@@ -1,74 +1,77 @@
 # Handoff
 
 Current Gate: SETUP-00 — Development Control Plane
-Current Status: READY_FOR_RED_TEAM
+Current Status: GATE_PASS
 
-Last valid commit: `845c32b180fd6bc63a4bd17c3980c4b9b5e9e119`; second-round corrections are currently uncommitted.
+Last valid commit: resolve `refs/tags/iacode-checkpoints/SETUP-00-CP-0001` with Git.
 Current branch: main
 
 ## Objective
 
-Revalidate the corrected SETUP-00 control plane independently and adversarially without implementing Gate 0.
+Preserve the completed SETUP-00 control plane and permit Gate 0 only after explicit user authorization.
 
 ## What was completed
 
-Canonical control-plane artifacts were implemented. Two review rounds drove corrections, and the isolated automated suite now contains 34 passing tests.
+The tool-neutral control plane, agent contracts, schemas, templates, policies, protocols, prompts, checkpoint lifecycle, secret redaction, automated validation, independent review, adversarial testing, cold-start simulation, and final evidence were completed.
 
 ## What was NOT completed
 
-Clean rework commit, independent re-review, final Red Team verdict, Gate-closing report, tag, and clean checkpoint validation.
+Gate 0 and every runtime capability remain unimplemented. Genuine resume validation by Claude Code or another provider remains `PENDING_MANUAL` because Claude Code is not installed.
 
 ## Current repository state
 
-The repository was initialized from an empty baseline on `main`. The last clean review checkpoint is committed; the working tree contains only documented SETUP-00 rework.
+The final checkpoint is intended to be clean on branch `main`; its namespaced checkpoint tag must resolve to the checked-out commit. `STATE.json` and the validator are authoritative.
 
 ## Files changed
 
-All tracked candidates are new SETUP-00 control-plane files. See `FILES.json` and `DIFF-SUMMARY.md`.
+All tracked files were created from the `EMPTY_PROJECT` baseline for SETUP-00. `FILES.json` contains the complete canonical inventory and portable SHA-256 hashes, except its documented self-hash.
 
 ## Important decisions
 
-Documentation is first-class, checkpoints are validated, agents are tool-neutral, provenance defaults to deny training, Git work is Gate-bound, and symbolic `HEAD` avoids impossible commit self-reference.
+Documentation is first-class, checkpoints are validated, agents are tool-neutral, training rights default to deny, Git work is Gate-bound, and handoff-ready checkpoints use immutable tag anchors.
 
 ## Tests executed
 
-`python -m unittest discover -s tests -v` passed 34 tests, including required corruptions, decoded JSONL scanning, commit anchors, evidence consistency, and lifecycle safety.
+`python -m unittest discover -s tests -v` passed 34 tests: 29 validator/redactor unit cases and 5 isolated lifecycle/integration cases. Python compilation and Git whitespace checks also passed.
 
 ## Known failures
 
-Claude Code is unavailable, and the optional `jsonschema` package is absent; the repository therefore uses a tested standard-library schema subset validator.
+No unresolved mandatory SETUP-00 failure remains. Genuine second-tool/provider validation is explicitly pending manual execution as permitted by the cold-start requirement.
 
 ## Known risks
 
-See `RISKS.md`; genuine cross-provider cold-start validation remains manual.
+The standard-library validator implements only schema keywords used by this repository; secret patterns require maintenance; tool adapters can drift; and no runtime capability exists. See `RISKS.md`.
 
 ## Do not repeat
 
-Do not recreate the baseline, add unverified Claude-specific formats, install dependencies merely to replace the working validator, or begin Gate 0.
+Do not recreate SETUP-00, move or overwrite checkpoint tags, bypass validation, invent unavailable tool support, or implement Gate 0 without explicit authorization.
 
 ## Required next action
 
-Commit the corrected checkpoint, validate clean Git state, rerun independent review and Red Team, then close SETUP-00 only if both pass.
+Wait for explicit user authorization to begin `GATE 0 — FOUNDATION`. Before any change, execute the continuation protocol and create a new Gate 0 checkpoint.
 
 ## Exact continuation sequence
 
-1. Regenerate and verify the full file manifest.
-2. Finalize and commit the corrected rework checkpoint.
-3. Perform independent re-review and Red Team in isolated fixtures.
-4. Record verdicts, create the final report, and rerun all checks.
-5. Finalize against the checkpoint tag, commit, create the tag, and validate clean state.
+1. Read `START-HERE.md`, the Development Contract, Master Plan, LATEST pointer, and this entire checkpoint.
+2. Run checkpoint validation and compare branch, tag-resolved commit, and dirty state.
+3. Run the validation commands below.
+4. If any divergence exists, create `DIVERGENCE.md`, set `BLOCKED`, and stop.
+5. Confirm explicit authorization for Gate 0.
+6. Create the pre-Gate checkpoint and baseline; do not reuse this closed checkpoint as a work log.
 
 ## Validation commands
 
 ```text
+python scripts/development-ledger/validate_checkpoint.py
 python -m unittest discover -s tests -v
 python -m compileall -q scripts tests
-python scripts/development-ledger/validate_checkpoint.py
+git diff --check HEAD^ HEAD
 git status --short --branch
 git branch --show-current
 git rev-parse HEAD
+git rev-parse refs/tags/iacode-checkpoints/SETUP-00-CP-0001
 ```
 
 ## Stop conditions
 
-Stop on a failing mandatory test, validator false negative, unredacted secret, documentation contradiction, unexpected Git divergence, or any need to implement Gate 0.
+Stop on validator/test failure, tag/HEAD mismatch, dirty or divergent Git state, missing authorization, secret detection, rights uncertainty, or any request that crosses the authorized Gate.

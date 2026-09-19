@@ -13,3 +13,4 @@ The empty baseline became a SETUP-00-only repository containing:
 
 No Gate 0 runtime, model gateway, agent runtime, sandbox, or application feature was implemented.
 
+Independent review and adversarial testing produced two rework cycles. The final validator rejects the false PASS paths found during those cycles, and the 34-test suite preserves each correction.

@@ -30,3 +30,14 @@ Final Red Team verdict is pending rerun against the corrected clean commit.
 ## Attack round 2
 
 The clean rework commit passed its 31-test suite but independent adversarial review found two remaining false-PASS paths: decoded JSONL values and unanchored handoff-ready states. Independent QA also found insufficient positive evidence for a PASS test category. All three now have dedicated regression tests; final rerun is pending.
+
+## Attack round 3
+
+- Target: clean commit `0b943d501346078bddf4d7518936c1f3abea1ae9`, anchored by the review tag.
+- Verdict: `RED_TEAM_PASS`.
+
+Independent read-only validation and the 34-case suite re-executed all required corruptions plus the false-PASS paths discovered in earlier rounds. Missing files, malformed content, status/metadata/quality contradictions, later commits, incomplete evidence, unsafe paths, external finalization, dirty bypass, raw/decoded secret shapes, incomplete redaction, schema corruption, stale hashes, and incomplete manifests were rejected. No tested value was disclosed in validator output, and no unresolved adversarial finding remains.
+
+## Final result
+
+`RED_TEAM_PASS`

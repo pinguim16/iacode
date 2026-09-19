@@ -1,7 +1,7 @@
 # Next
 
-## Required next action
+## Next Gate
 
-Complete independent review, Red Team, cold-start reconstruction, and clean post-commit checkpoint validation for SETUP-00.
+`GATE 0 — FOUNDATION`
 
-Do not begin Gate 0. Gate 0 — Foundation becomes the next permitted Gate only if the final SETUP-00 status is `GATE_PASS` and the user explicitly authorizes it.
+SETUP-00 is closed as `GATE_PASS`. Do not begin Gate 0 until the user explicitly authorizes it. On authorization, follow `prompts/START-GATE.md`, validate this checkpoint, confirm the final tag and clean Git state, and create a new pre-Gate checkpoint before implementation.
