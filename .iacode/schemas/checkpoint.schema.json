@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://iacode.local/schemas/checkpoint.schema.json",
+  "title": "IACode checkpoint state",
+  "type": "object",
+  "required": ["schemaVersion", "phase", "gate", "status", "branch", "baseCommit", "currentCommit", "dirty", "startedAt", "updatedAt", "nextAllowedAction", "blockedBy"],
+  "properties": {
+    "schemaVersion": {"type": "string", "const": "1.0.0"},
+    "phase": {"type": "string", "minLength": 1},
+    "gate": {"type": "string", "minLength": 1},
+    "status": {"enum": ["NOT_STARTED", "BASELINING", "IN_PROGRESS", "BLOCKED", "READY_FOR_REVIEW", "REWORK_REQUIRED", "READY_FOR_RED_TEAM", "GATE_PASS", "GATE_FAIL"]},
+    "branch": {"type": "string", "minLength": 1},
+    "baseCommit": {"type": "string", "pattern": "^(UNBORN|HEAD|[0-9a-f]{40})$"},
+    "currentCommit": {"type": "string", "pattern": "^(UNBORN|HEAD|[0-9a-f]{40})$"},
+    "dirty": {"type": "boolean"},
+    "startedAt": {"type": "string", "format": "date-time"},
+    "updatedAt": {"type": "string", "format": "date-time"},
+    "nextAllowedAction": {"type": "string", "minLength": 1},
+    "blockedBy": {"type": "array", "items": {"type": "string"}}
+  },
+  "additionalProperties": false
+}

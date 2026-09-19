@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://iacode.local/schemas/experience.schema.json",
+  "title": "Future observable engineering experience",
+  "description": "Stores observable summaries and evidence; never private chain-of-thought.",
+  "type": "object",
+  "required": ["task", "environment", "provider", "model", "effort", "repository", "baseCommit", "trajectorySummary", "actions", "toolCalls", "commands", "files", "attempts", "failures", "corrections", "tests", "quality", "humanReview", "agentReview", "finalResult", "provenance", "trainingEligibility"],
+  "properties": {
+    "task": {"type": "object"},
+    "environment": {"type": "object"},
+    "provider": {"type": "string", "minLength": 1},
+    "model": {"type": "string", "minLength": 1},
+    "effort": {"type": "string", "minLength": 1},
+    "repository": {"type": "string", "minLength": 1},
+    "baseCommit": {"type": "string", "minLength": 1},
+    "trajectorySummary": {"type": "string", "minLength": 1},
+    "actions": {"type": "array", "items": {"type": "object"}},
+    "toolCalls": {"type": "array", "items": {"type": "object"}},
+    "commands": {"type": "array", "items": {"type": "object"}},
+    "files": {"type": "object"},
+    "attempts": {"type": "array", "items": {"type": "object"}},
+    "failures": {"type": "array", "items": {"type": "object"}},
+    "corrections": {"type": "array", "items": {"type": "object"}},
+    "tests": {"type": "object"},
+    "quality": {"type": "object"},
+    "humanReview": {"type": ["object", "null"]},
+    "agentReview": {"type": ["object", "null"]},
+    "finalResult": {"type": "object"},
+    "provenance": {"type": "array", "items": {"type": "object"}},
+    "trainingEligibility": {
+      "type": "object",
+      "required": ["eligible", "evidence"],
+      "properties": {
+        "eligible": {"type": "boolean", "const": false},
+        "evidence": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

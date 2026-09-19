@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://iacode.local/schemas/decision.schema.json",
+  "title": "Structured decision record",
+  "type": "object",
+  "required": ["id", "title", "status", "date", "owners", "context", "decision", "evidence", "alternativesConsidered", "consequences", "risks", "reversalStrategy", "relatedArtifacts"],
+  "properties": {
+    "id": {"type": "string", "pattern": "^ADR-[0-9]{4}$"},
+    "title": {"type": "string", "minLength": 1},
+    "status": {"enum": ["PROPOSED", "ACCEPTED", "SUPERSEDED", "REJECTED"]},
+    "date": {"type": "string", "format": "date"},
+    "owners": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+    "context": {"type": "string", "minLength": 1},
+    "decision": {"type": "string", "minLength": 1},
+    "evidence": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+    "alternativesConsidered": {"type": "array", "items": {"type": "string"}},
+    "consequences": {"type": "array", "items": {"type": "string"}},
+    "risks": {"type": "array", "items": {"type": "string"}},
+    "reversalStrategy": {"type": "string", "minLength": 1},
+    "relatedArtifacts": {"type": "array", "items": {"type": "string"}}
+  },
+  "additionalProperties": false
+}

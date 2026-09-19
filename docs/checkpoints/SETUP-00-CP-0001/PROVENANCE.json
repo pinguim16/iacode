@@ -1,0 +1,53 @@
+{
+  "schemaVersion": "1.0.0",
+  "artifacts": [
+    {
+      "artifact": "SETUP-00 user specification",
+      "sourceType": "user-provided-requirement",
+      "provider": "user",
+      "model": "not-applicable",
+      "ownership": "user-provided; ownership not independently verified",
+      "license": "not-specified",
+      "rights": {
+        "storageAllowed": true,
+        "ragAllowed": false,
+        "trainingAllowed": false,
+        "distillationAllowed": false
+      },
+      "evidence": "The requirement was supplied directly for execution in this workspace.",
+      "notes": "Stored only as derived repository contracts and checkpoint evidence."
+    },
+    {
+      "artifact": "SETUP-00 control-plane files",
+      "sourceType": "model-assisted-project-work",
+      "provider": "OpenAI",
+      "model": "GPT-5 family; exact model not exposed",
+      "ownership": "project artifact; legal ownership not independently determined",
+      "license": "not-specified",
+      "rights": {
+        "storageAllowed": true,
+        "ragAllowed": false,
+        "trainingAllowed": false,
+        "distillationAllowed": false
+      },
+      "evidence": "Created in this repository during SETUP-00 and reviewed through repository evidence.",
+      "notes": "No permission for model training or distillation is inferred."
+    },
+    {
+      "artifact": "Local command and test evidence",
+      "sourceType": "local-tool-output",
+      "provider": "local environment",
+      "model": "not-applicable",
+      "ownership": "project-generated evidence",
+      "license": "not-applicable",
+      "rights": {
+        "storageAllowed": true,
+        "ragAllowed": false,
+        "trainingAllowed": false,
+        "distillationAllowed": false
+      },
+      "evidence": "Commands in COMMANDS.jsonl and test summaries in TESTS.json.",
+      "notes": "Outputs are summarized and sanitized; raw authentication material is excluded."
+    }
+  ]
+}

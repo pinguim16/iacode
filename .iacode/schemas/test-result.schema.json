@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://iacode.local/schemas/test-result.schema.json",
+  "title": "Checkpoint test results",
+  "type": "object",
+  "required": ["schemaVersion", "unit", "integration", "e2e"],
+  "$defs": {
+    "result": {
+      "type": "object",
+      "required": ["executed", "passed", "failed", "command", "evidence"],
+      "properties": {
+        "executed": {"type": "boolean"},
+        "passed": {"type": "integer", "minimum": 0},
+        "failed": {"type": "integer", "minimum": 0},
+        "command": {"type": ["string", "null"]},
+        "evidence": {"type": ["string", "null"]}
+      },
+      "additionalProperties": false
+    }
+  },
+  "properties": {
+    "schemaVersion": {"type": "string", "const": "1.0.0"},
+    "unit": {"$ref": "#/$defs/result"},
+    "integration": {"$ref": "#/$defs/result"},
+    "e2e": {"$ref": "#/$defs/result"}
+  },
+  "additionalProperties": false
+}

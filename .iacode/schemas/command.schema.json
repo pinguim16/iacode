@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://iacode.local/schemas/command.schema.json",
+  "title": "Sanitized command evidence",
+  "type": "object",
+  "required": ["timestamp", "command", "workingDirectory", "exitCode", "durationMs", "stdoutArtifact", "stderrArtifact"],
+  "properties": {
+    "timestamp": {"type": "string", "format": "date-time"},
+    "command": {"type": "string", "minLength": 1},
+    "workingDirectory": {"type": "string", "minLength": 1},
+    "exitCode": {"type": "integer"},
+    "durationMs": {"type": "integer", "minimum": 0},
+    "stdoutArtifact": {"type": ["string", "null"]},
+    "stderrArtifact": {"type": ["string", "null"]}
+  },
+  "additionalProperties": false
+}

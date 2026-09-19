@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://iacode.local/schemas/run-metadata.schema.json",
+  "title": "IACode run metadata",
+  "type": "object",
+  "required": ["tool", "toolVersion", "provider", "model", "effort", "operatingSystem", "startedAt", "finishedAt", "branch", "initialCommit", "finalCommit"],
+  "properties": {
+    "tool": {"type": "string", "minLength": 1},
+    "toolVersion": {"type": "string", "minLength": 1},
+    "provider": {"type": "string", "minLength": 1},
+    "model": {"type": "string", "minLength": 1},
+    "effort": {"type": "string", "minLength": 1},
+    "operatingSystem": {"type": "string", "minLength": 1},
+    "startedAt": {"type": "string", "format": "date-time"},
+    "finishedAt": {"type": "string", "format": "date-time"},
+    "branch": {"type": "string", "minLength": 1},
+    "initialCommit": {"type": "string", "pattern": "^(UNBORN|HEAD|[0-9a-f]{40})$"},
+    "finalCommit": {"type": "string", "pattern": "^(UNBORN|HEAD|[0-9a-f]{40})$"}
+  },
+  "additionalProperties": false
+}

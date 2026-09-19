@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://iacode.local/schemas/quality-result.schema.json",
+  "title": "Checkpoint quality result",
+  "type": "object",
+  "required": ["schemaVersion", "build", "unitTests", "integrationTests", "e2e", "lint", "staticAnalysis", "security", "documentation", "checkpointValidation", "redTeam"],
+  "properties": {
+    "schemaVersion": {"type": "string", "const": "1.0.0"},
+    "build": {"enum": ["PASS", "FAIL", "NOT_APPLICABLE", "NOT_EXECUTED"]},
+    "unitTests": {"enum": ["PASS", "FAIL", "NOT_APPLICABLE", "NOT_EXECUTED"]},
+    "integrationTests": {"enum": ["PASS", "FAIL", "NOT_APPLICABLE", "NOT_EXECUTED"]},
+    "e2e": {"enum": ["PASS", "FAIL", "NOT_APPLICABLE", "NOT_EXECUTED"]},
+    "lint": {"enum": ["PASS", "FAIL", "NOT_APPLICABLE", "NOT_EXECUTED"]},
+    "staticAnalysis": {"enum": ["PASS", "FAIL", "NOT_APPLICABLE", "NOT_EXECUTED"]},
+    "security": {"enum": ["PASS", "FAIL", "NOT_APPLICABLE", "NOT_EXECUTED"]},
+    "documentation": {"enum": ["PASS", "FAIL", "NOT_APPLICABLE", "NOT_EXECUTED"]},
+    "checkpointValidation": {"enum": ["PASS", "FAIL", "NOT_APPLICABLE", "NOT_EXECUTED"]},
+    "redTeam": {"enum": ["PASS", "FAIL", "NOT_APPLICABLE", "NOT_EXECUTED"]}
+  },
+  "additionalProperties": false
+}

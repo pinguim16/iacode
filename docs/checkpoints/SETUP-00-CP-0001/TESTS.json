@@ -1,0 +1,24 @@
+{
+  "schemaVersion": "1.0.0",
+  "unit": {
+    "executed": true,
+    "passed": 10,
+    "failed": 0,
+    "command": "python -m unittest discover -s tests -v",
+    "evidence": "Validator and redactor tests passed, including valid, missing file, malformed JSON, invalid status, wrong commit, nonexistent LATEST target, secret, provenance, and next-action cases."
+  },
+  "integration": {
+    "executed": true,
+    "passed": 1,
+    "failed": 0,
+    "command": "python -m unittest discover -s tests -v",
+    "evidence": "Isolated new -> finalize -> commit -> validate lifecycle passed."
+  },
+  "e2e": {
+    "executed": false,
+    "passed": 0,
+    "failed": 0,
+    "command": null,
+    "evidence": "No functional runtime exists in SETUP-00; end-to-end runtime testing is not applicable."
+  }
+}

@@ -1,0 +1,113 @@
+#!/usr/bin/env python3
+"""Create the next IACode checkpoint with safe, truthful defaults."""
+
+from __future__ import annotations
+
+import argparse
+import json
+import re
+import sys
+from pathlib import Path
+
+from ledger_common import SCHEMA_VERSION, STATUSES, find_root, git_snapshot, utc_now, write_json
+
+
+def next_checkpoint_name(root: Path, gate: str) -> str:
+    checkpoints = root / "docs" / "checkpoints"
+    pattern = re.compile(rf"^{re.escape(gate)}-CP-(\d{{4}})$")
+    numbers = [int(match.group(1)) for item in checkpoints.iterdir() if item.is_dir() and (match := pattern.match(item.name))]
+    return f"{gate}-CP-{max(numbers, default=0) + 1:04d}"
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--root", type=Path)
+    parser.add_argument("--gate", required=True)
+    parser.add_argument("--status", choices=STATUSES, default="IN_PROGRESS")
+    parser.add_argument("--phase")
+    args = parser.parse_args()
+
+    root = find_root(args.root) if args.root else find_root()
+    snapshot = git_snapshot(root)
+    name = next_checkpoint_name(root, args.gate)
+    checkpoint = root / "docs" / "checkpoints" / name
+    checkpoint.mkdir(parents=True, exist_ok=False)
+    now = utc_now()
+    phase = args.phase or args.gate
+
+    markdown = {
+        "STATUS.md": f"# Status\n\n{args.status}\n",
+        "HANDOFF.md": "# Handoff\n\nCurrent Gate: " + args.gate + "\nCurrent Status: " + args.status + "\n\n## Objective\n\nCheckpoint created; populate verified handoff evidence before transfer.\n",
+        "PLAN.md": "# Plan\n\nRecord an executable plan before implementation.\n",
+        "DECISIONS.md": "# Decisions\n\nNo checkpoint-local decision has been recorded yet.\n",
+        "DIFF-SUMMARY.md": "# Diff Summary\n\nNo changes have been summarized yet.\n",
+        "RISKS.md": "# Risks\n\nNo checkpoint-local risk has been recorded yet.\n",
+        "NEXT.md": "# Next\n\nPopulate the exact next allowed action before finalization.\n",
+    }
+    for filename, content in markdown.items():
+        (checkpoint / filename).write_text(content, encoding="utf-8")
+
+    write_json(checkpoint / "STATE.json", {
+        "schemaVersion": SCHEMA_VERSION,
+        "phase": phase,
+        "gate": args.gate,
+        "status": args.status,
+        "branch": snapshot["branch"],
+        "baseCommit": snapshot["head"],
+        "currentCommit": snapshot["head"],
+        "dirty": True,
+        "startedAt": now,
+        "updatedAt": now,
+        "nextAllowedAction": "Populate and validate this checkpoint.",
+        "blockedBy": [],
+    })
+    write_json(checkpoint / "RUN-METADATA.json", {
+        "tool": "not-recorded",
+        "toolVersion": "not-recorded",
+        "provider": "not-recorded",
+        "model": "not-recorded",
+        "effort": "not-exposed",
+        "operatingSystem": "not-recorded",
+        "startedAt": now,
+        "finishedAt": now,
+        "branch": snapshot["branch"],
+        "initialCommit": snapshot["head"],
+        "finalCommit": snapshot["head"],
+    })
+    (checkpoint / "COMMANDS.jsonl").write_text(json.dumps({
+        "timestamp": now,
+        "command": f"new_checkpoint.py --gate {args.gate} --status {args.status}",
+        "workingDirectory": str(root),
+        "exitCode": 0,
+        "durationMs": 0,
+        "stdoutArtifact": None,
+        "stderrArtifact": None,
+    }) + "\n", encoding="utf-8")
+    write_json(checkpoint / "FILES.json", {"filesRead": [], "filesCreated": [], "filesModified": [], "filesDeleted": []})
+    empty_test = {"executed": False, "passed": 0, "failed": 0, "command": None, "evidence": None}
+    write_json(checkpoint / "TESTS.json", {"schemaVersion": SCHEMA_VERSION, "unit": empty_test, "integration": empty_test, "e2e": empty_test})
+    write_json(checkpoint / "QUALITY.json", {
+        "schemaVersion": SCHEMA_VERSION,
+        "build": "NOT_EXECUTED", "unitTests": "NOT_EXECUTED", "integrationTests": "NOT_EXECUTED",
+        "e2e": "NOT_EXECUTED", "lint": "NOT_EXECUTED", "staticAnalysis": "NOT_EXECUTED",
+        "security": "NOT_EXECUTED", "documentation": "NOT_EXECUTED",
+        "checkpointValidation": "NOT_EXECUTED", "redTeam": "NOT_EXECUTED",
+    })
+    write_json(checkpoint / "PROVENANCE.json", {
+        "schemaVersion": SCHEMA_VERSION,
+        "artifacts": [{
+            "artifact": str(checkpoint.relative_to(root)), "sourceType": "repository-generated",
+            "provider": "local-script", "model": "not-applicable", "ownership": "project",
+            "license": "project-policy", "rights": {"storageAllowed": True, "ragAllowed": False, "trainingAllowed": False, "distillationAllowed": False},
+            "evidence": "Created by new_checkpoint.py.", "notes": "Review rights before reuse."
+        }]
+    })
+    latest = root / "docs" / "checkpoints" / "LATEST.md"
+    latest.write_text(f"# Latest Checkpoint\n\nCheckpoint: `docs/checkpoints/{name}`\n\nValidate before use.\n", encoding="utf-8")
+    print(checkpoint)
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
+
