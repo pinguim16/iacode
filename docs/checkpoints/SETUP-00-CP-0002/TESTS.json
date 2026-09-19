@@ -1,0 +1,24 @@
+{
+  "schemaVersion": "1.0.0",
+  "unit": {
+    "executed": true,
+    "passed": 32,
+    "failed": 0,
+    "command": "python -m unittest discover -s tests",
+    "evidence": "All 29 existing ledger/redaction unit tests plus 3 Claude adapter parity, frontmatter, and canonical-delegation tests passed."
+  },
+  "integration": {
+    "executed": true,
+    "passed": 5,
+    "failed": 0,
+    "command": "python -m unittest discover -s tests",
+    "evidence": "All 5 isolated checkpoint lifecycle and boundary tests passed."
+  },
+  "e2e": {
+    "executed": false,
+    "passed": 0,
+    "failed": 0,
+    "command": null,
+    "evidence": "No functional runtime exists in SETUP-00; runtime end-to-end testing is not applicable. The attempted Claude cold start stopped before a model call due to missing authentication and is not counted as PASS."
+  }
+}

@@ -1,6 +1,6 @@
 # Claude Code Project Instructions
 
-This file is a Claude Code adapter for the same canonical contracts used by Codex. It adds no independent policy.
+This file is a Claude Code adapter for the same canonical contracts used by Codex. It adds no independent policy. Project subagents in `.claude/agents/` map one-to-one to the canonical role definitions in `.iacode/agents/`.
 
 ## Before any alteration
 
@@ -28,5 +28,4 @@ This file is a Claude Code adapter for the same canonical contracts used by Code
 
 Update/finalize the checkpoint, validate it, record Git state, update `LATEST.md`, and provide exact handoff and next-action instructions.
 
-Claude Code was not installed during SETUP-00, so no unverified `.claude/agents/` format or hook configuration was generated.
-
+Claude Code `2.1.195` was detected at `C:/Users/cesar/.local/bin/claude.exe` during the SETUP-00 correction checkpoint. That directory was not on the detecting process's `PATH`, which caused the earlier false negative. The project adapters use the verified `.claude/agents/*.md` format. No Claude-specific hook or MCP dependency is required by SETUP-00.

@@ -1,0 +1,52 @@
+{
+  "filesRead": [
+    {
+      "path": "C:/Users/cesar/.codex/attachments/c703d3af-4867-4250-a133-ce339d1e762c/Texto colado.txt",
+      "reason": "Authoritative SETUP-00 requirement supplied by the user."
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0001",
+      "reason": "Sealed baseline checkpoint inspected without modification."
+    },
+    {
+      "path": ".iacode/agents",
+      "reason": "Canonical role definitions used to construct and verify Claude Code adapters."
+    }
+  ],
+  "filesCreated": [
+    {"path": ".claude/agents/architect.md", "reason": "Claude Code adapter for the canonical Architect role."},
+    {"path": ".claude/agents/engineering-lead.md", "reason": "Claude Code adapter for the canonical Engineering Lead role."},
+    {"path": ".claude/agents/historian.md", "reason": "Claude Code adapter for the canonical Historian role."},
+    {"path": ".claude/agents/implementer.md", "reason": "Claude Code adapter for the canonical Implementer role."},
+    {"path": ".claude/agents/planner.md", "reason": "Claude Code adapter for the canonical Planner role."},
+    {"path": ".claude/agents/provenance-rights.md", "reason": "Claude Code adapter for the canonical Provenance / Rights role."},
+    {"path": ".claude/agents/qa-validator.md", "reason": "Claude Code adapter for the canonical QA / Validator role."},
+    {"path": ".claude/agents/red-team.md", "reason": "Claude Code adapter for the canonical Red Team role."},
+    {"path": ".claude/agents/reviewer.md", "reason": "Claude Code adapter for the canonical Reviewer role."},
+    {"path": ".claude/agents/security-reviewer.md", "reason": "Claude Code adapter for the canonical Security Reviewer role."},
+    {"path": "docs/checkpoints/SETUP-00-CP-0002/COMMANDS.jsonl", "reason": "Correction command audit log."},
+    {"path": "docs/checkpoints/SETUP-00-CP-0002/DECISIONS.md", "reason": "Correction decisions."},
+    {"path": "docs/checkpoints/SETUP-00-CP-0002/DIFF-SUMMARY.md", "reason": "Correction diff summary."},
+    {"path": "docs/checkpoints/SETUP-00-CP-0002/FILES.json", "reason": "Correction file inventory; self-hash omitted."},
+    {"path": "docs/checkpoints/SETUP-00-CP-0002/HANDOFF.md", "reason": "Correction handoff."},
+    {"path": "docs/checkpoints/SETUP-00-CP-0002/NEXT.md", "reason": "Next authorized action."},
+    {"path": "docs/checkpoints/SETUP-00-CP-0002/PLAN.md", "reason": "Correction execution plan."},
+    {"path": "docs/checkpoints/SETUP-00-CP-0002/PROVENANCE.json", "reason": "Correction provenance classification."},
+    {"path": "docs/checkpoints/SETUP-00-CP-0002/QUALITY.json", "reason": "Correction quality evidence."},
+    {"path": "docs/checkpoints/SETUP-00-CP-0002/REVIEW-REPORT.md", "reason": "Independent Quality Validator review evidence."},
+    {"path": "docs/checkpoints/SETUP-00-CP-0002/RISKS.md", "reason": "Correction residual risks."},
+    {"path": "docs/checkpoints/SETUP-00-CP-0002/RUN-METADATA.json", "reason": "Correction run metadata."},
+    {"path": "docs/checkpoints/SETUP-00-CP-0002/STATE.json", "reason": "Correction checkpoint state."},
+    {"path": "docs/checkpoints/SETUP-00-CP-0002/STATUS.md", "reason": "Correction checkpoint status."},
+    {"path": "docs/checkpoints/SETUP-00-CP-0002/TESTS.json", "reason": "Correction test evidence."}
+  ],
+  "filesModified": [
+    {"path": "CLAUDE.md", "reason": "Corrected installation status and documented verified subagent adapters."},
+    {"path": "docs/ARCHITECTURE.md", "reason": "Added the verified Claude project-subagent adapter layer."},
+    {"path": "docs/TOOL-CAPABILITIES.md", "reason": "Recorded installed versions, PATH caveat, verified features, and authentication state."},
+    {"path": "docs/adr/ADR-0003-tool-neutral-agents.md", "reason": "Superseded the false absence evidence while retaining the provider-neutral decision."},
+    {"path": "docs/checkpoints/LATEST.md", "reason": "Points to the correction checkpoint."},
+    {"path": "tests/test_development_ledger.py", "reason": "Added Claude adapter contract tests."}
+  ],
+  "filesDeleted": []
+}

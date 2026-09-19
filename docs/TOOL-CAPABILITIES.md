@@ -1,6 +1,6 @@
 # Detected Tool Capabilities
 
-Detection was performed locally during SETUP-00; no capability below is inferred from an uninstalled tool.
+Detection was performed locally during SETUP-00 and its correction checkpoint. Capability claims are based on local executable help/version output or official tool documentation.
 
 ## Codex
 
@@ -15,7 +15,14 @@ Detection was performed locally during SETUP-00; no capability below is inferred
 
 ## Claude Code
 
-`claude --version` failed because the executable is not installed. Project instructions beyond the required `CLAUDE.md`, agents/subagents, hooks, MCP, permissions, and configuration therefore could not be verified. No `.claude/agents/` directory or hook format was invented.
+- Installed version: `2.1.195 (Claude Code)` at `C:/Users/cesar/.local/bin/claude.exe`. A second bundled copy reports `2.1.187` at `C:/Users/cesar/AppData/Local/Claude-3p/claude-code/2.1.187/claude.exe`.
+- PATH caveat: the user-local binary directory was not in the detecting process's `PATH`; therefore bare `claude --version` failed even though Claude Code was installed.
+- Project instructions: `CLAUDE.md` is loaded as repository context.
+- Agents and subagents: project definitions use the documented `.claude/agents/*.md` format. The ten adapters map one-to-one to `.iacode/agents/` and inherit the selected session model.
+- Hooks: local CLI help exposes hooks, and project configuration supports hooks in `.claude/settings.json`; SETUP-00 requires no mandatory Claude-specific hook.
+- MCP: local CLI help exposes MCP commands, and project MCP configuration is supported through `.mcp.json`; SETUP-00 has no MCP dependency.
+- Permissions and configuration: local CLI help exposes allowed/disallowed tools, permission modes, settings sources, agent selection, and effort levels. The repository does not enable a permission bypass.
+- Authentication: `claude auth status` reported `loggedIn: false` and `authMethod: none` on 2026-09-19. A clean-clone non-interactive validation reached the executable but stopped with `Not logged in`; no model call or file modification occurred.
 
 ## Portable baseline
 

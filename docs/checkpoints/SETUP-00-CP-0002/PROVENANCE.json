@@ -1,0 +1,69 @@
+{
+  "schemaVersion": "1.0.0",
+  "artifacts": [
+    {
+      "artifact": "Claude Code installation correction supplied by the user",
+      "sourceType": "user-provided-correction",
+      "provider": "user",
+      "model": "not-applicable",
+      "ownership": "user-provided observation; ownership not applicable",
+      "license": "not-applicable",
+      "rights": {
+        "storageAllowed": true,
+        "ragAllowed": false,
+        "trainingAllowed": false,
+        "distillationAllowed": false
+      },
+      "evidence": "The user stated that Claude Code is installed; local executable discovery and direct version execution independently confirmed it.",
+      "notes": "No credential or account data is stored."
+    },
+    {
+      "artifact": "Claude Code adapter files and SETUP-00 correction documentation",
+      "sourceType": "model-assisted-project-work",
+      "provider": "OpenAI",
+      "model": "GPT-5 family; exact identifier not exposed",
+      "ownership": "project artifact; legal ownership not independently determined",
+      "license": "not-specified",
+      "rights": {
+        "storageAllowed": true,
+        "ragAllowed": false,
+        "trainingAllowed": false,
+        "distillationAllowed": false
+      },
+      "evidence": "Created and tested locally in this repository during SETUP-00-CP-0002.",
+      "notes": "No permission for model training or distillation is inferred."
+    },
+    {
+      "artifact": "Claude Code configuration-format facts",
+      "sourceType": "official-documentation-derived",
+      "provider": "Anthropic",
+      "model": "not-applicable",
+      "ownership": "facts summarized for interoperability; source content remains with its owner",
+      "license": "source-site terms; not independently assessed",
+      "rights": {
+        "storageAllowed": true,
+        "ragAllowed": false,
+        "trainingAllowed": false,
+        "distillationAllowed": false
+      },
+      "evidence": "Official Claude Code documentation for project directories and custom subagents, corroborated by local CLI help.",
+      "notes": "Only format facts and field names were used; no substantial documentation text was copied."
+    },
+    {
+      "artifact": "Local executable, authentication, and test evidence",
+      "sourceType": "local-tool-output",
+      "provider": "local environment",
+      "model": "not-applicable",
+      "ownership": "project-generated evidence",
+      "license": "not-applicable",
+      "rights": {
+        "storageAllowed": true,
+        "ragAllowed": false,
+        "trainingAllowed": false,
+        "distillationAllowed": false
+      },
+      "evidence": "Summarized in COMMANDS.jsonl, TESTS.json, and TOOL-CAPABILITIES.md.",
+      "notes": "Authentication material is neither read nor stored; only non-secret status fields are recorded."
+    }
+  ]
+}

@@ -90,6 +90,19 @@ Stop on any unexpected source-repository change.
     "NEXT.md": "# Next\n\n## Required next action\n\nContinue only after this isolated checkpoint validates successfully.\n",
 }
 
+CANONICAL_AGENT_NAMES = {
+    "architect",
+    "engineering-lead",
+    "historian",
+    "implementer",
+    "planner",
+    "provenance-rights",
+    "qa-validator",
+    "red-team",
+    "reviewer",
+    "security-reviewer",
+}
+
 
 def run(command: list[str], cwd: Path) -> subprocess.CompletedProcess[str]:
     return subprocess.run(command, cwd=cwd, text=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, check=False)
@@ -478,6 +491,37 @@ class LedgerLifecycleTests(unittest.TestCase):
                 sys.executable, str(SCRIPTS / "validate_checkpoint.py"), "--root", str(root), "--allow-dirty"
             ], root)
             self.assertNotEqual(result.returncode, 0)
+
+
+class ClaudeAdapterTests(unittest.TestCase):
+    def test_project_agents_match_canonical_role_names(self) -> None:
+        canonical = {path.stem for path in (PROJECT_ROOT / ".iacode" / "agents").glob("*.md")}
+        adapters = {path.stem for path in (PROJECT_ROOT / ".claude" / "agents").glob("*.md")}
+        self.assertEqual(canonical, CANONICAL_AGENT_NAMES)
+        self.assertEqual(adapters, canonical)
+
+    def test_project_agents_have_supported_required_frontmatter(self) -> None:
+        for path in sorted((PROJECT_ROOT / ".claude" / "agents").glob("*.md")):
+            text = path.read_text(encoding="utf-8")
+            self.assertTrue(text.startswith("---\n"), path)
+            _, frontmatter, body = text.split("---", 2)
+            fields = {
+                key.strip(): value.strip()
+                for line in frontmatter.strip().splitlines()
+                for key, separator, value in [line.partition(":")]
+                if separator
+            }
+            self.assertEqual(fields.get("name"), path.stem, path)
+            self.assertTrue(fields.get("description"), path)
+            self.assertEqual(fields.get("model"), "inherit", path)
+            self.assertTrue(body.strip(), path)
+
+    def test_project_agents_defer_to_canonical_contracts(self) -> None:
+        for path in sorted((PROJECT_ROOT / ".claude" / "agents").glob("*.md")):
+            text = path.read_text(encoding="utf-8")
+            canonical_path = f".iacode/agents/{path.name}"
+            self.assertIn(canonical_path, text, path)
+            self.assertIn("canonical role contract", text, path)
 
 
 if __name__ == "__main__":

@@ -15,7 +15,8 @@ Define agent semantics in `.iacode/agents/`; root tool files are adapters only.
 ## Evidence
 
 - Codex CLI reports stable multi-agent support.
-- Claude Code is absent, so its additional local formats cannot be verified.
+- Claude Code `2.1.195` is installed at `C:/Users/cesar/.local/bin/claude.exe`; its documented project-subagent format is `.claude/agents/*.md`.
+- The initial bare-command check was a PATH-scoped false negative, corrected in `SETUP-00-CP-0002` without changing the provider-neutral decision.
 
 ## Alternatives Considered
 
@@ -36,5 +37,4 @@ Version the canonical contract and generate verified adapters from it.
 
 ## Related Artifacts
 
-`.iacode/agents/`, `AGENTS.md`, `CLAUDE.md`.
-
+`.iacode/agents/`, `AGENTS.md`, `CLAUDE.md`, `.claude/agents/`.
