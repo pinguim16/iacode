@@ -1,3 +1,3 @@
 # Status
 
-IN_PROGRESS
+GATE_PASS

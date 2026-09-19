@@ -1,7 +1,7 @@
 # Handoff
 
 Current Gate: SETUP-00
-Current Status: IN_PROGRESS
+Current Status: GATE_PASS
 
 Last valid commit: 0cb4f246b555a6304ca6dbce1c8e97c80b527ef9
 Current branch: main
@@ -17,6 +17,8 @@ Correct the Claude Code installation record and add verified Claude Code adapter
 - Added ten `.claude/agents/*.md` adapters mapped one-to-one to `.iacode/agents/`.
 - Added and executed adapter parity/frontmatter/canonical-delegation tests as part of the 37-test suite.
 - Attempted a non-interactive cold start from a clean clone; the executable ran but stopped because no Claude account is authenticated.
+- Captured the exact second cold-start invocation, zero-token/model-use result, and unchanged clone status in `CLAUDE-COLD-START.md`.
+- Received independent `APPROVED` review and `RED_TEAM_PASS` after remediating the initial ledger findings.
 - Preserved `SETUP-00-CP-0001` and its immutable tag unchanged.
 
 ## What was NOT completed
@@ -37,7 +39,7 @@ The sealed prior checkpoint is historical; PATH lookup failure is not absence; p
 
 ## Tests executed
 
-`python -m unittest discover -s tests` — 37 passed, 0 failed. Independent review and final checkpoint validation are recorded before closure.
+`python -m unittest discover -s tests` — 37 passed, 0 failed. Independent review returned `APPROVED`; the final Red Team rerun returned `RED_TEAM_PASS`; checkpoint validation returned `CHECKPOINT_VALID`.
 
 ## Known failures
 
