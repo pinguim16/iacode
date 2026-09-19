@@ -18,15 +18,16 @@ python scripts/development-ledger/validate_checkpoint.py
 
 Exit code `0` means valid. Any nonzero exit means invalid. Validation checks required and nonempty files, JSON parsing, bound JSON Schemas, command JSONL, file manifest structure, canonical status, branch, commit, dirty state, secret-shaped values, provenance, quality, handoff, next action, and the `LATEST.md` target.
 
-During finalization only, `--allow-dirty` permits the expected uncommitted ledger changes. It does not skip branch, commit, schema, secret, or content checks.
+Dirty-state relaxation is internal to `finalize_checkpoint.py` and is not exposed by the validation CLI, so unrelated working-tree changes cannot be hidden from a normal validation.
 
 ## Finalize
 
 ```text
 python scripts/development-ledger/finalize_checkpoint.py --status READY_FOR_REVIEW
+python scripts/development-ledger/finalize_checkpoint.py --status GATE_PASS --commit-ref refs/tags/iacode-checkpoints/SETUP-00-CP-0001
 ```
 
-Finalization records timestamps and the canonical symbolic `HEAD`, expects the checkpoint to become clean after commit, and performs a pre-commit validation. Commit the result and then run the validator without `--allow-dirty`.
+Finalization records timestamps, expects the checkpoint to become clean after commit, and performs a pre-commit validation. A Gate-closing checkpoint uses a namespaced tag reference: commit the result, create that tag at the resulting commit, and then run the validator normally. The tag binds the checkpoint to one immutable Git object without requiring a commit to contain its own hash.
 
 ## Redact
 

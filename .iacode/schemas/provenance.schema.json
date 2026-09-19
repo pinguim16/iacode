@@ -25,8 +25,8 @@
             "properties": {
               "storageAllowed": {"type": "boolean"},
               "ragAllowed": {"type": "boolean"},
-              "trainingAllowed": {"type": "boolean", "const": false},
-              "distillationAllowed": {"type": "boolean", "const": false}
+              "trainingAllowed": {"type": "boolean", "default": false},
+              "distillationAllowed": {"type": "boolean", "default": false}
             },
             "additionalProperties": false
           },

@@ -7,253 +7,403 @@
   ],
   "filesCreated": [
     {
+      "path": ".gitattributes",
+      "reason": "Created from the SETUP-00 EMPTY_PROJECT baseline.",
+      "hashAfter": "a425630009a04bd124a1566685fb189a49c5cb7db5087d21e8e34656d5f3111e"
+    },
+    {
       "path": ".gitignore",
-      "reason": "Exclude generated Python caches and local environment artifacts from version control.",
+      "reason": "Created from the SETUP-00 EMPTY_PROJECT baseline.",
       "hashAfter": "956bb97011b4157a40a57576efa29ee957d2b82a6abc22d37c831581132b4cbc"
     },
     {
+      "path": ".iacode/agents/architect.md",
+      "reason": "Created from the SETUP-00 EMPTY_PROJECT baseline.",
+      "hashAfter": "2a971de90383219d7106395245a5c9817f0f3c5cb8d75dd024f669199e6093b6"
+    },
+    {
+      "path": ".iacode/agents/engineering-lead.md",
+      "reason": "Created from the SETUP-00 EMPTY_PROJECT baseline.",
+      "hashAfter": "e9051d64f22a9570c400f3836c29aec0cfe37c4343251de0edc565621c87f14a"
+    },
+    {
+      "path": ".iacode/agents/historian.md",
+      "reason": "Created from the SETUP-00 EMPTY_PROJECT baseline.",
+      "hashAfter": "83726d82bc542a67a3cd904274dd18109e8ecb19c8d5bbc2d3f0b005d5f8af30"
+    },
+    {
+      "path": ".iacode/agents/implementer.md",
+      "reason": "Created from the SETUP-00 EMPTY_PROJECT baseline.",
+      "hashAfter": "8cefb3fd935450444a44b556c558a724dc85e28174f56ced025b91ae109e5d6d"
+    },
+    {
+      "path": ".iacode/agents/planner.md",
+      "reason": "Created from the SETUP-00 EMPTY_PROJECT baseline.",
+      "hashAfter": "8bd4427428f8323dd839fa41d79ca50b49666dee661cef2e1d568432ac408117"
+    },
+    {
+      "path": ".iacode/agents/provenance-rights.md",
+      "reason": "Created from the SETUP-00 EMPTY_PROJECT baseline.",
+      "hashAfter": "39f90df33694e957d9575210d3f0631b3fe9b0cebb4e8ae8d29206c61da8974f"
+    },
+    {
+      "path": ".iacode/agents/qa-validator.md",
+      "reason": "Created from the SETUP-00 EMPTY_PROJECT baseline.",
+      "hashAfter": "79f2d19aec81a295ef596a77936868b97a40aea7d39232a8b76e0cc760654984"
+    },
+    {
+      "path": ".iacode/agents/red-team.md",
+      "reason": "Created from the SETUP-00 EMPTY_PROJECT baseline.",
+      "hashAfter": "db8b7f7122f1e31c05485497220d066b531c373ac3a3e339707aca21c2ebd547"
+    },
+    {
+      "path": ".iacode/agents/reviewer.md",
+      "reason": "Created from the SETUP-00 EMPTY_PROJECT baseline.",
+      "hashAfter": "528a067e69a5f472b31ff835da185c9a49c5ba93e90a09fd3cf3d76124643571"
+    },
+    {
+      "path": ".iacode/agents/security-reviewer.md",
+      "reason": "Created from the SETUP-00 EMPTY_PROJECT baseline.",
+      "hashAfter": "f99dea10ee9c3dda11fadae6240adef68e5046f456797890ded73a6d9192a305"
+    },
+    {
+      "path": ".iacode/policies/documentation-policy.md",
+      "reason": "Created from the SETUP-00 EMPTY_PROJECT baseline.",
+      "hashAfter": "fe87972deee26e0375eb7c93d4a502a7a74304368b7f3522efa0f8e7bda16b52"
+    },
+    {
+      "path": ".iacode/policies/provenance-policy.md",
+      "reason": "Created from the SETUP-00 EMPTY_PROJECT baseline.",
+      "hashAfter": "600c3ced2639051b8bad207a5e1d4416d7394c25c1b3395d2c547a3470ae9696"
+    },
+    {
+      "path": ".iacode/policies/secret-policy.md",
+      "reason": "Created from the SETUP-00 EMPTY_PROJECT baseline.",
+      "hashAfter": "d16d6cfa71c3d9d42d28495e97dc2928c655b557d56501854e9429063d4f5330"
+    },
+    {
+      "path": ".iacode/policies/tool-execution-policy.md",
+      "reason": "Created from the SETUP-00 EMPTY_PROJECT baseline.",
+      "hashAfter": "7ed25ab02bffd343bd4f032cecc967b36eb49e6fe33d540e9c5d31e45e23d3ae"
+    },
+    {
+      "path": ".iacode/policies/training-data-policy.md",
+      "reason": "Created from the SETUP-00 EMPTY_PROJECT baseline.",
+      "hashAfter": "24b6b4e7bfb366d01467505cc4b838b4abd93b907b49bc98ece6ee3d221dca69"
+    },
+    {
+      "path": ".iacode/schemas/checkpoint.schema.json",
+      "reason": "Created from the SETUP-00 EMPTY_PROJECT baseline.",
+      "hashAfter": "6820328a78e7b03c74d4a21f0f2c60888572830f7af80cec9a503659e2753136"
+    },
+    {
+      "path": ".iacode/schemas/command.schema.json",
+      "reason": "Created from the SETUP-00 EMPTY_PROJECT baseline.",
+      "hashAfter": "6be17d55f82326dab920fecb6ffc9fa20a6d53323cf0e6630e090b2025ae9a89"
+    },
+    {
+      "path": ".iacode/schemas/decision.schema.json",
+      "reason": "Created from the SETUP-00 EMPTY_PROJECT baseline.",
+      "hashAfter": "813ebb1f98d0961dd560477cde38ab78e2738d19e8613048ab89e89ac706a36d"
+    },
+    {
+      "path": ".iacode/schemas/experience.schema.json",
+      "reason": "Created from the SETUP-00 EMPTY_PROJECT baseline.",
+      "hashAfter": "c8a47306ce37e73971791bf60f4d7e0ab7a387904bda338a18202bfca2706e69"
+    },
+    {
+      "path": ".iacode/schemas/provenance.schema.json",
+      "reason": "Created from the SETUP-00 EMPTY_PROJECT baseline.",
+      "hashAfter": "beefe79c27f113730f53b87f61765fc3c348dfae1b93e52276988296e27a9c24"
+    },
+    {
+      "path": ".iacode/schemas/quality-result.schema.json",
+      "reason": "Created from the SETUP-00 EMPTY_PROJECT baseline.",
+      "hashAfter": "93f99ad26f9f2fbab149fc52f4746ad13ad64953085b7c2b8f49bf7b44651fc0"
+    },
+    {
+      "path": ".iacode/schemas/run-metadata.schema.json",
+      "reason": "Created from the SETUP-00 EMPTY_PROJECT baseline.",
+      "hashAfter": "70f161e4d3ef27fbc52abdf5c8338f3ac7d99b37cb17d51ab024b1efc0d32dc0"
+    },
+    {
+      "path": ".iacode/schemas/test-result.schema.json",
+      "reason": "Created from the SETUP-00 EMPTY_PROJECT baseline.",
+      "hashAfter": "c5fe4875fcc124e7274689065f1be259487520182378a6a387ccba8f8e4d546f"
+    },
+    {
+      "path": ".iacode/templates/adr/TEMPLATE.md",
+      "reason": "Created from the SETUP-00 EMPTY_PROJECT baseline.",
+      "hashAfter": "3e89d87b3e5b25c5bda76a8fb484ba1525ba2bb044b21e4d9f594939c814f062"
+    },
+    {
+      "path": ".iacode/templates/checkpoint/README.md",
+      "reason": "Created from the SETUP-00 EMPTY_PROJECT baseline.",
+      "hashAfter": "f70fc3f44d65e8da359b34f47fc16663abbdd0ad6a90e585de36fa596094d857"
+    },
+    {
+      "path": ".iacode/templates/gate-report/TEMPLATE.md",
+      "reason": "Created from the SETUP-00 EMPTY_PROJECT baseline.",
+      "hashAfter": "ab0684c7a3dad03a2ec699fe9c793f0de870b1841d492ead5ae35439cd2a67f3"
+    },
+    {
+      "path": ".iacode/templates/handoff/TEMPLATE.md",
+      "reason": "Created from the SETUP-00 EMPTY_PROJECT baseline.",
+      "hashAfter": "c6fa4a4979b252e95dc476a474163ad2de62b1f548479aeab363bcdcce1092a8"
+    },
+    {
+      "path": ".iacode/VERSION",
+      "reason": "Created from the SETUP-00 EMPTY_PROJECT baseline.",
+      "hashAfter": "902772cf66e85a24a4c33df08372d2e50040c365eff94f8a7cf0e3183fe1140f"
+    },
+    {
       "path": "AGENTS.md",
-      "reason": "Created to implement SETUP-00 development control plane.",
+      "reason": "Created from the SETUP-00 EMPTY_PROJECT baseline.",
       "hashAfter": "22891739f87bc9134d5080644ed0b25a278d6a8d484c59f899187dbd38f8c1e6"
     },
     {
       "path": "CLAUDE.md",
-      "reason": "Created to implement SETUP-00 development control plane.",
+      "reason": "Created from the SETUP-00 EMPTY_PROJECT baseline.",
       "hashAfter": "4b11d3d989f63ba1c068578f7f7ced34afda827b53128dcf253a8bc70b11b62b"
     },
     {
       "path": "docs/adr/ADR-0001-documentation-first-class.md",
-      "reason": "Created to implement SETUP-00 development control plane.",
+      "reason": "Created from the SETUP-00 EMPTY_PROJECT baseline.",
       "hashAfter": "cae85bae82a51e5034471066fa0949f836f7dcb049b679cf39bc035bc0f1e3f4"
     },
     {
       "path": "docs/adr/ADR-0002-checkpoint-protocol.md",
-      "reason": "Created to implement SETUP-00 development control plane.",
+      "reason": "Created from the SETUP-00 EMPTY_PROJECT baseline.",
       "hashAfter": "4e2f397a69c531fa59da6c061b54e9adc47c4e96c0c6f4cd18eb10f3066b4f7f"
     },
     {
       "path": "docs/adr/ADR-0003-tool-neutral-agents.md",
-      "reason": "Created to implement SETUP-00 development control plane.",
+      "reason": "Created from the SETUP-00 EMPTY_PROJECT baseline.",
       "hashAfter": "c1830df54213c6b509a13f61e299b8039d46b4ed2df00ad747f65f55ad40cd1c"
     },
     {
       "path": "docs/adr/ADR-0004-provenance-default-deny.md",
-      "reason": "Created to implement SETUP-00 development control plane.",
+      "reason": "Created from the SETUP-00 EMPTY_PROJECT baseline.",
       "hashAfter": "dd4c63e978540e843aaa90ccdfc8630e4f88123740bc44b4c1cf266edefd499e"
     },
     {
       "path": "docs/adr/ADR-0005-git-gate-workflow.md",
-      "reason": "Created to implement SETUP-00 development control plane.",
+      "reason": "Created from the SETUP-00 EMPTY_PROJECT baseline.",
       "hashAfter": "b7f0d9e66165a2e3d7ce9177e693d441f955cda29c75699db016adcbb7a55650"
     },
     {
       "path": "docs/ARCHITECTURE.md",
-      "reason": "Created to implement SETUP-00 development control plane.",
+      "reason": "Created from the SETUP-00 EMPTY_PROJECT baseline.",
       "hashAfter": "30346b2626d7b2631b56cb554acab9e38c1ba15ef7d16b4b260f3945fe505d54"
     },
     {
       "path": "docs/CHECKPOINT-PROTOCOL.md",
-      "reason": "Created to implement SETUP-00 development control plane.",
-      "hashAfter": "b3bd44dbb6e0d462919b52f530062b16ff58598f004ff046b6d9e0c8cd4b4cc7"
+      "reason": "Created from the SETUP-00 EMPTY_PROJECT baseline.",
+      "hashAfter": "00bcd6e8a2feca5a96a07725f0a8d080195b2629eba9b85059aba0a8200bb676"
     },
     {
       "path": "docs/checkpoints/LATEST.md",
-      "reason": "Created to implement SETUP-00 development control plane.",
+      "reason": "Created from the SETUP-00 EMPTY_PROJECT baseline.",
       "hashAfter": "43d810d710104c0dbeea5125286e2ccb429fa15ae7637c87518082e72bc549d4"
     },
     {
       "path": "docs/checkpoints/README.md",
-      "reason": "Created to implement SETUP-00 development control plane.",
+      "reason": "Created from the SETUP-00 EMPTY_PROJECT baseline.",
       "hashAfter": "e12e3693891a9fe136ee58422973adcb50b0271d600afabda9a90ecb114ef7be"
     },
     {
       "path": "docs/checkpoints/SETUP-00-CP-0001/COMMANDS.jsonl",
-      "reason": "Created to implement SETUP-00 development control plane.",
-      "hashAfter": "db43bc69067379db2e0779ef7423ef50785e0e7a8ccfd15e140610e8718505c7"
+      "reason": "Created from the SETUP-00 EMPTY_PROJECT baseline.",
+      "hashAfter": "56c2a4beab8af2c09585246d979d7c09cec698ebfad3f2cfe747ab30c85dd5e8"
     },
     {
       "path": "docs/checkpoints/SETUP-00-CP-0001/DECISIONS.md",
-      "reason": "Created to implement SETUP-00 development control plane.",
-      "hashAfter": "5786c4374c7a2231a90615eae2bcb7e0426c0215bb77e80f85b40bf837854f31"
+      "reason": "Created from the SETUP-00 EMPTY_PROJECT baseline.",
+      "hashAfter": "8b716df3122791b59fc136daa909fb2aff0bea41b1149d0dce8966dfd0b931fd"
     },
     {
       "path": "docs/checkpoints/SETUP-00-CP-0001/DIFF-SUMMARY.md",
-      "reason": "Created to implement SETUP-00 development control plane.",
+      "reason": "Created from the SETUP-00 EMPTY_PROJECT baseline.",
       "hashAfter": "09ce6f6c5f5ee61a5ffdffbd3177b1b17a3a1c1b463429d62da0b597b77803bc"
     },
     {
+      "path": "docs/checkpoints/SETUP-00-CP-0001/FILES.json",
+      "reason": "Created from the SETUP-00 EMPTY_PROJECT baseline. Self-hash omitted because FILES.json is self-referential."
+    },
+    {
       "path": "docs/checkpoints/SETUP-00-CP-0001/HANDOFF.md",
-      "reason": "Created to implement SETUP-00 development control plane.",
-      "hashAfter": "28e4d66ccf9f6adabe7f1643abb6310765f69e27ad2f50d8f6b6e3284bde6770"
+      "reason": "Created from the SETUP-00 EMPTY_PROJECT baseline.",
+      "hashAfter": "36b71f9aba149deb6b58c79aaf9d32c61be24572c57ceec79f0b40cd7fa396c0"
     },
     {
       "path": "docs/checkpoints/SETUP-00-CP-0001/NEXT.md",
-      "reason": "Created to implement SETUP-00 development control plane.",
+      "reason": "Created from the SETUP-00 EMPTY_PROJECT baseline.",
       "hashAfter": "c98b07e2040d5877e9b8e89cfd1302cfcb5bbf74bef2152ead9b30a42d37c4a7"
     },
     {
       "path": "docs/checkpoints/SETUP-00-CP-0001/PLAN.md",
-      "reason": "Created to implement SETUP-00 development control plane.",
+      "reason": "Created from the SETUP-00 EMPTY_PROJECT baseline.",
       "hashAfter": "17670465ea95c9ab5aa9de265a3c2d578df4b34422ec5675b4a702402af4861d"
     },
     {
       "path": "docs/checkpoints/SETUP-00-CP-0001/PROVENANCE.json",
-      "reason": "Created to implement SETUP-00 development control plane.",
+      "reason": "Created from the SETUP-00 EMPTY_PROJECT baseline.",
       "hashAfter": "4c4df15933734ac78adb3376b525b70a4a08111b476b9bb71e607b8a6741ec10"
     },
     {
       "path": "docs/checkpoints/SETUP-00-CP-0001/QUALITY.json",
-      "reason": "Created to implement SETUP-00 development control plane.",
+      "reason": "Created from the SETUP-00 EMPTY_PROJECT baseline.",
       "hashAfter": "a52e3e68090a3cb5873728559432c6e3b254fa7ad5975eaa9d32c31fffc28fae"
     },
     {
+      "path": "docs/checkpoints/SETUP-00-CP-0001/RED-TEAM-REPORT.md",
+      "reason": "Created from the SETUP-00 EMPTY_PROJECT baseline.",
+      "hashAfter": "dd169d5bd7d636e8db32505521cf588a4ee98ee3af8972f8505b9a12f0f491ae"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0001/RESUME-VALIDATION.md",
+      "reason": "Created from the SETUP-00 EMPTY_PROJECT baseline.",
+      "hashAfter": "6a6c69f2b5480d4318c9224d5e5a59d1a8643c7e68d3a098ca2f11d17bed6e27"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0001/REVIEW-REPORT.md",
+      "reason": "Created from the SETUP-00 EMPTY_PROJECT baseline.",
+      "hashAfter": "31ca968cd958d4f092a3ea5c47d2f2820815e999028c92a34acffb91ebd8270d"
+    },
+    {
       "path": "docs/checkpoints/SETUP-00-CP-0001/RISKS.md",
-      "reason": "Created to implement SETUP-00 development control plane.",
+      "reason": "Created from the SETUP-00 EMPTY_PROJECT baseline.",
       "hashAfter": "9fc32f9f9b7e0d9fe12d87f5f5d221fa545b9fd7f7903941a82f4adb0d73aa20"
     },
     {
       "path": "docs/checkpoints/SETUP-00-CP-0001/RUN-METADATA.json",
-      "reason": "Created to implement SETUP-00 development control plane.",
-      "hashAfter": "091e7ed8903d80e6244630604f26c4a6f551a4a21cd6e2997fbc36789027260b"
+      "reason": "Created from the SETUP-00 EMPTY_PROJECT baseline.",
+      "hashAfter": "1cd248883f87df746cb67b37b7e35d62062a9da57c4d3196c68cd6cef12ce7a1"
     },
     {
       "path": "docs/checkpoints/SETUP-00-CP-0001/STATE.json",
-      "reason": "Created to implement SETUP-00 development control plane.",
-      "hashAfter": "a44bc0fdd89fe963065da28bb973336e61a8989c9b531628c5cd644a73a1f8e0"
+      "reason": "Created from the SETUP-00 EMPTY_PROJECT baseline.",
+      "hashAfter": "e19399c48a781a5de05021cd8bf34b5ec68002adf81df4899453c257c9858f9e"
     },
     {
       "path": "docs/checkpoints/SETUP-00-CP-0001/STATUS.md",
-      "reason": "Created to implement SETUP-00 development control plane.",
-      "hashAfter": "ff71bcf26ec8f56460891152f8356004d9ca32ffa87d1348228476446c671428"
+      "reason": "Created from the SETUP-00 EMPTY_PROJECT baseline.",
+      "hashAfter": "bc68c1fac4a56ca44d7479c050da8a625cd9397a8232d303da698b02756fc79f"
     },
     {
       "path": "docs/checkpoints/SETUP-00-CP-0001/TESTS.json",
-      "reason": "Created to implement SETUP-00 development control plane.",
-      "hashAfter": "16d062363454d697fd1a49f8fded18695180f2dc04882e4f4d33ccf99d8820a3"
+      "reason": "Created from the SETUP-00 EMPTY_PROJECT baseline.",
+      "hashAfter": "90d516b9fda2f7bd3d3a54273b5c9fce5bdc224a503731685f5c433a424be5d9"
     },
     {
       "path": "docs/DEFINITION-OF-DONE.md",
-      "reason": "Created to implement SETUP-00 development control plane.",
+      "reason": "Created from the SETUP-00 EMPTY_PROJECT baseline.",
       "hashAfter": "f33205cad887dfeedcd2f4689e513171c86a86b79d100bd75dc64ad8d95638c0"
     },
     {
       "path": "docs/DEVELOPMENT-CONTRACT.md",
-      "reason": "Created to implement SETUP-00 development control plane.",
+      "reason": "Created from the SETUP-00 EMPTY_PROJECT baseline.",
       "hashAfter": "4cbbb2b6f9055913e777646448e3d02e16042b4041c7068500fcf4076f47bfe4"
     },
     {
       "path": "docs/HANDOFF-PROTOCOL.md",
-      "reason": "Created to implement SETUP-00 development control plane.",
+      "reason": "Created from the SETUP-00 EMPTY_PROJECT baseline.",
       "hashAfter": "e7e3cb0af589ea9ccfd25de3ecc6fe72465f9b1a6bd4e478a1796426174cc160"
     },
     {
       "path": "docs/MASTER-PLAN.md",
-      "reason": "Created to implement SETUP-00 development control plane.",
+      "reason": "Created from the SETUP-00 EMPTY_PROJECT baseline.",
       "hashAfter": "ac7590615b3b199f4a56adb8675f99789058aab315ff39d33abe82201c0b6ce2"
     },
     {
       "path": "docs/MODEL-USAGE-POLICY.md",
-      "reason": "Created to implement SETUP-00 development control plane.",
+      "reason": "Created from the SETUP-00 EMPTY_PROJECT baseline.",
       "hashAfter": "772d048246943f2236281318490f6f4ed29fe6bd68c8303d101e2362012fb3e0"
     },
     {
       "path": "docs/PROVENANCE.md",
-      "reason": "Created to implement SETUP-00 development control plane.",
+      "reason": "Created from the SETUP-00 EMPTY_PROJECT baseline.",
       "hashAfter": "1dd9fa9bb8bbe68d51720c7e70b08255d1fa60712c515ab9a06948cd818049a6"
     },
     {
       "path": "docs/QUALITY-GATES.md",
-      "reason": "Created to implement SETUP-00 development control plane.",
+      "reason": "Created from the SETUP-00 EMPTY_PROJECT baseline.",
       "hashAfter": "02adeb154bc3717ce62e332d159cf6ecb3dc4f66f5465dd96186785ed591a094"
     },
     {
       "path": "docs/ROADMAP.md",
-      "reason": "Created to implement SETUP-00 development control plane.",
+      "reason": "Created from the SETUP-00 EMPTY_PROJECT baseline.",
       "hashAfter": "88cc3544e9b51ca2d01ab88ed299e1287caa15c336f95748c33f71f5eb63178a"
     },
     {
+      "path": "docs/TOOL-CAPABILITIES.md",
+      "reason": "Created from the SETUP-00 EMPTY_PROJECT baseline.",
+      "hashAfter": "f3689d46ccaa6bd56a864ac35890876456dcc328e7a472857dc99f6016c4c2dd"
+    },
+    {
       "path": "prompts/RED-TEAM-GATE.md",
-      "reason": "Created to implement SETUP-00 development control plane.",
+      "reason": "Created from the SETUP-00 EMPTY_PROJECT baseline.",
       "hashAfter": "185e314e03cfc39080afb02f5ead840147cbb42b4d0d2dd67a89fd1f91bfec0f"
     },
     {
       "path": "prompts/RESUME-WORK.md",
-      "reason": "Created to implement SETUP-00 development control plane.",
+      "reason": "Created from the SETUP-00 EMPTY_PROJECT baseline.",
       "hashAfter": "273b7fda43ae3a96da82cfc737c810ac0cc894529481de22dfb0d2583f3363d3"
     },
     {
       "path": "prompts/REVIEW-GATE.md",
-      "reason": "Created to implement SETUP-00 development control plane.",
+      "reason": "Created from the SETUP-00 EMPTY_PROJECT baseline.",
       "hashAfter": "9b7bcfc1ae1df29be0e4b1586f92dae2def76d24bb8549f2e4557000fc6e7745"
     },
     {
       "path": "prompts/START-GATE.md",
-      "reason": "Created to implement SETUP-00 development control plane.",
+      "reason": "Created from the SETUP-00 EMPTY_PROJECT baseline.",
       "hashAfter": "ba2d23061d329bb3f87578e1283d14d1567101209cd6d1e9d8b1c7df12ade1c8"
     },
     {
       "path": "README.md",
-      "reason": "Created to implement SETUP-00 development control plane.",
+      "reason": "Created from the SETUP-00 EMPTY_PROJECT baseline.",
       "hashAfter": "d3c5f39a5a20b220d480821f1a89b8f9c2c1a7684deb94a903a979e0a2222d83"
     },
     {
-      "path": "scripts/development-ledger/__pycache__/ledger_common.cpython-313.pyc",
-      "reason": "Created to implement SETUP-00 development control plane.",
-      "hashAfter": "0d69b088f15627914ca0957f80e80add3287272a45f0be94866c27a895d53e4d"
-    },
-    {
-      "path": "scripts/development-ledger/__pycache__/validate_checkpoint.cpython-313.pyc",
-      "reason": "Created to implement SETUP-00 development control plane.",
-      "hashAfter": "f05af643426f2a8c182538115f533acc59da0e91451866c70895e2ba77ac3941"
-    },
-    {
       "path": "scripts/development-ledger/finalize_checkpoint.py",
-      "reason": "Created to implement SETUP-00 development control plane.",
-      "hashAfter": "ee719d84534dd04976f7952f668f29b7c06c8730965ff2dc5af0197453077e13"
+      "reason": "Created from the SETUP-00 EMPTY_PROJECT baseline.",
+      "hashAfter": "555c29ad47701e3ea629baf53ff466712d2f2181fac6cd04ab1f1f5697cf44a9"
     },
     {
       "path": "scripts/development-ledger/ledger_common.py",
-      "reason": "Created to implement SETUP-00 development control plane.",
-      "hashAfter": "1da4b728a605fb60cd5927a65359e4a169042dd3d0ea798d51fc387b44db0764"
+      "reason": "Created from the SETUP-00 EMPTY_PROJECT baseline.",
+      "hashAfter": "859ca5eb71798afcc248413f4c125d8feab6a186da35889e7d6fe4c45a671820"
     },
     {
       "path": "scripts/development-ledger/new_checkpoint.py",
-      "reason": "Created to implement SETUP-00 development control plane.",
-      "hashAfter": "d5c50d87721cb37c70f1a1ad191135a5bb39ebcdbcd601cb2ceb862254d7fc77"
+      "reason": "Created from the SETUP-00 EMPTY_PROJECT baseline.",
+      "hashAfter": "e6b1648a13cfc5e71fbf9948954f96e8e9b726d486ac788a8ec3eddc45b63cf4"
     },
     {
       "path": "scripts/development-ledger/README.md",
-      "reason": "Created to implement SETUP-00 development control plane.",
-      "hashAfter": "2d81cd43c6146cafbb649089f869f550cdf7f317540c1c72f561e9a864b961b6"
+      "reason": "Created from the SETUP-00 EMPTY_PROJECT baseline.",
+      "hashAfter": "aa0982fb9558fadf2c18e59d2fe66875a4edfd250c862780a23bc41d0fad98f5"
     },
     {
       "path": "scripts/development-ledger/redact_secrets.py",
-      "reason": "Created to implement SETUP-00 development control plane.",
-      "hashAfter": "5993498f2c73fe11e8e7d0b92530317a75c9c538b1b031f1fe72f1d8ddd41747"
+      "reason": "Created from the SETUP-00 EMPTY_PROJECT baseline.",
+      "hashAfter": "f51426033e1343438bb6a134cf753bf65627ed5b36e20d64497184835b450d8c"
     },
     {
       "path": "scripts/development-ledger/validate_checkpoint.py",
-      "reason": "Created to implement SETUP-00 development control plane.",
-      "hashAfter": "3aaec805672d6c7dde8b57e6b751cbd3f3b8850761a2b4ff48aff35070b04a76"
+      "reason": "Created from the SETUP-00 EMPTY_PROJECT baseline.",
+      "hashAfter": "e1270500256d64db759ef4347e5d25fbea6c75382d05b92238f3ef5c72fee001"
     },
     {
       "path": "START-HERE.md",
-      "reason": "Created to implement SETUP-00 development control plane.",
+      "reason": "Created from the SETUP-00 EMPTY_PROJECT baseline.",
       "hashAfter": "2ed2e53106415bd3bdcd280e9c510dc08c9dedf58b38405894aa2df71e473642"
     },
     {
-      "path": "tests/__pycache__/test_development_ledger.cpython-313.pyc",
-      "reason": "Created to implement SETUP-00 development control plane.",
-      "hashAfter": "2f505e1dcec42ecd8d0079d61c1f4eff1c30795c74de4aecbcff17d597fa18bc"
-    },
-    {
       "path": "tests/test_development_ledger.py",
-      "reason": "Created to implement SETUP-00 development control plane.",
-      "hashAfter": "1f9705585f4b75d3178bee1c8aecb5e477afac5738cdd79db60ce208567615d0"
-    },
-    {
-      "path": "docs/checkpoints/SETUP-00-CP-0001/FILES.json",
-      "reason": "Engineering Ledger file inventory; self-hash omitted because it is self-referential."
+      "reason": "Created from the SETUP-00 EMPTY_PROJECT baseline.",
+      "hashAfter": "0b8f7c7c89c8ff8932418e69bd248dd997b724ce55bc7723a4bd04c02ce19bc0"
     }
   ],
   "filesModified": [],

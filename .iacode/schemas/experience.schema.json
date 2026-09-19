@@ -31,7 +31,7 @@
       "type": "object",
       "required": ["eligible", "evidence"],
       "properties": {
-        "eligible": {"type": "boolean", "const": false},
+        "eligible": {"type": "boolean", "default": false},
         "evidence": {"type": "string", "minLength": 1}
       },
       "additionalProperties": false

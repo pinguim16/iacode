@@ -2,17 +2,17 @@
   "schemaVersion": "1.0.0",
   "unit": {
     "executed": true,
-    "passed": 10,
+    "passed": 26,
     "failed": 0,
     "command": "python -m unittest discover -s tests -v",
-    "evidence": "Validator and redactor tests passed, including valid, missing file, malformed JSON, invalid status, wrong commit, nonexistent LATEST target, secret, provenance, and next-action cases."
+    "evidence": "Validator and redactor tests passed, including required corruptions, cross-file contradictions, repository/decoded secret scans, full redaction, schema loading, RFC 3339, portable hashes, and tag anchoring."
   },
   "integration": {
     "executed": true,
-    "passed": 1,
+    "passed": 5,
     "failed": 0,
     "command": "python -m unittest discover -s tests -v",
-    "evidence": "Isolated new -> finalize -> commit -> validate lifecycle passed."
+    "evidence": "Isolated lifecycle, path traversal rejection, external finalization rejection, dirty-bypass rejection, and tag divergence behavior passed."
   },
   "e2e": {
     "executed": false,

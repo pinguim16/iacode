@@ -22,5 +22,4 @@ The optional third-party `jsonschema` package is absent. A standard-library vali
 
 ## Commit evidence decision
 
-A commit cannot contain its own cryptographic hash. Final state therefore uses the documented symbolic value `HEAD`, resolved by the validator, while user-facing completion reports the resolved hash. The Git history is the terminal evidence for the final commit command, avoiding recursive modification of `COMMANDS.jsonl`.
-
+A commit cannot contain its own cryptographic hash. Intermediate state may use symbolic `HEAD`; Gate closure uses `refs/tags/iacode-checkpoints/SETUP-00-CP-0001`, created after the final commit and resolved by the validator. This anchors the checkpoint to one commit without self-reference. The Git history is the terminal evidence for the final commit command, avoiding recursive modification of `COMMANDS.jsonl`.

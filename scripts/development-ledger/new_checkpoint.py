@@ -23,11 +23,13 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--root", type=Path)
     parser.add_argument("--gate", required=True)
-    parser.add_argument("--status", choices=STATUSES, default="IN_PROGRESS")
+    parser.add_argument("--status", choices=tuple(status for status in STATUSES if status not in ("GATE_PASS", "GATE_FAIL")), default="IN_PROGRESS")
     parser.add_argument("--phase")
     args = parser.parse_args()
 
     root = find_root(args.root) if args.root else find_root()
+    if re.fullmatch(r"[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)*", args.gate) is None:
+        parser.error("--gate must be an uppercase identifier such as SETUP-00 or GATE-0")
     snapshot = git_snapshot(root)
     name = next_checkpoint_name(root, args.gate)
     checkpoint = root / "docs" / "checkpoints" / name
@@ -37,12 +39,29 @@ def main() -> int:
 
     markdown = {
         "STATUS.md": f"# Status\n\n{args.status}\n",
-        "HANDOFF.md": "# Handoff\n\nCurrent Gate: " + args.gate + "\nCurrent Status: " + args.status + "\n\n## Objective\n\nCheckpoint created; populate verified handoff evidence before transfer.\n",
+        "HANDOFF.md": (
+            "# Handoff\n\nCurrent Gate: " + args.gate + "\nCurrent Status: " + args.status
+            + "\n\nLast valid commit: " + snapshot["head"] + "\nCurrent branch: " + snapshot["branch"]
+            + "\n\n## Objective\n\nPopulate verified handoff evidence before transfer."
+            + "\n\n## What was completed\n\nCheckpoint creation only."
+            + "\n\n## What was NOT completed\n\nGate work and validation."
+            + "\n\n## Current repository state\n\nSee STATE.json."
+            + "\n\n## Files changed\n\nSee FILES.json."
+            + "\n\n## Important decisions\n\nSee DECISIONS.md."
+            + "\n\n## Tests executed\n\nNone at checkpoint creation."
+            + "\n\n## Known failures\n\nNone recorded at checkpoint creation."
+            + "\n\n## Known risks\n\nSee RISKS.md."
+            + "\n\n## Do not repeat\n\nDo not bypass checkpoint validation."
+            + "\n\n## Required next action\n\nPopulate this checkpoint with observed evidence."
+            + "\n\n## Exact continuation sequence\n\nRead, populate, test, and validate."
+            + "\n\n## Validation commands\n\n`python scripts/development-ledger/validate_checkpoint.py`"
+            + "\n\n## Stop conditions\n\nStop on divergence or failed validation.\n"
+        ),
         "PLAN.md": "# Plan\n\nRecord an executable plan before implementation.\n",
         "DECISIONS.md": "# Decisions\n\nNo checkpoint-local decision has been recorded yet.\n",
         "DIFF-SUMMARY.md": "# Diff Summary\n\nNo changes have been summarized yet.\n",
         "RISKS.md": "# Risks\n\nNo checkpoint-local risk has been recorded yet.\n",
-        "NEXT.md": "# Next\n\nPopulate the exact next allowed action before finalization.\n",
+        "NEXT.md": "# Next\n\n## Required next action\n\nPopulate the exact next allowed action before finalization.\n",
     }
     for filename, content in markdown.items():
         (checkpoint / filename).write_text(content, encoding="utf-8")
@@ -110,4 +129,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     sys.exit(main())
-

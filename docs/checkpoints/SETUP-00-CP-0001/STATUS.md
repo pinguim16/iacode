@@ -1,6 +1,5 @@
 # Status
 
-`READY_FOR_REVIEW`
+`READY_FOR_RED_TEAM`
 
-SETUP-00 implementation and automated fixture tests are present. Independent review, adversarial validation, cold-start evidence, and final clean-Git validation remain before Gate PASS.
-
+Initial independent review and Red Team required rework. Corrections and expanded tests are present; clean-commit revalidation remains before Gate PASS.

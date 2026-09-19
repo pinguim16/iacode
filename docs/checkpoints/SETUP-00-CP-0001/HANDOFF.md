@@ -1,26 +1,26 @@
 # Handoff
 
 Current Gate: SETUP-00 — Development Control Plane
-Current Status: READY_FOR_REVIEW
+Current Status: READY_FOR_RED_TEAM
 
-Last valid commit: UNBORN baseline; resolve `HEAD` after the review checkpoint is committed.
+Last valid commit: `0dc50fae803d6e8c13258fbe808e1af4cb6f4c10`; corrected rework is currently uncommitted.
 Current branch: main
 
 ## Objective
 
-Independently review and adversarially validate the SETUP-00 control plane without implementing Gate 0.
+Revalidate the corrected SETUP-00 control plane independently and adversarially without implementing Gate 0.
 
 ## What was completed
 
-Canonical agent definitions, tool adapters, policies, protocols, Gate plan, schemas, templates, checkpoint scripts, secret redaction, and isolated automated tests were implemented.
+Canonical control-plane artifacts were implemented. Initial review/Red Team findings were corrected, and the isolated automated suite now contains 31 passing tests.
 
 ## What was NOT completed
 
-Independent review, final Red Team verdict, cold-start resume record, and clean post-commit checkpoint validation.
+Clean rework commit, independent re-review, final Red Team verdict, Gate-closing report, tag, and clean checkpoint validation.
 
 ## Current repository state
 
-The repository was initialized from an empty baseline on `main`. It has no commit at this pre-review checkpoint and contains only SETUP-00 artifacts.
+The repository was initialized from an empty baseline on `main`. The last clean review checkpoint is committed; the working tree contains only documented SETUP-00 rework.
 
 ## Files changed
 
@@ -32,7 +32,7 @@ Documentation is first-class, checkpoints are validated, agents are tool-neutral
 
 ## Tests executed
 
-`python -m unittest discover -s tests -v` passed 11 tests, including every required corruption case and the checkpoint lifecycle.
+`python -m unittest discover -s tests -v` passed 31 tests, including required corruptions, additional false-PASS regressions, and lifecycle safety.
 
 ## Known failures
 
@@ -48,15 +48,15 @@ Do not recreate the baseline, add unverified Claude-specific formats, install de
 
 ## Required next action
 
-Commit the review checkpoint, validate clean Git state, perform independent review and Red Team, then finalize SETUP-00 based only on evidence.
+Commit the corrected checkpoint, validate clean Git state, rerun independent review and Red Team, then close SETUP-00 only if both pass.
 
 ## Exact continuation sequence
 
-1. Validate this checkpoint and commit the review baseline.
-2. Re-finalize checkpoint metadata to symbolic `HEAD`, commit, and validate clean state.
-3. Perform cold-start reconstruction using only repository content.
-4. Perform independent review and Red Team in isolated fixtures.
-5. Correct findings, rerun tests, update evidence, finalize, commit, and validate.
+1. Regenerate and verify the full file manifest.
+2. Finalize and commit the corrected rework checkpoint.
+3. Perform independent re-review and Red Team in isolated fixtures.
+4. Record verdicts, create the final report, and rerun all checks.
+5. Finalize against the checkpoint tag, commit, create the tag, and validate clean state.
 
 ## Validation commands
 
@@ -72,4 +72,3 @@ git rev-parse HEAD
 ## Stop conditions
 
 Stop on a failing mandatory test, validator false negative, unredacted secret, documentation contradiction, unexpected Git divergence, or any need to implement Gate 0.
-

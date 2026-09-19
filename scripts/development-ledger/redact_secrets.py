@@ -4,7 +4,9 @@
 from __future__ import annotations
 
 import argparse
+import os
 import sys
+import tempfile
 from pathlib import Path
 
 from ledger_common import redact_text
@@ -21,9 +23,18 @@ def main() -> int:
     source = args.path.read_text(encoding="utf-8") if args.path else sys.stdin.read()
     redacted = redact_text(source)
     if args.in_place:
-        temporary = args.path.with_suffix(args.path.suffix + ".redacted")
-        temporary.write_text(redacted, encoding="utf-8")
-        temporary.replace(args.path)
+        temporary_name = ""
+        try:
+            with tempfile.NamedTemporaryFile(
+                mode="w", encoding="utf-8", dir=args.path.parent, delete=False
+            ) as temporary:
+                temporary.write(redacted)
+                temporary_name = temporary.name
+            os.chmod(temporary_name, args.path.stat().st_mode)
+            os.replace(temporary_name, args.path)
+        finally:
+            if temporary_name:
+                Path(temporary_name).unlink(missing_ok=True)
     else:
         sys.stdout.write(redacted)
     return 0
@@ -31,4 +42,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     sys.exit(main())
-

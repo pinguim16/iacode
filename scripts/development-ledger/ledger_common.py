@@ -191,8 +191,14 @@ def validate_schema(value: Any, schema: dict[str, Any], path: str = "$", root_sc
         format_name = schema.get("format")
         try:
             if format_name == "date-time":
-                datetime.fromisoformat(value.replace("Z", "+00:00"))
+                if re.fullmatch(r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})", value) is None:
+                    raise ValueError("not RFC 3339")
+                parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
+                if parsed.tzinfo is None:
+                    raise ValueError("timezone required")
             elif format_name == "date":
+                if re.fullmatch(r"\d{4}-\d{2}-\d{2}", value) is None:
+                    raise ValueError("not an ISO date")
                 date.fromisoformat(value)
         except ValueError:
             errors.append(f"{path}: invalid {format_name} value")
@@ -207,25 +213,31 @@ def validate_schema(value: Any, schema: dict[str, Any], path: str = "$", root_sc
 SECRET_PATTERNS: tuple[tuple[str, re.Pattern[str], str], ...] = (
     (
         "authorization header",
-        re.compile(r"(?i)(authorization\s*:\s*)(?!\[REDACTED\])\S+"),
+        re.compile(r"(?i)(authorization[\"']?\s*:\s*[\"']?)(?!\[REDACTED\])(?:(?:Bearer|Basic)\s+)?[-A-Za-z0-9._~+/=]{6,}"),
         r"\1[REDACTED]",
     ),
     (
         "bearer credential",
-        re.compile(r"(?i)\bBearer\s+(?!\[REDACTED\])[-A-Za-z0-9._~+/=]{8,}"),
+        re.compile(r"(?i)\bBearer\s+(?!\[REDACTED\]|credentials?\b|tokens?\b|authentication\b)[-A-Za-z0-9._~+/=]{8,}"),
         "Bearer [REDACTED]",
     ),
     (
         "named secret assignment",
-        re.compile(r"(?i)\b((?:API_KEY|TOKEN|SECRET|PASSWORD)\b\s*[:=]\s*[\"']?)(?!\[REDACTED\])[-A-Za-z0-9._~+/=:@]{6,}"),
+        re.compile(r"(?i)\b((?:[A-Z0-9]+_)*(?:API_KEY|TOKEN|SECRET|PASSWORD|ACCESS_KEY_ID|SECRET_ACCESS_KEY)[\"']?\s*[:=]\s*[\"']?)(?!\[REDACTED\]|example\b|placeholder\b|changeme\b|not[_-]?set\b|your[_-])[-A-Za-z0-9._~+/=:@]{6,}"),
         r"\1[REDACTED]",
     ),
     ("DevWorld credential", re.compile(r"\bdw_live_[A-Za-z0-9_-]{8,}\b"), "[REDACTED]"),
     ("OpenAI-style key", re.compile(r"\bsk-[A-Za-z0-9_-]{12,}\b"), "[REDACTED]"),
     ("GitHub credential", re.compile(r"\bgh[pousr]_[A-Za-z0-9]{20,}\b"), "[REDACTED]"),
+    ("GitHub fine-grained credential", re.compile(r"\bgithub_pat_[A-Za-z0-9_]{20,}\b"), "[REDACTED]"),
     (
-        "private SSH key",
-        re.compile(r"-----BEGIN (?:OPENSSH|RSA|EC|DSA) PRIVATE KEY-----"),
+        "private SSH key block",
+        re.compile(r"-----BEGIN ((?:OPENSSH|RSA|EC|DSA) PRIVATE KEY)-----[\s\S]*?-----END \1-----", re.IGNORECASE),
+        "[REDACTED]",
+    ),
+    (
+        "private SSH key header",
+        re.compile(r"-----BEGIN (?:OPENSSH|RSA|EC|DSA) PRIVATE KEY-----", re.IGNORECASE),
         "[REDACTED]",
     ),
 )
@@ -240,4 +252,3 @@ def redact_text(text: str) -> str:
     for _name, pattern, replacement in SECRET_PATTERNS:
         result = pattern.sub(replacement, result)
     return result
-
