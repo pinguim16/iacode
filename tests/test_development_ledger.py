@@ -278,6 +278,17 @@ class LedgerValidationTests(unittest.TestCase):
         self.assertNotEqual(result.returncode, 0)
         self.assertIn("contradicts", result.stdout)
 
+    def test_quality_pass_requires_positive_evidence(self) -> None:
+        tests = json.loads((self.checkpoint / "TESTS.json").read_text(encoding="utf-8"))
+        tests["unit"] = {"executed": True, "passed": 0, "failed": 0, "command": None, "evidence": None}
+        self._write_json("TESTS.json", tests)
+        quality = json.loads((self.checkpoint / "QUALITY.json").read_text(encoding="utf-8"))
+        quality["unitTests"] = "PASS"
+        self._write_json("QUALITY.json", quality)
+        result = self._validate()
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("contradicts", result.stdout)
+
     def test_run_metadata_mismatch_fails(self) -> None:
         metadata = json.loads((self.checkpoint / "RUN-METADATA.json").read_text(encoding="utf-8"))
         metadata["branch"] = "invented"
@@ -312,6 +323,29 @@ class LedgerValidationTests(unittest.TestCase):
         result = self._validate()
         self.assertNotEqual(result.returncode, 0)
         self.assertIn("secret pattern detected", result.stdout)
+
+    def test_jsonl_escaped_secret_fails_without_disclosure(self) -> None:
+        encoded = "sk-" + ("\\u0061" * 20)
+        line = (
+            '{"timestamp":"' + NOW + '","command":"' + encoded
+            + '","workingDirectory":"fixture","exitCode":0,"durationMs":1,'
+            + '"stdoutArtifact":null,"stderrArtifact":null}'
+        )
+        with (self.checkpoint / "COMMANDS.jsonl").open("a", encoding="utf-8") as stream:
+            stream.write(line + "\n")
+        result = self._validate()
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("secret pattern detected", result.stdout)
+        self.assertNotIn("sk-" + ("a" * 20), result.stdout)
+
+    def test_handoff_ready_status_requires_commit_anchor(self) -> None:
+        state = json.loads((self.checkpoint / "STATE.json").read_text(encoding="utf-8"))
+        state["status"] = "READY_FOR_REVIEW"
+        self._write_json("STATE.json", state)
+        (self.checkpoint / "STATUS.md").write_text("# Status\n\nREADY_FOR_REVIEW\n", encoding="utf-8")
+        result = self._validate()
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("must be anchored", result.stdout)
 
     def test_all_required_schemas_are_loaded(self) -> None:
         (self.root / ".iacode" / "schemas" / "decision.schema.json").write_text("{invalid", encoding="utf-8")
@@ -396,11 +430,12 @@ class LedgerLifecycleTests(unittest.TestCase):
             self.assertEqual(created.returncode, 0, created.stdout)
             finalized = run([
                 sys.executable, str(SCRIPTS / "finalize_checkpoint.py"), "--root", str(root),
-                "--status", "READY_FOR_REVIEW",
+                "--status", "READY_FOR_REVIEW", "--commit-ref", "refs/tags/iacode-checkpoints/TEST-CP-0001",
             ], root)
             self.assertEqual(finalized.returncode, 0, finalized.stdout)
             self.assertEqual(run(["git", "add", "."], root).returncode, 0)
             self.assertEqual(run(["git", "commit", "-m", "test: finalize checkpoint"], root).returncode, 0)
+            self.assertEqual(run(["git", "tag", "iacode-checkpoints/TEST-CP-0001"], root).returncode, 0)
             validated = run([sys.executable, str(SCRIPTS / "validate_checkpoint.py"), "--root", str(root)], root)
             self.assertEqual(validated.returncode, 0, validated.stdout)
 

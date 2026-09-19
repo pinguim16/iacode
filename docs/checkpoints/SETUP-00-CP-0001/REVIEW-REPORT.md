@@ -29,3 +29,11 @@
 
 Final reviewer verdict is pending a clean committed revalidation.
 
+## Review 2
+
+- Commit reviewed: `845c32b180fd6bc63a4bd17c3980c4b9b5e9e119`.
+- Verdict: `REWORK_REQUIRED`.
+- Remaining technical findings: decoded strings in `COMMANDS.jsonl` were not scanned, and handoff-ready states still allowed unanchored `HEAD`.
+- Additional QA finding: a PASS test category required execution/no failures but did not require a positive pass count, command, and evidence.
+
+The validator and regression suite now cover all three findings. Final clean-commit revalidation remains pending.

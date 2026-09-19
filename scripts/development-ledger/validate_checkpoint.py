@@ -175,6 +175,9 @@ def validate_checkpoint(
                 command = json.loads(line)
                 for error in validate_schema(command, schemas.get("command.schema.json", {})):
                     errors.append(f"COMMANDS.jsonl:{line_number}: {error}")
+                for value in _all_strings(command):
+                    for finding in find_secrets(value):
+                        errors.append(f"secret pattern detected in COMMANDS.jsonl:{line_number}: {finding}")
             except json.JSONDecodeError as exc:
                 errors.append(f"COMMANDS.jsonl:{line_number}: invalid JSON: {exc}")
         if command_count == 0:
@@ -255,6 +258,8 @@ def validate_checkpoint(
         updated = _parse_datetime(state.get("updatedAt"))
         if started is None or updated is None or updated < started:
             errors.append("STATE.json timestamps are not ordered RFC 3339 values")
+        if state.get("status") in ("READY_FOR_REVIEW", "READY_FOR_RED_TEAM", "GATE_PASS", "GATE_FAIL") and state.get("currentCommit") in ("HEAD", "UNBORN"):
+            errors.append(f"{state.get('status')} must be anchored to an exact commit or checkpoint tag, not HEAD/UNBORN")
 
     if isinstance(metadata, dict) and isinstance(state, dict):
         if metadata.get("branch") != state.get("branch"):
@@ -275,7 +280,13 @@ def validate_checkpoint(
             if isinstance(result, dict):
                 if not result.get("executed") and (result.get("passed", 0) or result.get("failed", 0)):
                     errors.append(f"TESTS.json {test_key} has counts but executed is false")
-                if verdict == "PASS" and (not result.get("executed") or result.get("failed") != 0):
+                if verdict == "PASS" and (
+                    not result.get("executed")
+                    or result.get("failed") != 0
+                    or result.get("passed", 0) < 1
+                    or not result.get("command")
+                    or not result.get("evidence")
+                ):
                     errors.append(f"QUALITY.json {quality_key}=PASS contradicts TESTS.json {test_key}")
 
     handoff = target / "HANDOFF.md"
@@ -295,8 +306,6 @@ def validate_checkpoint(
             errors.append("NEXT.md is not meaningfully populated")
 
     if isinstance(state, dict) and state.get("status") == "GATE_PASS":
-        if state.get("currentCommit") in ("HEAD", "UNBORN"):
-            errors.append("GATE_PASS must be anchored to an exact commit or checkpoint tag, not HEAD/UNBORN")
         if state.get("dirty") is not False:
             errors.append("GATE_PASS requires dirty=false")
         if state.get("blockedBy"):

@@ -27,3 +27,6 @@ Destructive attacks ran only in temporary repositories. The shared checkout was 
 
 Final Red Team verdict is pending rerun against the corrected clean commit.
 
+## Attack round 2
+
+The clean rework commit passed its 31-test suite but independent adversarial review found two remaining false-PASS paths: decoded JSONL values and unanchored handoff-ready states. Independent QA also found insufficient positive evidence for a PASS test category. All three now have dedicated regression tests; final rerun is pending.

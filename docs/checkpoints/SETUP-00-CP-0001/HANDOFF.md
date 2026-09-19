@@ -3,7 +3,7 @@
 Current Gate: SETUP-00 — Development Control Plane
 Current Status: READY_FOR_RED_TEAM
 
-Last valid commit: `0dc50fae803d6e8c13258fbe808e1af4cb6f4c10`; corrected rework is currently uncommitted.
+Last valid commit: `845c32b180fd6bc63a4bd17c3980c4b9b5e9e119`; second-round corrections are currently uncommitted.
 Current branch: main
 
 ## Objective
@@ -12,7 +12,7 @@ Revalidate the corrected SETUP-00 control plane independently and adversarially 
 
 ## What was completed
 
-Canonical control-plane artifacts were implemented. Initial review/Red Team findings were corrected, and the isolated automated suite now contains 31 passing tests.
+Canonical control-plane artifacts were implemented. Two review rounds drove corrections, and the isolated automated suite now contains 34 passing tests.
 
 ## What was NOT completed
 
@@ -32,7 +32,7 @@ Documentation is first-class, checkpoints are validated, agents are tool-neutral
 
 ## Tests executed
 
-`python -m unittest discover -s tests -v` passed 31 tests, including required corruptions, additional false-PASS regressions, and lifecycle safety.
+`python -m unittest discover -s tests -v` passed 34 tests, including required corruptions, decoded JSONL scanning, commit anchors, evidence consistency, and lifecycle safety.
 
 ## Known failures
 

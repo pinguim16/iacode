@@ -2,10 +2,10 @@
   "schemaVersion": "1.0.0",
   "unit": {
     "executed": true,
-    "passed": 26,
+    "passed": 29,
     "failed": 0,
     "command": "python -m unittest discover -s tests -v",
-    "evidence": "Validator and redactor tests passed, including required corruptions, cross-file contradictions, repository/decoded secret scans, full redaction, schema loading, RFC 3339, portable hashes, and tag anchoring."
+    "evidence": "Validator and redactor tests passed, including required corruptions, cross-file contradictions, repository/decoded JSON and JSONL scans, full redaction, schema loading, RFC 3339, portable hashes, commit anchors, and positive evidence requirements."
   },
   "integration": {
     "executed": true,
