@@ -1,0 +1,51 @@
+{
+  "schemaVersion": "2.0.0",
+  "checks": {
+    "build": {"status": "NOT_APPLICABLE", "evidence": [], "justification": "SETUP-00 has no build target; its tooling is standard-library Python."},
+    "unitTests": {
+      "status": "PASS",
+      "evidence": ["command:cmd-0003", "file:TESTS.json"],
+      "justification": null
+    },
+    "integrationTests": {
+      "status": "PASS",
+      "evidence": ["command:cmd-0003", "file:TESTS.json"],
+      "justification": null
+    },
+    "e2e": {
+      "status": "NOT_APPLICABLE",
+      "evidence": [],
+      "justification": "No functional runtime exists in SETUP-00."
+    },
+    "lint": {
+      "status": "NOT_APPLICABLE",
+      "evidence": [],
+      "justification": "No linter is vendored; syntax/static compilation is recorded separately."
+    },
+    "staticAnalysis": {
+      "status": "PASS",
+      "evidence": ["command:cmd-0003"],
+      "justification": null
+    },
+    "security": {
+      "status": "PASS",
+      "evidence": ["command:cmd-0015"],
+      "justification": null
+    },
+    "documentation": {
+      "status": "PASS",
+      "evidence": ["command:cmd-0006", "file:REVIEW-REPORT.md"],
+      "justification": null
+    },
+    "checkpointValidation": {
+      "status": "NOT_EXECUTED",
+      "evidence": [],
+      "justification": "The review checkpoint will be validated after its WIP commit, before final sealing."
+    },
+    "redTeam": {
+      "status": "FAIL",
+      "evidence": ["command:cmd-0007", "command:cmd-0009", "file:RED-TEAM-REPORT.md"],
+      "justification": "RT-01 escaped and RT-02 violated finalization auditability."
+    }
+  }
+}

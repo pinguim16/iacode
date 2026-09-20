@@ -1,0 +1,24 @@
+{
+  "schemaVersion": "2.0.0",
+  "unit": {
+    "executed": true,
+    "passed": 53,
+    "failed": 0,
+    "command": "python -B -m unittest discover -s tests -v",
+    "evidence": "53 unit cases passed, including validation, cross-tool state, quality evidence, adapters, checklist, redaction, and secret detection."
+  },
+  "integration": {
+    "executed": true,
+    "passed": 22,
+    "failed": 0,
+    "command": "python -B -m unittest discover -s tests -v",
+    "evidence": "22 isolated Git/subprocess cases passed, including R1, R2, R3 lifecycle, and historical checkpoint compatibility fixtures."
+  },
+  "e2e": {
+    "executed": false,
+    "passed": 0,
+    "failed": 0,
+    "command": null,
+    "evidence": "No runtime exists in SETUP-00; runtime end-to-end testing is not applicable."
+  }
+}

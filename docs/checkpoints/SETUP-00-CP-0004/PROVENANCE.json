@@ -1,0 +1,43 @@
+{
+  "schemaVersion": "2.0.0",
+  "artifacts": [
+    {
+      "artifact": "SETUP-00 independent-validation specification",
+      "sourceType": "user-provided-requirement",
+      "provider": "user",
+      "model": "not-applicable",
+      "ownership": "user-provided; legal ownership not independently determined",
+      "license": "not-specified",
+      "rights": {
+        "storageAllowed": true,
+        "ragAllowed": false,
+        "trainingAllowed": false,
+        "distillationAllowed": false
+      },
+      "evidence": "Supplied directly as the task attachment for this run.",
+      "notes": "Stored as derived review evidence; no credential data included."
+    },
+    {
+      "artifact": "SETUP-00-CP-0004 review and Red Team artifacts",
+      "sourceType": "model-assisted-project-work",
+      "provider": "OpenAI",
+      "model": "GPT-5 family; exact identifier not exposed",
+      "ownership": "project artifact; legal ownership not independently determined",
+      "license": "not-specified",
+      "rights": {"storageAllowed": true, "ragAllowed": false, "trainingAllowed": false, "distillationAllowed": false},
+      "evidence": "Produced by the independent Codex validation run from repository and local execution evidence.",
+      "notes": "No permission for training or distillation is inferred."
+    },
+    {
+      "artifact": "Independent local test and adversarial evidence",
+      "sourceType": "local-tool-output",
+      "provider": "local environment",
+      "model": "not-applicable",
+      "ownership": "project-generated evidence",
+      "license": "not-applicable",
+      "rights": {"storageAllowed": true, "ragAllowed": false, "trainingAllowed": false, "distillationAllowed": false},
+      "evidence": "Summarized in COMMANDS.jsonl, TESTS.json, REVIEW-REPORT.md, and RED-TEAM-REPORT.md.",
+      "notes": "Temporary repositories were removed after evidence capture."
+    }
+  ]
+}

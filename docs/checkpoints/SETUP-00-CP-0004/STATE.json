@@ -1,0 +1,26 @@
+{
+  "schemaVersion": "2.0.0",
+  "phase": "SETUP-00 - Independent Validation",
+  "gate": "SETUP-00",
+  "status": "IN_PROGRESS",
+  "branch": "main",
+  "baseCommit": "5780b0f86dbf46ad84d69b88a637be6f076946f4",
+  "currentCommit": "HEAD",
+  "dirty": false,
+  "startedAt": "2026-09-20T06:30:03Z",
+  "updatedAt": "2026-09-20T06:36:29Z",
+  "nextAllowedAction": "Claude Code must implement a new corrective SETUP-00 checkpoint for the R3, RT-01, and RT-02 findings; Gate 0 remains blocked.",
+  "blockedBy": [],
+  "secondToolValidation": {
+    "status": "FAILED",
+    "tool": "Codex Desktop / Codex CLI 0.155.0-alpha.9",
+    "provider": "OpenAI",
+    "model": "GPT-5 family; exact identifier not exposed",
+    "validatedAt": "2026-09-20T06:29:54Z",
+    "justification": "Independent review found mandatory R3 failure; Red Team reproduced RT-01 and RT-02.",
+    "evidence": [
+      "file:REVIEW-REPORT.md",
+      "file:RED-TEAM-REPORT.md"
+    ]
+  }
+}
