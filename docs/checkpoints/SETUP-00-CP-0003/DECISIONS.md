@@ -62,6 +62,23 @@ Records `cmd-0001` through `cmd-0010` were written after their commands ran, bec
 introduced during the run; their ordering is exact and their timestamps are recording times, which is
 stated in each record. Every later record carries the real execution time and measured duration.
 
+## Corrected the handoff before handing it off, and re-created this checkpoint's own tag
+
+The first sealing commit, `64b132ca70a521d5ba8844dd3e976a4cb74f3e47`, carried a false statement in
+`HANDOFF.md`: it claimed that two failed finalization records were present in this ledger. Those two
+failures happened in the isolated sealing rehearsal and died with that fixture; the real ledger
+contains only the successful finalization. Shipping that sentence would have been exactly the kind of
+unverifiable claim this correction exists to prevent, so it was fixed and the checkpoint was re-sealed
+at a later commit.
+
+Re-sealing required the `refs/tags/iacode-checkpoints/SETUP-00-CP-0003` tag to be deleted and
+re-created, because validation requires the tag to resolve to the checked-out commit. This is
+recorded rather than done quietly. It is bounded and does not weaken the audit model: the tag had
+existed only in this working repository for a few minutes, no handoff or publication had occurred, no
+history was rewritten, the superseded commit `64b132ca70a521d5ba8844dd3e976a4cb74f3e47` remains
+reachable in the branch, and no sealed checkpoint tag was touched. Once this checkpoint is handed to
+the independent run, its tag is immutable like the others.
+
 ## Secret scanner scope left unchanged
 
 The independent review confirmed that the detector matches the scope documented in

@@ -15,6 +15,10 @@
   AWS access key id, a Slack `xox`-prefixed token, a Google `AIza` key, a JWT, a database URL with an
   embedded password, an Azure connection string, an `npm_` token, and a Stripe `sk_live_` key are not
   detected unless they appear in a named assignment. This is unchanged and remains defense in depth.
+- `write_json` emits platform-native line endings, so checkpoint JSON written on Windows contains CRLF
+  in the working tree while Git stores LF. This is harmless today because content hashing normalizes
+  line endings and `.gitattributes` forces LF in the repository, and a `core.autocrlf` checkout was
+  tested; it was left unchanged because it is outside the scope of these six findings.
 - The validator implements the JSON Schema subset this repository uses, not the whole specification.
   New keywords require validator tests or a managed dependency.
 - Schema dispatch adds two rule sets. Both are tested, but a third version would increase that cost.

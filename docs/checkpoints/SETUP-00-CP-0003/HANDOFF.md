@@ -54,9 +54,9 @@ Branch `main`, clean after the sealing commit, base commit
 ## Files changed
 
 See `FILES.json`, which is now verified against the real change set since the base commit, including
-content hashes. In summary: the three ledger scripts, four schemas, the test suite, the new SETUP-00
-checklist, two new ADRs, five protocol or specification documents, both tool adapters, the detected
-capabilities document, and this checkpoint.
+content hashes. In summary: the four ledger scripts and their README, five schemas, the test suite,
+the new SETUP-00 checklist, two new ADRs, six protocol or specification documents, both tool adapters,
+the detected capabilities document, `LATEST.md`, and this checkpoint.
 
 ## Important decisions
 
@@ -69,14 +69,23 @@ its own Gate.
 
 `python -m unittest discover -s tests` — 75 tests, 0 failures, recorded in `TESTS.json` and
 `COMMANDS.jsonl`. `python -m compileall -q scripts tests` — exit 0. The adversarial battery in
-`RED-TEAM-DEV-REPORT.md` was re-executed against isolated clones.
+`RED-TEAM-DEV-REPORT.md` was executed against isolated copies and clones outside the repository.
 
 ## Known failures
 
-Two finalization attempts failed during development with exit 1 while the inventory was incomplete;
-both records remain in `COMMANDS.jsonl` with their reasons, followed by the successful attempt. One
-intermediate suite run failed while the lifecycle test still predated the new inventory contract, and
-one failed while the SETUP-00 checklist did not yet exist. All are recorded.
+All recorded in `COMMANDS.jsonl` with their exit codes:
+
+- `cmd-0008` and `cmd-0009`: suite runs that failed while the lifecycle test still predated the new
+  inventory contract, and while `docs/SETUP-00-CHECKLIST.md` did not yet exist.
+- `cmd-0013`, `cmd-0017`, and `cmd-0018`: validation runs that failed before the inventory was
+  declared, after the ledger grew past the declared hash, and on a self-referential evidence
+  reference. Each was corrected before the next attempt.
+- `cmd-0021`: the deliberate correction cycle described below.
+
+Two finalization attempts also failed with exit 1 during the sealing rehearsal, which ran in an
+isolated copy outside the repository; those records lived and died with that fixture and are
+described in `RED-TEAM-DEV-REPORT.md`, not in this ledger. The finalizations recorded here are the
+real ones.
 
 ## Known risks
 
