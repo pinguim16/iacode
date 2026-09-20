@@ -80,7 +80,9 @@ All recorded in `COMMANDS.jsonl` with their exit codes:
 - `cmd-0013`, `cmd-0017`, and `cmd-0018`: validation runs that failed before the inventory was
   declared, after the ledger grew past the declared hash, and on a self-referential evidence
   reference. Each was corrected before the next attempt.
-- `cmd-0021`: the deliberate correction cycle described below.
+
+Those five records are every nonzero exit code in this ledger. `cmd-0021` is not a failure: it exited
+`0` and records the deliberate pre-handoff tag removal explained in `DECISIONS.md`.
 
 Two finalization attempts also failed with exit 1 during the sealing rehearsal, which ran in an
 isolated copy outside the repository; those records lived and died with that fixture and are
