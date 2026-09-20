@@ -1,0 +1,48 @@
+{
+  "schemaVersion": "1.0.0",
+  "checkpoint": "SETUP-00-CP-0007",
+  "generatedAt": "2026-09-20T16:46:09Z",
+  "policy": "Audit-owned candidates only; canonical engineering memory is unchanged.",
+  "candidates": [
+    {
+      "id": "M0-CANDIDATE-001",
+      "status": "OBSERVED",
+      "finding": "M0-F-001/M0-F-002",
+      "title": "Every positive terminal state needs one shared promotion invariant",
+      "observation": "MILESTONE_EXTERNAL_PASS bypasses assurance checks applied only to READY_FOR_REVIEW and can be self-asserted.",
+      "proposedGuardrail": "A table-driven validator test must exercise every positive status against every mandatory red dimension and independent-evidence prerequisite."
+    },
+    {
+      "id": "M0-CANDIDATE-002",
+      "status": "OBSERVED",
+      "finding": "M0-F-005",
+      "title": "A configurable mandatory gate set must be closed and non-empty",
+      "observation": "Green Keeper returns PASS when invoked with an empty gate list.",
+      "proposedGuardrail": "Reject empty, duplicate, unknown, or incomplete gate sets and validate evidence for the exact canonical mandatory set."
+    },
+    {
+      "id": "M0-CANDIDATE-003",
+      "status": "OBSERVED",
+      "finding": "M0-F-006/M0-F-008",
+      "title": "Completeness must be anchored to an independent required-ID set",
+      "observation": "The submitted matrix controls its own denominator and one aggregate field is not cross-checked.",
+      "proposedGuardrail": "Derive exact required IDs from the versioned specification/preflight and cross-check every aggregate field across matrix, report, and state."
+    },
+    {
+      "id": "M0-CANDIDATE-004",
+      "status": "OBSERVED",
+      "finding": "M0-F-003/M0-F-004",
+      "title": "Structured control references must be resolved, not only typed",
+      "observation": "Lesson prevention/evidence references and stale preflight membership can be syntactically valid while semantically false.",
+      "proposedGuardrail": "Resolve every referenced control/evidence target and recompute deterministic derived artifacts from canonical source data."
+    },
+    {
+      "id": "M0-CANDIDATE-005",
+      "status": "OBSERVED",
+      "finding": "M0-F-009/M0-F-010",
+      "title": "Evidence from a dirty tree needs immutable input identity",
+      "observation": "Recorded commands pass at the final tag but fail at their declared commits because dirty inputs are not content-bound.",
+      "proposedGuardrail": "Record input content hashes or require committed inputs, and enforce monotonic post-seal timestamps and validation."
+    }
+  ]
+}

@@ -1,0 +1,926 @@
+{
+  "schemaVersion": "1.0.0",
+  "milestone": "M0",
+  "gate": "SETUP-00",
+  "checkpoint": "SETUP-00-CP-0007",
+  "source": "M0 independent milestone audit prompt dated 2026-09-20",
+  "createdAt": "2026-09-20T16:33:16Z",
+  "statusVocabulary": [
+    "NOT_STARTED",
+    "IN_PROGRESS",
+    "COMPLETE",
+    "PARTIAL",
+    "MISSING",
+    "NOT_APPLICABLE"
+  ],
+  "passRule": "Every mandatory row COMPLETE or justified NOT_APPLICABLE; coverage and evidence coverage 100.00%; no PARTIAL or MISSING.",
+  "requirements": [
+    {
+      "id": "AUD-001",
+      "section": "1,45",
+      "dimension": "Execution profile and model usage",
+      "acceptance": "Record tool, version, provider, model, effort, OS, branch, commits, timestamps, duration, agent executions and measurable tool usage without invention.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "evidence": [
+        "file:MILESTONE-REPORT.md",
+        "file:REVIEW-REPORT.md"
+      ],
+      "outcome": "PASS"
+    },
+    {
+      "id": "AUD-002",
+      "section": "2",
+      "dimension": "Auditor independence",
+      "acceptance": "Audit-only changes; no product fix, weakened control, historical rewrite, implementer assertion as proof, or Gate 0 initiation.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "evidence": [
+        "file:MILESTONE-REPORT.md",
+        "file:REVIEW-REPORT.md"
+      ],
+      "outcome": "PASS"
+    },
+    {
+      "id": "AUD-003",
+      "section": "3",
+      "dimension": "Cold start",
+      "acceptance": "Read every mandated governing document plus CP-0005 and CP-0006 completely before audit-owned changes; inspect CP-0001 through CP-0004 as needed.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "evidence": [
+        "file:MILESTONE-REPORT.md",
+        "file:REVIEW-REPORT.md"
+      ],
+      "outcome": "PASS"
+    },
+    {
+      "id": "AUD-004",
+      "section": "4",
+      "dimension": "Baseline",
+      "acceptance": "Record Git state and log, validate latest checkpoint, run baseline suite, and prove a clean workspace before isolated adversarial work.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "evidence": [
+        "file:MILESTONE-REPORT.md",
+        "file:REVIEW-REPORT.md"
+      ],
+      "outcome": "PASS"
+    },
+    {
+      "id": "AUD-005",
+      "section": "5,41",
+      "dimension": "Audit control plane",
+      "acceptance": "Create canonical CP-0007 with normal evidence plus M0 audit matrix, review, Red Team, milestone report, and lesson-candidate artifacts when applicable.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "evidence": [
+        "file:MILESTONE-REPORT.md",
+        "file:REVIEW-REPORT.md"
+      ],
+      "outcome": "PASS"
+    },
+    {
+      "id": "AUD-006",
+      "section": "6",
+      "dimension": "Independent audit roles",
+      "acceptance": "Run separate completeness, test/evidence, and Red Team roles; primary auditor verifies their evidence.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "evidence": [
+        "file:AUDIT-EXECUTIONS.md"
+      ],
+      "outcome": "PASS"
+    },
+    {
+      "id": "AUD-007",
+      "section": "7",
+      "dimension": "M0 traceability and completeness",
+      "acceptance": "Trace every SETUP-00 requirement to implementation, test, executed command and evidence; mandatory and evidence coverage both 100.00%, with no partial or missing item.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "evidence": [
+        "file:MILESTONE-REPORT.md",
+        "file:REVIEW-REPORT.md"
+      ],
+      "outcome": "FAIL"
+    },
+    {
+      "id": "AUD-008",
+      "section": "8",
+      "dimension": "CP-0005 controls",
+      "acceptance": "Independently validate requirements matrix, Green Keeper, completeness validator, readiness invariants, reproducible commands, rejected-attempt audit, evidence, schemas and compatibility using mutations, not tests alone.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "evidence": [
+        "file:MILESTONE-REPORT.md",
+        "file:REVIEW-REPORT.md"
+      ],
+      "outcome": "PASS"
+    },
+    {
+      "id": "AUD-009",
+      "section": "9",
+      "dimension": "Inherited R3.1",
+      "acceptance": "Early and precondition-rejected finalization attempts remain auditable.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "evidence": [
+        "file:MILESTONE-REPORT.md",
+        "file:REVIEW-REPORT.md"
+      ],
+      "outcome": "FAIL"
+    },
+    {
+      "id": "AUD-010",
+      "section": "9",
+      "dimension": "Inherited R3.2",
+      "acceptance": "Evidence commands remain executable and reproducible from their declared context.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "evidence": [
+        "file:MILESTONE-REPORT.md",
+        "file:REVIEW-REPORT.md"
+      ],
+      "outcome": "FAIL"
+    },
+    {
+      "id": "AUD-011",
+      "section": "9",
+      "dimension": "Inherited RT-01",
+      "acceptance": "READY_FOR_REVIEW cannot coexist with blockers, incomplete requirements or red quality gates.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "evidence": [
+        "file:MILESTONE-REPORT.md",
+        "file:REVIEW-REPORT.md"
+      ],
+      "outcome": "PASS"
+    },
+    {
+      "id": "AUD-012",
+      "section": "9,26",
+      "dimension": "Inherited RT-02 and finalization audit",
+      "acceptance": "Execution records capture requested operation, preconditions, result, cwd, commit, runtime, sanitized args, duration, failure reason and truthful exit semantics.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "evidence": [
+        "file:MILESTONE-REPORT.md",
+        "file:REVIEW-REPORT.md"
+      ],
+      "outcome": "PASS"
+    },
+    {
+      "id": "AUD-013",
+      "section": "10",
+      "dimension": "Green Keeper enforcement",
+      "acceptance": "All red, unresolved, non-executed and contradictory states block readiness; PASS cannot be obtained by deleting, skipping, weakening, suppressing, disabling, mocking or invalid N/A classification.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "evidence": [
+        "file:MILESTONE-REPORT.md",
+        "file:REVIEW-REPORT.md"
+      ],
+      "outcome": "FAIL"
+    },
+    {
+      "id": "AUD-014",
+      "section": "11",
+      "dimension": "CP-0005 completeness recomputation",
+      "acceptance": "Independently recompute all counts and evidence; missing requirement/evidence, PARTIAL, unjustified N/A, forged 100%, or missing lesson requirement fails.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "evidence": [
+        "file:MILESTONE-REPORT.md",
+        "file:REVIEW-REPORT.md"
+      ],
+      "outcome": "PASS"
+    },
+    {
+      "id": "AUD-015",
+      "section": "11",
+      "dimension": "CP-0006 completeness recomputation",
+      "acceptance": "Independently recompute all counts and evidence and compare matrix, report and STATE; every mandated mutation fails.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "evidence": [
+        "file:MILESTONE-REPORT.md",
+        "file:REVIEW-REPORT.md"
+      ],
+      "outcome": "FAIL"
+    },
+    {
+      "id": "AUD-016",
+      "section": "12",
+      "dimension": "Engineering Memory structure and policy",
+      "acceptance": "Organizational non-personal memory is versioned, provenance-backed, training-denied by default, secret/chain-of-thought free, lifecycle-aware, recurrence-capable and guardrail-enforced.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "evidence": [
+        "file:MILESTONE-REPORT.md",
+        "file:REVIEW-REPORT.md"
+      ],
+      "outcome": "FAIL"
+    },
+    {
+      "id": "AUD-017",
+      "section": "13",
+      "dimension": "Lesson schema",
+      "acceptance": "Valid lesson passes; invalid status, duplicate ID, secret, unsafe training eligibility and unguarded GUARDED fail; CONFIRMED is allowed; RETIRED cannot become active.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "evidence": [
+        "file:MILESTONE-REPORT.md",
+        "file:REVIEW-REPORT.md"
+      ],
+      "outcome": "FAIL"
+    },
+    {
+      "id": "AUD-018",
+      "section": "14",
+      "dimension": "Initial lesson audit",
+      "acceptance": "Recount and inspect every lesson for real source, supported finding/root cause/resolution/status, real guardrail, resolvable evidence and provenance.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "evidence": [
+        "file:MILESTONE-REPORT.md",
+        "file:REVIEW-REPORT.md"
+      ],
+      "outcome": "FAIL"
+    },
+    {
+      "id": "AUD-019",
+      "section": "15",
+      "dimension": "Lesson preflight",
+      "acceptance": "Applicable selection, exclusion, determinism, derived requirements, reasons, required checks and evidence are correct; removed derived requirements fail completeness.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "evidence": [
+        "file:MILESTONE-REPORT.md",
+        "file:REVIEW-REPORT.md"
+      ],
+      "outcome": "FAIL"
+    },
+    {
+      "id": "AUD-020",
+      "section": "16",
+      "dimension": "Lesson to guardrail principle",
+      "acceptance": "Documentation alone never justifies GUARDED; automated preventive evidence is required where applicable.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "evidence": [
+        "file:MILESTONE-REPORT.md",
+        "file:REVIEW-REPORT.md"
+      ],
+      "outcome": "FAIL"
+    },
+    {
+      "id": "AUD-021",
+      "section": "17",
+      "dimension": "Recurrence",
+      "acceptance": "Stable recurrence increments one lesson; recurrence against GUARDED escalates as guardrail failure rather than silently duplicating.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "evidence": [
+        "file:MILESTONE-REPORT.md",
+        "file:REVIEW-REPORT.md"
+      ],
+      "outcome": "PASS"
+    },
+    {
+      "id": "AUD-022",
+      "section": "18",
+      "dimension": "Retrospective",
+      "acceptance": "Protocol requires all eight retrospective topics without requesting private chain-of-thought.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "evidence": [
+        "file:MILESTONE-REPORT.md",
+        "file:REVIEW-REPORT.md"
+      ],
+      "outcome": "PASS"
+    },
+    {
+      "id": "AUD-023",
+      "section": "19",
+      "dimension": "Milestone mapping",
+      "acceptance": "M0=SETUP-00; M1=0-3; M2=4-7; M3=8-11; M4=12-15; M5=16-19; M6=20-23 consistently across machine and documents.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "evidence": [
+        "file:MILESTONE-REPORT.md",
+        "file:REVIEW-REPORT.md"
+      ],
+      "outcome": "PASS"
+    },
+    {
+      "id": "AUD-024",
+      "section": "20",
+      "dimension": "Internal versus external pass",
+      "acceptance": "Both semantic misuse directions are rejected; external pass requires genuine second-tool validation.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "evidence": [
+        "file:MILESTONE-REPORT.md",
+        "file:REVIEW-REPORT.md"
+      ],
+      "outcome": "FAIL"
+    },
+    {
+      "id": "AUD-025",
+      "section": "21",
+      "dimension": "Codex cadence",
+      "acceptance": "Normal external audit cadence is every 3-4 major Gates via milestones, while intermediate Gates can close on internal controls without Codex.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "evidence": [
+        "file:MILESTONE-REPORT.md",
+        "file:REVIEW-REPORT.md"
+      ],
+      "outcome": "PASS"
+    },
+    {
+      "id": "AUD-026",
+      "section": "22",
+      "dimension": "Extraordinary external audit",
+      "acceptance": "Required flag without reason and unsupported reason fail; every canonical critical trigger passes without policy drift.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "evidence": [
+        "file:MILESTONE-REPORT.md",
+        "file:REVIEW-REPORT.md"
+      ],
+      "outcome": "PASS"
+    },
+    {
+      "id": "AUD-027",
+      "section": "23",
+      "dimension": "Historical integrity and compatibility",
+      "acceptance": "CP-0001 through CP-0006 directories and tags remain unchanged; current tooling is explicitly version-aware and does not rewrite history.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "evidence": [
+        "file:MILESTONE-REPORT.md",
+        "file:REVIEW-REPORT.md"
+      ],
+      "outcome": "FAIL"
+    },
+    {
+      "id": "AUD-028",
+      "section": "24",
+      "dimension": "Detached tag validation",
+      "acceptance": "Fresh detached checkouts validate according to documented support; wrong tag/commit, dirty tree and invalid branch are rejected.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "evidence": [
+        "file:MILESTONE-REPORT.md",
+        "file:REVIEW-REPORT.md"
+      ],
+      "outcome": "FAIL"
+    },
+    {
+      "id": "AUD-029",
+      "section": "25",
+      "dimension": "FILES inventory",
+      "acceptance": "Missing entry, silent modification, undeclared add/delete and wrong before/after hashes fail; exclusions are minimal, explicit and tested.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "evidence": [
+        "file:MILESTONE-REPORT.md",
+        "file:REVIEW-REPORT.md"
+      ],
+      "outcome": "PASS"
+    },
+    {
+      "id": "AUD-030",
+      "section": "27",
+      "dimension": "Quality evidence integrity",
+      "acceptance": "PASS without evidence, missing command/file, or failed-command evidence is rejected.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "evidence": [
+        "file:MILESTONE-REPORT.md",
+        "file:REVIEW-REPORT.md"
+      ],
+      "outcome": "PASS"
+    },
+    {
+      "id": "AUD-031",
+      "section": "28",
+      "dimension": "Command reproducibility sampling",
+      "acceptance": "Document exact random sample from CP-0005 and CP-0006; verify runtime, cwd, command, args, commit, purpose, inputs and result; safely replay representatives.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "evidence": [
+        "file:MILESTONE-REPORT.md",
+        "file:REVIEW-REPORT.md"
+      ],
+      "outcome": "FAIL"
+    },
+    {
+      "id": "AUD-032",
+      "section": "29",
+      "dimension": "Secret safety",
+      "acceptance": "Run declared scanner scope and confirm no real secret in checkpoints, logs, memory, lessons, arguments, provenance or reports; preserve documented limitations.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "evidence": [
+        "file:MILESTONE-REPORT.md",
+        "file:REVIEW-REPORT.md"
+      ],
+      "outcome": "PASS"
+    },
+    {
+      "id": "AUD-033",
+      "section": "30",
+      "dimension": "Self-contained repository",
+      "acceptance": "Fresh tool reconstructs SETUP-00 from repository only; START-HERE leads to the complete canonical chain with no session, attachment or transcript dependency.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "evidence": [
+        "file:MILESTONE-REPORT.md",
+        "file:REVIEW-REPORT.md"
+      ],
+      "outcome": "PASS"
+    },
+    {
+      "id": "AUD-034",
+      "section": "31",
+      "dimension": "Documentation integrity",
+      "acceptance": "No broken internal reference, missing artifact, contradictory status, stale milestone policy/count affecting correctness, or action-changing ambiguity.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "evidence": [
+        "file:MILESTONE-REPORT.md",
+        "file:REVIEW-REPORT.md"
+      ],
+      "outcome": "FAIL"
+    },
+    {
+      "id": "AUD-035",
+      "section": "32",
+      "dimension": "Full validation suite",
+      "acceptance": "Execute complete suite and all canonical static, checkpoint, lesson, completeness, delivery assurance, secret and diff checks; record actual counts.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "evidence": [
+        "file:AUDIT-EXECUTIONS.md"
+      ],
+      "outcome": "PASS"
+    },
+    {
+      "id": "AUD-036",
+      "section": "33",
+      "dimension": "Clean-clone validation",
+      "acceptance": "Required suite passes in a fresh clone without untracked files, caches, local configuration, credentials or session state.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "evidence": [
+        "file:AUDIT-EXECUTIONS.md"
+      ],
+      "outcome": "PASS"
+    },
+    {
+      "id": "RT-A",
+      "section": "34.A",
+      "dimension": "READY_FOR_REVIEW with blocker",
+      "acceptance": "Mutation is rejected.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "evidence": [
+        "file:RED-TEAM-REPORT.md#attack-a"
+      ],
+      "outcome": "DEFENDED"
+    },
+    {
+      "id": "RT-B",
+      "section": "34.B",
+      "dimension": "READY_FOR_REVIEW with red quality",
+      "acceptance": "Mutation is rejected.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "evidence": [
+        "file:RED-TEAM-REPORT.md#attack-b"
+      ],
+      "outcome": "DEFENDED"
+    },
+    {
+      "id": "RT-C",
+      "section": "34.C",
+      "dimension": "READY_FOR_REVIEW with missing requirement",
+      "acceptance": "Mutation is rejected.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "evidence": [
+        "file:RED-TEAM-REPORT.md#attack-c"
+      ],
+      "outcome": "ESCAPED"
+    },
+    {
+      "id": "RT-D",
+      "section": "34.D",
+      "dimension": "Forged completeness 100%",
+      "acceptance": "Mutation is rejected.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "evidence": [
+        "file:RED-TEAM-REPORT.md#attack-d"
+      ],
+      "outcome": "DEFENDED"
+    },
+    {
+      "id": "RT-E",
+      "section": "34.E",
+      "dimension": "Lesson requirement removed",
+      "acceptance": "Mutation is rejected.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "evidence": [
+        "file:RED-TEAM-REPORT.md#attack-e"
+      ],
+      "outcome": "DEFENDED"
+    },
+    {
+      "id": "RT-F",
+      "section": "34.F",
+      "dimension": "Documentation-only GUARDED lesson",
+      "acceptance": "Mutation is rejected.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "evidence": [
+        "file:RED-TEAM-REPORT.md#attack-f"
+      ],
+      "outcome": "DEFENDED"
+    },
+    {
+      "id": "RT-G",
+      "section": "34.G",
+      "dimension": "Duplicate lesson IDs",
+      "acceptance": "Mutation is rejected.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "evidence": [
+        "file:RED-TEAM-REPORT.md#attack-g"
+      ],
+      "outcome": "DEFENDED"
+    },
+    {
+      "id": "RT-H",
+      "section": "34.H",
+      "dimension": "Secret inserted into lesson",
+      "acceptance": "Mutation is rejected without disclosing the secret.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "evidence": [
+        "file:RED-TEAM-REPORT.md#attack-h"
+      ],
+      "outcome": "DEFENDED"
+    },
+    {
+      "id": "RT-I",
+      "section": "34.I",
+      "dimension": "Historical checkpoint modified",
+      "acceptance": "Mutation is rejected.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "evidence": [
+        "file:RED-TEAM-REPORT.md#attack-i"
+      ],
+      "outcome": "ESCAPED"
+    },
+    {
+      "id": "RT-J",
+      "section": "34.J",
+      "dimension": "Historical tag moved",
+      "acceptance": "Mutation is rejected.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "evidence": [
+        "file:RED-TEAM-REPORT.md#attack-j"
+      ],
+      "outcome": "ESCAPED"
+    },
+    {
+      "id": "RT-K",
+      "section": "34.K",
+      "dimension": "FILES entry removed",
+      "acceptance": "Mutation is rejected.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "evidence": [
+        "file:RED-TEAM-REPORT.md#attack-k"
+      ],
+      "outcome": "DEFENDED"
+    },
+    {
+      "id": "RT-L",
+      "section": "34.L",
+      "dimension": "Tracked file silently modified",
+      "acceptance": "Mutation is rejected.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "evidence": [
+        "file:RED-TEAM-REPORT.md#attack-l"
+      ],
+      "outcome": "DEFENDED"
+    },
+    {
+      "id": "RT-M",
+      "section": "34.M",
+      "dimension": "Wrong hashBefore",
+      "acceptance": "Mutation is rejected.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "evidence": [
+        "file:RED-TEAM-REPORT.md#attack-m"
+      ],
+      "outcome": "DEFENDED"
+    },
+    {
+      "id": "RT-N",
+      "section": "34.N",
+      "dimension": "Wrong hashAfter",
+      "acceptance": "Mutation is rejected.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "evidence": [
+        "file:RED-TEAM-REPORT.md#attack-n"
+      ],
+      "outcome": "DEFENDED"
+    },
+    {
+      "id": "RT-O",
+      "section": "34.O",
+      "dimension": "Quality PASS without evidence",
+      "acceptance": "Mutation is rejected.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "evidence": [
+        "file:RED-TEAM-REPORT.md#attack-o"
+      ],
+      "outcome": "DEFENDED"
+    },
+    {
+      "id": "RT-P",
+      "section": "34.P",
+      "dimension": "Nonexistent evidence reference",
+      "acceptance": "Mutation is rejected.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "evidence": [
+        "file:RED-TEAM-REPORT.md#attack-p"
+      ],
+      "outcome": "DEFENDED"
+    },
+    {
+      "id": "RT-Q",
+      "section": "34.Q",
+      "dimension": "Forged second-tool validation",
+      "acceptance": "Mutation is rejected.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "evidence": [
+        "file:RED-TEAM-REPORT.md#attack-q"
+      ],
+      "outcome": "ESCAPED"
+    },
+    {
+      "id": "RT-R",
+      "section": "34.R",
+      "dimension": "Internal pass forged as external",
+      "acceptance": "Mutation is rejected.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "evidence": [
+        "file:RED-TEAM-REPORT.md#attack-r"
+      ],
+      "outcome": "ESCAPED"
+    },
+    {
+      "id": "RT-S",
+      "section": "34.S",
+      "dimension": "External pass without independent validation",
+      "acceptance": "Mutation is rejected.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "evidence": [
+        "file:RED-TEAM-REPORT.md#attack-s"
+      ],
+      "outcome": "ESCAPED"
+    },
+    {
+      "id": "RT-T",
+      "section": "34.T",
+      "dimension": "Extraordinary audit without valid reason",
+      "acceptance": "Mutation is rejected.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "evidence": [
+        "file:RED-TEAM-REPORT.md#attack-t"
+      ],
+      "outcome": "DEFENDED"
+    },
+    {
+      "id": "RT-U",
+      "section": "34.U",
+      "dimension": "Retired lesson in active preflight",
+      "acceptance": "Mutation is rejected or excluded according to policy.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "evidence": [
+        "file:RED-TEAM-REPORT.md#attack-u"
+      ],
+      "outcome": "ESCAPED"
+    },
+    {
+      "id": "RT-V",
+      "section": "34.V",
+      "dimension": "Green Keeper green with red mandatory gate",
+      "acceptance": "Mutation is rejected.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "evidence": [
+        "file:RED-TEAM-REPORT.md#attack-v"
+      ],
+      "outcome": "ESCAPED"
+    },
+    {
+      "id": "RT-W",
+      "section": "34.W",
+      "dimension": "Completeness PASS with PARTIAL",
+      "acceptance": "Mutation is rejected.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "evidence": [
+        "file:RED-TEAM-REPORT.md#attack-w"
+      ],
+      "outcome": "DEFENDED"
+    },
+    {
+      "id": "RT-X",
+      "section": "34.X",
+      "dimension": "Malformed command or audit record",
+      "acceptance": "Mutation is rejected.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "evidence": [
+        "file:RED-TEAM-REPORT.md#attack-x"
+      ],
+      "outcome": "DEFENDED"
+    },
+    {
+      "id": "RT-Y",
+      "section": "34.Y",
+      "dimension": "LATEST points to wrong checkpoint",
+      "acceptance": "Mutation is rejected.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "evidence": [
+        "file:RED-TEAM-REPORT.md#attack-y"
+      ],
+      "outcome": "DEFENDED"
+    },
+    {
+      "id": "RT-Z",
+      "section": "34.Z",
+      "dimension": "Path traversal or invalid checkpoint path",
+      "acceptance": "Mutation is rejected.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "evidence": [
+        "file:RED-TEAM-REPORT.md#attack-z"
+      ],
+      "outcome": "DEFENDED"
+    },
+    {
+      "id": "AUD-037",
+      "section": "35",
+      "dimension": "Per-attack evidence",
+      "acceptance": "Every mandatory attack records attackId, target, mutation, expected, observed, result and evidence; no aggregate-only claim.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "evidence": [
+        "file:MILESTONE-REPORT.md",
+        "file:REVIEW-REPORT.md"
+      ],
+      "outcome": "PASS"
+    },
+    {
+      "id": "AUD-038",
+      "section": "36",
+      "dimension": "Audit completeness",
+      "acceptance": "Final audit matrix recomputation yields 100.00% coverage and evidence coverage with no partial or missing requirement before any external PASS.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "evidence": [
+        "file:MILESTONE-REPORT.md",
+        "file:REVIEW-REPORT.md"
+      ],
+      "outcome": "PASS"
+    },
+    {
+      "id": "AUD-039",
+      "section": "37",
+      "dimension": "Failure classification",
+      "acceptance": "Every failing gate is reproduced and classified product, environment or flaky; product defect causes rework and flaky red runs remain documented.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "evidence": [
+        "file:AUDIT-EXECUTIONS.md"
+      ],
+      "outcome": "PASS"
+    },
+    {
+      "id": "AUD-040",
+      "section": "38",
+      "dimension": "Lesson candidates",
+      "acceptance": "Meaningful new lessons are proposed only in audit-owned LESSON-CANDIDATES files; canonical memory is not modified.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "evidence": [
+        "file:LESSON-CANDIDATES.json",
+        "file:LESSON-CANDIDATES.md"
+      ],
+      "outcome": "PASS"
+    },
+    {
+      "id": "AUD-041",
+      "section": "39,40",
+      "dimension": "Binary milestone verdict",
+      "acceptance": "All pass conditions must hold; any mandatory failure yields REWORK_REQUIRED without averaging.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "evidence": [
+        "file:MILESTONE-REPORT.md",
+        "file:REVIEW-REPORT.md"
+      ],
+      "outcome": "PASS"
+    },
+    {
+      "id": "AUD-042",
+      "section": "42",
+      "dimension": "Pass transition",
+      "acceptance": "Only if all controls pass, record PASSED cross-tool state, MILESTONE_EXTERNAL_PASS and GATE_PASS, authorize but do not implement Gate 0.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "evidence": [
+        "file:MILESTONE-REPORT.md",
+        "file:REVIEW-REPORT.md"
+      ],
+      "outcome": "PASS"
+    },
+    {
+      "id": "AUD-043",
+      "section": "43",
+      "dimension": "Failure transition",
+      "acceptance": "On failure, record REWORK_REQUIRED, precise finding fields, Claude corrective handoff and Gate 0 BLOCKED without fixing implementation.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "evidence": [
+        "file:MILESTONE-REPORT.md",
+        "file:REVIEW-REPORT.md"
+      ],
+      "outcome": "PASS"
+    },
+    {
+      "id": "AUD-044",
+      "section": "44",
+      "dimension": "Engineering Memory effectiveness",
+      "acceptance": "Report actual lessons evaluated, effective guardrails, violations/recurrences, guardrail failures and lesson candidates without invented counts.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "evidence": [
+        "file:MILESTONE-REPORT.md#engineering-memory-effectiveness"
+      ],
+      "outcome": "PASS"
+    },
+    {
+      "id": "AUD-045",
+      "section": "46",
+      "dimension": "Final user response",
+      "acceptance": "Report every prescribed milestone field concisely and do not claim Gate 0 started.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "evidence": [
+        "file:FINAL-REPORT.md#execution-profile"
+      ],
+      "outcome": "PASS"
+    }
+  ],
+  "completedAt": "2026-09-20T16:46:09Z",
+  "auditCompleteness": {
+    "total": 71,
+    "complete": 71,
+    "partial": 0,
+    "missing": 0,
+    "coveragePercent": 100,
+    "evidenceCoveragePercent": 100
+  },
+  "milestoneVerdict": "REWORK_REQUIRED",
+  "redTeam": {
+    "total": 26,
+    "defended": 18,
+    "escaped": 8,
+    "result": "RED_TEAM_FAIL"
+  }
+}

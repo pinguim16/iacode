@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "3.1.0",
+  "artifacts": [
+    {
+      "artifact": "Independent M0/SETUP-00 audit reports and checkpoint evidence",
+      "sourceType": "model-assisted-project-audit",
+      "provider": "OpenAI",
+      "model": "GPT-5 family; exact deployment identifier not exposed",
+      "ownership": "project artifact; legal ownership not independently determined",
+      "license": "not-specified",
+      "rights": {
+        "storageAllowed": true,
+        "ragAllowed": false,
+        "trainingAllowed": false,
+        "distillationAllowed": false
+      },
+      "evidence": "Created from repository evidence and reproducible isolated executions recorded in this checkpoint.",
+      "notes": "Contains audit conclusions, not private chain-of-thought; no secrets or credentials stored."
+    },
+    {
+      "artifact": "Independent role outputs: completeness, test/evidence, and Red Team",
+      "sourceType": "repository-derived-analysis",
+      "provider": "OpenAI",
+      "model": "not separately exposed; inherited Codex runtime",
+      "ownership": "project audit evidence",
+      "license": "not-specified",
+      "rights": {
+        "storageAllowed": true,
+        "ragAllowed": false,
+        "trainingAllowed": false,
+        "distillationAllowed": false
+      },
+      "evidence": "Synthesized into REVIEW-REPORT.md, RED-TEAM-REPORT.md, MILESTONE-REPORT.md and AUDIT-EXECUTIONS.md.",
+      "notes": "Three separate roles; no direct product edits."
+    }
+  ]
+}

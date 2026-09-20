@@ -1,0 +1,24 @@
+{
+  "schemaVersion": "3.1.0",
+  "unit": {
+    "executed": true,
+    "passed": 146,
+    "failed": 0,
+    "command": "python -B -m unittest discover -s tests -v",
+    "evidence": "146 validator and policy unit cases; command:cmd-0002."
+  },
+  "integration": {
+    "executed": true,
+    "passed": 35,
+    "failed": 0,
+    "command": "python -B -m unittest discover -s tests -v",
+    "evidence": "35 isolated Git, subprocess, lifecycle and historical compatibility cases; command:cmd-0002."
+  },
+  "e2e": {
+    "executed": false,
+    "passed": 0,
+    "failed": 0,
+    "command": null,
+    "evidence": "No Gate 0 runtime exists. Control-plane lifecycle coverage is counted as integration."
+  }
+}

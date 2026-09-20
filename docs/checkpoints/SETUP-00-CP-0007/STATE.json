@@ -1,0 +1,121 @@
+{
+  "schemaVersion": "3.1.0",
+  "phase": "M0 - SETUP-00 Independent Milestone Audit",
+  "gate": "SETUP-00",
+  "status": "REWORK_REQUIRED",
+  "branch": "main",
+  "baseCommit": "994bab402873bc4d221c02d8c94bdebeb2b0f3cb",
+  "currentCommit": "refs/tags/iacode-checkpoints/SETUP-00-CP-0007",
+  "dirty": false,
+  "startedAt": "2026-09-20T16:33:16Z",
+  "updatedAt": "2026-09-20T17:00:25Z",
+  "nextAllowedAction": "Claude Code must create a corrective SETUP-00 checkpoint addressing M0-F-001 through M0-F-011; Gate 0 remains blocked pending a new independent M0 audit.",
+  "blockedBy": [
+    "M0-F-001",
+    "M0-F-002",
+    "M0-F-003",
+    "M0-F-004",
+    "M0-F-005",
+    "M0-F-006",
+    "M0-F-007",
+    "M0-F-008",
+    "M0-F-009",
+    "M0-F-010",
+    "M0-F-011"
+  ],
+  "secondToolValidation": {
+    "status": "FAILED",
+    "tool": "Codex Desktop / codex-cli 0.155.0-alpha.9",
+    "provider": "OpenAI",
+    "model": "GPT-5 family; exact deployment identifier not exposed",
+    "validatedAt": "2026-09-20T16:55:59Z",
+    "justification": "Independent M0 audit found eleven deterministic product defects and eight mandatory Red Team escapes.",
+    "evidence": [
+      "file:REVIEW-REPORT.md",
+      "file:RED-TEAM-REPORT.md",
+      "file:MILESTONE-REPORT.md"
+    ]
+  },
+  "requirementsMatrix": {
+    "path": "REQUIREMENTS-MATRIX.json",
+    "total": 59,
+    "mandatory": 59,
+    "complete": 55,
+    "partial": 4,
+    "missing": 0,
+    "notApplicable": 0,
+    "coveragePercent": 93.22
+  },
+  "greenKeeper": {
+    "status": "FAIL",
+    "cycles": 0,
+    "remainingFailures": 1,
+    "unresolvedReworkItems": 1,
+    "log": "REWORK-LOG.jsonl",
+    "externalBlockers": [],
+    "evidence": [
+      "file:REVIEW-REPORT.md",
+      "file:RED-TEAM-REPORT.md"
+    ]
+  },
+  "deliveryCompleteness": {
+    "status": "FAIL",
+    "report": "COMPLETENESS-REPORT.json",
+    "coveragePercent": 93.22,
+    "evidenceCoveragePercent": 100,
+    "auditor": "Independent M0 Completeness Auditor",
+    "evidence": [
+      "file:COMPLETENESS-REPORT.json",
+      "file:MILESTONE-REPORT.md"
+    ]
+  },
+  "reworkCycles": 0,
+  "independentReview": {
+    "status": "REWORK_REQUIRED",
+    "tool": "Codex Desktop / independent completeness and evidence roles",
+    "reviewedAt": "2026-09-20T16:55:59Z",
+    "justification": "Four of 59 SETUP-00 requirements remain PARTIAL and mandatory controls are bypassable.",
+    "evidence": [
+      "file:REVIEW-REPORT.md",
+      "file:MILESTONE-REPORT.md"
+    ]
+  },
+  "redTeam": {
+    "status": "RED_TEAM_FAIL",
+    "tool": "Codex independent Red Team role",
+    "executedAt": "2026-09-20T16:55:59Z",
+    "justification": "18 of 26 attacks were defended; eight escaped.",
+    "evidence": [
+      "file:RED-TEAM-REPORT.md"
+    ]
+  },
+  "lessonPreflight": {
+    "path": "LESSON-PREFLIGHT.json",
+    "gate": "SETUP-00",
+    "scope": "Independent M0 audit; CP-0006 canonical preflight inspected and adversarially tested",
+    "lessonsConsidered": 14,
+    "lessonsApplicable": 14,
+    "derivedRequirements": 14,
+    "evidence": [
+      "file:MILESTONE-REPORT.md",
+      "file:AUDIT-EXECUTIONS.md"
+    ]
+  },
+  "milestone": {
+    "id": "M0",
+    "title": "Development control plane",
+    "gates": [
+      "SETUP-00"
+    ],
+    "status": "FAILED",
+    "auditor": "Codex Desktop independent M0 audit",
+    "auditedAt": "2026-09-20T16:55:59Z",
+    "evidence": [
+      "file:MILESTONE-REPORT.md",
+      "file:REVIEW-REPORT.md",
+      "file:RED-TEAM-REPORT.md"
+    ]
+  },
+  "externalAuditRequired": false,
+  "externalAuditReason": null
+}

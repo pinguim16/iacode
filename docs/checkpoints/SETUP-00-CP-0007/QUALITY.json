@@ -1,0 +1,89 @@
+{
+  "schemaVersion": "3.1.0",
+  "checks": {
+    "build": {
+      "status": "NOT_APPLICABLE",
+      "evidence": [],
+      "justification": "SETUP-00 has no product build target; its tooling is standard-library Python."
+    },
+    "unitTests": {
+      "status": "PASS",
+      "evidence": [
+        "command:cmd-0002",
+        "file:TESTS.json"
+      ],
+      "justification": null
+    },
+    "integrationTests": {
+      "status": "PASS",
+      "evidence": [
+        "command:cmd-0002",
+        "file:TESTS.json"
+      ],
+      "justification": null
+    },
+    "e2e": {
+      "status": "NOT_APPLICABLE",
+      "evidence": [],
+      "justification": "No Gate 0 runtime exists; control-plane lifecycle cases are counted as integration."
+    },
+    "lint": {
+      "status": "NOT_APPLICABLE",
+      "evidence": [],
+      "justification": "No linter is vendored; compilation and diff checks are recorded."
+    },
+    "staticAnalysis": {
+      "status": "PASS",
+      "evidence": [
+        "command:cmd-0003",
+        "command:cmd-0005"
+      ],
+      "justification": null
+    },
+    "security": {
+      "status": "FAIL",
+      "evidence": [
+        "file:REVIEW-REPORT.md",
+        "file:RED-TEAM-REPORT.md"
+      ],
+      "justification": "Lesson validation does not recursively scan every field and accepts unresolved preventive controls/evidence."
+    },
+    "documentation": {
+      "status": "FAIL",
+      "evidence": [
+        "file:REVIEW-REPORT.md",
+        "file:MILESTONE-REPORT.md"
+      ],
+      "justification": "Lesson provenance and CP-0006 sealing chronology contain correctness-affecting inaccuracies."
+    },
+    "checkpointValidation": {
+      "status": "PASS",
+      "evidence": [
+        "command:cmd-0007"
+      ],
+      "justification": null
+    },
+    "redTeam": {
+      "status": "FAIL",
+      "evidence": [
+        "file:RED-TEAM-REPORT.md"
+      ],
+      "justification": "Eight of 26 mandatory attacks escaped."
+    },
+    "greenKeeper": {
+      "status": "FAIL",
+      "evidence": [
+        "file:RED-TEAM-REPORT.md"
+      ],
+      "justification": "The Green Keeper accepts an empty mandatory gate selection and emits a vacuous PASS."
+    },
+    "deliveryCompleteness": {
+      "status": "FAIL",
+      "evidence": [
+        "file:COMPLETENESS-REPORT.json",
+        "file:COMPLETENESS-REPORT.md"
+      ],
+      "justification": "55/59 checklist requirements are COMPLETE; four are PARTIAL."
+    }
+  }
+}
