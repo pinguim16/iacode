@@ -399,4 +399,3 @@ Do not start Gate 0 and keep it explicitly blocked.
 - Documentation: `checkpoint:NEXT.md`
 - Validation: `command:cmd-0013`
 - Notes: No runtime, model gateway, agent runtime, sandbox, quality runtime, or IDE integration exists in the change set.
-

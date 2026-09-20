@@ -4,7 +4,7 @@ Result: `PASS`
 
 - Checkpoint: `SETUP-00-CP-0005`
 - Matrix: `REQUIREMENTS-MATRIX.json`
-- Generated: `2026-09-20T07:31:13Z`
+- Generated: `2026-09-20T07:38:58Z`
 - Auditor: Delivery Completeness Validator, emulated in the implementing session
 
 ## Counts
@@ -68,4 +68,3 @@ No finding. Every requirement is satisfied and every evidence reference resolved
 | `REQ-0036` | yes | `COMPLETE` | `file:scripts/development-ledger/validate_checkpoint.py`, `test:HistoricalCheckpointCompatibilityTests.test_first_sealed_checkpoint_still_validates`, `test:HistoricalCheckpointCompatibilityTests.test_second_sealed_checkpoint_still_validates`, `test:HistoricalCheckpointCompatibilityTests.test_third_sealed_checkpoint_still_validates`, `test:HistoricalCheckpointCompatibilityTests.test_fourth_sealed_checkpoint_still_validates`, `file:docs/CHECKPOINT-PROTOCOL.md`, `command:cmd-0011` |
 | `REQ-0037` | yes | `COMPLETE` | `file:docs/adr/ADR-0008-delivery-assurance-gates.md`, `file:docs/adr/ADR-0008-delivery-assurance-gates.md`, `test:SetupChecklistTests.test_documentation_links_resolve` |
 | `REQ-0038` | yes | `COMPLETE` | `checkpoint:STATE.json`, `checkpoint:NEXT.md`, `command:cmd-0013` |
-

@@ -75,7 +75,8 @@ def render_markdown(report: dict[str, Any], matrix: dict[str, Any]) -> str:
             item.get("status"),
             ", ".join("`%s`" % value for value in references) if references else "_none_",
         ))
-    lines.append("")
+    while lines and not lines[-1]:
+        lines.pop()
     return "\n".join(lines) + "\n"
 
 

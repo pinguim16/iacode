@@ -59,9 +59,14 @@ than described as independence.
 
 ## The Green Keeper was applied to this delivery
 
-The first cycle of this checkpoint failed on checkpoint validation, and a later suite run failed
-because a lifecycle fixture did not ship the ledger tooling it recorded. Both were repaired at the
-cause, never by weakening a check, and both cycles are in `REWORK-LOG.jsonl`.
+Several cycles of this checkpoint were red before it turned green: checkpoint validation failed while
+the inventory was undeclared, a suite run failed because a lifecycle fixture did not ship the ledger
+tooling whose path it recorded, the first ledger record predated the new command format, the
+validation gate always observed stale hashes because a gate run appends to the checkpoint's own
+evidence, and the report generators emitted a trailing blank line. Every one was repaired at the
+cause, never by weakening a check, and every cycle with its root cause is in `REWORK-LOG.jsonl`.
+`git log` and that file are the complete record; this decision states the mechanism rather than
+enumerating instances, so it stays accurate without needing a correction to describe itself.
 
 ## Secret scanner scope unchanged
 
