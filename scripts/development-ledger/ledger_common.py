@@ -13,8 +13,9 @@ from typing import Any
 
 SCHEMA_VERSION = "1.0.0"
 LEGACY_SCHEMA_VERSION = "1.0.0"
-CURRENT_SCHEMA_VERSION = "2.0.0"
-SUPPORTED_SCHEMA_VERSIONS = (LEGACY_SCHEMA_VERSION, CURRENT_SCHEMA_VERSION)
+EVIDENCE_SCHEMA_VERSION = "2.0.0"
+CURRENT_SCHEMA_VERSION = "3.0.0"
+SUPPORTED_SCHEMA_VERSIONS = (LEGACY_SCHEMA_VERSION, EVIDENCE_SCHEMA_VERSION, CURRENT_SCHEMA_VERSION)
 
 QUALITY_DIMENSIONS = (
     "build",
@@ -29,9 +30,49 @@ QUALITY_DIMENSIONS = (
     "redTeam",
 )
 
+# Delivery-assurance gates introduced with schemaVersion 3.0.0.
+DELIVERY_ASSURANCE_DIMENSIONS = ("greenKeeper", "deliveryCompleteness")
+
+QUALITY_DIMENSIONS_V3 = QUALITY_DIMENSIONS + DELIVERY_ASSURANCE_DIMENSIONS
+
+# Dimensions produced by the independent run, after the implementing run hands off. They are the
+# only dimensions allowed to be NOT_EXECUTED at READY_FOR_REVIEW.
+INDEPENDENT_DIMENSIONS = ("redTeam",)
+
 QUALITY_OUTCOMES = ("PASS", "FAIL", "NOT_APPLICABLE", "NOT_EXECUTED")
 
+GATE_OUTCOMES = ("PASS", "FAIL", "NOT_EXECUTED")
+
 SECOND_TOOL_STATUSES = ("PENDING_MANUAL", "PASSED", "FAILED", "NOT_REQUIRED")
+
+REQUIREMENT_STATUSES = (
+    "NOT_STARTED",
+    "IN_PROGRESS",
+    "COMPLETE",
+    "PARTIAL",
+    "MISSING",
+    "NOT_APPLICABLE",
+)
+
+# Statuses that assert the work is ready to leave the implementing run. A non-empty blockedBy is
+# incompatible with every one of them, for every schema version.
+UNBLOCKED_STATUSES = ("READY_FOR_REVIEW", "READY_FOR_RED_TEAM", "GATE_PASS")
+
+INDEPENDENT_VERDICT_STATUSES = ("PENDING", "APPROVED", "REWORK_REQUIRED", "NOT_REQUIRED")
+RED_TEAM_VERDICT_STATUSES = ("PENDING", "RED_TEAM_PASS", "RED_TEAM_FAIL", "NOT_REQUIRED")
+
+# Canonical outcome vocabulary for a recorded operation. PRECONDITION_REJECTED exists so a refusal
+# that never launched a process is recorded without fabricating an exit code.
+COMMAND_RESULTS = ("COMPLETED", "PRECONDITION_REJECTED", "ABORTED")
+
+RESULT_CODES = {
+    "OK": "The operation ran to completion; exitCode carries the process result.",
+    "E_NOT_LATEST_CHECKPOINT": "Refused: the requested checkpoint is not the LATEST target.",
+    "E_DETACHED_HEAD": "Refused: finalization requires an attached branch.",
+    "E_INVALID_COMMIT_REF": "Refused: the commit reference is not a canonical checkpoint tag.",
+    "E_VALIDATION_FAILED": "The operation ran and its own validation rejected the result.",
+    "E_ABORTED": "The operation was interrupted before producing a result.",
+}
 
 # The only checkpoint file excluded from content hashing, because a file cannot
 # contain its own hash. Its integrity is bound by the checkpoint commit and tag,
@@ -201,6 +242,109 @@ def resolve_latest(root: Path) -> Path:
     if not target.is_dir():
         raise LedgerError(f"LATEST.md points to a nonexistent checkpoint: {target}")
     return target
+
+
+def head_commit(root: Path) -> str:
+    code, head = run_git(root, "rev-parse", "HEAD")
+    return head if code == 0 and head else "UNBORN"
+
+
+def runtime_label(interpreter: str | None = None) -> str:
+    """Human-readable runtime identity for a recorded command, without machine-specific paths."""
+    if interpreter in (None, "python", "python3"):
+        import platform
+
+        return f"python {platform.python_version()}"
+    return interpreter
+
+
+def next_command_id(commands_path: Path) -> str:
+    highest = 0
+    count = 0
+    if commands_path.is_file():
+        for line in commands_path.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            count += 1
+            try:
+                identifier = json.loads(line).get("id") or ""
+            except json.JSONDecodeError:
+                continue
+            match = re.fullmatch(r"cmd-(\d+)", identifier)
+            if match:
+                highest = max(highest, int(match.group(1)))
+    return f"cmd-{max(highest, count) + 1:04d}"
+
+
+def build_command_record(
+    root: Path,
+    *,
+    command: str,
+    purpose: str,
+    working_directory: str | None = None,
+    runtime: str | None = None,
+    arguments: list[str] | None = None,
+    inputs: list[str] | None = None,
+    result: str = "COMPLETED",
+    result_code: str = "OK",
+    exit_code: int | None = None,
+    duration_ms: int = 0,
+    stdout_artifact: str | None = None,
+    stderr_artifact: str | None = None,
+    notes: str | None = None,
+    operation: str | None = None,
+    phase: str | None = None,
+    attempt_id: str | None = None,
+    preconditions: list[dict[str, Any]] | None = None,
+    failure_reason: str | None = None,
+    repository_state: dict[str, Any] | None = None,
+    commit: str | None = None,
+) -> dict[str, Any]:
+    """Assemble an auditable command record. Free text is redacted before it is stored."""
+    record: dict[str, Any] = {
+        "id": "",
+        "timestamp": utc_now(),
+        "runtime": runtime or runtime_label(),
+        "workingDirectory": working_directory or str(root),
+        "command": command,
+        "commit": commit or head_commit(root),
+        "purpose": purpose,
+        "result": result,
+        "resultCode": result_code,
+        "exitCode": exit_code,
+        "durationMs": duration_ms,
+        "stdoutArtifact": stdout_artifact,
+        "stderrArtifact": stderr_artifact,
+    }
+    if arguments is not None:
+        record["arguments"] = [redact_text(item) for item in arguments]
+    if inputs is not None:
+        record["inputs"] = list(inputs)
+    if operation is not None:
+        record["operation"] = operation
+    if phase is not None:
+        record["phase"] = phase
+    if attempt_id is not None:
+        record["attemptId"] = attempt_id
+    if preconditions is not None:
+        record["preconditions"] = preconditions
+    if failure_reason is not None:
+        record["failureReason"] = redact_text(failure_reason)
+    if repository_state is not None:
+        record["repositoryState"] = repository_state
+    if notes is not None:
+        record["notes"] = redact_text(notes)
+    return record
+
+
+def append_command_record(commands_path: Path, record: dict[str, Any]) -> str:
+    record = dict(record)
+    record["id"] = record.get("id") or next_command_id(commands_path)
+    ordered = {"id": record.pop("id")}
+    ordered.update(record)
+    with commands_path.open("a", encoding="utf-8", newline="\n") as handle:
+        handle.write(json.dumps(ordered, ensure_ascii=False) + "\n")
+    return ordered["id"]
 
 
 def write_json(path: Path, value: Any) -> None:

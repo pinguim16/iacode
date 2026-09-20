@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://iacode.local/schemas/requirements-matrix.schema.json",
+  "title": "Delivery requirements matrix",
+  "type": "object",
+  "required": ["schemaVersion", "gate", "checkpoint", "requirements"],
+  "$defs": {
+    "requirement": {
+      "type": "object",
+      "required": [
+        "id",
+        "source",
+        "description",
+        "mandatory",
+        "status",
+        "implementationEvidence",
+        "testEvidence",
+        "documentationEvidence",
+        "validationEvidence",
+        "notes"
+      ],
+      "properties": {
+        "id": {"type": "string", "pattern": "^REQ-[0-9]{4}$"},
+        "source": {"type": "string", "minLength": 1},
+        "description": {"type": "string", "minLength": 1},
+        "mandatory": {"type": "boolean"},
+        "status": {"enum": ["NOT_STARTED", "IN_PROGRESS", "COMPLETE", "PARTIAL", "MISSING", "NOT_APPLICABLE"]},
+        "implementationEvidence": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "testEvidence": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "documentationEvidence": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "validationEvidence": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "justification": {"type": ["string", "null"]},
+        "notes": {"type": "string"}
+      },
+      "additionalProperties": false
+    }
+  },
+  "properties": {
+    "schemaVersion": {"enum": ["1.0.0"]},
+    "gate": {"type": "string", "minLength": 1},
+    "checkpoint": {"type": "string", "minLength": 1},
+    "requirements": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/requirement"}}
+  },
+  "additionalProperties": false
+}

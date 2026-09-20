@@ -26,6 +26,20 @@ This file is a Codex adapter for the canonical contracts in `.iacode/`. Reposito
 - Never mix Gates in one commit and never advance a Gate without explicit authorization.
 - Close an implementing run at `READY_FOR_REVIEW`; `GATE_PASS` is granted only by a later run independent of the one that implemented the Gate, which records `secondToolValidation` in `STATE.json`.
 - Declare every changed path in `FILES.json` before finalizing; `finalize_checkpoint.py` binds the hashes but never invents a declaration.
+- Follow the mandatory delivery order and skip no step: requirement extraction, baseline, plan, implementation, test and quality, Green Keeper, Delivery Completeness Validator, `READY_FOR_REVIEW`, independent review, Red Team, `GATE_PASS`.
+- Extract every requirement into `REQUIREMENTS-MATRIX.json` before implementing, and keep its status truthful.
+- Run `python scripts/development-ledger/green_keeper.py` until every mandatory gate is green, and `python scripts/development-ledger/check_completeness.py --write` before any handoff.
+- Record commands with `python scripts/development-ledger/record_command.py`; a recorded command must be executable from its declared working directory.
+- Never claim `READY_FOR_REVIEW` while `blockedBy` is non-empty; a real external blocker yields `BLOCKED` with the blocker named.
+
+## Delivery assurance roles
+
+Codex loads the canonical role contracts directly from `.iacode/agents/`: `test-rework-greenkeeper.md`
+may change code to repair a failing gate, and `delivery-completeness-validator.md` audits only and may
+not implement or silently correct. Codex has no per-agent project file mechanism in this repository,
+so these roles are adopted through this adapter and the canonical contracts rather than through a
+subagent definition file. Keep their artifacts separate and do not describe the separation as
+independence when a single session performs both.
 
 ## Before ending work
 

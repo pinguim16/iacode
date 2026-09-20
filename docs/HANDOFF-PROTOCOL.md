@@ -1,12 +1,22 @@
 # Handoff Protocol
 
+## Mandatory delivery order
+
+`requirement extraction` → `baseline` → `plan` → `implementation` → `test and quality` →
+`Green Keeper` → `Delivery Completeness Validator` → `READY_FOR_REVIEW` → `independent tool review` →
+`Red Team` → `GATE_PASS`. No step may be skipped. The independent tool receives a delivery that has
+already passed the internal controls; it is not the first line of defense against a red test or a
+forgotten requirement.
+
 ## Before changing tools
 
-1. Finalize the checkpoint.
-2. Validate it.
-3. Update `docs/checkpoints/LATEST.md` textually; do not use a symlink.
-4. Complete `HANDOFF.md` and `NEXT.md`.
-5. Record branch, commit semantics, and dirty state.
+1. Run the Green Keeper until every mandatory gate is green, or declare `BLOCKED`.
+2. Run the Delivery Completeness Validator until coverage is total.
+3. Finalize the checkpoint.
+4. Validate it.
+5. Update `docs/checkpoints/LATEST.md` textually; do not use a symlink.
+6. Complete `HANDOFF.md` and `NEXT.md`.
+7. Record branch, commit semantics, and dirty state.
 
 No Codex-to-Claude or Claude-to-Codex transition is informal.
 

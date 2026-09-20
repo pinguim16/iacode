@@ -1,0 +1,310 @@
+{
+  "filesRead": [
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0004",
+      "reason": "Sealed independent validation checkpoint; the authoritative source of the findings corrected here."
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0003",
+      "reason": "Sealed predecessor checkpoint inspected without modification."
+    },
+    {
+      "path": "docs/SETUP-00-CHECKLIST.md",
+      "reason": "In-repository SETUP-00 specification used to extract requirements."
+    },
+    {
+      "path": "prompts/RESUME-WORK.md",
+      "reason": "Continuation protocol executed before any change."
+    }
+  ],
+  "filesCreated": [
+    {
+      "path": ".claude/agents/delivery-completeness-validator.md",
+      "reason": "Claude Code adapter for the Delivery Completeness Validator role.",
+      "hashAfter": "3c5d3ef5c111b27ba4be4d689ee75859be64f6ffb8678535e3ac1066671f956b"
+    },
+    {
+      "path": ".claude/agents/test-rework-greenkeeper.md",
+      "reason": "Claude Code adapter for the Green Keeper role.",
+      "hashAfter": "ddf6657ac9dad14967a3d305edcc6376c048c861d7b57b34839086ec218b98b1"
+    },
+    {
+      "path": ".iacode/agents/delivery-completeness-validator.md",
+      "reason": "Canonical Delivery Completeness Validator role contract.",
+      "hashAfter": "8c9142cc43991f913a3d47174b6a45f77eb83a6338e6c04f235925b1dc197630"
+    },
+    {
+      "path": ".iacode/agents/test-rework-greenkeeper.md",
+      "reason": "Canonical Test Rework / Green Keeper role contract.",
+      "hashAfter": "8f743f5fe41f46e946f7ad4c612b3829f043ef419a769595e87cf0e47acd50e7"
+    },
+    {
+      "path": ".iacode/schemas/completeness-report.schema.json",
+      "reason": "New schema for the delivery completeness report and its findings.",
+      "hashAfter": "7c49d3fb481c47bce583a7d5e6e9ae388a7eb3e4dae24712b24a68eb0d6a7eeb"
+    },
+    {
+      "path": ".iacode/schemas/requirements-matrix.schema.json",
+      "reason": "New schema validating requirement identifiers, canonical statuses, evidence arrays, and justified NOT_APPLICABLE.",
+      "hashAfter": "09f08afe3c1ec3f0a19a2bd78bbbffcc72b395528e2e78ef7307f3543778fd55"
+    },
+    {
+      "path": ".iacode/schemas/rework-log.schema.json",
+      "reason": "New schema for Green Keeper rework cycles.",
+      "hashAfter": "57b7a3ab311c8605ba17bf2f546505deda726ecde2d65676c03637a3d76ce2ca"
+    },
+    {
+      "path": "docs/adr/ADR-0008-delivery-assurance-gates.md",
+      "reason": "Records the delivery assurance decision and schema 3.0.0.",
+      "hashAfter": "4f668bd78e6eba5eb63f26e232bebd12767ebeceab7f44cb76df8b15d7ff7d0e"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0005/COMMANDS.jsonl",
+      "reason": "Reproducible command ledger, including every finalization attempt.",
+      "hashAfter": "8ce757b5375bed222a1a6dbdc585a754498e96b75d5e1ad2ba3b906e2b3808eb"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0005/COMPLETENESS-REPORT.json",
+      "reason": "Delivery completeness audit result.",
+      "hashAfter": "bcdd94cb97cf8e1ddb8cb0aeeabf9a551a338c8d1333d75862b48388a13a8a67"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0005/COMPLETENESS-REPORT.md",
+      "reason": "Rendered delivery completeness audit.",
+      "hashAfter": "1e00686d275b5f6142dacfa76a7d1eb474a3188c86bf67abb6d5b43ee67fec38"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0005/DECISIONS.md",
+      "reason": "Decisions and their rationale.",
+      "hashAfter": "a6be8e8be9fb46df35540b115b32aa11890c54e3f90fc2d1e3df224a61b1df54"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0005/DIFF-SUMMARY.md",
+      "reason": "Summary of the change set.",
+      "hashAfter": "18175feee833e24658b46e9c712051b7b6919df903ce68dcc06b8de571380363"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0005/FILES.json",
+      "reason": "File inventory for this checkpoint."
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0005/FINAL-REPORT.md",
+      "reason": "Outcome report for this corrective run.",
+      "hashAfter": "f4bc27a2d9eac0f7e22143b277404115a393a3b3bbaa5ca09f08032c59cff057"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0005/HANDOFF.md",
+      "reason": "Executable handoff to the independent Codex run.",
+      "hashAfter": "b82434f48f9b13dd60c8b53c2e84ea837f7692e7e414a18f7cfc76474e3bd490"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0005/NEXT.md",
+      "reason": "Next allowed action.",
+      "hashAfter": "ac21a935e73c843e11eb495679017065a366f12e6145d38f0a5474b2c7522273"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0005/PLAN.md",
+      "reason": "Execution plan recorded after the requirements matrix and before implementation.",
+      "hashAfter": "d1641c0a615847fe0c4e74956425037a0b0fcaddd342328f5ea8b560dd2f399e"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0005/PROVENANCE.json",
+      "reason": "Provenance and rights classification.",
+      "hashAfter": "25d519f46ef03f455c4cff4d6911287448990e3d97b54b3c221dd2a7b67525a0"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0005/QUALITY.json",
+      "reason": "Quality dimensions with evidence references, including both new gates.",
+      "hashAfter": "b6ed1720e5e3f2d446203cda7905aa939f3c8a28bb56545640335b0a9f497b56"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0005/REQUIREMENTS-MATRIX.json",
+      "reason": "Authoritative requirement set for this delivery.",
+      "hashAfter": "c47ecaa08d6ae18d3020b7d2ec4bacf6d816f21a07cef2001a251e79ecbe0742"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0005/REQUIREMENTS-MATRIX.md",
+      "reason": "Rendered view of the requirement set.",
+      "hashAfter": "b9749dcde85326478c9358016067ae30aa3280574628a10f9a115026e4a15b41"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0005/REWORK-LOG.jsonl",
+      "reason": "Green Keeper rework cycles for this delivery.",
+      "hashAfter": "e9ed6e6754f13124c65c9980f9263049c969a835140bb27c2402bd4b9c39c261"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0005/RISKS.md",
+      "reason": "Residual risks.",
+      "hashAfter": "7aca6454e4812d957a9b5e81686c316408c78ceb0b7914f09f9391c723f59281"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0005/RUN-METADATA.json",
+      "reason": "Tool, provider, model, effort, and Git metadata for this run.",
+      "hashAfter": "e15529987199529ba14e77b7fe8c99756d80e5d2e2de863617e2c36a403da25f"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0005/STATE.json",
+      "reason": "Checkpoint state, including the delivery assurance blocks.",
+      "hashAfter": "45fe6a6dadfc0c730f08a8baacf003f923b4ad783f927edb2db7d35f7b197b22"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0005/STATUS.md",
+      "reason": "Checkpoint status.",
+      "hashAfter": "59e6444d1015b76b59cb6aa1143753675cf48a96814b94857478e8c5ce4c83e4"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0005/TESTS.json",
+      "reason": "Test execution evidence.",
+      "hashAfter": "bcfaae0454399df7873e2e51e46e6db122a9da73f76b6739ca2fd02ea4949ca3"
+    },
+    {
+      "path": "scripts/development-ledger/check_completeness.py",
+      "reason": "New Delivery Completeness Validator harness.",
+      "hashAfter": "fd6610be72578dc51297b3b82a013b64a3ad1bf1bac2a6d226f9059514415162"
+    },
+    {
+      "path": "scripts/development-ledger/delivery_assurance.py",
+      "reason": "New shared audit logic for the requirements matrix and evidence resolution.",
+      "hashAfter": "104331735ae324941a5f46105dac4c7062ce45fafc205178b555661bdfcb1700"
+    },
+    {
+      "path": "scripts/development-ledger/green_keeper.py",
+      "reason": "New Green Keeper evidence harness and rework logger.",
+      "hashAfter": "6bc1d39f07991f4a5547c6d557bd9526866e515152b7321e11c5543d956fb817"
+    },
+    {
+      "path": "scripts/development-ledger/record_command.py",
+      "reason": "New tool producing reproducible command records.",
+      "hashAfter": "c8e4f9d0bda0a69b4139a331f4fa0ba84b06e6e4531b645b3104bb3e0b85c907"
+    }
+  ],
+  "filesModified": [
+    {
+      "path": ".iacode/schemas/checkpoint.schema.json",
+      "reason": "Added schemaVersion 3.0.0 and the requirementsMatrix, greenKeeper, deliveryCompleteness, reworkCycles, independentReview, and redTeam blocks.",
+      "hashAfter": "ab4fdae68a30fc4c4ce0f9fe3057b4d4c113179a986d8b64bbb78f35078c99d1",
+      "hashBefore": "a732714c925896bb9ab86f3a90f43a67c77625189d07d8af1b0b18cd56137ebe"
+    },
+    {
+      "path": ".iacode/schemas/command.schema.json",
+      "reason": "RT-02: added runtime, commit, purpose, arguments, inputs, canonical result, attempt fields, and preconditions; exitCode may now be null for a refusal.",
+      "hashAfter": "4be8b40440eefe442687aa6f582ccbe59bfaed8085d8f1f5cabfbc8946892e00",
+      "hashBefore": "dee0c161927815def260e98f30afe3efcb4f606e06be12a0cbf52f26984e6532"
+    },
+    {
+      "path": ".iacode/schemas/provenance.schema.json",
+      "reason": "Allowed schemaVersion 3.0.0.",
+      "hashAfter": "befbd5e72af08e2f4cad6ae07a15cb1917111ffe4e527a48f85501b856223307",
+      "hashBefore": "09b519d8388c022b65408c3ea99aafed2bafef7658c07b657b8d225f59b693d3"
+    },
+    {
+      "path": ".iacode/schemas/quality-result.schema.json",
+      "reason": "Added the greenKeeper and deliveryCompleteness dimensions and schemaVersion 3.0.0.",
+      "hashAfter": "f4266a27e38678a09d00496d0241370f1c0fe729d88b3cc20cca5b8583001ef5",
+      "hashBefore": "db738de279be90b057fe0023d76106b067e7aa9dab884f52290ba7fedfa25853"
+    },
+    {
+      "path": ".iacode/schemas/test-result.schema.json",
+      "reason": "Allowed schemaVersion 3.0.0.",
+      "hashAfter": "dbf84c165615446f12e750e37b34e8e663667fcffc7f569b06c6a588dfd491ea",
+      "hashBefore": "1ba8c9444878e8c28cbb80fe05d6c383cb2ba409f6304ed379624552a2d277eb"
+    },
+    {
+      "path": "AGENTS.md",
+      "reason": "Codex adapter records the order, the new roles, and the mechanism limitation.",
+      "hashAfter": "577127049420d42ac88bbcf555be3c2ffbc85cc82c0dc71f5d725cc894935e73",
+      "hashBefore": "34b8894a97c8191ba312c3b9f6228b8acc11e716fa23bc0d5177b2dd7e1e15d8"
+    },
+    {
+      "path": "CLAUDE.md",
+      "reason": "Claude adapter records the order, the new roles, and the subagent separation.",
+      "hashAfter": "7d9cbf482ef5ee27af1f493bad6c6f1a6cdfedf4b3a3f93360930dcbb12e4095",
+      "hashBefore": "4431bb7bc52cb44568e1e18c19f944fd7acdb565a2a4343005bbc0a71f165d1f"
+    },
+    {
+      "path": "START-HERE.md",
+      "reason": "States the mandatory delivery order at the entry point.",
+      "hashAfter": "c59f33815f61fdda5bfd8c762b0b254ecccfd4b7d4a8be96f6b35a60f3865ada",
+      "hashBefore": "78840e6a101ab38a9222b00d52ddbf48e0f89b4fb67d7d82b6b2972fd3b86398"
+    },
+    {
+      "path": "docs/CHECKPOINT-PROTOCOL.md",
+      "reason": "Documented schema 3.0.0, the status and blocker invariant, delivery assurance, recorded refusals, and command reproducibility.",
+      "hashAfter": "ecb3f11c3fb8d37f561adb2e9abdc16ad004e798d2600e8fd8aef25fe912f7b6",
+      "hashBefore": "fc80ee8cc6d449b01783125653406388a4a287c8b50dd4c8bd35349e248da238"
+    },
+    {
+      "path": "docs/DEFINITION-OF-DONE.md",
+      "reason": "Added the matrix, gate, blocker, and reproducibility conditions.",
+      "hashAfter": "19dd6ce8e110987c3cf4c720f069073ab978d93be6159f389081e499edc9d19b",
+      "hashBefore": "2ef568637c7631a522b1ed651e324eeae33ebc797157cecf9e16007fdc2f4869"
+    },
+    {
+      "path": "docs/DEVELOPMENT-CONTRACT.md",
+      "reason": "Made the eleven-step delivery order mandatory.",
+      "hashAfter": "3c79fbd4e9914ca1d7771fb9a5c006841870780509be7a0bb00f851d1b48536a",
+      "hashBefore": "4cbbb2b6f9055913e777646448e3d02e16042b4041c7068500fcf4076f47bfe4"
+    },
+    {
+      "path": "docs/HANDOFF-PROTOCOL.md",
+      "reason": "Documented the mandatory order and the pre-handoff gate runs.",
+      "hashAfter": "8a6176644759fe4e314451835506f38d4786318fa15d07b18686a5ef5b366abd",
+      "hashBefore": "eadc98bb9aa61585c84ced0c064f2f69a998209738a6db489226292abd8d0bd9"
+    },
+    {
+      "path": "docs/QUALITY-GATES.md",
+      "reason": "Added the delivery assurance gates, the READY_FOR_REVIEW preconditions, and the matrix evidence vocabulary.",
+      "hashAfter": "9b62432ddcee4ca9bf5e3377e3b9258e987ed73c2b03d1416e2a4683b68b007c",
+      "hashBefore": "0c99ec5353571bbc99dde768abcfef5f3ad3c5be29da6adb8712e10c70d49a26"
+    },
+    {
+      "path": "docs/SETUP-00-CHECKLIST.md",
+      "reason": "Added the delivery assurance section to the in-repository specification.",
+      "hashAfter": "228e22a8cd6ccf034563e2308742c56c275df565010d78e3489e166cf39fe521",
+      "hashBefore": "18e51253f324776229eb4a8d033e0d13e086159105cf0b2e9134d76f9e6d0d46"
+    },
+    {
+      "path": "docs/checkpoints/LATEST.md",
+      "reason": "Points at this corrective checkpoint.",
+      "hashAfter": "784d702e7cf5ed2d2f68009f126284a48819ef78f28936166f275dcbcf92a78f",
+      "hashBefore": "6a3fd04f56d3092e5749f7018df20557d7372077b345c6e9cc3bdc6788a7f5df"
+    },
+    {
+      "path": "scripts/development-ledger/README.md",
+      "reason": "Documented the three new tools and the delivery gates.",
+      "hashAfter": "149ea8e4864fd22685fe6693ae0a447e6a96e53ca9dd6d638b0824da6fc04705",
+      "hashBefore": "91f065e2743bba274b9ab933e502122040c8e5fe7c93b3768701ef0accd65274"
+    },
+    {
+      "path": "scripts/development-ledger/finalize_checkpoint.py",
+      "reason": "R3: records every attempt including precondition refusals, with an executable command string.",
+      "hashAfter": "8e93076a6fe54cf33d952ec49e405d1e72eec885ce90f3e480298dc787ff1cb4",
+      "hashBefore": "72d0263fbf405658393d8bdfb185d64713098a1966e98fd69a214fbee170dcdf"
+    },
+    {
+      "path": "scripts/development-ledger/ledger_common.py",
+      "reason": "Added schema 3.0.0 constants, the canonical result vocabulary, delivery-assurance dimensions, and the reproducible command record builder.",
+      "hashAfter": "56a0d72ae9107a3ef66be9420ced2cff69cbdb5c3a41095d615fa010e42c9db6",
+      "hashBefore": "e505cd87cae74318ddc3a830b9902969848dc6c0f5e17191cfd9360577baa622"
+    },
+    {
+      "path": "scripts/development-ledger/new_checkpoint.py",
+      "reason": "Emits schemaVersion 3.0.0 skeletons with the delivery-assurance blocks and a reproducible first record.",
+      "hashAfter": "cf82e2f12d5c61f370374348e421eb7d25f8622fd6d1cc547a53c040bac35cdf",
+      "hashBefore": "357b8ca26204da0e3c717acb72e0aa57400b9788faf2423225b56962cd9fe2cc"
+    },
+    {
+      "path": "scripts/development-ledger/validate_checkpoint.py",
+      "reason": "Enforces the status and blocker invariant, command reproducibility, the delivery-assurance gates, and the recomputed completeness audit.",
+      "hashAfter": "b5b7e7b8bbbb452aedfab3bc48e3100886d7a33bda436fc2e79b744d613c06c2",
+      "hashBefore": "d73f9a5018e7398681a52f297e45460c3036d34e7e8aa208a38e3fe20265101e"
+    },
+    {
+      "path": "tests/test_development_ledger.py",
+      "reason": "Added regressions for R3, RT-01, RT-02, the delivery gates, the Green Keeper harness, the full delivery lifecycle, and CP-0003 and CP-0004 compatibility.",
+      "hashAfter": "cf6d8f2083d7dc86917c8f312979f660465fbeb95e43d6c0fe22f5293f78b1d1",
+      "hashBefore": "b0f86d02b181dfde9cb29885a38623444158cf972339a1799f757602dce444f3"
+    }
+  ],
+  "filesDeleted": []
+}

@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://iacode.local/schemas/completeness-report.schema.json",
+  "title": "Delivery completeness report",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "checkpoint",
+    "generatedAt",
+    "matrix",
+    "totalRequirements",
+    "mandatoryRequirements",
+    "complete",
+    "partial",
+    "missing",
+    "notApplicable",
+    "coveragePercent",
+    "evidenceCoveragePercent",
+    "result",
+    "findings"
+  ],
+  "$defs": {
+    "finding": {
+      "type": "object",
+      "required": ["requirement", "severity", "detail"],
+      "properties": {
+        "requirement": {"type": "string", "minLength": 1},
+        "severity": {"enum": ["BLOCKING", "ADVISORY"]},
+        "detail": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
+    }
+  },
+  "properties": {
+    "schemaVersion": {"enum": ["1.0.0"]},
+    "checkpoint": {"type": "string", "minLength": 1},
+    "generatedAt": {"type": "string", "format": "date-time"},
+    "matrix": {"type": "string", "minLength": 1},
+    "auditor": {"type": "string", "minLength": 1},
+    "totalRequirements": {"type": "integer", "minimum": 0},
+    "mandatoryRequirements": {"type": "integer", "minimum": 0},
+    "complete": {"type": "integer", "minimum": 0},
+    "partial": {"type": "integer", "minimum": 0},
+    "missing": {"type": "integer", "minimum": 0},
+    "notApplicable": {"type": "integer", "minimum": 0},
+    "inProgress": {"type": "integer", "minimum": 0},
+    "notStarted": {"type": "integer", "minimum": 0},
+    "coveragePercent": {"type": "number", "minimum": 0},
+    "evidenceCoveragePercent": {"type": "number", "minimum": 0},
+    "result": {"enum": ["PASS", "FAIL", "NOT_EXECUTED"]},
+    "findings": {"type": "array", "items": {"$ref": "#/$defs/finding"}}
+  },
+  "additionalProperties": false
+}

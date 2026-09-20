@@ -8,6 +8,23 @@ Quality checks use only `PASS`, `FAIL`, `NOT_APPLICABLE`, or `NOT_EXECUTED`. Gat
 
 Every Gate records build, unit tests, integration tests, end-to-end tests, lint, static analysis, security, documentation, checkpoint validation, and Red Team. Applicability and evidence are Gate-specific.
 
+## Delivery assurance gates
+
+From `schemaVersion` `3.0.0` every checkpoint additionally records two gates.
+
+`GREEN_KEEPER_GATE` is `PASS` only when every mandatory executable gate is green, `remainingFailures`
+is zero, and `unresolvedReworkItems` is zero. Each cycle is recorded in `REWORK-LOG.jsonl`. A real
+external blocker produces `BLOCKED`, never `PASS`.
+
+`DELIVERY_COMPLETENESS_GATE` is `PASS` only when the audit of `REQUIREMENTS-MATRIX.json` reports
+`coveragePercent` `100.00`, zero `partial`, zero `missing`, and every evidence reference resolved.
+The result is recorded in `COMPLETENESS-REPORT.json`, and validation recomputes it from the matrix so
+a stored verdict cannot drift from what it claims to describe.
+
+`READY_FOR_REVIEW` requires both gates to be `PASS`, every other non-independent dimension to be
+`PASS` or justified `NOT_APPLICABLE`, an empty `blockedBy`, and `independentReview` and `redTeam` to
+still be `PENDING`. An implementing run cannot record its own independent verdict.
+
 ## Evidence references
 
 From `schemaVersion` `2.0.0`, `QUALITY.json` records each dimension as `{status, evidence, justification}`.
@@ -15,6 +32,12 @@ A `PASS` requires at least one resolvable evidence reference: `command:<id>` mus
 checkpoint's `COMMANDS.jsonl` that exited `0`, and `file:<name>` must name a non-empty file inside the
 checkpoint. `NOT_APPLICABLE` requires a justification. A verdict inherited from an earlier checkpoint
 without re-execution is `NOT_EXECUTED`, never `PASS`.
+
+The requirements matrix uses a wider vocabulary, because it also points at repository artifacts:
+`file:<repository-relative path>`, `checkpoint:<name>` for a file inside the checkpoint,
+`command:<id>` for a successful ledger record, and `test:<TestClass.test_name>` for a case that
+exists in the suite. In `QUALITY.json`, `file:` keeps its original checkpoint-relative meaning so the
+sealed `2.0.0` checkpoints stay valid.
 
 ## Promotion rule
 

@@ -11,15 +11,21 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
+from delivery_assurance import collect_test_ids, evaluate_matrix, load_command_results
 from ledger_common import (
+    COMMAND_RESULTS,
     CURRENT_SCHEMA_VERSION,
+    EVIDENCE_SCHEMA_VERSION,
+    INDEPENDENT_DIMENSIONS,
     INVENTORY_SELF_REFERENTIAL_FILES,
     LEGACY_SCHEMA_VERSION,
     QUALITY_DIMENSIONS,
+    QUALITY_DIMENSIONS_V3,
     QUALITY_OUTCOMES,
     REQUIRED_CHECKPOINT_FILES,
     SCHEMA_BINDINGS,
     STATUSES,
+    UNBLOCKED_STATUSES,
     LedgerError,
     blob_hash,
     canonical_hash_path,
@@ -32,6 +38,26 @@ from ledger_common import (
     run_git,
     validate_schema,
 )
+
+# Schema versions whose FILES.json is a hash-bound description of the real change set.
+HASHED_INVENTORY_VERSIONS = (EVIDENCE_SCHEMA_VERSION, CURRENT_SCHEMA_VERSION)
+
+# The requirement set exists from the first moment of a delivery-assurance checkpoint.
+REQUIRED_DELIVERY_FILES = (
+    "REQUIREMENTS-MATRIX.json",
+    "REQUIREMENTS-MATRIX.md",
+)
+
+# The assurance artifacts only have to be populated once the delivery is offered for review.
+REQUIRED_HANDOFF_FILES = (
+    "REWORK-LOG.jsonl",
+    "COMPLETENESS-REPORT.json",
+    "COMPLETENESS-REPORT.md",
+    "FINAL-REPORT.md",
+)
+
+# Runtime tokens that make a recorded command literally executable from its working directory.
+RUNTIME_TOKENS = ("python", "python3", "git", "bash", "sh", "powershell", "pwsh", "cmd")
 
 
 HANDOFF_HEADINGS = (
@@ -290,6 +316,239 @@ def _validate_empty_project_inventory(root: Path, files: Any, files_path: Path, 
             errors.append(f"FILES.json created entry lacks hashAfter: {item.get('path')}")
 
 
+def _validate_command_reproducibility(
+    root: Path,
+    record: dict[str, Any],
+    line_number: int,
+    errors: list[str],
+) -> None:
+    """R3.2 and RT-02: a recorded command must be auditable and runnable where it says it ran."""
+    prefix = f"COMMANDS.jsonl:{line_number}"
+    for field in ("runtime", "commit", "purpose"):
+        if not record.get(field):
+            errors.append(f"{prefix}: schemaVersion 3.0.0 requires {field}")
+
+    result = record.get("result")
+    if result not in COMMAND_RESULTS:
+        errors.append(f"{prefix}: unsupported result {result!r}")
+    elif result == "COMPLETED":
+        if not isinstance(record.get("exitCode"), int):
+            errors.append(f"{prefix}: a COMPLETED command requires an integer exitCode")
+    else:
+        if record.get("exitCode") is not None:
+            errors.append(f"{prefix}: {result} must not carry a fabricated exitCode")
+        if not record.get("resultCode"):
+            errors.append(f"{prefix}: {result} requires a canonical resultCode")
+        if not record.get("failureReason"):
+            errors.append(f"{prefix}: {result} requires a failureReason")
+
+    command = record.get("command")
+    if not isinstance(command, str) or not command.strip():
+        return
+    tokens = command.split()
+    first = tokens[0]
+    if first not in RUNTIME_TOKENS:
+        errors.append(
+            f"{prefix}: the recorded command must start with an explicit runtime such as "
+            f"{RUNTIME_TOKENS[0]!r}, found {first!r}"
+        )
+    for token in tokens[1:]:
+        if token.endswith(".py"):
+            if not (root / token).is_file():
+                errors.append(f"{prefix}: recorded script path does not resolve from the repository: {token}")
+            break
+
+    for reference in record.get("inputs") or []:
+        if not (root / reference).exists():
+            errors.append(f"{prefix}: recorded input does not exist: {reference}")
+
+
+def _validate_status_blockers(state: dict[str, Any], errors: list[str]) -> None:
+    """RT-01: a checkpoint may never claim readiness while it also claims to be blocked."""
+    status = state.get("status")
+    blockers = state.get("blockedBy")
+    blocker_list = blockers if isinstance(blockers, list) else []
+    if status in UNBLOCKED_STATUSES and blocker_list:
+        errors.append(
+            f"{status} is incompatible with a non-empty blockedBy: {', '.join(str(item) for item in blocker_list)}"
+        )
+    if status == "BLOCKED" and not blocker_list:
+        errors.append("BLOCKED requires at least one entry in blockedBy")
+
+
+def _validate_delivery_assurance(
+    root: Path,
+    target: Path,
+    state: dict[str, Any],
+    normalized_quality: dict[str, dict[str, Any]],
+    tests: Any,
+    errors: list[str],
+) -> None:
+    """Enforce the Green Keeper and Delivery Completeness gates and their stored evidence."""
+    status = state.get("status")
+    green = state.get("greenKeeper")
+    delivery = state.get("deliveryCompleteness")
+    matrix_state = state.get("requirementsMatrix")
+    review = state.get("independentReview")
+    red_team = state.get("redTeam")
+
+    for name, block in (
+        ("requirementsMatrix", matrix_state),
+        ("greenKeeper", green),
+        ("deliveryCompleteness", delivery),
+        ("independentReview", review),
+        ("redTeam", red_team),
+    ):
+        if not isinstance(block, dict):
+            errors.append(f"STATE.json schemaVersion 3.0.0 requires the {name} block")
+    if not isinstance(state.get("reworkCycles"), int):
+        errors.append("STATE.json schemaVersion 3.0.0 requires an integer reworkCycles")
+
+    # The rework log is the Green Keeper's own evidence; its last cycle must agree with the gate.
+    cycles: list[dict[str, Any]] = []
+    log_path = target / "REWORK-LOG.jsonl"
+    if log_path.is_file():
+        schema_path = root / ".iacode" / "schemas" / "rework-log.schema.json"
+        schema = load_json(schema_path) if schema_path.is_file() else None
+        for index, line in enumerate(log_path.read_text(encoding="utf-8").splitlines(), 1):
+            if not line.strip():
+                continue
+            try:
+                entry = json.loads(line)
+            except json.JSONDecodeError as exc:
+                errors.append(f"REWORK-LOG.jsonl:{index}: invalid JSON: {exc}")
+                continue
+            if schema:
+                for error in validate_schema(entry, schema):
+                    errors.append(f"REWORK-LOG.jsonl:{index}: {error}")
+            cycles.append(entry)
+
+    # The gate values describe a delivery, so they are enforced when the delivery is offered. While a
+    # checkpoint is still being worked on they are provisional, which is what lets the Green Keeper
+    # validate the very checkpoint that records its own cycles.
+    offered = status in HANDOFF_READY_STATUSES
+    if isinstance(green, dict) and offered:
+        if green.get("cycles") != len(cycles):
+            errors.append(
+                f"STATE.json greenKeeper.cycles={green.get('cycles')!r} does not match "
+                f"{len(cycles)} recorded rework cycles"
+            )
+        if isinstance(state.get("reworkCycles"), int) and state["reworkCycles"] != len(cycles):
+            errors.append("STATE.json reworkCycles does not match the recorded rework cycles")
+        if green.get("status") == "PASS":
+            if not cycles:
+                errors.append("greenKeeper=PASS requires at least one recorded rework cycle")
+            elif cycles[-1].get("result") != "GREEN":
+                errors.append(
+                    f"greenKeeper=PASS contradicts the last rework cycle result "
+                    f"{cycles[-1].get('result')!r}"
+                )
+            if green.get("remainingFailures"):
+                errors.append("greenKeeper=PASS requires remainingFailures to be zero")
+            if green.get("unresolvedReworkItems"):
+                errors.append("greenKeeper=PASS requires unresolvedReworkItems to be zero")
+            if isinstance(tests, dict):
+                for key in ("unit", "integration", "e2e"):
+                    result = tests.get(key)
+                    if isinstance(result, dict) and result.get("failed"):
+                        errors.append(f"greenKeeper=PASS contradicts TESTS.json {key}.failed={result['failed']}")
+            for dimension, entry in normalized_quality.items():
+                if dimension not in INDEPENDENT_DIMENSIONS and entry.get("status") == "FAIL":
+                    errors.append(f"greenKeeper=PASS contradicts QUALITY.json {dimension}=FAIL")
+
+    # The completeness report is recomputed from the matrix, so a stored verdict cannot drift.
+    report_path = target / "COMPLETENESS-REPORT.json"
+    matrix_path = target / "REQUIREMENTS-MATRIX.json"
+    recomputed: dict[str, Any] | None = None
+    if matrix_path.is_file():
+        try:
+            matrix = load_json(matrix_path)
+        except LedgerError as exc:
+            errors.append(str(exc))
+            matrix = None
+        if matrix is not None:
+            schema_path = root / ".iacode" / "schemas" / "requirements-matrix.schema.json"
+            if schema_path.is_file():
+                for error in validate_schema(matrix, load_json(schema_path)):
+                    errors.append(f"REQUIREMENTS-MATRIX.json: {error}")
+            recomputed = evaluate_matrix(
+                root, target, matrix, load_command_results(target), collect_test_ids(root))
+            if isinstance(matrix_state, dict) and offered:
+                for key in ("total", "complete", "partial", "missing", "notApplicable"):
+                    source = {
+                        "total": "totalRequirements", "complete": "complete", "partial": "partial",
+                        "missing": "missing", "notApplicable": "notApplicable",
+                    }[key]
+                    if matrix_state.get(key) != recomputed[source]:
+                        errors.append(
+                            f"STATE.json requirementsMatrix.{key}={matrix_state.get(key)!r} does not match "
+                            f"the matrix value {recomputed[source]!r}"
+                        )
+                if matrix_state.get("coveragePercent") != recomputed["coveragePercent"]:
+                    errors.append("STATE.json requirementsMatrix.coveragePercent does not match the matrix")
+
+    if report_path.is_file():
+        try:
+            report = load_json(report_path)
+        except LedgerError as exc:
+            errors.append(str(exc))
+            report = None
+        if isinstance(report, dict):
+            schema_path = root / ".iacode" / "schemas" / "completeness-report.schema.json"
+            if schema_path.is_file():
+                for error in validate_schema(report, load_json(schema_path)):
+                    errors.append(f"COMPLETENESS-REPORT.json: {error}")
+            if recomputed is not None and offered:
+                for key in ("totalRequirements", "complete", "partial", "missing", "notApplicable",
+                            "coveragePercent", "evidenceCoveragePercent", "result"):
+                    if report.get(key) != recomputed[key]:
+                        errors.append(
+                            f"COMPLETENESS-REPORT.json {key}={report.get(key)!r} contradicts the "
+                            f"recomputed value {recomputed[key]!r}"
+                        )
+            if offered and isinstance(delivery, dict) and delivery.get("status") != report.get("result"):
+                errors.append(
+                    f"STATE.json deliveryCompleteness.status={delivery.get('status')!r} contradicts "
+                    f"COMPLETENESS-REPORT.json result={report.get('result')!r}"
+                )
+
+    if status != "READY_FOR_REVIEW":
+        return
+
+    if isinstance(green, dict) and green.get("status") != "PASS":
+        errors.append(f"READY_FOR_REVIEW requires GREEN_KEEPER_GATE=PASS, found {green.get('status')!r}")
+    if isinstance(delivery, dict):
+        if delivery.get("status") != "PASS":
+            errors.append(
+                f"READY_FOR_REVIEW requires DELIVERY_COMPLETENESS_GATE=PASS, found {delivery.get('status')!r}")
+        if delivery.get("coveragePercent") != 100.0:
+            errors.append(
+                f"READY_FOR_REVIEW requires total requirement coverage, found "
+                f"{delivery.get('coveragePercent')!r}")
+    if recomputed is not None:
+        if recomputed["partial"]:
+            errors.append(f"READY_FOR_REVIEW requires zero PARTIAL requirements, found {recomputed['partial']}")
+        if recomputed["missing"]:
+            errors.append(f"READY_FOR_REVIEW requires zero MISSING requirements, found {recomputed['missing']}")
+        if recomputed["result"] != "PASS":
+            for finding in recomputed["findings"]:
+                if finding["severity"] == "BLOCKING":
+                    errors.append(f"READY_FOR_REVIEW blocked by {finding['requirement']}: {finding['detail']}")
+    for dimension in QUALITY_DIMENSIONS_V3:
+        if dimension in INDEPENDENT_DIMENSIONS:
+            continue
+        entry = normalized_quality.get(dimension) or {}
+        if entry.get("status") == "NOT_EXECUTED":
+            errors.append(f"READY_FOR_REVIEW requires QUALITY.json {dimension} to be executed")
+        if entry.get("status") == "FAIL":
+            errors.append(f"READY_FOR_REVIEW cannot have QUALITY.json {dimension}=FAIL")
+    if isinstance(review, dict) and review.get("status") != "PENDING":
+        errors.append(
+            f"READY_FOR_REVIEW requires independentReview to be PENDING, found {review.get('status')!r}")
+    if isinstance(red_team, dict) and red_team.get("status") != "PENDING":
+        errors.append(f"READY_FOR_REVIEW requires redTeam to be PENDING, found {red_team.get('status')!r}")
+
+
 def _validate_second_tool(
     state: dict[str, Any],
     target: Path,
@@ -338,12 +597,13 @@ def _validate_quality_evidence(
         return
 
     if not isinstance(quality, dict) or not isinstance(quality.get("checks"), dict):
-        errors.append("QUALITY.json schemaVersion 2.0.0 requires a checks object")
+        errors.append(f"QUALITY.json schemaVersion {version} requires a checks object")
         return
     for dimension in quality:
         if dimension not in ("schemaVersion", "checks"):
-            errors.append(f"QUALITY.json schemaVersion 2.0.0 must not use the flat dimension {dimension}")
-    for dimension in QUALITY_DIMENSIONS:
+            errors.append(f"QUALITY.json schemaVersion {version} must not use the flat dimension {dimension}")
+    required = QUALITY_DIMENSIONS_V3 if version == CURRENT_SCHEMA_VERSION else QUALITY_DIMENSIONS
+    for dimension in required:
         entry = normalized.get(dimension)
         if entry is None:
             errors.append(f"QUALITY.json is missing the required dimension {dimension}")
@@ -397,7 +657,18 @@ def validate_checkpoint(
     if not target.is_dir():
         return errors + [f"checkpoint directory does not exist: {target}"]
 
-    for name in REQUIRED_CHECKPOINT_FILES:
+    declared_version = LEGACY_SCHEMA_VERSION
+    state_path = target / "STATE.json"
+    if state_path.is_file():
+        try:
+            declared_version = _schema_version(load_json(state_path))
+        except LedgerError:
+            declared_version = LEGACY_SCHEMA_VERSION
+
+    required_files = REQUIRED_CHECKPOINT_FILES
+    if declared_version == CURRENT_SCHEMA_VERSION:
+        required_files = REQUIRED_CHECKPOINT_FILES + REQUIRED_DELIVERY_FILES
+    for name in required_files:
         path = target / name
         if not path.is_file():
             errors.append(f"missing required checkpoint file: {name}")
@@ -452,11 +723,14 @@ def validate_checkpoint(
                 for error in validate_schema(command, schemas.get("command.schema.json", {})):
                     errors.append(f"COMMANDS.jsonl:{line_number}: {error}")
                 identifier = command.get("id") if isinstance(command, dict) else None
-                if version == CURRENT_SCHEMA_VERSION:
+                if version in (EVIDENCE_SCHEMA_VERSION, CURRENT_SCHEMA_VERSION):
                     if not identifier:
-                        errors.append(f"COMMANDS.jsonl:{line_number}: schemaVersion 2.0.0 requires a command id")
+                        errors.append(
+                            f"COMMANDS.jsonl:{line_number}: schemaVersion {version} requires a command id")
                     elif identifier in command_ids:
                         errors.append(f"COMMANDS.jsonl:{line_number}: duplicate command id {identifier!r}")
+                if version == CURRENT_SCHEMA_VERSION and isinstance(command, dict):
+                    _validate_command_reproducibility(root, command, line_number, errors)
                 if isinstance(identifier, str) and isinstance(command, dict):
                     command_ids[identifier] = command.get("exitCode")
                 for value in _all_strings(command):
@@ -544,10 +818,14 @@ def validate_checkpoint(
         if state.get("status") in HANDOFF_READY_STATUSES and state.get("currentCommit") in ("HEAD", "UNBORN"):
             errors.append(f"{state.get('status')} must be anchored to an exact commit or checkpoint tag, not HEAD/UNBORN")
 
+        _validate_status_blockers(state, errors)
         _validate_second_tool(state, target, version, errors)
         _validate_quality_evidence(target, quality, normalized_quality, command_ids, version, errors)
 
-        if version == CURRENT_SCHEMA_VERSION and files is not None:
+        if version == CURRENT_SCHEMA_VERSION:
+            _validate_delivery_assurance(root, target, state, normalized_quality, tests, errors)
+
+        if version in HASHED_INVENTORY_VERSIONS and files is not None:
             if state.get("baseCommit") == "UNBORN":
                 _validate_empty_project_inventory(root, files, files_path, errors)
             else:
@@ -600,8 +878,10 @@ def validate_checkpoint(
     if isinstance(state, dict) and state.get("status") in HANDOFF_READY_STATUSES:
         final_report = target / "FINAL-REPORT.md"
         required_finals: list[Path] = []
-        if version == CURRENT_SCHEMA_VERSION or state.get("status") == "GATE_PASS":
+        if version in (EVIDENCE_SCHEMA_VERSION, CURRENT_SCHEMA_VERSION) or state.get("status") == "GATE_PASS":
             required_finals.append(final_report)
+        if version == CURRENT_SCHEMA_VERSION:
+            required_finals += [target / name for name in REQUIRED_HANDOFF_FILES if name != "FINAL-REPORT.md"]
         if version == LEGACY_SCHEMA_VERSION and state.get("status") == "GATE_PASS":
             required_finals.append(target / "RESUME-VALIDATION.md")
         for required_final in required_finals:
@@ -616,8 +896,6 @@ def validate_checkpoint(
     if isinstance(state, dict) and state.get("status") == "GATE_PASS":
         if state.get("dirty") is not False:
             errors.append("GATE_PASS requires dirty=false")
-        if state.get("blockedBy"):
-            errors.append("GATE_PASS requires blockedBy to be empty")
         if normalized_quality:
             for key, entry in normalized_quality.items():
                 if entry.get("status") in ("FAIL", "NOT_EXECUTED"):

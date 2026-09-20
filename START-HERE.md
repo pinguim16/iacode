@@ -18,5 +18,14 @@ IACode is a planned private, autonomous, general-purpose software engineering pl
 7. Execute the validation commands in `HANDOFF.md`.
 8. Continue only from `NEXT.md` and do not advance a Gate without explicit authorization and a passing prior Gate.
 
-See the [Master Plan](docs/MASTER-PLAN.md) and [Handoff Protocol](docs/HANDOFF-PROTOCOL.md).
+## Mandatory delivery order
+
+Every delivery runs, in order: requirement extraction into `REQUIREMENTS-MATRIX.json`, baseline,
+plan, implementation, test and quality execution, [Test Rework / Green Keeper](.iacode/agents/test-rework-greenkeeper.md),
+[Delivery Completeness Validator](.iacode/agents/delivery-completeness-validator.md),
+`READY_FOR_REVIEW`, independent tool review, Red Team, and only then `GATE_PASS`. No step may be
+skipped, and nothing red or incomplete is handed to the independent tool.
+
+See the [Master Plan](docs/MASTER-PLAN.md), the [Quality Gates](docs/QUALITY-GATES.md), and the
+[Handoff Protocol](docs/HANDOFF-PROTOCOL.md).
 

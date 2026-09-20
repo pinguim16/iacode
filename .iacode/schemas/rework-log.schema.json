@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://iacode.local/schemas/rework-log.schema.json",
+  "title": "Green Keeper rework cycle",
+  "type": "object",
+  "required": [
+    "cycle",
+    "timestamp",
+    "trigger",
+    "failedGate",
+    "failureEvidence",
+    "rootCauseSummary",
+    "filesChanged",
+    "commandsExecuted",
+    "result",
+    "remainingFailures"
+  ],
+  "properties": {
+    "cycle": {"type": "integer", "minimum": 1},
+    "timestamp": {"type": "string", "format": "date-time"},
+    "trigger": {"type": "string", "minLength": 1},
+    "failedGate": {"type": ["string", "null"]},
+    "failureEvidence": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "rootCauseSummary": {"type": ["string", "null"]},
+    "filesChanged": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "commandsExecuted": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "result": {"enum": ["GREEN", "STILL_RED", "BLOCKED_EXTERNAL"]},
+    "remainingFailures": {"type": "integer", "minimum": 0},
+    "externalBlocker": {"type": ["string", "null"]},
+    "notes": {"type": ["string", "null"]}
+  },
+  "additionalProperties": false
+}

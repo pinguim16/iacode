@@ -19,16 +19,20 @@ from typing import Any
 
 from ledger_common import (
     CURRENT_SCHEMA_VERSION,
+    EVIDENCE_SCHEMA_VERSION,
     INVENTORY_SELF_REFERENTIAL_FILES,
     STATUSES,
     LedgerError,
+    append_command_record,
     blob_hash,
+    build_command_record,
     canonical_hash_path,
     find_root,
     git_snapshot,
     load_json,
     redact_text,
     resolve_latest,
+    runtime_label,
     utc_now,
     write_json,
 )
@@ -36,47 +40,86 @@ from validate_checkpoint import _resolve_expected_commit, validate_checkpoint
 
 FINALIZED_FILES = ("STATE.json", "RUN-METADATA.json", "STATUS.md", "HANDOFF.md")
 
+# The literal, portable invocation of this tool from the repository root. Recording the bare script
+# name made the CP-0003 ledger unexecutable from its own working directory.
+INVOCATION_PREFIX = "python scripts/development-ledger/finalize_checkpoint.py"
 
-def _next_command_id(commands_path: Path) -> str:
-    highest = 0
-    count = 0
+HASHED_INVENTORY_VERSIONS = (EVIDENCE_SCHEMA_VERSION, CURRENT_SCHEMA_VERSION)
+
+
+def _next_attempt_id(checkpoint: Path) -> str:
+    """Stable per-checkpoint attempt identifier, independent of the command numbering."""
+    attempts = 0
+    commands_path = checkpoint / "COMMANDS.jsonl"
     if commands_path.is_file():
         for line in commands_path.read_text(encoding="utf-8").splitlines():
             if not line.strip():
                 continue
-            count += 1
             try:
-                identifier = json.loads(line).get("id")
+                record = json.loads(line)
             except json.JSONDecodeError:
                 continue
-            match = re.fullmatch(r"cmd-(\d+)", identifier or "")
-            if match:
-                highest = max(highest, int(match.group(1)))
-    return f"cmd-{max(highest, count) + 1:04d}"
+            if record.get("operation") == "finalize-checkpoint":
+                attempts += 1
+    return f"finalize-attempt-{attempts + 1:04d}"
+
+
+def _repository_state(root: Path) -> dict[str, Any]:
+    try:
+        snapshot = git_snapshot(root)
+    except LedgerError:
+        return {"branch": None, "head": None, "dirty": None, "detached": None}
+    return {
+        "branch": snapshot["branch"],
+        "head": snapshot["head"],
+        "dirty": snapshot["dirty"],
+        "detached": snapshot["detached"],
+    }
 
 
 def _record_attempt(
     checkpoint: Path,
     root: Path,
     command: str,
-    exit_code: int,
+    arguments: list[str],
+    *,
+    phase: str,
+    result: str,
+    result_code: str,
+    exit_code: int | None,
     duration_ms: int,
-    notes: str | None,
-) -> None:
-    commands_path = checkpoint / "COMMANDS.jsonl"
-    record: dict[str, Any] = {
-        "id": _next_command_id(commands_path),
-        "timestamp": utc_now(),
-        "command": command,
-        "workingDirectory": str(root),
-        "exitCode": exit_code,
-        "durationMs": duration_ms,
-        "stdoutArtifact": "STATE.json" if exit_code == 0 else None,
-        "stderrArtifact": None,
-        "notes": redact_text(notes) if notes else None,
-    }
-    with commands_path.open("a", encoding="utf-8", newline="\n") as handle:
-        handle.write(json.dumps(record, ensure_ascii=False) + "\n")
+    preconditions: list[dict[str, Any]],
+    failure_reason: str | None,
+    notes: str | None = None,
+) -> str:
+    """Append this finalization attempt to the ledger. Every attempt is recorded, including a
+    refusal decided before the operation ran, so the ledger explains why nothing happened."""
+    record = build_command_record(
+        root,
+        command=command,
+        arguments=arguments,
+        purpose="Finalize the checkpoint metadata for a clean post-commit handoff.",
+        working_directory=str(root),
+        runtime=runtime_label("python"),
+        inputs=[
+            str((checkpoint / name).relative_to(root)).replace("\\", "/")
+            for name in ("STATE.json", "RUN-METADATA.json", "FILES.json")
+            if (checkpoint / name).is_file()
+        ],
+        result=result,
+        result_code=result_code,
+        exit_code=exit_code,
+        duration_ms=duration_ms,
+        stdout_artifact="STATE.json" if result == "COMPLETED" and exit_code == 0 else None,
+        operation="finalize-checkpoint",
+        phase=phase,
+        attempt_id=_next_attempt_id(checkpoint),
+        preconditions=preconditions,
+        failure_reason=failure_reason,
+        repository_state=_repository_state(root),
+        notes=redact_text(notes) if notes else None,
+    )
+    return append_command_record(checkpoint / "COMMANDS.jsonl", record)
 
 
 def _refresh_inventory_hashes(root: Path, checkpoint: Path, state: dict[str, Any], files: Any) -> Any:
@@ -90,7 +133,7 @@ def _refresh_inventory_hashes(root: Path, checkpoint: Path, state: dict[str, Any
         str((checkpoint / name).relative_to(root)).replace("\\", "/") for name in INVENTORY_SELF_REFERENTIAL_FILES
     }
 
-    if version != CURRENT_SCHEMA_VERSION:
+    if version not in HASHED_INVENTORY_VERSIONS:
         finalized_paths = {
             str((checkpoint / name).relative_to(root)).replace("\\", "/") for name in FINALIZED_FILES
         }
@@ -137,20 +180,75 @@ def main() -> int:
     elif not checkpoint.is_absolute():
         checkpoint = root / checkpoint
     checkpoint = checkpoint.resolve()
-    if checkpoint != latest:
-        print("CHECKPOINT_NOT_FINALIZED")
-        print("- finalization is restricted to the checkpoint named by LATEST.md")
-        return 2
 
-    snapshot = git_snapshot(root)
-    if snapshot["detached"]:
-        print("CHECKPOINT_NOT_FINALIZED")
-        print("- finalization requires an attached branch; detached HEAD is read-only for validation")
-        return 2
-
-    invocation = "finalize_checkpoint.py" + (f" --status {args.status}" if args.status else "")
-    invocation += f" --commit-ref {args.commit_ref}" if args.commit_ref else ""
+    arguments: list[str] = ["scripts/development-ledger/finalize_checkpoint.py"]
+    if args.status:
+        arguments += ["--status", args.status]
+    if args.commit_ref:
+        arguments += ["--commit-ref", args.commit_ref]
+    invocation = "python " + " ".join(arguments)
     started = time.monotonic()
+
+    snapshot = _repository_state(root)
+    commit_ref = args.commit_ref or ("HEAD" if snapshot.get("head") not in (None, "UNBORN") else "UNBORN")
+    canonical_ref = not (commit_ref.startswith("refs/") and not commit_ref.startswith("refs/tags/iacode-checkpoints/"))
+
+    # Preconditions are evaluated before anything is written, and the attempt is recorded even when
+    # they refuse the operation, so a refusal never disappears from the ledger.
+    preconditions = [
+        {
+            "name": "checkpoint-is-latest",
+            "expected": str(latest),
+            "observed": str(checkpoint),
+            "satisfied": checkpoint == latest,
+        },
+        {
+            "name": "attached-branch",
+            "expected": "an attached branch",
+            "observed": "detached HEAD" if snapshot.get("detached") else f"branch {snapshot.get('branch')}",
+            "satisfied": not snapshot.get("detached"),
+        },
+        {
+            "name": "canonical-commit-ref",
+            "expected": "refs/tags/iacode-checkpoints/... or an exact commit",
+            "observed": commit_ref,
+            "satisfied": canonical_ref,
+        },
+    ]
+    refusals = {
+        "checkpoint-is-latest": (
+            "E_NOT_LATEST_CHECKPOINT",
+            "finalization is restricted to the checkpoint named by LATEST.md",
+        ),
+        "attached-branch": (
+            "E_DETACHED_HEAD",
+            "finalization requires an attached branch; detached HEAD is read-only for validation",
+        ),
+        "canonical-commit-ref": (
+            "E_INVALID_COMMIT_REF",
+            "checkpoint commit refs must use refs/tags/iacode-checkpoints/",
+        ),
+    }
+    unsatisfied = [item for item in preconditions if not item["satisfied"]]
+    if unsatisfied:
+        result_code, message = refusals[unsatisfied[0]["name"]]
+        _record_attempt(
+            latest,
+            root,
+            invocation,
+            arguments,
+            phase="precondition",
+            result="PRECONDITION_REJECTED",
+            result_code=result_code,
+            exit_code=None,
+            duration_ms=int((time.monotonic() - started) * 1000),
+            preconditions=preconditions,
+            failure_reason=message,
+        )
+        print("CHECKPOINT_NOT_FINALIZED")
+        print(f"- {message}")
+        return 2
+
     now = utc_now()
 
     original_state = load_json(checkpoint / "STATE.json")
@@ -171,7 +269,19 @@ def main() -> int:
 
     def fail(reasons: list[str]) -> int:
         summary = f"{len(reasons)} validation error(s): " + "; ".join(reasons[:5])
-        _record_attempt(checkpoint, root, invocation, 1, int((time.monotonic() - started) * 1000), summary)
+        _record_attempt(
+            checkpoint,
+            root,
+            invocation,
+            arguments,
+            phase="validation",
+            result="COMPLETED",
+            result_code="E_VALIDATION_FAILED",
+            exit_code=1,
+            duration_ms=int((time.monotonic() - started) * 1000),
+            preconditions=preconditions,
+            failure_reason=summary,
+        )
         restore()
         print("CHECKPOINT_NOT_FINALIZED")
         for reason in reasons:
@@ -183,11 +293,6 @@ def main() -> int:
     if args.status:
         state["status"] = args.status
     state["branch"] = snapshot["branch"]
-    commit_ref = args.commit_ref or ("HEAD" if snapshot["head"] != "UNBORN" else "UNBORN")
-    if commit_ref.startswith("refs/") and not commit_ref.startswith("refs/tags/iacode-checkpoints/"):
-        print("CHECKPOINT_NOT_FINALIZED")
-        print("- checkpoint commit refs must use refs/tags/iacode-checkpoints/")
-        return 2
     state["currentCommit"] = commit_ref
     state["dirty"] = False
     state["updatedAt"] = now
@@ -209,7 +314,19 @@ def main() -> int:
 
     # Record the successful attempt before sealing the hashes, so the ledger entry that
     # produced the final state is itself covered by the inventory it seals.
-    _record_attempt(checkpoint, root, invocation, 0, int((time.monotonic() - started) * 1000), None)
+    _record_attempt(
+        checkpoint,
+        root,
+        invocation,
+        arguments,
+        phase="seal",
+        result="COMPLETED",
+        result_code="OK",
+        exit_code=0,
+        duration_ms=int((time.monotonic() - started) * 1000),
+        preconditions=preconditions,
+        failure_reason=None,
+    )
     write_json(files_path, _refresh_inventory_hashes(root, checkpoint, state, load_json(files_path)))
 
     errors = validate_checkpoint(root, checkpoint, allow_dirty=True, allow_pending_ref=True)

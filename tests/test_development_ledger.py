@@ -22,9 +22,13 @@ from ledger_common import (  # noqa: E402
     redact_text,
 )
 from validate_checkpoint import (  # noqa: E402
+    _validate_command_reproducibility,
+    _validate_delivery_assurance,
     _validate_quality_evidence,
     _validate_second_tool,
+    _validate_status_blockers,
 )
+from delivery_assurance import evaluate_matrix  # noqa: E402
 
 
 NOW = "2026-09-19T12:00:00Z"
@@ -112,6 +116,8 @@ CANONICAL_AGENT_NAMES = {
     "red-team",
     "reviewer",
     "security-reviewer",
+    "test-rework-greenkeeper",
+    "delivery-completeness-validator",
 }
 
 
@@ -135,6 +141,54 @@ FINAL_REPORT_FIXTURE = "\n".join(
 
 def write_final_report(checkpoint: Path) -> None:
     (checkpoint / "FINAL-REPORT.md").write_text(FINAL_REPORT_FIXTURE, encoding="utf-8")
+
+
+BASE_QUALITY_DIMENSIONS = (
+    "build", "unitTests", "integrationTests", "e2e", "lint", "staticAnalysis",
+    "security", "documentation", "checkpointValidation", "redTeam",
+)
+
+
+def copy_ledger_tooling(root: Path) -> None:
+    """A real IACode repository ships its ledger tooling, so recorded tool paths resolve from it."""
+    shutil.copytree(SCRIPTS, root / "scripts" / "development-ledger",
+                    ignore=shutil.ignore_patterns("__pycache__"))
+
+
+def read_json(path: Path) -> dict:
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def write_json_file(path: Path, value: object) -> None:
+    path.write_text(json.dumps(value, indent=2) + "\n", encoding="utf-8", newline="\n")
+
+
+def downgrade_to_evidence_schema(checkpoint: Path) -> None:
+    """Pin a freshly created checkpoint to schemaVersion 2.0.0.
+
+    The 2.0.0 rules stay under test after 3.0.0 arrives, and the inventory, detached-HEAD, and
+    finalization controls are shared by both versions.
+    """
+    state = read_json(checkpoint / "STATE.json")
+    state["schemaVersion"] = "2.0.0"
+    for key in ("requirementsMatrix", "greenKeeper", "deliveryCompleteness", "reworkCycles",
+                "independentReview", "redTeam"):
+        state.pop(key, None)
+    write_json_file(checkpoint / "STATE.json", state)
+    for name in ("TESTS.json", "PROVENANCE.json"):
+        document = read_json(checkpoint / name)
+        document["schemaVersion"] = "2.0.0"
+        write_json_file(checkpoint / name, document)
+    quality = read_json(checkpoint / "QUALITY.json")
+    quality["schemaVersion"] = "2.0.0"
+    quality["checks"] = {
+        name: entry for name, entry in quality["checks"].items() if name in BASE_QUALITY_DIMENSIONS
+    }
+    write_json_file(checkpoint / "QUALITY.json", quality)
+    for name in ("REQUIREMENTS-MATRIX.json", "REQUIREMENTS-MATRIX.md", "REWORK-LOG.jsonl"):
+        target = checkpoint / name
+        if target.exists():
+            target.unlink()
 
 
 def declare_inventory(root: Path, checkpoint: Path, reason: str = "declared by test scaffolding") -> None:
@@ -491,6 +545,7 @@ class LedgerLifecycleTests(unittest.TestCase):
             ], root)
             self.assertEqual(created.returncode, 0, created.stdout)
             checkpoint = root / "docs" / "checkpoints" / "TEST-CP-0001"
+            downgrade_to_evidence_schema(checkpoint)
             write_final_report(checkpoint)
             declare_inventory(root, checkpoint)
             finalized = run([
@@ -604,6 +659,7 @@ class DeltaCheckpointFixture(unittest.TestCase):
         ], root)
         self.assertEqual(created.returncode, 0, created.stdout)
         checkpoint = root / "docs" / "checkpoints" / "TEST-CP-0001"
+        downgrade_to_evidence_schema(checkpoint)
 
         (root / "content" / "keep.md").write_text("# Keep\n\nchanged\n", encoding="utf-8")
         (root / "content" / "added.md").write_text("# Added\n\nnew\n", encoding="utf-8")
@@ -828,10 +884,15 @@ class FinalizationLedgerTests(DeltaCheckpointFixture):
                 for line in (checkpoint / "COMMANDS.jsonl").read_text(encoding="utf-8").splitlines()
                 if line.strip()
             ]
-            failures = [item for item in records if item["command"].startswith("finalize_checkpoint.py")]
+            failures = [item for item in records if item.get("operation") == "finalize-checkpoint"]
             self.assertEqual(len(failures), 1)
             self.assertEqual(failures[0]["exitCode"], 1)
-            self.assertIn("validation error", failures[0]["notes"])
+            self.assertEqual(failures[0]["resultCode"], "E_VALIDATION_FAILED")
+            self.assertIn("validation error", failures[0]["failureReason"])
+            self.assertTrue(
+                failures[0]["command"].startswith("python scripts/development-ledger/finalize_checkpoint.py"),
+                failures[0]["command"],
+            )
 
             # Correction, then a second attempt that must succeed.
             self._seal(root, checkpoint)
@@ -841,8 +902,10 @@ class FinalizationLedgerTests(DeltaCheckpointFixture):
                 for line in (checkpoint / "COMMANDS.jsonl").read_text(encoding="utf-8").splitlines()
                 if line.strip()
             ]
-            attempts = [item for item in records if item["command"].startswith("finalize_checkpoint.py")]
+            attempts = [item for item in records if item.get("operation") == "finalize-checkpoint"]
             self.assertEqual([item["exitCode"] for item in attempts], [1, 0])
+            self.assertEqual([item["attemptId"] for item in attempts],
+                             ["finalize-attempt-0001", "finalize-attempt-0002"])
             self.assertEqual(len({item["id"] for item in records}), len(records))
 
             state = self._read(checkpoint, "STATE.json")
@@ -1058,6 +1121,708 @@ class HistoricalCheckpointCompatibilityTests(unittest.TestCase):
 
     def test_second_sealed_checkpoint_still_validates(self) -> None:
         self._assert_historical_checkpoint_validates("iacode-checkpoints/SETUP-00-CP-0002")
+
+    def test_third_sealed_checkpoint_still_validates(self) -> None:
+        self._assert_historical_checkpoint_validates("iacode-checkpoints/SETUP-00-CP-0003")
+
+    def test_fourth_sealed_checkpoint_still_validates(self) -> None:
+        self._assert_historical_checkpoint_validates("iacode-checkpoints/SETUP-00-CP-0004")
+
+
+class FinalizationAttemptRecordingTests(DeltaCheckpointFixture):
+    """CP-0004 R3.1 and RT-02: a refusal decided before the operation still reaches the ledger."""
+
+    def _records(self, checkpoint: Path) -> list[dict]:
+        return [
+            json.loads(line)
+            for line in (checkpoint / "COMMANDS.jsonl").read_text(encoding="utf-8").splitlines()
+            if line.strip()
+        ]
+
+    def _attempts(self, checkpoint: Path) -> list[dict]:
+        return [item for item in self._records(checkpoint) if item.get("operation") == "finalize-checkpoint"]
+
+    def test_detached_head_refusal_is_recorded(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            checkpoint = self._build(root)
+            self._seal(root, checkpoint)
+            before = len(self._attempts(checkpoint))
+            self._git(root, "checkout", "--detach", f"refs/tags/{self.TAG}")
+            result = run([
+                sys.executable, str(SCRIPTS / "finalize_checkpoint.py"), "--root", str(root),
+                "--status", "READY_FOR_REVIEW", "--commit-ref", f"refs/tags/{self.TAG}",
+            ], root)
+            self.assertEqual(result.returncode, 2, result.stdout)
+            attempts = self._attempts(checkpoint)
+            self.assertEqual(len(attempts), before + 1)
+            refusal = attempts[-1]
+            self.assertEqual(refusal["result"], "PRECONDITION_REJECTED")
+            self.assertEqual(refusal["resultCode"], "E_DETACHED_HEAD")
+            self.assertIsNone(refusal["exitCode"])
+            self.assertIn("attached branch", refusal["failureReason"])
+            self.assertEqual(refusal["phase"], "precondition")
+            self.assertTrue(refusal["repositoryState"]["detached"])
+            names = {item["name"]: item["satisfied"] for item in refusal["preconditions"]}
+            self.assertFalse(names["attached-branch"])
+            self.assertTrue(names["checkpoint-is-latest"])
+
+    def test_non_latest_checkpoint_refusal_is_recorded(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary, tempfile.TemporaryDirectory() as external:
+            root = Path(temporary)
+            checkpoint = self._build(root)
+            self._seal(root, checkpoint)
+            before = len(self._attempts(checkpoint))
+            outside = Path(external)
+            sentinel = outside / "STATE.json"
+            sentinel.write_text('{"status":"IN_PROGRESS"}\n', encoding="utf-8")
+            result = run([
+                sys.executable, str(SCRIPTS / "finalize_checkpoint.py"), "--root", str(root),
+                "--checkpoint", str(outside), "--status", "GATE_FAIL",
+            ], root)
+            self.assertEqual(result.returncode, 2, result.stdout)
+            self.assertEqual(sentinel.read_text(encoding="utf-8"), '{"status":"IN_PROGRESS"}\n')
+            attempts = self._attempts(checkpoint)
+            self.assertEqual(len(attempts), before + 1)
+            self.assertEqual(attempts[-1]["resultCode"], "E_NOT_LATEST_CHECKPOINT")
+            self.assertEqual(attempts[-1]["result"], "PRECONDITION_REJECTED")
+
+    def test_invalid_commit_reference_refusal_is_recorded(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            checkpoint = self._build(root)
+            self._seal(root, checkpoint)
+            before = len(self._attempts(checkpoint))
+            result = run([
+                sys.executable, str(SCRIPTS / "finalize_checkpoint.py"), "--root", str(root),
+                "--status", "READY_FOR_REVIEW", "--commit-ref", "refs/heads/main",
+            ], root)
+            self.assertEqual(result.returncode, 2, result.stdout)
+            attempts = self._attempts(checkpoint)
+            self.assertEqual(len(attempts), before + 1)
+            self.assertEqual(attempts[-1]["resultCode"], "E_INVALID_COMMIT_REF")
+            self.assertIsNone(attempts[-1]["exitCode"])
+
+    def test_recorded_finalizer_command_is_executable_from_its_working_directory(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            checkpoint = self._build(root)
+            self._seal(root, checkpoint)
+            attempts = self._attempts(checkpoint)
+            self.assertTrue(attempts)
+            for attempt in attempts:
+                command = attempt["command"]
+                self.assertTrue(command.startswith("python "), command)
+                script = command.split()[1]
+                self.assertTrue(script.endswith("finalize_checkpoint.py"), command)
+                self.assertTrue((PROJECT_ROOT / script).is_file(), script)
+
+
+class CommandReproducibilityTests(unittest.TestCase):
+    """CP-0004 RT-02: a record must say what ran, where, against which commit, and why."""
+
+    def _record(self, **overrides: object) -> dict:
+        record = {
+            "id": "cmd-0001",
+            "timestamp": NOW,
+            "runtime": "python 3.13.15",
+            "command": "python scripts/development-ledger/validate_checkpoint.py",
+            "workingDirectory": str(PROJECT_ROOT),
+            "commit": "0" * 40,
+            "purpose": "Validate the checkpoint.",
+            "result": "COMPLETED",
+            "resultCode": "OK",
+            "exitCode": 0,
+            "durationMs": 10,
+            "stdoutArtifact": None,
+            "stderrArtifact": None,
+        }
+        record.update(overrides)
+        return record
+
+    def _errors(self, **overrides: object) -> list[str]:
+        errors: list[str] = []
+        _validate_command_reproducibility(PROJECT_ROOT, self._record(**overrides), 1, errors)
+        return errors
+
+    def test_complete_record_passes(self) -> None:
+        self.assertEqual(self._errors(), [])
+
+    def test_missing_purpose_fails(self) -> None:
+        self.assertTrue(any("requires purpose" in error for error in self._errors(purpose="")))
+
+    def test_missing_runtime_fails(self) -> None:
+        self.assertTrue(any("requires runtime" in error for error in self._errors(runtime="")))
+
+    def test_missing_commit_fails(self) -> None:
+        self.assertTrue(any("requires commit" in error for error in self._errors(commit="")))
+
+    def test_bare_script_name_is_rejected(self) -> None:
+        errors = self._errors(command="validate_checkpoint.py")
+        self.assertTrue(any("explicit runtime" in error for error in errors), errors)
+
+    def test_unresolvable_script_path_is_rejected(self) -> None:
+        errors = self._errors(command="python scripts/development-ledger/absent_tool.py")
+        self.assertTrue(any("does not resolve" in error for error in errors), errors)
+
+    def test_precondition_rejection_must_not_fake_an_exit_code(self) -> None:
+        errors = self._errors(
+            result="PRECONDITION_REJECTED", resultCode="E_DETACHED_HEAD", exitCode=2,
+            failureReason="detached")
+        self.assertTrue(any("fabricated exitCode" in error for error in errors), errors)
+
+    def test_precondition_rejection_requires_a_reason(self) -> None:
+        errors = self._errors(result="PRECONDITION_REJECTED", resultCode="E_DETACHED_HEAD", exitCode=None)
+        self.assertTrue(any("requires a failureReason" in error for error in errors), errors)
+
+    def test_completed_record_requires_an_exit_code(self) -> None:
+        errors = self._errors(exitCode=None)
+        self.assertTrue(any("requires an integer exitCode" in error for error in errors), errors)
+
+    def test_declared_input_must_exist(self) -> None:
+        errors = self._errors(inputs=["scripts/development-ledger/absent.py"])
+        self.assertTrue(any("recorded input does not exist" in error for error in errors), errors)
+
+
+class StatusBlockerInvariantTests(unittest.TestCase):
+    """CP-0004 RT-01: readiness and blockage can never be claimed at the same time."""
+
+    def _errors(self, status: str, blockers: list[str]) -> list[str]:
+        errors: list[str] = []
+        _validate_status_blockers({"status": status, "blockedBy": blockers}, errors)
+        return errors
+
+    def test_ready_for_review_with_blocker_fails(self) -> None:
+        errors = self._errors("READY_FOR_REVIEW", ["waiting on a credential"])
+        self.assertTrue(any("incompatible with a non-empty blockedBy" in error for error in errors), errors)
+
+    def test_ready_for_red_team_with_blocker_fails(self) -> None:
+        self.assertTrue(self._errors("READY_FOR_RED_TEAM", ["blocked"]))
+
+    def test_gate_pass_with_blocker_fails(self) -> None:
+        self.assertTrue(self._errors("GATE_PASS", ["blocked"]))
+
+    def test_ready_for_review_without_blocker_passes(self) -> None:
+        self.assertEqual(self._errors("READY_FOR_REVIEW", []), [])
+
+    def test_blocked_requires_a_reason(self) -> None:
+        errors = self._errors("BLOCKED", [])
+        self.assertTrue(any("requires at least one entry" in error for error in errors), errors)
+
+    def test_rework_required_may_carry_blockers(self) -> None:
+        self.assertEqual(self._errors("REWORK_REQUIRED", ["needs a decision"]), [])
+
+
+class ResealedBlockerFixtureTests(DeltaCheckpointFixture):
+    """The escaped RT-01 attack, reproduced end to end through the real finalizer and validator."""
+
+    def test_resealed_ready_for_review_with_blocker_is_rejected(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            checkpoint = self._build(root)
+            self._seal(root, checkpoint)
+            self.assertEqual(self._validate(root).returncode, 0)
+
+            state = self._read(checkpoint, "STATE.json")
+            state["blockedBy"] = ["validation fixture blocker"]
+            self._write(checkpoint, "STATE.json", state)
+            declare_inventory(root, checkpoint)
+            finalized = run([
+                sys.executable, str(SCRIPTS / "finalize_checkpoint.py"), "--root", str(root),
+                "--status", "READY_FOR_REVIEW", "--commit-ref", f"refs/tags/{self.TAG}",
+            ], root)
+            self.assertNotEqual(finalized.returncode, 0, finalized.stdout)
+            self.assertIn("incompatible with a non-empty blockedBy", finalized.stdout)
+
+            self._reseal(root)
+            result = self._validate(root)
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("incompatible with a non-empty blockedBy", result.stdout)
+
+
+def build_matrix(*statuses: tuple[str, bool, list[str]]) -> dict:
+    """Matrix fixture: (status, mandatory, evidence) per requirement."""
+    requirements = []
+    for index, (status, mandatory, evidence) in enumerate(statuses, 1):
+        requirements.append({
+            "id": "REQ-%04d" % index,
+            "source": "fixture",
+            "description": "fixture requirement",
+            "mandatory": mandatory,
+            "status": status,
+            "implementationEvidence": list(evidence),
+            "testEvidence": [],
+            "documentationEvidence": [],
+            "validationEvidence": [],
+            "notes": "fixture justification" if status == "NOT_APPLICABLE" else "",
+        })
+    return {"schemaVersion": "1.0.0", "gate": "TEST", "checkpoint": "TEST-CP-0001",
+            "requirements": requirements}
+
+
+class DeliveryCompletenessMatrixTests(unittest.TestCase):
+    """The completeness audit refuses anything short of a total, evidenced delivery."""
+
+    EVIDENCE = ["file:START-HERE.md"]
+
+    def _evaluate(self, matrix: dict) -> dict:
+        return evaluate_matrix(PROJECT_ROOT, PROJECT_ROOT / "docs" / "checkpoints", matrix, {}, set())
+
+    def test_every_requirement_complete_passes(self) -> None:
+        report = self._evaluate(build_matrix(
+            ("COMPLETE", True, self.EVIDENCE), ("COMPLETE", True, self.EVIDENCE)))
+        self.assertEqual(report["result"], "PASS")
+        self.assertEqual(report["coveragePercent"], 100.0)
+        self.assertEqual(report["evidenceCoveragePercent"], 100.0)
+
+    def test_one_requirement_short_of_total_fails(self) -> None:
+        rows = [("COMPLETE", True, self.EVIDENCE)] * 99 + [("IN_PROGRESS", True, [])]
+        report = self._evaluate(build_matrix(*rows))
+        self.assertEqual(report["result"], "FAIL")
+        self.assertEqual(report["coveragePercent"], 99.0)
+
+    def test_missing_mandatory_requirement_fails(self) -> None:
+        report = self._evaluate(build_matrix(
+            ("COMPLETE", True, self.EVIDENCE), ("MISSING", True, [])))
+        self.assertEqual(report["result"], "FAIL")
+        self.assertEqual(report["missing"], 1)
+
+    def test_partial_requirement_fails(self) -> None:
+        report = self._evaluate(build_matrix(
+            ("COMPLETE", True, self.EVIDENCE), ("PARTIAL", True, self.EVIDENCE)))
+        self.assertEqual(report["result"], "FAIL")
+        self.assertEqual(report["partial"], 1)
+
+    def test_not_applicable_without_justification_fails(self) -> None:
+        matrix = build_matrix(("NOT_APPLICABLE", False, []))
+        matrix["requirements"][0]["notes"] = ""
+        report = self._evaluate(matrix)
+        self.assertEqual(report["result"], "FAIL")
+        self.assertTrue(any("justification" in finding["detail"] for finding in report["findings"]))
+
+    def test_not_applicable_with_justification_counts_as_covered(self) -> None:
+        report = self._evaluate(build_matrix(("NOT_APPLICABLE", False, [])))
+        self.assertEqual(report["result"], "PASS")
+        self.assertEqual(report["notApplicable"], 1)
+
+    def test_complete_without_evidence_fails(self) -> None:
+        report = self._evaluate(build_matrix(("COMPLETE", True, [])))
+        self.assertEqual(report["result"], "FAIL")
+        self.assertTrue(any("at least one evidence" in finding["detail"] for finding in report["findings"]))
+
+    def test_complete_with_unresolvable_evidence_fails(self) -> None:
+        report = self._evaluate(build_matrix(("COMPLETE", True, ["file:does/not/exist.md"])))
+        self.assertEqual(report["result"], "FAIL")
+        self.assertEqual(report["evidenceCoveragePercent"], 0.0)
+
+    def test_evidence_may_reference_a_successful_command(self) -> None:
+        matrix = build_matrix(("COMPLETE", True, ["command:cmd-0001"]))
+        report = evaluate_matrix(
+            PROJECT_ROOT, PROJECT_ROOT, matrix,
+            {"cmd-0001": {"result": "COMPLETED", "exitCode": 0}}, set())
+        self.assertEqual(report["result"], "PASS")
+
+    def test_evidence_referencing_a_failed_command_fails(self) -> None:
+        matrix = build_matrix(("COMPLETE", True, ["command:cmd-0001"]))
+        report = evaluate_matrix(
+            PROJECT_ROOT, PROJECT_ROOT, matrix,
+            {"cmd-0001": {"result": "COMPLETED", "exitCode": 1}}, set())
+        self.assertEqual(report["result"], "FAIL")
+
+    def test_evidence_may_reference_an_existing_test(self) -> None:
+        matrix = build_matrix(("COMPLETE", True, ["test:StatusBlockerInvariantTests.test_ready_for_review_with_blocker_fails"]))
+        report = evaluate_matrix(
+            PROJECT_ROOT, PROJECT_ROOT, matrix, {},
+            {"StatusBlockerInvariantTests.test_ready_for_review_with_blocker_fails"})
+        self.assertEqual(report["result"], "PASS")
+
+    def test_evidence_referencing_an_absent_test_fails(self) -> None:
+        matrix = build_matrix(("COMPLETE", True, ["test:NoSuchTests.test_nothing"]))
+        report = evaluate_matrix(PROJECT_ROOT, PROJECT_ROOT, matrix, {}, set())
+        self.assertEqual(report["result"], "FAIL")
+
+    def test_empty_matrix_fails(self) -> None:
+        report = self._evaluate({"schemaVersion": "1.0.0", "gate": "TEST",
+                                 "checkpoint": "TEST-CP-0001", "requirements": []})
+        self.assertEqual(report["result"], "FAIL")
+
+
+class DeliveryAssuranceGateTests(unittest.TestCase):
+    """GREEN_KEEPER_GATE and DELIVERY_COMPLETENESS_GATE guard READY_FOR_REVIEW."""
+
+    def setUp(self) -> None:
+        self.temporary = tempfile.TemporaryDirectory()
+        self.checkpoint = Path(self.temporary.name)
+        (self.checkpoint / "PLAN.md").write_text("# Plan\n\nfixture\n", encoding="utf-8")
+        self.matrix = build_matrix(("COMPLETE", True, ["checkpoint:PLAN.md"]))
+        write_json_file(self.checkpoint / "REQUIREMENTS-MATRIX.json", self.matrix)
+        (self.checkpoint / "REWORK-LOG.jsonl").write_text(
+            json.dumps({
+                "cycle": 1, "timestamp": NOW, "trigger": "fixture", "failedGate": None,
+                "failureEvidence": [], "rootCauseSummary": None, "filesChanged": [],
+                "commandsExecuted": ["cmd-0001"], "result": "GREEN", "remainingFailures": 0,
+            }) + "\n", encoding="utf-8", newline="\n")
+        self.report = {
+            "schemaVersion": "1.0.0", "checkpoint": "TEST-CP-0001", "generatedAt": NOW,
+            "matrix": "REQUIREMENTS-MATRIX.json", "auditor": "fixture",
+            "totalRequirements": 1, "mandatoryRequirements": 1, "complete": 1, "partial": 0,
+            "missing": 0, "notApplicable": 0, "inProgress": 0, "notStarted": 0,
+            "coveragePercent": 100.0, "evidenceCoveragePercent": 100.0, "result": "PASS",
+            "findings": [],
+        }
+        write_json_file(self.checkpoint / "COMPLETENESS-REPORT.json", self.report)
+
+    def tearDown(self) -> None:
+        self.temporary.cleanup()
+
+    def _state(self, **overrides: object) -> dict:
+        state = {
+            "schemaVersion": "3.0.0",
+            "status": "READY_FOR_REVIEW",
+            "blockedBy": [],
+            "requirementsMatrix": {
+                "path": "REQUIREMENTS-MATRIX.json", "total": 1, "mandatory": 1, "complete": 1,
+                "partial": 0, "missing": 0, "notApplicable": 0, "coveragePercent": 100.0,
+            },
+            "greenKeeper": {
+                "status": "PASS", "cycles": 1, "remainingFailures": 0,
+                "unresolvedReworkItems": 0, "log": "REWORK-LOG.jsonl",
+                "externalBlockers": [], "evidence": [],
+            },
+            "deliveryCompleteness": {
+                "status": "PASS", "report": "COMPLETENESS-REPORT.json", "coveragePercent": 100.0,
+                "evidenceCoveragePercent": 100.0, "auditor": "fixture", "evidence": [],
+            },
+            "reworkCycles": 1,
+            "independentReview": {"status": "PENDING"},
+            "redTeam": {"status": "PENDING"},
+        }
+        state.update(overrides)
+        return state
+
+    def _quality(self, **overrides: str) -> dict:
+        checks = {name: {"status": "PASS", "evidence": ["checkpoint:PLAN.md"], "justification": None}
+                  for name in BASE_QUALITY_DIMENSIONS + ("greenKeeper", "deliveryCompleteness")}
+        checks["redTeam"] = {"status": "NOT_EXECUTED", "evidence": [], "justification": None}
+        for name, status in overrides.items():
+            checks[name] = {"status": status, "evidence": [], "justification": None}
+        return checks
+
+    def _tests(self, failed: int = 0) -> dict:
+        result = {"executed": True, "passed": 5, "failed": failed,
+                  "command": "python -m unittest discover -s tests", "evidence": "fixture"}
+        return {"schemaVersion": "3.0.0", "unit": result, "integration": result,
+                "e2e": {"executed": False, "passed": 0, "failed": 0, "command": None, "evidence": None}}
+
+    def _errors(self, state: dict | None = None, quality: dict | None = None,
+                tests: dict | None = None) -> list[str]:
+        errors: list[str] = []
+        _validate_delivery_assurance(
+            PROJECT_ROOT, self.checkpoint, state or self._state(),
+            quality or self._quality(), tests or self._tests(), errors)
+        return errors
+
+    def test_complete_delivery_passes_every_gate(self) -> None:
+        self.assertEqual(self._errors(), [])
+
+    def test_green_keeper_not_executed_blocks_review(self) -> None:
+        state = self._state(greenKeeper={
+            "status": "NOT_EXECUTED", "cycles": 1, "remainingFailures": 0,
+            "unresolvedReworkItems": 0, "log": "REWORK-LOG.jsonl"})
+        errors = self._errors(state)
+        self.assertTrue(any("GREEN_KEEPER_GATE=PASS" in error for error in errors), errors)
+
+    def test_completeness_validator_not_executed_blocks_review(self) -> None:
+        state = self._state(deliveryCompleteness={
+            "status": "NOT_EXECUTED", "report": None, "coveragePercent": 0.0})
+        errors = self._errors(state)
+        self.assertTrue(any("DELIVERY_COMPLETENESS_GATE=PASS" in error for error in errors), errors)
+
+    def test_green_keeper_pass_with_a_real_failure_is_rejected(self) -> None:
+        (self.checkpoint / "REWORK-LOG.jsonl").write_text(
+            json.dumps({
+                "cycle": 1, "timestamp": NOW, "trigger": "fixture", "failedGate": "tests",
+                "failureEvidence": ["cmd-0001"], "rootCauseSummary": "unfixed",
+                "filesChanged": [], "commandsExecuted": ["cmd-0001"], "result": "STILL_RED",
+                "remainingFailures": 1,
+            }) + "\n", encoding="utf-8", newline="\n")
+        errors = self._errors()
+        self.assertTrue(any("contradicts the last rework cycle" in error for error in errors), errors)
+
+    def test_green_keeper_pass_with_red_tests_is_rejected(self) -> None:
+        errors = self._errors(tests=self._tests(failed=2))
+        self.assertTrue(any("contradicts TESTS.json" in error for error in errors), errors)
+
+    def test_red_tests_block_review(self) -> None:
+        errors = self._errors(quality=self._quality(unitTests="FAIL"))
+        self.assertTrue(any("unitTests=FAIL" in error for error in errors), errors)
+
+    def test_unresolved_rework_blocks_review(self) -> None:
+        state = self._state(greenKeeper={
+            "status": "PASS", "cycles": 1, "remainingFailures": 0,
+            "unresolvedReworkItems": 2, "log": "REWORK-LOG.jsonl"})
+        errors = self._errors(state)
+        self.assertTrue(any("unresolvedReworkItems" in error for error in errors), errors)
+
+    def test_completeness_report_inconsistent_with_the_matrix_is_rejected(self) -> None:
+        report = dict(self.report)
+        report["complete"] = 5
+        report["totalRequirements"] = 5
+        write_json_file(self.checkpoint / "COMPLETENESS-REPORT.json", report)
+        errors = self._errors()
+        self.assertTrue(any("contradicts the recomputed value" in error for error in errors), errors)
+
+    def test_completeness_pass_claimed_over_an_incomplete_matrix_is_rejected(self) -> None:
+        write_json_file(self.checkpoint / "REQUIREMENTS-MATRIX.json",
+                        build_matrix(("PARTIAL", True, ["checkpoint:PLAN.md"])))
+        errors = self._errors()
+        self.assertTrue(any("contradicts the recomputed value" in error for error in errors), errors)
+        self.assertTrue(any("zero PARTIAL requirements" in error for error in errors), errors)
+
+    def test_state_matrix_counts_must_match_the_matrix(self) -> None:
+        state = self._state(requirementsMatrix={
+            "path": "REQUIREMENTS-MATRIX.json", "total": 7, "complete": 7, "partial": 0,
+            "missing": 0, "notApplicable": 0, "coveragePercent": 100.0})
+        errors = self._errors(state)
+        self.assertTrue(any("does not match the matrix value" in error for error in errors), errors)
+
+    def test_cycle_count_must_match_the_rework_log(self) -> None:
+        state = self._state(greenKeeper={
+            "status": "PASS", "cycles": 9, "remainingFailures": 0,
+            "unresolvedReworkItems": 0, "log": "REWORK-LOG.jsonl"})
+        errors = self._errors(state)
+        self.assertTrue(any("recorded rework cycles" in error for error in errors), errors)
+
+    def test_self_claimed_independent_review_blocks_review(self) -> None:
+        state = self._state(independentReview={"status": "APPROVED"})
+        errors = self._errors(state)
+        self.assertTrue(any("independentReview to be PENDING" in error for error in errors), errors)
+
+    def test_self_claimed_red_team_blocks_review(self) -> None:
+        state = self._state(redTeam={"status": "RED_TEAM_PASS"})
+        errors = self._errors(state)
+        self.assertTrue(any("redTeam to be PENDING" in error for error in errors), errors)
+
+    def test_gate_consistency_is_provisional_while_work_is_in_progress(self) -> None:
+        """A checkpoint under construction may hold provisional gate values.
+
+        This is what lets the Green Keeper validate the very checkpoint that records its cycles.
+        The same inconsistency is rejected the moment the delivery is offered for review.
+        """
+        (self.checkpoint / "REWORK-LOG.jsonl").write_text(
+            json.dumps({
+                "cycle": 1, "timestamp": NOW, "trigger": "fixture", "failedGate": "tests",
+                "failureEvidence": ["cmd-0001"], "rootCauseSummary": "still being repaired",
+                "filesChanged": [], "commandsExecuted": ["cmd-0001"], "result": "STILL_RED",
+                "remainingFailures": 1,
+            }) + "\n", encoding="utf-8", newline="\n")
+        self.assertEqual(self._errors(self._state(status="IN_PROGRESS")), [])
+        self.assertTrue(self._errors(self._state(status="READY_FOR_REVIEW")))
+
+    def test_missing_assurance_block_is_rejected(self) -> None:
+        state = self._state()
+        del state["greenKeeper"]
+        errors = self._errors(state)
+        self.assertTrue(any("requires the greenKeeper block" in error for error in errors), errors)
+
+
+class GreenKeeperToolTests(unittest.TestCase):
+    """The Green Keeper harness must refuse to report green while a gate is red."""
+
+    def _bootstrap(self, root: Path, failing: bool) -> Path:
+        shutil.copytree(PROJECT_ROOT / ".iacode", root / ".iacode")
+        (root / "docs" / "checkpoints").mkdir(parents=True)
+        copy_ledger_tooling(root)
+        (root / "tests").mkdir()
+        body = "self.assertEqual(1, 2)" if failing else "self.assertEqual(1, 1)"
+        (root / "tests" / "test_fixture.py").write_text(
+            "import unittest\n\n\nclass FixtureTests(unittest.TestCase):\n"
+            f"    def test_case(self):\n        {body}\n", encoding="utf-8")
+        self.assertEqual(run(["git", "init", "-b", "main"], root).returncode, 0)
+        for key, value in (("user.name", "IACode Tests"), ("user.email", "iacode-tests@example.invalid")):
+            self.assertEqual(run(["git", "config", key, value], root).returncode, 0)
+        self.assertEqual(run(["git", "add", "."], root).returncode, 0)
+        self.assertEqual(run(["git", "commit", "-m", "test: bootstrap"], root).returncode, 0)
+        created = run([
+            sys.executable, str(SCRIPTS / "new_checkpoint.py"), "--root", str(root),
+            "--gate", "TEST", "--status", "IN_PROGRESS",
+        ], root)
+        self.assertEqual(created.returncode, 0, created.stdout)
+        return root / "docs" / "checkpoints" / "TEST-CP-0001"
+
+    def _cycles(self, checkpoint: Path) -> list[dict]:
+        text = (checkpoint / "REWORK-LOG.jsonl").read_text(encoding="utf-8")
+        return [json.loads(line) for line in text.splitlines() if line.strip()]
+
+    def test_red_gate_is_reported_as_still_red(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            checkpoint = self._bootstrap(root, failing=True)
+            result = run([
+                sys.executable, str(SCRIPTS / "green_keeper.py"), "--root", str(root),
+                "--gates", "tests", "--trigger", "fixture red gate", "--quiet",
+            ], root)
+            self.assertEqual(result.returncode, 1, result.stdout)
+            self.assertIn("GREEN_KEEPER_GATE=FAIL", result.stdout)
+            cycles = self._cycles(checkpoint)
+            self.assertEqual(len(cycles), 1)
+            self.assertEqual(cycles[0]["result"], "STILL_RED")
+            self.assertEqual(cycles[0]["failedGate"], "tests")
+            self.assertEqual(cycles[0]["remainingFailures"], 1)
+            self.assertTrue(cycles[0]["commandsExecuted"])
+
+    def test_repaired_gate_is_reported_as_green_in_a_new_cycle(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            checkpoint = self._bootstrap(root, failing=True)
+            run([sys.executable, str(SCRIPTS / "green_keeper.py"), "--root", str(root),
+                 "--gates", "tests", "--quiet"], root)
+            (root / "tests" / "test_fixture.py").write_text(
+                "import unittest\n\n\nclass FixtureTests(unittest.TestCase):\n"
+                "    def test_case(self):\n        self.assertEqual(1, 1)\n", encoding="utf-8")
+            result = run([
+                sys.executable, str(SCRIPTS / "green_keeper.py"), "--root", str(root),
+                "--gates", "tests", "--trigger", "after repair",
+                "--root-cause", "fixture assertion was wrong", "--files-changed", "tests/test_fixture.py",
+            ], root)
+            self.assertEqual(result.returncode, 0, result.stdout)
+            self.assertIn("GREEN_KEEPER_GATE=PASS", result.stdout)
+            cycles = self._cycles(checkpoint)
+            self.assertEqual([item["result"] for item in cycles], ["STILL_RED", "GREEN"])
+            self.assertEqual(cycles[1]["cycle"], 2)
+            self.assertEqual(cycles[1]["remainingFailures"], 0)
+            self.assertEqual(cycles[1]["filesChanged"], ["tests/test_fixture.py"])
+
+    def test_external_blocker_never_reports_pass(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            checkpoint = self._bootstrap(root, failing=True)
+            result = run([
+                sys.executable, str(SCRIPTS / "green_keeper.py"), "--root", str(root),
+                "--gates", "tests", "--external-blocker", "fixture service unavailable", "--quiet",
+            ], root)
+            self.assertEqual(result.returncode, 2, result.stdout)
+            self.assertIn("GREEN_KEEPER_GATE=FAIL", result.stdout)
+            cycles = self._cycles(checkpoint)
+            self.assertEqual(cycles[-1]["result"], "BLOCKED_EXTERNAL")
+            self.assertEqual(cycles[-1]["externalBlocker"], "fixture service unavailable")
+
+    def test_gate_invocations_are_recorded_reproducibly(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            checkpoint = self._bootstrap(root, failing=False)
+            run([sys.executable, str(SCRIPTS / "green_keeper.py"), "--root", str(root),
+                 "--gates", "tests", "--quiet"], root)
+            records = [
+                json.loads(line)
+                for line in (checkpoint / "COMMANDS.jsonl").read_text(encoding="utf-8").splitlines()
+                if line.strip()
+            ]
+            gate_records = [item for item in records if item.get("operation") == "green-keeper-gate"]
+            self.assertEqual(len(gate_records), 1)
+            record = gate_records[0]
+            self.assertEqual(record["command"], "python -m unittest discover -s tests")
+            self.assertEqual(record["result"], "COMPLETED")
+            self.assertEqual(record["exitCode"], 0)
+            self.assertTrue(record["purpose"])
+            self.assertTrue(record["runtime"].startswith("python "))
+            self.assertEqual(len(record["commit"]), 40)
+
+
+class DeliveryLifecycleTests(unittest.TestCase):
+    """The whole mandatory order, end to end, in an isolated repository."""
+
+    TAG = "iacode-checkpoints/TEST-CP-0001"
+
+    def _git(self, root: Path, *args: str) -> None:
+        completed = run(["git", *args], root)
+        self.assertEqual(completed.returncode, 0, completed.stdout)
+
+    def test_full_delivery_assurance_flow_reaches_ready_for_review(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            shutil.copytree(PROJECT_ROOT / ".iacode", root / ".iacode")
+            (root / "docs" / "checkpoints").mkdir(parents=True)
+            copy_ledger_tooling(root)
+            (root / "tests").mkdir()
+            (root / "tests" / "test_fixture.py").write_text(
+                "import unittest\n\n\nclass FixtureTests(unittest.TestCase):\n"
+                "    def test_case(self):\n        self.assertEqual(1, 1)\n", encoding="utf-8")
+            self._git(root, "init", "-b", "main")
+            self._git(root, "config", "user.name", "IACode Tests")
+            self._git(root, "config", "user.email", "iacode-tests@example.invalid")
+            self._git(root, "add", ".")
+            self._git(root, "commit", "-m", "test: bootstrap")
+
+            created = run([
+                sys.executable, str(SCRIPTS / "new_checkpoint.py"), "--root", str(root),
+                "--gate", "TEST", "--status", "IN_PROGRESS",
+            ], root)
+            self.assertEqual(created.returncode, 0, created.stdout)
+            checkpoint = root / "docs" / "checkpoints" / "TEST-CP-0001"
+
+            write_final_report(checkpoint)
+            write_json_file(checkpoint / "REQUIREMENTS-MATRIX.json",
+                            build_matrix(("COMPLETE", True, ["checkpoint:PLAN.md"])))
+            (checkpoint / "REQUIREMENTS-MATRIX.md").write_text(
+                "# Requirements Matrix\n\nOne fixture requirement, complete.\n", encoding="utf-8")
+
+            keeper = run([
+                sys.executable, str(SCRIPTS / "green_keeper.py"), "--root", str(root),
+                "--gates", "tests,staticAnalysis", "--trigger", "delivery gate run", "--quiet",
+            ], root)
+            self.assertEqual(keeper.returncode, 0, keeper.stdout)
+
+            audit = run([
+                sys.executable, str(SCRIPTS / "check_completeness.py"), "--root", str(root),
+                "--auditor", "fixture auditor", "--write",
+            ], root)
+            self.assertEqual(audit.returncode, 0, audit.stdout)
+            self.assertIn("DELIVERY_COMPLETENESS_GATE=PASS", audit.stdout)
+
+            result = {"executed": True, "passed": 1, "failed": 0,
+                      "command": "python -m unittest discover -s tests", "evidence": "fixture suite"}
+            write_json_file(checkpoint / "TESTS.json", {
+                "schemaVersion": "3.0.0", "unit": result, "integration": result,
+                "e2e": {"executed": False, "passed": 0, "failed": 0, "command": None, "evidence": None}})
+            checks = {name: {"status": "PASS", "evidence": ["command:cmd-0001"], "justification": None}
+                      for name in BASE_QUALITY_DIMENSIONS + ("greenKeeper", "deliveryCompleteness")}
+            checks["redTeam"] = {"status": "NOT_EXECUTED", "evidence": [], "justification": None}
+            checks["e2e"] = {"status": "NOT_APPLICABLE", "evidence": [],
+                             "justification": "no runtime in the fixture"}
+            write_json_file(checkpoint / "QUALITY.json", {"schemaVersion": "3.0.0", "checks": checks})
+
+            state = read_json(checkpoint / "STATE.json")
+            state["requirementsMatrix"] = {
+                "path": "REQUIREMENTS-MATRIX.json", "total": 1, "mandatory": 1, "complete": 1,
+                "partial": 0, "missing": 0, "notApplicable": 0, "coveragePercent": 100.0}
+            state["greenKeeper"] = {
+                "status": "PASS", "cycles": 1, "remainingFailures": 0, "unresolvedReworkItems": 0,
+                "log": "REWORK-LOG.jsonl", "externalBlockers": [], "evidence": []}
+            state["deliveryCompleteness"] = {
+                "status": "PASS", "report": "COMPLETENESS-REPORT.json", "coveragePercent": 100.0,
+                "evidenceCoveragePercent": 100.0, "auditor": "fixture auditor", "evidence": []}
+            state["reworkCycles"] = 1
+            write_json_file(checkpoint / "STATE.json", state)
+
+            declare_inventory(root, checkpoint)
+            finalized = run([
+                sys.executable, str(SCRIPTS / "finalize_checkpoint.py"), "--root", str(root),
+                "--status", "READY_FOR_REVIEW", "--commit-ref", f"refs/tags/{self.TAG}",
+            ], root)
+            self.assertEqual(finalized.returncode, 0, finalized.stdout)
+            self._git(root, "add", "-A")
+            self._git(root, "commit", "-m", "test: seal delivery")
+            self._git(root, "tag", self.TAG)
+            validated = run([
+                sys.executable, str(SCRIPTS / "validate_checkpoint.py"), "--root", str(root)], root)
+            self.assertEqual(validated.returncode, 0, validated.stdout)
+
+            sealed = read_json(checkpoint / "STATE.json")
+            self.assertEqual(sealed["status"], "READY_FOR_REVIEW")
+            self.assertEqual(sealed["greenKeeper"]["status"], "PASS")
+            self.assertEqual(sealed["deliveryCompleteness"]["status"], "PASS")
+            self.assertEqual(sealed["blockedBy"], [])
 
 
 if __name__ == "__main__":

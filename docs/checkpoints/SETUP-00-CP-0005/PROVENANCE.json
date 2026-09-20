@@ -1,0 +1,53 @@
+{
+  "schemaVersion": "3.0.0",
+  "artifacts": [
+    {
+      "artifact": "Corrections for the CP-0004 independent findings R3, RT-01, and RT-02",
+      "sourceType": "model-assisted-project-work",
+      "provider": "Anthropic",
+      "model": "claude-opus-5",
+      "ownership": "project artifact; legal ownership not independently determined",
+      "license": "not-specified",
+      "rights": {
+        "storageAllowed": true,
+        "ragAllowed": false,
+        "trainingAllowed": false,
+        "distillationAllowed": false
+      },
+      "evidence": "Implemented and executed locally in this repository during SETUP-00-CP-0005; evidence in COMMANDS.jsonl, TESTS.json, and REWORK-LOG.jsonl.",
+      "notes": "No permission for model training or distillation is inferred."
+    },
+    {
+      "artifact": "Green Keeper and Delivery Completeness Validator role contracts, adapters, tooling, and schemas",
+      "sourceType": "model-assisted-project-work",
+      "provider": "Anthropic",
+      "model": "claude-opus-5",
+      "ownership": "project artifact; legal ownership not independently determined",
+      "license": "not-specified",
+      "rights": {
+        "storageAllowed": true,
+        "ragAllowed": false,
+        "trainingAllowed": false,
+        "distillationAllowed": false
+      },
+      "evidence": "Created in this repository and exercised against the delivery itself; results recorded in REWORK-LOG.jsonl and COMPLETENESS-REPORT.json.",
+      "notes": "Rights policy unchanged; trainingAllowed remains false by default."
+    },
+    {
+      "artifact": "Independent validation findings consumed from SETUP-00-CP-0004",
+      "sourceType": "repository-generated",
+      "provider": "OpenAI",
+      "model": "GPT-5 family; exact identifier not exposed",
+      "ownership": "project-generated evidence",
+      "license": "not-applicable",
+      "rights": {
+        "storageAllowed": true,
+        "ragAllowed": false,
+        "trainingAllowed": false,
+        "distillationAllowed": false
+      },
+      "evidence": "Read from the sealed docs/checkpoints/SETUP-00-CP-0004 review and Red Team reports.",
+      "notes": "The sealed checkpoint was read only and was not modified."
+    }
+  ]
+}

@@ -17,10 +17,33 @@ Each checkpoint contains status, handoff, run metadata, state, plan, decisions, 
 ## Schema versions
 
 `schemaVersion` selects the rules a checkpoint is judged by. Version `1.0.0` is the historical
-format used by the sealed SETUP-00 checkpoints. Version `2.0.0` adds the structured cross-tool
+format used by the first sealed SETUP-00 checkpoints. Version `2.0.0` adds the structured cross-tool
 validation state, evidence-referenced quality results, command identifiers, and the bound file
-inventory described below. Validation applies the rules of the version a checkpoint declares, so a
-sealed checkpoint never becomes invalid because the tooling advanced. New checkpoints use `2.0.0`.
+inventory described below. Version `3.0.0` adds the delivery-assurance blocks, the reproducible
+command record, and the delivery gates. Validation applies the rules of the version a checkpoint
+declares, so a sealed checkpoint never becomes invalid because the tooling advanced. New checkpoints
+use `3.0.0`.
+
+## Status and blockers
+
+A checkpoint may never claim readiness and blockage at the same time. `READY_FOR_REVIEW`,
+`READY_FOR_RED_TEAM`, and `GATE_PASS` require `blockedBy` to be empty, in every schema version and
+whichever tool sealed the checkpoint. `BLOCKED` requires at least one entry in `blockedBy`, because a
+blocked checkpoint must say what blocks it.
+
+## Delivery assurance
+
+A `3.0.0` checkpoint carries `requirementsMatrix`, `greenKeeper`, `deliveryCompleteness`,
+`reworkCycles`, `independentReview`, and `redTeam` in `STATE.json`, plus
+`REQUIREMENTS-MATRIX.json` and `REQUIREMENTS-MATRIX.md`. Offering it for review additionally
+requires `REWORK-LOG.jsonl`, `COMPLETENESS-REPORT.json`, `COMPLETENESS-REPORT.md`, and
+`FINAL-REPORT.md`.
+
+`READY_FOR_REVIEW` is refused unless `greenKeeper.status` and `deliveryCompleteness.status` are both
+`PASS`, coverage is total, no requirement is `PARTIAL` or `MISSING`, no non-independent quality
+dimension is `NOT_EXECUTED` or `FAIL`, and `independentReview` and `redTeam` are still `PENDING`.
+The recorded gate values are cross-checked against the rework log and against a recomputation of the
+requirements matrix, so a checkpoint cannot assert a gate it did not earn.
 
 ## Commit semantics
 
@@ -52,10 +75,22 @@ its required presence, and its schema. See
 
 ## Finalization
 
-Finalization is observable. Every attempt appends its own sanitized record, with its exit code, to
-the checkpoint's `COMMANDS.jsonl`. A failed attempt restores the previous metadata but its record
-stays, so corrections remain visible. The successful attempt is recorded before the inventory hashes
-are sealed, so the command that produced the final state is itself covered by the inventory it seals.
+Finalization is observable. Every attempt appends its own sanitized record to the checkpoint's
+`COMMANDS.jsonl`, including an attempt refused by a precondition before the operation ran. A refusal
+carries `result = PRECONDITION_REJECTED`, a documented `resultCode`, a `failureReason`, the evaluated
+preconditions, and no `exitCode`, because no process was launched and a fabricated exit code would be
+false evidence. A failed attempt restores the previous metadata but its record stays, so corrections
+remain visible. The successful attempt is recorded before the inventory hashes are sealed, so the
+command that produced the final state is itself covered by the inventory it seals.
+
+## Command reproducibility
+
+A `3.0.0` command record carries an identifier, timestamp, runtime, working directory, the command,
+sanitized arguments, referenced inputs, the repository commit, a purpose, a canonical result, an exit
+code or a result code, a duration, and stream artifacts when they exist. The recorded command is the
+literal invocation: it starts with an explicit runtime and any script path resolves from the working
+directory. A bare script name that cannot be executed from where the record says it ran is invalid
+evidence.
 
 ## Promotion
 

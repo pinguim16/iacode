@@ -1,0 +1,788 @@
+{
+  "schemaVersion": "1.0.0",
+  "gate": "SETUP-00",
+  "checkpoint": "SETUP-00-CP-0005",
+  "requirements": [
+    {
+      "id": "REQ-0001",
+      "source": "CP-0004 REVIEW-REPORT.md R3.1 / RED-TEAM-REPORT.md RT-02",
+      "description": "Record every finalization attempt, including refusals that happen before the main operation runs, such as detached HEAD, a checkpoint that is not the LATEST target, and an invalid commit reference.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/finalize_checkpoint.py"
+      ],
+      "testEvidence": [
+        "test:FinalizationAttemptRecordingTests.test_detached_head_refusal_is_recorded",
+        "test:FinalizationAttemptRecordingTests.test_non_latest_checkpoint_refusal_is_recorded",
+        "test:FinalizationAttemptRecordingTests.test_invalid_commit_reference_refusal_is_recorded"
+      ],
+      "documentationEvidence": [
+        "file:docs/CHECKPOINT-PROTOCOL.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0011"
+      ],
+      "notes": "Preconditions are evaluated before any write and the attempt is appended before the error is returned."
+    },
+    {
+      "id": "REQ-0002",
+      "source": "CP-0004 REVIEW-REPORT.md R3.2 / NEXT.md item 3",
+      "description": "Every recorded command string must be executable from its declared working directory, including the interpreter and repository-relative script path.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/finalize_checkpoint.py",
+        "file:scripts/development-ledger/record_command.py"
+      ],
+      "testEvidence": [
+        "test:FinalizationAttemptRecordingTests.test_recorded_finalizer_command_is_executable_from_its_working_directory",
+        "test:CommandReproducibilityTests.test_bare_script_name_is_rejected",
+        "test:CommandReproducibilityTests.test_unresolvable_script_path_is_rejected"
+      ],
+      "documentationEvidence": [
+        "file:docs/CHECKPOINT-PROTOCOL.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0011"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "REQ-0003",
+      "source": "CP-0004 RED-TEAM-REPORT.md RT-01 / NEXT.md item 1",
+      "description": "READY_FOR_REVIEW must be impossible while blockedBy is non-empty, for every schema version and regardless of which tool sealed the checkpoint.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/validate_checkpoint.py"
+      ],
+      "testEvidence": [
+        "test:StatusBlockerInvariantTests.test_ready_for_review_with_blocker_fails",
+        "test:StatusBlockerInvariantTests.test_gate_pass_with_blocker_fails",
+        "test:StatusBlockerInvariantTests.test_blocked_requires_a_reason"
+      ],
+      "documentationEvidence": [
+        "file:docs/CHECKPOINT-PROTOCOL.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0013"
+      ],
+      "notes": "Enforced for every schema version, so the sealed checkpoints are judged by it too."
+    },
+    {
+      "id": "REQ-0004",
+      "source": "CP-0004 RED-TEAM-REPORT.md RT-02 / prompt section 7",
+      "description": "Command records must be reproducible and auditable: identifier, timestamp, runtime, working directory, command, sanitized arguments, repository commit, purpose, referenced inputs, result, exit code or canonical result code, duration, and stream artifacts.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/schemas/command.schema.json",
+        "file:scripts/development-ledger/record_command.py",
+        "file:scripts/development-ledger/ledger_common.py"
+      ],
+      "testEvidence": [
+        "test:CommandReproducibilityTests.test_complete_record_passes",
+        "test:CommandReproducibilityTests.test_precondition_rejection_must_not_fake_an_exit_code",
+        "test:CommandReproducibilityTests.test_declared_input_must_exist"
+      ],
+      "documentationEvidence": [
+        "file:docs/CHECKPOINT-PROTOCOL.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0013"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "REQ-0005",
+      "source": "CP-0004 NEXT.md item 1",
+      "description": "Regression that rejects READY_FOR_REVIEW with a non-empty blockedBy after a fully resealed fixture, reproducing the escaped RT-01 attack end to end.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:tests/test_development_ledger.py"
+      ],
+      "testEvidence": [
+        "test:ResealedBlockerFixtureTests.test_resealed_ready_for_review_with_blocker_is_rejected"
+      ],
+      "documentationEvidence": [
+        "checkpoint:HANDOFF.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0011"
+      ],
+      "notes": "The fixture reseals through the real finalizer and then validates, reproducing the escaped attack."
+    },
+    {
+      "id": "REQ-0006",
+      "source": "CP-0004 NEXT.md item 2",
+      "description": "Regressions proving each early finalization refusal is appended to the ledger before the error is returned.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:tests/test_development_ledger.py"
+      ],
+      "testEvidence": [
+        "test:FinalizationAttemptRecordingTests.test_detached_head_refusal_is_recorded",
+        "test:FinalizationAttemptRecordingTests.test_non_latest_checkpoint_refusal_is_recorded",
+        "test:FinalizationAttemptRecordingTests.test_invalid_commit_reference_refusal_is_recorded"
+      ],
+      "documentationEvidence": [
+        "checkpoint:HANDOFF.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0011"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "REQ-0007",
+      "source": "CP-0004 NEXT.md item 4 / prompt section 19",
+      "description": "Re-execute the new tests, the entire suite, static analysis, checkpoint validation, the secret scan, and the adversarial battery.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:REWORK-LOG.jsonl"
+      ],
+      "testEvidence": [
+        "test:DeliveryLifecycleTests.test_full_delivery_assurance_flow_reaches_ready_for_review"
+      ],
+      "documentationEvidence": [
+        "checkpoint:FINAL-REPORT.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0011",
+        "command:cmd-0012",
+        "command:cmd-0013"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "REQ-0008",
+      "source": "CP-0004 NEXT.md item 5 / prompt section 22",
+      "description": "Close CP-0005 at READY_FOR_REVIEW for an independent Codex review, never at GATE_PASS.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:STATE.json"
+      ],
+      "testEvidence": [
+        "test:DeliveryLifecycleTests.test_full_delivery_assurance_flow_reaches_ready_for_review"
+      ],
+      "documentationEvidence": [
+        "checkpoint:NEXT.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0013"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "REQ-0009",
+      "source": "prompt section 2",
+      "description": "Execute the cold start and read the authoritative documents plus SETUP-00-CP-0003 and SETUP-00-CP-0004 in full before altering any file.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:COMMANDS.jsonl"
+      ],
+      "testEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:PLAN.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:FILES.json"
+      ],
+      "notes": "FILES.json filesRead records the sealed CP-0003 and CP-0004 checkpoints read before any change."
+    },
+    {
+      "id": "REQ-0010",
+      "source": "prompt section 3",
+      "description": "Produce REQUIREMENTS-MATRIX.json and REQUIREMENTS-MATRIX.md with the mandated fields and canonical statuses before implementation begins.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:REQUIREMENTS-MATRIX.json"
+      ],
+      "testEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:REQUIREMENTS-MATRIX.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:COMPLETENESS-REPORT.json"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "REQ-0011",
+      "source": "prompt section 15",
+      "description": "Create .iacode/schemas/requirements-matrix.schema.json validating unique identifiers, boolean mandatory, canonical status, evidence arrays, justified NOT_APPLICABLE, and evidence-bearing COMPLETE.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/schemas/requirements-matrix.schema.json"
+      ],
+      "testEvidence": [
+        "test:DeliveryCompletenessMatrixTests.test_complete_without_evidence_fails",
+        "test:DeliveryCompletenessMatrixTests.test_not_applicable_without_justification_fails"
+      ],
+      "documentationEvidence": [
+        "file:scripts/development-ledger/README.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0013"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "REQ-0012",
+      "source": "prompt section 8",
+      "description": "Create the canonical Test Rework / Green Keeper role contract at .iacode/agents/test-rework-greenkeeper.md.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/agents/test-rework-greenkeeper.md"
+      ],
+      "testEvidence": [
+        "test:ClaudeAdapterTests.test_project_agents_match_canonical_role_names"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0011"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "REQ-0013",
+      "source": "prompt section 8 and 13",
+      "description": "Create the Green Keeper adapters using mechanisms the tools actually support, without claiming unsupported capability.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.claude/agents/test-rework-greenkeeper.md"
+      ],
+      "testEvidence": [
+        "test:ClaudeAdapterTests.test_project_agents_defer_to_canonical_contracts"
+      ],
+      "documentationEvidence": [
+        "file:AGENTS.md",
+        "file:CLAUDE.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0011"
+      ],
+      "notes": "Claude uses the verified .claude/agents mechanism; Codex adopts the canonical contract through AGENTS.md because it has no per-agent project file mechanism here."
+    },
+    {
+      "id": "REQ-0014",
+      "source": "prompt section 8",
+      "description": "Record every Green Keeper cycle in REWORK-LOG.jsonl with cycle, trigger, failed gate, failure evidence, root cause summary, files changed, commands executed, result, and remaining failures.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/green_keeper.py"
+      ],
+      "testEvidence": [
+        "test:GreenKeeperToolTests.test_red_gate_is_reported_as_still_red",
+        "test:GreenKeeperToolTests.test_gate_invocations_are_recorded_reproducibly"
+      ],
+      "documentationEvidence": [
+        "file:scripts/development-ledger/README.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:REWORK-LOG.jsonl"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "REQ-0015",
+      "source": "prompt section 17",
+      "description": "Create .iacode/schemas/rework-log.schema.json and validate the log against it.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/schemas/rework-log.schema.json"
+      ],
+      "testEvidence": [
+        "test:GreenKeeperToolTests.test_repaired_gate_is_reported_as_green_in_a_new_cycle"
+      ],
+      "documentationEvidence": [
+        "file:docs/CHECKPOINT-PROTOCOL.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0013"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "REQ-0016",
+      "source": "prompt section 9",
+      "description": "Create the canonical Delivery Completeness Validator role contract at .iacode/agents/delivery-completeness-validator.md, as an auditor that may not implement or silently correct.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/agents/delivery-completeness-validator.md"
+      ],
+      "testEvidence": [
+        "test:ClaudeAdapterTests.test_project_agents_match_canonical_role_names"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0011"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "REQ-0017",
+      "source": "prompt section 9 and 13",
+      "description": "Create the Delivery Completeness Validator adapters using supported mechanisms.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.claude/agents/delivery-completeness-validator.md"
+      ],
+      "testEvidence": [
+        "test:ClaudeAdapterTests.test_project_agents_have_supported_required_frontmatter"
+      ],
+      "documentationEvidence": [
+        "file:AGENTS.md",
+        "file:CLAUDE.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0011"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "REQ-0018",
+      "source": "prompt section 9",
+      "description": "Produce COMPLETENESS-REPORT.json and COMPLETENESS-REPORT.md carrying total, mandatory, complete, partial, missing, not applicable, coverage percent, evidence coverage percent, and result.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/check_completeness.py"
+      ],
+      "testEvidence": [
+        "test:DeliveryCompletenessMatrixTests.test_every_requirement_complete_passes"
+      ],
+      "documentationEvidence": [
+        "file:scripts/development-ledger/README.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:COMPLETENESS-REPORT.json",
+        "checkpoint:COMPLETENESS-REPORT.md"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "REQ-0019",
+      "source": "prompt section 16",
+      "description": "Create .iacode/schemas/completeness-report.schema.json and validate the report against it.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/schemas/completeness-report.schema.json"
+      ],
+      "testEvidence": [
+        "test:DeliveryAssuranceGateTests.test_completeness_report_inconsistent_with_the_matrix_is_rejected"
+      ],
+      "documentationEvidence": [
+        "file:docs/QUALITY-GATES.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0013"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "REQ-0020",
+      "source": "prompt section 10",
+      "description": "Create the DELIVERY_COMPLETENESS_GATE control with PASS, FAIL, and NOT_EXECUTED states, and make READY_FOR_REVIEW require PASS.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/validate_checkpoint.py"
+      ],
+      "testEvidence": [
+        "test:DeliveryAssuranceGateTests.test_completeness_validator_not_executed_blocks_review",
+        "test:DeliveryAssuranceGateTests.test_completeness_pass_claimed_over_an_incomplete_matrix_is_rejected"
+      ],
+      "documentationEvidence": [
+        "file:docs/QUALITY-GATES.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0013"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "REQ-0021",
+      "source": "prompt section 11",
+      "description": "Create the GREEN_KEEPER_GATE control that is PASS only when every mandatory executable gate is green, remaining failures are zero, and unresolved rework items are zero; an external blocker yields BLOCKED, never PASS.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/validate_checkpoint.py",
+        "file:scripts/development-ledger/green_keeper.py"
+      ],
+      "testEvidence": [
+        "test:DeliveryAssuranceGateTests.test_green_keeper_not_executed_blocks_review",
+        "test:DeliveryAssuranceGateTests.test_green_keeper_pass_with_a_real_failure_is_rejected",
+        "test:GreenKeeperToolTests.test_external_blocker_never_reports_pass"
+      ],
+      "documentationEvidence": [
+        "file:docs/QUALITY-GATES.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0013"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "REQ-0022",
+      "source": "prompt section 12",
+      "description": "Make the eleven-step delivery order mandatory in the development contract, quality gates, checkpoint protocol, handoff protocol, definition of done, START-HERE, AGENTS.md, and CLAUDE.md.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "testEvidence": [
+        "test:SetupChecklistTests.test_documentation_links_resolve"
+      ],
+      "documentationEvidence": [
+        "file:docs/DEVELOPMENT-CONTRACT.md",
+        "file:docs/QUALITY-GATES.md",
+        "file:docs/CHECKPOINT-PROTOCOL.md",
+        "file:docs/HANDOFF-PROTOCOL.md",
+        "file:docs/DEFINITION-OF-DONE.md",
+        "file:START-HERE.md",
+        "file:AGENTS.md",
+        "file:CLAUDE.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0011"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "REQ-0023",
+      "source": "prompt section 13",
+      "description": "Separate the two new roles honestly: the Green Keeper may change code, the Completeness Validator may not, and any emulation limit is documented rather than overstated.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:AGENTS.md",
+        "file:CLAUDE.md"
+      ],
+      "testEvidence": [],
+      "documentationEvidence": [
+        "file:docs/adr/ADR-0008-delivery-assurance-gates.md",
+        "checkpoint:DECISIONS.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:RISKS.md"
+      ],
+      "notes": "The separation is one of role and artifact inside a single session; it is documented as emulation, not claimed as independence."
+    },
+    {
+      "id": "REQ-0024",
+      "source": "prompt section 14",
+      "description": "Extend the checkpoint schema with requirementsMatrix, greenKeeper, deliveryCompleteness, reworkCycles, independentReview, and redTeam, and make READY_FOR_REVIEW impossible when the Green Keeper or completeness gate is not PASS.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/schemas/checkpoint.schema.json",
+        "file:scripts/development-ledger/validate_checkpoint.py"
+      ],
+      "testEvidence": [
+        "test:DeliveryAssuranceGateTests.test_missing_assurance_block_is_rejected",
+        "test:DeliveryAssuranceGateTests.test_green_keeper_not_executed_blocks_review"
+      ],
+      "documentationEvidence": [
+        "file:docs/CHECKPOINT-PROTOCOL.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0013"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "REQ-0025",
+      "source": "prompt section 18",
+      "description": "Add the thirteen mandated control tests covering coverage, partial, missing, unjustified NOT_APPLICABLE, evidence-free COMPLETE, red tests, unresolved rework, blockers, inconsistent gate claims, and an unexecuted validator.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:tests/test_development_ledger.py"
+      ],
+      "testEvidence": [
+        "test:DeliveryCompletenessMatrixTests.test_one_requirement_short_of_total_fails",
+        "test:DeliveryCompletenessMatrixTests.test_missing_mandatory_requirement_fails",
+        "test:DeliveryCompletenessMatrixTests.test_partial_requirement_fails",
+        "test:DeliveryAssuranceGateTests.test_red_tests_block_review",
+        "test:DeliveryAssuranceGateTests.test_unresolved_rework_blocks_review",
+        "test:DeliveryAssuranceGateTests.test_complete_delivery_passes_every_gate"
+      ],
+      "documentationEvidence": [
+        "checkpoint:FINAL-REPORT.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0011"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "REQ-0026",
+      "source": "prompt section 19",
+      "description": "Run the full re-execution sequence in order and escalate to the Green Keeper on any red result.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:REWORK-LOG.jsonl"
+      ],
+      "testEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:FINAL-REPORT.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0011",
+        "command:cmd-0012",
+        "command:cmd-0013"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "REQ-0027",
+      "source": "prompt section 20",
+      "description": "Apply the Green Keeper to CP-0005 itself and record every cycle, including failures caused by this run's own development.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:REWORK-LOG.jsonl"
+      ],
+      "testEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:DECISIONS.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0011"
+      ],
+      "notes": "Cycle 1 failed on checkpoint validation and a later suite failure came from this run's own fixture; both were repaired at the cause."
+    },
+    {
+      "id": "REQ-0028",
+      "source": "prompt section 21",
+      "description": "Run the Delivery Completeness Validator against CP-0005 before READY_FOR_REVIEW and repeat the correction loop until coverage is total.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:COMPLETENESS-REPORT.json"
+      ],
+      "testEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:DECISIONS.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:COMPLETENESS-REPORT.md"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "REQ-0029",
+      "source": "prompt section 22",
+      "description": "Enforce the CP-0005 exit conditions: total coverage, both new gates PASS, green tests, mandatory quality green, empty blockedBy, and zero unresolved rework.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/validate_checkpoint.py"
+      ],
+      "testEvidence": [
+        "test:DeliveryAssuranceGateTests.test_complete_delivery_passes_every_gate",
+        "test:DeliveryLifecycleTests.test_full_delivery_assurance_flow_reaches_ready_for_review"
+      ],
+      "documentationEvidence": [
+        "file:docs/QUALITY-GATES.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0013"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "REQ-0030",
+      "source": "prompt section 23",
+      "description": "Create docs/checkpoints/SETUP-00-CP-0005/ containing every mandated artifact.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:STATUS.md"
+      ],
+      "testEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:FINAL-REPORT.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:FILES.json",
+        "command:cmd-0013"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "REQ-0031",
+      "source": "prompt section 24",
+      "description": "Give Codex a handoff that allows verification of every CP-0004 finding, the matrix, completeness, the Green Keeper, the rework log, quality evidence, reproducibility, the READY_FOR_REVIEW invariants, and the tests, with exact commands.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:HANDOFF.md"
+      ],
+      "testEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:HANDOFF.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0013"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "REQ-0032",
+      "source": "prompt section 25",
+      "description": "Maintain the Engineering Ledger continuously with requirement, plan, file, command, exit code, failure, cause, correction, retest, result, and evidence, and no private chain-of-thought.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:COMMANDS.jsonl"
+      ],
+      "testEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:DECISIONS.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0013"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "REQ-0033",
+      "source": "prompt section 26",
+      "description": "Keep trainingAllowed false by default and change no rights policy without evidence.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:PROVENANCE.json"
+      ],
+      "testEvidence": [],
+      "documentationEvidence": [
+        "file:.iacode/policies/provenance-policy.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0013"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "REQ-0034",
+      "source": "prompt section 27",
+      "description": "Respect every prohibition: no Gate 0, no modification of sealed checkpoints or historical tags, no GATE_PASS, no skipped Green Keeper or Completeness Validator, no red test, no partial requirement, and no blocker at READY_FOR_REVIEW.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:STATE.json"
+      ],
+      "testEvidence": [
+        "test:HistoricalCheckpointCompatibilityTests.test_fourth_sealed_checkpoint_still_validates"
+      ],
+      "documentationEvidence": [
+        "checkpoint:DECISIONS.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0013"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "REQ-0035",
+      "source": "prompt section 28",
+      "description": "Deliver the final report with checkpoint, status, requirement counts and coverage, Green Keeper result and cycles, completeness result, tests, quality gates, per-finding CP-0004 status, remaining blockers, commit, tag, next step, and Gate 0 state.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:FINAL-REPORT.md"
+      ],
+      "testEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:FINAL-REPORT.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0013"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "REQ-0036",
+      "source": "docs/CHECKPOINT-PROTOCOL.md schema versions / ADR-0007",
+      "description": "Preserve backward compatibility: CP-0001, CP-0002, CP-0003, and CP-0004 must keep validating under the corrected tooling, with their tags unchanged.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/validate_checkpoint.py"
+      ],
+      "testEvidence": [
+        "test:HistoricalCheckpointCompatibilityTests.test_first_sealed_checkpoint_still_validates",
+        "test:HistoricalCheckpointCompatibilityTests.test_second_sealed_checkpoint_still_validates",
+        "test:HistoricalCheckpointCompatibilityTests.test_third_sealed_checkpoint_still_validates",
+        "test:HistoricalCheckpointCompatibilityTests.test_fourth_sealed_checkpoint_still_validates"
+      ],
+      "documentationEvidence": [
+        "file:docs/CHECKPOINT-PROTOCOL.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0011"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "REQ-0037",
+      "source": "docs/DEVELOPMENT-CONTRACT.md structural decisions",
+      "description": "Record the structural decisions of this checkpoint as an ADR, including the new schema version and the two new control gates.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:docs/adr/ADR-0008-delivery-assurance-gates.md"
+      ],
+      "testEvidence": [],
+      "documentationEvidence": [
+        "file:docs/adr/ADR-0008-delivery-assurance-gates.md"
+      ],
+      "validationEvidence": [
+        "test:SetupChecklistTests.test_documentation_links_resolve"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "REQ-0038",
+      "source": "prompt section 27 / docs/MASTER-PLAN.md",
+      "description": "Do not start Gate 0 and keep it explicitly blocked.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:STATE.json"
+      ],
+      "testEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:NEXT.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0013"
+      ],
+      "notes": "No runtime, model gateway, agent runtime, sandbox, quality runtime, or IDE integration exists in the change set."
+    }
+  ]
+}

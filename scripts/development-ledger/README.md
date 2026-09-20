@@ -46,6 +46,42 @@ every declared hash from the repository, but it never adds or removes a declarat
 manifest fails finalization until the author declares the missing paths. Finalization requires an
 attached branch.
 
+## Record a command
+
+```text
+python scripts/development-ledger/record_command.py --purpose "why this is evidence" -- python -m unittest discover -s tests
+```
+
+Runs the command, times it, and appends a reproducible record to the current checkpoint's
+`COMMANDS.jsonl`: identifier, runtime, working directory, literal command, sanitized arguments,
+referenced repository inputs, the repository commit, the purpose, the canonical result, the exit
+code, and the duration. The recorded command keeps the portable `python` token while execution uses
+the current interpreter, so the record replays from the working directory it names.
+
+## Green Keeper
+
+```text
+python scripts/development-ledger/green_keeper.py --gates tests,staticAnalysis,checkpointValidation --trigger "delivery gate run"
+```
+
+Executes the mandatory gates, records each invocation, and appends the cycle to `REWORK-LOG.jsonl`.
+Exit `0` means `GREEN_KEEPER_GATE=PASS`; exit `1` means a gate is still red; exit `2` means a real
+external blocker was declared, which maps to a `BLOCKED` checkpoint and never to `PASS`. The tool
+proves the state and never edits code: repairing the cause belongs to the role defined in
+`.iacode/agents/test-rework-greenkeeper.md`.
+
+## Delivery completeness
+
+```text
+python scripts/development-ledger/check_completeness.py --write
+```
+
+Audits `REQUIREMENTS-MATRIX.json` requirement by requirement, resolving every evidence reference, and
+writes `COMPLETENESS-REPORT.json` and `COMPLETENESS-REPORT.md`. Exit `0` means
+`DELIVERY_COMPLETENESS_GATE=PASS`, which requires total coverage, zero partial, zero missing, and
+every reference resolved. `validate_checkpoint.py` recomputes the same audit, so a stored report
+cannot disagree with the matrix it describes.
+
 ## Redact
 
 ```text

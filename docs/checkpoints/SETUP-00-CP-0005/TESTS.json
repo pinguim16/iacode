@@ -1,0 +1,24 @@
+{
+  "schemaVersion": "3.0.0",
+  "unit": {
+    "executed": true,
+    "passed": 97,
+    "failed": 0,
+    "command": "python -m unittest discover -s tests",
+    "evidence": "97 unit cases: 30 validator cases, 15 delivery gate cases, 13 completeness matrix cases, 10 command reproducibility cases, 9 cross-tool validation state cases, 9 quality evidence cases, 6 status and blocker invariant cases, 3 adapter cases, and 2 checklist and documentation link cases."
+  },
+  "integration": {
+    "executed": true,
+    "passed": 34,
+    "failed": 0,
+    "command": "python -m unittest discover -s tests",
+    "evidence": "34 isolated Git and subprocess cases: 8 delta inventory cases, 6 detached-HEAD cases, 4 checkpoint lifecycle cases, 4 finalization attempt recording cases, 4 historical compatibility cases against the four sealed tags, 4 Green Keeper harness cases, 2 finalization ledger cases, 1 resealed blocker reproduction, and 1 end-to-end delivery lifecycle case."
+  },
+  "e2e": {
+    "executed": false,
+    "passed": 0,
+    "failed": 0,
+    "command": null,
+    "evidence": "No functional runtime exists in SETUP-00, so runtime end-to-end testing is not applicable. The delivery lifecycle case exercises the control plane end to end and is counted as integration."
+  }
+}

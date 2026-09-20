@@ -76,6 +76,19 @@ observable. An unexecuted check is `NOT_EXECUTED`, never `PASS`.
 | 7.4 | A sealed checkpoint can be validated from a detached checkout of its own tag. | `validate_checkpoint.py` | `DetachedHeadValidationTests`. |
 | 7.5 | The handoff is executable by another tool without the producing session. | `HANDOFF.md` | Required headings plus reproducible validation commands. |
 
+## 7b. Delivery assurance
+
+| # | Requirement | Artifact | Evidence |
+|---|---|---|---|
+| 7b.1 | Every requirement of a delivery exists in a versioned matrix before implementation. | `REQUIREMENTS-MATRIX.json`, `.iacode/schemas/requirements-matrix.schema.json` | `DeliveryCompletenessMatrixTests`. |
+| 7b.2 | A Test Rework / Green Keeper role forbids shipping anything red and records every cycle. | `.iacode/agents/test-rework-greenkeeper.md`, `REWORK-LOG.jsonl`, `scripts/development-ledger/green_keeper.py` | `GreenKeeperToolTests`. |
+| 7b.3 | A Delivery Completeness Validator audits the matrix before handoff and may not implement. | `.iacode/agents/delivery-completeness-validator.md`, `COMPLETENESS-REPORT.json`, `scripts/development-ledger/check_completeness.py` | `DeliveryCompletenessMatrixTests`, `DeliveryAssuranceGateTests`. |
+| 7b.4 | `GREEN_KEEPER_GATE` and `DELIVERY_COMPLETENESS_GATE` are preconditions of `READY_FOR_REVIEW`. | `scripts/development-ledger/validate_checkpoint.py`, `docs/QUALITY-GATES.md` | `DeliveryAssuranceGateTests`, `DeliveryLifecycleTests`. |
+| 7b.5 | Readiness and blockage can never be claimed together. | `validate_checkpoint.py` | `StatusBlockerInvariantTests`, `ResealedBlockerFixtureTests`. |
+| 7b.6 | Every operation attempt is recorded, including a refusal decided before execution. | `scripts/development-ledger/finalize_checkpoint.py` | `FinalizationAttemptRecordingTests`. |
+| 7b.7 | Every recorded command is reproducible from its declared working directory. | `scripts/development-ledger/record_command.py`, `.iacode/schemas/command.schema.json` | `CommandReproducibilityTests`. |
+| 7b.8 | The mandatory eleven-step delivery order is stated in every governing document and both adapters. | `docs/DEVELOPMENT-CONTRACT.md`, `docs/QUALITY-GATES.md`, `docs/CHECKPOINT-PROTOCOL.md`, `docs/HANDOFF-PROTOCOL.md`, `docs/DEFINITION-OF-DONE.md`, `START-HERE.md`, `AGENTS.md`, `CLAUDE.md` | Documents present and consistent. |
+
 ## 8. Independent verification
 
 | # | Requirement | Artifact | Evidence |

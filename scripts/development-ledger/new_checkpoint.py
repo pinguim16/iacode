@@ -11,10 +11,11 @@ from pathlib import Path
 
 from ledger_common import (
     CURRENT_SCHEMA_VERSION,
-    QUALITY_DIMENSIONS,
+    QUALITY_DIMENSIONS_V3,
     STATUSES,
     find_root,
     git_snapshot,
+    runtime_label,
     utc_now,
     write_json,
 )
@@ -96,6 +97,26 @@ def main() -> int:
             "justification": None,
             "evidence": [],
         },
+        "requirementsMatrix": {
+            "path": "REQUIREMENTS-MATRIX.json",
+            "total": 0, "mandatory": 0, "complete": 0, "partial": 0, "missing": 0,
+            "notApplicable": 0, "coveragePercent": 0.0,
+        },
+        "greenKeeper": {
+            "status": "NOT_EXECUTED", "cycles": 0, "remainingFailures": 0,
+            "unresolvedReworkItems": 0, "log": "REWORK-LOG.jsonl",
+            "externalBlockers": [], "evidence": [],
+        },
+        "deliveryCompleteness": {
+            "status": "NOT_EXECUTED", "report": "COMPLETENESS-REPORT.json",
+            "coveragePercent": 0.0, "evidenceCoveragePercent": 0.0,
+            "auditor": None, "evidence": [],
+        },
+        "reworkCycles": 0,
+        "independentReview": {"status": "PENDING", "tool": None, "reviewedAt": None,
+                              "justification": None, "evidence": []},
+        "redTeam": {"status": "PENDING", "tool": None, "executedAt": None,
+                    "justification": None, "evidence": []},
     })
     write_json(checkpoint / "RUN-METADATA.json", {
         "tool": "not-recorded",
@@ -113,8 +134,19 @@ def main() -> int:
     (checkpoint / "COMMANDS.jsonl").write_text(json.dumps({
         "id": "cmd-0001",
         "timestamp": now,
-        "command": f"new_checkpoint.py --gate {args.gate} --status {args.status}",
+        "runtime": runtime_label("python"),
+        "command": (
+            "python scripts/development-ledger/new_checkpoint.py "
+            f"--gate {args.gate} --status {args.status}"
+        ),
+        "arguments": ["scripts/development-ledger/new_checkpoint.py", "--gate", args.gate,
+                      "--status", args.status],
+        "inputs": ["scripts/development-ledger/new_checkpoint.py"],
         "workingDirectory": str(root),
+        "commit": snapshot["head"],
+        "purpose": "Create the checkpoint skeleton with truthful non-PASS defaults.",
+        "result": "COMPLETED",
+        "resultCode": "OK",
         "exitCode": 0,
         "durationMs": 0,
         "stdoutArtifact": None,
@@ -127,9 +159,16 @@ def main() -> int:
         "schemaVersion": CURRENT_SCHEMA_VERSION,
         "checks": {
             dimension: {"status": "NOT_EXECUTED", "evidence": [], "justification": None}
-            for dimension in QUALITY_DIMENSIONS
+            for dimension in QUALITY_DIMENSIONS_V3
         },
     })
+    (checkpoint / "REWORK-LOG.jsonl").write_text("", encoding="utf-8")
+    write_json(checkpoint / "REQUIREMENTS-MATRIX.json", {
+        "schemaVersion": "1.0.0", "gate": args.gate, "checkpoint": name, "requirements": [],
+    })
+    (checkpoint / "REQUIREMENTS-MATRIX.md").write_text(
+        f"# Requirements Matrix - {name}\n\nExtract every requirement before implementation.\n",
+        encoding="utf-8")
     write_json(checkpoint / "PROVENANCE.json", {
         "schemaVersion": CURRENT_SCHEMA_VERSION,
         "artifacts": [{
