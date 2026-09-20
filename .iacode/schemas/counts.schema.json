@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://iacode.local/schemas/counts.schema.json",
+  "title": "Derived delivery counts",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "checkpoint",
+    "generatedAt",
+    "counts"
+  ],
+  "$defs": {
+    "count": {
+      "type": "object",
+      "required": [
+        "numerator",
+        "denominator",
+        "source"
+      ],
+      "properties": {
+        "numerator": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "denominator": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "source": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "properties": {
+    "schemaVersion": {
+      "enum": [
+        "1.0.0"
+      ]
+    },
+    "checkpoint": {
+      "type": "string",
+      "minLength": 1
+    },
+    "generatedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "counts": {
+      "type": "object",
+      "properties": {
+        "TESTS": {
+          "$ref": "#/$defs/count"
+        },
+        "REQUIREMENTS": {
+          "$ref": "#/$defs/count"
+        },
+        "FINDINGS": {
+          "$ref": "#/$defs/count"
+        },
+        "ATTACKS": {
+          "$ref": "#/$defs/count"
+        },
+        "LESSONS": {
+          "$ref": "#/$defs/count"
+        },
+        "GUARDRAILS": {
+          "$ref": "#/$defs/count"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

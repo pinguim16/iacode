@@ -1,0 +1,2911 @@
+{
+  "schemaVersion": "2.0.0",
+  "gate": "SETUP-00",
+  "checkpoint": "SETUP-00-CP-0008",
+  "expectedSetSource": "policies.expected_requirement_refs over docs/SETUP-00-CHECKLIST.md, .iacode/policies/canonical-requirements.json, .iacode/policies/audit-registry.json and LESSON-PREFLIGHT.json",
+  "requirements": [
+    {
+      "id": "REQ-0001",
+      "source": "docs/SETUP-00-CHECKLIST.md row 1.1",
+      "sourceRef": "canonical:SETUP-00#1.1",
+      "description": "A single entry point states the phase, current Gate, latest checkpoint, and start protocol.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:START-HERE.md"
+      ],
+      "testEvidence": [
+        "file:docs/checkpoints/LATEST.md"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0002",
+      "source": "docs/SETUP-00-CHECKLIST.md row 1.2",
+      "sourceRef": "canonical:SETUP-00#1.2",
+      "description": "A Codex adapter binds the canonical contracts without adding independent policy.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:AGENTS.md"
+      ],
+      "testEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0003",
+      "source": "docs/SETUP-00-CHECKLIST.md row 1.3",
+      "sourceRef": "canonical:SETUP-00#1.3",
+      "description": "A Claude Code adapter binds the same contracts.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:CLAUDE.md"
+      ],
+      "testEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0004",
+      "source": "docs/SETUP-00-CHECKLIST.md row 1.4",
+      "sourceRef": "canonical:SETUP-00#1.4",
+      "description": "Tool adapters stay semantically equivalent to the canonical roles.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "test:ClaudeAdapterTests",
+        "file:tests/test_development_ledger.py"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0005",
+      "source": "docs/SETUP-00-CHECKLIST.md row 2.1",
+      "sourceRef": "canonical:SETUP-00#2.1",
+      "description": "The Gate sequence, dependencies, acceptance, and fail conditions are recorded.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:docs/MASTER-PLAN.md"
+      ],
+      "testEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0006",
+      "source": "docs/SETUP-00-CHECKLIST.md row 2.2",
+      "sourceRef": "canonical:SETUP-00#2.2",
+      "description": "The completion standard, mandatory controls, and Git and evidence discipline are recorded.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:docs/DEVELOPMENT-CONTRACT.md"
+      ],
+      "testEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0007",
+      "source": "docs/SETUP-00-CHECKLIST.md row 2.3",
+      "sourceRef": "canonical:SETUP-00#2.3",
+      "description": "Tool-to-tool transfer is formal in both directions.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:docs/HANDOFF-PROTOCOL.md"
+      ],
+      "testEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0008",
+      "source": "docs/SETUP-00-CHECKLIST.md row 2.4",
+      "sourceRef": "canonical:SETUP-00#2.4",
+      "description": "Checkpoint statuses, required events, required contents, commit semantics, and divergence handling are defined.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:docs/CHECKPOINT-PROTOCOL.md"
+      ],
+      "testEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0009",
+      "source": "docs/SETUP-00-CHECKLIST.md row 2.5",
+      "sourceRef": "canonical:SETUP-00#2.5",
+      "description": "Done is defined and excludes assertion-only PASS.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:docs/DEFINITION-OF-DONE.md"
+      ],
+      "testEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0010",
+      "source": "docs/SETUP-00-CHECKLIST.md row 2.6",
+      "sourceRef": "canonical:SETUP-00#2.6",
+      "description": "Quality outcomes, required dimensions, and the promotion rule are defined.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:docs/QUALITY-GATES.md"
+      ],
+      "testEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0011",
+      "source": "docs/SETUP-00-CHECKLIST.md row 2.7",
+      "sourceRef": "canonical:SETUP-00#2.7",
+      "description": "Structural decisions are recorded as ADRs.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [],
+      "testEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0012",
+      "source": "docs/SETUP-00-CHECKLIST.md row 2.8",
+      "sourceRef": "canonical:SETUP-00#2.8",
+      "description": "Architecture, roadmap, provenance, model usage, and detected tool capabilities are documented.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:docs/ARCHITECTURE.md",
+        "file:docs/ROADMAP.md",
+        "file:docs/PROVENANCE.md",
+        "file:docs/MODEL-USAGE-POLICY.md",
+        "file:docs/TOOL-CAPABILITIES.md"
+      ],
+      "testEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0013",
+      "source": "docs/SETUP-00-CHECKLIST.md row 3.1",
+      "sourceRef": "canonical:SETUP-00#3.1",
+      "description": "The canonical, tool-neutral role contracts exist, one per role of the delivery protocol.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "test:test_project_agents_match_canonical_role_names"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0014",
+      "source": "docs/SETUP-00-CHECKLIST.md row 3.2",
+      "sourceRef": "canonical:SETUP-00#3.2",
+      "description": "Documentation, provenance, secret, tool-execution, and training-data policies exist.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [],
+      "testEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0015",
+      "source": "docs/SETUP-00-CHECKLIST.md row 3.3",
+      "sourceRef": "canonical:SETUP-00#3.3",
+      "description": "Reusable templates exist for ADRs, checkpoints, gate reports, and handoffs.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [],
+      "testEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0016",
+      "source": "docs/SETUP-00-CHECKLIST.md row 4.1",
+      "sourceRef": "canonical:SETUP-00#4.1",
+      "description": "Checkpoint state, run metadata, command, test, quality, provenance, and decision schemas exist and are loadable.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "test:test_all_required_schemas_are_loaded"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0017",
+      "source": "docs/SETUP-00-CHECKLIST.md row 4.2",
+      "sourceRef": "canonical:SETUP-00#4.2",
+      "description": "An experience schema is reserved for Gate 6 and implements no runtime.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/schemas/experience.schema.json"
+      ],
+      "testEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0018",
+      "source": "docs/SETUP-00-CHECKLIST.md row 4.3",
+      "sourceRef": "canonical:SETUP-00#4.3",
+      "description": "Schema evolution is versioned and never invalidates a sealed checkpoint.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "test:HistoricalCheckpointCompatibilityTests"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0019",
+      "source": "docs/SETUP-00-CHECKLIST.md row 5.1",
+      "sourceRef": "canonical:SETUP-00#5.1",
+      "description": "A checkpoint can be created with truthful non-PASS defaults.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/new_checkpoint.py"
+      ],
+      "testEvidence": [
+        "test:test_new_finalize_commit_validate"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0020",
+      "source": "docs/SETUP-00-CHECKLIST.md row 5.2",
+      "sourceRef": "canonical:SETUP-00#5.2",
+      "description": "A checkpoint can be finalized, and every finalization attempt is recorded with its exit code.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/finalize_checkpoint.py"
+      ],
+      "testEvidence": [
+        "test:FinalizationLedgerTests"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0021",
+      "source": "docs/SETUP-00-CHECKLIST.md row 5.3",
+      "sourceRef": "canonical:SETUP-00#5.3",
+      "description": "A checkpoint is validated against schemas, Git state, inventory, quality evidence, and secrets.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/validate_checkpoint.py"
+      ],
+      "testEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0022",
+      "source": "docs/SETUP-00-CHECKLIST.md row 5.4",
+      "sourceRef": "canonical:SETUP-00#5.4",
+      "description": "Secret redaction is available and documented to its real scope.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/redact_secrets.py",
+        "file:.iacode/policies/secret-policy.md"
+      ],
+      "testEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0023",
+      "source": "docs/SETUP-00-CHECKLIST.md row 5.5",
+      "sourceRef": "canonical:SETUP-00#5.5",
+      "description": "The tooling is standard-library only and portable across Windows and Unix-like checkouts.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/README.md"
+      ],
+      "testEvidence": [
+        "file:.gitattributes"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0024",
+      "source": "docs/SETUP-00-CHECKLIST.md row 6.1",
+      "sourceRef": "canonical:SETUP-00#6.1",
+      "description": "Every checkpoint carries status, handoff, run metadata, state, plan, decisions, commands, file inventory, tests, quality, provenance, diff summary, risks, and next action.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [],
+      "testEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0025",
+      "source": "docs/SETUP-00-CHECKLIST.md row 6.2",
+      "sourceRef": "canonical:SETUP-00#6.2",
+      "description": "`LATEST.md` points textually to the last checkpoint accepted by validation.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:docs/checkpoints/LATEST.md"
+      ],
+      "testEvidence": [
+        "test:test_latest_to_nonexistent_checkpoint_fails"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0026",
+      "source": "docs/SETUP-00-CHECKLIST.md row 6.3",
+      "sourceRef": "canonical:SETUP-00#6.3",
+      "description": "The file inventory matches the real change set, with bound content hashes.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:FILES.json"
+      ],
+      "testEvidence": [
+        "test:DeltaInventoryTests"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0027",
+      "source": "docs/SETUP-00-CHECKLIST.md row 6.4",
+      "sourceRef": "canonical:SETUP-00#6.4",
+      "description": "Provenance is complete and `trainingAllowed` defaults to `false`.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:PROVENANCE.json"
+      ],
+      "testEvidence": [
+        "file:.iacode/policies/provenance-policy.md"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0028",
+      "source": "docs/SETUP-00-CHECKLIST.md row 6.5",
+      "sourceRef": "canonical:SETUP-00#6.5",
+      "description": "A quality `PASS` carries resolvable evidence.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:QUALITY.json"
+      ],
+      "testEvidence": [
+        "test:QualityEvidenceTests"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0029",
+      "source": "docs/SETUP-00-CHECKLIST.md row 6.6",
+      "sourceRef": "canonical:SETUP-00#6.6",
+      "description": "Handoff-ready and terminal checkpoints are anchored to an immutable namespaced tag.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:STATE.json"
+      ],
+      "testEvidence": [
+        "test:test_handoff_ready_status_requires_commit_anchor"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0030",
+      "source": "docs/SETUP-00-CHECKLIST.md row 7.1",
+      "sourceRef": "canonical:SETUP-00#7.1",
+      "description": "A cold-start continuation prompt exists and depends only on checked-in files.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:prompts/RESUME-WORK.md"
+      ],
+      "testEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0031",
+      "source": "docs/SETUP-00-CHECKLIST.md row 7.2",
+      "sourceRef": "canonical:SETUP-00#7.2",
+      "description": "Cold-start validation is executed and recorded truthfully, including a blocked attempt.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [],
+      "testEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0032",
+      "source": "docs/SETUP-00-CHECKLIST.md row 7.3",
+      "sourceRef": "canonical:SETUP-00#7.3",
+      "description": "Cross-tool validation state is structured and explicit.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:STATE.json"
+      ],
+      "testEvidence": [
+        "test:SecondToolValidationTests"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0033",
+      "source": "docs/SETUP-00-CHECKLIST.md row 7.4",
+      "sourceRef": "canonical:SETUP-00#7.4",
+      "description": "A sealed checkpoint can be validated from a detached checkout of its own tag.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "test:DetachedHeadValidationTests"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0034",
+      "source": "docs/SETUP-00-CHECKLIST.md row 7.5",
+      "sourceRef": "canonical:SETUP-00#7.5",
+      "description": "The handoff is executable by another tool without the producing session.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:HANDOFF.md"
+      ],
+      "testEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0035",
+      "source": "docs/SETUP-00-CHECKLIST.md row 7b.1",
+      "sourceRef": "canonical:SETUP-00#7b.1",
+      "description": "Every requirement of a delivery exists in a versioned matrix before implementation.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:REQUIREMENTS-MATRIX.json",
+        "file:.iacode/schemas/requirements-matrix.schema.json"
+      ],
+      "testEvidence": [
+        "test:DeliveryCompletenessMatrixTests"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0036",
+      "source": "docs/SETUP-00-CHECKLIST.md row 7b.2",
+      "sourceRef": "canonical:SETUP-00#7b.2",
+      "description": "A Test Rework / Green Keeper role forbids shipping anything red and records every cycle.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/agents/test-rework-greenkeeper.md",
+        "file:scripts/development-ledger/green_keeper.py"
+      ],
+      "testEvidence": [
+        "test:GreenKeeperToolTests"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0037",
+      "source": "docs/SETUP-00-CHECKLIST.md row 7b.3",
+      "sourceRef": "canonical:SETUP-00#7b.3",
+      "description": "A Delivery Completeness Validator audits the matrix before handoff and may not implement.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/agents/delivery-completeness-validator.md",
+        "file:scripts/development-ledger/check_completeness.py"
+      ],
+      "testEvidence": [
+        "test:DeliveryCompletenessMatrixTests",
+        "test:DeliveryAssuranceGateTests"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0038",
+      "source": "docs/SETUP-00-CHECKLIST.md row 7b.4",
+      "sourceRef": "canonical:SETUP-00#7b.4",
+      "description": "`GREEN_KEEPER_GATE` and `DELIVERY_COMPLETENESS_GATE` are preconditions of `READY_FOR_REVIEW`.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/validate_checkpoint.py",
+        "file:docs/QUALITY-GATES.md"
+      ],
+      "testEvidence": [
+        "test:DeliveryAssuranceGateTests",
+        "test:DeliveryLifecycleTests"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0039",
+      "source": "docs/SETUP-00-CHECKLIST.md row 7b.5",
+      "sourceRef": "canonical:SETUP-00#7b.5",
+      "description": "Readiness and blockage can never be claimed together.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "test:StatusBlockerInvariantTests",
+        "test:ResealedBlockerFixtureTests"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0040",
+      "source": "docs/SETUP-00-CHECKLIST.md row 7b.6",
+      "sourceRef": "canonical:SETUP-00#7b.6",
+      "description": "Every operation attempt is recorded, including a refusal decided before execution.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/finalize_checkpoint.py"
+      ],
+      "testEvidence": [
+        "test:FinalizationAttemptRecordingTests"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0041",
+      "source": "docs/SETUP-00-CHECKLIST.md row 7b.7",
+      "sourceRef": "canonical:SETUP-00#7b.7",
+      "description": "Every recorded command is reproducible from its declared working directory.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/record_command.py",
+        "file:.iacode/schemas/command.schema.json"
+      ],
+      "testEvidence": [
+        "test:CommandReproducibilityTests"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0042",
+      "source": "docs/SETUP-00-CHECKLIST.md row 7b.8",
+      "sourceRef": "canonical:SETUP-00#7b.8",
+      "description": "The mandatory delivery order is stated in full in every governing document and both adapters.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:docs/DEVELOPMENT-CONTRACT.md",
+        "file:docs/QUALITY-GATES.md",
+        "file:docs/CHECKPOINT-PROTOCOL.md",
+        "file:docs/HANDOFF-PROTOCOL.md",
+        "file:docs/DEFINITION-OF-DONE.md",
+        "file:START-HERE.md",
+        "file:AGENTS.md",
+        "file:CLAUDE.md"
+      ],
+      "testEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0043",
+      "source": "docs/SETUP-00-CHECKLIST.md row 7c.1",
+      "sourceRef": "canonical:SETUP-00#7c.1",
+      "description": "The project keeps an organizational engineering memory of confirmed failures.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/schemas/lesson.schema.json"
+      ],
+      "testEvidence": [
+        "test:EngineeringMemoryStructureTests"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0044",
+      "source": "docs/SETUP-00-CHECKLIST.md row 7c.2",
+      "sourceRef": "canonical:SETUP-00#7c.2",
+      "description": "A lesson is `GUARDED` only when an automated control prevents recurrence.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/validate_lessons.py"
+      ],
+      "testEvidence": [
+        "test:LessonValidationTests"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0045",
+      "source": "docs/SETUP-00-CHECKLIST.md row 7c.3",
+      "sourceRef": "canonical:SETUP-00#7c.3",
+      "description": "A repeat increments recurrence, and a repeat against a guardrail is a `GUARDRAIL_FAILURE`.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/lessons.py"
+      ],
+      "testEvidence": [
+        "test:LessonRecurrenceTests"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0046",
+      "source": "docs/SETUP-00-CHECKLIST.md row 7c.4",
+      "sourceRef": "canonical:SETUP-00#7c.4",
+      "description": "A mandatory preflight selects the lessons that constrain each Gate.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/lesson_preflight.py",
+        "checkpoint:LESSON-PREFLIGHT.json"
+      ],
+      "testEvidence": [
+        "test:LessonPreflightTests"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0047",
+      "source": "docs/SETUP-00-CHECKLIST.md row 7c.5",
+      "sourceRef": "canonical:SETUP-00#7c.5",
+      "description": "Applicable lessons become requirements whose absence blocks completeness.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:REQUIREMENTS-MATRIX.json"
+      ],
+      "testEvidence": [
+        "test:DerivedRequirementCompletenessTests"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0048",
+      "source": "docs/SETUP-00-CHECKLIST.md row 7c.6",
+      "sourceRef": "canonical:SETUP-00#7c.6",
+      "description": "Lesson candidates can be extracted from recorded delivery evidence, never above `OBSERVED`.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/extract_lessons.py"
+      ],
+      "testEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0049",
+      "source": "docs/SETUP-00-CHECKLIST.md row 7c.7",
+      "sourceRef": "canonical:SETUP-00#7c.7",
+      "description": "External validation is grouped into milestones `M0` to `M6`.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:docs/MILESTONE-VALIDATION.md"
+      ],
+      "testEvidence": [
+        "test:MilestoneValidationPolicyTests"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0050",
+      "source": "docs/SETUP-00-CHECKLIST.md row 7c.8",
+      "sourceRef": "canonical:SETUP-00#7c.8",
+      "description": "An internal verdict is never described as independent external validation.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "test:MemoryStatusVocabularyTests",
+        "test:MemoryPolicyValidationTests"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0051",
+      "source": "docs/SETUP-00-CHECKLIST.md row 7c.9",
+      "sourceRef": "canonical:SETUP-00#7c.9",
+      "description": "An extraordinary audit requires a recorded trigger.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "test:MemoryPolicyValidationTests"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0052",
+      "source": "docs/SETUP-00-CHECKLIST.md row 7c.10",
+      "sourceRef": "canonical:SETUP-00#7c.10",
+      "description": "Every completed Gate produces a retrospective.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/templates/retrospective/TEMPLATE.md"
+      ],
+      "testEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0053",
+      "source": "docs/SETUP-00-CHECKLIST.md row 7d.1",
+      "sourceRef": "canonical:SETUP-00#7d.1",
+      "description": "One promotion invariant governs every positive terminal status, not only `READY_FOR_REVIEW`.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/validate_checkpoint.py"
+      ],
+      "testEvidence": [
+        "test:PromotionInvariantTests"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0054",
+      "source": "docs/SETUP-00-CHECKLIST.md row 7d.2",
+      "sourceRef": "canonical:SETUP-00#7d.2",
+      "description": "The mandatory quality gate set is a closed machine-readable registry that an invocation cannot narrow.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/policies/quality-gates.json",
+        "file:scripts/development-ledger/green_keeper.py"
+      ],
+      "testEvidence": [
+        "test:MandatoryGatePolicyTests"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0055",
+      "source": "docs/SETUP-00-CHECKLIST.md row 7d.3",
+      "sourceRef": "canonical:SETUP-00#7d.3",
+      "description": "The expected requirement set is derived from canonical sources and compared exactly with the declared set.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/policies/canonical-requirements.json",
+        "file:scripts/development-ledger/policies.py"
+      ],
+      "testEvidence": [
+        "test:ExpectedRequirementSetTests"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0056",
+      "source": "docs/SETUP-00-CHECKLIST.md row 7d.4",
+      "sourceRef": "canonical:SETUP-00#7d.4",
+      "description": "An external milestone PASS is derived from an audit attestation authored by another sealed checkpoint.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/attestation.py"
+      ],
+      "testEvidence": [
+        "test:ExternalAttestationTests"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0057",
+      "source": "docs/SETUP-00-CHECKLIST.md row 7d.5",
+      "sourceRef": "canonical:SETUP-00#7d.5",
+      "description": "A derived artifact carries a fingerprint of its inputs, and staleness is decided by recomputation.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/lesson_preflight.py",
+        "checkpoint:LESSON-PREFLIGHT.json"
+      ],
+      "testEvidence": [
+        "test:PreflightFreshnessTests"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0058",
+      "source": "docs/SETUP-00-CHECKLIST.md row 7d.6",
+      "sourceRef": "canonical:SETUP-00#7d.6",
+      "description": "Every lesson control, evidence path and provenance locator is resolved against the repository.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/lessons.py"
+      ],
+      "testEvidence": [
+        "test:LessonResolutionTests",
+        "test:LessonProvenanceTests"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0059",
+      "source": "docs/SETUP-00-CHECKLIST.md row 7d.7",
+      "sourceRef": "canonical:SETUP-00#7d.7",
+      "description": "Every `GUARDED` lesson names a registered guardrail, and guardrail effectiveness is measured.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/memory/guardrails/registry.json"
+      ],
+      "testEvidence": [
+        "test:GuardrailRegistryTests",
+        "test:GuardrailEffectivenessGateTests"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0060",
+      "source": "docs/SETUP-00-CHECKLIST.md row 7d.8",
+      "sourceRef": "canonical:SETUP-00#7d.8",
+      "description": "Sealed checkpoints are anchored by a hash-linked chain over tag, commit and tree.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/anchors/checkpoint-chain.json",
+        "file:scripts/development-ledger/anchors.py"
+      ],
+      "testEvidence": [
+        "test:IntegrityAnchorTests"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0061",
+      "source": "docs/SETUP-00-CHECKLIST.md row 7d.9",
+      "sourceRef": "canonical:SETUP-00#7d.9",
+      "description": "Every count used as evidence is derived once and verified wherever a report states it.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/derive_counts.py"
+      ],
+      "testEvidence": [
+        "test:DerivedCountTests"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0062",
+      "source": "docs/SETUP-00-CHECKLIST.md row 7d.10",
+      "sourceRef": "canonical:SETUP-00#7d.10",
+      "description": "Sealing is monotonic and post-commit, and every recorded command binds its declared inputs by content.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/seal_checkpoint.py"
+      ],
+      "testEvidence": [
+        "test:SealChronologyTests",
+        "test:CommandInputBindingTests"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0063",
+      "source": "docs/SETUP-00-CHECKLIST.md row 7d.11",
+      "sourceRef": "canonical:SETUP-00#7d.11",
+      "description": "A milestone delivery carries an internal Red Team and an internal mirror audit, and neither is recorded as external validation.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/m0_red_team.py",
+        "file:.iacode/agents/m0-closure-auditor.md"
+      ],
+      "testEvidence": [
+        "test:InternalAssuranceTests",
+        "test:AuditSourceParsingTests"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0064",
+      "source": "docs/SETUP-00-CHECKLIST.md row 7d.12",
+      "sourceRef": "canonical:SETUP-00#7d.12",
+      "description": "Every finding of an independent audit is closed before the corrective delivery is offered.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/policies/audit-registry.json",
+        "checkpoint:CP7-FINDINGS-CLOSURE.json"
+      ],
+      "testEvidence": [
+        "test:FindingsClosureTests"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0065",
+      "source": "docs/SETUP-00-CHECKLIST.md row 8.1",
+      "sourceRef": "canonical:SETUP-00#8.1",
+      "description": "An independent review is recorded.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [],
+      "testEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0066",
+      "source": "docs/SETUP-00-CHECKLIST.md row 8.2",
+      "sourceRef": "canonical:SETUP-00#8.2",
+      "description": "An adversarial Red Team is recorded.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [],
+      "testEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0067",
+      "source": "docs/SETUP-00-CHECKLIST.md row 8.3",
+      "sourceRef": "canonical:SETUP-00#8.3",
+      "description": "`GATE_PASS` is granted only by a run independent of the implementer.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:STATE.json",
+        "file:docs/QUALITY-GATES.md"
+      ],
+      "testEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0068",
+      "source": "docs/SETUP-00-CHECKLIST.md row 9.1",
+      "sourceRef": "canonical:SETUP-00#9.1",
+      "description": "No Gate 0 or later runtime is implemented during SETUP-00.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [],
+      "testEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0069",
+      "source": "docs/SETUP-00-CHECKLIST.md row 9.2",
+      "sourceRef": "canonical:SETUP-00#9.2",
+      "description": "Documentation is maintained continuously rather than reconstructed at the end.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:COMMANDS.jsonl",
+        "checkpoint:DECISIONS.md"
+      ],
+      "testEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0070",
+      "source": "docs/SETUP-00-CHECKLIST.md row 9.3",
+      "sourceRef": "canonical:SETUP-00#9.3",
+      "description": "No secret, credential, or private chain-of-thought is stored.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [],
+      "testEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0071",
+      "source": "docs/SETUP-00-CHECKLIST.md row 9.4",
+      "sourceRef": "canonical:SETUP-00#9.4",
+      "description": "Gate advancement requires explicit authorization and a passing previous Gate.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:docs/MASTER-PLAN.md",
+        "checkpoint:NEXT.md"
+      ],
+      "testEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0072",
+      "source": "M0-CP-0007 docs/checkpoints/SETUP-00-CP-0007/REVIEW-REPORT.md M0-F-001",
+      "sourceRef": "finding:M0-F-001",
+      "description": "positive terminal status bypasses delivery assurance",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/validate_checkpoint.py"
+      ],
+      "testEvidence": [
+        "test:PromotionInvariantTests.test_every_positive_status_rejects_a_red_green_keeper",
+        "test:PromotionInvariantTests.test_every_positive_status_rejects_a_red_completeness_gate",
+        "test:PromotionInvariantTests.test_every_positive_status_rejects_every_red_quality_dimension",
+        "test:PromotionInvariantTests.test_every_positive_status_rejects_an_unexecuted_mandatory_dimension",
+        "test:PromotionInvariantTests.test_every_positive_status_rejects_a_partial_requirement"
+      ],
+      "documentationEvidence": [
+        "file:docs/adr/ADR-0010-milestone-closure-controls.md",
+        "checkpoint:CP7-FINDINGS-CLOSURE.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:CP7-FINDINGS-CLOSURE.json",
+        "file:.iacode/memory/guardrails/registry.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0073",
+      "source": "M0-CP-0007 docs/checkpoints/SETUP-00-CP-0007/REVIEW-REPORT.md M0-F-002",
+      "sourceRef": "finding:M0-F-002",
+      "description": "external milestone PASS can be self-asserted on an intermediate Gate",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/attestation.py",
+        "file:.iacode/schemas/external-audit-attestation.schema.json"
+      ],
+      "testEvidence": [
+        "test:ExternalAttestationTests.test_an_implementer_checkpoint_cannot_declare_an_external_pass",
+        "test:ExternalAttestationTests.test_second_tool_validation_alone_is_not_enough",
+        "test:ExternalAttestationTests.test_an_attestation_naming_the_subject_as_its_own_auditor_is_rejected",
+        "test:ExternalAttestationTests.test_a_failed_review_cannot_produce_an_external_pass",
+        "test:ExternalAttestationTests.test_a_failed_red_team_cannot_produce_an_external_pass",
+        "test:ExternalAttestationTests.test_an_intermediate_gate_cannot_take_the_external_status"
+      ],
+      "documentationEvidence": [
+        "file:docs/adr/ADR-0010-milestone-closure-controls.md",
+        "checkpoint:CP7-FINDINGS-CLOSURE.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:CP7-FINDINGS-CLOSURE.json",
+        "file:.iacode/memory/guardrails/registry.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0074",
+      "source": "M0-CP-0007 docs/checkpoints/SETUP-00-CP-0007/REVIEW-REPORT.md M0-F-003",
+      "sourceRef": "finding:M0-F-003",
+      "description": "lesson preflight is not bound to the checkpoint Gate or canonical memory",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/lessons.py"
+      ],
+      "testEvidence": [
+        "test:PreflightFreshnessTests.test_a_changed_fingerprint_makes_the_preflight_stale",
+        "test:PreflightFreshnessTests.test_a_preflight_from_another_gate_is_refused",
+        "test:PreflightFreshnessTests.test_a_dropped_lesson_makes_the_preflight_stale",
+        "test:PreflightFreshnessTests.test_the_checkpoint_refuses_a_stale_preflight"
+      ],
+      "documentationEvidence": [
+        "file:docs/adr/ADR-0010-milestone-closure-controls.md",
+        "checkpoint:CP7-FINDINGS-CLOSURE.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:CP7-FINDINGS-CLOSURE.json",
+        "file:.iacode/memory/guardrails/registry.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0075",
+      "source": "M0-CP-0007 docs/checkpoints/SETUP-00-CP-0007/REVIEW-REPORT.md M0-F-004",
+      "sourceRef": "finding:M0-F-004",
+      "description": "Engineering Memory accepts forged controls, missing evidence, and nested secrets",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/lessons.py"
+      ],
+      "testEvidence": [
+        "test:LessonResolutionTests.test_a_test_control_must_exist_in_the_suite",
+        "test:LessonResolutionTests.test_lesson_evidence_must_resolve",
+        "test:LessonResolutionTests.test_an_invariant_control_must_be_defined_in_the_tooling",
+        "test:LessonResolutionTests.test_a_control_path_may_not_escape_the_repository",
+        "test:LessonValidationTests.test_secret_in_a_lesson_fails"
+      ],
+      "documentationEvidence": [
+        "file:docs/adr/ADR-0010-milestone-closure-controls.md",
+        "checkpoint:CP7-FINDINGS-CLOSURE.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:CP7-FINDINGS-CLOSURE.json",
+        "file:.iacode/memory/guardrails/registry.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0076",
+      "source": "M0-CP-0007 docs/checkpoints/SETUP-00-CP-0007/REVIEW-REPORT.md M0-F-005",
+      "sourceRef": "finding:M0-F-005",
+      "description": "Green Keeper has a vacuous PASS path",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/policies/quality-gates.json",
+        "file:scripts/development-ledger/green_keeper.py"
+      ],
+      "testEvidence": [
+        "test:MandatoryGatePolicyTests.test_a_cycle_measured_against_no_gate_is_rejected",
+        "test:MandatoryGatePolicyTests.test_the_policy_declares_a_non_empty_closed_set",
+        "test:MandatoryGatePolicyTests.test_a_cycle_missing_one_mandatory_gate_is_rejected",
+        "test:MandatoryGatePolicyTests.test_a_mandatory_gate_that_exited_nonzero_is_rejected",
+        "test:MandatoryGatePolicyTests.test_a_gate_without_command_evidence_is_rejected"
+      ],
+      "documentationEvidence": [
+        "file:docs/adr/ADR-0010-milestone-closure-controls.md",
+        "checkpoint:CP7-FINDINGS-CLOSURE.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:CP7-FINDINGS-CLOSURE.json",
+        "file:.iacode/memory/guardrails/registry.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0077",
+      "source": "M0-CP-0007 docs/checkpoints/SETUP-00-CP-0007/REVIEW-REPORT.md M0-F-006",
+      "sourceRef": "finding:M0-F-006",
+      "description": "completeness denominator is not anchored",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/policies.py",
+        "file:.iacode/policies/canonical-requirements.json"
+      ],
+      "testEvidence": [
+        "test:ExpectedRequirementSetTests.test_deleting_a_requirement_and_recomputing_the_counts_still_fails",
+        "test:ExpectedRequirementSetTests.test_the_expected_set_is_derived_from_the_canonical_sources",
+        "test:ExpectedRequirementSetTests.test_an_unexpected_anchored_requirement_is_rejected",
+        "test:ExpectedRequirementSetTests.test_a_requirement_without_an_anchor_is_rejected",
+        "test:ExpectedRequirementSetTests.test_a_downgraded_matrix_cannot_escape_the_comparison"
+      ],
+      "documentationEvidence": [
+        "file:docs/adr/ADR-0010-milestone-closure-controls.md",
+        "checkpoint:CP7-FINDINGS-CLOSURE.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:CP7-FINDINGS-CLOSURE.json",
+        "file:.iacode/memory/guardrails/registry.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0078",
+      "source": "M0-CP-0007 docs/checkpoints/SETUP-00-CP-0007/REVIEW-REPORT.md M0-F-007",
+      "sourceRef": "finding:M0-F-007",
+      "description": "historical immutability is not anchored externally",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/anchors.py",
+        "file:.iacode/anchors/checkpoint-chain.json",
+        "file:scripts/development-ledger/verify_integrity.py"
+      ],
+      "testEvidence": [
+        "test:IntegrityAnchorTests.test_a_moved_historical_tag_is_detected",
+        "test:IntegrityAnchorTests.test_an_unexpected_tree_is_detected",
+        "test:IntegrityAnchorTests.test_a_broken_link_between_anchors_is_detected",
+        "test:IntegrityAnchorTests.test_a_recomputed_anchor_hash_must_match_its_fields",
+        "test:IntegrityAnchorTests.test_a_sealed_checkpoint_without_an_anchor_is_detected"
+      ],
+      "documentationEvidence": [
+        "file:docs/adr/ADR-0010-milestone-closure-controls.md",
+        "checkpoint:CP7-FINDINGS-CLOSURE.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:CP7-FINDINGS-CLOSURE.json",
+        "file:.iacode/memory/guardrails/registry.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0079",
+      "source": "M0-CP-0007 docs/checkpoints/SETUP-00-CP-0007/REVIEW-REPORT.md M0-F-008",
+      "sourceRef": "finding:M0-F-008",
+      "description": "CP-0006 mandatory count is contradictory and accepted",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/derive_counts.py"
+      ],
+      "testEvidence": [
+        "test:ExpectedRequirementSetTests.test_the_state_mandatory_count_is_cross_checked",
+        "test:DerivedCountTests.test_the_stored_counts_match_the_derivation",
+        "test:DerivedCountTests.test_a_forged_count_is_rejected",
+        "test:DerivedCountTests.test_a_markdown_claim_that_contradicts_the_derivation_is_rejected"
+      ],
+      "documentationEvidence": [
+        "file:docs/adr/ADR-0010-milestone-closure-controls.md",
+        "checkpoint:CP7-FINDINGS-CLOSURE.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:CP7-FINDINGS-CLOSURE.json",
+        "file:.iacode/memory/guardrails/registry.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0080",
+      "source": "M0-CP-0007 docs/checkpoints/SETUP-00-CP-0007/REVIEW-REPORT.md M0-F-009",
+      "sourceRef": "finding:M0-F-009",
+      "description": "command records are not reproducible at their declared commits",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/ledger_common.py"
+      ],
+      "testEvidence": [
+        "test:CommandInputBindingTests.test_a_bound_record_passes",
+        "test:CommandInputBindingTests.test_the_recorder_binds_inputs_automatically",
+        "test:CommandInputBindingTests.test_a_record_without_a_digest_is_rejected",
+        "test:CommandInputBindingTests.test_a_digest_that_omits_an_input_is_rejected",
+        "test:CommandInputBindingTests.test_a_clean_tree_claim_is_checked_against_the_declared_commit"
+      ],
+      "documentationEvidence": [
+        "file:docs/adr/ADR-0010-milestone-closure-controls.md",
+        "checkpoint:CP7-FINDINGS-CLOSURE.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:CP7-FINDINGS-CLOSURE.json",
+        "file:.iacode/memory/guardrails/registry.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0081",
+      "source": "M0-CP-0007 docs/checkpoints/SETUP-00-CP-0007/REVIEW-REPORT.md M0-F-010",
+      "sourceRef": "finding:M0-F-010",
+      "description": "sealed finalization chronology is internally inconsistent",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/seal_checkpoint.py"
+      ],
+      "testEvidence": [
+        "test:SealChronologyTests.test_a_record_after_the_end_of_the_run_is_rejected",
+        "test:DeliveryLifecycleTests.test_full_delivery_assurance_flow_reaches_ready_for_review",
+        "test:SealChronologyTests.test_a_missing_post_commit_validation_is_rejected",
+        "test:SealChronologyTests.test_a_dirty_tree_validation_is_not_evidence_of_a_sealed_commit",
+        "test:SealChronologyTests.test_a_validation_of_an_unrelated_commit_is_rejected"
+      ],
+      "documentationEvidence": [
+        "file:docs/adr/ADR-0010-milestone-closure-controls.md",
+        "checkpoint:CP7-FINDINGS-CLOSURE.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:CP7-FINDINGS-CLOSURE.json",
+        "file:.iacode/memory/guardrails/registry.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0082",
+      "source": "M0-CP-0007 docs/checkpoints/SETUP-00-CP-0007/REVIEW-REPORT.md M0-F-011",
+      "sourceRef": "finding:M0-F-011",
+      "description": "one lesson source locator is inaccurate",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/memory/lessons.jsonl"
+      ],
+      "testEvidence": [
+        "test:LessonProvenanceTests.test_every_repository_lesson_cites_a_resolvable_source",
+        "test:LessonProvenanceTests.test_a_correct_locator_resolves",
+        "test:LessonProvenanceTests.test_a_finding_absent_from_the_cited_checkpoint_is_rejected",
+        "test:LessonProvenanceTests.test_a_nonexistent_checkpoint_is_rejected"
+      ],
+      "documentationEvidence": [
+        "file:docs/adr/ADR-0010-milestone-closure-controls.md",
+        "checkpoint:CP7-FINDINGS-CLOSURE.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:CP7-FINDINGS-CLOSURE.json",
+        "file:.iacode/memory/guardrails/registry.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0083",
+      "source": "M0-CP-0007 docs/checkpoints/SETUP-00-CP-0007/RED-TEAM-REPORT.md attack A",
+      "sourceRef": "attack:A",
+      "description": "Defend attack A: Add blocker to `READY_FOR_REVIEW`",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/m0_red_team.py"
+      ],
+      "testEvidence": [
+        "test:StatusBlockerInvariantTests.test_ready_for_review_with_blocker_fails",
+        "test:StatusBlockerInvariantTests.test_ready_for_review_with_blocker_fails"
+      ],
+      "documentationEvidence": [
+        "file:docs/adr/ADR-0010-milestone-closure-controls.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:CP7-FINDINGS-CLOSURE.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0084",
+      "source": "M0-CP-0007 docs/checkpoints/SETUP-00-CP-0007/RED-TEAM-REPORT.md attack B",
+      "sourceRef": "attack:B",
+      "description": "Defend attack B: Set a review-ready quality gate red",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/m0_red_team.py"
+      ],
+      "testEvidence": [
+        "test:DeliveryAssuranceGateTests.test_red_tests_block_review",
+        "test:DeliveryAssuranceGateTests.test_red_tests_block_review"
+      ],
+      "documentationEvidence": [
+        "file:docs/adr/ADR-0010-milestone-closure-controls.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:CP7-FINDINGS-CLOSURE.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0085",
+      "source": "M0-CP-0007 docs/checkpoints/SETUP-00-CP-0007/RED-TEAM-REPORT.md attack C",
+      "sourceRef": "attack:C",
+      "description": "Defend attack C: Delete mandatory `REQ-0001` and recompute all counts",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/m0_red_team.py"
+      ],
+      "testEvidence": [
+        "test:ExpectedRequirementSetTests.test_deleting_a_requirement_and_recomputing_the_counts_still_fails",
+        "test:ExpectedRequirementSetTests.test_deleting_a_requirement_and_recomputing_the_counts_still_fails"
+      ],
+      "documentationEvidence": [
+        "file:docs/adr/ADR-0010-milestone-closure-controls.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:CP7-FINDINGS-CLOSURE.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0086",
+      "source": "M0-CP-0007 docs/checkpoints/SETUP-00-CP-0007/RED-TEAM-REPORT.md attack D",
+      "sourceRef": "attack:D",
+      "description": "Defend attack D: Forge stored 100% counts",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/m0_red_team.py"
+      ],
+      "testEvidence": [
+        "test:DeliveryAssuranceGateTests.test_completeness_report_inconsistent_with_the_matrix_is_rejected",
+        "test:DeliveryAssuranceGateTests.test_completeness_report_inconsistent_with_the_matrix_is_rejected"
+      ],
+      "documentationEvidence": [
+        "file:docs/adr/ADR-0010-milestone-closure-controls.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:CP7-FINDINGS-CLOSURE.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0087",
+      "source": "M0-CP-0007 docs/checkpoints/SETUP-00-CP-0007/RED-TEAM-REPORT.md attack E",
+      "sourceRef": "attack:E",
+      "description": "Defend attack E: Remove a derived requirement",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/m0_red_team.py"
+      ],
+      "testEvidence": [
+        "test:DerivedRequirementCompletenessTests.test_a_missing_derived_requirement_blocks_completeness",
+        "test:DerivedRequirementCompletenessTests.test_a_missing_derived_requirement_blocks_completeness"
+      ],
+      "documentationEvidence": [
+        "file:docs/adr/ADR-0010-milestone-closure-controls.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:CP7-FINDINGS-CLOSURE.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0088",
+      "source": "M0-CP-0007 docs/checkpoints/SETUP-00-CP-0007/RED-TEAM-REPORT.md attack F",
+      "sourceRef": "attack:F",
+      "description": "Defend attack F: Replace prevention with documentation only",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/m0_red_team.py"
+      ],
+      "testEvidence": [
+        "test:LessonValidationTests.test_documentation_alone_does_not_guard_a_lesson",
+        "test:LessonValidationTests.test_documentation_alone_does_not_guard_a_lesson"
+      ],
+      "documentationEvidence": [
+        "file:docs/adr/ADR-0010-milestone-closure-controls.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:CP7-FINDINGS-CLOSURE.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0089",
+      "source": "M0-CP-0007 docs/checkpoints/SETUP-00-CP-0007/RED-TEAM-REPORT.md attack G",
+      "sourceRef": "attack:G",
+      "description": "Defend attack G: Duplicate lesson ID",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/m0_red_team.py"
+      ],
+      "testEvidence": [
+        "test:LessonValidationTests.test_duplicate_lesson_id_fails",
+        "test:LessonValidationTests.test_duplicate_lesson_id_fails"
+      ],
+      "documentationEvidence": [
+        "file:docs/adr/ADR-0010-milestone-closure-controls.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:CP7-FINDINGS-CLOSURE.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0090",
+      "source": "M0-CP-0007 docs/checkpoints/SETUP-00-CP-0007/RED-TEAM-REPORT.md attack H",
+      "sourceRef": "attack:H",
+      "description": "Defend attack H: Insert a secret-shaped value in a scanned field",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/m0_red_team.py"
+      ],
+      "testEvidence": [
+        "test:LessonValidationTests.test_secret_in_a_lesson_fails",
+        "test:LessonValidationTests.test_secret_in_a_lesson_fails"
+      ],
+      "documentationEvidence": [
+        "file:docs/adr/ADR-0010-milestone-closure-controls.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:CP7-FINDINGS-CLOSURE.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0091",
+      "source": "M0-CP-0007 docs/checkpoints/SETUP-00-CP-0007/RED-TEAM-REPORT.md attack I",
+      "sourceRef": "attack:I",
+      "description": "Defend attack I: Rewrite CP-0005, declare it in CP-0006 inventory, refresh hashes, move CP-0006 tag",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/m0_red_team.py"
+      ],
+      "testEvidence": [
+        "test:IntegrityAnchorTests.test_an_unexpected_tree_is_detected",
+        "test:IntegrityAnchorTests.test_an_unexpected_tree_is_detected"
+      ],
+      "documentationEvidence": [
+        "file:docs/adr/ADR-0010-milestone-closure-controls.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:CP7-FINDINGS-CLOSURE.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0092",
+      "source": "M0-CP-0007 docs/checkpoints/SETUP-00-CP-0007/RED-TEAM-REPORT.md attack J",
+      "sourceRef": "attack:J",
+      "description": "Defend attack J: Move CP-0006 tag and HEAD together to a new commit",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/m0_red_team.py"
+      ],
+      "testEvidence": [
+        "test:IntegrityAnchorTests.test_a_moved_historical_tag_is_detected",
+        "test:IntegrityAnchorTests.test_a_moved_historical_tag_is_detected"
+      ],
+      "documentationEvidence": [
+        "file:docs/adr/ADR-0010-milestone-closure-controls.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:CP7-FINDINGS-CLOSURE.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0093",
+      "source": "M0-CP-0007 docs/checkpoints/SETUP-00-CP-0007/RED-TEAM-REPORT.md attack K",
+      "sourceRef": "attack:K",
+      "description": "Defend attack K: Remove one inventory entry",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/m0_red_team.py"
+      ],
+      "testEvidence": [
+        "test:DeltaInventoryTests.test_removed_manifest_entry_fails",
+        "test:DeltaInventoryTests.test_removed_manifest_entry_fails"
+      ],
+      "documentationEvidence": [
+        "file:docs/adr/ADR-0010-milestone-closure-controls.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:CP7-FINDINGS-CLOSURE.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0094",
+      "source": "M0-CP-0007 docs/checkpoints/SETUP-00-CP-0007/RED-TEAM-REPORT.md attack L",
+      "sourceRef": "attack:L",
+      "description": "Defend attack L: Silently modify a tracked file",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/m0_red_team.py"
+      ],
+      "testEvidence": [
+        "test:DeltaInventoryTests.test_silent_tracked_modification_fails",
+        "test:DeltaInventoryTests.test_silent_tracked_modification_fails"
+      ],
+      "documentationEvidence": [
+        "file:docs/adr/ADR-0010-milestone-closure-controls.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:CP7-FINDINGS-CLOSURE.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0095",
+      "source": "M0-CP-0007 docs/checkpoints/SETUP-00-CP-0007/RED-TEAM-REPORT.md attack M",
+      "sourceRef": "attack:M",
+      "description": "Defend attack M: Set a wrong `hashBefore`",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/m0_red_team.py"
+      ],
+      "testEvidence": [
+        "test:DeltaInventoryTests.test_wrong_hash_before_fails",
+        "test:DeltaInventoryTests.test_wrong_hash_before_fails"
+      ],
+      "documentationEvidence": [
+        "file:docs/adr/ADR-0010-milestone-closure-controls.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:CP7-FINDINGS-CLOSURE.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0096",
+      "source": "M0-CP-0007 docs/checkpoints/SETUP-00-CP-0007/RED-TEAM-REPORT.md attack N",
+      "sourceRef": "attack:N",
+      "description": "Defend attack N: Set a wrong `hashAfter`",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/m0_red_team.py"
+      ],
+      "testEvidence": [
+        "test:DeltaInventoryTests.test_wrong_hash_after_fails",
+        "test:DeltaInventoryTests.test_wrong_hash_after_fails"
+      ],
+      "documentationEvidence": [
+        "file:docs/adr/ADR-0010-milestone-closure-controls.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:CP7-FINDINGS-CLOSURE.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0097",
+      "source": "M0-CP-0007 docs/checkpoints/SETUP-00-CP-0007/RED-TEAM-REPORT.md attack O",
+      "sourceRef": "attack:O",
+      "description": "Defend attack O: Claim PASS with no evidence",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/m0_red_team.py"
+      ],
+      "testEvidence": [
+        "test:QualityEvidenceTests.test_pass_without_evidence_fails",
+        "test:QualityEvidenceTests.test_pass_without_evidence_fails"
+      ],
+      "documentationEvidence": [
+        "file:docs/adr/ADR-0010-milestone-closure-controls.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:CP7-FINDINGS-CLOSURE.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0098",
+      "source": "M0-CP-0007 docs/checkpoints/SETUP-00-CP-0007/RED-TEAM-REPORT.md attack P",
+      "sourceRef": "attack:P",
+      "description": "Defend attack P: Reference an unknown command",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/m0_red_team.py"
+      ],
+      "testEvidence": [
+        "test:QualityEvidenceTests.test_pass_referencing_an_unknown_command_fails",
+        "test:QualityEvidenceTests.test_pass_referencing_an_unknown_command_fails"
+      ],
+      "documentationEvidence": [
+        "file:docs/adr/ADR-0010-milestone-closure-controls.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:CP7-FINDINGS-CLOSURE.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0099",
+      "source": "M0-CP-0007 docs/checkpoints/SETUP-00-CP-0007/RED-TEAM-REPORT.md attack Q",
+      "sourceRef": "attack:Q",
+      "description": "Defend attack Q: Supply arbitrary complete attribution with empty evidence",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/m0_red_team.py"
+      ],
+      "testEvidence": [
+        "test:ExternalAttestationTests.test_second_tool_validation_alone_is_not_enough",
+        "test:ExternalAttestationTests.test_second_tool_validation_alone_is_not_enough"
+      ],
+      "documentationEvidence": [
+        "file:docs/adr/ADR-0010-milestone-closure-controls.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:CP7-FINDINGS-CLOSURE.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0100",
+      "source": "M0-CP-0007 docs/checkpoints/SETUP-00-CP-0007/RED-TEAM-REPORT.md attack R",
+      "sourceRef": "attack:R",
+      "description": "Defend attack R: Promote an internally authored result to external status",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/m0_red_team.py"
+      ],
+      "testEvidence": [
+        "test:ExternalAttestationTests.test_an_implementer_checkpoint_cannot_declare_an_external_pass",
+        "test:ExternalAttestationTests.test_an_implementer_checkpoint_cannot_declare_an_external_pass"
+      ],
+      "documentationEvidence": [
+        "file:docs/adr/ADR-0010-milestone-closure-controls.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:CP7-FINDINGS-CLOSURE.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0101",
+      "source": "M0-CP-0007 docs/checkpoints/SETUP-00-CP-0007/RED-TEAM-REPORT.md attack S",
+      "sourceRef": "attack:S",
+      "description": "Defend attack S: Leave review/Red Team pending and auditor/time null",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/m0_red_team.py"
+      ],
+      "testEvidence": [
+        "test:ExternalAttestationTests.test_a_failed_review_cannot_produce_an_external_pass",
+        "test:ExternalAttestationTests.test_a_failed_review_cannot_produce_an_external_pass"
+      ],
+      "documentationEvidence": [
+        "file:docs/adr/ADR-0010-milestone-closure-controls.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:CP7-FINDINGS-CLOSURE.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0102",
+      "source": "M0-CP-0007 docs/checkpoints/SETUP-00-CP-0007/RED-TEAM-REPORT.md attack T",
+      "sourceRef": "attack:T",
+      "description": "Defend attack T: Request audit without a known trigger",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/m0_red_team.py"
+      ],
+      "testEvidence": [
+        "test:MemoryPolicyValidationTests.test_an_extraordinary_audit_requires_a_recorded_trigger",
+        "test:MemoryPolicyValidationTests.test_an_extraordinary_audit_requires_a_recorded_trigger"
+      ],
+      "documentationEvidence": [
+        "file:docs/adr/ADR-0010-milestone-closure-controls.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:CP7-FINDINGS-CLOSURE.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0103",
+      "source": "M0-CP-0007 docs/checkpoints/SETUP-00-CP-0007/RED-TEAM-REPORT.md attack U",
+      "sourceRef": "attack:U",
+      "description": "Defend attack U: Retire canonical lesson but keep stale active preflight",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/m0_red_team.py"
+      ],
+      "testEvidence": [
+        "test:PreflightFreshnessTests.test_a_dropped_lesson_makes_the_preflight_stale",
+        "test:PreflightFreshnessTests.test_a_dropped_lesson_makes_the_preflight_stale"
+      ],
+      "documentationEvidence": [
+        "file:docs/adr/ADR-0010-milestone-closure-controls.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:CP7-FINDINGS-CLOSURE.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0104",
+      "source": "M0-CP-0007 docs/checkpoints/SETUP-00-CP-0007/RED-TEAM-REPORT.md attack V",
+      "sourceRef": "attack:V",
+      "description": "Defend attack V: Run `--gates \"\"`, then retain PASS with an actually failing test",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/m0_red_team.py"
+      ],
+      "testEvidence": [
+        "test:MandatoryGatePolicyTests.test_a_cycle_measured_against_no_gate_is_rejected",
+        "test:MandatoryGatePolicyTests.test_a_cycle_measured_against_no_gate_is_rejected"
+      ],
+      "documentationEvidence": [
+        "file:docs/adr/ADR-0010-milestone-closure-controls.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:CP7-FINDINGS-CLOSURE.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0105",
+      "source": "M0-CP-0007 docs/checkpoints/SETUP-00-CP-0007/RED-TEAM-REPORT.md attack W",
+      "sourceRef": "attack:W",
+      "description": "Defend attack W: Claim PASS with a PARTIAL row",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/m0_red_team.py"
+      ],
+      "testEvidence": [
+        "test:DeliveryCompletenessMatrixTests.test_partial_requirement_fails",
+        "test:DeliveryCompletenessMatrixTests.test_partial_requirement_fails"
+      ],
+      "documentationEvidence": [
+        "file:docs/adr/ADR-0010-milestone-closure-controls.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:CP7-FINDINGS-CLOSURE.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0106",
+      "source": "M0-CP-0007 docs/checkpoints/SETUP-00-CP-0007/RED-TEAM-REPORT.md attack X",
+      "sourceRef": "attack:X",
+      "description": "Defend attack X: Remove required runtime/record field",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/m0_red_team.py"
+      ],
+      "testEvidence": [
+        "test:CommandReproducibilityTests.test_missing_runtime_fails",
+        "test:CommandReproducibilityTests.test_missing_runtime_fails"
+      ],
+      "documentationEvidence": [
+        "file:docs/adr/ADR-0010-milestone-closure-controls.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:CP7-FINDINGS-CLOSURE.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0107",
+      "source": "M0-CP-0007 docs/checkpoints/SETUP-00-CP-0007/RED-TEAM-REPORT.md attack Y",
+      "sourceRef": "attack:Y",
+      "description": "Defend attack Y: Point `LATEST.md` at CP-0005 while validating CP-0006",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/m0_red_team.py"
+      ],
+      "testEvidence": [
+        "test:LedgerValidationTests.test_latest_to_nonexistent_checkpoint_fails",
+        "test:LedgerValidationTests.test_latest_to_nonexistent_checkpoint_fails"
+      ],
+      "documentationEvidence": [
+        "file:docs/adr/ADR-0010-milestone-closure-controls.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:CP7-FINDINGS-CLOSURE.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0108",
+      "source": "M0-CP-0007 docs/checkpoints/SETUP-00-CP-0007/RED-TEAM-REPORT.md attack Z",
+      "sourceRef": "attack:Z",
+      "description": "Defend attack Z: Use path traversal as checkpoint/Gate input",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/m0_red_team.py"
+      ],
+      "testEvidence": [
+        "test:LedgerLifecycleTests.test_new_checkpoint_rejects_path_traversal_gate",
+        "test:LedgerLifecycleTests.test_new_checkpoint_rejects_path_traversal_gate"
+      ],
+      "documentationEvidence": [
+        "file:docs/adr/ADR-0010-milestone-closure-controls.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:CP7-FINDINGS-CLOSURE.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "LESSON-REQ-0001",
+      "source": "LESSON-PREFLIGHT.json LESSON-REQ-0001",
+      "sourceRef": "lesson:LSN-0001",
+      "description": "Verify checkpoint validation must succeed from a detached checkout of the checkpoint tag",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/memory/lessons.jsonl",
+        "file:scripts/development-ledger/validate_checkpoint.py"
+      ],
+      "testEvidence": [
+        "test:DetachedHeadValidationTests.test_detached_head_at_checkpoint_tag_validates",
+        "test:DetachedHeadValidationTests.test_detached_head_at_wrong_commit_fails"
+      ],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md",
+        "file:docs/ENGINEERING-MEMORY.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:LESSON-PREFLIGHT.json",
+        "file:.iacode/memory/guardrails/registry.json",
+        "test:DetachedHeadValidationTests.test_detached_head_at_checkpoint_tag_validates",
+        "test:DetachedHeadValidationTests.test_detached_head_at_wrong_commit_fails"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "LESSON-REQ-0002",
+      "source": "LESSON-PREFLIGHT.json LESSON-REQ-0002",
+      "sourceRef": "lesson:LSN-0002",
+      "description": "Verify a file inventory must be recomputed from the repository, never trusted as an assertion",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/memory/lessons.jsonl",
+        "file:scripts/development-ledger/validate_checkpoint.py"
+      ],
+      "testEvidence": [
+        "test:DeltaInventoryTests.test_removed_manifest_entry_fails",
+        "test:DeltaInventoryTests.test_silent_tracked_modification_fails"
+      ],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md",
+        "file:docs/ENGINEERING-MEMORY.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:LESSON-PREFLIGHT.json",
+        "file:.iacode/memory/guardrails/registry.json",
+        "test:DeltaInventoryTests.test_removed_manifest_entry_fails",
+        "test:DeltaInventoryTests.test_silent_tracked_modification_fails"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "LESSON-REQ-0003",
+      "source": "LESSON-PREFLIGHT.json LESSON-REQ-0003",
+      "sourceRef": "lesson:LSN-0003",
+      "description": "Verify every operation attempt must be auditable, including a refusal decided before execution",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/memory/lessons.jsonl",
+        "file:scripts/development-ledger/finalize_checkpoint.py"
+      ],
+      "testEvidence": [
+        "test:FinalizationAttemptRecordingTests.test_detached_head_refusal_is_recorded",
+        "test:FinalizationAttemptRecordingTests.test_non_latest_checkpoint_refusal_is_recorded"
+      ],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md",
+        "file:docs/ENGINEERING-MEMORY.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:LESSON-PREFLIGHT.json",
+        "file:.iacode/memory/guardrails/registry.json",
+        "test:FinalizationAttemptRecordingTests.test_detached_head_refusal_is_recorded",
+        "test:FinalizationAttemptRecordingTests.test_non_latest_checkpoint_refusal_is_recorded"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "LESSON-REQ-0004",
+      "source": "LESSON-PREFLIGHT.json LESSON-REQ-0004",
+      "sourceRef": "lesson:LSN-0004",
+      "description": "Verify a checkpoint may never claim readiness while it also claims to be blocked",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/memory/lessons.jsonl"
+      ],
+      "testEvidence": [
+        "test:StatusBlockerInvariantTests.test_ready_for_review_with_blocker_fails",
+        "test:ResealedBlockerFixtureTests.test_resealed_ready_for_review_with_blocker_is_rejected"
+      ],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md",
+        "file:docs/ENGINEERING-MEMORY.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:LESSON-PREFLIGHT.json",
+        "file:.iacode/memory/guardrails/registry.json",
+        "test:StatusBlockerInvariantTests.test_ready_for_review_with_blocker_fails",
+        "test:ResealedBlockerFixtureTests.test_resealed_ready_for_review_with_blocker_is_rejected"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "LESSON-REQ-0005",
+      "source": "LESSON-PREFLIGHT.json LESSON-REQ-0005",
+      "sourceRef": "lesson:LSN-0005",
+      "description": "Verify a PASS requires evidence that can be executed or resolved, not a statement",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/memory/lessons.jsonl",
+        "file:scripts/development-ledger/validate_checkpoint.py"
+      ],
+      "testEvidence": [
+        "test:QualityEvidenceTests.test_pass_without_evidence_fails",
+        "test:QualityEvidenceTests.test_pass_referencing_a_failed_command_fails",
+        "test:PromotionInvariantTests.test_every_positive_status_rejects_every_red_quality_dimension"
+      ],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md",
+        "file:docs/ENGINEERING-MEMORY.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:LESSON-PREFLIGHT.json",
+        "file:.iacode/memory/guardrails/registry.json",
+        "test:QualityEvidenceTests.test_pass_without_evidence_fails",
+        "test:QualityEvidenceTests.test_pass_referencing_a_failed_command_fails"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "LESSON-REQ-0006",
+      "source": "LESSON-PREFLIGHT.json LESSON-REQ-0006",
+      "sourceRef": "lesson:LSN-0006",
+      "description": "Verify the repository must be self-contained; a specification may not live outside it",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/memory/lessons.jsonl"
+      ],
+      "testEvidence": [
+        "test:SetupChecklistTests.test_checklist_exists_and_is_referenced",
+        "test:SetupChecklistTests.test_documentation_links_resolve"
+      ],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md",
+        "file:docs/ENGINEERING-MEMORY.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:LESSON-PREFLIGHT.json",
+        "file:.iacode/memory/guardrails/registry.json",
+        "test:SetupChecklistTests.test_checklist_exists_and_is_referenced",
+        "test:SetupChecklistTests.test_documentation_links_resolve"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "LESSON-REQ-0007",
+      "source": "LESSON-PREFLIGHT.json LESSON-REQ-0007",
+      "sourceRef": "lesson:LSN-0007",
+      "description": "Verify independent validation cannot be declared by the run that did the work",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/memory/lessons.jsonl",
+        "file:.iacode/schemas/checkpoint.schema.json",
+        "file:scripts/development-ledger/attestation.py"
+      ],
+      "testEvidence": [
+        "test:SecondToolValidationTests.test_failed_cross_tool_validation_cannot_grant_gate_pass",
+        "test:DeliveryAssuranceGateTests.test_self_claimed_independent_review_blocks_review",
+        "test:ExternalAttestationTests.test_an_implementer_checkpoint_cannot_declare_an_external_pass"
+      ],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md",
+        "file:docs/ENGINEERING-MEMORY.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:LESSON-PREFLIGHT.json",
+        "file:.iacode/memory/guardrails/registry.json",
+        "test:ExternalAttestationTests.test_an_implementer_checkpoint_cannot_declare_an_external_pass",
+        "test:ExternalAttestationTests.test_an_attestation_naming_the_subject_as_its_own_auditor_is_rejected",
+        "test:ExternalAttestationTests.test_second_tool_validation_alone_is_not_enough"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "LESSON-REQ-0008",
+      "source": "LESSON-PREFLIGHT.json LESSON-REQ-0008",
+      "sourceRef": "lesson:LSN-0008",
+      "description": "Verify requirement completeness must be total and evidence-backed before handoff",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/memory/lessons.jsonl",
+        "file:scripts/development-ledger/check_completeness.py"
+      ],
+      "testEvidence": [
+        "test:DeliveryCompletenessMatrixTests.test_one_requirement_short_of_total_fails",
+        "test:DeliveryAssuranceGateTests.test_completeness_validator_not_executed_blocks_review",
+        "test:ExpectedRequirementSetTests.test_deleting_a_requirement_and_recomputing_the_counts_still_fails"
+      ],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md",
+        "file:docs/ENGINEERING-MEMORY.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:LESSON-PREFLIGHT.json",
+        "file:.iacode/memory/guardrails/registry.json",
+        "test:ExpectedRequirementSetTests.test_deleting_a_requirement_and_recomputing_the_counts_still_fails",
+        "test:ExpectedRequirementSetTests.test_an_unexpected_anchored_requirement_is_rejected"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "LESSON-REQ-0009",
+      "source": "LESSON-PREFLIGHT.json LESSON-REQ-0009",
+      "sourceRef": "lesson:LSN-0009",
+      "description": "Verify a red gate requires rework, never a waiver, and never a weakened check",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/memory/lessons.jsonl",
+        "file:.iacode/policies/quality-gates.json"
+      ],
+      "testEvidence": [
+        "test:GreenKeeperToolTests.test_red_gate_is_reported_as_still_red",
+        "test:DeliveryAssuranceGateTests.test_green_keeper_pass_with_a_real_failure_is_rejected",
+        "test:DeliveryAssuranceGateTests.test_red_tests_block_review",
+        "test:MandatoryGatePolicyTests.test_a_cycle_measured_against_no_gate_is_rejected"
+      ],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md",
+        "file:docs/ENGINEERING-MEMORY.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:LESSON-PREFLIGHT.json",
+        "file:.iacode/memory/guardrails/registry.json",
+        "test:MandatoryGatePolicyTests.test_a_cycle_measured_against_no_gate_is_rejected",
+        "test:MandatoryGatePolicyTests.test_the_policy_declares_a_non_empty_closed_set"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "LESSON-REQ-0010",
+      "source": "LESSON-PREFLIGHT.json LESSON-REQ-0010",
+      "sourceRef": "lesson:LSN-0010",
+      "description": "Verify a recorded command must carry runtime, working directory, commit and purpose to be replayable",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/memory/lessons.jsonl",
+        "file:.iacode/schemas/command.schema.json"
+      ],
+      "testEvidence": [
+        "test:CommandReproducibilityTests.test_bare_script_name_is_rejected",
+        "test:CommandReproducibilityTests.test_unresolvable_script_path_is_rejected",
+        "test:CommandInputBindingTests.test_a_record_without_a_digest_is_rejected"
+      ],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md",
+        "file:docs/ENGINEERING-MEMORY.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:LESSON-PREFLIGHT.json",
+        "file:.iacode/memory/guardrails/registry.json",
+        "test:CommandInputBindingTests.test_a_record_without_a_digest_is_rejected",
+        "test:CommandInputBindingTests.test_a_clean_tree_claim_is_checked_against_the_declared_commit"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "LESSON-REQ-0011",
+      "source": "LESSON-PREFLIGHT.json LESSON-REQ-0011",
+      "sourceRef": "lesson:LSN-0011",
+      "description": "Verify a control over a checkpoint's own evidence must be scoped to the moment it matters",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/memory/lessons.jsonl"
+      ],
+      "testEvidence": [
+        "test:DeliveryAssuranceGateTests.test_gate_consistency_is_provisional_while_work_is_in_progress"
+      ],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md",
+        "file:docs/ENGINEERING-MEMORY.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:LESSON-PREFLIGHT.json",
+        "file:.iacode/memory/guardrails/registry.json",
+        "test:DeliveryAssuranceGateTests.test_gate_consistency_is_provisional_while_work_is_in_progress"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "LESSON-REQ-0012",
+      "source": "LESSON-PREFLIGHT.json LESSON-REQ-0012",
+      "sourceRef": "lesson:LSN-0012",
+      "description": "Verify sealed checkpoints and their tags are immutable, and tooling must keep validating them",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/memory/lessons.jsonl",
+        "file:docs/CHECKPOINT-PROTOCOL.md",
+        "file:scripts/development-ledger/anchors.py"
+      ],
+      "testEvidence": [
+        "test:HistoricalCheckpointCompatibilityTests.test_first_sealed_checkpoint_still_validates",
+        "test:HistoricalCheckpointCompatibilityTests.test_fourth_sealed_checkpoint_still_validates",
+        "test:IntegrityAnchorTests.test_a_moved_historical_tag_is_detected"
+      ],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md",
+        "file:docs/ENGINEERING-MEMORY.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:LESSON-PREFLIGHT.json",
+        "file:.iacode/memory/guardrails/registry.json",
+        "test:IntegrityAnchorTests.test_a_moved_historical_tag_is_detected",
+        "test:IntegrityAnchorTests.test_a_broken_link_between_anchors_is_detected"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "LESSON-REQ-0013",
+      "source": "LESSON-PREFLIGHT.json LESSON-REQ-0013",
+      "sourceRef": "lesson:LSN-0013",
+      "description": "Verify an installed capability must be detected by resolved path, not by a bare command lookup",
+      "mandatory": false,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/memory/lessons.jsonl",
+        "file:docs/TOOL-CAPABILITIES.md"
+      ],
+      "testEvidence": [],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md",
+        "file:docs/ENGINEERING-MEMORY.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:LESSON-PREFLIGHT.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "LESSON-REQ-0014",
+      "source": "LESSON-PREFLIGHT.json LESSON-REQ-0014",
+      "sourceRef": "lesson:LSN-0014",
+      "description": "Verify evidence must be recorded as it happens, not reconstructed at the end of a run",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/memory/lessons.jsonl",
+        "file:scripts/development-ledger/record_command.py"
+      ],
+      "testEvidence": [
+        "test:SealChronologyTests.test_a_record_after_the_end_of_the_run_is_rejected"
+      ],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md",
+        "file:docs/ENGINEERING-MEMORY.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:LESSON-PREFLIGHT.json",
+        "file:.iacode/memory/guardrails/registry.json",
+        "test:SealChronologyTests.test_a_record_after_the_end_of_the_run_is_rejected",
+        "test:SealChronologyTests.test_a_missing_post_commit_validation_is_rejected",
+        "test:SealChronologyTests.test_a_dirty_tree_validation_is_not_evidence_of_a_sealed_commit"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "LESSON-REQ-0015",
+      "source": "LESSON-PREFLIGHT.json LESSON-REQ-0015",
+      "sourceRef": "lesson:LSN-0015",
+      "description": "Verify every positive terminal status needs one shared promotion invariant",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/memory/lessons.jsonl"
+      ],
+      "testEvidence": [
+        "test:PromotionInvariantTests.test_every_positive_status_rejects_a_red_green_keeper"
+      ],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md",
+        "file:docs/ENGINEERING-MEMORY.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:LESSON-PREFLIGHT.json",
+        "file:.iacode/memory/guardrails/registry.json",
+        "test:PromotionInvariantTests.test_every_positive_status_rejects_a_red_green_keeper",
+        "test:PromotionInvariantTests.test_every_positive_status_rejects_every_red_quality_dimension",
+        "test:PromotionInvariantTests.test_a_terminal_status_requires_an_independent_verdict"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "LESSON-REQ-0016",
+      "source": "LESSON-PREFLIGHT.json LESSON-REQ-0016",
+      "sourceRef": "lesson:LSN-0016",
+      "description": "Verify a mandatory set must be closed by policy, never chosen by the caller",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/memory/lessons.jsonl",
+        "file:.iacode/policies/quality-gates.json"
+      ],
+      "testEvidence": [],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md",
+        "file:docs/ENGINEERING-MEMORY.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:LESSON-PREFLIGHT.json",
+        "file:.iacode/memory/guardrails/registry.json",
+        "test:MandatoryGatePolicyTests.test_a_cycle_missing_one_mandatory_gate_is_rejected",
+        "test:MandatoryGatePolicyTests.test_a_mandatory_gate_that_exited_nonzero_is_rejected",
+        "test:MandatoryGatePolicyTests.test_a_pass_measured_before_a_source_change_is_stale"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "LESSON-REQ-0017",
+      "source": "LESSON-PREFLIGHT.json LESSON-REQ-0017",
+      "sourceRef": "lesson:LSN-0017",
+      "description": "Verify a completeness denominator must come from a source the delivery does not own",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/memory/lessons.jsonl"
+      ],
+      "testEvidence": [
+        "test:ExpectedRequirementSetTests.test_an_unexpected_anchored_requirement_is_rejected"
+      ],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md",
+        "file:docs/ENGINEERING-MEMORY.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:LESSON-PREFLIGHT.json",
+        "file:.iacode/memory/guardrails/registry.json",
+        "test:ExpectedRequirementSetTests.test_the_expected_set_is_derived_from_the_canonical_sources",
+        "test:ExpectedRequirementSetTests.test_the_checklist_is_reparsed_rather_than_trusted",
+        "test:ExpectedRequirementSetTests.test_a_downgraded_matrix_cannot_escape_the_comparison"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "LESSON-REQ-0018",
+      "source": "LESSON-PREFLIGHT.json LESSON-REQ-0018",
+      "sourceRef": "lesson:LSN-0018",
+      "description": "Verify a structured reference must be resolved, not merely well typed",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/memory/lessons.jsonl"
+      ],
+      "testEvidence": [
+        "test:LessonResolutionTests.test_a_test_control_must_exist_in_the_suite"
+      ],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md",
+        "file:docs/ENGINEERING-MEMORY.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:LESSON-PREFLIGHT.json",
+        "file:.iacode/memory/guardrails/registry.json",
+        "test:LessonResolutionTests.test_a_test_control_must_exist_in_the_suite",
+        "test:LessonResolutionTests.test_an_invariant_control_must_be_defined_in_the_tooling",
+        "test:LessonResolutionTests.test_lesson_evidence_must_resolve"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "LESSON-REQ-0019",
+      "source": "LESSON-PREFLIGHT.json LESSON-REQ-0019",
+      "sourceRef": "lesson:LSN-0019",
+      "description": "Verify a derived artifact must carry a fingerprint of the inputs that produced it",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/memory/lessons.jsonl"
+      ],
+      "testEvidence": [
+        "test:PreflightFreshnessTests.test_a_dropped_lesson_makes_the_preflight_stale"
+      ],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md",
+        "file:docs/ENGINEERING-MEMORY.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:LESSON-PREFLIGHT.json",
+        "file:.iacode/memory/guardrails/registry.json",
+        "test:PreflightFreshnessTests.test_a_changed_fingerprint_makes_the_preflight_stale",
+        "test:PreflightFreshnessTests.test_a_dropped_lesson_makes_the_preflight_stale",
+        "test:PreflightFreshnessTests.test_a_preflight_from_another_gate_is_refused"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "LESSON-REQ-0020",
+      "source": "LESSON-PREFLIGHT.json LESSON-REQ-0020",
+      "sourceRef": "lesson:LSN-0020",
+      "description": "Verify evidence produced from a dirty tree needs immutable input identity",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/memory/lessons.jsonl"
+      ],
+      "testEvidence": [
+        "test:CommandInputBindingTests.test_the_recorder_binds_inputs_automatically"
+      ],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md",
+        "file:docs/ENGINEERING-MEMORY.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:LESSON-PREFLIGHT.json",
+        "file:.iacode/memory/guardrails/registry.json",
+        "test:CommandInputBindingTests.test_the_recorder_binds_inputs_automatically",
+        "test:CommandInputBindingTests.test_a_digest_that_omits_an_input_is_rejected"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "LESSON-REQ-0021",
+      "source": "LESSON-PREFLIGHT.json LESSON-REQ-0021",
+      "sourceRef": "lesson:LSN-0021",
+      "description": "Verify sealed history needs an anchor outside the content it describes",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/memory/lessons.jsonl"
+      ],
+      "testEvidence": [
+        "test:IntegrityAnchorTests.test_a_broken_link_between_anchors_is_detected"
+      ],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md",
+        "file:docs/ENGINEERING-MEMORY.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:LESSON-PREFLIGHT.json",
+        "file:.iacode/memory/guardrails/registry.json",
+        "test:IntegrityAnchorTests.test_an_unexpected_tree_is_detected",
+        "test:IntegrityAnchorTests.test_a_sealed_checkpoint_without_an_anchor_is_detected",
+        "test:IntegrityAnchorTests.test_a_recomputed_anchor_hash_must_match_its_fields"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "LESSON-REQ-0022",
+      "source": "LESSON-PREFLIGHT.json LESSON-REQ-0022",
+      "sourceRef": "lesson:LSN-0022",
+      "description": "Verify an authoritative count must be derived once, never maintained by hand twice",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/memory/lessons.jsonl"
+      ],
+      "testEvidence": [
+        "test:DerivedCountTests.test_a_markdown_claim_that_contradicts_the_derivation_is_rejected"
+      ],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md",
+        "file:docs/ENGINEERING-MEMORY.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:LESSON-PREFLIGHT.json",
+        "file:.iacode/memory/guardrails/registry.json",
+        "test:DerivedCountTests.test_a_forged_count_is_rejected",
+        "test:DerivedCountTests.test_a_markdown_claim_that_contradicts_the_derivation_is_rejected"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "LESSON-REQ-0023",
+      "source": "LESSON-PREFLIGHT.json LESSON-REQ-0023",
+      "sourceRef": "lesson:LSN-0023",
+      "description": "Verify a lesson must cite a source that actually records the finding it claims",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/memory/lessons.jsonl"
+      ],
+      "testEvidence": [
+        "test:LessonProvenanceTests.test_a_finding_absent_from_the_cited_checkpoint_is_rejected"
+      ],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md",
+        "file:docs/ENGINEERING-MEMORY.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:LESSON-PREFLIGHT.json",
+        "file:.iacode/memory/guardrails/registry.json",
+        "test:LessonProvenanceTests.test_a_finding_absent_from_the_cited_checkpoint_is_rejected",
+        "test:LessonProvenanceTests.test_a_nonexistent_checkpoint_is_rejected"
+      ],
+      "justification": null,
+      "notes": ""
+    }
+  ]
+}

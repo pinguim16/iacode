@@ -1,0 +1,345 @@
+{
+  "schemaVersion": "1.0.0",
+  "checkpoint": "SETUP-00-CP-0008",
+  "auditId": "M0-CP-0007",
+  "source": "docs/checkpoints/SETUP-00-CP-0007/REVIEW-REPORT.md",
+  "findings": [
+    {
+      "findingId": "M0-F-001",
+      "severity": "CRITICAL",
+      "title": "positive terminal status bypasses delivery assurance",
+      "originalExpected": "MILESTONE_EXTERNAL_PASS is rejected when any mandatory assurance dimension is red.",
+      "originalObserved": "The strong checks were written only for READY_FOR_REVIEW, so a mutated MILESTONE_EXTERNAL_PASS with greenKeeper.status=FAIL produced no error.",
+      "rootCause": "The promotion rules were attached to one status rather than to the concept of a positive terminal status, so every other status began with no rules.",
+      "implementation": [
+        "file:scripts/development-ledger/validate_checkpoint.py",
+        "POSITIVE_TERMINAL_STATUSES and one shared invariant in _validate_delivery_assurance"
+      ],
+      "regressionTest": [
+        "test:PromotionInvariantTests.test_every_positive_status_rejects_a_red_green_keeper",
+        "test:PromotionInvariantTests.test_every_positive_status_rejects_a_red_completeness_gate"
+      ],
+      "negativeTest": [
+        "test:PromotionInvariantTests.test_every_positive_status_rejects_every_red_quality_dimension",
+        "test:PromotionInvariantTests.test_every_positive_status_rejects_an_unexecuted_mandatory_dimension",
+        "test:PromotionInvariantTests.test_every_positive_status_rejects_a_partial_requirement"
+      ],
+      "verificationCommand": "python -m unittest discover -s tests",
+      "evidence": [
+        "file:docs/adr/ADR-0010-milestone-closure-controls.md",
+        "checkpoint:M0-INTERNAL-RED-TEAM.json",
+        "checkpoint:M0-INTERNAL-MIRROR.json"
+      ],
+      "lesson": "LSN-0015",
+      "guardrail": "GRD-0014",
+      "status": "CLOSED"
+    },
+    {
+      "findingId": "M0-F-002",
+      "severity": "CRITICAL",
+      "title": "external milestone PASS can be self-asserted on an intermediate Gate",
+      "originalExpected": "An intermediate Gate with externalAuditRequired=false is rejected as MILESTONE_EXTERNAL_PASS.",
+      "originalObserved": "Syntactically filled second-tool metadata, milestone.status=PASSED and matching status text were accepted with no external evidence and both independent verdicts pending.",
+      "rootCause": "The external verdict was a field of the checkpoint that benefits from it, so the delivery could write its own approval.",
+      "implementation": [
+        "file:scripts/development-ledger/attestation.py",
+        "file:.iacode/schemas/external-audit-attestation.schema.json",
+        "resolve_external_pass wired into _validate_memory_policy"
+      ],
+      "regressionTest": [
+        "test:ExternalAttestationTests.test_an_implementer_checkpoint_cannot_declare_an_external_pass",
+        "test:ExternalAttestationTests.test_second_tool_validation_alone_is_not_enough"
+      ],
+      "negativeTest": [
+        "test:ExternalAttestationTests.test_an_attestation_naming_the_subject_as_its_own_auditor_is_rejected",
+        "test:ExternalAttestationTests.test_a_failed_review_cannot_produce_an_external_pass",
+        "test:ExternalAttestationTests.test_a_failed_red_team_cannot_produce_an_external_pass",
+        "test:ExternalAttestationTests.test_an_intermediate_gate_cannot_take_the_external_status"
+      ],
+      "verificationCommand": "python -m unittest discover -s tests",
+      "evidence": [
+        "file:docs/adr/ADR-0010-milestone-closure-controls.md",
+        "checkpoint:M0-INTERNAL-RED-TEAM.json",
+        "checkpoint:M0-INTERNAL-MIRROR.json"
+      ],
+      "lesson": "LSN-0007",
+      "guardrail": "GRD-0008",
+      "status": "CLOSED"
+    },
+    {
+      "findingId": "M0-F-003",
+      "severity": "CRITICAL",
+      "title": "lesson preflight is not bound to the checkpoint Gate or canonical memory",
+      "originalExpected": "A GATE 1 state cannot reuse a SETUP-00 preflight, and retiring a lesson invalidates a stale active preflight.",
+      "originalObserved": "Both mutations were accepted: state and artifact were compared with one another rather than with STATE.gate or a recomputation of the canonical memory.",
+      "rootCause": "Freshness was judged by comparing an artifact with a copy of its own counts, and by a timestamp, instead of by recomputing it from its inputs.",
+      "implementation": [
+        "file:scripts/development-ledger/lessons.py",
+        "preflight_fingerprint, preflight_staleness and the Gate binding in _validate_memory_policy"
+      ],
+      "regressionTest": [
+        "test:PreflightFreshnessTests.test_a_changed_fingerprint_makes_the_preflight_stale",
+        "test:PreflightFreshnessTests.test_a_preflight_from_another_gate_is_refused"
+      ],
+      "negativeTest": [
+        "test:PreflightFreshnessTests.test_a_dropped_lesson_makes_the_preflight_stale",
+        "test:PreflightFreshnessTests.test_the_checkpoint_refuses_a_stale_preflight"
+      ],
+      "verificationCommand": "python -m unittest discover -s tests",
+      "evidence": [
+        "file:docs/adr/ADR-0010-milestone-closure-controls.md",
+        "checkpoint:M0-INTERNAL-RED-TEAM.json",
+        "checkpoint:M0-INTERNAL-MIRROR.json"
+      ],
+      "lesson": "LSN-0019",
+      "guardrail": "GRD-0018",
+      "status": "CLOSED"
+    },
+    {
+      "findingId": "M0-F-004",
+      "severity": "CRITICAL",
+      "title": "Engineering Memory accepts forged controls, missing evidence, and nested secrets",
+      "originalExpected": "A nonexistent test reference, a nonexistent evidence path, and a secret-shaped value in prevention.description are all rejected.",
+      "originalObserved": "Each independent in-memory mutation returned errors=[].",
+      "rootCause": "Validation checked that a field had the right shape and never asked the repository whether the thing it named exists; the secret scan covered a fixed list of fields.",
+      "implementation": [
+        "file:scripts/development-ledger/lessons.py",
+        "resolve_control, resolve_lesson_evidence and the recursive _walk_strings secret scan"
+      ],
+      "regressionTest": [
+        "test:LessonResolutionTests.test_a_test_control_must_exist_in_the_suite",
+        "test:LessonResolutionTests.test_lesson_evidence_must_resolve"
+      ],
+      "negativeTest": [
+        "test:LessonResolutionTests.test_an_invariant_control_must_be_defined_in_the_tooling",
+        "test:LessonResolutionTests.test_a_control_path_may_not_escape_the_repository",
+        "test:LessonValidationTests.test_secret_in_a_lesson_fails"
+      ],
+      "verificationCommand": "python -m unittest discover -s tests",
+      "evidence": [
+        "file:docs/adr/ADR-0010-milestone-closure-controls.md",
+        "checkpoint:M0-INTERNAL-RED-TEAM.json",
+        "checkpoint:M0-INTERNAL-MIRROR.json"
+      ],
+      "lesson": "LSN-0018",
+      "guardrail": "GRD-0017",
+      "status": "CLOSED"
+    },
+    {
+      "findingId": "M0-F-005",
+      "severity": "CRITICAL",
+      "title": "Green Keeper has a vacuous PASS path",
+      "originalExpected": "An empty gate selection is rejected.",
+      "originalObserved": "green_keeper.py --gates \"\" exited zero and wrote GREEN_KEEPER_GATE=PASS with empty evidence, and the checkpoint validator accepted it beside a failing test.",
+      "rootCause": "The tool asked its caller which gates were mandatory; a control whose scope is an argument can always be reduced to nothing.",
+      "implementation": [
+        "file:.iacode/policies/quality-gates.json",
+        "file:scripts/development-ledger/green_keeper.py",
+        "_validate_green_keeper_cycle in validate_checkpoint.py"
+      ],
+      "regressionTest": [
+        "test:MandatoryGatePolicyTests.test_a_cycle_measured_against_no_gate_is_rejected",
+        "test:MandatoryGatePolicyTests.test_the_policy_declares_a_non_empty_closed_set"
+      ],
+      "negativeTest": [
+        "test:MandatoryGatePolicyTests.test_a_cycle_missing_one_mandatory_gate_is_rejected",
+        "test:MandatoryGatePolicyTests.test_a_mandatory_gate_that_exited_nonzero_is_rejected",
+        "test:MandatoryGatePolicyTests.test_a_gate_without_command_evidence_is_rejected"
+      ],
+      "verificationCommand": "python -m unittest discover -s tests",
+      "evidence": [
+        "file:docs/adr/ADR-0010-milestone-closure-controls.md",
+        "checkpoint:M0-INTERNAL-RED-TEAM.json",
+        "checkpoint:M0-INTERNAL-MIRROR.json"
+      ],
+      "lesson": "LSN-0016",
+      "guardrail": "GRD-0015",
+      "status": "CLOSED"
+    },
+    {
+      "findingId": "M0-F-006",
+      "severity": "CRITICAL",
+      "title": "completeness denominator is not anchored",
+      "originalExpected": "Deleting REQ-0001 is detected even when every stored count is recomputed.",
+      "originalObserved": "The matrix shrank from 47 to 46 and both completeness and checkpoint validation passed at 100%.",
+      "rootCause": "Coverage was computed over the submitted set, so the submitted set decided what total coverage meant.",
+      "implementation": [
+        "file:scripts/development-ledger/policies.py",
+        "file:.iacode/policies/canonical-requirements.json",
+        "expected_requirement_refs and compare_requirement_sets wired into evaluate_matrix"
+      ],
+      "regressionTest": [
+        "test:ExpectedRequirementSetTests.test_deleting_a_requirement_and_recomputing_the_counts_still_fails",
+        "test:ExpectedRequirementSetTests.test_the_expected_set_is_derived_from_the_canonical_sources"
+      ],
+      "negativeTest": [
+        "test:ExpectedRequirementSetTests.test_an_unexpected_anchored_requirement_is_rejected",
+        "test:ExpectedRequirementSetTests.test_a_requirement_without_an_anchor_is_rejected",
+        "test:ExpectedRequirementSetTests.test_a_downgraded_matrix_cannot_escape_the_comparison"
+      ],
+      "verificationCommand": "python -m unittest discover -s tests",
+      "evidence": [
+        "file:docs/adr/ADR-0010-milestone-closure-controls.md",
+        "checkpoint:M0-INTERNAL-RED-TEAM.json",
+        "checkpoint:M0-INTERNAL-MIRROR.json"
+      ],
+      "lesson": "LSN-0017",
+      "guardrail": "GRD-0016",
+      "status": "CLOSED"
+    },
+    {
+      "findingId": "M0-F-007",
+      "severity": "CRITICAL",
+      "title": "historical immutability is not anchored externally",
+      "originalExpected": "Moving a historical tag or rewriting a predecessor remains detectable after coordinated metadata and hash changes.",
+      "originalObserved": "Moving the tag and HEAD together validated, and a CP-0005 rewrite declared in the CP-0006 inventory with refreshed hashes and a moved tag also validated.",
+      "rootCause": "Every expected value lived inside the mutable checkpoint content, so a coordinated edit left nothing to contradict.",
+      "implementation": [
+        "file:scripts/development-ledger/anchors.py",
+        "file:.iacode/anchors/checkpoint-chain.json",
+        "file:scripts/development-ledger/verify_integrity.py"
+      ],
+      "regressionTest": [
+        "test:IntegrityAnchorTests.test_a_moved_historical_tag_is_detected",
+        "test:IntegrityAnchorTests.test_an_unexpected_tree_is_detected"
+      ],
+      "negativeTest": [
+        "test:IntegrityAnchorTests.test_a_broken_link_between_anchors_is_detected",
+        "test:IntegrityAnchorTests.test_a_recomputed_anchor_hash_must_match_its_fields",
+        "test:IntegrityAnchorTests.test_a_sealed_checkpoint_without_an_anchor_is_detected"
+      ],
+      "verificationCommand": "python -m unittest discover -s tests",
+      "evidence": [
+        "file:docs/adr/ADR-0010-milestone-closure-controls.md",
+        "checkpoint:M0-INTERNAL-RED-TEAM.json",
+        "checkpoint:M0-INTERNAL-MIRROR.json"
+      ],
+      "lesson": "LSN-0021",
+      "guardrail": "GRD-0020",
+      "status": "CLOSED"
+    },
+    {
+      "findingId": "M0-F-008",
+      "severity": "HIGH",
+      "title": "CP-0006 mandatory count is contradictory and accepted",
+      "originalExpected": "Matrix, completeness report and state aggregates agree.",
+      "originalObserved": "The matrix and the report computed 45 mandatory requirements while the sealed CP-0006 state said 47, and validation never compared them.",
+      "rootCause": "The same authoritative number was written by hand in several artifacts, so they could disagree without any tool noticing.",
+      "implementation": [
+        "file:scripts/development-ledger/derive_counts.py",
+        "the mandatory cross-check in _validate_delivery_assurance and _validate_derived_counts",
+        "checkpoint:COUNTS.json"
+      ],
+      "regressionTest": [
+        "test:ExpectedRequirementSetTests.test_the_state_mandatory_count_is_cross_checked",
+        "test:DerivedCountTests.test_the_stored_counts_match_the_derivation"
+      ],
+      "negativeTest": [
+        "test:DerivedCountTests.test_a_forged_count_is_rejected",
+        "test:DerivedCountTests.test_a_markdown_claim_that_contradicts_the_derivation_is_rejected"
+      ],
+      "verificationCommand": "python -m unittest discover -s tests",
+      "evidence": [
+        "file:docs/adr/ADR-0010-milestone-closure-controls.md",
+        "checkpoint:M0-INTERNAL-RED-TEAM.json",
+        "checkpoint:M0-INTERNAL-MIRROR.json"
+      ],
+      "lesson": "LSN-0022",
+      "guardrail": "GRD-0021",
+      "status": "CLOSED"
+    },
+    {
+      "findingId": "M0-F-009",
+      "severity": "HIGH",
+      "title": "command records are not reproducible at their declared commits",
+      "originalExpected": "Sampled completed commands reproduce their recorded exit code at the recorded commit.",
+      "originalObserved": "CP-0006 cmd-0012 pointed at an input absent at its commit and CP-0005 cmd-0028 failed at its commit; both were recorded from a dirty tree whose inputs were not content-bound.",
+      "rootCause": "A record named a commit while its real inputs lived only in an uncommitted working tree.",
+      "implementation": [
+        "file:scripts/development-ledger/ledger_common.py",
+        "inputsDigest in build_command_record and the replay context check in _validate_command_reproducibility"
+      ],
+      "regressionTest": [
+        "test:CommandInputBindingTests.test_a_bound_record_passes",
+        "test:CommandInputBindingTests.test_the_recorder_binds_inputs_automatically"
+      ],
+      "negativeTest": [
+        "test:CommandInputBindingTests.test_a_record_without_a_digest_is_rejected",
+        "test:CommandInputBindingTests.test_a_digest_that_omits_an_input_is_rejected",
+        "test:CommandInputBindingTests.test_a_clean_tree_claim_is_checked_against_the_declared_commit"
+      ],
+      "verificationCommand": "python -m unittest discover -s tests",
+      "evidence": [
+        "file:docs/adr/ADR-0010-milestone-closure-controls.md",
+        "checkpoint:M0-INTERNAL-RED-TEAM.json",
+        "checkpoint:M0-INTERNAL-MIRROR.json"
+      ],
+      "lesson": "LSN-0020",
+      "guardrail": "GRD-0019",
+      "status": "CLOSED"
+    },
+    {
+      "findingId": "M0-F-010",
+      "severity": "HIGH",
+      "title": "sealed finalization chronology is internally inconsistent",
+      "originalExpected": "A run cannot finish before its recorded finalizer, and the final validator evidence binds the sealed commit.",
+      "originalObserved": "CP-0006 recorded finishedAt three seconds before the finalizer that sealed it, and its last evidence referenced a pre-tag commit with a dirty tree.",
+      "rootCause": "Sealing was not an ordered workflow: the end of the run was stamped before the records the run still had to write, and the final validation ran against an uncommitted tree.",
+      "implementation": [
+        "file:scripts/development-ledger/seal_checkpoint.py",
+        "the monotonic finishedAt in finalize_checkpoint.py",
+        "_validate_seal_chronology in validate_checkpoint.py"
+      ],
+      "regressionTest": [
+        "test:SealChronologyTests.test_a_record_after_the_end_of_the_run_is_rejected",
+        "test:DeliveryLifecycleTests.test_full_delivery_assurance_flow_reaches_ready_for_review"
+      ],
+      "negativeTest": [
+        "test:SealChronologyTests.test_a_missing_post_commit_validation_is_rejected",
+        "test:SealChronologyTests.test_a_dirty_tree_validation_is_not_evidence_of_a_sealed_commit",
+        "test:SealChronologyTests.test_a_validation_of_an_unrelated_commit_is_rejected"
+      ],
+      "verificationCommand": "python -m unittest discover -s tests",
+      "evidence": [
+        "file:docs/adr/ADR-0010-milestone-closure-controls.md",
+        "checkpoint:M0-INTERNAL-RED-TEAM.json",
+        "checkpoint:M0-INTERNAL-MIRROR.json"
+      ],
+      "lesson": "LSN-0014",
+      "guardrail": "GRD-0013",
+      "status": "CLOSED"
+    },
+    {
+      "findingId": "M0-F-011",
+      "severity": "MEDIUM",
+      "title": "one lesson source locator is inaccurate",
+      "originalExpected": "LSN-0007 locates both cited findings accurately.",
+      "originalObserved": "It attributed R4 and R7 to SETUP-00-CP-0003, while R7 is recorded in SETUP-00-CP-0004.",
+      "rootCause": "Provenance was written from recollection of where a finding had been discussed, and nothing resolved the citation against the cited checkpoint.",
+      "implementation": [
+        "file:.iacode/memory/lessons.jsonl",
+        "_resolve_source_locator in lessons.py"
+      ],
+      "regressionTest": [
+        "test:LessonProvenanceTests.test_every_repository_lesson_cites_a_resolvable_source",
+        "test:LessonProvenanceTests.test_a_correct_locator_resolves"
+      ],
+      "negativeTest": [
+        "test:LessonProvenanceTests.test_a_finding_absent_from_the_cited_checkpoint_is_rejected",
+        "test:LessonProvenanceTests.test_a_nonexistent_checkpoint_is_rejected"
+      ],
+      "verificationCommand": "python -m unittest discover -s tests",
+      "evidence": [
+        "file:docs/adr/ADR-0010-milestone-closure-controls.md",
+        "checkpoint:M0-INTERNAL-RED-TEAM.json",
+        "checkpoint:M0-INTERNAL-MIRROR.json"
+      ],
+      "lesson": "LSN-0023",
+      "guardrail": "GRD-0022",
+      "status": "CLOSED"
+    }
+  ],
+  "total": 11,
+  "closed": 11,
+  "result": "CLOSED"
+}

@@ -56,6 +56,8 @@ def main() -> int:
     parser.add_argument("--stderr-artifact", default=None)
     parser.add_argument("--operation", default=None)
     parser.add_argument("--phase", default=None)
+    parser.add_argument("--subject-commit", default=None,
+                        help="the commit this record is evidence about, when it is not HEAD")
     parser.add_argument("--quiet", action="store_true", help="do not echo the captured output")
     parser.add_argument("argv", nargs=argparse.REMAINDER, help="-- followed by the command to run")
     args = parser.parse_args()
@@ -101,6 +103,7 @@ def main() -> int:
         stderr_artifact=args.stderr_artifact,
         operation=args.operation,
         phase=args.phase,
+        subject_commit=args.subject_commit or snapshot["head"],
         repository_state={
             "branch": snapshot["branch"],
             "head": snapshot["head"],

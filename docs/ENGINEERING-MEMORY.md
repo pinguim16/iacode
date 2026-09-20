@@ -108,3 +108,39 @@ Implementer consults the applicable checks, the Green Keeper records failures as
 the Delivery Completeness Validator confirms that lesson-derived requirements were satisfied, the
 Historian records lessons and retrospectives, and the Reviewer looks for recurrence. The canonical
 contracts are in [.iacode/agents/](../.iacode/agents/).
+
+## Memory policy 2.0.0
+
+`.iacode/memory/POLICY.json` declares which rules the memory is read under. Under `2.0.0`:
+
+- every preventive control reference is resolved: a `test` must exist in the discovered suite, an
+  `invariant` must be defined in the tooling, and a path-shaped control must exist in the repository;
+- every evidence reference must resolve to an existing, non-empty repository file;
+- every lesson's provenance must resolve: the checkpoint it cites must exist, and every finding
+  identifier it names must appear in the recorded evidence of a checkpoint it names;
+- the whole lesson object is scanned for secrets at any depth, not a fixed list of fields;
+- a `GUARDED` lesson must name at least one guardrail in `.iacode/memory/guardrails/registry.json`,
+  and the registry entry must name the lesson back and list the tests that fail when the control is
+  removed.
+
+A memory without `POLICY.json` is read under the original `1.0.0` rules, which is how sealed
+checkpoints keep validating under their own version.
+
+## The guardrail registry
+
+A guardrail records what the control is, where it lives, which lessons it guards, which tests verify
+it, and what removing it would allow. `guardrail_effectiveness` measures rather than assumes:
+
+- `guardrailsTotal`, `guardrailsResolved`, `guardrailsTested`, `guardrailsEffective`, and
+  `guardrailFailures`.
+
+A delivery cannot be offered while a guardrail is unresolved, untested, or carries an unresolved
+`GUARDRAIL_FAILURE`. A guardrail failure is resolved by naming the checkpoint that repaired the
+control, which is the only way a reopened lesson returns to `GUARDED`.
+
+## Preflight freshness
+
+A preflight records `inputsFingerprint`, a digest of the canonical memory, the guardrail registry,
+the lesson schema, the selection policy version and the Gate inputs. Validation recomputes the
+fingerprint and reproduces the selection. A preflight generated for another Gate is refused outright.
+Freshness is a computation, never a timestamp.

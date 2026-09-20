@@ -18,8 +18,16 @@ import sys
 from pathlib import Path
 from typing import Any
 
-from delivery_assurance import evaluate_matrix, load_matrix
-from ledger_common import LedgerError, find_root, load_json, resolve_latest, utc_now, validate_schema
+from delivery_assurance import completeness_scope, evaluate_matrix, load_matrix
+from ledger_common import (
+    LedgerError,
+    find_root,
+    load_json,
+    resolve_latest,
+    scope_fingerprint,
+    utc_now,
+    validate_schema,
+)
 
 
 def render_markdown(report: dict[str, Any], matrix: dict[str, Any]) -> str:
@@ -32,11 +40,13 @@ def render_markdown(report: dict[str, Any], matrix: dict[str, Any]) -> str:
         f"- Matrix: `{report['matrix']}`",
         f"- Generated: `{report['generatedAt']}`",
         f"- Auditor: {report.get('auditor', 'not recorded')}",
+        f"- Expected set: {report.get('expectedSetSource', 'not derived')}",
         "",
         "## Counts",
         "",
         "| Metric | Value |",
         "|---|---|",
+        f"| expectedRequirements | {report.get('expectedRequirements', 0)} |",
         f"| totalRequirements | {report['totalRequirements']} |",
         f"| mandatoryRequirements | {report['mandatoryRequirements']} |",
         f"| complete | {report['complete']} |",
@@ -105,11 +115,12 @@ def main() -> int:
 
     report = evaluate_matrix(root, checkpoint, matrix)
     report = {
-        "schemaVersion": "1.0.0",
+        "schemaVersion": "2.0.0",
         "checkpoint": checkpoint.name,
         "generatedAt": utc_now(),
         "matrix": "REQUIREMENTS-MATRIX.json",
         "auditor": args.auditor,
+        "scopeFingerprint": scope_fingerprint(root, completeness_scope(root, checkpoint)),
         **report,
     }
 

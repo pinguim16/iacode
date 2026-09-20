@@ -118,3 +118,47 @@ own verdict; only `MILESTONE_EXTERNAL_PASS` records an independent one, and it r
 milestone and the cross-tool validation to be `PASSED`.
 
 Every completed Gate also produces a retrospective in `.iacode/memory/retrospectives/`.
+
+## Milestone closure controls
+
+`schemaVersion` `3.2.0` adds the controls recorded in
+[ADR-0010](adr/ADR-0010-milestone-closure-controls.md). A `3.2.0` checkpoint carries
+`CLOSURE-REQUIREMENTS.json` and `.md` from its first moment, and, once it is offered for review,
+`COUNTS.json`, `<milestone>-INTERNAL-RED-TEAM.json` and `<milestone>-INTERNAL-MIRROR.json`, plus the
+findings-closure artifact of every audit whose corrective work it is.
+
+`STATE.json` additionally carries `guardrailEffectiveness`, `integrity` and `externalAttestation`.
+The requirements matrix and the completeness report are `schemaVersion` `2.0.0`, the lesson preflight
+is `2.0.0`, and the engineering memory declares policy `2.0.0` in `.iacode/memory/POLICY.json`.
+
+### Integrity anchors
+
+`.iacode/anchors/checkpoint-chain.json` records, for every sealed checkpoint, its canonical tag, its
+commit, its tree and the digest of its predecessor's anchor. Validation re-derives all of it from
+Git, so a moved tag, a rewritten commit, an unexpected tree or a broken link is detected.
+
+A checkpoint cannot anchor its own tag, because the anchor would have to contain the commit that
+contains it. Its successor anchors it, and a checkpoint that fails to anchor a sealed predecessor is
+refused.
+
+This is **tamper evidence inside the local trust model**, not a signature. An actor who controls the
+whole repository can recompute the chain. What the chain removes is the coordinated edit that leaves
+the ledger internally consistent, which is the failure the `M0` audit demonstrated.
+
+### Sealing
+
+Sealing is monotonic and post-commit, in two steps:
+
+1. commit the prepared content;
+2. run `python scripts/development-ledger/seal_checkpoint.py`, which validates that commit with a
+   clean worktree, records the run as `post-commit-validation` bound to it, stamps the end of the
+   run after that record, refreshes the declared inventory hashes, commits the append-only evidence
+   and creates the canonical tag.
+
+Validation then requires a `post-commit-validation` record that exited zero over a clean tree and
+describes `HEAD` or `HEAD^`; in the second case the difference between them may be nothing but
+`COMMANDS.jsonl`, `FILES.json` and `RUN-METADATA.json`. No command timestamp may be later than
+`RUN-METADATA.finishedAt`.
+
+The residual limit is stated plainly: a commit cannot contain a validation of itself, so the evidence
+commit is validated by the reader and anchored by the next checkpoint.

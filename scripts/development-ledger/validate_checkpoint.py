@@ -11,9 +11,25 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
-from delivery_assurance import collect_test_ids, evaluate_matrix, load_command_results
-from lessons import validate_lessons as validate_engineering_memory
+from anchors import verify_chain
+from attestation import resolve_external_pass
+from delivery_assurance import (
+    collect_test_ids,
+    completeness_scope,
+    evaluate_matrix,
+    load_command_results,
+)
+from lessons import (
+    RESOLVING_MEMORY_POLICY,
+    guardrail_effectiveness,
+    memory_policy_version,
+    preflight_staleness,
+    validate_lessons as validate_engineering_memory,
+)
+from policies import mandatory_gates, open_audits
 from ledger_common import (
+    CLOSURE_SCHEMA_VERSION,
+    CLOSURE_SCHEMA_VERSIONS,
     COMMAND_RESULTS,
     CURRENT_SCHEMA_VERSION,
     DELIVERY_SCHEMA_VERSION,
@@ -24,6 +40,7 @@ from ledger_common import (
     INDEPENDENT_DIMENSIONS,
     INVENTORY_SELF_REFERENTIAL_FILES,
     LEGACY_SCHEMA_VERSION,
+    MEMORY_SCHEMA_VERSIONS,
     QUALITY_DIMENSIONS,
     QUALITY_DIMENSIONS_V3,
     QUALITY_OUTCOMES,
@@ -41,8 +58,10 @@ from ledger_common import (
     load_json,
     milestone_for,
     normalize_gate,
+    requires_external_validation,
     resolve_latest,
     run_git,
+    scope_fingerprint,
     validate_schema,
 )
 
@@ -53,6 +72,13 @@ HASHED_INVENTORY_VERSIONS = (EVIDENCE_SCHEMA_VERSION,) + DELIVERY_SCHEMA_VERSION
 REQUIRED_DELIVERY_FILES = (
     "REQUIREMENTS-MATRIX.json",
     "REQUIREMENTS-MATRIX.md",
+)
+
+# The closure view of the requirement set exists from the first moment of a 3.2.0 checkpoint,
+# because the expected set is derived before anything is implemented.
+REQUIRED_CLOSURE_FILES = (
+    "CLOSURE-REQUIREMENTS.json",
+    "CLOSURE-REQUIREMENTS.md",
 )
 
 # The assurance artifacts only have to be populated once the delivery is offered for review.
@@ -110,6 +136,18 @@ HANDOFF_READY_STATUSES = (
     "GATE_FAIL",
 )
 
+# Every status that asserts the delivery is good. The M0 audit escaped because the strong checks
+# were attached to READY_FOR_REVIEW alone, so a mutated MILESTONE_EXTERNAL_PASS carrying a failed
+# Green Keeper produced no error. One invariant now covers all of them, and each status adds
+# requirements on top of it instead of replacing it.
+POSITIVE_TERMINAL_STATUSES = (
+    "READY_FOR_REVIEW",
+    "READY_FOR_RED_TEAM",
+    "INTERNAL_GATE_PASS",
+    "MILESTONE_EXTERNAL_PASS",
+    "GATE_PASS",
+)
+
 HEX64 = re.compile(r"^[0-9a-f]{64}$")
 
 
@@ -139,6 +177,18 @@ def _parse_datetime(value: Any) -> datetime | None:
 
 def _canonical_hash(path: Path) -> str:
     return canonical_hash_path(path)
+
+
+def _relative_to_root(root: Path, path: Path) -> str | None:
+    """Repository-relative POSIX path, or None when the path lives outside the repository.
+
+    Test fixtures legitimately place a checkpoint outside the repository they validate against, so
+    a control that needs a repository-relative name degrades instead of raising.
+    """
+    try:
+        return str(path.relative_to(root)).replace("\\", "/")
+    except ValueError:
+        return None
 
 
 def _resolve_expected_commit(root: Path, expected: Any, actual_head: str, allow_pending_ref: bool) -> str | None:
@@ -335,6 +385,7 @@ def _validate_command_reproducibility(
     record: dict[str, Any],
     line_number: int,
     errors: list[str],
+    bind_inputs: bool = False,
 ) -> None:
     """R3.2 and RT-02: a recorded command must be auditable and runnable where it says it ran."""
     prefix = f"COMMANDS.jsonl:{line_number}"
@@ -372,9 +423,51 @@ def _validate_command_reproducibility(
                 errors.append(f"{prefix}: recorded script path does not resolve from the repository: {token}")
             break
 
-    for reference in record.get("inputs") or []:
+    inputs = [str(item) for item in record.get("inputs") or []]
+    for reference in inputs:
         if not (root / reference).exists():
             errors.append(f"{prefix}: recorded input does not exist: {reference}")
+
+    # M0-F-009: a record that names a commit while its real inputs lived only in a dirty working
+    # tree is not reproducible. The digest binds what the command actually read, so replay can be
+    # verified against content instead of against a commit that never held it.
+    if bind_inputs and inputs:
+        digest = record.get("inputsDigest")
+        if not isinstance(digest, list):
+            errors.append(
+                f"{prefix}: schemaVersion {CLOSURE_SCHEMA_VERSION} requires inputsDigest binding "
+                f"every declared input by content")
+            return
+        bound = {
+            str(item.get("path")): str(item.get("hash"))
+            for item in digest if isinstance(item, dict)
+        }
+        for reference in inputs:
+            if reference not in bound:
+                errors.append(f"{prefix}: inputsDigest does not bind the declared input {reference}")
+            elif HEX64.fullmatch(bound[reference]) is None and bound[reference] != "ABSENT":
+                errors.append(f"{prefix}: inputsDigest for {reference} is not a sha-256 digest")
+        for reference in sorted(set(bound) - set(inputs)):
+            errors.append(f"{prefix}: inputsDigest binds {reference}, which is not a declared input")
+
+        # When the tree was clean, the declared commit must really contain what was read, so the
+        # replay context is provable rather than asserted.
+        clean = (record.get("repositoryState") or {}).get("dirty") is False
+        commit = record.get("commit")
+        if clean and isinstance(commit, str) and re.fullmatch(r"[0-9a-f]{40}", commit):
+            for reference in inputs:
+                expected = bound.get(reference)
+                if expected in (None, "ABSENT"):
+                    continue
+                observed = blob_hash(root, commit, reference)
+                if observed is None:
+                    errors.append(
+                        f"{prefix}: the record claims a clean tree at {commit[:12]} but the input "
+                        f"{reference} does not exist there")
+                elif observed != expected:
+                    errors.append(
+                        f"{prefix}: the record claims a clean tree at {commit[:12]} but the input "
+                        f"{reference} had different content there")
 
 
 def _validate_status_blockers(state: dict[str, Any], errors: list[str]) -> None:
@@ -390,6 +483,69 @@ def _validate_status_blockers(state: dict[str, Any], errors: list[str]) -> None:
         errors.append("BLOCKED requires at least one entry in blockedBy")
 
 
+def _validate_green_keeper_cycle(
+    root: Path,
+    green: dict[str, Any],
+    cycle: dict[str, Any],
+    errors: list[str],
+    closure: bool,
+) -> None:
+    """A GREEN cycle must have measured the closed mandatory set against the current content.
+
+    Two failures of ``SETUP-00-CP-0006`` meet here. The gate set was whatever the caller passed, so
+    an empty selection produced a vacuous PASS; and a PASS survived any later edit, because nothing
+    recorded what content the PASS was a statement about.
+    """
+    if not closure and not cycle.get("requiredGates"):
+        return
+    try:
+        required = set(mandatory_gates(root))
+    except LedgerError as exc:
+        errors.append(f"greenKeeper=PASS cannot be verified: {exc}")
+        return
+
+    declared = {str(item) for item in cycle.get("requiredGates") or []}
+    if declared != required:
+        errors.append(
+            "greenKeeper=PASS was measured against "
+            f"{', '.join(sorted(declared)) or 'no gate'}, not the canonical mandatory set "
+            f"{', '.join(sorted(required))}")
+
+    results = {
+        str(item.get("gate")): item
+        for item in cycle.get("gateResults") or []
+        if isinstance(item, dict)
+    }
+    for gate in sorted(required):
+        entry = results.get(gate)
+        if entry is None:
+            errors.append(f"greenKeeper=PASS records no execution of the mandatory gate {gate!r}")
+            continue
+        if entry.get("exitCode") != 0:
+            errors.append(
+                f"greenKeeper=PASS records the mandatory gate {gate!r} exiting "
+                f"{entry.get('exitCode')!r}")
+        if not entry.get("commandId"):
+            errors.append(f"greenKeeper=PASS records no command evidence for the gate {gate!r}")
+
+    if not cycle.get("commandsExecuted"):
+        errors.append("greenKeeper=PASS requires recorded command evidence for the cycle")
+
+    observed = scope_fingerprint(root)
+    recorded = cycle.get("scopeFingerprint")
+    if not recorded:
+        errors.append(
+            "greenKeeper=PASS requires the cycle to record the scope fingerprint it was measured "
+            "against; without it a PASS cannot be distinguished from a stale one")
+    elif recorded != observed:
+        errors.append(
+            "greenKeeper=PASS is STALE: the delivery-assurance scope changed after the last GREEN "
+            "cycle, so the Green Keeper must run again")
+    if green.get("scopeFingerprint") not in (None, recorded):
+        errors.append(
+            "STATE.json greenKeeper.scopeFingerprint does not match the last GREEN rework cycle")
+
+
 def _validate_delivery_assurance(
     root: Path,
     target: Path,
@@ -397,8 +553,15 @@ def _validate_delivery_assurance(
     normalized_quality: dict[str, dict[str, Any]],
     tests: Any,
     errors: list[str],
+    closure: bool = False,
 ) -> None:
-    """Enforce the Green Keeper and Delivery Completeness gates and their stored evidence."""
+    """Enforce the Green Keeper and Delivery Completeness gates and their stored evidence.
+
+    ``closure`` selects the schemaVersion 3.2.0 rules: the closed mandatory gate set, the scope
+    fingerprints that make a stale PASS detectable, and the derived expected requirement set.
+    Sealed 3.0.0 and 3.1.0 checkpoints predate those artifacts and keep validating under their own
+    version's rules.
+    """
     status = state.get("status")
     green = state.get("greenKeeper")
     delivery = state.get("deliveryCompleteness")
@@ -457,6 +620,8 @@ def _validate_delivery_assurance(
                     f"greenKeeper=PASS contradicts the last rework cycle result "
                     f"{cycles[-1].get('result')!r}"
                 )
+            else:
+                _validate_green_keeper_cycle(root, green, cycles[-1], errors, closure)
             if green.get("remainingFailures"):
                 errors.append("greenKeeper=PASS requires remainingFailures to be zero")
             if green.get("unresolvedReworkItems"):
@@ -488,11 +653,19 @@ def _validate_delivery_assurance(
             recomputed = evaluate_matrix(
                 root, target, matrix, load_command_results(target), collect_test_ids(root))
             if isinstance(matrix_state, dict) and offered:
-                for key in ("total", "complete", "partial", "missing", "notApplicable"):
+                for key in ("total", "mandatory", "complete", "partial", "missing", "notApplicable"):
                     source = {
-                        "total": "totalRequirements", "complete": "complete", "partial": "partial",
+                        "total": "totalRequirements", "mandatory": "mandatoryRequirements",
+                        "complete": "complete", "partial": "partial",
                         "missing": "missing", "notApplicable": "notApplicable",
                     }[key]
+                    if key == "mandatory" and not closure:
+                        continue
+                    if key == "mandatory" and "mandatory" not in matrix_state:
+                        errors.append(
+                            "STATE.json requirementsMatrix must declare mandatory; the audit found "
+                            "a sealed state claiming a mandatory count no artifact agreed with")
+                        continue
                     if matrix_state.get(key) != recomputed[source]:
                         errors.append(
                             f"STATE.json requirementsMatrix.{key}={matrix_state.get(key)!r} does not match "
@@ -513,8 +686,15 @@ def _validate_delivery_assurance(
                 for error in validate_schema(report, load_json(schema_path)):
                     errors.append(f"COMPLETENESS-REPORT.json: {error}")
             if recomputed is not None and offered:
-                for key in ("totalRequirements", "complete", "partial", "missing", "notApplicable",
+                for key in ("totalRequirements", "mandatoryRequirements", "expectedRequirements",
+                            "complete", "partial", "missing", "notApplicable",
                             "coveragePercent", "evidenceCoveragePercent", "result"):
+                    if key not in recomputed:
+                        continue
+                    # The derived expected set arrived with report schemaVersion 2.0.0; sealed
+                    # 1.0.0 reports are read under their own version's rules.
+                    if key in ("expectedRequirements",) and report.get("schemaVersion") != "2.0.0":
+                        continue
                     if report.get(key) != recomputed[key]:
                         errors.append(
                             f"COMPLETENESS-REPORT.json {key}={report.get(key)!r} contradicts the "
@@ -525,42 +705,71 @@ def _validate_delivery_assurance(
                     f"STATE.json deliveryCompleteness.status={delivery.get('status')!r} contradicts "
                     f"COMPLETENESS-REPORT.json result={report.get('result')!r}"
                 )
+            if offered and report.get("result") == "PASS" and (
+                    closure or report.get("schemaVersion") == "2.0.0"):
+                observed = scope_fingerprint(root, completeness_scope(root, target))
+                recorded = report.get("scopeFingerprint")
+                if not recorded:
+                    errors.append(
+                        "a passing completeness report must record the scope fingerprint it "
+                        "audited, otherwise a later change cannot make it stale")
+                elif recorded != observed:
+                    errors.append(
+                        "DELIVERY_COMPLETENESS_GATE is STALE: the code, requirements, lessons or "
+                        "policy changed after the audit, so it must run again")
 
-    if status != "READY_FOR_REVIEW":
+    if status not in POSITIVE_TERMINAL_STATUSES:
         return
 
+    # ---- the shared promotion invariant, identical for every positive terminal status ----
     if isinstance(green, dict) and green.get("status") != "PASS":
-        errors.append(f"READY_FOR_REVIEW requires GREEN_KEEPER_GATE=PASS, found {green.get('status')!r}")
+        errors.append(f"{status} requires GREEN_KEEPER_GATE=PASS, found {green.get('status')!r}")
     if isinstance(delivery, dict):
         if delivery.get("status") != "PASS":
             errors.append(
-                f"READY_FOR_REVIEW requires DELIVERY_COMPLETENESS_GATE=PASS, found {delivery.get('status')!r}")
+                f"{status} requires DELIVERY_COMPLETENESS_GATE=PASS, found {delivery.get('status')!r}")
         if delivery.get("coveragePercent") != 100.0:
             errors.append(
-                f"READY_FOR_REVIEW requires total requirement coverage, found "
+                f"{status} requires total requirement coverage, found "
                 f"{delivery.get('coveragePercent')!r}")
+        if delivery.get("evidenceCoveragePercent") not in (None, 100.0):
+            errors.append(
+                f"{status} requires total evidence coverage, found "
+                f"{delivery.get('evidenceCoveragePercent')!r}")
     if recomputed is not None:
         if recomputed["partial"]:
-            errors.append(f"READY_FOR_REVIEW requires zero PARTIAL requirements, found {recomputed['partial']}")
+            errors.append(f"{status} requires zero PARTIAL requirements, found {recomputed['partial']}")
         if recomputed["missing"]:
-            errors.append(f"READY_FOR_REVIEW requires zero MISSING requirements, found {recomputed['missing']}")
+            errors.append(f"{status} requires zero MISSING requirements, found {recomputed['missing']}")
         if recomputed["result"] != "PASS":
             for finding in recomputed["findings"]:
                 if finding["severity"] == "BLOCKING":
-                    errors.append(f"READY_FOR_REVIEW blocked by {finding['requirement']}: {finding['detail']}")
+                    errors.append(f"{status} blocked by {finding['requirement']}: {finding['detail']}")
     for dimension in QUALITY_DIMENSIONS_V3:
         if dimension in INDEPENDENT_DIMENSIONS:
             continue
         entry = normalized_quality.get(dimension) or {}
         if entry.get("status") == "NOT_EXECUTED":
-            errors.append(f"READY_FOR_REVIEW requires QUALITY.json {dimension} to be executed")
+            errors.append(f"{status} requires QUALITY.json {dimension} to be executed")
         if entry.get("status") == "FAIL":
-            errors.append(f"READY_FOR_REVIEW cannot have QUALITY.json {dimension}=FAIL")
-    if isinstance(review, dict) and review.get("status") != "PENDING":
-        errors.append(
-            f"READY_FOR_REVIEW requires independentReview to be PENDING, found {review.get('status')!r}")
-    if isinstance(red_team, dict) and red_team.get("status") != "PENDING":
-        errors.append(f"READY_FOR_REVIEW requires redTeam to be PENDING, found {red_team.get('status')!r}")
+            errors.append(f"{status} cannot have QUALITY.json {dimension}=FAIL")
+
+    # ---- what each status adds on top of the shared invariant ----
+    if status in ("READY_FOR_REVIEW", "READY_FOR_RED_TEAM"):
+        if isinstance(review, dict) and status == "READY_FOR_REVIEW" and review.get("status") != "PENDING":
+            errors.append(
+                f"READY_FOR_REVIEW requires independentReview to be PENDING, found "
+                f"{review.get('status')!r}")
+        if isinstance(red_team, dict) and red_team.get("status") != "PENDING":
+            errors.append(f"{status} requires redTeam to be PENDING, found {red_team.get('status')!r}")
+    else:
+        if isinstance(review, dict) and review.get("status") not in ("APPROVED", "NOT_REQUIRED"):
+            errors.append(
+                f"{status} requires an independent review verdict, found {review.get('status')!r}")
+        if isinstance(red_team, dict) and red_team.get("status") not in (
+                "RED_TEAM_PASS", "NOT_REQUIRED"):
+            errors.append(
+                f"{status} requires a Red Team verdict, found {red_team.get('status')!r}")
 
 
 def _validate_memory_policy(
@@ -568,14 +777,26 @@ def _validate_memory_policy(
     target: Path,
     state: dict[str, Any],
     errors: list[str],
+    closure: bool = False,
 ) -> None:
-    """Engineering memory and milestone validation policy, bound to schemaVersion 3.1.0."""
+    """Engineering memory and milestone validation policy, bound to schemaVersion 3.1.0.
+
+    ``closure`` selects the schemaVersion 3.2.0 additions: preflight freshness recomputed from the
+    memory, and an external verdict derived from an attestation rather than asserted. Sealed 3.1.0
+    checkpoints keep validating under their own version's rules.
+    """
     status = state.get("status")
     offered = status in HANDOFF_READY_STATUSES
 
     # The memory is a control, so a broken memory is a broken checkpoint.
     for error in validate_engineering_memory(root):
         errors.append(f"engineering memory: {error}")
+    if closure and memory_policy_version(root) != RESOLVING_MEMORY_POLICY:
+        errors.append(
+            "schemaVersion 3.2.0 requires engineering memory policy "
+            f"{RESOLVING_MEMORY_POLICY}, which resolves every control, evidence and "
+            "provenance reference; found "
+            f"{memory_policy_version(root)!r}")
 
     preflight_state = state.get("lessonPreflight")
     if not isinstance(preflight_state, dict):
@@ -611,6 +832,22 @@ def _validate_memory_policy(
                 str(preflight.get("gate"))):
             errors.append("STATE.json lessonPreflight.gate does not match LESSON-PREFLIGHT.json")
 
+    # The preflight is bound to the Gate that is actually being delivered, and to the memory it was
+    # derived from. Comparing the artifact with the state that stores its own counts proves nothing:
+    # the audit reused a SETUP-00 preflight for GATE 1, and kept a stale one after retiring a lesson.
+    if isinstance(preflight, dict) and closure:
+        if preflight.get("schemaVersion") != "2.0.0":
+            errors.append(
+                "schemaVersion 3.2.0 requires LESSON-PREFLIGHT.json schemaVersion 2.0.0, which "
+                "carries the input fingerprint that makes a stale preflight detectable")
+        for message in preflight_staleness(root, preflight, str(state.get("gate", ""))):
+            errors.append(f"lesson preflight: {message}")
+        if isinstance(preflight_state, dict):
+            declared_fingerprint = preflight_state.get("fingerprint")
+            if declared_fingerprint not in (None, preflight.get("inputsFingerprint")):
+                errors.append(
+                    "STATE.json lessonPreflight.fingerprint does not match LESSON-PREFLIGHT.json")
+
     milestone = state.get("milestone")
     expected = milestone_for(str(state.get("gate", "")))
     if not isinstance(milestone, dict):
@@ -631,6 +868,13 @@ def _validate_memory_policy(
                     f"{', '.join(gates)}")
         if milestone.get("status") == "PASSED" and state.get("secondToolValidation", {}).get("status") != "PASSED":
             errors.append("a milestone may only be PASSED when secondToolValidation is PASSED")
+        if closure and milestone.get("status") == "PASSED" and expected is not None:
+            identifier = str(milestone.get("id"))
+            if not requires_external_validation(
+                    str(state.get("gate", "")), bool(state.get("externalAuditRequired"))):
+                errors.append(
+                    f"gate {state.get('gate')!r} does not close milestone {identifier} and no "
+                    f"extraordinary audit is recorded, so it may not report the milestone as PASSED")
 
     required = state.get("externalAuditRequired")
     reason = state.get("externalAuditReason")
@@ -647,16 +891,445 @@ def _validate_memory_policy(
     elif reason:
         errors.append("externalAuditReason is recorded while externalAuditRequired is false")
 
+    # An external verdict is derived from an attestation authored by a different sealed checkpoint,
+    # never from a field of the checkpoint that benefits from it. Filling secondToolValidation and
+    # milestone.status by hand is exactly the escape the audit demonstrated.
+    second_tool = state.get("secondToolValidation") or {}
+    claims_external = closure and (
+        status == EXTERNAL_PASS_STATUS
+        or second_tool.get("status") == "PASSED"
+        or (isinstance(milestone, dict) and milestone.get("status") == "PASSED")
+    )
+    if claims_external:
+        identifier = milestone.get("id") if isinstance(milestone, dict) else None
+        subject_commit = _resolve_expected_commit(
+            root, state.get("currentCommit"), "UNBORN", False)
+        attestation, reasons = resolve_external_pass(
+            root, str(identifier), target.name,
+            subject_commit if subject_commit not in (None, "UNBORN") else None)
+        for reason in reasons:
+            errors.append(f"external validation: {reason}")
+        if attestation is not None and not reasons:
+            if second_tool.get("status") != "PASSED":
+                errors.append(
+                    "a verified external attestation exists but secondToolValidation does not "
+                    "record PASSED")
+
     if status == EXTERNAL_PASS_STATUS:
         if not isinstance(milestone, dict) or milestone.get("status") != "PASSED":
             errors.append(f"{EXTERNAL_PASS_STATUS} requires milestone.status=PASSED")
-        if state.get("secondToolValidation", {}).get("status") != "PASSED":
+        if second_tool.get("status") != "PASSED":
             errors.append(f"{EXTERNAL_PASS_STATUS} requires secondToolValidation=PASSED")
+        if closure and not requires_external_validation(
+                str(state.get("gate", "")), bool(state.get("externalAuditRequired"))):
+            errors.append(
+                f"{EXTERNAL_PASS_STATUS} is only available to a milestone-closing Gate or to a "
+                f"recorded extraordinary audit; gate {state.get('gate')!r} is neither")
     if status == "INTERNAL_GATE_PASS" and state.get("secondToolValidation", {}).get("status") == "PASSED":
         # An internal verdict is not the place to record an external one; use the milestone status.
         errors.append(
             "INTERNAL_GATE_PASS records the project's own verdict; an external PASS belongs to "
             f"{EXTERNAL_PASS_STATUS}")
+
+
+COUNT_CLAIM = re.compile(
+    r"(?<![0-9])(\d+)\s*/\s*(\d+)\s+(TESTS|REQUIREMENTS|FINDINGS|ATTACKS|LESSONS|GUARDRAILS)\b")
+
+
+def _validate_anchor_chain(root: Path, target: Path, state: dict[str, Any], errors: list[str]) -> None:
+    """Sealed history is anchored outside the content it describes."""
+    for message in verify_chain(root, require_sealed=True, exclude={target.name}):
+        errors.append(f"checkpoint integrity: {message}")
+
+    integrity = state.get("integrity")
+    if not isinstance(integrity, dict):
+        errors.append("STATE.json schemaVersion 3.2.0 requires the integrity block")
+        return
+    try:
+        from anchors import load_anchors
+
+        anchors = load_anchors(root)
+    except LedgerError as exc:
+        errors.append(f"checkpoint integrity: {exc}")
+        return
+    if integrity.get("anchors") != len(anchors):
+        errors.append(
+            f"STATE.json integrity.anchors={integrity.get('anchors')!r} does not match the "
+            f"{len(anchors)} recorded anchors")
+
+    # A checkpoint must anchor every sealed predecessor; its own anchor belongs to its successor,
+    # because an anchor cannot contain the commit that contains it.
+    anchored = {item.get("checkpointId") for item in anchors}
+    checkpoints = root / "docs" / "checkpoints"
+    for item in sorted(checkpoints.iterdir()) if checkpoints.is_dir() else []:
+        if not item.is_dir() or item.name == target.name:
+            continue
+        code, _ = run_git(root, "rev-parse", "--verify",
+                          f"refs/tags/iacode-checkpoints/{item.name}^{{commit}}")
+        if code == 0 and item.name not in anchored:
+            errors.append(
+                f"checkpoint integrity: sealed predecessor {item.name} is not anchored by this "
+                f"checkpoint")
+
+
+def _validate_seal_chronology(
+    root: Path,
+    target: Path,
+    state: dict[str, Any],
+    metadata: Any,
+    commands: list[dict[str, Any]],
+    errors: list[str],
+) -> None:
+    """Sealing is monotonic and post-commit, and its final evidence describes the sealed content.
+
+    The audit found a run that finished three seconds before the finalizer it recorded, and a last
+    validation whose evidence pointed at a pre-tag commit with a dirty tree.
+    """
+    finished = _parse_datetime(metadata.get("finishedAt")) if isinstance(metadata, dict) else None
+    if finished is not None:
+        for record in commands:
+            stamp = _parse_datetime(record.get("timestamp"))
+            if stamp is not None and stamp > finished:
+                errors.append(
+                    f"COMMANDS.jsonl {record.get('id')} is timestamped after "
+                    f"RUN-METADATA.finishedAt; sealing must be monotonic")
+                break
+
+    sealed = [
+        record for record in commands
+        if record.get("operation") == "post-commit-validation"
+        and record.get("exitCode") == 0
+        and (record.get("repositoryState") or {}).get("dirty") is False
+    ]
+    if not sealed:
+        errors.append(
+            f"{state.get('status')} requires a recorded post-commit-validation run with exit code "
+            f"0 over a clean worktree; the sealed content must be validated as committed, not as a "
+            f"dirty working tree")
+        return
+
+    record = sealed[-1]
+    commit = str(record.get("commit"))
+    code, head = run_git(root, "rev-parse", "HEAD")
+    if code != 0:
+        errors.append("unable to resolve HEAD for the seal chronology check")
+        return
+    if commit == head:
+        return
+    parent_code, parent = run_git(root, "rev-parse", "HEAD^")
+    if parent_code != 0 or parent != commit:
+        errors.append(
+            f"the recorded post-commit validation describes {commit[:12]}, which is neither HEAD "
+            f"nor its parent; the sealed content is not the content that was validated")
+        return
+    diff_code, diff = run_git(root, "diff", "--name-only", commit, head)
+    if diff_code != 0:
+        errors.append("unable to compare the sealed content commit with HEAD")
+        return
+    allowed = {
+        value for value in (
+            _relative_to_root(root, target / name)
+            for name in ("COMMANDS.jsonl", "FILES.json", "RUN-METADATA.json")
+        ) if value
+    }
+    unexpected = sorted({line.replace("\\", "/") for line in diff.splitlines() if line} - allowed)
+    if unexpected:
+        errors.append(
+            "the sealing commit changed more than the append-only validation evidence: "
+            + ", ".join(unexpected))
+
+
+def _validate_internal_assurance(
+    root: Path,
+    target: Path,
+    state: dict[str, Any],
+    errors: list[str],
+) -> None:
+    """The internal Red Team and the internal mirror audit, and their freshness.
+
+    Neither is independent validation, and neither may be described as one. They exist so that the
+    external audit confirms rather than discovers.
+    """
+    milestone = state.get("milestone") or {}
+    identifier = str(milestone.get("id") or "M0")
+    observed = scope_fingerprint(root)
+
+    red_team_path = target / f"{identifier}-INTERNAL-RED-TEAM.json"
+    if not red_team_path.is_file():
+        errors.append(
+            f"{state.get('status')} requires {red_team_path.name}; the internal Red Team is part "
+            f"of the delivery, not of the audit")
+    else:
+        report = load_json(red_team_path)
+        schema_path = root / ".iacode" / "schemas" / "red-team-report.schema.json"
+        if schema_path.is_file():
+            for error in validate_schema(report, load_json(schema_path)):
+                errors.append(f"{red_team_path.name}: {error}")
+        if isinstance(report, dict):
+            attacks = [item for item in report.get("attacks") or [] if isinstance(item, dict)]
+            defended = [item for item in attacks if item.get("result") == "DEFENDED"]
+            escaped = [item for item in attacks if item.get("result") == "ESCAPED"]
+            if report.get("total") != len(attacks):
+                errors.append(f"{red_team_path.name}: total does not match the recorded attacks")
+            if report.get("defended") != len(defended):
+                errors.append(f"{red_team_path.name}: defended does not match the recorded attacks")
+            if report.get("escaped") != len(escaped):
+                errors.append(f"{red_team_path.name}: escaped does not match the recorded attacks")
+            if escaped and report.get("result") != "RED_TEAM_FAIL":
+                errors.append(
+                    f"{red_team_path.name}: {len(escaped)} attack(s) escaped but the result is "
+                    f"{report.get('result')!r}")
+            if report.get("result") != "RED_TEAM_PASS":
+                errors.append(
+                    f"{state.get('status')} requires the internal Red Team to report "
+                    f"RED_TEAM_PASS, found {report.get('result')!r}")
+            if report.get("targetFingerprint") != observed:
+                errors.append(
+                    f"{red_team_path.name} is STALE: the attacked content changed after the run, "
+                    f"so the affected attacks must be executed again")
+            recorded_ids = {str(item.get("attackId")) for item in attacks}
+            for audit in _safe_open_audits(root, state, target, errors):
+                from policies import audit_attacks
+
+                for attack in audit_attacks(root, audit):
+                    if attack["mandatory"] == "true" and attack["id"] not in recorded_ids:
+                        errors.append(
+                            f"{red_team_path.name}: mandatory attack {attack['id']} of "
+                            f"{audit.get('auditId')} was not executed")
+
+    mirror_path = target / f"{identifier}-INTERNAL-MIRROR.json"
+    if not mirror_path.is_file():
+        errors.append(f"{state.get('status')} requires {mirror_path.name}")
+        return
+    mirror = load_json(mirror_path)
+    schema_path = root / ".iacode" / "schemas" / "mirror-audit.schema.json"
+    if schema_path.is_file():
+        for error in validate_schema(mirror, load_json(schema_path)):
+            errors.append(f"{mirror_path.name}: {error}")
+    if isinstance(mirror, dict):
+        checks = [item for item in mirror.get("checks") or [] if isinstance(item, dict)]
+        failed = [item for item in checks if item.get("result") == "FAIL"]
+        if mirror.get("total") != len(checks):
+            errors.append(f"{mirror_path.name}: total does not match the recorded checks")
+        if mirror.get("failed") != len(failed):
+            errors.append(f"{mirror_path.name}: failed does not match the recorded checks")
+        if failed and mirror.get("result") != "FAIL":
+            errors.append(f"{mirror_path.name}: a failed check cannot produce a PASS")
+        if mirror.get("result") != "PASS":
+            errors.append(
+                f"{state.get('status')} requires the internal mirror audit to pass, found "
+                f"{mirror.get('result')!r}")
+        if mirror.get("targetFingerprint") != observed:
+            errors.append(
+                f"{mirror_path.name} is STALE: the audited content changed after the mirror ran")
+        independence = str(mirror.get("independence") or "")
+        if "internal" not in independence.lower():
+            errors.append(
+                f"{mirror_path.name}: independence must state plainly that this is an internal "
+                f"quality role and not independent external validation")
+
+
+def _safe_open_audits(
+    root: Path,
+    state: dict[str, Any],
+    target: Path,
+    errors: list[str],
+) -> list[dict[str, Any]]:
+    try:
+        return open_audits(root, str(state.get("gate", "")), target.name)
+    except LedgerError as exc:
+        errors.append(f"audit registry: {exc}")
+        return []
+
+
+def _validate_closure_matrix(root: Path, target: Path, errors: list[str]) -> None:
+    """The closure view and the schema-bound matrix describe the same requirements.
+
+    They are generated together by ``derive_requirements.py``. Validating that they still agree is
+    what stops one of them from being edited into a friendlier shape.
+    """
+    closure_path = target / "CLOSURE-REQUIREMENTS.json"
+    matrix_path = target / "REQUIREMENTS-MATRIX.json"
+    if not (closure_path.is_file() and matrix_path.is_file()):
+        return
+    closure = load_json(closure_path)
+    matrix = load_json(matrix_path)
+    if isinstance(matrix, dict) and matrix.get("schemaVersion") != "2.0.0":
+        errors.append(
+            f"schemaVersion {CLOSURE_SCHEMA_VERSION} requires REQUIREMENTS-MATRIX.json "
+            f"schemaVersion 2.0.0, which carries the anchored sourceRef the expected-set "
+            f"comparison needs; found {matrix.get('schemaVersion')!r}")
+    schema_path = root / ".iacode" / "schemas" / "closure-requirements.schema.json"
+    if schema_path.is_file():
+        for error in validate_schema(closure, load_json(schema_path)):
+            errors.append(f"CLOSURE-REQUIREMENTS.json: {error}")
+    if not (isinstance(closure, dict) and isinstance(matrix, dict)):
+        return
+
+    closure_rows = {
+        str(row.get("id")): row for row in closure.get("requirements") or []
+        if isinstance(row, dict)
+    }
+    matrix_rows = {
+        str(row.get("id")): row for row in matrix.get("requirements") or []
+        if isinstance(row, dict)
+    }
+    for identifier in sorted(set(closure_rows) - set(matrix_rows)):
+        errors.append(f"CLOSURE-REQUIREMENTS.json declares {identifier}, which the matrix omits")
+    for identifier in sorted(set(matrix_rows) - set(closure_rows)):
+        errors.append(f"REQUIREMENTS-MATRIX.json declares {identifier}, which the closure view omits")
+    for identifier in sorted(set(closure_rows) & set(matrix_rows)):
+        closure_row, matrix_row = closure_rows[identifier], matrix_rows[identifier]
+        if closure_row.get("sourceRef") != matrix_row.get("sourceRef"):
+            errors.append(f"{identifier}: the two requirement views disagree on the anchored source")
+        if closure_row.get("finalStatus") != matrix_row.get("status"):
+            errors.append(
+                f"{identifier}: the closure view records {closure_row.get('finalStatus')!r} while "
+                f"the matrix records {matrix_row.get('status')!r}")
+
+
+def _validate_findings_closure(
+    root: Path,
+    target: Path,
+    state: dict[str, Any],
+    errors: list[str],
+) -> None:
+    """Every finding of an open audit must be closed by the corrective checkpoint."""
+    from policies import audit_findings
+
+    for audit in _safe_open_audits(root, state, target, errors):
+        name = audit.get("findingsClosureFile") or "FINDINGS-CLOSURE.json"
+        path = target / str(name)
+        if not path.is_file():
+            errors.append(
+                f"the corrective checkpoint for {audit.get('auditId')} requires {name}")
+            continue
+        document = load_json(path)
+        schema_path = root / ".iacode" / "schemas" / "findings-closure.schema.json"
+        if schema_path.is_file():
+            for error in validate_schema(document, load_json(schema_path)):
+                errors.append(f"{name}: {error}")
+        if not isinstance(document, dict):
+            continue
+        rows = [item for item in document.get("findings") or [] if isinstance(item, dict)]
+        recorded = {str(item.get("findingId")) for item in rows}
+        expected = {item["id"] for item in audit_findings(root, audit)}
+        for missing in sorted(expected - recorded):
+            errors.append(f"{name}: finding {missing} of {audit.get('auditId')} is not accounted for")
+        for extra in sorted(recorded - expected):
+            errors.append(f"{name}: {extra} is not a finding of {audit.get('auditId')}")
+        closed = [item for item in rows if item.get("status") == "CLOSED"]
+        if document.get("total") != len(rows):
+            errors.append(f"{name}: total does not match the recorded findings")
+        if document.get("closed") != len(closed):
+            errors.append(f"{name}: closed does not match the recorded findings")
+        open_rows = [item for item in rows if item.get("status") != "CLOSED"]
+        if open_rows and document.get("result") != "OPEN":
+            errors.append(f"{name}: a finding that is not CLOSED cannot produce result CLOSED")
+        if open_rows:
+            errors.append(
+                f"{state.get('status')} is not available while "
+                + ", ".join(sorted(str(item.get("findingId")) for item in open_rows))
+                + f" of {audit.get('auditId')} remain open")
+
+
+def _validate_derived_counts(
+    root: Path,
+    target: Path,
+    state: dict[str, Any],
+    errors: list[str],
+) -> None:
+    """Counts used as evidence are derived once and verified wherever a report states them."""
+    from derive_counts import derive_counts
+
+    path = target / "COUNTS.json"
+    if not path.is_file():
+        errors.append(f"{state.get('status')} requires COUNTS.json; an evidential count is derived")
+        return
+    stored = load_json(path)
+    schema_path = root / ".iacode" / "schemas" / "counts.schema.json"
+    if schema_path.is_file():
+        for error in validate_schema(stored, load_json(schema_path)):
+            errors.append(f"COUNTS.json: {error}")
+    if not isinstance(stored, dict):
+        return
+    try:
+        derived = derive_counts(root, target)
+    except LedgerError as exc:
+        errors.append(f"COUNTS.json cannot be recomputed: {exc}")
+        return
+
+    recorded = stored.get("counts") or {}
+    for key, value in sorted(derived.items()):
+        entry = recorded.get(key)
+        if not isinstance(entry, dict):
+            errors.append(f"COUNTS.json does not record the derived count {key}")
+            continue
+        if (entry.get("numerator"), entry.get("denominator")) != (value["numerator"], value["denominator"]):
+            errors.append(
+                f"COUNTS.json {key}={entry.get('numerator')}/{entry.get('denominator')} "
+                f"contradicts the derived {value['numerator']}/{value['denominator']}")
+
+    for document in sorted(target.glob("*.md")):
+        try:
+            text = document.read_text(encoding="utf-8")
+        except UnicodeDecodeError:
+            continue
+        for numerator, denominator, label in COUNT_CLAIM.findall(text):
+            value = derived.get(label)
+            if value is None:
+                continue
+            if (int(numerator), int(denominator)) != (value["numerator"], value["denominator"]):
+                errors.append(
+                    f"{document.name} states {numerator}/{denominator} {label}, which contradicts "
+                    f"the derived {value['numerator']}/{value['denominator']}")
+
+
+def _validate_guardrail_effectiveness(root: Path, state: dict[str, Any], errors: list[str]) -> None:
+    """A guardrail that cannot be resolved or is not verified by a test is not effective."""
+    declared = state.get("guardrailEffectiveness")
+    if not isinstance(declared, dict):
+        errors.append("STATE.json schemaVersion 3.2.0 requires the guardrailEffectiveness block")
+        return
+    measured = guardrail_effectiveness(root)
+    for key in ("guardrailsTotal", "guardrailsResolved", "guardrailsTested", "guardrailsEffective",
+                "guardrailFailures"):
+        if declared.get(key) != measured[key]:
+            errors.append(
+                f"STATE.json guardrailEffectiveness.{key}={declared.get(key)!r} does not match the "
+                f"measured {measured[key]!r}")
+    if measured["guardrailFailures"]:
+        errors.append(
+            f"{state.get('status')} is not available while {measured['guardrailFailures']} "
+            f"guardrail failure(s) remain unresolved: "
+            + ", ".join(measured["lessonsWithUnresolvedFailures"]))
+    if measured["guardrailsEffective"] != measured["guardrailsTotal"]:
+        for entry in measured["guardrails"]:
+            if not entry["effective"]:
+                errors.append(
+                    f"guardrail {entry['guardrailId']} is not effective: {entry['detail']}")
+
+
+def _validate_closure_controls(
+    root: Path,
+    target: Path,
+    state: dict[str, Any],
+    metadata: Any,
+    commands: list[dict[str, Any]],
+    errors: list[str],
+    allow_pending_seal: bool = False,
+) -> None:
+    """The controls introduced by the M0 closure, bound to schemaVersion 3.2.0."""
+    _validate_anchor_chain(root, target, state, errors)
+    if state.get("status") not in POSITIVE_TERMINAL_STATUSES:
+        return
+    _validate_closure_matrix(root, target, errors)
+    if not allow_pending_seal:
+        _validate_seal_chronology(root, target, state, metadata, commands, errors)
+    _validate_internal_assurance(root, target, state, errors)
+    _validate_findings_closure(root, target, state, errors)
+    _validate_derived_counts(root, target, state, errors)
+    _validate_guardrail_effectiveness(root, state, errors)
 
 
 def _validate_second_tool(
@@ -754,7 +1427,14 @@ def validate_checkpoint(
     checkpoint: Path | None = None,
     allow_dirty: bool = False,
     allow_pending_ref: bool = False,
+    allow_pending_seal: bool = False,
 ) -> list[str]:
+    """Validate a checkpoint. ``allow_pending_seal`` is for the sealing tools only.
+
+    The seal chronology check asks for a recorded post-commit validation of the sealed content.
+    The tools that produce that record obviously run before it exists, so they pass this flag. It
+    is deliberately not a command-line option: the standalone validator always enforces the rule.
+    """
     errors: list[str] = []
     try:
         latest_checkpoint = resolve_latest(root)
@@ -778,6 +1458,8 @@ def validate_checkpoint(
     required_files = REQUIRED_CHECKPOINT_FILES
     if declared_version in DELIVERY_SCHEMA_VERSIONS:
         required_files = REQUIRED_CHECKPOINT_FILES + REQUIRED_DELIVERY_FILES
+    if declared_version in CLOSURE_SCHEMA_VERSIONS:
+        required_files = required_files + REQUIRED_CLOSURE_FILES
     for name in required_files:
         path = target / name
         if not path.is_file():
@@ -823,6 +1505,7 @@ def validate_checkpoint(
     commands_path = target / "COMMANDS.jsonl"
     command_count = 0
     command_ids: dict[str, int] = {}
+    command_records: list[dict[str, Any]] = []
     if commands_path.is_file():
         for line_number, line in enumerate(commands_path.read_text(encoding="utf-8").splitlines(), 1):
             if not line.strip():
@@ -840,7 +1523,11 @@ def validate_checkpoint(
                     elif identifier in command_ids:
                         errors.append(f"COMMANDS.jsonl:{line_number}: duplicate command id {identifier!r}")
                 if version in DELIVERY_SCHEMA_VERSIONS and isinstance(command, dict):
-                    _validate_command_reproducibility(root, command, line_number, errors)
+                    _validate_command_reproducibility(
+                        root, command, line_number, errors,
+                        bind_inputs=version in CLOSURE_SCHEMA_VERSIONS)
+                if isinstance(command, dict):
+                    command_records.append(command)
                 if isinstance(identifier, str) and isinstance(command, dict):
                     command_ids[identifier] = command.get("exitCode")
                 for value in _all_strings(command):
@@ -933,9 +1620,15 @@ def validate_checkpoint(
         _validate_quality_evidence(target, quality, normalized_quality, command_ids, version, errors)
 
         if version in DELIVERY_SCHEMA_VERSIONS:
-            _validate_delivery_assurance(root, target, state, normalized_quality, tests, errors)
-        if version == CURRENT_SCHEMA_VERSION:
-            _validate_memory_policy(root, target, state, errors)
+            _validate_delivery_assurance(
+                root, target, state, normalized_quality, tests, errors,
+                closure=version in CLOSURE_SCHEMA_VERSIONS)
+        if version in MEMORY_SCHEMA_VERSIONS:
+            _validate_memory_policy(
+                root, target, state, errors, closure=version in CLOSURE_SCHEMA_VERSIONS)
+        if version in CLOSURE_SCHEMA_VERSIONS:
+            _validate_closure_controls(
+                root, target, state, metadata, command_records, errors, allow_pending_seal)
 
         if version in HASHED_INVENTORY_VERSIONS and files is not None:
             if state.get("baseCommit") == "UNBORN":

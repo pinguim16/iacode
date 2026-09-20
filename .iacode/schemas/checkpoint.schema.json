@@ -165,6 +165,19 @@
             "type": "string",
             "minLength": 1
           }
+        },
+        "requiredGates": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "scopeFingerprint": {
+          "type": [
+            "string",
+            "null"
+          ]
         }
       },
       "additionalProperties": false
@@ -209,6 +222,12 @@
             "type": "string",
             "minLength": 1
           }
+        },
+        "scopeFingerprint": {
+          "type": [
+            "string",
+            "null"
+          ]
         }
       },
       "additionalProperties": false
@@ -396,6 +415,122 @@
             "type": "string",
             "minLength": 1
           }
+        },
+        "fingerprint": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "guardrailEffectiveness": {
+      "type": "object",
+      "required": [
+        "guardrailsTotal",
+        "guardrailsResolved",
+        "guardrailsTested",
+        "guardrailsEffective",
+        "guardrailFailures"
+      ],
+      "properties": {
+        "guardrailsTotal": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "guardrailsResolved": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "guardrailsTested": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "guardrailsEffective": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "guardrailFailures": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "integrity": {
+      "type": "object",
+      "required": [
+        "status",
+        "anchors"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "PASS",
+            "FAIL",
+            "NOT_EXECUTED"
+          ]
+        },
+        "anchors": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "chainFile": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "externalAttestation": {
+      "type": "object",
+      "required": [
+        "status"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "NONE",
+            "PRESENT",
+            "VERIFIED",
+            "REJECTED"
+          ]
+        },
+        "path": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "auditId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
         }
       },
       "additionalProperties": false
@@ -407,7 +542,8 @@
         "1.0.0",
         "2.0.0",
         "3.0.0",
-        "3.1.0"
+        "3.1.0",
+        "3.2.0"
       ]
     },
     "phase": {
@@ -502,6 +638,15 @@
         "string",
         "null"
       ]
+    },
+    "guardrailEffectiveness": {
+      "$ref": "#/$defs/guardrailEffectiveness"
+    },
+    "integrity": {
+      "$ref": "#/$defs/integrity"
+    },
+    "externalAttestation": {
+      "$ref": "#/$defs/externalAttestation"
     }
   },
   "additionalProperties": false

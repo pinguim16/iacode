@@ -116,3 +116,45 @@ Running it is mandatory before a Gate starts.
 stronger than `OBSERVED`; promotion is a human judgement, and `GUARDED` additionally requires a
 control the tool cannot invent. A candidate matching an existing recurrence key increments that
 lesson instead, and a repeat against a `GUARDED` lesson is recorded as a `GUARDRAIL_FAILURE`.
+
+## Milestone closure tooling
+
+```text
+python scripts/development-ledger/derive_requirements.py --write
+python scripts/development-ledger/verify_integrity.py
+python scripts/development-ledger/verify_integrity.py --rebuild
+python scripts/development-ledger/derive_counts.py --write
+python scripts/development-ledger/m0_red_team.py --write
+python scripts/development-ledger/m0_mirror_audit.py --clean-clone --write
+python scripts/development-ledger/seal_checkpoint.py
+```
+
+`policies.py` derives what the delivery is measured against. It reads the closed mandatory gate
+registry in `.iacode/policies/quality-gates.json`, re-parses the canonical Gate checklist, and
+re-parses the findings and attacks of every open audit named in `.iacode/policies/audit-registry.json`
+directly from the sealed audit reports. Nothing here is transcribed, so nothing here can be trimmed.
+
+`derive_requirements.py` writes `CLOSURE-REQUIREMENTS.json`/`.md` and `REQUIREMENTS-MATRIX.json`/`.md`
+together from that derivation, preserving whatever evidence a run has already recorded. Re-running it
+is how the matrix stays equal to the expected set.
+
+`anchors.py` and `verify_integrity.py` maintain the hash-linked chain in
+`.iacode/anchors/checkpoint-chain.json` over every sealed checkpoint's tag, commit and tree. This is
+tamper evidence inside the local trust model, not a signature; the limit is documented in
+`docs/CHECKPOINT-PROTOCOL.md`.
+
+`attestation.py` derives an external milestone verdict from `.iacode/attestations/<auditId>.json`.
+An external PASS cannot be produced by editing `STATE.json`: it requires a separate, sealed, anchored
+audit checkpoint.
+
+`derive_counts.py` writes `COUNTS.json` from the artifact that owns each count, and the validator
+rejects both a stored count and a Markdown claim that contradicts the derivation.
+
+`m0_red_team.py` executes the mandatory attack battery against a disposable clone of the delivery and
+writes `<milestone>-INTERNAL-RED-TEAM.json`/`.md`. `m0_mirror_audit.py` reproduces the dimensions of
+the independent milestone audit and writes `<milestone>-INTERNAL-MIRROR.json`/`.md`. Both are internal
+quality assurance and neither may be recorded as external validation.
+
+`seal_checkpoint.py` validates the committed content with a clean worktree, records that run as
+`post-commit-validation`, stamps the end of the run after it, and commits the append-only evidence
+before creating the canonical tag.

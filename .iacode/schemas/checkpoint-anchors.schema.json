@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://iacode.local/schemas/checkpoint-anchors.schema.json",
+  "title": "Checkpoint integrity anchor chain",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "trustModel",
+    "anchors"
+  ],
+  "$defs": {
+    "anchor": {
+      "type": "object",
+      "required": [
+        "checkpointId",
+        "tag",
+        "commit",
+        "treeHash",
+        "previousCheckpoint",
+        "previousAnchorHash",
+        "anchorHash"
+      ],
+      "properties": {
+        "checkpointId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "tag": {
+          "type": "string",
+          "pattern": "^refs/tags/iacode-checkpoints/"
+        },
+        "commit": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "treeHash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "previousCheckpoint": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "previousAnchorHash": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "anchorHash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "properties": {
+    "schemaVersion": {
+      "enum": [
+        "1.0.0"
+      ]
+    },
+    "trustModel": {
+      "type": "string",
+      "minLength": 1
+    },
+    "anchors": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/anchor"
+      }
+    }
+  },
+  "additionalProperties": false
+}

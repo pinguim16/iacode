@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://iacode.local/schemas/guardrail-registry.schema.json",
+  "title": "Guardrail registry",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "guardrails"
+  ],
+  "$defs": {
+    "guardrail": {
+      "type": "object",
+      "required": [
+        "guardrailId",
+        "title",
+        "kind",
+        "reference",
+        "verifiedBy",
+        "lessons",
+        "removingItWouldAllow"
+      ],
+      "properties": {
+        "guardrailId": {
+          "type": "string",
+          "pattern": "^GRD-[0-9]{4}$"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "enum": [
+            "test",
+            "validator",
+            "lint",
+            "policy",
+            "schema",
+            "invariant",
+            "automated-check"
+          ]
+        },
+        "reference": {
+          "type": "string",
+          "minLength": 1
+        },
+        "verifiedBy": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "lessons": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "pattern": "^LSN-[0-9]{4}$"
+          }
+        },
+        "removingItWouldAllow": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "properties": {
+    "schemaVersion": {
+      "enum": [
+        "1.0.0"
+      ]
+    },
+    "guardrails": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/guardrail"
+      }
+    }
+  },
+  "additionalProperties": false
+}

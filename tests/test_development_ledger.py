@@ -29,7 +29,7 @@ from validate_checkpoint import (  # noqa: E402
     _validate_second_tool,
     _validate_status_blockers,
 )
-from delivery_assurance import evaluate_matrix  # noqa: E402
+from delivery_assurance import completeness_scope, evaluate_matrix  # noqa: E402
 from ledger_common import (  # noqa: E402
     MILESTONES,
     milestone_for,
@@ -133,6 +133,7 @@ CANONICAL_AGENT_NAMES = {
     "security-reviewer",
     "test-rework-greenkeeper",
     "delivery-completeness-validator",
+    "m0-closure-auditor",
 }
 
 
@@ -164,10 +165,93 @@ BASE_QUALITY_DIMENSIONS = (
 )
 
 
+def clone_with_worktree(destination: Path) -> bool:
+    """Clone the repository and overlay the current working tree onto the clone.
+
+    A validator under development is not committed yet. Cloning HEAD alone would test the previous
+    revision, so the clone is brought up to the working tree and committed, which is exactly the
+    content the delivery is about to seal.
+    """
+    if run(["git", "clone", "--no-local", "--quiet", str(PROJECT_ROOT), str(destination)],
+           PROJECT_ROOT).returncode != 0:
+        return False
+    listed = run(["git", "ls-files", "--cached", "--others", "--exclude-standard"], PROJECT_ROOT)
+    if listed.returncode != 0:
+        return False
+    wanted = {line.replace("\\", "/") for line in listed.stdout.splitlines() if line.strip()}
+    present = run(["git", "ls-files"], destination)
+    for relative in {line.replace("\\", "/") for line in present.stdout.splitlines() if line.strip()}:
+        if relative not in wanted and (destination / relative).is_file():
+            (destination / relative).unlink()
+    for relative in sorted(wanted):
+        source = PROJECT_ROOT / relative
+        if not source.is_file():
+            continue
+        target = destination / relative
+        target.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(source, target)
+    for command in (["git", "add", "-A"],
+                    ["git", "-c", "user.name=IACode Tests",
+                     "-c", "user.email=iacode-tests@example.invalid",
+                     "commit", "--quiet", "--allow-empty", "-m", "test: working tree under test"]):
+        if run(command, destination).returncode != 0:
+            return False
+    return True
+
+
+def install_fixture_memory(root: Path, test_reference: str,
+                           checkpoint: str = "TEST-CP-0001") -> None:
+    """A minimal but complete engineering memory for an isolated fixture repository.
+
+    The memory validator resolves what a lesson claims, so a fixture repository needs a memory that
+    describes the fixture rather than the real project: one lesson, one guardrail, and a control
+    that really exists in the fixture's own suite.
+    """
+    memory = root / ".iacode" / "memory"
+    (memory / "guardrails").mkdir(parents=True, exist_ok=True)
+    write_json_file(memory / "POLICY.json", {
+        "schemaVersion": "2.0.0",
+        "policy": "Fixture memory under the resolving policy.",
+        "guardrailRegistry": "guardrails/registry.json",
+    })
+    write_json_file(memory / "guardrails" / "registry.json", {
+        "schemaVersion": "1.0.0",
+        "guardrails": [{
+            "guardrailId": "GRD-0001",
+            "title": "The fixture control",
+            "kind": "test",
+            "reference": test_reference,
+            "verifiedBy": [test_reference],
+            "lessons": ["LSN-0001"],
+            "removingItWouldAllow": "The fixture failure class to recur.",
+        }],
+    })
+    documentation = root / "docs"
+    documentation.mkdir(parents=True, exist_ok=True)
+    (documentation / "CHECKPOINT-PROTOCOL.md").write_text(
+        "# Checkpoint Protocol\n\nFixture document.\n", encoding="utf-8")
+    # An isolated fixture repository has sealed nothing, so it carries no integrity anchors.
+    anchors = root / ".iacode" / "anchors" / "checkpoint-chain.json"
+    if anchors.is_file():
+        anchors.unlink()
+    save_lessons(root, [make_lesson(
+        source={"gate": "SETUP-00", "checkpoint": checkpoint, "finding": None},
+        prevention=[{"kind": "test", "reference": test_reference,
+                     "description": "The fixture control."}],
+    )])
+
+
 def copy_ledger_tooling(root: Path) -> None:
-    """A real IACode repository ships its ledger tooling, so recorded tool paths resolve from it."""
+    """A real IACode repository ships its ledger tooling, so recorded tool paths resolve from it.
+
+    The ignore rules come with it: without them a fixture's own bytecode cache looks like an
+    undeclared change, which would make the fixture fail for the fixture's reasons.
+    """
     shutil.copytree(SCRIPTS, root / "scripts" / "development-ledger",
                     ignore=shutil.ignore_patterns("__pycache__"))
+    for name in (".gitignore", ".gitattributes"):
+        if (PROJECT_ROOT / name).is_file():
+            shutil.copy2(PROJECT_ROOT / name, root / name)
 
 
 def read_json(path: Path) -> dict:
@@ -1651,6 +1735,9 @@ class GreenKeeperToolTests(unittest.TestCase):
     def _bootstrap(self, root: Path, failing: bool) -> Path:
         shutil.copytree(PROJECT_ROOT / ".iacode", root / ".iacode")
         (root / "docs" / "checkpoints").mkdir(parents=True)
+        (root / "docs").mkdir(parents=True, exist_ok=True)
+        shutil.copy2(PROJECT_ROOT / "docs" / "SETUP-00-CHECKLIST.md",
+                     root / "docs" / "SETUP-00-CHECKLIST.md")
         copy_ledger_tooling(root)
         (root / "tests").mkdir()
         body = "self.assertEqual(1, 2)" if failing else "self.assertEqual(1, 1)"
@@ -1664,10 +1751,36 @@ class GreenKeeperToolTests(unittest.TestCase):
         self.assertEqual(run(["git", "commit", "-m", "test: bootstrap"], root).returncode, 0)
         created = run([
             sys.executable, str(SCRIPTS / "new_checkpoint.py"), "--root", str(root),
-            "--gate", "TEST", "--status", "IN_PROGRESS",
+            "--gate", "SETUP-00", "--status", "IN_PROGRESS",
         ], root)
         self.assertEqual(created.returncode, 0, created.stdout)
-        return root / "docs" / "checkpoints" / "TEST-CP-0001"
+        checkpoint = root / "docs" / "checkpoints" / "SETUP-00-CP-0001"
+        install_fixture_memory(root, "FixtureTests.test_case", checkpoint.name)
+        self.assertEqual(run([
+            sys.executable, str(SCRIPTS / "lesson_preflight.py"), "--root", str(root),
+            "--gate", "SETUP-00", "--scope", "fixture", "--write"], root).returncode, 0)
+        state = read_json(checkpoint / "STATE.json")
+        state["lessonPreflight"] = {
+            "path": "LESSON-PREFLIGHT.json", "gate": "SETUP-00", "scope": "fixture",
+            "lessonsConsidered": 1, "lessonsApplicable": 1, "derivedRequirements": 1,
+            "evidence": []}
+        write_json_file(checkpoint / "STATE.json", state)
+        self.assertEqual(run([
+            sys.executable, str(SCRIPTS / "derive_requirements.py"), "--root", str(root),
+            "--write"], root).returncode, 0)
+        matrix = read_json(checkpoint / "REQUIREMENTS-MATRIX.json")
+        for row in matrix["requirements"]:
+            row["status"] = "COMPLETE"
+            row["implementationEvidence"] = ["checkpoint:PLAN.md"]
+        write_json_file(checkpoint / "REQUIREMENTS-MATRIX.json", matrix)
+        closure = read_json(checkpoint / "CLOSURE-REQUIREMENTS.json")
+        for row in closure["requirements"]:
+            row["implementationStatus"] = "COMPLETE"
+            row["finalStatus"] = "COMPLETE"
+            row["implementationEvidence"] = ["checkpoint:PLAN.md"]
+        write_json_file(checkpoint / "CLOSURE-REQUIREMENTS.json", closure)
+        declare_inventory(root, checkpoint)
+        return checkpoint
 
     def _cycles(self, checkpoint: Path) -> list[dict]:
         text = (checkpoint / "REWORK-LOG.jsonl").read_text(encoding="utf-8")
@@ -1679,7 +1792,7 @@ class GreenKeeperToolTests(unittest.TestCase):
             checkpoint = self._bootstrap(root, failing=True)
             result = run([
                 sys.executable, str(SCRIPTS / "green_keeper.py"), "--root", str(root),
-                "--gates", "tests", "--trigger", "fixture red gate", "--quiet",
+                "--trigger", "fixture red gate", "--quiet",
             ], root)
             self.assertEqual(result.returncode, 1, result.stdout)
             self.assertIn("GREEN_KEEPER_GATE=FAIL", result.stdout)
@@ -1687,21 +1800,23 @@ class GreenKeeperToolTests(unittest.TestCase):
             self.assertEqual(len(cycles), 1)
             self.assertEqual(cycles[0]["result"], "STILL_RED")
             self.assertEqual(cycles[0]["failedGate"], "tests")
-            self.assertEqual(cycles[0]["remainingFailures"], 1)
+            self.assertGreaterEqual(cycles[0]["remainingFailures"], 1)
             self.assertTrue(cycles[0]["commandsExecuted"])
+            self.assertEqual(cycles[0]["requiredGates"], list(mandatory_gates(root)))
 
     def test_repaired_gate_is_reported_as_green_in_a_new_cycle(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
             checkpoint = self._bootstrap(root, failing=True)
             run([sys.executable, str(SCRIPTS / "green_keeper.py"), "--root", str(root),
-                 "--gates", "tests", "--quiet"], root)
+                 "--quiet"], root)
             (root / "tests" / "test_fixture.py").write_text(
                 "import unittest\n\n\nclass FixtureTests(unittest.TestCase):\n"
                 "    def test_case(self):\n        self.assertEqual(1, 1)\n", encoding="utf-8")
+            declare_inventory(root, checkpoint)
             result = run([
                 sys.executable, str(SCRIPTS / "green_keeper.py"), "--root", str(root),
-                "--gates", "tests", "--trigger", "after repair",
+                "--trigger", "after repair",
                 "--root-cause", "fixture assertion was wrong", "--files-changed", "tests/test_fixture.py",
             ], root)
             self.assertEqual(result.returncode, 0, result.stdout)
@@ -1718,7 +1833,7 @@ class GreenKeeperToolTests(unittest.TestCase):
             checkpoint = self._bootstrap(root, failing=True)
             result = run([
                 sys.executable, str(SCRIPTS / "green_keeper.py"), "--root", str(root),
-                "--gates", "tests", "--external-blocker", "fixture service unavailable", "--quiet",
+                "--external-blocker", "fixture service unavailable", "--quiet",
             ], root)
             self.assertEqual(result.returncode, 2, result.stdout)
             self.assertIn("GREEN_KEEPER_GATE=FAIL", result.stdout)
@@ -1731,15 +1846,15 @@ class GreenKeeperToolTests(unittest.TestCase):
             root = Path(temporary)
             checkpoint = self._bootstrap(root, failing=False)
             run([sys.executable, str(SCRIPTS / "green_keeper.py"), "--root", str(root),
-                 "--gates", "tests", "--quiet"], root)
+                 "--quiet"], root)
             records = [
                 json.loads(line)
                 for line in (checkpoint / "COMMANDS.jsonl").read_text(encoding="utf-8").splitlines()
                 if line.strip()
             ]
             gate_records = [item for item in records if item.get("operation") == "green-keeper-gate"]
-            self.assertEqual(len(gate_records), 1)
-            record = gate_records[0]
+            self.assertEqual([item["phase"] for item in gate_records], list(mandatory_gates(root)))
+            record = next(item for item in gate_records if item["phase"] == "tests")
             self.assertEqual(record["command"], "python -m unittest discover -s tests")
             self.assertEqual(record["result"], "COMPLETED")
             self.assertEqual(record["exitCode"], 0)
@@ -1749,7 +1864,13 @@ class GreenKeeperToolTests(unittest.TestCase):
 
 
 class DeliveryLifecycleTests(unittest.TestCase):
-    """The whole mandatory order, end to end, in an isolated repository."""
+    """The whole mandatory order, end to end, in an isolated repository.
+
+    This is the rehearsal of the real sealing workflow: derive the requirement set from the
+    canonical sources, run the closed mandatory gate set, audit completeness, record the internal
+    assurance artifacts, finalize, commit the content, validate that commit with a clean worktree,
+    and seal the result under its tag.
+    """
 
     TAG = "iacode-checkpoints/SETUP-00-CP-0001"
 
@@ -1757,11 +1878,31 @@ class DeliveryLifecycleTests(unittest.TestCase):
         completed = run(["git", *args], root)
         self.assertEqual(completed.returncode, 0, completed.stdout)
 
+    def _tool(self, root: Path, name: str, *args: str) -> subprocess.CompletedProcess[str]:
+        return run([sys.executable, str(SCRIPTS / name), "--root", str(root), *args], root)
+
+    def _complete(self, checkpoint: Path) -> None:
+        evidence = ["checkpoint:PLAN.md"]
+        matrix = read_json(checkpoint / "REQUIREMENTS-MATRIX.json")
+        for row in matrix["requirements"]:
+            row["status"] = "COMPLETE"
+            row["implementationEvidence"] = list(evidence)
+        write_json_file(checkpoint / "REQUIREMENTS-MATRIX.json", matrix)
+        closure = read_json(checkpoint / "CLOSURE-REQUIREMENTS.json")
+        for row in closure["requirements"]:
+            row["implementationStatus"] = "COMPLETE"
+            row["finalStatus"] = "COMPLETE"
+            row["implementationEvidence"] = list(evidence)
+        write_json_file(checkpoint / "CLOSURE-REQUIREMENTS.json", closure)
+        return matrix
+
     def test_full_delivery_assurance_flow_reaches_ready_for_review(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
             shutil.copytree(PROJECT_ROOT / ".iacode", root / ".iacode")
             (root / "docs" / "checkpoints").mkdir(parents=True)
+            shutil.copy2(PROJECT_ROOT / "docs" / "SETUP-00-CHECKLIST.md",
+                         root / "docs" / "SETUP-00-CHECKLIST.md")
             copy_ledger_tooling(root)
             (root / "tests").mkdir()
             (root / "tests" / "test_fixture.py").write_text(
@@ -1773,97 +1914,145 @@ class DeliveryLifecycleTests(unittest.TestCase):
             self._git(root, "add", ".")
             self._git(root, "commit", "-m", "test: bootstrap")
 
-            # One fixture lesson, so the preflight derives exactly one requirement.
-            save_lessons(root, [make_lesson()])
-
-            created = run([
-                sys.executable, str(SCRIPTS / "new_checkpoint.py"), "--root", str(root),
-                "--gate", "SETUP-00", "--status", "IN_PROGRESS",
-            ], root)
+            created = self._tool(root, "new_checkpoint.py", "--gate", "SETUP-00",
+                                 "--status", "IN_PROGRESS")
             self.assertEqual(created.returncode, 0, created.stdout)
             checkpoint = root / "docs" / "checkpoints" / "SETUP-00-CP-0001"
+            install_fixture_memory(root, "FixtureTests.test_case", checkpoint.name)
 
-            preflight = run([
-                sys.executable, str(SCRIPTS / "lesson_preflight.py"), "--root", str(root),
-                "--gate", "SETUP-00", "--scope", "control-plane", "--write",
-            ], root)
+            preflight = self._tool(root, "lesson_preflight.py", "--gate", "SETUP-00",
+                                   "--scope", "control-plane", "--write")
             self.assertEqual(preflight.returncode, 0, preflight.stdout)
             derived = read_json(checkpoint / "LESSON-PREFLIGHT.json")["derivedRequirements"]
             self.assertEqual(len(derived), 1)
-
-            write_final_report(checkpoint)
-            matrix = build_matrix(("COMPLETE", True, ["checkpoint:PLAN.md"]))
-            matrix["requirements"].append({
-                "id": derived[0]["id"], "source": "lesson preflight",
-                "description": derived[0]["description"], "mandatory": True, "status": "COMPLETE",
-                "implementationEvidence": ["checkpoint:LESSON-PREFLIGHT.json"], "testEvidence": [],
-                "documentationEvidence": [], "validationEvidence": [], "notes": "",
-            })
-            write_json_file(checkpoint / "REQUIREMENTS-MATRIX.json", matrix)
-            (checkpoint / "REQUIREMENTS-MATRIX.md").write_text(
-                "# Requirements Matrix\n\nOne fixture requirement plus one derived from a lesson.\n",
-                encoding="utf-8")
-
-            keeper = run([
-                sys.executable, str(SCRIPTS / "green_keeper.py"), "--root", str(root),
-                "--gates", "tests,staticAnalysis", "--trigger", "delivery gate run", "--quiet",
-            ], root)
-            self.assertEqual(keeper.returncode, 0, keeper.stdout)
-
-            audit = run([
-                sys.executable, str(SCRIPTS / "check_completeness.py"), "--root", str(root),
-                "--auditor", "fixture auditor", "--write",
-            ], root)
-            self.assertEqual(audit.returncode, 0, audit.stdout)
-            self.assertIn("DELIVERY_COMPLETENESS_GATE=PASS", audit.stdout)
-
-            result = {"executed": True, "passed": 1, "failed": 0,
-                      "command": "python -m unittest discover -s tests", "evidence": "fixture suite"}
-            write_json_file(checkpoint / "TESTS.json", {
-                "schemaVersion": "3.1.0", "unit": result, "integration": result,
-                "e2e": {"executed": False, "passed": 0, "failed": 0, "command": None, "evidence": None}})
-            checks = {name: {"status": "PASS", "evidence": ["command:cmd-0001"], "justification": None}
-                      for name in BASE_QUALITY_DIMENSIONS + ("greenKeeper", "deliveryCompleteness")}
-            checks["redTeam"] = {"status": "NOT_EXECUTED", "evidence": [], "justification": None}
-            checks["e2e"] = {"status": "NOT_APPLICABLE", "evidence": [],
-                             "justification": "no runtime in the fixture"}
-            write_json_file(checkpoint / "QUALITY.json", {"schemaVersion": "3.1.0", "checks": checks})
-
             state = read_json(checkpoint / "STATE.json")
-            state["requirementsMatrix"] = {
-                "path": "REQUIREMENTS-MATRIX.json", "total": 2, "mandatory": 2, "complete": 2,
-                "partial": 0, "missing": 0, "notApplicable": 0, "coveragePercent": 100.0}
             state["lessonPreflight"] = {
                 "path": "LESSON-PREFLIGHT.json", "gate": "SETUP-00", "scope": "control-plane",
                 "lessonsConsidered": 1, "lessonsApplicable": 1, "derivedRequirements": 1,
                 "evidence": []}
+            write_json_file(checkpoint / "STATE.json", state)
+
+            # The requirement set is derived from the canonical sources, never transcribed.
+            requirements = self._tool(root, "derive_requirements.py", "--write")
+            self.assertEqual(requirements.returncode, 0, requirements.stdout)
+            matrix = self._complete(checkpoint)
+            canonical = len(canonical_requirements(root, "SETUP-00"))
+            self.assertEqual(len(matrix["requirements"]), canonical + 1)
+
+            write_final_report(checkpoint)
+            result = {"executed": True, "passed": 1, "failed": 0,
+                      "command": "python -m unittest discover -s tests",
+                      "evidence": "fixture suite"}
+            write_json_file(checkpoint / "TESTS.json", {
+                "schemaVersion": "3.2.0", "unit": result,
+                "integration": {"executed": False, "passed": 0, "failed": 0, "command": None,
+                                "evidence": None},
+                "e2e": {"executed": False, "passed": 0, "failed": 0, "command": None,
+                        "evidence": None}})
+
+            declare_inventory(root, checkpoint)
+            keeper = self._tool(root, "green_keeper.py", "--trigger", "delivery gate run",
+                                "--quiet")
+            self.assertEqual(keeper.returncode, 0, keeper.stdout)
+            self.assertIn("GREEN_KEEPER_GATE=PASS", keeper.stdout)
+            cycle = [json.loads(line) for line
+                     in (checkpoint / "REWORK-LOG.jsonl").read_text(encoding="utf-8").splitlines()
+                     if line.strip()][-1]
+            self.assertEqual(cycle["requiredGates"], list(mandatory_gates(root)))
+
+            audit = self._tool(root, "check_completeness.py", "--auditor", "fixture auditor",
+                               "--write")
+            self.assertEqual(audit.returncode, 0, audit.stdout)
+            self.assertIn("DELIVERY_COMPLETENESS_GATE=PASS", audit.stdout)
+            report = read_json(checkpoint / "COMPLETENESS-REPORT.json")
+
+            # The internal assurance artifacts of a 3.2.0 delivery.
+            write_json_file(checkpoint / "M0-INTERNAL-RED-TEAM.json", {
+                "schemaVersion": "1.0.0", "checkpoint": checkpoint.name, "generatedAt": NOW,
+                "targetFingerprint": scope_fingerprint(root), "source": "fixture",
+                "attacks": [{
+                    "attackId": "A", "description": "fixture", "target": "fixture",
+                    "mutation": "fixture", "expectedDefense": "reject", "observed": "rejected",
+                    "result": "DEFENDED", "evidence": ["attack:A"], "mandatory": True}],
+                "total": 1, "defended": 1, "escaped": 0, "mandatoryTotal": 1,
+                "mandatoryDefended": 1, "result": "RED_TEAM_PASS"})
+            write_json_file(checkpoint / "M0-INTERNAL-MIRROR.json", {
+                "schemaVersion": "1.0.0", "checkpoint": checkpoint.name, "milestone": "M0",
+                "generatedAt": NOW, "targetFingerprint": scope_fingerprint(root),
+                "auditorRole": "M0 Closure Auditor",
+                "independence": "Internal quality assurance, not external validation.",
+                "checks": [{"id": "MIR-001", "dimension": "fixture", "expectation": "fixture",
+                            "observed": "fixture", "result": "PASS",
+                            "evidence": ["checkpoint:PLAN.md"]}],
+                "total": 1, "passed": 1, "failed": 0, "notApplicable": 0, "result": "PASS"})
+            counts = self._tool(root, "derive_counts.py", "--write")
+            self.assertEqual(counts.returncode, 0, counts.stdout)
+
+            checks = {name: {"status": "PASS", "evidence": ["command:cmd-0001"],
+                             "justification": None}
+                      for name in BASE_QUALITY_DIMENSIONS + ("greenKeeper", "deliveryCompleteness")}
+            checks["redTeam"] = {"status": "NOT_EXECUTED", "evidence": [], "justification": None}
+            for name in ("integrationTests", "e2e"):
+                checks[name] = {"status": "NOT_APPLICABLE", "evidence": [],
+                                "justification": "no runtime in the fixture"}
+            write_json_file(checkpoint / "QUALITY.json",
+                            {"schemaVersion": "3.2.0", "checks": checks})
+
+            measured = guardrail_effectiveness(root)
+            state = read_json(checkpoint / "STATE.json")
+            state["requirementsMatrix"] = {
+                "path": "REQUIREMENTS-MATRIX.json", "total": report["totalRequirements"],
+                "mandatory": report["mandatoryRequirements"], "complete": report["complete"],
+                "partial": 0, "missing": 0, "notApplicable": 0, "coveragePercent": 100.0}
             state["greenKeeper"] = {
                 "status": "PASS", "cycles": 1, "remainingFailures": 0, "unresolvedReworkItems": 0,
-                "log": "REWORK-LOG.jsonl", "externalBlockers": [], "evidence": []}
+                "log": "REWORK-LOG.jsonl", "externalBlockers": [], "evidence": [],
+                "requiredGates": list(mandatory_gates(root)),
+                "scopeFingerprint": cycle["scopeFingerprint"]}
             state["deliveryCompleteness"] = {
                 "status": "PASS", "report": "COMPLETENESS-REPORT.json", "coveragePercent": 100.0,
-                "evidenceCoveragePercent": 100.0, "auditor": "fixture auditor", "evidence": []}
+                "evidenceCoveragePercent": 100.0, "auditor": "fixture auditor", "evidence": [],
+                "scopeFingerprint": report["scopeFingerprint"]}
             state["reworkCycles"] = 1
+            state["guardrailEffectiveness"] = {
+                key: measured[key] for key in (
+                    "guardrailsTotal", "guardrailsResolved", "guardrailsTested",
+                    "guardrailsEffective", "guardrailFailures")}
+            state["integrity"] = {"status": "PASS", "anchors": 0,
+                                  "chainFile": ".iacode/anchors/checkpoint-chain.json",
+                                  "evidence": []}
             write_json_file(checkpoint / "STATE.json", state)
 
             declare_inventory(root, checkpoint)
-            finalized = run([
-                sys.executable, str(SCRIPTS / "finalize_checkpoint.py"), "--root", str(root),
-                "--status", "READY_FOR_REVIEW", "--commit-ref", f"refs/tags/{self.TAG}",
-            ], root)
+            finalized = self._tool(root, "finalize_checkpoint.py", "--status", "READY_FOR_REVIEW",
+                                   "--commit-ref", f"refs/tags/{self.TAG}")
             self.assertEqual(finalized.returncode, 0, finalized.stdout)
+
             self._git(root, "add", "-A")
-            self._git(root, "commit", "-m", "test: seal delivery")
-            self._git(root, "tag", self.TAG)
-            validated = run([
-                sys.executable, str(SCRIPTS / "validate_checkpoint.py"), "--root", str(root)], root)
+            self._git(root, "commit", "-m", "test: seal delivery content")
+            content_commit = run(["git", "rev-parse", "HEAD"], root).stdout.strip()
+
+            sealed = self._tool(root, "seal_checkpoint.py")
+            self.assertEqual(sealed.returncode, 0, sealed.stdout)
+            self.assertIn("CHECKPOINT_SEALED", sealed.stdout)
+
+            validated = self._tool(root, "validate_checkpoint.py")
             self.assertEqual(validated.returncode, 0, validated.stdout)
 
-            sealed = read_json(checkpoint / "STATE.json")
-            self.assertEqual(sealed["status"], "READY_FOR_REVIEW")
-            self.assertEqual(sealed["greenKeeper"]["status"], "PASS")
-            self.assertEqual(sealed["deliveryCompleteness"]["status"], "PASS")
-            self.assertEqual(sealed["blockedBy"], [])
+            records = [json.loads(line) for line
+                       in (checkpoint / "COMMANDS.jsonl").read_text(encoding="utf-8").splitlines()
+                       if line.strip()]
+            seal_records = [item for item in records
+                            if item.get("operation") == "post-commit-validation"]
+            self.assertTrue(seal_records)
+            self.assertEqual(seal_records[-1]["commit"], content_commit)
+            self.assertIs(seal_records[-1]["repositoryState"]["dirty"], False)
+
+            final = read_json(checkpoint / "STATE.json")
+            self.assertEqual(final["status"], "READY_FOR_REVIEW")
+            self.assertEqual(final["greenKeeper"]["status"], "PASS")
+            self.assertEqual(final["deliveryCompleteness"]["status"], "PASS")
+            self.assertEqual(final["blockedBy"], [])
 
 
 LESSON_TEMPLATE = {
@@ -1875,8 +2064,11 @@ LESSON_TEMPLATE = {
     "symptom": "A resealed checkpoint validated while it declared a blocker.",
     "rootCauseSummary": "The blocker list was inspected only for one status.",
     "resolution": "The invariant now applies to every readiness status and every schema version.",
-    "prevention": [{"kind": "test", "reference": "StatusBlockerInvariantTests",
-                    "description": "Readiness with a blocker is refused."}],
+    "prevention": [{
+        "kind": "test",
+        "reference": "StatusBlockerInvariantTests.test_ready_for_review_with_blocker_fails",
+        "description": "Readiness with a blocker is refused."}],
+    "guardrails": ["GRD-0001"],
     "evidence": ["file:docs/CHECKPOINT-PROTOCOL.md"],
     "applicability": {"gates": ["*"], "scopes": [], "technologies": [], "modules": []},
     "status": "GUARDED",
@@ -1942,13 +2134,50 @@ class EngineeringMemoryStructureTests(unittest.TestCase):
             self.assertIn("guardrail", text, str(path))
 
 
+def build_memory_fixture(root: Path) -> None:
+    """A realistic root for the memory validator.
+
+    The validator resolves what a lesson claims -- its control, its evidence and its source -- so a
+    fixture that lacks a suite, a documentation tree and a checkpoint would fail for the fixture's
+    reasons rather than the lesson's. The fixture is made real; the control is not weakened.
+    """
+    shutil.copytree(PROJECT_ROOT / ".iacode" / "schemas", root / ".iacode" / "schemas")
+    shutil.copytree(PROJECT_ROOT / "tests", root / "tests",
+                    ignore=shutil.ignore_patterns("__pycache__"))
+    copy_ledger_tooling(root)
+    documentation = root / "docs"
+    documentation.mkdir(parents=True, exist_ok=True)
+    for name in ("CHECKPOINT-PROTOCOL.md", "ENGINEERING-MEMORY.md"):
+        (documentation / name).write_text(
+            "# " + name + "\n\nFixture document.\n", encoding="utf-8")
+    checkpoint = documentation / "checkpoints" / "TEST-CP-0001"
+    checkpoint.mkdir(parents=True, exist_ok=True)
+    (checkpoint / "REVIEW-REPORT.md").write_text(
+        "# Review\n\nFinding RT-01 was recorded here.\n", encoding="utf-8")
+    registry = root / ".iacode" / "memory" / "guardrails"
+    registry.mkdir(parents=True, exist_ok=True)
+    write_json_file(registry / "registry.json", {
+        "schemaVersion": "1.0.0",
+        "guardrails": [{
+            "guardrailId": "GRD-0001",
+            "title": "Readiness and blockage are mutually exclusive",
+            "kind": "test",
+            "reference": "StatusBlockerInvariantTests.test_ready_for_review_with_blocker_fails",
+            "verifiedBy": [
+                "StatusBlockerInvariantTests.test_ready_for_review_with_blocker_fails"],
+            "lessons": ["LSN-0001"],
+            "removingItWouldAllow": "A checkpoint to claim readiness and blockage at once.",
+        }],
+    })
+
+
 class LessonValidationTests(unittest.TestCase):
     """validate_lessons is the control that keeps the memory honest."""
 
     def setUp(self) -> None:
         self.temporary = tempfile.TemporaryDirectory()
         self.root = Path(self.temporary.name)
-        shutil.copytree(PROJECT_ROOT / ".iacode" / "schemas", self.root / ".iacode" / "schemas")
+        build_memory_fixture(self.root)
 
     def tearDown(self) -> None:
         self.temporary.cleanup()
@@ -2303,6 +2532,1273 @@ class MemoryStatusVocabularyTests(unittest.TestCase):
             _validate_status_blockers({"status": status, "blockedBy": ["blocked"]}, errors)
             self.assertTrue(errors, status)
 
+
+# ==============================================================================================
+# M0 closure controls (schemaVersion 3.2.0)
+#
+# Every class below exists because the independent M0 audit of SETUP-00-CP-0006 escaped through
+# the gap it covers. Each test is written as the attack, so removing the control fails the suite.
+# ==============================================================================================
+
+from anchors import (  # noqa: E402
+    anchor_hash,
+    build_anchor,
+    load_anchors,
+    rebuild,
+    verify_chain,
+)
+from attestation import resolve_external_pass, verify_attestation  # noqa: E402
+from derive_counts import count_test_cases, derive_counts  # noqa: E402
+from ledger_common import (  # noqa: E402
+    CLOSURE_SCHEMA_VERSION,
+    assurance_scope_files,
+    in_assurance_scope,
+    scope_fingerprint,
+)
+from lessons import (  # noqa: E402
+    guardrail_effectiveness,
+    load_guardrails,
+    memory_fingerprint,
+    preflight_fingerprint,
+    preflight_staleness,
+    resolve_control,
+    resolve_lesson_evidence,
+    suite_test_ids,
+)
+from policies import (  # noqa: E402
+    audit_attacks,
+    audit_findings,
+    canonical_requirements,
+    compare_requirement_sets,
+    declared_requirement_refs,
+    expected_requirement_refs,
+    mandatory_gates,
+    open_audits,
+    parse_attacks,
+    parse_checklist,
+    parse_findings,
+    source_ref,
+)
+from validate_checkpoint import (  # noqa: E402
+    POSITIVE_TERMINAL_STATUSES,
+    _validate_closure_controls,
+    _validate_derived_counts,
+    _validate_findings_closure,
+    _validate_guardrail_effectiveness,
+    _validate_internal_assurance,
+    _validate_seal_chronology,
+)
+
+CLOSURE_CHECKPOINT = PROJECT_ROOT / "docs" / "checkpoints" / "SETUP-00-CP-0008"
+AUDIT_CHECKPOINT = PROJECT_ROOT / "docs" / "checkpoints" / "SETUP-00-CP-0007"
+
+
+class ClosureFixture(unittest.TestCase):
+    """A copy of the real closure checkpoint, made internally consistent, then attacked.
+
+    Copying the delivery rather than inventing one keeps the expected requirement set real: the
+    derived set is 119 anchored references, and no hand-written fixture could reproduce it without
+    also reproducing the bug the set exists to prevent.
+    """
+
+    MILESTONE = "M0"
+
+    def setUp(self) -> None:
+        if not CLOSURE_CHECKPOINT.is_dir():
+            self.skipTest("the closure checkpoint is not present in this checkout")
+        self.temporary = tempfile.TemporaryDirectory()
+        self.checkpoint = Path(self.temporary.name) / CLOSURE_CHECKPOINT.name
+        shutil.copytree(CLOSURE_CHECKPOINT, self.checkpoint)
+        self.fingerprint = scope_fingerprint(PROJECT_ROOT)
+        self.completeness_fingerprint = scope_fingerprint(
+            PROJECT_ROOT, completeness_scope(PROJECT_ROOT, self.checkpoint))
+        self._complete_matrix()
+        self._write_rework_log()
+        self._write_report()
+        self._write_internal_assurance()
+        self._write_findings_closure()
+        self._neutralize_markdown_counts()
+        self._write_counts()
+
+    def tearDown(self) -> None:
+        self.temporary.cleanup()
+
+    # -- fixture construction ------------------------------------------------------------
+    def _complete_matrix(self) -> None:
+        evidence = ["checkpoint:PLAN.md"]
+        matrix = read_json(self.checkpoint / "REQUIREMENTS-MATRIX.json")
+        for row in matrix["requirements"]:
+            row["status"] = "COMPLETE"
+            row["implementationEvidence"] = list(evidence)
+        write_json_file(self.checkpoint / "REQUIREMENTS-MATRIX.json", matrix)
+        closure = read_json(self.checkpoint / "CLOSURE-REQUIREMENTS.json")
+        for row in closure["requirements"]:
+            row["implementationStatus"] = "COMPLETE"
+            row["finalStatus"] = "COMPLETE"
+            row["implementationEvidence"] = list(evidence)
+        write_json_file(self.checkpoint / "CLOSURE-REQUIREMENTS.json", closure)
+        self.matrix = matrix
+        self.total = len(matrix["requirements"])
+        self.mandatory = sum(1 for row in matrix["requirements"] if row["mandatory"])
+
+    def _write_rework_log(self) -> None:
+        entry = {
+            "cycle": 1, "timestamp": NOW, "trigger": "fixture", "failedGate": None,
+            "failureEvidence": [], "rootCauseSummary": None, "filesChanged": [],
+            "commandsExecuted": ["cmd-0001"],
+            "requiredGates": list(mandatory_gates(PROJECT_ROOT)),
+            "gateResults": [
+                {"gate": gate, "commandId": "cmd-0001", "exitCode": 0, "mandatory": True}
+                for gate in mandatory_gates(PROJECT_ROOT)
+            ],
+            "scopeFingerprint": self.fingerprint,
+            "result": "GREEN", "remainingFailures": 0,
+        }
+        (self.checkpoint / "REWORK-LOG.jsonl").write_text(
+            json.dumps(entry) + "\n", encoding="utf-8", newline="\n")
+
+    def _write_report(self) -> None:
+        report = evaluate_matrix(PROJECT_ROOT, self.checkpoint, self.matrix)
+        report = {
+            "schemaVersion": "2.0.0", "checkpoint": self.checkpoint.name, "generatedAt": NOW,
+            "matrix": "REQUIREMENTS-MATRIX.json", "auditor": "fixture",
+            "scopeFingerprint": self.completeness_fingerprint, **report,
+        }
+        write_json_file(self.checkpoint / "COMPLETENESS-REPORT.json", report)
+        self.report = report
+
+    def _write_internal_assurance(self) -> None:
+        # The rendered reports belong to the real run; the fixture replaces the machine-readable
+        # ones, so a stale rendering would state counts the fixture no longer produces.
+        for name in (f"{self.MILESTONE}-INTERNAL-RED-TEAM.md",
+                     f"{self.MILESTONE}-INTERNAL-MIRROR.md"):
+            stale = self.checkpoint / name
+            if stale.is_file():
+                stale.unlink()
+        attacks = []
+        for audit in open_audits(PROJECT_ROOT, "SETUP-00", self.checkpoint.name):
+            for attack in audit_attacks(PROJECT_ROOT, audit):
+                attacks.append({
+                    "attackId": attack["id"], "description": attack["mutation"],
+                    "target": attack["target"], "mutation": attack["mutation"],
+                    "expectedDefense": attack["expectedDefense"], "observed": "rejected",
+                    "result": "DEFENDED", "evidence": ["attack:" + attack["id"]],
+                    "mandatory": attack["mandatory"] == "true",
+                })
+        mandatory = [item for item in attacks if item["mandatory"]]
+        write_json_file(self.checkpoint / f"{self.MILESTONE}-INTERNAL-RED-TEAM.json", {
+            "schemaVersion": "1.0.0", "checkpoint": self.checkpoint.name, "generatedAt": NOW,
+            "targetFingerprint": self.fingerprint, "source": "fixture", "attacks": attacks,
+            "total": len(attacks), "defended": len(attacks), "escaped": 0,
+            "mandatoryTotal": len(mandatory), "mandatoryDefended": len(mandatory),
+            "result": "RED_TEAM_PASS",
+        })
+        write_json_file(self.checkpoint / f"{self.MILESTONE}-INTERNAL-MIRROR.json", {
+            "schemaVersion": "1.0.0", "checkpoint": self.checkpoint.name,
+            "milestone": self.MILESTONE, "generatedAt": NOW,
+            "targetFingerprint": self.fingerprint,
+            "auditorRole": "M0 Closure Auditor",
+            "independence": "Internal quality assurance, not independent external validation.",
+            "checks": [{
+                "id": "MIR-001", "dimension": "fixture", "expectation": "fixture",
+                "observed": "fixture", "result": "PASS", "evidence": ["checkpoint:PLAN.md"]}],
+            "total": 1, "passed": 1, "failed": 0, "notApplicable": 0, "result": "PASS",
+        })
+
+    def _write_findings_closure(self) -> None:
+        findings = []
+        for audit in open_audits(PROJECT_ROOT, "SETUP-00", self.checkpoint.name):
+            self.audit = audit
+            for finding in audit_findings(PROJECT_ROOT, audit):
+                findings.append({
+                    "findingId": finding["id"], "severity": finding["severity"] or "HIGH",
+                    "title": finding["title"], "originalExpected": "fixture",
+                    "originalObserved": "fixture", "rootCause": "fixture",
+                    "implementation": ["fixture"], "regressionTest": ["fixture"],
+                    "verificationCommand": "python -m unittest discover -s tests",
+                    "evidence": ["checkpoint:PLAN.md"], "status": "CLOSED",
+                })
+        write_json_file(self.checkpoint / "CP7-FINDINGS-CLOSURE.json", {
+            "schemaVersion": "1.0.0", "checkpoint": self.checkpoint.name,
+            "auditId": "M0-CP-0007", "source": "fixture", "findings": findings,
+            "total": len(findings), "closed": len(findings), "result": "CLOSED",
+        })
+
+    def _neutralize_markdown_counts(self) -> None:
+        """Quote the counts the copied reports state.
+
+        The fixture replaces the machine-readable assurance artifacts with its own, so the real
+        reports' counts no longer describe it. Leaving them would make every test in this class
+        fail on a claim the fixture itself invalidated. A test that needs a Markdown claim
+        writes one.
+        """
+        claim = re.compile(
+            r"(?<![0-9])(\d+)\s*/\s*(\d+)\s+"
+            r"(TESTS|REQUIREMENTS|FINDINGS|ATTACKS|LESSONS|GUARDRAILS)\b")
+        for document in sorted(self.checkpoint.glob("*.md")):
+            text = document.read_text(encoding="utf-8")
+            rewritten = claim.sub(
+                lambda match: f"{match.group(1)} of {match.group(2)} {match.group(3)}", text)
+            if rewritten != text:
+                document.write_text(rewritten, encoding="utf-8", newline="\n")
+
+    def _write_counts(self) -> None:
+        counts = derive_counts(PROJECT_ROOT, self.checkpoint)
+        write_json_file(self.checkpoint / "COUNTS.json", {
+            "schemaVersion": "1.0.0", "checkpoint": self.checkpoint.name,
+            "generatedAt": NOW, "counts": counts,
+        })
+
+    # -- state and probes ----------------------------------------------------------------
+    def state(self, **overrides: object) -> dict:
+        state = {
+            "schemaVersion": CLOSURE_SCHEMA_VERSION,
+            "gate": "SETUP-00",
+            "status": "READY_FOR_REVIEW",
+            "blockedBy": [],
+            "secondToolValidation": {"status": "PENDING_MANUAL"},
+            "requirementsMatrix": {
+                "path": "REQUIREMENTS-MATRIX.json", "total": self.total,
+                "mandatory": self.mandatory, "complete": self.total, "partial": 0, "missing": 0,
+                "notApplicable": 0, "coveragePercent": 100.0,
+            },
+            "greenKeeper": {
+                "status": "PASS", "cycles": 1, "remainingFailures": 0,
+                "unresolvedReworkItems": 0, "log": "REWORK-LOG.jsonl", "externalBlockers": [],
+                "evidence": [], "requiredGates": list(mandatory_gates(PROJECT_ROOT)),
+                "scopeFingerprint": self.fingerprint,
+            },
+            "deliveryCompleteness": {
+                "status": "PASS", "report": "COMPLETENESS-REPORT.json", "coveragePercent": 100.0,
+                "evidenceCoveragePercent": 100.0, "auditor": "fixture", "evidence": [],
+                "scopeFingerprint": self.completeness_fingerprint,
+            },
+            "reworkCycles": 1,
+            "independentReview": {"status": "PENDING"},
+            "redTeam": {"status": "PENDING"},
+            "milestone": {"id": "M0", "title": "Development control plane",
+                          "gates": ["SETUP-00"], "status": "PENDING"},
+            "externalAuditRequired": False,
+            "externalAuditReason": None,
+            "guardrailEffectiveness": {
+                key: guardrail_effectiveness(PROJECT_ROOT)[key] for key in (
+                    "guardrailsTotal", "guardrailsResolved", "guardrailsTested",
+                    "guardrailsEffective", "guardrailFailures")
+            },
+            "integrity": {"status": "PASS", "anchors": len(load_anchors(PROJECT_ROOT)),
+                          "chainFile": ".iacode/anchors/checkpoint-chain.json", "evidence": []},
+            "externalAttestation": {"status": "NONE", "path": None, "auditId": None,
+                                    "evidence": []},
+        }
+        state.update(overrides)
+        return state
+
+    def quality(self, **overrides: str) -> dict:
+        checks = {name: {"status": "PASS", "evidence": ["checkpoint:PLAN.md"],
+                         "justification": None}
+                  for name in BASE_QUALITY_DIMENSIONS + ("greenKeeper", "deliveryCompleteness")}
+        checks["redTeam"] = {"status": "NOT_EXECUTED", "evidence": [], "justification": None}
+        for name, status in overrides.items():
+            checks[name] = {"status": status, "evidence": [], "justification": None}
+        return checks
+
+    def suite_results(self, failed: int = 0) -> dict:
+        result = {"executed": True, "passed": 5, "failed": failed,
+                  "command": "python -m unittest discover -s tests", "evidence": "fixture"}
+        return {"schemaVersion": CLOSURE_SCHEMA_VERSION, "unit": result, "integration": result,
+                "e2e": {"executed": False, "passed": 0, "failed": 0, "command": None,
+                        "evidence": None}}
+
+    def assurance_errors(self, state: dict | None = None, quality: dict | None = None,
+                         tests: dict | None = None) -> list[str]:
+        errors: list[str] = []
+        _validate_delivery_assurance(
+            PROJECT_ROOT, self.checkpoint, state or self.state(),
+            quality or self.quality(), tests or self.suite_results(), errors, closure=True)
+        return errors
+
+    def memory_errors(self, state: dict | None = None) -> list[str]:
+        errors: list[str] = []
+        _validate_memory_policy(
+            PROJECT_ROOT, self.checkpoint, state or self.state(), errors, closure=True)
+        return errors
+
+    def edit(self, name: str, mutate) -> None:
+        document = read_json(self.checkpoint / name)
+        mutate(document)
+        write_json_file(self.checkpoint / name, document)
+
+
+class PromotionInvariantTests(ClosureFixture):
+    """M0-F-001: one invariant covers every positive terminal status, not only one of them."""
+
+    RED_DIMENSIONS = ("unitTests", "staticAnalysis", "documentation", "greenKeeper",
+                      "deliveryCompleteness")
+
+    def test_the_consistent_delivery_passes(self) -> None:
+        self.assertEqual(self.assurance_errors(), [])
+
+    def test_every_positive_status_rejects_a_red_green_keeper(self) -> None:
+        for status in POSITIVE_TERMINAL_STATUSES:
+            state = self.state(status=status)
+            state["greenKeeper"] = {**state["greenKeeper"], "status": "FAIL"}
+            errors = self.assurance_errors(state)
+            self.assertTrue(any("GREEN_KEEPER_GATE=PASS" in error for error in errors), status)
+
+    def test_every_positive_status_rejects_a_red_completeness_gate(self) -> None:
+        for status in POSITIVE_TERMINAL_STATUSES:
+            state = self.state(status=status)
+            state["deliveryCompleteness"] = {**state["deliveryCompleteness"], "status": "FAIL"}
+            errors = self.assurance_errors(state)
+            self.assertTrue(
+                any("DELIVERY_COMPLETENESS_GATE=PASS" in error for error in errors), status)
+
+    def test_every_positive_status_rejects_every_red_quality_dimension(self) -> None:
+        for status in POSITIVE_TERMINAL_STATUSES:
+            for dimension in self.RED_DIMENSIONS:
+                errors = self.assurance_errors(
+                    self.state(status=status), self.quality(**{dimension: "FAIL"}))
+                self.assertTrue(
+                    any(f"{dimension}=FAIL" in error for error in errors),
+                    f"{status}/{dimension}: {errors}")
+
+    def test_every_positive_status_rejects_an_unexecuted_mandatory_dimension(self) -> None:
+        for status in POSITIVE_TERMINAL_STATUSES:
+            errors = self.assurance_errors(
+                self.state(status=status), self.quality(staticAnalysis="NOT_EXECUTED"))
+            self.assertTrue(any("to be executed" in error for error in errors), status)
+
+    def test_every_positive_status_rejects_a_partial_requirement(self) -> None:
+        self.edit("REQUIREMENTS-MATRIX.json",
+                  lambda d: d["requirements"][0].update({"status": "PARTIAL"}))
+        for status in POSITIVE_TERMINAL_STATUSES:
+            errors = self.assurance_errors(self.state(status=status))
+            self.assertTrue(any("PARTIAL" in error for error in errors), status)
+
+    def test_a_terminal_status_requires_an_independent_verdict(self) -> None:
+        for status in ("INTERNAL_GATE_PASS", "MILESTONE_EXTERNAL_PASS", "GATE_PASS"):
+            errors = self.assurance_errors(self.state(status=status))
+            self.assertTrue(
+                any("independent review verdict" in error for error in errors), status)
+            self.assertTrue(any("Red Team verdict" in error for error in errors), status)
+
+    def test_review_ready_still_requires_a_pending_verdict(self) -> None:
+        errors = self.assurance_errors(self.state(
+            independentReview={"status": "APPROVED"}, redTeam={"status": "RED_TEAM_PASS"}))
+        self.assertTrue(any("PENDING" in error for error in errors), errors)
+
+
+class MandatoryGatePolicyTests(ClosureFixture):
+    """M0-F-005: the mandatory gate set belongs to policy, not to the caller."""
+
+    def test_the_policy_declares_a_non_empty_closed_set(self) -> None:
+        gates = mandatory_gates(PROJECT_ROOT)
+        self.assertTrue(gates)
+        self.assertIn("tests", gates)
+        self.assertIn("checkpointValidation", gates)
+
+    def test_a_cycle_measured_against_no_gate_is_rejected(self) -> None:
+        log = self.checkpoint / "REWORK-LOG.jsonl"
+        entry = json.loads(log.read_text(encoding="utf-8").strip())
+        entry["requiredGates"] = []
+        entry["gateResults"] = []
+        log.write_text(json.dumps(entry) + "\n", encoding="utf-8", newline="\n")
+        errors = self.assurance_errors()
+        self.assertTrue(any("canonical mandatory set" in error for error in errors), errors)
+
+    def test_a_cycle_missing_one_mandatory_gate_is_rejected(self) -> None:
+        log = self.checkpoint / "REWORK-LOG.jsonl"
+        entry = json.loads(log.read_text(encoding="utf-8").strip())
+        entry["requiredGates"] = entry["requiredGates"][:-1]
+        entry["gateResults"] = entry["gateResults"][:-1]
+        log.write_text(json.dumps(entry) + "\n", encoding="utf-8", newline="\n")
+        errors = self.assurance_errors()
+        self.assertTrue(any("canonical mandatory set" in error for error in errors), errors)
+
+    def test_a_mandatory_gate_that_exited_nonzero_is_rejected(self) -> None:
+        log = self.checkpoint / "REWORK-LOG.jsonl"
+        entry = json.loads(log.read_text(encoding="utf-8").strip())
+        entry["gateResults"][0]["exitCode"] = 1
+        log.write_text(json.dumps(entry) + "\n", encoding="utf-8", newline="\n")
+        errors = self.assurance_errors()
+        self.assertTrue(any("exiting 1" in error for error in errors), errors)
+
+    def test_a_gate_without_command_evidence_is_rejected(self) -> None:
+        log = self.checkpoint / "REWORK-LOG.jsonl"
+        entry = json.loads(log.read_text(encoding="utf-8").strip())
+        entry["gateResults"][0]["commandId"] = ""
+        log.write_text(json.dumps(entry) + "\n", encoding="utf-8", newline="\n")
+        errors = self.assurance_errors()
+        self.assertTrue(any("no command evidence" in error for error in errors), errors)
+
+    def test_a_pass_measured_before_a_source_change_is_stale(self) -> None:
+        log = self.checkpoint / "REWORK-LOG.jsonl"
+        entry = json.loads(log.read_text(encoding="utf-8").strip())
+        entry["scopeFingerprint"] = "0" * 64
+        log.write_text(json.dumps(entry) + "\n", encoding="utf-8", newline="\n")
+        state = self.state()
+        state["greenKeeper"] = {**state["greenKeeper"], "scopeFingerprint": "0" * 64}
+        errors = self.assurance_errors(state)
+        self.assertTrue(any("STALE" in error for error in errors), errors)
+
+    def test_a_cycle_without_a_fingerprint_cannot_pass(self) -> None:
+        log = self.checkpoint / "REWORK-LOG.jsonl"
+        entry = json.loads(log.read_text(encoding="utf-8").strip())
+        entry.pop("scopeFingerprint")
+        log.write_text(json.dumps(entry) + "\n", encoding="utf-8", newline="\n")
+        state = self.state()
+        state["greenKeeper"] = {**state["greenKeeper"], "scopeFingerprint": None}
+        errors = self.assurance_errors(state)
+        self.assertTrue(any("scope fingerprint" in error for error in errors), errors)
+
+    def test_the_assurance_scope_covers_code_tests_and_policy(self) -> None:
+        self.assertTrue(in_assurance_scope("scripts/development-ledger/validate_checkpoint.py"))
+        self.assertTrue(in_assurance_scope("tests/test_development_ledger.py"))
+        self.assertTrue(in_assurance_scope(".iacode/policies/quality-gates.json"))
+        self.assertFalse(in_assurance_scope("docs/checkpoints/SETUP-00-CP-0008/STATE.json"))
+        self.assertIn("tests/test_development_ledger.py", assurance_scope_files(PROJECT_ROOT))
+
+
+class ExpectedRequirementSetTests(ClosureFixture):
+    """M0-F-006: the denominator is derived from sources the delivery does not own."""
+
+    def test_the_expected_set_is_derived_from_the_canonical_sources(self) -> None:
+        preflight = read_json(self.checkpoint / "LESSON-PREFLIGHT.json")
+        expected = expected_requirement_refs(
+            PROJECT_ROOT, "SETUP-00", self.checkpoint.name, preflight)
+        canonical = canonical_requirements(PROJECT_ROOT, "SETUP-00")
+        self.assertEqual(
+            sum(1 for key in expected if key.startswith("canonical:")), len(canonical))
+        self.assertTrue(any(key.startswith("finding:") for key in expected))
+        self.assertTrue(any(key.startswith("attack:") for key in expected))
+        self.assertTrue(any(key.startswith("lesson:") for key in expected))
+
+    def test_the_checklist_is_reparsed_rather_than_trusted(self) -> None:
+        rows = parse_checklist(
+            (PROJECT_ROOT / "docs" / "SETUP-00-CHECKLIST.md").read_text(encoding="utf-8"))
+        self.assertEqual([row["key"] for row in rows],
+                         [item["key"] for item in canonical_requirements(PROJECT_ROOT, "SETUP-00")])
+
+    def test_deleting_a_requirement_and_recomputing_the_counts_still_fails(self) -> None:
+        self.edit("REQUIREMENTS-MATRIX.json",
+                  lambda d: d.update({"requirements": d["requirements"][1:]}))
+        self._write_report()
+        state = self.state()
+        state["requirementsMatrix"] = {
+            **state["requirementsMatrix"], "total": self.total - 1, "complete": self.total - 1}
+        errors = self.assurance_errors(state)
+        self.assertTrue(
+            any("canonical expected set requires" in error for error in errors), errors)
+
+    def test_an_unexpected_anchored_requirement_is_rejected(self) -> None:
+        def mutate(document: dict) -> None:
+            row = json.loads(json.dumps(document["requirements"][0]))
+            row["id"] = "REQ-9999"
+            row["sourceRef"] = "canonical:SETUP-00#99.9"
+            document["requirements"].append(row)
+
+        self.edit("REQUIREMENTS-MATRIX.json", mutate)
+        errors = self.assurance_errors()
+        self.assertTrue(any("canonical:SETUP-00#99.9" in error for error in errors), errors)
+
+    def test_a_requirement_without_an_anchor_is_rejected(self) -> None:
+        self.edit("REQUIREMENTS-MATRIX.json",
+                  lambda d: d["requirements"][0].pop("sourceRef", None))
+        errors = self.assurance_errors()
+        self.assertTrue(any("anchored sourceRef" in error for error in errors), errors)
+
+    def test_two_requirements_may_not_claim_the_same_anchor(self) -> None:
+        def mutate(document: dict) -> None:
+            document["requirements"][1]["sourceRef"] = document["requirements"][0]["sourceRef"]
+
+        self.edit("REQUIREMENTS-MATRIX.json", mutate)
+        errors = self.assurance_errors()
+        self.assertTrue(any("more than one requirement" in error for error in errors), errors)
+
+    def test_the_state_mandatory_count_is_cross_checked(self) -> None:
+        state = self.state()
+        state["requirementsMatrix"] = {**state["requirementsMatrix"],
+                                       "mandatory": self.mandatory + 3}
+        errors = self.assurance_errors(state)
+        self.assertTrue(any("mandatory" in error for error in errors), errors)
+
+    def test_a_downgraded_matrix_cannot_escape_the_comparison(self) -> None:
+        self.edit("REQUIREMENTS-MATRIX.json", lambda d: d.update({"schemaVersion": "1.0.0"}))
+        errors: list[str] = []
+        _validate_closure_controls(
+            PROJECT_ROOT, self.checkpoint, self.state(), {}, [], errors, allow_pending_seal=True)
+        self.assertTrue(any("schemaVersion 2.0.0" in error for error in errors), errors)
+
+    def test_the_two_requirement_views_must_agree(self) -> None:
+        self.edit("CLOSURE-REQUIREMENTS.json",
+                  lambda d: d["requirements"][0].update({"finalStatus": "PARTIAL"}))
+        errors: list[str] = []
+        _validate_closure_controls(
+            PROJECT_ROOT, self.checkpoint, self.state(), {}, [], errors, allow_pending_seal=True)
+        self.assertTrue(any("closure view records" in error for error in errors), errors)
+
+    def test_set_comparison_reports_omission_and_addition(self) -> None:
+        expected = {"canonical:G#1.1": {"sourceReference": "row 1.1"}}
+        findings = compare_requirement_sets(expected, {"canonical:G#9.9": ["REQ-0001"]})
+        self.assertEqual(len(findings), 2)
+        self.assertTrue(all(finding["severity"] == "BLOCKING" for finding in findings))
+
+    def test_source_reference_parsing_accepts_only_known_kinds(self) -> None:
+        self.assertEqual(source_ref("canonical:SETUP-00#1.1"), ("canonical", "SETUP-00#1.1"))
+        self.assertEqual(source_ref("local:something"), ("local", "something"))
+        self.assertIsNone(source_ref("nonsense"))
+        self.assertIsNone(source_ref("unknownkind:value"))
+
+
+class ExternalAttestationTests(ClosureFixture):
+    """M0-F-002: an external PASS is derived from an attestation, never self-asserted."""
+
+    def _attestation(self, **overrides: object) -> dict:
+        document = {
+            "schemaVersion": "1.0.0", "auditId": "M0-TEST", "milestone": "M0",
+            "auditorRole": "milestone auditor", "tool": "a tool", "provider": "a provider",
+            "model": "a model", "subjectCheckpoint": self.checkpoint.name,
+            "subjectCommit": "a" * 40, "auditCheckpoint": "SETUP-00-CP-0007",
+            "reviewResult": "APPROVED", "redTeamResult": "RED_TEAM_PASS",
+            "completeness": 100.0, "evidenceCoverage": 100.0, "testResult": "PASS",
+            "createdAt": NOW,
+        }
+        document.update(overrides)
+        document["__path"] = "fixture-attestation.json"
+        return document
+
+    def test_an_implementer_checkpoint_cannot_declare_an_external_pass(self) -> None:
+        state = self.state(status="MILESTONE_EXTERNAL_PASS")
+        state["milestone"] = {**state["milestone"], "status": "PASSED"}
+        state["secondToolValidation"] = {"status": "PASSED", "tool": "self",
+                                         "provider": "self", "model": "self",
+                                         "validatedAt": NOW, "justification": None,
+                                         "evidence": []}
+        errors = self.memory_errors(state)
+        self.assertTrue(any("may not be self-asserted" in error for error in errors), errors)
+
+    def test_second_tool_validation_alone_is_not_enough(self) -> None:
+        state = self.state()
+        state["secondToolValidation"] = {"status": "PASSED", "tool": "a tool",
+                                         "provider": "a provider", "model": "a model",
+                                         "validatedAt": NOW, "justification": None,
+                                         "evidence": []}
+        errors = self.memory_errors(state)
+        self.assertTrue(any("external validation" in error for error in errors), errors)
+
+    def test_an_attestation_naming_the_subject_as_its_own_auditor_is_rejected(self) -> None:
+        errors = verify_attestation(
+            PROJECT_ROOT, self._attestation(auditCheckpoint=self.checkpoint.name),
+            self.checkpoint.name, None)
+        self.assertTrue(
+            any("may not be authored by the delivery it judges" in error for error in errors),
+            errors)
+
+    def test_an_attestation_for_another_checkpoint_is_rejected(self) -> None:
+        errors = verify_attestation(
+            PROJECT_ROOT, self._attestation(subjectCheckpoint="SETUP-00-CP-0001"),
+            self.checkpoint.name, None)
+        self.assertTrue(any("attests checkpoint" in error for error in errors), errors)
+
+    def test_an_attestation_for_another_commit_is_rejected(self) -> None:
+        errors = verify_attestation(
+            PROJECT_ROOT, self._attestation(), self.checkpoint.name, "b" * 40)
+        self.assertTrue(any("attests commit" in error for error in errors), errors)
+
+    def test_a_failed_review_cannot_produce_an_external_pass(self) -> None:
+        errors = verify_attestation(
+            PROJECT_ROOT, self._attestation(reviewResult="REWORK_REQUIRED"),
+            self.checkpoint.name, None)
+        self.assertTrue(any("requires APPROVED" in error for error in errors), errors)
+
+    def test_a_failed_red_team_cannot_produce_an_external_pass(self) -> None:
+        errors = verify_attestation(
+            PROJECT_ROOT, self._attestation(redTeamResult="RED_TEAM_FAIL"),
+            self.checkpoint.name, None)
+        self.assertTrue(any("requires RED_TEAM_PASS" in error for error in errors), errors)
+
+    def test_incomplete_audit_coverage_cannot_produce_an_external_pass(self) -> None:
+        errors = verify_attestation(
+            PROJECT_ROOT, self._attestation(completeness=93.22), self.checkpoint.name, None)
+        self.assertTrue(any("requires 100.0" in error for error in errors), errors)
+
+    def test_a_missing_field_is_refused_before_anything_else(self) -> None:
+        attestation = self._attestation()
+        attestation.pop("auditorRole")
+        errors = verify_attestation(PROJECT_ROOT, attestation, self.checkpoint.name, None)
+        self.assertTrue(any("requires auditorRole" in error for error in errors), errors)
+
+    def test_an_attestation_naming_an_unsealed_audit_checkpoint_is_rejected(self) -> None:
+        errors = verify_attestation(
+            PROJECT_ROOT, self._attestation(auditCheckpoint="SETUP-00-CP-9999"),
+            self.checkpoint.name, None)
+        self.assertTrue(any("does not exist" in error for error in errors), errors)
+
+    def test_no_attestation_means_no_external_pass(self) -> None:
+        attestation, reasons = resolve_external_pass(
+            PROJECT_ROOT, "M0", "SETUP-00-CP-9999", None)
+        self.assertIsNone(attestation)
+        self.assertTrue(any("may not be self-asserted" in reason for reason in reasons), reasons)
+
+    def test_an_intermediate_gate_cannot_take_the_external_status(self) -> None:
+        state = self.state(status="MILESTONE_EXTERNAL_PASS", gate="GATE 1")
+        state["milestone"] = {"id": "M1", "title": "IACode V0 foundation",
+                              "gates": ["GATE 0", "GATE 1", "GATE 2", "GATE 3"],
+                              "status": "PASSED"}
+        state["secondToolValidation"] = {"status": "PASSED", "tool": "t", "provider": "p",
+                                         "model": "m", "validatedAt": NOW,
+                                         "justification": None, "evidence": []}
+        errors = self.memory_errors(state)
+        self.assertTrue(
+            any("milestone-closing Gate" in error for error in errors), errors)
+
+
+class PreflightFreshnessTests(ClosureFixture):
+    """M0-F-003: the preflight is recomputed, not compared with a copy of its own counts."""
+
+    def test_the_repository_preflight_is_fresh(self) -> None:
+        preflight = read_json(self.checkpoint / "LESSON-PREFLIGHT.json")
+        self.assertEqual(preflight_staleness(PROJECT_ROOT, preflight, "SETUP-00"), [])
+
+    def test_the_fingerprint_covers_the_memory(self) -> None:
+        first = memory_fingerprint(PROJECT_ROOT)
+        self.assertEqual(first, memory_fingerprint(PROJECT_ROOT))
+        self.assertNotEqual(
+            preflight_fingerprint(PROJECT_ROOT, "SETUP-00", "a", [], []),
+            preflight_fingerprint(PROJECT_ROOT, "GATE 1", "a", [], []))
+
+    def test_a_changed_fingerprint_makes_the_preflight_stale(self) -> None:
+        preflight = read_json(self.checkpoint / "LESSON-PREFLIGHT.json")
+        preflight["inputsFingerprint"] = "0" * 64
+        messages = preflight_staleness(PROJECT_ROOT, preflight, "SETUP-00")
+        self.assertTrue(any("STALE" in message for message in messages), messages)
+
+    def test_a_preflight_from_another_gate_is_refused(self) -> None:
+        preflight = read_json(self.checkpoint / "LESSON-PREFLIGHT.json")
+        messages = preflight_staleness(PROJECT_ROOT, preflight, "GATE 1")
+        self.assertTrue(
+            any("may not be reused across Gates" in message for message in messages), messages)
+
+    def test_a_dropped_lesson_makes_the_preflight_stale(self) -> None:
+        preflight = read_json(self.checkpoint / "LESSON-PREFLIGHT.json")
+        preflight["applicable"] = preflight["applicable"][:-1]
+        preflight["derivedRequirements"] = preflight["derivedRequirements"][:-1]
+        messages = preflight_staleness(PROJECT_ROOT, preflight, "SETUP-00")
+        self.assertTrue(any("STALE" in message for message in messages), messages)
+
+    def test_the_checkpoint_refuses_a_stale_preflight(self) -> None:
+        self.edit("LESSON-PREFLIGHT.json",
+                  lambda d: d.update({"inputsFingerprint": "0" * 64}))
+        errors = self.memory_errors()
+        self.assertTrue(any("STALE" in error for error in errors), errors)
+
+    def test_a_closure_checkpoint_requires_the_versioned_preflight(self) -> None:
+        self.edit("LESSON-PREFLIGHT.json", lambda d: d.update({"schemaVersion": "1.0.0"}))
+        errors = self.memory_errors()
+        self.assertTrue(any("schemaVersion 2.0.0" in error for error in errors), errors)
+
+
+class IntegrityAnchorTests(unittest.TestCase):
+    """M0-F-007: sealed history is anchored outside the content it describes."""
+
+    def setUp(self) -> None:
+        self.temporary = tempfile.TemporaryDirectory()
+        self.root = Path(self.temporary.name) / "clone"
+        if not clone_with_worktree(self.root):
+            self.skipTest("the repository cannot be cloned in this environment")
+
+    def tearDown(self) -> None:
+        self.temporary.cleanup()
+
+    def _verify(self) -> list[str]:
+        return verify_chain(self.root, require_sealed=True, exclude={"SETUP-00-CP-0008"})
+
+    def _edit_anchors(self, mutate) -> None:
+        path = self.root / ".iacode" / "anchors" / "checkpoint-chain.json"
+        document = read_json(path)
+        mutate(document)
+        write_json_file(path, document)
+
+    def test_the_repository_chain_verifies(self) -> None:
+        self.assertEqual(self._verify(), [])
+
+    def test_a_moved_historical_tag_is_detected(self) -> None:
+        run(["git", "tag", "-f", "iacode-checkpoints/SETUP-00-CP-0003",
+             "refs/tags/iacode-checkpoints/SETUP-00-CP-0004"], self.root)
+        errors = self._verify()
+        self.assertTrue(any("SETUP-00-CP-0003" in error for error in errors), errors)
+
+    def test_an_anchor_pointing_at_another_commit_is_detected(self) -> None:
+        self._edit_anchors(lambda d: d["anchors"][1].update({"commit": d["anchors"][2]["commit"]}))
+        errors = self._verify()
+        self.assertTrue(any("anchorHash" in error or "tag" in error for error in errors), errors)
+
+    def test_an_unexpected_tree_is_detected(self) -> None:
+        def mutate(document: dict) -> None:
+            document["anchors"][2]["treeHash"] = "0" * 40
+            document["anchors"][2]["anchorHash"] = anchor_hash(document["anchors"][2])
+            previous = document["anchors"][2]["anchorHash"]
+            for anchor in document["anchors"][3:]:
+                anchor["previousAnchorHash"] = previous
+                anchor["anchorHash"] = anchor_hash(anchor)
+                previous = anchor["anchorHash"]
+
+        self._edit_anchors(mutate)
+        errors = self._verify()
+        self.assertTrue(any("tree" in error for error in errors), errors)
+
+    def test_a_broken_link_between_anchors_is_detected(self) -> None:
+        self._edit_anchors(lambda d: d["anchors"][2].update({"previousAnchorHash": "0" * 64}))
+        errors = self._verify()
+        self.assertTrue(any("chain" in error for error in errors), errors)
+
+    def test_a_recomputed_anchor_hash_must_match_its_fields(self) -> None:
+        self._edit_anchors(lambda d: d["anchors"][0].update({"anchorHash": "0" * 64}))
+        errors = self._verify()
+        self.assertTrue(any("anchorHash" in error for error in errors), errors)
+
+    def test_a_sealed_checkpoint_without_an_anchor_is_detected(self) -> None:
+        self._edit_anchors(lambda d: d.update({"anchors": d["anchors"][:-1]}))
+        errors = self._verify()
+        self.assertTrue(any("no integrity anchor" in error for error in errors), errors)
+
+    def test_the_chain_can_be_rebuilt_from_the_repository(self) -> None:
+        anchors = load_anchors(self.root)
+        rebuilt = rebuild(self.root, [item["checkpointId"] for item in anchors])
+        self.assertEqual(rebuilt["anchors"], anchors)
+
+    def test_an_anchor_binds_its_predecessor(self) -> None:
+        anchors = load_anchors(self.root)
+        first = anchors[0]
+        second = build_anchor(self.root, anchors[1]["checkpointId"], anchors[1]["commit"], first)
+        self.assertEqual(second["anchorHash"], anchors[1]["anchorHash"])
+        other = build_anchor(self.root, anchors[1]["checkpointId"], anchors[1]["commit"], None)
+        self.assertNotEqual(other["anchorHash"], anchors[1]["anchorHash"])
+
+    def test_the_trust_model_is_documented_without_overclaiming(self) -> None:
+        document = read_json(self.root / ".iacode" / "anchors" / "checkpoint-chain.json")
+        text = document["trustModel"].lower()
+        self.assertIn("tamper evident", text)
+        self.assertIn("not a signature", text)
+
+
+class LessonResolutionTests(unittest.TestCase):
+    """M0-F-004: a control reference is resolved against the repository, not merely typed."""
+
+    def test_a_test_control_must_exist_in_the_suite(self) -> None:
+        self.assertIsNone(resolve_control(PROJECT_ROOT, {
+            "kind": "test",
+            "reference": "StatusBlockerInvariantTests.test_ready_for_review_with_blocker_fails"}))
+        self.assertIn("does not exist in the suite", resolve_control(PROJECT_ROOT, {
+            "kind": "test", "reference": "NoSuchTests.test_nothing"}) or "")
+
+    def test_an_invariant_control_must_be_defined_in_the_tooling(self) -> None:
+        self.assertIsNone(resolve_control(PROJECT_ROOT, {
+            "kind": "invariant", "reference": "validate_checkpoint._validate_status_blockers"}))
+        self.assertIn("defined nowhere", resolve_control(PROJECT_ROOT, {
+            "kind": "invariant", "reference": "_no_such_invariant"}) or "")
+
+    def test_a_path_control_must_exist(self) -> None:
+        self.assertIsNone(resolve_control(PROJECT_ROOT, {
+            "kind": "validator", "reference": "scripts/development-ledger/validate_lessons.py"}))
+        self.assertIn("does not exist", resolve_control(PROJECT_ROOT, {
+            "kind": "policy", "reference": "docs/NOTHING-HERE.md"}) or "")
+
+    def test_a_control_path_may_not_escape_the_repository(self) -> None:
+        message = resolve_control(PROJECT_ROOT, {"kind": "schema", "reference": "../escape.json"})
+        self.assertIn("escapes", message or "")
+
+    def test_lesson_evidence_must_resolve(self) -> None:
+        self.assertIsNone(resolve_lesson_evidence(PROJECT_ROOT, "file:START-HERE.md"))
+        self.assertIn("does not exist",
+                      resolve_lesson_evidence(PROJECT_ROOT, "file:docs/nothing.md") or "")
+        self.assertIn("unsupported",
+                      resolve_lesson_evidence(PROJECT_ROOT, "command:cmd-0001") or "")
+
+    def test_the_suite_identifiers_include_class_qualified_names(self) -> None:
+        identifiers = suite_test_ids(PROJECT_ROOT)
+        self.assertIn("LessonResolutionTests.test_lesson_evidence_must_resolve", identifiers)
+
+
+class GuardrailRegistryTests(unittest.TestCase):
+    """A GUARDED lesson names a registry entry, and the entry is verified by a real test."""
+
+    def test_every_guarded_lesson_names_a_registered_guardrail(self) -> None:
+        guardrails = load_guardrails(PROJECT_ROOT)
+        self.assertTrue(guardrails)
+        for lesson in load_lessons(PROJECT_ROOT):
+            if lesson["status"] != "GUARDED":
+                continue
+            declared = lesson.get("guardrails") or []
+            self.assertTrue(declared, lesson["lessonId"])
+            for identifier in declared:
+                self.assertIn(identifier, guardrails, lesson["lessonId"])
+                self.assertIn(lesson["lessonId"], guardrails[identifier]["lessons"])
+
+    def test_every_guardrail_is_verified_by_a_test_that_exists(self) -> None:
+        identifiers = suite_test_ids(PROJECT_ROOT)
+        for guardrail in load_guardrails(PROJECT_ROOT).values():
+            self.assertTrue(guardrail["verifiedBy"], guardrail["guardrailId"])
+            for test_id in guardrail["verifiedBy"]:
+                self.assertIn(test_id, identifiers, guardrail["guardrailId"])
+
+    def test_every_guardrail_control_resolves(self) -> None:
+        for guardrail in load_guardrails(PROJECT_ROOT).values():
+            message = resolve_control(
+                PROJECT_ROOT, {"kind": guardrail["kind"], "reference": guardrail["reference"]})
+            self.assertIsNone(message, f"{guardrail['guardrailId']}: {message}")
+
+    def test_guardrail_effectiveness_is_measured_not_asserted(self) -> None:
+        measured = guardrail_effectiveness(PROJECT_ROOT)
+        self.assertEqual(measured["guardrailsResolved"], measured["guardrailsTotal"])
+        self.assertEqual(measured["guardrailsTested"], measured["guardrailsTotal"])
+        self.assertEqual(measured["guardrailsEffective"], measured["guardrailsTotal"])
+        self.assertEqual(measured["guardrailFailures"], 0)
+
+    def test_an_unresolved_guardrail_failure_is_counted(self) -> None:
+        lessons = json.loads(json.dumps(load_lessons(PROJECT_ROOT)))
+        baseline = guardrail_effectiveness(PROJECT_ROOT, lessons)["guardrailFailures"]
+        guarded = next(item for item in lessons if item["status"] == "GUARDED")
+        guarded["guardrailFailures"] = [
+            {"observedAt": NOW, "checkpoint": "TEST", "detail": "GUARDRAIL_FAILURE: bypassed"}]
+        guarded["recurrenceCount"] = 1
+        measured = guardrail_effectiveness(PROJECT_ROOT, lessons)
+        self.assertEqual(measured["guardrailFailures"], baseline + 1)
+        self.assertIn(guarded["lessonId"], measured["lessonsWithUnresolvedFailures"])
+
+    def test_a_resolved_guardrail_failure_no_longer_blocks(self) -> None:
+        lessons = json.loads(json.dumps(load_lessons(PROJECT_ROOT)))
+        baseline = guardrail_effectiveness(PROJECT_ROOT, lessons)["guardrailFailures"]
+        guarded = next(item for item in lessons if item["status"] == "GUARDED")
+        guarded["guardrailFailures"] = [{
+            "observedAt": NOW, "checkpoint": "TEST",
+            "detail": "GUARDRAIL_FAILURE: bypassed", "resolvedIn": "SETUP-00-CP-0008"}]
+        guarded["recurrenceCount"] = 1
+        measured = guardrail_effectiveness(PROJECT_ROOT, lessons)
+        self.assertEqual(measured["guardrailFailures"], baseline)
+        self.assertNotIn(guarded["lessonId"], measured["lessonsWithUnresolvedFailures"])
+
+    def test_the_registry_may_not_name_an_unknown_lesson(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            shutil.copytree(PROJECT_ROOT / ".iacode", root / ".iacode")
+            copy_ledger_tooling(root)
+            shutil.copytree(PROJECT_ROOT / "tests", root / "tests",
+                            ignore=shutil.ignore_patterns("__pycache__"))
+            registry = root / ".iacode" / "memory" / "guardrails" / "registry.json"
+            document = read_json(registry)
+            document["guardrails"][0]["lessons"] = ["LSN-9999"]
+            write_json_file(registry, document)
+            errors = validate_memory(root)
+            self.assertTrue(any("not in the memory" in error for error in errors), errors)
+
+
+class LessonProvenanceTests(unittest.TestCase):
+    """M0-F-011: a lesson must cite a source that records the finding it names."""
+
+    def test_every_repository_lesson_cites_a_resolvable_source(self) -> None:
+        self.assertEqual(validate_memory(PROJECT_ROOT), [])
+
+    def test_a_finding_absent_from_the_cited_checkpoint_is_rejected(self) -> None:
+        from lessons import _resolve_source_locator
+
+        lesson = make_lesson(source={
+            "gate": "SETUP-00", "checkpoint": "SETUP-00-CP-0003", "finding": "R9999"})
+        message = _resolve_source_locator(PROJECT_ROOT, lesson)
+        self.assertIn("appears in none of the checkpoints", message or "")
+
+    def test_a_nonexistent_checkpoint_is_rejected(self) -> None:
+        from lessons import _resolve_source_locator
+
+        lesson = make_lesson(source={
+            "gate": "SETUP-00", "checkpoint": "SETUP-00-CP-9999", "finding": "R1"})
+        message = _resolve_source_locator(PROJECT_ROOT, lesson)
+        self.assertIn("not a checkpoint in this repository", message or "")
+
+    def test_a_correct_locator_resolves(self) -> None:
+        from lessons import _resolve_source_locator
+
+        lesson = make_lesson(source={
+            "gate": "SETUP-00", "checkpoint": "SETUP-00-CP-0004", "finding": "R3"})
+        self.assertIsNone(_resolve_source_locator(PROJECT_ROOT, lesson))
+
+
+class DerivedCountTests(ClosureFixture):
+    """M0-F-008: an evidential count is derived once and verified wherever it is stated."""
+
+    def test_the_stored_counts_match_the_derivation(self) -> None:
+        errors: list[str] = []
+        _validate_derived_counts(PROJECT_ROOT, self.checkpoint, self.state(), errors)
+        self.assertEqual(errors, [])
+
+    def test_a_forged_count_is_rejected(self) -> None:
+        self.edit("COUNTS.json",
+                  lambda d: d["counts"]["LESSONS"].update({"numerator": 999}))
+        errors: list[str] = []
+        _validate_derived_counts(PROJECT_ROOT, self.checkpoint, self.state(), errors)
+        self.assertTrue(any("contradicts the derived" in error for error in errors), errors)
+
+    def test_a_markdown_claim_that_contradicts_the_derivation_is_rejected(self) -> None:
+        (self.checkpoint / "FINAL-REPORT.md").write_text(
+            "# Final Report\n\nTests: 9999/9999 TESTS PASS\n", encoding="utf-8", newline="\n")
+        errors: list[str] = []
+        _validate_derived_counts(PROJECT_ROOT, self.checkpoint, self.state(), errors)
+        self.assertTrue(any("contradicts the derived" in error for error in errors), errors)
+
+    def test_a_markdown_claim_that_matches_the_derivation_is_accepted(self) -> None:
+        counts = derive_counts(PROJECT_ROOT, self.checkpoint)["LESSONS"]
+        (self.checkpoint / "FINAL-REPORT.md").write_text(
+            f"# Final Report\n\nLessons: {counts['numerator']}/{counts['denominator']} LESSONS "
+            f"guarded.\n", encoding="utf-8", newline="\n")
+        errors: list[str] = []
+        _validate_derived_counts(PROJECT_ROOT, self.checkpoint, self.state(), errors)
+        self.assertEqual(errors, [])
+
+    def test_a_missing_counts_artifact_is_rejected(self) -> None:
+        (self.checkpoint / "COUNTS.json").unlink()
+        errors: list[str] = []
+        _validate_derived_counts(PROJECT_ROOT, self.checkpoint, self.state(), errors)
+        self.assertTrue(any("requires COUNTS.json" in error for error in errors), errors)
+
+    def test_the_test_count_comes_from_discovery(self) -> None:
+        self.assertGreater(count_test_cases(PROJECT_ROOT), 0)
+        counts = derive_counts(PROJECT_ROOT, self.checkpoint)
+        self.assertEqual(counts["TESTS"]["denominator"], count_test_cases(PROJECT_ROOT))
+
+
+class CommandInputBindingTests(unittest.TestCase):
+    """M0-F-009: a record that names an input binds it by content."""
+
+    def _record(self, **overrides: object) -> dict:
+        record = {
+            "id": "cmd-0001", "timestamp": NOW, "runtime": "python 3.13.0",
+            "command": "python scripts/development-ledger/validate_checkpoint.py",
+            "arguments": ["scripts/development-ledger/validate_checkpoint.py"],
+            "inputs": ["scripts/development-ledger/validate_checkpoint.py"],
+            "inputsDigest": [{
+                "path": "scripts/development-ledger/validate_checkpoint.py",
+                "hash": canonical_hash_path(SCRIPTS / "validate_checkpoint.py")}],
+            "workingDirectory": str(PROJECT_ROOT), "commit": "a" * 40,
+            "purpose": "fixture", "result": "COMPLETED", "resultCode": "OK",
+            "exitCode": 0, "durationMs": 1, "stdoutArtifact": None, "stderrArtifact": None,
+        }
+        record.update(overrides)
+        return record
+
+    def _errors(self, record: dict) -> list[str]:
+        errors: list[str] = []
+        _validate_command_reproducibility(PROJECT_ROOT, record, 1, errors, bind_inputs=True)
+        return errors
+
+    def test_a_bound_record_passes(self) -> None:
+        self.assertEqual(self._errors(self._record()), [])
+
+    def test_a_record_without_a_digest_is_rejected(self) -> None:
+        record = self._record()
+        record.pop("inputsDigest")
+        self.assertTrue(any("inputsDigest" in error for error in self._errors(record)))
+
+    def test_a_digest_that_omits_an_input_is_rejected(self) -> None:
+        record = self._record(inputsDigest=[])
+        self.assertTrue(any("does not bind" in error for error in self._errors(record)))
+
+    def test_a_digest_for_an_undeclared_input_is_rejected(self) -> None:
+        record = self._record()
+        record["inputsDigest"].append({"path": "START-HERE.md", "hash": "0" * 64})
+        self.assertTrue(any("not a declared input" in error for error in self._errors(record)))
+
+    def test_a_malformed_digest_is_rejected(self) -> None:
+        record = self._record()
+        record["inputsDigest"][0]["hash"] = "not-a-digest"
+        self.assertTrue(any("sha-256" in error for error in self._errors(record)))
+
+    def test_a_clean_tree_claim_is_checked_against_the_declared_commit(self) -> None:
+        code = run(["git", "rev-parse", "HEAD"], PROJECT_ROOT)
+        if code.returncode != 0:
+            self.skipTest("no commit is available")
+        record = self._record(
+            commit=code.stdout.strip(),
+            repositoryState={"branch": "main", "head": code.stdout.strip(), "dirty": False,
+                             "detached": False},
+            inputsDigest=[{"path": "scripts/development-ledger/validate_checkpoint.py",
+                           "hash": "0" * 64}])
+        errors = self._errors(record)
+        self.assertTrue(any("different content there" in error for error in errors), errors)
+
+    def test_a_dirty_tree_record_is_accepted_when_the_digest_binds_the_input(self) -> None:
+        record = self._record(
+            repositoryState={"branch": "main", "head": "a" * 40, "dirty": True,
+                             "detached": False})
+        self.assertEqual(self._errors(record), [])
+
+    def test_the_recorder_binds_inputs_automatically(self) -> None:
+        from ledger_common import build_command_record
+
+        record = build_command_record(
+            PROJECT_ROOT, command="python START-HERE.md", purpose="fixture",
+            inputs=["START-HERE.md"], exit_code=0)
+        self.assertEqual(record["inputsDigest"][0]["path"], "START-HERE.md")
+        self.assertEqual(record["inputsDigest"][0]["hash"],
+                         canonical_hash_path(PROJECT_ROOT / "START-HERE.md"))
+
+
+class SealChronologyTests(ClosureFixture):
+    """M0-F-010: sealing is monotonic, post-commit, and its evidence describes the sealed commit."""
+
+    def _commands(self, **overrides: object) -> list[dict]:
+        record = {
+            "id": "cmd-0100", "timestamp": NOW, "operation": "post-commit-validation",
+            "exitCode": 0, "commit": "a" * 40,
+            "repositoryState": {"branch": "main", "head": "a" * 40, "dirty": False,
+                                "detached": False},
+        }
+        record.update(overrides)
+        return [record]
+
+    def _errors(self, commands: list[dict], metadata: dict | None = None) -> list[str]:
+        errors: list[str] = []
+        _validate_seal_chronology(
+            PROJECT_ROOT, self.checkpoint, self.state(),
+            metadata or {"finishedAt": "2026-12-31T23:59:59Z"}, commands, errors)
+        return errors
+
+    def test_a_missing_post_commit_validation_is_rejected(self) -> None:
+        errors = self._errors([])
+        self.assertTrue(any("post-commit-validation" in error for error in errors), errors)
+
+    def test_a_failed_post_commit_validation_is_not_evidence(self) -> None:
+        errors = self._errors(self._commands(exitCode=1))
+        self.assertTrue(any("post-commit-validation" in error for error in errors), errors)
+
+    def test_a_dirty_tree_validation_is_not_evidence_of_a_sealed_commit(self) -> None:
+        errors = self._errors(self._commands(
+            repositoryState={"branch": "main", "head": "a" * 40, "dirty": True,
+                             "detached": False}))
+        self.assertTrue(any("clean worktree" in error for error in errors), errors)
+
+    def test_a_validation_of_an_unrelated_commit_is_rejected(self) -> None:
+        errors = self._errors(self._commands())
+        self.assertTrue(any("neither HEAD nor its parent" in error for error in errors), errors)
+
+    def test_a_record_after_the_end_of_the_run_is_rejected(self) -> None:
+        errors = self._errors(
+            self._commands(timestamp="2026-12-31T23:59:59Z"),
+            {"finishedAt": "2026-01-01T00:00:00Z"})
+        self.assertTrue(any("monotonic" in error for error in errors), errors)
+
+    def test_the_validation_of_head_itself_is_accepted(self) -> None:
+        head = run(["git", "rev-parse", "HEAD"], PROJECT_ROOT)
+        if head.returncode != 0:
+            self.skipTest("no commit is available")
+        errors = self._errors(self._commands(
+            commit=head.stdout.strip(),
+            repositoryState={"branch": "main", "head": head.stdout.strip(), "dirty": False,
+                             "detached": False}))
+        self.assertEqual(errors, [])
+
+    def test_the_sealing_tool_does_not_expose_a_pending_seal_bypass(self) -> None:
+        text = (SCRIPTS / "validate_checkpoint.py").read_text(encoding="utf-8")
+        self.assertNotIn("--allow-pending-seal", text)
+        self.assertNotIn("--allow-dirty", text)
+
+
+class InternalAssuranceTests(ClosureFixture):
+    """The internal Red Team and mirror audit are required, verified and never called external."""
+
+    def _errors(self, state: dict | None = None) -> list[str]:
+        errors: list[str] = []
+        _validate_internal_assurance(
+            PROJECT_ROOT, self.checkpoint, state or self.state(), errors)
+        return errors
+
+    def test_the_consistent_fixture_passes(self) -> None:
+        self.assertEqual(self._errors(), [])
+
+    def test_an_escaped_attack_cannot_produce_a_pass(self) -> None:
+        self.edit(f"{self.MILESTONE}-INTERNAL-RED-TEAM.json",
+                  lambda d: d["attacks"][0].update({"result": "ESCAPED"}))
+        errors = self._errors()
+        self.assertTrue(any("escaped" in error for error in errors), errors)
+
+    def test_a_missing_mandatory_attack_is_rejected(self) -> None:
+        def mutate(document: dict) -> None:
+            document["attacks"] = [item for item in document["attacks"]
+                                   if item["attackId"] != "C"]
+            document["total"] = len(document["attacks"])
+            document["defended"] = len(document["attacks"])
+            document["mandatoryTotal"] = sum(1 for item in document["attacks"] if item["mandatory"])
+            document["mandatoryDefended"] = document["mandatoryTotal"]
+
+        self.edit(f"{self.MILESTONE}-INTERNAL-RED-TEAM.json", mutate)
+        errors = self._errors()
+        self.assertTrue(any("mandatory attack C" in error for error in errors), errors)
+
+    def test_a_stale_red_team_result_is_rejected(self) -> None:
+        self.edit(f"{self.MILESTONE}-INTERNAL-RED-TEAM.json",
+                  lambda d: d.update({"targetFingerprint": "0" * 64}))
+        errors = self._errors()
+        self.assertTrue(any("STALE" in error for error in errors), errors)
+
+    def test_a_failed_mirror_check_cannot_produce_a_pass(self) -> None:
+        self.edit(f"{self.MILESTONE}-INTERNAL-MIRROR.json",
+                  lambda d: d["checks"][0].update({"result": "FAIL"}))
+        errors = self._errors()
+        self.assertTrue(any("failed" in error.lower() for error in errors), errors)
+
+    def test_a_stale_mirror_audit_is_rejected(self) -> None:
+        self.edit(f"{self.MILESTONE}-INTERNAL-MIRROR.json",
+                  lambda d: d.update({"targetFingerprint": "0" * 64}))
+        errors = self._errors()
+        self.assertTrue(any("STALE" in error for error in errors), errors)
+
+    def test_the_mirror_must_declare_that_it_is_internal(self) -> None:
+        self.edit(f"{self.MILESTONE}-INTERNAL-MIRROR.json",
+                  lambda d: d.update({"independence": "fully independent external validation"}))
+        errors = self._errors()
+        self.assertTrue(any("independence must state" in error for error in errors), errors)
+
+    def test_a_missing_internal_red_team_is_rejected(self) -> None:
+        (self.checkpoint / f"{self.MILESTONE}-INTERNAL-RED-TEAM.json").unlink()
+        errors = self._errors()
+        self.assertTrue(any("INTERNAL-RED-TEAM" in error for error in errors), errors)
+
+    def test_a_missing_mirror_audit_is_rejected(self) -> None:
+        (self.checkpoint / f"{self.MILESTONE}-INTERNAL-MIRROR.json").unlink()
+        errors = self._errors()
+        self.assertTrue(any("INTERNAL-MIRROR" in error for error in errors), errors)
+
+
+class FindingsClosureTests(ClosureFixture):
+    """Every finding of an open audit is closed before the delivery is offered."""
+
+    def _errors(self) -> list[str]:
+        errors: list[str] = []
+        _validate_findings_closure(PROJECT_ROOT, self.checkpoint, self.state(), errors)
+        return errors
+
+    def test_the_consistent_fixture_passes(self) -> None:
+        self.assertEqual(self._errors(), [])
+
+    def test_an_open_finding_blocks_the_delivery(self) -> None:
+        def mutate(document: dict) -> None:
+            document["findings"][0]["status"] = "OPEN"
+            document["closed"] -= 1
+            document["result"] = "OPEN"
+
+        self.edit("CP7-FINDINGS-CLOSURE.json", mutate)
+        errors = self._errors()
+        self.assertTrue(any("remain open" in error for error in errors), errors)
+
+    def test_a_missing_finding_is_detected(self) -> None:
+        def mutate(document: dict) -> None:
+            document["findings"] = document["findings"][1:]
+            document["total"] = len(document["findings"])
+            document["closed"] = len(document["findings"])
+
+        self.edit("CP7-FINDINGS-CLOSURE.json", mutate)
+        errors = self._errors()
+        self.assertTrue(any("not accounted for" in error for error in errors), errors)
+
+    def test_an_invented_finding_is_detected(self) -> None:
+        def mutate(document: dict) -> None:
+            row = json.loads(json.dumps(document["findings"][0]))
+            row["findingId"] = "M0-F-999"
+            document["findings"].append(row)
+            document["total"] = len(document["findings"])
+            document["closed"] = len(document["findings"])
+
+        self.edit("CP7-FINDINGS-CLOSURE.json", mutate)
+        errors = self._errors()
+        self.assertTrue(any("M0-F-999" in error for error in errors), errors)
+
+    def test_the_stored_totals_are_cross_checked(self) -> None:
+        self.edit("CP7-FINDINGS-CLOSURE.json", lambda d: d.update({"closed": 99}))
+        errors = self._errors()
+        self.assertTrue(any("closed does not match" in error for error in errors), errors)
+
+    def test_a_missing_closure_artifact_is_rejected(self) -> None:
+        (self.checkpoint / "CP7-FINDINGS-CLOSURE.json").unlink()
+        errors = self._errors()
+        self.assertTrue(any("requires CP7-FINDINGS-CLOSURE.json" in error for error in errors),
+                        errors)
+
+
+class GuardrailEffectivenessGateTests(ClosureFixture):
+    """A delivery cannot be offered while a guardrail is ineffective or has failed."""
+
+    def test_the_measured_effectiveness_is_recorded_truthfully(self) -> None:
+        errors: list[str] = []
+        _validate_guardrail_effectiveness(PROJECT_ROOT, self.state(), errors)
+        self.assertEqual(errors, [])
+
+    def test_a_forged_effectiveness_block_is_rejected(self) -> None:
+        state = self.state()
+        state["guardrailEffectiveness"] = {**state["guardrailEffectiveness"],
+                                           "guardrailsEffective": 999}
+        errors: list[str] = []
+        _validate_guardrail_effectiveness(PROJECT_ROOT, state, errors)
+        self.assertTrue(any("does not match the measured" in error for error in errors), errors)
+
+    def test_a_missing_effectiveness_block_is_rejected(self) -> None:
+        state = self.state()
+        state.pop("guardrailEffectiveness")
+        errors: list[str] = []
+        _validate_guardrail_effectiveness(PROJECT_ROOT, state, errors)
+        self.assertTrue(any("guardrailEffectiveness block" in error for error in errors), errors)
+
+
+class AuditSourceParsingTests(unittest.TestCase):
+    """The audit's findings and attacks are re-parsed from the sealed reports, never transcribed."""
+
+    def test_every_finding_of_the_sealed_review_is_parsed(self) -> None:
+        findings = parse_findings(
+            (AUDIT_CHECKPOINT / "REVIEW-REPORT.md").read_text(encoding="utf-8"))
+        self.assertEqual([item["id"] for item in findings],
+                         ["M0-F-%03d" % number for number in range(1, 12)])
+
+    def test_every_mandatory_attack_of_the_sealed_report_is_parsed(self) -> None:
+        attacks = parse_attacks(
+            (AUDIT_CHECKPOINT / "RED-TEAM-REPORT.md").read_text(encoding="utf-8"))
+        mandatory = [item["id"] for item in attacks if item["mandatory"] == "true"]
+        self.assertEqual(mandatory, [chr(code) for code in range(ord("A"), ord("Z") + 1)])
+        self.assertEqual(len(mandatory), 26)
+
+    def test_the_escaped_attacks_are_recorded_as_escaped(self) -> None:
+        attacks = parse_attacks(
+            (AUDIT_CHECKPOINT / "RED-TEAM-REPORT.md").read_text(encoding="utf-8"))
+        escaped = {item["id"] for item in attacks if item["result"] == "ESCAPED"}
+        self.assertTrue({"C", "I", "J", "Q", "R", "S", "U", "V"}.issubset(escaped))
+
+    def test_the_registry_binds_the_audit_to_this_corrective_checkpoint(self) -> None:
+        audits = open_audits(PROJECT_ROOT, "SETUP-00", "SETUP-00-CP-0008")
+        self.assertEqual([audit["auditId"] for audit in audits], ["M0-CP-0007"])
+        self.assertEqual(len(audit_findings(PROJECT_ROOT, audits[0])), 11)
+
+    def test_the_red_team_battery_implements_every_mandatory_attack(self) -> None:
+        from m0_red_team import build_attacks
+
+        implemented = {item["attackId"] for item in build_attacks() if item["mandatory"]}
+        audits = open_audits(PROJECT_ROOT, "SETUP-00", "SETUP-00-CP-0008")
+        expected = {item["id"] for item in audit_attacks(PROJECT_ROOT, audits[0])
+                    if item["mandatory"] == "true"}
+        self.assertEqual(implemented, expected)
+
+    def test_the_battery_also_covers_the_additional_and_new_surfaces(self) -> None:
+        from m0_red_team import build_attacks
+
+        identifiers = {item["attackId"] for item in build_attacks()}
+        self.assertTrue({"AA", "AB", "AC", "AD", "AE", "AF"}.issubset(identifiers))
+        self.assertTrue({"AI", "AL", "AR", "AT"}.issubset(identifiers))
+
+
+class HistoricalClosureCompatibilityTests(HistoricalCheckpointCompatibilityTests):
+    """The closure tooling still interprets every sealed checkpoint."""
+
+    def test_sixth_sealed_checkpoint_still_validates(self) -> None:
+        self._assert_historical_checkpoint_validates("iacode-checkpoints/SETUP-00-CP-0006")
+
+    def test_seventh_sealed_checkpoint_still_validates(self) -> None:
+        self._assert_historical_checkpoint_validates("iacode-checkpoints/SETUP-00-CP-0007")
 
 if __name__ == "__main__":
     unittest.main()

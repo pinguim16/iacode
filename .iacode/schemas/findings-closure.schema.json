@@ -1,0 +1,160 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://iacode.local/schemas/findings-closure.schema.json",
+  "title": "Audit findings closure record",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "checkpoint",
+    "auditId",
+    "source",
+    "findings",
+    "total",
+    "closed",
+    "result"
+  ],
+  "$defs": {
+    "finding": {
+      "type": "object",
+      "required": [
+        "findingId",
+        "severity",
+        "originalExpected",
+        "originalObserved",
+        "rootCause",
+        "implementation",
+        "regressionTest",
+        "verificationCommand",
+        "evidence",
+        "status"
+      ],
+      "properties": {
+        "findingId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "severity": {
+          "enum": [
+            "CRITICAL",
+            "HIGH",
+            "MEDIUM",
+            "LOW"
+          ]
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "originalExpected": {
+          "type": "string",
+          "minLength": 1
+        },
+        "originalObserved": {
+          "type": "string",
+          "minLength": 1
+        },
+        "rootCause": {
+          "type": "string",
+          "minLength": 1
+        },
+        "implementation": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "regressionTest": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "negativeTest": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "verificationCommand": {
+          "type": "string",
+          "minLength": 1
+        },
+        "evidence": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "lesson": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "guardrail": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "status": {
+          "enum": [
+            "OPEN",
+            "IN_PROGRESS",
+            "CLOSED",
+            "BLOCKED"
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "properties": {
+    "schemaVersion": {
+      "enum": [
+        "1.0.0"
+      ]
+    },
+    "checkpoint": {
+      "type": "string",
+      "minLength": 1
+    },
+    "auditId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source": {
+      "type": "string",
+      "minLength": 1
+    },
+    "findings": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/finding"
+      }
+    },
+    "total": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "closed": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "result": {
+      "enum": [
+        "CLOSED",
+        "OPEN"
+      ]
+    }
+  },
+  "additionalProperties": false
+}

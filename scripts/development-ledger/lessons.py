@@ -14,11 +14,32 @@ import re
 from pathlib import Path
 from typing import Any
 
-from ledger_common import LedgerError, find_secrets, load_json, utc_now, validate_schema
+from ledger_common import (
+    LedgerError,
+    canonical_digest,
+    canonical_hash_path,
+    find_secrets,
+    load_json,
+    utc_now,
+    validate_schema,
+)
 
 MEMORY_DIRECTORY = Path(".iacode") / "memory"
 LESSONS_FILE = "lessons.jsonl"
 INDEX_FILE = "LESSONS.md"
+GUARDRAIL_REGISTRY_FILE = "guardrails/registry.json"
+POLICY_FILE = "POLICY.json"
+
+# Memory policy versions. 1.0.0 is the original memory: a GUARDED lesson had to name a
+# preventive control, but nothing resolved the reference. 2.0.0 resolves every claim and
+# requires a registered guardrail. Sealed checkpoints carry a 1.0.0 memory and are read
+# under those rules, which is how a new control avoids invalidating history.
+LEGACY_MEMORY_POLICY = "1.0.0"
+RESOLVING_MEMORY_POLICY = "2.0.0"
+
+# The applicability and derivation rules the preflight implements. It is part of the preflight
+# fingerprint, so changing how lessons are selected makes every existing preflight stale.
+LESSON_POLICY_VERSION = "2.0.0"
 
 LESSON_STATUSES = ("OBSERVED", "CONFIRMED", "GUARDED", "SUPERSEDED", "RETIRED")
 
@@ -59,6 +80,36 @@ def memory_root(root: Path) -> Path:
 
 def lessons_path(root: Path) -> Path:
     return memory_root(root) / LESSONS_FILE
+
+
+def guardrail_registry_path(root: Path) -> Path:
+    return memory_root(root) / GUARDRAIL_REGISTRY_FILE
+
+
+def memory_policy_version(root: Path) -> str:
+    """The memory policy this repository declares, defaulting to the original rules."""
+    path = memory_root(root) / POLICY_FILE
+    if not path.is_file():
+        return LEGACY_MEMORY_POLICY
+    document = load_json(path)
+    version = document.get('schemaVersion') if isinstance(document, dict) else None
+    return str(version) if version else LEGACY_MEMORY_POLICY
+
+
+def load_guardrails(root: Path) -> dict[str, dict[str, Any]]:
+    """The guardrail registry, keyed by identifier. An empty registry is an empty mapping."""
+    path = guardrail_registry_path(root)
+    if not path.is_file():
+        return {}
+    document = load_json(path)
+    entries = document.get("guardrails") if isinstance(document, dict) else None
+    if not isinstance(entries, list):
+        raise LedgerError("guardrails/registry.json must declare a guardrails array")
+    return {
+        str(entry["guardrailId"]): entry
+        for entry in entries
+        if isinstance(entry, dict) and entry.get("guardrailId")
+    }
 
 
 def load_lessons(root: Path) -> list[dict[str, Any]]:
@@ -111,6 +162,272 @@ def preventive_controls(lesson: dict[str, Any]) -> list[dict[str, Any]]:
         control for control in lesson.get("prevention") or []
         if isinstance(control, dict) and control.get("kind") in PREVENTIVE_KINDS
     ]
+
+
+# --------------------------------------------------------------------------------------------
+# Resolving what a lesson claims
+# --------------------------------------------------------------------------------------------
+
+# Kinds whose reference is a repository path that must exist.
+PATH_CONTROL_KINDS = ("validator", "policy", "schema", "lint", "automated-check", "documentation")
+
+_TEST_ID_CACHE: dict[str, set[str]] = {}
+
+
+def suite_test_ids(root: Path) -> set[str]:
+    """Every test case id in the suite, as ``TestClass.test_name`` and as the bare method name.
+
+    The audit found that a ``GUARDED`` lesson could name a test that does not exist. A claim about
+    a control is only worth as much as the resolution of its reference, so the memory validator
+    resolves the reference against the real suite instead of accepting the string.
+    """
+    key = str(root.resolve())
+    if key in _TEST_ID_CACHE:
+        return _TEST_ID_CACHE[key]
+    from delivery_assurance import collect_test_ids
+
+    identifiers = collect_test_ids(root)
+    _TEST_ID_CACHE[key] = identifiers
+    return identifiers
+
+
+def _invariant_exists(root: Path, reference: str) -> bool:
+    """An invariant reference names a function that must exist in the tooling."""
+    module, _, symbol = reference.rpartition(".")
+    definition = re.compile(rf"^\s*(?:def|class)\s+{re.escape(symbol)}\b", re.MULTILINE)
+    scripts = root / "scripts"
+    if module:
+        candidate = scripts / "development-ledger" / f"{module}.py"
+        if candidate.is_file():
+            return definition.search(candidate.read_text(encoding="utf-8")) is not None
+    if not scripts.is_dir():
+        return False
+    for path in scripts.rglob("*.py"):
+        if "__pycache__" in path.parts:
+            continue
+        if definition.search(path.read_text(encoding="utf-8")):
+            return True
+    return False
+
+
+def resolve_control(root: Path, control: dict[str, Any]) -> str | None:
+    """Return why a preventive control cannot be resolved, or None when it resolves."""
+    kind = control.get("kind")
+    reference = control.get("reference")
+    if not isinstance(reference, str) or not reference.strip():
+        return f"control of kind {kind!r} has no reference"
+    if kind == "test":
+        if reference not in suite_test_ids(root):
+            return f"control names the test {reference!r}, which does not exist in the suite"
+        return None
+    if kind == "invariant":
+        if not _invariant_exists(root, reference):
+            return f"control names the invariant {reference!r}, which is defined nowhere in scripts/"
+        return None
+    if kind in PATH_CONTROL_KINDS:
+        candidate = (root / reference).resolve()
+        if root.resolve() not in candidate.parents:
+            return f"control path escapes the repository: {reference}"
+        if not candidate.is_file():
+            return f"control names the path {reference!r}, which does not exist"
+        try:
+            if not candidate.read_text(encoding="utf-8").strip():
+                return f"control names the empty file {reference!r}"
+        except UnicodeDecodeError:
+            pass
+        return None
+    return f"unsupported control kind {kind!r}"
+
+
+def resolve_lesson_evidence(root: Path, reference: Any) -> str | None:
+    """Return why a lesson evidence reference cannot be resolved, or None when it resolves."""
+    if not isinstance(reference, str) or ":" not in reference:
+        return f"malformed evidence reference {reference!r}"
+    kind, _, value = reference.partition(":")
+    if kind != "file":
+        return f"unsupported lesson evidence kind {kind!r}; lessons cite repository files"
+    if not value.strip():
+        return f"empty evidence target in {reference!r}"
+    candidate = (root / value).resolve()
+    if root.resolve() not in candidate.parents:
+        return f"evidence path escapes the repository: {reference}"
+    if not candidate.is_file():
+        return f"evidence file does not exist: {reference}"
+    try:
+        if not candidate.read_text(encoding="utf-8").strip():
+            return f"evidence file is empty: {reference}"
+    except UnicodeDecodeError:
+        if candidate.stat().st_size == 0:
+            return f"evidence file is empty: {reference}"
+    return None
+
+
+def _resolve_source_locator(root: Path, lesson: dict[str, Any]) -> str | None:
+    """A lesson's provenance must point at a checkpoint that records the finding it cites.
+
+    ``finding`` is free text because a finding identifier looks different in every audit. The rule
+    is therefore narrow and checkable: every checkpoint named in the locator must exist, and every
+    identifier-shaped token in the locator must appear somewhere in the evidence of one of the
+    checkpoints the locator names.
+    """
+    source = lesson.get("source") or {}
+    checkpoints_root = root / "docs" / "checkpoints"
+    named = [str(source.get("checkpoint") or "")]
+    finding = str(source.get("finding") or "")
+    named += re.findall(r"\b[A-Z][A-Z0-9]*-[0-9]{2}-CP-[0-9]{4}\b", finding)
+    named = [item for item in dict.fromkeys(named) if item]
+    if not named:
+        return "source names no checkpoint"
+
+    corpus: list[str] = []
+    for identifier in named:
+        directory = checkpoints_root / identifier
+        if not directory.is_dir():
+            return f"source cites {identifier}, which is not a checkpoint in this repository"
+        for path in sorted(directory.iterdir()):
+            if path.is_file() and path.suffix.lower() in (".md", ".json", ".jsonl"):
+                try:
+                    corpus.append(path.read_text(encoding="utf-8"))
+                except UnicodeDecodeError:
+                    continue
+    haystack = "\n".join(corpus)
+
+    tokens = re.findall(r"\b(?:[A-Z]+[0-9]*-)?[A-Z]{1,3}[0-9]+(?:\.[0-9]+)?\b", finding)
+    tokens = [token for token in tokens if not re.fullmatch(r"CP[0-9]+", token)]
+    for token in tokens:
+        if token in {item for identifier in named for item in (identifier,)}:
+            continue
+        if token not in haystack:
+            return (
+                f"source cites finding {token!r}, which appears in none of the checkpoints it "
+                f"names ({', '.join(named)})")
+    return None
+
+
+def _walk_strings(value: Any, path: str = "$"):
+    """Every string inside a lesson, with the place it was found, at any nesting depth."""
+    if isinstance(value, str):
+        yield path, value
+    elif isinstance(value, dict):
+        for key, item in value.items():
+            yield from _walk_strings(item, f"{path}.{key}")
+    elif isinstance(value, list):
+        for index, item in enumerate(value):
+            yield from _walk_strings(item, f"{path}[{index}]")
+
+
+def unresolved_guardrail_failures(lesson: dict[str, Any]) -> list[dict[str, Any]]:
+    return [
+        failure for failure in lesson.get("guardrailFailures") or []
+        if isinstance(failure, dict) and not failure.get("resolvedIn")
+    ]
+
+
+def memory_fingerprint(root: Path) -> str:
+    """Content identity of everything a preflight result depends on.
+
+    Not a timestamp: a timestamp says when the preflight ran, which is exactly what let a stale
+    preflight survive a retired lesson. This is a digest of the canonical memory, the lesson schema,
+    the guardrail registry and the selection policy version, so any change to any of them makes an
+    existing preflight detectably stale.
+    """
+    lessons = load_lessons(root)
+    lesson_identity = [
+        [
+            lesson.get("lessonId"),
+            lesson.get("status"),
+            lesson.get("severity"),
+            lesson.get("category"),
+            lesson.get("title"),
+            lesson.get("applicability"),
+            [[control.get("kind"), control.get("reference")] for control in lesson.get("prevention") or []],
+            lesson.get("guardrails"),
+            lesson.get("recurrenceCount"),
+        ]
+        for lesson in lessons
+    ]
+    schema_path = root / ".iacode" / "schemas" / "lesson.schema.json"
+    registry_path = guardrail_registry_path(root)
+    return canonical_digest({
+        "policyVersion": LESSON_POLICY_VERSION,
+        "memoryPolicy": memory_policy_version(root),
+        "lessons": lesson_identity,
+        "lessonSchema": canonical_hash_path(schema_path) if schema_path.is_file() else None,
+        "guardrailRegistry": canonical_hash_path(registry_path) if registry_path.is_file() else None,
+    })
+
+
+def preflight_fingerprint(root: Path, gate: str, scope: str,
+                          technologies: list[str], modules: list[str]) -> str:
+    """The fingerprint stored in a preflight, over memory identity plus selection inputs."""
+    return canonical_digest({
+        "memory": memory_fingerprint(root),
+        "gate": gate,
+        "scope": scope,
+        "technologies": sorted(str(item) for item in technologies),
+        "modules": sorted(str(item) for item in modules),
+    })
+
+
+def guardrail_effectiveness(root: Path, lessons: list[dict[str, Any]] | None = None) -> dict[str, Any]:
+    """Measure the guardrails rather than trusting the word ``GUARDED``."""
+    lessons = load_lessons(root) if lessons is None else lessons
+    registry = load_guardrails(root)
+    test_ids = suite_test_ids(root)
+
+    failures = 0
+    failing_lessons: list[str] = []
+    for lesson in lessons:
+        unresolved = unresolved_guardrail_failures(lesson)
+        if unresolved:
+            failures += len(unresolved)
+            failing_lessons.append(str(lesson.get("lessonId")))
+
+    resolved = 0
+    tested = 0
+    effective = 0
+    details: list[dict[str, Any]] = []
+    guarded_by: dict[str, list[str]] = {}
+    for lesson in lessons:
+        for identifier in lesson.get("guardrails") or []:
+            guarded_by.setdefault(str(identifier), []).append(str(lesson.get("lessonId")))
+
+    for identifier, entry in sorted(registry.items()):
+        control = {"kind": entry.get("kind"), "reference": entry.get("reference")}
+        control_error = resolve_control(root, control)
+        verified_by = [str(item) for item in entry.get("verifiedBy") or []]
+        missing_tests = [item for item in verified_by if item not in test_ids]
+        is_resolved = control_error is None
+        is_tested = bool(verified_by) and not missing_tests
+        lesson_ids = guarded_by.get(identifier, [])
+        is_effective = is_resolved and is_tested and not any(
+            lesson_id in failing_lessons for lesson_id in lesson_ids)
+        resolved += int(is_resolved)
+        tested += int(is_tested)
+        effective += int(is_effective)
+        details.append({
+            "guardrailId": identifier,
+            "kind": entry.get("kind"),
+            "reference": entry.get("reference"),
+            "lessons": lesson_ids,
+            "resolved": is_resolved,
+            "tested": is_tested,
+            "effective": is_effective,
+            "detail": control_error or (
+                "verifiedBy names tests that do not exist: " + ", ".join(missing_tests)
+                if missing_tests else
+                "the guardrail declares no verifying test" if not verified_by else None),
+        })
+
+    return {
+        "guardrailsTotal": len(registry),
+        "guardrailsResolved": resolved,
+        "guardrailsTested": tested,
+        "guardrailsEffective": effective,
+        "guardrailFailures": failures,
+        "lessonsWithUnresolvedFailures": sorted(set(failing_lessons)),
+        "guardrails": details,
+    }
 
 
 def escalate(severity: str) -> str:
@@ -230,17 +547,67 @@ def build_preflight(root: Path, gate: str, scope: str, technologies: list[str],
         })
         derived.append(derived_requirement(lesson, identifier))
     return {
-        "schemaVersion": "1.0.0",
+        "schemaVersion": "2.0.0",
         "gate": gate,
         "scope": scope,
         "technologies": list(technologies),
         "modules": list(modules),
         "generatedAt": utc_now(),
+        "policyVersion": LESSON_POLICY_VERSION,
+        "inputsFingerprint": preflight_fingerprint(root, gate, scope, technologies, modules),
         "lessonsConsidered": len(lessons),
         "lessonsApplicable": len(applicable),
         "applicable": applicable,
         "derivedRequirements": derived,
     }
+
+
+def preflight_staleness(root: Path, preflight: Any, gate: str | None = None) -> list[str]:
+    """Why a stored preflight no longer describes the memory, or an empty list when it is fresh.
+
+    Freshness is decided by recomputation, not by a date. The recorded fingerprint is compared with
+    a fresh one, and the selected lessons and derived requirement identifiers are compared with a
+    fresh selection, so adding, retiring or re-scoping a lesson invalidates the preflight.
+    """
+    if not isinstance(preflight, dict):
+        return ["LESSON-PREFLIGHT.json is not an object"]
+    errors: list[str] = []
+    declared_gate = str(preflight.get("gate") or "")
+    scope = str(preflight.get("scope") or "")
+    technologies = [str(item) for item in preflight.get("technologies") or []]
+    modules = [str(item) for item in preflight.get("modules") or []]
+
+    if gate is not None and declared_gate.upper().replace(" ", "") != str(gate).upper().replace(" ", ""):
+        errors.append(
+            f"the preflight was generated for gate {declared_gate!r} but the checkpoint declares "
+            f"{gate!r}; a preflight may not be reused across Gates")
+        return errors
+
+    expected = preflight_fingerprint(root, declared_gate, scope, technologies, modules)
+    if preflight.get("inputsFingerprint") != expected:
+        errors.append(
+            "the lesson preflight is STALE: its recorded inputsFingerprint does not match the "
+            "current engineering memory, guardrail registry, lesson schema and selection policy")
+    if preflight.get("policyVersion") not in (None, LESSON_POLICY_VERSION):
+        errors.append(
+            f"the lesson preflight was produced by selection policy "
+            f"{preflight.get('policyVersion')!r}, not {LESSON_POLICY_VERSION!r}")
+
+    fresh = build_preflight(root, declared_gate, scope, technologies, modules)
+    recorded_lessons = [item.get("lessonId") for item in preflight.get("applicable") or []]
+    fresh_lessons = [item["lessonId"] for item in fresh["applicable"]]
+    if recorded_lessons != fresh_lessons:
+        errors.append(
+            "the lesson preflight is STALE: a fresh selection yields "
+            f"{', '.join(fresh_lessons) or 'no lesson'} rather than "
+            f"{', '.join(str(item) for item in recorded_lessons) or 'no lesson'}")
+    recorded_derived = [item.get("id") for item in preflight.get("derivedRequirements") or []]
+    fresh_derived = [item["id"] for item in fresh["derivedRequirements"]]
+    if recorded_derived != fresh_derived:
+        errors.append(
+            "the lesson preflight is STALE: its derived requirement identifiers do not match a "
+            "fresh derivation")
+    return errors
 
 
 def validate_lessons(root: Path, lessons: list[dict[str, Any]] | None = None) -> list[str]:
@@ -256,6 +623,25 @@ def validate_lessons(root: Path, lessons: list[dict[str, Any]] | None = None) ->
     if schema is None:
         errors.append("lesson.schema.json is missing")
 
+    try:
+        guardrails = load_guardrails(root)
+    except LedgerError as exc:
+        errors.append(str(exc))
+        guardrails = {}
+    registry_backlinks = {
+        identifier: [str(item) for item in entry.get("lessons") or []]
+        for identifier, entry in guardrails.items()
+    }
+    test_ids = suite_test_ids(root)
+
+    known_ids = {str(lesson.get("lessonId")) for lesson in lessons}
+    for identifier, entry in sorted(guardrails.items()) if guardrails else []:
+        for lesson_id in entry.get("lessons") or []:
+            if str(lesson_id) not in known_ids:
+                errors.append(
+                    f"guardrail {identifier}: names lesson {lesson_id!r}, which is not in the memory")
+
+    resolving = memory_policy_version(root) == RESOLVING_MEMORY_POLICY
     seen_ids: set[str] = set()
     seen_keys: dict[str, str] = {}
     for index, lesson in enumerate(lessons, 1):
@@ -279,12 +665,50 @@ def validate_lessons(root: Path, lessons: list[dict[str, Any]] | None = None) ->
             seen_keys.setdefault(key, str(identifier))
 
         status = lesson.get("status")
-        if status == "GUARDED" and not preventive_controls(lesson):
+        controls = preventive_controls(lesson)
+        if status == "GUARDED" and not controls:
             errors.append(
                 f"{label}: GUARDED requires at least one preventive control of kind "
                 f"{', '.join(PREVENTIVE_KINDS)}; documentation alone is not a guardrail")
         if status == "SUPERSEDED" and not lesson.get("supersededBy"):
             errors.append(f"{label}: SUPERSEDED requires supersededBy")
+
+        # Every declared control is resolved against the repository. A reference that names a test,
+        # an invariant or a file that does not exist is a claim, not a guardrail.
+        for control in (lesson.get("prevention") or []) if resolving else []:
+            if not isinstance(control, dict):
+                continue
+            message = resolve_control(root, control)
+            if message is not None:
+                errors.append(f"{label}: {message}")
+
+        # A GUARDED lesson must point at the guardrail registry, and the registry entry must exist,
+        # name this lesson back, and be verified by a test that exists.
+        declared_guardrails = [str(item) for item in lesson.get("guardrails") or []]
+        if resolving and status == "GUARDED" and not declared_guardrails:
+            errors.append(
+                f"{label}: GUARDED requires at least one guardrailId from "
+                f"{GUARDRAIL_REGISTRY_FILE}")
+        for identifier in declared_guardrails if resolving else []:
+            entry = guardrails.get(identifier)
+            if entry is None:
+                errors.append(f"{label}: guardrail {identifier!r} is not in the guardrail registry")
+                continue
+            if identifier not in registry_backlinks or str(lesson.get("lessonId")) not in [
+                    str(item) for item in entry.get("lessons") or []]:
+                errors.append(
+                    f"{label}: guardrail {identifier!r} does not list this lesson, so the link is "
+                    f"one-directional and cannot be audited")
+            verified_by = [str(item) for item in entry.get("verifiedBy") or []]
+            if not verified_by:
+                errors.append(
+                    f"{label}: guardrail {identifier!r} declares no verifying test, so nothing "
+                    f"fails when the control is removed")
+            for test_id in verified_by:
+                if test_id not in test_ids:
+                    errors.append(
+                        f"{label}: guardrail {identifier!r} is verified by {test_id!r}, which does "
+                        f"not exist in the suite")
 
         eligibility = lesson.get("trainingEligibility") or {}
         if eligibility.get("trainingAllowed") and not eligibility.get("justification"):
@@ -297,20 +721,27 @@ def validate_lessons(root: Path, lessons: list[dict[str, Any]] | None = None) ->
         if isinstance(count, int) and len(failures) > count:
             errors.append(
                 f"{label}: {len(failures)} guardrail failures recorded but recurrenceCount is {count}")
-        if failures and status == "GUARDED":
+        if unresolved_guardrail_failures(lesson) and status == "GUARDED":
             errors.append(
                 f"{label}: a guardrail failure must reopen the lesson; GUARDED is not a valid status "
                 f"while a GUARDRAIL_FAILURE is unresolved")
 
-        for field in ("symptom", "rootCauseSummary", "resolution", "title", "notes"):
-            value = lesson.get(field)
-            if isinstance(value, str):
-                for finding in find_secrets(value):
-                    errors.append(f"{label}: secret pattern detected in {field}: {finding}")
-        for reference in lesson.get("evidence") or []:
-            if isinstance(reference, str):
-                for finding in find_secrets(reference):
-                    errors.append(f"{label}: secret pattern detected in evidence: {finding}")
+        # A lesson may only cite a checkpoint that records the finding it names. The audit found a
+        # locator that pointed at the wrong checkpoint while the lesson itself was sound.
+        message = _resolve_source_locator(root, lesson) if resolving else None
+        if message is not None:
+            errors.append(f"{label}: {message}")
+
+        # The whole lesson object is scanned, at any depth. The audit planted a secret-shaped value
+        # in prevention.description and the old field list never looked there.
+        for location, value in _walk_strings(lesson):
+            for finding in find_secrets(value):
+                errors.append(f"{label}: secret pattern detected in {location}: {finding}")
+
+        for reference in (lesson.get("evidence") or []) if resolving else []:
+            message = resolve_lesson_evidence(root, reference)
+            if message is not None:
+                errors.append(f"{label}: {message}")
 
     return errors
 

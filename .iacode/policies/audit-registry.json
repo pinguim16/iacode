@@ -1,0 +1,22 @@
+{
+  "schemaVersion": "1.0.0",
+  "policy": "An independent audit becomes work through this registry. Its findings and attacks are re-parsed from the sealed audit reports at validation time, so a finding cannot be dropped by editing this file, and the expected requirement set of the corrective delivery cannot be shrunk.",
+  "audits": [
+    {
+      "auditId": "M0-CP-0007",
+      "milestone": "M0",
+      "gate": "SETUP-00",
+      "auditor": "Codex Desktop, OpenAI, independent cross-tool milestone audit",
+      "auditCheckpoint": "SETUP-00-CP-0007",
+      "auditCommit": "502c554575f717c1d57290e4f4aafa575e41170e",
+      "subjectCheckpoint": "SETUP-00-CP-0006",
+      "subjectCommit": "994bab402873bc4d221c02d8c94bdebeb2b0f3cb",
+      "verdict": "REWORK_REQUIRED",
+      "reviewReport": "docs/checkpoints/SETUP-00-CP-0007/REVIEW-REPORT.md",
+      "redTeamReport": "docs/checkpoints/SETUP-00-CP-0007/RED-TEAM-REPORT.md",
+      "correctiveCheckpoint": "SETUP-00-CP-0008",
+      "notes": "Eleven findings and twenty-six mandatory A-Z attacks, of which eight escaped, plus six additional attacks AA-AF that also escaped.",
+      "findingsClosureFile": "CP7-FINDINGS-CLOSURE.json"
+    }
+  ]
+}

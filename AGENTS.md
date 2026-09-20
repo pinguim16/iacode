@@ -26,7 +26,11 @@ This file is a Codex adapter for the canonical contracts in `.iacode/`. Reposito
 - Never mix Gates in one commit and never advance a Gate without explicit authorization.
 - Close an implementing run at `READY_FOR_REVIEW`; `GATE_PASS` is granted only by a later run independent of the one that implemented the Gate, which records `secondToolValidation` in `STATE.json`.
 - Declare every changed path in `FILES.json` before finalizing; `finalize_checkpoint.py` binds the hashes but never invents a declaration.
-- Follow the mandatory delivery order and skip no step: requirement extraction, baseline, plan, implementation, test and quality, Green Keeper, Delivery Completeness Validator, `READY_FOR_REVIEW`, independent review, Red Team, `GATE_PASS`.
+- Follow the mandatory delivery order and skip no step: lesson preflight, requirement derivation, baseline, plan, implementation, test and quality, Green Keeper, Delivery Completeness Validator, internal Red Team, Milestone Closure Auditor, `READY_FOR_REVIEW`, independent review, Red Team, `GATE_PASS`.
+- Derive the requirement set with `python scripts/development-ledger/derive_requirements.py --write`; the canonical checklist, the lesson preflight and the open audit findings decide it, never the delivery.
+- Never narrow a mandatory gate set, a denominator or a promotion rule by an argument; those come from policy.
+- Never record an internal verdict as external validation. An external PASS is derived from an audit attestation authored by another sealed checkpoint.
+- Seal with `python scripts/development-ledger/seal_checkpoint.py` so the final validation describes the committed content, and anchor every sealed predecessor in `.iacode/anchors/checkpoint-chain.json`.
 - Extract every requirement into `REQUIREMENTS-MATRIX.json` before implementing, and keep its status truthful.
 - Run `python scripts/development-ledger/green_keeper.py` until every mandatory gate is green, and `python scripts/development-ledger/check_completeness.py --write` before any handoff.
 - Record commands with `python scripts/development-ledger/record_command.py`; a recorded command must be executable from its declared working directory.

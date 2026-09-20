@@ -1,0 +1,198 @@
+{
+  "schemaVersion": "1.0.0",
+  "checkpoint": "SETUP-00-CP-0008",
+  "milestone": "M0",
+  "generatedAt": "2026-09-20T22:16:54Z",
+  "targetFingerprint": "2dbac889f61f630403805b7a1751b5899ee5dd322a49441691e8db95e82d0d0d",
+  "auditorRole": "M0 Closure Auditor (.iacode/agents/m0-closure-auditor.md)",
+  "independence": "Internal quality assurance. This mirror audit is authored by the implementing run, on the same tooling, in the same session. It is not independent external validation and may not be recorded as one; only a milestone attestation produced by a separate audit checkpoint can grant MILESTONE_EXTERNAL_PASS.",
+  "checks": [
+    {
+      "id": "MIR-001",
+      "dimension": "SETUP requirements",
+      "expectation": "Every row of the canonical Gate specification is declared and COMPLETE.",
+      "observed": "71/71 canonical rows COMPLETE",
+      "result": "PASS",
+      "evidence": [
+        "file:docs/SETUP-00-CHECKLIST.md",
+        "checkpoint:REQUIREMENTS-MATRIX.json"
+      ]
+    },
+    {
+      "id": "MIR-002",
+      "dimension": "CP7 findings",
+      "expectation": "Every finding of the open audit is CLOSED.",
+      "observed": "11/11 audit findings CLOSED",
+      "result": "PASS",
+      "evidence": [
+        "checkpoint:CP7-FINDINGS-CLOSURE.json"
+      ]
+    },
+    {
+      "id": "MIR-003",
+      "dimension": "CP7 A-Z attacks",
+      "expectation": "Every mandatory attack of the sealed Red Team report is defended.",
+      "observed": "26/26 mandatory attacks defended; 46/46 overall",
+      "result": "PASS",
+      "evidence": [
+        "checkpoint:M0-INTERNAL-RED-TEAM.json"
+      ]
+    },
+    {
+      "id": "MIR-004",
+      "dimension": "Engineering Memory",
+      "expectation": "The memory validates.",
+      "observed": "LESSONS_VALID total=23 active=23 guarded=22",
+      "result": "PASS",
+      "evidence": [
+        "file:.iacode/memory/lessons.jsonl"
+      ]
+    },
+    {
+      "id": "MIR-005",
+      "dimension": "Lessons",
+      "expectation": "No lesson carries an unresolved guardrail failure.",
+      "observed": "23 lessons, 22 GUARDED, 1 CONFIRMED, 0 with an unresolved guardrail failure",
+      "result": "PASS",
+      "evidence": [
+        "file:.iacode/memory/LESSONS.md"
+      ]
+    },
+    {
+      "id": "MIR-006",
+      "dimension": "Guardrails",
+      "expectation": "Every guardrail resolves, is verified by a test, and has no unresolved failure.",
+      "observed": "22/22 effective, 22 resolved, 22 tested, 0 failures",
+      "result": "PASS",
+      "evidence": [
+        "file:.iacode/memory/guardrails/registry.json"
+      ]
+    },
+    {
+      "id": "MIR-007",
+      "dimension": "Lesson preflight",
+      "expectation": "The preflight is bound to the Gate and fresh against the current memory.",
+      "observed": "fresh; fingerprint recomputed and selection reproduced",
+      "result": "PASS",
+      "evidence": [
+        "checkpoint:LESSON-PREFLIGHT.json"
+      ]
+    },
+    {
+      "id": "MIR-008",
+      "dimension": "Green Keeper",
+      "expectation": "The last cycle is GREEN over the closed mandatory set and is not stale.",
+      "observed": "11 cycle(s), last GREEN, measured against 5/5 mandatory gates, fresh",
+      "result": "PASS",
+      "evidence": [
+        "checkpoint:REWORK-LOG.jsonl"
+      ]
+    },
+    {
+      "id": "MIR-009",
+      "dimension": "Delivery Completeness",
+      "expectation": "Coverage and evidence coverage are total over the derived expected set.",
+      "observed": "131/131 complete against an expected set of 131, coverage 100.00, evidence 100.00",
+      "result": "PASS",
+      "evidence": [
+        "checkpoint:COMPLETENESS-REPORT.json"
+      ]
+    },
+    {
+      "id": "MIR-010",
+      "dimension": "History integrity",
+      "expectation": "The sealed checkpoint chain resolves.",
+      "observed": "7 anchors verified",
+      "result": "PASS",
+      "evidence": [
+        "file:.iacode/anchors/checkpoint-chain.json"
+      ]
+    },
+    {
+      "id": "MIR-011",
+      "dimension": "Tags",
+      "expectation": "Every anchored tag resolves to its anchored commit.",
+      "observed": "7 tags resolve to their anchored commits",
+      "result": "PASS",
+      "evidence": [
+        "file:.iacode/anchors/checkpoint-chain.json"
+      ]
+    },
+    {
+      "id": "MIR-012",
+      "dimension": "Quality evidence",
+      "expectation": "Every PASS carries evidence and nothing is red.",
+      "observed": "8 PASS with evidence, 0 FAIL, 0 unevidenced, 0 unjustified",
+      "result": "PASS",
+      "evidence": [
+        "checkpoint:QUALITY.json"
+      ]
+    },
+    {
+      "id": "MIR-013",
+      "dimension": "Command reproducibility",
+      "expectation": "Every record that names an input binds it by content.",
+      "observed": "57 records, 0 without an input digest, 6 recorded failures kept in the ledger",
+      "result": "PASS",
+      "evidence": [
+        "checkpoint:COMMANDS.jsonl"
+      ]
+    },
+    {
+      "id": "MIR-014",
+      "dimension": "Derived counts",
+      "expectation": "Every evidential count matches its derivation.",
+      "observed": "ATTACKS=46/46; FINDINGS=11/11; GUARDRAILS=22/22; LESSONS=22/23; REQUIREMENTS=131/131; TESTS=306/306",
+      "result": "PASS",
+      "evidence": [
+        "checkpoint:COUNTS.json"
+      ]
+    },
+    {
+      "id": "MIR-015",
+      "dimension": "Documentation",
+      "expectation": "Every relative documentation link resolves.",
+      "observed": "39/39 relative documentation links resolve",
+      "result": "PASS",
+      "evidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ]
+    },
+    {
+      "id": "MIR-016",
+      "dimension": "Historical compatibility",
+      "expectation": "Every sealed checkpoint still validates under the tooling this Gate changes.",
+      "observed": "7 sealed checkpoints validate under this tooling",
+      "result": "PASS",
+      "evidence": [
+        "file:.iacode/anchors/checkpoint-chain.json"
+      ]
+    },
+    {
+      "id": "MIR-017",
+      "dimension": "Clean clone",
+      "expectation": "The delivery validates in a fresh clone with no workspace state.",
+      "observed": "suite=ok, compileall=ok, lessons=ok, integrity=ok, completeness=ok",
+      "result": "PASS",
+      "evidence": [
+        "checkpoint:HANDOFF.md"
+      ]
+    },
+    {
+      "id": "MIR-018",
+      "dimension": "Scope and self-containment",
+      "expectation": "No Gate 0 runtime exists and the delivery is reproducible from the repository.",
+      "observed": "no Gate 0 runtime present; specification in the repository=True; handoff executable without this session=True",
+      "result": "PASS",
+      "evidence": [
+        "file:docs/SETUP-00-CHECKLIST.md",
+        "checkpoint:HANDOFF.md"
+      ]
+    }
+  ],
+  "total": 18,
+  "passed": 18,
+  "failed": 0,
+  "notApplicable": 0,
+  "result": "PASS"
+}

@@ -1,0 +1,110 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://iacode.local/schemas/external-audit-attestation.schema.json",
+  "title": "External audit attestation",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "auditId",
+    "milestone",
+    "auditorRole",
+    "tool",
+    "provider",
+    "model",
+    "subjectCheckpoint",
+    "subjectCommit",
+    "auditCheckpoint",
+    "reviewResult",
+    "redTeamResult",
+    "completeness",
+    "evidenceCoverage",
+    "testResult",
+    "createdAt"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "enum": [
+        "1.0.0"
+      ]
+    },
+    "auditId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "milestone": {
+      "type": "string",
+      "pattern": "^M[0-9]+$"
+    },
+    "auditorRole": {
+      "type": "string",
+      "minLength": 1
+    },
+    "tool": {
+      "type": "string",
+      "minLength": 1
+    },
+    "provider": {
+      "type": "string",
+      "minLength": 1
+    },
+    "model": {
+      "type": "string",
+      "minLength": 1
+    },
+    "subjectCheckpoint": {
+      "type": "string",
+      "minLength": 1
+    },
+    "subjectCommit": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "auditCheckpoint": {
+      "type": "string",
+      "minLength": 1
+    },
+    "auditCommit": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "reviewResult": {
+      "enum": [
+        "APPROVED",
+        "REWORK_REQUIRED"
+      ]
+    },
+    "redTeamResult": {
+      "enum": [
+        "RED_TEAM_PASS",
+        "RED_TEAM_FAIL"
+      ]
+    },
+    "completeness": {
+      "type": "number",
+      "minimum": 0
+    },
+    "evidenceCoverage": {
+      "type": "number",
+      "minimum": 0
+    },
+    "testResult": {
+      "enum": [
+        "PASS",
+        "FAIL"
+      ]
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "notes": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "additionalProperties": false
+}

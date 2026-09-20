@@ -19,6 +19,7 @@ from typing import Any
 
 from ledger_common import (
     CURRENT_SCHEMA_VERSION,
+    DELIVERY_SCHEMA_VERSIONS,
     EVIDENCE_SCHEMA_VERSION,
     INVENTORY_SELF_REFERENTIAL_FILES,
     STATUSES,
@@ -44,7 +45,7 @@ FINALIZED_FILES = ("STATE.json", "RUN-METADATA.json", "STATUS.md", "HANDOFF.md")
 # name made the CP-0003 ledger unexecutable from its own working directory.
 INVOCATION_PREFIX = "python scripts/development-ledger/finalize_checkpoint.py"
 
-HASHED_INVENTORY_VERSIONS = (EVIDENCE_SCHEMA_VERSION, CURRENT_SCHEMA_VERSION)
+HASHED_INVENTORY_VERSIONS = (EVIDENCE_SCHEMA_VERSION,) + DELIVERY_SCHEMA_VERSIONS
 
 
 def _next_attempt_id(checkpoint: Path) -> str:
@@ -308,7 +309,8 @@ def main() -> int:
         handoff_path.write_text(handoff_text, encoding="utf-8")
     write_json(files_path, _refresh_inventory_hashes(root, checkpoint, state, original_files))
 
-    errors = validate_checkpoint(root, checkpoint, allow_dirty=True, allow_pending_ref=True)
+    errors = validate_checkpoint(
+        root, checkpoint, allow_dirty=True, allow_pending_ref=True, allow_pending_seal=True)
     if errors:
         return fail(errors)
 
@@ -327,9 +329,18 @@ def main() -> int:
         preconditions=preconditions,
         failure_reason=None,
     )
+    # The audit found a run that claimed to finish before the finalizer that sealed it. The end of
+    # the run is therefore stamped after the last record the run produced, never before it.
+    metadata = load_json(checkpoint / "RUN-METADATA.json")
+    metadata["finishedAt"] = utc_now()
+    write_json(checkpoint / "RUN-METADATA.json", metadata)
+    state = load_json(checkpoint / "STATE.json")
+    state["updatedAt"] = metadata["finishedAt"]
+    write_json(checkpoint / "STATE.json", state)
     write_json(files_path, _refresh_inventory_hashes(root, checkpoint, state, load_json(files_path)))
 
-    errors = validate_checkpoint(root, checkpoint, allow_dirty=True, allow_pending_ref=True)
+    errors = validate_checkpoint(
+        root, checkpoint, allow_dirty=True, allow_pending_ref=True, allow_pending_seal=True)
     if errors:
         return fail(errors)
 

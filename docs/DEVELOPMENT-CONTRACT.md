@@ -28,16 +28,22 @@ Every delivery follows this sequence. Skipping a step is a contract violation, n
 5. Test and quality execution.
 6. Test Rework / Green Keeper.
 7. Delivery Completeness Validator.
-8. `READY_FOR_REVIEW`.
-9. Independent tool review.
-10. Red Team.
-11. `GATE_PASS`.
+8. Internal Red Team over the mandatory attack battery.
+9. Milestone Closure Auditor, the internal mirror of the independent audit.
+10. `READY_FOR_REVIEW`.
+11. Independent tool review.
+12. Red Team.
+13. `GATE_PASS`.
 
-Steps 6 and 7 exist so the independent tool never has to discover an unimplemented requirement, a
-forgotten prompt item, missing documentation, a red test, a red quality gate, a partial artifact, or
-absent evidence. The Green Keeper may change code; the Delivery Completeness Validator may not.
-Their contracts are `.iacode/agents/test-rework-greenkeeper.md` and
-`.iacode/agents/delivery-completeness-validator.md`.
+Steps 6 to 9 exist so the independent tool never has to discover an unimplemented requirement, a
+forgotten prompt item, missing documentation, a red test, a red quality gate, a partial artifact,
+absent evidence, or an escaped attack. The Green Keeper may change code; the Delivery Completeness
+Validator, the internal Red Team and the Milestone Closure Auditor may not. Their contracts are
+`.iacode/agents/test-rework-greenkeeper.md`, `.iacode/agents/delivery-completeness-validator.md`,
+`.iacode/agents/red-team.md` and `.iacode/agents/m0-closure-auditor.md`.
+
+Any red result in steps 5 to 9 returns the delivery to step 4 and the whole cycle runs again. None of
+steps 6 to 9 is independent validation, and none of them may be recorded as one.
 
 Nothing red ships. A requirement that cannot be finished, or a gate that cannot be repaired inside
 the repository, produces `BLOCKED` with the blocker named, never `READY_FOR_REVIEW`. No delivery

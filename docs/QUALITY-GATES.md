@@ -70,3 +70,38 @@ Lesson validation is part of the Green Keeper gate set, so a broken memory is a 
 it. The two are different statuses and the first is never described as the second. Validation refuses
 `MILESTONE_EXTERNAL_PASS` unless the milestone and the cross-tool validation are both `PASSED`, and
 refuses an `INTERNAL_GATE_PASS` that carries an external verdict.
+
+## The closed mandatory gate set
+
+`.iacode/policies/quality-gates.json` is the registry of mandatory gates. The Green Keeper reads it
+and runs every mandatory gate; `--gates` may add to a run and can never remove from it. Every rework
+cycle records the mandatory set it was measured against, along with each gate's command evidence and
+exit code, and validation refuses a `PASS` whose cycle measured anything less than the canonical set.
+
+Adding a gate to the registry is how the mandatory set grows. Removing one is a policy change, not
+an invocation, and the change is visible in the diff.
+
+## The shared promotion invariant
+
+One set of checks governs every positive terminal status: `READY_FOR_REVIEW`, `READY_FOR_RED_TEAM`,
+`INTERNAL_GATE_PASS`, `MILESTONE_EXTERNAL_PASS` and `GATE_PASS`. All of them require the Green Keeper
+gate to pass, delivery completeness to be total with total evidence coverage, no `PARTIAL` or
+`MISSING` requirement, and every mandatory quality dimension executed and not `FAIL`. Each status then
+adds its own requirements: a review-ready checkpoint leaves the independent verdicts `PENDING`, and a
+terminal status requires them to have been given.
+
+## Freshness
+
+A gate result is a statement about a specific content. The Green Keeper cycle, the completeness
+report, the internal Red Team report and the internal mirror audit each record a fingerprint of the
+delivery-assurance scope they judged. Any later change inside that scope makes the result stale, and
+a stale result is refused exactly like a red one. The scope is the code, the tests, the policies, the
+memory, the prompts and the governing documents; the checkpoint's own evidence is deliberately
+outside it, so recording evidence never invalidates the evidence being recorded.
+
+## Derived counts
+
+Any count used as evidence is derived once into `COUNTS.json` from the artifact that owns it, and
+validation recomputes it. A checkpoint document that writes `N/M TESTS`, `N/M REQUIREMENTS`,
+`N/M FINDINGS`, `N/M ATTACKS`, `N/M LESSONS` or `N/M GUARDRAILS` is checked against the derivation,
+so two artifacts can no longer state different numbers for the same fact.

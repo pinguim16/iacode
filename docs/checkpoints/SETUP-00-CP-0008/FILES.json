@@ -1,0 +1,558 @@
+{
+  "filesRead": [
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0007/REVIEW-REPORT.md",
+      "reason": "The eleven findings this checkpoint closes."
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0007/RED-TEAM-REPORT.md",
+      "reason": "The twenty-six mandatory attacks this checkpoint must defend."
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0007/MILESTONE-REPORT.md",
+      "reason": "The milestone dispositions the internal mirror audit reproduces."
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0007/AUDIT-EXECUTIONS.md",
+      "reason": "The audit's own execution evidence."
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0007/LESSON-CANDIDATES.json",
+      "reason": "The audit's lesson candidates, promoted into the canonical memory."
+    }
+  ],
+  "filesCreated": [
+    {
+      "path": ".claude/agents/m0-closure-auditor.md",
+      "reason": "Claude Code adapter for the milestone closure auditor role.",
+      "hashAfter": "7e4201275eb9c706762d8fd6460fc619d0ca845c07b3cc6a698bcf8ec3310ef0"
+    },
+    {
+      "path": ".iacode/agents/m0-closure-auditor.md",
+      "reason": "Canonical contract of the internal milestone mirror auditor.",
+      "hashAfter": "6f5efec709da3bd47a05a378025b3434c4e2ab52591310a6654ee2590fbb442b"
+    },
+    {
+      "path": ".iacode/anchors/checkpoint-chain.json",
+      "reason": "Hash-linked integrity anchors over every sealed checkpoint (M0-F-007).",
+      "hashAfter": "c18144176351e205ae3f97c3a8e43a4888c80429023c96dc83c7e7bfe4044687"
+    },
+    {
+      "path": ".iacode/attestations/README.md",
+      "reason": "Where an external audit attestation is stored (M0-F-002).",
+      "hashAfter": "9b7d4dac8fa136de001381b03ba60b78ac807e7bad746b57bd30078b500ef205"
+    },
+    {
+      "path": ".iacode/memory/POLICY.json",
+      "reason": "Declares the resolving engineering memory policy 2.0.0 (M0-F-004).",
+      "hashAfter": "40d016c81e2ffe6f1283723ccde26cddf39bc9f2fd598a96689704c4df20f6ea"
+    },
+    {
+      "path": ".iacode/memory/guardrails/registry.json",
+      "reason": "Guardrail registry with the tests that fail when a control is removed.",
+      "hashAfter": "1119566f053449476f6d9df1fea8f53f12673ed368680b7a17ac5e5472bd1548"
+    },
+    {
+      "path": ".iacode/memory/retrospectives/SETUP-00-CP-0008.md",
+      "reason": "Gate retrospective.",
+      "hashAfter": "533897829cc317391faacfb91628e454ce084ffd93fc1d2537aa61d2331044cd"
+    },
+    {
+      "path": ".iacode/policies/audit-registry.json",
+      "reason": "Binds the independent M0 audit to this corrective checkpoint (M0-F-006).",
+      "hashAfter": "847aa76e7487fb218fe4cf2389832f6bc77f28b5d521358617959c41f3c1df4b"
+    },
+    {
+      "path": ".iacode/policies/canonical-requirements.json",
+      "reason": "Machine-readable mirror of the Gate checklist; the expected requirement set (M0-F-006).",
+      "hashAfter": "6889024deb362d799da17267b40a2f65f98ee22ce266254a9de611a3d55897ac"
+    },
+    {
+      "path": ".iacode/policies/quality-gates.json",
+      "reason": "Closed mandatory gate registry; the Green Keeper derives its scope from it (M0-F-005).",
+      "hashAfter": "3e61571a2dc45c5b1cd5cb2883ecf27adac3ed57b75e8905a259cc061670274c"
+    },
+    {
+      "path": ".iacode/schemas/audit-registry.schema.json",
+      "reason": "Schema evolution for the closure controls, versioned so sealed history stays valid.",
+      "hashAfter": "9d6bfe72b7d165d937f1578df8ac6644578ed9138e08291aa0c0502248bc9d7a"
+    },
+    {
+      "path": ".iacode/schemas/canonical-requirements.schema.json",
+      "reason": "Schema evolution for the closure controls, versioned so sealed history stays valid.",
+      "hashAfter": "0fb6fb33ec1727aadce9be3c6bae936034d82f465b9ac04b1c286fdc71da8ba9"
+    },
+    {
+      "path": ".iacode/schemas/checkpoint-anchors.schema.json",
+      "reason": "Schema evolution for the closure controls, versioned so sealed history stays valid.",
+      "hashAfter": "b45c22aa9cade41fd49b147475f9db46dea9c02a0d6c9326bb9600f169792413"
+    },
+    {
+      "path": ".iacode/schemas/closure-requirements.schema.json",
+      "reason": "Schema evolution for the closure controls, versioned so sealed history stays valid.",
+      "hashAfter": "c5c0d63bfafd421fec3b604bdbd54598ecc9ed81855a217a9391c33f8eb0c47d"
+    },
+    {
+      "path": ".iacode/schemas/counts.schema.json",
+      "reason": "Schema evolution for the closure controls, versioned so sealed history stays valid.",
+      "hashAfter": "8ca435dace958fc89757e1f447feb1fed19326dfe5c5cb597cefb0b31a72caf1"
+    },
+    {
+      "path": ".iacode/schemas/external-audit-attestation.schema.json",
+      "reason": "Schema evolution for the closure controls, versioned so sealed history stays valid.",
+      "hashAfter": "92e0bf00b8b99e928f265a5b225fa8f0194fa6dace89de154e3e13ff42abf11b"
+    },
+    {
+      "path": ".iacode/schemas/findings-closure.schema.json",
+      "reason": "Schema evolution for the closure controls, versioned so sealed history stays valid.",
+      "hashAfter": "52d964c7c7a3246ba35efd8a7c0dc854fb12fe26a87a83822c04c01b7f2a91c1"
+    },
+    {
+      "path": ".iacode/schemas/guardrail-registry.schema.json",
+      "reason": "Schema evolution for the closure controls, versioned so sealed history stays valid.",
+      "hashAfter": "6be5df6d2885e1ed82648db5a299dc352e9b9b8fcdcacd68f34acc108a7d99c6"
+    },
+    {
+      "path": ".iacode/schemas/memory-policy.schema.json",
+      "reason": "Schema evolution for the closure controls, versioned so sealed history stays valid.",
+      "hashAfter": "7ee87d44b1c43c88d6d6f2cf9cc6d16b0c3b573e7d111831d6e44935c8f9ac3c"
+    },
+    {
+      "path": ".iacode/schemas/mirror-audit.schema.json",
+      "reason": "Schema evolution for the closure controls, versioned so sealed history stays valid.",
+      "hashAfter": "62a29364a37391f10e58afff5309bc3067b35b4a1dbcb27807587d8c9cac4d22"
+    },
+    {
+      "path": ".iacode/schemas/quality-gate-policy.schema.json",
+      "reason": "Schema evolution for the closure controls, versioned so sealed history stays valid.",
+      "hashAfter": "75db57f0d78866a03d65bf3ad053ae1c6f9ea1a6acbe572f3795bb3aadbc133b"
+    },
+    {
+      "path": ".iacode/schemas/red-team-report.schema.json",
+      "reason": "Schema evolution for the closure controls, versioned so sealed history stays valid.",
+      "hashAfter": "ea70f965b28b183170c5bd956721c5eb20429d62d6dc48fa5289618a8e97bdfc"
+    },
+    {
+      "path": "docs/adr/ADR-0010-milestone-closure-controls.md",
+      "reason": "Records the structural decision and its trust model.",
+      "hashAfter": "2162e121562c8a2928f2393498357c994eb9521f69c6d4fd75fbfba17b177036"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0008/CLOSURE-REQUIREMENTS.json",
+      "reason": "Evidence of the M0 closure checkpoint.",
+      "hashAfter": "a07acbcc6f9faf29471f9da1a1515f17e0256abf7acd4c2a49aaa38644b95e29"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0008/CLOSURE-REQUIREMENTS.md",
+      "reason": "Evidence of the M0 closure checkpoint.",
+      "hashAfter": "0077cd9a55fda45f51877b80eb14dca2079a1200198ee1953da4cdb2b2f8cf3b"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0008/COMMANDS.jsonl",
+      "reason": "Evidence of the M0 closure checkpoint.",
+      "hashAfter": "599aab378f84d299f9680fd515506c460848a7c75565b30aa4cf66ba0a67ce96"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0008/COMPLETENESS-REPORT.json",
+      "reason": "Evidence of the M0 closure checkpoint.",
+      "hashAfter": "9a7b6950ad23e13aef0010225aad07d3fc8d2af29885d2988307dcd1e55dca39"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0008/COMPLETENESS-REPORT.md",
+      "reason": "Evidence of the M0 closure checkpoint.",
+      "hashAfter": "00ce76192676b6a28dbd804f5d774281e87158ca8ac238d73cdb3a6661d470de"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0008/COUNTS.json",
+      "reason": "Evidence of the M0 closure checkpoint.",
+      "hashAfter": "dd6329b00b5822b74d243637a6efe38bf20d92a2692fbc8c6d43d2eef1ef4b51"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0008/CP7-FINDINGS-CLOSURE.json",
+      "reason": "Evidence of the M0 closure checkpoint.",
+      "hashAfter": "1e3c08e5381ce53d5b7771a911c03c126ec4c5695f95762ef1cd03d58a64d167"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0008/CP7-FINDINGS-CLOSURE.md",
+      "reason": "Evidence of the M0 closure checkpoint.",
+      "hashAfter": "ac4bdbad0a05e69fcece443004947d6c6f6c9dea480652543bb568a397e36146"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0008/DECISIONS.md",
+      "reason": "Evidence of the M0 closure checkpoint.",
+      "hashAfter": "2d37cd9c0761347e0a52fcf601d14973dfea163e07f4e173ac733b8437441960"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0008/DIFF-SUMMARY.md",
+      "reason": "Evidence of the M0 closure checkpoint.",
+      "hashAfter": "419a535ce065acb790c55dff1e7bca69b0d58807bca00ae5585aac71d48e5c5f"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0008/FILES.json",
+      "reason": "Evidence of the M0 closure checkpoint."
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0008/FINAL-REPORT.md",
+      "reason": "Evidence of the M0 closure checkpoint.",
+      "hashAfter": "1888a9da0b5e2422069af059a802d634d90648929f2b77317642f7b34ff867b1"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0008/HANDOFF.md",
+      "reason": "Evidence of the M0 closure checkpoint.",
+      "hashAfter": "266ad70201e065de74433a2dafc67104bf4d5c7641e7151f98914a24a1ee320e"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0008/LESSON-PREFLIGHT.json",
+      "reason": "Evidence of the M0 closure checkpoint.",
+      "hashAfter": "890faa38d4ff1c6d4c6143b5e59a2035e3e7103c6aa1f99446f1c7741021c433"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0008/LESSON-PREFLIGHT.md",
+      "reason": "Evidence of the M0 closure checkpoint.",
+      "hashAfter": "9db7d20b932825556f5efded949e922d481d9a51c32c24d124c5dfa18b103c43"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0008/M0-INTERNAL-MIRROR.json",
+      "reason": "Evidence of the M0 closure checkpoint.",
+      "hashAfter": "dd45cd83aa75ed7fe9500b639535cde5a6f5c3838f826c15e340aaebcf8c4f05"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0008/M0-INTERNAL-MIRROR.md",
+      "reason": "Evidence of the M0 closure checkpoint.",
+      "hashAfter": "9f65492e1f0c90729343999dd9796d87c120983780983d0257d15317fe8556ae"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0008/M0-INTERNAL-RED-TEAM.json",
+      "reason": "Evidence of the M0 closure checkpoint.",
+      "hashAfter": "d564068302f6e8b87fa1d8cbcd20ccc965d0093a6f8c4192433336a56bbf12c1"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0008/M0-INTERNAL-RED-TEAM.md",
+      "reason": "Evidence of the M0 closure checkpoint.",
+      "hashAfter": "23f3e469b404dd16bacb34d22953cb9f945b79b6e815461d8bf62b894c7ce7e1"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0008/NEXT.md",
+      "reason": "Evidence of the M0 closure checkpoint.",
+      "hashAfter": "abe0d3d11a39c672672455bbfe1b013ee278e59277bb225872c47964f972af81"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0008/PLAN.md",
+      "reason": "Evidence of the M0 closure checkpoint.",
+      "hashAfter": "4afa33f3c55601da68536800e91b0e0c2adf7efc62edb70d60daf65ec341124c"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0008/PROVENANCE.json",
+      "reason": "Evidence of the M0 closure checkpoint.",
+      "hashAfter": "2b4d2967f537f049258b0c246c30a17da47881322e567f8e55dff9d3a2957662"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0008/QUALITY.json",
+      "reason": "Evidence of the M0 closure checkpoint.",
+      "hashAfter": "9a01e37b04f222b96914b3b8b6707b770efced0ff070e3951068e1a14403656d"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0008/REQUIREMENTS-MATRIX.json",
+      "reason": "Evidence of the M0 closure checkpoint.",
+      "hashAfter": "51e2026e9838feda76f8d53df8fe61f099be59771ba87b4410a2852baad414c6"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0008/REQUIREMENTS-MATRIX.md",
+      "reason": "Evidence of the M0 closure checkpoint.",
+      "hashAfter": "6c9808d7f93e4f12b8f35e8c586a1975087c2db5193b24ffdb8dd1542f70124a"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0008/RESUME-VALIDATION.md",
+      "reason": "Evidence of the M0 closure checkpoint.",
+      "hashAfter": "0b6a78c6d2b979b5e324f079e13ecc5a2bfeda85dd92bb1d6c425d446f8c3c41"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0008/REWORK-LOG.jsonl",
+      "reason": "Evidence of the M0 closure checkpoint.",
+      "hashAfter": "37e2d7f1b47ba4e1bb465efe0c8e6f58d63f3b2803344d5558352d124dbdd211"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0008/RISKS.md",
+      "reason": "Evidence of the M0 closure checkpoint.",
+      "hashAfter": "9b442d5c650cb123fad2bd9d69bd6bb6518523e4f7161a05c953e06e72ac678f"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0008/RUN-METADATA.json",
+      "reason": "Evidence of the M0 closure checkpoint.",
+      "hashAfter": "fabe2cc6a02199bc64f579bea7cf35be6c1f088b899ad251e8694557bd57a32d"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0008/STATE.json",
+      "reason": "Evidence of the M0 closure checkpoint.",
+      "hashAfter": "48a19d9af0119b8cf4900db1c02ed91345013c1e62892ca59e9cbd6bc20296d4"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0008/STATUS.md",
+      "reason": "Evidence of the M0 closure checkpoint.",
+      "hashAfter": "59e6444d1015b76b59cb6aa1143753675cf48a96814b94857478e8c5ce4c83e4"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0008/TESTS.json",
+      "reason": "Evidence of the M0 closure checkpoint.",
+      "hashAfter": "2095ddeabca886ee2f94a9ce1f1eec8713e059c93acc397be7e531f8c76bf643"
+    },
+    {
+      "path": "scripts/development-ledger/anchors.py",
+      "reason": "Computes and verifies the checkpoint integrity anchor chain.",
+      "hashAfter": "93033cb968730635fcc10383ff8ec613b46be671614a80ef683160afe7b70eed"
+    },
+    {
+      "path": "scripts/development-ledger/attestation.py",
+      "reason": "Derives an external milestone verdict from an audit attestation.",
+      "hashAfter": "832bec2fdb6cb0f74108608ebe628256d2ce7247e4f419b03e024c3beff3dee4"
+    },
+    {
+      "path": "scripts/development-ledger/derive_counts.py",
+      "reason": "Derives every count used as evidence from the artifact that owns it.",
+      "hashAfter": "2e7f51a9985fda1d97cb96fb4911d9154aaba763520412400f67b82103c0e492"
+    },
+    {
+      "path": "scripts/development-ledger/derive_requirements.py",
+      "reason": "Writes the closure requirement set and the matrix from the derivation.",
+      "hashAfter": "a6f90963655e97cfd3719ffdd348f27bc589722dee58472c8e266b5622f9f84a"
+    },
+    {
+      "path": "scripts/development-ledger/m0_mirror_audit.py",
+      "reason": "Reproduces the milestone audit internally before the external one.",
+      "hashAfter": "5261493a0c56c0cdce5c03314621f51df5c790c79b15d5a036068165b457ba54"
+    },
+    {
+      "path": "scripts/development-ledger/m0_red_team.py",
+      "reason": "Executes the mandatory attack battery against a disposable clone.",
+      "hashAfter": "85aa3590cd47a8c62e24cbb2b3d841029c68b44bb9d23b4005114512f3462c9e"
+    },
+    {
+      "path": "scripts/development-ledger/policies.py",
+      "reason": "Derives the mandatory gate set and the expected requirement set from canonical sources.",
+      "hashAfter": "184e623618862deedfccf496e0d21f91692f3b369591130456e7fdb070db7713"
+    },
+    {
+      "path": "scripts/development-ledger/seal_checkpoint.py",
+      "reason": "Monotonic post-commit sealing with a recorded clean-tree validation.",
+      "hashAfter": "8af332201d04181b2b0a79ca331afe3b985d254a6b95252a6709863146cf6c51"
+    },
+    {
+      "path": "scripts/development-ledger/verify_integrity.py",
+      "reason": "Mandatory gate that verifies the sealed checkpoint chain.",
+      "hashAfter": "a07521fd49ce626282d72e31e8d7f1e576863dcfc9223691b59f99f61e5633d7"
+    }
+  ],
+  "filesModified": [
+    {
+      "path": ".iacode/memory/LESSONS.md",
+      "reason": "Rendered lesson index, regenerated from the memory.",
+      "hashAfter": "7922b066f29275a851d71a6a05f0fb080e2dc57ca63b63186571c15ed88a1e99",
+      "hashBefore": "6cffa9f01fecbc1683511c8f668b49c4135adc974786fdea38a62436e133464a"
+    },
+    {
+      "path": ".iacode/memory/lessons.jsonl",
+      "reason": "Lessons from the M0 audit, repaired guardrails and corrected provenance.",
+      "hashAfter": "441d8c1b25461f764aa26954b11cd101ba7292ca33a96832eeca4ebeb8511eda",
+      "hashBefore": "48316a38d78eeae7c1c4d2fbcbe5c142959f77e322a8e0bb681b644dad14c22f"
+    },
+    {
+      "path": ".iacode/schemas/checkpoint.schema.json",
+      "reason": "Schema evolution for the closure controls, versioned so sealed history stays valid.",
+      "hashAfter": "217c07ff45293f7cf947e1ef913f81dbf732c02a6cc0961451318506cfeabcfd",
+      "hashBefore": "104720fd94a3ae74ef0c0881a0406ec34ac5a815e8b3bfe9a28223e2250c6b4d"
+    },
+    {
+      "path": ".iacode/schemas/command.schema.json",
+      "reason": "Schema evolution for the closure controls, versioned so sealed history stays valid.",
+      "hashAfter": "dbe633044a4e636232a067ead6402d0365b194d24d98860555153d25146d2c1b",
+      "hashBefore": "4be8b40440eefe442687aa6f582ccbe59bfaed8085d8f1f5cabfbc8946892e00"
+    },
+    {
+      "path": ".iacode/schemas/completeness-report.schema.json",
+      "reason": "Schema evolution for the closure controls, versioned so sealed history stays valid.",
+      "hashAfter": "5cb72e34bed000d54aab022d79078ec797355fe49e0b67b158f3f78494eecd98",
+      "hashBefore": "7c49d3fb481c47bce583a7d5e6e9ae388a7eb3e4dae24712b24a68eb0d6a7eeb"
+    },
+    {
+      "path": ".iacode/schemas/lesson-preflight.schema.json",
+      "reason": "Schema evolution for the closure controls, versioned so sealed history stays valid.",
+      "hashAfter": "8c5648d09ae2ff285d270eb6f7e5432db9f630bcb4608f00d079b1477c6f69de",
+      "hashBefore": "23f4a0d7a65a7c95492de78499a49ce6d638adb87165885a3b4d083cb7ca8533"
+    },
+    {
+      "path": ".iacode/schemas/lesson.schema.json",
+      "reason": "Schema evolution for the closure controls, versioned so sealed history stays valid.",
+      "hashAfter": "4cf6c0b9e27dda1de18ab2823c249b56018da400e7bbbf46d3d0a64a503e406b",
+      "hashBefore": "c63e2d5088d3e048bbb65707a7c587ed875e8605d69f8db4912de49374a391d6"
+    },
+    {
+      "path": ".iacode/schemas/provenance.schema.json",
+      "reason": "Schema evolution for the closure controls, versioned so sealed history stays valid.",
+      "hashAfter": "88e39a95f6a588887a5997037d5b7167c0c02a00ab7c8b3a13986c254437b1d4",
+      "hashBefore": "40c19775eccd3262651f7640973eab273b91db55681949decceb676ecdfff7c1"
+    },
+    {
+      "path": ".iacode/schemas/quality-result.schema.json",
+      "reason": "Schema evolution for the closure controls, versioned so sealed history stays valid.",
+      "hashAfter": "a8403d0e0cc011987875fe220de2b4bbd94cf7bc894d8b9851f5100522dfed7a",
+      "hashBefore": "338e4930b86933bafcf0d5cee668f867570c380de9b5cd946219cc9d1f276784"
+    },
+    {
+      "path": ".iacode/schemas/requirements-matrix.schema.json",
+      "reason": "Schema evolution for the closure controls, versioned so sealed history stays valid.",
+      "hashAfter": "8dce9474efcbbe3bd95af7a24c964a93c3faa24d13f11c7ea9395ce6150a3afb",
+      "hashBefore": "85aaa0f9d04337375475c1c210a9fc6dd20dc956327bbb15e622bf669e973e97"
+    },
+    {
+      "path": ".iacode/schemas/rework-log.schema.json",
+      "reason": "Schema evolution for the closure controls, versioned so sealed history stays valid.",
+      "hashAfter": "632c26cbf7703d03d120d2cf03225053456708cb78191feeeb7533759e4bdf0e",
+      "hashBefore": "57b7a3ab311c8605ba17bf2f546505deda726ecde2d65676c03637a3d76ce2ca"
+    },
+    {
+      "path": ".iacode/schemas/test-result.schema.json",
+      "reason": "Schema evolution for the closure controls, versioned so sealed history stays valid.",
+      "hashAfter": "7f6527e99f04c16213783496516c8909aa4af6a5c89c3ea0bec31600470d7bff",
+      "hashBefore": "e3e011d69179fc7cc91f9846a563ba725b8c110b11269b278ffaca950f653f97"
+    },
+    {
+      "path": "AGENTS.md",
+      "reason": "Codex adapter restated for the closure protocol.",
+      "hashAfter": "7f84929140f0182a82fb74ccbf33dff065274c40ef7c922549cbac53cade7d3b",
+      "hashBefore": "0e56b7508ef6b06b91f96bb35055394d7c5fcf0f06ae56b40bd1e72f5f7c2f0f"
+    },
+    {
+      "path": "CLAUDE.md",
+      "reason": "Claude Code adapter restated for the closure protocol.",
+      "hashAfter": "84c95320ea95a137e2e3628e08c632506053d76e048184575f30f4655ccad746",
+      "hashBefore": "063897ba2925aecc0210ba812873be1978780db9eaebd22707c0d7809cec97bc"
+    },
+    {
+      "path": "START-HERE.md",
+      "reason": "Entry contract restated for the closure protocol.",
+      "hashAfter": "fdfcd54c598698e4c4266adf219c144fb2754fef5f2d7c3ec02c818b380c7676",
+      "hashBefore": "5fff507d4a8e4087dda005ce7b46e956897e3e13cb8eb9020f32b3b829b3f82e"
+    },
+    {
+      "path": "docs/CHECKPOINT-PROTOCOL.md",
+      "reason": "Anchors, sealing and the 3.2.0 contents.",
+      "hashAfter": "cf2ffdc36a29993ceebd3a0ba668f55ff65b92d95c00fe8f20c4872bb188106d",
+      "hashBefore": "6555c42b9760da5082fbf0c4248dbe04fff34340697f83640d90e28a405c7928"
+    },
+    {
+      "path": "docs/DEFINITION-OF-DONE.md",
+      "reason": "Done now includes the closure controls.",
+      "hashAfter": "d585e9e2ab2bf8255a1400216bf20deb7c4a698312469d8071f3706370e31895",
+      "hashBefore": "c5d20a5d3f3dbb4206e9ad9194446e8e33d888b34195f056c29fcd98fe6801b7"
+    },
+    {
+      "path": "docs/DEVELOPMENT-CONTRACT.md",
+      "reason": "Mandatory delivery order extended with internal assurance.",
+      "hashAfter": "fac8c0a72511be543a57275b6dd99a94dfbcf494ad6b3ef3db5c83e471c3590f",
+      "hashBefore": "9374c218cefb5f9834ee79e7fbce7a597797d1fcfdcedccf181fee65bf33ad7d"
+    },
+    {
+      "path": "docs/ENGINEERING-MEMORY.md",
+      "reason": "Memory policy 2.0.0, the guardrail registry and freshness.",
+      "hashAfter": "eeea6b82458d36b1805f11f0858be5b6f54904e675e174c5aa0158e7dc5eedd5",
+      "hashBefore": "e1f51c239c890f2e800c2b1df3da9c2a02e576be0e8e1630d8f541ee14eb8b92"
+    },
+    {
+      "path": "docs/HANDOFF-PROTOCOL.md",
+      "reason": "Handoff order and the sealing steps.",
+      "hashAfter": "44f6068e681862fd785e14ddeb219ab7a01ce06ef20f16f0aded9d7a9cd113f0",
+      "hashBefore": "888183d10e853deba0b139f82b7cf50be54083bdee406a5ecf38acf7d0ac3dcd"
+    },
+    {
+      "path": "docs/MILESTONE-VALIDATION.md",
+      "reason": "External validation is derived from an attestation.",
+      "hashAfter": "f7edd58753e4cbc567efe196cc5dd95af621a5a0329c391c714dcdbc7b5b6d6c",
+      "hashBefore": "4368ccefa11d201f5d90b89f4f000cd29b5998723b810ae828ada9f745766f33"
+    },
+    {
+      "path": "docs/QUALITY-GATES.md",
+      "reason": "Closed mandatory set, promotion invariant, freshness and counts.",
+      "hashAfter": "a6dee1cedfb314020d2d7fc735881b1ac1f57c6447bdef893d4db37bdd9d5b6e",
+      "hashBefore": "b5715df267b67111ef56d3b811915e154ce5e89baf1bb14a684ad222a9becdcd"
+    },
+    {
+      "path": "docs/SETUP-00-CHECKLIST.md",
+      "reason": "Canonical Gate specification, extended with the closure controls.",
+      "hashAfter": "e67ad5a21484f986584fa6bae5cf0a920aa9e4ad297bb1a71b1faced8282c0dd",
+      "hashBefore": "4951b686aa5234a05cf7a5d33fc96412ca68c133af5ef68e7feafbbaeeec2bb6"
+    },
+    {
+      "path": "docs/checkpoints/LATEST.md",
+      "reason": "Points at the checkpoint this run produced.",
+      "hashAfter": "6c899f49e7685e08a2e805f09013e2ac4d7597c90fd92e80856640f30f528270",
+      "hashBefore": "f8dbdd5d70fb3a3af8be0f74cb4ec1f81ba4369298d7ff9e42f3f45a30d81d4a"
+    },
+    {
+      "path": "scripts/development-ledger/README.md",
+      "reason": "Documents the closure tooling.",
+      "hashAfter": "c716580cbfa543eb631056341cc46b33ca2284762b55ce06176f61fc8541c7fb",
+      "hashBefore": "6f2caea4555f1395e7d16dc72f5b358f45f82f758dd79d7ae8d63f14bf4180f7"
+    },
+    {
+      "path": "scripts/development-ledger/check_completeness.py",
+      "reason": "Audits the matrix against the derived expected set and records its freshness.",
+      "hashAfter": "8d2c5d04450e7c530d31c406ffa62551dd99dab6d51bda895a1009a764577c3b",
+      "hashBefore": "e0a817342641a5de4c571fe86b5186a60728bd56eae0a1d28287fd1b05a3f31b"
+    },
+    {
+      "path": "scripts/development-ledger/delivery_assurance.py",
+      "reason": "Expected-set comparison and import-free test discovery.",
+      "hashAfter": "d9221c368a0efc83b6b2d29fc2c1adb55388a77c13c0696d0baefeca7dbca369",
+      "hashBefore": "e75b67c56cd4de1b5b772c711539b07fd82bc91269d3dd0fdd64177b2ef21407"
+    },
+    {
+      "path": "scripts/development-ledger/finalize_checkpoint.py",
+      "reason": "Monotonic end of run and the shared hashed-inventory version set.",
+      "hashAfter": "b38c30caa6170831ee61421d09f0466ab8c546e39d4ba3bfe125c57826005cac",
+      "hashBefore": "8e93076a6fe54cf33d952ec49e405d1e72eec885ce90f3e480298dc787ff1cb4"
+    },
+    {
+      "path": "scripts/development-ledger/green_keeper.py",
+      "reason": "Runs the closed mandatory gate set and records the cycle it was measured against.",
+      "hashAfter": "2d09b0592b59122345e3fd01c4db51cacf2ca01fa899c4dcca39bc177e9753b9",
+      "hashBefore": "c977594edf224e5aca53e36df3615c798579bea065cc59771390b520f2d2f44c"
+    },
+    {
+      "path": "scripts/development-ledger/ledger_common.py",
+      "reason": "Schema versions, the assurance scope fingerprint and input digests.",
+      "hashAfter": "04b6dfd0d9fba7bbfa83610043e788b70ddfe325d36f3e70d158777f1d130e16",
+      "hashBefore": "0a737e37140d77fdf5fe72aa0b36cedcf245a40a18b71386192e15a99f6fd8de"
+    },
+    {
+      "path": "scripts/development-ledger/lessons.py",
+      "reason": "Resolves every lesson claim and computes preflight freshness and guardrail effectiveness.",
+      "hashAfter": "b08738af03f601f6050d4f59940733dfe1198ed871cc124262bb4e3f2e28c1ba",
+      "hashBefore": "d6b20b47cfa58b15a37f12069f9da85ea9bd9e0a350672c3c22ff932e00f51df"
+    },
+    {
+      "path": "scripts/development-ledger/new_checkpoint.py",
+      "reason": "Creates a 3.2.0 checkpoint with the closure blocks and a bound first record.",
+      "hashAfter": "0a03787c0c53338395baaed9e886df59716f5ed81b84ccd2a226d13e73be6a98",
+      "hashBefore": "67bfebee48db4c33ac40274d54d3cacb18d257d0406550e62e7f56201818ea79"
+    },
+    {
+      "path": "scripts/development-ledger/record_command.py",
+      "reason": "Records the subject commit alongside the bound inputs.",
+      "hashAfter": "ec166ab6a0eeead4940f48a88f498dcb4781937505856a53a220bfbcb7160573",
+      "hashBefore": "c8e4f9d0bda0a69b4139a331f4fa0ba84b06e6e4531b645b3104bb3e0b85c907"
+    },
+    {
+      "path": "scripts/development-ledger/validate_checkpoint.py",
+      "reason": "Promotion invariant, closure controls, seal chronology and input binding.",
+      "hashAfter": "a891d4405c73bab0dd6136ac34be62a3405deb97e203377f7d81e0eb30de820e",
+      "hashBefore": "8bae437d846ebcb6d7d1d0402b38506535e6487eb810b6dbe35da5d0555878ab"
+    },
+    {
+      "path": "tests/test_development_ledger.py",
+      "reason": "Regression and negative tests for every finding and every attack.",
+      "hashAfter": "776de4194da97c82df6256ddca7ac47be758cffd9fa31e9161b858fc166d51e0",
+      "hashBefore": "edeb80c35c13fb77ace28689d14e54a6d8bca1468c3209da5e916c47fc75f797"
+    }
+  ],
+  "filesDeleted": []
+}

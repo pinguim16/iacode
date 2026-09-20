@@ -3,53 +3,214 @@
   "$id": "https://iacode.local/schemas/command.schema.json",
   "title": "Sanitized command evidence",
   "type": "object",
-  "required": ["timestamp", "command", "workingDirectory", "exitCode", "durationMs", "stdoutArtifact", "stderrArtifact"],
+  "required": [
+    "timestamp",
+    "command",
+    "workingDirectory",
+    "exitCode",
+    "durationMs",
+    "stdoutArtifact",
+    "stderrArtifact"
+  ],
   "$defs": {
     "precondition": {
       "type": "object",
-      "required": ["name", "satisfied"],
+      "required": [
+        "name",
+        "satisfied"
+      ],
       "properties": {
-        "name": {"type": "string", "minLength": 1},
-        "expected": {"type": ["string", "null"]},
-        "observed": {"type": ["string", "null"]},
-        "satisfied": {"type": "boolean"}
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "expected": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "observed": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "satisfied": {
+          "type": "boolean"
+        }
       },
       "additionalProperties": false
     },
     "repositoryState": {
       "type": "object",
       "properties": {
-        "branch": {"type": ["string", "null"]},
-        "head": {"type": ["string", "null"]},
-        "dirty": {"type": ["boolean", "null"]},
-        "detached": {"type": ["boolean", "null"]}
+        "branch": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "head": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "dirty": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "detached": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "inputDigest": {
+      "type": "object",
+      "required": [
+        "path",
+        "hash"
+      ],
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "hash": {
+          "type": "string",
+          "pattern": "^([0-9a-f]{64}|ABSENT)$"
+        }
       },
       "additionalProperties": false
     }
   },
   "properties": {
-    "id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"},
-    "timestamp": {"type": "string", "format": "date-time"},
-    "runtime": {"type": "string", "minLength": 1},
-    "command": {"type": "string", "minLength": 1},
-    "arguments": {"type": "array", "items": {"type": "string"}},
-    "inputs": {"type": "array", "items": {"type": "string", "minLength": 1}},
-    "workingDirectory": {"type": "string", "minLength": 1},
-    "commit": {"type": "string", "pattern": "^(UNBORN|[0-9a-f]{40})$"},
-    "purpose": {"type": "string", "minLength": 1},
-    "result": {"enum": ["COMPLETED", "PRECONDITION_REJECTED", "ABORTED"]},
-    "resultCode": {"type": "string", "minLength": 1},
-    "exitCode": {"type": ["integer", "null"]},
-    "durationMs": {"type": "integer", "minimum": 0},
-    "stdoutArtifact": {"type": ["string", "null"]},
-    "stderrArtifact": {"type": ["string", "null"]},
-    "operation": {"type": "string", "minLength": 1},
-    "phase": {"type": "string", "minLength": 1},
-    "attemptId": {"type": "string", "minLength": 1},
-    "preconditions": {"type": "array", "items": {"$ref": "#/$defs/precondition"}},
-    "failureReason": {"type": ["string", "null"]},
-    "repositoryState": {"$ref": "#/$defs/repositoryState"},
-    "notes": {"type": ["string", "null"]}
+    "id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "runtime": {
+      "type": "string",
+      "minLength": 1
+    },
+    "command": {
+      "type": "string",
+      "minLength": 1
+    },
+    "arguments": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "inputs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "workingDirectory": {
+      "type": "string",
+      "minLength": 1
+    },
+    "commit": {
+      "type": "string",
+      "pattern": "^(UNBORN|[0-9a-f]{40})$"
+    },
+    "purpose": {
+      "type": "string",
+      "minLength": 1
+    },
+    "result": {
+      "enum": [
+        "COMPLETED",
+        "PRECONDITION_REJECTED",
+        "ABORTED"
+      ]
+    },
+    "resultCode": {
+      "type": "string",
+      "minLength": 1
+    },
+    "exitCode": {
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "durationMs": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "stdoutArtifact": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "stderrArtifact": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "operation": {
+      "type": "string",
+      "minLength": 1
+    },
+    "phase": {
+      "type": "string",
+      "minLength": 1
+    },
+    "attemptId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "preconditions": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/precondition"
+      }
+    },
+    "failureReason": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "repositoryState": {
+      "$ref": "#/$defs/repositoryState"
+    },
+    "notes": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "inputsDigest": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/inputDigest"
+      }
+    },
+    "subjectCommit": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
   },
   "additionalProperties": false
 }

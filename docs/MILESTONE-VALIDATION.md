@@ -85,3 +85,51 @@ cannot see because each Gate looked correct on its own.
 
 It does not implement corrections. Findings return to the implementer, which preserves the
 independence that makes the audit worth running.
+
+## External validation is derived, never asserted
+
+The first `M0` audit proved that a checkpoint could describe itself as externally validated: filling
+`secondToolValidation` with complete attribution, setting `milestone.status = PASSED` and writing
+`MILESTONE_EXTERNAL_PASS` were all accepted on an intermediate Gate with the review and the Red Team
+still pending.
+
+An external verdict is now derived from an **external audit attestation**, stored in
+`.iacode/attestations/<auditId>.json` and validated against
+`.iacode/schemas/external-audit-attestation.schema.json`. The attestation records the audit, the
+auditing tool, provider and model, the subject checkpoint and commit it judged, the audit checkpoint
+that carries the evidence, and the four results that make a milestone pass: the review verdict, the
+Red Team verdict, completeness with evidence coverage, and the test result.
+
+Verification re-derives all of it. An attestation is rejected when it names the audited checkpoint as
+its own auditor, when the audit checkpoint does not exist, is not sealed under its canonical tag, or
+is not in the integrity chain, when it attests a different checkpoint or commit than the one being
+promoted, when the review is not `APPROVED`, when the Red Team is not `RED_TEAM_PASS`, when
+completeness or evidence coverage is below `100.0`, or when the test result is not `PASS`.
+`MILESTONE_EXTERNAL_PASS` additionally requires a milestone-closing Gate or a recorded extraordinary
+trigger.
+
+### Trust model
+
+The control is structural, not cryptographic. There is no signature and no external key: an external
+PASS now requires a second, sealed, tagged, anchored checkpoint authored as an audit, which cannot be
+produced by editing `STATE.json`, `QUALITY.json` or one `secondToolValidation` field. An actor able
+to create that checkpoint and its tag could still forge the relationship. That residual limit is
+recorded here rather than papered over, and the upgrade to signed attestations stays available.
+
+## Internal assurance before the external audit
+
+A milestone delivery runs, before handoff, the full mandatory attack battery
+(`m0_red_team.py`) and a mirror of the milestone audit itself (`m0_mirror_audit.py`, the role in
+`.iacode/agents/m0-closure-auditor.md`). Both write machine-readable reports with a fingerprint of
+the content they judged, and both are refused when stale.
+
+Neither is independent validation. They are authored by the implementing run, on the same tooling, in
+the same session. Their purpose is to reduce the external audit to confirmation rather than
+discovery, and the validator refuses any attempt to record either of them as an external verdict.
+
+## Findings become work
+
+`.iacode/policies/audit-registry.json` binds an independent audit to the checkpoint that corrects it.
+The findings and the mandatory attacks are re-parsed from the sealed audit reports rather than
+transcribed, so the corrective delivery's expected requirement set contains one anchored requirement
+per finding and per mandatory attack. A delivery cannot be offered while any of them is open.

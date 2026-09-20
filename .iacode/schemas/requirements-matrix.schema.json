@@ -86,6 +86,24 @@
         },
         "notes": {
           "type": "string"
+        },
+        "sourceRef": {
+          "type": "string",
+          "pattern": "^(canonical|lesson|finding|attack|local):\\S"
+        },
+        "negativeTestEvidence": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "guardrailEvidence": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
         }
       },
       "additionalProperties": false
@@ -94,7 +112,8 @@
   "properties": {
     "schemaVersion": {
       "enum": [
-        "1.0.0"
+        "1.0.0",
+        "2.0.0"
       ]
     },
     "gate": {
@@ -111,6 +130,10 @@
       "items": {
         "$ref": "#/$defs/requirement"
       }
+    },
+    "expectedSetSource": {
+      "type": "string",
+      "minLength": 1
     }
   },
   "additionalProperties": false

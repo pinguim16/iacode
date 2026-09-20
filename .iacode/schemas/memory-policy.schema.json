@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://iacode.local/schemas/memory-policy.schema.json",
+  "title": "Engineering memory policy",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "policy"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "enum": [
+        "1.0.0",
+        "2.0.0"
+      ]
+    },
+    "policy": {
+      "type": "string",
+      "minLength": 1
+    },
+    "guardrailRegistry": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "additionalProperties": false
+}

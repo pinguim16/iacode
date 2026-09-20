@@ -33,7 +33,7 @@ observable. An unexecuted check is `NOT_EXECUTED`, never `PASS`.
 
 | # | Requirement | Artifact | Evidence |
 |---|---|---|---|
-| 3.1 | Ten canonical, tool-neutral role contracts exist. | `.iacode/agents/` | `test_project_agents_match_canonical_role_names`. |
+| 3.1 | The canonical, tool-neutral role contracts exist, one per role of the delivery protocol. | `.iacode/agents/` | `test_project_agents_match_canonical_role_names`. |
 | 3.2 | Documentation, provenance, secret, tool-execution, and training-data policies exist. | `.iacode/policies/` | Files present; secret policy matches the implemented detector scope. |
 | 3.3 | Reusable templates exist for ADRs, checkpoints, gate reports, and handoffs. | `.iacode/templates/` | Files present. |
 
@@ -87,7 +87,7 @@ observable. An unexecuted check is `NOT_EXECUTED`, never `PASS`.
 | 7b.5 | Readiness and blockage can never be claimed together. | `validate_checkpoint.py` | `StatusBlockerInvariantTests`, `ResealedBlockerFixtureTests`. |
 | 7b.6 | Every operation attempt is recorded, including a refusal decided before execution. | `scripts/development-ledger/finalize_checkpoint.py` | `FinalizationAttemptRecordingTests`. |
 | 7b.7 | Every recorded command is reproducible from its declared working directory. | `scripts/development-ledger/record_command.py`, `.iacode/schemas/command.schema.json` | `CommandReproducibilityTests`. |
-| 7b.8 | The mandatory eleven-step delivery order is stated in every governing document and both adapters. | `docs/DEVELOPMENT-CONTRACT.md`, `docs/QUALITY-GATES.md`, `docs/CHECKPOINT-PROTOCOL.md`, `docs/HANDOFF-PROTOCOL.md`, `docs/DEFINITION-OF-DONE.md`, `START-HERE.md`, `AGENTS.md`, `CLAUDE.md` | Documents present and consistent. |
+| 7b.8 | The mandatory delivery order is stated in full in every governing document and both adapters. | `docs/DEVELOPMENT-CONTRACT.md`, `docs/QUALITY-GATES.md`, `docs/CHECKPOINT-PROTOCOL.md`, `docs/HANDOFF-PROTOCOL.md`, `docs/DEFINITION-OF-DONE.md`, `START-HERE.md`, `AGENTS.md`, `CLAUDE.md` | Documents present and consistent. |
 
 ## 7c. Engineering memory and milestone validation
 
@@ -103,6 +103,23 @@ observable. An unexecuted check is `NOT_EXECUTED`, never `PASS`.
 | 7c.8 | An internal verdict is never described as independent external validation. | `INTERNAL_GATE_PASS`, `MILESTONE_EXTERNAL_PASS` | `MemoryStatusVocabularyTests`, `MemoryPolicyValidationTests`. |
 | 7c.9 | An extraordinary audit requires a recorded trigger. | `externalAuditRequired`, `externalAuditReason` | `MemoryPolicyValidationTests`. |
 | 7c.10 | Every completed Gate produces a retrospective. | `.iacode/templates/retrospective/TEMPLATE.md`, `.iacode/memory/retrospectives/` | Retrospective present for this Gate. |
+
+## 7d. Milestone closure controls
+
+| # | Requirement | Artifact | Evidence |
+|---|---|---|---|
+| 7d.1 | One promotion invariant governs every positive terminal status, not only `READY_FOR_REVIEW`. | `scripts/development-ledger/validate_checkpoint.py` | `PromotionInvariantTests`. |
+| 7d.2 | The mandatory quality gate set is a closed machine-readable registry that an invocation cannot narrow. | `.iacode/policies/quality-gates.json`, `scripts/development-ledger/green_keeper.py` | `MandatoryGatePolicyTests`. |
+| 7d.3 | The expected requirement set is derived from canonical sources and compared exactly with the declared set. | `.iacode/policies/canonical-requirements.json`, `scripts/development-ledger/policies.py` | `ExpectedRequirementSetTests`. |
+| 7d.4 | An external milestone PASS is derived from an audit attestation authored by another sealed checkpoint. | `.iacode/attestations/`, `scripts/development-ledger/attestation.py` | `ExternalAttestationTests`. |
+| 7d.5 | A derived artifact carries a fingerprint of its inputs, and staleness is decided by recomputation. | `scripts/development-ledger/lesson_preflight.py`, `LESSON-PREFLIGHT.json` | `PreflightFreshnessTests`. |
+| 7d.6 | Every lesson control, evidence path and provenance locator is resolved against the repository. | `scripts/development-ledger/lessons.py` | `LessonResolutionTests`, `LessonProvenanceTests`. |
+| 7d.7 | Every `GUARDED` lesson names a registered guardrail, and guardrail effectiveness is measured. | `.iacode/memory/guardrails/registry.json` | `GuardrailRegistryTests`, `GuardrailEffectivenessGateTests`. |
+| 7d.8 | Sealed checkpoints are anchored by a hash-linked chain over tag, commit and tree. | `.iacode/anchors/checkpoint-chain.json`, `scripts/development-ledger/anchors.py` | `IntegrityAnchorTests`. |
+| 7d.9 | Every count used as evidence is derived once and verified wherever a report states it. | `COUNTS.json`, `scripts/development-ledger/derive_counts.py` | `DerivedCountTests`. |
+| 7d.10 | Sealing is monotonic and post-commit, and every recorded command binds its declared inputs by content. | `scripts/development-ledger/seal_checkpoint.py`, `record_command.py` | `SealChronologyTests`, `CommandInputBindingTests`. |
+| 7d.11 | A milestone delivery carries an internal Red Team and an internal mirror audit, and neither is recorded as external validation. | `scripts/development-ledger/m0_red_team.py`, `m0_mirror_audit.py`, `.iacode/agents/m0-closure-auditor.md` | `InternalAssuranceTests`, `AuditSourceParsingTests`. |
+| 7d.12 | Every finding of an independent audit is closed before the corrective delivery is offered. | `.iacode/policies/audit-registry.json`, `CP7-FINDINGS-CLOSURE.json` | `FindingsClosureTests`. |
 
 ## 8. Independent verification
 

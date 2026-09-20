@@ -12,6 +12,7 @@ from pathlib import Path
 from ledger_common import (
     CURRENT_SCHEMA_VERSION,
     QUALITY_DIMENSIONS_V3,
+    canonical_hash_path,
     milestone_for,
     STATUSES,
     find_root,
@@ -132,6 +133,15 @@ def main() -> int:
         },
         "externalAuditRequired": False,
         "externalAuditReason": None,
+        "guardrailEffectiveness": {
+            "guardrailsTotal": 0, "guardrailsResolved": 0, "guardrailsTested": 0,
+            "guardrailsEffective": 0, "guardrailFailures": 0, "evidence": [],
+        },
+        "integrity": {
+            "status": "NOT_EXECUTED", "anchors": 0,
+            "chainFile": ".iacode/anchors/checkpoint-chain.json", "evidence": [],
+        },
+        "externalAttestation": {"status": "NONE", "path": None, "auditId": None, "evidence": []},
     })
     write_json(checkpoint / "RUN-METADATA.json", {
         "tool": "not-recorded",
@@ -157,6 +167,13 @@ def main() -> int:
         "arguments": ["scripts/development-ledger/new_checkpoint.py", "--gate", args.gate,
                       "--status", args.status],
         "inputs": ["scripts/development-ledger/new_checkpoint.py"],
+        # The tool binds its own source by content when the repository ships it. A checkout that
+        # does not vendor the tooling records ABSENT rather than inventing a digest.
+        "inputsDigest": [{
+            "path": "scripts/development-ledger/new_checkpoint.py",
+            "hash": canonical_hash_path(root / "scripts/development-ledger/new_checkpoint.py")
+            if (root / "scripts/development-ledger/new_checkpoint.py").is_file() else "ABSENT",
+        }],
         "workingDirectory": str(root),
         "commit": snapshot["head"],
         "purpose": "Create the checkpoint skeleton with truthful non-PASS defaults.",
@@ -179,10 +196,20 @@ def main() -> int:
     })
     (checkpoint / "REWORK-LOG.jsonl").write_text("", encoding="utf-8")
     write_json(checkpoint / "REQUIREMENTS-MATRIX.json", {
-        "schemaVersion": "1.0.0", "gate": args.gate, "checkpoint": name, "requirements": [],
+        "schemaVersion": "2.0.0", "gate": args.gate, "checkpoint": name, "requirements": [],
     })
     (checkpoint / "REQUIREMENTS-MATRIX.md").write_text(
         f"# Requirements Matrix - {name}\n\nExtract every requirement before implementation.\n",
+        encoding="utf-8")
+    write_json(checkpoint / "CLOSURE-REQUIREMENTS.json", {
+        "schemaVersion": "1.0.0", "gate": args.gate, "checkpoint": name,
+        "sources": ["Derive the expected set with derive_requirements.py before implementing."],
+        "requirements": [],
+    })
+    (checkpoint / "CLOSURE-REQUIREMENTS.md").write_text(
+        f"# Closure Requirements - {name}\n\n"
+        "Derive the expected requirement set from the canonical sources before implementation:\n"
+        "`python scripts/development-ledger/derive_requirements.py --write`.\n",
         encoding="utf-8")
     write_json(checkpoint / "PROVENANCE.json", {
         "schemaVersion": CURRENT_SCHEMA_VERSION,

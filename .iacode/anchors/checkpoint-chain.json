@@ -1,0 +1,69 @@
+{
+  "schemaVersion": "1.0.0",
+  "trustModel": "Tamper evident inside the local trust model. The chain detects a moved tag, a rewritten commit or tree, and a broken link between checkpoints. It is not a signature and does not defend against an attacker who controls the whole repository.",
+  "anchors": [
+    {
+      "checkpointId": "SETUP-00-CP-0001",
+      "tag": "refs/tags/iacode-checkpoints/SETUP-00-CP-0001",
+      "commit": "0cb4f246b555a6304ca6dbce1c8e97c80b527ef9",
+      "treeHash": "b6f32f4fccd54a9fdb24642173f8cedc8aac644b",
+      "previousCheckpoint": null,
+      "previousAnchorHash": null,
+      "anchorHash": "f02ce941ba442dd2cddac6d01d36d6436ebaa0799cf884bd255690b50c9a3b34"
+    },
+    {
+      "checkpointId": "SETUP-00-CP-0002",
+      "tag": "refs/tags/iacode-checkpoints/SETUP-00-CP-0002",
+      "commit": "ae563f860856e3ce5ca9ec6e94b6202ed7e4a4e4",
+      "treeHash": "331054d5062501261e9987a8fade132b4b1f3cd4",
+      "previousCheckpoint": "SETUP-00-CP-0001",
+      "previousAnchorHash": "f02ce941ba442dd2cddac6d01d36d6436ebaa0799cf884bd255690b50c9a3b34",
+      "anchorHash": "65c76a8a1c19cf70cfc37a03ce790d710b877afdf62c90a442d34879ca003279"
+    },
+    {
+      "checkpointId": "SETUP-00-CP-0003",
+      "tag": "refs/tags/iacode-checkpoints/SETUP-00-CP-0003",
+      "commit": "5780b0f86dbf46ad84d69b88a637be6f076946f4",
+      "treeHash": "65dfc288c60dec518e5c488db6af8b4e9825fd8c",
+      "previousCheckpoint": "SETUP-00-CP-0002",
+      "previousAnchorHash": "65c76a8a1c19cf70cfc37a03ce790d710b877afdf62c90a442d34879ca003279",
+      "anchorHash": "df6e7bacb173d4b440b9cfee831968886735528dd77f2a54e3a5ca92041ecad3"
+    },
+    {
+      "checkpointId": "SETUP-00-CP-0004",
+      "tag": "refs/tags/iacode-checkpoints/SETUP-00-CP-0004",
+      "commit": "c2eea150de9c97cfab5429d1e1eb3d5285e585f7",
+      "treeHash": "7f6299ce5420e08a841fca8499ce2e00d721410c",
+      "previousCheckpoint": "SETUP-00-CP-0003",
+      "previousAnchorHash": "df6e7bacb173d4b440b9cfee831968886735528dd77f2a54e3a5ca92041ecad3",
+      "anchorHash": "a5c174320d6fae29d2e94c20a5de08c8617cfa3c18d3f4946c6f0915c710b3bb"
+    },
+    {
+      "checkpointId": "SETUP-00-CP-0005",
+      "tag": "refs/tags/iacode-checkpoints/SETUP-00-CP-0005",
+      "commit": "276645b4498a0e58a1bf38979b5e078669dbb380",
+      "treeHash": "f023e2db91ab6ad590715a57447795304d713d4d",
+      "previousCheckpoint": "SETUP-00-CP-0004",
+      "previousAnchorHash": "a5c174320d6fae29d2e94c20a5de08c8617cfa3c18d3f4946c6f0915c710b3bb",
+      "anchorHash": "2689fb49156d8da152582fccf2f07e458e7b0909766a53b5e5887fb2a797d137"
+    },
+    {
+      "checkpointId": "SETUP-00-CP-0006",
+      "tag": "refs/tags/iacode-checkpoints/SETUP-00-CP-0006",
+      "commit": "994bab402873bc4d221c02d8c94bdebeb2b0f3cb",
+      "treeHash": "f91e5c3c02897bb36f39d62bef9c0a4b189f31fc",
+      "previousCheckpoint": "SETUP-00-CP-0005",
+      "previousAnchorHash": "2689fb49156d8da152582fccf2f07e458e7b0909766a53b5e5887fb2a797d137",
+      "anchorHash": "aba51e15e657b73b55f24fe41b23a430f0ef761719eed18aa4a16df8162f24eb"
+    },
+    {
+      "checkpointId": "SETUP-00-CP-0007",
+      "tag": "refs/tags/iacode-checkpoints/SETUP-00-CP-0007",
+      "commit": "502c554575f717c1d57290e4f4aafa575e41170e",
+      "treeHash": "b8344e174df193931d586e13c2f372a45794ca21",
+      "previousCheckpoint": "SETUP-00-CP-0006",
+      "previousAnchorHash": "aba51e15e657b73b55f24fe41b23a430f0ef761719eed18aa4a16df8162f24eb",
+      "anchorHash": "2ddb4dfc04f84b6d87f4a79f23360b3736490c2c21949dc24d8ff349171123dc"
+    }
+  ]
+}

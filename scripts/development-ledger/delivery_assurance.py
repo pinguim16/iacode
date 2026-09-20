@@ -15,14 +15,42 @@ The same function is used by ``check_completeness.py`` to produce the report and
 
 from __future__ import annotations
 
+import ast
 import json
-import unittest
 from pathlib import Path
 from typing import Any
 
 from ledger_common import LedgerError, load_json
+from policies import (
+    compare_requirement_sets,
+    declared_requirement_refs,
+    expected_requirement_refs,
+    source_ref,
+)
 
 EVIDENCE_KINDS = ("file", "checkpoint", "command", "test")
+
+def completeness_scope(root: Path, checkpoint: Path) -> list[str]:
+    """Extra paths the completeness fingerprint covers beyond the assurance scope.
+
+    The requirements matrix and the lesson preflight live inside the checkpoint, so they are not in
+    the assurance scope, yet changing either of them invalidates a completeness audit. A checkpoint
+    outside the repository, which only a test fixture ever is, contributes no extra path.
+    """
+    names = ("REQUIREMENTS-MATRIX.json", "LESSON-PREFLIGHT.json")
+    resolved: list[str] = []
+    for name in names:
+        try:
+            resolved.append(str((checkpoint / name).relative_to(root)).replace("\\", "/"))
+        except ValueError:
+            continue
+    return resolved
+
+
+EXPECTED_SET_DESCRIPTION = (
+    "derived by policies.expected_requirement_refs from the canonical Gate specification, the "
+    "lesson preflight and the open independent audit findings and attacks"
+)
 
 
 def load_command_results(checkpoint: Path) -> dict[str, dict[str, Any]]:
@@ -55,7 +83,14 @@ _TEST_ID_CACHE: dict[str, set[str]] = {}
 
 
 def collect_test_ids(root: Path) -> set[str]:
-    """Discover every test case id in the suite, as ``TestClass.test_name``."""
+    """Every test case id in the suite, as ``TestClass.test_name`` and as the bare method name.
+
+    The suite is read with ``ast`` rather than imported. Importing it would execute it, would make
+    the answer depend on the interpreter's module cache, and fails outright when a checkout is
+    inspected from another checkout -- which is exactly the situation of a validator resolving the
+    references of a repository it is auditing. Inheritance inside a test module is resolved, so a
+    subclass carries the cases it inherits.
+    """
     cache_key = str(root.resolve())
     if cache_key in _TEST_ID_CACHE:
         return _TEST_ID_CACHE[cache_key]
@@ -65,22 +100,47 @@ def collect_test_ids(root: Path) -> set[str]:
         _TEST_ID_CACHE[cache_key] = identifiers
         return identifiers
 
-    def walk(suite: Any) -> None:
-        for item in suite:
-            if isinstance(item, unittest.TestSuite):
-                walk(item)
-            elif isinstance(item, unittest.TestCase):
-                name = item.__class__.__name__
-                method = item.id().rsplit(".", 1)[-1]
+    for path in sorted(tests_directory.rglob("*.py")):
+        if "__pycache__" in path.parts:
+            continue
+        try:
+            tree = ast.parse(path.read_text(encoding="utf-8"))
+        except (OSError, SyntaxError):
+            continue
+        own: dict[str, set[str]] = {}
+        bases: dict[str, list[str]] = {}
+        for node in ast.walk(tree):
+            if not isinstance(node, ast.ClassDef):
+                continue
+            own[node.name] = {
+                item.name for item in node.body
+                if isinstance(item, (ast.FunctionDef, ast.AsyncFunctionDef))
+                and item.name.startswith("test")
+            }
+            bases[node.name] = [
+                base.id for base in node.bases if isinstance(base, ast.Name)
+            ] + [
+                base.attr for base in node.bases if isinstance(base, ast.Attribute)
+            ]
+
+        def resolve(name: str, seen: set[str]) -> set[str]:
+            if name in seen:
+                return set()
+            seen.add(name)
+            methods = set(own.get(name, set()))
+            for base in bases.get(name, []):
+                methods |= resolve(base, seen)
+            return methods
+
+        for name in own:
+            methods = resolve(name, set())
+            if methods:
+                # A class name is a usable reference: it names a group of cases that must exist.
+                identifiers.add(name)
+            for method in methods:
                 identifiers.add(f"{name}.{method}")
                 identifiers.add(method)
-            else:
-                continue
 
-    try:
-        walk(unittest.defaultTestLoader.discover(str(tests_directory), top_level_dir=str(tests_directory)))
-    except Exception:  # pragma: no cover - discovery failure is reported by the suite itself
-        return identifiers
     _TEST_ID_CACHE[cache_key] = identifiers
     return identifiers
 
@@ -153,6 +213,8 @@ def evaluate_matrix(
     if not isinstance(requirements, list) or not requirements:
         return {
             "totalRequirements": 0,
+            "expectedRequirements": 0,
+            "expectedSetSource": "not derived",
             "mandatoryRequirements": 0,
             "complete": 0,
             "partial": 0,
@@ -181,6 +243,7 @@ def evaluate_matrix(
     # A lesson that the preflight selected is a requirement of this Gate. Dropping it from the matrix
     # would let the memory be silently ignored, which is the failure the memory exists to prevent.
     preflight_path = checkpoint / "LESSON-PREFLIGHT.json"
+    preflight: Any = None
     if preflight_path.is_file():
         try:
             preflight = load_json(preflight_path)
@@ -197,6 +260,39 @@ def evaluate_matrix(
                             f"the lesson preflight derived this requirement from "
                             f"{derived.get('lessonId')} but the matrix does not declare it"),
                     })
+
+    # The denominator is not the matrix's to choose. The expected identifier set is derived from
+    # the Gate specification, the preflight and the open audit findings, and compared exactly, so
+    # deleting a requirement no longer shrinks the total: it becomes a blocking finding.
+    expected_total = 0
+    expected_source = "not derived"
+    gate = matrix.get("gate") if isinstance(matrix, dict) else None
+    # The comparison is bound to matrix schemaVersion 2.0.0, which is the version that carries an
+    # anchored sourceRef per requirement. A 3.2.0 checkpoint is required to use it, so downgrading
+    # the matrix to escape the comparison fails checkpoint validation instead of succeeding.
+    if gate and isinstance(matrix, dict) and matrix.get("schemaVersion") == "2.0.0":
+        try:
+            expected = expected_requirement_refs(
+                root, str(gate), checkpoint.name,
+                preflight if isinstance(preflight, dict) else None)
+            expected_total = len(expected)
+            expected_source = EXPECTED_SET_DESCRIPTION
+            findings.extend(compare_requirement_sets(expected, declared_requirement_refs(matrix)))
+            for item in requirements:
+                if isinstance(item, dict) and source_ref(item.get("sourceRef")) is None:
+                    findings.append({
+                        "requirement": str(item.get("id")),
+                        "severity": "BLOCKING",
+                        "detail": (
+                            "every requirement must carry an anchored sourceRef of the form "
+                            "canonical:, lesson:, finding:, attack: or local:"),
+                    })
+        except LedgerError as exc:
+            findings.append({
+                "requirement": "-",
+                "severity": "BLOCKING",
+                "detail": f"the expected requirement set cannot be derived: {exc}",
+            })
 
     for item in requirements:
         identifier = item.get("id", "?") if isinstance(item, dict) else "?"
@@ -263,6 +359,8 @@ def evaluate_matrix(
 
     return {
         "totalRequirements": total,
+        "expectedRequirements": expected_total,
+        "expectedSetSource": expected_source,
         "mandatoryRequirements": mandatory,
         "complete": counters["COMPLETE"],
         "partial": counters["PARTIAL"],

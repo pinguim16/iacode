@@ -25,7 +25,11 @@ This file is a Claude Code adapter for the same canonical contracts used by Code
 - Do not mix or advance Gates without authorization.
 - Close an implementing run at `READY_FOR_REVIEW`; never grant `GATE_PASS` to your own work. An independent run records `secondToolValidation` and decides the Gate.
 - Declare every changed path in `FILES.json` before finalizing; the tooling binds the hashes but never invents a declaration.
-- Follow the mandatory delivery order and skip no step: requirement extraction, baseline, plan, implementation, test and quality, Green Keeper, Delivery Completeness Validator, `READY_FOR_REVIEW`, independent review, Red Team, `GATE_PASS`.
+- Follow the mandatory delivery order and skip no step: lesson preflight, requirement derivation, baseline, plan, implementation, test and quality, Green Keeper, Delivery Completeness Validator, internal Red Team, Milestone Closure Auditor, `READY_FOR_REVIEW`, independent review, Red Team, `GATE_PASS`.
+- Derive the requirement set with `python scripts/development-ledger/derive_requirements.py --write`; the canonical checklist, the lesson preflight and the open audit findings decide it, never the delivery.
+- Never narrow a mandatory gate set, a denominator or a promotion rule by an argument; those come from policy.
+- Never record an internal verdict as external validation. An external PASS is derived from an audit attestation authored by another sealed checkpoint.
+- Seal with `python scripts/development-ledger/seal_checkpoint.py` so the final validation describes the committed content, and anchor every sealed predecessor in `.iacode/anchors/checkpoint-chain.json`.
 - Extract every requirement into `REQUIREMENTS-MATRIX.json` before implementing. A requirement that exists only in the session is not a requirement.
 - Run `python scripts/development-ledger/green_keeper.py` until every mandatory gate is green; never delete, skip, or weaken a check to get there. A real external blocker yields `BLOCKED`, never `READY_FOR_REVIEW`.
 - Run `python scripts/development-ledger/check_completeness.py --write` before handoff and repair every gap it reports.

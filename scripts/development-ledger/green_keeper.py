@@ -7,9 +7,17 @@ invocation in the checkpoint ledger, and appends the cycle to ``REWORK-LOG.jsonl
 edits code, never weakens a check, and never reports green on a red gate: repairing the cause is
 the agent's responsibility, and proving the result is this tool's.
 
-``GREEN_KEEPER_GATE`` is ``PASS`` only when every executed gate is green, no failure remains, and
-no rework item is left unresolved. A real external blocker yields ``BLOCKED_EXTERNAL``, which maps
-to a ``BLOCKED`` checkpoint, never to ``PASS``.
+``GREEN_KEEPER_GATE`` is ``PASS`` only when every *mandatory* gate executed and is green, no
+failure remains, and no rework item is left unresolved. A real external blocker yields
+``BLOCKED_EXTERNAL``, which maps to a ``BLOCKED`` checkpoint, never to ``PASS``.
+
+The mandatory set is closed
+---------------------------
+The M0 audit of ``SETUP-00-CP-0006`` ran ``--gates ""`` and obtained ``GREEN_KEEPER_GATE=PASS``
+with no gate executed, no evidence, and a genuinely failing test in the tree. The cause was that
+the tool asked its caller which gates were mandatory. It no longer does. The mandatory set comes
+from ``.iacode/policies/quality-gates.json``; ``--gates`` may only *add* to a run, and an empty or
+partial value changes nothing. Every cycle records the mandatory set it was measured against.
 """
 
 from __future__ import annotations
@@ -26,36 +34,18 @@ from ledger_common import (
     LedgerError,
     append_command_record,
     build_command_record,
+    canonical_hash_path,
     find_root,
     git_snapshot,
     resolve_latest,
     runtime_label,
+    scope_fingerprint,
     utc_now,
     validate_schema,
     load_json,
     write_json,
 )
-
-GATES: dict[str, tuple[list[str], str]] = {
-    "tests": (
-        ["python", "-m", "unittest", "discover", "-s", "tests"],
-        "Green Keeper gate: the full unit and integration suite must be green before handoff.",
-    ),
-    "staticAnalysis": (
-        ["python", "-m", "compileall", "-q", "scripts", "tests"],
-        "Green Keeper gate: static analysis of the ledger tooling and the suite.",
-    ),
-    "lessons": (
-        ["python", "scripts/development-ledger/validate_lessons.py"],
-        "Green Keeper gate: the engineering memory must stay valid, with every GUARDED lesson backed by a control.",
-    ),
-    "checkpointValidation": (
-        ["python", "scripts/development-ledger/validate_checkpoint.py"],
-        "Green Keeper gate: checkpoint validation, which also runs the repository secret scan.",
-    ),
-}
-
-DEFAULT_GATES = ("tests", "staticAnalysis", "lessons", "checkpointValidation")
+from policies import gate_definitions, mandatory_gates
 
 
 def _refresh_declared_hashes(root: Path, checkpoint: Path) -> None:
@@ -75,10 +65,11 @@ def _refresh_declared_hashes(root: Path, checkpoint: Path) -> None:
     write_json(files_path, _refresh_inventory_hashes(root, checkpoint, state, load_json(files_path)))
 
 
-def _run_gate(root: Path, checkpoint: Path, name: str) -> tuple[str, int, str]:
+def _run_gate(root: Path, checkpoint: Path, name: str, definition: dict[str, Any]) -> tuple[str, int, str]:
     if name == "checkpointValidation":
         _refresh_declared_hashes(root, checkpoint)
-    argv, purpose = GATES[name]
+    argv = [str(item) for item in definition["command"]]
+    purpose = str(definition["purpose"])
     executable = list(argv)
     if executable[0] == "python":
         executable[0] = sys.executable
@@ -87,6 +78,7 @@ def _run_gate(root: Path, checkpoint: Path, name: str) -> tuple[str, int, str]:
         executable, cwd=root, text=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, check=False)
     duration = int((time.monotonic() - started) * 1000)
     snapshot = git_snapshot(root)
+    inputs = [item for item in argv[1:] if (root / item).is_file() or (root / item).is_dir()]
     record = build_command_record(
         root,
         command=" ".join(argv),
@@ -94,7 +86,12 @@ def _run_gate(root: Path, checkpoint: Path, name: str) -> tuple[str, int, str]:
         purpose=purpose,
         working_directory=str(root),
         runtime=runtime_label("python"),
-        inputs=[item for item in argv[1:] if (root / item).is_file() or (root / item).is_dir()],
+        inputs=inputs,
+        inputs_digest=[
+            {"path": item,
+             "hash": canonical_hash_path(root / item) if (root / item).is_file() else "ABSENT"}
+            for item in inputs
+        ],
         result="COMPLETED",
         result_code="OK",
         exit_code=completed.returncode,
@@ -129,8 +126,9 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--root", type=Path)
     parser.add_argument("--checkpoint", type=Path)
-    parser.add_argument("--gates", default=",".join(DEFAULT_GATES),
-                        help="comma-separated subset of: " + ", ".join(sorted(GATES)))
+    parser.add_argument("--gates", default="",
+                        help="extra gates to run in addition to the canonical mandatory set; "
+                             "this argument can never remove a mandatory gate")
     parser.add_argument("--trigger", default="scheduled delivery gate run",
                         help="what caused this cycle")
     parser.add_argument("--root-cause", default=None, help="root cause repaired before this cycle")
@@ -146,16 +144,33 @@ def main() -> int:
     if not checkpoint.is_absolute():
         checkpoint = root / checkpoint
 
-    names = [name.strip() for name in args.gates.split(",") if name.strip()]
-    unknown = [name for name in names if name not in GATES]
+    definitions = gate_definitions(root)
+    required = list(mandatory_gates(root))
+    if not required:
+        print("QUALITY_GATE_POLICY_INVALID")
+        print("- the canonical policy declares no mandatory gate; a delivery cannot be measured")
+        return 3
+
+    extra = [name.strip() for name in args.gates.split(",") if name.strip()]
+    unknown = [name for name in extra if name not in definitions]
     if unknown:
         parser.error("unknown gate(s): " + ", ".join(unknown))
 
+    # The mandatory set always runs first and in policy order. Anything the caller adds runs after.
+    names = required + [name for name in extra if name not in required]
+
     executed: list[str] = []
     failures: list[str] = []
+    gate_results: list[dict[str, Any]] = []
     for name in names:
-        identifier, code, output = _run_gate(root, checkpoint, name)
+        identifier, code, output = _run_gate(root, checkpoint, name, definitions[name])
         executed.append(identifier)
+        gate_results.append({
+            "gate": name,
+            "commandId": identifier,
+            "exitCode": code,
+            "mandatory": name in required,
+        })
         status = "GREEN" if code == 0 else "RED"
         print(f"[{name}] {status} exit={code} ledger={identifier}")
         if code != 0:
@@ -177,6 +192,9 @@ def main() -> int:
         "rootCauseSummary": args.root_cause,
         "filesChanged": [item.strip() for item in args.files_changed.split(",") if item.strip()],
         "commandsExecuted": executed,
+        "requiredGates": required,
+        "gateResults": gate_results,
+        "scopeFingerprint": scope_fingerprint(root),
         "result": result,
         "remainingFailures": len(failures),
     }
@@ -199,6 +217,7 @@ def main() -> int:
 
     gate = "PASS" if result == "GREEN" else "FAIL"
     print(f"GREEN_KEEPER_GATE={gate} cycle={entry['cycle']} result={result} "
+          f"required={','.join(required)} "
           f"remainingFailures={entry['remainingFailures']} evidence={','.join(executed)}")
     if result == "GREEN":
         return 0

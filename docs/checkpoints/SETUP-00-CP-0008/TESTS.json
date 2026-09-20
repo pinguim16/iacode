@@ -1,0 +1,24 @@
+{
+  "schemaVersion": "3.2.0",
+  "unit": {
+    "executed": true,
+    "passed": 224,
+    "failed": 0,
+    "command": "python -m unittest discover -s tests",
+    "evidence": "In-process cases over the validator, the policy derivation, the attestation, the memory, the guardrail registry, the preflight fingerprint, the derived counts, the seal chronology and the internal assurance artifacts."
+  },
+  "integration": {
+    "executed": true,
+    "passed": 82,
+    "failed": 0,
+    "command": "python -m unittest discover -s tests",
+    "evidence": "Cases that build isolated Git repositories or run the tooling as a subprocess: the delta inventory, detached validation, finalization recording, the Green Keeper harness, the integrity anchors over a real clone, the historical compatibility of every sealed tag, and the end-to-end delivery lifecycle through seal_checkpoint.py."
+  },
+  "e2e": {
+    "executed": false,
+    "passed": 0,
+    "failed": 0,
+    "command": null,
+    "evidence": "No functional runtime exists in SETUP-00, so runtime end-to-end testing is not applicable. The delivery lifecycle case exercises the control plane end to end and is counted as integration."
+  }
+}

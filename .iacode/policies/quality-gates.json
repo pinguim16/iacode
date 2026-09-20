@@ -1,0 +1,81 @@
+{
+  "schemaVersion": "1.0.0",
+  "policy": "The mandatory gate set of a delivery is decided by this registry, never by the caller of the Green Keeper. A gate may be added here; it may not be dropped by an invocation.",
+  "gates": [
+    {
+      "id": "tests",
+      "title": "Full unit and integration suite",
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests"
+      ],
+      "purpose": "Green Keeper gate: the full unit and integration suite must be green before handoff.",
+      "mandatory": true,
+      "qualityDimensions": [
+        "unitTests",
+        "integrationTests"
+      ]
+    },
+    {
+      "id": "staticAnalysis",
+      "title": "Static analysis of the tooling and the suite",
+      "command": [
+        "python",
+        "-m",
+        "compileall",
+        "-q",
+        "scripts",
+        "tests"
+      ],
+      "purpose": "Green Keeper gate: static analysis of the ledger tooling and the suite.",
+      "mandatory": true,
+      "qualityDimensions": [
+        "staticAnalysis"
+      ]
+    },
+    {
+      "id": "lessons",
+      "title": "Engineering memory validation",
+      "command": [
+        "python",
+        "scripts/development-ledger/validate_lessons.py"
+      ],
+      "purpose": "Green Keeper gate: the engineering memory must stay valid, with every GUARDED lesson backed by a resolvable control.",
+      "mandatory": true,
+      "qualityDimensions": [
+        "security"
+      ]
+    },
+    {
+      "id": "integrity",
+      "title": "Checkpoint chain and tag integrity",
+      "command": [
+        "python",
+        "scripts/development-ledger/verify_integrity.py"
+      ],
+      "purpose": "Green Keeper gate: the sealed checkpoint chain, its tags, commits and trees must still match their recorded anchors.",
+      "mandatory": true,
+      "qualityDimensions": [
+        "security"
+      ]
+    },
+    {
+      "id": "checkpointValidation",
+      "title": "Checkpoint validation and repository secret scan",
+      "command": [
+        "python",
+        "scripts/development-ledger/validate_checkpoint.py"
+      ],
+      "purpose": "Green Keeper gate: checkpoint validation, which also runs the repository secret scan.",
+      "mandatory": true,
+      "qualityDimensions": [
+        "checkpointValidation",
+        "security"
+      ]
+    }
+  ]
+}

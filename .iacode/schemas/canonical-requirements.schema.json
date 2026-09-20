@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://iacode.local/schemas/canonical-requirements.schema.json",
+  "title": "Canonical Gate requirement registry",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "gates"
+  ],
+  "$defs": {
+    "requirement": {
+      "type": "object",
+      "required": [
+        "key",
+        "description",
+        "mandatory"
+      ],
+      "properties": {
+        "key": {
+          "type": "string",
+          "pattern": "^[0-9]+[a-z]?\\.[0-9]+$"
+        },
+        "section": {
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "artifact": {
+          "type": "string",
+          "minLength": 1
+        },
+        "evidence": {
+          "type": "string",
+          "minLength": 1
+        },
+        "mandatory": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "properties": {
+    "schemaVersion": {
+      "enum": [
+        "1.0.0"
+      ]
+    },
+    "gates": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "gate",
+          "specification",
+          "requirements"
+        ],
+        "properties": {
+          "gate": {
+            "type": "string",
+            "minLength": 1
+          },
+          "specification": {
+            "type": "string",
+            "minLength": 1
+          },
+          "parser": {
+            "type": "string",
+            "minLength": 1
+          },
+          "requirements": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "$ref": "#/$defs/requirement"
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

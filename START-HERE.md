@@ -20,11 +20,16 @@ IACode is a planned private, autonomous, general-purpose software engineering pl
 
 ## Mandatory delivery order
 
-Every delivery runs, in order: requirement extraction into `REQUIREMENTS-MATRIX.json`, baseline,
-plan, implementation, test and quality execution, [Test Rework / Green Keeper](.iacode/agents/test-rework-greenkeeper.md),
+Every delivery runs, in order: the lesson preflight, requirement derivation into
+`REQUIREMENTS-MATRIX.json`, baseline, plan, implementation, test and quality execution,
+[Test Rework / Green Keeper](.iacode/agents/test-rework-greenkeeper.md),
 [Delivery Completeness Validator](.iacode/agents/delivery-completeness-validator.md),
+the internal Red Team, the [Milestone Closure Auditor](.iacode/agents/m0-closure-auditor.md),
 `READY_FOR_REVIEW`, independent tool review, Red Team, and only then `GATE_PASS`. No step may be
-skipped, and nothing red or incomplete is handed to the independent tool.
+skipped, and nothing red, incomplete or unattacked is handed to the independent tool.
+
+The requirement set is derived, not transcribed: the canonical Gate checklist, the lesson preflight
+and the open audit findings decide it, and a delivery that declares anything else is refused.
 
 See the [Master Plan](docs/MASTER-PLAN.md), the [Quality Gates](docs/QUALITY-GATES.md), and the
 [Handoff Protocol](docs/HANDOFF-PROTOCOL.md).

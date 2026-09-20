@@ -1,0 +1,137 @@
+{
+  "schemaVersion": "3.2.0",
+  "phase": "SETUP-00",
+  "gate": "SETUP-00",
+  "status": "READY_FOR_REVIEW",
+  "branch": "main",
+  "baseCommit": "502c554575f717c1d57290e4f4aafa575e41170e",
+  "currentCommit": "refs/tags/iacode-checkpoints/SETUP-00-CP-0008",
+  "dirty": false,
+  "startedAt": "2026-09-20T18:36:46Z",
+  "updatedAt": "2026-09-20T22:17:29Z",
+  "nextAllowedAction": "Request the final Codex M0 independent audit of SETUP-00-CP-0008. Gate 0 stays blocked.",
+  "blockedBy": [],
+  "secondToolValidation": {
+    "status": "PENDING_MANUAL",
+    "tool": null,
+    "provider": null,
+    "model": null,
+    "validatedAt": null,
+    "justification": null,
+    "evidence": []
+  },
+  "requirementsMatrix": {
+    "path": "REQUIREMENTS-MATRIX.json",
+    "total": 131,
+    "mandatory": 130,
+    "complete": 131,
+    "partial": 0,
+    "missing": 0,
+    "notApplicable": 0,
+    "coveragePercent": 100.0
+  },
+  "greenKeeper": {
+    "status": "PASS",
+    "cycles": 11,
+    "remainingFailures": 0,
+    "unresolvedReworkItems": 0,
+    "log": "REWORK-LOG.jsonl",
+    "externalBlockers": [],
+    "evidence": [
+      "command:cmd-0053",
+      "command:cmd-0054",
+      "command:cmd-0055",
+      "command:cmd-0056",
+      "command:cmd-0057"
+    ],
+    "requiredGates": [
+      "tests",
+      "staticAnalysis",
+      "lessons",
+      "integrity",
+      "checkpointValidation"
+    ],
+    "scopeFingerprint": "2dbac889f61f630403805b7a1751b5899ee5dd322a49441691e8db95e82d0d0d"
+  },
+  "deliveryCompleteness": {
+    "status": "PASS",
+    "report": "COMPLETENESS-REPORT.json",
+    "coveragePercent": 100.0,
+    "evidenceCoveragePercent": 100.0,
+    "auditor": "Delivery Completeness Validator, emulated in the implementing session",
+    "evidence": [
+      "file:COMPLETENESS-REPORT.json",
+      "file:CLOSURE-REQUIREMENTS.json"
+    ],
+    "scopeFingerprint": "1503fa5ee1257db2b1c73482313d0e76ffd168d703b25879db21c22ed73b99f6"
+  },
+  "reworkCycles": 11,
+  "independentReview": {
+    "status": "PENDING",
+    "tool": null,
+    "reviewedAt": null,
+    "justification": null,
+    "evidence": []
+  },
+  "redTeam": {
+    "status": "PENDING",
+    "tool": null,
+    "executedAt": null,
+    "justification": null,
+    "evidence": []
+  },
+  "lessonPreflight": {
+    "path": "LESSON-PREFLIGHT.json",
+    "gate": "SETUP-00",
+    "scope": "M0 closure: correct every finding of the independent M0 audit and re-establish the delivery controls",
+    "lessonsConsidered": 23,
+    "lessonsApplicable": 23,
+    "derivedRequirements": 23,
+    "fingerprint": "4c899ffe7646fa174122438bc611b836d4ccb68963b358a32cb8a5bd8f53ce5e",
+    "evidence": [
+      "file:LESSON-PREFLIGHT.md"
+    ]
+  },
+  "milestone": {
+    "id": "M0",
+    "title": "Development control plane",
+    "gates": [
+      "SETUP-00"
+    ],
+    "status": "PENDING",
+    "auditor": null,
+    "auditedAt": null,
+    "evidence": [
+      "file:NEXT.md",
+      "file:HANDOFF.md"
+    ]
+  },
+  "externalAuditRequired": false,
+  "externalAuditReason": null,
+  "guardrailEffectiveness": {
+    "guardrailsTotal": 22,
+    "guardrailsResolved": 22,
+    "guardrailsTested": 22,
+    "guardrailsEffective": 22,
+    "guardrailFailures": 0,
+    "evidence": [
+      "file:.iacode/memory/guardrails/registry.json"
+    ]
+  },
+  "integrity": {
+    "status": "PASS",
+    "anchors": 7,
+    "chainFile": ".iacode/anchors/checkpoint-chain.json",
+    "evidence": [
+      "file:.iacode/anchors/checkpoint-chain.json"
+    ]
+  },
+  "externalAttestation": {
+    "status": "NONE",
+    "path": null,
+    "auditId": null,
+    "evidence": [
+      "file:.iacode/attestations/README.md"
+    ]
+  }
+}

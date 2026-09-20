@@ -1,0 +1,53 @@
+{
+  "schemaVersion": "3.2.0",
+  "artifacts": [
+    {
+      "artifact": "docs/checkpoints/SETUP-00-CP-0008",
+      "sourceType": "repository-generated",
+      "provider": "Anthropic",
+      "model": "claude-opus-5",
+      "ownership": "project",
+      "license": "project-policy",
+      "rights": {
+        "storageAllowed": true,
+        "ragAllowed": false,
+        "trainingAllowed": false,
+        "distillationAllowed": false
+      },
+      "evidence": "Authored in this run with the ledger tooling; every command is recorded in COMMANDS.jsonl.",
+      "notes": "Training denied by default; no rights evidence exists for this content."
+    },
+    {
+      "artifact": "scripts/development-ledger",
+      "sourceType": "repository-generated",
+      "provider": "Anthropic",
+      "model": "claude-opus-5",
+      "ownership": "project",
+      "license": "project-policy",
+      "rights": {
+        "storageAllowed": true,
+        "ragAllowed": false,
+        "trainingAllowed": false,
+        "distillationAllowed": false
+      },
+      "evidence": "Standard-library Python written in this run and covered by the suite.",
+      "notes": "Training denied by default."
+    },
+    {
+      "artifact": ".iacode/memory",
+      "sourceType": "derived-from-recorded-findings",
+      "provider": "IACode project",
+      "model": "not-applicable",
+      "ownership": "project",
+      "license": "project-policy",
+      "rights": {
+        "storageAllowed": true,
+        "ragAllowed": false,
+        "trainingAllowed": false,
+        "distillationAllowed": false
+      },
+      "evidence": "Every lesson cites a finding recorded in a sealed checkpoint; provenance is resolved by validate_lessons.py.",
+      "notes": "Organizational memory. No personal preference, chain-of-thought or secret."
+    }
+  ]
+}

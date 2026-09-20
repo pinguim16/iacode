@@ -15,17 +15,28 @@ SCHEMA_VERSION = "1.0.0"
 LEGACY_SCHEMA_VERSION = "1.0.0"
 EVIDENCE_SCHEMA_VERSION = "2.0.0"
 DELIVERY_SCHEMA_VERSION = "3.0.0"
-CURRENT_SCHEMA_VERSION = "3.1.0"
+MEMORY_SCHEMA_VERSION = "3.1.0"
+CLOSURE_SCHEMA_VERSION = "3.2.0"
+CURRENT_SCHEMA_VERSION = CLOSURE_SCHEMA_VERSION
 SUPPORTED_SCHEMA_VERSIONS = (
     LEGACY_SCHEMA_VERSION,
     EVIDENCE_SCHEMA_VERSION,
     DELIVERY_SCHEMA_VERSION,
-    CURRENT_SCHEMA_VERSION,
+    MEMORY_SCHEMA_VERSION,
+    CLOSURE_SCHEMA_VERSION,
 )
 
 # Versions that carry the delivery-assurance gates. 3.1.0 adds the engineering memory preflight and
-# the milestone validation policy on top of them.
-DELIVERY_SCHEMA_VERSIONS = (DELIVERY_SCHEMA_VERSION, CURRENT_SCHEMA_VERSION)
+# the milestone validation policy on top of them; 3.2.0 adds the M0 closure controls: derived
+# expected requirement sets, the closed mandatory gate set, preflight freshness, external audit
+# attestations, checkpoint integrity anchors and derived counts.
+DELIVERY_SCHEMA_VERSIONS = (DELIVERY_SCHEMA_VERSION, MEMORY_SCHEMA_VERSION, CLOSURE_SCHEMA_VERSION)
+
+# Versions that carry the engineering memory and the milestone validation policy.
+MEMORY_SCHEMA_VERSIONS = (MEMORY_SCHEMA_VERSION, CLOSURE_SCHEMA_VERSION)
+
+# Versions that carry the M0 closure controls.
+CLOSURE_SCHEMA_VERSIONS = (CLOSURE_SCHEMA_VERSION,)
 
 QUALITY_DIMENSIONS = (
     "build",
@@ -304,6 +315,116 @@ def git_delta(root: Path, base: str, ref: str | None = None) -> dict[str, str]:
     return delta
 
 
+# Directories and files whose content decides whether a delivery gate result is still valid. A
+# Green Keeper PASS, a completeness PASS, a Red Team result and a mirror audit are all statements
+# about this content: when it changes, the statement is stale and must be re-established.
+# The checkpoint ledger itself is deliberately outside the scope, because recording evidence must
+# not invalidate the evidence being recorded.
+ASSURANCE_SCOPE_PREFIXES = (
+    "scripts/",
+    "tests/",
+    ".iacode/",
+    ".claude/",
+    "prompts/",
+    "docs/",
+)
+
+ASSURANCE_SCOPE_EXCLUSIONS = (
+    "docs/checkpoints/",
+    "__pycache__/",
+)
+
+ASSURANCE_SCOPE_FILES = (
+    "START-HERE.md",
+    "AGENTS.md",
+    "CLAUDE.md",
+    "README.md",
+    ".gitattributes",
+)
+
+
+def in_assurance_scope(path: str) -> bool:
+    normalized = path.replace("\\", "/")
+    if any(part in normalized for part in ASSURANCE_SCOPE_EXCLUSIONS):
+        return False
+    if normalized in ASSURANCE_SCOPE_FILES:
+        return True
+    return any(normalized.startswith(prefix) for prefix in ASSURANCE_SCOPE_PREFIXES)
+
+
+def assurance_scope_files(root: Path) -> list[str]:
+    """Tracked and untracked-but-not-ignored files whose content the delivery gates judge."""
+    code, output = run_git(root, "ls-files", "--cached", "--others", "--exclude-standard")
+    if code != 0:
+        raise LedgerError("unable to enumerate the assurance scope")
+    paths = {line.replace("\\", "/") for line in output.splitlines() if line.strip()}
+    # A file that Git still has in the index but that no longer exists on disk contributes nothing
+    # to the content the gates judged, and including it would make the fingerprint change the
+    # moment the deletion is committed rather than the moment the content changed.
+    return sorted(
+        path for path in paths
+        if in_assurance_scope(path) and (root / path).is_file()
+    )
+
+
+def canonical_digest(value: Any) -> str:
+    """SHA-256 over canonical JSON, so a fingerprint does not depend on formatting."""
+    encoded = json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
+    return hashlib.sha256(encoded.encode("utf-8")).hexdigest()
+
+
+def scope_fingerprint(root: Path, extra_paths: list[str] | None = None) -> str:
+    """Deterministic fingerprint of the delivery-assurance scope.
+
+    Two runs of the same content produce the same value; any edit inside the scope changes it. A
+    gate result that carries a fingerprint different from the current one is stale by construction,
+    which is what stops a PASS from surviving the change that invalidated it.
+    """
+    entries: list[list[str]] = []
+    for path in assurance_scope_files(root):
+        candidate = root / path
+        entries.append([path, canonical_hash_path(candidate) if candidate.is_file() else "ABSENT"])
+    for path in sorted(set(extra_paths or [])):
+        candidate = root / path
+        entries.append([path, canonical_hash_path(candidate) if candidate.is_file() else "ABSENT"])
+    return canonical_digest(entries)
+
+
+def clone_with_worktree(root: Path, destination: Path) -> bool:
+    """Clone the repository and bring the clone up to the current working tree.
+
+    A delivery is validated before it is committed, so a clone of ``HEAD`` would test the previous
+    revision. This produces a fresh repository whose content is exactly what is about to be sealed,
+    which is what a clean-clone check is supposed to answer.
+    """
+    completed = subprocess.run(
+        ["git", "clone", "--quiet", "--no-hardlinks", str(root), str(destination)],
+        stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=False)
+    if completed.returncode != 0:
+        return False
+    code, output = run_git(root, "ls-files", "--cached", "--others", "--exclude-standard")
+    if code != 0:
+        return False
+    wanted = {line.replace("\\", "/") for line in output.splitlines() if line.strip()}
+    code, output = run_git(destination, "ls-files")
+    for relative in {line.replace("\\", "/") for line in output.splitlines() if line.strip()}:
+        if relative not in wanted and (destination / relative).is_file():
+            (destination / relative).unlink()
+    for relative in sorted(wanted):
+        source = root / relative
+        if not source.is_file():
+            continue
+        target = destination / relative
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes(source.read_bytes())
+    for argv in (["add", "-A"],
+                 ["-c", "user.name=iacode", "-c", "user.email=iacode@local",
+                  "commit", "--quiet", "--allow-empty", "-m", "the content under validation"]):
+        if run_git(destination, *argv)[0] != 0:
+            return False
+    return True
+
+
 def resolve_latest(root: Path) -> Path:
     latest = root / "docs" / "checkpoints" / "LATEST.md"
     if not latest.is_file():
@@ -362,6 +483,8 @@ def build_command_record(
     runtime: str | None = None,
     arguments: list[str] | None = None,
     inputs: list[str] | None = None,
+    inputs_digest: list[dict[str, Any]] | None = None,
+    subject_commit: str | None = None,
     result: str = "COMPLETED",
     result_code: str = "OK",
     exit_code: int | None = None,
@@ -397,6 +520,21 @@ def build_command_record(
         record["arguments"] = [redact_text(item) for item in arguments]
     if inputs is not None:
         record["inputs"] = list(inputs)
+        # A record that names an input but not its content cannot be replayed: the audit replayed
+        # commands at their declared commits and found inputs that were only ever in a dirty tree.
+        # The digest binds what the command actually read, independently of the commit.
+        if inputs_digest is None:
+            inputs_digest = [
+                {
+                    "path": reference,
+                    "hash": canonical_hash_path(root / reference)
+                    if (root / reference).is_file() else "ABSENT",
+                }
+                for reference in inputs
+            ]
+        record["inputsDigest"] = list(inputs_digest)
+    if subject_commit is not None:
+        record["subjectCommit"] = subject_commit
     if operation is not None:
         record["operation"] = operation
     if phase is not None:

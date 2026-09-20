@@ -16,43 +16,149 @@
   "$defs": {
     "applicableLesson": {
       "type": "object",
-      "required": ["lessonId", "reasonApplicable", "requiredCheck", "requiredEvidence", "derivedRequirementId"],
+      "required": [
+        "lessonId",
+        "reasonApplicable",
+        "requiredCheck",
+        "requiredEvidence",
+        "derivedRequirementId"
+      ],
       "properties": {
-        "lessonId": {"type": "string", "pattern": "^LSN-[0-9]{4}$"},
-        "title": {"type": "string", "minLength": 1},
-        "status": {"enum": ["OBSERVED", "CONFIRMED", "GUARDED"]},
-        "severity": {"enum": ["LOW", "MEDIUM", "HIGH", "CRITICAL"]},
-        "reasonApplicable": {"type": "string", "minLength": 1},
-        "requiredCheck": {"type": "string", "minLength": 1},
-        "requiredEvidence": {"type": "string", "minLength": 1},
-        "derivedRequirementId": {"type": "string", "pattern": "^LESSON-REQ-[0-9]{4}$"}
+        "lessonId": {
+          "type": "string",
+          "pattern": "^LSN-[0-9]{4}$"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "enum": [
+            "OBSERVED",
+            "CONFIRMED",
+            "GUARDED"
+          ]
+        },
+        "severity": {
+          "enum": [
+            "LOW",
+            "MEDIUM",
+            "HIGH",
+            "CRITICAL"
+          ]
+        },
+        "reasonApplicable": {
+          "type": "string",
+          "minLength": 1
+        },
+        "requiredCheck": {
+          "type": "string",
+          "minLength": 1
+        },
+        "requiredEvidence": {
+          "type": "string",
+          "minLength": 1
+        },
+        "derivedRequirementId": {
+          "type": "string",
+          "pattern": "^LESSON-REQ-[0-9]{4}$"
+        }
       },
       "additionalProperties": false
     },
     "derivedRequirement": {
       "type": "object",
-      "required": ["id", "lessonId", "description", "mandatory"],
+      "required": [
+        "id",
+        "lessonId",
+        "description",
+        "mandatory"
+      ],
       "properties": {
-        "id": {"type": "string", "pattern": "^LESSON-REQ-[0-9]{4}$"},
-        "lessonId": {"type": "string", "pattern": "^LSN-[0-9]{4}$"},
-        "description": {"type": "string", "minLength": 1},
-        "mandatory": {"type": "boolean"},
-        "requiredEvidence": {"type": "string", "minLength": 1}
+        "id": {
+          "type": "string",
+          "pattern": "^LESSON-REQ-[0-9]{4}$"
+        },
+        "lessonId": {
+          "type": "string",
+          "pattern": "^LSN-[0-9]{4}$"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "mandatory": {
+          "type": "boolean"
+        },
+        "requiredEvidence": {
+          "type": "string",
+          "minLength": 1
+        }
       },
       "additionalProperties": false
     }
   },
   "properties": {
-    "schemaVersion": {"enum": ["1.0.0"]},
-    "gate": {"type": "string", "minLength": 1},
-    "scope": {"type": "string", "minLength": 1},
-    "technologies": {"type": "array", "items": {"type": "string", "minLength": 1}},
-    "modules": {"type": "array", "items": {"type": "string", "minLength": 1}},
-    "generatedAt": {"type": "string", "format": "date-time"},
-    "lessonsConsidered": {"type": "integer", "minimum": 0},
-    "lessonsApplicable": {"type": "integer", "minimum": 0},
-    "applicable": {"type": "array", "items": {"$ref": "#/$defs/applicableLesson"}},
-    "derivedRequirements": {"type": "array", "items": {"$ref": "#/$defs/derivedRequirement"}}
+    "schemaVersion": {
+      "enum": [
+        "1.0.0",
+        "2.0.0"
+      ]
+    },
+    "gate": {
+      "type": "string",
+      "minLength": 1
+    },
+    "scope": {
+      "type": "string",
+      "minLength": 1
+    },
+    "technologies": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "modules": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "generatedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "lessonsConsidered": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "lessonsApplicable": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "applicable": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/applicableLesson"
+      }
+    },
+    "derivedRequirements": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/derivedRequirement"
+      }
+    },
+    "policyVersion": {
+      "type": "string",
+      "minLength": 1
+    },
+    "inputsFingerprint": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    }
   },
   "additionalProperties": false
 }

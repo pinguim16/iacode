@@ -16,18 +16,115 @@
     "remainingFailures"
   ],
   "properties": {
-    "cycle": {"type": "integer", "minimum": 1},
-    "timestamp": {"type": "string", "format": "date-time"},
-    "trigger": {"type": "string", "minLength": 1},
-    "failedGate": {"type": ["string", "null"]},
-    "failureEvidence": {"type": "array", "items": {"type": "string", "minLength": 1}},
-    "rootCauseSummary": {"type": ["string", "null"]},
-    "filesChanged": {"type": "array", "items": {"type": "string", "minLength": 1}},
-    "commandsExecuted": {"type": "array", "items": {"type": "string", "minLength": 1}},
-    "result": {"enum": ["GREEN", "STILL_RED", "BLOCKED_EXTERNAL"]},
-    "remainingFailures": {"type": "integer", "minimum": 0},
-    "externalBlocker": {"type": ["string", "null"]},
-    "notes": {"type": ["string", "null"]}
+    "cycle": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "trigger": {
+      "type": "string",
+      "minLength": 1
+    },
+    "failedGate": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "failureEvidence": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "rootCauseSummary": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "filesChanged": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "commandsExecuted": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "result": {
+      "enum": [
+        "GREEN",
+        "STILL_RED",
+        "BLOCKED_EXTERNAL"
+      ]
+    },
+    "remainingFailures": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "externalBlocker": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "notes": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "requiredGates": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "gateResults": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "gate",
+          "commandId",
+          "exitCode"
+        ],
+        "properties": {
+          "gate": {
+            "type": "string",
+            "minLength": 1
+          },
+          "commandId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "exitCode": {
+            "type": "integer"
+          },
+          "mandatory": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "scopeFingerprint": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
   },
   "additionalProperties": false
 }

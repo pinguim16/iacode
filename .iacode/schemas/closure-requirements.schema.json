@@ -1,0 +1,168 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://iacode.local/schemas/closure-requirements.schema.json",
+  "title": "Closure requirements matrix",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "gate",
+    "checkpoint",
+    "sources",
+    "requirements"
+  ],
+  "$defs": {
+    "requirement": {
+      "type": "object",
+      "required": [
+        "id",
+        "source",
+        "sourceRef",
+        "sourceReference",
+        "description",
+        "mandatory",
+        "implementationStatus",
+        "implementationEvidence",
+        "testEvidence",
+        "negativeTestEvidence",
+        "documentationEvidence",
+        "validationEvidence",
+        "guardrailEvidence",
+        "finalStatus"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^(REQ|LESSON-REQ)-[0-9]{4}$"
+        },
+        "source": {
+          "enum": [
+            "SETUP",
+            "MILESTONE",
+            "AUDIT_FINDING",
+            "AUDIT_ATTACK",
+            "LESSON",
+            "LOCAL"
+          ]
+        },
+        "sourceRef": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sourceReference": {
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "mandatory": {
+          "type": "boolean"
+        },
+        "implementationStatus": {
+          "enum": [
+            "NOT_STARTED",
+            "IN_PROGRESS",
+            "COMPLETE",
+            "PARTIAL",
+            "MISSING",
+            "NOT_APPLICABLE"
+          ]
+        },
+        "implementationEvidence": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "testEvidence": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "negativeTestEvidence": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "documentationEvidence": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "validationEvidence": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "guardrailEvidence": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "justification": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "finalStatus": {
+          "enum": [
+            "NOT_STARTED",
+            "IN_PROGRESS",
+            "COMPLETE",
+            "PARTIAL",
+            "MISSING",
+            "NOT_APPLICABLE"
+          ]
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "properties": {
+    "schemaVersion": {
+      "enum": [
+        "1.0.0"
+      ]
+    },
+    "gate": {
+      "type": "string",
+      "minLength": 1
+    },
+    "checkpoint": {
+      "type": "string",
+      "minLength": 1
+    },
+    "sources": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "requirements": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/requirement"
+      }
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,320 @@
+{
+  "schemaVersion": "1.0.0",
+  "guardrails": [
+    {
+      "guardrailId": "GRD-0001",
+      "title": "Detached validation at the checkpoint tag",
+      "kind": "test",
+      "reference": "DetachedHeadValidationTests.test_detached_head_at_checkpoint_tag_validates",
+      "verifiedBy": [
+        "DetachedHeadValidationTests.test_detached_head_at_checkpoint_tag_validates",
+        "DetachedHeadValidationTests.test_detached_head_at_wrong_commit_fails"
+      ],
+      "lessons": [
+        "LSN-0001"
+      ],
+      "removingItWouldAllow": "The documented tag-checkout validation procedure to fail again."
+    },
+    {
+      "guardrailId": "GRD-0002",
+      "title": "File inventory recomputed from the repository",
+      "kind": "invariant",
+      "reference": "validate_checkpoint._validate_delta_inventory",
+      "verifiedBy": [
+        "DeltaInventoryTests.test_removed_manifest_entry_fails",
+        "DeltaInventoryTests.test_silent_tracked_modification_fails"
+      ],
+      "lessons": [
+        "LSN-0002"
+      ],
+      "removingItWouldAllow": "An undeclared or silently altered file to ship inside a valid checkpoint."
+    },
+    {
+      "guardrailId": "GRD-0003",
+      "title": "Every finalization attempt is recorded, including a refusal",
+      "kind": "validator",
+      "reference": "scripts/development-ledger/finalize_checkpoint.py",
+      "verifiedBy": [
+        "FinalizationAttemptRecordingTests.test_detached_head_refusal_is_recorded",
+        "FinalizationAttemptRecordingTests.test_non_latest_checkpoint_refusal_is_recorded"
+      ],
+      "lessons": [
+        "LSN-0003"
+      ],
+      "removingItWouldAllow": "A refused operation to disappear from the ledger."
+    },
+    {
+      "guardrailId": "GRD-0004",
+      "title": "Readiness and blockage are mutually exclusive",
+      "kind": "invariant",
+      "reference": "validate_checkpoint._validate_status_blockers",
+      "verifiedBy": [
+        "StatusBlockerInvariantTests.test_ready_for_review_with_blocker_fails",
+        "ResealedBlockerFixtureTests.test_resealed_ready_for_review_with_blocker_is_rejected"
+      ],
+      "lessons": [
+        "LSN-0004"
+      ],
+      "removingItWouldAllow": "A checkpoint to claim readiness and blockage at once."
+    },
+    {
+      "guardrailId": "GRD-0005",
+      "title": "The Gate specification lives in the repository",
+      "kind": "test",
+      "reference": "SetupChecklistTests.test_checklist_exists_and_is_referenced",
+      "verifiedBy": [
+        "SetupChecklistTests.test_checklist_exists_and_is_referenced",
+        "SetupChecklistTests.test_documentation_links_resolve"
+      ],
+      "lessons": [
+        "LSN-0006"
+      ],
+      "removingItWouldAllow": "A Gate to be accepted against a specification that is not in the repository."
+    },
+    {
+      "guardrailId": "GRD-0006",
+      "title": "A control over its own run's evidence is scoped to handoff",
+      "kind": "invariant",
+      "reference": "green_keeper._refresh_declared_hashes",
+      "verifiedBy": [
+        "DeliveryAssuranceGateTests.test_gate_consistency_is_provisional_while_work_is_in_progress"
+      ],
+      "lessons": [
+        "LSN-0011"
+      ],
+      "removingItWouldAllow": "A control that its own run makes unsatisfiable."
+    },
+    {
+      "guardrailId": "GRD-0007",
+      "title": "A PASS resolves its evidence",
+      "kind": "invariant",
+      "reference": "validate_checkpoint._validate_quality_evidence",
+      "verifiedBy": [
+        "QualityEvidenceTests.test_pass_without_evidence_fails",
+        "QualityEvidenceTests.test_pass_referencing_a_failed_command_fails"
+      ],
+      "lessons": [
+        "LSN-0005"
+      ],
+      "removingItWouldAllow": "A PASS with no execution behind it."
+    },
+    {
+      "guardrailId": "GRD-0008",
+      "title": "An external verdict is derived from an attestation",
+      "kind": "validator",
+      "reference": "scripts/development-ledger/attestation.py",
+      "verifiedBy": [
+        "ExternalAttestationTests.test_an_implementer_checkpoint_cannot_declare_an_external_pass",
+        "ExternalAttestationTests.test_an_attestation_naming_the_subject_as_its_own_auditor_is_rejected",
+        "ExternalAttestationTests.test_second_tool_validation_alone_is_not_enough"
+      ],
+      "lessons": [
+        "LSN-0007"
+      ],
+      "removingItWouldAllow": "An implementing run to certify itself as externally validated."
+    },
+    {
+      "guardrailId": "GRD-0009",
+      "title": "The expected requirement set is derived independently",
+      "kind": "validator",
+      "reference": "scripts/development-ledger/policies.py",
+      "verifiedBy": [
+        "ExpectedRequirementSetTests.test_deleting_a_requirement_and_recomputing_the_counts_still_fails",
+        "ExpectedRequirementSetTests.test_an_unexpected_anchored_requirement_is_rejected"
+      ],
+      "lessons": [
+        "LSN-0008"
+      ],
+      "removingItWouldAllow": "A delivery to shrink its own denominator and claim total coverage."
+    },
+    {
+      "guardrailId": "GRD-0010",
+      "title": "The mandatory gate set is closed by policy",
+      "kind": "policy",
+      "reference": ".iacode/policies/quality-gates.json",
+      "verifiedBy": [
+        "MandatoryGatePolicyTests.test_a_cycle_measured_against_no_gate_is_rejected",
+        "MandatoryGatePolicyTests.test_the_policy_declares_a_non_empty_closed_set"
+      ],
+      "lessons": [
+        "LSN-0009"
+      ],
+      "removingItWouldAllow": "A red or unexecuted gate to be handed to the auditor as green."
+    },
+    {
+      "guardrailId": "GRD-0011",
+      "title": "A recorded command binds its inputs by content",
+      "kind": "invariant",
+      "reference": "validate_checkpoint._validate_command_reproducibility",
+      "verifiedBy": [
+        "CommandInputBindingTests.test_a_record_without_a_digest_is_rejected",
+        "CommandInputBindingTests.test_a_clean_tree_claim_is_checked_against_the_declared_commit"
+      ],
+      "lessons": [
+        "LSN-0010"
+      ],
+      "removingItWouldAllow": "A ledger that cannot be replayed at the commit it names."
+    },
+    {
+      "guardrailId": "GRD-0012",
+      "title": "Sealed history is anchored outside the content it describes",
+      "kind": "validator",
+      "reference": "scripts/development-ledger/anchors.py",
+      "verifiedBy": [
+        "IntegrityAnchorTests.test_a_moved_historical_tag_is_detected",
+        "IntegrityAnchorTests.test_a_broken_link_between_anchors_is_detected"
+      ],
+      "lessons": [
+        "LSN-0012"
+      ],
+      "removingItWouldAllow": "A coordinated tag and content move to pass as untouched history."
+    },
+    {
+      "guardrailId": "GRD-0013",
+      "title": "Sealing is monotonic and post-commit",
+      "kind": "invariant",
+      "reference": "validate_checkpoint._validate_seal_chronology",
+      "verifiedBy": [
+        "SealChronologyTests.test_a_record_after_the_end_of_the_run_is_rejected",
+        "SealChronologyTests.test_a_missing_post_commit_validation_is_rejected",
+        "SealChronologyTests.test_a_dirty_tree_validation_is_not_evidence_of_a_sealed_commit"
+      ],
+      "lessons": [
+        "LSN-0014"
+      ],
+      "removingItWouldAllow": "Final evidence to describe a state that was never sealed."
+    },
+    {
+      "guardrailId": "GRD-0014",
+      "title": "One promotion invariant covers every positive terminal status",
+      "kind": "invariant",
+      "reference": "validate_checkpoint._validate_delivery_assurance",
+      "verifiedBy": [
+        "PromotionInvariantTests.test_every_positive_status_rejects_a_red_green_keeper",
+        "PromotionInvariantTests.test_every_positive_status_rejects_every_red_quality_dimension",
+        "PromotionInvariantTests.test_a_terminal_status_requires_an_independent_verdict"
+      ],
+      "lessons": [
+        "LSN-0015"
+      ],
+      "removingItWouldAllow": "A new terminal status to start life with no rules."
+    },
+    {
+      "guardrailId": "GRD-0015",
+      "title": "A gate run is measured against the canonical mandatory set",
+      "kind": "invariant",
+      "reference": "validate_checkpoint._validate_green_keeper_cycle",
+      "verifiedBy": [
+        "MandatoryGatePolicyTests.test_a_cycle_missing_one_mandatory_gate_is_rejected",
+        "MandatoryGatePolicyTests.test_a_mandatory_gate_that_exited_nonzero_is_rejected",
+        "MandatoryGatePolicyTests.test_a_pass_measured_before_a_source_change_is_stale"
+      ],
+      "lessons": [
+        "LSN-0016"
+      ],
+      "removingItWouldAllow": "An invocation to decide how much of the mandatory set actually runs."
+    },
+    {
+      "guardrailId": "GRD-0016",
+      "title": "The denominator comes from a source the delivery does not own",
+      "kind": "invariant",
+      "reference": "policies.expected_requirement_refs",
+      "verifiedBy": [
+        "ExpectedRequirementSetTests.test_the_expected_set_is_derived_from_the_canonical_sources",
+        "ExpectedRequirementSetTests.test_the_checklist_is_reparsed_rather_than_trusted",
+        "ExpectedRequirementSetTests.test_a_downgraded_matrix_cannot_escape_the_comparison"
+      ],
+      "lessons": [
+        "LSN-0017"
+      ],
+      "removingItWouldAllow": "Coverage to be computed over whatever set the delivery chose to submit."
+    },
+    {
+      "guardrailId": "GRD-0017",
+      "title": "A structured reference is resolved, not merely typed",
+      "kind": "invariant",
+      "reference": "lessons.resolve_control",
+      "verifiedBy": [
+        "LessonResolutionTests.test_a_test_control_must_exist_in_the_suite",
+        "LessonResolutionTests.test_an_invariant_control_must_be_defined_in_the_tooling",
+        "LessonResolutionTests.test_lesson_evidence_must_resolve"
+      ],
+      "lessons": [
+        "LSN-0018"
+      ],
+      "removingItWouldAllow": "A guardrail claim to name a control that does not exist."
+    },
+    {
+      "guardrailId": "GRD-0018",
+      "title": "A derived artifact carries a fingerprint of its inputs",
+      "kind": "invariant",
+      "reference": "lessons.preflight_staleness",
+      "verifiedBy": [
+        "PreflightFreshnessTests.test_a_changed_fingerprint_makes_the_preflight_stale",
+        "PreflightFreshnessTests.test_a_dropped_lesson_makes_the_preflight_stale",
+        "PreflightFreshnessTests.test_a_preflight_from_another_gate_is_refused"
+      ],
+      "lessons": [
+        "LSN-0019"
+      ],
+      "removingItWouldAllow": "A stale selection to survive the change that invalidated it."
+    },
+    {
+      "guardrailId": "GRD-0019",
+      "title": "Evidence from a dirty tree carries immutable input identity",
+      "kind": "invariant",
+      "reference": "ledger_common.build_command_record",
+      "verifiedBy": [
+        "CommandInputBindingTests.test_the_recorder_binds_inputs_automatically",
+        "CommandInputBindingTests.test_a_digest_that_omits_an_input_is_rejected"
+      ],
+      "lessons": [
+        "LSN-0020"
+      ],
+      "removingItWouldAllow": "A record to name a commit that never held what the command read."
+    },
+    {
+      "guardrailId": "GRD-0020",
+      "title": "The sealed checkpoint chain is re-derived from Git",
+      "kind": "invariant",
+      "reference": "anchors.verify_chain",
+      "verifiedBy": [
+        "IntegrityAnchorTests.test_an_unexpected_tree_is_detected",
+        "IntegrityAnchorTests.test_a_sealed_checkpoint_without_an_anchor_is_detected",
+        "IntegrityAnchorTests.test_a_recomputed_anchor_hash_must_match_its_fields"
+      ],
+      "lessons": [
+        "LSN-0021"
+      ],
+      "removingItWouldAllow": "Sealed history to be rewritten with every dependent value refreshed."
+    },
+    {
+      "guardrailId": "GRD-0021",
+      "title": "An evidential count is derived and verified where it is stated",
+      "kind": "invariant",
+      "reference": "validate_checkpoint._validate_derived_counts",
+      "verifiedBy": [
+        "DerivedCountTests.test_a_forged_count_is_rejected",
+        "DerivedCountTests.test_a_markdown_claim_that_contradicts_the_derivation_is_rejected"
+      ],
+      "lessons": [
+        "LSN-0022"
+      ],
+      "removingItWouldAllow": "Two artifacts to state different numbers for the same fact."
+    },
+    {
+      "guardrailId": "GRD-0022",
+      "title": "Lesson provenance resolves against the checkpoint it cites",
+      "kind": "invariant",
+      "reference": "lessons._resolve_source_locator",
+      "verifiedBy": [
+        "LessonProvenanceTests.test_a_finding_absent_from_the_cited_checkpoint_is_rejected",
+        "LessonProvenanceTests.test_a_nonexistent_checkpoint_is_rejected"
+      ],
+      "lessons": [
+        "LSN-0023"
+      ],
+      "removingItWouldAllow": "A lesson to cite a source that does not record the finding it claims."
+    }
+  ]
+}

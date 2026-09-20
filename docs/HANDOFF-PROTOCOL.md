@@ -2,21 +2,26 @@
 
 ## Mandatory delivery order
 
-`requirement extraction` → `baseline` → `plan` → `implementation` → `test and quality` →
-`Green Keeper` → `Delivery Completeness Validator` → `READY_FOR_REVIEW` → `independent tool review` →
-`Red Team` → `GATE_PASS`. No step may be skipped. The independent tool receives a delivery that has
-already passed the internal controls; it is not the first line of defense against a red test or a
-forgotten requirement.
+`lesson preflight` → `requirement derivation` → `baseline` → `plan` → `implementation` →
+`test and quality` → `Green Keeper` → `Delivery Completeness Validator` → `internal Red Team` →
+`Milestone Closure Auditor` → `READY_FOR_REVIEW` → `independent tool review` → `Red Team` →
+`GATE_PASS`. No step may be skipped. The independent tool receives a delivery that has already passed
+the internal controls; it is not the first line of defense against a red test, a forgotten
+requirement or an escaped attack.
 
 ## Before changing tools
 
 1. Run the Green Keeper until every mandatory gate is green, or declare `BLOCKED`.
 2. Run the Delivery Completeness Validator until coverage is total.
-3. Finalize the checkpoint.
-4. Validate it.
-5. Update `docs/checkpoints/LATEST.md` textually; do not use a symlink.
-6. Complete `HANDOFF.md` and `NEXT.md`.
-7. Record branch, commit semantics, and dirty state.
+3. Run the internal Red Team until every mandatory attack is defended.
+4. Run the Milestone Closure Auditor until every mirrored dimension passes.
+5. Finalize the checkpoint.
+6. Commit the content, then seal it with `seal_checkpoint.py`, which validates the committed content
+   with a clean worktree, records that validation, and creates the canonical tag.
+7. Validate the sealed checkpoint.
+8. Update `docs/checkpoints/LATEST.md` textually; do not use a symlink.
+9. Complete `HANDOFF.md` and `NEXT.md`.
+10. Record branch, commit semantics, and dirty state.
 
 No Codex-to-Claude or Claude-to-Codex transition is informal.
 

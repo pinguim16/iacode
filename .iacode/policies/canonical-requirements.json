@@ -1,0 +1,580 @@
+{
+  "schemaVersion": "1.0.0",
+  "gates": [
+    {
+      "gate": "SETUP-00",
+      "specification": "docs/SETUP-00-CHECKLIST.md",
+      "requirements": [
+        {
+          "key": "1.1",
+          "section": "1. Entry contract and tool adapters",
+          "description": "A single entry point states the phase, current Gate, latest checkpoint, and start protocol.",
+          "artifact": "`START-HERE.md`",
+          "evidence": "File present and consistent with `docs/checkpoints/LATEST.md`.",
+          "mandatory": true
+        },
+        {
+          "key": "1.2",
+          "section": "1. Entry contract and tool adapters",
+          "description": "A Codex adapter binds the canonical contracts without adding independent policy.",
+          "artifact": "`AGENTS.md`",
+          "evidence": "File present; references `.iacode/`.",
+          "mandatory": true
+        },
+        {
+          "key": "1.3",
+          "section": "1. Entry contract and tool adapters",
+          "description": "A Claude Code adapter binds the same contracts.",
+          "artifact": "`CLAUDE.md`",
+          "evidence": "File present; references `.iacode/agents/` and the checkpoint protocol.",
+          "mandatory": true
+        },
+        {
+          "key": "1.4",
+          "section": "1. Entry contract and tool adapters",
+          "description": "Tool adapters stay semantically equivalent to the canonical roles.",
+          "artifact": "`.claude/agents/*.md`",
+          "evidence": "`ClaudeAdapterTests` in `tests/test_development_ledger.py`.",
+          "mandatory": true
+        },
+        {
+          "key": "2.1",
+          "section": "2. Governing documents",
+          "description": "The Gate sequence, dependencies, acceptance, and fail conditions are recorded.",
+          "artifact": "`docs/MASTER-PLAN.md`",
+          "evidence": "File present; SETUP-00 accepts against this checklist.",
+          "mandatory": true
+        },
+        {
+          "key": "2.2",
+          "section": "2. Governing documents",
+          "description": "The completion standard, mandatory controls, and Git and evidence discipline are recorded.",
+          "artifact": "`docs/DEVELOPMENT-CONTRACT.md`",
+          "evidence": "File present.",
+          "mandatory": true
+        },
+        {
+          "key": "2.3",
+          "section": "2. Governing documents",
+          "description": "Tool-to-tool transfer is formal in both directions.",
+          "artifact": "`docs/HANDOFF-PROTOCOL.md`",
+          "evidence": "File present; receiver sequence is executable.",
+          "mandatory": true
+        },
+        {
+          "key": "2.4",
+          "section": "2. Governing documents",
+          "description": "Checkpoint statuses, required events, required contents, commit semantics, and divergence handling are defined.",
+          "artifact": "`docs/CHECKPOINT-PROTOCOL.md`",
+          "evidence": "File present; enforced by `validate_checkpoint.py`.",
+          "mandatory": true
+        },
+        {
+          "key": "2.5",
+          "section": "2. Governing documents",
+          "description": "Done is defined and excludes assertion-only PASS.",
+          "artifact": "`docs/DEFINITION-OF-DONE.md`",
+          "evidence": "File present.",
+          "mandatory": true
+        },
+        {
+          "key": "2.6",
+          "section": "2. Governing documents",
+          "description": "Quality outcomes, required dimensions, and the promotion rule are defined.",
+          "artifact": "`docs/QUALITY-GATES.md`",
+          "evidence": "File present; enforced by the validator.",
+          "mandatory": true
+        },
+        {
+          "key": "2.7",
+          "section": "2. Governing documents",
+          "description": "Structural decisions are recorded as ADRs.",
+          "artifact": "`docs/adr/ADR-*.md`",
+          "evidence": "At least one ADR per structural decision of this Gate.",
+          "mandatory": true
+        },
+        {
+          "key": "2.8",
+          "section": "2. Governing documents",
+          "description": "Architecture, roadmap, provenance, model usage, and detected tool capabilities are documented.",
+          "artifact": "`docs/ARCHITECTURE.md`, `docs/ROADMAP.md`, `docs/PROVENANCE.md`, `docs/MODEL-USAGE-POLICY.md`, `docs/TOOL-CAPABILITIES.md`",
+          "evidence": "Files present and consistent with observed evidence.",
+          "mandatory": true
+        },
+        {
+          "key": "3.1",
+          "section": "3. Canonical roles and policies",
+          "description": "The canonical, tool-neutral role contracts exist, one per role of the delivery protocol.",
+          "artifact": "`.iacode/agents/`",
+          "evidence": "`test_project_agents_match_canonical_role_names`.",
+          "mandatory": true
+        },
+        {
+          "key": "3.2",
+          "section": "3. Canonical roles and policies",
+          "description": "Documentation, provenance, secret, tool-execution, and training-data policies exist.",
+          "artifact": "`.iacode/policies/`",
+          "evidence": "Files present; secret policy matches the implemented detector scope.",
+          "mandatory": true
+        },
+        {
+          "key": "3.3",
+          "section": "3. Canonical roles and policies",
+          "description": "Reusable templates exist for ADRs, checkpoints, gate reports, and handoffs.",
+          "artifact": "`.iacode/templates/`",
+          "evidence": "Files present.",
+          "mandatory": true
+        },
+        {
+          "key": "4.1",
+          "section": "4. Schemas",
+          "description": "Checkpoint state, run metadata, command, test, quality, provenance, and decision schemas exist and are loadable.",
+          "artifact": "`.iacode/schemas/`",
+          "evidence": "`test_all_required_schemas_are_loaded`.",
+          "mandatory": true
+        },
+        {
+          "key": "4.2",
+          "section": "4. Schemas",
+          "description": "An experience schema is reserved for Gate 6 and implements no runtime.",
+          "artifact": "`.iacode/schemas/experience.schema.json`",
+          "evidence": "File present; no runtime consumer exists.",
+          "mandatory": true
+        },
+        {
+          "key": "4.3",
+          "section": "4. Schemas",
+          "description": "Schema evolution is versioned and never invalidates a sealed checkpoint.",
+          "artifact": "`.iacode/schemas/*.json`",
+          "evidence": "`HistoricalCheckpointCompatibilityTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "5.1",
+          "section": "5. Ledger tooling",
+          "description": "A checkpoint can be created with truthful non-PASS defaults.",
+          "artifact": "`scripts/development-ledger/new_checkpoint.py`",
+          "evidence": "`test_new_finalize_commit_validate`.",
+          "mandatory": true
+        },
+        {
+          "key": "5.2",
+          "section": "5. Ledger tooling",
+          "description": "A checkpoint can be finalized, and every finalization attempt is recorded with its exit code.",
+          "artifact": "`scripts/development-ledger/finalize_checkpoint.py`",
+          "evidence": "`FinalizationLedgerTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "5.3",
+          "section": "5. Ledger tooling",
+          "description": "A checkpoint is validated against schemas, Git state, inventory, quality evidence, and secrets.",
+          "artifact": "`scripts/development-ledger/validate_checkpoint.py`",
+          "evidence": "`CHECKPOINT_VALID` plus the validation test classes.",
+          "mandatory": true
+        },
+        {
+          "key": "5.4",
+          "section": "5. Ledger tooling",
+          "description": "Secret redaction is available and documented to its real scope.",
+          "artifact": "`scripts/development-ledger/redact_secrets.py`, `.iacode/policies/secret-policy.md`",
+          "evidence": "Redactor tests; documented residual limits.",
+          "mandatory": true
+        },
+        {
+          "key": "5.5",
+          "section": "5. Ledger tooling",
+          "description": "The tooling is standard-library only and portable across Windows and Unix-like checkouts.",
+          "artifact": "`scripts/development-ledger/README.md`",
+          "evidence": "Suite passes without third-party packages; `.gitattributes` normalizes line endings.",
+          "mandatory": true
+        },
+        {
+          "key": "6.1",
+          "section": "6. Engineering Ledger",
+          "description": "Every checkpoint carries status, handoff, run metadata, state, plan, decisions, commands, file inventory, tests, quality, provenance, diff summary, risks, and next action.",
+          "artifact": "`docs/checkpoints/<id>/`",
+          "evidence": "Required-file validation.",
+          "mandatory": true
+        },
+        {
+          "key": "6.2",
+          "section": "6. Engineering Ledger",
+          "description": "`LATEST.md` points textually to the last checkpoint accepted by validation.",
+          "artifact": "`docs/checkpoints/LATEST.md`",
+          "evidence": "`resolve_latest` plus `test_latest_to_nonexistent_checkpoint_fails`.",
+          "mandatory": true
+        },
+        {
+          "key": "6.3",
+          "section": "6. Engineering Ledger",
+          "description": "The file inventory matches the real change set, with bound content hashes.",
+          "artifact": "`FILES.json`",
+          "evidence": "`DeltaInventoryTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "6.4",
+          "section": "6. Engineering Ledger",
+          "description": "Provenance is complete and `trainingAllowed` defaults to `false`.",
+          "artifact": "`PROVENANCE.json`",
+          "evidence": "Schema validation plus `.iacode/policies/provenance-policy.md`.",
+          "mandatory": true
+        },
+        {
+          "key": "6.5",
+          "section": "6. Engineering Ledger",
+          "description": "A quality `PASS` carries resolvable evidence.",
+          "artifact": "`QUALITY.json`",
+          "evidence": "`QualityEvidenceTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "6.6",
+          "section": "6. Engineering Ledger",
+          "description": "Handoff-ready and terminal checkpoints are anchored to an immutable namespaced tag.",
+          "artifact": "`STATE.json`",
+          "evidence": "`test_handoff_ready_status_requires_commit_anchor`.",
+          "mandatory": true
+        },
+        {
+          "key": "7.1",
+          "section": "7. Continuation and validation",
+          "description": "A cold-start continuation prompt exists and depends only on checked-in files.",
+          "artifact": "`prompts/RESUME-WORK.md`",
+          "evidence": "Executed from a clean clone.",
+          "mandatory": true
+        },
+        {
+          "key": "7.2",
+          "section": "7. Continuation and validation",
+          "description": "Cold-start validation is executed and recorded truthfully, including a blocked attempt.",
+          "artifact": "`RESUME-VALIDATION.md` of the current checkpoint",
+          "evidence": "Recorded result; a blocked attempt is never a PASS.",
+          "mandatory": true
+        },
+        {
+          "key": "7.3",
+          "section": "7. Continuation and validation",
+          "description": "Cross-tool validation state is structured and explicit.",
+          "artifact": "`STATE.json` `secondToolValidation`",
+          "evidence": "`SecondToolValidationTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "7.4",
+          "section": "7. Continuation and validation",
+          "description": "A sealed checkpoint can be validated from a detached checkout of its own tag.",
+          "artifact": "`validate_checkpoint.py`",
+          "evidence": "`DetachedHeadValidationTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "7.5",
+          "section": "7. Continuation and validation",
+          "description": "The handoff is executable by another tool without the producing session.",
+          "artifact": "`HANDOFF.md`",
+          "evidence": "Required headings plus reproducible validation commands.",
+          "mandatory": true
+        },
+        {
+          "key": "7b.1",
+          "section": "7b. Delivery assurance",
+          "description": "Every requirement of a delivery exists in a versioned matrix before implementation.",
+          "artifact": "`REQUIREMENTS-MATRIX.json`, `.iacode/schemas/requirements-matrix.schema.json`",
+          "evidence": "`DeliveryCompletenessMatrixTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "7b.2",
+          "section": "7b. Delivery assurance",
+          "description": "A Test Rework / Green Keeper role forbids shipping anything red and records every cycle.",
+          "artifact": "`.iacode/agents/test-rework-greenkeeper.md`, `REWORK-LOG.jsonl`, `scripts/development-ledger/green_keeper.py`",
+          "evidence": "`GreenKeeperToolTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "7b.3",
+          "section": "7b. Delivery assurance",
+          "description": "A Delivery Completeness Validator audits the matrix before handoff and may not implement.",
+          "artifact": "`.iacode/agents/delivery-completeness-validator.md`, `COMPLETENESS-REPORT.json`, `scripts/development-ledger/check_completeness.py`",
+          "evidence": "`DeliveryCompletenessMatrixTests`, `DeliveryAssuranceGateTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "7b.4",
+          "section": "7b. Delivery assurance",
+          "description": "`GREEN_KEEPER_GATE` and `DELIVERY_COMPLETENESS_GATE` are preconditions of `READY_FOR_REVIEW`.",
+          "artifact": "`scripts/development-ledger/validate_checkpoint.py`, `docs/QUALITY-GATES.md`",
+          "evidence": "`DeliveryAssuranceGateTests`, `DeliveryLifecycleTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "7b.5",
+          "section": "7b. Delivery assurance",
+          "description": "Readiness and blockage can never be claimed together.",
+          "artifact": "`validate_checkpoint.py`",
+          "evidence": "`StatusBlockerInvariantTests`, `ResealedBlockerFixtureTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "7b.6",
+          "section": "7b. Delivery assurance",
+          "description": "Every operation attempt is recorded, including a refusal decided before execution.",
+          "artifact": "`scripts/development-ledger/finalize_checkpoint.py`",
+          "evidence": "`FinalizationAttemptRecordingTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "7b.7",
+          "section": "7b. Delivery assurance",
+          "description": "Every recorded command is reproducible from its declared working directory.",
+          "artifact": "`scripts/development-ledger/record_command.py`, `.iacode/schemas/command.schema.json`",
+          "evidence": "`CommandReproducibilityTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "7b.8",
+          "section": "7b. Delivery assurance",
+          "description": "The mandatory delivery order is stated in full in every governing document and both adapters.",
+          "artifact": "`docs/DEVELOPMENT-CONTRACT.md`, `docs/QUALITY-GATES.md`, `docs/CHECKPOINT-PROTOCOL.md`, `docs/HANDOFF-PROTOCOL.md`, `docs/DEFINITION-OF-DONE.md`, `START-HERE.md`, `AGENTS.md`, `CLAUDE.md`",
+          "evidence": "Documents present and consistent.",
+          "mandatory": true
+        },
+        {
+          "key": "7c.1",
+          "section": "7c. Engineering memory and milestone validation",
+          "description": "The project keeps an organizational engineering memory of confirmed failures.",
+          "artifact": "`.iacode/memory/`, `.iacode/schemas/lesson.schema.json`",
+          "evidence": "`EngineeringMemoryStructureTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "7c.2",
+          "section": "7c. Engineering memory and milestone validation",
+          "description": "A lesson is `GUARDED` only when an automated control prevents recurrence.",
+          "artifact": "`scripts/development-ledger/validate_lessons.py`",
+          "evidence": "`LessonValidationTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "7c.3",
+          "section": "7c. Engineering memory and milestone validation",
+          "description": "A repeat increments recurrence, and a repeat against a guardrail is a `GUARDRAIL_FAILURE`.",
+          "artifact": "`scripts/development-ledger/lessons.py`",
+          "evidence": "`LessonRecurrenceTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "7c.4",
+          "section": "7c. Engineering memory and milestone validation",
+          "description": "A mandatory preflight selects the lessons that constrain each Gate.",
+          "artifact": "`scripts/development-ledger/lesson_preflight.py`, `LESSON-PREFLIGHT.json`",
+          "evidence": "`LessonPreflightTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "7c.5",
+          "section": "7c. Engineering memory and milestone validation",
+          "description": "Applicable lessons become requirements whose absence blocks completeness.",
+          "artifact": "`REQUIREMENTS-MATRIX.json`, `check_completeness.py`",
+          "evidence": "`DerivedRequirementCompletenessTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "7c.6",
+          "section": "7c. Engineering memory and milestone validation",
+          "description": "Lesson candidates can be extracted from recorded delivery evidence, never above `OBSERVED`.",
+          "artifact": "`scripts/development-ledger/extract_lessons.py`",
+          "evidence": "Candidates recorded in this checkpoint's evidence.",
+          "mandatory": true
+        },
+        {
+          "key": "7c.7",
+          "section": "7c. Engineering memory and milestone validation",
+          "description": "External validation is grouped into milestones `M0` to `M6`.",
+          "artifact": "`docs/MILESTONE-VALIDATION.md`, `ledger_common.MILESTONES`",
+          "evidence": "`MilestoneValidationPolicyTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "7c.8",
+          "section": "7c. Engineering memory and milestone validation",
+          "description": "An internal verdict is never described as independent external validation.",
+          "artifact": "`INTERNAL_GATE_PASS`, `MILESTONE_EXTERNAL_PASS`",
+          "evidence": "`MemoryStatusVocabularyTests`, `MemoryPolicyValidationTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "7c.9",
+          "section": "7c. Engineering memory and milestone validation",
+          "description": "An extraordinary audit requires a recorded trigger.",
+          "artifact": "`externalAuditRequired`, `externalAuditReason`",
+          "evidence": "`MemoryPolicyValidationTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "7c.10",
+          "section": "7c. Engineering memory and milestone validation",
+          "description": "Every completed Gate produces a retrospective.",
+          "artifact": "`.iacode/templates/retrospective/TEMPLATE.md`, `.iacode/memory/retrospectives/`",
+          "evidence": "Retrospective present for this Gate.",
+          "mandatory": true
+        },
+        {
+          "key": "7d.1",
+          "section": "7d. Milestone closure controls",
+          "description": "One promotion invariant governs every positive terminal status, not only `READY_FOR_REVIEW`.",
+          "artifact": "`scripts/development-ledger/validate_checkpoint.py`",
+          "evidence": "`PromotionInvariantTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "7d.2",
+          "section": "7d. Milestone closure controls",
+          "description": "The mandatory quality gate set is a closed machine-readable registry that an invocation cannot narrow.",
+          "artifact": "`.iacode/policies/quality-gates.json`, `scripts/development-ledger/green_keeper.py`",
+          "evidence": "`MandatoryGatePolicyTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "7d.3",
+          "section": "7d. Milestone closure controls",
+          "description": "The expected requirement set is derived from canonical sources and compared exactly with the declared set.",
+          "artifact": "`.iacode/policies/canonical-requirements.json`, `scripts/development-ledger/policies.py`",
+          "evidence": "`ExpectedRequirementSetTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "7d.4",
+          "section": "7d. Milestone closure controls",
+          "description": "An external milestone PASS is derived from an audit attestation authored by another sealed checkpoint.",
+          "artifact": "`.iacode/attestations/`, `scripts/development-ledger/attestation.py`",
+          "evidence": "`ExternalAttestationTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "7d.5",
+          "section": "7d. Milestone closure controls",
+          "description": "A derived artifact carries a fingerprint of its inputs, and staleness is decided by recomputation.",
+          "artifact": "`scripts/development-ledger/lesson_preflight.py`, `LESSON-PREFLIGHT.json`",
+          "evidence": "`PreflightFreshnessTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "7d.6",
+          "section": "7d. Milestone closure controls",
+          "description": "Every lesson control, evidence path and provenance locator is resolved against the repository.",
+          "artifact": "`scripts/development-ledger/lessons.py`",
+          "evidence": "`LessonResolutionTests`, `LessonProvenanceTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "7d.7",
+          "section": "7d. Milestone closure controls",
+          "description": "Every `GUARDED` lesson names a registered guardrail, and guardrail effectiveness is measured.",
+          "artifact": "`.iacode/memory/guardrails/registry.json`",
+          "evidence": "`GuardrailRegistryTests`, `GuardrailEffectivenessGateTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "7d.8",
+          "section": "7d. Milestone closure controls",
+          "description": "Sealed checkpoints are anchored by a hash-linked chain over tag, commit and tree.",
+          "artifact": "`.iacode/anchors/checkpoint-chain.json`, `scripts/development-ledger/anchors.py`",
+          "evidence": "`IntegrityAnchorTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "7d.9",
+          "section": "7d. Milestone closure controls",
+          "description": "Every count used as evidence is derived once and verified wherever a report states it.",
+          "artifact": "`COUNTS.json`, `scripts/development-ledger/derive_counts.py`",
+          "evidence": "`DerivedCountTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "7d.10",
+          "section": "7d. Milestone closure controls",
+          "description": "Sealing is monotonic and post-commit, and every recorded command binds its declared inputs by content.",
+          "artifact": "`scripts/development-ledger/seal_checkpoint.py`, `record_command.py`",
+          "evidence": "`SealChronologyTests`, `CommandInputBindingTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "7d.11",
+          "section": "7d. Milestone closure controls",
+          "description": "A milestone delivery carries an internal Red Team and an internal mirror audit, and neither is recorded as external validation.",
+          "artifact": "`scripts/development-ledger/m0_red_team.py`, `m0_mirror_audit.py`, `.iacode/agents/m0-closure-auditor.md`",
+          "evidence": "`InternalAssuranceTests`, `AuditSourceParsingTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "7d.12",
+          "section": "7d. Milestone closure controls",
+          "description": "Every finding of an independent audit is closed before the corrective delivery is offered.",
+          "artifact": "`.iacode/policies/audit-registry.json`, `CP7-FINDINGS-CLOSURE.json`",
+          "evidence": "`FindingsClosureTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "8.1",
+          "section": "8. Independent verification",
+          "description": "An independent review is recorded.",
+          "artifact": "`REVIEW-REPORT.md`",
+          "evidence": "`APPROVED` or `REWORK_REQUIRED` with evidence.",
+          "mandatory": true
+        },
+        {
+          "key": "8.2",
+          "section": "8. Independent verification",
+          "description": "An adversarial Red Team is recorded.",
+          "artifact": "`RED-TEAM-REPORT.md`",
+          "evidence": "`RED_TEAM_PASS` or `RED_TEAM_FAIL` with reproducible attacks.",
+          "mandatory": true
+        },
+        {
+          "key": "8.3",
+          "section": "8. Independent verification",
+          "description": "`GATE_PASS` is granted only by a run independent of the implementer.",
+          "artifact": "`STATE.json`, `docs/QUALITY-GATES.md`",
+          "evidence": "The implementing run closes at `READY_FOR_REVIEW`; the validator refuses `GATE_PASS` without a passed or explicitly waived cross-tool validation.",
+          "mandatory": true
+        },
+        {
+          "key": "9.1",
+          "section": "9. Scope control",
+          "description": "No Gate 0 or later runtime is implemented during SETUP-00.",
+          "artifact": "repository tree",
+          "evidence": "No model gateway, agent runtime, sandbox, quality runtime, or IDE integration exists.",
+          "mandatory": true
+        },
+        {
+          "key": "9.2",
+          "section": "9. Scope control",
+          "description": "Documentation is maintained continuously rather than reconstructed at the end.",
+          "artifact": "`COMMANDS.jsonl`, `DECISIONS.md`",
+          "evidence": "Chronological records inside the checkpoint.",
+          "mandatory": true
+        },
+        {
+          "key": "9.3",
+          "section": "9. Scope control",
+          "description": "No secret, credential, or private chain-of-thought is stored.",
+          "artifact": "whole repository",
+          "evidence": "Validator secret scan over every readable file.",
+          "mandatory": true
+        },
+        {
+          "key": "9.4",
+          "section": "9. Scope control",
+          "description": "Gate advancement requires explicit authorization and a passing previous Gate.",
+          "artifact": "`docs/MASTER-PLAN.md`, `NEXT.md`",
+          "evidence": "Next action never points directly at Gate 0 without authorization.",
+          "mandatory": true
+        }
+      ],
+      "parser": "scripts/development-ledger/policies.py:parse_checklist"
+    }
+  ]
+}
