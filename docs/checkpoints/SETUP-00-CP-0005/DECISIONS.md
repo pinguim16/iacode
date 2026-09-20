@@ -68,6 +68,18 @@ cause, never by weakening a check, and every cycle with its root cause is in `RE
 `git log` and that file are the complete record; this decision states the mechanism rather than
 enumerating instances, so it stays accurate without needing a correction to describe itself.
 
+## Corrections before handoff re-create this checkpoint's own tag
+
+Whenever a defect was found in this checkpoint after it had been sealed but before it was handed off,
+it was corrected in its own commit rather than amended away, so every superseded sealing commit stays
+reachable with a message saying what it got wrong. Each such correction required
+`refs/tags/iacode-checkpoints/SETUP-00-CP-0005` to be deleted and re-created, because validation
+requires the tag to resolve to the checked-out commit. This is bounded and does not weaken the audit
+model: the tag existed only in this working repository, no handoff or publication had occurred, no
+history was rewritten, and no sealed checkpoint or historical tag was touched. `git log` is the
+complete record. Once this checkpoint reaches the independent run, its tag is immutable like the
+others.
+
 ## Secret scanner scope unchanged
 
 The detector still matches the scope documented in `.iacode/policies/secret-policy.md`. Expanding it
