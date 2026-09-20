@@ -174,6 +174,29 @@ def evaluate_matrix(
     mandatory = 0
     evidence_required = 0
     evidence_resolved = 0
+    declared_ids = {
+        item.get("id") for item in requirements if isinstance(item, dict)
+    }
+
+    # A lesson that the preflight selected is a requirement of this Gate. Dropping it from the matrix
+    # would let the memory be silently ignored, which is the failure the memory exists to prevent.
+    preflight_path = checkpoint / "LESSON-PREFLIGHT.json"
+    if preflight_path.is_file():
+        try:
+            preflight = load_json(preflight_path)
+        except LedgerError:
+            preflight = None
+        if isinstance(preflight, dict):
+            for derived in preflight.get("derivedRequirements") or []:
+                identifier = derived.get("id") if isinstance(derived, dict) else None
+                if identifier and identifier not in declared_ids:
+                    findings.append({
+                        "requirement": str(identifier),
+                        "severity": "BLOCKING",
+                        "detail": (
+                            f"the lesson preflight derived this requirement from "
+                            f"{derived.get('lessonId')} but the matrix does not declare it"),
+                    })
 
     for item in requirements:
         identifier = item.get("id", "?") if isinstance(item, dict) else "?"

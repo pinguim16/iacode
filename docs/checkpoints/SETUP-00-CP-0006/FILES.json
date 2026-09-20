@@ -1,0 +1,419 @@
+{
+  "filesRead": [
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0005",
+      "reason": "Sealed predecessor checkpoint read in full before any change."
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0004",
+      "reason": "Sealed independent validation checkpoint; source of several seeded lessons."
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0003",
+      "reason": "Sealed checkpoint; source of several seeded lessons."
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0002",
+      "reason": "Sealed checkpoint; source of the capability detection lesson."
+    },
+    {
+      "path": "docs/SETUP-00-CHECKLIST.md",
+      "reason": "In-repository SETUP-00 specification used to extract requirements."
+    }
+  ],
+  "filesCreated": [
+    {
+      "path": ".iacode/memory/LESSONS.md",
+      "reason": "Rendered index of the machine-readable memory.",
+      "hashAfter": "6cffa9f01fecbc1683511c8f668b49c4135adc974786fdea38a62436e133464a"
+    },
+    {
+      "path": ".iacode/memory/README.md",
+      "reason": "Engineering memory contract: organizational scope, layout, lifecycle, recurrence and the guardrail principle.",
+      "hashAfter": "5dd27a6a2bf7ce25b08851336a01fba39862cd4d6e229e4196553cbc8d430807"
+    },
+    {
+      "path": ".iacode/memory/anti-patterns/README.md",
+      "reason": "Practices that repeatedly failed here, with their evidence.",
+      "hashAfter": "c147b6fd82d804865ed51a76e034b4339bef1b1ae7eec7400226416bb0b5cc97"
+    },
+    {
+      "path": ".iacode/memory/guardrails/README.md",
+      "reason": "How each guarded lesson became an automated control and what breaks if it is removed.",
+      "hashAfter": "24c532c0df68b366fc3ce08ab32903697dc3c9a7a2b283a1bbed0d4e893915df"
+    },
+    {
+      "path": ".iacode/memory/incidents/README.md",
+      "reason": "Narrative records of individual failures that need more than a lesson row.",
+      "hashAfter": "c288513678ceb8c8895ee36bf238250f0bcb22963ab4617a6d030c9e61821bcb"
+    },
+    {
+      "path": ".iacode/memory/lessons.jsonl",
+      "reason": "Authoritative engineering memory, seeded from findings recorded in the sealed checkpoints.",
+      "hashAfter": "48316a38d78eeae7c1c4d2fbcbe5c142959f77e322a8e0bb681b644dad14c22f"
+    },
+    {
+      "path": ".iacode/memory/patterns/README.md",
+      "reason": "Practices that repeatedly worked, with their evidence.",
+      "hashAfter": "c6c9d9421b04e13e8340040e809a854446acaf637de52e00dae72db25675b0a7"
+    },
+    {
+      "path": ".iacode/memory/retrospectives/README.md",
+      "reason": "One retrospective per completed Gate.",
+      "hashAfter": "e20b6fbaea621512082719627d3521bd8c399b915ca13f6a2fbb43c4b471d5fa"
+    },
+    {
+      "path": ".iacode/memory/retrospectives/SETUP-00-CP-0006.md",
+      "reason": "Retrospective for this Gate.",
+      "hashAfter": "1dbc80f0de2e9d35728f70334b79e22669919b7c3738ec5e1c849b013a65da9b"
+    },
+    {
+      "path": ".iacode/schemas/lesson-preflight.schema.json",
+      "reason": "New schema for the per-Gate lesson preflight and its derived requirements.",
+      "hashAfter": "23f4a0d7a65a7c95492de78499a49ce6d638adb87165885a3b4d083cb7ca8533"
+    },
+    {
+      "path": ".iacode/schemas/lesson.schema.json",
+      "reason": "New schema for an engineering lesson, including statuses, categories, recurrence, provenance and training eligibility.",
+      "hashAfter": "c63e2d5088d3e048bbb65707a7c587ed875e8605d69f8db4912de49374a391d6"
+    },
+    {
+      "path": ".iacode/templates/retrospective/TEMPLATE.md",
+      "reason": "Mandatory retrospective template.",
+      "hashAfter": "455283835ea575b8eec9e93bb19251c5b4e371576328f1b2c162e8fd204983ab"
+    },
+    {
+      "path": "docs/ENGINEERING-MEMORY.md",
+      "reason": "New contract for the engineering memory and the guardrail principle.",
+      "hashAfter": "e1f51c239c890f2e800c2b1df3da9c2a02e576be0e8e1630d8f541ee14eb8b92"
+    },
+    {
+      "path": "docs/MILESTONE-VALIDATION.md",
+      "reason": "New external validation cadence, milestone grouping and auditor role.",
+      "hashAfter": "4368ccefa11d201f5d90b89f4f000cd29b5998723b810ae828ada9f745766f33"
+    },
+    {
+      "path": "docs/adr/ADR-0009-engineering-memory-and-milestone-validation.md",
+      "reason": "Records the structural decisions of this checkpoint.",
+      "hashAfter": "6ac9045e7cae53d4c3326a181c40b8ac1dc6edece34ac418d164bb254f8110df"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0006/COMMANDS.jsonl",
+      "reason": "Reproducible command ledger, including every finalization attempt.",
+      "hashAfter": "425b5a99832c5da9c7ffbd35bf53e466c3d48be9a3bfdf7ad4d34646cb85af3d"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0006/COMPLETENESS-REPORT.json",
+      "reason": "Delivery completeness audit result.",
+      "hashAfter": "38cb314726f28e41ae50a2160a19d45b422f3b2223bab1a502f26833321c98e1"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0006/COMPLETENESS-REPORT.md",
+      "reason": "Rendered delivery completeness audit.",
+      "hashAfter": "d03767413e6ace7a3ea231274ad1d0934cce1d498f2e6d5a4d402df51caaea2e"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0006/DECISIONS.md",
+      "reason": "Decisions and their rationale.",
+      "hashAfter": "aae3aa3d00cf208c02c3d0fe070a97336b336fc0ea969924a5a12f9c350bab6f"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0006/DIFF-SUMMARY.md",
+      "reason": "Summary of the change set.",
+      "hashAfter": "e0242accd5570d97c3621548955a0238b45ae220162f1b6934d51b96f5bd064c"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0006/FILES.json",
+      "reason": "File inventory for this checkpoint."
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0006/FINAL-REPORT.md",
+      "reason": "Outcome report for this run.",
+      "hashAfter": "e08b54b11f05f3248021fbfeed04b48ff6fcc9e51aeb2ea63fa68a1e21041730"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0006/HANDOFF.md",
+      "reason": "Executable handoff for the Codex M0 milestone audit.",
+      "hashAfter": "678453c520e88e811c3d08fd05ada75540c84656eead4ddb9b039504b07e5704"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0006/LESSON-PREFLIGHT.json",
+      "reason": "Lessons that constrain this Gate and the requirements derived from them.",
+      "hashAfter": "032451e71b1fdabdca5fd46d8b866628587ad71dab12fc6793b5db0b05de819a"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0006/LESSON-PREFLIGHT.md",
+      "reason": "Rendered view of the lesson preflight.",
+      "hashAfter": "044bb8c83867ed66a4de7b40a60cae047f42f915b1cc6ed9ff3006d765e0e1aa"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0006/NEXT.md",
+      "reason": "Next allowed action: the single Codex M0 milestone audit.",
+      "hashAfter": "3ca9e772827d478e602f39576c0ac8d56f41ea64beaa40cca4bbfafdc0460a54"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0006/PLAN.md",
+      "reason": "Execution plan recorded after the requirements matrix and before implementation.",
+      "hashAfter": "b59c3e4b3cd8a079f873a08f5d3e56372d8ccb9648faf9dee20a439fabe61430"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0006/PROVENANCE.json",
+      "reason": "Provenance and rights classification.",
+      "hashAfter": "b01345d0be8cba919029acb08214621034fb2e4a59c50b0a4ee4dc3a4f5895d8"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0006/QUALITY.json",
+      "reason": "Quality dimensions with evidence references.",
+      "hashAfter": "8add77385a3e88c715fb219b851ea065d0a25e1be0032d9fc1980eb6bff17ea3"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0006/REQUIREMENTS-MATRIX.json",
+      "reason": "Authoritative requirement set, including the lesson-derived requirements.",
+      "hashAfter": "fb84c91474160c6e194e346fe3d39d44dd05615e2491bcb97649ac429e12983f"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0006/REQUIREMENTS-MATRIX.md",
+      "reason": "Rendered view of the requirement set.",
+      "hashAfter": "7c4760f7c9a9c7ffec1dfb5a5b935720fb306aad24f3546f0a7d9728eb609248"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0006/REWORK-LOG.jsonl",
+      "reason": "Green Keeper rework cycles for this delivery.",
+      "hashAfter": "a2c1addd1a137fc688b8d3244affc952b00570341aab48fad6527eef789d88fa"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0006/RISKS.md",
+      "reason": "Residual risks.",
+      "hashAfter": "35b98ea610464bdcc5fe8043c81cbf0259fc57600f242bd6534718d4ffa3c963"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0006/RUN-METADATA.json",
+      "reason": "Tool, provider, model, effort and Git metadata for this run.",
+      "hashAfter": "c6d4a35e364ae60aafd81fe5d6d382ceeac5dedff5ae0d906c4dc5bd9426b2f4"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0006/STATE.json",
+      "reason": "Checkpoint state, including the preflight and milestone blocks.",
+      "hashAfter": "017967ba650088b971d45193353d0cf59945a1c72e25eab1acd5d2698878943d"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0006/STATUS.md",
+      "reason": "Checkpoint status.",
+      "hashAfter": "59e6444d1015b76b59cb6aa1143753675cf48a96814b94857478e8c5ce4c83e4"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0006/TESTS.json",
+      "reason": "Test execution evidence.",
+      "hashAfter": "a707cef3944d7510092930de4fadbb86838be5fa1139bb8548da0ddd9e7570df"
+    },
+    {
+      "path": "scripts/development-ledger/extract_lessons.py",
+      "reason": "New lesson extractor producing OBSERVED candidates from recorded evidence.",
+      "hashAfter": "a191c507cd6bc3ca8870803c551f6a0a32dc2516cd97613ef07c0ee70d635ee1"
+    },
+    {
+      "path": "scripts/development-ledger/lesson_preflight.py",
+      "reason": "New mandatory per-Gate lesson preflight.",
+      "hashAfter": "cb78740905a54cf538c067517a3ac3b5e0be3659a884088f81df2a7902eabdff"
+    },
+    {
+      "path": "scripts/development-ledger/lessons.py",
+      "reason": "New shared library for the memory: loading, recurrence, applicability, validation and index rendering.",
+      "hashAfter": "d6b20b47cfa58b15a37f12069f9da85ea9bd9e0a350672c3c22ff932e00f51df"
+    },
+    {
+      "path": "scripts/development-ledger/validate_lessons.py",
+      "reason": "New lesson validator, part of the Green Keeper gate set.",
+      "hashAfter": "ea676d739e1b40e13679f5fb3dcbb15ddde2e121b02a339452293e160e34386a"
+    }
+  ],
+  "filesModified": [
+    {
+      "path": ".iacode/agents/delivery-completeness-validator.md",
+      "reason": "Confirms that lesson-derived requirements were satisfied.",
+      "hashAfter": "e10029943769da2cf3d6b58b9207f7a77ea5e293f2da1e3b809c5a37d6167b40",
+      "hashBefore": "8c9142cc43991f913a3d47174b6a45f77eb83a6338e6c04f235925b1dc197630"
+    },
+    {
+      "path": ".iacode/agents/engineering-lead.md",
+      "reason": "Runs the mandatory lesson preflight and applies the validation cadence.",
+      "hashAfter": "82ab6ceb4398ed4a81a20fb01afd13f045b76128161411690f29a996feff9ef0",
+      "hashBefore": "e9051d64f22a9570c400f3836c29aec0cfe37c4343251de0edc565621c87f14a"
+    },
+    {
+      "path": ".iacode/agents/historian.md",
+      "reason": "Records lessons, guardrail entries and retrospectives.",
+      "hashAfter": "02e9777e19fee4ecd3fec14cc1e799e4483b08f5fe19e41105bd93bd2506083b",
+      "hashBefore": "83726d82bc542a67a3cd904274dd18109e8ecb19c8d5bbc2d3f0b005d5f8af30"
+    },
+    {
+      "path": ".iacode/agents/implementer.md",
+      "reason": "Consults the applicable checks before writing code.",
+      "hashAfter": "ffa75f6761d7e1dc93d9607910930d72532772f689ec30bbbf00bfc1e674102b",
+      "hashBefore": "8cefb3fd935450444a44b556c558a724dc85e28174f56ced025b91ae109e5d6d"
+    },
+    {
+      "path": ".iacode/agents/planner.md",
+      "reason": "Incorporates lesson-derived requirements into the plan and the matrix.",
+      "hashAfter": "0dba9b88f09b271b52017496da050596a1f97965c501c02d7ee3af6f1de25c41",
+      "hashBefore": "8bd4427428f8323dd839fa41d79ca50b49666dee661cef2e1d568432ac408117"
+    },
+    {
+      "path": ".iacode/agents/reviewer.md",
+      "reason": "Looks for recurrence and for guardrails that are not holding.",
+      "hashAfter": "8028d529f993827301efbc2a869bc3b0df585cc2449f7ff4992b97f597ca845e",
+      "hashBefore": "528a067e69a5f472b31ff835da185c9a49c5ba93e90a09fd3cf3d76124643571"
+    },
+    {
+      "path": ".iacode/agents/test-rework-greenkeeper.md",
+      "reason": "Records failures as lesson candidates and escalates guardrail failures.",
+      "hashAfter": "1c9d5352c1eeda55e051bf1990eb226b0514366c79301ed839e1b5bcc17d994a",
+      "hashBefore": "8f743f5fe41f46e946f7ad4c612b3829f043ef419a769595e87cf0e47acd50e7"
+    },
+    {
+      "path": ".iacode/schemas/checkpoint.schema.json",
+      "reason": "Added schemaVersion 3.1.0, the internal and external pass statuses, and the lessonPreflight, milestone and external audit fields.",
+      "hashAfter": "104720fd94a3ae74ef0c0881a0406ec34ac5a815e8b3bfe9a28223e2250c6b4d",
+      "hashBefore": "ab4fdae68a30fc4c4ce0f9fe3057b4d4c113179a986d8b64bbb78f35078c99d1"
+    },
+    {
+      "path": ".iacode/schemas/provenance.schema.json",
+      "reason": "Allowed schemaVersion 3.1.0.",
+      "hashAfter": "40c19775eccd3262651f7640973eab273b91db55681949decceb676ecdfff7c1",
+      "hashBefore": "befbd5e72af08e2f4cad6ae07a15cb1917111ffe4e527a48f85501b856223307"
+    },
+    {
+      "path": ".iacode/schemas/quality-result.schema.json",
+      "reason": "Allowed schemaVersion 3.1.0.",
+      "hashAfter": "338e4930b86933bafcf0d5cee668f867570c380de9b5cd946219cc9d1f276784",
+      "hashBefore": "f4266a27e38678a09d00496d0241370f1c0fe729d88b3cc20cca5b8583001ef5"
+    },
+    {
+      "path": ".iacode/schemas/requirements-matrix.schema.json",
+      "reason": "Accepts lesson-derived LESSON-REQ identifiers.",
+      "hashAfter": "85aaa0f9d04337375475c1c210a9fc6dd20dc956327bbb15e622bf669e973e97",
+      "hashBefore": "09f08afe3c1ec3f0a19a2bd78bbbffcc72b395528e2e78ef7307f3543778fd55"
+    },
+    {
+      "path": ".iacode/schemas/test-result.schema.json",
+      "reason": "Allowed schemaVersion 3.1.0.",
+      "hashAfter": "e3e011d69179fc7cc91f9846a563ba725b8c110b11269b278ffaca950f653f97",
+      "hashBefore": "dbf84c165615446f12e750e37b34e8e663667fcffc7f569b06c6a588dfd491ea"
+    },
+    {
+      "path": "AGENTS.md",
+      "reason": "Codex adapter records the memory rules and the milestone auditor role.",
+      "hashAfter": "0e56b7508ef6b06b91f96bb35055394d7c5fcf0f06ae56b40bd1e72f5f7c2f0f",
+      "hashBefore": "577127049420d42ac88bbcf555be3c2ffbc85cc82c0dc71f5d725cc894935e73"
+    },
+    {
+      "path": "CLAUDE.md",
+      "reason": "Claude adapter records the memory rules and the validation cadence.",
+      "hashAfter": "063897ba2925aecc0210ba812873be1978780db9eaebd22707c0d7809cec97bc",
+      "hashBefore": "7d9cbf482ef5ee27af1f493bad6c6f1a6cdfedf4b3a3f93360930dcbb12e4095"
+    },
+    {
+      "path": "START-HERE.md",
+      "reason": "States the memory and the validation cadence at the entry point.",
+      "hashAfter": "5fff507d4a8e4087dda005ce7b46e956897e3e13cb8eb9020f32b3b829b3f82e",
+      "hashBefore": "c59f33815f61fdda5bfd8c762b0b254ecccfd4b7d4a8be96f6b35a60f3865ada"
+    },
+    {
+      "path": "docs/CHECKPOINT-PROTOCOL.md",
+      "reason": "Added the new statuses, schemaVersion 3.1.0 and the memory and milestone rules.",
+      "hashAfter": "6555c42b9760da5082fbf0c4248dbe04fff34340697f83640d90e28a405c7928",
+      "hashBefore": "ecb3f11c3fb8d37f561adb2e9abdc16ad004e798d2600e8fd8aef25fe912f7b6"
+    },
+    {
+      "path": "docs/DEFINITION-OF-DONE.md",
+      "reason": "Added the preflight and guardrail conditions.",
+      "hashAfter": "c5d20a5d3f3dbb4206e9ad9194446e8e33d888b34195f056c29fcd98fe6801b7",
+      "hashBefore": "19dd6ce8e110987c3cf4c720f069073ab978d93be6159f389081e499edc9d19b"
+    },
+    {
+      "path": "docs/DEVELOPMENT-CONTRACT.md",
+      "reason": "Added the preflight step, the engineering memory and the validation cadence.",
+      "hashAfter": "9374c218cefb5f9834ee79e7fbce7a597797d1fcfdcedccf181fee65bf33ad7d",
+      "hashBefore": "3c79fbd4e9914ca1d7771fb9a5c006841870780509be7a0bb00f851d1b48536a"
+    },
+    {
+      "path": "docs/HANDOFF-PROTOCOL.md",
+      "reason": "Added the milestone handoff.",
+      "hashAfter": "888183d10e853deba0b139f82b7cf50be54083bdee406a5ecf38acf7d0ac3dcd",
+      "hashBefore": "8a6176644759fe4e314451835506f38d4786318fa15d07b18686a5ef5b366abd"
+    },
+    {
+      "path": "docs/MASTER-PLAN.md",
+      "reason": "Added the milestone table and the validation cadence.",
+      "hashAfter": "e73ad4601b63564506181963d0791fe5a4a9e95f96e36b7391034cd9bd95de98",
+      "hashBefore": "6767fced2dbf8468467648cbd13018dfd17d121e9e3d4481df45d74cc3d6f5f0"
+    },
+    {
+      "path": "docs/QUALITY-GATES.md",
+      "reason": "Added lesson-derived requirements and the internal and external verdict distinction.",
+      "hashAfter": "b5715df267b67111ef56d3b811915e154ce5e89baf1bb14a684ad222a9becdcd",
+      "hashBefore": "9b62432ddcee4ca9bf5e3377e3b9258e987ed73c2b03d1416e2a4683b68b007c"
+    },
+    {
+      "path": "docs/ROADMAP.md",
+      "reason": "Added the validation milestones.",
+      "hashAfter": "68ff84ed48b4d6eeeac8da12ff924ee50ff5e874830609e10a50b32420ea9041",
+      "hashBefore": "88cc3544e9b51ca2d01ab88ed299e1287caa15c336f95748c33f71f5eb63178a"
+    },
+    {
+      "path": "docs/SETUP-00-CHECKLIST.md",
+      "reason": "Added the engineering memory and milestone validation section.",
+      "hashAfter": "4951b686aa5234a05cf7a5d33fc96412ca68c133af5ef68e7feafbbaeeec2bb6",
+      "hashBefore": "228e22a8cd6ccf034563e2308742c56c275df565010d78e3489e166cf39fe521"
+    },
+    {
+      "path": "docs/checkpoints/LATEST.md",
+      "reason": "Points at this checkpoint.",
+      "hashAfter": "2c3430c837d2fb0a9e9f53e9275b36ca31b3c1d5f945ef2c9ac6ddb55da44655",
+      "hashBefore": "784d702e7cf5ed2d2f68009f126284a48819ef78f28936166f275dcbcf92a78f"
+    },
+    {
+      "path": "scripts/development-ledger/README.md",
+      "reason": "Documented the engineering memory tooling.",
+      "hashAfter": "6f2caea4555f1395e7d16dc72f5b358f45f82f758dd79d7ae8d63f14bf4180f7",
+      "hashBefore": "149ea8e4864fd22685fe6693ae0a447e6a96e53ca9dd6d638b0824da6fc04705"
+    },
+    {
+      "path": "scripts/development-ledger/delivery_assurance.py",
+      "reason": "Fails completeness when a lesson-derived requirement is missing from the matrix.",
+      "hashAfter": "e75b67c56cd4de1b5b772c711539b07fd82bc91269d3dd0fdd64177b2ef21407",
+      "hashBefore": "104331735ae324941a5f46105dac4c7062ce45fafc205178b555661bdfcb1700"
+    },
+    {
+      "path": "scripts/development-ledger/green_keeper.py",
+      "reason": "Added lesson validation to the mandatory gate set.",
+      "hashAfter": "c977594edf224e5aca53e36df3615c798579bea065cc59771390b520f2d2f44c",
+      "hashBefore": "6bc1d39f07991f4a5547c6d557bd9526866e515152b7321e11c5543d956fb817"
+    },
+    {
+      "path": "scripts/development-ledger/ledger_common.py",
+      "reason": "Added schema 3.1.0, the internal and external pass statuses, the milestone grouping and the external audit triggers.",
+      "hashAfter": "0a737e37140d77fdf5fe72aa0b36cedcf245a40a18b71386192e15a99f6fd8de",
+      "hashBefore": "56a0d72ae9107a3ef66be9420ced2cff69cbdb5c3a41095d615fa010e42c9db6"
+    },
+    {
+      "path": "scripts/development-ledger/new_checkpoint.py",
+      "reason": "Emits schemaVersion 3.1.0 skeletons with the preflight and milestone blocks.",
+      "hashAfter": "67bfebee48db4c33ac40274d54d3cacb18d257d0406550e62e7f56201818ea79",
+      "hashBefore": "cf82e2f12d5c61f370374348e421eb7d25f8622fd6d1cc547a53c040bac35cdf"
+    },
+    {
+      "path": "scripts/development-ledger/validate_checkpoint.py",
+      "reason": "Enforces the memory policy, the preflight consistency, the milestone grouping and the verdict vocabulary.",
+      "hashAfter": "8bae437d846ebcb6d7d1d0402b38506535e6487eb810b6dbe35da5d0555878ab",
+      "hashBefore": "b5b7e7b8bbbb452aedfab3bc48e3100886d7a33bda436fc2e79b744d613c06c2"
+    },
+    {
+      "path": "tests/test_development_ledger.py",
+      "reason": "Added the memory, recurrence, preflight, derived requirement, milestone policy and verdict vocabulary regressions.",
+      "hashAfter": "edeb80c35c13fb77ace28689d14e54a6d8bca1468c3209da5e916c47fc75f797",
+      "hashBefore": "cf6d8f2083d7dc86917c8f312979f660465fbeb95e43d6c0fe22f5293f78b1d1"
+    }
+  ],
+  "filesDeleted": []
+}

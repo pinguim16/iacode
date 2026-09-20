@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "3.1.0",
+  "artifacts": [
+    {
+      "artifact": "IACode engineering memory: lessons, patterns, anti-patterns, incidents, guardrails and retrospectives",
+      "sourceType": "repository-generated",
+      "provider": "local-analysis",
+      "model": "not-applicable",
+      "ownership": "project-generated engineering knowledge owned by the IACode project",
+      "license": "not-applicable",
+      "rights": {
+        "storageAllowed": true,
+        "ragAllowed": false,
+        "trainingAllowed": false,
+        "distillationAllowed": false
+      },
+      "evidence": "Every lesson is derived from findings recorded in the sealed SETUP-00 checkpoints and cites them.",
+      "notes": "Organizational engineering memory, not personal memory. No chain-of-thought and no secrets are stored."
+    },
+    {
+      "artifact": "Lesson tooling, milestone validation policy, schemas, documentation and tests",
+      "sourceType": "model-assisted-project-work",
+      "provider": "Anthropic",
+      "model": "claude-opus-5",
+      "ownership": "project artifact; legal ownership not independently determined",
+      "license": "not-specified",
+      "rights": {
+        "storageAllowed": true,
+        "ragAllowed": false,
+        "trainingAllowed": false,
+        "distillationAllowed": false
+      },
+      "evidence": "Created and executed locally during SETUP-00-CP-0006; evidence in COMMANDS.jsonl, TESTS.json and REWORK-LOG.jsonl.",
+      "notes": "No permission for model training or distillation is inferred."
+    }
+  ]
+}

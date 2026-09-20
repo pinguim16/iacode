@@ -49,3 +49,13 @@ zero, and no rework item is unresolved. Otherwise `FAIL`, or `BLOCKED` for a rea
 `python scripts/development-ledger/green_keeper.py` executes the gates, records each invocation in the
 checkpoint ledger, and appends the cycle to `REWORK-LOG.jsonl`. The tool proves the state; this role
 performs the repair. The tool never edits code and never reports green on a red gate.
+
+## Failures become lesson candidates
+
+Every red cycle is raw material for the engineering memory. Record the root cause in
+`REWORK-LOG.jsonl` precisely enough that `python scripts/development-ledger/extract_lessons.py` can
+derive a candidate from it. A repeat of a failure class that a `GUARDED` lesson already covers is a
+`GUARDRAIL_FAILURE`: escalate it rather than repairing it quietly, because the control that let it
+through is itself defective.
+
+Lesson validation is part of the mandatory gate set, so a broken memory is a red delivery.

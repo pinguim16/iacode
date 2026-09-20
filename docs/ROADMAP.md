@@ -10,3 +10,15 @@
 
 The detailed prerequisite and acceptance contract is in `MASTER-PLAN.md`. A roadmap entry is not evidence that work has started.
 
+
+## Validation milestones
+
+External independent validation is grouped, not per Gate:
+
+- `M0`: SETUP-00.
+- `M1`: Gates 0–3. `M2`: Gates 4–7. `M3`: Gates 8–11.
+- `M4`: Gates 12–15. `M5`: Gates 16–19. `M6`: Gates 20–23.
+
+An intermediate Gate closes at `INTERNAL_GATE_PASS`; a milestone closes at
+`MILESTONE_EXTERNAL_PASS` after an independent audit. See
+[MILESTONE-VALIDATION.md](MILESTONE-VALIDATION.md).

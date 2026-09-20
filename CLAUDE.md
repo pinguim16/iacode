@@ -42,3 +42,12 @@ Keep the two roles and their artifacts separate even when they run in the same s
 Update/finalize the checkpoint, validate it, record Git state, update `LATEST.md`, and provide exact handoff and next-action instructions.
 
 Claude Code `2.1.195` was detected at `C:/Users/cesar/.local/bin/claude.exe` during the SETUP-00 correction checkpoint. That directory was not on the detecting process's `PATH`, which caused the earlier false negative. The project adapters use the verified `.claude/agents/*.md` format. No Claude-specific hook or MCP dependency is required by SETUP-00.
+
+## Engineering memory and validation cadence
+
+- Run `python scripts/development-ledger/lesson_preflight.py --gate <gate> --scope <scope> --write` before the Gate starts, and carry every derived `LESSON-REQ-` requirement into the matrix.
+- Turn a confirmed failure into a lesson, and an important lesson into an automated guardrail. A lesson is `GUARDED` only when a test, validator, lint rule, policy, schema, invariant or automated check prevents recurrence; documentation alone is never enough.
+- Treat a repeat of a guarded failure class as a `GUARDRAIL_FAILURE` and investigate the control, not only the defect.
+- The memory in `.iacode/memory/` belongs to the project, not to the user. Never store personal preferences, chain-of-thought or secrets there.
+- Close an intermediate Gate at `INTERNAL_GATE_PASS`. External independent validation is due once per milestone and produces `MILESTONE_EXTERNAL_PASS`; never describe an internal verdict as an external one. Requesting an early audit requires `externalAuditRequired` with a recorded trigger.
+- Produce the Gate retrospective from `.iacode/templates/retrospective/TEMPLATE.md`.

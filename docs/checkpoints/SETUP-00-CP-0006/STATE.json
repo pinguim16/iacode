@@ -1,0 +1,99 @@
+{
+  "schemaVersion": "3.1.0",
+  "phase": "SETUP-00 - Engineering Memory and Milestone Validation",
+  "gate": "SETUP-00",
+  "status": "READY_FOR_REVIEW",
+  "branch": "main",
+  "baseCommit": "276645b4498a0e58a1bf38979b5e078669dbb380",
+  "currentCommit": "refs/tags/iacode-checkpoints/SETUP-00-CP-0006",
+  "dirty": false,
+  "startedAt": "2026-09-20T15:30:00Z",
+  "updatedAt": "2026-09-20T16:13:08Z",
+  "nextAllowedAction": "Single Codex M0 independent milestone audit covering SETUP-00-CP-0005, SETUP-00-CP-0006 and SETUP-00 as a whole. Gate 0 stays blocked.",
+  "blockedBy": [],
+  "secondToolValidation": {
+    "status": "PENDING_MANUAL",
+    "tool": null,
+    "provider": null,
+    "model": null,
+    "validatedAt": null,
+    "justification": null,
+    "evidence": []
+  },
+  "requirementsMatrix": {
+    "path": "REQUIREMENTS-MATRIX.json",
+    "total": 47,
+    "mandatory": 47,
+    "complete": 47,
+    "partial": 0,
+    "missing": 0,
+    "notApplicable": 0,
+    "coveragePercent": 100.0
+  },
+  "greenKeeper": {
+    "status": "PASS",
+    "cycles": 3,
+    "remainingFailures": 0,
+    "unresolvedReworkItems": 0,
+    "log": "REWORK-LOG.jsonl",
+    "externalBlockers": [],
+    "evidence": [
+      "command:cmd-0006",
+      "command:cmd-0007",
+      "command:cmd-0008",
+      "command:cmd-0009"
+    ]
+  },
+  "deliveryCompleteness": {
+    "status": "PASS",
+    "report": "COMPLETENESS-REPORT.json",
+    "coveragePercent": 100.0,
+    "evidenceCoveragePercent": 100.0,
+    "auditor": "Delivery Completeness Validator, emulated in the implementing session",
+    "evidence": [
+      "file:COMPLETENESS-REPORT.json"
+    ]
+  },
+  "reworkCycles": 3,
+  "independentReview": {
+    "status": "PENDING",
+    "tool": null,
+    "reviewedAt": null,
+    "justification": null,
+    "evidence": []
+  },
+  "redTeam": {
+    "status": "PENDING",
+    "tool": null,
+    "executedAt": null,
+    "justification": null,
+    "evidence": []
+  },
+  "lessonPreflight": {
+    "path": "LESSON-PREFLIGHT.json",
+    "gate": "SETUP-00",
+    "scope": "control-plane",
+    "lessonsConsidered": 14,
+    "lessonsApplicable": 14,
+    "derivedRequirements": 14,
+    "evidence": [
+      "file:LESSON-PREFLIGHT.json"
+    ]
+  },
+  "milestone": {
+    "id": "M0",
+    "title": "Development control plane",
+    "gates": [
+      "SETUP-00"
+    ],
+    "status": "PENDING",
+    "auditor": null,
+    "auditedAt": null,
+    "evidence": [
+      "file:NEXT.md",
+      "file:HANDOFF.md"
+    ]
+  },
+  "externalAuditRequired": false,
+  "externalAuditReason": null
+}

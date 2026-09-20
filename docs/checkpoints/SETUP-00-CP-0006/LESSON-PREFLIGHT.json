@@ -1,0 +1,252 @@
+{
+  "schemaVersion": "1.0.0",
+  "gate": "SETUP-00",
+  "scope": "control-plane",
+  "technologies": [],
+  "modules": [],
+  "generatedAt": "2026-09-20T15:47:23Z",
+  "lessonsConsidered": 14,
+  "lessonsApplicable": 14,
+  "applicable": [
+    {
+      "lessonId": "LSN-0001",
+      "title": "Checkpoint validation must succeed from a detached checkout of the checkpoint tag",
+      "status": "GUARDED",
+      "severity": "HIGH",
+      "reasonApplicable": "applies to every Gate; category checkpoint; severity HIGH; already guarded, so the control must keep holding",
+      "requiredCheck": "Validate the checkpoint from a clean clone detached at its own tag, not only on the branch.",
+      "requiredEvidence": "A recorded validate_checkpoint.py run from a detached checkout returning CHECKPOINT_VALID.",
+      "derivedRequirementId": "LESSON-REQ-0001"
+    },
+    {
+      "lessonId": "LSN-0002",
+      "title": "A file inventory must be recomputed from the repository, never trusted as an assertion",
+      "status": "GUARDED",
+      "severity": "HIGH",
+      "reasonApplicable": "applies to every Gate; category checkpoint; severity HIGH; already guarded, so the control must keep holding",
+      "requiredCheck": "Declare every changed path with a reason before finalizing and let the tooling bind the hashes.",
+      "requiredEvidence": "A FILES.json whose declared change set matches the recomputed one, proven by a passing validation.",
+      "derivedRequirementId": "LESSON-REQ-0002"
+    },
+    {
+      "lessonId": "LSN-0003",
+      "title": "Every operation attempt must be auditable, including a refusal decided before execution",
+      "status": "GUARDED",
+      "severity": "HIGH",
+      "reasonApplicable": "applies to every Gate; category checkpoint; severity HIGH; already guarded, so the control must keep holding",
+      "requiredCheck": "Confirm that a refused operation appends its attempt to the ledger before returning an error.",
+      "requiredEvidence": "A ledger record with result PRECONDITION_REJECTED, a result code and a failure reason.",
+      "derivedRequirementId": "LESSON-REQ-0003"
+    },
+    {
+      "lessonId": "LSN-0004",
+      "title": "A checkpoint may never claim readiness while it also claims to be blocked",
+      "status": "GUARDED",
+      "severity": "CRITICAL",
+      "reasonApplicable": "applies to every Gate; category checkpoint; severity CRITICAL; already guarded, so the control must keep holding",
+      "requiredCheck": "Verify that the checkpoint carries no blocker while it claims to be ready for review.",
+      "requiredEvidence": "A passing validation with blockedBy empty at a readiness status.",
+      "derivedRequirementId": "LESSON-REQ-0004"
+    },
+    {
+      "lessonId": "LSN-0005",
+      "title": "A PASS requires evidence that can be executed or resolved, not a statement",
+      "status": "GUARDED",
+      "severity": "HIGH",
+      "reasonApplicable": "applies to every Gate; category quality; severity HIGH; already guarded, so the control must keep holding",
+      "requiredCheck": "Attach a resolvable evidence reference to every PASS recorded by this Gate.",
+      "requiredEvidence": "A validation run confirming that every PASS reference resolves.",
+      "derivedRequirementId": "LESSON-REQ-0005"
+    },
+    {
+      "lessonId": "LSN-0006",
+      "title": "The repository must be self-contained; a specification may not live outside it",
+      "status": "GUARDED",
+      "severity": "MEDIUM",
+      "reasonApplicable": "applies to every Gate; category documentation; severity MEDIUM; already guarded, so the control must keep holding",
+      "requiredCheck": "Confirm that every specification this Gate depends on is committed to the repository.",
+      "requiredEvidence": "A passing documentation link and checklist test.",
+      "derivedRequirementId": "LESSON-REQ-0006"
+    },
+    {
+      "lessonId": "LSN-0007",
+      "title": "Independent validation cannot be declared by the run that did the work",
+      "status": "GUARDED",
+      "severity": "CRITICAL",
+      "reasonApplicable": "applies to every Gate; category process; severity CRITICAL; already guarded, so the control must keep holding",
+      "requiredCheck": "Close the implementing run at an internal status and leave the independent verdict pending.",
+      "requiredEvidence": "A checkpoint whose independentReview and redTeam are PENDING at handoff.",
+      "derivedRequirementId": "LESSON-REQ-0007"
+    },
+    {
+      "lessonId": "LSN-0008",
+      "title": "Requirement completeness must be total and evidence-backed before handoff",
+      "status": "GUARDED",
+      "severity": "HIGH",
+      "reasonApplicable": "applies to every Gate; category process; severity HIGH; already guarded, so the control must keep holding",
+      "requiredCheck": "Extract every requirement before implementing and audit completeness before handoff.",
+      "requiredEvidence": "A completeness report with total coverage and total evidence coverage.",
+      "derivedRequirementId": "LESSON-REQ-0008"
+    },
+    {
+      "lessonId": "LSN-0009",
+      "title": "A red gate requires rework, never a waiver, and never a weakened check",
+      "status": "GUARDED",
+      "severity": "HIGH",
+      "reasonApplicable": "applies to every Gate; category testing; severity HIGH; already guarded, so the control must keep holding",
+      "requiredCheck": "Run the Green Keeper until every mandatory gate is green, repairing causes rather than checks.",
+      "requiredEvidence": "A rework log whose last cycle is GREEN with zero remaining failures.",
+      "derivedRequirementId": "LESSON-REQ-0009"
+    },
+    {
+      "lessonId": "LSN-0010",
+      "title": "A recorded command must carry runtime, working directory, commit and purpose to be replayable",
+      "status": "GUARDED",
+      "severity": "MEDIUM",
+      "reasonApplicable": "applies to every Gate; category tooling; severity MEDIUM; already guarded, so the control must keep holding",
+      "requiredCheck": "Record commands with the tooling so each one is executable from its declared working directory.",
+      "requiredEvidence": "A validation run over a ledger whose commands all resolve.",
+      "derivedRequirementId": "LESSON-REQ-0010"
+    },
+    {
+      "lessonId": "LSN-0011",
+      "title": "A control over a checkpoint's own evidence must be scoped to the moment it matters",
+      "status": "GUARDED",
+      "severity": "MEDIUM",
+      "reasonApplicable": "applies to every Gate; category tooling; severity MEDIUM; already guarded, so the control must keep holding",
+      "requiredCheck": "Check whether any new control would be invalidated by the evidence its own run produces.",
+      "requiredEvidence": "A passing validation executed by the gate harness itself.",
+      "derivedRequirementId": "LESSON-REQ-0011"
+    },
+    {
+      "lessonId": "LSN-0012",
+      "title": "Sealed checkpoints and their tags are immutable, and tooling must keep validating them",
+      "status": "GUARDED",
+      "severity": "HIGH",
+      "reasonApplicable": "applies to every Gate; category git; severity HIGH; already guarded, so the control must keep holding",
+      "requiredCheck": "Confirm that every sealed checkpoint still validates under the tooling this Gate changes.",
+      "requiredEvidence": "A passing historical compatibility run over every sealed tag.",
+      "derivedRequirementId": "LESSON-REQ-0012"
+    },
+    {
+      "lessonId": "LSN-0013",
+      "title": "An installed capability must be detected by resolved path, not by a bare command lookup",
+      "status": "CONFIRMED",
+      "severity": "MEDIUM",
+      "reasonApplicable": "applies to every Gate; category environment; severity MEDIUM; status CONFIRMED, so it is not yet prevented automatically",
+      "requiredCheck": "When this Gate records a capability, resolve the executable path before concluding anything about availability.",
+      "requiredEvidence": "A capability record naming the resolved path, or a justification that this Gate detects no capability.",
+      "derivedRequirementId": "LESSON-REQ-0013"
+    },
+    {
+      "lessonId": "LSN-0014",
+      "title": "Evidence must be recorded as it happens, not reconstructed at the end of a run",
+      "status": "CONFIRMED",
+      "severity": "MEDIUM",
+      "reasonApplicable": "applies to every Gate; category process; severity MEDIUM; status CONFIRMED, so it is not yet prevented automatically",
+      "requiredCheck": "Record each command through the tooling while the work happens.",
+      "requiredEvidence": "A ledger whose records were produced by the recording tooling during the run.",
+      "derivedRequirementId": "LESSON-REQ-0014"
+    }
+  ],
+  "derivedRequirements": [
+    {
+      "id": "LESSON-REQ-0001",
+      "lessonId": "LSN-0001",
+      "description": "Verify checkpoint validation must succeed from a detached checkout of the checkpoint tag",
+      "mandatory": true,
+      "requiredEvidence": "A recorded validate_checkpoint.py run from a detached checkout returning CHECKPOINT_VALID."
+    },
+    {
+      "id": "LESSON-REQ-0002",
+      "lessonId": "LSN-0002",
+      "description": "Verify a file inventory must be recomputed from the repository, never trusted as an assertion",
+      "mandatory": true,
+      "requiredEvidence": "A FILES.json whose declared change set matches the recomputed one, proven by a passing validation."
+    },
+    {
+      "id": "LESSON-REQ-0003",
+      "lessonId": "LSN-0003",
+      "description": "Verify every operation attempt must be auditable, including a refusal decided before execution",
+      "mandatory": true,
+      "requiredEvidence": "A ledger record with result PRECONDITION_REJECTED, a result code and a failure reason."
+    },
+    {
+      "id": "LESSON-REQ-0004",
+      "lessonId": "LSN-0004",
+      "description": "Verify a checkpoint may never claim readiness while it also claims to be blocked",
+      "mandatory": true,
+      "requiredEvidence": "A passing validation with blockedBy empty at a readiness status."
+    },
+    {
+      "id": "LESSON-REQ-0005",
+      "lessonId": "LSN-0005",
+      "description": "Verify a PASS requires evidence that can be executed or resolved, not a statement",
+      "mandatory": true,
+      "requiredEvidence": "A validation run confirming that every PASS reference resolves."
+    },
+    {
+      "id": "LESSON-REQ-0006",
+      "lessonId": "LSN-0006",
+      "description": "Verify the repository must be self-contained; a specification may not live outside it",
+      "mandatory": true,
+      "requiredEvidence": "A passing documentation link and checklist test."
+    },
+    {
+      "id": "LESSON-REQ-0007",
+      "lessonId": "LSN-0007",
+      "description": "Verify independent validation cannot be declared by the run that did the work",
+      "mandatory": true,
+      "requiredEvidence": "A checkpoint whose independentReview and redTeam are PENDING at handoff."
+    },
+    {
+      "id": "LESSON-REQ-0008",
+      "lessonId": "LSN-0008",
+      "description": "Verify requirement completeness must be total and evidence-backed before handoff",
+      "mandatory": true,
+      "requiredEvidence": "A completeness report with total coverage and total evidence coverage."
+    },
+    {
+      "id": "LESSON-REQ-0009",
+      "lessonId": "LSN-0009",
+      "description": "Verify a red gate requires rework, never a waiver, and never a weakened check",
+      "mandatory": true,
+      "requiredEvidence": "A rework log whose last cycle is GREEN with zero remaining failures."
+    },
+    {
+      "id": "LESSON-REQ-0010",
+      "lessonId": "LSN-0010",
+      "description": "Verify a recorded command must carry runtime, working directory, commit and purpose to be replayable",
+      "mandatory": true,
+      "requiredEvidence": "A validation run over a ledger whose commands all resolve."
+    },
+    {
+      "id": "LESSON-REQ-0011",
+      "lessonId": "LSN-0011",
+      "description": "Verify a control over a checkpoint's own evidence must be scoped to the moment it matters",
+      "mandatory": true,
+      "requiredEvidence": "A passing validation executed by the gate harness itself."
+    },
+    {
+      "id": "LESSON-REQ-0012",
+      "lessonId": "LSN-0012",
+      "description": "Verify sealed checkpoints and their tags are immutable, and tooling must keep validating them",
+      "mandatory": true,
+      "requiredEvidence": "A passing historical compatibility run over every sealed tag."
+    },
+    {
+      "id": "LESSON-REQ-0013",
+      "lessonId": "LSN-0013",
+      "description": "Verify an installed capability must be detected by resolved path, not by a bare command lookup",
+      "mandatory": false,
+      "requiredEvidence": "A capability record naming the resolved path, or a justification that this Gate detects no capability."
+    },
+    {
+      "id": "LESSON-REQ-0014",
+      "lessonId": "LSN-0014",
+      "description": "Verify evidence must be recorded as it happens, not reconstructed at the end of a run",
+      "mandatory": false,
+      "requiredEvidence": "A ledger whose records were produced by the recording tooling during the run."
+    }
+  ]
+}

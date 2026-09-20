@@ -1,0 +1,994 @@
+{
+  "schemaVersion": "1.0.0",
+  "gate": "SETUP-00",
+  "checkpoint": "SETUP-00-CP-0006",
+  "requirements": [
+    {
+      "id": "REQ-0001",
+      "source": "prompt section 1",
+      "description": "Execute the cold start, reading the entry contract, the development contracts, the Master Plan, the SETUP-00 checklist, LATEST, and the complete CP-0004 and CP-0005 checkpoints, then validate and baseline before altering anything.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:COMMANDS.jsonl"
+      ],
+      "testEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:PLAN.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:FILES.json"
+      ],
+      "notes": "FILES.json filesRead records the sealed CP-0004 and CP-0005 checkpoints read before any change."
+    },
+    {
+      "id": "REQ-0002",
+      "source": "prompt section 2",
+      "description": "Create the engineering memory tree at .iacode/memory/ with README.md, LESSONS.md, lessons.jsonl, patterns/, anti-patterns/, incidents/, guardrails/, and retrospectives/.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/memory/README.md",
+        "file:.iacode/memory/lessons.jsonl",
+        "file:.iacode/memory/LESSONS.md"
+      ],
+      "testEvidence": [
+        "test:EngineeringMemoryStructureTests.test_memory_tree_exists"
+      ],
+      "documentationEvidence": [
+        "file:docs/ENGINEERING-MEMORY.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0006"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "REQ-0003",
+      "source": "prompt section 2",
+      "description": "State that the memory belongs to the IACode engineering organization and is not the user's personal memory.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/memory/README.md"
+      ],
+      "testEvidence": [
+        "test:EngineeringMemoryStructureTests.test_memory_states_it_is_organizational_not_personal"
+      ],
+      "documentationEvidence": [
+        "file:docs/ENGINEERING-MEMORY.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0006"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "REQ-0004",
+      "source": "prompt section 3",
+      "description": "Create .iacode/schemas/lesson.schema.json carrying every mandated lesson field, the five canonical statuses, training denied by default, and no chain-of-thought or secrets.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/schemas/lesson.schema.json"
+      ],
+      "testEvidence": [
+        "test:LessonValidationTests.test_valid_lesson_passes",
+        "test:LessonValidationTests.test_missing_required_field_fails",
+        "test:EngineeringMemoryStructureTests.test_repository_lessons_deny_training_by_default"
+      ],
+      "documentationEvidence": [
+        "file:docs/ENGINEERING-MEMORY.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0008"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "REQ-0005",
+      "source": "prompt section 4",
+      "description": "Support at least the sixteen mandated lesson categories.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/schemas/lesson.schema.json",
+        "file:scripts/development-ledger/lessons.py"
+      ],
+      "testEvidence": [
+        "test:LessonValidationTests.test_invalid_lesson_fails"
+      ],
+      "documentationEvidence": [
+        "file:docs/ENGINEERING-MEMORY.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0008"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "REQ-0006",
+      "source": "prompt section 5",
+      "description": "Implement the OBSERVED to CONFIRMED to GUARDED lifecycle, where GUARDED requires concrete preventive evidence such as a test, validator, lint rule, policy, schema, invariant, or automated check, and never documentation alone.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/lessons.py"
+      ],
+      "testEvidence": [
+        "test:LessonValidationTests.test_guarded_without_preventive_evidence_fails",
+        "test:LessonValidationTests.test_documentation_alone_does_not_guard_a_lesson",
+        "test:EngineeringMemoryStructureTests.test_every_guarded_lesson_names_a_real_control"
+      ],
+      "documentationEvidence": [
+        "file:docs/ENGINEERING-MEMORY.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0008"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "REQ-0007",
+      "source": "prompt section 6",
+      "description": "Give every lesson a recurrence key, increment recurrenceCount on a repeat, and record a GUARDRAIL_FAILURE when a repeat happens against a GUARDED lesson.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/lessons.py"
+      ],
+      "testEvidence": [
+        "test:LessonRecurrenceTests.test_recurrence_increments_the_counter",
+        "test:LessonRecurrenceTests.test_a_repeat_against_a_guarded_lesson_is_a_guardrail_failure",
+        "test:LessonValidationTests.test_unresolved_guardrail_failure_cannot_stay_guarded"
+      ],
+      "documentationEvidence": [
+        "file:docs/ENGINEERING-MEMORY.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0006"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "REQ-0008",
+      "source": "prompt section 7",
+      "description": "Provide a lesson extraction mechanism that consumes rework logs, review findings, Red Team findings, failures, and retrospectives, and produces candidates no stronger than OBSERVED.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/extract_lessons.py"
+      ],
+      "testEvidence": [
+        "test:LessonRecurrenceTests.test_recurrence_key_is_stable_for_a_failure_class"
+      ],
+      "documentationEvidence": [
+        "file:scripts/development-ledger/README.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0007"
+      ],
+      "notes": "Candidates are never stronger than OBSERVED; promotion is a human judgement."
+    },
+    {
+      "id": "REQ-0009",
+      "source": "prompt section 8",
+      "description": "Provide a lesson validator checking schema, unique identifiers, valid status, provenance, training policy, evidence, preventive evidence for GUARDED, absence of secrets, and recurrence consistency, exiting zero only when valid.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/validate_lessons.py",
+        "file:scripts/development-ledger/lessons.py"
+      ],
+      "testEvidence": [
+        "test:LessonValidationTests.test_duplicate_lesson_id_fails",
+        "test:LessonValidationTests.test_secret_in_a_lesson_fails",
+        "test:LessonValidationTests.test_training_allowed_requires_a_rights_justification",
+        "test:LessonValidationTests.test_reused_recurrence_key_fails"
+      ],
+      "documentationEvidence": [
+        "file:scripts/development-ledger/README.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0008"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "REQ-0010",
+      "source": "prompt section 9",
+      "description": "Provide a mandatory lesson preflight that takes gate, scope, technologies, and modules, and writes LESSON-PREFLIGHT.json and LESSON-PREFLIGHT.md naming each applicable lesson with its reason, required check, and required evidence.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/lesson_preflight.py",
+        "file:.iacode/schemas/lesson-preflight.schema.json"
+      ],
+      "testEvidence": [
+        "test:LessonPreflightTests.test_preflight_selects_an_applicable_lesson",
+        "test:LessonPreflightTests.test_preflight_ignores_a_lesson_declared_for_another_gate"
+      ],
+      "documentationEvidence": [
+        "file:docs/ENGINEERING-MEMORY.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:LESSON-PREFLIGHT.json",
+        "checkpoint:LESSON-PREFLIGHT.md"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "REQ-0011",
+      "source": "prompt section 10",
+      "description": "Turn applicable lessons into derived requirements in the Gate requirements matrix, so a lesson becomes a requirement, then evidence, then validation.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/delivery_assurance.py",
+        "checkpoint:REQUIREMENTS-MATRIX.json"
+      ],
+      "testEvidence": [
+        "test:DerivedRequirementCompletenessTests.test_a_missing_derived_requirement_blocks_completeness",
+        "test:DerivedRequirementCompletenessTests.test_a_declared_derived_requirement_passes",
+        "test:LessonPreflightTests.test_an_applicable_lesson_becomes_a_derived_requirement"
+      ],
+      "documentationEvidence": [
+        "file:docs/ENGINEERING-MEMORY.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:COMPLETENESS-REPORT.json"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "REQ-0012",
+      "source": "prompt section 11",
+      "description": "Populate the initial memory only from facts confirmed by the existing checkpoints, covering at least the twelve listed SETUP-00 lessons, each referencing historical evidence.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/memory/lessons.jsonl"
+      ],
+      "testEvidence": [
+        "test:EngineeringMemoryStructureTests.test_repository_memory_is_valid",
+        "test:LessonPreflightTests.test_the_repository_preflight_covers_every_active_lesson"
+      ],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md",
+        "file:.iacode/memory/guardrails/README.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0008"
+      ],
+      "notes": "Fourteen lessons, each citing a finding recorded in a sealed checkpoint. None was invented."
+    },
+    {
+      "id": "REQ-0013",
+      "source": "prompt section 12",
+      "description": "Document the principle that an important lesson must become an automated guardrail and that no control may depend on someone remembering to read LESSONS.md.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/memory/README.md"
+      ],
+      "testEvidence": [
+        "test:EngineeringMemoryStructureTests.test_the_guardrail_principle_is_documented"
+      ],
+      "documentationEvidence": [
+        "file:docs/ENGINEERING-MEMORY.md",
+        "file:docs/adr/ADR-0009-engineering-memory-and-milestone-validation.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0006"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "REQ-0014",
+      "source": "prompt section 13",
+      "description": "Require a retrospective for every completed Gate, provide its template, and record this checkpoint's own retrospective.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/templates/retrospective/TEMPLATE.md"
+      ],
+      "testEvidence": [],
+      "documentationEvidence": [
+        "file:.iacode/memory/retrospectives/SETUP-00-CP-0006.md",
+        "file:docs/CHECKPOINT-PROTOCOL.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0009"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "REQ-0015",
+      "source": "prompt section 14",
+      "description": "Make the Implementer, tests, Green Keeper, and Delivery Completeness Validator sequence mandatory for every delivery, and forbid advancing with red gates, coverage below total, any partial, or any missing requirement.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/validate_checkpoint.py"
+      ],
+      "testEvidence": [
+        "test:DeliveryAssuranceGateTests.test_green_keeper_not_executed_blocks_review",
+        "test:DeliveryAssuranceGateTests.test_completeness_validator_not_executed_blocks_review",
+        "test:DeliveryLifecycleTests.test_full_delivery_assurance_flow_reaches_ready_for_review"
+      ],
+      "documentationEvidence": [
+        "file:docs/DEVELOPMENT-CONTRACT.md",
+        "file:docs/QUALITY-GATES.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0009"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "REQ-0016",
+      "source": "prompt section 15",
+      "description": "Define the external validation cadence and the milestone grouping M0 through M6, and state that the auditor evaluates the milestone as a whole rather than only the last Gate.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/ledger_common.py"
+      ],
+      "testEvidence": [
+        "test:MilestoneValidationPolicyTests.test_milestone_grouping_matches_the_published_plan",
+        "test:MilestoneValidationPolicyTests.test_every_planned_gate_belongs_to_exactly_one_milestone"
+      ],
+      "documentationEvidence": [
+        "file:docs/MILESTONE-VALIDATION.md",
+        "file:docs/MASTER-PLAN.md",
+        "file:docs/ROADMAP.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0006"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "REQ-0017",
+      "source": "prompt section 16",
+      "description": "Add externalAuditRequired and externalAuditReason so an extraordinary audit before a milestone is possible only with a recorded reason, and list the triggering categories.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/validate_checkpoint.py",
+        "file:.iacode/schemas/checkpoint.schema.json"
+      ],
+      "testEvidence": [
+        "test:MemoryPolicyValidationTests.test_an_extraordinary_audit_requires_a_recorded_trigger",
+        "test:MemoryPolicyValidationTests.test_an_extraordinary_audit_reason_must_name_a_known_trigger",
+        "test:MemoryPolicyValidationTests.test_a_reason_without_a_request_is_rejected"
+      ],
+      "documentationEvidence": [
+        "file:docs/MILESTONE-VALIDATION.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0009"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "REQ-0018",
+      "source": "prompt section 17",
+      "description": "Distinguish INTERNAL_GATE_PASS from MILESTONE_EXTERNAL_PASS so an internal verdict is never described as independent external validation.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/ledger_common.py",
+        "file:scripts/development-ledger/validate_checkpoint.py"
+      ],
+      "testEvidence": [
+        "test:MemoryStatusVocabularyTests.test_internal_and_external_pass_are_distinct_statuses",
+        "test:MemoryPolicyValidationTests.test_an_internal_pass_may_not_carry_an_external_verdict",
+        "test:MemoryPolicyValidationTests.test_a_milestone_pass_requires_external_validation"
+      ],
+      "documentationEvidence": [
+        "file:docs/MILESTONE-VALIDATION.md",
+        "file:docs/QUALITY-GATES.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0009"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "REQ-0019",
+      "source": "prompt section 18",
+      "description": "Define the milestone checkpoint that consolidates the included Gates, lessons, open risks, architecture changes, tests, regression, cross-gate integration, requirements completeness, outstanding debt, provenance, and model usage.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/schemas/checkpoint.schema.json"
+      ],
+      "testEvidence": [
+        "test:MemoryPolicyValidationTests.test_a_wrong_milestone_grouping_fails"
+      ],
+      "documentationEvidence": [
+        "file:docs/MILESTONE-VALIDATION.md",
+        "file:docs/HANDOFF-PROTOCOL.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0009"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "REQ-0020",
+      "source": "prompt section 19",
+      "description": "Record that Codex acts primarily as the milestone independent auditor and what it must validate.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:AGENTS.md"
+      ],
+      "testEvidence": [],
+      "documentationEvidence": [
+        "file:docs/MILESTONE-VALIDATION.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0006"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "REQ-0021",
+      "source": "prompt section 20",
+      "description": "Update the governing documents and add docs/ENGINEERING-MEMORY.md and docs/MILESTONE-VALIDATION.md.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:docs/ENGINEERING-MEMORY.md",
+        "file:docs/MILESTONE-VALIDATION.md"
+      ],
+      "testEvidence": [
+        "test:SetupChecklistTests.test_documentation_links_resolve"
+      ],
+      "documentationEvidence": [
+        "file:START-HERE.md",
+        "file:AGENTS.md",
+        "file:CLAUDE.md",
+        "file:docs/DEVELOPMENT-CONTRACT.md",
+        "file:docs/MASTER-PLAN.md",
+        "file:docs/ROADMAP.md",
+        "file:docs/QUALITY-GATES.md",
+        "file:docs/DEFINITION-OF-DONE.md",
+        "file:docs/CHECKPOINT-PROTOCOL.md",
+        "file:docs/HANDOFF-PROTOCOL.md",
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0006"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "REQ-0022",
+      "source": "prompt section 21",
+      "description": "Update the canonical agent contracts so the Engineering Lead runs the preflight, the Planner incorporates lesson requirements, the Implementer consults applicable checks, the Green Keeper records failures as lesson candidates, the Completeness Validator confirms lesson-derived requirements, the Historian records lessons, and the Reviewer looks for recurrence.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/agents/engineering-lead.md",
+        "file:.iacode/agents/planner.md",
+        "file:.iacode/agents/implementer.md",
+        "file:.iacode/agents/test-rework-greenkeeper.md",
+        "file:.iacode/agents/delivery-completeness-validator.md",
+        "file:.iacode/agents/historian.md",
+        "file:.iacode/agents/reviewer.md"
+      ],
+      "testEvidence": [
+        "test:ClaudeAdapterTests.test_project_agents_match_canonical_role_names",
+        "test:ClaudeAdapterTests.test_project_agents_defer_to_canonical_contracts"
+      ],
+      "documentationEvidence": [
+        "file:docs/ENGINEERING-MEMORY.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0006"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "REQ-0023",
+      "source": "prompt section 22",
+      "description": "Add the seventeen mandated tests for the lesson schema, lifecycle, recurrence, preflight, derived requirements, milestone grouping, audit policy, and historical compatibility.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:tests/test_development_ledger.py"
+      ],
+      "testEvidence": [
+        "test:LessonValidationTests.test_guarded_without_preventive_evidence_fails",
+        "test:LessonPreflightTests.test_preflight_ignores_a_retired_lesson",
+        "test:DerivedRequirementCompletenessTests.test_a_missing_derived_requirement_blocks_completeness",
+        "test:MilestoneValidationPolicyTests.test_an_intermediate_gate_does_not_require_external_validation",
+        "test:MilestoneValidationPolicyTests.test_a_milestone_closing_gate_requires_external_validation",
+        "test:HistoricalCheckpointCompatibilityTests.test_fourth_sealed_checkpoint_still_validates"
+      ],
+      "documentationEvidence": [
+        "checkpoint:FINAL-REPORT.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0006"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "REQ-0024",
+      "source": "prompt section 23",
+      "description": "Use the real Green Keeper on this checkpoint, repairing until green or declaring a real external blocker, and never reaching READY_FOR_REVIEW with anything red.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:REWORK-LOG.jsonl"
+      ],
+      "testEvidence": [
+        "test:GreenKeeperToolTests.test_red_gate_is_reported_as_still_red"
+      ],
+      "documentationEvidence": [
+        "checkpoint:DECISIONS.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0006",
+        "command:cmd-0007",
+        "command:cmd-0008",
+        "command:cmd-0009"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "REQ-0025",
+      "source": "prompt section 24",
+      "description": "Run the real Delivery Completeness Validator before handoff and reach total coverage with zero partial, zero missing, and total evidence coverage.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:COMPLETENESS-REPORT.json"
+      ],
+      "testEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:COMPLETENESS-REPORT.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:COMPLETENESS-REPORT.json"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "REQ-0026",
+      "source": "prompt section 25",
+      "description": "Close CP-0006 at READY_FOR_REVIEW rather than GATE_PASS, because SETUP-00 still needs the M0 milestone audit.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:STATE.json"
+      ],
+      "testEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:STATUS.md",
+        "checkpoint:DECISIONS.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0009"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "REQ-0027",
+      "source": "prompt section 26",
+      "description": "Make NEXT.md request a single Codex M0 validation covering CP-0005, CP-0006, and SETUP-00 as a whole, rather than separate validations.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:NEXT.md"
+      ],
+      "testEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:NEXT.md",
+        "checkpoint:HANDOFF.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0009"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "REQ-0028",
+      "source": "prompt section 27",
+      "description": "Respect every prohibition: no Gate 0, no modification of sealed checkpoints or historical tags, no chain-of-thought, no secrets, no automatic training eligibility, and no removal of the Green Keeper or completeness controls.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:STATE.json"
+      ],
+      "testEvidence": [
+        "test:HistoricalCheckpointCompatibilityTests.test_first_sealed_checkpoint_still_validates"
+      ],
+      "documentationEvidence": [
+        "checkpoint:DECISIONS.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0009"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "REQ-0029",
+      "source": "prompt section 28",
+      "description": "Deliver the final report with checkpoint, status, coverage, Green Keeper, completeness, tests, lessons created and guarded, preflight, milestone policy, historical compatibility, commit, tag, risks, and next action.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:FINAL-REPORT.md"
+      ],
+      "testEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:FINAL-REPORT.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0009"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "REQ-0030",
+      "source": "docs/CHECKPOINT-PROTOCOL.md schema versions",
+      "description": "Preserve backward compatibility: CP-0001 through CP-0005 must keep validating under the extended tooling, with their tags unchanged.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/validate_checkpoint.py"
+      ],
+      "testEvidence": [
+        "test:HistoricalCheckpointCompatibilityTests.test_second_sealed_checkpoint_still_validates",
+        "test:HistoricalCheckpointCompatibilityTests.test_third_sealed_checkpoint_still_validates",
+        "test:HistoricalCheckpointCompatibilityTests.test_fifth_sealed_checkpoint_still_validates"
+      ],
+      "documentationEvidence": [
+        "file:docs/CHECKPOINT-PROTOCOL.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0006"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "REQ-0031",
+      "source": "docs/DEVELOPMENT-CONTRACT.md structural decisions",
+      "description": "Record the structural decisions of this checkpoint as an ADR, covering the engineering memory, the guardrail principle, and the milestone validation policy.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:docs/adr/ADR-0009-engineering-memory-and-milestone-validation.md"
+      ],
+      "testEvidence": [],
+      "documentationEvidence": [
+        "file:docs/adr/ADR-0009-engineering-memory-and-milestone-validation.md"
+      ],
+      "validationEvidence": [
+        "test:SetupChecklistTests.test_documentation_links_resolve"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "REQ-0032",
+      "source": "docs/DEVELOPMENT-CONTRACT.md mandatory controls",
+      "description": "Maintain the Engineering Ledger continuously with requirement, plan, file, command, exit code, failure, cause, correction, retest, result, and evidence.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:COMMANDS.jsonl"
+      ],
+      "testEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:DECISIONS.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0009"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "REQ-0033",
+      "source": "prompt section 3 and 27",
+      "description": "Keep trainingAllowed false by default for every new artifact and change no rights policy without evidence.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:PROVENANCE.json",
+        "file:.iacode/memory/lessons.jsonl"
+      ],
+      "testEvidence": [
+        "test:EngineeringMemoryStructureTests.test_repository_lessons_deny_training_by_default"
+      ],
+      "documentationEvidence": [
+        "file:.iacode/policies/provenance-policy.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0008"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "LESSON-REQ-0001",
+      "source": "lesson preflight, LSN-0001",
+      "description": "Verify checkpoint validation must succeed from a detached checkout of the checkpoint tag",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:LESSON-PREFLIGHT.json"
+      ],
+      "testEvidence": [
+        "test:DetachedHeadValidationTests.test_detached_head_at_checkpoint_tag_validates"
+      ],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0006"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "LESSON-REQ-0002",
+      "source": "lesson preflight, LSN-0002",
+      "description": "Verify a file inventory must be recomputed from the repository, never trusted as an assertion",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:LESSON-PREFLIGHT.json"
+      ],
+      "testEvidence": [
+        "test:DeltaInventoryTests.test_removed_manifest_entry_fails"
+      ],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0006"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "LESSON-REQ-0003",
+      "source": "lesson preflight, LSN-0003",
+      "description": "Verify every operation attempt must be auditable, including a refusal decided before execution",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:LESSON-PREFLIGHT.json"
+      ],
+      "testEvidence": [
+        "test:FinalizationAttemptRecordingTests.test_detached_head_refusal_is_recorded"
+      ],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0006"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "LESSON-REQ-0004",
+      "source": "lesson preflight, LSN-0004",
+      "description": "Verify a checkpoint may never claim readiness while it also claims to be blocked",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:LESSON-PREFLIGHT.json"
+      ],
+      "testEvidence": [
+        "test:StatusBlockerInvariantTests.test_ready_for_review_with_blocker_fails",
+        "test:MemoryStatusVocabularyTests.test_neither_pass_status_may_carry_a_blocker"
+      ],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0006"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "LESSON-REQ-0005",
+      "source": "lesson preflight, LSN-0005",
+      "description": "Verify a PASS requires evidence that can be executed or resolved, not a statement",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:LESSON-PREFLIGHT.json"
+      ],
+      "testEvidence": [
+        "test:QualityEvidenceTests.test_pass_without_evidence_fails"
+      ],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0006"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "LESSON-REQ-0006",
+      "source": "lesson preflight, LSN-0006",
+      "description": "Verify the repository must be self-contained; a specification may not live outside it",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:LESSON-PREFLIGHT.json"
+      ],
+      "testEvidence": [
+        "test:SetupChecklistTests.test_checklist_exists_and_is_referenced"
+      ],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0006"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "LESSON-REQ-0007",
+      "source": "lesson preflight, LSN-0007",
+      "description": "Verify independent validation cannot be declared by the run that did the work",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:LESSON-PREFLIGHT.json"
+      ],
+      "testEvidence": [
+        "test:MemoryPolicyValidationTests.test_an_internal_pass_may_not_carry_an_external_verdict"
+      ],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0006"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "LESSON-REQ-0008",
+      "source": "lesson preflight, LSN-0008",
+      "description": "Verify requirement completeness must be total and evidence-backed before handoff",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:LESSON-PREFLIGHT.json"
+      ],
+      "testEvidence": [
+        "test:DerivedRequirementCompletenessTests.test_a_missing_derived_requirement_blocks_completeness"
+      ],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0006"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "LESSON-REQ-0009",
+      "source": "lesson preflight, LSN-0009",
+      "description": "Verify a red gate requires rework, never a waiver, and never a weakened check",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:LESSON-PREFLIGHT.json"
+      ],
+      "testEvidence": [
+        "test:GreenKeeperToolTests.test_red_gate_is_reported_as_still_red"
+      ],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0006"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "LESSON-REQ-0010",
+      "source": "lesson preflight, LSN-0010",
+      "description": "Verify a recorded command must carry runtime, working directory, commit and purpose to be replayable",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:LESSON-PREFLIGHT.json"
+      ],
+      "testEvidence": [
+        "test:CommandReproducibilityTests.test_bare_script_name_is_rejected"
+      ],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0006"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "LESSON-REQ-0011",
+      "source": "lesson preflight, LSN-0011",
+      "description": "Verify a control over a checkpoint's own evidence must be scoped to the moment it matters",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:LESSON-PREFLIGHT.json"
+      ],
+      "testEvidence": [
+        "test:DeliveryAssuranceGateTests.test_gate_consistency_is_provisional_while_work_is_in_progress"
+      ],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0006"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "LESSON-REQ-0012",
+      "source": "lesson preflight, LSN-0012",
+      "description": "Verify sealed checkpoints and their tags are immutable, and tooling must keep validating them",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:LESSON-PREFLIGHT.json"
+      ],
+      "testEvidence": [
+        "test:HistoricalCheckpointCompatibilityTests.test_fifth_sealed_checkpoint_still_validates"
+      ],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0006"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "LESSON-REQ-0013",
+      "source": "lesson preflight, LSN-0013",
+      "description": "Verify an installed capability must be detected by resolved path, not by a bare command lookup",
+      "mandatory": false,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:LESSON-PREFLIGHT.json"
+      ],
+      "testEvidence": [],
+      "documentationEvidence": [
+        "file:docs/TOOL-CAPABILITIES.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0009"
+      ],
+      "notes": "This Gate records no new capability detection; the existing record in docs/TOOL-CAPABILITIES.md names the resolved executable path and the PATH caveat, and nothing was concluded about availability from a bare lookup."
+    },
+    {
+      "id": "LESSON-REQ-0014",
+      "source": "lesson preflight, LSN-0014",
+      "description": "Verify evidence must be recorded as it happens, not reconstructed at the end of a run",
+      "mandatory": false,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:LESSON-PREFLIGHT.json"
+      ],
+      "testEvidence": [],
+      "documentationEvidence": [
+        "file:scripts/development-ledger/record_command.py"
+      ],
+      "validationEvidence": [
+        "command:cmd-0009"
+      ],
+      "notes": "Every command of this delivery was recorded by the tooling as it ran; no ledger entry was reconstructed afterwards."
+    }
+  ]
+}

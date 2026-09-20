@@ -94,3 +94,25 @@ Standard output is the safest default. In-place mode writes a redacted temporary
 ## Schema scope
 
 `checkpoint.schema.json` validates `STATE.json`; run metadata, command lines, tests, quality, and provenance each have a bound schema. `decision.schema.json` defines future structured decision exports while ADRs remain the canonical Markdown records. `experience.schema.json` is reserved for Gate 6 and later and implements no runtime.
+
+## Engineering memory
+
+```text
+python scripts/development-ledger/validate_lessons.py --render-index
+python scripts/development-ledger/lesson_preflight.py --gate "GATE 0" --scope runtime --write
+python scripts/development-ledger/extract_lessons.py --write
+```
+
+`validate_lessons.py` checks the memory in `.iacode/memory/`: schema, unique identifiers, valid
+status, provenance, training policy, evidence, preventive evidence behind every `GUARDED` lesson,
+absence of secrets, and recurrence consistency. Exit `0` means valid. It is part of the Green Keeper
+gate set, so a broken memory is a red delivery.
+
+`lesson_preflight.py` selects the lessons that constrain a Gate and writes `LESSON-PREFLIGHT.json`
+and `LESSON-PREFLIGHT.md` into the checkpoint, deriving a `LESSON-REQ-` requirement from each one.
+Running it is mandatory before a Gate starts.
+
+`extract_lessons.py` derives candidates from rework logs and finding documents. A candidate is never
+stronger than `OBSERVED`; promotion is a human judgement, and `GUARDED` additionally requires a
+control the tool cannot invent. A candidate matching an existing recurrence key increments that
+lesson instead, and a repeat against a `GUARDED` lesson is recorded as a `GUARDRAIL_FAILURE`.

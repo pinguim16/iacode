@@ -19,6 +19,8 @@ A partial feature is not complete. Functional placeholders, production fakes, fi
 
 Every delivery follows this sequence. Skipping a step is a contract violation, not a shortcut.
 
+0. Lesson preflight, before the Gate starts, writing `LESSON-PREFLIGHT.json` and turning every
+   applicable lesson into a `LESSON-REQ-` requirement.
 1. Requirement extraction into `REQUIREMENTS-MATRIX.json`.
 2. Baseline.
 3. Plan.
@@ -38,7 +40,25 @@ Their contracts are `.iacode/agents/test-rework-greenkeeper.md` and
 `.iacode/agents/delivery-completeness-validator.md`.
 
 Nothing red ships. A requirement that cannot be finished, or a gate that cannot be repaired inside
-the repository, produces `BLOCKED` with the blocker named, never `READY_FOR_REVIEW`.
+the repository, produces `BLOCKED` with the blocker named, never `READY_FOR_REVIEW`. No delivery
+advances with a red test or gate, with coverage below total, or with any requirement `PARTIAL` or
+`MISSING`.
+
+## Engineering memory
+
+Confirmed failures become lessons in `.iacode/memory/`, and important lessons become automated
+guardrails. A lesson is `GUARDED` only when a test, validator, lint rule, policy, schema, invariant
+or automated check prevents recurrence; documentation alone never is. The preflight is mandatory
+before every Gate, and a repeat of a guarded failure class is a `GUARDRAIL_FAILURE` that must be
+investigated. See [ENGINEERING-MEMORY.md](ENGINEERING-MEMORY.md).
+
+## External validation cadence
+
+An intermediate Gate closes at `INTERNAL_GATE_PASS` on the project's own controls. Independent
+external validation happens once per milestone, over the group of Gates, and produces
+`MILESTONE_EXTERNAL_PASS`. An internal verdict is never described as independent external
+validation. An extraordinary audit before the milestone requires `externalAuditRequired` with a
+recorded trigger. See [MILESTONE-VALIDATION.md](MILESTONE-VALIDATION.md).
 
 ## Git discipline
 

@@ -1,0 +1,119 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://iacode.local/schemas/lesson.schema.json",
+  "title": "IACode engineering lesson",
+  "type": "object",
+  "required": [
+    "lessonId",
+    "title",
+    "category",
+    "severity",
+    "source",
+    "symptom",
+    "rootCauseSummary",
+    "resolution",
+    "prevention",
+    "evidence",
+    "applicability",
+    "status",
+    "recurrenceKey",
+    "recurrenceCount",
+    "createdAt",
+    "updatedAt",
+    "provenance",
+    "trainingEligibility"
+  ],
+  "$defs": {
+    "source": {
+      "type": "object",
+      "required": ["gate", "checkpoint"],
+      "properties": {
+        "gate": {"type": "string", "minLength": 1},
+        "checkpoint": {"type": "string", "minLength": 1},
+        "finding": {"type": ["string", "null"]}
+      },
+      "additionalProperties": false
+    },
+    "control": {
+      "type": "object",
+      "required": ["kind", "reference", "description"],
+      "properties": {
+        "kind": {"enum": ["test", "validator", "lint", "policy", "schema", "invariant", "automated-check", "documentation"]},
+        "reference": {"type": "string", "minLength": 1},
+        "description": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
+    },
+    "applicability": {
+      "type": "object",
+      "required": ["gates"],
+      "properties": {
+        "gates": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "scopes": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "technologies": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "modules": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "requiredCheck": {"type": "string", "minLength": 1},
+        "requiredEvidence": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
+    },
+    "provenance": {
+      "type": "object",
+      "required": ["sourceType", "provider", "ownership"],
+      "properties": {
+        "sourceType": {"type": "string", "minLength": 1},
+        "provider": {"type": "string", "minLength": 1},
+        "model": {"type": ["string", "null"]},
+        "ownership": {"type": "string", "minLength": 1},
+        "license": {"type": ["string", "null"]},
+        "notes": {"type": ["string", "null"]}
+      },
+      "additionalProperties": false
+    },
+    "trainingEligibility": {
+      "type": "object",
+      "required": ["trainingAllowed", "ragAllowed", "distillationAllowed"],
+      "properties": {
+        "trainingAllowed": {"type": "boolean"},
+        "ragAllowed": {"type": "boolean"},
+        "distillationAllowed": {"type": "boolean"},
+        "justification": {"type": ["string", "null"]}
+      },
+      "additionalProperties": false
+    },
+    "guardrailFailure": {
+      "type": "object",
+      "required": ["observedAt", "checkpoint", "detail"],
+      "properties": {
+        "observedAt": {"type": "string", "format": "date-time"},
+        "checkpoint": {"type": "string", "minLength": 1},
+        "detail": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
+    }
+  },
+  "properties": {
+    "lessonId": {"type": "string", "pattern": "^LSN-[0-9]{4}$"},
+    "title": {"type": "string", "minLength": 1},
+    "category": {"enum": ["architecture", "implementation", "testing", "quality", "security", "documentation", "tooling", "git", "checkpoint", "process", "provider", "model-behavior", "training", "data", "performance", "environment"]},
+    "severity": {"enum": ["LOW", "MEDIUM", "HIGH", "CRITICAL"]},
+    "source": {"$ref": "#/$defs/source"},
+    "symptom": {"type": "string", "minLength": 1},
+    "rootCauseSummary": {"type": "string", "minLength": 1},
+    "resolution": {"type": "string", "minLength": 1},
+    "prevention": {"type": "array", "items": {"$ref": "#/$defs/control"}},
+    "evidence": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+    "applicability": {"$ref": "#/$defs/applicability"},
+    "status": {"enum": ["OBSERVED", "CONFIRMED", "GUARDED", "SUPERSEDED", "RETIRED"]},
+    "recurrenceKey": {"type": "string", "pattern": "^[a-z0-9]+(?:[-/][a-z0-9]+)*$"},
+    "recurrenceCount": {"type": "integer", "minimum": 0},
+    "guardrailFailures": {"type": "array", "items": {"$ref": "#/$defs/guardrailFailure"}},
+    "supersededBy": {"type": ["string", "null"]},
+    "createdAt": {"type": "string", "format": "date-time"},
+    "updatedAt": {"type": "string", "format": "date-time"},
+    "provenance": {"$ref": "#/$defs/provenance"},
+    "trainingEligibility": {"$ref": "#/$defs/trainingEligibility"},
+    "notes": {"type": ["string", "null"]}
+  },
+  "additionalProperties": false
+}

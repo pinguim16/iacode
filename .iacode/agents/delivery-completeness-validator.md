@@ -47,3 +47,10 @@ implementer.
 `python scripts/development-ledger/check_completeness.py --write` recomputes the audit from the matrix
 and writes the report. `validate_checkpoint.py` recomputes it again independently, so a stored report
 cannot disagree with the matrix it claims to describe.
+
+## Lesson-derived requirements
+
+Confirm that every derived requirement in `LESSON-PREFLIGHT.json` appears in the matrix and is
+satisfied with resolvable evidence. A missing derived requirement is a blocking finding: it means the
+delivery ignored a failure this project has already suffered. The audit refuses the delivery even
+when every other requirement is complete.

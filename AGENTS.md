@@ -48,3 +48,12 @@ independence when a single session performs both.
 3. Record the final Git state truthfully.
 4. Ensure `docs/checkpoints/LATEST.md` names the last valid checkpoint.
 
+
+## Engineering memory and validation cadence
+
+- Run the lesson preflight before the Gate starts and carry every derived `LESSON-REQ-` requirement into `REQUIREMENTS-MATRIX.json`.
+- A confirmed failure becomes a lesson in `.iacode/memory/`, and an important lesson becomes an automated guardrail. Documentation alone never justifies `GUARDED`.
+- A repeat of a guarded failure class is a `GUARDRAIL_FAILURE`; escalate it rather than repairing it quietly.
+- The memory is the project's, not the user's. No personal data, no chain-of-thought, no secrets.
+- As the milestone independent auditor, evaluate the milestone as a whole: accumulated completeness, integration between Gates, architecture, regressions, quality, documentation, lessons and guardrails, Red Team, and the inconsistencies that per-Gate validation cannot see. Findings return to the implementer; do not implement corrections.
+- `INTERNAL_GATE_PASS` is the project's own verdict; only `MILESTONE_EXTERNAL_PASS` records an independent one.

@@ -24,11 +24,26 @@ from ledger_common import (  # noqa: E402
 from validate_checkpoint import (  # noqa: E402
     _validate_command_reproducibility,
     _validate_delivery_assurance,
+    _validate_memory_policy,
     _validate_quality_evidence,
     _validate_second_tool,
     _validate_status_blockers,
 )
 from delivery_assurance import evaluate_matrix  # noqa: E402
+from ledger_common import (  # noqa: E402
+    MILESTONES,
+    milestone_for,
+    requires_external_validation,
+)
+from lessons import (  # noqa: E402
+    build_preflight,
+    load_lessons,
+    preventive_controls,
+    recurrence_key,
+    register_recurrence,
+    save_lessons,
+    validate_lessons as validate_memory,
+)
 
 
 NOW = "2026-09-19T12:00:00Z"
@@ -172,7 +187,8 @@ def downgrade_to_evidence_schema(checkpoint: Path) -> None:
     state = read_json(checkpoint / "STATE.json")
     state["schemaVersion"] = "2.0.0"
     for key in ("requirementsMatrix", "greenKeeper", "deliveryCompleteness", "reworkCycles",
-                "independentReview", "redTeam"):
+                "independentReview", "redTeam", "lessonPreflight", "milestone",
+                "externalAuditRequired", "externalAuditReason"):
         state.pop(key, None)
     write_json_file(checkpoint / "STATE.json", state)
     for name in ("TESTS.json", "PROVENANCE.json"):
@@ -1128,6 +1144,9 @@ class HistoricalCheckpointCompatibilityTests(unittest.TestCase):
     def test_fourth_sealed_checkpoint_still_validates(self) -> None:
         self._assert_historical_checkpoint_validates("iacode-checkpoints/SETUP-00-CP-0004")
 
+    def test_fifth_sealed_checkpoint_still_validates(self) -> None:
+        self._assert_historical_checkpoint_validates("iacode-checkpoints/SETUP-00-CP-0005")
+
 
 class FinalizationAttemptRecordingTests(DeltaCheckpointFixture):
     """CP-0004 R3.1 and RT-02: a refusal decided before the operation still reaches the ledger."""
@@ -1732,7 +1751,7 @@ class GreenKeeperToolTests(unittest.TestCase):
 class DeliveryLifecycleTests(unittest.TestCase):
     """The whole mandatory order, end to end, in an isolated repository."""
 
-    TAG = "iacode-checkpoints/TEST-CP-0001"
+    TAG = "iacode-checkpoints/SETUP-00-CP-0001"
 
     def _git(self, root: Path, *args: str) -> None:
         completed = run(["git", *args], root)
@@ -1754,18 +1773,36 @@ class DeliveryLifecycleTests(unittest.TestCase):
             self._git(root, "add", ".")
             self._git(root, "commit", "-m", "test: bootstrap")
 
+            # One fixture lesson, so the preflight derives exactly one requirement.
+            save_lessons(root, [make_lesson()])
+
             created = run([
                 sys.executable, str(SCRIPTS / "new_checkpoint.py"), "--root", str(root),
-                "--gate", "TEST", "--status", "IN_PROGRESS",
+                "--gate", "SETUP-00", "--status", "IN_PROGRESS",
             ], root)
             self.assertEqual(created.returncode, 0, created.stdout)
-            checkpoint = root / "docs" / "checkpoints" / "TEST-CP-0001"
+            checkpoint = root / "docs" / "checkpoints" / "SETUP-00-CP-0001"
+
+            preflight = run([
+                sys.executable, str(SCRIPTS / "lesson_preflight.py"), "--root", str(root),
+                "--gate", "SETUP-00", "--scope", "control-plane", "--write",
+            ], root)
+            self.assertEqual(preflight.returncode, 0, preflight.stdout)
+            derived = read_json(checkpoint / "LESSON-PREFLIGHT.json")["derivedRequirements"]
+            self.assertEqual(len(derived), 1)
 
             write_final_report(checkpoint)
-            write_json_file(checkpoint / "REQUIREMENTS-MATRIX.json",
-                            build_matrix(("COMPLETE", True, ["checkpoint:PLAN.md"])))
+            matrix = build_matrix(("COMPLETE", True, ["checkpoint:PLAN.md"]))
+            matrix["requirements"].append({
+                "id": derived[0]["id"], "source": "lesson preflight",
+                "description": derived[0]["description"], "mandatory": True, "status": "COMPLETE",
+                "implementationEvidence": ["checkpoint:LESSON-PREFLIGHT.json"], "testEvidence": [],
+                "documentationEvidence": [], "validationEvidence": [], "notes": "",
+            })
+            write_json_file(checkpoint / "REQUIREMENTS-MATRIX.json", matrix)
             (checkpoint / "REQUIREMENTS-MATRIX.md").write_text(
-                "# Requirements Matrix\n\nOne fixture requirement, complete.\n", encoding="utf-8")
+                "# Requirements Matrix\n\nOne fixture requirement plus one derived from a lesson.\n",
+                encoding="utf-8")
 
             keeper = run([
                 sys.executable, str(SCRIPTS / "green_keeper.py"), "--root", str(root),
@@ -1783,19 +1820,23 @@ class DeliveryLifecycleTests(unittest.TestCase):
             result = {"executed": True, "passed": 1, "failed": 0,
                       "command": "python -m unittest discover -s tests", "evidence": "fixture suite"}
             write_json_file(checkpoint / "TESTS.json", {
-                "schemaVersion": "3.0.0", "unit": result, "integration": result,
+                "schemaVersion": "3.1.0", "unit": result, "integration": result,
                 "e2e": {"executed": False, "passed": 0, "failed": 0, "command": None, "evidence": None}})
             checks = {name: {"status": "PASS", "evidence": ["command:cmd-0001"], "justification": None}
                       for name in BASE_QUALITY_DIMENSIONS + ("greenKeeper", "deliveryCompleteness")}
             checks["redTeam"] = {"status": "NOT_EXECUTED", "evidence": [], "justification": None}
             checks["e2e"] = {"status": "NOT_APPLICABLE", "evidence": [],
                              "justification": "no runtime in the fixture"}
-            write_json_file(checkpoint / "QUALITY.json", {"schemaVersion": "3.0.0", "checks": checks})
+            write_json_file(checkpoint / "QUALITY.json", {"schemaVersion": "3.1.0", "checks": checks})
 
             state = read_json(checkpoint / "STATE.json")
             state["requirementsMatrix"] = {
-                "path": "REQUIREMENTS-MATRIX.json", "total": 1, "mandatory": 1, "complete": 1,
+                "path": "REQUIREMENTS-MATRIX.json", "total": 2, "mandatory": 2, "complete": 2,
                 "partial": 0, "missing": 0, "notApplicable": 0, "coveragePercent": 100.0}
+            state["lessonPreflight"] = {
+                "path": "LESSON-PREFLIGHT.json", "gate": "SETUP-00", "scope": "control-plane",
+                "lessonsConsidered": 1, "lessonsApplicable": 1, "derivedRequirements": 1,
+                "evidence": []}
             state["greenKeeper"] = {
                 "status": "PASS", "cycles": 1, "remainingFailures": 0, "unresolvedReworkItems": 0,
                 "log": "REWORK-LOG.jsonl", "externalBlockers": [], "evidence": []}
@@ -1823,6 +1864,444 @@ class DeliveryLifecycleTests(unittest.TestCase):
             self.assertEqual(sealed["greenKeeper"]["status"], "PASS")
             self.assertEqual(sealed["deliveryCompleteness"]["status"], "PASS")
             self.assertEqual(sealed["blockedBy"], [])
+
+
+LESSON_TEMPLATE = {
+    "lessonId": "LSN-0001",
+    "title": "A checkpoint may never claim readiness while it also claims to be blocked",
+    "category": "checkpoint",
+    "severity": "HIGH",
+    "source": {"gate": "SETUP-00", "checkpoint": "TEST-CP-0001", "finding": "RT-01"},
+    "symptom": "A resealed checkpoint validated while it declared a blocker.",
+    "rootCauseSummary": "The blocker list was inspected only for one status.",
+    "resolution": "The invariant now applies to every readiness status and every schema version.",
+    "prevention": [{"kind": "test", "reference": "StatusBlockerInvariantTests",
+                    "description": "Readiness with a blocker is refused."}],
+    "evidence": ["file:docs/CHECKPOINT-PROTOCOL.md"],
+    "applicability": {"gates": ["*"], "scopes": [], "technologies": [], "modules": []},
+    "status": "GUARDED",
+    "recurrenceKey": "checkpoint/readiness-with-blockers",
+    "recurrenceCount": 0,
+    "guardrailFailures": [],
+    "createdAt": NOW,
+    "updatedAt": NOW,
+    "provenance": {"sourceType": "repository-generated", "provider": "local-analysis",
+                   "model": None, "ownership": "project", "license": "not-applicable",
+                   "notes": None},
+    "trainingEligibility": {"trainingAllowed": False, "ragAllowed": False,
+                            "distillationAllowed": False, "justification": None},
+    "notes": None,
+}
+
+
+def make_lesson(**overrides: object) -> dict:
+    lesson = json.loads(json.dumps(LESSON_TEMPLATE))
+    for key, value in overrides.items():
+        lesson[key] = value
+    return lesson
+
+
+class EngineeringMemoryStructureTests(unittest.TestCase):
+    """The memory exists, belongs to the project, and its own rules hold."""
+
+    MEMORY = PROJECT_ROOT / ".iacode" / "memory"
+
+    def test_memory_tree_exists(self) -> None:
+        self.assertTrue((self.MEMORY / "README.md").is_file())
+        self.assertTrue((self.MEMORY / "LESSONS.md").is_file())
+        self.assertTrue((self.MEMORY / "lessons.jsonl").is_file())
+        for name in ("patterns", "anti-patterns", "incidents", "guardrails", "retrospectives"):
+            self.assertTrue((self.MEMORY / name).is_dir(), name)
+
+    def test_memory_states_it_is_organizational_not_personal(self) -> None:
+        text = (self.MEMORY / "README.md").read_text(encoding="utf-8").lower()
+        self.assertIn("engineering organization", text)
+        self.assertIn("not** the user's personal memory", text)
+
+    def test_repository_memory_is_valid(self) -> None:
+        self.assertEqual(validate_memory(PROJECT_ROOT), [])
+
+    def test_repository_lessons_deny_training_by_default(self) -> None:
+        lessons = load_lessons(PROJECT_ROOT)
+        self.assertTrue(lessons)
+        for lesson in lessons:
+            rights = lesson["trainingEligibility"]
+            self.assertFalse(rights["trainingAllowed"], lesson["lessonId"])
+            self.assertFalse(rights["distillationAllowed"], lesson["lessonId"])
+
+    def test_every_guarded_lesson_names_a_real_control(self) -> None:
+        for lesson in load_lessons(PROJECT_ROOT):
+            if lesson["status"] != "GUARDED":
+                continue
+            controls = preventive_controls(lesson)
+            self.assertTrue(controls, lesson["lessonId"])
+
+    def test_the_guardrail_principle_is_documented(self) -> None:
+        for path in (self.MEMORY / "README.md", PROJECT_ROOT / "docs" / "ENGINEERING-MEMORY.md"):
+            text = path.read_text(encoding="utf-8").lower()
+            self.assertIn("guardrail", text, str(path))
+
+
+class LessonValidationTests(unittest.TestCase):
+    """validate_lessons is the control that keeps the memory honest."""
+
+    def setUp(self) -> None:
+        self.temporary = tempfile.TemporaryDirectory()
+        self.root = Path(self.temporary.name)
+        shutil.copytree(PROJECT_ROOT / ".iacode" / "schemas", self.root / ".iacode" / "schemas")
+
+    def tearDown(self) -> None:
+        self.temporary.cleanup()
+
+    def _errors(self, *lessons: dict) -> list[str]:
+        save_lessons(self.root, list(lessons))
+        return validate_memory(self.root)
+
+    def test_valid_lesson_passes(self) -> None:
+        self.assertEqual(self._errors(make_lesson()), [])
+
+    def test_invalid_lesson_fails(self) -> None:
+        errors = self._errors(make_lesson(category="astrology", severity="URGENT"))
+        self.assertTrue(any("category" in error for error in errors), errors)
+        self.assertTrue(any("severity" in error for error in errors), errors)
+
+    def test_missing_required_field_fails(self) -> None:
+        lesson = make_lesson()
+        del lesson["rootCauseSummary"]
+        errors = self._errors(lesson)
+        self.assertTrue(any("rootCauseSummary" in error for error in errors), errors)
+
+    def test_duplicate_lesson_id_fails(self) -> None:
+        errors = self._errors(make_lesson(), make_lesson(recurrenceKey="checkpoint/other-key"))
+        self.assertTrue(any("duplicate lessonId" in error for error in errors), errors)
+
+    def test_guarded_without_preventive_evidence_fails(self) -> None:
+        errors = self._errors(make_lesson(prevention=[]))
+        self.assertTrue(any("GUARDED requires at least one preventive control" in error
+                            for error in errors), errors)
+
+    def test_documentation_alone_does_not_guard_a_lesson(self) -> None:
+        errors = self._errors(make_lesson(prevention=[
+            {"kind": "documentation", "reference": "docs/ENGINEERING-MEMORY.md",
+             "description": "It is written down."}]))
+        self.assertTrue(any("documentation alone is not a guardrail" in error
+                            for error in errors), errors)
+
+    def test_secret_in_a_lesson_fails(self) -> None:
+        # Assembled at runtime so this source file does not itself carry a secret-shaped literal.
+        leaked = "OPENAI_" + "API_KEY=" + "sk-" + "liveexamplekey0123456789"
+        errors = self._errors(make_lesson(symptom=f"The run failed because {leaked} was rejected."))
+        self.assertTrue(any("secret pattern detected" in error for error in errors), errors)
+
+    def test_training_allowed_requires_a_rights_justification(self) -> None:
+        errors = self._errors(make_lesson(trainingEligibility={
+            "trainingAllowed": True, "ragAllowed": False, "distillationAllowed": False,
+            "justification": None}))
+        self.assertTrue(any("rights justification" in error for error in errors), errors)
+
+    def test_reused_recurrence_key_fails(self) -> None:
+        errors = self._errors(make_lesson(), make_lesson(lessonId="LSN-0002"))
+        self.assertTrue(any("already used by" in error for error in errors), errors)
+
+    def test_unresolved_guardrail_failure_cannot_stay_guarded(self) -> None:
+        errors = self._errors(make_lesson(recurrenceCount=1, guardrailFailures=[
+            {"observedAt": NOW, "checkpoint": "TEST-CP-0001", "detail": "GUARDRAIL_FAILURE: repeated"}]))
+        self.assertTrue(any("GUARDED is not a valid status" in error for error in errors), errors)
+
+    def test_superseded_requires_a_successor(self) -> None:
+        errors = self._errors(make_lesson(status="SUPERSEDED", prevention=[]))
+        self.assertTrue(any("SUPERSEDED requires supersededBy" in error for error in errors), errors)
+
+
+class LessonRecurrenceTests(unittest.TestCase):
+    def test_recurrence_key_is_stable_for_a_failure_class(self) -> None:
+        first = recurrence_key("checkpoint", "The finalization refusal was not recorded in the ledger")
+        second = recurrence_key("checkpoint", "the finalization refusal was NOT recorded in the ledger!")
+        self.assertEqual(first, second)
+
+    def test_recurrence_key_separates_different_classes(self) -> None:
+        self.assertNotEqual(
+            recurrence_key("checkpoint", "a refusal was not recorded"),
+            recurrence_key("testing", "the suite was red at handoff"))
+
+    def test_recurrence_increments_the_counter(self) -> None:
+        lesson = make_lesson(status="CONFIRMED", prevention=[])
+        repeated = register_recurrence(lesson, "TEST-CP-0002", "it happened again")
+        self.assertEqual(repeated["recurrenceCount"], 1)
+        self.assertEqual(repeated["status"], "CONFIRMED")
+        self.assertEqual(repeated["guardrailFailures"], [])
+
+    def test_a_repeat_against_a_guarded_lesson_is_a_guardrail_failure(self) -> None:
+        repeated = register_recurrence(make_lesson(), "TEST-CP-0002", "the control let it through")
+        self.assertEqual(repeated["recurrenceCount"], 1)
+        self.assertEqual(repeated["status"], "CONFIRMED")
+        self.assertEqual(len(repeated["guardrailFailures"]), 1)
+        self.assertIn("GUARDRAIL_FAILURE", repeated["guardrailFailures"][0]["detail"])
+        self.assertEqual(repeated["severity"], "CRITICAL")
+
+
+class LessonPreflightTests(unittest.TestCase):
+    def setUp(self) -> None:
+        self.temporary = tempfile.TemporaryDirectory()
+        self.root = Path(self.temporary.name)
+        shutil.copytree(PROJECT_ROOT / ".iacode" / "schemas", self.root / ".iacode" / "schemas")
+
+    def tearDown(self) -> None:
+        self.temporary.cleanup()
+
+    def _preflight(self, lessons: list[dict], gate: str = "GATE 0", scope: str = "runtime",
+                   technologies: list[str] | None = None, modules: list[str] | None = None) -> dict:
+        save_lessons(self.root, lessons)
+        return build_preflight(self.root, gate, scope, technologies or [], modules or [])
+
+    def test_preflight_selects_an_applicable_lesson(self) -> None:
+        preflight = self._preflight([make_lesson()])
+        self.assertEqual(preflight["lessonsApplicable"], 1)
+        selected = preflight["applicable"][0]
+        self.assertEqual(selected["lessonId"], "LSN-0001")
+        self.assertTrue(selected["reasonApplicable"])
+        self.assertTrue(selected["requiredCheck"])
+        self.assertTrue(selected["requiredEvidence"])
+
+    def test_preflight_ignores_a_lesson_declared_for_another_gate(self) -> None:
+        lesson = make_lesson(applicability={"gates": ["GATE 7"], "scopes": [], "technologies": [],
+                                            "modules": []})
+        preflight = self._preflight([lesson], gate="GATE 0")
+        self.assertEqual(preflight["lessonsConsidered"], 1)
+        self.assertEqual(preflight["lessonsApplicable"], 0)
+        self.assertEqual(preflight["derivedRequirements"], [])
+
+    def test_preflight_ignores_a_lesson_whose_technology_is_absent(self) -> None:
+        lesson = make_lesson(applicability={"gates": ["*"], "scopes": [],
+                                            "technologies": ["postgresql"], "modules": []})
+        self.assertEqual(self._preflight([lesson], technologies=["python"])["lessonsApplicable"], 0)
+        self.assertEqual(self._preflight([lesson], technologies=["postgresql"])["lessonsApplicable"], 1)
+
+    def test_preflight_ignores_a_retired_lesson(self) -> None:
+        preflight = self._preflight([make_lesson(status="RETIRED", prevention=[])])
+        self.assertEqual(preflight["lessonsApplicable"], 0)
+        self.assertEqual(preflight["derivedRequirements"], [])
+
+    def test_preflight_ignores_a_superseded_lesson(self) -> None:
+        preflight = self._preflight([make_lesson(status="SUPERSEDED", prevention=[],
+                                                 supersededBy="LSN-0099")])
+        self.assertEqual(preflight["lessonsApplicable"], 0)
+
+    def test_an_applicable_lesson_becomes_a_derived_requirement(self) -> None:
+        preflight = self._preflight([make_lesson()])
+        derived = preflight["derivedRequirements"]
+        self.assertEqual(len(derived), 1)
+        self.assertEqual(derived[0]["id"], "LESSON-REQ-0001")
+        self.assertEqual(derived[0]["lessonId"], "LSN-0001")
+        self.assertTrue(derived[0]["mandatory"])
+        self.assertIn("verify", derived[0]["description"].lower())
+
+    def test_the_repository_preflight_covers_every_active_lesson(self) -> None:
+        preflight = build_preflight(PROJECT_ROOT, "SETUP-00", "control-plane", [], [])
+        active = [lesson for lesson in load_lessons(PROJECT_ROOT)
+                  if lesson["status"] not in ("SUPERSEDED", "RETIRED")]
+        self.assertEqual(preflight["lessonsApplicable"], len(active))
+
+
+class DerivedRequirementCompletenessTests(unittest.TestCase):
+    """A lesson that the preflight selected cannot be dropped from the matrix."""
+
+    def setUp(self) -> None:
+        self.temporary = tempfile.TemporaryDirectory()
+        self.checkpoint = Path(self.temporary.name)
+        (self.checkpoint / "PLAN.md").write_text("# Plan\n\nfixture\n", encoding="utf-8")
+        write_json_file(self.checkpoint / "LESSON-PREFLIGHT.json", {
+            "schemaVersion": "1.0.0", "gate": "TEST", "scope": "fixture", "technologies": [],
+            "modules": [], "generatedAt": NOW, "lessonsConsidered": 1, "lessonsApplicable": 1,
+            "applicable": [{
+                "lessonId": "LSN-0001", "title": "fixture", "status": "GUARDED", "severity": "HIGH",
+                "reasonApplicable": "applies to every Gate", "requiredCheck": "check it",
+                "requiredEvidence": "evidence", "derivedRequirementId": "LESSON-REQ-0001"}],
+            "derivedRequirements": [{
+                "id": "LESSON-REQ-0001", "lessonId": "LSN-0001",
+                "description": "Verify the fixture lesson", "mandatory": True,
+                "requiredEvidence": "evidence"}],
+        })
+
+    def tearDown(self) -> None:
+        self.temporary.cleanup()
+
+    def _evaluate(self, matrix: dict) -> dict:
+        return evaluate_matrix(PROJECT_ROOT, self.checkpoint, matrix, {}, set())
+
+    def test_a_missing_derived_requirement_blocks_completeness(self) -> None:
+        report = self._evaluate(build_matrix(("COMPLETE", True, ["checkpoint:PLAN.md"])))
+        self.assertEqual(report["result"], "FAIL")
+        self.assertTrue(any("the matrix does not declare it" in finding["detail"]
+                            for finding in report["findings"]), report["findings"])
+
+    def test_a_declared_derived_requirement_passes(self) -> None:
+        matrix = build_matrix(("COMPLETE", True, ["checkpoint:PLAN.md"]))
+        matrix["requirements"].append({
+            "id": "LESSON-REQ-0001", "source": "lesson preflight",
+            "description": "Verify the fixture lesson", "mandatory": True, "status": "COMPLETE",
+            "implementationEvidence": ["checkpoint:PLAN.md"], "testEvidence": [],
+            "documentationEvidence": [], "validationEvidence": [], "notes": "",
+        })
+        self.assertEqual(self._evaluate(matrix)["result"], "PASS")
+
+
+class MilestoneValidationPolicyTests(unittest.TestCase):
+    def test_milestone_grouping_matches_the_published_plan(self) -> None:
+        identifiers = [identifier for identifier, _title, _gates in MILESTONES]
+        self.assertEqual(identifiers, ["M0", "M1", "M2", "M3", "M4", "M5", "M6"])
+        self.assertEqual(milestone_for("SETUP-00")[0], "M0")
+        for gate, expected in (("GATE 0", "M1"), ("GATE 3", "M1"), ("GATE 4", "M2"),
+                               ("GATE 7", "M2"), ("GATE 8", "M3"), ("GATE 11", "M3"),
+                               ("GATE 12", "M4"), ("GATE 15", "M4"), ("GATE 16", "M5"),
+                               ("GATE 19", "M5"), ("GATE 20", "M6"), ("GATE 23", "M6")):
+            self.assertEqual(milestone_for(gate)[0], expected, gate)
+
+    def test_every_planned_gate_belongs_to_exactly_one_milestone(self) -> None:
+        seen: set[str] = set()
+        for _identifier, _title, gates in MILESTONES:
+            for gate in gates:
+                self.assertNotIn(gate, seen, gate)
+                seen.add(gate)
+        self.assertEqual(len(seen), 25)
+
+    def test_an_intermediate_gate_does_not_require_external_validation(self) -> None:
+        for gate in ("GATE 0", "GATE 1", "GATE 2", "GATE 4", "GATE 21"):
+            self.assertFalse(requires_external_validation(gate), gate)
+
+    def test_a_milestone_closing_gate_requires_external_validation(self) -> None:
+        for gate in ("SETUP-00", "GATE 3", "GATE 7", "GATE 11", "GATE 15", "GATE 19", "GATE 23"):
+            self.assertTrue(requires_external_validation(gate), gate)
+
+    def test_an_extraordinary_audit_can_be_requested_earlier(self) -> None:
+        self.assertFalse(requires_external_validation("GATE 1"))
+        self.assertTrue(requires_external_validation("GATE 1", external_audit_required=True))
+
+    def test_an_unplanned_gate_is_treated_conservatively(self) -> None:
+        self.assertIsNone(milestone_for("GATE 99"))
+        self.assertTrue(requires_external_validation("GATE 99"))
+
+
+class MemoryPolicyValidationTests(unittest.TestCase):
+    """The 3.1.0 checkpoint rules for the preflight, the milestone and extraordinary audits."""
+
+    def setUp(self) -> None:
+        self.temporary = tempfile.TemporaryDirectory()
+        self.checkpoint = Path(self.temporary.name)
+        self.preflight = {
+            "schemaVersion": "1.0.0", "gate": "SETUP-00", "scope": "control-plane",
+            "technologies": [], "modules": [], "generatedAt": NOW,
+            "lessonsConsidered": 2, "lessonsApplicable": 1,
+            "applicable": [{
+                "lessonId": "LSN-0001", "title": "fixture", "status": "GUARDED", "severity": "HIGH",
+                "reasonApplicable": "applies to every Gate", "requiredCheck": "check it",
+                "requiredEvidence": "evidence", "derivedRequirementId": "LESSON-REQ-0001"}],
+            "derivedRequirements": [{
+                "id": "LESSON-REQ-0001", "lessonId": "LSN-0001", "description": "Verify it",
+                "mandatory": True, "requiredEvidence": "evidence"}],
+        }
+        write_json_file(self.checkpoint / "LESSON-PREFLIGHT.json", self.preflight)
+
+    def tearDown(self) -> None:
+        self.temporary.cleanup()
+
+    def _state(self, **overrides: object) -> dict:
+        state = {
+            "schemaVersion": "3.1.0",
+            "gate": "SETUP-00",
+            "status": "IN_PROGRESS",
+            "blockedBy": [],
+            "secondToolValidation": {"status": "PENDING_MANUAL"},
+            "lessonPreflight": {
+                "path": "LESSON-PREFLIGHT.json", "gate": "SETUP-00", "scope": "control-plane",
+                "lessonsConsidered": 2, "lessonsApplicable": 1, "derivedRequirements": 1},
+            "milestone": {"id": "M0", "title": "Development control plane",
+                          "gates": ["SETUP-00"], "status": "PENDING"},
+            "externalAuditRequired": False,
+            "externalAuditReason": None,
+        }
+        state.update(overrides)
+        return state
+
+    def _errors(self, state: dict | None = None) -> list[str]:
+        errors: list[str] = []
+        _validate_memory_policy(PROJECT_ROOT, self.checkpoint, state or self._state(), errors)
+        return errors
+
+    def test_a_consistent_checkpoint_passes(self) -> None:
+        self.assertEqual(self._errors(), [])
+
+    def test_a_missing_preflight_block_fails(self) -> None:
+        state = self._state()
+        del state["lessonPreflight"]
+        errors = self._errors(state)
+        self.assertTrue(any("requires the lessonPreflight block" in error for error in errors), errors)
+
+    def test_preflight_counts_must_match_the_artifact(self) -> None:
+        state = self._state(lessonPreflight={
+            "path": "LESSON-PREFLIGHT.json", "gate": "SETUP-00", "scope": "control-plane",
+            "lessonsConsidered": 99, "lessonsApplicable": 1, "derivedRequirements": 1})
+        errors = self._errors(state)
+        self.assertTrue(any("does not match" in error for error in errors), errors)
+
+    def test_a_wrong_milestone_grouping_fails(self) -> None:
+        state = self._state(milestone={"id": "M3", "gates": ["SETUP-00"], "status": "PENDING"})
+        errors = self._errors(state)
+        self.assertTrue(any("does not match the planned milestone" in error for error in errors), errors)
+
+    def test_an_extraordinary_audit_requires_a_recorded_trigger(self) -> None:
+        errors = self._errors(self._state(externalAuditRequired=True))
+        self.assertTrue(any("demands externalAuditReason" in error for error in errors), errors)
+
+    def test_an_extraordinary_audit_reason_must_name_a_known_trigger(self) -> None:
+        errors = self._errors(self._state(externalAuditRequired=True,
+                                          externalAuditReason="because it feels risky"))
+        self.assertTrue(any("must name one of the recorded triggers" in error for error in errors), errors)
+
+    def test_a_recorded_trigger_is_accepted(self) -> None:
+        self.assertEqual(self._errors(self._state(
+            externalAuditRequired=True,
+            externalAuditReason="sandbox-boundary change in the execution policy")), [])
+
+    def test_a_reason_without_a_request_is_rejected(self) -> None:
+        errors = self._errors(self._state(externalAuditReason="secret-handling"))
+        self.assertTrue(any("while externalAuditRequired is false" in error for error in errors), errors)
+
+    def test_a_milestone_pass_requires_external_validation(self) -> None:
+        state = self._state(
+            status="MILESTONE_EXTERNAL_PASS",
+            milestone={"id": "M0", "gates": ["SETUP-00"], "status": "PASSED"},
+            secondToolValidation={"status": "PENDING_MANUAL"})
+        errors = self._errors(state)
+        self.assertTrue(any("requires secondToolValidation=PASSED" in error for error in errors), errors)
+        self.assertTrue(any("may only be PASSED when secondToolValidation is PASSED" in error
+                            for error in errors), errors)
+
+    def test_an_internal_pass_may_not_carry_an_external_verdict(self) -> None:
+        state = self._state(status="INTERNAL_GATE_PASS",
+                            secondToolValidation={"status": "PASSED"})
+        errors = self._errors(state)
+        self.assertTrue(any("an external PASS belongs to" in error for error in errors), errors)
+
+    def test_an_offered_checkpoint_requires_the_preflight_artifact(self) -> None:
+        (self.checkpoint / "LESSON-PREFLIGHT.json").unlink()
+        errors = self._errors(self._state(status="READY_FOR_REVIEW"))
+        self.assertTrue(any("the lesson preflight is mandatory" in error for error in errors), errors)
+
+
+class MemoryStatusVocabularyTests(unittest.TestCase):
+    def test_internal_and_external_pass_are_distinct_statuses(self) -> None:
+        from ledger_common import EXTERNAL_PASS_STATUS, INTERNAL_PASS_STATUS, STATUSES
+
+        self.assertIn(INTERNAL_PASS_STATUS, STATUSES)
+        self.assertIn(EXTERNAL_PASS_STATUS, STATUSES)
+        self.assertNotEqual(INTERNAL_PASS_STATUS, EXTERNAL_PASS_STATUS)
+
+    def test_neither_pass_status_may_carry_a_blocker(self) -> None:
+        for status in ("INTERNAL_GATE_PASS", "MILESTONE_EXTERNAL_PASS"):
+            errors: list[str] = []
+            _validate_status_blockers({"status": status, "blockedBy": ["blocked"]}, errors)
+            self.assertTrue(errors, status)
 
 
 if __name__ == "__main__":

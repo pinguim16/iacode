@@ -12,10 +12,15 @@ from pathlib import Path
 from typing import Any
 
 from delivery_assurance import collect_test_ids, evaluate_matrix, load_command_results
+from lessons import validate_lessons as validate_engineering_memory
 from ledger_common import (
     COMMAND_RESULTS,
     CURRENT_SCHEMA_VERSION,
+    DELIVERY_SCHEMA_VERSION,
+    DELIVERY_SCHEMA_VERSIONS,
     EVIDENCE_SCHEMA_VERSION,
+    EXTERNAL_AUDIT_TRIGGERS,
+    EXTERNAL_PASS_STATUS,
     INDEPENDENT_DIMENSIONS,
     INVENTORY_SELF_REFERENTIAL_FILES,
     LEGACY_SCHEMA_VERSION,
@@ -34,13 +39,15 @@ from ledger_common import (
     git_delta,
     git_snapshot,
     load_json,
+    milestone_for,
+    normalize_gate,
     resolve_latest,
     run_git,
     validate_schema,
 )
 
 # Schema versions whose FILES.json is a hash-bound description of the real change set.
-HASHED_INVENTORY_VERSIONS = (EVIDENCE_SCHEMA_VERSION, CURRENT_SCHEMA_VERSION)
+HASHED_INVENTORY_VERSIONS = (EVIDENCE_SCHEMA_VERSION,) + DELIVERY_SCHEMA_VERSIONS
 
 # The requirement set exists from the first moment of a delivery-assurance checkpoint.
 REQUIRED_DELIVERY_FILES = (
@@ -94,7 +101,14 @@ FINAL_REPORT_HEADINGS = (
     "## Evidence",
 )
 
-HANDOFF_READY_STATUSES = ("READY_FOR_REVIEW", "READY_FOR_RED_TEAM", "GATE_PASS", "GATE_FAIL")
+HANDOFF_READY_STATUSES = (
+    "READY_FOR_REVIEW",
+    "READY_FOR_RED_TEAM",
+    "INTERNAL_GATE_PASS",
+    "MILESTONE_EXTERNAL_PASS",
+    "GATE_PASS",
+    "GATE_FAIL",
+)
 
 HEX64 = re.compile(r"^[0-9a-f]{64}$")
 
@@ -549,6 +563,102 @@ def _validate_delivery_assurance(
         errors.append(f"READY_FOR_REVIEW requires redTeam to be PENDING, found {red_team.get('status')!r}")
 
 
+def _validate_memory_policy(
+    root: Path,
+    target: Path,
+    state: dict[str, Any],
+    errors: list[str],
+) -> None:
+    """Engineering memory and milestone validation policy, bound to schemaVersion 3.1.0."""
+    status = state.get("status")
+    offered = status in HANDOFF_READY_STATUSES
+
+    # The memory is a control, so a broken memory is a broken checkpoint.
+    for error in validate_engineering_memory(root):
+        errors.append(f"engineering memory: {error}")
+
+    preflight_state = state.get("lessonPreflight")
+    if not isinstance(preflight_state, dict):
+        errors.append("STATE.json schemaVersion 3.1.0 requires the lessonPreflight block")
+    preflight_path = target / "LESSON-PREFLIGHT.json"
+    preflight: dict[str, Any] | None = None
+    if preflight_path.is_file():
+        try:
+            preflight = load_json(preflight_path)
+        except LedgerError as exc:
+            errors.append(str(exc))
+        schema_path = root / ".iacode" / "schemas" / "lesson-preflight.schema.json"
+        if isinstance(preflight, dict) and schema_path.is_file():
+            for error in validate_schema(preflight, load_json(schema_path)):
+                errors.append(f"LESSON-PREFLIGHT.json: {error}")
+    elif offered:
+        errors.append(f"{status} requires LESSON-PREFLIGHT.json; the lesson preflight is mandatory")
+
+    if isinstance(preflight_state, dict) and isinstance(preflight, dict):
+        for key, source in (("lessonsConsidered", "lessonsConsidered"),
+                            ("lessonsApplicable", "lessonsApplicable")):
+            if preflight_state.get(key) != preflight.get(source):
+                errors.append(
+                    f"STATE.json lessonPreflight.{key}={preflight_state.get(key)!r} does not match "
+                    f"LESSON-PREFLIGHT.json {source}={preflight.get(source)!r}")
+        declared = preflight_state.get("derivedRequirements")
+        actual = len(preflight.get("derivedRequirements") or [])
+        if declared != actual:
+            errors.append(
+                f"STATE.json lessonPreflight.derivedRequirements={declared!r} does not match the "
+                f"{actual} requirements the preflight derived")
+        if preflight_state.get("gate") and normalize_gate(preflight_state["gate"]) != normalize_gate(
+                str(preflight.get("gate"))):
+            errors.append("STATE.json lessonPreflight.gate does not match LESSON-PREFLIGHT.json")
+
+    milestone = state.get("milestone")
+    expected = milestone_for(str(state.get("gate", "")))
+    if not isinstance(milestone, dict):
+        errors.append("STATE.json schemaVersion 3.1.0 requires the milestone block")
+    else:
+        if expected is None:
+            errors.append(f"gate {state.get('gate')!r} does not belong to any planned milestone")
+        else:
+            identifier, _title, gates = expected
+            if milestone.get("id") != identifier:
+                errors.append(
+                    f"STATE.json milestone.id={milestone.get('id')!r} does not match the planned "
+                    f"milestone {identifier} for gate {state.get('gate')!r}")
+            declared_gates = [normalize_gate(item) for item in milestone.get("gates") or []]
+            if declared_gates != [normalize_gate(item) for item in gates]:
+                errors.append(
+                    f"STATE.json milestone.gates does not match the planned grouping "
+                    f"{', '.join(gates)}")
+        if milestone.get("status") == "PASSED" and state.get("secondToolValidation", {}).get("status") != "PASSED":
+            errors.append("a milestone may only be PASSED when secondToolValidation is PASSED")
+
+    required = state.get("externalAuditRequired")
+    reason = state.get("externalAuditReason")
+    if required is None:
+        errors.append("STATE.json schemaVersion 3.1.0 requires externalAuditRequired")
+    if required:
+        if not reason:
+            errors.append(
+                "externalAuditRequired demands externalAuditReason naming the recorded trigger")
+        elif not any(trigger in str(reason) for trigger in EXTERNAL_AUDIT_TRIGGERS):
+            errors.append(
+                "externalAuditReason must name one of the recorded triggers: "
+                + ", ".join(EXTERNAL_AUDIT_TRIGGERS))
+    elif reason:
+        errors.append("externalAuditReason is recorded while externalAuditRequired is false")
+
+    if status == EXTERNAL_PASS_STATUS:
+        if not isinstance(milestone, dict) or milestone.get("status") != "PASSED":
+            errors.append(f"{EXTERNAL_PASS_STATUS} requires milestone.status=PASSED")
+        if state.get("secondToolValidation", {}).get("status") != "PASSED":
+            errors.append(f"{EXTERNAL_PASS_STATUS} requires secondToolValidation=PASSED")
+    if status == "INTERNAL_GATE_PASS" and state.get("secondToolValidation", {}).get("status") == "PASSED":
+        # An internal verdict is not the place to record an external one; use the milestone status.
+        errors.append(
+            "INTERNAL_GATE_PASS records the project's own verdict; an external PASS belongs to "
+            f"{EXTERNAL_PASS_STATUS}")
+
+
 def _validate_second_tool(
     state: dict[str, Any],
     target: Path,
@@ -602,7 +712,7 @@ def _validate_quality_evidence(
     for dimension in quality:
         if dimension not in ("schemaVersion", "checks"):
             errors.append(f"QUALITY.json schemaVersion {version} must not use the flat dimension {dimension}")
-    required = QUALITY_DIMENSIONS_V3 if version == CURRENT_SCHEMA_VERSION else QUALITY_DIMENSIONS
+    required = QUALITY_DIMENSIONS_V3 if version in DELIVERY_SCHEMA_VERSIONS else QUALITY_DIMENSIONS
     for dimension in required:
         entry = normalized.get(dimension)
         if entry is None:
@@ -666,7 +776,7 @@ def validate_checkpoint(
             declared_version = LEGACY_SCHEMA_VERSION
 
     required_files = REQUIRED_CHECKPOINT_FILES
-    if declared_version == CURRENT_SCHEMA_VERSION:
+    if declared_version in DELIVERY_SCHEMA_VERSIONS:
         required_files = REQUIRED_CHECKPOINT_FILES + REQUIRED_DELIVERY_FILES
     for name in required_files:
         path = target / name
@@ -723,13 +833,13 @@ def validate_checkpoint(
                 for error in validate_schema(command, schemas.get("command.schema.json", {})):
                     errors.append(f"COMMANDS.jsonl:{line_number}: {error}")
                 identifier = command.get("id") if isinstance(command, dict) else None
-                if version in (EVIDENCE_SCHEMA_VERSION, CURRENT_SCHEMA_VERSION):
+                if version in (EVIDENCE_SCHEMA_VERSION,) + DELIVERY_SCHEMA_VERSIONS:
                     if not identifier:
                         errors.append(
                             f"COMMANDS.jsonl:{line_number}: schemaVersion {version} requires a command id")
                     elif identifier in command_ids:
                         errors.append(f"COMMANDS.jsonl:{line_number}: duplicate command id {identifier!r}")
-                if version == CURRENT_SCHEMA_VERSION and isinstance(command, dict):
+                if version in DELIVERY_SCHEMA_VERSIONS and isinstance(command, dict):
                     _validate_command_reproducibility(root, command, line_number, errors)
                 if isinstance(identifier, str) and isinstance(command, dict):
                     command_ids[identifier] = command.get("exitCode")
@@ -822,8 +932,10 @@ def validate_checkpoint(
         _validate_second_tool(state, target, version, errors)
         _validate_quality_evidence(target, quality, normalized_quality, command_ids, version, errors)
 
-        if version == CURRENT_SCHEMA_VERSION:
+        if version in DELIVERY_SCHEMA_VERSIONS:
             _validate_delivery_assurance(root, target, state, normalized_quality, tests, errors)
+        if version == CURRENT_SCHEMA_VERSION:
+            _validate_memory_policy(root, target, state, errors)
 
         if version in HASHED_INVENTORY_VERSIONS and files is not None:
             if state.get("baseCommit") == "UNBORN":
@@ -878,9 +990,9 @@ def validate_checkpoint(
     if isinstance(state, dict) and state.get("status") in HANDOFF_READY_STATUSES:
         final_report = target / "FINAL-REPORT.md"
         required_finals: list[Path] = []
-        if version in (EVIDENCE_SCHEMA_VERSION, CURRENT_SCHEMA_VERSION) or state.get("status") == "GATE_PASS":
+        if version in (EVIDENCE_SCHEMA_VERSION,) + DELIVERY_SCHEMA_VERSIONS or state.get("status") == "GATE_PASS":
             required_finals.append(final_report)
-        if version == CURRENT_SCHEMA_VERSION:
+        if version in DELIVERY_SCHEMA_VERSIONS:
             required_finals += [target / name for name in REQUIRED_HANDOFF_FILES if name != "FINAL-REPORT.md"]
         if version == LEGACY_SCHEMA_VERSION and state.get("status") == "GATE_PASS":
             required_finals.append(target / "RESUME-VALIDATION.md")

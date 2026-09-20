@@ -8,6 +8,8 @@ Work is done only when all applicable items are evidenced:
 - automated tests and relevant manual checks ran successfully;
 - build, lint, static analysis, security, and performance checks are recorded truthfully;
 - no correct test or quality control was weakened to obtain PASS;
+- the lesson preflight ran before the Gate and every derived `LESSON-REQ-` requirement is satisfied;
+- every confirmed failure of this Gate became a lesson, and every important lesson became a guardrail;
 - every requirement of the delivery exists in `REQUIREMENTS-MATRIX.json`, and none is `PARTIAL` or `MISSING`;
 - every recorded `PASS` carries a resolvable evidence reference;
 - `GREEN_KEEPER_GATE` is `PASS`, with every rework cycle recorded and no unresolved item;

@@ -14,8 +14,18 @@ from typing import Any
 SCHEMA_VERSION = "1.0.0"
 LEGACY_SCHEMA_VERSION = "1.0.0"
 EVIDENCE_SCHEMA_VERSION = "2.0.0"
-CURRENT_SCHEMA_VERSION = "3.0.0"
-SUPPORTED_SCHEMA_VERSIONS = (LEGACY_SCHEMA_VERSION, EVIDENCE_SCHEMA_VERSION, CURRENT_SCHEMA_VERSION)
+DELIVERY_SCHEMA_VERSION = "3.0.0"
+CURRENT_SCHEMA_VERSION = "3.1.0"
+SUPPORTED_SCHEMA_VERSIONS = (
+    LEGACY_SCHEMA_VERSION,
+    EVIDENCE_SCHEMA_VERSION,
+    DELIVERY_SCHEMA_VERSION,
+    CURRENT_SCHEMA_VERSION,
+)
+
+# Versions that carry the delivery-assurance gates. 3.1.0 adds the engineering memory preflight and
+# the milestone validation policy on top of them.
+DELIVERY_SCHEMA_VERSIONS = (DELIVERY_SCHEMA_VERSION, CURRENT_SCHEMA_VERSION)
 
 QUALITY_DIMENSIONS = (
     "build",
@@ -56,7 +66,13 @@ REQUIREMENT_STATUSES = (
 
 # Statuses that assert the work is ready to leave the implementing run. A non-empty blockedBy is
 # incompatible with every one of them, for every schema version.
-UNBLOCKED_STATUSES = ("READY_FOR_REVIEW", "READY_FOR_RED_TEAM", "GATE_PASS")
+UNBLOCKED_STATUSES = (
+    "READY_FOR_REVIEW",
+    "READY_FOR_RED_TEAM",
+    "INTERNAL_GATE_PASS",
+    "MILESTONE_EXTERNAL_PASS",
+    "GATE_PASS",
+)
 
 INDEPENDENT_VERDICT_STATUSES = ("PENDING", "APPROVED", "REWORK_REQUIRED", "NOT_REQUIRED")
 RED_TEAM_VERDICT_STATUSES = ("PENDING", "RED_TEAM_PASS", "RED_TEAM_FAIL", "NOT_REQUIRED")
@@ -87,9 +103,70 @@ STATUSES = (
     "READY_FOR_REVIEW",
     "REWORK_REQUIRED",
     "READY_FOR_RED_TEAM",
+    "INTERNAL_GATE_PASS",
+    "MILESTONE_EXTERNAL_PASS",
     "GATE_PASS",
     "GATE_FAIL",
 )
+
+# A Gate approved by the project's own controls. It is not, and may not be described as, independent
+# external validation. Only MILESTONE_EXTERNAL_PASS carries that meaning.
+INTERNAL_PASS_STATUS = "INTERNAL_GATE_PASS"
+EXTERNAL_PASS_STATUS = "MILESTONE_EXTERNAL_PASS"
+
+# External independent validation happens per milestone, not per Gate. The auditor evaluates the
+# milestone as a whole, including integration between its Gates.
+MILESTONES = (
+    ("M0", "Development control plane", ("SETUP-00",)),
+    ("M1", "IACode V0 foundation", ("GATE 0", "GATE 1", "GATE 2", "GATE 3")),
+    ("M2", "IACode V0 completion and experience", ("GATE 4", "GATE 5", "GATE 6", "GATE 7")),
+    ("M3", "Code graph, memory and gap detection", ("GATE 8", "GATE 9", "GATE 10", "GATE 11")),
+    ("M4", "Skills and dataset production", ("GATE 12", "GATE 13", "GATE 14", "GATE 15")),
+    ("M5", "Dataset audit and model adaptation", ("GATE 16", "GATE 17", "GATE 18", "GATE 19")),
+    ("M6", "Evaluation, shadow mode and promotion", ("GATE 20", "GATE 21", "GATE 22", "GATE 23")),
+)
+
+MILESTONE_STATUSES = ("PENDING", "PASSED", "FAILED", "NOT_REQUIRED")
+
+# An extraordinary audit before the milestone is allowed only for a recorded reason in this set.
+EXTERNAL_AUDIT_TRIGGERS = (
+    "security-boundary",
+    "sandbox-boundary",
+    "rights-or-provenance-change",
+    "training-data-policy",
+    "training-execution",
+    "promotion-logic",
+    "secret-handling",
+    "destructive-persistence",
+)
+
+
+def normalize_gate(name: str) -> str:
+    return re.sub(r"[^A-Z0-9]", "", str(name).upper())
+
+
+def milestone_for(gate: str) -> tuple[str, str, tuple[str, ...]] | None:
+    """The milestone a Gate belongs to, or None when the Gate is not in the plan."""
+    target = normalize_gate(gate)
+    for identifier, title, gates in MILESTONES:
+        if target in {normalize_gate(item) for item in gates}:
+            return identifier, title, gates
+    return None
+
+
+def requires_external_validation(gate: str, external_audit_required: bool = False) -> bool:
+    """External independent validation is due at the end of a milestone, not after every Gate.
+
+    An intermediate Gate closes on the project's own controls. An extraordinary audit may still be
+    requested earlier, but only through a recorded reason, which is what ``external_audit_required``
+    represents. A Gate outside the plan is treated conservatively as requiring validation.
+    """
+    if external_audit_required:
+        return True
+    planned = milestone_for(gate)
+    if planned is None:
+        return True
+    return normalize_gate(gate) == normalize_gate(planned[2][-1])
 
 REQUIRED_CHECKPOINT_FILES = (
     "STATUS.md",

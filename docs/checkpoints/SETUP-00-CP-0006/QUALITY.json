@@ -1,0 +1,90 @@
+{
+  "schemaVersion": "3.1.0",
+  "checks": {
+    "build": {
+      "status": "NOT_APPLICABLE",
+      "evidence": [],
+      "justification": "SETUP-00 has no build target; the ledger tooling is standard-library Python executed directly."
+    },
+    "unitTests": {
+      "status": "PASS",
+      "evidence": [
+        "command:cmd-0006",
+        "file:TESTS.json"
+      ],
+      "justification": null
+    },
+    "integrationTests": {
+      "status": "PASS",
+      "evidence": [
+        "command:cmd-0006",
+        "file:TESTS.json"
+      ],
+      "justification": null
+    },
+    "e2e": {
+      "status": "NOT_APPLICABLE",
+      "evidence": [],
+      "justification": "No runtime exists to exercise end to end during SETUP-00."
+    },
+    "lint": {
+      "status": "NOT_APPLICABLE",
+      "evidence": [],
+      "justification": "No linter is vendored; static analysis is covered by compileall."
+    },
+    "staticAnalysis": {
+      "status": "PASS",
+      "evidence": [
+        "command:cmd-0007"
+      ],
+      "justification": null
+    },
+    "security": {
+      "status": "PASS",
+      "evidence": [
+        "command:cmd-0009",
+        "command:cmd-0008"
+      ],
+      "justification": null
+    },
+    "documentation": {
+      "status": "PASS",
+      "evidence": [
+        "command:cmd-0006",
+        "file:DIFF-SUMMARY.md"
+      ],
+      "justification": null
+    },
+    "checkpointValidation": {
+      "status": "PASS",
+      "evidence": [
+        "command:cmd-0009"
+      ],
+      "justification": null
+    },
+    "redTeam": {
+      "status": "NOT_EXECUTED",
+      "evidence": [],
+      "justification": "The independent Red Team belongs to the Codex M0 milestone audit and has not run. This delivery recorded no adversarial verdict of its own."
+    },
+    "greenKeeper": {
+      "status": "PASS",
+      "evidence": [
+        "file:REWORK-LOG.jsonl",
+        "command:cmd-0006",
+        "command:cmd-0008",
+        "command:cmd-0009"
+      ],
+      "justification": null
+    },
+    "deliveryCompleteness": {
+      "status": "PASS",
+      "evidence": [
+        "file:COMPLETENESS-REPORT.json",
+        "file:REQUIREMENTS-MATRIX.json",
+        "file:LESSON-PREFLIGHT.json"
+      ],
+      "justification": null
+    }
+  }
+}

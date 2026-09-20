@@ -12,6 +12,7 @@ from pathlib import Path
 from ledger_common import (
     CURRENT_SCHEMA_VERSION,
     QUALITY_DIMENSIONS_V3,
+    milestone_for,
     STATUSES,
     find_root,
     git_snapshot,
@@ -45,6 +46,7 @@ def main() -> int:
     checkpoint.mkdir(parents=True, exist_ok=False)
     now = utc_now()
     phase = args.phase or args.gate
+    planned = milestone_for(args.gate)
 
     markdown = {
         "STATUS.md": f"# Status\n\n{args.status}\n",
@@ -117,6 +119,19 @@ def main() -> int:
                               "justification": None, "evidence": []},
         "redTeam": {"status": "PENDING", "tool": None, "executedAt": None,
                     "justification": None, "evidence": []},
+        "lessonPreflight": {
+            "path": "LESSON-PREFLIGHT.json", "gate": args.gate, "scope": None,
+            "lessonsConsidered": 0, "lessonsApplicable": 0, "derivedRequirements": 0,
+            "evidence": [],
+        },
+        "milestone": {
+            "id": planned[0] if planned else "M0",
+            "title": planned[1] if planned else None,
+            "gates": list(planned[2]) if planned else [args.gate],
+            "status": "PENDING", "auditor": None, "auditedAt": None, "evidence": [],
+        },
+        "externalAuditRequired": False,
+        "externalAuditReason": None,
     })
     write_json(checkpoint / "RUN-METADATA.json", {
         "tool": "not-recorded",

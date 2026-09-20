@@ -45,13 +45,17 @@ GATES: dict[str, tuple[list[str], str]] = {
         ["python", "-m", "compileall", "-q", "scripts", "tests"],
         "Green Keeper gate: static analysis of the ledger tooling and the suite.",
     ),
+    "lessons": (
+        ["python", "scripts/development-ledger/validate_lessons.py"],
+        "Green Keeper gate: the engineering memory must stay valid, with every GUARDED lesson backed by a control.",
+    ),
     "checkpointValidation": (
         ["python", "scripts/development-ledger/validate_checkpoint.py"],
         "Green Keeper gate: checkpoint validation, which also runs the repository secret scan.",
     ),
 }
 
-DEFAULT_GATES = ("tests", "staticAnalysis", "checkpointValidation")
+DEFAULT_GATES = ("tests", "staticAnalysis", "lessons", "checkpointValidation")
 
 
 def _refresh_declared_hashes(root: Path, checkpoint: Path) -> None:

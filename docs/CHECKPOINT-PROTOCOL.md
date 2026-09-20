@@ -4,7 +4,7 @@ A checkpoint is a reconstructible snapshot of observable engineering state.
 
 ## Canonical statuses
 
-`NOT_STARTED`, `BASELINING`, `IN_PROGRESS`, `BLOCKED`, `READY_FOR_REVIEW`, `REWORK_REQUIRED`, `READY_FOR_RED_TEAM`, `GATE_PASS`, `GATE_FAIL`.
+`NOT_STARTED`, `BASELINING`, `IN_PROGRESS`, `BLOCKED`, `READY_FOR_REVIEW`, `REWORK_REQUIRED`, `READY_FOR_RED_TEAM`, `INTERNAL_GATE_PASS`, `MILESTONE_EXTERNAL_PASS`, `GATE_PASS`, `GATE_FAIL`.
 
 ## Required events
 
@@ -20,14 +20,16 @@ Each checkpoint contains status, handoff, run metadata, state, plan, decisions, 
 format used by the first sealed SETUP-00 checkpoints. Version `2.0.0` adds the structured cross-tool
 validation state, evidence-referenced quality results, command identifiers, and the bound file
 inventory described below. Version `3.0.0` adds the delivery-assurance blocks, the reproducible
-command record, and the delivery gates. Validation applies the rules of the version a checkpoint
-declares, so a sealed checkpoint never becomes invalid because the tooling advanced. New checkpoints
-use `3.0.0`.
+command record, and the delivery gates. Version `3.1.0` adds the engineering memory preflight and
+the milestone validation policy. Validation applies the rules of the version a checkpoint declares,
+so a sealed checkpoint never becomes invalid because the tooling advanced. New checkpoints use
+`3.1.0`.
 
 ## Status and blockers
 
 A checkpoint may never claim readiness and blockage at the same time. `READY_FOR_REVIEW`,
-`READY_FOR_RED_TEAM`, and `GATE_PASS` require `blockedBy` to be empty, in every schema version and
+`READY_FOR_RED_TEAM`, `INTERNAL_GATE_PASS`, `MILESTONE_EXTERNAL_PASS`, and `GATE_PASS` require
+`blockedBy` to be empty, in every schema version and
 whichever tool sealed the checkpoint. `BLOCKED` requires at least one entry in `blockedBy`, because a
 blocked checkpoint must say what blocks it.
 
@@ -101,3 +103,18 @@ a later, independent run, and for `schemaVersion` `2.0.0` the validator refuses 
 ## Divergence
 
 If Git state differs unexpectedly from the checkpoint, do not continue. Create `DIVERGENCE.md` with expected, observed, difference, and possible cause; set status `BLOCKED`; wait for reconciliation.
+
+## Engineering memory and milestone policy
+
+`schemaVersion` `3.1.0` adds the engineering memory preflight and the milestone validation policy on
+top of `3.0.0`. A `3.1.0` checkpoint carries `lessonPreflight`, `milestone`, `externalAuditRequired`
+and `externalAuditReason` in `STATE.json`, and a checkpoint offered for review additionally carries
+`LESSON-PREFLIGHT.json`.
+
+Validation checks that the recorded preflight counts match the artifact, that the milestone
+identifier and gate grouping match the published plan, that an extraordinary audit names a recorded
+trigger, and that the engineering memory itself is valid. `INTERNAL_GATE_PASS` records the project's
+own verdict; only `MILESTONE_EXTERNAL_PASS` records an independent one, and it requires both the
+milestone and the cross-tool validation to be `PASSED`.
+
+Every completed Gate also produces a retrospective in `.iacode/memory/retrospectives/`.

@@ -55,3 +55,18 @@ A Gate can be `GATE_PASS` only when:
 
 Any unmet mandatory criterion produces `GATE_FAIL`, `REWORK_REQUIRED`, or `BLOCKED`, as appropriate.
 
+
+## Lesson-derived requirements
+
+Before a Gate starts, the lesson preflight selects the applicable entries of the engineering memory
+and derives a `LESSON-REQ-` requirement from each one. Those requirements are part of the Gate's
+matrix, and the Delivery Completeness Validator fails the delivery when one is absent or unevidenced.
+Lesson validation is part of the Green Keeper gate set, so a broken memory is a red delivery.
+
+## Internal and external verdicts
+
+`INTERNAL_GATE_PASS` records that a Gate satisfied the project's own controls.
+`MILESTONE_EXTERNAL_PASS` records that an independent tool audited the whole milestone and approved
+it. The two are different statuses and the first is never described as the second. Validation refuses
+`MILESTONE_EXTERNAL_PASS` unless the milestone and the cross-tool validation are both `PASSED`, and
+refuses an `INTERNAL_GATE_PASS` that carries an external verdict.

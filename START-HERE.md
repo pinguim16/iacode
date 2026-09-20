@@ -29,3 +29,15 @@ skipped, and nothing red or incomplete is handed to the independent tool.
 See the [Master Plan](docs/MASTER-PLAN.md), the [Quality Gates](docs/QUALITY-GATES.md), and the
 [Handoff Protocol](docs/HANDOFF-PROTOCOL.md).
 
+
+## Engineering memory and validation cadence
+
+Before a Gate starts, run the mandatory lesson preflight; every applicable lesson in
+[.iacode/memory/](.iacode/memory/README.md) becomes a requirement of that Gate. Confirmed failures
+become lessons, and important lessons become automated guardrails rather than prose. See
+[docs/ENGINEERING-MEMORY.md](docs/ENGINEERING-MEMORY.md).
+
+An intermediate Gate closes at `INTERNAL_GATE_PASS` on the project's own controls. Independent
+external validation happens once per milestone and produces `MILESTONE_EXTERNAL_PASS`; an internal
+verdict is never described as an external one. See
+[docs/MILESTONE-VALIDATION.md](docs/MILESTONE-VALIDATION.md).

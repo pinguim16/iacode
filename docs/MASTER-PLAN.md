@@ -1,6 +1,26 @@
 # IACode Master Plan
 
-Each Gate requires its named previous Gate to be `GATE_PASS`. Acceptance requires implementation evidence, applicable quality checks, independent review, Red Team, and a valid checkpoint. A Gate fails when any listed fail condition or the global Development Contract is violated.
+Each Gate requires its named previous Gate to have passed. Acceptance requires implementation evidence, applicable quality checks, the delivery-assurance gates, and a valid checkpoint. A Gate fails when any listed fail condition or the global Development Contract is violated.
+
+## Validation cadence
+
+An intermediate Gate closes at `INTERNAL_GATE_PASS` on the project's own controls: the lesson
+preflight, the requirements matrix, the Green Keeper, and the Delivery Completeness Validator.
+Independent external validation happens once per milestone and produces `MILESTONE_EXTERNAL_PASS`.
+
+| Milestone | Scope | Gates |
+|---|---|---|
+| `M0` | Development control plane | `SETUP-00` |
+| `M1` | IACode V0 foundation | `GATE 0` – `GATE 3` |
+| `M2` | IACode V0 completion and experience | `GATE 4` – `GATE 7` |
+| `M3` | Code graph, memory and gap detection | `GATE 8` – `GATE 11` |
+| `M4` | Skills and dataset production | `GATE 12` – `GATE 15` |
+| `M5` | Dataset audit and model adaptation | `GATE 16` – `GATE 19` |
+| `M6` | Evaluation, shadow mode and promotion | `GATE 20` – `GATE 23` |
+
+The auditor evaluates the milestone as a whole, including integration between its Gates, not only the
+last Gate. The full policy, including the extraordinary-audit triggers, is in
+[MILESTONE-VALIDATION.md](MILESTONE-VALIDATION.md).
 
 ## SETUP-00 — Development Control Plane
 

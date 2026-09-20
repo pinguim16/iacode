@@ -89,6 +89,21 @@ observable. An unexecuted check is `NOT_EXECUTED`, never `PASS`.
 | 7b.7 | Every recorded command is reproducible from its declared working directory. | `scripts/development-ledger/record_command.py`, `.iacode/schemas/command.schema.json` | `CommandReproducibilityTests`. |
 | 7b.8 | The mandatory eleven-step delivery order is stated in every governing document and both adapters. | `docs/DEVELOPMENT-CONTRACT.md`, `docs/QUALITY-GATES.md`, `docs/CHECKPOINT-PROTOCOL.md`, `docs/HANDOFF-PROTOCOL.md`, `docs/DEFINITION-OF-DONE.md`, `START-HERE.md`, `AGENTS.md`, `CLAUDE.md` | Documents present and consistent. |
 
+## 7c. Engineering memory and milestone validation
+
+| # | Requirement | Artifact | Evidence |
+|---|---|---|---|
+| 7c.1 | The project keeps an organizational engineering memory of confirmed failures. | `.iacode/memory/`, `.iacode/schemas/lesson.schema.json` | `EngineeringMemoryStructureTests`. |
+| 7c.2 | A lesson is `GUARDED` only when an automated control prevents recurrence. | `scripts/development-ledger/validate_lessons.py` | `LessonValidationTests`. |
+| 7c.3 | A repeat increments recurrence, and a repeat against a guardrail is a `GUARDRAIL_FAILURE`. | `scripts/development-ledger/lessons.py` | `LessonRecurrenceTests`. |
+| 7c.4 | A mandatory preflight selects the lessons that constrain each Gate. | `scripts/development-ledger/lesson_preflight.py`, `LESSON-PREFLIGHT.json` | `LessonPreflightTests`. |
+| 7c.5 | Applicable lessons become requirements whose absence blocks completeness. | `REQUIREMENTS-MATRIX.json`, `check_completeness.py` | `DerivedRequirementCompletenessTests`. |
+| 7c.6 | Lesson candidates can be extracted from recorded delivery evidence, never above `OBSERVED`. | `scripts/development-ledger/extract_lessons.py` | Candidates recorded in this checkpoint's evidence. |
+| 7c.7 | External validation is grouped into milestones `M0` to `M6`. | `docs/MILESTONE-VALIDATION.md`, `ledger_common.MILESTONES` | `MilestoneValidationPolicyTests`. |
+| 7c.8 | An internal verdict is never described as independent external validation. | `INTERNAL_GATE_PASS`, `MILESTONE_EXTERNAL_PASS` | `MemoryStatusVocabularyTests`, `MemoryPolicyValidationTests`. |
+| 7c.9 | An extraordinary audit requires a recorded trigger. | `externalAuditRequired`, `externalAuditReason` | `MemoryPolicyValidationTests`. |
+| 7c.10 | Every completed Gate produces a retrospective. | `.iacode/templates/retrospective/TEMPLATE.md`, `.iacode/memory/retrospectives/` | Retrospective present for this Gate. |
+
 ## 8. Independent verification
 
 | # | Requirement | Artifact | Evidence |

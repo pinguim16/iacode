@@ -47,3 +47,12 @@ The implementing run closes at `READY_FOR_REVIEW` and records `secondToolValidat
 `PENDING_MANUAL`. The independent run performs the review and Red Team, sets that record to `PASSED`
 or `FAILED` with tool, provider, and timestamp, and only then may a checkpoint reach `GATE_PASS`.
 
+
+## Milestone handoff
+
+An intermediate Gate hands off internally and closes at `INTERNAL_GATE_PASS`. The Gate that closes a
+milestone produces a milestone checkpoint consolidating the whole group: the Gates included, the
+lessons produced, open risks, architecture changes, all tests, the regression position, cross-Gate
+integration, requirements completeness, outstanding debt, provenance, and cost and model usage. That
+checkpoint is what the external auditor receives, and it is the only handoff that asks for an
+independent verdict. See [MILESTONE-VALIDATION.md](MILESTONE-VALIDATION.md).

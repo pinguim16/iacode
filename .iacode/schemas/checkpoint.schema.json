@@ -3,109 +3,506 @@
   "$id": "https://iacode.local/schemas/checkpoint.schema.json",
   "title": "IACode checkpoint state",
   "type": "object",
-  "required": ["schemaVersion", "phase", "gate", "status", "branch", "baseCommit", "currentCommit", "dirty", "startedAt", "updatedAt", "nextAllowedAction", "blockedBy"],
+  "required": [
+    "schemaVersion",
+    "phase",
+    "gate",
+    "status",
+    "branch",
+    "baseCommit",
+    "currentCommit",
+    "dirty",
+    "startedAt",
+    "updatedAt",
+    "nextAllowedAction",
+    "blockedBy"
+  ],
   "$defs": {
     "secondToolValidation": {
       "type": "object",
-      "required": ["status"],
+      "required": [
+        "status"
+      ],
       "properties": {
-        "status": {"enum": ["PENDING_MANUAL", "PASSED", "FAILED", "NOT_REQUIRED"]},
-        "tool": {"type": ["string", "null"]},
-        "provider": {"type": ["string", "null"]},
-        "model": {"type": ["string", "null"]},
-        "validatedAt": {"type": ["string", "null"]},
-        "justification": {"type": ["string", "null"]},
-        "evidence": {"type": "array", "items": {"type": "string"}}
+        "status": {
+          "enum": [
+            "PENDING_MANUAL",
+            "PASSED",
+            "FAILED",
+            "NOT_REQUIRED"
+          ]
+        },
+        "tool": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "provider": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "model": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "validatedAt": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "justification": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
       },
       "additionalProperties": false
     },
     "requirementsMatrix": {
       "type": "object",
-      "required": ["path", "total", "complete", "partial", "missing", "notApplicable", "coveragePercent"],
+      "required": [
+        "path",
+        "total",
+        "complete",
+        "partial",
+        "missing",
+        "notApplicable",
+        "coveragePercent"
+      ],
       "properties": {
-        "path": {"type": "string", "minLength": 1},
-        "total": {"type": "integer", "minimum": 0},
-        "mandatory": {"type": "integer", "minimum": 0},
-        "complete": {"type": "integer", "minimum": 0},
-        "partial": {"type": "integer", "minimum": 0},
-        "missing": {"type": "integer", "minimum": 0},
-        "notApplicable": {"type": "integer", "minimum": 0},
-        "coveragePercent": {"type": "number", "minimum": 0}
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "total": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "mandatory": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "complete": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "partial": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "missing": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "notApplicable": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "coveragePercent": {
+          "type": "number",
+          "minimum": 0
+        }
       },
       "additionalProperties": false
     },
     "greenKeeper": {
       "type": "object",
-      "required": ["status", "cycles", "remainingFailures", "unresolvedReworkItems"],
+      "required": [
+        "status",
+        "cycles",
+        "remainingFailures",
+        "unresolvedReworkItems"
+      ],
       "properties": {
-        "status": {"enum": ["PASS", "FAIL", "NOT_EXECUTED"]},
-        "cycles": {"type": "integer", "minimum": 0},
-        "remainingFailures": {"type": "integer", "minimum": 0},
-        "unresolvedReworkItems": {"type": "integer", "minimum": 0},
-        "log": {"type": ["string", "null"]},
-        "externalBlockers": {"type": "array", "items": {"type": "string", "minLength": 1}},
-        "evidence": {"type": "array", "items": {"type": "string", "minLength": 1}}
+        "status": {
+          "enum": [
+            "PASS",
+            "FAIL",
+            "NOT_EXECUTED"
+          ]
+        },
+        "cycles": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "remainingFailures": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "unresolvedReworkItems": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "log": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "externalBlockers": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
       },
       "additionalProperties": false
     },
     "deliveryCompleteness": {
       "type": "object",
-      "required": ["status", "coveragePercent"],
+      "required": [
+        "status",
+        "coveragePercent"
+      ],
       "properties": {
-        "status": {"enum": ["PASS", "FAIL", "NOT_EXECUTED"]},
-        "report": {"type": ["string", "null"]},
-        "coveragePercent": {"type": "number", "minimum": 0},
-        "evidenceCoveragePercent": {"type": "number", "minimum": 0},
-        "auditor": {"type": ["string", "null"]},
-        "evidence": {"type": "array", "items": {"type": "string", "minLength": 1}}
+        "status": {
+          "enum": [
+            "PASS",
+            "FAIL",
+            "NOT_EXECUTED"
+          ]
+        },
+        "report": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "coveragePercent": {
+          "type": "number",
+          "minimum": 0
+        },
+        "evidenceCoveragePercent": {
+          "type": "number",
+          "minimum": 0
+        },
+        "auditor": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
       },
       "additionalProperties": false
     },
     "independentReview": {
       "type": "object",
-      "required": ["status"],
+      "required": [
+        "status"
+      ],
       "properties": {
-        "status": {"enum": ["PENDING", "APPROVED", "REWORK_REQUIRED", "NOT_REQUIRED"]},
-        "tool": {"type": ["string", "null"]},
-        "reviewedAt": {"type": ["string", "null"]},
-        "justification": {"type": ["string", "null"]},
-        "evidence": {"type": "array", "items": {"type": "string", "minLength": 1}}
+        "status": {
+          "enum": [
+            "PENDING",
+            "APPROVED",
+            "REWORK_REQUIRED",
+            "NOT_REQUIRED"
+          ]
+        },
+        "tool": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "reviewedAt": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "justification": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
       },
       "additionalProperties": false
     },
     "redTeam": {
       "type": "object",
-      "required": ["status"],
+      "required": [
+        "status"
+      ],
       "properties": {
-        "status": {"enum": ["PENDING", "RED_TEAM_PASS", "RED_TEAM_FAIL", "NOT_REQUIRED"]},
-        "tool": {"type": ["string", "null"]},
-        "executedAt": {"type": ["string", "null"]},
-        "justification": {"type": ["string", "null"]},
-        "evidence": {"type": "array", "items": {"type": "string", "minLength": 1}}
+        "status": {
+          "enum": [
+            "PENDING",
+            "RED_TEAM_PASS",
+            "RED_TEAM_FAIL",
+            "NOT_REQUIRED"
+          ]
+        },
+        "tool": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "executedAt": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "justification": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "milestone": {
+      "type": "object",
+      "required": [
+        "id",
+        "gates",
+        "status"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^M[0-9]+$"
+        },
+        "title": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "gates": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "status": {
+          "enum": [
+            "PENDING",
+            "PASSED",
+            "FAILED",
+            "NOT_REQUIRED"
+          ]
+        },
+        "auditor": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "auditedAt": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "lessonPreflight": {
+      "type": "object",
+      "required": [
+        "path",
+        "lessonsConsidered",
+        "lessonsApplicable",
+        "derivedRequirements"
+      ],
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "gate": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "scope": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "lessonsConsidered": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "lessonsApplicable": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "derivedRequirements": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
       },
       "additionalProperties": false
     }
   },
   "properties": {
-    "schemaVersion": {"enum": ["1.0.0", "2.0.0", "3.0.0"]},
-    "phase": {"type": "string", "minLength": 1},
-    "gate": {"type": "string", "minLength": 1},
-    "status": {"enum": ["NOT_STARTED", "BASELINING", "IN_PROGRESS", "BLOCKED", "READY_FOR_REVIEW", "REWORK_REQUIRED", "READY_FOR_RED_TEAM", "GATE_PASS", "GATE_FAIL"]},
-    "branch": {"type": "string", "minLength": 1},
-    "baseCommit": {"type": "string", "pattern": "^(UNBORN|HEAD|refs/tags/iacode-checkpoints/[A-Za-z0-9._/-]+|[0-9a-f]{40})$"},
-    "currentCommit": {"type": "string", "pattern": "^(UNBORN|HEAD|refs/tags/iacode-checkpoints/[A-Za-z0-9._/-]+|[0-9a-f]{40})$"},
-    "dirty": {"type": "boolean"},
-    "startedAt": {"type": "string", "format": "date-time"},
-    "updatedAt": {"type": "string", "format": "date-time"},
-    "nextAllowedAction": {"type": "string", "minLength": 1},
-    "blockedBy": {"type": "array", "items": {"type": "string"}},
-    "secondToolValidation": {"$ref": "#/$defs/secondToolValidation"},
-    "requirementsMatrix": {"$ref": "#/$defs/requirementsMatrix"},
-    "greenKeeper": {"$ref": "#/$defs/greenKeeper"},
-    "deliveryCompleteness": {"$ref": "#/$defs/deliveryCompleteness"},
-    "reworkCycles": {"type": "integer", "minimum": 0},
-    "independentReview": {"$ref": "#/$defs/independentReview"},
-    "redTeam": {"$ref": "#/$defs/redTeam"}
+    "schemaVersion": {
+      "enum": [
+        "1.0.0",
+        "2.0.0",
+        "3.0.0",
+        "3.1.0"
+      ]
+    },
+    "phase": {
+      "type": "string",
+      "minLength": 1
+    },
+    "gate": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "enum": [
+        "NOT_STARTED",
+        "BASELINING",
+        "IN_PROGRESS",
+        "BLOCKED",
+        "READY_FOR_REVIEW",
+        "REWORK_REQUIRED",
+        "READY_FOR_RED_TEAM",
+        "INTERNAL_GATE_PASS",
+        "MILESTONE_EXTERNAL_PASS",
+        "GATE_PASS",
+        "GATE_FAIL"
+      ]
+    },
+    "branch": {
+      "type": "string",
+      "minLength": 1
+    },
+    "baseCommit": {
+      "type": "string",
+      "pattern": "^(UNBORN|HEAD|refs/tags/iacode-checkpoints/[A-Za-z0-9._/-]+|[0-9a-f]{40})$"
+    },
+    "currentCommit": {
+      "type": "string",
+      "pattern": "^(UNBORN|HEAD|refs/tags/iacode-checkpoints/[A-Za-z0-9._/-]+|[0-9a-f]{40})$"
+    },
+    "dirty": {
+      "type": "boolean"
+    },
+    "startedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updatedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "nextAllowedAction": {
+      "type": "string",
+      "minLength": 1
+    },
+    "blockedBy": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "secondToolValidation": {
+      "$ref": "#/$defs/secondToolValidation"
+    },
+    "requirementsMatrix": {
+      "$ref": "#/$defs/requirementsMatrix"
+    },
+    "greenKeeper": {
+      "$ref": "#/$defs/greenKeeper"
+    },
+    "deliveryCompleteness": {
+      "$ref": "#/$defs/deliveryCompleteness"
+    },
+    "reworkCycles": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "independentReview": {
+      "$ref": "#/$defs/independentReview"
+    },
+    "redTeam": {
+      "$ref": "#/$defs/redTeam"
+    },
+    "milestone": {
+      "$ref": "#/$defs/milestone"
+    },
+    "lessonPreflight": {
+      "$ref": "#/$defs/lessonPreflight"
+    },
+    "externalAuditRequired": {
+      "type": "boolean"
+    },
+    "externalAuditReason": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
   },
   "additionalProperties": false
 }
