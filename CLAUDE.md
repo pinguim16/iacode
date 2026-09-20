@@ -23,6 +23,8 @@ This file is a Claude Code adapter for the same canonical contracts used by Code
 - Default `trainingAllowed` to `false` without explicit rights evidence.
 - Do not force push, hard reset, destructively clean, or rewrite history without explicit authorization and a preceding checkpoint.
 - Do not mix or advance Gates without authorization.
+- Close an implementing run at `READY_FOR_REVIEW`; never grant `GATE_PASS` to your own work. An independent run records `secondToolValidation` and decides the Gate.
+- Declare every changed path in `FILES.json` before finalizing; the tooling binds the hashes but never invents a declaration.
 
 ## Before ending work
 

@@ -24,6 +24,8 @@ This file is a Codex adapter for the canonical contracts in `.iacode/`. Reposito
 - `trainingAllowed` is `false` unless explicit rights evidence proves otherwise.
 - Do not use force push, hard reset, destructive clean, or history rewriting without explicit authorization and a preceding checkpoint.
 - Never mix Gates in one commit and never advance a Gate without explicit authorization.
+- Close an implementing run at `READY_FOR_REVIEW`; `GATE_PASS` is granted only by a later run independent of the one that implemented the Gate, which records `secondToolValidation` in `STATE.json`.
+- Declare every changed path in `FILES.json` before finalizing; `finalize_checkpoint.py` binds the hashes but never invents a declaration.
 
 ## Before ending work
 

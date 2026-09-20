@@ -4,8 +4,24 @@
   "title": "IACode checkpoint state",
   "type": "object",
   "required": ["schemaVersion", "phase", "gate", "status", "branch", "baseCommit", "currentCommit", "dirty", "startedAt", "updatedAt", "nextAllowedAction", "blockedBy"],
+  "$defs": {
+    "secondToolValidation": {
+      "type": "object",
+      "required": ["status"],
+      "properties": {
+        "status": {"enum": ["PENDING_MANUAL", "PASSED", "FAILED", "NOT_REQUIRED"]},
+        "tool": {"type": ["string", "null"]},
+        "provider": {"type": ["string", "null"]},
+        "model": {"type": ["string", "null"]},
+        "validatedAt": {"type": ["string", "null"]},
+        "justification": {"type": ["string", "null"]},
+        "evidence": {"type": "array", "items": {"type": "string"}}
+      },
+      "additionalProperties": false
+    }
+  },
   "properties": {
-    "schemaVersion": {"type": "string", "const": "1.0.0"},
+    "schemaVersion": {"enum": ["1.0.0", "2.0.0"]},
     "phase": {"type": "string", "minLength": 1},
     "gate": {"type": "string", "minLength": 1},
     "status": {"enum": ["NOT_STARTED", "BASELINING", "IN_PROGRESS", "BLOCKED", "READY_FOR_REVIEW", "REWORK_REQUIRED", "READY_FOR_RED_TEAM", "GATE_PASS", "GATE_FAIL"]},
@@ -16,7 +32,8 @@
     "startedAt": {"type": "string", "format": "date-time"},
     "updatedAt": {"type": "string", "format": "date-time"},
     "nextAllowedAction": {"type": "string", "minLength": 1},
-    "blockedBy": {"type": "array", "items": {"type": "string"}}
+    "blockedBy": {"type": "array", "items": {"type": "string"}},
+    "secondToolValidation": {"$ref": "#/$defs/secondToolValidation"}
   },
   "additionalProperties": false
 }

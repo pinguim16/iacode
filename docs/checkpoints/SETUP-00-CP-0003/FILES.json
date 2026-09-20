@@ -1,0 +1,259 @@
+{
+  "filesRead": [
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0002",
+      "reason": "Sealed base checkpoint inspected without modification."
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0001",
+      "reason": "Sealed baseline checkpoint inspected without modification."
+    },
+    {
+      "path": "prompts/RESUME-WORK.md",
+      "reason": "Continuation protocol executed before any change."
+    },
+    {
+      "path": "prompts/REVIEW-GATE.md",
+      "reason": "Review contract used for the preceding independent review."
+    },
+    {
+      "path": "prompts/RED-TEAM-GATE.md",
+      "reason": "Red Team contract used for the preceding adversarial pass."
+    }
+  ],
+  "filesCreated": [
+    {
+      "path": "docs/SETUP-00-CHECKLIST.md",
+      "reason": "R5: the in-repository SETUP-00 specification that replaces the external prompt.",
+      "hashAfter": "18e51253f324776229eb4a8d033e0d13e086159105cf0b2e9134d76f9e6d0d46"
+    },
+    {
+      "path": "docs/adr/ADR-0006-checkpoint-inventory-binding.md",
+      "reason": "Records the inventory binding decision and its single self-referential exclusion.",
+      "hashAfter": "6489424dd0075e0aaeb42ac2f66ac293c603df85bcc7a87d581ee6c0bc0f87db"
+    },
+    {
+      "path": "docs/adr/ADR-0007-checkpoint-schema-2-and-independent-promotion.md",
+      "reason": "Records schema 2.0.0, structured cross-tool validation, and independent promotion.",
+      "hashAfter": "810f4a33ec80943399680a1fb37220ed79f5ecd9a18ea5fed00dcaec816dc253"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0003/COMMANDS.jsonl",
+      "reason": "Sanitized command ledger, including both failed and successful finalizations.",
+      "hashAfter": "06aca2ea7f35c82eadeb21e4ef97dfc19d93b3d373d201581a8c8d62e3b9b2d7"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0003/DECISIONS.md",
+      "reason": "Decisions and their rationale.",
+      "hashAfter": "aaf1ea4083da22fa416863f39a3c192f93b09b00bdb55063329341b032a868bb"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0003/DIFF-SUMMARY.md",
+      "reason": "Summary of the change set.",
+      "hashAfter": "d36bfdce8c492764b7b728f9a1fb60aff4037a6607b1b50c4d64e4b43dcd33bf"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0003/FILES.json",
+      "reason": "File inventory for this checkpoint."
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0003/FINAL-REPORT.md",
+      "reason": "Outcome report for this corrective run.",
+      "hashAfter": "f3b558786fd285d2517b37b69f7d04292eab725ff3dd7659cd708af42aa13301"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0003/HANDOFF.md",
+      "reason": "Executable handoff to the independent Codex run.",
+      "hashAfter": "8c56a43a339d77a4398f4f9a61fb7edb9d6f0a1bd2eb144cc105fcf1932dc78c"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0003/NEXT.md",
+      "reason": "Next allowed action.",
+      "hashAfter": "3b331ad077a6db5da3dcc7a65880cf5b2d8e4bb87b3c6d2cf90a3294a7e05179"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0003/PLAN.md",
+      "reason": "Execution plan recorded before implementation.",
+      "hashAfter": "83f4fbb2eebe8dac679f6ca4ab1b4f976b380fca8ccbe2a125168c976e283e43"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0003/PROVENANCE.json",
+      "reason": "Provenance and rights classification.",
+      "hashAfter": "0d48af3234b6b789a405184e10193d71cd35c2bd5cc59615602880df8bb15441"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0003/QUALITY.json",
+      "reason": "Quality dimensions with evidence references.",
+      "hashAfter": "df680c324c2379528a78baebbca0d764ef8b1dd1ff9ca3baf631f98fcb629347"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0003/RED-TEAM-DEV-REPORT.md",
+      "reason": "Non-independent development Red Team battery and results.",
+      "hashAfter": "d56df9346da1a25a01408b83689d63361bb6de2ff8ae2495ffd9528c37af2bfa"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0003/RESUME-VALIDATION.md",
+      "reason": "Cold-start and cross-tool validation record.",
+      "hashAfter": "06de9fae88be2657249c67049b6fb5aeee358ad331af9a613d1238fc005fbd83"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0003/RISKS.md",
+      "reason": "Residual risks.",
+      "hashAfter": "54a1bd0d442d1491aa2adf0e58970e9295e6499b10c014d9e146fff5386d2018"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0003/RUN-METADATA.json",
+      "reason": "Tool, provider, model, effort, and Git metadata for this run.",
+      "hashAfter": "0321b88394346df06a8712af2d03365ecdc2ba9e9ebb515c30f37a3235e0de8d"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0003/SELF-REVIEW.md",
+      "reason": "Non-independent implementer review.",
+      "hashAfter": "971a75a4d204caba345a902c6cc4a01e0b7c0b488db23a6176dbbcd8722deb57"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0003/STATE.json",
+      "reason": "Checkpoint state, including the structured cross-tool validation record.",
+      "hashAfter": "b1a686100cd56accc3c84db22f9abfb5ff9a21bdc30c4b5d4581da2a1943643b"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0003/STATUS.md",
+      "reason": "Checkpoint status.",
+      "hashAfter": "59e6444d1015b76b59cb6aa1143753675cf48a96814b94857478e8c5ce4c83e4"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0003/TESTS.json",
+      "reason": "Test execution evidence.",
+      "hashAfter": "be01b4dbe03489cdb9c5cf089817472af1c231bbbed0ce0c96e63abb3e58cea7"
+    }
+  ],
+  "filesModified": [
+    {
+      "path": ".iacode/schemas/checkpoint.schema.json",
+      "reason": "Allowed schemaVersion 2.0.0 and added the secondToolValidation object.",
+      "hashAfter": "a732714c925896bb9ab86f3a90f43a67c77625189d07d8af1b0b18cd56137ebe",
+      "hashBefore": "6820328a78e7b03c74d4a21f0f2c60888572830f7af80cec9a503659e2753136"
+    },
+    {
+      "path": ".iacode/schemas/command.schema.json",
+      "reason": "Added optional command identifier and sanitized notes.",
+      "hashAfter": "dee0c161927815def260e98f30afe3efcb4f606e06be12a0cbf52f26984e6532",
+      "hashBefore": "6be17d55f82326dab920fecb6ffc9fa20a6d53323cf0e6630e090b2025ae9a89"
+    },
+    {
+      "path": ".iacode/schemas/provenance.schema.json",
+      "reason": "Allowed schemaVersion 2.0.0.",
+      "hashAfter": "09b519d8388c022b65408c3ea99aafed2bafef7658c07b657b8d225f59b693d3",
+      "hashBefore": "beefe79c27f113730f53b87f61765fc3c348dfae1b93e52276988296e27a9c24"
+    },
+    {
+      "path": ".iacode/schemas/quality-result.schema.json",
+      "reason": "Added the evidence-carrying checks shape while keeping the legacy flat shape.",
+      "hashAfter": "db738de279be90b057fe0023d76106b067e7aa9dab884f52290ba7fedfa25853",
+      "hashBefore": "93f99ad26f9f2fbab149fc52f4746ad13ad64953085b7c2b8f49bf7b44651fc0"
+    },
+    {
+      "path": ".iacode/schemas/test-result.schema.json",
+      "reason": "Allowed schemaVersion 2.0.0.",
+      "hashAfter": "1ba8c9444878e8c28cbb80fe05d6c383cb2ba409f6304ed379624552a2d277eb",
+      "hashBefore": "c5fe4875fcc124e7274689065f1be259487520182378a6a387ccba8f8e4d546f"
+    },
+    {
+      "path": "AGENTS.md",
+      "reason": "Adapter records the promotion rule and the inventory declaration duty.",
+      "hashAfter": "34b8894a97c8191ba312c3b9f6228b8acc11e716fa23bc0d5177b2dd7e1e15d8",
+      "hashBefore": "22891739f87bc9134d5080644ed0b25a278d6a8d484c59f899187dbd38f8c1e6"
+    },
+    {
+      "path": "CLAUDE.md",
+      "reason": "Adapter records the promotion rule and the inventory declaration duty.",
+      "hashAfter": "4431bb7bc52cb44568e1e18c19f944fd7acdb565a2a4343005bbc0a71f165d1f",
+      "hashBefore": "4b82dd85385b5747c68e17ab26d3bbf3f07242374e7f0563f353d3cc947daa65"
+    },
+    {
+      "path": "START-HERE.md",
+      "reason": "R5: the start protocol points at the checklist.",
+      "hashAfter": "78840e6a101ab38a9222b00d52ddbf48e0f89b4fb67d7d82b6b2972fd3b86398",
+      "hashBefore": "2ed2e53106415bd3bdcd280e9c510dc08c9dedf58b38405894aa2df71e473642"
+    },
+    {
+      "path": "docs/CHECKPOINT-PROTOCOL.md",
+      "reason": "Documented schema versions, checkout modes, inventory binding, recorded finalization, and promotion.",
+      "hashAfter": "fc80ee8cc6d449b01783125653406388a4a287c8b50dd4c8bd35349e248da238",
+      "hashBefore": "fc8a1bbc7deef2920b82e7616db5540c3d6e50a520c6058a4e8ed4784e9f4919"
+    },
+    {
+      "path": "docs/DEFINITION-OF-DONE.md",
+      "reason": "Added evidence references and independent Gate verdict.",
+      "hashAfter": "2ef568637c7631a522b1ed651e324eeae33ebc797157cecf9e16007fdc2f4869",
+      "hashBefore": "f33205cad887dfeedcd2f4689e513171c86a86b79d100bd75dc64ad8d95638c0"
+    },
+    {
+      "path": "docs/HANDOFF-PROTOCOL.md",
+      "reason": "Documented clean-clone and detached validation and how a Gate is granted.",
+      "hashAfter": "eadc98bb9aa61585c84ced0c064f2f69a998209738a6db489226292abd8d0bd9",
+      "hashBefore": "e7e3cb0af589ea9ccfd25de3ecc6fe72465f9b1a6bd4e478a1796426174cc160"
+    },
+    {
+      "path": "docs/MASTER-PLAN.md",
+      "reason": "R5: acceptance now references the in-repository checklist.",
+      "hashAfter": "6767fced2dbf8468467648cbd13018dfd17d121e9e3d4481df45d74cc3d6f5f0",
+      "hashBefore": "ac7590615b3b199f4a56adb8675f99789058aab315ff39d33abe82201c0b6ce2"
+    },
+    {
+      "path": "docs/QUALITY-GATES.md",
+      "reason": "Documented evidence references and independent promotion.",
+      "hashAfter": "0c99ec5353571bbc99dde768abcfef5f3ad3c5be29da6adb8712e10c70d49a26",
+      "hashBefore": "02adeb154bc3717ce62e332d159cf6ecb3dc4f66f5465dd96186785ed591a094"
+    },
+    {
+      "path": "docs/TOOL-CAPABILITIES.md",
+      "reason": "Recorded the authenticated Claude Code desktop session and the unchanged CLI authentication state.",
+      "hashAfter": "b2523b50e8fb52dc25e35070d0bdd1b4b9f2fc651d4367753044aac55f82217a",
+      "hashBefore": "d34cfe3cb752f9ad788f71c1adbb0542bd745c061c8c833299f6987cd520700a"
+    },
+    {
+      "path": "docs/checkpoints/LATEST.md",
+      "reason": "Points at this correction checkpoint.",
+      "hashAfter": "7f053e53daa8d8ec9a4bbeccc4492a74ea92e07974f35ea72116dec3bccac81d",
+      "hashBefore": "170a62ce95af7a5b5240ed50d15a6a867f67cdcd693fd6a0b796305af2c4acc5"
+    },
+    {
+      "path": "scripts/development-ledger/README.md",
+      "reason": "Documented the new validation, finalization, and inventory behavior.",
+      "hashAfter": "91f065e2743bba274b9ab933e502122040c8e5fe7c93b3768701ef0accd65274",
+      "hashBefore": "aa0982fb9558fadf2c18e59d2fe66875a4edfd250c862780a23bc41d0fad98f5"
+    },
+    {
+      "path": "scripts/development-ledger/finalize_checkpoint.py",
+      "reason": "Implemented R3 recorded finalization and inventory hash binding.",
+      "hashAfter": "72d0263fbf405658393d8bdfb185d64713098a1966e98fd69a214fbee170dcdf",
+      "hashBefore": "555c29ad47701e3ea629baf53ff466712d2f2181fac6cd04ab1f1f5697cf44a9"
+    },
+    {
+      "path": "scripts/development-ledger/ledger_common.py",
+      "reason": "Added schema versions, canonical hashing, blob hashing, and Git change-set helpers.",
+      "hashAfter": "e505cd87cae74318ddc3a830b9902969848dc6c0f5e17191cfd9360577baa622",
+      "hashBefore": "859ca5eb71798afcc248413f4c125d8feab6a186da35889e7d6fe4c45a671820"
+    },
+    {
+      "path": "scripts/development-ledger/new_checkpoint.py",
+      "reason": "Emits schemaVersion 2.0.0 skeletons with command identifiers and evidence-shaped quality.",
+      "hashAfter": "357b8ca26204da0e3c717acb72e0aa57400b9788faf2423225b56962cd9fe2cc",
+      "hashBefore": "e6b1648a13cfc5e71fbf9948954f96e8e9b726d486ac788a8ec3eddc45b63cf4"
+    },
+    {
+      "path": "scripts/development-ledger/validate_checkpoint.py",
+      "reason": "Implemented R1 detached-HEAD binding, R2 delta inventory, R4 structured cross-tool state, and R6 quality evidence.",
+      "hashAfter": "d73f9a5018e7398681a52f297e45460c3036d34e7e8aa208a38e3fe20265101e",
+      "hashBefore": "ce49bd3928d0e8466bd8221f782534d6c44bbcb80ad0e183279037c8b27c5e22"
+    },
+    {
+      "path": "tests/test_development_ledger.py",
+      "reason": "Added regressions for R1 to R6, the inventory attacks, and historical checkpoint compatibility.",
+      "hashAfter": "b0f86d02b181dfde9cb29885a38623444158cf972339a1799f757602dce444f3",
+      "hashBefore": "0b4893f06e862b3863f3bc1e26791a6c3c6d8e454b15d19bac6970392a3bddd2"
+    }
+  ],
+  "filesDeleted": []
+}

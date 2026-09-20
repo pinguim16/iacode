@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import hashlib
 import json
 import re
 import subprocess
@@ -11,6 +12,32 @@ from typing import Any
 
 
 SCHEMA_VERSION = "1.0.0"
+LEGACY_SCHEMA_VERSION = "1.0.0"
+CURRENT_SCHEMA_VERSION = "2.0.0"
+SUPPORTED_SCHEMA_VERSIONS = (LEGACY_SCHEMA_VERSION, CURRENT_SCHEMA_VERSION)
+
+QUALITY_DIMENSIONS = (
+    "build",
+    "unitTests",
+    "integrationTests",
+    "e2e",
+    "lint",
+    "staticAnalysis",
+    "security",
+    "documentation",
+    "checkpointValidation",
+    "redTeam",
+)
+
+QUALITY_OUTCOMES = ("PASS", "FAIL", "NOT_APPLICABLE", "NOT_EXECUTED")
+
+SECOND_TOOL_STATUSES = ("PENDING_MANUAL", "PASSED", "FAILED", "NOT_REQUIRED")
+
+# The only checkpoint file excluded from content hashing, because a file cannot
+# contain its own hash. Its integrity is bound by the checkpoint commit and tag,
+# by its required presence, and by its schema and inventory rules.
+# See docs/adr/ADR-0006-checkpoint-inventory-binding.md.
+INVENTORY_SELF_REFERENTIAL_FILES = ("FILES.json",)
 STATUSES = (
     "NOT_STARTED",
     "BASELINING",
@@ -77,6 +104,17 @@ def run_git(root: Path, *args: str) -> tuple[int, str]:
     return completed.returncode, completed.stdout.strip()
 
 
+def run_git_bytes(root: Path, *args: str) -> tuple[int, bytes]:
+    completed = subprocess.run(
+        ["git", *args],
+        cwd=root,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.DEVNULL,
+        check=False,
+    )
+    return completed.returncode, completed.stdout
+
+
 def git_snapshot(root: Path) -> dict[str, Any]:
     branch_code, branch = run_git(root, "branch", "--show-current")
     head_code, head = run_git(root, "rev-parse", "HEAD")
@@ -87,7 +125,65 @@ def git_snapshot(root: Path) -> dict[str, Any]:
         "branch": branch or "DETACHED",
         "head": head if head_code == 0 else "UNBORN",
         "dirty": bool(status),
+        "detached": not branch,
     }
+
+
+def canonical_hash_bytes(content: bytes) -> str:
+    """Hash content with line endings normalized so checkouts stay portable."""
+    try:
+        normalized = content.decode("utf-8").replace("\r\n", "\n").encode("utf-8")
+    except UnicodeDecodeError:
+        normalized = content
+    return hashlib.sha256(normalized).hexdigest()
+
+
+def canonical_hash_path(path: Path) -> str:
+    return canonical_hash_bytes(path.read_bytes())
+
+
+def blob_hash(root: Path, commit: str, relative_path: str) -> str | None:
+    """Canonical hash of a tracked path as it existed at a commit, or None."""
+    code, content = run_git_bytes(root, "show", f"{commit}:{relative_path}")
+    if code != 0:
+        return None
+    return canonical_hash_bytes(content)
+
+
+def _split_nul(payload: bytes) -> list[str]:
+    return [item for item in payload.decode("utf-8", "surrogateescape").split("\0") if item]
+
+
+def git_delta(root: Path, base: str, ref: str | None = None) -> dict[str, str]:
+    """Change set from base to ref, or from base to the working tree when ref is None.
+
+    Returns a mapping of repository-relative POSIX path to 'A', 'M', or 'D'.
+    Renames are reported as an addition plus a deletion so the inventory stays explicit.
+    """
+    arguments = ["diff", "--name-status", "--no-renames", "-z", base]
+    if ref is not None:
+        arguments.append(ref)
+    code, payload = run_git_bytes(root, *arguments)
+    if code != 0:
+        raise LedgerError(f"unable to compute the change set from {base}")
+    fields = _split_nul(payload)
+    delta: dict[str, str] = {}
+    for index in range(0, len(fields) - 1, 2):
+        status = fields[index][:1]
+        path = fields[index + 1].replace("\\", "/")
+        if status in ("A", "M", "D"):
+            delta[path] = status
+        elif status in ("C", "R", "T"):
+            delta[path] = "M"
+
+    if ref is None:
+        code, payload = run_git_bytes(root, "status", "--porcelain=1", "-z", "--untracked-files=all")
+        if code != 0:
+            raise LedgerError("unable to enumerate untracked files")
+        for entry in _split_nul(payload):
+            if entry.startswith("?? "):
+                delta[entry[3:].replace("\\", "/")] = "A"
+    return delta
 
 
 def resolve_latest(root: Path) -> Path:

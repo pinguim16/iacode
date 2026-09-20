@@ -22,7 +22,8 @@ Detection was performed locally during SETUP-00 and its correction checkpoint. C
 - Hooks: local CLI help exposes hooks, and project configuration supports hooks in `.claude/settings.json`; SETUP-00 requires no mandatory Claude-specific hook.
 - MCP: local CLI help exposes MCP commands, and project MCP configuration is supported through `.mcp.json`; SETUP-00 has no MCP dependency.
 - Permissions and configuration: local CLI help exposes allowed/disallowed tools, permission modes, settings sources, agent selection, and effort levels. The repository does not enable a permission bypass.
-- Authentication: `claude auth status` reported `loggedIn: false` and `authMethod: none` on 2026-09-19. A clean-clone non-interactive validation reached the executable but stopped with `Not logged in`; no model call or file modification occurred.
+- Authentication: `claude auth status` reported `loggedIn: false` and `authMethod: none` on 2026-09-19 and again on 2026-09-20 for the `C:/Users/cesar/.local/bin/claude.exe` CLI installation. A clean-clone non-interactive validation reached the executable but stopped with `Not logged in`; no model call or file modification occurred.
+- Executed sessions: an authenticated Claude Code desktop session performed the independent review, the Red Team battery, and the `SETUP-00-CP-0003` implementation on 2026-09-20. The desktop session and the unauthenticated CLI installation are separate; the CLI cold-start blocker is unchanged. The ten project subagents in `.claude/agents/` were observed loaded by that session, which confirms the adapter format is accepted by the runtime.
 
 ## Portable baseline
 

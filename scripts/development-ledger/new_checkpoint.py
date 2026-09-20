@@ -9,7 +9,15 @@ import re
 import sys
 from pathlib import Path
 
-from ledger_common import SCHEMA_VERSION, STATUSES, find_root, git_snapshot, utc_now, write_json
+from ledger_common import (
+    CURRENT_SCHEMA_VERSION,
+    QUALITY_DIMENSIONS,
+    STATUSES,
+    find_root,
+    git_snapshot,
+    utc_now,
+    write_json,
+)
 
 
 def next_checkpoint_name(root: Path, gate: str) -> str:
@@ -67,7 +75,7 @@ def main() -> int:
         (checkpoint / filename).write_text(content, encoding="utf-8")
 
     write_json(checkpoint / "STATE.json", {
-        "schemaVersion": SCHEMA_VERSION,
+        "schemaVersion": CURRENT_SCHEMA_VERSION,
         "phase": phase,
         "gate": args.gate,
         "status": args.status,
@@ -79,6 +87,15 @@ def main() -> int:
         "updatedAt": now,
         "nextAllowedAction": "Populate and validate this checkpoint.",
         "blockedBy": [],
+        "secondToolValidation": {
+            "status": "PENDING_MANUAL",
+            "tool": None,
+            "provider": None,
+            "model": None,
+            "validatedAt": None,
+            "justification": None,
+            "evidence": [],
+        },
     })
     write_json(checkpoint / "RUN-METADATA.json", {
         "tool": "not-recorded",
@@ -94,6 +111,7 @@ def main() -> int:
         "finalCommit": snapshot["head"],
     })
     (checkpoint / "COMMANDS.jsonl").write_text(json.dumps({
+        "id": "cmd-0001",
         "timestamp": now,
         "command": f"new_checkpoint.py --gate {args.gate} --status {args.status}",
         "workingDirectory": str(root),
@@ -104,16 +122,16 @@ def main() -> int:
     }) + "\n", encoding="utf-8")
     write_json(checkpoint / "FILES.json", {"filesRead": [], "filesCreated": [], "filesModified": [], "filesDeleted": []})
     empty_test = {"executed": False, "passed": 0, "failed": 0, "command": None, "evidence": None}
-    write_json(checkpoint / "TESTS.json", {"schemaVersion": SCHEMA_VERSION, "unit": empty_test, "integration": empty_test, "e2e": empty_test})
+    write_json(checkpoint / "TESTS.json", {"schemaVersion": CURRENT_SCHEMA_VERSION, "unit": empty_test, "integration": empty_test, "e2e": empty_test})
     write_json(checkpoint / "QUALITY.json", {
-        "schemaVersion": SCHEMA_VERSION,
-        "build": "NOT_EXECUTED", "unitTests": "NOT_EXECUTED", "integrationTests": "NOT_EXECUTED",
-        "e2e": "NOT_EXECUTED", "lint": "NOT_EXECUTED", "staticAnalysis": "NOT_EXECUTED",
-        "security": "NOT_EXECUTED", "documentation": "NOT_EXECUTED",
-        "checkpointValidation": "NOT_EXECUTED", "redTeam": "NOT_EXECUTED",
+        "schemaVersion": CURRENT_SCHEMA_VERSION,
+        "checks": {
+            dimension: {"status": "NOT_EXECUTED", "evidence": [], "justification": None}
+            for dimension in QUALITY_DIMENSIONS
+        },
     })
     write_json(checkpoint / "PROVENANCE.json", {
-        "schemaVersion": SCHEMA_VERSION,
+        "schemaVersion": CURRENT_SCHEMA_VERSION,
         "artifacts": [{
             "artifact": str(checkpoint.relative_to(root)), "sourceType": "repository-generated",
             "provider": "local-script", "model": "not-applicable", "ownership": "project",

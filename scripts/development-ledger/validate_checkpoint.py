@@ -4,7 +4,6 @@
 from __future__ import annotations
 
 import argparse
-import hashlib
 import json
 import re
 import sys
@@ -13,12 +12,20 @@ from pathlib import Path
 from typing import Any
 
 from ledger_common import (
+    CURRENT_SCHEMA_VERSION,
+    INVENTORY_SELF_REFERENTIAL_FILES,
+    LEGACY_SCHEMA_VERSION,
+    QUALITY_DIMENSIONS,
+    QUALITY_OUTCOMES,
     REQUIRED_CHECKPOINT_FILES,
     SCHEMA_BINDINGS,
     STATUSES,
     LedgerError,
+    blob_hash,
+    canonical_hash_path,
     find_root,
     find_secrets,
+    git_delta,
     git_snapshot,
     load_json,
     resolve_latest,
@@ -61,6 +68,10 @@ FINAL_REPORT_HEADINGS = (
     "## Evidence",
 )
 
+HANDOFF_READY_STATUSES = ("READY_FOR_REVIEW", "READY_FOR_RED_TEAM", "GATE_PASS", "GATE_FAIL")
+
+HEX64 = re.compile(r"^[0-9a-f]{64}$")
+
 
 def _all_strings(value: Any):
     if isinstance(value, str):
@@ -87,11 +98,7 @@ def _parse_datetime(value: Any) -> datetime | None:
 
 
 def _canonical_hash(path: Path) -> str:
-    try:
-        content = path.read_text(encoding="utf-8").replace("\r\n", "\n").encode("utf-8")
-    except UnicodeDecodeError:
-        content = path.read_bytes()
-    return hashlib.sha256(content).hexdigest()
+    return canonical_hash_path(path)
 
 
 def _resolve_expected_commit(root: Path, expected: Any, actual_head: str, allow_pending_ref: bool) -> str | None:
@@ -105,6 +112,271 @@ def _resolve_expected_commit(root: Path, expected: Any, actual_head: str, allow_
             return actual_head if allow_pending_ref else None
         return resolved
     return expected if isinstance(expected, str) else None
+
+
+def _schema_version(state: Any) -> str:
+    if isinstance(state, dict) and isinstance(state.get("schemaVersion"), str):
+        return state["schemaVersion"]
+    return LEGACY_SCHEMA_VERSION
+
+
+def _normalize_quality(quality: Any) -> dict[str, dict[str, Any]]:
+    """Return {dimension: {status, evidence, justification}} for both quality shapes."""
+    normalized: dict[str, dict[str, Any]] = {}
+    if not isinstance(quality, dict):
+        return normalized
+    checks = quality.get("checks")
+    if isinstance(checks, dict):
+        for dimension, entry in checks.items():
+            if isinstance(entry, dict):
+                normalized[dimension] = {
+                    "status": entry.get("status"),
+                    "evidence": entry.get("evidence") or [],
+                    "justification": entry.get("justification"),
+                }
+        return normalized
+    for dimension, status in quality.items():
+        if dimension != "schemaVersion":
+            normalized[dimension] = {"status": status, "evidence": [], "justification": None}
+    return normalized
+
+
+def _validate_git_binding(
+    root: Path,
+    state: dict[str, Any],
+    actual: dict[str, Any],
+    allow_dirty: bool,
+    allow_pending_ref: bool,
+    errors: list[str],
+) -> None:
+    """R1: bind the checkpoint to a commit, accepting a detached HEAD only at its own tag."""
+    expected_commit = state.get("currentCommit")
+    resolved_commit = _resolve_expected_commit(root, expected_commit, actual["head"], allow_pending_ref)
+    if resolved_commit is None:
+        errors.append(f"commit reference cannot be resolved: {expected_commit!r}")
+    elif resolved_commit != actual["head"]:
+        errors.append(
+            f"commit mismatch: expected {expected_commit!r} -> {resolved_commit!r}, observed {actual['head']!r}"
+        )
+
+    if not actual["detached"]:
+        if state.get("branch") != actual["branch"]:
+            errors.append(f"branch mismatch: expected {state.get('branch')!r}, observed {actual['branch']!r}")
+        if not allow_dirty and state.get("dirty") != actual["dirty"]:
+            errors.append(f"dirty-state mismatch: expected {state.get('dirty')!r}, observed {actual['dirty']!r}")
+        return
+
+    # Detached HEAD is a legitimate way to inspect a sealed checkpoint, but it removes the
+    # branch identity control, so every remaining anchor is mandatory and no relaxation applies.
+    if actual["dirty"] or state.get("dirty") is not False:
+        errors.append("detached HEAD validation requires a clean worktree and dirty=false")
+    if not (isinstance(expected_commit, str) and expected_commit.startswith("refs/tags/iacode-checkpoints/")):
+        errors.append("detached HEAD validation requires STATE.json currentCommit to name the checkpoint tag")
+        return
+    code, tag_commit = run_git(root, "rev-parse", "--verify", f"{expected_commit}^{{commit}}")
+    if code != 0:
+        errors.append(f"detached HEAD validation requires an existing checkpoint tag: {expected_commit}")
+    elif tag_commit != actual["head"]:
+        errors.append(
+            f"checkpoint tag does not resolve to the checked-out commit: {expected_commit} -> {tag_commit}, observed {actual['head']}"
+        )
+
+
+def _manifest_entries(files: Any) -> tuple[dict[str, tuple[str, dict[str, Any]]], list[str]]:
+    mapping: dict[str, tuple[str, dict[str, Any]]] = {}
+    duplicates: list[str] = []
+    for category, letter in (("filesCreated", "A"), ("filesModified", "M"), ("filesDeleted", "D")):
+        for item in (files.get(category) or []) if isinstance(files, dict) else []:
+            if not isinstance(item, dict) or not isinstance(item.get("path"), str):
+                continue
+            path = item["path"].replace("\\", "/")
+            if path in mapping:
+                duplicates.append(path)
+            mapping[path] = (letter, item)
+    return mapping, duplicates
+
+
+def _validate_delta_inventory(
+    root: Path,
+    target: Path,
+    state: dict[str, Any],
+    files: Any,
+    compare_worktree: bool,
+    errors: list[str],
+) -> None:
+    """R2: require FILES.json to describe the real change set, with bound content hashes."""
+    base = state.get("baseCommit")
+    if not isinstance(base, str) or base in ("UNBORN", "HEAD"):
+        errors.append("a delta checkpoint requires baseCommit to name an exact commit or checkpoint tag")
+        return
+    base_commit = _resolve_expected_commit(root, base, "UNBORN", False)
+    if base_commit is None or base_commit == "UNBORN":
+        errors.append(f"baseCommit cannot be resolved: {base!r}")
+        return
+
+    # A sealed checkpoint is compared commit to commit. While work is still uncommitted, the
+    # comparison target is the working tree, so the inventory can be validated before finalization.
+    try:
+        delta = git_delta(root, base_commit, None if compare_worktree else "HEAD")
+    except LedgerError as exc:
+        errors.append(str(exc))
+        return
+
+    mapping, duplicates = _manifest_entries(files)
+    for path in sorted(set(duplicates)):
+        errors.append(f"FILES.json declares {path} in more than one category")
+
+    letters = {"A": "added", "M": "modified", "D": "deleted"}
+    for path in sorted(set(delta) - set(mapping)):
+        errors.append(f"FILES.json omits a changed path: {path} ({letters[delta[path]]})")
+    for path in sorted(set(mapping) - set(delta)):
+        errors.append(f"FILES.json declares a path that did not change since baseCommit: {path}")
+    for path in sorted(set(mapping) & set(delta)):
+        declared, observed = mapping[path][0], delta[path]
+        if declared != observed:
+            errors.append(
+                f"FILES.json declares {path} as {letters[declared]} but the repository shows it as {letters[observed]}"
+            )
+
+    self_referential = {
+        str((target / name).relative_to(root)).replace("\\", "/") for name in INVENTORY_SELF_REFERENTIAL_FILES
+    }
+    for path in sorted(set(mapping) & set(delta)):
+        letter, item = mapping[path]
+        before, after = item.get("hashBefore"), item.get("hashAfter")
+        if path in self_referential:
+            continue
+        if letter in ("A", "M"):
+            if not isinstance(after, str) or HEX64.fullmatch(after) is None:
+                errors.append(f"FILES.json requires a sha-256 hashAfter for {path}")
+            else:
+                candidate = root / path
+                if not candidate.is_file():
+                    errors.append(f"FILES.json hashed path does not exist: {path}")
+                elif canonical_hash_path(candidate) != after:
+                    errors.append(f"FILES.json hashAfter does not match the repository content of {path}")
+        if letter in ("M", "D"):
+            if not isinstance(before, str) or HEX64.fullmatch(before) is None:
+                errors.append(f"FILES.json requires a sha-256 hashBefore for {path}")
+            else:
+                observed_before = blob_hash(root, base_commit, path)
+                if observed_before is None:
+                    errors.append(f"FILES.json declares {path} as pre-existing but it is absent from baseCommit")
+                elif observed_before != before:
+                    errors.append(f"FILES.json hashBefore does not match the baseCommit content of {path}")
+        if letter == "A" and item.get("hashBefore") is not None:
+            errors.append(f"FILES.json must not declare hashBefore for the added path {path}")
+        if letter == "D":
+            if after is not None:
+                errors.append(f"FILES.json must not declare hashAfter for the deleted path {path}")
+            if (root / path).exists():
+                errors.append(f"FILES.json declares {path} as deleted but it still exists")
+
+
+def _validate_empty_project_inventory(root: Path, files: Any, files_path: Path, errors: list[str]) -> None:
+    code, tracked_output = run_git(root, "ls-files")
+    if code != 0:
+        errors.append("unable to enumerate tracked files for empty-project completeness")
+        return
+    tracked = {line.replace("\\", "/") for line in tracked_output.splitlines() if line}
+    created_items = files.get("filesCreated", []) if isinstance(files, dict) else []
+    created = {item.get("path", "").replace("\\", "/") for item in created_items if isinstance(item, dict)}
+    missing = sorted(tracked - created)
+    if missing:
+        errors.append("FILES.json omits tracked files created from EMPTY_PROJECT: " + ", ".join(missing))
+    own_path = str(files_path.relative_to(root)).replace("\\", "/")
+    for item in created_items:
+        if isinstance(item, dict) and item.get("path") != own_path and not item.get("hashAfter"):
+            errors.append(f"FILES.json created entry lacks hashAfter: {item.get('path')}")
+
+
+def _validate_second_tool(
+    state: dict[str, Any],
+    target: Path,
+    version: str,
+    errors: list[str],
+) -> None:
+    """R4: represent cross-tool validation as structured state instead of a frozen sentence."""
+    status = state.get("status")
+    record = state.get("secondToolValidation")
+    if version == LEGACY_SCHEMA_VERSION:
+        resume = target / "RESUME-VALIDATION.md"
+        if status == "GATE_PASS" and resume.is_file():
+            if "SECOND_TOOL_VALIDATION = PENDING_MANUAL" not in resume.read_text(encoding="utf-8"):
+                errors.append("RESUME-VALIDATION.md lacks the required second-tool status")
+        return
+
+    if not isinstance(record, dict):
+        errors.append("STATE.json requires a secondToolValidation object")
+        return
+    outcome = record.get("status")
+    if outcome == "PASSED":
+        for field in ("tool", "provider", "validatedAt"):
+            if not record.get(field):
+                errors.append(f"secondToolValidation PASSED requires {field}")
+        if record.get("validatedAt") and _parse_datetime(record.get("validatedAt")) is None:
+            errors.append("secondToolValidation validatedAt is not an RFC 3339 value")
+    if outcome == "NOT_REQUIRED" and not record.get("justification"):
+        errors.append("secondToolValidation NOT_REQUIRED requires a justification")
+    if status == "GATE_PASS" and outcome not in ("PASSED", "NOT_REQUIRED"):
+        errors.append(f"GATE_PASS requires secondToolValidation PASSED or NOT_REQUIRED, found {outcome!r}")
+
+
+def _validate_quality_evidence(
+    target: Path,
+    quality: Any,
+    normalized: dict[str, dict[str, Any]],
+    command_ids: dict[str, int],
+    version: str,
+    errors: list[str],
+) -> None:
+    """R6: a PASS must reference evidence that exists and succeeded."""
+    if version == LEGACY_SCHEMA_VERSION:
+        for dimension in QUALITY_DIMENSIONS:
+            if not isinstance(quality, dict) or dimension not in quality:
+                errors.append(f"QUALITY.json is missing the required dimension {dimension}")
+        return
+
+    if not isinstance(quality, dict) or not isinstance(quality.get("checks"), dict):
+        errors.append("QUALITY.json schemaVersion 2.0.0 requires a checks object")
+        return
+    for dimension in quality:
+        if dimension not in ("schemaVersion", "checks"):
+            errors.append(f"QUALITY.json schemaVersion 2.0.0 must not use the flat dimension {dimension}")
+    for dimension in QUALITY_DIMENSIONS:
+        entry = normalized.get(dimension)
+        if entry is None:
+            errors.append(f"QUALITY.json is missing the required dimension {dimension}")
+            continue
+        status = entry.get("status")
+        if status not in QUALITY_OUTCOMES:
+            errors.append(f"QUALITY.json {dimension} has an unsupported status {status!r}")
+            continue
+        evidence = entry.get("evidence") or []
+        if status == "PASS" and not evidence:
+            errors.append(f"QUALITY.json {dimension}=PASS requires at least one evidence reference")
+        if status == "NOT_APPLICABLE" and not entry.get("justification"):
+            errors.append(f"QUALITY.json {dimension}=NOT_APPLICABLE requires a justification")
+        for reference in evidence:
+            if not isinstance(reference, str) or ":" not in reference:
+                errors.append(f"QUALITY.json {dimension} has a malformed evidence reference {reference!r}")
+                continue
+            kind, _, value = reference.partition(":")
+            if kind == "command":
+                if value not in command_ids:
+                    errors.append(f"QUALITY.json {dimension} references an unknown command id {value!r}")
+                elif command_ids[value] != 0:
+                    errors.append(
+                        f"QUALITY.json {dimension} references command {value!r}, which exited {command_ids[value]}"
+                    )
+            elif kind == "file":
+                candidate = (target / value).resolve()
+                if target.resolve() not in candidate.parents:
+                    errors.append(f"QUALITY.json {dimension} references a file outside the checkpoint: {value}")
+                elif not candidate.is_file() or not candidate.read_text(encoding="utf-8").strip():
+                    errors.append(f"QUALITY.json {dimension} references a missing or empty file {value!r}")
+            else:
+                errors.append(f"QUALITY.json {dimension} has an unsupported evidence kind {kind!r}")
 
 
 def validate_checkpoint(
@@ -164,8 +436,12 @@ def validate_checkpoint(
         except LedgerError as exc:
             errors.append(str(exc))
 
+    state = documents.get("STATE.json")
+    version = _schema_version(state)
+
     commands_path = target / "COMMANDS.jsonl"
     command_count = 0
+    command_ids: dict[str, int] = {}
     if commands_path.is_file():
         for line_number, line in enumerate(commands_path.read_text(encoding="utf-8").splitlines(), 1):
             if not line.strip():
@@ -175,6 +451,14 @@ def validate_checkpoint(
                 command = json.loads(line)
                 for error in validate_schema(command, schemas.get("command.schema.json", {})):
                     errors.append(f"COMMANDS.jsonl:{line_number}: {error}")
+                identifier = command.get("id") if isinstance(command, dict) else None
+                if version == CURRENT_SCHEMA_VERSION:
+                    if not identifier:
+                        errors.append(f"COMMANDS.jsonl:{line_number}: schemaVersion 2.0.0 requires a command id")
+                    elif identifier in command_ids:
+                        errors.append(f"COMMANDS.jsonl:{line_number}: duplicate command id {identifier!r}")
+                if isinstance(identifier, str) and isinstance(command, dict):
+                    command_ids[identifier] = command.get("exitCode")
                 for value in _all_strings(command):
                     for finding in find_secrets(value):
                         errors.append(f"secret pattern detected in COMMANDS.jsonl:{line_number}: {finding}")
@@ -196,17 +480,22 @@ def validate_checkpoint(
                         if not isinstance(item, dict) or not item.get("path") or not item.get("reason"):
                             errors.append(f"FILES.json: {key}[{index}] requires path and reason")
                             continue
-                        expected_hash = item.get("hashAfter")
-                        if expected_hash:
+                        for field in ("hashBefore", "hashAfter"):
+                            expected_hash = item.get(field)
+                            if expected_hash is None:
+                                continue
+                            if not isinstance(expected_hash, str) or HEX64.fullmatch(expected_hash) is None:
+                                errors.append(f"FILES.json: {key}[{index}] {field} is not a sha-256 digest")
+                                continue
+                            if field == "hashBefore":
+                                continue
                             candidate = (root / item["path"]).resolve()
                             if root.resolve() not in candidate.parents:
                                 errors.append(f"FILES.json: {key}[{index}] path escapes repository")
                             elif not candidate.is_file():
                                 errors.append(f"FILES.json: hashed path does not exist: {item['path']}")
-                            else:
-                                observed_hash = _canonical_hash(candidate)
-                                if observed_hash != expected_hash:
-                                    errors.append(f"FILES.json: hash mismatch for {item['path']}")
+                            elif canonical_hash_path(candidate) != expected_hash:
+                                errors.append(f"FILES.json: hash mismatch for {item['path']}")
         except LedgerError as exc:
             errors.append(str(exc))
 
@@ -227,23 +516,17 @@ def validate_checkpoint(
             except UnicodeDecodeError:
                 continue
 
-    state = documents.get("STATE.json")
     metadata = documents.get("RUN-METADATA.json")
     tests = documents.get("TESTS.json")
     quality = documents.get("QUALITY.json")
+    normalized_quality = _normalize_quality(quality)
+
+    observed_dirty = False
     if isinstance(state, dict):
         try:
             actual = git_snapshot(root)
-            if state.get("branch") != actual["branch"]:
-                errors.append(f"branch mismatch: expected {state.get('branch')!r}, observed {actual['branch']!r}")
-            expected_commit = state.get("currentCommit")
-            resolved_commit = _resolve_expected_commit(root, expected_commit, actual["head"], allow_pending_ref)
-            if resolved_commit is None:
-                errors.append(f"commit reference cannot be resolved: {expected_commit!r}")
-            elif resolved_commit != actual["head"]:
-                errors.append(f"commit mismatch: expected {expected_commit!r} -> {resolved_commit!r}, observed {actual['head']!r}")
-            if not allow_dirty and state.get("dirty") != actual["dirty"]:
-                errors.append(f"dirty-state mismatch: expected {state.get('dirty')!r}, observed {actual['dirty']!r}")
+            observed_dirty = bool(actual["dirty"])
+            _validate_git_binding(root, state, actual, allow_dirty, allow_pending_ref, errors)
         except LedgerError as exc:
             errors.append(str(exc))
 
@@ -258,8 +541,17 @@ def validate_checkpoint(
         updated = _parse_datetime(state.get("updatedAt"))
         if started is None or updated is None or updated < started:
             errors.append("STATE.json timestamps are not ordered RFC 3339 values")
-        if state.get("status") in ("READY_FOR_REVIEW", "READY_FOR_RED_TEAM", "GATE_PASS", "GATE_FAIL") and state.get("currentCommit") in ("HEAD", "UNBORN"):
+        if state.get("status") in HANDOFF_READY_STATUSES and state.get("currentCommit") in ("HEAD", "UNBORN"):
             errors.append(f"{state.get('status')} must be anchored to an exact commit or checkpoint tag, not HEAD/UNBORN")
+
+        _validate_second_tool(state, target, version, errors)
+        _validate_quality_evidence(target, quality, normalized_quality, command_ids, version, errors)
+
+        if version == CURRENT_SCHEMA_VERSION and files is not None:
+            if state.get("baseCommit") == "UNBORN":
+                _validate_empty_project_inventory(root, files, files_path, errors)
+            else:
+                _validate_delta_inventory(root, target, state, files, observed_dirty, errors)
 
     if isinstance(metadata, dict) and isinstance(state, dict):
         if metadata.get("branch") != state.get("branch"):
@@ -273,10 +565,10 @@ def validate_checkpoint(
         if started is None or finished is None or finished < started:
             errors.append("RUN-METADATA.json timestamps are not ordered RFC 3339 values")
 
-    if isinstance(tests, dict) and isinstance(quality, dict):
+    if isinstance(tests, dict) and normalized_quality:
         for test_key, quality_key in (("unit", "unitTests"), ("integration", "integrationTests"), ("e2e", "e2e")):
             result = tests.get(test_key)
-            verdict = quality.get(quality_key)
+            verdict = (normalized_quality.get(quality_key) or {}).get("status")
             if isinstance(result, dict):
                 if not result.get("executed") and (result.get("passed", 0) or result.get("failed", 0)):
                     errors.append(f"TESTS.json {test_key} has counts but executed is false")
@@ -305,50 +597,45 @@ def validate_checkpoint(
         ):
             errors.append("NEXT.md is not meaningfully populated")
 
+    if isinstance(state, dict) and state.get("status") in HANDOFF_READY_STATUSES:
+        final_report = target / "FINAL-REPORT.md"
+        required_finals: list[Path] = []
+        if version == CURRENT_SCHEMA_VERSION or state.get("status") == "GATE_PASS":
+            required_finals.append(final_report)
+        if version == LEGACY_SCHEMA_VERSION and state.get("status") == "GATE_PASS":
+            required_finals.append(target / "RESUME-VALIDATION.md")
+        for required_final in required_finals:
+            if not required_final.is_file() or not required_final.read_text(encoding="utf-8").strip():
+                errors.append(f"{state.get('status')} requires {required_final.name}")
+        if required_finals and final_report.is_file():
+            report_text = final_report.read_text(encoding="utf-8")
+            for heading in FINAL_REPORT_HEADINGS:
+                if heading not in report_text:
+                    errors.append(f"FINAL-REPORT.md is missing heading: {heading}")
+
     if isinstance(state, dict) and state.get("status") == "GATE_PASS":
         if state.get("dirty") is not False:
             errors.append("GATE_PASS requires dirty=false")
         if state.get("blockedBy"):
             errors.append("GATE_PASS requires blockedBy to be empty")
-        if isinstance(quality, dict):
-            for key, verdict in quality.items():
-                if key != "schemaVersion" and verdict in ("FAIL", "NOT_EXECUTED"):
-                    errors.append(f"GATE_PASS cannot have QUALITY.json {key}={verdict}")
+        if normalized_quality:
+            for key, entry in normalized_quality.items():
+                if entry.get("status") in ("FAIL", "NOT_EXECUTED"):
+                    errors.append(f"GATE_PASS cannot have QUALITY.json {key}={entry.get('status')}")
             for key in ("security", "documentation", "checkpointValidation", "redTeam"):
-                if quality.get(key) != "PASS":
+                if (normalized_quality.get(key) or {}).get("status") != "PASS":
                     errors.append(f"GATE_PASS requires QUALITY.json {key}=PASS")
         else:
             errors.append("GATE_PASS requires valid QUALITY.json")
 
         final_report = target / "FINAL-REPORT.md"
-        resume_validation = target / "RESUME-VALIDATION.md"
-        for required_final in (final_report, resume_validation):
-            if not required_final.is_file() or not required_final.read_text(encoding="utf-8").strip():
-                errors.append(f"GATE_PASS requires {required_final.name}")
         if final_report.is_file():
             report_text = final_report.read_text(encoding="utf-8")
-            for heading in FINAL_REPORT_HEADINGS:
-                if heading not in report_text:
-                    errors.append(f"FINAL-REPORT.md is missing heading: {heading}")
             if "GATE_PASS" not in report_text or "RED_TEAM_PASS" not in report_text:
                 errors.append("FINAL-REPORT.md lacks GATE_PASS or RED_TEAM_PASS evidence")
-        if resume_validation.is_file() and "SECOND_TOOL_VALIDATION = PENDING_MANUAL" not in resume_validation.read_text(encoding="utf-8"):
-            errors.append("RESUME-VALIDATION.md lacks the required second-tool status")
 
-        if state.get("baseCommit") == "UNBORN" and isinstance(files, dict):
-            code, tracked_output = run_git(root, "ls-files")
-            if code != 0:
-                errors.append("unable to enumerate tracked files for empty-project completeness")
-            else:
-                tracked = {line.replace("\\", "/") for line in tracked_output.splitlines() if line}
-                created_items = files.get("filesCreated", [])
-                created = {item.get("path", "").replace("\\", "/") for item in created_items if isinstance(item, dict)}
-                missing = sorted(tracked - created)
-                if missing:
-                    errors.append("FILES.json omits tracked files created from EMPTY_PROJECT: " + ", ".join(missing))
-                for item in created_items:
-                    if isinstance(item, dict) and item.get("path") != str(files_path.relative_to(root)).replace("\\", "/") and not item.get("hashAfter"):
-                        errors.append(f"FILES.json created entry lacks hashAfter: {item.get('path')}")
+        if version == LEGACY_SCHEMA_VERSION and state.get("baseCommit") == "UNBORN" and isinstance(files, dict):
+            _validate_empty_project_inventory(root, files, files_path, errors)
 
     return errors
 

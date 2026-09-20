@@ -1,0 +1,71 @@
+{
+  "schemaVersion": "2.0.0",
+  "checks": {
+    "build": {
+      "status": "NOT_APPLICABLE",
+      "evidence": [],
+      "justification": "SETUP-00 has no build target; the ledger tooling is standard-library Python executed directly."
+    },
+    "unitTests": {
+      "status": "PASS",
+      "evidence": [
+        "command:cmd-0016",
+        "file:TESTS.json"
+      ],
+      "justification": null
+    },
+    "integrationTests": {
+      "status": "PASS",
+      "evidence": [
+        "command:cmd-0016",
+        "file:TESTS.json"
+      ],
+      "justification": null
+    },
+    "e2e": {
+      "status": "NOT_APPLICABLE",
+      "evidence": [],
+      "justification": "No runtime exists to exercise end to end during SETUP-00."
+    },
+    "lint": {
+      "status": "NOT_APPLICABLE",
+      "evidence": [],
+      "justification": "No linter is vendored, and the tooling is standard-library only; static analysis is covered by compileall."
+    },
+    "staticAnalysis": {
+      "status": "PASS",
+      "evidence": [
+        "command:cmd-0015"
+      ],
+      "justification": null
+    },
+    "security": {
+      "status": "PASS",
+      "evidence": [
+        "command:cmd-0014",
+        "file:RED-TEAM-DEV-REPORT.md"
+      ],
+      "justification": null
+    },
+    "documentation": {
+      "status": "PASS",
+      "evidence": [
+        "command:cmd-0016",
+        "file:DIFF-SUMMARY.md"
+      ],
+      "justification": null
+    },
+    "checkpointValidation": {
+      "status": "PASS",
+      "evidence": [
+        "command:cmd-0014"
+      ],
+      "justification": null
+    },
+    "redTeam": {
+      "status": "NOT_EXECUTED",
+      "evidence": [],
+      "justification": "The independent Red Team is performed by Codex. This run recorded only a non-independent development battery in RED-TEAM-DEV-REPORT.md, which cannot be reported as PASS."
+    }
+  }
+}

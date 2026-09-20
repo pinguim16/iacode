@@ -19,7 +19,7 @@
     }
   },
   "properties": {
-    "schemaVersion": {"type": "string", "const": "1.0.0"},
+    "schemaVersion": {"enum": ["1.0.0", "2.0.0"]},
     "unit": {"$ref": "#/$defs/result"},
     "integration": {"$ref": "#/$defs/result"},
     "e2e": {"$ref": "#/$defs/result"}

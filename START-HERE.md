@@ -10,7 +10,7 @@ IACode is a planned private, autonomous, general-purpose software engineering pl
 ## Required start protocol
 
 1. Read [docs/DEVELOPMENT-CONTRACT.md](docs/DEVELOPMENT-CONTRACT.md).
-2. Read [docs/MASTER-PLAN.md](docs/MASTER-PLAN.md).
+2. Read [docs/MASTER-PLAN.md](docs/MASTER-PLAN.md) and, for this Gate, [docs/SETUP-00-CHECKLIST.md](docs/SETUP-00-CHECKLIST.md).
 3. Read [docs/checkpoints/LATEST.md](docs/checkpoints/LATEST.md) and every file in the checkpoint it names.
 4. Run `python scripts/development-ledger/validate_checkpoint.py`.
 5. Run `git status --short --branch`, `git branch --show-current`, and `git rev-parse HEAD`.

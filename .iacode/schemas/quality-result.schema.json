@@ -3,19 +3,50 @@
   "$id": "https://iacode.local/schemas/quality-result.schema.json",
   "title": "Checkpoint quality result",
   "type": "object",
-  "required": ["schemaVersion", "build", "unitTests", "integrationTests", "e2e", "lint", "staticAnalysis", "security", "documentation", "checkpointValidation", "redTeam"],
+  "required": ["schemaVersion"],
+  "$defs": {
+    "outcome": {"enum": ["PASS", "FAIL", "NOT_APPLICABLE", "NOT_EXECUTED"]},
+    "check": {
+      "type": "object",
+      "required": ["status"],
+      "properties": {
+        "status": {"enum": ["PASS", "FAIL", "NOT_APPLICABLE", "NOT_EXECUTED"]},
+        "evidence": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "justification": {"type": ["string", "null"]}
+      },
+      "additionalProperties": false
+    },
+    "checks": {
+      "type": "object",
+      "required": ["build", "unitTests", "integrationTests", "e2e", "lint", "staticAnalysis", "security", "documentation", "checkpointValidation", "redTeam"],
+      "properties": {
+        "build": {"$ref": "#/$defs/check"},
+        "unitTests": {"$ref": "#/$defs/check"},
+        "integrationTests": {"$ref": "#/$defs/check"},
+        "e2e": {"$ref": "#/$defs/check"},
+        "lint": {"$ref": "#/$defs/check"},
+        "staticAnalysis": {"$ref": "#/$defs/check"},
+        "security": {"$ref": "#/$defs/check"},
+        "documentation": {"$ref": "#/$defs/check"},
+        "checkpointValidation": {"$ref": "#/$defs/check"},
+        "redTeam": {"$ref": "#/$defs/check"}
+      },
+      "additionalProperties": false
+    }
+  },
   "properties": {
-    "schemaVersion": {"type": "string", "const": "1.0.0"},
-    "build": {"enum": ["PASS", "FAIL", "NOT_APPLICABLE", "NOT_EXECUTED"]},
-    "unitTests": {"enum": ["PASS", "FAIL", "NOT_APPLICABLE", "NOT_EXECUTED"]},
-    "integrationTests": {"enum": ["PASS", "FAIL", "NOT_APPLICABLE", "NOT_EXECUTED"]},
-    "e2e": {"enum": ["PASS", "FAIL", "NOT_APPLICABLE", "NOT_EXECUTED"]},
-    "lint": {"enum": ["PASS", "FAIL", "NOT_APPLICABLE", "NOT_EXECUTED"]},
-    "staticAnalysis": {"enum": ["PASS", "FAIL", "NOT_APPLICABLE", "NOT_EXECUTED"]},
-    "security": {"enum": ["PASS", "FAIL", "NOT_APPLICABLE", "NOT_EXECUTED"]},
-    "documentation": {"enum": ["PASS", "FAIL", "NOT_APPLICABLE", "NOT_EXECUTED"]},
-    "checkpointValidation": {"enum": ["PASS", "FAIL", "NOT_APPLICABLE", "NOT_EXECUTED"]},
-    "redTeam": {"enum": ["PASS", "FAIL", "NOT_APPLICABLE", "NOT_EXECUTED"]}
+    "schemaVersion": {"enum": ["1.0.0", "2.0.0"]},
+    "checks": {"$ref": "#/$defs/checks"},
+    "build": {"$ref": "#/$defs/outcome"},
+    "unitTests": {"$ref": "#/$defs/outcome"},
+    "integrationTests": {"$ref": "#/$defs/outcome"},
+    "e2e": {"$ref": "#/$defs/outcome"},
+    "lint": {"$ref": "#/$defs/outcome"},
+    "staticAnalysis": {"$ref": "#/$defs/outcome"},
+    "security": {"$ref": "#/$defs/outcome"},
+    "documentation": {"$ref": "#/$defs/outcome"},
+    "checkpointValidation": {"$ref": "#/$defs/outcome"},
+    "redTeam": {"$ref": "#/$defs/outcome"}
   },
   "additionalProperties": false
 }

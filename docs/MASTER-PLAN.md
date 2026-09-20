@@ -6,8 +6,8 @@ Each Gate requires its named previous Gate to be `GATE_PASS`. Acceptance require
 
 - Objective: establish tool-neutral contracts, agents, documentation, schemas, ledger tooling, tests, and handoff.
 - Dependencies: empty or existing repository baseline.
-- Deliverables: all artifacts required by SETUP-00 and a valid initial checkpoint.
-- Acceptance: the SETUP-00 checklist, automated tests, Red Team, cold-start simulation, and checkpoint validation pass.
+- Deliverables: every artifact required by [SETUP-00-CHECKLIST.md](SETUP-00-CHECKLIST.md) and a valid checkpoint.
+- Acceptance: [SETUP-00-CHECKLIST.md](SETUP-00-CHECKLIST.md), automated tests, Red Team, cold-start simulation, and checkpoint validation pass.
 - FAIL: missing mandatory artifact/evidence, undetected corruption/secret, false PASS, or any future-Gate implementation.
 - Previous Gate: none.
 

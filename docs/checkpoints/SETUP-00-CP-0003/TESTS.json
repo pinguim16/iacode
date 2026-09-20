@@ -1,0 +1,24 @@
+{
+  "schemaVersion": "2.0.0",
+  "unit": {
+    "executed": true,
+    "passed": 53,
+    "failed": 0,
+    "command": "python -m unittest discover -s tests",
+    "evidence": "53 unit cases: 30 validator cases including the redaction and secret families, 9 cross-tool validation state cases, 9 quality evidence cases, 3 Claude adapter contract cases, and 2 SETUP-00 checklist and documentation link cases."
+  },
+  "integration": {
+    "executed": true,
+    "passed": 22,
+    "failed": 0,
+    "command": "python -m unittest discover -s tests",
+    "evidence": "22 isolated Git and subprocess cases: 4 checkpoint lifecycle and boundary cases, 8 delta inventory cases, 6 detached-HEAD cases, 2 finalization ledger cases, and 2 historical checkpoint compatibility cases against clean clones of the sealed tags."
+  },
+  "e2e": {
+    "executed": false,
+    "passed": 0,
+    "failed": 0,
+    "command": null,
+    "evidence": "No functional runtime exists in SETUP-00, so runtime end-to-end testing is not applicable. The unauthenticated Claude Code CLI cold start remains blocked and is not counted as evidence."
+  }
+}

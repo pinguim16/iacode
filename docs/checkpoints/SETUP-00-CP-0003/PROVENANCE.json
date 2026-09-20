@@ -1,0 +1,53 @@
+{
+  "schemaVersion": "2.0.0",
+  "artifacts": [
+    {
+      "artifact": "Independent review findings R1 to R6 for SETUP-00-CP-0002",
+      "sourceType": "model-assisted-project-work",
+      "provider": "Anthropic",
+      "model": "claude-opus-5",
+      "ownership": "project artifact; legal ownership not independently determined",
+      "license": "not-specified",
+      "rights": {
+        "storageAllowed": true,
+        "ragAllowed": false,
+        "trainingAllowed": false,
+        "distillationAllowed": false
+      },
+      "evidence": "Produced by an authenticated Claude Code desktop session executing prompts/REVIEW-GATE.md and prompts/RED-TEAM-GATE.md against the sealed checkpoint, with reproducible commands.",
+      "notes": "No credential or account data is stored."
+    },
+    {
+      "artifact": "Corrected ledger tooling, schemas, tests, documentation, and this checkpoint",
+      "sourceType": "model-assisted-project-work",
+      "provider": "Anthropic",
+      "model": "claude-opus-5",
+      "ownership": "project artifact; legal ownership not independently determined",
+      "license": "not-specified",
+      "rights": {
+        "storageAllowed": true,
+        "ragAllowed": false,
+        "trainingAllowed": false,
+        "distillationAllowed": false
+      },
+      "evidence": "Created and executed locally in this repository during SETUP-00-CP-0003; test and command evidence is recorded in TESTS.json and COMMANDS.jsonl.",
+      "notes": "No permission for model training or distillation is inferred."
+    },
+    {
+      "artifact": "Local execution, authentication status, and adversarial test evidence",
+      "sourceType": "local-tool-output",
+      "provider": "local environment",
+      "model": "not-applicable",
+      "ownership": "project-generated evidence",
+      "license": "not-applicable",
+      "rights": {
+        "storageAllowed": true,
+        "ragAllowed": false,
+        "trainingAllowed": false,
+        "distillationAllowed": false
+      },
+      "evidence": "Summarized in COMMANDS.jsonl, RED-TEAM-DEV-REPORT.md, and docs/TOOL-CAPABILITIES.md.",
+      "notes": "Authentication material is neither read nor stored; only non-secret status fields are recorded."
+    }
+  ]
+}
