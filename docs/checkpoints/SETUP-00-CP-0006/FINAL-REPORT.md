@@ -60,11 +60,12 @@ schema rule sets did not invalidate sealed history.
 
 ## Tests
 
-`python -m unittest discover -s tests` passed 180 of 180, up from 131.
+`python -m unittest discover -s tests` passed 181 of 181, up from 131.
 `python -m compileall -q scripts tests` returned 0. New coverage: six memory structure cases, eleven
 lesson validation cases, four recurrence cases, seven preflight cases, two derived-requirement
 completeness cases, six milestone policy cases, eleven memory policy validation cases, and two
-verdict vocabulary cases, plus one additional historical compatibility case.
+verdict vocabulary cases, plus one additional historical compatibility case for
+the fifth sealed tag.
 
 ## Red Team
 

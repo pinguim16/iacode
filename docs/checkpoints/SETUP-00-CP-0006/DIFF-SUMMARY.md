@@ -22,7 +22,7 @@
 - Added the retrospective template and this Gate's retrospective.
 - Updated the seven affected canonical agent contracts, the governing documents, the SETUP-00
   checklist, the tooling README, and both tool adapters, and added ADR-0009.
-- The suite grew from 131 to 180 tests, covering the lesson schema and lifecycle, recurrence and
+- The suite grew from 131 to 181 tests, covering the lesson schema and lifecycle, recurrence and
   guardrail failure, preflight selection and rejection, derived requirements and their absence,
   milestone grouping and cadence, extraordinary audits, the internal and external verdict
   vocabulary, and compatibility with every sealed checkpoint.

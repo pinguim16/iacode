@@ -39,7 +39,7 @@ matrix, and replace per-Gate external validation with a milestone audit cadence.
 - Checkpoint `schemaVersion` `3.1.0` with version dispatch; all five sealed checkpoints still
   validate.
 - Retrospective template and this Gate's retrospective.
-- The suite grew from 131 to 180 tests.
+- The suite grew from 131 to 181 tests.
 
 ## What was NOT completed
 
@@ -69,7 +69,7 @@ status from external approval.
 
 ## Tests executed
 
-`python -m unittest discover -s tests` — 180 tests, 0 failures, recorded in `TESTS.json` and
+`python -m unittest discover -s tests` — 181 tests, 0 failures, recorded in `TESTS.json` and
 `COMMANDS.jsonl`. `python -m compileall -q scripts tests` — exit 0.
 `python scripts/development-ledger/validate_lessons.py` — `LESSONS_VALID`.
 `python scripts/development-ledger/validate_checkpoint.py` — `CHECKPOINT_VALID`. Every gate run is
