@@ -1,7 +1,7 @@
 # Handoff
 
 Current Gate: SETUP-00
-Current Status: IN_PROGRESS
+Current Status: REWORK_REQUIRED
 
 Last valid commit: 5780b0f86dbf46ad84d69b88a637be6f076946f4
 Current branch: main
