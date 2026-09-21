@@ -1,0 +1,86 @@
+# Delivery Completeness — SETUP-00-CP-0009
+
+Result: `FAIL`  
+Coverage: 97.18 per cent  
+Evidence coverage: 100.00 per cent  
+
+This matrix is the auditor's verdict on the canonical SETUP-00 Gate specification, one row per checklist requirement, in the shape `SETUP-00-CP-0007` used.
+
+| ID | Requirement | Status |
+|---|---|---|
+| REQ-0001 | canonical:SETUP-00#1.1 | `COMPLETE` |
+| REQ-0002 | canonical:SETUP-00#1.2 | `COMPLETE` |
+| REQ-0003 | canonical:SETUP-00#1.3 | `COMPLETE` |
+| REQ-0004 | canonical:SETUP-00#1.4 | `COMPLETE` |
+| REQ-0005 | canonical:SETUP-00#2.1 | `COMPLETE` |
+| REQ-0006 | canonical:SETUP-00#2.2 | `COMPLETE` |
+| REQ-0007 | canonical:SETUP-00#2.3 | `COMPLETE` |
+| REQ-0008 | canonical:SETUP-00#2.4 | `COMPLETE` |
+| REQ-0009 | canonical:SETUP-00#2.5 | `COMPLETE` |
+| REQ-0010 | canonical:SETUP-00#2.6 | `COMPLETE` |
+| REQ-0011 | canonical:SETUP-00#2.7 | `COMPLETE` |
+| REQ-0012 | canonical:SETUP-00#2.8 | `COMPLETE` |
+| REQ-0013 | canonical:SETUP-00#3.1 | `COMPLETE` |
+| REQ-0014 | canonical:SETUP-00#3.2 | `COMPLETE` |
+| REQ-0015 | canonical:SETUP-00#3.3 | `COMPLETE` |
+| REQ-0016 | canonical:SETUP-00#4.1 | `COMPLETE` |
+| REQ-0017 | canonical:SETUP-00#4.2 | `COMPLETE` |
+| REQ-0018 | canonical:SETUP-00#4.3 | `COMPLETE` |
+| REQ-0019 | canonical:SETUP-00#5.1 | `COMPLETE` |
+| REQ-0020 | canonical:SETUP-00#5.2 | `COMPLETE` |
+| REQ-0021 | canonical:SETUP-00#5.3 | `COMPLETE` |
+| REQ-0022 | canonical:SETUP-00#5.4 | `COMPLETE` |
+| REQ-0023 | canonical:SETUP-00#5.5 | `COMPLETE` |
+| REQ-0024 | canonical:SETUP-00#6.1 | `COMPLETE` |
+| REQ-0025 | canonical:SETUP-00#6.2 | `COMPLETE` |
+| REQ-0026 | canonical:SETUP-00#6.3 | `COMPLETE` |
+| REQ-0027 | canonical:SETUP-00#6.4 | `COMPLETE` |
+| REQ-0028 | canonical:SETUP-00#6.5 | `COMPLETE` |
+| REQ-0029 | canonical:SETUP-00#6.6 | `COMPLETE` |
+| REQ-0030 | canonical:SETUP-00#7.1 | `COMPLETE` |
+| REQ-0031 | canonical:SETUP-00#7.2 | `COMPLETE` |
+| REQ-0032 | canonical:SETUP-00#7.3 | `COMPLETE` |
+| REQ-0033 | canonical:SETUP-00#7.4 | `COMPLETE` |
+| REQ-0034 | canonical:SETUP-00#7.5 | `COMPLETE` |
+| REQ-0035 | canonical:SETUP-00#7b.1 | `COMPLETE` |
+| REQ-0036 | canonical:SETUP-00#7b.2 | `COMPLETE` |
+| REQ-0037 | canonical:SETUP-00#7b.3 | `COMPLETE` |
+| REQ-0038 | canonical:SETUP-00#7b.4 | `COMPLETE` |
+| REQ-0039 | canonical:SETUP-00#7b.5 | `COMPLETE` |
+| REQ-0040 | canonical:SETUP-00#7b.6 | `COMPLETE` |
+| REQ-0041 | canonical:SETUP-00#7b.7 | `COMPLETE` |
+| REQ-0042 | canonical:SETUP-00#7b.8 | `COMPLETE` |
+| REQ-0043 | canonical:SETUP-00#7c.1 | `COMPLETE` |
+| REQ-0044 | canonical:SETUP-00#7c.2 | `COMPLETE` |
+| REQ-0045 | canonical:SETUP-00#7c.3 | `COMPLETE` |
+| REQ-0046 | canonical:SETUP-00#7c.4 | `COMPLETE` |
+| REQ-0047 | canonical:SETUP-00#7c.5 | `COMPLETE` |
+| REQ-0048 | canonical:SETUP-00#7c.6 | `COMPLETE` |
+| REQ-0049 | canonical:SETUP-00#7c.7 | `COMPLETE` |
+| REQ-0050 | canonical:SETUP-00#7c.8 | `COMPLETE` |
+| REQ-0051 | canonical:SETUP-00#7c.9 | `COMPLETE` |
+| REQ-0052 | canonical:SETUP-00#7c.10 | `COMPLETE` |
+| REQ-0053 | canonical:SETUP-00#7d.1 | `COMPLETE` |
+| REQ-0054 | canonical:SETUP-00#7d.2 | `COMPLETE` |
+| REQ-0055 | canonical:SETUP-00#7d.3 | `COMPLETE` |
+| REQ-0056 | canonical:SETUP-00#7d.4 | `PARTIAL` |
+| REQ-0057 | canonical:SETUP-00#7d.5 | `COMPLETE` |
+| REQ-0058 | canonical:SETUP-00#7d.6 | `COMPLETE` |
+| REQ-0059 | canonical:SETUP-00#7d.7 | `COMPLETE` |
+| REQ-0060 | canonical:SETUP-00#7d.8 | `PARTIAL` |
+| REQ-0061 | canonical:SETUP-00#7d.9 | `COMPLETE` |
+| REQ-0062 | canonical:SETUP-00#7d.10 | `COMPLETE` |
+| REQ-0063 | canonical:SETUP-00#7d.11 | `COMPLETE` |
+| REQ-0064 | canonical:SETUP-00#7d.12 | `COMPLETE` |
+| REQ-0065 | canonical:SETUP-00#8.1 | `COMPLETE` |
+| REQ-0066 | canonical:SETUP-00#8.2 | `COMPLETE` |
+| REQ-0067 | canonical:SETUP-00#8.3 | `COMPLETE` |
+| REQ-0068 | canonical:SETUP-00#9.1 | `COMPLETE` |
+| REQ-0069 | canonical:SETUP-00#9.2 | `COMPLETE` |
+| REQ-0070 | canonical:SETUP-00#9.3 | `COMPLETE` |
+| REQ-0071 | canonical:SETUP-00#9.4 | `COMPLETE` |
+
+## Rows this audit could not confirm
+
+- **canonical:SETUP-00#7d.4** — The rejection half of the control is complete and was reproduced fifteen ways, but the acceptance half is unreachable: a legitimate attestation must live in the tree of the commit it names as subjectCommit, and once the audit checkpoint commits it the subject can no longer be validated at all. No repository state satisfies the promotion, and no test covers acceptance. See finding CP9-F-001.
+- **canonical:SETUP-00#7d.8** — The anchor chain itself is complete and defended every mutation this audit ran, but its verifying test binds the exclusion to the literal name SETUP-00-CP-0008, so the mandatory tests gate turns red for the next delivery the moment this checkpoint is sealed. A guardrail that must be edited for every successor is not yet a durable guardrail. See finding CP9-F-002.

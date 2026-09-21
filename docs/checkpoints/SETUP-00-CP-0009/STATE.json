@@ -1,0 +1,153 @@
+{
+  "schemaVersion": "3.2.0",
+  "phase": "M0 - final independent fresh-session audit of SETUP-00",
+  "gate": "SETUP-00",
+  "status": "REWORK_REQUIRED",
+  "branch": "main",
+  "baseCommit": "c53f4c59a77870414324efa6b5f61b35d26c5090",
+  "currentCommit": "refs/tags/iacode-checkpoints/SETUP-00-CP-0009",
+  "dirty": false,
+  "startedAt": "2026-09-20T23:59:12Z",
+  "updatedAt": "2026-09-21T01:42:17Z",
+  "nextAllowedAction": "Return SETUP-00-CP-0009 to the implementer. Correct CP9-F-001 and CP9-F-002, assess CP9-F-003 to CP9-F-005 and the eight lesson candidates, and request a new M0 audit. Gate 0 stays blocked.",
+  "blockedBy": [
+    "CP9-F-001",
+    "CP9-F-002",
+    "CP9-F-003",
+    "CP9-F-004",
+    "CP9-F-005"
+  ],
+  "secondToolValidation": {
+    "status": "FAILED",
+    "tool": "Claude Code 2.1.195, fresh session",
+    "provider": "Anthropic",
+    "model": "claude-opus-5",
+    "validatedAt": "2026-09-21T01:37:48Z",
+    "justification": "Fresh-session independent audit of SETUP-00-CP-0008. Two critical product defects and three low findings. Same tool and provider as the implementing run, so this is not cross-tool validation and is not recorded as one.",
+    "evidence": [
+      "file:REVIEW-REPORT.md",
+      "file:RED-TEAM-REPORT.md",
+      "file:MILESTONE-REPORT.md",
+      "file:FINAL-M0-AUDIT-MATRIX.json"
+    ]
+  },
+  "requirementsMatrix": {
+    "path": "REQUIREMENTS-MATRIX.json",
+    "total": 71,
+    "mandatory": 71,
+    "complete": 69,
+    "partial": 2,
+    "missing": 0,
+    "notApplicable": 0,
+    "coveragePercent": 97.18
+  },
+  "greenKeeper": {
+    "status": "FAIL",
+    "cycles": 1,
+    "remainingFailures": 1,
+    "unresolvedReworkItems": 0,
+    "log": "REWORK-LOG.jsonl",
+    "externalBlockers": [],
+    "evidence": [
+      "command:cmd-0004",
+      "command:cmd-0008"
+    ],
+    "requiredGates": [
+      "tests",
+      "staticAnalysis",
+      "lessons",
+      "integrity",
+      "checkpointValidation"
+    ]
+  },
+  "deliveryCompleteness": {
+    "status": "FAIL",
+    "report": "COMPLETENESS-REPORT.json",
+    "coveragePercent": 97.18,
+    "evidenceCoveragePercent": 100.0,
+    "auditor": "CP-0009 fresh-session independent auditor",
+    "evidence": [
+      "file:FINAL-M0-AUDIT-MATRIX.json",
+      "file:REVIEW-REPORT.md"
+    ]
+  },
+  "reworkCycles": 1,
+  "independentReview": {
+    "status": "REWORK_REQUIRED",
+    "tool": "Claude Code 2.1.195, fresh session, Anthropic, claude-opus-5",
+    "reviewedAt": "2026-09-21T01:37:48Z",
+    "justification": "Two critical findings: the external attestation has no reachable positive path, and anchoring the sealed predecessor turns the mandatory suite red.",
+    "evidence": [
+      "file:REVIEW-REPORT.md",
+      "file:MILESTONE-REPORT.md"
+    ]
+  },
+  "redTeam": {
+    "status": "RED_TEAM_PASS",
+    "tool": "CP-0009 auditor's own battery, independent of m0_red_team.py",
+    "executedAt": "2026-09-21T01:37:48Z",
+    "justification": "26 of 26 mandatory attacks and 26 of 26 additional attacks defended, with a null-mutation control and an accepted baseline.",
+    "evidence": [
+      "file:RED-TEAM-REPORT.md",
+      "file:AUDIT-EXECUTIONS.json"
+    ]
+  },
+  "lessonPreflight": {
+    "path": "LESSON-PREFLIGHT.json",
+    "gate": "SETUP-00",
+    "scope": "Audit of SETUP-00; the Gate preflight sealed in SETUP-00-CP-0008 was recomputed and reproduced rather than regenerated, because this audit does not start the Gate",
+    "lessonsConsidered": 23,
+    "lessonsApplicable": 23,
+    "derivedRequirements": 23,
+    "evidence": [
+      "file:AUDIT-EXECUTIONS.json",
+      "file:MILESTONE-REPORT.md"
+    ]
+  },
+  "milestone": {
+    "id": "M0",
+    "title": "Development control plane",
+    "gates": [
+      "SETUP-00"
+    ],
+    "status": "FAILED",
+    "auditor": "Claude Code fresh-session independent M0 audit (FRESH_SESSION_INDEPENDENT_AUDIT)",
+    "auditedAt": "2026-09-21T01:37:48Z",
+    "evidence": [
+      "file:MILESTONE-REPORT.md",
+      "file:REVIEW-REPORT.md",
+      "file:RED-TEAM-REPORT.md",
+      "file:FINAL-M0-AUDIT-MATRIX.json"
+    ]
+  },
+  "externalAuditRequired": false,
+  "externalAuditReason": null,
+  "guardrailEffectiveness": {
+    "guardrailsTotal": 22,
+    "guardrailsResolved": 22,
+    "guardrailsTested": 22,
+    "guardrailsEffective": 22,
+    "guardrailFailures": 0,
+    "evidence": [
+      "file:AUDIT-EXECUTIONS.json",
+      "file:.iacode/memory/guardrails/registry.json"
+    ]
+  },
+  "integrity": {
+    "status": "PASS",
+    "anchors": 8,
+    "chainFile": ".iacode/anchors/checkpoint-chain.json",
+    "evidence": [
+      "command:cmd-0003",
+      "command:cmd-0007"
+    ]
+  },
+  "externalAttestation": {
+    "status": "NONE",
+    "path": null,
+    "auditId": null,
+    "evidence": [
+      "file:REVIEW-REPORT.md"
+    ]
+  }
+}

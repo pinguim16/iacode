@@ -1,0 +1,53 @@
+{
+  "schemaVersion": "3.2.0",
+  "artifacts": [
+    {
+      "artifact": "docs/checkpoints/SETUP-00-CP-0009",
+      "sourceType": "repository-generated",
+      "provider": "Anthropic",
+      "model": "claude-opus-5",
+      "ownership": "project",
+      "license": "project-policy",
+      "rights": {
+        "storageAllowed": true,
+        "ragAllowed": false,
+        "trainingAllowed": false,
+        "distillationAllowed": false
+      },
+      "evidence": "Produced by the CP-0009 fresh-session independent audit from this repository alone; no third-party content was introduced.",
+      "notes": "Audit artifacts. trainingAllowed is false by default and is not claimed."
+    },
+    {
+      "artifact": "docs/checkpoints/SETUP-00-CP-0009/audit-harness",
+      "sourceType": "repository-generated",
+      "provider": "Anthropic",
+      "model": "claude-opus-5",
+      "ownership": "project",
+      "license": "project-policy",
+      "rights": {
+        "storageAllowed": true,
+        "ragAllowed": false,
+        "trainingAllowed": false,
+        "distillationAllowed": false
+      },
+      "evidence": "The auditor's own scenario harness, written for this audit and kept so that every recorded result can be reproduced from a clean clone.",
+      "notes": "Does not import the delivery's own m0_red_team harness."
+    },
+    {
+      "artifact": ".iacode/anchors/checkpoint-chain.json",
+      "sourceType": "repository-generated",
+      "provider": "local-script",
+      "model": "not-applicable",
+      "ownership": "project",
+      "license": "project-policy",
+      "rights": {
+        "storageAllowed": true,
+        "ragAllowed": false,
+        "trainingAllowed": false,
+        "distillationAllowed": false
+      },
+      "evidence": "Extended by verify_integrity.py --rebuild so that this checkpoint anchors its sealed predecessor, as the checkpoint protocol requires.",
+      "notes": "Derived from Git; no content was authored by hand."
+    }
+  ]
+}

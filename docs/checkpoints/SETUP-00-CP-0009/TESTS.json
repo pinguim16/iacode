@@ -1,0 +1,24 @@
+{
+  "schemaVersion": "3.2.0",
+  "unit": {
+    "executed": true,
+    "passed": 305,
+    "failed": 1,
+    "command": "python -m unittest discover -s tests",
+    "evidence": "command:cmd-0004; 306/306 in a clean detached clone of refs/tags/iacode-checkpoints/SETUP-00-CP-0008, 305/306 in the working repository once this checkpoint anchored its sealed predecessor; the one failure is finding CP9-F-002 and was not repaired by this audit"
+  },
+  "integration": {
+    "executed": true,
+    "passed": 305,
+    "failed": 1,
+    "command": "python -m unittest discover -s tests",
+    "evidence": "command:cmd-0004; the suite is a single discovery over tests/ covering both unit and integration cases"
+  },
+  "e2e": {
+    "executed": false,
+    "passed": 0,
+    "failed": 0,
+    "command": null,
+    "evidence": "No runtime exists to exercise end to end during SETUP-00."
+  }
+}

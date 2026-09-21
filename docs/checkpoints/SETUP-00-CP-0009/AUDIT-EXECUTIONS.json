@@ -1,0 +1,2553 @@
+{
+  "schemaVersion": "1.0.0",
+  "checkpoint": "SETUP-00-CP-0009",
+  "milestone": "M0",
+  "subjectCheckpoint": "SETUP-00-CP-0008",
+  "auditMechanism": "FRESH_SESSION_INDEPENDENT_AUDIT",
+  "note": "Every negative scenario ran inside a disposable clone or an in-memory copy under the session scratchpad. No tag, commit or artifact of the real repository was written to by any attack.",
+  "coldStart": {
+    "documentsRead": [
+      "START-HERE.md",
+      "AGENTS.md",
+      "CLAUDE.md",
+      "docs/DEVELOPMENT-CONTRACT.md",
+      "docs/MASTER-PLAN.md",
+      "docs/ROADMAP.md",
+      "docs/DEFINITION-OF-DONE.md",
+      "docs/QUALITY-GATES.md",
+      "docs/HANDOFF-PROTOCOL.md",
+      "docs/CHECKPOINT-PROTOCOL.md",
+      "docs/SETUP-00-CHECKLIST.md",
+      "docs/ENGINEERING-MEMORY.md",
+      "docs/MILESTONE-VALIDATION.md",
+      "docs/checkpoints/LATEST.md",
+      "docs/adr/ADR-0010-milestone-closure-controls.md",
+      ".iacode/attestations/README.md",
+      ".iacode/policies/secret-policy.md",
+      ".iacode/policies/quality-gates.json",
+      ".iacode/policies/canonical-requirements.json",
+      ".iacode/policies/audit-registry.json",
+      ".iacode/memory/POLICY.json",
+      ".iacode/memory/lessons.jsonl",
+      ".iacode/memory/guardrails/registry.json",
+      ".iacode/anchors/checkpoint-chain.json"
+    ],
+    "checkpointsRead": {
+      "SETUP-00-CP-0007": [
+        "REVIEW-REPORT.md",
+        "RED-TEAM-REPORT.md",
+        "MILESTONE-REPORT.md",
+        "FINAL-REPORT.md",
+        "HANDOFF.md",
+        "STATE.json",
+        "REQUIREMENTS-MATRIX.json"
+      ],
+      "SETUP-00-CP-0008": [
+        "STATUS.md",
+        "STATE.json",
+        "RUN-METADATA.json",
+        "COUNTS.json",
+        "CLOSURE-REQUIREMENTS.json",
+        "CP7-FINDINGS-CLOSURE.json",
+        "M0-INTERNAL-RED-TEAM.json",
+        "M0-INTERNAL-MIRROR.json",
+        "COMPLETENESS-REPORT.json",
+        "LESSON-PREFLIGHT.json",
+        "REQUIREMENTS-MATRIX.json",
+        "REWORK-LOG.jsonl",
+        "COMMANDS.jsonl",
+        "FILES.json",
+        "QUALITY.json",
+        "HANDOFF.md",
+        "NEXT.md",
+        "FINAL-REPORT.md"
+      ]
+    },
+    "externalSummariesUsedAsEvidence": 0
+  },
+  "expectedRequirementSet": {
+    "checklistRows": 71,
+    "checklistKeys": [
+      "1.1",
+      "1.2",
+      "1.3",
+      "1.4",
+      "2.1",
+      "2.2",
+      "2.3",
+      "2.4",
+      "2.5",
+      "2.6",
+      "2.7",
+      "2.8",
+      "3.1",
+      "3.2",
+      "3.3",
+      "4.1",
+      "4.2",
+      "4.3",
+      "5.1",
+      "5.2",
+      "5.3",
+      "5.4",
+      "5.5",
+      "6.1",
+      "6.2",
+      "6.3",
+      "6.4",
+      "6.5",
+      "6.6",
+      "7.1",
+      "7.2",
+      "7.3",
+      "7.4",
+      "7.5",
+      "7b.1",
+      "7b.2",
+      "7b.3",
+      "7b.4",
+      "7b.5",
+      "7b.6",
+      "7b.7",
+      "7b.8",
+      "7c.1",
+      "7c.2",
+      "7c.3",
+      "7c.4",
+      "7c.5",
+      "7c.6",
+      "7c.7",
+      "7c.8",
+      "7c.9",
+      "7c.10",
+      "7d.1",
+      "7d.2",
+      "7d.3",
+      "7d.4",
+      "7d.5",
+      "7d.6",
+      "7d.7",
+      "7d.8",
+      "7d.9",
+      "7d.10",
+      "7d.11",
+      "7d.12",
+      "8.1",
+      "8.2",
+      "8.3",
+      "9.1",
+      "9.2",
+      "9.3",
+      "9.4"
+    ],
+    "findings": [
+      "M0-F-001",
+      "M0-F-002",
+      "M0-F-003",
+      "M0-F-004",
+      "M0-F-005",
+      "M0-F-006",
+      "M0-F-007",
+      "M0-F-008",
+      "M0-F-009",
+      "M0-F-010",
+      "M0-F-011"
+    ],
+    "mandatoryAttacks": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H",
+      "I",
+      "J",
+      "K",
+      "L",
+      "M",
+      "N",
+      "O",
+      "P",
+      "Q",
+      "R",
+      "S",
+      "T",
+      "U",
+      "V",
+      "W",
+      "X",
+      "Y",
+      "Z"
+    ],
+    "additionalAttacks": [
+      "AA",
+      "AB",
+      "AC",
+      "AD",
+      "AE",
+      "AF"
+    ],
+    "lessonIds": [
+      "LSN-0001",
+      "LSN-0002",
+      "LSN-0003",
+      "LSN-0004",
+      "LSN-0005",
+      "LSN-0006",
+      "LSN-0007",
+      "LSN-0008",
+      "LSN-0009",
+      "LSN-0010",
+      "LSN-0011",
+      "LSN-0012",
+      "LSN-0013",
+      "LSN-0014",
+      "LSN-0015",
+      "LSN-0016",
+      "LSN-0017",
+      "LSN-0018",
+      "LSN-0019",
+      "LSN-0020",
+      "LSN-0021",
+      "LSN-0022",
+      "LSN-0023"
+    ],
+    "expectedTotal": 131,
+    "declaredTotal": 131,
+    "missing": [],
+    "unexpected": [],
+    "duplicated": {},
+    "matrixRows": 131,
+    "localRows": [],
+    "statusCounts": {
+      "COMPLETE": 131
+    },
+    "mandatoryRows": 130
+  },
+  "findingClosure": {
+    "findings": [
+      {
+        "id": "M0-F-001",
+        "status": "CLOSED",
+        "lesson": "LSN-0015",
+        "guardrail": "GRD-0014",
+        "tests": [
+          "PromotionInvariantTests.test_every_positive_status_rejects_a_red_green_keeper",
+          "PromotionInvariantTests.test_every_positive_status_rejects_a_red_completeness_gate",
+          "PromotionInvariantTests.test_every_positive_status_rejects_every_red_quality_dimension",
+          "PromotionInvariantTests.test_every_positive_status_rejects_an_unexecuted_mandatory_dimension",
+          "PromotionInvariantTests.test_every_positive_status_rejects_a_partial_requirement"
+        ]
+      },
+      {
+        "id": "M0-F-002",
+        "status": "CLOSED",
+        "lesson": "LSN-0007",
+        "guardrail": "GRD-0008",
+        "tests": [
+          "ExternalAttestationTests.test_an_implementer_checkpoint_cannot_declare_an_external_pass",
+          "ExternalAttestationTests.test_second_tool_validation_alone_is_not_enough",
+          "ExternalAttestationTests.test_an_attestation_naming_the_subject_as_its_own_auditor_is_rejected",
+          "ExternalAttestationTests.test_a_failed_review_cannot_produce_an_external_pass",
+          "ExternalAttestationTests.test_a_failed_red_team_cannot_produce_an_external_pass",
+          "ExternalAttestationTests.test_an_intermediate_gate_cannot_take_the_external_status"
+        ]
+      },
+      {
+        "id": "M0-F-003",
+        "status": "CLOSED",
+        "lesson": "LSN-0019",
+        "guardrail": "GRD-0018",
+        "tests": [
+          "PreflightFreshnessTests.test_a_changed_fingerprint_makes_the_preflight_stale",
+          "PreflightFreshnessTests.test_a_preflight_from_another_gate_is_refused",
+          "PreflightFreshnessTests.test_a_dropped_lesson_makes_the_preflight_stale",
+          "PreflightFreshnessTests.test_the_checkpoint_refuses_a_stale_preflight"
+        ]
+      },
+      {
+        "id": "M0-F-004",
+        "status": "CLOSED",
+        "lesson": "LSN-0018",
+        "guardrail": "GRD-0017",
+        "tests": [
+          "LessonResolutionTests.test_a_test_control_must_exist_in_the_suite",
+          "LessonResolutionTests.test_lesson_evidence_must_resolve",
+          "LessonResolutionTests.test_an_invariant_control_must_be_defined_in_the_tooling",
+          "LessonResolutionTests.test_a_control_path_may_not_escape_the_repository",
+          "LessonValidationTests.test_secret_in_a_lesson_fails"
+        ]
+      },
+      {
+        "id": "M0-F-005",
+        "status": "CLOSED",
+        "lesson": "LSN-0016",
+        "guardrail": "GRD-0015",
+        "tests": [
+          "MandatoryGatePolicyTests.test_a_cycle_measured_against_no_gate_is_rejected",
+          "MandatoryGatePolicyTests.test_the_policy_declares_a_non_empty_closed_set",
+          "MandatoryGatePolicyTests.test_a_cycle_missing_one_mandatory_gate_is_rejected",
+          "MandatoryGatePolicyTests.test_a_mandatory_gate_that_exited_nonzero_is_rejected",
+          "MandatoryGatePolicyTests.test_a_gate_without_command_evidence_is_rejected"
+        ]
+      },
+      {
+        "id": "M0-F-006",
+        "status": "CLOSED",
+        "lesson": "LSN-0017",
+        "guardrail": "GRD-0016",
+        "tests": [
+          "ExpectedRequirementSetTests.test_deleting_a_requirement_and_recomputing_the_counts_still_fails",
+          "ExpectedRequirementSetTests.test_the_expected_set_is_derived_from_the_canonical_sources",
+          "ExpectedRequirementSetTests.test_an_unexpected_anchored_requirement_is_rejected",
+          "ExpectedRequirementSetTests.test_a_requirement_without_an_anchor_is_rejected",
+          "ExpectedRequirementSetTests.test_a_downgraded_matrix_cannot_escape_the_comparison"
+        ]
+      },
+      {
+        "id": "M0-F-007",
+        "status": "CLOSED",
+        "lesson": "LSN-0021",
+        "guardrail": "GRD-0020",
+        "tests": [
+          "IntegrityAnchorTests.test_a_moved_historical_tag_is_detected",
+          "IntegrityAnchorTests.test_an_unexpected_tree_is_detected",
+          "IntegrityAnchorTests.test_a_broken_link_between_anchors_is_detected",
+          "IntegrityAnchorTests.test_a_recomputed_anchor_hash_must_match_its_fields",
+          "IntegrityAnchorTests.test_a_sealed_checkpoint_without_an_anchor_is_detected"
+        ]
+      },
+      {
+        "id": "M0-F-008",
+        "status": "CLOSED",
+        "lesson": "LSN-0022",
+        "guardrail": "GRD-0021",
+        "tests": [
+          "ExpectedRequirementSetTests.test_the_state_mandatory_count_is_cross_checked",
+          "DerivedCountTests.test_the_stored_counts_match_the_derivation",
+          "DerivedCountTests.test_a_forged_count_is_rejected",
+          "DerivedCountTests.test_a_markdown_claim_that_contradicts_the_derivation_is_rejected"
+        ]
+      },
+      {
+        "id": "M0-F-009",
+        "status": "CLOSED",
+        "lesson": "LSN-0020",
+        "guardrail": "GRD-0019",
+        "tests": [
+          "CommandInputBindingTests.test_a_bound_record_passes",
+          "CommandInputBindingTests.test_the_recorder_binds_inputs_automatically",
+          "CommandInputBindingTests.test_a_record_without_a_digest_is_rejected",
+          "CommandInputBindingTests.test_a_digest_that_omits_an_input_is_rejected",
+          "CommandInputBindingTests.test_a_clean_tree_claim_is_checked_against_the_declared_commit"
+        ]
+      },
+      {
+        "id": "M0-F-010",
+        "status": "CLOSED",
+        "lesson": "LSN-0014",
+        "guardrail": "GRD-0013",
+        "tests": [
+          "SealChronologyTests.test_a_record_after_the_end_of_the_run_is_rejected",
+          "DeliveryLifecycleTests.test_full_delivery_assurance_flow_reaches_ready_for_review",
+          "SealChronologyTests.test_a_missing_post_commit_validation_is_rejected",
+          "SealChronologyTests.test_a_dirty_tree_validation_is_not_evidence_of_a_sealed_commit",
+          "SealChronologyTests.test_a_validation_of_an_unrelated_commit_is_rejected"
+        ]
+      },
+      {
+        "id": "M0-F-011",
+        "status": "CLOSED",
+        "lesson": "LSN-0023",
+        "guardrail": "GRD-0022",
+        "tests": [
+          "LessonProvenanceTests.test_every_repository_lesson_cites_a_resolvable_source",
+          "LessonProvenanceTests.test_a_correct_locator_resolves",
+          "LessonProvenanceTests.test_a_finding_absent_from_the_cited_checkpoint_is_rejected",
+          "LessonProvenanceTests.test_a_nonexistent_checkpoint_is_rejected"
+        ]
+      }
+    ],
+    "all": [
+      "CommandInputBindingTests.test_a_bound_record_passes",
+      "CommandInputBindingTests.test_a_clean_tree_claim_is_checked_against_the_declared_commit",
+      "CommandInputBindingTests.test_a_digest_that_omits_an_input_is_rejected",
+      "CommandInputBindingTests.test_a_record_without_a_digest_is_rejected",
+      "CommandInputBindingTests.test_the_recorder_binds_inputs_automatically",
+      "DeliveryLifecycleTests.test_full_delivery_assurance_flow_reaches_ready_for_review",
+      "DerivedCountTests.test_a_forged_count_is_rejected",
+      "DerivedCountTests.test_a_markdown_claim_that_contradicts_the_derivation_is_rejected",
+      "DerivedCountTests.test_the_stored_counts_match_the_derivation",
+      "ExpectedRequirementSetTests.test_a_downgraded_matrix_cannot_escape_the_comparison",
+      "ExpectedRequirementSetTests.test_a_requirement_without_an_anchor_is_rejected",
+      "ExpectedRequirementSetTests.test_an_unexpected_anchored_requirement_is_rejected",
+      "ExpectedRequirementSetTests.test_deleting_a_requirement_and_recomputing_the_counts_still_fails",
+      "ExpectedRequirementSetTests.test_the_expected_set_is_derived_from_the_canonical_sources",
+      "ExpectedRequirementSetTests.test_the_state_mandatory_count_is_cross_checked",
+      "ExternalAttestationTests.test_a_failed_red_team_cannot_produce_an_external_pass",
+      "ExternalAttestationTests.test_a_failed_review_cannot_produce_an_external_pass",
+      "ExternalAttestationTests.test_an_attestation_naming_the_subject_as_its_own_auditor_is_rejected",
+      "ExternalAttestationTests.test_an_implementer_checkpoint_cannot_declare_an_external_pass",
+      "ExternalAttestationTests.test_an_intermediate_gate_cannot_take_the_external_status",
+      "ExternalAttestationTests.test_second_tool_validation_alone_is_not_enough",
+      "IntegrityAnchorTests.test_a_broken_link_between_anchors_is_detected",
+      "IntegrityAnchorTests.test_a_moved_historical_tag_is_detected",
+      "IntegrityAnchorTests.test_a_recomputed_anchor_hash_must_match_its_fields",
+      "IntegrityAnchorTests.test_a_sealed_checkpoint_without_an_anchor_is_detected",
+      "IntegrityAnchorTests.test_an_unexpected_tree_is_detected",
+      "LessonProvenanceTests.test_a_correct_locator_resolves",
+      "LessonProvenanceTests.test_a_finding_absent_from_the_cited_checkpoint_is_rejected",
+      "LessonProvenanceTests.test_a_nonexistent_checkpoint_is_rejected",
+      "LessonProvenanceTests.test_every_repository_lesson_cites_a_resolvable_source",
+      "LessonResolutionTests.test_a_control_path_may_not_escape_the_repository",
+      "LessonResolutionTests.test_a_test_control_must_exist_in_the_suite",
+      "LessonResolutionTests.test_an_invariant_control_must_be_defined_in_the_tooling",
+      "LessonResolutionTests.test_lesson_evidence_must_resolve",
+      "LessonValidationTests.test_secret_in_a_lesson_fails",
+      "MandatoryGatePolicyTests.test_a_cycle_measured_against_no_gate_is_rejected",
+      "MandatoryGatePolicyTests.test_a_cycle_missing_one_mandatory_gate_is_rejected",
+      "MandatoryGatePolicyTests.test_a_gate_without_command_evidence_is_rejected",
+      "MandatoryGatePolicyTests.test_a_mandatory_gate_that_exited_nonzero_is_rejected",
+      "MandatoryGatePolicyTests.test_the_policy_declares_a_non_empty_closed_set",
+      "PreflightFreshnessTests.test_a_changed_fingerprint_makes_the_preflight_stale",
+      "PreflightFreshnessTests.test_a_dropped_lesson_makes_the_preflight_stale",
+      "PreflightFreshnessTests.test_a_preflight_from_another_gate_is_refused",
+      "PreflightFreshnessTests.test_the_checkpoint_refuses_a_stale_preflight",
+      "PromotionInvariantTests.test_every_positive_status_rejects_a_partial_requirement",
+      "PromotionInvariantTests.test_every_positive_status_rejects_a_red_completeness_gate",
+      "PromotionInvariantTests.test_every_positive_status_rejects_a_red_green_keeper",
+      "PromotionInvariantTests.test_every_positive_status_rejects_an_unexecuted_mandatory_dimension",
+      "PromotionInvariantTests.test_every_positive_status_rejects_every_red_quality_dimension",
+      "SealChronologyTests.test_a_dirty_tree_validation_is_not_evidence_of_a_sealed_commit",
+      "SealChronologyTests.test_a_missing_post_commit_validation_is_rejected",
+      "SealChronologyTests.test_a_record_after_the_end_of_the_run_is_rejected",
+      "SealChronologyTests.test_a_validation_of_an_unrelated_commit_is_rejected"
+    ]
+  },
+  "attackBattery": [
+    {
+      "attackId": "A",
+      "target": "readiness and blocker invariant",
+      "mutation": "Add a blocker to a READY_FOR_REVIEW checkpoint",
+      "mandatory": true,
+      "expected": "reject",
+      "observed": "exit=1 CHECKPOINT_INVALID | - READY_FOR_REVIEW is incompatible with a non-empty blockedBy: an unresolved blocker planted by the CP-0009 audit",
+      "result": "DEFENDED"
+    },
+    {
+      "attackId": "B",
+      "target": "mandatory quality",
+      "mutation": "Set a review-ready quality dimension red",
+      "mandatory": true,
+      "expected": "reject",
+      "observed": "exit=1 CHECKPOINT_INVALID | - greenKeeper=PASS contradicts QUALITY.json unitTests=FAIL | - READY_FOR_REVIEW cannot have QUALITY.json unitTests=FAIL",
+      "result": "DEFENDED"
+    },
+    {
+      "attackId": "C",
+      "target": "completeness denominator",
+      "mutation": "Delete a canonical requirement and recompute every count",
+      "mandatory": true,
+      "expected": "reject",
+      "observed": "exit=1 CHECKPOINT_INVALID | - COMPLETENESS-REPORT.json expectedRequirements=130 contradicts the recomputed value 131 | - COMPLETENESS-REPORT.json result='PASS' contradicts the recomputed value 'FAIL' | - DELIVERY_COMPLETENESS_GATE is STALE: the code, requirements, lessons or policy changed after the audit, so it must run again | - READY_FOR_REVIEW blocked by canonical:SETUP-00#1.1: the canonical expected",
+      "result": "DEFENDED"
+    },
+    {
+      "attackId": "D",
+      "target": "completeness claims",
+      "mutation": "Forge the stored counts of a passing report",
+      "mandatory": true,
+      "expected": "reject",
+      "observed": "exit=1 CHECKPOINT_INVALID | - COMPLETENESS-REPORT.json totalRequirements=999 contradicts the recomputed value 131 | - COMPLETENESS-REPORT.json complete=999 contradicts the recomputed value 131",
+      "result": "DEFENDED"
+    },
+    {
+      "attackId": "E",
+      "target": "lesson-derived requirement",
+      "mutation": "Remove a lesson-derived requirement from the matrix",
+      "mandatory": true,
+      "expected": "reject",
+      "observed": "exit=1 CHECKPOINT_INVALID | - COMPLETENESS-REPORT.json expectedRequirements=130 contradicts the recomputed value 131 | - COMPLETENESS-REPORT.json result='PASS' contradicts the recomputed value 'FAIL' | - DELIVERY_COMPLETENESS_GATE is STALE: the code, requirements, lessons or policy changed after the audit, so it must run again | - READY_FOR_REVIEW blocked by LESSON-REQ-0001: the lesson preflight derived ",
+      "result": "DEFENDED"
+    },
+    {
+      "attackId": "F",
+      "target": "GUARDED semantics",
+      "mutation": "Replace a preventive control with documentation only",
+      "mandatory": true,
+      "expected": "reject",
+      "observed": "exit=1 LESSONS_INVALID | - LSN-0001: GUARDED requires at least one preventive control of kind test, validator, lint, policy, schema, invariant, automated-check; documentation alone is not a guardrail",
+      "result": "DEFENDED"
+    },
+    {
+      "attackId": "G",
+      "target": "lesson identity",
+      "mutation": "Duplicate a lesson identifier",
+      "mandatory": true,
+      "expected": "reject",
+      "observed": "exit=1 LESSONS_INVALID | - LSN-0001: duplicate lessonId | - LSN-0001: recurrenceKey 'checkpoint/removing-entry-files-json-silently-altering' is already used by LSN-0002; a repeat must increment that lesson instead of creating a new one | - LSN-0001: guardrail 'GRD-0002' does not list this lesson, so the link is one-directional and cannot be audited",
+      "result": "DEFENDED"
+    },
+    {
+      "attackId": "H",
+      "target": "lesson secret handling",
+      "mutation": "Insert a secret-shaped value into a scanned field",
+      "mandatory": true,
+      "expected": "reject",
+      "observed": "exit=1 LESSONS_INVALID | - LSN-0001: secret pattern detected in $.symptom: GitHub credential",
+      "result": "DEFENDED"
+    },
+    {
+      "attackId": "I",
+      "target": "sealed predecessor",
+      "mutation": "Rewrite a sealed predecessor, refresh hashes and move its tag",
+      "mandatory": true,
+      "expected": "reject",
+      "observed": "exit=1 CHECKPOINT_INVALID | - checkpoint integrity: SETUP-00-CP-0007: tag refs/tags/iacode-checkpoints/SETUP-00-CP-0007 resolves to a552e918df0d3c5eb632fdc931f0c2dc90ea51c7, not the anchored commit 502c554575f717c1d57290e4f4aafa575e41170e",
+      "result": "DEFENDED"
+    },
+    {
+      "attackId": "J",
+      "target": "tag immutability",
+      "mutation": "Move a checkpoint tag and HEAD together",
+      "mandatory": true,
+      "expected": "reject",
+      "observed": "exit=1 CHECKPOINT_INVALID | - checkpoint integrity: SETUP-00-CP-0006: tag refs/tags/iacode-checkpoints/SETUP-00-CP-0006 resolves to 855edcfcfc19bbb9281670f18e2bc88a746de3f2, not the anchored commit 994bab402873bc4d221c02d8c94bdebeb2b0f3cb",
+      "result": "DEFENDED"
+    },
+    {
+      "attackId": "K",
+      "target": "file inventory",
+      "mutation": "Remove one inventory entry",
+      "mandatory": true,
+      "expected": "reject",
+      "observed": "exit=1 CHECKPOINT_INVALID | - FILES.json omits a changed path: .claude/agents/m0-closure-auditor.md (added)",
+      "result": "DEFENDED"
+    },
+    {
+      "attackId": "L",
+      "target": "file inventory",
+      "mutation": "Silently modify a tracked file",
+      "mandatory": true,
+      "expected": "reject",
+      "observed": "exit=1 CHECKPOINT_INVALID | - greenKeeper=PASS is STALE: the delivery-assurance scope changed after the last GREEN cycle, so the Green Keeper must run again | - DELIVERY_COMPLETENESS_GATE is STALE: the code, requirements, lessons or policy changed after the audit, so it must run again | - M0-INTERNAL-RED-TEAM.json is STALE: the attacked content changed after the run, so the affected attacks must be execu",
+      "result": "DEFENDED"
+    },
+    {
+      "attackId": "M",
+      "target": "file inventory",
+      "mutation": "Set a wrong hashBefore",
+      "mandatory": true,
+      "expected": "reject",
+      "observed": "exit=1 CHECKPOINT_INVALID | - FILES.json hashBefore does not match the baseCommit content of .iacode/memory/LESSONS.md",
+      "result": "DEFENDED"
+    },
+    {
+      "attackId": "N",
+      "target": "file inventory",
+      "mutation": "Set a wrong hashAfter",
+      "mandatory": true,
+      "expected": "reject",
+      "observed": "exit=1 CHECKPOINT_INVALID | - FILES.json: hash mismatch for .claude/agents/m0-closure-auditor.md | - FILES.json hashAfter does not match the repository content of .claude/agents/m0-closure-auditor.md",
+      "result": "DEFENDED"
+    },
+    {
+      "attackId": "O",
+      "target": "quality evidence",
+      "mutation": "Claim PASS with no evidence",
+      "mandatory": true,
+      "expected": "reject",
+      "observed": "exit=1 CHECKPOINT_INVALID | - QUALITY.json staticAnalysis=PASS requires at least one evidence reference",
+      "result": "DEFENDED"
+    },
+    {
+      "attackId": "P",
+      "target": "evidence resolution",
+      "mutation": "Reference an unknown command",
+      "mandatory": true,
+      "expected": "reject",
+      "observed": "exit=1 CHECKPOINT_INVALID | - QUALITY.json staticAnalysis references an unknown command id 'cmd-9999'",
+      "result": "DEFENDED"
+    },
+    {
+      "attackId": "Q",
+      "target": "second-tool evidence",
+      "mutation": "Supply complete attribution with empty evidence",
+      "mandatory": true,
+      "expected": "reject",
+      "observed": "exit=1 CHECKPOINT_INVALID | - GATE_PASS requires an independent review verdict, found 'PENDING' | - GATE_PASS requires a Red Team verdict, found 'PENDING' | - external validation: no external audit attestation exists for milestone M0 and checkpoint SETUP-00-CP-0008; an external PASS may not be self-asserted | - GATE_PASS cannot have QUALITY.json redTeam=NOT_EXECUTED | - GATE_PASS requires QUALITY.json re",
+      "result": "DEFENDED"
+    },
+    {
+      "attackId": "R",
+      "target": "pass vocabulary",
+      "mutation": "Promote an internally authored result to an external status",
+      "mandatory": true,
+      "expected": "reject",
+      "observed": "exit=1 CHECKPOINT_INVALID | - MILESTONE_EXTERNAL_PASS requires an independent review verdict, found 'PENDING' | - MILESTONE_EXTERNAL_PASS requires a Red Team verdict, found 'PENDING' | - external validation: no external audit attestation exists for milestone M0 and checkpoint SETUP-00-CP-0008; an external PASS may not be self-asserted",
+      "result": "DEFENDED"
+    },
+    {
+      "attackId": "S",
+      "target": "external milestone review",
+      "mutation": "Leave review and Red Team pending with a null auditor",
+      "mandatory": true,
+      "expected": "reject",
+      "observed": "exit=1 CHECKPOINT_INVALID | - MILESTONE_EXTERNAL_PASS requires an independent review verdict, found 'PENDING' | - MILESTONE_EXTERNAL_PASS requires a Red Team verdict, found 'PENDING' | - a milestone may only be PASSED when secondToolValidation is PASSED | - external validation: no external audit attestation exists for milestone M0 and checkpoint SETUP-00-CP-0008; an external PASS may not be self-asserted",
+      "result": "DEFENDED"
+    },
+    {
+      "attackId": "T",
+      "target": "extraordinary cadence",
+      "mutation": "Request an audit without a known trigger",
+      "mandatory": true,
+      "expected": "reject",
+      "observed": "exit=1 CHECKPOINT_INVALID | - externalAuditReason must name one of the recorded triggers: security-boundary, sandbox-boundary, rights-or-provenance-change, training-data-policy, training-execution, promotion-logic, secret-handling, destructive-persistence",
+      "result": "DEFENDED"
+    },
+    {
+      "attackId": "U",
+      "target": "preflight freshness",
+      "mutation": "Retire a canonical lesson but keep the active preflight",
+      "mandatory": true,
+      "expected": "reject",
+      "observed": "exit=1 CHECKPOINT_INVALID | - greenKeeper=PASS is STALE: the delivery-assurance scope changed after the last GREEN cycle, so the Green Keeper must run again | - DELIVERY_COMPLETENESS_GATE is STALE: the code, requirements, lessons or policy changed after the audit, so it must run again | - lesson preflight: the lesson preflight is STALE: its recorded inputsFingerprint does not match the current engineerin",
+      "result": "DEFENDED"
+    },
+    {
+      "attackId": "V",
+      "target": "Green Keeper mandatory set",
+      "mutation": "Run the Green Keeper with an empty gate selection",
+      "mandatory": true,
+      "expected": "reject",
+      "observed": "exit=1 recorded cycle measured checkpointValidation,integrity,lessons,staticAnalysis,tests against the canonical checkpointValidation,integrity,lessons,staticAnalysis,tests; commandsExecuted=5; green_keeper exit=1 | [tests] GREEN exit=0 ledger=cmd-0061 | [staticAnalysis] GREEN exit=0 ledger=cmd-0062 | [lessons] GREEN exit=0 ledger=cmd-0063 | [integrity] GREEN exit=0 ledger=cmd-0064 | [checkpointValidatio",
+      "result": "DEFENDED"
+    },
+    {
+      "attackId": "W",
+      "target": "partial completeness",
+      "mutation": "Claim PASS with a PARTIAL requirement",
+      "mandatory": true,
+      "expected": "reject",
+      "observed": "exit=1 CHECKPOINT_INVALID | - STATE.json requirementsMatrix.complete=131 does not match the matrix value 130 | - STATE.json requirementsMatrix.partial=0 does not match the matrix value 1 | - STATE.json requirementsMatrix.coveragePercent does not match the matrix | - COMPLETENESS-REPORT.json complete=131 contradicts the recomputed value 130 | - COMPLETENESS-REPORT.json partial=0 contradicts the recomputed",
+      "result": "DEFENDED"
+    },
+    {
+      "attackId": "X",
+      "target": "command audit",
+      "mutation": "Remove a required field from a command record",
+      "mandatory": true,
+      "expected": "reject",
+      "observed": "exit=1 CHECKPOINT_INVALID | - COMMANDS.jsonl:1: schemaVersion 3.0.0 requires runtime",
+      "result": "DEFENDED"
+    },
+    {
+      "attackId": "Y",
+      "target": "latest pointer",
+      "mutation": "Point LATEST.md at an older checkpoint",
+      "mandatory": true,
+      "expected": "reject",
+      "observed": "exit=1 CHECKPOINT_INVALID | - requested checkpoint is not the LATEST target: C:\\Users\\cesar\\AppData\\Local\\Temp\\claude\\E--iacode\\b305dd77-f117-4885-9aeb-0239c66d22e6\\scratchpad\\audit\\battery\\fixture\\docs\\checkpoints\\SETUP-00-CP-0008",
+      "result": "DEFENDED"
+    },
+    {
+      "attackId": "Z",
+      "target": "path safety",
+      "mutation": "Use path traversal as the Gate identifier",
+      "mandatory": true,
+      "expected": "reject",
+      "observed": "exit=2 usage: new_checkpoint.py [-h] [--root ROOT] --gate GATE | [--status {NOT_STARTED,BASELINING,IN_PROGRESS,BLOCKED,READY_FOR_REVIEW,REWORK_REQUIRED,READY_FOR_RED_TEAM,INTERNAL_GATE_PASS,MILESTONE_EXTERNAL_PASS}] | [--phase PHASE] | new_checkpoint.py: error: --gate must be an uppercase identifier such as SETUP-00 or GATE-0",
+      "result": "DEFENDED"
+    },
+    {
+      "attackId": "AA",
+      "target": "aggregate consistency",
+      "mutation": "Contradict the matrix in the recorded state aggregate",
+      "mandatory": false,
+      "expected": "reject",
+      "observed": "exit=1 CHECKPOINT_INVALID | - STATE.json requirementsMatrix.mandatory=999 does not match the matrix value 130",
+      "result": "DEFENDED"
+    },
+    {
+      "attackId": "AB",
+      "target": "control resolution",
+      "mutation": "Point a GUARDED lesson at a nonexistent test",
+      "mandatory": false,
+      "expected": "reject",
+      "observed": "exit=1 LESSONS_INVALID | - LSN-0001: control names the test 'NoSuchTests.test_nothing', which does not exist in the suite",
+      "result": "DEFENDED"
+    },
+    {
+      "attackId": "AC",
+      "target": "evidence resolution",
+      "mutation": "Point lesson evidence at a nonexistent file",
+      "mandatory": false,
+      "expected": "reject",
+      "observed": "exit=1 LESSONS_INVALID | - LSN-0001: evidence file does not exist: file:docs/does-not-exist.md",
+      "result": "DEFENDED"
+    },
+    {
+      "attackId": "AD",
+      "target": "nested secret scan",
+      "mutation": "Hide a secret-shaped value inside prevention.description",
+      "mandatory": false,
+      "expected": "reject",
+      "observed": "exit=1 LESSONS_INVALID | - LSN-0001: secret pattern detected in $.prevention[0].description: GitHub credential",
+      "result": "DEFENDED"
+    },
+    {
+      "attackId": "AE",
+      "target": "preflight gate binding",
+      "mutation": "Reuse a SETUP-00 preflight for another Gate",
+      "mandatory": false,
+      "expected": "reject",
+      "observed": "exit=1 CHECKPOINT_INVALID | - STATE.json lessonPreflight.gate does not match LESSON-PREFLIGHT.json | - lesson preflight: the preflight was generated for gate 'SETUP-00' but the checkpoint declares 'GATE 1'; a preflight may not be reused across Gates | - STATE.json milestone.id='M0' does not match the planned milestone M1 for gate 'GATE 1' | - STATE.json milestone.gates does not match the planned grouping",
+      "result": "DEFENDED"
+    },
+    {
+      "attackId": "AF",
+      "target": "promotion invariant",
+      "mutation": "External status with a red Green Keeper",
+      "mandatory": false,
+      "expected": "reject",
+      "observed": "exit=1 CHECKPOINT_INVALID | - MILESTONE_EXTERNAL_PASS requires GREEN_KEEPER_GATE=PASS, found 'FAIL' | - MILESTONE_EXTERNAL_PASS requires an independent review verdict, found 'PENDING' | - MILESTONE_EXTERNAL_PASS requires a Red Team verdict, found 'PENDING' | - a milestone may only be PASSED when secondToolValidation is PASSED | - external validation: no external audit attestation exists for milestone M0 ",
+      "result": "DEFENDED"
+    },
+    {
+      "attackId": "AG",
+      "target": "gate registry",
+      "mutation": "Remove a mandatory gate from the policy after a green cycle",
+      "mandatory": false,
+      "expected": "reject",
+      "observed": "exit=1 CHECKPOINT_INVALID | - greenKeeper=PASS was measured against checkpointValidation, integrity, lessons, staticAnalysis, tests, not the canonical mandatory set checkpointValidation, integrity, staticAnalysis, tests | - greenKeeper=PASS is STALE: the delivery-assurance scope changed after the last GREEN cycle, so the Green Keeper must run again | - DELIVERY_COMPLETENESS_GATE is STALE: the code, requi",
+      "result": "DEFENDED"
+    },
+    {
+      "attackId": "AH",
+      "target": "gate staleness",
+      "mutation": "Edit the assurance scope after the last green cycle",
+      "mandatory": false,
+      "expected": "reject",
+      "observed": "exit=1 CHECKPOINT_INVALID | - COMMANDS.jsonl:60: the record claims a clean tree at 3a143911fc01 but the input scripts/development-ledger/validate_checkpoint.py had different content there | - greenKeeper=PASS is STALE: the delivery-assurance scope changed after the last GREEN cycle, so the Green Keeper must run again | - DELIVERY_COMPLETENESS_GATE is STALE: the code, requirements, lessons or policy chang",
+      "result": "DEFENDED"
+    },
+    {
+      "attackId": "AI",
+      "target": "external attestation",
+      "mutation": "Attest the subject with the subject's own checkpoint",
+      "mandatory": false,
+      "expected": "reject",
+      "observed": "exit=1 CHECKPOINT_INVALID | - greenKeeper=PASS is STALE: the delivery-assurance scope changed after the last GREEN cycle, so the Green Keeper must run again | - DELIVERY_COMPLETENESS_GATE is STALE: the code, requirements, lessons or policy changed after the audit, so it must run again | - external validation: .iacode/attestations/M0-CP-0009-FIXTURE.json: attests commit 'cc6599027266346aae322a20f654e906e9",
+      "result": "DEFENDED"
+    },
+    {
+      "attackId": "AJ",
+      "target": "external attestation",
+      "mutation": "Claim an external PASS over a failed review",
+      "mandatory": false,
+      "expected": "reject",
+      "observed": "exit=1 CHECKPOINT_INVALID | - greenKeeper=PASS is STALE: the delivery-assurance scope changed after the last GREEN cycle, so the Green Keeper must run again | - DELIVERY_COMPLETENESS_GATE is STALE: the code, requirements, lessons or policy changed after the audit, so it must run again | - external validation: .iacode/attestations/M0-CP-0009-FIXTURE.json: attests commit 'f4546ee6a8c6ca3b648b335c7f057736f0",
+      "result": "DEFENDED"
+    },
+    {
+      "attackId": "AK",
+      "target": "external attestation",
+      "mutation": "Attest a different commit than the one promoted",
+      "mandatory": false,
+      "expected": "reject",
+      "observed": "exit=1 CHECKPOINT_INVALID | - greenKeeper=PASS is STALE: the delivery-assurance scope changed after the last GREEN cycle, so the Green Keeper must run again | - DELIVERY_COMPLETENESS_GATE is STALE: the code, requirements, lessons or policy changed after the audit, so it must run again | - external validation: .iacode/attestations/M0-CP-0009-FIXTURE.json: attests commit '0000000000000000000000000000000000",
+      "result": "DEFENDED"
+    },
+    {
+      "attackId": "AL",
+      "target": "derived counts",
+      "mutation": "Forge a stored derived count",
+      "mandatory": false,
+      "expected": "reject",
+      "observed": "exit=1 CHECKPOINT_INVALID | - COUNTS.json TESTS=999/999 contradicts the derived 306/306",
+      "result": "DEFENDED"
+    },
+    {
+      "attackId": "AM",
+      "target": "count consistency",
+      "mutation": "State a contradicting count in Markdown",
+      "mandatory": false,
+      "expected": "reject",
+      "observed": "exit=1 CHECKPOINT_INVALID | - FINAL-REPORT.md states 999/999 TESTS, which contradicts the derived 306/306",
+      "result": "DEFENDED"
+    },
+    {
+      "attackId": "AN",
+      "target": "findings closure",
+      "mutation": "Offer the delivery with an audit finding still open",
+      "mandatory": false,
+      "expected": "reject",
+      "observed": "exit=1 CHECKPOINT_INVALID | - CP7-FINDINGS-CLOSURE.json: closed does not match the recorded findings | - CP7-FINDINGS-CLOSURE.json: a finding that is not CLOSED cannot produce result CLOSED | - READY_FOR_REVIEW is not available while M0-F-001 of M0-CP-0007 remain open | - COUNTS.json FINDINGS=11/11 contradicts the derived 10/11 | - CP7-FINDINGS-CLOSURE.md states 11/11 FINDINGS, which contradicts the deri",
+      "result": "DEFENDED"
+    },
+    {
+      "attackId": "AO",
+      "target": "internal Red Team",
+      "mutation": "Keep a PASS verdict while an attack escaped",
+      "mandatory": false,
+      "expected": "reject",
+      "observed": "exit=1 CHECKPOINT_INVALID | - M0-INTERNAL-RED-TEAM.json: defended does not match the recorded attacks | - M0-INTERNAL-RED-TEAM.json: escaped does not match the recorded attacks | - M0-INTERNAL-RED-TEAM.json: 1 attack(s) escaped but the result is 'RED_TEAM_PASS' | - COUNTS.json ATTACKS=46/46 contradicts the derived 45/46 | - FINAL-REPORT.md states 46/46 ATTACKS, which contradicts the derived 45/46 | - M0-",
+      "result": "DEFENDED"
+    },
+    {
+      "attackId": "AP",
+      "target": "internal mirror audit",
+      "mutation": "Keep a PASS verdict while a mirror check failed",
+      "mandatory": false,
+      "expected": "reject",
+      "observed": "exit=1 CHECKPOINT_INVALID | - M0-INTERNAL-MIRROR.json: failed does not match the recorded checks | - M0-INTERNAL-MIRROR.json: a failed check cannot produce a PASS",
+      "result": "DEFENDED"
+    },
+    {
+      "attackId": "AQ",
+      "target": "guardrail registry",
+      "mutation": "Verify a guardrail with a test that does not exist",
+      "mandatory": false,
+      "expected": "reject",
+      "observed": "exit=1 LESSONS_INVALID | - LSN-0001: guardrail 'GRD-0001' is verified by 'NoSuchTests.test_nothing', which does not exist in the suite",
+      "result": "DEFENDED"
+    },
+    {
+      "attackId": "AR",
+      "target": "integrity anchors",
+      "mutation": "Break the link between two anchors",
+      "mandatory": false,
+      "expected": "reject",
+      "observed": "exit=1 INTEGRITY_INVALID | - SETUP-00-CP-0004: anchorHash does not match its own anchored fields (recorded 'a5c174320d6fae29d2e94c20a5de08c8617cfa3c18d3f4946c6f0915c710b3bb', recomputed '714ded680a4314167420555efdc79d1a6563b0929af2339921a27fb663bbe1d7') | - SETUP-00-CP-0004: previousAnchorHash breaks the chain with 'SETUP-00-CP-0003'",
+      "result": "DEFENDED"
+    },
+    {
+      "attackId": "AS",
+      "target": "command replay context",
+      "mutation": "Remove the content binding of recorded inputs",
+      "mandatory": false,
+      "expected": "reject",
+      "observed": "exit=1 CHECKPOINT_INVALID | - COMMANDS.jsonl:1: schemaVersion 3.2.0 requires inputsDigest binding every declared input by content | - COMMANDS.jsonl:2: schemaVersion 3.2.0 requires inputsDigest binding every declared input by content | - COMMANDS.jsonl:3: schemaVersion 3.2.0 requires inputsDigest binding every declared input by content | - COMMANDS.jsonl:4: schemaVersion 3.2.0 requires inputsDigest bindi",
+      "result": "DEFENDED"
+    },
+    {
+      "attackId": "AT",
+      "target": "seal chronology",
+      "mutation": "Remove the post-commit validation of the sealed content",
+      "mandatory": false,
+      "expected": "reject",
+      "observed": "exit=1 CHECKPOINT_INVALID | - READY_FOR_REVIEW requires a recorded post-commit-validation run with exit code 0 over a clean worktree; the sealed content must be validated as committed, not as a dirty working tree",
+      "result": "DEFENDED"
+    },
+    {
+      "attackId": "AU",
+      "target": "external attestation",
+      "mutation": "Reuse an attestation written for another checkpoint",
+      "mandatory": false,
+      "expected": "reject",
+      "observed": "exit=1 CHECKPOINT_INVALID | - greenKeeper=PASS is STALE: the delivery-assurance scope changed after the last GREEN cycle, so the Green Keeper must run again | - DELIVERY_COMPLETENESS_GATE is STALE: the code, requirements, lessons or policy changed after the audit, so it must run again | - external validation: no external audit attestation exists for milestone M0 and checkpoint SETUP-00-CP-0008; an extern",
+      "result": "DEFENDED"
+    },
+    {
+      "attackId": "AV",
+      "target": "external attestation",
+      "mutation": "Claim an external PASS over a failed Red Team",
+      "mandatory": false,
+      "expected": "reject",
+      "observed": "exit=1 CHECKPOINT_INVALID | - greenKeeper=PASS is STALE: the delivery-assurance scope changed after the last GREEN cycle, so the Green Keeper must run again | - DELIVERY_COMPLETENESS_GATE is STALE: the code, requirements, lessons or policy changed after the audit, so it must run again | - external validation: .iacode/attestations/M0-CP-0009-FIXTURE.json: attests commit 'ccd87bfb4bceebf984bb962d86766f3e1d",
+      "result": "DEFENDED"
+    },
+    {
+      "attackId": "AW",
+      "target": "external attestation",
+      "mutation": "Claim an external PASS over an incomplete audit",
+      "mandatory": false,
+      "expected": "reject",
+      "observed": "exit=1 CHECKPOINT_INVALID | - greenKeeper=PASS is STALE: the delivery-assurance scope changed after the last GREEN cycle, so the Green Keeper must run again | - DELIVERY_COMPLETENESS_GATE is STALE: the code, requirements, lessons or policy changed after the audit, so it must run again | - external validation: .iacode/attestations/M0-CP-0009-FIXTURE.json: attests commit 'f3af4d407d1abc18a131386d21dfd04edd",
+      "result": "DEFENDED"
+    },
+    {
+      "attackId": "AX",
+      "target": "external attestation",
+      "mutation": "Attest from a checkpoint that is unsealed and unanchored",
+      "mandatory": false,
+      "expected": "reject",
+      "observed": "exit=1 CHECKPOINT_INVALID | - greenKeeper=PASS is STALE: the delivery-assurance scope changed after the last GREEN cycle, so the Green Keeper must run again | - DELIVERY_COMPLETENESS_GATE is STALE: the code, requirements, lessons or policy changed after the audit, so it must run again | - external validation: .iacode/attestations/M0-CP-0009-FIXTURE.json: attests commit '021b8441d1a24b83a858600ef08809fe05",
+      "result": "DEFENDED"
+    },
+    {
+      "attackId": "AY",
+      "target": "external attestation",
+      "mutation": "Attest with no auditor role recorded",
+      "mandatory": false,
+      "expected": "reject",
+      "observed": "exit=1 CHECKPOINT_INVALID | - greenKeeper=PASS is STALE: the delivery-assurance scope changed after the last GREEN cycle, so the Green Keeper must run again | - DELIVERY_COMPLETENESS_GATE is STALE: the code, requirements, lessons or policy changed after the audit, so it must run again | - external validation: .iacode/attestations/M0-CP-0009-FIXTURE.json: an external audit attestation requires auditorRole",
+      "result": "DEFENDED"
+    },
+    {
+      "attackId": "AZ",
+      "target": "external attestation",
+      "mutation": "Claim an external PASS over a failed test result",
+      "mandatory": false,
+      "expected": "reject",
+      "observed": "exit=1 CHECKPOINT_INVALID | - greenKeeper=PASS is STALE: the delivery-assurance scope changed after the last GREEN cycle, so the Green Keeper must run again | - DELIVERY_COMPLETENESS_GATE is STALE: the code, requirements, lessons or policy changed after the audit, so it must run again | - external validation: .iacode/attestations/M0-CP-0009-FIXTURE.json: attests commit 'fc724b3808fc88e3ca90d2732526e5e447",
+      "result": "DEFENDED"
+    },
+    {
+      "attackId": "POS-EXT",
+      "target": "external attestation",
+      "mutation": "A structurally legitimate external PASS",
+      "mandatory": true,
+      "expected": "accept",
+      "observed": "exit=1 CHECKPOINT_INVALID | - greenKeeper=PASS is STALE: the delivery-assurance scope changed after the last GREEN cycle, so the Green Keeper must run again | - DELIVERY_COMPLETENESS_GATE is STALE: the code, requirements, lessons or policy changed after the audit, so it must run again | - external validation: .iacode/attestations/M0-CP-0009-FIXTURE.json: attests commit '9ef95d48da395cec126942c747115c20965b457d', not the subject commit '049da1db29fc053b9bae7f88fe2893c10abbaef1' | - the sealing commit changed more than the append-only validation evidence: .iacode/attestations/M0-CP-0009-FIXTURE.json | - M0-INTERNAL-RED-TEAM.json is STALE: the attacked content changed after the run, so the affected attacks must be executed again | - M0-INTERNAL-MIRROR.json is STALE: the audited content changed after the mirror ran",
+      "result": "REFUSED"
+    }
+  ],
+  "assuranceScenarios": [
+    {
+      "id": "BASE-001",
+      "description": "the consistent delivery copy is accepted by both validators",
+      "expected": "accept",
+      "marker": null,
+      "rejected": false,
+      "observed": [
+        "no error"
+      ],
+      "result": "ACCEPTED"
+    },
+    {
+      "id": "GK-001",
+      "description": "requiredGates empty in the recorded cycle",
+      "expected": "reject",
+      "marker": "canonical mandatory set",
+      "rejected": true,
+      "observed": [
+        "greenKeeper=PASS was measured against no gate, not the canonical mandatory set checkpointValidation, integrity, lessons, staticAnalysis, tests"
+      ],
+      "result": "DEFENDED"
+    },
+    {
+      "id": "GK-002",
+      "description": "one mandatory gate omitted from the cycle",
+      "expected": "reject",
+      "marker": "canonical mandatory set",
+      "rejected": true,
+      "observed": [
+        "greenKeeper=PASS was measured against checkpointValidation, integrity, staticAnalysis, tests, not the canonical mandatory set checkpointValidation, integrity, lessons, staticAnalysis, tests"
+      ],
+      "result": "DEFENDED"
+    },
+    {
+      "id": "GK-003",
+      "description": "a mandatory gate recorded as not executed",
+      "expected": "reject",
+      "marker": "exiting None",
+      "rejected": true,
+      "observed": [
+        "greenKeeper=PASS records the mandatory gate 'tests' exiting None"
+      ],
+      "result": "DEFENDED"
+    },
+    {
+      "id": "GK-004",
+      "description": "a mandatory gate that exited nonzero",
+      "expected": "reject",
+      "marker": "exiting 1",
+      "rejected": true,
+      "observed": [
+        "greenKeeper=PASS records the mandatory gate 'tests' exiting 1"
+      ],
+      "result": "DEFENDED"
+    },
+    {
+      "id": "GK-005",
+      "description": "a mandatory gate with no command evidence",
+      "expected": "reject",
+      "marker": "no command evidence",
+      "rejected": true,
+      "observed": [
+        "greenKeeper=PASS records no command evidence for the gate 'checkpointValidation'",
+        "greenKeeper=PASS records no command evidence for the gate 'integrity'",
+        "greenKeeper=PASS records no command evidence for the gate 'lessons'"
+      ],
+      "result": "DEFENDED"
+    },
+    {
+      "id": "GK-006",
+      "description": "a PASS carrying remaining failures",
+      "expected": "reject",
+      "marker": "remainingFailures",
+      "rejected": true,
+      "observed": [
+        "greenKeeper=PASS requires remainingFailures to be zero"
+      ],
+      "result": "DEFENDED"
+    },
+    {
+      "id": "GK-007",
+      "description": "a PASS carrying unresolved rework items",
+      "expected": "reject",
+      "marker": "unresolved",
+      "rejected": true,
+      "observed": [
+        "greenKeeper=PASS requires unresolvedReworkItems to be zero"
+      ],
+      "result": "DEFENDED"
+    },
+    {
+      "id": "GK-008",
+      "description": "a fabricated PASS over a red cycle in the log",
+      "expected": "reject",
+      "marker": "contradicts the last rework cycle",
+      "rejected": true,
+      "observed": [
+        "greenKeeper=PASS contradicts the last rework cycle result 'RED'"
+      ],
+      "result": "DEFENDED"
+    },
+    {
+      "id": "GK-009",
+      "description": "a PASS whose fingerprint no longer describes the scope",
+      "expected": "reject",
+      "marker": "STALE",
+      "rejected": true,
+      "observed": [
+        "greenKeeper=PASS is STALE: the delivery-assurance scope changed after the last GREEN cycle, so the Green Keeper must run again"
+      ],
+      "result": "DEFENDED"
+    },
+    {
+      "id": "GK-010",
+      "description": "the mandatory set is the policy registry, not the caller's argument",
+      "expected": "policy-derived",
+      "marker": "mandatory_gates(ROOT)",
+      "rejected": true,
+      "observed": [
+        "mandatory_gates(ROOT) = tests,staticAnalysis,lessons,integrity,checkpointValidation"
+      ],
+      "result": "DEFENDED"
+    },
+    {
+      "id": "DC-001",
+      "description": "a canonical requirement removed",
+      "expected": "reject",
+      "marker": "canonical expected set requires",
+      "rejected": true,
+      "observed": [
+        "READY_FOR_REVIEW blocked by canonical:SETUP-00#1.1: the canonical expected set requires canonical:SETUP-00#1.1 (docs/SETUP-00-CHECKLIST.md row 1.1) but the matrix does not declare it"
+      ],
+      "result": "DEFENDED"
+    },
+    {
+      "id": "DC-002",
+      "description": "a lesson-derived requirement removed",
+      "expected": "reject",
+      "marker": "canonical expected set requires",
+      "rejected": true,
+      "observed": [
+        "READY_FOR_REVIEW blocked by lesson:LSN-0001: the canonical expected set requires lesson:LSN-0001 (LESSON-PREFLIGHT.json LESSON-REQ-0001) but the matrix does not declare it"
+      ],
+      "result": "DEFENDED"
+    },
+    {
+      "id": "DC-003",
+      "description": "an audit-finding requirement removed",
+      "expected": "reject",
+      "marker": "canonical expected set requires",
+      "rejected": true,
+      "observed": [
+        "READY_FOR_REVIEW blocked by finding:M0-F-001: the canonical expected set requires finding:M0-F-001 (M0-CP-0007 docs/checkpoints/SETUP-00-CP-0007/REVIEW-REPORT.md M0-F-001) but the matrix does not declare it"
+      ],
+      "result": "DEFENDED"
+    },
+    {
+      "id": "DC-004",
+      "description": "an audit-attack requirement removed",
+      "expected": "reject",
+      "marker": "canonical expected set requires",
+      "rejected": true,
+      "observed": [
+        "READY_FOR_REVIEW blocked by attack:A: the canonical expected set requires attack:A (M0-CP-0007 docs/checkpoints/SETUP-00-CP-0007/RED-TEAM-REPORT.md attack A) but the matrix does not declare it"
+      ],
+      "result": "DEFENDED"
+    },
+    {
+      "id": "DC-005",
+      "description": "the denominator decreased with every stored count recomputed",
+      "expected": "reject",
+      "marker": "canonical expected set requires",
+      "rejected": true,
+      "observed": [
+        "READY_FOR_REVIEW blocked by canonical:SETUP-00#1.1: the canonical expected set requires canonical:SETUP-00#1.1 (docs/SETUP-00-CHECKLIST.md row 1.1) but the matrix does not declare it"
+      ],
+      "result": "DEFENDED"
+    },
+    {
+      "id": "DC-006",
+      "description": "the declared total falsified upward",
+      "expected": "reject",
+      "marker": "does not match the matrix",
+      "rejected": true,
+      "observed": [
+        "STATE.json requirementsMatrix.total=171 does not match the matrix value 131"
+      ],
+      "result": "DEFENDED"
+    },
+    {
+      "id": "DC-007",
+      "description": "coverage forged to 100 over an incomplete matrix",
+      "expected": "reject",
+      "marker": "contradicts the recomputed value",
+      "rejected": true,
+      "observed": [
+        "COMPLETENESS-REPORT.json complete=131 contradicts the recomputed value 130",
+        "COMPLETENESS-REPORT.json partial=0 contradicts the recomputed value 1",
+        "COMPLETENESS-REPORT.json coveragePercent=100.0 contradicts the recomputed value 99.24"
+      ],
+      "result": "DEFENDED"
+    },
+    {
+      "id": "DC-008",
+      "description": "a report claiming PASS over a MISSING requirement",
+      "expected": "reject",
+      "marker": "contradicts the recomputed value",
+      "rejected": true,
+      "observed": [
+        "COMPLETENESS-REPORT.json complete=131 contradicts the recomputed value 130",
+        "COMPLETENESS-REPORT.json missing=0 contradicts the recomputed value 1",
+        "COMPLETENESS-REPORT.json coveragePercent=100.0 contradicts the recomputed value 99.24"
+      ],
+      "result": "DEFENDED"
+    },
+    {
+      "id": "DC-009",
+      "description": "a COMPLETE requirement with no evidence at all",
+      "expected": "reject",
+      "marker": "at least one evidence reference",
+      "rejected": true,
+      "observed": [
+        "READY_FOR_REVIEW blocked by REQ-0001: COMPLETE requires at least one evidence reference"
+      ],
+      "result": "DEFENDED"
+    },
+    {
+      "id": "DC-010",
+      "description": "evidence pointing at a path that does not exist",
+      "expected": "reject",
+      "marker": "does not exist",
+      "rejected": true,
+      "observed": [
+        "READY_FOR_REVIEW blocked by REQ-0001: evidence file does not exist: file:docs/does-not-exist.md"
+      ],
+      "result": "DEFENDED"
+    },
+    {
+      "id": "DC-011",
+      "description": "evidence referencing a command whose record failed",
+      "expected": "reject",
+      "marker": "cmd-0002",
+      "rejected": true,
+      "observed": [
+        "READY_FOR_REVIEW blocked by REQ-0001: evidence references command 'cmd-0002', which did not complete successfully (result='FAILED', exitCode=3)"
+      ],
+      "result": "DEFENDED"
+    },
+    {
+      "id": "EVD-001",
+      "description": "a quality PASS with no evidence reference",
+      "expected": "reject",
+      "marker": "at least one evidence reference",
+      "rejected": true,
+      "observed": [
+        "QUALITY.json staticAnalysis=PASS requires at least one evidence reference"
+      ],
+      "result": "DEFENDED"
+    },
+    {
+      "id": "EVD-002",
+      "description": "quality evidence naming a file that does not exist",
+      "expected": "reject",
+      "marker": "NO-SUCH-FILE",
+      "rejected": true,
+      "observed": [
+        "QUALITY.json staticAnalysis references a missing or empty file 'NO-SUCH-FILE.md'"
+      ],
+      "result": "DEFENDED"
+    },
+    {
+      "id": "EVD-003",
+      "description": "quality evidence naming a command that does not exist",
+      "expected": "reject",
+      "marker": "cmd-9999",
+      "rejected": true,
+      "observed": [
+        "QUALITY.json staticAnalysis references an unknown command id 'cmd-9999'"
+      ],
+      "result": "DEFENDED"
+    },
+    {
+      "id": "EVD-004",
+      "description": "quality evidence naming a command that failed",
+      "expected": "reject",
+      "marker": "cmd-0002",
+      "rejected": true,
+      "observed": [
+        "QUALITY.json staticAnalysis references command 'cmd-0002', which exited 5"
+      ],
+      "result": "DEFENDED"
+    },
+    {
+      "id": "EVD-005",
+      "description": "quality evidence naming an existing but empty file",
+      "expected": "reject",
+      "marker": "EMPTY-EVIDENCE",
+      "rejected": true,
+      "observed": [
+        "QUALITY.json staticAnalysis references a missing or empty file 'EMPTY-EVIDENCE.md'"
+      ],
+      "result": "DEFENDED"
+    },
+    {
+      "id": "EVD-006",
+      "description": "a completeness verdict describing content that has since changed",
+      "expected": "reject",
+      "marker": "STALE",
+      "rejected": true,
+      "observed": [
+        "DELIVERY_COMPLETENESS_GATE is STALE: the code, requirements, lessons or policy changed after the audit, so it must run again"
+      ],
+      "result": "DEFENDED"
+    },
+    {
+      "id": "STL-001",
+      "description": "a Green Keeper PASS whose recorded scope is no longer the current one",
+      "expected": "reject",
+      "marker": "STALE",
+      "rejected": true,
+      "observed": [
+        "greenKeeper=PASS is STALE: the delivery-assurance scope changed after the last GREEN cycle, so the Green Keeper must run again"
+      ],
+      "result": "DEFENDED"
+    },
+    {
+      "id": "STL-002",
+      "description": "a completeness PASS that predates a relevant scope change",
+      "expected": "reject",
+      "marker": "STALE",
+      "rejected": true,
+      "observed": [
+        "DELIVERY_COMPLETENESS_GATE is STALE: the code, requirements, lessons or policy changed after the audit, so it must run again"
+      ],
+      "result": "DEFENDED"
+    },
+    {
+      "id": "STL-003a",
+      "description": "an internal Red Team result that predates a change to an attacked control",
+      "expected": "reject",
+      "marker": "STALE",
+      "rejected": true,
+      "observed": [
+        "M0-INTERNAL-RED-TEAM.json is STALE: the attacked content changed after the run, so the affected attacks must be executed again"
+      ],
+      "result": "DEFENDED"
+    },
+    {
+      "id": "STL-003b",
+      "description": "an internal mirror result that predates a change to the audited content",
+      "expected": "reject",
+      "marker": "STALE",
+      "rejected": true,
+      "observed": [
+        "M0-INTERNAL-MIRROR.json is STALE: the audited content changed after the mirror ran"
+      ],
+      "result": "DEFENDED"
+    },
+    {
+      "id": "STL-004",
+      "description": "an internal Red Team PASS while one attack escaped",
+      "expected": "reject",
+      "marker": "escap",
+      "rejected": true,
+      "observed": [
+        "M0-INTERNAL-RED-TEAM.json: escaped does not match the recorded attacks",
+        "M0-INTERNAL-RED-TEAM.json: 1 attack(s) escaped but the result is 'RED_TEAM_PASS'"
+      ],
+      "result": "DEFENDED"
+    },
+    {
+      "id": "STL-005",
+      "description": "an internal mirror PASS while one mirrored check failed",
+      "expected": "reject",
+      "marker": "fail",
+      "rejected": true,
+      "observed": [
+        "M0-INTERNAL-MIRROR.json: failed does not match the recorded checks",
+        "M0-INTERNAL-MIRROR.json: a failed check cannot produce a PASS"
+      ],
+      "result": "DEFENDED"
+    }
+  ],
+  "attestationProbes": [
+    {
+      "id": "EXT-000",
+      "description": "a structurally valid attestation",
+      "expected": "accept",
+      "observed": [
+        "no error"
+      ],
+      "result": "ACCEPTED"
+    },
+    {
+      "id": "EXT-001",
+      "description": "a forged secondToolValidation with no attestation in the repository",
+      "expected": "reject",
+      "marker": "may not be self-asserted",
+      "observed": [
+        "no external audit attestation exists for milestone M0 and checkpoint SETUP-00-CP-0008; an external PASS may not be self-asserted"
+      ],
+      "result": "DEFENDED"
+    },
+    {
+      "id": "EXT-002",
+      "description": "a forged MILESTONE_EXTERNAL_PASS backed by an attestation for nothing",
+      "expected": "reject",
+      "marker": "attests checkpoint",
+      "observed": [
+        "probe-attestation.json: attests checkpoint 'SETUP-00-CP-0001', not 'SETUP-00-CP-0008'"
+      ],
+      "result": "DEFENDED"
+    },
+    {
+      "id": "EXT-003",
+      "description": "an attestation copied from an audit of another checkpoint",
+      "expected": "reject",
+      "marker": "attests checkpoint",
+      "observed": [
+        "probe-attestation.json: attests checkpoint 'SETUP-00-CP-0006', not 'SETUP-00-CP-0008'"
+      ],
+      "result": "DEFENDED"
+    },
+    {
+      "id": "EXT-004",
+      "description": "an attestation whose auditor is the audited checkpoint itself",
+      "expected": "reject",
+      "marker": "may not be authored by the delivery it judges",
+      "observed": [
+        "probe-attestation.json: the audit checkpoint and the audited checkpoint are the same; an external verdict may not be authored by the delivery it judges"
+      ],
+      "result": "DEFENDED"
+    },
+    {
+      "id": "EXT-005",
+      "description": "an attestation naming a subject checkpoint that is not the one promoted",
+      "expected": "reject",
+      "marker": "attests checkpoint",
+      "observed": [
+        "probe-attestation.json: attests checkpoint 'SETUP-00-CP-0005', not 'SETUP-00-CP-0008'"
+      ],
+      "result": "DEFENDED"
+    },
+    {
+      "id": "EXT-006",
+      "description": "an attestation naming a different subject commit",
+      "expected": "reject",
+      "marker": "attests commit",
+      "observed": [
+        "probe-attestation.json: attests commit '0000000000000000000000000000000000000000', not the subject commit 'c53f4c59a77870414324efa6b5f61b35d26c5090'"
+      ],
+      "result": "DEFENDED"
+    },
+    {
+      "id": "EXT-007",
+      "description": "review REWORK_REQUIRED with an external PASS claimed",
+      "expected": "reject",
+      "marker": "requires APPROVED",
+      "observed": [
+        "probe-attestation.json: reviewResult is 'REWORK_REQUIRED'; an external PASS requires APPROVED"
+      ],
+      "result": "DEFENDED"
+    },
+    {
+      "id": "EXT-008",
+      "description": "Red Team FAIL with an external PASS claimed",
+      "expected": "reject",
+      "marker": "requires RED_TEAM_PASS",
+      "observed": [
+        "probe-attestation.json: redTeamResult is 'RED_TEAM_FAIL'; an external PASS requires RED_TEAM_PASS"
+      ],
+      "result": "DEFENDED"
+    },
+    {
+      "id": "EXT-009",
+      "description": "an incomplete audit with an external PASS claimed",
+      "expected": "reject",
+      "marker": "requires 100.0",
+      "observed": [
+        "probe-attestation.json: completeness is 93.22; an external PASS requires 100.0"
+      ],
+      "result": "DEFENDED"
+    },
+    {
+      "id": "EXT-009b",
+      "description": "an audit with incomplete evidence coverage",
+      "expected": "reject",
+      "marker": "requires 100.0",
+      "observed": [
+        "probe-attestation.json: evidenceCoverage is 99.0; an external PASS requires 100.0"
+      ],
+      "result": "DEFENDED"
+    },
+    {
+      "id": "EXT-009c",
+      "description": "an audit whose test result is FAIL",
+      "expected": "reject",
+      "marker": "requires PASS",
+      "observed": [
+        "probe-attestation.json: testResult is 'FAIL'; an external PASS requires PASS"
+      ],
+      "result": "DEFENDED"
+    },
+    {
+      "id": "EXT-010",
+      "description": "an attestation whose audit checkpoint does not exist",
+      "expected": "reject",
+      "marker": "does not exist",
+      "observed": [
+        "probe-attestation.json: audit checkpoint SETUP-00-CP-9999 does not exist"
+      ],
+      "result": "DEFENDED"
+    },
+    {
+      "id": "EXT-010b",
+      "description": "an attestation with no auditor role recorded",
+      "expected": "reject",
+      "marker": "requires auditorRole",
+      "observed": [
+        "probe-attestation.json: an external audit attestation requires auditorRole"
+      ],
+      "result": "DEFENDED"
+    },
+    {
+      "id": "EXT-010c",
+      "description": "an attestation with no auditing tool recorded",
+      "expected": "reject",
+      "marker": "requires tool",
+      "observed": [
+        "probe-attestation.json: an external audit attestation requires tool"
+      ],
+      "result": "DEFENDED"
+    }
+  ],
+  "externalPassReachability": {
+    "attempts": [
+      {
+        "attempt": 1,
+        "description": "attestation binds the pre-seal commit; the seal then moves the tag",
+        "boundCommit": "c53f4c59a77870414324efa6b5f61b35d26c5090",
+        "tagCommitAfterSeal": "550db33d4c6deae28c943fda473f340002473960",
+        "exit": 1,
+        "observed": "CHECKPOINT_INVALID | - greenKeeper=PASS is STALE: the delivery-assurance scope changed after the last GREEN cycle, so the Green Keeper must run again | - DELIVERY_COMPLETENESS_GATE is STALE: the code, requirements, lessons or policy changed after the audit, so it must run again | - external validation: .iacode/attestations/M0-REACHABILITY.json: attests commit 'c53f4c59a77870414324efa6b5f61b35d26c5090', not the subject commit '550db33d4c6deae28c943fda473f340002473960' | - M0-INTERNAL-RED-TEAM.json is STALE: the attacked content changed after the run, so the affected attacks must be executed again | - M0-INTERNAL-MIRROR.json is STALE: the audited content changed after the mirror ran"
+      },
+      {
+        "attempt": 2,
+        "description": "attestation is rewritten to bind the sealed commit, which changes that commit",
+        "boundCommit": "39f7e8a07d2fd4a52678859b100a279f20dc22c4",
+        "tagCommitAfterAmend": "f699f2d81c97146f76ea8ee00e477b461844cbdf",
+        "exit": 1,
+        "observed": "CHECKPOINT_INVALID | - greenKeeper=PASS is STALE: the delivery-assurance scope changed after the last GREEN cycle, so the Green Keeper must run again | - DELIVERY_COMPLETENESS_GATE is STALE: the code, requirements, lessons or policy changed after the audit, so it must run again | - external validation: .iacode/attestations/M0-REACHABILITY.json: attests commit '39f7e8a07d2fd4a52678859b100a279f20dc22c4', not the subject commit 'f699f2d81c97146f76ea8ee00e477b461844cbdf' | - the sealing commit changed more than the append-only validation evidence: .iacode/attestations/M0-REACHABILITY.json | - M0-INTERNAL-RED-TEAM.json is STALE: the attacked content changed after the run, so the affected attacks must be executed again | - M0-INTERNAL-MIRROR.json is STALE: the audited content changed after the mirror ran"
+      },
+      {
+        "attempt": 3,
+        "description": "iterating the rewrite looking for a fixed point",
+        "exit": 1,
+        "observed": "CHECKPOINT_INVALID | - greenKeeper=PASS is STALE: the delivery-assurance scope changed after the last GREEN cycle, so the Green Keeper must run again | - DELIVERY_COMPLETENESS_GATE is STALE: the code, requirements, lessons or policy changed after the audit, so it must run again | - external validation: .iacode/attestations/M0-REACHABILITY.json: attests commit 'c0fa176ad0c65ce5726d88e0a11f4623b8809220', not the subject commit '52809b8e3a92f15fec6c1c6b42dec2195628fad3' | - the sealing commit changed more than the append-only validation evidence: .iacode/attestations/M0-REACHABILITY.json | - M0-INTERNAL-RED-TEAM.json is STALE: the attacked content changed after the run, so the affected attacks must be executed again | - M0-INTERNAL-MIRROR.json is STALE: the audited content changed after the mirror ran"
+      }
+    ]
+  },
+  "preflightFreshness": [
+    {
+      "id": "PRE-000",
+      "mutation": "none (control)",
+      "storedStale": false,
+      "regeneratedFresh": true,
+      "observed": {
+        "stored": [],
+        "regenerated": [],
+        "storedApplicable": 23,
+        "freshApplicable": 23
+      },
+      "result": "OK"
+    },
+    {
+      "id": "PRE-001",
+      "mutation": "an active lesson changed",
+      "storedStale": true,
+      "regeneratedFresh": true,
+      "observed": {
+        "stored": [
+          "the lesson preflight is STALE: its recorded inputsFingerprint does not match the current engineering memory, guardrail registry, lesson schema and selection policy"
+        ],
+        "regenerated": [],
+        "storedApplicable": 23,
+        "freshApplicable": 23
+      },
+      "result": "DEFENDED"
+    },
+    {
+      "id": "PRE-002",
+      "mutation": "a lesson retired",
+      "storedStale": true,
+      "regeneratedFresh": true,
+      "observed": {
+        "stored": [
+          "the lesson preflight is STALE: its recorded inputsFingerprint does not match the current engineering memory, guardrail registry, lesson schema and selection policy",
+          "the lesson preflight is STALE: a fresh selection yields LSN-0002, LSN-0003, LSN-0004, LSN-0005, LSN-0006, LSN-0007, LSN-0008, LSN-0009, LSN-0010, LSN-0011, LSN-0012, LSN-0013, LSN-0014, LSN-0015, LSN-0016, LSN-0017, LSN-0018, LSN-0019, LSN-0020, LSN-0021, LSN-0022, LSN-0023 rather than LSN-0001, LSN-0002, LSN-0003, LSN-0004, LSN-0005, LSN-0006, LSN-0007, LSN-0008, LSN-0009, LSN-0010, LSN-0011, LSN-0012, LSN-0013, LSN-0014, LSN-0015, LSN-0016, LSN-0017, LSN-0018, LSN-0019, LSN-0020, LSN-0021, LSN-0022, LSN-0023",
+          "the lesson preflight is STALE: its derived requirement identifiers do not match a fresh derivation"
+        ],
+        "regenerated": [],
+        "storedApplicable": 23,
+        "freshApplicable": 22
+      },
+      "result": "DEFENDED"
+    },
+    {
+      "id": "PRE-003",
+      "mutation": "applicability changed",
+      "storedStale": true,
+      "regeneratedFresh": true,
+      "observed": {
+        "stored": [
+          "the lesson preflight is STALE: its recorded inputsFingerprint does not match the current engineering memory, guardrail registry, lesson schema and selection policy",
+          "the lesson preflight is STALE: a fresh selection yields LSN-0002, LSN-0003, LSN-0004, LSN-0005, LSN-0006, LSN-0007, LSN-0008, LSN-0009, LSN-0010, LSN-0011, LSN-0012, LSN-0013, LSN-0014, LSN-0015, LSN-0016, LSN-0017, LSN-0018, LSN-0019, LSN-0020, LSN-0021, LSN-0022, LSN-0023 rather than LSN-0001, LSN-0002, LSN-0003, LSN-0004, LSN-0005, LSN-0006, LSN-0007, LSN-0008, LSN-0009, LSN-0010, LSN-0011, LSN-0012, LSN-0013, LSN-0014, LSN-0015, LSN-0016, LSN-0017, LSN-0018, LSN-0019, LSN-0020, LSN-0021, LSN-0022, LSN-0023",
+          "the lesson preflight is STALE: its derived requirement identifiers do not match a fresh derivation"
+        ],
+        "regenerated": [],
+        "storedApplicable": 23,
+        "freshApplicable": 22
+      },
+      "result": "DEFENDED"
+    },
+    {
+      "id": "PRE-004",
+      "mutation": "the guardrail registry changed",
+      "storedStale": true,
+      "regeneratedFresh": true,
+      "observed": {
+        "stored": [
+          "the lesson preflight is STALE: its recorded inputsFingerprint does not match the current engineering memory, guardrail registry, lesson schema and selection policy"
+        ],
+        "regenerated": [],
+        "storedApplicable": 23,
+        "freshApplicable": 23
+      },
+      "result": "DEFENDED"
+    },
+    {
+      "id": "PRE-005a",
+      "mutation": "the memory policy changed",
+      "storedStale": false,
+      "regeneratedFresh": true,
+      "observed": {
+        "stored": [],
+        "regenerated": [],
+        "storedApplicable": 23,
+        "freshApplicable": 23
+      },
+      "result": "ESCAPED"
+    },
+    {
+      "id": "PRE-005b",
+      "mutation": "the lesson schema changed",
+      "storedStale": true,
+      "regeneratedFresh": true,
+      "observed": {
+        "stored": [
+          "the lesson preflight is STALE: its recorded inputsFingerprint does not match the current engineering memory, guardrail registry, lesson schema and selection policy"
+        ],
+        "regenerated": [],
+        "storedApplicable": 23,
+        "freshApplicable": 23
+      },
+      "result": "DEFENDED"
+    },
+    {
+      "id": "PRE-006",
+      "mutation": "the Gate changed",
+      "storedStale": true,
+      "regeneratedFresh": true,
+      "observed": {
+        "otherGate": [
+          "the preflight was generated for gate 'SETUP-00' but the checkpoint declares 'GATE 1'; a preflight may not be reused across Gates"
+        ]
+      },
+      "result": "DEFENDED"
+    }
+  ],
+  "previouslyBypassedGuardrails": [
+    {
+      "id": "GRD-LSN-0005-original",
+      "description": "original bypass: MILESTONE_EXTERNAL_PASS carrying a red Green Keeper",
+      "expected": "reject",
+      "marker": "GREEN_KEEPER_GATE=PASS",
+      "rejected": true,
+      "observed": [
+        "MILESTONE_EXTERNAL_PASS requires GREEN_KEEPER_GATE=PASS, found 'FAIL'"
+      ],
+      "result": "DEFENDED"
+    },
+    {
+      "id": "GRD-LSN-0005-variation",
+      "description": "variation: a red completeness gate under every positive terminal status",
+      "expected": "reject",
+      "marker": "escaped: none",
+      "rejected": true,
+      "observed": [
+        "statuses that escaped: none"
+      ],
+      "result": "DEFENDED"
+    },
+    {
+      "id": "GRD-LSN-0007-original",
+      "description": "original bypass: complete second-tool attribution written by the delivery itself",
+      "expected": "reject",
+      "marker": "may not be self-asserted",
+      "rejected": true,
+      "observed": [
+        "external validation: no external audit attestation exists for milestone M0 and checkpoint SETUP-00-CP-0008; an external PASS may not be self-asserted"
+      ],
+      "result": "DEFENDED"
+    },
+    {
+      "id": "GRD-LSN-0007-variation",
+      "description": "variation: externalAttestation declared VERIFIED against a file that does not exist",
+      "expected": "reject",
+      "marker": "external validation",
+      "rejected": true,
+      "observed": [
+        "external validation: no external audit attestation exists for milestone M0 and checkpoint SETUP-00-CP-0008; an external PASS may not be self-asserted"
+      ],
+      "result": "DEFENDED"
+    },
+    {
+      "id": "GRD-LSN-0008-original",
+      "description": "original bypass: delete a mandatory requirement and recompute every stored count",
+      "expected": "reject",
+      "marker": "canonical expected set requires",
+      "rejected": true,
+      "observed": [
+        "READY_FOR_REVIEW blocked by canonical:SETUP-00#1.1: the canonical expected set requires canonical:SETUP-00#1.1 (docs/SETUP-00-CHECKLIST.md row 1.1) but the matrix does not declare it"
+      ],
+      "result": "DEFENDED"
+    },
+    {
+      "id": "GRD-LSN-0008-variation",
+      "description": "variation: keep the row count but substitute a canonical anchor with a local one",
+      "expected": "reject",
+      "marker": "canonical expected set requires",
+      "rejected": true,
+      "observed": [
+        "READY_FOR_REVIEW blocked by canonical:SETUP-00#1.1: the canonical expected set requires canonical:SETUP-00#1.1 (docs/SETUP-00-CHECKLIST.md row 1.1) but the matrix does not declare it"
+      ],
+      "result": "DEFENDED"
+    },
+    {
+      "id": "GRD-LSN-0009-original",
+      "description": "original bypass: a GREEN cycle measured against no gate at all",
+      "expected": "reject",
+      "marker": "canonical mandatory set",
+      "rejected": true,
+      "observed": [
+        "greenKeeper=PASS was measured against no gate, not the canonical mandatory set checkpointValidation, integrity, lessons, staticAnalysis, tests"
+      ],
+      "result": "DEFENDED"
+    },
+    {
+      "id": "GRD-LSN-0009-variation",
+      "description": "variation: a GREEN cycle measured against a single mandatory gate",
+      "expected": "reject",
+      "marker": "canonical mandatory set",
+      "rejected": true,
+      "observed": [
+        "greenKeeper=PASS was measured against tests, not the canonical mandatory set checkpointValidation, integrity, lessons, staticAnalysis, tests"
+      ],
+      "result": "DEFENDED"
+    },
+    {
+      "id": "GRD-LSN-0009-policy",
+      "description": "the mandatory gate set is read from policy, and --gates only adds to a run",
+      "expected": "policy-derived",
+      "marker": "canonical mandatory set =",
+      "rejected": true,
+      "observed": [
+        "canonical mandatory set = tests, staticAnalysis, lessons, integrity, checkpointValidation"
+      ],
+      "result": "DEFENDED"
+    }
+  ],
+  "engineeringMemory": {
+    "lessonsTotal": 23,
+    "statuses": {
+      "GUARDED": 22,
+      "CONFIRMED": 1
+    },
+    "trainingAllowed": {
+      "False": 23
+    },
+    "recurrenceCounts": {
+      "0": 16,
+      "1": 7
+    },
+    "lessonsWithRecurrence": [
+      "LSN-0005",
+      "LSN-0007",
+      "LSN-0008",
+      "LSN-0009",
+      "LSN-0010",
+      "LSN-0012",
+      "LSN-0014"
+    ],
+    "guardrailFailures": [
+      {
+        "lesson": "LSN-0005",
+        "resolvedIn": [
+          "SETUP-00-CP-0008"
+        ]
+      },
+      {
+        "lesson": "LSN-0007",
+        "resolvedIn": [
+          "SETUP-00-CP-0008"
+        ]
+      },
+      {
+        "lesson": "LSN-0008",
+        "resolvedIn": [
+          "SETUP-00-CP-0008"
+        ]
+      },
+      {
+        "lesson": "LSN-0009",
+        "resolvedIn": [
+          "SETUP-00-CP-0008"
+        ]
+      },
+      {
+        "lesson": "LSN-0010",
+        "resolvedIn": [
+          "SETUP-00-CP-0008"
+        ]
+      },
+      {
+        "lesson": "LSN-0012",
+        "resolvedIn": [
+          "SETUP-00-CP-0008"
+        ]
+      }
+    ],
+    "resolutionChain": [
+      {
+        "lesson": "LSN-0001",
+        "guardrail": "GRD-0001",
+        "kind": "test",
+        "control": "DetachedHeadValidationTests.test_detached_head_at_checkpoint_tag_validates",
+        "controlResolves": true,
+        "verifiedBy": [
+          "DetachedHeadValidationTests.test_detached_head_at_checkpoint_tag_validates",
+          "DetachedHeadValidationTests.test_detached_head_at_wrong_commit_fails"
+        ],
+        "verifyingTestsExist": true,
+        "namesTheLessonBack": true
+      },
+      {
+        "lesson": "LSN-0002",
+        "guardrail": "GRD-0002",
+        "kind": "invariant",
+        "control": "validate_checkpoint._validate_delta_inventory",
+        "controlResolves": true,
+        "verifiedBy": [
+          "DeltaInventoryTests.test_removed_manifest_entry_fails",
+          "DeltaInventoryTests.test_silent_tracked_modification_fails"
+        ],
+        "verifyingTestsExist": true,
+        "namesTheLessonBack": true
+      },
+      {
+        "lesson": "LSN-0003",
+        "guardrail": "GRD-0003",
+        "kind": "validator",
+        "control": "scripts/development-ledger/finalize_checkpoint.py",
+        "controlResolves": true,
+        "verifiedBy": [
+          "FinalizationAttemptRecordingTests.test_detached_head_refusal_is_recorded",
+          "FinalizationAttemptRecordingTests.test_non_latest_checkpoint_refusal_is_recorded"
+        ],
+        "verifyingTestsExist": true,
+        "namesTheLessonBack": true
+      },
+      {
+        "lesson": "LSN-0004",
+        "guardrail": "GRD-0004",
+        "kind": "invariant",
+        "control": "validate_checkpoint._validate_status_blockers",
+        "controlResolves": true,
+        "verifiedBy": [
+          "StatusBlockerInvariantTests.test_ready_for_review_with_blocker_fails",
+          "ResealedBlockerFixtureTests.test_resealed_ready_for_review_with_blocker_is_rejected"
+        ],
+        "verifyingTestsExist": true,
+        "namesTheLessonBack": true
+      },
+      {
+        "lesson": "LSN-0005",
+        "guardrail": "GRD-0007",
+        "kind": "invariant",
+        "control": "validate_checkpoint._validate_quality_evidence",
+        "controlResolves": true,
+        "verifiedBy": [
+          "QualityEvidenceTests.test_pass_without_evidence_fails",
+          "QualityEvidenceTests.test_pass_referencing_a_failed_command_fails"
+        ],
+        "verifyingTestsExist": true,
+        "namesTheLessonBack": true
+      },
+      {
+        "lesson": "LSN-0006",
+        "guardrail": "GRD-0005",
+        "kind": "test",
+        "control": "SetupChecklistTests.test_checklist_exists_and_is_referenced",
+        "controlResolves": true,
+        "verifiedBy": [
+          "SetupChecklistTests.test_checklist_exists_and_is_referenced",
+          "SetupChecklistTests.test_documentation_links_resolve"
+        ],
+        "verifyingTestsExist": true,
+        "namesTheLessonBack": true
+      },
+      {
+        "lesson": "LSN-0007",
+        "guardrail": "GRD-0008",
+        "kind": "validator",
+        "control": "scripts/development-ledger/attestation.py",
+        "controlResolves": true,
+        "verifiedBy": [
+          "ExternalAttestationTests.test_an_implementer_checkpoint_cannot_declare_an_external_pass",
+          "ExternalAttestationTests.test_an_attestation_naming_the_subject_as_its_own_auditor_is_rejected",
+          "ExternalAttestationTests.test_second_tool_validation_alone_is_not_enough"
+        ],
+        "verifyingTestsExist": true,
+        "namesTheLessonBack": true
+      },
+      {
+        "lesson": "LSN-0008",
+        "guardrail": "GRD-0009",
+        "kind": "validator",
+        "control": "scripts/development-ledger/policies.py",
+        "controlResolves": true,
+        "verifiedBy": [
+          "ExpectedRequirementSetTests.test_deleting_a_requirement_and_recomputing_the_counts_still_fails",
+          "ExpectedRequirementSetTests.test_an_unexpected_anchored_requirement_is_rejected"
+        ],
+        "verifyingTestsExist": true,
+        "namesTheLessonBack": true
+      },
+      {
+        "lesson": "LSN-0009",
+        "guardrail": "GRD-0010",
+        "kind": "policy",
+        "control": ".iacode/policies/quality-gates.json",
+        "controlResolves": true,
+        "verifiedBy": [
+          "MandatoryGatePolicyTests.test_a_cycle_measured_against_no_gate_is_rejected",
+          "MandatoryGatePolicyTests.test_the_policy_declares_a_non_empty_closed_set"
+        ],
+        "verifyingTestsExist": true,
+        "namesTheLessonBack": true
+      },
+      {
+        "lesson": "LSN-0010",
+        "guardrail": "GRD-0011",
+        "kind": "invariant",
+        "control": "validate_checkpoint._validate_command_reproducibility",
+        "controlResolves": true,
+        "verifiedBy": [
+          "CommandInputBindingTests.test_a_record_without_a_digest_is_rejected",
+          "CommandInputBindingTests.test_a_clean_tree_claim_is_checked_against_the_declared_commit"
+        ],
+        "verifyingTestsExist": true,
+        "namesTheLessonBack": true
+      },
+      {
+        "lesson": "LSN-0011",
+        "guardrail": "GRD-0006",
+        "kind": "invariant",
+        "control": "green_keeper._refresh_declared_hashes",
+        "controlResolves": true,
+        "verifiedBy": [
+          "DeliveryAssuranceGateTests.test_gate_consistency_is_provisional_while_work_is_in_progress"
+        ],
+        "verifyingTestsExist": true,
+        "namesTheLessonBack": true
+      },
+      {
+        "lesson": "LSN-0012",
+        "guardrail": "GRD-0012",
+        "kind": "validator",
+        "control": "scripts/development-ledger/anchors.py",
+        "controlResolves": true,
+        "verifiedBy": [
+          "IntegrityAnchorTests.test_a_moved_historical_tag_is_detected",
+          "IntegrityAnchorTests.test_a_broken_link_between_anchors_is_detected"
+        ],
+        "verifyingTestsExist": true,
+        "namesTheLessonBack": true
+      },
+      {
+        "lesson": "LSN-0014",
+        "guardrail": "GRD-0013",
+        "kind": "invariant",
+        "control": "validate_checkpoint._validate_seal_chronology",
+        "controlResolves": true,
+        "verifiedBy": [
+          "SealChronologyTests.test_a_record_after_the_end_of_the_run_is_rejected",
+          "SealChronologyTests.test_a_missing_post_commit_validation_is_rejected",
+          "SealChronologyTests.test_a_dirty_tree_validation_is_not_evidence_of_a_sealed_commit"
+        ],
+        "verifyingTestsExist": true,
+        "namesTheLessonBack": true
+      },
+      {
+        "lesson": "LSN-0015",
+        "guardrail": "GRD-0014",
+        "kind": "invariant",
+        "control": "validate_checkpoint._validate_delivery_assurance",
+        "controlResolves": true,
+        "verifiedBy": [
+          "PromotionInvariantTests.test_every_positive_status_rejects_a_red_green_keeper",
+          "PromotionInvariantTests.test_every_positive_status_rejects_every_red_quality_dimension",
+          "PromotionInvariantTests.test_a_terminal_status_requires_an_independent_verdict"
+        ],
+        "verifyingTestsExist": true,
+        "namesTheLessonBack": true
+      },
+      {
+        "lesson": "LSN-0016",
+        "guardrail": "GRD-0015",
+        "kind": "invariant",
+        "control": "validate_checkpoint._validate_green_keeper_cycle",
+        "controlResolves": true,
+        "verifiedBy": [
+          "MandatoryGatePolicyTests.test_a_cycle_missing_one_mandatory_gate_is_rejected",
+          "MandatoryGatePolicyTests.test_a_mandatory_gate_that_exited_nonzero_is_rejected",
+          "MandatoryGatePolicyTests.test_a_pass_measured_before_a_source_change_is_stale"
+        ],
+        "verifyingTestsExist": true,
+        "namesTheLessonBack": true
+      },
+      {
+        "lesson": "LSN-0017",
+        "guardrail": "GRD-0016",
+        "kind": "invariant",
+        "control": "policies.expected_requirement_refs",
+        "controlResolves": true,
+        "verifiedBy": [
+          "ExpectedRequirementSetTests.test_the_expected_set_is_derived_from_the_canonical_sources",
+          "ExpectedRequirementSetTests.test_the_checklist_is_reparsed_rather_than_trusted",
+          "ExpectedRequirementSetTests.test_a_downgraded_matrix_cannot_escape_the_comparison"
+        ],
+        "verifyingTestsExist": true,
+        "namesTheLessonBack": true
+      },
+      {
+        "lesson": "LSN-0018",
+        "guardrail": "GRD-0017",
+        "kind": "invariant",
+        "control": "lessons.resolve_control",
+        "controlResolves": true,
+        "verifiedBy": [
+          "LessonResolutionTests.test_a_test_control_must_exist_in_the_suite",
+          "LessonResolutionTests.test_an_invariant_control_must_be_defined_in_the_tooling",
+          "LessonResolutionTests.test_lesson_evidence_must_resolve"
+        ],
+        "verifyingTestsExist": true,
+        "namesTheLessonBack": true
+      },
+      {
+        "lesson": "LSN-0019",
+        "guardrail": "GRD-0018",
+        "kind": "invariant",
+        "control": "lessons.preflight_staleness",
+        "controlResolves": true,
+        "verifiedBy": [
+          "PreflightFreshnessTests.test_a_changed_fingerprint_makes_the_preflight_stale",
+          "PreflightFreshnessTests.test_a_dropped_lesson_makes_the_preflight_stale",
+          "PreflightFreshnessTests.test_a_preflight_from_another_gate_is_refused"
+        ],
+        "verifyingTestsExist": true,
+        "namesTheLessonBack": true
+      },
+      {
+        "lesson": "LSN-0020",
+        "guardrail": "GRD-0019",
+        "kind": "invariant",
+        "control": "ledger_common.build_command_record",
+        "controlResolves": true,
+        "verifiedBy": [
+          "CommandInputBindingTests.test_the_recorder_binds_inputs_automatically",
+          "CommandInputBindingTests.test_a_digest_that_omits_an_input_is_rejected"
+        ],
+        "verifyingTestsExist": true,
+        "namesTheLessonBack": true
+      },
+      {
+        "lesson": "LSN-0021",
+        "guardrail": "GRD-0020",
+        "kind": "invariant",
+        "control": "anchors.verify_chain",
+        "controlResolves": true,
+        "verifiedBy": [
+          "IntegrityAnchorTests.test_an_unexpected_tree_is_detected",
+          "IntegrityAnchorTests.test_a_sealed_checkpoint_without_an_anchor_is_detected",
+          "IntegrityAnchorTests.test_a_recomputed_anchor_hash_must_match_its_fields"
+        ],
+        "verifyingTestsExist": true,
+        "namesTheLessonBack": true
+      },
+      {
+        "lesson": "LSN-0022",
+        "guardrail": "GRD-0021",
+        "kind": "invariant",
+        "control": "validate_checkpoint._validate_derived_counts",
+        "controlResolves": true,
+        "verifiedBy": [
+          "DerivedCountTests.test_a_forged_count_is_rejected",
+          "DerivedCountTests.test_a_markdown_claim_that_contradicts_the_derivation_is_rejected"
+        ],
+        "verifyingTestsExist": true,
+        "namesTheLessonBack": true
+      },
+      {
+        "lesson": "LSN-0023",
+        "guardrail": "GRD-0022",
+        "kind": "invariant",
+        "control": "lessons._resolve_source_locator",
+        "controlResolves": true,
+        "verifiedBy": [
+          "LessonProvenanceTests.test_a_finding_absent_from_the_cited_checkpoint_is_rejected",
+          "LessonProvenanceTests.test_a_nonexistent_checkpoint_is_rejected"
+        ],
+        "verifyingTestsExist": true,
+        "namesTheLessonBack": true
+      }
+    ],
+    "resolutionProblems": [],
+    "effectivenessRecomputed": {
+      "guardrailsTotal": 22,
+      "guardrailsResolved": 22,
+      "guardrailsTested": 22,
+      "guardrailsEffective": 22,
+      "guardrailFailures": 0
+    },
+    "effectivenessProduct": {
+      "guardrailsTotal": 22,
+      "guardrailsResolved": 22,
+      "guardrailsTested": 22,
+      "guardrailsEffective": 22,
+      "guardrailFailures": 0
+    },
+    "effectivenessCheckpointState": {
+      "guardrailsTotal": 22,
+      "guardrailsResolved": 22,
+      "guardrailsTested": 22,
+      "guardrailsEffective": 22,
+      "guardrailFailures": 0
+    },
+    "effectivenessAgrees": true,
+    "recurrenceEscalation": {
+      "lesson": "LSN-0001",
+      "status": "CONFIRMED",
+      "severity": "CRITICAL",
+      "recurrenceCount": 1,
+      "failures": 1
+    },
+    "guardedWhileUnresolvedRefused": [
+      "LSN-0001: a guardrail failure must reopen the lesson; GUARDED is not a valid status while a GUARDRAIL_FAILURE is unresolved"
+    ],
+    "guardedAfterRepairAccepted": true,
+    "derivedRequirementsAfterRetiring": 22,
+    "retiredLessonStillDerived": false,
+    "activeLessons": 23,
+    "derivedRequirements": 23,
+    "lessonRowsInMatrix": 23,
+    "activeWithoutRequirement": [],
+    "requirementWithoutActiveLesson": [],
+    "requirementWithoutMatrixRow": []
+  },
+  "historyIntegrity": [
+    {
+      "id": "HIST-000",
+      "description": "unmutated clone (control)",
+      "exit": 0,
+      "observed": [
+        "INTEGRITY_VALID anchors=7 latest=SETUP-00-CP-0007"
+      ],
+      "expected": "accept",
+      "result": "ACCEPTED"
+    },
+    {
+      "id": "HIST-001",
+      "description": "a historical tag moved to another commit",
+      "expected": "reject",
+      "exit": 1,
+      "observed": [
+        "- SETUP-00-CP-0003: tag refs/tags/iacode-checkpoints/SETUP-00-CP-0003 resolves to c2eea150de9c97cfab5429d1e1eb3d5285e585f7, not the anchored commit 5780b0f86dbf46ad84d69b88a637be6f076946f4"
+      ],
+      "result": "DEFENDED"
+    },
+    {
+      "id": "HIST-002",
+      "description": "an anchor naming the wrong tag",
+      "expected": "reject",
+      "exit": 1,
+      "observed": [
+        "- SETUP-00-CP-0003: anchored tag 'refs/tags/iacode-checkpoints/SETUP-00-CP-0099' is not the canonical 'refs/tags/iacode-checkpoints/SETUP-00-CP-0003'",
+        "- SETUP-00-CP-0003: anchorHash does not match its own anchored fields (recorded 'df6e7bacb173d4b440b9cfee831968886735528dd77f2a54e3a5ca92041ecad3', recomputed '83f1bccbde0bf4a4d345e9a0edac502bfdc6b6fd0145b9066908387a40759ccb')",
+        "- SETUP-00-CP-0003: anchored tag refs/tags/iacode-checkpoints/SETUP-00-CP-0099 does not exist"
+      ],
+      "result": "DEFENDED"
+    },
+    {
+      "id": "HIST-003",
+      "description": "an anchor naming the wrong commit",
+      "expected": "reject",
+      "exit": 1,
+      "observed": [
+        "- SETUP-00-CP-0003: anchorHash does not match its own anchored fields (recorded 'df6e7bacb173d4b440b9cfee831968886735528dd77f2a54e3a5ca92041ecad3', recomputed 'ac8e664c2cb99264a472253f6fd6b7feacd6990ddd4acdc5bd388d24c662f97e')",
+        "- SETUP-00-CP-0003: tag refs/tags/iacode-checkpoints/SETUP-00-CP-0003 resolves to 5780b0f86dbf46ad84d69b88a637be6f076946f4, not the anchored commit 0000000000000000000000000000000000000000",
+        "- SETUP-00-CP-0003: anchored commit 0000000000000000000000000000000000000000 does not exist"
+      ],
+      "result": "DEFENDED"
+    },
+    {
+      "id": "HIST-004",
+      "description": "an anchor naming the wrong tree, with the chain recomputed around it",
+      "expected": "reject",
+      "exit": 1,
+      "observed": [
+        "- SETUP-00-CP-0003: commit 5780b0f86dbf46ad84d69b88a637be6f076946f4 has tree 65dfc288c60dec518e5c488db6af8b4e9825fd8c, not the anchored 0000000000000000000000000000000000000000"
+      ],
+      "result": "DEFENDED"
+    },
+    {
+      "id": "HIST-005",
+      "description": "a wrong previous-anchor digest",
+      "expected": "reject",
+      "exit": 1,
+      "observed": [
+        "- SETUP-00-CP-0004: anchorHash does not match its own anchored fields (recorded 'a5c174320d6fae29d2e94c20a5de08c8617cfa3c18d3f4946c6f0915c710b3bb', recomputed '714ded680a4314167420555efdc79d1a6563b0929af2339921a27fb663bbe1d7')",
+        "- SETUP-00-CP-0004: previousAnchorHash breaks the chain with 'SETUP-00-CP-0003'"
+      ],
+      "result": "DEFENDED"
+    },
+    {
+      "id": "HIST-006",
+      "description": "a link removed from the chain",
+      "expected": "reject",
+      "exit": 1,
+      "observed": [
+        "- sealed checkpoint SETUP-00-CP-0007 has no integrity anchor"
+      ],
+      "result": "DEFENDED"
+    },
+    {
+      "id": "HIST-007",
+      "description": "an anchor naming the wrong predecessor",
+      "expected": "reject",
+      "exit": 1,
+      "observed": [
+        "- SETUP-00-CP-0004: previousCheckpoint 'SETUP-00-CP-0001' breaks the chain; expected 'SETUP-00-CP-0003'"
+      ],
+      "result": "DEFENDED"
+    },
+    {
+      "id": "HIST-008",
+      "description": "CP-0001 to CP-0007 intact under read-only inspection",
+      "expected": "intact",
+      "observed": [
+        {
+          "checkpointId": "SETUP-00-CP-0001",
+          "commitMatches": true,
+          "treeMatches": true,
+          "linkMatches": true,
+          "digestMatches": true
+        },
+        {
+          "checkpointId": "SETUP-00-CP-0002",
+          "commitMatches": true,
+          "treeMatches": true,
+          "linkMatches": true,
+          "digestMatches": true
+        },
+        {
+          "checkpointId": "SETUP-00-CP-0003",
+          "commitMatches": true,
+          "treeMatches": true,
+          "linkMatches": true,
+          "digestMatches": true
+        },
+        {
+          "checkpointId": "SETUP-00-CP-0004",
+          "commitMatches": true,
+          "treeMatches": true,
+          "linkMatches": true,
+          "digestMatches": true
+        },
+        {
+          "checkpointId": "SETUP-00-CP-0005",
+          "commitMatches": true,
+          "treeMatches": true,
+          "linkMatches": true,
+          "digestMatches": true
+        },
+        {
+          "checkpointId": "SETUP-00-CP-0006",
+          "commitMatches": true,
+          "treeMatches": true,
+          "linkMatches": true,
+          "digestMatches": true
+        },
+        {
+          "checkpointId": "SETUP-00-CP-0007",
+          "commitMatches": true,
+          "treeMatches": true,
+          "linkMatches": true,
+          "digestMatches": true
+        }
+      ],
+      "result": "DEFENDED"
+    }
+  ],
+  "semanticCounts": {
+    "counts": {
+      "derived": {
+        "SETUP_REQUIREMENTS": 71,
+        "M0_CLOSURE_REQUIREMENTS": 131,
+        "M0_CLOSURE_MANDATORY": 130,
+        "FINDINGS": 11,
+        "FINDINGS_CLOSED": 11,
+        "TESTS": 306,
+        "LESSONS": 23,
+        "LESSONS_GUARDED": 22,
+        "GUARDRAILS": 22,
+        "ATTACKS": 46,
+        "ATTACKS_DEFENDED": 46,
+        "ANCHORS": 7
+      },
+      "compared": 18,
+      "mismatches": [],
+      "markdown": {
+        "claims": [
+          {
+            "file": "CP7-FINDINGS-CLOSURE.md",
+            "claim": "11/11 FINDINGS"
+          },
+          {
+            "file": "FINAL-REPORT.md",
+            "claim": "131/131 REQUIREMENTS"
+          },
+          {
+            "file": "FINAL-REPORT.md",
+            "claim": "11/11 FINDINGS"
+          },
+          {
+            "file": "FINAL-REPORT.md",
+            "claim": "22/23 LESSONS"
+          },
+          {
+            "file": "FINAL-REPORT.md",
+            "claim": "22/22 GUARDRAILS"
+          },
+          {
+            "file": "FINAL-REPORT.md",
+            "claim": "306/306 TESTS"
+          },
+          {
+            "file": "FINAL-REPORT.md",
+            "claim": "46/46 ATTACKS"
+          },
+          {
+            "file": "M0-INTERNAL-RED-TEAM.md",
+            "claim": "46/46 ATTACKS"
+          }
+        ]
+      }
+    },
+    "commands": {
+      "total": 60,
+      "incomplete": [],
+      "withInputsDigest": 60,
+      "inputsWithoutDigest": [],
+      "results": [
+        "COMPLETED"
+      ],
+      "nonZeroExits": [
+        {
+          "id": "cmd-0007",
+          "exitCode": 1
+        },
+        {
+          "id": "cmd-0011",
+          "exitCode": 1
+        },
+        {
+          "id": "cmd-0027",
+          "exitCode": 1
+        },
+        {
+          "id": "cmd-0031",
+          "exitCode": 1
+        },
+        {
+          "id": "cmd-0036",
+          "exitCode": 1
+        },
+        {
+          "id": "cmd-0052",
+          "exitCode": 1
+        }
+      ],
+      "replay": {
+        "seed": 20260920,
+        "sampled": 6,
+        "replays": [
+          {
+            "id": "cmd-0014",
+            "command": "python scripts/development-ledger/validate_lessons.py",
+            "commit": "502c554575f717c1d57290e4f4aafa575e41170e",
+            "recordedExit": 0,
+            "inputBinding": [
+              {
+                "path": "scripts/development-ledger/validate_lessons.py",
+                "recorded": "ea676d739e1b40e13679f5fb3dcbb15ddde2e121b02a339452293e160e34386a",
+                "atCommit": "ea676d739e1b40e13679f5fb3dcbb15ddde2e121b02a339452293e160e34386a",
+                "matches": true
+              }
+            ]
+          },
+          {
+            "id": "cmd-0034",
+            "command": "python scripts/development-ledger/validate_lessons.py",
+            "commit": "502c554575f717c1d57290e4f4aafa575e41170e",
+            "recordedExit": 0,
+            "inputBinding": [
+              {
+                "path": "scripts/development-ledger/validate_lessons.py",
+                "recorded": "ea676d739e1b40e13679f5fb3dcbb15ddde2e121b02a339452293e160e34386a",
+                "atCommit": "ea676d739e1b40e13679f5fb3dcbb15ddde2e121b02a339452293e160e34386a",
+                "matches": true
+              }
+            ]
+          },
+          {
+            "id": "cmd-0003",
+            "command": "python -m compileall -q scripts tests",
+            "commit": "502c554575f717c1d57290e4f4aafa575e41170e",
+            "recordedExit": 0,
+            "inputBinding": [
+              {
+                "path": "scripts",
+                "recorded": "ABSENT",
+                "atCommit": "b8176c600a2ca58a450c19bc892d89860f990416d3692597fd707cefd7e61f42",
+                "matches": false
+              },
+              {
+                "path": "tests",
+                "recorded": "ABSENT",
+                "atCommit": "366f0f487a60982c8f9d320aa5cf0e74d642628e069f93f925c0bd1d99a9ac9f",
+                "matches": false
+              }
+            ]
+          },
+          {
+            "id": "cmd-0045",
+            "command": "python scripts/development-ledger/verify_integrity.py",
+            "commit": "502c554575f717c1d57290e4f4aafa575e41170e",
+            "recordedExit": 0,
+            "inputBinding": [
+              {
+                "path": "scripts/development-ledger/verify_integrity.py",
+                "recorded": "a07521fd49ce626282d72e31e8d7f1e576863dcfc9223691b59f99f61e5633d7",
+                "atCommit": null,
+                "matches": false
+              }
+            ]
+          },
+          {
+            "id": "cmd-0033",
+            "command": "python -m compileall -q scripts tests",
+            "commit": "502c554575f717c1d57290e4f4aafa575e41170e",
+            "recordedExit": 0,
+            "inputBinding": [
+              {
+                "path": "scripts",
+                "recorded": "ABSENT",
+                "atCommit": "b8176c600a2ca58a450c19bc892d89860f990416d3692597fd707cefd7e61f42",
+                "matches": false
+              },
+              {
+                "path": "tests",
+                "recorded": "ABSENT",
+                "atCommit": "366f0f487a60982c8f9d320aa5cf0e74d642628e069f93f925c0bd1d99a9ac9f",
+                "matches": false
+              }
+            ]
+          },
+          {
+            "id": "cmd-0020",
+            "command": "python scripts/development-ledger/verify_integrity.py",
+            "commit": "502c554575f717c1d57290e4f4aafa575e41170e",
+            "recordedExit": 0,
+            "inputBinding": [
+              {
+                "path": "scripts/development-ledger/verify_integrity.py",
+                "recorded": "a07521fd49ce626282d72e31e8d7f1e576863dcfc9223691b59f99f61e5633d7",
+                "atCommit": null,
+                "matches": false
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "documentation": {
+      "linksChecked": 39,
+      "broken": []
+    }
+  },
+  "commandAuditability": {
+    "records": 60,
+    "cleanTreeBindings": 1,
+    "cleanTreeBindingMismatches": [],
+    "replaySeed": 20260920,
+    "replays": [
+      {
+        "id": "cmd-0025",
+        "command": "python scripts/development-ledger/verify_integrity.py",
+        "declaredWorkingDirectory": "E:\\iacode",
+        "recordedExit": 0,
+        "replayExit": 0,
+        "replayDurationMs": 1220,
+        "replayHead": "iacode-checkpoints/SETUP-00-CP-0008",
+        "firstLine": [
+          "INTEGRITY_VALID anchors=7 latest=SETUP-00-CP-0007"
+        ],
+        "executable": true
+      },
+      {
+        "id": "cmd-0002",
+        "command": "python -m unittest discover -s tests",
+        "declaredWorkingDirectory": "E:\\iacode",
+        "recordedExit": 0,
+        "replayExit": 0,
+        "replayDurationMs": 348650,
+        "replayHead": "iacode-checkpoints/SETUP-00-CP-0008",
+        "firstLine": [
+          ".................................................................................................................................................................................................................................................................................................................."
+        ],
+        "executable": true
+      },
+      {
+        "id": "cmd-0005",
+        "command": "python scripts/development-ledger/verify_integrity.py",
+        "declaredWorkingDirectory": "E:\\iacode",
+        "recordedExit": 0,
+        "replayExit": 0,
+        "replayDurationMs": 1290,
+        "replayHead": "iacode-checkpoints/SETUP-00-CP-0008",
+        "firstLine": [
+          "INTEGRITY_VALID anchors=7 latest=SETUP-00-CP-0007"
+        ],
+        "executable": true
+      },
+      {
+        "id": "cmd-0038",
+        "command": "python -m compileall -q scripts tests",
+        "declaredWorkingDirectory": "E:\\iacode",
+        "recordedExit": 0,
+        "replayExit": 0,
+        "replayDurationMs": 135,
+        "replayHead": "iacode-checkpoints/SETUP-00-CP-0008",
+        "firstLine": [],
+        "executable": true
+      },
+      {
+        "id": "cmd-0044",
+        "command": "python scripts/development-ledger/validate_lessons.py",
+        "declaredWorkingDirectory": "E:\\iacode",
+        "recordedExit": 0,
+        "replayExit": 0,
+        "replayDurationMs": 309,
+        "replayHead": "iacode-checkpoints/SETUP-00-CP-0008",
+        "firstLine": [
+          "LESSONS_VALID total=23 active=23 guarded=22"
+        ],
+        "executable": true
+      },
+      {
+        "id": "cmd-0023",
+        "command": "python -m compileall -q scripts tests",
+        "declaredWorkingDirectory": "E:\\iacode",
+        "recordedExit": 0,
+        "replayExit": 0,
+        "replayDurationMs": 295,
+        "replayHead": "iacode-checkpoints/SETUP-00-CP-0008",
+        "firstLine": [],
+        "executable": true
+      }
+    ]
+  },
+  "successorSuiteSimulation": {
+    "scenario": "a clone of SETUP-00-CP-0008 advanced exactly as this audit checkpoint advances the repository: a further checkpoint sealed under iacode-checkpoints/SETUP-00-CP-0009, LATEST.md pointing at it, and the integrity chain rebuilt so that the predecessor SETUP-00-CP-0008 is anchored",
+    "integrityValidatorExit": 0,
+    "integrityValidatorOutput": [
+      "INTEGRITY_VALID anchors=8 latest=SETUP-00-CP-0008"
+    ],
+    "suiteClassExit": 1,
+    "failure": [
+      "FAIL: test_the_repository_chain_verifies (tests.test_development_ledger.IntegrityAnchorTests.test_the_repository_chain_verifies)",
+      "AssertionError: Lists differ: ['sealed checkpoint SETUP-00-CP-0009 has no integrity anchor'] != []"
+    ],
+    "cause": "the mandatory integrity gate is correct, because verify_integrity.py derives the checkpoint being sealed from LATEST; the suite is not, because IntegrityAnchorTests._verify hardcodes exclude={'SETUP-00-CP-0008'}",
+    "consequence": "the mandatory tests gate is red for the next delivery unless a guardrail test is edited, which the Development Contract forbids as a way to obtain a green result"
+  },
+  "executionTails": {
+    "cleanCloneSuite": [
+      "test_rework_required_may_carry_blockers (test_development_ledger.StatusBlockerInvariantTests.test_rework_required_may_carry_blockers) ... ok",
+      "----------------------------------------------------------------------",
+      "Ran 306 tests in 242.747s",
+      "OK"
+    ],
+    "findingRegressionTests": [
+      "----------------------------------------------------------------------",
+      "Ran 53 tests in 76.298s",
+      "OK",
+      "EXIT 0"
+    ],
+    "handoffCommands": [
+      "[AO] DEFENDED exit=1 CHECKPOINT_INVALID | - M0-INTERNAL-RED-TEAM.json: escaped does not match the recorded attacks",
+      "[AP] DEFENDED exit=1 CHECKPOINT_INVALID | - M0-INTERNAL-MIRROR.json: failed does not match the recorded checks",
+      "[AQ] DEFENDED exit=1 LESSONS_INVALID | - LSN-0001: guardrail 'GRD-0001' is verified by 'NoSuchTests.test_nothing', which does not exist in the suite",
+      "[AR] DEFENDED exit=1 INTEGRITY_INVALID | - SETUP-00-CP-0003: previousAnchorHash breaks the chain with 'SETUP-00-CP-0002'",
+      "[AS] DEFENDED exit=1 CHECKPOINT_INVALID | - COMMANDS.jsonl:1: schemaVersion 3.2.0 requires inputsDigest binding every declared input by content",
+      "[AT] DEFENDED exit=1 CHECKPOINT_INVALID | - READY_FOR_REVIEW requires a recorded post-commit-validation run with exit code 0 over a clean worktree; the sealed content must be validated as committed, not as a dirty working tree",
+      "INTERNAL_RED_TEAM=RED_TEAM_PASS defended=46/46 mandatory=26/26",
+      "exit=0"
+    ],
+    "attackBatteryRun": [
+      "[AZ] DEFENDED exit=1 CHECKPOINT_INVALID | - greenKeeper=PASS is STALE: the delivery-assurance scope changed after the last GREEN cycle, so the Green Keeper must run again | - DELIVERY_COMPLETENESS_GATE is STALE: the code, requirements",
+      "[POS-EXT] REFUSED exit=1 CHECKPOINT_INVALID | - greenKeeper=PASS is STALE: the delivery-assurance scope changed after the last GREEN cycle, so the Green Keeper must run again | - DELIVERY_COMPLETENESS_GATE is STALE: the code, requirements, lessons or policy changed after the audit, so it must run again | - external validation: .iacode/attestations/M0-CP-0009-FIXTURE.json: attests commit '9ef95d48d",
+      "TOTAL=53 DEFENDED=52 ESCAPED=1"
+    ]
+  }
+}
