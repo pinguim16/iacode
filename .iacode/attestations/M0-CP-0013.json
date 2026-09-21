@@ -1,0 +1,22 @@
+{
+  "schemaVersion": "2.0.0",
+  "auditId": "M0-CP-0013",
+  "milestone": "M0",
+  "validationMechanism": "FRESH_SESSION_INDEPENDENT_AUDIT",
+  "crossToolValidation": "NOT_AVAILABLE",
+  "auditorRole": "milestone independent auditor",
+  "tool": "Claude Code 2.1.195, desktop application",
+  "provider": "Anthropic",
+  "model": "claude-opus-5",
+  "freshSession": true,
+  "subjectCheckpoint": "SETUP-00-CP-0012",
+  "subjectCommit": "3f730dca1a12245ee8fdf8dfad7a523ed5c1c186",
+  "auditCheckpoint": "SETUP-00-CP-0013",
+  "reviewResult": "APPROVED",
+  "redTeamResult": "RED_TEAM_PASS",
+  "completeness": 100.0,
+  "evidenceCoverage": 100.0,
+  "testResult": "PASS",
+  "createdAt": "2026-09-21T18:05:00Z",
+  "notes": "Fresh session of the same tool, provider and model as the implementing run, so this is session independence and not cross-tool validation, and it is not recorded as one. The audit closed at APPROVED: CP11-F-001 is CLOSED, proved by executing m0_mirror_audit.py over six applicability states in disposable clones rather than by reading the delivery's artifacts, and the reverse escape the repair could have opened was attacked in twenty-six scenarios over two accepted null-mutation controls without an escape. This audit checkpoint is itself the first real delivery whose applicable audit set is empty, so the repaired semantics are exercised by the audit that judges them. crossToolValidation is NOT_AVAILABLE, so this attestation authorises MILESTONE_INDEPENDENT_AUDIT_PASS and the derivation refuses MILESTONE_EXTERNAL_PASS from it."
+}

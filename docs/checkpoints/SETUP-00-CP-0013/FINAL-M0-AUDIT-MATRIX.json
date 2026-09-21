@@ -1,0 +1,350 @@
+{
+  "schemaVersion": "1.0.0",
+  "artifact": "FINAL-M0-AUDIT-MATRIX",
+  "checkpoint": "SETUP-00-CP-0013",
+  "milestone": "M0",
+  "gate": "SETUP-00",
+  "subjectCheckpoint": "SETUP-00-CP-0012",
+  "subjectCommit": "3f730dca1a12245ee8fdf8dfad7a523ed5c1c186",
+  "auditMechanism": "FRESH_SESSION_INDEPENDENT_AUDIT",
+  "sameToolAsImplementer": true,
+  "sameProviderAsImplementer": true,
+  "crossToolValidation": "NOT_AVAILABLE",
+  "createdAt": "2026-09-21T18:44:56Z",
+  "note": "Rows are the dimensions of the audit mandate, written before substantive execution. Results are merged from the append-only execution record; no row is edited by hand.",
+  "allowedStatuses": [
+    "NOT_STARTED",
+    "IN_PROGRESS",
+    "COMPLETE",
+    "FAILED",
+    "UNVERIFIED"
+  ],
+  "rows": [
+    {
+      "id": "AM-001",
+      "dimension": "CP11-F-001 closure",
+      "expectation": "The single critical finding of the sealed SETUP-00-CP-0011 review report is closed, and the closure is verified against that sealed report rather than against the delivery's own summary.",
+      "failsIf": "The finding set re-parsed from the sealed report contains an identifier the closure record does not carry as CLOSED.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "CP11-F-001 read from the sealed SETUP-00-CP-0011 review report and re-parsed from it rather than from the closure record: the report raises exactly one finding under its own ## Findings section, and CP11-FINDINGS-CLOSURE.json carries CP11-F-001 as CLOSED. The real mirror reports 1/1 audit findings CLOSED.",
+      "evidence": [
+        "checkpoint:EXPECTED-SET-SUBJECT.json",
+        "checkpoint:MIRROR-SEMANTICS-PROBE.json",
+        "file:docs/checkpoints/SETUP-00-CP-0011/REVIEW-REPORT.md"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AM-002",
+      "dimension": "Mirror zero-set semantics",
+      "expectation": "An empty canonically derived applicable set is reported as NOT_APPLICABLE and the overall mirror can still PASS.",
+      "failsIf": "A dimension with nothing to audit reports FAIL, or the overall report cannot reach PASS in that state.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "Zero-set: MSV-001 overall=PASS with MIR-002 and MIR-003 NOT_APPLICABLE and sealed=True; GATE_TRANSITION=PASS 9/9 reaching READY_FOR_REVIEW with both empty dimensions justified; and this audit checkpoint itself, whose applicable set is empty by derivation.",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json",
+        "checkpoint:M0-INTERNAL-MIRROR.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AM-003",
+      "dimension": "Mirror closed-set semantics",
+      "expectation": "A non-empty applicable set whose items are all satisfied reports PASS, so the repair did not replace the check with an unconditional pass.",
+      "failsIf": "MIR-002 or MIR-003 passes without evaluating the items the canonical sources name.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "Closed set: the real m0_mirror_audit.py over the unmutated subject reports 18/18 PASS with MIR-002 1/1 audit findings CLOSED and MIR-003 12/12 mandatory attacks defended. MSV-002 confirms the same shape in a fixture.",
+      "evidence": [
+        "checkpoint:MIRROR-SEMANTICS-PROBE.json",
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AM-004",
+      "dimension": "Mirror open-set semantics",
+      "expectation": "A non-empty applicable set with one item unsatisfied reports FAIL, and so does a required artifact that is absent.",
+      "failsIf": "An open finding or a missing required closure record reaches a passing mirror.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "Open set: one applicable finding set to OPEN gives MIR-002 FAIL 0/1 audit findings CLOSED and an overall FAIL; deleting the required closure record gives MIR-002 FAIL CP11-FINDINGS-CLOSURE.json is missing and an overall FAIL. MSV-003 and MSV-004 agree.",
+      "evidence": [
+        "checkpoint:MIRROR-SEMANTICS-PROBE.json",
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AM-005",
+      "dimension": "The caller cannot forge an empty expected set",
+      "expectation": "No invocation argument and no artifact inside the delivery can shrink the applicable set; the canonical derivation prevails, and an unreadable report raises instead of reducing to an empty set.",
+      "failsIf": "A declaration inside the checkpoint, a command-line argument, or an unparseable report produces an empty applicable set that is then accepted.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "No CLI argument supplies the applicable set; a declaration inside the delivery is data and the open finding still fails; an unparseable sealed report raises rather than reducing to an empty set; and deleting the registry entry makes the dimensions inapplicable while the overall report still fails on the shrunken expected set and on a stale Green Keeper cycle.",
+      "evidence": [
+        "checkpoint:MIRROR-SEMANTICS-PROBE.json",
+        "checkpoint:M0-INTERNAL-RED-TEAM.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AM-006",
+      "dimension": "NOT_APPLICABLE is evidence, not an escape",
+      "expectation": "An inapplicable dimension carries a reason, an expected count of zero and a named canonical derivation source; the reverse escape is refused by the auditor and again by checkpoint validation.",
+      "failsIf": "An unjustified inapplicable dimension, one carrying items, one counted as a pass, one under report schemaVersion 1.0.0, or one declared over work the audit registry still names is accepted.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "Six attacks on the state the repair opened, all refused with the message the model predicts: no reason; over work the registry names; carrying items; under report schemaVersion 1.0.0; counted as a pass; every dimension at once. The refusals come from the auditor and again from validate_checkpoint._validate_mirror_applicability, which re-derives the applicable set instead of believing the claim.",
+      "evidence": [
+        "checkpoint:NA-ESCAPE-PROBE.json",
+        "checkpoint:M0-INTERNAL-RED-TEAM.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AM-007",
+      "dimension": "The real m0_mirror_audit.py",
+      "expectation": "Every mirror verdict this audit relies on comes from executing the shipped command-line tool, never from reading an artifact a delivery wrote.",
+      "failsIf": "A conclusion rests on a hand-crafted mirror report.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "Every mirror verdict in this audit was produced by executing m0_mirror_audit.py: six times by this audit's own probe, once per applicability state, and again through mirror_semantics_validation.py, gate_transition_simulation.py and promotion_simulation.py, whose fixture raises rather than writing the artifact when the tool produces no report.",
+      "evidence": [
+        "checkpoint:MIRROR-SEMANTICS-PROBE.json",
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AM-008",
+      "dimension": "Positive promotion simulation",
+      "expectation": "promotion_simulation.py reaches a derived milestone verdict of PASSED and produces every mirror report in it by executing m0_mirror_audit.py.",
+      "failsIf": "The simulation writes a mirror artifact instead of running the tool, or the positive path does not reach PASSED.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "POSITIVE_PROMOTION=PASS verdict=PASSED checks=9/9, with POS-008 asserting that every mirror in the simulation was produced by executing the tool and POS-009 that a checkpoint correcting no audit passes with its empty dimensions justified.",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json",
+        "file:scripts/development-ledger/promotion_simulation.py"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AM-009",
+      "dimension": "Gate 0 transition",
+      "expectation": "A closed milestone followed by the first checkpoint of the next Gate reaches READY_FOR_REVIEW with no applicable audit findings, a passing mirror and a verifying integrity chain, inside a disposable repository.",
+      "failsIf": "The first delivery of the next Gate cannot reach a handoff-ready status, or any Gate 0 runtime is created in this repository.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "GATE_TRANSITION=PASS checks=9/9 status=READY_FOR_REVIEW. The first checkpoint of the next Gate is created against a synthetic specification inside a disposable repository, its mirror is produced by executing the tool, the empty dimensions are NOT_APPLICABLE with reasons, the chain still verifies, and GT-009 confirms no Gate 0 runtime exists here.",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json",
+        "file:scripts/development-ledger/gate_transition_simulation.py"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AM-010",
+      "dimension": "Successor durability",
+      "expectation": "Several successors are sealed in succession, each anchoring its predecessor, and the integrity controls stay green at every state, with the negative control still detecting a removed anchor.",
+      "failsIf": "Any state of the advancing chain turns a mandatory control red, or the detection control stops detecting.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "SUCCESSOR_DURABILITY=PASS checks=8/8: three checkpoints sealed in succession, each anchoring its predecessor, with the chain and verify_integrity.py green at every state, plus the negative control that removes an anchor the rule does not forgive and the restoration that follows.",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json",
+        "file:scripts/development-ledger/successor_durability.py"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AM-011",
+      "dimension": "Full suite",
+      "expectation": "The whole discovered suite executes with zero failures and zero errors, and every skip is investigated and explained.",
+      "failsIf": "Any test fails or errors, or a skip hides an unexecuted mandatory control.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "python -m unittest discover -s tests: Ran 410 tests, 0 failures, 0 errors, 1 skipped, in the working tree and again in a clean clone. The skip is AuditAttestationModelTests.test_an_unsealed_subject_is_rejected, skipped because every checkpoint directory in a sealed checkout is sealed; it executes during any delivery and skips only in a repository at rest, no guardrail or checklist row names that method, and the rest of its class executes unconditionally.",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json",
+        "file:tests/test_development_ledger.py"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AM-012",
+      "dimension": "Clean clone",
+      "expectation": "The mandatory validations and the suite reproduce in a fresh clone detached at the subject's canonical tag, with no workspace state.",
+      "failsIf": "Any mandatory validation or the suite behaves differently in a clean clone.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "A fresh clone detached at refs/tags/iacode-checkpoints/SETUP-00-CP-0012 with a clean worktree: CHECKPOINT_VALID; LESSONS_VALID total=31 guarded=29; INTEGRITY_VALID anchors=11; COUNTS_DERIVED identical to the sealed COUNTS.json; DELIVERY_COMPLETENESS_GATE=PASS coverage=100.00 evidenceCoverage=100.00; MILESTONE_NOT_PASSED as the honest pre-audit state; compileall ok; Ran 410 tests OK with the same single skip.",
+      "evidence": [
+        "checkpoint:audit-harness/clean_clone.sh",
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AM-013",
+      "dimension": "Green Keeper",
+      "expectation": "The mandatory gate set is closed and green, measured against the canonical registry rather than an invocation, with a fresh scope fingerprint.",
+      "failsIf": "A cycle is red, measures less than the canonical set, or is stale.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "GREEN_KEEPER_GATE=PASS on cycle 2, measured against the closed canonical mandatory set tests, staticAnalysis, lessons, integrity and checkpointValidation, all five exit 0, remainingFailures=0, with a fresh scope fingerprint. Cycle 1 was STILL_RED on checkpointValidation alone and is kept in the log: no gate command failed and no check was weakened; the checkpoint's own quality evidence, attestation status and run metadata were repaired and the cycle re-run.",
+      "evidence": [
+        "checkpoint:REWORK-LOG.jsonl",
+        "command:cmd-0019"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AM-014",
+      "dimension": "Delivery completeness",
+      "expectation": "The expected requirement set is re-derived independently and equals the anchored declared set exactly, with total coverage and total evidence coverage and no PARTIAL or MISSING row.",
+      "failsIf": "The denominator differs from an independent derivation, or any evidence reference does not resolve.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "The expected set re-derived independently: 118 references for the subject, 75 canonical, 30 lesson-derived, 1 finding and 12 mandatory attacks, equal to the 118 anchored rows declared, with no omission, duplicate or unexpected anchor. All 881 evidence references resolve, every row is COMPLETE, coverage and evidence coverage are 100.00.",
+      "evidence": [
+        "checkpoint:EXPECTED-SET-SUBJECT.json",
+        "checkpoint:EVIDENCE-RESOLUTION-SUBJECT.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AM-015",
+      "dimension": "Engineering memory",
+      "expectation": "The memory validates, the lesson raised by CP11-F-001 exists, and the GUARDRAIL_FAILURE of the recurrence is recorded against the lessons whose classes recurred and is resolved.",
+      "failsIf": "The memory is invalid, the recurrence is filed as a new lesson instead of a guardrail failure, or any guardrail failure is unresolved.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "LESSONS_VALID total=31 active=31 guarded=29. The CP11-F-001 recurrence is a GUARDRAIL_FAILURE on LSN-0024 and LSN-0029, both resolved in SETUP-00-CP-0012, and the genuinely new class is LSN-0031 GUARDED by GRD-0030 and GRD-0031. No guardrail failure is unresolved.",
+      "evidence": [
+        "checkpoint:MEMORY-MEASUREMENT.json",
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AM-016",
+      "dimension": "Guardrails",
+      "expectation": "Every registered guardrail resolves to a real control, names verifying tests that exist in the suite, and no guardrail failure is unresolved.",
+      "failsIf": "guardrailFailures is non-zero, or a guardrail names a control or a test that does not resolve.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "32 guardrails, every control resolving, all 72 verifiedBy references naming cases the suite discovers, no guardrail without a verifying test, and guardrailFailures=0. Measured with this audit's own reader, which imports the tooling module and looks an invariant symbol up at run time rather than searching the source text.",
+      "evidence": [
+        "checkpoint:MEMORY-MEASUREMENT.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AM-017",
+      "dimension": "Lesson preflight",
+      "expectation": "The preflight of the subject is bound to its Gate and fresh against the memory, recomputed rather than read, and this audit runs its own.",
+      "failsIf": "The recorded preflight cannot be reproduced from the memory it names.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "The subject's preflight is fresh and reproducible: the real mirror over the unmutated subject reports MIR-007 fresh, fingerprint recomputed and selection reproduced, within an 18/18 PASS. This audit ran its own preflight for the independent-audit scope: 31 lessons considered, 31 applicable, 31 derived requirements, every one carried into the matrix.",
+      "evidence": [
+        "checkpoint:MIRROR-SEMANTICS-PROBE.json",
+        "checkpoint:LESSON-PREFLIGHT.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AM-018",
+      "dimension": "History integrity",
+      "expectation": "Every sealed checkpoint resolves to its anchored commit and tree, the hash-linked chain verifies, and every sealed checkpoint still validates under the current tooling.",
+      "failsIf": "A tag moved, a tree changed, a link broke, or a sealed checkpoint no longer validates.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "INTEGRITY_VALID anchors=12 after this checkpoint anchored its sealed predecessor. A moved historical tag, a forged anchored commit, a broken chain link and a removed anchor were each attacked and each refused. MIR-016 confirms every sealed checkpoint still validates under the current tooling.",
+      "evidence": [
+        "checkpoint:M0-INTERNAL-RED-TEAM.json",
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AM-019",
+      "dimension": "The subject is untouched",
+      "expectation": "This audit rewrites no sealed checkpoint, moves no historical tag and changes no product code; the subject's tag, tree and STATE.json are the same before and after.",
+      "failsIf": "Any sealed content differs, or any file under scripts/ changes.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "The subject is untouched: its tag still resolves to 3f730dca1a12245ee8fdf8dfad7a523ed5c1c186 and its tree to 1838695a8a3d65728669aea734c468ac3eab5284, git status reports no change under docs/checkpoints/SETUP-00-CP-0012, scripts/ or tests/, and its STATE.json still records READY_FOR_REVIEW with externalAttestation NONE. The clean-clone run at that tag, performed after this checkpoint existed, reproduced every one of its results.",
+      "evidence": [
+        "checkpoint:DIFF-SUMMARY.md",
+        "file:docs/checkpoints/SETUP-00-CP-0012/STATE.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AM-020",
+      "dimension": "Honest audit semantics",
+      "expectation": "This audit records FRESH_SESSION_INDEPENDENT_AUDIT with crossToolValidation NOT_AVAILABLE, and the derivation refuses to promote a cross-tool status from it.",
+      "failsIf": "A same-tool audit is recorded as cross-tool validation, or an internal verdict is recorded as an independent one.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "The attestation records FRESH_SESSION_INDEPENDENT_AUDIT with crossToolValidation NOT_AVAILABLE and freshSession true. Relabelling it as a cross-tool audit was executed as an attack and refused: a CROSS_TOOL_INDEPENDENT_AUDIT records crossToolValidation=AVAILABLE. A delivery promoting itself to MILESTONE_EXTERNAL_PASS was refused because the verdict belongs to the audit checkpoint.",
+      "evidence": [
+        "checkpoint:M0-INTERNAL-RED-TEAM.json",
+        "file:.iacode/attestations/M0-CP-0013.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AM-021",
+      "dimension": "Secrets and diff hygiene",
+      "expectation": "No tracked file carries a credential-shaped value and the diff carries no whitespace or conflict damage.",
+      "failsIf": "A credential-shaped value exists in a tracked file, or git diff --check reports damage.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "SECRET_SCAN scanned=514 tracked=514 hits=0 using the project's own redaction patterns. The credential-shaped strings anywhere in the checkout are synthetic fixtures composed at run time, so the literal never appears in a source file, and they survive only inside ignored __pycache__ artifacts. git diff --check reports nothing.",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json",
+        "file:scripts/development-ledger/ledger_common.py"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AM-022",
+      "dimension": "Audit completeness",
+      "expectation": "This matrix itself ends fully executed, with evidence on every terminal row, no failed mandatory row, no UNVERIFIED row and no NOT_STARTED row.",
+      "failsIf": "Any row is left unexecuted or unevidenced.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "The audit matrix ends with all twenty-two rows COMPLETE, zero FAILED, zero UNVERIFIED, zero NOT_STARTED and zero IN_PROGRESS; every terminal row carries evidence and every evidence reference resolves. Execution coverage and evidence coverage are both total.",
+      "evidence": [
+        "checkpoint:FINAL-M0-AUDIT-MATRIX.json",
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "PASS"
+    }
+  ],
+  "summary": {
+    "total": 22,
+    "mandatory": 22,
+    "complete": 22,
+    "failed": 0,
+    "unverified": 0,
+    "inProgress": 0,
+    "notStarted": 0,
+    "executed": 22,
+    "missingEvidence": 0,
+    "rowsWithoutEvidence": [],
+    "unresolvableEvidence": [],
+    "mandatoryIncomplete": [],
+    "mandatoryFailed": [],
+    "executedPercent": 100.0,
+    "evidenceCoveragePercent": 100.0,
+    "recomputedAt": "2026-09-21T18:44:56Z"
+  }
+}

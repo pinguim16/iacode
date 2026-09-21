@@ -1,0 +1,291 @@
+{
+  "schemaVersion": "1.0.0",
+  "artifact": "AUDIT-EXECUTIONS",
+  "checkpoint": "SETUP-00-CP-0013",
+  "subjectCheckpoint": "SETUP-00-CP-0012",
+  "auditMechanism": "FRESH_SESSION_INDEPENDENT_AUDIT",
+  "crossToolValidation": "NOT_AVAILABLE",
+  "note": "Every execution this audit relied on, appended as it happened. A non-zero exit code is kept rather than removed: some executions are deliberately negative, and the dimension says which.",
+  "generatedAt": "2026-09-21T18:44:56Z",
+  "executions": [
+    {
+      "id": "EX-001",
+      "dimension": "mirror semantics (product control)",
+      "command": "python scripts/development-ledger/mirror_semantics_validation.py",
+      "exitCode": 0,
+      "observed": "MIRROR_SEMANTICS=PASS states=6/6; MSV-001 no-applicable-audit overall=PASS MIR-002=NOT_APPLICABLE MIR-003=NOT_APPLICABLE sealed=True; MSV-002 closed-findings PASS/PASS/PASS; MSV-003 open-finding FAIL; MSV-004 missing-closure-record FAIL; MSV-005 forged-empty-applicable-set FAIL; MSV-006 undefended-mandatory-attack FAIL",
+      "evidence": [
+        "file:scripts/development-ledger/mirror_semantics_validation.py"
+      ],
+      "recordedAt": "2026-09-21T17:37:31Z"
+    },
+    {
+      "id": "EX-002",
+      "dimension": "Gate 0 transition",
+      "command": "python scripts/development-ledger/gate_transition_simulation.py",
+      "exitCode": 0,
+      "observed": "GATE_TRANSITION=PASS checks=9/9 status=READY_FOR_REVIEW",
+      "evidence": [
+        "file:scripts/development-ledger/gate_transition_simulation.py"
+      ],
+      "recordedAt": "2026-09-21T17:37:31Z"
+    },
+    {
+      "id": "EX-003",
+      "dimension": "positive promotion",
+      "command": "python scripts/development-ledger/promotion_simulation.py",
+      "exitCode": 0,
+      "observed": "POSITIVE_PROMOTION=PASS verdict=PASSED checks=9/9",
+      "evidence": [
+        "file:scripts/development-ledger/promotion_simulation.py"
+      ],
+      "recordedAt": "2026-09-21T17:37:31Z"
+    },
+    {
+      "id": "EX-004",
+      "dimension": "successor durability",
+      "command": "python scripts/development-ledger/successor_durability.py",
+      "exitCode": 0,
+      "observed": "SUCCESSOR_DURABILITY=PASS checks=8/8 over three checkpoints sealed in succession plus the removal and restoration controls",
+      "evidence": [
+        "file:scripts/development-ledger/successor_durability.py"
+      ],
+      "recordedAt": "2026-09-21T17:37:31Z"
+    },
+    {
+      "id": "EX-005",
+      "dimension": "engineering memory",
+      "command": "python scripts/development-ledger/validate_lessons.py",
+      "exitCode": 0,
+      "observed": "LESSONS_VALID total=31 active=31 guarded=29",
+      "evidence": [
+        "command:cmd-0003"
+      ],
+      "recordedAt": "2026-09-21T17:37:31Z"
+    },
+    {
+      "id": "EX-006",
+      "dimension": "history integrity",
+      "command": "python scripts/development-ledger/verify_integrity.py",
+      "exitCode": 0,
+      "observed": "INTEGRITY_VALID anchors=11 latest=SETUP-00-CP-0011; the pending anchor of SETUP-00-CP-0012 is the derived exclusion its successor owes",
+      "evidence": [
+        "command:cmd-0004"
+      ],
+      "recordedAt": "2026-09-21T17:37:32Z"
+    },
+    {
+      "id": "EX-007",
+      "dimension": "derived counts",
+      "command": "python scripts/development-ledger/derive_counts.py",
+      "exitCode": 0,
+      "observed": "COUNTS_DERIVED TESTS=410/410 REQUIREMENTS=156/156 FINDINGS=1/1 ATTACKS=73/73 LESSONS=29/31 GUARDRAILS=32/32, identical to the sealed COUNTS.json of the subject",
+      "evidence": [
+        "command:cmd-0005"
+      ],
+      "recordedAt": "2026-09-21T17:37:32Z"
+    },
+    {
+      "id": "EX-008",
+      "dimension": "subject checkpoint validation",
+      "command": "python scripts/development-ledger/validate_checkpoint.py",
+      "exitCode": 0,
+      "observed": "CHECKPOINT_VALID for SETUP-00-CP-0012 on the working branch before this audit created its own checkpoint",
+      "evidence": [
+        "file:docs/checkpoints/SETUP-00-CP-0012/STATE.json"
+      ],
+      "recordedAt": "2026-09-21T17:37:32Z"
+    },
+    {
+      "id": "EX-009",
+      "dimension": "static analysis",
+      "command": "python -m compileall -q scripts tests",
+      "exitCode": 0,
+      "observed": "every module under scripts/ and tests/ compiles",
+      "evidence": [
+        "file:scripts/development-ledger"
+      ],
+      "recordedAt": "2026-09-21T17:37:32Z"
+    },
+    {
+      "id": "EX-010",
+      "dimension": "diff hygiene",
+      "command": "git diff --check",
+      "exitCode": 0,
+      "observed": "no whitespace or conflict damage reported",
+      "evidence": [
+        "file:.gitignore"
+      ],
+      "recordedAt": "2026-09-21T17:37:32Z"
+    },
+    {
+      "id": "EX-011",
+      "dimension": "milestone derivation before this audit",
+      "command": "python scripts/development-ledger/milestone_status.py --milestone M0",
+      "exitCode": 0,
+      "observed": "MILESTONE_NOT_PASSED attestations=1 accepted=0; REJECTED M0-CP-0011 because reviewResult is REWORK_REQUIRED. The honest pre-audit state: the subject carries no verdict of its own",
+      "evidence": [
+        "file:.iacode/attestations/M0-CP-0011.json"
+      ],
+      "recordedAt": "2026-09-21T17:37:32Z"
+    },
+    {
+      "id": "EX-012",
+      "dimension": "clean clone",
+      "command": "git clone --no-hardlinks + git checkout --detach refs/tags/iacode-checkpoints/SETUP-00-CP-0012 and re-run the mandatory validations and the suite",
+      "exitCode": 0,
+      "observed": "CHECKPOINT_VALID; LESSONS_VALID total=31 active=31 guarded=29; INTEGRITY_VALID anchors=11; COUNTS_DERIVED identical to the sealed COUNTS.json; DELIVERY_COMPLETENESS_GATE=PASS coverage=100.00 evidenceCoverage=100.00; MILESTONE_NOT_PASSED as expected before this audit; compileall ok; suite OK with one state-conditional skip",
+      "evidence": [
+        "checkpoint:audit-harness/clean_clone.sh"
+      ],
+      "recordedAt": "2026-09-21T17:39:19Z"
+    },
+    {
+      "id": "EX-013",
+      "dimension": "mirror semantics (this audit's own probe)",
+      "command": "python docs/checkpoints/SETUP-00-CP-0013/audit-harness/probe_mirror.py",
+      "exitCode": 0,
+      "observed": "PROBE_RESULT=PASS 6/6. P1 closed set 18/18 PASS; P2 open finding FAIL; P3 missing required artifact FAIL; P4 forged empty set inside the delivery FAIL; P5 unparseable report raises instead of emptying FAIL; P6 registry entry deleted gives NOT_APPLICABLE but the overall mirror still FAILS on the shrunken expected set",
+      "evidence": [
+        "checkpoint:MIRROR-SEMANTICS-PROBE.json"
+      ],
+      "recordedAt": "2026-09-21T17:39:19Z"
+    },
+    {
+      "id": "EX-014",
+      "dimension": "expected requirement set of the subject",
+      "command": "python docs/checkpoints/SETUP-00-CP-0013/audit-harness/derive_expected.py --checkpoint SETUP-00-CP-0012",
+      "exitCode": 0,
+      "observed": "EXPECTED_SET derived=118 declaredAnchored=118 missing=0 unexpected=0 duplicates=0 agree=True; SETUP=75 LESSON=30 AUDIT_FINDING=1 AUDIT_ATTACK=12",
+      "evidence": [
+        "checkpoint:EXPECTED-SET-SUBJECT.json"
+      ],
+      "recordedAt": "2026-09-21T17:39:19Z"
+    },
+    {
+      "id": "EX-015",
+      "dimension": "evidence resolution of the subject",
+      "command": "python docs/checkpoints/SETUP-00-CP-0013/audit-harness/resolve_evidence.py --checkpoint SETUP-00-CP-0012",
+      "exitCode": 0,
+      "observed": "EVIDENCE rows=156 references=881 unresolved=0 rowsWithoutEvidence=0 coverage=100.0%; every row COMPLETE",
+      "evidence": [
+        "checkpoint:EVIDENCE-RESOLUTION-SUBJECT.json"
+      ],
+      "recordedAt": "2026-09-21T17:39:19Z"
+    },
+    {
+      "id": "EX-016",
+      "dimension": "engineering memory and guardrails",
+      "command": "python docs/checkpoints/SETUP-00-CP-0013/audit-harness/verify_memory.py",
+      "exitCode": 0,
+      "observed": "MEMORY lessons=31 guardrails=32 unresolvedFailures=0 resolvedFailures=9 unresolvableControls=0 withoutTest=0 missingTests=0 clean=True; the CP11-F-001 recurrence is recorded as a GUARDRAIL_FAILURE on LSN-0024 and LSN-0029 resolved in SETUP-00-CP-0012, and the genuinely new class is LSN-0031 GUARDED by GRD-0030 and GRD-0031",
+      "evidence": [
+        "checkpoint:MEMORY-MEASUREMENT.json"
+      ],
+      "recordedAt": "2026-09-21T17:39:19Z"
+    },
+    {
+      "id": "EX-017",
+      "dimension": "secret scan",
+      "command": "ledger_common.redact_text over every tracked file",
+      "exitCode": 0,
+      "observed": "SECRET_SCAN scanned=514 tracked=514 hits=0; the only credential-shaped strings in the checkout are synthetic fixtures composed at run time and they exist solely inside ignored __pycache__ artifacts",
+      "evidence": [
+        "file:scripts/development-ledger/ledger_common.py"
+      ],
+      "recordedAt": "2026-09-21T17:39:19Z"
+    },
+    {
+      "id": "EX-018",
+      "dimension": "skip investigation",
+      "command": "python -m unittest tests.test_development_ledger.AuditAttestationModelTests.test_an_unsealed_subject_is_rejected -v",
+      "exitCode": 0,
+      "observed": "skipped 'every checkpoint directory in this checkout is sealed'. The single skip of the suite is state-conditional: it needs an unsealed checkpoint directory, which exists during any delivery and not in a checkout at rest. No guardrail and no checklist row names that method",
+      "evidence": [
+        "file:tests/test_development_ledger.py"
+      ],
+      "recordedAt": "2026-09-21T17:39:20Z"
+    },
+    {
+      "id": "EX-019",
+      "dimension": "adversarial battery of this audit",
+      "command": "python docs/checkpoints/SETUP-00-CP-0013/audit-harness/attack_battery.py",
+      "exitCode": 0,
+      "observed": "BATTERY=RED_TEAM_PASS defended=23/23 over a null-mutation control the unmutated sealed subject passed first (CHECKPOINT_VALID). Six attacks target the state the CP11-F-001 repair opened and all six were refused with the message the model predicts",
+      "evidence": [
+        "checkpoint:M0-INTERNAL-RED-TEAM.json"
+      ],
+      "recordedAt": "2026-09-21T17:45:32Z"
+    },
+    {
+      "id": "EX-020",
+      "dimension": "the delivery's own battery, re-executed",
+      "command": "python scripts/development-ledger/m0_red_team.py",
+      "exitCode": 0,
+      "observed": "INTERNAL_RED_TEAM=RED_TEAM_PASS defended=73/73 mandatory=38/38, which reproduces the count the subject recorded rather than accepting it",
+      "evidence": [
+        "file:scripts/development-ledger/m0_red_team.py"
+      ],
+      "recordedAt": "2026-09-21T17:45:32Z"
+    },
+    {
+      "id": "EX-021",
+      "dimension": "clean clone, shipped script",
+      "command": "sh docs/checkpoints/SETUP-00-CP-0013/audit-harness/clean_clone.sh /e/iacode SETUP-00-CP-0012",
+      "exitCode": 0,
+      "observed": "CLONE_HEAD=3f730dca1a12245ee8fdf8dfad7a523ed5c1c186 CLONE_STATUS=0 dirty-lines; every mandatory validation exit=0; Ran 410 tests in 790.829s OK (skipped=1)",
+      "evidence": [
+        "checkpoint:audit-harness/clean_clone.sh"
+      ],
+      "recordedAt": "2026-09-21T17:53:36Z"
+    },
+    {
+      "id": "EX-022",
+      "dimension": "attributable adversarial variants",
+      "command": "python docs/checkpoints/SETUP-00-CP-0013/audit-harness/attack_battery_refreshed.py",
+      "exitCode": 0,
+      "observed": "BATTERY=RED_TEAM_PASS defended=3/3 over a null-mutation control that passed with the declared hashes re-derived first. CNT-02 refused by the derived-count comparison, PRM-02 by the rule that a milestone verdict belongs to the audit checkpoint, STL-02 by the Green Keeper staleness rule",
+      "evidence": [
+        "checkpoint:M0-INTERNAL-RED-TEAM.json"
+      ],
+      "recordedAt": "2026-09-21T17:56:26Z"
+    },
+    {
+      "id": "EX-023",
+      "dimension": "every finding of every independent audit",
+      "command": "python docs/checkpoints/SETUP-00-CP-0013/audit-harness/derive_expected.py, findings re-parsed from each sealed review report and compared with each corrective delivery's closure record",
+      "exitCode": 0,
+      "observed": "17 findings raised across the three sealed independent audits: 11 by M0-CP-0007, 5 by M0-CP-0009, 1 by M0-CP-0011. All 17 carry CLOSED in the closure record of the corrective delivery the registry names, verified against the sealed report that raised them rather than against the record",
+      "evidence": [
+        "file:.iacode/policies/audit-registry.json",
+        "checkpoint:EXPECTED-SET-SUBJECT.json"
+      ],
+      "recordedAt": "2026-09-21T17:59:34Z"
+    },
+    {
+      "id": "EX-024",
+      "dimension": "Green Keeper of this audit checkpoint",
+      "command": "python scripts/development-ledger/green_keeper.py",
+      "exitCode": 0,
+      "observed": "GREEN_KEEPER_GATE=PASS cycle=2 result=GREEN required=tests,staticAnalysis,lessons,integrity,checkpointValidation remainingFailures=0. Cycle 1 STILL_RED on checkpointValidation only, kept in the log so the correction stays visible",
+      "evidence": [
+        "checkpoint:REWORK-LOG.jsonl"
+      ],
+      "recordedAt": "2026-09-21T18:32:39Z"
+    },
+    {
+      "id": "EX-025",
+      "dimension": "internal mirror of this audit checkpoint",
+      "command": "python scripts/development-ledger/m0_mirror_audit.py --clean-clone --write",
+      "exitCode": 0,
+      "observed": "INTERNAL_MIRROR=PASS passed=16/18 notApplicable=2 failed=0. MIR-002 and MIR-003 are NOT_APPLICABLE with expectedCount 0 and the audit registry named as the derivation source, because no registered audit names SETUP-00-CP-0013 as its corrective delivery. Under CP11-F-001 this checkpoint could not have reached a passing mirror at all",
+      "evidence": [
+        "checkpoint:M0-INTERNAL-MIRROR.json"
+      ],
+      "recordedAt": "2026-09-21T18:44:56Z"
+    }
+  ],
+  "total": 25,
+  "nonZeroExit": [],
+  "appendOnlyRecords": 25
+}

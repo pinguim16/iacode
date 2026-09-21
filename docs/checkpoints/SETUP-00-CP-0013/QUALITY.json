@@ -1,0 +1,90 @@
+{
+  "schemaVersion": "3.2.0",
+  "checks": {
+    "build": {
+      "status": "NOT_APPLICABLE",
+      "evidence": [],
+      "justification": "SETUP-00 has no build target; the ledger tooling is standard-library Python executed directly."
+    },
+    "unitTests": {
+      "status": "PASS",
+      "evidence": [
+        "command:cmd-0010",
+        "file:TESTS.json"
+      ],
+      "justification": null
+    },
+    "integrationTests": {
+      "status": "PASS",
+      "evidence": [
+        "command:cmd-0010",
+        "file:TESTS.json"
+      ],
+      "justification": null
+    },
+    "e2e": {
+      "status": "NOT_APPLICABLE",
+      "evidence": [],
+      "justification": "No runtime exists to exercise end to end during SETUP-00."
+    },
+    "lint": {
+      "status": "NOT_APPLICABLE",
+      "evidence": [],
+      "justification": "No linter is vendored; static analysis is covered by compileall."
+    },
+    "staticAnalysis": {
+      "status": "PASS",
+      "evidence": [
+        "command:cmd-0011"
+      ],
+      "justification": null
+    },
+    "security": {
+      "status": "PASS",
+      "evidence": [
+        "command:cmd-0012",
+        "file:M0-INTERNAL-RED-TEAM.json"
+      ],
+      "justification": null
+    },
+    "documentation": {
+      "status": "PASS",
+      "evidence": [
+        "file:REVIEW-REPORT.md",
+        "file:MILESTONE-REPORT.md",
+        "file:DIFF-SUMMARY.md"
+      ],
+      "justification": null
+    },
+    "checkpointValidation": {
+      "status": "PASS",
+      "evidence": [
+        "file:REWORK-LOG.jsonl"
+      ],
+      "justification": null
+    },
+    "redTeam": {
+      "status": "PASS",
+      "evidence": [
+        "file:RED-TEAM-REPORT.md",
+        "file:M0-INTERNAL-RED-TEAM.json"
+      ],
+      "justification": null
+    },
+    "greenKeeper": {
+      "status": "PASS",
+      "evidence": [
+        "file:REWORK-LOG.jsonl"
+      ],
+      "justification": null
+    },
+    "deliveryCompleteness": {
+      "status": "PASS",
+      "evidence": [
+        "command:cmd-0009",
+        "file:COMPLETENESS-REPORT.json"
+      ],
+      "justification": null
+    }
+  }
+}

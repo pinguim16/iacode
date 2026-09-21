@@ -1,0 +1,386 @@
+{
+  "schemaVersion": "1.1.0",
+  "checkpoint": "SETUP-00-CP-0013",
+  "generatedAt": "2026-09-21T17:56:26Z",
+  "targetFingerprint": "82c7c20b057414134929c1bc825806d7e6fc27080e52f11082c180ab0a4926eb",
+  "source": "The adversarial battery of the SETUP-00-CP-0013 fresh-session independent audit, authored by this audit and executed against disposable clones of the sealed SETUP-00-CP-0012 checkout, one clone per scenario. It is independent of m0_red_team.py, which this audit also executed separately and which reported 73 of 73 defended.",
+  "baselineControl": {
+    "result": "VALID",
+    "detail": "the unmutated SETUP-00-CP-0012 checkout, detached at its canonical tag, run through the identical validation path: exit=0 CHECKPOINT_VALID A second null-mutation control, with the declared inventory hashes re-derived by the project's own helper, was also accepted before the three attributable variants ran: the unmutated SETUP-00-CP-0012 checkout with its declared inventory hashes re-derived by the same helper the attacks use (inventory refresh exit=0 ['INVENTORY_REFRESHED']), then validated: exit=0 CHECKPOINT_VALID",
+    "evidence": [
+      "file:docs/checkpoints/SETUP-00-CP-0012/STATE.json"
+    ]
+  },
+  "attacks": [
+    {
+      "attackId": "NA-01",
+      "description": "An inapplicable dimension with no justification.",
+      "target": "mirror applicability: inapplicable dimension",
+      "mutation": "MIR-002 declared NOT_APPLICABLE with no reason and no derivation source",
+      "expectedDefense": "reject",
+      "observed": "exit=1; - M0-INTERNAL-MIRROR.json: check MIR-002 is NOT_APPLICABLE without a reason; an unjustified inapplicable check is indistinguishable from a skipped one",
+      "result": "DEFENDED",
+      "evidence": [
+        "checkpoint:audit-harness/attack_battery.py"
+      ],
+      "mandatory": true,
+      "origin": "authored by the CP-0013 fresh-session independent audit"
+    },
+    {
+      "attackId": "NA-02",
+      "description": "A fully justified inapplicable dimension over work the registry still names.",
+      "target": "mirror applicability: inapplicable dimension",
+      "mutation": "MIR-002 declared NOT_APPLICABLE while the registry still names CP11-F-001",
+      "expectedDefense": "reject",
+      "observed": "exit=1; - M0-INTERNAL-MIRROR.json: check MIR-002 is recorded as NOT_APPLICABLE while the canonical sources name 1 applicable audit finding(s) for this checkpoint (.iacode/policies/audit-registry.json matched on gate='SETUP-00' and correctiveCheckpo",
+      "result": "DEFENDED",
+      "evidence": [
+        "checkpoint:audit-harness/attack_battery.py"
+      ],
+      "mandatory": true,
+      "origin": "authored by the CP-0013 fresh-session independent audit"
+    },
+    {
+      "attackId": "NA-03",
+      "description": "An inapplicable dimension that admits it has items.",
+      "target": "mirror applicability: inapplicable dimension",
+      "mutation": "MIR-002 declared NOT_APPLICABLE while carrying four applicable items",
+      "expectedDefense": "reject",
+      "observed": "exit=1; - M0-INTERNAL-MIRROR.json: check MIR-002 is NOT_APPLICABLE with expectedCount=4; a dimension that has items to audit is not inapplicable",
+      "result": "DEFENDED",
+      "evidence": [
+        "checkpoint:audit-harness/attack_battery.py"
+      ],
+      "mandatory": true,
+      "origin": "authored by the CP-0013 fresh-session independent audit"
+    },
+    {
+      "attackId": "NA-04",
+      "description": "An inapplicable dimension under the report version that cannot justify one.",
+      "target": "mirror applicability: report version",
+      "mutation": "an inapplicable dimension recorded under mirror report schemaVersion 1.0.0",
+      "expectedDefense": "reject",
+      "observed": "exit=1; - M0-INTERNAL-MIRROR.json: a NOT_APPLICABLE check requires the justification fields of report schemaVersion 1.1.0",
+      "result": "DEFENDED",
+      "evidence": [
+        "checkpoint:audit-harness/attack_battery.py"
+      ],
+      "mandatory": true,
+      "origin": "authored by the CP-0013 fresh-session independent audit"
+    },
+    {
+      "attackId": "NA-05",
+      "description": "An inapplicable dimension counted as a passing one.",
+      "target": "mirror applicability: counting",
+      "mutation": "the inapplicable dimension counted as a passing one",
+      "expectedDefense": "reject",
+      "observed": "exit=1; - M0-INTERNAL-MIRROR.json: passed does not match the recorded checks",
+      "result": "DEFENDED",
+      "evidence": [
+        "checkpoint:audit-harness/attack_battery.py"
+      ],
+      "mandatory": true,
+      "origin": "authored by the CP-0013 fresh-session independent audit"
+    },
+    {
+      "attackId": "NA-06",
+      "description": "Every dimension declared inapplicable at once.",
+      "target": "mirror applicability: whole report",
+      "mutation": "every mirror dimension declared inapplicable at once",
+      "expectedDefense": "reject",
+      "observed": "exit=1; - M0-INTERNAL-MIRROR.json: check MIR-002 is recorded as NOT_APPLICABLE while the canonical sources name 1 applicable audit finding(s) for this checkpoint (.iacode/policies/audit-registry.json matched on gate='SETUP-00' and correctiveCheckpo",
+      "result": "DEFENDED",
+      "evidence": [
+        "checkpoint:audit-harness/attack_battery.py"
+      ],
+      "mandatory": true,
+      "origin": "authored by the CP-0013 fresh-session independent audit"
+    },
+    {
+      "attackId": "MIR-A1",
+      "description": "A failing dimension kept while the report claims a pass.",
+      "target": "mirror integrity: overall result",
+      "mutation": "a failing dimension kept while the overall result claims PASS",
+      "expectedDefense": "reject",
+      "observed": "exit=1; - M0-INTERNAL-MIRROR.json: a failed check cannot produce a PASS",
+      "result": "DEFENDED",
+      "evidence": [
+        "checkpoint:audit-harness/attack_battery.py"
+      ],
+      "mandatory": true,
+      "origin": "authored by the CP-0013 fresh-session independent audit"
+    },
+    {
+      "attackId": "FND-01",
+      "description": "A closed finding reopened.",
+      "target": "audit findings: closure record",
+      "mutation": "the closed audit finding set back to OPEN",
+      "expectedDefense": "reject",
+      "observed": "exit=1; - FAIL MIR-002: 0/1 audit findings CLOSED; CP11-F-001 is OPEN",
+      "result": "DEFENDED",
+      "evidence": [
+        "checkpoint:audit-harness/attack_battery.py"
+      ],
+      "mandatory": true,
+      "origin": "authored by the CP-0013 fresh-session independent audit"
+    },
+    {
+      "attackId": "FND-02",
+      "description": "The required closure record deleted.",
+      "target": "audit findings: closure record",
+      "mutation": "the closure record the audit registry requires deleted",
+      "expectedDefense": "reject",
+      "observed": "exit=1; - FAIL MIR-002: 0/1 audit findings CLOSED; M0-CP-0011: CP11-FINDINGS-CLOSURE.json is missing",
+      "result": "DEFENDED",
+      "evidence": [
+        "checkpoint:audit-harness/attack_battery.py"
+      ],
+      "mandatory": true,
+      "origin": "authored by the CP-0013 fresh-session independent audit"
+    },
+    {
+      "attackId": "FND-03",
+      "description": "The delivery declaring it has nothing to close.",
+      "target": "audit findings: expected set",
+      "mutation": "the delivery declaring that it has no finding to close",
+      "expectedDefense": "reject",
+      "observed": "exit=1; - FAIL MIR-002: 0/1 audit findings CLOSED; CP11-F-001 is undeclared",
+      "result": "DEFENDED",
+      "evidence": [
+        "checkpoint:audit-harness/attack_battery.py"
+      ],
+      "mandatory": true,
+      "origin": "authored by the CP-0013 fresh-session independent audit"
+    },
+    {
+      "attackId": "FND-04",
+      "description": "The audit deleted from the registry so its findings stop applying.",
+      "target": "audit findings: audit registry",
+      "mutation": "the audit removed from the registry so its findings stop being applicable",
+      "expectedDefense": "reject",
+      "observed": "exit=1; - FAIL MIR-009: 156/156 complete; 118 anchored against an expected set of 105 and 38 declared locally, coverage 100.00, evidence 100.00",
+      "result": "DEFENDED",
+      "evidence": [
+        "checkpoint:audit-harness/attack_battery.py"
+      ],
+      "mandatory": true,
+      "origin": "authored by the CP-0013 fresh-session independent audit"
+    },
+    {
+      "attackId": "FND-05",
+      "description": "The registry repointed at a report with no parseable finding.",
+      "target": "audit findings: sealed report",
+      "mutation": "the registry repointed at a report from which no finding can be parsed",
+      "expectedDefense": "reject",
+      "observed": "exit=1; [MIR-002] FAIL Audit findings: the check itself failed: no finding could be parsed from docs/checkpoints/SETUP-00-CP-0012/NO-FINDINGS.md",
+      "result": "DEFENDED",
+      "evidence": [
+        "checkpoint:audit-harness/attack_battery.py"
+      ],
+      "mandatory": true,
+      "origin": "authored by the CP-0013 fresh-session independent audit"
+    },
+    {
+      "attackId": "INT-01",
+      "description": "The anchor of a sealed checkpoint removed.",
+      "target": "integrity: anchor chain",
+      "mutation": "the anchor of a sealed checkpoint removed from the chain",
+      "expectedDefense": "reject",
+      "observed": "exit=1; INTEGRITY_INVALID",
+      "result": "DEFENDED",
+      "evidence": [
+        "checkpoint:audit-harness/attack_battery.py"
+      ],
+      "mandatory": true,
+      "origin": "authored by the CP-0013 fresh-session independent audit"
+    },
+    {
+      "attackId": "INT-02",
+      "description": "An anchored commit replaced with one the tag does not resolve to.",
+      "target": "integrity: anchor chain",
+      "mutation": "an anchored commit replaced with one the tag does not resolve to",
+      "expectedDefense": "reject",
+      "observed": "exit=1; INTEGRITY_INVALID",
+      "result": "DEFENDED",
+      "evidence": [
+        "checkpoint:audit-harness/attack_battery.py"
+      ],
+      "mandatory": true,
+      "origin": "authored by the CP-0013 fresh-session independent audit"
+    },
+    {
+      "attackId": "INT-03",
+      "description": "A historical checkpoint tag moved onto another commit.",
+      "target": "integrity: sealed history",
+      "mutation": "a historical checkpoint tag moved onto another commit",
+      "expectedDefense": "reject",
+      "observed": "exit=1; INTEGRITY_INVALID",
+      "result": "DEFENDED",
+      "evidence": [
+        "checkpoint:audit-harness/attack_battery.py"
+      ],
+      "mandatory": true,
+      "origin": "authored by the CP-0013 fresh-session independent audit"
+    },
+    {
+      "attackId": "CNT-01",
+      "description": "The derived test count replaced with a larger one.",
+      "target": "derived counts: COUNTS.json",
+      "mutation": "the derived test count replaced with a larger one",
+      "expectedDefense": "reject",
+      "observed": "exit=1; - FILES.json: hash mismatch for docs/checkpoints/SETUP-00-CP-0012/COUNTS.json",
+      "result": "DEFENDED",
+      "evidence": [
+        "checkpoint:audit-harness/attack_battery.py"
+      ],
+      "mandatory": true,
+      "origin": "authored by the CP-0013 fresh-session independent audit"
+    },
+    {
+      "attackId": "RDY-01",
+      "description": "A blocker carried while claiming readiness.",
+      "target": "readiness invariant: STATE.json",
+      "mutation": "a blocker carried while the checkpoint claims READY_FOR_REVIEW",
+      "expectedDefense": "reject",
+      "observed": "exit=1; - READY_FOR_REVIEW is incompatible with a non-empty blockedBy: INVENTED-BLOCKER",
+      "result": "DEFENDED",
+      "evidence": [
+        "checkpoint:audit-harness/attack_battery.py"
+      ],
+      "mandatory": true,
+      "origin": "authored by the CP-0013 fresh-session independent audit"
+    },
+    {
+      "attackId": "PRM-01",
+      "description": "The delivery promoting itself to a cross-tool milestone status.",
+      "target": "promotion: STATE.json",
+      "mutation": "the delivery promoting itself to a cross-tool milestone status",
+      "expectedDefense": "reject",
+      "observed": "exit=1; - status mismatch: STATE.json='MILESTONE_EXTERNAL_PASS', STATUS.md='READY_FOR_REVIEW'",
+      "result": "DEFENDED",
+      "evidence": [
+        "checkpoint:audit-harness/attack_battery.py"
+      ],
+      "mandatory": true,
+      "origin": "authored by the CP-0013 fresh-session independent audit"
+    },
+    {
+      "attackId": "ATT-01",
+      "description": "A fresh-session attestation relabelled as cross-tool.",
+      "target": "attestation: mechanism",
+      "mutation": "a fresh-session attestation relabelled as a cross-tool one while it records that cross-tool execution was unavailable",
+      "expectedDefense": "reject",
+      "observed": "exit=1; - REJECTED .iacode/attestations/M0-CP-0011.json: a CROSS_TOOL_INDEPENDENT_AUDIT records crossToolValidation=AVAILABLE; 'NOT_AVAILABLE' contradicts the mechanism it claims",
+      "result": "DEFENDED",
+      "evidence": [
+        "checkpoint:audit-harness/attack_battery.py"
+      ],
+      "mandatory": true,
+      "origin": "authored by the CP-0013 fresh-session independent audit"
+    },
+    {
+      "attackId": "ATT-02",
+      "description": "An approved attestation for a commit the subject tag does not resolve to.",
+      "target": "attestation: subject",
+      "mutation": "an attestation approved for a commit the subject tag does not resolve to",
+      "expectedDefense": "reject",
+      "observed": "exit=1; - REJECTED .iacode/attestations/M0-CP-0011.json: attests commit '0000000000000000000000000000000000000000', not the subject commit '90b67a7e0a11179465bc5c92dee22c78da36801f'",
+      "result": "DEFENDED",
+      "evidence": [
+        "checkpoint:audit-harness/attack_battery.py"
+      ],
+      "mandatory": true,
+      "origin": "authored by the CP-0013 fresh-session independent audit"
+    },
+    {
+      "attackId": "MEM-01",
+      "description": "A GUARDED lesson stripped of its guardrail.",
+      "target": "engineering memory: guarded semantics",
+      "mutation": "a GUARDED lesson stripped of the guardrail it names",
+      "expectedDefense": "reject",
+      "observed": "exit=1; LESSONS_INVALID",
+      "result": "DEFENDED",
+      "evidence": [
+        "checkpoint:audit-harness/attack_battery.py"
+      ],
+      "mandatory": true,
+      "origin": "authored by the CP-0013 fresh-session independent audit"
+    },
+    {
+      "attackId": "SEC-01",
+      "description": "A credential-shaped value planted in the memory.",
+      "target": "secret handling: engineering memory",
+      "mutation": "a credential-shaped value planted in the engineering memory",
+      "expectedDefense": "reject",
+      "observed": "exit=1; LESSONS_INVALID",
+      "result": "DEFENDED",
+      "evidence": [
+        "checkpoint:audit-harness/attack_battery.py"
+      ],
+      "mandatory": true,
+      "origin": "authored by the CP-0013 fresh-session independent audit"
+    },
+    {
+      "attackId": "STL-01",
+      "description": "An entry removed from the declared change set.",
+      "target": "file inventory: FILES.json",
+      "mutation": "an entry removed from the declared change set",
+      "expectedDefense": "reject",
+      "observed": "exit=1; - FILES.json omits a changed path: docs/checkpoints/SETUP-00-CP-0012/AFFECTED-RED-TEAM.json (added)",
+      "result": "DEFENDED",
+      "evidence": [
+        "checkpoint:audit-harness/attack_battery.py"
+      ],
+      "mandatory": true,
+      "origin": "authored by the CP-0013 fresh-session independent audit"
+    },
+    {
+      "attackId": "CNT-02",
+      "description": "The derived test count forged by an attacker who also repairs the inventory.",
+      "target": "derived counts: COUNTS.json",
+      "mutation": "the derived test count set to 9999/9999, then the declared inventory hashes re-derived; inventory refresh exit=0 ['INVENTORY_REFRESHED']",
+      "expectedDefense": "reject",
+      "observed": "exit=1; - COUNTS.json TESTS=9999/9999 contradicts the derived 410/410",
+      "result": "DEFENDED",
+      "evidence": [
+        "checkpoint:audit-harness/attack_battery_refreshed.py"
+      ],
+      "mandatory": true,
+      "origin": "authored by the CP-0013 fresh-session independent audit"
+    },
+    {
+      "attackId": "PRM-02",
+      "description": "A delivery promoting itself to a cross-tool milestone status, consistently.",
+      "target": "promotion: STATE.json",
+      "mutation": "the delivery promoting itself to MILESTONE_EXTERNAL_PASS with a filled secondToolValidation, a matching STATUS.md, and the inventory hashes re-derived; inventory refresh exit=0 ['INVENTORY_REFRESHED']",
+      "expectedDefense": "reject",
+      "observed": "exit=1; - independent audit: a milestone verdict requires STATE.json externalAttestation.subjectCheckpoint naming the sealed checkpoint this audit judged; the verdict belongs to the audit checkpoint, never to the delivery it judges",
+      "result": "DEFENDED",
+      "evidence": [
+        "checkpoint:audit-harness/attack_battery_refreshed.py"
+      ],
+      "mandatory": true,
+      "origin": "authored by the CP-0013 fresh-session independent audit"
+    },
+    {
+      "attackId": "STL-02",
+      "description": "The audited scope changed after the last green cycle.",
+      "target": "staleness: assurance scope",
+      "mutation": "a policy file edited after the last green Green Keeper cycle, then the declared inventory hashes re-derived; inventory refresh exit=0 ['INVENTORY_REFRESHED']",
+      "expectedDefense": "reject",
+      "observed": "exit=1; - greenKeeper=PASS is STALE: the delivery-assurance scope changed after the last GREEN cycle, so the Green Keeper must run again",
+      "result": "DEFENDED",
+      "evidence": [
+        "checkpoint:audit-harness/attack_battery_refreshed.py"
+      ],
+      "mandatory": true,
+      "origin": "authored by the CP-0013 fresh-session independent audit"
+    }
+  ],
+  "total": 26,
+  "defended": 26,
+  "escaped": 0,
+  "mandatoryTotal": 26,
+  "mandatoryDefended": 26,
+  "result": "RED_TEAM_PASS"
+}

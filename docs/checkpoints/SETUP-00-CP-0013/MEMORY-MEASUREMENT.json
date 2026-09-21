@@ -1,0 +1,31 @@
+{
+  "lessons": 31,
+  "statuses": {
+    "CONFIRMED": 2,
+    "GUARDED": 29
+  },
+  "guardrails": 32,
+  "guardrailFailuresUnresolved": [],
+  "guardrailFailuresResolved": 9,
+  "guardedWithoutRegisteredGuardrail": [],
+  "unresolvableControls": [],
+  "guardrailsWithoutVerifyingTest": [],
+  "verifyingTestsThatDoNotExist": [],
+  "recurrenceFinding": "CP11-F-001",
+  "recurrenceRecordedAsGuardrailFailure": [
+    {
+      "lessonId": "LSN-0024",
+      "detail": "GUARDRAIL_FAILURE: promotion_simulation.py wrote the internal mirror report by hand instead of running m0_mirror_audit.py, so the rehearsal reached a milestone status while the real control refused every delivery that corrects no audit (CP11-F-001).",
+      "resolvedIn": "SETUP-00-CP-0012"
+    },
+    {
+      "lessonId": "LSN-0029",
+      "detail": "GUARDRAIL_FAILURE: successor_durability.py covers the succession of checkpoints inside one Gate and not the transition into the next Gate, so the first delivery of any later Gate still could not reach READY_FOR_REVIEW (CP11-F-001).",
+      "resolvedIn": "SETUP-00-CP-0012"
+    }
+  ],
+  "lessonsRaisedByTheRecurrence": [
+    "LSN-0031"
+  ],
+  "clean": true
+}

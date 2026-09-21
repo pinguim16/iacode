@@ -1,0 +1,27 @@
+{
+  "schemaVersion": "3.2.0",
+  "unit": {
+    "executed": true,
+    "passed": 410,
+    "failed": 0,
+    "command": "python -m unittest discover -s tests",
+    "runId": "cp13-suite",
+    "evidence": "One discovery over tests/ covering the unit and integration cases, recorded once because it is one physical execution. The result object was read directly: 410 discovered, 410 run, 0 failures, 0 errors, 1 skipped. The skip is AuditAttestationModelTests.test_an_unsealed_subject_is_rejected, which needs an unsealed checkpoint directory and therefore executes during any delivery and skips only in a checkout at rest; it is investigated in REVIEW-REPORT.md and recorded as R4 in RISKS.md."
+  },
+  "integration": {
+    "executed": true,
+    "passed": 410,
+    "failed": 0,
+    "command": "python -m unittest discover -s tests",
+    "runId": "cp13-suite",
+    "evidence": "The same physical run as the unit categories, deduplicated by runId so one execution is counted once. Re-executed in a clean clone detached at the subject tag with the identical result."
+  },
+  "e2e": {
+    "executed": false,
+    "passed": 0,
+    "failed": 0,
+    "command": null,
+    "runId": null,
+    "evidence": "No runtime exists to exercise end to end during SETUP-00."
+  }
+}

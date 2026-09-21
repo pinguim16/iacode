@@ -1,0 +1,89 @@
+[
+  {
+    "scenario": "N1-na-without-justification",
+    "mutation": "MIR-002 -> NOT_APPLICABLE with no reason and no derivationSource",
+    "exitCode": 1,
+    "requiredFragments": {
+      "NOT_APPLICABLE without a reason": true
+    },
+    "verdict": "PASS",
+    "output": [
+      "CHECKPOINT_INVALID",
+      "- FILES.json: hash mismatch for docs/checkpoints/SETUP-00-CP-0012/M0-INTERNAL-MIRROR.json",
+      "- detached HEAD validation requires a clean worktree and dirty=false",
+      "- M0-INTERNAL-MIRROR.json: check MIR-002 is NOT_APPLICABLE without a reason; an unjustified inapplicable check is indistinguishable from a skipped one",
+      "- M0-INTERNAL-MIRROR.json: check MIR-002 is NOT_APPLICABLE without naming the canonical source its empty applicable set was derived from",
+      "- M0-INTERNAL-MIRROR.json: check MIR-002 is NOT_APPLICABLE with expectedCount=None; a dimension that has items to audit is not inapplicable",
+      "- M0-INTERNAL-MIRROR.json: check MIR-002 is recorded as NOT_APPLICABLE while the canonical sources name 1 applicable audit finding(s) for this checkpoint (.iacode/policies/audit-registry.json matched on gate='SETUP-00' and correctiveCheckpoint='SETUP-00-CP-0012', with every finding and mandatory attack re-parsed from the sealed reports the matching entries name)",
+      "- FILES.json hashAfter does not match the repository content of docs/checkpoints/SETUP-00-CP-0012/M0-INTERNAL-MIRROR.json"
+    ]
+  },
+  {
+    "scenario": "N2-na-while-registry-names-items",
+    "mutation": "MIR-002 -> fully justified NOT_APPLICABLE while the registry names CP11-F-001",
+    "exitCode": 1,
+    "requiredFragments": {
+      "NOT_APPLICABLE while the canonical sources name 1 applicable audit finding": true
+    },
+    "verdict": "PASS",
+    "output": [
+      "CHECKPOINT_INVALID",
+      "- FILES.json: hash mismatch for docs/checkpoints/SETUP-00-CP-0012/M0-INTERNAL-MIRROR.json",
+      "- detached HEAD validation requires a clean worktree and dirty=false",
+      "- M0-INTERNAL-MIRROR.json: check MIR-002 is recorded as NOT_APPLICABLE while the canonical sources name 1 applicable audit finding(s) for this checkpoint (.iacode/policies/audit-registry.json matched on gate='SETUP-00' and correctiveCheckpoint='SETUP-00-CP-0012', with every finding and mandatory attack re-parsed from the sealed reports the matching entries name)",
+      "- FILES.json hashAfter does not match the repository content of docs/checkpoints/SETUP-00-CP-0012/M0-INTERNAL-MIRROR.json"
+    ]
+  },
+  {
+    "scenario": "N3-na-with-nonzero-expected-count",
+    "mutation": "MIR-002 -> NOT_APPLICABLE with expectedCount=3",
+    "exitCode": 1,
+    "requiredFragments": {
+      "expectedCount=3": true
+    },
+    "verdict": "PASS",
+    "output": [
+      "CHECKPOINT_INVALID",
+      "- FILES.json: hash mismatch for docs/checkpoints/SETUP-00-CP-0012/M0-INTERNAL-MIRROR.json",
+      "- detached HEAD validation requires a clean worktree and dirty=false",
+      "- M0-INTERNAL-MIRROR.json: check MIR-002 is NOT_APPLICABLE with expectedCount=3; a dimension that has items to audit is not inapplicable",
+      "- M0-INTERNAL-MIRROR.json: check MIR-002 is recorded as NOT_APPLICABLE while the canonical sources name 1 applicable audit finding(s) for this checkpoint (.iacode/policies/audit-registry.json matched on gate='SETUP-00' and correctiveCheckpoint='SETUP-00-CP-0012', with every finding and mandatory attack re-parsed from the sealed reports the matching entries name)",
+      "- FILES.json hashAfter does not match the repository content of docs/checkpoints/SETUP-00-CP-0012/M0-INTERNAL-MIRROR.json"
+    ]
+  },
+  {
+    "scenario": "N4-na-under-report-version-1.0.0",
+    "mutation": "MIR-002 -> NOT_APPLICABLE under report schemaVersion 1.0.0",
+    "exitCode": 1,
+    "requiredFragments": {
+      "requires the justification fields of report schemaVersion 1.1.0": true
+    },
+    "verdict": "PASS",
+    "output": [
+      "CHECKPOINT_INVALID",
+      "- FILES.json: hash mismatch for docs/checkpoints/SETUP-00-CP-0012/M0-INTERNAL-MIRROR.json",
+      "- detached HEAD validation requires a clean worktree and dirty=false",
+      "- M0-INTERNAL-MIRROR.json: a NOT_APPLICABLE check requires the justification fields of report schemaVersion 1.1.0",
+      "- M0-INTERNAL-MIRROR.json: check MIR-002 is recorded as NOT_APPLICABLE while the canonical sources name 1 applicable audit finding(s) for this checkpoint (.iacode/policies/audit-registry.json matched on gate='SETUP-00' and correctiveCheckpoint='SETUP-00-CP-0012', with every finding and mandatory attack re-parsed from the sealed reports the matching entries name)",
+      "- FILES.json hashAfter does not match the repository content of docs/checkpoints/SETUP-00-CP-0012/M0-INTERNAL-MIRROR.json"
+    ]
+  },
+  {
+    "scenario": "N5-na-counted-as-a-pass",
+    "mutation": "the inapplicable dimension counted as a passing one",
+    "exitCode": 1,
+    "requiredFragments": {
+      "passed does not match the recorded checks": true
+    },
+    "verdict": "PASS",
+    "output": [
+      "CHECKPOINT_INVALID",
+      "- FILES.json: hash mismatch for docs/checkpoints/SETUP-00-CP-0012/M0-INTERNAL-MIRROR.json",
+      "- detached HEAD validation requires a clean worktree and dirty=false",
+      "- M0-INTERNAL-MIRROR.json: passed does not match the recorded checks",
+      "- M0-INTERNAL-MIRROR.json: notApplicable does not match the recorded checks",
+      "- M0-INTERNAL-MIRROR.json: check MIR-002 is recorded as NOT_APPLICABLE while the canonical sources name 1 applicable audit finding(s) for this checkpoint (.iacode/policies/audit-registry.json matched on gate='SETUP-00' and correctiveCheckpoint='SETUP-00-CP-0012', with every finding and mandatory attack re-parsed from the sealed reports the matching entries name)",
+      "- FILES.json hashAfter does not match the repository content of docs/checkpoints/SETUP-00-CP-0012/M0-INTERNAL-MIRROR.json"
+    ]
+  }
+]
