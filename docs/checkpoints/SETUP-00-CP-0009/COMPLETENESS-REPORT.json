@@ -1,0 +1,32 @@
+{
+  "schemaVersion": "2.0.0",
+  "checkpoint": "SETUP-00-CP-0009",
+  "generatedAt": "2026-09-21T01:37:48Z",
+  "matrix": "REQUIREMENTS-MATRIX.json",
+  "auditor": "CP-0009 fresh-session independent auditor",
+  "totalRequirements": 71,
+  "expectedRequirements": 71,
+  "expectedSetSource": "the canonical SETUP-00 Gate specification, re-parsed; this audit records a verdict for every row rather than a delivery plan",
+  "mandatoryRequirements": 71,
+  "complete": 69,
+  "partial": 2,
+  "missing": 0,
+  "notApplicable": 0,
+  "inProgress": 0,
+  "notStarted": 0,
+  "coveragePercent": 97.18,
+  "evidenceCoveragePercent": 100.0,
+  "result": "FAIL",
+  "findings": [
+    {
+      "requirement": "canonical:SETUP-00#7d.4",
+      "severity": "BLOCKING",
+      "detail": "the external attestation control has no reachable positive path; CP9-F-001"
+    },
+    {
+      "requirement": "canonical:SETUP-00#7d.8",
+      "severity": "BLOCKING",
+      "detail": "the anchor chain's verifying test is bound to a literal checkpoint name, so anchoring the sealed predecessor turns the mandatory suite red; CP9-F-002"
+    }
+  ]
+}

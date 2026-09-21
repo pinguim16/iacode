@@ -1,0 +1,80 @@
+{
+  "schemaVersion": "1.0.0",
+  "checkpoint": "SETUP-00-CP-0009",
+  "generatedAt": "2026-09-20T23:59:00Z",
+  "policy": "Audit-owned candidates only, never above OBSERVED. The canonical engineering memory in .iacode/memory/ was not modified by this audit; the implementer assesses provenance, category, severity, applicability and guardrail evidence in the corrective checkpoint.",
+  "candidates": [
+    {
+      "id": "M0-CP9-CANDIDATE-001",
+      "status": "OBSERVED",
+      "finding": "CP9-F-001",
+      "category": "quality",
+      "title": "A control is only finished when its positive path is executed, not only its refusals",
+      "observation": "The external attestation mechanism refuses fifteen distinct forgeries and accepts no legitimate case that can exist, because the attestation must live in the tree of the commit it names as subjectCommit. Twelve tests cover rejection and none covers acceptance, so nothing failed when the reachable state space became empty.",
+      "proposedGuardrail": "For every control that gates a status, require at least one executed test that reaches the status through the control, and make the absence of such a test a validation error rather than a review observation."
+    },
+    {
+      "id": "M0-CP9-CANDIDATE-002",
+      "status": "OBSERVED",
+      "finding": "CP9-F-002",
+      "category": "testing",
+      "title": "A guardrail test must derive what it excludes, never name it by literal",
+      "observation": "IntegrityAnchorTests excludes SETUP-00-CP-0008 by literal while verify_integrity.py derives the same exclusion from LATEST. The mandatory tests gate therefore turns red for the next delivery, and the only remedy is editing a guardrail test.",
+      "proposedGuardrail": "A test that seals a synthetic successor in a disposable clone and asserts the suite's own chain assertion stays green, so the literal cannot come back."
+    },
+    {
+      "id": "M0-CP9-CANDIDATE-003",
+      "status": "OBSERVED",
+      "finding": "audit harness, classified AUDIT_ENVIRONMENT",
+      "category": "testing",
+      "title": "An adversarial fixture needs a null-mutation control and must restore shared state between scenarios",
+      "observation": "The first revision of this audit's harness did not restore historical tags between attacks and did not re-seal mutations the way seal_checkpoint.py does. Every attack still reported DEFENDED, but the rejections came from leftover state and from a broken seal chronology rather than from the mutation under test. A null-mutation control through the same path exposed it immediately.",
+      "proposedGuardrail": "Require every adversarial battery to run an unmutated control through the identical path and to assert that the control passes, and to restore every shared object it writes."
+    },
+    {
+      "id": "M0-CP9-CANDIDATE-004",
+      "status": "OBSERVED",
+      "finding": "CP9-F-003",
+      "category": "quality",
+      "title": "A derived-count control that inspects one file type leaves the same defect class alive in the others",
+      "observation": "COUNT_CLAIM matches the N/M NOUN form in checkpoint Markdown only, so a prose count in a source file survived: a test docstring states 119 anchored references where the derived set is 131.",
+      "proposedGuardrail": "Extend the count derivation check to the artifacts that state counts in prose, or state explicitly in the policy which artifacts are outside it and why."
+    },
+    {
+      "id": "M0-CP9-CANDIDATE-005",
+      "status": "OBSERVED",
+      "finding": "CP9-F-004",
+      "category": "documentation",
+      "title": "A lesson's prose must not contradict its own status",
+      "observation": "LSN-0014 is GUARDED and names GRD-0013 while its notes field still reads 'Not guarded'. A reader who trusts the prose reaches the opposite conclusion from the machine-readable status.",
+      "proposedGuardrail": "A memory validation rule that refuses a GUARDED lesson whose notes assert it is not guarded, or a notes field structured into a residual-limit field that cannot state a status."
+    },
+    {
+      "id": "M0-CP9-CANDIDATE-006",
+      "status": "OBSERVED",
+      "finding": "CP9-F-005",
+      "category": "documentation",
+      "title": "A configuration key that no code reads is a defect, not a harmless comment",
+      "observation": ".iacode/memory/POLICY.json declares guardrailRegistry while lessons.guardrail_registry_path() returns a constant. Re-pointing the key in a clone changed nothing, so a future tool that relocated the registry through the documented key would silently keep reading the old file.",
+      "proposedGuardrail": "Resolve the registry through the declared key, or remove the key and state in the policy that the path is fixed."
+    },
+    {
+      "id": "M0-CP9-CANDIDATE-007",
+      "status": "OBSERVED",
+      "finding": "audit observation",
+      "category": "process",
+      "title": "The lesson preflight presumes an implementing delivery and has no audit-role subset",
+      "observation": "Derived requirements such as 'a passing validation with blockedBy empty at a readiness status' cannot apply to an audit checkpoint that legitimately records blockers. Running the preflight for an audit run would therefore force either dishonest COMPLETE marks or a matrix full of NOT_APPLICABLE rows.",
+      "proposedGuardrail": "Give the preflight a delivery-role input, so an audit run derives the requirements that actually constrain it, and record the role in the checkpoint."
+    },
+    {
+      "id": "M0-CP9-CANDIDATE-008",
+      "status": "OBSERVED",
+      "finding": "audit observation, not a defect",
+      "category": "security",
+      "title": "The secret detector's documented scope excludes bare cloud access key identifiers, and the policy says so",
+      "observation": "A bare cloud-provider access key identifier planted in a lesson field was not detected. The secret policy enumerates its scope and does not claim to cover it, and an assignment form of the same value is covered, so policy and implementation agree, which is what checklist row 3.2 requires. Recorded so that a future reader does not mistake the documented gap for an escape.",
+      "proposedGuardrail": "None required. If the scope is widened later, widen the policy in the same change."
+    }
+  ]
+}

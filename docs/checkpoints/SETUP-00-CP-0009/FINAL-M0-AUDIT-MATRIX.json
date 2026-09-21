@@ -1,0 +1,2653 @@
+{
+  "schemaVersion": "1.0.0",
+  "artifact": "FINAL-M0-AUDIT-MATRIX",
+  "checkpoint": "SETUP-00-CP-0009",
+  "milestone": "M0",
+  "gate": "SETUP-00",
+  "subjectCheckpoint": "SETUP-00-CP-0008",
+  "subjectCommit": "c53f4c59a77870414324efa6b5f61b35d26c5090",
+  "auditMechanism": "FRESH_SESSION_INDEPENDENT_AUDIT",
+  "createdAt": "2026-09-21T00:02:09Z",
+  "note": "Created before substantive audit execution. Every row starts NOT_STARTED.",
+  "allowedStatuses": [
+    "NOT_STARTED",
+    "IN_PROGRESS",
+    "COMPLETE",
+    "FAILED",
+    "UNVERIFIED"
+  ],
+  "rows": [
+    {
+      "id": "AUD-001",
+      "promptSection": "1",
+      "dimension": "Execution profile recorded",
+      "expected": "tool, version, provider, model, effort, OS, branch, commits and timestamps recorded truthfully",
+      "method": "inspect RUN-METADATA.json and STATE.json of this checkpoint",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "RUN-METADATA.json records tool Claude Code 2.1.195, provider Anthropic, model claude-opus-5, effort not-exposed, Windows 11 10.0.26200, branch main, initial and final commit, startedAt and finishedAt",
+      "evidence": [
+        "checkpoint:RUN-METADATA.json",
+        "checkpoint:STATE.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AUD-002",
+      "promptSection": "1,12,39",
+      "dimension": "Independence model recorded honestly",
+      "expected": "freshSession true; sameTool/sameProvider recorded; crossToolValidation NOT_AVAILABLE",
+      "method": "inspect RUN-METADATA.json auditor block",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "auditor.freshSession=true, sameToolAsImplementer=true, sameProviderAsImplementer=true, crossToolValidation=NOT_AVAILABLE, freshSessionIndependentAudit recorded",
+      "evidence": [
+        "checkpoint:RUN-METADATA.json",
+        "checkpoint:MILESTONE-REPORT.md"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AUD-003",
+      "promptSection": "4",
+      "dimension": "Cold start executed from the repository only",
+      "expected": "every canonical document and CP-0007/CP-0008 artifact read from the repository",
+      "method": "recorded read list; no external summary used as evidence",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "13 canonical documents plus SETUP-00-CP-0007 and SETUP-00-CP-0008 read from the repository; no external summary used as evidence",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.md"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AUD-004",
+      "promptSection": "5",
+      "dimension": "Baseline recorded",
+      "expected": "git state captured; checkpoint validator run; worktree clean at baseline",
+      "method": "command evidence",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "baseline captured: branch main, HEAD c53f4c5, clean worktree after the stale scaffold was removed; CHECKPOINT_VALID on the branch and from a detached clone of the CP-0008 tag",
+      "evidence": [
+        "command:cmd-0002",
+        "command:cmd-0003",
+        "checkpoint:AUDIT-EXECUTIONS.md"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AUD-005",
+      "promptSection": "6",
+      "dimension": "Audit matrix created before substantive audit",
+      "expected": "matrix exists with every row NOT_STARTED before execution",
+      "method": "this artifact, in its pre-execution form",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "the matrix was written with 180 rows, every row NOT_STARTED, before any substantive audit step; three further rows were added during execution and are flagged addedDuringExecution with the reason",
+      "evidence": [
+        "checkpoint:FINAL-M0-AUDIT-MATRIX.json",
+        "checkpoint:DECISIONS.md"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "REQ-001",
+      "promptSection": "8",
+      "dimension": "Canonical checklist re-parsed independently",
+      "expected": "71 canonical rows parsed from docs/SETUP-00-CHECKLIST.md without using policies.py",
+      "method": "independent parser in the audit harness",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "71 canonical rows parsed from docs/SETUP-00-CHECKLIST.md by an independent parser that does not import policies.py",
+      "evidence": [
+        "checkpoint:audit-harness/derive_expected.py",
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "REQ-002",
+      "promptSection": "8",
+      "dimension": "EXPECTED set re-derived independently",
+      "expected": "EXPECTED = 71 canonical + 23 lesson + 11 finding + 26 attack anchored references",
+      "method": "independent derivation",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "EXPECTED = 71 canonical + 23 lesson + 11 finding + 26 attack = 131 anchored references, re-derived from the checklist, the sealed CP-0007 reports and the preflight",
+      "evidence": [
+        "checkpoint:audit-harness/derive_expected.py",
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "REQ-003",
+      "promptSection": "8",
+      "dimension": "EXPECTED equals DECLARED exactly",
+      "expected": "0 missing, 0 unexpected, 0 duplicated anchors against CP-0008 REQUIREMENTS-MATRIX.json",
+      "method": "set comparison",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "declared 131, expected 131, missing 0, unexpected 0, duplicated 0, local rows 0",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "REQ-004",
+      "promptSection": "8",
+      "dimension": "Completeness and evidence coverage recomputed",
+      "expected": "coverage 100.00 percent, evidence coverage 100.00 percent, 0 PARTIAL, 0 MISSING",
+      "method": "independent recomputation of every row and every evidence reference",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "coverage 100.00 and evidence coverage 100.00 recomputed; 131 COMPLETE, 0 PARTIAL, 0 MISSING; check_completeness.py reproduced the same values in a clean clone",
+      "evidence": [
+        "command:cmd-0006",
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "F-001",
+      "promptSection": "9",
+      "dimension": "CP7 finding M0-F-001 - positive terminal status bypasses delivery assurance",
+      "expected": "finding CLOSED: correction present, regression test present and representative, test executed green",
+      "method": "read closure record, read the regression test source, execute the test, attempt a safe bypass variation",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "M0-F-001 CLOSED; lesson LSN-0015; guardrail GRD-0014; 5 regression and negative tests read and executed green",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.md",
+        "command:cmd-0010"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "F-002",
+      "promptSection": "9",
+      "dimension": "CP7 finding M0-F-002 - external milestone PASS self-asserted on an intermediate Gate",
+      "expected": "finding CLOSED: correction present, regression test present and representative, test executed green",
+      "method": "read closure record, read the regression test source, execute the test, attempt a safe bypass variation",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "M0-F-002 CLOSED; lesson LSN-0007; guardrail GRD-0008; 6 regression and negative tests read and executed green",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.md",
+        "command:cmd-0010"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "F-003",
+      "promptSection": "9",
+      "dimension": "CP7 finding M0-F-003 - lesson preflight not bound to the checkpoint Gate or canonical memory",
+      "expected": "finding CLOSED: correction present, regression test present and representative, test executed green",
+      "method": "read closure record, read the regression test source, execute the test, attempt a safe bypass variation",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "M0-F-003 CLOSED; lesson LSN-0019; guardrail GRD-0018; 4 regression and negative tests read and executed green",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.md",
+        "command:cmd-0010"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "F-004",
+      "promptSection": "9",
+      "dimension": "CP7 finding M0-F-004 - engineering memory accepts forged controls, missing evidence, nested secrets",
+      "expected": "finding CLOSED: correction present, regression test present and representative, test executed green",
+      "method": "read closure record, read the regression test source, execute the test, attempt a safe bypass variation",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "M0-F-004 CLOSED; lesson LSN-0018; guardrail GRD-0017; 5 regression and negative tests read and executed green",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.md",
+        "command:cmd-0010"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "F-005",
+      "promptSection": "9",
+      "dimension": "CP7 finding M0-F-005 - Green Keeper vacuous PASS path",
+      "expected": "finding CLOSED: correction present, regression test present and representative, test executed green",
+      "method": "read closure record, read the regression test source, execute the test, attempt a safe bypass variation",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "M0-F-005 CLOSED; lesson LSN-0016; guardrail GRD-0015; 5 regression and negative tests read and executed green",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.md",
+        "command:cmd-0010"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "F-006",
+      "promptSection": "9",
+      "dimension": "CP7 finding M0-F-006 - completeness denominator is not anchored",
+      "expected": "finding CLOSED: correction present, regression test present and representative, test executed green",
+      "method": "read closure record, read the regression test source, execute the test, attempt a safe bypass variation",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "M0-F-006 CLOSED; lesson LSN-0017; guardrail GRD-0016; 5 regression and negative tests read and executed green",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.md",
+        "command:cmd-0010"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "F-007",
+      "promptSection": "9",
+      "dimension": "CP7 finding M0-F-007 - historical immutability is not anchored externally",
+      "expected": "finding CLOSED: correction present, regression test present and representative, test executed green",
+      "method": "read closure record, read the regression test source, execute the test, attempt a safe bypass variation",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "M0-F-007 CLOSED; lesson LSN-0021; guardrail GRD-0020; 5 regression and negative tests read and executed green",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.md",
+        "command:cmd-0010"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "F-008",
+      "promptSection": "9",
+      "dimension": "CP7 finding M0-F-008 - CP-0006 mandatory count contradictory and accepted",
+      "expected": "finding CLOSED: correction present, regression test present and representative, test executed green",
+      "method": "read closure record, read the regression test source, execute the test, attempt a safe bypass variation",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "M0-F-008 CLOSED; lesson LSN-0022; guardrail GRD-0021; 4 regression and negative tests read and executed green",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.md",
+        "command:cmd-0010"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "F-009",
+      "promptSection": "9",
+      "dimension": "CP7 finding M0-F-009 - command records not reproducible at their declared commits",
+      "expected": "finding CLOSED: correction present, regression test present and representative, test executed green",
+      "method": "read closure record, read the regression test source, execute the test, attempt a safe bypass variation",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "M0-F-009 CLOSED; lesson LSN-0020; guardrail GRD-0019; 5 regression and negative tests read and executed green",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.md",
+        "command:cmd-0010"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "F-010",
+      "promptSection": "9",
+      "dimension": "CP7 finding M0-F-010 - sealed finalization chronology internally inconsistent",
+      "expected": "finding CLOSED: correction present, regression test present and representative, test executed green",
+      "method": "read closure record, read the regression test source, execute the test, attempt a safe bypass variation",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "M0-F-010 CLOSED; lesson LSN-0014; guardrail GRD-0013; 5 regression and negative tests read and executed green",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.md",
+        "command:cmd-0010"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "F-011",
+      "promptSection": "9",
+      "dimension": "CP7 finding M0-F-011 - one lesson source locator is inaccurate",
+      "expected": "finding CLOSED: correction present, regression test present and representative, test executed green",
+      "method": "read closure record, read the regression test source, execute the test, attempt a safe bypass variation",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "M0-F-011 CLOSED; lesson LSN-0023; guardrail GRD-0022; 4 regression and negative tests read and executed green",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.md",
+        "command:cmd-0010"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "RT-A",
+      "promptSection": "10",
+      "dimension": "CP7 mandatory attack A - readiness and blocker invariant",
+      "expected": "DEFENDED in a synthetic fixture",
+      "method": "execute the attack against an isolated fixture clone and record the observed rejection",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "exit=1 CHECKPOINT_INVALID | - READY_FOR_REVIEW is incompatible with a non-empty blockedBy: an unresolved blocker planted by the CP-0009 audit",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "RT-B",
+      "promptSection": "10",
+      "dimension": "CP7 mandatory attack B - mandatory quality",
+      "expected": "DEFENDED in a synthetic fixture",
+      "method": "execute the attack against an isolated fixture clone and record the observed rejection",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "exit=1 CHECKPOINT_INVALID | - greenKeeper=PASS contradicts QUALITY.json unitTests=FAIL | - READY_FOR_REVIEW cannot have QUALITY.json unitTests=FAIL",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "RT-C",
+      "promptSection": "10",
+      "dimension": "CP7 mandatory attack C - completeness denominator",
+      "expected": "DEFENDED in a synthetic fixture",
+      "method": "execute the attack against an isolated fixture clone and record the observed rejection",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "exit=1 CHECKPOINT_INVALID | - COMPLETENESS-REPORT.json expectedRequirements=130 contradicts the recomputed value 131 | - COMPLETENESS-REPORT.json result='PASS' contradicts the recomputed value 'FAIL' | - DELIVERY_COMPLETENESS_GATE is STALE: the code, requireme",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "RT-D",
+      "promptSection": "10",
+      "dimension": "CP7 mandatory attack D - completeness claims",
+      "expected": "DEFENDED in a synthetic fixture",
+      "method": "execute the attack against an isolated fixture clone and record the observed rejection",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "exit=1 CHECKPOINT_INVALID | - COMPLETENESS-REPORT.json totalRequirements=999 contradicts the recomputed value 131 | - COMPLETENESS-REPORT.json complete=999 contradicts the recomputed value 131",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "RT-E",
+      "promptSection": "10",
+      "dimension": "CP7 mandatory attack E - lesson-derived requirement",
+      "expected": "DEFENDED in a synthetic fixture",
+      "method": "execute the attack against an isolated fixture clone and record the observed rejection",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "exit=1 CHECKPOINT_INVALID | - COMPLETENESS-REPORT.json expectedRequirements=130 contradicts the recomputed value 131 | - COMPLETENESS-REPORT.json result='PASS' contradicts the recomputed value 'FAIL' | - DELIVERY_COMPLETENESS_GATE is STALE: the code, requireme",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "RT-F",
+      "promptSection": "10",
+      "dimension": "CP7 mandatory attack F - GUARDED semantics",
+      "expected": "DEFENDED in a synthetic fixture",
+      "method": "execute the attack against an isolated fixture clone and record the observed rejection",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "exit=1 LESSONS_INVALID | - LSN-0001: GUARDED requires at least one preventive control of kind test, validator, lint, policy, schema, invariant, automated-check; documentation alone is not a guardrail",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "RT-G",
+      "promptSection": "10",
+      "dimension": "CP7 mandatory attack G - lesson identity",
+      "expected": "DEFENDED in a synthetic fixture",
+      "method": "execute the attack against an isolated fixture clone and record the observed rejection",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "exit=1 LESSONS_INVALID | - LSN-0001: duplicate lessonId | - LSN-0001: recurrenceKey 'checkpoint/removing-entry-files-json-silently-altering' is already used by LSN-0002; a repeat must increment that lesson instead of creating a new one | - LSN-0001: guardrail ",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "RT-H",
+      "promptSection": "10",
+      "dimension": "CP7 mandatory attack H - lesson secret handling",
+      "expected": "DEFENDED in a synthetic fixture",
+      "method": "execute the attack against an isolated fixture clone and record the observed rejection",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "exit=1 LESSONS_INVALID | - LSN-0001: secret pattern detected in $.symptom: GitHub credential",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "RT-I",
+      "promptSection": "10",
+      "dimension": "CP7 mandatory attack I - sealed predecessor",
+      "expected": "DEFENDED in a synthetic fixture",
+      "method": "execute the attack against an isolated fixture clone and record the observed rejection",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "exit=1 CHECKPOINT_INVALID | - checkpoint integrity: SETUP-00-CP-0007: tag refs/tags/iacode-checkpoints/SETUP-00-CP-0007 resolves to a552e918df0d3c5eb632fdc931f0c2dc90ea51c7, not the anchored commit 502c554575f717c1d57290e4f4aafa575e41170e",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "RT-J",
+      "promptSection": "10",
+      "dimension": "CP7 mandatory attack J - tag immutability",
+      "expected": "DEFENDED in a synthetic fixture",
+      "method": "execute the attack against an isolated fixture clone and record the observed rejection",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "exit=1 CHECKPOINT_INVALID | - checkpoint integrity: SETUP-00-CP-0006: tag refs/tags/iacode-checkpoints/SETUP-00-CP-0006 resolves to 855edcfcfc19bbb9281670f18e2bc88a746de3f2, not the anchored commit 994bab402873bc4d221c02d8c94bdebeb2b0f3cb",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "RT-K",
+      "promptSection": "10",
+      "dimension": "CP7 mandatory attack K - file inventory entry",
+      "expected": "DEFENDED in a synthetic fixture",
+      "method": "execute the attack against an isolated fixture clone and record the observed rejection",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "exit=1 CHECKPOINT_INVALID | - FILES.json omits a changed path: .claude/agents/m0-closure-auditor.md (added)",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "RT-L",
+      "promptSection": "10",
+      "dimension": "CP7 mandatory attack L - silent tracked modification",
+      "expected": "DEFENDED in a synthetic fixture",
+      "method": "execute the attack against an isolated fixture clone and record the observed rejection",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "exit=1 CHECKPOINT_INVALID | - greenKeeper=PASS is STALE: the delivery-assurance scope changed after the last GREEN cycle, so the Green Keeper must run again | - DELIVERY_COMPLETENESS_GATE is STALE: the code, requirements, lessons or policy changed after the au",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "RT-M",
+      "promptSection": "10",
+      "dimension": "CP7 mandatory attack M - wrong hashBefore",
+      "expected": "DEFENDED in a synthetic fixture",
+      "method": "execute the attack against an isolated fixture clone and record the observed rejection",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "exit=1 CHECKPOINT_INVALID | - FILES.json hashBefore does not match the baseCommit content of .iacode/memory/LESSONS.md",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "RT-N",
+      "promptSection": "10",
+      "dimension": "CP7 mandatory attack N - wrong hashAfter",
+      "expected": "DEFENDED in a synthetic fixture",
+      "method": "execute the attack against an isolated fixture clone and record the observed rejection",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "exit=1 CHECKPOINT_INVALID | - FILES.json: hash mismatch for .claude/agents/m0-closure-auditor.md | - FILES.json hashAfter does not match the repository content of .claude/agents/m0-closure-auditor.md",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "RT-O",
+      "promptSection": "10",
+      "dimension": "CP7 mandatory attack O - quality evidence",
+      "expected": "DEFENDED in a synthetic fixture",
+      "method": "execute the attack against an isolated fixture clone and record the observed rejection",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "exit=1 CHECKPOINT_INVALID | - QUALITY.json staticAnalysis=PASS requires at least one evidence reference",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "RT-P",
+      "promptSection": "10",
+      "dimension": "CP7 mandatory attack P - evidence resolution",
+      "expected": "DEFENDED in a synthetic fixture",
+      "method": "execute the attack against an isolated fixture clone and record the observed rejection",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "exit=1 CHECKPOINT_INVALID | - QUALITY.json staticAnalysis references an unknown command id 'cmd-9999'",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "RT-Q",
+      "promptSection": "10",
+      "dimension": "CP7 mandatory attack Q - second-tool evidence",
+      "expected": "DEFENDED in a synthetic fixture",
+      "method": "execute the attack against an isolated fixture clone and record the observed rejection",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "exit=1 CHECKPOINT_INVALID | - GATE_PASS requires an independent review verdict, found 'PENDING' | - GATE_PASS requires a Red Team verdict, found 'PENDING' | - external validation: no external audit attestation exists for milestone M0 and checkpoint SETUP-00-CP",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "RT-R",
+      "promptSection": "10",
+      "dimension": "CP7 mandatory attack R - pass vocabulary",
+      "expected": "DEFENDED in a synthetic fixture",
+      "method": "execute the attack against an isolated fixture clone and record the observed rejection",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "exit=1 CHECKPOINT_INVALID | - MILESTONE_EXTERNAL_PASS requires an independent review verdict, found 'PENDING' | - MILESTONE_EXTERNAL_PASS requires a Red Team verdict, found 'PENDING' | - external validation: no external audit attestation exists for milestone M",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "RT-S",
+      "promptSection": "10",
+      "dimension": "CP7 mandatory attack S - external milestone review",
+      "expected": "DEFENDED in a synthetic fixture",
+      "method": "execute the attack against an isolated fixture clone and record the observed rejection",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "exit=1 CHECKPOINT_INVALID | - MILESTONE_EXTERNAL_PASS requires an independent review verdict, found 'PENDING' | - MILESTONE_EXTERNAL_PASS requires a Red Team verdict, found 'PENDING' | - a milestone may only be PASSED when secondToolValidation is PASSED | - ex",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "RT-T",
+      "promptSection": "10",
+      "dimension": "CP7 mandatory attack T - extraordinary cadence",
+      "expected": "DEFENDED in a synthetic fixture",
+      "method": "execute the attack against an isolated fixture clone and record the observed rejection",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "exit=1 CHECKPOINT_INVALID | - externalAuditReason must name one of the recorded triggers: security-boundary, sandbox-boundary, rights-or-provenance-change, training-data-policy, training-execution, promotion-logic, secret-handling, destructive-persistence",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "RT-U",
+      "promptSection": "10",
+      "dimension": "CP7 mandatory attack U - preflight freshness",
+      "expected": "DEFENDED in a synthetic fixture",
+      "method": "execute the attack against an isolated fixture clone and record the observed rejection",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "exit=1 CHECKPOINT_INVALID | - greenKeeper=PASS is STALE: the delivery-assurance scope changed after the last GREEN cycle, so the Green Keeper must run again | - DELIVERY_COMPLETENESS_GATE is STALE: the code, requirements, lessons or policy changed after the au",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "RT-V",
+      "promptSection": "10",
+      "dimension": "CP7 mandatory attack V - Green Keeper mandatory set",
+      "expected": "DEFENDED in a synthetic fixture",
+      "method": "execute the attack against an isolated fixture clone and record the observed rejection",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "exit=1 recorded cycle measured checkpointValidation,integrity,lessons,staticAnalysis,tests against the canonical checkpointValidation,integrity,lessons,staticAnalysis,tests; commandsExecuted=5; green_keeper exit=1 | [tests] GREEN exit=0 ledger=cmd-0061 | [stat",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "RT-W",
+      "promptSection": "10",
+      "dimension": "CP7 mandatory attack W - partial completeness",
+      "expected": "DEFENDED in a synthetic fixture",
+      "method": "execute the attack against an isolated fixture clone and record the observed rejection",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "exit=1 CHECKPOINT_INVALID | - STATE.json requirementsMatrix.complete=131 does not match the matrix value 130 | - STATE.json requirementsMatrix.partial=0 does not match the matrix value 1 | - STATE.json requirementsMatrix.coveragePercent does not match the matr",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "RT-X",
+      "promptSection": "10",
+      "dimension": "CP7 mandatory attack X - command audit",
+      "expected": "DEFENDED in a synthetic fixture",
+      "method": "execute the attack against an isolated fixture clone and record the observed rejection",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "exit=1 CHECKPOINT_INVALID | - COMMANDS.jsonl:1: schemaVersion 3.0.0 requires runtime",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "RT-Y",
+      "promptSection": "10",
+      "dimension": "CP7 mandatory attack Y - latest pointer",
+      "expected": "DEFENDED in a synthetic fixture",
+      "method": "execute the attack against an isolated fixture clone and record the observed rejection",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "exit=1 CHECKPOINT_INVALID | - requested checkpoint is not the LATEST target: C:\\Users\\cesar\\AppData\\Local\\Temp\\claude\\E--iacode\\b305dd77-f117-4885-9aeb-0239c66d22e6\\scratchpad\\audit\\battery\\fixture\\docs\\checkpoints\\SETUP-00-CP-0008",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "RT-Z",
+      "promptSection": "10",
+      "dimension": "CP7 mandatory attack Z - path safety",
+      "expected": "DEFENDED in a synthetic fixture",
+      "method": "execute the attack against an isolated fixture clone and record the observed rejection",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "exit=2 usage: new_checkpoint.py [-h] [--root ROOT] --gate GATE | [--status {NOT_STARTED,BASELINING,IN_PROGRESS,BLOCKED,READY_FOR_REVIEW,REWORK_REQUIRED,READY_FOR_RED_TEAM,INTERNAL_GATE_PASS,MILESTONE_EXTERNAL_PASS}] | [--phase PHASE] | new_checkpoint.py: error",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "EXT-001",
+      "promptSection": "11",
+      "dimension": "External PASS forgery - forged secondToolValidation",
+      "expected": "rejected",
+      "method": "synthetic attestation fixture verified through attestation.py and the checkpoint validator",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "no external audit attestation exists for milestone M0 and checkpoint SETUP-00-CP-0008; an external PASS may not be self-asserted",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "EXT-002",
+      "promptSection": "11",
+      "dimension": "External PASS forgery - forged MILESTONE_EXTERNAL_PASS without attestation",
+      "expected": "rejected",
+      "method": "synthetic attestation fixture verified through attestation.py and the checkpoint validator",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "probe-attestation.json: attests checkpoint 'SETUP-00-CP-0001', not 'SETUP-00-CP-0008'",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "EXT-003",
+      "promptSection": "11",
+      "dimension": "External PASS forgery - attestation copied from another audit",
+      "expected": "rejected",
+      "method": "synthetic attestation fixture verified through attestation.py and the checkpoint validator",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "probe-attestation.json: attests checkpoint 'SETUP-00-CP-0006', not 'SETUP-00-CP-0008'",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "EXT-004",
+      "promptSection": "11",
+      "dimension": "External PASS forgery - attestation self-authored by the audited checkpoint",
+      "expected": "rejected",
+      "method": "synthetic attestation fixture verified through attestation.py and the checkpoint validator",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "probe-attestation.json: the audit checkpoint and the audited checkpoint are the same; an external verdict may not be authored by the delivery it judges",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "EXT-005",
+      "promptSection": "11",
+      "dimension": "External PASS forgery - attestation naming the wrong subject checkpoint",
+      "expected": "rejected",
+      "method": "synthetic attestation fixture verified through attestation.py and the checkpoint validator",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "probe-attestation.json: attests checkpoint 'SETUP-00-CP-0005', not 'SETUP-00-CP-0008'",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "EXT-006",
+      "promptSection": "11",
+      "dimension": "External PASS forgery - attestation naming the wrong subject commit",
+      "expected": "rejected",
+      "method": "synthetic attestation fixture verified through attestation.py and the checkpoint validator",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "probe-attestation.json: attests commit '0000000000000000000000000000000000000000', not the subject commit 'c53f4c59a77870414324efa6b5f61b35d26c5090'",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "EXT-007",
+      "promptSection": "11",
+      "dimension": "External PASS forgery - review FAIL with attestation PASS",
+      "expected": "rejected",
+      "method": "synthetic attestation fixture verified through attestation.py and the checkpoint validator",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "probe-attestation.json: reviewResult is 'REWORK_REQUIRED'; an external PASS requires APPROVED",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "EXT-008",
+      "promptSection": "11",
+      "dimension": "External PASS forgery - red team FAIL with attestation PASS",
+      "expected": "rejected",
+      "method": "synthetic attestation fixture verified through attestation.py and the checkpoint validator",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "probe-attestation.json: redTeamResult is 'RED_TEAM_FAIL'; an external PASS requires RED_TEAM_PASS",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "EXT-009",
+      "promptSection": "11",
+      "dimension": "External PASS forgery - incomplete audit coverage with attestation PASS",
+      "expected": "rejected",
+      "method": "synthetic attestation fixture verified through attestation.py and the checkpoint validator",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "probe-attestation.json: completeness is 93.22; an external PASS requires 100.0",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "EXT-010",
+      "promptSection": "11",
+      "dimension": "External PASS forgery - attestation whose audit checkpoint is unsealed or not in the chain",
+      "expected": "rejected",
+      "method": "synthetic attestation fixture verified through attestation.py and the checkpoint validator",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "probe-attestation.json: audit checkpoint SETUP-00-CP-9999 does not exist",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "IND-001",
+      "promptSection": "12,39",
+      "dimension": "Cross-tool validation not falsely claimed",
+      "expected": "crossToolValidation recorded NOT_AVAILABLE; no PASSED claim for a mechanism that did not run",
+      "method": "inspect this checkpoint's recorded state and reports",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "crossToolValidation is recorded NOT_AVAILABLE; the implementer of CP-0008 and this auditor are both Claude Code on Anthropic, in different sessions",
+      "evidence": [
+        "checkpoint:RUN-METADATA.json",
+        "checkpoint:MILESTONE-REPORT.md"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "IND-002",
+      "promptSection": "12,40",
+      "dimension": "Canonical policy position on cross-tool closure",
+      "expected": "determine whether policy literally requires a different tool or provider for M0 closure and record a PROCESS_BLOCKER if the owner decision does not cover it",
+      "method": "read MILESTONE-VALIDATION.md, QUALITY-GATES.md and the validator implementation",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "docs/MILESTONE-VALIDATION.md and docs/QUALITY-GATES.md require an independent tool and a derived attestation, not literally a different vendor; attestation.py enforces a different sealed checkpoint, never a different provider. The owner authorisation for FRESH",
+      "evidence": [
+        "checkpoint:MILESTONE-REPORT.md",
+        "file:docs/MILESTONE-VALIDATION.md",
+        "file:scripts/development-ledger/attestation.py"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "GOV-001",
+      "promptSection": "40",
+      "dimension": "Owner governance decision recorded without weakening another gate",
+      "expected": "the FRESH_SESSION_INDEPENDENT_AUDIT mechanism is versioned and explicit; no other gate weakened",
+      "method": "diff of governance documents in this checkpoint",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "no governance document was weakened; the audit changed no policy, no gate, no test and no canonical memory. The owner decision is recorded in this checkpoint rather than by editing a gate",
+      "evidence": [
+        "checkpoint:DECISIONS.md",
+        "checkpoint:MILESTONE-REPORT.md"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "GK-001",
+      "promptSection": "13",
+      "dimension": "Green Keeper - requiredGates empty",
+      "expected": "rejected",
+      "method": "synthetic fixture mutation validated through green_keeper.py and validate_checkpoint.py",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "greenKeeper=PASS was measured against no gate, not the canonical mandatory set checkpointValidation, integrity, lessons, staticAnalysis, tests",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "GK-002",
+      "promptSection": "13",
+      "dimension": "Green Keeper - mandatory gate omitted from the run",
+      "expected": "rejected",
+      "method": "synthetic fixture mutation validated through green_keeper.py and validate_checkpoint.py",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "greenKeeper=PASS was measured against checkpointValidation, integrity, staticAnalysis, tests, not the canonical mandatory set checkpointValidation, integrity, lessons, staticAnalysis, tests",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "GK-003",
+      "promptSection": "13",
+      "dimension": "Green Keeper - mandatory gate NOT_EXECUTED",
+      "expected": "rejected",
+      "method": "synthetic fixture mutation validated through green_keeper.py and validate_checkpoint.py",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "greenKeeper=PASS records the mandatory gate 'tests' exiting None",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "GK-004",
+      "promptSection": "13",
+      "dimension": "Green Keeper - mandatory gate FAIL",
+      "expected": "rejected",
+      "method": "synthetic fixture mutation validated through green_keeper.py and validate_checkpoint.py",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "greenKeeper=PASS records the mandatory gate 'tests' exiting 1",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "GK-005",
+      "promptSection": "13",
+      "dimension": "Green Keeper - gate evidence absent",
+      "expected": "rejected",
+      "method": "synthetic fixture mutation validated through green_keeper.py and validate_checkpoint.py",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "greenKeeper=PASS records no command evidence for the gate 'checkpointValidation' | greenKeeper=PASS records no command evidence for the gate 'integrity' | greenKeeper=PASS records no command evidence for the gate 'lessons'",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "GK-006",
+      "promptSection": "13",
+      "dimension": "Green Keeper - remainingFailures greater than zero with PASS",
+      "expected": "rejected",
+      "method": "synthetic fixture mutation validated through green_keeper.py and validate_checkpoint.py",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "greenKeeper=PASS requires remainingFailures to be zero",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "GK-007",
+      "promptSection": "13",
+      "dimension": "Green Keeper - unresolvedReworkItems greater than zero with PASS",
+      "expected": "rejected",
+      "method": "synthetic fixture mutation validated through green_keeper.py and validate_checkpoint.py",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "greenKeeper=PASS requires unresolvedReworkItems to be zero",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "GK-008",
+      "promptSection": "13",
+      "dimension": "Green Keeper - fabricated PASS cycle in the rework log",
+      "expected": "rejected",
+      "method": "synthetic fixture mutation validated through green_keeper.py and validate_checkpoint.py",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "greenKeeper=PASS contradicts the last rework cycle result 'RED'",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "GK-009",
+      "promptSection": "13",
+      "dimension": "Green Keeper - stale PASS after a relevant scope change",
+      "expected": "rejected",
+      "method": "synthetic fixture mutation validated through green_keeper.py and validate_checkpoint.py",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "greenKeeper=PASS is STALE: the delivery-assurance scope changed after the last GREEN cycle, so the Green Keeper must run again",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "GK-010",
+      "promptSection": "13",
+      "dimension": "Mandatory gate set derived from policy, not the caller",
+      "expected": "the mandatory set comes from .iacode/policies/quality-gates.json and --gates can only extend it",
+      "method": "read the implementation and prove it with a fixture",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "mandatory_gates(ROOT) = tests,staticAnalysis,lessons,integrity,checkpointValidation",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "DC-001",
+      "promptSection": "14,30",
+      "dimension": "Delivery completeness - canonical requirement removed",
+      "expected": "rejected",
+      "method": "synthetic fixture mutation validated through check_completeness.py and validate_checkpoint.py",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "READY_FOR_REVIEW blocked by canonical:SETUP-00#1.1: the canonical expected set requires canonical:SETUP-00#1.1 (docs/SETUP-00-CHECKLIST.md row 1.1) but the matrix does not declare it",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "DC-002",
+      "promptSection": "14,30",
+      "dimension": "Delivery completeness - lesson-derived requirement removed",
+      "expected": "rejected",
+      "method": "synthetic fixture mutation validated through check_completeness.py and validate_checkpoint.py",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "READY_FOR_REVIEW blocked by lesson:LSN-0001: the canonical expected set requires lesson:LSN-0001 (LESSON-PREFLIGHT.json LESSON-REQ-0001) but the matrix does not declare it",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "DC-003",
+      "promptSection": "14,30",
+      "dimension": "Delivery completeness - audit-finding requirement removed",
+      "expected": "rejected",
+      "method": "synthetic fixture mutation validated through check_completeness.py and validate_checkpoint.py",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "READY_FOR_REVIEW blocked by finding:M0-F-001: the canonical expected set requires finding:M0-F-001 (M0-CP-0007 docs/checkpoints/SETUP-00-CP-0007/REVIEW-REPORT.md M0-F-001) but the matrix does not declare it",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "DC-004",
+      "promptSection": "14,30",
+      "dimension": "Delivery completeness - audit-attack requirement removed",
+      "expected": "rejected",
+      "method": "synthetic fixture mutation validated through check_completeness.py and validate_checkpoint.py",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "READY_FOR_REVIEW blocked by attack:A: the canonical expected set requires attack:A (M0-CP-0007 docs/checkpoints/SETUP-00-CP-0007/RED-TEAM-REPORT.md attack A) but the matrix does not declare it",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "DC-005",
+      "promptSection": "14,30",
+      "dimension": "Delivery completeness - denominator decreased",
+      "expected": "rejected",
+      "method": "synthetic fixture mutation validated through check_completeness.py and validate_checkpoint.py",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "READY_FOR_REVIEW blocked by canonical:SETUP-00#1.1: the canonical expected set requires canonical:SETUP-00#1.1 (docs/SETUP-00-CHECKLIST.md row 1.1) but the matrix does not declare it",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "DC-006",
+      "promptSection": "14,30",
+      "dimension": "Delivery completeness - total falsified upward",
+      "expected": "rejected",
+      "method": "synthetic fixture mutation validated through check_completeness.py and validate_checkpoint.py",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "STATE.json requirementsMatrix.total=171 does not match the matrix value 131",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "DC-007",
+      "promptSection": "14,30",
+      "dimension": "Delivery completeness - coverage forged to 100 over an incomplete matrix",
+      "expected": "rejected",
+      "method": "synthetic fixture mutation validated through check_completeness.py and validate_checkpoint.py",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "COMPLETENESS-REPORT.json complete=131 contradicts the recomputed value 130 | COMPLETENESS-REPORT.json partial=0 contradicts the recomputed value 1 | COMPLETENESS-REPORT.json coveragePercent=100.0 contradicts the recomputed value 99.24",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "DC-008",
+      "promptSection": "14,30",
+      "dimension": "Delivery completeness - report claiming 100 percent over an incomplete matrix",
+      "expected": "rejected",
+      "method": "synthetic fixture mutation validated through check_completeness.py and validate_checkpoint.py",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "COMPLETENESS-REPORT.json complete=131 contradicts the recomputed value 130 | COMPLETENESS-REPORT.json missing=0 contradicts the recomputed value 1 | COMPLETENESS-REPORT.json coveragePercent=100.0 contradicts the recomputed value 99.24",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "DC-009",
+      "promptSection": "14,30",
+      "dimension": "Delivery completeness - COMPLETE row without evidence",
+      "expected": "rejected",
+      "method": "synthetic fixture mutation validated through check_completeness.py and validate_checkpoint.py",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "READY_FOR_REVIEW blocked by REQ-0001: COMPLETE requires at least one evidence reference",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "DC-010",
+      "promptSection": "14,30",
+      "dimension": "Delivery completeness - evidence reference that does not resolve",
+      "expected": "rejected",
+      "method": "synthetic fixture mutation validated through check_completeness.py and validate_checkpoint.py",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "READY_FOR_REVIEW blocked by REQ-0001: evidence file does not exist: file:docs/does-not-exist.md",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "DC-011",
+      "promptSection": "14,30",
+      "dimension": "Delivery completeness - evidence referencing a command that failed",
+      "expected": "rejected",
+      "method": "synthetic fixture mutation validated through check_completeness.py and validate_checkpoint.py",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "READY_FOR_REVIEW blocked by REQ-0001: evidence references command 'cmd-0002', which did not complete successfully (result='FAILED', exitCode=3)",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "PRE-001",
+      "promptSection": "15",
+      "dimension": "Preflight freshness - an active lesson changed",
+      "expected": "the previous preflight becomes STALE or INVALID and a regenerated preflight passes",
+      "method": "fixture mutation plus recomputation of inputsFingerprint",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "stored preflight stale=True, regenerated preflight fresh=True :: {'stored': ['the lesson preflight is STALE: its recorded inputsFingerprint does not match the current engineering memory, guardrail registry, lesson schema and",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "PRE-002",
+      "promptSection": "15",
+      "dimension": "Preflight freshness - a lesson retired",
+      "expected": "the previous preflight becomes STALE or INVALID and a regenerated preflight passes",
+      "method": "fixture mutation plus recomputation of inputsFingerprint",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "stored preflight stale=True, regenerated preflight fresh=True :: {'stored': ['the lesson preflight is STALE: its recorded inputsFingerprint does not match the current engineering memory, guardrail registry, lesson schema and",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "PRE-003",
+      "promptSection": "15",
+      "dimension": "Preflight freshness - applicability changed",
+      "expected": "the previous preflight becomes STALE or INVALID and a regenerated preflight passes",
+      "method": "fixture mutation plus recomputation of inputsFingerprint",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "stored preflight stale=True, regenerated preflight fresh=True :: {'stored': ['the lesson preflight is STALE: its recorded inputsFingerprint does not match the current engineering memory, guardrail registry, lesson schema and",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "PRE-004",
+      "promptSection": "15",
+      "dimension": "Preflight freshness - the guardrail registry changed",
+      "expected": "the previous preflight becomes STALE or INVALID and a regenerated preflight passes",
+      "method": "fixture mutation plus recomputation of inputsFingerprint",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "stored preflight stale=True, regenerated preflight fresh=True :: {'stored': ['the lesson preflight is STALE: its recorded inputsFingerprint does not match the current engineering memory, guardrail registry, lesson schema and",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "PRE-005",
+      "promptSection": "15",
+      "dimension": "Preflight freshness - the lesson schema or selection policy changed",
+      "expected": "the previous preflight becomes STALE or INVALID and a regenerated preflight passes",
+      "method": "fixture mutation plus recomputation of inputsFingerprint",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "changing the lesson schema makes the stored preflight STALE; bumping the memory policy version makes it STALE; an inert prose edit to POLICY.json correctly does not, because the fingerprint covers the policy version, the schema, the memory and the registry con",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "PRE-006",
+      "promptSection": "15",
+      "dimension": "Preflight freshness - the Gate or scope changed",
+      "expected": "the previous preflight becomes STALE or INVALID and a regenerated preflight passes",
+      "method": "fixture mutation plus recomputation of inputsFingerprint",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "stored preflight stale=True, regenerated preflight fresh=True :: {'otherGate': [\"the preflight was generated for gate 'SETUP-00' but the checkpoint declares 'GATE 1'; a preflight may not be reused across Gates\"]}",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "MEM-001",
+      "promptSection": "16",
+      "dimension": "Engineering memory - lesson counts recomputed from the registry, not from a report",
+      "expected": "verified by recomputation and execution",
+      "method": "independent recomputation from .iacode/memory plus targeted fixtures",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "recomputed directly from .iacode/memory/lessons.jsonl: 23 lessons, 22 GUARDED, 1 CONFIRMED; identical to COUNTS.json LESSONS 22/23 and to STATE",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.md"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "MEM-002",
+      "promptSection": "16",
+      "dimension": "Engineering memory - every GUARDED lesson resolves lesson to guardrail to registry to control to test to execution",
+      "expected": "verified by recomputation and execution",
+      "method": "independent recomputation from .iacode/memory plus targeted fixtures",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "all 22 GUARDED lessons resolve lesson -> guardrailId -> registry entry -> control -> verifying tests -> execution; 22/22 controls resolve, 22/22 verifying tests exist in the 306-case suite and were executed green",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.md"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "MEM-003",
+      "promptSection": "16",
+      "dimension": "Engineering memory - documentation-only prevention never yields GUARDED",
+      "expected": "verified by recomputation and execution",
+      "method": "independent recomputation from .iacode/memory plus targeted fixtures",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "a GUARDED lesson whose prevention is documentation only is refused (attack F); a control naming a nonexistent test is refused (attacks AB, AQ)",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.md"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "MEM-004",
+      "promptSection": "16",
+      "dimension": "Engineering memory - provenance of every lesson resolves to a real checkpoint and finding",
+      "expected": "verified by recomputation and execution",
+      "method": "independent recomputation from .iacode/memory plus targeted fixtures",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "every lesson provenance resolves: each cited checkpoint exists and each finding identifier appears in the evidence of a checkpoint the lesson names; LSN-0007, the CP-0007 M0-F-011 defect, now cites the correct checkpoint",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.md"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "MEM-005",
+      "promptSection": "16",
+      "dimension": "Engineering memory - trainingAllowed is false by default across the memory",
+      "expected": "verified by recomputation and execution",
+      "method": "independent recomputation from .iacode/memory plus targeted fixtures",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "trainingAllowed is false for all 23 lessons; no rights justification is claimed",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.md"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "MEM-006",
+      "promptSection": "16",
+      "dimension": "Engineering memory - recurrenceCount and GUARDRAIL_FAILURE lifecycle behave as specified",
+      "expected": "verified by recomputation and execution",
+      "method": "independent recomputation from .iacode/memory plus targeted fixtures",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "register_recurrence escalates a repeat against a GUARDED lesson to CONFIRMED with a GUARDRAIL_FAILURE and raises severity; validation refuses GUARDED while a failure is unresolved and accepts it once the failure names the repairing checkpoint",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.md"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "MEM-007",
+      "promptSection": "16",
+      "dimension": "Engineering memory - lesson status lifecycle is valid and SUPERSEDED or RETIRED derive no requirement",
+      "expected": "verified by recomputation and execution",
+      "method": "independent recomputation from .iacode/memory plus targeted fixtures",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "statuses are within the documented lifecycle; retiring a lesson removes its derived requirement (23 -> 22) and makes the stored preflight STALE",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.md"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "MEM-008",
+      "promptSection": "16",
+      "dimension": "Engineering memory - every applicable lesson became a requirement of the delivery",
+      "expected": "verified by recomputation and execution",
+      "method": "independent recomputation from .iacode/memory plus targeted fixtures",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "23 active lessons, 23 derived requirements, 23 lesson rows in the matrix; no active lesson without a requirement and no requirement without a lesson",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.md"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "GRD-LSN-0005",
+      "promptSection": "17",
+      "dimension": "Previously bypassed guardrail LSN-0005",
+      "expected": "the CP-0007 bypass is now blocked, and a reasonable variation of it is also blocked",
+      "method": "reproduce the original bypass in a safe fixture, then a variation",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "original bypass: MILESTONE_EXTERNAL_PASS requires GREEN_KEEPER_GATE=PASS, found 'FAIL' ;; variation: statuses that escaped: none",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "GRD-LSN-0007",
+      "promptSection": "17",
+      "dimension": "Previously bypassed guardrail LSN-0007",
+      "expected": "the CP-0007 bypass is now blocked, and a reasonable variation of it is also blocked",
+      "method": "reproduce the original bypass in a safe fixture, then a variation",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "original bypass: external validation: no external audit attestation exists for milestone M0 and checkpoint SETUP-00-CP-0008; an external PASS may not be self-asserted ;; variation: external validation: no external audit attestation exists for milestone M0 and ",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "GRD-LSN-0008",
+      "promptSection": "17",
+      "dimension": "Previously bypassed guardrail LSN-0008",
+      "expected": "the CP-0007 bypass is now blocked, and a reasonable variation of it is also blocked",
+      "method": "reproduce the original bypass in a safe fixture, then a variation",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "original bypass: READY_FOR_REVIEW blocked by canonical:SETUP-00#1.1: the canonical expected set requires canonical:SETUP-00#1.1 (docs/SETUP-00-CHECKLIST.md row 1.1) bu ;; variation: READY_FOR_REVIEW blocked by canonical:SETUP-00#1.1: the canonical expected set",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "GRD-LSN-0009",
+      "promptSection": "17",
+      "dimension": "Previously bypassed guardrail LSN-0009",
+      "expected": "the CP-0007 bypass is now blocked, and a reasonable variation of it is also blocked",
+      "method": "reproduce the original bypass in a safe fixture, then a variation",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "original bypass: greenKeeper=PASS was measured against no gate, not the canonical mandatory set checkpointValidation, integrity, lessons, staticAnalysis, tests ;; variation: greenKeeper=PASS was measured against tests, not the canonical mandatory set checkpoin",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "GRE-001",
+      "promptSection": "18",
+      "dimension": "Guardrail effectiveness recomputed",
+      "expected": "guardrailsTotal, Resolved, Tested and Effective recomputed independently and guardrailFailures is zero",
+      "method": "independent recomputation from the registry and the suite",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "independent recomputation: total 22, resolved 22, tested 22, effective 22, unresolved guardrail failures 0; identical to guardrail_effectiveness() and to STATE.guardrailEffectiveness. Six resolved guardrail failures are recorded against LSN-0005, LSN-0007, LSN",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.md"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "HIST-001",
+      "promptSection": "19",
+      "dimension": "History integrity - historical tag moved",
+      "expected": "rejected",
+      "method": "temporary Git fixture repository; the real repository and its tags are never modified",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "- SETUP-00-CP-0003: tag refs/tags/iacode-checkpoints/SETUP-00-CP-0003 resolves to c2eea150de9c97cfab5429d1e1eb3d5285e585f7, not the anchored commit 5780b0f86dbf46ad84d69b88a637be6f076946f4",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "HIST-002",
+      "promptSection": "19",
+      "dimension": "History integrity - anchor names the wrong tag",
+      "expected": "rejected",
+      "method": "temporary Git fixture repository; the real repository and its tags are never modified",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "- SETUP-00-CP-0003: anchored tag 'refs/tags/iacode-checkpoints/SETUP-00-CP-0099' is not the canonical 'refs/tags/iacode-checkpoints/SETUP-00-CP-0003' | - SETUP-00-CP-0003: anchorHash does not match its own anchored fields (recorded 'df6e7bacb173d4b440b9cfee831",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "HIST-003",
+      "promptSection": "19",
+      "dimension": "History integrity - anchor names the wrong commit",
+      "expected": "rejected",
+      "method": "temporary Git fixture repository; the real repository and its tags are never modified",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "- SETUP-00-CP-0003: anchorHash does not match its own anchored fields (recorded 'df6e7bacb173d4b440b9cfee831968886735528dd77f2a54e3a5ca92041ecad3', recomputed 'ac8e664c2cb99264a472253f6fd6b7feacd6990ddd4acdc5bd388d24c662f97e') | - SETUP-00-CP-0003: tag refs/ta",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "HIST-004",
+      "promptSection": "19",
+      "dimension": "History integrity - anchor names the wrong tree",
+      "expected": "rejected",
+      "method": "temporary Git fixture repository; the real repository and its tags are never modified",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "- SETUP-00-CP-0003: commit 5780b0f86dbf46ad84d69b88a637be6f076946f4 has tree 65dfc288c60dec518e5c488db6af8b4e9825fd8c, not the anchored 0000000000000000000000000000000000000000",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "HIST-005",
+      "promptSection": "19",
+      "dimension": "History integrity - previous-anchor digest wrong",
+      "expected": "rejected",
+      "method": "temporary Git fixture repository; the real repository and its tags are never modified",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "- SETUP-00-CP-0004: anchorHash does not match its own anchored fields (recorded 'a5c174320d6fae29d2e94c20a5de08c8617cfa3c18d3f4946c6f0915c710b3bb', recomputed '714ded680a4314167420555efdc79d1a6563b0929af2339921a27fb663bbe1d7') | - SETUP-00-CP-0004: previousAnc",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "HIST-006",
+      "promptSection": "19",
+      "dimension": "History integrity - chain link removed",
+      "expected": "rejected",
+      "method": "temporary Git fixture repository; the real repository and its tags are never modified",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "- sealed checkpoint SETUP-00-CP-0007 has no integrity anchor",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "HIST-007",
+      "promptSection": "19",
+      "dimension": "History integrity - anchor names the wrong previous checkpoint",
+      "expected": "rejected",
+      "method": "temporary Git fixture repository; the real repository and its tags are never modified",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "- SETUP-00-CP-0004: previousCheckpoint 'SETUP-00-CP-0001' breaks the chain; expected 'SETUP-00-CP-0003'",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "HIST-008",
+      "promptSection": "19",
+      "dimension": "CP-0001 through CP-0007 intact",
+      "expected": "every sealed tag still resolves to its recorded commit and tree under read-only inspection",
+      "method": "git rev-parse and cat-file over the real repository, read-only",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "read-only inspection of the real repository: all 7 sealed anchors match their tag, commit, tree, predecessor and digest; no tag in the real repository was written to",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "ANC-001",
+      "promptSection": "20",
+      "dimension": "CP-0008 successor anchor architecture",
+      "expected": "this audit checkpoint can legitimately anchor CP-0008 without modifying CP-0008",
+      "method": "produce the anchor and validate the chain",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "this audit checkpoint anchors SETUP-00-CP-0008 without modifying it: verify_integrity.py --rebuild adds the eighth anchor over the sealed tag, commit and tree, and the chain verifies with this checkpoint excluded as the one being sealed",
+      "evidence": [
+        "command:cmd-0016",
+        "file:.iacode/anchors/checkpoint-chain.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "CNT-001",
+      "promptSection": "21",
+      "dimension": "Semantic count - SETUP requirements",
+      "expected": "recomputed from the machine-readable owner and consistent wherever current artifacts state it",
+      "method": "independent recomputation plus cross-artifact comparison",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "71 canonical SETUP-00 rows re-parsed; matches the registry and the matrix",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "CNT-002",
+      "promptSection": "21",
+      "dimension": "Semantic count - M0 closure requirements",
+      "expected": "recomputed from the machine-readable owner and consistent wherever current artifacts state it",
+      "method": "independent recomputation plus cross-artifact comparison",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "131 M0 closure requirements, 130 mandatory; matches STATE, the report and COUNTS.json",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "CNT-003",
+      "promptSection": "21",
+      "dimension": "Semantic count - findings",
+      "expected": "recomputed from the machine-readable owner and consistent wherever current artifacts state it",
+      "method": "independent recomputation plus cross-artifact comparison",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "11 findings parsed from the sealed CP-0007 review report, 11 CLOSED in the closure record",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "CNT-004",
+      "promptSection": "21",
+      "dimension": "Semantic count - tests",
+      "expected": "recomputed from the machine-readable owner and consistent wherever current artifacts state it",
+      "method": "independent recomputation plus cross-artifact comparison",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "306 test cases discovered; matches COUNTS.json and the executed suite",
+      "evidence": [
+        "command:cmd-0004",
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "CNT-005",
+      "promptSection": "21",
+      "dimension": "Semantic count - lessons",
+      "expected": "recomputed from the machine-readable owner and consistent wherever current artifacts state it",
+      "method": "independent recomputation plus cross-artifact comparison",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "23 lessons, 22 GUARDED; matches COUNTS.json LESSONS 22/23",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "CNT-006",
+      "promptSection": "21",
+      "dimension": "Semantic count - guardrails",
+      "expected": "recomputed from the machine-readable owner and consistent wherever current artifacts state it",
+      "method": "independent recomputation plus cross-artifact comparison",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "22 guardrails; matches COUNTS.json and STATE.guardrailEffectiveness",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "CNT-007",
+      "promptSection": "21",
+      "dimension": "Semantic count - attacks",
+      "expected": "recomputed from the machine-readable owner and consistent wherever current artifacts state it",
+      "method": "independent recomputation plus cross-artifact comparison",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "18 cross-artifact comparisons between the derivation and COUNTS.json, STATE.json and COMPLETENESS-REPORT.json: 0 mismatches; 8 Markdown N/M claims, all consistent",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "TST-001",
+      "promptSection": "22",
+      "dimension": "Mandatory execution - unit and integration suite via unittest discovery over tests/",
+      "expected": "executed and green, with the real observed value recorded",
+      "method": "execute the repository's own official command",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "306 tests discovered and executed. 306/306 in a clean detached clone of the sealed commit and in a fresh fixture clone; 305/306 in the working repository after this checkpoint anchored its sealed predecessor, which is finding CP9-F-002",
+      "evidence": [
+        "command:cmd-0004",
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "FAIL"
+    },
+    {
+      "id": "TST-002",
+      "promptSection": "22",
+      "dimension": "Mandatory execution - static analysis via compileall",
+      "expected": "executed and green, with the real observed value recorded",
+      "method": "execute the repository's own official command",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "python -m compileall -q scripts tests exited 0",
+      "evidence": [
+        "command:cmd-0005"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "TST-003",
+      "promptSection": "22",
+      "dimension": "Mandatory execution - checkpoint validator",
+      "expected": "executed and green, with the real observed value recorded",
+      "method": "execute the repository's own official command",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "CHECKPOINT_VALID for SETUP-00-CP-0008 on the branch at baseline and from a detached clone of its canonical tag",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "TST-004",
+      "promptSection": "22",
+      "dimension": "Mandatory execution - lesson validator",
+      "expected": "executed and green, with the real observed value recorded",
+      "method": "execute the repository's own official command",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "LESSONS_VALID total=23 active=23 guarded=22",
+      "evidence": [
+        "command:cmd-0006"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "TST-005",
+      "promptSection": "22",
+      "dimension": "Mandatory execution - integrity validator",
+      "expected": "executed and green, with the real observed value recorded",
+      "method": "execute the repository's own official command",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "INTEGRITY_VALID anchors=8 after this checkpoint anchored SETUP-00-CP-0008",
+      "evidence": [
+        "command:cmd-0007",
+        "command:cmd-0003"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "TST-006",
+      "promptSection": "22",
+      "dimension": "Mandatory execution - completeness validator",
+      "expected": "executed and green, with the real observed value recorded",
+      "method": "execute the repository's own official command",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "DELIVERY_COMPLETENESS_GATE=PASS coverage=100.00 evidenceCoverage=100.00 total=131 complete=131 partial=0 missing=0 for the subject",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "TST-007",
+      "promptSection": "22",
+      "dimension": "Mandatory execution - green keeper and delivery assurance",
+      "expected": "executed and green, with the real observed value recorded",
+      "method": "execute the repository's own official command",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "green_keeper.py --gates '' still measured the canonical five mandatory gates and executed five commands; the delivery's own last GREEN cycle measured the same set",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "TST-008",
+      "promptSection": "22",
+      "dimension": "Mandatory execution - secret policy scan",
+      "expected": "executed and green, with the real observed value recorded",
+      "method": "execute the repository's own official command",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "the validator's secret scan runs over every readable file as part of checkpoint validation and reported nothing; a secret planted in a nested lesson field is detected and not echoed",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "TST-009",
+      "promptSection": "22",
+      "dimension": "Mandatory execution - git diff --check",
+      "expected": "executed and green, with the real observed value recorded",
+      "method": "execute the repository's own official command",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "git diff --check exited 0",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "TST-010",
+      "promptSection": "22",
+      "dimension": "Mandatory execution - derived counts validator",
+      "expected": "executed and green, with the real observed value recorded",
+      "method": "execute the repository's own official command",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "COUNTS_DERIVED TESTS=306/306 REQUIREMENTS=131/131 FINDINGS=11/11 ATTACKS=46/46 LESSONS=22/23 GUARDRAILS=22/22, identical to the stored COUNTS.json",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "CLN-001",
+      "promptSection": "23",
+      "dimension": "Clean clone of the subject commit validates",
+      "expected": "a detached clone at the CP-0008 tag validates and the full suite passes",
+      "method": "isolated clone in a disposable workspace",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "a clone of the repository detached at refs/tags/iacode-checkpoints/SETUP-00-CP-0008 validated CHECKPOINT_VALID and ran the full suite 306/306 in 242.7 s",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "CLN-002",
+      "promptSection": "23",
+      "dimension": "No dependency on untracked files, local cache or session state",
+      "expected": "the clean clone runs every mandatory validator without anything outside the repository",
+      "method": "execute the validators in the clone",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "in the same clone: compileall 0, validate_lessons 0, verify_integrity 0, check_completeness 0, validate_checkpoint 0, derive_counts 0, derive_requirements 0, m0_mirror_audit --clean-clone 18/18 PASS, m0_red_team 46/46 defended, git diff --check 0",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "CLN-003",
+      "promptSection": "23",
+      "dimension": "No dependency on an external prompt or attachment",
+      "expected": "every mandatory SETUP artifact is inside the repository",
+      "method": "inventory of referenced artifacts",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "no untracked file, local cache, session state, external attachment or prompt was needed: every command above ran from the clone alone, and the Gate specification is in the repository as docs/SETUP-00-CHECKLIST.md",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json",
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "NS-001",
+      "promptSection": "24",
+      "dimension": "New surface - external audit attestation",
+      "expected": "implementation inspected, its tests read and executed, and one additional safe negative scenario run",
+      "method": "read scripts/development-ledger/attestation.py, execute its tests, add an independent negative fixture",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "scripts/development-ledger/attestation.py read in full; ExternalAttestationTests read and executed green; fifteen independent negative probes plus a positive control run against verify_attestation, and an end-to-end reachability experiment which is finding CP9",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json",
+        "checkpoint:RED-TEAM-REPORT.md"
+      ],
+      "verdict": "FAIL"
+    },
+    {
+      "id": "NS-002",
+      "promptSection": "24",
+      "dimension": "New surface - canonical requirements registry",
+      "expected": "implementation inspected, its tests read and executed, and one additional safe negative scenario run",
+      "method": "read scripts/development-ledger/policies.py, execute its tests, add an independent negative fixture",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "scripts/development-ledger/policies.py read in full; ExpectedRequirementSetTests and AuditSourceParsingTests executed green; the expected set re-derived by an independent parser that does not import policies.py, and four removal scenarios plus an anchor-substi",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json",
+        "checkpoint:RED-TEAM-REPORT.md"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "NS-003",
+      "promptSection": "24",
+      "dimension": "New surface - quality gate registry",
+      "expected": "implementation inspected, its tests read and executed, and one additional safe negative scenario run",
+      "method": "read .iacode/policies/quality-gates.json, execute its tests, add an independent negative fixture",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": ".iacode/policies/quality-gates.json and green_keeper.py read; MandatoryGatePolicyTests executed green; an empty invocation still measured the canonical five gates, and a cycle measuring one gate, no gate or a gate that exited nonzero was refused",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json",
+        "checkpoint:RED-TEAM-REPORT.md"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "NS-004",
+      "promptSection": "24",
+      "dimension": "New surface - preflight fingerprint",
+      "expected": "implementation inspected, its tests read and executed, and one additional safe negative scenario run",
+      "method": "read scripts/development-ledger/lesson_preflight.py, execute its tests, add an independent negative fixture",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "lesson_preflight.py and lessons.preflight_staleness read; PreflightFreshnessTests executed green; six input mutations in disposable clones, each checked both for staleness of the stored preflight and for freshness of a regenerated one",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json",
+        "checkpoint:RED-TEAM-REPORT.md"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "NS-005",
+      "promptSection": "24",
+      "dimension": "New surface - guardrail registry",
+      "expected": "implementation inspected, its tests read and executed, and one additional safe negative scenario run",
+      "method": "read .iacode/memory/guardrails/registry.json, execute its tests, add an independent negative fixture",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": ".iacode/memory/guardrails/registry.json read; GuardrailRegistryTests and GuardrailEffectivenessGateTests executed green; the full lesson to guardrail to control to test to execution chain resolved for all 22, and a registry entry verified by a nonexistent test",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json",
+        "checkpoint:RED-TEAM-REPORT.md"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "NS-006",
+      "promptSection": "24",
+      "dimension": "New surface - checkpoint anchor chain",
+      "expected": "implementation inspected, its tests read and executed, and one additional safe negative scenario run",
+      "method": "read scripts/development-ledger/anchors.py, execute its tests, add an independent negative fixture",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "anchors.py read in full; IntegrityAnchorTests executed green; every anchorHash recomputed independently, and seven chain mutations refused in temporary repositories",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json",
+        "checkpoint:RED-TEAM-REPORT.md"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "ART-AA",
+      "promptSection": "25",
+      "dimension": "Additional attack AA - aggregate consistency",
+      "expected": "DEFENDED in a synthetic fixture",
+      "method": "execute the attack against an isolated fixture clone",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "exit=1 CHECKPOINT_INVALID | - STATE.json requirementsMatrix.mandatory=999 does not match the matrix value 130",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "ART-AB",
+      "promptSection": "25",
+      "dimension": "Additional attack AB - control resolution",
+      "expected": "DEFENDED in a synthetic fixture",
+      "method": "execute the attack against an isolated fixture clone",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "exit=1 LESSONS_INVALID | - LSN-0001: control names the test 'NoSuchTests.test_nothing', which does not exist in the suite",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "ART-AC",
+      "promptSection": "25",
+      "dimension": "Additional attack AC - evidence resolution",
+      "expected": "DEFENDED in a synthetic fixture",
+      "method": "execute the attack against an isolated fixture clone",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "exit=1 LESSONS_INVALID | - LSN-0001: evidence file does not exist: file:docs/does-not-exist.md",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "ART-AD",
+      "promptSection": "25",
+      "dimension": "Additional attack AD - nested secret scan",
+      "expected": "DEFENDED in a synthetic fixture",
+      "method": "execute the attack against an isolated fixture clone",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "exit=1 LESSONS_INVALID | - LSN-0001: secret pattern detected in $.prevention[0].description: GitHub credential",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "ART-AE",
+      "promptSection": "25",
+      "dimension": "Additional attack AE - preflight gate binding",
+      "expected": "DEFENDED in a synthetic fixture",
+      "method": "execute the attack against an isolated fixture clone",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "exit=1 CHECKPOINT_INVALID | - STATE.json lessonPreflight.gate does not match LESSON-PREFLIGHT.json | - lesson preflight: the preflight was generated for gate 'SETUP-00' but the checkpoint declares 'GATE 1'; a preflight may not be reused across Gates | - STATE.",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "ART-AF",
+      "promptSection": "25",
+      "dimension": "Additional attack AF - promotion invariant",
+      "expected": "DEFENDED in a synthetic fixture",
+      "method": "execute the attack against an isolated fixture clone",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "exit=1 CHECKPOINT_INVALID | - MILESTONE_EXTERNAL_PASS requires GREEN_KEEPER_GATE=PASS, found 'FAIL' | - MILESTONE_EXTERNAL_PASS requires an independent review verdict, found 'PENDING' | - MILESTONE_EXTERNAL_PASS requires a Red Team verdict, found 'PENDING' | -",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "ART-AG",
+      "promptSection": "25",
+      "dimension": "Additional attack AG - gate registry narrowing",
+      "expected": "DEFENDED in a synthetic fixture",
+      "method": "execute the attack against an isolated fixture clone",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "exit=1 CHECKPOINT_INVALID | - greenKeeper=PASS was measured against checkpointValidation, integrity, lessons, staticAnalysis, tests, not the canonical mandatory set checkpointValidation, integrity, staticAnalysis, tests | - greenKeeper=PASS is STALE: the deliv",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "ART-AH",
+      "promptSection": "25",
+      "dimension": "Additional attack AH - gate staleness",
+      "expected": "DEFENDED in a synthetic fixture",
+      "method": "execute the attack against an isolated fixture clone",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "exit=1 CHECKPOINT_INVALID | - COMMANDS.jsonl:60: the record claims a clean tree at 3a143911fc01 but the input scripts/development-ledger/validate_checkpoint.py had different content there | - greenKeeper=PASS is STALE: the delivery-assurance scope changed afte",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "ART-AI",
+      "promptSection": "25",
+      "dimension": "Additional attack AI - external attestation self-audit",
+      "expected": "DEFENDED in a synthetic fixture",
+      "method": "execute the attack against an isolated fixture clone",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "exit=1 CHECKPOINT_INVALID | - greenKeeper=PASS is STALE: the delivery-assurance scope changed after the last GREEN cycle, so the Green Keeper must run again | - DELIVERY_COMPLETENESS_GATE is STALE: the code, requirements, lessons or policy changed after the au",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "ART-AJ",
+      "promptSection": "25",
+      "dimension": "Additional attack AJ - external attestation over a failed review",
+      "expected": "DEFENDED in a synthetic fixture",
+      "method": "execute the attack against an isolated fixture clone",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "exit=1 CHECKPOINT_INVALID | - greenKeeper=PASS is STALE: the delivery-assurance scope changed after the last GREEN cycle, so the Green Keeper must run again | - DELIVERY_COMPLETENESS_GATE is STALE: the code, requirements, lessons or policy changed after the au",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "ART-AK",
+      "promptSection": "25",
+      "dimension": "Additional attack AK - attestation of a different commit",
+      "expected": "DEFENDED in a synthetic fixture",
+      "method": "execute the attack against an isolated fixture clone",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "exit=1 CHECKPOINT_INVALID | - greenKeeper=PASS is STALE: the delivery-assurance scope changed after the last GREEN cycle, so the Green Keeper must run again | - DELIVERY_COMPLETENESS_GATE is STALE: the code, requirements, lessons or policy changed after the au",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "ART-AL",
+      "promptSection": "25",
+      "dimension": "Additional attack AL - forged derived count",
+      "expected": "DEFENDED in a synthetic fixture",
+      "method": "execute the attack against an isolated fixture clone",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "exit=1 CHECKPOINT_INVALID | - COUNTS.json TESTS=999/999 contradicts the derived 306/306",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "ART-AM",
+      "promptSection": "25",
+      "dimension": "Additional attack AM - count contradiction in Markdown",
+      "expected": "DEFENDED in a synthetic fixture",
+      "method": "execute the attack against an isolated fixture clone",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "exit=1 CHECKPOINT_INVALID | - FINAL-REPORT.md states 999/999 TESTS, which contradicts the derived 306/306",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "ART-AN",
+      "promptSection": "25",
+      "dimension": "Additional attack AN - open audit finding",
+      "expected": "DEFENDED in a synthetic fixture",
+      "method": "execute the attack against an isolated fixture clone",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "exit=1 CHECKPOINT_INVALID | - CP7-FINDINGS-CLOSURE.json: closed does not match the recorded findings | - CP7-FINDINGS-CLOSURE.json: a finding that is not CLOSED cannot produce result CLOSED | - READY_FOR_REVIEW is not available while M0-F-001 of M0-CP-0007 rem",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "ART-AO",
+      "promptSection": "25",
+      "dimension": "Additional attack AO - internal Red Team false PASS",
+      "expected": "DEFENDED in a synthetic fixture",
+      "method": "execute the attack against an isolated fixture clone",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "exit=1 CHECKPOINT_INVALID | - M0-INTERNAL-RED-TEAM.json: defended does not match the recorded attacks | - M0-INTERNAL-RED-TEAM.json: escaped does not match the recorded attacks | - M0-INTERNAL-RED-TEAM.json: 1 attack(s) escaped but the result is 'RED_TEAM_PASS",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "ART-AP",
+      "promptSection": "25",
+      "dimension": "Additional attack AP - internal mirror false PASS",
+      "expected": "DEFENDED in a synthetic fixture",
+      "method": "execute the attack against an isolated fixture clone",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "exit=1 CHECKPOINT_INVALID | - M0-INTERNAL-MIRROR.json: failed does not match the recorded checks | - M0-INTERNAL-MIRROR.json: a failed check cannot produce a PASS",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "ART-AQ",
+      "promptSection": "25",
+      "dimension": "Additional attack AQ - guardrail verified by a nonexistent test",
+      "expected": "DEFENDED in a synthetic fixture",
+      "method": "execute the attack against an isolated fixture clone",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "exit=1 LESSONS_INVALID | - LSN-0001: guardrail 'GRD-0001' is verified by 'NoSuchTests.test_nothing', which does not exist in the suite",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "ART-AR",
+      "promptSection": "25",
+      "dimension": "Additional attack AR - broken anchor link",
+      "expected": "DEFENDED in a synthetic fixture",
+      "method": "execute the attack against an isolated fixture clone",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "exit=1 INTEGRITY_INVALID | - SETUP-00-CP-0004: anchorHash does not match its own anchored fields (recorded 'a5c174320d6fae29d2e94c20a5de08c8617cfa3c18d3f4946c6f0915c710b3bb', recomputed '714ded680a4314167420555efdc79d1a6563b0929af2339921a27fb663bbe1d7') | - SE",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "ART-AS",
+      "promptSection": "25",
+      "dimension": "Additional attack AS - command input binding removed",
+      "expected": "DEFENDED in a synthetic fixture",
+      "method": "execute the attack against an isolated fixture clone",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "exit=1 CHECKPOINT_INVALID | - COMMANDS.jsonl:1: schemaVersion 3.2.0 requires inputsDigest binding every declared input by content | - COMMANDS.jsonl:2: schemaVersion 3.2.0 requires inputsDigest binding every declared input by content | - COMMANDS.jsonl:3: sche",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "ART-AT",
+      "promptSection": "25",
+      "dimension": "Additional attack AT - seal chronology evidence removed",
+      "expected": "DEFENDED in a synthetic fixture",
+      "method": "execute the attack against an isolated fixture clone",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "exit=1 CHECKPOINT_INVALID | - READY_FOR_REVIEW requires a recorded post-commit-validation run with exit code 0 over a clean worktree; the sealed content must be validated as committed, not as a dirty working tree",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "STL-001",
+      "promptSection": "26",
+      "dimension": "Green Keeper staleness",
+      "expected": "a PASS recorded before a relevant scope change is refused until re-execution",
+      "method": "fixture: mutate the assurance scope after a green cycle",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "greenKeeper=PASS is STALE: the delivery-assurance scope changed after the last GREEN cycle, so the Green Keeper must run again",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "STL-002",
+      "promptSection": "27",
+      "dimension": "Delivery completeness staleness",
+      "expected": "a completeness PASS is refused after requirements, lessons, policy or implementation change",
+      "method": "fixture: mutate the scope after the report",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "DELIVERY_COMPLETENESS_GATE is STALE: the code, requirements, lessons or policy changed after the audit, so it must run again",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "STL-003",
+      "promptSection": "28",
+      "dimension": "Internal Red Team and mirror staleness",
+      "expected": "an attacked control changing after the Red Team makes the previous result stale",
+      "method": "fixture: mutate the scope after the report",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "internal Red Team: M0-INTERNAL-RED-TEAM.json is STALE: the attacked content changed after the run, so the affected attacks must be executed ;; internal mirror: M0-INTERNAL-MIRROR.json is STALE: the audited content changed after the mirror ran ;; a false PASS o",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "CMD-001",
+      "promptSection": "29",
+      "dimension": "Command records carry every reproducibility field",
+      "expected": "runtime, cwd, command, sanitized arguments, inputs, commit, purpose, result and duration present",
+      "method": "schema recomputation over CP-0008 COMMANDS.jsonl",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "60 records in the subject ledger; 0 missing any of id, timestamp, runtime, working directory, command, arguments, inputs, commit, purpose, result, duration or exit code; 6 recorded nonzero exits kept rather than removed",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "CMD-002",
+      "promptSection": "29",
+      "dimension": "Representative command sample reproduces",
+      "expected": "a deterministic sample of safe, read-only commands replays with the recorded result",
+      "method": "replay in an isolated checkout",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "deterministic sample seed 20260920, six safe read-only commands replayed in a detached clone of the sealed commit: cmd-0025, cmd-0002, cmd-0005, cmd-0038, cmd-0044 and cmd-0023 all reproduced their recorded exit code 0",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "CMD-003",
+      "promptSection": "29",
+      "dimension": "Declared inputs are bound by content",
+      "expected": "every declared input resolves and its recorded digest matches the content at the declared commit",
+      "method": "recomputation",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "every record that declares inputs also carries inputsDigest; the one record that claims a clean tree has its declared input content verified at the commit it names, and it matches. Removing the binding is refused",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "EVD-001",
+      "promptSection": "30",
+      "dimension": "Evidence integrity - PASS without evidence",
+      "expected": "rejected",
+      "method": "synthetic fixture through validate_checkpoint.py",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "QUALITY.json staticAnalysis=PASS requires at least one evidence reference",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "EVD-002",
+      "promptSection": "30",
+      "dimension": "Evidence integrity - evidence file that does not exist",
+      "expected": "rejected",
+      "method": "synthetic fixture through validate_checkpoint.py",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "QUALITY.json staticAnalysis references a missing or empty file 'NO-SUCH-FILE.md'",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "EVD-003",
+      "promptSection": "30",
+      "dimension": "Evidence integrity - command reference that does not exist",
+      "expected": "rejected",
+      "method": "synthetic fixture through validate_checkpoint.py",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "QUALITY.json staticAnalysis references an unknown command id 'cmd-9999'",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "EVD-004",
+      "promptSection": "30",
+      "dimension": "Evidence integrity - command reference whose record failed",
+      "expected": "rejected",
+      "method": "synthetic fixture through validate_checkpoint.py",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "QUALITY.json staticAnalysis references command 'cmd-0002', which exited 5",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "EVD-005",
+      "promptSection": "30",
+      "dimension": "Evidence integrity - evidence file that exists but is empty",
+      "expected": "rejected",
+      "method": "synthetic fixture through validate_checkpoint.py",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "QUALITY.json staticAnalysis references a missing or empty file 'EMPTY-EVIDENCE.md'",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "EVD-006",
+      "promptSection": "30",
+      "dimension": "Evidence integrity - stale evidence describing older content",
+      "expected": "rejected",
+      "method": "synthetic fixture through validate_checkpoint.py",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "DELIVERY_COMPLETENESS_GATE is STALE: the code, requirements, lessons or policy changed after the audit, so it must run again",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "DEFENDED"
+    },
+    {
+      "id": "SCR-001",
+      "promptSection": "31",
+      "dimension": "Self-contained repository",
+      "expected": "a new session can reconstruct the state from the repository alone and START-HERE leads to the needed context",
+      "method": "cold-start simulation from the clean clone",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "START-HERE.md leads to the contract, the plan, the Gate checklist and LATEST.md; LATEST.md resolves; the named checkpoint carries an executable handoff whose fifteen validation commands all ran from a clean clone with nothing outside the repository. The audit ",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json",
+        "file:START-HERE.md"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "DOC-001",
+      "promptSection": "32",
+      "dimension": "Documentation integrity - internal documentation links resolve",
+      "expected": "verified",
+      "method": "link resolution and consistency recomputation",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "39 relative documentation links resolved, 0 broken",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "DOC-002",
+      "promptSection": "32",
+      "dimension": "Documentation integrity - no missing referenced artifact",
+      "expected": "verified",
+      "method": "link resolution and consistency recomputation",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "every artifact named by the SETUP-00 checklist resolves to a file or directory that exists; the requirements matrix of this checkpoint records the resolved path per row",
+      "evidence": [
+        "checkpoint:REQUIREMENTS-MATRIX.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "DOC-003",
+      "promptSection": "32",
+      "dimension": "Documentation integrity - no stale checkpoint reference or contradictory status",
+      "expected": "verified",
+      "method": "link resolution and consistency recomputation",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "LATEST.md, START-HERE.md and the sealed checkpoints agree; one contradiction found: LSN-0014 is GUARDED while its own notes field says it is not guarded, recorded as finding CP9-F-004",
+      "evidence": [
+        "checkpoint:REVIEW-REPORT.md"
+      ],
+      "verdict": "FAIL"
+    },
+    {
+      "id": "DOC-004",
+      "promptSection": "32",
+      "dimension": "Documentation integrity - no contradictory instruction that could make another tool act wrongly",
+      "expected": "verified",
+      "method": "link resolution and consistency recomputation",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "two instructions could mislead another tool and are recorded as findings: a stale count in a test docstring, 119 against a derived 131 (CP9-F-003), and a policy key that no code reads, POLICY.json guardrailRegistry (CP9-F-005). NEXT.md of the subject names Cod",
+      "evidence": [
+        "checkpoint:REVIEW-REPORT.md",
+        "checkpoint:NEXT.md"
+      ],
+      "verdict": "FAIL"
+    },
+    {
+      "id": "SAF-001",
+      "promptSection": "33",
+      "dimension": "Safe reproduction available for every critical control",
+      "expected": "no critical integrity, security, governance, auditability or quality control lacks a safe reproduction",
+      "method": "inventory of controls against the fixtures that exercise them",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "every critical integrity, security, governance, auditability and quality control in this delivery has a safe reproduction: 52 attacks and 33 assurance scenarios in disposable clones or in-memory copies, 7 history scenarios in temporary repositories, 15 attesta",
+      "evidence": [
+        "checkpoint:RED-TEAM-REPORT.md",
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AUD-006",
+      "promptSection": "34",
+      "dimension": "Audit of the audit",
+      "expected": "matrix recomputed: mandatory equals complete, zero failed, zero unverified, zero not started, zero missing evidence",
+      "method": "recomputation of this matrix",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "recomputed below in this artifact's summary block",
+      "evidence": [
+        "checkpoint:FINAL-M0-AUDIT-MATRIX.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "FND-001",
+      "promptSection": "35",
+      "dimension": "Consolidated findings package",
+      "expected": "every finding carries id, severity, source rows, expected, observed, reproduction, evidence, acceptance and regression scenario",
+      "method": "REVIEW-REPORT.md of this checkpoint",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "five findings, each with identifier, severity, requirement, expected, observed, reproduction, evidence, classification, acceptance criteria and a regression scenario",
+      "evidence": [
+        "checkpoint:REVIEW-REPORT.md"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "LSC-001",
+      "promptSection": "36",
+      "dimension": "Lesson candidates recorded and the memory unchanged by the audit",
+      "expected": "LESSON-CANDIDATES.json and .md produced; .iacode/memory not modified by this audit",
+      "method": "artifact plus git diff",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "eight OBSERVED candidates recorded; .iacode/memory/lessons.jsonl, LESSONS.md, POLICY.json and the guardrail registry are byte-identical to the sealed subject",
+      "evidence": [
+        "checkpoint:LESSON-CANDIDATES.json",
+        "checkpoint:DIFF-SUMMARY.md"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "TFP-001",
+      "promptSection": "37",
+      "dimension": "Test failure policy applied",
+      "expected": "every red result classified PRODUCT_DEFECT, AUDIT_ENVIRONMENT or FLAKY, with no rerun-until-green",
+      "method": "recorded classification",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "one product failure classified PRODUCT_DEFECT and left red (CP9-F-002); two harness failures classified AUDIT_ENVIRONMENT and repaired in the audit harness only; no FLAKY_OR_NONDETERMINISTIC result observed; no command was re-run until green",
+      "evidence": [
+        "checkpoint:REVIEW-REPORT.md",
+        "checkpoint:AUDIT-EXECUTIONS.md"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "CKP-001",
+      "promptSection": "38",
+      "dimension": "Audit checkpoint complete",
+      "expected": "every artifact required by the current schema plus the audit-specific artifacts exists",
+      "method": "checkpoint validator",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "the checkpoint carries every artifact the 3.2.0 schema requires plus the audit artifacts: the matrix, the three reports, the lesson candidates, the executions record and the harness that produced them",
+      "evidence": [
+        "checkpoint:STATE.json",
+        "checkpoint:FILES.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "CKP-002",
+      "promptSection": "45",
+      "dimension": "This checkpoint validates from a clean detached checkout",
+      "expected": "CP-0009 validates at its own sealed tag with a clean worktree",
+      "method": "detached validation in an isolated clone",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "validated from a clean detached checkout of this checkpoint's own canonical tag after sealing; recorded in RESUME-VALIDATION.md",
+      "evidence": [
+        "checkpoint:RESUME-VALIDATION.md"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "VER-001",
+      "promptSection": "41,42",
+      "dimension": "Binary verdict",
+      "expected": "MILESTONE_AUDIT_PASS or REWORK_REQUIRED, with no conditional wording",
+      "method": "this checkpoint's reports",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "REWORK_REQUIRED, with no conditional or partial wording anywhere in the reports",
+      "evidence": [
+        "checkpoint:REVIEW-REPORT.md",
+        "checkpoint:MILESTONE-REPORT.md"
+      ],
+      "verdict": "REWORK_REQUIRED"
+    },
+    {
+      "id": "VER-002",
+      "promptSection": "43,44,46",
+      "dimension": "Final state and reporting",
+      "expected": "recorded state and final response match the evidence exactly",
+      "method": "FINAL-REPORT.md and the session response",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "STATE.json, STATUS.md, FINAL-REPORT.md, HANDOFF.md and NEXT.md all record REWORK_REQUIRED, milestone FAILED, crossToolValidation NOT_AVAILABLE and Gate 0 BLOCKED",
+      "evidence": [
+        "checkpoint:FINAL-REPORT.md",
+        "checkpoint:STATE.json"
+      ],
+      "verdict": "REWORK_REQUIRED"
+    },
+    {
+      "id": "EXT-011",
+      "promptSection": "11",
+      "dimension": "Positive control - a legitimate attestation is accepted",
+      "expected": "a structurally valid attestation passes verification",
+      "method": "call attestation.verify_attestation with a valid document",
+      "mandatory": true,
+      "addedDuringExecution": true,
+      "addedBecause": "section 11 audits a control; a control that refuses every input, including the true one, is not a control, so the positive path has to be executed too",
+      "status": "COMPLETE",
+      "observed": "no error",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "verdict": "ACCEPTED"
+    },
+    {
+      "id": "EXT-012",
+      "promptSection": "11,43",
+      "dimension": "End-to-end reachability of MILESTONE_EXTERNAL_PASS",
+      "expected": "a legitimately attested subject can actually reach MILESTONE_EXTERNAL_PASS",
+      "method": "build the most favourable legitimate promotion in a disposable clone",
+      "mandatory": true,
+      "addedDuringExecution": true,
+      "addedBecause": "the rejection scenarios alone cannot show whether the mechanism can ever be satisfied",
+      "status": "FAILED",
+      "observed": "no repository state satisfies the promotion: the attestation must live in the tree of the commit it names as subjectCommit. Three attempts and a fixed-point iteration all fail with 'attests commit X, not the subject commit Y'; and once the attestation is commi",
+      "evidence": [
+        "checkpoint:AUDIT-EXECUTIONS.json",
+        "checkpoint:audit-harness/ext_reachability.py",
+        "checkpoint:REVIEW-REPORT.md"
+      ],
+      "verdict": "FAIL"
+    },
+    {
+      "id": "TST-011",
+      "promptSection": "22,23",
+      "dimension": "The sealed suite stays green for the next delivery",
+      "expected": "sealing the next checkpoint does not make a mandatory gate red",
+      "method": "simulate the next sealed checkpoint in a disposable clone and run the suite",
+      "mandatory": true,
+      "addedDuringExecution": true,
+      "addedBecause": "the tests gate is mandatory for every delivery, so its durability past this seal is part of auditing the delivery that seals it",
+      "status": "FAILED",
+      "observed": "anchoring the sealed predecessor, which the checkpoint protocol requires of every successor, took the suite from 306/306 to 305/306: IntegrityAnchorTests.test_a_sealed_checkpoint_without_an_anchor_is_detected asserts an error the hardcoded exclusion now swallo",
+      "evidence": [
+        "command:cmd-0004",
+        "command:cmd-0008",
+        "checkpoint:AUDIT-EXECUTIONS.json",
+        "checkpoint:REVIEW-REPORT.md"
+      ],
+      "verdict": "FAIL"
+    }
+  ],
+  "summary": {
+    "total": 183,
+    "mandatory": 183,
+    "complete": 181,
+    "failed": 2,
+    "unverified": 0,
+    "inProgress": 0,
+    "notStarted": 0,
+    "missingEvidence": 0,
+    "rowsWithoutEvidence": [],
+    "executedPercent": 100.0,
+    "evidenceCoveragePercent": 100.0,
+    "auditedItemsPassing": 181,
+    "auditedItemsFailing": 2,
+    "recomputedAt": "2026-09-21T01:35:55Z",
+    "note": "Every row was executed and carries evidence. 'failed' counts rows whose audited property did not hold; those are the rows that produce the findings, and they are why the milestone verdict is REWORK_REQUIRED."
+  }
+}

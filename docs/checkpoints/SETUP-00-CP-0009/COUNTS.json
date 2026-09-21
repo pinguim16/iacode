@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "1.0.0",
+  "checkpoint": "SETUP-00-CP-0009",
+  "generatedAt": "2026-09-21T01:37:48Z",
+  "counts": {
+    "TESTS": {
+      "numerator": 305,
+      "denominator": 306,
+      "source": "unittest discovery over tests/ in the working repository"
+    },
+    "REQUIREMENTS": {
+      "numerator": 69,
+      "denominator": 71,
+      "source": "REQUIREMENTS-MATRIX.json, the auditor's verdict per canonical SETUP-00 row"
+    },
+    "FINDINGS": {
+      "numerator": 0,
+      "denominator": 5,
+      "source": "REVIEW-REPORT.md of this audit; none is closed yet"
+    },
+    "ATTACKS": {
+      "numerator": 52,
+      "denominator": 52,
+      "source": "RED-TEAM-REPORT.md, this auditor's own battery"
+    },
+    "LESSONS": {
+      "numerator": 22,
+      "denominator": 23,
+      "source": ".iacode/memory/lessons.jsonl, unchanged by this audit"
+    },
+    "GUARDRAILS": {
+      "numerator": 22,
+      "denominator": 22,
+      "source": ".iacode/memory/guardrails/registry.json, measured"
+    }
+  }
+}

@@ -1,0 +1,1799 @@
+{
+  "schemaVersion": "2.0.0",
+  "gate": "SETUP-00",
+  "checkpoint": "SETUP-00-CP-0009",
+  "expectedSetSource": "policies.expected_requirement_refs over docs/SETUP-00-CHECKLIST.md, .iacode/policies/canonical-requirements.json, .iacode/policies/audit-registry.json and LESSON-PREFLIGHT.json",
+  "requirements": [
+    {
+      "id": "REQ-0001",
+      "source": "docs/SETUP-00-CHECKLIST.md row 1.1",
+      "sourceRef": "canonical:SETUP-00#1.1",
+      "description": "A single entry point states the phase, current Gate, latest checkpoint, and start protocol.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:START-HERE.md"
+      ],
+      "testEvidence": [
+        "command:cmd-0004",
+        "command:cmd-0010"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:FINAL-M0-AUDIT-MATRIX.json",
+        "checkpoint:AUDIT-EXECUTIONS.md"
+      ],
+      "justification": null,
+      "notes": "Audited by the CP-0009 fresh-session independent audit; confirmed."
+    },
+    {
+      "id": "REQ-0002",
+      "source": "docs/SETUP-00-CHECKLIST.md row 1.2",
+      "sourceRef": "canonical:SETUP-00#1.2",
+      "description": "A Codex adapter binds the canonical contracts without adding independent policy.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:AGENTS.md"
+      ],
+      "testEvidence": [
+        "command:cmd-0004",
+        "command:cmd-0010"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:FINAL-M0-AUDIT-MATRIX.json",
+        "checkpoint:AUDIT-EXECUTIONS.md"
+      ],
+      "justification": null,
+      "notes": "Audited by the CP-0009 fresh-session independent audit; confirmed."
+    },
+    {
+      "id": "REQ-0003",
+      "source": "docs/SETUP-00-CHECKLIST.md row 1.3",
+      "sourceRef": "canonical:SETUP-00#1.3",
+      "description": "A Claude Code adapter binds the same contracts.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:CLAUDE.md"
+      ],
+      "testEvidence": [
+        "command:cmd-0004",
+        "command:cmd-0010"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:FINAL-M0-AUDIT-MATRIX.json",
+        "checkpoint:AUDIT-EXECUTIONS.md"
+      ],
+      "justification": null,
+      "notes": "Audited by the CP-0009 fresh-session independent audit; confirmed."
+    },
+    {
+      "id": "REQ-0004",
+      "source": "docs/SETUP-00-CHECKLIST.md row 1.4",
+      "sourceRef": "canonical:SETUP-00#1.4",
+      "description": "Tool adapters stay semantically equivalent to the canonical roles.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.claude/agents/architect.md"
+      ],
+      "testEvidence": [
+        "command:cmd-0004",
+        "command:cmd-0010"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:FINAL-M0-AUDIT-MATRIX.json",
+        "checkpoint:AUDIT-EXECUTIONS.md"
+      ],
+      "justification": null,
+      "notes": "Audited by the CP-0009 fresh-session independent audit; confirmed."
+    },
+    {
+      "id": "REQ-0005",
+      "source": "docs/SETUP-00-CHECKLIST.md row 2.1",
+      "sourceRef": "canonical:SETUP-00#2.1",
+      "description": "The Gate sequence, dependencies, acceptance, and fail conditions are recorded.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:docs/MASTER-PLAN.md"
+      ],
+      "testEvidence": [
+        "command:cmd-0004",
+        "command:cmd-0010"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:FINAL-M0-AUDIT-MATRIX.json",
+        "checkpoint:AUDIT-EXECUTIONS.md"
+      ],
+      "justification": null,
+      "notes": "Audited by the CP-0009 fresh-session independent audit; confirmed."
+    },
+    {
+      "id": "REQ-0006",
+      "source": "docs/SETUP-00-CHECKLIST.md row 2.2",
+      "sourceRef": "canonical:SETUP-00#2.2",
+      "description": "The completion standard, mandatory controls, and Git and evidence discipline are recorded.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:docs/DEVELOPMENT-CONTRACT.md"
+      ],
+      "testEvidence": [
+        "command:cmd-0004",
+        "command:cmd-0010"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:FINAL-M0-AUDIT-MATRIX.json",
+        "checkpoint:AUDIT-EXECUTIONS.md"
+      ],
+      "justification": null,
+      "notes": "Audited by the CP-0009 fresh-session independent audit; confirmed."
+    },
+    {
+      "id": "REQ-0007",
+      "source": "docs/SETUP-00-CHECKLIST.md row 2.3",
+      "sourceRef": "canonical:SETUP-00#2.3",
+      "description": "Tool-to-tool transfer is formal in both directions.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:docs/HANDOFF-PROTOCOL.md"
+      ],
+      "testEvidence": [
+        "command:cmd-0004",
+        "command:cmd-0010"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:FINAL-M0-AUDIT-MATRIX.json",
+        "checkpoint:AUDIT-EXECUTIONS.md"
+      ],
+      "justification": null,
+      "notes": "Audited by the CP-0009 fresh-session independent audit; confirmed."
+    },
+    {
+      "id": "REQ-0008",
+      "source": "docs/SETUP-00-CHECKLIST.md row 2.4",
+      "sourceRef": "canonical:SETUP-00#2.4",
+      "description": "Checkpoint statuses, required events, required contents, commit semantics, and divergence handling are defined.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:docs/CHECKPOINT-PROTOCOL.md"
+      ],
+      "testEvidence": [
+        "command:cmd-0004",
+        "command:cmd-0010"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:FINAL-M0-AUDIT-MATRIX.json",
+        "checkpoint:AUDIT-EXECUTIONS.md"
+      ],
+      "justification": null,
+      "notes": "Audited by the CP-0009 fresh-session independent audit; confirmed."
+    },
+    {
+      "id": "REQ-0009",
+      "source": "docs/SETUP-00-CHECKLIST.md row 2.5",
+      "sourceRef": "canonical:SETUP-00#2.5",
+      "description": "Done is defined and excludes assertion-only PASS.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:docs/DEFINITION-OF-DONE.md"
+      ],
+      "testEvidence": [
+        "command:cmd-0004",
+        "command:cmd-0010"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:FINAL-M0-AUDIT-MATRIX.json",
+        "checkpoint:AUDIT-EXECUTIONS.md"
+      ],
+      "justification": null,
+      "notes": "Audited by the CP-0009 fresh-session independent audit; confirmed."
+    },
+    {
+      "id": "REQ-0010",
+      "source": "docs/SETUP-00-CHECKLIST.md row 2.6",
+      "sourceRef": "canonical:SETUP-00#2.6",
+      "description": "Quality outcomes, required dimensions, and the promotion rule are defined.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:docs/QUALITY-GATES.md"
+      ],
+      "testEvidence": [
+        "command:cmd-0004",
+        "command:cmd-0010"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:FINAL-M0-AUDIT-MATRIX.json",
+        "checkpoint:AUDIT-EXECUTIONS.md"
+      ],
+      "justification": null,
+      "notes": "Audited by the CP-0009 fresh-session independent audit; confirmed."
+    },
+    {
+      "id": "REQ-0011",
+      "source": "docs/SETUP-00-CHECKLIST.md row 2.7",
+      "sourceRef": "canonical:SETUP-00#2.7",
+      "description": "Structural decisions are recorded as ADRs.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:docs/adr/ADR-0001-documentation-first-class.md"
+      ],
+      "testEvidence": [
+        "command:cmd-0004",
+        "command:cmd-0010"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:FINAL-M0-AUDIT-MATRIX.json",
+        "checkpoint:AUDIT-EXECUTIONS.md"
+      ],
+      "justification": null,
+      "notes": "Audited by the CP-0009 fresh-session independent audit; confirmed."
+    },
+    {
+      "id": "REQ-0012",
+      "source": "docs/SETUP-00-CHECKLIST.md row 2.8",
+      "sourceRef": "canonical:SETUP-00#2.8",
+      "description": "Architecture, roadmap, provenance, model usage, and detected tool capabilities are documented.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:docs/ARCHITECTURE.md",
+        "file:docs/ROADMAP.md",
+        "file:docs/PROVENANCE.md",
+        "file:docs/MODEL-USAGE-POLICY.md",
+        "file:docs/TOOL-CAPABILITIES.md"
+      ],
+      "testEvidence": [
+        "command:cmd-0004",
+        "command:cmd-0010"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:FINAL-M0-AUDIT-MATRIX.json",
+        "checkpoint:AUDIT-EXECUTIONS.md"
+      ],
+      "justification": null,
+      "notes": "Audited by the CP-0009 fresh-session independent audit; confirmed."
+    },
+    {
+      "id": "REQ-0013",
+      "source": "docs/SETUP-00-CHECKLIST.md row 3.1",
+      "sourceRef": "canonical:SETUP-00#3.1",
+      "description": "The canonical, tool-neutral role contracts exist, one per role of the delivery protocol.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/agents/architect.md"
+      ],
+      "testEvidence": [
+        "command:cmd-0004",
+        "command:cmd-0010"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:FINAL-M0-AUDIT-MATRIX.json",
+        "checkpoint:AUDIT-EXECUTIONS.md"
+      ],
+      "justification": null,
+      "notes": "Audited by the CP-0009 fresh-session independent audit; confirmed."
+    },
+    {
+      "id": "REQ-0014",
+      "source": "docs/SETUP-00-CHECKLIST.md row 3.2",
+      "sourceRef": "canonical:SETUP-00#3.2",
+      "description": "Documentation, provenance, secret, tool-execution, and training-data policies exist.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/policies/audit-registry.json"
+      ],
+      "testEvidence": [
+        "command:cmd-0004",
+        "command:cmd-0010"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:FINAL-M0-AUDIT-MATRIX.json",
+        "checkpoint:AUDIT-EXECUTIONS.md"
+      ],
+      "justification": null,
+      "notes": "Audited by the CP-0009 fresh-session independent audit; confirmed."
+    },
+    {
+      "id": "REQ-0015",
+      "source": "docs/SETUP-00-CHECKLIST.md row 3.3",
+      "sourceRef": "canonical:SETUP-00#3.3",
+      "description": "Reusable templates exist for ADRs, checkpoints, gate reports, and handoffs.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/templates/adr/TEMPLATE.md"
+      ],
+      "testEvidence": [
+        "command:cmd-0004",
+        "command:cmd-0010"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:FINAL-M0-AUDIT-MATRIX.json",
+        "checkpoint:AUDIT-EXECUTIONS.md"
+      ],
+      "justification": null,
+      "notes": "Audited by the CP-0009 fresh-session independent audit; confirmed."
+    },
+    {
+      "id": "REQ-0016",
+      "source": "docs/SETUP-00-CHECKLIST.md row 4.1",
+      "sourceRef": "canonical:SETUP-00#4.1",
+      "description": "Checkpoint state, run metadata, command, test, quality, provenance, and decision schemas exist and are loadable.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/schemas/audit-registry.schema.json"
+      ],
+      "testEvidence": [
+        "command:cmd-0004",
+        "command:cmd-0010"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:FINAL-M0-AUDIT-MATRIX.json",
+        "checkpoint:AUDIT-EXECUTIONS.md"
+      ],
+      "justification": null,
+      "notes": "Audited by the CP-0009 fresh-session independent audit; confirmed."
+    },
+    {
+      "id": "REQ-0017",
+      "source": "docs/SETUP-00-CHECKLIST.md row 4.2",
+      "sourceRef": "canonical:SETUP-00#4.2",
+      "description": "An experience schema is reserved for Gate 6 and implements no runtime.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/schemas/experience.schema.json"
+      ],
+      "testEvidence": [
+        "command:cmd-0004",
+        "command:cmd-0010"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:FINAL-M0-AUDIT-MATRIX.json",
+        "checkpoint:AUDIT-EXECUTIONS.md"
+      ],
+      "justification": null,
+      "notes": "Audited by the CP-0009 fresh-session independent audit; confirmed."
+    },
+    {
+      "id": "REQ-0018",
+      "source": "docs/SETUP-00-CHECKLIST.md row 4.3",
+      "sourceRef": "canonical:SETUP-00#4.3",
+      "description": "Schema evolution is versioned and never invalidates a sealed checkpoint.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/schemas/audit-registry.schema.json"
+      ],
+      "testEvidence": [
+        "command:cmd-0004",
+        "command:cmd-0010"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:FINAL-M0-AUDIT-MATRIX.json",
+        "checkpoint:AUDIT-EXECUTIONS.md"
+      ],
+      "justification": null,
+      "notes": "Audited by the CP-0009 fresh-session independent audit; confirmed."
+    },
+    {
+      "id": "REQ-0019",
+      "source": "docs/SETUP-00-CHECKLIST.md row 5.1",
+      "sourceRef": "canonical:SETUP-00#5.1",
+      "description": "A checkpoint can be created with truthful non-PASS defaults.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/new_checkpoint.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0004",
+        "command:cmd-0010"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:FINAL-M0-AUDIT-MATRIX.json",
+        "checkpoint:AUDIT-EXECUTIONS.md",
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "justification": null,
+      "notes": "Audited by the CP-0009 fresh-session independent audit; confirmed."
+    },
+    {
+      "id": "REQ-0020",
+      "source": "docs/SETUP-00-CHECKLIST.md row 5.2",
+      "sourceRef": "canonical:SETUP-00#5.2",
+      "description": "A checkpoint can be finalized, and every finalization attempt is recorded with its exit code.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/finalize_checkpoint.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0004",
+        "command:cmd-0010"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:FINAL-M0-AUDIT-MATRIX.json",
+        "checkpoint:AUDIT-EXECUTIONS.md",
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "justification": null,
+      "notes": "Audited by the CP-0009 fresh-session independent audit; confirmed."
+    },
+    {
+      "id": "REQ-0021",
+      "source": "docs/SETUP-00-CHECKLIST.md row 5.3",
+      "sourceRef": "canonical:SETUP-00#5.3",
+      "description": "A checkpoint is validated against schemas, Git state, inventory, quality evidence, and secrets.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/validate_checkpoint.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0004",
+        "command:cmd-0010"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:FINAL-M0-AUDIT-MATRIX.json",
+        "checkpoint:AUDIT-EXECUTIONS.md",
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "justification": null,
+      "notes": "Audited by the CP-0009 fresh-session independent audit; confirmed."
+    },
+    {
+      "id": "REQ-0022",
+      "source": "docs/SETUP-00-CHECKLIST.md row 5.4",
+      "sourceRef": "canonical:SETUP-00#5.4",
+      "description": "Secret redaction is available and documented to its real scope.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/redact_secrets.py",
+        "file:.iacode/policies/secret-policy.md"
+      ],
+      "testEvidence": [
+        "command:cmd-0004",
+        "command:cmd-0010"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:FINAL-M0-AUDIT-MATRIX.json",
+        "checkpoint:AUDIT-EXECUTIONS.md",
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "justification": null,
+      "notes": "Audited by the CP-0009 fresh-session independent audit; confirmed."
+    },
+    {
+      "id": "REQ-0023",
+      "source": "docs/SETUP-00-CHECKLIST.md row 5.5",
+      "sourceRef": "canonical:SETUP-00#5.5",
+      "description": "The tooling is standard-library only and portable across Windows and Unix-like checkouts.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/README.md"
+      ],
+      "testEvidence": [
+        "command:cmd-0004",
+        "command:cmd-0010"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:FINAL-M0-AUDIT-MATRIX.json",
+        "checkpoint:AUDIT-EXECUTIONS.md",
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "justification": null,
+      "notes": "Audited by the CP-0009 fresh-session independent audit; confirmed."
+    },
+    {
+      "id": "REQ-0024",
+      "source": "docs/SETUP-00-CHECKLIST.md row 6.1",
+      "sourceRef": "canonical:SETUP-00#6.1",
+      "description": "Every checkpoint carries status, handoff, run metadata, state, plan, decisions, commands, file inventory, tests, quality, provenance, diff summary, risks, and next action.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:AUDIT-EXECUTIONS.md"
+      ],
+      "testEvidence": [
+        "command:cmd-0004",
+        "command:cmd-0010"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:FINAL-M0-AUDIT-MATRIX.json",
+        "checkpoint:AUDIT-EXECUTIONS.md",
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "justification": null,
+      "notes": "Audited by the CP-0009 fresh-session independent audit; confirmed."
+    },
+    {
+      "id": "REQ-0025",
+      "source": "docs/SETUP-00-CHECKLIST.md row 6.2",
+      "sourceRef": "canonical:SETUP-00#6.2",
+      "description": "`LATEST.md` points textually to the last checkpoint accepted by validation.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:docs/checkpoints/LATEST.md"
+      ],
+      "testEvidence": [
+        "command:cmd-0004",
+        "command:cmd-0010"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:FINAL-M0-AUDIT-MATRIX.json",
+        "checkpoint:AUDIT-EXECUTIONS.md",
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "justification": null,
+      "notes": "Audited by the CP-0009 fresh-session independent audit; confirmed."
+    },
+    {
+      "id": "REQ-0026",
+      "source": "docs/SETUP-00-CHECKLIST.md row 6.3",
+      "sourceRef": "canonical:SETUP-00#6.3",
+      "description": "The file inventory matches the real change set, with bound content hashes.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:AUDIT-EXECUTIONS.md"
+      ],
+      "testEvidence": [
+        "command:cmd-0004",
+        "command:cmd-0010"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:FINAL-M0-AUDIT-MATRIX.json",
+        "checkpoint:AUDIT-EXECUTIONS.md",
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "justification": null,
+      "notes": "Audited by the CP-0009 fresh-session independent audit; confirmed."
+    },
+    {
+      "id": "REQ-0027",
+      "source": "docs/SETUP-00-CHECKLIST.md row 6.4",
+      "sourceRef": "canonical:SETUP-00#6.4",
+      "description": "Provenance is complete and `trainingAllowed` defaults to `false`.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:AUDIT-EXECUTIONS.md"
+      ],
+      "testEvidence": [
+        "command:cmd-0004",
+        "command:cmd-0010"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:FINAL-M0-AUDIT-MATRIX.json",
+        "checkpoint:AUDIT-EXECUTIONS.md",
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "justification": null,
+      "notes": "Audited by the CP-0009 fresh-session independent audit; confirmed."
+    },
+    {
+      "id": "REQ-0028",
+      "source": "docs/SETUP-00-CHECKLIST.md row 6.5",
+      "sourceRef": "canonical:SETUP-00#6.5",
+      "description": "A quality `PASS` carries resolvable evidence.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:AUDIT-EXECUTIONS.md"
+      ],
+      "testEvidence": [
+        "command:cmd-0004",
+        "command:cmd-0010"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:FINAL-M0-AUDIT-MATRIX.json",
+        "checkpoint:AUDIT-EXECUTIONS.md",
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "justification": null,
+      "notes": "Audited by the CP-0009 fresh-session independent audit; confirmed."
+    },
+    {
+      "id": "REQ-0029",
+      "source": "docs/SETUP-00-CHECKLIST.md row 6.6",
+      "sourceRef": "canonical:SETUP-00#6.6",
+      "description": "Handoff-ready and terminal checkpoints are anchored to an immutable namespaced tag.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:AUDIT-EXECUTIONS.md"
+      ],
+      "testEvidence": [
+        "command:cmd-0004",
+        "command:cmd-0010"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:FINAL-M0-AUDIT-MATRIX.json",
+        "checkpoint:AUDIT-EXECUTIONS.md",
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "justification": null,
+      "notes": "Audited by the CP-0009 fresh-session independent audit; confirmed."
+    },
+    {
+      "id": "REQ-0030",
+      "source": "docs/SETUP-00-CHECKLIST.md row 7.1",
+      "sourceRef": "canonical:SETUP-00#7.1",
+      "description": "A cold-start continuation prompt exists and depends only on checked-in files.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:prompts/RESUME-WORK.md"
+      ],
+      "testEvidence": [
+        "command:cmd-0004",
+        "command:cmd-0010"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:FINAL-M0-AUDIT-MATRIX.json",
+        "checkpoint:AUDIT-EXECUTIONS.md",
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "justification": null,
+      "notes": "Audited by the CP-0009 fresh-session independent audit; confirmed."
+    },
+    {
+      "id": "REQ-0031",
+      "source": "docs/SETUP-00-CHECKLIST.md row 7.2",
+      "sourceRef": "canonical:SETUP-00#7.2",
+      "description": "Cold-start validation is executed and recorded truthfully, including a blocked attempt.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:AUDIT-EXECUTIONS.md"
+      ],
+      "testEvidence": [
+        "command:cmd-0004",
+        "command:cmd-0010"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:FINAL-M0-AUDIT-MATRIX.json",
+        "checkpoint:AUDIT-EXECUTIONS.md",
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "justification": null,
+      "notes": "Audited by the CP-0009 fresh-session independent audit; confirmed."
+    },
+    {
+      "id": "REQ-0032",
+      "source": "docs/SETUP-00-CHECKLIST.md row 7.3",
+      "sourceRef": "canonical:SETUP-00#7.3",
+      "description": "Cross-tool validation state is structured and explicit.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:AUDIT-EXECUTIONS.md"
+      ],
+      "testEvidence": [
+        "command:cmd-0004",
+        "command:cmd-0010"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:FINAL-M0-AUDIT-MATRIX.json",
+        "checkpoint:AUDIT-EXECUTIONS.md",
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "justification": null,
+      "notes": "Audited by the CP-0009 fresh-session independent audit; confirmed."
+    },
+    {
+      "id": "REQ-0033",
+      "source": "docs/SETUP-00-CHECKLIST.md row 7.4",
+      "sourceRef": "canonical:SETUP-00#7.4",
+      "description": "A sealed checkpoint can be validated from a detached checkout of its own tag.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:AUDIT-EXECUTIONS.md"
+      ],
+      "testEvidence": [
+        "command:cmd-0004",
+        "command:cmd-0010"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:FINAL-M0-AUDIT-MATRIX.json",
+        "checkpoint:AUDIT-EXECUTIONS.md",
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "justification": null,
+      "notes": "Audited by the CP-0009 fresh-session independent audit; confirmed."
+    },
+    {
+      "id": "REQ-0034",
+      "source": "docs/SETUP-00-CHECKLIST.md row 7.5",
+      "sourceRef": "canonical:SETUP-00#7.5",
+      "description": "The handoff is executable by another tool without the producing session.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:AUDIT-EXECUTIONS.md"
+      ],
+      "testEvidence": [
+        "command:cmd-0004",
+        "command:cmd-0010"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:FINAL-M0-AUDIT-MATRIX.json",
+        "checkpoint:AUDIT-EXECUTIONS.md",
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "justification": null,
+      "notes": "Audited by the CP-0009 fresh-session independent audit; confirmed."
+    },
+    {
+      "id": "REQ-0035",
+      "source": "docs/SETUP-00-CHECKLIST.md row 7b.1",
+      "sourceRef": "canonical:SETUP-00#7b.1",
+      "description": "Every requirement of a delivery exists in a versioned matrix before implementation.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/schemas/requirements-matrix.schema.json"
+      ],
+      "testEvidence": [
+        "command:cmd-0004",
+        "command:cmd-0010"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:FINAL-M0-AUDIT-MATRIX.json",
+        "checkpoint:AUDIT-EXECUTIONS.md",
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "justification": null,
+      "notes": "Audited by the CP-0009 fresh-session independent audit; confirmed."
+    },
+    {
+      "id": "REQ-0036",
+      "source": "docs/SETUP-00-CHECKLIST.md row 7b.2",
+      "sourceRef": "canonical:SETUP-00#7b.2",
+      "description": "A Test Rework / Green Keeper role forbids shipping anything red and records every cycle.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/agents/test-rework-greenkeeper.md",
+        "file:scripts/development-ledger/green_keeper.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0004",
+        "command:cmd-0010"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:FINAL-M0-AUDIT-MATRIX.json",
+        "checkpoint:AUDIT-EXECUTIONS.md",
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "justification": null,
+      "notes": "Audited by the CP-0009 fresh-session independent audit; confirmed."
+    },
+    {
+      "id": "REQ-0037",
+      "source": "docs/SETUP-00-CHECKLIST.md row 7b.3",
+      "sourceRef": "canonical:SETUP-00#7b.3",
+      "description": "A Delivery Completeness Validator audits the matrix before handoff and may not implement.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/agents/delivery-completeness-validator.md",
+        "file:scripts/development-ledger/check_completeness.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0004",
+        "command:cmd-0010"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:FINAL-M0-AUDIT-MATRIX.json",
+        "checkpoint:AUDIT-EXECUTIONS.md",
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "justification": null,
+      "notes": "Audited by the CP-0009 fresh-session independent audit; confirmed."
+    },
+    {
+      "id": "REQ-0038",
+      "source": "docs/SETUP-00-CHECKLIST.md row 7b.4",
+      "sourceRef": "canonical:SETUP-00#7b.4",
+      "description": "`GREEN_KEEPER_GATE` and `DELIVERY_COMPLETENESS_GATE` are preconditions of `READY_FOR_REVIEW`.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/validate_checkpoint.py",
+        "file:docs/QUALITY-GATES.md"
+      ],
+      "testEvidence": [
+        "command:cmd-0004",
+        "command:cmd-0010"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:FINAL-M0-AUDIT-MATRIX.json",
+        "checkpoint:AUDIT-EXECUTIONS.md",
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "justification": null,
+      "notes": "Audited by the CP-0009 fresh-session independent audit; confirmed."
+    },
+    {
+      "id": "REQ-0039",
+      "source": "docs/SETUP-00-CHECKLIST.md row 7b.5",
+      "sourceRef": "canonical:SETUP-00#7b.5",
+      "description": "Readiness and blockage can never be claimed together.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:AUDIT-EXECUTIONS.md"
+      ],
+      "testEvidence": [
+        "command:cmd-0004",
+        "command:cmd-0010"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:FINAL-M0-AUDIT-MATRIX.json",
+        "checkpoint:AUDIT-EXECUTIONS.md",
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "justification": null,
+      "notes": "Audited by the CP-0009 fresh-session independent audit; confirmed."
+    },
+    {
+      "id": "REQ-0040",
+      "source": "docs/SETUP-00-CHECKLIST.md row 7b.6",
+      "sourceRef": "canonical:SETUP-00#7b.6",
+      "description": "Every operation attempt is recorded, including a refusal decided before execution.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/finalize_checkpoint.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0004",
+        "command:cmd-0010"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:FINAL-M0-AUDIT-MATRIX.json",
+        "checkpoint:AUDIT-EXECUTIONS.md",
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "justification": null,
+      "notes": "Audited by the CP-0009 fresh-session independent audit; confirmed."
+    },
+    {
+      "id": "REQ-0041",
+      "source": "docs/SETUP-00-CHECKLIST.md row 7b.7",
+      "sourceRef": "canonical:SETUP-00#7b.7",
+      "description": "Every recorded command is reproducible from its declared working directory.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/record_command.py",
+        "file:.iacode/schemas/command.schema.json"
+      ],
+      "testEvidence": [
+        "command:cmd-0004",
+        "command:cmd-0010"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:FINAL-M0-AUDIT-MATRIX.json",
+        "checkpoint:AUDIT-EXECUTIONS.md",
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "justification": null,
+      "notes": "Audited by the CP-0009 fresh-session independent audit; confirmed."
+    },
+    {
+      "id": "REQ-0042",
+      "source": "docs/SETUP-00-CHECKLIST.md row 7b.8",
+      "sourceRef": "canonical:SETUP-00#7b.8",
+      "description": "The mandatory delivery order is stated in full in every governing document and both adapters.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:docs/DEVELOPMENT-CONTRACT.md",
+        "file:docs/QUALITY-GATES.md",
+        "file:docs/CHECKPOINT-PROTOCOL.md",
+        "file:docs/HANDOFF-PROTOCOL.md",
+        "file:docs/DEFINITION-OF-DONE.md",
+        "file:START-HERE.md",
+        "file:AGENTS.md",
+        "file:CLAUDE.md"
+      ],
+      "testEvidence": [
+        "command:cmd-0004",
+        "command:cmd-0010"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:FINAL-M0-AUDIT-MATRIX.json",
+        "checkpoint:AUDIT-EXECUTIONS.md",
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "justification": null,
+      "notes": "Audited by the CP-0009 fresh-session independent audit; confirmed."
+    },
+    {
+      "id": "REQ-0043",
+      "source": "docs/SETUP-00-CHECKLIST.md row 7c.1",
+      "sourceRef": "canonical:SETUP-00#7c.1",
+      "description": "The project keeps an organizational engineering memory of confirmed failures.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/memory/anti-patterns/README.md",
+        "file:.iacode/schemas/lesson.schema.json"
+      ],
+      "testEvidence": [
+        "command:cmd-0004",
+        "command:cmd-0010"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:FINAL-M0-AUDIT-MATRIX.json",
+        "checkpoint:AUDIT-EXECUTIONS.md",
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "justification": null,
+      "notes": "Audited by the CP-0009 fresh-session independent audit; confirmed."
+    },
+    {
+      "id": "REQ-0044",
+      "source": "docs/SETUP-00-CHECKLIST.md row 7c.2",
+      "sourceRef": "canonical:SETUP-00#7c.2",
+      "description": "A lesson is `GUARDED` only when an automated control prevents recurrence.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/validate_lessons.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0004",
+        "command:cmd-0010"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:FINAL-M0-AUDIT-MATRIX.json",
+        "checkpoint:AUDIT-EXECUTIONS.md",
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "justification": null,
+      "notes": "Audited by the CP-0009 fresh-session independent audit; confirmed."
+    },
+    {
+      "id": "REQ-0045",
+      "source": "docs/SETUP-00-CHECKLIST.md row 7c.3",
+      "sourceRef": "canonical:SETUP-00#7c.3",
+      "description": "A repeat increments recurrence, and a repeat against a guardrail is a `GUARDRAIL_FAILURE`.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/lessons.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0004",
+        "command:cmd-0010"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:FINAL-M0-AUDIT-MATRIX.json",
+        "checkpoint:AUDIT-EXECUTIONS.md",
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "justification": null,
+      "notes": "Audited by the CP-0009 fresh-session independent audit; confirmed."
+    },
+    {
+      "id": "REQ-0046",
+      "source": "docs/SETUP-00-CHECKLIST.md row 7c.4",
+      "sourceRef": "canonical:SETUP-00#7c.4",
+      "description": "A mandatory preflight selects the lessons that constrain each Gate.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/lesson_preflight.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0004",
+        "command:cmd-0010"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:FINAL-M0-AUDIT-MATRIX.json",
+        "checkpoint:AUDIT-EXECUTIONS.md",
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "justification": null,
+      "notes": "Audited by the CP-0009 fresh-session independent audit; confirmed."
+    },
+    {
+      "id": "REQ-0047",
+      "source": "docs/SETUP-00-CHECKLIST.md row 7c.5",
+      "sourceRef": "canonical:SETUP-00#7c.5",
+      "description": "Applicable lessons become requirements whose absence blocks completeness.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:AUDIT-EXECUTIONS.md"
+      ],
+      "testEvidence": [
+        "command:cmd-0004",
+        "command:cmd-0010"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:FINAL-M0-AUDIT-MATRIX.json",
+        "checkpoint:AUDIT-EXECUTIONS.md",
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "justification": null,
+      "notes": "Audited by the CP-0009 fresh-session independent audit; confirmed."
+    },
+    {
+      "id": "REQ-0048",
+      "source": "docs/SETUP-00-CHECKLIST.md row 7c.6",
+      "sourceRef": "canonical:SETUP-00#7c.6",
+      "description": "Lesson candidates can be extracted from recorded delivery evidence, never above `OBSERVED`.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/extract_lessons.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0004",
+        "command:cmd-0010"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:FINAL-M0-AUDIT-MATRIX.json",
+        "checkpoint:AUDIT-EXECUTIONS.md",
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "justification": null,
+      "notes": "Audited by the CP-0009 fresh-session independent audit; confirmed."
+    },
+    {
+      "id": "REQ-0049",
+      "source": "docs/SETUP-00-CHECKLIST.md row 7c.7",
+      "sourceRef": "canonical:SETUP-00#7c.7",
+      "description": "External validation is grouped into milestones `M0` to `M6`.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:docs/MILESTONE-VALIDATION.md"
+      ],
+      "testEvidence": [
+        "command:cmd-0004",
+        "command:cmd-0010"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:FINAL-M0-AUDIT-MATRIX.json",
+        "checkpoint:AUDIT-EXECUTIONS.md",
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "justification": null,
+      "notes": "Audited by the CP-0009 fresh-session independent audit; confirmed."
+    },
+    {
+      "id": "REQ-0050",
+      "source": "docs/SETUP-00-CHECKLIST.md row 7c.8",
+      "sourceRef": "canonical:SETUP-00#7c.8",
+      "description": "An internal verdict is never described as independent external validation.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:AUDIT-EXECUTIONS.md"
+      ],
+      "testEvidence": [
+        "command:cmd-0004",
+        "command:cmd-0010"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:FINAL-M0-AUDIT-MATRIX.json",
+        "checkpoint:AUDIT-EXECUTIONS.md",
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "justification": null,
+      "notes": "Audited by the CP-0009 fresh-session independent audit; confirmed."
+    },
+    {
+      "id": "REQ-0051",
+      "source": "docs/SETUP-00-CHECKLIST.md row 7c.9",
+      "sourceRef": "canonical:SETUP-00#7c.9",
+      "description": "An extraordinary audit requires a recorded trigger.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:AUDIT-EXECUTIONS.md"
+      ],
+      "testEvidence": [
+        "command:cmd-0004",
+        "command:cmd-0010"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:FINAL-M0-AUDIT-MATRIX.json",
+        "checkpoint:AUDIT-EXECUTIONS.md",
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "justification": null,
+      "notes": "Audited by the CP-0009 fresh-session independent audit; confirmed."
+    },
+    {
+      "id": "REQ-0052",
+      "source": "docs/SETUP-00-CHECKLIST.md row 7c.10",
+      "sourceRef": "canonical:SETUP-00#7c.10",
+      "description": "Every completed Gate produces a retrospective.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/templates/retrospective/TEMPLATE.md",
+        "file:.iacode/memory/retrospectives/README.md"
+      ],
+      "testEvidence": [
+        "command:cmd-0004",
+        "command:cmd-0010"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:FINAL-M0-AUDIT-MATRIX.json",
+        "checkpoint:AUDIT-EXECUTIONS.md",
+        "checkpoint:AUDIT-EXECUTIONS.json"
+      ],
+      "justification": null,
+      "notes": "Audited by the CP-0009 fresh-session independent audit; confirmed."
+    },
+    {
+      "id": "REQ-0053",
+      "source": "docs/SETUP-00-CHECKLIST.md row 7d.1",
+      "sourceRef": "canonical:SETUP-00#7d.1",
+      "description": "One promotion invariant governs every positive terminal status, not only `READY_FOR_REVIEW`.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/validate_checkpoint.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0004",
+        "command:cmd-0010"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:FINAL-M0-AUDIT-MATRIX.json",
+        "checkpoint:AUDIT-EXECUTIONS.md",
+        "checkpoint:AUDIT-EXECUTIONS.json",
+        "checkpoint:RED-TEAM-REPORT.md"
+      ],
+      "justification": null,
+      "notes": "Audited by the CP-0009 fresh-session independent audit; confirmed."
+    },
+    {
+      "id": "REQ-0054",
+      "source": "docs/SETUP-00-CHECKLIST.md row 7d.2",
+      "sourceRef": "canonical:SETUP-00#7d.2",
+      "description": "The mandatory quality gate set is a closed machine-readable registry that an invocation cannot narrow.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/policies/quality-gates.json",
+        "file:scripts/development-ledger/green_keeper.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0004",
+        "command:cmd-0010"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:FINAL-M0-AUDIT-MATRIX.json",
+        "checkpoint:AUDIT-EXECUTIONS.md",
+        "checkpoint:AUDIT-EXECUTIONS.json",
+        "checkpoint:RED-TEAM-REPORT.md"
+      ],
+      "justification": null,
+      "notes": "Audited by the CP-0009 fresh-session independent audit; confirmed."
+    },
+    {
+      "id": "REQ-0055",
+      "source": "docs/SETUP-00-CHECKLIST.md row 7d.3",
+      "sourceRef": "canonical:SETUP-00#7d.3",
+      "description": "The expected requirement set is derived from canonical sources and compared exactly with the declared set.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/policies/canonical-requirements.json",
+        "file:scripts/development-ledger/policies.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0004",
+        "command:cmd-0010"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:FINAL-M0-AUDIT-MATRIX.json",
+        "checkpoint:AUDIT-EXECUTIONS.md",
+        "checkpoint:AUDIT-EXECUTIONS.json",
+        "checkpoint:RED-TEAM-REPORT.md"
+      ],
+      "justification": null,
+      "notes": "Audited by the CP-0009 fresh-session independent audit; confirmed."
+    },
+    {
+      "id": "REQ-0056",
+      "source": "docs/SETUP-00-CHECKLIST.md row 7d.4",
+      "sourceRef": "canonical:SETUP-00#7d.4",
+      "description": "An external milestone PASS is derived from an audit attestation authored by another sealed checkpoint.",
+      "mandatory": true,
+      "status": "PARTIAL",
+      "implementationEvidence": [
+        "file:.iacode/attestations/README.md",
+        "file:scripts/development-ledger/attestation.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0004",
+        "command:cmd-0010"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:FINAL-M0-AUDIT-MATRIX.json",
+        "checkpoint:AUDIT-EXECUTIONS.md",
+        "checkpoint:AUDIT-EXECUTIONS.json",
+        "checkpoint:RED-TEAM-REPORT.md"
+      ],
+      "justification": "The rejection half of the control is complete and was reproduced fifteen ways, but the acceptance half is unreachable: a legitimate attestation must live in the tree of the commit it names as subjectCommit, and once the audit checkpoint commits it the subject can no longer be validated at all. No repository state satisfies the promotion, and no test covers acceptance. See finding CP9-F-001.",
+      "notes": "Audited by the CP-0009 fresh-session independent audit; not confirmed."
+    },
+    {
+      "id": "REQ-0057",
+      "source": "docs/SETUP-00-CHECKLIST.md row 7d.5",
+      "sourceRef": "canonical:SETUP-00#7d.5",
+      "description": "A derived artifact carries a fingerprint of its inputs, and staleness is decided by recomputation.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/lesson_preflight.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0004",
+        "command:cmd-0010"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:FINAL-M0-AUDIT-MATRIX.json",
+        "checkpoint:AUDIT-EXECUTIONS.md",
+        "checkpoint:AUDIT-EXECUTIONS.json",
+        "checkpoint:RED-TEAM-REPORT.md"
+      ],
+      "justification": null,
+      "notes": "Audited by the CP-0009 fresh-session independent audit; confirmed."
+    },
+    {
+      "id": "REQ-0058",
+      "source": "docs/SETUP-00-CHECKLIST.md row 7d.6",
+      "sourceRef": "canonical:SETUP-00#7d.6",
+      "description": "Every lesson control, evidence path and provenance locator is resolved against the repository.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/lessons.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0004",
+        "command:cmd-0010"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:FINAL-M0-AUDIT-MATRIX.json",
+        "checkpoint:AUDIT-EXECUTIONS.md",
+        "checkpoint:AUDIT-EXECUTIONS.json",
+        "checkpoint:RED-TEAM-REPORT.md"
+      ],
+      "justification": null,
+      "notes": "Audited by the CP-0009 fresh-session independent audit; confirmed."
+    },
+    {
+      "id": "REQ-0059",
+      "source": "docs/SETUP-00-CHECKLIST.md row 7d.7",
+      "sourceRef": "canonical:SETUP-00#7d.7",
+      "description": "Every `GUARDED` lesson names a registered guardrail, and guardrail effectiveness is measured.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/memory/guardrails/registry.json"
+      ],
+      "testEvidence": [
+        "command:cmd-0004",
+        "command:cmd-0010"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:FINAL-M0-AUDIT-MATRIX.json",
+        "checkpoint:AUDIT-EXECUTIONS.md",
+        "checkpoint:AUDIT-EXECUTIONS.json",
+        "checkpoint:RED-TEAM-REPORT.md"
+      ],
+      "justification": null,
+      "notes": "Audited by the CP-0009 fresh-session independent audit; confirmed."
+    },
+    {
+      "id": "REQ-0060",
+      "source": "docs/SETUP-00-CHECKLIST.md row 7d.8",
+      "sourceRef": "canonical:SETUP-00#7d.8",
+      "description": "Sealed checkpoints are anchored by a hash-linked chain over tag, commit and tree.",
+      "mandatory": true,
+      "status": "PARTIAL",
+      "implementationEvidence": [
+        "file:.iacode/anchors/checkpoint-chain.json",
+        "file:scripts/development-ledger/anchors.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0004",
+        "command:cmd-0010"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:FINAL-M0-AUDIT-MATRIX.json",
+        "checkpoint:AUDIT-EXECUTIONS.md",
+        "checkpoint:AUDIT-EXECUTIONS.json",
+        "checkpoint:RED-TEAM-REPORT.md"
+      ],
+      "justification": "The anchor chain itself is complete and defended every mutation this audit ran, but its verifying test binds the exclusion to the literal name SETUP-00-CP-0008, so the mandatory tests gate turns red for the next delivery the moment this checkpoint is sealed. A guardrail that must be edited for every successor is not yet a durable guardrail. See finding CP9-F-002.",
+      "notes": "Audited by the CP-0009 fresh-session independent audit; not confirmed."
+    },
+    {
+      "id": "REQ-0061",
+      "source": "docs/SETUP-00-CHECKLIST.md row 7d.9",
+      "sourceRef": "canonical:SETUP-00#7d.9",
+      "description": "Every count used as evidence is derived once and verified wherever a report states it.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/derive_counts.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0004",
+        "command:cmd-0010"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:FINAL-M0-AUDIT-MATRIX.json",
+        "checkpoint:AUDIT-EXECUTIONS.md",
+        "checkpoint:AUDIT-EXECUTIONS.json",
+        "checkpoint:RED-TEAM-REPORT.md"
+      ],
+      "justification": null,
+      "notes": "Audited by the CP-0009 fresh-session independent audit; confirmed."
+    },
+    {
+      "id": "REQ-0062",
+      "source": "docs/SETUP-00-CHECKLIST.md row 7d.10",
+      "sourceRef": "canonical:SETUP-00#7d.10",
+      "description": "Sealing is monotonic and post-commit, and every recorded command binds its declared inputs by content.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/seal_checkpoint.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0004",
+        "command:cmd-0010"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:FINAL-M0-AUDIT-MATRIX.json",
+        "checkpoint:AUDIT-EXECUTIONS.md",
+        "checkpoint:AUDIT-EXECUTIONS.json",
+        "checkpoint:RED-TEAM-REPORT.md"
+      ],
+      "justification": null,
+      "notes": "Audited by the CP-0009 fresh-session independent audit; confirmed."
+    },
+    {
+      "id": "REQ-0063",
+      "source": "docs/SETUP-00-CHECKLIST.md row 7d.11",
+      "sourceRef": "canonical:SETUP-00#7d.11",
+      "description": "A milestone delivery carries an internal Red Team and an internal mirror audit, and neither is recorded as external validation.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/m0_red_team.py",
+        "file:.iacode/agents/m0-closure-auditor.md"
+      ],
+      "testEvidence": [
+        "command:cmd-0004",
+        "command:cmd-0010"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:FINAL-M0-AUDIT-MATRIX.json",
+        "checkpoint:AUDIT-EXECUTIONS.md",
+        "checkpoint:AUDIT-EXECUTIONS.json",
+        "checkpoint:RED-TEAM-REPORT.md"
+      ],
+      "justification": null,
+      "notes": "Audited by the CP-0009 fresh-session independent audit; confirmed."
+    },
+    {
+      "id": "REQ-0064",
+      "source": "docs/SETUP-00-CHECKLIST.md row 7d.12",
+      "sourceRef": "canonical:SETUP-00#7d.12",
+      "description": "Every finding of an independent audit is closed before the corrective delivery is offered.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/policies/audit-registry.json"
+      ],
+      "testEvidence": [
+        "command:cmd-0004",
+        "command:cmd-0010"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:FINAL-M0-AUDIT-MATRIX.json",
+        "checkpoint:AUDIT-EXECUTIONS.md",
+        "checkpoint:AUDIT-EXECUTIONS.json",
+        "checkpoint:RED-TEAM-REPORT.md"
+      ],
+      "justification": null,
+      "notes": "Audited by the CP-0009 fresh-session independent audit; confirmed."
+    },
+    {
+      "id": "REQ-0065",
+      "source": "docs/SETUP-00-CHECKLIST.md row 8.1",
+      "sourceRef": "canonical:SETUP-00#8.1",
+      "description": "An independent review is recorded.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:AUDIT-EXECUTIONS.md"
+      ],
+      "testEvidence": [
+        "command:cmd-0004",
+        "command:cmd-0010"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:FINAL-M0-AUDIT-MATRIX.json",
+        "checkpoint:AUDIT-EXECUTIONS.md",
+        "checkpoint:REVIEW-REPORT.md",
+        "checkpoint:RED-TEAM-REPORT.md"
+      ],
+      "justification": null,
+      "notes": "Audited by the CP-0009 fresh-session independent audit; confirmed."
+    },
+    {
+      "id": "REQ-0066",
+      "source": "docs/SETUP-00-CHECKLIST.md row 8.2",
+      "sourceRef": "canonical:SETUP-00#8.2",
+      "description": "An adversarial Red Team is recorded.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:AUDIT-EXECUTIONS.md"
+      ],
+      "testEvidence": [
+        "command:cmd-0004",
+        "command:cmd-0010"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:FINAL-M0-AUDIT-MATRIX.json",
+        "checkpoint:AUDIT-EXECUTIONS.md",
+        "checkpoint:REVIEW-REPORT.md",
+        "checkpoint:RED-TEAM-REPORT.md"
+      ],
+      "justification": null,
+      "notes": "Audited by the CP-0009 fresh-session independent audit; confirmed."
+    },
+    {
+      "id": "REQ-0067",
+      "source": "docs/SETUP-00-CHECKLIST.md row 8.3",
+      "sourceRef": "canonical:SETUP-00#8.3",
+      "description": "`GATE_PASS` is granted only by a run independent of the implementer.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:docs/QUALITY-GATES.md"
+      ],
+      "testEvidence": [
+        "command:cmd-0004",
+        "command:cmd-0010"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:FINAL-M0-AUDIT-MATRIX.json",
+        "checkpoint:AUDIT-EXECUTIONS.md",
+        "checkpoint:REVIEW-REPORT.md",
+        "checkpoint:RED-TEAM-REPORT.md"
+      ],
+      "justification": null,
+      "notes": "Audited by the CP-0009 fresh-session independent audit; confirmed."
+    },
+    {
+      "id": "REQ-0068",
+      "source": "docs/SETUP-00-CHECKLIST.md row 9.1",
+      "sourceRef": "canonical:SETUP-00#9.1",
+      "description": "No Gate 0 or later runtime is implemented during SETUP-00.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:AUDIT-EXECUTIONS.md"
+      ],
+      "testEvidence": [
+        "command:cmd-0004",
+        "command:cmd-0010"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:FINAL-M0-AUDIT-MATRIX.json",
+        "checkpoint:AUDIT-EXECUTIONS.md"
+      ],
+      "justification": null,
+      "notes": "Audited by the CP-0009 fresh-session independent audit; confirmed."
+    },
+    {
+      "id": "REQ-0069",
+      "source": "docs/SETUP-00-CHECKLIST.md row 9.2",
+      "sourceRef": "canonical:SETUP-00#9.2",
+      "description": "Documentation is maintained continuously rather than reconstructed at the end.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:AUDIT-EXECUTIONS.md"
+      ],
+      "testEvidence": [
+        "command:cmd-0004",
+        "command:cmd-0010"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:FINAL-M0-AUDIT-MATRIX.json",
+        "checkpoint:AUDIT-EXECUTIONS.md"
+      ],
+      "justification": null,
+      "notes": "Audited by the CP-0009 fresh-session independent audit; confirmed."
+    },
+    {
+      "id": "REQ-0070",
+      "source": "docs/SETUP-00-CHECKLIST.md row 9.3",
+      "sourceRef": "canonical:SETUP-00#9.3",
+      "description": "No secret, credential, or private chain-of-thought is stored.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:AUDIT-EXECUTIONS.md"
+      ],
+      "testEvidence": [
+        "command:cmd-0004",
+        "command:cmd-0010"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:FINAL-M0-AUDIT-MATRIX.json",
+        "checkpoint:AUDIT-EXECUTIONS.md"
+      ],
+      "justification": null,
+      "notes": "Audited by the CP-0009 fresh-session independent audit; confirmed."
+    },
+    {
+      "id": "REQ-0071",
+      "source": "docs/SETUP-00-CHECKLIST.md row 9.4",
+      "sourceRef": "canonical:SETUP-00#9.4",
+      "description": "Gate advancement requires explicit authorization and a passing previous Gate.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:docs/MASTER-PLAN.md"
+      ],
+      "testEvidence": [
+        "command:cmd-0004",
+        "command:cmd-0010"
+      ],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:FINAL-M0-AUDIT-MATRIX.json",
+        "checkpoint:AUDIT-EXECUTIONS.md"
+      ],
+      "justification": null,
+      "notes": "Audited by the CP-0009 fresh-session independent audit; confirmed."
+    }
+  ]
+}

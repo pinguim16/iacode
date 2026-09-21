@@ -1,0 +1,16 @@
+{
+  "role": "milestone independent auditor",
+  "mechanism": "FRESH_SESSION_INDEPENDENT_AUDIT",
+  "freshSession": true,
+  "sameToolAsImplementer": true,
+  "sameProviderAsImplementer": true,
+  "sameModelAsImplementer": true,
+  "crossToolValidation": "NOT_AVAILABLE",
+  "freshSessionIndependentAudit": "FAILED",
+  "note": "The implementing run of SETUP-00-CP-0008 used the same tool, provider and model in a different session. This audit is session-independent and is not cross-tool validation; it is never recorded as one.",
+  "schemaVersion": "1.0.0",
+  "checkpoint": "SETUP-00-CP-0009",
+  "subjectCheckpoint": "SETUP-00-CP-0008",
+  "ownerAuthorisation": "The owner authorised a fresh Claude Code session to perform the final M0 audit because Codex cannot currently execute the flow. That authorisation permits FRESH_SESSION_INDEPENDENT_AUDIT as the closure mechanism. It does not permit recording cross-tool validation, and this audit does not. No governance document was changed to accommodate it.",
+  "canonicalPolicyCheck": "docs/MILESTONE-VALIDATION.md and scripts/development-ledger/attestation.py require a different sealed audit checkpoint, not a different vendor, so no PROCESS_BLOCKER arises from the same-tool limitation itself."
+}
