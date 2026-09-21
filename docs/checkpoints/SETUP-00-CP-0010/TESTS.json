@@ -1,0 +1,27 @@
+{
+  "schemaVersion": "3.2.0",
+  "unit": {
+    "executed": true,
+    "passed": 363,
+    "failed": 0,
+    "command": "python -m unittest discover -s tests",
+    "runId": "cp10-suite",
+    "evidence": "command:cmd-0037; one discovery over tests/ covering the unit and integration cases, recorded once because it is one execution"
+  },
+  "integration": {
+    "executed": true,
+    "passed": 363,
+    "failed": 0,
+    "command": "python -m unittest discover -s tests",
+    "runId": "cp10-suite",
+    "evidence": "command:cmd-0037; the same physical run as the unit categories, deduplicated by runId so one execution is counted once"
+  },
+  "e2e": {
+    "executed": false,
+    "passed": 0,
+    "failed": 0,
+    "command": null,
+    "runId": null,
+    "evidence": "No runtime exists to exercise end to end during SETUP-00."
+  }
+}

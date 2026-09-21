@@ -126,6 +126,16 @@ contracts are in [.iacode/agents/](../.iacode/agents/).
 A memory without `POLICY.json` is read under the original `1.0.0` rules, which is how sealed
 checkpoints keep validating under their own version.
 
+`POLICY.json` is itself validated against `.iacode/schemas/memory-policy.schema.json`, which is
+closed: a key the implementation does not read cannot be declared there. The guardrail registry lives
+at the fixed path `.iacode/memory/guardrails/registry.json`, resolved by
+`lessons.guardrail_registry_path` and by nothing else. The policy used to advertise a relocatable
+registry path that no code consulted, so re-pointing it changed nothing while promising that it
+would; a configuration key with no consumer is a defect, not documentation.
+
+A lesson's prose records the residual limit of its control and never restates its status: validation
+refuses a `GUARDED` lesson whose notes say it is not guarded.
+
 ## The guardrail registry
 
 A guardrail records what the control is, where it lives, which lessons it guards, which tests verify
@@ -139,6 +149,12 @@ A delivery cannot be offered while a guardrail is unresolved, untested, or carri
 control, which is the only way a reopened lesson returns to `GUARDED`.
 
 ## Preflight freshness
+
+The preflight assumes an implementing delivery. Some derived requirements — an empty `blockedBy`
+at a readiness status, for instance — do not describe a run that audits rather than implements, and
+an audit checkpoint legitimately records blockers. Until the preflight takes a delivery role, an
+audit run records which derived requirements describe it and which describe an implementing delivery,
+and lessons that constrain audits only are scoped to the `independent-audit` scope.
 
 A preflight records `inputsFingerprint`, a digest of the canonical memory, the guardrail registry,
 the lesson schema, the selection policy version and the Gate inputs. Validation recomputes the

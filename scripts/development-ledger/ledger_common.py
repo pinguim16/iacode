@@ -81,6 +81,7 @@ UNBLOCKED_STATUSES = (
     "READY_FOR_REVIEW",
     "READY_FOR_RED_TEAM",
     "INTERNAL_GATE_PASS",
+    "MILESTONE_INDEPENDENT_AUDIT_PASS",
     "MILESTONE_EXTERNAL_PASS",
     "GATE_PASS",
 )
@@ -115,15 +116,23 @@ STATUSES = (
     "REWORK_REQUIRED",
     "READY_FOR_RED_TEAM",
     "INTERNAL_GATE_PASS",
+    "MILESTONE_INDEPENDENT_AUDIT_PASS",
     "MILESTONE_EXTERNAL_PASS",
     "GATE_PASS",
     "GATE_FAIL",
 )
 
 # A Gate approved by the project's own controls. It is not, and may not be described as, independent
-# external validation. Only MILESTONE_EXTERNAL_PASS carries that meaning.
+# validation of any kind.
 INTERNAL_PASS_STATUS = "INTERNAL_GATE_PASS"
+
+# The two statuses an independent audit can produce, named for what the evidence actually supports.
+# A fresh session of the same tool is independent of the implementing run and nothing more, so it
+# produces INDEPENDENT_AUDIT_PASS; only a different tool, provider or model produces EXTERNAL_PASS.
+# Both are carried by the audit checkpoint about the subject it judged, never by the subject itself.
+INDEPENDENT_AUDIT_PASS_STATUS = "MILESTONE_INDEPENDENT_AUDIT_PASS"
 EXTERNAL_PASS_STATUS = "MILESTONE_EXTERNAL_PASS"
+MILESTONE_VERDICT_STATUSES = (INDEPENDENT_AUDIT_PASS_STATUS, EXTERNAL_PASS_STATUS)
 
 # External independent validation happens per milestone, not per Gate. The auditor evaluates the
 # milestone as a whole, including integration between its Gates.
@@ -563,7 +572,10 @@ def append_command_record(commands_path: Path, record: dict[str, Any]) -> str:
 
 
 def write_json(path: Path, value: Any) -> None:
-    path.write_text(json.dumps(value, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    # LF explicitly. The ledger hashes text with normalized endings, so a file written with platform
+    # endings is byte-different from the same content written by any other tool in the repository.
+    path.write_text(json.dumps(value, indent=2, ensure_ascii=False) + "\n",
+                    encoding="utf-8", newline="\n")
 
 
 def load_json(path: Path) -> Any:

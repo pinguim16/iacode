@@ -315,6 +315,104 @@
         "LSN-0023"
       ],
       "removingItWouldAllow": "A lesson to cite a source that does not record the finding it claims."
+    },
+    {
+      "guardrailId": "GRD-0023",
+      "title": "The positive promotion path is executed, not only the refusals",
+      "kind": "automated-check",
+      "reference": "scripts/development-ledger/promotion_simulation.py",
+      "verifiedBy": [
+        "PositivePromotionTests.test_the_milestone_verdict_is_derived_as_passed",
+        "PositivePromotionTests.test_the_subject_is_not_rewritten_by_its_own_audit"
+      ],
+      "lessons": [
+        "LSN-0024"
+      ],
+      "removingItWouldAllow": "A status-gating control whose positive path is unreachable to look complete because every forgery is refused."
+    },
+    {
+      "guardrailId": "GRD-0024",
+      "title": "The pending-anchor exclusion is derived from repository state",
+      "kind": "invariant",
+      "reference": "anchors.pending_anchor_exclusion",
+      "verifiedBy": [
+        "IntegrityAnchorTests.test_the_pending_exclusion_is_the_newest_sealed_checkpoint",
+        "SuccessorDurabilityTests.test_the_pending_exclusion_moves_with_the_chain"
+      ],
+      "lessons": [
+        "LSN-0025"
+      ],
+      "removingItWouldAllow": "A guardrail to depend on the checkpoint name that happened to be newest when it was written."
+    },
+    {
+      "guardrailId": "GRD-0025",
+      "title": "An adversarial battery records a null-mutation control",
+      "kind": "invariant",
+      "reference": "validate_checkpoint._validate_internal_assurance",
+      "verifiedBy": [
+        "InternalAssuranceTests.test_a_report_without_a_null_mutation_control_is_rejected",
+        "InternalAssuranceTests.test_a_failed_null_mutation_control_cannot_produce_a_pass"
+      ],
+      "lessons": [
+        "LSN-0026"
+      ],
+      "removingItWouldAllow": "A battery whose refusals come from a broken fixture to be read as defences."
+    },
+    {
+      "guardrailId": "GRD-0026",
+      "title": "No comment or docstring states a derived count",
+      "kind": "test",
+      "reference": "SourceCardinalityPolicyTests",
+      "verifiedBy": [
+        "SourceCardinalityPolicyTests.test_no_comment_or_docstring_states_a_derived_count_claim",
+        "SourceCardinalityPolicyTests.test_no_comment_or_docstring_states_the_cardinality_of_a_derived_set"
+      ],
+      "lessons": [
+        "LSN-0022"
+      ],
+      "removingItWouldAllow": "A cardinality maintained by hand in a source file to contradict the derivation without any control noticing."
+    },
+    {
+      "guardrailId": "GRD-0027",
+      "title": "A GUARDED lesson may not describe itself as unguarded",
+      "kind": "invariant",
+      "reference": "lessons.validate_lessons",
+      "verifiedBy": [
+        "MemoryPolicyDocumentTests.test_a_guarded_lesson_may_not_describe_itself_as_unguarded",
+        "MemoryPolicyDocumentTests.test_the_repository_memory_has_no_status_contradiction"
+      ],
+      "lessons": [
+        "LSN-0027"
+      ],
+      "removingItWouldAllow": "A lesson's prose to state the opposite of the status the tooling reads."
+    },
+    {
+      "guardrailId": "GRD-0028",
+      "title": "The memory policy declares only settings the implementation reads",
+      "kind": "schema",
+      "reference": ".iacode/schemas/memory-policy.schema.json",
+      "verifiedBy": [
+        "MemoryPolicyDocumentTests.test_a_setting_no_code_reads_cannot_be_declared",
+        "MemoryPolicyDocumentTests.test_the_declared_policy_validates_against_its_schema"
+      ],
+      "lessons": [
+        "LSN-0028"
+      ],
+      "removingItWouldAllow": "A documented configuration key that changes nothing to survive as if it were behaviour."
+    },
+    {
+      "guardrailId": "GRD-0029",
+      "title": "The protocol's own next steps are executed before handoff",
+      "kind": "automated-check",
+      "reference": "scripts/development-ledger/successor_durability.py",
+      "verifiedBy": [
+        "SuccessorDurabilityTests.test_every_state_of_the_chain_verifies",
+        "SuccessorDurabilityTests.test_a_missing_anchor_is_still_detected_after_the_chain_advances"
+      ],
+      "lessons": [
+        "LSN-0029"
+      ],
+      "removingItWouldAllow": "A required protocol transition to turn a mandatory gate red in the next delivery instead of this one."
     }
   ]
 }

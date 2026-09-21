@@ -1,0 +1,72 @@
+{
+  "schemaVersion": "1.0.0",
+  "generatedAt": "2026-09-21T05:40:32Z",
+  "simulation": "positive milestone promotion",
+  "finding": "CP9-F-001",
+  "subject": {
+    "checkpoint": "SETUP-00-CP-0001",
+    "commit": "5ad046d317b29a9eb7cee8178e44cf1e3d4e1092",
+    "tag": "refs/tags/iacode-checkpoints/SETUP-00-CP-0001",
+    "tree": "60a266396248fc66041c78c85bfb1b6133cecce3",
+    "status": "READY_FOR_REVIEW"
+  },
+  "audit": {
+    "checkpoint": "SETUP-00-CP-0002",
+    "commit": "5386a4420d920561b8a5bc393043c5dd6dfefa3a",
+    "tag": "refs/tags/iacode-checkpoints/SETUP-00-CP-0002",
+    "status": "MILESTONE_INDEPENDENT_AUDIT_PASS"
+  },
+  "attestation": ".iacode/attestations/M0-AUDIT-OF-SETUP-00-CP-0001.json",
+  "milestoneVerdict": "PASSED",
+  "acceptedAttestations": [
+    "M0-AUDIT-OF-SETUP-00-CP-0001"
+  ],
+  "checks": [
+    {
+      "id": "POS-001",
+      "expectation": "the subject checkpoint is delivered and sealed under its canonical tag",
+      "observed": "SETUP-00-CP-0001 sealed at 5ad046d317b29a9eb7cee8178e44cf1e3d4e1092",
+      "result": "PASS"
+    },
+    {
+      "id": "POS-002",
+      "expectation": "a second checkpoint is authored as the audit and validates as sealed",
+      "observed": "SETUP-00-CP-0002: CHECKPOINT_VALID",
+      "result": "PASS"
+    },
+    {
+      "id": "POS-003",
+      "expectation": "the audit checkpoint carries a milestone verdict status",
+      "observed": "MILESTONE_INDEPENDENT_AUDIT_PASS",
+      "result": "PASS"
+    },
+    {
+      "id": "POS-004",
+      "expectation": "the milestone verdict is derived from the repository as PASSED",
+      "observed": "PASSED; 1 accepted attestation(s)",
+      "result": "PASS"
+    },
+    {
+      "id": "POS-005",
+      "expectation": "the subject is not rewritten, re-tagged or re-sealed by its own audit",
+      "observed": "commit, tree and STATE.json unchanged: True; subject status still READY_FOR_REVIEW",
+      "result": "PASS"
+    },
+    {
+      "id": "POS-006",
+      "expectation": "no attestation names the commit of the tree that contains it",
+      "observed": "the attestation binds subjectCommit only, resolved from the subject's canonical tag",
+      "result": "PASS"
+    },
+    {
+      "id": "POS-007",
+      "expectation": "the integrity chain verifies after the audit checkpoint is sealed",
+      "observed": "no divergence",
+      "result": "PASS"
+    }
+  ],
+  "total": 7,
+  "passed": 7,
+  "failed": 0,
+  "result": "PASS"
+}

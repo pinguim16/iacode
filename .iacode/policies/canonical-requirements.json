@@ -518,6 +518,30 @@
           "mandatory": true
         },
         {
+          "key": "7d.13",
+          "section": "7d. Milestone closure controls",
+          "description": "A milestone verdict is carried by the audit checkpoint about a sealed subject, and its positive path is executed rather than only its refusals.",
+          "artifact": "`scripts/development-ledger/attestation.py`, `milestone_status.py`, `promotion_simulation.py`",
+          "evidence": "`AuditAttestationModelTests`, `PositivePromotionTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "7d.14",
+          "section": "7d. Milestone closure controls",
+          "description": "A generic guardrail derives repository state instead of naming a historical checkpoint, and the protocol's own next steps keep every mandatory gate green.",
+          "artifact": "`scripts/development-ledger/anchors.py`, `successor_durability.py`",
+          "evidence": "`SuccessorDurabilityTests`, `IntegrityAnchorTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "7d.15",
+          "section": "7d. Milestone closure controls",
+          "description": "Every adversarial battery records a null-mutation control, and no count used as evidence is stated in prose.",
+          "artifact": "`scripts/development-ledger/m0_red_team.py`, `.iacode/schemas/red-team-report.schema.json`, `docs/QUALITY-GATES.md`",
+          "evidence": "`InternalAssuranceTests`, `SourceCardinalityPolicyTests`, `DerivedTestCountTests`.",
+          "mandatory": true
+        },
+        {
           "key": "8.1",
           "section": "8. Independent verification",
           "description": "An independent review is recorded.",

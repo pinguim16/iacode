@@ -1,0 +1,714 @@
+{
+  "schemaVersion": "1.0.0",
+  "checkpoint": "SETUP-00-CP-0010",
+  "gate": "SETUP-00",
+  "audit": "M0-CP-0009",
+  "policy": "The canonical requirement set of this delivery is REQUIREMENTS-MATRIX.json, derived from policy. This artifact is the correction view the CP-0009 audit and the corrective prompt require: one row per finding, per named regression scenario and per positive path, each separating positive from negative evidence.",
+  "requirements": [
+    {
+      "id": "CORR-0001",
+      "source": "CP9-F-001",
+      "description": "A milestone verdict is carried by the audit checkpoint about a sealed subject, and the positive promotion path is reachable end to end.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/attestation.py",
+        "file:scripts/development-ledger/validate_checkpoint.py",
+        "file:scripts/development-ledger/milestone_status.py"
+      ],
+      "testEvidence": [
+        "test:AuditAttestationModelTests.test_a_legitimate_attestation_over_the_sealed_history_is_accepted"
+      ],
+      "negativeTestEvidence": [
+        "test:AuditAttestationModelTests.test_an_attestation_naming_the_subject_as_its_own_auditor_is_rejected",
+        "test:AuditAttestationModelTests.test_a_checkpoint_may_not_claim_a_verdict_another_checkpoint_authored"
+      ],
+      "positiveTestEvidence": [
+        "test:PositivePromotionTests.test_the_milestone_verdict_is_derived_as_passed",
+        "test:PositivePromotionTests.test_the_audit_checkpoint_validates_as_sealed"
+      ],
+      "documentationEvidence": [
+        "file:docs/adr/ADR-0011-audit-checkpoint-carries-the-verdict.md",
+        "file:docs/MILESTONE-VALIDATION.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:CP9-FINDINGS-CLOSURE.json",
+        "checkpoint:POSITIVE-PROMOTION-VALIDATION.json"
+      ]
+    },
+    {
+      "id": "CORR-0002",
+      "source": "CP9-F-002",
+      "description": "The pending-anchor exclusion is derived from repository state, and no generic guardrail names a historical checkpoint.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/anchors.py",
+        "file:scripts/development-ledger/verify_integrity.py",
+        "file:tests/test_development_ledger.py"
+      ],
+      "testEvidence": [
+        "test:IntegrityAnchorTests.test_the_pending_exclusion_is_the_newest_sealed_checkpoint"
+      ],
+      "negativeTestEvidence": [
+        "test:IntegrityAnchorTests.test_a_sealed_checkpoint_without_an_anchor_is_detected",
+        "test:SuccessorDurabilityTests.test_a_missing_anchor_is_still_detected_after_the_chain_advances"
+      ],
+      "positiveTestEvidence": [
+        "test:SuccessorDurabilityTests.test_every_state_of_the_chain_verifies",
+        "test:SuccessorDurabilityTests.test_the_pending_exclusion_moves_with_the_chain"
+      ],
+      "documentationEvidence": [
+        "file:docs/CHECKPOINT-PROTOCOL.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:CP9-FINDINGS-CLOSURE.json",
+        "checkpoint:SUCCESSOR-DURABILITY.json"
+      ]
+    },
+    {
+      "id": "CORR-0003",
+      "source": "CP9-F-003",
+      "description": "The stale cardinality is removed and a count in a comment or docstring is refused by the suite and by policy.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:tests/test_development_ledger.py",
+        "file:docs/QUALITY-GATES.md"
+      ],
+      "testEvidence": [
+        "test:SourceCardinalityPolicyTests.test_no_comment_or_docstring_states_the_cardinality_of_a_derived_set",
+        "test:SourceCardinalityPolicyTests.test_no_comment_or_docstring_states_a_derived_count_claim"
+      ],
+      "negativeTestEvidence": [
+        "test:SourceCardinalityPolicyTests.test_the_control_detects_a_cardinality_written_in_a_docstring"
+      ],
+      "positiveTestEvidence": [
+        "test:SourceCardinalityPolicyTests.test_the_count_policy_is_documented"
+      ],
+      "documentationEvidence": [
+        "file:docs/QUALITY-GATES.md",
+        "file:.iacode/memory/LESSONS.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:CP9-FINDINGS-CLOSURE.json"
+      ]
+    },
+    {
+      "id": "CORR-0004",
+      "source": "CP9-F-004",
+      "description": "LSN-0014 records the residual limit of its control instead of contradicting its status, and the contradiction is refused by memory validation.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/memory/lessons.jsonl",
+        "file:scripts/development-ledger/lessons.py"
+      ],
+      "testEvidence": [
+        "test:MemoryPolicyDocumentTests.test_the_repository_memory_has_no_status_contradiction"
+      ],
+      "negativeTestEvidence": [
+        "test:MemoryPolicyDocumentTests.test_a_guarded_lesson_may_not_describe_itself_as_unguarded"
+      ],
+      "positiveTestEvidence": [],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md",
+        "file:docs/ENGINEERING-MEMORY.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:CP9-FINDINGS-CLOSURE.json"
+      ]
+    },
+    {
+      "id": "CORR-0005",
+      "source": "CP9-F-005",
+      "description": "The unread guardrailRegistry key is removed, the fixed path is documented and resolved by one function, and the policy document is validated against a closed schema.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/memory/POLICY.json",
+        "file:.iacode/schemas/memory-policy.schema.json",
+        "file:scripts/development-ledger/lessons.py"
+      ],
+      "testEvidence": [
+        "test:MemoryPolicyDocumentTests.test_the_declared_policy_validates_against_its_schema",
+        "test:MemoryPolicyDocumentTests.test_the_guardrail_registry_path_has_one_resolver"
+      ],
+      "negativeTestEvidence": [
+        "test:MemoryPolicyDocumentTests.test_a_setting_no_code_reads_cannot_be_declared"
+      ],
+      "positiveTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/ENGINEERING-MEMORY.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:CP9-FINDINGS-CLOSURE.json"
+      ]
+    },
+    {
+      "id": "CORR-0101",
+      "source": "CP9-F-001 regression: valid attestation accepted end to end",
+      "description": "A structurally legitimate attestation over the sealed history is accepted.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/attestation.py"
+      ],
+      "testEvidence": [],
+      "negativeTestEvidence": [],
+      "positiveTestEvidence": [
+        "test:AuditAttestationModelTests.test_a_legitimate_attestation_over_the_sealed_history_is_accepted",
+        "test:PositivePromotionTests.test_the_milestone_verdict_is_derived_as_passed"
+      ],
+      "documentationEvidence": [],
+      "validationEvidence": [
+        "checkpoint:POSITIVE-PROMOTION-VALIDATION.json"
+      ]
+    },
+    {
+      "id": "CORR-0102",
+      "source": "CP9-F-001 regression: the audit checkpoint can be sealed",
+      "description": "A checkpoint carrying a milestone verdict is finalized, sealed and validated.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/promotion_fixture.py"
+      ],
+      "testEvidence": [],
+      "negativeTestEvidence": [],
+      "positiveTestEvidence": [
+        "test:PositivePromotionTests.test_the_audit_checkpoint_validates_as_sealed",
+        "test:PositivePromotionTests.test_the_audit_checkpoint_carries_the_milestone_verdict"
+      ],
+      "documentationEvidence": [],
+      "validationEvidence": [
+        "checkpoint:POSITIVE-PROMOTION-VALIDATION.json"
+      ]
+    },
+    {
+      "id": "CORR-0103",
+      "source": "CP9-F-001 regression: the subject commit, tag and tree are unchanged",
+      "description": "The audited subject is not rewritten, re-tagged or re-sealed by its own audit.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/attestation.py"
+      ],
+      "testEvidence": [],
+      "negativeTestEvidence": [],
+      "positiveTestEvidence": [
+        "test:PositivePromotionTests.test_the_subject_is_not_rewritten_by_its_own_audit"
+      ],
+      "documentationEvidence": [],
+      "validationEvidence": [
+        "checkpoint:POSITIVE-PROMOTION-VALIDATION.json"
+      ]
+    },
+    {
+      "id": "CORR-0104",
+      "source": "CP9-F-001 regression: no self-referential commit requirement",
+      "description": "No attestation names the commit of the tree that contains it.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/schemas/external-audit-attestation.schema.json"
+      ],
+      "testEvidence": [
+        "test:AuditAttestationModelTests.test_the_attestation_never_names_the_commit_of_the_tree_that_contains_it"
+      ],
+      "negativeTestEvidence": [
+        "test:AuditAttestationModelTests.test_the_schema_of_the_circular_model_is_refused"
+      ],
+      "positiveTestEvidence": [],
+      "documentationEvidence": [
+        "file:.iacode/attestations/README.md"
+      ],
+      "validationEvidence": []
+    },
+    {
+      "id": "CORR-0105",
+      "source": "CP9-F-001 regression: the audit does not stale the subject's assurance",
+      "description": "The subject's gate results describe the tree its tag names, so a later attestation cannot make them stale; the audit checkpoint fingerprints its own content after writing it.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/promotion_fixture.py"
+      ],
+      "testEvidence": [],
+      "negativeTestEvidence": [],
+      "positiveTestEvidence": [
+        "test:PositivePromotionTests.test_the_attestation_lives_in_the_audit_checkpoints_change_set",
+        "test:PositivePromotionTests.test_the_integrity_chain_still_verifies_after_the_audit"
+      ],
+      "documentationEvidence": [
+        "file:docs/MILESTONE-VALIDATION.md"
+      ],
+      "validationEvidence": []
+    },
+    {
+      "id": "CORR-0106",
+      "source": "CP9-F-001 regression: wrong subject, commit, auditor and results rejected",
+      "description": "Every forged element of the relationship is refused.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/attestation.py"
+      ],
+      "testEvidence": [],
+      "negativeTestEvidence": [
+        "test:AuditAttestationModelTests.test_an_attestation_for_another_checkpoint_is_rejected",
+        "test:AuditAttestationModelTests.test_an_attestation_for_another_commit_is_rejected",
+        "test:AuditAttestationModelTests.test_a_subject_commit_that_is_not_the_sealed_one_is_rejected",
+        "test:AuditAttestationModelTests.test_an_unsealed_subject_is_rejected",
+        "test:AuditAttestationModelTests.test_an_attestation_naming_a_checkpoint_that_does_not_exist_is_rejected",
+        "test:AuditAttestationModelTests.test_a_failed_review_cannot_produce_a_milestone_pass",
+        "test:AuditAttestationModelTests.test_a_failed_red_team_cannot_produce_a_milestone_pass",
+        "test:AuditAttestationModelTests.test_incomplete_audit_coverage_cannot_produce_a_milestone_pass",
+        "test:AuditAttestationModelTests.test_a_failed_test_result_cannot_produce_a_milestone_pass",
+        "test:AuditAttestationModelTests.test_a_missing_field_is_refused_before_anything_else"
+      ],
+      "positiveTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [
+        "checkpoint:M0-INTERNAL-RED-TEAM.json"
+      ]
+    },
+    {
+      "id": "CORR-0107",
+      "source": "CP9-F-001 regression: the mechanism decides the status",
+      "description": "A fresh-session attestation may not produce the cross-tool status, and an unknown or self-contradicting mechanism is refused.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/attestation.py",
+        "file:scripts/development-ledger/validate_checkpoint.py"
+      ],
+      "testEvidence": [
+        "test:AuditAttestationModelTests.test_a_fresh_session_audit_may_not_produce_the_external_status",
+        "test:AuditAttestationModelTests.test_the_status_vocabulary_separates_the_two_verdicts"
+      ],
+      "negativeTestEvidence": [
+        "test:AuditAttestationModelTests.test_an_unknown_validation_mechanism_is_rejected",
+        "test:AuditAttestationModelTests.test_a_cross_tool_claim_without_cross_tool_availability_is_rejected",
+        "test:AuditAttestationModelTests.test_a_fresh_session_claim_requires_a_fresh_session",
+        "test:PositivePromotionTests.test_a_fresh_session_audit_cannot_reach_the_external_status"
+      ],
+      "positiveTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/QUALITY-GATES.md",
+        "file:docs/MILESTONE-VALIDATION.md"
+      ],
+      "validationEvidence": []
+    },
+    {
+      "id": "CORR-0108",
+      "source": "CP9-F-001 regression: integrity validation still works",
+      "description": "The chain verifies before, during and after the promotion.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/anchors.py"
+      ],
+      "testEvidence": [],
+      "negativeTestEvidence": [
+        "test:IntegrityAnchorTests.test_a_broken_link_between_anchors_is_detected"
+      ],
+      "positiveTestEvidence": [
+        "test:PositivePromotionTests.test_the_integrity_chain_still_verifies_after_the_audit"
+      ],
+      "documentationEvidence": [],
+      "validationEvidence": [
+        "command:cmd-integrity"
+      ]
+    },
+    {
+      "id": "CORR-0201",
+      "source": "CP9-F-002 regression: synthetic succession",
+      "description": "A predecessor is sealed, a successor anchors it, and a further successor advances the chain; every state keeps the controls green with no source change.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/successor_durability.py"
+      ],
+      "testEvidence": [],
+      "negativeTestEvidence": [],
+      "positiveTestEvidence": [
+        "test:SuccessorDurabilityTests.test_three_checkpoints_were_sealed_in_succession",
+        "test:SuccessorDurabilityTests.test_every_state_of_the_chain_verifies",
+        "test:SuccessorDurabilityTests.test_each_successor_anchors_its_predecessor",
+        "test:SuccessorDurabilityTests.test_the_pending_exclusion_moves_with_the_chain"
+      ],
+      "documentationEvidence": [],
+      "validationEvidence": [
+        "checkpoint:SUCCESSOR-DURABILITY.json"
+      ]
+    },
+    {
+      "id": "CORR-0202",
+      "source": "CP9-F-002 regression: removing an anchor still fails",
+      "description": "Removing the anchor of a checkpoint the rule does not forgive is detected at every state.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/anchors.py"
+      ],
+      "testEvidence": [],
+      "negativeTestEvidence": [
+        "test:SuccessorDurabilityTests.test_a_missing_anchor_is_still_detected_after_the_chain_advances",
+        "test:IntegrityAnchorTests.test_a_sealed_checkpoint_without_an_anchor_is_detected"
+      ],
+      "positiveTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [
+        "checkpoint:SUCCESSOR-DURABILITY.json"
+      ]
+    },
+    {
+      "id": "CORR-0203",
+      "source": "CP9-F-002 regression: one canonical exclusion rule",
+      "description": "The CLI, the validator and the suite resolve the exclusion through one helper.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/anchors.py",
+        "file:scripts/development-ledger/verify_integrity.py"
+      ],
+      "testEvidence": [
+        "test:IntegrityAnchorTests.test_the_pending_exclusion_is_the_newest_sealed_checkpoint",
+        "test:IntegrityAnchorTests.test_every_sealed_checkpoint_but_the_newest_is_anchored"
+      ],
+      "negativeTestEvidence": [],
+      "positiveTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/CHECKPOINT-PROTOCOL.md"
+      ],
+      "validationEvidence": []
+    },
+    {
+      "id": "CORR-0204",
+      "source": "CP9-F-002 regression: no literal historical identifier in generic logic",
+      "description": "Executable logic that decides behaviour derives the checkpoint it acts on; the remaining literals are historical fixtures and compatibility cases, documented as such.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:tests/test_development_ledger.py",
+        "file:scripts/development-ledger/derive_requirements.py",
+        "file:scripts/development-ledger/m0_red_team.py"
+      ],
+      "testEvidence": [
+        "test:AuditRegistrySuccessionTests.test_the_registry_binds_the_audit_to_this_corrective_checkpoint"
+      ],
+      "negativeTestEvidence": [],
+      "positiveTestEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:DECISIONS.md"
+      ],
+      "validationEvidence": []
+    },
+    {
+      "id": "CORR-0301",
+      "source": "CP-0009 disclosure: additive test counts",
+      "description": "One physical test execution recorded under several categories counts once, and a count larger than what exists is refused.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/derive_counts.py",
+        "file:.iacode/schemas/test-result.schema.json",
+        "file:scripts/development-ledger/validate_checkpoint.py"
+      ],
+      "testEvidence": [
+        "test:DerivedTestCountTests.test_one_run_recorded_in_two_categories_counts_once",
+        "test:DerivedTestCountTests.test_an_explicit_run_identifier_deduplicates_across_categories",
+        "test:DerivedTestCountTests.test_two_real_executions_are_both_counted"
+      ],
+      "negativeTestEvidence": [
+        "test:DerivedTestCountTests.test_a_count_larger_than_what_exists_is_refused"
+      ],
+      "positiveTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/QUALITY-GATES.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:COUNTS.json"
+      ]
+    },
+    {
+      "id": "CORR-0302",
+      "source": "CP-0009 disclosure: ambiguous Red Team totals",
+      "description": "Adversarial totals are reported by explicit category, each derived from the machine-readable report rather than maintained by hand.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/m0_red_team.py"
+      ],
+      "testEvidence": [
+        "test:AuditRegistrySuccessionTests.test_the_battery_of_an_additional_section_is_not_promoted_to_mandatory"
+      ],
+      "negativeTestEvidence": [],
+      "positiveTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [
+        "checkpoint:AFFECTED-RED-TEAM.json",
+        "checkpoint:M0-INTERNAL-RED-TEAM.json"
+      ]
+    },
+    {
+      "id": "CORR-0303",
+      "source": "CP-0009 disclosure: adversarial batteries need a null-mutation control",
+      "description": "A battery records the unmutated control it ran, and a report without one cannot produce a PASS.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/m0_red_team.py",
+        "file:.iacode/schemas/red-team-report.schema.json",
+        "file:scripts/development-ledger/validate_checkpoint.py"
+      ],
+      "testEvidence": [],
+      "negativeTestEvidence": [
+        "test:InternalAssuranceTests.test_a_report_without_a_null_mutation_control_is_rejected",
+        "test:InternalAssuranceTests.test_a_failed_null_mutation_control_cannot_produce_a_pass"
+      ],
+      "positiveTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/MILESTONE-VALIDATION.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:M0-INTERNAL-RED-TEAM.json"
+      ]
+    },
+    {
+      "id": "CORR-0401",
+      "source": "Prompt section 26: the eight CP-0009 lesson candidates are assessed",
+      "description": "Each candidate is registered, merged into an existing lesson as a recurrence, or recorded as not requiring a lesson, with the reason.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/memory/lessons.jsonl"
+      ],
+      "testEvidence": [],
+      "negativeTestEvidence": [],
+      "positiveTestEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:LESSON-CANDIDATE-ASSESSMENT.md",
+        "file:.iacode/memory/LESSONS.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0004"
+      ]
+    },
+    {
+      "id": "CORR-0402",
+      "source": "Prompt sections 27 to 29: the three named lessons exist and are guarded",
+      "description": "A control needs a positive path, a guardrail may not name a historical checkpoint, and a required protocol transition may not turn a mandatory gate red.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/memory/lessons.jsonl",
+        "file:.iacode/memory/guardrails/registry.json"
+      ],
+      "testEvidence": [
+        "test:PositivePromotionTests.test_the_milestone_verdict_is_derived_as_passed",
+        "test:SuccessorDurabilityTests.test_every_state_of_the_chain_verifies"
+      ],
+      "negativeTestEvidence": [],
+      "positiveTestEvidence": [],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0004"
+      ]
+    },
+    {
+      "id": "CORR-0403",
+      "source": "Prompt section 30: the preflight is regenerated and fresh",
+      "description": "The preflight was regenerated after the memory changed and its fingerprint recomputes.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:LESSON-PREFLIGHT.json"
+      ],
+      "testEvidence": [],
+      "negativeTestEvidence": [],
+      "positiveTestEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:LESSON-PREFLIGHT.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-validate"
+      ]
+    },
+    {
+      "id": "CORR-0404",
+      "source": "CP9 candidate 007: the preflight has no audit-role subset",
+      "description": "Recorded as a scoped lesson that constrains audit runs only, and documented in the engineering memory policy.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/memory/lessons.jsonl"
+      ],
+      "testEvidence": [],
+      "negativeTestEvidence": [],
+      "positiveTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/ENGINEERING-MEMORY.md",
+        "checkpoint:LESSON-CANDIDATE-ASSESSMENT.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0004"
+      ]
+    },
+    {
+      "id": "CORR-0501",
+      "source": "Prompt section 31: Green Keeper",
+      "description": "Every mandatory gate is green with zero remaining failures and zero unresolved rework.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:REWORK-LOG.jsonl"
+      ],
+      "testEvidence": [],
+      "negativeTestEvidence": [],
+      "positiveTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [
+        "command:cmd-greenkeeper"
+      ]
+    },
+    {
+      "id": "CORR-0502",
+      "source": "Prompt section 32: Delivery Completeness",
+      "description": "Coverage and evidence coverage are total, with no PARTIAL and no MISSING requirement.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:COMPLETENESS-REPORT.json"
+      ],
+      "testEvidence": [],
+      "negativeTestEvidence": [],
+      "positiveTestEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:COMPLETENESS-REPORT.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-completeness"
+      ]
+    },
+    {
+      "id": "CORR-0503",
+      "source": "Prompt section 33: internal positive promotion simulation",
+      "description": "A complete promotion is executed in a disposable repository before handoff.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/promotion_simulation.py"
+      ],
+      "testEvidence": [],
+      "negativeTestEvidence": [],
+      "positiveTestEvidence": [
+        "test:PositivePromotionTests.test_the_milestone_verdict_is_derived_as_passed"
+      ],
+      "documentationEvidence": [],
+      "validationEvidence": [
+        "checkpoint:POSITIVE-PROMOTION-VALIDATION.json"
+      ]
+    },
+    {
+      "id": "CORR-0504",
+      "source": "Prompt section 34: internal successor durability simulation",
+      "description": "A sealed chain is advanced and re-checked at every state before handoff.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/successor_durability.py"
+      ],
+      "testEvidence": [],
+      "negativeTestEvidence": [],
+      "positiveTestEvidence": [
+        "test:SuccessorDurabilityTests.test_every_state_of_the_chain_verifies"
+      ],
+      "documentationEvidence": [],
+      "validationEvidence": [
+        "checkpoint:SUCCESSOR-DURABILITY.json"
+      ]
+    },
+    {
+      "id": "CORR-0505",
+      "source": "Prompt section 35: the whole suite passes",
+      "description": "The discovered suite is executed in full and every case passes.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:TESTS.json"
+      ],
+      "testEvidence": [],
+      "negativeTestEvidence": [],
+      "positiveTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [
+        "command:cmd-tests",
+        "checkpoint:COUNTS.json"
+      ]
+    },
+    {
+      "id": "CORR-0506",
+      "source": "Prompt section 36: clean clone",
+      "description": "The sealed content is validated in a clean clone with no session state.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:RESUME-VALIDATION.md"
+      ],
+      "testEvidence": [],
+      "negativeTestEvidence": [],
+      "positiveTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [
+        "command:cmd-clean-clone"
+      ]
+    },
+    {
+      "id": "CORR-0507",
+      "source": "Prompt section 37: internal closure audit",
+      "description": "An internal non-implementing audit verifies each closed finding and each required property.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:CP9-FINDINGS-CLOSURE.json"
+      ],
+      "testEvidence": [],
+      "negativeTestEvidence": [],
+      "positiveTestEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:CP9-FINDINGS-CLOSURE.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:M0-INTERNAL-MIRROR.json"
+      ]
+    },
+    {
+      "id": "CORR-0508",
+      "source": "Prompt section 38: affected Red Team scenarios",
+      "description": "Every attack affected by this delivery is re-executed and defended.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/m0_red_team.py"
+      ],
+      "testEvidence": [],
+      "negativeTestEvidence": [],
+      "positiveTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [
+        "checkpoint:AFFECTED-RED-TEAM.json",
+        "checkpoint:M0-INTERNAL-RED-TEAM.json"
+      ]
+    }
+  ],
+  "total": 32,
+  "complete": 32,
+  "partial": 0,
+  "missing": 0,
+  "coveragePercent": 100.0,
+  "evidenceCoveragePercent": 100.0
+}

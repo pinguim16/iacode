@@ -1,0 +1,469 @@
+{
+  "filesRead": [],
+  "filesCreated": [
+    {
+      "path": ".iacode/memory/retrospectives/SETUP-00-CP-0010.md",
+      "reason": "The Gate retrospective required by the checkpoint protocol.",
+      "hashAfter": "a31eea2f80b413cb9680f6691f09a6ed8c178d6f00b03cf04b3b65ab4be05697"
+    },
+    {
+      "path": "docs/adr/ADR-0011-audit-checkpoint-carries-the-verdict.md",
+      "reason": "The structural decision that closes CP9-F-001.",
+      "hashAfter": "3794fbd4068e0b57e8917c4fb9278c9ea260842e8764e80d0592503138a0eeb1"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0010/AFFECTED-RED-TEAM.json",
+      "reason": "Checkpoint evidence for the CP-0009 corrective delivery.",
+      "hashAfter": "4af2a2adfdb914db5a28db2ea982300e8b37464d626ee02ecdbf57055c6a7918"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0010/AFFECTED-RED-TEAM.md",
+      "reason": "Checkpoint evidence for the CP-0009 corrective delivery.",
+      "hashAfter": "18d3834668e30978308f85ccb97c280cbc209b1d531c3355ca2ab5eae6fc4fcd"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0010/CLOSURE-REQUIREMENTS.json",
+      "reason": "Checkpoint evidence for the CP-0009 corrective delivery.",
+      "hashAfter": "cd80abd67b79ea042ef99d139cfe6321339b4ff0bbf54d72bbc17c79179f4ba2"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0010/CLOSURE-REQUIREMENTS.md",
+      "reason": "Checkpoint evidence for the CP-0009 corrective delivery.",
+      "hashAfter": "d12dcae125d9099d4dffc7ca0cde9cccd2a0b9ee0dc85fe40ce2596bb9346a8b"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0010/COMMANDS.jsonl",
+      "reason": "Checkpoint evidence for the CP-0009 corrective delivery.",
+      "hashAfter": "9fd4abf9b2f53ab211662d6486084fa0d318e38cac0953e4d14febb795e03a1f"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0010/COMPLETENESS-REPORT.json",
+      "reason": "Checkpoint evidence for the CP-0009 corrective delivery.",
+      "hashAfter": "7de8151e93e0dc88f483893fc6f973ae3d98fca618919173b4ff5abc820a35e4"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0010/COMPLETENESS-REPORT.md",
+      "reason": "Checkpoint evidence for the CP-0009 corrective delivery.",
+      "hashAfter": "160da3f59f0f432bf133a67af4786f2d1877d09842f06afcacbd97f519451037"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0010/COUNTS.json",
+      "reason": "Checkpoint evidence for the CP-0009 corrective delivery.",
+      "hashAfter": "6b391b9a6d405f2ee41a6f7d5c7d9f5eb11b4029f10e96bf0a2c13a45e428077"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0010/CP9-FINDINGS-CLOSURE.json",
+      "reason": "Checkpoint evidence for the CP-0009 corrective delivery.",
+      "hashAfter": "aca70a485ff459b09dd1f3e58a73a9f4525a8d263a3d5d1eb13bfa263640f63c"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0010/CP9-FINDINGS-CLOSURE.md",
+      "reason": "Checkpoint evidence for the CP-0009 corrective delivery.",
+      "hashAfter": "463e37345c62b47b8300a3a0bd487645300e85f5f89b2dd2da25c78437ad671a"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0010/DECISIONS.md",
+      "reason": "Checkpoint evidence for the CP-0009 corrective delivery.",
+      "hashAfter": "900b80eaf5d9bf37c4a43f571266354090a492b5d05bd0d019af8a6e1fd57f34"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0010/DIFF-SUMMARY.md",
+      "reason": "Checkpoint evidence for the CP-0009 corrective delivery.",
+      "hashAfter": "e8faa1117005c12b559a026e5fe82871bcd2fab078e0f09aea8385a131849676"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0010/FILES.json",
+      "reason": "Checkpoint evidence for the CP-0009 corrective delivery."
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0010/FINAL-CORRECTION-REQUIREMENTS.json",
+      "reason": "Checkpoint evidence for the CP-0009 corrective delivery.",
+      "hashAfter": "63da6bcd19281d15a612e630fa632704f7acdee0136b36c4ead63178f6b0791a"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0010/FINAL-CORRECTION-REQUIREMENTS.md",
+      "reason": "Checkpoint evidence for the CP-0009 corrective delivery.",
+      "hashAfter": "5fbe21b718b99e9736adfd3a432cc6838deb7e627d821a49ae7eadd8a4e1bc5c"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0010/FINAL-REPORT.md",
+      "reason": "Checkpoint evidence for the CP-0009 corrective delivery.",
+      "hashAfter": "59e20a05bffcc843eb47a0b2626b3c3ca84f9da5388de93ee749baa615a61f9b"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0010/HANDOFF.md",
+      "reason": "Checkpoint evidence for the CP-0009 corrective delivery.",
+      "hashAfter": "d368b6778a0a866aa84fd239257edbec4701607e179ab31e43c121d14272b433"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0010/LESSON-CANDIDATE-ASSESSMENT.md",
+      "reason": "Checkpoint evidence for the CP-0009 corrective delivery.",
+      "hashAfter": "0114e08df322646007e67c55444d9f709032a21d3c4a958b6338a391984907a6"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0010/LESSON-PREFLIGHT.json",
+      "reason": "Checkpoint evidence for the CP-0009 corrective delivery.",
+      "hashAfter": "b7a8b3fd83a97e216fc052dd9fa7c8b2340a5fd193f7e53995c03f238bd015f5"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0010/LESSON-PREFLIGHT.md",
+      "reason": "Checkpoint evidence for the CP-0009 corrective delivery.",
+      "hashAfter": "9f7dea3951483aa6bff7b99a7cafb15b7c2dab6039d86c7a82f6ba85c0e45573"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0010/M0-INTERNAL-MIRROR.json",
+      "reason": "Checkpoint evidence for the CP-0009 corrective delivery.",
+      "hashAfter": "a7b5e5fb72d61d03624ee4bd5d9be826a182e30403a72d243a15727ed922f7e6"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0010/M0-INTERNAL-MIRROR.md",
+      "reason": "Checkpoint evidence for the CP-0009 corrective delivery.",
+      "hashAfter": "cbdecf68e6e1cee3cfb6e210415021e0b6998298c83f756faa2cff46493c653b"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0010/M0-INTERNAL-RED-TEAM.json",
+      "reason": "Checkpoint evidence for the CP-0009 corrective delivery.",
+      "hashAfter": "ad4b6ed8b693605a4cd932da4444e0030e4cd3b41aca5ef73a84dfa06e7c22b9"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0010/M0-INTERNAL-RED-TEAM.md",
+      "reason": "Checkpoint evidence for the CP-0009 corrective delivery.",
+      "hashAfter": "d5bec97d0c370602f1d93334b07ff5643efcd8bb4285b25a0285a58b1220694e"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0010/NEXT.md",
+      "reason": "Checkpoint evidence for the CP-0009 corrective delivery.",
+      "hashAfter": "9e43b12203e52c9f309f7a869d4130eda8699c3a14a874b45441dc318aff3d99"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0010/PLAN.md",
+      "reason": "Checkpoint evidence for the CP-0009 corrective delivery.",
+      "hashAfter": "146a7961e93beff1766c836344dc334b200eb570ec9eb43fd52ae83b586d86d9"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0010/POSITIVE-PROMOTION-VALIDATION.json",
+      "reason": "Checkpoint evidence for the CP-0009 corrective delivery.",
+      "hashAfter": "e769175931439e85191be0ee5b1f4a828782ecf53cd2df218ba0aa2fd42305ed"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0010/POSITIVE-PROMOTION-VALIDATION.md",
+      "reason": "Checkpoint evidence for the CP-0009 corrective delivery.",
+      "hashAfter": "be8e28653351d60ea7907e237e0e21292335f7630010911d4d64b75cf9dd1122"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0010/PROVENANCE.json",
+      "reason": "Checkpoint evidence for the CP-0009 corrective delivery.",
+      "hashAfter": "84526fd97bbd696692086c0ed5ca056340b7d62b696cd69a340aa5379b9202e4"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0010/QUALITY.json",
+      "reason": "Checkpoint evidence for the CP-0009 corrective delivery.",
+      "hashAfter": "fcc66c366f70dfaa0cbe6a08e85e74c5ccc5490d39bf1c35c09d6b7b77e08558"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0010/REQUIREMENTS-MATRIX.json",
+      "reason": "Checkpoint evidence for the CP-0009 corrective delivery.",
+      "hashAfter": "f875ae50a399dc2836d34046d933b52bb1db26472946f00a107a17ae240c2720"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0010/REQUIREMENTS-MATRIX.md",
+      "reason": "Checkpoint evidence for the CP-0009 corrective delivery.",
+      "hashAfter": "2822db56b3b10fc91f528f0e588d7b8a1cbd8b209cde973f2cd03a344d3b5a1e"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0010/RESUME-VALIDATION.md",
+      "reason": "Checkpoint evidence for the CP-0009 corrective delivery.",
+      "hashAfter": "1ddf8a4e4f3df41c621c0b0375ca7780320acef8a43b9d260a51e277b9f58f22"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0010/REWORK-LOG.jsonl",
+      "reason": "Checkpoint evidence for the CP-0009 corrective delivery.",
+      "hashAfter": "a301738018c9deeb2aec7b31b33cf04680431b3f0966f08f2fd02596a083d3c0"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0010/RISKS.md",
+      "reason": "Checkpoint evidence for the CP-0009 corrective delivery.",
+      "hashAfter": "9899df86e555d7ebc90f7dcd92a3941ad3363308ba648be9352c1d1d00c9006f"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0010/RUN-METADATA.json",
+      "reason": "Checkpoint evidence for the CP-0009 corrective delivery.",
+      "hashAfter": "5645b6df8a54049a6a839514652967988ad5b4c775f6c2299d6d9d3931cf0644"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0010/STATE.json",
+      "reason": "Checkpoint evidence for the CP-0009 corrective delivery.",
+      "hashAfter": "2607c9a55c7c52063b3ae11ef4b3a570e3da0cae3ded963316b054bf42cab4c6"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0010/STATUS.md",
+      "reason": "Checkpoint evidence for the CP-0009 corrective delivery.",
+      "hashAfter": "59e6444d1015b76b59cb6aa1143753675cf48a96814b94857478e8c5ce4c83e4"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0010/SUCCESSOR-DURABILITY.json",
+      "reason": "Checkpoint evidence for the CP-0009 corrective delivery.",
+      "hashAfter": "3ad88505b155e83e8d0e4a97cf8d1fac6d7a6b44750baf5f9e76d4986a1cbdb6"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0010/SUCCESSOR-DURABILITY.md",
+      "reason": "Checkpoint evidence for the CP-0009 corrective delivery.",
+      "hashAfter": "07dcc8f8abb511dcf459b437b7352a44de4b95db3dda99f378a30c13342b6c4d"
+    },
+    {
+      "path": "docs/checkpoints/SETUP-00-CP-0010/TESTS.json",
+      "reason": "Checkpoint evidence for the CP-0009 corrective delivery.",
+      "hashAfter": "fe1e545d6ac048d4e3a492e9942d334465c874e075385513ca6683af1d7030bb"
+    },
+    {
+      "path": "scripts/development-ledger/affected_red_team.py",
+      "reason": "CP-0009 disclosure: report the adversarial position by explicit derived category.",
+      "hashAfter": "7fe9f34a56ffd3f4072faa1f5f70599fb6c2f7800e2e43850546d186cb8c8f61"
+    },
+    {
+      "path": "scripts/development-ledger/milestone_status.py",
+      "reason": "CP9-F-001: derive the milestone verdict from the repository instead of reading a status.",
+      "hashAfter": "e87773053883fb80c0dbba279a760b19dce9ba7f8c18e78593635d035eed85a5"
+    },
+    {
+      "path": "scripts/development-ledger/promotion_fixture.py",
+      "reason": "CP9-F-001 and CP9-F-002: build disposable repositories that execute the protocol's positive paths.",
+      "hashAfter": "7fa081c11a236c6134eefc313b1ed248afe48e60fa732fa760e4bb25bb81cd5e"
+    },
+    {
+      "path": "scripts/development-ledger/promotion_simulation.py",
+      "reason": "CP9-F-001: execute the complete two-checkpoint promotion and record what it observed.",
+      "hashAfter": "0f6c2019c6cfd68ec80b01c1a419b1945dafc73f187e78b3b202a787b03011cd"
+    },
+    {
+      "path": "scripts/development-ledger/successor_durability.py",
+      "reason": "CP9-F-002: advance a sealed chain and re-check the integrity controls at every state.",
+      "hashAfter": "f53faccf92e7708f533e14709e5551bb8fdf3ad089bc66d7e5abbd688518802c"
+    }
+  ],
+  "filesModified": [
+    {
+      "path": ".iacode/anchors/checkpoint-chain.json",
+      "reason": "Anchor SETUP-00-CP-0009, which its own checkpoint could not anchor.",
+      "hashAfter": "90490e491f6a166926031f5e1631442d47789ed0a26e46177f868acba567c880",
+      "hashBefore": "b54a05cbe51f7d0b6277a15ce3dbb4d2c8658275145db0ef061bd99192eed45d"
+    },
+    {
+      "path": ".iacode/attestations/README.md",
+      "reason": "CP9-F-001: describe the corrected model and the two mechanisms.",
+      "hashAfter": "f625f31d8e068fd7c74bf9a629ffdecb4eaf8852f7e8a67460e6ce9ee3ef5a1e",
+      "hashBefore": "9b7d4dac8fa136de001381b03ba60b78ac807e7bad746b57bd30078b500ef205"
+    },
+    {
+      "path": ".iacode/memory/LESSONS.md",
+      "reason": "Regenerated index of the engineering memory.",
+      "hashAfter": "6d2a0e6344d8a1aef27c35de50e4a2b185f073e5b63101f8425f5de4c3d06860",
+      "hashBefore": "7922b066f29275a851d71a6a05f0fb080e2dc57ca63b63186571c15ed88a1e99"
+    },
+    {
+      "path": ".iacode/memory/POLICY.json",
+      "reason": "CP9-F-005: remove the setting no code reads and state that the registry path is fixed.",
+      "hashAfter": "28e63bd7ab08d65a89d3ae1880b4897f8c3ec6a27b6e87466dde0408ba3a0991",
+      "hashBefore": "40d016c81e2ffe6f1283723ccde26cddf39bc9f2fd598a96689704c4df20f6ea"
+    },
+    {
+      "path": ".iacode/memory/guardrails/registry.json",
+      "reason": "Register GRD-0023 to GRD-0029, the controls that guard the new lessons.",
+      "hashAfter": "1269cbc4a54c21522f6e41031d352c9268dc04964774d72e8d3b49ab994ffdd6",
+      "hashBefore": "1119566f053449476f6d9df1fea8f53f12673ed368680b7a17ac5e5472bd1548"
+    },
+    {
+      "path": ".iacode/memory/lessons.jsonl",
+      "reason": "CP9-F-004 and the candidate assessment: repair LSN-0014, record the LSN-0022 recurrence, and register the seven new lessons.",
+      "hashAfter": "2c9c88bb2b454f5e0ac09d8c53c16b6358f20d766e276041153608fc2db5bfa4",
+      "hashBefore": "441d8c1b25461f764aa26954b11cd101ba7292ca33a96832eeca4ebeb8511eda"
+    },
+    {
+      "path": ".iacode/policies/audit-registry.json",
+      "reason": "Register the CP-0009 audit and bind it to this corrective checkpoint.",
+      "hashAfter": "8b1d4be05a60534347b8c8fbb106ecbdaf334c703c49d12af05babb07e5a35a9",
+      "hashBefore": "847aa76e7487fb218fe4cf2389832f6bc77f28b5d521358617959c41f3c1df4b"
+    },
+    {
+      "path": ".iacode/policies/canonical-requirements.json",
+      "reason": "Mirror the three checklist rows this delivery adds.",
+      "hashAfter": "3b305fd0c5e45c5ccb3e08ae5fd5436af4cb877ae918f3c8c0d67348157b7087",
+      "hashBefore": "6889024deb362d799da17267b40a2f65f98ee22ce266254a9de611a3d55897ac"
+    },
+    {
+      "path": ".iacode/schemas/checkpoint.schema.json",
+      "reason": "CP9-F-001: the new status and the subject an audit checkpoint names.",
+      "hashAfter": "8c1b9d7d495fbdb94e4c8a55f55dd80787aa18d93b32882aa7fc442ba413bc99",
+      "hashBefore": "217c07ff45293f7cf947e1ef913f81dbf732c02a6cc0961451318506cfeabcfd"
+    },
+    {
+      "path": ".iacode/schemas/external-audit-attestation.schema.json",
+      "reason": "CP9-F-001: the attestation records its mechanism and never names its own commit.",
+      "hashAfter": "45932be6ca5e3de69618ec453b95b1625ea2a8b2497b3e1840646d8d396ddba1",
+      "hashBefore": "92e0bf00b8b99e928f265a5b225fa8f0194fa6dace89de154e3e13ff42abf11b"
+    },
+    {
+      "path": ".iacode/schemas/memory-policy.schema.json",
+      "reason": "CP9-F-005: close the policy schema so an unread setting cannot be declared.",
+      "hashAfter": "aa3d338b631eac7d9b81865c7a3e80b291a0d747624a618a2fd64eb06ef55134",
+      "hashBefore": "7ee87d44b1c43c88d6d6f2cf9cc6d16b0c3b573e7d111831d6e44935c8f9ac3c"
+    },
+    {
+      "path": ".iacode/schemas/red-team-report.schema.json",
+      "reason": "CP-0009 disclosure: a battery must record its null-mutation control.",
+      "hashAfter": "fc4fed8a2b4ae6e8d3a634773843658541eb4802e513ddb22a1d9b463dc44afd",
+      "hashBefore": "ea70f965b28b183170c5bd956721c5eb20429d62d6dc48fa5289618a8e97bdfc"
+    },
+    {
+      "path": ".iacode/schemas/test-result.schema.json",
+      "reason": "CP-0009 disclosure: a category may name the physical run it was measured by.",
+      "hashAfter": "b423309a49dd5fad659e3c68329c3f19f01987bd7c7ca244a9e6dd07ba3228d8",
+      "hashBefore": "7f6527e99f04c16213783496516c8909aa4af6a5c89c3ea0bec31600470d7bff"
+    },
+    {
+      "path": "AGENTS.md",
+      "reason": "Bind the Codex adapter to the corrected milestone verdict model.",
+      "hashAfter": "0eb8f2b01648fc687930a5cb38783dfd937d0647cb848371e568a03ec475e6f5",
+      "hashBefore": "7f84929140f0182a82fb74ccbf33dff065274c40ef7c922549cbac53cade7d3b"
+    },
+    {
+      "path": "CLAUDE.md",
+      "reason": "Bind the Claude Code adapter to the corrected milestone verdict model.",
+      "hashAfter": "98f2f5f89216c15db48e9a3ca99b1966dedf9da7c26a733833bec2d8c5e2e40d",
+      "hashBefore": "84c95320ea95a137e2e3628e08c632506053d76e048184575f30f4655ccad746"
+    },
+    {
+      "path": "START-HERE.md",
+      "reason": "State the corrected validation cadence at the entry point.",
+      "hashAfter": "46704b37270bdad10b3f1cd2ad08ada9411dc7e90b8766372819c68c54b20617",
+      "hashBefore": "fdfcd54c598698e4c4266adf219c144fb2754fef5f2d7c3ec02c818b380c7676"
+    },
+    {
+      "path": "docs/CHECKPOINT-PROTOCOL.md",
+      "reason": "The new status and the derived pending-anchor rule.",
+      "hashAfter": "84cec584e9b0b1d889fee8b3eddf3a66e5258b6ad3a7430ebe9dc58a04e206ad",
+      "hashBefore": "cf2ffdc36a29993ceebd3a0ba668f55ff65b92d95c00fe8f20c4872bb188106d"
+    },
+    {
+      "path": "docs/DEFINITION-OF-DONE.md",
+      "reason": "Positive paths, null-mutation controls, derived guardrails and executed transitions.",
+      "hashAfter": "c6a247a0ce9ef4e2431c1c542f8ea942a887bb0020f06915cdacf594760a94ce",
+      "hashBefore": "d585e9e2ab2bf8255a1400216bf20deb7c4a698312469d8071f3706370e31895"
+    },
+    {
+      "path": "docs/ENGINEERING-MEMORY.md",
+      "reason": "CP9-F-005 and the preflight's role assumption.",
+      "hashAfter": "e418d12644f7b80a9fa94a8ef4d3ccea4884d76ae0e8ba68d7fae7cf2909367f",
+      "hashBefore": "eeea6b82458d36b1805f11f0858be5b6f54904e675e174c5aa0158e7dc5eedd5"
+    },
+    {
+      "path": "docs/MILESTONE-VALIDATION.md",
+      "reason": "CP9-F-001: the two objects, the derivation, the mechanisms and the assurance boundary.",
+      "hashAfter": "186862f51409184b4ef8d226463ae35d6da73e5cba8ea9e478dbf6b93ccde9e7",
+      "hashBefore": "f7edd58753e4cbc567efe196cc5dd95af621a5a0329c391c714dcdbc7b5b6d6c"
+    },
+    {
+      "path": "docs/QUALITY-GATES.md",
+      "reason": "The status vocabulary, the count policy and the deduplication rule.",
+      "hashAfter": "a2ad4875f7d6b1d22fa636499992a0aea6c9c10a03dfb1141e070b542a3cc52f",
+      "hashBefore": "a6dee1cedfb314020d2d7fc735881b1ac1f57c6447bdef893d4db37bdd9d5b6e"
+    },
+    {
+      "path": "docs/SETUP-00-CHECKLIST.md",
+      "reason": "Three canonical rows for the controls this delivery adds.",
+      "hashAfter": "788ff78291f2ee7f7d72b3ac1a876d53e5c9bd037982d01ee72be5d46c46ed0e",
+      "hashBefore": "e67ad5a21484f986584fa6bae5cf0a920aa9e4ad297bb1a71b1faced8282c0dd"
+    },
+    {
+      "path": "docs/checkpoints/LATEST.md",
+      "reason": "Point the textual pointer at this checkpoint.",
+      "hashAfter": "60b8865e8a1e2892b2a5d1c03e8f719db5e129948f3e630eae854ad50835c144",
+      "hashBefore": "fe69b485b4c77a8179b7e71d3d855cfe167af2a4e650e7060cd6710554cae2c9"
+    },
+    {
+      "path": "scripts/development-ledger/README.md",
+      "reason": "Document the corrected attestation model and the new simulation entry points.",
+      "hashAfter": "c5d81116629ededca5a3d411dc2049bceff01875ab8aeb825f8210f14c0b867d",
+      "hashBefore": "c716580cbfa543eb631056341cc46b33ca2284762b55ce06176f61fc8541c7fb"
+    },
+    {
+      "path": "scripts/development-ledger/anchors.py",
+      "reason": "CP9-F-002: derive the pending-anchor exclusion and the rebuild exclusion from repository state.",
+      "hashAfter": "37d46b0d8c7952b0078a166c197a6f5c1155d9fc0e86198456f9ac390c34e42b",
+      "hashBefore": "93033cb968730635fcc10383ff8ec613b46be671614a80ef683160afe7b70eed"
+    },
+    {
+      "path": "scripts/development-ledger/attestation.py",
+      "reason": "CP9-F-001: the verdict moves to the audit checkpoint and names an already sealed subject.",
+      "hashAfter": "0d0f0257e6708290116f3f98989ffd0ff5ab85e8ae3cf82c9207c0b5ff8d1cbf",
+      "hashBefore": "832bec2fdb6cb0f74108608ebe628256d2ce7247e4f419b03e024c3beff3dee4"
+    },
+    {
+      "path": "scripts/development-ledger/derive_counts.py",
+      "reason": "CP-0009 disclosure: count one physical test execution once.",
+      "hashAfter": "018df46a5a9181474d0e0710ca7f311ae563ca8777fb2e6c604abb3bacddda8e",
+      "hashBefore": "2e7f51a9985fda1d97cb96fb4911d9154aaba763520412400f67b82103c0e492"
+    },
+    {
+      "path": "scripts/development-ledger/derive_requirements.py",
+      "reason": "CP9-F-002: read the corrected audit's report paths from the registry instead of naming them.",
+      "hashAfter": "977552531891522edc1e8d3c9bc49264a05091e61d2a2e8441b858787936a93b",
+      "hashBefore": "a6f90963655e97cfd3719ffdd348f27bc589722dee58472c8e266b5622f9f84a"
+    },
+    {
+      "path": "scripts/development-ledger/ledger_common.py",
+      "reason": "CP9-F-001: add MILESTONE_INDEPENDENT_AUDIT_PASS to the status vocabulary.",
+      "hashAfter": "d7f152de1eb72a7db0d928b43ea0f0167862bb5cea897a35658c81af689cad2e",
+      "hashBefore": "04b6dfd0d9fba7bbfa83610043e788b70ddfe325d36f3e70d158777f1d130e16"
+    },
+    {
+      "path": "scripts/development-ledger/lessons.py",
+      "reason": "CP9-F-004 and CP9-F-005: refuse a GUARDED lesson that calls itself unguarded, and validate the memory policy document.",
+      "hashAfter": "0293e1b44e4de81062ac1de0814bfb0fbd7ec56f940351eec51c8d493193ce9b",
+      "hashBefore": "b08738af03f601f6050d4f59940733dfe1198ed871cc124262bb4e3f2e28c1ba"
+    },
+    {
+      "path": "scripts/development-ledger/m0_mirror_audit.py",
+      "reason": "CP9-F-002: name the findings-closure evidence from the registry instead of one audit's file.",
+      "hashAfter": "2900a6a1acfab22d38031ce93b7a0b09533ab94c020850ecf3d36bd2777e0f3c",
+      "hashBefore": "5261493a0c56c0cdce5c03314621f51df5c790c79b15d5a036068165b457ba54"
+    },
+    {
+      "path": "scripts/development-ledger/m0_red_team.py",
+      "reason": "CP9-F-001 and CP-0009 disclosures: attack the corrected attestation model, derive the attack victims, and record the null-mutation control.",
+      "hashAfter": "ffdd8f2c0d427ecc94c0e0301005f1a1dbe7579dad2506c1f5dde68650872925",
+      "hashBefore": "85aa3590cd47a8c62e24cbb2b3d841029c68b44bb9d23b4005114512f3462c9e"
+    },
+    {
+      "path": "scripts/development-ledger/new_checkpoint.py",
+      "reason": "Write checkpoint text with normalized line endings, as every other tool does.",
+      "hashAfter": "9db69877ec21e0bdfd65963a8d47053c9a22fa7f4fcd833745420dae3c3acfe0",
+      "hashBefore": "0a03787c0c53338395baaed9e886df59716f5ed81b84ccd2a226d13e73be6a98"
+    },
+    {
+      "path": "scripts/development-ledger/policies.py",
+      "reason": "CP9-F-002: decide the battery from the report section and accept both sealed renderings.",
+      "hashAfter": "ff0ada8650d47aa70ecd940213d74d66a4add9124fa6acc7b614af57c67296f6",
+      "hashBefore": "184e623618862deedfccf496e0d21f91692f3b369591130456e7fdb070db7713"
+    },
+    {
+      "path": "scripts/development-ledger/validate_checkpoint.py",
+      "reason": "CP9-F-001 and the CP-0009 count disclosure: derive the milestone verdict from the audit checkpoint's attestation, require a null-mutation control, and refuse a count larger than what exists.",
+      "hashAfter": "e7e4b036d3e21568ab5e24668c3718d3170ffa863365bc7c49fd558d9f8740fb",
+      "hashBefore": "a891d4405c73bab0dd6136ac34be62a3405deb97e203377f7d81e0eb30de820e"
+    },
+    {
+      "path": "scripts/development-ledger/verify_integrity.py",
+      "reason": "CP9-F-002: use the derived exclusions instead of resolving LATEST inline.",
+      "hashAfter": "40d59357c85d5ae1c4bdfdb413eee695069523b5865a159caee27533df5dccce",
+      "hashBefore": "a07521fd49ce626282d72e31e8d7f1e576863dcfc9223691b59f99f61e5633d7"
+    },
+    {
+      "path": "tests/test_development_ledger.py",
+      "reason": "Regression cases for the five CP-0009 findings, the positive paths, and the fixtures that must derive from current policy rather than copy a sealed claim.",
+      "hashAfter": "c62438d78de81da24963a5e88ad7db15eea72676abadafc1dda2a6a244f067b0",
+      "hashBefore": "776de4194da97c82df6256ddca7ac47be758cffd9fa31e9161b858fc166d51e0"
+    }
+  ],
+  "filesDeleted": []
+}

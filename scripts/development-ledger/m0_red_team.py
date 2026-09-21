@@ -32,7 +32,9 @@ import tempfile
 from pathlib import Path
 from typing import Any, Callable
 
+from anchors import resolve_tag
 from ledger_common import (
+    INDEPENDENT_AUDIT_PASS_STATUS,
     LedgerError,
     find_root,
     load_json,
@@ -182,8 +184,13 @@ class Fixture:
                     })
             mandatory = [item for item in attacks if item["mandatory"]]
             write_json(red_team, {
-                "schemaVersion": "1.0.0", "checkpoint": checkpoint.name, "generatedAt": utc_now(),
+                "schemaVersion": "1.1.0", "checkpoint": checkpoint.name, "generatedAt": utc_now(),
                 "targetFingerprint": fingerprint,
+                "baselineControl": {
+                    "result": "VALID",
+                    "detail": "modelled by the attack fixture for the first run, before the real "
+                              "battery has produced its own control",
+                },
                 "source": "modelled by the attack fixture", "attacks": attacks,
                 "total": len(attacks), "defended": len(attacks), "escaped": 0,
                 "mandatoryTotal": len(mandatory), "mandatoryDefended": len(mandatory),
@@ -398,6 +405,21 @@ def _guarded(lessons: list[dict[str, Any]]) -> dict[str, Any]:
     raise LedgerError("the memory contains no GUARDED lesson to attack")
 
 
+def _anchored_predecessor(fixture: Fixture) -> str:
+    """An anchored sealed checkpoint before the delivery under attack, derived from the fixture.
+
+    A battery that names its victim by literal decides today's behaviour from yesterday's
+    repository, which is the coupling class finding CP9-F-002 records.
+    """
+    from anchors import load_anchors
+
+    anchored = [str(item.get("checkpointId")) for item in load_anchors(fixture.path)
+                if str(item.get("checkpointId")) != fixture.name]
+    if not anchored:
+        raise LedgerError("the fixture has no anchored predecessor to attack")
+    return anchored[-1]
+
+
 def build_attacks() -> list[dict[str, Any]]:
     """Every attack, as data. ``run`` returns (observed, defended)."""
 
@@ -508,7 +530,10 @@ def build_attacks() -> list[dict[str, Any]]:
            "reject without disclosing the value", run_h, True, cp7)
 
     def run_i(fixture: Fixture) -> tuple[str, bool]:
-        sealed = fixture.path / "docs" / "checkpoints" / "SETUP-00-CP-0005" / "DECISIONS.md"
+        # The victim is derived: an anchored predecessor of the delivery under attack, never the
+        # checkpoint that happened to be convenient when this battery was written.
+        victim = _anchored_predecessor(fixture)
+        sealed = fixture.path / "docs" / "checkpoints" / victim / "DECISIONS.md"
         sealed.write_text("# Decisions\n\nrewritten by the attacker\n", encoding="utf-8", newline="\n")
         subprocess.run(["git", "add", "-A"], cwd=fixture.path, check=True,
                        stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
@@ -516,16 +541,17 @@ def build_attacks() -> list[dict[str, Any]]:
                         "-m", "rewrite sealed history"], cwd=fixture.path, check=True,
                        stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         code, head = run_git(fixture.path, "rev-parse", "HEAD")
-        subprocess.run(["git", "tag", "-f", f"{TAG_NAMESPACE}SETUP-00-CP-0005", head],
+        subprocess.run(["git", "tag", "-f", f"{TAG_NAMESPACE}{victim}", head],
                        cwd=fixture.path, check=code == 0,
                        stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-        return tool_refuses(fixture, [INTEGRITY], "checkpoint")
+        return tool_refuses(fixture, [INTEGRITY], victim)
 
     attack("I", "sealed predecessor",
            "Rewrite a sealed checkpoint and move its tag to the rewritten commit",
            "reject the historical rewrite", run_i, True, cp7)
 
     def run_j(fixture: Fixture) -> tuple[str, bool]:
+        victim = _anchored_predecessor(fixture)
         (fixture.path / "docs" / "checkpoints" / "README.md").write_text(
             "# Checkpoints\n\nmoved\n", encoding="utf-8", newline="\n")
         subprocess.run(["git", "add", "-A"], cwd=fixture.path, check=True,
@@ -534,10 +560,10 @@ def build_attacks() -> list[dict[str, Any]]:
                         "-m", "move the tag with HEAD"], cwd=fixture.path, check=True,
                        stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         code, head = run_git(fixture.path, "rev-parse", "HEAD")
-        subprocess.run(["git", "tag", "-f", f"{TAG_NAMESPACE}SETUP-00-CP-0007", head],
+        subprocess.run(["git", "tag", "-f", f"{TAG_NAMESPACE}{victim}", head],
                        cwd=fixture.path, check=code == 0,
                        stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-        return tool_refuses(fixture, [INTEGRITY], "SETUP-00-CP-0007")
+        return tool_refuses(fixture, [INTEGRITY], victim)
 
     attack("J", "tag immutability", "Move a checkpoint tag and HEAD to a new commit together",
            "reject the moved tag", run_j, True, cp7)
@@ -610,7 +636,7 @@ def build_attacks() -> list[dict[str, Any]]:
             }
             return document
         fixture.checkpoint_edit("STATE.json", mutate)
-        return validator_refuses(fixture, "external validation")
+        return validator_refuses(fixture, "independent audit")
 
     attack("Q", "second-tool evidence",
            "Supply complete cross-tool attribution with no external evidence",
@@ -628,7 +654,7 @@ def build_attacks() -> list[dict[str, Any]]:
         fixture.checkpoint_edit("STATE.json", mutate)
         (fixture.checkpoint / "STATUS.md").write_text(
             "# Status\n\nMILESTONE_EXTERNAL_PASS\n", encoding="utf-8", newline="\n")
-        return validator_refuses(fixture, "external validation")
+        return validator_refuses(fixture, "independent audit")
 
     attack("R", "pass vocabulary", "Promote an internally authored result to an external status",
            "require an independent verdict", run_r, True, cp7)
@@ -818,18 +844,43 @@ def build_attacks() -> list[dict[str, Any]]:
     attack("AH", "gate staleness", "Edit the assurance scope after the last GREEN cycle",
            "reject the stale PASS", run_ah, False, new)
 
-    def _write_attestation(fixture: Fixture, **overrides: Any) -> None:
+    def _audit_subject(fixture: Fixture) -> tuple[str, str]:
+        """The sealed checkpoint this fixture would be auditing, derived from its own history.
+
+        The fixture models the delivery as sealed, so its predecessor is the newest checkpoint an
+        audit could legitimately judge. Naming one by literal is the failure class CP9-F-002
+        describes, so it is derived here as well.
+        """
+        from anchors import sealed_checkpoints_in_history_order
+
+        sealed = [item for item in sealed_checkpoints_in_history_order(fixture.path)
+                  if item != fixture.name]
+        subject = sealed[-1] if sealed else fixture.name
+        commit = resolve_tag(fixture.path, f"refs/tags/{TAG_NAMESPACE}{subject}")
+        return subject, commit or "0" * 40
+
+    def _write_attestation(fixture: Fixture, *, status: str = INDEPENDENT_AUDIT_PASS_STATUS,
+                           state_only: bool = False, **overrides: Any) -> None:
+        """Promote the fixture as if it were the audit checkpoint of its sealed predecessor.
+
+        The shape is the honest one the corrected model requires -- the verdict lives in the audit
+        checkpoint and names the subject -- so every attack below mutates exactly one element of a
+        promotion that would otherwise be legitimate.
+        """
         state = load_json(fixture.checkpoint / "STATE.json")
-        code, commit = run_git(fixture.path, "rev-parse", "HEAD")
+        subject, subject_commit = _audit_subject(fixture)
         document = {
-            "schemaVersion": "1.0.0",
+            "schemaVersion": "2.0.0",
             "auditId": "M0-FORGED",
             "milestone": state["milestone"]["id"],
-            "auditorRole": "milestone auditor",
+            "validationMechanism": "FRESH_SESSION_INDEPENDENT_AUDIT",
+            "crossToolValidation": "NOT_AVAILABLE",
+            "auditorRole": "milestone independent auditor",
             "tool": "a tool", "provider": "a provider", "model": "a model",
-            "subjectCheckpoint": fixture.name,
-            "subjectCommit": commit if code == 0 else "0" * 40,
-            "auditCheckpoint": "SETUP-00-CP-0007",
+            "freshSession": True,
+            "subjectCheckpoint": subject,
+            "subjectCommit": subject_commit,
+            "auditCheckpoint": fixture.name,
             "reviewResult": "APPROVED",
             "redTeamResult": "RED_TEAM_PASS",
             "completeness": 100.0,
@@ -840,23 +891,50 @@ def build_attacks() -> list[dict[str, Any]]:
         document.update(overrides)
         directory = fixture.path / ".iacode" / "attestations"
         directory.mkdir(parents=True, exist_ok=True)
-        write_json(directory / "forged.json", document)
+        if not state_only:
+            write_json(directory / "forged.json", document)
 
         def promote(state_document: Any) -> Any:
-            state_document["status"] = "MILESTONE_EXTERNAL_PASS"
+            state_document["status"] = status
             state_document["milestone"]["status"] = "PASSED"
+            state_document["independentReview"] = {
+                "status": "APPROVED", "tool": "a tool",
+                "reviewedAt": "2026-09-20T00:00:00Z", "justification": None,
+                "evidence": ["file:HANDOFF.md"],
+            }
+            state_document["redTeam"] = {
+                "status": "RED_TEAM_PASS", "tool": "a tool",
+                "executedAt": "2026-09-20T00:00:00Z", "justification": None,
+                "evidence": ["file:HANDOFF.md"],
+            }
             state_document["secondToolValidation"] = {
                 "status": "PASSED", "tool": "a tool", "provider": "a provider", "model": "a model",
                 "validatedAt": "2026-09-20T00:00:00Z", "justification": None,
                 "evidence": ["file:HANDOFF.md"],
             }
+            state_document["externalAttestation"] = {
+                "status": "VERIFIED", "path": ".iacode/attestations/forged.json",
+                "auditId": document["auditId"],
+                "subjectCheckpoint": document["subjectCheckpoint"],
+                "subjectCommit": document["subjectCommit"],
+                "validationMechanism": document["validationMechanism"],
+                "evidence": ["file:HANDOFF.md"],
+            }
+            if state_only:
+                state_document["externalAttestation"] = {
+                    "status": "VERIFIED", "path": None, "auditId": None,
+                    "subjectCheckpoint": None, "subjectCommit": None,
+                    "validationMechanism": None, "evidence": [],
+                }
             return state_document
         fixture.checkpoint_edit("STATE.json", promote)
         (fixture.checkpoint / "STATUS.md").write_text(
-            "# Status\n\nMILESTONE_EXTERNAL_PASS\n", encoding="utf-8", newline="\n")
+            f"# Status\n\n{status}\n", encoding="utf-8", newline="\n")
 
     def run_ai(fixture: Fixture) -> tuple[str, bool]:
-        _write_attestation(fixture, auditCheckpoint=fixture.name)
+        subject, _ = _audit_subject(fixture)
+        _write_attestation(fixture, subjectCheckpoint=fixture.name,
+                           auditCheckpoint=fixture.name)
         return validator_refuses(fixture, "may not be authored by the delivery it judges")
 
     attack("AI", "external attestation",
@@ -867,14 +945,14 @@ def build_attacks() -> list[dict[str, Any]]:
         _write_attestation(fixture, reviewResult="REWORK_REQUIRED")
         return validator_refuses(fixture, "requires APPROVED")
 
-    attack("AJ", "external attestation", "Claim an external PASS over a failed review", "reject",
+    attack("AJ", "external attestation", "Claim a milestone PASS over a failed review", "reject",
            run_aj, False, new)
 
     def run_ak(fixture: Fixture) -> tuple[str, bool]:
         _write_attestation(fixture, subjectCommit="0" * 40)
-        return validator_refuses(fixture, "attests commit")
+        return validator_refuses(fixture, "subjectCommit")
 
-    attack("AK", "external attestation", "Attest a different commit than the one being promoted",
+    attack("AK", "external attestation", "Attest a commit the subject's tag does not resolve to",
            "reject", run_ak, False, new)
 
     def run_al(fixture: Fixture) -> tuple[str, bool]:
@@ -901,7 +979,17 @@ def build_attacks() -> list[dict[str, Any]]:
             document["closed"] -= 1
             document["result"] = "OPEN"
             return document
-        fixture.checkpoint_edit("CP7-FINDINGS-CLOSURE.json", mutate)
+        # The closure artifact is named by the registry entry that binds the audit to this
+        # corrective checkpoint. Naming one audit's file by literal is the coupling class
+        # CP9-F-002 records, and it made this attack a tooling error rather than a defence.
+        state = load_json(fixture.checkpoint / "STATE.json")
+        closure_files = [
+            str(audit.get("findingsClosureFile") or "FINDINGS-CLOSURE.json")
+            for audit in open_audits(fixture.path, str(state.get("gate", "")), fixture.name)
+        ]
+        if not closure_files:
+            return "no open audit binds a findings closure artifact to this checkpoint", True
+        fixture.checkpoint_edit(closure_files[0], mutate)
         return validator_refuses(fixture, "remain open")
 
     attack("AN", "findings closure", "Offer the delivery with an audit finding still open",
@@ -970,7 +1058,96 @@ def build_attacks() -> list[dict[str, Any]]:
     attack("AT", "seal chronology", "Remove the post-commit validation of the sealed content",
            "reject", run_at, False, new)
 
+    # The attestation model after CP9-F-001: the verdict lives in the audit checkpoint, names the
+    # sealed subject, and is refused the moment any element of that relationship is forged.
+    def run_au(fixture: Fixture) -> tuple[str, bool]:
+        sealed = [item for item in sealed_ids(fixture) if item != fixture.name]
+        other = sealed[0] if sealed else "SETUP-00-CP-0001"
+        _write_attestation(fixture, auditCheckpoint=other)
+        return validator_refuses(fixture, "may only carry the verdict of the audit it performed")
+
+    attack("AU", "external attestation", "Claim a verdict another checkpoint authored", "reject",
+           run_au, False, new)
+
+    def run_av(fixture: Fixture) -> tuple[str, bool]:
+        _write_attestation(fixture, redTeamResult="RED_TEAM_FAIL")
+        return validator_refuses(fixture, "requires RED_TEAM_PASS")
+
+    attack("AV", "external attestation", "Claim a milestone PASS over a failed Red Team", "reject",
+           run_av, False, new)
+
+    def run_aw(fixture: Fixture) -> tuple[str, bool]:
+        _write_attestation(fixture, completeness=93.22)
+        return validator_refuses(fixture, "requires 100.0")
+
+    attack("AW", "external attestation", "Claim a milestone PASS over an incomplete audit",
+           "reject", run_aw, False, new)
+
+    def run_ax(fixture: Fixture) -> tuple[str, bool]:
+        _write_attestation(fixture, subjectCheckpoint="SETUP-00-CP-9999")
+        return validator_refuses(fixture, "does not exist")
+
+    attack("AX", "external attestation", "Attest a subject checkpoint that does not exist",
+           "reject", run_ax, False, new)
+
+    def run_ay(fixture: Fixture) -> tuple[str, bool]:
+        _write_attestation(fixture, auditorRole="")
+        return validator_refuses(fixture, "requires auditorRole")
+
+    attack("AY", "external attestation", "Attest with no auditor role recorded", "reject",
+           run_ay, False, new)
+
+    def run_az(fixture: Fixture) -> tuple[str, bool]:
+        _write_attestation(fixture, testResult="FAIL")
+        return validator_refuses(fixture, "requires PASS")
+
+    attack("AZ", "external attestation", "Claim a milestone PASS over a failed test result",
+           "reject", run_az, False, new)
+
+    def run_ba(fixture: Fixture) -> tuple[str, bool]:
+        _write_attestation(fixture, status="MILESTONE_EXTERNAL_PASS")
+        return validator_refuses(fixture, "may not be derived from")
+
+    attack("BA", "pass vocabulary",
+           "Take the cross-tool status on a fresh-session attestation", "reject", run_ba, False,
+           new)
+
+    def run_bb(fixture: Fixture) -> tuple[str, bool]:
+        _write_attestation(fixture, state_only=True)
+        return validator_refuses(fixture, "externalAttestation.subjectCheckpoint")
+
+    attack("BB", "external attestation",
+           "Claim a milestone verdict without naming the subject that was audited", "reject",
+           run_bb, False, new)
+
+    def run_bc(fixture: Fixture) -> tuple[str, bool]:
+        _write_attestation(fixture, validationMechanism="TRUST_ME")
+        return validator_refuses(fixture, "recognised mechanisms")
+
+    attack("BC", "external attestation", "Invent a validation mechanism", "reject", run_bc,
+           False, new)
+
+    def run_bd(fixture: Fixture) -> tuple[str, bool]:
+        sealed = [item for item in sealed_ids(fixture) if item != fixture.name]
+        if len(sealed) < 2:
+            return "the fixture has too little sealed history to attack", True
+        older = sealed[-2]
+        _write_attestation(
+            fixture, subjectCheckpoint=older,
+            subjectCommit=resolve_tag(fixture.path, f"refs/tags/{TAG_NAMESPACE}{older}") or "0" * 40)
+        return validator_refuses(fixture, "is not the sealed checkpoint this audit succeeds")
+
+    attack("BD", "external attestation",
+           "Attest an older checkpoint than the delivery the audit succeeds", "reject", run_bd,
+           False, new)
+
     return attacks
+
+
+def sealed_ids(fixture: Fixture) -> list[str]:
+    from anchors import sealed_checkpoints_in_history_order
+
+    return sealed_checkpoints_in_history_order(fixture.path)
 
 
 def _summarize(code: int, output: str, needle: str | None = None) -> str:
@@ -1070,6 +1247,15 @@ def main() -> int:
         fixture = Fixture(root, checkpoint.name, Path(workdir))
         fixture.capture_tags()
         baseline_code, baseline_output = fixture.validator()
+        # The null-mutation control: the unmutated fixture has to be accepted before any refusal
+        # can be attributed to the mutation under test. The CP-0009 audit's first harness reported
+        # every attack as defended while the refusals came from leftover state.
+        baseline_control = {
+            "result": "VALID" if baseline_code == 0 else "INVALID",
+            "detail": _summarize(baseline_code, baseline_output)
+            if baseline_code != 0 else
+            "the unmutated fixture validates through the same path as every attack",
+        }
         if baseline_code != 0:
             print("RED_TEAM_FIXTURE_INVALID")
             sys.stdout.write(baseline_output)
@@ -1099,14 +1285,15 @@ def main() -> int:
     escaped = [item for item in results if item["result"] == "ESCAPED"]
     mandatory = [item for item in results if item["mandatory"]]
     report = {
-        "schemaVersion": "1.0.0",
+        "schemaVersion": "1.1.0",
         "checkpoint": checkpoint.name,
         "generatedAt": utc_now(),
         "targetFingerprint": fingerprint,
+        "baselineControl": baseline_control,
         "source": (
-            "Mandatory battery re-parsed from docs/checkpoints/SETUP-00-CP-0007/RED-TEAM-REPORT.md; "
-            "additional attacks from the same report; new attacks for the surfaces this checkpoint "
-            "introduces."),
+            "Mandatory battery re-parsed from the sealed Red Team report of every audit in "
+            ".iacode/policies/audit-registry.json; additional attacks from the same reports; new "
+            "attacks for the surfaces this checkpoint introduces."),
         "attacks": results,
         "total": len(results),
         "defended": len(defended),

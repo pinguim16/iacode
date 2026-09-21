@@ -42,6 +42,13 @@
             "string",
             "null"
           ]
+        },
+        "runId": {
+          "description": "Identifier of the physical test execution this category was measured by. Two categories covered by the same run share it, so a single execution is never counted twice.",
+          "type": [
+            "string",
+            "null"
+          ]
         }
       },
       "additionalProperties": false

@@ -1,0 +1,91 @@
+{
+  "schemaVersion": "1.0.0",
+  "generatedAt": "2026-09-21T05:41:08Z",
+  "simulation": "successor anchor durability",
+  "finding": "CP9-F-002",
+  "checkpoints": [
+    {
+      "checkpoint": "SETUP-00-CP-0001",
+      "commit": "91326361a7ebc7a04b7841a35da4b8dfd59a7b52",
+      "tag": "refs/tags/iacode-checkpoints/SETUP-00-CP-0001"
+    },
+    {
+      "checkpoint": "SETUP-00-CP-0002",
+      "commit": "05051d820fda2b55946c46db51822589577db129",
+      "tag": "refs/tags/iacode-checkpoints/SETUP-00-CP-0002"
+    },
+    {
+      "checkpoint": "SETUP-00-CP-0003",
+      "commit": "609ae9ad3170b176f53ad41c6f7ae72bc86fa8f3",
+      "tag": "refs/tags/iacode-checkpoints/SETUP-00-CP-0003"
+    }
+  ],
+  "states": [
+    "SETUP-00-CP-0001 sealed, its anchor still owed",
+    "SETUP-00-CP-0002 sealed, anchoring SETUP-00-CP-0001",
+    "SETUP-00-CP-0003 sealed, anchoring SETUP-00-CP-0002"
+  ],
+  "removedAnchor": "SETUP-00-CP-0002",
+  "checks": [
+    {
+      "id": "SUC-001",
+      "expectation": "the chain verifies with a derived exclusion at this state",
+      "observed": "sealed SETUP-00-CP-0001; anchored none; pending anchor SETUP-00-CP-0001; no divergence",
+      "state": "SETUP-00-CP-0001 sealed, its anchor still owed",
+      "result": "PASS"
+    },
+    {
+      "id": "SUC-001I",
+      "expectation": "verify_integrity.py exits zero at this state",
+      "observed": "exit=0 INTEGRITY_VALID anchors=0 latest=none",
+      "state": "SETUP-00-CP-0001 sealed, its anchor still owed",
+      "result": "PASS"
+    },
+    {
+      "id": "SUC-002",
+      "expectation": "the chain verifies with a derived exclusion at this state",
+      "observed": "sealed SETUP-00-CP-0001, SETUP-00-CP-0002; anchored SETUP-00-CP-0001; pending anchor SETUP-00-CP-0002; no divergence",
+      "state": "SETUP-00-CP-0002 sealed, anchoring SETUP-00-CP-0001",
+      "result": "PASS"
+    },
+    {
+      "id": "SUC-002I",
+      "expectation": "verify_integrity.py exits zero at this state",
+      "observed": "exit=0 INTEGRITY_VALID anchors=1 latest=SETUP-00-CP-0001",
+      "state": "SETUP-00-CP-0002 sealed, anchoring SETUP-00-CP-0001",
+      "result": "PASS"
+    },
+    {
+      "id": "SUC-003",
+      "expectation": "the chain verifies with a derived exclusion at this state",
+      "observed": "sealed SETUP-00-CP-0001, SETUP-00-CP-0002, SETUP-00-CP-0003; anchored SETUP-00-CP-0001, SETUP-00-CP-0002; pending anchor SETUP-00-CP-0003; no divergence",
+      "state": "SETUP-00-CP-0003 sealed, anchoring SETUP-00-CP-0002",
+      "result": "PASS"
+    },
+    {
+      "id": "SUC-003I",
+      "expectation": "verify_integrity.py exits zero at this state",
+      "observed": "exit=0 INTEGRITY_VALID anchors=2 latest=SETUP-00-CP-0002",
+      "state": "SETUP-00-CP-0003 sealed, anchoring SETUP-00-CP-0002",
+      "result": "PASS"
+    },
+    {
+      "id": "SUC-DETECT",
+      "expectation": "removing the anchor of a checkpoint the rule does not forgive is detected",
+      "observed": "removed SETUP-00-CP-0002: sealed checkpoint SETUP-00-CP-0002 has no integrity anchor",
+      "state": "mutation",
+      "result": "PASS"
+    },
+    {
+      "id": "SUC-RESTORE",
+      "expectation": "the chain verifies again once the anchor is restored",
+      "observed": "no divergence",
+      "state": "restored",
+      "result": "PASS"
+    }
+  ],
+  "total": 8,
+  "passed": 8,
+  "failed": 0,
+  "result": "PASS"
+}

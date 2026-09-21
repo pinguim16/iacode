@@ -29,7 +29,7 @@ from pathlib import Path
 from typing import Any
 
 from ledger_common import LedgerError, find_root, load_json, resolve_latest, utc_now, validate_schema
-from policies import expected_requirement_refs
+from policies import expected_requirement_refs, open_audits
 
 EVIDENCE_FIELDS = (
     "implementationEvidence",
@@ -110,17 +110,32 @@ def build(root: Path, checkpoint: Path, gate: str) -> tuple[dict[str, Any], dict
             continue
         requirements.append(_row(identifier, expected[reference], previous.get(reference)))
 
+    # The audit sources are the ones this checkpoint actually corrects, read from the registry.
+    # Naming a checkpoint's reports by literal here would make the derivation describe the audit of
+    # some earlier delivery, which is the coupling class CP9-F-002 records.
+    sources = [
+        "SOURCE A: docs/SETUP-00-CHECKLIST.md, the canonical SETUP-00 specification",
+        "SOURCE B: docs/MILESTONE-VALIDATION.md, the milestone requirements of the audit",
+    ]
+    letter = ord("C")
+    for audit in open_audits(root, gate, checkpoint.name):
+        sources.append(
+            f"SOURCE {chr(letter)}: {audit.get('reviewReport')}, the findings of "
+            f"{audit.get('auditId')}")
+        letter += 1
+        if audit.get("redTeamReport"):
+            sources.append(
+                f"SOURCE {chr(letter)}: {audit.get('redTeamReport')}, the mandatory attacks of "
+                f"{audit.get('auditId')}")
+            letter += 1
+    sources.append(
+        f"SOURCE {chr(letter)}: LESSON-PREFLIGHT.json, the lessons the engineering memory imposes")
+
     closure = {
         "schemaVersion": "1.0.0",
         "gate": gate,
         "checkpoint": checkpoint.name,
-        "sources": [
-            "SOURCE A: docs/SETUP-00-CHECKLIST.md, the canonical SETUP-00 specification",
-            "SOURCE B: docs/MILESTONE-VALIDATION.md, the M0 milestone requirements of the audit",
-            "SOURCE C: docs/checkpoints/SETUP-00-CP-0007/REVIEW-REPORT.md, the audit findings",
-            "SOURCE D: docs/checkpoints/SETUP-00-CP-0007/RED-TEAM-REPORT.md, the A-Z attacks",
-            "SOURCE E: LESSON-PREFLIGHT.json, the lessons the engineering memory imposes",
-        ],
+        "sources": sources,
         "requirements": requirements,
     }
 

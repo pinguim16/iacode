@@ -17,6 +17,22 @@
       "correctiveCheckpoint": "SETUP-00-CP-0008",
       "notes": "Eleven findings and twenty-six mandatory A-Z attacks, of which eight escaped, plus six additional attacks AA-AF that also escaped.",
       "findingsClosureFile": "CP7-FINDINGS-CLOSURE.json"
+    },
+    {
+      "auditId": "M0-CP-0009",
+      "milestone": "M0",
+      "gate": "SETUP-00",
+      "auditor": "Claude Code 2.1.195, Anthropic, fresh-session independent milestone audit (FRESH_SESSION_INDEPENDENT_AUDIT); not cross-tool validation",
+      "auditCheckpoint": "SETUP-00-CP-0009",
+      "auditCommit": "28c2b487baf216d3745bb6c5a25a5b8aa7274a9e",
+      "subjectCheckpoint": "SETUP-00-CP-0008",
+      "subjectCommit": "c53f4c59a77870414324efa6b5f61b35d26c5090",
+      "verdict": "REWORK_REQUIRED",
+      "reviewReport": "docs/checkpoints/SETUP-00-CP-0009/REVIEW-REPORT.md",
+      "redTeamReport": "docs/checkpoints/SETUP-00-CP-0009/RED-TEAM-REPORT.md",
+      "correctiveCheckpoint": "SETUP-00-CP-0010",
+      "notes": "Five findings: CP9-F-001 and CP9-F-002 CRITICAL, CP9-F-003 to CP9-F-005 LOW. Twenty-six mandatory A-Z attacks and twenty-six additional AA-AZ attacks, all defended, over a null-mutation control; the positive control POS-EXT was refused, which is finding CP9-F-001.",
+      "findingsClosureFile": "CP9-FINDINGS-CLOSURE.json"
     }
   ]
 }

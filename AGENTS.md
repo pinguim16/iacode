@@ -29,7 +29,7 @@ This file is a Codex adapter for the canonical contracts in `.iacode/`. Reposito
 - Follow the mandatory delivery order and skip no step: lesson preflight, requirement derivation, baseline, plan, implementation, test and quality, Green Keeper, Delivery Completeness Validator, internal Red Team, Milestone Closure Auditor, `READY_FOR_REVIEW`, independent review, Red Team, `GATE_PASS`.
 - Derive the requirement set with `python scripts/development-ledger/derive_requirements.py --write`; the canonical checklist, the lesson preflight and the open audit findings decide it, never the delivery.
 - Never narrow a mandatory gate set, a denominator or a promotion rule by an argument; those come from policy.
-- Never record an internal verdict as external validation. An external PASS is derived from an audit attestation authored by another sealed checkpoint.
+- Never record an internal verdict as independent validation. A milestone verdict is derived from an audit attestation that a later audit checkpoint wrote about a sealed subject; the subject is never rewritten to become approved. `MILESTONE_INDEPENDENT_AUDIT_PASS` records a fresh-session audit and `MILESTONE_EXTERNAL_PASS` a cross-tool one, and neither mechanism may take the other's status.
 - Seal with `python scripts/development-ledger/seal_checkpoint.py` so the final validation describes the committed content, and anchor every sealed predecessor in `.iacode/anchors/checkpoint-chain.json`.
 - Extract every requirement into `REQUIREMENTS-MATRIX.json` before implementing, and keep its status truthful.
 - Run `python scripts/development-ledger/green_keeper.py` until every mandatory gate is green, and `python scripts/development-ledger/check_completeness.py --write` before any handoff.

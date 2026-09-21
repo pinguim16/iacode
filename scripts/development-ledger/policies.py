@@ -51,17 +51,22 @@ CHECKLIST_ROW = re.compile(
 # One finding heading in an independent review report: ### M0-F-001 — CRITICAL — ...
 FINDING_HEADING = re.compile(r"^###\s+(?P<id>[A-Z0-9]+-F-[0-9]{3})\s*[-—]\s*(?P<rest>.+?)\s*$")
 
-# One attack row in a Red Team report: | C | target | mutation | expected | observed | result | ev |
+# One attack row in a Red Team report:
+#     | C | target | mutation | expected | observed | result | evidence |
+# The evidence column and the backticks around the identifier and the verdict are optional,
+# because sealed reports differ in how they render the same table: CP-0007 wrote seven columns
+# with a bare verdict and CP-0009 wrote six with a quoted one. A parser that recognised only one
+# rendering would silently read a sealed report as containing no attack at all.
 ATTACK_ROW = re.compile(
-    r"^\|\s*(?P<id>[A-Z]{1,2})\s*\|\s*(?P<target>.+?)\s*\|\s*(?P<mutation>.+?)\s*\|"
-    r"\s*(?P<expected>.+?)\s*\|\s*(?P<observed>.+?)\s*\|\s*(?P<result>DEFENDED|ESCAPED)\s*\|"
-    r"\s*(?P<evidence>.+?)\s*\|\s*$"
+    r"^\|\s*`?(?P<id>[A-Z]{1,2})`?\s*\|\s*(?P<target>.+?)\s*\|\s*(?P<mutation>.+?)\s*\|"
+    r"\s*(?P<expected>.+?)\s*\|\s*(?P<observed>.+?)\s*\|\s*`?(?P<result>DEFENDED|ESCAPED)`?"
+    r"\s*\|(?:\s*(?P<evidence>.+?)\s*\|)?\s*$"
 )
 
 # One additional-attack row, which omits the target column.
 ADDITIONAL_ATTACK_ROW = re.compile(
-    r"^\|\s*(?P<id>[A-Z]{1,2})\s*\|\s*(?P<mutation>.+?)\s*\|\s*(?P<expected>.+?)\s*\|"
-    r"\s*(?P<observed>.+?)\s*\|\s*(?P<result>DEFENDED|ESCAPED)\s*\|\s*$"
+    r"^\|\s*`?(?P<id>[A-Z]{1,2})`?\s*\|\s*(?P<mutation>.+?)\s*\|\s*(?P<expected>.+?)\s*\|"
+    r"\s*(?P<observed>.+?)\s*\|\s*`?(?P<result>DEFENDED|ESCAPED)`?\s*\|\s*$"
 )
 
 
@@ -182,10 +187,23 @@ def parse_findings(text: str) -> list[dict[str, str]]:
 
 
 def parse_attacks(text: str) -> list[dict[str, str]]:
-    """Every attack row of a Red Team report, mandatory table first, additional table after."""
+    """Every attack row of a Red Team report, mandatory battery first, additional battery after.
+
+    Which battery a row belongs to is decided by the section it is written under, not by how many
+    columns its table happens to have. The CP-0007 report wrote its additional attacks in a narrower
+    table and the CP-0009 report wrote them in the same table shape as the mandatory ones; a parser
+    that inferred the battery from the shape would have promoted twenty-six additional attacks to
+    mandatory the moment the second report was registered. A section whose heading names it as
+    additional is additional; the narrower row shape remains additional wherever it appears.
+    """
     attacks: list[dict[str, str]] = []
     seen: set[str] = set()
+    additional_section = False
     for line in text.splitlines():
+        heading = re.match(r"^#{2,}\s+(?P<title>.+?)\s*$", line)
+        if heading:
+            additional_section = "additional" in heading.group("title").lower()
+            continue
         match = ATTACK_ROW.match(line)
         if match:
             identifier = match.group("id")
@@ -199,7 +217,7 @@ def parse_attacks(text: str) -> list[dict[str, str]]:
                 "expectedDefense": match.group("expected"),
                 "observed": match.group("observed"),
                 "result": match.group("result"),
-                "mandatory": "true",
+                "mandatory": "false" if additional_section else "true",
             })
             continue
         match = ADDITIONAL_ATTACK_ROW.match(line)

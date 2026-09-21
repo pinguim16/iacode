@@ -18,6 +18,12 @@ Work is done only when all applicable items are evidenced:
 - the mandatory gate set came from policy, and every mandatory gate executed and was green;
 - no gate result is stale: the Green Keeper, the completeness audit, the internal Red Team and the
   internal mirror audit all describe the content as it stands;
+- every control this delivery adds or changes that gates a status has an executed positive path, not
+  only executed refusals;
+- every adversarial battery recorded a null-mutation control that the unmutated fixture passed;
+- no generic guard, test or policy decides behaviour from the name of a historical checkpoint;
+- the protocol transitions this delivery's successor must perform were executed, and the mandatory
+  gates stayed green through all of them;
 - every mandatory attack of every open audit is defended, and every finding of those audits is closed;
 - every guardrail resolves, is verified by a test, and carries no unresolved `GUARDRAIL_FAILURE`;
 - the sealed checkpoint chain verifies, and this checkpoint anchors every sealed predecessor;

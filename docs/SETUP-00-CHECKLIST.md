@@ -120,6 +120,9 @@ observable. An unexecuted check is `NOT_EXECUTED`, never `PASS`.
 | 7d.10 | Sealing is monotonic and post-commit, and every recorded command binds its declared inputs by content. | `scripts/development-ledger/seal_checkpoint.py`, `record_command.py` | `SealChronologyTests`, `CommandInputBindingTests`. |
 | 7d.11 | A milestone delivery carries an internal Red Team and an internal mirror audit, and neither is recorded as external validation. | `scripts/development-ledger/m0_red_team.py`, `m0_mirror_audit.py`, `.iacode/agents/m0-closure-auditor.md` | `InternalAssuranceTests`, `AuditSourceParsingTests`. |
 | 7d.12 | Every finding of an independent audit is closed before the corrective delivery is offered. | `.iacode/policies/audit-registry.json`, `CP7-FINDINGS-CLOSURE.json` | `FindingsClosureTests`. |
+| 7d.13 | A milestone verdict is carried by the audit checkpoint about a sealed subject, and its positive path is executed rather than only its refusals. | `scripts/development-ledger/attestation.py`, `milestone_status.py`, `promotion_simulation.py` | `AuditAttestationModelTests`, `PositivePromotionTests`. |
+| 7d.14 | A generic guardrail derives repository state instead of naming a historical checkpoint, and the protocol's own next steps keep every mandatory gate green. | `scripts/development-ledger/anchors.py`, `successor_durability.py` | `SuccessorDurabilityTests`, `IntegrityAnchorTests`. |
+| 7d.15 | Every adversarial battery records a null-mutation control, and no count used as evidence is stated in prose. | `scripts/development-ledger/m0_red_team.py`, `.iacode/schemas/red-team-report.schema.json`, `docs/QUALITY-GATES.md` | `InternalAssuranceTests`, `SourceCardinalityPolicyTests`, `DerivedTestCountTests`. |
 
 ## 8. Independent verification
 

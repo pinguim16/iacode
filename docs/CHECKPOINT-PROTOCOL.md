@@ -4,7 +4,11 @@ A checkpoint is a reconstructible snapshot of observable engineering state.
 
 ## Canonical statuses
 
-`NOT_STARTED`, `BASELINING`, `IN_PROGRESS`, `BLOCKED`, `READY_FOR_REVIEW`, `REWORK_REQUIRED`, `READY_FOR_RED_TEAM`, `INTERNAL_GATE_PASS`, `MILESTONE_EXTERNAL_PASS`, `GATE_PASS`, `GATE_FAIL`.
+`NOT_STARTED`, `BASELINING`, `IN_PROGRESS`, `BLOCKED`, `READY_FOR_REVIEW`, `REWORK_REQUIRED`, `READY_FOR_RED_TEAM`, `INTERNAL_GATE_PASS`, `MILESTONE_INDEPENDENT_AUDIT_PASS`, `MILESTONE_EXTERNAL_PASS`, `GATE_PASS`, `GATE_FAIL`.
+
+`MILESTONE_INDEPENDENT_AUDIT_PASS` and `MILESTONE_EXTERNAL_PASS` are the two verdicts an independent
+audit can record, and both belong to the **audit checkpoint**, never to the delivery it judges. See
+[MILESTONE-VALIDATION.md](MILESTONE-VALIDATION.md).
 
 ## Required events
 
@@ -28,8 +32,9 @@ so a sealed checkpoint never becomes invalid because the tooling advanced. New c
 ## Status and blockers
 
 A checkpoint may never claim readiness and blockage at the same time. `READY_FOR_REVIEW`,
-`READY_FOR_RED_TEAM`, `INTERNAL_GATE_PASS`, `MILESTONE_EXTERNAL_PASS`, and `GATE_PASS` require
-`blockedBy` to be empty, in every schema version and
+`READY_FOR_RED_TEAM`, `INTERNAL_GATE_PASS`, `MILESTONE_INDEPENDENT_AUDIT_PASS`,
+`MILESTONE_EXTERNAL_PASS`, and `GATE_PASS` require `blockedBy` to be empty, in every schema version
+and
 whichever tool sealed the checkpoint. `BLOCKED` requires at least one entry in `blockedBy`, because a
 blocked checkpoint must say what blocks it.
 
@@ -140,6 +145,12 @@ Git, so a moved tag, a rewritten commit, an unexpected tree or a broken link is 
 A checkpoint cannot anchor its own tag, because the anchor would have to contain the commit that
 contains it. Its successor anchors it, and a checkpoint that fails to anchor a sealed predecessor is
 refused.
+
+Exactly one checkpoint may therefore carry no anchor: the newest sealed one, whose anchor its
+successor still owes. That exclusion is **derived**, by `anchors.pending_anchor_exclusion`, from the
+sealed history itself. The CLI, the validator and the test suite all ask the same function, because
+the second `M0` audit found a guardrail test that named the excluded checkpoint by literal and so
+turned the mandatory `tests` gate red the moment a successor anchored its predecessor.
 
 This is **tamper evidence inside the local trust model**, not a signature. An actor who controls the
 whole repository can recompute the chain. What the chain removes is the coordinated edit that leaves

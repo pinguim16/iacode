@@ -29,8 +29,15 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 | `LSN-0019` | `GUARDED` | HIGH | tooling | A derived artifact must carry a fingerprint of the inputs that produced it | `lessons.preflight_staleness`, `PreflightFreshnessTests.test_a_dropped_lesson_makes_the_preflight_stale` |
 | `LSN-0020` | `GUARDED` | HIGH | tooling | Evidence produced from a dirty tree needs immutable input identity | `ledger_common.build_command_record`, `CommandInputBindingTests.test_the_recorder_binds_inputs_automatically` |
 | `LSN-0021` | `GUARDED` | CRITICAL | git | Sealed history needs an anchor outside the content it describes | `anchors.verify_chain`, `IntegrityAnchorTests.test_a_broken_link_between_anchors_is_detected` |
-| `LSN-0022` | `GUARDED` | HIGH | documentation | An authoritative count must be derived once, never maintained by hand twice | `validate_checkpoint._validate_derived_counts`, `DerivedCountTests.test_a_markdown_claim_that_contradicts_the_derivation_is_rejected` |
+| `LSN-0022` | `GUARDED` | CRITICAL | documentation | An authoritative count must be derived once, never maintained by hand twice | `validate_checkpoint._validate_derived_counts`, `DerivedCountTests.test_a_markdown_claim_that_contradicts_the_derivation_is_rejected`, `SourceCardinalityPolicyTests.test_no_comment_or_docstring_states_a_derived_count_claim`, `docs/QUALITY-GATES.md` |
 | `LSN-0023` | `GUARDED` | MEDIUM | documentation | A lesson must cite a source that actually records the finding it claims | `lessons._resolve_source_locator`, `LessonProvenanceTests.test_a_finding_absent_from_the_cited_checkpoint_is_rejected` |
+| `LSN-0024` | `GUARDED` | CRITICAL | quality | A control is finished only when its positive path has been executed, not only its refusals | `PositivePromotionTests.test_the_milestone_verdict_is_derived_as_passed`, `scripts/development-ledger/promotion_simulation.py` |
+| `LSN-0025` | `GUARDED` | CRITICAL | testing | A generic guardrail derives repository state instead of naming today's checkpoint | `anchors.pending_anchor_exclusion`, `SuccessorDurabilityTests.test_the_pending_exclusion_moves_with_the_chain`, `IntegrityAnchorTests.test_the_pending_exclusion_is_the_newest_sealed_checkpoint` |
+| `LSN-0026` | `GUARDED` | HIGH | testing | An adversarial battery without a null-mutation control proves nothing | `.iacode/schemas/red-team-report.schema.json`, `validate_checkpoint._validate_internal_assurance`, `InternalAssuranceTests.test_a_report_without_a_null_mutation_control_is_rejected` |
+| `LSN-0027` | `GUARDED` | MEDIUM | documentation | A lesson's prose may record a residual limit but may never contradict its status | `lessons.validate_lessons`, `MemoryPolicyDocumentTests.test_a_guarded_lesson_may_not_describe_itself_as_unguarded` |
+| `LSN-0028` | `GUARDED` | MEDIUM | tooling | A configuration key that no code reads is a defect, not documentation | `.iacode/schemas/memory-policy.schema.json`, `lessons.validate_memory_policy_document`, `MemoryPolicyDocumentTests.test_a_setting_no_code_reads_cannot_be_declared` |
+| `LSN-0029` | `GUARDED` | CRITICAL | process | A required protocol transition must never turn a mandatory gate red | `scripts/development-ledger/successor_durability.py`, `SuccessorDurabilityTests.test_every_state_of_the_chain_verifies` |
+| `LSN-0030` | `CONFIRMED` | LOW | process | The lesson preflight presumes an implementing delivery and constrains an audit run badly | _not yet guarded_ |
 
 ## Detail
 
@@ -309,7 +316,7 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 
 ### LSN-0022 — An authoritative count must be derived once, never maintained by hand twice
 
-- Status: `GUARDED`, severity HIGH, category documentation, recurrences 0.
+- Status: `GUARDED`, severity CRITICAL, category documentation, recurrences 1.
 - Source: SETUP-00, SETUP-00-CP-0007, finding M0-F-008.
 - Symptom: The sealed CP-0006 state declared 47 mandatory requirements while the matrix and the completeness report both computed 45, and validation never compared them.
 - Root cause: The same number was written by hand in several artifacts, so the artifacts could disagree without any tool noticing.
@@ -317,7 +324,9 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 - Prevention:
   - `invariant` validate_checkpoint._validate_derived_counts — Counts used as evidence are derived once and verified wherever they are stated.
   - `test` DerivedCountTests.test_a_markdown_claim_that_contradicts_the_derivation_is_rejected — A report that states a count contradicting the derivation is refused.
-- Evidence: `file:docs/checkpoints/SETUP-00-CP-0007/REVIEW-REPORT.md`, `file:docs/checkpoints/SETUP-00-CP-0007/MILESTONE-REPORT.md`
+  - `test` SourceCardinalityPolicyTests.test_no_comment_or_docstring_states_a_derived_count_claim — No comment or docstring in scripts/ or tests/ states a derived count.
+  - `policy` docs/QUALITY-GATES.md — A count stated in a source comment or docstring is not evidence.
+- Evidence: `file:docs/checkpoints/SETUP-00-CP-0007/REVIEW-REPORT.md`, `file:docs/checkpoints/SETUP-00-CP-0007/MILESTONE-REPORT.md`, `file:docs/checkpoints/SETUP-00-CP-0009/REVIEW-REPORT.md`
 
 ### LSN-0023 — A lesson must cite a source that actually records the finding it claims
 
@@ -330,3 +339,89 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
   - `invariant` lessons._resolve_source_locator — A lesson's cited checkpoint must record the finding identifier it names.
   - `test` LessonProvenanceTests.test_a_finding_absent_from_the_cited_checkpoint_is_rejected — A locator that points at the wrong checkpoint is refused.
 - Evidence: `file:docs/checkpoints/SETUP-00-CP-0007/REVIEW-REPORT.md`, `file:docs/checkpoints/SETUP-00-CP-0004/REVIEW-REPORT.md`
+
+### LSN-0024 — A control is finished only when its positive path has been executed, not only its refusals
+
+- Status: `GUARDED`, severity CRITICAL, category quality, recurrences 0.
+- Source: SETUP-00, SETUP-00-CP-0009, finding CP9-F-001.
+- Symptom: The milestone attestation refused fifteen forged variants and could accept nothing, because the attestation had to live inside the tree of the commit it named as its subject, so the status it guarded was unreachable.
+- Root cause: The control was exercised only from the refusing side. Twelve rejection tests passed while the reachable state space was empty, so nothing failed when the positive path disappeared.
+- Resolution: The verdict moved to the audit checkpoint, which names an already sealed subject, and the positive promotion is now executed end to end in a disposable repository by promotion_simulation.py and asserted by PositivePromotionTests.
+- Prevention:
+  - `test` PositivePromotionTests.test_the_milestone_verdict_is_derived_as_passed — A legitimate two-checkpoint promotion reaches a derived milestone PASS.
+  - `automated-check` scripts/development-ledger/promotion_simulation.py — The positive promotion is executed and recorded as a delivery artifact.
+- Evidence: `file:docs/checkpoints/SETUP-00-CP-0009/REVIEW-REPORT.md`, `file:scripts/development-ledger/attestation.py`, `file:scripts/development-ledger/promotion_simulation.py`
+
+### LSN-0025 — A generic guardrail derives repository state instead of naming today's checkpoint
+
+- Status: `GUARDED`, severity CRITICAL, category testing, recurrences 0.
+- Source: SETUP-00, SETUP-00-CP-0009, finding CP9-F-002.
+- Symptom: A chain guardrail test excluded a checkpoint by literal name while the product derived the same exclusion from repository state, so anchoring the sealed predecessor turned the mandatory tests gate red.
+- Root cause: The same semantic rule was implemented twice, once derived and once typed, and the typed copy encoded the repository as it looked on the day it was written.
+- Resolution: The rule has one implementation, anchors.pending_anchor_exclusion, which the CLI, the validator and the suite all call, and a succession simulation proves it keeps moving.
+- Prevention:
+  - `invariant` anchors.pending_anchor_exclusion — The checkpoint whose anchor is still owed is derived from history.
+  - `test` SuccessorDurabilityTests.test_the_pending_exclusion_moves_with_the_chain — The exclusion follows the chain across successive checkpoints.
+  - `test` IntegrityAnchorTests.test_the_pending_exclusion_is_the_newest_sealed_checkpoint — The exclusion equals the newest sealed checkpoint, never a literal.
+- Evidence: `file:docs/checkpoints/SETUP-00-CP-0009/REVIEW-REPORT.md`, `file:scripts/development-ledger/anchors.py`, `file:tests/test_development_ledger.py`
+
+### LSN-0026 — An adversarial battery without a null-mutation control proves nothing
+
+- Status: `GUARDED`, severity HIGH, category testing, recurrences 0.
+- Source: SETUP-00, SETUP-00-CP-0009, finding audit harness classified AUDIT_ENVIRONMENT.
+- Symptom: An attack harness reported every attack as defended while the refusals came from leftover state and a broken seal chronology rather than from the mutation under test.
+- Root cause: The harness never ran an unmutated case through the identical path, so a fixture that refused everything was indistinguishable from a control that worked.
+- Resolution: The battery records a baselineControl, the unmutated fixture run through the same path, and validation refuses a report whose control is missing or not VALID.
+- Prevention:
+  - `schema` .iacode/schemas/red-team-report.schema.json — A Red Team report must carry its null-mutation control.
+  - `invariant` validate_checkpoint._validate_internal_assurance — A battery whose control is missing or INVALID cannot produce a PASS.
+  - `test` InternalAssuranceTests.test_a_report_without_a_null_mutation_control_is_rejected — A report without the control is refused.
+- Evidence: `file:docs/checkpoints/SETUP-00-CP-0009/AUDIT-EXECUTIONS.md`, `file:scripts/development-ledger/m0_red_team.py`, `file:.iacode/schemas/red-team-report.schema.json`
+
+### LSN-0027 — A lesson's prose may record a residual limit but may never contradict its status
+
+- Status: `GUARDED`, severity MEDIUM, category documentation, recurrences 0.
+- Source: SETUP-00, SETUP-00-CP-0009, finding CP9-F-004.
+- Symptom: A GUARDED lesson carried a note saying it was not guarded, so a reader who trusted the prose reached the opposite conclusion from the machine-readable status.
+- Root cause: The note was written while the lesson was unguarded and was never revisited when an automated control was added, because nothing compared the two.
+- Resolution: Memory validation refuses a GUARDED lesson whose notes assert that it is not guarded, and the note now describes the residual limit of the control instead of its status.
+- Prevention:
+  - `invariant` lessons.validate_lessons — A GUARDED lesson may not describe itself as unguarded.
+  - `test` MemoryPolicyDocumentTests.test_a_guarded_lesson_may_not_describe_itself_as_unguarded — The contradiction is refused by the memory validator.
+- Evidence: `file:docs/checkpoints/SETUP-00-CP-0009/REVIEW-REPORT.md`, `file:.iacode/memory/lessons.jsonl`, `file:scripts/development-ledger/lessons.py`
+
+### LSN-0028 — A configuration key that no code reads is a defect, not documentation
+
+- Status: `GUARDED`, severity MEDIUM, category tooling, recurrences 0.
+- Source: SETUP-00, SETUP-00-CP-0009, finding CP9-F-005.
+- Symptom: The memory policy declared a relocatable guardrail registry path while the implementation resolved a fixed constant, so re-pointing the documented key changed nothing.
+- Root cause: The policy document was never validated against a schema, so a key could be added without any consumer and without any check noticing.
+- Resolution: The unread key was removed, the fixed path is documented and resolved by one function, and the policy document is validated against a closed schema that refuses an unknown key.
+- Prevention:
+  - `schema` .iacode/schemas/memory-policy.schema.json — The memory policy schema is closed to keys no code reads.
+  - `invariant` lessons.validate_memory_policy_document — The declared policy is validated like every other governing document.
+  - `test` MemoryPolicyDocumentTests.test_a_setting_no_code_reads_cannot_be_declared — Declaring an unread setting is a validation error.
+- Evidence: `file:docs/checkpoints/SETUP-00-CP-0009/REVIEW-REPORT.md`, `file:.iacode/memory/POLICY.json`, `file:.iacode/schemas/memory-policy.schema.json`
+
+### LSN-0029 — A required protocol transition must never turn a mandatory gate red
+
+- Status: `GUARDED`, severity CRITICAL, category process, recurrences 0.
+- Source: SETUP-00, SETUP-00-CP-0009, finding CP9-F-002.
+- Symptom: Carrying out a step the checkpoint protocol requires of every successor, anchoring its sealed predecessor, took the mandatory suite from green to red and left editing a guardrail test as the only apparent remedy.
+- Root cause: The controls were written against one repository state instead of against the sequence of states the protocol itself produces.
+- Resolution: The successor durability simulation seals a chain of checkpoints and re-runs the controls at every state, so a transition that breaks a gate is found by the delivery that introduces it rather than by the next audit.
+- Prevention:
+  - `automated-check` scripts/development-ledger/successor_durability.py — The protocol's own next steps are executed and the gates re-checked.
+  - `test` SuccessorDurabilityTests.test_every_state_of_the_chain_verifies — Every state of an advancing chain keeps the controls green.
+- Evidence: `file:docs/checkpoints/SETUP-00-CP-0009/REVIEW-REPORT.md`, `file:scripts/development-ledger/successor_durability.py`, `file:docs/CHECKPOINT-PROTOCOL.md`
+
+### LSN-0030 — The lesson preflight presumes an implementing delivery and constrains an audit run badly
+
+- Status: `CONFIRMED`, severity LOW, category process, recurrences 0.
+- Source: SETUP-00, SETUP-00-CP-0009, finding audit observation recorded in LESSON-CANDIDATES.json.
+- Symptom: Requirements derived for an implementing delivery, such as an empty blockedBy at a readiness status, cannot apply to an audit checkpoint that legitimately records blockers.
+- Root cause: The preflight has one role model, so a run that audits rather than implements would have to answer requirements that do not describe it.
+- Resolution: Recorded as a scoped lesson that constrains audit runs only, so an implementing Gate is not asked to answer it, until a delivery-role input is worth building.
+- Prevention:
+  - `documentation` docs/ENGINEERING-MEMORY.md — The preflight's role assumption is recorded rather than implied.
+- Evidence: `file:docs/checkpoints/SETUP-00-CP-0009/LESSON-CANDIDATES.json`, `file:docs/ENGINEERING-MEMORY.md`

@@ -1,0 +1,180 @@
+{
+  "schemaVersion": "1.0.0",
+  "checkpoint": "SETUP-00-CP-0010",
+  "auditId": "M0-CP-0009",
+  "source": "docs/checkpoints/SETUP-00-CP-0009/REVIEW-REPORT.md",
+  "findings": [
+    {
+      "findingId": "CP9-F-001",
+      "severity": "CRITICAL",
+      "title": "the milestone attestation could be written but never consumed, so a milestone PASS was unreachable",
+      "originalExpected": "An attestation authored by a different sealed, anchored checkpoint, carrying APPROVED, RED_TEAM_PASS, 100.0, 100.0 and PASS, lets the audited subject reach a milestone PASS.",
+      "originalObserved": "The attestation was verified against the checkpoint being validated, so satisfying it required a tree containing its own commit identifier. Three attempts and a fixed-point iteration ended in 'attests commit X, not the subject commit Y'; writing it in the audit checkpoint moved HEAD past the subject's tag; and adding it marked the subject's assurance results STALE. Twelve rejection tests passed and no acceptance case existed.",
+      "rootCause": "The verdict was attached to the object being judged. A delivery checkpoint and its audit are different immutable objects, and consuming the attestation as if it belonged to the subject made the reachable state space empty.",
+      "implementation": [
+        "file:scripts/development-ledger/attestation.py",
+        "file:scripts/development-ledger/validate_checkpoint.py",
+        "file:scripts/development-ledger/milestone_status.py",
+        "file:scripts/development-ledger/promotion_fixture.py",
+        "file:scripts/development-ledger/promotion_simulation.py",
+        "file:.iacode/schemas/external-audit-attestation.schema.json",
+        "file:.iacode/schemas/checkpoint.schema.json"
+      ],
+      "regressionTest": [
+        "test:PositivePromotionTests.test_the_milestone_verdict_is_derived_as_passed",
+        "test:PositivePromotionTests.test_the_audit_checkpoint_validates_as_sealed",
+        "test:PositivePromotionTests.test_the_audit_checkpoint_carries_the_milestone_verdict",
+        "test:PositivePromotionTests.test_the_subject_is_not_rewritten_by_its_own_audit",
+        "test:PositivePromotionTests.test_the_integrity_chain_still_verifies_after_the_audit",
+        "test:AuditAttestationModelTests.test_a_legitimate_attestation_over_the_sealed_history_is_accepted",
+        "test:AuditAttestationModelTests.test_the_attestation_never_names_the_commit_of_the_tree_that_contains_it"
+      ],
+      "negativeTest": [
+        "test:AuditAttestationModelTests.test_an_attestation_naming_the_subject_as_its_own_auditor_is_rejected",
+        "test:AuditAttestationModelTests.test_an_attestation_for_another_checkpoint_is_rejected",
+        "test:AuditAttestationModelTests.test_an_attestation_for_another_commit_is_rejected",
+        "test:AuditAttestationModelTests.test_a_subject_commit_that_is_not_the_sealed_one_is_rejected",
+        "test:AuditAttestationModelTests.test_an_unsealed_subject_is_rejected",
+        "test:AuditAttestationModelTests.test_a_checkpoint_may_not_claim_a_verdict_another_checkpoint_authored",
+        "test:AuditAttestationModelTests.test_a_failed_review_cannot_produce_a_milestone_pass",
+        "test:AuditAttestationModelTests.test_a_failed_red_team_cannot_produce_a_milestone_pass",
+        "test:AuditAttestationModelTests.test_incomplete_audit_coverage_cannot_produce_a_milestone_pass",
+        "test:AuditAttestationModelTests.test_a_failed_test_result_cannot_produce_a_milestone_pass",
+        "test:AuditAttestationModelTests.test_an_unknown_validation_mechanism_is_rejected",
+        "test:AuditAttestationModelTests.test_a_cross_tool_claim_without_cross_tool_availability_is_rejected",
+        "test:AuditAttestationModelTests.test_a_fresh_session_claim_requires_a_fresh_session",
+        "test:AuditAttestationModelTests.test_no_attestation_means_no_milestone_pass",
+        "test:PositivePromotionTests.test_a_fresh_session_audit_cannot_reach_the_external_status"
+      ],
+      "verificationCommand": "python -m unittest discover -s tests",
+      "evidence": [
+        "checkpoint:POSITIVE-PROMOTION-VALIDATION.json",
+        "checkpoint:POSITIVE-PROMOTION-VALIDATION.md",
+        "file:docs/adr/ADR-0011-audit-checkpoint-carries-the-verdict.md",
+        "file:docs/MILESTONE-VALIDATION.md",
+        "file:.iacode/attestations/README.md"
+      ],
+      "status": "CLOSED"
+    },
+    {
+      "findingId": "CP9-F-002",
+      "severity": "CRITICAL",
+      "title": "a guardrail test was bound to a literal checkpoint name, so the protocol's own next step turned the mandatory tests gate red",
+      "originalExpected": "Carrying out the protocol's own next step -- a successor anchoring its sealed predecessor -- leaves the mandatory gate set green.",
+      "originalObserved": "tests/test_development_ledger.py called verify_chain with exclude={'SETUP-00-CP-0008'} while verify_integrity.py derived the same exclusion from repository state. Anchoring the sealed predecessor took the suite from 306/306 to 305/306, and sealing a successor produced the mirror failure.",
+      "rootCause": "One semantic rule had two implementations: one derived, one typed. The typed copy encoded the repository as it looked on the day it was written.",
+      "implementation": [
+        "file:scripts/development-ledger/anchors.py",
+        "file:scripts/development-ledger/verify_integrity.py",
+        "file:scripts/development-ledger/successor_durability.py",
+        "file:scripts/development-ledger/promotion_fixture.py",
+        "file:tests/test_development_ledger.py"
+      ],
+      "regressionTest": [
+        "test:SuccessorDurabilityTests.test_every_state_of_the_chain_verifies",
+        "test:SuccessorDurabilityTests.test_the_pending_exclusion_moves_with_the_chain",
+        "test:SuccessorDurabilityTests.test_each_successor_anchors_its_predecessor",
+        "test:SuccessorDurabilityTests.test_three_checkpoints_were_sealed_in_succession",
+        "test:IntegrityAnchorTests.test_the_pending_exclusion_is_the_newest_sealed_checkpoint",
+        "test:IntegrityAnchorTests.test_every_sealed_checkpoint_but_the_newest_is_anchored"
+      ],
+      "negativeTest": [
+        "test:SuccessorDurabilityTests.test_a_missing_anchor_is_still_detected_after_the_chain_advances",
+        "test:IntegrityAnchorTests.test_a_sealed_checkpoint_without_an_anchor_is_detected",
+        "test:IntegrityAnchorTests.test_a_moved_historical_tag_is_detected",
+        "test:IntegrityAnchorTests.test_a_broken_link_between_anchors_is_detected"
+      ],
+      "verificationCommand": "python -m unittest discover -s tests",
+      "evidence": [
+        "checkpoint:SUCCESSOR-DURABILITY.json",
+        "checkpoint:SUCCESSOR-DURABILITY.md",
+        "file:docs/CHECKPOINT-PROTOCOL.md",
+        "file:.iacode/memory/guardrails/registry.json"
+      ],
+      "status": "CLOSED"
+    },
+    {
+      "findingId": "CP9-F-003",
+      "severity": "LOW",
+      "title": "a stale count survived in a current artifact because the count guardrail only inspected Markdown",
+      "originalExpected": "No current artifact states a count that contradicts the derivation.",
+      "originalObserved": "A test docstring stated a cardinality for the derived requirement set that the derivation had outgrown, and COUNT_CLAIM only matched the N/M NOUN form in checkpoint Markdown, so a prose count in a .py file was outside the control.",
+      "rootCause": "The control's scope was one artifact type, and the same failure class stayed alive everywhere else. The recurrence is recorded against LSN-0022 as a GUARDRAIL_FAILURE.",
+      "implementation": [
+        "file:tests/test_development_ledger.py",
+        "file:docs/QUALITY-GATES.md",
+        "file:.iacode/memory/lessons.jsonl",
+        "file:.iacode/memory/guardrails/registry.json"
+      ],
+      "regressionTest": [
+        "test:SourceCardinalityPolicyTests.test_no_comment_or_docstring_states_a_derived_count_claim",
+        "test:SourceCardinalityPolicyTests.test_no_comment_or_docstring_states_the_cardinality_of_a_derived_set",
+        "test:SourceCardinalityPolicyTests.test_the_count_policy_is_documented"
+      ],
+      "negativeTest": [
+        "test:SourceCardinalityPolicyTests.test_the_control_detects_a_cardinality_written_in_a_docstring",
+        "test:DerivedCountTests.test_a_forged_count_is_rejected"
+      ],
+      "verificationCommand": "python -m unittest discover -s tests",
+      "evidence": [
+        "file:docs/QUALITY-GATES.md",
+        "file:.iacode/memory/LESSONS.md"
+      ],
+      "status": "CLOSED"
+    },
+    {
+      "findingId": "CP9-F-004",
+      "severity": "LOW",
+      "title": "a lesson's own note contradicted its status",
+      "originalExpected": "A GUARDED lesson does not describe itself as unguarded.",
+      "originalObserved": "LSN-0014 was GUARDED and named GRD-0013 while its notes field still read 'Not guarded: nothing can prove from the artifact alone that a record was written at execution time.'",
+      "rootCause": "The note was written while the lesson was unguarded and was never revisited when the control arrived, because nothing compared the prose with the status.",
+      "implementation": [
+        "file:.iacode/memory/lessons.jsonl",
+        "file:scripts/development-ledger/lessons.py"
+      ],
+      "regressionTest": [
+        "test:MemoryPolicyDocumentTests.test_the_repository_memory_has_no_status_contradiction"
+      ],
+      "negativeTest": [
+        "test:MemoryPolicyDocumentTests.test_a_guarded_lesson_may_not_describe_itself_as_unguarded"
+      ],
+      "verificationCommand": "python -m unittest discover -s tests",
+      "evidence": [
+        "file:.iacode/memory/LESSONS.md",
+        "file:docs/ENGINEERING-MEMORY.md"
+      ],
+      "status": "CLOSED"
+    },
+    {
+      "findingId": "CP9-F-005",
+      "severity": "LOW",
+      "title": "a policy key was declared and never read",
+      "originalExpected": "A configuration value either governs behaviour or is not declared.",
+      "originalObserved": ".iacode/memory/POLICY.json declared 'guardrailRegistry' while lessons.guardrail_registry_path returned a constant path, so re-pointing the key in a clone changed nothing.",
+      "rootCause": "The policy document was never validated against its schema, so a key without a consumer could be added and nothing noticed.",
+      "implementation": [
+        "file:.iacode/memory/POLICY.json",
+        "file:.iacode/schemas/memory-policy.schema.json",
+        "file:scripts/development-ledger/lessons.py",
+        "file:docs/ENGINEERING-MEMORY.md"
+      ],
+      "regressionTest": [
+        "test:MemoryPolicyDocumentTests.test_the_declared_policy_validates_against_its_schema",
+        "test:MemoryPolicyDocumentTests.test_the_guardrail_registry_path_has_one_resolver"
+      ],
+      "negativeTest": [
+        "test:MemoryPolicyDocumentTests.test_a_setting_no_code_reads_cannot_be_declared"
+      ],
+      "verificationCommand": "python -m unittest discover -s tests",
+      "evidence": [
+        "file:.iacode/memory/POLICY.json",
+        "file:docs/ENGINEERING-MEMORY.md"
+      ],
+      "status": "CLOSED"
+    }
+  ],
+  "total": 5,
+  "closed": 5,
+  "result": "CLOSED"
+}

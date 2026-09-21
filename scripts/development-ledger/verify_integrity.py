@@ -18,8 +18,16 @@ import json
 import sys
 from pathlib import Path
 
-from anchors import anchor_path, load_anchors, rebuild, sealed_checkpoint_ids, verify_chain
-from ledger_common import LedgerError, find_root, load_json, resolve_latest, validate_schema
+from anchors import (
+    anchor_path,
+    load_anchors,
+    pending_anchor_checkpoint,
+    rebuild,
+    rebuild_exclusion,
+    sealed_checkpoint_ids,
+    verify_chain,
+)
+from ledger_common import LedgerError, find_root, load_json, validate_schema
 
 
 def main() -> int:
@@ -32,15 +40,14 @@ def main() -> int:
     args = parser.parse_args()
 
     root = find_root(args.root) if args.root else find_root()
-    exclude = args.exclude
-    if exclude is None:
-        try:
-            exclude = resolve_latest(root).name
-        except LedgerError:
-            exclude = None
+    # Both exclusions are semantic rules, not names. Verification forgives the newest sealed
+    # checkpoint, whose anchor its successor still owes; a rebuild excludes the checkpoint being
+    # delivered, because the run rebuilding the chain is that successor and cannot anchor itself.
+    exclude = args.exclude if args.exclude is not None else pending_anchor_checkpoint(root)
+    rebuild_skip = args.exclude if args.exclude is not None else rebuild_exclusion(root)
 
     if args.rebuild:
-        identifiers = [item for item in sealed_checkpoint_ids(root) if item != exclude]
+        identifiers = [item for item in sealed_checkpoint_ids(root) if item != rebuild_skip]
         document = rebuild(root, identifiers)
         schema_path = root / ".iacode" / "schemas" / "checkpoint-anchors.schema.json"
         if schema_path.is_file():

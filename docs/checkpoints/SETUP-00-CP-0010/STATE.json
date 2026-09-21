@@ -1,0 +1,124 @@
+{
+  "schemaVersion": "3.2.0",
+  "phase": "M0 - corrective delivery for the CP-0009 fresh-session audit",
+  "gate": "SETUP-00",
+  "status": "READY_FOR_REVIEW",
+  "branch": "main",
+  "baseCommit": "28c2b487baf216d3745bb6c5a25a5b8aa7274a9e",
+  "currentCommit": "refs/tags/iacode-checkpoints/SETUP-00-CP-0010",
+  "dirty": false,
+  "startedAt": "2026-09-21T02:04:52Z",
+  "updatedAt": "2026-09-21T05:43:24Z",
+  "nextAllowedAction": "Request a fresh-session independent M0 audit of SETUP-00-CP-0010. The auditor writes its verdict in its own audit checkpoint, which anchors this one and carries the attestation about it; this checkpoint is never rewritten. Gate 0 stays blocked.",
+  "blockedBy": [],
+  "secondToolValidation": {
+    "status": "PENDING_MANUAL"
+  },
+  "requirementsMatrix": {
+    "path": "REQUIREMENTS-MATRIX.json",
+    "total": 134,
+    "mandatory": 133,
+    "complete": 134,
+    "partial": 0,
+    "missing": 0,
+    "notApplicable": 0,
+    "coveragePercent": 100.0
+  },
+  "greenKeeper": {
+    "status": "PASS",
+    "cycles": 6,
+    "remainingFailures": 0,
+    "unresolvedReworkItems": 0,
+    "log": "REWORK-LOG.jsonl",
+    "externalBlockers": [],
+    "evidence": [
+      "command:cmd-0037",
+      "command:cmd-0041"
+    ],
+    "requiredGates": [
+      "tests",
+      "staticAnalysis",
+      "lessons",
+      "integrity",
+      "checkpointValidation"
+    ],
+    "scopeFingerprint": "f23676867732613ffe4789a8fbf6b41b8e6e4fa3eb1a9a15c5a70298c9e281b0"
+  },
+  "deliveryCompleteness": {
+    "status": "PASS",
+    "report": "COMPLETENESS-REPORT.json",
+    "coveragePercent": 100.0,
+    "evidenceCoveragePercent": 100.0,
+    "auditor": "CP-0010 Delivery Completeness Validator",
+    "evidence": [
+      "command:cmd-0050",
+      "file:COMPLETENESS-REPORT.json"
+    ],
+    "scopeFingerprint": "aef84caf059800cf49e13d7d5529adb4af04e0522b9ab64cdc1a84c740ff0917"
+  },
+  "reworkCycles": 6,
+  "independentReview": {
+    "status": "PENDING"
+  },
+  "redTeam": {
+    "status": "PENDING"
+  },
+  "lessonPreflight": {
+    "path": "LESSON-PREFLIGHT.json",
+    "gate": "SETUP-00",
+    "scope": "corrective delivery closing the CP-0009 audit findings",
+    "lessonsConsidered": 30,
+    "lessonsApplicable": 29,
+    "derivedRequirements": 29,
+    "fingerprint": "e694f8bd5389a28990f16336ddccc77be20882d2a2395e9f7c88e90fb07c929e",
+    "evidence": [
+      "file:LESSON-PREFLIGHT.json",
+      "command:cmd-0035"
+    ]
+  },
+  "milestone": {
+    "id": "M0",
+    "title": "Development control plane",
+    "gates": [
+      "SETUP-00"
+    ],
+    "status": "PENDING",
+    "auditor": "pending: the next fresh-session independent M0 audit",
+    "evidence": [
+      "file:CP9-FINDINGS-CLOSURE.json",
+      "file:FINAL-REPORT.md"
+    ]
+  },
+  "externalAuditRequired": false,
+  "externalAuditReason": null,
+  "guardrailEffectiveness": {
+    "guardrailsTotal": 29,
+    "guardrailsResolved": 29,
+    "guardrailsTested": 29,
+    "guardrailsEffective": 29,
+    "guardrailFailures": 0,
+    "evidence": [
+      "file:.iacode/memory/guardrails/registry.json",
+      "command:cmd-0039"
+    ]
+  },
+  "integrity": {
+    "status": "PASS",
+    "anchors": 9,
+    "chainFile": ".iacode/anchors/checkpoint-chain.json",
+    "evidence": [
+      "command:cmd-0040"
+    ]
+  },
+  "externalAttestation": {
+    "status": "NONE",
+    "path": null,
+    "auditId": null,
+    "subjectCheckpoint": null,
+    "subjectCommit": null,
+    "validationMechanism": null,
+    "evidence": [
+      "file:CP9-FINDINGS-CLOSURE.json"
+    ]
+  }
+}

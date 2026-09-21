@@ -59,6 +59,28 @@ def count_test_cases(root: Path) -> int:
     return len(identifiers)
 
 
+def executed_test_runs(tests: dict[str, Any]) -> dict[str, int]:
+    """Passing cases per *physical* execution, not per category.
+
+    One discovery run over ``tests/`` covers unit and integration cases at once. Recording it in
+    both categories and adding the two produced ``610/306`` in the audit checkpoint: twice the
+    suite, from one execution. Categories that name the same run -- explicitly through ``runId``,
+    or implicitly by recording the same command with the same result -- are one measurement, and
+    the largest recorded value for that run is the one that counts.
+    """
+    runs: dict[str, int] = {}
+    for category in ("unit", "integration", "e2e"):
+        entry = tests.get(category)
+        if not isinstance(entry, dict) or not entry.get("executed"):
+            continue
+        passed = int(entry.get("passed") or 0)
+        failed = int(entry.get("failed") or 0)
+        identifier = entry.get("runId") or "command:%s|%d/%d" % (
+            entry.get("command"), passed, failed)
+        runs[str(identifier)] = max(runs.get(str(identifier), 0), passed)
+    return runs
+
+
 def derive_counts(root: Path, checkpoint: Path) -> dict[str, dict[str, Any]]:
     from delivery_assurance import evaluate_matrix
     from lessons import load_guardrails, load_lessons
@@ -72,15 +94,13 @@ def derive_counts(root: Path, checkpoint: Path) -> dict[str, dict[str, Any]]:
     if tests_path.is_file():
         tests = load_json(tests_path)
         if isinstance(tests, dict):
-            passed = sum(
-                int((tests.get(key) or {}).get("passed") or 0)
-                for key in ("unit", "integration", "e2e")
-                if isinstance(tests.get(key), dict)
-            )
+            passed = sum(executed_test_runs(tests).values())
     counts["TESTS"] = {
         "numerator": passed,
         "denominator": discovered,
-        "source": "unittest discovery over tests/ cross-checked with TESTS.json",
+        "source": (
+            "unittest discovery over tests/ cross-checked with TESTS.json, deduplicated by "
+            "physical execution"),
     }
 
     matrix_path = checkpoint / "REQUIREMENTS-MATRIX.json"

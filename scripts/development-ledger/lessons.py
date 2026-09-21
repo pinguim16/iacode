@@ -37,6 +37,12 @@ POLICY_FILE = "POLICY.json"
 LEGACY_MEMORY_POLICY = "1.0.0"
 RESOLVING_MEMORY_POLICY = "2.0.0"
 
+# 2.1.0 adds the rule that a lesson's prose may not contradict its status. A memory declaring an
+# earlier version is read under the rules it declares, which is how a sealed checkpoint keeps
+# validating after the tooling advances: the control applies to the content written for it.
+CONSISTENT_PROSE_MEMORY_POLICY = "2.1.0"
+RESOLVING_MEMORY_POLICIES = (RESOLVING_MEMORY_POLICY, CONSISTENT_PROSE_MEMORY_POLICY)
+
 # The applicability and derivation rules the preflight implements. It is part of the preflight
 # fingerprint, so changing how lessons are selected makes every existing preflight stale.
 LESSON_POLICY_VERSION = "2.0.0"
@@ -73,6 +79,10 @@ CONTROL_KINDS = PREVENTIVE_KINDS + ("documentation",)
 
 SEVERITY_ORDER = {"LOW": 0, "MEDIUM": 1, "HIGH": 2, "CRITICAL": 3}
 
+# Prose that asserts the opposite of the GUARDED status. Notes describe what a control cannot
+# reach; they never restate a status, because the two then drift apart.
+NOT_GUARDED_CLAIM = re.compile(r"\bnot\s+guarded\b", re.IGNORECASE)
+
 
 def memory_root(root: Path) -> Path:
     return root / MEMORY_DIRECTORY
@@ -83,6 +93,12 @@ def lessons_path(root: Path) -> Path:
 
 
 def guardrail_registry_path(root: Path) -> Path:
+    """The single canonical location of the guardrail registry.
+
+    The path is fixed on purpose. ``POLICY.json`` used to advertise a ``guardrailRegistry`` key
+    that nothing read, so re-pointing it changed nothing while promising that it would
+    (CP9-F-005). The policy schema now refuses that key, and this function is the only resolver.
+    """
     return memory_root(root) / GUARDRAIL_REGISTRY_FILE
 
 
@@ -94,6 +110,27 @@ def memory_policy_version(root: Path) -> str:
     document = load_json(path)
     version = document.get('schemaVersion') if isinstance(document, dict) else None
     return str(version) if version else LEGACY_MEMORY_POLICY
+
+
+def validate_memory_policy_document(root: Path) -> list[str]:
+    """The declared policy is validated against its schema, like every other governing document.
+
+    Nothing validated ``POLICY.json`` before, which is how it came to declare a setting no code
+    consumed. The schema is closed, so an unread key is now a validation error rather than a
+    comment that looks like configuration.
+    """
+    path = memory_root(root) / POLICY_FILE
+    if not path.is_file():
+        return []
+    schema_path = root / ".iacode" / "schemas" / "memory-policy.schema.json"
+    if not schema_path.is_file():
+        return [f"{POLICY_FILE} cannot be validated: memory-policy.schema.json is missing"]
+    try:
+        document = load_json(path)
+    except LedgerError as exc:
+        return [str(exc)]
+    return [f"{POLICY_FILE}: {error}"
+            for error in validate_schema(document, load_json(schema_path))]
 
 
 def load_guardrails(root: Path) -> dict[str, dict[str, Any]]:
@@ -623,6 +660,8 @@ def validate_lessons(root: Path, lessons: list[dict[str, Any]] | None = None) ->
     if schema is None:
         errors.append("lesson.schema.json is missing")
 
+    errors.extend(validate_memory_policy_document(root))
+
     try:
         guardrails = load_guardrails(root)
     except LedgerError as exc:
@@ -641,7 +680,9 @@ def validate_lessons(root: Path, lessons: list[dict[str, Any]] | None = None) ->
                 errors.append(
                     f"guardrail {identifier}: names lesson {lesson_id!r}, which is not in the memory")
 
-    resolving = memory_policy_version(root) == RESOLVING_MEMORY_POLICY
+    policy_version = memory_policy_version(root)
+    resolving = policy_version in RESOLVING_MEMORY_POLICIES
+    consistent_prose = policy_version == CONSISTENT_PROSE_MEMORY_POLICY
     seen_ids: set[str] = set()
     seen_keys: dict[str, str] = {}
     for index, lesson in enumerate(lessons, 1):
@@ -672,6 +713,15 @@ def validate_lessons(root: Path, lessons: list[dict[str, Any]] | None = None) ->
                 f"{', '.join(PREVENTIVE_KINDS)}; documentation alone is not a guardrail")
         if status == "SUPERSEDED" and not lesson.get("supersededBy"):
             errors.append(f"{label}: SUPERSEDED requires supersededBy")
+
+        # A lesson's prose may record what a control cannot reach; it may not contradict the
+        # status the machine reads. LSN-0014 was GUARDED while its own note said it was not
+        # guarded, so a reader who trusted the prose reached the opposite conclusion (CP9-F-004).
+        if (consistent_prose and status == "GUARDED"
+                and NOT_GUARDED_CLAIM.search(str(lesson.get("notes") or ""))):
+            errors.append(
+                f"{label}: the notes state that the lesson is not guarded while its status is "
+                f"GUARDED; describe the residual limit of the control instead of its status")
 
         # Every declared control is resolved against the repository. A reference that names a test,
         # an invariant or a file that does not exist is a claim, not a guardrail.

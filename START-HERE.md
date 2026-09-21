@@ -43,6 +43,7 @@ become lessons, and important lessons become automated guardrails rather than pr
 [docs/ENGINEERING-MEMORY.md](docs/ENGINEERING-MEMORY.md).
 
 An intermediate Gate closes at `INTERNAL_GATE_PASS` on the project's own controls. Independent
-external validation happens once per milestone and produces `MILESTONE_EXTERNAL_PASS`; an internal
-verdict is never described as an external one. See
+validation happens once per milestone, in a separate audit checkpoint that judges a sealed subject
+and carries the verdict: `MILESTONE_INDEPENDENT_AUDIT_PASS` for a fresh-session audit,
+`MILESTONE_EXTERNAL_PASS` for a cross-tool one. An internal verdict is never described as either. See
 [docs/MILESTONE-VALIDATION.md](docs/MILESTONE-VALIDATION.md).

@@ -32,7 +32,7 @@ import json
 from pathlib import Path
 from typing import Any
 
-from ledger_common import LedgerError, load_json, run_git
+from ledger_common import LedgerError, load_json, resolve_latest, run_git
 
 ANCHOR_FILE = Path(".iacode") / "anchors" / "checkpoint-chain.json"
 TAG_NAMESPACE = "refs/tags/iacode-checkpoints/"
@@ -112,6 +112,72 @@ def sealed_checkpoint_ids(root: Path) -> list[str]:
         if resolve_tag(root, f"{TAG_NAMESPACE}{item.name}") is not None:
             identifiers.append(item.name)
     return identifiers
+
+
+def sealed_checkpoints_in_history_order(root: Path) -> list[str]:
+    """Sealed checkpoints ordered by their position in history, oldest first.
+
+    Ordering by name would be wrong the moment the Gate prefix changes, because ``GATE-0-CP-0001``
+    sorts before ``SETUP-00-CP-0010`` while being newer. The order is therefore derived from Git:
+    the number of commits reachable from the tagged commit, with the commit timestamp and the name
+    as deterministic tie-breakers.
+    """
+    ordered: list[tuple[int, int, str, str]] = []
+    for identifier in sealed_checkpoint_ids(root):
+        commit = resolve_tag(root, f"{TAG_NAMESPACE}{identifier}")
+        if commit is None:
+            continue
+        code, depth = run_git(root, "rev-list", "--count", commit)
+        code_time, stamp = run_git(root, "show", "-s", "--format=%ct", commit)
+        ordered.append((
+            int(depth) if code == 0 and depth.isdigit() else 0,
+            int(stamp) if code_time == 0 and stamp.isdigit() else 0,
+            identifier,
+            commit,
+        ))
+    return [item[2] for item in sorted(ordered)]
+
+
+def pending_anchor_checkpoint(root: Path) -> str | None:
+    """The one sealed checkpoint whose anchor is legitimately still owed.
+
+    An anchor names the commit of the checkpoint it anchors, so it cannot live inside that commit:
+    the newest sealed checkpoint is always anchored by a later one. That newest checkpoint is the
+    single legitimate exception to "every sealed checkpoint is anchored", and it is derived from
+    sealed history here so that no caller has to name a checkpoint by literal.
+
+    The exception is deliberately narrow. It forgives an anchor that does not exist *yet*, which is
+    the state between sealing a checkpoint and delivering its successor; ``_validate_anchor_chain``
+    separately refuses a checkpoint that fails to anchor every sealed predecessor, so a successor
+    cannot use this exception to skip the anchor it owes.
+    """
+    sealed = sealed_checkpoints_in_history_order(root)
+    return sealed[-1] if sealed else None
+
+
+def pending_anchor_exclusion(root: Path) -> set[str]:
+    """The canonical ``exclude`` argument for :func:`verify_chain`, derived from the repository.
+
+    One rule, one implementation: the CLI, the validator and the test suite all ask this function
+    which checkpoint may carry no anchor yet, instead of each encoding today's checkpoint name.
+    """
+    identifier = pending_anchor_checkpoint(root)
+    return {identifier} if identifier else set()
+
+
+def rebuild_exclusion(root: Path) -> str | None:
+    """The checkpoint a rebuild must leave out: the one being delivered.
+
+    Rebuilding is done by the successor, which owes its sealed predecessors an anchor and cannot
+    anchor itself. Verification forgives the newest *sealed* checkpoint, because its successor may
+    not exist yet; construction excludes the *current* checkpoint, because the run doing the work
+    is that successor. Both are derived -- one from sealed history, one from ``LATEST.md`` -- and
+    neither is a name typed into the tooling.
+    """
+    try:
+        return resolve_latest(root).name
+    except LedgerError:
+        return pending_anchor_checkpoint(root)
 
 
 def verify_chain(

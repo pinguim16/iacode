@@ -141,8 +141,15 @@ def run_audit(root: Path, checkpoint: Path, clean_clone: bool) -> dict[str, Any]
                     closed += 1
         return closed == total and total > 0, f"{closed}/{total} audit findings CLOSED"
 
-    mirror.check("MIR-002", "CP7 findings", "Every finding of the open audit is CLOSED.",
-                 ["checkpoint:CP7-FINDINGS-CLOSURE.json"], probe_findings)
+    # The closure artifact is named by the registry entry that binds the audit to this corrective
+    # checkpoint, so the mirror follows the repository instead of one audit's file name.
+    closure_evidence = [
+        f"checkpoint:{audit.get('findingsClosureFile') or 'FINDINGS-CLOSURE.json'}"
+        for audit in open_audits(root, gate, checkpoint.name)
+    ] or ["checkpoint:REQUIREMENTS-MATRIX.json"]
+
+    mirror.check("MIR-002", "Audit findings", "Every finding of the open audit is CLOSED.",
+                 closure_evidence, probe_findings)
 
     # 3. Mandatory attacks
     def probe_attacks() -> tuple[bool, str]:
@@ -157,7 +164,7 @@ def run_audit(root: Path, checkpoint: Path, clean_clone: bool) -> dict[str, Any]
             f"{len(defended)}/{len(expected)} mandatory attacks defended; "
             f"{red_team.get('defended')}/{red_team.get('total')} overall")
 
-    mirror.check("MIR-003", "CP7 A-Z attacks",
+    mirror.check("MIR-003", "Mandatory attacks",
                  "Every mandatory attack of the sealed Red Team report is defended.",
                  [f"checkpoint:{milestone}-INTERNAL-RED-TEAM.json"], probe_attacks)
 

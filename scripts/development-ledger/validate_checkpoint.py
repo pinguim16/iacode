@@ -12,7 +12,7 @@ from pathlib import Path
 from typing import Any
 
 from anchors import verify_chain
-from attestation import resolve_external_pass
+from attestation import resolve_external_pass, statuses_for_mechanism
 from delivery_assurance import (
     collect_test_ids,
     completeness_scope,
@@ -20,7 +20,7 @@ from delivery_assurance import (
     load_command_results,
 )
 from lessons import (
-    RESOLVING_MEMORY_POLICY,
+    RESOLVING_MEMORY_POLICIES,
     guardrail_effectiveness,
     memory_policy_version,
     preflight_staleness,
@@ -37,6 +37,7 @@ from ledger_common import (
     EVIDENCE_SCHEMA_VERSION,
     EXTERNAL_AUDIT_TRIGGERS,
     EXTERNAL_PASS_STATUS,
+    INDEPENDENT_AUDIT_PASS_STATUS,
     INDEPENDENT_DIMENSIONS,
     INVENTORY_SELF_REFERENTIAL_FILES,
     LEGACY_SCHEMA_VERSION,
@@ -131,6 +132,7 @@ HANDOFF_READY_STATUSES = (
     "READY_FOR_REVIEW",
     "READY_FOR_RED_TEAM",
     "INTERNAL_GATE_PASS",
+    "MILESTONE_INDEPENDENT_AUDIT_PASS",
     "MILESTONE_EXTERNAL_PASS",
     "GATE_PASS",
     "GATE_FAIL",
@@ -144,8 +146,16 @@ POSITIVE_TERMINAL_STATUSES = (
     "READY_FOR_REVIEW",
     "READY_FOR_RED_TEAM",
     "INTERNAL_GATE_PASS",
+    "MILESTONE_INDEPENDENT_AUDIT_PASS",
     "MILESTONE_EXTERNAL_PASS",
     "GATE_PASS",
+)
+
+# The statuses that record an independent audit's verdict about a subject checkpoint. They are
+# carried by the audit checkpoint, never by the delivery being judged.
+MILESTONE_VERDICT_STATUSES = (
+    "MILESTONE_INDEPENDENT_AUDIT_PASS",
+    "MILESTONE_EXTERNAL_PASS",
 )
 
 HEX64 = re.compile(r"^[0-9a-f]{64}$")
@@ -782,21 +792,23 @@ def _validate_memory_policy(
     """Engineering memory and milestone validation policy, bound to schemaVersion 3.1.0.
 
     ``closure`` selects the schemaVersion 3.2.0 additions: preflight freshness recomputed from the
-    memory, and an external verdict derived from an attestation rather than asserted. Sealed 3.1.0
-    checkpoints keep validating under their own version's rules.
+    memory, and a milestone verdict derived from an audit attestation rather than asserted. Sealed
+    3.1.0 checkpoints keep validating under their own version's rules.
     """
     status = state.get("status")
     offered = status in HANDOFF_READY_STATUSES
+    review = state.get("independentReview")
+    red_team = state.get("redTeam")
 
     # The memory is a control, so a broken memory is a broken checkpoint.
     for error in validate_engineering_memory(root):
         errors.append(f"engineering memory: {error}")
-    if closure and memory_policy_version(root) != RESOLVING_MEMORY_POLICY:
+    if closure and memory_policy_version(root) not in RESOLVING_MEMORY_POLICIES:
         errors.append(
-            "schemaVersion 3.2.0 requires engineering memory policy "
-            f"{RESOLVING_MEMORY_POLICY}, which resolves every control, evidence and "
-            "provenance reference; found "
-            f"{memory_policy_version(root)!r}")
+            "schemaVersion 3.2.0 requires an engineering memory policy that resolves every "
+            "control, evidence and provenance reference ("
+            + ", ".join(RESOLVING_MEMORY_POLICIES)
+            + f"); found {memory_policy_version(root)!r}")
 
     preflight_state = state.get("lessonPreflight")
     if not isinstance(preflight_state, dict):
@@ -891,45 +903,90 @@ def _validate_memory_policy(
     elif reason:
         errors.append("externalAuditReason is recorded while externalAuditRequired is false")
 
-    # An external verdict is derived from an attestation authored by a different sealed checkpoint,
-    # never from a field of the checkpoint that benefits from it. Filling secondToolValidation and
-    # milestone.status by hand is exactly the escape the audit demonstrated.
+    # A milestone verdict is derived from an attestation the *audit* checkpoint wrote about the
+    # sealed subject it judged. Two shapes are refused: a delivery that fills secondToolValidation
+    # and milestone.status about itself, and the circular shape the second audit found, where the
+    # promoted checkpoint had to contain an attestation naming its own commit. The subject stays
+    # immutable; the verdict lives in the checkpoint that performed the audit, which names the
+    # subject explicitly.
     second_tool = state.get("secondToolValidation") or {}
-    claims_external = closure and (
-        status == EXTERNAL_PASS_STATUS
+    attestation_state = state.get("externalAttestation")
+    claims_verdict = closure and (
+        status in MILESTONE_VERDICT_STATUSES
         or second_tool.get("status") == "PASSED"
         or (isinstance(milestone, dict) and milestone.get("status") == "PASSED")
     )
-    if claims_external:
+    verified: dict[str, Any] | None = None
+    if claims_verdict:
         identifier = milestone.get("id") if isinstance(milestone, dict) else None
-        subject_commit = _resolve_expected_commit(
-            root, state.get("currentCommit"), "UNBORN", False)
-        attestation, reasons = resolve_external_pass(
-            root, str(identifier), target.name,
-            subject_commit if subject_commit not in (None, "UNBORN") else None)
-        for reason in reasons:
-            errors.append(f"external validation: {reason}")
-        if attestation is not None and not reasons:
-            if second_tool.get("status") != "PASSED":
-                errors.append(
-                    "a verified external attestation exists but secondToolValidation does not "
-                    "record PASSED")
+        subject = None
+        if isinstance(attestation_state, dict):
+            subject = attestation_state.get("subjectCheckpoint")
+        if not subject:
+            errors.append(
+                "independent audit: a milestone verdict requires STATE.json "
+                "externalAttestation.subjectCheckpoint naming the sealed checkpoint this audit "
+                "judged; the verdict belongs to the audit checkpoint, never to the delivery it "
+                "judges")
+        else:
+            attestation, reasons = resolve_external_pass(
+                root, str(identifier), str(subject),
+                attestation_state.get("subjectCommit") or None,
+                claiming_checkpoint=target.name)
+            for reason in reasons:
+                errors.append(f"independent audit: {reason}")
+            if attestation is not None and not reasons:
+                verified = attestation
+                for key in ("path", "auditId", "validationMechanism"):
+                    expected_value = (
+                        attestation.get("__path") if key == "path" else attestation.get(key))
+                    if attestation_state.get(key) != expected_value:
+                        errors.append(
+                            f"STATE.json externalAttestation.{key}="
+                            f"{attestation_state.get(key)!r} does not describe the attestation it "
+                            f"points at ({expected_value!r})")
+                if attestation_state.get("status") != "VERIFIED":
+                    errors.append(
+                        "STATE.json externalAttestation.status must be VERIFIED when a milestone "
+                        "verdict is claimed on a verified attestation")
+                if second_tool.get("status") != "PASSED":
+                    errors.append(
+                        "a verified independent audit attestation exists but secondToolValidation "
+                        "does not record PASSED")
+                if isinstance(review, dict) and review.get("status") not in ("APPROVED", None):
+                    errors.append(
+                        f"the attestation records reviewResult=APPROVED while this checkpoint "
+                        f"records independentReview={review.get('status')!r}")
+                if isinstance(red_team, dict) and red_team.get("status") not in (
+                        "RED_TEAM_PASS", None):
+                    errors.append(
+                        f"the attestation records redTeamResult=RED_TEAM_PASS while this "
+                        f"checkpoint records redTeam={red_team.get('status')!r}")
 
-    if status == EXTERNAL_PASS_STATUS:
+    if status in MILESTONE_VERDICT_STATUSES:
         if not isinstance(milestone, dict) or milestone.get("status") != "PASSED":
-            errors.append(f"{EXTERNAL_PASS_STATUS} requires milestone.status=PASSED")
+            errors.append(f"{status} requires milestone.status=PASSED")
         if second_tool.get("status") != "PASSED":
-            errors.append(f"{EXTERNAL_PASS_STATUS} requires secondToolValidation=PASSED")
+            errors.append(f"{status} requires secondToolValidation=PASSED")
         if closure and not requires_external_validation(
                 str(state.get("gate", "")), bool(state.get("externalAuditRequired"))):
             errors.append(
-                f"{EXTERNAL_PASS_STATUS} is only available to a milestone-closing Gate or to a "
-                f"recorded extraordinary audit; gate {state.get('gate')!r} is neither")
+                f"{status} is only available to a milestone-closing Gate or to a recorded "
+                f"extraordinary audit; gate {state.get('gate')!r} is neither")
+        if closure and verified is not None:
+            permitted = statuses_for_mechanism(verified.get("validationMechanism"))
+            if status not in permitted:
+                errors.append(
+                    f"{status} may not be derived from a "
+                    f"{verified.get('validationMechanism')!r} attestation, which authorises "
+                    + (", ".join(permitted) if permitted else "no milestone status")
+                    + f"; {INDEPENDENT_AUDIT_PASS_STATUS} is the honest status for an audit that "
+                    f"is independent of the run but not of the tool")
     if status == "INTERNAL_GATE_PASS" and state.get("secondToolValidation", {}).get("status") == "PASSED":
-        # An internal verdict is not the place to record an external one; use the milestone status.
+        # An internal verdict is not the place to record an independent one; use the milestone status.
         errors.append(
-            "INTERNAL_GATE_PASS records the project's own verdict; an external PASS belongs to "
-            f"{EXTERNAL_PASS_STATUS}")
+            "INTERNAL_GATE_PASS records the project's own verdict; an independently audited PASS "
+            f"belongs to {INDEPENDENT_AUDIT_PASS_STATUS} or {EXTERNAL_PASS_STATUS}")
 
 
 COUNT_CLAIM = re.compile(
@@ -1087,6 +1144,18 @@ def _validate_internal_assurance(
                 errors.append(
                     f"{red_team_path.name} is STALE: the attacked content changed after the run, "
                     f"so the affected attacks must be executed again")
+            # A battery without a null-mutation control proves nothing: the CP-0009 audit's first
+            # harness reported every attack as defended while the refusals came from leftover
+            # state rather than from the mutation under test. The rule arrived with report version
+            # 1.1.0, and a report sealed under 1.0.0 keeps the rules it was written for.
+            control = report.get("baselineControl")
+            requires_control = str(report.get("schemaVersion")) != "1.0.0"
+            if requires_control and (
+                    not isinstance(control, dict) or control.get("result") != "VALID"):
+                errors.append(
+                    f"{red_team_path.name}: the battery must record a null-mutation control that "
+                    f"the unmutated fixture passes; found "
+                    f"{(control or {}).get('result') if isinstance(control, dict) else control!r}")
             recorded_ids = {str(item.get("attackId")) for item in attacks}
             for audit in _safe_open_audits(root, state, target, errors):
                 from policies import audit_attacks
@@ -1265,6 +1334,15 @@ def _validate_derived_counts(
         if not isinstance(entry, dict):
             errors.append(f"COUNTS.json does not record the derived count {key}")
             continue
+        # A count of executions can never exceed what exists to execute. The audit checkpoint
+        # recorded one 306-case run in two categories and derived 610 of 306 passing tests, which
+        # is additive nonsense rather than a measurement.
+        if (isinstance(value["numerator"], int) and isinstance(value["denominator"], int)
+                and value["numerator"] > value["denominator"]):
+            errors.append(
+                f"COUNTS.json {key}={value['numerator']}/{value['denominator']} counts more than "
+                f"exists; one physical execution recorded under several categories is one "
+                f"measurement, not their sum")
         if (entry.get("numerator"), entry.get("denominator")) != (value["numerator"], value["denominator"]):
             errors.append(
                 f"COUNTS.json {key}={entry.get('numerator')}/{entry.get('denominator')} "

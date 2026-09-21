@@ -76,7 +76,7 @@ def main() -> int:
         "NEXT.md": "# Next\n\n## Required next action\n\nPopulate the exact next allowed action before finalization.\n",
     }
     for filename, content in markdown.items():
-        (checkpoint / filename).write_text(content, encoding="utf-8")
+        (checkpoint / filename).write_text(content, encoding="utf-8", newline="\n")
 
     write_json(checkpoint / "STATE.json", {
         "schemaVersion": CURRENT_SCHEMA_VERSION,
@@ -183,7 +183,7 @@ def main() -> int:
         "durationMs": 0,
         "stdoutArtifact": None,
         "stderrArtifact": None,
-    }) + "\n", encoding="utf-8")
+    }) + "\n", encoding="utf-8", newline="\n")
     write_json(checkpoint / "FILES.json", {"filesRead": [], "filesCreated": [], "filesModified": [], "filesDeleted": []})
     empty_test = {"executed": False, "passed": 0, "failed": 0, "command": None, "evidence": None}
     write_json(checkpoint / "TESTS.json", {"schemaVersion": CURRENT_SCHEMA_VERSION, "unit": empty_test, "integration": empty_test, "e2e": empty_test})
@@ -194,13 +194,13 @@ def main() -> int:
             for dimension in QUALITY_DIMENSIONS_V3
         },
     })
-    (checkpoint / "REWORK-LOG.jsonl").write_text("", encoding="utf-8")
+    (checkpoint / "REWORK-LOG.jsonl").write_text("", encoding="utf-8", newline="\n")
     write_json(checkpoint / "REQUIREMENTS-MATRIX.json", {
         "schemaVersion": "2.0.0", "gate": args.gate, "checkpoint": name, "requirements": [],
     })
     (checkpoint / "REQUIREMENTS-MATRIX.md").write_text(
         f"# Requirements Matrix - {name}\n\nExtract every requirement before implementation.\n",
-        encoding="utf-8")
+        encoding="utf-8", newline="\n")
     write_json(checkpoint / "CLOSURE-REQUIREMENTS.json", {
         "schemaVersion": "1.0.0", "gate": args.gate, "checkpoint": name,
         "sources": ["Derive the expected set with derive_requirements.py before implementing."],
@@ -210,7 +210,7 @@ def main() -> int:
         f"# Closure Requirements - {name}\n\n"
         "Derive the expected requirement set from the canonical sources before implementation:\n"
         "`python scripts/development-ledger/derive_requirements.py --write`.\n",
-        encoding="utf-8")
+        encoding="utf-8", newline="\n")
     write_json(checkpoint / "PROVENANCE.json", {
         "schemaVersion": CURRENT_SCHEMA_VERSION,
         "artifacts": [{
@@ -221,7 +221,9 @@ def main() -> int:
         }]
     })
     latest = root / "docs" / "checkpoints" / "LATEST.md"
-    latest.write_text(f"# Latest Checkpoint\n\nCheckpoint: `docs/checkpoints/{name}`\n\nValidate before use.\n", encoding="utf-8")
+    # LF explicitly: the ledger hashes text with normalized endings, and a file written with
+    # platform endings here would differ from the same content written by every other tool.
+    latest.write_text(f"# Latest Checkpoint\n\nCheckpoint: `docs/checkpoints/{name}`\n\nValidate before use.\n", encoding="utf-8", newline="\n")
     print(checkpoint)
     return 0
 

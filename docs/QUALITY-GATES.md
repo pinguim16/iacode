@@ -63,13 +63,22 @@ and derives a `LESSON-REQ-` requirement from each one. Those requirements are pa
 matrix, and the Delivery Completeness Validator fails the delivery when one is absent or unevidenced.
 Lesson validation is part of the Green Keeper gate set, so a broken memory is a red delivery.
 
-## Internal and external verdicts
+## Internal, independent and external verdicts
 
 `INTERNAL_GATE_PASS` records that a Gate satisfied the project's own controls.
-`MILESTONE_EXTERNAL_PASS` records that an independent tool audited the whole milestone and approved
-it. The two are different statuses and the first is never described as the second. Validation refuses
-`MILESTONE_EXTERNAL_PASS` unless the milestone and the cross-tool validation are both `PASSED`, and
-refuses an `INTERNAL_GATE_PASS` that carries an external verdict.
+
+An independent audit produces one of two statuses, named for what its evidence supports:
+
+| Status | Mechanism | What it claims |
+|---|---|---|
+| `MILESTONE_INDEPENDENT_AUDIT_PASS` | `FRESH_SESSION_INDEPENDENT_AUDIT` | A new session with no memory of the implementing run audited the milestone. Independent of the run, not of the tool. |
+| `MILESTONE_EXTERNAL_PASS` | `CROSS_TOOL_INDEPENDENT_AUDIT` | A different tool, provider or model audited the milestone. |
+
+Both are carried by the **audit checkpoint**, about the sealed subject checkpoint it judged, and both
+are derived from an audit attestation rather than asserted. A fresh-session attestation cannot
+produce the cross-tool status: validation refuses a status the recorded mechanism does not authorise.
+An `INTERNAL_GATE_PASS` that carries an independent verdict is refused, and the first status is never
+described as either of the other two.
 
 ## The closed mandatory gate set
 
@@ -84,7 +93,8 @@ an invocation, and the change is visible in the diff.
 ## The shared promotion invariant
 
 One set of checks governs every positive terminal status: `READY_FOR_REVIEW`, `READY_FOR_RED_TEAM`,
-`INTERNAL_GATE_PASS`, `MILESTONE_EXTERNAL_PASS` and `GATE_PASS`. All of them require the Green Keeper
+`INTERNAL_GATE_PASS`, `MILESTONE_INDEPENDENT_AUDIT_PASS`, `MILESTONE_EXTERNAL_PASS` and
+`GATE_PASS`. All of them require the Green Keeper
 gate to pass, delivery completeness to be total with total evidence coverage, no `PARTIAL` or
 `MISSING` requirement, and every mandatory quality dimension executed and not `FAIL`. Each status then
 adds its own requirements: a review-ready checkpoint leaves the independent verdicts `PENDING`, and a
@@ -105,3 +115,15 @@ Any count used as evidence is derived once into `COUNTS.json` from the artifact 
 validation recomputes it. A checkpoint document that writes `N/M TESTS`, `N/M REQUIREMENTS`,
 `N/M FINDINGS`, `N/M ATTACKS`, `N/M LESSONS` or `N/M GUARDRAILS` is checked against the derivation,
 so two artifacts can no longer state different numbers for the same fact.
+
+A count of executions never exceeds what exists to execute. One physical test run recorded under
+several categories is one measurement, not their sum, and a numerator larger than its denominator is
+refused: the second `M0` audit recorded a single 306-case run as both unit and integration and
+derived 610 passing tests from it.
+
+**A count stated in a source comment or docstring is not evidence.** Canonical counts live in
+`COUNTS.json`, derived and recomputed; comments and docstrings describe semantics. The suite refuses
+a cardinality or an `N/M LABEL` claim written in a comment or a docstring of `scripts/` or `tests/`,
+because such a number has no derivation behind it and drifts silently, which is exactly what
+`CP9-F-003` found. A count inside an ordinary string literal is data, not a claim: the Red Team
+forges one deliberately.

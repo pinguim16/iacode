@@ -77,12 +77,40 @@
         }
       },
       "additionalProperties": false
+    },
+    "baselineControl": {
+      "type": "object",
+      "required": [
+        "result",
+        "detail"
+      ],
+      "properties": {
+        "result": {
+          "enum": [
+            "VALID",
+            "INVALID"
+          ]
+        },
+        "detail": {
+          "type": "string",
+          "minLength": 1
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "additionalProperties": false
     }
   },
   "properties": {
     "schemaVersion": {
       "enum": [
-        "1.0.0"
+        "1.0.0",
+        "1.1.0"
       ]
     },
     "checkpoint": {
@@ -100,6 +128,9 @@
     "source": {
       "type": "string",
       "minLength": 1
+    },
+    "baselineControl": {
+      "$ref": "#/$defs/baselineControl"
     },
     "attacks": {
       "type": "array",
@@ -135,5 +166,6 @@
       ]
     }
   },
-  "additionalProperties": false
+  "additionalProperties": false,
+  "description": "An executed adversarial battery. baselineControl records the null-mutation control: the unmutated fixture run through the identical path, which must be accepted before any attack is believed. The CP-0009 audit's first harness reported every attack as defended while the rejections came from leftover state rather than from the mutation under test, and only a null-mutation control exposed it. Sealed reports are validated against the schema of their own tree, so requiring it here constrains new reports only. The control is required from version 1.1.0 onwards and is validated by validate_checkpoint._validate_internal_assurance, so a report sealed under 1.0.0 keeps the rules it was written for."
 }

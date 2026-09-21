@@ -1,16 +1,20 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://iacode.local/schemas/external-audit-attestation.schema.json",
-  "title": "External audit attestation",
+  "title": "Independent audit attestation",
+  "description": "Written by the audit checkpoint about the sealed subject checkpoint it judged. It never names its own commit, because an attestation that had to contain the commit of the tree that contains it would be unreachable, which is finding CP9-F-001.",
   "type": "object",
   "required": [
     "schemaVersion",
     "auditId",
     "milestone",
+    "validationMechanism",
+    "crossToolValidation",
     "auditorRole",
     "tool",
     "provider",
     "model",
+    "freshSession",
     "subjectCheckpoint",
     "subjectCommit",
     "auditCheckpoint",
@@ -24,7 +28,7 @@
   "properties": {
     "schemaVersion": {
       "enum": [
-        "1.0.0"
+        "2.0.0"
       ]
     },
     "auditId": {
@@ -34,6 +38,18 @@
     "milestone": {
       "type": "string",
       "pattern": "^M[0-9]+$"
+    },
+    "validationMechanism": {
+      "enum": [
+        "CROSS_TOOL_INDEPENDENT_AUDIT",
+        "FRESH_SESSION_INDEPENDENT_AUDIT"
+      ]
+    },
+    "crossToolValidation": {
+      "enum": [
+        "AVAILABLE",
+        "NOT_AVAILABLE"
+      ]
     },
     "auditorRole": {
       "type": "string",
@@ -51,6 +67,9 @@
       "type": "string",
       "minLength": 1
     },
+    "freshSession": {
+      "type": "boolean"
+    },
     "subjectCheckpoint": {
       "type": "string",
       "minLength": 1
@@ -62,12 +81,6 @@
     "auditCheckpoint": {
       "type": "string",
       "minLength": 1
-    },
-    "auditCommit": {
-      "type": [
-        "string",
-        "null"
-      ]
     },
     "reviewResult": {
       "enum": [

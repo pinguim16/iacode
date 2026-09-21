@@ -126,6 +126,10 @@ python scripts/development-ledger/verify_integrity.py --rebuild
 python scripts/development-ledger/derive_counts.py --write
 python scripts/development-ledger/m0_red_team.py --write
 python scripts/development-ledger/m0_mirror_audit.py --clean-clone --write
+python scripts/development-ledger/milestone_status.py --milestone M0
+python scripts/development-ledger/promotion_simulation.py --write
+python scripts/development-ledger/successor_durability.py --write
+python scripts/development-ledger/affected_red_team.py --write
 python scripts/development-ledger/seal_checkpoint.py
 ```
 
@@ -143,9 +147,14 @@ is how the matrix stays equal to the expected set.
 tamper evidence inside the local trust model, not a signature; the limit is documented in
 `docs/CHECKPOINT-PROTOCOL.md`.
 
-`attestation.py` derives an external milestone verdict from `.iacode/attestations/<auditId>.json`.
-An external PASS cannot be produced by editing `STATE.json`: it requires a separate, sealed, anchored
-audit checkpoint.
+`attestation.py` derives a milestone verdict from `.iacode/attestations/<auditId>.json`, which the
+**audit** checkpoint writes about the sealed subject it judged. A verdict cannot be produced by
+editing `STATE.json`, and the subject is never rewritten to become approved: an audit is recorded
+about sealed content, in a later checkpoint. `milestone_status.py --milestone M0` performs the whole
+derivation from a clean checkout and exits nonzero when no valid attestation supports a PASS.
+`CROSS_TOOL_INDEPENDENT_AUDIT` authorises `MILESTONE_EXTERNAL_PASS`;
+`FRESH_SESSION_INDEPENDENT_AUDIT` authorises `MILESTONE_INDEPENDENT_AUDIT_PASS` and nothing
+stronger.
 
 `derive_counts.py` writes `COUNTS.json` from the artifact that owns each count, and the validator
 rejects both a stored count and a Markdown claim that contradicts the derivation.
@@ -154,6 +163,19 @@ rejects both a stored count and a Markdown claim that contradicts the derivation
 writes `<milestone>-INTERNAL-RED-TEAM.json`/`.md`. `m0_mirror_audit.py` reproduces the dimensions of
 the independent milestone audit and writes `<milestone>-INTERNAL-MIRROR.json`/`.md`. Both are internal
 quality assurance and neither may be recorded as external validation.
+
+`promotion_fixture.py` builds disposable repositories that execute the protocol's own positive
+paths, and the two entry points over it record what they observed:
+`promotion_simulation.py` delivers and seals a subject checkpoint, authors a second checkpoint as its
+audit, and derives the milestone verdict, writing `POSITIVE-PROMOTION-VALIDATION.json`/`.md`;
+`successor_durability.py` seals a chain of checkpoints, each anchoring its predecessor, re-runs the
+integrity controls at every state and writes `SUCCESSOR-DURABILITY.json`/`.md`. A control proven only
+by refusals is not proven, and a protocol transition that breaks a mandatory gate must be found by
+the delivery that introduces it.
+
+`affected_red_team.py` reports the adversarial position by explicit derived category — the mandatory
+battery, the additional battery, the attestation scenarios and the executed positive controls — so no
+two totals in a report can overlap or drift.
 
 `seal_checkpoint.py` validates the committed content with a clean worktree, records that run as
 `post-commit-validation`, stamps the end of the run after it, and commits the append-only evidence

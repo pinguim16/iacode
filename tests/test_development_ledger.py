@@ -37,6 +37,7 @@ from ledger_common import (  # noqa: E402
 )
 from lessons import (  # noqa: E402
     build_preflight,
+    is_applicable,
     load_lessons,
     preventive_controls,
     recurrence_key,
@@ -211,8 +212,7 @@ def install_fixture_memory(root: Path, test_reference: str,
     (memory / "guardrails").mkdir(parents=True, exist_ok=True)
     write_json_file(memory / "POLICY.json", {
         "schemaVersion": "2.0.0",
-        "policy": "Fixture memory under the resolving policy.",
-        "guardrailRegistry": "guardrails/registry.json",
+        "policy": "Fixture memory under the resolving policy; the registry path is fixed.",
     })
     write_json_file(memory / "guardrails" / "registry.json", {
         "schemaVersion": "1.0.0",
@@ -1968,8 +1968,9 @@ class DeliveryLifecycleTests(unittest.TestCase):
 
             # The internal assurance artifacts of a 3.2.0 delivery.
             write_json_file(checkpoint / "M0-INTERNAL-RED-TEAM.json", {
-                "schemaVersion": "1.0.0", "checkpoint": checkpoint.name, "generatedAt": NOW,
+                "schemaVersion": "1.1.0", "checkpoint": checkpoint.name, "generatedAt": NOW,
                 "targetFingerprint": scope_fingerprint(root), "source": "fixture",
+                "baselineControl": {"result": "VALID", "detail": "null-mutation control"},
                 "attacks": [{
                     "attackId": "A", "description": "fixture", "target": "fixture",
                     "mutation": "fixture", "expectedDefense": "reject", "observed": "rejected",
@@ -2325,11 +2326,28 @@ class LessonPreflightTests(unittest.TestCase):
         self.assertTrue(derived[0]["mandatory"])
         self.assertIn("verify", derived[0]["description"].lower())
 
-    def test_the_repository_preflight_covers_every_active_lesson(self) -> None:
-        preflight = build_preflight(PROJECT_ROOT, "SETUP-00", "control-plane", [], [])
+    def test_the_repository_preflight_covers_every_applicable_lesson(self) -> None:
+        """Every active lesson that applies to the declared scope is selected, and only those.
+
+        A lesson may declare the scopes it constrains -- an audit run's lessons do not constrain an
+        implementing Gate -- so the expectation is computed with the same applicability rule the
+        preflight uses, and every exclusion must name a scope the lesson itself declares.
+        """
+        gate, scope = "SETUP-00", "control-plane"
+        preflight = build_preflight(PROJECT_ROOT, gate, scope, [], [])
         active = [lesson for lesson in load_lessons(PROJECT_ROOT)
                   if lesson["status"] not in ("SUPERSEDED", "RETIRED")]
-        self.assertEqual(preflight["lessonsApplicable"], len(active))
+        applicable = [lesson for lesson in active
+                      if is_applicable(lesson, gate, scope, [], [])[0]]
+        self.assertEqual(preflight["lessonsApplicable"], len(applicable))
+        self.assertEqual(
+            {item["lessonId"] for item in preflight["applicable"]},
+            {lesson["lessonId"] for lesson in applicable})
+        for lesson in active:
+            if lesson in applicable:
+                continue
+            self.assertTrue(lesson["applicability"]["scopes"],
+                            f"{lesson['lessonId']} is excluded without declaring a scope")
 
 
 class DerivedRequirementCompletenessTests(unittest.TestCase):
@@ -2510,7 +2528,8 @@ class MemoryPolicyValidationTests(unittest.TestCase):
         state = self._state(status="INTERNAL_GATE_PASS",
                             secondToolValidation={"status": "PASSED"})
         errors = self._errors(state)
-        self.assertTrue(any("an external PASS belongs to" in error for error in errors), errors)
+        self.assertTrue(
+            any("an independently audited PASS belongs to" in error for error in errors), errors)
 
     def test_an_offered_checkpoint_requires_the_preflight_artifact(self) -> None:
         (self.checkpoint / "LESSON-PREFLIGHT.json").unlink()
@@ -2544,10 +2563,20 @@ from anchors import (  # noqa: E402
     anchor_hash,
     build_anchor,
     load_anchors,
+    pending_anchor_checkpoint,
+    pending_anchor_exclusion,
     rebuild,
+    sealed_checkpoint_ids,
+    sealed_checkpoints_in_history_order,
     verify_chain,
 )
-from attestation import resolve_external_pass, verify_attestation  # noqa: E402
+from attestation import (  # noqa: E402
+    derive_milestone_verdict,
+    resolve_external_pass,
+    sealed_commit_of,
+    statuses_for_mechanism,
+    verify_attestation,
+)
 from derive_counts import count_test_cases, derive_counts  # noqa: E402
 from ledger_common import (  # noqa: E402
     CLOSURE_SCHEMA_VERSION,
@@ -2557,6 +2586,7 @@ from ledger_common import (  # noqa: E402
 )
 from lessons import (  # noqa: E402
     guardrail_effectiveness,
+    guardrail_registry_path,
     load_guardrails,
     memory_fingerprint,
     preflight_fingerprint,
@@ -2568,6 +2598,7 @@ from lessons import (  # noqa: E402
 from policies import (  # noqa: E402
     audit_attacks,
     audit_findings,
+    load_audit_registry,
     canonical_requirements,
     compare_requirement_sets,
     declared_requirement_refs,
@@ -2580,6 +2611,7 @@ from policies import (  # noqa: E402
     source_ref,
 )
 from validate_checkpoint import (  # noqa: E402
+    COUNT_CLAIM,
     POSITIVE_TERMINAL_STATUSES,
     _validate_closure_controls,
     _validate_derived_counts,
@@ -2597,8 +2629,10 @@ class ClosureFixture(unittest.TestCase):
     """A copy of the real closure checkpoint, made internally consistent, then attacked.
 
     Copying the delivery rather than inventing one keeps the expected requirement set real: the
-    derived set is 119 anchored references, and no hand-written fixture could reproduce it without
-    also reproducing the bug the set exists to prevent.
+    fixture carries the complete canonical anchored reference set, which no hand-written fixture
+    could reproduce without also reproducing the bug the set exists to prevent. The cardinality is
+    deliberately not stated here: a count in prose drifts away from its derivation, which is
+    finding CP9-F-003, and every count that is evidence lives in COUNTS.json.
     """
 
     MILESTONE = "M0"
@@ -2609,6 +2643,7 @@ class ClosureFixture(unittest.TestCase):
         self.temporary = tempfile.TemporaryDirectory()
         self.checkpoint = Path(self.temporary.name) / CLOSURE_CHECKPOINT.name
         shutil.copytree(CLOSURE_CHECKPOINT, self.checkpoint)
+        self._refresh_derived_inputs()
         self.fingerprint = scope_fingerprint(PROJECT_ROOT)
         self.completeness_fingerprint = scope_fingerprint(
             PROJECT_ROOT, completeness_scope(PROJECT_ROOT, self.checkpoint))
@@ -2624,6 +2659,29 @@ class ClosureFixture(unittest.TestCase):
         self.temporary.cleanup()
 
     # -- fixture construction ------------------------------------------------------------
+    def _refresh_derived_inputs(self) -> None:
+        """Re-derive the copied checkpoint's preflight and requirement set from current policy.
+
+        The copy is a template, not a historical claim. Its sealed preflight was fresh for the
+        memory of its own day and its matrix declared the expected set of its own day, so a fixture
+        that kept both would fail for the fixture's own reasons every time a lesson or a checklist
+        row is added. Re-deriving them keeps every attack below aimed at the control under test.
+        """
+        from derive_requirements import build
+        from lessons import build_preflight
+
+        recorded = read_json(self.checkpoint / "LESSON-PREFLIGHT.json")
+        preflight = build_preflight(
+            PROJECT_ROOT, str(recorded.get("gate") or "SETUP-00"),
+            str(recorded.get("scope") or "control-plane"),
+            list(recorded.get("technologies") or []), list(recorded.get("modules") or []))
+        write_json_file(self.checkpoint / "LESSON-PREFLIGHT.json", preflight)
+        self.preflight = preflight
+
+        closure, matrix = build(PROJECT_ROOT, self.checkpoint, "SETUP-00")
+        write_json_file(self.checkpoint / "CLOSURE-REQUIREMENTS.json", closure)
+        write_json_file(self.checkpoint / "REQUIREMENTS-MATRIX.json", matrix)
+
     def _complete_matrix(self) -> None:
         evidence = ["checkpoint:PLAN.md"]
         matrix = read_json(self.checkpoint / "REQUIREMENTS-MATRIX.json")
@@ -2687,8 +2745,11 @@ class ClosureFixture(unittest.TestCase):
                 })
         mandatory = [item for item in attacks if item["mandatory"]]
         write_json_file(self.checkpoint / f"{self.MILESTONE}-INTERNAL-RED-TEAM.json", {
-            "schemaVersion": "1.0.0", "checkpoint": self.checkpoint.name, "generatedAt": NOW,
-            "targetFingerprint": self.fingerprint, "source": "fixture", "attacks": attacks,
+            "schemaVersion": "1.1.0", "checkpoint": self.checkpoint.name, "generatedAt": NOW,
+            "targetFingerprint": self.fingerprint, "source": "fixture",
+            "baselineControl": {"result": "VALID",
+                                "detail": "the unmutated fixture validates before any attack"},
+            "attacks": attacks,
             "total": len(attacks), "defended": len(attacks), "escaped": 0,
             "mandatoryTotal": len(mandatory), "mandatoryDefended": len(mandatory),
             "result": "RED_TEAM_PASS",
@@ -2718,9 +2779,13 @@ class ClosureFixture(unittest.TestCase):
                     "verificationCommand": "python -m unittest discover -s tests",
                     "evidence": ["checkpoint:PLAN.md"], "status": "CLOSED",
                 })
-        write_json_file(self.checkpoint / "CP7-FINDINGS-CLOSURE.json", {
+        # The artifact name and the audit identifier are read from the registry entry that binds
+        # this audit to this corrective checkpoint, so the fixture follows the repository instead
+        # of encoding one checkpoint's file name.
+        closure_name = str(self.audit.get("findingsClosureFile") or "FINDINGS-CLOSURE.json")
+        write_json_file(self.checkpoint / closure_name, {
             "schemaVersion": "1.0.0", "checkpoint": self.checkpoint.name,
-            "auditId": "M0-CP-0007", "source": "fixture", "findings": findings,
+            "auditId": self.audit.get("auditId"), "source": "fixture", "findings": findings,
             "total": len(findings), "closed": len(findings), "result": "CLOSED",
         })
 
@@ -2955,7 +3020,7 @@ class MandatoryGatePolicyTests(ClosureFixture):
         self.assertTrue(in_assurance_scope("scripts/development-ledger/validate_checkpoint.py"))
         self.assertTrue(in_assurance_scope("tests/test_development_ledger.py"))
         self.assertTrue(in_assurance_scope(".iacode/policies/quality-gates.json"))
-        self.assertFalse(in_assurance_scope("docs/checkpoints/SETUP-00-CP-0008/STATE.json"))
+        self.assertFalse(in_assurance_scope(f"docs/checkpoints/{CLOSURE_CHECKPOINT.name}/STATE.json"))
         self.assertIn("tests/test_development_ledger.py", assurance_scope_files(PROJECT_ROOT))
 
 
@@ -3051,14 +3116,30 @@ class ExpectedRequirementSetTests(ClosureFixture):
 
 
 class ExternalAttestationTests(ClosureFixture):
-    """M0-F-002: an external PASS is derived from an attestation, never self-asserted."""
+    """M0-F-002: a milestone verdict is derived from an attestation, never self-asserted.
+
+    The attestation document itself is exercised by ``AuditAttestationModelTests``, which works
+    against the repository's own sealed history. This class keeps the *state* cases: what a
+    checkpoint may and may not claim about itself.
+    """
+
+    def _sealed_pair(self) -> tuple[str, str]:
+        sealed = sealed_checkpoints_in_history_order(PROJECT_ROOT)
+        if len(sealed) < 2:
+            self.skipTest("the repository has fewer than two sealed checkpoints")
+        return sealed[-2], sealed[-1]
 
     def _attestation(self, **overrides: object) -> dict:
+        subject, audit = self._sealed_pair()
         document = {
-            "schemaVersion": "1.0.0", "auditId": "M0-TEST", "milestone": "M0",
-            "auditorRole": "milestone auditor", "tool": "a tool", "provider": "a provider",
-            "model": "a model", "subjectCheckpoint": self.checkpoint.name,
-            "subjectCommit": "a" * 40, "auditCheckpoint": "SETUP-00-CP-0007",
+            "schemaVersion": "2.0.0", "auditId": "M0-TEST", "milestone": "M0",
+            "validationMechanism": "FRESH_SESSION_INDEPENDENT_AUDIT",
+            "crossToolValidation": "NOT_AVAILABLE",
+            "auditorRole": "milestone independent auditor", "tool": "a tool",
+            "provider": "a provider", "model": "a model", "freshSession": True,
+            "subjectCheckpoint": subject,
+            "subjectCommit": sealed_commit_of(PROJECT_ROOT, subject),
+            "auditCheckpoint": audit,
             "reviewResult": "APPROVED", "redTeamResult": "RED_TEAM_PASS",
             "completeness": 100.0, "evidenceCoverage": 100.0, "testResult": "PASS",
             "createdAt": NOW,
@@ -3075,7 +3156,8 @@ class ExternalAttestationTests(ClosureFixture):
                                          "validatedAt": NOW, "justification": None,
                                          "evidence": []}
         errors = self.memory_errors(state)
-        self.assertTrue(any("may not be self-asserted" in error for error in errors), errors)
+        self.assertTrue(
+            any("belongs to the audit checkpoint" in error for error in errors), errors)
 
     def test_second_tool_validation_alone_is_not_enough(self) -> None:
         state = self.state()
@@ -3084,55 +3166,42 @@ class ExternalAttestationTests(ClosureFixture):
                                          "validatedAt": NOW, "justification": None,
                                          "evidence": []}
         errors = self.memory_errors(state)
-        self.assertTrue(any("external validation" in error for error in errors), errors)
+        self.assertTrue(any("independent audit" in error for error in errors), errors)
+
+    def test_a_verdict_naming_a_subject_without_an_attestation_is_refused(self) -> None:
+        state = self.state(status="MILESTONE_INDEPENDENT_AUDIT_PASS")
+        state["milestone"] = {**state["milestone"], "status": "PASSED"}
+        state["secondToolValidation"] = {"status": "PASSED", "tool": "a tool",
+                                         "provider": "a provider", "model": "a model",
+                                         "validatedAt": NOW, "justification": None,
+                                         "evidence": []}
+        state["externalAttestation"] = {"status": "VERIFIED", "path": None, "auditId": None,
+                                        "subjectCheckpoint": "SETUP-00-CP-9999",
+                                        "subjectCommit": None, "validationMechanism": None,
+                                        "evidence": []}
+        errors = self.memory_errors(state)
+        self.assertTrue(any("may not be self-asserted" in error for error in errors), errors)
 
     def test_an_attestation_naming_the_subject_as_its_own_auditor_is_rejected(self) -> None:
+        subject, _audit = self._sealed_pair()
         errors = verify_attestation(
-            PROJECT_ROOT, self._attestation(auditCheckpoint=self.checkpoint.name),
-            self.checkpoint.name, None)
+            PROJECT_ROOT, self._attestation(auditCheckpoint=subject), subject, None)
         self.assertTrue(
             any("may not be authored by the delivery it judges" in error for error in errors),
             errors)
 
-    def test_an_attestation_for_another_checkpoint_is_rejected(self) -> None:
-        errors = verify_attestation(
-            PROJECT_ROOT, self._attestation(subjectCheckpoint="SETUP-00-CP-0001"),
-            self.checkpoint.name, None)
-        self.assertTrue(any("attests checkpoint" in error for error in errors), errors)
-
-    def test_an_attestation_for_another_commit_is_rejected(self) -> None:
-        errors = verify_attestation(
-            PROJECT_ROOT, self._attestation(), self.checkpoint.name, "b" * 40)
-        self.assertTrue(any("attests commit" in error for error in errors), errors)
-
     def test_a_failed_review_cannot_produce_an_external_pass(self) -> None:
+        """Kept under its original name: sealed matrices and the memory cite this case."""
+        subject, _audit = self._sealed_pair()
         errors = verify_attestation(
-            PROJECT_ROOT, self._attestation(reviewResult="REWORK_REQUIRED"),
-            self.checkpoint.name, None)
+            PROJECT_ROOT, self._attestation(reviewResult="REWORK_REQUIRED"), subject, None)
         self.assertTrue(any("requires APPROVED" in error for error in errors), errors)
 
     def test_a_failed_red_team_cannot_produce_an_external_pass(self) -> None:
+        subject, _audit = self._sealed_pair()
         errors = verify_attestation(
-            PROJECT_ROOT, self._attestation(redTeamResult="RED_TEAM_FAIL"),
-            self.checkpoint.name, None)
+            PROJECT_ROOT, self._attestation(redTeamResult="RED_TEAM_FAIL"), subject, None)
         self.assertTrue(any("requires RED_TEAM_PASS" in error for error in errors), errors)
-
-    def test_incomplete_audit_coverage_cannot_produce_an_external_pass(self) -> None:
-        errors = verify_attestation(
-            PROJECT_ROOT, self._attestation(completeness=93.22), self.checkpoint.name, None)
-        self.assertTrue(any("requires 100.0" in error for error in errors), errors)
-
-    def test_a_missing_field_is_refused_before_anything_else(self) -> None:
-        attestation = self._attestation()
-        attestation.pop("auditorRole")
-        errors = verify_attestation(PROJECT_ROOT, attestation, self.checkpoint.name, None)
-        self.assertTrue(any("requires auditorRole" in error for error in errors), errors)
-
-    def test_an_attestation_naming_an_unsealed_audit_checkpoint_is_rejected(self) -> None:
-        errors = verify_attestation(
-            PROJECT_ROOT, self._attestation(auditCheckpoint="SETUP-00-CP-9999"),
-            self.checkpoint.name, None)
-        self.assertTrue(any("does not exist" in error for error in errors), errors)
 
     def test_no_attestation_means_no_external_pass(self) -> None:
         attestation, reasons = resolve_external_pass(
@@ -3166,6 +3235,22 @@ class PreflightFreshnessTests(ClosureFixture):
         self.assertNotEqual(
             preflight_fingerprint(PROJECT_ROOT, "SETUP-00", "a", [], []),
             preflight_fingerprint(PROJECT_ROOT, "GATE 1", "a", [], []))
+
+    def test_the_preflight_of_the_current_delivery_is_fresh(self) -> None:
+        """The real invariant: the preflight the delivery ships recomputes against the memory.
+
+        The fixture regenerates its own copy, so this case reads the checkpoint LATEST names and
+        recomputes that one. It is derived, never a checkpoint written here by name.
+        """
+        from ledger_common import resolve_latest
+
+        latest = resolve_latest(PROJECT_ROOT)
+        path = latest / "LESSON-PREFLIGHT.json"
+        if not path.is_file():
+            self.skipTest("the latest checkpoint carries no preflight yet")
+        state = read_json(latest / "STATE.json")
+        self.assertEqual(
+            preflight_staleness(PROJECT_ROOT, read_json(path), str(state.get("gate"))), [])
 
     def test_a_changed_fingerprint_makes_the_preflight_stale(self) -> None:
         preflight = read_json(self.checkpoint / "LESSON-PREFLIGHT.json")
@@ -3211,7 +3296,24 @@ class IntegrityAnchorTests(unittest.TestCase):
         self.temporary.cleanup()
 
     def _verify(self) -> list[str]:
-        return verify_chain(self.root, require_sealed=True, exclude={"SETUP-00-CP-0008"})
+        """Verify the chain the way the product does, with a derived exclusion.
+
+        CP9-F-002: this call named ``SETUP-00-CP-0008`` by literal while ``verify_integrity.py``
+        derived the same exclusion from repository state. Performing the protocol's own next step
+        -- a successor anchoring its sealed predecessor -- then turned the mandatory ``tests`` gate
+        red. The rule now has one implementation, ``anchors.pending_anchor_exclusion``, which the
+        CLI, the validator and this suite all ask.
+        """
+        return verify_chain(self.root, require_sealed=True,
+                            exclude=pending_anchor_exclusion(self.root))
+
+    def _anchored_checkpoint_that_is_not_pending(self) -> str:
+        """A checkpoint the chain anchors and the pending rule does not forgive."""
+        pending = pending_anchor_checkpoint(self.root)
+        candidates = [item["checkpointId"] for item in load_anchors(self.root)
+                      if item["checkpointId"] != pending]
+        self.assertTrue(candidates, "the chain anchors nothing beyond the pending checkpoint")
+        return candidates[-1]
 
     def _edit_anchors(self, mutate) -> None:
         path = self.root / ".iacode" / "anchors" / "checkpoint-chain.json"
@@ -3223,10 +3325,13 @@ class IntegrityAnchorTests(unittest.TestCase):
         self.assertEqual(self._verify(), [])
 
     def test_a_moved_historical_tag_is_detected(self) -> None:
-        run(["git", "tag", "-f", "iacode-checkpoints/SETUP-00-CP-0003",
-             "refs/tags/iacode-checkpoints/SETUP-00-CP-0004"], self.root)
+        anchors = load_anchors(self.root)
+        self.assertGreaterEqual(len(anchors), 3, "the chain is too short to move a tag inside it")
+        moved, onto = anchors[1]["checkpointId"], anchors[2]["checkpointId"]
+        run(["git", "tag", "-f", f"iacode-checkpoints/{moved}",
+             f"refs/tags/iacode-checkpoints/{onto}"], self.root)
         errors = self._verify()
-        self.assertTrue(any("SETUP-00-CP-0003" in error for error in errors), errors)
+        self.assertTrue(any(moved in error for error in errors), errors)
 
     def test_an_anchor_pointing_at_another_commit_is_detected(self) -> None:
         self._edit_anchors(lambda d: d["anchors"][1].update({"commit": d["anchors"][2]["commit"]}))
@@ -3258,9 +3363,24 @@ class IntegrityAnchorTests(unittest.TestCase):
         self.assertTrue(any("anchorHash" in error for error in errors), errors)
 
     def test_a_sealed_checkpoint_without_an_anchor_is_detected(self) -> None:
-        self._edit_anchors(lambda d: d.update({"anchors": d["anchors"][:-1]}))
+        victim = self._anchored_checkpoint_that_is_not_pending()
+        self._edit_anchors(lambda d: d.update({
+            "anchors": [item for item in d["anchors"] if item["checkpointId"] != victim]}))
         errors = self._verify()
-        self.assertTrue(any("no integrity anchor" in error for error in errors), errors)
+        self.assertTrue(
+            any("no integrity anchor" in error and victim in error for error in errors), errors)
+
+    def test_the_pending_exclusion_is_the_newest_sealed_checkpoint(self) -> None:
+        """The exclusion rule is a property of history, not a name someone typed."""
+        sealed = sealed_checkpoints_in_history_order(self.root)
+        self.assertEqual(pending_anchor_checkpoint(self.root), sealed[-1])
+        self.assertEqual(pending_anchor_exclusion(self.root), {sealed[-1]})
+        self.assertEqual(set(sealed), set(sealed_checkpoint_ids(self.root)))
+
+    def test_every_sealed_checkpoint_but_the_newest_is_anchored(self) -> None:
+        anchored = {item["checkpointId"] for item in load_anchors(self.root)}
+        owed = set(sealed_checkpoints_in_history_order(self.root)) - anchored
+        self.assertTrue(owed <= pending_anchor_exclusion(self.root), sorted(owed))
 
     def test_the_chain_can_be_rebuilt_from_the_repository(self) -> None:
         anchors = load_anchors(self.root)
@@ -3633,6 +3753,20 @@ class InternalAssuranceTests(ClosureFixture):
         errors = self._errors()
         self.assertTrue(any("mandatory attack C" in error for error in errors), errors)
 
+    def test_a_report_without_a_null_mutation_control_is_rejected(self) -> None:
+        """An adversarial battery is believed only once its unmutated control is accepted."""
+        self.edit(f"{self.MILESTONE}-INTERNAL-RED-TEAM.json",
+                  lambda d: d.pop("baselineControl", None))
+        errors = self._errors()
+        self.assertTrue(any("null-mutation control" in error for error in errors), errors)
+
+    def test_a_failed_null_mutation_control_cannot_produce_a_pass(self) -> None:
+        self.edit(f"{self.MILESTONE}-INTERNAL-RED-TEAM.json",
+                  lambda d: d.update({"baselineControl": {
+                      "result": "INVALID", "detail": "the fixture did not validate"}}))
+        errors = self._errors()
+        self.assertTrue(any("null-mutation control" in error for error in errors), errors)
+
     def test_a_stale_red_team_result_is_rejected(self) -> None:
         self.edit(f"{self.MILESTONE}-INTERNAL-RED-TEAM.json",
                   lambda d: d.update({"targetFingerprint": "0" * 64}))
@@ -3770,17 +3904,26 @@ class AuditSourceParsingTests(unittest.TestCase):
         self.assertTrue({"C", "I", "J", "Q", "R", "S", "U", "V"}.issubset(escaped))
 
     def test_the_registry_binds_the_audit_to_this_corrective_checkpoint(self) -> None:
-        audits = open_audits(PROJECT_ROOT, "SETUP-00", "SETUP-00-CP-0008")
+        audits = open_audits(PROJECT_ROOT, "SETUP-00", CLOSURE_CHECKPOINT.name)
         self.assertEqual([audit["auditId"] for audit in audits], ["M0-CP-0007"])
         self.assertEqual(len(audit_findings(PROJECT_ROOT, audits[0])), 11)
 
     def test_the_red_team_battery_implements_every_mandatory_attack(self) -> None:
+        """Every mandatory attack of every registered audit is implemented, not only one audit's.
+
+        Deriving the expectation from the whole registry is what keeps the battery correct when a
+        new audit is registered: the next corrective delivery inherits its predecessors' mandatory
+        attacks instead of silently dropping them.
+        """
         from m0_red_team import build_attacks
+        from policies import load_audit_registry
 
         implemented = {item["attackId"] for item in build_attacks() if item["mandatory"]}
-        audits = open_audits(PROJECT_ROOT, "SETUP-00", "SETUP-00-CP-0008")
-        expected = {item["id"] for item in audit_attacks(PROJECT_ROOT, audits[0])
-                    if item["mandatory"] == "true"}
+        expected: set[str] = set()
+        for audit in load_audit_registry(PROJECT_ROOT):
+            expected |= {item["id"] for item in audit_attacks(PROJECT_ROOT, audit)
+                         if item["mandatory"] == "true"}
+        self.assertTrue(expected, "the registry declares no mandatory attack")
         self.assertEqual(implemented, expected)
 
     def test_the_battery_also_covers_the_additional_and_new_surfaces(self) -> None:
@@ -3789,6 +3932,572 @@ class AuditSourceParsingTests(unittest.TestCase):
         identifiers = {item["attackId"] for item in build_attacks()}
         self.assertTrue({"AA", "AB", "AC", "AD", "AE", "AF"}.issubset(identifiers))
         self.assertTrue({"AI", "AL", "AR", "AT"}.issubset(identifiers))
+
+
+
+
+# ==============================================================================================
+# CP-0009 findings (schemaVersion 3.2.0, corrective delivery SETUP-00-CP-0010)
+#
+# Every class below exists because the fresh-session M0 audit of SETUP-00-CP-0008 found the gap it
+# covers. CP9-F-001 and CP9-F-002 were both failures of a control that had only ever been tested
+# from one side, so each class here executes the positive path as well as the refusals.
+# ==============================================================================================
+
+from promotion_fixture import (  # noqa: E402
+    run_positive_promotion,
+    run_successor_durability,
+)
+from derive_counts import executed_test_runs  # noqa: E402
+from lessons import validate_memory_policy_document  # noqa: E402
+
+
+def _sealed_pair(root: Path) -> tuple[str, str]:
+    """The newest sealed checkpoint and the one before it, derived from history."""
+    sealed = sealed_checkpoints_in_history_order(root)
+    if len(sealed) < 2:
+        raise unittest.SkipTest("the repository has fewer than two sealed checkpoints")
+    return sealed[-2], sealed[-1]
+
+
+class AuditAttestationModelTests(unittest.TestCase):
+    """CP9-F-001: the verdict belongs to the audit checkpoint, and the subject stays immutable.
+
+    The previous model consumed the attestation as if it belonged to the checkpoint being
+    promoted, which required a tree containing its own commit identifier. Nothing could satisfy
+    it, so every forgery was refused and no honest audit could pass. These cases are written
+    against the repository's own sealed history, so the subject and its auditor are derived rather
+    than named.
+    """
+
+    def setUp(self) -> None:
+        self.subject, self.audit = _sealed_pair(PROJECT_ROOT)
+        self.subject_commit = sealed_commit_of(PROJECT_ROOT, self.subject)
+
+    def attestation(self, **overrides: object) -> dict:
+        document = {
+            "schemaVersion": "2.0.0",
+            "auditId": "M0-TEST",
+            "milestone": "M0",
+            "validationMechanism": "FRESH_SESSION_INDEPENDENT_AUDIT",
+            "crossToolValidation": "NOT_AVAILABLE",
+            "auditorRole": "milestone independent auditor",
+            "tool": "a tool",
+            "provider": "a provider",
+            "model": "a model",
+            "freshSession": True,
+            "subjectCheckpoint": self.subject,
+            "subjectCommit": self.subject_commit,
+            "auditCheckpoint": self.audit,
+            "reviewResult": "APPROVED",
+            "redTeamResult": "RED_TEAM_PASS",
+            "completeness": 100.0,
+            "evidenceCoverage": 100.0,
+            "testResult": "PASS",
+            "createdAt": NOW,
+        }
+        document.update(overrides)
+        document["__path"] = "fixture-attestation.json"
+        return document
+
+    def verify(self, attestation: dict, **kwargs: object) -> list[str]:
+        return verify_attestation(
+            PROJECT_ROOT, attestation, attestation.get("subjectCheckpoint", self.subject),
+            None, **kwargs)
+
+    # -- the positive case, which is the finding ---------------------------------------
+    def test_a_legitimate_attestation_over_the_sealed_history_is_accepted(self) -> None:
+        self.assertEqual(self.verify(self.attestation()), [])
+
+    def test_the_attestation_never_names_the_commit_of_the_tree_that_contains_it(self) -> None:
+        schema = read_json(
+            PROJECT_ROOT / ".iacode" / "schemas" / "external-audit-attestation.schema.json")
+        self.assertNotIn("auditCommit", schema["properties"])
+        self.assertIn("subjectCommit", schema["required"])
+
+    def test_the_schema_of_the_circular_model_is_refused(self) -> None:
+        errors = self.verify(self.attestation(schemaVersion="1.0.0"))
+        self.assertTrue(any("schemaVersion" in error for error in errors), errors)
+
+    # -- the subject -------------------------------------------------------------------
+    def test_an_attestation_naming_the_subject_as_its_own_auditor_is_rejected(self) -> None:
+        errors = self.verify(self.attestation(auditCheckpoint=self.subject))
+        self.assertTrue(
+            any("may not be authored by the delivery it judges" in error for error in errors),
+            errors)
+
+    def test_an_attestation_for_another_checkpoint_is_rejected(self) -> None:
+        other = sealed_checkpoints_in_history_order(PROJECT_ROOT)[0]
+        errors = verify_attestation(
+            PROJECT_ROOT, self.attestation(subjectCheckpoint=other), self.subject, None)
+        self.assertTrue(any("attests checkpoint" in error for error in errors), errors)
+
+    def test_an_attestation_for_another_commit_is_rejected(self) -> None:
+        errors = verify_attestation(
+            PROJECT_ROOT, self.attestation(), self.subject, "b" * 40)
+        self.assertTrue(any("attests commit" in error for error in errors), errors)
+
+    def test_a_subject_commit_that_is_not_the_sealed_one_is_rejected(self) -> None:
+        errors = self.verify(self.attestation(subjectCommit="c" * 40))
+        self.assertTrue(
+            any("resolves to" in error or "not the commit" in error for error in errors), errors)
+
+    def test_an_unsealed_subject_is_rejected(self) -> None:
+        unsealed = [item.name for item in sorted(
+            (PROJECT_ROOT / "docs" / "checkpoints").iterdir())
+            if item.is_dir() and item.name not in set(sealed_checkpoint_ids(PROJECT_ROOT))]
+        if not unsealed:
+            self.skipTest("every checkpoint directory in this checkout is sealed")
+        errors = verify_attestation(
+            PROJECT_ROOT, self.attestation(subjectCheckpoint=unsealed[-1]), unsealed[-1], None)
+        self.assertTrue(any("is not sealed" in error for error in errors), errors)
+
+    def test_attesting_an_older_checkpoint_than_the_audit_succeeds_is_rejected(self) -> None:
+        """An audit judges the delivery it follows, not an older, easier checkpoint.
+
+        Without this rule every other check would hold for an old checkpoint: it is sealed,
+        anchored and an ancestor of everything after it, so a milestone could be claimed on a
+        delivery the audit never examined.
+        """
+        sealed = sealed_checkpoints_in_history_order(PROJECT_ROOT)
+        if len(sealed) < 3:
+            self.skipTest("the repository has fewer than three sealed checkpoints")
+        older = sealed[-3]
+        errors = verify_attestation(
+            PROJECT_ROOT,
+            self.attestation(subjectCheckpoint=older,
+                             subjectCommit=sealed_commit_of(PROJECT_ROOT, older)),
+            older, None)
+        self.assertTrue(
+            any("is not the sealed checkpoint this audit succeeds" in error for error in errors),
+            errors)
+
+    # -- the auditor -------------------------------------------------------------------
+    def test_an_attestation_naming_a_checkpoint_that_does_not_exist_is_rejected(self) -> None:
+        errors = self.verify(self.attestation(auditCheckpoint="SETUP-00-CP-9999"))
+        self.assertTrue(any("does not exist" in error for error in errors), errors)
+
+    def test_a_checkpoint_may_not_claim_a_verdict_another_checkpoint_authored(self) -> None:
+        errors = self.verify(self.attestation(), claiming_checkpoint="SETUP-00-CP-9999")
+        self.assertTrue(
+            any("may only carry the verdict of the audit it performed" in error
+                for error in errors), errors)
+
+    # -- the verdict -------------------------------------------------------------------
+    def test_a_failed_review_cannot_produce_a_milestone_pass(self) -> None:
+        errors = self.verify(self.attestation(reviewResult="REWORK_REQUIRED"))
+        self.assertTrue(any("requires APPROVED" in error for error in errors), errors)
+
+    def test_a_failed_red_team_cannot_produce_a_milestone_pass(self) -> None:
+        errors = self.verify(self.attestation(redTeamResult="RED_TEAM_FAIL"))
+        self.assertTrue(any("requires RED_TEAM_PASS" in error for error in errors), errors)
+
+    def test_incomplete_audit_coverage_cannot_produce_a_milestone_pass(self) -> None:
+        errors = self.verify(self.attestation(completeness=93.22))
+        self.assertTrue(any("requires 100.0" in error for error in errors), errors)
+
+    def test_a_failed_test_result_cannot_produce_a_milestone_pass(self) -> None:
+        errors = self.verify(self.attestation(testResult="FAIL"))
+        self.assertTrue(any("requires PASS" in error for error in errors), errors)
+
+    def test_a_missing_field_is_refused_before_anything_else(self) -> None:
+        attestation = self.attestation()
+        attestation.pop("auditorRole")
+        errors = self.verify(attestation)
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("requires auditorRole", errors[0])
+
+    # -- the mechanism -----------------------------------------------------------------
+    def test_an_unknown_validation_mechanism_is_rejected(self) -> None:
+        errors = self.verify(self.attestation(validationMechanism="TRUST_ME"))
+        self.assertTrue(any("recognised mechanisms" in error for error in errors), errors)
+
+    def test_a_cross_tool_claim_without_cross_tool_availability_is_rejected(self) -> None:
+        errors = self.verify(self.attestation(
+            validationMechanism="CROSS_TOOL_INDEPENDENT_AUDIT",
+            crossToolValidation="NOT_AVAILABLE"))
+        self.assertTrue(any("contradicts the mechanism" in error for error in errors), errors)
+
+    def test_a_fresh_session_claim_requires_a_fresh_session(self) -> None:
+        errors = self.verify(self.attestation(freshSession=False))
+        self.assertTrue(any("freshSession" in error for error in errors), errors)
+
+    def test_a_fresh_session_audit_may_not_produce_the_external_status(self) -> None:
+        self.assertEqual(
+            statuses_for_mechanism("FRESH_SESSION_INDEPENDENT_AUDIT"),
+            ("MILESTONE_INDEPENDENT_AUDIT_PASS",))
+        self.assertIn("MILESTONE_EXTERNAL_PASS",
+                      statuses_for_mechanism("CROSS_TOOL_INDEPENDENT_AUDIT"))
+
+    def test_the_status_vocabulary_separates_the_two_verdicts(self) -> None:
+        from ledger_common import (
+            EXTERNAL_PASS_STATUS,
+            INDEPENDENT_AUDIT_PASS_STATUS,
+            INTERNAL_PASS_STATUS,
+            STATUSES,
+            UNBLOCKED_STATUSES,
+        )
+
+        self.assertIn(INDEPENDENT_AUDIT_PASS_STATUS, STATUSES)
+        self.assertIn(INDEPENDENT_AUDIT_PASS_STATUS, UNBLOCKED_STATUSES)
+        self.assertIn(INDEPENDENT_AUDIT_PASS_STATUS, POSITIVE_TERMINAL_STATUSES)
+        self.assertNotIn(INDEPENDENT_AUDIT_PASS_STATUS,
+                         (INTERNAL_PASS_STATUS, EXTERNAL_PASS_STATUS))
+
+    # -- the derivation ----------------------------------------------------------------
+    def test_no_attestation_means_no_milestone_pass(self) -> None:
+        attestation, reasons = resolve_external_pass(
+            PROJECT_ROOT, "M0", "SETUP-00-CP-9999", None)
+        self.assertIsNone(attestation)
+        self.assertTrue(any("may not be self-asserted" in reason for reason in reasons), reasons)
+
+    def test_the_milestone_verdict_is_derived_and_not_read_from_a_status(self) -> None:
+        verdict = derive_milestone_verdict(PROJECT_ROOT, "M0")
+        self.assertIn(verdict["status"], ("PASSED", "NOT_PASSED"))
+        if verdict["status"] == "NOT_PASSED":
+            self.assertTrue(verdict["reasons"])
+
+
+class AdversarialCategoryTests(ClosureFixture):
+    """CP-0009's report could be read two ways; a category is derived, and the totals never overlap."""
+
+    def _document(self) -> dict:
+        from affected_red_team import build
+
+        return build(PROJECT_ROOT, self.checkpoint)
+
+    def test_every_category_is_derived_from_the_executed_battery(self) -> None:
+        document = self._document()
+        executed = read_json(
+            self.checkpoint / f"{self.MILESTONE}-INTERNAL-RED-TEAM.json")["attacks"]
+        self.assertEqual(document["totalAdversarialScenarios"], len(executed))
+        categories = document["categories"]
+        self.assertEqual(
+            categories["originalRedTeam"]["count"] + categories["additionalControlAttacks"]["count"],
+            len(executed))
+
+    def test_the_mandatory_category_matches_the_registry(self) -> None:
+        from policies import load_audit_registry
+
+        expected: set[str] = set()
+        for audit in load_audit_registry(PROJECT_ROOT):
+            expected |= {item["id"] for item in audit_attacks(PROJECT_ROOT, audit)
+                         if item["mandatory"] == "true"}
+        document = self._document()
+        self.assertEqual(set(document["categories"]["originalRedTeam"]["required"]), expected)
+        self.assertEqual(document["categories"]["originalRedTeam"]["missing"], [])
+
+    def test_a_battery_missing_a_mandatory_attack_does_not_report_defended(self) -> None:
+        def prune(report: dict) -> None:
+            report["attacks"] = [item for item in report["attacks"] if item["attackId"] != "A"]
+            report["total"] = len(report["attacks"])
+            report["defended"] = len(report["attacks"])
+            report["mandatoryTotal"] = sum(1 for item in report["attacks"] if item["mandatory"])
+            report["mandatoryDefended"] = report["mandatoryTotal"]
+
+        self.edit(f"{self.MILESTONE}-INTERNAL-RED-TEAM.json", prune)
+        document = self._document()
+        self.assertIn("A", document["categories"]["originalRedTeam"]["missing"])
+        self.assertEqual(document["result"], "FAIL")
+
+    def test_the_null_mutation_control_is_carried_into_the_report(self) -> None:
+        document = self._document()
+        self.assertEqual((document["baselineControl"] or {}).get("result"), "VALID")
+
+
+class PositivePromotionTests(unittest.TestCase):
+    """CP9-F-001: a milestone PASS is reachable by an honest sequence of repository states.
+
+    The whole promotion is executed once in a disposable repository: a subject checkpoint is
+    delivered and sealed, a second checkpoint is authored as its audit, and the verdict is derived
+    afterwards from the repository.
+    """
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.temporary = tempfile.TemporaryDirectory()
+        try:
+            cls.result = run_positive_promotion(Path(cls.temporary.name))
+        except Exception as exc:  # noqa: BLE001 - the simulation failing is the finding
+            cls.temporary.cleanup()
+            raise AssertionError(f"the positive promotion could not be executed: {exc}") from exc
+
+    @classmethod
+    def tearDownClass(cls) -> None:
+        cls.temporary.cleanup()
+
+    def test_the_audit_checkpoint_validates_as_sealed(self) -> None:
+        self.assertIn("CHECKPOINT_VALID", self.result["audit"]["validatorOutput"])
+
+    def test_the_audit_checkpoint_carries_the_milestone_verdict(self) -> None:
+        self.assertEqual(self.result["audit"]["status"], "MILESTONE_INDEPENDENT_AUDIT_PASS")
+
+    def test_the_milestone_verdict_is_derived_as_passed(self) -> None:
+        verdict = self.result["milestoneVerdict"]
+        self.assertEqual(verdict["status"], "PASSED", verdict["reasons"])
+        self.assertEqual(len(verdict["accepted"]), 1, verdict)
+
+    def test_the_subject_is_not_rewritten_by_its_own_audit(self) -> None:
+        self.assertTrue(self.result["subjectImmutable"])
+        self.assertEqual(self.result["subjectStatusAfter"], "READY_FOR_REVIEW")
+
+    def test_the_attestation_lives_in_the_audit_checkpoints_change_set(self) -> None:
+        self.assertTrue(str(self.result["attestation"]).startswith(".iacode/attestations/"))
+
+    def test_the_integrity_chain_still_verifies_after_the_audit(self) -> None:
+        self.assertEqual(self.result["chainErrors"], [])
+
+    def test_a_fresh_session_audit_cannot_reach_the_external_status(self) -> None:
+        """The honest status is available; the one that would overclaim is refused."""
+        with tempfile.TemporaryDirectory() as workdir:
+            with self.assertRaises(Exception) as refused:
+                run_positive_promotion(Path(workdir), status="MILESTONE_EXTERNAL_PASS")
+        self.assertIn("MILESTONE_EXTERNAL_PASS", str(refused.exception))
+
+
+class SuccessorDurabilityTests(unittest.TestCase):
+    """CP9-F-002: advancing the sealed chain never requires editing a guardrail.
+
+    Three checkpoints are sealed in succession in a disposable repository, each anchoring its
+    predecessor, and the chain controls are re-run at every state with a derived exclusion.
+    """
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.temporary = tempfile.TemporaryDirectory()
+        try:
+            cls.result = run_successor_durability(Path(cls.temporary.name), successors=2)
+        except Exception as exc:  # noqa: BLE001 - the simulation failing is the finding
+            cls.temporary.cleanup()
+            raise AssertionError(f"the succession could not be executed: {exc}") from exc
+
+    @classmethod
+    def tearDownClass(cls) -> None:
+        cls.temporary.cleanup()
+
+    def test_three_checkpoints_were_sealed_in_succession(self) -> None:
+        self.assertEqual(len(self.result["checkpoints"]), 3)
+
+    def test_every_state_of_the_chain_verifies(self) -> None:
+        for state in self.result["states"]:
+            self.assertEqual(state["chainErrors"], [], state["state"])
+            self.assertEqual(state["integrityExit"], 0, state["state"])
+
+    def test_the_pending_exclusion_moves_with_the_chain(self) -> None:
+        pending = [state["pendingAnchor"] for state in self.result["states"]]
+        self.assertEqual(pending, [item["checkpoint"] for item in self.result["checkpoints"]])
+        self.assertEqual(len(set(pending)), len(pending))
+
+    def test_each_successor_anchors_its_predecessor(self) -> None:
+        names = [item["checkpoint"] for item in self.result["checkpoints"]]
+        self.assertEqual(self.result["states"][-1]["anchored"], names[:-1])
+
+    def test_a_missing_anchor_is_still_detected_after_the_chain_advances(self) -> None:
+        self.assertTrue(self.result["detected"], self.result["detectionErrors"])
+        self.assertEqual(self.result["restoredChainErrors"], [])
+
+
+class DerivedTestCountTests(ClosureFixture):
+    """CP-0009's own defect: one physical run recorded twice is one measurement, not two."""
+
+    def test_one_run_recorded_in_two_categories_counts_once(self) -> None:
+        entry = {"executed": True, "passed": 306, "failed": 0,
+                 "command": "python -m unittest discover -s tests", "evidence": "one run"}
+        runs = executed_test_runs({"unit": dict(entry), "integration": dict(entry),
+                                   "e2e": {"executed": False, "passed": 0, "failed": 0,
+                                           "command": None, "evidence": None}})
+        self.assertEqual(sum(runs.values()), 306)
+
+    def test_an_explicit_run_identifier_deduplicates_across_categories(self) -> None:
+        runs = executed_test_runs({
+            "unit": {"executed": True, "passed": 306, "failed": 0, "command": "a",
+                     "runId": "suite", "evidence": None},
+            "integration": {"executed": True, "passed": 300, "failed": 0, "command": "b",
+                            "runId": "suite", "evidence": None},
+        })
+        self.assertEqual(sum(runs.values()), 306)
+
+    def test_two_real_executions_are_both_counted(self) -> None:
+        runs = executed_test_runs({
+            "unit": {"executed": True, "passed": 10, "failed": 0, "command": "unit",
+                     "runId": "unit-run", "evidence": None},
+            "e2e": {"executed": True, "passed": 4, "failed": 0, "command": "e2e",
+                    "runId": "e2e-run", "evidence": None},
+        })
+        self.assertEqual(sum(runs.values()), 14)
+
+    def test_a_count_larger_than_what_exists_is_refused(self) -> None:
+        def forge(document: dict) -> None:
+            for name in ("unit", "integration"):
+                document[name] = {"executed": True, "passed": 10 ** 6, "failed": 0,
+                                  "command": f"{name} run", "runId": name, "evidence": "forged"}
+
+        self.edit("TESTS.json", forge)
+        errors: list[str] = []
+        _validate_derived_counts(PROJECT_ROOT, self.checkpoint, self.state(), errors)
+        self.assertTrue(any("counts more than exists" in error for error in errors), errors)
+
+
+class SourceCardinalityPolicyTests(unittest.TestCase):
+    """CP9-F-003: a cardinality written in prose is not evidence, and no source may state one.
+
+    The decision recorded in docs/QUALITY-GATES.md is that every count used as evidence lives in
+    COUNTS.json, derived once and recomputed during validation. Comments and docstrings describe
+    semantics; a number written there has no derivation behind it and drifts, which is exactly what
+    happened when a docstring kept claiming a requirement-set size the derivation had outgrown.
+
+    Only comments and docstrings are inspected. A count inside an ordinary string literal is data:
+    the Red Team forges one on purpose, and forbidding that would forbid the attack that proves the
+    control works.
+    """
+
+    CARDINALITY = re.compile(
+        r"(?:derived|expected|canonical|anchored)\s+(?:reference\s+)?set\s+"
+        r"(?:is|has|contains)\s+(\d+)", re.IGNORECASE)
+
+    def _sources(self) -> list[Path]:
+        paths: list[Path] = []
+        for directory in ("scripts", "tests"):
+            for path in sorted((PROJECT_ROOT / directory).rglob("*.py")):
+                if "__pycache__" not in path.parts:
+                    paths.append(path)
+        return paths
+
+    def _prose(self, path: Path) -> list[str]:
+        """Every comment and docstring of a module, which is where prose claims live."""
+        import ast
+        import io
+        import tokenize
+
+        text = path.read_text(encoding="utf-8")
+        prose: list[str] = []
+        try:
+            for token in tokenize.generate_tokens(io.StringIO(text).readline):
+                if token.type == tokenize.COMMENT:
+                    prose.append(token.string)
+        except (tokenize.TokenError, IndentationError):
+            pass
+        try:
+            tree = ast.parse(text)
+        except SyntaxError:
+            return prose
+        for node in ast.walk(tree):
+            if isinstance(node, (ast.Module, ast.ClassDef, ast.FunctionDef, ast.AsyncFunctionDef)):
+                document = ast.get_docstring(node, clean=False)
+                if document:
+                    prose.append(document)
+        return prose
+
+    def test_no_comment_or_docstring_states_the_cardinality_of_a_derived_set(self) -> None:
+        offenders = []
+        for path in self._sources():
+            for prose in self._prose(path):
+                for match in self.CARDINALITY.finditer(prose):
+                    offenders.append(f"{path.relative_to(PROJECT_ROOT)}: {match.group(0)}")
+        self.assertEqual(offenders, [])
+
+    def test_no_comment_or_docstring_states_a_derived_count_claim(self) -> None:
+        offenders = []
+        for path in self._sources():
+            for prose in self._prose(path):
+                for numerator, denominator, label in COUNT_CLAIM.findall(prose):
+                    offenders.append(
+                        f"{path.relative_to(PROJECT_ROOT)}: {numerator}/{denominator} {label}")
+        self.assertEqual(offenders, [])
+
+    def test_the_control_detects_a_cardinality_written_in_a_docstring(self) -> None:
+        """The check must fail on the shape the audit found, not merely pass on clean sources."""
+        with tempfile.TemporaryDirectory() as temporary:
+            path = Path(temporary) / "sample.py"
+            path.write_text(
+                '"""A module whose docstring claims the derived set is 119 anchored references."""\n'
+                "# and a comment stating 305/306 TESTS\n",
+                encoding="utf-8")
+            prose = self._prose(path)
+        self.assertTrue(any(self.CARDINALITY.search(item) for item in prose), prose)
+        self.assertTrue(any(COUNT_CLAIM.search(item) for item in prose), prose)
+
+    def test_the_count_policy_is_documented(self) -> None:
+        text = (PROJECT_ROOT / "docs" / "QUALITY-GATES.md").read_text(encoding="utf-8")
+        self.assertIn("A count stated in a source comment or docstring is not evidence", text)
+
+
+class MemoryPolicyDocumentTests(unittest.TestCase):
+    """CP9-F-005 and CP9-F-004: the policy declares only what is read, and prose cannot lie."""
+
+    def test_the_declared_policy_validates_against_its_schema(self) -> None:
+        self.assertEqual(validate_memory_policy_document(PROJECT_ROOT), [])
+
+    def test_a_setting_no_code_reads_cannot_be_declared(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            (root / ".iacode" / "memory").mkdir(parents=True)
+            (root / ".iacode" / "schemas").mkdir(parents=True)
+            shutil.copy2(
+                PROJECT_ROOT / ".iacode" / "schemas" / "memory-policy.schema.json",
+                root / ".iacode" / "schemas" / "memory-policy.schema.json")
+            write_json_file(root / ".iacode" / "memory" / "POLICY.json", {
+                "schemaVersion": "2.0.0", "policy": "fixture",
+                "guardrailRegistry": "guardrails/registry.json"})
+            errors = validate_memory_policy_document(root)
+        self.assertTrue(any("guardrailRegistry" in error for error in errors), errors)
+
+    def test_the_guardrail_registry_path_has_one_resolver(self) -> None:
+        self.assertEqual(
+            guardrail_registry_path(PROJECT_ROOT),
+            PROJECT_ROOT / ".iacode" / "memory" / "guardrails" / "registry.json")
+        self.assertTrue(guardrail_registry_path(PROJECT_ROOT).is_file())
+
+    def test_a_guarded_lesson_may_not_describe_itself_as_unguarded(self) -> None:
+        lessons = load_lessons(PROJECT_ROOT)
+        lesson = dict(next(item for item in lessons if item["status"] == "GUARDED"))
+        lesson["notes"] = "Not guarded: nothing can prove this from the artifact alone."
+        errors = validate_memory(PROJECT_ROOT, [lesson])
+        self.assertTrue(any("not guarded" in error for error in errors), errors)
+
+    def test_the_repository_memory_has_no_status_contradiction(self) -> None:
+        for lesson in load_lessons(PROJECT_ROOT):
+            if lesson["status"] == "GUARDED":
+                self.assertNotRegex(str(lesson.get("notes") or ""), r"(?i)\bnot\s+guarded\b",
+                                    lesson["lessonId"])
+
+
+class AuditRegistrySuccessionTests(unittest.TestCase):
+    """A second registered audit inherits its own findings and its own mandatory battery."""
+
+    def test_the_second_audit_is_registered_against_this_corrective_checkpoint(self) -> None:
+        audits = {audit["auditId"]: audit for audit in load_audit_registry(PROJECT_ROOT)}
+        self.assertIn("M0-CP-0009", audits)
+        self.assertEqual(audits["M0-CP-0009"]["subjectCheckpoint"], "SETUP-00-CP-0008")
+        self.assertEqual(audits["M0-CP-0009"]["auditCheckpoint"], "SETUP-00-CP-0009")
+
+    def test_every_finding_of_the_second_audit_is_parsed(self) -> None:
+        audits = {audit["auditId"]: audit for audit in load_audit_registry(PROJECT_ROOT)}
+        findings = audit_findings(PROJECT_ROOT, audits["M0-CP-0009"])
+        self.assertEqual([item["id"] for item in findings],
+                         ["CP9-F-%03d" % number for number in range(1, 6)])
+
+    def test_the_battery_of_an_additional_section_is_not_promoted_to_mandatory(self) -> None:
+        """The battery a row belongs to is decided by its section, not by its table shape."""
+        audits = {audit["auditId"]: audit for audit in load_audit_registry(PROJECT_ROOT)}
+        for identifier in ("M0-CP-0007", "M0-CP-0009"):
+            attacks = audit_attacks(PROJECT_ROOT, audits[identifier])
+            mandatory = [item["id"] for item in attacks if item["mandatory"] == "true"]
+            self.assertEqual(mandatory,
+                             [chr(code) for code in range(ord("A"), ord("Z") + 1)], identifier)
+            additional = [item["id"] for item in attacks if item["mandatory"] == "false"]
+            self.assertTrue(additional, identifier)
+            self.assertTrue(all(len(item) == 2 for item in additional), identifier)
+
+    def test_a_rendered_verdict_is_parsed_whether_or_not_it_is_quoted(self) -> None:
+        rows = parse_attacks(
+            "## Mandatory battery\n"
+            "| A | target | mutation | reject | rejected | DEFENDED | evidence |\n"
+            "| B | target | mutation | reject | rejected | `DEFENDED` |\n"
+            "## Additional battery\n"
+            "| AA | mutation | reject | rejected | DEFENDED |\n")
+        self.assertEqual([(item["id"], item["mandatory"]) for item in rows],
+                         [("A", "true"), ("B", "true"), ("AA", "false")])
 
 
 class HistoricalClosureCompatibilityTests(HistoricalCheckpointCompatibilityTests):

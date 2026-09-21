@@ -525,6 +525,26 @@
             "null"
           ]
         },
+        "subjectCheckpoint": {
+          "description": "The sealed checkpoint this audit judged. An audit checkpoint names its subject; a delivery never names itself here.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "subjectCommit": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "validationMechanism": {
+          "enum": [
+            "CROSS_TOOL_INDEPENDENT_AUDIT",
+            "FRESH_SESSION_INDEPENDENT_AUDIT",
+            null
+          ]
+        },
         "evidence": {
           "type": "array",
           "items": {
@@ -564,6 +584,7 @@
         "REWORK_REQUIRED",
         "READY_FOR_RED_TEAM",
         "INTERNAL_GATE_PASS",
+        "MILESTONE_INDEPENDENT_AUDIT_PASS",
         "MILESTONE_EXTERNAL_PASS",
         "GATE_PASS",
         "GATE_FAIL"

@@ -1,0 +1,803 @@
+{
+  "schemaVersion": "1.1.0",
+  "checkpoint": "SETUP-00-CP-0010",
+  "generatedAt": "2026-09-21T05:22:47Z",
+  "targetFingerprint": "f23676867732613ffe4789a8fbf6b41b8e6e4fa3eb1a9a15c5a70298c9e281b0",
+  "baselineControl": {
+    "result": "VALID",
+    "detail": "the unmutated fixture validates through the same path as every attack"
+  },
+  "source": "Mandatory battery re-parsed from the sealed Red Team report of every audit in .iacode/policies/audit-registry.json; additional attacks from the same reports; new attacks for the surfaces this checkpoint introduces.",
+  "attacks": [
+    {
+      "attackId": "A",
+      "description": "Add a blocker to a READY_FOR_REVIEW checkpoint",
+      "target": "readiness and blocker invariant",
+      "mutation": "Add a blocker to a READY_FOR_REVIEW checkpoint",
+      "expectedDefense": "reject",
+      "observed": "exit=1 CHECKPOINT_INVALID | - READY_FOR_REVIEW is incompatible with a non-empty blockedBy: an unresolved blocker",
+      "result": "DEFENDED",
+      "evidence": [
+        "attack:A"
+      ],
+      "mandatory": true,
+      "origin": "SETUP-00-CP-0007 mandatory A-Z battery"
+    },
+    {
+      "attackId": "B",
+      "description": "Set a review-ready quality gate red",
+      "target": "mandatory quality",
+      "mutation": "Set a review-ready quality gate red",
+      "expectedDefense": "reject",
+      "observed": "exit=1 CHECKPOINT_INVALID | - greenKeeper=PASS contradicts QUALITY.json unitTests=FAIL",
+      "result": "DEFENDED",
+      "evidence": [
+        "attack:B"
+      ],
+      "mandatory": true,
+      "origin": "SETUP-00-CP-0007 mandatory A-Z battery"
+    },
+    {
+      "attackId": "C",
+      "description": "Delete a mandatory requirement and recompute every stored count",
+      "target": "completeness denominator",
+      "mutation": "Delete a mandatory requirement and recompute every stored count",
+      "expectedDefense": "reject the missing source requirement",
+      "observed": "exit=1 CHECKPOINT_INVALID | - READY_FOR_REVIEW blocked by canonical:SETUP-00#1.1: the canonical expected set requires canonical:SETUP-00#1.1 (docs/SETUP-00-CHECKLIST.md row 1.1) but the matrix does not declare it",
+      "result": "DEFENDED",
+      "evidence": [
+        "attack:C"
+      ],
+      "mandatory": true,
+      "origin": "SETUP-00-CP-0007 mandatory A-Z battery"
+    },
+    {
+      "attackId": "D",
+      "description": "Forge the stored counts of a passing report",
+      "target": "completeness claims",
+      "mutation": "Forge the stored counts of a passing report",
+      "expectedDefense": "reject the mismatch",
+      "observed": "exit=1 CHECKPOINT_INVALID | - COMPLETENESS-REPORT.json complete=139 contradicts the recomputed value 134",
+      "result": "DEFENDED",
+      "evidence": [
+        "attack:D"
+      ],
+      "mandatory": true,
+      "origin": "SETUP-00-CP-0007 mandatory A-Z battery"
+    },
+    {
+      "attackId": "E",
+      "description": "Remove a derived requirement from the matrix",
+      "target": "lesson-derived requirement",
+      "mutation": "Remove a derived requirement from the matrix",
+      "expectedDefense": "reject",
+      "observed": "exit=1 CHECKPOINT_INVALID | - READY_FOR_REVIEW blocked by LESSON-REQ-0001: the lesson preflight derived this requirement from LSN-0001 but the matrix does not declare it",
+      "result": "DEFENDED",
+      "evidence": [
+        "attack:E"
+      ],
+      "mandatory": true,
+      "origin": "SETUP-00-CP-0007 mandatory A-Z battery"
+    },
+    {
+      "attackId": "F",
+      "description": "Replace a preventive control with documentation only",
+      "target": "GUARDED semantics",
+      "mutation": "Replace a preventive control with documentation only",
+      "expectedDefense": "reject",
+      "observed": "exit=1 LESSONS_INVALID | - LSN-0001: GUARDED requires at least one preventive control of kind test, validator, lint, policy, schema, invariant, automated-check; documentation alone is not a guardrail",
+      "result": "DEFENDED",
+      "evidence": [
+        "attack:F"
+      ],
+      "mandatory": true,
+      "origin": "SETUP-00-CP-0007 mandatory A-Z battery"
+    },
+    {
+      "attackId": "G",
+      "description": "Duplicate a lesson identifier",
+      "target": "lesson identity",
+      "mutation": "Duplicate a lesson identifier",
+      "expectedDefense": "reject",
+      "observed": "exit=1 LESSONS_INVALID | - LSN-0001: duplicate lessonId",
+      "result": "DEFENDED",
+      "evidence": [
+        "attack:G"
+      ],
+      "mandatory": true,
+      "origin": "SETUP-00-CP-0007 mandatory A-Z battery"
+    },
+    {
+      "attackId": "H",
+      "description": "Insert a secret-shaped value into a scanned field",
+      "target": "lesson secret handling",
+      "mutation": "Insert a secret-shaped value into a scanned field",
+      "expectedDefense": "reject without disclosing the value",
+      "observed": "exit=1 LESSONS_INVALID | - LSN-0001: secret pattern detected in $.notes: GitHub credential",
+      "result": "DEFENDED",
+      "evidence": [
+        "attack:H"
+      ],
+      "mandatory": true,
+      "origin": "SETUP-00-CP-0007 mandatory A-Z battery"
+    },
+    {
+      "attackId": "I",
+      "description": "Rewrite a sealed checkpoint and move its tag to the rewritten commit",
+      "target": "sealed predecessor",
+      "mutation": "Rewrite a sealed checkpoint and move its tag to the rewritten commit",
+      "expectedDefense": "reject the historical rewrite",
+      "observed": "exit=1 INTEGRITY_INVALID | - SETUP-00-CP-0009: tag refs/tags/iacode-checkpoints/SETUP-00-CP-0009 resolves to ae056414886bca16dffe5c0573bdee4a9ab74edc, not the anchored commit 28c2b487baf216d3745bb6c5a25a5b8aa7274a9e",
+      "result": "DEFENDED",
+      "evidence": [
+        "attack:I"
+      ],
+      "mandatory": true,
+      "origin": "SETUP-00-CP-0007 mandatory A-Z battery"
+    },
+    {
+      "attackId": "J",
+      "description": "Move a checkpoint tag and HEAD to a new commit together",
+      "target": "tag immutability",
+      "mutation": "Move a checkpoint tag and HEAD to a new commit together",
+      "expectedDefense": "reject the moved tag",
+      "observed": "exit=1 INTEGRITY_INVALID | - SETUP-00-CP-0009: tag refs/tags/iacode-checkpoints/SETUP-00-CP-0009 resolves to 751d0c6f6aede79d519e822b1b3c60ba5a0c7f99, not the anchored commit 28c2b487baf216d3745bb6c5a25a5b8aa7274a9e",
+      "result": "DEFENDED",
+      "evidence": [
+        "attack:J"
+      ],
+      "mandatory": true,
+      "origin": "SETUP-00-CP-0007 mandatory A-Z battery"
+    },
+    {
+      "attackId": "K",
+      "description": "Remove one inventory entry",
+      "target": "file inventory",
+      "mutation": "Remove one inventory entry",
+      "expectedDefense": "reject",
+      "observed": "exit=1 CHECKPOINT_INVALID | - FILES.json omits a changed path: .iacode/memory/retrospectives/SETUP-00-CP-0010.md (added)",
+      "result": "DEFENDED",
+      "evidence": [
+        "attack:K"
+      ],
+      "mandatory": true,
+      "origin": "SETUP-00-CP-0007 mandatory A-Z battery"
+    },
+    {
+      "attackId": "L",
+      "description": "Silently modify a tracked file",
+      "target": "file inventory",
+      "mutation": "Silently modify a tracked file",
+      "expectedDefense": "reject",
+      "observed": "exit=1 CHECKPOINT_INVALID | - FILES.json omits a changed path: docs/MASTER-PLAN.md (modified)",
+      "result": "DEFENDED",
+      "evidence": [
+        "attack:L"
+      ],
+      "mandatory": true,
+      "origin": "SETUP-00-CP-0007 mandatory A-Z battery"
+    },
+    {
+      "attackId": "M",
+      "description": "Set a wrong hashBefore",
+      "target": "file inventory",
+      "mutation": "Set a wrong hashBefore",
+      "expectedDefense": "reject",
+      "observed": "exit=1 CHECKPOINT_INVALID | - FILES.json hashBefore does not match the baseCommit content of .iacode/anchors/checkpoint-chain.json",
+      "result": "DEFENDED",
+      "evidence": [
+        "attack:M"
+      ],
+      "mandatory": true,
+      "origin": "SETUP-00-CP-0007 mandatory A-Z battery"
+    },
+    {
+      "attackId": "N",
+      "description": "Set a wrong hashAfter",
+      "target": "file inventory",
+      "mutation": "Set a wrong hashAfter",
+      "expectedDefense": "reject",
+      "observed": "exit=1 CHECKPOINT_INVALID | - FILES.json: hash mismatch for .iacode/memory/retrospectives/SETUP-00-CP-0010.md",
+      "result": "DEFENDED",
+      "evidence": [
+        "attack:N"
+      ],
+      "mandatory": true,
+      "origin": "SETUP-00-CP-0007 mandatory A-Z battery"
+    },
+    {
+      "attackId": "O",
+      "description": "Claim PASS with no evidence",
+      "target": "quality evidence",
+      "mutation": "Claim PASS with no evidence",
+      "expectedDefense": "reject",
+      "observed": "exit=1 CHECKPOINT_INVALID | - QUALITY.json staticAnalysis=PASS requires at least one evidence reference",
+      "result": "DEFENDED",
+      "evidence": [
+        "attack:O"
+      ],
+      "mandatory": true,
+      "origin": "SETUP-00-CP-0007 mandatory A-Z battery"
+    },
+    {
+      "attackId": "P",
+      "description": "Reference an unknown command",
+      "target": "evidence resolution",
+      "mutation": "Reference an unknown command",
+      "expectedDefense": "reject",
+      "observed": "exit=1 CHECKPOINT_INVALID | - QUALITY.json staticAnalysis references an unknown command id 'cmd-9999'",
+      "result": "DEFENDED",
+      "evidence": [
+        "attack:P"
+      ],
+      "mandatory": true,
+      "origin": "SETUP-00-CP-0007 mandatory A-Z battery"
+    },
+    {
+      "attackId": "Q",
+      "description": "Supply complete cross-tool attribution with no external evidence",
+      "target": "second-tool evidence",
+      "mutation": "Supply complete cross-tool attribution with no external evidence",
+      "expectedDefense": "reject unauthenticated validation",
+      "observed": "exit=1 CHECKPOINT_INVALID | - independent audit: a milestone verdict requires STATE.json externalAttestation.subjectCheckpoint naming the sealed checkpoint this audit judged; the verdict belongs to the audit checkpoint, never to the delivery it judges",
+      "result": "DEFENDED",
+      "evidence": [
+        "attack:Q"
+      ],
+      "mandatory": true,
+      "origin": "SETUP-00-CP-0007 mandatory A-Z battery"
+    },
+    {
+      "attackId": "R",
+      "description": "Promote an internally authored result to an external status",
+      "target": "pass vocabulary",
+      "mutation": "Promote an internally authored result to an external status",
+      "expectedDefense": "require an independent verdict",
+      "observed": "exit=1 CHECKPOINT_INVALID | - independent audit: a milestone verdict requires STATE.json externalAttestation.subjectCheckpoint naming the sealed checkpoint this audit judged; the verdict belongs to the audit checkpoint, never to the delivery it judges",
+      "result": "DEFENDED",
+      "evidence": [
+        "attack:R"
+      ],
+      "mandatory": true,
+      "origin": "SETUP-00-CP-0007 mandatory A-Z battery"
+    },
+    {
+      "attackId": "S",
+      "description": "Leave the review and Red Team pending with a null auditor and timestamp",
+      "target": "external milestone review",
+      "mutation": "Leave the review and Red Team pending with a null auditor and timestamp",
+      "expectedDefense": "reject",
+      "observed": "exit=1 CHECKPOINT_INVALID | - MILESTONE_EXTERNAL_PASS requires an independent review verdict, found 'PENDING'",
+      "result": "DEFENDED",
+      "evidence": [
+        "attack:S"
+      ],
+      "mandatory": true,
+      "origin": "SETUP-00-CP-0007 mandatory A-Z battery"
+    },
+    {
+      "attackId": "T",
+      "description": "Request an audit without a known trigger",
+      "target": "extraordinary cadence",
+      "mutation": "Request an audit without a known trigger",
+      "expectedDefense": "reject",
+      "observed": "exit=1 CHECKPOINT_INVALID | - externalAuditReason must name one of the recorded triggers: security-boundary, sandbox-boundary, rights-or-provenance-change, training-data-policy, training-execution, promotion-logic, secret-handling, destructive-persistence",
+      "result": "DEFENDED",
+      "evidence": [
+        "attack:T"
+      ],
+      "mandatory": true,
+      "origin": "SETUP-00-CP-0007 mandatory A-Z battery"
+    },
+    {
+      "attackId": "U",
+      "description": "Retire a canonical lesson but keep the active preflight",
+      "target": "preflight freshness",
+      "mutation": "Retire a canonical lesson but keep the active preflight",
+      "expectedDefense": "reject or recompute",
+      "observed": "exit=1 CHECKPOINT_INVALID | - greenKeeper=PASS is STALE: the delivery-assurance scope changed after the last GREEN cycle, so the Green Keeper must run again",
+      "result": "DEFENDED",
+      "evidence": [
+        "attack:U"
+      ],
+      "mandatory": true,
+      "origin": "SETUP-00-CP-0007 mandatory A-Z battery"
+    },
+    {
+      "attackId": "V",
+      "description": "Run the Green Keeper with an empty gate selection while a test genuinely fails",
+      "target": "Green Keeper mandatory set",
+      "mutation": "Run the Green Keeper with an empty gate selection while a test genuinely fails",
+      "expectedDefense": "reject; the mandatory set is not the caller's to choose",
+      "observed": "exit=1 [tests] RED exit=1 ledger=cmd-0044",
+      "result": "DEFENDED",
+      "evidence": [
+        "attack:V"
+      ],
+      "mandatory": true,
+      "origin": "SETUP-00-CP-0007 mandatory A-Z battery"
+    },
+    {
+      "attackId": "W",
+      "description": "Claim PASS with a PARTIAL requirement",
+      "target": "partial completeness",
+      "mutation": "Claim PASS with a PARTIAL requirement",
+      "expectedDefense": "reject",
+      "observed": "exit=1 CHECKPOINT_INVALID | - STATE.json requirementsMatrix.partial=0 does not match the matrix value 1",
+      "result": "DEFENDED",
+      "evidence": [
+        "attack:W"
+      ],
+      "mandatory": true,
+      "origin": "SETUP-00-CP-0007 mandatory A-Z battery"
+    },
+    {
+      "attackId": "X",
+      "description": "Remove a required field from a command record",
+      "target": "command audit",
+      "mutation": "Remove a required field from a command record",
+      "expectedDefense": "reject",
+      "observed": "exit=1 CHECKPOINT_INVALID | - COMMANDS.jsonl:43: schemaVersion 3.0.0 requires runtime",
+      "result": "DEFENDED",
+      "evidence": [
+        "attack:X"
+      ],
+      "mandatory": true,
+      "origin": "SETUP-00-CP-0007 mandatory A-Z battery"
+    },
+    {
+      "attackId": "Y",
+      "description": "Point LATEST.md at an older checkpoint",
+      "target": "latest pointer",
+      "mutation": "Point LATEST.md at an older checkpoint",
+      "expectedDefense": "reject",
+      "observed": "exit=1 CHECKPOINT_INVALID | - requested checkpoint is not the LATEST target: C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-red-team-hgqiqqmf\\fixture\\docs\\checkpoints\\SETUP-00-CP-0010",
+      "result": "DEFENDED",
+      "evidence": [
+        "attack:Y"
+      ],
+      "mandatory": true,
+      "origin": "SETUP-00-CP-0007 mandatory A-Z battery"
+    },
+    {
+      "attackId": "Z",
+      "description": "Use path traversal as the Gate identifier",
+      "target": "path safety",
+      "mutation": "Use path traversal as the Gate identifier",
+      "expectedDefense": "reject with no write outside the repository",
+      "observed": "exit=2 usage: new_checkpoint.py [-h] [--root ROOT] --gate GATE",
+      "result": "DEFENDED",
+      "evidence": [
+        "attack:Z"
+      ],
+      "mandatory": true,
+      "origin": "SETUP-00-CP-0007 mandatory A-Z battery"
+    },
+    {
+      "attackId": "AA",
+      "description": "Declare a mandatory count in state that no artifact agrees with",
+      "target": "aggregate consistency",
+      "mutation": "Declare a mandatory count in state that no artifact agrees with",
+      "expectedDefense": "reject",
+      "observed": "exit=1 CHECKPOINT_INVALID | - STATE.json requirementsMatrix.mandatory=135 does not match the matrix value 133",
+      "result": "DEFENDED",
+      "evidence": [
+        "attack:AA"
+      ],
+      "mandatory": false,
+      "origin": "SETUP-00-CP-0007 additional battery"
+    },
+    {
+      "attackId": "AB",
+      "description": "Point a GUARDED lesson at a nonexistent test",
+      "target": "control resolution",
+      "mutation": "Point a GUARDED lesson at a nonexistent test",
+      "expectedDefense": "reject",
+      "observed": "exit=1 LESSONS_INVALID | - LSN-0001: control names the test 'NoSuchTests.test_nothing', which does not exist in the suite",
+      "result": "DEFENDED",
+      "evidence": [
+        "attack:AB"
+      ],
+      "mandatory": false,
+      "origin": "SETUP-00-CP-0007 additional battery"
+    },
+    {
+      "attackId": "AC",
+      "description": "Point lesson evidence at a nonexistent file",
+      "target": "evidence resolution",
+      "mutation": "Point lesson evidence at a nonexistent file",
+      "expectedDefense": "reject",
+      "observed": "exit=1 LESSONS_INVALID | - LSN-0001: evidence file does not exist: file:docs/this-file-does-not-exist.md",
+      "result": "DEFENDED",
+      "evidence": [
+        "attack:AC"
+      ],
+      "mandatory": false,
+      "origin": "SETUP-00-CP-0007 additional battery"
+    },
+    {
+      "attackId": "AD",
+      "description": "Hide a secret-shaped value inside prevention.description",
+      "target": "nested secret scan",
+      "mutation": "Hide a secret-shaped value inside prevention.description",
+      "expectedDefense": "reject without disclosing the value",
+      "observed": "exit=1 LESSONS_INVALID | - LSN-0001: secret pattern detected in $.prevention[0].description: OpenAI-style key",
+      "result": "DEFENDED",
+      "evidence": [
+        "attack:AD"
+      ],
+      "mandatory": false,
+      "origin": "SETUP-00-CP-0007 additional battery"
+    },
+    {
+      "attackId": "AE",
+      "description": "Reuse a SETUP-00 preflight for another Gate",
+      "target": "preflight gate binding",
+      "mutation": "Reuse a SETUP-00 preflight for another Gate",
+      "expectedDefense": "reject",
+      "observed": "exit=1 CHECKPOINT_INVALID | - lesson preflight: the preflight was generated for gate 'SETUP-00' but the checkpoint declares 'GATE 1'; a preflight may not be reused across Gates",
+      "result": "DEFENDED",
+      "evidence": [
+        "attack:AE"
+      ],
+      "mandatory": false,
+      "origin": "SETUP-00-CP-0007 additional battery"
+    },
+    {
+      "attackId": "AF",
+      "description": "Reach an external status while the Green Keeper gate is red",
+      "target": "promotion invariant",
+      "mutation": "Reach an external status while the Green Keeper gate is red",
+      "expectedDefense": "reject",
+      "observed": "exit=1 CHECKPOINT_INVALID | - MILESTONE_EXTERNAL_PASS requires GREEN_KEEPER_GATE=PASS, found 'FAIL'",
+      "result": "DEFENDED",
+      "evidence": [
+        "attack:AF"
+      ],
+      "mandatory": false,
+      "origin": "SETUP-00-CP-0007 additional battery"
+    },
+    {
+      "attackId": "AG",
+      "description": "Remove a mandatory gate from the policy after a GREEN cycle",
+      "target": "gate registry",
+      "mutation": "Remove a mandatory gate from the policy after a GREEN cycle",
+      "expectedDefense": "reject the mismatch between the cycle and the policy",
+      "observed": "exit=1 CHECKPOINT_INVALID | - greenKeeper=PASS was measured against checkpointValidation, integrity, lessons, staticAnalysis, tests, not the canonical mandatory set checkpointValidation, integrity, staticAnalysis, tests",
+      "result": "DEFENDED",
+      "evidence": [
+        "attack:AG"
+      ],
+      "mandatory": false,
+      "origin": "SETUP-00-CP-0008 new attack surface"
+    },
+    {
+      "attackId": "AH",
+      "description": "Edit the assurance scope after the last GREEN cycle",
+      "target": "gate staleness",
+      "mutation": "Edit the assurance scope after the last GREEN cycle",
+      "expectedDefense": "reject the stale PASS",
+      "observed": "exit=1 CHECKPOINT_INVALID | - greenKeeper=PASS is STALE: the delivery-assurance scope changed after the last GREEN cycle, so the Green Keeper must run again",
+      "result": "DEFENDED",
+      "evidence": [
+        "attack:AH"
+      ],
+      "mandatory": false,
+      "origin": "SETUP-00-CP-0008 new attack surface"
+    },
+    {
+      "attackId": "AI",
+      "description": "Write an attestation whose audit checkpoint is the audited checkpoint itself",
+      "target": "external attestation",
+      "mutation": "Write an attestation whose audit checkpoint is the audited checkpoint itself",
+      "expectedDefense": "reject self-attestation",
+      "observed": "exit=1 CHECKPOINT_INVALID | - independent audit: .iacode/attestations/forged.json: the audit checkpoint and the audited checkpoint are the same; a verdict may not be authored by the delivery it judges",
+      "result": "DEFENDED",
+      "evidence": [
+        "attack:AI"
+      ],
+      "mandatory": false,
+      "origin": "SETUP-00-CP-0008 new attack surface"
+    },
+    {
+      "attackId": "AJ",
+      "description": "Claim a milestone PASS over a failed review",
+      "target": "external attestation",
+      "mutation": "Claim a milestone PASS over a failed review",
+      "expectedDefense": "reject",
+      "observed": "exit=1 CHECKPOINT_INVALID | - independent audit: .iacode/attestations/forged.json: reviewResult is 'REWORK_REQUIRED'; a milestone PASS requires APPROVED",
+      "result": "DEFENDED",
+      "evidence": [
+        "attack:AJ"
+      ],
+      "mandatory": false,
+      "origin": "SETUP-00-CP-0008 new attack surface"
+    },
+    {
+      "attackId": "AK",
+      "description": "Attest a commit the subject's tag does not resolve to",
+      "target": "external attestation",
+      "mutation": "Attest a commit the subject's tag does not resolve to",
+      "expectedDefense": "reject",
+      "observed": "exit=1 CHECKPOINT_INVALID | - independent audit: .iacode/attestations/forged.json: subjectCommit '0000000000000000000000000000000000000000' is not the commit refs/tags/iacode-checkpoints/SETUP-00-CP-0009 resolves to (28c2b487baf216d3745bb6c5a25a5b8aa7274a9e)",
+      "result": "DEFENDED",
+      "evidence": [
+        "attack:AK"
+      ],
+      "mandatory": false,
+      "origin": "SETUP-00-CP-0008 new attack surface"
+    },
+    {
+      "attackId": "AL",
+      "description": "Forge a stored count",
+      "target": "derived counts",
+      "mutation": "Forge a stored count",
+      "expectedDefense": "reject",
+      "observed": "exit=1 CHECKPOINT_INVALID | - COUNTS.json TESTS=370/363 contradicts the derived 363/363",
+      "result": "DEFENDED",
+      "evidence": [
+        "attack:AL"
+      ],
+      "mandatory": false,
+      "origin": "SETUP-00-CP-0008 new attack surface"
+    },
+    {
+      "attackId": "AM",
+      "description": "State a count in Markdown that contradicts the derived one",
+      "target": "count consistency",
+      "mutation": "State a count in Markdown that contradicts the derived one",
+      "expectedDefense": "reject",
+      "observed": "exit=1 CHECKPOINT_INVALID | - FINAL-REPORT.md states 999/999 TESTS, which contradicts the derived 363/363",
+      "result": "DEFENDED",
+      "evidence": [
+        "attack:AM"
+      ],
+      "mandatory": false,
+      "origin": "SETUP-00-CP-0008 new attack surface"
+    },
+    {
+      "attackId": "AN",
+      "description": "Offer the delivery with an audit finding still open",
+      "target": "findings closure",
+      "mutation": "Offer the delivery with an audit finding still open",
+      "expectedDefense": "reject",
+      "observed": "exit=1 CHECKPOINT_INVALID | - READY_FOR_REVIEW is not available while CP9-F-001 of M0-CP-0009 remain open",
+      "result": "DEFENDED",
+      "evidence": [
+        "attack:AN"
+      ],
+      "mandatory": false,
+      "origin": "SETUP-00-CP-0008 new attack surface"
+    },
+    {
+      "attackId": "AO",
+      "description": "Keep a PASS verdict while an attack escaped",
+      "target": "internal Red Team",
+      "mutation": "Keep a PASS verdict while an attack escaped",
+      "expectedDefense": "reject",
+      "observed": "exit=1 CHECKPOINT_INVALID | - M0-INTERNAL-RED-TEAM.json: escaped does not match the recorded attacks",
+      "result": "DEFENDED",
+      "evidence": [
+        "attack:AO"
+      ],
+      "mandatory": false,
+      "origin": "SETUP-00-CP-0008 new attack surface"
+    },
+    {
+      "attackId": "AP",
+      "description": "Keep a PASS verdict while a mirror check failed",
+      "target": "internal mirror audit",
+      "mutation": "Keep a PASS verdict while a mirror check failed",
+      "expectedDefense": "reject",
+      "observed": "exit=1 CHECKPOINT_INVALID | - M0-INTERNAL-MIRROR.json: failed does not match the recorded checks",
+      "result": "DEFENDED",
+      "evidence": [
+        "attack:AP"
+      ],
+      "mandatory": false,
+      "origin": "SETUP-00-CP-0008 new attack surface"
+    },
+    {
+      "attackId": "AQ",
+      "description": "Verify a guardrail with a test that does not exist",
+      "target": "guardrail registry",
+      "mutation": "Verify a guardrail with a test that does not exist",
+      "expectedDefense": "reject",
+      "observed": "exit=1 LESSONS_INVALID | - LSN-0001: guardrail 'GRD-0001' is verified by 'NoSuchTests.test_nothing', which does not exist in the suite",
+      "result": "DEFENDED",
+      "evidence": [
+        "attack:AQ"
+      ],
+      "mandatory": false,
+      "origin": "SETUP-00-CP-0008 new attack surface"
+    },
+    {
+      "attackId": "AR",
+      "description": "Break the link between two anchors",
+      "target": "integrity anchors",
+      "mutation": "Break the link between two anchors",
+      "expectedDefense": "reject",
+      "observed": "exit=1 INTEGRITY_INVALID | - SETUP-00-CP-0003: previousAnchorHash breaks the chain with 'SETUP-00-CP-0002'",
+      "result": "DEFENDED",
+      "evidence": [
+        "attack:AR"
+      ],
+      "mandatory": false,
+      "origin": "SETUP-00-CP-0008 new attack surface"
+    },
+    {
+      "attackId": "AS",
+      "description": "Remove the content binding of recorded inputs",
+      "target": "command replay context",
+      "mutation": "Remove the content binding of recorded inputs",
+      "expectedDefense": "reject",
+      "observed": "exit=1 CHECKPOINT_INVALID | - COMMANDS.jsonl:1: schemaVersion 3.2.0 requires inputsDigest binding every declared input by content",
+      "result": "DEFENDED",
+      "evidence": [
+        "attack:AS"
+      ],
+      "mandatory": false,
+      "origin": "SETUP-00-CP-0008 new attack surface"
+    },
+    {
+      "attackId": "AT",
+      "description": "Remove the post-commit validation of the sealed content",
+      "target": "seal chronology",
+      "mutation": "Remove the post-commit validation of the sealed content",
+      "expectedDefense": "reject",
+      "observed": "exit=1 CHECKPOINT_INVALID | - READY_FOR_REVIEW requires a recorded post-commit-validation run with exit code 0 over a clean worktree; the sealed content must be validated as committed, not as a dirty working tree",
+      "result": "DEFENDED",
+      "evidence": [
+        "attack:AT"
+      ],
+      "mandatory": false,
+      "origin": "SETUP-00-CP-0008 new attack surface"
+    },
+    {
+      "attackId": "AU",
+      "description": "Claim a verdict another checkpoint authored",
+      "target": "external attestation",
+      "mutation": "Claim a verdict another checkpoint authored",
+      "expectedDefense": "reject",
+      "observed": "exit=1 CHECKPOINT_INVALID | - independent audit: .iacode/attestations/forged.json: SETUP-00-CP-0010 claims a milestone verdict from an attestation authored by SETUP-00-CP-0001; a checkpoint may only carry the verdict of the audit it performed",
+      "result": "DEFENDED",
+      "evidence": [
+        "attack:AU"
+      ],
+      "mandatory": false,
+      "origin": "SETUP-00-CP-0008 new attack surface"
+    },
+    {
+      "attackId": "AV",
+      "description": "Claim a milestone PASS over a failed Red Team",
+      "target": "external attestation",
+      "mutation": "Claim a milestone PASS over a failed Red Team",
+      "expectedDefense": "reject",
+      "observed": "exit=1 CHECKPOINT_INVALID | - independent audit: .iacode/attestations/forged.json: redTeamResult is 'RED_TEAM_FAIL'; a milestone PASS requires RED_TEAM_PASS",
+      "result": "DEFENDED",
+      "evidence": [
+        "attack:AV"
+      ],
+      "mandatory": false,
+      "origin": "SETUP-00-CP-0008 new attack surface"
+    },
+    {
+      "attackId": "AW",
+      "description": "Claim a milestone PASS over an incomplete audit",
+      "target": "external attestation",
+      "mutation": "Claim a milestone PASS over an incomplete audit",
+      "expectedDefense": "reject",
+      "observed": "exit=1 CHECKPOINT_INVALID | - independent audit: .iacode/attestations/forged.json: completeness is 93.22; a milestone PASS requires 100.0",
+      "result": "DEFENDED",
+      "evidence": [
+        "attack:AW"
+      ],
+      "mandatory": false,
+      "origin": "SETUP-00-CP-0008 new attack surface"
+    },
+    {
+      "attackId": "AX",
+      "description": "Attest a subject checkpoint that does not exist",
+      "target": "external attestation",
+      "mutation": "Attest a subject checkpoint that does not exist",
+      "expectedDefense": "reject",
+      "observed": "exit=1 CHECKPOINT_INVALID | - independent audit: .iacode/attestations/forged.json: subject checkpoint SETUP-00-CP-9999 does not exist",
+      "result": "DEFENDED",
+      "evidence": [
+        "attack:AX"
+      ],
+      "mandatory": false,
+      "origin": "SETUP-00-CP-0008 new attack surface"
+    },
+    {
+      "attackId": "AY",
+      "description": "Attest with no auditor role recorded",
+      "target": "external attestation",
+      "mutation": "Attest with no auditor role recorded",
+      "expectedDefense": "reject",
+      "observed": "exit=1 CHECKPOINT_INVALID | - independent audit: .iacode/attestations/forged.json: an independent audit attestation requires auditorRole",
+      "result": "DEFENDED",
+      "evidence": [
+        "attack:AY"
+      ],
+      "mandatory": false,
+      "origin": "SETUP-00-CP-0008 new attack surface"
+    },
+    {
+      "attackId": "AZ",
+      "description": "Claim a milestone PASS over a failed test result",
+      "target": "external attestation",
+      "mutation": "Claim a milestone PASS over a failed test result",
+      "expectedDefense": "reject",
+      "observed": "exit=1 CHECKPOINT_INVALID | - independent audit: .iacode/attestations/forged.json: testResult is 'FAIL'; a milestone PASS requires PASS",
+      "result": "DEFENDED",
+      "evidence": [
+        "attack:AZ"
+      ],
+      "mandatory": false,
+      "origin": "SETUP-00-CP-0008 new attack surface"
+    },
+    {
+      "attackId": "BA",
+      "description": "Take the cross-tool status on a fresh-session attestation",
+      "target": "pass vocabulary",
+      "mutation": "Take the cross-tool status on a fresh-session attestation",
+      "expectedDefense": "reject",
+      "observed": "exit=1 CHECKPOINT_INVALID | - MILESTONE_EXTERNAL_PASS may not be derived from a 'FRESH_SESSION_INDEPENDENT_AUDIT' attestation, which authorises MILESTONE_INDEPENDENT_AUDIT_PASS; MILESTONE_INDEPENDENT_AUDIT_PASS is the honest status for an audit that is independent of the run but not of the tool",
+      "result": "DEFENDED",
+      "evidence": [
+        "attack:BA"
+      ],
+      "mandatory": false,
+      "origin": "SETUP-00-CP-0008 new attack surface"
+    },
+    {
+      "attackId": "BB",
+      "description": "Claim a milestone verdict without naming the subject that was audited",
+      "target": "external attestation",
+      "mutation": "Claim a milestone verdict without naming the subject that was audited",
+      "expectedDefense": "reject",
+      "observed": "exit=1 CHECKPOINT_INVALID | - independent audit: a milestone verdict requires STATE.json externalAttestation.subjectCheckpoint naming the sealed checkpoint this audit judged; the verdict belongs to the audit checkpoint, never to the delivery it judges",
+      "result": "DEFENDED",
+      "evidence": [
+        "attack:BB"
+      ],
+      "mandatory": false,
+      "origin": "SETUP-00-CP-0008 new attack surface"
+    },
+    {
+      "attackId": "BC",
+      "description": "Invent a validation mechanism",
+      "target": "external attestation",
+      "mutation": "Invent a validation mechanism",
+      "expectedDefense": "reject",
+      "observed": "exit=1 CHECKPOINT_INVALID | - independent audit: .iacode/attestations/forged.json: validationMechanism is 'TRUST_ME'; the recognised mechanisms are CROSS_TOOL_INDEPENDENT_AUDIT, FRESH_SESSION_INDEPENDENT_AUDIT",
+      "result": "DEFENDED",
+      "evidence": [
+        "attack:BC"
+      ],
+      "mandatory": false,
+      "origin": "SETUP-00-CP-0008 new attack surface"
+    },
+    {
+      "attackId": "BD",
+      "description": "Attest an older checkpoint than the delivery the audit succeeds",
+      "target": "external attestation",
+      "mutation": "Attest an older checkpoint than the delivery the audit succeeds",
+      "expectedDefense": "reject",
+      "observed": "exit=1 CHECKPOINT_INVALID | - independent audit: .iacode/attestations/forged.json: attests SETUP-00-CP-0008, which is not the sealed checkpoint this audit succeeds (SETUP-00-CP-0009); an audit judges the delivery it follows",
+      "result": "DEFENDED",
+      "evidence": [
+        "attack:BD"
+      ],
+      "mandatory": false,
+      "origin": "SETUP-00-CP-0008 new attack surface"
+    }
+  ],
+  "total": 56,
+  "defended": 56,
+  "escaped": 0,
+  "mandatoryTotal": 26,
+  "mandatoryDefended": 26,
+  "result": "RED_TEAM_PASS"
+}
