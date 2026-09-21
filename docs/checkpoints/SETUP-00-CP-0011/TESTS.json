@@ -1,0 +1,27 @@
+{
+  "schemaVersion": "3.2.0",
+  "unit": {
+    "executed": true,
+    "passed": 363,
+    "failed": 0,
+    "command": "python -m unittest discover -s tests",
+    "runId": "cp11-suite",
+    "evidence": "command:cmd-0011; one discovery over tests/ covering the unit and integration cases, recorded once because it is one physical execution. The same command was additionally executed through the audit harness at the same content, which read the result object directly: 363 discovered, 363 run, 363 passed, 0 failed, 0 errors, 0 skipped."
+  },
+  "integration": {
+    "executed": true,
+    "passed": 363,
+    "failed": 0,
+    "command": "python -m unittest discover -s tests",
+    "runId": "cp11-suite",
+    "evidence": "command:cmd-0011; the same physical run as the unit categories, deduplicated by runId so one execution is counted once."
+  },
+  "e2e": {
+    "executed": false,
+    "passed": 0,
+    "failed": 0,
+    "command": null,
+    "runId": null,
+    "evidence": "No runtime exists to exercise end to end during SETUP-00."
+  }
+}

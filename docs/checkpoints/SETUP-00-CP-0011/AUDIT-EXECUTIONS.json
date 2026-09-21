@@ -1,0 +1,908 @@
+{
+  "schemaVersion": "1.0.0",
+  "auditCheckpoint": "SETUP-00-CP-0011",
+  "subjectCheckpoint": "SETUP-00-CP-0010",
+  "subjectCommit": "90b67a7e0a11179465bc5c92dee22c78da36801f",
+  "auditMechanism": "FRESH_SESSION_INDEPENDENT_AUDIT",
+  "sameToolAsImplementer": true,
+  "sameProviderAsImplementer": true,
+  "crossToolValidation": "NOT_AVAILABLE",
+  "generatedAt": "2026-09-21T06:50:34Z",
+  "expectedRequirementSet": {
+    "gate": "SETUP-00",
+    "checkpoint": "SETUP-00-CP-0010",
+    "checklistRows": 74,
+    "mirrorErrors": [],
+    "openAudits": [
+      "M0-CP-0009"
+    ],
+    "battery": {
+      "M0-CP-0009": {
+        "mandatory": 26,
+        "additional": 26
+      }
+    },
+    "expectedTotal": 134,
+    "declaredTotal": 134,
+    "declaredRows": 134,
+    "missingFromDelivery": [],
+    "extraInDelivery": [],
+    "bySource": {
+      "SETUP": 74,
+      "LESSON": 29,
+      "AUDIT_FINDING": 5,
+      "AUDIT_ATTACK": 26
+    },
+    "agrees": true
+  },
+  "evidenceResolution": {
+    "checkpoint": "SETUP-00-CP-0010",
+    "requirements": 134,
+    "statuses": {
+      "COMPLETE": 134
+    },
+    "evidenceReferences": 723,
+    "referenceKinds": {
+      "file": 368,
+      "test": 240,
+      "checkpoint": 113,
+      "command": 2
+    },
+    "requirementsWithoutEvidence": [],
+    "unresolved": [],
+    "allResolve": true
+  },
+  "suiteWorkingRepository": {
+    "root": "E:\\iacode",
+    "discovered": 363,
+    "distinctDiscovered": 363,
+    "testsRun": 363,
+    "passed": 362,
+    "failures": [],
+    "errors": [],
+    "skipped": [
+      {
+        "test": "test_development_ledger.PreflightFreshnessTests.test_the_preflight_of_the_current_delivery_is_fresh",
+        "reason": "the latest checkpoint carries no preflight yet"
+      }
+    ],
+    "expectedFailures": [],
+    "unexpectedSuccesses": [],
+    "wasSuccessful": true,
+    "durationSeconds": 555.0
+  },
+  "suiteCleanClone": {
+    "root": "C:\\Users\\cesar\\AppData\\Local\\Temp\\claude\\E--iacode\\fd55fef0-2e61-4a1f-ad1a-57938345e576\\scratchpad\\clone-cp10",
+    "discovered": 363,
+    "distinctDiscovered": 363,
+    "testsRun": 363,
+    "passed": 362,
+    "failures": [],
+    "errors": [],
+    "skipped": [
+      {
+        "test": "test_development_ledger.AuditAttestationModelTests.test_an_unsealed_subject_is_rejected",
+        "reason": "every checkpoint directory in this checkout is sealed"
+      }
+    ],
+    "expectedFailures": [],
+    "unexpectedSuccesses": [],
+    "wasSuccessful": true,
+    "durationSeconds": 572.5
+  },
+  "namedRegressionTestsCleanClone": {
+    "root": "C:\\Users\\cesar\\AppData\\Local\\Temp\\claude\\E--iacode\\fd55fef0-2e61-4a1f-ad1a-57938345e576\\scratchpad\\clone-cp10",
+    "requested": 42,
+    "loadFailures": [],
+    "outcomes": {
+      "test_development_ledger.AuditAttestationModelTests.test_a_checkpoint_may_not_claim_a_verdict_another_checkpoint_authored": "PASS",
+      "test_development_ledger.AuditAttestationModelTests.test_a_cross_tool_claim_without_cross_tool_availability_is_rejected": "PASS",
+      "test_development_ledger.AuditAttestationModelTests.test_a_failed_red_team_cannot_produce_a_milestone_pass": "PASS",
+      "test_development_ledger.AuditAttestationModelTests.test_a_failed_review_cannot_produce_a_milestone_pass": "PASS",
+      "test_development_ledger.AuditAttestationModelTests.test_a_failed_test_result_cannot_produce_a_milestone_pass": "PASS",
+      "test_development_ledger.AuditAttestationModelTests.test_a_fresh_session_claim_requires_a_fresh_session": "PASS",
+      "test_development_ledger.AuditAttestationModelTests.test_a_legitimate_attestation_over_the_sealed_history_is_accepted": "PASS",
+      "test_development_ledger.AuditAttestationModelTests.test_a_subject_commit_that_is_not_the_sealed_one_is_rejected": "PASS",
+      "test_development_ledger.AuditAttestationModelTests.test_an_attestation_for_another_checkpoint_is_rejected": "PASS",
+      "test_development_ledger.AuditAttestationModelTests.test_an_attestation_for_another_commit_is_rejected": "PASS",
+      "test_development_ledger.AuditAttestationModelTests.test_an_attestation_naming_the_subject_as_its_own_auditor_is_rejected": "PASS",
+      "test_development_ledger.AuditAttestationModelTests.test_an_unknown_validation_mechanism_is_rejected": "PASS",
+      "test_development_ledger.AuditAttestationModelTests.test_an_unsealed_subject_is_rejected": "SKIPPED",
+      "test_development_ledger.AuditAttestationModelTests.test_incomplete_audit_coverage_cannot_produce_a_milestone_pass": "PASS",
+      "test_development_ledger.AuditAttestationModelTests.test_no_attestation_means_no_milestone_pass": "PASS",
+      "test_development_ledger.AuditAttestationModelTests.test_the_attestation_never_names_the_commit_of_the_tree_that_contains_it": "PASS",
+      "test_development_ledger.DerivedCountTests.test_a_forged_count_is_rejected": "PASS",
+      "test_development_ledger.IntegrityAnchorTests.test_a_broken_link_between_anchors_is_detected": "PASS",
+      "test_development_ledger.IntegrityAnchorTests.test_a_moved_historical_tag_is_detected": "PASS",
+      "test_development_ledger.IntegrityAnchorTests.test_a_sealed_checkpoint_without_an_anchor_is_detected": "PASS",
+      "test_development_ledger.IntegrityAnchorTests.test_every_sealed_checkpoint_but_the_newest_is_anchored": "PASS",
+      "test_development_ledger.IntegrityAnchorTests.test_the_pending_exclusion_is_the_newest_sealed_checkpoint": "PASS",
+      "test_development_ledger.MemoryPolicyDocumentTests.test_a_guarded_lesson_may_not_describe_itself_as_unguarded": "PASS",
+      "test_development_ledger.MemoryPolicyDocumentTests.test_a_setting_no_code_reads_cannot_be_declared": "PASS",
+      "test_development_ledger.MemoryPolicyDocumentTests.test_the_declared_policy_validates_against_its_schema": "PASS",
+      "test_development_ledger.MemoryPolicyDocumentTests.test_the_guardrail_registry_path_has_one_resolver": "PASS",
+      "test_development_ledger.MemoryPolicyDocumentTests.test_the_repository_memory_has_no_status_contradiction": "PASS",
+      "test_development_ledger.PositivePromotionTests.test_a_fresh_session_audit_cannot_reach_the_external_status": "PASS",
+      "test_development_ledger.PositivePromotionTests.test_the_audit_checkpoint_carries_the_milestone_verdict": "PASS",
+      "test_development_ledger.PositivePromotionTests.test_the_audit_checkpoint_validates_as_sealed": "PASS",
+      "test_development_ledger.PositivePromotionTests.test_the_integrity_chain_still_verifies_after_the_audit": "PASS",
+      "test_development_ledger.PositivePromotionTests.test_the_milestone_verdict_is_derived_as_passed": "PASS",
+      "test_development_ledger.PositivePromotionTests.test_the_subject_is_not_rewritten_by_its_own_audit": "PASS",
+      "test_development_ledger.SourceCardinalityPolicyTests.test_no_comment_or_docstring_states_a_derived_count_claim": "PASS",
+      "test_development_ledger.SourceCardinalityPolicyTests.test_no_comment_or_docstring_states_the_cardinality_of_a_derived_set": "PASS",
+      "test_development_ledger.SourceCardinalityPolicyTests.test_the_control_detects_a_cardinality_written_in_a_docstring": "PASS",
+      "test_development_ledger.SourceCardinalityPolicyTests.test_the_count_policy_is_documented": "PASS",
+      "test_development_ledger.SuccessorDurabilityTests.test_a_missing_anchor_is_still_detected_after_the_chain_advances": "PASS",
+      "test_development_ledger.SuccessorDurabilityTests.test_each_successor_anchors_its_predecessor": "PASS",
+      "test_development_ledger.SuccessorDurabilityTests.test_every_state_of_the_chain_verifies": "PASS",
+      "test_development_ledger.SuccessorDurabilityTests.test_the_pending_exclusion_moves_with_the_chain": "PASS",
+      "test_development_ledger.SuccessorDurabilityTests.test_three_checkpoints_were_sealed_in_succession": "PASS"
+    },
+    "details": {
+      "test_development_ledger.AuditAttestationModelTests.test_an_unsealed_subject_is_rejected": "every checkpoint directory in this checkout is sealed"
+    },
+    "passed": 41,
+    "skipped": 1,
+    "failed": 0,
+    "notRun": 0
+  },
+  "namedRegressionTestsWorkingRepository": {
+    "root": "E:\\iacode",
+    "requested": 42,
+    "loadFailures": [],
+    "outcomes": {
+      "test_development_ledger.AuditAttestationModelTests.test_a_checkpoint_may_not_claim_a_verdict_another_checkpoint_authored": "PASS",
+      "test_development_ledger.AuditAttestationModelTests.test_a_cross_tool_claim_without_cross_tool_availability_is_rejected": "PASS",
+      "test_development_ledger.AuditAttestationModelTests.test_a_failed_red_team_cannot_produce_a_milestone_pass": "PASS",
+      "test_development_ledger.AuditAttestationModelTests.test_a_failed_review_cannot_produce_a_milestone_pass": "PASS",
+      "test_development_ledger.AuditAttestationModelTests.test_a_failed_test_result_cannot_produce_a_milestone_pass": "PASS",
+      "test_development_ledger.AuditAttestationModelTests.test_a_fresh_session_claim_requires_a_fresh_session": "PASS",
+      "test_development_ledger.AuditAttestationModelTests.test_a_legitimate_attestation_over_the_sealed_history_is_accepted": "PASS",
+      "test_development_ledger.AuditAttestationModelTests.test_a_subject_commit_that_is_not_the_sealed_one_is_rejected": "PASS",
+      "test_development_ledger.AuditAttestationModelTests.test_an_attestation_for_another_checkpoint_is_rejected": "PASS",
+      "test_development_ledger.AuditAttestationModelTests.test_an_attestation_for_another_commit_is_rejected": "PASS",
+      "test_development_ledger.AuditAttestationModelTests.test_an_attestation_naming_the_subject_as_its_own_auditor_is_rejected": "PASS",
+      "test_development_ledger.AuditAttestationModelTests.test_an_unknown_validation_mechanism_is_rejected": "PASS",
+      "test_development_ledger.AuditAttestationModelTests.test_an_unsealed_subject_is_rejected": "PASS",
+      "test_development_ledger.AuditAttestationModelTests.test_incomplete_audit_coverage_cannot_produce_a_milestone_pass": "PASS",
+      "test_development_ledger.AuditAttestationModelTests.test_no_attestation_means_no_milestone_pass": "PASS",
+      "test_development_ledger.AuditAttestationModelTests.test_the_attestation_never_names_the_commit_of_the_tree_that_contains_it": "PASS",
+      "test_development_ledger.DerivedCountTests.test_a_forged_count_is_rejected": "PASS",
+      "test_development_ledger.IntegrityAnchorTests.test_a_broken_link_between_anchors_is_detected": "PASS",
+      "test_development_ledger.IntegrityAnchorTests.test_a_moved_historical_tag_is_detected": "PASS",
+      "test_development_ledger.IntegrityAnchorTests.test_a_sealed_checkpoint_without_an_anchor_is_detected": "PASS",
+      "test_development_ledger.IntegrityAnchorTests.test_every_sealed_checkpoint_but_the_newest_is_anchored": "PASS",
+      "test_development_ledger.IntegrityAnchorTests.test_the_pending_exclusion_is_the_newest_sealed_checkpoint": "PASS",
+      "test_development_ledger.MemoryPolicyDocumentTests.test_a_guarded_lesson_may_not_describe_itself_as_unguarded": "PASS",
+      "test_development_ledger.MemoryPolicyDocumentTests.test_a_setting_no_code_reads_cannot_be_declared": "PASS",
+      "test_development_ledger.MemoryPolicyDocumentTests.test_the_declared_policy_validates_against_its_schema": "PASS",
+      "test_development_ledger.MemoryPolicyDocumentTests.test_the_guardrail_registry_path_has_one_resolver": "PASS",
+      "test_development_ledger.MemoryPolicyDocumentTests.test_the_repository_memory_has_no_status_contradiction": "PASS",
+      "test_development_ledger.PositivePromotionTests.test_a_fresh_session_audit_cannot_reach_the_external_status": "PASS",
+      "test_development_ledger.PositivePromotionTests.test_the_audit_checkpoint_carries_the_milestone_verdict": "PASS",
+      "test_development_ledger.PositivePromotionTests.test_the_audit_checkpoint_validates_as_sealed": "PASS",
+      "test_development_ledger.PositivePromotionTests.test_the_integrity_chain_still_verifies_after_the_audit": "PASS",
+      "test_development_ledger.PositivePromotionTests.test_the_milestone_verdict_is_derived_as_passed": "PASS",
+      "test_development_ledger.PositivePromotionTests.test_the_subject_is_not_rewritten_by_its_own_audit": "PASS",
+      "test_development_ledger.SourceCardinalityPolicyTests.test_no_comment_or_docstring_states_a_derived_count_claim": "PASS",
+      "test_development_ledger.SourceCardinalityPolicyTests.test_no_comment_or_docstring_states_the_cardinality_of_a_derived_set": "PASS",
+      "test_development_ledger.SourceCardinalityPolicyTests.test_the_control_detects_a_cardinality_written_in_a_docstring": "PASS",
+      "test_development_ledger.SourceCardinalityPolicyTests.test_the_count_policy_is_documented": "PASS",
+      "test_development_ledger.SuccessorDurabilityTests.test_a_missing_anchor_is_still_detected_after_the_chain_advances": "PASS",
+      "test_development_ledger.SuccessorDurabilityTests.test_each_successor_anchors_its_predecessor": "PASS",
+      "test_development_ledger.SuccessorDurabilityTests.test_every_state_of_the_chain_verifies": "PASS",
+      "test_development_ledger.SuccessorDurabilityTests.test_the_pending_exclusion_moves_with_the_chain": "PASS",
+      "test_development_ledger.SuccessorDurabilityTests.test_three_checkpoints_were_sealed_in_succession": "PASS"
+    },
+    "details": {},
+    "passed": 42,
+    "skipped": 0,
+    "failed": 0,
+    "notRun": 0
+  },
+  "observations": {
+    "note": "Properties this audit examined that did not warrant a finding. They are recorded because an audit that reports only its verdict hides what it looked at, and because a later run may want to decide differently.",
+    "observations": [
+      {
+        "id": "OBS-001",
+        "subject": "the passing test count is environment dependent by one case",
+        "observed": "The subject records 363 passing cases. Reproducing the suite from a clean clone detached at the subject tag gives 363 run, 362 passed, 0 failures, 0 errors and 1 conditional skip: AuditAttestationModelTests.test_an_unsealed_subject_is_rejected, whose own guard says every checkpoint directory in a fully sealed checkout is sealed. In the working repository of this audit a different case skips for the same kind of reason, PreflightFreshnessTests.test_the_preflight_of_the_current_delivery_is_fresh, because the audit checkpoint already existed and carried no preflight yet.",
+        "assessment": "Not a finding. Both skips are conditional guards on repository state, the delivery measured its own environment where neither condition held, and RESUME-VALIDATION.md makes no numeric claim about a clean clone. The suite is green in both environments with zero failures and zero errors.",
+        "wouldBecomeAFindingIf": "a checkpoint claimed a passing count for an environment it did not measure, or a skip were counted as a pass in the environment where it occurred"
+      },
+      {
+        "id": "OBS-002",
+        "subject": "a narrative sentence about adversarial categories is looser than the artifact it summarises",
+        "observed": "FINAL-REPORT.md of the subject writes: mandatory battery 26; additional battery 30; attestation scenarios 14; positive controls 2, followed by the sentence that the categories do not overlap and each is derived. AFFECTED-RED-TEAM.json shows that the 14 attestation scenarios are a labelled view over the executed battery and share members with both batteries, and its own description says so. The derived total, 56, equals 26 plus 30 and double counts nothing.",
+        "assessment": "Not a finding. The numbers are derived and the total is correct; the machine-readable artifact describes the attestation category accurately as the surface this delivery changed rather than as a disjoint partition. The prose is a loose summary of an accurate artifact, and no count contradicts the derivation.",
+        "wouldBecomeAFindingIf": "the total were computed by adding the four figures, or an artifact asserted disjointness that its own membership contradicts"
+      },
+      {
+        "id": "OBS-003",
+        "subject": "three refusal branches of the attestation model have no test",
+        "observed": "verify_attestation refuses an audit checkpoint that exists but is not sealed, an audit checkpoint absent from the integrity chain, and a subject commit that is not an ancestor of the audit commit, all on the third-party derivation path. No case in the suite exercises those three branches. This audit exercised them directly and each refused with the expected message.",
+        "assessment": "Not a finding, and not a regression. The test the corrective delivery removed was named after the unsealed-auditor case but actually asserted the does-not-exist case, and its replacement asserts the same thing under an accurate name, so no assertion was lost. The branches were uncovered before this delivery as well.",
+        "wouldBecomeAFindingIf": "one of those branches stopped refusing, which this audit checked by execution rather than by reading"
+      },
+      {
+        "id": "OBS-004",
+        "subject": "the prose-count control is scoped to scripts and tests",
+        "observed": "The control of CP9-F-003 inspects the comments and docstrings of Python sources under scripts and tests. A harness kept inside a checkpoint directory, including the harness of this audit, is outside it.",
+        "assessment": "Not a finding. docs/QUALITY-GATES.md records the scope explicitly as a decision, which is what the acceptance criteria of CP9-F-003 asked for, and checkpoint Markdown is covered by the separate derived-count comparison. The scope is disclosed rather than assumed.",
+        "wouldBecomeAFindingIf": "the scope were narrowed without the policy being narrowed with it"
+      },
+      {
+        "id": "OBS-005",
+        "subject": "the trust model of a milestone verdict is structural, not cryptographic",
+        "observed": "A verdict requires a second sealed, tagged, anchored checkpoint authored as the audit of an already sealed subject. There is no signature and no external key, so an actor who can create that checkpoint and its tag can forge the relationship.",
+        "assessment": "Not a finding. The limit is stated in docs/MILESTONE-VALIDATION.md, in .iacode/attestations/README.md and in the trust model of the anchor chain, and no artifact claims more than that. This audit confirms the claim is not overstated anywhere it is made.",
+        "wouldBecomeAFindingIf": "any artifact described the control as cryptographic assurance"
+      }
+    ]
+  },
+  "commandResults": {
+    "note": "Every execution this audit performed outside the suite, with the environment it ran in and the exit code observed. The clean clone is a git clone of the repository detached at refs/tags/iacode-checkpoints/SETUP-00-CP-0010, resolving to 90b67a7e0a11179465bc5c92dee22c78da36801f with a clean worktree.",
+    "workingRepository": [
+      {
+        "command": "git status --short --branch; git branch --show-current; git rev-parse HEAD",
+        "exit": 0,
+        "observed": "clean at start; branch main; HEAD 90b67a7e0a11179465bc5c92dee22c78da36801f, equal to the subject tag and to STATE.json currentCommit"
+      },
+      {
+        "command": "python scripts/development-ledger/validate_checkpoint.py",
+        "exit": 0,
+        "observed": "CHECKPOINT_VALID"
+      },
+      {
+        "command": "python scripts/development-ledger/validate_lessons.py",
+        "exit": 0,
+        "observed": "LESSONS_VALID total=30 active=30 guarded=28"
+      },
+      {
+        "command": "python scripts/development-ledger/verify_integrity.py",
+        "exit": 0,
+        "observed": "INTEGRITY_VALID anchors=9 latest=SETUP-00-CP-0009 before this audit anchored the subject; INTEGRITY_VALID anchors=10 latest=SETUP-00-CP-0010 afterwards"
+      },
+      {
+        "command": "python scripts/development-ledger/derive_counts.py",
+        "exit": 0,
+        "observed": "COUNTS_DERIVED TESTS=363/363 REQUIREMENTS=134/134 FINDINGS=5/5 ATTACKS=56/56 LESSONS=28/30 GUARDRAILS=29/29"
+      },
+      {
+        "command": "python -m unittest discover -s tests",
+        "exit": 0,
+        "observed": "Ran 363 tests, OK, 0 failures, 0 errors"
+      },
+      {
+        "command": "python -m compileall -q scripts tests",
+        "exit": 0,
+        "observed": "no output"
+      },
+      {
+        "command": "python scripts/development-ledger/validate_checkpoint.py --checkpoint docs/checkpoints/SETUP-00-CP-0009",
+        "exit": 1,
+        "observed": "CHECKPOINT_INVALID, as the protocol prescribes: an older sealed checkpoint is validated from a detached checkout of its own tag, not from a working tree that has advanced past it"
+      }
+    ],
+    "cleanClone": [
+      {
+        "command": "python scripts/development-ledger/validate_checkpoint.py",
+        "exit": 0,
+        "observed": "CHECKPOINT_VALID"
+      },
+      {
+        "command": "python scripts/development-ledger/validate_lessons.py",
+        "exit": 0,
+        "observed": "LESSONS_VALID total=30 active=30 guarded=28"
+      },
+      {
+        "command": "python scripts/development-ledger/verify_integrity.py",
+        "exit": 0,
+        "observed": "INTEGRITY_VALID anchors=9 latest=SETUP-00-CP-0009"
+      },
+      {
+        "command": "python scripts/development-ledger/derive_counts.py",
+        "exit": 0,
+        "observed": "COUNTS_DERIVED TESTS=363/363 REQUIREMENTS=134/134 FINDINGS=5/5 ATTACKS=56/56 LESSONS=28/30 GUARDRAILS=29/29"
+      },
+      {
+        "command": "python scripts/development-ledger/check_completeness.py",
+        "exit": 0,
+        "observed": "DELIVERY_COMPLETENESS_GATE=PASS coverage=100.00 evidenceCoverage=100.00 total=134 complete=134 partial=0 missing=0 notApplicable=0"
+      },
+      {
+        "command": "python scripts/development-ledger/derive_requirements.py",
+        "exit": 0,
+        "observed": "REQUIREMENTS_DERIVED gate=SETUP-00 checkpoint=SETUP-00-CP-0010 total=134"
+      },
+      {
+        "command": "python scripts/development-ledger/milestone_status.py --milestone M0",
+        "exit": 1,
+        "observed": "MILESTONE_NOT_PASSED milestone=M0 attestations=0 accepted=0; no independent audit attestation exists for milestone M0. This is the honest state of the subject before this audit wrote one."
+      },
+      {
+        "command": "python scripts/development-ledger/promotion_simulation.py",
+        "exit": 0,
+        "observed": "POSITIVE_PROMOTION=PASS verdict=PASSED checks=7 of 7"
+      },
+      {
+        "command": "python scripts/development-ledger/successor_durability.py",
+        "exit": 0,
+        "observed": "SUCCESSOR_DURABILITY=PASS checks=8 of 8"
+      },
+      {
+        "command": "python scripts/development-ledger/affected_red_team.py",
+        "exit": 0,
+        "observed": "AFFECTED_RED_TEAM=DEFENDED total=56 defended=56 escaped=0 mandatory=26 additional=30 attestation=14 positive=2"
+      },
+      {
+        "command": "python scripts/development-ledger/m0_red_team.py",
+        "exit": 0,
+        "observed": "INTERNAL_RED_TEAM=RED_TEAM_PASS defended=56/56 mandatory=26/26"
+      },
+      {
+        "command": "python scripts/development-ledger/m0_mirror_audit.py --clean-clone",
+        "exit": 0,
+        "observed": "INTERNAL_MIRROR=PASS passed=18/18"
+      },
+      {
+        "command": "python -m compileall -q scripts tests",
+        "exit": 0,
+        "observed": "no output"
+      },
+      {
+        "command": "git diff --check 28c2b487baf216d3745bb6c5a25a5b8aa7274a9e HEAD",
+        "exit": 0,
+        "observed": "no whitespace error in the audited change set"
+      },
+      {
+        "command": "python -m unittest discover -s tests",
+        "exit": 0,
+        "observed": "363 run, 362 passed, 1 conditional skip, 0 failures, 0 errors"
+      }
+    ],
+    "historicalDetachedValidation": {
+      "note": "Each sealed checkpoint checked out detached at its own canonical tag and validated with the current tooling, which is the compatibility question that matters.",
+      "results": {
+        "SETUP-00-CP-0001": 0,
+        "SETUP-00-CP-0002": 0,
+        "SETUP-00-CP-0003": 0,
+        "SETUP-00-CP-0004": 0,
+        "SETUP-00-CP-0005": 0,
+        "SETUP-00-CP-0006": 0,
+        "SETUP-00-CP-0007": 0,
+        "SETUP-00-CP-0008": 0,
+        "SETUP-00-CP-0009": 0,
+        "SETUP-00-CP-0010": 0
+      },
+      "sideNote": "Running each checkpoint's own era of the tooling instead refuses the two 1.0.0 checkpoints with a branch mismatch, because detached validation did not exist then. That is a property of the old tooling, not of the sealed content, and it is why the compatibility check runs the current validator."
+    },
+    "integrityRederivation": {
+      "note": "Every anchor recomputed from Git by a reimplementation written for this audit, without importing anchors.py.",
+      "anchors": 9,
+      "anchorsAfterThisAudit": 10,
+      "namespacedTags": 11,
+      "divergences": []
+    },
+    "scopeFingerprints": {
+      "greenKeeperRecorded": "f23676867732613ffe4789a8fbf6b41b8e6e4fa3eb1a9a15c5a70298c9e281b0",
+      "greenKeeperRecomputed": "f23676867732613ffe4789a8fbf6b41b8e6e4fa3eb1a9a15c5a70298c9e281b0",
+      "completenessRecorded": "aef84caf059800cf49e13d7d5529adb4af04e0522b9ab64cdc1a84c740ff0917",
+      "completenessRecomputed": "aef84caf059800cf49e13d7d5529adb4af04e0522b9ab64cdc1a84c740ff0917",
+      "internalRedTeamTarget": "f23676867732613ffe4789a8fbf6b41b8e6e4fa3eb1a9a15c5a70298c9e281b0",
+      "internalMirrorTarget": "f23676867732613ffe4789a8fbf6b41b8e6e4fa3eb1a9a15c5a70298c9e281b0",
+      "allFresh": true
+    },
+    "guardrailEffectiveness": {
+      "guardrailsTotal": 29,
+      "guardrailsResolved": 29,
+      "guardrailsTested": 29,
+      "guardrailsEffective": 29,
+      "guardrailFailures": 0,
+      "lessonsWithUnresolvedFailures": [],
+      "guardrailFailureRecords": 7,
+      "unresolvedGuardrailFailureRecords": 0
+    },
+    "engineeringMemory": {
+      "lessons": 30,
+      "guarded": 28,
+      "confirmed": 2,
+      "duplicateLessonIds": [],
+      "duplicateRecurrenceKeys": [],
+      "candidatesRaisedByTheProvenAudit": 8,
+      "candidateDecisions": {
+        "NEW": 6,
+        "RECURRENCE": 1,
+        "NOT_REGISTERED": 1
+      },
+      "lessonsAddedBeyondTheCandidates": [
+        "LSN-0029"
+      ],
+      "retrospective": ".iacode/memory/retrospectives/SETUP-00-CP-0010.md"
+    },
+    "preflight": {
+      "subjectFingerprintRecorded": "e694f8bd5389a28990f16336ddccc77be20882d2a2395e9f7c88e90fb07c929e",
+      "subjectFingerprintRecomputed": "e694f8bd5389a28990f16336ddccc77be20882d2a2395e9f7c88e90fb07c929e",
+      "stalenessMessages": [],
+      "derivedRequirementsMissingFromTheMatrix": [],
+      "auditPreflight": {
+        "gate": "SETUP-00",
+        "scope": "independent-audit",
+        "considered": 30,
+        "applicable": 30,
+        "derived": 30,
+        "note": "LSN-0030 is scoped to independent-audit, so it selects itself for this run and stayed silent for the implementing delivery, which is exactly the behaviour its assessment describes."
+      }
+    },
+    "prosecountControl": {
+      "note": "The control of CP9-F-003 re-implemented for this audit rather than invoked.",
+      "pythonSourcesScanned": 28,
+      "offenders": [],
+      "detectsAPlantedCardinality": true,
+      "detectsAPlantedCountClaim": true,
+      "policySentencePresent": true
+    },
+    "attestationProbes": {
+      "note": "Refusal branches of verify_attestation exercised directly by this audit against the repository history.",
+      "positiveThirdPartyPath": [],
+      "unsealedAuditCheckpoint": [
+        "audit checkpoint SETUP-00-CP-0099 is not sealed under refs/tags/iacode-checkpoints/SETUP-00-CP-0099"
+      ],
+      "nonAncestorSubject": [
+        "attests SETUP-00-CP-0008, which is not the sealed checkpoint this audit succeeds (SETUP-00-CP-0006)",
+        "the subject commit is not an ancestor of the audit commit; an audit judges content that already exists"
+      ],
+      "attestationOfThisAuditBeforeSealing": {
+        "claimingPath": [],
+        "thirdPartyPath": [
+          "audit checkpoint SETUP-00-CP-0011 is not sealed under refs/tags/iacode-checkpoints/SETUP-00-CP-0011"
+        ],
+        "note": "Exactly the behaviour the corrected model prescribes: the claiming checkpoint is the content being validated, so sealing is post-commit; a third party requires the seal, which exists once this checkpoint is sealed."
+      }
+    },
+    "subjectImmutability": {
+      "tag": "refs/tags/iacode-checkpoints/SETUP-00-CP-0010",
+      "commitBefore": "90b67a7e0a11179465bc5c92dee22c78da36801f",
+      "attestationsInSubjectTree": [
+        ".iacode/attestations/README.md"
+      ],
+      "subjectStatus": "READY_FOR_REVIEW",
+      "subjectExternalAttestation": "NONE"
+    }
+  },
+  "auditorBattery": {
+    "schemaVersion": "1.0.0",
+    "generatedAt": "2026-09-21T08:14:22Z",
+    "auditCheckpoint": "SETUP-00-CP-0011",
+    "subjectCheckpoint": "SETUP-00-CP-0010",
+    "baselineControl": {
+      "control": "null-mutation",
+      "detail": "the unmutated snapshot is validated through the identical path",
+      "validator": "CHECKPOINT_VALID",
+      "milestone": "MILESTONE_PASSED milestone=M0 attestations=1 accepted=1\n- M0-CP-0011: SETUP-00-CP-0010 at 90b67a7e0a11179465bc5c92dee22c78da36801f audited by SETUP-00-CP-0011 (FRESH_SESSION_INDEPENDENT_AUDIT); authorises MILESTONE_INDEPENDENT_AUDIT_PASS",
+      "result": "VALID"
+    },
+    "scenarios": [
+      {
+        "attackId": "ATT-01",
+        "category": "additional",
+        "target": "attestation subject",
+        "mutation": "Attest a checkpoint other than the sealed subject",
+        "expectedDefense": "reject",
+        "observed": "exit=1 CHECKPOINT_INVALID\n- FILES.json: hash mismatch for .iacode/attestations/M0-CP-0011.json\n- dirty-state mismatch: expected False, observed True\n- greenKeeper=PASS is STALE: the delivery-assurance scope changed after the last GREEN cycle, so the Green Keeper must run again\n- DELIVERY_COMPLETENESS_GATE is STALE: the code, requirements, lessons or policy changed after the audit, so it must run a",
+        "result": "DEFENDED"
+      },
+      {
+        "attackId": "ATT-02",
+        "category": "additional",
+        "target": "attestation subject",
+        "mutation": "Attest a commit the subject tag does not resolve to",
+        "expectedDefense": "reject",
+        "observed": "exit=1 CHECKPOINT_INVALID\n- FILES.json: hash mismatch for .iacode/attestations/M0-CP-0011.json\n- dirty-state mismatch: expected False, observed True\n- greenKeeper=PASS is STALE: the delivery-assurance scope changed after the last GREEN cycle, so the Green Keeper must run again\n- DELIVERY_COMPLETENESS_GATE is STALE: the code, requirements, lessons or policy changed after the audit, so it must run a",
+        "result": "DEFENDED"
+      },
+      {
+        "attackId": "ATT-03",
+        "category": "additional",
+        "target": "attestation author",
+        "mutation": "Name the subject as its own auditor",
+        "expectedDefense": "reject",
+        "observed": "exit=1 CHECKPOINT_INVALID\n- FILES.json: hash mismatch for .iacode/attestations/M0-CP-0011.json\n- dirty-state mismatch: expected False, observed True\n- greenKeeper=PASS is STALE: the delivery-assurance scope changed after the last GREEN cycle, so the Green Keeper must run again\n- DELIVERY_COMPLETENESS_GATE is STALE: the code, requirements, lessons or policy changed after the audit, so it must run a",
+        "result": "DEFENDED"
+      },
+      {
+        "attackId": "ATT-04",
+        "category": "additional",
+        "target": "attestation author",
+        "mutation": "Claim a verdict another checkpoint authored",
+        "expectedDefense": "reject",
+        "observed": "exit=1 CHECKPOINT_INVALID\n- FILES.json: hash mismatch for .iacode/attestations/M0-CP-0011.json\n- dirty-state mismatch: expected False, observed True\n- greenKeeper=PASS is STALE: the delivery-assurance scope changed after the last GREEN cycle, so the Green Keeper must run again\n- DELIVERY_COMPLETENESS_GATE is STALE: the code, requirements, lessons or policy changed after the audit, so it must run a",
+        "result": "DEFENDED"
+      },
+      {
+        "attackId": "ATT-05",
+        "category": "additional",
+        "target": "attestation verdict",
+        "mutation": "Promote on a review that was not approved",
+        "expectedDefense": "reject",
+        "observed": "exit=1 CHECKPOINT_INVALID\n- FILES.json: hash mismatch for .iacode/attestations/M0-CP-0011.json\n- dirty-state mismatch: expected False, observed True\n- greenKeeper=PASS is STALE: the delivery-assurance scope changed after the last GREEN cycle, so the Green Keeper must run again\n- DELIVERY_COMPLETENESS_GATE is STALE: the code, requirements, lessons or policy changed after the audit, so it must run a",
+        "result": "DEFENDED"
+      },
+      {
+        "attackId": "ATT-06",
+        "category": "additional",
+        "target": "attestation verdict",
+        "mutation": "Promote on a failed Red Team",
+        "expectedDefense": "reject",
+        "observed": "exit=1 CHECKPOINT_INVALID\n- FILES.json: hash mismatch for .iacode/attestations/M0-CP-0011.json\n- dirty-state mismatch: expected False, observed True\n- greenKeeper=PASS is STALE: the delivery-assurance scope changed after the last GREEN cycle, so the Green Keeper must run again\n- DELIVERY_COMPLETENESS_GATE is STALE: the code, requirements, lessons or policy changed after the audit, so it must run a",
+        "result": "DEFENDED"
+      },
+      {
+        "attackId": "ATT-07",
+        "category": "additional",
+        "target": "attestation verdict",
+        "mutation": "Promote on incomplete coverage",
+        "expectedDefense": "reject",
+        "observed": "exit=1 CHECKPOINT_INVALID\n- FILES.json: hash mismatch for .iacode/attestations/M0-CP-0011.json\n- dirty-state mismatch: expected False, observed True\n- greenKeeper=PASS is STALE: the delivery-assurance scope changed after the last GREEN cycle, so the Green Keeper must run again\n- DELIVERY_COMPLETENESS_GATE is STALE: the code, requirements, lessons or policy changed after the audit, so it must run a",
+        "result": "DEFENDED"
+      },
+      {
+        "attackId": "ATT-08",
+        "category": "additional",
+        "target": "attestation verdict",
+        "mutation": "Promote on incomplete evidence coverage",
+        "expectedDefense": "reject",
+        "observed": "exit=1 CHECKPOINT_INVALID\n- FILES.json: hash mismatch for .iacode/attestations/M0-CP-0011.json\n- dirty-state mismatch: expected False, observed True\n- greenKeeper=PASS is STALE: the delivery-assurance scope changed after the last GREEN cycle, so the Green Keeper must run again\n- DELIVERY_COMPLETENESS_GATE is STALE: the code, requirements, lessons or policy changed after the audit, so it must run a",
+        "result": "DEFENDED"
+      },
+      {
+        "attackId": "ATT-09",
+        "category": "additional",
+        "target": "attestation verdict",
+        "mutation": "Promote on a failing test result",
+        "expectedDefense": "reject",
+        "observed": "exit=1 CHECKPOINT_INVALID\n- FILES.json: hash mismatch for .iacode/attestations/M0-CP-0011.json\n- dirty-state mismatch: expected False, observed True\n- greenKeeper=PASS is STALE: the delivery-assurance scope changed after the last GREEN cycle, so the Green Keeper must run again\n- DELIVERY_COMPLETENESS_GATE is STALE: the code, requirements, lessons or policy changed after the audit, so it must run a",
+        "result": "DEFENDED"
+      },
+      {
+        "attackId": "ATT-10",
+        "category": "additional",
+        "target": "attestation mechanism",
+        "mutation": "Declare an unrecognised validation mechanism",
+        "expectedDefense": "reject",
+        "observed": "exit=1 CHECKPOINT_INVALID\n- FILES.json: hash mismatch for .iacode/attestations/M0-CP-0011.json\n- dirty-state mismatch: expected False, observed True\n- greenKeeper=PASS is STALE: the delivery-assurance scope changed after the last GREEN cycle, so the Green Keeper must run again\n- DELIVERY_COMPLETENESS_GATE is STALE: the code, requirements, lessons or policy changed after the audit, so it must run a",
+        "result": "DEFENDED"
+      },
+      {
+        "attackId": "ATT-11",
+        "category": "additional",
+        "target": "attestation mechanism",
+        "mutation": "Claim a fresh-session audit without a fresh session",
+        "expectedDefense": "reject",
+        "observed": "exit=1 CHECKPOINT_INVALID\n- FILES.json: hash mismatch for .iacode/attestations/M0-CP-0011.json\n- dirty-state mismatch: expected False, observed True\n- greenKeeper=PASS is STALE: the delivery-assurance scope changed after the last GREEN cycle, so the Green Keeper must run again\n- DELIVERY_COMPLETENESS_GATE is STALE: the code, requirements, lessons or policy changed after the audit, so it must run a",
+        "result": "DEFENDED"
+      },
+      {
+        "attackId": "ATT-12",
+        "category": "additional",
+        "target": "attestation mechanism",
+        "mutation": "Claim a cross-tool audit while recording that cross-tool execution was unavailable",
+        "expectedDefense": "reject",
+        "observed": "exit=1 CHECKPOINT_INVALID\n- FILES.json: hash mismatch for .iacode/attestations/M0-CP-0011.json\n- dirty-state mismatch: expected False, observed True\n- greenKeeper=PASS is STALE: the delivery-assurance scope changed after the last GREEN cycle, so the Green Keeper must run again\n- DELIVERY_COMPLETENESS_GATE is STALE: the code, requirements, lessons or policy changed after the audit, so it must run a",
+        "result": "DEFENDED"
+      },
+      {
+        "attackId": "ATT-13",
+        "category": "additional",
+        "target": "attestation schema",
+        "mutation": "Declare an older attestation schema version",
+        "expectedDefense": "reject",
+        "observed": "exit=1 CHECKPOINT_INVALID\n- FILES.json: hash mismatch for .iacode/attestations/M0-CP-0011.json\n- dirty-state mismatch: expected False, observed True\n- greenKeeper=PASS is STALE: the delivery-assurance scope changed after the last GREEN cycle, so the Green Keeper must run again\n- DELIVERY_COMPLETENESS_GATE is STALE: the code, requirements, lessons or policy changed after the audit, so it must run a",
+        "result": "DEFENDED"
+      },
+      {
+        "attackId": "ATT-14",
+        "category": "additional",
+        "target": "attestation schema",
+        "mutation": "Remove a required field",
+        "expectedDefense": "reject",
+        "observed": "exit=1 CHECKPOINT_INVALID\n- FILES.json: hash mismatch for .iacode/attestations/M0-CP-0011.json\n- dirty-state mismatch: expected False, observed True\n- greenKeeper=PASS is STALE: the delivery-assurance scope changed after the last GREEN cycle, so the Green Keeper must run again\n- DELIVERY_COMPLETENESS_GATE is STALE: the code, requirements, lessons or policy changed after the audit, so it must run a",
+        "result": "DEFENDED"
+      },
+      {
+        "attackId": "ATT-15",
+        "category": "additional",
+        "target": "attestation subject",
+        "mutation": "Attest an older, easier checkpoint",
+        "expectedDefense": "reject",
+        "observed": "exit=1 CHECKPOINT_INVALID\n- FILES.json: hash mismatch for .iacode/attestations/M0-CP-0011.json\n- FILES.json: hash mismatch for docs/checkpoints/SETUP-00-CP-0011/STATE.json\n- dirty-state mismatch: expected False, observed True\n- greenKeeper=PASS is STALE: the delivery-assurance scope changed after the last GREEN cycle, so the Green Keeper must run again\n- DELIVERY_COMPLETENESS_GATE is STALE: the co",
+        "result": "DEFENDED"
+      },
+      {
+        "attackId": "ATT-16",
+        "category": "additional",
+        "target": "milestone derivation",
+        "mutation": "Remove the attestation and keep the claimed status",
+        "expectedDefense": "reject",
+        "observed": "exit=1 CHECKPOINT_INVALID\n- FILES.json: hashed path does not exist: .iacode/attestations/M0-CP-0011.json\n- dirty-state mismatch: expected False, observed True\n- greenKeeper=PASS is STALE: the delivery-assurance scope changed after the last GREEN cycle, so the Green Keeper must run again\n- DELIVERY_COMPLETENESS_GATE is STALE: the code, requirements, lessons or policy changed after the audit, so it ",
+        "result": "DEFENDED"
+      },
+      {
+        "attackId": "ATT-17",
+        "category": "additional",
+        "target": "milestone derivation",
+        "mutation": "Derive the verdict with no attestation at all",
+        "expectedDefense": "reject",
+        "observed": "exit=1 MILESTONE_NOT_PASSED milestone=M0 attestations=0 accepted=0\n- no independent audit attestation exists for milestone M0",
+        "result": "DEFENDED"
+      },
+      {
+        "attackId": "ATT-18",
+        "category": "additional",
+        "target": "pass vocabulary",
+        "mutation": "Record a cross-tool milestone status from a fresh-session audit",
+        "expectedDefense": "reject",
+        "observed": "exit=1 CHECKPOINT_INVALID\n- FILES.json: hash mismatch for docs/checkpoints/SETUP-00-CP-0011/STATE.json\n- FILES.json: hash mismatch for docs/checkpoints/SETUP-00-CP-0011/STATUS.md\n- dirty-state mismatch: expected False, observed True\n- MILESTONE_EXTERNAL_PASS may not be derived from a 'FRESH_SESSION_INDEPENDENT_AUDIT' attestation, which authorises MILESTONE_INDEPENDENT_AUDIT_PASS; MILESTONE_INDEPEN",
+        "result": "DEFENDED"
+      },
+      {
+        "attackId": "INT-01",
+        "category": "mandatory",
+        "target": "sealed history",
+        "mutation": "Move a historical checkpoint tag onto another commit",
+        "expectedDefense": "reject",
+        "observed": "exit=1 INTEGRITY_INVALID\n- SETUP-00-CP-0005: tag refs/tags/iacode-checkpoints/SETUP-00-CP-0005 resolves to 994bab402873bc4d221c02d8c94bdebeb2b0f3cb, not the anchored commit 276645b4498a0e58a1bf38979b5e078669dbb380",
+        "result": "DEFENDED"
+      },
+      {
+        "attackId": "INT-02",
+        "category": "mandatory",
+        "target": "sealed history",
+        "mutation": "Rewrite sealed content and move its tag onto the rewrite",
+        "expectedDefense": "reject",
+        "observed": "exit=1 INTEGRITY_INVALID\n- SETUP-00-CP-0005: tag refs/tags/iacode-checkpoints/SETUP-00-CP-0005 resolves to 22841ac8d57518d95a768c2911c3bc6dfba8cbdb, not the anchored commit 276645b4498a0e58a1bf38979b5e078669dbb380\n- sealed checkpoint SETUP-00-CP-0011 has no integrity anchor",
+        "result": "DEFENDED"
+      },
+      {
+        "attackId": "INT-03",
+        "category": "mandatory",
+        "target": "integrity chain",
+        "mutation": "Break the link between two consecutive anchors",
+        "expectedDefense": "reject",
+        "observed": "exit=1 INTEGRITY_INVALID\n- SETUP-00-CP-0004: anchorHash does not match its own anchored fields (recorded 'a5c174320d6fae29d2e94c20a5de08c8617cfa3c18d3f4946c6f0915c710b3bb', recomputed '714ded680a4314167420555efdc79d1a6563b0929af2339921a27fb663bbe1d7')\n- SETUP-00-CP-0004: previousAnchorHash breaks the chain with 'SETUP-00-CP-0003'",
+        "result": "DEFENDED"
+      },
+      {
+        "attackId": "INT-04",
+        "category": "mandatory",
+        "target": "integrity chain",
+        "mutation": "Remove the anchor of a sealed checkpoint",
+        "expectedDefense": "reject",
+        "observed": "exit=1 INTEGRITY_INVALID\n- SETUP-00-CP-0007: previousCheckpoint 'SETUP-00-CP-0006' breaks the chain; expected 'SETUP-00-CP-0005'\n- SETUP-00-CP-0007: previousAnchorHash breaks the chain with 'SETUP-00-CP-0005'\n- sealed checkpoint SETUP-00-CP-0006 has no integrity anchor",
+        "result": "DEFENDED"
+      },
+      {
+        "attackId": "INT-05",
+        "category": "mandatory",
+        "target": "successor duty",
+        "mutation": "Skip the anchor this checkpoint owes its sealed predecessor",
+        "expectedDefense": "reject",
+        "observed": "exit=1 CHECKPOINT_INVALID\n- FILES.json: hash mismatch for .iacode/anchors/checkpoint-chain.json\n- dirty-state mismatch: expected False, observed True\n- greenKeeper=PASS is STALE: the delivery-assurance scope changed after the last GREEN cycle, so the Green Keeper must run again\n- DELIVERY_COMPLETENESS_GATE is STALE: the code, requirements, lessons or policy changed after the audit, so it must run ",
+        "result": "DEFENDED"
+      },
+      {
+        "attackId": "INT-06",
+        "category": "additional",
+        "target": "integrity chain",
+        "mutation": "Forge an anchored tree without recomputing the digest",
+        "expectedDefense": "reject",
+        "observed": "exit=1 INTEGRITY_INVALID\n- SETUP-00-CP-0003: anchorHash does not match its own anchored fields (recorded 'df6e7bacb173d4b440b9cfee831968886735528dd77f2a54e3a5ca92041ecad3', recomputed 'e3ee016f2df68110e23ddfd8eb367819b86f045acb330dc24563789ed10cd196')\n- SETUP-00-CP-0003: commit 5780b0f86dbf46ad84d69b88a637be6f076946f4 has tree 65dfc288c60dec518e5c488db6af8b4e9825fd8c, not the anchored 000000000000",
+        "result": "DEFENDED"
+      },
+      {
+        "attackId": "PRE-01",
+        "category": "mandatory",
+        "target": "lesson preflight",
+        "mutation": "Change the memory after the preflight was recorded",
+        "expectedDefense": "reject",
+        "observed": "exit=1 CHECKPOINT_INVALID\n- dirty-state mismatch: expected False, observed True\n- greenKeeper=PASS is STALE: the delivery-assurance scope changed after the last GREEN cycle, so the Green Keeper must run again\n- DELIVERY_COMPLETENESS_GATE is STALE: the code, requirements, lessons or policy changed after the audit, so it must run again\n- lesson preflight: the lesson preflight is STALE: its recorded ",
+        "result": "DEFENDED"
+      },
+      {
+        "attackId": "PRE-02",
+        "category": "additional",
+        "target": "lesson preflight",
+        "mutation": "Forge the recorded preflight fingerprint",
+        "expectedDefense": "reject",
+        "observed": "exit=1 CHECKPOINT_INVALID\n- FILES.json: hash mismatch for docs/checkpoints/SETUP-00-CP-0011/LESSON-PREFLIGHT.json\n- dirty-state mismatch: expected False, observed True\n- DELIVERY_COMPLETENESS_GATE is STALE: the code, requirements, lessons or policy changed after the audit, so it must run again\n- lesson preflight: the lesson preflight is STALE: its recorded inputsFingerprint does not match the curr",
+        "result": "DEFENDED"
+      },
+      {
+        "attackId": "PRE-03",
+        "category": "additional",
+        "target": "lesson preflight",
+        "mutation": "Drop a derived lesson requirement from the preflight",
+        "expectedDefense": "reject",
+        "observed": "exit=1 CHECKPOINT_INVALID\n- FILES.json: hash mismatch for docs/checkpoints/SETUP-00-CP-0011/LESSON-PREFLIGHT.json\n- dirty-state mismatch: expected False, observed True\n- COMPLETENESS-REPORT.json expectedRequirements=104 contradicts the recomputed value 103\n- COMPLETENESS-REPORT.json result='PASS' contradicts the recomputed value 'FAIL'\n- DELIVERY_COMPLETENESS_GATE is STALE: the code, requirements,",
+        "result": "DEFENDED"
+      },
+      {
+        "attackId": "MEM-01",
+        "category": "mandatory",
+        "target": "guarded semantics",
+        "mutation": "Replace a preventive control with documentation only",
+        "expectedDefense": "reject",
+        "observed": "exit=1 LESSONS_INVALID\n- LSN-0001: GUARDED requires at least one preventive control of kind test, validator, lint, policy, schema, invariant, automated-check; documentation alone is not a guardrail",
+        "result": "DEFENDED"
+      },
+      {
+        "attackId": "MEM-02",
+        "category": "additional",
+        "target": "memory policy",
+        "mutation": "Declare a relocatable guardrail registry the code never reads",
+        "expectedDefense": "reject",
+        "observed": "exit=1 LESSONS_INVALID\n- POLICY.json: $: unexpected property 'guardrailRegistry'",
+        "result": "DEFENDED"
+      },
+      {
+        "attackId": "MEM-03",
+        "category": "additional",
+        "target": "memory prose",
+        "mutation": "Let a GUARDED lesson describe itself as unguarded",
+        "expectedDefense": "reject",
+        "observed": "exit=1 LESSONS_INVALID\n- LSN-0001: the notes state that the lesson is not guarded while its status is GUARDED; describe the residual limit of the control instead of its status",
+        "result": "DEFENDED"
+      },
+      {
+        "attackId": "MEM-04",
+        "category": "additional",
+        "target": "guardrail registry",
+        "mutation": "Remove a guardrail a GUARDED lesson names",
+        "expectedDefense": "reject",
+        "observed": "exit=1 CHECKPOINT_INVALID\n- dirty-state mismatch: expected False, observed True\n- greenKeeper=PASS is STALE: the delivery-assurance scope changed after the last GREEN cycle, so the Green Keeper must run again\n- DELIVERY_COMPLETENESS_GATE is STALE: the code, requirements, lessons or policy changed after the audit, so it must run again\n- engineering memory: LSN-0029: guardrail 'GRD-0029' is not in t",
+        "result": "DEFENDED"
+      },
+      {
+        "attackId": "STL-01",
+        "category": "mandatory",
+        "target": "gate staleness",
+        "mutation": "Edit the assurance scope after the last green cycle",
+        "expectedDefense": "reject",
+        "observed": "exit=1 CHECKPOINT_INVALID\n- dirty-state mismatch: expected False, observed True\n- greenKeeper=PASS is STALE: the delivery-assurance scope changed after the last GREEN cycle, so the Green Keeper must run again\n- DELIVERY_COMPLETENESS_GATE is STALE: the code, requirements, lessons or policy changed after the audit, so it must run again\n- M0-INTERNAL-RED-TEAM.json is STALE: the attacked content chang",
+        "result": "DEFENDED"
+      },
+      {
+        "attackId": "STL-02",
+        "category": "mandatory",
+        "target": "derived counts",
+        "mutation": "Forge the derived test count",
+        "expectedDefense": "reject",
+        "observed": "exit=1 CHECKPOINT_INVALID\n- FILES.json: hash mismatch for docs/checkpoints/SETUP-00-CP-0011/COUNTS.json\n- dirty-state mismatch: expected False, observed True\n- COUNTS.json TESTS=99999/99999 contradicts the derived 363/363\n- FILES.json hashAfter does not match the repository content of docs/checkpoints/SETUP-00-CP-0011/COUNTS.json",
+        "result": "DEFENDED"
+      },
+      {
+        "attackId": "STL-03",
+        "category": "additional",
+        "target": "derived counts",
+        "mutation": "Record more passing cases than the suite contains",
+        "expectedDefense": "reject",
+        "observed": "exit=1 CHECKPOINT_INVALID\n- FILES.json: hash mismatch for docs/checkpoints/SETUP-00-CP-0011/COUNTS.json\n- dirty-state mismatch: expected False, observed True\n- COUNTS.json TESTS=726/363 contradicts the derived 363/363\n- FILES.json hashAfter does not match the repository content of docs/checkpoints/SETUP-00-CP-0011/COUNTS.json",
+        "result": "DEFENDED"
+      },
+      {
+        "attackId": "STL-04",
+        "category": "mandatory",
+        "target": "readiness invariant",
+        "mutation": "Carry a blocker while claiming a milestone verdict",
+        "expectedDefense": "reject",
+        "observed": "exit=1 CHECKPOINT_INVALID\n- FILES.json: hash mismatch for docs/checkpoints/SETUP-00-CP-0011/STATE.json\n- dirty-state mismatch: expected False, observed True\n- MILESTONE_INDEPENDENT_AUDIT_PASS is incompatible with a non-empty blockedBy: an unresolved blocker\n- FILES.json hashAfter does not match the repository content of docs/checkpoints/SETUP-00-CP-0011/STATE.json",
+        "result": "DEFENDED"
+      },
+      {
+        "attackId": "STL-05",
+        "category": "mandatory",
+        "target": "file inventory",
+        "mutation": "Remove an entry from the declared change set",
+        "expectedDefense": "reject",
+        "observed": "exit=1 CHECKPOINT_INVALID\n- dirty-state mismatch: expected False, observed True\n- FILES.json omits a changed path: docs/checkpoints/SETUP-00-CP-0011/audit-harness/run_suite.py (added)",
+        "result": "DEFENDED"
+      },
+      {
+        "attackId": "SEC-01",
+        "category": "mandatory",
+        "target": "secret handling",
+        "mutation": "Insert a credential-shaped value into the memory and require a refusal that does not repeat it",
+        "expectedDefense": "reject",
+        "observed": "exit=1 LESSONS_INVALID\n- LSN-0001: secret pattern detected in $.symptom: GitHub credential",
+        "result": "DEFENDED"
+      }
+    ],
+    "total": 37,
+    "defended": 37,
+    "escaped": 0,
+    "mandatory": 12,
+    "additional": 25,
+    "result": "DEFENDED"
+  },
+  "suiteAuditCheckpointContent": {
+    "root": "E:\\iacode",
+    "discovered": 363,
+    "distinctDiscovered": 363,
+    "testsRun": 363,
+    "passed": 363,
+    "failures": [],
+    "errors": [],
+    "skipped": [],
+    "expectedFailures": [],
+    "unexpectedSuccesses": [],
+    "wasSuccessful": true,
+    "durationSeconds": 562.8
+  },
+  "mirrorReachability": {
+    "finding": "CP11-F-001",
+    "question": "can a checkpoint that corrects no audit obtain a passing internal mirror?",
+    "thisAuditCheckpoint": {
+      "command": "python scripts/development-ledger/m0_mirror_audit.py --write --clean-clone --checkpoint docs/checkpoints/SETUP-00-CP-0011",
+      "exit": 1,
+      "result": "FAIL",
+      "passed": 15,
+      "total": 18,
+      "failures": [
+        "MIR-002 Audit findings: 0/0 audit findings CLOSED",
+        "MIR-003 Mandatory attacks: the internal red team report did not exist yet",
+        "MIR-014 Derived counts: COUNTS.json did not exist yet"
+      ],
+      "note": "MIR-003 and MIR-014 are artifacts a delivery supplies. MIR-002 is not: it derives from open_audits, which is empty for a checkpoint that corrects no audit."
+    },
+    "nextDelivery": {
+      "command": "new_checkpoint.py --gate GATE-0 followed by m0_mirror_audit.py in a disposable clone",
+      "exit": 1,
+      "result": "FAIL",
+      "decisiveFailure": "MIR-002 Audit findings: 0/0 audit findings CLOSED",
+      "note": "A Gate 0 delivery corrects no audit, so no amount of populating the checkpoint makes this check pass."
+    },
+    "validatorConsequence": {
+      "command": "python scripts/development-ledger/validate_checkpoint.py",
+      "observed": "MILESTONE_INDEPENDENT_AUDIT_PASS requires the internal mirror audit to pass, found 'FAIL'",
+      "note": "The same rule applies to READY_FOR_REVIEW and to every other positive terminal status on schemaVersion 3.2.0."
+    },
+    "predicates": [
+      "m0_mirror_audit.probe_findings returns closed == total and total > 0",
+      "m0_mirror_audit.probe_attacks returns len(defended) == len(expected) and bool(expected)"
+    ],
+    "contractSays": ".iacode/agents/m0-closure-auditor.md: a check that cannot run is recorded as NOT_APPLICABLE with a reason, never silently omitted",
+    "schemaAllows": "mirror-audit.schema.json permits NOT_APPLICABLE and the tool counts such checks, but no check ever emits one",
+    "sealedSnapshotProof": {
+      "note": "With the mirror artifact modelled as passing, the whole promotion works, which is how this audit established that CP9-F-001 is closed and that the blocked control is the mirror rather than the attestation.",
+      "validate": "CHECKPOINT_VALID",
+      "milestone": "MILESTONE_PASSED milestone=M0 attestations=1 accepted=1"
+    },
+    "realRepositoryDerivation": {
+      "command": "python scripts/development-ledger/milestone_status.py --milestone M0",
+      "exit": 1,
+      "observed": "MILESTONE_NOT_PASSED milestone=M0 attestations=1 accepted=0; rejected because the audit checkpoint is not sealed yet and because reviewResult is REWORK_REQUIRED",
+      "note": "The attestation this audit wrote records the real verdict, and the derivation refuses to promote on it. The mechanism is exercised in both directions against the real repository."
+    }
+  },
+  "greenKeeperReexecution": {
+    "classification": "AUDIT_ENVIRONMENT",
+    "command": "python scripts/development-ledger/green_keeper.py --checkpoint docs/checkpoints/SETUP-00-CP-0010, in a disposable clone",
+    "observed": "tests, staticAnalysis, lessons and integrity GREEN; checkpointValidation RED with 'detached HEAD validation requires a clean worktree and dirty=false' and 'COMMANDS.jsonl cmd-0054 is timestamped after RUN-METADATA.finishedAt'",
+    "why": "Running a delivery gate against a sealed checkpoint appends to its closed ledger and dirties the worktree. The refusal is a property of re-running a finished delivery, not of the subject.",
+    "verifiedInsteadBy": "re-executing the five canonical mandatory gate commands individually in a clean clone, all exiting zero, and comparing the recorded cycle with the canonical gate policy and a recomputation of the scope fingerprint"
+  },
+  "harnessCorrections": [
+    {
+      "instrument": "audit-harness/matrix_rows.py",
+      "defect": "the closure record was read with plural field names, so no regression row was derived",
+      "correction": "the field names were fixed and the matrix regenerated with those rows present and NOT_STARTED; they were executed afterwards",
+      "productResultAffected": false
+    },
+    {
+      "instrument": "audit-harness/attack_battery.py",
+      "defect": "four scenarios carried expectations the product does not implement or message fragments it does not emit, and were reported as escaped",
+      "correction": "two expectations were replaced by the real control, one mutation was extended to move the claim as well as the attestation, and two fragments were corrected; the corrected battery defends every scenario",
+      "productResultAffected": false
+    }
+  ]
+}

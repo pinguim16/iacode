@@ -1,0 +1,22 @@
+{
+  "schemaVersion": "2.0.0",
+  "auditId": "M0-CP-0011",
+  "milestone": "M0",
+  "validationMechanism": "FRESH_SESSION_INDEPENDENT_AUDIT",
+  "crossToolValidation": "NOT_AVAILABLE",
+  "auditorRole": "milestone independent auditor",
+  "tool": "Claude Code 2.1.195, desktop application",
+  "provider": "Anthropic",
+  "model": "claude-opus-5",
+  "freshSession": true,
+  "subjectCheckpoint": "SETUP-00-CP-0010",
+  "subjectCommit": "90b67a7e0a11179465bc5c92dee22c78da36801f",
+  "auditCheckpoint": "SETUP-00-CP-0011",
+  "reviewResult": "REWORK_REQUIRED",
+  "redTeamResult": "RED_TEAM_PASS",
+  "completeness": 100.0,
+  "evidenceCoverage": 100.0,
+  "testResult": "PASS",
+  "createdAt": "2026-09-21T07:20:00Z",
+  "notes": "Fresh session of the same tool and the same provider as the implementing run, so this is not cross-tool validation and is not recorded as one. The audit closed at REWORK_REQUIRED: the five findings of SETUP-00-CP-0009 are closed and every other dimension is green, but finding CP11-F-001 blocks the milestone. This attestation is kept because it records the audit that happened, and because the derivation correctly refuses to promote on it: milestone_status.py reports NOT_PASSED with the reason that a milestone PASS requires an APPROVED review."
+}

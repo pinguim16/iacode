@@ -1,0 +1,32 @@
+{
+  "schemaVersion": "1.0.0",
+  "checkpoint": "SETUP-00-CP-0011",
+  "generatedAt": "2026-09-21T08:21:01Z",
+  "counts": {
+    "TESTS": {
+      "numerator": 363,
+      "denominator": 363,
+      "source": "unittest discovery over tests/ cross-checked with TESTS.json, deduplicated by physical execution"
+    },
+    "REQUIREMENTS": {
+      "numerator": 104,
+      "denominator": 104,
+      "source": "REQUIREMENTS-MATRIX.json evaluated against the derived expected set"
+    },
+    "ATTACKS": {
+      "numerator": 37,
+      "denominator": 37,
+      "source": "M0-INTERNAL-RED-TEAM.json"
+    },
+    "LESSONS": {
+      "numerator": 28,
+      "denominator": 30,
+      "source": ".iacode/memory/lessons.jsonl"
+    },
+    "GUARDRAILS": {
+      "numerator": 29,
+      "denominator": 29,
+      "source": ".iacode/memory/guardrails/registry.json measured for effectiveness"
+    }
+  }
+}

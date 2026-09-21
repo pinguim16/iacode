@@ -1,0 +1,69 @@
+{
+  "schemaVersion": "3.2.0",
+  "artifacts": [
+    {
+      "artifact": "docs/checkpoints/SETUP-00-CP-0011",
+      "sourceType": "repository-generated",
+      "provider": "Anthropic",
+      "model": "claude-opus-5",
+      "ownership": "project",
+      "license": "project-policy",
+      "rights": {
+        "storageAllowed": true,
+        "ragAllowed": false,
+        "trainingAllowed": false,
+        "distillationAllowed": false
+      },
+      "evidence": "Authored by the fresh-session independent M0 audit of SETUP-00-CP-0010; every command is recorded in COMMANDS.jsonl and every result in AUDIT-EXECUTIONS.json.",
+      "notes": "Training denied by default; no rights evidence exists for this content."
+    },
+    {
+      "artifact": "docs/checkpoints/SETUP-00-CP-0011/audit-harness",
+      "sourceType": "repository-generated",
+      "provider": "Anthropic",
+      "model": "claude-opus-5",
+      "ownership": "project",
+      "license": "project-policy",
+      "rights": {
+        "storageAllowed": true,
+        "ragAllowed": false,
+        "trainingAllowed": false,
+        "distillationAllowed": false
+      },
+      "evidence": "Standard-library Python written by this audit so that every result reproduces from a clean clone. It reads the repository and disposable copies of it and changes no product file.",
+      "notes": "Audit instrument, kept with the audit it produced. Training denied by default."
+    },
+    {
+      "artifact": ".iacode/attestations/M0-CP-0011.json",
+      "sourceType": "repository-generated",
+      "provider": "Anthropic",
+      "model": "claude-opus-5",
+      "ownership": "project",
+      "license": "project-policy",
+      "rights": {
+        "storageAllowed": true,
+        "ragAllowed": false,
+        "trainingAllowed": false,
+        "distillationAllowed": false
+      },
+      "evidence": "The attestation this audit authored about the sealed subject, verified by attestation.verify_attestation and consumed by milestone_status.py.",
+      "notes": "Records a fresh-session audit and states that cross-tool validation was not available. Training denied by default."
+    },
+    {
+      "artifact": ".iacode/anchors/checkpoint-chain.json",
+      "sourceType": "derived-from-git",
+      "provider": "IACode project",
+      "model": "not-applicable",
+      "ownership": "project",
+      "license": "project-policy",
+      "rights": {
+        "storageAllowed": true,
+        "ragAllowed": false,
+        "trainingAllowed": false,
+        "distillationAllowed": false
+      },
+      "evidence": "Rebuilt by verify_integrity.py so that this checkpoint anchors its sealed predecessor, and independently re-derived from Git by this audit.",
+      "notes": "Tamper evidence inside the local trust model, not a signature."
+    }
+  ]
+}
