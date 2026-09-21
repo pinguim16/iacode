@@ -213,6 +213,7 @@ def evaluate_matrix(
     if not isinstance(requirements, list) or not requirements:
         return {
             "totalRequirements": 0,
+            "anchoredRequirements": 0,
             "expectedRequirements": 0,
             "expectedSetSource": "not derived",
             "mandatoryRequirements": 0,
@@ -357,8 +358,21 @@ def evaluate_matrix(
         and evidence_coverage == 100.0
     ) else "FAIL"
 
+    # How many of the declared rows carry an anchored reference, which is the set the derivation
+    # governs. A delivery may add its own local requirements -- the schema defines a ``local:``
+    # kind for exactly that -- and those are audited like the rest without belonging to the derived
+    # set. Reporting the two counts separately is what lets a control compare the anchored set with
+    # the expected one instead of forbidding a delivery to declare a requirement of its own.
+    anchored = sum(
+        1 for item in requirements
+        if isinstance(item, dict)
+        and (parsed := source_ref(item.get("sourceRef"))) is not None
+        and parsed[0] != "local"
+    )
+
     return {
         "totalRequirements": total,
+        "anchoredRequirements": anchored,
         "expectedRequirements": expected_total,
         "expectedSetSource": expected_source,
         "mandatoryRequirements": mandatory,

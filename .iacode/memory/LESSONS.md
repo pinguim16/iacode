@@ -31,13 +31,14 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 | `LSN-0021` | `GUARDED` | CRITICAL | git | Sealed history needs an anchor outside the content it describes | `anchors.verify_chain`, `IntegrityAnchorTests.test_a_broken_link_between_anchors_is_detected` |
 | `LSN-0022` | `GUARDED` | CRITICAL | documentation | An authoritative count must be derived once, never maintained by hand twice | `validate_checkpoint._validate_derived_counts`, `DerivedCountTests.test_a_markdown_claim_that_contradicts_the_derivation_is_rejected`, `SourceCardinalityPolicyTests.test_no_comment_or_docstring_states_a_derived_count_claim`, `docs/QUALITY-GATES.md` |
 | `LSN-0023` | `GUARDED` | MEDIUM | documentation | A lesson must cite a source that actually records the finding it claims | `lessons._resolve_source_locator`, `LessonProvenanceTests.test_a_finding_absent_from_the_cited_checkpoint_is_rejected` |
-| `LSN-0024` | `GUARDED` | CRITICAL | quality | A control is finished only when its positive path has been executed, not only its refusals | `PositivePromotionTests.test_the_milestone_verdict_is_derived_as_passed`, `scripts/development-ledger/promotion_simulation.py` |
+| `LSN-0024` | `GUARDED` | CRITICAL | quality | A control is finished only when its positive path has been executed, not only its refusals | `PositivePromotionTests.test_the_milestone_verdict_is_derived_as_passed`, `scripts/development-ledger/promotion_simulation.py`, `SimulationExecutesProductionControlsTests.test_the_sealed_artifact_is_the_tools_own_output` |
 | `LSN-0025` | `GUARDED` | CRITICAL | testing | A generic guardrail derives repository state instead of naming today's checkpoint | `anchors.pending_anchor_exclusion`, `SuccessorDurabilityTests.test_the_pending_exclusion_moves_with_the_chain`, `IntegrityAnchorTests.test_the_pending_exclusion_is_the_newest_sealed_checkpoint` |
 | `LSN-0026` | `GUARDED` | HIGH | testing | An adversarial battery without a null-mutation control proves nothing | `.iacode/schemas/red-team-report.schema.json`, `validate_checkpoint._validate_internal_assurance`, `InternalAssuranceTests.test_a_report_without_a_null_mutation_control_is_rejected` |
 | `LSN-0027` | `GUARDED` | MEDIUM | documentation | A lesson's prose may record a residual limit but may never contradict its status | `lessons.validate_lessons`, `MemoryPolicyDocumentTests.test_a_guarded_lesson_may_not_describe_itself_as_unguarded` |
 | `LSN-0028` | `GUARDED` | MEDIUM | tooling | A configuration key that no code reads is a defect, not documentation | `.iacode/schemas/memory-policy.schema.json`, `lessons.validate_memory_policy_document`, `MemoryPolicyDocumentTests.test_a_setting_no_code_reads_cannot_be_declared` |
-| `LSN-0029` | `GUARDED` | CRITICAL | process | A required protocol transition must never turn a mandatory gate red | `scripts/development-ledger/successor_durability.py`, `SuccessorDurabilityTests.test_every_state_of_the_chain_verifies` |
+| `LSN-0029` | `GUARDED` | CRITICAL | process | A required protocol transition must never turn a mandatory gate red | `scripts/development-ledger/successor_durability.py`, `SuccessorDurabilityTests.test_every_state_of_the_chain_verifies`, `scripts/development-ledger/gate_transition_simulation.py` |
 | `LSN-0030` | `CONFIRMED` | LOW | process | The lesson preflight presumes an implementing delivery and constrains an audit run badly | _not yet guarded_ |
+| `LSN-0031` | `GUARDED` | CRITICAL | quality | An empty applicable set is not a missing required set, and a control must tell them apart | `scripts/development-ledger/mirror_semantics_validation.py`, `MirrorApplicabilitySemanticsTests.test_an_empty_applicable_set_is_not_applicable_and_the_mirror_passes`, `MirrorApplicabilityValidationTests.test_a_registry_bound_dimension_cannot_be_declared_inapplicable`, `validate_checkpoint._validate_mirror_applicability` |
 
 ## Detail
 
@@ -342,7 +343,7 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 
 ### LSN-0024 — A control is finished only when its positive path has been executed, not only its refusals
 
-- Status: `GUARDED`, severity CRITICAL, category quality, recurrences 0.
+- Status: `GUARDED`, severity CRITICAL, category quality, recurrences 1.
 - Source: SETUP-00, SETUP-00-CP-0009, finding CP9-F-001.
 - Symptom: The milestone attestation refused fifteen forged variants and could accept nothing, because the attestation had to live inside the tree of the commit it named as its subject, so the status it guarded was unreachable.
 - Root cause: The control was exercised only from the refusing side. Twelve rejection tests passed while the reachable state space was empty, so nothing failed when the positive path disappeared.
@@ -350,6 +351,7 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 - Prevention:
   - `test` PositivePromotionTests.test_the_milestone_verdict_is_derived_as_passed — A legitimate two-checkpoint promotion reaches a derived milestone PASS.
   - `automated-check` scripts/development-ledger/promotion_simulation.py — The positive promotion is executed and recorded as a delivery artifact.
+  - `test` SimulationExecutesProductionControlsTests.test_the_sealed_artifact_is_the_tools_own_output — The artifact a simulation seals is bound by content to the tool's own output.
 - Evidence: `file:docs/checkpoints/SETUP-00-CP-0009/REVIEW-REPORT.md`, `file:scripts/development-ledger/attestation.py`, `file:scripts/development-ledger/promotion_simulation.py`
 
 ### LSN-0025 — A generic guardrail derives repository state instead of naming today's checkpoint
@@ -405,7 +407,7 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 
 ### LSN-0029 — A required protocol transition must never turn a mandatory gate red
 
-- Status: `GUARDED`, severity CRITICAL, category process, recurrences 0.
+- Status: `GUARDED`, severity CRITICAL, category process, recurrences 1.
 - Source: SETUP-00, SETUP-00-CP-0009, finding CP9-F-002.
 - Symptom: Carrying out a step the checkpoint protocol requires of every successor, anchoring its sealed predecessor, took the mandatory suite from green to red and left editing a guardrail test as the only apparent remedy.
 - Root cause: The controls were written against one repository state instead of against the sequence of states the protocol itself produces.
@@ -413,6 +415,7 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 - Prevention:
   - `automated-check` scripts/development-ledger/successor_durability.py — The protocol's own next steps are executed and the gates re-checked.
   - `test` SuccessorDurabilityTests.test_every_state_of_the_chain_verifies — Every state of an advancing chain keeps the controls green.
+  - `automated-check` scripts/development-ledger/gate_transition_simulation.py — The transition into the first delivery of the next Gate is executed before handoff.
 - Evidence: `file:docs/checkpoints/SETUP-00-CP-0009/REVIEW-REPORT.md`, `file:scripts/development-ledger/successor_durability.py`, `file:docs/CHECKPOINT-PROTOCOL.md`
 
 ### LSN-0030 — The lesson preflight presumes an implementing delivery and constrains an audit run badly
@@ -425,3 +428,17 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 - Prevention:
   - `documentation` docs/ENGINEERING-MEMORY.md — The preflight's role assumption is recorded rather than implied.
 - Evidence: `file:docs/checkpoints/SETUP-00-CP-0009/LESSON-CANDIDATES.json`, `file:docs/ENGINEERING-MEMORY.md`
+
+### LSN-0031 — An empty applicable set is not a missing required set, and a control must tell them apart
+
+- Status: `GUARDED`, severity CRITICAL, category quality, recurrences 0.
+- Source: SETUP-00, SETUP-00-CP-0011, finding CP11-F-001.
+- Symptom: The internal mirror audit required its derived set to be non-empty in order to report success, so a delivery that legitimately had no audit to correct was refused for having nothing to correct, and checkpoint validation then refused every positive terminal status.
+- Root cause: The check conflated two states of a derived set. Zero items derived because nothing of this kind applies was treated as zero items derived because the delivery failed to supply them.
+- Resolution: A dimension whose canonically derived applicable set is empty is NOT_APPLICABLE with a reason, an expected count of zero and the source the emptiness was derived from; a dimension whose sources name items the delivery does not satisfy stays FAIL. The applicable set is derived from the canonical sources at every call, so no delivery can declare its own set empty.
+- Prevention:
+  - `automated-check` scripts/development-ledger/mirror_semantics_validation.py — Every applicability state is executed through the real tool, including the negatives.
+  - `test` MirrorApplicabilitySemanticsTests.test_an_empty_applicable_set_is_not_applicable_and_the_mirror_passes — A delivery with nothing to audit reaches a passing mirror.
+  - `test` MirrorApplicabilityValidationTests.test_a_registry_bound_dimension_cannot_be_declared_inapplicable — A dimension the canonical sources make applicable cannot be declared inapplicable.
+  - `invariant` validate_checkpoint._validate_mirror_applicability — Checkpoint validation re-derives the applicable set instead of believing the report.
+- Evidence: `file:docs/checkpoints/SETUP-00-CP-0011/REVIEW-REPORT.md`, `file:scripts/development-ledger/m0_mirror_audit.py`, `file:scripts/development-ledger/mirror_semantics_validation.py`

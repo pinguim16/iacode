@@ -413,6 +413,50 @@
         "LSN-0029"
       ],
       "removingItWouldAllow": "A required protocol transition to turn a mandatory gate red in the next delivery instead of this one."
+    },
+    {
+      "guardrailId": "GRD-0030",
+      "title": "An empty applicable set is told from a missing required set",
+      "kind": "automated-check",
+      "reference": "scripts/development-ledger/mirror_semantics_validation.py",
+      "verifiedBy": [
+        "MirrorApplicabilitySemanticsTests.test_an_empty_applicable_set_is_not_applicable_and_the_mirror_passes",
+        "MirrorApplicabilitySemanticsTests.test_a_missing_required_set_fails_rather_than_being_inapplicable",
+        "MirrorApplicabilityValidationTests.test_a_registry_bound_dimension_cannot_be_declared_inapplicable"
+      ],
+      "lessons": [
+        "LSN-0031"
+      ],
+      "removingItWouldAllow": "A delivery with nothing of a kind to audit to be refused for having nothing to audit, or a delivery with work still open to declare that work away."
+    },
+    {
+      "guardrailId": "GRD-0031",
+      "title": "A simulation executes the control it claims passed",
+      "kind": "test",
+      "reference": "SimulationExecutesProductionControlsTests.test_the_sealed_artifact_is_the_tools_own_output",
+      "verifiedBy": [
+        "SimulationExecutesProductionControlsTests.test_the_sealed_artifact_is_the_tools_own_output",
+        "SimulationExecutesProductionControlsTests.test_every_simulated_mirror_is_recorded_as_executed"
+      ],
+      "lessons": [
+        "LSN-0024",
+        "LSN-0031"
+      ],
+      "removingItWouldAllow": "A rehearsal to report a control as passing while the control itself refuses every real delivery."
+    },
+    {
+      "guardrailId": "GRD-0032",
+      "title": "The transition into the next Gate is executed before handoff",
+      "kind": "automated-check",
+      "reference": "scripts/development-ledger/gate_transition_simulation.py",
+      "verifiedBy": [
+        "GateTransitionSimulationTests.test_the_first_checkpoint_of_the_next_gate_reaches_review_readiness",
+        "GateTransitionSimulationTests.test_its_mirror_audit_passes_with_the_empty_dimensions_inapplicable"
+      ],
+      "lessons": [
+        "LSN-0029"
+      ],
+      "removingItWouldAllow": "The first delivery of the next Gate to discover, after the Gate starts, that it cannot be handed over at all."
     }
   ]
 }

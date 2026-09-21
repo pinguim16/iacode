@@ -1,0 +1,154 @@
+{
+  "schemaVersion": "1.0.0",
+  "checkpoint": "SETUP-00-CP-0012",
+  "generatedAt": "2026-09-21T05:22:19-03:00",
+  "auditorRole": "internal, non-implementing audit pass of the corrective delivery",
+  "independence": "Internal quality assurance. This audit is authored by the implementing run, on the same tooling, in the same session. It is not independent validation and may not be recorded as one; only an audit checkpoint authored by a separate run about a sealed subject carries a milestone verdict.",
+  "subject": "SETUP-00-CP-0012",
+  "checks": [
+    {
+      "id": "FIA-001",
+      "question": "Is CP11-F-001 closed, against the sealed report rather than against the record?",
+      "howItWasEstablished": "The finding set was re-parsed from docs/checkpoints/SETUP-00-CP-0011/REVIEW-REPORT.md and compared with CP11-FINDINGS-CLOSURE.json.",
+      "observed": "the sealed review raises CP11-F-001; the closure record marks CP11-F-001=CLOSED",
+      "result": "PASS"
+    },
+    {
+      "id": "FIA-002",
+      "question": "Was the internal mirror produced by the tool rather than written by hand?",
+      "howItWasEstablished": "The sealed artifact was compared by content with the module's own constants and its complete dimension set.",
+      "observed": "18 dimensions, independence text identical to the tool's own, auditor role 'M0 Closure Auditor (.iacode/agents/m0-closure-auditor.md)'",
+      "result": "PASS"
+    },
+    {
+      "id": "FIA-003",
+      "question": "Does an empty applicable set report NOT_APPLICABLE with a justification?",
+      "howItWasEstablished": "MIRROR-SEMANTICS-VALIDATION.json MSV-001, produced by executing m0_mirror_audit.py.",
+      "observed": "overall=PASS; MIR-002=NOT_APPLICABLE; MIR-003=NOT_APPLICABLE; sealed=True; reason recorded: True",
+      "result": "PASS"
+    },
+    {
+      "id": "FIA-004",
+      "question": "Does a missing required set fail instead of being inapplicable?",
+      "howItWasEstablished": "MIRROR-SEMANTICS-VALIDATION.json MSV-004.",
+      "observed": "0/1 audit findings CLOSED; M0-FIXTURE-AUDIT: FIXTURE-FINDINGS-CLOSURE.json is missing",
+      "result": "PASS"
+    },
+    {
+      "id": "FIA-005",
+      "question": "Does an open applicable finding fail and block the seal?",
+      "howItWasEstablished": "MIRROR-SEMANTICS-VALIDATION.json MSV-003.",
+      "observed": "overall=FAIL; MIR-002=FAIL; MIR-003=PASS; sealed=False",
+      "result": "PASS"
+    },
+    {
+      "id": "FIA-006",
+      "question": "Does a satisfied applicable set pass?",
+      "howItWasEstablished": "MIRROR-SEMANTICS-VALIDATION.json MSV-002.",
+      "observed": "overall=PASS; MIR-002=PASS; MIR-003=PASS; sealed=True",
+      "result": "PASS"
+    },
+    {
+      "id": "FIA-007",
+      "question": "Can a delivery declare its own applicable set empty?",
+      "howItWasEstablished": "MIRROR-SEMANTICS-VALIDATION.json MSV-005, and the validator rule the battery attacks as BG.",
+      "observed": "0/1 audit findings CLOSED; FIX-F-001 is OPEN",
+      "result": "PASS"
+    },
+    {
+      "id": "FIA-008",
+      "question": "Does the overall verdict handle NOT_APPLICABLE without rewriting it?",
+      "howItWasEstablished": "The counts of M0-INTERNAL-MIRROR.json were recomputed from its own rows.",
+      "observed": "PASS: 18 passed, 0 failed, 0 inapplicable of 18",
+      "result": "PASS"
+    },
+    {
+      "id": "FIA-009",
+      "question": "Does the positive milestone promotion still work, with the mirror executed?",
+      "howItWasEstablished": "POSITIVE-PROMOTION-VALIDATION.json, produced by running the simulation.",
+      "observed": "PASS, verdict PASSED, 2 mirror(s) produced by execution",
+      "result": "PASS"
+    },
+    {
+      "id": "FIA-010",
+      "question": "Does successor durability still hold?",
+      "howItWasEstablished": "SUCCESSOR-DURABILITY.json, produced by running the simulation.",
+      "observed": "PASS, 8/8 checks",
+      "result": "PASS"
+    },
+    {
+      "id": "FIA-011",
+      "question": "Can the first delivery of the next Gate reach READY_FOR_REVIEW?",
+      "howItWasEstablished": "GATE0-TRANSITION-SIMULATION.json, produced by executing the transition in a disposable repository.",
+      "observed": "GATE-0-CP-0001 reached READY_FOR_REVIEW; mirror PASS with 2 inapplicable",
+      "result": "PASS"
+    },
+    {
+      "id": "FIA-012",
+      "question": "Do the sealed checkpoints still validate under this tooling?",
+      "howItWasEstablished": "MIR-016 of the mirror audit, plus an independent re-derivation of every anchor from Git.",
+      "observed": "11 anchors, none moved, chain verifies; 11 sealed checkpoints validate under this tooling",
+      "result": "PASS"
+    },
+    {
+      "id": "FIA-013",
+      "question": "Does the delivery validate in a clean clone with no workspace state?",
+      "howItWasEstablished": "MIR-017 of the mirror audit, executed with --clean-clone.",
+      "observed": "suite=ok, compileall=ok, lessons=ok, integrity=ok, completeness=ok",
+      "result": "PASS"
+    },
+    {
+      "id": "FIA-014",
+      "question": "Does the canonical Claude adapter record the language rule?",
+      "howItWasEstablished": "CLAUDE.md was read and the required statements located.",
+      "observed": "CLAUDE.md records the language rule",
+      "result": "PASS"
+    },
+    {
+      "id": "FIA-015",
+      "question": "Is the recurrence recorded as a guardrail failure and resolved by a control?",
+      "howItWasEstablished": "The engineering memory was read and the effectiveness measured, not assumed.",
+      "observed": "LSN-0031 GUARDED; the recurrence is recorded against LSN-0024, LSN-0029 and resolved in SETUP-00-CP-0012; 32/32 guardrails effective, 0 unresolved failures",
+      "result": "PASS"
+    },
+    {
+      "id": "FIA-016",
+      "question": "Was every mandatory attack of the registered audits defended?",
+      "howItWasEstablished": "The expected battery was re-derived from the audit registry and the sealed reports, then compared with M0-INTERNAL-RED-TEAM.json.",
+      "observed": "RED_TEAM_PASS, 73/73 defended, control VALID",
+      "result": "PASS"
+    },
+    {
+      "id": "FIA-017",
+      "question": "Is the delivery complete against an independently recomputed expected set?",
+      "howItWasEstablished": "evaluate_matrix was re-run here rather than the stored report being read.",
+      "observed": "PASS: 156 complete of 156, 118 anchored against an expected set of 118, coverage 100.00, evidence 100.00",
+      "result": "PASS"
+    },
+    {
+      "id": "FIA-018",
+      "question": "Does every count used as evidence match its derivation?",
+      "howItWasEstablished": "The counts were re-derived here and compared with COUNTS.json.",
+      "observed": "ATTACKS=73/73; FINDINGS=1/1; GUARDRAILS=32/32; LESSONS=29/31; REQUIREMENTS=156/156; TESTS=410/410",
+      "result": "PASS"
+    },
+    {
+      "id": "FIA-019",
+      "question": "Does the implementing run refrain from granting itself any independent verdict?",
+      "howItWasEstablished": "STATE.json was read and every verdict field checked.",
+      "observed": "status READY_FOR_REVIEW, blockedBy [], review PENDING, red team PENDING, milestone PENDING",
+      "result": "PASS"
+    },
+    {
+      "id": "FIA-020",
+      "question": "Was the scope respected: no Gate 0 work and no sealed checkpoint rewritten?",
+      "howItWasEstablished": "The repository tree and the change set against the base commit were inspected.",
+      "observed": "no Gate 0 runtime; no Gate 0 checkpoint; 0 sealed checkpoint files touched",
+      "result": "PASS"
+    }
+  ],
+  "total": 20,
+  "passed": 20,
+  "failed": 0,
+  "result": "PASS"
+}

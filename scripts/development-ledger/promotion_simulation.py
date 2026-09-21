@@ -28,6 +28,24 @@ from ledger_common import LedgerError, find_root, resolve_latest, utc_now, write
 from promotion_fixture import run_positive_promotion
 
 
+def _inapplicable_are_justified(mirror: dict[str, Any]) -> bool:
+    """Every inapplicable dimension carries a reason, a derivation source and an empty count.
+
+    An unjustified ``NOT_APPLICABLE`` would turn the repair of ``CP11-F-001`` into a way of hiding a
+    dimension instead of describing it, so the simulation checks the justification rather than only
+    the verdict. At least one dimension must be inapplicable here: this fixture corrects no audit,
+    which is the state the finding made unreachable.
+    """
+    inapplicable = [item for item in mirror["checks"] if item["result"] == "NOT_APPLICABLE"]
+    if not inapplicable:
+        return False
+    return all(
+        (item.get("reason") or "").strip()
+        and (item.get("derivationSource") or "").strip()
+        and item.get("expectedCount") == 0
+        for item in inapplicable)
+
+
 def evaluate(result: dict[str, Any]) -> dict[str, Any]:
     verdict = result["milestoneVerdict"]
     checks = [
@@ -76,6 +94,35 @@ def evaluate(result: dict[str, Any]) -> dict[str, Any]:
             "observed": "; ".join(result["chainErrors"]) or "no divergence",
             "result": "PASS" if not result["chainErrors"] else "FAIL",
         },
+        {
+            "id": "POS-008",
+            "expectation": "the internal mirror audit of every checkpoint in this simulation was "
+                           "produced by executing m0_mirror_audit.py, not by writing its artifact",
+            "observed": "; ".join(
+                f"{item['checkpoint']}: {item['mirror']['command']} exit="
+                f"{item['mirror']['exitCode']} -> {item['mirror']['result']} "
+                f"{item['mirror']['passed']}/{item['mirror']['total']}"
+                for item in (result["subject"], result["audit"])),
+            "result": "PASS" if all(
+                item["mirror"]["producedBy"] == "execution"
+                and item["mirror"]["exitCode"] == 0
+                and item["mirror"]["result"] == "PASS"
+                for item in (result["subject"], result["audit"])) else "FAIL",
+        },
+        {
+            "id": "POS-009",
+            "expectation": "a checkpoint that corrects no audit reaches a passing mirror with its "
+                           "empty dimensions recorded as NOT_APPLICABLE and justified",
+            "observed": "; ".join(
+                f"{item['checkpoint']}: " + ", ".join(
+                    f"{check['id']}={check['result']}"
+                    for check in item["mirror"]["checks"]
+                    if check["result"] != "PASS") or f"{item['checkpoint']}: none"
+                for item in (result["subject"], result["audit"])),
+            "result": "PASS" if all(
+                _inapplicable_are_justified(item["mirror"]) for item in
+                (result["subject"], result["audit"])) else "FAIL",
+        },
     ]
     failed = [item for item in checks if item["result"] != "PASS"]
     return {
@@ -97,6 +144,32 @@ def evaluate(result: dict[str, Any]) -> dict[str, Any]:
             "status": result["audit"]["status"],
         },
         "attestation": result["attestation"],
+        "artifactProvenance": {
+            item["checkpoint"]: {
+                "internalMirror": {
+                    "producedBy": item["mirror"]["producedBy"],
+                    "command": item["mirror"]["command"],
+                    "exitCode": item["mirror"]["exitCode"],
+                    "result": item["mirror"]["result"],
+                    "passed": item["mirror"]["passed"],
+                    "failed": item["mirror"]["failed"],
+                    "notApplicable": item["mirror"]["notApplicable"],
+                    "inapplicable": [
+                        {"id": check["id"], "reason": check["reason"],
+                         "expectedCount": check["expectedCount"],
+                         "derivationSource": check["derivationSource"]}
+                        for check in item["mirror"]["checks"]
+                        if check["result"] == "NOT_APPLICABLE"],
+                },
+                "internalRedTeam": {
+                    "producedBy": "modelled",
+                    "note": "the battery attacks a disposable copy of a sealed delivery; this "
+                            "simulation proves the promotion path and never claims the battery of "
+                            "the fixture checkpoint was executed",
+                },
+            }
+            for item in (result["subject"], result["audit"])
+        },
         "milestoneVerdict": verdict["status"],
         "acceptedAttestations": [item["auditId"] for item in verdict["accepted"]],
         "checks": checks,

@@ -12,6 +12,17 @@ checkpoint validator refuses any attempt to describe it as an external verdict. 
 declared, not disguised.
 
 The auditor never implements and never repairs. It reads, recomputes and reports.
+
+A dimension with nothing to audit is ``NOT_APPLICABLE`` with a reason, never ``FAIL``. The two
+states an audit control can be in are not the same: an *empty applicable set*, where the canonical
+sources say there is nothing of this kind to judge, is a legitimate outcome, while a *missing
+required set*, where the sources say something exists and the delivery does not carry it, is a
+failure. Finding ``CP11-F-001`` was the collapse of the first into the second: two checks required
+``total > 0`` to report success, so every delivery that corrected no audit -- this milestone's own
+audit checkpoint, and the first delivery of every future Gate -- was refused for having nothing to
+correct. An inapplicable check states why it is inapplicable, from which canonical source that was
+derived, and that the derived count was zero, so ``NOT_APPLICABLE`` is auditable rather than a
+silent escape.
 """
 
 from __future__ import annotations
@@ -23,6 +34,7 @@ import shutil
 import subprocess
 import sys
 import tempfile
+from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Callable
 
@@ -48,6 +60,30 @@ INDEPENDENCE = (
 )
 
 
+@dataclass(frozen=True)
+class NotApplicable:
+    """A dimension whose canonically derived set of items to audit is empty.
+
+    It carries its own justification because an unjustified ``NOT_APPLICABLE`` is indistinguishable
+    from a skipped check. ``expectedCount`` is always zero: a dimension that has items to audit is
+    never inapplicable, and recording one with a non-zero count is refused rather than believed.
+    """
+
+    reason: str
+    derivation_source: str
+    observed: str
+    evidence: tuple[str, ...] = field(default=())
+
+    def __post_init__(self) -> None:
+        if not self.reason.strip():
+            raise LedgerError("NOT_APPLICABLE requires a reason")
+        if not self.derivation_source.strip():
+            raise LedgerError("NOT_APPLICABLE requires the canonical source of its derivation")
+
+
+ProbeResult = tuple[bool, str] | NotApplicable
+
+
 class Mirror:
     def __init__(self, root: Path, checkpoint: Path) -> None:
         self.root = root
@@ -56,24 +92,50 @@ class Mirror:
         self.state = load_json(checkpoint / "STATE.json")
 
     def record(self, identifier: str, dimension: str, expectation: str,
-               observed: str, result: str, evidence: list[str]) -> None:
-        self.checks.append({
+               observed: str, result: str, evidence: list[str],
+               reason: str | None = None, expected_count: int | None = None,
+               derivation_source: str | None = None) -> None:
+        check: dict[str, Any] = {
             "id": identifier,
             "dimension": dimension,
             "expectation": expectation,
             "observed": observed,
             "result": result,
             "evidence": evidence,
-        })
-        print(f"[{identifier}] {result} {dimension}: {observed}")
+        }
+        if result == "NOT_APPLICABLE":
+            # The justification is part of the outcome, not decoration: a check recorded as
+            # inapplicable without it, or with items it claims not to have, is recorded as a
+            # failure of this auditor rather than accepted.
+            if not (reason or "").strip() or not (derivation_source or "").strip():
+                check["result"] = "FAIL"
+                check["observed"] = (
+                    "NOT_APPLICABLE was recorded without a reason and a derivation source")
+            elif expected_count:
+                check["result"] = "FAIL"
+                check["observed"] = (
+                    f"NOT_APPLICABLE was recorded with {expected_count} applicable item(s)")
+            else:
+                check["reason"] = reason
+                check["expectedCount"] = 0
+                check["derivationSource"] = derivation_source
+        self.checks.append(check)
+        print(f"[{identifier}] {check['result']} {dimension}: {check['observed']}")
 
     def check(self, identifier: str, dimension: str, expectation: str,
-              evidence: list[str], probe: Callable[[], tuple[bool, str]]) -> None:
+              evidence: list[str], probe: Callable[[], ProbeResult]) -> None:
         try:
-            ok, observed = probe()
+            outcome = probe()
         except Exception as exc:  # an auditor that crashes has found something
-            ok, observed = False, f"the check itself failed: {exc}"
-        self.record(identifier, dimension, expectation, observed, "PASS" if ok else "FAIL", evidence)
+            outcome = (False, f"the check itself failed: {exc}")
+        if isinstance(outcome, NotApplicable):
+            self.record(identifier, dimension, expectation, outcome.observed, "NOT_APPLICABLE",
+                        list(outcome.evidence) or evidence, reason=outcome.reason,
+                        expected_count=0, derivation_source=outcome.derivation_source)
+            return
+        ok, observed = outcome
+        self.record(identifier, dimension, expectation, observed, "PASS" if ok else "FAIL",
+                    evidence)
 
 
 def _tool(root: Path, *argv: str) -> tuple[int, str]:
@@ -96,7 +158,13 @@ def run_audit(root: Path, checkpoint: Path, clean_clone: bool) -> dict[str, Any]
     from delivery_assurance import evaluate_matrix
     from derive_counts import derive_counts
     from lessons import guardrail_effectiveness, load_lessons, preflight_staleness
-    from policies import audit_attacks, audit_findings, canonical_requirements, mandatory_gates, open_audits
+    from policies import (
+        audit_applicability,
+        audit_findings,
+        canonical_requirements,
+        mandatory_gates,
+        open_audits,
+    )
 
     mirror = Mirror(root, checkpoint)
     gate = str(mirror.state.get("gate"))
@@ -126,43 +194,80 @@ def run_audit(root: Path, checkpoint: Path, clean_clone: bool) -> dict[str, Any]
                  probe_setup)
 
     # 2. Audit findings
-    def probe_findings() -> tuple[bool, str]:
-        total = 0
+    #
+    # The applicable set is derived from the audit registry and the sealed reports it names, never
+    # from this invocation and never from an artifact the checkpoint itself writes. Zero applicable
+    # findings is a legitimate state for any delivery that corrects no audit; a finding the
+    # canonical sources do name and the delivery does not close is a failure, and so is a closure
+    # record the registry requires and the checkpoint does not carry.
+    def probe_findings() -> ProbeResult:
+        applicable = audit_applicability(root, gate, checkpoint.name)
+        findings = applicable["findings"]
+        if not findings:
+            return NotApplicable(
+                reason=("No audit finding is applicable to this checkpoint: no registered audit "
+                        "names it as its corrective delivery, so there is no finding to close."),
+                derivation_source=applicable["derivationSource"],
+                observed="0 applicable audit findings derived from the audit registry",
+                evidence=("file:.iacode/policies/audit-registry.json",))
         closed = 0
-        for audit in open_audits(root, gate, checkpoint.name):
-            findings = audit_findings(root, audit)
-            total += len(findings)
-            name = audit.get("findingsClosureFile") or "FINDINGS-CLOSURE.json"
-            document = load_json(checkpoint / str(name))
+        problems: list[str] = []
+        for audit in applicable["audits"]:
+            name = str(audit.get("findingsClosureFile") or "FINDINGS-CLOSURE.json")
+            path = checkpoint / name
+            if not path.is_file():
+                problems.append(f"{audit.get('auditId')}: {name} is missing")
+                continue
+            document = load_json(path)
             rows = {str(row["findingId"]): row for row in document.get("findings") or []}
-            for finding in findings:
+            for finding in audit_findings(root, audit):
                 row = rows.get(finding["id"])
                 if row and row.get("status") == "CLOSED":
                     closed += 1
-        return closed == total and total > 0, f"{closed}/{total} audit findings CLOSED"
+                else:
+                    problems.append(
+                        f"{finding['id']} is {row.get('status') if row else 'undeclared'}")
+        return (closed == len(findings) and not problems), (
+            f"{closed}/{len(findings)} audit findings CLOSED"
+            + ("; " + "; ".join(problems[:5]) if problems else ""))
 
     # The closure artifact is named by the registry entry that binds the audit to this corrective
     # checkpoint, so the mirror follows the repository instead of one audit's file name.
     closure_evidence = [
         f"checkpoint:{audit.get('findingsClosureFile') or 'FINDINGS-CLOSURE.json'}"
         for audit in open_audits(root, gate, checkpoint.name)
-    ] or ["checkpoint:REQUIREMENTS-MATRIX.json"]
+    ] or ["file:.iacode/policies/audit-registry.json"]
 
-    mirror.check("MIR-002", "Audit findings", "Every finding of the open audit is CLOSED.",
+    mirror.check("MIR-002", "Audit findings",
+                 "Every finding of every audit whose corrective delivery this is, is CLOSED.",
                  closure_evidence, probe_findings)
 
     # 3. Mandatory attacks
-    def probe_attacks() -> tuple[bool, str]:
+    #
+    # The expected battery is the mandatory attacks of the sealed reports of the same audits. The
+    # report the delivery must carry is read only once there is a battery to check it against, so a
+    # delivery with no applicable battery is inapplicable here rather than failed for the absence of
+    # an artifact no canonical source asked this dimension for. The delivery still carries its own
+    # internal Red Team: checkpoint validation requires it independently of this check.
+    def probe_attacks() -> ProbeResult:
+        applicable = audit_applicability(root, gate, checkpoint.name)
+        expected = [item["id"] for item in applicable["mandatoryAttacks"]]
+        if not expected:
+            return NotApplicable(
+                reason=("No mandatory attack battery is applicable to this checkpoint: no "
+                        "registered audit names it as its corrective delivery, so no sealed Red "
+                        "Team report hands it a battery to re-defend."),
+                derivation_source=applicable["derivationSource"],
+                observed="0 applicable mandatory attacks derived from the audit registry",
+                evidence=("file:.iacode/policies/audit-registry.json",))
         red_team = load_json(checkpoint / f"{milestone}-INTERNAL-RED-TEAM.json")
         results = {str(item["attackId"]): item for item in red_team.get("attacks") or []}
-        expected: list[str] = []
-        for audit in open_audits(root, gate, checkpoint.name):
-            expected += [item["id"] for item in audit_attacks(root, audit)
-                         if item["mandatory"] == "true"]
         defended = [item for item in expected if results.get(item, {}).get("result") == "DEFENDED"]
-        return len(defended) == len(expected) and bool(expected), (
+        missing = [item for item in expected if item not in results]
+        return len(defended) == len(expected), (
             f"{len(defended)}/{len(expected)} mandatory attacks defended; "
-            f"{red_team.get('defended')}/{red_team.get('total')} overall")
+            f"{red_team.get('defended')}/{red_team.get('total')} overall"
+            + ("; not executed: " + ", ".join(missing[:5]) if missing else ""))
 
     mirror.check("MIR-003", "Mandatory attacks",
                  "Every mandatory attack of the sealed Red Team report is defended.",
@@ -241,13 +346,22 @@ def run_audit(root: Path, checkpoint: Path, clean_clone: bool) -> dict[str, Any]
                  ["checkpoint:REWORK-LOG.jsonl"], probe_green_keeper)
 
     # 9. Completeness
+    #
+    # The denominator is not the delivery's to choose, so the *anchored* rows must equal the
+    # derived expected set exactly. A delivery may still declare requirements of its own: the
+    # matrix defines a ``local:`` kind for them and they are audited like every other row. Counting
+    # them against the derived set would refuse a delivery for recording its own work, which is the
+    # same shape as the finding this control's sibling carried.
     def probe_completeness() -> tuple[bool, str]:
+        anchored = report.get("anchoredRequirements", report["totalRequirements"])
+        local = report["totalRequirements"] - anchored
         ok = (report["result"] == "PASS" and report["coveragePercent"] == 100.0
               and report["evidenceCoveragePercent"] == 100.0
-              and report["totalRequirements"] == report["expectedRequirements"])
+              and anchored == report["expectedRequirements"])
         return ok, (
-            f"{report['complete']}/{report['totalRequirements']} complete against an expected set "
-            f"of {report['expectedRequirements']}, coverage {report['coveragePercent']:.2f}, "
+            f"{report['complete']}/{report['totalRequirements']} complete; {anchored} anchored "
+            f"against an expected set of {report['expectedRequirements']} and {local} declared "
+            f"locally, coverage {report['coveragePercent']:.2f}, "
             f"evidence {report['evidenceCoveragePercent']:.2f}")
 
     mirror.check("MIR-009", "Delivery Completeness",
@@ -423,8 +537,10 @@ def run_audit(root: Path, checkpoint: Path, clean_clone: bool) -> dict[str, Any]
     passed = [item for item in mirror.checks if item["result"] == "PASS"]
     failed = [item for item in mirror.checks if item["result"] == "FAIL"]
     not_applicable = [item for item in mirror.checks if item["result"] == "NOT_APPLICABLE"]
+    # An inapplicable check is not a passing one and is never counted as one: the individual status
+    # survives into the artifact with its justification, and only a FAIL makes the report fail.
     return {
-        "schemaVersion": "1.0.0",
+        "schemaVersion": "1.1.0",
         "checkpoint": checkpoint.name,
         "milestone": milestone,
         "generatedAt": utc_now(),
@@ -464,6 +580,24 @@ def render_markdown(report: dict[str, Any]) -> str:
         lines.append("| `%s` | %s | %s | %s | %s |" % (
             check["id"], check["dimension"], check["expectation"],
             check["observed"].replace("|", "/"), check["result"]))
+    inapplicable = [check for check in report["checks"] if check["result"] == "NOT_APPLICABLE"]
+    if inapplicable:
+        lines += [
+            "",
+            "## Inapplicable dimensions",
+            "",
+            "A dimension whose canonically derived set of items to audit is empty is recorded here "
+            "with the reason and the source the emptiness was derived from. An empty applicable set "
+            "is not a missing required set: the second is a failure and is reported as one.",
+            "",
+            "| ID | Expected items | Reason | Derived from |",
+            "|---|---|---|---|",
+        ]
+        for check in inapplicable:
+            lines.append("| `%s` | %s | %s | %s |" % (
+                check["id"], check.get("expectedCount"),
+                str(check.get("reason", "")).replace("|", "/"),
+                str(check.get("derivationSource", "")).replace("|", "/")))
     while lines and not lines[-1]:
         lines.pop()
     return "\n".join(lines) + "\n"
@@ -498,10 +632,13 @@ def main() -> int:
         (checkpoint / f"{report['milestone']}-INTERNAL-MIRROR.md").write_text(
             render_markdown(report), encoding="utf-8", newline="\n")
 
-    print(f"INTERNAL_MIRROR={report['result']} passed={report['passed']}/{report['total']}")
+    print(f"INTERNAL_MIRROR={report['result']} passed={report['passed']}/{report['total']} "
+          f"notApplicable={report['notApplicable']} failed={report['failed']}")
     for check in report["checks"]:
         if check["result"] == "FAIL":
             print(f"- FAIL {check['id']}: {check['observed']}")
+        elif check["result"] == "NOT_APPLICABLE":
+            print(f"- NOT_APPLICABLE {check['id']}: {check.get('reason')}")
     return 0 if report["result"] == "PASS" else 1
 
 

@@ -1178,12 +1178,57 @@ def _validate_internal_assurance(
     if isinstance(mirror, dict):
         checks = [item for item in mirror.get("checks") or [] if isinstance(item, dict)]
         failed = [item for item in checks if item.get("result") == "FAIL"]
+        passed = [item for item in checks if item.get("result") == "PASS"]
+        inapplicable = [item for item in checks if item.get("result") == "NOT_APPLICABLE"]
         if mirror.get("total") != len(checks):
             errors.append(f"{mirror_path.name}: total does not match the recorded checks")
         if mirror.get("failed") != len(failed):
             errors.append(f"{mirror_path.name}: failed does not match the recorded checks")
+        if mirror.get("passed") != len(passed):
+            errors.append(f"{mirror_path.name}: passed does not match the recorded checks")
         if failed and mirror.get("result") != "FAIL":
             errors.append(f"{mirror_path.name}: a failed check cannot produce a PASS")
+        # An inapplicable dimension is neither a pass nor a failure, and it never silently becomes
+        # one: it keeps its own status in the artifact and it is counted separately. The finding
+        # CP11-F-001 was the opposite collapse -- nothing to audit reported as a failure -- and the
+        # rule that repairs it must not open the reverse escape, a dimension declared inapplicable
+        # while the canonical sources name items for it.
+        if inapplicable or "notApplicable" in mirror:
+            if mirror.get("notApplicable") != len(inapplicable):
+                errors.append(
+                    f"{mirror_path.name}: notApplicable does not match the recorded checks")
+        if len(passed) + len(failed) + len(inapplicable) != len(checks):
+            errors.append(
+                f"{mirror_path.name}: every check is PASS, FAIL or NOT_APPLICABLE, and the three "
+                f"counts must add up to the total")
+        # The justification arrived with report version 1.1.0. A 1.0.0 report has nowhere to put a
+        # reason, so it may not record an inapplicable dimension at all, and the sealed 1.0.0
+        # reports keep the rules they were written for.
+        if inapplicable and str(mirror.get("schemaVersion")) == "1.0.0":
+            errors.append(
+                f"{mirror_path.name}: a NOT_APPLICABLE check requires the justification fields of "
+                f"report schemaVersion 1.1.0")
+        for item in inapplicable:
+            identifier = item.get("id")
+            if not str(item.get("reason") or "").strip():
+                errors.append(
+                    f"{mirror_path.name}: check {identifier} is NOT_APPLICABLE without a reason; "
+                    f"an unjustified inapplicable check is indistinguishable from a skipped one")
+            if not str(item.get("derivationSource") or "").strip():
+                errors.append(
+                    f"{mirror_path.name}: check {identifier} is NOT_APPLICABLE without naming the "
+                    f"canonical source its empty applicable set was derived from")
+            if item.get("expectedCount") != 0:
+                errors.append(
+                    f"{mirror_path.name}: check {identifier} is NOT_APPLICABLE with "
+                    f"expectedCount={item.get('expectedCount')!r}; a dimension that has items to "
+                    f"audit is not inapplicable")
+        # Whether a dimension is applicable is decided by the canonical sources, not by the report
+        # that would rather not run it. The validator re-derives the applicable set from the audit
+        # registry and the sealed reports it names, so declaring a dimension inapplicable while
+        # those sources name items for it is refused here as well as by the mirror itself.
+        if inapplicable:
+            _validate_mirror_applicability(root, state, target, mirror_path, inapplicable, errors)
         if mirror.get("result") != "PASS":
             errors.append(
                 f"{state.get('status')} requires the internal mirror audit to pass, found "
@@ -1196,6 +1241,52 @@ def _validate_internal_assurance(
             errors.append(
                 f"{mirror_path.name}: independence must state plainly that this is an internal "
                 f"quality role and not independent external validation")
+
+
+#: The mirror dimensions whose applicable set the audit registry decides, and the key of the
+#: derivation each one is bound to. A dimension outside this map may be inapplicable for reasons the
+#: validator cannot re-derive; these two may not, because their source is canonical.
+REGISTRY_BOUND_MIRROR_CHECKS = {
+    "MIR-002": ("findings", "audit finding"),
+    "MIR-003": ("mandatoryAttacks", "mandatory attack"),
+}
+
+
+def _validate_mirror_applicability(
+    root: Path,
+    state: dict[str, Any],
+    target: Path,
+    mirror_path: Path,
+    inapplicable: list[dict[str, Any]],
+    errors: list[str],
+) -> None:
+    """Refuse an inapplicable dimension the canonical sources say is applicable.
+
+    Repairing ``CP11-F-001`` made ``NOT_APPLICABLE`` reachable, which opens the mirror-image escape:
+    a delivery that declares a dimension inapplicable rather than satisfying it. The applicable set
+    is re-derived here from the audit registry and the sealed reports it names -- the same sources
+    the mirror uses and none of them inside the delivery -- so the claim is checked rather than
+    believed.
+    """
+    from policies import audit_applicability
+
+    try:
+        applicable = audit_applicability(root, str(state.get("gate", "")), target.name)
+    except LedgerError as exc:
+        errors.append(f"audit registry: {exc}")
+        return
+    for item in inapplicable:
+        identifier = str(item.get("id"))
+        binding = REGISTRY_BOUND_MIRROR_CHECKS.get(identifier)
+        if binding is None:
+            continue
+        key, label = binding
+        count = len(applicable[key])
+        if count:
+            errors.append(
+                f"{mirror_path.name}: check {identifier} is recorded as NOT_APPLICABLE while the "
+                f"canonical sources name {count} applicable {label}(s) for this checkpoint "
+                f"({applicable['derivationSource']})")
 
 
 def _safe_open_audits(

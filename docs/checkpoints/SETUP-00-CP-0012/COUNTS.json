@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "1.0.0",
+  "checkpoint": "SETUP-00-CP-0012",
+  "generatedAt": "2026-09-21T16:15:04Z",
+  "counts": {
+    "TESTS": {
+      "numerator": 410,
+      "denominator": 410,
+      "source": "unittest discovery over tests/ cross-checked with TESTS.json, deduplicated by physical execution"
+    },
+    "REQUIREMENTS": {
+      "numerator": 156,
+      "denominator": 156,
+      "source": "REQUIREMENTS-MATRIX.json evaluated against the derived expected set"
+    },
+    "FINDINGS": {
+      "numerator": 1,
+      "denominator": 1,
+      "source": "the sealed audit review reports and the closure record"
+    },
+    "ATTACKS": {
+      "numerator": 73,
+      "denominator": 73,
+      "source": "M0-INTERNAL-RED-TEAM.json"
+    },
+    "LESSONS": {
+      "numerator": 29,
+      "denominator": 31,
+      "source": ".iacode/memory/lessons.jsonl"
+    },
+    "GUARDRAILS": {
+      "numerator": 32,
+      "denominator": 32,
+      "source": ".iacode/memory/guardrails/registry.json measured for effectiveness"
+    }
+  }
+}

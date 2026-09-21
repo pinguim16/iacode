@@ -1,0 +1,144 @@
+{
+  "schemaVersion": "1.0.0",
+  "generatedAt": "2026-09-21T12:39:02Z",
+  "simulation": "positive milestone promotion",
+  "finding": "CP9-F-001",
+  "subject": {
+    "checkpoint": "SETUP-00-CP-0001",
+    "commit": "94637e07282ef7d1c5d5d6fdc99f6d5cae3952be",
+    "tag": "refs/tags/iacode-checkpoints/SETUP-00-CP-0001",
+    "tree": "d65d1cdfe1903981ce31360a1f5ad3d1804fe9dd",
+    "status": "READY_FOR_REVIEW"
+  },
+  "audit": {
+    "checkpoint": "SETUP-00-CP-0002",
+    "commit": "ae854775067fbaceeec3cc23522bde3380e75b85",
+    "tag": "refs/tags/iacode-checkpoints/SETUP-00-CP-0002",
+    "status": "MILESTONE_INDEPENDENT_AUDIT_PASS"
+  },
+  "attestation": ".iacode/attestations/M0-AUDIT-OF-SETUP-00-CP-0001.json",
+  "artifactProvenance": {
+    "SETUP-00-CP-0001": {
+      "internalMirror": {
+        "producedBy": "execution",
+        "command": "python scripts/development-ledger/m0_mirror_audit.py --write --checkpoint C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-promotion-wy7f5ykd\\promotion\\docs\\checkpoints\\SETUP-00-CP-0001",
+        "exitCode": 0,
+        "result": "PASS",
+        "passed": 16,
+        "failed": 0,
+        "notApplicable": 2,
+        "inapplicable": [
+          {
+            "id": "MIR-002",
+            "reason": "No audit finding is applicable to this checkpoint: no registered audit names it as its corrective delivery, so there is no finding to close.",
+            "expectedCount": 0,
+            "derivationSource": ".iacode/policies/audit-registry.json matched on gate='SETUP-00' and correctiveCheckpoint='SETUP-00-CP-0001', with every finding and mandatory attack re-parsed from the sealed reports the matching entries name"
+          },
+          {
+            "id": "MIR-003",
+            "reason": "No mandatory attack battery is applicable to this checkpoint: no registered audit names it as its corrective delivery, so no sealed Red Team report hands it a battery to re-defend.",
+            "expectedCount": 0,
+            "derivationSource": ".iacode/policies/audit-registry.json matched on gate='SETUP-00' and correctiveCheckpoint='SETUP-00-CP-0001', with every finding and mandatory attack re-parsed from the sealed reports the matching entries name"
+          }
+        ]
+      },
+      "internalRedTeam": {
+        "producedBy": "modelled",
+        "note": "the battery attacks a disposable copy of a sealed delivery; this simulation proves the promotion path and never claims the battery of the fixture checkpoint was executed"
+      }
+    },
+    "SETUP-00-CP-0002": {
+      "internalMirror": {
+        "producedBy": "execution",
+        "command": "python scripts/development-ledger/m0_mirror_audit.py --write --checkpoint C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-promotion-wy7f5ykd\\promotion\\docs\\checkpoints\\SETUP-00-CP-0002",
+        "exitCode": 0,
+        "result": "PASS",
+        "passed": 16,
+        "failed": 0,
+        "notApplicable": 2,
+        "inapplicable": [
+          {
+            "id": "MIR-002",
+            "reason": "No audit finding is applicable to this checkpoint: no registered audit names it as its corrective delivery, so there is no finding to close.",
+            "expectedCount": 0,
+            "derivationSource": ".iacode/policies/audit-registry.json matched on gate='SETUP-00' and correctiveCheckpoint='SETUP-00-CP-0002', with every finding and mandatory attack re-parsed from the sealed reports the matching entries name"
+          },
+          {
+            "id": "MIR-003",
+            "reason": "No mandatory attack battery is applicable to this checkpoint: no registered audit names it as its corrective delivery, so no sealed Red Team report hands it a battery to re-defend.",
+            "expectedCount": 0,
+            "derivationSource": ".iacode/policies/audit-registry.json matched on gate='SETUP-00' and correctiveCheckpoint='SETUP-00-CP-0002', with every finding and mandatory attack re-parsed from the sealed reports the matching entries name"
+          }
+        ]
+      },
+      "internalRedTeam": {
+        "producedBy": "modelled",
+        "note": "the battery attacks a disposable copy of a sealed delivery; this simulation proves the promotion path and never claims the battery of the fixture checkpoint was executed"
+      }
+    }
+  },
+  "milestoneVerdict": "PASSED",
+  "acceptedAttestations": [
+    "M0-AUDIT-OF-SETUP-00-CP-0001"
+  ],
+  "checks": [
+    {
+      "id": "POS-001",
+      "expectation": "the subject checkpoint is delivered and sealed under its canonical tag",
+      "observed": "SETUP-00-CP-0001 sealed at 94637e07282ef7d1c5d5d6fdc99f6d5cae3952be",
+      "result": "PASS"
+    },
+    {
+      "id": "POS-002",
+      "expectation": "a second checkpoint is authored as the audit and validates as sealed",
+      "observed": "SETUP-00-CP-0002: CHECKPOINT_VALID",
+      "result": "PASS"
+    },
+    {
+      "id": "POS-003",
+      "expectation": "the audit checkpoint carries a milestone verdict status",
+      "observed": "MILESTONE_INDEPENDENT_AUDIT_PASS",
+      "result": "PASS"
+    },
+    {
+      "id": "POS-004",
+      "expectation": "the milestone verdict is derived from the repository as PASSED",
+      "observed": "PASSED; 1 accepted attestation(s)",
+      "result": "PASS"
+    },
+    {
+      "id": "POS-005",
+      "expectation": "the subject is not rewritten, re-tagged or re-sealed by its own audit",
+      "observed": "commit, tree and STATE.json unchanged: True; subject status still READY_FOR_REVIEW",
+      "result": "PASS"
+    },
+    {
+      "id": "POS-006",
+      "expectation": "no attestation names the commit of the tree that contains it",
+      "observed": "the attestation binds subjectCommit only, resolved from the subject's canonical tag",
+      "result": "PASS"
+    },
+    {
+      "id": "POS-007",
+      "expectation": "the integrity chain verifies after the audit checkpoint is sealed",
+      "observed": "no divergence",
+      "result": "PASS"
+    },
+    {
+      "id": "POS-008",
+      "expectation": "the internal mirror audit of every checkpoint in this simulation was produced by executing m0_mirror_audit.py, not by writing its artifact",
+      "observed": "SETUP-00-CP-0001: python scripts/development-ledger/m0_mirror_audit.py --write --checkpoint C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-promotion-wy7f5ykd\\promotion\\docs\\checkpoints\\SETUP-00-CP-0001 exit=0 -> PASS 16/18; SETUP-00-CP-0002: python scripts/development-ledger/m0_mirror_audit.py --write --checkpoint C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-promotion-wy7f5ykd\\promotion\\docs\\checkpoints\\SETUP-00-CP-0002 exit=0 -> PASS 16/18",
+      "result": "PASS"
+    },
+    {
+      "id": "POS-009",
+      "expectation": "a checkpoint that corrects no audit reaches a passing mirror with its empty dimensions recorded as NOT_APPLICABLE and justified",
+      "observed": "SETUP-00-CP-0001: MIR-002=NOT_APPLICABLE, MIR-003=NOT_APPLICABLE; SETUP-00-CP-0002: MIR-002=NOT_APPLICABLE, MIR-003=NOT_APPLICABLE",
+      "result": "PASS"
+    }
+  ],
+  "total": 9,
+  "passed": 9,
+  "failed": 0,
+  "result": "PASS"
+}

@@ -1,0 +1,4283 @@
+{
+  "schemaVersion": "1.0.0",
+  "gate": "SETUP-00",
+  "checkpoint": "SETUP-00-CP-0012",
+  "sources": [
+    "SOURCE A: docs/SETUP-00-CHECKLIST.md, the canonical SETUP-00 specification",
+    "SOURCE B: docs/MILESTONE-VALIDATION.md, the milestone requirements of the audit",
+    "SOURCE C: docs/checkpoints/SETUP-00-CP-0011/REVIEW-REPORT.md, the findings of M0-CP-0011",
+    "SOURCE D: docs/checkpoints/SETUP-00-CP-0011/RED-TEAM-REPORT.md, the mandatory attacks of M0-CP-0011",
+    "SOURCE E: LESSON-PREFLIGHT.json, the lessons the engineering memory imposes",
+    "SOURCE F: FINAL-CORRECTION-REQUIREMENTS.json, the delivery-local requirements of this correction"
+  ],
+  "requirements": [
+    {
+      "id": "REQ-0001",
+      "source": "SETUP",
+      "sourceRef": "canonical:SETUP-00#1.1",
+      "sourceReference": "docs/SETUP-00-CHECKLIST.md row 1.1",
+      "description": "A single entry point states the phase, current Gate, latest checkpoint, and start protocol.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [
+        "file:START-HERE.md"
+      ],
+      "testEvidence": [
+        "file:docs/checkpoints/LATEST.md"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0002",
+      "source": "SETUP",
+      "sourceRef": "canonical:SETUP-00#1.2",
+      "sourceReference": "docs/SETUP-00-CHECKLIST.md row 1.2",
+      "description": "A Codex adapter binds the canonical contracts without adding independent policy.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [
+        "file:AGENTS.md"
+      ],
+      "testEvidence": [],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0003",
+      "source": "SETUP",
+      "sourceRef": "canonical:SETUP-00#1.3",
+      "sourceReference": "docs/SETUP-00-CHECKLIST.md row 1.3",
+      "description": "A Claude Code adapter binds the same contracts.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [
+        "file:CLAUDE.md"
+      ],
+      "testEvidence": [],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0004",
+      "source": "SETUP",
+      "sourceRef": "canonical:SETUP-00#1.4",
+      "sourceReference": "docs/SETUP-00-CHECKLIST.md row 1.4",
+      "description": "Tool adapters stay semantically equivalent to the canonical roles.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "test:ClaudeAdapterTests",
+        "file:tests/test_development_ledger.py"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0005",
+      "source": "SETUP",
+      "sourceRef": "canonical:SETUP-00#2.1",
+      "sourceReference": "docs/SETUP-00-CHECKLIST.md row 2.1",
+      "description": "The Gate sequence, dependencies, acceptance, and fail conditions are recorded.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [
+        "file:docs/MASTER-PLAN.md"
+      ],
+      "testEvidence": [],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0006",
+      "source": "SETUP",
+      "sourceRef": "canonical:SETUP-00#2.2",
+      "sourceReference": "docs/SETUP-00-CHECKLIST.md row 2.2",
+      "description": "The completion standard, mandatory controls, and Git and evidence discipline are recorded.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [
+        "file:docs/DEVELOPMENT-CONTRACT.md"
+      ],
+      "testEvidence": [],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0007",
+      "source": "SETUP",
+      "sourceRef": "canonical:SETUP-00#2.3",
+      "sourceReference": "docs/SETUP-00-CHECKLIST.md row 2.3",
+      "description": "Tool-to-tool transfer is formal in both directions.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [
+        "file:docs/HANDOFF-PROTOCOL.md"
+      ],
+      "testEvidence": [],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0008",
+      "source": "SETUP",
+      "sourceRef": "canonical:SETUP-00#2.4",
+      "sourceReference": "docs/SETUP-00-CHECKLIST.md row 2.4",
+      "description": "Checkpoint statuses, required events, required contents, commit semantics, and divergence handling are defined.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [
+        "file:docs/CHECKPOINT-PROTOCOL.md"
+      ],
+      "testEvidence": [],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0009",
+      "source": "SETUP",
+      "sourceRef": "canonical:SETUP-00#2.5",
+      "sourceReference": "docs/SETUP-00-CHECKLIST.md row 2.5",
+      "description": "Done is defined and excludes assertion-only PASS.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [
+        "file:docs/DEFINITION-OF-DONE.md"
+      ],
+      "testEvidence": [],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0010",
+      "source": "SETUP",
+      "sourceRef": "canonical:SETUP-00#2.6",
+      "sourceReference": "docs/SETUP-00-CHECKLIST.md row 2.6",
+      "description": "Quality outcomes, required dimensions, and the promotion rule are defined.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [
+        "file:docs/QUALITY-GATES.md"
+      ],
+      "testEvidence": [],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0011",
+      "source": "SETUP",
+      "sourceRef": "canonical:SETUP-00#2.7",
+      "sourceReference": "docs/SETUP-00-CHECKLIST.md row 2.7",
+      "description": "Structural decisions are recorded as ADRs.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [],
+      "testEvidence": [],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0012",
+      "source": "SETUP",
+      "sourceRef": "canonical:SETUP-00#2.8",
+      "sourceReference": "docs/SETUP-00-CHECKLIST.md row 2.8",
+      "description": "Architecture, roadmap, provenance, model usage, and detected tool capabilities are documented.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [
+        "file:docs/ARCHITECTURE.md",
+        "file:docs/ROADMAP.md",
+        "file:docs/PROVENANCE.md",
+        "file:docs/MODEL-USAGE-POLICY.md",
+        "file:docs/TOOL-CAPABILITIES.md"
+      ],
+      "testEvidence": [],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0013",
+      "source": "SETUP",
+      "sourceRef": "canonical:SETUP-00#3.1",
+      "sourceReference": "docs/SETUP-00-CHECKLIST.md row 3.1",
+      "description": "The canonical, tool-neutral role contracts exist, one per role of the delivery protocol.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "test:test_project_agents_match_canonical_role_names"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0014",
+      "source": "SETUP",
+      "sourceRef": "canonical:SETUP-00#3.2",
+      "sourceReference": "docs/SETUP-00-CHECKLIST.md row 3.2",
+      "description": "Documentation, provenance, secret, tool-execution, and training-data policies exist.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [],
+      "testEvidence": [],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0015",
+      "source": "SETUP",
+      "sourceRef": "canonical:SETUP-00#3.3",
+      "sourceReference": "docs/SETUP-00-CHECKLIST.md row 3.3",
+      "description": "Reusable templates exist for ADRs, checkpoints, gate reports, and handoffs.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [],
+      "testEvidence": [],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0016",
+      "source": "SETUP",
+      "sourceRef": "canonical:SETUP-00#4.1",
+      "sourceReference": "docs/SETUP-00-CHECKLIST.md row 4.1",
+      "description": "Checkpoint state, run metadata, command, test, quality, provenance, and decision schemas exist and are loadable.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "test:test_all_required_schemas_are_loaded"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0017",
+      "source": "SETUP",
+      "sourceRef": "canonical:SETUP-00#4.2",
+      "sourceReference": "docs/SETUP-00-CHECKLIST.md row 4.2",
+      "description": "An experience schema is reserved for Gate 6 and implements no runtime.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [
+        "file:.iacode/schemas/experience.schema.json"
+      ],
+      "testEvidence": [],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0018",
+      "source": "SETUP",
+      "sourceRef": "canonical:SETUP-00#4.3",
+      "sourceReference": "docs/SETUP-00-CHECKLIST.md row 4.3",
+      "description": "Schema evolution is versioned and never invalidates a sealed checkpoint.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "test:HistoricalCheckpointCompatibilityTests"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0019",
+      "source": "SETUP",
+      "sourceRef": "canonical:SETUP-00#5.1",
+      "sourceReference": "docs/SETUP-00-CHECKLIST.md row 5.1",
+      "description": "A checkpoint can be created with truthful non-PASS defaults.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/new_checkpoint.py"
+      ],
+      "testEvidence": [
+        "test:test_new_finalize_commit_validate"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0020",
+      "source": "SETUP",
+      "sourceRef": "canonical:SETUP-00#5.2",
+      "sourceReference": "docs/SETUP-00-CHECKLIST.md row 5.2",
+      "description": "A checkpoint can be finalized, and every finalization attempt is recorded with its exit code.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/finalize_checkpoint.py"
+      ],
+      "testEvidence": [
+        "test:FinalizationLedgerTests"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0021",
+      "source": "SETUP",
+      "sourceRef": "canonical:SETUP-00#5.3",
+      "sourceReference": "docs/SETUP-00-CHECKLIST.md row 5.3",
+      "description": "A checkpoint is validated against schemas, Git state, inventory, quality evidence, and secrets.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/validate_checkpoint.py"
+      ],
+      "testEvidence": [],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0022",
+      "source": "SETUP",
+      "sourceRef": "canonical:SETUP-00#5.4",
+      "sourceReference": "docs/SETUP-00-CHECKLIST.md row 5.4",
+      "description": "Secret redaction is available and documented to its real scope.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/redact_secrets.py",
+        "file:.iacode/policies/secret-policy.md"
+      ],
+      "testEvidence": [],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0023",
+      "source": "SETUP",
+      "sourceRef": "canonical:SETUP-00#5.5",
+      "sourceReference": "docs/SETUP-00-CHECKLIST.md row 5.5",
+      "description": "The tooling is standard-library only and portable across Windows and Unix-like checkouts.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/README.md"
+      ],
+      "testEvidence": [
+        "file:.gitattributes"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0024",
+      "source": "SETUP",
+      "sourceRef": "canonical:SETUP-00#6.1",
+      "sourceReference": "docs/SETUP-00-CHECKLIST.md row 6.1",
+      "description": "Every checkpoint carries status, handoff, run metadata, state, plan, decisions, commands, file inventory, tests, quality, provenance, diff summary, risks, and next action.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [],
+      "testEvidence": [],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0025",
+      "source": "SETUP",
+      "sourceRef": "canonical:SETUP-00#6.2",
+      "sourceReference": "docs/SETUP-00-CHECKLIST.md row 6.2",
+      "description": "`LATEST.md` points textually to the last checkpoint accepted by validation.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [
+        "file:docs/checkpoints/LATEST.md"
+      ],
+      "testEvidence": [
+        "test:test_latest_to_nonexistent_checkpoint_fails"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0026",
+      "source": "SETUP",
+      "sourceRef": "canonical:SETUP-00#6.3",
+      "sourceReference": "docs/SETUP-00-CHECKLIST.md row 6.3",
+      "description": "The file inventory matches the real change set, with bound content hashes.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "test:DeltaInventoryTests"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0027",
+      "source": "SETUP",
+      "sourceRef": "canonical:SETUP-00#6.4",
+      "sourceReference": "docs/SETUP-00-CHECKLIST.md row 6.4",
+      "description": "Provenance is complete and `trainingAllowed` defaults to `false`.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "file:.iacode/policies/provenance-policy.md"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0028",
+      "source": "SETUP",
+      "sourceRef": "canonical:SETUP-00#6.5",
+      "sourceReference": "docs/SETUP-00-CHECKLIST.md row 6.5",
+      "description": "A quality `PASS` carries resolvable evidence.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "test:QualityEvidenceTests"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0029",
+      "source": "SETUP",
+      "sourceRef": "canonical:SETUP-00#6.6",
+      "sourceReference": "docs/SETUP-00-CHECKLIST.md row 6.6",
+      "description": "Handoff-ready and terminal checkpoints are anchored to an immutable namespaced tag.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "test:test_handoff_ready_status_requires_commit_anchor"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0030",
+      "source": "SETUP",
+      "sourceRef": "canonical:SETUP-00#7.1",
+      "sourceReference": "docs/SETUP-00-CHECKLIST.md row 7.1",
+      "description": "A cold-start continuation prompt exists and depends only on checked-in files.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [
+        "file:prompts/RESUME-WORK.md"
+      ],
+      "testEvidence": [],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0031",
+      "source": "SETUP",
+      "sourceRef": "canonical:SETUP-00#7.2",
+      "sourceReference": "docs/SETUP-00-CHECKLIST.md row 7.2",
+      "description": "Cold-start validation is executed and recorded truthfully, including a blocked attempt.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [],
+      "testEvidence": [],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0032",
+      "source": "SETUP",
+      "sourceRef": "canonical:SETUP-00#7.3",
+      "sourceReference": "docs/SETUP-00-CHECKLIST.md row 7.3",
+      "description": "Cross-tool validation state is structured and explicit.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "test:SecondToolValidationTests"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0033",
+      "source": "SETUP",
+      "sourceRef": "canonical:SETUP-00#7.4",
+      "sourceReference": "docs/SETUP-00-CHECKLIST.md row 7.4",
+      "description": "A sealed checkpoint can be validated from a detached checkout of its own tag.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "test:DetachedHeadValidationTests"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0034",
+      "source": "SETUP",
+      "sourceRef": "canonical:SETUP-00#7.5",
+      "sourceReference": "docs/SETUP-00-CHECKLIST.md row 7.5",
+      "description": "The handoff is executable by another tool without the producing session.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [],
+      "testEvidence": [],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0035",
+      "source": "SETUP",
+      "sourceRef": "canonical:SETUP-00#7b.1",
+      "sourceReference": "docs/SETUP-00-CHECKLIST.md row 7b.1",
+      "description": "Every requirement of a delivery exists in a versioned matrix before implementation.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [
+        "file:.iacode/schemas/requirements-matrix.schema.json"
+      ],
+      "testEvidence": [
+        "test:DeliveryCompletenessMatrixTests"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0036",
+      "source": "SETUP",
+      "sourceRef": "canonical:SETUP-00#7b.2",
+      "sourceReference": "docs/SETUP-00-CHECKLIST.md row 7b.2",
+      "description": "A Test Rework / Green Keeper role forbids shipping anything red and records every cycle.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [
+        "file:.iacode/agents/test-rework-greenkeeper.md",
+        "file:scripts/development-ledger/green_keeper.py"
+      ],
+      "testEvidence": [
+        "test:GreenKeeperToolTests"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0037",
+      "source": "SETUP",
+      "sourceRef": "canonical:SETUP-00#7b.3",
+      "sourceReference": "docs/SETUP-00-CHECKLIST.md row 7b.3",
+      "description": "A Delivery Completeness Validator audits the matrix before handoff and may not implement.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [
+        "file:.iacode/agents/delivery-completeness-validator.md",
+        "file:scripts/development-ledger/check_completeness.py"
+      ],
+      "testEvidence": [
+        "test:DeliveryCompletenessMatrixTests",
+        "test:DeliveryAssuranceGateTests"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0038",
+      "source": "SETUP",
+      "sourceRef": "canonical:SETUP-00#7b.4",
+      "sourceReference": "docs/SETUP-00-CHECKLIST.md row 7b.4",
+      "description": "`GREEN_KEEPER_GATE` and `DELIVERY_COMPLETENESS_GATE` are preconditions of `READY_FOR_REVIEW`.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/validate_checkpoint.py",
+        "file:docs/QUALITY-GATES.md"
+      ],
+      "testEvidence": [
+        "test:DeliveryAssuranceGateTests",
+        "test:DeliveryLifecycleTests"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0039",
+      "source": "SETUP",
+      "sourceRef": "canonical:SETUP-00#7b.5",
+      "sourceReference": "docs/SETUP-00-CHECKLIST.md row 7b.5",
+      "description": "Readiness and blockage can never be claimed together.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "test:StatusBlockerInvariantTests",
+        "test:ResealedBlockerFixtureTests"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0040",
+      "source": "SETUP",
+      "sourceRef": "canonical:SETUP-00#7b.6",
+      "sourceReference": "docs/SETUP-00-CHECKLIST.md row 7b.6",
+      "description": "Every operation attempt is recorded, including a refusal decided before execution.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/finalize_checkpoint.py"
+      ],
+      "testEvidence": [
+        "test:FinalizationAttemptRecordingTests"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0041",
+      "source": "SETUP",
+      "sourceRef": "canonical:SETUP-00#7b.7",
+      "sourceReference": "docs/SETUP-00-CHECKLIST.md row 7b.7",
+      "description": "Every recorded command is reproducible from its declared working directory.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/record_command.py",
+        "file:.iacode/schemas/command.schema.json"
+      ],
+      "testEvidence": [
+        "test:CommandReproducibilityTests"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0042",
+      "source": "SETUP",
+      "sourceRef": "canonical:SETUP-00#7b.8",
+      "sourceReference": "docs/SETUP-00-CHECKLIST.md row 7b.8",
+      "description": "The mandatory delivery order is stated in full in every governing document and both adapters.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [
+        "file:docs/DEVELOPMENT-CONTRACT.md",
+        "file:docs/QUALITY-GATES.md",
+        "file:docs/CHECKPOINT-PROTOCOL.md",
+        "file:docs/HANDOFF-PROTOCOL.md",
+        "file:docs/DEFINITION-OF-DONE.md",
+        "file:START-HERE.md",
+        "file:AGENTS.md",
+        "file:CLAUDE.md"
+      ],
+      "testEvidence": [],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0043",
+      "source": "SETUP",
+      "sourceRef": "canonical:SETUP-00#7c.1",
+      "sourceReference": "docs/SETUP-00-CHECKLIST.md row 7c.1",
+      "description": "The project keeps an organizational engineering memory of confirmed failures.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [
+        "file:.iacode/schemas/lesson.schema.json"
+      ],
+      "testEvidence": [
+        "test:EngineeringMemoryStructureTests"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0044",
+      "source": "SETUP",
+      "sourceRef": "canonical:SETUP-00#7c.2",
+      "sourceReference": "docs/SETUP-00-CHECKLIST.md row 7c.2",
+      "description": "A lesson is `GUARDED` only when an automated control prevents recurrence.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/validate_lessons.py"
+      ],
+      "testEvidence": [
+        "test:LessonValidationTests"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0045",
+      "source": "SETUP",
+      "sourceRef": "canonical:SETUP-00#7c.3",
+      "sourceReference": "docs/SETUP-00-CHECKLIST.md row 7c.3",
+      "description": "A repeat increments recurrence, and a repeat against a guardrail is a `GUARDRAIL_FAILURE`.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/lessons.py"
+      ],
+      "testEvidence": [
+        "test:LessonRecurrenceTests"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0046",
+      "source": "SETUP",
+      "sourceRef": "canonical:SETUP-00#7c.4",
+      "sourceReference": "docs/SETUP-00-CHECKLIST.md row 7c.4",
+      "description": "A mandatory preflight selects the lessons that constrain each Gate.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/lesson_preflight.py"
+      ],
+      "testEvidence": [
+        "test:LessonPreflightTests"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0047",
+      "source": "SETUP",
+      "sourceRef": "canonical:SETUP-00#7c.5",
+      "sourceReference": "docs/SETUP-00-CHECKLIST.md row 7c.5",
+      "description": "Applicable lessons become requirements whose absence blocks completeness.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "test:DerivedRequirementCompletenessTests"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0048",
+      "source": "SETUP",
+      "sourceRef": "canonical:SETUP-00#7c.6",
+      "sourceReference": "docs/SETUP-00-CHECKLIST.md row 7c.6",
+      "description": "Lesson candidates can be extracted from recorded delivery evidence, never above `OBSERVED`.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/extract_lessons.py"
+      ],
+      "testEvidence": [],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0049",
+      "source": "SETUP",
+      "sourceRef": "canonical:SETUP-00#7c.7",
+      "sourceReference": "docs/SETUP-00-CHECKLIST.md row 7c.7",
+      "description": "External validation is grouped into milestones `M0` to `M6`.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [
+        "file:docs/MILESTONE-VALIDATION.md"
+      ],
+      "testEvidence": [
+        "test:MilestoneValidationPolicyTests"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0050",
+      "source": "SETUP",
+      "sourceRef": "canonical:SETUP-00#7c.8",
+      "sourceReference": "docs/SETUP-00-CHECKLIST.md row 7c.8",
+      "description": "An internal verdict is never described as independent external validation.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "test:MemoryStatusVocabularyTests",
+        "test:MemoryPolicyValidationTests"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0051",
+      "source": "SETUP",
+      "sourceRef": "canonical:SETUP-00#7c.9",
+      "sourceReference": "docs/SETUP-00-CHECKLIST.md row 7c.9",
+      "description": "An extraordinary audit requires a recorded trigger.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "test:MemoryPolicyValidationTests"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0052",
+      "source": "SETUP",
+      "sourceRef": "canonical:SETUP-00#7c.10",
+      "sourceReference": "docs/SETUP-00-CHECKLIST.md row 7c.10",
+      "description": "Every completed Gate produces a retrospective.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [
+        "file:.iacode/templates/retrospective/TEMPLATE.md"
+      ],
+      "testEvidence": [],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0053",
+      "source": "SETUP",
+      "sourceRef": "canonical:SETUP-00#7d.1",
+      "sourceReference": "docs/SETUP-00-CHECKLIST.md row 7d.1",
+      "description": "One promotion invariant governs every positive terminal status, not only `READY_FOR_REVIEW`.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/validate_checkpoint.py"
+      ],
+      "testEvidence": [
+        "test:PromotionInvariantTests"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0054",
+      "source": "SETUP",
+      "sourceRef": "canonical:SETUP-00#7d.2",
+      "sourceReference": "docs/SETUP-00-CHECKLIST.md row 7d.2",
+      "description": "The mandatory quality gate set is a closed machine-readable registry that an invocation cannot narrow.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [
+        "file:.iacode/policies/quality-gates.json",
+        "file:scripts/development-ledger/green_keeper.py"
+      ],
+      "testEvidence": [
+        "test:MandatoryGatePolicyTests"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0055",
+      "source": "SETUP",
+      "sourceRef": "canonical:SETUP-00#7d.3",
+      "sourceReference": "docs/SETUP-00-CHECKLIST.md row 7d.3",
+      "description": "The expected requirement set is derived from canonical sources and compared exactly with the declared set.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [
+        "file:.iacode/policies/canonical-requirements.json",
+        "file:scripts/development-ledger/policies.py"
+      ],
+      "testEvidence": [
+        "test:ExpectedRequirementSetTests"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0056",
+      "source": "SETUP",
+      "sourceRef": "canonical:SETUP-00#7d.4",
+      "sourceReference": "docs/SETUP-00-CHECKLIST.md row 7d.4",
+      "description": "An external milestone PASS is derived from an audit attestation authored by another sealed checkpoint.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/attestation.py"
+      ],
+      "testEvidence": [
+        "test:ExternalAttestationTests"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0057",
+      "source": "SETUP",
+      "sourceRef": "canonical:SETUP-00#7d.5",
+      "sourceReference": "docs/SETUP-00-CHECKLIST.md row 7d.5",
+      "description": "A derived artifact carries a fingerprint of its inputs, and staleness is decided by recomputation.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/lesson_preflight.py"
+      ],
+      "testEvidence": [
+        "test:PreflightFreshnessTests"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0058",
+      "source": "SETUP",
+      "sourceRef": "canonical:SETUP-00#7d.6",
+      "sourceReference": "docs/SETUP-00-CHECKLIST.md row 7d.6",
+      "description": "Every lesson control, evidence path and provenance locator is resolved against the repository.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/lessons.py"
+      ],
+      "testEvidence": [
+        "test:LessonResolutionTests",
+        "test:LessonProvenanceTests"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0059",
+      "source": "SETUP",
+      "sourceRef": "canonical:SETUP-00#7d.7",
+      "sourceReference": "docs/SETUP-00-CHECKLIST.md row 7d.7",
+      "description": "Every `GUARDED` lesson names a registered guardrail, and guardrail effectiveness is measured.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [
+        "file:.iacode/memory/guardrails/registry.json"
+      ],
+      "testEvidence": [
+        "test:GuardrailRegistryTests",
+        "test:GuardrailEffectivenessGateTests"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0060",
+      "source": "SETUP",
+      "sourceRef": "canonical:SETUP-00#7d.8",
+      "sourceReference": "docs/SETUP-00-CHECKLIST.md row 7d.8",
+      "description": "Sealed checkpoints are anchored by a hash-linked chain over tag, commit and tree.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [
+        "file:.iacode/anchors/checkpoint-chain.json",
+        "file:scripts/development-ledger/anchors.py"
+      ],
+      "testEvidence": [
+        "test:IntegrityAnchorTests"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0061",
+      "source": "SETUP",
+      "sourceRef": "canonical:SETUP-00#7d.9",
+      "sourceReference": "docs/SETUP-00-CHECKLIST.md row 7d.9",
+      "description": "Every count used as evidence is derived once and verified wherever a report states it.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/derive_counts.py"
+      ],
+      "testEvidence": [
+        "test:DerivedCountTests"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0062",
+      "source": "SETUP",
+      "sourceRef": "canonical:SETUP-00#7d.10",
+      "sourceReference": "docs/SETUP-00-CHECKLIST.md row 7d.10",
+      "description": "Sealing is monotonic and post-commit, and every recorded command binds its declared inputs by content.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/seal_checkpoint.py"
+      ],
+      "testEvidence": [
+        "test:SealChronologyTests",
+        "test:CommandInputBindingTests"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0063",
+      "source": "SETUP",
+      "sourceRef": "canonical:SETUP-00#7d.11",
+      "sourceReference": "docs/SETUP-00-CHECKLIST.md row 7d.11",
+      "description": "A milestone delivery carries an internal Red Team and an internal mirror audit, and neither is recorded as external validation.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/m0_red_team.py",
+        "file:.iacode/agents/m0-closure-auditor.md"
+      ],
+      "testEvidence": [
+        "test:InternalAssuranceTests",
+        "test:AuditSourceParsingTests"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0064",
+      "source": "SETUP",
+      "sourceRef": "canonical:SETUP-00#7d.12",
+      "sourceReference": "docs/SETUP-00-CHECKLIST.md row 7d.12",
+      "description": "Every finding of an independent audit is closed before the corrective delivery is offered.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [
+        "file:.iacode/policies/audit-registry.json"
+      ],
+      "testEvidence": [
+        "test:FindingsClosureTests"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0065",
+      "source": "SETUP",
+      "sourceRef": "canonical:SETUP-00#7d.13",
+      "sourceReference": "docs/SETUP-00-CHECKLIST.md row 7d.13",
+      "description": "A milestone verdict is carried by the audit checkpoint about a sealed subject, and its positive path is executed rather than only its refusals.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/attestation.py",
+        "file:scripts/development-ledger/milestone_status.py",
+        "file:scripts/development-ledger/promotion_simulation.py"
+      ],
+      "testEvidence": [
+        "test:AuditAttestationModelTests.test_a_legitimate_attestation_over_the_sealed_history_is_accepted",
+        "test:PositivePromotionTests.test_the_milestone_verdict_is_derived_as_passed",
+        "test:PositivePromotionTests.test_the_subject_is_not_rewritten_by_its_own_audit",
+        "test:AuditAttestationModelTests.test_an_attestation_naming_the_subject_as_its_own_auditor_is_rejected",
+        "test:AuditAttestationModelTests.test_a_checkpoint_may_not_claim_a_verdict_another_checkpoint_authored"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/MILESTONE-VALIDATION.md",
+        "file:docs/adr/ADR-0011-audit-checkpoint-carries-the-verdict.md",
+        "file:.iacode/attestations/README.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0066",
+      "source": "SETUP",
+      "sourceRef": "canonical:SETUP-00#7d.14",
+      "sourceReference": "docs/SETUP-00-CHECKLIST.md row 7d.14",
+      "description": "A generic guardrail derives repository state instead of naming a historical checkpoint, and the protocol's own next steps keep every mandatory gate green.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/anchors.py",
+        "file:scripts/development-ledger/verify_integrity.py",
+        "file:scripts/development-ledger/successor_durability.py"
+      ],
+      "testEvidence": [
+        "test:SuccessorDurabilityTests.test_every_state_of_the_chain_verifies",
+        "test:SuccessorDurabilityTests.test_the_pending_exclusion_moves_with_the_chain",
+        "test:IntegrityAnchorTests.test_the_pending_exclusion_is_the_newest_sealed_checkpoint",
+        "test:SuccessorDurabilityTests.test_a_missing_anchor_is_still_detected_after_the_chain_advances",
+        "test:IntegrityAnchorTests.test_a_sealed_checkpoint_without_an_anchor_is_detected"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/CHECKPOINT-PROTOCOL.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0067",
+      "source": "SETUP",
+      "sourceRef": "canonical:SETUP-00#7d.15",
+      "sourceReference": "docs/SETUP-00-CHECKLIST.md row 7d.15",
+      "description": "Every adversarial battery records a null-mutation control, and no count used as evidence is stated in prose.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/m0_red_team.py",
+        "file:.iacode/schemas/red-team-report.schema.json",
+        "file:scripts/development-ledger/derive_counts.py"
+      ],
+      "testEvidence": [
+        "test:DerivedTestCountTests.test_one_run_recorded_in_two_categories_counts_once",
+        "test:SourceCardinalityPolicyTests.test_no_comment_or_docstring_states_a_derived_count_claim",
+        "test:InternalAssuranceTests.test_a_report_without_a_null_mutation_control_is_rejected",
+        "test:DerivedTestCountTests.test_a_count_larger_than_what_exists_is_refused"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/QUALITY-GATES.md",
+        "file:docs/MILESTONE-VALIDATION.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0068",
+      "source": "SETUP",
+      "sourceRef": "canonical:SETUP-00#7d.16",
+      "sourceReference": "docs/SETUP-00-CHECKLIST.md row 7d.16",
+      "description": "An audit control tells an empty applicable set from a missing required set, justifies every `NOT_APPLICABLE` against a canonical derivation no delivery can shrink, and a simulation that claims a control passed executes that control instead of writing its artifact.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/m0_mirror_audit.py",
+        "file:scripts/development-ledger/mirror_semantics_validation.py",
+        "file:scripts/development-ledger/gate_transition_simulation.py",
+        "file:.iacode/schemas/mirror-audit.schema.json"
+      ],
+      "testEvidence": [
+        "test:MirrorApplicabilitySemanticsTests.test_every_applicability_state_behaves_as_specified",
+        "test:GateTransitionSimulationTests.test_the_first_checkpoint_of_the_next_gate_reaches_review_readiness",
+        "test:SimulationExecutesProductionControlsTests.test_the_sealed_artifact_is_the_tools_own_output",
+        "test:LocalRequirementDeclarationTests.test_the_anchored_count_excludes_a_locally_declared_requirement"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md",
+        "file:docs/QUALITY-GATES.md",
+        "file:.iacode/agents/m0-closure-auditor.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0069",
+      "source": "SETUP",
+      "sourceRef": "canonical:SETUP-00#8.1",
+      "sourceReference": "docs/SETUP-00-CHECKLIST.md row 8.1",
+      "description": "An independent review is recorded.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [],
+      "testEvidence": [],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0070",
+      "source": "SETUP",
+      "sourceRef": "canonical:SETUP-00#8.2",
+      "sourceReference": "docs/SETUP-00-CHECKLIST.md row 8.2",
+      "description": "An adversarial Red Team is recorded.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [],
+      "testEvidence": [],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0071",
+      "source": "SETUP",
+      "sourceRef": "canonical:SETUP-00#8.3",
+      "sourceReference": "docs/SETUP-00-CHECKLIST.md row 8.3",
+      "description": "`GATE_PASS` is granted only by a run independent of the implementer.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [
+        "file:docs/QUALITY-GATES.md"
+      ],
+      "testEvidence": [],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0072",
+      "source": "SETUP",
+      "sourceRef": "canonical:SETUP-00#9.1",
+      "sourceReference": "docs/SETUP-00-CHECKLIST.md row 9.1",
+      "description": "No Gate 0 or later runtime is implemented during SETUP-00.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [],
+      "testEvidence": [],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0073",
+      "source": "SETUP",
+      "sourceRef": "canonical:SETUP-00#9.2",
+      "sourceReference": "docs/SETUP-00-CHECKLIST.md row 9.2",
+      "description": "Documentation is maintained continuously rather than reconstructed at the end.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [],
+      "testEvidence": [],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0074",
+      "source": "SETUP",
+      "sourceRef": "canonical:SETUP-00#9.3",
+      "sourceReference": "docs/SETUP-00-CHECKLIST.md row 9.3",
+      "description": "No secret, credential, or private chain-of-thought is stored.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [],
+      "testEvidence": [],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0075",
+      "source": "SETUP",
+      "sourceRef": "canonical:SETUP-00#9.4",
+      "sourceReference": "docs/SETUP-00-CHECKLIST.md row 9.4",
+      "description": "Gate advancement requires explicit authorization and a passing previous Gate.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [
+        "file:docs/MASTER-PLAN.md"
+      ],
+      "testEvidence": [],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/SETUP-00-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0076",
+      "source": "AUDIT_FINDING",
+      "sourceRef": "finding:CP11-F-001",
+      "sourceReference": "M0-CP-0011 docs/checkpoints/SETUP-00-CP-0011/REVIEW-REPORT.md CP11-F-001",
+      "description": "the internal mirror audit cannot pass for a delivery that corrects no audit, and checkpoint validation requires it to pass",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/m0_mirror_audit.py",
+        "file:scripts/development-ledger/policies.py",
+        "file:scripts/development-ledger/validate_checkpoint.py",
+        "file:scripts/development-ledger/promotion_fixture.py"
+      ],
+      "testEvidence": [
+        "test:MirrorApplicabilitySemanticsTests.test_every_applicability_state_behaves_as_specified",
+        "test:GateTransitionSimulationTests.test_the_first_checkpoint_of_the_next_gate_reaches_review_readiness"
+      ],
+      "negativeTestEvidence": [
+        "test:MirrorApplicabilitySemanticsTests.test_an_open_finding_fails",
+        "test:MirrorApplicabilitySemanticsTests.test_a_delivery_cannot_declare_its_own_applicable_set_empty"
+      ],
+      "documentationEvidence": [
+        "checkpoint:CP11-FINDINGS-CLOSURE.md",
+        "file:.iacode/agents/m0-closure-auditor.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:CP11-FINDINGS-CLOSURE.json",
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:GATE0-TRANSITION-SIMULATION.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0077",
+      "source": "AUDIT_ATTACK",
+      "sourceRef": "attack:INT-01",
+      "sourceReference": "M0-CP-0011 docs/checkpoints/SETUP-00-CP-0011/RED-TEAM-REPORT.md attack INT-01",
+      "description": "Defend attack INT-01: Move a historical checkpoint tag onto another commit",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Mandatory attack INT-01 of the sealed SETUP-00-CP-0011 battery, re-parsed from that report and executed again by this delivery's own battery against a disposable copy of this checkpoint.",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/m0_red_team.py"
+      ],
+      "testEvidence": [
+        "test:InternalAssuranceTests.test_a_missing_mandatory_attack_is_rejected"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:M0-INTERNAL-RED-TEAM.json"
+      ],
+      "validationEvidence": [
+        "checkpoint:M0-INTERNAL-RED-TEAM.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0078",
+      "source": "AUDIT_ATTACK",
+      "sourceRef": "attack:INT-02",
+      "sourceReference": "M0-CP-0011 docs/checkpoints/SETUP-00-CP-0011/RED-TEAM-REPORT.md attack INT-02",
+      "description": "Defend attack INT-02: Rewrite sealed content and move its tag onto the rewrite",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Mandatory attack INT-02 of the sealed SETUP-00-CP-0011 battery, re-parsed from that report and executed again by this delivery's own battery against a disposable copy of this checkpoint.",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/m0_red_team.py"
+      ],
+      "testEvidence": [
+        "test:InternalAssuranceTests.test_a_missing_mandatory_attack_is_rejected"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:M0-INTERNAL-RED-TEAM.json"
+      ],
+      "validationEvidence": [
+        "checkpoint:M0-INTERNAL-RED-TEAM.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0079",
+      "source": "AUDIT_ATTACK",
+      "sourceRef": "attack:INT-03",
+      "sourceReference": "M0-CP-0011 docs/checkpoints/SETUP-00-CP-0011/RED-TEAM-REPORT.md attack INT-03",
+      "description": "Defend attack INT-03: Break the link between two consecutive anchors",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Mandatory attack INT-03 of the sealed SETUP-00-CP-0011 battery, re-parsed from that report and executed again by this delivery's own battery against a disposable copy of this checkpoint.",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/m0_red_team.py"
+      ],
+      "testEvidence": [
+        "test:InternalAssuranceTests.test_a_missing_mandatory_attack_is_rejected"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:M0-INTERNAL-RED-TEAM.json"
+      ],
+      "validationEvidence": [
+        "checkpoint:M0-INTERNAL-RED-TEAM.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0080",
+      "source": "AUDIT_ATTACK",
+      "sourceRef": "attack:INT-04",
+      "sourceReference": "M0-CP-0011 docs/checkpoints/SETUP-00-CP-0011/RED-TEAM-REPORT.md attack INT-04",
+      "description": "Defend attack INT-04: Remove the anchor of a sealed checkpoint",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Mandatory attack INT-04 of the sealed SETUP-00-CP-0011 battery, re-parsed from that report and executed again by this delivery's own battery against a disposable copy of this checkpoint.",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/m0_red_team.py"
+      ],
+      "testEvidence": [
+        "test:InternalAssuranceTests.test_a_missing_mandatory_attack_is_rejected"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:M0-INTERNAL-RED-TEAM.json"
+      ],
+      "validationEvidence": [
+        "checkpoint:M0-INTERNAL-RED-TEAM.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0081",
+      "source": "AUDIT_ATTACK",
+      "sourceRef": "attack:INT-05",
+      "sourceReference": "M0-CP-0011 docs/checkpoints/SETUP-00-CP-0011/RED-TEAM-REPORT.md attack INT-05",
+      "description": "Defend attack INT-05: Skip the anchor this checkpoint owes its sealed predecessor",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Mandatory attack INT-05 of the sealed SETUP-00-CP-0011 battery, re-parsed from that report and executed again by this delivery's own battery against a disposable copy of this checkpoint.",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/m0_red_team.py"
+      ],
+      "testEvidence": [
+        "test:InternalAssuranceTests.test_a_missing_mandatory_attack_is_rejected"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:M0-INTERNAL-RED-TEAM.json"
+      ],
+      "validationEvidence": [
+        "checkpoint:M0-INTERNAL-RED-TEAM.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0082",
+      "source": "AUDIT_ATTACK",
+      "sourceRef": "attack:PRE-01",
+      "sourceReference": "M0-CP-0011 docs/checkpoints/SETUP-00-CP-0011/RED-TEAM-REPORT.md attack PRE-01",
+      "description": "Defend attack PRE-01: Change the memory after the preflight was recorded",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Mandatory attack PRE-01 of the sealed SETUP-00-CP-0011 battery, re-parsed from that report and executed again by this delivery's own battery against a disposable copy of this checkpoint.",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/m0_red_team.py"
+      ],
+      "testEvidence": [
+        "test:InternalAssuranceTests.test_a_missing_mandatory_attack_is_rejected"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:M0-INTERNAL-RED-TEAM.json"
+      ],
+      "validationEvidence": [
+        "checkpoint:M0-INTERNAL-RED-TEAM.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0083",
+      "source": "AUDIT_ATTACK",
+      "sourceRef": "attack:MEM-01",
+      "sourceReference": "M0-CP-0011 docs/checkpoints/SETUP-00-CP-0011/RED-TEAM-REPORT.md attack MEM-01",
+      "description": "Defend attack MEM-01: Replace a preventive control with documentation only",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Mandatory attack MEM-01 of the sealed SETUP-00-CP-0011 battery, re-parsed from that report and executed again by this delivery's own battery against a disposable copy of this checkpoint.",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/m0_red_team.py"
+      ],
+      "testEvidence": [
+        "test:InternalAssuranceTests.test_a_missing_mandatory_attack_is_rejected"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:M0-INTERNAL-RED-TEAM.json"
+      ],
+      "validationEvidence": [
+        "checkpoint:M0-INTERNAL-RED-TEAM.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0084",
+      "source": "AUDIT_ATTACK",
+      "sourceRef": "attack:STL-01",
+      "sourceReference": "M0-CP-0011 docs/checkpoints/SETUP-00-CP-0011/RED-TEAM-REPORT.md attack STL-01",
+      "description": "Defend attack STL-01: Edit the assurance scope after the last green cycle",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Mandatory attack STL-01 of the sealed SETUP-00-CP-0011 battery, re-parsed from that report and executed again by this delivery's own battery against a disposable copy of this checkpoint.",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/m0_red_team.py"
+      ],
+      "testEvidence": [
+        "test:InternalAssuranceTests.test_a_missing_mandatory_attack_is_rejected"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:M0-INTERNAL-RED-TEAM.json"
+      ],
+      "validationEvidence": [
+        "checkpoint:M0-INTERNAL-RED-TEAM.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0085",
+      "source": "AUDIT_ATTACK",
+      "sourceRef": "attack:STL-02",
+      "sourceReference": "M0-CP-0011 docs/checkpoints/SETUP-00-CP-0011/RED-TEAM-REPORT.md attack STL-02",
+      "description": "Defend attack STL-02: Forge the derived test count",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Mandatory attack STL-02 of the sealed SETUP-00-CP-0011 battery, re-parsed from that report and executed again by this delivery's own battery against a disposable copy of this checkpoint.",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/m0_red_team.py"
+      ],
+      "testEvidence": [
+        "test:InternalAssuranceTests.test_a_missing_mandatory_attack_is_rejected"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:M0-INTERNAL-RED-TEAM.json"
+      ],
+      "validationEvidence": [
+        "checkpoint:M0-INTERNAL-RED-TEAM.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0086",
+      "source": "AUDIT_ATTACK",
+      "sourceRef": "attack:STL-04",
+      "sourceReference": "M0-CP-0011 docs/checkpoints/SETUP-00-CP-0011/RED-TEAM-REPORT.md attack STL-04",
+      "description": "Defend attack STL-04: Carry a blocker while claiming a milestone verdict",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Mandatory attack STL-04 of the sealed SETUP-00-CP-0011 battery, re-parsed from that report and executed again by this delivery's own battery against a disposable copy of this checkpoint.",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/m0_red_team.py"
+      ],
+      "testEvidence": [
+        "test:InternalAssuranceTests.test_a_missing_mandatory_attack_is_rejected"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:M0-INTERNAL-RED-TEAM.json"
+      ],
+      "validationEvidence": [
+        "checkpoint:M0-INTERNAL-RED-TEAM.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0087",
+      "source": "AUDIT_ATTACK",
+      "sourceRef": "attack:STL-05",
+      "sourceReference": "M0-CP-0011 docs/checkpoints/SETUP-00-CP-0011/RED-TEAM-REPORT.md attack STL-05",
+      "description": "Defend attack STL-05: Remove an entry from the declared change set",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Mandatory attack STL-05 of the sealed SETUP-00-CP-0011 battery, re-parsed from that report and executed again by this delivery's own battery against a disposable copy of this checkpoint.",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/m0_red_team.py"
+      ],
+      "testEvidence": [
+        "test:InternalAssuranceTests.test_a_missing_mandatory_attack_is_rejected"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:M0-INTERNAL-RED-TEAM.json"
+      ],
+      "validationEvidence": [
+        "checkpoint:M0-INTERNAL-RED-TEAM.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0088",
+      "source": "AUDIT_ATTACK",
+      "sourceRef": "attack:SEC-01",
+      "sourceReference": "M0-CP-0011 docs/checkpoints/SETUP-00-CP-0011/RED-TEAM-REPORT.md attack SEC-01",
+      "description": "Defend attack SEC-01: Insert a credential-shaped value into the memory and require a refusal that does not repeat it",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Mandatory attack SEC-01 of the sealed SETUP-00-CP-0011 battery, re-parsed from that report and executed again by this delivery's own battery against a disposable copy of this checkpoint.",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/m0_red_team.py"
+      ],
+      "testEvidence": [
+        "test:InternalAssuranceTests.test_a_missing_mandatory_attack_is_rejected"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:M0-INTERNAL-RED-TEAM.json"
+      ],
+      "validationEvidence": [
+        "checkpoint:M0-INTERNAL-RED-TEAM.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "LESSON-REQ-0001",
+      "source": "LESSON",
+      "sourceRef": "lesson:LSN-0001",
+      "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0001",
+      "description": "Verify checkpoint validation must succeed from a detached checkout of the checkpoint tag",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [
+        "file:.iacode/memory/lessons.jsonl",
+        "file:scripts/development-ledger/validate_checkpoint.py"
+      ],
+      "testEvidence": [
+        "test:DetachedHeadValidationTests.test_detached_head_at_checkpoint_tag_validates",
+        "test:DetachedHeadValidationTests.test_detached_head_at_wrong_commit_fails"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md",
+        "file:docs/ENGINEERING-MEMORY.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "LESSON-REQ-0002",
+      "source": "LESSON",
+      "sourceRef": "lesson:LSN-0002",
+      "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0002",
+      "description": "Verify a file inventory must be recomputed from the repository, never trusted as an assertion",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [
+        "file:.iacode/memory/lessons.jsonl",
+        "file:scripts/development-ledger/validate_checkpoint.py"
+      ],
+      "testEvidence": [
+        "test:DeltaInventoryTests.test_removed_manifest_entry_fails",
+        "test:DeltaInventoryTests.test_silent_tracked_modification_fails"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md",
+        "file:docs/ENGINEERING-MEMORY.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "LESSON-REQ-0003",
+      "source": "LESSON",
+      "sourceRef": "lesson:LSN-0003",
+      "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0003",
+      "description": "Verify every operation attempt must be auditable, including a refusal decided before execution",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [
+        "file:.iacode/memory/lessons.jsonl",
+        "file:scripts/development-ledger/finalize_checkpoint.py"
+      ],
+      "testEvidence": [
+        "test:FinalizationAttemptRecordingTests.test_detached_head_refusal_is_recorded",
+        "test:FinalizationAttemptRecordingTests.test_non_latest_checkpoint_refusal_is_recorded"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md",
+        "file:docs/ENGINEERING-MEMORY.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "LESSON-REQ-0004",
+      "source": "LESSON",
+      "sourceRef": "lesson:LSN-0004",
+      "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0004",
+      "description": "Verify a checkpoint may never claim readiness while it also claims to be blocked",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [
+        "file:.iacode/memory/lessons.jsonl"
+      ],
+      "testEvidence": [
+        "test:StatusBlockerInvariantTests.test_ready_for_review_with_blocker_fails",
+        "test:ResealedBlockerFixtureTests.test_resealed_ready_for_review_with_blocker_is_rejected"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md",
+        "file:docs/ENGINEERING-MEMORY.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "LESSON-REQ-0005",
+      "source": "LESSON",
+      "sourceRef": "lesson:LSN-0005",
+      "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0005",
+      "description": "Verify a PASS requires evidence that can be executed or resolved, not a statement",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [
+        "file:.iacode/memory/lessons.jsonl",
+        "file:scripts/development-ledger/validate_checkpoint.py"
+      ],
+      "testEvidence": [
+        "test:QualityEvidenceTests.test_pass_without_evidence_fails",
+        "test:QualityEvidenceTests.test_pass_referencing_a_failed_command_fails",
+        "test:PromotionInvariantTests.test_every_positive_status_rejects_every_red_quality_dimension"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md",
+        "file:docs/ENGINEERING-MEMORY.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "LESSON-REQ-0006",
+      "source": "LESSON",
+      "sourceRef": "lesson:LSN-0006",
+      "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0006",
+      "description": "Verify the repository must be self-contained; a specification may not live outside it",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [
+        "file:.iacode/memory/lessons.jsonl"
+      ],
+      "testEvidence": [
+        "test:SetupChecklistTests.test_checklist_exists_and_is_referenced",
+        "test:SetupChecklistTests.test_documentation_links_resolve"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md",
+        "file:docs/ENGINEERING-MEMORY.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "LESSON-REQ-0007",
+      "source": "LESSON",
+      "sourceRef": "lesson:LSN-0007",
+      "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0007",
+      "description": "Verify independent validation cannot be declared by the run that did the work",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [
+        "file:.iacode/memory/lessons.jsonl",
+        "file:.iacode/schemas/checkpoint.schema.json",
+        "file:scripts/development-ledger/attestation.py"
+      ],
+      "testEvidence": [
+        "test:SecondToolValidationTests.test_failed_cross_tool_validation_cannot_grant_gate_pass",
+        "test:DeliveryAssuranceGateTests.test_self_claimed_independent_review_blocks_review",
+        "test:ExternalAttestationTests.test_an_implementer_checkpoint_cannot_declare_an_external_pass"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md",
+        "file:docs/ENGINEERING-MEMORY.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "LESSON-REQ-0008",
+      "source": "LESSON",
+      "sourceRef": "lesson:LSN-0008",
+      "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0008",
+      "description": "Verify requirement completeness must be total and evidence-backed before handoff",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [
+        "file:.iacode/memory/lessons.jsonl",
+        "file:scripts/development-ledger/check_completeness.py"
+      ],
+      "testEvidence": [
+        "test:DeliveryCompletenessMatrixTests.test_one_requirement_short_of_total_fails",
+        "test:DeliveryAssuranceGateTests.test_completeness_validator_not_executed_blocks_review",
+        "test:ExpectedRequirementSetTests.test_deleting_a_requirement_and_recomputing_the_counts_still_fails"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md",
+        "file:docs/ENGINEERING-MEMORY.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "LESSON-REQ-0009",
+      "source": "LESSON",
+      "sourceRef": "lesson:LSN-0009",
+      "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0009",
+      "description": "Verify a red gate requires rework, never a waiver, and never a weakened check",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [
+        "file:.iacode/memory/lessons.jsonl",
+        "file:.iacode/policies/quality-gates.json"
+      ],
+      "testEvidence": [
+        "test:GreenKeeperToolTests.test_red_gate_is_reported_as_still_red",
+        "test:DeliveryAssuranceGateTests.test_green_keeper_pass_with_a_real_failure_is_rejected",
+        "test:DeliveryAssuranceGateTests.test_red_tests_block_review",
+        "test:MandatoryGatePolicyTests.test_a_cycle_measured_against_no_gate_is_rejected"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md",
+        "file:docs/ENGINEERING-MEMORY.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "LESSON-REQ-0010",
+      "source": "LESSON",
+      "sourceRef": "lesson:LSN-0010",
+      "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0010",
+      "description": "Verify a recorded command must carry runtime, working directory, commit and purpose to be replayable",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [
+        "file:.iacode/memory/lessons.jsonl",
+        "file:.iacode/schemas/command.schema.json"
+      ],
+      "testEvidence": [
+        "test:CommandReproducibilityTests.test_bare_script_name_is_rejected",
+        "test:CommandReproducibilityTests.test_unresolvable_script_path_is_rejected",
+        "test:CommandInputBindingTests.test_a_record_without_a_digest_is_rejected"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md",
+        "file:docs/ENGINEERING-MEMORY.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "LESSON-REQ-0011",
+      "source": "LESSON",
+      "sourceRef": "lesson:LSN-0011",
+      "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0011",
+      "description": "Verify a control over a checkpoint's own evidence must be scoped to the moment it matters",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [
+        "file:.iacode/memory/lessons.jsonl"
+      ],
+      "testEvidence": [
+        "test:DeliveryAssuranceGateTests.test_gate_consistency_is_provisional_while_work_is_in_progress"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md",
+        "file:docs/ENGINEERING-MEMORY.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "LESSON-REQ-0012",
+      "source": "LESSON",
+      "sourceRef": "lesson:LSN-0012",
+      "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0012",
+      "description": "Verify sealed checkpoints and their tags are immutable, and tooling must keep validating them",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [
+        "file:.iacode/memory/lessons.jsonl",
+        "file:docs/CHECKPOINT-PROTOCOL.md",
+        "file:scripts/development-ledger/anchors.py"
+      ],
+      "testEvidence": [
+        "test:HistoricalCheckpointCompatibilityTests.test_first_sealed_checkpoint_still_validates",
+        "test:HistoricalCheckpointCompatibilityTests.test_fourth_sealed_checkpoint_still_validates",
+        "test:IntegrityAnchorTests.test_a_moved_historical_tag_is_detected"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md",
+        "file:docs/ENGINEERING-MEMORY.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "LESSON-REQ-0013",
+      "source": "LESSON",
+      "sourceRef": "lesson:LSN-0013",
+      "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0013",
+      "description": "Verify an installed capability must be detected by resolved path, not by a bare command lookup",
+      "mandatory": false,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [
+        "file:.iacode/memory/lessons.jsonl",
+        "file:docs/TOOL-CAPABILITIES.md"
+      ],
+      "testEvidence": [],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md",
+        "file:docs/ENGINEERING-MEMORY.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "LESSON-REQ-0014",
+      "source": "LESSON",
+      "sourceRef": "lesson:LSN-0014",
+      "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0014",
+      "description": "Verify evidence must be recorded as it happens, not reconstructed at the end of a run",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [
+        "file:.iacode/memory/lessons.jsonl",
+        "file:scripts/development-ledger/record_command.py"
+      ],
+      "testEvidence": [
+        "test:SealChronologyTests.test_a_record_after_the_end_of_the_run_is_rejected"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md",
+        "file:docs/ENGINEERING-MEMORY.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "LESSON-REQ-0015",
+      "source": "LESSON",
+      "sourceRef": "lesson:LSN-0015",
+      "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0015",
+      "description": "Verify every positive terminal status needs one shared promotion invariant",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [
+        "file:.iacode/memory/lessons.jsonl"
+      ],
+      "testEvidence": [
+        "test:PromotionInvariantTests.test_every_positive_status_rejects_a_red_green_keeper"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md",
+        "file:docs/ENGINEERING-MEMORY.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "LESSON-REQ-0016",
+      "source": "LESSON",
+      "sourceRef": "lesson:LSN-0016",
+      "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0016",
+      "description": "Verify a mandatory set must be closed by policy, never chosen by the caller",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [
+        "file:.iacode/memory/lessons.jsonl",
+        "file:.iacode/policies/quality-gates.json"
+      ],
+      "testEvidence": [],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md",
+        "file:docs/ENGINEERING-MEMORY.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "LESSON-REQ-0017",
+      "source": "LESSON",
+      "sourceRef": "lesson:LSN-0017",
+      "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0017",
+      "description": "Verify a completeness denominator must come from a source the delivery does not own",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [
+        "file:.iacode/memory/lessons.jsonl"
+      ],
+      "testEvidence": [
+        "test:ExpectedRequirementSetTests.test_an_unexpected_anchored_requirement_is_rejected"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md",
+        "file:docs/ENGINEERING-MEMORY.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "LESSON-REQ-0018",
+      "source": "LESSON",
+      "sourceRef": "lesson:LSN-0018",
+      "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0018",
+      "description": "Verify a structured reference must be resolved, not merely well typed",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [
+        "file:.iacode/memory/lessons.jsonl"
+      ],
+      "testEvidence": [
+        "test:LessonResolutionTests.test_a_test_control_must_exist_in_the_suite"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md",
+        "file:docs/ENGINEERING-MEMORY.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "LESSON-REQ-0019",
+      "source": "LESSON",
+      "sourceRef": "lesson:LSN-0019",
+      "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0019",
+      "description": "Verify a derived artifact must carry a fingerprint of the inputs that produced it",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [
+        "file:.iacode/memory/lessons.jsonl"
+      ],
+      "testEvidence": [
+        "test:PreflightFreshnessTests.test_a_dropped_lesson_makes_the_preflight_stale"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md",
+        "file:docs/ENGINEERING-MEMORY.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "LESSON-REQ-0020",
+      "source": "LESSON",
+      "sourceRef": "lesson:LSN-0020",
+      "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0020",
+      "description": "Verify evidence produced from a dirty tree needs immutable input identity",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [
+        "file:.iacode/memory/lessons.jsonl"
+      ],
+      "testEvidence": [
+        "test:CommandInputBindingTests.test_the_recorder_binds_inputs_automatically"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md",
+        "file:docs/ENGINEERING-MEMORY.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "LESSON-REQ-0021",
+      "source": "LESSON",
+      "sourceRef": "lesson:LSN-0021",
+      "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0021",
+      "description": "Verify sealed history needs an anchor outside the content it describes",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [
+        "file:.iacode/memory/lessons.jsonl"
+      ],
+      "testEvidence": [
+        "test:IntegrityAnchorTests.test_a_broken_link_between_anchors_is_detected"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md",
+        "file:docs/ENGINEERING-MEMORY.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "LESSON-REQ-0022",
+      "source": "LESSON",
+      "sourceRef": "lesson:LSN-0022",
+      "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0022",
+      "description": "Verify an authoritative count must be derived once, never maintained by hand twice",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [
+        "file:.iacode/memory/lessons.jsonl",
+        "file:scripts/development-ledger/derive_counts.py",
+        "file:tests/test_development_ledger.py"
+      ],
+      "testEvidence": [
+        "test:SourceCardinalityPolicyTests.test_no_comment_or_docstring_states_a_derived_count_claim",
+        "test:DerivedCountTests.test_the_stored_counts_match_the_derivation",
+        "test:DerivedTestCountTests.test_one_run_recorded_in_two_categories_counts_once",
+        "test:DerivedCountTests.test_a_forged_count_is_rejected",
+        "test:DerivedTestCountTests.test_a_count_larger_than_what_exists_is_refused"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/QUALITY-GATES.md",
+        "file:.iacode/memory/LESSONS.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "LESSON-REQ-0023",
+      "source": "LESSON",
+      "sourceRef": "lesson:LSN-0023",
+      "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0023",
+      "description": "Verify a lesson must cite a source that actually records the finding it claims",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [
+        "file:.iacode/memory/lessons.jsonl"
+      ],
+      "testEvidence": [
+        "test:LessonProvenanceTests.test_a_finding_absent_from_the_cited_checkpoint_is_rejected"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md",
+        "file:docs/ENGINEERING-MEMORY.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "LESSON-REQ-0024",
+      "source": "LESSON",
+      "sourceRef": "lesson:LSN-0024",
+      "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0024",
+      "description": "Verify a control is finished only when its positive path has been executed, not only its refusals",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [
+        "file:.iacode/memory/lessons.jsonl",
+        "file:scripts/development-ledger/promotion_simulation.py"
+      ],
+      "testEvidence": [
+        "test:PositivePromotionTests.test_the_milestone_verdict_is_derived_as_passed",
+        "test:PositivePromotionTests.test_the_subject_is_not_rewritten_by_its_own_audit",
+        "test:PositivePromotionTests.test_a_fresh_session_audit_cannot_reach_the_external_status"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md",
+        "file:docs/DEFINITION-OF-DONE.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "LESSON-REQ-0025",
+      "source": "LESSON",
+      "sourceRef": "lesson:LSN-0025",
+      "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0025",
+      "description": "Verify a generic guardrail derives repository state instead of naming today's checkpoint",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [
+        "file:.iacode/memory/lessons.jsonl",
+        "file:scripts/development-ledger/anchors.py"
+      ],
+      "testEvidence": [
+        "test:IntegrityAnchorTests.test_the_pending_exclusion_is_the_newest_sealed_checkpoint",
+        "test:SuccessorDurabilityTests.test_the_pending_exclusion_moves_with_the_chain",
+        "test:IntegrityAnchorTests.test_a_sealed_checkpoint_without_an_anchor_is_detected"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md",
+        "file:docs/CHECKPOINT-PROTOCOL.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "LESSON-REQ-0026",
+      "source": "LESSON",
+      "sourceRef": "lesson:LSN-0026",
+      "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0026",
+      "description": "Verify an adversarial battery without a null-mutation control proves nothing",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [
+        "file:.iacode/memory/lessons.jsonl",
+        "file:scripts/development-ledger/m0_red_team.py",
+        "file:.iacode/schemas/red-team-report.schema.json"
+      ],
+      "testEvidence": [
+        "test:InternalAssuranceTests.test_the_consistent_fixture_passes",
+        "test:InternalAssuranceTests.test_a_report_without_a_null_mutation_control_is_rejected",
+        "test:InternalAssuranceTests.test_a_failed_null_mutation_control_cannot_produce_a_pass"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md",
+        "file:docs/MILESTONE-VALIDATION.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "LESSON-REQ-0027",
+      "source": "LESSON",
+      "sourceRef": "lesson:LSN-0027",
+      "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0027",
+      "description": "Verify a lesson's prose may record a residual limit but may never contradict its status",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [
+        "file:.iacode/memory/lessons.jsonl",
+        "file:scripts/development-ledger/lessons.py"
+      ],
+      "testEvidence": [
+        "test:MemoryPolicyDocumentTests.test_the_repository_memory_has_no_status_contradiction",
+        "test:MemoryPolicyDocumentTests.test_a_guarded_lesson_may_not_describe_itself_as_unguarded"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md",
+        "file:docs/ENGINEERING-MEMORY.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "LESSON-REQ-0028",
+      "source": "LESSON",
+      "sourceRef": "lesson:LSN-0028",
+      "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0028",
+      "description": "Verify a configuration key that no code reads is a defect, not documentation",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [
+        "file:.iacode/memory/lessons.jsonl",
+        "file:.iacode/schemas/memory-policy.schema.json",
+        "file:.iacode/memory/POLICY.json"
+      ],
+      "testEvidence": [
+        "test:MemoryPolicyDocumentTests.test_the_declared_policy_validates_against_its_schema",
+        "test:MemoryPolicyDocumentTests.test_a_setting_no_code_reads_cannot_be_declared"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md",
+        "file:docs/ENGINEERING-MEMORY.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "LESSON-REQ-0029",
+      "source": "LESSON",
+      "sourceRef": "lesson:LSN-0029",
+      "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0029",
+      "description": "Verify a required protocol transition must never turn a mandatory gate red",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [
+        "file:.iacode/memory/lessons.jsonl",
+        "file:scripts/development-ledger/successor_durability.py"
+      ],
+      "testEvidence": [
+        "test:SuccessorDurabilityTests.test_every_state_of_the_chain_verifies",
+        "test:SuccessorDurabilityTests.test_three_checkpoints_were_sealed_in_succession",
+        "test:SuccessorDurabilityTests.test_a_missing_anchor_is_still_detected_after_the_chain_advances"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md",
+        "file:docs/DEFINITION-OF-DONE.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "LESSON-REQ-0030",
+      "source": "LESSON",
+      "sourceRef": "lesson:LSN-0031",
+      "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0030",
+      "description": "Verify an empty applicable set is not a missing required set, and a control must tell them apart",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "Re-verified by this corrective delivery against the repository: the artifact exists, the named test identifiers resolve in the suite, and the mandatory gates were re-run over the content as it stands.",
+      "implementationEvidence": [
+        "file:.iacode/memory/lessons.jsonl",
+        "file:scripts/development-ledger/m0_mirror_audit.py"
+      ],
+      "testEvidence": [
+        "test:MirrorApplicabilitySemanticsTests.test_an_empty_applicable_set_is_not_applicable_and_the_mirror_passes",
+        "test:MirrorApplicabilitySemanticsTests.test_a_missing_required_set_fails_rather_than_being_inapplicable"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md",
+        "file:docs/QUALITY-GATES.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0089",
+      "source": "LOCAL",
+      "sourceRef": "local:FCR-001",
+      "sourceReference": "FINAL-CORRECTION-REQUIREMENTS.json FCR-001",
+      "description": "The finding set is taken from the sealed audit checkpoint, not from a summary",
+      "mandatory": true,
+      "justification": null,
+      "notes": "Read SETUP-00-CP-0011 in full and derive the finding set from the checkpoint itself rather than from any external description of it.",
+      "guardrailEvidence": [],
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/policies/audit-registry.json",
+        "file:scripts/development-ledger/policies.py"
+      ],
+      "testEvidence": [
+        "test:SealedReportRenderingTests.test_a_findings_section_bounds_what_the_report_raises_as_its_own",
+        "test:SealedReportRenderingTests.test_the_registry_binds_the_third_audit_to_this_corrective_checkpoint"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:CP11-FINDINGS-CLOSURE.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ]
+    },
+    {
+      "id": "REQ-0090",
+      "source": "LOCAL",
+      "sourceRef": "local:FCR-002",
+      "sourceReference": "FINAL-CORRECTION-REQUIREMENTS.json FCR-002",
+      "description": "CP11-F-001 is closed",
+      "mandatory": true,
+      "justification": null,
+      "notes": "Close the single critical finding of the CP-0011 audit with implementation, positive regression, negative regression and resolvable evidence.",
+      "guardrailEvidence": [],
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/m0_mirror_audit.py"
+      ],
+      "testEvidence": [
+        "test:MirrorApplicabilitySemanticsTests.test_every_applicability_state_behaves_as_specified"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ]
+    },
+    {
+      "id": "REQ-0091",
+      "source": "LOCAL",
+      "sourceRef": "local:FCR-003",
+      "sourceReference": "FINAL-CORRECTION-REQUIREMENTS.json FCR-003",
+      "description": "MIR-002 reports an empty applicable set as NOT_APPLICABLE",
+      "mandatory": true,
+      "justification": null,
+      "notes": "The audit-findings dimension reports NOT_APPLICABLE when no registered audit names the checkpoint as its corrective delivery, PASS when every applicable finding is closed, and FAIL when one is not.",
+      "guardrailEvidence": [],
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/m0_mirror_audit.py"
+      ],
+      "testEvidence": [
+        "test:MirrorApplicabilitySemanticsTests.test_an_empty_applicable_set_is_not_applicable_and_the_mirror_passes",
+        "test:MirrorApplicabilitySemanticsTests.test_a_satisfied_applicable_set_passes"
+      ],
+      "negativeTestEvidence": [
+        "test:MirrorApplicabilitySemanticsTests.test_an_open_finding_fails"
+      ],
+      "documentationEvidence": [
+        "file:docs/QUALITY-GATES.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ]
+    },
+    {
+      "id": "REQ-0092",
+      "source": "LOCAL",
+      "sourceRef": "local:FCR-004",
+      "sourceReference": "FINAL-CORRECTION-REQUIREMENTS.json FCR-004",
+      "description": "MIR-003 is analysed on its own and repaired on its own terms",
+      "mandatory": true,
+      "justification": null,
+      "notes": "The mandatory-attack dimension derives its battery from the sealed Red Team reports of the same audits; an empty battery is NOT_APPLICABLE, an unexecuted mandatory attack is FAIL.",
+      "guardrailEvidence": [],
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/m0_mirror_audit.py"
+      ],
+      "testEvidence": [
+        "test:MirrorApplicabilitySemanticsTests.test_an_empty_applicable_set_is_not_applicable_and_the_mirror_passes"
+      ],
+      "negativeTestEvidence": [
+        "test:MirrorApplicabilitySemanticsTests.test_an_unexecuted_mandatory_attack_fails"
+      ],
+      "documentationEvidence": [
+        "file:.iacode/agents/m0-closure-auditor.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ]
+    },
+    {
+      "id": "REQ-0093",
+      "source": "LOCAL",
+      "sourceRef": "local:FCR-005",
+      "sourceReference": "FINAL-CORRECTION-REQUIREMENTS.json FCR-005",
+      "description": "The overall verdict treats NOT_APPLICABLE as non-failing without rewriting it",
+      "mandatory": true,
+      "justification": null,
+      "notes": "A report fails only on a FAIL. An inapplicable dimension keeps its own status in the artifact, is counted separately, and is never mapped to PASS.",
+      "guardrailEvidence": [],
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/m0_mirror_audit.py",
+        "file:scripts/development-ledger/validate_checkpoint.py"
+      ],
+      "testEvidence": [
+        "test:MirrorApplicabilitySemanticsTests.test_an_empty_applicable_set_is_not_applicable_and_the_mirror_passes"
+      ],
+      "negativeTestEvidence": [
+        "test:MirrorApplicabilityValidationTests.test_an_inapplicable_dimension_counted_as_a_pass_is_refused"
+      ],
+      "documentationEvidence": [
+        "file:docs/QUALITY-GATES.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ]
+    },
+    {
+      "id": "REQ-0094",
+      "source": "LOCAL",
+      "sourceRef": "local:FCR-006",
+      "sourceReference": "FINAL-CORRECTION-REQUIREMENTS.json FCR-006",
+      "description": "Every NOT_APPLICABLE carries a reason, an empty expected count and a source",
+      "mandatory": true,
+      "justification": null,
+      "notes": "An inapplicable dimension records status, reason, expectedCount zero, derivationSource and evidence, so it is auditable rather than a silent skip.",
+      "guardrailEvidence": [],
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/m0_mirror_audit.py",
+        "file:.iacode/schemas/mirror-audit.schema.json"
+      ],
+      "testEvidence": [
+        "test:NotApplicableRecordingTests.test_an_inapplicable_check_records_its_reason_count_and_source"
+      ],
+      "negativeTestEvidence": [
+        "test:MirrorApplicabilityValidationTests.test_an_inapplicable_dimension_without_a_reason_is_refused",
+        "test:NotApplicableRecordingTests.test_an_unjustified_inapplicable_record_becomes_a_failure"
+      ],
+      "documentationEvidence": [
+        "file:docs/QUALITY-GATES.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ]
+    },
+    {
+      "id": "REQ-0095",
+      "source": "LOCAL",
+      "sourceRef": "local:FCR-007",
+      "sourceReference": "FINAL-CORRECTION-REQUIREMENTS.json FCR-007",
+      "description": "NOT_APPLICABLE never becomes a bypass",
+      "mandatory": true,
+      "justification": null,
+      "notes": "The applicable set is derived from the canonical sources at every call and no caller or delivery artifact supplies it; checkpoint validation re-derives the registry-bound dimensions instead of believing the report.",
+      "guardrailEvidence": [],
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/policies.py",
+        "file:scripts/development-ledger/validate_checkpoint.py"
+      ],
+      "testEvidence": [
+        "test:ApplicableSetDerivationTests.test_the_mirror_derives_its_own_expected_set_and_takes_none_from_its_caller"
+      ],
+      "negativeTestEvidence": [
+        "test:MirrorApplicabilityValidationTests.test_a_registry_bound_dimension_cannot_be_declared_inapplicable",
+        "test:MirrorApplicabilityValidationTests.test_an_inapplicable_dimension_with_items_is_refused"
+      ],
+      "documentationEvidence": [
+        "file:docs/QUALITY-GATES.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ]
+    },
+    {
+      "id": "REQ-0096",
+      "source": "LOCAL",
+      "sourceRef": "local:FCR-008",
+      "sourceReference": "FINAL-CORRECTION-REQUIREMENTS.json FCR-008",
+      "description": "A checkpoint with no open audit passes the real mirror",
+      "mandatory": true,
+      "justification": null,
+      "notes": "A checkpoint that corrects no audit obtains a passing mirror through the shipped CLI, with the two empty dimensions recorded as NOT_APPLICABLE.",
+      "guardrailEvidence": [],
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/mirror_semantics_validation.py"
+      ],
+      "testEvidence": [
+        "test:MirrorApplicabilitySemanticsTests.test_an_empty_applicable_set_is_not_applicable_and_the_mirror_passes",
+        "test:MirrorApplicabilitySemanticsTests.test_every_state_was_produced_by_executing_the_tool"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ]
+    },
+    {
+      "id": "REQ-0097",
+      "source": "LOCAL",
+      "sourceRef": "local:FCR-009",
+      "sourceReference": "FINAL-CORRECTION-REQUIREMENTS.json FCR-009",
+      "description": "The first checkpoint of the next Gate reaches READY_FOR_REVIEW",
+      "mandatory": true,
+      "justification": null,
+      "notes": "The whole transition is executed in a disposable repository: SETUP sealed, independent audit, derived milestone PASS, first checkpoint of the next Gate, READY_FOR_REVIEW. No Gate 0 work exists in this repository.",
+      "guardrailEvidence": [],
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/gate_transition_simulation.py"
+      ],
+      "testEvidence": [
+        "test:GateTransitionSimulationTests.test_the_first_checkpoint_of_the_next_gate_reaches_review_readiness",
+        "test:GateTransitionSimulationTests.test_no_runtime_of_the_next_gate_was_implemented"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:GATE0-TRANSITION-SIMULATION.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ]
+    },
+    {
+      "id": "REQ-0098",
+      "source": "LOCAL",
+      "sourceRef": "local:FCR-010",
+      "sourceReference": "FINAL-CORRECTION-REQUIREMENTS.json FCR-010",
+      "description": "A real open finding still fails",
+      "mandatory": true,
+      "justification": null,
+      "notes": "A non-empty applicable set with an unsatisfied item fails and the delivery cannot be sealed, so the repair is not a vacuous pass.",
+      "guardrailEvidence": [],
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/m0_mirror_audit.py"
+      ],
+      "testEvidence": [
+        "test:MirrorApplicabilitySemanticsTests.test_an_open_finding_fails"
+      ],
+      "negativeTestEvidence": [
+        "test:MirrorApplicabilitySemanticsTests.test_an_open_finding_fails"
+      ],
+      "documentationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ]
+    },
+    {
+      "id": "REQ-0099",
+      "source": "LOCAL",
+      "sourceRef": "local:FCR-011",
+      "sourceReference": "FINAL-CORRECTION-REQUIREMENTS.json FCR-011",
+      "description": "An expected audit artifact that is absent fails, and is never inapplicable",
+      "mandatory": true,
+      "justification": null,
+      "notes": "When the canonical sources name a finding and the closure record is missing, the dimension fails rather than reporting an empty set.",
+      "guardrailEvidence": [],
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/m0_mirror_audit.py"
+      ],
+      "testEvidence": [
+        "test:MirrorApplicabilitySemanticsTests.test_a_missing_required_set_fails_rather_than_being_inapplicable"
+      ],
+      "negativeTestEvidence": [
+        "test:SealedReportRenderingTests.test_a_report_whose_findings_cannot_be_parsed_is_refused_rather_than_read_as_empty",
+        "test:ApplicableSetDerivationTests.test_an_unreadable_audit_report_raises_instead_of_reducing_to_an_empty_set"
+      ],
+      "documentationEvidence": [
+        "file:docs/QUALITY-GATES.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ]
+    },
+    {
+      "id": "REQ-0100",
+      "source": "LOCAL",
+      "sourceRef": "local:FCR-012",
+      "sourceReference": "FINAL-CORRECTION-REQUIREMENTS.json FCR-012",
+      "description": "A forged empty expected set does not reduce the applicable set",
+      "mandatory": true,
+      "justification": null,
+      "notes": "A delivery declaring that it has nothing to close is ignored: the canonical derivation prevails and the open item still fails.",
+      "guardrailEvidence": [],
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/policies.py"
+      ],
+      "testEvidence": [
+        "test:MirrorApplicabilitySemanticsTests.test_a_delivery_cannot_declare_its_own_applicable_set_empty"
+      ],
+      "negativeTestEvidence": [
+        "test:MirrorApplicabilityValidationTests.test_a_registry_bound_dimension_cannot_be_declared_inapplicable"
+      ],
+      "documentationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ]
+    },
+    {
+      "id": "REQ-0101",
+      "source": "LOCAL",
+      "sourceRef": "local:FCR-013",
+      "sourceReference": "FINAL-CORRECTION-REQUIREMENTS.json FCR-013",
+      "description": "A milestone with no findings of its own can pass",
+      "mandatory": true,
+      "justification": null,
+      "notes": "A clean audit checkpoint reaches a milestone verdict with the findings dimension inapplicable.",
+      "guardrailEvidence": [],
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/promotion_fixture.py"
+      ],
+      "testEvidence": [
+        "test:PositivePromotionTests.test_the_milestone_verdict_is_derived_as_passed",
+        "test:SimulationExecutesProductionControlsTests.test_the_simulated_mirror_reaches_a_pass_with_inapplicable_dimensions"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:POSITIVE-PROMOTION-VALIDATION.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ]
+    },
+    {
+      "id": "REQ-0102",
+      "source": "LOCAL",
+      "sourceRef": "local:FCR-014",
+      "sourceReference": "FINAL-CORRECTION-REQUIREMENTS.json FCR-014",
+      "description": "A delivery with closed findings passes",
+      "mandatory": true,
+      "justification": null,
+      "notes": "Three applicable findings, all CLOSED, and two mandatory attacks, both defended, produce a passing mirror.",
+      "guardrailEvidence": [],
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/mirror_semantics_validation.py"
+      ],
+      "testEvidence": [
+        "test:MirrorApplicabilitySemanticsTests.test_a_satisfied_applicable_set_passes"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ]
+    },
+    {
+      "id": "REQ-0103",
+      "source": "LOCAL",
+      "sourceRef": "local:FCR-015",
+      "sourceReference": "FINAL-CORRECTION-REQUIREMENTS.json FCR-015",
+      "description": "A delivery with an open finding does not pass",
+      "mandatory": true,
+      "justification": null,
+      "notes": "Three applicable findings with one OPEN produce a failing mirror and an unsealable delivery.",
+      "guardrailEvidence": [],
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/mirror_semantics_validation.py"
+      ],
+      "testEvidence": [
+        "test:MirrorApplicabilitySemanticsTests.test_an_open_finding_fails"
+      ],
+      "negativeTestEvidence": [
+        "test:MirrorApplicabilitySemanticsTests.test_an_open_finding_fails"
+      ],
+      "documentationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ]
+    },
+    {
+      "id": "REQ-0104",
+      "source": "LOCAL",
+      "sourceRef": "local:FCR-016",
+      "sourceReference": "FINAL-CORRECTION-REQUIREMENTS.json FCR-016",
+      "description": "The schema reuses NOT_APPLICABLE and evolves compatibly under a version gate",
+      "mandatory": true,
+      "justification": null,
+      "notes": "No new status is invented. Report version 1.1.0 adds the justification fields; a 1.0.0 report keeps its own rules and may not carry an inapplicable dimension.",
+      "guardrailEvidence": [],
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/schemas/mirror-audit.schema.json",
+        "file:scripts/development-ledger/validate_checkpoint.py"
+      ],
+      "testEvidence": [
+        "test:MirrorApplicabilityValidationTests.test_a_justified_inapplicable_dimension_is_accepted"
+      ],
+      "negativeTestEvidence": [
+        "test:MirrorApplicabilityValidationTests.test_an_inapplicable_dimension_under_the_older_report_version_is_refused"
+      ],
+      "documentationEvidence": [
+        "file:docs/CHECKPOINT-PROTOCOL.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ]
+    },
+    {
+      "id": "REQ-0105",
+      "source": "LOCAL",
+      "sourceRef": "local:FCR-017",
+      "sourceReference": "FINAL-CORRECTION-REQUIREMENTS.json FCR-017",
+      "description": "Every sealed checkpoint still validates under the new semantics",
+      "mandatory": true,
+      "justification": null,
+      "notes": "The current tooling validates all sealed checkpoints from a detached checkout of their own tags, and no sealed checkpoint is modified.",
+      "guardrailEvidence": [],
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/validate_checkpoint.py"
+      ],
+      "testEvidence": [
+        "test:HistoricalClosureCompatibilityTests.test_seventh_sealed_checkpoint_still_validates"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/CHECKPOINT-PROTOCOL.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json"
+      ]
+    },
+    {
+      "id": "REQ-0106",
+      "source": "LOCAL",
+      "sourceRef": "local:FCR-018",
+      "sourceReference": "FINAL-CORRECTION-REQUIREMENTS.json FCR-018",
+      "description": "The positive promotion simulation passes after the repair",
+      "mandatory": true,
+      "justification": null,
+      "notes": "Re-executed end to end, now producing the mirror report by running the tool.",
+      "guardrailEvidence": [],
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/promotion_simulation.py"
+      ],
+      "testEvidence": [
+        "test:PositivePromotionTests.test_the_milestone_verdict_is_derived_as_passed"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:POSITIVE-PROMOTION-VALIDATION.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:POSITIVE-PROMOTION-VALIDATION.json",
+        "command:cmd-0002"
+      ]
+    },
+    {
+      "id": "REQ-0107",
+      "source": "LOCAL",
+      "sourceRef": "local:FCR-019",
+      "sourceReference": "FINAL-CORRECTION-REQUIREMENTS.json FCR-019",
+      "description": "Successor durability passes after the repair",
+      "mandatory": true,
+      "justification": null,
+      "notes": "The integrity controls stay green at every state of an advancing chain.",
+      "guardrailEvidence": [],
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/successor_durability.py"
+      ],
+      "testEvidence": [
+        "test:SuccessorDurabilityTests.test_every_state_of_the_chain_verifies"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:SUCCESSOR-DURABILITY.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:SUCCESSOR-DURABILITY.json",
+        "command:cmd-0003"
+      ]
+    },
+    {
+      "id": "REQ-0108",
+      "source": "LOCAL",
+      "sourceRef": "local:FCR-020",
+      "sourceReference": "FINAL-CORRECTION-REQUIREMENTS.json FCR-020",
+      "description": "The state machine is proven without implementing the next Gate",
+      "mandatory": true,
+      "justification": null,
+      "notes": "The Gate transition fixture is synthetic and disposable; no Foundation work is implemented and no Gate 0 artifact exists in this repository.",
+      "guardrailEvidence": [],
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/promotion_fixture.py"
+      ],
+      "testEvidence": [
+        "test:GateTransitionSimulationTests.test_no_runtime_of_the_next_gate_was_implemented"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:NEXT.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:GATE0-TRANSITION-SIMULATION.json",
+        "command:cmd-0005"
+      ]
+    },
+    {
+      "id": "REQ-0109",
+      "source": "LOCAL",
+      "sourceRef": "local:FCR-021",
+      "sourceReference": "FINAL-CORRECTION-REQUIREMENTS.json FCR-021",
+      "description": "The lesson is recorded with the precise distinction and is guarded",
+      "mandatory": true,
+      "justification": null,
+      "notes": "LSN-0031 states that an empty applicable set is not a missing required set, and GRD-0030 prevents the recurrence automatically.",
+      "guardrailEvidence": [],
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/memory/lessons.jsonl",
+        "file:.iacode/memory/guardrails/registry.json"
+      ],
+      "testEvidence": [
+        "test:MirrorApplicabilitySemanticsTests.test_the_declared_states_cover_both_sides_of_the_distinction"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ]
+    },
+    {
+      "id": "REQ-0110",
+      "source": "LOCAL",
+      "sourceRef": "local:FCR-022",
+      "sourceReference": "FINAL-CORRECTION-REQUIREMENTS.json FCR-022",
+      "description": "The recurrence is recorded as a GUARDRAIL_FAILURE and resolved",
+      "mandatory": true,
+      "justification": null,
+      "notes": "LSN-0024 and LSN-0029 each carry a guardrail failure for this recurrence, resolved in this checkpoint by a new control, and the occurrence is kept rather than erased.",
+      "guardrailEvidence": [],
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/memory/lessons.jsonl"
+      ],
+      "testEvidence": [
+        "test:GuardrailEffectivenessGateTests.test_the_measured_effectiveness_is_recorded_truthfully"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/ENGINEERING-MEMORY.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ]
+    },
+    {
+      "id": "REQ-0111",
+      "source": "LOCAL",
+      "sourceRef": "local:FCR-023",
+      "sourceReference": "FINAL-CORRECTION-REQUIREMENTS.json FCR-023",
+      "description": "The positive simulation executes the mirror instead of writing its artifact",
+      "mandatory": true,
+      "justification": null,
+      "notes": "promotion_fixture runs m0_mirror_audit.py, records the command and the exit code, and the sealed artifact is bound to the tool's output by content.",
+      "guardrailEvidence": [],
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/promotion_fixture.py"
+      ],
+      "testEvidence": [
+        "test:SimulationExecutesProductionControlsTests.test_the_sealed_artifact_is_the_tools_own_output",
+        "test:SimulationExecutesProductionControlsTests.test_every_simulated_mirror_is_recorded_as_executed"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/QUALITY-GATES.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ]
+    },
+    {
+      "id": "REQ-0112",
+      "source": "LOCAL",
+      "sourceRef": "local:FCR-024",
+      "sourceReference": "FINAL-CORRECTION-REQUIREMENTS.json FCR-024",
+      "description": "A simulation that reports a control as passing calls that control",
+      "mandatory": true,
+      "justification": null,
+      "notes": "The rule is written down, guarded by GRD-0031, and what a simulation had to model instead is declared rather than implied.",
+      "guardrailEvidence": [],
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/promotion_simulation.py"
+      ],
+      "testEvidence": [
+        "test:SimulationExecutesProductionControlsTests.test_the_simulation_declares_which_artifacts_it_modelled"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/DEVELOPMENT-CONTRACT.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ]
+    },
+    {
+      "id": "REQ-0113",
+      "source": "LOCAL",
+      "sourceRef": "local:FCR-025",
+      "sourceReference": "FINAL-CORRECTION-REQUIREMENTS.json FCR-025",
+      "description": "The canonical CLAUDE.md records the language rule",
+      "mandatory": true,
+      "justification": null,
+      "notes": "Every response to the user is in Brazilian Portuguese, with the technical literals that must stay unchanged named explicitly, and no historical artifact is rewritten to translate it.",
+      "guardrailEvidence": [],
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "implementationEvidence": [
+        "file:CLAUDE.md"
+      ],
+      "testEvidence": [
+        "test:ClaudeAdapterTests.test_project_agents_defer_to_canonical_contracts"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:CLAUDE.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ]
+    },
+    {
+      "id": "REQ-0114",
+      "source": "LOCAL",
+      "sourceRef": "local:FCR-026",
+      "sourceReference": "FINAL-CORRECTION-REQUIREMENTS.json FCR-026",
+      "description": "The Green Keeper is green over the canonical mandatory gate set",
+      "mandatory": true,
+      "justification": null,
+      "notes": "Every mandatory gate exits zero with command evidence, with no remaining failure and no unresolved rework item.",
+      "guardrailEvidence": [],
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/green_keeper.py"
+      ],
+      "testEvidence": [
+        "test:GreenKeeperToolTests.test_gate_invocations_are_recorded_reproducibly"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/QUALITY-GATES.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:REWORK-LOG.jsonl"
+      ]
+    },
+    {
+      "id": "REQ-0115",
+      "source": "LOCAL",
+      "sourceRef": "local:FCR-027",
+      "sourceReference": "FINAL-CORRECTION-REQUIREMENTS.json FCR-027",
+      "description": "Delivery completeness is total over an independently derived expected set",
+      "mandatory": true,
+      "justification": null,
+      "notes": "Coverage and evidence coverage are 100.00, with zero partial and zero missing requirements.",
+      "guardrailEvidence": [],
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/check_completeness.py"
+      ],
+      "testEvidence": [
+        "test:DeliveryCompletenessMatrixTests.test_missing_mandatory_requirement_fails",
+        "test:LocalRequirementDeclarationTests.test_a_locally_declared_requirement_does_not_fail_the_audit",
+        "test:LocalRequirementDeclarationTests.test_a_locally_declared_requirement_cannot_replace_an_anchored_one"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:CLOSURE-REQUIREMENTS.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ]
+    },
+    {
+      "id": "REQ-0116",
+      "source": "LOCAL",
+      "sourceRef": "local:FCR-028",
+      "sourceReference": "FINAL-CORRECTION-REQUIREMENTS.json FCR-028",
+      "description": "The completeness audit covers this whole execution before handoff",
+      "mandatory": true,
+      "justification": null,
+      "notes": "Every requirement of this delivery is declared, complete and evidenced; the auditing role reports gaps and never repairs them silently.",
+      "guardrailEvidence": [],
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/agents/delivery-completeness-validator.md"
+      ],
+      "testEvidence": [
+        "test:DeliveryAssuranceGateTests.test_completeness_pass_claimed_over_an_incomplete_matrix_is_rejected"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:DECISIONS.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ]
+    },
+    {
+      "id": "REQ-0117",
+      "source": "LOCAL",
+      "sourceRef": "local:FCR-029",
+      "sourceReference": "FINAL-CORRECTION-REQUIREMENTS.json FCR-029",
+      "description": "The internal mirror of this delivery is the tool's own output",
+      "mandatory": true,
+      "justification": null,
+      "notes": "M0-INTERNAL-MIRROR.json was produced by running m0_mirror_audit.py over this checkpoint, never written by hand.",
+      "guardrailEvidence": [],
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/m0_mirror_audit.py"
+      ],
+      "testEvidence": [
+        "test:InternalAssuranceTests.test_a_failed_mirror_check_cannot_produce_a_pass"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json"
+      ]
+    },
+    {
+      "id": "REQ-0118",
+      "source": "LOCAL",
+      "sourceRef": "local:FCR-030",
+      "sourceReference": "FINAL-CORRECTION-REQUIREMENTS.json FCR-030",
+      "description": "The adversarial position of the changed surface is executed",
+      "mandatory": true,
+      "justification": null,
+      "notes": "The battery attacks the states the repair opens as well as the states it closes, including an unjustified inapplicable dimension, one with items, one counted as a pass, one under the older report version, and one declared away while the registry names work.",
+      "guardrailEvidence": [],
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/m0_red_team.py"
+      ],
+      "testEvidence": [
+        "test:InternalAssuranceTests.test_a_missing_mandatory_attack_is_rejected"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:CP11-FINDINGS-CLOSURE.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:M0-INTERNAL-RED-TEAM.json"
+      ]
+    },
+    {
+      "id": "REQ-0119",
+      "source": "LOCAL",
+      "sourceRef": "local:FCR-031",
+      "sourceReference": "FINAL-CORRECTION-REQUIREMENTS.json FCR-031",
+      "description": "The whole suite passes and every skip is accounted for",
+      "mandatory": true,
+      "justification": null,
+      "notes": "The suite is executed in full, the result object is read directly, and any skip is recorded with its condition rather than counted as a pass.",
+      "guardrailEvidence": [],
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "implementationEvidence": [
+        "file:tests/test_development_ledger.py"
+      ],
+      "testEvidence": [
+        "test:DerivedTestCountTests.test_a_count_larger_than_what_exists_is_refused"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:FINAL-REPORT.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:TESTS.json",
+        "checkpoint:COUNTS.json"
+      ]
+    },
+    {
+      "id": "REQ-0120",
+      "source": "LOCAL",
+      "sourceRef": "local:FCR-032",
+      "sourceReference": "FINAL-CORRECTION-REQUIREMENTS.json FCR-032",
+      "description": "The delivery validates from a clean clone",
+      "mandatory": true,
+      "justification": null,
+      "notes": "The suite, the validators and the closure controls all run green in a fresh clone with no workspace state.",
+      "guardrailEvidence": [],
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/m0_mirror_audit.py"
+      ],
+      "testEvidence": [
+        "test:InternalAssuranceTests.test_a_failed_mirror_check_cannot_produce_a_pass"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:FINAL-REPORT.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json"
+      ]
+    },
+    {
+      "id": "REQ-0121",
+      "source": "LOCAL",
+      "sourceRef": "local:FCR-033",
+      "sourceReference": "FINAL-CORRECTION-REQUIREMENTS.json FCR-033",
+      "description": "The CP-0011 findings closure record exists and is complete",
+      "mandatory": true,
+      "justification": null,
+      "notes": "Every finding the sealed review report raises is closed, with root cause, implementation, positive and negative regression and evidence.",
+      "guardrailEvidence": [],
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ],
+      "testEvidence": [
+        "test:FindingsClosureTests.test_an_open_finding_blocks_the_delivery"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:CP11-FINDINGS-CLOSURE.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ]
+    },
+    {
+      "id": "REQ-0122",
+      "source": "LOCAL",
+      "sourceRef": "local:FCR-034",
+      "sourceReference": "FINAL-CORRECTION-REQUIREMENTS.json FCR-034",
+      "description": "An internal auditor that did not implement audits the delivery",
+      "mandatory": true,
+      "justification": null,
+      "notes": "A separate auditing pass verifies the closure, the executed mirror, the three applicability outcomes, the Gate transition, the historical compatibility, the memory and the clean clone, and records its verdict as internal, never as independent validation.",
+      "guardrailEvidence": [],
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/agents/m0-closure-auditor.md"
+      ],
+      "testEvidence": [
+        "test:MemoryStatusVocabularyTests.test_internal_and_external_pass_are_distinct_statuses"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:DECISIONS.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:GATE0-TRANSITION-SIMULATION.json"
+      ]
+    },
+    {
+      "id": "REQ-0123",
+      "source": "LOCAL",
+      "sourceRef": "local:FCR-035",
+      "sourceReference": "FINAL-CORRECTION-REQUIREMENTS.json FCR-035",
+      "description": "The checkpoint carries every mandatory artifact of the current protocol",
+      "mandatory": true,
+      "justification": null,
+      "notes": "The standard ledger plus the artifacts this correction owes: the requirement register, the findings closure, the mirror semantics validation, the Gate transition simulation, the affected Red Team and the final internal audit.",
+      "guardrailEvidence": [],
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:FINAL-CORRECTION-REQUIREMENTS.json"
+      ],
+      "testEvidence": [
+        "test:SetupChecklistTests.test_checklist_exists_and_is_referenced"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:FINAL-CORRECTION-REQUIREMENTS.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ]
+    },
+    {
+      "id": "REQ-0124",
+      "source": "LOCAL",
+      "sourceRef": "local:FCR-036",
+      "sourceReference": "FINAL-CORRECTION-REQUIREMENTS.json FCR-036",
+      "description": "The delivery closes at READY_FOR_REVIEW and never grants itself a Gate",
+      "mandatory": true,
+      "justification": null,
+      "notes": "The implementing run records no independent verdict; independentReview and redTeam stay PENDING and blockedBy is empty.",
+      "guardrailEvidence": [],
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/validate_checkpoint.py"
+      ],
+      "testEvidence": [
+        "test:StatusBlockerInvariantTests.test_ready_for_review_with_blocker_fails"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:STATUS.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:STATE.json"
+      ]
+    },
+    {
+      "id": "REQ-0125",
+      "source": "LOCAL",
+      "sourceRef": "local:FCR-037",
+      "sourceReference": "FINAL-CORRECTION-REQUIREMENTS.json FCR-037",
+      "description": "The next action is a fresh-session independent M0 audit and Gate 0 stays blocked",
+      "mandatory": true,
+      "justification": null,
+      "notes": "NEXT.md names the audit, not Gate 0, and no Gate 0 work was started.",
+      "guardrailEvidence": [],
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:NEXT.md"
+      ],
+      "testEvidence": [
+        "test:GateTransitionSimulationTests.test_no_runtime_of_the_next_gate_was_implemented"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:HANDOFF.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json",
+        "checkpoint:CP11-FINDINGS-CLOSURE.json"
+      ]
+    },
+    {
+      "id": "REQ-0126",
+      "source": "LOCAL",
+      "sourceRef": "local:FCR-038",
+      "sourceReference": "FINAL-CORRECTION-REQUIREMENTS.json FCR-038",
+      "description": "No historical checkpoint, commit or tag is rewritten",
+      "mandatory": true,
+      "justification": null,
+      "notes": "Every correction belongs to this checkpoint; the sealed history is read, anchored and validated, never edited.",
+      "guardrailEvidence": [],
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/anchors/checkpoint-chain.json"
+      ],
+      "testEvidence": [
+        "test:IntegrityAnchorTests.test_a_moved_historical_tag_is_detected"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:DIFF-SUMMARY.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:MIRROR-SEMANTICS-VALIDATION.json"
+      ]
+    }
+  ]
+}

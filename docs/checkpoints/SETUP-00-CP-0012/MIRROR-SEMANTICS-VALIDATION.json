@@ -1,0 +1,230 @@
+{
+  "schemaVersion": "1.0.0",
+  "generatedAt": "2026-09-21T12:40:28Z",
+  "validation": "internal mirror audit applicability semantics",
+  "finding": "CP11-F-001",
+  "statesCovered": {
+    "emptyApplicableSet": "MSV-001",
+    "satisfiedApplicableSet": "MSV-002",
+    "unsatisfiedApplicableSet": "MSV-003",
+    "missingRequiredSet": "MSV-004",
+    "forgedEmptyApplicableSet": "MSV-005",
+    "unexecutedApplicableBattery": "MSV-006"
+  },
+  "checks": [
+    {
+      "id": "MSV-001",
+      "scenario": "no-applicable-audit",
+      "title": "a delivery that corrects no audit",
+      "why": "No registered audit names this checkpoint as its corrective delivery, so the applicable set is empty by derivation. This is the state the finding made unreachable, and the delivery must reach a handoff-ready status in it.",
+      "expected": {
+        "overall": "PASS",
+        "MIR-002": "NOT_APPLICABLE",
+        "MIR-003": "NOT_APPLICABLE",
+        "sealed": true
+      },
+      "observed": "overall=PASS; MIR-002=NOT_APPLICABLE; MIR-003=NOT_APPLICABLE; sealed=True",
+      "mirrorCommand": "python scripts/development-ledger/m0_mirror_audit.py --write --checkpoint C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-mirror-semantics-74d6reai\\no-applicable-audit\\docs\\checkpoints\\SETUP-00-CP-0001",
+      "mirrorExitCode": 0,
+      "findingsCheck": {
+        "id": "MIR-002",
+        "dimension": "Audit findings",
+        "observed": "0 applicable audit findings derived from the audit registry",
+        "result": "NOT_APPLICABLE",
+        "reason": "No audit finding is applicable to this checkpoint: no registered audit names it as its corrective delivery, so there is no finding to close.",
+        "expectedCount": 0,
+        "derivationSource": ".iacode/policies/audit-registry.json matched on gate='SETUP-00' and correctiveCheckpoint='SETUP-00-CP-0001', with every finding and mandatory attack re-parsed from the sealed reports the matching entries name"
+      },
+      "attacksCheck": {
+        "id": "MIR-003",
+        "dimension": "Mandatory attacks",
+        "observed": "0 applicable mandatory attacks derived from the audit registry",
+        "result": "NOT_APPLICABLE",
+        "reason": "No mandatory attack battery is applicable to this checkpoint: no registered audit names it as its corrective delivery, so no sealed Red Team report hands it a battery to re-defend.",
+        "expectedCount": 0,
+        "derivationSource": ".iacode/policies/audit-registry.json matched on gate='SETUP-00' and correctiveCheckpoint='SETUP-00-CP-0001', with every finding and mandatory attack re-parsed from the sealed reports the matching entries name"
+      },
+      "failures": [],
+      "result": "PASS"
+    },
+    {
+      "id": "MSV-002",
+      "scenario": "closed-findings",
+      "title": "a delivery whose applicable findings and attacks are all satisfied",
+      "why": "Three findings are applicable and all three are CLOSED; two mandatory attacks are applicable and both were defended. The repair must not have replaced the check with an unconditional pass.",
+      "expected": {
+        "overall": "PASS",
+        "MIR-002": "PASS",
+        "MIR-003": "PASS",
+        "sealed": true
+      },
+      "observed": "overall=PASS; MIR-002=PASS; MIR-003=PASS; sealed=True",
+      "mirrorCommand": "python scripts/development-ledger/m0_mirror_audit.py --write --checkpoint C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-mirror-semantics-74d6reai\\closed-findings\\docs\\checkpoints\\SETUP-00-CP-0001",
+      "mirrorExitCode": 0,
+      "findingsCheck": {
+        "id": "MIR-002",
+        "dimension": "Audit findings",
+        "observed": "3/3 audit findings CLOSED",
+        "result": "PASS",
+        "reason": null,
+        "expectedCount": null,
+        "derivationSource": null
+      },
+      "attacksCheck": {
+        "id": "MIR-003",
+        "dimension": "Mandatory attacks",
+        "observed": "2/2 mandatory attacks defended; 2/2 overall",
+        "result": "PASS",
+        "reason": null,
+        "expectedCount": null,
+        "derivationSource": null
+      },
+      "failures": [],
+      "result": "PASS"
+    },
+    {
+      "id": "MSV-003",
+      "scenario": "open-finding",
+      "title": "a delivery with an applicable finding still open",
+      "why": "A non-empty applicable set with an unsatisfied item is a failure, and the delivery cannot be sealed. This is what stops the repair from becoming a vacuous pass.",
+      "expected": {
+        "overall": "FAIL",
+        "MIR-002": "FAIL",
+        "MIR-003": "PASS",
+        "sealed": false
+      },
+      "observed": "overall=FAIL; MIR-002=FAIL; MIR-003=PASS; sealed=False",
+      "mirrorCommand": "python scripts/development-ledger/m0_mirror_audit.py --write --checkpoint C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-mirror-semantics-74d6reai\\open-finding\\docs\\checkpoints\\SETUP-00-CP-0001",
+      "mirrorExitCode": 1,
+      "findingsCheck": {
+        "id": "MIR-002",
+        "dimension": "Audit findings",
+        "observed": "2/3 audit findings CLOSED; FIX-F-003 is OPEN",
+        "result": "FAIL",
+        "reason": null,
+        "expectedCount": null,
+        "derivationSource": null
+      },
+      "attacksCheck": {
+        "id": "MIR-003",
+        "dimension": "Mandatory attacks",
+        "observed": "1/1 mandatory attacks defended; 1/1 overall",
+        "result": "PASS",
+        "reason": null,
+        "expectedCount": null,
+        "derivationSource": null
+      },
+      "failures": [],
+      "result": "PASS"
+    },
+    {
+      "id": "MSV-004",
+      "scenario": "missing-closure-record",
+      "title": "a delivery that omits the closure record the registry requires",
+      "why": "The canonical sources name a finding and the artifact that would close it is absent. A missing required set is never an empty applicable set.",
+      "expected": {
+        "overall": "FAIL",
+        "MIR-002": "FAIL",
+        "MIR-003": "PASS",
+        "sealed": false
+      },
+      "observed": "overall=FAIL; MIR-002=FAIL; MIR-003=PASS; sealed=False",
+      "mirrorCommand": "python scripts/development-ledger/m0_mirror_audit.py --write --checkpoint C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-mirror-semantics-74d6reai\\missing-closure-record\\docs\\checkpoints\\SETUP-00-CP-0001",
+      "mirrorExitCode": 1,
+      "findingsCheck": {
+        "id": "MIR-002",
+        "dimension": "Audit findings",
+        "observed": "0/1 audit findings CLOSED; M0-FIXTURE-AUDIT: FIXTURE-FINDINGS-CLOSURE.json is missing",
+        "result": "FAIL",
+        "reason": null,
+        "expectedCount": null,
+        "derivationSource": null
+      },
+      "attacksCheck": {
+        "id": "MIR-003",
+        "dimension": "Mandatory attacks",
+        "observed": "1/1 mandatory attacks defended; 1/1 overall",
+        "result": "PASS",
+        "reason": null,
+        "expectedCount": null,
+        "derivationSource": null
+      },
+      "failures": [],
+      "result": "PASS"
+    },
+    {
+      "id": "MSV-005",
+      "scenario": "forged-empty-applicable-set",
+      "title": "a delivery declaring that it has nothing to close",
+      "why": "The checkpoint declares an empty expected set while the registry and the sealed report name one open finding. The applicable set is derived from the canonical sources and no artifact inside the delivery can shrink it, so the declaration changes nothing and the open finding still fails.",
+      "expected": {
+        "overall": "FAIL",
+        "MIR-002": "FAIL",
+        "MIR-003": "PASS",
+        "sealed": false
+      },
+      "observed": "overall=FAIL; MIR-002=FAIL; MIR-003=PASS; sealed=False",
+      "mirrorCommand": "python scripts/development-ledger/m0_mirror_audit.py --write --checkpoint C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-mirror-semantics-74d6reai\\forged-empty-applicable-set\\docs\\checkpoints\\SETUP-00-CP-0001",
+      "mirrorExitCode": 1,
+      "findingsCheck": {
+        "id": "MIR-002",
+        "dimension": "Audit findings",
+        "observed": "0/1 audit findings CLOSED; FIX-F-001 is OPEN",
+        "result": "FAIL",
+        "reason": null,
+        "expectedCount": null,
+        "derivationSource": null
+      },
+      "attacksCheck": {
+        "id": "MIR-003",
+        "dimension": "Mandatory attacks",
+        "observed": "1/1 mandatory attacks defended; 1/1 overall",
+        "result": "PASS",
+        "reason": null,
+        "expectedCount": null,
+        "derivationSource": null
+      },
+      "failures": [],
+      "result": "PASS"
+    },
+    {
+      "id": "MSV-006",
+      "scenario": "undefended-mandatory-attack",
+      "title": "a delivery that did not execute an applicable mandatory attack",
+      "why": "A mandatory attack the sealed report hands the delivery was not executed. The battery dimension is applicable and unsatisfied, which is a failure.",
+      "expected": {
+        "overall": "FAIL",
+        "MIR-002": "PASS",
+        "MIR-003": "FAIL",
+        "sealed": false
+      },
+      "observed": "overall=FAIL; MIR-002=PASS; MIR-003=FAIL; sealed=False",
+      "mirrorCommand": "python scripts/development-ledger/m0_mirror_audit.py --write --checkpoint C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-mirror-semantics-74d6reai\\undefended-mandatory-attack\\docs\\checkpoints\\SETUP-00-CP-0001",
+      "mirrorExitCode": 1,
+      "findingsCheck": {
+        "id": "MIR-002",
+        "dimension": "Audit findings",
+        "observed": "1/1 audit findings CLOSED",
+        "result": "PASS",
+        "reason": null,
+        "expectedCount": null,
+        "derivationSource": null
+      },
+      "attacksCheck": {
+        "id": "MIR-003",
+        "dimension": "Mandatory attacks",
+        "observed": "1/2 mandatory attacks defended; 1/1 overall; not executed: FIX-02",
+        "result": "FAIL",
+        "reason": null,
+        "expectedCount": null,
+        "derivationSource": null
+      },
+      "failures": [],
+      "result": "PASS"
+    }
+  ],
+  "total": 6,
+  "passed": 6,
+  "failed": 0,
+  "result": "PASS"
+}

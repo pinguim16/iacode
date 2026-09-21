@@ -2733,9 +2733,17 @@ class ClosureFixture(unittest.TestCase):
             stale = self.checkpoint / name
             if stale.is_file():
                 stale.unlink()
+        # Every registered audit, not only the one whose corrective delivery this fixture models.
+        # A delivery inherits the mandatory battery of every audit the registry carries, so a
+        # fixture that modelled one audit's rows would report the rest as missing the moment a new
+        # audit is registered -- and that is a property of the fixture, not of the battery.
         attacks = []
-        for audit in open_audits(PROJECT_ROOT, "SETUP-00", self.checkpoint.name):
+        seen: set[str] = set()
+        for audit in load_audit_registry(PROJECT_ROOT):
             for attack in audit_attacks(PROJECT_ROOT, audit):
+                if attack["id"] in seen:
+                    continue
+                seen.add(attack["id"])
                 attacks.append({
                     "attackId": attack["id"], "description": attack["mutation"],
                     "target": attack["target"], "mutation": attack["mutation"],
@@ -4498,6 +4506,574 @@ class AuditRegistrySuccessionTests(unittest.TestCase):
             "| AA | mutation | reject | rejected | DEFENDED |\n")
         self.assertEqual([(item["id"], item["mandatory"]) for item in rows],
                          [("A", "true"), ("B", "true"), ("AA", "false")])
+
+
+# ==============================================================================================
+# CP-0011 findings (schemaVersion 3.2.0, corrective delivery SETUP-00-CP-0012)
+#
+# CP11-F-001 was one control that could not tell two states apart: an empty applicable set, where
+# the canonical sources name nothing of this kind to judge, and a missing required set, where they
+# name something the delivery does not carry. The first is legitimate and the second is a failure,
+# and collapsing them made every delivery that corrects no audit unshippable. Each class below
+# executes the states rather than asserting them, including the states that would turn the repair
+# into a way of passing without auditing anything.
+# ==============================================================================================
+
+import inspect  # noqa: E402
+
+import m0_mirror_audit  # noqa: E402
+from ledger_common import LedgerError  # noqa: E402
+from m0_mirror_audit import INDEPENDENCE as MIRROR_INDEPENDENCE  # noqa: E402
+from m0_mirror_audit import Mirror, NotApplicable  # noqa: E402
+from mirror_semantics_validation import SCENARIOS as MIRROR_SEMANTICS_SCENARIOS  # noqa: E402
+from mirror_semantics_validation import run as run_mirror_semantics  # noqa: E402
+from gate_transition_simulation import evaluate as evaluate_gate_transition  # noqa: E402
+from policies import audit_applicability  # noqa: E402
+from promotion_fixture import run_gate_transition  # noqa: E402
+
+
+class SealedReportRenderingTests(unittest.TestCase):
+    """Three sealed audits rendered their reports three ways, and all three must still parse.
+
+    A parser that recognises one rendering reads the others as empty, and an empty parse of a report
+    that has findings is exactly the confusion this delivery exists to remove: it looks like "this
+    audit raised nothing" and it means "this report could not be read". The tooling refuses the
+    second rather than believing the first, and these cases hold the earlier parses fixed so the
+    expected requirement set of a sealed checkpoint never moves under it.
+    """
+
+    def _report(self, checkpoint: str, name: str) -> str:
+        path = PROJECT_ROOT / "docs" / "checkpoints" / checkpoint / name
+        if not path.is_file():
+            self.skipTest(f"{checkpoint} is not present in this checkout")
+        return path.read_text(encoding="utf-8")
+
+    def test_the_first_audits_parse_is_unchanged(self) -> None:
+        attacks = parse_attacks(self._report("SETUP-00-CP-0007", "RED-TEAM-REPORT.md"))
+        self.assertEqual([item["id"] for item in attacks if item["mandatory"] == "true"],
+                         [chr(code) for code in range(ord("A"), ord("Z") + 1)])
+        self.assertEqual([item["id"] for item in attacks if item["mandatory"] == "false"],
+                         ["AA", "AB", "AC", "AD", "AE", "AF"])
+        self.assertEqual(
+            [item["id"] for item in parse_findings(
+                self._report("SETUP-00-CP-0007", "REVIEW-REPORT.md"))],
+            ["M0-F-%03d" % number for number in range(1, 12)])
+
+    def test_the_second_audits_parse_is_unchanged(self) -> None:
+        attacks = parse_attacks(self._report("SETUP-00-CP-0009", "RED-TEAM-REPORT.md"))
+        self.assertEqual([item["id"] for item in attacks if item["mandatory"] == "true"],
+                         [chr(code) for code in range(ord("A"), ord("Z") + 1)])
+        self.assertEqual([item["id"] for item in attacks if item["mandatory"] == "false"],
+                         ["A" + chr(code) for code in range(ord("A"), ord("Z") + 1)])
+        self.assertEqual(
+            [item["id"] for item in parse_findings(
+                self._report("SETUP-00-CP-0009", "REVIEW-REPORT.md"))],
+            ["CP9-F-00%d" % number for number in range(1, 6)])
+
+    def test_the_third_audits_battery_is_read_from_its_category_column(self) -> None:
+        attacks = parse_attacks(self._report("SETUP-00-CP-0011", "RED-TEAM-REPORT.md"))
+        self.assertTrue(attacks, "the third sealed report parsed as containing no attack")
+        mandatory = [item["id"] for item in attacks if item["mandatory"] == "true"]
+        self.assertEqual(mandatory, ["INT-01", "INT-02", "INT-03", "INT-04", "INT-05", "PRE-01",
+                                     "MEM-01", "STL-01", "STL-02", "STL-04", "STL-05", "SEC-01"])
+        self.assertTrue(all(item["id"].startswith("ATT-")
+                            for item in attacks[:1]), attacks[:1])
+
+    def test_a_table_that_is_not_a_table_of_attacks_is_not_read_as_one(self) -> None:
+        """The positive control, the guardrail probes and the scenario logs are not attacks."""
+        attacks = parse_attacks(self._report("SETUP-00-CP-0009", "RED-TEAM-REPORT.md"))
+        identifiers = {item["id"] for item in attacks}
+        for foreign in ("POS-EXT", "GK-001", "HIST-001", "EXT-000"):
+            self.assertNotIn(foreign, identifiers)
+
+    def test_a_findings_section_bounds_what_the_report_raises_as_its_own(self) -> None:
+        """An audit verifying its predecessor's findings is not raising them again."""
+        findings = [item["id"] for item in parse_findings(
+            self._report("SETUP-00-CP-0011", "REVIEW-REPORT.md"))]
+        self.assertEqual(findings, ["CP11-F-001"])
+        for earlier in ("CP9-F-001", "CP9-F-005"):
+            self.assertNotIn(earlier, findings)
+
+    def test_a_report_whose_findings_cannot_be_parsed_is_refused_rather_than_read_as_empty(
+            self) -> None:
+        """A missing required set is never an empty applicable set, not even in the parser."""
+        with tempfile.TemporaryDirectory() as workdir:
+            root = Path(workdir)
+            (root / "report.md").write_text(
+                "# Review\n\n## Findings\n\nnone could be rendered\n",
+                encoding="utf-8", newline="\n")
+            with self.assertRaises(LedgerError) as refused:
+                audit_findings(root, {"auditId": "X", "reviewReport": "report.md"})
+        self.assertIn("no finding could be parsed", str(refused.exception))
+
+    def test_the_registry_binds_the_third_audit_to_this_corrective_checkpoint(self) -> None:
+        audits = open_audits(PROJECT_ROOT, "SETUP-00", "SETUP-00-CP-0012")
+        self.assertEqual([audit["auditId"] for audit in audits], ["M0-CP-0011"])
+        self.assertEqual([item["id"] for item in audit_findings(PROJECT_ROOT, audits[0])],
+                         ["CP11-F-001"])
+
+
+class ApplicableSetDerivationTests(unittest.TestCase):
+    """The applicable set comes from the canonical sources and no delivery can shrink it."""
+
+    def test_the_applicable_set_of_this_delivery_is_derived_from_the_registry(self) -> None:
+        applicable = audit_applicability(PROJECT_ROOT, "SETUP-00", "SETUP-00-CP-0012")
+        self.assertEqual(applicable["auditIds"], ["M0-CP-0011"])
+        self.assertEqual([item["id"] for item in applicable["findings"]], ["CP11-F-001"])
+        self.assertTrue(applicable["mandatoryAttacks"])
+        self.assertIn("audit-registry.json", applicable["derivationSource"])
+
+    def test_a_checkpoint_no_audit_names_has_an_empty_applicable_set(self) -> None:
+        applicable = audit_applicability(PROJECT_ROOT, "SETUP-00", "SETUP-00-CP-9999")
+        self.assertEqual(applicable["findings"], [])
+        self.assertEqual(applicable["mandatoryAttacks"], [])
+        self.assertEqual(applicable["auditIds"], [])
+
+    def test_an_unreadable_audit_report_raises_instead_of_reducing_to_an_empty_set(self) -> None:
+        with tempfile.TemporaryDirectory() as workdir:
+            root = Path(workdir)
+            policies = root / ".iacode" / "policies"
+            policies.mkdir(parents=True)
+            write_json_file(policies / "audit-registry.json", {
+                "schemaVersion": "1.0.0", "policy": "fixture",
+                "audits": [{
+                    "auditId": "FIXTURE", "milestone": "M0", "gate": "SETUP-00",
+                    "auditor": "fixture", "auditCheckpoint": "A", "subjectCheckpoint": "B",
+                    "subjectCommit": "0" * 40, "verdict": "REWORK_REQUIRED",
+                    "reviewReport": "missing-report.md", "correctiveCheckpoint": "C",
+                    "findingsClosureFile": "CLOSURE.json"}]})
+            with self.assertRaises(LedgerError):
+                audit_applicability(root, "SETUP-00", "C")
+
+    def test_the_mirror_derives_its_own_expected_set_and_takes_none_from_its_caller(self) -> None:
+        """No entry point offers a way to hand the mirror the set it is supposed to derive.
+
+        A control that trusts its own input is not a control, which is the CP-0006 lesson about a
+        shrinkable denominator. The audit is invoked with a root and a checkpoint, and every
+        applicable item is derived from the canonical sources inside.
+        """
+        signature = inspect.signature(m0_mirror_audit.run_audit)
+        self.assertEqual(list(signature.parameters), ["root", "checkpoint", "clean_clone"])
+        source = inspect.getsource(m0_mirror_audit.run_audit)
+        self.assertIn("audit_applicability(root, gate, checkpoint.name)", source)
+
+
+class NotApplicableRecordingTests(unittest.TestCase):
+    """An inapplicable dimension justifies itself, or it is recorded as a failure of the auditor."""
+
+    def _mirror(self) -> Mirror:
+        checkpoint = PROJECT_ROOT / "docs" / "checkpoints" / "SETUP-00-CP-0011"
+        if not (checkpoint / "STATE.json").is_file():
+            self.skipTest("the audit checkpoint is not present in this checkout")
+        return Mirror(PROJECT_ROOT, checkpoint)
+
+    def test_an_inapplicable_outcome_cannot_be_constructed_without_a_reason(self) -> None:
+        with self.assertRaises(LedgerError):
+            NotApplicable(reason="  ", derivation_source="registry", observed="nothing")
+
+    def test_an_inapplicable_outcome_cannot_be_constructed_without_a_derivation_source(
+            self) -> None:
+        with self.assertRaises(LedgerError):
+            NotApplicable(reason="nothing applies", derivation_source="", observed="nothing")
+
+    def test_an_inapplicable_check_records_its_reason_count_and_source(self) -> None:
+        mirror = self._mirror()
+        mirror.check("MIR-TEST", "fixture", "fixture", ["checkpoint:PLAN.md"],
+                     lambda: NotApplicable(reason="nothing applies",
+                                           derivation_source="the fixture registry",
+                                           observed="0 applicable items"))
+        recorded = mirror.checks[-1]
+        self.assertEqual(recorded["result"], "NOT_APPLICABLE")
+        self.assertEqual(recorded["expectedCount"], 0)
+        self.assertEqual(recorded["reason"], "nothing applies")
+        self.assertEqual(recorded["derivationSource"], "the fixture registry")
+
+    def test_an_unjustified_inapplicable_record_becomes_a_failure(self) -> None:
+        mirror = self._mirror()
+        mirror.record("MIR-TEST", "fixture", "fixture", "0 applicable items", "NOT_APPLICABLE",
+                      [], reason="", expected_count=0, derivation_source="")
+        self.assertEqual(mirror.checks[-1]["result"], "FAIL")
+
+    def test_an_inapplicable_record_with_items_becomes_a_failure(self) -> None:
+        mirror = self._mirror()
+        mirror.record("MIR-TEST", "fixture", "fixture", "3 applicable items", "NOT_APPLICABLE",
+                      [], reason="nothing applies", expected_count=3,
+                      derivation_source="the fixture registry")
+        self.assertEqual(mirror.checks[-1]["result"], "FAIL")
+        self.assertIn("3 applicable item", mirror.checks[-1]["observed"])
+
+
+class MirrorApplicabilityValidationTests(ClosureFixture):
+    """Checkpoint validation judges an inapplicable dimension instead of believing it."""
+
+    def _mirror_document(self) -> dict[str, Any]:
+        return read_json(self.checkpoint / f"{self.MILESTONE}-INTERNAL-MIRROR.json")
+
+    def _write_mirror(self, document: dict[str, Any]) -> None:
+        write_json_file(self.checkpoint / f"{self.MILESTONE}-INTERNAL-MIRROR.json", document)
+
+    def _errors(self) -> list[str]:
+        errors: list[str] = []
+        _validate_internal_assurance(PROJECT_ROOT, self.checkpoint, self.state(), errors)
+        return errors
+
+    def state(self) -> dict[str, Any]:
+        return read_json(self.checkpoint / "STATE.json")
+
+    def test_the_unmutated_fixture_is_accepted(self) -> None:
+        self.assertEqual([error for error in self._errors() if "MIRROR" in error], [])
+
+    def test_a_justified_inapplicable_dimension_is_accepted(self) -> None:
+        document = self._mirror_document()
+        document["schemaVersion"] = "1.1.0"
+        document["checks"].append({
+            "id": "MIR-999", "dimension": "fixture", "expectation": "fixture",
+            "observed": "0 applicable items", "result": "NOT_APPLICABLE",
+            "evidence": ["checkpoint:PLAN.md"], "reason": "nothing of this kind applies",
+            "expectedCount": 0, "derivationSource": ".iacode/policies/audit-registry.json"})
+        document["total"] += 1
+        document["notApplicable"] = 1
+        self._write_mirror(document)
+        self.assertEqual([error for error in self._errors() if "MIRROR" in error], [])
+
+    def test_an_inapplicable_dimension_without_a_reason_is_refused(self) -> None:
+        document = self._mirror_document()
+        document["schemaVersion"] = "1.1.0"
+        document["checks"].append({
+            "id": "MIR-999", "dimension": "fixture", "expectation": "fixture",
+            "observed": "0 applicable items", "result": "NOT_APPLICABLE",
+            "evidence": ["checkpoint:PLAN.md"], "expectedCount": 0,
+            "derivationSource": ".iacode/policies/audit-registry.json"})
+        document["total"] += 1
+        document["notApplicable"] = 1
+        self._write_mirror(document)
+        self.assertTrue(any("without a reason" in error for error in self._errors()))
+
+    def test_an_inapplicable_dimension_with_items_is_refused(self) -> None:
+        document = self._mirror_document()
+        document["schemaVersion"] = "1.1.0"
+        document["checks"].append({
+            "id": "MIR-999", "dimension": "fixture", "expectation": "fixture",
+            "observed": "3 applicable items", "result": "NOT_APPLICABLE",
+            "evidence": ["checkpoint:PLAN.md"], "reason": "nothing of this kind applies",
+            "expectedCount": 3, "derivationSource": ".iacode/policies/audit-registry.json"})
+        document["total"] += 1
+        document["notApplicable"] = 1
+        self._write_mirror(document)
+        self.assertTrue(any("is not inapplicable" in error for error in self._errors()))
+
+    def test_an_inapplicable_dimension_under_the_older_report_version_is_refused(self) -> None:
+        document = self._mirror_document()
+        document["schemaVersion"] = "1.0.0"
+        document["checks"].append({
+            "id": "MIR-999", "dimension": "fixture", "expectation": "fixture",
+            "observed": "0 applicable items", "result": "NOT_APPLICABLE",
+            "evidence": ["checkpoint:PLAN.md"]})
+        document["total"] += 1
+        document["notApplicable"] = 1
+        self._write_mirror(document)
+        self.assertTrue(any("justification fields" in error for error in self._errors()))
+
+    def test_a_registry_bound_dimension_cannot_be_declared_inapplicable(self) -> None:
+        """The escape the repair opens: declaring away work the canonical sources still name."""
+        applicable = audit_applicability(PROJECT_ROOT, "SETUP-00", self.checkpoint.name)
+        if not applicable["findings"]:
+            self.skipTest("this fixture checkpoint corrects no audit")
+        document = self._mirror_document()
+        document["schemaVersion"] = "1.1.0"
+        document["checks"].append({
+            "id": "MIR-002", "dimension": "Audit findings", "expectation": "fixture",
+            "observed": "0 applicable audit findings", "result": "NOT_APPLICABLE",
+            "evidence": ["checkpoint:PLAN.md"],
+            "reason": "this delivery decided it has nothing to close", "expectedCount": 0,
+            "derivationSource": "declared by this delivery"})
+        document["total"] += 1
+        document["notApplicable"] = 1
+        self._write_mirror(document)
+        self.assertTrue(any("while the canonical sources name" in error
+                            for error in self._errors()))
+
+    def test_an_inapplicable_dimension_counted_as_a_pass_is_refused(self) -> None:
+        document = self._mirror_document()
+        document["schemaVersion"] = "1.1.0"
+        document["checks"].append({
+            "id": "MIR-999", "dimension": "fixture", "expectation": "fixture",
+            "observed": "0 applicable items", "result": "NOT_APPLICABLE",
+            "evidence": ["checkpoint:PLAN.md"], "reason": "nothing of this kind applies",
+            "expectedCount": 0, "derivationSource": ".iacode/policies/audit-registry.json"})
+        document["total"] += 1
+        document["passed"] += 1
+        document["notApplicable"] = 1
+        self._write_mirror(document)
+        errors = self._errors()
+        self.assertTrue(any("passed does not match" in error for error in errors)
+                        or any("must add up to the total" in error for error in errors), errors)
+
+
+class LocalRequirementDeclarationTests(ClosureFixture):
+    """A delivery may declare a requirement of its own without escaping the derived set.
+
+    The matrix defines a ``local:`` kind for a delivery-specific requirement, and the exact set
+    comparison already refuses an omitted, substituted or duplicated anchor. A control that also
+    demanded the total to equal the derived set would refuse a delivery for recording its own work
+    -- the same shape as treating an empty applicable set as a failure.
+    """
+
+    LOCAL_ROW = {
+        "id": "REQ-9001",
+        "source": "FINAL-CORRECTION-REQUIREMENTS.json FCR-999",
+        "sourceRef": "local:FCR-999",
+        "description": "A requirement this delivery declared for itself.",
+        "mandatory": True,
+        "status": "COMPLETE",
+        "implementationEvidence": ["checkpoint:PLAN.md"],
+        "testEvidence": [],
+        "documentationEvidence": [],
+        "validationEvidence": [],
+        "justification": None,
+        "notes": "Declared locally and audited like every other row.",
+    }
+
+    def _report(self) -> dict[str, Any]:
+        return evaluate_matrix(PROJECT_ROOT, self.checkpoint,
+                               read_json(self.checkpoint / "REQUIREMENTS-MATRIX.json"))
+
+    def test_the_anchored_count_excludes_a_locally_declared_requirement(self) -> None:
+        before = self._report()
+        self.edit("REQUIREMENTS-MATRIX.json",
+                  lambda document: document["requirements"].append(dict(self.LOCAL_ROW)))
+        after = self._report()
+        self.assertEqual(after["anchoredRequirements"], before["anchoredRequirements"])
+        self.assertEqual(after["totalRequirements"], before["totalRequirements"] + 1)
+        self.assertEqual(after["anchoredRequirements"], after["expectedRequirements"])
+
+    def test_a_locally_declared_requirement_does_not_fail_the_audit(self) -> None:
+        self.edit("REQUIREMENTS-MATRIX.json",
+                  lambda document: document["requirements"].append(dict(self.LOCAL_ROW)))
+        report = self._report()
+        self.assertEqual(report["result"], "PASS", report["findings"])
+
+    def test_a_locally_declared_requirement_cannot_replace_an_anchored_one(self) -> None:
+        def mutate(document: dict[str, Any]) -> None:
+            anchored = [row for row in document["requirements"]
+                        if str(row.get("sourceRef", "")).startswith("canonical:")]
+            document["requirements"].remove(anchored[0])
+            document["requirements"].append(dict(self.LOCAL_ROW))
+
+        self.edit("REQUIREMENTS-MATRIX.json", mutate)
+        report = self._report()
+        self.assertEqual(report["result"], "FAIL")
+        self.assertTrue(any("does not declare it" in finding["detail"]
+                            for finding in report["findings"]), report["findings"])
+
+    def test_a_local_requirement_without_evidence_is_still_refused(self) -> None:
+        def mutate(document: dict[str, Any]) -> None:
+            row = dict(self.LOCAL_ROW)
+            row["implementationEvidence"] = []
+            document["requirements"].append(row)
+
+        self.edit("REQUIREMENTS-MATRIX.json", mutate)
+        report = self._report()
+        self.assertEqual(report["result"], "FAIL")
+        self.assertTrue(any("requires at least one evidence reference" in finding["detail"]
+                            for finding in report["findings"]), report["findings"])
+
+
+class MirrorApplicabilitySemanticsTests(unittest.TestCase):
+    """CP11-F-001, executed: every applicability state the mirror audit can be in.
+
+    The tool itself runs in every state. Nothing here writes the report the tool would have
+    produced, because writing it is how the defect survived a passing rehearsal.
+    """
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.temporary = tempfile.TemporaryDirectory()
+        try:
+            cls.report = run_mirror_semantics(Path(cls.temporary.name))
+        except Exception as exc:  # noqa: BLE001 - the validation failing is the finding
+            cls.temporary.cleanup()
+            raise AssertionError(
+                f"the mirror semantics validation could not be executed: {exc}") from exc
+
+    @classmethod
+    def tearDownClass(cls) -> None:
+        cls.temporary.cleanup()
+
+    def _check(self, identifier: str) -> dict[str, Any]:
+        return next(item for item in self.report["checks"] if item["id"] == identifier)
+
+    def test_every_applicability_state_behaves_as_specified(self) -> None:
+        failures = [item for item in self.report["checks"] if item["result"] != "PASS"]
+        self.assertEqual(failures, [], self.report["result"])
+
+    def test_an_empty_applicable_set_is_not_applicable_and_the_mirror_passes(self) -> None:
+        check = self._check("MSV-001")
+        self.assertEqual(check["findingsCheck"]["result"], "NOT_APPLICABLE")
+        self.assertEqual(check["attacksCheck"]["result"], "NOT_APPLICABLE")
+        self.assertEqual(check["findingsCheck"]["expectedCount"], 0)
+        self.assertTrue(check["findingsCheck"]["reason"])
+        self.assertTrue(check["findingsCheck"]["derivationSource"])
+        self.assertIn("overall=PASS", check["observed"])
+        self.assertIn("sealed=True", check["observed"])
+
+    def test_a_satisfied_applicable_set_passes(self) -> None:
+        check = self._check("MSV-002")
+        self.assertEqual(check["findingsCheck"]["result"], "PASS")
+        self.assertEqual(check["attacksCheck"]["result"], "PASS")
+
+    def test_an_open_finding_fails(self) -> None:
+        check = self._check("MSV-003")
+        self.assertEqual(check["findingsCheck"]["result"], "FAIL")
+        self.assertIn("overall=FAIL", check["observed"])
+        self.assertIn("sealed=False", check["observed"])
+
+    def test_a_missing_required_set_fails_rather_than_being_inapplicable(self) -> None:
+        check = self._check("MSV-004")
+        self.assertEqual(check["findingsCheck"]["result"], "FAIL")
+        self.assertIn("missing", check["findingsCheck"]["observed"])
+
+    def test_a_delivery_cannot_declare_its_own_applicable_set_empty(self) -> None:
+        check = self._check("MSV-005")
+        self.assertEqual(check["findingsCheck"]["result"], "FAIL")
+        self.assertNotEqual(check["findingsCheck"]["result"], "NOT_APPLICABLE")
+
+    def test_an_unexecuted_mandatory_attack_fails(self) -> None:
+        check = self._check("MSV-006")
+        self.assertEqual(check["attacksCheck"]["result"], "FAIL")
+
+    def test_every_state_was_produced_by_executing_the_tool(self) -> None:
+        for check in self.report["checks"]:
+            self.assertTrue(check["mirrorCommand"].endswith(
+                "m0_mirror_audit.py --write --checkpoint " + check["mirrorCommand"].split()[-1]),
+                check["mirrorCommand"])
+            self.assertIsNotNone(check["mirrorExitCode"])
+
+    def test_the_declared_states_cover_both_sides_of_the_distinction(self) -> None:
+        covered = self.report["statesCovered"]
+        self.assertIn("emptyApplicableSet", covered)
+        self.assertIn("missingRequiredSet", covered)
+        self.assertEqual(len(MIRROR_SEMANTICS_SCENARIOS), self.report["total"])
+
+
+class GateTransitionSimulationTests(unittest.TestCase):
+    """CP11-F-001, second consequence: the first delivery of the next Gate can be handed over.
+
+    A Gate's first delivery corrects no audit, so before the repair its mirror reported FAIL and
+    checkpoint validation refused every positive terminal status. The whole transition is executed
+    here in a disposable repository. No Gate 0 work exists in this repository and none is created:
+    the next Gate's specification is synthetic and lives only in the fixture.
+    """
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.temporary = tempfile.TemporaryDirectory()
+        try:
+            cls.result = run_gate_transition(Path(cls.temporary.name))
+            cls.report = evaluate_gate_transition(cls.result)
+        except Exception as exc:  # noqa: BLE001 - the transition failing is the finding
+            cls.temporary.cleanup()
+            raise AssertionError(
+                f"the Gate transition could not be executed: {exc}") from exc
+
+    @classmethod
+    def tearDownClass(cls) -> None:
+        cls.temporary.cleanup()
+
+    def test_the_preceding_milestone_is_derived_as_passed(self) -> None:
+        self.assertEqual(self.result["milestoneVerdictBeforeTransition"], "PASSED")
+
+    def test_the_first_checkpoint_of_the_next_gate_reaches_review_readiness(self) -> None:
+        self.assertEqual(self.result["statusReached"], "READY_FOR_REVIEW")
+        self.assertIn("CHECKPOINT_VALID", self.result["validatorOutput"])
+
+    def test_its_mirror_audit_passes_with_the_empty_dimensions_inapplicable(self) -> None:
+        mirror = self.result["mirror"]
+        self.assertEqual(mirror["result"], "PASS")
+        self.assertEqual(mirror["failed"], 0)
+        self.assertTrue(self.result["inapplicable"])
+        for item in self.result["inapplicable"]:
+            self.assertTrue(item["reason"])
+            self.assertTrue(item["derivationSource"])
+            self.assertEqual(item["expectedCount"], 0)
+
+    def test_its_mirror_audit_was_executed_rather_than_written(self) -> None:
+        self.assertEqual(self.result["mirror"]["producedBy"], "execution")
+        self.assertEqual(self.result["mirror"]["exitCode"], 0)
+
+    def test_the_integrity_chain_survives_the_transition(self) -> None:
+        self.assertEqual(self.result["chainErrors"], [])
+
+    def test_no_runtime_of_the_next_gate_was_implemented(self) -> None:
+        self.assertTrue(self.result["noGateRuntime"])
+
+    def test_every_recorded_check_of_the_simulation_passes(self) -> None:
+        failures = [item for item in self.report["checks"] if item["result"] != "PASS"]
+        self.assertEqual(failures, [], self.report["result"])
+
+
+class SimulationExecutesProductionControlsTests(unittest.TestCase):
+    """A simulation that says a control passed ran that control.
+
+    ``promotion_simulation.py`` used to write the mirror report by hand, so the rehearsal reached a
+    milestone status while the real path was blocked for every delivery. The artifact the simulation
+    seals is now bound to the tool's own output by content, not by a claim.
+    """
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.temporary = tempfile.TemporaryDirectory()
+        try:
+            cls.result = run_positive_promotion(Path(cls.temporary.name))
+        except Exception as exc:  # noqa: BLE001
+            cls.temporary.cleanup()
+            raise AssertionError(f"the positive promotion could not be executed: {exc}") from exc
+
+    @classmethod
+    def tearDownClass(cls) -> None:
+        cls.temporary.cleanup()
+
+    def _sealed_mirrors(self) -> list[dict[str, Any]]:
+        documents = []
+        for item in (self.result["subject"], self.result["audit"]):
+            path = Path(item["path"]) / f"{item['milestone']}-INTERNAL-MIRROR.json"
+            documents.append(read_json(path))
+        return documents
+
+    def test_every_simulated_mirror_is_recorded_as_executed(self) -> None:
+        for item in (self.result["subject"], self.result["audit"]):
+            self.assertEqual(item["mirror"]["producedBy"], "execution")
+            self.assertEqual(item["mirror"]["exitCode"], 0)
+            self.assertIn("m0_mirror_audit.py", item["mirror"]["command"])
+
+    def test_the_sealed_artifact_is_the_tools_own_output(self) -> None:
+        """Bound by content: the auditor role, the independence text and the whole dimension set."""
+        for document in self._sealed_mirrors():
+            self.assertEqual(document["independence"], MIRROR_INDEPENDENCE)
+            self.assertIn("m0-closure-auditor.md", document["auditorRole"])
+            identifiers = [check["id"] for check in document["checks"]]
+            self.assertIn("MIR-001", identifiers)
+            self.assertIn("MIR-018", identifiers)
+            self.assertEqual(len(identifiers), len(set(identifiers)))
+
+    def test_the_simulated_mirror_reaches_a_pass_with_inapplicable_dimensions(self) -> None:
+        for document in self._sealed_mirrors():
+            self.assertEqual(document["result"], "PASS")
+            inapplicable = [check for check in document["checks"]
+                            if check["result"] == "NOT_APPLICABLE"]
+            self.assertTrue(inapplicable, document["checkpoint"])
+            self.assertEqual(document["notApplicable"], len(inapplicable))
+
+    def test_the_simulation_declares_which_artifacts_it_modelled(self) -> None:
+        """What is executed and what is modelled is stated, so neither is mistaken for the other."""
+        from promotion_simulation import evaluate
+
+        report = evaluate(self.result)
+        provenance = report["artifactProvenance"]
+        self.assertEqual(len(provenance), 2)
+        for entry in provenance.values():
+            self.assertEqual(entry["internalMirror"]["producedBy"], "execution")
+            self.assertEqual(entry["internalRedTeam"]["producedBy"], "modelled")
 
 
 class HistoricalClosureCompatibilityTests(HistoricalCheckpointCompatibilityTests):

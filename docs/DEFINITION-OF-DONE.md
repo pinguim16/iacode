@@ -20,6 +20,12 @@ Work is done only when all applicable items are evidenced:
   internal mirror audit all describe the content as it stands;
 - every control this delivery adds or changes that gates a status has an executed positive path, not
   only executed refusals;
+- every control that judges a derived set reports an empty applicable set as `NOT_APPLICABLE` with a
+  reason, an expected count of zero and a named derivation source, and reports a missing required
+  set as `FAIL`; the applicable set is derived from canonical sources that the delivery cannot
+  shrink;
+- every simulation that reports a control as passing executed that control, and any artifact it had
+  to model instead is declared as modelled;
 - every adversarial battery recorded a null-mutation control that the unmutated fixture passed;
 - no generic guard, test or policy decides behaviour from the name of a historical checkpoint;
 - the protocol transitions this delivery's successor must perform were executed, and the mandatory

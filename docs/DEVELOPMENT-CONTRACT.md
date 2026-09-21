@@ -50,6 +50,12 @@ the repository, produces `BLOCKED` with the blocker named, never `READY_FOR_REVI
 advances with a red test or gate, with coverage below total, or with any requirement `PARTIAL` or
 `MISSING`.
 
+Nothing inapplicable is red either. A control that judges a derived set reports an empty applicable
+set as `NOT_APPLICABLE` with its justification, and a missing required set as `FAIL`; the two states
+are never collapsed, and the applicable set is derived from canonical sources the delivery cannot
+shrink. A simulation that reports a control as passing executes that control rather than writing the
+artifact it would have produced. See [QUALITY-GATES.md](QUALITY-GATES.md).
+
 ## Engineering memory
 
 Confirmed failures become lessons in `.iacode/memory/`, and important lessons become automated

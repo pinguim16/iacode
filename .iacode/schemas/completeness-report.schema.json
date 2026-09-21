@@ -135,6 +135,11 @@
         "string",
         "null"
       ]
+    },
+    "anchoredRequirements": {
+      "description": "Declared requirements carrying an anchored sourceRef, which is the set the canonical derivation governs. Local requirements a delivery adds are counted in totalRequirements and not here. Optional, so reports sealed before the count existed stay valid.",
+      "type": "integer",
+      "minimum": 0
     }
   },
   "additionalProperties": false

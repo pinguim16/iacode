@@ -542,6 +542,14 @@
           "mandatory": true
         },
         {
+          "key": "7d.16",
+          "section": "7d. Milestone closure controls",
+          "description": "An audit control tells an empty applicable set from a missing required set, justifies every `NOT_APPLICABLE` against a canonical derivation no delivery can shrink, and a simulation that claims a control passed executes that control instead of writing its artifact.",
+          "artifact": "`scripts/development-ledger/m0_mirror_audit.py`, `mirror_semantics_validation.py`, `gate_transition_simulation.py`, `.iacode/schemas/mirror-audit.schema.json`",
+          "evidence": "`MirrorApplicabilitySemanticsTests`, `GateTransitionSimulationTests`, `SimulationExecutesProductionControlsTests`.",
+          "mandatory": true
+        },
+        {
           "key": "8.1",
           "section": "8. Independent verification",
           "description": "An independent review is recorded.",

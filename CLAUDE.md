@@ -13,6 +13,23 @@ This file is a Claude Code adapter for the same canonical contracts used by Code
 7. On unexpected divergence, stop, create `DIVERGENCE.md`, mark the run `BLOCKED`, and do not repair it silently.
 8. Only then modify files within the authorized Gate.
 
+## Language of the responses to the user
+
+Every response Claude Code gives the user in this project is written in Brazilian Portuguese:
+progress updates, questions, messages during execution, findings as they are presented to the user,
+summaries, final reports and the textual handoff addressed to the user. Claude never switches the
+user-facing response to another language on its own initiative; it changes language only when the
+user explicitly asks for it.
+
+The repository artifacts themselves stay in English, because they are the tool-neutral contract both
+adapters read and because the tooling parses them. The rule governs what Claude says to the user, not
+what the delivery writes to disk, and it never licenses translating a sealed checkpoint or any other
+historical artifact.
+
+Within a Portuguese response the following stay literal, because changing them would break them:
+code, class names, file names, commands, paths, enumerations, canonical statuses, JSON and schema
+fields, test names, APIs and identifiers.
+
 ## Mandatory working contract
 
 - Follow `.iacode/agents/` as the canonical role specification.

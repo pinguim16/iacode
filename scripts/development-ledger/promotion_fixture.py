@@ -279,28 +279,70 @@ def _complete_requirements(checkpoint: Path) -> None:
     write_json(checkpoint / "CLOSURE-REQUIREMENTS.json", closure)
 
 
-def _write_internal_assurance(root: Path, checkpoint: Path) -> None:
-    fingerprint = scope_fingerprint(root)
-    write_json(checkpoint / "M0-INTERNAL-RED-TEAM.json", {
+def _write_internal_red_team(root: Path, checkpoint: Path, milestone: str,
+                             attacks: list[dict[str, Any]] | None = None) -> None:
+    """Model the internal Red Team report of the fixture delivery.
+
+    This one is modelled rather than executed, and the artifact says so. The battery attacks a
+    disposable copy of a sealed delivery, so executing it here would mean building a fixture inside
+    a fixture; what this simulation asserts is the promotion path, and it never claims that the
+    battery of the fixture checkpoint was run. The mirror audit, which this simulation *does* claim
+    passed, is executed by its own tool instead of written by hand.
+    """
+    recorded = attacks if attacks is not None else [{
+        "attackId": "A", "description": "simulation", "target": "simulation",
+        "mutation": "simulation", "expectedDefense": "reject", "observed": "rejected",
+        "result": "DEFENDED", "evidence": ["attack:A"], "mandatory": True}]
+    defended = [item for item in recorded if item["result"] == "DEFENDED"]
+    escaped = [item for item in recorded if item["result"] == "ESCAPED"]
+    mandatory = [item for item in recorded if item.get("mandatory")]
+    write_json(checkpoint / f"{milestone}-INTERNAL-RED-TEAM.json", {
         "schemaVersion": "1.1.0", "checkpoint": checkpoint.name, "generatedAt": utc_now(),
-        "targetFingerprint": fingerprint, "source": "promotion simulation",
+        "targetFingerprint": scope_fingerprint(root),
+        "source": "modelled by the promotion simulation; the battery itself is not executed here",
         "baselineControl": {"result": "VALID",
                             "detail": "the unmutated fixture validates before any attack"},
-        "attacks": [{
-            "attackId": "A", "description": "simulation", "target": "simulation",
-            "mutation": "simulation", "expectedDefense": "reject", "observed": "rejected",
-            "result": "DEFENDED", "evidence": ["attack:A"], "mandatory": True}],
-        "total": 1, "defended": 1, "escaped": 0, "mandatoryTotal": 1, "mandatoryDefended": 1,
-        "result": "RED_TEAM_PASS"})
-    write_json(checkpoint / "M0-INTERNAL-MIRROR.json", {
-        "schemaVersion": "1.0.0", "checkpoint": checkpoint.name, "milestone": "M0",
-        "generatedAt": utc_now(), "targetFingerprint": fingerprint,
-        "auditorRole": "M0 Closure Auditor",
-        "independence": "Internal quality assurance, not independent validation.",
-        "checks": [{"id": "MIR-001", "dimension": "simulation", "expectation": "simulation",
-                    "observed": "simulation", "result": "PASS",
-                    "evidence": ["checkpoint:PLAN.md"]}],
-        "total": 1, "passed": 1, "failed": 0, "notApplicable": 0, "result": "PASS"})
+        "attacks": recorded,
+        "total": len(recorded), "defended": len(defended), "escaped": len(escaped),
+        "mandatoryTotal": len(mandatory),
+        "mandatoryDefended": len([item for item in mandatory if item["result"] == "DEFENDED"]),
+        "result": "RED_TEAM_FAIL" if escaped else "RED_TEAM_PASS"})
+
+
+def _execute_internal_mirror(root: Path, checkpoint: Path, milestone: str) -> dict[str, Any]:
+    """Run the real mirror audit over the fixture checkpoint and keep what it produced.
+
+    Finding ``CP11-F-001`` escaped because this simulation used to write
+    ``<milestone>-INTERNAL-MIRROR.json`` by hand: the rehearsal reached a milestone status while the
+    control it rehearsed refused every real delivery. A simulation that claims a control passed runs
+    that control. The artifact sealed here is the tool's own output, and the command that produced
+    it is recorded so a reader can re-run it.
+    """
+    argv = ["m0_mirror_audit.py", "--write", "--checkpoint", str(checkpoint)]
+    completed = _tool(root, *argv)
+    path = checkpoint / f"{milestone}-INTERNAL-MIRROR.json"
+    if not path.is_file():
+        raise FixtureError(
+            f"m0_mirror_audit.py produced no report in the fixture: {completed.stdout}")
+    report = read_json(path)
+    return {
+        "artifact": path.name,
+        "command": "python scripts/development-ledger/" + " ".join(argv),
+        "exitCode": completed.returncode,
+        "output": completed.stdout.strip().splitlines()[-1:] or [""],
+        "result": report.get("result"),
+        "total": report.get("total"),
+        "passed": report.get("passed"),
+        "failed": report.get("failed"),
+        "notApplicable": report.get("notApplicable"),
+        "checks": [
+            {"id": item.get("id"), "dimension": item.get("dimension"),
+             "observed": item.get("observed"), "result": item.get("result"),
+             "reason": item.get("reason"), "expectedCount": item.get("expectedCount"),
+             "derivationSource": item.get("derivationSource")}
+            for item in report.get("checks") or []],
+        "producedBy": "execution",
+    }
 
 
 def _quality(terminal: bool) -> dict[str, Any]:
@@ -318,21 +360,37 @@ def deliver_checkpoint(
     root: Path,
     *,
     scope: str,
+    gate: str = "SETUP-00",
     status: str = "READY_FOR_REVIEW",
     before_gates: Callable[[Path, Path], None] | None = None,
     state_overrides: Callable[[dict[str, Any]], None] | None = None,
+    red_team_attacks: list[dict[str, Any]] | None = None,
+    before_mirror: Callable[[Path, Path], None] | None = None,
+    seal: bool = True,
 ) -> dict[str, Any]:
     """Run the mandatory delivery order in the fixture and seal the result.
 
     ``before_gates`` runs after the checkpoint exists and before any gate is measured, which is
     where content inside the delivery-assurance scope -- an integrity anchor, an attestation --
     has to be written so that the gates judge the content that is actually sealed.
+
+    ``gate`` is the Gate the checkpoint belongs to. It is a parameter because the delivery order is
+    the same for every Gate, and because the state machine has to be provable for a Gate other than
+    the one this repository is in: the first delivery of a later Gate corrects no audit, which is
+    exactly the state finding ``CP11-F-001`` made unreachable.
+
+    ``before_mirror`` runs after every artifact the mirror reads exists and before the mirror runs,
+    which is where a scenario plants the state it wants the mirror to judge. ``seal`` is false for a
+    scenario that expects the mirror to refuse: a delivery with a failing mirror cannot be sealed,
+    which is the behaviour under test and not a fixture error.
     """
-    created = _tool(root, "new_checkpoint.py", "--gate", "SETUP-00", "--status", "IN_PROGRESS")
+    created = _tool(root, "new_checkpoint.py", "--gate", gate, "--status", "IN_PROGRESS")
     _require(created, "new_checkpoint.py")
     name = sorted(
-        item.name for item in (root / "docs" / "checkpoints").iterdir() if item.is_dir())[-1]
+        (item.name for item in (root / "docs" / "checkpoints").iterdir()
+         if item.is_dir() and item.name.startswith(f"{gate}-CP-")))[-1]
     checkpoint = root / "docs" / "checkpoints" / name
+    milestone = str((read_json(checkpoint / "STATE.json").get("milestone") or {}).get("id") or "M0")
 
     if not (root / ".iacode" / "memory" / "lessons.jsonl").is_file():
         _install_memory(root, name)
@@ -349,13 +407,13 @@ def deliver_checkpoint(
                           "chainFile": ".iacode/anchors/checkpoint-chain.json", "evidence": []}
     write_json(checkpoint / "STATE.json", state)
 
-    preflight = _tool(root, "lesson_preflight.py", "--gate", "SETUP-00", "--scope", scope,
+    preflight = _tool(root, "lesson_preflight.py", "--gate", gate, "--scope", scope,
                       "--write", "--checkpoint", str(checkpoint))
     _require(preflight, "lesson_preflight.py")
     derived = read_json(checkpoint / "LESSON-PREFLIGHT.json")
     state = read_json(checkpoint / "STATE.json")
     state["lessonPreflight"] = {
-        "path": "LESSON-PREFLIGHT.json", "gate": "SETUP-00", "scope": scope,
+        "path": "LESSON-PREFLIGHT.json", "gate": gate, "scope": scope,
         "lessonsConsidered": derived["lessonsConsidered"],
         "lessonsApplicable": derived["lessonsApplicable"],
         "derivedRequirements": len(derived["derivedRequirements"]), "evidence": []}
@@ -388,12 +446,20 @@ def deliver_checkpoint(
     _require(audit, "check_completeness.py")
     report = read_json(checkpoint / "COMPLETENESS-REPORT.json")
 
-    _write_internal_assurance(root, checkpoint)
+    _write_internal_red_team(root, checkpoint, milestone, red_team_attacks)
     _require(_tool(root, "derive_counts.py", "--write", "--checkpoint", str(checkpoint)),
              "derive_counts.py")
 
     terminal = status not in ("READY_FOR_REVIEW", "READY_FOR_RED_TEAM")
     write_json(checkpoint / "QUALITY.json", _quality(terminal))
+
+    if before_mirror is not None:
+        before_mirror(root, checkpoint)
+
+    # The mirror audit runs last, after every artifact it reads exists, and it runs for real. The
+    # checkpoint ledger is outside the delivery-assurance scope, so writing the report here does
+    # not invalidate the fingerprint the report itself records.
+    mirror = _execute_internal_mirror(root, checkpoint, milestone)
 
     measured = guardrail_effectiveness(root)
     state = read_json(checkpoint / "STATE.json")
@@ -423,6 +489,21 @@ def deliver_checkpoint(
         state_overrides(state)
     write_json(checkpoint / "STATE.json", state)
 
+    if not seal:
+        return {
+            "checkpoint": name,
+            "gate": gate,
+            "milestone": milestone,
+            "path": str(checkpoint),
+            "tag": None,
+            "contentCommit": None,
+            "commit": None,
+            "tree": None,
+            "status": "IN_PROGRESS",
+            "validatorOutput": "not sealed: the scenario expects the mirror to refuse",
+            "mirror": mirror,
+        }
+
     declare_inventory(root, checkpoint)
     finalized = _tool(root, "finalize_checkpoint.py", "--status", status,
                       "--commit-ref", f"{TAG_NAMESPACE}{name}", "--checkpoint", str(checkpoint))
@@ -441,6 +522,8 @@ def deliver_checkpoint(
     commit = resolve_tag(root, tag)
     return {
         "checkpoint": name,
+        "gate": gate,
+        "milestone": milestone,
         "path": str(checkpoint),
         "tag": tag,
         "contentCommit": content_commit,
@@ -448,6 +531,7 @@ def deliver_checkpoint(
         "tree": commit_tree(root, str(commit)) if commit else None,
         "status": status,
         "validatorOutput": validated.stdout.strip(),
+        "mirror": mirror,
     }
 
 
@@ -577,6 +661,293 @@ def run_positive_promotion(workdir: Path, *,
         "subjectStatusAfter": json.loads(subject_after["state"])["status"],
         "chainErrors": verify_chain(root, require_sealed=True,
                                     exclude=pending_anchor_exclusion(root)),
+    }
+
+
+SYNTHETIC_GATE = "GATE-0"
+
+SYNTHETIC_GATE_CHECKLIST = """# {gate} Checklist
+
+A synthetic Gate specification that exists only inside the promotion fixture. It stands for "the
+next Gate", so the state machine can be exercised for a Gate other than the one the real repository
+is in. It describes no runtime, prescribes no architecture and is never copied into the repository:
+what is proven here is that the delivery order reaches a handoff-ready status for a Gate whose first
+checkpoint corrects no audit.
+
+## 1. Fixture specification
+
+| # | Requirement | Artifact | Evidence |
+|---|---|---|---|
+| 1.1 | The Gate declares its own specification document inside the repository. | `docs/{gate}-CHECKLIST.md` | File present and mirrored by the canonical registry. |
+| 1.2 | The Gate's first delivery follows the mandatory delivery order without exception. | `docs/checkpoints/{gate}-CP-0001/` | Checkpoint validation of the sealed delivery. |
+| 1.3 | The Gate's first delivery corrects no audit and is not refused for having nothing to correct. | `{milestone}-INTERNAL-MIRROR.json` | The mirror audit reports the empty dimensions as NOT_APPLICABLE and passes. |
+"""
+
+
+def _install_synthetic_gate(root: Path, gate: str, milestone: str) -> dict[str, Any]:
+    """Give the fixture a later Gate with a specification of its own.
+
+    A Gate's expected requirement set is derived from its specification document, so a fixture that
+    wants to deliver a later Gate has to have one. It is written here, in the disposable repository,
+    and never in the real one: authoring a real Gate 0 specification would be starting Gate 0, which
+    is not authorized. The document is deliberately about the delivery machinery and says nothing
+    about what the Gate would actually build.
+    """
+    specification = f"docs/{gate}-CHECKLIST.md"
+    (root / specification).write_text(
+        SYNTHETIC_GATE_CHECKLIST.format(gate=gate, milestone=milestone),
+        encoding="utf-8", newline="\n")
+
+    from policies import parse_checklist
+
+    rows = parse_checklist((root / specification).read_text(encoding="utf-8"))
+    if not rows:
+        raise FixtureError(f"the synthetic {gate} specification produced no requirement row")
+    registry_path = root / ".iacode" / "policies" / "canonical-requirements.json"
+    registry = read_json(registry_path)
+    registry["gates"].append({
+        "gate": gate,
+        "specification": specification,
+        "parser": "scripts/development-ledger/policies.py:parse_checklist",
+        "requirements": [dict(row, mandatory=True) for row in rows],
+    })
+    write_json(registry_path, registry)
+    _git(root, "add", "-A")
+    _git(root, "commit", "-m", f"test: declare the synthetic {gate} specification")
+    return {"gate": gate, "specification": specification, "rows": len(rows)}
+
+
+def run_gate_transition(workdir: Path) -> dict[str, Any]:
+    """Close a milestone, then deliver the first checkpoint of the next Gate.
+
+    This is the transition finding ``CP11-F-001`` made impossible, executed rather than argued:
+
+        SETUP closed -> final independent audit -> milestone PASS -> first checkpoint of the next
+        Gate -> READY_FOR_REVIEW
+
+    The next Gate's delivery corrects no audit, because no audit has judged it yet, so the two
+    mirror dimensions that derive their work from the audit registry have nothing to audit. Before
+    the repair they reported ``FAIL`` and checkpoint validation refused every positive terminal
+    status; the first delivery of the next Gate could not be handed over at all.
+
+    Nothing of the next Gate is implemented here. The fixture declares a synthetic specification for
+    it inside the disposable repository so the delivery order has a requirement set to derive, and
+    the subject of the proof is the state machine, not the Gate's content.
+    """
+    promotion = run_positive_promotion(workdir)
+    root = Path(promotion["root"])
+    milestone_before = derive_milestone_verdict(root, "M0")
+
+    from ledger_common import milestone_for
+
+    planned = milestone_for(SYNTHETIC_GATE)
+    next_milestone = planned[0] if planned else "M1"
+    specification = _install_synthetic_gate(root, SYNTHETIC_GATE, next_milestone)
+
+    delivery = deliver_checkpoint(
+        root, gate=SYNTHETIC_GATE, scope="control-plane", status="READY_FOR_REVIEW",
+        before_gates=lambda repository, checkpoint: _rebuild_anchors(
+            repository, exclude=checkpoint.name))
+
+    mirror = delivery["mirror"]
+    inapplicable = [item for item in mirror["checks"] if item["result"] == "NOT_APPLICABLE"]
+    return {
+        "root": str(root),
+        "setupSubject": promotion["subject"],
+        "setupAudit": promotion["audit"],
+        "milestoneVerdictBeforeTransition": milestone_before["status"],
+        "syntheticSpecification": specification,
+        "nextGate": SYNTHETIC_GATE,
+        "nextMilestone": next_milestone,
+        "delivery": delivery,
+        "mirror": mirror,
+        "inapplicable": inapplicable,
+        "statusReached": delivery["status"],
+        "validatorOutput": delivery["validatorOutput"],
+        "chainErrors": verify_chain(root, require_sealed=True,
+                                    exclude=pending_anchor_exclusion(root)),
+        "noGateRuntime": not any(
+            (root / name).exists() for name in ("services", "runtime", "gateway", "sandbox")),
+    }
+
+
+FIXTURE_AUDIT_ID = "M0-FIXTURE-AUDIT"
+FIXTURE_AUDIT_DIRECTORY = "docs/fixture-audit"
+FIXTURE_CLOSURE_FILE = "FIXTURE-FINDINGS-CLOSURE.json"
+
+
+def _write_fixture_audit_reports(root: Path, findings: list[str],
+                                 attacks: list[tuple[str, bool]]) -> tuple[str, str]:
+    """Sealed-shaped audit reports for the fixture, parsed by the same parsers the product uses."""
+    directory = root / FIXTURE_AUDIT_DIRECTORY
+    directory.mkdir(parents=True, exist_ok=True)
+    review = ["# Independent Review Report — fixture audit", "", "## Findings", ""]
+    for identifier in findings:
+        review += [
+            f"### `{identifier}` — CRITICAL — a fixture finding of the mirror semantics scenarios",
+            "",
+            "- Expected: the fixture delivery closes this finding.",
+            "- Observed: recorded by the scenario.",
+            "",
+        ]
+    (directory / "REVIEW-REPORT.md").write_text(
+        "\n".join(review).rstrip() + "\n", encoding="utf-8", newline="\n")
+
+    red_team = [
+        "# Red Team Report — fixture audit", "", "Result: `RED_TEAM_PASS`", "", "## Scenarios", "",
+        "| Attack | Category | Target | Mutation | Expected | Result |",
+        "|---|---|---|---|---|---|",
+    ]
+    for identifier, mandatory in attacks:
+        red_team.append(
+            f"| `{identifier}` | {'mandatory' if mandatory else 'additional'} | fixture surface "
+            f"| a fixture mutation | reject | `DEFENDED` |")
+    (directory / "RED-TEAM-REPORT.md").write_text(
+        "\n".join(red_team).rstrip() + "\n", encoding="utf-8", newline="\n")
+    return (f"{FIXTURE_AUDIT_DIRECTORY}/REVIEW-REPORT.md",
+            f"{FIXTURE_AUDIT_DIRECTORY}/RED-TEAM-REPORT.md")
+
+
+def _register_fixture_audit(root: Path, *, corrective: str, findings: list[str],
+                            attacks: list[tuple[str, bool]]) -> dict[str, Any]:
+    """Register an audit in the fixture registry so the corrective delivery has work to close."""
+    review, red_team = _write_fixture_audit_reports(root, findings, attacks)
+    commit = _git(root, "rev-parse", "HEAD")
+    registry_path = root / ".iacode" / "policies" / "audit-registry.json"
+    registry = read_json(registry_path)
+    entry = {
+        "auditId": FIXTURE_AUDIT_ID,
+        "milestone": "M0",
+        "gate": "SETUP-00",
+        "auditor": "the mirror semantics fixture",
+        "auditCheckpoint": "FIXTURE-AUDIT",
+        "auditCommit": commit,
+        "subjectCheckpoint": "FIXTURE-SUBJECT",
+        "subjectCommit": commit,
+        "verdict": "REWORK_REQUIRED",
+        "reviewReport": review,
+        "redTeamReport": red_team,
+        "correctiveCheckpoint": corrective,
+        "notes": "A fixture audit. It exists only inside the disposable repository.",
+        "findingsClosureFile": FIXTURE_CLOSURE_FILE,
+    }
+    registry["audits"].append(entry)
+    write_json(registry_path, registry)
+    _git(root, "add", "-A")
+    _git(root, "commit", "-m", "test: register the fixture audit")
+    return entry
+
+
+def _write_fixture_closure(checkpoint: Path, statuses: dict[str, str]) -> None:
+    findings = [{
+        "findingId": identifier,
+        "severity": "CRITICAL",
+        "title": "a fixture finding of the mirror semantics scenarios",
+        "originalExpected": "the fixture delivery closes this finding",
+        "originalObserved": "recorded by the scenario",
+        "rootCause": "declared by the mirror semantics fixture",
+        "implementation": ["the scenario prepared this state deliberately"],
+        "regressionTest": ["MirrorApplicabilitySemanticsTests"],
+        "verificationCommand": "python scripts/development-ledger/m0_mirror_audit.py",
+        "evidence": ["checkpoint:PLAN.md"],
+        "status": status,
+    } for identifier, status in statuses.items()]
+    closed = [item for item in findings if item["status"] == "CLOSED"]
+    write_json(checkpoint / FIXTURE_CLOSURE_FILE, {
+        "schemaVersion": "1.0.0",
+        "auditId": FIXTURE_AUDIT_ID,
+        "checkpoint": checkpoint.name,
+        "source": f"{FIXTURE_AUDIT_DIRECTORY}/REVIEW-REPORT.md",
+        "findings": findings,
+        "total": len(findings),
+        "closed": len(closed),
+        "result": "CLOSED" if len(closed) == len(findings) else "OPEN",
+    })
+
+
+def run_mirror_scenario(
+    workdir: Path,
+    *,
+    name: str,
+    findings: dict[str, str] | None = None,
+    attacks: list[tuple[str, bool]] | None = None,
+    defended: set[str] | None = None,
+    omit_closure: bool = False,
+    forge_empty_expected: bool = False,
+) -> dict[str, Any]:
+    """Execute the real mirror audit over one prepared state and report exactly what it said.
+
+    Every scenario runs ``m0_mirror_audit.py`` itself. Nothing here writes the artifact the tool
+    would have produced: that shortcut is how ``CP11-F-001`` survived a passing rehearsal.
+
+    ``findings`` maps each finding of the fixture audit to the status the closure record will give
+    it. ``None`` registers no audit at all, which is the legitimately empty applicable set.
+    """
+    root = workdir / name
+    build_fixture_repository(root)
+    corrective = "SETUP-00-CP-0001"
+    registered: dict[str, Any] | None = None
+    attack_rows = attacks or []
+    if findings is not None:
+        registered = _register_fixture_audit(
+            root, corrective=corrective, findings=list(findings), attacks=attack_rows)
+
+    mandatory_ids = [identifier for identifier, mandatory in attack_rows if mandatory]
+    executed = defended if defended is not None else set(mandatory_ids)
+    red_team_attacks = [{
+        "attackId": identifier, "description": "fixture", "target": "fixture surface",
+        "mutation": "a fixture mutation", "expectedDefense": "reject",
+        "observed": "rejected by the fixture control", "result": "DEFENDED",
+        "evidence": [f"attack:{identifier}"], "mandatory": True}
+        for identifier in mandatory_ids if identifier in executed]
+    if not red_team_attacks:
+        red_team_attacks = None
+
+    def before_gates(_repository: Path, checkpoint: Path) -> None:
+        # The closure record belongs to the delivery, so it exists before any gate measures it:
+        # the derived counts read it, and a record written after them would contradict them.
+        if findings is not None and not omit_closure:
+            _write_fixture_closure(checkpoint, findings)
+        if forge_empty_expected:
+            # A delivery declaring that it has nothing to close. The mirror derives the applicable
+            # set from the registry and the sealed reports, so a declaration inside the checkpoint
+            # is data, never an input: this is the CP-0006 shrinkable-denominator shape, refused.
+            write_json(checkpoint / "MIRROR-EXPECTED.json", {
+                "expectedFindings": [], "expectedAttacks": [],
+                "claim": "this delivery has nothing to close"})
+            state = read_json(checkpoint / "STATE.json")
+            state["nextAllowedAction"] = (
+                "expectedFindings=[] expectedAttacks=[] planted by the forged-empty-set scenario")
+            write_json(checkpoint / "STATE.json", state)
+
+    # A forged declaration inside the checkpoint is not part of this prediction: the whole point of
+    # that scenario is that the canonical derivation decides the outcome and the declaration does
+    # not move it.
+    expect_pass = findings is None or (
+        not omit_closure
+        and all(status == "CLOSED" for status in findings.values())
+        and set(mandatory_ids) <= executed)
+
+    delivery = deliver_checkpoint(
+        root, scope="control-plane", status="READY_FOR_REVIEW",
+        red_team_attacks=red_team_attacks, before_gates=before_gates, seal=expect_pass)
+    mirror = delivery["mirror"]
+    checks = {item["id"]: item for item in mirror["checks"]}
+    return {
+        "scenario": name,
+        "root": str(root),
+        "registeredAudit": registered["auditId"] if registered else None,
+        "declaredFindings": findings,
+        "declaredAttacks": attack_rows,
+        "executedAttacks": sorted(executed),
+        "omittedClosureFile": omit_closure,
+        "forgedEmptyExpectedSet": forge_empty_expected,
+        "checkpoint": delivery["checkpoint"],
+        "sealed": delivery["tag"] is not None,
+        "validatorOutput": delivery["validatorOutput"],
+        "mirror": mirror,
+        "findingsCheck": checks.get("MIR-002"),
+        "attacksCheck": checks.get("MIR-003"),
     }
 
 

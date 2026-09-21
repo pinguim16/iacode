@@ -48,8 +48,20 @@ CHECKLIST_ROW = re.compile(
     r"\s*(?P<artifact>.+?)\s*\|\s*(?P<evidence>.+?)\s*\|\s*$"
 )
 
+# One section heading of a report: ## Findings, ### M0-F-001 - ...
+SECTION_HEADING = re.compile(r"^#{2,}\s+(?P<title>.+?)\s*$")
+
 # One finding heading in an independent review report: ### M0-F-001 — CRITICAL — ...
-FINDING_HEADING = re.compile(r"^###\s+(?P<id>[A-Z0-9]+-F-[0-9]{3})\s*[-—]\s*(?P<rest>.+?)\s*$")
+# The backticks around the identifier are optional: CP-0007 and CP-0009 wrote the identifier bare
+# and CP-0011 wrote it quoted. A report whose findings cannot be parsed is refused by
+# ``audit_findings`` rather than read as a report without findings.
+FINDING_HEADING = re.compile(r"^###\s+`?(?P<id>[A-Z0-9]+-F-[0-9]{3})`?\s*[-—]\s*(?P<rest>.+?)\s*$")
+
+# The section whose findings belong to the report that writes them. An audit report also discusses
+# the findings of the audit it follows, under its own heading, and those are that audit's findings
+# and not this one's: reading them as new work would make a corrective delivery re-close findings a
+# previous delivery already closed.
+FINDINGS_SECTION = "findings"
 
 # One attack row in a Red Team report:
 #     | C | target | mutation | expected | observed | result | evidence |
@@ -68,6 +80,18 @@ ADDITIONAL_ATTACK_ROW = re.compile(
     r"^\|\s*`?(?P<id>[A-Z]{1,2})`?\s*\|\s*(?P<mutation>.+?)\s*\|\s*(?P<expected>.+?)\s*\|"
     r"\s*(?P<observed>.+?)\s*\|\s*`?(?P<result>DEFENDED|ESCAPED)`?\s*\|\s*$"
 )
+
+# The separator under a Markdown table header: |---|---|
+TABLE_SEPARATOR = re.compile(r"^\|(?:\s*:?-{3,}:?\s*\|)+\s*$")
+
+# An attack identifier, in either rendering a sealed report has used: a single letter or a pair of
+# letters (CP-0007, CP-0009) or a prefixed, numbered identifier (CP-0011).
+ATTACK_IDENTIFIER = re.compile(r"^(?:[A-Z]{1,2}|[A-Z]{2,4}-[0-9]{1,3})$")
+
+# The header cells that introduce a table of attacks. A table whose first column is anything else
+# is a table of something else -- a positive control, a guardrail probe, a scenario log -- and its
+# rows are not attacks.
+ATTACK_ID_HEADERS = ("attack", "id")
 
 
 def _read(root: Path, relative: str | Path) -> str:
@@ -171,38 +195,126 @@ def canonical_requirements(root: Path, gate: str) -> list[dict[str, Any]]:
 
 
 def parse_findings(text: str) -> list[dict[str, str]]:
-    """Every finding identifier and headline of an independent review report."""
+    """Every finding identifier and headline the report raises *as its own*.
+
+    Scoped to the report's ``## Findings`` section. An audit report also verifies the findings of
+    the audit before it, under a heading of its own and in the same ``###`` shape; those belong to
+    the earlier audit and were closed by an earlier delivery. Reading them here would require the
+    corrective delivery to close findings it did not receive, and would inflate the expected
+    requirement set with work that is already done.
+    """
     findings: list[dict[str, str]] = []
+    section = ""
     for line in text.splitlines():
+        heading = SECTION_HEADING.match(line)
+        if heading and not line.startswith("###"):
+            section = heading.group("title").strip().strip("`").lower()
+            continue
+        if section != FINDINGS_SECTION:
+            continue
         match = FINDING_HEADING.match(line)
         if match:
             rest = match.group("rest")
             parts = [part.strip() for part in re.split(r"\s*[-—]\s*", rest, maxsplit=1)]
             findings.append({
                 "id": match.group("id"),
-                "severity": parts[0] if parts else "",
+                "severity": parts[0].strip("`") if parts else "",
                 "title": parts[1] if len(parts) > 1 else rest,
             })
     return findings
 
 
+def _table_cells(line: str) -> list[str]:
+    body = line.strip()
+    if not body.startswith("|"):
+        return []
+    body = body[1:]
+    if body.endswith("|"):
+        body = body[:-1]
+    return [cell.strip() for cell in body.split("|")]
+
+
+def _attack_columns(header: str) -> list[str] | None:
+    """The column map of a table of attacks, or ``None`` when the table is not one."""
+    cells = [cell.strip().strip("`").lower() for cell in _table_cells(header)]
+    if not cells or cells[0] not in ATTACK_ID_HEADERS or "result" not in cells:
+        return None
+    return cells
+
+
+def _attack_from_row(cells: list[str], columns: list[str],
+                     additional_section: bool) -> dict[str, str] | None:
+    def column(name: str, default: str = "") -> str:
+        return cells[columns.index(name)].strip() if name in columns else default
+
+    identifier = cells[0].strip().strip("`")
+    if ATTACK_IDENTIFIER.match(identifier) is None:
+        return None
+    result = column("result").strip("`")
+    if result not in ("DEFENDED", "ESCAPED"):
+        return None
+    # The battery a row belongs to is stated by the row when the table says so, and by the section
+    # otherwise. CP-0011 rendered one table with a category column; the earlier reports rendered one
+    # table per battery.
+    if "category" in columns:
+        mandatory = column("category").strip("`").lower() == "mandatory"
+    else:
+        mandatory = not additional_section
+    return {
+        "id": identifier,
+        "target": column("target", "additional attack surface"),
+        "mutation": column("mutation") or column("scenario") or column("expectation"),
+        "expectedDefense": column("expected", "reject"),
+        "observed": column("observed", "not recorded as a column in the sealed report"),
+        "result": result,
+        "mandatory": "true" if mandatory else "false",
+    }
+
+
 def parse_attacks(text: str) -> list[dict[str, str]]:
     """Every attack row of a Red Team report, mandatory battery first, additional battery after.
 
-    Which battery a row belongs to is decided by the section it is written under, not by how many
-    columns its table happens to have. The CP-0007 report wrote its additional attacks in a narrower
-    table and the CP-0009 report wrote them in the same table shape as the mandatory ones; a parser
-    that inferred the battery from the shape would have promoted twenty-six additional attacks to
-    mandatory the moment the second report was registered. A section whose heading names it as
-    additional is additional; the narrower row shape remains additional wherever it appears.
+    Which battery a row belongs to is decided by the table's own category column when it has one and
+    by the section it is written under otherwise, never by how many columns its table happens to
+    have. The CP-0007 report wrote its additional attacks in a narrower table, the CP-0009 report
+    wrote them in the same table shape as the mandatory ones, and the CP-0011 report wrote one table
+    with a category column and prefixed identifiers; a parser that inferred the battery from the
+    shape would have promoted twenty-six additional attacks to mandatory the moment the second
+    report was registered, and a parser that recognised only the first two renderings read the third
+    sealed report as containing no attack at all.
+
+    A table is read by its header whenever it has one, so the column meanings come from the document
+    instead of from a guess, and a table whose first column is not an attack identifier is not a
+    table of attacks. The header-less shapes stay supported because a report may quote a battery
+    fragment without its header.
     """
     attacks: list[dict[str, str]] = []
     seen: set[str] = set()
     additional_section = False
-    for line in text.splitlines():
-        heading = re.match(r"^#{2,}\s+(?P<title>.+?)\s*$", line)
+    columns: list[str] | None = None
+    lines = text.splitlines()
+    for index, line in enumerate(lines):
+        heading = SECTION_HEADING.match(line)
         if heading:
             additional_section = "additional" in heading.group("title").lower()
+            columns = None
+            continue
+        if TABLE_SEPARATOR.match(line):
+            columns = _attack_columns(lines[index - 1]) if index else None
+            continue
+        if not line.lstrip().startswith("|"):
+            columns = None
+            continue
+        if columns is not None:
+            cells = _table_cells(line)
+            if len(cells) != len(columns):
+                columns = None
+                continue
+            parsed = _attack_from_row(cells, columns, additional_section)
+            if parsed is None or parsed["id"] in seen:
+                continue
+            seen.add(parsed["id"])
+            attacks.append(parsed)
             continue
         match = ATTACK_ROW.match(line)
         if match:
@@ -272,6 +384,38 @@ def audit_attacks(root: Path, audit: dict[str, Any]) -> list[dict[str, str]]:
     if not attacks:
         raise LedgerError(f"no attack could be parsed from {report}")
     return attacks
+
+
+def audit_applicability(root: Path, gate: str, checkpoint: str) -> dict[str, Any]:
+    """What the canonical sources say this checkpoint must close, and where that came from.
+
+    The applicable set is derived here and nowhere else. No invocation supplies it and no artifact
+    inside the checkpoint can shrink it: the audits come from the registry, matched on the Gate and
+    on the checkpoint the registry itself names as their corrective delivery, and their findings and
+    attacks are re-parsed from the sealed reports at every call.
+
+    An empty result and a missing result are different states, and only the first one is benign. A
+    checkpoint that no registered audit names as its corrective delivery has nothing to close, which
+    is legitimate and is what the empty set means here. An audit whose sealed report cannot be read
+    raises instead of reducing to an empty set, so a report that becomes unparseable can never be
+    mistaken for an audit without findings.
+    """
+    audits = open_audits(root, gate, checkpoint)
+    findings: list[dict[str, str]] = []
+    attacks: list[dict[str, str]] = []
+    for audit in audits:
+        findings.extend(audit_findings(root, audit))
+        attacks.extend(item for item in audit_attacks(root, audit) if item["mandatory"] == "true")
+    return {
+        "audits": audits,
+        "auditIds": [str(audit.get("auditId")) for audit in audits],
+        "findings": findings,
+        "mandatoryAttacks": attacks,
+        "derivationSource": (
+            f"{AUDIT_REGISTRY.as_posix()} matched on gate={gate!r} and "
+            f"correctiveCheckpoint={checkpoint!r}, with every finding and mandatory attack "
+            f"re-parsed from the sealed reports the matching entries name"),
+    }
 
 
 # --------------------------------------------------------------------------------------------

@@ -109,6 +109,41 @@ a stale result is refused exactly like a red one. The scope is the code, the tes
 memory, the prompts and the governing documents; the checkpoint's own evidence is deliberately
 outside it, so recording evidence never invalidates the evidence being recorded.
 
+## Applicability: an empty set is not a missing one
+
+A control that judges a derived set can find that set empty for two different reasons, and they are
+not the same result.
+
+| State | Meaning | Outcome |
+|---|---|---|
+| empty applicable set | the canonical sources name nothing of this kind for this delivery to judge | `NOT_APPLICABLE` with a justification |
+| missing required set | the canonical sources name items and the delivery does not carry or satisfy them | `FAIL` |
+
+The third `M0` audit found the two collapsed into one: the internal mirror audit required its
+derived set to be non-empty in order to report success, so a delivery that corrects no audit was
+refused for having nothing to correct, and with it the audit checkpoint of this milestone and the
+first delivery of every future Gate.
+
+An inapplicable result is auditable, never a silent skip. It records why the dimension does not
+apply, an expected count of zero, and the canonical source the emptiness was derived from. An
+inapplicable result without those is refused, and so is one that records items it claims not to
+have.
+
+The applicable set is derived from the canonical sources at every run and never supplied by the
+delivery. Nothing a checkpoint writes about itself reduces it, and validation re-derives the
+dimensions whose source is canonical rather than believing the report, so declaring work away is
+refused exactly like leaving it open. This is the same rule as the closed mandatory gate set and the
+anchored completeness denominator: a control that trusts its own input is not a control.
+
+## Simulations execute the control they report
+
+A simulation, a rehearsal or a fixture that reports a control as passing runs that control. Writing
+the artifact the control would have produced makes the rehearsal pass while the control itself may
+refuse every real delivery, which is exactly how the applicability defect survived a green
+`promotion_simulation.py`. Where a simulation must model an artifact it cannot execute, it says so
+in the artifact and in its own report, so what was executed and what was modelled are never
+confused.
+
 ## Derived counts
 
 Any count used as evidence is derived once into `COUNTS.json` from the artifact that owns it, and

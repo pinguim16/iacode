@@ -204,7 +204,7 @@ class Fixture:
         modelled = modelled or not mirror.is_file()
         if not mirror.is_file():
             write_json(mirror, {
-                "schemaVersion": "1.0.0", "checkpoint": checkpoint.name, "milestone": milestone,
+                "schemaVersion": "1.1.0", "checkpoint": checkpoint.name, "milestone": milestone,
                 "generatedAt": utc_now(), "targetFingerprint": fingerprint,
                 "auditorRole": "M0 Closure Auditor",
                 "independence": "Internal quality assurance, not external validation.",
@@ -1140,6 +1140,209 @@ def build_attacks() -> list[dict[str, Any]]:
     attack("BD", "external attestation",
            "Attest an older checkpoint than the delivery the audit succeeds", "reject", run_bd,
            False, new)
+
+    # -- the surface the applicability repair opened -----------------------------------
+    #
+    # Making NOT_APPLICABLE reachable is what closes CP11-F-001. It also creates the opposite
+    # escape: a delivery that declares a dimension inapplicable instead of satisfying it, or that
+    # counts an inapplicable dimension as a pass. Each of those is attacked here, because a repair
+    # whose own new state space is unattacked is half a repair.
+    applicability = "SETUP-00-CP-0012 applicability semantics"
+
+    def _first_mirror_check(document: Any) -> dict[str, Any]:
+        return document["checks"][0]
+
+    def run_be(fixture: Fixture) -> tuple[str, bool]:
+        def mutate(document: Any) -> Any:
+            check = _first_mirror_check(document)
+            check["result"] = "NOT_APPLICABLE"
+            check["expectedCount"] = 0
+            check["derivationSource"] = "declared by this delivery"
+            document["passed"] -= 1
+            document["notApplicable"] = document.get("notApplicable", 0) + 1
+            return document
+        fixture.checkpoint_edit("M0-INTERNAL-MIRROR.json", mutate)
+        return validator_refuses(fixture, "NOT_APPLICABLE without a reason")
+
+    attack("BE", "internal mirror audit",
+           "Record a dimension as inapplicable without saying why", "reject", run_be, False,
+           applicability)
+
+    def run_bf(fixture: Fixture) -> tuple[str, bool]:
+        def mutate(document: Any) -> Any:
+            check = _first_mirror_check(document)
+            check["result"] = "NOT_APPLICABLE"
+            check["reason"] = "there was nothing to audit"
+            check["derivationSource"] = "declared by this delivery"
+            check["expectedCount"] = 3
+            document["passed"] -= 1
+            document["notApplicable"] = document.get("notApplicable", 0) + 1
+            return document
+        fixture.checkpoint_edit("M0-INTERNAL-MIRROR.json", mutate)
+        return validator_refuses(fixture, "a dimension that has items to audit is not inapplicable")
+
+    attack("BF", "internal mirror audit",
+           "Declare a dimension inapplicable while recording that it has items to audit",
+           "reject", run_bf, False, applicability)
+
+    def run_bg(fixture: Fixture) -> tuple[str, bool]:
+        """Declare away the very dimension the audit registry makes applicable.
+
+        The declaration is well formed: it carries a reason, an empty expected count and a named
+        source, so the justification rules alone would accept it. Only re-deriving the applicable
+        set from the registry refuses it, which is the control under attack.
+        """
+        inapplicable = {
+            "id": "MIR-002",
+            "dimension": "Audit findings",
+            "expectation": "Every finding of every audit whose corrective delivery this is, is "
+                           "CLOSED.",
+            "observed": "0 applicable audit findings",
+            "result": "NOT_APPLICABLE",
+            "evidence": ["file:.iacode/policies/audit-registry.json"],
+            "reason": "this delivery decided it has nothing to close",
+            "expectedCount": 0,
+            "derivationSource": "declared by this delivery",
+        }
+
+        def mutate(document: Any) -> Any:
+            replaced = False
+            for index, check in enumerate(document["checks"]):
+                if check["id"] != "MIR-002":
+                    continue
+                if check["result"] == "PASS":
+                    document["passed"] -= 1
+                elif check["result"] == "FAIL":
+                    document["failed"] = max(document.get("failed", 0) - 1, 0)
+                document["checks"][index] = inapplicable
+                replaced = True
+            if not replaced:
+                document["checks"].append(inapplicable)
+                document["total"] = document.get("total", 0) + 1
+            document["notApplicable"] = document.get("notApplicable", 0) + 1
+            document["result"] = "PASS" if not document.get("failed") else "FAIL"
+            return document
+        fixture.checkpoint_edit("M0-INTERNAL-MIRROR.json", mutate)
+        return validator_refuses(fixture, "while the canonical sources name")
+
+    attack("BG", "internal mirror audit",
+           "Declare the audit-findings dimension inapplicable while the registry names findings "
+           "for this checkpoint", "reject", run_bg, False, applicability)
+
+    def run_bh(fixture: Fixture) -> tuple[str, bool]:
+        def mutate(document: Any) -> Any:
+            check = _first_mirror_check(document)
+            check["result"] = "NOT_APPLICABLE"
+            check["reason"] = "there was nothing to audit"
+            check["expectedCount"] = 0
+            check["derivationSource"] = "declared by this delivery"
+            # The dimension is quietly kept inside the passing count as well.
+            return document
+        fixture.checkpoint_edit("M0-INTERNAL-MIRROR.json", mutate)
+        return validator_refuses(fixture, "passed does not match the recorded checks")
+
+    attack("BH", "internal mirror audit",
+           "Count an inapplicable dimension as a passing one", "reject", run_bh, False,
+           applicability)
+
+    def run_bi(fixture: Fixture) -> tuple[str, bool]:
+        def mutate(document: Any) -> Any:
+            check = _first_mirror_check(document)
+            check["result"] = "NOT_APPLICABLE"
+            check["reason"] = "there was nothing to audit"
+            check["expectedCount"] = 0
+            check["derivationSource"] = "declared by this delivery"
+            document["passed"] -= 1
+            document["notApplicable"] = document.get("notApplicable", 0) + 1
+            document["schemaVersion"] = "1.0.0"
+            return document
+        fixture.checkpoint_edit("M0-INTERNAL-MIRROR.json", mutate)
+        return validator_refuses(fixture, "requires the justification fields")
+
+    attack("BI", "internal mirror audit",
+           "Record an inapplicable dimension under the report version that cannot justify one",
+           "reject", run_bi, False, applicability)
+
+    # -- the mandatory battery of SETUP-00-CP-0011 -------------------------------------
+    #
+    # The audit that produced CP11-F-001 numbered its battery in its own vocabulary, and the
+    # registry requires the corrective delivery to defend the rows that battery marks mandatory.
+    # Most of them name a failure class this battery already attacks. Each is executed again under
+    # the identifier the sealed report uses, in its own fixture, rather than credited from another
+    # row: where the mutation is one an existing attack performs, the alias records which one, and
+    # where the sealed report isolates a mutation this battery did not have, it is written here.
+    cp11 = "SETUP-00-CP-0011 mandatory battery"
+    existing = {str(item["attackId"]): item for item in attacks}
+
+    def alias(identifier: str, source: str, target: str, mutation: str) -> None:
+        origin = existing[source]
+        attack(identifier, target, mutation, origin["expectedDefense"], origin["run"], True,
+               f"{cp11}; the same mutation as attack {source}, executed again")
+
+    def run_int01(fixture: Fixture) -> tuple[str, bool]:
+        """Move a sealed tag onto a commit that already exists, without rewriting anything."""
+        victim = _anchored_predecessor(fixture)
+        code, head = run_git(fixture.path, "rev-parse", "HEAD")
+        if code != 0:
+            return "the fixture could not resolve HEAD", False
+        subprocess.run(["git", "tag", "-f", f"{TAG_NAMESPACE}{victim}", head],
+                       cwd=fixture.path, check=True,
+                       stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        return tool_refuses(fixture, [INTEGRITY], victim)
+
+    attack("INT-01", "sealed history", "Move a historical checkpoint tag onto another commit",
+           "reject the moved tag", run_int01, True, cp11)
+
+    alias("INT-02", "I", "sealed history", "Rewrite sealed content and move its tag onto the rewrite")
+    alias("INT-03", "AR", "integrity chain", "Break the link between two consecutive anchors")
+
+    def run_int04(fixture: Fixture) -> tuple[str, bool]:
+        """Remove the anchor of a sealed checkpoint the pending rule does not forgive."""
+        from anchors import pending_anchor_checkpoint
+
+        pending = pending_anchor_checkpoint(fixture.path)
+
+        def mutate(document: Any) -> Any:
+            remaining = [item for item in document["anchors"]
+                         if item["checkpointId"] != pending]
+            if not remaining:
+                return document
+            victim = remaining[-1]["checkpointId"]
+            document["anchors"] = [item for item in document["anchors"]
+                                   if item["checkpointId"] != victim]
+            return document
+        fixture.json_edit(".iacode/anchors/checkpoint-chain.json", mutate)
+        return tool_refuses(fixture, [INTEGRITY], "anchor")
+
+    attack("INT-04", "integrity chain", "Remove the anchor of a sealed checkpoint",
+           "reject the missing anchor", run_int04, True, cp11)
+
+    def run_int05(fixture: Fixture) -> tuple[str, bool]:
+        """Skip the anchor this checkpoint owes its sealed predecessor."""
+        victim = _anchored_predecessor(fixture)
+
+        def mutate(document: Any) -> Any:
+            document["anchors"] = [item for item in document["anchors"]
+                                   if item["checkpointId"] != victim]
+            return document
+        fixture.json_edit(".iacode/anchors/checkpoint-chain.json", mutate)
+        return validator_refuses(fixture, victim)
+
+    attack("INT-05", "successor duty",
+           "Skip the anchor this checkpoint owes its sealed predecessor", "reject", run_int05,
+           True, cp11)
+
+    alias("PRE-01", "U", "lesson preflight", "Change the memory after the preflight was recorded")
+    alias("MEM-01", "F", "guarded semantics",
+          "Replace a preventive control with documentation only")
+    alias("STL-01", "AH", "gate staleness", "Edit the assurance scope after the last green cycle")
+    alias("STL-02", "AL", "derived counts", "Forge the derived count of a delivery artifact")
+    alias("STL-04", "A", "readiness invariant",
+          "Carry a blocker while claiming a handoff-ready status")
+    alias("STL-05", "K", "file inventory", "Remove an entry from the declared change set")
+    alias("SEC-01", "H", "secret handling",
+          "Insert a credential-shaped value into the memory and require a refusal that does not "
+          "repeat it")
 
     return attacks
 

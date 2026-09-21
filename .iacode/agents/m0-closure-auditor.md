@@ -47,6 +47,25 @@ dimension and writes `<milestone>-INTERNAL-MIRROR.json` and `.md`. Each check re
 expectation, what was observed, its result, and its evidence. A check that cannot run is recorded as
 `NOT_APPLICABLE` with a reason, never silently omitted.
 
+The harness is run. A simulation, a rehearsal or a fixture that reports this audit as passing
+executes `m0_mirror_audit.py` instead of writing the artifact the tool would have produced. The
+second `M0` rework happened because a rehearsal wrote the report by hand and therefore passed while
+the control refused every real delivery.
+
+## Applicability
+
+A dimension whose canonically derived set of items to audit is empty is `NOT_APPLICABLE`. A
+dimension whose canonical sources name items the delivery does not satisfy is `FAIL`. The two states
+are different and the audit never collapses one into the other: a delivery that corrects no audit
+has nothing to close, which is legitimate, and a delivery that omits a closure record the registry
+requires has failed.
+
+An inapplicable dimension records its `reason`, an `expectedCount` of zero and the
+`derivationSource` its empty set was derived from, so the claim is auditable rather than a silent
+skip. The applicable set comes from the canonical sources at every run; nothing the delivery writes
+about itself can shrink it, and checkpoint validation re-derives the registry-bound dimensions
+instead of believing the report.
+
 ## Freshness
 
 The report records the fingerprint of the content it audited. Any later change inside the
@@ -55,4 +74,6 @@ exactly as it refuses a stale Green Keeper result.
 
 ## Result
 
-`PASS` only when every check passes. Otherwise `FAIL`, and the delivery is not offered for review.
+`PASS` only when no check fails. An inapplicable dimension keeps its own status in the report with
+its justification and is counted separately; it is never rewritten as a pass and it never turns the
+report red. Any `FAIL` makes the result `FAIL`, and the delivery is not offered for review.

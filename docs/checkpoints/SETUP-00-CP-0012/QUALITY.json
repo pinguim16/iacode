@@ -1,0 +1,88 @@
+{
+  "schemaVersion": "3.2.0",
+  "checks": {
+    "build": {
+      "status": "NOT_APPLICABLE",
+      "evidence": [],
+      "justification": "SETUP-00 has no build target; the ledger tooling is standard-library Python executed directly."
+    },
+    "unitTests": {
+      "status": "PASS",
+      "evidence": [
+        "command:cmd-0043",
+        "file:TESTS.json"
+      ],
+      "justification": null
+    },
+    "integrationTests": {
+      "status": "PASS",
+      "evidence": [
+        "command:cmd-0043",
+        "file:TESTS.json"
+      ],
+      "justification": null
+    },
+    "e2e": {
+      "status": "NOT_APPLICABLE",
+      "evidence": [],
+      "justification": "No runtime exists to exercise end to end during SETUP-00."
+    },
+    "lint": {
+      "status": "NOT_APPLICABLE",
+      "evidence": [],
+      "justification": "No linter is vendored; static analysis is covered by compileall."
+    },
+    "staticAnalysis": {
+      "status": "PASS",
+      "evidence": [
+        "command:cmd-0031"
+      ],
+      "justification": null
+    },
+    "security": {
+      "status": "PASS",
+      "evidence": [
+        "command:cmd-0034",
+        "command:cmd-0038"
+      ],
+      "justification": null
+    },
+    "documentation": {
+      "status": "PASS",
+      "evidence": [
+        "command:cmd-0043",
+        "file:DIFF-SUMMARY.md",
+        "file:FINAL-REPORT.md"
+      ],
+      "justification": null
+    },
+    "checkpointValidation": {
+      "status": "PASS",
+      "evidence": [
+        "command:cmd-0034"
+      ],
+      "justification": null
+    },
+    "redTeam": {
+      "status": "NOT_EXECUTED",
+      "evidence": [],
+      "justification": "The independent Red Team belongs to the next M0 audit and has not run. The battery in M0-INTERNAL-RED-TEAM.json is this delivery's own quality assurance and is not recorded as an independent verdict."
+    },
+    "greenKeeper": {
+      "status": "PASS",
+      "evidence": [
+        "command:cmd-0035",
+        "file:REWORK-LOG.jsonl"
+      ],
+      "justification": null
+    },
+    "deliveryCompleteness": {
+      "status": "PASS",
+      "evidence": [
+        "command:cmd-0036",
+        "file:COMPLETENESS-REPORT.json"
+      ],
+      "justification": null
+    }
+  }
+}

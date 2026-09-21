@@ -1,0 +1,101 @@
+{
+  "schemaVersion": "3.2.0",
+  "artifacts": [
+    {
+      "artifact": "docs/checkpoints/SETUP-00-CP-0012",
+      "sourceType": "repository-generated",
+      "provider": "Anthropic",
+      "model": "claude-opus-5",
+      "ownership": "project",
+      "license": "project-policy",
+      "rights": {
+        "storageAllowed": true,
+        "ragAllowed": false,
+        "trainingAllowed": false,
+        "distillationAllowed": false
+      },
+      "evidence": "Authored by the corrective delivery that closes CP11-F-001; every command is recorded in COMMANDS.jsonl and every gate result in the artifacts those commands produced.",
+      "notes": "Training denied by default; no rights evidence exists for this content."
+    },
+    {
+      "artifact": "scripts/development-ledger/mirror_semantics_validation.py",
+      "sourceType": "repository-generated",
+      "provider": "Anthropic",
+      "model": "claude-opus-5",
+      "ownership": "project",
+      "license": "project-policy",
+      "rights": {
+        "storageAllowed": true,
+        "ragAllowed": false,
+        "trainingAllowed": false,
+        "distillationAllowed": false
+      },
+      "evidence": "Standard-library Python that executes m0_mirror_audit.py over six prepared applicability states in disposable repositories and compares each outcome with a declared expectation.",
+      "notes": "Guardrail GRD-0030. Training denied by default."
+    },
+    {
+      "artifact": "scripts/development-ledger/gate_transition_simulation.py",
+      "sourceType": "repository-generated",
+      "provider": "Anthropic",
+      "model": "claude-opus-5",
+      "ownership": "project",
+      "license": "project-policy",
+      "rights": {
+        "storageAllowed": true,
+        "ragAllowed": false,
+        "trainingAllowed": false,
+        "distillationAllowed": false
+      },
+      "evidence": "Standard-library Python that closes a milestone in a disposable repository and delivers the first checkpoint of a synthetic next Gate to READY_FOR_REVIEW.",
+      "notes": "Guardrail GRD-0032. The next Gate's specification is synthetic and never leaves the disposable repository. Training denied by default."
+    },
+    {
+      "artifact": ".iacode/policies/audit-registry.json",
+      "sourceType": "repository-generated",
+      "provider": "IACode project",
+      "model": "not-applicable",
+      "ownership": "project",
+      "license": "project-policy",
+      "rights": {
+        "storageAllowed": true,
+        "ragAllowed": false,
+        "trainingAllowed": false,
+        "distillationAllowed": false
+      },
+      "evidence": "Registers M0-CP-0011 as the audit whose corrective delivery this checkpoint is; its findings and attacks are re-parsed from the sealed reports at every validation rather than transcribed here.",
+      "notes": "A registry entry cannot shrink an expected set, because the set is derived from the sealed reports it names."
+    },
+    {
+      "artifact": ".iacode/memory/lessons.jsonl",
+      "sourceType": "repository-generated",
+      "provider": "IACode project",
+      "model": "not-applicable",
+      "ownership": "project",
+      "license": "project-policy",
+      "rights": {
+        "storageAllowed": true,
+        "ragAllowed": false,
+        "trainingAllowed": false,
+        "distillationAllowed": false
+      },
+      "evidence": "LSN-0031 derived from the recorded finding CP11-F-001, and the guardrail failures recorded against LSN-0024 and LSN-0029 for the same recurrence.",
+      "notes": "Organizational engineering memory. No personal data, no chain-of-thought, no secrets. Training denied by default."
+    },
+    {
+      "artifact": ".iacode/anchors/checkpoint-chain.json",
+      "sourceType": "derived-from-git",
+      "provider": "IACode project",
+      "model": "not-applicable",
+      "ownership": "project",
+      "license": "project-policy",
+      "rights": {
+        "storageAllowed": true,
+        "ragAllowed": false,
+        "trainingAllowed": false,
+        "distillationAllowed": false
+      },
+      "evidence": "Rebuilt by verify_integrity.py so that this checkpoint anchors its sealed predecessor SETUP-00-CP-0011.",
+      "notes": "Tamper evidence inside the local trust model, not a signature."
+    }
+  ]
+}

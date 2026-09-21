@@ -58,6 +58,21 @@
             "type": "string",
             "minLength": 1
           }
+        },
+        "reason": {
+          "description": "Why the dimension has nothing to audit. Required when result is NOT_APPLICABLE, and only permitted from schemaVersion 1.1.0.",
+          "type": "string",
+          "minLength": 1
+        },
+        "expectedCount": {
+          "description": "How many items the canonical derivation found for this dimension. A NOT_APPLICABLE check records 0; a non-zero count is not an inapplicable dimension.",
+          "type": "integer",
+          "minimum": 0
+        },
+        "derivationSource": {
+          "description": "The canonical source the applicable set was derived from, so an inapplicable dimension can be re-derived rather than believed.",
+          "type": "string",
+          "minLength": 1
         }
       },
       "additionalProperties": false
@@ -66,8 +81,10 @@
   "properties": {
     "schemaVersion": {
       "enum": [
-        "1.0.0"
-      ]
+        "1.0.0",
+        "1.1.0"
+      ],
+      "description": "1.0.0 is the original report. 1.1.0 adds the justification of an inapplicable dimension: reason, expectedCount and derivationSource. A 1.0.0 report has no place to justify a NOT_APPLICABLE check and therefore may not record one; sealed 1.0.0 reports keep the rules they were written for."
     },
     "checkpoint": {
       "type": "string",
@@ -114,7 +131,8 @@
     },
     "notApplicable": {
       "type": "integer",
-      "minimum": 0
+      "minimum": 0,
+      "description": "Checks whose canonically derived applicable set was empty. They are neither passes nor failures, and the total is passed + failed + notApplicable."
     },
     "result": {
       "enum": [
