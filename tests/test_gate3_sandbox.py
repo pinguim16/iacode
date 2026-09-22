@@ -336,5 +336,69 @@ class LessonIndexFreshnessTests(unittest.TestCase):
         self.assertNotEqual(code, 0, output)
 
 
+ADR_DIRECTORY = PROJECT_ROOT / "docs" / "adr"
+
+
+def adr_records(directory: Path) -> list[tuple[str, str, str, str]]:
+    """``(identifier, title, status, file name)`` of every ADR, read from the records."""
+    import re
+
+    rows = []
+    for path in sorted(directory.glob("ADR-*.md")):
+        text = path.read_text(encoding="utf-8")
+        heading = re.search(r"(?m)^# (ADR-\d{4})\s*[—:]\s*(.+?)\s*$", text)
+        status = re.search(r"(?m)^(?:- )?Status: (\S+)", text)
+        if heading is None or status is None:
+            rows.append((path.stem[:8], "", "", path.name))
+            continue
+        rows.append((heading.group(1), heading.group(2).strip(), status.group(1).capitalize(),
+                     path.name))
+    return rows
+
+
+def adr_index_rows(index: Path) -> list[tuple[str, str, str, str]]:
+    import re
+
+    row = re.compile(r"^\| \[(ADR-\d{4})\]\(([^)]+)\) \| (.+?) \| (\S+) \|$")
+    rows = []
+    for line in index.read_text(encoding="utf-8").splitlines():
+        match = row.match(line)
+        if match:
+            rows.append((match.group(1), match.group(3), match.group(4), match.group(2)))
+    return rows
+
+
+class AdrIndexTests(unittest.TestCase):
+    """`R-G2-012`: the ADR index exists, lists every record exactly, and a missing index fails."""
+
+    def test_the_index_exists(self) -> None:
+        self.assertTrue((ADR_DIRECTORY / "README.md").is_file(), "the ADR index is missing")
+
+    def test_the_index_lists_every_record_with_its_title_and_status(self) -> None:
+        records = adr_records(ADR_DIRECTORY)
+        self.assertGreaterEqual(len(records), 24)
+        for identifier, title, status, _name in records:
+            with self.subTest(adr=identifier):
+                self.assertTrue(title and status, f"{identifier} has no heading or status line")
+        self.assertEqual(adr_index_rows(ADR_DIRECTORY / "README.md"), records)
+
+    def test_every_link_of_the_index_resolves(self) -> None:
+        for identifier, _title, _status, name in adr_index_rows(ADR_DIRECTORY / "README.md"):
+            with self.subTest(adr=identifier):
+                self.assertTrue((ADR_DIRECTORY / name).is_file())
+
+    def test_a_record_missing_from_the_index_is_detected(self) -> None:
+        """Null and mutation control over a disposable copy of the directory."""
+        import shutil
+
+        with tempfile.TemporaryDirectory(prefix="iacode-adr-") as workdir:
+            copy = Path(workdir) / "adr"
+            shutil.copytree(ADR_DIRECTORY, copy)
+            self.assertEqual(adr_index_rows(copy / "README.md"), adr_records(copy))
+            (copy / "ADR-9999-planted.md").write_text(
+                "# ADR-9999 — A planted decision\n\nStatus: Proposed\n", encoding="utf-8")
+            self.assertNotEqual(adr_index_rows(copy / "README.md"), adr_records(copy))
+
+
 if __name__ == "__main__":
     unittest.main()

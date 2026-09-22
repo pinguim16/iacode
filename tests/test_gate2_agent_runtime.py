@@ -729,9 +729,11 @@ class Gate2AdrTests(unittest.TestCase):
                 self.assertGreater(len(text), 1200, f"{path.name} is a stub")
 
     def test_the_index_lists_them(self) -> None:
+        # A missing index fails. The first version skipped instead, the index never existed, and
+        # the test was counted as executed for two checkpoints without asserting anything: a
+        # vacuous pass, `R-G2-012`, closed in GATE 3.
         index = (PROJECT_ROOT / "docs" / "adr" / "README.md")
-        if not index.is_file():
-            self.skipTest("the ADR directory has no index")
+        self.assertTrue(index.is_file(), "the ADR directory has no index")
         text = index.read_text(encoding="utf-8")
         for path in self.adrs():
             with self.subTest(adr=path.name):
