@@ -8,8 +8,10 @@ version = "0.1.0"
 description = "The IACode Foundation API."
 requires-python = ">=3.12"
 dependencies = [
+  "iacode-agent-runtime==0.1.0",
   "iacode-common==0.1.0",
   "iacode-contracts==0.1.0",
+  "iacode-persistence==0.1.0",
   "iacode-telemetry==0.1.0",
   "iacode-model-gateway==0.1.0",
   "fastapi==0.141.1",

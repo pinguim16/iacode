@@ -8,8 +8,8 @@ actually matches.
 
 from __future__ import annotations
 
-from iacode_api.db import models
-from iacode_api.db.base import Base, ImmutableRecord, TimestampedEntity
+from iacode_persistence import models
+from iacode_persistence.base import Base, ImmutableRecord, TimestampedEntity
 
 # The set from `docs/GATE-0-CHECKLIST.md` row 5.6.
 STRUCTURAL_TABLES = {
@@ -17,12 +17,30 @@ STRUCTURAL_TABLES = {
     "providers", "models", "model_calls", "tool_calls", "artifacts", "experiences",
 }
 
+# What `docs/GATE-2-CHECKLIST.md` adds. Kept as its own set rather than merged into the one above,
+# so the two statements stay legible: Gate 0 declared a persistence contract, and Gate 2 added the
+# tables the agent runtime needs *beside* it rather than duplicating any of them.
+AGENT_RUNTIME_TABLES = {"agent_teams", "run_events", "tool_requests", "tool_results"}
+
 # Append-only facts: something that already happened, and cannot change afterwards.
-APPEND_ONLY = {"model_calls", "tool_calls"}
+APPEND_ONLY = {"model_calls", "tool_calls", "run_events", "tool_results"}
 
 
 def test_structural_tables_exist() -> None:
-    assert set(Base.metadata.tables) == STRUCTURAL_TABLES
+    assert set(Base.metadata.tables) == STRUCTURAL_TABLES | AGENT_RUNTIME_TABLES
+
+
+def test_the_agent_runtime_created_no_parallel_entity() -> None:
+    """Gate 2 evolved the existing entities; it did not shadow one with a table of its own.
+
+    The check is a property rather than a list: no new table may be a renamed copy of a structural
+    one. `docs/GATE-2-CHECKLIST.md` row 3.2 exists because "agent_runtime_tasks" beside "tasks" is
+    the easiest wrong turn available to this Gate.
+    """
+    for table in AGENT_RUNTIME_TABLES:
+        for structural in STRUCTURAL_TABLES:
+            assert structural not in table, (
+                f"{table} looks like a second home for {structural}")
 
 
 def test_common_columns_follow_the_convention() -> None:
@@ -93,6 +111,14 @@ def test_relationships_cascade_deliberately() -> None:
         ("tool_calls", "agent_run_id"): "CASCADE",
         ("artifacts", "task_run_id"): "SET NULL",
         ("experiences", "task_run_id"): "SET NULL",
+        # Gate 2. A run's history and its tool interactions belong to the run: deleting the run
+        # deletes them. The agent run reference is cleared rather than cascaded, because an event
+        # about a stage stays true after the stage's row is gone.
+        ("run_events", "task_run_id"): "CASCADE",
+        ("run_events", "agent_run_id"): "SET NULL",
+        ("tool_requests", "task_run_id"): "CASCADE",
+        ("tool_requests", "agent_run_id"): "SET NULL",
+        ("tool_results", "tool_request_id"): "CASCADE",
     }
     observed = {
         (table_name, next(iter(key.columns)).name): key.ondelete
@@ -194,3 +220,88 @@ def test_provider_registry_persists_operational_metadata() -> None:
     assert models.Provider.__table__.columns["healthy"].nullable
     assert models.Provider.__table__.columns["last_health_check"].nullable
     assert models.Provider.__table__.columns["last_sync"].nullable
+
+
+def test_run_event_log_is_append_only() -> None:
+    """A history that can be edited is not a history.
+
+    The control is the shape: `run_events` inherits `ImmutableRecord`, so there is no `updated_at`
+    to bump and no optimistic-locking counter to increment. `docs/GATE-2-CHECKLIST.md` row 3.6.
+    """
+    events = Base.metadata.tables["run_events"]
+    columns = set(events.columns.keys())
+
+    assert "created_at" in columns
+    assert "updated_at" not in columns
+    assert "version" not in columns
+
+    model = next(mapper.class_ for mapper in Base.registry.mappers
+                 if mapper.class_.__tablename__ == "run_events")
+    assert issubclass(model, ImmutableRecord)
+    assert not issubclass(model, TimestampedEntity)
+
+
+def test_the_event_sequence_and_its_dedupe_key_are_unique_per_run() -> None:
+    """The two constraints that make a history ordered and appendable exactly once."""
+    events = Base.metadata.tables["run_events"]
+    unique = {
+        tuple(column.name for column in constraint.columns)
+        for constraint in events.constraints
+        if constraint.__class__.__name__ == "UniqueConstraint"
+    }
+
+    assert ("task_run_id", "sequence") in unique
+    assert ("task_run_id", "dedupe_key") in unique
+
+
+def test_a_tool_request_carries_at_most_one_result() -> None:
+    """The uniqueness constraint is the idempotency mechanism, not a nicety."""
+    results = Base.metadata.tables["tool_results"]
+    unique = {
+        tuple(column.name for column in constraint.columns)
+        for constraint in results.constraints
+        if constraint.__class__.__name__ == "UniqueConstraint"
+    }
+
+    assert ("tool_request_id",) in unique
+
+    model = next(mapper.class_ for mapper in Base.registry.mappers
+                 if mapper.class_.__tablename__ == "tool_results")
+    assert issubclass(model, ImmutableRecord)
+
+
+def test_agent_run_usage_is_derived_from_model_calls() -> None:
+    """There is no aggregate usage column: a second count eventually disagrees with the first."""
+    agent_runs = Base.metadata.tables["agent_runs"]
+    model_calls = Base.metadata.tables["model_calls"]
+
+    for forbidden in ("input_tokens", "output_tokens", "total_tokens", "cost"):
+        assert forbidden not in agent_runs.columns
+
+    assert "agent_run_id" in model_calls.columns
+    assert "input_tokens" in model_calls.columns
+    assert "cost" in model_calls.columns
+
+
+def test_nothing_this_gate_persists_is_training_eligible() -> None:
+    """Rights default to denial at the database level, not as an opinion in code."""
+    task_runs = Base.metadata.tables["task_runs"]
+
+    assert task_runs.columns["training_allowed"].server_default.arg == "false"
+    for table in ("run_events", "tool_requests", "tool_results", "agent_teams"):
+        assert "training_allowed" not in Base.metadata.tables[table].columns, (
+            f"{table} carries a rights flag nothing in this Gate grants")
+
+
+def test_no_raw_provider_prompt_is_persisted() -> None:
+    """`model_calls` has nowhere to put one, and the run keeps its own task rather than a prompt."""
+    for table_name in ("model_calls", "task_runs", "agent_runs", "run_events"):
+        columns = set(Base.metadata.tables[table_name].columns.keys())
+        for forbidden in ("prompt", "prompts", "messages", "completion", "raw_request",
+                          "system_prompt", "transcript"):
+            assert forbidden not in columns, f"{table_name} can hold a {forbidden}"
+
+    # What the run does keep is its own instruction and its own answer, which is what lets the
+    # workflow resume and the page render after a restart.
+    assert "result" in Base.metadata.tables["task_runs"].columns
+    assert "description" in Base.metadata.tables["tasks"].columns

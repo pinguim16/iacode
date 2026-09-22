@@ -38,13 +38,19 @@ apps/api/                  the FastAPI application
   tests/unit/              no external service; the mandatory gate runs these
   tests/integration/       the real PostgreSQL, Redis, MinIO and Temporal
 apps/web/                  the Angular shell
-services/orchestrator/     the Temporal worker and the smoke workflow
+services/orchestrator/     the Temporal worker: the smoke workflow and the agent run workflow
+  src/                     the workflow, its activities and the process that polls for them
+  rehearsal/               a harness, outside the shipped source, for the durability scenario
 packages/common/           UUIDv7 and credential redaction
 packages/contracts/        the response shapes that cross a process boundary
+packages/persistence/      the system of record: one declarative schema, shared by both processes
 packages/telemetry/        the logging contract and the ambient correlation context
 services/model-gateway/    the provider-neutral model boundary: contracts, adapters, catalog,
   src/                     routing, resilience, telemetry; it imports no application
   tests/                   its own suite, deterministic, with no network and no stack
+services/agent-runtime/    the agent runtime: states, events, profiles, protocol, budgets, the
+  src/                     tool-request boundary and the engine; it executes nothing
+  tests/                   its own suite, with no provider, no database and no Temporal
 infra/compose/             the stack
 infra/tests/               what the infrastructure declares, and the live configuration
 scripts/iacode/            operational tooling: stack, migrate, backup, restore, verify, scenarios
@@ -61,9 +67,14 @@ Edit under `apps/api/src/`, then:
 
 ```bash
 python scripts/iacode/gates/api_tests.py                      # unit suite, no stack needed
+python scripts/iacode/gates/agent_runtime_tests.py            # the agent runtime suite
 python scripts/iacode/stack.py up --build                     # rebuild and restart
 python scripts/iacode/smoke.py                                # prove it still works
 ```
+
+The agent runtime lives in `services/agent-runtime/` and is a library: the API composes it
+to create and read runs, and the worker composes it to execute them. Editing it means
+rebuilding both images, which `up --build` does.
 
 The image is rebuilt on `up --build`; there is no live-reload mount, because a container that runs
 different code from the image it was built from is a container whose behaviour nobody can
@@ -111,9 +122,12 @@ a bad way to learn about a version mismatch.
 python scripts/iacode/verify.py --fast
 ```
 
-Ten mandatory gates, the stack, the integration suite, the live infrastructure suite, the smoke
-check, a verified backup-and-restore cycle and a dependency scan. `--fast` stops before the stages
-that restart the stack and delete volumes.
+Eleven mandatory gates — `tests`, `staticAnalysis`, `lessons`, `integrity`,
+`checkpointValidation`, `apiTests`, `gatewayTests`, `agentRuntimeTests`, `webTests`, `lint`
+and `infraDefinition` — the stack, the integration suite, the live infrastructure suite, the
+smoke check, the two live provider smokes, the agent runtime's durability and cancellation
+scenarios, a verified backup-and-restore cycle and a dependency scan. `--fast` stops before
+the stages that restart the stack and delete volumes.
 
 The full run — `python scripts/iacode/verify.py`, or `.\verify.ps1` on Windows — adds the restart
 scenario, the dependency-failure scenario and a complete installation from no volumes at all. That

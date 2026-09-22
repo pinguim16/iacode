@@ -27,6 +27,12 @@ from datetime import datetime
 from decimal import Decimal
 from typing import Any
 
+from iacode_contracts.agent_runtime import (
+    AGENT_RUN_STATES,
+    RUN_EVENT_TYPES,
+    TOOL_REQUEST_STATUSES,
+    TOOL_RESULT_STATUSES,
+)
 from sqlalchemy import (
     Boolean,
     CheckConstraint,
@@ -42,13 +48,26 @@ from sqlalchemy import (
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from iacode_api.db.base import Base, ImmutableRecord, TimestampedEntity
+from iacode_persistence.base import Base, ImmutableRecord, TimestampedEntity
 
 # Lifecycle vocabularies. They are CHECK constraints rather than PostgreSQL ENUM types: adding a
 # value to an ENUM needs a migration that cannot run inside a transaction on older servers, and
 # every one of these vocabularies will grow as the Gates land.
 TASK_STATUSES = ("PENDING", "RUNNING", "SUCCEEDED", "FAILED", "CANCELLED")
-RUN_STATUSES = ("PENDING", "RUNNING", "SUCCEEDED", "FAILED", "CANCELLED", "TIMED_OUT")
+
+#: The states a run may hold, **derived** from the shared vocabulary rather than written again.
+#: Gate 0 declared six of its own; Gate 2 needs `CREATED`, `QUEUED` and `WAITING_FOR_TOOL` as well,
+#: and the honest way to add them is to take the runtime's canonical tuple and keep the historical
+#: values a sealed row may still carry. A second literal list here is exactly the duplicated
+#: classification `.iacode/memory/lessons.jsonl` records as a failure class: one copy grows a value
+#: the other does not have, and the disagreement surfaces as a constraint violation.
+_LEGACY_RUN_STATUSES = ("PENDING", "TIMED_OUT")
+RUN_STATUSES = AGENT_RUN_STATES + _LEGACY_RUN_STATUSES
+
+
+def _vocabulary(values: tuple[str, ...]) -> str:
+    """A CHECK expression over a vocabulary, rendered the same way everywhere."""
+    return "(" + ", ".join(f"'{value}'" for value in values) + ")"
 
 
 class Project(TimestampedEntity, Base):
@@ -89,7 +108,7 @@ class Task(TimestampedEntity, Base):
     __tablename__ = "tasks"
     __table_args__ = (
         CheckConstraint(
-            "status IN " + str(TASK_STATUSES), name="status_is_known"),
+            "status IN " + _vocabulary(TASK_STATUSES), name="status_is_known"),
     )
 
     project_id: Mapped[uuid.UUID] = mapped_column(
@@ -105,15 +124,30 @@ class Task(TimestampedEntity, Base):
 
 
 class TaskRun(TimestampedEntity, Base):
-    """One attempt at a task. A task can be attempted more than once; each attempt is a row."""
+    """One attempt at a task. A task can be attempted more than once; each attempt is a row.
+
+    Gate 2 gives the row its behaviour. ``status`` becomes the run's state in the agent runtime's
+    state machine — the same column, a wider vocabulary — because a second state column would be a
+    second answer to "what is this run doing". ``result`` is the run's own final answer and
+    ``budget`` is what it was allowed to spend; neither is a prompt and neither is a provider
+    payload, which is the difference between this table and ``model_calls``:
+
+    ``model_calls``   records that a call happened and what it cost. It has no column that could
+                      hold what was said, by shape rather than by discipline.
+    ``task_runs``     records what IACode was asked to do and what it answered, because the
+                      workflow cannot resume without the first and the operator cannot read the
+                      run without the second. This is local operational persistence, not a
+                      transcript of a provider exchange.
+    """
 
     __tablename__ = "task_runs"
     __table_args__ = (
-        CheckConstraint("status IN " + str(RUN_STATUSES), name="status_is_known"),
+        CheckConstraint("status IN " + _vocabulary(RUN_STATUSES), name="status_is_known"),
         CheckConstraint(
             "finished_at IS NULL OR started_at IS NULL OR finished_at >= started_at",
             name="finished_after_started"),
         Index("ix_task_runs_task_id_created_at", "task_id", "created_at"),
+        UniqueConstraint("idempotency_key", name="idempotency_key"),
     )
 
     task_id: Mapped[uuid.UUID] = mapped_column(
@@ -122,19 +156,60 @@ class TaskRun(TimestampedEntity, Base):
         String(32), nullable=False, default="PENDING", server_default="PENDING")
     attempt: Mapped[int] = mapped_column(Integer, nullable=False, default=1, server_default="1")
     workflow_id: Mapped[str | None] = mapped_column(
-        String(256), doc="Temporal workflow identifier, once Gate 2 runs tasks as workflows.")
+        String(256), doc="Temporal workflow identifier of the run that executes this attempt.")
     started_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     finished_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
 
+    # --- Gate 2: what the run is, what it may spend and what it answered -----------------------
+    team_slug: Mapped[str | None] = mapped_column(
+        String(128), doc="The team profile this run executes, frozen when the run was created.")
+    team_version: Mapped[str | None] = mapped_column(String(32))
+    route: Mapped[str | None] = mapped_column(
+        String(64), doc="A configured route alias the gateway resolves. Never a provider address.")
+    model_override: Mapped[str | None] = mapped_column(
+        String(384),
+        doc="An explicit 'provider:model' the caller asked for. The gateway decides whether it "
+            "can serve the request; nothing here inspects provider metadata.")
+    idempotency_key: Mapped[str | None] = mapped_column(
+        String(128),
+        doc="Unique when present: a repeated creation request returns the run the first one made.")
+    current_stage: Mapped[str | None] = mapped_column(String(128))
+    budget: Mapped[dict[str, Any]] = mapped_column(
+        JSONB, nullable=False, default=dict, server_default="{}",
+        doc="The limits this run was created with. Frozen; a later configuration change does not "
+            "retroactively widen a running run.")
+    budget_used: Mapped[dict[str, Any]] = mapped_column(
+        JSONB, nullable=False, default=dict, server_default="{}")
+    result: Mapped[str | None] = mapped_column(
+        Text, doc="The run's final answer, kept so the page can render it after a restart.")
+    result_summary: Mapped[str | None] = mapped_column(String(1024))
+    error_type: Mapped[str | None] = mapped_column(
+        String(128), doc="The runtime's classified error type, never a traceback.")
+    error_summary: Mapped[str | None] = mapped_column(String(2048))
+    failed_stage: Mapped[str | None] = mapped_column(String(128))
+    correlation_id: Mapped[str | None] = mapped_column(String(128))
+    cancel_requested: Mapped[bool] = mapped_column(
+        Boolean, nullable=False, default=False, server_default="false")
+    training_allowed: Mapped[bool] = mapped_column(
+        Boolean, nullable=False, default=False, server_default="false",
+        doc="Denied by default. Nothing in this Gate grants it, and no run enters a dataset.")
+
     task: Mapped[Task] = relationship(back_populates="runs")
     agent_runs: Mapped[list[AgentRun]] = relationship(
+        back_populates="task_run", cascade="all, delete-orphan")
+    events: Mapped[list[RunEvent]] = relationship(
+        back_populates="task_run", cascade="all, delete-orphan")
+    tool_requests: Mapped[list[ToolRequest]] = relationship(
         back_populates="task_run", cascade="all, delete-orphan")
 
 
 class Agent(TimestampedEntity, Base):
     """A declared agent role.
 
-    Gate 2 loads and executes these; Gate 0 only records that they exist.
+    Gate 0 recorded that roles exist; Gate 2 loads and executes them, so the row now carries the
+    configuration the runtime actually reads. The definition lives in ``agents/profiles/`` and this
+    table is its operational mirror: ``definition_hash`` is what makes the bootstrap idempotent,
+    and ``customised`` is what stops it from silently overwriting an operator's edit.
     """
 
     __tablename__ = "agents"
@@ -148,16 +223,74 @@ class Agent(TimestampedEntity, Base):
         Boolean, nullable=False, default=False, server_default="false",
         doc="Disabled by default: an agent runs only when a Gate that can run it enables it.")
 
+    # --- Gate 2: the configuration the runtime reads -------------------------------------------
+    role: Mapped[str | None] = mapped_column(String(128))
+    description: Mapped[str | None] = mapped_column(Text)
+    profile_version: Mapped[str | None] = mapped_column(
+        String(32),
+        doc="The version the definition declares. Distinct from the inherited optimistic-locking "
+            "``version``, which counts writes to this row: one number is about the profile and "
+            "the other is about the row, and sharing a name would make both unreadable.")
+    default_route: Mapped[str | None] = mapped_column(String(64))
+    max_turns: Mapped[int | None] = mapped_column(Integer)
+    allowed_actions: Mapped[list[str]] = mapped_column(
+        JSONB, nullable=False, default=list, server_default="[]",
+        doc="The tool names this role may request. A request outside the set is refused before "
+            "anything is persisted; nothing here executes one.")
+    prompt_template: Mapped[str | None] = mapped_column(
+        String(256), doc="Repository path of the versioned prompt template.")
+    prompt_template_version: Mapped[str | None] = mapped_column(String(32))
+    prompt_template_hash: Mapped[str | None] = mapped_column(String(64))
+    definition_hash: Mapped[str | None] = mapped_column(
+        String(64), doc="Digest of the repository definition this row was loaded from.")
+    customised: Mapped[bool] = mapped_column(
+        Boolean, nullable=False, default=False, server_default="false",
+        doc="Set by an operator who edited the row. Bootstrap leaves a customised row alone.")
+
     runs: Mapped[list[AgentRun]] = relationship(back_populates="agent")
 
 
+class AgentTeam(TimestampedEntity, Base):
+    """A declared team: an ordered list of stages, each naming an agent.
+
+    Composition is configuration. Nothing in this Gate invents a team and no model decides which
+    agents run — dynamic composition is a later Gate's problem and pretending to have it now would
+    be a feature that cannot be evidenced.
+    """
+
+    __tablename__ = "agent_teams"
+
+    slug: Mapped[str] = mapped_column(String(128), nullable=False, unique=True)
+    name: Mapped[str] = mapped_column(String(256), nullable=False)
+    description: Mapped[str | None] = mapped_column(Text)
+    profile_version: Mapped[str] = mapped_column(
+        String(32), nullable=False, default="1.0.0", server_default="1.0.0")
+    stages: Mapped[list[dict[str, Any]]] = mapped_column(
+        JSONB, nullable=False, default=list, server_default="[]")
+    enabled: Mapped[bool] = mapped_column(
+        Boolean, nullable=False, default=True, server_default="true")
+    definition_hash: Mapped[str | None] = mapped_column(String(64))
+    customised: Mapped[bool] = mapped_column(
+        Boolean, nullable=False, default=False, server_default="false")
+
+
 class AgentRun(TimestampedEntity, Base):
-    """One execution of one agent inside one task run."""
+    """One execution of one agent inside one task run.
+
+    It carries the provenance of what produced its output: which profile version, which prompt
+    template and which hash of that template. Without those three, a run that behaved oddly cannot
+    be reproduced, because the definition it ran under may have changed since.
+
+    There is no aggregate token column and no aggregate cost column. ``model_calls`` already holds
+    the authoritative usage of every call this run made, and a second count maintained by hand is a
+    second number that will eventually disagree with the first.
+    """
 
     __tablename__ = "agent_runs"
     __table_args__ = (
-        CheckConstraint("status IN " + str(RUN_STATUSES), name="status_is_known"),
+        CheckConstraint("status IN " + _vocabulary(RUN_STATUSES), name="status_is_known"),
         Index("ix_agent_runs_task_run_id_created_at", "task_run_id", "created_at"),
+        UniqueConstraint("task_run_id", "stage_index", name="task_run_id_stage_index"),
     )
 
     task_run_id: Mapped[uuid.UUID] = mapped_column(
@@ -168,6 +301,26 @@ class AgentRun(TimestampedEntity, Base):
         String(32), nullable=False, default="PENDING", server_default="PENDING")
     started_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     finished_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+
+    # --- Gate 2: which stage this is, what produced it and what it answered ---------------------
+    stage_index: Mapped[int] = mapped_column(
+        Integer, nullable=False, default=0, server_default="0")
+    stage_name: Mapped[str | None] = mapped_column(String(128))
+    agent_slug: Mapped[str | None] = mapped_column(String(128))
+    profile_version: Mapped[str | None] = mapped_column(String(32))
+    prompt_template_version: Mapped[str | None] = mapped_column(String(32))
+    prompt_template_hash: Mapped[str | None] = mapped_column(String(64))
+    turns: Mapped[int] = mapped_column(Integer, nullable=False, default=0, server_default="0")
+    model_calls: Mapped[int] = mapped_column(
+        Integer, nullable=False, default=0, server_default="0")
+    output_name: Mapped[str | None] = mapped_column(String(128))
+    output: Mapped[str | None] = mapped_column(
+        Text, doc="What this agent produced, as the next stage will receive it.")
+    output_summary: Mapped[str | None] = mapped_column(
+        String(1024),
+        doc="A short verifiable summary of the outcome. Never a model's private reasoning.")
+    error_type: Mapped[str | None] = mapped_column(String(128))
+    error_summary: Mapped[str | None] = mapped_column(String(2048))
 
     task_run: Mapped[TaskRun] = relationship(back_populates="agent_runs")
     agent: Mapped[Agent] = relationship(back_populates="runs")
@@ -329,7 +482,13 @@ class ModelCall(ImmutableRecord, Base):
 
 
 class ToolCall(ImmutableRecord, Base):
-    """One tool invocation made during an agent run. Append-only, like every other recorded fact."""
+    """One tool invocation that **was executed**, append-only, like every other recorded fact.
+
+    Gate 2 writes no row here, and that is not an omission. This table records an execution — a
+    latency, a success, an error code — and Gate 2 executes nothing. What Gate 2 records is a
+    *request* and its *result*, in ``tool_requests`` and ``tool_results``; the sandbox that
+    executes one is Gate 3's, and it is what will fill this table.
+    """
 
     __tablename__ = "tool_calls"
     __table_args__ = (
@@ -342,6 +501,107 @@ class ToolCall(ImmutableRecord, Base):
     succeeded: Mapped[bool] = mapped_column(Boolean, nullable=False)
     latency_ms: Mapped[int | None] = mapped_column(Integer)
     error_code: Mapped[str | None] = mapped_column(String(128))
+
+
+class RunEvent(ImmutableRecord, Base):
+    """One recorded moment of a run. Append-only by shape as well as by intention.
+
+    It inherits :class:`ImmutableRecord`, so there is no ``updated_at`` and no ``version``: an
+    event describes something that already happened, and a column that invites an update is how a
+    history quietly stops being one. A correction is a later event, never an edit.
+
+    ``sequence`` is unique per run and assigned by the store, so the order two consumers see is the
+    same order and a reconnecting consumer can resume from a cursor. ``dedupe_key`` is what makes
+    an append idempotent: a Temporal activity can execute more than once, and an event log that
+    grew a duplicate every time an activity was retried would make the run's history a function of
+    infrastructure luck.
+    """
+
+    __tablename__ = "run_events"
+    __table_args__ = (
+        CheckConstraint("event_type IN " + _vocabulary(RUN_EVENT_TYPES),
+                        name="event_type_is_known"),
+        UniqueConstraint("task_run_id", "sequence", name="task_run_id_sequence"),
+        UniqueConstraint("task_run_id", "dedupe_key", name="task_run_id_dedupe_key"),
+        Index("ix_run_events_task_run_id_sequence", "task_run_id", "sequence"),
+    )
+
+    task_run_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("task_runs.id", ondelete="CASCADE"), nullable=False)
+    agent_run_id: Mapped[uuid.UUID | None] = mapped_column(
+        ForeignKey("agent_runs.id", ondelete="SET NULL"))
+    sequence: Mapped[int] = mapped_column(Integer, nullable=False)
+    event_type: Mapped[str] = mapped_column(String(64), nullable=False)
+    stage: Mapped[str | None] = mapped_column(String(128))
+    dedupe_key: Mapped[str] = mapped_column(
+        String(128), nullable=False,
+        doc="Identifies the occurrence, not the row: the same occurrence appended twice is one "
+            "event.")
+    payload: Mapped[dict[str, Any]] = mapped_column(
+        JSONB, nullable=False, default=dict, server_default="{}",
+        doc="Short, verifiable facts about the moment. Never a prompt, a completion or a model's "
+            "private reasoning.")
+
+    task_run: Mapped[TaskRun] = relationship(back_populates="events")
+
+
+class ToolRequest(TimestampedEntity, Base):
+    """A tool an agent asked for. **Nothing here executes it.**
+
+    The row is the whole of Gate 2's answer to a tool call: persist it, record the event, and put
+    the run to sleep until something authorised answers. ``tool_name`` is data — it is never
+    resolved to a command, a path or an executable — and ``arguments`` is an opaque object this
+    Gate stores and hands back without reading.
+    """
+
+    __tablename__ = "tool_requests"
+    __table_args__ = (
+        CheckConstraint("status IN " + _vocabulary(TOOL_REQUEST_STATUSES),
+                        name="status_is_known"),
+        Index("ix_tool_requests_task_run_id_created_at", "task_run_id", "created_at"),
+    )
+
+    task_run_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("task_runs.id", ondelete="CASCADE"), nullable=False)
+    agent_run_id: Mapped[uuid.UUID | None] = mapped_column(
+        ForeignKey("agent_runs.id", ondelete="SET NULL"), index=True)
+    tool_name: Mapped[str] = mapped_column(String(128), nullable=False)
+    arguments: Mapped[dict[str, Any]] = mapped_column(
+        JSONB, nullable=False, default=dict, server_default="{}")
+    status: Mapped[str] = mapped_column(
+        String(32), nullable=False, default="PENDING", server_default="PENDING")
+    resolved_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+
+    task_run: Mapped[TaskRun] = relationship(back_populates="tool_requests")
+    result: Mapped[ToolResult | None] = relationship(
+        back_populates="request", cascade="all, delete-orphan", uselist=False)
+
+
+class ToolResult(ImmutableRecord, Base):
+    """The answer to one tool request, append-only and at most one per request.
+
+    The uniqueness constraint is the idempotency mechanism rather than a nicety: the same result
+    delivered twice — a retried HTTP call, a redelivered signal — must resolve the request once and
+    resume the run once. A rule enforced by the database cannot be forgotten by a code path.
+    """
+
+    __tablename__ = "tool_results"
+    __table_args__ = (
+        CheckConstraint("status IN " + _vocabulary(TOOL_RESULT_STATUSES), name="status_is_known"),
+        UniqueConstraint("tool_request_id", name="tool_request_id"),
+    )
+
+    tool_request_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("tool_requests.id", ondelete="CASCADE"), nullable=False)
+    status: Mapped[str] = mapped_column(String(32), nullable=False)
+    output: Mapped[dict[str, Any]] = mapped_column(
+        JSONB, nullable=False, default=dict, server_default="{}")
+    error: Mapped[str | None] = mapped_column(Text)
+    result_metadata: Mapped[dict[str, Any]] = mapped_column(
+        "result_metadata", JSONB, nullable=False, default=dict, server_default="{}",
+        doc="Whatever the executor wants to record about the execution. Opaque to this Gate.")
+
+    request: Mapped[ToolRequest] = relationship(back_populates="result")
 
 
 class Artifact(TimestampedEntity, Base):

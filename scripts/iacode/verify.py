@@ -17,6 +17,10 @@ Stages, in order, because each one depends on the last being true:
     infra          our configuration of each service, exercised live
     smoke          the API, the web shell, Prometheus, Grafana and a real Temporal workflow
     gateway-smoke  the Model Gateway against the real configured provider
+    agent-runtime-smoke  the Agent Runtime, end to end, through the gateway to a real provider
+    agent-durability     a run waiting for a tool survives a real worker restart
+    agent-cancellation   a paused run is cancelled and refuses a late result
+    agent-deadline       a run that outlives its deadline is ended, not left running
     backup         a backup, a restore into a disposable target, and a verified read-back
     scan           known vulnerabilities in the pinned dependency locks
     scenarios      restart with data intact, dependency failure and recovery
@@ -26,8 +30,9 @@ Stages, in order, because each one depends on the last being true:
 stack and delete volumes, so the edit-run loop does not pay for a full reinstallation. The Gate is
 verified by the full run.
 
-The stage list is not a list of Gates. Gate 1 added one stage and changed none of the others,
-because the Foundation still has to work for the gateway to mean anything — and the report names the
+The stage list is not a list of Gates. Gate 1 added one stage and Gate 2 adds four, and neither
+changed any of the others, because the Foundation still has to work for the gateway to mean
+anything and the gateway has to work for the runtime to mean anything — and the report names the
 Gate the repository is delivering rather than the one this file was written during.
 """
 
@@ -109,6 +114,27 @@ def build_stages(fast: bool) -> list[Stage]:
         python_stage("gateway-smoke", "the Model Gateway against the real configured provider",
                      "scripts/iacode/gateway_smoke.py", "--report",
                      str(REPOSITORY_ROOT / "var" / "gateway-smoke.json")),
+        # The agent runtime, end to end. Like the gateway smoke it exits BLOCKED rather than FAIL
+        # when no credential is configured here, and it never substitutes the configured model.
+        python_stage("agent-runtime-smoke",
+                     "the Agent Runtime against the real provider, through the gateway",
+                     "scripts/iacode/agent_runtime_smoke.py", "--report",
+                     str(REPOSITORY_ROOT / "var" / "agent-runtime-smoke.json")),
+        # The two claims of this Gate that only a real workflow can settle. They restart a
+        # container of their own rather than the stack, so they belong before the destructive
+        # stages and inside the targeted mode.
+        python_stage("agent-durability",
+                     "a run waiting for a tool survives a real worker restart",
+                     "scripts/iacode/scenarios/agent_runtime_durability.py", "--report",
+                     str(REPOSITORY_ROOT / "var" / "agent-durability.json")),
+        python_stage("agent-cancellation",
+                     "a paused run is cancelled, stays cancelled and refuses a late result",
+                     "scripts/iacode/scenarios/agent_runtime_cancellation.py", "--report",
+                     str(REPOSITORY_ROOT / "var" / "agent-cancellation.json")),
+        python_stage("agent-deadline",
+                     "a run that is alive and going nowhere is ended by its own deadline",
+                     "scripts/iacode/scenarios/agent_runtime_deadline.py", "--report",
+                     str(REPOSITORY_ROOT / "var" / "agent-deadline.json")),
         python_stage("backup", "backup, restore into a disposable target, verified read-back",
                      "scripts/iacode/backup_restore_check.py"),
         python_stage("dependency-scan", "known vulnerabilities in the pinned dependencies",

@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 """Run every counted Python suite that lives inside the API image, in one execution.
 
-Two of the four suites the canonical registry counts — `apps/api/tests` and
-`services/model-gateway/tests` — need the image's dependencies, and the mandatory gates run them
-separately because a gate measures one thing. The delivery evidence needs the other shape: the
-number of cases that actually executed, compared with the denominator the registry derives. Two
+Three of the suites the canonical registry counts — `apps/api/tests`,
+`services/model-gateway/tests` and `services/agent-runtime/tests` — need the image's
+dependencies, and the mandatory gates run them separately because a gate measures one thing.
+The delivery evidence needs the other shape: the number of cases that actually executed, compared
+with the denominator the registry derives. Two
 recorded runs cannot be added up without double counting the categories they are filed under, so
 this entry point makes them one physical execution with one number.
 
@@ -25,9 +26,10 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from compose import build_service, compose, log, main_guard
 
-#: Where each counted suite lives inside the image. The gateway suite is copied to its own path
-#: rather than installed under `tests`, so that a gate can address one without the other.
-SUITE_PATHS = ("tests", "/app/gateway_tests")
+#: Where each counted suite lives inside the image. The gateway and agent runtime suites are
+#: copied to paths of their own rather than under `tests`, so a gate can address one without
+#: the others.
+SUITE_PATHS = ("tests", "/app/gateway_tests", "/app/agent_runtime_tests")
 
 
 def main() -> int:

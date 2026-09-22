@@ -18,7 +18,6 @@ from pathlib import Path
 
 import pytest
 from iacode_api.db import engine as db_engine
-from iacode_api.db.models import Model, ModelCall, Provider
 from iacode_api.gateway.store import SqlCatalogStore, SqlModelCallStore
 from iacode_model_gateway.config import load_provider_configs
 from iacode_model_gateway.contracts import (
@@ -30,6 +29,7 @@ from iacode_model_gateway.contracts import (
     ModelRef,
 )
 from iacode_model_gateway.ports import ModelCallRecord, ProviderRecord
+from iacode_persistence.models import Model, ModelCall, Provider
 from sqlalchemy import create_engine, delete, select, text
 
 from tests.conftest import stack_is_configured, stack_settings

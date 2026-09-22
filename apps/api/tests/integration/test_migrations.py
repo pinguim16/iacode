@@ -37,6 +37,15 @@ EXPECTED_TABLES = {
     "providers", "models", "model_calls", "tool_calls", "artifacts", "experiences",
 }
 
+#: What `GATE 2 — AGENT RUNTIME` adds. Kept separate so the two statements stay legible: Gate 0
+#: declared a persistence contract, and Gate 2 added tables beside it rather than duplicating one.
+AGENT_RUNTIME_TABLES = {"agent_teams", "run_events", "tool_requests", "tool_results"}
+
+#: The revision the previous Gate left behind. A literal here is correct and unavoidable: the point
+#: of the check is that a database at *that* revision upgrades, so the name is the subject of the
+#: test rather than a value that drifts.
+GATE1_REVISION = "0002_model_gateway"
+
 
 def _sync_url(async_url: str) -> str:
     return async_url.replace("postgresql+asyncpg://", "postgresql+psycopg://", 1)
@@ -233,3 +242,102 @@ def test_failed_migration_does_not_report_ready() -> None:
     # infra/tests/test_compose_definition.py::test_the_api_waits_for_the_migration_to_succeed.
     assert postgres["status"] == "UP"
     assert database.revision() is None, "an unmigrated database records no revision"
+
+
+class Gate2MigrationTests:
+    """The agent runtime's schema: from nothing, from Gate 1, and back out again."""
+
+    def test_fresh_database_reaches_head(self) -> None:
+        with _DisposableDatabase() as database:
+            assert database.tables() == set()
+
+            assert _alembic(database.url, "upgrade", "head").returncode == 0
+
+            present = database.tables()
+            assert present >= EXPECTED_TABLES | AGENT_RUNTIME_TABLES, (
+                f"missing: {sorted((EXPECTED_TABLES | AGENT_RUNTIME_TABLES) - present)}")
+            assert database.revision() == head_revision()
+
+    def test_gate1_database_upgrades_to_gate2_head(self) -> None:
+        """A database at the previous Gate's revision, with rows in it, reaches this Gate's head.
+
+        The rows matter. An upgrade that only works on an empty database is an upgrade nobody can
+        apply, and the constraint this migration adds to ``agent_runs`` is exactly the kind that
+        fails on existing data.
+        """
+        with _DisposableDatabase() as database:
+            assert _alembic(database.url, "upgrade", GATE1_REVISION).returncode == 0
+            assert database.revision() == GATE1_REVISION
+            assert not (database.tables() & AGENT_RUNTIME_TABLES)
+
+            engine = create_engine(_sync_url(database.url), future=True)
+            try:
+                with engine.begin() as connection:
+                    connection.execute(text(
+                        "INSERT INTO projects (id, slug, name) "
+                        "VALUES (gen_random_uuid(), 'p', 'P')"))
+                    connection.execute(text(
+                        "INSERT INTO tasks (id, project_id, title, status) "
+                        "SELECT gen_random_uuid(), id, 'a task', 'PENDING' FROM projects"))
+                    connection.execute(text(
+                        "INSERT INTO task_runs (id, task_id, status, attempt) "
+                        "SELECT gen_random_uuid(), id, 'PENDING', 1 FROM tasks"))
+                    connection.execute(text(
+                        "INSERT INTO agents (id, slug, name, role_contract) "
+                        "VALUES (gen_random_uuid(), 'generalist', 'Generalist', 'agents/x.json')"))
+                    # Two agent runs inside one task run: the pair the new unique constraint on
+                    # (task_run_id, stage_index) would reject if the migration did not number them.
+                    for _ in range(2):
+                        connection.execute(text(
+                            "INSERT INTO agent_runs (id, task_run_id, agent_id, status) "
+                            "SELECT gen_random_uuid(), task_runs.id, agents.id, 'PENDING' "
+                            "FROM task_runs, agents"))
+            finally:
+                engine.dispose()
+
+            result = _alembic(database.url, "upgrade", "head")
+
+            assert result.returncode == 0, result.stdout
+            assert database.revision() == head_revision()
+            assert database.tables() >= AGENT_RUNTIME_TABLES
+
+            engine = create_engine(_sync_url(database.url), future=True)
+            try:
+                with engine.connect() as connection:
+                    rows = connection.execute(text(
+                        "SELECT stage_index FROM agent_runs ORDER BY stage_index")).all()
+                    assert [row[0] for row in rows] == [0, 1], (
+                        "the migration did not number the pre-existing agent runs")
+                    kept = connection.execute(text("SELECT count(*) FROM task_runs")).scalar_one()
+                    assert kept == 1, "the upgrade lost a row it was carrying"
+            finally:
+                engine.dispose()
+
+    def test_the_agent_runtime_migration_is_reversible(self) -> None:
+        with _DisposableDatabase() as database:
+            assert _alembic(database.url, "upgrade", "head").returncode == 0
+            assert database.tables() >= AGENT_RUNTIME_TABLES
+
+            result = _alembic(database.url, "downgrade", GATE1_REVISION)
+
+            assert result.returncode == 0, result.stdout
+            assert database.revision() == GATE1_REVISION
+            assert not (database.tables() & AGENT_RUNTIME_TABLES)
+
+    def test_the_run_state_vocabulary_the_database_accepts_is_the_declared_one(self) -> None:
+        """`docs/GATE-2-CHECKLIST.md` row 3.5, asserted against PostgreSQL rather than the model."""
+        from iacode_contracts.agent_runtime import AGENT_RUN_STATES
+
+        with _DisposableDatabase() as database:
+            assert _alembic(database.url, "upgrade", "head").returncode == 0
+            engine = create_engine(_sync_url(database.url), future=True)
+            try:
+                with engine.connect() as connection:
+                    expression = connection.execute(text(
+                        "SELECT pg_get_constraintdef(oid) FROM pg_constraint "
+                        "WHERE conname = 'ck_task_runs_status_is_known'")).scalar_one()
+            finally:
+                engine.dispose()
+
+            for state in AGENT_RUN_STATES:
+                assert f"'{state}'" in expression, f"the database refuses {state}"

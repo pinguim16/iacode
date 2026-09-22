@@ -1,0 +1,127 @@
+{
+  "schemaVersion": "3.2.0",
+  "phase": "GATE-2 - Agent Runtime",
+  "gate": "GATE-2",
+  "status": "BLOCKED",
+  "branch": "main",
+  "baseCommit": "4de6b2fb191ab3e7d7879fe81b5a72ce454829b2",
+  "currentCommit": "HEAD",
+  "dirty": false,
+  "startedAt": "2026-09-22T12:18:55Z",
+  "updatedAt": "2026-09-22T17:36:48Z",
+  "nextAllowedAction": "Re-run scripts/iacode/agent_runtime_smoke.py once the provider quota resets; see NEXT.md.",
+  "blockedBy": [
+    "The configured live smoke model cannot be reached: every paid model in the DevWorld catalogue returns 429 RATE_LIMITED with retryAfterSeconds of roughly 52600, and the free tier returns 503 PROVIDER_UNAVAILABLE. IACODE_GATEWAY_SMOKE_MODEL is configuration and is never substituted, so checklist rows 19.1, 19.2 and 19.5 cannot be satisfied in this session. GATE-1's own gateway smoke fails identically, which locates the condition in the provider."
+  ],
+  "secondToolValidation": {
+    "status": "PENDING_MANUAL",
+    "tool": null,
+    "provider": null,
+    "model": null,
+    "validatedAt": null,
+    "justification": null,
+    "evidence": []
+  },
+  "requirementsMatrix": {
+    "path": "REQUIREMENTS-MATRIX.json",
+    "total": 0,
+    "mandatory": 0,
+    "complete": 0,
+    "partial": 0,
+    "missing": 0,
+    "notApplicable": 0,
+    "coveragePercent": 0.0
+  },
+  "greenKeeper": {
+    "status": "PASS",
+    "cycles": 3,
+    "remainingFailures": 0,
+    "unresolvedReworkItems": 0,
+    "log": "REWORK-LOG.jsonl",
+    "externalBlockers": [],
+    "evidence": [
+      "file:REWORK-LOG.jsonl",
+      "command:cmd-0055"
+    ]
+  },
+  "deliveryCompleteness": {
+    "status": "FAIL",
+    "report": "COMPLETENESS-REPORT.json",
+    "coveragePercent": 98.35,
+    "evidenceCoveragePercent": 100.0,
+    "auditor": "internal-delivery-completeness-validator",
+    "evidence": [
+      "file:COMPLETENESS-REPORT.json"
+    ]
+  },
+  "reworkCycles": 0,
+  "independentReview": {
+    "status": "PENDING",
+    "tool": null,
+    "reviewedAt": null,
+    "justification": null,
+    "evidence": []
+  },
+  "redTeam": {
+    "status": "RED_TEAM_PASS",
+    "tool": "claude-code",
+    "executedAt": "2026-09-22T14:55:00Z",
+    "justification": "22 of 22 attacks defended with a valid null-mutation control. This is the delivery's own internal battery and is recorded as such: it is not independent validation, and the independent Red Team belongs to the M1 milestone audit after GATE 3.",
+    "evidence": [
+      "file:M1-INTERNAL-RED-TEAM.json",
+      "command:cmd-0012"
+    ]
+  },
+  "lessonPreflight": {
+    "path": "LESSON-PREFLIGHT.json",
+    "gate": "GATE-2",
+    "scope": "agent runtime",
+    "lessonsConsidered": 46,
+    "lessonsApplicable": 45,
+    "derivedRequirements": 45,
+    "evidence": [
+      "file:docs/checkpoints/GATE-2-CP-0001/LESSON-PREFLIGHT.json"
+    ]
+  },
+  "milestone": {
+    "id": "M1",
+    "title": "IACode V0 foundation",
+    "gates": [
+      "GATE 0",
+      "GATE 1",
+      "GATE 2",
+      "GATE 3"
+    ],
+    "status": "PENDING",
+    "auditor": null,
+    "auditedAt": null,
+    "evidence": []
+  },
+  "externalAuditRequired": false,
+  "externalAuditReason": null,
+  "guardrailEffectiveness": {
+    "guardrailsTotal": 48,
+    "guardrailsResolved": 48,
+    "guardrailsTested": 48,
+    "guardrailsEffective": 48,
+    "guardrailFailures": 0,
+    "evidence": [
+      "file:.iacode/memory/guardrails/registry.json",
+      "command:cmd-0046"
+    ]
+  },
+  "integrity": {
+    "status": "PASS",
+    "anchors": 15,
+    "chainFile": ".iacode/anchors/checkpoint-chain.json",
+    "evidence": [
+      "command:cmd-0047"
+    ]
+  },
+  "externalAttestation": {
+    "status": "NONE",
+    "path": null,
+    "auditId": null,
+    "evidence": []
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "schemaVersion": "1.0.0",
+  "team": "single-agent",
+  "name": "Single agent",
+  "description": "One generalist answers the task. The shortest path a run can take.",
+  "version": "1.0.0",
+  "enabled": true,
+  "stages": [
+    {
+      "name": "answer",
+      "agent": "generalist",
+      "inputs": [
+        "task"
+      ],
+      "outputName": "answer"
+    }
+  ]
+}

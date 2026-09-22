@@ -39,3 +39,14 @@ scrape_configs:
       - targets: ["worker:9100"]
         labels:
           component: worker
+
+  # Gate 2 adds instruments the SDK cannot produce, because they are about agent runs rather than
+  # about workflow tasks: how many runs started, how long they took, how many turns they executed,
+  # how many are paused on a tool request. They live on a second port because the SDK core binds
+  # 9100 itself and a process cannot bind it twice.
+  - job_name: iacode-agent-runtime
+    metrics_path: /metrics
+    static_configs:
+      - targets: ["worker:9101"]
+        labels:
+          component: agent-runtime

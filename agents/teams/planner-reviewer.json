@@ -1,0 +1,27 @@
+{
+  "schemaVersion": "1.0.0",
+  "team": "planner-reviewer",
+  "name": "Planner and reviewer",
+  "description": "A planner produces a plan and a reviewer judges it. Two agents, in order, with the first one's output reaching the second as a labelled artifact.",
+  "version": "1.0.0",
+  "enabled": true,
+  "stages": [
+    {
+      "name": "plan",
+      "agent": "planner",
+      "inputs": [
+        "task"
+      ],
+      "outputName": "plan"
+    },
+    {
+      "name": "review",
+      "agent": "reviewer",
+      "inputs": [
+        "task",
+        "plan"
+      ],
+      "outputName": "review"
+    }
+  ]
+}

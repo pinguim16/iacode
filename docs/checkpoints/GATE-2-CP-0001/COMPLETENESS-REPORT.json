@@ -1,0 +1,39 @@
+{
+  "schemaVersion": "2.0.0",
+  "checkpoint": "GATE-2-CP-0001",
+  "generatedAt": "2026-09-22T17:35:01Z",
+  "matrix": "REQUIREMENTS-MATRIX.json",
+  "auditor": "Delivery Completeness Validator",
+  "scopeFingerprint": "3a7f9030031eb064b68e9e8ee0a5b9b796671c9056e9937ea80632dc455480ec",
+  "totalRequirements": 182,
+  "anchoredRequirements": 182,
+  "expectedRequirements": 182,
+  "expectedSetSource": "derived by policies.expected_requirement_refs from the canonical Gate specification, the lesson preflight and the open independent audit findings and attacks",
+  "mandatoryRequirements": 181,
+  "complete": 179,
+  "partial": 0,
+  "missing": 3,
+  "notApplicable": 0,
+  "inProgress": 0,
+  "notStarted": 0,
+  "coveragePercent": 98.35,
+  "evidenceCoveragePercent": 100.0,
+  "result": "FAIL",
+  "findings": [
+    {
+      "requirement": "REQ-0127",
+      "severity": "BLOCKING",
+      "detail": "requirement is MISSING and cannot ship"
+    },
+    {
+      "requirement": "REQ-0128",
+      "severity": "BLOCKING",
+      "detail": "requirement is MISSING and cannot ship"
+    },
+    {
+      "requirement": "REQ-0131",
+      "severity": "BLOCKING",
+      "detail": "requirement is MISSING and cannot ship"
+    }
+  ]
+}

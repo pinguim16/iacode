@@ -13,8 +13,12 @@ is therefore connected on demand and cached, and readiness is what reports the c
 from __future__ import annotations
 
 import asyncio
+from datetime import timedelta
+from typing import Any
 
 from temporalio.client import Client
+from temporalio.exceptions import WorkflowAlreadyStartedError
+from temporalio.service import RPCError
 
 from iacode_api.config import Settings
 
@@ -59,6 +63,49 @@ class TemporalGateway:
                 _describe_namespace_request(self._settings.temporal_namespace)),
             timeout=self._settings.readiness_timeout_seconds,
         )
+
+    # --- Gate 2: starting and steering an agent run -------------------------------------------
+
+    async def start_agent_run(self, *, workflow: str, workflow_id: str,
+                              payload: dict[str, Any], task_queue: str,
+                              execution_timeout_seconds: int) -> str:
+        """Start the durable run, or adopt the one already running under this identifier.
+
+        The workflow identifier is derived from the run identifier, so starting the same run twice
+        is refused by Temporal itself. That is a second idempotency layer under the one the
+        database provides, and it is the one that holds when two API processes race.
+        """
+        client = await self.connect()
+        try:
+            handle = await client.start_workflow(
+                workflow,
+                payload,
+                id=workflow_id,
+                task_queue=task_queue,
+                execution_timeout=timedelta(seconds=execution_timeout_seconds),
+            )
+            return handle.id
+        except WorkflowAlreadyStartedError:
+            return workflow_id
+
+    async def signal_agent_run(self, *, workflow_id: str, signal: str,
+                               payload: Any = None) -> bool:
+        """Deliver a signal, answering whether there was a running workflow to receive it.
+
+        ``False`` rather than an exception when the workflow has already finished: a tool result
+        arriving after a run ended is a case the API answers with a refusal of its own, and a
+        transport error here would obscure it.
+        """
+        client = await self.connect()
+        handle = client.get_workflow_handle(workflow_id)
+        try:
+            if payload is None:
+                await handle.signal(signal)
+            else:
+                await handle.signal(signal, payload)
+            return True
+        except RPCError:
+            return False
 
     async def close(self) -> None:
         """Drop the cached client.

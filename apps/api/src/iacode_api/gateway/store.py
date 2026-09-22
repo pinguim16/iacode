@@ -31,10 +31,9 @@ from iacode_model_gateway.contracts import (
     ReasoningEffort,
 )
 from iacode_model_gateway.ports import ModelCallRecord, ProviderRecord, SyncOutcome
+from iacode_persistence.models import Model, ModelCall, Provider
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
-
-from iacode_api.db.models import Model, ModelCall, Provider
 
 __all__ = ["SqlCatalogStore", "SqlModelCallStore", "descriptor_from_row"]
 

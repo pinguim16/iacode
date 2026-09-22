@@ -17,9 +17,9 @@ import pytest
 from fastapi.testclient import TestClient
 from iacode_api.cache import client as cache_client
 from iacode_api.db import engine as db_engine
-from iacode_api.db.models import Project, Task
 from iacode_api.storage import client as storage_client
 from iacode_api.workflows.client import TemporalGateway
+from iacode_persistence.models import Project, Task
 from sqlalchemy import select, text
 
 from tests.conftest import stack_is_configured, stack_settings

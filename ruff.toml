@@ -45,6 +45,12 @@ ignore = [
 # does not apply to it.
 "packages/contracts/src/iacode_contracts/gateway.py" = ["N815"]
 
+# The agent runtime's wire contract is the same case: the run, its events, its budget and its tool
+# request are read as JSON by the operational page and by every client after it. Same reasoning,
+# same decision, stated per module rather than as a blanket exception so the next contract module
+# has to be looked at rather than inherited.
+"packages/contracts/src/iacode_contracts/agent_runtime.py" = ["N815"]
+
 # The application binds 0.0.0.0 *inside a container*, where the alternative is a service nothing can
 # reach. The published port is the security boundary, and the compose file binds that to 127.0.0.1;
 # `infra/tests/test_compose_definition.py` is the control that keeps it there.

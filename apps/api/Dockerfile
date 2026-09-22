@@ -34,11 +34,14 @@ RUN pip install --no-cache-dir -r /build/requirements.lock.txt
 # pip resolve them again could quietly upgrade a package the lock pinned.
 COPY packages/common /build/packages/common
 COPY packages/contracts /build/packages/contracts
+COPY packages/persistence /build/packages/persistence
 COPY packages/telemetry /build/packages/telemetry
 COPY services/model-gateway /build/services/model-gateway
+COPY services/agent-runtime /build/services/agent-runtime
 RUN pip install --no-cache-dir --no-deps \
-      /build/packages/common /build/packages/contracts /build/packages/telemetry \
-      /build/services/model-gateway
+      /build/packages/common /build/packages/contracts /build/packages/persistence \
+      /build/packages/telemetry /build/services/model-gateway \
+      /build/services/agent-runtime
 
 # ---------------------------------------------------------------------------------------------
 # Runtime
@@ -79,6 +82,11 @@ COPY --chown=iacode:iacode .iacode/policies /app/.iacode/policies
 # The gateway's own suite, executed in this image by the gatewayTests gate. It ships with the image
 # for the same reason the API suite does: the code it exercises only runs here.
 COPY --chown=iacode:iacode services/model-gateway/tests /app/gateway_tests
+# The declared agents, teams and prompt templates, and the agent runtime's own suite. The API
+# resolves a team into a frozen plan when a run is created, so it reads the same definitions
+# the worker executes, from the same place.
+COPY --chown=iacode:iacode agents /app/agents
+COPY --chown=iacode:iacode services/agent-runtime/tests /app/agent_runtime_tests
 
 USER iacode
 EXPOSE 8000

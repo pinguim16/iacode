@@ -29,6 +29,22 @@ The frontend toolchain runs only inside its image. Nothing about the repository 
 developer's machine, which is deliberate: the environment this was built on has Node 18, and the
 Angular toolchain needs 22.
 
+## Local packages
+
+Versioned together, because they are one repository and a version skew between them would be
+a skew nobody could observe. Each is installed into the images that need it, from source,
+with `--no-deps`, so the dependency lock stays authoritative.
+
+| Package | Version | What it owns |
+|---|---|---|
+| `packages/common` | 0.1.0 | UUIDv7 and credential redaction |
+| `packages/contracts` | 0.1.0 | the shapes that cross a process boundary, and the agent runtime vocabulary |
+| `packages/persistence` | 0.1.0 | the declarative schema, shared by the API and the worker |
+| `packages/telemetry` | 0.1.0 | the logging contract and the ambient correlation context |
+| `services/model-gateway` | 0.1.0 | provider-neutral model invocation |
+| `services/agent-runtime` | 0.1.0 | the agent runtime: lifecycle, protocol, budgets, tool boundary |
+| `services/orchestrator` | 0.1.0 | the Temporal worker and the agent run workflow |
+
 ## Services
 
 | Service | Image | Version |

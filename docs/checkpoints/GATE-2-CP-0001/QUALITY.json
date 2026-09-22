@@ -1,0 +1,96 @@
+{
+  "schemaVersion": "3.2.0",
+  "checks": {
+    "build": {
+      "status": "PASS",
+      "evidence": [
+        "command:cmd-0049",
+        "command:cmd-0051",
+        "command:cmd-0052"
+      ],
+      "justification": null
+    },
+    "unitTests": {
+      "status": "PASS",
+      "evidence": [
+        "file:TESTS.json",
+        "command:cmd-0044"
+      ],
+      "justification": null
+    },
+    "integrationTests": {
+      "status": "PASS",
+      "evidence": [
+        "file:TESTS.json",
+        "command:cmd-0029"
+      ],
+      "justification": null
+    },
+    "e2e": {
+      "status": "PASS",
+      "evidence": [
+        "file:TESTS.json",
+        "command:cmd-0030"
+      ],
+      "justification": null
+    },
+    "lint": {
+      "status": "PASS",
+      "evidence": [
+        "command:cmd-0053"
+      ],
+      "justification": null
+    },
+    "staticAnalysis": {
+      "status": "PASS",
+      "evidence": [
+        "command:cmd-0045"
+      ],
+      "justification": null
+    },
+    "security": {
+      "status": "PASS",
+      "evidence": [
+        "file:M1-INTERNAL-RED-TEAM.json",
+        "command:cmd-0012"
+      ],
+      "justification": null
+    },
+    "documentation": {
+      "status": "PASS",
+      "evidence": [
+        "file:M1-INTERNAL-MIRROR.json",
+        "file:DIFF-SUMMARY.md"
+      ],
+      "justification": null
+    },
+    "checkpointValidation": {
+      "status": "PASS",
+      "evidence": [
+        "file:VERIFICATION-REPORT.json",
+        "command:cmd-0048"
+      ],
+      "justification": null
+    },
+    "redTeam": {
+      "status": "NOT_EXECUTED",
+      "evidence": [],
+      "justification": "The independent Red Team belongs to the M1 milestone audit, which happens after GATE 3. The internal battery this delivery ran is recorded in M1-INTERNAL-RED-TEAM.json, is 22 of 22 defended with a valid null-mutation control, and is not independent validation."
+    },
+    "greenKeeper": {
+      "status": "PASS",
+      "evidence": [
+        "file:REWORK-LOG.jsonl",
+        "command:cmd-0055"
+      ],
+      "justification": null
+    },
+    "deliveryCompleteness": {
+      "status": "FAIL",
+      "evidence": [
+        "file:COMPLETENESS-REPORT.json"
+      ],
+      "justification": "179 of 182 requirements complete, 98.35 per cent, with 100 per cent of evidence references resolving. The three that are not complete are checklist rows 19.1, 19.2 and 19.5, each of which needs one live model call. The provider's quota is exhausted for roughly 14.6 hours and the configured smoke model is never substituted, so the Gate is recorded BLOCKED rather than ready."
+    }
+  }
+}

@@ -27,6 +27,14 @@
       "purpose": "The provider-neutral boundary: the contracts, the protocol adapters, the catalog, the router, the resilience policies, streaming and secret containment."
     },
     {
+      "id": "agent-runtime",
+      "title": "Agent Runtime suite",
+      "root": "services/agent-runtime/tests",
+      "framework": "python-pytest",
+      "counted": true,
+      "purpose": "The agent runtime: the state machine, the event log, profiles and teams, the turn protocol, context assembly, budgets, the tool-request lifecycle and the engine."
+    },
+    {
       "id": "infra",
       "title": "Foundation infrastructure smoke suite",
       "root": "infra/tests",

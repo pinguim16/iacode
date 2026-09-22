@@ -1,0 +1,13 @@
+{
+  "schemaVersion": "1.0.0",
+  "agent": "generalist",
+  "name": "Generalist",
+  "role": "generalist",
+  "description": "Answers a single task end to end. It exists to prove the runtime executes one agent against a real model and returns a result.",
+  "version": "1.0.0",
+  "promptTemplate": "agents/prompts/generalist.v1.md",
+  "defaultRoute": null,
+  "maxTurns": 4,
+  "allowedActions": [],
+  "enabled": true
+}

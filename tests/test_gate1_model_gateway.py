@@ -149,13 +149,28 @@ class Gate1ScopeTests(unittest.TestCase):
 
         # Normalised on both sides, because the registry writes "GATE 1" and the checkpoint
         # writes "GATE-1"; `reservations_in_force` compares them the same way.
-        self.assertEqual(ledger_common.normalize_gate(owners["services/model-gateway"]),
-                         ledger_common.normalize_gate(current))
+        #
+        # The path is derived, not named. `G2-F-009`: the first version of this test asserted that
+        # the delivered Gate owns `services/model-gateway`, which was true for exactly one Gate and
+        # then failed GATE 2 for doing nothing wrong. That is `LSN-0037`'s class wearing a path
+        # instead of a Gate, so the rule is now stated once: whatever the delivered Gate owns is no
+        # longer in force, and whatever a later Gate owns still is.
+        owned = [path for path, gate in owners.items()
+                 if ledger_common.normalize_gate(gate) == ledger_common.normalize_gate(current)]
+        self.assertTrue(owned, f"the delivered Gate {current} owns no reservation")
+
         reserved = {str(item["path"]) for item
                     in policies.reservations_in_force(PROJECT_ROOT, current)}
-        self.assertNotIn("services/model-gateway", reserved)
+        for path in owned:
+            with self.subTest(path=path):
+                self.assertNotIn(path, reserved,
+                                 "the Gate that owns a reservation is still constrained by it")
+
         # A later Gate's reservation still constrains this one, which is what the registry is for.
-        self.assertIn("services/sandbox", reserved)
+        later = [path for path, gate in owners.items()
+                 if ledger_common.normalize_gate(gate) != ledger_common.normalize_gate(current)
+                 and path in reserved]
+        self.assertTrue(later, "no later Gate's reservation is in force, which cannot be right")
 
     def test_gateway_readme_describes_the_delivery(self) -> None:
         readme = (GATEWAY_ROOT / "README.md").read_text(encoding="utf-8")
@@ -402,8 +417,10 @@ class TrainingRightsTests(unittest.TestCase):
                 self.assertFalse(eligibility["distillationAllowed"])
 
         # And the gateway persists no content that could become training data in the first place.
-        models = (PROJECT_ROOT / "apps" / "api" / "src" / "iacode_api" / "db"
-                  / "models.py").read_text(encoding="utf-8")
+        # The schema is located rather than named: GATE 2 moved it into `packages/persistence`
+        # because three services share it, and a control that names one path stops being a control
+        # the moment the file moves. `LSN-0037`.
+        models = _shared_schema_source()
         call_table = models.partition("class ModelCall")[2].partition("\nclass ")[0]
         for column in ("prompt", "messages", "completion", "content", "response"):
             with self.subTest(column=column):
@@ -602,6 +619,23 @@ _BACKTICKED = re.compile(r"`([^`]+)`")
 
 #: A Python test case name, as the checklists write them.
 _TEST_NAME = re.compile(r"^test_[a-z0-9_]+$")
+
+
+def _shared_schema_source() -> str:
+    """The declarative schema, wherever the repository currently keeps it.
+
+    Located by asking the persistence package for the module that declares the mapped classes, so
+    the control follows the file instead of being broken by a move.
+    """
+    candidates = sorted(PROJECT_ROOT.rglob("models.py"))
+    for path in candidates:
+        relative = path.relative_to(PROJECT_ROOT).as_posix()
+        if "__pycache__" in relative or "/tests/" in relative or "/.venv/" in relative:
+            continue
+        text = path.read_text(encoding="utf-8")
+        if "class ModelCall" in text:
+            return text
+    raise AssertionError("no module in this repository declares the ModelCall mapping")
 
 
 def _delivering_checkpoint() -> str:
