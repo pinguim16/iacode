@@ -170,5 +170,105 @@ class LedgerCommandReplayabilityTests(unittest.TestCase):
         self.assertEqual(records[0]["result"], "COMPLETED")
 
 
+def memory_fixture(root: Path) -> None:
+    """A disposable clone of the repository as it stands, working tree included."""
+    if not ledger_common.clone_with_worktree(PROJECT_ROOT, root):
+        raise RuntimeError("the repository could not be cloned for a fixture")
+
+
+def validate_memory_cli(root: Path, *extra: str) -> tuple[int, str]:
+    completed = subprocess.run(
+        [sys.executable, str(root / "scripts" / "development-ledger" / "validate_lessons.py"),
+         "--root", str(root), *extra],
+        cwd=root, capture_output=True, text=True, encoding="utf-8", errors="replace")
+    return completed.returncode, completed.stdout + completed.stderr
+
+
+class GuardrailRegistryResolutionTests(unittest.TestCase):
+    """`R-G2-010` / MIR-006: a lesson's guardrail is resolved all the way down — lesson, registry
+    entry, kind, reference, the control itself — by the validator and the effectiveness measure
+    alike, through one function."""
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls._directory = tempfile.TemporaryDirectory(prefix="iacode-guardrail-")
+        cls.root = Path(cls._directory.name) / "clone"
+        memory_fixture(cls.root)
+        cls.registry = cls.root / ".iacode" / "memory" / "guardrails" / "registry.json"
+        cls.original = cls.registry.read_text(encoding="utf-8")
+
+    @classmethod
+    def tearDownClass(cls) -> None:
+        cls._directory.cleanup()
+
+    def tearDown(self) -> None:
+        self.registry.write_text(self.original, encoding="utf-8", newline="\n")
+
+    def mutate(self, change) -> dict:
+        document = json.loads(self.original)
+        entry = next(item for item in document["guardrails"] if item["kind"] == "test")
+        change(entry)
+        self.registry.write_text(json.dumps(document, indent=2), encoding="utf-8", newline="\n")
+        return entry
+
+    def test_the_unmutated_memory_is_valid(self) -> None:
+        """The null control: the identical fixture and path accept the real registry."""
+        code, output = validate_memory_cli(self.root)
+        self.assertEqual(code, 0, output)
+        self.assertIn("LESSONS_VALID", output)
+
+    def test_a_test_guardrail_that_names_a_file_is_refused(self) -> None:
+        entry = self.mutate(lambda item: item.update(
+            reference="file:tests/test_development_ledger.py"))
+
+        code, output = validate_memory_cli(self.root)
+
+        self.assertNotEqual(code, 0, output)
+        self.assertIn("LESSONS_INVALID", output)
+        self.assertIn(entry["guardrailId"], output)
+        self.assertIn("does not exist in the suite", output)
+
+    def test_a_test_guardrail_that_names_a_path_is_refused(self) -> None:
+        self.mutate(lambda item: item.update(reference="tests/test_development_ledger.py"))
+        code, output = validate_memory_cli(self.root)
+        self.assertNotEqual(code, 0, output)
+        self.assertIn("LESSONS_INVALID", output)
+
+    def test_validation_and_effectiveness_agree(self) -> None:
+        import lessons
+
+        entry = self.mutate(lambda item: item.update(reference="file:tests/absent.py"))
+        lessons._TEST_ID_CACHE.clear()
+        measured = lessons.guardrail_effectiveness(self.root)
+        detail = next(item for item in measured["guardrails"]
+                      if item["guardrailId"] == entry["guardrailId"])
+        errors = lessons.validate_lessons(self.root)
+
+        self.assertFalse(detail["resolved"])
+        self.assertTrue(any(entry["guardrailId"] in error for error in errors), errors)
+
+    def test_the_repository_memory_declares_the_newest_policy(self) -> None:
+        """The new rules are versioned so sealed checkpoints keep validating under theirs; the
+        repository itself may not step back to a version that does not apply them."""
+        import lessons
+
+        self.assertEqual(lessons.memory_policy_version(PROJECT_ROOT),
+                         lessons.RESOLVING_MEMORY_POLICIES[-1])
+        self.assertIn(lessons.RESOLVED_GUARDRAIL_MEMORY_POLICY,
+                      lessons.RESOLVED_GUARDRAIL_MEMORY_POLICIES)
+
+    def test_one_function_resolves_a_guardrail_entry(self) -> None:
+        import lessons
+
+        source = Path(lessons.__file__).read_text(encoding="utf-8")
+        tree = ast.parse(source)
+        callers = {
+            function.name for function in ast.walk(tree) if isinstance(function, ast.FunctionDef)
+            for node in ast.walk(function) if isinstance(node, ast.Call)
+            and getattr(node.func, "id", None) == "guardrail_entry_errors"
+        }
+        self.assertEqual(callers, {"validate_lessons", "guardrail_effectiveness"})
+
+
 if __name__ == "__main__":
     unittest.main()

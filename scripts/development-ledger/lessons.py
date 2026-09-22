@@ -41,7 +41,16 @@ RESOLVING_MEMORY_POLICY = "2.0.0"
 # earlier version is read under the rules it declares, which is how a sealed checkpoint keeps
 # validating after the tooling advances: the control applies to the content written for it.
 CONSISTENT_PROSE_MEMORY_POLICY = "2.1.0"
-RESOLVING_MEMORY_POLICIES = (RESOLVING_MEMORY_POLICY, CONSISTENT_PROSE_MEMORY_POLICY)
+
+# 2.2.0 adds the rule GATE 3 found missing first (`R-G2-010`, the internal mirror's MIR-006): every
+# guardrail registry entry resolves its own kind and reference to a real control, through the one
+# function the effectiveness measure also uses.
+RESOLVED_GUARDRAIL_MEMORY_POLICY = "2.2.0"
+
+RESOLVING_MEMORY_POLICIES = (RESOLVING_MEMORY_POLICY, CONSISTENT_PROSE_MEMORY_POLICY,
+                             RESOLVED_GUARDRAIL_MEMORY_POLICY)
+CONSISTENT_PROSE_MEMORY_POLICIES = RESOLVING_MEMORY_POLICIES[1:]
+RESOLVED_GUARDRAIL_MEMORY_POLICIES = RESOLVING_MEMORY_POLICIES[2:]
 
 # The applicability and derivation rules the preflight implements. It is part of the preflight
 # fingerprint, so changing how lessons are selected makes every existing preflight stale.
@@ -406,6 +415,33 @@ def preflight_fingerprint(root: Path, gate: str, scope: str,
     })
 
 
+def guardrail_entry_errors(root: Path, identifier: str, entry: dict[str, Any],
+                           test_ids: set[str]) -> list[str]:
+    """Why a registry entry does not resolve to a working control, or nothing when it does.
+
+    The one resolution of a guardrail: its own kind and reference resolve to a control that exists,
+    and the tests that verify it exist. `validate_lessons` and `guardrail_effectiveness` both ask
+    this function. They used to answer separately, and only the second resolved the entry's own
+    reference, so a `test` guardrail whose reference was a file path validated as a memory while
+    the effectiveness measure called it unresolved (`R-G2-010`, the internal mirror's MIR-006).
+    """
+    errors: list[str] = []
+    control_error = resolve_control(
+        root, {"kind": entry.get("kind"), "reference": entry.get("reference")})
+    if control_error is not None:
+        errors.append(f"guardrail {identifier}: its {entry.get('kind')!r} control does not "
+                      f"resolve: {control_error}")
+    verified_by = [str(item) for item in entry.get("verifiedBy") or []]
+    if not verified_by:
+        errors.append(f"guardrail {identifier}: declares no verifying test, so nothing fails when "
+                      f"the control is removed")
+    for test_id in verified_by:
+        if test_id not in test_ids:
+            errors.append(f"guardrail {identifier}: is verified by {test_id!r}, which does not "
+                          f"exist in the suite")
+    return errors
+
+
 def guardrail_effectiveness(root: Path, lessons: list[dict[str, Any]] | None = None) -> dict[str, Any]:
     """Measure the guardrails rather than trusting the word ``GUARDED``."""
     lessons = load_lessons(root) if lessons is None else lessons
@@ -430,8 +466,9 @@ def guardrail_effectiveness(root: Path, lessons: list[dict[str, Any]] | None = N
             guarded_by.setdefault(str(identifier), []).append(str(lesson.get("lessonId")))
 
     for identifier, entry in sorted(registry.items()):
-        control = {"kind": entry.get("kind"), "reference": entry.get("reference")}
-        control_error = resolve_control(root, control)
+        entry_errors = guardrail_entry_errors(root, identifier, entry, test_ids)
+        control_error = next((item for item in entry_errors if "control does not resolve" in item),
+                             None)
         verified_by = [str(item) for item in entry.get("verifiedBy") or []]
         missing_tests = [item for item in verified_by if item not in test_ids]
         is_resolved = control_error is None
@@ -682,7 +719,13 @@ def validate_lessons(root: Path, lessons: list[dict[str, Any]] | None = None) ->
 
     policy_version = memory_policy_version(root)
     resolving = policy_version in RESOLVING_MEMORY_POLICIES
-    consistent_prose = policy_version == CONSISTENT_PROSE_MEMORY_POLICY
+    resolved_guardrails = policy_version in RESOLVED_GUARDRAIL_MEMORY_POLICIES
+    # lesson -> guardrailId -> registry entry -> kind/reference -> the control itself. Every entry
+    # is resolved, not only the ones a lesson happens to name, by the same function the
+    # effectiveness measure uses.
+    for identifier, entry in sorted(guardrails.items()) if resolved_guardrails else []:
+        errors.extend(guardrail_entry_errors(root, identifier, entry, test_ids))
+    consistent_prose = policy_version in CONSISTENT_PROSE_MEMORY_POLICIES
     seen_ids: set[str] = set()
     seen_keys: dict[str, str] = {}
     for index, lesson in enumerate(lessons, 1):
@@ -749,16 +792,10 @@ def validate_lessons(root: Path, lessons: list[dict[str, Any]] | None = None) ->
                 errors.append(
                     f"{label}: guardrail {identifier!r} does not list this lesson, so the link is "
                     f"one-directional and cannot be audited")
-            verified_by = [str(item) for item in entry.get("verifiedBy") or []]
-            if not verified_by:
+            if guardrail_entry_errors(root, identifier, entry, test_ids):
                 errors.append(
-                    f"{label}: guardrail {identifier!r} declares no verifying test, so nothing "
-                    f"fails when the control is removed")
-            for test_id in verified_by:
-                if test_id not in test_ids:
-                    errors.append(
-                        f"{label}: guardrail {identifier!r} is verified by {test_id!r}, which does "
-                        f"not exist in the suite")
+                    f"{label}: guardrail {identifier!r} does not resolve to a working control; "
+                    f"see the guardrail's own errors")
 
         eligibility = lesson.get("trainingEligibility") or {}
         if eligibility.get("trainingAllowed") and not eligibility.get("justification"):
