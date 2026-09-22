@@ -91,6 +91,20 @@
       ]
     },
     {
+      "id": "gatewayTests",
+      "title": "Model Gateway suite",
+      "command": [
+        "python",
+        "scripts/iacode/gates/gateway_tests.py"
+      ],
+      "purpose": "Green Keeper gate: the Model Gateway's own suite — contracts, protocol adapters, catalog, routing, resilience, streaming and secret containment — executed in the API image against deterministic doubles, with no dependency on a running stack or on a provider credential.",
+      "mandatory": true,
+      "qualityDimensions": [
+        "unitTests",
+        "security"
+      ]
+    },
+    {
       "id": "webTests",
       "title": "Foundation frontend build and suite",
       "command": [

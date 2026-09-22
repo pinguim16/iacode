@@ -42,6 +42,9 @@ services/orchestrator/     the Temporal worker and the smoke workflow
 packages/common/           UUIDv7 and credential redaction
 packages/contracts/        the response shapes that cross a process boundary
 packages/telemetry/        the logging contract and the ambient correlation context
+services/model-gateway/    the provider-neutral model boundary: contracts, adapters, catalog,
+  src/                     routing, resilience, telemetry; it imports no application
+  tests/                   its own suite, deterministic, with no network and no stack
 infra/compose/             the stack
 infra/tests/               what the infrastructure declares, and the live configuration
 scripts/iacode/            operational tooling: stack, migrate, backup, restore, verify, scenarios
@@ -108,7 +111,7 @@ a bad way to learn about a version mismatch.
 python scripts/iacode/verify.py --fast
 ```
 
-Nine mandatory gates, the stack, the integration suite, the live infrastructure suite, the smoke
+Ten mandatory gates, the stack, the integration suite, the live infrastructure suite, the smoke
 check, a verified backup-and-restore cycle and a dependency scan. `--fast` stops before the stages
 that restart the stack and delete volumes.
 
@@ -139,6 +142,18 @@ the standard way to take down a Prometheus.
 
 **Integration is proved against the real service.** `docs/DEVELOPMENT-CONTRACT.md` forbids a mock
 where the test stack has the real thing.
+
+**A test that writes to the stack's own database cleans up after itself.** The store tests use the
+real PostgreSQL on purpose, and a fixture left behind is a row in the operational catalog. See
+`apps/api/tests/integration/test_gateway_persistence.py`, where an invariant also asserts the
+catalog holds no provider the policy does not declare.
+
+**A gate that measures inside an image builds that image first.** Otherwise it reports on whatever
+was baked into the last build, which is how a red test survived a green gate for an entire Gate.
+`compose.build_service` exists for this, and a control-plane test enforces it.
+
+**Nothing above the gateway names a provider.** Ask for `provider:model` or a route alias. A
+provider name in a provider-neutral module fails the boundary scan.
 
 ## The development ledger
 

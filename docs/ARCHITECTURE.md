@@ -2,13 +2,14 @@
 
 ## Current state
 
-Two things exist: the **SETUP-00 development control plane** and the **Gate 0 Foundation runtime**.
+Three things exist: the **SETUP-00 development control plane**, the **Gate 0 Foundation
+runtime** and the **Gate 1 Model Gateway**.
 
-No model gateway, agent runtime, sandbox, quality runtime, IDE integration, memory system, learning
-engine or training pipeline has been implemented. The directories reserved for them contain a README
-declaring the reservation and nothing else, and `.iacode/policies/gate-scope.json` records which
-Gate owns each one. The internal mirror audit fails a delivery that puts an implementation there, so
-this statement is a checked fact rather than a claim.
+No agent runtime, sandbox, quality runtime, IDE integration, memory system, learning engine or
+training pipeline has been implemented. The directories reserved for them contain a README declaring
+the reservation and nothing else, and `.iacode/policies/gate-scope.json` records which Gate owns
+each one. The internal mirror audit fails a delivery that puts an implementation there, so this
+statement is a checked fact rather than a claim.
 
 ## Control plane
 
@@ -82,6 +83,24 @@ database URL rather than discovering it on the first request.
 shape and by text, and every log record passes through it. The call sites are supposed to keep
 credentials out of log arguments; one day one of them will not.
 
+**The model gateway is a boundary, not a service.** `services/model-gateway/` is a library the API
+composes in process. It declares the storage it needs as ports and the application implements them,
+so the dependency points inward and a second consumer can use the gateway without inheriting a web
+application — [ADR-0016](adr/ADR-0016-model-gateway-boundary.md).
+
+**Nothing above the gateway names a provider.** A caller asks for `provider:model` or a route alias
+and receives a normalised answer. Provider-specific shapes exist only inside the three protocol
+adapters, and a static scan fails the build if a provider name appears in a provider-neutral module.
+
+**A provider credential exists only in the environment.** The versioned policy names the variable;
+the value lives in `infra/compose/.env`, which Git ignores, and never leaves the API process — in
+particular it never reaches the browser
+— [ADR-0019](adr/ADR-0019-credentials-are-named-not-stored.md).
+
+**The gateway stores what a call cost, never what it said.** `model_calls` has no column that can
+hold a prompt, a completion or a credential, and the schema is the control rather than the
+discipline of the code above it.
+
 ### Packages
 
 | Package | What it owns | Why it is separate |
@@ -89,6 +108,7 @@ credentials out of log arguments; one day one of them will not.
 | `packages/common` | UUIDv7, redaction | needed by every process; depends on nothing but the standard library |
 | `packages/contracts` | the response shapes | a promise to callers the producer does not control |
 | `packages/telemetry` | the logging contract, the ambient context | one contract, every component |
+| `services/model-gateway` | provider-neutral model invocation | a boundary with its own contracts; it depends on no application |
 
 ### Persistence
 
@@ -125,12 +145,38 @@ files. Distributed tracing is deferred to the Gate that has something to trace �
 | pgvector prepared, not used | [ADR-0013](adr/ADR-0013-pgvector-prepared-not-used.md) |
 | One PostgreSQL server, separate databases for Temporal | [ADR-0014](adr/ADR-0014-one-postgresql-server-for-the-foundation.md) |
 | OpenTelemetry deferred | [ADR-0015](adr/ADR-0015-opentelemetry-deferred.md) |
+| The model gateway is an in-process library with dependencies pointing inward | [ADR-0016](adr/ADR-0016-model-gateway-boundary.md) |
+| A capability is tri-state and carries its provenance | [ADR-0017](adr/ADR-0017-capabilities-are-tri-state.md) |
+| A stream commits to one model at its first delivered event | [ADR-0018](adr/ADR-0018-streaming-commitment-point.md) |
+| Policy names the credential; only the environment holds it | [ADR-0019](adr/ADR-0019-credentials-are-named-not-stored.md) |
 
-Pinned versions: [VERSIONS.md](VERSIONS.md). Operating it: [runbooks/FOUNDATION.md](runbooks/FOUNDATION.md).
+Pinned versions: [VERSIONS.md](VERSIONS.md). Operating it: [runbooks/FOUNDATION.md](runbooks/FOUNDATION.md)
+and [runbooks/MODEL-GATEWAY.md](runbooks/MODEL-GATEWAY.md).
+
+## The model gateway
+
+One boundary for reaching a model. Providers are declared in `.iacode/policies/providers.json`;
+models are **discovered** from each provider's own API rather than maintained by hand; capabilities
+are recorded as `SUPPORTED`, `UNSUPPORTED` or `UNKNOWN` with the provenance of the statement, and
+the router refuses an unknown capability instead of guessing
+— [ADR-0017](adr/ADR-0017-capabilities-are-tri-state.md).
+
+A request resolves to an ordered candidate list, filtered on what the catalog says. Failures carry a
+class that decides whether they may be retried and whether they may fall back; a rate limit may, an
+invalid request may not. Retry uses full-jitter backoff on an injected clock, and the circuit
+breaker is scoped both to a provider and to a provider-and-model pair.
+
+Streaming commits to one model at its first delivered event: before it, retry and fallback behave as
+they do for any call; after it, a failure becomes an `error` event, because the alternative is one
+stream carrying two models' text — [ADR-0018](adr/ADR-0018-streaming-commitment-point.md).
+
+What it deliberately is not: an agent runtime, a tool executor, a conversation store or a retrieval
+system. It normalises a tool call; it never executes one. It records that a call happened; it never
+records what the call said.
 
 ## Planned runtime boundaries
 
-Later Gates establish, in order, a model gateway, an agent runtime, a sandbox, a quality engine and
+Later Gates establish, in order, an agent runtime, a sandbox, a quality engine and
 VS Code integration. Later releases add experience, knowledge, code graph, project memory, gap
 detection, research, skills, dataset production, model training, evaluation, shadow mode, promotion
 and autonomous learning.

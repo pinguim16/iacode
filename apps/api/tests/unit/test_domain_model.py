@@ -84,7 +84,11 @@ def test_relationships_cascade_deliberately() -> None:
         # An agent that has run cannot be deleted: its runs are the record that it did.
         ("agent_runs", "agent_id"): "RESTRICT",
         ("models", "provider_id"): "CASCADE",
+        # A recorded call keeps its provider and its model from being deleted underneath it. The
+        # columns are nullable from Gate 1 — a call can outlive the catalog row it names — but a
+        # row that *is* named may not vanish while the record points at it.
         ("model_calls", "model_id"): "RESTRICT",
+        ("model_calls", "provider_id"): "RESTRICT",
         ("model_calls", "agent_run_id"): "SET NULL",
         ("tool_calls", "agent_run_id"): "CASCADE",
         ("artifacts", "task_run_id"): "SET NULL",
@@ -111,11 +115,28 @@ def test_rights_default_to_denial() -> None:
     assert experiences.columns["storage_allowed"].server_default.arg == "true"
 
 
-def test_providers_models_and_agents_are_disabled_by_default() -> None:
-    """Nothing this Gate creates is live. A later Gate enables what it can actually run."""
-    for table_name in ("providers", "models", "agents"):
+def test_providers_and_agents_are_disabled_by_default() -> None:
+    """Nothing is live because a row exists. A Gate enables what it can actually run."""
+    for table_name in ("providers", "agents"):
         column = Base.metadata.tables[table_name].columns["enabled"]
         assert column.server_default.arg == "false", f"{table_name} is enabled by default"
+
+
+def test_a_model_is_governed_by_its_provider_rather_than_by_a_switch_of_its_own() -> None:
+    """``models`` has no ``enabled`` column from Gate 1, and that is the point.
+
+    Gate 0 gave every model a default-off ``enabled`` flag, which made sense while nothing populated
+    the table. Gate 1 populates it by discovery: a row exists because a provider listed the model,
+    and ``active`` says whether it still does. An operator switch on top of that would be a second
+    place to disable a model, and two switches are how a model ends up disabled in the one nobody
+    looked at. The switch is at the provider, in configuration; the router refuses a model whose
+    provider is not enabled.
+    """
+    models = Base.metadata.tables["models"]
+
+    assert "enabled" not in models.columns
+    assert models.columns["active"].server_default.arg == "true"
+    assert Base.metadata.tables["providers"].columns["enabled"].server_default.arg == "false"
 
 
 def test_lifecycle_vocabularies_are_constrained() -> None:
@@ -149,3 +170,27 @@ def test_no_table_stores_a_credential() -> None:
         for column in table.columns:
             assert credential.search(column.name) is None, \
                 f"{name}.{column.name} looks like a credential column"
+
+
+def test_provider_registry_persists_operational_metadata() -> None:
+    """Row 5.2: what the registry remembers about a provider, and what it must never remember.
+
+    Operational metadata is the answer to "is this provider working and what does it serve". The
+    address and the credential are not part of that answer: they belong to the environment, and a
+    column for either is a column somebody will eventually fill.
+    """
+    columns = set(models.Provider.__table__.columns.keys())
+
+    for expected in ("slug", "name", "kind", "adapter", "enabled", "healthy",
+                     "last_health_check", "last_sync", "model_count", "detail"):
+        assert expected in columns, f"providers does not record {expected}"
+
+    for forbidden in ("api_key", "credential", "secret", "token", "password",
+                      "base_url", "endpoint", "authorization"):
+        assert forbidden not in columns, f"providers carries {forbidden}"
+
+    # Health is tri-state: unknown until something has asked. A boolean defaulting to false would
+    # report every provider as broken before the first check.
+    assert models.Provider.__table__.columns["healthy"].nullable
+    assert models.Provider.__table__.columns["last_health_check"].nullable
+    assert models.Provider.__table__.columns["last_sync"].nullable

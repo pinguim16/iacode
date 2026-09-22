@@ -1,0 +1,3527 @@
+{
+  "schemaVersion": "1.0.0",
+  "gate": "GATE-1",
+  "checkpoint": "GATE-1-CP-0001",
+  "sources": [
+    "SOURCE A: docs/GATE-1-CHECKLIST.md, the canonical GATE-1 specification",
+    "SOURCE B: docs/MILESTONE-VALIDATION.md, the milestone requirements of the audit",
+    "SOURCE C: LESSON-PREFLIGHT.json, the lessons the engineering memory imposes"
+  ],
+  "requirements": [
+    {
+      "id": "REQ-0001",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#1.1",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 1.1",
+      "description": "A canonical, machine-readable requirement specification exists for this Gate and the registry mirrors it row for row.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:.iacode/policies/canonical-requirements.json"
+      ],
+      "testEvidence": [
+        "test:Gate1CanonicalSpecificationTests"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/GATE-1-CHECKLIST.md"
+      ],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0002",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#1.2",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 1.2",
+      "description": "The closed mandatory gate registry carries every executable gate this Gate introduces.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:.iacode/policies/quality-gates.json"
+      ],
+      "testEvidence": [],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0003",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#1.3",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 1.3",
+      "description": "Every test suite this Gate introduces is declared canonically, is counted by the count derivation and is resolvable as evidence.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:.iacode/policies/test-suites.json"
+      ],
+      "testEvidence": [
+        "test:test_gateway_suite_is_declared_and_discovered"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0004",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#1.4",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 1.4",
+      "description": "The internal Red Team battery of this Gate is executable, scoped to the Model Gateway, and records a null-mutation control.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/gate1_red_team.py"
+      ],
+      "testEvidence": [],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0005",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#1.5",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 1.5",
+      "description": "The reservation of the gateway directory is consumed by the Gate that owns it, and the scope registry keeps constraining every path still owned by a later Gate.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:.iacode/policies/gate-scope.json"
+      ],
+      "testEvidence": [
+        "test:test_model_gateway_reservation_is_consumed_by_its_owner"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:services/model-gateway/README.md"
+      ],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0006",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#1.6",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 1.6",
+      "description": "One documented command verifies this Gate, adds the stages it introduces and keeps a targeted mode that does not restart the stack.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:scripts/iacode/verify.py"
+      ],
+      "testEvidence": [],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0007",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#2.1",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 2.1",
+      "description": "The Model Gateway lives in the directory the Foundation reserved for it and is consumed in process, and the boundary decision is recorded rather than implied.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "test:test_gateway_package_is_importable"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/adr/ADR-0016-model-gateway-boundary.md"
+      ],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0008",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#2.2",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 2.2",
+      "description": "No consumer outside the adapter layer names a provider-specific endpoint, payload field or product name.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "test:test_no_provider_specific_name_escapes_the_adapter_layer"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0009",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#2.3",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 2.3",
+      "description": "The gateway declares its persistence and clock ports and imports no application module, so the dependency points inward.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:services/model-gateway/src/iacode_model_gateway/ports.py"
+      ],
+      "testEvidence": [
+        "test:test_gateway_imports_no_application_module"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0010",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#2.4",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 2.4",
+      "description": "No later-Gate capability — tool execution, agent lifecycle, sandboxing, retrieval, experience storage or training — is implemented, simulated or faked here.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "test:test_no_future_gate_capability_is_implemented"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0011",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#2.5",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 2.5",
+      "description": "The gateway directory stops declaring itself reserved and describes what this Gate delivered.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "test:test_gateway_readme_describes_the_delivery"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:services/model-gateway/README.md"
+      ],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0012",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#3.1",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 3.1",
+      "description": "A canonical request carries correlation, messages, routing intent, required capabilities, sampling, output limits, streaming intent, tools, structured output and metadata, and is validated when it is built.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:services/model-gateway/src/iacode_model_gateway/contracts.py"
+      ],
+      "testEvidence": [
+        "test:test_request_is_validated_when_it_is_built"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0013",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#3.2",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 3.2",
+      "description": "The message contract expresses the system, developer, user, assistant and tool roles independently of any provider's vocabulary.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:services/model-gateway/src/iacode_model_gateway/contracts.py"
+      ],
+      "testEvidence": [
+        "test:test_message_roles_are_provider_independent"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0014",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#3.3",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 3.3",
+      "description": "The canonical response normalizes content, tool calls, finish reason, usage, latency, provider, model, endpoint, route and fallback chain, and the raw provider payload is never the public contract.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:services/model-gateway/src/iacode_model_gateway/contracts.py"
+      ],
+      "testEvidence": [
+        "test:test_response_never_exposes_the_raw_provider_payload"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0015",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#3.4",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 3.4",
+      "description": "Tool definitions and tool calls are normalized into internal types with identifier, name and arguments, and the gateway executes no tool.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:services/model-gateway/src/iacode_model_gateway/contracts.py"
+      ],
+      "testEvidence": [
+        "test:test_gateway_normalises_a_tool_call_without_executing_it"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0016",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#3.5",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 3.5",
+      "description": "A tool call whose arguments are not valid JSON produces a normalized error instead of a partially parsed call.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "test:test_invalid_tool_arguments_produce_a_normalised_error"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0017",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#3.6",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 3.6",
+      "description": "Structured output is requested only from a model whose capability is known, and a request that needs it is refused or routed elsewhere rather than sent hopefully.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:services/model-gateway/src/iacode_model_gateway/routing/router.py"
+      ],
+      "testEvidence": [
+        "test:test_structured_output_requires_a_capable_candidate"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0018",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#3.7",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 3.7",
+      "description": "The contract carries an explicit version, so a consumer can detect an incompatible change instead of discovering one.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:services/model-gateway/src/iacode_model_gateway/contracts.py"
+      ],
+      "testEvidence": [
+        "test:test_contract_version_is_declared"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0019",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#4.1",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 4.1",
+      "description": "A provider contract declares health, model discovery, generation and streaming, and is not shaped by any one provider.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:services/model-gateway/src/iacode_model_gateway/providers/base.py"
+      ],
+      "testEvidence": [
+        "test:test_provider_contract_is_not_coupled_to_one_provider"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0020",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#4.2",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 4.2",
+      "description": "An OpenAI-compatible Chat Completions adapter builds the request, parses the response, parses the stream and maps the error.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:services/model-gateway/src/iacode_model_gateway/protocols/openai_chat.py"
+      ],
+      "testEvidence": [
+        "test:OpenAiChatProtocolTests"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0021",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#4.3",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 4.3",
+      "description": "An OpenAI-compatible Responses adapter builds the request, parses the response, parses the stream and maps the error.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:services/model-gateway/src/iacode_model_gateway/protocols/openai_responses.py"
+      ],
+      "testEvidence": [
+        "test:OpenAiResponsesProtocolTests"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0022",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#4.4",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 4.4",
+      "description": "An Anthropic-compatible Messages adapter builds the request, parses the response, parses the stream and maps the error.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:services/model-gateway/src/iacode_model_gateway/protocols/anthropic_messages.py"
+      ],
+      "testEvidence": [
+        "test:AnthropicMessagesProtocolTests"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0023",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#4.5",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 4.5",
+      "description": "The protocol is selected from the capabilities and endpoints the catalog records, the shape of the request and the provider configuration, never assumed from a default path.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:services/model-gateway/src/iacode_model_gateway/protocols/selection.py"
+      ],
+      "testEvidence": [
+        "test:test_endpoint_selection_reads_the_declared_endpoints"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0024",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#4.6",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 4.6",
+      "description": "A request that needs an endpoint the model does not declare is refused before it reaches the network.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:services/model-gateway/src/iacode_model_gateway/protocols/selection.py"
+      ],
+      "testEvidence": [
+        "test:test_unsupported_endpoint_is_refused_before_the_call"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0025",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#4.7",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 4.7",
+      "description": "No fictitious provider is registered in the runtime configuration; the deterministic double exists only inside the test fixtures.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:.iacode/policies/providers.json"
+      ],
+      "testEvidence": [
+        "test:test_no_fake_provider_is_registered_at_runtime"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0026",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#5.1",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 5.1",
+      "description": "Provider configuration is versionable and carries no credential value: an identifier, an adapter, an enabled flag, a base URL reference, the name of the secret variable, the discovery endpoint and the protocols supported.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:.iacode/policies/providers.json"
+      ],
+      "testEvidence": [
+        "test:test_provider_configuration_carries_no_credential"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0027",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#5.2",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 5.2",
+      "description": "The provider registry persists operational metadata — adapter, enabled state, health, last check and catalog state — and never a credential.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:apps/api/src/iacode_api/db/models.py"
+      ],
+      "testEvidence": [
+        "test:test_no_table_stores_a_credential",
+        "test:test_provider_registry_persists_operational_metadata"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0028",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#5.3",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 5.3",
+      "description": "A credential is resolved from the environment at call time and reaches no database row, response body, log record, metric label or catalog record.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:services/model-gateway/src/iacode_model_gateway/config.py"
+      ],
+      "testEvidence": [
+        "test:SecretContainmentTests"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0029",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#5.4",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 5.4",
+      "description": "Every configuration key this Gate declares is read by the implementation.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:apps/api/src/iacode_api/config.py",
+        "file:infra/compose/.env.example"
+      ],
+      "testEvidence": [
+        "test:test_every_declared_key_is_read_somewhere"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0030",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#5.5",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 5.5",
+      "description": "A provider base URL is validated: HTTPS for a remote provider, plain HTTP only for a loopback address, and never user information embedded in the URL.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:services/model-gateway/src/iacode_model_gateway/security/base_url.py"
+      ],
+      "testEvidence": [
+        "test:BaseUrlSafetyTests"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0031",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#5.6",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 5.6",
+      "description": "A provider address can never be supplied by an inference request; it comes from administrative configuration alone.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:services/model-gateway/src/iacode_model_gateway/contracts.py",
+        "file:apps/api/src/iacode_api/routes/gateway.py"
+      ],
+      "testEvidence": [
+        "test:test_request_cannot_supply_a_provider_address"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0032",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#6.1",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 6.1",
+      "description": "The catalog is discovered from the provider API, and no list written by hand is treated as authoritative.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:services/model-gateway/src/iacode_model_gateway/catalog/sync.py"
+      ],
+      "testEvidence": [
+        "test:test_catalog_comes_from_the_provider_api"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0033",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#6.2",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 6.2",
+      "description": "A normalized model record carries the provider model identifier, display name, family, context window, maximum output tokens, supported endpoints, streaming, vision, tools, structured output, reasoning levels, active state, raw metadata and the synchronization instant.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:services/model-gateway/src/iacode_model_gateway/catalog/normalize.py"
+      ],
+      "testEvidence": [
+        "test:test_normalised_model_carries_the_declared_fields"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0034",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#6.3",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 6.3",
+      "description": "An absent capability stays unknown and is never normalized into a negative answer.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:services/model-gateway/src/iacode_model_gateway/catalog/normalize.py"
+      ],
+      "testEvidence": [
+        "test:test_unknown_capability_is_not_turned_into_false"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0035",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#6.4",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 6.4",
+      "description": "Every capability records where it came from: provider metadata, manual configuration or observation, and never inference from a model's name.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:services/model-gateway/src/iacode_model_gateway/catalog/normalize.py"
+      ],
+      "testEvidence": [
+        "test:test_capability_provenance_is_recorded",
+        "test:test_capability_is_never_inferred_from_a_name"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0036",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#6.5",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 6.5",
+      "description": "Synchronization is idempotent: running it twice over the same provider answer changes nothing the second time.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:services/model-gateway/src/iacode_model_gateway/catalog/sync.py"
+      ],
+      "testEvidence": [
+        "test:test_sync_is_idempotent"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0037",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#6.6",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 6.6",
+      "description": "A model that disappears from the provider answer is deactivated rather than destroyed, so the calls recorded against it stay readable.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:services/model-gateway/src/iacode_model_gateway/catalog/sync.py"
+      ],
+      "testEvidence": [
+        "test:test_missing_model_is_deactivated_not_deleted"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0038",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#6.7",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 6.7",
+      "description": "A partial, invalid or failed synchronization leaves the previous catalog usable: the answer is validated and normalized before anything is committed.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:services/model-gateway/src/iacode_model_gateway/catalog/sync.py"
+      ],
+      "testEvidence": [
+        "test:test_failed_sync_preserves_the_previous_catalog"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0039",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#6.8",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 6.8",
+      "description": "Model identity is the provider together with the provider's own model identifier, so two providers exposing the same name do not collide.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:apps/api/src/iacode_api/db/models.py",
+        "file:services/model-gateway/src/iacode_model_gateway/contracts.py"
+      ],
+      "testEvidence": [
+        "test:test_same_model_id_in_two_providers_does_not_collide"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0040",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#6.9",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 6.9",
+      "description": "Routing reads normalized fields; the raw provider metadata is kept for diagnosis and is never the thing a decision depends on.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:services/model-gateway/src/iacode_model_gateway/routing/router.py"
+      ],
+      "testEvidence": [
+        "test:test_routing_reads_normalised_fields_only"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0041",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#7.1",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 7.1",
+      "description": "The router is deterministic and applies a documented order: validate, explicit override, candidates, capability filter, context filter, route policy, configured priority, execution, fallback.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:services/model-gateway/src/iacode_model_gateway/routing/router.py"
+      ],
+      "testEvidence": [
+        "test:test_router_is_deterministic"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0042",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#7.2",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 7.2",
+      "description": "An explicit model is honored when the policy allows it and is refused, rather than silently replaced, when it cannot serve the request.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:services/model-gateway/src/iacode_model_gateway/routing/router.py"
+      ],
+      "testEvidence": [
+        "test:test_explicit_model_is_honoured_or_refused"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0043",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#7.3",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 7.3",
+      "description": "A default model is configurable, and a request with no model and no usable default fails with a clear error instead of an arbitrary choice.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:services/model-gateway/src/iacode_model_gateway/config.py"
+      ],
+      "testEvidence": [
+        "test:test_missing_default_model_is_an_explicit_error"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0044",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#7.4",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 7.4",
+      "description": "Required capabilities eliminate candidates that cannot satisfy them, and an unknown capability is refused unless the policy explicitly allows it.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:services/model-gateway/src/iacode_model_gateway/routing/policy.py"
+      ],
+      "testEvidence": [
+        "test:test_unknown_capability_is_rejected_by_default"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0045",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#7.5",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 7.5",
+      "description": "The gateway never knowingly sends a request larger than the context window it knows about, and an estimated token count is labelled an estimate rather than reported as exact.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:services/model-gateway/src/iacode_model_gateway/routing/context.py"
+      ],
+      "testEvidence": [
+        "test:ContextWindowTests"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0046",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#7.6",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 7.6",
+      "description": "A reasoning effort is validated against the levels the model or the provider declares, and an incompatible level produces a fallback or an explicit error rather than a silent send.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:services/model-gateway/src/iacode_model_gateway/routing/policy.py"
+      ],
+      "testEvidence": [
+        "test:test_incompatible_reasoning_effort_is_not_sent_silently"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0047",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#7.7",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 7.7",
+      "description": "Route aliases are configuration, not built-in preference, and the system claims no empirical superiority for any of them.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:.iacode/policies/model-routes.json"
+      ],
+      "testEvidence": [
+        "test:test_route_aliases_come_from_configuration"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0048",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#7.8",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 7.8",
+      "description": "No model quality score, benchmark result or comparative claim is invented anywhere in this Gate.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "test:test_no_model_quality_claim_is_hardcoded"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0049",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#7.9",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 7.9",
+      "description": "Every routing result carries a short structured explanation of the decision, and never a model's private reasoning.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:services/model-gateway/src/iacode_model_gateway/routing/router.py"
+      ],
+      "testEvidence": [
+        "test:test_route_explanation_is_structured_and_short"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0050",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#7.10",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 7.10",
+      "description": "A disabled provider and an inactive model are never selected.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:services/model-gateway/src/iacode_model_gateway/routing/router.py"
+      ],
+      "testEvidence": [
+        "test:test_disabled_provider_and_inactive_model_are_excluded"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0051",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#8.1",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 8.1",
+      "description": "An internal error taxonomy distinguishes authentication, authorization, rate limiting, unknown model, invalid request, context limit, provider unavailability, provider timeout, transient and permanent provider failure, an open circuit, cancellation and an internal gateway failure, and every adapter maps onto it.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:services/model-gateway/src/iacode_model_gateway/errors.py"
+      ],
+      "testEvidence": [
+        "test:ErrorTaxonomyTests"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0052",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#8.2",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 8.2",
+      "description": "Timeouts are configurable, connect and read are separated, and no provider call can hang without bound.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:services/model-gateway/src/iacode_model_gateway/config.py",
+        "file:services/model-gateway/src/iacode_model_gateway/providers/http_provider.py"
+      ],
+      "testEvidence": [
+        "test:test_no_call_is_unbounded",
+        "test:test_timeout_is_normalised"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0053",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#8.3",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 8.3",
+      "description": "A retry happens only for an error class a retry can resolve, and never for authentication, authorization, an invalid request, an unknown model, an invalid schema or a context limit.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:services/model-gateway/src/iacode_model_gateway/resilience/retry.py"
+      ],
+      "testEvidence": [
+        "test:RetryClassificationTests"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0054",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#8.4",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 8.4",
+      "description": "A provider's `Retry-After` is honored within a configured bound, and an unreasonably long wait is refused rather than obeyed.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:services/model-gateway/src/iacode_model_gateway/resilience/retry.py"
+      ],
+      "testEvidence": [
+        "test:test_retry_after_is_bounded"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0055",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#8.5",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 8.5",
+      "description": "Backoff is exponential with jitter, and the test suite controls time instead of waiting for it.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:services/model-gateway/src/iacode_model_gateway/resilience/retry.py"
+      ],
+      "testEvidence": [
+        "test:test_backoff_is_exponential_with_jitter"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0056",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#8.6",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 8.6",
+      "description": "A circuit breaker moves between closed, open and half-open per provider and per provider and model, from external configuration.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:services/model-gateway/src/iacode_model_gateway/resilience/circuit.py"
+      ],
+      "testEvidence": [
+        "test:CircuitBreakerTests"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0057",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#8.7",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 8.7",
+      "description": "The fallback chain is bounded, never repeats a candidate, cannot loop, and the chain that was used is recorded.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:services/model-gateway/src/iacode_model_gateway/routing/router.py"
+      ],
+      "testEvidence": [
+        "test:test_fallback_chain_is_bounded_and_recorded"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0058",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#8.8",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 8.8",
+      "description": "Fallback happens only for the error classes another candidate could resolve, and an invalid request is not retried against a second model.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:services/model-gateway/src/iacode_model_gateway/routing/policy.py"
+      ],
+      "testEvidence": [
+        "test:FallbackSemanticsTests"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0059",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#8.9",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 8.9",
+      "description": "A consumer that cancels interrupts the upstream call and the attempt is recorded as cancelled.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:services/model-gateway/src/iacode_model_gateway/gateway.py"
+      ],
+      "testEvidence": [
+        "test:test_cancellation_stops_the_upstream_call"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0060",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#8.10",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 8.10",
+      "description": "Request limits are configurable and enforced: payload size, message count, tool count, output tokens and fallback depth.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:services/model-gateway/src/iacode_model_gateway/resilience/limits.py"
+      ],
+      "testEvidence": [
+        "test:RequestLimitTests"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0061",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#8.11",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 8.11",
+      "description": "A provider response larger than the configured bound is refused instead of being read into memory without limit.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:services/model-gateway/src/iacode_model_gateway/providers/http_provider.py"
+      ],
+      "testEvidence": [
+        "test:test_oversized_provider_response_is_refused"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0062",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#8.12",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 8.12",
+      "description": "An unavailable provider never makes the Foundation liveness endpoint fail; it is visible in the gateway's own health instead.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:apps/api/src/iacode_api/routes/gateway.py"
+      ],
+      "testEvidence": [
+        "test:test_provider_outage_does_not_affect_process_health"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0063",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#9.1",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 9.1",
+      "description": "Streaming goes through the same router and the same adapter abstraction as a non-streaming call, with no parallel architecture.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:services/model-gateway/src/iacode_model_gateway/gateway.py"
+      ],
+      "testEvidence": [
+        "test:test_streaming_uses_the_same_router"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0064",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#9.2",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 9.2",
+      "description": "Stream events are normalized into an envelope covering start, text delta, tool-call delta, usage, end and error.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:services/model-gateway/src/iacode_model_gateway/contracts.py"
+      ],
+      "testEvidence": [
+        "test:StreamEnvelopeTests"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0065",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#9.3",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 9.3",
+      "description": "Automatic fallback is allowed only before the first content reaches the consumer; after it, the error is propagated and no second model continues the stream.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:services/model-gateway/src/iacode_model_gateway/gateway.py"
+      ],
+      "testEvidence": [
+        "test:test_no_fallback_after_the_first_delivered_content"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0066",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#9.4",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 9.4",
+      "description": "A stream that fails after content ends with an explicit error event carrying the partial result, not with a silent completion.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:services/model-gateway/src/iacode_model_gateway/gateway.py"
+      ],
+      "testEvidence": [
+        "test:test_failure_after_content_ends_with_an_error_event"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0067",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#9.5",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 9.5",
+      "description": "The API streams over Server-Sent Events and stops the upstream call when the client disconnects.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:apps/api/src/iacode_api/routes/gateway.py"
+      ],
+      "testEvidence": [
+        "test:test_stream_endpoint_emits_sse_and_stops_on_disconnect"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0068",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#10.1",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 10.1",
+      "description": "Usage is normalized where the provider supplies it — input, output, total, cached and reasoning tokens — and a field the provider did not supply stays absent rather than being invented.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:services/model-gateway/src/iacode_model_gateway/catalog/normalize.py"
+      ],
+      "testEvidence": [
+        "test:UsageNormalisationTests"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0069",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#10.2",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 10.2",
+      "description": "Cost is absent unless pricing is configured, and zero is never used to mean unknown.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:services/model-gateway/src/iacode_model_gateway/pricing.py"
+      ],
+      "testEvidence": [
+        "test:test_unknown_cost_is_absent_not_zero"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0070",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#10.3",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 10.3",
+      "description": "Every attempt is recorded with its operational metadata: correlation, provider, model, endpoint, route, status, timestamps, latency, tokens, error type, retries and fallbacks.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:apps/api/src/iacode_api/gateway/store.py"
+      ],
+      "testEvidence": [
+        "test:test_model_call_records_the_operational_metadata"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0071",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#10.4",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 10.4",
+      "description": "Prompts, messages and completions are not persisted by default; the debug capture is opt-in, redacted, documented and off in every shipped configuration.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:services/model-gateway/src/iacode_model_gateway/config.py",
+        "file:apps/api/src/iacode_api/gateway/store.py"
+      ],
+      "testEvidence": [
+        "test:test_prompt_is_not_persisted_by_default",
+        "test:PromptCaptureTests"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0072",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#10.5",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 10.5",
+      "description": "A request fingerprint may be stored for correlation, and its documentation states that a hash is not anonymization.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:services/model-gateway/src/iacode_model_gateway/fingerprint.py"
+      ],
+      "testEvidence": [
+        "test:test_request_fingerprint_is_stable_and_carries_no_content"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/runbooks/MODEL-GATEWAY.md"
+      ],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0073",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#10.6",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 10.6",
+      "description": "No provider reasoning content is stored; only the reasoning token count a provider reports.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:apps/api/src/iacode_api/gateway/store.py"
+      ],
+      "testEvidence": [
+        "test:test_no_reasoning_content_is_persisted"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0074",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#10.7",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 10.7",
+      "description": "Nothing this Gate persists becomes training data: the rights defaults of the provenance policy are preserved.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "test:test_gate_one_records_no_training_eligible_data"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:.iacode/policies/training-data-policy.md"
+      ],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0075",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#11.1",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 11.1",
+      "description": "The gateway exposes request, duration, error, retry, fallback, circuit state, provider health and catalog size metrics through the existing Prometheus endpoint.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:services/model-gateway/src/iacode_model_gateway/telemetry/metrics.py"
+      ],
+      "testEvidence": [
+        "test:GatewayMetricsTests"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0076",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#11.2",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 11.2",
+      "description": "No metric label carries a prompt, a completion, a credential or an unbounded value.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:services/model-gateway/src/iacode_model_gateway/telemetry/metrics.py"
+      ],
+      "testEvidence": [
+        "test:test_metric_labels_are_bounded_and_carry_no_content"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0077",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#11.3",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 11.3",
+      "description": "Structured logs carry the correlation and request identifiers, the provider, the model, the route, the attempt, the fallback index, the latency, the status and the error type where each is known.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:services/model-gateway/src/iacode_model_gateway/telemetry/logs.py"
+      ],
+      "testEvidence": [
+        "test:test_gateway_log_contract"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0078",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#11.4",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 11.4",
+      "description": "An authorization header, an API key, a full prompt and a full response are never written to a log.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:services/model-gateway/src/iacode_model_gateway/telemetry/logs.py"
+      ],
+      "testEvidence": [
+        "test:SecretContainmentTests"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0079",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#11.5",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 11.5",
+      "description": "A correlation identifier propagates from the HTTP request through every provider attempt to the persisted record, so one call is traceable end to end.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:apps/api/src/iacode_api/routes/gateway.py"
+      ],
+      "testEvidence": [
+        "test:test_correlation_reaches_the_persisted_model_call"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0080",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#12.1",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 12.1",
+      "description": "The gateway API is versioned and documented in the OpenAPI document.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:apps/api/src/iacode_api/routes/gateway.py"
+      ],
+      "testEvidence": [
+        "test:test_openapi_documents_the_gateway_endpoints"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0081",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#12.2",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 12.2",
+      "description": "The provider listing returns safe metadata only and never a credential, an authorization header or a secret value.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:apps/api/src/iacode_api/routes/gateway.py"
+      ],
+      "testEvidence": [
+        "test:test_provider_listing_exposes_no_secret"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0082",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#12.3",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 12.3",
+      "description": "The model listing filters by provider, by active state and by capability.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:apps/api/src/iacode_api/routes/gateway.py"
+      ],
+      "testEvidence": [
+        "test:test_model_listing_filters"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0083",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#12.4",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 12.4",
+      "description": "The synchronization endpoint reports what was added, updated, deactivated, unchanged and what failed, without exposing a provider secret.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:apps/api/src/iacode_api/routes/gateway.py"
+      ],
+      "testEvidence": [
+        "test:test_sync_endpoint_reports_its_outcome"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0084",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#12.5",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 12.5",
+      "description": "The inference endpoint returns the normalized response, the route information, the usage and the request identifier, and never a stack trace.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:apps/api/src/iacode_api/routes/gateway.py"
+      ],
+      "testEvidence": [
+        "test:test_infer_endpoint_returns_the_normalised_response",
+        "test:test_infer_endpoint_leaks_no_internal_detail"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0085",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#12.6",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 12.6",
+      "description": "The gateway health endpoint separates the process from the external provider, so an unreachable provider is reported without claiming the service is down.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:apps/api/src/iacode_api/routes/gateway.py"
+      ],
+      "testEvidence": [
+        "test:test_gateway_health_separates_process_from_provider"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0086",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#13.1",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 13.1",
+      "description": "A Model Gateway page shows the provider status, the model count, the last synchronization and the model list with its capabilities.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:apps/web/src/app/gateway/gateway.ts",
+        "file:apps/web/src/app/gateway/gateway.spec.ts"
+      ],
+      "testEvidence": [],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/runbooks/MODEL-GATEWAY.md"
+      ],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0087",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#13.2",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 13.2",
+      "description": "A minimal playground sends a prompt with a route or a model and an optional reasoning effort, and shows the chosen model, the provider, the answer, the latency and the usage when it exists.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:apps/web/src/app/gateway/gateway.html",
+        "file:apps/web/src/app/gateway/gateway.spec.ts"
+      ],
+      "testEvidence": [],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/runbooks/MODEL-GATEWAY.md"
+      ],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0088",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#13.3",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 13.3",
+      "description": "No provider credential reaches the browser: the page calls the IACode backend and nothing else.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "test:test_frontend_calls_only_the_iacode_backend"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0089",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#13.4",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 13.4",
+      "description": "No conversation persistence, chat history, persona, agent interface or tool execution is added to the frontend.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "test:test_frontend_adds_no_conversation_capability"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0090",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#13.5",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 13.5",
+      "description": "The frontend suite covers the new page and its service, runs headless and is part of the verification command.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:scripts/iacode/verify.py"
+      ],
+      "testEvidence": [],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0091",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#14.1",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 14.1",
+      "description": "A real catalog synchronization runs against the configured provider API, parses the answer, normalizes it, persists it and repeats without changing anything.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:scripts/iacode/gateway_smoke.py"
+      ],
+      "testEvidence": [],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [
+        "command:cmd-0002"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0092",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#14.2",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 14.2",
+      "description": "A real non-streaming inference against the explicitly configured smoke model returns the expected text through the normalized response.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:scripts/iacode/gateway_smoke.py"
+      ],
+      "testEvidence": [],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [
+        "command:cmd-0002"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0093",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#14.3",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 14.3",
+      "description": "A real streaming inference produces a start, at least one delta and an end, with no duplicated content.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:scripts/iacode/gateway_smoke.py"
+      ],
+      "testEvidence": [],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [
+        "command:cmd-0002"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0094",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#14.4",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 14.4",
+      "description": "The configured smoke model is never silently substituted: its absence from the discovered catalog fails the check.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:scripts/iacode/gateway_smoke.py"
+      ],
+      "testEvidence": [
+        "test:test_absent_smoke_model_fails_rather_than_substitutes"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0095",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#14.5",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 14.5",
+      "description": "The live checks are minimal: a short prompt, a small output cap, no repetition, no deliberate rate limiting and no repeated authentication failure against the real provider.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:scripts/iacode/gateway_smoke.py"
+      ],
+      "testEvidence": [
+        "test:test_live_smoke_is_bounded_and_minimal"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0096",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#14.6",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 14.6",
+      "description": "The live inference produced a persisted record carrying the provider, the model, the status, the latency and the usage the provider supplied, and carrying no prompt.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:scripts/iacode/gateway_smoke.py"
+      ],
+      "testEvidence": [],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [
+        "command:cmd-0002"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0097",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#14.7",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 14.7",
+      "description": "The observability stack observed the live gateway request.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:infra/prometheus/prometheus.yml"
+      ],
+      "testEvidence": [],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [
+        "command:cmd-0002"
+      ],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0098",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#14.8",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 14.8",
+      "description": "Without a configured provider credential the live validation fails loudly and the Gate is blocked, and no result is claimed that was not executed.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:scripts/iacode/gateway_smoke.py"
+      ],
+      "testEvidence": [
+        "test:test_missing_credential_blocks_rather_than_passes"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0099",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#15.1",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 15.1",
+      "description": "A provider contract suite proves discovery, generation, streaming, usage, error normalization, timeout, cancellation and tool-call normalization for every adapter.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "file:services/model-gateway/tests/test_provider_contract.py"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0100",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#15.2",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 15.2",
+      "description": "The catalog suite covers a new model, changed metadata, a removed model, a duplicate, invalid metadata, an unknown capability, a failed transaction and a repeated synchronization.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "file:services/model-gateway/tests/test_catalog.py"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0101",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#15.3",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 15.3",
+      "description": "The routing suite covers an explicit model, the default model, capability filtering, an unknown required capability, a disabled provider, an inactive model, an insufficient context window, route priority, fallback order and fallback exhaustion.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "file:services/model-gateway/tests/test_routing.py"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0102",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#15.4",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 15.4",
+      "description": "The retry suite proves which classes are retried — rate limiting, server failure, timeout, connection reset — and which are not: authentication, invalid request and context limit.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "file:services/model-gateway/tests/test_resilience.py"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0103",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#15.5",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 15.5",
+      "description": "The circuit breaker suite covers the threshold, the open state, fast failure, the cooldown, the half-open probe, recovery and reopening, without waiting in real time.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "file:services/model-gateway/tests/test_resilience.py"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0104",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#15.6",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 15.6",
+      "description": "The streaming suite covers a normal stream, an empty stream, a failure before the first delta, a failure after the first delta, consumer cancellation, usage at the end and a tool-call delta.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "file:services/model-gateway/tests/test_streaming.py"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0105",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#15.7",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 15.7",
+      "description": "A test proves that two models' output can never be concatenated into one stream.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "file:services/model-gateway/tests/test_streaming.py",
+        "test:test_no_two_models_are_concatenated_in_one_stream"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0106",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#15.8",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 15.8",
+      "description": "The structured-output suite proves that an incapable candidate is rejected and that a capable one receives the right configuration.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "file:services/model-gateway/tests/test_structured_output.py"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0107",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#15.9",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 15.9",
+      "description": "The secret suite proves that a credential appears in no log, no exception, no HTTP response, no persisted record, no metric and no catalog metadata.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "file:services/model-gateway/tests/test_secrets.py"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0108",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#15.10",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 15.10",
+      "description": "Provider unavailability, an invalid credential and rate limiting are exercised with fixtures rather than against the real provider.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "file:services/model-gateway/tests/test_resilience.py",
+        "file:services/model-gateway/tests/test_provider_contract.py",
+        "file:services/model-gateway/tests/test_secrets.py"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0109",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#15.11",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 15.11",
+      "description": "The deterministic provider double exists only under the test fixtures and cannot be reached from a runtime path.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "test:test_no_fake_provider_is_registered_at_runtime"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0110",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#16.1",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 16.1",
+      "description": "The schema change of this Gate is a new migration, and no migration of the previous Gate is edited.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "test:test_previous_migrations_are_unmodified"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0111",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#16.2",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 16.2",
+      "description": "Every migration runs from zero against an empty database and produces the declared schema.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "test:test_migrations_run_from_zero",
+        "test:test_the_declared_model_matches_the_migrated_schema"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0112",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#16.3",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 16.3",
+      "description": "A database created by the previous Gate upgrades without loss.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "test:test_a_previous_gate_database_upgrades",
+        "test:test_the_upgrade_carries_forward_what_the_booleans_said"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0113",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#16.4",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 16.4",
+      "description": "The Foundation endpoints, the backup and restore procedure, the restart behaviour and the observability stack do not regress.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [
+        "file:scripts/iacode/verify.py"
+      ],
+      "testEvidence": [],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0114",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#17.1",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 17.1",
+      "description": "An operational runbook documents provider configuration, the variables, synchronization, listing, inference, streaming, fallback, troubleshooting, the live smoke and how to add an adapter.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [],
+      "testEvidence": [],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/runbooks/MODEL-GATEWAY.md"
+      ],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0115",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#17.2",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 17.2",
+      "description": "The architecture document describes the gateway boundary, what crosses it and what is deliberately absent.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [],
+      "testEvidence": [],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/ARCHITECTURE.md"
+      ],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0116",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#17.3",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 17.3",
+      "description": "The entry documentation and the development guide describe what exists after this Gate and how to run it.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [],
+      "testEvidence": [],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:README.md",
+        "file:docs/DEVELOPMENT.md"
+      ],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0117",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#17.4",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 17.4",
+      "description": "Every dependency and version this Gate pins is recorded in the one place that records versions.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [],
+      "testEvidence": [],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/VERSIONS.md"
+      ],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0118",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#17.5",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 17.5",
+      "description": "The API examples are sanitized and carry no real token.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [],
+      "testEvidence": [],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/runbooks/MODEL-GATEWAY.md"
+      ],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0119",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#17.6",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 17.6",
+      "description": "Every structural decision of this Gate that is not already recorded becomes an ADR, and no ADR duplicates an existing decision.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [],
+      "testEvidence": [],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/adr/ADR-0016-model-gateway-boundary.md",
+        "file:docs/adr/ADR-0017-capabilities-are-tri-state.md",
+        "file:docs/adr/ADR-0018-streaming-commitment-point.md",
+        "file:docs/adr/ADR-0019-credentials-are-named-not-stored.md"
+      ],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0120",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#18.1",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 18.1",
+      "description": "The entry contract and the plan describe the current Gate and its status truthfully.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [],
+      "testEvidence": [],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:START-HERE.md",
+        "file:docs/MASTER-PLAN.md",
+        "file:docs/checkpoints/LATEST.md"
+      ],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0121",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#18.2",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 18.2",
+      "description": "The Gate produces a retrospective from the canonical template.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [],
+      "testEvidence": [],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:.iacode/memory/retrospectives/GATE-1-CP-0001.md"
+      ],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "REQ-0122",
+      "source": "GATE_SPECIFICATION",
+      "sourceRef": "canonical:GATE-1#18.3",
+      "sourceReference": "docs/GATE-1-CHECKLIST.md row 18.3",
+      "description": "The Gate closes on the project's own controls and claims no independent, fresh-session or cross-tool verdict.",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [],
+      "testEvidence": [],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/checkpoints/GATE-1-CP-0001/STATE.json"
+      ],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "LESSON-REQ-0001",
+      "source": "LESSON",
+      "sourceRef": "lesson:LSN-0001",
+      "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0001",
+      "description": "Verify checkpoint validation must succeed from a detached checkout of the checkpoint tag",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "test:DetachedHeadValidationTests.test_detached_head_at_checkpoint_tag_validates",
+        "test:DetachedHeadValidationTests.test_detached_head_at_wrong_commit_fails"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "LESSON-REQ-0002",
+      "source": "LESSON",
+      "sourceRef": "lesson:LSN-0002",
+      "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0002",
+      "description": "Verify a file inventory must be recomputed from the repository, never trusted as an assertion",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "test:DeltaInventoryTests.test_removed_manifest_entry_fails",
+        "test:DeltaInventoryTests.test_silent_tracked_modification_fails"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "LESSON-REQ-0003",
+      "source": "LESSON",
+      "sourceRef": "lesson:LSN-0003",
+      "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0003",
+      "description": "Verify every operation attempt must be auditable, including a refusal decided before execution",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "test:FinalizationAttemptRecordingTests.test_detached_head_refusal_is_recorded",
+        "test:FinalizationAttemptRecordingTests.test_non_latest_checkpoint_refusal_is_recorded"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "LESSON-REQ-0004",
+      "source": "LESSON",
+      "sourceRef": "lesson:LSN-0004",
+      "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0004",
+      "description": "Verify a checkpoint may never claim readiness while it also claims to be blocked",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "test:ResealedBlockerFixtureTests.test_resealed_ready_for_review_with_blocker_is_rejected",
+        "test:StatusBlockerInvariantTests.test_ready_for_review_with_blocker_fails"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "LESSON-REQ-0005",
+      "source": "LESSON",
+      "sourceRef": "lesson:LSN-0005",
+      "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0005",
+      "description": "Verify a PASS requires evidence that can be executed or resolved, not a statement",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "test:PromotionInvariantTests.test_every_positive_status_rejects_every_red_quality_dimension",
+        "test:QualityEvidenceTests.test_pass_referencing_a_failed_command_fails",
+        "test:QualityEvidenceTests.test_pass_without_evidence_fails"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "LESSON-REQ-0006",
+      "source": "LESSON",
+      "sourceRef": "lesson:LSN-0006",
+      "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0006",
+      "description": "Verify the repository must be self-contained; a specification may not live outside it",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "test:SetupChecklistTests.test_checklist_exists_and_is_referenced",
+        "test:SetupChecklistTests.test_documentation_links_resolve"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "LESSON-REQ-0007",
+      "source": "LESSON",
+      "sourceRef": "lesson:LSN-0007",
+      "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0007",
+      "description": "Verify independent validation cannot be declared by the run that did the work",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "test:DeliveryAssuranceGateTests.test_self_claimed_independent_review_blocks_review",
+        "test:ExternalAttestationTests.test_an_attestation_naming_the_subject_as_its_own_auditor_is_rejected",
+        "test:ExternalAttestationTests.test_an_implementer_checkpoint_cannot_declare_an_external_pass",
+        "test:ExternalAttestationTests.test_second_tool_validation_alone_is_not_enough",
+        "test:SecondToolValidationTests.test_failed_cross_tool_validation_cannot_grant_gate_pass"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "LESSON-REQ-0008",
+      "source": "LESSON",
+      "sourceRef": "lesson:LSN-0008",
+      "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0008",
+      "description": "Verify requirement completeness must be total and evidence-backed before handoff",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "test:DeliveryAssuranceGateTests.test_completeness_validator_not_executed_blocks_review",
+        "test:DeliveryCompletenessMatrixTests.test_one_requirement_short_of_total_fails",
+        "test:ExpectedRequirementSetTests.test_an_unexpected_anchored_requirement_is_rejected",
+        "test:ExpectedRequirementSetTests.test_deleting_a_requirement_and_recomputing_the_counts_still_fails"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "LESSON-REQ-0009",
+      "source": "LESSON",
+      "sourceRef": "lesson:LSN-0009",
+      "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0009",
+      "description": "Verify a red gate requires rework, never a waiver, and never a weakened check",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "test:DeliveryAssuranceGateTests.test_green_keeper_pass_with_a_real_failure_is_rejected",
+        "test:DeliveryAssuranceGateTests.test_red_tests_block_review",
+        "test:GreenKeeperToolTests.test_red_gate_is_reported_as_still_red",
+        "test:MandatoryGatePolicyTests.test_a_cycle_measured_against_no_gate_is_rejected",
+        "test:MandatoryGatePolicyTests.test_the_policy_declares_a_non_empty_closed_set"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "LESSON-REQ-0010",
+      "source": "LESSON",
+      "sourceRef": "lesson:LSN-0010",
+      "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0010",
+      "description": "Verify a recorded command must carry runtime, working directory, commit and purpose to be replayable",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "test:CommandInputBindingTests.test_a_clean_tree_claim_is_checked_against_the_declared_commit",
+        "test:CommandInputBindingTests.test_a_record_without_a_digest_is_rejected",
+        "test:CommandReproducibilityTests.test_bare_script_name_is_rejected",
+        "test:CommandReproducibilityTests.test_unresolvable_script_path_is_rejected"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "LESSON-REQ-0011",
+      "source": "LESSON",
+      "sourceRef": "lesson:LSN-0011",
+      "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0011",
+      "description": "Verify a control over a checkpoint's own evidence must be scoped to the moment it matters",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "test:DeliveryAssuranceGateTests.test_gate_consistency_is_provisional_while_work_is_in_progress",
+        "test:test_every_runner_of_the_mandatory_gates_refreshes_the_declared_hashes",
+        "test:test_no_other_module_executes_the_mandatory_gate_set",
+        "test:test_the_refresh_has_one_definition"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "LESSON-REQ-0012",
+      "source": "LESSON",
+      "sourceRef": "lesson:LSN-0012",
+      "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0012",
+      "description": "Verify sealed checkpoints and their tags are immutable, and tooling must keep validating them",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "test:HistoricalCheckpointCompatibilityTests.test_first_sealed_checkpoint_still_validates",
+        "test:HistoricalCheckpointCompatibilityTests.test_fourth_sealed_checkpoint_still_validates",
+        "test:IntegrityAnchorTests.test_a_broken_link_between_anchors_is_detected",
+        "test:IntegrityAnchorTests.test_a_moved_historical_tag_is_detected"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "LESSON-REQ-0013",
+      "source": "LESSON",
+      "sourceRef": "lesson:LSN-0013",
+      "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0013",
+      "description": "Verify an installed capability must be detected by resolved path, not by a bare command lookup",
+      "mandatory": false,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [],
+      "testEvidence": [],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "file:docs/TOOL-CAPABILITIES.md"
+      ],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "LESSON-REQ-0014",
+      "source": "LESSON",
+      "sourceRef": "lesson:LSN-0014",
+      "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0014",
+      "description": "Verify evidence must be recorded as it happens, not reconstructed at the end of a run",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "test:SealChronologyTests.test_a_dirty_tree_validation_is_not_evidence_of_a_sealed_commit",
+        "test:SealChronologyTests.test_a_missing_post_commit_validation_is_rejected",
+        "test:SealChronologyTests.test_a_record_after_the_end_of_the_run_is_rejected"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "LESSON-REQ-0015",
+      "source": "LESSON",
+      "sourceRef": "lesson:LSN-0015",
+      "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0015",
+      "description": "Verify every positive terminal status needs one shared promotion invariant",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "test:PromotionInvariantTests.test_a_terminal_status_requires_an_independent_verdict",
+        "test:PromotionInvariantTests.test_every_positive_status_rejects_a_red_green_keeper",
+        "test:PromotionInvariantTests.test_every_positive_status_rejects_every_red_quality_dimension"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "LESSON-REQ-0016",
+      "source": "LESSON",
+      "sourceRef": "lesson:LSN-0016",
+      "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0016",
+      "description": "Verify a mandatory set must be closed by policy, never chosen by the caller",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "test:MandatoryGatePolicyTests.test_a_cycle_missing_one_mandatory_gate_is_rejected",
+        "test:MandatoryGatePolicyTests.test_a_mandatory_gate_that_exited_nonzero_is_rejected",
+        "test:MandatoryGatePolicyTests.test_a_pass_measured_before_a_source_change_is_stale"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "LESSON-REQ-0017",
+      "source": "LESSON",
+      "sourceRef": "lesson:LSN-0017",
+      "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0017",
+      "description": "Verify a completeness denominator must come from a source the delivery does not own",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "test:ExpectedRequirementSetTests.test_a_downgraded_matrix_cannot_escape_the_comparison",
+        "test:ExpectedRequirementSetTests.test_an_unexpected_anchored_requirement_is_rejected",
+        "test:ExpectedRequirementSetTests.test_the_checklist_is_reparsed_rather_than_trusted",
+        "test:ExpectedRequirementSetTests.test_the_expected_set_is_derived_from_the_canonical_sources"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "LESSON-REQ-0018",
+      "source": "LESSON",
+      "sourceRef": "lesson:LSN-0018",
+      "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0018",
+      "description": "Verify a structured reference must be resolved, not merely well typed",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "test:LessonResolutionTests.test_a_test_control_must_exist_in_the_suite",
+        "test:LessonResolutionTests.test_an_invariant_control_must_be_defined_in_the_tooling",
+        "test:LessonResolutionTests.test_lesson_evidence_must_resolve"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "LESSON-REQ-0019",
+      "source": "LESSON",
+      "sourceRef": "lesson:LSN-0019",
+      "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0019",
+      "description": "Verify a derived artifact must carry a fingerprint of the inputs that produced it",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "test:PreflightFreshnessTests.test_a_changed_fingerprint_makes_the_preflight_stale",
+        "test:PreflightFreshnessTests.test_a_dropped_lesson_makes_the_preflight_stale",
+        "test:PreflightFreshnessTests.test_a_preflight_from_another_gate_is_refused"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "LESSON-REQ-0020",
+      "source": "LESSON",
+      "sourceRef": "lesson:LSN-0020",
+      "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0020",
+      "description": "Verify evidence produced from a dirty tree needs immutable input identity",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "test:CommandInputBindingTests.test_a_digest_that_omits_an_input_is_rejected",
+        "test:CommandInputBindingTests.test_the_recorder_binds_inputs_automatically"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "LESSON-REQ-0021",
+      "source": "LESSON",
+      "sourceRef": "lesson:LSN-0021",
+      "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0021",
+      "description": "Verify sealed history needs an anchor outside the content it describes",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "test:IntegrityAnchorTests.test_a_broken_link_between_anchors_is_detected",
+        "test:IntegrityAnchorTests.test_a_recomputed_anchor_hash_must_match_its_fields",
+        "test:IntegrityAnchorTests.test_a_sealed_checkpoint_without_an_anchor_is_detected",
+        "test:IntegrityAnchorTests.test_an_unexpected_tree_is_detected"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "LESSON-REQ-0022",
+      "source": "LESSON",
+      "sourceRef": "lesson:LSN-0022",
+      "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0022",
+      "description": "Verify an authoritative count must be derived once, never maintained by hand twice",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "test:DerivedCountTests.test_a_forged_count_is_rejected",
+        "test:DerivedCountTests.test_a_markdown_claim_that_contradicts_the_derivation_is_rejected",
+        "test:SourceCardinalityPolicyTests",
+        "test:SourceCardinalityPolicyTests.test_no_comment_or_docstring_states_a_derived_count_claim",
+        "test:SourceCardinalityPolicyTests.test_no_comment_or_docstring_states_the_cardinality_of_a_derived_set"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "LESSON-REQ-0023",
+      "source": "LESSON",
+      "sourceRef": "lesson:LSN-0023",
+      "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0023",
+      "description": "Verify a lesson must cite a source that actually records the finding it claims",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "test:LessonProvenanceTests.test_a_finding_absent_from_the_cited_checkpoint_is_rejected",
+        "test:LessonProvenanceTests.test_a_nonexistent_checkpoint_is_rejected"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "LESSON-REQ-0024",
+      "source": "LESSON",
+      "sourceRef": "lesson:LSN-0024",
+      "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0024",
+      "description": "Verify a control is finished only when its positive path has been executed, not only its refusals",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "test:PositivePromotionTests.test_the_milestone_verdict_is_derived_as_passed",
+        "test:PositivePromotionTests.test_the_subject_is_not_rewritten_by_its_own_audit",
+        "test:SimulationExecutesProductionControlsTests.test_every_simulated_mirror_is_recorded_as_executed",
+        "test:SimulationExecutesProductionControlsTests.test_the_sealed_artifact_is_the_tools_own_output"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "LESSON-REQ-0025",
+      "source": "LESSON",
+      "sourceRef": "lesson:LSN-0025",
+      "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0025",
+      "description": "Verify a generic guardrail derives repository state instead of naming today's checkpoint",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "test:IntegrityAnchorTests.test_the_pending_exclusion_is_the_newest_sealed_checkpoint",
+        "test:SuccessorDurabilityTests.test_the_pending_exclusion_moves_with_the_chain"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "LESSON-REQ-0026",
+      "source": "LESSON",
+      "sourceRef": "lesson:LSN-0026",
+      "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0026",
+      "description": "Verify an adversarial battery without a null-mutation control proves nothing",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "test:InternalAssuranceTests.test_a_failed_null_mutation_control_cannot_produce_a_pass",
+        "test:InternalAssuranceTests.test_a_report_without_a_null_mutation_control_is_rejected"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "LESSON-REQ-0027",
+      "source": "LESSON",
+      "sourceRef": "lesson:LSN-0027",
+      "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0027",
+      "description": "Verify a lesson's prose may record a residual limit but may never contradict its status",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "test:MemoryPolicyDocumentTests.test_a_guarded_lesson_may_not_describe_itself_as_unguarded",
+        "test:MemoryPolicyDocumentTests.test_the_repository_memory_has_no_status_contradiction"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "LESSON-REQ-0028",
+      "source": "LESSON",
+      "sourceRef": "lesson:LSN-0028",
+      "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0028",
+      "description": "Verify a configuration key that no code reads is a defect, not documentation",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "test:MemoryPolicyDocumentTests.test_a_setting_no_code_reads_cannot_be_declared",
+        "test:MemoryPolicyDocumentTests.test_the_declared_policy_validates_against_its_schema",
+        "test:test_every_declared_key_is_read_somewhere",
+        "test:test_test_settings_ignore_the_ambient_environment"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "LESSON-REQ-0029",
+      "source": "LESSON",
+      "sourceRef": "lesson:LSN-0029",
+      "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0029",
+      "description": "Verify a required protocol transition must never turn a mandatory gate red",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "test:GateTransitionSimulationTests.test_its_mirror_audit_passes_with_the_empty_dimensions_inapplicable",
+        "test:GateTransitionSimulationTests.test_the_first_checkpoint_of_the_next_gate_reaches_review_readiness",
+        "test:SuccessorDurabilityTests.test_a_missing_anchor_is_still_detected_after_the_chain_advances",
+        "test:SuccessorDurabilityTests.test_every_state_of_the_chain_verifies"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "LESSON-REQ-0030",
+      "source": "LESSON",
+      "sourceRef": "lesson:LSN-0031",
+      "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0030",
+      "description": "Verify an empty applicable set is not a missing required set, and a control must tell them apart",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "test:MirrorApplicabilitySemanticsTests.test_a_missing_required_set_fails_rather_than_being_inapplicable",
+        "test:MirrorApplicabilitySemanticsTests.test_an_empty_applicable_set_is_not_applicable_and_the_mirror_passes",
+        "test:MirrorApplicabilityValidationTests.test_a_registry_bound_dimension_cannot_be_declared_inapplicable",
+        "test:SimulationExecutesProductionControlsTests.test_every_simulated_mirror_is_recorded_as_executed",
+        "test:SimulationExecutesProductionControlsTests.test_the_sealed_artifact_is_the_tools_own_output"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "LESSON-REQ-0031",
+      "source": "LESSON",
+      "sourceRef": "lesson:LSN-0032",
+      "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0031",
+      "description": "Verify a control written while one Gate was the only Gate stops being a control when the next one starts",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "test:test_assurance_scope_covers_the_runtime_source",
+        "test:test_declared_suites_are_discovered",
+        "test:test_expected_set_names_the_gate_specification",
+        "test:test_no_future_gate_capability_is_implemented",
+        "test:test_the_scope_control_detects_an_implementation",
+        "test:test_the_scope_control_ignores_a_gate_that_has_already_run"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "LESSON-REQ-0032",
+      "source": "LESSON",
+      "sourceRef": "lesson:LSN-0033",
+      "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0032",
+      "description": "Verify a value bound in middleware is absent in the handlers that run outside it",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "test:test_a_missing_route_uses_the_error_contract",
+        "test:test_internal_error_leaks_nothing",
+        "test:test_internal_error_still_carries_a_correlation_identifier"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "LESSON-REQ-0033",
+      "source": "LESSON",
+      "sourceRef": "lesson:LSN-0034",
+      "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0033",
+      "description": "Verify re-deriving what the framework already computed diverges from the framework",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "test:test_metrics_endpoint_exposes_request_metrics",
+        "test:test_metrics_label_routes_by_template_not_by_url",
+        "test:test_the_api_instruments_reach_prometheus"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "LESSON-REQ-0034",
+      "source": "LESSON",
+      "sourceRef": "lesson:LSN-0035",
+      "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0034",
+      "description": "Verify captured subprocess output decoded or re-emitted with the platform codepage crashes the tool, not the work",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "test:test_every_tool_that_re_emits_captured_output_configures_its_own_stream",
+        "test:test_no_capture_relies_on_the_platform_codepage",
+        "test:test_the_rule_detects_a_capture_that_would_fail"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "LESSON-REQ-0035",
+      "source": "LESSON",
+      "sourceRef": "lesson:LSN-0036",
+      "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0035",
+      "description": "Verify a gate that runs inside an image measures the image, not the source",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "test:test_every_image_gate_builds_before_it_measures",
+        "test:test_the_image_gate_rule_detects_a_gate_that_would_skip_the_build"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "LESSON-REQ-0036",
+      "source": "LESSON",
+      "sourceRef": "lesson:LSN-0037",
+      "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0036",
+      "description": "Verify a shared control that names an identifier the repository derives stops being a control when that identifier moves",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "test:test_no_control_names_a_migration_revision_literally",
+        "test:test_no_shared_control_is_bound_to_a_gate_literal",
+        "test:test_the_gate_literal_rule_accepts_a_derived_gate_and_a_fixture_root",
+        "test:test_the_gate_literal_rule_detects_a_bound_control",
+        "test:test_the_head_revision_has_one_derivation",
+        "test:test_the_revision_rule_detects_a_named_head"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "LESSON-REQ-0037",
+      "source": "LESSON",
+      "sourceRef": "lesson:LSN-0038",
+      "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0037",
+      "description": "Verify two representations of one concept in one module disagree, and the safer one loses",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "test:test_a_documented_placeholder_is_not_redacted",
+        "test:test_both_redactors_agree_on_every_value_the_example_file_carries",
+        "test:test_no_module_writes_its_own_credential_name_rule",
+        "test:test_the_rule_detects_a_second_opinion",
+        "test:test_the_two_questions_stay_different"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "LESSON-REQ-0038",
+      "source": "LESSON",
+      "sourceRef": "lesson:LSN-0039",
+      "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0038",
+      "description": "Verify a test that writes to the operational database leaves production data behind",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "test:test_the_operational_catalog_holds_only_providers_the_policy_declares"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "LESSON-REQ-0039",
+      "source": "LESSON",
+      "sourceRef": "lesson:LSN-0040",
+      "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0039",
+      "description": "Verify a control that judges sealed history only runs once a successor anchors it",
+      "mandatory": true,
+      "implementationStatus": "COMPLETE",
+      "finalStatus": "COMPLETE",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "test:test_an_ignored_input_is_bound_by_content_rather_than_by_presence",
+        "test:test_an_ignored_input_without_a_bound_digest_is_still_refused",
+        "test:test_an_input_the_repository_carries_is_still_required_to_exist",
+        "test:test_every_sealed_checkpoint_validates_from_its_own_tag",
+        "test:test_the_recorder_never_declares_an_ignored_path_as_an_input"
+      ],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    }
+  ]
+}

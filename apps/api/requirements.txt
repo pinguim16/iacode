@@ -20,10 +20,14 @@ redis==8.1.0
 minio==7.2.20
 temporalio==1.33.0
 prometheus-client==0.26.0
+# The gateway's HTTP client. It was already resolved into the lock as a transitive dependency of
+# the FastAPI test client; from Gate 1 it is a production dependency, because the Model Gateway
+# calls providers with it. Listing it here is the difference between a dependency we chose and one
+# we inherited.
+httpx==0.28.1
 
 # Test and lint toolchain. It ships in the image because the API test suite runs inside a
 # container against the real Compose services, which is the only place those tests are honest.
 pytest==9.1.1
 pytest-asyncio==1.4.0
-httpx==0.28.1
 ruff==0.16.8

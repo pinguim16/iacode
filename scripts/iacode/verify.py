@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""One command that verifies the whole Gate 0 Foundation.
+"""One command that verifies everything the repository has delivered.
 
 `docs/GATE-0-CHECKLIST.md` row 13.1. It runs on Windows and on POSIX, because it is Python driving
 Docker rather than a shell script: the primary development environment here is Windows, and an
@@ -11,18 +11,24 @@ operational path that only works under bash makes the primary environment the un
 
 Stages, in order, because each one depends on the last being true:
 
-    gates        the mandatory gate set from `.iacode/policies/quality-gates.json`
-    stack        the stack is up and every service is healthy
-    integration  the backend suite against the real services
-    infra        our configuration of each service, exercised live
-    smoke        the API, the web shell, Prometheus, Grafana and a real Temporal workflow
-    backup       a backup, a restore into a disposable target, and a verified read-back
-    scan         known vulnerabilities in the pinned dependency locks
-    scenarios    restart with data intact, dependency failure and recovery
-    fresh        a complete installation from no volumes at all
+    gates          the mandatory gate set from `.iacode/policies/quality-gates.json`
+    stack          the stack is up and every service is healthy
+    integration    the backend suite against the real services
+    infra          our configuration of each service, exercised live
+    smoke          the API, the web shell, Prometheus, Grafana and a real Temporal workflow
+    gateway-smoke  the Model Gateway against the real configured provider
+    backup         a backup, a restore into a disposable target, and a verified read-back
+    scan           known vulnerabilities in the pinned dependency locks
+    scenarios      restart with data intact, dependency failure and recovery
+    fresh          a complete installation from no volumes at all
 
-``--fast`` stops before the last two, which are the ones that restart the stack and delete volumes.
-It is for the edit-run loop; the Gate is verified by the full run.
+``--fast`` is the targeted mode: it stops before the last two, which are the ones that restart the
+stack and delete volumes, so the edit-run loop does not pay for a full reinstallation. The Gate is
+verified by the full run.
+
+The stage list is not a list of Gates. Gate 1 added one stage and changed none of the others,
+because the Foundation still has to work for the gateway to mean anything — and the report names the
+Gate the repository is delivering rather than the one this file was written during.
 """
 
 from __future__ import annotations
@@ -38,7 +44,11 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from compose import REPOSITORY_ROOT, log, main_guard
-from policies_bridge import mandatory_gate_commands
+from policies_bridge import (
+    delivered_gate,
+    mandatory_gate_commands,
+    refresh_declared_hashes,
+)
 
 
 @dataclass
@@ -93,6 +103,12 @@ def build_stages(fast: bool) -> list[Stage]:
                     "-t", str(REPOSITORY_ROOT / "infra" / "tests")]),
         python_stage("smoke", "the API, the web shell, the observability stack and a workflow",
                      "scripts/iacode/smoke.py"),
+        # The live provider check. It exits BLOCKED, not FAIL, when no credential is configured
+        # here: "not set up on this machine" and "broken" are different states, and reporting the
+        # first as the second sends somebody looking for a defect that does not exist.
+        python_stage("gateway-smoke", "the Model Gateway against the real configured provider",
+                     "scripts/iacode/gateway_smoke.py", "--report",
+                     str(REPOSITORY_ROOT / "var" / "gateway-smoke.json")),
         python_stage("backup", "backup, restore into a disposable target, verified read-back",
                      "scripts/iacode/backup_restore_check.py"),
         python_stage("dependency-scan", "known vulnerabilities in the pinned dependencies",
@@ -149,8 +165,16 @@ def main() -> int:
             print(f"{stage.name:22} {stage.description}{marker}")
         return 0
 
-    log(f"verifying GATE 0 — FOUNDATION: {len(stages)} stage(s)"
-        + (", fast mode" if arguments.fast else ""))
+    gate = delivered_gate(REPOSITORY_ROOT)
+    # The mandatory set includes `checkpointValidation`, and the checkpoint's append-only evidence
+    # has grown since the author last bound its hashes — every recorded command since then is in
+    # it. Re-derive the declared hashes through the ledger's own function, which never adds or
+    # removes a declaration, so an undeclared change still fails. The Green Keeper has always done
+    # this and this command did not, which made the same gate green under one runner and red under
+    # the other.
+    refresh_declared_hashes(REPOSITORY_ROOT)
+    log(f"verifying {gate}: {len(stages)} stage(s)"
+        + (", targeted mode" if arguments.fast else ""))
     started = time.monotonic()
     executed: list[Stage] = []
     for stage in stages:
@@ -167,7 +191,7 @@ def main() -> int:
     if arguments.report:
         arguments.report.parent.mkdir(parents=True, exist_ok=True)
         arguments.report.write_text(json.dumps({
-            "gate": "GATE-0",
+            "gate": gate,
             "result": result,
             "fast": arguments.fast,
             "durationSeconds": elapsed,

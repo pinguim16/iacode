@@ -1,0 +1,33 @@
+{
+  "schemaVersion": "1.0.0",
+  "policy": "Route aliases and the unknown-capability rule. An alias is a name for a routing intent, and the models behind it are a deployment decision recorded here. Every alias ships with an empty candidate list on purpose: assigning a model to 'coding' or 'deep' would be this project asserting that some model is better at something, and it has measured nothing. The Evaluation Lab of a later Gate is what earns the right to fill these lists. Until then an alias with no candidate resolves to IACODE_GATEWAY_DEFAULT_MODEL, and a request with neither fails with a clear error rather than with an arbitrary choice.",
+  "allowUnknownCapability": [],
+  "unknownCapabilityNote": "Empty means refuse. A candidate whose support for a required capability the catalog records as UNKNOWN is not selected, because sending the request anyway spends somebody's quota to discover what the catalog already said it did not know. A capability may be allowed through by naming it here, which is a recorded decision rather than a default.",
+  "routes": [
+    {
+      "alias": "default",
+      "description": "No particular intent. Resolves to the configured default model.",
+      "candidates": []
+    },
+    {
+      "alias": "fast",
+      "description": "Latency matters more than depth. Unconfigured: no latency has been measured.",
+      "candidates": []
+    },
+    {
+      "alias": "deep",
+      "description": "Depth matters more than latency. Unconfigured: no depth has been measured.",
+      "candidates": []
+    },
+    {
+      "alias": "coding",
+      "description": "Code generation and modification. Unconfigured: no coding benchmark exists yet.",
+      "candidates": []
+    },
+    {
+      "alias": "review",
+      "description": "Critique and review. Unconfigured: no review benchmark exists yet.",
+      "candidates": []
+    }
+  ]
+}

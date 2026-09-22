@@ -1,0 +1,32 @@
+{
+  "schemaVersion": "1.0.0",
+  "checkpoint": "GATE-1-CP-0001",
+  "generatedAt": "2026-09-22T09:15:29Z",
+  "counts": {
+    "TESTS": {
+      "numerator": 893,
+      "denominator": 893,
+      "source": "discovery over every counted suite of .iacode/policies/test-suites.json, cross-checked with TESTS.json and deduplicated by physical execution"
+    },
+    "REQUIREMENTS": {
+      "numerator": 161,
+      "denominator": 161,
+      "source": "REQUIREMENTS-MATRIX.json evaluated against the derived expected set"
+    },
+    "ATTACKS": {
+      "numerator": 18,
+      "denominator": 18,
+      "source": "M1-INTERNAL-RED-TEAM.json"
+    },
+    "LESSONS": {
+      "numerator": 38,
+      "denominator": 40,
+      "source": ".iacode/memory/lessons.jsonl"
+    },
+    "GUARDRAILS": {
+      "numerator": 42,
+      "denominator": 42,
+      "source": ".iacode/memory/guardrails/registry.json measured for effectiveness"
+    }
+  }
+}

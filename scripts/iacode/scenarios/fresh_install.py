@@ -48,6 +48,25 @@ def volume_names() -> list[str]:
     return [line.strip() for line in result.stdout.splitlines() if line.strip()]
 
 
+def declared_head_revision() -> str:
+    """The head the migration directory declares, read rather than named.
+
+    A literal here described the newest migration on the day it was written, so the Gate that
+    added the next one failed a scenario about something else. The derivation lives once, in
+    `apps/api/migrations/head.py`, and is loaded by path because the scenario runs on the host,
+    where the application package is not installed.
+    """
+    import importlib.util
+
+    module_path = REPOSITORY_ROOT / "apps" / "api" / "migrations" / "head.py"
+    spec = importlib.util.spec_from_file_location("iacode_migrations_head", module_path)
+    if spec is None or spec.loader is None:
+        raise StackError(f"the migration head derivation could not be loaded from {module_path}")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module.head_revision(module_path.parent / "versions")
+
+
 def run_smoke() -> tuple[bool, str]:
     completed = subprocess.run(
         [sys.executable, str(REPOSITORY_ROOT / "scripts" / "iacode" / "smoke.py"), "--json"],
@@ -121,8 +140,9 @@ def main() -> int:
         f'PGPASSWORD="$POSTGRES_PASSWORD" psql --username="{user}" --dbname="{database}" '
         f'--tuples-only --no-align -c "SELECT version_num FROM alembic_version"',
         merge_stderr=False)
-    record("migration_recorded", result.stdout.strip() == "0001_foundation",
-           f"alembic_version={result.stdout.strip()!r}")
+    expected = declared_head_revision()
+    record("migration_recorded", result.stdout.strip() == expected,
+           f"alembic_version={result.stdout.strip()!r}, head={expected!r}")
 
     ok, detail = run_smoke()
     record("smoke", ok, detail)

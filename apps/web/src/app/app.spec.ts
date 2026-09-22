@@ -1,44 +1,27 @@
 import { TestBed } from '@angular/core/testing';
+import { Router, provideRouter } from '@angular/router';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import { API_CONFIG } from './api-config';
 import { App } from './app';
-
-const HEALTH = {
-  service: 'iacode-api',
-  status: 'UP',
-  version: '0.1.0',
-  commit: 'abc1234',
-  timestamp: '2026-01-01T00:00:00.000Z',
-};
-
-const READINESS = {
-  service: 'iacode-api',
-  status: 'READY',
-  version: '0.1.0',
-  commit: 'abc1234',
-  timestamp: '2026-01-01T00:00:00.000Z',
-  dependencies: [
-    { name: 'postgres', status: 'UP', mandatory: true, latencyMs: 1.2, detail: null },
-    { name: 'redis', status: 'UP', mandatory: true, latencyMs: 0.8, detail: null },
-    { name: 'minio', status: 'UP', mandatory: true, latencyMs: 2.1, detail: null },
-    { name: 'temporal', status: 'UP', mandatory: true, latencyMs: 4.5, detail: null },
-  ],
-};
-
-const VERSION = {
-  service: 'iacode-api',
-  version: '0.1.0',
-  commit: 'abc1234',
-  buildTimestamp: '2026-01-01T00:00:00Z',
-  pythonVersion: '3.13.15',
-  environment: 'local',
-};
+import { routes } from './app.routes';
 
 function stubBackend(): void {
   vi.spyOn(globalThis, 'fetch').mockImplementation(async (input) => {
     const url = String(input);
-    const body = url.endsWith('/health') ? HEALTH : url.endsWith('/ready') ? READINESS : VERSION;
+    const body = url.includes('/gateway/health')
+      ? {
+          status: 'DEGRADED',
+          contractVersion: '1.0.0',
+          providers: [],
+          circuits: {},
+          catalogSize: 0,
+          defaultModel: null,
+          routes: [],
+        }
+      : url.includes('/gateway/models')
+        ? { total: 0, models: [] }
+        : { service: 'iacode-api', status: 'UP', version: '0.1.0', commit: 'abc', timestamp: 'x' };
     return new Response(JSON.stringify(body), {
       status: 200,
       headers: { 'Content-Type': 'application/json' },
@@ -46,15 +29,24 @@ function stubBackend(): void {
   });
 }
 
-async function render() {
+/**
+ * Render the shell and navigate it.
+ *
+ * `RouterTestingHarness` mounts the *routed* component as the root, which is the wrong subject
+ * here: the shell is what carries the identity and the navigation, and a harness that replaced it
+ * would leave both untested.
+ */
+async function renderShell(path: string) {
   TestBed.configureTestingModule({
     imports: [App],
-    providers: [{ provide: API_CONFIG, useValue: { baseUrl: 'http://api.test' } }],
+    providers: [
+      provideRouter(routes),
+      { provide: API_CONFIG, useValue: { baseUrl: 'http://api.test' } },
+    ],
   });
   const fixture = TestBed.createComponent(App);
-  // detectChanges runs ngOnInit, which starts the refresh; whenStable waits for it, because the
-  // service registers the request as a pending task rather than leaving a floating promise.
   fixture.detectChanges();
+  await TestBed.inject(Router).navigateByUrl(path);
   await fixture.whenStable();
   fixture.detectChanges();
   return fixture;
@@ -65,47 +57,40 @@ afterEach(() => {
   TestBed.resetTestingModule();
 });
 
-describe('App', () => {
-  it('identifies the product and the Gate', async () => {
+describe('App shell', () => {
+  it('identifies the product and offers both pages', async () => {
     stubBackend();
-    const fixture = await render();
-    const element = fixture.nativeElement as HTMLElement;
+    const element = (await renderShell('/')).nativeElement as HTMLElement;
 
     expect(element.querySelector('h1')?.textContent).toContain('IACode');
-    expect(element.querySelector('header p')?.textContent).toContain('Foundation');
-  });
-
-  it('renders liveness, readiness and version from the backend', async () => {
-    stubBackend();
-    const fixture = await render();
-    const element = fixture.nativeElement as HTMLElement;
-
-    expect(element.querySelector('[data-testid="liveness"]')?.textContent).toContain('UP');
-    expect(element.querySelector('[data-testid="readiness"]')?.textContent).toContain('READY');
-    expect(element.querySelector('[data-testid="version"]')?.textContent).toContain('3.13.15');
-  });
-
-  it('lists every dependency the readiness probe reported', async () => {
-    stubBackend();
-    const fixture = await render();
-    const element = fixture.nativeElement as HTMLElement;
-
-    const rows = element.querySelectorAll('[data-testid="readiness"] tbody tr');
-    expect(rows).toHaveLength(4);
-    const names = Array.from(rows).map((row) => row.querySelector('td')?.textContent?.trim());
-    expect(names).toEqual(['postgres', 'redis', 'minio', 'temporal']);
-  });
-
-  it('renders an explicit failure panel when the backend is unreachable', async () => {
-    vi.spyOn(globalThis, 'fetch').mockRejectedValue(new Error('connection refused'));
-
-    const fixture = await render();
-    const element = fixture.nativeElement as HTMLElement;
-
-    // The shell still renders. An unreachable API must be a visible state, not a blank page.
-    expect(element.querySelector('h1')?.textContent).toContain('IACode');
-    expect(element.querySelector('[data-testid="error"]')?.textContent).toContain(
-      'connection refused',
+    const links = Array.from(element.querySelectorAll('nav a')).map((item) =>
+      item.textContent?.trim(),
     );
+    expect(links).toEqual(['Foundation', 'Model Gateway']);
+  });
+
+  it('renders the Foundation page at the root', async () => {
+    stubBackend();
+    const element = (await renderShell('/')).nativeElement as HTMLElement;
+
+    expect(element.querySelector('[data-testid="liveness"]')).not.toBeNull();
+  });
+
+  it('routes to the Model Gateway page', async () => {
+    stubBackend();
+    const element = (await renderShell('/gateway')).nativeElement as HTMLElement;
+
+    expect(element.querySelector('[data-testid="providers"]')).not.toBeNull();
+    expect(element.querySelector('[data-testid="playground"]')).not.toBeNull();
+  });
+
+  it('adds no conversation capability', async () => {
+    stubBackend();
+    const text = ((await renderShell('/gateway')).nativeElement as HTMLElement).textContent ?? '';
+
+    // Gate 1 is a gateway, not a chat application. No history, no persona, no tool execution.
+    for (const absent of ['Conversation', 'History', 'Persona', 'Agent', 'Run tool']) {
+      expect(text).not.toContain(absent);
+    }
   });
 });

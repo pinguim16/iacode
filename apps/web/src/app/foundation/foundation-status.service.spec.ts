@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
-import { API_CONFIG } from './api-config';
+import { API_CONFIG } from '../api-config';
 import { FoundationStatusService } from './foundation-status.service';
 
 const HEALTH = {

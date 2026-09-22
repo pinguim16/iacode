@@ -9,6 +9,8 @@ process that does not want one.
 from iacode_common.identifiers import uuid7, uuid7_timestamp_ms
 from iacode_common.redaction import (
     REDACTED,
+    carries_a_secret_value,
+    is_placeholder,
     is_sensitive_key,
     redact_mapping,
     redact_text,
@@ -18,6 +20,8 @@ from iacode_common.redaction import (
 
 __all__ = [
     "REDACTED",
+    "carries_a_secret_value",
+    "is_placeholder",
     "is_sensitive_key",
     "redact_mapping",
     "redact_text",

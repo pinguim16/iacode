@@ -38,6 +38,13 @@ ignore = [
 # in a fixture, and writes literal SQL against a database it created for itself.
 "apps/api/tests/**" = ["S105", "S106", "S104", "S608"]
 
+# The gateway wire contract is camelCase from end to end: these names are what a browser and a
+# future agent runtime read off the JSON, and there are thirty-odd of them. Listing each one in
+# `ignore-names` would turn a property of the module into a growing inventory nobody maintains, and
+# an alias for each would state the same name twice. The module is the wire format; the convention
+# does not apply to it.
+"packages/contracts/src/iacode_contracts/gateway.py" = ["N815"]
+
 # The application binds 0.0.0.0 *inside a container*, where the alternative is a service nothing can
 # reach. The published port is the security boundary, and the compose file binds that to 127.0.0.1;
 # `infra/tests/test_compose_definition.py` is the control that keeps it there.
@@ -61,6 +68,17 @@ ignore = [
 # The infrastructure suite shells out to Docker and reads the stack over HTTP for the same reasons.
 # `setUpClass` is unittest's own hook name: renaming it does not rename the hook, it removes it.
 "infra/tests/**" = ["N802", "S108", "S310", "S608"]
+
+
+[lint.flake8-bugbear]
+# FastAPI expresses a parameter's source as its default value: `Query(...)`, `Depends(...)`,
+# `Body(...)`. B008 exists because a mutable default is evaluated once and shared, and these are
+# neither mutable nor shared — the framework reads them as metadata before the function is ever
+# called. Rewriting them to satisfy the rule would mean abandoning the framework's own idiom.
+extend-immutable-calls = [
+  "fastapi.Query", "fastapi.Path", "fastapi.Header", "fastapi.Cookie", "fastapi.Body",
+  "fastapi.Form", "fastapi.File", "fastapi.Depends", "fastapi.Security",
+]
 
 [lint.pep8-naming]
 # The response contracts are a wire format. `latencyMs`, `buildTimestamp` and `correlationId` are

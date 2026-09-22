@@ -1285,6 +1285,988 @@
           "mandatory": true
         }
       ]
+    },
+    {
+      "gate": "GATE-1",
+      "specification": "docs/GATE-1-CHECKLIST.md",
+      "requirements": [
+        {
+          "key": "1.1",
+          "section": "1. Gate specification and requirement derivation",
+          "description": "A canonical, machine-readable requirement specification exists for this Gate and the registry mirrors it row for row.",
+          "artifact": "`docs/GATE-1-CHECKLIST.md`, `.iacode/policies/canonical-requirements.json`",
+          "evidence": "`policies.canonical_requirements` parses and mirrors the document; `Gate1CanonicalSpecificationTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "1.2",
+          "section": "1. Gate specification and requirement derivation",
+          "description": "The closed mandatory gate registry carries every executable gate this Gate introduces.",
+          "artifact": "`.iacode/policies/quality-gates.json`",
+          "evidence": "A Green Keeper cycle measured against the registry's mandatory set.",
+          "mandatory": true
+        },
+        {
+          "key": "1.3",
+          "section": "1. Gate specification and requirement derivation",
+          "description": "Every test suite this Gate introduces is declared canonically, is counted by the count derivation and is resolvable as evidence.",
+          "artifact": "`.iacode/policies/test-suites.json`",
+          "evidence": "`COUNTS.json` `TESTS`; `test_gateway_suite_is_declared_and_discovered`.",
+          "mandatory": true
+        },
+        {
+          "key": "1.4",
+          "section": "1. Gate specification and requirement derivation",
+          "description": "The internal Red Team battery of this Gate is executable, scoped to the Model Gateway, and records a null-mutation control.",
+          "artifact": "`scripts/development-ledger/gate1_red_team.py`",
+          "evidence": "`M1-INTERNAL-RED-TEAM.json` with a `VALID` `baselineControl`.",
+          "mandatory": true
+        },
+        {
+          "key": "1.5",
+          "section": "1. Gate specification and requirement derivation",
+          "description": "The reservation of the gateway directory is consumed by the Gate that owns it, and the scope registry keeps constraining every path still owned by a later Gate.",
+          "artifact": "`.iacode/policies/gate-scope.json`, `services/model-gateway/README.md`",
+          "evidence": "`test_model_gateway_reservation_is_consumed_by_its_owner`.",
+          "mandatory": true
+        },
+        {
+          "key": "1.6",
+          "section": "1. Gate specification and requirement derivation",
+          "description": "One documented command verifies this Gate, adds the stages it introduces and keeps a targeted mode that does not restart the stack.",
+          "artifact": "`scripts/iacode/verify.py`",
+          "evidence": "Verification run, targeted and full.",
+          "mandatory": true
+        },
+        {
+          "key": "2.1",
+          "section": "2. Gateway boundary and architecture",
+          "description": "The Model Gateway lives in the directory the Foundation reserved for it and is consumed in process, and the boundary decision is recorded rather than implied.",
+          "artifact": "`services/model-gateway/`, `docs/adr/ADR-0016-model-gateway-boundary.md`",
+          "evidence": "`test_gateway_package_is_importable`; `ADR-0016`.",
+          "mandatory": true
+        },
+        {
+          "key": "2.2",
+          "section": "2. Gateway boundary and architecture",
+          "description": "No consumer outside the adapter layer names a provider-specific endpoint, payload field or product name.",
+          "artifact": "`services/model-gateway/src/`, `apps/api/src/`, `apps/web/src/`",
+          "evidence": "`test_no_provider_specific_name_escapes_the_adapter_layer`.",
+          "mandatory": true
+        },
+        {
+          "key": "2.3",
+          "section": "2. Gateway boundary and architecture",
+          "description": "The gateway declares its persistence and clock ports and imports no application module, so the dependency points inward.",
+          "artifact": "`services/model-gateway/src/iacode_model_gateway/ports.py`",
+          "evidence": "`test_gateway_imports_no_application_module`.",
+          "mandatory": true
+        },
+        {
+          "key": "2.4",
+          "section": "2. Gateway boundary and architecture",
+          "description": "No later-Gate capability — tool execution, agent lifecycle, sandboxing, retrieval, experience storage or training — is implemented, simulated or faked here.",
+          "artifact": "the whole tree",
+          "evidence": "`test_no_future_gate_capability_is_implemented`.",
+          "mandatory": true
+        },
+        {
+          "key": "2.5",
+          "section": "2. Gateway boundary and architecture",
+          "description": "The gateway directory stops declaring itself reserved and describes what this Gate delivered.",
+          "artifact": "`services/model-gateway/README.md`",
+          "evidence": "File content; `test_gateway_readme_describes_the_delivery`.",
+          "mandatory": true
+        },
+        {
+          "key": "3.1",
+          "section": "3. The gateway contracts",
+          "description": "A canonical request carries correlation, messages, routing intent, required capabilities, sampling, output limits, streaming intent, tools, structured output and metadata, and is validated when it is built.",
+          "artifact": "`services/model-gateway/src/iacode_model_gateway/contracts.py`",
+          "evidence": "`test_request_is_validated_when_it_is_built`.",
+          "mandatory": true
+        },
+        {
+          "key": "3.2",
+          "section": "3. The gateway contracts",
+          "description": "The message contract expresses the system, developer, user, assistant and tool roles independently of any provider's vocabulary.",
+          "artifact": "`services/model-gateway/src/iacode_model_gateway/contracts.py`",
+          "evidence": "`test_message_roles_are_provider_independent`.",
+          "mandatory": true
+        },
+        {
+          "key": "3.3",
+          "section": "3. The gateway contracts",
+          "description": "The canonical response normalizes content, tool calls, finish reason, usage, latency, provider, model, endpoint, route and fallback chain, and the raw provider payload is never the public contract.",
+          "artifact": "`services/model-gateway/src/iacode_model_gateway/contracts.py`",
+          "evidence": "`test_response_never_exposes_the_raw_provider_payload`.",
+          "mandatory": true
+        },
+        {
+          "key": "3.4",
+          "section": "3. The gateway contracts",
+          "description": "Tool definitions and tool calls are normalized into internal types with identifier, name and arguments, and the gateway executes no tool.",
+          "artifact": "`services/model-gateway/src/iacode_model_gateway/contracts.py`",
+          "evidence": "`test_gateway_normalises_a_tool_call_without_executing_it`.",
+          "mandatory": true
+        },
+        {
+          "key": "3.5",
+          "section": "3. The gateway contracts",
+          "description": "A tool call whose arguments are not valid JSON produces a normalized error instead of a partially parsed call.",
+          "artifact": "`services/model-gateway/src/iacode_model_gateway/protocols/`",
+          "evidence": "`test_invalid_tool_arguments_produce_a_normalised_error`.",
+          "mandatory": true
+        },
+        {
+          "key": "3.6",
+          "section": "3. The gateway contracts",
+          "description": "Structured output is requested only from a model whose capability is known, and a request that needs it is refused or routed elsewhere rather than sent hopefully.",
+          "artifact": "`services/model-gateway/src/iacode_model_gateway/routing/router.py`",
+          "evidence": "`test_structured_output_requires_a_capable_candidate`.",
+          "mandatory": true
+        },
+        {
+          "key": "3.7",
+          "section": "3. The gateway contracts",
+          "description": "The contract carries an explicit version, so a consumer can detect an incompatible change instead of discovering one.",
+          "artifact": "`services/model-gateway/src/iacode_model_gateway/contracts.py`",
+          "evidence": "`test_contract_version_is_declared`.",
+          "mandatory": true
+        },
+        {
+          "key": "4.1",
+          "section": "4. Provider abstraction and protocols",
+          "description": "A provider contract declares health, model discovery, generation and streaming, and is not shaped by any one provider.",
+          "artifact": "`services/model-gateway/src/iacode_model_gateway/providers/base.py`",
+          "evidence": "`test_provider_contract_is_not_coupled_to_one_provider`.",
+          "mandatory": true
+        },
+        {
+          "key": "4.2",
+          "section": "4. Provider abstraction and protocols",
+          "description": "An OpenAI-compatible Chat Completions adapter builds the request, parses the response, parses the stream and maps the error.",
+          "artifact": "`services/model-gateway/src/iacode_model_gateway/protocols/openai_chat.py`",
+          "evidence": "`OpenAiChatProtocolTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "4.3",
+          "section": "4. Provider abstraction and protocols",
+          "description": "An OpenAI-compatible Responses adapter builds the request, parses the response, parses the stream and maps the error.",
+          "artifact": "`services/model-gateway/src/iacode_model_gateway/protocols/openai_responses.py`",
+          "evidence": "`OpenAiResponsesProtocolTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "4.4",
+          "section": "4. Provider abstraction and protocols",
+          "description": "An Anthropic-compatible Messages adapter builds the request, parses the response, parses the stream and maps the error.",
+          "artifact": "`services/model-gateway/src/iacode_model_gateway/protocols/anthropic_messages.py`",
+          "evidence": "`AnthropicMessagesProtocolTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "4.5",
+          "section": "4. Provider abstraction and protocols",
+          "description": "The protocol is selected from the capabilities and endpoints the catalog records, the shape of the request and the provider configuration, never assumed from a default path.",
+          "artifact": "`services/model-gateway/src/iacode_model_gateway/protocols/selection.py`",
+          "evidence": "`test_endpoint_selection_reads_the_declared_endpoints`.",
+          "mandatory": true
+        },
+        {
+          "key": "4.6",
+          "section": "4. Provider abstraction and protocols",
+          "description": "A request that needs an endpoint the model does not declare is refused before it reaches the network.",
+          "artifact": "`services/model-gateway/src/iacode_model_gateway/protocols/selection.py`",
+          "evidence": "`test_unsupported_endpoint_is_refused_before_the_call`.",
+          "mandatory": true
+        },
+        {
+          "key": "4.7",
+          "section": "4. Provider abstraction and protocols",
+          "description": "No fictitious provider is registered in the runtime configuration; the deterministic double exists only inside the test fixtures.",
+          "artifact": "`.iacode/policies/providers.json`, `services/model-gateway/tests/fixtures/`",
+          "evidence": "`test_no_fake_provider_is_registered_at_runtime`.",
+          "mandatory": true
+        },
+        {
+          "key": "5.1",
+          "section": "5. Provider registry, configuration and secrets",
+          "description": "Provider configuration is versionable and carries no credential value: an identifier, an adapter, an enabled flag, a base URL reference, the name of the secret variable, the discovery endpoint and the protocols supported.",
+          "artifact": "`.iacode/policies/providers.json`",
+          "evidence": "`test_provider_configuration_carries_no_credential`.",
+          "mandatory": true
+        },
+        {
+          "key": "5.2",
+          "section": "5. Provider registry, configuration and secrets",
+          "description": "The provider registry persists operational metadata — adapter, enabled state, health, last check and catalog state — and never a credential.",
+          "artifact": "`apps/api/migrations/versions/`, `apps/api/src/iacode_api/db/models.py`",
+          "evidence": "`test_no_table_stores_a_credential`; `test_provider_registry_persists_operational_metadata`.",
+          "mandatory": true
+        },
+        {
+          "key": "5.3",
+          "section": "5. Provider registry, configuration and secrets",
+          "description": "A credential is resolved from the environment at call time and reaches no database row, response body, log record, metric label or catalog record.",
+          "artifact": "`services/model-gateway/src/iacode_model_gateway/config.py`",
+          "evidence": "`SecretContainmentTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "5.4",
+          "section": "5. Provider registry, configuration and secrets",
+          "description": "Every configuration key this Gate declares is read by the implementation.",
+          "artifact": "`apps/api/src/iacode_api/config.py`, `infra/compose/.env.example`",
+          "evidence": "`test_every_declared_key_is_read_somewhere`.",
+          "mandatory": true
+        },
+        {
+          "key": "5.5",
+          "section": "5. Provider registry, configuration and secrets",
+          "description": "A provider base URL is validated: HTTPS for a remote provider, plain HTTP only for a loopback address, and never user information embedded in the URL.",
+          "artifact": "`services/model-gateway/src/iacode_model_gateway/security/base_url.py`",
+          "evidence": "`BaseUrlSafetyTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "5.6",
+          "section": "5. Provider registry, configuration and secrets",
+          "description": "A provider address can never be supplied by an inference request; it comes from administrative configuration alone.",
+          "artifact": "`services/model-gateway/src/iacode_model_gateway/contracts.py`, `apps/api/src/iacode_api/routes/gateway.py`",
+          "evidence": "`test_request_cannot_supply_a_provider_address`.",
+          "mandatory": true
+        },
+        {
+          "key": "6.1",
+          "section": "6. Model catalog and synchronization",
+          "description": "The catalog is discovered from the provider API, and no list written by hand is treated as authoritative.",
+          "artifact": "`services/model-gateway/src/iacode_model_gateway/catalog/sync.py`",
+          "evidence": "`test_catalog_comes_from_the_provider_api`; live catalog run.",
+          "mandatory": true
+        },
+        {
+          "key": "6.2",
+          "section": "6. Model catalog and synchronization",
+          "description": "A normalized model record carries the provider model identifier, display name, family, context window, maximum output tokens, supported endpoints, streaming, vision, tools, structured output, reasoning levels, active state, raw metadata and the synchronization instant.",
+          "artifact": "`services/model-gateway/src/iacode_model_gateway/catalog/normalize.py`",
+          "evidence": "`test_normalised_model_carries_the_declared_fields`.",
+          "mandatory": true
+        },
+        {
+          "key": "6.3",
+          "section": "6. Model catalog and synchronization",
+          "description": "An absent capability stays unknown and is never normalized into a negative answer.",
+          "artifact": "`services/model-gateway/src/iacode_model_gateway/catalog/normalize.py`",
+          "evidence": "`test_unknown_capability_is_not_turned_into_false`.",
+          "mandatory": true
+        },
+        {
+          "key": "6.4",
+          "section": "6. Model catalog and synchronization",
+          "description": "Every capability records where it came from: provider metadata, manual configuration or observation, and never inference from a model's name.",
+          "artifact": "`services/model-gateway/src/iacode_model_gateway/catalog/normalize.py`",
+          "evidence": "`test_capability_provenance_is_recorded`; `test_capability_is_never_inferred_from_a_name`.",
+          "mandatory": true
+        },
+        {
+          "key": "6.5",
+          "section": "6. Model catalog and synchronization",
+          "description": "Synchronization is idempotent: running it twice over the same provider answer changes nothing the second time.",
+          "artifact": "`services/model-gateway/src/iacode_model_gateway/catalog/sync.py`",
+          "evidence": "`test_sync_is_idempotent`.",
+          "mandatory": true
+        },
+        {
+          "key": "6.6",
+          "section": "6. Model catalog and synchronization",
+          "description": "A model that disappears from the provider answer is deactivated rather than destroyed, so the calls recorded against it stay readable.",
+          "artifact": "`services/model-gateway/src/iacode_model_gateway/catalog/sync.py`",
+          "evidence": "`test_missing_model_is_deactivated_not_deleted`.",
+          "mandatory": true
+        },
+        {
+          "key": "6.7",
+          "section": "6. Model catalog and synchronization",
+          "description": "A partial, invalid or failed synchronization leaves the previous catalog usable: the answer is validated and normalized before anything is committed.",
+          "artifact": "`services/model-gateway/src/iacode_model_gateway/catalog/sync.py`",
+          "evidence": "`test_failed_sync_preserves_the_previous_catalog`.",
+          "mandatory": true
+        },
+        {
+          "key": "6.8",
+          "section": "6. Model catalog and synchronization",
+          "description": "Model identity is the provider together with the provider's own model identifier, so two providers exposing the same name do not collide.",
+          "artifact": "`apps/api/src/iacode_api/db/models.py`, `services/model-gateway/src/iacode_model_gateway/contracts.py`",
+          "evidence": "`test_same_model_id_in_two_providers_does_not_collide`.",
+          "mandatory": true
+        },
+        {
+          "key": "6.9",
+          "section": "6. Model catalog and synchronization",
+          "description": "Routing reads normalized fields; the raw provider metadata is kept for diagnosis and is never the thing a decision depends on.",
+          "artifact": "`services/model-gateway/src/iacode_model_gateway/routing/router.py`",
+          "evidence": "`test_routing_reads_normalised_fields_only`.",
+          "mandatory": true
+        },
+        {
+          "key": "7.1",
+          "section": "7. Routing",
+          "description": "The router is deterministic and applies a documented order: validate, explicit override, candidates, capability filter, context filter, route policy, configured priority, execution, fallback.",
+          "artifact": "`services/model-gateway/src/iacode_model_gateway/routing/router.py`",
+          "evidence": "`test_router_is_deterministic`.",
+          "mandatory": true
+        },
+        {
+          "key": "7.2",
+          "section": "7. Routing",
+          "description": "An explicit model is honored when the policy allows it and is refused, rather than silently replaced, when it cannot serve the request.",
+          "artifact": "`services/model-gateway/src/iacode_model_gateway/routing/router.py`",
+          "evidence": "`test_explicit_model_is_honoured_or_refused`.",
+          "mandatory": true
+        },
+        {
+          "key": "7.3",
+          "section": "7. Routing",
+          "description": "A default model is configurable, and a request with no model and no usable default fails with a clear error instead of an arbitrary choice.",
+          "artifact": "`services/model-gateway/src/iacode_model_gateway/config.py`",
+          "evidence": "`test_missing_default_model_is_an_explicit_error`.",
+          "mandatory": true
+        },
+        {
+          "key": "7.4",
+          "section": "7. Routing",
+          "description": "Required capabilities eliminate candidates that cannot satisfy them, and an unknown capability is refused unless the policy explicitly allows it.",
+          "artifact": "`services/model-gateway/src/iacode_model_gateway/routing/policy.py`",
+          "evidence": "`test_unknown_capability_is_rejected_by_default`.",
+          "mandatory": true
+        },
+        {
+          "key": "7.5",
+          "section": "7. Routing",
+          "description": "The gateway never knowingly sends a request larger than the context window it knows about, and an estimated token count is labelled an estimate rather than reported as exact.",
+          "artifact": "`services/model-gateway/src/iacode_model_gateway/routing/context.py`",
+          "evidence": "`ContextWindowTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "7.6",
+          "section": "7. Routing",
+          "description": "A reasoning effort is validated against the levels the model or the provider declares, and an incompatible level produces a fallback or an explicit error rather than a silent send.",
+          "artifact": "`services/model-gateway/src/iacode_model_gateway/routing/policy.py`",
+          "evidence": "`test_incompatible_reasoning_effort_is_not_sent_silently`.",
+          "mandatory": true
+        },
+        {
+          "key": "7.7",
+          "section": "7. Routing",
+          "description": "Route aliases are configuration, not built-in preference, and the system claims no empirical superiority for any of them.",
+          "artifact": "`.iacode/policies/model-routes.json`",
+          "evidence": "`test_route_aliases_come_from_configuration`.",
+          "mandatory": true
+        },
+        {
+          "key": "7.8",
+          "section": "7. Routing",
+          "description": "No model quality score, benchmark result or comparative claim is invented anywhere in this Gate.",
+          "artifact": "the whole tree",
+          "evidence": "`test_no_model_quality_claim_is_hardcoded`.",
+          "mandatory": true
+        },
+        {
+          "key": "7.9",
+          "section": "7. Routing",
+          "description": "Every routing result carries a short structured explanation of the decision, and never a model's private reasoning.",
+          "artifact": "`services/model-gateway/src/iacode_model_gateway/routing/router.py`",
+          "evidence": "`test_route_explanation_is_structured_and_short`.",
+          "mandatory": true
+        },
+        {
+          "key": "7.10",
+          "section": "7. Routing",
+          "description": "A disabled provider and an inactive model are never selected.",
+          "artifact": "`services/model-gateway/src/iacode_model_gateway/routing/router.py`",
+          "evidence": "`test_disabled_provider_and_inactive_model_are_excluded`.",
+          "mandatory": true
+        },
+        {
+          "key": "8.1",
+          "section": "8. Failure handling and reliability",
+          "description": "An internal error taxonomy distinguishes authentication, authorization, rate limiting, unknown model, invalid request, context limit, provider unavailability, provider timeout, transient and permanent provider failure, an open circuit, cancellation and an internal gateway failure, and every adapter maps onto it.",
+          "artifact": "`services/model-gateway/src/iacode_model_gateway/errors.py`",
+          "evidence": "`ErrorTaxonomyTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "8.2",
+          "section": "8. Failure handling and reliability",
+          "description": "Timeouts are configurable, connect and read are separated, and no provider call can hang without bound.",
+          "artifact": "`services/model-gateway/src/iacode_model_gateway/config.py`, `services/model-gateway/src/iacode_model_gateway/providers/http_provider.py`",
+          "evidence": "`test_no_call_is_unbounded`; `test_timeout_is_normalised`.",
+          "mandatory": true
+        },
+        {
+          "key": "8.3",
+          "section": "8. Failure handling and reliability",
+          "description": "A retry happens only for an error class a retry can resolve, and never for authentication, authorization, an invalid request, an unknown model, an invalid schema or a context limit.",
+          "artifact": "`services/model-gateway/src/iacode_model_gateway/resilience/retry.py`",
+          "evidence": "`RetryClassificationTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "8.4",
+          "section": "8. Failure handling and reliability",
+          "description": "A provider's `Retry-After` is honored within a configured bound, and an unreasonably long wait is refused rather than obeyed.",
+          "artifact": "`services/model-gateway/src/iacode_model_gateway/resilience/retry.py`",
+          "evidence": "`test_retry_after_is_bounded`.",
+          "mandatory": true
+        },
+        {
+          "key": "8.5",
+          "section": "8. Failure handling and reliability",
+          "description": "Backoff is exponential with jitter, and the test suite controls time instead of waiting for it.",
+          "artifact": "`services/model-gateway/src/iacode_model_gateway/resilience/retry.py`",
+          "evidence": "`test_backoff_is_exponential_with_jitter`.",
+          "mandatory": true
+        },
+        {
+          "key": "8.6",
+          "section": "8. Failure handling and reliability",
+          "description": "A circuit breaker moves between closed, open and half-open per provider and per provider and model, from external configuration.",
+          "artifact": "`services/model-gateway/src/iacode_model_gateway/resilience/circuit.py`",
+          "evidence": "`CircuitBreakerTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "8.7",
+          "section": "8. Failure handling and reliability",
+          "description": "The fallback chain is bounded, never repeats a candidate, cannot loop, and the chain that was used is recorded.",
+          "artifact": "`services/model-gateway/src/iacode_model_gateway/routing/router.py`",
+          "evidence": "`test_fallback_chain_is_bounded_and_recorded`.",
+          "mandatory": true
+        },
+        {
+          "key": "8.8",
+          "section": "8. Failure handling and reliability",
+          "description": "Fallback happens only for the error classes another candidate could resolve, and an invalid request is not retried against a second model.",
+          "artifact": "`services/model-gateway/src/iacode_model_gateway/routing/policy.py`",
+          "evidence": "`FallbackSemanticsTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "8.9",
+          "section": "8. Failure handling and reliability",
+          "description": "A consumer that cancels interrupts the upstream call and the attempt is recorded as cancelled.",
+          "artifact": "`services/model-gateway/src/iacode_model_gateway/gateway.py`",
+          "evidence": "`test_cancellation_stops_the_upstream_call`.",
+          "mandatory": true
+        },
+        {
+          "key": "8.10",
+          "section": "8. Failure handling and reliability",
+          "description": "Request limits are configurable and enforced: payload size, message count, tool count, output tokens and fallback depth.",
+          "artifact": "`services/model-gateway/src/iacode_model_gateway/resilience/limits.py`",
+          "evidence": "`RequestLimitTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "8.11",
+          "section": "8. Failure handling and reliability",
+          "description": "A provider response larger than the configured bound is refused instead of being read into memory without limit.",
+          "artifact": "`services/model-gateway/src/iacode_model_gateway/providers/http_provider.py`",
+          "evidence": "`test_oversized_provider_response_is_refused`.",
+          "mandatory": true
+        },
+        {
+          "key": "8.12",
+          "section": "8. Failure handling and reliability",
+          "description": "An unavailable provider never makes the Foundation liveness endpoint fail; it is visible in the gateway's own health instead.",
+          "artifact": "`apps/api/src/iacode_api/routes/gateway.py`",
+          "evidence": "`test_provider_outage_does_not_affect_process_health`.",
+          "mandatory": true
+        },
+        {
+          "key": "9.1",
+          "section": "9. Streaming",
+          "description": "Streaming goes through the same router and the same adapter abstraction as a non-streaming call, with no parallel architecture.",
+          "artifact": "`services/model-gateway/src/iacode_model_gateway/gateway.py`",
+          "evidence": "`test_streaming_uses_the_same_router`.",
+          "mandatory": true
+        },
+        {
+          "key": "9.2",
+          "section": "9. Streaming",
+          "description": "Stream events are normalized into an envelope covering start, text delta, tool-call delta, usage, end and error.",
+          "artifact": "`services/model-gateway/src/iacode_model_gateway/contracts.py`",
+          "evidence": "`StreamEnvelopeTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "9.3",
+          "section": "9. Streaming",
+          "description": "Automatic fallback is allowed only before the first content reaches the consumer; after it, the error is propagated and no second model continues the stream.",
+          "artifact": "`services/model-gateway/src/iacode_model_gateway/gateway.py`",
+          "evidence": "`test_no_fallback_after_the_first_delivered_content`.",
+          "mandatory": true
+        },
+        {
+          "key": "9.4",
+          "section": "9. Streaming",
+          "description": "A stream that fails after content ends with an explicit error event carrying the partial result, not with a silent completion.",
+          "artifact": "`services/model-gateway/src/iacode_model_gateway/gateway.py`",
+          "evidence": "`test_failure_after_content_ends_with_an_error_event`.",
+          "mandatory": true
+        },
+        {
+          "key": "9.5",
+          "section": "9. Streaming",
+          "description": "The API streams over Server-Sent Events and stops the upstream call when the client disconnects.",
+          "artifact": "`apps/api/src/iacode_api/routes/gateway.py`",
+          "evidence": "`test_stream_endpoint_emits_sse_and_stops_on_disconnect`.",
+          "mandatory": true
+        },
+        {
+          "key": "10.1",
+          "section": "10. Usage, cost, persistence and privacy",
+          "description": "Usage is normalized where the provider supplies it — input, output, total, cached and reasoning tokens — and a field the provider did not supply stays absent rather than being invented.",
+          "artifact": "`services/model-gateway/src/iacode_model_gateway/catalog/normalize.py`",
+          "evidence": "`UsageNormalisationTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "10.2",
+          "section": "10. Usage, cost, persistence and privacy",
+          "description": "Cost is absent unless pricing is configured, and zero is never used to mean unknown.",
+          "artifact": "`services/model-gateway/src/iacode_model_gateway/pricing.py`",
+          "evidence": "`test_unknown_cost_is_absent_not_zero`.",
+          "mandatory": true
+        },
+        {
+          "key": "10.3",
+          "section": "10. Usage, cost, persistence and privacy",
+          "description": "Every attempt is recorded with its operational metadata: correlation, provider, model, endpoint, route, status, timestamps, latency, tokens, error type, retries and fallbacks.",
+          "artifact": "`apps/api/src/iacode_api/gateway/store.py`",
+          "evidence": "`test_model_call_records_the_operational_metadata`; live persistence check.",
+          "mandatory": true
+        },
+        {
+          "key": "10.4",
+          "section": "10. Usage, cost, persistence and privacy",
+          "description": "Prompts, messages and completions are not persisted by default; the debug capture is opt-in, redacted, documented and off in every shipped configuration.",
+          "artifact": "`services/model-gateway/src/iacode_model_gateway/config.py`, `apps/api/src/iacode_api/gateway/store.py`",
+          "evidence": "`test_prompt_is_not_persisted_by_default`; `PromptCaptureTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "10.5",
+          "section": "10. Usage, cost, persistence and privacy",
+          "description": "A request fingerprint may be stored for correlation, and its documentation states that a hash is not anonymization.",
+          "artifact": "`services/model-gateway/src/iacode_model_gateway/fingerprint.py`, `docs/runbooks/MODEL-GATEWAY.md`",
+          "evidence": "`test_request_fingerprint_is_stable_and_carries_no_content`.",
+          "mandatory": true
+        },
+        {
+          "key": "10.6",
+          "section": "10. Usage, cost, persistence and privacy",
+          "description": "No provider reasoning content is stored; only the reasoning token count a provider reports.",
+          "artifact": "`apps/api/src/iacode_api/gateway/store.py`",
+          "evidence": "`test_no_reasoning_content_is_persisted`.",
+          "mandatory": true
+        },
+        {
+          "key": "10.7",
+          "section": "10. Usage, cost, persistence and privacy",
+          "description": "Nothing this Gate persists becomes training data: the rights defaults of the provenance policy are preserved.",
+          "artifact": "`.iacode/policies/training-data-policy.md`, `PROVENANCE.json`",
+          "evidence": "`test_gate_one_records_no_training_eligible_data`.",
+          "mandatory": true
+        },
+        {
+          "key": "11.1",
+          "section": "11. Telemetry, logging and correlation",
+          "description": "The gateway exposes request, duration, error, retry, fallback, circuit state, provider health and catalog size metrics through the existing Prometheus endpoint.",
+          "artifact": "`services/model-gateway/src/iacode_model_gateway/telemetry/metrics.py`",
+          "evidence": "`GatewayMetricsTests`; Prometheus scrape after the live smoke.",
+          "mandatory": true
+        },
+        {
+          "key": "11.2",
+          "section": "11. Telemetry, logging and correlation",
+          "description": "No metric label carries a prompt, a completion, a credential or an unbounded value.",
+          "artifact": "`services/model-gateway/src/iacode_model_gateway/telemetry/metrics.py`",
+          "evidence": "`test_metric_labels_are_bounded_and_carry_no_content`.",
+          "mandatory": true
+        },
+        {
+          "key": "11.3",
+          "section": "11. Telemetry, logging and correlation",
+          "description": "Structured logs carry the correlation and request identifiers, the provider, the model, the route, the attempt, the fallback index, the latency, the status and the error type where each is known.",
+          "artifact": "`services/model-gateway/src/iacode_model_gateway/telemetry/logs.py`",
+          "evidence": "`test_gateway_log_contract`.",
+          "mandatory": true
+        },
+        {
+          "key": "11.4",
+          "section": "11. Telemetry, logging and correlation",
+          "description": "An authorization header, an API key, a full prompt and a full response are never written to a log.",
+          "artifact": "`services/model-gateway/src/iacode_model_gateway/telemetry/logs.py`",
+          "evidence": "`SecretContainmentTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "11.5",
+          "section": "11. Telemetry, logging and correlation",
+          "description": "A correlation identifier propagates from the HTTP request through every provider attempt to the persisted record, so one call is traceable end to end.",
+          "artifact": "`apps/api/src/iacode_api/routes/gateway.py`",
+          "evidence": "`test_correlation_reaches_the_persisted_model_call`.",
+          "mandatory": true
+        },
+        {
+          "key": "12.1",
+          "section": "12. The gateway HTTP API",
+          "description": "The gateway API is versioned and documented in the OpenAPI document.",
+          "artifact": "`apps/api/src/iacode_api/routes/gateway.py`",
+          "evidence": "`test_openapi_documents_the_gateway_endpoints`.",
+          "mandatory": true
+        },
+        {
+          "key": "12.2",
+          "section": "12. The gateway HTTP API",
+          "description": "The provider listing returns safe metadata only and never a credential, an authorization header or a secret value.",
+          "artifact": "`apps/api/src/iacode_api/routes/gateway.py`",
+          "evidence": "`test_provider_listing_exposes_no_secret`.",
+          "mandatory": true
+        },
+        {
+          "key": "12.3",
+          "section": "12. The gateway HTTP API",
+          "description": "The model listing filters by provider, by active state and by capability.",
+          "artifact": "`apps/api/src/iacode_api/routes/gateway.py`",
+          "evidence": "`test_model_listing_filters`.",
+          "mandatory": true
+        },
+        {
+          "key": "12.4",
+          "section": "12. The gateway HTTP API",
+          "description": "The synchronization endpoint reports what was added, updated, deactivated, unchanged and what failed, without exposing a provider secret.",
+          "artifact": "`apps/api/src/iacode_api/routes/gateway.py`",
+          "evidence": "`test_sync_endpoint_reports_its_outcome`.",
+          "mandatory": true
+        },
+        {
+          "key": "12.5",
+          "section": "12. The gateway HTTP API",
+          "description": "The inference endpoint returns the normalized response, the route information, the usage and the request identifier, and never a stack trace.",
+          "artifact": "`apps/api/src/iacode_api/routes/gateway.py`",
+          "evidence": "`test_infer_endpoint_returns_the_normalised_response`; `test_infer_endpoint_leaks_no_internal_detail`.",
+          "mandatory": true
+        },
+        {
+          "key": "12.6",
+          "section": "12. The gateway HTTP API",
+          "description": "The gateway health endpoint separates the process from the external provider, so an unreachable provider is reported without claiming the service is down.",
+          "artifact": "`apps/api/src/iacode_api/routes/gateway.py`",
+          "evidence": "`test_gateway_health_separates_process_from_provider`.",
+          "mandatory": true
+        },
+        {
+          "key": "13.1",
+          "section": "13. Frontend",
+          "description": "A Model Gateway page shows the provider status, the model count, the last synchronization and the model list with its capabilities.",
+          "artifact": "`apps/web/src/app/gateway/`",
+          "evidence": "Frontend unit tests; browser check recorded in the runbook.",
+          "mandatory": true
+        },
+        {
+          "key": "13.2",
+          "section": "13. Frontend",
+          "description": "A minimal playground sends a prompt with a route or a model and an optional reasoning effort, and shows the chosen model, the provider, the answer, the latency and the usage when it exists.",
+          "artifact": "`apps/web/src/app/gateway/`",
+          "evidence": "Frontend unit tests.",
+          "mandatory": true
+        },
+        {
+          "key": "13.3",
+          "section": "13. Frontend",
+          "description": "No provider credential reaches the browser: the page calls the IACode backend and nothing else.",
+          "artifact": "`apps/web/src/app/`",
+          "evidence": "`test_frontend_calls_only_the_iacode_backend`.",
+          "mandatory": true
+        },
+        {
+          "key": "13.4",
+          "section": "13. Frontend",
+          "description": "No conversation persistence, chat history, persona, agent interface or tool execution is added to the frontend.",
+          "artifact": "`apps/web/src/app/`",
+          "evidence": "`test_frontend_adds_no_conversation_capability`.",
+          "mandatory": true
+        },
+        {
+          "key": "13.5",
+          "section": "13. Frontend",
+          "description": "The frontend suite covers the new page and its service, runs headless and is part of the verification command.",
+          "artifact": "`apps/web/src/`, `scripts/iacode/verify.py`",
+          "evidence": "Frontend test run.",
+          "mandatory": true
+        },
+        {
+          "key": "14.1",
+          "section": "14. Live provider integration",
+          "description": "A real catalog synchronization runs against the configured provider API, parses the answer, normalizes it, persists it and repeats without changing anything.",
+          "artifact": "`scripts/iacode/gateway_smoke.py`",
+          "evidence": "Live catalog run.",
+          "mandatory": true
+        },
+        {
+          "key": "14.2",
+          "section": "14. Live provider integration",
+          "description": "A real non-streaming inference against the explicitly configured smoke model returns the expected text through the normalized response.",
+          "artifact": "`scripts/iacode/gateway_smoke.py`",
+          "evidence": "Live inference run.",
+          "mandatory": true
+        },
+        {
+          "key": "14.3",
+          "section": "14. Live provider integration",
+          "description": "A real streaming inference produces a start, at least one delta and an end, with no duplicated content.",
+          "artifact": "`scripts/iacode/gateway_smoke.py`",
+          "evidence": "Live streaming run.",
+          "mandatory": true
+        },
+        {
+          "key": "14.4",
+          "section": "14. Live provider integration",
+          "description": "The configured smoke model is never silently substituted: its absence from the discovered catalog fails the check.",
+          "artifact": "`scripts/iacode/gateway_smoke.py`",
+          "evidence": "`test_absent_smoke_model_fails_rather_than_substitutes`.",
+          "mandatory": true
+        },
+        {
+          "key": "14.5",
+          "section": "14. Live provider integration",
+          "description": "The live checks are minimal: a short prompt, a small output cap, no repetition, no deliberate rate limiting and no repeated authentication failure against the real provider.",
+          "artifact": "`scripts/iacode/gateway_smoke.py`",
+          "evidence": "`test_live_smoke_is_bounded_and_minimal`.",
+          "mandatory": true
+        },
+        {
+          "key": "14.6",
+          "section": "14. Live provider integration",
+          "description": "The live inference produced a persisted record carrying the provider, the model, the status, the latency and the usage the provider supplied, and carrying no prompt.",
+          "artifact": "`scripts/iacode/gateway_smoke.py`",
+          "evidence": "Live persistence check.",
+          "mandatory": true
+        },
+        {
+          "key": "14.7",
+          "section": "14. Live provider integration",
+          "description": "The observability stack observed the live gateway request.",
+          "artifact": "`infra/prometheus/prometheus.yml`",
+          "evidence": "Prometheus query after the live smoke.",
+          "mandatory": true
+        },
+        {
+          "key": "14.8",
+          "section": "14. Live provider integration",
+          "description": "Without a configured provider credential the live validation fails loudly and the Gate is blocked, and no result is claimed that was not executed.",
+          "artifact": "`scripts/iacode/gateway_smoke.py`",
+          "evidence": "`test_missing_credential_blocks_rather_than_passes`.",
+          "mandatory": true
+        },
+        {
+          "key": "15.1",
+          "section": "15. Deterministic verification",
+          "description": "A provider contract suite proves discovery, generation, streaming, usage, error normalization, timeout, cancellation and tool-call normalization for every adapter.",
+          "artifact": "`services/model-gateway/tests/test_provider_contract.py`",
+          "evidence": "Gateway suite run.",
+          "mandatory": true
+        },
+        {
+          "key": "15.2",
+          "section": "15. Deterministic verification",
+          "description": "The catalog suite covers a new model, changed metadata, a removed model, a duplicate, invalid metadata, an unknown capability, a failed transaction and a repeated synchronization.",
+          "artifact": "`services/model-gateway/tests/test_catalog.py`",
+          "evidence": "Gateway suite run.",
+          "mandatory": true
+        },
+        {
+          "key": "15.3",
+          "section": "15. Deterministic verification",
+          "description": "The routing suite covers an explicit model, the default model, capability filtering, an unknown required capability, a disabled provider, an inactive model, an insufficient context window, route priority, fallback order and fallback exhaustion.",
+          "artifact": "`services/model-gateway/tests/test_routing.py`",
+          "evidence": "Gateway suite run.",
+          "mandatory": true
+        },
+        {
+          "key": "15.4",
+          "section": "15. Deterministic verification",
+          "description": "The retry suite proves which classes are retried — rate limiting, server failure, timeout, connection reset — and which are not: authentication, invalid request and context limit.",
+          "artifact": "`services/model-gateway/tests/test_resilience.py`",
+          "evidence": "Gateway suite run.",
+          "mandatory": true
+        },
+        {
+          "key": "15.5",
+          "section": "15. Deterministic verification",
+          "description": "The circuit breaker suite covers the threshold, the open state, fast failure, the cooldown, the half-open probe, recovery and reopening, without waiting in real time.",
+          "artifact": "`services/model-gateway/tests/test_resilience.py`",
+          "evidence": "Gateway suite run.",
+          "mandatory": true
+        },
+        {
+          "key": "15.6",
+          "section": "15. Deterministic verification",
+          "description": "The streaming suite covers a normal stream, an empty stream, a failure before the first delta, a failure after the first delta, consumer cancellation, usage at the end and a tool-call delta.",
+          "artifact": "`services/model-gateway/tests/test_streaming.py`",
+          "evidence": "Gateway suite run.",
+          "mandatory": true
+        },
+        {
+          "key": "15.7",
+          "section": "15. Deterministic verification",
+          "description": "A test proves that two models' output can never be concatenated into one stream.",
+          "artifact": "`services/model-gateway/tests/test_streaming.py`",
+          "evidence": "`test_no_two_models_are_concatenated_in_one_stream`.",
+          "mandatory": true
+        },
+        {
+          "key": "15.8",
+          "section": "15. Deterministic verification",
+          "description": "The structured-output suite proves that an incapable candidate is rejected and that a capable one receives the right configuration.",
+          "artifact": "`services/model-gateway/tests/test_structured_output.py`",
+          "evidence": "Gateway suite run.",
+          "mandatory": true
+        },
+        {
+          "key": "15.9",
+          "section": "15. Deterministic verification",
+          "description": "The secret suite proves that a credential appears in no log, no exception, no HTTP response, no persisted record, no metric and no catalog metadata.",
+          "artifact": "`services/model-gateway/tests/test_secrets.py`",
+          "evidence": "Gateway suite run.",
+          "mandatory": true
+        },
+        {
+          "key": "15.10",
+          "section": "15. Deterministic verification",
+          "description": "Provider unavailability, an invalid credential and rate limiting are exercised with fixtures rather than against the real provider.",
+          "artifact": "`services/model-gateway/tests/`",
+          "evidence": "Gateway suite run.",
+          "mandatory": true
+        },
+        {
+          "key": "15.11",
+          "section": "15. Deterministic verification",
+          "description": "The deterministic provider double exists only under the test fixtures and cannot be reached from a runtime path.",
+          "artifact": "`services/model-gateway/tests/fixtures/`",
+          "evidence": "`test_no_fake_provider_is_registered_at_runtime`.",
+          "mandatory": true
+        },
+        {
+          "key": "16.1",
+          "section": "16. Migrations and compatibility",
+          "description": "The schema change of this Gate is a new migration, and no migration of the previous Gate is edited.",
+          "artifact": "`apps/api/migrations/versions/`",
+          "evidence": "`test_previous_migrations_are_unmodified`.",
+          "mandatory": true
+        },
+        {
+          "key": "16.2",
+          "section": "16. Migrations and compatibility",
+          "description": "Every migration runs from zero against an empty database and produces the declared schema.",
+          "artifact": "`apps/api/migrations/`",
+          "evidence": "Fresh-install scenario.",
+          "mandatory": true
+        },
+        {
+          "key": "16.3",
+          "section": "16. Migrations and compatibility",
+          "description": "A database created by the previous Gate upgrades without loss.",
+          "artifact": "`apps/api/migrations/`",
+          "evidence": "Upgrade run recorded in the checkpoint.",
+          "mandatory": true
+        },
+        {
+          "key": "16.4",
+          "section": "16. Migrations and compatibility",
+          "description": "The Foundation endpoints, the backup and restore procedure, the restart behaviour and the observability stack do not regress.",
+          "artifact": "`scripts/iacode/verify.py`",
+          "evidence": "Full verification run.",
+          "mandatory": true
+        },
+        {
+          "key": "17.1",
+          "section": "17. Documentation and decisions",
+          "description": "An operational runbook documents provider configuration, the variables, synchronization, listing, inference, streaming, fallback, troubleshooting, the live smoke and how to add an adapter.",
+          "artifact": "`docs/runbooks/MODEL-GATEWAY.md`",
+          "evidence": "Procedure reproduced during the delivery.",
+          "mandatory": true
+        },
+        {
+          "key": "17.2",
+          "section": "17. Documentation and decisions",
+          "description": "The architecture document describes the gateway boundary, what crosses it and what is deliberately absent.",
+          "artifact": "`docs/ARCHITECTURE.md`",
+          "evidence": "File content.",
+          "mandatory": true
+        },
+        {
+          "key": "17.3",
+          "section": "17. Documentation and decisions",
+          "description": "The entry documentation and the development guide describe what exists after this Gate and how to run it.",
+          "artifact": "`README.md`, `docs/DEVELOPMENT.md`",
+          "evidence": "File content consistent with the runtime.",
+          "mandatory": true
+        },
+        {
+          "key": "17.4",
+          "section": "17. Documentation and decisions",
+          "description": "Every dependency and version this Gate pins is recorded in the one place that records versions.",
+          "artifact": "`docs/VERSIONS.md`",
+          "evidence": "Recorded versions match the lock files.",
+          "mandatory": true
+        },
+        {
+          "key": "17.5",
+          "section": "17. Documentation and decisions",
+          "description": "The API examples are sanitized and carry no real token.",
+          "artifact": "`docs/runbooks/MODEL-GATEWAY.md`",
+          "evidence": "Repository secret scan.",
+          "mandatory": true
+        },
+        {
+          "key": "17.6",
+          "section": "17. Documentation and decisions",
+          "description": "Every structural decision of this Gate that is not already recorded becomes an ADR, and no ADR duplicates an existing decision.",
+          "artifact": "`docs/adr/`",
+          "evidence": "`ADR-0016` to `ADR-0019`.",
+          "mandatory": true
+        },
+        {
+          "key": "18.1",
+          "section": "18. Gate consistency",
+          "description": "The entry contract and the plan describe the current Gate and its status truthfully.",
+          "artifact": "`START-HERE.md`, `docs/MASTER-PLAN.md`",
+          "evidence": "File content consistent with `docs/checkpoints/LATEST.md`.",
+          "mandatory": true
+        },
+        {
+          "key": "18.2",
+          "section": "18. Gate consistency",
+          "description": "The Gate produces a retrospective from the canonical template.",
+          "artifact": "`.iacode/memory/retrospectives/`",
+          "evidence": "Retrospective file.",
+          "mandatory": true
+        },
+        {
+          "key": "18.3",
+          "section": "18. Gate consistency",
+          "description": "The Gate closes on the project's own controls and claims no independent, fresh-session or cross-tool verdict.",
+          "artifact": "`docs/checkpoints/GATE-1-CP-0001/STATE.json`",
+          "evidence": "Checkpoint validation.",
+          "mandatory": true
+        }
+      ]
     }
   ]
 }

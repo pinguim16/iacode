@@ -24,6 +24,7 @@ from __future__ import annotations
 
 import uuid
 from datetime import datetime
+from decimal import Decimal
 from typing import Any
 
 from sqlalchemy import (
@@ -33,6 +34,7 @@ from sqlalchemy import (
     ForeignKey,
     Index,
     Integer,
+    Numeric,
     String,
     Text,
     UniqueConstraint,
@@ -172,9 +174,11 @@ class AgentRun(TimestampedEntity, Base):
 
 
 class Provider(TimestampedEntity, Base):
-    """A model provider.
+    """A model provider and its operational state.
 
-    Credentials are never stored here: Gate 1 resolves them from configuration.
+    Credentials are never stored here. Gate 1 resolves them from the environment at call time, and
+    the absence of a column is the mechanism: a nullable secret column is a place a secret
+    eventually lands, whatever the intention was when it was added.
     """
 
     __tablename__ = "providers"
@@ -186,13 +190,40 @@ class Provider(TimestampedEntity, Base):
         doc="Transport family, for example 'http-api' or 'local-runtime'.")
     enabled: Mapped[bool] = mapped_column(
         Boolean, nullable=False, default=False, server_default="false")
+    adapter: Mapped[str | None] = mapped_column(
+        String(64),
+        doc="The adapter family that serves this provider, mirrored from the provider policy.")
+    healthy: Mapped[bool | None] = mapped_column(
+        Boolean,
+        doc="Result of the last health probe. NULL means never probed, which is not the same as "
+            "unhealthy and is not rendered as one.")
+    last_health_check: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    last_sync: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    model_count: Mapped[int] = mapped_column(
+        Integer, nullable=False, default=0, server_default="0")
+    detail: Mapped[str | None] = mapped_column(
+        Text,
+        doc="Why the last probe or synchronisation failed, already classified. Never a provider's "
+            "raw error body, which can echo a request header back at us.")
 
     models: Mapped[list[Model]] = relationship(
         back_populates="provider", cascade="all, delete-orphan")
 
 
 class Model(TimestampedEntity, Base):
-    """A model a provider exposes. Capability flags only; Gate 1 owns routing and pricing."""
+    """A model a provider exposes, as the catalog discovered it.
+
+    Identity is the pair ``(provider_id, slug)``: two providers may expose the same identifier, and
+    they are different models with different availability and different prices.
+
+    **Capabilities are a tri-state, stored as JSONB rather than as booleans.** Gate 0 gave this
+    table ``supports_tools`` and ``enabled`` as non-null booleans, and Gate 1 removes both, because
+    a boolean cannot express the state most discovery answers actually produce: the provider said
+    nothing. Recording that silence as ``false`` would make the catalog assert a fact it was never
+    told, and the router would quietly exclude every model a terse provider lists.
+    ``capability_provenance`` records where each statement came from, so an administrator's claim is
+    never mistaken for the provider's.
+    """
 
     __tablename__ = "models"
     __table_args__ = (
@@ -203,39 +234,96 @@ class Model(TimestampedEntity, Base):
         ForeignKey("providers.id", ondelete="CASCADE"), nullable=False, index=True)
     slug: Mapped[str] = mapped_column(String(256), nullable=False)
     display_name: Mapped[str] = mapped_column(String(256), nullable=False)
+    family: Mapped[str | None] = mapped_column(String(128))
     context_window: Mapped[int | None] = mapped_column(Integer)
-    supports_tools: Mapped[bool] = mapped_column(
-        Boolean, nullable=False, default=False, server_default="false")
-    enabled: Mapped[bool] = mapped_column(
-        Boolean, nullable=False, default=False, server_default="false")
+    max_output_tokens: Mapped[int | None] = mapped_column(Integer)
+    supported_endpoints: Mapped[list[str]] = mapped_column(
+        JSONB, nullable=False, default=list, server_default="[]",
+        doc="Protocol families the model accepts. Empty means the provider did not say, which the "
+            "endpoint selection treats differently from 'accepts none'.")
+    capabilities: Mapped[dict[str, Any]] = mapped_column(
+        JSONB, nullable=False, default=dict, server_default="{}",
+        doc="Capability to SUPPORTED, UNSUPPORTED or UNKNOWN. An absent key is UNKNOWN.")
+    capability_provenance: Mapped[dict[str, Any]] = mapped_column(
+        JSONB, nullable=False, default=dict, server_default="{}",
+        doc="Capability to PROVIDER_METADATA, MANUAL_CONFIGURATION or OBSERVED.")
+    reasoning_levels: Mapped[list[str]] = mapped_column(
+        JSONB, nullable=False, default=list, server_default="[]")
+    active: Mapped[bool] = mapped_column(
+        Boolean, nullable=False, default=True, server_default="true",
+        doc="Whether the provider still lists the model. A model that disappears is deactivated "
+            "rather than deleted, because model_calls rows point at it.")
+    raw_metadata: Mapped[dict[str, Any]] = mapped_column(
+        JSONB, nullable=False, default=dict, server_default="{}",
+        doc="The provider's own record, kept for diagnosis. Routing reads the normalised columns; "
+            "nothing decides behaviour from this.")
+    synced_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
 
     provider: Mapped[Provider] = relationship(back_populates="models")
     calls: Mapped[list[ModelCall]] = relationship(back_populates="model")
 
 
 class ModelCall(ImmutableRecord, Base):
-    """One invocation of one model. An append-only fact, so it has no update time and no version.
+    """One attempt against one model. An append-only fact, so it has no update time and no version.
 
-    Prompts and completions are deliberately absent. Storing them is a rights and secret-handling
-    decision that `.iacode/policies/training-data-policy.md` governs, and Gate 1 makes it with the
-    provenance record in hand. Gate 0 records that a call happened and what it cost.
+    **Prompts and completions are absent, and this is the mechanism rather than the intention.**
+    There is no column for a message, a prompt or a completion, so no code path can put one here by
+    accident, and `docs/GATE-1-CHECKLIST.md` row 10.4 is satisfied by the shape of the table. What
+    is recorded is operational: who was called, over which protocol, by which routing decision, how
+    it went, how long it took, what it consumed and what it cost when that is knowable.
+
+    ``request_fingerprint`` is a digest of what was asked, for correlating two identical calls
+    without storing either. It is not anonymisation: anyone holding a candidate prompt can hash it
+    and compare. The runbook says so in the same words.
+
+    ``model_id`` is nullable from Gate 1. A call can legitimately outlive the catalog row it names —
+    a model withdrawn between the call and the record — and losing the record of a call that cost
+    money would be worse than losing the link to a row that no longer describes anything.
     """
 
     __tablename__ = "model_calls"
     __table_args__ = (
         Index("ix_model_calls_model_id_created_at", "model_id", "created_at"),
+        Index("ix_model_calls_provider_id_created_at", "provider_id", "created_at"),
+        CheckConstraint(
+            "finished_at IS NULL OR started_at IS NULL OR finished_at >= started_at",
+            name="finished_after_started"),
     )
 
-    model_id: Mapped[uuid.UUID] = mapped_column(
-        ForeignKey("models.id", ondelete="RESTRICT"), nullable=False)
+    model_id: Mapped[uuid.UUID | None] = mapped_column(
+        ForeignKey("models.id", ondelete="RESTRICT"))
+    provider_id: Mapped[uuid.UUID | None] = mapped_column(
+        ForeignKey("providers.id", ondelete="RESTRICT"))
     agent_run_id: Mapped[uuid.UUID | None] = mapped_column(
         ForeignKey("agent_runs.id", ondelete="SET NULL"), index=True)
+    request_id: Mapped[str] = mapped_column(String(128), nullable=False)
+    correlation_id: Mapped[str | None] = mapped_column(String(128))
+    request_fingerprint: Mapped[str | None] = mapped_column(String(64))
+    endpoint: Mapped[str | None] = mapped_column(String(64))
+    route: Mapped[str | None] = mapped_column(String(64))
     purpose: Mapped[str] = mapped_column(String(128), nullable=False)
+    status: Mapped[str] = mapped_column(
+        String(32), nullable=False, default="UNKNOWN", server_default="UNKNOWN")
+    started_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    finished_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     input_tokens: Mapped[int | None] = mapped_column(Integer)
     output_tokens: Mapped[int | None] = mapped_column(Integer)
+    cached_input_tokens: Mapped[int | None] = mapped_column(Integer)
+    reasoning_tokens: Mapped[int | None] = mapped_column(
+        Integer,
+        doc="How many reasoning tokens the provider reported. The reasoning itself is never "
+            "stored: a model's private deliberation is not ours to keep.")
+    cost: Mapped[Decimal | None] = mapped_column(
+        Numeric(18, 8),
+        doc="NULL unless pricing is configured. Zero would state that the call was free.")
     latency_ms: Mapped[int | None] = mapped_column(Integer)
+    retry_count: Mapped[int] = mapped_column(
+        Integer, nullable=False, default=0, server_default="0")
+    fallback_count: Mapped[int] = mapped_column(
+        Integer, nullable=False, default=0, server_default="0")
     succeeded: Mapped[bool] = mapped_column(Boolean, nullable=False)
-    error_code: Mapped[str | None] = mapped_column(String(128))
+    error_code: Mapped[str | None] = mapped_column(
+        String(128), doc="The gateway's classified error type, never a provider's raw message.")
 
     model: Mapped[Model] = relationship(back_populates="calls")
 

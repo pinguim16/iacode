@@ -15,10 +15,20 @@ import json
 import re
 import shutil
 import subprocess
+import sys
 import unittest
 from pathlib import Path
 
 REPOSITORY_ROOT = Path(__file__).resolve().parents[2]
+
+# The redaction package is stdlib-only and is the single definition of what a credential-carrying
+# name and a placeholder are. Importing it here rather than restating either is the point.
+for _extra in (REPOSITORY_ROOT / "packages" / "common" / "src",):
+    if str(_extra) not in sys.path:
+        sys.path.insert(0, str(_extra))
+
+from iacode_common.redaction import carries_a_secret_value, is_placeholder  # noqa: E402
+
 COMPOSE_DIRECTORY = REPOSITORY_ROOT / "infra" / "compose"
 COMPOSE_FILE = COMPOSE_DIRECTORY / "docker-compose.yml"
 ENV_FILE = COMPOSE_DIRECTORY / ".env"
@@ -204,11 +214,15 @@ class CommittedConfigurationTests(unittest.TestCase):
             if not line.strip() or line.strip().startswith("#") or "=" not in line:
                 continue
             key, _, value = line.partition("=")
-            if any(token in key.upper()
-                   for token in ("PASSWORD", "SECRET", "TOKEN", "API_KEY")):
+            # Which names carry a credential, and which values are placeholders, are asked of
+            # `iacode_common.redaction`. This file used to answer the first question itself, and
+            # a third module answered it differently: one of the three read
+            # ``IACODE_GATEWAY_MAX_OUTPUT_TOKENS`` as a credential and redacted an operational
+            # limit out of the configuration dump. `LSN-0038` records the class.
+            if carries_a_secret_value(key.strip()):
                 with self.subTest(key=key):
-                    self.assertIn(value.strip(), ("change-me-before-starting", ""),
-                                  f"{key} carries something that is not a placeholder")
+                    self.assertTrue(is_placeholder(value.strip()),
+                                    f"{key} carries something that is not a placeholder")
 
     def test_the_real_environment_file_is_ignored(self) -> None:
         ignore = (REPOSITORY_ROOT / ".gitignore").read_text(encoding="utf-8")

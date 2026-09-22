@@ -64,10 +64,25 @@ package, in `apps/api/requirements.lock.txt`. The images install the lock.
 | minio | 7.2.20 | the object-storage client |
 | temporalio | 1.33.0 | the workflow SDK, in the API and in the worker |
 | prometheus-client | 0.26.0 | the metrics instruments |
+| httpx | 0.28.1 | the HTTP client the Model Gateway calls providers with, and the test client's transport |
 | pytest | 9.1.1 | the backend test runner |
 | pytest-asyncio | 1.4.0 | asynchronous test support |
-| httpx | 0.28.1 | the test client's transport |
 | ruff | 0.16.8 | lint and static analysis |
+
+`httpx` became a production dependency in Gate 1. It was already resolved into the lock as a
+transitive dependency of the FastAPI test client; listing it directly is the difference between a
+dependency we chose and one we inherited.
+
+## First-party packages
+
+Installed from the repository, versioned together, and pinned by exact version in every consumer.
+
+| Package | Version | Consumed by |
+|---|---|---|
+| `iacode-common` | 0.1.0 | the API, the worker, the gateway |
+| `iacode-contracts` | 0.1.0 | the API |
+| `iacode-telemetry` | 0.1.0 | the API, the worker, the gateway |
+| `iacode-model-gateway` | 0.1.0 | the API |
 
 ## Frontend libraries
 

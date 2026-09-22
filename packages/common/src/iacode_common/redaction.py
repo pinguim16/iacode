@@ -25,6 +25,8 @@ from urllib.parse import urlsplit, urlunsplit
 
 __all__ = [
     "REDACTED",
+    "carries_a_secret_value",
+    "is_placeholder",
     "is_sensitive_key",
     "redact_mapping",
     "redact_text",
@@ -37,7 +39,11 @@ REDACTED = "[REDACTED]"
 # A key is sensitive when its *name* says the value is a credential. Matching on a substring is
 # deliberate: ``POSTGRES_PASSWORD``, ``password`` and ``db_password_file`` are all the same risk.
 _SENSITIVE_KEY = re.compile(
-    r"(?i)(password|passwd|secret|token|api[-_]?key|access[-_]?key|private[-_]?key|"
+    # ``token`` but not ``tokens``: a plural is a quantity, not a credential. Redacting
+    # ``IACODE_GATEWAY_MAX_OUTPUT_TOKENS`` hides an operational limit and teaches operators that
+    # the redaction markers are noise. Every consumer of this judgement imports it from here;
+    # `tests/test_gate1_model_gateway.py` fails the build if one starts writing its own.
+    r"(?i)(password|passwd|secret|token(?!s)|api[-_]?key|access[-_]?key|private[-_]?key|"
     r"credential|authorization|auth[-_]?header|session[-_]?key|signing[-_]?key)"
 )
 
@@ -55,12 +61,18 @@ _PLACEHOLDER = re.compile(
     r"your[-_].*|<.*>|\$\{.*\})$"
 )
 
+# The value each pattern captures is classified by ``_PLACEHOLDER`` in ``_keep_a_placeholder``
+# rather than by a negative lookahead written into the pattern. There used to be a lookahead, and
+# the two definitions disagreed about the repository's own documented placeholder: ``redact_text``
+# hid ``change-me-before-starting`` while ``redact_value`` kept it, so reading the committed example
+# file could not answer whether a real value had replaced the placeholder — the one thing reading it
+# is for. One definition, consulted twice.
 _TEXT_PATTERNS: tuple[re.Pattern[str], ...] = (
     # An authorization header, with or without a Bearer or Basic prefix, in a log line or a
     # serialised mapping. The pattern is written out rather than quoted as an example, because
     # an example of the shape is indistinguishable from the shape.
     re.compile(
-        r"(?i)(authorization[\"']?\s*[:=]\s*[\"']?)(?!\[REDACTED\])"
+        r"(?i)(authorization[\"']?\s*[:=]\s*[\"']?)"
         r"(?:(?:bearer|basic)\s+)?[-A-Za-z0-9._~+/=]{6,}"
     ),
     # NAME_TOKEN=<value>, api_key: "<value>", password = <value>
@@ -69,7 +81,6 @@ _TEXT_PATTERNS: tuple[re.Pattern[str], ...] = (
         r"(?:secret[-_]?access[-_]?key|access[-_]?key[-_]?id|secret[-_]?key|api[-_]?key|"
         r"access[-_]?key|private[-_]?key|signing[-_]?key|credential|token|secret|passwd|password)"
         r"[\"']?\s*[:=]\s*[\"']?)"
-        r"(?!\[REDACTED\]|example\b|placeholder\b|changeme\b|not[-_]?set\b|your[-_])"
         r"[-A-Za-z0-9._~+/=:@]{6,}"
     ),
 )
@@ -80,6 +91,26 @@ _SCHEME_WITH_USERINFO = re.compile(r"(?i)^[a-z][a-z0-9+.\-]*://[^/\s]*@")
 # a log line is redacted even though no key protects it.
 _EMBEDDED_URL = re.compile(r"(?i)\b[a-z][a-z0-9+.\-]*://[^\s\"']*@[^\s\"']*")
 
+# Names whose value is the secret itself, rather than a name that merely sits next to one. Used by
+# the rule about what a committed file may hold; see ``carries_a_secret_value``.
+_SECRET_VALUE = re.compile(
+    r"(PASSWORD|PASSWD|SECRET|API_?KEY|PRIVATE_?KEY|SIGNING_?KEY|SESSION_?KEY|CREDENTIAL|TOKEN)")
+
+# ``TOKENS`` in the plural is a quantity, and an access key is an identifier published next to the
+# secret it pairs with. Both look credential-shaped and neither is a secret.
+_SECRET_VALUE_EXEMPT = re.compile(r"(TOKENS|ACCESS_?KEY_?ID|ACCESS_?KEY)")
+
+
+def is_placeholder(value: object) -> bool:
+    """Whether a value is documentation rather than a credential.
+
+    Public because more than one consumer needs the answer and there must be one of them. A
+    committed example file may hold a placeholder under a sensitive key and nothing else, and the
+    infrastructure suite asks this rather than writing a second opinion about what a placeholder
+    looks like -- which is the failure `LSN-0038` records.
+    """
+    return _PLACEHOLDER.match(str(value)) is not None
+
 
 def is_sensitive_key(key: str) -> bool:
     """Whether a mapping key marks its value as a credential."""
@@ -87,6 +118,24 @@ def is_sensitive_key(key: str) -> bool:
     if _SENSITIVE_KEY_EXEMPT.match(name):
         return False
     return _SENSITIVE_KEY.search(name) is not None
+
+
+def carries_a_secret_value(key: str) -> bool:
+    """Whether a name may never hold a real value in a committed file.
+
+    Deliberately narrower than :func:`is_sensitive_key`, and the difference is the point.
+    Redaction is conservative because a log is read by whoever can read the log: an access-key
+    *identifier* is masked there because it half-identifies a credential. A committed example file
+    is a different question — that identifier is published alongside the secret it pairs with, and
+    demanding a placeholder for it would be a rule somebody switches off.
+
+    One definition per question, each with one home. There were three formulations of this
+    question in this repository and they disagreed; `LSN-0038` records what that cost.
+    """
+    name = str(key).upper()
+    if _SECRET_VALUE_EXEMPT.search(name):
+        return False
+    return _SECRET_VALUE.search(name) is not None
 
 
 def redact_url(value: str) -> str:
@@ -111,11 +160,22 @@ def redact_url(value: str) -> str:
     return urlunsplit((parts.scheme, f"{userinfo}@{host}", parts.path, parts.query, parts.fragment))
 
 
+def _keep_a_placeholder(match: re.Match[str]) -> str:
+    """Redact the matched value, unless ``_PLACEHOLDER`` says it is documentation.
+
+    ``match.group(1)`` is the key and the separator; everything after it is the value. Classifying
+    it here means the rule lives in exactly one place, and a pattern cannot carry a second opinion.
+    """
+    key = match.group(1)
+    captured = match.group(0)[len(key):]
+    return match.group(0) if _PLACEHOLDER.match(captured) else key + REDACTED
+
+
 def redact_text(value: str) -> str:
     """Replace credential-shaped substrings already interpolated into a message."""
     result = _EMBEDDED_URL.sub(lambda match: redact_url(match.group(0)), value)
     for pattern in _TEXT_PATTERNS:
-        result = pattern.sub(lambda match: match.group(1) + REDACTED, result)
+        result = pattern.sub(_keep_a_placeholder, result)
     return result
 
 

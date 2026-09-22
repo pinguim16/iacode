@@ -1,0 +1,29 @@
+{
+  "schemaVersion": "1.0.0",
+  "policy": "Which model providers exist, which adapter serves each one, and the NAMES of the environment variables that carry its address and its credential. A value is never written here: this file is versioned, and a versioned credential is a published credential. A provider listed here is a real provider; the deterministic double the gateway suite uses lives under services/model-gateway/tests/fixtures and is unreachable from any runtime path. 'capabilities' is what an administrator states about every model the provider serves, used only where the model's own metadata is silent and recorded with MANUAL_CONFIGURATION provenance, so an administrator's statement is never mistaken for the provider's.",
+  "providers": [
+    {
+      "provider_id": "devworld",
+      "display_name": "DevWorld",
+      "adapter": "openai-compatible",
+      "enabled": true,
+      "base_url_env": "IACODE_DEVWORLD_BASE_URL",
+      "credential_env": "IACODE_DEVWORLD_API_KEY",
+      "models_path": "/models",
+      "protocols": [
+        "openai-chat-completions"
+      ],
+      "default_protocol": "openai-chat-completions",
+      "protocol_paths": {
+        "openai-chat-completions": "/chat/completions"
+      },
+      "protocol_options": {},
+      "capabilities": {
+        "streaming": "SUPPORTED"
+      },
+      "reasoning_levels": [],
+      "priority": 100,
+      "description": "The first real provider. Only the Chat Completions protocol is declared, because that is the one this deployment has exercised against the live API; the Responses and Messages adapters exist and are tested, and either is enabled here by adding it to 'protocols' once the provider's support for it has been observed rather than assumed. 'streaming' is declared because incremental delivery is a property of the Chat Completions protocol itself rather than a guess about any particular model."
+    }
+  ]
+}

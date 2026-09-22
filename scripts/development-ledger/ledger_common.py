@@ -482,6 +482,22 @@ def resolve_latest(root: Path) -> Path:
     return target
 
 
+def delivered_gate(root: Path) -> str:
+    """The Gate this repository is currently delivering, read from the latest checkpoint.
+
+    A control that needs to know which Gate is in progress derives it here rather than carrying a
+    literal. `.iacode/memory/lessons.jsonl` records what the literal costs: a guard that names the
+    current Gate's content blocks or blinds the Gate after it, and which of the two it does is luck.
+    The Gate 0 scope check is the worked example — it passed for a year of Gate 0 deliveries and
+    failed the first Gate 1 delivery for filling the directory reserved for Gate 1.
+    """
+    state = load_json(resolve_latest(root) / "STATE.json")
+    gate = state.get("gate") if isinstance(state, dict) else None
+    if not gate:
+        raise LedgerError("the latest checkpoint declares no gate")
+    return str(gate)
+
+
 def head_commit(root: Path) -> str:
     code, head = run_git(root, "rev-parse", "HEAD")
     return head if code == 0 and head else "UNBORN"

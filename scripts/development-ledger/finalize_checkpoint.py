@@ -123,6 +123,27 @@ def _record_attempt(
     return append_command_record(checkpoint / "COMMANDS.jsonl", record)
 
 
+def refresh_declared_hashes(root: Path, checkpoint: Path) -> None:
+    """Re-derive the declared inventory hashes before something validates the checkpoint.
+
+    Running a gate appends to the checkpoint's own append-only evidence, so its recorded hashes are
+    stale the instant a cycle starts — the failure class `LSN-0011` records. This re-derives hashes
+    for paths the author already declared; it never adds or removes a declaration, so an undeclared
+    change still fails validation.
+
+    Public, and here rather than in one of its callers, because every runner of the mandatory gate
+    set needs it and a second copy is a second thing that can be forgotten: the Green Keeper did
+    this and the verification command did not, so the same gate was green under one and red under
+    the other (`G1-F-009`).
+    """
+    state_path = checkpoint / "STATE.json"
+    files_path = checkpoint / "FILES.json"
+    if not (state_path.is_file() and files_path.is_file()):
+        return
+    state = load_json(state_path)
+    write_json(files_path, _refresh_inventory_hashes(root, checkpoint, state, load_json(files_path)))
+
+
 def _refresh_inventory_hashes(root: Path, checkpoint: Path, state: dict[str, Any], files: Any) -> Any:
     """Re-derive declared content hashes from the repository. Never invents a declaration."""
     if not isinstance(files, dict):
