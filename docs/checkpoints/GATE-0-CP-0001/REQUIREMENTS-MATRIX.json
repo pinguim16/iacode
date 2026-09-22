@@ -1,0 +1,2796 @@
+{
+  "schemaVersion": "2.0.0",
+  "gate": "GATE-0",
+  "checkpoint": "GATE-0-CP-0001",
+  "expectedSetSource": "policies.expected_requirement_refs over docs/GATE-0-CHECKLIST.md, .iacode/policies/canonical-requirements.json, .iacode/policies/audit-registry.json and LESSON-PREFLIGHT.json",
+  "requirements": [
+    {
+      "id": "REQ-0001",
+      "source": "docs/GATE-0-CHECKLIST.md row 1.1",
+      "sourceRef": "canonical:GATE-0#1.1",
+      "description": "A canonical, machine-readable requirement specification exists for this Gate and the registry mirrors it row for row.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:docs/GATE-0-CHECKLIST.md",
+        "file:.iacode/policies/canonical-requirements.json"
+      ],
+      "testEvidence": [
+        "test:Gate0CanonicalSpecificationTests",
+        "test:test_the_registry_mirrors_the_specification"
+      ],
+      "documentationEvidence": [
+        "file:docs/GATE-0-CHECKLIST.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:CLOSURE-REQUIREMENTS.json",
+        "command:cmd-0005"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0002",
+      "source": "docs/GATE-0-CHECKLIST.md row 1.2",
+      "sourceRef": "canonical:GATE-0#1.2",
+      "description": "The derived expected set names the specification of the Gate it describes instead of a fixed document.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/policies.py",
+        "file:scripts/development-ledger/derive_requirements.py"
+      ],
+      "testEvidence": [
+        "test:test_expected_set_names_the_gate_specification",
+        "test:test_the_setup_gate_still_derives_from_its_own_specification"
+      ],
+      "documentationEvidence": [
+        "file:docs/checkpoints/GATE-0-CP-0001/DECISIONS.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:REQUIREMENTS-MATRIX.json",
+        "command:cmd-0005"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0003",
+      "source": "docs/GATE-0-CHECKLIST.md row 1.3",
+      "sourceRef": "canonical:GATE-0#1.3",
+      "description": "The delivery-assurance scope covers the runtime source this Gate introduces, so a gate result becomes stale when the product changes.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/ledger_common.py"
+      ],
+      "testEvidence": [
+        "test:test_assurance_scope_covers_the_runtime_source",
+        "test:test_the_fingerprint_changes_when_the_runtime_changes"
+      ],
+      "documentationEvidence": [
+        "file:docs/QUALITY-GATES.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:REWORK-LOG.jsonl",
+        "command:cmd-0005"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0004",
+      "source": "docs/GATE-0-CHECKLIST.md row 1.4",
+      "sourceRef": "canonical:GATE-0#1.4",
+      "description": "The closed mandatory gate registry carries every executable gate this Gate introduces.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/policies/quality-gates.json",
+        "file:scripts/iacode/gates/api_tests.py",
+        "file:scripts/iacode/gates/web_tests.py",
+        "file:scripts/iacode/gates/lint.py",
+        "file:scripts/iacode/gates/infra_definition.py"
+      ],
+      "testEvidence": [
+        "test:test_every_declared_key_is_read_somewhere"
+      ],
+      "documentationEvidence": [
+        "file:docs/QUALITY-GATES.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:REWORK-LOG.jsonl",
+        "command:cmd-0005"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0005",
+      "source": "docs/GATE-0-CHECKLIST.md row 1.5",
+      "sourceRef": "canonical:GATE-0#1.5",
+      "description": "Every test suite this Gate introduces is declared canonically and is counted by the count derivation and resolvable as evidence.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/policies/test-suites.json",
+        "file:.iacode/schemas/test-suites.schema.json",
+        "file:scripts/development-ledger/derive_counts.py"
+      ],
+      "testEvidence": [
+        "test:test_declared_suites_are_discovered",
+        "test:test_an_uncounted_suite_declares_why",
+        "test:test_evidence_resolution_covers_the_runtime_suites"
+      ],
+      "documentationEvidence": [
+        "file:docs/checkpoints/GATE-0-CP-0001/DECISIONS.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:COUNTS.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0006",
+      "source": "docs/GATE-0-CHECKLIST.md row 1.6",
+      "sourceRef": "canonical:GATE-0#1.6",
+      "description": "The internal mirror audit judges the Gate it runs in rather than a Gate named in its own source.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/m0_mirror_audit.py",
+        "file:.iacode/policies/gate-scope.json"
+      ],
+      "testEvidence": [
+        "test:test_no_future_gate_capability_is_implemented"
+      ],
+      "documentationEvidence": [
+        "file:docs/checkpoints/GATE-0-CP-0001/DECISIONS.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:M1-INTERNAL-MIRROR.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0007",
+      "source": "docs/GATE-0-CHECKLIST.md row 1.7",
+      "sourceRef": "canonical:GATE-0#1.7",
+      "description": "The internal Red Team battery of this Gate is executable, scoped to the Foundation, and records a null-mutation control.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/gate0_red_team.py",
+        "file:scripts/development-ledger/gate0_runtime_attacks.py"
+      ],
+      "testEvidence": [
+        "test:test_the_scope_control_detects_an_implementation"
+      ],
+      "documentationEvidence": [
+        "checkpoint:RED-TEAM-REPORT.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:M1-INTERNAL-RED-TEAM.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0008",
+      "source": "docs/GATE-0-CHECKLIST.md row 2.1",
+      "sourceRef": "canonical:GATE-0#2.1",
+      "description": "The repository carries the planned application, service, package and infrastructure directories.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:apps/api/pyproject.toml",
+        "file:apps/web/package.json",
+        "file:services/orchestrator/pyproject.toml",
+        "file:packages/common/pyproject.toml",
+        "file:infra/compose/docker-compose.yml"
+      ],
+      "testEvidence": [
+        "test:test_monorepo_structure_exists"
+      ],
+      "documentationEvidence": [
+        "file:docs/ARCHITECTURE.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0005"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0009",
+      "source": "docs/GATE-0-CHECKLIST.md row 2.2",
+      "sourceRef": "canonical:GATE-0#2.2",
+      "description": "A directory reserved for a later Gate says so and contains no implementation.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/policies/gate-scope.json",
+        "file:services/model-gateway/README.md",
+        "file:apps/cli/README.md",
+        "file:datasets/README.md"
+      ],
+      "testEvidence": [
+        "test:test_reserved_directories_declare_themselves"
+      ],
+      "documentationEvidence": [
+        "file:docs/ARCHITECTURE.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0005"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0010",
+      "source": "docs/GATE-0-CHECKLIST.md row 2.3",
+      "sourceRef": "canonical:GATE-0#2.3",
+      "description": "No later-Gate capability is implemented, simulated or faked in this Gate.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/policies.py"
+      ],
+      "testEvidence": [
+        "test:test_no_future_gate_capability_is_implemented",
+        "test:test_the_scope_control_detects_an_implementation"
+      ],
+      "documentationEvidence": [
+        "file:docs/ARCHITECTURE.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:M1-INTERNAL-MIRROR.json",
+        "checkpoint:M1-INTERNAL-RED-TEAM.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0011",
+      "source": "docs/GATE-0-CHECKLIST.md row 3.1",
+      "sourceRef": "canonical:GATE-0#3.1",
+      "description": "The backend is a real FastAPI application that starts reliably and fails loudly when it cannot.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:apps/api/src/iacode_api/main.py",
+        "file:apps/api/src/iacode_api/lifespan.py"
+      ],
+      "testEvidence": [
+        "test:test_application_starts"
+      ],
+      "documentationEvidence": [
+        "file:docs/DEVELOPMENT.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:VERIFICATION-REPORT.json",
+        "command:cmd-0005"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0012",
+      "source": "docs/GATE-0-CHECKLIST.md row 3.2",
+      "sourceRef": "canonical:GATE-0#3.2",
+      "description": "Shutdown is graceful and releases every client the application opened.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:apps/api/src/iacode_api/lifespan.py"
+      ],
+      "testEvidence": [
+        "test:test_shutdown_releases_every_client",
+        "test:test_resources_are_released_after_shutdown"
+      ],
+      "documentationEvidence": [
+        "file:docs/ARCHITECTURE.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0005"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0013",
+      "source": "docs/GATE-0-CHECKLIST.md row 3.3",
+      "sourceRef": "canonical:GATE-0#3.3",
+      "description": "Dependency lifecycle is explicit and held on the application, not in ambient mutable globals.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:apps/api/src/iacode_api/dependencies.py"
+      ],
+      "testEvidence": [
+        "test:test_dependencies_are_held_on_application_state",
+        "test:test_every_mandatory_dependency_is_probed"
+      ],
+      "documentationEvidence": [
+        "file:docs/ARCHITECTURE.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0005"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0014",
+      "source": "docs/GATE-0-CHECKLIST.md row 3.4",
+      "sourceRef": "canonical:GATE-0#3.4",
+      "description": "`GET /health` reports process liveness and does not depend on external dependencies to answer.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:apps/api/src/iacode_api/routes/health.py"
+      ],
+      "testEvidence": [
+        "test:test_health_is_up_while_dependencies_are_down",
+        "test:test_health_answers_without_contacting_a_dependency"
+      ],
+      "documentationEvidence": [
+        "file:docs/runbooks/FOUNDATION.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:VERIFICATION-REPORT.json",
+        "checkpoint:M1-INTERNAL-RED-TEAM.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0015",
+      "source": "docs/GATE-0-CHECKLIST.md row 3.5",
+      "sourceRef": "canonical:GATE-0#3.5",
+      "description": "`GET /ready` probes PostgreSQL, Redis, MinIO and Temporal and refuses readiness when a mandatory dependency is unavailable.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:apps/api/src/iacode_api/routes/health.py",
+        "file:apps/api/src/iacode_api/readiness.py"
+      ],
+      "testEvidence": [
+        "test:test_ready_reports_each_dependency",
+        "test:test_readiness_is_ready_against_the_running_stack",
+        "test:test_readiness_bounds_a_hanging_probe"
+      ],
+      "documentationEvidence": [
+        "file:docs/runbooks/FOUNDATION.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:VERIFICATION-REPORT.json",
+        "checkpoint:M1-INTERNAL-RED-TEAM.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0016",
+      "source": "docs/GATE-0-CHECKLIST.md row 3.6",
+      "sourceRef": "canonical:GATE-0#3.6",
+      "description": "`GET /version` reports the application version and build identity and exposes no secret.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:apps/api/src/iacode_api/routes/version.py"
+      ],
+      "testEvidence": [
+        "test:test_version_exposes_no_secret"
+      ],
+      "documentationEvidence": [
+        "file:docs/runbooks/FOUNDATION.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:VERIFICATION-REPORT.json",
+        "checkpoint:M1-INTERNAL-RED-TEAM.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0017",
+      "source": "docs/GATE-0-CHECKLIST.md row 3.7",
+      "sourceRef": "canonical:GATE-0#3.7",
+      "description": "The application exposes a Prometheus metrics endpoint with request, latency, status and dependency metrics.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:apps/api/src/iacode_api/observability/metrics.py"
+      ],
+      "testEvidence": [
+        "test:test_metrics_endpoint_exposes_request_metrics",
+        "test:test_metrics_label_routes_by_template_not_by_url",
+        "test:test_readiness_updates_the_dependency_gauge"
+      ],
+      "documentationEvidence": [
+        "file:docs/ARCHITECTURE.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:VERIFICATION-REPORT.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0018",
+      "source": "docs/GATE-0-CHECKLIST.md row 3.8",
+      "sourceRef": "canonical:GATE-0#3.8",
+      "description": "OpenAPI documentation describes the Foundation endpoints and exposes no internal-only route.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:apps/api/src/iacode_api/main.py"
+      ],
+      "testEvidence": [
+        "test:test_openapi_documents_the_foundation_endpoints",
+        "test:test_metrics_is_not_part_of_the_api_contract"
+      ],
+      "documentationEvidence": [
+        "file:docs/runbooks/FOUNDATION.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0005"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0019",
+      "source": "docs/GATE-0-CHECKLIST.md row 3.9",
+      "sourceRef": "canonical:GATE-0#3.9",
+      "description": "CORS is configured explicitly from configuration, without a permissive wildcard, and allows the local frontend.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:apps/api/src/iacode_api/config.py",
+        "file:apps/api/src/iacode_api/main.py"
+      ],
+      "testEvidence": [
+        "test:test_cors_is_explicit_and_not_wildcard",
+        "test:test_cors_refuses_a_wildcard",
+        "test:test_cors_allows_the_local_frontend_to_read_the_correlation_header"
+      ],
+      "documentationEvidence": [
+        "file:infra/compose/.env.example"
+      ],
+      "validationEvidence": [
+        "checkpoint:M1-INTERNAL-RED-TEAM.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0020",
+      "source": "docs/GATE-0-CHECKLIST.md row 4.1",
+      "sourceRef": "canonical:GATE-0#4.1",
+      "description": "Configuration is typed, validated at load time and rejects an invalid or missing mandatory value.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:apps/api/src/iacode_api/config.py"
+      ],
+      "testEvidence": [
+        "test:test_configuration_rejects_invalid_values"
+      ],
+      "documentationEvidence": [
+        "file:docs/DEVELOPMENT.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:M1-INTERNAL-RED-TEAM.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0021",
+      "source": "docs/GATE-0-CHECKLIST.md row 4.2",
+      "sourceRef": "canonical:GATE-0#4.2",
+      "description": "Safe defaults, development configuration and test configuration are separated rather than conflated.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:apps/api/src/iacode_api/config.py",
+        "file:infra/compose/.env.example"
+      ],
+      "testEvidence": [
+        "test:test_configuration_layers_are_separate",
+        "test:test_test_settings_ignore_the_ambient_environment"
+      ],
+      "documentationEvidence": [
+        "file:docs/DEVELOPMENT.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0005"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0022",
+      "source": "docs/GATE-0-CHECKLIST.md row 4.3",
+      "sourceRef": "canonical:GATE-0#4.3",
+      "description": "A committed example environment file documents every key and carries no real secret, and the real file is ignored by Git.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:infra/compose/.env.example",
+        "file:.gitignore",
+        "file:scripts/iacode/bootstrap_env.py"
+      ],
+      "testEvidence": [
+        "test:test_env_example_documents_every_key_without_secrets",
+        "test:test_the_real_environment_file_is_ignored"
+      ],
+      "documentationEvidence": [
+        "file:docs/runbooks/FOUNDATION.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0005"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0023",
+      "source": "docs/GATE-0-CHECKLIST.md row 4.4",
+      "sourceRef": "canonical:GATE-0#4.4",
+      "description": "Secret values are redacted wherever configuration, errors or logs could expose them.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:packages/common/src/iacode_common/redaction.py"
+      ],
+      "testEvidence": [
+        "test:test_secrets_are_redacted_in_logs_and_errors",
+        "test:test_redaction_masks_a_connection_string_without_hiding_the_host",
+        "test:test_redaction_reaches_every_depth_of_a_mapping"
+      ],
+      "documentationEvidence": [
+        "file:.iacode/policies/secret-policy.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:M1-INTERNAL-RED-TEAM.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0024",
+      "source": "docs/GATE-0-CHECKLIST.md row 4.5",
+      "sourceRef": "canonical:GATE-0#4.5",
+      "description": "No secret is baked into an image, a compose file, a Dockerfile or a committed configuration file.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:infra/compose/docker-compose.yml",
+        "file:apps/api/Dockerfile",
+        "file:apps/web/Dockerfile"
+      ],
+      "testEvidence": [
+        "test:test_no_secret_is_committed_in_infrastructure",
+        "test:test_dockerfiles_carry_no_secret"
+      ],
+      "documentationEvidence": [
+        "file:.iacode/policies/secret-policy.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0005"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0025",
+      "source": "docs/GATE-0-CHECKLIST.md row 5.1",
+      "sourceRef": "canonical:GATE-0#5.1",
+      "description": "PostgreSQL runs locally from the compose stack at a pinned version with a persistent named volume.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:infra/compose/docker-compose.yml"
+      ],
+      "testEvidence": [
+        "test:test_postgres_is_pinned_and_persistent",
+        "test:test_durable_state_uses_named_volumes"
+      ],
+      "documentationEvidence": [
+        "file:docs/VERSIONS.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:VERIFICATION-REPORT.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0026",
+      "source": "docs/GATE-0-CHECKLIST.md row 5.2",
+      "sourceRef": "canonical:GATE-0#5.2",
+      "description": "The persistence layer is real, asynchronous and pooled, built on SQLAlchemy 2.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:apps/api/src/iacode_api/db/engine.py"
+      ],
+      "testEvidence": [
+        "test:test_database_round_trip",
+        "test:test_a_failed_statement_does_not_poison_the_pooled_connection"
+      ],
+      "documentationEvidence": [
+        "file:docs/ARCHITECTURE.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:VERIFICATION-REPORT.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0027",
+      "source": "docs/GATE-0-CHECKLIST.md row 5.3",
+      "sourceRef": "canonical:GATE-0#5.3",
+      "description": "Alembic migrations run from zero against an empty database and produce the declared schema.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:apps/api/migrations/versions/0001_foundation_schema.py",
+        "file:apps/api/migrations/env.py"
+      ],
+      "testEvidence": [
+        "test:test_migrations_run_from_zero"
+      ],
+      "documentationEvidence": [
+        "file:docs/runbooks/FOUNDATION.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:VERIFICATION-REPORT.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0028",
+      "source": "docs/GATE-0-CHECKLIST.md row 5.4",
+      "sourceRef": "canonical:GATE-0#5.4",
+      "description": "Starting against an already-migrated database neither fails nor recreates the schema.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:apps/api/migrations/env.py",
+        "file:scripts/iacode/migrate.py"
+      ],
+      "testEvidence": [
+        "test:test_migrations_are_idempotent_on_restart"
+      ],
+      "documentationEvidence": [
+        "file:docs/runbooks/FOUNDATION.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:VERIFICATION-REPORT.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0029",
+      "source": "docs/GATE-0-CHECKLIST.md row 5.5",
+      "sourceRef": "canonical:GATE-0#5.5",
+      "description": "A failed migration never produces a healthy readiness or a silent partial start.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:apps/api/src/iacode_api/readiness.py",
+        "file:infra/compose/docker-compose.yml"
+      ],
+      "testEvidence": [
+        "test:test_failed_migration_does_not_report_ready",
+        "test:test_the_api_waits_for_the_migration_to_succeed",
+        "test:test_a_failed_migration_reports_failure"
+      ],
+      "documentationEvidence": [
+        "file:docs/runbooks/FOUNDATION.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:M1-INTERNAL-RED-TEAM.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0030",
+      "source": "docs/GATE-0-CHECKLIST.md row 5.6",
+      "sourceRef": "canonical:GATE-0#5.6",
+      "description": "The structural domain tables the later Gates build on exist, with their relationships and constraints.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:apps/api/src/iacode_api/db/models.py"
+      ],
+      "testEvidence": [
+        "test:test_structural_tables_exist",
+        "test:test_relationships_cascade_deliberately",
+        "test:test_the_schema_matches_the_declared_model"
+      ],
+      "documentationEvidence": [
+        "file:docs/ARCHITECTURE.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:VERIFICATION-REPORT.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0031",
+      "source": "docs/GATE-0-CHECKLIST.md row 5.7",
+      "sourceRef": "canonical:GATE-0#5.7",
+      "description": "Identifiers use one consistent strategy, UUIDv7, implemented and tested rather than assumed.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:packages/common/src/iacode_common/identifiers.py"
+      ],
+      "testEvidence": [
+        "test:test_uuid7_is_ordered_and_well_formed",
+        "test:test_uuid7_is_monotonic_within_a_millisecond",
+        "test:test_identifiers_are_time_ordered_in_the_database"
+      ],
+      "documentationEvidence": [
+        "file:docs/ARCHITECTURE.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0005"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0032",
+      "source": "docs/GATE-0-CHECKLIST.md row 5.8",
+      "sourceRef": "canonical:GATE-0#5.8",
+      "description": "The common column convention is defined once and applied where it makes sense, not forced everywhere.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:apps/api/src/iacode_api/db/base.py"
+      ],
+      "testEvidence": [
+        "test:test_common_columns_follow_the_convention",
+        "test:test_the_two_base_classes_are_used_deliberately"
+      ],
+      "documentationEvidence": [
+        "file:docs/ARCHITECTURE.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0005"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0033",
+      "source": "docs/GATE-0-CHECKLIST.md row 5.9",
+      "sourceRef": "canonical:GATE-0#5.9",
+      "description": "The pgvector position is decided, recorded, and — where the extension is enabled — migrated and tested.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:apps/api/migrations/versions/0001_foundation_schema.py"
+      ],
+      "testEvidence": [
+        "test:test_pgvector_extension_is_available"
+      ],
+      "documentationEvidence": [
+        "file:docs/adr/ADR-0013-pgvector-prepared-not-used.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:VERIFICATION-REPORT.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0034",
+      "source": "docs/GATE-0-CHECKLIST.md row 6.1",
+      "sourceRef": "canonical:GATE-0#6.1",
+      "description": "Redis runs locally from the compose stack at a pinned version.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:infra/compose/docker-compose.yml"
+      ],
+      "testEvidence": [
+        "test:test_redis_is_pinned",
+        "test:test_redis_answers_on_the_published_port"
+      ],
+      "documentationEvidence": [
+        "file:docs/VERSIONS.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:VERIFICATION-REPORT.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0035",
+      "source": "docs/GATE-0-CHECKLIST.md row 6.2",
+      "sourceRef": "canonical:GATE-0#6.2",
+      "description": "The backend holds a real Redis client whose availability the readiness probe verifies.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:apps/api/src/iacode_api/cache/client.py"
+      ],
+      "testEvidence": [
+        "test:test_ready_reports_each_dependency"
+      ],
+      "documentationEvidence": [
+        "file:docs/ARCHITECTURE.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:VERIFICATION-REPORT.json",
+        "checkpoint:M1-INTERNAL-RED-TEAM.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0036",
+      "source": "docs/GATE-0-CHECKLIST.md row 6.3",
+      "sourceRef": "canonical:GATE-0#6.3",
+      "description": "An integration test exercises a real Redis round trip against the running service.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:apps/api/tests/integration/test_dependencies.py"
+      ],
+      "testEvidence": [
+        "test:test_redis_round_trip"
+      ],
+      "documentationEvidence": [
+        "file:docs/DEVELOPMENT.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:VERIFICATION-REPORT.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0037",
+      "source": "docs/GATE-0-CHECKLIST.md row 7.1",
+      "sourceRef": "canonical:GATE-0#7.1",
+      "description": "MinIO runs locally from the compose stack at a pinned version with a persistent named volume.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:infra/compose/docker-compose.yml"
+      ],
+      "testEvidence": [
+        "test:test_minio_is_pinned_and_persistent",
+        "test:test_durable_state_uses_named_volumes"
+      ],
+      "documentationEvidence": [
+        "file:docs/VERSIONS.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:VERIFICATION-REPORT.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0038",
+      "source": "docs/GATE-0-CHECKLIST.md row 7.2",
+      "sourceRef": "canonical:GATE-0#7.2",
+      "description": "The buckets the later Gates need are created by an idempotent bootstrap that is safe to re-run.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:infra/compose/docker-compose.yml",
+        "file:infra/minio/bootstrap-minio.sh"
+      ],
+      "testEvidence": [
+        "test:test_bucket_bootstrap_is_idempotent",
+        "test:test_the_artifact_bucket_exists_and_is_private"
+      ],
+      "documentationEvidence": [
+        "file:docs/runbooks/FOUNDATION.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:VERIFICATION-REPORT.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0039",
+      "source": "docs/GATE-0-CHECKLIST.md row 7.3",
+      "sourceRef": "canonical:GATE-0#7.3",
+      "description": "The readiness probe verifies real object-storage connectivity rather than a reachable port.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:apps/api/src/iacode_api/storage/client.py"
+      ],
+      "testEvidence": [
+        "test:test_ready_reports_each_dependency"
+      ],
+      "documentationEvidence": [
+        "file:docs/ARCHITECTURE.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:VERIFICATION-REPORT.json",
+        "checkpoint:M1-INTERNAL-RED-TEAM.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0040",
+      "source": "docs/GATE-0-CHECKLIST.md row 7.4",
+      "sourceRef": "canonical:GATE-0#7.4",
+      "description": "An integration test writes, reads and deletes a real object.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:apps/api/tests/integration/test_dependencies.py"
+      ],
+      "testEvidence": [
+        "test:test_object_storage_round_trip"
+      ],
+      "documentationEvidence": [
+        "file:docs/DEVELOPMENT.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:VERIFICATION-REPORT.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0041",
+      "source": "docs/GATE-0-CHECKLIST.md row 8.1",
+      "sourceRef": "canonical:GATE-0#8.1",
+      "description": "Temporal runs locally from the compose stack at a pinned version with its persistent state.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:infra/compose/docker-compose.yml",
+        "file:infra/temporal/dynamicconfig/iacode.yaml"
+      ],
+      "testEvidence": [
+        "test:test_temporal_is_pinned",
+        "test:test_the_configured_namespace_exists"
+      ],
+      "documentationEvidence": [
+        "file:docs/VERSIONS.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:VERIFICATION-REPORT.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0042",
+      "source": "docs/GATE-0-CHECKLIST.md row 8.2",
+      "sourceRef": "canonical:GATE-0#8.2",
+      "description": "An IACode worker connects to Temporal and polls its task queue as a first-class service.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/orchestrator/src/iacode_orchestrator/worker.py",
+        "file:services/orchestrator/src/iacode_orchestrator/healthcheck.py"
+      ],
+      "testEvidence": [
+        "test:test_worker_registers_the_smoke_workflow",
+        "test:test_the_worker_is_polling_our_task_queue"
+      ],
+      "documentationEvidence": [
+        "file:docs/ARCHITECTURE.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:VERIFICATION-REPORT.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0043",
+      "source": "docs/GATE-0-CHECKLIST.md row 8.3",
+      "sourceRef": "canonical:GATE-0#8.3",
+      "description": "The readiness probe verifies real Temporal connectivity.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:apps/api/src/iacode_api/workflows/client.py"
+      ],
+      "testEvidence": [
+        "test:test_temporal_connectivity",
+        "test:test_temporal_readiness_fails_against_an_unknown_namespace"
+      ],
+      "documentationEvidence": [
+        "file:docs/ARCHITECTURE.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:VERIFICATION-REPORT.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0044",
+      "source": "docs/GATE-0-CHECKLIST.md row 8.4",
+      "sourceRef": "canonical:GATE-0#8.4",
+      "description": "A minimal real workflow and activity execute end to end through the worker and return an observable result.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/orchestrator/src/iacode_orchestrator/workflows/smoke.py",
+        "file:services/orchestrator/src/iacode_orchestrator/smoke_client.py"
+      ],
+      "testEvidence": [
+        "test:test_smoke_workflow_executes_end_to_end",
+        "test:test_the_workflow_result_is_recorded_in_history"
+      ],
+      "documentationEvidence": [
+        "file:docs/runbooks/FOUNDATION.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:VERIFICATION-REPORT.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0045",
+      "source": "docs/GATE-0-CHECKLIST.md row 8.5",
+      "sourceRef": "canonical:GATE-0#8.5",
+      "description": "No agent workflow, tool call or orchestration of a later Gate is implemented here.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/orchestrator/src/iacode_orchestrator/workflows/smoke.py"
+      ],
+      "testEvidence": [
+        "test:test_no_future_gate_capability_is_implemented"
+      ],
+      "documentationEvidence": [
+        "file:docs/ARCHITECTURE.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:M1-INTERNAL-MIRROR.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0046",
+      "source": "docs/GATE-0-CHECKLIST.md row 9.1",
+      "sourceRef": "canonical:GATE-0#9.1",
+      "description": "A real Angular application exists and builds reproducibly with pinned dependencies.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:apps/web/package.json",
+        "file:apps/web/package-lock.json",
+        "file:apps/web/Dockerfile"
+      ],
+      "testEvidence": [
+        "test:test_web_dependencies_are_locked"
+      ],
+      "documentationEvidence": [
+        "file:docs/VERSIONS.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:VERIFICATION-REPORT.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0047",
+      "source": "docs/GATE-0-CHECKLIST.md row 9.2",
+      "sourceRef": "canonical:GATE-0#9.2",
+      "description": "The Foundation page identifies IACode and renders the live backend health, readiness and version.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:apps/web/src/app/app.ts",
+        "file:apps/web/src/app/app.html",
+        "file:apps/web/src/app/foundation-status.service.ts"
+      ],
+      "testEvidence": [
+        "test:test_the_web_shell_is_served",
+        "test:test_unknown_paths_serve_the_application_shell"
+      ],
+      "documentationEvidence": [
+        "file:docs/runbooks/FOUNDATION.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:VERIFICATION-REPORT.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0048",
+      "source": "docs/GATE-0-CHECKLIST.md row 9.3",
+      "sourceRef": "canonical:GATE-0#9.3",
+      "description": "The API base address is centralized in configuration, carries no secret and is not hardcoded across the code.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:apps/web/src/app/api-config.ts",
+        "file:apps/web/docker-entrypoint.sh"
+      ],
+      "testEvidence": [
+        "test:test_api_base_is_centralised",
+        "test:test_the_runtime_configuration_is_written_at_start_up",
+        "test:test_the_runtime_configuration_carries_no_secret"
+      ],
+      "documentationEvidence": [
+        "file:docs/ARCHITECTURE.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:VERIFICATION-REPORT.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0049",
+      "source": "docs/GATE-0-CHECKLIST.md row 9.4",
+      "sourceRef": "canonical:GATE-0#9.4",
+      "description": "Frontend unit tests run headless and are part of the verification command.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/iacode/gates/web_tests.py",
+        "file:scripts/iacode/verify.py"
+      ],
+      "testEvidence": [
+        "test:test_web_dependencies_are_locked"
+      ],
+      "documentationEvidence": [
+        "file:docs/DEVELOPMENT.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:VERIFICATION-REPORT.json",
+        "command:cmd-0005"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0050",
+      "source": "docs/GATE-0-CHECKLIST.md row 10.1",
+      "sourceRef": "canonical:GATE-0#10.1",
+      "description": "Every image builds from a pinned base, runs as a non-root user where practical, carries no secret and excludes build waste.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:apps/api/Dockerfile",
+        "file:apps/web/Dockerfile",
+        "file:services/orchestrator/Dockerfile",
+        "file:.dockerignore"
+      ],
+      "testEvidence": [
+        "test:test_dockerfiles_pin_and_drop_root",
+        "test:test_the_build_context_excludes_the_ledger_and_the_toolchain"
+      ],
+      "documentationEvidence": [
+        "file:docs/VERSIONS.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0005"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0051",
+      "source": "docs/GATE-0-CHECKLIST.md row 10.2",
+      "sourceRef": "canonical:GATE-0#10.2",
+      "description": "The compose stack declares every Foundation service and nothing that the Foundation does not need.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:infra/compose/docker-compose.yml"
+      ],
+      "testEvidence": [
+        "test:test_compose_declares_the_foundation_services"
+      ],
+      "documentationEvidence": [
+        "file:docs/runbooks/FOUNDATION.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0005"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0052",
+      "source": "docs/GATE-0-CHECKLIST.md row 10.3",
+      "sourceRef": "canonical:GATE-0#10.3",
+      "description": "Every service that can report health has a real healthcheck, and start-up ordering uses those conditions instead of fixed sleeps.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:infra/compose/docker-compose.yml"
+      ],
+      "testEvidence": [
+        "test:test_compose_uses_health_conditions_not_sleeps",
+        "test:test_every_long_running_service_has_a_healthcheck",
+        "test:test_healthchecks_do_more_than_confirm_a_process_exists"
+      ],
+      "documentationEvidence": [
+        "file:docs/runbooks/FOUNDATION.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:M1-INTERNAL-RED-TEAM.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0053",
+      "source": "docs/GATE-0-CHECKLIST.md row 10.4",
+      "sourceRef": "canonical:GATE-0#10.4",
+      "description": "Restart behaviour is declared, and the stack recovers its state after a restart.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:infra/compose/docker-compose.yml",
+        "file:scripts/iacode/scenarios/restart.py"
+      ],
+      "testEvidence": [
+        "test:test_every_long_running_service_declares_a_restart_policy",
+        "test:test_one_shot_jobs_do_not_restart"
+      ],
+      "documentationEvidence": [
+        "file:docs/runbooks/FOUNDATION.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:VERIFICATION-REPORT.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0054",
+      "source": "docs/GATE-0-CHECKLIST.md row 10.5",
+      "sourceRef": "canonical:GATE-0#10.5",
+      "description": "Durable state lives in named volumes that are documented, not in the container filesystem.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:infra/compose/docker-compose.yml"
+      ],
+      "testEvidence": [
+        "test:test_durable_state_uses_named_volumes"
+      ],
+      "documentationEvidence": [
+        "file:docs/runbooks/FOUNDATION.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:VERIFICATION-REPORT.json",
+        "checkpoint:M1-INTERNAL-RED-TEAM.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0055",
+      "source": "docs/GATE-0-CHECKLIST.md row 10.6",
+      "sourceRef": "canonical:GATE-0#10.6",
+      "description": "The stack uses an explicit network and publishes only the ports local development needs, from configuration.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:infra/compose/docker-compose.yml",
+        "file:infra/compose/.env.example"
+      ],
+      "testEvidence": [
+        "test:test_published_ports_are_configurable_and_minimal",
+        "test:test_published_ports_are_loopback_only",
+        "test:test_every_service_is_on_the_explicit_network"
+      ],
+      "documentationEvidence": [
+        "file:docs/runbooks/FOUNDATION.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:M1-INTERNAL-RED-TEAM.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0056",
+      "source": "docs/GATE-0-CHECKLIST.md row 11.1",
+      "sourceRef": "canonical:GATE-0#11.1",
+      "description": "The backend and the worker emit structured logs carrying the contract fields, absent rather than invented when there is no context.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:packages/telemetry/src/iacode_telemetry/logging.py",
+        "file:packages/telemetry/src/iacode_telemetry/context.py"
+      ],
+      "testEvidence": [
+        "test:test_structured_log_contract",
+        "test:test_a_field_with_no_value_is_absent_rather_than_null"
+      ],
+      "documentationEvidence": [
+        "file:docs/ARCHITECTURE.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:M1-INTERNAL-RED-TEAM.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0057",
+      "source": "docs/GATE-0-CHECKLIST.md row 11.2",
+      "sourceRef": "canonical:GATE-0#11.2",
+      "description": "Every HTTP request carries a correlation identifier that is accepted or generated, propagated, returned and logged.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:apps/api/src/iacode_api/middleware/correlation.py"
+      ],
+      "testEvidence": [
+        "test:test_correlation_identifier_is_propagated",
+        "test:test_a_malformed_correlation_identifier_is_replaced",
+        "test:test_the_request_identifier_differs_per_request"
+      ],
+      "documentationEvidence": [
+        "file:docs/ARCHITECTURE.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:M1-INTERNAL-RED-TEAM.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0058",
+      "source": "docs/GATE-0-CHECKLIST.md row 11.3",
+      "sourceRef": "canonical:GATE-0#11.3",
+      "description": "The API error contract is explicit, extensible and never returns a traceback or internal detail to the client while keeping it in the logs.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:apps/api/src/iacode_api/errors.py",
+        "file:packages/contracts/src/iacode_contracts/foundation.py"
+      ],
+      "testEvidence": [
+        "test:test_internal_error_leaks_nothing",
+        "test:test_internal_error_still_carries_a_correlation_identifier",
+        "test:test_validation_errors_do_not_echo_the_submitted_value"
+      ],
+      "documentationEvidence": [
+        "file:docs/ARCHITECTURE.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:M1-INTERNAL-RED-TEAM.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0059",
+      "source": "docs/GATE-0-CHECKLIST.md row 11.4",
+      "sourceRef": "canonical:GATE-0#11.4",
+      "description": "Prometheus is provisioned and scrapes the API and the worker.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:infra/prometheus/prometheus.yml",
+        "file:services/orchestrator/src/iacode_orchestrator/runtime.py"
+      ],
+      "testEvidence": [
+        "test:test_prometheus_scrapes_the_foundation_targets",
+        "test:test_the_api_instruments_reach_prometheus"
+      ],
+      "documentationEvidence": [
+        "file:docs/runbooks/FOUNDATION.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:VERIFICATION-REPORT.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0060",
+      "source": "docs/GATE-0-CHECKLIST.md row 11.5",
+      "sourceRef": "canonical:GATE-0#11.5",
+      "description": "Grafana starts with the Prometheus datasource and a Foundation dashboard provisioned automatically.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:infra/grafana/provisioning/datasources/prometheus.yml",
+        "file:infra/grafana/dashboards/foundation.json"
+      ],
+      "testEvidence": [
+        "test:test_grafana_provisioning_is_declared",
+        "test:test_grafana_is_healthy",
+        "test:test_grafana_refuses_anonymous_access"
+      ],
+      "documentationEvidence": [
+        "file:docs/runbooks/FOUNDATION.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:VERIFICATION-REPORT.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0061",
+      "source": "docs/GATE-0-CHECKLIST.md row 11.6",
+      "sourceRef": "canonical:GATE-0#11.6",
+      "description": "The OpenTelemetry position for the Foundation is decided and recorded rather than left implicit.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:packages/telemetry/src/iacode_telemetry/context.py"
+      ],
+      "testEvidence": [
+        "test:test_a_field_with_no_value_is_absent_rather_than_null"
+      ],
+      "documentationEvidence": [
+        "file:docs/adr/ADR-0015-opentelemetry-deferred.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0005"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0062",
+      "source": "docs/GATE-0-CHECKLIST.md row 12.1",
+      "sourceRef": "canonical:GATE-0#12.1",
+      "description": "A reproducible backup produces a PostgreSQL dump and the object-storage contents, with a correct exit code and a log, and fails loudly on partial failure.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/iacode/backup.py"
+      ],
+      "testEvidence": [
+        "test:test_backup_fails_loudly",
+        "test:test_an_empty_dump_is_a_failure"
+      ],
+      "documentationEvidence": [
+        "file:docs/runbooks/BACKUP-RESTORE.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:VERIFICATION-REPORT.json",
+        "checkpoint:M1-INTERNAL-RED-TEAM.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0063",
+      "source": "docs/GATE-0-CHECKLIST.md row 12.2",
+      "sourceRef": "canonical:GATE-0#12.2",
+      "description": "The backup never writes a credential into its artifacts or its log.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/iacode/backup.py"
+      ],
+      "testEvidence": [
+        "test:test_backup_artifacts_carry_no_secret",
+        "test:test_the_backup_never_passes_a_password_as_an_argument"
+      ],
+      "documentationEvidence": [
+        "file:docs/runbooks/BACKUP-RESTORE.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:M1-INTERNAL-RED-TEAM.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0064",
+      "source": "docs/GATE-0-CHECKLIST.md row 12.3",
+      "sourceRef": "canonical:GATE-0#12.3",
+      "description": "A restore reconstructs the database and the object storage from a backup produced by this tooling.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/iacode/restore.py"
+      ],
+      "testEvidence": [
+        "test:test_an_incomplete_backup_is_refused",
+        "test:test_a_corrupt_dump_is_detected_before_anything_is_overwritten",
+        "test:test_a_valid_backup_passes_verification"
+      ],
+      "documentationEvidence": [
+        "file:docs/runbooks/BACKUP-RESTORE.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:VERIFICATION-REPORT.json",
+        "checkpoint:M1-INTERNAL-RED-TEAM.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0065",
+      "source": "docs/GATE-0-CHECKLIST.md row 12.4",
+      "sourceRef": "canonical:GATE-0#12.4",
+      "description": "Backup and restore are verified end to end with synthetic data in a disposable environment, and the restored data is checked rather than assumed.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/iacode/backup_restore_check.py"
+      ],
+      "testEvidence": [
+        "test:test_a_valid_backup_passes_verification"
+      ],
+      "documentationEvidence": [
+        "file:docs/runbooks/BACKUP-RESTORE.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:VERIFICATION-REPORT.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0066",
+      "source": "docs/GATE-0-CHECKLIST.md row 12.5",
+      "sourceRef": "canonical:GATE-0#12.5",
+      "description": "Backup retention for the Foundation is either implemented simply or documented as out of scope, with no silent gap.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/iacode/backup.py"
+      ],
+      "testEvidence": [
+        "test:test_retention_keeps_the_newest_and_deletes_the_rest",
+        "test:test_retention_can_be_disabled",
+        "test:test_retention_ignores_a_directory_that_is_not_a_backup"
+      ],
+      "documentationEvidence": [
+        "file:docs/runbooks/BACKUP-RESTORE.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0005"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0067",
+      "source": "docs/GATE-0-CHECKLIST.md row 13.1",
+      "sourceRef": "canonical:GATE-0#13.1",
+      "description": "One documented command runs the whole Gate verification and works on the primary Windows environment as well as on POSIX.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/iacode/verify.py",
+        "file:verify.ps1",
+        "file:scripts/iacode/policies_bridge.py"
+      ],
+      "testEvidence": [
+        "test:test_declared_suites_are_discovered"
+      ],
+      "documentationEvidence": [
+        "file:docs/DEVELOPMENT.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:VERIFICATION-REPORT.json",
+        "command:cmd-0005"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0068",
+      "source": "docs/GATE-0-CHECKLIST.md row 13.2",
+      "sourceRef": "canonical:GATE-0#13.2",
+      "description": "The backend suite covers health, readiness, version, configuration, redaction, error handling, correlation, database, cache, object storage, workflows and migrations.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:apps/api/tests/conftest.py"
+      ],
+      "testEvidence": [
+        "test:test_health_is_up_while_dependencies_are_down",
+        "test:test_database_round_trip",
+        "test:test_redis_round_trip",
+        "test:test_object_storage_round_trip",
+        "test:test_smoke_workflow_executes_end_to_end",
+        "test:test_migrations_run_from_zero"
+      ],
+      "documentationEvidence": [
+        "file:docs/DEVELOPMENT.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:VERIFICATION-REPORT.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0069",
+      "source": "docs/GATE-0-CHECKLIST.md row 13.3",
+      "sourceRef": "canonical:GATE-0#13.3",
+      "description": "The frontend suite covers bootstrap, the status rendering and the API configuration, and the production build succeeds.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:apps/web/src/app/app.spec.ts",
+        "file:apps/web/src/app/foundation-status.service.spec.ts",
+        "file:apps/web/src/app/api-config.spec.ts"
+      ],
+      "testEvidence": [
+        "test:test_web_dependencies_are_locked"
+      ],
+      "documentationEvidence": [
+        "file:docs/DEVELOPMENT.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:VERIFICATION-REPORT.json",
+        "command:cmd-0005"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0070",
+      "source": "docs/GATE-0-CHECKLIST.md row 13.4",
+      "sourceRef": "canonical:GATE-0#13.4",
+      "description": "Infrastructure smoke validation proves that our own configuration of each service is operational.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:infra/tests/test_running_stack.py",
+        "file:infra/tests/test_compose_definition.py"
+      ],
+      "testEvidence": [
+        "test:test_prometheus_scrapes_the_foundation_targets",
+        "test:test_the_temporal_databases_exist_beside_ours"
+      ],
+      "documentationEvidence": [
+        "file:docs/DEVELOPMENT.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:VERIFICATION-REPORT.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0071",
+      "source": "docs/GATE-0-CHECKLIST.md row 13.5",
+      "sourceRef": "canonical:GATE-0#13.5",
+      "description": "A fresh installation with no previous volume reaches a ready stack, a migrated database, a reachable frontend and a green smoke check.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/iacode/scenarios/fresh_install.py"
+      ],
+      "testEvidence": [
+        "test:test_migrations_run_from_zero"
+      ],
+      "documentationEvidence": [
+        "file:docs/runbooks/FOUNDATION.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:VERIFICATION-REPORT.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0072",
+      "source": "docs/GATE-0-CHECKLIST.md row 13.6",
+      "sourceRef": "canonical:GATE-0#13.6",
+      "description": "A restart of the running stack returns every service to ready with its data intact.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/iacode/scenarios/restart.py"
+      ],
+      "testEvidence": [
+        "test:test_migrations_are_idempotent_on_restart"
+      ],
+      "documentationEvidence": [
+        "file:docs/runbooks/FOUNDATION.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:VERIFICATION-REPORT.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0073",
+      "source": "docs/GATE-0-CHECKLIST.md row 13.7",
+      "sourceRef": "canonical:GATE-0#13.7",
+      "description": "With a mandatory dependency stopped, liveness may stay up while readiness fails correctly, and readiness recovers when the dependency returns.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/iacode/scenarios/dependency_failure.py"
+      ],
+      "testEvidence": [
+        "test:test_health_is_up_while_dependencies_are_down",
+        "test:test_ready_reports_each_dependency"
+      ],
+      "documentationEvidence": [
+        "file:docs/runbooks/FOUNDATION.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:VERIFICATION-REPORT.json",
+        "checkpoint:M1-INTERNAL-RED-TEAM.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0074",
+      "source": "docs/GATE-0-CHECKLIST.md row 13.8",
+      "sourceRef": "canonical:GATE-0#13.8",
+      "description": "Lint and static analysis run over the backend, the worker and the frontend and are green.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:ruff.toml",
+        "file:scripts/iacode/gates/lint.py",
+        "file:apps/web/package.json"
+      ],
+      "testEvidence": [
+        "test:test_declared_suites_are_discovered"
+      ],
+      "documentationEvidence": [
+        "file:docs/DEVELOPMENT.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:VERIFICATION-REPORT.json",
+        "command:cmd-0005"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0075",
+      "source": "docs/GATE-0-CHECKLIST.md row 13.9",
+      "sourceRef": "canonical:GATE-0#13.9",
+      "description": "A dependency vulnerability scan is executed, or its absence is justified, and relevant Critical and High findings block the Gate.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/iacode/dependency_scan.py"
+      ],
+      "testEvidence": [
+        "test:test_web_dependencies_are_locked"
+      ],
+      "documentationEvidence": [
+        "file:docs/VERSIONS.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:VERIFICATION-REPORT.json",
+        "command:cmd-0005"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0076",
+      "source": "docs/GATE-0-CHECKLIST.md row 14.1",
+      "sourceRef": "canonical:GATE-0#14.1",
+      "description": "The repository entry documentation describes what exists after this Gate and how to run it.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:README.md"
+      ],
+      "testEvidence": [
+        "test:test_monorepo_structure_exists"
+      ],
+      "documentationEvidence": [
+        "file:README.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0005"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0077",
+      "source": "docs/GATE-0-CHECKLIST.md row 14.2",
+      "sourceRef": "canonical:GATE-0#14.2",
+      "description": "The architecture document describes the Foundation runtime, its boundaries and what is deliberately absent.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:docs/ARCHITECTURE.md"
+      ],
+      "testEvidence": [
+        "test:test_no_future_gate_capability_is_implemented"
+      ],
+      "documentationEvidence": [
+        "file:docs/ARCHITECTURE.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:M1-INTERNAL-MIRROR.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0078",
+      "source": "docs/GATE-0-CHECKLIST.md row 14.3",
+      "sourceRef": "canonical:GATE-0#14.3",
+      "description": "A development guide explains the local workflow end to end for a new machine.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:docs/DEVELOPMENT.md"
+      ],
+      "testEvidence": [
+        "test:test_declared_suites_are_discovered"
+      ],
+      "documentationEvidence": [
+        "file:docs/DEVELOPMENT.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0005"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0079",
+      "source": "docs/GATE-0-CHECKLIST.md row 14.4",
+      "sourceRef": "canonical:GATE-0#14.4",
+      "description": "An operational runbook documents start, stop, rebuild, reset, migrate, health, readiness, Grafana and the smoke checks.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:docs/runbooks/FOUNDATION.md"
+      ],
+      "testEvidence": [
+        "test:test_the_web_shell_is_served"
+      ],
+      "documentationEvidence": [
+        "file:docs/runbooks/FOUNDATION.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:VERIFICATION-REPORT.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0080",
+      "source": "docs/GATE-0-CHECKLIST.md row 14.5",
+      "sourceRef": "canonical:GATE-0#14.5",
+      "description": "A backup and restore runbook documents the full procedure and its verification.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:docs/runbooks/BACKUP-RESTORE.md"
+      ],
+      "testEvidence": [
+        "test:test_a_valid_backup_passes_verification"
+      ],
+      "documentationEvidence": [
+        "file:docs/runbooks/BACKUP-RESTORE.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:VERIFICATION-REPORT.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0081",
+      "source": "docs/GATE-0-CHECKLIST.md row 14.6",
+      "sourceRef": "canonical:GATE-0#14.6",
+      "description": "The pinned versions of every runtime, service and principal library are recorded in one place.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:docs/VERSIONS.md"
+      ],
+      "testEvidence": [
+        "test:test_every_image_is_pinned",
+        "test:test_web_dependencies_are_locked"
+      ],
+      "documentationEvidence": [
+        "file:docs/VERSIONS.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0005"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0082",
+      "source": "docs/GATE-0-CHECKLIST.md row 14.7",
+      "sourceRef": "canonical:GATE-0#14.7",
+      "description": "Every structural decision of this Gate that is not already recorded becomes an ADR, and no ADR duplicates an existing decision.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:docs/adr/ADR-0012-foundation-runtime-stack.md",
+        "file:docs/adr/ADR-0013-pgvector-prepared-not-used.md",
+        "file:docs/adr/ADR-0014-one-postgresql-server-for-the-foundation.md",
+        "file:docs/adr/ADR-0015-opentelemetry-deferred.md"
+      ],
+      "testEvidence": [
+        "test:test_no_future_gate_capability_is_implemented"
+      ],
+      "documentationEvidence": [
+        "file:docs/adr/ADR-0012-foundation-runtime-stack.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:M1-INTERNAL-MIRROR.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0083",
+      "source": "docs/GATE-0-CHECKLIST.md row 15.1",
+      "sourceRef": "canonical:GATE-0#15.1",
+      "description": "The entry contract and the plan describe the current Gate and its status truthfully.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:START-HERE.md",
+        "file:docs/MASTER-PLAN.md"
+      ],
+      "testEvidence": [
+        "test:test_the_specification_exists_and_is_parseable"
+      ],
+      "documentationEvidence": [
+        "file:START-HERE.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0005"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "REQ-0084",
+      "source": "docs/GATE-0-CHECKLIST.md row 15.2",
+      "sourceRef": "canonical:GATE-0#15.2",
+      "description": "The Gate produces a retrospective from the canonical template.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/memory/retrospectives/GATE-0-CP-0001.md"
+      ],
+      "testEvidence": [
+        "test:test_declared_suites_are_discovered"
+      ],
+      "documentationEvidence": [
+        "file:docs/ENGINEERING-MEMORY.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0005"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "LESSON-REQ-0001",
+      "source": "LESSON-PREFLIGHT.json LESSON-REQ-0001",
+      "sourceRef": "lesson:LSN-0001",
+      "description": "Verify checkpoint validation must succeed from a detached checkout of the checkpoint tag",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/validate_checkpoint.py"
+      ],
+      "testEvidence": [
+        "test:DetachedHeadValidationTests"
+      ],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:HANDOFF.md",
+        "file:.iacode/memory/guardrails/registry.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "LESSON-REQ-0002",
+      "source": "LESSON-PREFLIGHT.json LESSON-REQ-0002",
+      "sourceRef": "lesson:LSN-0002",
+      "description": "Verify a file inventory must be recomputed from the repository, never trusted as an assertion",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:FILES.json"
+      ],
+      "testEvidence": [
+        "test:DeltaInventoryTests"
+      ],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0005",
+        "file:.iacode/memory/guardrails/registry.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "LESSON-REQ-0003",
+      "source": "LESSON-PREFLIGHT.json LESSON-REQ-0003",
+      "sourceRef": "lesson:LSN-0003",
+      "description": "Verify every operation attempt must be auditable, including a refusal decided before execution",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:COMMANDS.jsonl"
+      ],
+      "testEvidence": [
+        "test:FinalizationAttemptRecordingTests"
+      ],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0005",
+        "file:.iacode/memory/guardrails/registry.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "LESSON-REQ-0004",
+      "source": "LESSON-PREFLIGHT.json LESSON-REQ-0004",
+      "sourceRef": "lesson:LSN-0004",
+      "description": "Verify a checkpoint may never claim readiness while it also claims to be blocked",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:STATE.json"
+      ],
+      "testEvidence": [
+        "test:StatusBlockerInvariantTests"
+      ],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0005",
+        "file:.iacode/memory/guardrails/registry.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "LESSON-REQ-0005",
+      "source": "LESSON-PREFLIGHT.json LESSON-REQ-0005",
+      "sourceRef": "lesson:LSN-0005",
+      "description": "Verify a PASS requires evidence that can be executed or resolved, not a statement",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:QUALITY.json"
+      ],
+      "testEvidence": [
+        "test:QualityEvidenceTests"
+      ],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0005",
+        "file:.iacode/memory/guardrails/registry.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "LESSON-REQ-0006",
+      "source": "LESSON-PREFLIGHT.json LESSON-REQ-0006",
+      "sourceRef": "lesson:LSN-0006",
+      "description": "Verify the repository must be self-contained; a specification may not live outside it",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:docs/GATE-0-CHECKLIST.md"
+      ],
+      "testEvidence": [
+        "test:Gate0CanonicalSpecificationTests"
+      ],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0005",
+        "file:.iacode/memory/guardrails/registry.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "LESSON-REQ-0007",
+      "source": "LESSON-PREFLIGHT.json LESSON-REQ-0007",
+      "sourceRef": "lesson:LSN-0007",
+      "description": "Verify independent validation cannot be declared by the run that did the work",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:STATE.json"
+      ],
+      "testEvidence": [
+        "test:SecondToolValidationTests"
+      ],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0005",
+        "file:.iacode/memory/guardrails/registry.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "LESSON-REQ-0008",
+      "source": "LESSON-PREFLIGHT.json LESSON-REQ-0008",
+      "sourceRef": "lesson:LSN-0008",
+      "description": "Verify requirement completeness must be total and evidence-backed before handoff",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:REQUIREMENTS-MATRIX.json"
+      ],
+      "testEvidence": [
+        "test:test_declared_suites_are_discovered"
+      ],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:COMPLETENESS-REPORT.json",
+        "file:.iacode/memory/guardrails/registry.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "LESSON-REQ-0009",
+      "source": "LESSON-PREFLIGHT.json LESSON-REQ-0009",
+      "sourceRef": "lesson:LSN-0009",
+      "description": "Verify a red gate requires rework, never a waiver, and never a weakened check",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:REWORK-LOG.jsonl"
+      ],
+      "testEvidence": [
+        "test:GreenKeeperToolTests"
+      ],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0005",
+        "file:.iacode/memory/guardrails/registry.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "LESSON-REQ-0010",
+      "source": "LESSON-PREFLIGHT.json LESSON-REQ-0010",
+      "sourceRef": "lesson:LSN-0010",
+      "description": "Verify a recorded command must carry runtime, working directory, commit and purpose to be replayable",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:COMMANDS.jsonl"
+      ],
+      "testEvidence": [
+        "test:CommandReproducibilityTests"
+      ],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0005",
+        "file:.iacode/memory/guardrails/registry.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "LESSON-REQ-0011",
+      "source": "LESSON-PREFLIGHT.json LESSON-REQ-0011",
+      "sourceRef": "lesson:LSN-0011",
+      "description": "Verify a control over a checkpoint's own evidence must be scoped to the moment it matters",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/green_keeper.py"
+      ],
+      "testEvidence": [
+        "test:DeliveryAssuranceGateTests"
+      ],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:REWORK-LOG.jsonl",
+        "file:.iacode/memory/guardrails/registry.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "LESSON-REQ-0012",
+      "source": "LESSON-PREFLIGHT.json LESSON-REQ-0012",
+      "sourceRef": "lesson:LSN-0012",
+      "description": "Verify sealed checkpoints and their tags are immutable, and tooling must keep validating them",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/anchors/checkpoint-chain.json"
+      ],
+      "testEvidence": [
+        "test:HistoricalCheckpointCompatibilityTests"
+      ],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:M1-INTERNAL-MIRROR.json",
+        "file:.iacode/memory/guardrails/registry.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "LESSON-REQ-0013",
+      "source": "LESSON-PREFLIGHT.json LESSON-REQ-0013",
+      "sourceRef": "lesson:LSN-0013",
+      "description": "Verify an installed capability must be detected by resolved path, not by a bare command lookup",
+      "mandatory": false,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:docs/VERSIONS.md"
+      ],
+      "testEvidence": [
+        "test:test_every_image_is_pinned"
+      ],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:BASELINE.md",
+        "file:.iacode/memory/guardrails/registry.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "LESSON-REQ-0014",
+      "source": "LESSON-PREFLIGHT.json LESSON-REQ-0014",
+      "sourceRef": "lesson:LSN-0014",
+      "description": "Verify evidence must be recorded as it happens, not reconstructed at the end of a run",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:COMMANDS.jsonl"
+      ],
+      "testEvidence": [
+        "test:CommandReproducibilityTests"
+      ],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0005",
+        "file:.iacode/memory/guardrails/registry.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "LESSON-REQ-0015",
+      "source": "LESSON-PREFLIGHT.json LESSON-REQ-0015",
+      "sourceRef": "lesson:LSN-0015",
+      "description": "Verify every positive terminal status needs one shared promotion invariant",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/validate_checkpoint.py"
+      ],
+      "testEvidence": [
+        "test:PromotionInvariantTests"
+      ],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0005",
+        "file:.iacode/memory/guardrails/registry.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "LESSON-REQ-0016",
+      "source": "LESSON-PREFLIGHT.json LESSON-REQ-0016",
+      "sourceRef": "lesson:LSN-0016",
+      "description": "Verify a mandatory set must be closed by policy, never chosen by the caller",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/policies/quality-gates.json",
+        "file:scripts/iacode/policies_bridge.py"
+      ],
+      "testEvidence": [
+        "test:MandatoryGatePolicyTests"
+      ],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:REWORK-LOG.jsonl",
+        "file:.iacode/memory/guardrails/registry.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "LESSON-REQ-0017",
+      "source": "LESSON-PREFLIGHT.json LESSON-REQ-0017",
+      "sourceRef": "lesson:LSN-0017",
+      "description": "Verify a completeness denominator must come from a source the delivery does not own",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/policies.py"
+      ],
+      "testEvidence": [
+        "test:test_expected_set_names_the_gate_specification"
+      ],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:CLOSURE-REQUIREMENTS.json",
+        "file:.iacode/memory/guardrails/registry.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "LESSON-REQ-0018",
+      "source": "LESSON-PREFLIGHT.json LESSON-REQ-0018",
+      "sourceRef": "lesson:LSN-0018",
+      "description": "Verify a structured reference must be resolved, not merely well typed",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/policies/test-suites.json"
+      ],
+      "testEvidence": [
+        "test:test_evidence_resolution_covers_the_runtime_suites"
+      ],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:COMPLETENESS-REPORT.json",
+        "file:.iacode/memory/guardrails/registry.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "LESSON-REQ-0019",
+      "source": "LESSON-PREFLIGHT.json LESSON-REQ-0019",
+      "sourceRef": "lesson:LSN-0019",
+      "description": "Verify a derived artifact must carry a fingerprint of the inputs that produced it",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/derive_counts.py"
+      ],
+      "testEvidence": [
+        "test:test_declared_suites_are_discovered"
+      ],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:COUNTS.json",
+        "file:.iacode/memory/guardrails/registry.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "LESSON-REQ-0020",
+      "source": "LESSON-PREFLIGHT.json LESSON-REQ-0020",
+      "sourceRef": "lesson:LSN-0020",
+      "description": "Verify evidence produced from a dirty tree needs immutable input identity",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:COMMANDS.jsonl"
+      ],
+      "testEvidence": [
+        "test:CommandReproducibilityTests"
+      ],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0005",
+        "file:.iacode/memory/guardrails/registry.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "LESSON-REQ-0021",
+      "source": "LESSON-PREFLIGHT.json LESSON-REQ-0021",
+      "sourceRef": "lesson:LSN-0021",
+      "description": "Verify sealed history needs an anchor outside the content it describes",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/anchors/checkpoint-chain.json"
+      ],
+      "testEvidence": [
+        "test:test_the_scope_control_ignores_a_gate_that_has_already_run"
+      ],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:M1-INTERNAL-MIRROR.json",
+        "file:.iacode/memory/guardrails/registry.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "LESSON-REQ-0022",
+      "source": "LESSON-PREFLIGHT.json LESSON-REQ-0022",
+      "sourceRef": "lesson:LSN-0022",
+      "description": "Verify an authoritative count must be derived once, never maintained by hand twice",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "checkpoint:COUNTS.json"
+      ],
+      "testEvidence": [
+        "test:DerivedCountTests"
+      ],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0005",
+        "file:.iacode/memory/guardrails/registry.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "LESSON-REQ-0023",
+      "source": "LESSON-PREFLIGHT.json LESSON-REQ-0023",
+      "sourceRef": "lesson:LSN-0023",
+      "description": "Verify a lesson must cite a source that actually records the finding it claims",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/memory/lessons.jsonl"
+      ],
+      "testEvidence": [
+        "test:LessonProvenanceTests"
+      ],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md"
+      ],
+      "validationEvidence": [
+        "file:.iacode/memory/LESSONS.md",
+        "file:.iacode/memory/guardrails/registry.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "LESSON-REQ-0024",
+      "source": "LESSON-PREFLIGHT.json LESSON-REQ-0024",
+      "sourceRef": "lesson:LSN-0024",
+      "description": "Verify a control is finished only when its positive path has been executed, not only its refusals",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/gate0_red_team.py"
+      ],
+      "testEvidence": [
+        "test:test_a_valid_backup_passes_verification",
+        "test:test_readiness_is_ready_when_every_probe_succeeds"
+      ],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:M1-INTERNAL-RED-TEAM.json",
+        "file:.iacode/memory/guardrails/registry.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "LESSON-REQ-0025",
+      "source": "LESSON-PREFLIGHT.json LESSON-REQ-0025",
+      "sourceRef": "lesson:LSN-0025",
+      "description": "Verify a generic guardrail derives repository state instead of naming today's checkpoint",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/policies/gate-scope.json"
+      ],
+      "testEvidence": [
+        "test:test_the_scope_control_ignores_a_gate_that_has_already_run"
+      ],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:M1-INTERNAL-MIRROR.json",
+        "file:.iacode/memory/guardrails/registry.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "LESSON-REQ-0026",
+      "source": "LESSON-PREFLIGHT.json LESSON-REQ-0026",
+      "sourceRef": "lesson:LSN-0026",
+      "description": "Verify an adversarial battery without a null-mutation control proves nothing",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/gate0_red_team.py"
+      ],
+      "testEvidence": [
+        "test:test_the_scope_control_detects_an_implementation"
+      ],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:M1-INTERNAL-RED-TEAM.json",
+        "file:.iacode/memory/guardrails/registry.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "LESSON-REQ-0027",
+      "source": "LESSON-PREFLIGHT.json LESSON-REQ-0027",
+      "sourceRef": "lesson:LSN-0027",
+      "description": "Verify a lesson's prose may record a residual limit but may never contradict its status",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/memory/lessons.jsonl"
+      ],
+      "testEvidence": [
+        "test:test_a_guarded_lesson_may_not_describe_itself_as_unguarded"
+      ],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md"
+      ],
+      "validationEvidence": [
+        "file:.iacode/memory/LESSONS.md",
+        "file:.iacode/memory/guardrails/registry.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "LESSON-REQ-0028",
+      "source": "LESSON-PREFLIGHT.json LESSON-REQ-0028",
+      "sourceRef": "lesson:LSN-0028",
+      "description": "Verify a configuration key that no code reads is a defect, not documentation",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:apps/api/src/iacode_api/config.py"
+      ],
+      "testEvidence": [
+        "test:test_every_declared_key_is_read_somewhere"
+      ],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md"
+      ],
+      "validationEvidence": [
+        "file:.iacode/memory/LESSONS.md",
+        "file:.iacode/memory/guardrails/registry.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "LESSON-REQ-0029",
+      "source": "LESSON-PREFLIGHT.json LESSON-REQ-0029",
+      "sourceRef": "lesson:LSN-0029",
+      "description": "Verify a required protocol transition must never turn a mandatory gate red",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/gate_transition_simulation.py"
+      ],
+      "testEvidence": [
+        "test:GateTransitionSimulationTests"
+      ],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0005",
+        "file:.iacode/memory/guardrails/registry.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "LESSON-REQ-0030",
+      "source": "LESSON-PREFLIGHT.json LESSON-REQ-0030",
+      "sourceRef": "lesson:LSN-0031",
+      "description": "Verify an empty applicable set is not a missing required set, and a control must tell them apart",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/m0_mirror_audit.py"
+      ],
+      "testEvidence": [
+        "test:MirrorApplicabilitySemanticsTests"
+      ],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:M1-INTERNAL-MIRROR.json",
+        "file:.iacode/memory/guardrails/registry.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "LESSON-REQ-0031",
+      "source": "LESSON-PREFLIGHT.json LESSON-REQ-0031",
+      "sourceRef": "lesson:LSN-0032",
+      "description": "Verify a control written while one Gate was the only Gate stops being a control when the next one starts",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/policies/gate-scope.json",
+        "file:scripts/development-ledger/policies.py"
+      ],
+      "testEvidence": [
+        "test:test_expected_set_names_the_gate_specification",
+        "test:test_assurance_scope_covers_the_runtime_source",
+        "test:test_declared_suites_are_discovered"
+      ],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:M1-INTERNAL-MIRROR.json",
+        "checkpoint:DECISIONS.md",
+        "file:.iacode/memory/guardrails/registry.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "LESSON-REQ-0032",
+      "source": "LESSON-PREFLIGHT.json LESSON-REQ-0032",
+      "sourceRef": "lesson:LSN-0033",
+      "description": "Verify a value bound in middleware is absent in the handlers that run outside it",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:apps/api/src/iacode_api/errors.py"
+      ],
+      "testEvidence": [
+        "test:test_internal_error_still_carries_a_correlation_identifier"
+      ],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:M1-INTERNAL-RED-TEAM.json",
+        "file:.iacode/memory/guardrails/registry.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "LESSON-REQ-0033",
+      "source": "LESSON-PREFLIGHT.json LESSON-REQ-0033",
+      "sourceRef": "lesson:LSN-0034",
+      "description": "Verify re-deriving what the framework already computed diverges from the framework",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:apps/api/src/iacode_api/observability/metrics.py"
+      ],
+      "testEvidence": [
+        "test:test_metrics_label_routes_by_template_not_by_url",
+        "test:test_the_api_instruments_reach_prometheus"
+      ],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:M1-INTERNAL-RED-TEAM.json",
+        "checkpoint:VERIFICATION-REPORT.json",
+        "file:.iacode/memory/guardrails/registry.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "LESSON-REQ-0034",
+      "source": "LESSON-PREFLIGHT.json LESSON-REQ-0034",
+      "sourceRef": "lesson:LSN-0035",
+      "description": "Verify captured subprocess output decoded or re-emitted with the platform codepage crashes the tool, not the work",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/ledger_common.py",
+        "file:scripts/iacode/compose.py"
+      ],
+      "testEvidence": [
+        "test:test_no_capture_relies_on_the_platform_codepage",
+        "test:test_every_tool_that_re_emits_captured_output_configures_its_own_stream",
+        "test:test_the_rule_detects_a_capture_that_would_fail"
+      ],
+      "documentationEvidence": [
+        "file:.iacode/memory/LESSONS.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:REWORK-LOG.jsonl",
+        "command:cmd-0005",
+        "file:.iacode/memory/guardrails/registry.json"
+      ],
+      "justification": null,
+      "notes": ""
+    }
+  ]
+}

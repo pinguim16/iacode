@@ -29,7 +29,7 @@ from pathlib import Path
 from typing import Any
 
 from ledger_common import LedgerError, find_root, load_json, resolve_latest, utc_now, validate_schema
-from policies import expected_requirement_refs, open_audits
+from policies import expected_requirement_refs, gate_specification, open_audits
 
 EVIDENCE_FIELDS = (
     "implementationEvidence",
@@ -51,11 +51,18 @@ MATRIX_EVIDENCE_FIELDS = (
 # runs as long as the canonical sources are stable.
 KIND_ORDER = ("canonical", "finding", "attack", "local")
 
-EXPECTED_SET_SOURCE = (
-    "policies.expected_requirement_refs over docs/SETUP-00-CHECKLIST.md, "
-    ".iacode/policies/canonical-requirements.json, .iacode/policies/audit-registry.json and "
-    "LESSON-PREFLIGHT.json"
-)
+def expected_set_source(specification: str) -> str:
+    """How the expected set was derived, naming the Gate's own specification document.
+
+    The Gate whose requirements are being derived owns the checklist they come from. Writing one
+    Gate's document into another Gate's derivation would describe the set by a source it was not
+    taken from, which is the same class of defect as a count with no derivation behind it.
+    """
+    return (
+        f"policies.expected_requirement_refs over {specification}, "
+        ".iacode/policies/canonical-requirements.json, .iacode/policies/audit-registry.json and "
+        "LESSON-PREFLIGHT.json"
+    )
 
 
 def _load_preflight(checkpoint: Path) -> dict[str, Any] | None:
@@ -113,8 +120,9 @@ def build(root: Path, checkpoint: Path, gate: str) -> tuple[dict[str, Any], dict
     # The audit sources are the ones this checkpoint actually corrects, read from the registry.
     # Naming a checkpoint's reports by literal here would make the derivation describe the audit of
     # some earlier delivery, which is the coupling class CP9-F-002 records.
+    specification = gate_specification(root, gate)
     sources = [
-        "SOURCE A: docs/SETUP-00-CHECKLIST.md, the canonical SETUP-00 specification",
+        f"SOURCE A: {specification}, the canonical {gate} specification",
         "SOURCE B: docs/MILESTONE-VALIDATION.md, the milestone requirements of the audit",
     ]
     letter = ord("C")
@@ -143,7 +151,7 @@ def build(root: Path, checkpoint: Path, gate: str) -> tuple[dict[str, Any], dict
         "schemaVersion": "2.0.0",
         "gate": gate,
         "checkpoint": checkpoint.name,
-        "expectedSetSource": EXPECTED_SET_SOURCE,
+        "expectedSetSource": expected_set_source(specification),
         "requirements": [
             {
                 "id": row["id"],

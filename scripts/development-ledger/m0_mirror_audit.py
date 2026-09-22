@@ -47,6 +47,7 @@ from ledger_common import (
     resolve_latest,
     run_git,
     scope_fingerprint,
+    use_utf8_stdout,
     utc_now,
     validate_schema,
     write_json,
@@ -142,8 +143,8 @@ def _tool(root: Path, *argv: str) -> tuple[int, str]:
     environment = dict(os.environ)
     environment["PYTHONDONTWRITEBYTECODE"] = "1"
     completed = subprocess.run(
-        [sys.executable, *argv], cwd=root, text=True, stdout=subprocess.PIPE,
-        stderr=subprocess.STDOUT, check=False, env=environment)
+        [sys.executable, *argv], cwd=root, text=True, encoding="utf-8", errors="replace",
+        stdout=subprocess.PIPE, stderr=subprocess.STDOUT, check=False, env=environment)
     return completed.returncode, completed.stdout
 
 
@@ -162,13 +163,19 @@ def run_audit(root: Path, checkpoint: Path, clean_clone: bool) -> dict[str, Any]
         audit_applicability,
         audit_findings,
         canonical_requirements,
+        gate_specification,
         mandatory_gates,
         open_audits,
+        scope_violations,
     )
 
     mirror = Mirror(root, checkpoint)
     gate = str(mirror.state.get("gate"))
     milestone = str((mirror.state.get("milestone") or {}).get("id") or "M0")
+    # The Gate under audit owns its specification. Naming one Gate's checklist in the evidence of
+    # another Gate's audit would point a reader at a document that does not contain the rows the
+    # check just examined.
+    specification = gate_specification(root, gate)
     matrix = load_json(checkpoint / "REQUIREMENTS-MATRIX.json")
     report = evaluate_matrix(root, checkpoint, matrix)
 
@@ -188,9 +195,9 @@ def run_audit(root: Path, checkpoint: Path, clean_clone: bool) -> dict[str, Any]
             + (f"; missing {', '.join(missing)}" if missing else "")
             + (f"; not complete {', '.join(incomplete)}" if incomplete else ""))
 
-    mirror.check("MIR-001", "SETUP requirements",
+    mirror.check("MIR-001", "Gate specification requirements",
                  "Every row of the canonical Gate specification is declared and COMPLETE.",
-                 ["file:docs/SETUP-00-CHECKLIST.md", "checkpoint:REQUIREMENTS-MATRIX.json"],
+                 [f"file:{specification}", "checkpoint:REQUIREMENTS-MATRIX.json"],
                  probe_setup)
 
     # 2. Audit findings
@@ -447,8 +454,18 @@ def run_audit(root: Path, checkpoint: Path, clean_clone: bool) -> dict[str, Any]
 
         missing: list[str] = []
         total = 0
-        for path in root.rglob("*.md"):
-            if ".git" in path.parts:
+        # Only documents the repository actually carries. A recursive walk of the working tree
+        # would also read whatever a toolchain vendored into it -- ``node_modules`` alone ships
+        # thousands of Markdown files with links into their own published sites -- and the check
+        # would then report on somebody else's documentation instead of ours.
+        code, listing = run_git(root, "ls-files", "--cached", "--others", "--exclude-standard")
+        if code != 0:
+            return False, "the repository file list could not be enumerated"
+        for relative in sorted({line.strip() for line in listing.splitlines() if line.strip()}):
+            if not relative.endswith(".md"):
+                continue
+            path = root / relative
+            if not path.is_file():
                 continue
             text = path.read_text(encoding="utf-8", errors="ignore")
             for target in re.findall(r"\]\(([^)#:]+)\)", text):
@@ -461,7 +478,7 @@ def run_audit(root: Path, checkpoint: Path, clean_clone: bool) -> dict[str, Any]
                              + ("; missing " + ", ".join(missing[:5]) if missing else ""))
 
     mirror.check("MIR-015", "Documentation", "Every relative documentation link resolves.",
-                 ["file:docs/SETUP-00-CHECKLIST.md"], probe_documentation)
+                 [f"file:{specification}"], probe_documentation)
 
     # 16. Historical compatibility
     def probe_history() -> tuple[bool, str]:
@@ -520,19 +537,31 @@ def run_audit(root: Path, checkpoint: Path, clean_clone: bool) -> dict[str, Any]
 
     # 18. Self-contained repository and scope control
     def probe_scope() -> tuple[bool, str]:
-        forbidden = [name for name in ("services", "runtime", "gateway", "sandbox")
-                     if (root / name).exists()]
-        checklist = (root / "docs" / "SETUP-00-CHECKLIST.md").is_file()
+        """Scope is judged against the Gate under audit, never against a Gate named in this file.
+
+        The original check forbade a ``services/`` tree outright, which was the right control while
+        SETUP-00 was the only Gate and the wrong one the moment Gate 0 created that tree as part of
+        the monorepo layout it is required to deliver. What must stay true for *every* Gate is that
+        a capability belonging to a later Gate is not implemented early, and the canonical source
+        for that is `.iacode/policies/gate-scope.json`: each reservation names a path, the Gate that
+        owns it, and therefore the deliveries that may not fill it.
+        """
+        violations = scope_violations(root, gate)
+        specified = (root / specification).is_file()
         handoff = (checkpoint / "HANDOFF.md").read_text(encoding="utf-8")
         executable = "## Validation commands" in handoff and "## Stop conditions" in handoff
-        ok = not forbidden and checklist and executable
+        ok = not violations and specified and executable
         return ok, (
-            f"no Gate 0 runtime present; specification in the repository={checklist}; "
-            f"handoff executable without this session={executable}")
+            f"{len(violations)} later-Gate reservation(s) implemented early; "
+            f"specification {specification} in the repository={specified}; "
+            f"handoff executable without this session={executable}"
+            + ("; " + "; ".join(violations[:3]) if violations else ""))
 
     mirror.check("MIR-018", "Scope and self-containment",
-                 "No Gate 0 runtime exists and the delivery is reproducible from the repository.",
-                 ["file:docs/SETUP-00-CHECKLIST.md", "checkpoint:HANDOFF.md"], probe_scope)
+                 "No capability reserved for a later Gate is implemented, and the delivery is "
+                 "reproducible from the repository.",
+                 [f"file:{specification}", "file:.iacode/policies/gate-scope.json",
+                  "checkpoint:HANDOFF.md"], probe_scope)
 
     passed = [item for item in mirror.checks if item["result"] == "PASS"]
     failed = [item for item in mirror.checks if item["result"] == "FAIL"]
@@ -604,6 +633,7 @@ def render_markdown(report: dict[str, Any]) -> str:
 
 
 def main() -> int:
+    use_utf8_stdout()
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--root", type=Path)
     parser.add_argument("--checkpoint", type=Path)

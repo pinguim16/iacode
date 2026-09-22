@@ -42,6 +42,7 @@ from ledger_common import (
     load_json,
     resolve_latest,
     runtime_label,
+    use_utf8_stdout,
     utc_now,
     write_json,
 )
@@ -52,6 +53,7 @@ VALIDATOR = "scripts/development-ledger/validate_checkpoint.py"
 
 
 def main() -> int:
+    use_utf8_stdout()
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--root", type=Path)
     parser.add_argument("--checkpoint", type=Path)
@@ -152,8 +154,9 @@ def main() -> int:
         ["git", "commit", "-m", message],
         ["git", "tag", f"iacode-checkpoints/{checkpoint.name}"],
     ):
-        result = subprocess.run(argv, cwd=root, text=True,
-                                stdout=subprocess.PIPE, stderr=subprocess.STDOUT, check=False)
+        result = subprocess.run(argv, cwd=root, text=True, encoding="utf-8",
+                                errors="replace", stdout=subprocess.PIPE,
+                                stderr=subprocess.STDOUT, check=False)
         sys.stdout.write(result.stdout)
         if result.returncode != 0:
             print("CHECKPOINT_NOT_SEALED")

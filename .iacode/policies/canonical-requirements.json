@@ -607,6 +607,684 @@
         }
       ],
       "parser": "scripts/development-ledger/policies.py:parse_checklist"
+    },
+    {
+      "gate": "GATE-0",
+      "specification": "docs/GATE-0-CHECKLIST.md",
+      "requirements": [
+        {
+          "key": "1.1",
+          "section": "1. Gate specification and requirement derivation",
+          "description": "A canonical, machine-readable requirement specification exists for this Gate and the registry mirrors it row for row.",
+          "artifact": "`docs/GATE-0-CHECKLIST.md`, `.iacode/policies/canonical-requirements.json`",
+          "evidence": "`policies.canonical_requirements` parses and mirrors the document; `Gate0CanonicalSpecificationTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "1.2",
+          "section": "1. Gate specification and requirement derivation",
+          "description": "The derived expected set names the specification of the Gate it describes instead of a fixed document.",
+          "artifact": "`scripts/development-ledger/policies.py`, `scripts/development-ledger/derive_requirements.py`",
+          "evidence": "`test_expected_set_names_the_gate_specification`.",
+          "mandatory": true
+        },
+        {
+          "key": "1.3",
+          "section": "1. Gate specification and requirement derivation",
+          "description": "The delivery-assurance scope covers the runtime source this Gate introduces, so a gate result becomes stale when the product changes.",
+          "artifact": "`scripts/development-ledger/ledger_common.py`",
+          "evidence": "`test_assurance_scope_covers_the_runtime_source`.",
+          "mandatory": true
+        },
+        {
+          "key": "1.4",
+          "section": "1. Gate specification and requirement derivation",
+          "description": "The closed mandatory gate registry carries every executable gate this Gate introduces.",
+          "artifact": "`.iacode/policies/quality-gates.json`",
+          "evidence": "A Green Keeper cycle measured against the registry's mandatory set.",
+          "mandatory": true
+        },
+        {
+          "key": "1.5",
+          "section": "1. Gate specification and requirement derivation",
+          "description": "Every test suite this Gate introduces is declared canonically and is counted by the count derivation and resolvable as evidence.",
+          "artifact": "`.iacode/policies/test-suites.json`",
+          "evidence": "`COUNTS.json` `TESTS`; `test_declared_suites_are_discovered`.",
+          "mandatory": true
+        },
+        {
+          "key": "1.6",
+          "section": "1. Gate specification and requirement derivation",
+          "description": "The internal mirror audit judges the Gate it runs in rather than a Gate named in its own source.",
+          "artifact": "`scripts/development-ledger/m0_mirror_audit.py`",
+          "evidence": "`M1-INTERNAL-MIRROR.json` with `result` `PASS`.",
+          "mandatory": true
+        },
+        {
+          "key": "1.7",
+          "section": "1. Gate specification and requirement derivation",
+          "description": "The internal Red Team battery of this Gate is executable, scoped to the Foundation, and records a null-mutation control.",
+          "artifact": "`scripts/development-ledger/gate0_red_team.py`",
+          "evidence": "`M1-INTERNAL-RED-TEAM.json` with a `VALID` `baselineControl`.",
+          "mandatory": true
+        },
+        {
+          "key": "2.1",
+          "section": "2. Monorepo structure",
+          "description": "The repository carries the planned application, service, package and infrastructure directories.",
+          "artifact": "`apps/`, `services/`, `packages/`, `infra/`, `agents/`, `training/`, `evaluation/`, `datasets/`",
+          "evidence": "Directories present; `test_monorepo_structure_exists`.",
+          "mandatory": true
+        },
+        {
+          "key": "2.2",
+          "section": "2. Monorepo structure",
+          "description": "A directory reserved for a later Gate says so and contains no implementation.",
+          "artifact": "`services/*/README.md`, `training/README.md`",
+          "evidence": "`test_reserved_directories_declare_themselves`.",
+          "mandatory": true
+        },
+        {
+          "key": "2.3",
+          "section": "2. Monorepo structure",
+          "description": "No later-Gate capability is implemented, simulated or faked in this Gate.",
+          "artifact": "the whole tree",
+          "evidence": "`test_no_future_gate_capability_is_implemented`; mirror scope check.",
+          "mandatory": true
+        },
+        {
+          "key": "3.1",
+          "section": "3. Backend application",
+          "description": "The backend is a real FastAPI application that starts reliably and fails loudly when it cannot.",
+          "artifact": "`apps/api/src/iacode_api/main.py`",
+          "evidence": "`test_application_starts`; container healthcheck.",
+          "mandatory": true
+        },
+        {
+          "key": "3.2",
+          "section": "3. Backend application",
+          "description": "Shutdown is graceful and releases every client the application opened.",
+          "artifact": "`apps/api/src/iacode_api/lifespan.py`",
+          "evidence": "`test_shutdown_releases_every_client`.",
+          "mandatory": true
+        },
+        {
+          "key": "3.3",
+          "section": "3. Backend application",
+          "description": "Dependency lifecycle is explicit and held on the application, not in ambient mutable globals.",
+          "artifact": "`apps/api/src/iacode_api/dependencies.py`",
+          "evidence": "`test_dependencies_are_held_on_application_state`.",
+          "mandatory": true
+        },
+        {
+          "key": "3.4",
+          "section": "3. Backend application",
+          "description": "`GET /health` reports process liveness and does not depend on external dependencies to answer.",
+          "artifact": "`apps/api/src/iacode_api/routes/health.py`",
+          "evidence": "`test_health_is_up_while_dependencies_are_down`.",
+          "mandatory": true
+        },
+        {
+          "key": "3.5",
+          "section": "3. Backend application",
+          "description": "`GET /ready` probes PostgreSQL, Redis, MinIO and Temporal and refuses readiness when a mandatory dependency is unavailable.",
+          "artifact": "`apps/api/src/iacode_api/routes/health.py`, `apps/api/src/iacode_api/readiness.py`",
+          "evidence": "`test_ready_reports_each_dependency`; dependency-failure scenario.",
+          "mandatory": true
+        },
+        {
+          "key": "3.6",
+          "section": "3. Backend application",
+          "description": "`GET /version` reports the application version and build identity and exposes no secret.",
+          "artifact": "`apps/api/src/iacode_api/routes/version.py`",
+          "evidence": "`test_version_exposes_no_secret`.",
+          "mandatory": true
+        },
+        {
+          "key": "3.7",
+          "section": "3. Backend application",
+          "description": "The application exposes a Prometheus metrics endpoint with request, latency, status and dependency metrics.",
+          "artifact": "`apps/api/src/iacode_api/observability/metrics.py`",
+          "evidence": "`test_metrics_endpoint_exposes_request_metrics`.",
+          "mandatory": true
+        },
+        {
+          "key": "3.8",
+          "section": "3. Backend application",
+          "description": "OpenAPI documentation describes the Foundation endpoints and exposes no internal-only route.",
+          "artifact": "`apps/api/src/iacode_api/main.py`",
+          "evidence": "`test_openapi_documents_the_foundation_endpoints`.",
+          "mandatory": true
+        },
+        {
+          "key": "3.9",
+          "section": "3. Backend application",
+          "description": "CORS is configured explicitly from configuration, without a permissive wildcard, and allows the local frontend.",
+          "artifact": "`apps/api/src/iacode_api/config.py`, `apps/api/src/iacode_api/main.py`",
+          "evidence": "`test_cors_is_explicit_and_not_wildcard`.",
+          "mandatory": true
+        },
+        {
+          "key": "4.1",
+          "section": "4. Configuration and secrets",
+          "description": "Configuration is typed, validated at load time and rejects an invalid or missing mandatory value.",
+          "artifact": "`apps/api/src/iacode_api/config.py`",
+          "evidence": "`test_configuration_rejects_invalid_values`.",
+          "mandatory": true
+        },
+        {
+          "key": "4.2",
+          "section": "4. Configuration and secrets",
+          "description": "Safe defaults, development configuration and test configuration are separated rather than conflated.",
+          "artifact": "`apps/api/src/iacode_api/config.py`, `infra/compose/.env.example`",
+          "evidence": "`test_configuration_layers_are_separate`.",
+          "mandatory": true
+        },
+        {
+          "key": "4.3",
+          "section": "4. Configuration and secrets",
+          "description": "A committed example environment file documents every key and carries no real secret, and the real file is ignored by Git.",
+          "artifact": "`infra/compose/.env.example`, `.gitignore`",
+          "evidence": "`test_env_example_documents_every_key_without_secrets`.",
+          "mandatory": true
+        },
+        {
+          "key": "4.4",
+          "section": "4. Configuration and secrets",
+          "description": "Secret values are redacted wherever configuration, errors or logs could expose them.",
+          "artifact": "`packages/common/src/iacode_common/redaction.py`",
+          "evidence": "`test_secrets_are_redacted_in_logs_and_errors`.",
+          "mandatory": true
+        },
+        {
+          "key": "4.5",
+          "section": "4. Configuration and secrets",
+          "description": "No secret is baked into an image, a compose file, a Dockerfile or a committed configuration file.",
+          "artifact": "`infra/`, `apps/*/Dockerfile`",
+          "evidence": "`test_no_secret_is_committed_in_infrastructure`; repository secret scan.",
+          "mandatory": true
+        },
+        {
+          "key": "5.1",
+          "section": "5. Persistence",
+          "description": "PostgreSQL runs locally from the compose stack at a pinned version with a persistent named volume.",
+          "artifact": "`infra/compose/docker-compose.yml`",
+          "evidence": "Stack up; `test_postgres_is_pinned_and_persistent`.",
+          "mandatory": true
+        },
+        {
+          "key": "5.2",
+          "section": "5. Persistence",
+          "description": "The persistence layer is real, asynchronous and pooled, built on SQLAlchemy 2.",
+          "artifact": "`apps/api/src/iacode_api/db/engine.py`",
+          "evidence": "`test_database_round_trip`.",
+          "mandatory": true
+        },
+        {
+          "key": "5.3",
+          "section": "5. Persistence",
+          "description": "Alembic migrations run from zero against an empty database and produce the declared schema.",
+          "artifact": "`apps/api/migrations/`",
+          "evidence": "Fresh-install scenario; `test_migrations_run_from_zero`.",
+          "mandatory": true
+        },
+        {
+          "key": "5.4",
+          "section": "5. Persistence",
+          "description": "Starting against an already-migrated database neither fails nor recreates the schema.",
+          "artifact": "`apps/api/migrations/env.py`, `scripts/iacode/migrate.py`",
+          "evidence": "Restart scenario; `test_migrations_are_idempotent_on_restart`.",
+          "mandatory": true
+        },
+        {
+          "key": "5.5",
+          "section": "5. Persistence",
+          "description": "A failed migration never produces a healthy readiness or a silent partial start.",
+          "artifact": "`apps/api/src/iacode_api/readiness.py`",
+          "evidence": "`test_failed_migration_does_not_report_ready`; Red Team scenario.",
+          "mandatory": true
+        },
+        {
+          "key": "5.6",
+          "section": "5. Persistence",
+          "description": "The structural domain tables the later Gates build on exist, with their relationships and constraints.",
+          "artifact": "`apps/api/src/iacode_api/db/models.py`",
+          "evidence": "`test_structural_tables_exist`; `test_relationships_cascade_deliberately`.",
+          "mandatory": true
+        },
+        {
+          "key": "5.7",
+          "section": "5. Persistence",
+          "description": "Identifiers use one consistent strategy, UUIDv7, implemented and tested rather than assumed.",
+          "artifact": "`packages/common/src/iacode_common/identifiers.py`",
+          "evidence": "`test_uuid7_is_ordered_and_well_formed`.",
+          "mandatory": true
+        },
+        {
+          "key": "5.8",
+          "section": "5. Persistence",
+          "description": "The common column convention is defined once and applied where it makes sense, not forced everywhere.",
+          "artifact": "`apps/api/src/iacode_api/db/base.py`",
+          "evidence": "`test_common_columns_follow_the_convention`.",
+          "mandatory": true
+        },
+        {
+          "key": "5.9",
+          "section": "5. Persistence",
+          "description": "The pgvector position is decided, recorded, and — where the extension is enabled — migrated and tested.",
+          "artifact": "`apps/api/migrations/`, `docs/adr/`",
+          "evidence": "`test_pgvector_extension_is_available`; `ADR-0013`.",
+          "mandatory": true
+        },
+        {
+          "key": "6.1",
+          "section": "6. Cache",
+          "description": "Redis runs locally from the compose stack at a pinned version.",
+          "artifact": "`infra/compose/docker-compose.yml`",
+          "evidence": "Stack up; `test_redis_is_pinned`.",
+          "mandatory": true
+        },
+        {
+          "key": "6.2",
+          "section": "6. Cache",
+          "description": "The backend holds a real Redis client whose availability the readiness probe verifies.",
+          "artifact": "`apps/api/src/iacode_api/cache/client.py`",
+          "evidence": "`test_ready_reports_each_dependency`.",
+          "mandatory": true
+        },
+        {
+          "key": "6.3",
+          "section": "6. Cache",
+          "description": "An integration test exercises a real Redis round trip against the running service.",
+          "artifact": "`apps/api/tests/integration/test_redis.py`",
+          "evidence": "`test_redis_round_trip`.",
+          "mandatory": true
+        },
+        {
+          "key": "7.1",
+          "section": "7. Object storage",
+          "description": "MinIO runs locally from the compose stack at a pinned version with a persistent named volume.",
+          "artifact": "`infra/compose/docker-compose.yml`",
+          "evidence": "Stack up; `test_minio_is_pinned_and_persistent`.",
+          "mandatory": true
+        },
+        {
+          "key": "7.2",
+          "section": "7. Object storage",
+          "description": "The buckets the later Gates need are created by an idempotent bootstrap that is safe to re-run.",
+          "artifact": "`infra/compose/docker-compose.yml`, `scripts/iacode/bootstrap_storage.py`",
+          "evidence": "`test_bucket_bootstrap_is_idempotent`.",
+          "mandatory": true
+        },
+        {
+          "key": "7.3",
+          "section": "7. Object storage",
+          "description": "The readiness probe verifies real object-storage connectivity rather than a reachable port.",
+          "artifact": "`apps/api/src/iacode_api/storage/client.py`",
+          "evidence": "`test_ready_reports_each_dependency`.",
+          "mandatory": true
+        },
+        {
+          "key": "7.4",
+          "section": "7. Object storage",
+          "description": "An integration test writes, reads and deletes a real object.",
+          "artifact": "`apps/api/tests/integration/test_object_storage.py`",
+          "evidence": "`test_object_storage_round_trip`.",
+          "mandatory": true
+        },
+        {
+          "key": "8.1",
+          "section": "8. Durable workflows",
+          "description": "Temporal runs locally from the compose stack at a pinned version with its persistent state.",
+          "artifact": "`infra/compose/docker-compose.yml`",
+          "evidence": "Stack up; `test_temporal_is_pinned`.",
+          "mandatory": true
+        },
+        {
+          "key": "8.2",
+          "section": "8. Durable workflows",
+          "description": "An IACode worker connects to Temporal and polls its task queue as a first-class service.",
+          "artifact": "`services/orchestrator/src/iacode_orchestrator/worker.py`",
+          "evidence": "Worker container healthy; `test_worker_registers_the_smoke_workflow`.",
+          "mandatory": true
+        },
+        {
+          "key": "8.3",
+          "section": "8. Durable workflows",
+          "description": "The readiness probe verifies real Temporal connectivity.",
+          "artifact": "`apps/api/src/iacode_api/workflows/client.py`",
+          "evidence": "`test_ready_reports_each_dependency`.",
+          "mandatory": true
+        },
+        {
+          "key": "8.4",
+          "section": "8. Durable workflows",
+          "description": "A minimal real workflow and activity execute end to end through the worker and return an observable result.",
+          "artifact": "`services/orchestrator/src/iacode_orchestrator/workflows/smoke.py`",
+          "evidence": "`test_smoke_workflow_executes_end_to_end`.",
+          "mandatory": true
+        },
+        {
+          "key": "8.5",
+          "section": "8. Durable workflows",
+          "description": "No agent workflow, tool call or orchestration of a later Gate is implemented here.",
+          "artifact": "`services/orchestrator/`",
+          "evidence": "`test_no_future_gate_capability_is_implemented`.",
+          "mandatory": true
+        },
+        {
+          "key": "9.1",
+          "section": "9. Frontend",
+          "description": "A real Angular application exists and builds reproducibly with pinned dependencies.",
+          "artifact": "`apps/web/`",
+          "evidence": "Production build; `test_web_dependencies_are_locked`.",
+          "mandatory": true
+        },
+        {
+          "key": "9.2",
+          "section": "9. Frontend",
+          "description": "The Foundation page identifies IACode and renders the live backend health, readiness and version.",
+          "artifact": "`apps/web/src/app/`",
+          "evidence": "Frontend unit tests; browser check recorded in the runbook.",
+          "mandatory": true
+        },
+        {
+          "key": "9.3",
+          "section": "9. Frontend",
+          "description": "The API base address is centralized in configuration, carries no secret and is not hardcoded across the code.",
+          "artifact": "`apps/web/src/environments/`",
+          "evidence": "`test_api_base_is_centralised`.",
+          "mandatory": true
+        },
+        {
+          "key": "9.4",
+          "section": "9. Frontend",
+          "description": "Frontend unit tests run headless and are part of the verification command.",
+          "artifact": "`apps/web/`, `scripts/iacode/verify.py`",
+          "evidence": "Frontend test run.",
+          "mandatory": true
+        },
+        {
+          "key": "10.1",
+          "section": "10. Containers and Compose",
+          "description": "Every image builds from a pinned base, runs as a non-root user where practical, carries no secret and excludes build waste.",
+          "artifact": "`apps/api/Dockerfile`, `apps/web/Dockerfile`, `services/orchestrator/Dockerfile`",
+          "evidence": "Image build; `test_dockerfiles_pin_and_drop_root`.",
+          "mandatory": true
+        },
+        {
+          "key": "10.2",
+          "section": "10. Containers and Compose",
+          "description": "The compose stack declares every Foundation service and nothing that the Foundation does not need.",
+          "artifact": "`infra/compose/docker-compose.yml`",
+          "evidence": "`docker compose config`; `test_compose_declares_the_foundation_services`.",
+          "mandatory": true
+        },
+        {
+          "key": "10.3",
+          "section": "10. Containers and Compose",
+          "description": "Every service that can report health has a real healthcheck, and start-up ordering uses those conditions instead of fixed sleeps.",
+          "artifact": "`infra/compose/docker-compose.yml`",
+          "evidence": "`test_compose_uses_health_conditions_not_sleeps`.",
+          "mandatory": true
+        },
+        {
+          "key": "10.4",
+          "section": "10. Containers and Compose",
+          "description": "Restart behaviour is declared, and the stack recovers its state after a restart.",
+          "artifact": "`infra/compose/docker-compose.yml`",
+          "evidence": "Restart scenario.",
+          "mandatory": true
+        },
+        {
+          "key": "10.5",
+          "section": "10. Containers and Compose",
+          "description": "Durable state lives in named volumes that are documented, not in the container filesystem.",
+          "artifact": "`infra/compose/docker-compose.yml`, `docs/runbooks/FOUNDATION.md`",
+          "evidence": "`test_durable_state_uses_named_volumes`.",
+          "mandatory": true
+        },
+        {
+          "key": "10.6",
+          "section": "10. Containers and Compose",
+          "description": "The stack uses an explicit network and publishes only the ports local development needs, from configuration.",
+          "artifact": "`infra/compose/docker-compose.yml`, `infra/compose/.env.example`",
+          "evidence": "`test_published_ports_are_configurable_and_minimal`.",
+          "mandatory": true
+        },
+        {
+          "key": "11.1",
+          "section": "11. Observability",
+          "description": "The backend and the worker emit structured logs carrying the contract fields, absent rather than invented when there is no context.",
+          "artifact": "`packages/telemetry/src/iacode_telemetry/logging.py`",
+          "evidence": "`test_structured_log_contract`.",
+          "mandatory": true
+        },
+        {
+          "key": "11.2",
+          "section": "11. Observability",
+          "description": "Every HTTP request carries a correlation identifier that is accepted or generated, propagated, returned and logged.",
+          "artifact": "`apps/api/src/iacode_api/middleware/correlation.py`",
+          "evidence": "`test_correlation_identifier_is_propagated`.",
+          "mandatory": true
+        },
+        {
+          "key": "11.3",
+          "section": "11. Observability",
+          "description": "The API error contract is explicit, extensible and never returns a traceback or internal detail to the client while keeping it in the logs.",
+          "artifact": "`apps/api/src/iacode_api/errors.py`",
+          "evidence": "`test_internal_error_leaks_nothing`.",
+          "mandatory": true
+        },
+        {
+          "key": "11.4",
+          "section": "11. Observability",
+          "description": "Prometheus is provisioned and scrapes the API and the worker.",
+          "artifact": "`infra/prometheus/prometheus.yml`",
+          "evidence": "Prometheus targets up; `test_prometheus_scrapes_the_foundation_targets`.",
+          "mandatory": true
+        },
+        {
+          "key": "11.5",
+          "section": "11. Observability",
+          "description": "Grafana starts with the Prometheus datasource and a Foundation dashboard provisioned automatically.",
+          "artifact": "`infra/grafana/provisioning/`",
+          "evidence": "Grafana health; `test_grafana_provisioning_is_declared`.",
+          "mandatory": true
+        },
+        {
+          "key": "11.6",
+          "section": "11. Observability",
+          "description": "The OpenTelemetry position for the Foundation is decided and recorded rather than left implicit.",
+          "artifact": "`docs/adr/`, `docs/ARCHITECTURE.md`",
+          "evidence": "`ADR-0015`.",
+          "mandatory": true
+        },
+        {
+          "key": "12.1",
+          "section": "12. Backup and restore",
+          "description": "A reproducible backup produces a PostgreSQL dump and the object-storage contents, with a correct exit code and a log, and fails loudly on partial failure.",
+          "artifact": "`scripts/iacode/backup.py`",
+          "evidence": "Backup run; `BackupFailureTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "12.2",
+          "section": "12. Backup and restore",
+          "description": "The backup never writes a credential into its artifacts or its log.",
+          "artifact": "`scripts/iacode/backup.py`",
+          "evidence": "`test_backup_artifacts_carry_no_secret`; `BackupSecrecyTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "12.3",
+          "section": "12. Backup and restore",
+          "description": "A restore reconstructs the database and the object storage from a backup produced by this tooling.",
+          "artifact": "`scripts/iacode/restore.py`",
+          "evidence": "Restore run; `RestoreRefusalTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "12.4",
+          "section": "12. Backup and restore",
+          "description": "Backup and restore are verified end to end with synthetic data in a disposable environment, and the restored data is checked rather than assumed.",
+          "artifact": "`scripts/iacode/backup_restore_check.py`",
+          "evidence": "Verified backup-restore cycle.",
+          "mandatory": true
+        },
+        {
+          "key": "12.5",
+          "section": "12. Backup and restore",
+          "description": "Backup retention for the Foundation is either implemented simply or documented as out of scope, with no silent gap.",
+          "artifact": "`scripts/iacode/backup.py`, `docs/runbooks/BACKUP-RESTORE.md`",
+          "evidence": "`RetentionTests`; runbook and implementation agree.",
+          "mandatory": true
+        },
+        {
+          "key": "13.1",
+          "section": "13. Verification, tests and scenarios",
+          "description": "One documented command runs the whole Gate verification and works on the primary Windows environment as well as on POSIX.",
+          "artifact": "`scripts/iacode/verify.py`, `verify.ps1`",
+          "evidence": "Verification run.",
+          "mandatory": true
+        },
+        {
+          "key": "13.2",
+          "section": "13. Verification, tests and scenarios",
+          "description": "The backend suite covers health, readiness, version, configuration, redaction, error handling, correlation, database, cache, object storage, workflows and migrations.",
+          "artifact": "`apps/api/tests/`",
+          "evidence": "Backend test run.",
+          "mandatory": true
+        },
+        {
+          "key": "13.3",
+          "section": "13. Verification, tests and scenarios",
+          "description": "The frontend suite covers bootstrap, the status rendering and the API configuration, and the production build succeeds.",
+          "artifact": "`apps/web/src/`",
+          "evidence": "Frontend test and build run.",
+          "mandatory": true
+        },
+        {
+          "key": "13.4",
+          "section": "13. Verification, tests and scenarios",
+          "description": "Infrastructure smoke validation proves that our own configuration of each service is operational.",
+          "artifact": "`infra/tests/`",
+          "evidence": "Infrastructure smoke run.",
+          "mandatory": true
+        },
+        {
+          "key": "13.5",
+          "section": "13. Verification, tests and scenarios",
+          "description": "A fresh installation with no previous volume reaches a ready stack, a migrated database, a reachable frontend and a green smoke check.",
+          "artifact": "`scripts/iacode/scenarios/fresh_install.py`",
+          "evidence": "Fresh-install scenario.",
+          "mandatory": true
+        },
+        {
+          "key": "13.6",
+          "section": "13. Verification, tests and scenarios",
+          "description": "A restart of the running stack returns every service to ready with its data intact.",
+          "artifact": "`scripts/iacode/scenarios/restart.py`",
+          "evidence": "Restart scenario.",
+          "mandatory": true
+        },
+        {
+          "key": "13.7",
+          "section": "13. Verification, tests and scenarios",
+          "description": "With a mandatory dependency stopped, liveness may stay up while readiness fails correctly, and readiness recovers when the dependency returns.",
+          "artifact": "`scripts/iacode/scenarios/dependency_failure.py`",
+          "evidence": "Dependency-failure scenario.",
+          "mandatory": true
+        },
+        {
+          "key": "13.8",
+          "section": "13. Verification, tests and scenarios",
+          "description": "Lint and static analysis run over the backend, the worker and the frontend and are green.",
+          "artifact": "`apps/api/pyproject.toml`, `apps/web/eslint.config.js`",
+          "evidence": "Lint run.",
+          "mandatory": true
+        },
+        {
+          "key": "13.9",
+          "section": "13. Verification, tests and scenarios",
+          "description": "A dependency vulnerability scan is executed, or its absence is justified, and relevant Critical and High findings block the Gate.",
+          "artifact": "`scripts/iacode/dependency_scan.py`",
+          "evidence": "Scan run over both ecosystems, or a recorded justification.",
+          "mandatory": true
+        },
+        {
+          "key": "14.1",
+          "section": "14. Documentation and decisions",
+          "description": "The repository entry documentation describes what exists after this Gate and how to run it.",
+          "artifact": "`README.md`",
+          "evidence": "File content consistent with the runtime.",
+          "mandatory": true
+        },
+        {
+          "key": "14.2",
+          "section": "14. Documentation and decisions",
+          "description": "The architecture document describes the Foundation runtime, its boundaries and what is deliberately absent.",
+          "artifact": "`docs/ARCHITECTURE.md`",
+          "evidence": "File content.",
+          "mandatory": true
+        },
+        {
+          "key": "14.3",
+          "section": "14. Documentation and decisions",
+          "description": "A development guide explains the local workflow end to end for a new machine.",
+          "artifact": "`docs/DEVELOPMENT.md`",
+          "evidence": "File content.",
+          "mandatory": true
+        },
+        {
+          "key": "14.4",
+          "section": "14. Documentation and decisions",
+          "description": "An operational runbook documents start, stop, rebuild, reset, migrate, health, readiness, Grafana and the smoke checks.",
+          "artifact": "`docs/runbooks/FOUNDATION.md`",
+          "evidence": "Procedure reproduced during the delivery.",
+          "mandatory": true
+        },
+        {
+          "key": "14.5",
+          "section": "14. Documentation and decisions",
+          "description": "A backup and restore runbook documents the full procedure and its verification.",
+          "artifact": "`docs/runbooks/BACKUP-RESTORE.md`",
+          "evidence": "Procedure reproduced during the delivery.",
+          "mandatory": true
+        },
+        {
+          "key": "14.6",
+          "section": "14. Documentation and decisions",
+          "description": "The pinned versions of every runtime, service and principal library are recorded in one place.",
+          "artifact": "`docs/VERSIONS.md`",
+          "evidence": "Recorded versions match the lock files and the compose file.",
+          "mandatory": true
+        },
+        {
+          "key": "14.7",
+          "section": "14. Documentation and decisions",
+          "description": "Every structural decision of this Gate that is not already recorded becomes an ADR, and no ADR duplicates an existing decision.",
+          "artifact": "`docs/adr/`",
+          "evidence": "`ADR-0012` to `ADR-0015`.",
+          "mandatory": true
+        },
+        {
+          "key": "15.1",
+          "section": "15. Gate consistency",
+          "description": "The entry contract and the plan describe the current Gate and its status truthfully.",
+          "artifact": "`START-HERE.md`, `docs/MASTER-PLAN.md`",
+          "evidence": "File content consistent with `docs/checkpoints/LATEST.md`.",
+          "mandatory": true
+        },
+        {
+          "key": "15.2",
+          "section": "15. Gate consistency",
+          "description": "The Gate produces a retrospective from the canonical template.",
+          "artifact": "`.iacode/memory/retrospectives/`",
+          "evidence": "Retrospective file.",
+          "mandatory": true
+        }
+      ]
     }
   ]
 }

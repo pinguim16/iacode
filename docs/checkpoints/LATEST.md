@@ -1,5 +1,5 @@
 # Latest Checkpoint
 
-Checkpoint: `docs/checkpoints/SETUP-00-CP-0013`
+Checkpoint: `docs/checkpoints/GATE-0-CP-0001`
 
 Validate before use.

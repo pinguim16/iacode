@@ -457,6 +457,78 @@
         "LSN-0029"
       ],
       "removingItWouldAllow": "The first delivery of the next Gate to discover, after the Gate starts, that it cannot be handed over at all."
+    },
+    {
+      "guardrailId": "GRD-0033",
+      "title": "The application declares only configuration its own source reads",
+      "kind": "test",
+      "reference": "test_every_declared_key_is_read_somewhere",
+      "verifiedBy": [
+        "test_every_declared_key_is_read_somewhere",
+        "test_test_settings_ignore_the_ambient_environment"
+      ],
+      "lessons": [
+        "LSN-0028"
+      ],
+      "removingItWouldAllow": "A configuration key that promises behaviour nothing implements to ship as if it were a feature, in the application as well as in the policy documents."
+    },
+    {
+      "guardrailId": "GRD-0034",
+      "title": "Scope is judged against a registry of Gate reservations, not a literal",
+      "kind": "policy",
+      "reference": ".iacode/policies/gate-scope.json",
+      "verifiedBy": [
+        "test_no_future_gate_capability_is_implemented",
+        "test_the_scope_control_detects_an_implementation",
+        "test_the_scope_control_ignores_a_gate_that_has_already_run"
+      ],
+      "lessons": [
+        "LSN-0032"
+      ],
+      "removingItWouldAllow": "A later Gate's capability to be implemented early with nothing to notice, and the scope control to keep refusing the Gate that legitimately fills a directory."
+    },
+    {
+      "guardrailId": "GRD-0035",
+      "title": "An error produced outside the middleware chain still carries its correlation",
+      "kind": "test",
+      "reference": "test_internal_error_still_carries_a_correlation_identifier",
+      "verifiedBy": [
+        "test_internal_error_still_carries_a_correlation_identifier",
+        "test_internal_error_leaks_nothing"
+      ],
+      "lessons": [
+        "LSN-0033"
+      ],
+      "removingItWouldAllow": "A failure response to tell a caller to quote an identifier that the response does not contain, making the safe error message unactionable."
+    },
+    {
+      "guardrailId": "GRD-0036",
+      "title": "Request metrics are labelled with the route the router actually matched",
+      "kind": "test",
+      "reference": "test_metrics_label_routes_by_template_not_by_url",
+      "verifiedBy": [
+        "test_metrics_endpoint_exposes_request_metrics",
+        "test_metrics_label_routes_by_template_not_by_url"
+      ],
+      "lessons": [
+        "LSN-0034"
+      ],
+      "removingItWouldAllow": "Every request to be labelled with one bucket while the metrics endpoint keeps answering and the dashboard keeps rendering."
+    },
+    {
+      "guardrailId": "GRD-0037",
+      "title": "Every subprocess capture, and every tool that re-emits one, states its codec",
+      "kind": "test",
+      "reference": "test_no_capture_relies_on_the_platform_codepage",
+      "verifiedBy": [
+        "test_no_capture_relies_on_the_platform_codepage",
+        "test_every_tool_that_re_emits_captured_output_configures_its_own_stream",
+        "test_the_rule_detects_a_capture_that_would_fail"
+      ],
+      "lessons": [
+        "LSN-0035"
+      ],
+      "removingItWouldAllow": "A tool to abort with a Unicode error while reading or printing output it was only meant to pass along, discarding work that had already succeeded."
     }
   ]
 }

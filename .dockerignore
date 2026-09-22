@@ -1,0 +1,31 @@
+# Every Foundation image builds from the repository root, because the applications depend on the
+# local packages under packages/. This file keeps the context small: without it Docker uploads the
+# whole ledger, every sealed checkpoint and the frontend's node_modules on each build.
+.git/
+.github/
+docs/
+prompts/
+.claude/
+.iacode/
+tests/
+scripts/development-ledger/
+
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+
+node_modules/
+apps/web/dist/
+apps/web/.angular/
+
+.env
+*.env
+!*.env.example
+
+var/
+backups/

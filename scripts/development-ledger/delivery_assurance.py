@@ -23,6 +23,7 @@ from typing import Any
 from ledger_common import LedgerError, load_json
 from policies import (
     compare_requirement_sets,
+    counted_test_suites,
     declared_requirement_refs,
     expected_requirement_refs,
     source_ref,
@@ -90,17 +91,28 @@ def collect_test_ids(root: Path) -> set[str]:
     inspected from another checkout -- which is exactly the situation of a validator resolving the
     references of a repository it is auditing. Inheritance inside a test module is resolved, so a
     subclass carries the cases it inherits.
+
+    Every Python suite the canonical registry declares as counted is read, not only ``tests/``. A
+    Gate that adds a suite and leaves it out of this function would make its own test references
+    unresolvable, and the honest reference would have to be downgraded to a command.
     """
     cache_key = str(root.resolve())
     if cache_key in _TEST_ID_CACHE:
         return _TEST_ID_CACHE[cache_key]
     identifiers: set[str] = set()
-    tests_directory = root / "tests"
-    if not tests_directory.is_dir():
+    directories = [
+        root / str(suite["root"]) for suite in counted_test_suites(root)
+        if str(suite.get("framework", "")).startswith("python-")
+    ]
+    if not any(directory.is_dir() for directory in directories):
         _TEST_ID_CACHE[cache_key] = identifiers
         return identifiers
 
-    for path in sorted(tests_directory.rglob("*.py")):
+    files = sorted(
+        {path for directory in directories if directory.is_dir()
+         for path in directory.rglob("*.py")}
+    )
+    for path in files:
         if "__pycache__" in path.parts:
             continue
         try:
@@ -140,6 +152,15 @@ def collect_test_ids(root: Path) -> set[str]:
             for method in methods:
                 identifiers.add(f"{name}.{method}")
                 identifiers.add(method)
+
+        # A pytest suite writes its cases as module-level functions, which no class owns. They are
+        # real cases and a reference to one has to resolve, so the module is a usable qualifier in
+        # the same way a class is.
+        for node in tree.body:
+            if (isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef))
+                    and node.name.startswith("test")):
+                identifiers.add(node.name)
+                identifiers.add(f"{path.stem}.{node.name}")
 
     _TEST_ID_CACHE[cache_key] = identifiers
     return identifiers

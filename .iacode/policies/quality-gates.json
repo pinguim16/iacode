@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "policy": "The mandatory gate set of a delivery is decided by this registry, never by the caller of the Green Keeper. A gate may be added here; it may not be dropped by an invocation.",
+  "policy": "The mandatory gate set of a delivery is decided by this registry, never by the caller of the Green Keeper. A gate may be added here; it may not be dropped by an invocation. A gate listed here must be executable wherever the delivery is worked on: the Foundation gates need Docker, which Gate 0 makes a hard requirement of the repository, but none of them needs the whole stack to be running, because a gate that does would be skipped rather than fixed.",
   "gates": [
     {
       "id": "tests",
@@ -74,6 +74,61 @@
       "mandatory": true,
       "qualityDimensions": [
         "checkpointValidation",
+        "security"
+      ]
+    },
+    {
+      "id": "apiTests",
+      "title": "Foundation backend unit suite",
+      "command": [
+        "python",
+        "scripts/iacode/gates/api_tests.py"
+      ],
+      "purpose": "Green Keeper gate: the API unit suite, executed in the API image with no dependency on a running stack.",
+      "mandatory": true,
+      "qualityDimensions": [
+        "unitTests"
+      ]
+    },
+    {
+      "id": "webTests",
+      "title": "Foundation frontend build and suite",
+      "command": [
+        "python",
+        "scripts/iacode/gates/web_tests.py"
+      ],
+      "purpose": "Green Keeper gate: the Angular production build and the frontend suite, executed in the frontend toolchain image.",
+      "mandatory": true,
+      "qualityDimensions": [
+        "build",
+        "unitTests"
+      ]
+    },
+    {
+      "id": "lint",
+      "title": "Static analysis of the Foundation source",
+      "command": [
+        "python",
+        "scripts/iacode/gates/lint.py"
+      ],
+      "purpose": "Green Keeper gate: ruff over the backend, the worker, the packages and the operational tooling, and the TypeScript compiler and Prettier over the frontend.",
+      "mandatory": true,
+      "qualityDimensions": [
+        "lint",
+        "staticAnalysis"
+      ]
+    },
+    {
+      "id": "infraDefinition",
+      "title": "Infrastructure declaration",
+      "command": [
+        "python",
+        "scripts/iacode/gates/infra_definition.py"
+      ],
+      "purpose": "Green Keeper gate: the infrastructure the stack declares — pinned images, loopback-only ports, real health conditions, no committed credential.",
+      "mandatory": true,
+      "qualityDimensions": [
+        "staticAnalysis",
         "security"
       ]
     }

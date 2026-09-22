@@ -1,0 +1,72 @@
+# Static analysis for every Python source in the repository.
+#
+# One configuration at the root rather than one per package. Per-file exceptions are the interesting
+# part of a lint configuration — they are where a project records which findings it has looked at
+# and decided are not findings — and split across four files nobody can read them as a whole.
+#
+# The development-ledger tooling under `scripts/development-ledger/` is deliberately outside this:
+# it was written and sealed under SETUP-00, its own suite governs it, and re-linting sealed content
+# to a standard it was not written against would produce churn in files that must not change.
+
+line-length = 100
+target-version = "py312"
+
+extend-exclude = [
+  "scripts/development-ledger",
+  "apps/web",
+  "var",
+  "backups",
+]
+
+[lint]
+select = ["E", "F", "W", "I", "N", "UP", "B", "C4", "SIM", "RUF", "S", "ASYNC"]
+ignore = [
+  # Assertions are what a test suite is made of.
+  "S101",
+  # Every subprocess call in this repository is a fixed argument vector built in code, never a
+  # shell string and never assembled from caller input. `S603` cannot see that distinction, so left
+  # on it fires on every single invocation and stops being information.
+  "S603",
+  # The same calls name `docker`, `git` and `python` without an absolute path, on purpose: the
+  # correct binary is the one on PATH, and hardcoding `/usr/bin/docker` would break the Windows
+  # environment this repository is primarily developed on.
+  "S607",
+]
+
+[lint.per-file-ignores]
+# The API test suite hardcodes credentials for a disposable local service, binds to every interface
+# in a fixture, and writes literal SQL against a database it created for itself.
+"apps/api/tests/**" = ["S105", "S106", "S104", "S608"]
+
+# The application binds 0.0.0.0 *inside a container*, where the alternative is a service nothing can
+# reach. The published port is the security boundary, and the compose file binds that to 127.0.0.1;
+# `infra/tests/test_compose_definition.py` is the control that keeps it there.
+"apps/api/src/iacode_api/config.py" = ["S104"]
+
+# Alembic writes the migration body. Reformatting generated output means every regeneration produces
+# a diff against a file nobody edited, which is how a real schema change gets lost in whitespace.
+# The file is still linted for everything else.
+"apps/api/migrations/versions/**" = ["E501"]
+
+# `env.py` and the operational scripts extend `sys.path` before importing their siblings, because
+# they are executed as scripts rather than imported as packages. The import order is the point.
+"apps/api/migrations/env.py" = ["E402"]
+
+# The operational tooling administers the local stack. It composes SQL from identifiers it chose
+# itself — a database name it generated, a slug it generated — writes into the containers' own
+# `/tmp`, and opens `http://127.0.0.1:<published port>` to check the stack it just started. Each of
+# those is the job; none of them takes external input.
+"scripts/iacode/**" = ["E402", "S108", "S310", "S608"]
+
+# The infrastructure suite shells out to Docker and reads the stack over HTTP for the same reasons.
+# `setUpClass` is unittest's own hook name: renaming it does not rename the hook, it removes it.
+"infra/tests/**" = ["N802", "S108", "S310", "S608"]
+
+[lint.pep8-naming]
+# The response contracts are a wire format. `latencyMs`, `buildTimestamp` and `correlationId` are
+# the names a JSON consumer sees; renaming them to satisfy a Python convention would either break
+# the contract or bury it under serialisation aliases that state the same thing twice.
+ignore-names = [
+  "latencyMs", "buildTimestamp", "pythonVersion", "correlationId",
+  "requestedBy", "workerIdentity", "executedAt", "workflowId",
+]

@@ -23,6 +23,7 @@ from ledger_common import (
     git_snapshot,
     resolve_latest,
     runtime_label,
+    use_utf8_stdout,
 )
 
 INTERPRETER_TOKENS = ("python", "python3")
@@ -47,6 +48,7 @@ def _detect_inputs(root: Path, arguments: list[str]) -> list[str]:
 
 
 def main() -> int:
+    use_utf8_stdout()
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--root", type=Path)
     parser.add_argument("--checkpoint", type=Path, help="checkpoint directory; defaults to LATEST")
@@ -83,7 +85,8 @@ def main() -> int:
     inputs = _detect_inputs(root, argv) + [item for item in args.input if item]
     started = time.monotonic()
     completed = subprocess.run(
-        executable, cwd=root, text=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, check=False)
+        executable, cwd=root, text=True, encoding="utf-8", errors="replace",
+        stdout=subprocess.PIPE, stderr=subprocess.STDOUT, check=False)
     duration = int((time.monotonic() - started) * 1000)
 
     snapshot = git_snapshot(root)

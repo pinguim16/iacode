@@ -1,0 +1,381 @@
+# The IACode Foundation stack.
+#
+# Everything Gate 0 delivers, running locally: the API, the worker, the web shell, PostgreSQL,
+# Redis, MinIO, Temporal, Prometheus and Grafana. Nothing else — a service the Foundation does not
+# need is a service the Foundation has to operate.
+#
+# Three rules this file follows:
+#
+# 1. **Start-up order comes from health, not from sleeps.** Every dependency edge uses
+#    `condition: service_healthy` or `service_completed_successfully`, so a slow container delays
+#    its dependants instead of letting them start against a service that is not ready.
+# 2. **Every published port binds to 127.0.0.1 and comes from configuration.** The stack is a
+#    development environment; exposing it on every interface would put an unauthenticated database
+#    on the local network.
+# 3. **Durable state lives in named volumes.** PostgreSQL, MinIO, Prometheus and Grafana would
+#    otherwise lose everything on `docker compose down`.
+#
+# The build context is the repository root for the images we build, because the applications
+# depend on the local packages under `packages/`.
+
+name: ${COMPOSE_PROJECT_NAME:-iacode}
+
+x-build-args: &build-args
+  IACODE_VERSION: ${IACODE_VERSION:-0.1.0}
+  IACODE_COMMIT: ${IACODE_COMMIT:-unknown}
+  IACODE_BUILD_TIMESTAMP: ${IACODE_BUILD_TIMESTAMP:-unknown}
+
+# Everything a Python runtime process needs to reach the rest of the stack. Shared so the API, the
+# migration job and the worker cannot drift into three different views of the same infrastructure.
+x-runtime-env: &runtime-env
+  IACODE_VERSION: ${IACODE_VERSION:-0.1.0}
+  IACODE_ENVIRONMENT: ${IACODE_ENVIRONMENT:-local}
+  IACODE_LOG_LEVEL: ${IACODE_LOG_LEVEL:-INFO}
+  IACODE_DATABASE_URL: ${IACODE_DATABASE_URL}
+  IACODE_DATABASE_POOL_SIZE: ${IACODE_DATABASE_POOL_SIZE:-5}
+  IACODE_DATABASE_MAX_OVERFLOW: ${IACODE_DATABASE_MAX_OVERFLOW:-5}
+  IACODE_DATABASE_CONNECT_TIMEOUT_SECONDS: ${IACODE_DATABASE_CONNECT_TIMEOUT_SECONDS:-5}
+  IACODE_REDIS_URL: ${IACODE_REDIS_URL}
+  IACODE_MINIO_ENDPOINT: ${IACODE_MINIO_ENDPOINT}
+  IACODE_MINIO_ACCESS_KEY: ${IACODE_MINIO_ACCESS_KEY}
+  IACODE_MINIO_SECRET_KEY: ${IACODE_MINIO_SECRET_KEY}
+  IACODE_MINIO_SECURE: ${IACODE_MINIO_SECURE:-false}
+  IACODE_MINIO_BUCKET: ${IACODE_MINIO_BUCKET:-iacode-artifacts}
+  IACODE_TEMPORAL_TARGET: ${IACODE_TEMPORAL_TARGET}
+  IACODE_TEMPORAL_NAMESPACE: ${IACODE_TEMPORAL_NAMESPACE:-default}
+  IACODE_TEMPORAL_TASK_QUEUE: ${IACODE_TEMPORAL_TASK_QUEUE:-iacode-foundation}
+
+networks:
+  iacode:
+    name: ${COMPOSE_PROJECT_NAME:-iacode}-network
+    driver: bridge
+
+volumes:
+  postgres-data:
+  minio-data:
+  prometheus-data:
+  grafana-data:
+
+services:
+
+  # ------------------------------------------------------------------------------------------
+  # PostgreSQL: the system of record, and Temporal's persistence.
+  # ------------------------------------------------------------------------------------------
+  # The pgvector image is the plain PostgreSQL image plus the extension. Using it now costs
+  # nothing and means Gate 7 does not have to migrate the database engine to add retrieval; the
+  # extension itself is created by a migration, not by the image.
+  postgres:
+    image: pgvector/pgvector:0.8.6-pg17
+    container_name: ${COMPOSE_PROJECT_NAME:-iacode}-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${IACODE_POSTGRES_USER}
+      POSTGRES_PASSWORD: ${IACODE_POSTGRES_PASSWORD}
+      POSTGRES_DB: ${IACODE_POSTGRES_DB}
+      # Scram rather than the image default, so a password is never sent in the clear even on a
+      # local network.
+      POSTGRES_INITDB_ARGS: "--auth-host=scram-sha-256 --auth-local=scram-sha-256"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ../postgres/initdb:/docker-entrypoint-initdb.d:ro
+    ports:
+      - "127.0.0.1:${IACODE_POSTGRES_PORT:-15432}:5432"
+    healthcheck:
+      # `pg_isready` with the real user and database: the default check succeeds while the server
+      # is still running its init scripts, which is exactly the window a dependant must not start in.
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB} -h 127.0.0.1"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 15s
+    networks: [iacode]
+
+  # ------------------------------------------------------------------------------------------
+  # Redis: cache.
+  # ------------------------------------------------------------------------------------------
+  # No volume, on purpose. Gate 0 uses Redis as a cache, and a cache that survives a restart hides
+  # the cold-start behaviour the application must handle anyway. When a later Gate stores something
+  # it cannot lose, that Gate adds persistence and says why.
+  redis:
+    image: redis:8.2.10-alpine
+    container_name: ${COMPOSE_PROJECT_NAME:-iacode}-redis
+    restart: unless-stopped
+    command: ["redis-server", "--save", "", "--appendonly", "no"]
+    ports:
+      - "127.0.0.1:${IACODE_REDIS_PORT:-16379}:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 5s
+    networks: [iacode]
+
+  # ------------------------------------------------------------------------------------------
+  # MinIO: object storage.
+  # ------------------------------------------------------------------------------------------
+  minio:
+    image: quay.io/minio/minio:RELEASE.2025-09-07T16-13-09Z
+    container_name: ${COMPOSE_PROJECT_NAME:-iacode}-minio
+    restart: unless-stopped
+    command: ["server", "/data", "--console-address", ":9001"]
+    environment:
+      MINIO_ROOT_USER: ${IACODE_MINIO_ROOT_USER}
+      MINIO_ROOT_PASSWORD: ${IACODE_MINIO_ROOT_PASSWORD}
+      MINIO_UPDATE: "off"
+    volumes:
+      - minio-data:/data
+    ports:
+      - "127.0.0.1:${IACODE_MINIO_API_PORT:-19000}:9000"
+      - "127.0.0.1:${IACODE_MINIO_CONSOLE_PORT:-19001}:9001"
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:9000/minio/health/live"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 10s
+    networks: [iacode]
+
+  # A one-shot bootstrap rather than an init container that lingers. It creates the bucket the
+  # later Gates will write artifacts into, and re-running it is a no-op.
+  minio-bootstrap:
+    image: quay.io/minio/mc:RELEASE.2025-08-13T08-35-41Z
+    container_name: ${COMPOSE_PROJECT_NAME:-iacode}-minio-bootstrap
+    restart: "no"
+    depends_on:
+      minio:
+        condition: service_healthy
+    environment:
+      MINIO_ROOT_USER: ${IACODE_MINIO_ROOT_USER}
+      MINIO_ROOT_PASSWORD: ${IACODE_MINIO_ROOT_PASSWORD}
+      IACODE_MINIO_BUCKET: ${IACODE_MINIO_BUCKET:-iacode-artifacts}
+    entrypoint: ["/bin/sh", "/bootstrap/bootstrap-minio.sh"]
+    volumes:
+      - ../minio:/bootstrap:ro
+    networks: [iacode]
+
+  # ------------------------------------------------------------------------------------------
+  # Temporal: durable workflows.
+  # ------------------------------------------------------------------------------------------
+  # auto-setup provisions its own schema on first boot, in the shared PostgreSQL server but in its
+  # own databases. Sharing the server keeps the stack small; separate databases keep the backup of
+  # our system of record free of Temporal's internal tables.
+  temporal:
+    image: temporalio/auto-setup:1.29.7
+    container_name: ${COMPOSE_PROJECT_NAME:-iacode}-temporal
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DB: postgres12
+      DB_PORT: 5432
+      POSTGRES_SEEDS: postgres
+      POSTGRES_USER: ${IACODE_POSTGRES_USER}
+      POSTGRES_PWD: ${IACODE_POSTGRES_PASSWORD}
+      DBNAME: temporal
+      VISIBILITY_DBNAME: temporal_visibility
+      ENABLE_ES: "false"
+      DYNAMIC_CONFIG_FILE_PATH: config/dynamicconfig/iacode.yaml
+    volumes:
+      - ../temporal/dynamicconfig:/etc/temporal/config/dynamicconfig:ro
+    ports:
+      - "127.0.0.1:${IACODE_TEMPORAL_PORT:-17233}:7233"
+    healthcheck:
+      # `temporal operator namespace list` is a real gRPC call to the frontend service. A TCP
+      # probe would report the port as open while the server was still migrating its schema.
+      #
+      # The address is the container's own IP, not 127.0.0.1: auto-setup binds the frontend to the
+      # container address, so a loopback probe is refused even when the server is perfectly
+      # healthy. That is not a detail worth rediscovering, which is why it is written down here.
+      test: ["CMD-SHELL", "temporal operator namespace list --address $$(hostname -i):7233 >/dev/null"]
+      interval: 10s
+      timeout: 10s
+      retries: 30
+      start_period: 45s
+    networks: [iacode]
+
+  temporal-ui:
+    image: temporalio/ui:2.54.1
+    container_name: ${COMPOSE_PROJECT_NAME:-iacode}-temporal-ui
+    restart: unless-stopped
+    depends_on:
+      temporal:
+        condition: service_healthy
+    environment:
+      TEMPORAL_ADDRESS: temporal:7233
+      TEMPORAL_CORS_ORIGINS: http://localhost:${IACODE_TEMPORAL_UI_PORT:-18233}
+    ports:
+      - "127.0.0.1:${IACODE_TEMPORAL_UI_PORT:-18233}:8080"
+    networks: [iacode]
+
+  # ------------------------------------------------------------------------------------------
+  # Schema migration: a job, not a service.
+  # ------------------------------------------------------------------------------------------
+  # It runs to completion and exits. The API waits for it to succeed, so the API never serves a
+  # request against a schema that has not been migrated — and a failed migration stops the API from
+  # starting at all instead of letting it report health over a broken database.
+  migrate:
+    build:
+      context: ../..
+      dockerfile: apps/api/Dockerfile
+      args: *build-args
+    image: ${COMPOSE_PROJECT_NAME:-iacode}/api:${IACODE_VERSION:-0.1.0}
+    container_name: ${COMPOSE_PROJECT_NAME:-iacode}-migrate
+    restart: "no"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment: *runtime-env
+    command: ["alembic", "upgrade", "head"]
+    networks: [iacode]
+
+  # ------------------------------------------------------------------------------------------
+  # The API.
+  # ------------------------------------------------------------------------------------------
+  api:
+    build:
+      context: ../..
+      dockerfile: apps/api/Dockerfile
+      args: *build-args
+    image: ${COMPOSE_PROJECT_NAME:-iacode}/api:${IACODE_VERSION:-0.1.0}
+    container_name: ${COMPOSE_PROJECT_NAME:-iacode}-api
+    restart: unless-stopped
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      minio-bootstrap:
+        condition: service_completed_successfully
+      temporal:
+        condition: service_healthy
+    environment:
+      <<: *runtime-env
+      IACODE_CORS_ALLOW_ORIGINS: ${IACODE_CORS_ALLOW_ORIGINS}
+      IACODE_CORRELATION_HEADER: ${IACODE_CORRELATION_HEADER:-X-Correlation-ID}
+      IACODE_READINESS_TIMEOUT_SECONDS: ${IACODE_READINESS_TIMEOUT_SECONDS:-3}
+    ports:
+      - "127.0.0.1:${IACODE_API_PORT:-18080}:8000"
+    healthcheck:
+      # Liveness, not readiness. A container healthcheck that probed /ready would restart the API
+      # whenever a dependency blinked, which is the failure /health exists to avoid. The image has
+      # no curl, and adding one to a runtime image for a healthcheck is a package too many.
+      test: ["CMD", "python", "-c", "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=3).status == 200 else 1)"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+      start_period: 20s
+    networks: [iacode]
+
+  # ------------------------------------------------------------------------------------------
+  # The Temporal worker.
+  # ------------------------------------------------------------------------------------------
+  worker:
+    build:
+      context: ../..
+      dockerfile: services/orchestrator/Dockerfile
+      args: *build-args
+    image: ${COMPOSE_PROJECT_NAME:-iacode}/worker:${IACODE_VERSION:-0.1.0}
+    container_name: ${COMPOSE_PROJECT_NAME:-iacode}-worker
+    restart: unless-stopped
+    depends_on:
+      temporal:
+        condition: service_healthy
+    environment:
+      <<: *runtime-env
+      IACODE_WORKER_CONNECT_TIMEOUT_SECONDS: ${IACODE_WORKER_CONNECT_TIMEOUT_SECONDS:-180}
+    healthcheck:
+      # The worker has no HTTP surface, so "the process exists" would be the lazy answer. Instead
+      # it asks Temporal whether this task queue actually has a poller, which is the only evidence
+      # that the worker is doing its job rather than merely running.
+      test: ["CMD", "python", "-m", "iacode_orchestrator.healthcheck"]
+      interval: 15s
+      timeout: 10s
+      retries: 6
+      start_period: 45s
+    networks: [iacode]
+
+  # ------------------------------------------------------------------------------------------
+  # The web shell.
+  # ------------------------------------------------------------------------------------------
+  web:
+    build:
+      context: ../..
+      dockerfile: apps/web/Dockerfile
+      args: *build-args
+    image: ${COMPOSE_PROJECT_NAME:-iacode}/web:${IACODE_VERSION:-0.1.0}
+    container_name: ${COMPOSE_PROJECT_NAME:-iacode}-web
+    restart: unless-stopped
+    environment:
+      # Read by the image's entrypoint, which writes config.json before nginx starts. The browser
+      # runs on the host, so this is the host-published address rather than the Compose service
+      # name: a service name is not resolvable from outside the Compose network.
+      IACODE_WEB_API_BASE_URL: http://localhost:${IACODE_API_PORT:-18080}
+    ports:
+      - "127.0.0.1:${IACODE_WEB_PORT:-18081}:8080"
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://127.0.0.1:8080/"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+      start_period: 10s
+    networks: [iacode]
+
+  # ------------------------------------------------------------------------------------------
+  # Observability.
+  # ------------------------------------------------------------------------------------------
+  prometheus:
+    image: prom/prometheus:v3.5.5
+    container_name: ${COMPOSE_PROJECT_NAME:-iacode}-prometheus
+    restart: unless-stopped
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.path=/prometheus
+      - --storage.tsdb.retention.time=15d
+      - --web.enable-lifecycle
+    volumes:
+      - ../prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus-data:/prometheus
+    ports:
+      - "127.0.0.1:${IACODE_PROMETHEUS_PORT:-19090}:9090"
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://127.0.0.1:9090/-/healthy"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+      start_period: 10s
+    networks: [iacode]
+
+  grafana:
+    image: grafana/grafana:13.0.9
+    container_name: ${COMPOSE_PROJECT_NAME:-iacode}-grafana
+    restart: unless-stopped
+    depends_on:
+      prometheus:
+        condition: service_healthy
+    environment:
+      GF_SECURITY_ADMIN_USER: ${IACODE_GRAFANA_USER:-admin}
+      GF_SECURITY_ADMIN_PASSWORD: ${IACODE_GRAFANA_PASSWORD}
+      # Anonymous access stays off even locally: the dashboard is behind the same login the
+      # runbook documents, so the local setup and a future shared one differ in configuration
+      # rather than in behaviour.
+      GF_AUTH_ANONYMOUS_ENABLED: "false"
+      GF_USERS_ALLOW_SIGN_UP: "false"
+      GF_ANALYTICS_REPORTING_ENABLED: "false"
+      GF_ANALYTICS_CHECK_FOR_UPDATES: "false"
+    volumes:
+      - ../grafana/provisioning:/etc/grafana/provisioning:ro
+      - ../grafana/dashboards:/var/lib/grafana/dashboards:ro
+      - grafana-data:/var/lib/grafana
+    ports:
+      - "127.0.0.1:${IACODE_GRAFANA_PORT:-13000}:3000"
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:3000/api/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+    networks: [iacode]

@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=80.9.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "iacode-orchestrator"
+version = "0.1.0"
+description = "The IACode Temporal worker."
+requires-python = ">=3.12"
+dependencies = [
+  "iacode-common==0.1.0",
+  "iacode-telemetry==0.1.0",
+  "pydantic==2.13.5",
+  "pydantic-settings==2.15.0",
+  "temporalio==1.33.0",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]

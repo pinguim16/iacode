@@ -1,0 +1,29 @@
+# Direct third-party dependencies of the IACode API and its worker, pinned exactly.
+#
+# This file lists what we chose. ``requirements.lock.txt`` lists what that choice resolves to,
+# including every transitive package, and is what the images install: a direct pin alone still lets
+# a transitive dependency change between two builds of the same commit, which is the difference
+# between a pinned build and a reproducible one.
+#
+# To change a version: edit here, rebuild, regenerate the lock with
+# ``python scripts/iacode/lock_dependencies.py``, and record the change in docs/VERSIONS.md.
+
+fastapi==0.141.1
+uvicorn[standard]==0.53.0
+pydantic==2.13.5
+pydantic-settings==2.15.0
+sqlalchemy[asyncio]==2.0.54
+alembic==1.20.0
+asyncpg==0.31.0
+psycopg[binary]==3.3.6
+redis==8.1.0
+minio==7.2.20
+temporalio==1.33.0
+prometheus-client==0.26.0
+
+# Test and lint toolchain. It ships in the image because the API test suite runs inside a
+# container against the real Compose services, which is the only place those tests are honest.
+pytest==9.1.1
+pytest-asyncio==1.4.0
+httpx==0.28.1
+ruff==0.16.8

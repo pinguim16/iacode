@@ -1,0 +1,22 @@
+# The Prometheus datasource, provisioned rather than clicked.
+#
+# `docs/GATE-0-CHECKLIST.md` row 11.5 asks for Grafana to start useful. A datasource an operator has
+# to add by hand is a step that gets skipped, and a dashboard whose datasource is missing renders as
+# a wall of errors that looks like the stack is broken.
+#
+# `uid` is fixed because the dashboard JSON references it. Letting Grafana generate one would make
+# the dashboard point at a datasource that exists under a different identifier.
+
+apiVersion: 1
+
+datasources:
+  - name: Prometheus
+    uid: iacode-prometheus
+    type: prometheus
+    access: proxy
+    url: http://prometheus:9090
+    isDefault: true
+    editable: false
+    jsonData:
+      timeInterval: 15s
+      httpMethod: POST

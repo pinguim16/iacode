@@ -1,0 +1,39 @@
+{
+  "schemaVersion": "1.0.0",
+  "policy": "The suites a delivery is measured by are declared here, not discovered by guesswork and not chosen by the caller. A suite that counts contributes its discovered cases to the TESTS denominator and its case identifiers to evidence resolution, so a test reference cannot resolve against a suite nobody declared and a suite cannot be dropped from the denominator by an invocation. A suite that does not count says why, because a silent omission and a justified one are different states.",
+  "suites": [
+    {
+      "id": "ledger",
+      "title": "Development control plane suite",
+      "root": "tests",
+      "framework": "python-unittest",
+      "counted": true,
+      "purpose": "The SETUP-00 tooling: the ledger, the policies, the schemas and their guardrails."
+    },
+    {
+      "id": "api",
+      "title": "Foundation backend suite",
+      "root": "apps/api/tests",
+      "framework": "python-pytest",
+      "counted": true,
+      "purpose": "The FastAPI application, its configuration, its persistence and its dependencies."
+    },
+    {
+      "id": "infra",
+      "title": "Foundation infrastructure smoke suite",
+      "root": "infra/tests",
+      "framework": "python-unittest",
+      "counted": true,
+      "purpose": "Our own configuration of PostgreSQL, Redis, MinIO, Temporal, Prometheus and Grafana, exercised against the running stack."
+    },
+    {
+      "id": "web",
+      "title": "Foundation frontend suite",
+      "root": "apps/web/src",
+      "framework": "angular-karma",
+      "counted": false,
+      "notCountedReason": "The cases are TypeScript and are collected by Karma inside the toolchain container. The Python count derivation cannot enumerate them without executing the frontend toolchain, and a number it cannot re-derive would be a claim rather than a measurement. The suite is evidenced by its recorded execution instead, and its absence from the denominator is declared here rather than implied.",
+      "purpose": "The Angular application shell, the Foundation status rendering and the API configuration."
+    }
+  ]
+}

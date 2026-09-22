@@ -41,6 +41,7 @@ from ledger_common import (
     resolve_latest,
     run_git,
     scope_fingerprint,
+    use_utf8_stdout,
     utc_now,
     validate_schema,
     write_json,
@@ -321,8 +322,9 @@ class Fixture:
         environment = dict(os.environ)
         environment["PYTHONDONTWRITEBYTECODE"] = "1"
         completed = subprocess.run(
-            [sys.executable, *argv], cwd=self.path, text=True, stdout=subprocess.PIPE,
-            stderr=subprocess.STDOUT, check=False, env=environment)
+            [sys.executable, *argv], cwd=self.path, text=True, encoding="utf-8",
+            errors="replace", stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+            check=False, env=environment)
         return completed.returncode, completed.stdout
 
     def validator(self) -> tuple[int, str]:
@@ -1413,6 +1415,7 @@ def render_markdown(report: dict[str, Any]) -> str:
 
 
 def main() -> int:
+    use_utf8_stdout()
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--root", type=Path)
     parser.add_argument("--checkpoint", type=Path)

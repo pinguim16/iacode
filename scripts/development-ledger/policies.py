@@ -34,6 +34,7 @@ from ledger_common import LedgerError, load_json
 QUALITY_GATE_POLICY = Path(".iacode") / "policies" / "quality-gates.json"
 CANONICAL_REQUIREMENTS = Path(".iacode") / "policies" / "canonical-requirements.json"
 AUDIT_REGISTRY = Path(".iacode") / "policies" / "audit-registry.json"
+TEST_SUITE_REGISTRY = Path(".iacode") / "policies" / "test-suites.json"
 
 # The anchored reference kinds. A matrix row that carries one of these is compared against the
 # expected set; ``local`` rows are delivery-specific additions that may never replace an anchor.
@@ -131,6 +132,125 @@ def mandatory_gates(root: Path) -> tuple[str, ...]:
 
 
 # --------------------------------------------------------------------------------------------
+# The canonical test suites
+# --------------------------------------------------------------------------------------------
+
+
+def load_test_suites(root: Path) -> list[dict[str, Any]]:
+    """Every declared test suite, or the historical single suite when no registry exists.
+
+    Gate 0 adds runtime suites next to the control-plane one, and the denominator of the TESTS
+    count has to include them. Which suites exist is a policy statement, exactly like the mandatory
+    gate set: a suite cannot be added by an invocation and cannot be dropped to shrink a count.
+
+    A repository sealed before the registry existed has one suite, ``tests/``. Returning it keeps
+    every sealed checkpoint deriving the number it was sealed with instead of becoming invalid
+    because the tooling grew.
+    """
+    path = root / TEST_SUITE_REGISTRY
+    if not path.is_file():
+        return [{
+            "id": "ledger",
+            "title": "Development control plane suite",
+            "root": "tests",
+            "framework": "python-unittest",
+            "counted": True,
+            "purpose": "The only suite this repository revision declares.",
+        }]
+    registry = load_json(path)
+    suites = registry.get("suites") if isinstance(registry, dict) else None
+    if not isinstance(suites, list) or not suites:
+        raise LedgerError("test-suites.json must declare a non-empty suites array")
+    for suite in suites:
+        if not isinstance(suite, dict) or not suite.get("id") or not suite.get("root"):
+            raise LedgerError("every declared test suite needs an id and a root")
+        if not suite.get("counted") and not str(suite.get("notCountedReason") or "").strip():
+            raise LedgerError(
+                f"test suite {suite['id']!r} is not counted and records no reason; an omission "
+                f"from the denominator is declared, never implied")
+    return [dict(suite) for suite in suites]
+
+
+def counted_test_suites(root: Path) -> list[dict[str, Any]]:
+    """The declared suites whose cases the count derivation and evidence resolution may use."""
+    return [suite for suite in load_test_suites(root) if suite.get("counted")]
+
+
+# --------------------------------------------------------------------------------------------
+# Gate scope
+# --------------------------------------------------------------------------------------------
+
+GATE_SCOPE = Path(".iacode") / "policies" / "gate-scope.json"
+
+# A reserved directory holds its declaration and nothing else. The marker is a phrase the README
+# states about itself, so a reservation cannot be lifted by editing prose alone: dropping the
+# marker while the directory holds an implementation still fails, because the implementation is
+# what the control counts.
+RESERVATION_MARKER = "Status: RESERVED"
+RESERVATION_ALLOWED_FILES = ("README.md",)
+
+
+def load_gate_scope(root: Path) -> list[dict[str, Any]]:
+    """Every reservation the canonical scope policy declares, or none when it does not exist."""
+    path = root / GATE_SCOPE
+    if not path.is_file():
+        return []
+    document = load_json(path)
+    reservations = document.get("reservations") if isinstance(document, dict) else None
+    if not isinstance(reservations, list):
+        raise LedgerError("gate-scope.json must declare a reservations array")
+    return [item for item in reservations if isinstance(item, dict)]
+
+
+def gate_order() -> tuple[str, ...]:
+    """Every planned Gate in delivery order, normalised, derived from the published milestones."""
+    from ledger_common import MILESTONES, normalize_gate
+
+    return tuple(normalize_gate(gate) for _identifier, _title, gates in MILESTONES
+                 for gate in gates)
+
+
+def scope_violations(root: Path, gate: str) -> list[str]:
+    """Reserved paths a delivery for ``gate`` has implemented, which it may not have.
+
+    A reservation belongs to a Gate that has not run yet. Until then the directory may hold its
+    declaration and nothing else. A path that does not exist is not a violation: creating the
+    directory is part of the monorepo layout and is verified by the suite, while this control is
+    about what a delivery *put inside* one.
+    """
+    from ledger_common import normalize_gate
+
+    order = gate_order()
+    current = normalize_gate(gate)
+    position = order.index(current) if current in order else -1
+    violations: list[str] = []
+    for reservation in load_gate_scope(root):
+        owner = normalize_gate(str(reservation.get("gate")))
+        if owner not in order or (position >= 0 and order.index(owner) <= position):
+            continue
+        directory = root / str(reservation["path"])
+        if not directory.is_dir():
+            continue
+        contents = sorted(
+            str(item.relative_to(directory)).replace("\\", "/")
+            for item in directory.rglob("*")
+            if item.is_file() and "__pycache__" not in item.parts
+        )
+        extra = [name for name in contents if name not in RESERVATION_ALLOWED_FILES]
+        if extra:
+            violations.append(
+                f"{reservation['path']} is reserved for {reservation['gate']} but carries "
+                + ", ".join(extra[:5]))
+            continue
+        readme = directory / "README.md"
+        if not readme.is_file() or RESERVATION_MARKER not in readme.read_text(encoding="utf-8"):
+            violations.append(
+                f"{reservation['path']} is reserved for {reservation['gate']} and does not "
+                f"declare the reservation")
+    return violations
+
+
+# --------------------------------------------------------------------------------------------
 # Canonical Gate requirements
 # --------------------------------------------------------------------------------------------
 
@@ -187,6 +307,24 @@ def canonical_requirements(root: Path, gate: str) -> list[dict[str, Any]]:
                     f"canonical requirement {gate}#{row['key']} does not mirror {specification}")
         return [dict(item) for item in declared]
     raise LedgerError(f"canonical-requirements.json declares no requirements for gate {gate}")
+
+
+def gate_specification(root: Path, gate: str) -> str:
+    """The canonical specification document of a Gate, as the registry declares it.
+
+    Every Gate has its own specification, and a derived requirement must cite the document it was
+    actually derived from. Naming one Gate's checklist in the derivation of another's requirements
+    would make a Gate 0 requirement point at the SETUP-00 checklist, where the row does not exist:
+    an evidence reference that resolves to the wrong document is not evidence.
+    """
+    registry = load_json(root / CANONICAL_REQUIREMENTS)
+    entries = registry.get("gates") if isinstance(registry, dict) else None
+    if not isinstance(entries, list):
+        raise LedgerError("canonical-requirements.json must declare a gates array")
+    for entry in entries:
+        if isinstance(entry, dict) and entry.get("gate") == gate and entry.get("specification"):
+            return str(entry["specification"])
+    raise LedgerError(f"canonical-requirements.json declares no specification for gate {gate}")
 
 
 # --------------------------------------------------------------------------------------------
@@ -447,12 +585,13 @@ def expected_requirement_refs(
     """
     expected: dict[str, dict[str, Any]] = {}
 
+    specification = gate_specification(root, gate)
     for item in canonical_requirements(root, gate):
         reference = f"canonical:{gate}#{item['key']}"
         expected[reference] = {
             "sourceRef": reference,
-            "source": "SETUP",
-            "sourceReference": f"docs/SETUP-00-CHECKLIST.md row {item['key']}",
+            "source": "GATE_SPECIFICATION",
+            "sourceReference": f"{specification} row {item['key']}",
             "description": item.get("description", ""),
             "mandatory": bool(item.get("mandatory", True)),
         }

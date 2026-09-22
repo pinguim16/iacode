@@ -1,0 +1,415 @@
+{
+  "schemaVersion": "1.1.0",
+  "checkpoint": "GATE-0-CP-0001",
+  "generatedAt": "2026-09-22T00:31:27Z",
+  "targetFingerprint": "8ebe820fcd1f2e20431dda92d861b2b229249df03a145e8ec40d800ec061c22f",
+  "source": "scripts/development-ledger/gate0_red_team.py with gate0_runtime_attacks.py — the internal adversarial battery of GATE 0 — FOUNDATION, executed against the delivery",
+  "baselineControl": {
+    "result": "VALID",
+    "detail": "the unmutated fixture is accepted by every control this battery mutates: the application accepts its own configuration (configuration loads, health=UP, version=0.0.0-test); redaction leaves a clean message alone (connected to db:5432 in 35ms); the scope control accepts the real tree (no violation); the infrastructure suite accepts the real compose file (..................\n----------------------------------------------------------------------\nRan 18 tests in 0.657s\n\nOK)",
+    "evidence": [
+      "file:infra/tests/test_compose_definition.py",
+      "file:apps/api/src/iacode_api/config.py"
+    ]
+  },
+  "attacks": [
+    {
+      "attackId": "G0-A",
+      "description": "A permissive CORS wildcard reaches the running API.",
+      "target": "configuration",
+      "mutation": "IACODE_CORS_ALLOW_ORIGINS='*'",
+      "expectedDefense": "the configuration refuses to load and names the wildcard",
+      "observed": "Value error, IACODE_CORS_ALLOW_ORIGINS may not contain '*'; list the exact origins [type=value_error, input_value=['*'], input_type=list]",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:apps/api/src/iacode_api/config.py"
+      ],
+      "mandatory": true,
+      "origin": "GATE-0 internal Red Team, executed in the API image"
+    },
+    {
+      "attackId": "G0-B",
+      "description": "A synchronous database URL silently blocks the event loop.",
+      "target": "configuration",
+      "mutation": "IACODE_DATABASE_URL without the asyncpg driver",
+      "expectedDefense": "the configuration refuses to load and names the driver",
+      "observed": "Value error, IACODE_DATABASE_URL must use the postgresql+asyncpg driver, found 'postgresql' [type=value_error, input_value='postgresql://iacode:iacode@db:5432/iacode', input_type=s",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:apps/api/src/iacode_api/config.py"
+      ],
+      "mandatory": true,
+      "origin": "GATE-0 internal Red Team, executed in the API image"
+    },
+    {
+      "attackId": "G0-C",
+      "description": "A scheme in the object-storage endpoint produces a client that builds broken URLs.",
+      "target": "configuration",
+      "mutation": "IACODE_MINIO_ENDPOINT='http://minio:9000'",
+      "expectedDefense": "the configuration refuses at start-up rather than on the first object call",
+      "observed": "Value error, IACODE_MINIO_ENDPOINT is host:port without a scheme; use IACODE_MINIO_SECURE [type=value_error, input_value='http://minio:9000', input_type=str]",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:apps/api/src/iacode_api/config.py"
+      ],
+      "mandatory": true,
+      "origin": "GATE-0 internal Red Team, executed in the API image"
+    },
+    {
+      "attackId": "G0-D",
+      "description": "An invalid enumerated configuration value is accepted.",
+      "target": "configuration",
+      "mutation": "IACODE_LOG_LEVEL='CHATTY'",
+      "expectedDefense": "the configuration refuses to load",
+      "observed": "Input should be 'DEBUG', 'INFO', 'WARNING', 'ERROR' or 'CRITICAL' [type=literal_error, input_value='CHATTY', input_type=str]",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:apps/api/src/iacode_api/config.py"
+      ],
+      "mandatory": true,
+      "origin": "GATE-0 internal Red Team, executed in the API image"
+    },
+    {
+      "attackId": "G0-E",
+      "description": "A default credential ships inside the application.",
+      "target": "configuration",
+      "mutation": "load the configuration with no environment at all",
+      "expectedDefense": "every credential default is empty rather than a working value",
+      "observed": "every credential default is empty",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:apps/api/src/iacode_api/config.py"
+      ],
+      "mandatory": true,
+      "origin": "GATE-0 internal Red Team, executed in the API image"
+    },
+    {
+      "attackId": "G0-F",
+      "description": "A credential reaches a log record through the message.",
+      "target": "secret handling",
+      "mutation": "log a DSN in the message and a secret key in the structured context",
+      "expectedDefense": "both are replaced with [REDACTED] while the host stays readable",
+      "observed": "redacted; host preserved as 'minio'",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:packages/telemetry/src/iacode_telemetry/logging.py"
+      ],
+      "mandatory": true,
+      "origin": "GATE-0 internal Red Team, executed in the API image"
+    },
+    {
+      "attackId": "G0-I",
+      "description": "An unhandled exception returns its traceback to the caller.",
+      "target": "error contract",
+      "mutation": "raise an exception whose message contains a connection string",
+      "expectedDefense": "the response carries a stable code and a correlation id, and no internal detail",
+      "observed": "HTTP 500; code=INTERNAL_ERROR correlationId present",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:apps/api/src/iacode_api/errors.py"
+      ],
+      "mandatory": true,
+      "origin": "GATE-0 internal Red Team, executed in the API image"
+    },
+    {
+      "attackId": "G0-J",
+      "description": "A caller controls what is written into our logs and headers.",
+      "target": "correlation",
+      "mutation": "supply a correlation identifier that is too short, one with a space and one oversized",
+      "expectedDefense": "every supplied value is replaced by a generated one rather than echoed",
+      "observed": "all three replaced, e.g. 01a0c685-ae66-7000-a4c9-...",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:apps/api/src/iacode_api/middleware/correlation.py"
+      ],
+      "mandatory": true,
+      "origin": "GATE-0 internal Red Team, executed in the API image"
+    },
+    {
+      "attackId": "G0-K",
+      "description": "Readiness reports READY while no dependency is reachable.",
+      "target": "readiness",
+      "mutation": "run the application against addresses where nothing is listening",
+      "expectedDefense": "readiness answers 503 NOT_READY with every dependency DOWN while liveness stays UP",
+      "observed": "ready=HTTP 503 NOT_READY, health=UP, 4 dependencies reported",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:apps/api/src/iacode_api/readiness.py"
+      ],
+      "mandatory": true,
+      "origin": "GATE-0 internal Red Team, executed in the API image"
+    },
+    {
+      "attackId": "G0-L",
+      "description": "A driver error puts the database password in the readiness payload.",
+      "target": "readiness",
+      "mutation": "point the database at an unreachable host with a password in the URL",
+      "expectedDefense": "the failure detail is redacted before it reaches the response",
+      "observed": "the failure detail is redacted",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:apps/api/src/iacode_api/readiness.py"
+      ],
+      "mandatory": true,
+      "origin": "GATE-0 internal Red Team, executed in the API image"
+    },
+    {
+      "attackId": "G0-M",
+      "description": "A dependency that never answers makes readiness hang forever.",
+      "target": "readiness",
+      "mutation": "a probe that sleeps for an hour",
+      "expectedDefense": "readiness bounds the probe and answers DOWN within the configured timeout",
+      "observed": "answered in 1.0s with DOWN",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:apps/api/src/iacode_api/readiness.py"
+      ],
+      "mandatory": true,
+      "origin": "GATE-0 internal Red Team, executed in the API image"
+    },
+    {
+      "attackId": "G0-N",
+      "description": "The version endpoint becomes a diagnostics dump.",
+      "target": "version",
+      "mutation": "configure a password and a secret key, then read /version",
+      "expectedDefense": "the payload carries build identity only",
+      "observed": "the payload carries build identity only",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:apps/api/src/iacode_api/routes/version.py"
+      ],
+      "mandatory": true,
+      "origin": "GATE-0 internal Red Team, executed in the API image"
+    },
+    {
+      "attackId": "G0-G",
+      "description": "A credential hides at depth under a key nothing enumerates.",
+      "target": "secret handling",
+      "mutation": "a secret three levels down, inside a list, under a key the code never names",
+      "expectedDefense": "redaction reaches it, because it matches on the key name at any depth",
+      "observed": "{\"deeply\": {\"nested\": [{\"AWS_SECRET_ACCESS_KEY\": \"[REDACTED]\"}]}}",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:packages/common/src/iacode_common/redaction.py"
+      ],
+      "mandatory": true,
+      "origin": "GATE-0 internal Red Team, executed on the host"
+    },
+    {
+      "attackId": "G0-H",
+      "description": "Redaction destroys the log it was supposed to protect.",
+      "target": "secret handling",
+      "mutation": "an ordinary operational message with no credential in it",
+      "expectedDefense": "the message passes through unchanged, so redaction stays worth having",
+      "observed": "connected to db:5432 in 35ms with log level INFO",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:packages/common/src/iacode_common/redaction.py"
+      ],
+      "mandatory": true,
+      "origin": "GATE-0 internal Red Team, executed on the host"
+    },
+    {
+      "attackId": "G0-O",
+      "description": "A later Gate's capability is implemented inside this Gate.",
+      "target": "scope",
+      "mutation": "plant a module in a directory the scope registry reserves for a later Gate",
+      "expectedDefense": "the scope control reports a violation naming the path and the owning Gate",
+      "observed": "apps/cli is reserved for GATE 5 but carries gateway.py",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:.iacode/policies/gate-scope.json"
+      ],
+      "mandatory": true,
+      "origin": "GATE-0 internal Red Team, executed on the host"
+    },
+    {
+      "attackId": "G0-P",
+      "description": "A reserved directory quietly drops the declaration that reserves it.",
+      "target": "scope",
+      "mutation": "replace a reserved README with prose that does not declare the reservation",
+      "expectedDefense": "the scope control reports the missing declaration",
+      "observed": "apps/cli is reserved for GATE 5 and does not declare the reservation",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:.iacode/policies/gate-scope.json"
+      ],
+      "mandatory": true,
+      "origin": "GATE-0 internal Red Team, executed on the host"
+    },
+    {
+      "attackId": "G0-Q",
+      "description": "The stack is published on every interface.",
+      "target": "infrastructure",
+      "mutation": "bind the API's published port to 0.0.0.0 instead of 127.0.0.1",
+      "expectedDefense": "test_published_ports_are_loopback_only refuses, naming the host address",
+      "observed": "exit 1; test_published_ports_are_loopback_only fired",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:infra/tests/test_compose_definition.py"
+      ],
+      "mandatory": true,
+      "origin": "GATE-0 internal Red Team, executed on the host"
+    },
+    {
+      "attackId": "G0-R",
+      "description": "An image floats on a moving tag.",
+      "target": "infrastructure",
+      "mutation": "replace a pinned image reference with :latest",
+      "expectedDefense": "test_every_image_is_pinned refuses, naming the floating tag",
+      "observed": "exit 1; test_every_image_is_pinned fired",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:infra/tests/test_compose_definition.py"
+      ],
+      "mandatory": true,
+      "origin": "GATE-0 internal Red Team, executed on the host"
+    },
+    {
+      "attackId": "G0-S",
+      "description": "The API is allowed to start before the migration succeeds.",
+      "target": "infrastructure",
+      "mutation": "weaken the migration dependency to service_started",
+      "expectedDefense": "test_compose_uses_health_conditions_not_sleeps refuses, naming the weakened condition",
+      "observed": "exit 1; test_compose_uses_health_conditions_not_sleeps fired",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:infra/tests/test_compose_definition.py"
+      ],
+      "mandatory": true,
+      "origin": "GATE-0 internal Red Team, executed on the host"
+    },
+    {
+      "attackId": "G0-T",
+      "description": "Durable state moves into the container filesystem.",
+      "target": "infrastructure",
+      "mutation": "remove the named volume from PostgreSQL",
+      "expectedDefense": "test_durable_state_uses_named_volumes refuses, naming the service",
+      "observed": "exit 1; test_durable_state_uses_named_volumes fired",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:infra/tests/test_compose_definition.py"
+      ],
+      "mandatory": true,
+      "origin": "GATE-0 internal Red Team, executed on the host"
+    },
+    {
+      "attackId": "G0-U",
+      "description": "A healthcheck is reduced to proving a process exists.",
+      "target": "infrastructure",
+      "mutation": "replace the API healthcheck with a command that always succeeds",
+      "expectedDefense": "test_healthchecks_do_more_than_confirm_a_process_exists refuses",
+      "observed": "exit 1; test_healthchecks_do_more_than_confirm_a_process_exists fired",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:infra/tests/test_compose_definition.py"
+      ],
+      "mandatory": true,
+      "origin": "GATE-0 internal Red Team, executed on the host"
+    },
+    {
+      "attackId": "G0-V",
+      "description": "A half-finished backup is restored as if it were complete.",
+      "target": "backup",
+      "mutation": "a manifest recording result=FAILED",
+      "expectedDefense": "the restore refuses before touching the target",
+      "observed": "iacode-g0-restore-uuio24tn records result='FAILED'; an incomplete backup is not restorable and pretending otherwise is how a partial recovery is mistaken for a full one",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:scripts/iacode/restore.py"
+      ],
+      "mandatory": true,
+      "origin": "GATE-0 internal Red Team, executed on the host"
+    },
+    {
+      "attackId": "G0-W",
+      "description": "A corrupted dump is restored over a working database.",
+      "target": "backup",
+      "mutation": "a dump whose bytes do not match the recorded digest",
+      "expectedDefense": "the restore refuses before dropping anything",
+      "observed": "postgres.dump does not match its recorded checksum; the backup is corrupt",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:scripts/iacode/restore.py"
+      ],
+      "mandatory": true,
+      "origin": "GATE-0 internal Red Team, executed on the host"
+    },
+    {
+      "attackId": "G0-X",
+      "description": "A backup against a stopped stack reports success.",
+      "target": "backup",
+      "mutation": "run the backup with every container command failing",
+      "expectedDefense": "the component is reported FAILED with a reason, so the run exits non-zero",
+      "observed": "FAILED: Error: No such container",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:scripts/iacode/backup.py"
+      ],
+      "mandatory": true,
+      "origin": "GATE-0 internal Red Team, executed on the host"
+    },
+    {
+      "attackId": "G0-Y",
+      "description": "With postgres stopped, the API keeps claiming it can accept work.",
+      "target": "dependency failure",
+      "mutation": "docker compose stop postgres",
+      "expectedDefense": "liveness stays UP, readiness answers 503 NOT_READY over exactly the declared blast radius, no credential leaks, and readiness recovers when the service returns",
+      "observed": "health=UP ready=HTTP 503 NOT_READY down=['postgres', 'temporal'] expected=['postgres', 'temporal']; recovered=READY",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:scripts/iacode/scenarios/dependency_failure.py"
+      ],
+      "mandatory": true,
+      "origin": "GATE-0 internal Red Team, executed on the host"
+    },
+    {
+      "attackId": "G0-Z",
+      "description": "With redis stopped, the API keeps claiming it can accept work.",
+      "target": "dependency failure",
+      "mutation": "docker compose stop redis",
+      "expectedDefense": "liveness stays UP, readiness answers 503 NOT_READY over exactly the declared blast radius, no credential leaks, and readiness recovers when the service returns",
+      "observed": "health=UP ready=HTTP 503 NOT_READY down=['redis'] expected=['redis']; recovered=READY",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:scripts/iacode/scenarios/dependency_failure.py"
+      ],
+      "mandatory": true,
+      "origin": "GATE-0 internal Red Team, executed on the host"
+    },
+    {
+      "attackId": "G0-AA",
+      "description": "With minio stopped, the API keeps claiming it can accept work.",
+      "target": "dependency failure",
+      "mutation": "docker compose stop minio",
+      "expectedDefense": "liveness stays UP, readiness answers 503 NOT_READY over exactly the declared blast radius, no credential leaks, and readiness recovers when the service returns",
+      "observed": "health=UP ready=HTTP 503 NOT_READY down=['minio'] expected=['minio']; recovered=READY",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:scripts/iacode/scenarios/dependency_failure.py"
+      ],
+      "mandatory": true,
+      "origin": "GATE-0 internal Red Team, executed on the host"
+    },
+    {
+      "attackId": "G0-AB",
+      "description": "With temporal stopped, the API keeps claiming it can accept work.",
+      "target": "dependency failure",
+      "mutation": "docker compose stop temporal",
+      "expectedDefense": "liveness stays UP, readiness answers 503 NOT_READY over exactly the declared blast radius, no credential leaks, and readiness recovers when the service returns",
+      "observed": "health=UP ready=HTTP 503 NOT_READY down=['temporal'] expected=['temporal']; recovered=READY",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:scripts/iacode/scenarios/dependency_failure.py"
+      ],
+      "mandatory": true,
+      "origin": "GATE-0 internal Red Team, executed on the host"
+    }
+  ],
+  "total": 28,
+  "defended": 28,
+  "escaped": 0,
+  "mandatoryTotal": 28,
+  "mandatoryDefended": 28,
+  "result": "RED_TEAM_PASS"
+}

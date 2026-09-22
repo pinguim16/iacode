@@ -83,8 +83,9 @@ class FixtureError(LedgerError):
 def _run(command: list[str], cwd: Path) -> subprocess.CompletedProcess[str]:
     environment = dict(os.environ)
     environment["PYTHONDONTWRITEBYTECODE"] = "1"
-    return subprocess.run(command, cwd=cwd, text=True, stdout=subprocess.PIPE,
-                          stderr=subprocess.STDOUT, check=False, env=environment)
+    return subprocess.run(command, cwd=cwd, text=True, encoding="utf-8", errors="replace",
+                          stdout=subprocess.PIPE, stderr=subprocess.STDOUT, check=False,
+                          env=environment)
 
 
 def _git(root: Path, *args: str) -> str:
@@ -176,6 +177,12 @@ def build_fixture_repository(root: Path) -> None:
     for audit in document.get("audits") or []:
         audit["correctiveCheckpoint"] = None
     write_json(registry, document)
+    # The fixture is a minimal repository, not a copy of this one. It carries the SETUP-00
+    # specification and nothing else, so a canonical Gate entry whose specification document was
+    # not copied describes a document that does not exist here. Dropping those entries is the same
+    # move as dropping the anchors, the memory and the open audits: the fixture inherits the
+    # policies, never the real repository's history.
+    restrict_policies_to_available_content(root)
     # An empty attestation directory would not survive Git, and the real repository keeps its
     # README there, so the fixture inherits the same shape.
     (root / ".iacode" / "attestations").mkdir(parents=True, exist_ok=True)
@@ -185,6 +192,44 @@ def build_fixture_repository(root: Path) -> None:
     _git(root, "config", "user.email", "iacode-simulation@example.invalid")
     _git(root, "add", "-A")
     _git(root, "commit", "-m", "test: bootstrap the promotion fixture")
+
+
+def restrict_policies_to_available_content(root: Path) -> None:
+    """Keep the fixture's canonical policies describing what the fixture actually contains.
+
+    A fixture inherits the real repository's *policies* and almost none of its *content*. Two of
+    those policies name things by path — the Gate specifications and the commands of the mandatory
+    gates — and a fixture that copies the names without the files would fail for its own reasons:
+    a Gate whose checklist was never copied, or a gate command that is not there to run.
+
+    This is construction, not an invocation shrinking a set. The mandatory set stays closed inside
+    the fixture, and the real repository's registry is untouched. Without it, adding a Gate or a
+    gate to the real policies breaks every fixture in the suite, which is exactly what happened
+    when GATE 0 added four.
+    """
+    canonical = root / ".iacode" / "policies" / "canonical-requirements.json"
+    if canonical.is_file():
+        document = read_json(canonical)
+        document["gates"] = [
+            entry for entry in document.get("gates") or []
+            if (root / str(entry.get("specification", ""))).is_file()
+        ]
+        write_json(canonical, document)
+
+    gates = root / ".iacode" / "policies" / "quality-gates.json"
+    if gates.is_file():
+        document = read_json(gates)
+        kept = []
+        for gate in document.get("gates") or []:
+            command = [str(item) for item in gate.get("command") or []]
+            # A command is runnable here when every repository-relative path it names exists. A
+            # module invocation (`python -m unittest ...`) names none, so it is kept.
+            paths = [item for item in command[1:] if item.endswith((".py", ".sh"))]
+            if all((root / item).is_file() for item in paths):
+                kept.append(gate)
+        if any(gate.get("mandatory") for gate in kept):
+            document["gates"] = kept
+            write_json(gates, document)
 
 
 def _install_memory(root: Path, checkpoint: str) -> None:
@@ -705,12 +750,18 @@ def _install_synthetic_gate(root: Path, gate: str, milestone: str) -> dict[str, 
         raise FixtureError(f"the synthetic {gate} specification produced no requirement row")
     registry_path = root / ".iacode" / "policies" / "canonical-requirements.json"
     registry = read_json(registry_path)
-    registry["gates"].append({
+    entry = {
         "gate": gate,
         "specification": specification,
         "parser": "scripts/development-ledger/policies.py:parse_checklist",
         "requirements": [dict(row, mandatory=True) for row in rows],
-    })
+    }
+    # Replace rather than append. Appending produced a second entry for the same Gate, and the
+    # lookup answers with the first one, so the fixture silently compared the real repository's
+    # specification against the synthetic document and refused the transition it exists to prove.
+    registry["gates"] = [
+        item for item in registry.get("gates") or [] if item.get("gate") != gate
+    ] + [entry]
     write_json(registry_path, registry)
     _git(root, "add", "-A")
     _git(root, "commit", "-m", f"test: declare the synthetic {gate} specification")

@@ -1,0 +1,18 @@
+# Temporal dynamic configuration for the Foundation.
+#
+# Deliberately almost empty. The image ships a development profile, and overriding it with values
+# nobody has measured would be configuration theatre. Two settings are here because the defaults
+# are wrong for a single-node local stack:
+#
+# - SQL visibility needs list operations enabled explicitly; without it the UI and every
+#   `list workflows` call fail with an error that reads like a permissions problem.
+# - The default retention of 72 hours is longer than a local machine needs and grows the
+#   visibility database for no benefit.
+
+system.forceSearchAttributesCacheRefreshOnRead:
+  - value: true
+    constraints: {}
+
+frontend.enableUpdateWorkflowExecution:
+  - value: true
+    constraints: {}

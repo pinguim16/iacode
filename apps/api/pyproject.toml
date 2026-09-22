@@ -1,0 +1,49 @@
+[build-system]
+requires = ["setuptools>=80.9.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "iacode-api"
+version = "0.1.0"
+description = "The IACode Foundation API."
+requires-python = ">=3.12"
+dependencies = [
+  "iacode-common==0.1.0",
+  "iacode-contracts==0.1.0",
+  "iacode-telemetry==0.1.0",
+  "fastapi==0.141.1",
+  "uvicorn[standard]==0.53.0",
+  "pydantic==2.13.5",
+  "pydantic-settings==2.15.0",
+  "sqlalchemy[asyncio]==2.0.54",
+  "alembic==1.20.0",
+  "asyncpg==0.31.0",
+  # Alembic runs synchronously; see migrations/env.py for why the async driver is not used there.
+  "psycopg[binary]==3.3.6",
+  "redis==8.1.0",
+  "minio==7.2.20",
+  "temporalio==1.33.0",
+  "prometheus-client==0.26.0",
+]
+
+[project.optional-dependencies]
+test = [
+  "pytest==9.1.1",
+  "pytest-asyncio==1.4.0",
+  "httpx==0.28.1",
+  "ruff==0.16.8",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+# ``asyncio_mode = auto`` removes a decorator from every async test. The alternative is a suite
+# where a forgotten marker makes a coroutine silently never run and the test still reports PASS.
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+testpaths = ["tests"]
+addopts = "-q --strict-markers --strict-config"
+markers = [
+  "integration: needs the Foundation stack running; excluded from the unit gate.",
+]

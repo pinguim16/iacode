@@ -1,0 +1,1149 @@
+{
+  "filesRead": [],
+  "filesCreated": [
+    {
+      "path": ".dockerignore",
+      "reason": "The build context excludes the ledger, the sealed history and the frontend dependencies.",
+      "hashAfter": "8e75276c46964afc2dd2203247e43c59fcb83bac88feb2832124f3e2b5724995"
+    },
+    {
+      "path": ".iacode/memory/retrospectives/GATE-0-CP-0001.md",
+      "reason": "The Gate retrospective, produced from the canonical template.",
+      "hashAfter": "426edf22a193ba5091bcecf17627a10c6b990118c8e9cdc665053399c0087d62"
+    },
+    {
+      "path": ".iacode/policies/gate-scope.json",
+      "reason": "The scope registry: which path is reserved for which later Gate.",
+      "hashAfter": "1f5b26aea2987d11c0d7369061e2cb77abcc70f27b253e60bf920c7455854ee7"
+    },
+    {
+      "path": ".iacode/policies/test-suites.json",
+      "reason": "The test-suite registry the count derivation and evidence resolution read.",
+      "hashAfter": "74589940b80aaaae16b922c6ff55ede896eba75f3f373765da9cda33cc6bb0d8"
+    },
+    {
+      "path": ".iacode/schemas/gate-scope.schema.json",
+      "reason": "The schema for a policy this Gate introduced, or a vocabulary it extends.",
+      "hashAfter": "cb525c913b69d3d7155255d62ceab91ab6a145c855203dbc9dbc4a683ee6e6c7"
+    },
+    {
+      "path": ".iacode/schemas/test-suites.schema.json",
+      "reason": "The schema for a policy this Gate introduced, or a vocabulary it extends.",
+      "hashAfter": "80742cd678f3e56c19b5e9d94b5d20322998fb09c578befbeca913dcc3853a07"
+    },
+    {
+      "path": "agents/README.md",
+      "reason": "Reserved for GATE 2. A README declaring the reservation and nothing else.",
+      "hashAfter": "21c13bb7eb59470a116fca89979730e88a7c21e8f54977ea2ee4b91cbf4df15b"
+    },
+    {
+      "path": "apps/api/.dockerignore",
+      "reason": "The FastAPI application: typed configuration, explicit dependency lifecycle, the Foundation endpoints, persistence and the clients.",
+      "hashAfter": "8660aeddc268cfbaddcfe346f7602d75afc8e2075f90a041cd2a5380cad61ae3"
+    },
+    {
+      "path": "apps/api/Dockerfile",
+      "reason": "The FastAPI application: typed configuration, explicit dependency lifecycle, the Foundation endpoints, persistence and the clients.",
+      "hashAfter": "392870bd4fe0ab8f915972f2493be5699d6735a968c1b44d9be660e1405d3a36"
+    },
+    {
+      "path": "apps/api/alembic.ini",
+      "reason": "The FastAPI application: typed configuration, explicit dependency lifecycle, the Foundation endpoints, persistence and the clients.",
+      "hashAfter": "cfa67798af23a3a6c23505bbbe9a42e6d52721445ee9cd8aa3fa1a73e6aff3bd"
+    },
+    {
+      "path": "apps/api/migrations/env.py",
+      "reason": "Alembic migrations. The schema is created only by these, from the first commit.",
+      "hashAfter": "49bec620f882d03903b5a09aa1b01a4410a5380ed41713067fb754bc0d0f1cff"
+    },
+    {
+      "path": "apps/api/migrations/script.py.mako",
+      "reason": "Alembic migrations. The schema is created only by these, from the first commit.",
+      "hashAfter": "d0c39d22815a01e8f4393c9c74dfff9f18301eaa4a5b8293b0011a0fb258968a"
+    },
+    {
+      "path": "apps/api/migrations/versions/0001_foundation_schema.py",
+      "reason": "Alembic migrations. The schema is created only by these, from the first commit.",
+      "hashAfter": "b63ff414ea88cfd7644fb00477dcb6c39e0bf1e0fe328fba7d5d6424486b6820"
+    },
+    {
+      "path": "apps/api/pyproject.toml",
+      "reason": "The FastAPI application: typed configuration, explicit dependency lifecycle, the Foundation endpoints, persistence and the clients.",
+      "hashAfter": "ef866bb325034cf3c751f8e0a9bbee902557a5461c4c765001d06ee5ae52d7aa"
+    },
+    {
+      "path": "apps/api/requirements.lock.txt",
+      "reason": "The FastAPI application: typed configuration, explicit dependency lifecycle, the Foundation endpoints, persistence and the clients.",
+      "hashAfter": "cf44e83c8c1b894dab4c3b85ad46a32bbd535b32d153d393b678f2cc99fe77ed"
+    },
+    {
+      "path": "apps/api/requirements.txt",
+      "reason": "The FastAPI application: typed configuration, explicit dependency lifecycle, the Foundation endpoints, persistence and the clients.",
+      "hashAfter": "8c3bf92df1860d8d5201b7bd086552aecceb8b43b270a6fbcb3c262bcfbbc74f"
+    },
+    {
+      "path": "apps/api/src/iacode_api/__init__.py",
+      "reason": "The FastAPI application: typed configuration, explicit dependency lifecycle, the Foundation endpoints, persistence and the clients.",
+      "hashAfter": "6dd8269402ff40fe91a339156c9624dddde8be3d739dd43763d729e54eb7bae9"
+    },
+    {
+      "path": "apps/api/src/iacode_api/cache/__init__.py",
+      "reason": "The FastAPI application: typed configuration, explicit dependency lifecycle, the Foundation endpoints, persistence and the clients.",
+      "hashAfter": "a70644b55793d95d8eff8ec220fe93ca7e9d6d294fea78fc33ae1bad45f482d6"
+    },
+    {
+      "path": "apps/api/src/iacode_api/cache/client.py",
+      "reason": "The FastAPI application: typed configuration, explicit dependency lifecycle, the Foundation endpoints, persistence and the clients.",
+      "hashAfter": "bc16b692e6b75c7d751d455839744e4e4e931951cf529408d527c6544b5cddd4"
+    },
+    {
+      "path": "apps/api/src/iacode_api/config.py",
+      "reason": "The FastAPI application: typed configuration, explicit dependency lifecycle, the Foundation endpoints, persistence and the clients.",
+      "hashAfter": "91de9ab24733a757d155ac736417fe443d597c6b7e9678e02475f058a731cbed"
+    },
+    {
+      "path": "apps/api/src/iacode_api/db/__init__.py",
+      "reason": "The FastAPI application: typed configuration, explicit dependency lifecycle, the Foundation endpoints, persistence and the clients.",
+      "hashAfter": "cc18e33fdde664e32a0ca6e655e008f5246d7421fba33456b10c51e543839aaf"
+    },
+    {
+      "path": "apps/api/src/iacode_api/db/base.py",
+      "reason": "The FastAPI application: typed configuration, explicit dependency lifecycle, the Foundation endpoints, persistence and the clients.",
+      "hashAfter": "70b0a53e0e5cf379bdbfaccc05e2ca1221606f18425d18efbb0f83c246ab93ea"
+    },
+    {
+      "path": "apps/api/src/iacode_api/db/engine.py",
+      "reason": "The FastAPI application: typed configuration, explicit dependency lifecycle, the Foundation endpoints, persistence and the clients.",
+      "hashAfter": "08b502ce2b0524a1824053758995d3060b721ec5917215ea25b5aef07e0b00be"
+    },
+    {
+      "path": "apps/api/src/iacode_api/db/models.py",
+      "reason": "The FastAPI application: typed configuration, explicit dependency lifecycle, the Foundation endpoints, persistence and the clients.",
+      "hashAfter": "a1bc9638ed4c2b3b837869d0376074f51ebeecba916cd7b81fc1ade4c46e543d"
+    },
+    {
+      "path": "apps/api/src/iacode_api/dependencies.py",
+      "reason": "The FastAPI application: typed configuration, explicit dependency lifecycle, the Foundation endpoints, persistence and the clients.",
+      "hashAfter": "8ab154e9ee719891f582d75070f8c33cacc0ccdb4c5abe66ff3a0b13faa6e46d"
+    },
+    {
+      "path": "apps/api/src/iacode_api/errors.py",
+      "reason": "The FastAPI application: typed configuration, explicit dependency lifecycle, the Foundation endpoints, persistence and the clients.",
+      "hashAfter": "5990b52b881ab7934a62cc609bff9ae3b2cdb380c97889daf509aab250af210c"
+    },
+    {
+      "path": "apps/api/src/iacode_api/lifespan.py",
+      "reason": "The FastAPI application: typed configuration, explicit dependency lifecycle, the Foundation endpoints, persistence and the clients.",
+      "hashAfter": "a4cd4e86000786f8c2cdca35c4ef6f7e966e81b9237e3571161a8b1836ca859f"
+    },
+    {
+      "path": "apps/api/src/iacode_api/main.py",
+      "reason": "The FastAPI application: typed configuration, explicit dependency lifecycle, the Foundation endpoints, persistence and the clients.",
+      "hashAfter": "d9f3c60c611571036fe604fcd3765ba4f7b6b79d331f1e48dde20f28bf14bfb6"
+    },
+    {
+      "path": "apps/api/src/iacode_api/middleware/__init__.py",
+      "reason": "The FastAPI application: typed configuration, explicit dependency lifecycle, the Foundation endpoints, persistence and the clients.",
+      "hashAfter": "94ba472d82e7e8833edf0d0c04d50016e9e25fb504ec291c2a4960ca64d7e93d"
+    },
+    {
+      "path": "apps/api/src/iacode_api/middleware/correlation.py",
+      "reason": "The FastAPI application: typed configuration, explicit dependency lifecycle, the Foundation endpoints, persistence and the clients.",
+      "hashAfter": "46dab16d56abbd295293ed12e85e7dff2682f0de7d36155466a38cca55146287"
+    },
+    {
+      "path": "apps/api/src/iacode_api/observability/__init__.py",
+      "reason": "The FastAPI application: typed configuration, explicit dependency lifecycle, the Foundation endpoints, persistence and the clients.",
+      "hashAfter": "90f1ceb3dbd28c58b4d4104f5e070c9ae289c5265541c847f8fda38fc4317d4d"
+    },
+    {
+      "path": "apps/api/src/iacode_api/observability/metrics.py",
+      "reason": "The FastAPI application: typed configuration, explicit dependency lifecycle, the Foundation endpoints, persistence and the clients.",
+      "hashAfter": "b040b82505d0068ad138b2fc48bf4dff20b6a63daa2b133e80d57d2ccb6c342f"
+    },
+    {
+      "path": "apps/api/src/iacode_api/readiness.py",
+      "reason": "The FastAPI application: typed configuration, explicit dependency lifecycle, the Foundation endpoints, persistence and the clients.",
+      "hashAfter": "68a45e3521b579cbaf3872e990a0a7e2afdc87615164d95ceabfa0553a555849"
+    },
+    {
+      "path": "apps/api/src/iacode_api/routes/__init__.py",
+      "reason": "The FastAPI application: typed configuration, explicit dependency lifecycle, the Foundation endpoints, persistence and the clients.",
+      "hashAfter": "5a9e4841101c06e2be45baa67ba4bafc28e1485fbaf7f94d00d6ea45553c7c94"
+    },
+    {
+      "path": "apps/api/src/iacode_api/routes/health.py",
+      "reason": "The FastAPI application: typed configuration, explicit dependency lifecycle, the Foundation endpoints, persistence and the clients.",
+      "hashAfter": "94246ac51f178b61e55b5119a0b433b1ab542a5a5fd42b37adb42400176da2ed"
+    },
+    {
+      "path": "apps/api/src/iacode_api/routes/version.py",
+      "reason": "The FastAPI application: typed configuration, explicit dependency lifecycle, the Foundation endpoints, persistence and the clients.",
+      "hashAfter": "af5326e90aa808eb9d2ad180416d628a6a151b7890612b19a9d6198e51273965"
+    },
+    {
+      "path": "apps/api/src/iacode_api/storage/__init__.py",
+      "reason": "The FastAPI application: typed configuration, explicit dependency lifecycle, the Foundation endpoints, persistence and the clients.",
+      "hashAfter": "98f01fec3d73a59d837b70a916f8e2b394bde5af77b1163bb15c1ec343b05a6d"
+    },
+    {
+      "path": "apps/api/src/iacode_api/storage/client.py",
+      "reason": "The FastAPI application: typed configuration, explicit dependency lifecycle, the Foundation endpoints, persistence and the clients.",
+      "hashAfter": "3ad2df3a15ecdcfe4f416f5d6f4b9eb41122d5d11817b9beecc1a5973c10bfd9"
+    },
+    {
+      "path": "apps/api/src/iacode_api/workflows/__init__.py",
+      "reason": "The FastAPI application: typed configuration, explicit dependency lifecycle, the Foundation endpoints, persistence and the clients.",
+      "hashAfter": "1fc144fa91a18e54b1919e3037dbe2c9472f0f082caf5d48017a83fec5bac86f"
+    },
+    {
+      "path": "apps/api/src/iacode_api/workflows/client.py",
+      "reason": "The FastAPI application: typed configuration, explicit dependency lifecycle, the Foundation endpoints, persistence and the clients.",
+      "hashAfter": "16a7842eb29b67bd1bd534ece24a6916fc413b1ddce1cfb90d746916c3a92440"
+    },
+    {
+      "path": "apps/api/tests/__init__.py",
+      "reason": "The backend suite: unit tests that need no stack, and integration tests against the real PostgreSQL, Redis, MinIO and Temporal.",
+      "hashAfter": "9339fb885912a74cf051bcc3606401e8c8402549a00b7405aff121060f2dd192"
+    },
+    {
+      "path": "apps/api/tests/conftest.py",
+      "reason": "The backend suite: unit tests that need no stack, and integration tests against the real PostgreSQL, Redis, MinIO and Temporal.",
+      "hashAfter": "37770f04c9652dae3fa827d12f95b74fb8af1a8f5c1b2c46737cc3fa6dbcc825"
+    },
+    {
+      "path": "apps/api/tests/integration/__init__.py",
+      "reason": "The backend suite: unit tests that need no stack, and integration tests against the real PostgreSQL, Redis, MinIO and Temporal.",
+      "hashAfter": "d493d1bfee4b7e6fa124e05c390bcbbcfb34872ddd126744383bfb96e5eec2ff"
+    },
+    {
+      "path": "apps/api/tests/integration/test_dependencies.py",
+      "reason": "The backend suite: unit tests that need no stack, and integration tests against the real PostgreSQL, Redis, MinIO and Temporal.",
+      "hashAfter": "a13a2e353ebb61c7d82734c780cf99f2572937eac0ae37ccb52a95b5f96f0738"
+    },
+    {
+      "path": "apps/api/tests/integration/test_migrations.py",
+      "reason": "The backend suite: unit tests that need no stack, and integration tests against the real PostgreSQL, Redis, MinIO and Temporal.",
+      "hashAfter": "acec9448b9d1d611c3bffff88f8268ba9255fe2e661be13bfb6f96c240dcf4a1"
+    },
+    {
+      "path": "apps/api/tests/integration/test_workflows.py",
+      "reason": "The backend suite: unit tests that need no stack, and integration tests against the real PostgreSQL, Redis, MinIO and Temporal.",
+      "hashAfter": "dba65a4e910a9568b27a83d2bb55a016433cb81d10a9f21fd76184353cb009de"
+    },
+    {
+      "path": "apps/api/tests/unit/__init__.py",
+      "reason": "The backend suite: unit tests that need no stack, and integration tests against the real PostgreSQL, Redis, MinIO and Temporal.",
+      "hashAfter": "52ae834861a00aecf40775f59818e766d41237134e9dfc52d36988d743fa04bb"
+    },
+    {
+      "path": "apps/api/tests/unit/test_application.py",
+      "reason": "The backend suite: unit tests that need no stack, and integration tests against the real PostgreSQL, Redis, MinIO and Temporal.",
+      "hashAfter": "c7bbf2294aa162b0117c5381306641784a770331f0529923536b649663d50a20"
+    },
+    {
+      "path": "apps/api/tests/unit/test_common_primitives.py",
+      "reason": "The backend suite: unit tests that need no stack, and integration tests against the real PostgreSQL, Redis, MinIO and Temporal.",
+      "hashAfter": "4a3dbdbd8b304a1a1cf812de886cdf3e71c38e2b54082f3dc0c1df9852349636"
+    },
+    {
+      "path": "apps/api/tests/unit/test_configuration.py",
+      "reason": "The backend suite: unit tests that need no stack, and integration tests against the real PostgreSQL, Redis, MinIO and Temporal.",
+      "hashAfter": "4a7ff345d22d6027c45463bd779fb8abfcd56c020db25420069c4c5c5614c7ae"
+    },
+    {
+      "path": "apps/api/tests/unit/test_domain_model.py",
+      "reason": "The backend suite: unit tests that need no stack, and integration tests against the real PostgreSQL, Redis, MinIO and Temporal.",
+      "hashAfter": "39f32da77ac2423c4d19dab753b0d3e400e70d37ebee50f81fe5ef86ad1b3647"
+    },
+    {
+      "path": "apps/api/tests/unit/test_errors_and_correlation.py",
+      "reason": "The backend suite: unit tests that need no stack, and integration tests against the real PostgreSQL, Redis, MinIO and Temporal.",
+      "hashAfter": "462b20491829ec17d8fd3ba8d7f5d5e1d0a216cb02d2edc9740a097bac58c403"
+    },
+    {
+      "path": "apps/api/tests/unit/test_health_and_readiness.py",
+      "reason": "The backend suite: unit tests that need no stack, and integration tests against the real PostgreSQL, Redis, MinIO and Temporal.",
+      "hashAfter": "eaf9bc389ed491be1950d80f1eb115a0f138132524a0d2c8597933293ec9b382"
+    },
+    {
+      "path": "apps/api/tests/unit/test_observability.py",
+      "reason": "The backend suite: unit tests that need no stack, and integration tests against the real PostgreSQL, Redis, MinIO and Temporal.",
+      "hashAfter": "0d2e694311c17afc3f9ff4d612afadb05c2ed9df70171dc636eb2264dae8fb6e"
+    },
+    {
+      "path": "apps/cli/README.md",
+      "reason": "Reserved for GATE 5. A README declaring the reservation and nothing else.",
+      "hashAfter": "a045cc4a54b34e97108f1a10a23371ccc47bdc1999de0e6fa65ba8b054f8e00d"
+    },
+    {
+      "path": "apps/vscode-extension/README.md",
+      "reason": "Reserved for GATE 5. A README declaring the reservation and nothing else.",
+      "hashAfter": "d9d4ad1c08eff6d3d53567ca840d6221aa0c8d46c3e85b94114dca17e953b457"
+    },
+    {
+      "path": "apps/web/.dockerignore",
+      "reason": "The Angular web shell, built and tested in a container, reading its backend address at run time.",
+      "hashAfter": "b380000c4962df3ab2d78a22b07ae11adff4e1a40c47f3d3c33497137f035ac8"
+    },
+    {
+      "path": "apps/web/.editorconfig",
+      "reason": "The Angular web shell, built and tested in a container, reading its backend address at run time.",
+      "hashAfter": "d62fd282eadb5b3ff888a23ba5968e490cc0a77dded2fbc4f704b7e6e247f4db"
+    },
+    {
+      "path": "apps/web/.gitignore",
+      "reason": "The Angular web shell, built and tested in a container, reading its backend address at run time.",
+      "hashAfter": "6faa24d286aa308f683225069e0cbabf9146bcb584e5ea06c812a5f7478b2abd"
+    },
+    {
+      "path": "apps/web/.prettierrc",
+      "reason": "The Angular web shell, built and tested in a container, reading its backend address at run time.",
+      "hashAfter": "8cd4a6408c3eadd007f0e8986754f4f03e6f2ea451a0181040555671491069a9"
+    },
+    {
+      "path": "apps/web/.vscode/extensions.json",
+      "reason": "The Angular web shell, built and tested in a container, reading its backend address at run time.",
+      "hashAfter": "6da5b6004a21316f17db45d15fc93a8d8b060ddfa4139c1fadab4d191187c898"
+    },
+    {
+      "path": "apps/web/.vscode/launch.json",
+      "reason": "The Angular web shell, built and tested in a container, reading its backend address at run time.",
+      "hashAfter": "d2e7a817688daf2f187f74902717e525da165d77060fec3b0da1a9d2726971ed"
+    },
+    {
+      "path": "apps/web/.vscode/tasks.json",
+      "reason": "The Angular web shell, built and tested in a container, reading its backend address at run time.",
+      "hashAfter": "fcfc78f7041bc36369d7638898bb52973adf849fc47d6fdaa27920d522d3396e"
+    },
+    {
+      "path": "apps/web/Dockerfile",
+      "reason": "The Angular web shell, built and tested in a container, reading its backend address at run time.",
+      "hashAfter": "32395ae52c0ac3fdb91197cdbadb6226a03244b9f9497d63511eed0cea197276"
+    },
+    {
+      "path": "apps/web/README.md",
+      "reason": "The Angular web shell, built and tested in a container, reading its backend address at run time.",
+      "hashAfter": "7a34dc374afbbd5bbce35e45ded83ead0d86ed199f16f6056d6aaa92c12b0976"
+    },
+    {
+      "path": "apps/web/angular.json",
+      "reason": "The Angular web shell, built and tested in a container, reading its backend address at run time.",
+      "hashAfter": "e9c9c6b54c4a1779774c34bf3cf244973cd23f6299d29be06d9d4824778b6a36"
+    },
+    {
+      "path": "apps/web/docker-entrypoint.sh",
+      "reason": "The Angular web shell, built and tested in a container, reading its backend address at run time.",
+      "hashAfter": "3a4afa4baa79764b6f4f24a87a125308064c9a92d63e5be2551f65097ccdf7f5"
+    },
+    {
+      "path": "apps/web/nginx.conf",
+      "reason": "The Angular web shell, built and tested in a container, reading its backend address at run time.",
+      "hashAfter": "8ec5f04b861fa7147130d3b92293fdd552440976987d44d3a71bd127ec3815a3"
+    },
+    {
+      "path": "apps/web/package-lock.json",
+      "reason": "The Angular web shell, built and tested in a container, reading its backend address at run time.",
+      "hashAfter": "8c84a72897222171f5d01a5e187e56b9fb90465c9d8c50c1a56ff7334775e971"
+    },
+    {
+      "path": "apps/web/package.json",
+      "reason": "The Angular web shell, built and tested in a container, reading its backend address at run time.",
+      "hashAfter": "54297b0c05363e536eba5c71e5195408cdf61b5a362edaaa0db74d57eb08cb04"
+    },
+    {
+      "path": "apps/web/public/config.json",
+      "reason": "The Angular web shell, built and tested in a container, reading its backend address at run time.",
+      "hashAfter": "3be957fbf2bc4239f17ca04398c552f2214c74caabe1109ee876ddeca9e8f270"
+    },
+    {
+      "path": "apps/web/public/favicon.ico",
+      "reason": "The Angular web shell, built and tested in a container, reading its backend address at run time.",
+      "hashAfter": "f9102be80297c0529207607be5277b4f90bca89d65988fa1771b91c7894e815f"
+    },
+    {
+      "path": "apps/web/src/app/api-config.spec.ts",
+      "reason": "The Angular web shell, built and tested in a container, reading its backend address at run time.",
+      "hashAfter": "67e3edc86a019ae4bba1dc088fbf7880a37d3abd4e1a19b2b96a0fea216c667d"
+    },
+    {
+      "path": "apps/web/src/app/api-config.ts",
+      "reason": "The Angular web shell, built and tested in a container, reading its backend address at run time.",
+      "hashAfter": "d68b415abea66cbaa07496bb6468f45e38c7f692bc59537e4f34e0dd03012360"
+    },
+    {
+      "path": "apps/web/src/app/app.config.ts",
+      "reason": "The Angular web shell, built and tested in a container, reading its backend address at run time.",
+      "hashAfter": "52873be7d142a9fc3ea49c03b7760e4cddb4eecd4903e6f416ae4d345ae16e2d"
+    },
+    {
+      "path": "apps/web/src/app/app.css",
+      "reason": "The Angular web shell, built and tested in a container, reading its backend address at run time.",
+      "hashAfter": "9ace2672bcee12e169a323deae3b4c21f413619fdea1dac4d6e130b1d7d23101"
+    },
+    {
+      "path": "apps/web/src/app/app.html",
+      "reason": "The Angular web shell, built and tested in a container, reading its backend address at run time.",
+      "hashAfter": "489215e9be17990216d679c6aa4e88e3ef157f63072a798d320b940b1adf79f6"
+    },
+    {
+      "path": "apps/web/src/app/app.spec.ts",
+      "reason": "The Angular web shell, built and tested in a container, reading its backend address at run time.",
+      "hashAfter": "08a27884694bf5a678a5c086b41c4319dade111a9bca12688019abaa5d8967b3"
+    },
+    {
+      "path": "apps/web/src/app/app.ts",
+      "reason": "The Angular web shell, built and tested in a container, reading its backend address at run time.",
+      "hashAfter": "fc48906e3db3bf7e49e7b383c169c4416d880a348a13bc2002cea3525d124daf"
+    },
+    {
+      "path": "apps/web/src/app/foundation-status.service.spec.ts",
+      "reason": "The Angular web shell, built and tested in a container, reading its backend address at run time.",
+      "hashAfter": "b28e8f0d2e84f8e46682b4b00c2f98fc037e9612c69d61d66d0c81ddb9e238ef"
+    },
+    {
+      "path": "apps/web/src/app/foundation-status.service.ts",
+      "reason": "The Angular web shell, built and tested in a container, reading its backend address at run time.",
+      "hashAfter": "4de8a22cdedf07d3d10afa992f4ec9c1fb7c2ddeac91ba2a677e817db4e6417d"
+    },
+    {
+      "path": "apps/web/src/index.html",
+      "reason": "The Angular web shell, built and tested in a container, reading its backend address at run time.",
+      "hashAfter": "ecd1cee9778576b1bfe3ae51ae38e4c4629c05c6b30f156aff2e37b63cdcbd06"
+    },
+    {
+      "path": "apps/web/src/main.ts",
+      "reason": "The Angular web shell, built and tested in a container, reading its backend address at run time.",
+      "hashAfter": "e2e0d9ed1e05df755044b8557dcc4a204aa5b2029a9267f32414a554dd736042"
+    },
+    {
+      "path": "apps/web/src/styles.css",
+      "reason": "The Angular web shell, built and tested in a container, reading its backend address at run time.",
+      "hashAfter": "795d2ee16827b259d3de2d77c9ab571fdd8b7138cb3b7bf3887783ab06277aa8"
+    },
+    {
+      "path": "apps/web/tsconfig.app.json",
+      "reason": "The Angular web shell, built and tested in a container, reading its backend address at run time.",
+      "hashAfter": "12e2786b56cc873a4e91f822894cc541082d16b90c0d7280aa5512469627d23f"
+    },
+    {
+      "path": "apps/web/tsconfig.json",
+      "reason": "The Angular web shell, built and tested in a container, reading its backend address at run time.",
+      "hashAfter": "3c3b6c2138f0a910f5284e1d64e9fc213af2b91409fdeaf5598ff495c28f79c2"
+    },
+    {
+      "path": "apps/web/tsconfig.spec.json",
+      "reason": "The Angular web shell, built and tested in a container, reading its backend address at run time.",
+      "hashAfter": "958fd251a505c5d54d94d2694b8fde3d1c71aa244b522e3e053db1ac5b987dd0"
+    },
+    {
+      "path": "datasets/README.md",
+      "reason": "Reserved for GATE 16. A README declaring the reservation and nothing else.",
+      "hashAfter": "22518811c15e65a107818c7b3301450e83c6c4c84e8642633291c61202e30dd0"
+    },
+    {
+      "path": "docs/DEVELOPMENT.md",
+      "reason": "The contributor's path end to end on a new machine.",
+      "hashAfter": "bc0bdd80c1567828a782e9be19a51fcd3d5c2e7da1cb2b71e460afa734095f28"
+    },
+    {
+      "path": "docs/GATE-0-CHECKLIST.md",
+      "reason": "The canonical specification of this Gate, and the source its requirement set is derived from.",
+      "hashAfter": "9737c0da539993dbeccd5a80a684efa99969122ce2e916045237cf0f714456db"
+    },
+    {
+      "path": "docs/VERSIONS.md",
+      "reason": "Every pinned version in one place.",
+      "hashAfter": "7e0ba79f85b973b89d2a4e653b36a31acae787b994324e05e70b07d21fd1260e"
+    },
+    {
+      "path": "docs/adr/ADR-0012-foundation-runtime-stack.md",
+      "reason": "A structural decision of this Gate, recorded where a later Gate will look for it.",
+      "hashAfter": "13d9535383ded24f5e29d442ee58a97b5a08d6d29ebefe9e080dfcff4b8da43d"
+    },
+    {
+      "path": "docs/adr/ADR-0013-pgvector-prepared-not-used.md",
+      "reason": "A structural decision of this Gate, recorded where a later Gate will look for it.",
+      "hashAfter": "afc484666ffd011bc10a0496dc9cffeb7d321acc541c185d609e1290e466252a"
+    },
+    {
+      "path": "docs/adr/ADR-0014-one-postgresql-server-for-the-foundation.md",
+      "reason": "A structural decision of this Gate, recorded where a later Gate will look for it.",
+      "hashAfter": "1f875a8d4297e1a676ecceb0d4f63fa531811d713813bc2c119ceffdcd0c0fbe"
+    },
+    {
+      "path": "docs/adr/ADR-0015-opentelemetry-deferred.md",
+      "reason": "A structural decision of this Gate, recorded where a later Gate will look for it.",
+      "hashAfter": "e1f3529829556873b0c61b0da8a8ef3fe46127a9188484cc8fb8de522ff7ab24"
+    },
+    {
+      "path": "docs/checkpoints/GATE-0-CP-0001/BASELINE.md",
+      "reason": "This checkpoint's own evidence.",
+      "hashAfter": "e482088512aed7651a2d148ef1deb0e4e3bccb2c12dddb1feaea7ac6aafa5d43"
+    },
+    {
+      "path": "docs/checkpoints/GATE-0-CP-0001/CLOSURE-REQUIREMENTS.json",
+      "reason": "This checkpoint's own evidence.",
+      "hashAfter": "2c1b514f849784bf99139405549387fc37881dcb7494a9ccfbca3d913d9e33eb"
+    },
+    {
+      "path": "docs/checkpoints/GATE-0-CP-0001/CLOSURE-REQUIREMENTS.md",
+      "reason": "This checkpoint's own evidence.",
+      "hashAfter": "a22a217f2484033f9bc20143769d8830fe7218130e8695893cb03335bc05d509"
+    },
+    {
+      "path": "docs/checkpoints/GATE-0-CP-0001/COMMANDS.jsonl",
+      "reason": "This checkpoint's own evidence.",
+      "hashAfter": "1a2360dffcd0cbd96abd5668d4b0d9b20af789aa407611ac850e42b0f2625272"
+    },
+    {
+      "path": "docs/checkpoints/GATE-0-CP-0001/COMPLETENESS-REPORT.json",
+      "reason": "This checkpoint's own evidence.",
+      "hashAfter": "65cdd274312929443abe5c641ed662224dfd5d703f9cb3c503d0c439f8607fca"
+    },
+    {
+      "path": "docs/checkpoints/GATE-0-CP-0001/COMPLETENESS-REPORT.md",
+      "reason": "This checkpoint's own evidence.",
+      "hashAfter": "c63bf34f888f71f848d7f8e7f3e4c71a6ba371ba26942a709f275758cb532a61"
+    },
+    {
+      "path": "docs/checkpoints/GATE-0-CP-0001/COUNTS.json",
+      "reason": "This checkpoint's own evidence.",
+      "hashAfter": "3d93f3a8d85916c0ae0ee7309fb9d4cbf2dc7ae6cd831c162cbeeaa92c904a73"
+    },
+    {
+      "path": "docs/checkpoints/GATE-0-CP-0001/DECISIONS.md",
+      "reason": "This checkpoint's own evidence.",
+      "hashAfter": "1d127d4b713e033bfe288de759ef006976a5a62e7b923896257f62aa66a82e71"
+    },
+    {
+      "path": "docs/checkpoints/GATE-0-CP-0001/DIFF-SUMMARY.md",
+      "reason": "This checkpoint's own evidence.",
+      "hashAfter": "8c960f1c4d2eaf646122f8e04ba6404a87d34f8387fe3f93b8d96cf6d8719af4"
+    },
+    {
+      "path": "docs/checkpoints/GATE-0-CP-0001/FILES.json",
+      "reason": "This checkpoint's own evidence."
+    },
+    {
+      "path": "docs/checkpoints/GATE-0-CP-0001/FINAL-REPORT.md",
+      "reason": "This checkpoint's own evidence.",
+      "hashAfter": "b13406bf1b7f185516aa571fdc48c0c5f7b71d6c56cdd9dfcfb0381d47e38baf"
+    },
+    {
+      "path": "docs/checkpoints/GATE-0-CP-0001/HANDOFF.md",
+      "reason": "This checkpoint's own evidence.",
+      "hashAfter": "154ccab83932b6b4cf58ceee3018801928967ed2a5db21e3c85af0e4d6eb2d9c"
+    },
+    {
+      "path": "docs/checkpoints/GATE-0-CP-0001/LESSON-PREFLIGHT.json",
+      "reason": "This checkpoint's own evidence.",
+      "hashAfter": "c27b45414655e0f8b4e4a13f3834b170dce28b0d2fcfc9caf542877d45ec91d0"
+    },
+    {
+      "path": "docs/checkpoints/GATE-0-CP-0001/LESSON-PREFLIGHT.md",
+      "reason": "This checkpoint's own evidence.",
+      "hashAfter": "58d313da845a79a08a64a9f9c508c8b93c8f252dcfbb17bc43cd362f019e9282"
+    },
+    {
+      "path": "docs/checkpoints/GATE-0-CP-0001/M1-INTERNAL-MIRROR.json",
+      "reason": "This checkpoint's own evidence.",
+      "hashAfter": "5b854dcee6960cfbb601d20a27b3a6bb18f5cd408dd79ac579dbb7fb51e1b62b"
+    },
+    {
+      "path": "docs/checkpoints/GATE-0-CP-0001/M1-INTERNAL-MIRROR.md",
+      "reason": "This checkpoint's own evidence.",
+      "hashAfter": "43014727d52885d058a7f0e9acd7ca8d212e921a9c317758330da67b78b3ea1e"
+    },
+    {
+      "path": "docs/checkpoints/GATE-0-CP-0001/M1-INTERNAL-RED-TEAM.json",
+      "reason": "This checkpoint's own evidence.",
+      "hashAfter": "9fd00f84570828573fd33c03ae8c3b6e6b981bf752ccbd83d7977ac84a65a7bc"
+    },
+    {
+      "path": "docs/checkpoints/GATE-0-CP-0001/NEXT.md",
+      "reason": "This checkpoint's own evidence.",
+      "hashAfter": "37b1653fd48c5209c80036e9b034ec847530acea5e7a7643509b2c225641ef7e"
+    },
+    {
+      "path": "docs/checkpoints/GATE-0-CP-0001/PLAN.md",
+      "reason": "This checkpoint's own evidence.",
+      "hashAfter": "e0ed58781eb4b7127f8d8160c36e08b7fd47ae4c4658cc9eef440706ef3da4a6"
+    },
+    {
+      "path": "docs/checkpoints/GATE-0-CP-0001/PROVENANCE.json",
+      "reason": "This checkpoint's own evidence.",
+      "hashAfter": "e8d595610792e60ec179a956489db718d5559004a28101cfa20e0b66be1729f9"
+    },
+    {
+      "path": "docs/checkpoints/GATE-0-CP-0001/QUALITY.json",
+      "reason": "This checkpoint's own evidence.",
+      "hashAfter": "7683391c9d2e54d452f23e2f9ee9070d930746dc31ac7c0b063da5b4cd6b5581"
+    },
+    {
+      "path": "docs/checkpoints/GATE-0-CP-0001/RED-TEAM-REPORT.md",
+      "reason": "This checkpoint's own evidence.",
+      "hashAfter": "0c0b2408241c195d632e0641ba7bc14cf78b0130940b74946ba600d5977edd48"
+    },
+    {
+      "path": "docs/checkpoints/GATE-0-CP-0001/REQUIREMENTS-MATRIX.json",
+      "reason": "This checkpoint's own evidence.",
+      "hashAfter": "c27dcfd8d04bca9dc72fb36d2e6d390b2be79fb59f8018693a8b719ad1e6a222"
+    },
+    {
+      "path": "docs/checkpoints/GATE-0-CP-0001/REQUIREMENTS-MATRIX.md",
+      "reason": "This checkpoint's own evidence.",
+      "hashAfter": "0d8f0470b06fcce060af9d05ae08008f1a7cb728cef51a2c9127d156d695faea"
+    },
+    {
+      "path": "docs/checkpoints/GATE-0-CP-0001/REWORK-LOG.jsonl",
+      "reason": "This checkpoint's own evidence.",
+      "hashAfter": "c86765c558aad754b22cea25d0d093f20f3e05a67e2ccce0fdfa508d0e134d03"
+    },
+    {
+      "path": "docs/checkpoints/GATE-0-CP-0001/RISKS.md",
+      "reason": "This checkpoint's own evidence.",
+      "hashAfter": "cca1675792a598e0630d688cd31fa71e2cf406acb01f8ed90c455c91886e2d33"
+    },
+    {
+      "path": "docs/checkpoints/GATE-0-CP-0001/RUN-METADATA.json",
+      "reason": "This checkpoint's own evidence.",
+      "hashAfter": "ee8c5f4f2cd282f9f2d624ca70a41bbff56a15ad1d3f8a39cb79033d0e69597e"
+    },
+    {
+      "path": "docs/checkpoints/GATE-0-CP-0001/STATE.json",
+      "reason": "This checkpoint's own evidence.",
+      "hashAfter": "338142210da9586e8dddf9b925c9faa4394ef9d9d3236cf006cb7f201e4c4977"
+    },
+    {
+      "path": "docs/checkpoints/GATE-0-CP-0001/STATUS.md",
+      "reason": "This checkpoint's own evidence.",
+      "hashAfter": "9d4197ffdc38c2c88d38f41ddcc6a0f1eb8dca77023ca57229ed37a504329707"
+    },
+    {
+      "path": "docs/checkpoints/GATE-0-CP-0001/TESTS.json",
+      "reason": "This checkpoint's own evidence.",
+      "hashAfter": "9452d23b3fe3c9138c33ce3ce7719354a867deb24b8800f50d62786e4ec62914"
+    },
+    {
+      "path": "docs/checkpoints/GATE-0-CP-0001/VERIFICATION-REPORT.json",
+      "reason": "This checkpoint's own evidence.",
+      "hashAfter": "640768589737d068b599cc5fae57f6e52eab2fcaf86d3d6c2afeb18ab6f718ac"
+    },
+    {
+      "path": "docs/runbooks/BACKUP-RESTORE.md",
+      "reason": "The operator's procedures: running the Foundation, and backing it up and restoring it.",
+      "hashAfter": "c3d02972af6bcfc54a8e9da1f00f2644e93e5b4adfade3d22c70aacf280bfdf8"
+    },
+    {
+      "path": "docs/runbooks/FOUNDATION.md",
+      "reason": "The operator's procedures: running the Foundation, and backing it up and restoring it.",
+      "hashAfter": "3f283457736ac31c1313be34e95ce8d83974cc7c73b882306b922844459d4af3"
+    },
+    {
+      "path": "evaluation/README.md",
+      "reason": "Reserved for GATE 20. A README declaring the reservation and nothing else.",
+      "hashAfter": "7d84435dac4368f4210269f12e0b40da0d498379444b4b4ad3112db7d2fc7d7b"
+    },
+    {
+      "path": "infra/compose/.env.example",
+      "reason": "The Foundation stack and the documented example environment.",
+      "hashAfter": "9e4624fd9c19f0fa0a58b817c5a795303fc8749f11999b414376dd28cd884039"
+    },
+    {
+      "path": "infra/compose/docker-compose.yml",
+      "reason": "The Foundation stack and the documented example environment.",
+      "hashAfter": "e155f95402fc8eec230b9f81ea1e66b67bf4f64088260606956f14e713cd1756"
+    },
+    {
+      "path": "infra/grafana/dashboards/foundation.json",
+      "reason": "The configuration each service is provisioned from: Prometheus, Grafana, PostgreSQL's init script, the MinIO bootstrap and Temporal's dynamic config.",
+      "hashAfter": "6372b5f33e15d7f773205d4306f98fc4bba0e8fdf0090ba3f310b46b4095037a"
+    },
+    {
+      "path": "infra/grafana/provisioning/dashboards/foundation.yml",
+      "reason": "The configuration each service is provisioned from: Prometheus, Grafana, PostgreSQL's init script, the MinIO bootstrap and Temporal's dynamic config.",
+      "hashAfter": "9db173666f45597d3d34a903d981de6b41ea56002c4d31b198384744ec1495d0"
+    },
+    {
+      "path": "infra/grafana/provisioning/datasources/prometheus.yml",
+      "reason": "The configuration each service is provisioned from: Prometheus, Grafana, PostgreSQL's init script, the MinIO bootstrap and Temporal's dynamic config.",
+      "hashAfter": "90161b2a7c91a03e8b90e183970951e288cd1633ccc7614d762e6a3f65429fbe"
+    },
+    {
+      "path": "infra/minio/bootstrap-minio.sh",
+      "reason": "The configuration each service is provisioned from: Prometheus, Grafana, PostgreSQL's init script, the MinIO bootstrap and Temporal's dynamic config.",
+      "hashAfter": "3ddd6126b653f8d98313fc42f3f20b9654a0f554018dafe1790b1d173dcb9987"
+    },
+    {
+      "path": "infra/postgres/initdb/10-temporal-databases.sql",
+      "reason": "The configuration each service is provisioned from: Prometheus, Grafana, PostgreSQL's init script, the MinIO bootstrap and Temporal's dynamic config.",
+      "hashAfter": "40d82685d3c272f2914ed42c1fcceb27f3e26beaa827e6854931f3ec80b5be45"
+    },
+    {
+      "path": "infra/prometheus/prometheus.yml",
+      "reason": "The configuration each service is provisioned from: Prometheus, Grafana, PostgreSQL's init script, the MinIO bootstrap and Temporal's dynamic config.",
+      "hashAfter": "6c2179894cc819b4128879d95a1ba222103a23bf6472edcf001e05a51bdda26a"
+    },
+    {
+      "path": "infra/temporal/dynamicconfig/iacode.yaml",
+      "reason": "The configuration each service is provisioned from: Prometheus, Grafana, PostgreSQL's init script, the MinIO bootstrap and Temporal's dynamic config.",
+      "hashAfter": "d79f03da61da92f00d5274d94056f6bcf4e20b0af973dda5b8c62af4360db887"
+    },
+    {
+      "path": "infra/tests/test_backup_tooling.py",
+      "reason": "What the infrastructure declares, and our configuration of each service exercised against the running stack.",
+      "hashAfter": "62ba4538716774c45795d509b5d31572e9565e1c54a11b497b94e0c629d9cce4"
+    },
+    {
+      "path": "infra/tests/test_compose_definition.py",
+      "reason": "What the infrastructure declares, and our configuration of each service exercised against the running stack.",
+      "hashAfter": "14aa0a4987bfcb027b8338dcbddd616419eb5467d1f7495d5df01fccc0097ff6"
+    },
+    {
+      "path": "infra/tests/test_running_stack.py",
+      "reason": "What the infrastructure declares, and our configuration of each service exercised against the running stack.",
+      "hashAfter": "8c110d9ce267bcbc93464d7a6b8c2325866d6fcbb9ca2e038f947662f32f147e"
+    },
+    {
+      "path": "packages/common/pyproject.toml",
+      "reason": "Cross-cutting primitives every process needs: UUIDv7 identifiers and credential redaction, standard library only.",
+      "hashAfter": "4d11aab8e673663564339d8bc38adbe1564638536d403bc419a7a884566b060a"
+    },
+    {
+      "path": "packages/common/src/iacode_common/__init__.py",
+      "reason": "Cross-cutting primitives every process needs: UUIDv7 identifiers and credential redaction, standard library only.",
+      "hashAfter": "b3fc51cffc83e8b2da21f805e927aba6ebb71ecdcbf270e07e4b14639f9160e3"
+    },
+    {
+      "path": "packages/common/src/iacode_common/identifiers.py",
+      "reason": "Cross-cutting primitives every process needs: UUIDv7 identifiers and credential redaction, standard library only.",
+      "hashAfter": "93b7ad420cc0b1bb2276affb419308d03947a2f98b950ce183fb46d182e780c0"
+    },
+    {
+      "path": "packages/common/src/iacode_common/redaction.py",
+      "reason": "Cross-cutting primitives every process needs: UUIDv7 identifiers and credential redaction, standard library only.",
+      "hashAfter": "a0b924c23332d25ae490caf1e385e5beee9565464d57a61d546ff9f392a28f89"
+    },
+    {
+      "path": "packages/contracts/pyproject.toml",
+      "reason": "The response and error shapes that cross a process boundary.",
+      "hashAfter": "bf2c90eb3cc03db3a87375a5a384c0b1a367fc43154ba3f734fdd82143c01a5c"
+    },
+    {
+      "path": "packages/contracts/src/iacode_contracts/__init__.py",
+      "reason": "The response and error shapes that cross a process boundary.",
+      "hashAfter": "5d9aee1ea0b0f9b462ddd381c5db9bd47f66c963ffa56b53a5b9e00e35fdb165"
+    },
+    {
+      "path": "packages/contracts/src/iacode_contracts/foundation.py",
+      "reason": "The response and error shapes that cross a process boundary.",
+      "hashAfter": "e66ff3115ef6546d749c607ec4ad9b3a90ade8a14219d2bdce40a1e029928e78"
+    },
+    {
+      "path": "packages/telemetry/pyproject.toml",
+      "reason": "The structured logging contract and the ambient correlation context.",
+      "hashAfter": "c241db69527a5f1c14b796e152399c23bde7b690aba91f8c142456282de0508b"
+    },
+    {
+      "path": "packages/telemetry/src/iacode_telemetry/__init__.py",
+      "reason": "The structured logging contract and the ambient correlation context.",
+      "hashAfter": "59b38c26409973c901884f88c48d42f74d646f404c6ac00811dff7de9135baad"
+    },
+    {
+      "path": "packages/telemetry/src/iacode_telemetry/context.py",
+      "reason": "The structured logging contract and the ambient correlation context.",
+      "hashAfter": "0d3af959341902607ce59d4f009014536ba8f92096f6acd6419ad981c19b7605"
+    },
+    {
+      "path": "packages/telemetry/src/iacode_telemetry/logging.py",
+      "reason": "The structured logging contract and the ambient correlation context.",
+      "hashAfter": "2ac134607c7e6582b7818feb03cca15282f3f8ea9301f15d9d8c5c0638b8ac45"
+    },
+    {
+      "path": "ruff.toml",
+      "reason": "One static-analysis configuration for the repository, with every exception justified in place.",
+      "hashAfter": "dc6b486b45b3c9b205d6bad7cb915c2ed0f57121e8e1ce55f9c29ea1b6c8e259"
+    },
+    {
+      "path": "scripts/development-ledger/gate0_red_team.py",
+      "reason": "The Gate's internal adversarial battery, scoped to the Foundation.",
+      "hashAfter": "1b155e37073734c8a2e0d753a90d36c31af6cbe4d3367b15646a8b3bf4df3dc8"
+    },
+    {
+      "path": "scripts/development-ledger/gate0_runtime_attacks.py",
+      "reason": "The half of the battery that runs inside the API image, because the application needs FastAPI and pydantic and the host deliberately does not have them.",
+      "hashAfter": "17500c9a53260035dca895f7aae73c7594978f442c0f55109fc32a19d194e5d5"
+    },
+    {
+      "path": "scripts/iacode/__init__.py",
+      "reason": "The operational tooling: bootstrap, stack lifecycle, migrations, smoke, backup, restore, dependency scan and the verification command.",
+      "hashAfter": "f01f931a7231be1b426178eec685afa9b686694ed385ff8a7541622916e0555f"
+    },
+    {
+      "path": "scripts/iacode/backup.py",
+      "reason": "The operational tooling: bootstrap, stack lifecycle, migrations, smoke, backup, restore, dependency scan and the verification command.",
+      "hashAfter": "edb883ba366318e0028536c2cb3e48bc4d8b9c70288b37fa7823e120a0a9dfe2"
+    },
+    {
+      "path": "scripts/iacode/backup_restore_check.py",
+      "reason": "The operational tooling: bootstrap, stack lifecycle, migrations, smoke, backup, restore, dependency scan and the verification command.",
+      "hashAfter": "2514c00801ae1d5832c43ab677823482cb593f2d21794d21526f5dbb57c144be"
+    },
+    {
+      "path": "scripts/iacode/bootstrap_env.py",
+      "reason": "The operational tooling: bootstrap, stack lifecycle, migrations, smoke, backup, restore, dependency scan and the verification command.",
+      "hashAfter": "6f6bbdf681062c8b8ca588bee5d9757ee2ccf12a2c53763213c031f30aa070d4"
+    },
+    {
+      "path": "scripts/iacode/compose.py",
+      "reason": "The operational tooling: bootstrap, stack lifecycle, migrations, smoke, backup, restore, dependency scan and the verification command.",
+      "hashAfter": "ae49a14feb1b9fceded7ad60f5f668c5f01cef30b9764b916edb23bdf6e47273"
+    },
+    {
+      "path": "scripts/iacode/dependency_scan.py",
+      "reason": "The operational tooling: bootstrap, stack lifecycle, migrations, smoke, backup, restore, dependency scan and the verification command.",
+      "hashAfter": "1c9c652e7501e938f8c472ef29ce9a88bb73b8c9a8a252d0a20a0c75cdce4d18"
+    },
+    {
+      "path": "scripts/iacode/gates/__init__.py",
+      "reason": "The entry points the mandatory gate registry names, so the registry does not have to change when an invocation does.",
+      "hashAfter": "bf50e22be265b87192872cc31b08b059117401136bb885d8a13de6998af9dca0"
+    },
+    {
+      "path": "scripts/iacode/gates/api_tests.py",
+      "reason": "The entry points the mandatory gate registry names, so the registry does not have to change when an invocation does.",
+      "hashAfter": "ac45570aa790e4189fb85ca14285e8682726a41001c72299b2b6d9b51a7e73d9"
+    },
+    {
+      "path": "scripts/iacode/gates/infra_definition.py",
+      "reason": "The entry points the mandatory gate registry names, so the registry does not have to change when an invocation does.",
+      "hashAfter": "cd3a641a80ff9e5e8e277c50a31e5c50aa45f566a8d641ace2a723e87d520d49"
+    },
+    {
+      "path": "scripts/iacode/gates/lint.py",
+      "reason": "The entry points the mandatory gate registry names, so the registry does not have to change when an invocation does.",
+      "hashAfter": "eddd0c467a188f1fd256ce9181d571cf6b321fe2c7b2b89ca0813565a7fd2f31"
+    },
+    {
+      "path": "scripts/iacode/gates/web_tests.py",
+      "reason": "The entry points the mandatory gate registry names, so the registry does not have to change when an invocation does.",
+      "hashAfter": "719d9f2edae113e8e9ad7674953366554650620a116d6274a967e01c11d5ae6a"
+    },
+    {
+      "path": "scripts/iacode/lock_dependencies.py",
+      "reason": "The operational tooling: bootstrap, stack lifecycle, migrations, smoke, backup, restore, dependency scan and the verification command.",
+      "hashAfter": "042c6af747faae6bc1bc1be1bad25028c62cc9c06a29e99c95c59f3e8145eaff"
+    },
+    {
+      "path": "scripts/iacode/migrate.py",
+      "reason": "The operational tooling: bootstrap, stack lifecycle, migrations, smoke, backup, restore, dependency scan and the verification command.",
+      "hashAfter": "d248ce385cfb69f4095b4f551ece0da1715430b6313c44cec530e48185cfc354"
+    },
+    {
+      "path": "scripts/iacode/policies_bridge.py",
+      "reason": "The operational tooling: bootstrap, stack lifecycle, migrations, smoke, backup, restore, dependency scan and the verification command.",
+      "hashAfter": "9ae3389f7f37cc61f487c5d514392e8b0eb0d4216df9d27281c95028793b200f"
+    },
+    {
+      "path": "scripts/iacode/restore.py",
+      "reason": "The operational tooling: bootstrap, stack lifecycle, migrations, smoke, backup, restore, dependency scan and the verification command.",
+      "hashAfter": "b97d3a27aa11e46080fa03b9702a4f78e915894b7cb6255e131999b1e2ce50ba"
+    },
+    {
+      "path": "scripts/iacode/scenarios/__init__.py",
+      "reason": "The executable scenarios: a fresh installation, a restart with data intact, and a dependency failure with recovery.",
+      "hashAfter": "3d036f10dd21bcb93f9464fc7c1fdc22a79065394e158709aa3ee5663720f72a"
+    },
+    {
+      "path": "scripts/iacode/scenarios/dependency_failure.py",
+      "reason": "The executable scenarios: a fresh installation, a restart with data intact, and a dependency failure with recovery.",
+      "hashAfter": "f16c69623a583d5a5a31a4ebfc5f841f6f5eafe33713e4956f2000e7e5c40eab"
+    },
+    {
+      "path": "scripts/iacode/scenarios/fresh_install.py",
+      "reason": "The executable scenarios: a fresh installation, a restart with data intact, and a dependency failure with recovery.",
+      "hashAfter": "655632ad5e90d75544ff8152de7d404c439db9c8185ffb816d1881e69a3c306d"
+    },
+    {
+      "path": "scripts/iacode/scenarios/restart.py",
+      "reason": "The executable scenarios: a fresh installation, a restart with data intact, and a dependency failure with recovery.",
+      "hashAfter": "248e442e12462adfefbd726fe90e51a13d38488ca89ef4c2c9abb031af10dac7"
+    },
+    {
+      "path": "scripts/iacode/smoke.py",
+      "reason": "The operational tooling: bootstrap, stack lifecycle, migrations, smoke, backup, restore, dependency scan and the verification command.",
+      "hashAfter": "c1ce4c894eb6122230bf436bf491784fdf97643d4ebcc71a09fe9a7567ecf95b"
+    },
+    {
+      "path": "scripts/iacode/stack.py",
+      "reason": "The operational tooling: bootstrap, stack lifecycle, migrations, smoke, backup, restore, dependency scan and the verification command.",
+      "hashAfter": "c50c03eca449a4cb39fa93bf2f6800d75c59de2d6f51f192f1b9aa43a0a216bd"
+    },
+    {
+      "path": "scripts/iacode/verify.py",
+      "reason": "The operational tooling: bootstrap, stack lifecycle, migrations, smoke, backup, restore, dependency scan and the verification command.",
+      "hashAfter": "a2d3a385e00255e37a99b00b9d47c09abf4cac3e469c7737026cb982d308add3"
+    },
+    {
+      "path": "services/evaluator/README.md",
+      "reason": "Reserved for a later Gate. A README declaring the reservation and nothing else.",
+      "hashAfter": "9a315ce59eda030b3ae0675607fbb0593519e5f0b60b7285fc97dc002efa40df"
+    },
+    {
+      "path": "services/experience/README.md",
+      "reason": "Reserved for a later Gate. A README declaring the reservation and nothing else.",
+      "hashAfter": "24db2a978ef71ed1fa90c099a25ae0e3caa7535db10f6a12fcd7b42063bcaad8"
+    },
+    {
+      "path": "services/knowledge/README.md",
+      "reason": "Reserved for a later Gate. A README declaring the reservation and nothing else.",
+      "hashAfter": "69c2e3e805120790dd4a7e815aa0873279a5715e20dcebf279491ee628368e76"
+    },
+    {
+      "path": "services/model-gateway/README.md",
+      "reason": "Reserved for a later Gate. A README declaring the reservation and nothing else.",
+      "hashAfter": "98f40df08ab987ccf5d8e8bae25188b602a1c2b9d4cb052066e5d0ade9b495ac"
+    },
+    {
+      "path": "services/orchestrator/Dockerfile",
+      "reason": "The Temporal worker: a separate process, one smoke workflow, and a healthcheck that asks Temporal whether this queue has a poller.",
+      "hashAfter": "4b9b33b27ae6739c0d93983944ea214512115957748cb941a96f17a96111e59a"
+    },
+    {
+      "path": "services/orchestrator/pyproject.toml",
+      "reason": "The Temporal worker: a separate process, one smoke workflow, and a healthcheck that asks Temporal whether this queue has a poller.",
+      "hashAfter": "d6b73363a780108894f871f98eb3fc08e2939210f43a9080c3f2d81b0cb75537"
+    },
+    {
+      "path": "services/orchestrator/src/iacode_orchestrator/__init__.py",
+      "reason": "The Temporal worker: a separate process, one smoke workflow, and a healthcheck that asks Temporal whether this queue has a poller.",
+      "hashAfter": "4dacec1d36c208d946a9ad97a1024d99fcfb65fea41d62c6f1b28198194b3df7"
+    },
+    {
+      "path": "services/orchestrator/src/iacode_orchestrator/config.py",
+      "reason": "The Temporal worker: a separate process, one smoke workflow, and a healthcheck that asks Temporal whether this queue has a poller.",
+      "hashAfter": "c852a33688f9a5ffd3c7c0f6bfe7865d951a81004212fc5c585b3218487875da"
+    },
+    {
+      "path": "services/orchestrator/src/iacode_orchestrator/healthcheck.py",
+      "reason": "The Temporal worker: a separate process, one smoke workflow, and a healthcheck that asks Temporal whether this queue has a poller.",
+      "hashAfter": "dc649868eaa82271724326cb89af3a8d5508ffb9a03e3db3586e78b8a8be4279"
+    },
+    {
+      "path": "services/orchestrator/src/iacode_orchestrator/runtime.py",
+      "reason": "The Temporal worker: a separate process, one smoke workflow, and a healthcheck that asks Temporal whether this queue has a poller.",
+      "hashAfter": "017e55f2f708e177c719d758a1a1f8811eb612d560896e8d371233f83327183f"
+    },
+    {
+      "path": "services/orchestrator/src/iacode_orchestrator/smoke_client.py",
+      "reason": "The Temporal worker: a separate process, one smoke workflow, and a healthcheck that asks Temporal whether this queue has a poller.",
+      "hashAfter": "6fb28540e318842df31ee2f43502ba743698e7f9cb462abd0d7f3a59b697ea90"
+    },
+    {
+      "path": "services/orchestrator/src/iacode_orchestrator/worker.py",
+      "reason": "The Temporal worker: a separate process, one smoke workflow, and a healthcheck that asks Temporal whether this queue has a poller.",
+      "hashAfter": "3a17d7f5816e7eb7c39d8959d13827b1c405967c0b8192577ccc61c4635d0d60"
+    },
+    {
+      "path": "services/orchestrator/src/iacode_orchestrator/workflows/__init__.py",
+      "reason": "The Temporal worker: a separate process, one smoke workflow, and a healthcheck that asks Temporal whether this queue has a poller.",
+      "hashAfter": "9f4e6d9d8ab3131978ddf53bfee4ad59377c3c7f9f6387eebb898d99c30308e9"
+    },
+    {
+      "path": "services/orchestrator/src/iacode_orchestrator/workflows/smoke.py",
+      "reason": "The Temporal worker: a separate process, one smoke workflow, and a healthcheck that asks Temporal whether this queue has a poller.",
+      "hashAfter": "f049a46d14b94ea2a4edbe27266ecb064ca1e39539f0791fa7e7d4f3d3324af9"
+    },
+    {
+      "path": "services/sandbox/README.md",
+      "reason": "Reserved for a later Gate. A README declaring the reservation and nothing else.",
+      "hashAfter": "526a5415da05259e7ffa6c70d6175d99bc807e7a23812e22d155b8591f5b1c0e"
+    },
+    {
+      "path": "services/training/README.md",
+      "reason": "Reserved for a later Gate. A README declaring the reservation and nothing else.",
+      "hashAfter": "0476fd903f7768c26617343b190bc0e494a9dd87e931bddd7f213b53bf90bebe"
+    },
+    {
+      "path": "tests/test_gate0_foundation.py",
+      "reason": "The control-plane properties this Gate adds: its specification, the derivation, the assurance scope, the suite registry, the structure, the scope control and the secret scan.",
+      "hashAfter": "42a79b972589aa24a758153a04b73860ad9a4f084e6d5050991fde2d719d512e"
+    },
+    {
+      "path": "training/README.md",
+      "reason": "Reserved for GATE 18. A README declaring the reservation and nothing else.",
+      "hashAfter": "8d89f541c8cf4294d53d8727bb3491b451771f407f49bf94ce14a1493ce6aacf"
+    },
+    {
+      "path": "verify.ps1",
+      "reason": "A wrapper so the verification is one command on Windows too.",
+      "hashAfter": "be55f61b3f20e83e50d5220c2296eeb6c19dfac3ba4753ba7997542f3c8a3ee0"
+    }
+  ],
+  "filesModified": [
+    {
+      "path": ".gitattributes",
+      "reason": "Line endings declared for the file types this Gate introduces.",
+      "hashAfter": "2681d5606d36123803d89af7dde47253328b76a6975df94518a8e86b10162a4e",
+      "hashBefore": "dca2276bea86b9807b795376519645c3c2a14215417a93f4127c50c651f61575"
+    },
+    {
+      "path": ".gitignore",
+      "reason": "The real environment file, the frontend toolchain output and the local runtime artifacts are not part of the repository.",
+      "hashAfter": "86312be93b99b47d27a407b1080593e35f6f3810e721a3d1889ead3180be367f",
+      "hashBefore": "956bb97011b4157a40a57576efa29ee957d2b82a6abc22d37c831581132b4cbc"
+    },
+    {
+      "path": ".iacode/anchors/checkpoint-chain.json",
+      "reason": "The twelfth sealed predecessor is anchored by this checkpoint, which is how the integrity chain advances.",
+      "hashAfter": "e2ebf9d050ef30ff529b26ea2f69612616be683acd642fd8047f51039f7ac9af",
+      "hashBefore": "23bd8c34951b1f560c603c85352b04cc78d8e81dca113b51afb355e13a5961cd"
+    },
+    {
+      "path": ".iacode/memory/LESSONS.md",
+      "reason": "The engineering memory: three new lessons, one recorded guardrail failure and its resolution, and four guardrails.",
+      "hashAfter": "dcc0d463f0d3d58f86ece00dfe6e75092b251d50fbe0447c8473624e7ead4124",
+      "hashBefore": "1fc04b86bb5c1d4ac5c73c9e55ac8c81c01b8866a19f988187e0713e9bcb731d"
+    },
+    {
+      "path": ".iacode/memory/guardrails/registry.json",
+      "reason": "The engineering memory: three new lessons, one recorded guardrail failure and its resolution, and four guardrails.",
+      "hashAfter": "6bd29d910794f87f4059362efb3093d2972fc8b27768b1c0a9a5a1405f0986e6",
+      "hashBefore": "c9b86d5f4e41b579d241ea30e39deba65807c73d823a399ee0ca4ba4f2e89230"
+    },
+    {
+      "path": ".iacode/memory/lessons.jsonl",
+      "reason": "The engineering memory: three new lessons, one recorded guardrail failure and its resolution, and four guardrails.",
+      "hashAfter": "f903d4a6f04c6b31eb543ac92eb6d386dde0867aaa8a5b11e824d30bb0887403",
+      "hashBefore": "961805fbe4ccbdf1988d5a6132c5144759b8cf9e158e592ae470aa41706b7dc0"
+    },
+    {
+      "path": ".iacode/policies/canonical-requirements.json",
+      "reason": "The machine-readable mirror of this Gate's specification.",
+      "hashAfter": "4e62378c2a94fbcfa58e5c584fbb1720b6f951e329fcf66beaf06300acfb880f",
+      "hashBefore": "3eee5eefc957af91cf4f45047482dcd2b6799e1a976fd9f816b6ce1b4cbeec09"
+    },
+    {
+      "path": ".iacode/policies/quality-gates.json",
+      "reason": "Four executable gates added to the closed mandatory set.",
+      "hashAfter": "f027e08635884cd6a6afade1ef5ec56f362b0723fc9470e214164717b05b448c",
+      "hashBefore": "3e61571a2dc45c5b1cd5cb2883ecf27adac3ed57b75e8905a259cc061670274c"
+    },
+    {
+      "path": ".iacode/schemas/closure-requirements.schema.json",
+      "reason": "The schema for a policy this Gate introduced, or a vocabulary it extends.",
+      "hashAfter": "d5e98bd9fe5f893dfbd487378eb09027f3d576d8966210c135243d416a3a958b",
+      "hashBefore": "c5c0d63bfafd421fec3b604bdbd54598ecc9ed81855a217a9391c33f8eb0c47d"
+    },
+    {
+      "path": "README.md",
+      "reason": "The entry documentation describes what exists after this Gate and how to run it.",
+      "hashAfter": "b81d48af1ae898e262c91acb13bdd37a65c7b071b3c9e6a585140a174a84051a",
+      "hashBefore": "d3c5f39a5a20b220d480821f1a89b8f9c2c1a7684deb94a903a979e0a2222d83"
+    },
+    {
+      "path": "START-HERE.md",
+      "reason": "The entry contract names the current Gate and its specification.",
+      "hashAfter": "8eef814e4353a573eb911002c8187bb49ed8fff638e4ffa73b183e351bf8c777",
+      "hashBefore": "46704b37270bdad10b3f1cd2ad08ada9411dc7e90b8766372819c68c54b20617"
+    },
+    {
+      "path": "docs/ARCHITECTURE.md",
+      "reason": "The architecture updated to describe the Foundation runtime and what is deliberately absent.",
+      "hashAfter": "616d0b3ed9141a6edf7c5d4168acd8c60be32357b9e2f6f396436f285371caf0",
+      "hashBefore": "d7ad49bc64331cd513c554606e913a2ec4d3be144d948b7923644b57f77e8043"
+    },
+    {
+      "path": "docs/MASTER-PLAN.md",
+      "reason": "The Gate 0 row points at its canonical specification.",
+      "hashAfter": "f11a9e341144a1788ec2ab7c8a6fceb89213824b7ebab563e20ddc631545db17",
+      "hashBefore": "e73ad4601b63564506181963d0791fe5a4a9e95f96e36b7391034cd9bd95de98"
+    },
+    {
+      "path": "docs/checkpoints/LATEST.md",
+      "reason": "The latest checkpoint pointer.",
+      "hashAfter": "9e0102dcfedb9d1c0781a80df4f3587d952082f6d022060204ecddb9b9bf35a4",
+      "hashBefore": "64c6ac285d2e865274ea00295ff71ece9643aab069b35e2b8f19151eec03ee60"
+    },
+    {
+      "path": "scripts/development-ledger/delivery_assurance.py",
+      "reason": "A control-plane control generalised so a Gate other than SETUP-00 can be delivered. See DECISIONS.md.",
+      "hashAfter": "f95e6fd33a1371b86bef7536dad2ef3f870279417cc81f782cb142ed49e9c5a2",
+      "hashBefore": "ab5efdd02cdf261d0cd86b53e6b91f14029d20a5329ea1cf517b87596fb6444a"
+    },
+    {
+      "path": "scripts/development-ledger/derive_counts.py",
+      "reason": "A control-plane control generalised so a Gate other than SETUP-00 can be delivered. See DECISIONS.md.",
+      "hashAfter": "8abd83cc0ddbeb425f4780225971a48d5721eea82c24c321c80cb8154e50f2cb",
+      "hashBefore": "018df46a5a9181474d0e0710ca7f311ae563ca8777fb2e6c604abb3bacddda8e"
+    },
+    {
+      "path": "scripts/development-ledger/derive_requirements.py",
+      "reason": "A control-plane control generalised so a Gate other than SETUP-00 can be delivered. See DECISIONS.md.",
+      "hashAfter": "a1f45f2458616b149e381af4cc1c60f3273149404973094d458d479c95b01e2b",
+      "hashBefore": "977552531891522edc1e8d3c9bc49264a05091e61d2a2e8441b858787936a93b"
+    },
+    {
+      "path": "scripts/development-ledger/green_keeper.py",
+      "reason": "A control-plane control generalised so a Gate other than SETUP-00 can be delivered. See DECISIONS.md.",
+      "hashAfter": "fad8540712074e810fe4418058a2ae2aea6a1d8efd2fb088f44eaec7eccbeecf",
+      "hashBefore": "2d09b0592b59122345e3fd01c4db51cacf2ca01fa899c4dcca39bc177e9753b9"
+    },
+    {
+      "path": "scripts/development-ledger/ledger_common.py",
+      "reason": "A control-plane control generalised so a Gate other than SETUP-00 can be delivered. See DECISIONS.md.",
+      "hashAfter": "b64bb4fd2ce976f2f847401f6bb780af2ef6f792b133bf035d90e921003baf90",
+      "hashBefore": "d7f152de1eb72a7db0d928b43ea0f0167862bb5cea897a35658c81af689cad2e"
+    },
+    {
+      "path": "scripts/development-ledger/m0_mirror_audit.py",
+      "reason": "A control-plane control generalised so a Gate other than SETUP-00 can be delivered. See DECISIONS.md.",
+      "hashAfter": "d3aa86c2644ad268d0ad4f816c606d02adbdbd67043e4cc803b202156760c5bb",
+      "hashBefore": "657e5a10a2ad95080d3144c79601368fcc50e79367706267766ce9c572d60571"
+    },
+    {
+      "path": "scripts/development-ledger/m0_red_team.py",
+      "reason": "A control-plane control generalised so a Gate other than SETUP-00 can be delivered. See DECISIONS.md.",
+      "hashAfter": "be0dadf3c52be378773afdb7c5237e8a66403943a264d197ce0c91892b397ccc",
+      "hashBefore": "a8faa12fe740dccb5dcb2373f12ef7140103835ac9377f84f3e7f3a6a38622c4"
+    },
+    {
+      "path": "scripts/development-ledger/policies.py",
+      "reason": "A control-plane control generalised so a Gate other than SETUP-00 can be delivered. See DECISIONS.md.",
+      "hashAfter": "13745576e065b513c412a5474405bc6f58d41a32f09052e20b387807607f96e6",
+      "hashBefore": "964b00eef75849e9a15c0538fcf4cf7f8bc4a5057c4eb49c95e4368ff0e7ddc4"
+    },
+    {
+      "path": "scripts/development-ledger/promotion_fixture.py",
+      "reason": "A control-plane control generalised so a Gate other than SETUP-00 can be delivered. See DECISIONS.md.",
+      "hashAfter": "007b8f409875b5cde6a7e72953dbf9c0e52245a53f4dedc419722bbae1504c89",
+      "hashBefore": "a9fb7fb1b59bbbae02b730e6e229fb659de90eb441e6a77781e6c692dcab73cf"
+    },
+    {
+      "path": "scripts/development-ledger/record_command.py",
+      "reason": "A control-plane control generalised so a Gate other than SETUP-00 can be delivered. See DECISIONS.md.",
+      "hashAfter": "ff1b38c7937b5724ae4a0cd05600260668fe4e055d6d79342feddefb6783bd7a",
+      "hashBefore": "ec166ab6a0eeead4940f48a88f498dcb4781937505856a53a220bfbcb7160573"
+    },
+    {
+      "path": "scripts/development-ledger/seal_checkpoint.py",
+      "reason": "A control-plane control generalised so a Gate other than SETUP-00 can be delivered. See DECISIONS.md.",
+      "hashAfter": "518ad7bc9bfe0f93d6e0b875e6c076aa3a8a668c6b57b0b5409e00576258ea64",
+      "hashBefore": "8af332201d04181b2b0a79ca331afe3b985d254a6b95252a6709863146cf6c51"
+    },
+    {
+      "path": "scripts/development-ledger/validate_checkpoint.py",
+      "reason": "A control-plane control generalised so a Gate other than SETUP-00 can be delivered. See DECISIONS.md.",
+      "hashAfter": "6cbfb176d01b097967bbb1f8eefa739705083e40b5ced3c2b6590de1dc246070",
+      "hashBefore": "f003b1c735f1f557c7d524e83b97d602a7d965e088542ec60405c2fdc3111622"
+    },
+    {
+      "path": "tests/test_development_ledger.py",
+      "reason": "The control-plane suite, updated so a fixture's policies describe the content the fixture has.",
+      "hashAfter": "594a87ab20429d94905b999f342816a70b73e1b8548bc37e36720079eaa76b51",
+      "hashBefore": "e51c5b5d28caa68ca1d10086c9dc22ebf3e3de4ae5fc7976c88b47ee7f7dc2af"
+    }
+  ],
+  "filesDeleted": []
+}

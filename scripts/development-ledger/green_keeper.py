@@ -37,12 +37,13 @@ from ledger_common import (
     canonical_hash_path,
     find_root,
     git_snapshot,
+    load_json,
     resolve_latest,
     runtime_label,
     scope_fingerprint,
+    use_utf8_stdout,
     utc_now,
     validate_schema,
-    load_json,
     write_json,
 )
 from policies import gate_definitions, mandatory_gates
@@ -75,7 +76,8 @@ def _run_gate(root: Path, checkpoint: Path, name: str, definition: dict[str, Any
         executable[0] = sys.executable
     started = time.monotonic()
     completed = subprocess.run(
-        executable, cwd=root, text=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, check=False)
+        executable, cwd=root, text=True, encoding="utf-8", errors="replace",
+        stdout=subprocess.PIPE, stderr=subprocess.STDOUT, check=False)
     duration = int((time.monotonic() - started) * 1000)
     snapshot = git_snapshot(root)
     inputs = [item for item in argv[1:] if (root / item).is_file() or (root / item).is_dir()]
@@ -123,6 +125,7 @@ def _next_cycle(log_path: Path) -> int:
 
 
 def main() -> int:
+    use_utf8_stdout()
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--root", type=Path)
     parser.add_argument("--checkpoint", type=Path)

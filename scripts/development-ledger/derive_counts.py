@@ -22,6 +22,7 @@ disagrees and any Markdown in the checkpoint that states ``N/M LABEL`` with diff
 from __future__ import annotations
 
 import argparse
+import ast
 import json
 import sys
 import unittest
@@ -36,14 +37,15 @@ from ledger_common import (
     utc_now,
     validate_schema,
 )
+from policies import counted_test_suites
 
 COUNT_LABELS = ("TESTS", "REQUIREMENTS", "FINDINGS", "ATTACKS", "LESSONS", "GUARDRAILS")
 
 
-def count_test_cases(root: Path) -> int:
-    """Number of distinct test cases the suite discovers."""
-    tests_directory = root / "tests"
-    if not tests_directory.is_dir():
+def count_unittest_cases(root: Path, relative: str) -> int:
+    """Distinct cases a ``unittest`` suite discovers under ``relative``."""
+    directory = root / relative
+    if not directory.is_dir():
         return 0
     identifiers: set[str] = set()
 
@@ -54,9 +56,58 @@ def count_test_cases(root: Path) -> int:
             elif isinstance(item, unittest.TestCase):
                 identifiers.add(item.id())
 
-    walk(unittest.defaultTestLoader.discover(
-        str(tests_directory), top_level_dir=str(tests_directory)))
+    walk(unittest.defaultTestLoader.discover(str(directory), top_level_dir=str(directory)))
     return len(identifiers)
+
+
+def count_pytest_cases(root: Path, relative: str) -> int:
+    """Distinct cases a ``pytest`` suite declares under ``relative``, read rather than executed.
+
+    The suite is parsed with ``ast`` for the same reason the evidence resolver parses it: deriving
+    a count by importing test modules would execute them and would make the denominator depend on
+    an installed environment the validator does not have.
+
+    ``pytest.mark.parametrize`` is refused rather than approximated. A parametrised function is one
+    source definition and several collected cases, so a static reading and the runner would report
+    different numbers for the same suite, and a denominator that cannot be re-derived exactly is a
+    claim rather than a measurement.
+    """
+    directory = root / relative
+    if not directory.is_dir():
+        return 0
+    total = 0
+    for path in sorted(directory.rglob("test_*.py")):
+        if "__pycache__" in path.parts:
+            continue
+        try:
+            tree = ast.parse(path.read_text(encoding="utf-8"))
+        except (OSError, SyntaxError) as exc:
+            raise LedgerError(f"declared pytest suite file cannot be parsed: {path.name}: {exc}")
+        for node in ast.walk(tree):
+            if not isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
+                continue
+            if not node.name.startswith("test"):
+                continue
+            for decorator in node.decorator_list:
+                if "parametrize" in ast.dump(decorator):
+                    raise LedgerError(
+                        f"{path.name}::{node.name} is parametrised; the TESTS denominator is "
+                        f"derived statically and cannot reproduce a runtime expansion")
+            total += 1
+    return total
+
+
+def count_test_cases(root: Path) -> int:
+    """Distinct test cases across every counted suite the canonical registry declares."""
+    total = 0
+    for suite in counted_test_suites(root):
+        framework = str(suite.get("framework"))
+        relative = str(suite["root"])
+        if framework == "python-unittest":
+            total += count_unittest_cases(root, relative)
+        elif framework == "python-pytest":
+            total += count_pytest_cases(root, relative)
+    return total
 
 
 def executed_test_runs(tests: dict[str, Any]) -> dict[str, int]:
@@ -99,8 +150,8 @@ def derive_counts(root: Path, checkpoint: Path) -> dict[str, dict[str, Any]]:
         "numerator": passed,
         "denominator": discovered,
         "source": (
-            "unittest discovery over tests/ cross-checked with TESTS.json, deduplicated by "
-            "physical execution"),
+            "discovery over every counted suite of .iacode/policies/test-suites.json, "
+            "cross-checked with TESTS.json and deduplicated by physical execution"),
     }
 
     matrix_path = checkpoint / "REQUIREMENTS-MATRIX.json"

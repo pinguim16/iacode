@@ -6,3 +6,18 @@ htmlcov/
 .venv/
 venv/
 
+# Real local configuration and every secret it carries. Only the example file is committed.
+.env
+*.env
+!*.env.example
+.env.*
+!.env.example
+
+# Frontend toolchain output and dependencies.
+node_modules/
+apps/web/dist/
+apps/web/.angular/
+
+# Local runtime artifacts produced by the Foundation stack.
+var/
+backups/

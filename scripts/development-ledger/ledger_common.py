@@ -6,6 +6,7 @@ import hashlib
 import json
 import re
 import subprocess
+import sys
 from datetime import date, datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -230,11 +231,28 @@ def find_root(start: Path | None = None) -> Path:
     raise LedgerError(f"repository root not found from {candidate}")
 
 
+def use_utf8_stdout() -> None:
+    """Emit this process's own output as UTF-8, whatever the machine's codepage is.
+
+    The companion of the explicit `encoding` on every capture: a tool reads a child's UTF-8 output,
+    then writes it back out, and on Windows `sys.stdout` encodes with `cp1252`. A character the
+    codepage cannot encode -- including the replacement character a tolerant *read* just produced --
+    raises `UnicodeEncodeError` in the writer, which loses the result of work that had already
+    succeeded. Idempotent, and a no-op on a stream that cannot be reconfigured.
+    """
+    for stream in (sys.stdout, sys.stderr):
+        reconfigure = getattr(stream, "reconfigure", None)
+        if reconfigure is not None:
+            reconfigure(encoding="utf-8", errors="replace")
+
+
 def run_git(root: Path, *args: str) -> tuple[int, str]:
     completed = subprocess.run(
         ["git", *args],
         cwd=root,
         text=True,
+        encoding="utf-8",
+        errors="replace",
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,
         check=False,
@@ -336,6 +354,19 @@ ASSURANCE_SCOPE_PREFIXES = (
     ".claude/",
     "prompts/",
     "docs/",
+    # The runtime Gate 0 introduces. A Green Keeper PASS, a completeness PASS, a Red Team result
+    # and a mirror audit are statements about the product as much as about the control plane: with
+    # these prefixes outside the scope, editing the API, the worker, the frontend or the compose
+    # stack would leave every gate result looking fresh while describing content that no longer
+    # exists.
+    "apps/",
+    "services/",
+    "packages/",
+    "infra/",
+    "agents/",
+    "training/",
+    "evaluation/",
+    "datasets/",
 )
 
 ASSURANCE_SCOPE_EXCLUSIONS = (
@@ -690,7 +721,7 @@ SECRET_PATTERNS: tuple[tuple[str, re.Pattern[str], str], ...] = (
     ),
     (
         "named secret assignment",
-        re.compile(r"(?i)\b((?:[A-Z0-9]+_)*(?:API_KEY|TOKEN|SECRET|PASSWORD|ACCESS_KEY_ID|SECRET_ACCESS_KEY)[\"']?\s*[:=]\s*[\"']?)(?!\[REDACTED\]|example\b|placeholder\b|changeme\b|not[_-]?set\b|your[_-])[-A-Za-z0-9._~+/=:@]{6,}"),
+        re.compile(r"(?i)\b((?:[A-Z0-9]+_)*(?:API_KEY|TOKEN|SECRET|PASSWORD|ACCESS_KEY_ID|SECRET_ACCESS_KEY)[\"']?\s*[:=]\s*[\"']?)(?!\[REDACTED\]|example\b|placeholder\b|change[_-]?me[_-a-z0-9]*|not[_-]?set\b|your[_-])[-A-Za-z0-9._~+/=:@]{6,}"),
         r"\1[REDACTED]",
     ),
     ("DevWorld credential", re.compile(r"\bdw_live_[A-Za-z0-9_-]{8,}\b"), "[REDACTED]"),

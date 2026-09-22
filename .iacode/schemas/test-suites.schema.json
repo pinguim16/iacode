@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://iacode.local/schemas/test-suites.schema.json",
+  "title": "Canonical test suite registry",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "suites"
+  ],
+  "$defs": {
+    "suite": {
+      "type": "object",
+      "required": [
+        "id",
+        "title",
+        "root",
+        "framework",
+        "counted",
+        "purpose"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]*$"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "root": {
+          "description": "Repository-relative directory that holds the suite.",
+          "type": "string",
+          "minLength": 1
+        },
+        "framework": {
+          "enum": [
+            "python-unittest",
+            "python-pytest",
+            "angular-karma"
+          ]
+        },
+        "counted": {
+          "description": "Whether the suite contributes to the derived TESTS denominator and to evidence resolution.",
+          "type": "boolean"
+        },
+        "notCountedReason": {
+          "description": "Required when counted is false. An uncounted suite states why it cannot be re-derived, so the omission is auditable rather than silent.",
+          "type": "string",
+          "minLength": 1
+        },
+        "purpose": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "properties": {
+    "schemaVersion": {
+      "enum": [
+        "1.0.0"
+      ]
+    },
+    "policy": {
+      "type": "string",
+      "minLength": 1
+    },
+    "suites": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/suite"
+      }
+    }
+  },
+  "additionalProperties": false
+}

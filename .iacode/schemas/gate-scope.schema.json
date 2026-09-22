@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://iacode.local/schemas/gate-scope.schema.json",
+  "title": "Gate scope reservations",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "reservations"
+  ],
+  "$defs": {
+    "reservation": {
+      "type": "object",
+      "required": [
+        "path",
+        "gate",
+        "capability"
+      ],
+      "properties": {
+        "path": {
+          "description": "Repository-relative directory reserved for a later Gate.",
+          "type": "string",
+          "pattern": "^[A-Za-z0-9._-]+(/[A-Za-z0-9._-]+)*$"
+        },
+        "gate": {
+          "description": "The Gate that owns the capability, named as the published plan names it.",
+          "type": "string",
+          "minLength": 1
+        },
+        "capability": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "properties": {
+    "schemaVersion": {
+      "enum": [
+        "1.0.0"
+      ]
+    },
+    "policy": {
+      "type": "string",
+      "minLength": 1
+    },
+    "reservations": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/reservation"
+      }
+    }
+  },
+  "additionalProperties": false
+}

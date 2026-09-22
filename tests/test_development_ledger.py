@@ -139,7 +139,8 @@ CANONICAL_AGENT_NAMES = {
 
 
 def run(command: list[str], cwd: Path) -> subprocess.CompletedProcess[str]:
-    return subprocess.run(command, cwd=cwd, text=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, check=False)
+    return subprocess.run(command, cwd=cwd, text=True, encoding="utf-8", errors="replace",
+                          stdout=subprocess.PIPE, stderr=subprocess.STDOUT, check=False)
 
 
 FINAL_REPORT_FIXTURE = "\n".join(
@@ -246,12 +247,23 @@ def copy_ledger_tooling(root: Path) -> None:
 
     The ignore rules come with it: without them a fixture's own bytecode cache looks like an
     undeclared change, which would make the fixture fail for the fixture's reasons.
+
+    The canonical policies are then restricted to what this fixture actually contains. A fixture
+    inherits the real repository's policies and almost none of its content, and two of those
+    policies name things by path: the Gate specifications and the commands of the mandatory gates.
+    Copying the names without the files makes the fixture fail for its own reasons, which is what
+    happened when GATE 0 added four gates whose commands live outside `scripts/development-ledger`.
     """
     shutil.copytree(SCRIPTS, root / "scripts" / "development-ledger",
                     ignore=shutil.ignore_patterns("__pycache__"))
     for name in (".gitignore", ".gitattributes"):
         if (PROJECT_ROOT / name).is_file():
             shutil.copy2(PROJECT_ROOT / name, root / name)
+    if (root / ".iacode" / "policies").is_dir():
+        sys.path.insert(0, str(SCRIPTS))
+        from promotion_fixture import restrict_policies_to_available_content
+
+        restrict_policies_to_available_content(root)
 
 
 def read_json(path: Path) -> dict:

@@ -35,10 +35,14 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 | `LSN-0025` | `GUARDED` | CRITICAL | testing | A generic guardrail derives repository state instead of naming today's checkpoint | `anchors.pending_anchor_exclusion`, `SuccessorDurabilityTests.test_the_pending_exclusion_moves_with_the_chain`, `IntegrityAnchorTests.test_the_pending_exclusion_is_the_newest_sealed_checkpoint` |
 | `LSN-0026` | `GUARDED` | HIGH | testing | An adversarial battery without a null-mutation control proves nothing | `.iacode/schemas/red-team-report.schema.json`, `validate_checkpoint._validate_internal_assurance`, `InternalAssuranceTests.test_a_report_without_a_null_mutation_control_is_rejected` |
 | `LSN-0027` | `GUARDED` | MEDIUM | documentation | A lesson's prose may record a residual limit but may never contradict its status | `lessons.validate_lessons`, `MemoryPolicyDocumentTests.test_a_guarded_lesson_may_not_describe_itself_as_unguarded` |
-| `LSN-0028` | `GUARDED` | MEDIUM | tooling | A configuration key that no code reads is a defect, not documentation | `.iacode/schemas/memory-policy.schema.json`, `lessons.validate_memory_policy_document`, `MemoryPolicyDocumentTests.test_a_setting_no_code_reads_cannot_be_declared` |
+| `LSN-0028` | `GUARDED` | HIGH | tooling | A configuration key that no code reads is a defect, not documentation | `.iacode/schemas/memory-policy.schema.json`, `lessons.validate_memory_policy_document`, `MemoryPolicyDocumentTests.test_a_setting_no_code_reads_cannot_be_declared`, `test_every_declared_key_is_read_somewhere` |
 | `LSN-0029` | `GUARDED` | CRITICAL | process | A required protocol transition must never turn a mandatory gate red | `scripts/development-ledger/successor_durability.py`, `SuccessorDurabilityTests.test_every_state_of_the_chain_verifies`, `scripts/development-ledger/gate_transition_simulation.py` |
 | `LSN-0030` | `CONFIRMED` | LOW | process | The lesson preflight presumes an implementing delivery and constrains an audit run badly | _not yet guarded_ |
 | `LSN-0031` | `GUARDED` | CRITICAL | quality | An empty applicable set is not a missing required set, and a control must tell them apart | `scripts/development-ledger/mirror_semantics_validation.py`, `MirrorApplicabilitySemanticsTests.test_an_empty_applicable_set_is_not_applicable_and_the_mirror_passes`, `MirrorApplicabilityValidationTests.test_a_registry_bound_dimension_cannot_be_declared_inapplicable`, `validate_checkpoint._validate_mirror_applicability` |
+| `LSN-0032` | `GUARDED` | HIGH | quality | A control written while one Gate was the only Gate stops being a control when the next one starts | `test_expected_set_names_the_gate_specification`, `test_assurance_scope_covers_the_runtime_source`, `test_declared_suites_are_discovered`, `.iacode/policies/gate-scope.json`, `scripts/development-ledger/gate_transition_simulation.py` |
+| `LSN-0033` | `GUARDED` | MEDIUM | implementation | A value bound in middleware is absent in the handlers that run outside it | `test_internal_error_still_carries_a_correlation_identifier`, `test_a_missing_route_uses_the_error_contract` |
+| `LSN-0034` | `GUARDED` | MEDIUM | implementation | Re-deriving what the framework already computed diverges from the framework | `test_metrics_endpoint_exposes_request_metrics`, `test_metrics_label_routes_by_template_not_by_url`, `test_the_api_instruments_reach_prometheus` |
+| `LSN-0035` | `GUARDED` | HIGH | tooling | Captured subprocess output decoded or re-emitted with the platform codepage crashes the tool, not the work | `test_no_capture_relies_on_the_platform_codepage`, `test_every_tool_that_re_emits_captured_output_configures_its_own_stream`, `test_the_rule_detects_a_capture_that_would_fail` |
 
 ## Detail
 
@@ -394,16 +398,17 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 
 ### LSN-0028 — A configuration key that no code reads is a defect, not documentation
 
-- Status: `GUARDED`, severity MEDIUM, category tooling, recurrences 0.
+- Status: `GUARDED`, severity HIGH, category tooling, recurrences 1.
 - Source: SETUP-00, SETUP-00-CP-0009, finding CP9-F-005.
 - Symptom: The memory policy declared a relocatable guardrail registry path while the implementation resolved a fixed constant, so re-pointing the documented key changed nothing.
 - Root cause: The policy document was never validated against a schema, so a key could be added without any consumer and without any check noticing.
-- Resolution: The unread key was removed, the fixed path is documented and resolved by one function, and the policy document is validated against a closed schema that refuses an unknown key.
+- Resolution: The unread key was removed, the fixed path is documented and resolved by one function, and the policy document is validated against a closed schema that refuses an unknown key. GATE-0 generalised it: the same class recurred in the application configuration and in an operational helper, so the check now reads the declaring module against the code that must consume it rather than relying on a schema over one document.
 - Prevention:
   - `schema` .iacode/schemas/memory-policy.schema.json — The memory policy schema is closed to keys no code reads.
   - `invariant` lessons.validate_memory_policy_document — The declared policy is validated like every other governing document.
   - `test` MemoryPolicyDocumentTests.test_a_setting_no_code_reads_cannot_be_declared — Declaring an unread setting is a validation error.
-- Evidence: `file:docs/checkpoints/SETUP-00-CP-0009/REVIEW-REPORT.md`, `file:.iacode/memory/POLICY.json`, `file:.iacode/schemas/memory-policy.schema.json`
+  - `test` test_every_declared_key_is_read_somewhere — The API's declared settings are compared against the application source, so a field nothing consumes fails instead of surviving as documentation.
+- Evidence: `file:docs/checkpoints/SETUP-00-CP-0009/REVIEW-REPORT.md`, `file:.iacode/memory/POLICY.json`, `file:.iacode/schemas/memory-policy.schema.json`, `file:apps/api/tests/unit/test_configuration.py`
 
 ### LSN-0029 — A required protocol transition must never turn a mandatory gate red
 
@@ -442,3 +447,56 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
   - `test` MirrorApplicabilityValidationTests.test_a_registry_bound_dimension_cannot_be_declared_inapplicable — A dimension the canonical sources make applicable cannot be declared inapplicable.
   - `invariant` validate_checkpoint._validate_mirror_applicability — Checkpoint validation re-derives the applicable set instead of believing the report.
 - Evidence: `file:docs/checkpoints/SETUP-00-CP-0011/REVIEW-REPORT.md`, `file:scripts/development-ledger/m0_mirror_audit.py`, `file:scripts/development-ledger/mirror_semantics_validation.py`
+
+### LSN-0032 — A control written while one Gate was the only Gate stops being a control when the next one starts
+
+- Status: `GUARDED`, severity HIGH, category quality, recurrences 0.
+- Source: GATE-0, GATE-0-CP-0001, finding G0-F-001.
+- Symptom: Four control-plane controls refused the first delivery of GATE 0 for reasons that were correct under SETUP-00 and meaningless afterwards: the expected requirement set cited one Gate's checklist by literal, the delivery-assurance scope did not cover the runtime, the TESTS denominator counted one suite, and the internal mirror audit asserted that no Gate 0 runtime existed while Gate 0's job was to create it.
+- Root cause: Each control encoded the current Gate's content instead of deriving it. A literal that is true for exactly one Gate looks like a strong control while that Gate runs and becomes a blocker or a blind spot the moment the next one begins.
+- Resolution: Each control now derives what it judges from a canonical source: the specification path from the Gate registry, the assurance scope from declared prefixes covering the product, the test denominator from a declared suite registry, and the scope check from a reservation registry naming the Gate that owns each path. The replacements apply to every Gate, including the one that wrote them.
+- Prevention:
+  - `test` test_expected_set_names_the_gate_specification — A derived requirement cites the document it was derived from.
+  - `test` test_assurance_scope_covers_the_runtime_source — A gate result goes stale when the product changes, not only the tooling.
+  - `test` test_declared_suites_are_discovered — The TESTS denominator includes every declared suite.
+  - `policy` .iacode/policies/gate-scope.json — Scope is judged against a registry of reservations and the Gate that owns each one, never against a directory name written into a tool.
+  - `automated-check` scripts/development-ledger/gate_transition_simulation.py — The transition into the next Gate is executed in a disposable repository before handoff, which is what surfaced the first of the four.
+- Evidence: `file:docs/checkpoints/GATE-0-CP-0001/DECISIONS.md`, `file:.iacode/policies/gate-scope.json`, `file:tests/test_gate0_foundation.py`
+
+### LSN-0033 — A value bound in middleware is absent in the handlers that run outside it
+
+- Status: `GUARDED`, severity MEDIUM, category implementation, recurrences 0.
+- Source: GATE-0, GATE-0-CP-0001, finding G0-F-002.
+- Symptom: Error responses told the caller to quote a correlation identifier and carried none. The identifier was bound to a context variable inside the correlation middleware, and the unhandled-exception handler runs in the framework's outermost error middleware, outside the task that binding belonged to.
+- Root cause: Context-local state is scoped to the execution it was set in. A handler installed above the middleware in the stack is a different execution, so the value is simply not there — and the failure is silent, because an absent identifier reads as 'not generated yet' rather than as a bug.
+- Resolution: The error contract reads the identifier from the request state, which lives on the shared scope and therefore crosses that boundary, and falls back to the context variable. It also sets the response header itself, because a response produced outside the middleware never passes back through it.
+- Prevention:
+  - `test` test_internal_error_still_carries_a_correlation_identifier — An unhandled exception returns a body and a header carrying the identifier.
+  - `test` test_a_missing_route_uses_the_error_contract — A response produced by the framework follows the same contract.
+- Evidence: `file:apps/api/src/iacode_api/errors.py`, `file:apps/api/tests/unit/test_errors_and_correlation.py`
+
+### LSN-0034 — Re-deriving what the framework already computed diverges from the framework
+
+- Status: `GUARDED`, severity MEDIUM, category implementation, recurrences 0.
+- Source: GATE-0, GATE-0-CP-0001, finding G0-F-003.
+- Symptom: Every HTTP metric was labelled with the unmatched-path bucket. The middleware resolved the route template by re-matching the request against the application's top-level route list, and the framework wraps an included router in a single object, so that list does not contain the routes the routers own.
+- Root cause: The middleware reimplemented routing instead of reading the result of it. A reimplementation agrees with the original until the original changes shape, and the disagreement is invisible: the endpoint kept answering and the dashboard kept rendering, with one time series for everything.
+- Resolution: The template is read from the request scope after the request has been handled, where the router records the route it actually matched. Anything genuinely unmatched still collapses into one bucket, because an unmatched path is caller-controlled.
+- Prevention:
+  - `test` test_metrics_endpoint_exposes_request_metrics — A handled request is labelled with its route template.
+  - `test` test_metrics_label_routes_by_template_not_by_url — Unmatched paths collapse into one series, so cardinality stays bounded.
+  - `test` test_the_api_instruments_reach_prometheus — The series the dashboard depends on are queryable in Prometheus.
+- Evidence: `file:apps/api/src/iacode_api/observability/metrics.py`, `file:apps/api/tests/unit/test_observability.py`
+
+### LSN-0035 — Captured subprocess output decoded or re-emitted with the platform codepage crashes the tool, not the work
+
+- Status: `GUARDED`, severity HIGH, category tooling, recurrences 0.
+- Source: GATE-0, GATE-0-CP-0001, finding G0-F-004.
+- Symptom: The Green Keeper aborted with UnicodeDecodeError: 'charmap' codec can't decode byte 0x9d while reading the output of a gate that was green. After the read was repaired, the command recorder aborted with UnicodeEncodeError: 'charmap' codec can't encode character '�' while printing what it had just captured -- after an eighteen-minute verification had already passed.
+- Root cause: Both ends inherit the machine's codepage. subprocess.run(..., text=True) with no encoding decodes with locale.getencoding(), and sys.stdout encodes with it as well; on Windows that is cp1252, while every tool here writes UTF-8. The failure is intermittent because it depends on which character the measured process happened to print, and it lands after the work succeeded, so it destroys a result rather than reporting one.
+- Resolution: Eleven captures now state encoding="utf-8" with errors="replace", and every entry point that re-emits what it captured configures its own streams the same way -- directly through ledger_common.use_utf8_stdout, or through compose.main_guard, which every operational script goes through. Both directions are stated rather than inherited.
+- Prevention:
+  - `test` test_no_capture_relies_on_the_platform_codepage — Every subprocess capture in the tree is parsed and must state its encoding.
+  - `test` test_every_tool_that_re_emits_captured_output_configures_its_own_stream — Every entry point that captures also configures the stream it writes to.
+  - `test` test_the_rule_detects_a_capture_that_would_fail — The rule is exercised against a call it must reject.
+- Evidence: `file:tests/test_gate0_foundation.py`, `file:scripts/development-ledger/ledger_common.py`, `file:scripts/iacode/compose.py`

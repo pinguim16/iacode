@@ -1739,7 +1739,23 @@ def validate_checkpoint(
         except LedgerError as exc:
             errors.append(str(exc))
 
-    for path in root.rglob("*"):
+    # The scan covers what the repository *carries*: every tracked file and every untracked file
+    # Git would include. An ignored file is not part of the repository and cannot reach the
+    # Engineering Ledger, which is what `.iacode/policies/secret-policy.md` protects — and GATE 0
+    # makes the distinction load-bearing, because its own bootstrap creates `infra/compose/.env`
+    # with real local credentials. Walking the working tree refused the repository for containing
+    # the file the runbook tells an operator to create.
+    #
+    # The residual limit is stated rather than hidden: a credential in a file somebody chose to
+    # ignore is out of scope here. It is also out of the commit, and a change to `.gitignore` that
+    # made it so is visible in the diff.
+    code, listing = run_git(root, "ls-files", "--cached", "--others", "--exclude-standard")
+    if code != 0:
+        errors.append("the repository file list could not be enumerated for the secret scan")
+        listing = ""
+    scanned = sorted({line.strip() for line in listing.splitlines() if line.strip()})
+    for relative in scanned:
+        path = root / relative
         if path.is_file() and ".git" not in path.parts and "__pycache__" not in path.parts:
             try:
                 text = path.read_text(encoding="utf-8")

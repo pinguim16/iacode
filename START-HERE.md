@@ -2,15 +2,22 @@
 
 IACode is a planned private, autonomous, general-purpose software engineering platform. The repository is self-contained context and is the only source of truth.
 
-- Phase: `SETUP-00 — Development Control Plane`.
-- Current Gate: `SETUP-00`.
+- Phase: `M1 — IACode V0 foundation`.
+- Current Gate: `GATE 0 — FOUNDATION`.
+- Previous Gate: `SETUP-00`, closed; `M0` passed its independent audit.
 - Latest checkpoint: follow [docs/checkpoints/LATEST.md](docs/checkpoints/LATEST.md).
-- Gate 0 is not implemented and may not begin until SETUP-00 is `GATE_PASS`.
+- Gate 1 is not implemented and may not begin until Gate 0 closes and Gate 1 is authorized.
+
+The Gate 0 runtime runs locally. To start it, read [docs/runbooks/FOUNDATION.md](docs/runbooks/FOUNDATION.md);
+to work on it, read [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md). Neither replaces the start protocol
+below for anyone about to change the repository.
 
 ## Required start protocol
 
 1. Read [docs/DEVELOPMENT-CONTRACT.md](docs/DEVELOPMENT-CONTRACT.md).
-2. Read [docs/MASTER-PLAN.md](docs/MASTER-PLAN.md) and, for this Gate, [docs/SETUP-00-CHECKLIST.md](docs/SETUP-00-CHECKLIST.md).
+2. Read [docs/MASTER-PLAN.md](docs/MASTER-PLAN.md) and the canonical specification of the current
+   Gate: [docs/GATE-0-CHECKLIST.md](docs/GATE-0-CHECKLIST.md) now,
+   [docs/SETUP-00-CHECKLIST.md](docs/SETUP-00-CHECKLIST.md) for the Gate before it.
 3. Read [docs/checkpoints/LATEST.md](docs/checkpoints/LATEST.md) and every file in the checkpoint it names.
 4. Run `python scripts/development-ledger/validate_checkpoint.py`.
 5. Run `git status --short --branch`, `git branch --show-current`, and `git rev-parse HEAD`.

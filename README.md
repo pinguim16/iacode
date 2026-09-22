@@ -1,21 +1,62 @@
 # IACode
 
-IACode is a planned private, autonomous, general-purpose, self-improving software engineering platform. This repository currently contains only the development control plane established by **SETUP-00**; it does not contain the Gate 0 runtime.
+IACode is a planned private, autonomous, general-purpose, self-improving software engineering
+platform. This repository contains the development control plane established by **SETUP-00** and the
+runtime foundation delivered by **GATE 0 — FOUNDATION**.
 
-Begin with [START-HERE.md](START-HERE.md). The repository is the source of truth; chat history is not.
+Begin with [START-HERE.md](START-HERE.md). The repository is the source of truth; chat history is
+not.
 
 ## Current boundary
 
-- Current phase: `SETUP-00 — Development Control Plane`.
-- Current Gate: `SETUP-00`.
-- Runtime Gates: not started.
+- Current Gate: `GATE 0 — FOUNDATION`, milestone `M1`.
+- What runs: an API, a Temporal worker, a web shell, PostgreSQL, Redis, MinIO, Temporal, Prometheus
+  and Grafana, locally on Docker Compose.
+- What does not: the model gateway, the agent runtime, the sandbox, retrieval and training. Those
+  belong to later Gates; the directories reserved for them say so and contain nothing else.
 - Canonical agent definitions: `.iacode/agents/`.
-- Latest reconstructible state: `docs/checkpoints/LATEST.md`.
+- Latest reconstructible state: [docs/checkpoints/LATEST.md](docs/checkpoints/LATEST.md).
 
-## Quick validation
+## Running it
 
-```text
-python scripts/development-ledger/validate_checkpoint.py
-python -m unittest discover -s tests -v
+You need Docker with Compose v2, Python 3.12 or newer, and Git. Nothing else: every service and
+every build runs in a container.
+
+```bash
+python scripts/iacode/bootstrap_env.py
+python scripts/iacode/stack.py up --build
+python scripts/iacode/smoke.py
 ```
 
+Then the API is at <http://localhost:18080> and the Foundation page at <http://localhost:18081>.
+Every port is configurable and bound to loopback; the defaults and the rest of the operator's
+commands are in [docs/runbooks/FOUNDATION.md](docs/runbooks/FOUNDATION.md).
+
+## Verifying it
+
+```bash
+python scripts/iacode/verify.py --fast   # everything that does not restart the stack
+python scripts/iacode/verify.py          # everything, including a fresh installation
+```
+
+On Windows, `.\verify.ps1` does the same. The full run ends by deleting every volume and rebuilding
+from nothing, because that is the claim this Gate makes.
+
+## Reading it
+
+| Question | Document |
+|---|---|
+| How do I work on this? | [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md) |
+| How do I operate the stack? | [docs/runbooks/FOUNDATION.md](docs/runbooks/FOUNDATION.md) |
+| How do I back it up and restore it? | [docs/runbooks/BACKUP-RESTORE.md](docs/runbooks/BACKUP-RESTORE.md) |
+| What is the shape of the system? | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) |
+| What version is everything on? | [docs/VERSIONS.md](docs/VERSIONS.md) |
+| What comes next, and when? | [docs/MASTER-PLAN.md](docs/MASTER-PLAN.md) |
+| Why is it built this way? | [docs/adr/](docs/adr/) |
+
+## Validating the ledger
+
+```bash
+python scripts/development-ledger/validate_checkpoint.py
+python -m unittest discover -s tests
+```

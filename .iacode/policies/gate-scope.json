@@ -1,0 +1,66 @@
+{
+  "schemaVersion": "1.0.0",
+  "policy": "Scope control is derived from this registry, not from a directory name written into a tool. A path reserved here belongs to the Gate named beside it: until that Gate runs, the path may hold its README and nothing else, and the README must declare the reservation. A delivery that implements a later Gate's capability therefore fails a control rather than depending on a reviewer noticing. Adding or removing a reservation is a policy change and is visible in the diff, exactly like the mandatory gate set and the canonical requirement set.",
+  "reservations": [
+    {
+      "path": "apps/cli",
+      "gate": "GATE 5",
+      "capability": "The command line entry point to the governed workflows."
+    },
+    {
+      "path": "apps/vscode-extension",
+      "gate": "GATE 5",
+      "capability": "The VS Code integration and its secure IPC."
+    },
+    {
+      "path": "services/model-gateway",
+      "gate": "GATE 1",
+      "capability": "Provider-neutral model invocation, routing and the provider error model."
+    },
+    {
+      "path": "services/sandbox",
+      "gate": "GATE 3",
+      "capability": "Policy-isolated execution of tools and generated code."
+    },
+    {
+      "path": "services/evaluator",
+      "gate": "GATE 4",
+      "capability": "The quality engine, its runners and its evidence store."
+    },
+    {
+      "path": "services/experience",
+      "gate": "GATE 6",
+      "capability": "The experience store API and its retention and rights controls."
+    },
+    {
+      "path": "services/knowledge",
+      "gate": "GATE 7",
+      "capability": "Knowledge ingestion, indexing, retrieval and citation."
+    },
+    {
+      "path": "services/training",
+      "gate": "GATE 18",
+      "capability": "Supervised adaptation and the training pipeline."
+    },
+    {
+      "path": "agents",
+      "gate": "GATE 2",
+      "capability": "Runtime agent definitions loaded by the agent runtime."
+    },
+    {
+      "path": "training",
+      "gate": "GATE 18",
+      "capability": "Training configurations, checkpoints and run artifacts."
+    },
+    {
+      "path": "evaluation",
+      "gate": "GATE 20",
+      "capability": "Held-out evaluation suites, the harness and the scoring assets."
+    },
+    {
+      "path": "datasets",
+      "gate": "GATE 16",
+      "capability": "Versioned, filtered and auditable training datasets."
+    }
+  ]
+}
