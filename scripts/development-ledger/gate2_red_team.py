@@ -230,32 +230,46 @@ def build_host_attacks(root: Path, rebuild_gate: bool) -> list[Attack]:
     attacks: list[Attack] = []
 
     def a_sandbox_is_implemented_early() -> tuple[bool, str]:
-        """Plant an executor in the directory Gate 3 owns and run the real scope control.
+        """Plant an executor in a reservation still in force and run the real scope control.
 
         This Gate's most tempting mistake is to start the sandbox because the tool request is
         sitting there. The control that stops it is the scope registry, and the way to know it
         works is to break the rule and watch it refuse.
+
+        The executor is planted in a disposable copy of the scope policy, never in the working
+        tree, and in whichever reservation the delivered Gate is still bound by. The first
+        version wrote into `services/sandbox` and deleted what it wrote, which stopped being an
+        attack and started being a deletion the moment GATE 3 filled that directory.
         """
-        planted = root / "services" / "sandbox" / "executor.py"
-        planted.write_text(
-            '"""Planted by the GATE 2 Red Team. Deleted by the same attack."""\n\n\n'
-            "def execute(command: str) -> int:\n"
-            "    raise NotImplementedError\n",
-            encoding="utf-8", newline="\n")
-        try:
-            violations = policies.scope_violations(root, delivered_gate(root))
-        finally:
-            planted.unlink(missing_ok=True)
-        named = [item for item in violations if "services/sandbox" in item]
+        import shutil
+        import tempfile
+
+        gate = delivered_gate(root)
+        with tempfile.TemporaryDirectory(prefix="iacode-g2t-") as workdir:
+            fixture = Path(workdir)
+            shutil.copytree(root / ".iacode" / "policies", fixture / ".iacode" / "policies")
+            in_force = policies.reservations_in_force(fixture, gate)
+            if not in_force:
+                return False, "no reservation is in force, so the scope control guards nothing"
+            reserved = str(in_force[0]["path"])
+            planted = fixture / reserved
+            planted.mkdir(parents=True)
+            (planted / "executor.py").write_text(
+                '"""Planted by the GATE 2 Red Team in a disposable copy."""\n\n\n'
+                "def execute(command: str) -> int:\n"
+                "    raise NotImplementedError\n",
+                encoding="utf-8", newline="\n")
+            violations = policies.scope_violations(fixture, gate)
+        named = [item for item in violations if reserved in item]
         if not named:
-            return False, ("the scope control accepted an executor in the directory Gate 3 owns: "
+            return False, (f"the scope control accepted an executor in {reserved}: "
                            + ("; ".join(violations) or "no violation at all"))
         return True, "the scope control refused it: " + named[0][:180]
 
     attacks.append(Attack(
         "G2-T", "gate scope",
         "The sandbox is started early, because the tool request is already there.",
-        "plant an executor in services/sandbox and run the real scope control",
+        "plant an executor in a reservation still in force, in a disposable copy, and run the real scope control",
         "the control refuses the delivery, naming the reserved path",
         a_sandbox_is_implemented_early,
         evidence=("file:.iacode/policies/gate-scope.json",

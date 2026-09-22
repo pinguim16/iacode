@@ -232,25 +232,57 @@ class Gate2ScopeTests(unittest.TestCase):
         self.assertGreaterEqual(len(list((AGENTS / "teams").glob("*.json"))), 2)
 
     def test_every_later_gate_reservation_is_still_empty(self) -> None:
-        self.assertEqual(policies.scope_violations(PROJECT_ROOT, self.current()), [])
+        """Consumed are exactly the reservations of the Gates delivered so far.
 
-        in_force = {item["path"]
-                    for item in policies.reservations_in_force(PROJECT_ROOT, self.current())}
+        The consumed set is derived from the published Gate order rather than listed. The first
+        version named the three directories Gates 1 and 2 had filled, and failed GATE 3 for
+        consuming the one it owns — `LSN-0037`'s class wearing a set of paths.
+        """
+        current = self.current()
+        self.assertEqual(policies.scope_violations(PROJECT_ROOT, current), [])
+
+        in_force = {item["path"] for item in policies.reservations_in_force(PROJECT_ROOT, current)}
         self.assertTrue(in_force, "no later Gate's reservation is in force, which cannot be right")
-        later = {item["path"] for item in policies.load_gate_scope(PROJECT_ROOT)} - in_force
-        self.assertTrue(
-            later <= {"agents", "services/model-gateway", "services/agent-runtime"},
-            f"a reservation was consumed by a Gate that has not been delivered: {sorted(later)}")
+        order = policies.gate_order()
+        position = order.index(ledger_common.normalize_gate(current))
+        for reservation in policies.load_gate_scope(PROJECT_ROOT):
+            path = str(reservation["path"])
+            owner = order.index(ledger_common.normalize_gate(str(reservation["gate"])))
+            with self.subTest(path=path):
+                if owner <= position:
+                    self.assertNotIn(path, in_force)
+                else:
+                    self.assertIn(path, in_force,
+                                  "a reservation was consumed by a Gate that has not run")
 
-    def test_the_scope_control_would_refuse_an_early_sandbox(self) -> None:
-        """The null control: the check fires when the rule is broken."""
-        planted = PROJECT_ROOT / "services" / "sandbox" / "executor.py"
-        planted.write_text("# planted by a control-plane test\n", encoding="utf-8", newline="\n")
-        try:
-            violations = policies.scope_violations(PROJECT_ROOT, self.current())
-        finally:
-            planted.unlink(missing_ok=True)
-        self.assertTrue(any("services/sandbox" in item for item in violations))
+    def test_the_scope_control_would_refuse_an_early_implementation(self) -> None:
+        """The null control: the check fires when the rule is broken.
+
+        The implementation is planted in a disposable copy of the scope policy, in whichever
+        reservation is still in force, and never in the working tree: the first version wrote
+        into `services/sandbox` and deleted what it wrote, which from GATE 3 onwards would have
+        deleted the sandbox itself.
+        """
+        import shutil
+        import tempfile
+
+        current = self.current()
+        with tempfile.TemporaryDirectory(prefix="iacode-scope-") as workdir:
+            root = Path(workdir)
+            shutil.copytree(PROJECT_ROOT / ".iacode" / "policies",
+                            root / ".iacode" / "policies")
+            reservation = policies.reservations_in_force(root, current)[0]
+            planted = root / str(reservation["path"])
+            planted.mkdir(parents=True)
+            (planted / "README.md").write_text(
+                f"**{policies.RESERVATION_MARKER}** for {reservation['gate']}\n",
+                encoding="utf-8", newline="\n")
+            (planted / "executor.py").write_text("# planted by a control-plane test\n",
+                                                 encoding="utf-8", newline="\n")
+            self.assertEqual(len(policies.scope_violations(root, current)), 1)
+            (planted / "executor.py").unlink()
+            self.assertEqual(policies.scope_violations(root, current), [],
+                             "the unmutated fixture must pass the same control")
 
 
 class Gate2VerificationStageTests(unittest.TestCase):
