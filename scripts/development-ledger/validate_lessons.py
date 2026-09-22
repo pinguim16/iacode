@@ -25,7 +25,13 @@ def main() -> int:
     args = parser.parse_args()
 
     root = find_root(args.root) if args.root else find_root()
-    errors = validate_lessons(root)
+    # Re-rendering is the repair for a stale index, so it validates everything except the index,
+    # renders it from the canonical source, and then validates everything again, index included.
+    errors = validate_lessons(root, check_index=not args.render_index)
+    if not errors and args.render_index:
+        (memory_root(root) / INDEX_FILE).write_text(render_index(load_lessons(root)),
+                                                    encoding="utf-8", newline="\n")
+        errors = validate_lessons(root)
     if errors:
         print("LESSONS_INVALID")
         for error in errors:
@@ -33,8 +39,6 @@ def main() -> int:
         return 1
 
     lessons = load_lessons(root)
-    if args.render_index:
-        (memory_root(root) / INDEX_FILE).write_text(render_index(lessons), encoding="utf-8", newline="\n")
 
     guarded = sum(1 for lesson in lessons if lesson.get("status") == "GUARDED")
     active = sum(1 for lesson in lessons if lesson.get("status") in ("OBSERVED", "CONFIRMED", "GUARDED"))

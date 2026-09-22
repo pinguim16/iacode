@@ -47,10 +47,16 @@ CONSISTENT_PROSE_MEMORY_POLICY = "2.1.0"
 # function the effectiveness measure also uses.
 RESOLVED_GUARDRAIL_MEMORY_POLICY = "2.2.0"
 
+# 2.3.0 adds the second (`R-G2-010`): the committed `LESSONS.md` is exactly the render of
+# `lessons.jsonl`. The sealed checkpoints of GATE 1 and GATE 2 carry a 2.1.0 memory whose index was
+# stale, and they keep validating from their own tags under the rules they were written for.
+DERIVED_INDEX_MEMORY_POLICY = "2.3.0"
+
 RESOLVING_MEMORY_POLICIES = (RESOLVING_MEMORY_POLICY, CONSISTENT_PROSE_MEMORY_POLICY,
-                             RESOLVED_GUARDRAIL_MEMORY_POLICY)
+                             RESOLVED_GUARDRAIL_MEMORY_POLICY, DERIVED_INDEX_MEMORY_POLICY)
 CONSISTENT_PROSE_MEMORY_POLICIES = RESOLVING_MEMORY_POLICIES[1:]
 RESOLVED_GUARDRAIL_MEMORY_POLICIES = RESOLVING_MEMORY_POLICIES[2:]
+DERIVED_INDEX_MEMORY_POLICIES = RESOLVING_MEMORY_POLICIES[3:]
 
 # The applicability and derivation rules the preflight implements. It is part of the preflight
 # fingerprint, so changing how lessons are selected makes every existing preflight stale.
@@ -684,9 +690,17 @@ def preflight_staleness(root: Path, preflight: Any, gate: str | None = None) -> 
     return errors
 
 
-def validate_lessons(root: Path, lessons: list[dict[str, Any]] | None = None) -> list[str]:
-    """Every rule the memory must satisfy, in one place, used by the CLI and by the tests."""
+def validate_lessons(root: Path, lessons: list[dict[str, Any]] | None = None, *,
+                     check_index: bool = True) -> list[str]:
+    """Every rule the memory must satisfy, in one place, used by the CLI and by the tests.
+
+    ``check_index`` requires the committed ``LESSONS.md`` to be exactly the render of the memory on
+    disk. It applies only to a memory read from disk, because a caller that validates lessons it
+    holds in memory is asking about those lessons and not about the file; the CLI turns it off for
+    the one moment it is about to re-render.
+    """
     errors: list[str] = []
+    from_disk = lessons is None
     try:
         lessons = load_lessons(root) if lessons is None else lessons
     except LedgerError as exc:
@@ -720,6 +734,7 @@ def validate_lessons(root: Path, lessons: list[dict[str, Any]] | None = None) ->
     policy_version = memory_policy_version(root)
     resolving = policy_version in RESOLVING_MEMORY_POLICIES
     resolved_guardrails = policy_version in RESOLVED_GUARDRAIL_MEMORY_POLICIES
+    derived_index = policy_version in DERIVED_INDEX_MEMORY_POLICIES
     # lesson -> guardrailId -> registry entry -> kind/reference -> the control itself. Every entry
     # is resolved, not only the ones a lesson happens to name, by the same function the
     # effectiveness measure uses.
@@ -829,6 +844,18 @@ def validate_lessons(root: Path, lessons: list[dict[str, Any]] | None = None) ->
             message = resolve_lesson_evidence(root, reference)
             if message is not None:
                 errors.append(f"{label}: {message}")
+
+    # The index is derived, so it is recomputed rather than trusted. It went stale for fourteen
+    # lessons and no control noticed, because nothing compared it with its source. `R-G2-010`.
+    if derived_index and from_disk and check_index:
+        index = memory_root(root) / INDEX_FILE
+        if not index.is_file():
+            errors.append(f"{INDEX_FILE} is missing; render it with validate_lessons.py "
+                          f"--render-index")
+        elif index.read_text(encoding="utf-8") != render_index(lessons):
+            errors.append(f"{INDEX_FILE} is stale: it is not the render of lessons.jsonl; "
+                          f"regenerate it with validate_lessons.py --render-index rather than by "
+                          f"hand")
 
     return errors
 

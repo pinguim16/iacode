@@ -270,5 +270,71 @@ class GuardrailRegistryResolutionTests(unittest.TestCase):
         self.assertEqual(callers, {"validate_lessons", "guardrail_effectiveness"})
 
 
+class LessonIndexFreshnessTests(unittest.TestCase):
+    """`R-G2-010`: `LESSONS.md` is derived from `lessons.jsonl`, and a stale render is refused
+    rather than discovered by a reader five lessons later."""
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls._directory = tempfile.TemporaryDirectory(prefix="iacode-index-")
+        cls.root = Path(cls._directory.name) / "clone"
+        memory_fixture(cls.root)
+        cls.memory = cls.root / ".iacode" / "memory"
+        cls.original = (cls.memory / "lessons.jsonl").read_text(encoding="utf-8")
+        cls.original_index = (cls.memory / "LESSONS.md").read_text(encoding="utf-8")
+
+    @classmethod
+    def tearDownClass(cls) -> None:
+        cls._directory.cleanup()
+
+    def tearDown(self) -> None:
+        (self.memory / "lessons.jsonl").write_text(self.original, encoding="utf-8", newline="\n")
+        (self.memory / "LESSONS.md").write_text(self.original_index, encoding="utf-8",
+                                                newline="\n")
+
+    def retitle_first_lesson(self) -> str:
+        lines = self.original.splitlines()
+        first = json.loads(lines[0])
+        first["title"] = first["title"] + " (retitled by a freshness test)"
+        lines[0] = json.dumps(first, ensure_ascii=False)
+        (self.memory / "lessons.jsonl").write_text("\n".join(lines) + "\n", encoding="utf-8",
+                                                    newline="\n")
+        return first["title"]
+
+    def test_the_committed_index_is_the_render_of_the_memory(self) -> None:
+        """The null control, and the repository's own state: the index is current."""
+        import lessons
+
+        rendered = lessons.render_index(lessons.load_lessons(PROJECT_ROOT))
+        committed = (PROJECT_ROOT / ".iacode" / "memory" / "LESSONS.md").read_text(
+            encoding="utf-8")
+        self.assertEqual(committed, rendered)
+        code, output = validate_memory_cli(self.root)
+        self.assertEqual(code, 0, output)
+
+    def test_a_memory_changed_without_rerendering_is_refused(self) -> None:
+        self.retitle_first_lesson()
+        code, output = validate_memory_cli(self.root)
+        self.assertNotEqual(code, 0, output)
+        self.assertIn("LESSONS_INVALID", output)
+        self.assertIn("LESSONS.md", output)
+
+    def test_rerendering_from_the_canonical_source_repairs_it(self) -> None:
+        title = self.retitle_first_lesson()
+        render_code, render_output = validate_memory_cli(self.root, "--render-index")
+        code, output = validate_memory_cli(self.root)
+
+        self.assertEqual(render_code, 0, render_output)
+        self.assertEqual(code, 0, output)
+        self.assertIn(title, (self.memory / "LESSONS.md").read_text(encoding="utf-8"))
+
+    def test_a_hand_edited_index_is_refused(self) -> None:
+        """The index is a render, not a document: editing it by hand is refused too."""
+        (self.memory / "LESSONS.md").write_text(self.original_index + "\nA hand edit.\n",
+                                                encoding="utf-8", newline="\n")
+        code, output = validate_memory_cli(self.root)
+        self.assertNotEqual(code, 0, output)
+
+
 if __name__ == "__main__":
     unittest.main()
