@@ -82,6 +82,9 @@ INVALID_ENVELOPES = (
     ('{"content": "x"}', "no kind at all"),
     ('{"kind": "FINAL"}', "a final answer with no content"),
     ('{"kind": "FINAL", "content": "  "}', "a final answer with blank content"),
+    ('{"kind": "FINAL", "content": ["step one", "step two"]}',
+     "a final answer whose content is an array of steps"),
+    ('{"kind": "MESSAGE", "content": {"plan": "x"}}', "a message whose content is an object"),
     ('{"kind": "TOOL_REQUEST"}', "a tool request with no tool"),
     ('{"kind": "TOOL_REQUEST", "tool": {"arguments": {}}}', "a tool with no name"),
     ('{"kind": "TOOL_REQUEST", "tool": {"name": "x", "arguments": []}}',
@@ -104,6 +107,42 @@ def test_invalid_envelope_is_not_accepted_silently() -> None:
         with pytest.raises(InvalidAgentOutputError) as raised:
             parse_envelope(body)
         assert str(raised.value).strip(), f"the refusal of {because} said nothing"
+
+
+WRONGLY_TYPED_CONTENT = (
+    (["step one", "step two"], "an array"),
+    ({"plan": "x"}, "an object"),
+    (3, "a number"),
+    (True, "a boolean"),
+)
+
+
+def test_content_of_the_wrong_type_is_refused_by_its_real_defect() -> None:
+    """G2-F-009: a planner answered its steps as an array, and the refusal said content was missing.
+
+    The one repair quotes the refusal back, so a reason that misnames the defect spends the repair
+    on the wrong correction and the model returns the same array. The parser stays exactly as
+    strict — an array is still refused — and the sentence now says what is wrong.
+    """
+    for value, named in WRONGLY_TYPED_CONTENT:
+        with pytest.raises(InvalidAgentOutputError) as raised:
+            parse_envelope(json.dumps({"kind": "FINAL", "content": value}))
+        reason = str(raised.value)
+        assert raised.value.details["reason"] == "content-not-a-string", named
+        assert named in reason
+        assert "one JSON string" in reason
+        assert "non-empty" not in reason, f"{named} content was reported as missing"
+
+        instruction = repair_instruction(reason)
+        assert "one JSON string" in instruction
+        for forbidden in ("you should answer", "for example", "try:"):
+            assert forbidden not in instruction.lower()
+
+    for body in ('{"kind": "FINAL"}', '{"kind": "FINAL", "content": "  "}',
+                 '{"kind": "FINAL", "content": null}'):
+        with pytest.raises(InvalidAgentOutputError) as raised:
+            parse_envelope(body)
+        assert raised.value.details["reason"] == "missing-content", body
 
 
 def test_the_schema_describes_exactly_the_parser() -> None:

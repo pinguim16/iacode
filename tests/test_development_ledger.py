@@ -963,6 +963,56 @@ class DetachedHeadValidationTests(DeltaCheckpointFixture):
             self.assertNotEqual(result.returncode, 0)
             self.assertIn("branch mismatch", result.stdout)
 
+    def _seal_with_symbolic_head(self, root: Path, checkpoint: Path) -> None:
+        """Finalize at a status that may keep the symbolic HEAD, commit and tag: G2-F-013's shape."""
+        declare_inventory(root, checkpoint)
+        finalized = run([
+            sys.executable, str(SCRIPTS / "finalize_checkpoint.py"), "--root", str(root),
+            "--status", "IN_PROGRESS",
+        ], root)
+        self.assertEqual(finalized.returncode, 0, finalized.stdout)
+        self.assertEqual(self._read(checkpoint, "STATE.json")["currentCommit"], "HEAD")
+        self._git(root, "add", "-A")
+        self._git(root, "commit", "-m", "test: checkpoint committed with the symbolic HEAD")
+        self._git(root, "tag", "-f", self.TAG)
+
+    def test_a_symbolic_head_validates_from_its_own_canonical_tag(self) -> None:
+        """G2-F-013: GATE-2-CP-0001 was sealed at BLOCKED with currentCommit HEAD and then could
+        not be validated from its own tag at all. The binding is derived from the checkpoint's
+        identity: its canonical tag must be the checked-out commit."""
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            checkpoint = self._build(root)
+            self._seal_with_symbolic_head(root, checkpoint)
+            self._git(root, "checkout", "--detach", f"refs/tags/{self.TAG}")
+            result = self._validate(root)
+            self.assertEqual(result.returncode, 0, result.stdout)
+
+    def test_a_symbolic_head_away_from_its_canonical_tag_is_still_refused(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            checkpoint = self._build(root)
+            self._seal_with_symbolic_head(root, checkpoint)
+            self._git(root, "commit", "--allow-empty", "-m", "test: unrelated later commit")
+            self._git(root, "checkout", "--detach", "HEAD")
+            result = self._validate(root)
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("checkpoint tag does not resolve to the checked-out commit", result.stdout)
+
+    def test_sealing_refuses_a_state_that_does_not_name_its_own_tag(self) -> None:
+        """The recurrence control: a seal is refused before it creates a tag the state never names."""
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            checkpoint = self._build(root)
+            self._seal_with_symbolic_head(root, checkpoint)
+            self._git(root, "tag", "-d", self.TAG)
+            result = run([sys.executable, str(SCRIPTS / "seal_checkpoint.py"), "--root", str(root)],
+                         root)
+            self.assertEqual(result.returncode, 2, result.stdout)
+            self.assertIn("CHECKPOINT_NOT_SEALED", result.stdout)
+            self.assertIn("a sealed checkpoint names its own tag", result.stdout)
+            self.assertEqual(run(["git", "tag", "--list", self.TAG], root).stdout.strip(), "")
+
     def test_finalization_refuses_detached_head(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)

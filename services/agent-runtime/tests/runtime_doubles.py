@@ -168,6 +168,8 @@ class RecordingEffects:
     cancel_after_events: int | None = None
     tool_wait_returns_none: bool = False
     waits: list[tuple[str, int]] = field(default_factory=list)
+    #: The event types the log held at each state change: which of the two a reader sees first.
+    log_at_state: list[tuple[str, tuple[str, ...]]] = field(default_factory=list)
     _identifiers: int = 0
     _sequence: int = 0
 
@@ -188,6 +190,7 @@ class RecordingEffects:
             self.cancel = True
 
     async def set_state(self, state: str, **fields: Any) -> None:
+        self.log_at_state.append((state, tuple(self.event_types())))
         if state != self.state:
             assert_transition(self.state, state)
             self.state = state

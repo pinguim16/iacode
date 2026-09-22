@@ -1,0 +1,27 @@
+{
+  "schemaVersion": "3.2.0",
+  "unit": {
+    "executed": true,
+    "passed": 578,
+    "failed": 0,
+    "command": "python -m unittest discover -s tests",
+    "evidence": "command:cmd-0056",
+    "runId": "ledger-suite"
+  },
+  "integration": {
+    "executed": true,
+    "passed": 606,
+    "failed": 0,
+    "command": "python scripts/iacode/image_tests.py",
+    "evidence": "command:cmd-0013",
+    "runId": "image-suites"
+  },
+  "e2e": {
+    "executed": true,
+    "passed": 48,
+    "failed": 0,
+    "command": "python -m unittest discover -s infra/tests",
+    "evidence": "command:cmd-0014",
+    "runId": "infra-suite"
+  }
+}

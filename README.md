@@ -11,7 +11,7 @@ not.
 
 ## Current boundary
 
-- Current Gate: `GATE 2 — AGENT RUNTIME`, milestone `M1`.
+- Current Gate: `GATE 2 — AGENT RUNTIME`, closed at `INTERNAL_GATE_PASS`, milestone `M1`.
 - What runs: an API, a Temporal worker, a web shell, PostgreSQL, Redis, MinIO, Temporal, Prometheus
   and Grafana, locally on Docker Compose — and the Model Gateway, which discovers a provider's
   models and invokes them behind one provider-neutral contract.

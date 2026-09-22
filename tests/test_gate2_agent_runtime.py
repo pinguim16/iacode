@@ -18,6 +18,7 @@ from __future__ import annotations
 import ast
 import json
 import re
+import subprocess
 import sys
 import unittest
 from pathlib import Path
@@ -1043,6 +1044,29 @@ class DeadlineEnforcementTests(unittest.TestCase):
                 return
         self.fail("the workflow declares no _deadline_exceeded")
 
+    def test_the_workflow_writes_the_terminal_event_before_the_terminal_state(self) -> None:
+        """G2-F-010: a reader between the two commits must find the log closed, not the row."""
+        tree = ast.parse(self.source())
+        checked: list[str] = []
+        for node in ast.walk(tree):
+            if not isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
+                continue
+            if node.name not in ("_deadline_exceeded", "_unrecoverable"):
+                continue
+            calls = {"record_event": [], "set_state": []}
+            for inner in ast.walk(node):
+                if (isinstance(inner, ast.Call) and isinstance(inner.func, ast.Attribute)
+                        and inner.func.attr in calls):
+                    calls[inner.func.attr].append(inner.lineno)
+            with self.subTest(function=node.name):
+                self.assertTrue(calls["record_event"] and calls["set_state"],
+                                f"{node.name} does not write both the event and the state")
+                self.assertLess(max(calls["record_event"]), min(calls["set_state"]),
+                                f"{node.name} makes the terminal state visible before the log "
+                                f"says the run ended")
+            checked.append(node.name)
+        self.assertEqual(sorted(checked), ["_deadline_exceeded", "_unrecoverable"])
+
     def test_the_scenario_asserts_the_run_ended_and_said_so(self) -> None:
         scenario = (PROJECT_ROOT / "scripts" / "iacode" / "scenarios"
                     / "agent_runtime_deadline.py").read_text(encoding="utf-8")
@@ -1050,3 +1074,145 @@ class DeadlineEnforcementTests(unittest.TestCase):
         self.assertIn("RUN_FAILED", scenario,
                       "a run that ends without recording that it ended is the defect this "
                       "scenario exists to catch")
+
+
+PROMETHEUS_READS = ("/api/v1/query", "/api/v1/targets")
+
+
+def unbounded_prometheus_reads(source: str) -> list[str]:
+    """Why a module that reads Prometheus's API does not wait for a scrape, or nothing if it does.
+
+    Read from the syntax tree, never from the text: a module reads Prometheus when a string
+    constant names one of its query endpoints, and it waits when it calls ``time.monotonic`` and
+    ``time.sleep`` and declares a ``*_WAIT_SECONDS`` bound of at least two fifteen-second scrape
+    intervals and at most one minute.
+    """
+    tree = ast.parse(source)
+    reads = any(isinstance(node, ast.Constant) and isinstance(node.value, str)
+                and any(endpoint in node.value for endpoint in PROMETHEUS_READS)
+                for node in ast.walk(tree))
+    if not reads:
+        return []
+    problems: list[str] = []
+    calls = called(source)
+    for needed in ("time.monotonic", "time.sleep"):
+        if needed not in calls:
+            problems.append(f"never calls {needed}")
+    bounds = [node.value.value for node in ast.walk(tree)
+              if isinstance(node, ast.Assign) and len(node.targets) == 1
+              and isinstance(node.targets[0], ast.Name)
+              and node.targets[0].id.endswith("_WAIT_SECONDS")
+              and isinstance(node.value, ast.Constant)
+              and isinstance(node.value.value, (int, float))]
+    if not bounds:
+        problems.append("declares no *_WAIT_SECONDS bound")
+    elif not all(30 <= bound <= 60 for bound in bounds):
+        problems.append(f"waits {bounds}, outside two scrape intervals to one minute")
+    return problems
+
+
+class ObserverCycleTests(unittest.TestCase):
+    """LSN-0049: a check of what Prometheus observes waits for its scrape, within a bound.
+
+    `G2-F-012` was the gateway smoke; `G2-F-014` was the same class in the Foundation smoke, which
+    `GRD-0051` did not reach because it named one function. The control is now the class.
+    """
+
+    def test_every_script_that_reads_prometheus_waits_for_a_scrape(self) -> None:
+        scripts = python_files(PROJECT_ROOT / "scripts")
+        readers = []
+        for path in scripts:
+            source = path.read_text(encoding="utf-8")
+            problems = unbounded_prometheus_reads(source)
+            if any(endpoint in source for endpoint in PROMETHEUS_READS):
+                readers.append(path.name)
+            with self.subTest(script=str(path.relative_to(PROJECT_ROOT))):
+                self.assertEqual(problems, [], f"{path.name} reads Prometheus without waiting")
+        self.assertIn("smoke.py", readers, "the scan found no reader; it would pass on anything")
+        self.assertIn("gateway_smoke.py", readers)
+
+    def test_the_scan_fires_on_a_read_that_does_not_wait(self) -> None:
+        """The null control: the identical scan over a module that reads once and returns."""
+        mutated = (
+            "import urllib.request\n"
+            "def check(base):\n"
+            "    return urllib.request.urlopen(base + '/api/v1/targets?state=active')\n")
+        self.assertTrue(unbounded_prometheus_reads(mutated))
+        waits = mutated.replace("import urllib.request\n", (
+            "import time\nimport urllib.request\nPROBE_WAIT_SECONDS = 45.0\n"
+            "def later():\n    time.monotonic()\n    time.sleep(1)\n"))
+        self.assertEqual(unbounded_prometheus_reads(waits), [])
+
+    def test_the_foundation_smoke_waits_for_both_targets_and_asks_only_prometheus(self) -> None:
+        operational = str(PROJECT_ROOT / "scripts" / "iacode")
+        if operational not in sys.path:
+            sys.path.insert(0, operational)
+        import smoke
+
+        down = {"status": "success", "data": {"activeTargets": [
+            {"labels": {"job": "iacode-api"}, "health": "down"},
+            {"labels": {"job": "iacode-worker"}, "health": "down"}]}}
+        up = {"status": "success", "data": {"activeTargets": [
+            {"labels": {"job": "iacode-api"}, "health": "up"},
+            {"labels": {"job": "iacode-worker"}, "health": "up"}]}}
+        clock = {"now": 0.0}
+        asked: list[str] = []
+
+        def answer(first_up_at):
+            def fake(url, *args, **kwargs):
+                asked.append(url)
+                return 200, (up if len(asked) >= first_up_at else down)
+            return fake
+
+        def fake_sleep(seconds):
+            clock["now"] += seconds
+
+        originals = (smoke.http_json, smoke.time.sleep, smoke.time.monotonic)
+        smoke.time.sleep = fake_sleep
+        smoke.time.monotonic = lambda: clock["now"]
+        try:
+            smoke.http_json = answer(3)
+            late = smoke.check_prometheus("http://prometheus.invalid")
+            asked_late = list(asked)
+            asked.clear()
+            clock["now"] = 0.0
+            smoke.http_json = answer(10_000)
+            never = smoke.check_prometheus("http://prometheus.invalid")
+        finally:
+            smoke.http_json, smoke.time.sleep, smoke.time.monotonic = originals
+
+        self.assertTrue(all(check.ok for check in late), [c.detail for c in late])
+        self.assertEqual(len(asked_late), 3)
+        self.assertFalse(all(check.ok for check in never), "targets that never came up passed")
+        self.assertLessEqual(clock["now"], smoke.TARGET_WAIT_SECONDS + smoke.TARGET_POLL_SECONDS)
+        for url in asked_late + asked:
+            self.assertTrue(url.startswith("http://prometheus.invalid/api/v1/targets"), url)
+
+
+class FreshInstallReportTests(unittest.TestCase):
+    """The fresh-installation scenario names the smoke checks that failed, not only their count."""
+
+    def test_a_failed_smoke_check_is_named_in_the_scenario_report(self) -> None:
+        """GATE-2-CP-0002's verification recorded "17/18 smoke checks" and nothing that explained it."""
+        for relative in ("scripts/iacode", "scripts/iacode/scenarios"):
+            path = str(PROJECT_ROOT / relative)
+            if path not in sys.path:
+                sys.path.insert(0, path)
+        import fresh_install
+
+        payload = {"result": "FAIL", "total": 2, "passed": 1, "checks": [
+            {"name": "api.health", "ok": True, "detail": "status=UP"},
+            {"name": "prometheus.target.iacode-worker", "ok": False, "detail": "unknown"}]}
+        completed = subprocess.CompletedProcess(
+            args=[], returncode=1, stdout="[iacode] smoke\n" + json.dumps(payload))
+        original = fresh_install.subprocess.run
+        fresh_install.subprocess.run = lambda *args, **kwargs: completed
+        try:
+            ok, detail = fresh_install.run_smoke()
+        finally:
+            fresh_install.subprocess.run = original
+
+        self.assertFalse(ok)
+        self.assertIn("1/2 smoke checks", detail)
+        self.assertIn("prometheus.target.iacode-worker: unknown", detail)
+        self.assertNotIn("api.health", detail, "a passing check was reported as failed")

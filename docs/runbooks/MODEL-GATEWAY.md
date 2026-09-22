@@ -39,6 +39,8 @@ mistake fails at load rather than at the first request.
 |---|---|
 | `IACODE_DEVWORLD_BASE_URL` | the provider's API root, the part `/models` and `/chat/completions` are appended to |
 | `IACODE_DEVWORLD_API_KEY` | the credential. Set it only in `infra/compose/.env` |
+| `IACODE_OPENAI_BASE_URL` | the second provider's API root, for example `https://api.openai.com/v1` |
+| `IACODE_OPENAI_API_KEY` | its credential. Set it only in `infra/compose/.env`; left empty, the provider is reported unconfigured and routed around |
 | `IACODE_GATEWAY_DEFAULT_MODEL` | `provider:model`, used when a request names neither a model nor a route |
 | `IACODE_GATEWAY_SMOKE_MODEL` | `provider:model` the live smoke check is authorised to spend on |
 | `IACODE_GATEWAY_CONNECT_TIMEOUT_SECONDS` | connect timeout; there is no unbounded wait anywhere |

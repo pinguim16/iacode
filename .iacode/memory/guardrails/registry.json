@@ -706,6 +706,67 @@
         "LSN-0046"
       ],
       "removingItWouldAllow": "A run to hit its deadline, die silently, and leave a row RUNNING for ever — which reads from outside exactly like a deadline that was never enforced."
+    },
+    {
+      "guardrailId": "GRD-0049",
+      "title": "An envelope refusal names the defect it found, and the contract names the type of content",
+      "kind": "test",
+      "reference": "test_content_of_the_wrong_type_is_refused_by_its_real_defect",
+      "verifiedBy": [
+        "test_content_of_the_wrong_type_is_refused_by_its_real_defect",
+        "test_the_runtime_instructions_state_that_content_is_one_string"
+      ],
+      "lessons": [
+        "LSN-0047"
+      ],
+      "removingItWouldAllow": "A wrong-typed content to be refused as missing again, so the one repair quotes a false reason and a model that answered with an array fails the run with the same array."
+    },
+    {
+      "guardrailId": "GRD-0050",
+      "title": "No terminal run state is visible before the terminal event that explains it",
+      "kind": "test",
+      "reference": "test_a_terminal_state_is_never_visible_before_its_terminal_event",
+      "verifiedBy": [
+        "test_a_terminal_state_is_never_visible_before_its_terminal_event",
+        "test_the_workflow_writes_the_terminal_event_before_the_terminal_state",
+        "test_a_workflow_that_cannot_start_fails_the_run_rather_than_leaving_it_created"
+      ],
+      "lessons": [
+        "LSN-0048"
+      ],
+      "removingItWouldAllow": "A reader that waits for a terminal state to find a log that never says the run ended, and an SSE stream opened on a finished run to close without its terminal event."
+    },
+    {
+      "guardrailId": "GRD-0051",
+      "title": "Every check of what Prometheus observes waits for a scrape, within a bound, and asks only Prometheus",
+      "kind": "test",
+      "reference": "test_every_script_that_reads_prometheus_waits_for_a_scrape",
+      "verifiedBy": [
+        "test_every_script_that_reads_prometheus_waits_for_a_scrape",
+        "test_the_scan_fires_on_a_read_that_does_not_wait",
+        "test_the_foundation_smoke_waits_for_both_targets_and_asks_only_prometheus",
+        "test_the_observability_check_waits_for_a_scrape_and_asks_only_prometheus"
+      ],
+      "lessons": [
+        "LSN-0049"
+      ],
+      "removingItWouldAllow": "A smoke to pass or fail by how long the stack had been running - the gateway smoke on a rebuilt stack, the Foundation smoke on a fresh installation - and a green check to mean only that the timing was lucky."
+    },
+    {
+      "guardrailId": "GRD-0052",
+      "title": "A checkpoint is sealed only when its state names its own tag, and validates from it",
+      "kind": "test",
+      "reference": "test_sealing_refuses_a_state_that_does_not_name_its_own_tag",
+      "verifiedBy": [
+        "test_sealing_refuses_a_state_that_does_not_name_its_own_tag",
+        "test_a_symbolic_head_validates_from_its_own_canonical_tag",
+        "test_a_symbolic_head_away_from_its_canonical_tag_is_still_refused",
+        "test_every_sealed_checkpoint_validates_from_its_own_tag"
+      ],
+      "lessons": [
+        "LSN-0050"
+      ],
+      "removingItWouldAllow": "A checkpoint to be sealed in a state from which it can never be validated, discovered only when a successor anchors it and the historical check turns red for good."
     }
   ]
 }

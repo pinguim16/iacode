@@ -125,6 +125,19 @@ def envelope_schema() -> dict[str, Any]:
     }
 
 
+def _json_type(value: Any) -> str:
+    """The JSON name of a decoded value's type, as a refusal sentence can say it."""
+    if isinstance(value, bool):
+        return "a boolean"
+    if isinstance(value, (int, float)):
+        return "a number"
+    if isinstance(value, list):
+        return "an array"
+    if isinstance(value, dict):
+        return "an object"
+    return "null" if value is None else "a string"
+
+
 def _unwrap(text: str) -> str:
     fenced = FENCED.match(text)
     return fenced.group("body") if fenced else text
@@ -195,6 +208,15 @@ def parse_envelope(text: str) -> AgentEnvelope:
             tool=ToolRequestIntent(name=str(tool["name"]).strip(), arguments=dict(arguments)))
 
     content = payload.get("content")
+    if content is not None and not isinstance(content, str):
+        # A present value of the wrong type is a different defect from an absent one, and the
+        # refusal has to say which: the one repair quotes this sentence back, and "must carry
+        # content" sent to an agent that did carry content — as an array of plan steps — is
+        # answered with the same array again.
+        raise InvalidAgentOutputError(
+            f"'content' must be one JSON string, and it was {_json_type(content)}; an answer with "
+            f"several lines is still one string, with its lines separated by newline characters",
+            details={"reason": "content-not-a-string"})
     if not isinstance(content, str) or not content.strip():
         raise InvalidAgentOutputError(
             f"a {kind} envelope must carry non-empty 'content'",

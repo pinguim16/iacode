@@ -99,6 +99,13 @@ def test_the_runtime_instructions_ask_for_no_reasoning() -> None:
     assert "never how you decided it" in instructions
 
 
+def test_the_runtime_instructions_state_that_content_is_one_string() -> None:
+    """G2-F-009: a contract that never named the type of content was read as permitting an array."""
+    instructions = runtime_instructions()
+    assert '"content" is always one JSON string' in instructions
+    assert "never an array or an object" in instructions
+
+
 def test_a_run_with_no_tool_says_so_rather_than_staying_silent() -> None:
     assert "No tool is available to you" in runtime_instructions()
     with_tools = runtime_instructions(tool_names=("repo.read",))

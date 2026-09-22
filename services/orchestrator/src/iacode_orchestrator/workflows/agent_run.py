@@ -372,12 +372,13 @@ class AgentRunWorkflow:
             f"the run exceeded its deadline of {plan.budget.max_duration_seconds}s",
             details={"limit": "maxDurationSeconds",
                      "value": plan.budget.max_duration_seconds})
-        await effects.set_state(
-            str(RunState.FAILED), error_type=str(error.error_type),
-            error_summary=error.message, budget_used=engine.ledger.to_dict(), finished=True)
+        # The terminal event before the terminal state, as the engine does. G2-F-010.
         await effects.record_event(RunEvent(
             run_id=plan.run_id, type="RUN_FAILED", dedupe_key="run-deadline",
             payload={"errorType": str(error.error_type), "message": error.message}))
+        await effects.set_state(
+            str(RunState.FAILED), error_type=str(error.error_type),
+            error_summary=error.message, budget_used=engine.ledger.to_dict(), finished=True)
         return RunOutcome(state=str(RunState.FAILED), error_type=str(error.error_type),
                           error_summary=error.message,
                           turns=engine.ledger.turns_used,
@@ -385,11 +386,11 @@ class AgentRunWorkflow:
 
     async def _unrecoverable(self, plan: RunPlan, effects: _WorkflowEffects,
                              error: AgentRuntimeError) -> RunOutcome:
-        await effects.set_state(
-            str(RunState.FAILED), error_type=str(error.error_type),
-            error_summary=error.message, finished=True)
         await effects.record_event(RunEvent(
             run_id=plan.run_id, type="RUN_FAILED", dedupe_key="run-unrecoverable",
             payload={"errorType": str(error.error_type), "message": error.message}))
+        await effects.set_state(
+            str(RunState.FAILED), error_type=str(error.error_type),
+            error_summary=error.message, finished=True)
         return RunOutcome(state=str(RunState.FAILED), error_type=str(error.error_type),
                           error_summary=error.message)

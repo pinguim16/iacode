@@ -128,8 +128,16 @@ class _Service:
 class _Store:
     def __init__(self) -> None:
         self.states: list[tuple[str, str]] = []
+        self.events: list[tuple[str, str]] = []
+        #: What the log held at each state change, so a test can see which of the two came first.
+        self.log_at_state: list[tuple[str, tuple[str, ...]]] = []
+
+    async def append_event(self, event):
+        self.events.append((event.run_id, event.type))
+        return event
 
     async def set_run_state(self, run_id: str, state: str, **fields) -> str:
+        self.log_at_state.append((state, tuple(kind for _, kind in self.events)))
         self.states.append((run_id, state))
         return state
 
@@ -250,6 +258,9 @@ def test_a_workflow_that_cannot_start_fails_the_run_rather_than_leaving_it_creat
     assert response.status_code == 503
     assert response.json()["code"] == str(AgentRuntimeErrorType.WORKFLOW_ERROR)
     assert store.states == [(RUN_ID, "FAILED")]
+    # G2-F-010: the run's log ends too, and it ends before the state says so.
+    assert store.events == [(RUN_ID, "RUN_FAILED")]
+    assert store.log_at_state == [("FAILED", ("RUN_FAILED",))]
 
 
 REFUSED_CREATION_PAYLOADS = (

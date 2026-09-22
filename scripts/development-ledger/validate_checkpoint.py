@@ -248,6 +248,7 @@ def _validate_git_binding(
     allow_dirty: bool,
     allow_pending_ref: bool,
     errors: list[str],
+    checkpoint_id: str | None = None,
 ) -> None:
     """R1: bind the checkpoint to a commit, accepting a detached HEAD only at its own tag."""
     expected_commit = state.get("currentCommit")
@@ -270,15 +271,24 @@ def _validate_git_binding(
     # branch identity control, so every remaining anchor is mandatory and no relaxation applies.
     if actual["dirty"] or state.get("dirty") is not False:
         errors.append("detached HEAD validation requires a clean worktree and dirty=false")
-    if not (isinstance(expected_commit, str) and expected_commit.startswith("refs/tags/iacode-checkpoints/")):
+    if isinstance(expected_commit, str) and expected_commit.startswith("refs/tags/iacode-checkpoints/"):
+        tag_ref = expected_commit
+    elif expected_commit == "HEAD" and checkpoint_id:
+        # A checkpoint finalized at a status that may use the symbolic HEAD was sealed with it,
+        # and then could not be validated from its own tag at all (G2-F-013, GATE-2-CP-0001). The
+        # binding is the same one the named tag gives: the checked-out commit must be this
+        # checkpoint's own canonical tag, derived from its identity rather than read from a field
+        # it never carried. A HEAD at any other commit is still refused.
+        tag_ref = f"refs/tags/iacode-checkpoints/{checkpoint_id}"
+    else:
         errors.append("detached HEAD validation requires STATE.json currentCommit to name the checkpoint tag")
         return
-    code, tag_commit = run_git(root, "rev-parse", "--verify", f"{expected_commit}^{{commit}}")
+    code, tag_commit = run_git(root, "rev-parse", "--verify", f"{tag_ref}^{{commit}}")
     if code != 0:
-        errors.append(f"detached HEAD validation requires an existing checkpoint tag: {expected_commit}")
+        errors.append(f"detached HEAD validation requires an existing checkpoint tag: {tag_ref}")
     elif tag_commit != actual["head"]:
         errors.append(
-            f"checkpoint tag does not resolve to the checked-out commit: {expected_commit} -> {tag_commit}, observed {actual['head']}"
+            f"checkpoint tag does not resolve to the checked-out commit: {tag_ref} -> {tag_commit}, observed {actual['head']}"
         )
 
 
@@ -1815,7 +1825,8 @@ def validate_checkpoint(
         try:
             actual = git_snapshot(root)
             observed_dirty = bool(actual["dirty"])
-            _validate_git_binding(root, state, actual, allow_dirty, allow_pending_ref, errors)
+            _validate_git_binding(root, state, actual, allow_dirty, allow_pending_ref, errors,
+                                  checkpoint_id=target.name)
         except LedgerError as exc:
             errors.append(str(exc))
 

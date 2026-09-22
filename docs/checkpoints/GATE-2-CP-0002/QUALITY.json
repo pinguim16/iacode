@@ -1,0 +1,100 @@
+{
+  "schemaVersion": "3.2.0",
+  "checks": {
+    "build": {
+      "status": "PASS",
+      "evidence": [
+        "command:cmd-0061",
+        "command:cmd-0063",
+        "command:cmd-0064"
+      ],
+      "justification": null
+    },
+    "unitTests": {
+      "status": "PASS",
+      "evidence": [
+        "file:TESTS.json",
+        "command:cmd-0056"
+      ],
+      "justification": null
+    },
+    "integrationTests": {
+      "status": "PASS",
+      "evidence": [
+        "file:TESTS.json",
+        "command:cmd-0013"
+      ],
+      "justification": null
+    },
+    "e2e": {
+      "status": "PASS",
+      "evidence": [
+        "file:TESTS.json",
+        "command:cmd-0014"
+      ],
+      "justification": null
+    },
+    "lint": {
+      "status": "PASS",
+      "evidence": [
+        "command:cmd-0065"
+      ],
+      "justification": null
+    },
+    "staticAnalysis": {
+      "status": "PASS",
+      "evidence": [
+        "command:cmd-0057"
+      ],
+      "justification": null
+    },
+    "security": {
+      "status": "PASS",
+      "evidence": [
+        "file:M1-INTERNAL-RED-TEAM.json",
+        "command:cmd-0073"
+      ],
+      "justification": null
+    },
+    "documentation": {
+      "status": "PASS",
+      "evidence": [
+        "file:M1-INTERNAL-MIRROR.json",
+        "file:DIFF-SUMMARY.md",
+        "file:DECISIONS.md",
+        "command:cmd-0071"
+      ],
+      "justification": null
+    },
+    "checkpointValidation": {
+      "status": "PASS",
+      "evidence": [
+        "file:VERIFICATION-REPORT.json",
+        "command:cmd-0060",
+        "command:cmd-0067"
+      ],
+      "justification": null
+    },
+    "redTeam": {
+      "status": "NOT_EXECUTED",
+      "evidence": [],
+      "justification": "The independent Red Team belongs to the M1 milestone audit, which happens after GATE 3. The internal battery this closure re-executed is recorded in M1-INTERNAL-RED-TEAM.json, is 22 of 22 defended with a valid null-mutation control, and is not independent validation."
+    },
+    "greenKeeper": {
+      "status": "PASS",
+      "evidence": [
+        "file:REWORK-LOG.jsonl",
+        "command:cmd-0056"
+      ],
+      "justification": null
+    },
+    "deliveryCompleteness": {
+      "status": "PASS",
+      "evidence": [
+        "file:COMPLETENESS-REPORT.json",
+        "command:cmd-0023"
+      ],
+      "justification": null
+    }
+  }
+}

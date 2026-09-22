@@ -82,8 +82,15 @@ def run_smoke() -> tuple[bool, str]:
             break
     if payload is None:
         return False, completed.stdout.strip()[-400:]
-    return (payload.get("result") == "PASS",
-            f"{payload.get('passed')}/{payload.get('total')} smoke checks")
+    detail = f"{payload.get('passed')}/{payload.get('total')} smoke checks"
+    # A count says that something failed and not what. The verification of GATE-2-CP-0002 recorded
+    # "17/18" after a fresh installation and nothing that could explain it, and the same smoke
+    # passed on the running stack a minute later. Name every failing check and its own detail.
+    failed = [f"{item.get('name')}: {item.get('detail')}"
+              for item in payload.get("checks") or [] if not item.get("ok")]
+    if failed:
+        detail += "; failed " + "; ".join(failed)[:600]
+    return payload.get("result") == "PASS", detail
 
 
 def main() -> int:

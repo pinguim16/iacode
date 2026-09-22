@@ -34,6 +34,7 @@ from collections.abc import AsyncIterator
 from fastapi import APIRouter, FastAPI, Header, Query, Request, status
 from fastapi.responses import JSONResponse, StreamingResponse
 from iacode_agent_runtime.errors import AgentRuntimeError, AgentRuntimeErrorType
+from iacode_agent_runtime.events import RunEvent
 from iacode_agent_runtime.states import RunState, is_terminal
 from iacode_contracts.agent_runtime import (
     AGENT_RUN_WORKFLOW,
@@ -165,7 +166,12 @@ async def create_agent_run(request: Request, payload: CreateAgentRunRequest) -> 
     except Exception as error:
         # The run row exists and the workflow does not. Recording the failure on the run is what
         # keeps the two consistent: a run stuck at CREATED with no explanation is worse than a run
-        # that failed and says why.
+        # that failed and says why. The log says so first and the state second, as the engine
+        # does, so no reader ever finds a FAILED run whose log never ended. G2-F-010.
+        await runtime.store.append_event(RunEvent(
+            run_id=created.runId, type="RUN_FAILED", dedupe_key="run-not-started",
+            payload={"errorType": str(AgentRuntimeErrorType.WORKFLOW_ERROR),
+                     "message": "the durable workflow could not be started"}))
         await runtime.store.set_run_state(
             created.runId, str(RunState.FAILED),
             error_type=str(AgentRuntimeErrorType.WORKFLOW_ERROR),

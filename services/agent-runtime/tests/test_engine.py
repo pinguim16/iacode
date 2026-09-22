@@ -287,6 +287,41 @@ async def test_two_invalid_outputs_fail_the_run() -> None:
     assert effects.event_types()[-1] == "RUN_FAILED"
 
 
+TERMINAL_EVENTS = {
+    str(RunState.SUCCEEDED): "RUN_COMPLETED",
+    str(RunState.FAILED): "RUN_FAILED",
+    str(RunState.CANCELLED): "RUN_CANCELLED",
+}
+
+
+async def test_a_terminal_state_is_never_visible_before_its_terminal_event() -> None:
+    """G2-F-010: the live smoke read a SUCCEEDED run whose log had no RUN_COMPLETED.
+
+    State and event are two commits, so a reader between them sees one without the other. The
+    event is the half that may be seen alone: a reader that waits for a terminal state and then
+    reads the log has to find the log already closed.
+    """
+    succeeded = build(plan_for(stage()), ScriptedModel(script=[envelope("FINAL", "done")]))
+    failed = build(plan_for(stage()), ScriptedModel(script=["nonsense", "still nonsense"]),
+                   budget=Budget(max_turns=4, max_model_calls=4))
+    cancelled_model = ScriptedModel(default=envelope("MESSAGE", "again"))
+    cancelled = build(plan_for(stage()), cancelled_model,
+                      effects=RecordingEffects(model=cancelled_model, cancel=True))
+
+    observed = []
+    for engine, effects in (succeeded, failed, cancelled):
+        outcome = await engine.execute()
+        terminal = [(state, log) for state, log in effects.log_at_state
+                    if state in TERMINAL_EVENTS]
+        assert terminal, f"a {outcome.state} run never recorded a terminal state"
+        for state, log in terminal:
+            assert TERMINAL_EVENTS[state] in log, (
+                f"{state} became visible while the log held only {list(log)}")
+        observed.append(outcome.state)
+
+    assert observed == [str(RunState.SUCCEEDED), str(RunState.FAILED), str(RunState.CANCELLED)]
+
+
 async def test_a_message_turn_continues_the_stage() -> None:
     model = ScriptedModel(script=[
         envelope("MESSAGE", "I need another turn"),

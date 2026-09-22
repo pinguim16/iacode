@@ -165,13 +165,18 @@ class AgentRunEngine:
             final = artifacts.get(
                 self.plan.stages[-1].output_name if self.plan.stages else "", "")
             outcome = self._outcome(str(RunState.SUCCEEDED), result=final)
+            # The terminal event is written before the terminal state, never after. They are two
+            # commits, and whoever reads between them sees one of the two without the other; the
+            # only safe half to see first is the event. A reader that waits for a terminal state
+            # and then reads the log — the live smoke, the SSE stream opened on a finished run —
+            # otherwise finds a SUCCEEDED run whose log never says so. G2-F-010.
+            await self._event("RUN_COMPLETED", "run-completed", payload={
+                "agentsExecuted": outcome.stages_executed, "turns": outcome.turns,
+                "modelCalls": outcome.model_calls})
             await self.effects.set_state(
                 str(RunState.SUCCEEDED), result=final,
                 result_summary=_summarise(final),
                 budget_used=self.ledger.to_dict(), finished=True)
-            await self._event("RUN_COMPLETED", "run-completed", payload={
-                "agentsExecuted": outcome.stages_executed, "turns": outcome.turns,
-                "modelCalls": outcome.model_calls})
             return outcome
 
         except RunCancelledError as cancelled:
@@ -186,11 +191,12 @@ class AgentRunEngine:
     async def _terminate(self, state: str, error: AgentRuntimeError, event: str, key: str,
                          stage_name: str | None) -> RunOutcome:
         outcome = self._outcome(state, error=error, failed_stage=stage_name)
+        # Event first, then state, for the reason the success path gives. G2-F-010.
+        await self._event(event, key, stage=stage_name, payload={
+            "errorType": str(error.error_type), "message": error.message})
         await self.effects.set_state(
             state, error_type=str(error.error_type), error_summary=error.message,
             failed_stage=stage_name, budget_used=self.ledger.to_dict(), finished=True)
-        await self._event(event, key, stage=stage_name, payload={
-            "errorType": str(error.error_type), "message": error.message})
         return outcome
 
     # -- one stage -------------------------------------------------------------------------------

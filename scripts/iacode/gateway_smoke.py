@@ -37,6 +37,7 @@ from __future__ import annotations
 import argparse
 import json
 import sys
+import time
 import urllib.error
 import urllib.request
 from dataclasses import dataclass, field
@@ -62,6 +63,13 @@ MAX_OUTPUT_TOKENS = 32
 
 READ_TIMEOUT_SECONDS = 20
 INFERENCE_TIMEOUT_SECONDS = 180
+
+#: Prometheus scrapes the API every fifteen seconds (`infra/prometheus/prometheus.yml`). A counter
+#: read the instant after the call that moved it is read before the scrape that carries it, which
+#: passes or fails by timing alone. The check waits up to three scrape intervals for the scrape to
+#: happen, asking Prometheus and nothing else: the provider is never called again. G2-F-012.
+OBSERVABILITY_WAIT_SECONDS = 45.0
+OBSERVABILITY_POLL_SECONDS = 3.0
 
 #: The exit code that means "not run, and not passed either".
 BLOCKED_EXIT = 2
@@ -343,16 +351,27 @@ def check_persistence(request_id: str, smoke_model: str) -> list[Check]:
     ]
 
 
-def check_observability(prometheus: str) -> list[Check]:
-    """Prometheus scraped the instruments the call moved."""
+def _scraped_requests(prometheus: str) -> tuple[list[dict], float]:
     status, body = request_json(
         f"{prometheus}/api/v1/query?query=iacode_gateway_requests_total",
         timeout=READ_TIMEOUT_SECONDS)
     series = body.get("data", {}).get("result", []) if status == 200 else []
-    total = sum(float(item["value"][1]) for item in series)
+    return series, sum(float(item["value"][1]) for item in series)
+
+
+def check_observability(prometheus: str) -> list[Check]:
+    """Prometheus scraped the instruments the call moved, within a bounded number of scrapes."""
+    started = time.monotonic()
+    series, total = _scraped_requests(prometheus)
+    while not (series and total >= 1) and (
+            time.monotonic() - started < OBSERVABILITY_WAIT_SECONDS):
+        time.sleep(OBSERVABILITY_POLL_SECONDS)
+        series, total = _scraped_requests(prometheus)
+    waited = time.monotonic() - started
     return [
         Check("observability.scraped", bool(series) and total >= 1,
-              f"{len(series)} gateway request series, {total:.0f} observation(s)",
+              f"{len(series)} gateway request series, {total:.0f} observation(s), "
+              f"read after {waited:.0f}s",
               {"series": len(series)}),
     ]
 

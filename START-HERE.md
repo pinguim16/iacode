@@ -3,7 +3,8 @@
 IACode is a planned private, autonomous, general-purpose software engineering platform. The repository is self-contained context and is the only source of truth.
 
 - Phase: `M1 — IACode V0 foundation`.
-- Current Gate: `GATE 2 — AGENT RUNTIME`.
+- Current Gate: `GATE 2 — AGENT RUNTIME`, closed at `INTERNAL_GATE_PASS`. GATE 3 — SANDBOX
+  awaits the owner's explicit authorization.
 - Previous Gates: `GATE 1 — MODEL GATEWAY` and `GATE 0 — FOUNDATION`, both closed at
   `INTERNAL_GATE_PASS`; before them `SETUP-00`, closed, with `M0` having passed its
   independent audit.

@@ -494,6 +494,53 @@ class LiveSmokeContractTests(unittest.TestCase):
             with self.subTest(header=header):
                 self.assertNotIn(header.lower(), source.lower())
 
+    def test_the_observability_check_waits_for_a_scrape_and_asks_only_prometheus(self) -> None:
+        """G2-F-012: a counter read before the scrape that carries it passed or failed by timing.
+
+        The check asked Prometheus once, the instant after the call; the stack had just been
+        rebuilt, the counter had not been scraped yet, and the live smoke failed on a call that
+        had succeeded. It now waits, within a bound of a few scrape intervals, and every read goes
+        to Prometheus — the provider is never called again to make the metric appear.
+        """
+        smoke = _gateway_smoke()
+        self.assertLessEqual(smoke.OBSERVABILITY_WAIT_SECONDS, 60, "the wait has no small bound")
+        self.assertGreaterEqual(smoke.OBSERVABILITY_WAIT_SECONDS, 30,
+                                "the wait does not cover two fifteen-second scrape intervals")
+        scraped = {"data": {"result": [{"metric": {}, "value": [0, "2"]}]}}
+        empty = {"data": {"result": []}}
+        clock = {"now": 0.0}
+        asked: list[str] = []
+
+        def fake_request(url, payload=None, **_kwargs):
+            asked.append(url)
+            return 200, (scraped if len(asked) >= 3 else empty)
+
+        def fake_sleep(seconds):
+            clock["now"] += seconds
+
+        originals = (smoke.request_json, smoke.time.sleep, smoke.time.monotonic)
+        smoke.request_json = fake_request
+        smoke.time.sleep = fake_sleep
+        smoke.time.monotonic = lambda: clock["now"]
+        try:
+            late = smoke.check_observability("http://prometheus.invalid")
+            asked_late = list(asked)
+            asked.clear()
+            clock["now"] = 0.0
+            smoke.request_json = lambda url, payload=None, **_kwargs: (asked.append(url)
+                                                                       or (200, empty))
+            never = smoke.check_observability("http://prometheus.invalid")
+        finally:
+            smoke.request_json, smoke.time.sleep, smoke.time.monotonic = originals
+
+        self.assertTrue(late[0].ok, "a scrape that arrives after the call was not waited for")
+        self.assertEqual(len(asked_late), 3)
+        self.assertFalse(never[0].ok, "a metric that never appears was reported as scraped")
+        self.assertLessEqual(clock["now"], smoke.OBSERVABILITY_WAIT_SECONDS
+                             + smoke.OBSERVABILITY_POLL_SECONDS, "the wait was not bounded")
+        for url in asked_late + asked:
+            self.assertTrue(url.startswith("http://prometheus.invalid/api/v1/query"), url)
+
     def test_missing_credential_blocks_rather_than_passes(self) -> None:
         smoke = _gateway_smoke()
         health = {"providers": [{

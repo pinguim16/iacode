@@ -77,6 +77,18 @@ def main() -> int:
         print("- sealing validates committed content; commit the checkpoint first")
         return 2
 
+    # A seal creates the canonical tag, and a sealed checkpoint is later validated from that tag
+    # with a detached HEAD. A checkpoint whose state still carries the symbolic HEAD was sealed once
+    # (GATE-2-CP-0001, at BLOCKED) and could not be validated from its own tag afterwards: G2-F-013.
+    # The state names the tag before anything is sealed.
+    canonical_ref = f"{TAG_NAMESPACE}{checkpoint.name}"
+    declared_ref = load_json(checkpoint / "STATE.json").get("currentCommit")
+    if declared_ref != canonical_ref:
+        print("CHECKPOINT_NOT_SEALED")
+        print(f"- STATE.json currentCommit is {declared_ref!r}; a sealed checkpoint names its own tag. "
+              f"Finalize with --commit-ref {canonical_ref} and commit before sealing")
+        return 2
+
     content_commit = snapshot["head"]
     started = time.monotonic()
     # The canonical tag is created a few lines below, on the evidence commit, so at this moment it

@@ -22,6 +22,7 @@ from __future__ import annotations
 import argparse
 import json
 import sys
+import time
 import urllib.error
 import urllib.request
 from dataclasses import dataclass
@@ -114,13 +115,33 @@ def check_web(base: str) -> list[Check]:
     ]
 
 
-def check_prometheus(base: str) -> list[Check]:
+#: Prometheus scrapes every fifteen seconds (`infra/prometheus/prometheus.yml`). On a stack that has
+#: just started, the last scrape of a target can predate that target's readiness, and the target
+#: reads "down" until the next one: the fresh installation of GATE-2-CP-0002's verification failed
+#: on exactly that. The check waits up to three scrape intervals for both targets, asking only
+#: Prometheus. G2-F-014, LSN-0049.
+TARGET_WAIT_SECONDS = 45.0
+TARGET_POLL_SECONDS = 3.0
+REQUIRED_TARGETS = ("iacode-api", "iacode-worker")
+
+
+def _active_targets(base: str) -> tuple[dict, list, dict]:
     _status, payload = http_json(f"{base}/api/v1/targets?state=active")
     targets = payload.get("data", {}).get("activeTargets", [])
-    by_job = {item.get("labels", {}).get("job"): item.get("health") for item in targets}
+    return payload, targets, {item.get("labels", {}).get("job"): item.get("health")
+                              for item in targets}
+
+
+def check_prometheus(base: str) -> list[Check]:
+    started = time.monotonic()
+    payload, targets, by_job = _active_targets(base)
+    while any(by_job.get(job) != "up" for job in REQUIRED_TARGETS) and (
+            time.monotonic() - started < TARGET_WAIT_SECONDS):
+        time.sleep(TARGET_POLL_SECONDS)
+        payload, targets, by_job = _active_targets(base)
     checks = [Check("prometheus.reachable", payload.get("status") == "success",
                     f"{len(targets)} active target(s)")]
-    for job in ("iacode-api", "iacode-worker"):
+    for job in REQUIRED_TARGETS:
         checks.append(Check(f"prometheus.target.{job}", by_job.get(job) == "up",
                             f"{by_job.get(job, 'absent')}"))
     return checks

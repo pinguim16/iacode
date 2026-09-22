@@ -24,6 +24,29 @@
       "reasoning_levels": [],
       "priority": 100,
       "description": "The first real provider. Only the Chat Completions protocol is declared, because that is the one this deployment has exercised against the live API; the Responses and Messages adapters exist and are tested, and either is enabled here by adding it to 'protocols' once the provider's support for it has been observed rather than assumed. 'streaming' is declared because incremental delivery is a property of the Chat Completions protocol itself rather than a guess about any particular model."
+    },
+    {
+      "provider_id": "openai",
+      "display_name": "OpenAI",
+      "adapter": "openai-compatible",
+      "enabled": true,
+      "base_url_env": "IACODE_OPENAI_BASE_URL",
+      "credential_env": "IACODE_OPENAI_API_KEY",
+      "models_path": "/models",
+      "protocols": [
+        "openai-chat-completions"
+      ],
+      "default_protocol": "openai-chat-completions",
+      "protocol_paths": {
+        "openai-chat-completions": "/chat/completions"
+      },
+      "protocol_options": {},
+      "capabilities": {
+        "streaming": "SUPPORTED"
+      },
+      "reasoning_levels": [],
+      "priority": 50,
+      "description": "The second real provider, registered by the operator as the alternative to DevWorld when DevWorld cannot answer. It is reached only through configuration: the adapter, the protocol and the fallback machinery are the ones GATE 1 delivered, and nothing about it is special-cased in code. Its priority is below DevWorld's, so a bare model identifier both providers expose resolves to DevWorld first. Only Chat Completions is declared, and the Chat adapter sends 'max_tokens', which OpenAI's reasoning-model families refuse; a model from those families is served through the Responses adapter once that protocol has been observed against this provider and added here. A route still names no candidate: which provider a route prefers is a measured decision, and GATE 1 row 7.8 keeps the route policy empty until something has been measured."
     }
   ]
 }
