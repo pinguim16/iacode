@@ -1,0 +1,293 @@
+{
+  "schemaVersion": "1.1.0",
+  "checkpoint": "GATE-1-CP-0001",
+  "generatedAt": "2026-09-22T09:12:10Z",
+  "targetFingerprint": "f400086ce6586ef755ca47875ba8350913c60934c28f7fd35568f60f85363158",
+  "source": "scripts/development-ledger/gate1_red_team.py with gate1_runtime_attacks.py — the internal adversarial battery of GATE 1 — MODEL GATEWAY, executed against the delivery",
+  "baselineControl": {
+    "result": "VALID",
+    "detail": "the unmutated fixture is accepted by every control this battery mutates: the gateway serves an unmutated request (the unmutated path synchronises, answers, streams, records and accepts a clean address); the scope control accepts the real tree (no violation); the secret scan accepts the committed configuration (no finding); the canonical requirement set parses and mirrors (122 row(s))",
+    "evidence": [
+      "file:.iacode/policies/providers.json",
+      "file:services/model-gateway/src/iacode_model_gateway/gateway.py"
+    ]
+  },
+  "attacks": [
+    {
+      "attackId": "G1-A",
+      "description": "A provider echoes the credential back, and every surface the gateway produces is searched.",
+      "target": "secrets",
+      "mutation": "classify a provider failure while a credential is resolved, then render the error, the resolved provider, its repr, the recorded calls and the provider registry",
+      "expectedDefense": "the credential appears in none of them",
+      "observed": "the credential is in no error, no record, no repr and no dump",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/model-gateway/src/iacode_model_gateway/config.py",
+        "test:SecretContainmentTests"
+      ],
+      "mandatory": true,
+      "origin": "GATE-1 internal Red Team, executed in the API image"
+    },
+    {
+      "attackId": "G1-B",
+      "description": "A caller supplies the address the gateway should call.",
+      "target": "trust boundary",
+      "mutation": "look for a request field that could carry an address, then configure a link-local address, an address with user information, a file URL and one with a query string",
+      "expectedDefense": "no request field exists, and every unusable configured address is refused",
+      "observed": "no request field can carry an address, and a plain-HTTP, user-information, non-HTTP or query-bearing configured address is refused",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/model-gateway/src/iacode_model_gateway/security/base_url.py",
+        "test:BaseUrlSafetyTests"
+      ],
+      "mandatory": true,
+      "origin": "GATE-1 internal Red Team, executed in the API image"
+    },
+    {
+      "attackId": "G1-C",
+      "description": "A request needs a capability the catalog never recorded.",
+      "target": "routing",
+      "mutation": "send a request with tools to a model whose tool support is UNKNOWN",
+      "expectedDefense": "the candidate is refused rather than tried",
+      "observed": "the unknown capability was refused rather than assumed",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/model-gateway/src/iacode_model_gateway/routing/policy.py",
+        "test:test_unknown_capability_is_rejected_by_default"
+      ],
+      "mandatory": true,
+      "origin": "GATE-1 internal Red Team, executed in the API image"
+    },
+    {
+      "attackId": "G1-D",
+      "description": "A credential failure is retried, burning quota on an answer that cannot change.",
+      "target": "resilience",
+      "mutation": "script an authentication failure followed by a success and count the attempts",
+      "expectedDefense": "exactly one attempt is made",
+      "observed": "one attempt; an authentication failure is never retried",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/model-gateway/src/iacode_model_gateway/resilience/retry.py",
+        "test:RetryClassificationTests"
+      ],
+      "mandatory": true,
+      "origin": "GATE-1 internal Red Team, executed in the API image"
+    },
+    {
+      "attackId": "G1-E",
+      "description": "A route names the same failing candidate twelve times.",
+      "target": "resilience",
+      "mutation": "configure a route whose candidate list repeats one model and fail every call",
+      "expectedDefense": "the duplicate collapses to one attempt and the chain stays bounded",
+      "observed": "the duplicate candidate collapsed to one attempt; the chain is bounded",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/model-gateway/src/iacode_model_gateway/routing/router.py",
+        "test:test_fallback_chain_is_bounded_and_recorded"
+      ],
+      "mandatory": true,
+      "origin": "GATE-1 internal Red Team, executed in the API image"
+    },
+    {
+      "attackId": "G1-F",
+      "description": "Traffic keeps arriving at a provider that is down, so every caller pays the full timeout.",
+      "target": "resilience",
+      "mutation": "fail past the configured threshold, then call again and count the provider's attempts",
+      "expectedDefense": "the circuit opens and the next call never reaches the provider",
+      "observed": "the circuit opened after 2 failures and the next call never left",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/model-gateway/src/iacode_model_gateway/resilience/circuit.py",
+        "test:CircuitBreakerTests"
+      ],
+      "mandatory": true,
+      "origin": "GATE-1 internal Red Team, executed in the API image"
+    },
+    {
+      "attackId": "G1-G",
+      "description": "A stream dies after delivering text and a second model is offered the chance to finish it.",
+      "target": "streaming",
+      "mutation": "stream text from the first candidate, fail it, and give the router a healthy second candidate",
+      "expectedDefense": "the second model is never called and no output is spliced",
+      "observed": "the second model was never called and no output was spliced",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/model-gateway/src/iacode_model_gateway/gateway.py",
+        "test:test_no_two_models_are_concatenated_in_one_stream"
+      ],
+      "mandatory": true,
+      "origin": "GATE-1 internal Red Team, executed in the API image"
+    },
+    {
+      "attackId": "G1-H",
+      "description": "A request far larger than the context window is sent anyway.",
+      "target": "routing",
+      "mutation": "send two hundred thousand characters to a model with a one-thousand token window",
+      "expectedDefense": "the preflight refuses before the request leaves the process",
+      "observed": "the preflight refused before the request left the process",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/model-gateway/src/iacode_model_gateway/routing/context.py",
+        "test:ContextWindowTests"
+      ],
+      "mandatory": true,
+      "origin": "GATE-1 internal Red Team, executed in the API image"
+    },
+    {
+      "attackId": "G1-I",
+      "description": "A synchronisation answers with nothing, then with a duplicated identifier.",
+      "target": "catalog",
+      "mutation": "synchronise against an empty answer and then against a duplicate, and read the catalog",
+      "expectedDefense": "the previous catalog survives both, active and intact",
+      "observed": "an empty answer and a duplicated identifier both left the catalog intact",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/model-gateway/src/iacode_model_gateway/catalog/sync.py",
+        "test:test_failed_sync_preserves_the_previous_catalog"
+      ],
+      "mandatory": true,
+      "origin": "GATE-1 internal Red Team, executed in the API image"
+    },
+    {
+      "attackId": "G1-J",
+      "description": "A confidential prompt is sent and the record is searched for it.",
+      "target": "privacy",
+      "mutation": "send a sentence that must not be stored and render every recorded field",
+      "expectedDefense": "neither the prompt nor the completion is present, and no field could hold one",
+      "observed": "neither the prompt nor the completion is in the record, and no field could hold one",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/model-gateway/src/iacode_model_gateway/ports.py",
+        "test:PromptCaptureTests"
+      ],
+      "mandatory": true,
+      "origin": "GATE-1 internal Red Team, executed in the API image"
+    },
+    {
+      "attackId": "G1-K",
+      "description": "Every provider is unreachable.",
+      "target": "resilience",
+      "mutation": "fail both candidates of a route with a transport failure",
+      "expectedDefense": "both are tried once, the failure is classified, and the caller is not held",
+      "observed": "both candidates were tried once and the failure was classified",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/model-gateway/src/iacode_model_gateway/providers/http_provider.py",
+        "test:test_provider_unavailability_falls_back"
+      ],
+      "mandatory": true,
+      "origin": "GATE-1 internal Red Team, executed in the API image"
+    },
+    {
+      "attackId": "G1-L",
+      "description": "A caller names a model that is not in the catalog, hoping for a substitute.",
+      "target": "routing",
+      "mutation": "request an identifier the catalog does not hold while a healthy model exists",
+      "expectedDefense": "the request is refused and no other model is used in its place",
+      "observed": "the named model was refused and no other model was used in its place",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/model-gateway/src/iacode_model_gateway/routing/router.py",
+        "test:test_explicit_model_is_honoured_or_refused"
+      ],
+      "mandatory": true,
+      "origin": "GATE-1 internal Red Team, executed in the API image"
+    },
+    {
+      "attackId": "G1-M",
+      "description": "The configuration is asked for a call with no time limit.",
+      "target": "resilience",
+      "mutation": "read the client construction, then configure a zero and an absurd timeout",
+      "expectedDefense": "connect and read are separate, always set, and an unusable value is refused at load time",
+      "observed": "connect and read budgets are separate, always set, and a zero or absurd value is refused at load time",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/model-gateway/src/iacode_model_gateway/config.py",
+        "test:test_no_call_is_unbounded"
+      ],
+      "mandatory": true,
+      "origin": "GATE-1 internal Red Team, executed in the API image"
+    },
+    {
+      "attackId": "G1-N",
+      "description": "A model vanishes from the provider between two synchronisations.",
+      "target": "catalog",
+      "mutation": "record a call against a model, remove it from the provider's answer, synchronise again",
+      "expectedDefense": "it is deactivated rather than deleted, its recorded call survives, and a new request for it is refused",
+      "observed": "the vanished model was deactivated rather than deleted, its recorded call survived, and a new request for it was refused",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/model-gateway/src/iacode_model_gateway/catalog/sync.py",
+        "test:test_missing_model_is_deactivated_not_deleted"
+      ],
+      "mandatory": true,
+      "origin": "GATE-1 internal Red Team, executed in the API image"
+    },
+    {
+      "attackId": "G1-R",
+      "description": "The key itself is pasted into the field that holds the name of its variable.",
+      "target": "secrets",
+      "mutation": "configure a provider whose credential variable is a credential, and one that serves no protocol",
+      "expectedDefense": "both are refused when the configuration loads, not when the first call fails",
+      "observed": "a value where a variable name belongs is refused at load time, and so is a provider that declares no protocol",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/model-gateway/src/iacode_model_gateway/config.py",
+        "test:test_a_configuration_that_put_a_value_where_a_name_belongs_is_refused"
+      ],
+      "mandatory": true,
+      "origin": "GATE-1 internal Red Team, executed in the API image"
+    },
+    {
+      "attackId": "G1-O",
+      "description": "A gate that runs inside an image measures the image instead of the source.",
+      "target": "delivery assurance",
+      "mutation": "plant a failing test in the API suite on disk and run the real mandatory gate",
+      "expectedDefense": "the gate builds the image first and reports the failure",
+      "observed": "the gate rebuilt and failed on the planted test: [iacode] API_UNIT_TESTS=FAIL",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:scripts/iacode/compose.py",
+        "file:scripts/iacode/gates/api_tests.py"
+      ],
+      "mandatory": true,
+      "origin": "GATE-1 internal Red Team, executed on the host"
+    },
+    {
+      "attackId": "G1-P",
+      "description": "A generic control decides from the name of the Gate it was written during.",
+      "target": "delivery assurance",
+      "mutation": "run the scope control with the derived Gate and with the previous Gate written in",
+      "expectedDefense": "the derived answer is clean and the literal one is not, so the derivation is what works",
+      "observed": "derived from GATE-1 the tree is clean; with the previous Gate written in, the same control reports 1 violation(s) — the literal would have blocked this Gate",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:scripts/development-ledger/ledger_common.py",
+        "test:test_no_future_gate_capability_is_implemented"
+      ],
+      "mandatory": true,
+      "origin": "GATE-1 internal Red Team, executed on the host"
+    },
+    {
+      "attackId": "G1-Q",
+      "description": "A credential value is committed where a placeholder belongs.",
+      "target": "secrets",
+      "mutation": "replace the placeholder of the provider credential in the committed example file with a credential-shaped value and run the real infrastructure control",
+      "expectedDefense": "the control refuses the file, naming the key",
+      "observed": "the control refused the example file the moment its placeholder became a value, and the file was restored",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:infra/compose/.env.example",
+        "file:infra/tests/test_compose_definition.py"
+      ],
+      "mandatory": true,
+      "origin": "GATE-1 internal Red Team, executed on the host"
+    }
+  ],
+  "total": 18,
+  "defended": 18,
+  "escaped": 0,
+  "mandatoryTotal": 18,
+  "mandatoryDefended": 18,
+  "result": "RED_TEAM_PASS"
+}

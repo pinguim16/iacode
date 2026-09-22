@@ -1,0 +1,215 @@
+@if (gateway.error(); as message) {
+  <section class="error" data-testid="gateway-error">
+    <h2>Gateway unreachable</h2>
+    <p>{{ message }}</p>
+  </section>
+}
+
+<section data-testid="providers">
+  <h2>Providers</h2>
+  @if (gateway.health(); as health) {
+    <dl>
+      <dt>Gateway</dt>
+      <dd>
+        <span class="badge {{ tone(health.status) }}">{{ health.status }}</span>
+      </dd>
+      <dt>Contract</dt>
+      <dd>{{ health.contractVersion }}</dd>
+      <dt>Default model</dt>
+      <dd>{{ health.defaultModel ?? 'not configured' }}</dd>
+      <dt>Models in catalog</dt>
+      <dd data-testid="catalog-size">{{ health.catalogSize }}</dd>
+    </dl>
+    <table>
+      <thead>
+        <tr>
+          <th>Provider</th>
+          <th>Adapter</th>
+          <th>Enabled</th>
+          <th>Reachable</th>
+          <th>Credential</th>
+          <th>Models</th>
+          <th>Last sync</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (provider of health.providers; track provider.provider) {
+          <tr>
+            <td>{{ provider.displayName }}</td>
+            <td>{{ provider.adapter }}</td>
+            <td>{{ provider.enabled ? 'yes' : 'no' }}</td>
+            <td>
+              <span class="badge {{ tone(provider.healthy) }}">{{
+                provider.healthy === null ? 'NOT PROBED' : provider.healthy ? 'YES' : 'NO'
+              }}</span>
+              @if (provider.detail) {
+                <p class="detail">{{ provider.detail }}</p>
+              }
+            </td>
+            <td class="detail">
+              @if (provider.credentialConfigured) {
+                configured
+              } @else {
+                set {{ provider.credentialVariable }}
+              }
+            </td>
+            <td>{{ provider.modelCount }}</td>
+            <td class="detail">{{ provider.lastSync ?? 'never' }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  } @else {
+    <p class="detail">No answer from the gateway health endpoint.</p>
+  }
+
+  <button type="button" [disabled]="gateway.syncing()" (click)="synchronise()" data-testid="sync">
+    {{ gateway.syncing() ? 'Synchronising…' : 'Synchronise catalog' }}
+  </button>
+
+  @if (gateway.syncOutcomes().length) {
+    <p class="detail" data-testid="sync-outcome">
+      @for (outcome of gateway.syncOutcomes(); track outcome.provider) {
+        {{ outcome.provider }}: {{ outcome.added }} added, {{ outcome.updated }} updated,
+        {{ outcome.deactivated }} deactivated, {{ outcome.unchanged }} unchanged.
+        @for (failure of outcome.errors; track failure) {
+          <span class="bad">{{ failure }}</span>
+        }
+      }
+    </p>
+  }
+</section>
+
+<section data-testid="catalog">
+  <h2>Model catalog</h2>
+  @if (catalog().length) {
+    <table>
+      <thead>
+        <tr>
+          <th>Model</th>
+          <th>Provider</th>
+          <th>Context</th>
+          <th>Streaming</th>
+          <th>Tools</th>
+          <th>Structured</th>
+          <th>Active</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (model of catalog(); track model.provider + ':' + model.model) {
+          <tr>
+            <td>{{ model.model }}</td>
+            <td>{{ model.provider }}</td>
+            <td>{{ model.contextWindow ?? 'unknown' }}</td>
+            <td>
+              <span class="badge {{ tone(capability(model, 'streaming')) }}">{{
+                capability(model, 'streaming')
+              }}</span>
+            </td>
+            <td>
+              <span class="badge {{ tone(capability(model, 'tools')) }}">{{
+                capability(model, 'tools')
+              }}</span>
+            </td>
+            <td>
+              <span class="badge {{ tone(capability(model, 'structured-output')) }}">{{
+                capability(model, 'structured-output')
+              }}</span>
+            </td>
+            <td>{{ model.active ? 'yes' : 'no' }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+    <p class="detail">
+      <code>UNKNOWN</code> means the provider said nothing about the capability, which is not the
+      same as saying no. The router refuses an unknown capability rather than guessing.
+    </p>
+  } @else {
+    <p class="detail">
+      The catalog is empty. Configure a provider's address and credential, then synchronise.
+    </p>
+  }
+</section>
+
+<section data-testid="playground">
+  <h2>Playground</h2>
+  <p class="detail">
+    One prompt, one answer. Nothing is stored: there is no conversation here, and the gateway keeps
+    no prompt.
+  </p>
+
+  <label for="target">Model or route</label>
+  <input
+    id="target"
+    name="target"
+    list="targets"
+    [ngModel]="target()"
+    (ngModelChange)="target.set($event)"
+    placeholder="provider:model, a route alias, or empty for the default"
+  />
+  <datalist id="targets">
+    @for (route of routes(); track route) {
+      <option [value]="route"></option>
+    }
+    @for (model of catalog(); track model.provider + ':' + model.model) {
+      <option [value]="model.provider + ':' + model.model"></option>
+    }
+  </datalist>
+
+  <label for="effort">Reasoning effort</label>
+  <select id="effort" name="effort" [ngModel]="effort()" (ngModelChange)="effort.set($event)">
+    @for (level of efforts; track level) {
+      <option [value]="level">{{ level || 'not requested' }}</option>
+    }
+  </select>
+
+  <label for="prompt">Prompt</label>
+  <textarea
+    id="prompt"
+    name="prompt"
+    rows="3"
+    [ngModel]="prompt()"
+    (ngModelChange)="prompt.set($event)"
+  ></textarea>
+
+  <button type="button" [disabled]="gateway.sending()" (click)="send()" data-testid="send">
+    {{ gateway.sending() ? 'Sending…' : 'Send' }}
+  </button>
+
+  @if (gateway.answerError(); as message) {
+    <p class="detail bad" data-testid="answer-error">{{ message }}</p>
+  }
+
+  @if (gateway.answer(); as answer) {
+    <dl data-testid="answer">
+      <dt>Model</dt>
+      <dd>{{ answer.provider }}:{{ answer.model }}</dd>
+      <dt>Endpoint</dt>
+      <dd>{{ answer.endpoint }}</dd>
+      <dt>Route</dt>
+      <dd>
+        {{ answer.route.reason }}{{ answer.route.route ? ' (' + answer.route.route + ')' : '' }}
+      </dd>
+      <dt>Latency</dt>
+      <dd>{{ answer.latencyMs }} ms</dd>
+      <dt>Usage</dt>
+      <dd>
+        @if (answer.usage.totalTokens !== null) {
+          {{ answer.usage.inputTokens }} in / {{ answer.usage.outputTokens }} out
+        } @else {
+          not reported
+        }
+      </dd>
+      <dt>Cost</dt>
+      <dd>{{ answer.cost === null ? 'unknown (no pricing configured)' : answer.cost }}</dd>
+      <dt>Finish</dt>
+      <dd>{{ answer.finishReason }}</dd>
+    </dl>
+    <pre data-testid="answer-content">{{ answer.content }}</pre>
+  }
+</section>
+
+<button type="button" [disabled]="gateway.loading()" (click)="refresh()" data-testid="refresh">
+  {{ gateway.loading() ? 'Refreshing…' : 'Refresh' }}
+</button>

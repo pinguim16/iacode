@@ -92,6 +92,23 @@ def read_env_file(path: Path = ENV_FILE) -> dict[str, str]:
     return values
 
 
+
+def build_service(service: str) -> None:
+    """Rebuild one service's image before a gate runs against it.
+
+    A gate that executes inside an image measures whatever that image happens to contain. The image
+    is built from the source, but not *by* the gate, so a source change since the last build leaves
+    the gate reporting on code nobody is running — which is how a red test survived a green gate
+    through a whole Gate. Building first costs a cached layer check when nothing changed, and
+    removes the gap when something did.
+    """
+    result = compose("build", service, capture=True)
+    if not result.ok:
+        raise StackError(
+            f"the {service} image could not be built before the gate ran:\n"
+            + result.output.strip()[-1500:])
+
+
 def compose_environment(extra: dict[str, str] | None = None) -> dict[str, str]:
     """The process environment Compose should see."""
     environment = dict(os.environ)
@@ -158,6 +175,21 @@ def run_in(service: str, *command: str, user: str | None = None,
 def exec_in(service: str, *command: str, timeout: float | None = None) -> CommandResult:
     """Run a command inside the *running* container of ``service``."""
     return compose("exec", "-T", service, *command, timeout=timeout)
+
+
+def psql(query: str, *, timeout: float | None = None) -> CommandResult:
+    """Run one SQL statement against the stack's PostgreSQL.
+
+    The credential is never passed from here. `psql` reads it from ``PGPASSWORD`` inside the
+    container, which is set from the variable Compose already gave that container, so the password
+    never appears on a host command line, in this process's environment, or in a log of it.
+    """
+    script = (
+        'PGPASSWORD="$POSTGRES_PASSWORD" exec psql --username "$POSTGRES_USER" '
+        '--dbname "$POSTGRES_DB" --tuples-only --no-align --field-separator "|" '
+        '--command "$1"')
+    return compose("exec", "-T", "postgres", "sh", "-c", script, "psql", query,
+                   timeout=timeout, merge_stderr=False)
 
 
 def service_health(service: str) -> str:

@@ -539,7 +539,12 @@ def baseline_control(root: Path, runtime: dict[str, dict[str, Any]]) -> dict[str
     checks.append(("redaction leaves a clean message alone", redact_text(message) == message,
                    redact_text(message)))
 
-    violations = scope_violations(root, "GATE-0")
+    # The Gate is derived, not written. With ``"GATE-0"`` here this control would report the scope
+    # check as *refusing* the real tree the moment Gate 1 filled the directory reserved for Gate 1,
+    # and the whole battery would refuse to run — the failure class `LSN-0025` records.
+    from ledger_common import delivered_gate
+
+    violations = scope_violations(root, delivered_gate(root))
     checks.append(("the scope control accepts the real tree", not violations,
                    "; ".join(violations)[:160] or "no violation"))
 

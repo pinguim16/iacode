@@ -115,6 +115,26 @@ class _DisposableDatabase:
             engine.dispose()
 
 
+
+def head_revision() -> str:
+    """The revision the migration directory declares as head.
+
+    One line, because the rule lives in `migrations/head.py`, next to the migrations it reads. A
+    literal would make this assertion describe whichever migration was newest on the day it was
+    written, so the first migration after that would fail a test about something else entirely --
+    and a second copy of the derivation is the same defect one step removed, which is what the
+    fresh-installation scenario proved by keeping one.
+    """
+    import sys
+
+    if str(APPLICATION_ROOT) not in sys.path:
+        sys.path.insert(0, str(APPLICATION_ROOT))
+    from migrations.head import head_revision as declared
+
+    return declared(APPLICATION_ROOT / "migrations" / "versions")
+
+
+
 def test_migrations_run_from_zero() -> None:
     with _DisposableDatabase() as database:
         assert database.tables() == set()
@@ -124,7 +144,7 @@ def test_migrations_run_from_zero() -> None:
         assert result.returncode == 0, result.stdout
         present = database.tables()
         assert present >= EXPECTED_TABLES, f"missing: {sorted(EXPECTED_TABLES - present)}"
-        assert database.revision() == "0001_foundation"
+        assert database.revision() == head_revision()
 
 
 def test_migrations_are_idempotent_on_restart() -> None:
@@ -139,7 +159,7 @@ def test_migrations_are_idempotent_on_restart() -> None:
         assert second.returncode == 0, second.stdout
         assert "Running upgrade" not in second.stdout
         assert database.tables() == tables_after_first
-        assert database.revision() == "0001_foundation"
+        assert database.revision() == head_revision()
 
 
 def test_the_migration_is_reversible() -> None:

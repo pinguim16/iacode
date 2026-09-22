@@ -25,7 +25,12 @@ for extra in (REPOSITORY_ROOT / "scripts" / "iacode",
 import backup as backup_tool  # noqa: E402
 import restore as restore_tool  # noqa: E402
 from compose import StackError  # noqa: E402
-from iacode_common.redaction import REDACTED, redact_mapping  # noqa: E402
+from iacode_common.redaction import (  # noqa: E402
+    REDACTED,
+    carries_a_secret_value,
+    is_placeholder,
+    redact_mapping,
+)
 
 
 def _manifest(result: str = "OK", **overrides: object) -> dict:
@@ -151,9 +156,15 @@ class BackupSecrecyTests(unittest.TestCase):
             if "=" not in line or line.strip().startswith("#"):
                 continue
             key, _, value = line.partition("=")
-            if any(word in key.upper() for word in ("PASSWORD", "SECRET", "TOKEN")):
+            # What counts as a credential-carrying name, and what counts as a placeholder, are
+            # asked of `iacode_common.redaction` rather than restated here. Three formulations of
+            # the first question already existed in this repository and they disagreed: one of
+            # them read IACODE_GATEWAY_MAX_OUTPUT_TOKENS as a credential (LSN-0038).
+            if carries_a_secret_value(key.strip()):
                 with self.subTest(key=key.strip()):
-                    self.assertEqual(value.strip(), "change-me-before-starting")
+                    self.assertTrue(
+                        is_placeholder(value.strip()),
+                        f"{key.strip()} carries something that is not a placeholder")
 
 
 class RestoreRefusalTests(unittest.TestCase):

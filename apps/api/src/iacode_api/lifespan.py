@@ -30,6 +30,7 @@ from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession, async_sessionmaker
 from iacode_api.cache import client as cache_client
 from iacode_api.config import Settings
 from iacode_api.db import engine as db_engine
+from iacode_api.gateway.runtime import GatewayRuntime, build_runtime
 from iacode_api.observability.metrics import Metrics
 from iacode_api.storage import client as storage_client
 from iacode_api.workflows.client import TemporalGateway
@@ -48,19 +49,25 @@ class Resources:
     redis: Redis
     minio: Minio
     temporal: TemporalGateway
+    gateway: GatewayRuntime
 
 
 def build_resources(settings: Settings, metrics: Metrics) -> Resources:
     """Construct every client without performing any I/O."""
     engine = db_engine.create_engine(settings)
+    session_factory = db_engine.create_session_factory(engine)
     return Resources(
         settings=settings,
         metrics=metrics,
         engine=engine,
-        session_factory=db_engine.create_session_factory(engine),
+        session_factory=session_factory,
         redis=cache_client.create_client(settings),
         minio=storage_client.create_client(settings),
         temporal=TemporalGateway(settings),
+        # Reading the provider policy here rather than on first use means a missing or malformed
+        # policy file stops the process at start-up, where it is one clear failure, instead of
+        # turning every inference request into a confusing "no candidate".
+        gateway=build_runtime(settings, session_factory, metrics.registry),
     )
 
 

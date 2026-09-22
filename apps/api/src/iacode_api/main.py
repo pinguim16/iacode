@@ -15,9 +15,10 @@ Middleware order is a decision, not an accident. Starlette runs middleware outer
 * **Correlation before metrics** so the identifier is already bound when the metrics layer logs.
 * **Metrics innermost** so the duration it observes is the handler's, not the middleware stack's.
 
-Gate 0 exposes health, readiness, version and metrics. There is deliberately no endpoint over the
-domain tables: they exist as a persistence contract for later Gates, and an endpoint that returned
-an empty list would be a capability this Gate does not have.
+Gate 0 exposed health, readiness, version and metrics. Gate 1 adds the Model Gateway under
+``/api/v1/gateway``: the providers, the discovered catalog, its synchronisation, the gateway's own
+health, and the two inference endpoints. There is still no endpoint over the remaining domain
+tables, because the capabilities that would fill them belong to later Gates.
 """
 
 from __future__ import annotations
@@ -31,16 +32,20 @@ from iacode_api.errors import register_error_handlers
 from iacode_api.lifespan import lifespan
 from iacode_api.middleware.correlation import REQUEST_ID_HEADER, CorrelationMiddleware
 from iacode_api.observability.metrics import Metrics, MetricsMiddleware
-from iacode_api.routes import health, version
+from iacode_api.routes import gateway, health, version
 
 logger = get_logger(__name__)
 
 DESCRIPTION = """
 The IACode Foundation API.
 
-Gate 0 delivers the runtime foundation: configuration, persistence, cache, object storage, durable
-workflows and observability. The model gateway, the agent runtime and the sandbox belong to later
-Gates and are not implemented here.
+Gate 0 delivered the runtime foundation: configuration, persistence, cache, object storage,
+durable workflows and observability. Gate 1 adds the Model Gateway: one provider-neutral boundary
+for model discovery, routing and invocation, with streaming, retries, a circuit breaker and a
+bounded fallback chain.
+
+The agent runtime and the sandbox belong to later Gates and are not implemented here. The gateway
+normalises a tool call so a later Gate can decide what to do with it; it executes nothing.
 """.strip()
 
 
@@ -79,8 +84,13 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     )
 
     register_error_handlers(app)
+    # Registered after the Foundation handlers and from here rather than from ``errors.py``: the
+    # Foundation error module knows nothing about the gateway, and the direction of that dependency
+    # is what keeps Gate 0 independent of Gate 1.
+    gateway.register_gateway_errors(app)
     app.include_router(health.router)
     app.include_router(version.router)
+    app.include_router(gateway.router)
     return app
 
 

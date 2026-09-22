@@ -434,9 +434,25 @@ def _validate_command_reproducibility(
             break
 
     inputs = [str(item) for item in record.get("inputs") or []]
+    declared_digests = {
+        str(item.get("path")): str(item.get("hash"))
+        for item in (record.get("inputsDigest") or []) if isinstance(item, dict)
+    }
     for reference in inputs:
-        if not (root / reference).exists():
-            errors.append(f"{prefix}: recorded input does not exist: {reference}")
+        if (root / reference).exists():
+            continue
+        # A path the repository deliberately does not carry cannot be required to be present in a
+        # checkout of it. `var/` holds generated artifacts and is ignored, so a command that read
+        # one names a file no clone will ever have -- which is what made GATE-0-CP-0001 fail the
+        # first time a successor anchored it and validated it from its own tag.
+        #
+        # The reference is accepted only when the record binds the content it actually read. An
+        # input with no digest, and any input the repository does carry, is still required to
+        # resolve, so a fabricated or mistyped path is still refused.
+        if (path_is_ignored(root, reference)
+                and HEX64.fullmatch(declared_digests.get(reference, "")) is not None):
+            continue
+        errors.append(f"{prefix}: recorded input does not exist: {reference}")
 
     # M0-F-009: a record that names a commit while its real inputs lived only in a dirty working
     # tree is not reproducible. The digest binds what the command actually read, so replay can be
@@ -1391,6 +1407,23 @@ def _validate_findings_closure(
                 f"{state.get('status')} is not available while "
                 + ", ".join(sorted(str(item.get("findingId")) for item in open_rows))
                 + f" of {audit.get('auditId')} remain open")
+
+
+#: Answers cached per repository: one `git check-ignore` per distinct path, not per record.
+_IGNORED_PATHS: dict[tuple[str, str], bool] = {}
+
+
+def path_is_ignored(root: Path, reference: str) -> bool:
+    """Whether Git deliberately does not carry ``reference``.
+
+    Asked of Git rather than of a pattern list here, because `.gitignore` is the canonical answer
+    and a second copy of its rules would disagree with it the first time one of them changed.
+    """
+    key = (str(root.resolve()), reference)
+    if key not in _IGNORED_PATHS:
+        code, _ = run_git(root, "check-ignore", "--quiet", "--no-index", reference)
+        _IGNORED_PATHS[key] = code == 0
+    return _IGNORED_PATHS[key]
 
 
 def _validate_derived_counts(

@@ -1,0 +1,892 @@
+{
+  "filesRead": [],
+  "filesCreated": [
+    {
+      "path": ".iacode/memory/retrospectives/GATE-1-CP-0001.md",
+      "reason": "The Gate retrospective, produced from the canonical template.",
+      "hashAfter": "e96af118efa54e8576443178d887be6f143d0ba997448368fd6d374b2f29449a"
+    },
+    {
+      "path": ".iacode/policies/model-routes.json",
+      "reason": "Route aliases with empty candidate lists: an alias with candidates would be a preference this project has not measured.",
+      "hashAfter": "8e878de71606c9438d3b766dc0b19c5c8dce7f98db04c45f4cceb873a516c03b"
+    },
+    {
+      "path": ".iacode/policies/providers.json",
+      "reason": "Which providers exist, which adapter serves each, and the names of the variables that carry the address and the credential. No value.",
+      "hashAfter": "bb75dca26253c3cd0a71023e43e8feb9c175b921776465680ebf56c77c066fce"
+    },
+    {
+      "path": "apps/api/migrations/head.py",
+      "reason": "Which revision the migration directory declares as head, derived once and next to the migrations it reads. Repairs G1-F-010.",
+      "hashAfter": "301ba66c6c9f2c7f8df81d156d2198c0a46605926ec66a92728875c0a6522023"
+    },
+    {
+      "path": "apps/api/migrations/versions/0002_model_gateway.py",
+      "reason": "The schema change of this Gate, as a new migration with a real downgrade.",
+      "hashAfter": "8fbfc19740fc5a4b776f3a110f8c1ee606f9e3e30491ccf4541655cfbc39ecde"
+    },
+    {
+      "path": "apps/api/src/iacode_api/gateway/__init__.py",
+      "reason": "The application's answer to the gateway's ports: the SQLAlchemy stores and the runtime that composes the gateway.",
+      "hashAfter": "2fa05ccc6e940459476961f3f6b3fd85848207125736500a7b0423def5fed3e3"
+    },
+    {
+      "path": "apps/api/src/iacode_api/gateway/runtime.py",
+      "reason": "The application's answer to the gateway's ports: the SQLAlchemy stores and the runtime that composes the gateway.",
+      "hashAfter": "8e86a434193b259001bcb4b042738f381d6580031721bbd0c859bbb5a5771420"
+    },
+    {
+      "path": "apps/api/src/iacode_api/gateway/store.py",
+      "reason": "The application's answer to the gateway's ports: the SQLAlchemy stores and the runtime that composes the gateway.",
+      "hashAfter": "fcb39f23709582e4c272e1b7ab101b8ed913165087091ae46f32aa12fd12380d"
+    },
+    {
+      "path": "apps/api/src/iacode_api/routes/gateway.py",
+      "reason": "The gateway HTTP API, with an allow-list of public error detail keys.",
+      "hashAfter": "67f79d63c1025cdf10d31e177b2e1fbad8454f51490ced672d5c2b19e7927311"
+    },
+    {
+      "path": "apps/api/tests/integration/test_gateway_persistence.py",
+      "reason": "The stores against the real PostgreSQL, each test removing what it created.",
+      "hashAfter": "072ca42b79d73da7a173088c3ef5b8589b4ce9ca4047a25e82d31ff96ae1a119"
+    },
+    {
+      "path": "apps/api/tests/unit/test_gateway_api.py",
+      "reason": "The gateway API through the real application, with only the provider doubled.",
+      "hashAfter": "c7b3263a213d7d5a0cad4fc2d72ebae019f44f3443f3c6ab503c1901811b645f"
+    },
+    {
+      "path": "apps/web/src/app/app.routes.ts",
+      "reason": "The application gains a router, because it now has two pages.",
+      "hashAfter": "9a9f6b7eba305b22bd1a7ea9964a43adbc8e4bf095b233d9e16d6de99e7e56fc"
+    },
+    {
+      "path": "apps/web/src/app/foundation/foundation-status.service.spec.ts",
+      "reason": "The Foundation page moves into its own route now that the shell has more than one.",
+      "hashAfter": "b820c8611c00325bfda54345493a047884367df95bec8034bb4bb1270f9f29ae"
+    },
+    {
+      "path": "apps/web/src/app/foundation/foundation-status.service.ts",
+      "reason": "The Foundation page moves into its own route now that the shell has more than one.",
+      "hashAfter": "2b03a8376d69beacea00449270797d3e9914d1c83e4757eb00e1215c9ec49824"
+    },
+    {
+      "path": "apps/web/src/app/foundation/foundation.html",
+      "reason": "The Foundation page moves into its own route now that the shell has more than one.",
+      "hashAfter": "d195eb66f2a24848b9c2be12a42cf4fbfe3e83de9c1f805b991cbdeaab686cf7"
+    },
+    {
+      "path": "apps/web/src/app/foundation/foundation.spec.ts",
+      "reason": "The Foundation page moves into its own route now that the shell has more than one.",
+      "hashAfter": "0c6347c048318fe8fa9c9311b4db289481137b1edcf80ca7d5c21b0cf91d72f4"
+    },
+    {
+      "path": "apps/web/src/app/foundation/foundation.ts",
+      "reason": "The Foundation page moves into its own route now that the shell has more than one.",
+      "hashAfter": "598ba55ea6df51565bdc40c28db4502e0cc5ec73a534f6b5b458f3625565e675"
+    },
+    {
+      "path": "apps/web/src/app/gateway/gateway.css",
+      "reason": "The Model Gateway page: provider status, the catalog with its capabilities, and a one-shot playground.",
+      "hashAfter": "d0decbd89884358181c26eabd38b8e6f8d22d98225872bc332ff3f2ba67d56e0"
+    },
+    {
+      "path": "apps/web/src/app/gateway/gateway.html",
+      "reason": "The Model Gateway page: provider status, the catalog with its capabilities, and a one-shot playground.",
+      "hashAfter": "0e87d3a03c353d6f27ec3fd073b3d512534fc1c06894783ebfdde8ef6a0c8229"
+    },
+    {
+      "path": "apps/web/src/app/gateway/gateway.service.spec.ts",
+      "reason": "The Model Gateway page: provider status, the catalog with its capabilities, and a one-shot playground.",
+      "hashAfter": "8c5319a511f0505461c98aa5f04d7c387fb49d560c67d9c38ce5c8002a53789d"
+    },
+    {
+      "path": "apps/web/src/app/gateway/gateway.service.ts",
+      "reason": "The Model Gateway page: provider status, the catalog with its capabilities, and a one-shot playground.",
+      "hashAfter": "538b7c79b7cdf6452111b8ffc9b362e978e05db83586ca3a7a0c7cac71953d49"
+    },
+    {
+      "path": "apps/web/src/app/gateway/gateway.spec.ts",
+      "reason": "The Model Gateway page: provider status, the catalog with its capabilities, and a one-shot playground.",
+      "hashAfter": "e94f30407a7245a89aa1f667851c15fad48d08bdc285b7ecb8514f33c8a14025"
+    },
+    {
+      "path": "apps/web/src/app/gateway/gateway.ts",
+      "reason": "The Model Gateway page: provider status, the catalog with its capabilities, and a one-shot playground.",
+      "hashAfter": "ef709c025880288594f4d1715ca1404735fa0f5eaaf02ba239418923a4e73d48"
+    },
+    {
+      "path": "docs/GATE-1-CHECKLIST.md",
+      "reason": "The Gate's canonical specification: 18 sections, 122 requirement rows, and the source the expected requirement set is derived from.",
+      "hashAfter": "fd37cc89c448c9722d54acc0b374ef8b344b4089c6010ef64ba62b85dda4d035"
+    },
+    {
+      "path": "docs/adr/ADR-0016-model-gateway-boundary.md",
+      "reason": "The boundary decision: an in-process library with its dependencies pointing inward.",
+      "hashAfter": "4463e57981f9a052e9877bf43b76923079b71b1c890372ec1acd0030edd82433"
+    },
+    {
+      "path": "docs/adr/ADR-0017-capabilities-are-tri-state.md",
+      "reason": "A capability is tri-state and carries its provenance.",
+      "hashAfter": "2e1af44000ae7795476ea183c15e39985f2db026d1461e58dd1fa7b79fb52852"
+    },
+    {
+      "path": "docs/adr/ADR-0018-streaming-commitment-point.md",
+      "reason": "A stream commits to one model at its first delivered event.",
+      "hashAfter": "6432314a7875a6eeafa882d38661ec65c565cd98e37e7d10dd2f38e2cb697be7"
+    },
+    {
+      "path": "docs/adr/ADR-0019-credentials-are-named-not-stored.md",
+      "reason": "Policy names the credential; only the environment holds it.",
+      "hashAfter": "f9006ceae905ae31a4c731eb70cb942ab0ec16cfe99843aaabd530cc110267c4"
+    },
+    {
+      "path": "docs/checkpoints/GATE-1-CP-0001/BASELINE.md",
+      "reason": "The checkpoint: its plan, decisions, risks, requirement matrix, evidence and ledger.",
+      "hashAfter": "27b6dc4e9131de30075eea7a5a8c904a69a447322a7cf7fc365626f40c16ab9a"
+    },
+    {
+      "path": "docs/checkpoints/GATE-1-CP-0001/CLOSURE-REQUIREMENTS.json",
+      "reason": "The checkpoint: its plan, decisions, risks, requirement matrix, evidence and ledger.",
+      "hashAfter": "9fd23cd076fbb750ae4d43e58092b79788737e8cb6df87b8823bee7163e7a6e4"
+    },
+    {
+      "path": "docs/checkpoints/GATE-1-CP-0001/CLOSURE-REQUIREMENTS.md",
+      "reason": "The checkpoint: its plan, decisions, risks, requirement matrix, evidence and ledger.",
+      "hashAfter": "8a84403e0ea3d60f80c7cceb5980913f0adb25fadf2991bc59b5da52a021dad0"
+    },
+    {
+      "path": "docs/checkpoints/GATE-1-CP-0001/COMMANDS.jsonl",
+      "reason": "The checkpoint: its plan, decisions, risks, requirement matrix, evidence and ledger.",
+      "hashAfter": "0a80989a1ffc2bddabdaa8c2c872527de3e99a305ae302298cf20ccf8e8a5b6e"
+    },
+    {
+      "path": "docs/checkpoints/GATE-1-CP-0001/COMPLETENESS-REPORT.json",
+      "reason": "The checkpoint: its plan, decisions, risks, requirement matrix, evidence and ledger.",
+      "hashAfter": "f22d1b41feac6027169dcbbc5bd1f34c5813cefba946bee93bbe1d83507cc2c4"
+    },
+    {
+      "path": "docs/checkpoints/GATE-1-CP-0001/COMPLETENESS-REPORT.md",
+      "reason": "The checkpoint: its plan, decisions, risks, requirement matrix, evidence and ledger.",
+      "hashAfter": "bffb5cd268bec9f9845385732d4f38664f272cb8ebff3d21c74be906ad0bc1dd"
+    },
+    {
+      "path": "docs/checkpoints/GATE-1-CP-0001/COUNTS.json",
+      "reason": "The checkpoint: its plan, decisions, risks, requirement matrix, evidence and ledger.",
+      "hashAfter": "58b9456dc7a8f05a0388f0d45923171ef3710a0496cfb94abea9759cf99dde9b"
+    },
+    {
+      "path": "docs/checkpoints/GATE-1-CP-0001/DECISIONS.md",
+      "reason": "The checkpoint: its plan, decisions, risks, requirement matrix, evidence and ledger.",
+      "hashAfter": "eba26d4a85e6afebb347f78ec6ba31ee1187c96ae057bdb69215e5ef28b2d1be"
+    },
+    {
+      "path": "docs/checkpoints/GATE-1-CP-0001/DIFF-SUMMARY.md",
+      "reason": "The checkpoint: its plan, decisions, risks, requirement matrix, evidence and ledger.",
+      "hashAfter": "454398aca202d60ee031712cf23d8d7389782b00aa1a119ce08d9100549c5351"
+    },
+    {
+      "path": "docs/checkpoints/GATE-1-CP-0001/FILES.json",
+      "reason": "The checkpoint: its plan, decisions, risks, requirement matrix, evidence and ledger."
+    },
+    {
+      "path": "docs/checkpoints/GATE-1-CP-0001/FINAL-REPORT.md",
+      "reason": "The checkpoint: its plan, decisions, risks, requirement matrix, evidence and ledger.",
+      "hashAfter": "7514bab1a92357e0b4529348f90ffc472a5fe3df78e873a716dbd1dee74a9ba7"
+    },
+    {
+      "path": "docs/checkpoints/GATE-1-CP-0001/HANDOFF.md",
+      "reason": "The checkpoint: its plan, decisions, risks, requirement matrix, evidence and ledger.",
+      "hashAfter": "904301e8a0a81a2d3bc179c6b5c4ec9f9af2ae32769655348b132b2c69ec58b5"
+    },
+    {
+      "path": "docs/checkpoints/GATE-1-CP-0001/LESSON-PREFLIGHT.json",
+      "reason": "The checkpoint: its plan, decisions, risks, requirement matrix, evidence and ledger.",
+      "hashAfter": "becae5e2fa12acf6ae5401f80fde9d4c540c46239091a41c83138fd2288f826b"
+    },
+    {
+      "path": "docs/checkpoints/GATE-1-CP-0001/LESSON-PREFLIGHT.md",
+      "reason": "The checkpoint: its plan, decisions, risks, requirement matrix, evidence and ledger.",
+      "hashAfter": "00e5f8cedf57746a3ac0b70a7110c5f84e459d46511f7b358ca1b2abe8d5bcd0"
+    },
+    {
+      "path": "docs/checkpoints/GATE-1-CP-0001/M1-INTERNAL-MIRROR.json",
+      "reason": "The checkpoint: its plan, decisions, risks, requirement matrix, evidence and ledger.",
+      "hashAfter": "3bf9aab24115481f2919a5b1ec67601ee5217737dc3ab260191770d2901a2603"
+    },
+    {
+      "path": "docs/checkpoints/GATE-1-CP-0001/M1-INTERNAL-MIRROR.md",
+      "reason": "The checkpoint: its plan, decisions, risks, requirement matrix, evidence and ledger.",
+      "hashAfter": "77795f16d9dbe09f2859da5eaba7573ab1fb36d7977fa1feb0f1a88ad1dc7aa7"
+    },
+    {
+      "path": "docs/checkpoints/GATE-1-CP-0001/M1-INTERNAL-RED-TEAM.json",
+      "reason": "The checkpoint: its plan, decisions, risks, requirement matrix, evidence and ledger.",
+      "hashAfter": "45fc2dfa3b2f763982693be146354df776e5dd6c22989a55b041062be54b6894"
+    },
+    {
+      "path": "docs/checkpoints/GATE-1-CP-0001/NEXT.md",
+      "reason": "The checkpoint: its plan, decisions, risks, requirement matrix, evidence and ledger.",
+      "hashAfter": "1923f1af8172c16bfa6d21773375be6fb5d21a1148045a624c829d32b451fce4"
+    },
+    {
+      "path": "docs/checkpoints/GATE-1-CP-0001/PLAN.md",
+      "reason": "The checkpoint: its plan, decisions, risks, requirement matrix, evidence and ledger.",
+      "hashAfter": "4640a70c21785dedde29faa40bc317af42635e6032f95e8d4fa99133502a9351"
+    },
+    {
+      "path": "docs/checkpoints/GATE-1-CP-0001/PROVENANCE.json",
+      "reason": "The checkpoint: its plan, decisions, risks, requirement matrix, evidence and ledger.",
+      "hashAfter": "18c55f07e4587b3a855e767dad741439ef72f96b2266c708e467ededfa601efa"
+    },
+    {
+      "path": "docs/checkpoints/GATE-1-CP-0001/QUALITY.json",
+      "reason": "The checkpoint: its plan, decisions, risks, requirement matrix, evidence and ledger.",
+      "hashAfter": "df79c72262794a212dd231c602f1a4ef9eee99b643b3316b6e4728ccdb8a0440"
+    },
+    {
+      "path": "docs/checkpoints/GATE-1-CP-0001/RED-TEAM-REPORT.md",
+      "reason": "The checkpoint: its plan, decisions, risks, requirement matrix, evidence and ledger.",
+      "hashAfter": "2eeb2a0f7536979de0c9f02337e00394471cbef13a676c244ea30bfd98ad0bd9"
+    },
+    {
+      "path": "docs/checkpoints/GATE-1-CP-0001/REQUIREMENTS-MATRIX.json",
+      "reason": "The checkpoint: its plan, decisions, risks, requirement matrix, evidence and ledger.",
+      "hashAfter": "01cfc2981022788e6e7912a4fc7f1e7e6030a34173d491b58e1ded1ed6517867"
+    },
+    {
+      "path": "docs/checkpoints/GATE-1-CP-0001/REQUIREMENTS-MATRIX.md",
+      "reason": "The checkpoint: its plan, decisions, risks, requirement matrix, evidence and ledger.",
+      "hashAfter": "ac6e6ed41244351840042bd2d4189332ddd74fe80286e3a050d759a3983942d8"
+    },
+    {
+      "path": "docs/checkpoints/GATE-1-CP-0001/REWORK-LOG.jsonl",
+      "reason": "The checkpoint: its plan, decisions, risks, requirement matrix, evidence and ledger.",
+      "hashAfter": "886f27de2acbbb10d16376ebe709f8689c31cd1f17892569dbedab13266799d8"
+    },
+    {
+      "path": "docs/checkpoints/GATE-1-CP-0001/RISKS.md",
+      "reason": "The checkpoint: its plan, decisions, risks, requirement matrix, evidence and ledger.",
+      "hashAfter": "ef57f6ca7bfdf4ffb55a70c8f8ba1e77d8f7d637ea2b5a8e316fbc571984a3e0"
+    },
+    {
+      "path": "docs/checkpoints/GATE-1-CP-0001/RUN-METADATA.json",
+      "reason": "The checkpoint: its plan, decisions, risks, requirement matrix, evidence and ledger.",
+      "hashAfter": "3e12076f9329250e6304056ce7f1b7de0e32e8d3ea091b4d45578e416203d6a2"
+    },
+    {
+      "path": "docs/checkpoints/GATE-1-CP-0001/STATE.json",
+      "reason": "The checkpoint: its plan, decisions, risks, requirement matrix, evidence and ledger.",
+      "hashAfter": "116b508dc26b953e9d2b290a1dd9e721f9eee6fbb99758d3f786f7c7ffae9bcd"
+    },
+    {
+      "path": "docs/checkpoints/GATE-1-CP-0001/STATUS.md",
+      "reason": "The checkpoint: its plan, decisions, risks, requirement matrix, evidence and ledger.",
+      "hashAfter": "9d4197ffdc38c2c88d38f41ddcc6a0f1eb8dca77023ca57229ed37a504329707"
+    },
+    {
+      "path": "docs/checkpoints/GATE-1-CP-0001/TESTS.json",
+      "reason": "The checkpoint: its plan, decisions, risks, requirement matrix, evidence and ledger.",
+      "hashAfter": "94c0fe43a4562b518e01d33ebcd6f94c212a87e90be5a2144d7bcecc7672078a"
+    },
+    {
+      "path": "docs/checkpoints/GATE-1-CP-0001/VERIFICATION-REPORT.json",
+      "reason": "The checkpoint: its plan, decisions, risks, requirement matrix, evidence and ledger.",
+      "hashAfter": "01aa31f12f1e3ab20718bdbefd9cec7213775bb51762f4ad6e0ac6cdd61625fb"
+    },
+    {
+      "path": "docs/runbooks/MODEL-GATEWAY.md",
+      "reason": "The operator's runbook: configuration, synchronisation, inference, streaming, fallback, troubleshooting, the live smoke and how to add an adapter.",
+      "hashAfter": "3d5638d5ca206505615953c56f6b5697fde0895997752914bea37dc0f06e7239"
+    },
+    {
+      "path": "packages/contracts/src/iacode_contracts/gateway.py",
+      "reason": "The camelCase wire contracts the gateway API answers with.",
+      "hashAfter": "6051a3e6a183ad9b9f6e71ef952eee6cb03e9f3c2ad7c0329fcc4fdd273d4ea9"
+    },
+    {
+      "path": "scripts/development-ledger/gate1_red_team.py",
+      "reason": "The Gate 1 adversarial battery and its null-mutation control.",
+      "hashAfter": "007d900fa85d44676b2048d7eeab6a6f569705e83eeb5e5503c8346745db18a3"
+    },
+    {
+      "path": "scripts/development-ledger/gate1_runtime_attacks.py",
+      "reason": "The attacks that run inside the image, against the gateway itself.",
+      "hashAfter": "1c682b620be2ac5ebd56bbc974160a9768eca56fef0c36e8e44f0440e4c608ca"
+    },
+    {
+      "path": "scripts/iacode/gates/gateway_tests.py",
+      "reason": "The gateway suite as a mandatory gate, building the image before it measures.",
+      "hashAfter": "14f7be0fb4f348771d2a454a598c34c7f42cc5cd7cfb64620cca5226323f83d6"
+    },
+    {
+      "path": "scripts/iacode/gateway_smoke.py",
+      "reason": "The live provider check: catalog, one inference, one stream, the persisted record and the Prometheus observation. BLOCKED when a credential is absent, never PASS.",
+      "hashAfter": "33883f0e99fa7af1b21deeb492accf13d2a23eea1e139f5ffe158added75b388"
+    },
+    {
+      "path": "scripts/iacode/image_tests.py",
+      "reason": "Every counted Python suite that lives in the API image, in one execution, so the executed count can be compared with the derived denominator.",
+      "hashAfter": "b5324afcc8d0efa8843c1eb9e3e04a8af8183ecc8113b3f7e140446fdf51e2a6"
+    },
+    {
+      "path": "services/model-gateway/pyproject.toml",
+      "reason": "The gateway is its own package, depending on no application.",
+      "hashAfter": "e8ee81daf516381e1ab0f7d733e7d3dbb8a9a33c3998eb9de2e7ef0ef1a66b73"
+    },
+    {
+      "path": "services/model-gateway/src/iacode_model_gateway/__init__.py",
+      "reason": "The provider-neutral Model Gateway: its contracts, its error taxonomy, its configuration and the ports it declares for the application to implement.",
+      "hashAfter": "9d5f648e5c2f1d186bd083bfdcd8d2c2f66fb1aaf2ea88049bdbb78266ab6550"
+    },
+    {
+      "path": "services/model-gateway/src/iacode_model_gateway/catalog/__init__.py",
+      "reason": "Model discovery and normalisation: the catalog comes from the provider's own API, never from a hand-maintained list.",
+      "hashAfter": "62cb35c545445e5c4456921e425062cf90df16baafbe9f37cfa94e4c04f3d323"
+    },
+    {
+      "path": "services/model-gateway/src/iacode_model_gateway/catalog/normalize.py",
+      "reason": "Model discovery and normalisation: the catalog comes from the provider's own API, never from a hand-maintained list.",
+      "hashAfter": "d20acf3bf29a1809d5dcae531e70648390490a928a868feaf44bd6232e7fe5ea"
+    },
+    {
+      "path": "services/model-gateway/src/iacode_model_gateway/catalog/sync.py",
+      "reason": "Model discovery and normalisation: the catalog comes from the provider's own API, never from a hand-maintained list.",
+      "hashAfter": "5e095ed83debdc5dc1e27267c8e984cf30c53e8b2d640dfdd383b8a887761174"
+    },
+    {
+      "path": "services/model-gateway/src/iacode_model_gateway/config.py",
+      "reason": "The provider-neutral Model Gateway: its contracts, its error taxonomy, its configuration and the ports it declares for the application to implement.",
+      "hashAfter": "c339dbd09454fc107feb9d3855ef40708d33cf7e5acb9aee4b4430e8edf5e129"
+    },
+    {
+      "path": "services/model-gateway/src/iacode_model_gateway/contracts.py",
+      "reason": "The provider-neutral Model Gateway: its contracts, its error taxonomy, its configuration and the ports it declares for the application to implement.",
+      "hashAfter": "faac415a711a2f476d2d8cf608dcdb1e491bfb182994026e3e3622f16a56ea15"
+    },
+    {
+      "path": "services/model-gateway/src/iacode_model_gateway/errors.py",
+      "reason": "The provider-neutral Model Gateway: its contracts, its error taxonomy, its configuration and the ports it declares for the application to implement.",
+      "hashAfter": "fed8c1280889cbd0071ee436117ed58d02ed7d690d2f4557fb3bbc025389d4cd"
+    },
+    {
+      "path": "services/model-gateway/src/iacode_model_gateway/fingerprint.py",
+      "reason": "The provider-neutral Model Gateway: its contracts, its error taxonomy, its configuration and the ports it declares for the application to implement.",
+      "hashAfter": "eb87953b1cc825561ba24149109f7811963ae5bd5085aa33aec0c740054b5a1a"
+    },
+    {
+      "path": "services/model-gateway/src/iacode_model_gateway/gateway.py",
+      "reason": "The provider-neutral Model Gateway: its contracts, its error taxonomy, its configuration and the ports it declares for the application to implement.",
+      "hashAfter": "c6c3fd4629e4edd1ec764c3e91b42e451578fcf0ca5e258b74490c3d26ce111f"
+    },
+    {
+      "path": "services/model-gateway/src/iacode_model_gateway/ports.py",
+      "reason": "The provider-neutral Model Gateway: its contracts, its error taxonomy, its configuration and the ports it declares for the application to implement.",
+      "hashAfter": "f8d47dde5c7865e4eb3c7f6c4e81909945da922a7bdaddee842de813f56550cf"
+    },
+    {
+      "path": "services/model-gateway/src/iacode_model_gateway/pricing.py",
+      "reason": "The provider-neutral Model Gateway: its contracts, its error taxonomy, its configuration and the ports it declares for the application to implement.",
+      "hashAfter": "becc7cf77cf9340ebcf75fd83953f150af5426519fc15931d6e1f4fee8fce509"
+    },
+    {
+      "path": "services/model-gateway/src/iacode_model_gateway/protocols/__init__.py",
+      "reason": "A protocol adapter: pure translation between the gateway's contracts and one provider protocol, performing no I/O.",
+      "hashAfter": "c5cd59bb90bb5129cbb6dfb809c8cd82369dd10c2904f7422fec86b6e1331305"
+    },
+    {
+      "path": "services/model-gateway/src/iacode_model_gateway/protocols/anthropic_messages.py",
+      "reason": "A protocol adapter: pure translation between the gateway's contracts and one provider protocol, performing no I/O.",
+      "hashAfter": "3309c067e0564e0e6216773afbf60932ceca8486b962304e9275fa14f1290f8a"
+    },
+    {
+      "path": "services/model-gateway/src/iacode_model_gateway/protocols/base.py",
+      "reason": "A protocol adapter: pure translation between the gateway's contracts and one provider protocol, performing no I/O.",
+      "hashAfter": "b1d78b076ddac881c935466d199f2bca3a89ce127233b9482f287ba00605d5da"
+    },
+    {
+      "path": "services/model-gateway/src/iacode_model_gateway/protocols/openai_chat.py",
+      "reason": "A protocol adapter: pure translation between the gateway's contracts and one provider protocol, performing no I/O.",
+      "hashAfter": "ae93848cfa776eb8852258102610d7c2eb9d9e53c9ca90c467b0f68815aee6b6"
+    },
+    {
+      "path": "services/model-gateway/src/iacode_model_gateway/protocols/openai_responses.py",
+      "reason": "A protocol adapter: pure translation between the gateway's contracts and one provider protocol, performing no I/O.",
+      "hashAfter": "224ddc1c9606daf6460293083e0674e283fa60f6c933ec90b1aa3778378465ff"
+    },
+    {
+      "path": "services/model-gateway/src/iacode_model_gateway/protocols/selection.py",
+      "reason": "A protocol adapter: pure translation between the gateway's contracts and one provider protocol, performing no I/O.",
+      "hashAfter": "b7af1e4d7698e54dff7155df5075642e76aeb99aac0b59e199bd363d025d97e4"
+    },
+    {
+      "path": "services/model-gateway/src/iacode_model_gateway/providers/__init__.py",
+      "reason": "The one place in the gateway that opens a socket, and the health contract above it.",
+      "hashAfter": "e340848962ae70757d9b416c09afdf542817737323b39b5f60d49c448e31c54f"
+    },
+    {
+      "path": "services/model-gateway/src/iacode_model_gateway/providers/base.py",
+      "reason": "The one place in the gateway that opens a socket, and the health contract above it.",
+      "hashAfter": "6413c57359a65a6c3f3ce5744f5849fb68ee8950f5fbfcd0a258e4d7ed47c070"
+    },
+    {
+      "path": "services/model-gateway/src/iacode_model_gateway/providers/http_provider.py",
+      "reason": "The one place in the gateway that opens a socket, and the health contract above it.",
+      "hashAfter": "3f16f6ffec82f26c5b635b9b10f92668d7c9e56cab51346b0f09bb9612fbcd28"
+    },
+    {
+      "path": "services/model-gateway/src/iacode_model_gateway/resilience/__init__.py",
+      "reason": "Retry with full-jitter backoff, the circuit breaker, and the request limits.",
+      "hashAfter": "af52afe4e5cf6adb9894ff37c12bec34114f23beb8cf62c3c1d90473e2367a21"
+    },
+    {
+      "path": "services/model-gateway/src/iacode_model_gateway/resilience/circuit.py",
+      "reason": "Retry with full-jitter backoff, the circuit breaker, and the request limits.",
+      "hashAfter": "ec155c802f8629cc9c287533da4c197f2db7c6f7ee57a782796006f98a5fb526"
+    },
+    {
+      "path": "services/model-gateway/src/iacode_model_gateway/resilience/limits.py",
+      "reason": "Retry with full-jitter backoff, the circuit breaker, and the request limits.",
+      "hashAfter": "40fb5f75a47bbb25e7efa55da8d40de5373d7b1c84ac30552e8b8ffd94de6c85"
+    },
+    {
+      "path": "services/model-gateway/src/iacode_model_gateway/resilience/retry.py",
+      "reason": "Retry with full-jitter backoff, the circuit breaker, and the request limits.",
+      "hashAfter": "fd014b456724739bad37e2a0eba2aabd85cf3c1fa7019f478a145045c07bfa01"
+    },
+    {
+      "path": "services/model-gateway/src/iacode_model_gateway/routing/__init__.py",
+      "reason": "Candidate selection, capability filtering and the context estimate that decides whether a prompt fits.",
+      "hashAfter": "dd9df943e04a38f4951ef6737c7ec80257c766881a1684102dd2e9e2982915a7"
+    },
+    {
+      "path": "services/model-gateway/src/iacode_model_gateway/routing/context.py",
+      "reason": "Candidate selection, capability filtering and the context estimate that decides whether a prompt fits.",
+      "hashAfter": "7fcdec2e76efb947f1cf94e9941cc730bd880dbea7a6a2fd507947330d6291d2"
+    },
+    {
+      "path": "services/model-gateway/src/iacode_model_gateway/routing/policy.py",
+      "reason": "Candidate selection, capability filtering and the context estimate that decides whether a prompt fits.",
+      "hashAfter": "8348a5a2c9fa5eb0b163c959708ca8b8b3d33aa1c8ebe78d8c8200fb39ab57b0"
+    },
+    {
+      "path": "services/model-gateway/src/iacode_model_gateway/routing/router.py",
+      "reason": "Candidate selection, capability filtering and the context estimate that decides whether a prompt fits.",
+      "hashAfter": "43879e1b82b0c62543a9b8dc09753e0a237b3f3e101ae4eb651b82c16b6c23b5"
+    },
+    {
+      "path": "services/model-gateway/src/iacode_model_gateway/security/__init__.py",
+      "reason": "Base-URL validation, performed without resolving DNS.",
+      "hashAfter": "315111402f51018e1593a8d0a40e80ad1792de04d02ee84eb77dfdeec1972672"
+    },
+    {
+      "path": "services/model-gateway/src/iacode_model_gateway/security/base_url.py",
+      "reason": "Base-URL validation, performed without resolving DNS.",
+      "hashAfter": "702e94c58db3bcec7718871160d337096554ee5577d1491a1fa0c7cf2a1702c0"
+    },
+    {
+      "path": "services/model-gateway/src/iacode_model_gateway/telemetry/__init__.py",
+      "reason": "The gateway's metrics and its structured log fields, neither carrying a prompt or a credential.",
+      "hashAfter": "df8a39db219cfa7a6846d4759c24cbff25eacdbbd008dd9e7ef5a4ef1b6e093b"
+    },
+    {
+      "path": "services/model-gateway/src/iacode_model_gateway/telemetry/logs.py",
+      "reason": "The gateway's metrics and its structured log fields, neither carrying a prompt or a credential.",
+      "hashAfter": "93dc467f1c32ec09f64fa6fadc99e5078fc5d0bbfb45b350f2cffa262c3c91f7"
+    },
+    {
+      "path": "services/model-gateway/src/iacode_model_gateway/telemetry/metrics.py",
+      "reason": "The gateway's metrics and its structured log fields, neither carrying a prompt or a credential.",
+      "hashAfter": "9cfaabbcf8738b51bc85789aa95db881078134512c7a2553fe8f3126e7a24943"
+    },
+    {
+      "path": "services/model-gateway/tests/conftest.py",
+      "reason": "The Model Gateway suite: deterministic, with no network and no stack.",
+      "hashAfter": "c65c1216d4b642a8f81a883bd532c5371e878eec1a9f33bee7f1add63be5f4b6"
+    },
+    {
+      "path": "services/model-gateway/tests/fixtures/__init__.py",
+      "reason": "The deterministic doubles the gateway suite runs against, unreachable from any runtime path.",
+      "hashAfter": "bff8d1f1c66633fc16a368e5ffcd5ad86e7b456830621fb569b4dba1f6212e53"
+    },
+    {
+      "path": "services/model-gateway/tests/fixtures/doubles.py",
+      "reason": "The deterministic doubles the gateway suite runs against, unreachable from any runtime path.",
+      "hashAfter": "5539bbf760859be886edadc8744032f1c7e788125d302edc15c9a99770fcb2b4"
+    },
+    {
+      "path": "services/model-gateway/tests/test_catalog.py",
+      "reason": "The Model Gateway suite: deterministic, with no network and no stack.",
+      "hashAfter": "f4d0bf343ab3583c94022c53dbbcdb9d15ef0b2d68402eddab4b4a6e6208148b"
+    },
+    {
+      "path": "services/model-gateway/tests/test_contracts.py",
+      "reason": "The Model Gateway suite: deterministic, with no network and no stack.",
+      "hashAfter": "a40936238afe1ee598983f7bc76cdabc86772420e44169e6a5e0e5329d1187b4"
+    },
+    {
+      "path": "services/model-gateway/tests/test_gateway.py",
+      "reason": "The Model Gateway suite: deterministic, with no network and no stack.",
+      "hashAfter": "9d7c4163bbca84dc7e4142962d0c8e8ea77ca419a1e9b4640f43b79c646aa244"
+    },
+    {
+      "path": "services/model-gateway/tests/test_package.py",
+      "reason": "The Model Gateway suite: deterministic, with no network and no stack.",
+      "hashAfter": "ea2a96248e81cb58b04f2ffd94323ef963c91864284bc8ee6f125a6fe88e52cf"
+    },
+    {
+      "path": "services/model-gateway/tests/test_protocols.py",
+      "reason": "The Model Gateway suite: deterministic, with no network and no stack.",
+      "hashAfter": "42e274175f3ac9339584b3351f9a55ea43c83de65cde4b25c9c6063af28430a0"
+    },
+    {
+      "path": "services/model-gateway/tests/test_provider_contract.py",
+      "reason": "The Model Gateway suite: deterministic, with no network and no stack.",
+      "hashAfter": "3be3f12d5709d12738d57272c5a123fb22af37e86189d4dc702ecf368df4649a"
+    },
+    {
+      "path": "services/model-gateway/tests/test_resilience.py",
+      "reason": "The Model Gateway suite: deterministic, with no network and no stack.",
+      "hashAfter": "4facef9e67dd0e05b1049d844cd8cd6e6ce7cfe772896bb3cb33d5dcc643f4d8"
+    },
+    {
+      "path": "services/model-gateway/tests/test_routing.py",
+      "reason": "The Model Gateway suite: deterministic, with no network and no stack.",
+      "hashAfter": "90db78d0dd039d1327307b38f599f80c77fd807effcdbeb86c69c795a35644c2"
+    },
+    {
+      "path": "services/model-gateway/tests/test_secrets.py",
+      "reason": "The Model Gateway suite: deterministic, with no network and no stack.",
+      "hashAfter": "bcc5b04863805df863d873f6aa536be08c2340e09b56b5bc66cac0da7085dc25"
+    },
+    {
+      "path": "services/model-gateway/tests/test_security.py",
+      "reason": "The Model Gateway suite: deterministic, with no network and no stack.",
+      "hashAfter": "01c9f95181c2874e77012415470672daba3037abc5715b27390da076d1f06c72"
+    },
+    {
+      "path": "services/model-gateway/tests/test_streaming.py",
+      "reason": "The Model Gateway suite: deterministic, with no network and no stack.",
+      "hashAfter": "8bd03ce60a90c2ce3fc11c9b9977460a68c7c6b04c902050cacfdb87e9b12637"
+    },
+    {
+      "path": "services/model-gateway/tests/test_structured_output.py",
+      "reason": "The Model Gateway suite: deterministic, with no network and no stack.",
+      "hashAfter": "51ad965aad511d1e0dd890a83946da4c42feed8ba0b921fb089cd98abe64733b"
+    },
+    {
+      "path": "tests/test_gate1_model_gateway.py",
+      "reason": "The Gate's control-plane suite: the specification mirror, the registries, the scope, the provider-neutral boundary, the frontend boundary, the live-check contract and the four guardrails this Gate's failures produced.",
+      "hashAfter": "39364106db424ad6098624e01d2cc651636c10c9813041ade408757aad2bc887"
+    }
+  ],
+  "filesModified": [
+    {
+      "path": ".dockerignore",
+      "reason": "The policy directory reaches the build context; nothing else about the ledger does.",
+      "hashAfter": "0f09e1c4ad47d18f4977ed709e5f50b9e99a6f623c52f5369389ff1e71528dc6",
+      "hashBefore": "8e75276c46964afc2dd2203247e43c59fcb83bac88feb2832124f3e2b5724995"
+    },
+    {
+      "path": ".iacode/anchors/checkpoint-chain.json",
+      "reason": "The sealed predecessor GATE-0-CP-0001 is anchored by its successor.",
+      "hashAfter": "c88915d259b76bc83206d0ed5ca48378aae707c20b03d570fafd6600a3037d05",
+      "hashBefore": "e2ebf9d050ef30ff529b26ea2f69612616be683acd642fd8047f51039f7ac9af"
+    },
+    {
+      "path": ".iacode/memory/guardrails/registry.json",
+      "reason": "The four controls those lessons became.",
+      "hashAfter": "2e227b553ac3bd64b1d6b09cb544d8a55c8c7960c4d28c81f967dbbb16de1906",
+      "hashBefore": "6bd29d910794f87f4059362efb3093d2972fc8b27768b1c0a9a5a1405f0986e6"
+    },
+    {
+      "path": ".iacode/memory/lessons.jsonl",
+      "reason": "Four lessons this Gate's own failures produced, each GUARDED by an automated control.",
+      "hashAfter": "95ec6340065ee8362280b7d75fd3190980f85ff04a20a242a9ccb78801d167c7",
+      "hashBefore": "f903d4a6f04c6b31eb543ac92eb6d386dde0867aaa8a5b11e824d30bb0887403"
+    },
+    {
+      "path": ".iacode/policies/canonical-requirements.json",
+      "reason": "The Gate 1 mirror, generated from the checklist by the same parser the control reads it with.",
+      "hashAfter": "a1f54b838ae643681535dfc882392e71d1614affd3864a3a71aabdbebf1e379a",
+      "hashBefore": "4e62378c2a94fbcfa58e5c584fbb1720b6f951e329fcf66beaf06300acfb880f"
+    },
+    {
+      "path": ".iacode/policies/quality-gates.json",
+      "reason": "The gateway suite becomes a mandatory gate.",
+      "hashAfter": "b621a002dc9dfba36ab7fd946f5d49ad75538c39acbc4149bf5d1e857821cb69",
+      "hashBefore": "f027e08635884cd6a6afade1ef5ec56f362b0723fc9470e214164717b05b448c"
+    },
+    {
+      "path": ".iacode/policies/test-suites.json",
+      "reason": "The gateway suite is declared, so it contributes to the denominator and to evidence resolution.",
+      "hashAfter": "22dde910c7006d610265b712c100958d02e93b1d539855b201953f0c234bee32",
+      "hashBefore": "74589940b80aaaae16b922c6ff55ede896eba75f3f373765da9cda33cc6bb0d8"
+    },
+    {
+      "path": "README.md",
+      "reason": "What exists after this Gate, and how to reach a provider.",
+      "hashAfter": "12f4d2fbebac4cab4eaa7c8c0241c8198f127a85fb75bcea774ff9f7fba1338c",
+      "hashBefore": "b81d48af1ae898e262c91acb13bdd37a65c7b071b3c9e6a585140a174a84051a"
+    },
+    {
+      "path": "START-HERE.md",
+      "reason": "The current Gate, its specification, and that M1 stays PENDING.",
+      "hashAfter": "c1c284a4ae1a3b483e2667a76ce3469c461cbc046b8d117771a89c9700d58447",
+      "hashBefore": "8eef814e4353a573eb911002c8187bb49ed8fff638e4ffa73b183e351bf8c777"
+    },
+    {
+      "path": "apps/api/Dockerfile",
+      "reason": "The image installs the gateway package and carries the policy directory and the gateway suite.",
+      "hashAfter": "0eda5605aa64816a6d197c5b01b9079e11291db07a91636c04a228d07719bf77",
+      "hashBefore": "392870bd4fe0ab8f915972f2493be5699d6735a968c1b44d9be660e1405d3a36"
+    },
+    {
+      "path": "apps/api/pyproject.toml",
+      "reason": "httpx becomes a production dependency and the gateway package is installed.",
+      "hashAfter": "9271f0f8f6f83d9e6784d826c95af48204e603fae526653a5970f0c2f10fa13d",
+      "hashBefore": "ef866bb325034cf3c751f8e0a9bbee902557a5461c4c765001d06ee5ae52d7aa"
+    },
+    {
+      "path": "apps/api/requirements.txt",
+      "reason": "httpx moves from the test toolchain to the production set, because the gateway calls providers with it.",
+      "hashAfter": "695e4eba517900ed35e1270a8e28d586d31fbb9b222620031d323721746097f2",
+      "hashBefore": "8c3bf92df1860d8d5201b7bd086552aecceb8b43b270a6fbcb3c262bcfbbc74f"
+    },
+    {
+      "path": "apps/api/src/iacode_api/config.py",
+      "reason": "The gateway's operational configuration: timeouts, attempts, limits, and the default model.",
+      "hashAfter": "2541fcae6e352811a10423d27201a7adc8fd03fd89ee7d649e2230a3b5f92205",
+      "hashBefore": "91de9ab24733a757d155ac736417fe443d597c6b7e9678e02475f058a731cbed"
+    },
+    {
+      "path": "apps/api/src/iacode_api/db/models.py",
+      "reason": "The provider, model and model-call tables grow the columns the gateway records, and none that could hold a prompt.",
+      "hashAfter": "e6807204665b78516f02670f1bc969bec7285425f62f6357050c644a74b9b36e",
+      "hashBefore": "a1bc9638ed4c2b3b837869d0376074f51ebeecba916cd7b81fc1ade4c46e543d"
+    },
+    {
+      "path": "apps/api/src/iacode_api/lifespan.py",
+      "reason": "The gateway runtime is built with the other resources and disposed with them.",
+      "hashAfter": "12e646bf18960663fbea7b2bc8e2859040ede04efca9cc9c56ef352a6282c623",
+      "hashBefore": "a4cd4e86000786f8c2cdca35c4ef6f7e966e81b9237e3571161a8b1836ca859f"
+    },
+    {
+      "path": "apps/api/src/iacode_api/main.py",
+      "reason": "The gateway router and its error handler are mounted.",
+      "hashAfter": "6cef24ba0ec13c708d36df365ef19069870176be24d52fb173cc8c387d31400d",
+      "hashBefore": "d9f3c60c611571036fe604fcd3765ba4f7b6b79d331f1e48dde20f28bf14bfb6"
+    },
+    {
+      "path": "apps/api/tests/integration/test_migrations.py",
+      "reason": "The head revision is derived from the migration graph rather than named.",
+      "hashAfter": "49094f33406d4df0bb2f04ec0612b363e7c5b81d34e5c92947ccb6a1b981168d",
+      "hashBefore": "acec9448b9d1d611c3bffff88f8268ba9255fe2e661be13bfb6f96c240dcf4a1"
+    },
+    {
+      "path": "apps/api/tests/unit/test_domain_model.py",
+      "reason": "The provider registry contract, and the model row governed by its provider.",
+      "hashAfter": "ecf8d426017e19e26aacb5f837177ef408126b837a99d8620c38852d950013ab",
+      "hashBefore": "39f32da77ac2423c4d19dab753b0d3e400e70d37ebee50f81fe5ef86ad1b3647"
+    },
+    {
+      "path": "apps/web/src/app/app.config.ts",
+      "reason": "The router is provided, with component input binding.",
+      "hashAfter": "d65aa78d1ed8d58238328b15229d0da79523ad38bd7a12385607480116cdd6dd",
+      "hashBefore": "52873be7d142a9fc3ea49c03b7760e4cddb4eecd4903e6f416ae4d345ae16e2d"
+    },
+    {
+      "path": "apps/web/src/app/app.css",
+      "reason": "The shell's layout, with the shared design moved to the global stylesheet.",
+      "hashAfter": "a94b6258a546f700156839aa40ade02da25b49ebc4f8a67f856182fcfbee84bc",
+      "hashBefore": "9ace2672bcee12e169a323deae3b4c21f413619fdea1dac4d6e130b1d7d23101"
+    },
+    {
+      "path": "apps/web/src/app/app.html",
+      "reason": "The shell's own template, separate from the Foundation page it used to be.",
+      "hashAfter": "001cf15348892aa8fdfb635ce0ddd013a5284d7546186c02dd3cbb7c116ba7cc",
+      "hashBefore": "489215e9be17990216d679c6aa4e88e3ef157f63072a798d320b940b1adf79f6"
+    },
+    {
+      "path": "apps/web/src/app/app.spec.ts",
+      "reason": "The shell is tested by mounting it and navigating, not by mounting the routed component.",
+      "hashAfter": "5d153f06c603bf9884c9869416e345648fe5e034ee7ee7843c373f9aa1f9cd1e",
+      "hashBefore": "08a27884694bf5a678a5c086b41c4319dade111a9bca12688019abaa5d8967b3"
+    },
+    {
+      "path": "apps/web/src/app/app.ts",
+      "reason": "The shell becomes a shell: navigation and a router outlet.",
+      "hashAfter": "9c9021baf8fa1e282591452954c8150b8b708728f14fab57f828ba390be8ff38",
+      "hashBefore": "fc48906e3db3bf7e49e7b383c169c4416d880a348a13bc2002cea3525d124daf"
+    },
+    {
+      "path": "apps/web/src/styles.css",
+      "reason": "The design tokens and shared rules both pages use.",
+      "hashAfter": "6e380001113fd54e1f239e1a5dfa2c74af1220a646fdbed28f3803439872c88b",
+      "hashBefore": "795d2ee16827b259d3de2d77c9ab571fdd8b7138cb3b7bf3887783ab06277aa8"
+    },
+    {
+      "path": "docs/ARCHITECTURE.md",
+      "reason": "The gateway boundary, what crosses it, and what is deliberately absent.",
+      "hashAfter": "8ac275e58146b0b95f167e512f206c0cc7b429e0254380957ec68c6ed8e1ec26",
+      "hashBefore": "616d0b3ed9141a6edf7c5d4168acd8c60be32357b9e2f6f396436f285371caf0"
+    },
+    {
+      "path": "docs/DEVELOPMENT.md",
+      "reason": "Where the gateway lives and the conventions this Gate's failures produced.",
+      "hashAfter": "5384f82b8fd5dadde44bc4f65727e435cf80dda42f1f63f4209aeee3a049027e",
+      "hashBefore": "bc0bdd80c1567828a782e9be19a51fcd3d5c2e7da1cb2b71e460afa734095f28"
+    },
+    {
+      "path": "docs/VERSIONS.md",
+      "reason": "httpx as a production dependency, and the first-party packages.",
+      "hashAfter": "c7eddda47e5987b080382b928ec8aa1fa2be9f841be311eac29957e51183e25e",
+      "hashBefore": "7e0ba79f85b973b89d2a4e653b36a31acae787b994324e05e70b07d21fd1260e"
+    },
+    {
+      "path": "docs/checkpoints/LATEST.md",
+      "reason": "The entry point now names this checkpoint.",
+      "hashAfter": "0995c85fe5a2f67b5c7c6f7c0bfdbdd3766a6e08f98138f000278bf3c139d5f5",
+      "hashBefore": "9e0102dcfedb9d1c0781a80df4f3587d952082f6d022060204ecddb9b9bf35a4"
+    },
+    {
+      "path": "infra/compose/.env.example",
+      "reason": "The Model Gateway section: every variable named, no value written.",
+      "hashAfter": "48c78e393ef49c77e937a93fe6f9ea033ca4083beda32a7c451f01fc36eb1b45",
+      "hashBefore": "9e4624fd9c19f0fa0a58b817c5a795303fc8749f11999b414376dd28cd884039"
+    },
+    {
+      "path": "infra/compose/docker-compose.yml",
+      "reason": "The API container receives the provider address, the credential variable and the gateway's operational settings.",
+      "hashAfter": "2b28195be4e8f987f1a2b9fe917fd2ac03ef20e1d7d86ec06e82fb0fb6eb60ce",
+      "hashBefore": "e155f95402fc8eec230b9f81ea1e66b67bf4f64088260606956f14e713cd1756"
+    },
+    {
+      "path": "infra/tests/test_backup_tooling.py",
+      "reason": "The committed example may hold a placeholder under a secret-carrying name and nothing else, judged by the one definition of each question.",
+      "hashAfter": "5a108eb94b277a4fe80cbfaea3f6426825da21994490986ac8098c2072060b9c",
+      "hashBefore": "62ba4538716774c45795d509b5d31572e9565e1c54a11b497b94e0c629d9cce4"
+    },
+    {
+      "path": "infra/tests/test_compose_definition.py",
+      "reason": "Which names carry a credential is asked of the redaction package rather than restated here.",
+      "hashAfter": "0b9b1d5f934d3c723e987c81bb26e696c69d6019ba5c56479b1927573b226480",
+      "hashBefore": "14aa0a4987bfcb027b8338dcbddd616419eb5467d1f7495d5df01fccc0097ff6"
+    },
+    {
+      "path": "packages/common/src/iacode_common/__init__.py",
+      "reason": "The two predicates the rest of the repository imports instead of writing its own.",
+      "hashAfter": "bf15737d6cc13507ffd8e2944baa53646e1fdc8ca4e2e77280e812dbeb898cf4",
+      "hashBefore": "b3fc51cffc83e8b2da21f805e927aba6ebb71ecdcbf270e07e4b14639f9160e3"
+    },
+    {
+      "path": "packages/common/src/iacode_common/redaction.py",
+      "reason": "One authoritative definition of what a placeholder is, and a sensitive-key rule that reads a plural TOKENS as a quantity. Repairs G1-F-003 and G1-F-005.",
+      "hashAfter": "4c85a6cd2e8b4f04afb9519a364d4313bff374e0e16aec87de6470994ecb6735",
+      "hashBefore": "a0b924c23332d25ae490caf1e385e5beee9565464d57a61d546ff9f392a28f89"
+    },
+    {
+      "path": "ruff.toml",
+      "reason": "The camelCase wire contract and FastAPI's call-in-default parameters are declared rather than silently tolerated.",
+      "hashAfter": "29b93802de08fae65e6686739e05dbb09b80bdf44582aab2607955de968a557c",
+      "hashBefore": "dc6b486b45b3c9b205d6bad7cb915c2ed0f57121e8e1ce55f9c29ea1b6c8e259"
+    },
+    {
+      "path": "scripts/development-ledger/finalize_checkpoint.py",
+      "reason": "The refresh of the checkpoint's declared inventory hashes becomes a public function with one home, because every runner of the mandatory gate set needs it. Repairs G1-F-009.",
+      "hashAfter": "985ee6bb4e7613b81b692ab7e470677e2a6f62e567be0af2ba0eb1f81d3a34ed",
+      "hashBefore": "b38c30caa6170831ee61421d09f0466ab8c546e39d4ba3bfe125c57826005cac"
+    },
+    {
+      "path": "scripts/development-ledger/gate0_red_team.py",
+      "reason": "The baseline control derives the Gate rather than naming GATE-0.",
+      "hashAfter": "4a21e54ebb45024947600b5dfaa05addb73b323164698f834adb573a78b6adf8",
+      "hashBefore": "1b155e37073734c8a2e0d753a90d36c31af6cbe4d3367b15646a8b3bf4df3dc8"
+    },
+    {
+      "path": "scripts/development-ledger/green_keeper.py",
+      "reason": "The Green Keeper calls the shared refresh instead of keeping its own copy of the rule.",
+      "hashAfter": "9ac44f13ddb9bda151fe693ad133f03e334bbd6b78c6873e0cf1a6a61c1e9e79",
+      "hashBefore": "fad8540712074e810fe4418058a2ae2aea6a1d8efd2fb088f44eaec7eccbeecf"
+    },
+    {
+      "path": "scripts/development-ledger/ledger_common.py",
+      "reason": "delivered_gate, so a shared control derives the Gate instead of naming one.",
+      "hashAfter": "e021e473dbc2e6f942b5a9c815fcf3ec0366d83a28ddd25143e729e1d76c19f4",
+      "hashBefore": "b64bb4fd2ce976f2f847401f6bb780af2ef6f792b133bf035d90e921003baf90"
+    },
+    {
+      "path": "scripts/development-ledger/policies.py",
+      "reason": "reservations_in_force, so the ordering rule that decides which reservations still constrain a delivery exists once. Repairs G1-F-002.",
+      "hashAfter": "8dce391dc8561f54ca471db75a80851b21a1218dd7d870feb5538b33315bbffa",
+      "hashBefore": "13745576e065b513c412a5474405bc6f58d41a32f09052e20b387807607f96e6"
+    },
+    {
+      "path": "scripts/development-ledger/record_command.py",
+      "reason": "A path Git ignores is a generated artefact, not an input the repository carries, so it is no longer declared as one. Repairs G1-F-007.",
+      "hashAfter": "cf66d63660a18f4349c9a642c367a793dba7e0779fd5ee754e8bfde22a764fe4",
+      "hashBefore": "ff1b38c7937b5724ae4a0cd05600260668fe4e055d6d79342feddefb6783bd7a"
+    },
+    {
+      "path": "scripts/development-ledger/validate_checkpoint.py",
+      "reason": "An input the repository deliberately does not carry is judged by the content it binds; every path the repository does carry must still resolve.",
+      "hashAfter": "892145b8d9c53d78e033841bb093a981775f8d7b98c6201901d7eae5d590d245",
+      "hashBefore": "6cbfb176d01b097967bbb1f8eefa739705083e40b5ced3c2b6590de1dc246070"
+    },
+    {
+      "path": "scripts/iacode/compose.py",
+      "reason": "build_service, so a gate cannot measure a stale image, and psql, which authenticates from inside the container.",
+      "hashAfter": "ce333633403d8b5e5c3f3a42c70245cbf85fe082ad6dc6e36ddd3c578cab116b",
+      "hashBefore": "ae49a14feb1b9fceded7ad60f5f668c5f01cef30b9764b916edb23bdf6e47273"
+    },
+    {
+      "path": "scripts/iacode/gates/api_tests.py",
+      "reason": "The gate builds the image before measuring inside it. Repairs G1-F-001.",
+      "hashAfter": "1c2e1b02c2bd92ff435ea3a97ef912bcccfecd62278b4b585934bb60e2e7c697",
+      "hashBefore": "ac45570aa790e4189fb85ca14285e8682726a41001c72299b2b6d9b51a7e73d9"
+    },
+    {
+      "path": "scripts/iacode/policies_bridge.py",
+      "reason": "The delivered Gate is read from the ledger rather than carried as a literal.",
+      "hashAfter": "76b6baf35e70460449ab621bc66338ca7584fbdc4875331372a560df26cfe634",
+      "hashBefore": "9ae3389f7f37cc61f487c5d514392e8b0eb0d4216df9d27281c95028793b200f"
+    },
+    {
+      "path": "scripts/iacode/scenarios/fresh_install.py",
+      "reason": "The fresh installation asserts the head the repository declares, not the one that was newest when the scenario was written.",
+      "hashAfter": "6346f06e57b184676f5d7600838f9ec224bcce214b465aa3d75bfeb48995c943",
+      "hashBefore": "655632ad5e90d75544ff8152de7d404c439db9c8185ffb816d1881e69a3c306d"
+    },
+    {
+      "path": "scripts/iacode/verify.py",
+      "reason": "The live gateway stage, and a report label derived from the Gate rather than named.",
+      "hashAfter": "6d9d3c97db4c227f488659bb199b463c56987af3ffe4947393f734154422f5a6",
+      "hashBefore": "a2d3a385e00255e37a99b00b9d47c09abf4cac3e469c7737026cb982d308add3"
+    },
+    {
+      "path": "services/model-gateway/README.md",
+      "reason": "The reservation Gate 0 recorded is consumed: the directory now describes what it delivers.",
+      "hashAfter": "620e7e45f8288bf1c505345e94cb3e7380950f143d27d770d7c90d5d868a462b",
+      "hashBefore": "98f40df08ab987ccf5d8e8bae25188b602a1c2b9d4cb052066e5d0ade9b495ac"
+    },
+    {
+      "path": "tests/test_gate0_foundation.py",
+      "reason": "Two controls derive the Gate instead of naming GATE-0.",
+      "hashAfter": "8a4bc846d86041656d73f8aef30d6eb4923856f7959fba9bf30767d9c4298718",
+      "hashBefore": "42a79b972589aa24a758153a04b73860ad9a4f084e6d5050991fde2d719d512e"
+    }
+  ],
+  "filesDeleted": [
+    {
+      "path": "apps/web/src/app/foundation-status.service.spec.ts",
+      "reason": "The Foundation status service moves under the page that owns it.",
+      "hashBefore": "b28e8f0d2e84f8e46682b4b00c2f98fc037e9612c69d61d66d0c81ddb9e238ef"
+    },
+    {
+      "path": "apps/web/src/app/foundation-status.service.ts",
+      "reason": "The Foundation status service moves under the page that owns it.",
+      "hashBefore": "4de8a22cdedf07d3d10afa992f4ec9c1fb7c2ddeac91ba2a677e817db4e6417d"
+    }
+  ]
+}

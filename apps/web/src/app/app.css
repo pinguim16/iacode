@@ -1,21 +1,10 @@
+/* The shell: the frame every page sits in. The shared page styles live in src/styles.css. */
 :host {
   display: block;
   min-height: 100vh;
   padding: 3rem 1.5rem;
   background: #0d1117;
   color: #e6edf3;
-  font-family:
-    ui-sans-serif,
-    system-ui,
-    -apple-system,
-    'Segoe UI',
-    Roboto,
-    sans-serif;
-}
-
-.page {
-  margin: 0 auto;
-  max-width: 62rem;
 }
 
 header h1 {
@@ -24,119 +13,25 @@ header h1 {
   letter-spacing: -0.02em;
 }
 
-header p {
-  margin: 0.25rem 0 0;
+nav {
+  display: flex;
+  gap: 1.25rem;
+  margin-top: 0.5rem;
+}
+
+nav a {
   color: #8b949e;
+  text-decoration: none;
   font-size: 1.05rem;
+  padding-bottom: 0.2rem;
+  border-bottom: 2px solid transparent;
 }
 
-section {
-  margin-top: 2rem;
-  padding: 1.25rem 1.5rem;
-  border: 1px solid #30363d;
-  border-radius: 10px;
-  background: #161b22;
-}
-
-section h2 {
-  margin: 0 0 0.75rem;
-  font-size: 1rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: #8b949e;
-}
-
-dl {
-  display: grid;
-  grid-template-columns: max-content 1fr;
-  gap: 0.4rem 1.25rem;
-  margin: 0;
-}
-
-dt {
-  color: #8b949e;
-}
-
-dd {
-  margin: 0;
-  font-variant-numeric: tabular-nums;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-variant-numeric: tabular-nums;
-}
-
-th,
-td {
-  padding: 0.5rem 0.25rem;
-  text-align: left;
-  border-bottom: 1px solid #21262d;
-}
-
-th {
-  color: #8b949e;
-  font-weight: 500;
-}
-
-.badge {
-  display: inline-block;
-  padding: 0.1rem 0.55rem;
-  border-radius: 999px;
-  font-size: 0.8rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-}
-
-.badge.ok {
-  background: #12321c;
-  color: #3fb950;
-}
-
-.badge.bad {
-  background: #3a1417;
-  color: #f85149;
-}
-
-.badge.unknown {
-  background: #26292e;
-  color: #8b949e;
-}
-
-.detail {
-  color: #8b949e;
-  font-size: 0.85rem;
-}
-
-button {
-  margin-top: 1.5rem;
-  padding: 0.5rem 1.1rem;
-  border: 1px solid #30363d;
-  border-radius: 8px;
-  background: #21262d;
+nav a:hover {
   color: #e6edf3;
-  font: inherit;
-  cursor: pointer;
 }
 
-button:hover:not(:disabled) {
-  border-color: #58a6ff;
-}
-
-button:disabled {
-  opacity: 0.6;
-  cursor: progress;
-}
-
-.error {
-  border-color: #6e2229;
-  color: #f85149;
-}
-
-footer {
-  margin-top: 2rem;
-  color: #6e7681;
-  font-size: 0.85rem;
+nav a.active {
+  color: #e6edf3;
+  border-bottom-color: #58a6ff;
 }

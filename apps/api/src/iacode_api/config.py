@@ -102,6 +102,50 @@ class Settings(BaseSettings):
     # --- readiness ----------------------------------------------------------------------------
     readiness_timeout_seconds: Annotated[float, Field(gt=0, le=30)] = 3.0
 
+    # --- model gateway ------------------------------------------------------------------------
+    # Operational tuning of the gateway. Every one of these is a bound whose absence is a failure
+    # mode: a call with no read timeout that never returns, a retry loop that hammers a provider
+    # already asking for mercy, a fallback chain that walks the catalog, a response read into
+    # memory until the process dies. The gateway's own settings object is built from these in
+    # `iacode_api.gateway.runtime`, so the process has one configuration entry point rather than
+    # two that can disagree.
+    #
+    # Which providers exist and where their credentials live is *not* here: that is
+    # `.iacode/policies/providers.json` plus the environment variables it names, because a provider
+    # is a description of the world rather than a knob.
+    gateway_policy_dir: str = Field(
+        default=".iacode/policies",
+        description="Directory holding providers.json and model-routes.json. The image carries a "
+                    "copy, so this is an absolute path inside the container and a repository-"
+                    "relative one on a developer's machine.")
+    gateway_default_model: str | None = Field(
+        default=None,
+        description="'provider:model' used when a request names neither a model nor a route. "
+                    "Without it such a request fails, which is deliberate: choosing one silently "
+                    "would spend tokens on a model nobody authorised.")
+    gateway_smoke_model: str | None = Field(
+        default=None,
+        description="'provider:model' the live smoke check is authorised to spend tokens on.")
+    gateway_connect_timeout_seconds: Annotated[float, Field(gt=0, le=120)] = 5.0
+    gateway_read_timeout_seconds: Annotated[float, Field(gt=0, le=900)] = 120.0
+    gateway_max_attempts: Annotated[int, Field(ge=1, le=10)] = 3
+    gateway_retry_initial_backoff_seconds: Annotated[float, Field(gt=0, le=60)] = 0.25
+    gateway_retry_max_backoff_seconds: Annotated[float, Field(gt=0, le=300)] = 8.0
+    gateway_retry_max_retry_after_seconds: Annotated[float, Field(gt=0, le=600)] = 30.0
+    gateway_circuit_failure_threshold: Annotated[int, Field(ge=1, le=100)] = 5
+    gateway_circuit_cooldown_seconds: Annotated[float, Field(gt=0, le=3600)] = 30.0
+    gateway_circuit_half_open_successes: Annotated[int, Field(ge=1, le=10)] = 1
+    gateway_max_fallbacks: Annotated[int, Field(ge=0, le=5)] = 2
+    gateway_max_request_bytes: Annotated[int, Field(ge=1024, le=67_108_864)] = 1_048_576
+    gateway_max_messages: Annotated[int, Field(ge=1, le=5000)] = 200
+    gateway_max_tools: Annotated[int, Field(ge=0, le=512)] = 64
+    gateway_max_output_tokens: Annotated[int, Field(ge=1, le=1_000_000)] = 16384
+    gateway_max_response_bytes: Annotated[int, Field(ge=1024, le=268_435_456)] = 8_388_608
+    gateway_persist_prompts: bool = Field(
+        default=False,
+        description="Opt-in debug capture of request content. False in every shipped "
+                    "configuration; turning it on is a rights decision, not a convenience.")
+
     @field_validator("cors_allow_origins", mode="before")
     @classmethod
     def _split_origins(cls, value: object) -> object:
@@ -219,6 +263,25 @@ def settings_for_tests(**overrides: object) -> Settings:
         "temporal_target": "localhost:7233",
         "temporal_namespace": "default",
         "readiness_timeout_seconds": 2.0,
+        "gateway_policy_dir": ".iacode/policies",
+        "gateway_default_model": None,
+        "gateway_smoke_model": None,
+        "gateway_connect_timeout_seconds": 1.0,
+        "gateway_read_timeout_seconds": 5.0,
+        "gateway_max_attempts": 2,
+        "gateway_retry_initial_backoff_seconds": 0.01,
+        "gateway_retry_max_backoff_seconds": 0.05,
+        "gateway_retry_max_retry_after_seconds": 1.0,
+        "gateway_circuit_failure_threshold": 2,
+        "gateway_circuit_cooldown_seconds": 1.0,
+        "gateway_circuit_half_open_successes": 1,
+        "gateway_max_fallbacks": 1,
+        "gateway_max_request_bytes": 65536,
+        "gateway_max_messages": 20,
+        "gateway_max_tools": 4,
+        "gateway_max_output_tokens": 256,
+        "gateway_max_response_bytes": 65536,
+        "gateway_persist_prompts": False,
     }
     values.update(overrides)
     missing = set(Settings.model_fields) - set(values)

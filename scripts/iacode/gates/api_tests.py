@@ -14,10 +14,13 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from compose import compose, log, main_guard
+from compose import build_service, compose, log, main_guard
 
 
 def main() -> int:
+    # Build first: a gate that runs inside an image and does not build it measures whatever
+    # the image happens to contain, which is a measurement of the past.
+    build_service("api")
     result = compose(
         "run", "--rm", "--no-deps", "--entrypoint", "", "api",
         "python", "-m", "pytest", "tests/unit", "-p", "no:cacheprovider", "--no-header",

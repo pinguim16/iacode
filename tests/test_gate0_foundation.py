@@ -187,8 +187,15 @@ class MonorepoStructureTests(unittest.TestCase):
                 self.assertTrue((PROJECT_ROOT / relative).is_dir(), f"{relative} is missing")
 
     def test_reserved_directories_declare_themselves(self) -> None:
-        """A directory held for a later Gate says so, and holds nothing else."""
-        reservations = policies.load_gate_scope(PROJECT_ROOT)
+        """A directory held for a later Gate says so, and holds nothing else.
+
+        Scoped to the reservations still in force, derived from the Gate the repository is
+        delivering. A reservation whose owner has already run describes a directory that Gate
+        legitimately filled, and requiring it to keep declaring itself reserved would mean the
+        control fails every delivery after the one it was written for.
+        """
+        reservations = policies.reservations_in_force(
+            PROJECT_ROOT, ledger_common.delivered_gate(PROJECT_ROOT))
         self.assertTrue(reservations)
 
         for reservation in reservations:
@@ -203,7 +210,15 @@ class MonorepoStructureTests(unittest.TestCase):
                               "the README names the Gate the registry reserves it for")
 
     def test_no_future_gate_capability_is_implemented(self) -> None:
-        self.assertEqual(policies.scope_violations(PROJECT_ROOT, GATE), [])
+        """No delivery implements a directory reserved for a Gate that has not run.
+
+        The Gate is derived from the latest checkpoint rather than written here. With ``GATE-0``
+        as a literal this assertion would have failed the moment Gate 1 filled the directory
+        reserved for Gate 1, which is the failure class `LSN-0025` records.
+        """
+        gate = ledger_common.delivered_gate(PROJECT_ROOT)
+
+        self.assertEqual(policies.scope_violations(PROJECT_ROOT, gate), [])
 
     def test_the_scope_control_detects_an_implementation(self) -> None:
         """The positive path of the control, so it is not one that has only ever said yes."""

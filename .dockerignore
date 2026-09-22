@@ -7,6 +7,11 @@ docs/
 prompts/
 .claude/
 .iacode/
+# …except the gateway's provider and route policy, which the API image carries so the runtime reads
+# the same declaration the repository holds. Re-including one directory is deliberately narrow: the
+# rest of the control plane — the agents, the schemas, the memory, the anchors — has no business
+# inside a runtime image.
+!.iacode/policies/
 tests/
 scripts/development-ledger/
 

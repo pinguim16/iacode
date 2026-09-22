@@ -1,4 +1,7 @@
 import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
+import { provideRouter, withComponentInputBinding } from '@angular/router';
+
+import { routes } from './app.routes';
 
 /**
  * Providers shared by the real bootstrap and by the tests.
@@ -8,5 +11,8 @@ import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/
  * nobody meant to exercise.
  */
 export const appConfig: ApplicationConfig = {
-  providers: [provideBrowserGlobalErrorListeners()],
+  providers: [
+    provideBrowserGlobalErrorListeners(),
+    provideRouter(routes, withComponentInputBinding()),
+  ],
 };

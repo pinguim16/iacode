@@ -77,12 +77,15 @@
       "kind": "invariant",
       "reference": "green_keeper._refresh_declared_hashes",
       "verifiedBy": [
-        "DeliveryAssuranceGateTests.test_gate_consistency_is_provisional_while_work_is_in_progress"
+        "DeliveryAssuranceGateTests.test_gate_consistency_is_provisional_while_work_is_in_progress",
+        "test_every_runner_of_the_mandatory_gates_refreshes_the_declared_hashes",
+        "test_the_refresh_has_one_definition",
+        "test_no_other_module_executes_the_mandatory_gate_set"
       ],
       "lessons": [
         "LSN-0011"
       ],
-      "removingItWouldAllow": "A control that its own run makes unsatisfiable."
+      "removingItWouldAllow": "A control over a checkpoint's own evidence to be invalidated by the evidence its own run produces, and to be green under one runner of the mandatory gates while red under another."
     },
     {
       "guardrailId": "GRD-0007",
@@ -529,6 +532,85 @@
         "LSN-0035"
       ],
       "removingItWouldAllow": "A tool to abort with a Unicode error while reading or printing output it was only meant to pass along, discarding work that had already succeeded."
+    },
+    {
+      "guardrailId": "GRD-0038",
+      "title": "A gate that measures inside an image builds that image first",
+      "kind": "test",
+      "reference": "test_every_image_gate_builds_before_it_measures",
+      "verifiedBy": [
+        "test_every_image_gate_builds_before_it_measures",
+        "test_the_image_gate_rule_detects_a_gate_that_would_skip_the_build"
+      ],
+      "lessons": [
+        "LSN-0036"
+      ],
+      "removingItWouldAllow": "A mandatory gate to report PASS about source that is not in the repository, so a red test can be committed and sealed behind a green gate."
+    },
+    {
+      "guardrailId": "GRD-0039",
+      "title": "A shared control derives every identifier it reasons about",
+      "kind": "test",
+      "reference": "test_no_shared_control_is_bound_to_a_gate_literal",
+      "verifiedBy": [
+        "test_no_shared_control_is_bound_to_a_gate_literal",
+        "test_the_gate_literal_rule_detects_a_bound_control",
+        "test_the_gate_literal_rule_accepts_a_derived_gate_and_a_fixture_root",
+        "test_no_control_names_a_migration_revision_literally",
+        "test_the_revision_rule_detects_a_named_head",
+        "test_the_head_revision_has_one_derivation"
+      ],
+      "lessons": [
+        "LSN-0037"
+      ],
+      "removingItWouldAllow": "A control to name today's Gate, checkpoint or migration revision, so it refuses the next one and gets edited out of the way rather than corrected."
+    },
+    {
+      "guardrailId": "GRD-0040",
+      "title": "One definition of what a credential-carrying name is, and one home for it",
+      "kind": "test",
+      "reference": "test_both_redactors_agree_on_every_value_the_example_file_carries",
+      "verifiedBy": [
+        "test_a_documented_placeholder_is_not_redacted",
+        "test_both_redactors_agree_on_every_value_the_example_file_carries",
+        "test_no_module_writes_its_own_credential_name_rule",
+        "test_the_rule_detects_a_second_opinion",
+        "test_the_two_questions_stay_different"
+      ],
+      "lessons": [
+        "LSN-0038"
+      ],
+      "removingItWouldAllow": "Modules to answer 'does this name carry a credential' differently from one another, which hid whether a real credential had reached the committed example file and redacted an operational limit out of the configuration dump."
+    },
+    {
+      "guardrailId": "GRD-0041",
+      "title": "The operational catalog holds only providers the policy declares",
+      "kind": "test",
+      "reference": "test_the_operational_catalog_holds_only_providers_the_policy_declares",
+      "verifiedBy": [
+        "test_the_operational_catalog_holds_only_providers_the_policy_declares"
+      ],
+      "lessons": [
+        "LSN-0039"
+      ],
+      "removingItWouldAllow": "Test fixtures to accumulate in the operator-visible catalog, where a route could resolve to a model that does not exist."
+    },
+    {
+      "guardrailId": "GRD-0042",
+      "title": "Every anchored checkpoint validates from a detached checkout of its own tag",
+      "kind": "test",
+      "reference": "test_every_sealed_checkpoint_validates_from_its_own_tag",
+      "verifiedBy": [
+        "test_every_sealed_checkpoint_validates_from_its_own_tag",
+        "test_the_recorder_never_declares_an_ignored_path_as_an_input",
+        "test_an_ignored_input_is_bound_by_content_rather_than_by_presence",
+        "test_an_input_the_repository_carries_is_still_required_to_exist",
+        "test_an_ignored_input_without_a_bound_digest_is_still_refused"
+      ],
+      "lessons": [
+        "LSN-0040"
+      ],
+      "removingItWouldAllow": "A sealed checkpoint to stop validating from its own tag without anything noticing until a successor happens to anchor it, one Gate later."
     }
   ]
 }

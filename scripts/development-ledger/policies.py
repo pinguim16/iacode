@@ -210,24 +210,40 @@ def gate_order() -> tuple[str, ...]:
                  for gate in gates)
 
 
-def scope_violations(root: Path, gate: str) -> list[str]:
-    """Reserved paths a delivery for ``gate`` has implemented, which it may not have.
+def reservations_in_force(root: Path, gate: str) -> list[dict[str, Any]]:
+    """The reservations that still constrain a delivery for ``gate``.
 
-    A reservation belongs to a Gate that has not run yet. Until then the directory may hold its
-    declaration and nothing else. A path that does not exist is not a violation: creating the
-    directory is part of the monorepo layout and is verified by the suite, while this control is
-    about what a delivery *put inside* one.
+    A reservation belongs to a Gate that has not run yet, so it constrains every delivery before its
+    owner and stops constraining anything from its owner onwards — otherwise the control would fail
+    the Gate for the directory it had just legitimately filled.
+
+    This is derived here, once, rather than re-implemented by each caller. The scope check and the
+    test that reads the reservation READMEs both need exactly this set, and a second copy of the
+    ordering rule is a second copy that can disagree with the first.
     """
     from ledger_common import normalize_gate
 
     order = gate_order()
     current = normalize_gate(gate)
     position = order.index(current) if current in order else -1
-    violations: list[str] = []
+    in_force: list[dict[str, Any]] = []
     for reservation in load_gate_scope(root):
         owner = normalize_gate(str(reservation.get("gate")))
         if owner not in order or (position >= 0 and order.index(owner) <= position):
             continue
+        in_force.append(reservation)
+    return in_force
+
+
+def scope_violations(root: Path, gate: str) -> list[str]:
+    """Reserved paths a delivery for ``gate`` has implemented, which it may not have.
+
+    A path that does not exist is not a violation: creating the directory is part of the monorepo
+    layout and is verified by the suite, while this control is about what a delivery *put inside*
+    one.
+    """
+    violations: list[str] = []
+    for reservation in reservations_in_force(root, gate):
         directory = root / str(reservation["path"])
         if not directory.is_dir():
             continue

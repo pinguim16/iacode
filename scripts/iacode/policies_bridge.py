@@ -36,3 +36,32 @@ def mandatory_gate_commands(root: Path) -> list[tuple[str, list[str]]]:
         (identifier, [str(item) for item in definitions[identifier]["command"]])
         for identifier in policies.mandatory_gates(root)
     ]
+
+
+def delivered_gate(root: Path) -> str:
+    """The Gate this repository is currently delivering, from the same reader the ledger uses.
+
+    The verification labels its report with it. A literal would make the report name whichever Gate
+    was current on the day the script was written, which is the failure class `LSN-0025` records.
+    """
+    if str(LEDGER_TOOLING) not in sys.path:
+        sys.path.insert(0, str(LEDGER_TOOLING))
+    import ledger_common
+
+    return ledger_common.delivered_gate(root)
+
+
+def refresh_declared_hashes(root: Path) -> None:
+    """Re-derive the checkpoint's declared inventory hashes, through the ledger's own function.
+
+    The mandatory gate set includes `checkpointValidation`, and running any gate appends to the
+    checkpoint's append-only evidence, so the declared hashes are stale before the gate is reached.
+    The Green Keeper has always done this; the verification command did not, and the same gate was
+    therefore green under one runner and red under the other.
+    """
+    if str(LEDGER_TOOLING) not in sys.path:
+        sys.path.insert(0, str(LEDGER_TOOLING))
+    import ledger_common
+    from finalize_checkpoint import refresh_declared_hashes as refresh
+
+    refresh(root, ledger_common.resolve_latest(root))

@@ -12,7 +12,7 @@
 
 import { Injectable, PendingTasks, inject, signal } from '@angular/core';
 
-import { API_CONFIG } from './api-config';
+import { API_CONFIG } from '../api-config';
 
 export type ServiceStatus = 'UP' | 'DOWN';
 export type ReadinessStatus = 'READY' | 'NOT_READY';

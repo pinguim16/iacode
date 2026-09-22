@@ -35,8 +35,10 @@ RUN pip install --no-cache-dir -r /build/requirements.lock.txt
 COPY packages/common /build/packages/common
 COPY packages/contracts /build/packages/contracts
 COPY packages/telemetry /build/packages/telemetry
+COPY services/model-gateway /build/services/model-gateway
 RUN pip install --no-cache-dir --no-deps \
-      /build/packages/common /build/packages/contracts /build/packages/telemetry
+      /build/packages/common /build/packages/contracts /build/packages/telemetry \
+      /build/services/model-gateway
 
 # ---------------------------------------------------------------------------------------------
 # Runtime
@@ -69,6 +71,14 @@ COPY --chown=iacode:iacode apps/api/migrations /app/migrations
 COPY --chown=iacode:iacode apps/api/alembic.ini /app/alembic.ini
 COPY --chown=iacode:iacode apps/api/pyproject.toml /app/pyproject.toml
 COPY --chown=iacode:iacode apps/api/tests /app/tests
+# The gateway's provider and route policy, at the path the default configuration expects. Copying
+# the canonical directory rather than a hand-written copy means the image cannot describe a
+# different set of providers from the repository it was built from, and the default
+# ``IACODE_GATEWAY_POLICY_DIR`` resolves identically here and in a repository checkout.
+COPY --chown=iacode:iacode .iacode/policies /app/.iacode/policies
+# The gateway's own suite, executed in this image by the gatewayTests gate. It ships with the image
+# for the same reason the API suite does: the code it exercises only runs here.
+COPY --chown=iacode:iacode services/model-gateway/tests /app/gateway_tests
 
 USER iacode
 EXPOSE 8000

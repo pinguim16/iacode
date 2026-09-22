@@ -1,0 +1,101 @@
+@if (status.error(); as message) {
+  <section class="error" data-testid="error">
+    <h2>Backend unreachable</h2>
+    <p>{{ message }}</p>
+    <p class="detail">
+      The page is served independently of the API, so this panel means the API is down or the
+      configured address is wrong — not that the frontend failed.
+    </p>
+  </section>
+}
+
+<section data-testid="liveness">
+  <h2>Liveness</h2>
+  @if (status.health(); as health) {
+    <dl>
+      <dt>Service</dt>
+      <dd>{{ health.service }}</dd>
+      <dt>Status</dt>
+      <dd>
+        <span class="badge {{ tone(health.status) }}">{{ health.status }}</span>
+      </dd>
+      <dt>Reported at</dt>
+      <dd>{{ health.timestamp }}</dd>
+    </dl>
+  } @else {
+    <p class="detail">No answer from <code>/health</code>.</p>
+  }
+</section>
+
+<section data-testid="readiness">
+  <h2>Readiness</h2>
+  @if (status.readiness(); as readiness) {
+    <dl>
+      <dt>Status</dt>
+      <dd>
+        <span class="badge {{ tone(readiness.status) }}">{{ readiness.status }}</span>
+      </dd>
+    </dl>
+    <table>
+      <thead>
+        <tr>
+          <th>Dependency</th>
+          <th>Status</th>
+          <th>Mandatory</th>
+          <th>Latency</th>
+          <th>Detail</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (dependency of readiness.dependencies; track dependency.name) {
+          <tr>
+            <td>{{ dependency.name }}</td>
+            <td>
+              <span class="badge {{ tone(dependency.status) }}">{{ dependency.status }}</span>
+            </td>
+            <td>{{ dependency.mandatory ? 'yes' : 'no' }}</td>
+            <td>{{ dependency.latencyMs !== null ? dependency.latencyMs + ' ms' : '—' }}</td>
+            <td class="detail">{{ dependency.detail ?? '—' }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  } @else {
+    <p class="detail">No answer from <code>/ready</code>.</p>
+  }
+</section>
+
+<section data-testid="version">
+  <h2>Version</h2>
+  @if (status.version(); as version) {
+    <dl>
+      <dt>Version</dt>
+      <dd>{{ version.version }}</dd>
+      <dt>Commit</dt>
+      <dd>{{ version.commit }}</dd>
+      <dt>Built</dt>
+      <dd>{{ version.buildTimestamp ?? 'not recorded' }}</dd>
+      <dt>Runtime</dt>
+      <dd>Python {{ version.pythonVersion }}</dd>
+      <dt>Environment</dt>
+      <dd>{{ version.environment }}</dd>
+    </dl>
+  } @else {
+    <p class="detail">No answer from <code>/version</code>.</p>
+  }
+</section>
+
+<button type="button" [disabled]="status.loading()" (click)="refresh()" data-testid="refresh">
+  {{ status.loading() ? 'Refreshing…' : 'Refresh' }}
+</button>
+
+<footer>
+  @if (lastRefreshed(); as moment) {
+    <p>Last refreshed {{ moment }}.</p>
+  }
+  <p>
+    The runtime foundation: the API, persistence, cache, object storage, durable workflows and
+    observability. The agent runtime and the sandbox belong to later Gates and are not part of this
+    build.
+  </p>
+</footer>

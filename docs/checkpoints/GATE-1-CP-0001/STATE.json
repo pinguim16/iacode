@@ -1,0 +1,127 @@
+{
+  "schemaVersion": "3.2.0",
+  "phase": "GATE-1 - Model Gateway",
+  "gate": "GATE-1",
+  "status": "INTERNAL_GATE_PASS",
+  "branch": "main",
+  "baseCommit": "195739ffd5a588a55096ebd8a6a7f64057e1f66d",
+  "currentCommit": "refs/tags/iacode-checkpoints/GATE-1-CP-0001",
+  "dirty": false,
+  "startedAt": "2026-09-22T02:15:32Z",
+  "updatedAt": "2026-09-22T09:17:57Z",
+  "nextAllowedAction": "Obtain explicit authorization for GATE 2 - AGENT RUNTIME and create its pre-Gate checkpoint. No Gate 2 work exists in this change set.",
+  "blockedBy": [],
+  "secondToolValidation": {
+    "status": "PENDING_MANUAL",
+    "tool": null,
+    "provider": null,
+    "model": null,
+    "validatedAt": null,
+    "justification": null,
+    "evidence": []
+  },
+  "requirementsMatrix": {
+    "path": "REQUIREMENTS-MATRIX.json",
+    "total": 161,
+    "mandatory": 160,
+    "complete": 161,
+    "partial": 0,
+    "missing": 0,
+    "notApplicable": 0,
+    "coveragePercent": 100.0
+  },
+  "greenKeeper": {
+    "status": "PASS",
+    "cycles": 6,
+    "remainingFailures": 0,
+    "unresolvedReworkItems": 0,
+    "log": "REWORK-LOG.jsonl",
+    "externalBlockers": [],
+    "evidence": [
+      "checkpoint:REWORK-LOG.jsonl"
+    ]
+  },
+  "deliveryCompleteness": {
+    "status": "PASS",
+    "report": "COMPLETENESS-REPORT.json",
+    "coveragePercent": 100.0,
+    "evidenceCoveragePercent": 100.0,
+    "auditor": "delivery-completeness-validator",
+    "evidence": [
+      "checkpoint:COMPLETENESS-REPORT.json"
+    ]
+  },
+  "reworkCycles": 6,
+  "independentReview": {
+    "status": "NOT_REQUIRED",
+    "tool": null,
+    "reviewedAt": null,
+    "justification": "Independent validation is a milestone event. M1 covers Gates 0 to 3 and is audited after Gate 3, so this Gate closes on the project's own controls at INTERNAL_GATE_PASS. An implementing run may not record an independent verdict about its own work.",
+    "evidence": [
+      "checkpoint:FINAL-REPORT.md"
+    ]
+  },
+  "redTeam": {
+    "status": "NOT_REQUIRED",
+    "tool": null,
+    "executedAt": null,
+    "justification": "The independent Red Team belongs to the M1 audit after Gate 3. The adversarial battery this delivery executed is internal and is filed as M1-INTERNAL-RED-TEAM.json; it is not recorded as a Red Team verdict.",
+    "evidence": [
+      "checkpoint:M1-INTERNAL-RED-TEAM.json",
+      "checkpoint:RED-TEAM-REPORT.md"
+    ]
+  },
+  "lessonPreflight": {
+    "path": "LESSON-PREFLIGHT.json",
+    "gate": "GATE-1",
+    "scope": "Gate 1 — Model Gateway",
+    "lessonsConsidered": 40,
+    "lessonsApplicable": 39,
+    "derivedRequirements": 39,
+    "evidence": [
+      "checkpoint:LESSON-PREFLIGHT.json",
+      "checkpoint:LESSON-PREFLIGHT.md"
+    ]
+  },
+  "milestone": {
+    "id": "M1",
+    "title": "IACode V0 foundation",
+    "gates": [
+      "GATE 0",
+      "GATE 1",
+      "GATE 2",
+      "GATE 3"
+    ],
+    "status": "PENDING",
+    "auditor": null,
+    "auditedAt": null,
+    "evidence": []
+  },
+  "externalAuditRequired": false,
+  "externalAuditReason": null,
+  "guardrailEffectiveness": {
+    "guardrailsTotal": 42,
+    "guardrailsResolved": 42,
+    "guardrailsTested": 42,
+    "guardrailsEffective": 42,
+    "guardrailFailures": 0,
+    "evidence": [
+      "file:.iacode/memory/guardrails/registry.json",
+      "file:.iacode/memory/lessons.jsonl"
+    ]
+  },
+  "integrity": {
+    "status": "PASS",
+    "anchors": 14,
+    "chainFile": ".iacode/anchors/checkpoint-chain.json",
+    "evidence": [
+      "file:.iacode/anchors/checkpoint-chain.json"
+    ]
+  },
+  "externalAttestation": {
+    "status": "NONE",
+    "path": null,
+    "auditId": null,
+    "evidence": []
+  }
+}

@@ -1,0 +1,34 @@
+[build-system]
+requires = ["setuptools>=80.9.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "iacode-model-gateway"
+version = "0.1.0"
+description = "The IACode Model Gateway: one provider-neutral boundary for model invocation."
+requires-python = ">=3.12"
+# The gateway depends on the HTTP client, the validation library and the metric client, and on
+# nothing of IACode's beyond the two cross-cutting packages. It deliberately does not depend on
+# ``iacode-api``: the application composes the gateway, never the other way round, and a dependency
+# in that direction is what would let a provider detail reach a consumer.
+dependencies = [
+  "iacode-common==0.1.0",
+  "iacode-telemetry==0.1.0",
+  "httpx==0.28.1",
+  "pydantic==2.13.5",
+  "prometheus-client==0.26.0",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+# pytest collects ``Test*`` classes by default. The suites here group cases in classes
+# named ``<Subject>Tests``, which reads better in a checklist evidence column and which a
+# default configuration would silently not run: the file would look full and the run would
+# report nothing.
+python_classes = ["Test*", "*Tests"]
+testpaths = ["tests"]
+addopts = "-q --strict-markers --strict-config"

@@ -42,9 +42,22 @@ def _detect_inputs(root: Path, arguments: list[str]) -> list[str]:
             continue
         if candidate.is_file():
             value = str(relative).replace("\\", "/")
+            # A path Git ignores is a generated artifact, not an input the repository carries.
+            # Declaring one makes the record unreplayable from a checkout, which is how six of
+            # GATE-0-CP-0001's records named a file no clone has (G1-F-007).
+            if _git_ignores(root, value):
+                continue
             if value not in inputs:
                 inputs.append(value)
     return inputs
+
+
+def _git_ignores(root: Path, reference: str) -> bool:
+    """Whether Git deliberately does not carry ``reference``."""
+    completed = subprocess.run(
+        ["git", "check-ignore", "--quiet", "--no-index", reference],
+        cwd=root, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=False)
+    return completed.returncode == 0
 
 
 def main() -> int:

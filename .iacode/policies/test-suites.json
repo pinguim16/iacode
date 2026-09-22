@@ -19,6 +19,14 @@
       "purpose": "The FastAPI application, its configuration, its persistence and its dependencies."
     },
     {
+      "id": "gateway",
+      "title": "Model Gateway suite",
+      "root": "services/model-gateway/tests",
+      "framework": "python-pytest",
+      "counted": true,
+      "purpose": "The provider-neutral boundary: the contracts, the protocol adapters, the catalog, the router, the resilience policies, streaming and secret containment."
+    },
+    {
       "id": "infra",
       "title": "Foundation infrastructure smoke suite",
       "root": "infra/tests",

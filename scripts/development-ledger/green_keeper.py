@@ -52,18 +52,14 @@ from policies import gate_definitions, mandatory_gates
 def _refresh_declared_hashes(root: Path, checkpoint: Path) -> None:
     """Re-derive the declared inventory hashes before validating the checkpoint.
 
-    Running a gate appends to the checkpoint's own append-only evidence, so its recorded hashes are
-    stale the instant a cycle starts. This re-derives hashes for paths the author already declared;
-    it never adds or removes a declaration, so an undeclared change still fails validation.
+    One line, because the rule lives in `finalize_checkpoint.refresh_declared_hashes` and every
+    runner of the mandatory gate set calls the same one. It used to live here, and the
+    verification command did not have it, so the same gate was green under the Green Keeper and
+    red under the verification (`G1-F-009`).
     """
-    from finalize_checkpoint import _refresh_inventory_hashes
+    from finalize_checkpoint import refresh_declared_hashes
 
-    state_path = checkpoint / "STATE.json"
-    files_path = checkpoint / "FILES.json"
-    if not (state_path.is_file() and files_path.is_file()):
-        return
-    state = load_json(state_path)
-    write_json(files_path, _refresh_inventory_hashes(root, checkpoint, state, load_json(files_path)))
+    refresh_declared_hashes(root, checkpoint)
 
 
 def _run_gate(root: Path, checkpoint: Path, name: str, definition: dict[str, Any]) -> tuple[str, int, str]:

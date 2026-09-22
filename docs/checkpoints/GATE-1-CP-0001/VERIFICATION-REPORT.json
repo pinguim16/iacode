@@ -1,0 +1,148 @@
+{
+  "gate": "GATE-1",
+  "result": "PASS",
+  "fast": false,
+  "durationSeconds": 1336.9,
+  "stages": [
+    {
+      "name": "gate:tests",
+      "description": "mandatory gate tests",
+      "exitCode": 0,
+      "durationSeconds": 1018.6,
+      "result": "PASS"
+    },
+    {
+      "name": "gate:staticAnalysis",
+      "description": "mandatory gate staticAnalysis",
+      "exitCode": 0,
+      "durationSeconds": 0.1,
+      "result": "PASS"
+    },
+    {
+      "name": "gate:lessons",
+      "description": "mandatory gate lessons",
+      "exitCode": 0,
+      "durationSeconds": 0.4,
+      "result": "PASS"
+    },
+    {
+      "name": "gate:integrity",
+      "description": "mandatory gate integrity",
+      "exitCode": 0,
+      "durationSeconds": 5.4,
+      "result": "PASS"
+    },
+    {
+      "name": "gate:checkpointValidation",
+      "description": "mandatory gate checkpointValidation",
+      "exitCode": 0,
+      "durationSeconds": 9.4,
+      "result": "PASS"
+    },
+    {
+      "name": "gate:apiTests",
+      "description": "mandatory gate apiTests",
+      "exitCode": 0,
+      "durationSeconds": 36.4,
+      "result": "PASS"
+    },
+    {
+      "name": "gate:gatewayTests",
+      "description": "mandatory gate gatewayTests",
+      "exitCode": 0,
+      "durationSeconds": 7.3,
+      "result": "PASS"
+    },
+    {
+      "name": "gate:webTests",
+      "description": "mandatory gate webTests",
+      "exitCode": 0,
+      "durationSeconds": 13.9,
+      "result": "PASS"
+    },
+    {
+      "name": "gate:lint",
+      "description": "mandatory gate lint",
+      "exitCode": 0,
+      "durationSeconds": 8.2,
+      "result": "PASS"
+    },
+    {
+      "name": "gate:infraDefinition",
+      "description": "mandatory gate infraDefinition",
+      "exitCode": 0,
+      "durationSeconds": 1.4,
+      "result": "PASS"
+    },
+    {
+      "name": "stack",
+      "description": "start the stack and wait for real health",
+      "exitCode": 0,
+      "durationSeconds": 20.6,
+      "result": "PASS"
+    },
+    {
+      "name": "integration",
+      "description": "the backend suite against the real services",
+      "exitCode": 0,
+      "durationSeconds": 58.5,
+      "result": "PASS"
+    },
+    {
+      "name": "infra",
+      "description": "our configuration of each service, exercised live",
+      "exitCode": 0,
+      "durationSeconds": 15.5,
+      "result": "PASS"
+    },
+    {
+      "name": "smoke",
+      "description": "the API, the web shell, the observability stack and a workflow",
+      "exitCode": 0,
+      "durationSeconds": 4.6,
+      "result": "PASS"
+    },
+    {
+      "name": "gateway-smoke",
+      "description": "the Model Gateway against the real configured provider",
+      "exitCode": 0,
+      "durationSeconds": 8.0,
+      "result": "PASS"
+    },
+    {
+      "name": "backup",
+      "description": "backup, restore into a disposable target, verified read-back",
+      "exitCode": 0,
+      "durationSeconds": 22.1,
+      "result": "PASS"
+    },
+    {
+      "name": "dependency-scan",
+      "description": "known vulnerabilities in the pinned dependencies",
+      "exitCode": 0,
+      "durationSeconds": 27.2,
+      "result": "PASS"
+    },
+    {
+      "name": "restart",
+      "description": "restart with data intact",
+      "exitCode": 0,
+      "durationSeconds": 29.6,
+      "result": "PASS"
+    },
+    {
+      "name": "dependency-failure",
+      "description": "liveness holds, readiness refuses, both recover",
+      "exitCode": 0,
+      "durationSeconds": 5.9,
+      "result": "PASS"
+    },
+    {
+      "name": "fresh-install",
+      "description": "a complete installation from no volumes at all",
+      "exitCode": 0,
+      "durationSeconds": 43.5,
+      "result": "PASS"
+    }
+  ]
+}
