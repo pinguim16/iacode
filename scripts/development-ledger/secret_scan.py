@@ -33,7 +33,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from ledger_common import SECRET_PATTERNS, find_root
+from ledger_common import SECRET_PATTERNS, find_root, use_utf8_stdout
 
 # The canonical patterns redact command records and gate the checkpoint tree. A public history
 # needs a wider net: key material in formats the canonical set does not name, cloud access key
@@ -235,6 +235,7 @@ SCANNERS = {"history": scan_history, "staged": scan_staged, "tree": scan_tree}
 
 
 def main(argv: list[str] | None = None) -> int:
+    use_utf8_stdout()
     parser = argparse.ArgumentParser(description=__doc__,
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
     mode = parser.add_mutually_exclusive_group(required=True)

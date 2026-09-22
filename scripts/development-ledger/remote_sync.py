@@ -25,7 +25,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from ledger_common import find_root
+from ledger_common import find_root, use_utf8_stdout
 
 AUTHORISED_REMOTE = "https://github.com/pinguim16/iacode.git"
 DEFAULT_BRANCH = "main"
@@ -89,6 +89,7 @@ def check(root: Path, remote: str, branch: str, tags: list[str],
 
 
 def main(argv: list[str] | None = None) -> int:
+    use_utf8_stdout()
     parser = argparse.ArgumentParser(description=__doc__,
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--root", type=Path, default=None)

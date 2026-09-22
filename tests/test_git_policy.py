@@ -28,7 +28,7 @@ PLANTED_KEY = "sk-" + "live" + "Xy9" * 6
 
 def git(root: Path, *arguments: str) -> str:
     completed = subprocess.run(["git", *arguments], cwd=root, check=True, capture_output=True,
-                               text=True)
+                               text=True, encoding="utf-8", errors="replace")
     return completed.stdout.strip()
 
 
