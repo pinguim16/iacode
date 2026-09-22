@@ -28,10 +28,10 @@ if str(SOURCE) not in sys.path:
     sys.path.insert(0, str(SOURCE))
 
 from iacode_api.config import get_settings
-from iacode_api.db import (
+from iacode_persistence import (
     models,  # noqa: F401  (imported for its side effect: table registration)
 )
-from iacode_api.db.base import Base
+from iacode_persistence.base import Base
 
 config = context.config
 if config.config_file_name is not None:

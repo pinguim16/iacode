@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=80.9.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "iacode-persistence"
+version = "0.1.0"
+description = "The IACode system of record: one declarative schema, shared by every process that reads it."
+requires-python = ">=3.12"
+dependencies = [
+  "iacode-common==0.1.0",
+  "iacode-contracts==0.1.0",
+  "sqlalchemy[asyncio]==2.0.54",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]

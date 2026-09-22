@@ -27,6 +27,7 @@ from minio import Minio
 from redis.asyncio import Redis
 from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession, async_sessionmaker
 
+from iacode_api.agent_runtime.runtime import AgentRuntimeRuntime, build_agent_runtime
 from iacode_api.cache import client as cache_client
 from iacode_api.config import Settings
 from iacode_api.db import engine as db_engine
@@ -50,6 +51,7 @@ class Resources:
     minio: Minio
     temporal: TemporalGateway
     gateway: GatewayRuntime
+    agent_runtime: AgentRuntimeRuntime
 
 
 def build_resources(settings: Settings, metrics: Metrics) -> Resources:
@@ -68,6 +70,10 @@ def build_resources(settings: Settings, metrics: Metrics) -> Resources:
         # policy file stops the process at start-up, where it is one clear failure, instead of
         # turning every inference request into a confusing "no candidate".
         gateway=build_runtime(settings, session_factory, metrics.registry),
+        # The declared agent and team profiles are read here for the same reason the provider
+        # policy is: a malformed definition stops the process at start-up, where it is one
+        # clear failure, instead of turning every run creation into a confusing refusal.
+        agent_runtime=build_agent_runtime(settings, session_factory),
     )
 
 

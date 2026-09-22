@@ -1,0 +1,831 @@
+{
+  "filesRead": [],
+  "filesCreated": [
+    {
+      "path": ".iacode/memory/retrospectives/GATE-2-CP-0001.md",
+      "reason": "The Gate retrospective, produced from the canonical template.",
+      "hashAfter": "787c21e653bcfbc08cd01bd0c9254148dd809565393451fccb267d6b31608854"
+    },
+    {
+      "path": "agents/profiles/engineering-lead.json",
+      "reason": "Four agent profiles. Every one declares an empty allowedActions, because no tool may be executed in this Gate.",
+      "hashAfter": "9c252149cf190b6c1cefad91e99b00e7281235ec0557779817448b586614f0b4"
+    },
+    {
+      "path": "agents/profiles/generalist.json",
+      "reason": "Four agent profiles. Every one declares an empty allowedActions, because no tool may be executed in this Gate.",
+      "hashAfter": "4956be05833a89e4fa7f842d4c7c432cdaa060ef374c6537081d5833952faeb1"
+    },
+    {
+      "path": "agents/profiles/planner.json",
+      "reason": "Four agent profiles. Every one declares an empty allowedActions, because no tool may be executed in this Gate.",
+      "hashAfter": "4bf00988c734a62c0935b89789ce5cc590433fc099c41e7abf8086e784f8bed4"
+    },
+    {
+      "path": "agents/profiles/reviewer.json",
+      "reason": "Four agent profiles. Every one declares an empty allowedActions, because no tool may be executed in this Gate.",
+      "hashAfter": "e9edae04265a7d3bfebdc301dc5cfa502cf0914d702ed8c0e4614c3c62f9145b"
+    },
+    {
+      "path": "agents/prompts/engineering-lead.v1.md",
+      "reason": "The versioned role prompts the profiles name, hashed into every run's provenance.",
+      "hashAfter": "c312677d9ddde2012383ac607dabda5042a19448c81e8b24809852ef777a7893"
+    },
+    {
+      "path": "agents/prompts/generalist.v1.md",
+      "reason": "The versioned role prompts the profiles name, hashed into every run's provenance.",
+      "hashAfter": "ebacdc12ee9cb3a9a3b2655530d92e9962f480f00725f8fc09919ff2fddad0e0"
+    },
+    {
+      "path": "agents/prompts/planner.v1.md",
+      "reason": "The versioned role prompts the profiles name, hashed into every run's provenance.",
+      "hashAfter": "084cf6cb89c89a4d4ea07958231cc41807572b0791e054af6b40ec4f97b07d95"
+    },
+    {
+      "path": "agents/prompts/reviewer.v1.md",
+      "reason": "The versioned role prompts the profiles name, hashed into every run's provenance.",
+      "hashAfter": "42fca77cf508b97410d35c6f8c1c1b807436550356a06035ede5aeebcafe95da"
+    },
+    {
+      "path": "agents/teams/planner-reviewer.json",
+      "reason": "Two team profiles: a single agent, and a planner followed by a reviewer.",
+      "hashAfter": "3fc309860a9913045d6f427fa8630289a095e41848afe06ba3dcd0d9d511965f"
+    },
+    {
+      "path": "agents/teams/single-agent.json",
+      "reason": "Two team profiles: a single agent, and a planner followed by a reviewer.",
+      "hashAfter": "4c27324e378d9d908b3f1bfe28997fbcafdb024dc388c3589400f73411a384bc"
+    },
+    {
+      "path": "apps/api/migrations/versions/0003_agent_runtime.py",
+      "reason": "The schema change, reversible, stating where the naming convention applies and where it does not.",
+      "hashAfter": "beefcde6ff83ecbf82feca389d4da54de0d8e2b8cc4f215268887b8c5b5943c1"
+    },
+    {
+      "path": "apps/api/src/iacode_api/agent_runtime/__init__.py",
+      "reason": "The API's wiring of the runtime service, built once per process at start-up.",
+      "hashAfter": "44fbf4ff6aabcc5f90da4c1fc3f56575327bb2c8fcd1e1c231141d6b5439eac4"
+    },
+    {
+      "path": "apps/api/src/iacode_api/agent_runtime/runtime.py",
+      "reason": "The API's wiring of the runtime service, built once per process at start-up.",
+      "hashAfter": "803ee1237a4a0c51819790f591a343ce4ac0dde2f192dd0fb358895b9039c509"
+    },
+    {
+      "path": "apps/api/src/iacode_api/routes/agent_runs.py",
+      "reason": "The eight endpoints: create, list, detail, events, the resumable SSE stream, cancel, submit a tool result, and the agent and team catalogues.",
+      "hashAfter": "a0e736c360159e1d08426af1daf87a6cb29c4eb45d797637571be5dff588caf0"
+    },
+    {
+      "path": "apps/api/tests/integration/test_agent_runtime_persistence.py",
+      "reason": "The store against a real database: append-only events, idempotent writes, the tool-result constraint, and usage derived rather than duplicated.",
+      "hashAfter": "47f95eae06e77691a868b1a1569f505497d4d967b79951e5edb192a8cee73011"
+    },
+    {
+      "path": "apps/api/tests/unit/test_agent_runtime_api.py",
+      "reason": "The API surface: status mapping, the fields a run exposes, the safe failure summary, and the request fields that must be refused.",
+      "hashAfter": "b6f6606d6d05c81f4d315b25ecb4ed1595c16f977d25c0cee9d5413e2477855f"
+    },
+    {
+      "path": "apps/web/src/app/agent-runtime/agent-runtime.css",
+      "reason": "The operational page and its service: create a run, watch its events, read its result, cancel it, see a pending tool request — and no control that would execute one.",
+      "hashAfter": "dc8fb280dddb67ebf2eabbb4d66a7cea5ad291dfbf4bf3ab17cc22677b0ad150"
+    },
+    {
+      "path": "apps/web/src/app/agent-runtime/agent-runtime.html",
+      "reason": "The operational page and its service: create a run, watch its events, read its result, cancel it, see a pending tool request — and no control that would execute one.",
+      "hashAfter": "dd9ef924adf5ff0c5b23c9c908c823858940610d387f4ac527169d92e4a56f2f"
+    },
+    {
+      "path": "apps/web/src/app/agent-runtime/agent-runtime.service.spec.ts",
+      "reason": "The operational page and its service: create a run, watch its events, read its result, cancel it, see a pending tool request — and no control that would execute one.",
+      "hashAfter": "6933f02b83d181c29f0071f2c847e15d8492003092fb3578fea0f0a5c3570a4b"
+    },
+    {
+      "path": "apps/web/src/app/agent-runtime/agent-runtime.service.ts",
+      "reason": "The operational page and its service: create a run, watch its events, read its result, cancel it, see a pending tool request — and no control that would execute one.",
+      "hashAfter": "bfe78a43e4d29f7be98cb1168fef7e0e27f8fe64dc70c9687f28a11350520555"
+    },
+    {
+      "path": "apps/web/src/app/agent-runtime/agent-runtime.spec.ts",
+      "reason": "The operational page and its service: create a run, watch its events, read its result, cancel it, see a pending tool request — and no control that would execute one.",
+      "hashAfter": "db6ab09816bf9b2fe7c4d44ba383d2c4929821cbcc4302f0513860a1d5f5aef1"
+    },
+    {
+      "path": "apps/web/src/app/agent-runtime/agent-runtime.ts",
+      "reason": "The operational page and its service: create a run, watch its events, read its result, cancel it, see a pending tool request — and no control that would execute one.",
+      "hashAfter": "71737b9e6420fe5f6c19aba30d5151d4d32f247a38c7f483bcad8bcf28e3a456"
+    },
+    {
+      "path": "docs/GATE-2-CHECKLIST.md",
+      "reason": "The canonical requirement specification of this Gate: 137 rows, each naming an artifact and its evidence.",
+      "hashAfter": "c83fae21991af660b43a9bc8adbdf58e249a56ee3190f3aade6e3d90e61c2f71"
+    },
+    {
+      "path": "docs/adr/ADR-0020-agent-runtime-boundary.md",
+      "reason": "The runtime is a library, Temporal is its durable engine, and the schema is shared.",
+      "hashAfter": "b5a140046e471383b05c93eb4aba4b173f9248fc9ed2ec3ccbbc1e34e7d28588"
+    },
+    {
+      "path": "docs/adr/ADR-0021-tool-execution-boundary.md",
+      "reason": "A tool request is recorded and waited on; execution belongs to GATE 3.",
+      "hashAfter": "9b75d28b71562eb5703ae88fea91088a070f158b0700c2a3c81504399105d2f7"
+    },
+    {
+      "path": "docs/adr/ADR-0022-agent-output-envelope.md",
+      "reason": "An agent turn is one versioned envelope, parsed strictly, with exactly one repair.",
+      "hashAfter": "a673ca5d318de7baab1d31a7d7c8b011b8eee09bc6593dcc2a164b2b376881a7"
+    },
+    {
+      "path": "docs/checkpoints/GATE-2-CP-0001/BASELINE.md",
+      "reason": "The checkpoint: its plan, baseline, requirements, evidence, commands, decisions, risks, diff summary, handoff and state.",
+      "hashAfter": "0e0af6db4842c804a8d3b3fd91a5d1f2ab5605c0ef81db1393bb344cc13e260b"
+    },
+    {
+      "path": "docs/checkpoints/GATE-2-CP-0001/CLOSURE-REQUIREMENTS.json",
+      "reason": "The checkpoint: its plan, baseline, requirements, evidence, commands, decisions, risks, diff summary, handoff and state.",
+      "hashAfter": "ac512840d6ecca808eb73352d09d0d8a4a1f6cd389effba8f8d0d4c50eab0efd"
+    },
+    {
+      "path": "docs/checkpoints/GATE-2-CP-0001/CLOSURE-REQUIREMENTS.md",
+      "reason": "The checkpoint: its plan, baseline, requirements, evidence, commands, decisions, risks, diff summary, handoff and state.",
+      "hashAfter": "49e792b62b40a7a24d68ac8ddfe8eab3f71bfe7b1dd9c2df96dac678a17b87a7"
+    },
+    {
+      "path": "docs/checkpoints/GATE-2-CP-0001/COMMANDS.jsonl",
+      "reason": "The checkpoint: its plan, baseline, requirements, evidence, commands, decisions, risks, diff summary, handoff and state.",
+      "hashAfter": "07348074c5d8da11f1f249986c8a455b26cc333653305b1f634f431cf8e11333"
+    },
+    {
+      "path": "docs/checkpoints/GATE-2-CP-0001/COMPLETENESS-REPORT.json",
+      "reason": "The checkpoint: its plan, baseline, requirements, evidence, commands, decisions, risks, diff summary, handoff and state.",
+      "hashAfter": "29f5951aaf115edcad19576dbec14ae093d3ed7eb25ef84b988a37a89a3953b2"
+    },
+    {
+      "path": "docs/checkpoints/GATE-2-CP-0001/COMPLETENESS-REPORT.md",
+      "reason": "The checkpoint: its plan, baseline, requirements, evidence, commands, decisions, risks, diff summary, handoff and state.",
+      "hashAfter": "eb70cdec630a3906a854c7afd3be7d6f24d2de3105f26c12f640ae15ee3ed321"
+    },
+    {
+      "path": "docs/checkpoints/GATE-2-CP-0001/COUNTS.json",
+      "reason": "The checkpoint: its plan, baseline, requirements, evidence, commands, decisions, risks, diff summary, handoff and state.",
+      "hashAfter": "4fe22629e5413d8a1f752ae5a0488b8de1648ca22aec84e5269ef3aedfa968b5"
+    },
+    {
+      "path": "docs/checkpoints/GATE-2-CP-0001/DECISIONS.md",
+      "reason": "The checkpoint: its plan, baseline, requirements, evidence, commands, decisions, risks, diff summary, handoff and state.",
+      "hashAfter": "461e05051dc434df948f6d5a03d79b8e04bc3c9ca17daf4cff70cbba14e5e008"
+    },
+    {
+      "path": "docs/checkpoints/GATE-2-CP-0001/DIFF-SUMMARY.md",
+      "reason": "The checkpoint: its plan, baseline, requirements, evidence, commands, decisions, risks, diff summary, handoff and state.",
+      "hashAfter": "3d8599fc856205a33fef0539cd8c307980a0f4a551e315a857609d13be2c9044"
+    },
+    {
+      "path": "docs/checkpoints/GATE-2-CP-0001/FILES.json",
+      "reason": "The checkpoint: its plan, baseline, requirements, evidence, commands, decisions, risks, diff summary, handoff and state."
+    },
+    {
+      "path": "docs/checkpoints/GATE-2-CP-0001/HANDOFF.md",
+      "reason": "The checkpoint: its plan, baseline, requirements, evidence, commands, decisions, risks, diff summary, handoff and state.",
+      "hashAfter": "cf0ce435b952047a17561a91a66e4dfec281bc78a8d93a6a74df78b3b4d2b629"
+    },
+    {
+      "path": "docs/checkpoints/GATE-2-CP-0001/LESSON-PREFLIGHT.json",
+      "reason": "The checkpoint: its plan, baseline, requirements, evidence, commands, decisions, risks, diff summary, handoff and state.",
+      "hashAfter": "634595b7cc833140cf919199dacbc7f8e98d407427106df4c8a7d18830deee6b"
+    },
+    {
+      "path": "docs/checkpoints/GATE-2-CP-0001/LESSON-PREFLIGHT.md",
+      "reason": "The checkpoint: its plan, baseline, requirements, evidence, commands, decisions, risks, diff summary, handoff and state.",
+      "hashAfter": "c0a6bcda3032aa76deb35e1b653a35578b1d2bd21305f41d7d01018996013169"
+    },
+    {
+      "path": "docs/checkpoints/GATE-2-CP-0001/M1-INTERNAL-MIRROR.json",
+      "reason": "The milestone audit reproduced inside the delivery. Internal, never independent: M1 is audited by a fresh session after GATE 3.",
+      "hashAfter": "59343a729096e6df4df7e2c098e2017433207a7358529f75f8f3173c5e784e50"
+    },
+    {
+      "path": "docs/checkpoints/GATE-2-CP-0001/M1-INTERNAL-MIRROR.md",
+      "reason": "The readable form of that internal mirror.",
+      "hashAfter": "401e123bb518de431443a63ed96d59c98cbd834870d0e638e460ab97ccd13523"
+    },
+    {
+      "path": "docs/checkpoints/GATE-2-CP-0001/M1-INTERNAL-RED-TEAM.json",
+      "reason": "The checkpoint: its plan, baseline, requirements, evidence, commands, decisions, risks, diff summary, handoff and state.",
+      "hashAfter": "e1b06864eeb7759e3350620215ab020674a1d8752642a724df74797a342fad59"
+    },
+    {
+      "path": "docs/checkpoints/GATE-2-CP-0001/NEXT.md",
+      "reason": "The checkpoint: its plan, baseline, requirements, evidence, commands, decisions, risks, diff summary, handoff and state.",
+      "hashAfter": "4fbd90a2afa34536bd105c504c6f3ae9b7096126c76ba44798c5da45ab94c00b"
+    },
+    {
+      "path": "docs/checkpoints/GATE-2-CP-0001/PLAN.md",
+      "reason": "The checkpoint: its plan, baseline, requirements, evidence, commands, decisions, risks, diff summary, handoff and state.",
+      "hashAfter": "208bb6ed6ada204060f9161e035e240d92ecd081af69c9d6ad8f2743652deed4"
+    },
+    {
+      "path": "docs/checkpoints/GATE-2-CP-0001/PROVENANCE.json",
+      "reason": "The checkpoint: its plan, baseline, requirements, evidence, commands, decisions, risks, diff summary, handoff and state.",
+      "hashAfter": "d807fd52a6490e9bddda8e4a0e117fb24a2788160c78096b6e0133feae975d45"
+    },
+    {
+      "path": "docs/checkpoints/GATE-2-CP-0001/QUALITY.json",
+      "reason": "The checkpoint: its plan, baseline, requirements, evidence, commands, decisions, risks, diff summary, handoff and state.",
+      "hashAfter": "a303da00c54b6c749e1f2289032af0d34800aa79eaa61a2e0127f359f250552d"
+    },
+    {
+      "path": "docs/checkpoints/GATE-2-CP-0001/RED-TEAM-REPORT.md",
+      "reason": "The checkpoint: its plan, baseline, requirements, evidence, commands, decisions, risks, diff summary, handoff and state.",
+      "hashAfter": "e999e93c99cd0027ddd5163842c84514187d689423c8803e64b68741df2f4b2b"
+    },
+    {
+      "path": "docs/checkpoints/GATE-2-CP-0001/REQUIREMENTS-MATRIX.json",
+      "reason": "The checkpoint: its plan, baseline, requirements, evidence, commands, decisions, risks, diff summary, handoff and state.",
+      "hashAfter": "1f61b18ade69e77d33c182c58dd975a956e54236bf1313b73d9cbc4761f9aa4b"
+    },
+    {
+      "path": "docs/checkpoints/GATE-2-CP-0001/REQUIREMENTS-MATRIX.md",
+      "reason": "The checkpoint: its plan, baseline, requirements, evidence, commands, decisions, risks, diff summary, handoff and state.",
+      "hashAfter": "1f01bc4e8b60d803ed5ba5c4148f379c9cc375eeeb60e0f3d21721ff802be688"
+    },
+    {
+      "path": "docs/checkpoints/GATE-2-CP-0001/REWORK-LOG.jsonl",
+      "reason": "The checkpoint: its plan, baseline, requirements, evidence, commands, decisions, risks, diff summary, handoff and state.",
+      "hashAfter": "f036a80c0d0e437c5260cb82578e646b1c28a3bb4e387e9b0c406094a3deb406"
+    },
+    {
+      "path": "docs/checkpoints/GATE-2-CP-0001/RISKS.md",
+      "reason": "The checkpoint: its plan, baseline, requirements, evidence, commands, decisions, risks, diff summary, handoff and state.",
+      "hashAfter": "17ffdd713d3d213a2c4b665088fbed90bef4a1cc2ea189e6a6d880def76cb5dc"
+    },
+    {
+      "path": "docs/checkpoints/GATE-2-CP-0001/RUN-METADATA.json",
+      "reason": "The checkpoint: its plan, baseline, requirements, evidence, commands, decisions, risks, diff summary, handoff and state.",
+      "hashAfter": "c8bb941860377c8c82fe6a0aebcf2381f07640546f69a0af47757df5908a7155"
+    },
+    {
+      "path": "docs/checkpoints/GATE-2-CP-0001/STATE.json",
+      "reason": "The checkpoint: its plan, baseline, requirements, evidence, commands, decisions, risks, diff summary, handoff and state.",
+      "hashAfter": "06182f9ea8b619fc0db4716257d2a416cad8d9a545447503d976025936f088d0"
+    },
+    {
+      "path": "docs/checkpoints/GATE-2-CP-0001/STATUS.md",
+      "reason": "The checkpoint: its plan, baseline, requirements, evidence, commands, decisions, risks, diff summary, handoff and state.",
+      "hashAfter": "b5c7b00d9f55266be0d8349621e36a679fb37ea106af7a33815e27aa47977d72"
+    },
+    {
+      "path": "docs/checkpoints/GATE-2-CP-0001/TESTS.json",
+      "reason": "The checkpoint: its plan, baseline, requirements, evidence, commands, decisions, risks, diff summary, handoff and state.",
+      "hashAfter": "614577706b9bf513f9cc1fa1bdc43bb767e6595c19b8c77d68500a5aa041de88"
+    },
+    {
+      "path": "docs/checkpoints/GATE-2-CP-0001/VERIFICATION-REPORT.json",
+      "reason": "The full verification run: 22 of 25 stages, with the two live smokes and the pre-commit checkpoint validation named as the three that did not pass.",
+      "hashAfter": "60df8fc4ea84b78e95a774b2aa7b1964df5181861b40a9c9e097a3ea9ed67cc2"
+    },
+    {
+      "path": "docs/runbooks/AGENT-RUNTIME.md",
+      "reason": "How to run, observe, pause, resume and cancel a run, and what each failure means.",
+      "hashAfter": "94b8614bcc00b4c5bbb26cb0b6af12f0a8b7bcd7ad5680186fa0019986b7f071"
+    },
+    {
+      "path": "packages/contracts/src/iacode_contracts/agent_runtime.py",
+      "reason": "The one definition of the run states, the transitions, the event types, the signal names and the public wire shapes. The runtime, the database and the API all derive from it.",
+      "hashAfter": "5c56741827b3f531845fdf236a843cc031d3533505608fc76a4c4dfcead1a1f4"
+    },
+    {
+      "path": "packages/persistence/pyproject.toml",
+      "reason": "The shared schema package: three processes need the same tables, and importing the web application from the worker would invert the dependency direction.",
+      "hashAfter": "18c43fa9f91ed7f9b3c6085ea378f826248a127c77390c3cfb1943c2dbf6214a"
+    },
+    {
+      "path": "packages/persistence/src/iacode_persistence/__init__.py",
+      "reason": "The package marker and its public surface.",
+      "hashAfter": "6d74b26083499ac6aed5a854bba4b6a6942a4939e817e359745ddd85eaffa49c"
+    },
+    {
+      "path": "packages/persistence/src/iacode_persistence/base.py",
+      "reason": "Moved from apps/api: the declarative base and its naming convention are shared.",
+      "hashAfter": "70b0a53e0e5cf379bdbfaccc05e2ca1221606f18425d18efbb0f83c246ab93ea"
+    },
+    {
+      "path": "packages/persistence/src/iacode_persistence/engine.py",
+      "reason": "Moved from apps/api and reshaped to take values rather than the API's Settings object.",
+      "hashAfter": "b80323c8eff0e709018a3ae23db3ceb3e74cc7a950ac7c55cd5df01b6d8e8fac"
+    },
+    {
+      "path": "packages/persistence/src/iacode_persistence/models.py",
+      "reason": "Moved from apps/api and evolved: five new tables, the widened run-state vocabulary, and profile_version renamed away from the optimistic lock.",
+      "hashAfter": "c0ecef2ae514770cf2fea71dcfe99415ae561ea49b5280fbbd9ffd5923d648a8"
+    },
+    {
+      "path": "scripts/development-ledger/gate2_red_team.py",
+      "reason": "This Gate's adversarial battery and its null-mutation control.",
+      "hashAfter": "7799faebf8382023e4d8b1fa6df9ccb392eea8b899bed842d779cea0d93fad39"
+    },
+    {
+      "path": "scripts/development-ledger/gate2_runtime_attacks.py",
+      "reason": "The attacks that need the runtime itself rather than the repository.",
+      "hashAfter": "14725d8991b9bf53e88ec7dcc214ff88bb0b3e5f59a0edceb84be2298a35c927"
+    },
+    {
+      "path": "scripts/iacode/agent_runtime_smoke.py",
+      "reason": "The live check: one agent and one team, through the Model Gateway, against the configured model, which it never substitutes.",
+      "hashAfter": "30ab0ad2c258c9abb4a8af1e5b984c38068cbd85626365f35caa3e1ca48f0459"
+    },
+    {
+      "path": "scripts/iacode/gates/agent_runtime_tests.py",
+      "reason": "The eleventh mandatory gate, which builds the image before it measures it.",
+      "hashAfter": "015867f0a68c48279dd0fa3696b8c735e96512c143bf350ac36ebed3f48886a0"
+    },
+    {
+      "path": "scripts/iacode/scenarios/agent_runtime_cancellation.py",
+      "reason": "A run is cancelled while waiting, and a late tool result is refused.",
+      "hashAfter": "099259ac7b19638bc925a3b5be295c261383794e1cacc877ddfa18ece6c9508b"
+    },
+    {
+      "path": "scripts/iacode/scenarios/agent_runtime_deadline.py",
+      "reason": "A run that is alive and going nowhere is ended at its deadline, and the store records why.",
+      "hashAfter": "1c39e6ebe77aa3186e45a3c29bae9b95f70074bc365d0e387a44aaa68959b6d2"
+    },
+    {
+      "path": "scripts/iacode/scenarios/agent_runtime_durability.py",
+      "reason": "A run waiting for a tool survives a real container restart.",
+      "hashAfter": "4d3db042863e32cf6abce062f637967efe4aed198a6493bf8e4d9a30efd67e73"
+    },
+    {
+      "path": "services/agent-runtime/README.md",
+      "reason": "The agent runtime: the turn engine, the envelope protocol, the context channels, budgets and limits, the profile registry, the gateway client, the store adapter, telemetry and the service facade — with its own suite beside it. No I/O in the engine, no provider SDK anywhere, and no module that could execute a tool.",
+      "hashAfter": "9d380236f2ab42d930902b284521760d9d2818a60743f07df2cdbd386d7d2905"
+    },
+    {
+      "path": "services/agent-runtime/pyproject.toml",
+      "reason": "The agent runtime: the turn engine, the envelope protocol, the context channels, budgets and limits, the profile registry, the gateway client, the store adapter, telemetry and the service facade — with its own suite beside it. No I/O in the engine, no provider SDK anywhere, and no module that could execute a tool.",
+      "hashAfter": "77e4076dc06e4c2a0fb0740cc82fc4f2f6d3bbd948611b1bd6ee1846159a6ae5"
+    },
+    {
+      "path": "services/agent-runtime/src/iacode_agent_runtime/__init__.py",
+      "reason": "The agent runtime: the turn engine, the envelope protocol, the context channels, budgets and limits, the profile registry, the gateway client, the store adapter, telemetry and the service facade — with its own suite beside it. No I/O in the engine, no provider SDK anywhere, and no module that could execute a tool.",
+      "hashAfter": "f1cd5dc7af2c018143b8dc27a91b4478011636b6ec246cf8421d5ad53f0b5b91"
+    },
+    {
+      "path": "services/agent-runtime/src/iacode_agent_runtime/budgets.py",
+      "reason": "The agent runtime: the turn engine, the envelope protocol, the context channels, budgets and limits, the profile registry, the gateway client, the store adapter, telemetry and the service facade — with its own suite beside it. No I/O in the engine, no provider SDK anywhere, and no module that could execute a tool.",
+      "hashAfter": "e4a1606628622727cdc58d5cb133a3524e46343261043ebf311c2844737c8276"
+    },
+    {
+      "path": "services/agent-runtime/src/iacode_agent_runtime/context.py",
+      "reason": "The agent runtime: the turn engine, the envelope protocol, the context channels, budgets and limits, the profile registry, the gateway client, the store adapter, telemetry and the service facade — with its own suite beside it. No I/O in the engine, no provider SDK anywhere, and no module that could execute a tool.",
+      "hashAfter": "9327144caa54aac4e529031f659bdc0480490845fa9961b610f9bd1fc06540f8"
+    },
+    {
+      "path": "services/agent-runtime/src/iacode_agent_runtime/contracts.py",
+      "reason": "The agent runtime: the turn engine, the envelope protocol, the context channels, budgets and limits, the profile registry, the gateway client, the store adapter, telemetry and the service facade — with its own suite beside it. No I/O in the engine, no provider SDK anywhere, and no module that could execute a tool.",
+      "hashAfter": "6cba46ed2694f97797407ca1ddde897674ad07dd41cd32198fb315e461cdcacb"
+    },
+    {
+      "path": "services/agent-runtime/src/iacode_agent_runtime/engine.py",
+      "reason": "The agent runtime: the turn engine, the envelope protocol, the context channels, budgets and limits, the profile registry, the gateway client, the store adapter, telemetry and the service facade — with its own suite beside it. No I/O in the engine, no provider SDK anywhere, and no module that could execute a tool.",
+      "hashAfter": "3bfe66c406e04ea3e4e70f4dc6b46d2e63429c627ddf353469a097a0929f5950"
+    },
+    {
+      "path": "services/agent-runtime/src/iacode_agent_runtime/errors.py",
+      "reason": "The agent runtime: the turn engine, the envelope protocol, the context channels, budgets and limits, the profile registry, the gateway client, the store adapter, telemetry and the service facade — with its own suite beside it. No I/O in the engine, no provider SDK anywhere, and no module that could execute a tool.",
+      "hashAfter": "7bfb816cbaff8ccb6df4e68aa5005ea2841f3e11756bebaa2a72d1b3b6b2e7f6"
+    },
+    {
+      "path": "services/agent-runtime/src/iacode_agent_runtime/events.py",
+      "reason": "The agent runtime: the turn engine, the envelope protocol, the context channels, budgets and limits, the profile registry, the gateway client, the store adapter, telemetry and the service facade — with its own suite beside it. No I/O in the engine, no provider SDK anywhere, and no module that could execute a tool.",
+      "hashAfter": "768c5df6a7e6d33e5da76dd0877cef1751b8f78b4d140ea7cc6b503eba4d65d6"
+    },
+    {
+      "path": "services/agent-runtime/src/iacode_agent_runtime/gateway_client.py",
+      "reason": "The agent runtime: the turn engine, the envelope protocol, the context channels, budgets and limits, the profile registry, the gateway client, the store adapter, telemetry and the service facade — with its own suite beside it. No I/O in the engine, no provider SDK anywhere, and no module that could execute a tool.",
+      "hashAfter": "8104631f5fb918d370f8769b237513ebc0cd06a2ed1e8e4bdc5b2f3278a912f0"
+    },
+    {
+      "path": "services/agent-runtime/src/iacode_agent_runtime/limits.py",
+      "reason": "The agent runtime: the turn engine, the envelope protocol, the context channels, budgets and limits, the profile registry, the gateway client, the store adapter, telemetry and the service facade — with its own suite beside it. No I/O in the engine, no provider SDK anywhere, and no module that could execute a tool.",
+      "hashAfter": "76c001617e6d28bab012196894d979f6295a7950f062fe6d054eb3c9d55ae2f0"
+    },
+    {
+      "path": "services/agent-runtime/src/iacode_agent_runtime/persistence.py",
+      "reason": "The agent runtime: the turn engine, the envelope protocol, the context channels, budgets and limits, the profile registry, the gateway client, the store adapter, telemetry and the service facade — with its own suite beside it. No I/O in the engine, no provider SDK anywhere, and no module that could execute a tool.",
+      "hashAfter": "b2cbba4e14bb59914d5e8fdb71984e0d08516b66f4b56e7ccef3fb009ef5363b"
+    },
+    {
+      "path": "services/agent-runtime/src/iacode_agent_runtime/ports.py",
+      "reason": "The agent runtime: the turn engine, the envelope protocol, the context channels, budgets and limits, the profile registry, the gateway client, the store adapter, telemetry and the service facade — with its own suite beside it. No I/O in the engine, no provider SDK anywhere, and no module that could execute a tool.",
+      "hashAfter": "bd8ef7768a307945dc3ef2dce3f71920e4ad026971df289dc453bacfa98a45de"
+    },
+    {
+      "path": "services/agent-runtime/src/iacode_agent_runtime/profiles.py",
+      "reason": "The agent runtime: the turn engine, the envelope protocol, the context channels, budgets and limits, the profile registry, the gateway client, the store adapter, telemetry and the service facade — with its own suite beside it. No I/O in the engine, no provider SDK anywhere, and no module that could execute a tool.",
+      "hashAfter": "5397e2d21d7458a114e98728ee01162ba58472876df806dce790ec13099255d0"
+    },
+    {
+      "path": "services/agent-runtime/src/iacode_agent_runtime/prompts.py",
+      "reason": "The agent runtime: the turn engine, the envelope protocol, the context channels, budgets and limits, the profile registry, the gateway client, the store adapter, telemetry and the service facade — with its own suite beside it. No I/O in the engine, no provider SDK anywhere, and no module that could execute a tool.",
+      "hashAfter": "daf22bd92f47df5231e83139704ff8fd8dcf7f1708528d3a1e4d3e1789f94ae9"
+    },
+    {
+      "path": "services/agent-runtime/src/iacode_agent_runtime/protocol.py",
+      "reason": "The agent runtime: the turn engine, the envelope protocol, the context channels, budgets and limits, the profile registry, the gateway client, the store adapter, telemetry and the service facade — with its own suite beside it. No I/O in the engine, no provider SDK anywhere, and no module that could execute a tool.",
+      "hashAfter": "e0a388ed76c3a69eae37aa40fc3d386cb10d7aa7b67ee1855927713a33ab21dc"
+    },
+    {
+      "path": "services/agent-runtime/src/iacode_agent_runtime/registry.py",
+      "reason": "The agent runtime: the turn engine, the envelope protocol, the context channels, budgets and limits, the profile registry, the gateway client, the store adapter, telemetry and the service facade — with its own suite beside it. No I/O in the engine, no provider SDK anywhere, and no module that could execute a tool.",
+      "hashAfter": "1774b48c6ce7ee86f123d08c0c9758a090699652b3b1be3ef5a0fb724da8efff"
+    },
+    {
+      "path": "services/agent-runtime/src/iacode_agent_runtime/service.py",
+      "reason": "The agent runtime: the turn engine, the envelope protocol, the context channels, budgets and limits, the profile registry, the gateway client, the store adapter, telemetry and the service facade — with its own suite beside it. No I/O in the engine, no provider SDK anywhere, and no module that could execute a tool.",
+      "hashAfter": "066a224c139a3a70d232a875961ecaf0c1f4e10eeda7b93d775868fcf3654968"
+    },
+    {
+      "path": "services/agent-runtime/src/iacode_agent_runtime/states.py",
+      "reason": "The agent runtime: the turn engine, the envelope protocol, the context channels, budgets and limits, the profile registry, the gateway client, the store adapter, telemetry and the service facade — with its own suite beside it. No I/O in the engine, no provider SDK anywhere, and no module that could execute a tool.",
+      "hashAfter": "83aebeb595ec3cb8e38a4fce6bd976ae8cb03e204063ac28ab29dff7e67c15a5"
+    },
+    {
+      "path": "services/agent-runtime/src/iacode_agent_runtime/telemetry.py",
+      "reason": "The agent runtime: the turn engine, the envelope protocol, the context channels, budgets and limits, the profile registry, the gateway client, the store adapter, telemetry and the service facade — with its own suite beside it. No I/O in the engine, no provider SDK anywhere, and no module that could execute a tool.",
+      "hashAfter": "52913c24c8e3ce2f2fbdeb2c269e39eebc16ec9b645a70db59d74e640e65df3d"
+    },
+    {
+      "path": "services/agent-runtime/tests/conftest.py",
+      "reason": "The agent runtime: the turn engine, the envelope protocol, the context channels, budgets and limits, the profile registry, the gateway client, the store adapter, telemetry and the service facade — with its own suite beside it. No I/O in the engine, no provider SDK anywhere, and no module that could execute a tool.",
+      "hashAfter": "b947bf527e4f180a84aab748eb3632f8e1eaca58e4ac9ea435a0c95ca9cde641"
+    },
+    {
+      "path": "services/agent-runtime/tests/runtime_doubles.py",
+      "reason": "The agent runtime: the turn engine, the envelope protocol, the context channels, budgets and limits, the profile registry, the gateway client, the store adapter, telemetry and the service facade — with its own suite beside it. No I/O in the engine, no provider SDK anywhere, and no module that could execute a tool.",
+      "hashAfter": "fa5da2397f5b84ab3f56b5d186d9aab94b1fc5998f79cc780d4f030afee30d0c"
+    },
+    {
+      "path": "services/agent-runtime/tests/test_boundary.py",
+      "reason": "The agent runtime: the turn engine, the envelope protocol, the context channels, budgets and limits, the profile registry, the gateway client, the store adapter, telemetry and the service facade — with its own suite beside it. No I/O in the engine, no provider SDK anywhere, and no module that could execute a tool.",
+      "hashAfter": "51e061417c7067f6e929569dc2173bfa58176f42340945263dcae29ac69e1180"
+    },
+    {
+      "path": "services/agent-runtime/tests/test_budgets.py",
+      "reason": "The agent runtime: the turn engine, the envelope protocol, the context channels, budgets and limits, the profile registry, the gateway client, the store adapter, telemetry and the service facade — with its own suite beside it. No I/O in the engine, no provider SDK anywhere, and no module that could execute a tool.",
+      "hashAfter": "e05f58e46f0d733c3cab52c37daa9aa2c7145bd52ecd66bb9240af8c40cb4923"
+    },
+    {
+      "path": "services/agent-runtime/tests/test_context.py",
+      "reason": "The agent runtime: the turn engine, the envelope protocol, the context channels, budgets and limits, the profile registry, the gateway client, the store adapter, telemetry and the service facade — with its own suite beside it. No I/O in the engine, no provider SDK anywhere, and no module that could execute a tool.",
+      "hashAfter": "61ce002e11a5d890a484713ccc066ca239e397b01c388ec55836b73be8a527dd"
+    },
+    {
+      "path": "services/agent-runtime/tests/test_engine.py",
+      "reason": "The agent runtime: the turn engine, the envelope protocol, the context channels, budgets and limits, the profile registry, the gateway client, the store adapter, telemetry and the service facade — with its own suite beside it. No I/O in the engine, no provider SDK anywhere, and no module that could execute a tool.",
+      "hashAfter": "759202437604d57e288713d912b653103d5ab84efaa72a065deed68dc7f31e2c"
+    },
+    {
+      "path": "services/agent-runtime/tests/test_events.py",
+      "reason": "The agent runtime: the turn engine, the envelope protocol, the context channels, budgets and limits, the profile registry, the gateway client, the store adapter, telemetry and the service facade — with its own suite beside it. No I/O in the engine, no provider SDK anywhere, and no module that could execute a tool.",
+      "hashAfter": "9f04631ad5626cdb85f8a4c6381b47d2631d63daaec23d8bdedd18b5414fbdf9"
+    },
+    {
+      "path": "services/agent-runtime/tests/test_gateway_client.py",
+      "reason": "The agent runtime: the turn engine, the envelope protocol, the context channels, budgets and limits, the profile registry, the gateway client, the store adapter, telemetry and the service facade — with its own suite beside it. No I/O in the engine, no provider SDK anywhere, and no module that could execute a tool.",
+      "hashAfter": "df501075ef0b47198e0f489ca831a773bb9731ac54254b32085e93c796759174"
+    },
+    {
+      "path": "services/agent-runtime/tests/test_protocol.py",
+      "reason": "The agent runtime: the turn engine, the envelope protocol, the context channels, budgets and limits, the profile registry, the gateway client, the store adapter, telemetry and the service facade — with its own suite beside it. No I/O in the engine, no provider SDK anywhere, and no module that could execute a tool.",
+      "hashAfter": "690cf90619cadc80ef236b526f88bd855e22eb7498c7f37907f03bc942f303c3"
+    },
+    {
+      "path": "services/agent-runtime/tests/test_registry.py",
+      "reason": "The agent runtime: the turn engine, the envelope protocol, the context channels, budgets and limits, the profile registry, the gateway client, the store adapter, telemetry and the service facade — with its own suite beside it. No I/O in the engine, no provider SDK anywhere, and no module that could execute a tool.",
+      "hashAfter": "b6726b69eba9555118fe3ce4e064ff7b0bf6f470799e6f489a108796f4ad17ce"
+    },
+    {
+      "path": "services/agent-runtime/tests/test_runtime_contracts.py",
+      "reason": "The agent runtime: the turn engine, the envelope protocol, the context channels, budgets and limits, the profile registry, the gateway client, the store adapter, telemetry and the service facade — with its own suite beside it. No I/O in the engine, no provider SDK anywhere, and no module that could execute a tool.",
+      "hashAfter": "5ec448749ae22423450dcaec919f9996f0ed6739e29e8b1ad62ff0018785889a"
+    },
+    {
+      "path": "services/agent-runtime/tests/test_states.py",
+      "reason": "The agent runtime: the turn engine, the envelope protocol, the context channels, budgets and limits, the profile registry, the gateway client, the store adapter, telemetry and the service facade — with its own suite beside it. No I/O in the engine, no provider SDK anywhere, and no module that could execute a tool.",
+      "hashAfter": "3d00d04a550a5aefb35b50d8f3c152a20c58207042925b3c9174221a3f60d743"
+    },
+    {
+      "path": "services/agent-runtime/tests/test_telemetry.py",
+      "reason": "The agent runtime: the turn engine, the envelope protocol, the context channels, budgets and limits, the profile registry, the gateway client, the store adapter, telemetry and the service facade — with its own suite beside it. No I/O in the engine, no provider SDK anywhere, and no module that could execute a tool.",
+      "hashAfter": "0f9b91bf5b02d4478d9de5dff3cc12ee69782c8d4b6d9e0bc9356b65b9f0f9e2"
+    },
+    {
+      "path": "services/orchestrator/rehearsal/README.md",
+      "reason": "The scenario harness, kept outside the shipped source so a running worker cannot import it. One substitution only — the model — which is what makes an agent that asks for a tool exist in a Gate where no shipped profile may have one.",
+      "hashAfter": "feea22ff923b2fc8698305ddf59270d40bb7d897b4e601f0308261e527060504"
+    },
+    {
+      "path": "services/orchestrator/rehearsal/durability.py",
+      "reason": "The scenario harness, kept outside the shipped source so a running worker cannot import it. One substitution only — the model — which is what makes an agent that asks for a tool exist in a Gate where no shipped profile may have one.",
+      "hashAfter": "7d40b7b149228eec6dd0ebea0058221b12713a8430435547e0755f3cbbd5cf26"
+    },
+    {
+      "path": "services/orchestrator/src/iacode_orchestrator/agent_runtime/__init__.py",
+      "reason": "The worker's runtime context and the eleven activities the workflow invokes.",
+      "hashAfter": "7d3774d4c51b226f41d2cbd9535b18094e43ef10bf26b0645841465deb66eeac"
+    },
+    {
+      "path": "services/orchestrator/src/iacode_orchestrator/agent_runtime/activities.py",
+      "reason": "The worker's runtime context and the eleven activities the workflow invokes.",
+      "hashAfter": "fc16b8acb16405b2d2e982b54a728aec3711730cee1959aa5ce1369568d0fca0"
+    },
+    {
+      "path": "services/orchestrator/src/iacode_orchestrator/agent_runtime/runtime_context.py",
+      "reason": "The worker's runtime context and the eleven activities the workflow invokes.",
+      "hashAfter": "f7e950a6209b773841023e99cc5735393e0f080f28b1c0f6ec505595541cedec"
+    },
+    {
+      "path": "services/orchestrator/src/iacode_orchestrator/workflows/agent_run.py",
+      "reason": "The durable run: the activities that satisfy the engine's Effects, the tool-result and cancel signals, and the wall-clock deadline that ends a run and records that it did.",
+      "hashAfter": "6d9b1201ed3948ecbe5c4d4adda9a1a99133c2ffc6553a40f07f83e77807e65b"
+    },
+    {
+      "path": "tests/test_gate2_agent_runtime.py",
+      "reason": "The repository-level controls of this Gate: the specification mirror, the mandatory gate set, the scope, the boundary scans with their null controls, workflow determinism, the persistence contract, the declared agents, the documentation, the live smoke contract, frontend safety, source integrity, scenario readiness, migration naming, counted-suite expansion and deadline enforcement.",
+      "hashAfter": "8a2f941638bc274b4e2c327f4291c160095f53450fd916ee737b028084074e4b"
+    }
+  ],
+  "filesModified": [
+    {
+      "path": ".iacode/anchors/checkpoint-chain.json",
+      "reason": "Anchors GATE-1-CP-0001 so this Gate's predecessor is verifiable from outside its content.",
+      "hashAfter": "406d5ed469fc3d6a68c6b73d06aebfa09900e9853367c0f3147cfb29ce3138ce",
+      "hashBefore": "c88915d259b76bc83206d0ed5ca48378aae707c20b03d570fafd6600a3037d05"
+    },
+    {
+      "path": ".iacode/memory/guardrails/registry.json",
+      "reason": "The six controls that prevent those failure classes from returning.",
+      "hashAfter": "5ad6c6999b82cb2ba5792a724f4266bb418968a0d1d2095f85927453b29cb5fb",
+      "hashBefore": "2e227b553ac3bd64b1d6b09cb544d8a55c8c7960c4d28c81f967dbbb16de1906"
+    },
+    {
+      "path": ".iacode/memory/lessons.jsonl",
+      "reason": "Six lessons this Gate confirmed, and one recurrence recorded against an existing one.",
+      "hashAfter": "91e7af4ed1404d34496dccc770444d5928e0f3b7546f8c55d801c31b2fcd3df2",
+      "hashBefore": "95ec6340065ee8362280b7d75fd3190980f85ff04a20a242a9ccb78801d167c7"
+    },
+    {
+      "path": ".iacode/policies/canonical-requirements.json",
+      "reason": "The machine-readable mirror of that checklist, generated from it rather than transcribed.",
+      "hashAfter": "6cf41637a4def405a096abfbcf11b71d07f51292685f1c8a26f9a15fa213314e",
+      "hashBefore": "a1f54b838ae643681535dfc882392e71d1614affd3864a3a71aabdbebf1e379a"
+    },
+    {
+      "path": ".iacode/policies/gate-scope.json",
+      "reason": "Adds the services/agent-runtime reservation owned by this Gate.",
+      "hashAfter": "eb4be225d8a87b6b1492947f88127b62acbede84474a6a7534b82b49c525061b",
+      "hashBefore": "1f5b26aea2987d11c0d7369061e2cb77abcc70f27b253e60bf920c7455854ee7"
+    },
+    {
+      "path": ".iacode/policies/quality-gates.json",
+      "reason": "Adds agentRuntimeTests as the eleventh mandatory gate.",
+      "hashAfter": "d0b8c2c3b1779645ade6f4fbecdd38a3d82ede29f9850c5abf18667353a20b1d",
+      "hashBefore": "b621a002dc9dfba36ab7fd946f5d49ad75538c39acbc4149bf5d1e857821cb69"
+    },
+    {
+      "path": ".iacode/policies/test-suites.json",
+      "reason": "Registers services/agent-runtime/tests as a counted suite.",
+      "hashAfter": "6f9dd588af9b6b24e5f473b658727ce7a5ca79eb0f1c8bb25d4a4de5b595adb3",
+      "hashBefore": "22dde910c7006d610265b712c100958d02e93b1d539855b201953f0c234bee32"
+    },
+    {
+      "path": "README.md",
+      "reason": "The repository now delivers an agent runtime.",
+      "hashAfter": "c6c38d7ac9cbacd6b6b2aa2a4a4b5c9728ba2794330b358c83ee1cefb033a0d7",
+      "hashBefore": "12f4d2fbebac4cab4eaa7c8c0241c8198f127a85fb75bcea774ff9f7fba1338c"
+    },
+    {
+      "path": "START-HERE.md",
+      "reason": "Points a cold start at this Gate.",
+      "hashAfter": "4bf7b62e3e562f86eb8336833d9180326bc080bfe885653de496e39d0d4741ad",
+      "hashBefore": "c1c284a4ae1a3b483e2667a76ce3469c461cbc046b8d117771a89c9700d58447"
+    },
+    {
+      "path": "agents/README.md",
+      "reason": "Consumes this Gate's reservation of the directory and describes what a profile is.",
+      "hashAfter": "bf0001a495dd7438846917bc42e99e0168bff386eaa44e91792d8aaec95cb33b",
+      "hashBefore": "21c13bb7eb59470a116fca89979730e88a7c21e8f54977ea2ee4b91cbf4df15b"
+    },
+    {
+      "path": "apps/api/Dockerfile",
+      "reason": "Installs the runtime library and the shared schema into the image.",
+      "hashAfter": "801ed8a3407db045e90ef68590079f19dda343a262f3dbf39db549a30e744fde",
+      "hashBefore": "0eda5605aa64816a6d197c5b01b9079e11291db07a91636c04a228d07719bf77"
+    },
+    {
+      "path": "apps/api/migrations/env.py",
+      "reason": "Points autogenerate at the shared metadata.",
+      "hashAfter": "0186e81cf7714dd8a69ca023b275cf1d0c6ed95c91f46effce99cbba69a29a2b",
+      "hashBefore": "49bec620f882d03903b5a09aa1b01a4410a5380ed41713067fb754bc0d0f1cff"
+    },
+    {
+      "path": "apps/api/pyproject.toml",
+      "reason": "Depends on the runtime library and the shared schema.",
+      "hashAfter": "1d225e78c0155fed50a9fdf1482927165dcf1227b86ee5ad0ea76297647868cf",
+      "hashBefore": "9271f0f8f6f83d9e6784d826c95af48204e603fae526653a5970f0c2f10fa13d"
+    },
+    {
+      "path": "apps/api/src/iacode_api/config.py",
+      "reason": "Adds the repository root and the agent runtime settings.",
+      "hashAfter": "4b640f1c78d220a2615623443fc6f776bed2aa5de357a4379d141e8cc33fee5e",
+      "hashBefore": "2541fcae6e352811a10423d27201a7adc8fd03fd89ee7d649e2230a3b5f92205"
+    },
+    {
+      "path": "apps/api/src/iacode_api/db/__init__.py",
+      "reason": "Re-exports the shared schema from its new home.",
+      "hashAfter": "4d887e8af36c4a9f0db64284af30d5f5f6641cc4b9cf64547d171dfd103239e1",
+      "hashBefore": "cc18e33fdde664e32a0ca6e655e008f5246d7421fba33456b10c51e543839aaf"
+    },
+    {
+      "path": "apps/api/src/iacode_api/db/engine.py",
+      "reason": "A thin delegation left where Gate 0 and Gate 1 call it, so no call site had to change.",
+      "hashAfter": "76684b5de92d3045d75a61453475dfea3b75f64a58132d39a3df714c0f74cab4",
+      "hashBefore": "08b502ce2b0524a1824053758995d3060b721ec5917215ea25b5aef07e0b00be"
+    },
+    {
+      "path": "apps/api/src/iacode_api/gateway/store.py",
+      "reason": "Reads the schema from its new package.",
+      "hashAfter": "09ef1bc627c0dc3c2e4c53a39dadd654008f1816028be318666ded246c302afe",
+      "hashBefore": "fcb39f23709582e4c272e1b7ab101b8ed913165087091ae46f32aa12fd12380d"
+    },
+    {
+      "path": "apps/api/src/iacode_api/lifespan.py",
+      "reason": "Builds the runtime service and closes it with the application.",
+      "hashAfter": "fd3392aaaca8514d478f1722a9b89aeb2cdbaaa660b84974ba5dae93d5363ed8",
+      "hashBefore": "12e646bf18960663fbea7b2bc8e2859040ede04efca9cc9c56ef352a6282c623"
+    },
+    {
+      "path": "apps/api/src/iacode_api/main.py",
+      "reason": "Registers the agent run routes.",
+      "hashAfter": "23064a64c308666110660d1210f4d50f8378ab6e2134932bece1f54a26738062",
+      "hashBefore": "6cef24ba0ec13c708d36df365ef19069870176be24d52fb173cc8c387d31400d"
+    },
+    {
+      "path": "apps/api/src/iacode_api/workflows/client.py",
+      "reason": "Starts and signals the agent run workflow.",
+      "hashAfter": "1d2fbec3c7978394fbd5f4eff83390a7cbab11360ba85533c3c2cc3daf581798",
+      "hashBefore": "16a7842eb29b67bd1bd534ece24a6916fc413b1ddce1cfb90d746916c3a92440"
+    },
+    {
+      "path": "apps/api/tests/integration/test_dependencies.py",
+      "reason": "Reads the shared schema from its new package.",
+      "hashAfter": "5b1ac91c1ec9e7d0bf1dc8e56c18f1a32b820ff163cdb67682755af55219e0a4",
+      "hashBefore": "a13a2e353ebb61c7d82734c780cf99f2572937eac0ae37ccb52a95b5f96f0738"
+    },
+    {
+      "path": "apps/api/tests/integration/test_gateway_persistence.py",
+      "reason": "Reads the shared schema from its new package.",
+      "hashAfter": "a4a39f288ea816eee5316ca54f7404df16d8a6e402711316c3ea37402917ea97",
+      "hashBefore": "072ca42b79d73da7a173088c3ef5b8589b4ce9ca4047a25e82d31ff96ae1a119"
+    },
+    {
+      "path": "apps/api/tests/integration/test_migrations.py",
+      "reason": "The new migration is applied and reversed against a disposable database.",
+      "hashAfter": "75af0fff9f9b3ff43c6d2c83e0802ec9cd3204b03d00bd670c64fd4cf726a08a",
+      "hashBefore": "49094f33406d4df0bb2f04ec0612b363e7c5b81d34e5c92947ccb6a1b981168d"
+    },
+    {
+      "path": "apps/api/tests/unit/test_domain_model.py",
+      "reason": "The structural expectations grew with the schema.",
+      "hashAfter": "159ef4e6bfd2375cffa9896151f766660401ed401c0ec1f6996455c0a56eb1d0",
+      "hashBefore": "ecf8d426017e19e26aacb5f837177ef408126b837a99d8620c38852d950013ab"
+    },
+    {
+      "path": "apps/web/src/app/app.html",
+      "reason": "Adds the page to the shell's navigation.",
+      "hashAfter": "ec8d02436e01f416812a9dad7b1f30116ab4fbe01bc3acc133c08a4435b56d06",
+      "hashBefore": "001cf15348892aa8fdfb635ce0ddd013a5284d7546186c02dd3cbb7c116ba7cc"
+    },
+    {
+      "path": "apps/web/src/app/app.routes.ts",
+      "reason": "Routes the new page.",
+      "hashAfter": "fb388eaf889e5eb629e9f97672520e469fdfa34b7e8b2f180c493bb3911307bc",
+      "hashBefore": "9a9f6b7eba305b22bd1a7ea9964a43adbc8e4bf095b233d9e16d6de99e7e56fc"
+    },
+    {
+      "path": "apps/web/src/app/app.spec.ts",
+      "reason": "The shell now offers three pages, and the assertion is scoped to the page rather than the navigation so it keeps meaning what it meant.",
+      "hashAfter": "7cc4280734fb4d1dbd4d461306a257fbec6c72ad4244b69086f4a1b7d73fe88f",
+      "hashBefore": "5d153f06c603bf9884c9869416e345648fe5e034ee7ee7843c373f9aa1f9cd1e"
+    },
+    {
+      "path": "docs/ARCHITECTURE.md",
+      "reason": "The runtime's place in the system and the boundaries it draws.",
+      "hashAfter": "81ead9bc185681a8f2d6f118b9e897446c728fc7cf9208ec6d960da74321cf5f",
+      "hashBefore": "8ac275e58146b0b95f167e512f206c0cc7b429e0254380957ec68c6ed8e1ec26"
+    },
+    {
+      "path": "docs/DEVELOPMENT.md",
+      "reason": "How to work on the runtime and how to run its gates and scenarios.",
+      "hashAfter": "4a5eb93da5a107b38f9f1f6e543da20c05b8947789f23851873602f08eb76535",
+      "hashBefore": "5384f82b8fd5dadde44bc4f65727e435cf80dda42f1f63f4209aeee3a049027e"
+    },
+    {
+      "path": "docs/VERSIONS.md",
+      "reason": "The versions this Gate pins.",
+      "hashAfter": "47e6e03839f175c061c5f6c84689552b607d1129a1f220f3942b18e3c6b41828",
+      "hashBefore": "c7eddda47e5987b080382b928ec8aa1fa2be9f841be311eac29957e51183e25e"
+    },
+    {
+      "path": "docs/checkpoints/LATEST.md",
+      "reason": "Identifies this checkpoint.",
+      "hashAfter": "f1066c053ddc6d03a43be0b3d8a2979ed5bfe5c324707e768d70c6bb398cdb34",
+      "hashBefore": "0995c85fe5a2f67b5c7c6f7c0bfdbdd3766a6e08f98138f000278bf3c139d5f5"
+    },
+    {
+      "path": "infra/compose/.env.example",
+      "reason": "Documents the runtime's settings without carrying a value.",
+      "hashAfter": "cc4984d0eddae82187c7b0f8fd8224759c53004c9001e89a76b8843612f5f39a",
+      "hashBefore": "48c78e393ef49c77e937a93fe6f9ea033ca4083beda32a7c451f01fc36eb1b45"
+    },
+    {
+      "path": "infra/compose/docker-compose.yml",
+      "reason": "The runtime's environment, the rehearsal mount and the worker's metrics port.",
+      "hashAfter": "6036269be2788ac5c7f81ee495e531d45298e6c2566f382334ff49a545c7ade0",
+      "hashBefore": "2b28195be4e8f987f1a2b9fe917fd2ac03ef20e1d7d86ec06e82fb0fb6eb60ce"
+    },
+    {
+      "path": "infra/prometheus/prometheus.yml",
+      "reason": "Scrapes the agent runtime metrics endpoint.",
+      "hashAfter": "07b0e542b6620deccf8240f33f742d0aafde38f57557f75dcadb938f654279e7",
+      "hashBefore": "6c2179894cc819b4128879d95a1ba222103a23bf6472edcf001e05a51bdda26a"
+    },
+    {
+      "path": "ruff.toml",
+      "reason": "Records the one exception this Gate looked at and decided was not a finding: the runtime wire contract is camelCase because that is what a JSON consumer reads.",
+      "hashAfter": "0407a55406677ab8c7a2d411df2e71fca2648ffcb4f76e93b2f4b209000239f1",
+      "hashBefore": "29b93802de08fae65e6686739e05dbb09b80bdf44582aab2607955de968a557c"
+    },
+    {
+      "path": "scripts/iacode/gates/lint.py",
+      "reason": "Lints the agent runtime source and its suite.",
+      "hashAfter": "29c1b5c831e4c2a4e00dfb7daec18df37d809d562a06a550cb0678c71ffae7c6",
+      "hashBefore": "eddd0c467a188f1fd256ce9181d571cf6b321fe2c7b2b89ca0813565a7fd2f31"
+    },
+    {
+      "path": "scripts/iacode/image_tests.py",
+      "reason": "Counts the runtime suite's executed cases.",
+      "hashAfter": "d0f48e75341d261c56e3917fcbff1e7a21be6008448195bacccbbe08d63ffc2d",
+      "hashBefore": "b5324afcc8d0efa8843c1eb9e3e04a8af8183ecc8113b3f7e140446fdf51e2a6"
+    },
+    {
+      "path": "scripts/iacode/verify.py",
+      "reason": "Four new verification stages.",
+      "hashAfter": "f23fb164483734faf74d12ca0137114ebb6a7e700f78b1841923a9032018974e",
+      "hashBefore": "6d9d3c97db4c227f488659bb199b463c56987af3ffe4947393f734154422f5a6"
+    },
+    {
+      "path": "services/orchestrator/Dockerfile",
+      "reason": "Installs the runtime and the shared schema, and mounts the rehearsal harness outside the shipped source path.",
+      "hashAfter": "3e9e27172fd4dde363c1f0006c88a1e50d4c5375dbd8b92cddaee9f0b80638ab",
+      "hashBefore": "4b9b33b27ae6739c0d93983944ea214512115957748cb941a96f17a96111e59a"
+    },
+    {
+      "path": "services/orchestrator/pyproject.toml",
+      "reason": "Depends on the runtime library and the shared schema.",
+      "hashAfter": "4f52a2ec9b2be7c501a51c4f1744666d05e14420d43088cb0e638eff71521879",
+      "hashBefore": "d6b73363a780108894f871f98eb3fc08e2939210f43a9080c3f2d81b0cb75537"
+    },
+    {
+      "path": "services/orchestrator/src/iacode_orchestrator/config.py",
+      "reason": "The runtime's settings: the task queue, the gateway address and the metrics port.",
+      "hashAfter": "24f15011b0a965430f05d4cd3f979e460077dbe14aabdb0b3971303ffb7570bc",
+      "hashBefore": "c852a33688f9a5ffd3c7c0f6bfe7865d951a81004212fc5c585b3218487875da"
+    },
+    {
+      "path": "services/orchestrator/src/iacode_orchestrator/worker.py",
+      "reason": "A second Worker on the agent runtime task queue, with its own metrics port.",
+      "hashAfter": "6eed349f86e0083a9f6ef255c4eca247c45639fbd40383dfd49562c46a8c71de",
+      "hashBefore": "3a17d7f5816e7eb7c39d8959d13827b1c405967c0b8192577ccc61c4635d0d60"
+    },
+    {
+      "path": "tests/test_gate1_model_gateway.py",
+      "reason": "Two controls of the previous Gate were written against a single Gate and a single path, and stopped being controls when this one arrived. Both now derive what they compare against: G2-F-009.",
+      "hashAfter": "0ae76cefed52fe7b296aa5a7216a1b7bbb46dbd5ef47b8e8bad27a933870bd68",
+      "hashBefore": "39364106db424ad6098624e01d2cc651636c10c9813041ade408757aad2bc887"
+    }
+  ],
+  "filesDeleted": [
+    {
+      "path": "apps/api/src/iacode_api/db/base.py",
+      "reason": "Moved into packages/persistence, which three processes share.",
+      "hashBefore": "70b0a53e0e5cf379bdbfaccc05e2ca1221606f18425d18efbb0f83c246ab93ea"
+    },
+    {
+      "path": "apps/api/src/iacode_api/db/models.py",
+      "reason": "Moved into packages/persistence, which three processes share.",
+      "hashBefore": "e6807204665b78516f02670f1bc969bec7285425f62f6357050c644a74b9b36e"
+    }
+  ]
+}

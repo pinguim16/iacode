@@ -58,7 +58,7 @@ afterEach(() => {
 });
 
 describe('App shell', () => {
-  it('identifies the product and offers both pages', async () => {
+  it('identifies the product and offers every page it has', async () => {
     stubBackend();
     const element = (await renderShell('/')).nativeElement as HTMLElement;
 
@@ -66,7 +66,7 @@ describe('App shell', () => {
     const links = Array.from(element.querySelectorAll('nav a')).map((item) =>
       item.textContent?.trim(),
     );
-    expect(links).toEqual(['Foundation', 'Model Gateway']);
+    expect(links).toEqual(['Foundation', 'Model Gateway', 'Agent Runtime']);
   });
 
   it('renders the Foundation page at the root', async () => {
@@ -86,11 +86,15 @@ describe('App shell', () => {
 
   it('adds no conversation capability', async () => {
     stubBackend();
-    const text = ((await renderShell('/gateway')).nativeElement as HTMLElement).textContent ?? '';
+    const element = (await renderShell('/gateway')).nativeElement as HTMLElement;
+    // The page, not the shell: Gate 2 adds an Agent Runtime link to the navigation, and reading
+    // the navigation as page content would make this assertion about the menu rather than about
+    // what the gateway page offers.
+    const text = element.querySelector('router-outlet')?.parentElement?.textContent ?? '';
 
-    // Gate 1 is a gateway, not a chat application. No history, no persona, no tool execution.
-    for (const absent of ['Conversation', 'History', 'Persona', 'Agent', 'Run tool']) {
-      expect(text).not.toContain(absent);
+    // The gateway is a gateway, not a chat application. No history, no persona, no tool execution.
+    for (const absent of ['Conversation', 'History', 'Persona', 'Run tool', 'Execute']) {
+      expect(text.replace(/Foundation|Model Gateway|Agent Runtime/g, '')).not.toContain(absent);
     }
   });
 });

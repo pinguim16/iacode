@@ -611,6 +611,101 @@
         "LSN-0040"
       ],
       "removingItWouldAllow": "A sealed checkpoint to stop validating from its own tag without anything noticing until a successor happens to anchor it, one Gate later."
+    },
+    {
+      "guardrailId": "GRD-0043",
+      "title": "No source file carries a stray control character, and every scan asserts it found something",
+      "kind": "test",
+      "reference": "test_no_source_file_carries_a_stray_control_character",
+      "verifiedBy": [
+        "test_no_source_file_carries_a_stray_control_character",
+        "test_the_scan_detects_one",
+        "test_the_page_offers_nothing_that_would_execute_a_tool",
+        "test_the_boundary_has_something_to_scan"
+      ],
+      "lessons": [
+        "LSN-0041"
+      ],
+      "removingItWouldAllow": "A control whose pattern was mangled in editing to match nothing, compile, run and report the delivery as clean."
+    },
+    {
+      "guardrailId": "GRD-0044",
+      "title": "A migration is applied and reversed against a disposable database, so a constraint name mismatch is a failing test",
+      "kind": "test",
+      "reference": "test_the_agent_runtime_migration_is_reversible",
+      "verifiedBy": [
+        "test_the_agent_runtime_migration_is_reversible",
+        "test_the_declared_model_matches_the_migrated_schema",
+        "test_a_check_constraint_is_created_and_dropped_by_its_bare_name",
+        "test_a_unique_constraint_keeps_exactly_the_name_it_was_given"
+      ],
+      "lessons": [
+        "LSN-0042"
+      ],
+      "removingItWouldAllow": "A migration that applies and cannot be reversed, discovered during the incident that needed the reversal."
+    },
+    {
+      "guardrailId": "GRD-0045",
+      "title": "A scenario waits on the server's answer rather than on another process's log line",
+      "kind": "test",
+      "reference": "test_readiness_is_asked_of_temporal",
+      "verifiedBy": [
+        "test_readiness_is_asked_of_temporal",
+        "test_readiness_is_not_read_from_a_log_line",
+        "test_the_harness_asks_the_server_for_the_answer"
+      ],
+      "lessons": [
+        "LSN-0043"
+      ],
+      "removingItWouldAllow": "A scenario to start work against a queue nobody polls, time out, and report a defect that does not exist."
+    },
+    {
+      "guardrailId": "GRD-0046",
+      "title": "Every boundary scan reads the syntax tree and carries a control that fires on a mutated module",
+      "kind": "test",
+      "reference": "test_the_null_control_detects_a_mutation",
+      "verifiedBy": [
+        "test_the_null_control_detects_a_mutation",
+        "test_the_provider_scan_would_catch_one",
+        "test_the_credential_scan_would_catch_one",
+        "test_the_scan_detects_a_module_that_does_it",
+        "test_the_determinism_scan_detects_a_module_that_breaks_it"
+      ],
+      "lessons": [
+        "LSN-0044"
+      ],
+      "removingItWouldAllow": "A boundary scan to be weakened until it passes, or to be satisfied by a docstring, with nothing showing that it can still fail."
+    },
+    {
+      "guardrailId": "GRD-0047",
+      "title": "No counted pytest suite expands at run time",
+      "kind": "test",
+      "reference": "test_no_counted_pytest_case_expands_at_run_time",
+      "verifiedBy": [
+        "test_no_counted_pytest_case_expands_at_run_time",
+        "test_the_scan_detects_an_expansion"
+      ],
+      "lessons": [
+        "LSN-0045"
+      ],
+      "removingItWouldAllow": "A counted suite to declare cases the denominator cannot see, so the whole ledger errors on a message that names the counter rather than the file."
+    },
+    {
+      "guardrailId": "GRD-0048",
+      "title": "A run that outlives its deadline reaches a terminal state and the store records why",
+      "kind": "automated-check",
+      "reference": "scripts/iacode/scenarios/agent_runtime_deadline.py",
+      "verifiedBy": [
+        "test_the_engine_is_not_wrapped_in_wait_for",
+        "test_the_deadline_races_an_explicit_child_task",
+        "test_the_wait_accepts_every_way_a_cancelled_activity_surfaces",
+        "test_the_deadline_path_writes_the_failure_down",
+        "test_the_scenario_asserts_the_run_ended_and_said_so"
+      ],
+      "lessons": [
+        "LSN-0046"
+      ],
+      "removingItWouldAllow": "A run to hit its deadline, die silently, and leave a row RUNNING for ever — which reads from outside exactly like a deadline that was never enforced."
     }
   ]
 }

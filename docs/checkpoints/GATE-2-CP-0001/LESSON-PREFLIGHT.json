@@ -1,0 +1,781 @@
+{
+  "schemaVersion": "2.0.0",
+  "gate": "GATE-2",
+  "scope": "agent runtime",
+  "technologies": [],
+  "modules": [],
+  "generatedAt": "2026-09-22T15:42:26Z",
+  "policyVersion": "2.0.0",
+  "inputsFingerprint": "18e2d7d1b1cb1f9a9ba1c6ee6f9873e0fe658f213e2cfb2dbfb1d981e78eaf91",
+  "lessonsConsidered": 46,
+  "lessonsApplicable": 45,
+  "applicable": [
+    {
+      "lessonId": "LSN-0001",
+      "title": "Checkpoint validation must succeed from a detached checkout of the checkpoint tag",
+      "status": "GUARDED",
+      "severity": "HIGH",
+      "reasonApplicable": "applies to every Gate; category checkpoint; severity HIGH; already guarded, so the control must keep holding",
+      "requiredCheck": "Validate the checkpoint from a clean clone detached at its own tag, not only on the branch.",
+      "requiredEvidence": "A recorded validate_checkpoint.py run from a detached checkout returning CHECKPOINT_VALID.",
+      "derivedRequirementId": "LESSON-REQ-0001"
+    },
+    {
+      "lessonId": "LSN-0002",
+      "title": "A file inventory must be recomputed from the repository, never trusted as an assertion",
+      "status": "GUARDED",
+      "severity": "HIGH",
+      "reasonApplicable": "applies to every Gate; category checkpoint; severity HIGH; already guarded, so the control must keep holding",
+      "requiredCheck": "Declare every changed path with a reason before finalizing and let the tooling bind the hashes.",
+      "requiredEvidence": "A FILES.json whose declared change set matches the recomputed one, proven by a passing validation.",
+      "derivedRequirementId": "LESSON-REQ-0002"
+    },
+    {
+      "lessonId": "LSN-0003",
+      "title": "Every operation attempt must be auditable, including a refusal decided before execution",
+      "status": "GUARDED",
+      "severity": "HIGH",
+      "reasonApplicable": "applies to every Gate; category checkpoint; severity HIGH; already guarded, so the control must keep holding",
+      "requiredCheck": "Confirm that a refused operation appends its attempt to the ledger before returning an error.",
+      "requiredEvidence": "A ledger record with result PRECONDITION_REJECTED, a result code and a failure reason.",
+      "derivedRequirementId": "LESSON-REQ-0003"
+    },
+    {
+      "lessonId": "LSN-0004",
+      "title": "A checkpoint may never claim readiness while it also claims to be blocked",
+      "status": "GUARDED",
+      "severity": "CRITICAL",
+      "reasonApplicable": "applies to every Gate; category checkpoint; severity CRITICAL; already guarded, so the control must keep holding",
+      "requiredCheck": "Verify that the checkpoint carries no blocker while it claims to be ready for review.",
+      "requiredEvidence": "A passing validation with blockedBy empty at a readiness status.",
+      "derivedRequirementId": "LESSON-REQ-0004"
+    },
+    {
+      "lessonId": "LSN-0005",
+      "title": "A PASS requires evidence that can be executed or resolved, not a statement",
+      "status": "GUARDED",
+      "severity": "CRITICAL",
+      "reasonApplicable": "applies to every Gate; category quality; severity CRITICAL; already guarded, so the control must keep holding",
+      "requiredCheck": "Attach a resolvable evidence reference to every PASS recorded by this Gate.",
+      "requiredEvidence": "A validation run confirming that every PASS reference resolves.",
+      "derivedRequirementId": "LESSON-REQ-0005"
+    },
+    {
+      "lessonId": "LSN-0006",
+      "title": "The repository must be self-contained; a specification may not live outside it",
+      "status": "GUARDED",
+      "severity": "MEDIUM",
+      "reasonApplicable": "applies to every Gate; category documentation; severity MEDIUM; already guarded, so the control must keep holding",
+      "requiredCheck": "Confirm that every specification this Gate depends on is committed to the repository.",
+      "requiredEvidence": "A passing documentation link and checklist test.",
+      "derivedRequirementId": "LESSON-REQ-0006"
+    },
+    {
+      "lessonId": "LSN-0007",
+      "title": "Independent validation cannot be declared by the run that did the work",
+      "status": "GUARDED",
+      "severity": "CRITICAL",
+      "reasonApplicable": "applies to every Gate; category process; severity CRITICAL; already guarded, so the control must keep holding",
+      "requiredCheck": "Close the implementing run at an internal status and leave the independent verdict pending.",
+      "requiredEvidence": "A checkpoint whose independentReview and redTeam are PENDING at handoff.",
+      "derivedRequirementId": "LESSON-REQ-0007"
+    },
+    {
+      "lessonId": "LSN-0008",
+      "title": "Requirement completeness must be total and evidence-backed before handoff",
+      "status": "GUARDED",
+      "severity": "CRITICAL",
+      "reasonApplicable": "applies to every Gate; category process; severity CRITICAL; already guarded, so the control must keep holding",
+      "requiredCheck": "Extract every requirement before implementing and audit completeness before handoff.",
+      "requiredEvidence": "A completeness report with total coverage and total evidence coverage.",
+      "derivedRequirementId": "LESSON-REQ-0008"
+    },
+    {
+      "lessonId": "LSN-0009",
+      "title": "A red gate requires rework, never a waiver, and never a weakened check",
+      "status": "GUARDED",
+      "severity": "CRITICAL",
+      "reasonApplicable": "applies to every Gate; category testing; severity CRITICAL; already guarded, so the control must keep holding",
+      "requiredCheck": "Run the Green Keeper until every mandatory gate is green, repairing causes rather than checks.",
+      "requiredEvidence": "A rework log whose last cycle is GREEN with zero remaining failures.",
+      "derivedRequirementId": "LESSON-REQ-0009"
+    },
+    {
+      "lessonId": "LSN-0010",
+      "title": "A recorded command must carry runtime, working directory, commit and purpose to be replayable",
+      "status": "GUARDED",
+      "severity": "HIGH",
+      "reasonApplicable": "applies to every Gate; category tooling; severity HIGH; already guarded, so the control must keep holding",
+      "requiredCheck": "Record commands with the tooling so each one is executable from its declared working directory.",
+      "requiredEvidence": "A validation run over a ledger whose commands all resolve.",
+      "derivedRequirementId": "LESSON-REQ-0010"
+    },
+    {
+      "lessonId": "LSN-0011",
+      "title": "A control over a checkpoint's own evidence must be scoped to the moment it matters",
+      "status": "GUARDED",
+      "severity": "MEDIUM",
+      "reasonApplicable": "applies to every Gate; category tooling; severity MEDIUM; already guarded, so the control must keep holding",
+      "requiredCheck": "Check whether any new control would be invalidated by the evidence its own run produces.",
+      "requiredEvidence": "A passing validation executed by the gate harness itself.",
+      "derivedRequirementId": "LESSON-REQ-0011"
+    },
+    {
+      "lessonId": "LSN-0012",
+      "title": "Sealed checkpoints and their tags are immutable, and tooling must keep validating them",
+      "status": "GUARDED",
+      "severity": "CRITICAL",
+      "reasonApplicable": "applies to every Gate; category git; severity CRITICAL; already guarded, so the control must keep holding",
+      "requiredCheck": "Confirm that every sealed checkpoint still validates under the tooling this Gate changes.",
+      "requiredEvidence": "A passing historical compatibility run over every sealed tag.",
+      "derivedRequirementId": "LESSON-REQ-0012"
+    },
+    {
+      "lessonId": "LSN-0013",
+      "title": "An installed capability must be detected by resolved path, not by a bare command lookup",
+      "status": "CONFIRMED",
+      "severity": "MEDIUM",
+      "reasonApplicable": "applies to every Gate; category environment; severity MEDIUM; status CONFIRMED, so it is not yet prevented automatically",
+      "requiredCheck": "When this Gate records a capability, resolve the executable path before concluding anything about availability.",
+      "requiredEvidence": "A capability record naming the resolved path, or a justification that this Gate detects no capability.",
+      "derivedRequirementId": "LESSON-REQ-0013"
+    },
+    {
+      "lessonId": "LSN-0014",
+      "title": "Evidence must be recorded as it happens, not reconstructed at the end of a run",
+      "status": "GUARDED",
+      "severity": "MEDIUM",
+      "reasonApplicable": "applies to every Gate; category process; severity MEDIUM; already guarded, so the control must keep holding",
+      "requiredCheck": "Record each command through the tooling while the work happens.",
+      "requiredEvidence": "A ledger whose records were produced by the recording tooling during the run.",
+      "derivedRequirementId": "LESSON-REQ-0014"
+    },
+    {
+      "lessonId": "LSN-0015",
+      "title": "Every positive terminal status needs one shared promotion invariant",
+      "status": "GUARDED",
+      "severity": "CRITICAL",
+      "reasonApplicable": "applies to every Gate; category quality; severity CRITICAL; already guarded, so the control must keep holding",
+      "requiredCheck": "Confirm that every positive terminal status this Gate can produce is covered by the shared promotion invariant, not only the status this delivery ends at.",
+      "requiredEvidence": "A table-driven validation run that exercises every positive status against every mandatory red dimension.",
+      "derivedRequirementId": "LESSON-REQ-0015"
+    },
+    {
+      "lessonId": "LSN-0016",
+      "title": "A mandatory set must be closed by policy, never chosen by the caller",
+      "status": "GUARDED",
+      "severity": "CRITICAL",
+      "reasonApplicable": "applies to every Gate; category testing; severity CRITICAL; already guarded, so the control must keep holding",
+      "requiredCheck": "Confirm that every control whose scope could be narrowed by an argument derives that scope from policy instead.",
+      "requiredEvidence": "A recorded gate run whose requiredGates equal the canonical mandatory set, with a successful command for each one.",
+      "derivedRequirementId": "LESSON-REQ-0016"
+    },
+    {
+      "lessonId": "LSN-0017",
+      "title": "A completeness denominator must come from a source the delivery does not own",
+      "status": "GUARDED",
+      "severity": "CRITICAL",
+      "reasonApplicable": "applies to every Gate; category process; severity CRITICAL; already guarded, so the control must keep holding",
+      "requiredCheck": "Confirm that the expected requirement set is derived independently and compared as a set, not only as a count.",
+      "requiredEvidence": "A completeness report whose expected and declared identifier sets are equal.",
+      "derivedRequirementId": "LESSON-REQ-0017"
+    },
+    {
+      "lessonId": "LSN-0018",
+      "title": "A structured reference must be resolved, not merely well typed",
+      "status": "GUARDED",
+      "severity": "CRITICAL",
+      "reasonApplicable": "applies to every Gate; category tooling; severity CRITICAL; already guarded, so the control must keep holding",
+      "requiredCheck": "Confirm that every reference this Gate records is resolved by a tool, not accepted as a string.",
+      "requiredEvidence": "A validation run that rejects a nonexistent control, a nonexistent evidence path and a nested secret.",
+      "derivedRequirementId": "LESSON-REQ-0018"
+    },
+    {
+      "lessonId": "LSN-0019",
+      "title": "A derived artifact must carry a fingerprint of the inputs that produced it",
+      "status": "GUARDED",
+      "severity": "HIGH",
+      "reasonApplicable": "applies to every Gate; category tooling; severity HIGH; already guarded, so the control must keep holding",
+      "requiredCheck": "Confirm that every derived artifact this Gate stores can be recomputed and is recomputed during validation.",
+      "requiredEvidence": "A validation run that rejects a preflight whose inputs have changed.",
+      "derivedRequirementId": "LESSON-REQ-0019"
+    },
+    {
+      "lessonId": "LSN-0020",
+      "title": "Evidence produced from a dirty tree needs immutable input identity",
+      "status": "GUARDED",
+      "severity": "HIGH",
+      "reasonApplicable": "applies to every Gate; category tooling; severity HIGH; already guarded, so the control must keep holding",
+      "requiredCheck": "Confirm that every recorded command binds its inputs by content and that no timestamp in the ledger is later than the recorded end of the run.",
+      "requiredEvidence": "A validation run over a ledger whose records all carry an input digest, with a post-commit validation record at the sealed commit.",
+      "derivedRequirementId": "LESSON-REQ-0020"
+    },
+    {
+      "lessonId": "LSN-0021",
+      "title": "Sealed history needs an anchor outside the content it describes",
+      "status": "GUARDED",
+      "severity": "CRITICAL",
+      "reasonApplicable": "applies to every Gate; category git; severity CRITICAL; already guarded, so the control must keep holding",
+      "requiredCheck": "Confirm that the integrity chain still resolves for every sealed checkpoint and that this Gate anchors every sealed predecessor.",
+      "requiredEvidence": "A verification run over the anchor chain returning no divergence.",
+      "derivedRequirementId": "LESSON-REQ-0021"
+    },
+    {
+      "lessonId": "LSN-0022",
+      "title": "An authoritative count must be derived once, never maintained by hand twice",
+      "status": "GUARDED",
+      "severity": "CRITICAL",
+      "reasonApplicable": "applies to every Gate; category documentation; severity CRITICAL; already guarded, so the control must keep holding",
+      "requiredCheck": "Confirm that every count used as evidence in this Gate is derived from one source and verified where it is quoted.",
+      "requiredEvidence": "A validation run that rejects a report whose stated count contradicts the derived one.",
+      "derivedRequirementId": "LESSON-REQ-0022"
+    },
+    {
+      "lessonId": "LSN-0023",
+      "title": "A lesson must cite a source that actually records the finding it claims",
+      "status": "GUARDED",
+      "severity": "MEDIUM",
+      "reasonApplicable": "applies to every Gate; category documentation; severity MEDIUM; already guarded, so the control must keep holding",
+      "requiredCheck": "Confirm that every lesson this Gate writes or updates cites a checkpoint that records the finding identifier it names.",
+      "requiredEvidence": "A memory validation run that resolves every lesson source locator.",
+      "derivedRequirementId": "LESSON-REQ-0023"
+    },
+    {
+      "lessonId": "LSN-0024",
+      "title": "A control is finished only when its positive path has been executed, not only its refusals",
+      "status": "GUARDED",
+      "severity": "CRITICAL",
+      "reasonApplicable": "applies to every Gate; category quality; severity CRITICAL; already guarded, so the control must keep holding",
+      "requiredCheck": "For every control this Gate adds or changes that gates a status, execute the path that reaches the status, not only the paths that are refused.",
+      "requiredEvidence": "An executed positive-path test or simulation artifact for each such control.",
+      "derivedRequirementId": "LESSON-REQ-0024"
+    },
+    {
+      "lessonId": "LSN-0025",
+      "title": "A generic guardrail derives repository state instead of naming today's checkpoint",
+      "status": "GUARDED",
+      "severity": "CRITICAL",
+      "reasonApplicable": "applies to every Gate; category testing; severity CRITICAL; already guarded, so the control must keep holding",
+      "requiredCheck": "Confirm that no generic guard, test or policy in this Gate names a historical checkpoint to decide behaviour, and that any such rule is derived from repository state.",
+      "requiredEvidence": "A derived exclusion with a test proving it moves, or a documented fixture that names a concrete checkpoint on purpose.",
+      "derivedRequirementId": "LESSON-REQ-0025"
+    },
+    {
+      "lessonId": "LSN-0026",
+      "title": "An adversarial battery without a null-mutation control proves nothing",
+      "status": "GUARDED",
+      "severity": "HIGH",
+      "reasonApplicable": "applies to every Gate; category testing; severity HIGH; already guarded, so the control must keep holding",
+      "requiredCheck": "Run every adversarial battery of this Gate with an unmutated control through the same path, and record its result with the battery.",
+      "requiredEvidence": "A Red Team report whose baselineControl is VALID.",
+      "derivedRequirementId": "LESSON-REQ-0026"
+    },
+    {
+      "lessonId": "LSN-0027",
+      "title": "A lesson's prose may record a residual limit but may never contradict its status",
+      "status": "GUARDED",
+      "severity": "MEDIUM",
+      "reasonApplicable": "applies to every Gate; category documentation; severity MEDIUM; already guarded, so the control must keep holding",
+      "requiredCheck": "Confirm that every lesson this Gate writes or updates describes limits rather than restating its own status.",
+      "requiredEvidence": "A memory validation run with no status contradiction reported.",
+      "derivedRequirementId": "LESSON-REQ-0027"
+    },
+    {
+      "lessonId": "LSN-0028",
+      "title": "A configuration key that no code reads is a defect, not documentation",
+      "status": "GUARDED",
+      "severity": "HIGH",
+      "reasonApplicable": "applies to every Gate; category tooling; severity HIGH; already guarded, so the control must keep holding",
+      "requiredCheck": "Confirm that every configuration key this Gate declares is read by the implementation, or remove it and document the fixed behaviour.",
+      "requiredEvidence": "A validated policy document whose every key has a consumer.",
+      "derivedRequirementId": "LESSON-REQ-0028"
+    },
+    {
+      "lessonId": "LSN-0029",
+      "title": "A required protocol transition must never turn a mandatory gate red",
+      "status": "GUARDED",
+      "severity": "CRITICAL",
+      "reasonApplicable": "applies to every Gate; category process; severity CRITICAL; already guarded, so the control must keep holding",
+      "requiredCheck": "Before handoff, execute the protocol transitions this Gate's successor will perform and confirm the mandatory gates stay green.",
+      "requiredEvidence": "A successor durability artifact whose every state is green.",
+      "derivedRequirementId": "LESSON-REQ-0029"
+    },
+    {
+      "lessonId": "LSN-0031",
+      "title": "An empty applicable set is not a missing required set, and a control must tell them apart",
+      "status": "GUARDED",
+      "severity": "CRITICAL",
+      "reasonApplicable": "applies to every Gate; category quality; severity CRITICAL; already guarded, so the control must keep holding",
+      "requiredCheck": "For every quality or audit control this Gate adds or changes that operates on a derived set, confirm that an empty applicable set is reported as NOT_APPLICABLE with a justification and that a missing required set is reported as a failure.",
+      "requiredEvidence": "An executed artifact showing both outcomes: a passing run whose empty dimensions are justified, and a failing run whose named items are unsatisfied.",
+      "derivedRequirementId": "LESSON-REQ-0030"
+    },
+    {
+      "lessonId": "LSN-0032",
+      "title": "A control written while one Gate was the only Gate stops being a control when the next one starts",
+      "status": "GUARDED",
+      "severity": "HIGH",
+      "reasonApplicable": "applies to every Gate; category quality; severity HIGH; already guarded, so the control must keep holding",
+      "requiredCheck": "For every control this Gate adds or changes, confirm that what it judges is derived from a canonical source rather than written into the control, and that it would still be correct for the Gate after this one.",
+      "requiredEvidence": "An executed transition into the next Gate, and a test that the control's subject comes from a registry rather than a literal.",
+      "derivedRequirementId": "LESSON-REQ-0031"
+    },
+    {
+      "lessonId": "LSN-0033",
+      "title": "A value bound in middleware is absent in the handlers that run outside it",
+      "status": "GUARDED",
+      "severity": "MEDIUM",
+      "reasonApplicable": "applies to every Gate; category implementation; severity MEDIUM; already guarded, so the control must keep holding",
+      "requiredCheck": "For every cross-cutting value this Gate binds in middleware, confirm it is present in the responses produced above that middleware, including error responses.",
+      "requiredEvidence": "A test that triggers a failure handled outside the middleware chain and asserts the value is still carried.",
+      "derivedRequirementId": "LESSON-REQ-0032"
+    },
+    {
+      "lessonId": "LSN-0034",
+      "title": "Re-deriving what the framework already computed diverges from the framework",
+      "status": "GUARDED",
+      "severity": "MEDIUM",
+      "reasonApplicable": "applies to every Gate; category implementation; severity MEDIUM; already guarded, so the control must keep holding",
+      "requiredCheck": "Where this Gate derives a value the framework already computes, confirm it reads the framework's result rather than recomputing it, and that a test asserts the value rather than only its presence.",
+      "requiredEvidence": "A test asserting the specific derived value, not merely that the endpoint answers.",
+      "derivedRequirementId": "LESSON-REQ-0033"
+    },
+    {
+      "lessonId": "LSN-0035",
+      "title": "Captured subprocess output decoded or re-emitted with the platform codepage crashes the tool, not the work",
+      "status": "GUARDED",
+      "severity": "HIGH",
+      "reasonApplicable": "applies to every Gate; category tooling; severity HIGH; already guarded, so the control must keep holding",
+      "requiredCheck": "Confirm every subprocess capture this Gate adds states its decoder explicitly, that every entry point re-emitting captured output configures its own stream, and that the repository-wide control still passes.",
+      "requiredEvidence": "The control-plane test that parses the tree, green, with the rule exercised against a rejecting case.",
+      "derivedRequirementId": "LESSON-REQ-0034"
+    },
+    {
+      "lessonId": "LSN-0036",
+      "title": "A gate that runs inside an image measures the image, not the source",
+      "status": "GUARDED",
+      "severity": "HIGH",
+      "reasonApplicable": "applies to every Gate; category tooling; severity HIGH; already guarded, so the control must keep holding",
+      "requiredCheck": "For every mandatory gate this Gate adds or changes, confirm that a gate executing inside a built artefact rebuilds that artefact before measuring, and that the repository-wide control still passes.",
+      "requiredEvidence": "The control-plane test that parses every gate module, green, with the rule exercised against a rejecting case.",
+      "derivedRequirementId": "LESSON-REQ-0035"
+    },
+    {
+      "lessonId": "LSN-0037",
+      "title": "A shared control that names an identifier the repository derives stops being a control when that identifier moves",
+      "status": "GUARDED",
+      "severity": "MEDIUM",
+      "reasonApplicable": "applies to every Gate; category tooling; severity MEDIUM; already guarded, so the control must keep holding",
+      "requiredCheck": "Confirm that every control this Gate adds which reasons about an identifier the repository derives -- the current Gate, the newest checkpoint, the head migration -- derives it rather than naming it, and that the repository-wide control still passes.",
+      "requiredEvidence": "The control-plane test that parses every caller, green, with a rejecting case.",
+      "derivedRequirementId": "LESSON-REQ-0036"
+    },
+    {
+      "lessonId": "LSN-0038",
+      "title": "Two representations of one concept in one module disagree, and the safer one loses",
+      "status": "GUARDED",
+      "severity": "MEDIUM",
+      "reasonApplicable": "applies to every Gate; category implementation; severity MEDIUM; already guarded, so the control must keep holding",
+      "requiredCheck": "Where this Gate defines a classification twice — once anchored and once embedded — confirm one definition is authoritative and the other derives from it or is removed.",
+      "requiredEvidence": "A test asserting both paths classify the same corpus identically.",
+      "derivedRequirementId": "LESSON-REQ-0037"
+    },
+    {
+      "lessonId": "LSN-0039",
+      "title": "A test that writes to the operational database leaves production data behind",
+      "status": "GUARDED",
+      "severity": "HIGH",
+      "reasonApplicable": "applies to every Gate; category testing; severity HIGH; already guarded, so the control must keep holding",
+      "requiredCheck": "For every test this Gate adds that writes to a shared service rather than to a disposable one, confirm it removes what it created and that an invariant detects residue.",
+      "requiredEvidence": "The suite run followed by a query of the shared service showing no fixture rows.",
+      "derivedRequirementId": "LESSON-REQ-0038"
+    },
+    {
+      "lessonId": "LSN-0040",
+      "title": "A control that judges sealed history only runs once a successor anchors it",
+      "status": "GUARDED",
+      "severity": "HIGH",
+      "reasonApplicable": "applies to every Gate; category checkpoint; severity HIGH; already guarded, so the control must keep holding",
+      "requiredCheck": "Confirm that every sealed predecessor this Gate anchors validates from a detached checkout of its own tag, and that no command this Gate records declares an input the repository does not carry.",
+      "requiredEvidence": "A validation run against each anchored checkpoint from its tag, green.",
+      "derivedRequirementId": "LESSON-REQ-0039"
+    },
+    {
+      "lessonId": "LSN-0041",
+      "title": "An editing path that consumes a backslash escape leaves a control character, and the control it belonged to silently matches nothing",
+      "status": "GUARDED",
+      "severity": "HIGH",
+      "reasonApplicable": "applies to every Gate; category testing; severity HIGH; already guarded, so the control must keep holding",
+      "requiredCheck": "Confirm that every scan this Gate adds asserts it found something before judging it, and that no source file carries a stray control character.",
+      "requiredEvidence": "A green run of the repository-wide control-character scan and of each scan's own non-empty-corpus assertion.",
+      "derivedRequirementId": "LESSON-REQ-0040"
+    },
+    {
+      "lessonId": "LSN-0042",
+      "title": "A naming convention rewrites a CHECK constraint's name and leaves a UNIQUE constraint's alone",
+      "status": "GUARDED",
+      "severity": "HIGH",
+      "reasonApplicable": "applies to every Gate; category implementation; severity HIGH; already guarded, so the control must keep holding",
+      "requiredCheck": "For every migration this Gate adds, confirm it is applied and reversed against a disposable database, and that autogenerate finds nothing left to do afterwards.",
+      "requiredEvidence": "A green reversibility run and a green autogenerate check against a database migrated from zero.",
+      "derivedRequirementId": "LESSON-REQ-0041"
+    },
+    {
+      "lessonId": "LSN-0043",
+      "title": "A log line is not evidence that another process is ready",
+      "status": "GUARDED",
+      "severity": "MEDIUM",
+      "reasonApplicable": "applies to every Gate; category testing; severity MEDIUM; already guarded, so the control must keep holding",
+      "requiredCheck": "For every wait this Gate adds on another process, confirm it asks that process or its server for the state rather than reading a log line.",
+      "requiredEvidence": "The readiness path asserted against the server's own answer, with the log-line path refused by a test.",
+      "derivedRequirementId": "LESSON-REQ-0042"
+    },
+    {
+      "lessonId": "LSN-0044",
+      "title": "A boundary scan must read the code rather than the prose, and must be shown to fire on a mutated module",
+      "status": "GUARDED",
+      "severity": "HIGH",
+      "reasonApplicable": "applies to every Gate; category quality; severity HIGH; already guarded, so the control must keep holding",
+      "requiredCheck": "For every boundary scan this Gate adds, confirm it reads the syntax tree rather than the text, and that it carries a control which runs the identical scan over a module that violates the rule.",
+      "requiredEvidence": "Each scan's null control executed and green, alongside the scan itself.",
+      "derivedRequirementId": "LESSON-REQ-0043"
+    },
+    {
+      "lessonId": "LSN-0045",
+      "title": "A counted test suite must declare its cases statically, because the denominator is read from the source",
+      "status": "GUARDED",
+      "severity": "MEDIUM",
+      "reasonApplicable": "applies to every Gate; category testing; severity MEDIUM; already guarded, so the control must keep holding",
+      "requiredCheck": "Confirm that every case this Gate adds to a counted suite is declared statically, with table-driven inputs written as a loop rather than as a parametrisation.",
+      "requiredEvidence": "A green run of the counted-suite scan alongside the suite itself.",
+      "derivedRequirementId": "LESSON-REQ-0044"
+    },
+    {
+      "lessonId": "LSN-0046",
+      "title": "A timeout that cancels the task it runs in leaves nothing able to record what happened",
+      "status": "GUARDED",
+      "severity": "CRITICAL",
+      "reasonApplicable": "applies to every Gate; category implementation; severity CRITICAL; already guarded, so the control must keep holding",
+      "requiredCheck": "For every limit this Gate enforces, confirm that the enforcement path is still able to write when it fires, and that a real run is observed reaching the terminal state with the reason recorded.",
+      "requiredEvidence": "A recorded scenario run in which the limit fires and the store shows the terminal state, the error type and the event.",
+      "derivedRequirementId": "LESSON-REQ-0045"
+    }
+  ],
+  "derivedRequirements": [
+    {
+      "id": "LESSON-REQ-0001",
+      "lessonId": "LSN-0001",
+      "description": "Verify checkpoint validation must succeed from a detached checkout of the checkpoint tag",
+      "mandatory": true,
+      "requiredEvidence": "A recorded validate_checkpoint.py run from a detached checkout returning CHECKPOINT_VALID."
+    },
+    {
+      "id": "LESSON-REQ-0002",
+      "lessonId": "LSN-0002",
+      "description": "Verify a file inventory must be recomputed from the repository, never trusted as an assertion",
+      "mandatory": true,
+      "requiredEvidence": "A FILES.json whose declared change set matches the recomputed one, proven by a passing validation."
+    },
+    {
+      "id": "LESSON-REQ-0003",
+      "lessonId": "LSN-0003",
+      "description": "Verify every operation attempt must be auditable, including a refusal decided before execution",
+      "mandatory": true,
+      "requiredEvidence": "A ledger record with result PRECONDITION_REJECTED, a result code and a failure reason."
+    },
+    {
+      "id": "LESSON-REQ-0004",
+      "lessonId": "LSN-0004",
+      "description": "Verify a checkpoint may never claim readiness while it also claims to be blocked",
+      "mandatory": true,
+      "requiredEvidence": "A passing validation with blockedBy empty at a readiness status."
+    },
+    {
+      "id": "LESSON-REQ-0005",
+      "lessonId": "LSN-0005",
+      "description": "Verify a PASS requires evidence that can be executed or resolved, not a statement",
+      "mandatory": true,
+      "requiredEvidence": "A validation run confirming that every PASS reference resolves."
+    },
+    {
+      "id": "LESSON-REQ-0006",
+      "lessonId": "LSN-0006",
+      "description": "Verify the repository must be self-contained; a specification may not live outside it",
+      "mandatory": true,
+      "requiredEvidence": "A passing documentation link and checklist test."
+    },
+    {
+      "id": "LESSON-REQ-0007",
+      "lessonId": "LSN-0007",
+      "description": "Verify independent validation cannot be declared by the run that did the work",
+      "mandatory": true,
+      "requiredEvidence": "A checkpoint whose independentReview and redTeam are PENDING at handoff."
+    },
+    {
+      "id": "LESSON-REQ-0008",
+      "lessonId": "LSN-0008",
+      "description": "Verify requirement completeness must be total and evidence-backed before handoff",
+      "mandatory": true,
+      "requiredEvidence": "A completeness report with total coverage and total evidence coverage."
+    },
+    {
+      "id": "LESSON-REQ-0009",
+      "lessonId": "LSN-0009",
+      "description": "Verify a red gate requires rework, never a waiver, and never a weakened check",
+      "mandatory": true,
+      "requiredEvidence": "A rework log whose last cycle is GREEN with zero remaining failures."
+    },
+    {
+      "id": "LESSON-REQ-0010",
+      "lessonId": "LSN-0010",
+      "description": "Verify a recorded command must carry runtime, working directory, commit and purpose to be replayable",
+      "mandatory": true,
+      "requiredEvidence": "A validation run over a ledger whose commands all resolve."
+    },
+    {
+      "id": "LESSON-REQ-0011",
+      "lessonId": "LSN-0011",
+      "description": "Verify a control over a checkpoint's own evidence must be scoped to the moment it matters",
+      "mandatory": true,
+      "requiredEvidence": "A passing validation executed by the gate harness itself."
+    },
+    {
+      "id": "LESSON-REQ-0012",
+      "lessonId": "LSN-0012",
+      "description": "Verify sealed checkpoints and their tags are immutable, and tooling must keep validating them",
+      "mandatory": true,
+      "requiredEvidence": "A passing historical compatibility run over every sealed tag."
+    },
+    {
+      "id": "LESSON-REQ-0013",
+      "lessonId": "LSN-0013",
+      "description": "Verify an installed capability must be detected by resolved path, not by a bare command lookup",
+      "mandatory": false,
+      "requiredEvidence": "A capability record naming the resolved path, or a justification that this Gate detects no capability."
+    },
+    {
+      "id": "LESSON-REQ-0014",
+      "lessonId": "LSN-0014",
+      "description": "Verify evidence must be recorded as it happens, not reconstructed at the end of a run",
+      "mandatory": true,
+      "requiredEvidence": "A ledger whose records were produced by the recording tooling during the run."
+    },
+    {
+      "id": "LESSON-REQ-0015",
+      "lessonId": "LSN-0015",
+      "description": "Verify every positive terminal status needs one shared promotion invariant",
+      "mandatory": true,
+      "requiredEvidence": "A table-driven validation run that exercises every positive status against every mandatory red dimension."
+    },
+    {
+      "id": "LESSON-REQ-0016",
+      "lessonId": "LSN-0016",
+      "description": "Verify a mandatory set must be closed by policy, never chosen by the caller",
+      "mandatory": true,
+      "requiredEvidence": "A recorded gate run whose requiredGates equal the canonical mandatory set, with a successful command for each one."
+    },
+    {
+      "id": "LESSON-REQ-0017",
+      "lessonId": "LSN-0017",
+      "description": "Verify a completeness denominator must come from a source the delivery does not own",
+      "mandatory": true,
+      "requiredEvidence": "A completeness report whose expected and declared identifier sets are equal."
+    },
+    {
+      "id": "LESSON-REQ-0018",
+      "lessonId": "LSN-0018",
+      "description": "Verify a structured reference must be resolved, not merely well typed",
+      "mandatory": true,
+      "requiredEvidence": "A validation run that rejects a nonexistent control, a nonexistent evidence path and a nested secret."
+    },
+    {
+      "id": "LESSON-REQ-0019",
+      "lessonId": "LSN-0019",
+      "description": "Verify a derived artifact must carry a fingerprint of the inputs that produced it",
+      "mandatory": true,
+      "requiredEvidence": "A validation run that rejects a preflight whose inputs have changed."
+    },
+    {
+      "id": "LESSON-REQ-0020",
+      "lessonId": "LSN-0020",
+      "description": "Verify evidence produced from a dirty tree needs immutable input identity",
+      "mandatory": true,
+      "requiredEvidence": "A validation run over a ledger whose records all carry an input digest, with a post-commit validation record at the sealed commit."
+    },
+    {
+      "id": "LESSON-REQ-0021",
+      "lessonId": "LSN-0021",
+      "description": "Verify sealed history needs an anchor outside the content it describes",
+      "mandatory": true,
+      "requiredEvidence": "A verification run over the anchor chain returning no divergence."
+    },
+    {
+      "id": "LESSON-REQ-0022",
+      "lessonId": "LSN-0022",
+      "description": "Verify an authoritative count must be derived once, never maintained by hand twice",
+      "mandatory": true,
+      "requiredEvidence": "A validation run that rejects a report whose stated count contradicts the derived one."
+    },
+    {
+      "id": "LESSON-REQ-0023",
+      "lessonId": "LSN-0023",
+      "description": "Verify a lesson must cite a source that actually records the finding it claims",
+      "mandatory": true,
+      "requiredEvidence": "A memory validation run that resolves every lesson source locator."
+    },
+    {
+      "id": "LESSON-REQ-0024",
+      "lessonId": "LSN-0024",
+      "description": "Verify a control is finished only when its positive path has been executed, not only its refusals",
+      "mandatory": true,
+      "requiredEvidence": "An executed positive-path test or simulation artifact for each such control."
+    },
+    {
+      "id": "LESSON-REQ-0025",
+      "lessonId": "LSN-0025",
+      "description": "Verify a generic guardrail derives repository state instead of naming today's checkpoint",
+      "mandatory": true,
+      "requiredEvidence": "A derived exclusion with a test proving it moves, or a documented fixture that names a concrete checkpoint on purpose."
+    },
+    {
+      "id": "LESSON-REQ-0026",
+      "lessonId": "LSN-0026",
+      "description": "Verify an adversarial battery without a null-mutation control proves nothing",
+      "mandatory": true,
+      "requiredEvidence": "A Red Team report whose baselineControl is VALID."
+    },
+    {
+      "id": "LESSON-REQ-0027",
+      "lessonId": "LSN-0027",
+      "description": "Verify a lesson's prose may record a residual limit but may never contradict its status",
+      "mandatory": true,
+      "requiredEvidence": "A memory validation run with no status contradiction reported."
+    },
+    {
+      "id": "LESSON-REQ-0028",
+      "lessonId": "LSN-0028",
+      "description": "Verify a configuration key that no code reads is a defect, not documentation",
+      "mandatory": true,
+      "requiredEvidence": "A validated policy document whose every key has a consumer."
+    },
+    {
+      "id": "LESSON-REQ-0029",
+      "lessonId": "LSN-0029",
+      "description": "Verify a required protocol transition must never turn a mandatory gate red",
+      "mandatory": true,
+      "requiredEvidence": "A successor durability artifact whose every state is green."
+    },
+    {
+      "id": "LESSON-REQ-0030",
+      "lessonId": "LSN-0031",
+      "description": "Verify an empty applicable set is not a missing required set, and a control must tell them apart",
+      "mandatory": true,
+      "requiredEvidence": "An executed artifact showing both outcomes: a passing run whose empty dimensions are justified, and a failing run whose named items are unsatisfied."
+    },
+    {
+      "id": "LESSON-REQ-0031",
+      "lessonId": "LSN-0032",
+      "description": "Verify a control written while one Gate was the only Gate stops being a control when the next one starts",
+      "mandatory": true,
+      "requiredEvidence": "An executed transition into the next Gate, and a test that the control's subject comes from a registry rather than a literal."
+    },
+    {
+      "id": "LESSON-REQ-0032",
+      "lessonId": "LSN-0033",
+      "description": "Verify a value bound in middleware is absent in the handlers that run outside it",
+      "mandatory": true,
+      "requiredEvidence": "A test that triggers a failure handled outside the middleware chain and asserts the value is still carried."
+    },
+    {
+      "id": "LESSON-REQ-0033",
+      "lessonId": "LSN-0034",
+      "description": "Verify re-deriving what the framework already computed diverges from the framework",
+      "mandatory": true,
+      "requiredEvidence": "A test asserting the specific derived value, not merely that the endpoint answers."
+    },
+    {
+      "id": "LESSON-REQ-0034",
+      "lessonId": "LSN-0035",
+      "description": "Verify captured subprocess output decoded or re-emitted with the platform codepage crashes the tool, not the work",
+      "mandatory": true,
+      "requiredEvidence": "The control-plane test that parses the tree, green, with the rule exercised against a rejecting case."
+    },
+    {
+      "id": "LESSON-REQ-0035",
+      "lessonId": "LSN-0036",
+      "description": "Verify a gate that runs inside an image measures the image, not the source",
+      "mandatory": true,
+      "requiredEvidence": "The control-plane test that parses every gate module, green, with the rule exercised against a rejecting case."
+    },
+    {
+      "id": "LESSON-REQ-0036",
+      "lessonId": "LSN-0037",
+      "description": "Verify a shared control that names an identifier the repository derives stops being a control when that identifier moves",
+      "mandatory": true,
+      "requiredEvidence": "The control-plane test that parses every caller, green, with a rejecting case."
+    },
+    {
+      "id": "LESSON-REQ-0037",
+      "lessonId": "LSN-0038",
+      "description": "Verify two representations of one concept in one module disagree, and the safer one loses",
+      "mandatory": true,
+      "requiredEvidence": "A test asserting both paths classify the same corpus identically."
+    },
+    {
+      "id": "LESSON-REQ-0038",
+      "lessonId": "LSN-0039",
+      "description": "Verify a test that writes to the operational database leaves production data behind",
+      "mandatory": true,
+      "requiredEvidence": "The suite run followed by a query of the shared service showing no fixture rows."
+    },
+    {
+      "id": "LESSON-REQ-0039",
+      "lessonId": "LSN-0040",
+      "description": "Verify a control that judges sealed history only runs once a successor anchors it",
+      "mandatory": true,
+      "requiredEvidence": "A validation run against each anchored checkpoint from its tag, green."
+    },
+    {
+      "id": "LESSON-REQ-0040",
+      "lessonId": "LSN-0041",
+      "description": "Verify an editing path that consumes a backslash escape leaves a control character, and the control it belonged to silently matches nothing",
+      "mandatory": true,
+      "requiredEvidence": "A green run of the repository-wide control-character scan and of each scan's own non-empty-corpus assertion."
+    },
+    {
+      "id": "LESSON-REQ-0041",
+      "lessonId": "LSN-0042",
+      "description": "Verify a naming convention rewrites a CHECK constraint's name and leaves a UNIQUE constraint's alone",
+      "mandatory": true,
+      "requiredEvidence": "A green reversibility run and a green autogenerate check against a database migrated from zero."
+    },
+    {
+      "id": "LESSON-REQ-0042",
+      "lessonId": "LSN-0043",
+      "description": "Verify a log line is not evidence that another process is ready",
+      "mandatory": true,
+      "requiredEvidence": "The readiness path asserted against the server's own answer, with the log-line path refused by a test."
+    },
+    {
+      "id": "LESSON-REQ-0043",
+      "lessonId": "LSN-0044",
+      "description": "Verify a boundary scan must read the code rather than the prose, and must be shown to fire on a mutated module",
+      "mandatory": true,
+      "requiredEvidence": "Each scan's null control executed and green, alongside the scan itself."
+    },
+    {
+      "id": "LESSON-REQ-0044",
+      "lessonId": "LSN-0045",
+      "description": "Verify a counted test suite must declare its cases statically, because the denominator is read from the source",
+      "mandatory": true,
+      "requiredEvidence": "A green run of the counted-suite scan alongside the suite itself."
+    },
+    {
+      "id": "LESSON-REQ-0045",
+      "lessonId": "LSN-0046",
+      "description": "Verify a timeout that cancels the task it runs in leaves nothing able to record what happened",
+      "mandatory": true,
+      "requiredEvidence": "A recorded scenario run in which the limit fires and the store shows the terminal state, the error type and the event."
+    }
+  ]
+}

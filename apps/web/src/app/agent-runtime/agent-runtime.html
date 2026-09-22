@@ -1,0 +1,214 @@
+@if (runtime.error(); as message) {
+  <section class="error" data-testid="runtime-error">
+    <h2>The agent runtime answered with an error</h2>
+    <p>{{ message }}</p>
+  </section>
+}
+
+<section data-testid="new-run">
+  <h2>New run</h2>
+  <p class="detail">
+    A run executes a team of agents against one task. Every model call goes through the Model
+    Gateway. <strong>No tool is executed in this Gate</strong>: an agent that asks for one has its
+    request recorded and the run waits.
+  </p>
+
+  <label for="task">Task</label>
+  <textarea
+    id="task"
+    rows="4"
+    data-testid="task"
+    [ngModel]="task()"
+    (ngModelChange)="task.set($event)"
+  ></textarea>
+
+  <label for="team">Team</label>
+  <select id="team" data-testid="team" [ngModel]="team()" (ngModelChange)="team.set($event)">
+    @for (profile of runtime.teams(); track profile.team) {
+      <option [value]="profile.team">
+        {{ profile.name }} — {{ profile.stages.length }} stage(s)
+      </option>
+    }
+  </select>
+
+  <label for="target">Route or model <span class="detail">(optional)</span></label>
+  <input
+    id="target"
+    data-testid="target"
+    placeholder="provider:model, or a configured route alias"
+    [ngModel]="target()"
+    (ngModelChange)="target.set($event)"
+  />
+
+  <button type="button" data-testid="start" [disabled]="runtime.starting()" (click)="start()">
+    {{ runtime.starting() ? 'Starting…' : 'Start run' }}
+  </button>
+</section>
+
+@if (run(); as current) {
+  <section data-testid="run">
+    <h2>Run</h2>
+    <dl>
+      <dt>Identifier</dt>
+      <dd data-testid="run-id">{{ current.runId }}</dd>
+      <dt>State</dt>
+      <dd>
+        <span class="badge {{ tone(current.state) }}" data-testid="run-state">{{
+          current.state
+        }}</span>
+        @if (runtime.following()) {
+          <span class="detail" data-testid="following">following</span>
+        }
+      </dd>
+      <dt>Team</dt>
+      <dd>{{ current.team }}</dd>
+      <dt>Stage</dt>
+      <dd>{{ current.currentStage ?? '—' }}</dd>
+      <dt>Budget</dt>
+      <dd data-testid="budget">{{ spent() }}</dd>
+      <dt>Cost</dt>
+      <dd data-testid="cost">{{ cost() }}</dd>
+      <dt>Workflow</dt>
+      <dd class="detail">{{ current.workflowId ?? '—' }}</dd>
+    </dl>
+
+    @if (canCancel()) {
+      <button type="button" data-testid="cancel" (click)="cancel()">Cancel run</button>
+    }
+
+    @if (waiting() && current.pendingToolRequest; as pending) {
+      <div class="waiting-panel" data-testid="waiting-for-tool">
+        <h3>Waiting for a tool</h3>
+        <p>
+          The agent asked for <code data-testid="pending-tool">{{ pending.name }}</code> and the run
+          is paused. The request is
+          <span class="badge waiting" data-testid="pending-status">{{ pending.status }}</span>
+        </p>
+        <p class="detail">
+          Nothing here runs it. Gate 2 records a tool request and waits; the sandbox that executes
+          one is Gate 3. A result is delivered through the API by whatever is authorised to execute.
+        </p>
+      </div>
+    }
+
+    <h3>Stages</h3>
+    <table data-testid="stages">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Stage</th>
+          <th>Agent</th>
+          <th>State</th>
+          <th>Turns</th>
+          <th>Calls</th>
+          <th>Summary</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (stage of current.stages; track stage.index) {
+          <tr>
+            <td>{{ stage.index }}</td>
+            <td>{{ stage.name }}</td>
+            <td>{{ stage.agent }}</td>
+            <td>
+              <span class="badge {{ tone(stage.state) }}">{{ stage.state }}</span>
+            </td>
+            <td>{{ stage.turns }}</td>
+            <td>{{ stage.modelCalls }}</td>
+            <td class="detail">{{ stage.outputSummary ?? '—' }}</td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="7" class="detail">No stage has started yet.</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+
+    @if (current.result) {
+      <h3>Result</h3>
+      <!--
+        Interpolation, never raw HTML binding. This is a model's output: it is text the page
+        displays, not markup the page trusts. Angular escapes an interpolated value, which is the
+        whole defence and the reason there is no Markdown renderer on this page.
+      -->
+      <pre data-testid="result">{{ current.result }}</pre>
+    }
+
+    @if (current.errorType) {
+      <h3>Failure</h3>
+      <dl data-testid="failure">
+        <dt>Type</dt>
+        <dd>
+          <code data-testid="error-type">{{ current.errorType }}</code>
+        </dd>
+        <dt>Message</dt>
+        <dd>{{ current.errorSummary }}</dd>
+        <dt>Stage</dt>
+        <dd>{{ current.failedStage ?? '—' }}</dd>
+        <dt>Correlation</dt>
+        <dd class="detail" data-testid="correlation">{{ current.correlationId ?? '—' }}</dd>
+      </dl>
+    }
+
+    <h3>Events</h3>
+    <table data-testid="events">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Event</th>
+          <th>Stage</th>
+          <th>Detail</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (event of events(); track event.sequence) {
+          <tr>
+            <td>{{ event.sequence }}</td>
+            <td>{{ event.type }}</td>
+            <td>{{ event.stage ?? '—' }}</td>
+            <td class="detail">{{ describe(event.payload) }}</td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="4" class="detail">No event has been recorded yet.</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </section>
+}
+
+<section data-testid="recent">
+  <h2>Recent runs</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Run</th>
+        <th>Team</th>
+        <th>State</th>
+        <th>Created</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (item of runtime.recent(); track item.runId) {
+        <tr>
+          <td class="detail">{{ item.title ?? item.runId }}</td>
+          <td>{{ item.team }}</td>
+          <td>
+            <span class="badge {{ tone(item.state) }}">{{ item.state }}</span>
+          </td>
+          <td class="detail">{{ item.createdAt }}</td>
+          <td>
+            <button type="button" class="link" (click)="open(item.runId)">open</button>
+          </td>
+        </tr>
+      } @empty {
+        <tr>
+          <td colspan="5" class="detail">No run has been created yet.</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</section>

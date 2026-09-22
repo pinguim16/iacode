@@ -23,11 +23,15 @@ import signal
 import sys
 
 from iacode_telemetry.logging import configure_logging, get_logger
+from prometheus_client import start_http_server
 from temporalio.client import Client
 from temporalio.worker import Worker
 
+from iacode_orchestrator.agent_runtime.activities import AGENT_RUNTIME_ACTIVITIES
+from iacode_orchestrator.agent_runtime.runtime_context import build_context, set_context
 from iacode_orchestrator.config import WorkerSettings, get_worker_settings
 from iacode_orchestrator.runtime import get_runtime
+from iacode_orchestrator.workflows.agent_run import AgentRunWorkflow
 from iacode_orchestrator.workflows.smoke import SmokeWorkflow, echo
 
 logger = get_logger(__name__)
@@ -68,8 +72,11 @@ async def run(settings: WorkerSettings | None = None) -> int:
     client = await connect(settings)
     stop = asyncio.Event()
     loop = asyncio.get_running_loop()
-    for name in ("SIGTERM", "SIGINT"):
-        received = getattr(signal, name, None)
+    # Named rather than looked up. The agent runtime boundary resolves no name at runtime — a
+    # tool name least of all — and a repository-wide control enforces that, so this module does
+    # not get an exception for the convenience of a loop over two strings.
+    for received in (signal.SIGTERM if hasattr(signal, "SIGTERM") else None,
+                     signal.SIGINT if hasattr(signal, "SIGINT") else None):
         if received is None:
             continue
         with contextlib.suppress(NotImplementedError):
@@ -77,19 +84,42 @@ async def run(settings: WorkerSettings | None = None) -> int:
             # containers, so the suppression is about not crashing during a local developer run.
             loop.add_signal_handler(received, stop.set)
 
-    worker = Worker(
+    # Gate 2 adds the agent runtime. It is composed once per process and installed where the
+    # activities can read it, because an activity is a module-level function and cannot be handed
+    # its dependencies any other way.
+    context = build_context(settings)
+    set_context(context)
+    start_http_server(settings.agent_runtime_metrics_port, registry=context.prometheus)
+
+    foundation = Worker(
         client,
         task_queue=settings.task_queue,
         workflows=[SmokeWorkflow],
         activities=[echo],
         identity=settings.identity,
     )
+    # A queue of its own for agent runs. A long run waiting on a tool holds a workflow task slot,
+    # and sharing one queue would let a paused run starve the Foundation smoke check — which is the
+    # thing an operator reaches for when they want to know whether durable execution works at all.
+    agent_runtime = Worker(
+        client,
+        task_queue=settings.agent_runtime_task_queue,
+        workflows=[AgentRunWorkflow],
+        activities=AGENT_RUNTIME_ACTIVITIES,
+        identity=settings.identity,
+    )
     logger.info(
         "worker started",
-        extra={"taskQueue": settings.task_queue, "namespace": settings.namespace})
+        extra={"taskQueue": settings.task_queue,
+               "agentRuntimeTaskQueue": settings.agent_runtime_task_queue,
+               "namespace": settings.namespace})
 
-    async with worker:
-        await stop.wait()
+    try:
+        async with foundation, agent_runtime:
+            await stop.wait()
+    finally:
+        set_context(None)
+        await context.close()
 
     # The SDK exposes no explicit close; the connection is released when the client is dropped.
     logger.info("worker stopped")

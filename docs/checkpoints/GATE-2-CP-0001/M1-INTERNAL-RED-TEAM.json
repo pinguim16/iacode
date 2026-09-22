@@ -1,0 +1,353 @@
+{
+  "schemaVersion": "1.1.0",
+  "checkpoint": "GATE-2-CP-0001",
+  "generatedAt": "2026-09-22T15:05:17Z",
+  "targetFingerprint": "87e1d374f41df14e275dfb1f31657ee5591feb6c326e71e4a9cd24596d813165",
+  "source": "scripts/development-ledger/gate2_red_team.py with gate2_runtime_attacks.py — the internal adversarial battery of GATE 2 — AGENT RUNTIME, executed against the delivery",
+  "baselineControl": {
+    "result": "VALID",
+    "detail": "the unmutated fixture is accepted by every control this battery mutates: the runtime executes an unmutated run (the unmutated path runs, answers, records, parses, transitions, pauses on a tool, resumes and accepts an ordinary payload and budget); the scope control accepts the real tree (no violation); the canonical requirement set parses and mirrors (137 row(s)); the declared agents and teams are readable (4 profile(s), 2 team(s))",
+    "evidence": [
+      "file:services/agent-runtime/src/iacode_agent_runtime/engine.py",
+      "file:agents/teams/single-agent.json"
+    ]
+  },
+  "attacks": [
+    {
+      "attackId": "G2-A",
+      "description": "A finished run is asked to run again.",
+      "target": "state machine",
+      "mutation": "apply every transition out of SUCCEEDED, FAILED and CANCELLED through the real state machine",
+      "expectedDefense": "every one is refused and a terminal run stays terminal",
+      "observed": "every terminal move was refused; 36 forbidden transitions in total",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/agent-runtime/src/iacode_agent_runtime/states.py",
+        "test:RunStateMachineTests"
+      ],
+      "mandatory": true,
+      "origin": "GATE-2 internal Red Team, executed in the API image"
+    },
+    {
+      "attackId": "G2-B",
+      "description": "An agent that never finishes, against a run that must stop.",
+      "target": "budgets",
+      "mutation": "run a real engine with an agent that answers MESSAGE for ever",
+      "expectedDefense": "the run ends with BUDGET_EXCEEDED at the configured turn limit",
+      "observed": "the run stopped after 3 turn(s) with BUDGET_EXCEEDED",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/agent-runtime/src/iacode_agent_runtime/budgets.py",
+        "test:test_budget_exhaustion_ends_the_run"
+      ],
+      "mandatory": true,
+      "origin": "GATE-2 internal Red Team, executed in the API image"
+    },
+    {
+      "attackId": "G2-C",
+      "description": "An agent that answers with rubbish for ever.",
+      "target": "agent protocol",
+      "mutation": "run a real engine with a model that never produces a valid envelope",
+      "expectedDefense": "one repair is attempted and the second refusal ends the run",
+      "observed": "one repair was attempted and the second refusal ended the run",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/agent-runtime/src/iacode_agent_runtime/protocol.py",
+        "test:test_two_invalid_outputs_fail_the_run"
+      ],
+      "mandatory": true,
+      "origin": "GATE-2 internal Red Team, executed in the API image"
+    },
+    {
+      "attackId": "G2-D",
+      "description": "A repair that is not charged makes one turn cost two invisibly.",
+      "target": "budgets",
+      "mutation": "run a turn that needs a repair and read the ledger",
+      "expectedDefense": "the repair is counted as a model call like any other",
+      "observed": "the repair was charged like any other call",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/agent-runtime/src/iacode_agent_runtime/engine.py",
+        "test:test_repair_counts_against_the_budget"
+      ],
+      "mandatory": true,
+      "origin": "GATE-2 internal Red Team, executed in the API image"
+    },
+    {
+      "attackId": "G2-E",
+      "description": "Fourteen shapes of nearly-right output.",
+      "target": "agent protocol",
+      "mutation": "parse every one of them with the real parser",
+      "expectedDefense": "none is read as an answer",
+      "observed": "all 14 malformed outputs were refused",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/agent-runtime/src/iacode_agent_runtime/protocol.py",
+        "test:test_invalid_envelope_is_not_accepted_silently"
+      ],
+      "mandatory": true,
+      "origin": "GATE-2 internal Red Team, executed in the API image"
+    },
+    {
+      "attackId": "G2-F",
+      "description": "An agent asks for a shell, with a command that would destroy the machine.",
+      "target": "tool execution",
+      "mutation": "run a real engine whose agent requests shell.exec with a destructive command",
+      "expectedDefense": "the request is stored as data, the run pauses, and nothing executes",
+      "observed": "the hostile command was stored verbatim as data, the run paused, and nothing in the engine can execute anything",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/agent-runtime/src/iacode_agent_runtime/engine.py",
+        "test:ToolExecutionBoundaryTests"
+      ],
+      "mandatory": true,
+      "origin": "GATE-2 internal Red Team, executed in the API image"
+    },
+    {
+      "attackId": "G2-G",
+      "description": "An agent asks for a tool its profile does not permit.",
+      "target": "tool execution",
+      "mutation": "run a real engine whose agent requests a tool outside its allowed actions",
+      "expectedDefense": "the request is refused before anything is persisted",
+      "observed": "the request was refused before anything was stored",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/agent-runtime/src/iacode_agent_runtime/profiles.py",
+        "test:test_tool_request_outside_allowed_actions_is_refused"
+      ],
+      "mandatory": true,
+      "origin": "GATE-2 internal Red Team, executed in the API image"
+    },
+    {
+      "attackId": "G2-H",
+      "description": "A cancelled run is woken by a tool result.",
+      "target": "cancellation",
+      "mutation": "cancel a run that is waiting for a tool and let the wait return",
+      "expectedDefense": "the run reaches CANCELLED and makes no further call",
+      "observed": "the cancelled run made no further call and reached a terminal state",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/agent-runtime/src/iacode_agent_runtime/engine.py",
+        "test:test_cancel_while_waiting_for_tool"
+      ],
+      "mandatory": true,
+      "origin": "GATE-2 internal Red Team, executed in the API image"
+    },
+    {
+      "attackId": "G2-I",
+      "description": "A cancelled run keeps calling the model.",
+      "target": "cancellation",
+      "mutation": "request cancellation and execute a run whose agent would loop for ever",
+      "expectedDefense": "no model call is made after the cancellation",
+      "observed": "no model call was made once cancellation was requested",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/agent-runtime/src/iacode_agent_runtime/engine.py",
+        "test:test_no_model_call_after_cancellation"
+      ],
+      "mandatory": true,
+      "origin": "GATE-2 internal Red Team, executed in the API image"
+    },
+    {
+      "attackId": "G2-J",
+      "description": "The history is replayed to forge extra events.",
+      "target": "event log",
+      "mutation": "append every recorded event a second time through the real store contract",
+      "expectedDefense": "the log is unchanged and its sequence stays monotonic and unique",
+      "observed": "6 events, replayed, stayed 6 in sequence order",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/agent-runtime/src/iacode_agent_runtime/persistence.py",
+        "test:test_duplicate_append_does_not_duplicate_the_event"
+      ],
+      "mandatory": true,
+      "origin": "GATE-2 internal Red Team, executed in the API image"
+    },
+    {
+      "attackId": "G2-K",
+      "description": "A prompt, a transcript or a credential is written into the run's history.",
+      "target": "privacy",
+      "mutation": "append an event payload carrying each forbidden key, including nested",
+      "expectedDefense": "every one is refused rather than truncated",
+      "observed": "every forbidden payload key was refused, at any depth",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/agent-runtime/src/iacode_agent_runtime/events.py",
+        "test:test_event_payload_carries_no_private_reasoning"
+      ],
+      "mandatory": true,
+      "origin": "GATE-2 internal Red Team, executed in the API image"
+    },
+    {
+      "attackId": "G2-L",
+      "description": "A task written to look like a platform instruction.",
+      "target": "prompt separation",
+      "mutation": "assemble a context and build a real turn from a task that claims to override the protocol",
+      "expectedDefense": "the task stays in the user channel and never reaches the instructions",
+      "observed": "the task stayed in the user channel, inside its labelled block",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/agent-runtime/src/iacode_agent_runtime/context.py",
+        "test:test_task_never_enters_the_system_channel"
+      ],
+      "mandatory": true,
+      "origin": "GATE-2 internal Red Team, executed in the API image"
+    },
+    {
+      "attackId": "G2-M",
+      "description": "Two runs at once, reading each other's task and history.",
+      "target": "isolation",
+      "mutation": "execute two real engines concurrently with different tasks",
+      "expectedDefense": "neither run sees the other's task, events or result",
+      "observed": "two concurrent runs shared no task, no event and no result",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/agent-runtime/src/iacode_agent_runtime/engine.py",
+        "test:ConcurrentRunIsolationTests"
+      ],
+      "mandatory": true,
+      "origin": "GATE-2 internal Red Team, executed in the API image"
+    },
+    {
+      "attackId": "G2-N",
+      "description": "The runtime reaches a provider directly.",
+      "target": "provider boundary",
+      "mutation": "read every module of the installed runtime package and look for a provider or an adapter",
+      "expectedDefense": "no module names a provider or imports the gateway implementation",
+      "observed": "18 runtime modules name no provider and import no adapter, and the identical scan detects a module that does both",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/agent-runtime/src/iacode_agent_runtime/gateway_client.py",
+        "test:test_no_provider_specific_name_escapes_the_runtime"
+      ],
+      "mandatory": true,
+      "origin": "GATE-2 internal Red Team, executed in the API image"
+    },
+    {
+      "attackId": "G2-O",
+      "description": "An inference escapes the one port the runtime has.",
+      "target": "gateway boundary",
+      "mutation": "close the model port and execute a real run",
+      "expectedDefense": "no inference happens at all and the run fails with a gateway error",
+      "observed": "closing the one port stopped every inference the run could make",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/agent-runtime/src/iacode_agent_runtime/ports.py",
+        "test:test_every_inference_goes_through_the_gateway"
+      ],
+      "mandatory": true,
+      "origin": "GATE-2 internal Red Team, executed in the API image"
+    },
+    {
+      "attackId": "G2-P",
+      "description": "A task becomes a Prometheus label.",
+      "target": "observability",
+      "mutation": "record every instrument with a task as the label value",
+      "expectedDefense": "the published labels are the permitted set and every value is bounded",
+      "observed": "labels are ['agent', 'error_type', 'service', 'team'] and every value is bounded, so content cannot become a time series",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/agent-runtime/src/iacode_agent_runtime/telemetry.py",
+        "test:test_no_metric_label_carries_content"
+      ],
+      "mandatory": true,
+      "origin": "GATE-2 internal Red Team, executed in the API image"
+    },
+    {
+      "attackId": "G2-Q",
+      "description": "An unbounded task, tool argument set and agent answer.",
+      "target": "limits",
+      "mutation": "run real engines with payloads far above the configured limits",
+      "expectedDefense": "each one is refused before anything is stored or sent",
+      "observed": "3 oversized payloads were refused before anything was stored",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/agent-runtime/src/iacode_agent_runtime/limits.py",
+        "test:PayloadLimitTests"
+      ],
+      "mandatory": true,
+      "origin": "GATE-2 internal Red Team, executed in the API image"
+    },
+    {
+      "attackId": "G2-R",
+      "description": "A run configured with no bound at all.",
+      "target": "budgets",
+      "mutation": "construct budgets with zero, negative and absurd limits",
+      "expectedDefense": "every one is refused at validation",
+      "observed": "every zero, negative and absurd limit was refused at validation",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/agent-runtime/src/iacode_agent_runtime/budgets.py",
+        "test:test_absurd_budget_is_refused"
+      ],
+      "mandatory": true,
+      "origin": "GATE-2 internal Red Team, executed in the API image"
+    },
+    {
+      "attackId": "G2-S",
+      "description": "A token budget enforced against usage the provider never reported.",
+      "target": "budgets",
+      "mutation": "record an absent usage against a run with a token budget",
+      "expectedDefense": "the budget becomes unenforceable and says so, rather than counting zero",
+      "observed": "an absent usage made the token budget unenforceable and said so",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/agent-runtime/src/iacode_agent_runtime/budgets.py",
+        "test:test_token_budget_is_unenforceable_without_usage"
+      ],
+      "mandatory": true,
+      "origin": "GATE-2 internal Red Team, executed in the API image"
+    },
+    {
+      "attackId": "G2-T",
+      "description": "The sandbox is started early, because the tool request is already there.",
+      "target": "gate scope",
+      "mutation": "plant an executor in services/sandbox and run the real scope control",
+      "expectedDefense": "the control refuses the delivery, naming the reserved path",
+      "observed": "the scope control refused it: services/sandbox is reserved for GATE 3 but carries executor.py",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:.iacode/policies/gate-scope.json",
+        "test:Gate2ScopeTests"
+      ],
+      "mandatory": true,
+      "origin": "GATE-2 internal Red Team, executed on the host"
+    },
+    {
+      "attackId": "G2-U",
+      "description": "Workflow code that cannot be replayed.",
+      "target": "durability",
+      "mutation": "scan the real workflow for a clock, a random value, a database or a network call, and run the identical scan over a module that has them",
+      "expectedDefense": "the workflow has none and the scan detects the mutated module",
+      "observed": "the workflow reads no clock, no randomness and no database, and the check detects a module that does (random, random.random, time.time)",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/orchestrator/src/iacode_orchestrator/workflows/agent_run.py",
+        "test:WorkflowDeterminismTests"
+      ],
+      "mandatory": true,
+      "origin": "GATE-2 internal Red Team, executed on the host"
+    },
+    {
+      "attackId": "G2-V",
+      "description": "The new mandatory gate measures an image nobody rebuilt.",
+      "target": "delivery assurance",
+      "mutation": "plant a failing test in the agent runtime suite on disk and run the real gate",
+      "expectedDefense": "the gate builds the image first and reports the failure",
+      "observed": "the gate rebuilt and failed on the planted test: [iacode] AGENT_RUNTIME_TESTS=FAIL",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:scripts/iacode/gates/agent_runtime_tests.py",
+        "file:scripts/iacode/compose.py"
+      ],
+      "mandatory": true,
+      "origin": "GATE-2 internal Red Team, executed on the host"
+    }
+  ],
+  "total": 22,
+  "defended": 22,
+  "escaped": 0,
+  "mandatoryTotal": 22,
+  "mandatoryDefended": 22,
+  "result": "RED_TEAM_PASS"
+}

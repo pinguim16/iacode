@@ -1,0 +1,13 @@
+{
+  "schemaVersion": "1.0.0",
+  "agent": "reviewer",
+  "name": "Reviewer",
+  "role": "reviewer",
+  "description": "Reviews the previous stage's output against the task and either approves it or says precisely what is wrong. It has no authority over any repository artefact.",
+  "version": "1.0.0",
+  "promptTemplate": "agents/prompts/reviewer.v1.md",
+  "defaultRoute": null,
+  "maxTurns": 3,
+  "allowedActions": [],
+  "enabled": true
+}

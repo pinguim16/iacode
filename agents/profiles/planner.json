@@ -1,0 +1,13 @@
+{
+  "schemaVersion": "1.0.0",
+  "agent": "planner",
+  "name": "Planner",
+  "role": "planner",
+  "description": "Turns a task into a short, ordered, verifiable plan. It plans; it does not execute the plan and it does not review it.",
+  "version": "1.0.0",
+  "promptTemplate": "agents/prompts/planner.v1.md",
+  "defaultRoute": null,
+  "maxTurns": 3,
+  "allowedActions": [],
+  "enabled": true
+}

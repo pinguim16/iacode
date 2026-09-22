@@ -15,10 +15,11 @@ Middleware order is a decision, not an accident. Starlette runs middleware outer
 * **Correlation before metrics** so the identifier is already bound when the metrics layer logs.
 * **Metrics innermost** so the duration it observes is the handler's, not the middleware stack's.
 
-Gate 0 exposed health, readiness, version and metrics. Gate 1 adds the Model Gateway under
-``/api/v1/gateway``: the providers, the discovered catalog, its synchronisation, the gateway's own
-health, and the two inference endpoints. There is still no endpoint over the remaining domain
-tables, because the capabilities that would fill them belong to later Gates.
+Gate 0 exposed health, readiness, version and metrics. Gate 1 added the Model Gateway under
+``/api/v1/gateway``. Gate 2 adds the agent runtime under ``/api/v1/agent-runs``: creating a run,
+reading it, streaming its events, cancelling it and answering a tool request, plus the declared
+agents and teams. There is still no endpoint over the remaining domain tables, because the
+capabilities that would fill them belong to later Gates.
 """
 
 from __future__ import annotations
@@ -32,7 +33,7 @@ from iacode_api.errors import register_error_handlers
 from iacode_api.lifespan import lifespan
 from iacode_api.middleware.correlation import REQUEST_ID_HEADER, CorrelationMiddleware
 from iacode_api.observability.metrics import Metrics, MetricsMiddleware
-from iacode_api.routes import gateway, health, version
+from iacode_api.routes import agent_runs, gateway, health, version
 
 logger = get_logger(__name__)
 
@@ -44,8 +45,9 @@ durable workflows and observability. Gate 1 adds the Model Gateway: one provider
 for model discovery, routing and invocation, with streaming, retries, a circuit breaker and a
 bounded fallback chain.
 
-The agent runtime and the sandbox belong to later Gates and are not implemented here. The gateway
-normalises a tool call so a later Gate can decide what to do with it; it executes nothing.
+Gate 2 adds the agent runtime: durable agent runs, a team of agents, budgets, cancellation and a
+tool-request lifecycle that pauses a run and waits. **Nothing here executes a tool.** The
+sandbox that will belongs to Gate 3.
 """.strip()
 
 
@@ -88,9 +90,11 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     # Foundation error module knows nothing about the gateway, and the direction of that dependency
     # is what keeps Gate 0 independent of Gate 1.
     gateway.register_gateway_errors(app)
+    agent_runs.register_agent_runtime_errors(app)
     app.include_router(health.router)
     app.include_router(version.router)
     app.include_router(gateway.router)
+    app.include_router(agent_runs.router)
     return app
 
 

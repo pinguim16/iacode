@@ -44,6 +44,14 @@ x-runtime-env: &runtime-env
   IACODE_TEMPORAL_TARGET: ${IACODE_TEMPORAL_TARGET}
   IACODE_TEMPORAL_NAMESPACE: ${IACODE_TEMPORAL_NAMESPACE:-default}
   IACODE_TEMPORAL_TASK_QUEUE: ${IACODE_TEMPORAL_TASK_QUEUE:-iacode-foundation}
+  # The agent runtime. The API creates runs and the worker executes them, so both read the
+  # same queue name and the same limits; two views of one lifecycle is how a run gets created
+  # on a queue nobody polls.
+  IACODE_AGENT_RUNTIME_TASK_QUEUE: ${IACODE_AGENT_RUNTIME_TASK_QUEUE:-iacode-agent-runtime}
+  IACODE_AGENT_RUNTIME_MAX_TURNS: ${IACODE_AGENT_RUNTIME_MAX_TURNS:-8}
+  IACODE_AGENT_RUNTIME_MAX_MODEL_CALLS: ${IACODE_AGENT_RUNTIME_MAX_MODEL_CALLS:-12}
+  IACODE_AGENT_RUNTIME_MAX_DURATION_SECONDS: ${IACODE_AGENT_RUNTIME_MAX_DURATION_SECONDS:-900}
+  IACODE_AGENT_RUNTIME_TOOL_WAIT_TIMEOUT_SECONDS: ${IACODE_AGENT_RUNTIME_TOOL_WAIT_TIMEOUT_SECONDS:-3600}
 
 networks:
   iacode:
@@ -271,6 +279,10 @@ services:
       IACODE_GATEWAY_MAX_OUTPUT_TOKENS: ${IACODE_GATEWAY_MAX_OUTPUT_TOKENS:-16384}
       IACODE_GATEWAY_CIRCUIT_FAILURE_THRESHOLD: ${IACODE_GATEWAY_CIRCUIT_FAILURE_THRESHOLD:-5}
       IACODE_GATEWAY_CIRCUIT_COOLDOWN_SECONDS: ${IACODE_GATEWAY_CIRCUIT_COOLDOWN_SECONDS:-30}
+      # Where the declared agents, teams and prompts live in this image.
+      IACODE_REPOSITORY_ROOT: ${IACODE_REPOSITORY_ROOT:-/app}
+      IACODE_AGENT_RUNTIME_MAX_TASK_BYTES: ${IACODE_AGENT_RUNTIME_MAX_TASK_BYTES:-65536}
+      IACODE_AGENT_RUNTIME_EVENT_STREAM_POLL_SECONDS: ${IACODE_AGENT_RUNTIME_EVENT_STREAM_POLL_SECONDS:-0.5}
     ports:
       - "127.0.0.1:${IACODE_API_PORT:-18080}:8000"
     healthcheck:
@@ -301,6 +313,14 @@ services:
     environment:
       <<: *runtime-env
       IACODE_WORKER_CONNECT_TIMEOUT_SECONDS: ${IACODE_WORKER_CONNECT_TIMEOUT_SECONDS:-180}
+      # Where the declared agents, teams and prompts live in this image.
+      IACODE_REPOSITORY_ROOT: ${IACODE_REPOSITORY_ROOT:-/app}
+      # The Model Gateway's own address. Not a provider address: the worker cannot reach a
+      # provider and holds no credential — every inference goes through the gateway's API.
+      IACODE_AGENT_RUNTIME_GATEWAY_URL: ${IACODE_AGENT_RUNTIME_GATEWAY_URL:-http://api:8000}
+      IACODE_AGENT_RUNTIME_REQUEST_TIMEOUT_SECONDS: ${IACODE_AGENT_RUNTIME_REQUEST_TIMEOUT_SECONDS:-300}
+      IACODE_AGENT_RUNTIME_MAX_OUTPUT_TOKENS: ${IACODE_AGENT_RUNTIME_MAX_OUTPUT_TOKENS:-2048}
+      IACODE_AGENT_RUNTIME_METRICS_PORT: ${IACODE_AGENT_RUNTIME_METRICS_PORT:-9101}
     healthcheck:
       # The worker has no HTTP surface, so "the process exists" would be the lazy answer. Instead
       # it asks Temporal whether this task queue actually has a poller, which is the only evidence

@@ -146,6 +146,27 @@ class Settings(BaseSettings):
         description="Opt-in debug capture of request content. False in every shipped "
                     "configuration; turning it on is a rights decision, not a convenience.")
 
+    # --- agent runtime ---------------------------------------------------------------------------
+    # What the API needs to create a run: where the declared agents live, which task queue the
+    # durable workflow belongs to, and the default limits a run is created with. What it does
+    # *not* need is anything about a provider: the run is executed by the worker, and the worker
+    # reaches a model through the gateway exactly as any other caller does.
+    repository_root: str = Field(
+        default=".",
+        description="Where agents/ lives in this process. '.' resolves to the image's working "
+                    "directory, which carries the declared profiles, and to the repository root "
+                    "on a developer's machine.")
+    agent_runtime_task_queue: str = Field(
+        default="iacode-agent-runtime", min_length=1,
+        description="The Temporal task queue agent runs are started on. A queue of its own, so a "
+                    "run paused on a tool cannot starve the Foundation smoke workflow.")
+    agent_runtime_max_turns: Annotated[int, Field(ge=1, le=100)] = 8
+    agent_runtime_max_model_calls: Annotated[int, Field(ge=1, le=200)] = 12
+    agent_runtime_max_duration_seconds: Annotated[int, Field(ge=1, le=86400)] = 900
+    agent_runtime_tool_wait_timeout_seconds: Annotated[int, Field(ge=1, le=86400)] = 3600
+    agent_runtime_max_task_bytes: Annotated[int, Field(ge=256, le=4_194_304)] = 65_536
+    agent_runtime_event_stream_poll_seconds: Annotated[float, Field(gt=0, le=10)] = 0.5
+
     @field_validator("cors_allow_origins", mode="before")
     @classmethod
     def _split_origins(cls, value: object) -> object:
@@ -282,6 +303,14 @@ def settings_for_tests(**overrides: object) -> Settings:
         "gateway_max_output_tokens": 256,
         "gateway_max_response_bytes": 65536,
         "gateway_persist_prompts": False,
+        "repository_root": ".",
+        "agent_runtime_task_queue": "iacode-agent-runtime",
+        "agent_runtime_max_turns": 4,
+        "agent_runtime_max_model_calls": 6,
+        "agent_runtime_max_duration_seconds": 60,
+        "agent_runtime_tool_wait_timeout_seconds": 30,
+        "agent_runtime_max_task_bytes": 8192,
+        "agent_runtime_event_stream_poll_seconds": 0.05,
     }
     values.update(overrides)
     missing = set(Settings.model_fields) - set(values)

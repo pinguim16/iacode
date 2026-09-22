@@ -105,6 +105,20 @@
       ]
     },
     {
+      "id": "agentRuntimeTests",
+      "title": "Agent Runtime suite",
+      "command": [
+        "python",
+        "scripts/iacode/gates/agent_runtime_tests.py"
+      ],
+      "purpose": "Green Keeper gate: the agent runtime's own suite — the state machine, the event log, profiles and teams, the turn protocol, context assembly, budgets, the tool-request lifecycle, the engine and the boundary that proves no tool is executed — run in the API image against deterministic doubles, with no dependency on a running stack, on Temporal or on a provider credential.",
+      "mandatory": true,
+      "qualityDimensions": [
+        "unitTests",
+        "security"
+      ]
+    },
+    {
       "id": "webTests",
       "title": "Foundation frontend build and suite",
       "command": [

@@ -31,6 +31,8 @@ PYTHON_ROOTS = (
     "apps/api/tests",
     "apps/api/migrations",
     "services/orchestrator/src",
+    "services/agent-runtime/src",
+    "services/agent-runtime/tests",
     "packages",
     "scripts/iacode",
     "infra/tests",

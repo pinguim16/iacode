@@ -3,16 +3,20 @@
 IACode is a planned private, autonomous, general-purpose software engineering platform. The repository is self-contained context and is the only source of truth.
 
 - Phase: `M1 — IACode V0 foundation`.
-- Current Gate: `GATE 1 — MODEL GATEWAY`.
-- Previous Gate: `GATE 0 — FOUNDATION`, closed at `INTERNAL_GATE_PASS`; before it `SETUP-00`, closed,
-  with `M0` having passed its independent audit.
+- Current Gate: `GATE 2 — AGENT RUNTIME`.
+- Previous Gates: `GATE 1 — MODEL GATEWAY` and `GATE 0 — FOUNDATION`, both closed at
+  `INTERNAL_GATE_PASS`; before them `SETUP-00`, closed, with `M0` having passed its
+  independent audit.
 - Latest checkpoint: follow [docs/checkpoints/LATEST.md](docs/checkpoints/LATEST.md).
 - `M1` remains `PENDING`. It is audited after Gate 3, not after this Gate.
-- Gate 2 is not implemented and may not begin until Gate 1 closes and Gate 2 is authorized.
+- Gate 3 is not implemented and may not begin until Gate 2 closes and Gate 3 is authorized.
+  In particular **no tool is executed anywhere in this repository**: the agent runtime
+  records a tool request and pauses, and the sandbox that will execute one belongs to Gate 3.
 
 The runtime runs locally. To start it, read [docs/runbooks/FOUNDATION.md](docs/runbooks/FOUNDATION.md);
 to configure and operate a model provider, read
-[docs/runbooks/MODEL-GATEWAY.md](docs/runbooks/MODEL-GATEWAY.md);
+[docs/runbooks/MODEL-GATEWAY.md](docs/runbooks/MODEL-GATEWAY.md); to run and follow an
+agent, read [docs/runbooks/AGENT-RUNTIME.md](docs/runbooks/AGENT-RUNTIME.md);
 to work on it, read [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md). Neither replaces the start protocol
 below for anyone about to change the repository.
 
@@ -20,7 +24,8 @@ below for anyone about to change the repository.
 
 1. Read [docs/DEVELOPMENT-CONTRACT.md](docs/DEVELOPMENT-CONTRACT.md).
 2. Read [docs/MASTER-PLAN.md](docs/MASTER-PLAN.md) and the canonical specification of the current
-   Gate: [docs/GATE-1-CHECKLIST.md](docs/GATE-1-CHECKLIST.md) now,
+   Gate: [docs/GATE-2-CHECKLIST.md](docs/GATE-2-CHECKLIST.md) now,
+   [docs/GATE-1-CHECKLIST.md](docs/GATE-1-CHECKLIST.md),
    [docs/GATE-0-CHECKLIST.md](docs/GATE-0-CHECKLIST.md) and
    [docs/SETUP-00-CHECKLIST.md](docs/SETUP-00-CHECKLIST.md) for the Gates before it.
 3. Read [docs/checkpoints/LATEST.md](docs/checkpoints/LATEST.md) and every file in the checkpoint it names.
