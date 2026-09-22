@@ -74,7 +74,26 @@ recorded trigger. See [MILESTONE-VALIDATION.md](MILESTONE-VALIDATION.md).
 
 ## Git discipline
 
-Do not force push, hard reset, destructively clean, or rewrite history without explicit authorization and a validated checkpoint immediately before the operation. Do not mix Gates in a commit. Prefer clear prefixes: `setup:`, `gate0:`, `gate1:`, `fix:`, `test:`, `docs:`, and `refactor:`.
+Do not force push, hard reset, destructively clean, or rewrite history without explicit authorization and a validated checkpoint immediately before the operation. Do not mix Gates in a commit. Prefer clear prefixes: `setup:`, `gate0:`, `gate1:`, `fix:`, `test:`, `docs:`, and `refactor:`, or a semantic `type(scope): subject`.
+
+From `GATE 3` the repository has a public remote, `origin` =
+`https://github.com/pinguim16/iacode.git`, and `main` is the branch pushed
+([ADR-0024](adr/ADR-0024-public-remote-and-atomic-commits.md)):
+
+- the whole history is scanned with `secret_scan.py --history` before it is first made public, and
+  a finding blocks the push rather than triggering a rewrite;
+- a commit is one logical advance: implementation complete, its targeted tests green, only its own
+  files staged, and `secret_scan.py --staged` clean;
+- every green commit is pushed with `git push origin main`, not held until the Gate closes;
+- a pushed commit is never amended, rebased or reset; a mistake is corrected by a new commit;
+- a sealed checkpoint's tag is pushed and never moved or deleted on the remote;
+- authentication stays in the local credential store, never in a URL, a config file, the repository
+  or a chat;
+- a Gate claims remote synchronisation only when `git log origin/main..main` is empty and its
+  final tag is on the remote.
+
+The Git an agent uses inside a sandbox is not this Git: it is local to a disposable workspace, has
+its own identity, and has no remote and no credential.
 
 ## Gate discipline
 
