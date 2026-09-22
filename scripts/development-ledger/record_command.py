@@ -19,6 +19,7 @@ from ledger_common import (
     LedgerError,
     append_command_record,
     build_command_record,
+    command_replay_errors,
     find_root,
     git_snapshot,
     resolve_latest,
@@ -88,6 +89,45 @@ def main() -> int:
     if not checkpoint.is_absolute():
         checkpoint = root / checkpoint
 
+    # The replay rule is asked before anything runs. A command the validator would refuse is
+    # refused here instead, and the refusal is recorded: an operation that was attempted and
+    # declined stays visible, without an exit code, because no process was launched. `LSN-0003`.
+    command = " ".join(argv)
+    replay_errors = command_replay_errors(root, command)
+    if replay_errors:
+        snapshot = git_snapshot(root)
+        record = build_command_record(
+            root,
+            command=command,
+            arguments=argv[1:],
+            purpose=args.purpose,
+            working_directory=str(root),
+            runtime=runtime_label(argv[0]) if argv[0] not in INTERPRETER_TOKENS
+            else runtime_label("python"),
+            inputs=[],
+            result="PRECONDITION_REJECTED",
+            result_code="E_UNREPLAYABLE_COMMAND",
+            exit_code=None,
+            duration_ms=0,
+            operation=args.operation,
+            phase=args.phase,
+            preconditions=[{"name": "command-is-replayable", "expected": "no replay error",
+                            "observed": message, "satisfied": False}
+                           for message in replay_errors],
+            failure_reason="; ".join(replay_errors),
+            subject_commit=args.subject_commit or snapshot["head"],
+            repository_state={
+                "branch": snapshot["branch"],
+                "head": snapshot["head"],
+                "dirty": snapshot["dirty"],
+                "detached": snapshot["detached"],
+            },
+        )
+        identifier = append_command_record(checkpoint / "COMMANDS.jsonl", record)
+        print(f"[ledger {identifier}] PRECONDITION_REJECTED E_UNREPLAYABLE_COMMAND: "
+              + "; ".join(replay_errors))
+        return 2
+
     executable = list(argv)
     if executable[0] in INTERPRETER_TOKENS:
         executable[0] = sys.executable
@@ -105,7 +145,7 @@ def main() -> int:
     snapshot = git_snapshot(root)
     record = build_command_record(
         root,
-        command=" ".join(argv),
+        command=command,
         arguments=argv[1:],
         purpose=args.purpose,
         working_directory=str(root),

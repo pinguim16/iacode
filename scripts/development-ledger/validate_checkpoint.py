@@ -52,6 +52,7 @@ from ledger_common import (
     LedgerError,
     blob_hash,
     canonical_hash_path,
+    command_replay_errors,
     find_root,
     find_secrets,
     git_delta,
@@ -89,9 +90,6 @@ REQUIRED_HANDOFF_FILES = (
     "COMPLETENESS-REPORT.md",
     "FINAL-REPORT.md",
 )
-
-# Runtime tokens that make a recorded command literally executable from its working directory.
-RUNTIME_TOKENS = ("python", "python3", "git", "bash", "sh", "powershell", "pwsh", "cmd")
 
 
 HANDOFF_HEADINGS = (
@@ -430,18 +428,19 @@ def _validate_command_reproducibility(
     command = record.get("command")
     if not isinstance(command, str) or not command.strip():
         return
-    tokens = command.split()
-    first = tokens[0]
-    if first not in RUNTIME_TOKENS:
-        errors.append(
-            f"{prefix}: the recorded command must start with an explicit runtime such as "
-            f"{RUNTIME_TOKENS[0]!r}, found {first!r}"
-        )
-    for token in tokens[1:]:
-        if token.endswith(".py"):
-            if not (root / token).is_file():
-                errors.append(f"{prefix}: recorded script path does not resolve from the repository: {token}")
-            break
+    replay_errors = command_replay_errors(root, command)
+    if result == "PRECONDITION_REJECTED" and record.get("resultCode") == "E_UNREPLAYABLE_COMMAND":
+        # The record of a refusal names the command that was refused, which is by definition one
+        # that cannot be replayed; nothing ran, and with no exit code it can never be evidence of
+        # a PASS. What must hold is that the shared rule really refuses it: a replayable command
+        # recorded as refused would be a false record of an operation that was never attempted.
+        if not replay_errors:
+            errors.append(
+                f"{prefix}: recorded as refused for being unreplayable, but the replay rule "
+                f"does not refuse {command!r}")
+        return
+    for message in replay_errors:
+        errors.append(f"{prefix}: {message}")
 
     inputs = [str(item) for item in record.get("inputs") or []]
     declared_digests = {

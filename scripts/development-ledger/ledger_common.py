@@ -101,7 +101,38 @@ RESULT_CODES = {
     "E_INVALID_COMMIT_REF": "Refused: the commit reference is not a canonical checkpoint tag.",
     "E_VALIDATION_FAILED": "The operation ran and its own validation rejected the result.",
     "E_ABORTED": "The operation was interrupted before producing a result.",
+    "E_UNREPLAYABLE_COMMAND": "Refused before execution: the recorded command could not be "
+                              "replayed from the working directory it names.",
 }
+
+# Runtime tokens that make a recorded command literally executable from its working directory.
+RUNTIME_TOKENS = ("python", "python3", "git", "bash", "sh", "powershell", "pwsh", "cmd")
+
+
+def command_replay_errors(root: Path, command: str) -> list[str]:
+    """Why ``command`` could not be replayed from ``root``, or nothing when it can.
+
+    The one statement of the rule. `record_command.py` asks it **before** running a command and
+    refuses the ones it names, and `validate_checkpoint.py` asks it of every recorded command
+    afterwards. Two copies of this rule are how `G2-F-011` happened: the recorder ran and recorded
+    three commands the validator then refused, and the only repair left was to take evidence out of
+    a ledger that had already been written.
+    """
+    tokens = command.split()
+    if not tokens:
+        return ["the recorded command is empty"]
+    errors: list[str] = []
+    if tokens[0] not in RUNTIME_TOKENS:
+        errors.append(
+            f"the recorded command must start with an explicit runtime such as "
+            f"{RUNTIME_TOKENS[0]!r}, found {tokens[0]!r}")
+    for token in tokens[1:]:
+        if token.endswith(".py"):
+            if not (root / token).is_file():
+                errors.append(
+                    f"recorded script path does not resolve from the repository: {token}")
+            break
+    return errors
 
 # The only checkpoint file excluded from content hashing, because a file cannot
 # contain its own hash. Its integrity is bound by the checkpoint commit and tag,
