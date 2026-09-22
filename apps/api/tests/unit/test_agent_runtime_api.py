@@ -407,6 +407,32 @@ def test_event_stream_resumes_from_a_cursor(wired) -> None:
     assert service.event_reads[0] == (RUN_ID, 7)
 
 
+def test_a_terminal_stream_drains_every_page_after_the_cursor(wired) -> None:
+    """`R-G2-011`: a finished run whose history is longer than one page reaches the consumer whole.
+
+    The stream read the run's state once, saw it terminal and returned after the first page, so a
+    consumer that opened the stream after the run ended received two hundred events and a closed
+    connection, with nothing saying the rest existed.
+    """
+    from iacode_api.routes import agent_runs
+
+    client, service, _, _ = wired
+    service.detail_state = "SUCCEEDED"
+    size = agent_runs.EVENT_PAGE_SIZE
+    total = size * 2 + size // 4
+    history = [event(sequence) for sequence in range(1, total)] + [event(total, "RUN_COMPLETED")]
+    service.events_by_cursor = {
+        start: history[start:start + size] for start in range(0, total, size)}
+
+    with client.stream("GET", f"{RUNS}/{RUN_ID}/events/stream") as response:
+        body = "".join(response.iter_text())
+
+    delivered = [int(line[4:]) for line in body.splitlines() if line.startswith("id: ")]
+    assert delivered == list(range(1, total + 1))
+    assert "event: RUN_COMPLETED" in body
+    assert [cursor for _run, cursor in service.event_reads][:3] == [0, size, size * 2]
+
+
 def test_the_stream_accepts_the_standard_reconnect_header(wired) -> None:
     client, service, _, _ = wired
     service.detail_state = "SUCCEEDED"

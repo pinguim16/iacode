@@ -91,6 +91,11 @@ PUBLIC_DETAIL_KEYS = frozenset({
 #: bytes for a minute closes the connection, and a run thinking for two minutes is normal.
 KEEPALIVE_SECONDS = 15.0
 
+#: How many events the stream reads from the store at a time. A bound on one read, never on what a
+#: consumer receives: a stream keeps reading pages until it has delivered everything after its
+#: cursor, including after the run has finished.
+EVENT_PAGE_SIZE = 200
+
 
 def workflow_id_for(run_id: str) -> str:
     """The durable workflow's identifier, derived from the run's.
@@ -245,7 +250,7 @@ async def stream_agent_run_events(
         while True:
             if await request.is_disconnected():
                 return
-            page = await runtime.service.events(run_id, after=cursor, limit=200)
+            page = await runtime.service.events(run_id, after=cursor, limit=EVENT_PAGE_SIZE)
             for event in page.events:
                 cursor = event.sequence
                 idle = 0.0
@@ -254,7 +259,12 @@ async def stream_agent_run_events(
                 if event.type in ("RUN_COMPLETED", "RUN_FAILED", "RUN_CANCELLED"):
                     finished = True
             if finished:
-                return
+                # A finished run has nothing more to wait for, but it may still have more to say:
+                # a full page means the next one may exist, so it is read before the stream ends.
+                # Ending after the first page truncated every history longer than one. `R-G2-011`.
+                if len(page.events) < EVENT_PAGE_SIZE:
+                    return
+                continue
             await asyncio.sleep(runtime.event_poll_seconds)
             idle += runtime.event_poll_seconds
             if idle >= KEEPALIVE_SECONDS:
