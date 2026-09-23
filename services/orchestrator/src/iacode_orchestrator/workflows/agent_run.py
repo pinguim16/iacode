@@ -60,6 +60,7 @@ with workflow.unsafe.imports_passed_through():
         TOOL_RESULT_SIGNAL,
     )
     from iacode_contracts.sandbox import (
+        SANDBOX_AGENT_RESULT_KEY,
         SANDBOX_CONTRACT_VERSION,
         SANDBOX_EXECUTE_ACTIVITY,
         SANDBOX_RELEASE_ACTIVITY,
@@ -298,7 +299,7 @@ class _WorkflowEffects:
                 return None
             try:
                 body = await handle
-                result = dict(body["agentResult"])
+                result = dict(body[SANDBOX_AGENT_RESULT_KEY])
             except ActivityError as error:
                 # The sandbox could not answer at all - its service down past the retries, or the
                 # schedule exhausted. The agent receives that as a failed tool, rather than the run

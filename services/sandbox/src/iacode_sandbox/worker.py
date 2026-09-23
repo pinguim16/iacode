@@ -22,7 +22,9 @@ from pathlib import Path
 from typing import Any
 
 from iacode_contracts.sandbox import (
+    SANDBOX_AGENT_RESULT_KEY,
     SANDBOX_EXECUTE_ACTIVITY,
+    SANDBOX_EXECUTION_KEY,
     SANDBOX_RELEASE_ACTIVITY,
     SANDBOX_TASK_QUEUE,
 )
@@ -54,9 +56,14 @@ def _service() -> Any:
 
 @activity.defn(name=SANDBOX_EXECUTE_ACTIVITY)
 async def execute_tool(payload: dict[str, Any]) -> dict[str, Any]:
-    """Execute one tool request in the run's sandbox and return the result as data."""
+    """Execute one tool request in the run's sandbox.
+
+    The answer carries the tool result the workflow persists for the agent, bounded as the runtime
+    measures it, and the whole execution record beside it.
+    """
     result = await _service().execute(payload, heartbeat=activity.heartbeat)
-    return result.to_dict()
+    return {SANDBOX_AGENT_RESULT_KEY: result.agent_result(),
+            SANDBOX_EXECUTION_KEY: result.to_dict()}
 
 
 @activity.defn(name=SANDBOX_RELEASE_ACTIVITY)

@@ -18,9 +18,11 @@ from pydantic import BaseModel, ConfigDict, Field
 
 __all__ = [
     "SANDBOX_ACTIVE_SESSION_STATES",
+    "SANDBOX_AGENT_RESULT_KEY",
     "SANDBOX_AGENT_RESULT_MAX_BYTES",
     "SANDBOX_CONTRACT_VERSION",
     "SANDBOX_EXECUTE_ACTIVITY",
+    "SANDBOX_EXECUTION_KEY",
     "SANDBOX_RELEASE_ACTIVITY",
     "SANDBOX_SESSION_STATES",
     "SANDBOX_TASK_QUEUE",
@@ -41,6 +43,14 @@ SANDBOX_TASK_QUEUE = "iacode-sandbox"
 #: The two activities the sandbox registers on that queue.
 SANDBOX_EXECUTE_ACTIVITY = "iacode_sandbox_execute_tool"
 SANDBOX_RELEASE_ACTIVITY = "iacode_sandbox_release_run"
+
+#: The two keys of what the execute activity returns: the tool result the workflow persists and
+#: hands back to the agent, and the whole execution record. They are written here once because the
+#: producer and the consumer live in two processes that share nothing else: the first version had
+#: the sandbox return the execution record alone while the workflow read the tool result, and no
+#: test that ran either side against a double could see it.
+SANDBOX_AGENT_RESULT_KEY = "agentResult"
+SANDBOX_EXECUTION_KEY = "execution"
 
 #: A sandbox session's lifecycle. ``CREATED`` is a row with no container yet; ``STARTING`` is a
 #: container being created and its workspace provisioned; ``READY`` is idle and usable; ``RUNNING``
