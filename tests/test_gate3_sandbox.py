@@ -582,6 +582,58 @@ class Gate3TestSuiteRegistryTests(unittest.TestCase):
                 self.assertIn(reference, identifiers)
 
 
+class Gate3RedTeamHarnessTests(unittest.TestCase):
+    """The battery is executable, scoped to the sandbox, and records a null-mutation control."""
+
+    HARNESS = SCRIPTS / "gate3_red_team.py"
+    SANDBOX_HALF = SCRIPTS / "gate3_sandbox_attacks.py"
+
+    def test_the_battery_exists_and_declares_its_attacks(self) -> None:
+        self.assertTrue(self.HARNESS.is_file())
+        self.assertTrue(self.SANDBOX_HALF.is_file())
+        import re
+
+        source = self.HARNESS.read_text(encoding="utf-8")
+        declared = re.findall(r'\("(G3-[A-Z])",', source)
+        host = re.findall(r'"(G3-[A-Z])", "', source)
+        self.assertGreaterEqual(len(set(declared) | set(host)), 20,
+                                "the battery declares fewer attacks than the Gate asked for")
+        self.assertEqual(len(declared), len(set(declared)), "an attack identifier is duplicated")
+        self.assertIn("baseline_control", source)
+
+    def test_the_battery_refuses_to_report_without_its_control(self) -> None:
+        source = self.HARNESS.read_text(encoding="utf-8")
+        self.assertIn("the null-mutation control failed", source)
+        self.assertIn("raise LedgerError", source)
+        self.assertIn("the battery leaves no sandbox behind", source)
+
+    def test_every_attack_in_the_sandbox_half_is_declared_on_the_host(self) -> None:
+        import re
+
+        harness = self.HARNESS.read_text(encoding="utf-8")
+        sandbox = self.SANDBOX_HALF.read_text(encoding="utf-8")
+        executed = set(re.findall(r'"(G3-[A-Z])": ', sandbox))
+        declared = set(re.findall(r'\("(G3-[A-Z])",', harness))
+        self.assertGreaterEqual(len(executed), 20)
+        self.assertEqual(executed, declared, "a verdict nobody declared, or a declaration nobody "
+                                             "executes")
+
+    def test_the_battery_carries_no_credential_of_its_own(self) -> None:
+        """It plants a credential-shaped value, built at run time, never written in its source."""
+        for path in (self.HARNESS, self.SANDBOX_HALF):
+            with self.subTest(module=path.name):
+                self.assertEqual(ledger_common.find_secrets(path.read_text(encoding="utf-8")), [])
+
+    def test_the_sandbox_half_attacks_through_the_real_engine(self) -> None:
+        source = self.SANDBOX_HALF.read_text(encoding="utf-8")
+        self.assertIn("backend=DockerBackend()", source)
+        self.assertNotIn("FakeBackend", source)
+        harness = ast.unparse(function(self.HARNESS.read_text(encoding="utf-8"),
+                                       "run_sandbox_attacks"))
+        self.assertLess(harness.index("'build', 'sandbox'"), harness.index("'run', '--rm'"))
+        self.assertLess(harness.index("sandbox_image.py"), harness.index("'run', '--rm'"))
+
+
 class Gate3ScopeTests(unittest.TestCase):
     """The reservation this Gate owns is consumed; every later Gate's is still enforced.
 
