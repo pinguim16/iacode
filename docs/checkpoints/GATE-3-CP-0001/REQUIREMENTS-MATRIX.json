@@ -10,10 +10,16 @@
       "sourceRef": "canonical:GATE-3#1.1",
       "description": "A canonical, machine-readable requirement specification exists for this Gate and the registry mirrors it row for row.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
-      "documentationEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/policies/canonical-requirements.json"
+      ],
+      "testEvidence": [
+        "test:Gate3CanonicalSpecificationTests"
+      ],
+      "documentationEvidence": [
+        "file:docs/GATE-3-CHECKLIST.md"
+      ],
       "validationEvidence": [],
       "justification": null,
       "notes": ""
@@ -24,9 +30,14 @@
       "sourceRef": "canonical:GATE-3#1.2",
       "description": "The closed mandatory gate registry carries the executable gate this Gate introduces, and that gate builds what it measures before measuring it.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/policies/quality-gates.json",
+        "file:scripts/iacode/gates/sandbox_tests.py"
+      ],
+      "testEvidence": [
+        "test:Gate3MandatoryGateTests"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -38,9 +49,13 @@
       "sourceRef": "canonical:GATE-3#1.3",
       "description": "The test suite this Gate introduces is declared canonically, is counted by the count derivation and is resolvable as evidence.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/policies/test-suites.json"
+      ],
+      "testEvidence": [
+        "test:Gate3TestSuiteRegistryTests"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -52,11 +67,18 @@
       "sourceRef": "canonical:GATE-3#1.4",
       "description": "The internal Red Team battery of this Gate is executable, scoped to the sandbox, runs its attacks against the real container engine and records a null-mutation control.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/gate3_red_team.py"
+      ],
+      "testEvidence": [
+        "test:Gate3RedTeamHarnessTests"
+      ],
       "documentationEvidence": [],
-      "validationEvidence": [],
+      "validationEvidence": [
+        "checkpoint:M1-INTERNAL-RED-TEAM.json",
+        "checkpoint:RED-TEAM-REPORT.md"
+      ],
       "justification": null,
       "notes": ""
     },
@@ -66,10 +88,16 @@
       "sourceRef": "canonical:GATE-3#1.5",
       "description": "The reservation of the sandbox directory is consumed by the Gate that owns it, and every reservation of a later Gate is still enforced.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
-      "documentationEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/policies/gate-scope.json"
+      ],
+      "testEvidence": [
+        "test:Gate3ScopeTests"
+      ],
+      "documentationEvidence": [
+        "file:services/sandbox/README.md"
+      ],
       "validationEvidence": [],
       "justification": null,
       "notes": ""
@@ -80,9 +108,13 @@
       "sourceRef": "canonical:GATE-3#1.6",
       "description": "One documented command verifies this Gate, adds the stages it introduces and keeps a targeted mode that does not restart the stack.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/iacode/verify.py"
+      ],
+      "testEvidence": [
+        "test:Gate3VerificationStageTests"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -94,9 +126,14 @@
       "sourceRef": "canonical:GATE-3#2.1",
       "description": "The repository publishes to exactly one authorised remote, and a remote pointing anywhere else is refused rather than used.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/remote_sync.py"
+      ],
+      "testEvidence": [
+        "test:test_a_remote_other_than_the_authorised_one_fails",
+        "test:test_the_authorised_remote_is_the_one_the_policy_names"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -108,11 +145,19 @@
       "sourceRef": "canonical:GATE-3#2.2",
       "description": "The whole history was scanned for credentials before its first publication, and a finding names the commit, the file, the line and the kind but never the value.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/secret_scan.py",
+        "file:.iacode/policies/secret-scan-allowlist.json"
+      ],
+      "testEvidence": [
+        "test:SecretScanTests",
+        "test:test_a_finding_never_prints_the_value"
+      ],
       "documentationEvidence": [],
-      "validationEvidence": [],
+      "validationEvidence": [
+        "command:cmd-0005"
+      ],
       "justification": null,
       "notes": ""
     },
@@ -122,9 +167,14 @@
       "sourceRef": "canonical:GATE-3#2.3",
       "description": "The published history carries no credential, and the check is repeatable against the history as it now stands.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/secret_scan.py"
+      ],
+      "testEvidence": [
+        "test:PublishedHistoryTests",
+        "test:test_the_published_history_carries_no_credential"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -136,11 +186,19 @@
       "sourceRef": "canonical:GATE-3#2.4",
       "description": "Every push is preceded by a scan of exactly the staged content, and an allowance matches a value's digest rather than a path.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/secret_scan.py"
+      ],
+      "testEvidence": [
+        "test:test_the_staged_scan_judges_only_the_staged_content",
+        "test:test_the_allowlist_matches_the_value_and_not_the_path"
+      ],
       "documentationEvidence": [],
-      "validationEvidence": [],
+      "validationEvidence": [
+        "command:cmd-0010",
+        "command:cmd-0058"
+      ],
       "justification": null,
       "notes": ""
     },
@@ -150,11 +208,18 @@
       "sourceRef": "canonical:GATE-3#2.5",
       "description": "Whether the branch and the checkpoint tag are on the remote is asked of the remote, an unpushed commit or a missing tag fails, and an unreachable remote is never a pass.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/remote_sync.py"
+      ],
+      "testEvidence": [
+        "test:RemoteSyncTests",
+        "test:test_an_unreachable_remote_is_unavailable_and_never_a_pass"
+      ],
       "documentationEvidence": [],
-      "validationEvidence": [],
+      "validationEvidence": [
+        "command:cmd-0006"
+      ],
       "justification": null,
       "notes": ""
     },
@@ -164,10 +229,16 @@
       "sourceRef": "canonical:GATE-3#2.6",
       "description": "The commit, push, tag and correction rules are stated in the development contract and recorded as a decision: atomic commits, green commits only, no rewriting of published history, no moving of a published tag, and no credential in a URL, a configuration or a versioned file.",
       "mandatory": true,
-      "status": "NOT_STARTED",
+      "status": "COMPLETE",
       "implementationEvidence": [],
-      "testEvidence": [],
-      "documentationEvidence": [],
+      "testEvidence": [
+        "test:GitPolicyDocumentationTests"
+      ],
+      "documentationEvidence": [
+        "file:docs/DEVELOPMENT-CONTRACT.md",
+        "file:docs/adr/ADR-0024-public-remote-and-atomic-commits.md",
+        "file:.iacode/policies/secret-policy.md"
+      ],
       "validationEvidence": [],
       "justification": null,
       "notes": ""
@@ -178,10 +249,14 @@
       "sourceRef": "canonical:GATE-3#2.7",
       "description": "The history of this Gate's development is preserved as observable data — requirement, commits, tests, fixes, checkpoint — and nothing in it is marked as training-eligible.",
       "mandatory": true,
-      "status": "NOT_STARTED",
+      "status": "COMPLETE",
       "implementationEvidence": [],
-      "testEvidence": [],
-      "documentationEvidence": [],
+      "testEvidence": [
+        "test:test_the_decision_is_recorded_as_an_adr"
+      ],
+      "documentationEvidence": [
+        "file:docs/adr/ADR-0024-public-remote-and-atomic-commits.md"
+      ],
       "validationEvidence": [],
       "justification": null,
       "notes": ""
@@ -192,9 +267,17 @@
       "sourceRef": "canonical:GATE-3#3.1",
       "description": "A command the ledger could not replay is refused before it executes, the refusal is itself recorded, and the recorder and the validator apply one shared replayability rule.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/ledger_common.py",
+        "file:scripts/development-ledger/record_command.py",
+        "file:scripts/development-ledger/validate_checkpoint.py"
+      ],
+      "testEvidence": [
+        "test:LedgerCommandReplayabilityTests",
+        "test:test_rejected_command_is_never_executed",
+        "test:test_recorder_and_validator_share_one_rule"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -206,9 +289,15 @@
       "sourceRef": "canonical:GATE-3#3.2",
       "description": "A guardrail entry that names a file or a path where a test is required is refused, and lesson validation and guardrail effectiveness resolve an entry through one function.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/lessons.py"
+      ],
+      "testEvidence": [
+        "test:GuardrailRegistryResolutionTests",
+        "test:test_validation_and_effectiveness_agree",
+        "test:test_one_function_resolves_a_guardrail_entry"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -220,9 +309,15 @@
       "sourceRef": "canonical:GATE-3#3.3",
       "description": "The committed lesson index is the render of the memory, and a memory changed without re-rendering it, or an index edited by hand, is refused under the memory policy that introduced the rule.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/lessons.py",
+        "file:.iacode/memory/POLICY.json"
+      ],
+      "testEvidence": [
+        "test:LessonIndexFreshnessTests",
+        "test:test_a_memory_changed_without_rerendering_is_refused"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -234,9 +329,13 @@
       "sourceRef": "canonical:GATE-3#3.4",
       "description": "The event stream of a run that is already terminal delivers every event after the cursor, however many pages that takes, before it closes.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:apps/api/src/iacode_api/routes/agent_runs.py"
+      ],
+      "testEvidence": [
+        "test:test_a_terminal_stream_drains_every_page_after_the_cursor"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -248,10 +347,15 @@
       "sourceRef": "canonical:GATE-3#3.5",
       "description": "A canonical ADR index exists, lists every record with its title and status, resolves every link, and its test asserts rather than skips.",
       "mandatory": true,
-      "status": "NOT_STARTED",
+      "status": "COMPLETE",
       "implementationEvidence": [],
-      "testEvidence": [],
-      "documentationEvidence": [],
+      "testEvidence": [
+        "test:AdrIndexTests",
+        "test:test_the_index_lists_every_record_with_its_title_and_status"
+      ],
+      "documentationEvidence": [
+        "file:docs/adr/README.md"
+      ],
       "validationEvidence": [],
       "justification": null,
       "notes": ""
@@ -262,10 +366,14 @@
       "sourceRef": "canonical:GATE-3#4.1",
       "description": "The sandbox is its own service in the directory the scope registry reserved for it, with its own contracts, and the decision is recorded.",
       "mandatory": true,
-      "status": "NOT_STARTED",
+      "status": "COMPLETE",
       "implementationEvidence": [],
-      "testEvidence": [],
-      "documentationEvidence": [],
+      "testEvidence": [
+        "test:SandboxBoundaryTests"
+      ],
+      "documentationEvidence": [
+        "file:docs/adr/ADR-0025-sandbox-isolation-boundary.md"
+      ],
       "validationEvidence": [],
       "justification": null,
       "notes": ""
@@ -276,9 +384,11 @@
       "sourceRef": "canonical:GATE-3#4.2",
       "description": "No sandbox logic lives in the API routes, the Agent Runtime or the Model Gateway: none of them imports the sandbox package or a container client.",
       "mandatory": true,
-      "status": "NOT_STARTED",
+      "status": "COMPLETE",
       "implementationEvidence": [],
-      "testEvidence": [],
+      "testEvidence": [
+        "test:SandboxBoundaryTests"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -290,9 +400,13 @@
       "sourceRef": "canonical:GATE-3#4.3",
       "description": "The Agent Runtime and the workflow that drives it still execute nothing themselves; a tool reaches the sandbox only as an activity on the sandbox's own task queue.",
       "mandatory": true,
-      "status": "NOT_STARTED",
+      "status": "COMPLETE",
       "implementationEvidence": [],
-      "testEvidence": [],
+      "testEvidence": [
+        "test:RepositoryToolExecutionBoundaryTests",
+        "test:ToolExecutionBoundaryTests",
+        "test:WorkflowSandboxDispatchTests"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -304,9 +418,15 @@
       "sourceRef": "canonical:GATE-3#4.4",
       "description": "Inside the sandbox service only the engine backend and the in-container helper start a process, and the controller never uses a shell.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/sandbox/src/iacode_sandbox/backend.py",
+        "file:services/sandbox/src/iacode_sandbox/helper.py"
+      ],
+      "testEvidence": [
+        "test:test_only_the_backend_and_the_helper_start_processes",
+        "test:test_no_module_of_the_controller_uses_a_shell"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -318,9 +438,14 @@
       "sourceRef": "canonical:GATE-3#4.5",
       "description": "The controller starts only the container client, with an argument vector, and never a command a request supplied.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/sandbox/src/iacode_sandbox/backend.py"
+      ],
+      "testEvidence": [
+        "test:test_the_backend_starts_only_the_container_client",
+        "test:test_the_image_decides_the_command_not_the_request"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -332,9 +457,13 @@
       "sourceRef": "canonical:GATE-3#4.6",
       "description": "The controller is the only service given the container engine, and it holds no capability, cannot gain one, and publishes no port.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:infra/compose/docker-compose.yml"
+      ],
+      "testEvidence": [
+        "test:test_only_the_sandbox_service_is_given_the_engine_socket"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -346,9 +475,16 @@
       "sourceRef": "canonical:GATE-3#5.1",
       "description": "Versioned contracts exist for the sandbox session, the policy, the workspace, the execution request, the execution result, the command execution, the file operation, the Git operation and the artifact reference.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/sandbox/src/iacode_sandbox/contracts.py",
+        "file:services/sandbox/src/iacode_sandbox/policy.py",
+        "file:packages/contracts/src/iacode_contracts/sandbox.py"
+      ],
+      "testEvidence": [
+        "test:SandboxContractTests",
+        "test:test_the_contract_is_versioned"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -360,9 +496,15 @@
       "sourceRef": "canonical:GATE-3#5.2",
       "description": "A contract of another version is refused rather than interpreted, and a request carrying a field the contract does not declare or missing one it requires is refused.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/sandbox/src/iacode_sandbox/contracts.py"
+      ],
+      "testEvidence": [
+        "test:test_another_version_is_refused_rather_than_interpreted",
+        "test:test_a_request_cannot_carry_a_field_the_contract_does_not_declare",
+        "test:test_a_missing_required_field_is_refused"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -374,9 +516,14 @@
       "sourceRef": "canonical:GATE-3#5.3",
       "description": "A command result carries the exit code, standard output, standard error, duration, whether it timed out, whether it was truncated and its artifact references, and no exit code is invented for a command that never started.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/sandbox/src/iacode_sandbox/contracts.py"
+      ],
+      "testEvidence": [
+        "test:test_no_exit_code_is_invented_for_a_command_that_never_started",
+        "test:test_the_result_round_trips_with_its_artifacts"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -388,9 +535,15 @@
       "sourceRef": "canonical:GATE-3#5.4",
       "description": "The execution status, session state, workspace and operation vocabularies are closed, and the database accepts exactly the declared ones.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:packages/contracts/src/iacode_contracts/sandbox.py"
+      ],
+      "testEvidence": [
+        "test:test_the_status_vocabulary_is_closed",
+        "test:test_the_session_workspace_and_operations_have_closed_vocabularies",
+        "test:test_the_session_state_vocabulary_the_database_accepts_is_the_declared_one"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -402,9 +555,13 @@
       "sourceRef": "canonical:GATE-3#5.5",
       "description": "The result an agent receives cannot present a cancellation, a denial or a timeout as a success.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/sandbox/src/iacode_sandbox/contracts.py"
+      ],
+      "testEvidence": [
+        "test:test_the_agent_sees_a_cancellation_as_a_failure_it_cannot_misread"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -416,9 +573,14 @@
       "sourceRef": "canonical:GATE-3#6.1",
       "description": "An explicit registry names every executable tool — list, read, write, patch and search of files, shell execution, and the local Git status, diff, log, show, add and commit — and only a registered name can execute.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/sandbox/src/iacode_sandbox/tools.py"
+      ],
+      "testEvidence": [
+        "test:ToolRegistryTests",
+        "test:test_the_registry_is_exactly_the_specified_set"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -430,9 +592,15 @@
       "sourceRef": "canonical:GATE-3#6.2",
       "description": "An unknown tool name is refused, and no name is ever mapped to a shell.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/sandbox/src/iacode_sandbox/tools.py",
+        "file:services/sandbox/src/iacode_sandbox/service.py"
+      ],
+      "testEvidence": [
+        "test:test_an_unknown_tool_is_refused_and_never_mapped_to_a_shell",
+        "test:test_an_unknown_tool_is_denied_and_nothing_is_started"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -444,9 +612,15 @@
       "sourceRef": "canonical:GATE-3#6.3",
       "description": "A canonical sandbox tool policy defines, per policy, the allowed tools, the resource profile, the network profile, the workspace permissions, the command timeout and the output limits.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/policies/sandbox-policy.json",
+        "file:services/sandbox/src/iacode_sandbox/policy.py"
+      ],
+      "testEvidence": [
+        "test:SandboxPolicyTests",
+        "test:test_the_canonical_policy_loads"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -458,9 +632,16 @@
       "sourceRef": "canonical:GATE-3#6.4",
       "description": "A tool the run's policy does not allow is refused, a policy naming an unregistered tool is refused, and an unknown policy is refused.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/sandbox/src/iacode_sandbox/policy.py",
+        "file:services/sandbox/src/iacode_sandbox/service.py"
+      ],
+      "testEvidence": [
+        "test:test_a_tool_outside_the_policy_is_refused",
+        "test:test_a_policy_naming_an_unregistered_tool_is_refused",
+        "test:test_an_unknown_policy_is_denied"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -472,9 +653,14 @@
       "sourceRef": "canonical:GATE-3#6.5",
       "description": "Tool arguments are structured and typed: an undeclared argument is refused, and a wrong type, an absent value and a wrong value each carry their own reason.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/sandbox/src/iacode_sandbox/tools.py"
+      ],
+      "testEvidence": [
+        "test:test_an_argument_a_tool_does_not_declare_is_refused",
+        "test:test_a_wrong_type_is_refused_with_its_own_reason"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -486,9 +672,16 @@
       "sourceRef": "canonical:GATE-3#6.6",
       "description": "No request can change its policy, its limits, its network or its mounts; a request that tries is denied, and a request may lower a timeout but never raise it.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/sandbox/src/iacode_sandbox/service.py",
+        "file:services/sandbox/src/iacode_sandbox/tools.py"
+      ],
+      "testEvidence": [
+        "test:test_a_request_that_tries_to_set_a_limit_is_denied",
+        "test:test_no_request_can_change_the_network_the_limits_or_the_mounts",
+        "test:test_a_request_may_lower_a_timeout_and_never_raise_it"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -500,9 +693,15 @@
       "sourceRef": "canonical:GATE-3#6.7",
       "description": "The limits a tool runs under come from the policy, and every limit a policy applies is inside its declared bound.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/sandbox/src/iacode_sandbox/tools.py",
+        "file:services/sandbox/src/iacode_sandbox/policy.py"
+      ],
+      "testEvidence": [
+        "test:test_the_limits_come_from_the_policy",
+        "test:test_every_limit_the_policy_applies_is_inside_its_bound"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -514,9 +713,14 @@
       "sourceRef": "canonical:GATE-3#6.8",
       "description": "A policy document with an unknown key, or a read-only policy that allows a writing tool, is refused when it is loaded.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/sandbox/src/iacode_sandbox/policy.py"
+      ],
+      "testEvidence": [
+        "test:test_an_unknown_key_is_refused",
+        "test:test_a_read_only_policy_that_allows_a_writer_is_refused"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -528,10 +732,16 @@
       "sourceRef": "canonical:GATE-3#6.9",
       "description": "Tools the policy allows execute automatically, inside the sandbox, without a confirmation per call; nothing is executed on the host under any policy.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
-      "documentationEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/orchestrator/src/iacode_orchestrator/workflows/agent_run.py"
+      ],
+      "testEvidence": [
+        "test:WorkflowSandboxDispatchTests"
+      ],
+      "documentationEvidence": [
+        "file:docs/adr/ADR-0027-tool-execution-policy.md"
+      ],
       "validationEvidence": [],
       "justification": null,
       "notes": ""
@@ -542,9 +752,15 @@
       "sourceRef": "canonical:GATE-3#7.1",
       "description": "Every run executes in its own disposable container with its own workspace; two runs never share either.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/sandbox/src/iacode_sandbox/service.py",
+        "file:services/sandbox/src/iacode_sandbox/backend.py"
+      ],
+      "testEvidence": [
+        "test:test_two_runs_have_two_containers_and_two_workspaces",
+        "test:test_one_run_gets_one_session_and_two_runs_get_two"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -556,9 +772,15 @@
       "sourceRef": "canonical:GATE-3#7.2",
       "description": "The sandbox runs unprivileged, as a non-root user, with every capability dropped and no way to gain privileges.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/sandbox/src/iacode_sandbox/backend.py",
+        "file:services/sandbox/images/iacode-dev/Dockerfile"
+      ],
+      "testEvidence": [
+        "test:test_the_sandbox_runs_unprivileged_with_no_capability",
+        "test:test_every_isolation_flag_is_emitted"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -570,9 +792,14 @@
       "sourceRef": "canonical:GATE-3#7.3",
       "description": "The root filesystem is read-only, and the only writable places are the workspace and a temporary directory, both in-memory filesystems with a size limit.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/sandbox/src/iacode_sandbox/backend.py"
+      ],
+      "testEvidence": [
+        "test:test_the_root_filesystem_is_read_only",
+        "test:test_the_writable_places_are_bounded_in_memory_filesystems"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -584,9 +811,13 @@
       "sourceRef": "canonical:GATE-3#7.4",
       "description": "The container engine's socket, and any other engine endpoint, is absent from a sandbox.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/sandbox/src/iacode_sandbox/backend.py"
+      ],
+      "testEvidence": [
+        "test:test_no_docker_socket_or_engine_endpoint_is_reachable"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -598,9 +829,14 @@
       "sourceRef": "canonical:GATE-3#7.5",
       "description": "No host path is mounted into a sandbox — no drive, no root, no home, no profile, no SSH directory, no credential store, no secret environment file — and no argument of a request can add one.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/sandbox/src/iacode_sandbox/backend.py"
+      ],
+      "testEvidence": [
+        "test:test_no_host_path_is_mounted",
+        "test:test_no_privilege_and_no_host_resource_can_be_granted"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -612,9 +848,13 @@
       "sourceRef": "canonical:GATE-3#7.6",
       "description": "Every sandbox container carries labels naming the service instance that owns it, the session, the run, the policy and its expiry, so ownership is read from the engine rather than from memory.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/sandbox/src/iacode_sandbox/backend.py"
+      ],
+      "testEvidence": [
+        "test:test_every_container_carries_the_ownership_labels"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -626,9 +866,16 @@
       "sourceRef": "canonical:GATE-3#8.1",
       "description": "CPU, memory, process count, workspace size, execution timeout and output size are mandatory, configurable limits, and a zero, negative, absurd or missing value is refused.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/policies/sandbox-policy.json",
+        "file:services/sandbox/src/iacode_sandbox/policy.py"
+      ],
+      "testEvidence": [
+        "test:ResourceLimitValidationTests",
+        "test:test_zero_negative_and_absurd_values_are_refused",
+        "test:test_a_missing_limit_is_refused"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -640,9 +887,13 @@
       "sourceRef": "canonical:GATE-3#8.2",
       "description": "The memory limit holds the in-memory filesystems, so a full workspace cannot starve the processes of the limit they were promised.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/sandbox/src/iacode_sandbox/policy.py"
+      ],
+      "testEvidence": [
+        "test:test_memory_must_hold_the_in_memory_filesystems"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -654,9 +905,13 @@
       "sourceRef": "canonical:GATE-3#8.3",
       "description": "A process that multiplies without end is contained by the process limit, and the sandbox remains usable afterwards.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/sandbox/src/iacode_sandbox/backend.py"
+      ],
+      "testEvidence": [
+        "test:test_a_fork_bomb_is_contained_by_the_process_limit"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -668,9 +923,13 @@
       "sourceRef": "canonical:GATE-3#8.4",
       "description": "A process that exceeds the memory limit fails in a controlled way, and the host is unaffected.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/sandbox/src/iacode_sandbox/backend.py"
+      ],
+      "testEvidence": [
+        "test:test_a_process_that_exceeds_memory_fails_in_a_controlled_way"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -682,9 +941,14 @@
       "sourceRef": "canonical:GATE-3#8.5",
       "description": "The workspace cannot outgrow its limit.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/sandbox/src/iacode_sandbox/backend.py"
+      ],
+      "testEvidence": [
+        "test:test_the_workspace_cannot_outgrow_its_limit",
+        "test:test_the_workspace_is_bounded"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -696,9 +960,13 @@
       "sourceRef": "canonical:GATE-3#8.6",
       "description": "A command that exceeds its timeout is ended together with every process it started, including a process that left its session, and nothing is left running.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/sandbox/src/iacode_sandbox/helper.py"
+      ],
+      "testEvidence": [
+        "test:test_a_timeout_kills_the_whole_process_tree"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -710,9 +978,15 @@
       "sourceRef": "canonical:GATE-3#8.7",
       "description": "Standard output and standard error are bounded while they are read; what exceeds the bound is truncated explicitly and stored whole as an artifact, and memory is never unbounded.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/sandbox/src/iacode_sandbox/helper.py",
+        "file:services/sandbox/src/iacode_sandbox/artifacts.py"
+      ],
+      "testEvidence": [
+        "test:test_output_is_bounded_and_the_rest_is_an_artifact",
+        "test:test_truncated_output_goes_to_the_artifact_store"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -724,9 +998,15 @@
       "sourceRef": "canonical:GATE-3#9.1",
       "description": "A sandbox has no network by default: only loopback exists, and every policy the Gate ships denies the network.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/sandbox/src/iacode_sandbox/backend.py",
+        "file:.iacode/policies/sandbox-policy.json"
+      ],
+      "testEvidence": [
+        "test:test_the_default_network_has_only_loopback",
+        "test:test_every_policy_denies_network_by_default"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -738,9 +1018,13 @@
       "sourceRef": "canonical:GATE-3#9.2",
       "description": "An attempt to reach an external address from a sandbox without network fails.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/sandbox/src/iacode_sandbox/backend.py"
+      ],
+      "testEvidence": [
+        "test:test_external_egress_fails"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -752,9 +1036,15 @@
       "sourceRef": "canonical:GATE-3#9.3",
       "description": "The one other network profile is local services only, on an internal network with no route outside, and it is chosen by the policy, never by a request.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/sandbox/src/iacode_sandbox/backend.py",
+        "file:services/sandbox/src/iacode_sandbox/policy.py"
+      ],
+      "testEvidence": [
+        "test:test_a_local_services_network_is_internal",
+        "test:test_no_request_can_change_the_network_the_limits_or_the_mounts"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -766,10 +1056,16 @@
       "sourceRef": "canonical:GATE-3#9.4",
       "description": "No package installation from the internet is offered; the image carries the toolchain the Gate's tests need.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
-      "documentationEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/sandbox/images/iacode-dev/Dockerfile"
+      ],
+      "testEvidence": [
+        "test:SandboxImageProfileTests"
+      ],
+      "documentationEvidence": [
+        "file:docs/runbooks/SANDBOX.md"
+      ],
       "validationEvidence": [],
       "justification": null,
       "notes": ""
@@ -780,9 +1076,15 @@
       "sourceRef": "canonical:GATE-3#10.1",
       "description": "A sandbox receives only the variables its policy explicitly allows, and no variable of the controller — provider key, repository token, agent socket, cloud credential or engine address — reaches it.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/sandbox/src/iacode_sandbox/backend.py",
+        "file:services/sandbox/src/iacode_sandbox/tools.py"
+      ],
+      "testEvidence": [
+        "test:test_no_variable_of_the_controller_reaches_a_sandbox",
+        "test:test_the_command_environment_is_an_allowlist"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -794,9 +1096,13 @@
       "sourceRef": "canonical:GATE-3#10.2",
       "description": "A command's environment inside the sandbox is the allowlist and nothing else.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/sandbox/src/iacode_sandbox/helper.py"
+      ],
+      "testEvidence": [
+        "test:test_the_environment_is_the_allowlist_and_nothing_else"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -808,9 +1114,13 @@
       "sourceRef": "canonical:GATE-3#10.3",
       "description": "A policy cannot allow a credential-shaped variable into a command's environment.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/sandbox/src/iacode_sandbox/policy.py"
+      ],
+      "testEvidence": [
+        "test:test_a_credential_cannot_be_allowed_into_a_command_environment"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -822,9 +1132,14 @@
       "sourceRef": "canonical:GATE-3#10.4",
       "description": "No Git credential, credential helper, SSH key or agent socket exists in a sandbox.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/sandbox/images/iacode-dev/gitconfig",
+        "file:services/sandbox/src/iacode_sandbox/backend.py"
+      ],
+      "testEvidence": [
+        "test:test_no_git_or_ssh_credential_exists"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -836,9 +1151,15 @@
       "sourceRef": "canonical:GATE-3#11.1",
       "description": "A workspace has an identity and an explicit lifecycle, belongs to exactly one run, and a run holds at most one active session.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/sandbox/src/iacode_sandbox/service.py",
+        "file:packages/persistence/src/iacode_persistence/models.py"
+      ],
+      "testEvidence": [
+        "test:test_one_run_gets_one_session_and_two_runs_get_two",
+        "test:SandboxMigrationTests"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -850,9 +1171,15 @@
       "sourceRef": "canonical:GATE-3#11.2",
       "description": "A workspace is provisioned only from an authorised snapshot, named by its artifact identifier and never by a path, and becomes a repository the tools can work on.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/sandbox/src/iacode_sandbox/snapshots.py",
+        "file:services/agent-runtime/src/iacode_agent_runtime/service.py"
+      ],
+      "testEvidence": [
+        "test:test_a_snapshot_provisions_the_workspace_as_a_repository",
+        "test:test_a_coding_run_names_an_authorised_snapshot"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -864,9 +1191,14 @@
       "sourceRef": "canonical:GATE-3#11.3",
       "description": "Anything but a workspace snapshot artifact is refused before the run exists, and a snapshot for a team that executes no tool is refused.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/agent-runtime/src/iacode_agent_runtime/service.py"
+      ],
+      "testEvidence": [
+        "test:test_anything_but_a_snapshot_artifact_is_refused",
+        "test:test_a_snapshot_for_a_team_without_tools_is_refused"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -878,9 +1210,15 @@
       "sourceRef": "canonical:GATE-3#11.4",
       "description": "A snapshot whose digest differs from its record, or that carries a link or an escaping member, is refused, and no session survives the refusal.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/sandbox/src/iacode_sandbox/snapshots.py"
+      ],
+      "testEvidence": [
+        "test:test_a_snapshot_with_a_different_digest_is_refused",
+        "test:test_an_unsafe_snapshot_is_refused_and_no_session_survives",
+        "test:test_the_snapshot_builder_refuses_a_link"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -892,9 +1230,15 @@
       "sourceRef": "canonical:GATE-3#11.5",
       "description": "One run cannot read or write another run's files, nor see its processes.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/sandbox/src/iacode_sandbox/backend.py"
+      ],
+      "testEvidence": [
+        "test:CrossSessionIsolationTests",
+        "test:test_one_run_cannot_see_another_runs_files",
+        "test:test_one_run_cannot_see_another_runs_processes"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -906,11 +1250,19 @@
       "sourceRef": "canonical:GATE-3#11.6",
       "description": "The development working tree of this repository is never an agent's workspace.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
-      "documentationEvidence": [],
-      "validationEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/sandbox/src/iacode_sandbox/snapshots.py"
+      ],
+      "testEvidence": [
+        "test:SandboxScenarioTests"
+      ],
+      "documentationEvidence": [
+        "file:docs/adr/ADR-0026-workspace-lifecycle.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0071"
+      ],
       "justification": null,
       "notes": ""
     },
@@ -920,9 +1272,13 @@
       "sourceRef": "canonical:GATE-3#12.1",
       "description": "One canonical path resolver decides every path a tool touches; no other module re-implements path safety.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/sandbox/src/iacode_sandbox/paths.py"
+      ],
+      "testEvidence": [
+        "test:SinglePathResolverTests"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -934,9 +1290,14 @@
       "sourceRef": "canonical:GATE-3#12.2",
       "description": "Traversal, absolute paths, drive letters, UNC paths, null bytes and normalisation tricks are refused, each with its own reason.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/sandbox/src/iacode_sandbox/paths.py"
+      ],
+      "testEvidence": [
+        "test:PathResolverTests",
+        "test:test_every_hostile_spelling_is_refused_with_its_own_code"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -948,9 +1309,14 @@
       "sourceRef": "canonical:GATE-3#12.3",
       "description": "A link inside the workspace that points outside it cannot be read or written through, whether it names a file, a directory, the root or climbs out relatively; a link that stays inside is followed.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/sandbox/src/iacode_sandbox/paths.py"
+      ],
+      "testEvidence": [
+        "test:SymlinkContainmentTests",
+        "test:test_a_symlink_that_points_outside_cannot_be_read_or_written_through"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -962,9 +1328,13 @@
       "sourceRef": "canonical:GATE-3#12.4",
       "description": "Listing, reading, writing, searching and patching work inside the workspace of a real sandbox.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/sandbox/src/iacode_sandbox/helper.py"
+      ],
+      "testEvidence": [
+        "test:test_write_read_list_search_and_patch"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -976,9 +1346,14 @@
       "sourceRef": "canonical:GATE-3#12.5",
       "description": "A read and a write are bounded in size, an oversized one is refused, and binary content is refused as text rather than mangled.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/sandbox/src/iacode_sandbox/helper.py"
+      ],
+      "testEvidence": [
+        "test:test_oversized_reads_and_writes_are_refused",
+        "test:test_binary_content_is_refused_as_text"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -990,9 +1365,13 @@
       "sourceRef": "canonical:GATE-3#12.6",
       "description": "A write validates its parent directory and replaces the file atomically.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/sandbox/src/iacode_sandbox/helper.py"
+      ],
+      "testEvidence": [
+        "test:FilesystemToolTests"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -1004,9 +1383,16 @@
       "sourceRef": "canonical:GATE-3#12.7",
       "description": "A patch applies only inside the workspace; a patch whose context does not match, or that has one bad file, changes nothing.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/sandbox/src/iacode_sandbox/patching.py"
+      ],
+      "testEvidence": [
+        "test:PatchApplyTests",
+        "test:test_a_failing_patch_changes_nothing",
+        "test:test_a_multi_file_patch_with_one_bad_file_writes_no_file",
+        "test:test_a_patch_cannot_reach_outside_the_workspace"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -1018,9 +1404,15 @@
       "sourceRef": "canonical:GATE-3#12.8",
       "description": "A search is confined to the workspace and bounded in results, output and duration.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/sandbox/src/iacode_sandbox/helper.py",
+        "file:services/sandbox/src/iacode_sandbox/tools.py"
+      ],
+      "testEvidence": [
+        "test:test_write_read_list_search_and_patch",
+        "test:test_the_limits_come_from_the_policy"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -1032,9 +1424,14 @@
       "sourceRef": "canonical:GATE-3#12.9",
       "description": "A path refused inside the sandbox reaches the agent as a denial, not as a failure of the sandbox.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/sandbox/src/iacode_sandbox/service.py"
+      ],
+      "testEvidence": [
+        "test:test_a_path_refusal_from_inside_the_sandbox_is_a_denial",
+        "test:test_traversal_and_absolute_escapes_are_denied"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -1046,9 +1443,15 @@
       "sourceRef": "canonical:GATE-3#13.1",
       "description": "Shell execution runs only inside the sandbox container, with the command, the working directory, the allowed environment and the timeout passed as structured arguments.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/sandbox/src/iacode_sandbox/tools.py",
+        "file:services/sandbox/src/iacode_sandbox/helper.py"
+      ],
+      "testEvidence": [
+        "test:ShellToolTests",
+        "test:test_a_hostile_path_is_refused_before_the_helper"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -1060,9 +1463,15 @@
       "sourceRef": "canonical:GATE-3#13.2",
       "description": "Standard output, standard error, a zero and a non-zero exit code, a missing executable and a child process are all reported faithfully.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/sandbox/src/iacode_sandbox/helper.py"
+      ],
+      "testEvidence": [
+        "test:test_echo_stdout_stderr_and_exit_codes",
+        "test:test_a_missing_executable_is_a_failure_with_its_exit_code",
+        "test:test_a_child_process_runs_and_reports"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -1074,9 +1483,13 @@
       "sourceRef": "canonical:GATE-3#13.3",
       "description": "The working directory resolves inside the workspace, and an escaping one is refused.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/sandbox/src/iacode_sandbox/paths.py"
+      ],
+      "testEvidence": [
+        "test:test_the_working_directory_is_resolved_inside_the_workspace"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -1088,11 +1501,18 @@
       "sourceRef": "canonical:GATE-3#13.4",
       "description": "A payload that tries to reach a host command affects only the sandbox, inside its policy, and the host is unchanged.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/sandbox/src/iacode_sandbox/helper.py"
+      ],
+      "testEvidence": [
+        "test:test_an_injected_host_command_only_reaches_the_sandbox",
+        "test:SandboxScenarioTests"
+      ],
       "documentationEvidence": [],
-      "validationEvidence": [],
+      "validationEvidence": [
+        "command:cmd-0071"
+      ],
       "justification": null,
       "notes": ""
     },
@@ -1102,9 +1522,14 @@
       "sourceRef": "canonical:GATE-3#13.5",
       "description": "A command still running when its run is cancelled is stopped, with every process it started.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/sandbox/src/iacode_sandbox/service.py",
+        "file:services/sandbox/src/iacode_sandbox/helper.py"
+      ],
+      "testEvidence": [
+        "test:test_a_cancelled_run_stops_its_command_and_leaves_nothing_running"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -1116,9 +1541,16 @@
       "sourceRef": "canonical:GATE-3#14.1",
       "description": "Inside the workspace an agent can read the status, the working and the staged diff, the log and a commit, stage files and commit locally.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/sandbox/src/iacode_sandbox/tools.py",
+        "file:services/sandbox/src/iacode_sandbox/helper.py"
+      ],
+      "testEvidence": [
+        "test:GitToolTests",
+        "test:test_status_diff_add_commit_log_and_show",
+        "test:test_the_staged_diff_is_asked_for_explicitly"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -1130,9 +1562,16 @@
       "sourceRef": "canonical:GATE-3#14.2",
       "description": "Every Git tool builds a fixed argument vector, a revision that looks like an option is refused, and a commit skips hooks and carries its message as one argument.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/sandbox/src/iacode_sandbox/tools.py"
+      ],
+      "testEvidence": [
+        "test:GitOperationTests",
+        "test:test_every_git_tool_builds_a_fixed_argument_vector",
+        "test:test_a_revision_that_looks_like_an_option_is_refused",
+        "test:test_a_commit_skips_hooks_and_carries_the_message_as_one_argument"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -1144,9 +1583,16 @@
       "sourceRef": "canonical:GATE-3#14.3",
       "description": "No remote Git operation is offered or possible — no push, fetch, clone or remote — and no destructive operation — hard reset, clean, rebase, history filtering, forced push — is offered by default.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/sandbox/src/iacode_sandbox/tools.py",
+        "file:.iacode/policies/sandbox-policy.json"
+      ],
+      "testEvidence": [
+        "test:test_no_remote_or_destructive_git_verb_exists",
+        "test:test_no_remote_operation_is_offered_or_possible",
+        "test:test_no_policy_offers_a_remote_git_operation"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -1158,10 +1604,17 @@
       "sourceRef": "canonical:GATE-3#14.4",
       "description": "An agent's commits carry an explicit sandbox identity that is not a person, separate from the owner's development identity, and the difference is documented.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
-      "documentationEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/sandbox/images/iacode-dev/gitconfig"
+      ],
+      "testEvidence": [
+        "test:test_the_sandbox_git_identity_is_not_a_person",
+        "test:Gate3DocumentationTests"
+      ],
+      "documentationEvidence": [
+        "file:docs/runbooks/SANDBOX.md"
+      ],
       "validationEvidence": [],
       "justification": null,
       "notes": ""
@@ -1172,9 +1625,13 @@
       "sourceRef": "canonical:GATE-3#14.5",
       "description": "Git output is bounded like any other output.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/sandbox/src/iacode_sandbox/helper.py"
+      ],
+      "testEvidence": [
+        "test:test_git_output_is_bounded"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -1186,9 +1643,15 @@
       "sourceRef": "canonical:GATE-3#15.1",
       "description": "A session moves through explicit states, is created ready for its run and is removed with it.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/sandbox/src/iacode_sandbox/service.py",
+        "file:packages/contracts/src/iacode_contracts/sandbox.py"
+      ],
+      "testEvidence": [
+        "test:SessionLifecycleTests",
+        "test:test_a_session_is_created_ready_and_removed_with_its_run"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -1200,9 +1663,14 @@
       "sourceRef": "canonical:GATE-3#15.2",
       "description": "A running tool holds its session in the running state, and inspecting a session reports the store and the engine side by side.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/sandbox/src/iacode_sandbox/service.py"
+      ],
+      "testEvidence": [
+        "test:test_a_running_tool_holds_the_session_in_running",
+        "test:test_inspect_reports_the_store_and_the_engine"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -1214,9 +1682,15 @@
       "sourceRef": "canonical:GATE-3#15.3",
       "description": "When a run ends or is cancelled its sandbox is removed, and no container or temporary volume is left behind.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/sandbox/src/iacode_sandbox/service.py",
+        "file:services/orchestrator/src/iacode_orchestrator/workflows/agent_run.py"
+      ],
+      "testEvidence": [
+        "test:test_releasing_a_run_removes_its_container",
+        "test:WorkflowSandboxDispatchTests"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -1228,9 +1702,15 @@
       "sourceRef": "canonical:GATE-3#15.4",
       "description": "A restarted service reconciles from the store and the engine rather than from memory: it keeps a live session, removes a container no session owns, and fails a session whose container vanished.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/sandbox/src/iacode_sandbox/service.py"
+      ],
+      "testEvidence": [
+        "test:RecoveryTests",
+        "test:SessionRecoveryTests",
+        "test:test_a_restarted_service_keeps_a_live_session_and_removes_an_orphan"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -1242,9 +1722,15 @@
       "sourceRef": "canonical:GATE-3#15.5",
       "description": "Reconciliation touches only containers this service instance owns, so another stack or a test on the same engine is never cleaned up by it.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/sandbox/src/iacode_sandbox/backend.py",
+        "file:services/sandbox/src/iacode_sandbox/service.py"
+      ],
+      "testEvidence": [
+        "test:test_a_restarted_service_keeps_a_live_session_and_removes_an_orphan",
+        "test:test_every_container_carries_the_ownership_labels"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -1256,9 +1742,16 @@
       "sourceRef": "canonical:GATE-3#15.6",
       "description": "An orphan sweeper expires only sessions that have expired and are not running, in bounded, deterministic batches, and never removes an active workspace.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/sandbox/src/iacode_sandbox/service.py"
+      ],
+      "testEvidence": [
+        "test:test_the_sweeper_expires_only_what_has_expired_and_is_not_running",
+        "test:test_the_sweeper_is_bounded",
+        "test:test_nothing_unexpired_is_swept",
+        "test:test_an_expired_session_is_swept_and_its_container_removed"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -1270,9 +1763,14 @@
       "sourceRef": "canonical:GATE-3#16.1",
       "description": "This Gate adds its schema through a new migration and edits no migration that has already been applied.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:apps/api/migrations/versions/0004_sandbox.py"
+      ],
+      "testEvidence": [
+        "test:test_applied_migrations_are_not_edited",
+        "test:SandboxMigrationTests"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -1284,9 +1782,14 @@
       "sourceRef": "canonical:GATE-3#16.2",
       "description": "The existing tool call, artifact and run entities are evolved rather than duplicated, and the one new table holds only what nothing else could: the sandbox session.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:packages/persistence/src/iacode_persistence/models.py"
+      ],
+      "testEvidence": [
+        "test:test_the_agent_runtime_created_no_parallel_entity",
+        "test:test_structural_tables_exist"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -1298,9 +1801,15 @@
       "sourceRef": "canonical:GATE-3#16.3",
       "description": "A database created from nothing reaches the head revision, and a database at the previous Gate's head upgrades without losing a row.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:apps/api/migrations/versions/0004_sandbox.py"
+      ],
+      "testEvidence": [
+        "test:test_fresh_database_reaches_the_sandbox_head",
+        "test:test_gate2_database_upgrades_to_gate3_head",
+        "test:test_the_sandbox_migration_is_reversible"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -1312,9 +1821,14 @@
       "sourceRef": "canonical:GATE-3#16.4",
       "description": "Every execution is traceable from the task through the run, the agent run, the tool request, the sandbox session and the execution to the result, and none of it holds private reasoning.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:packages/persistence/src/iacode_persistence/models.py"
+      ],
+      "testEvidence": [
+        "test:test_relationships_cascade_deliberately",
+        "test:test_the_detail_shows_what_the_sandbox_executed_and_not_its_output"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -1326,9 +1840,15 @@
       "sourceRef": "canonical:GATE-3#16.5",
       "description": "A retried request never executes twice: the execution is keyed by the tool request it answers.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/sandbox/src/iacode_sandbox/store.py",
+        "file:services/sandbox/src/iacode_sandbox/service.py"
+      ],
+      "testEvidence": [
+        "test:test_an_execution_is_never_repeated_for_a_retried_request",
+        "test:SqlSandboxStoreTests"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -1340,9 +1860,13 @@
       "sourceRef": "canonical:GATE-3#16.6",
       "description": "The store the service runs against in the stack records sessions and executions in the real database with the same behaviour the suite asserts in memory.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/sandbox/src/iacode_sandbox/store.py"
+      ],
+      "testEvidence": [
+        "test:SqlSandboxStoreTests"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -1354,9 +1878,14 @@
       "sourceRef": "canonical:GATE-3#16.7",
       "description": "Nothing this Gate persists is training-eligible, and no table stores a credential.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:packages/persistence/src/iacode_persistence/models.py"
+      ],
+      "testEvidence": [
+        "test:test_rights_default_to_denial",
+        "test:test_no_table_stores_a_credential"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -1368,11 +1897,18 @@
       "sourceRef": "canonical:GATE-3#17.1",
       "description": "A pending tool request of a stage with a sandbox policy is checked against the policy, executed in the run's sandbox, its result persisted, and the workflow resumes.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/orchestrator/src/iacode_orchestrator/workflows/agent_run.py",
+        "file:services/orchestrator/src/iacode_orchestrator/agent_runtime/activities.py"
+      ],
+      "testEvidence": [
+        "test:WorkflowSandboxDispatchTests"
+      ],
       "documentationEvidence": [],
-      "validationEvidence": [],
+      "validationEvidence": [
+        "command:cmd-0071"
+      ],
       "justification": null,
       "notes": ""
     },
@@ -1382,9 +1918,14 @@
       "sourceRef": "canonical:GATE-3#17.2",
       "description": "A stage without a sandbox policy keeps the previous Gate's behaviour: the request waits for a result delivered through the API.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/orchestrator/src/iacode_orchestrator/workflows/agent_run.py"
+      ],
+      "testEvidence": [
+        "test:WorkflowSandboxDispatchTests",
+        "test:test_tool_request_pauses_the_run"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -1396,9 +1937,14 @@
       "sourceRef": "canonical:GATE-3#17.3",
       "description": "The run plan names the sandbox policy of each stage and the workspace source, frozen when the run is created.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/agent-runtime/src/iacode_agent_runtime/contracts.py"
+      ],
+      "testEvidence": [
+        "test:SandboxPlanContractTests",
+        "test:test_the_sandbox_policy_and_the_workspace_round_trip"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -1410,9 +1956,14 @@
       "sourceRef": "canonical:GATE-3#17.4",
       "description": "A tool result returns to the agent as labelled data in its own channel and never as an instruction.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/agent-runtime/src/iacode_agent_runtime/context.py"
+      ],
+      "testEvidence": [
+        "test:InstructionHierarchyTests",
+        "test:test_each_source_lands_in_its_own_channel"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -1424,9 +1975,14 @@
       "sourceRef": "canonical:GATE-3#17.5",
       "description": "A large result reaches the model truncated inline with an artifact reference, within the size the runtime accepts for a tool result.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/sandbox/src/iacode_sandbox/contracts.py"
+      ],
+      "testEvidence": [
+        "test:test_truncated_output_goes_to_the_artifact_store",
+        "test:Gate3AgentToolPolicyTests"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -1438,11 +1994,19 @@
       "sourceRef": "canonical:GATE-3#17.6",
       "description": "A tool that times out returns a normalised error result the agent receives, and the run never stays waiting for a tool for ever.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/sandbox/src/iacode_sandbox/service.py",
+        "file:services/orchestrator/src/iacode_orchestrator/workflows/agent_run.py"
+      ],
+      "testEvidence": [
+        "test:test_a_timeout_kills_the_whole_process_tree",
+        "test:WorkflowSandboxDispatchTests"
+      ],
       "documentationEvidence": [],
-      "validationEvidence": [],
+      "validationEvidence": [
+        "command:cmd-0072"
+      ],
       "justification": null,
       "notes": ""
     },
@@ -1452,11 +2016,17 @@
       "sourceRef": "canonical:GATE-3#17.7",
       "description": "Cancelling a run during a long command stops the command, records the cancellation, ends the run cancelled and leaves no process behind.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/iacode/scenarios/sandbox_coding_e2e.py"
+      ],
+      "testEvidence": [
+        "test:test_a_cancelled_run_stops_its_command_and_leaves_nothing_running"
+      ],
       "documentationEvidence": [],
-      "validationEvidence": [],
+      "validationEvidence": [
+        "command:cmd-0073"
+      ],
       "justification": null,
       "notes": ""
     },
@@ -1466,11 +2036,17 @@
       "sourceRef": "canonical:GATE-3#17.8",
       "description": "A sandbox service restart while a run executes does not lose the run: the session is reconciled and the run completes.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/iacode/scenarios/sandbox_coding_e2e.py"
+      ],
+      "testEvidence": [
+        "test:RecoveryTests"
+      ],
       "documentationEvidence": [],
-      "validationEvidence": [],
+      "validationEvidence": [
+        "command:cmd-0074"
+      ],
       "justification": null,
       "notes": ""
     },
@@ -1480,9 +2056,14 @@
       "sourceRef": "canonical:GATE-3#18.1",
       "description": "A profile that may request tools names the sandbox policy that governs them, and a profile with tools and no policy is refused.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/agent-runtime/src/iacode_agent_runtime/profiles.py"
+      ],
+      "testEvidence": [
+        "test:SandboxProfileTests",
+        "test:test_a_profile_with_tools_and_no_policy_is_refused"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -1494,9 +2075,13 @@
       "sourceRef": "canonical:GATE-3#18.2",
       "description": "No agent is given every tool: each profile's permitted actions are within its policy's tools.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/policies/sandbox-policy.json"
+      ],
+      "testEvidence": [
+        "test:Gate3AgentToolPolicyTests"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -1508,9 +2093,13 @@
       "sourceRef": "canonical:GATE-3#18.3",
       "description": "A developer profile may read, search, write, patch, run tests and use the local Git tools its policy allows.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:agents/profiles/developer.json"
+      ],
+      "testEvidence": [
+        "test:test_the_developer_and_the_reviewer_name_their_policies"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -1522,9 +2111,14 @@
       "sourceRef": "canonical:GATE-3#18.4",
       "description": "The reviewer is read-only: read, search, diff and test results, and no writing tool.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:agents/profiles/code-reviewer.json"
+      ],
+      "testEvidence": [
+        "test:test_the_code_reviewer_is_given_no_writing_tool",
+        "test:test_the_reviewer_is_read_only"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -1536,9 +2130,13 @@
       "sourceRef": "canonical:GATE-3#18.5",
       "description": "The planner has no writing tool and works from context alone.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:agents/profiles/planner.json"
+      ],
+      "testEvidence": [
+        "test:Gate3AgentToolPolicyTests"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -1550,9 +2148,13 @@
       "sourceRef": "canonical:GATE-3#18.6",
       "description": "A minimal coding team — planner, developer, reviewer — proves the flow, and no larger team is built.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:agents/teams/coding.json"
+      ],
+      "testEvidence": [
+        "test:test_the_coding_team_is_planner_developer_reviewer"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -1564,9 +2166,15 @@
       "sourceRef": "canonical:GATE-3#19.1",
       "description": "Full output, large diffs and workspace snapshots are stored in the existing artifact infrastructure, recorded as artifacts, and no second store is created.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/sandbox/src/iacode_sandbox/artifacts.py",
+        "file:services/sandbox/src/iacode_sandbox/snapshots.py"
+      ],
+      "testEvidence": [
+        "test:test_truncated_output_goes_to_the_artifact_store",
+        "test:SandboxArtifactStoreTests"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -1578,11 +2186,18 @@
       "sourceRef": "canonical:GATE-3#19.2",
       "description": "A workspace snapshot is created from an explicit source directory by a documented command, and never from the development working tree implicitly.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/iacode/sandbox_snapshot.py"
+      ],
+      "testEvidence": [
+        "test:test_the_snapshot_builder_refuses_a_link",
+        "test:SandboxScenarioTests"
+      ],
       "documentationEvidence": [],
-      "validationEvidence": [],
+      "validationEvidence": [
+        "command:cmd-0071"
+      ],
       "justification": null,
       "notes": ""
     },
@@ -1592,9 +2207,14 @@
       "sourceRef": "canonical:GATE-3#20.1",
       "description": "A registry of sandbox image profiles exists, the architecture accepts new profiles, and one functional profile for this project carries Git and Python.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/policies/sandbox-policy.json",
+        "file:services/sandbox/images/iacode-dev/Dockerfile"
+      ],
+      "testEvidence": [
+        "test:SandboxImageProfileTests"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -1606,9 +2226,13 @@
       "sourceRef": "canonical:GATE-3#20.2",
       "description": "The image is built as part of the Gate from a base pinned by digest and packages pinned by version, and never from a moving tag.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/sandbox/images/iacode-dev/Dockerfile"
+      ],
+      "testEvidence": [
+        "test:SandboxImageProfileTests"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -1620,9 +2244,15 @@
       "sourceRef": "canonical:GATE-3#20.3",
       "description": "The image is addressed by a fingerprint of its inputs, and a missing or stale image is refused rather than substituted.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/sandbox/src/iacode_sandbox/image.py",
+        "file:scripts/iacode/sandbox_image.py"
+      ],
+      "testEvidence": [
+        "test:test_a_missing_or_stale_image_is_refused_rather_than_substituted",
+        "test:SandboxImageProfileTests"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -1634,9 +2264,13 @@
       "sourceRef": "canonical:GATE-3#20.4",
       "description": "The sandbox gate builds the service image and the sandbox image before it measures anything.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/iacode/gates/sandbox_tests.py"
+      ],
+      "testEvidence": [
+        "test:Gate3MandatoryGateTests"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -1648,10 +2282,17 @@
       "sourceRef": "canonical:GATE-3#20.5",
       "description": "The sandbox service installs the one dependency lock the dependency scan reads, so its Python dependencies are scanned with the rest; the sandbox image's system packages are pinned by version, and what the scan does not cover is documented rather than implied.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
-      "documentationEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/sandbox/Dockerfile",
+        "file:scripts/iacode/dependency_scan.py"
+      ],
+      "testEvidence": [
+        "test:SandboxImageProfileTests"
+      ],
+      "documentationEvidence": [
+        "file:docs/runbooks/SANDBOX.md"
+      ],
       "validationEvidence": [],
       "justification": null,
       "notes": ""
@@ -1662,9 +2303,15 @@
       "sourceRef": "canonical:GATE-3#21.1",
       "description": "An internal service contract creates a session, executes a tool, inspects a session and terminates it, and it is reached only as activities on the sandbox's task queue.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/sandbox/src/iacode_sandbox/service.py",
+        "file:services/sandbox/src/iacode_sandbox/worker.py"
+      ],
+      "testEvidence": [
+        "test:SandboxServiceDecisionTests",
+        "test:WorkflowSandboxDispatchTests"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -1676,9 +2323,13 @@
       "sourceRef": "canonical:GATE-3#21.2",
       "description": "A refusal is recorded as an execution with its reason, so a denied request is as traceable as an executed one.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/sandbox/src/iacode_sandbox/service.py"
+      ],
+      "testEvidence": [
+        "test:test_a_denial_is_recorded_as_an_execution"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -1690,9 +2341,13 @@
       "sourceRef": "canonical:GATE-3#21.3",
       "description": "The service's health is a poller on its queue and an engine that answers, not a process that exists.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/sandbox/src/iacode_sandbox/healthcheck.py"
+      ],
+      "testEvidence": [
+        "test:SandboxBoundaryTests"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -1704,9 +2359,14 @@
       "sourceRef": "canonical:GATE-3#22.1",
       "description": "The service publishes instruments for sessions created and active, tool executions, their duration, failures, timeouts and policy refusals.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/sandbox/src/iacode_sandbox/telemetry.py"
+      ],
+      "testEvidence": [
+        "test:SandboxMetricsTests",
+        "test:test_every_required_instrument_exists"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -1718,9 +2378,15 @@
       "sourceRef": "canonical:GATE-3#22.2",
       "description": "Every metric label is low cardinality, a command never becomes a label, and a refusal is counted by its reason.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/sandbox/src/iacode_sandbox/telemetry.py"
+      ],
+      "testEvidence": [
+        "test:test_no_instrument_declares_a_label_outside_the_permitted_set",
+        "test:test_a_command_never_becomes_a_label",
+        "test:test_a_refusal_is_counted_by_reason"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -1732,9 +2398,14 @@
       "sourceRef": "canonical:GATE-3#22.3",
       "description": "Logs carry the run, the agent, the sandbox, the tool, the status and the duration, and never a whole result, a secret or the host environment.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/sandbox/src/iacode_sandbox/telemetry.py"
+      ],
+      "testEvidence": [
+        "test:SandboxLogTests",
+        "test:test_an_execution_log_record_holds_no_command_or_output"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -1746,9 +2417,13 @@
       "sourceRef": "canonical:GATE-3#22.4",
       "description": "The observability stack scrapes the sandbox service.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:infra/prometheus/prometheus.yml"
+      ],
+      "testEvidence": [
+        "test:SandboxBoundaryTests"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -1760,8 +2435,11 @@
       "sourceRef": "canonical:GATE-3#23.1",
       "description": "The run page shows each tool the sandbox executed: the tool, its status, its duration, the abbreviated sandbox identifier and a summary.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:apps/web/src/app/agent-runtime/agent-runtime.html",
+        "file:apps/web/src/app/agent-runtime/agent-runtime.spec.ts"
+      ],
       "testEvidence": [],
       "documentationEvidence": [],
       "validationEvidence": [],
@@ -1774,9 +2452,15 @@
       "sourceRef": "canonical:GATE-3#23.2",
       "description": "The page never receives a tool's output and offers no interactive shell.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:apps/web/src/app/agent-runtime/agent-runtime.html",
+        "file:packages/contracts/src/iacode_contracts/sandbox.py"
+      ],
+      "testEvidence": [
+        "test:test_the_page_offers_nothing_that_would_execute_a_tool",
+        "test:test_the_detail_shows_what_the_sandbox_executed_and_not_its_output"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -1788,9 +2472,13 @@
       "sourceRef": "canonical:GATE-3#23.3",
       "description": "The command line interface stays reserved for the Gate that owns it.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/policies/gate-scope.json"
+      ],
+      "testEvidence": [
+        "test:Gate3ScopeTests"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -1802,11 +2490,17 @@
       "sourceRef": "canonical:GATE-3#24.1",
       "description": "A synthetic repository with a defective function and a failing test is provisioned as a snapshot, and a coding run over it reads the code, runs the failing test, patches the code, runs the passing test, reads the diff, commits locally, is reviewed and finishes.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/iacode/scenarios/sandbox_coding_e2e.py"
+      ],
+      "testEvidence": [
+        "test:SandboxScenarioTests"
+      ],
       "documentationEvidence": [],
-      "validationEvidence": [],
+      "validationEvidence": [
+        "command:cmd-0071"
+      ],
       "justification": null,
       "notes": ""
     },
@@ -1816,11 +2510,20 @@
       "sourceRef": "canonical:GATE-3#24.2",
       "description": "The scenario drives the real workflow, the real activities, the real sandbox service and the real container engine, with only the model replaced by a deterministic script.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/iacode/scenarios/sandbox_coding_e2e.py"
+      ],
+      "testEvidence": [
+        "test:SandboxScenarioTests"
+      ],
       "documentationEvidence": [],
-      "validationEvidence": [],
+      "validationEvidence": [
+        "command:cmd-0071",
+        "command:cmd-0072",
+        "command:cmd-0073",
+        "command:cmd-0074"
+      ],
       "justification": null,
       "notes": ""
     },
@@ -1830,11 +2533,17 @@
       "sourceRef": "canonical:GATE-3#24.3",
       "description": "An automatic proof shows a shell request did not execute on the host: a sentinel outside the sandbox is neither created nor modified.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/iacode/scenarios/sandbox_coding_e2e.py"
+      ],
+      "testEvidence": [
+        "test:SandboxScenarioTests"
+      ],
       "documentationEvidence": [],
-      "validationEvidence": [],
+      "validationEvidence": [
+        "command:cmd-0071"
+      ],
       "justification": null,
       "notes": ""
     },
@@ -1844,11 +2553,17 @@
       "sourceRef": "canonical:GATE-3#24.4",
       "description": "The scenario asserts what the run recorded — its terminal state, its tool executions and the test that passed — rather than what the harness sent.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/iacode/scenarios/sandbox_coding_e2e.py"
+      ],
+      "testEvidence": [
+        "test:SandboxScenarioTests"
+      ],
       "documentationEvidence": [],
-      "validationEvidence": [],
+      "validationEvidence": [
+        "command:cmd-0071"
+      ],
       "justification": null,
       "notes": ""
     },
@@ -1858,9 +2573,13 @@
       "sourceRef": "canonical:GATE-3#25.1",
       "description": "The repository's one verification command covers this Gate, in its targeted and its full mode.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/iacode/verify.py"
+      ],
+      "testEvidence": [
+        "test:Gate3VerificationStageTests"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -1872,10 +2591,14 @@
       "sourceRef": "canonical:GATE-3#25.2",
       "description": "A runbook documents the lifecycle, the tool policy, the filesystem, the shell, Git, the network, resources, artifacts, cleanup, debugging and the security boundary.",
       "mandatory": true,
-      "status": "NOT_STARTED",
+      "status": "COMPLETE",
       "implementationEvidence": [],
-      "testEvidence": [],
-      "documentationEvidence": [],
+      "testEvidence": [
+        "test:Gate3DocumentationTests"
+      ],
+      "documentationEvidence": [
+        "file:docs/runbooks/SANDBOX.md"
+      ],
       "validationEvidence": [],
       "justification": null,
       "notes": ""
@@ -1886,10 +2609,16 @@
       "sourceRef": "canonical:GATE-3#25.3",
       "description": "The architecture, development, version and entry documents describe what this Gate delivered rather than what was planned.",
       "mandatory": true,
-      "status": "NOT_STARTED",
+      "status": "COMPLETE",
       "implementationEvidence": [],
-      "testEvidence": [],
-      "documentationEvidence": [],
+      "testEvidence": [
+        "test:Gate3DocumentationTests"
+      ],
+      "documentationEvidence": [
+        "file:docs/ARCHITECTURE.md",
+        "file:docs/DEVELOPMENT.md",
+        "file:docs/VERSIONS.md"
+      ],
       "validationEvidence": [],
       "justification": null,
       "notes": ""
@@ -1900,9 +2629,11 @@
       "sourceRef": "canonical:GATE-3#25.4",
       "description": "The structural decisions of this Gate are recorded as ADRs and listed in the index.",
       "mandatory": true,
-      "status": "NOT_STARTED",
+      "status": "COMPLETE",
       "implementationEvidence": [],
-      "testEvidence": [],
+      "testEvidence": [
+        "test:Gate3AdrTests"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -1914,11 +2645,18 @@
       "sourceRef": "canonical:GATE-3#25.5",
       "description": "The Gate produces its retrospective from the canonical template, and its reusable lessons are recorded with the guardrail that protects the property rather than one file.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:.iacode/memory/lessons.jsonl"
+      ],
       "testEvidence": [],
-      "documentationEvidence": [],
-      "validationEvidence": [],
+      "documentationEvidence": [
+        "file:.iacode/memory/retrospectives/GATE-3-CP-0001.md",
+        "file:.iacode/templates/retrospective/TEMPLATE.md"
+      ],
+      "validationEvidence": [
+        "command:cmd-0088"
+      ],
       "justification": null,
       "notes": ""
     },
@@ -1928,8 +2666,10 @@
       "sourceRef": "canonical:GATE-3#25.6",
       "description": "Every commit of the Gate and its checkpoint tag are on the authorised remote when the Gate closes.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/remote_sync.py"
+      ],
       "testEvidence": [],
       "documentationEvidence": [],
       "validationEvidence": [],
@@ -1942,9 +2682,13 @@
       "sourceRef": "canonical:GATE-3#25.7",
       "description": "The Gate closes at the project's own internal verdict, leaves the milestone verdict to a fresh-session audit, and starts no part of the Gate that follows it.",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:docs/checkpoints/GATE-3-CP-0001/STATE.json"
+      ],
+      "testEvidence": [
+        "test:Gate3ScopeTests"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -1956,9 +2700,12 @@
       "sourceRef": "lesson:LSN-0001",
       "description": "Verify checkpoint validation must succeed from a detached checkout of the checkpoint tag",
       "mandatory": true,
-      "status": "NOT_STARTED",
+      "status": "COMPLETE",
       "implementationEvidence": [],
-      "testEvidence": [],
+      "testEvidence": [
+        "test:DetachedHeadValidationTests.test_detached_head_at_checkpoint_tag_validates",
+        "test:DetachedHeadValidationTests.test_detached_head_at_wrong_commit_fails"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -1970,11 +2717,16 @@
       "sourceRef": "lesson:LSN-0002",
       "description": "Verify a file inventory must be recomputed from the repository, never trusted as an assertion",
       "mandatory": true,
-      "status": "NOT_STARTED",
+      "status": "COMPLETE",
       "implementationEvidence": [],
-      "testEvidence": [],
+      "testEvidence": [
+        "test:DeltaInventoryTests.test_removed_manifest_entry_fails",
+        "test:DeltaInventoryTests.test_silent_tracked_modification_fails"
+      ],
       "documentationEvidence": [],
-      "validationEvidence": [],
+      "validationEvidence": [
+        "checkpoint:FILES.json"
+      ],
       "justification": null,
       "notes": ""
     },
@@ -1984,9 +2736,12 @@
       "sourceRef": "lesson:LSN-0003",
       "description": "Verify every operation attempt must be auditable, including a refusal decided before execution",
       "mandatory": true,
-      "status": "NOT_STARTED",
+      "status": "COMPLETE",
       "implementationEvidence": [],
-      "testEvidence": [],
+      "testEvidence": [
+        "test:FinalizationAttemptRecordingTests.test_detached_head_refusal_is_recorded",
+        "test:FinalizationAttemptRecordingTests.test_non_latest_checkpoint_refusal_is_recorded"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -1998,9 +2753,12 @@
       "sourceRef": "lesson:LSN-0004",
       "description": "Verify a checkpoint may never claim readiness while it also claims to be blocked",
       "mandatory": true,
-      "status": "NOT_STARTED",
+      "status": "COMPLETE",
       "implementationEvidence": [],
-      "testEvidence": [],
+      "testEvidence": [
+        "test:StatusBlockerInvariantTests.test_ready_for_review_with_blocker_fails",
+        "test:ResealedBlockerFixtureTests.test_resealed_ready_for_review_with_blocker_is_rejected"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -2012,9 +2770,13 @@
       "sourceRef": "lesson:LSN-0005",
       "description": "Verify a PASS requires evidence that can be executed or resolved, not a statement",
       "mandatory": true,
-      "status": "NOT_STARTED",
+      "status": "COMPLETE",
       "implementationEvidence": [],
-      "testEvidence": [],
+      "testEvidence": [
+        "test:QualityEvidenceTests.test_pass_without_evidence_fails",
+        "test:QualityEvidenceTests.test_pass_referencing_a_failed_command_fails",
+        "test:PromotionInvariantTests.test_every_positive_status_rejects_every_red_quality_dimension"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -2026,9 +2788,12 @@
       "sourceRef": "lesson:LSN-0006",
       "description": "Verify the repository must be self-contained; a specification may not live outside it",
       "mandatory": true,
-      "status": "NOT_STARTED",
+      "status": "COMPLETE",
       "implementationEvidence": [],
-      "testEvidence": [],
+      "testEvidence": [
+        "test:SetupChecklistTests.test_checklist_exists_and_is_referenced",
+        "test:SetupChecklistTests.test_documentation_links_resolve"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -2040,9 +2805,15 @@
       "sourceRef": "lesson:LSN-0007",
       "description": "Verify independent validation cannot be declared by the run that did the work",
       "mandatory": true,
-      "status": "NOT_STARTED",
+      "status": "COMPLETE",
       "implementationEvidence": [],
-      "testEvidence": [],
+      "testEvidence": [
+        "test:ExternalAttestationTests.test_an_implementer_checkpoint_cannot_declare_an_external_pass",
+        "test:ExternalAttestationTests.test_an_attestation_naming_the_subject_as_its_own_auditor_is_rejected",
+        "test:ExternalAttestationTests.test_second_tool_validation_alone_is_not_enough",
+        "test:SecondToolValidationTests.test_failed_cross_tool_validation_cannot_grant_gate_pass",
+        "test:DeliveryAssuranceGateTests.test_self_claimed_independent_review_blocks_review"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -2054,9 +2825,14 @@
       "sourceRef": "lesson:LSN-0008",
       "description": "Verify requirement completeness must be total and evidence-backed before handoff",
       "mandatory": true,
-      "status": "NOT_STARTED",
+      "status": "COMPLETE",
       "implementationEvidence": [],
-      "testEvidence": [],
+      "testEvidence": [
+        "test:ExpectedRequirementSetTests.test_deleting_a_requirement_and_recomputing_the_counts_still_fails",
+        "test:ExpectedRequirementSetTests.test_an_unexpected_anchored_requirement_is_rejected",
+        "test:DeliveryCompletenessMatrixTests.test_one_requirement_short_of_total_fails",
+        "test:DeliveryAssuranceGateTests.test_completeness_validator_not_executed_blocks_review"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -2068,9 +2844,15 @@
       "sourceRef": "lesson:LSN-0009",
       "description": "Verify a red gate requires rework, never a waiver, and never a weakened check",
       "mandatory": true,
-      "status": "NOT_STARTED",
+      "status": "COMPLETE",
       "implementationEvidence": [],
-      "testEvidence": [],
+      "testEvidence": [
+        "test:MandatoryGatePolicyTests.test_a_cycle_measured_against_no_gate_is_rejected",
+        "test:MandatoryGatePolicyTests.test_the_policy_declares_a_non_empty_closed_set",
+        "test:GreenKeeperToolTests.test_red_gate_is_reported_as_still_red",
+        "test:DeliveryAssuranceGateTests.test_green_keeper_pass_with_a_real_failure_is_rejected",
+        "test:DeliveryAssuranceGateTests.test_red_tests_block_review"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -2082,9 +2864,14 @@
       "sourceRef": "lesson:LSN-0010",
       "description": "Verify a recorded command must carry runtime, working directory, commit and purpose to be replayable",
       "mandatory": true,
-      "status": "NOT_STARTED",
+      "status": "COMPLETE",
       "implementationEvidence": [],
-      "testEvidence": [],
+      "testEvidence": [
+        "test:CommandInputBindingTests.test_a_record_without_a_digest_is_rejected",
+        "test:CommandInputBindingTests.test_a_clean_tree_claim_is_checked_against_the_declared_commit",
+        "test:CommandReproducibilityTests.test_bare_script_name_is_rejected",
+        "test:CommandReproducibilityTests.test_unresolvable_script_path_is_rejected"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -2096,9 +2883,14 @@
       "sourceRef": "lesson:LSN-0011",
       "description": "Verify a control over a checkpoint's own evidence must be scoped to the moment it matters",
       "mandatory": true,
-      "status": "NOT_STARTED",
+      "status": "COMPLETE",
       "implementationEvidence": [],
-      "testEvidence": [],
+      "testEvidence": [
+        "test:DeliveryAssuranceGateTests.test_gate_consistency_is_provisional_while_work_is_in_progress",
+        "test:GateRunnerTests.test_every_runner_of_the_mandatory_gates_refreshes_the_declared_hashes",
+        "test:GateRunnerTests.test_the_refresh_has_one_definition",
+        "test:GateRunnerTests.test_no_other_module_executes_the_mandatory_gate_set"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -2110,9 +2902,14 @@
       "sourceRef": "lesson:LSN-0012",
       "description": "Verify sealed checkpoints and their tags are immutable, and tooling must keep validating them",
       "mandatory": true,
-      "status": "NOT_STARTED",
+      "status": "COMPLETE",
       "implementationEvidence": [],
-      "testEvidence": [],
+      "testEvidence": [
+        "test:IntegrityAnchorTests.test_a_moved_historical_tag_is_detected",
+        "test:IntegrityAnchorTests.test_a_broken_link_between_anchors_is_detected",
+        "test:HistoricalCheckpointCompatibilityTests.test_first_sealed_checkpoint_still_validates",
+        "test:HistoricalCheckpointCompatibilityTests.test_fourth_sealed_checkpoint_still_validates"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -2124,10 +2921,12 @@
       "sourceRef": "lesson:LSN-0013",
       "description": "Verify an installed capability must be detected by resolved path, not by a bare command lookup",
       "mandatory": false,
-      "status": "NOT_STARTED",
+      "status": "COMPLETE",
       "implementationEvidence": [],
       "testEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "file:docs/TOOL-CAPABILITIES.md"
+      ],
       "validationEvidence": [],
       "justification": null,
       "notes": ""
@@ -2138,9 +2937,13 @@
       "sourceRef": "lesson:LSN-0014",
       "description": "Verify evidence must be recorded as it happens, not reconstructed at the end of a run",
       "mandatory": true,
-      "status": "NOT_STARTED",
+      "status": "COMPLETE",
       "implementationEvidence": [],
-      "testEvidence": [],
+      "testEvidence": [
+        "test:SealChronologyTests.test_a_record_after_the_end_of_the_run_is_rejected",
+        "test:SealChronologyTests.test_a_missing_post_commit_validation_is_rejected",
+        "test:SealChronologyTests.test_a_dirty_tree_validation_is_not_evidence_of_a_sealed_commit"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -2152,9 +2955,13 @@
       "sourceRef": "lesson:LSN-0015",
       "description": "Verify every positive terminal status needs one shared promotion invariant",
       "mandatory": true,
-      "status": "NOT_STARTED",
+      "status": "COMPLETE",
       "implementationEvidence": [],
-      "testEvidence": [],
+      "testEvidence": [
+        "test:PromotionInvariantTests.test_every_positive_status_rejects_a_red_green_keeper",
+        "test:PromotionInvariantTests.test_every_positive_status_rejects_every_red_quality_dimension",
+        "test:PromotionInvariantTests.test_a_terminal_status_requires_an_independent_verdict"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -2166,9 +2973,13 @@
       "sourceRef": "lesson:LSN-0016",
       "description": "Verify a mandatory set must be closed by policy, never chosen by the caller",
       "mandatory": true,
-      "status": "NOT_STARTED",
+      "status": "COMPLETE",
       "implementationEvidence": [],
-      "testEvidence": [],
+      "testEvidence": [
+        "test:MandatoryGatePolicyTests.test_a_cycle_missing_one_mandatory_gate_is_rejected",
+        "test:MandatoryGatePolicyTests.test_a_mandatory_gate_that_exited_nonzero_is_rejected",
+        "test:MandatoryGatePolicyTests.test_a_pass_measured_before_a_source_change_is_stale"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -2180,9 +2991,14 @@
       "sourceRef": "lesson:LSN-0017",
       "description": "Verify a completeness denominator must come from a source the delivery does not own",
       "mandatory": true,
-      "status": "NOT_STARTED",
+      "status": "COMPLETE",
       "implementationEvidence": [],
-      "testEvidence": [],
+      "testEvidence": [
+        "test:ExpectedRequirementSetTests.test_the_expected_set_is_derived_from_the_canonical_sources",
+        "test:ExpectedRequirementSetTests.test_the_checklist_is_reparsed_rather_than_trusted",
+        "test:ExpectedRequirementSetTests.test_a_downgraded_matrix_cannot_escape_the_comparison",
+        "test:ExpectedRequirementSetTests.test_an_unexpected_anchored_requirement_is_rejected"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -2194,9 +3010,13 @@
       "sourceRef": "lesson:LSN-0018",
       "description": "Verify a structured reference must be resolved, not merely well typed",
       "mandatory": true,
-      "status": "NOT_STARTED",
+      "status": "COMPLETE",
       "implementationEvidence": [],
-      "testEvidence": [],
+      "testEvidence": [
+        "test:LessonResolutionTests.test_a_test_control_must_exist_in_the_suite",
+        "test:LessonResolutionTests.test_an_invariant_control_must_be_defined_in_the_tooling",
+        "test:LessonResolutionTests.test_lesson_evidence_must_resolve"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -2208,9 +3028,13 @@
       "sourceRef": "lesson:LSN-0019",
       "description": "Verify a derived artifact must carry a fingerprint of the inputs that produced it",
       "mandatory": true,
-      "status": "NOT_STARTED",
+      "status": "COMPLETE",
       "implementationEvidence": [],
-      "testEvidence": [],
+      "testEvidence": [
+        "test:PreflightFreshnessTests.test_a_changed_fingerprint_makes_the_preflight_stale",
+        "test:PreflightFreshnessTests.test_a_dropped_lesson_makes_the_preflight_stale",
+        "test:PreflightFreshnessTests.test_a_preflight_from_another_gate_is_refused"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -2222,9 +3046,12 @@
       "sourceRef": "lesson:LSN-0020",
       "description": "Verify evidence produced from a dirty tree needs immutable input identity",
       "mandatory": true,
-      "status": "NOT_STARTED",
+      "status": "COMPLETE",
       "implementationEvidence": [],
-      "testEvidence": [],
+      "testEvidence": [
+        "test:CommandInputBindingTests.test_the_recorder_binds_inputs_automatically",
+        "test:CommandInputBindingTests.test_a_digest_that_omits_an_input_is_rejected"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -2236,9 +3063,14 @@
       "sourceRef": "lesson:LSN-0021",
       "description": "Verify sealed history needs an anchor outside the content it describes",
       "mandatory": true,
-      "status": "NOT_STARTED",
+      "status": "COMPLETE",
       "implementationEvidence": [],
-      "testEvidence": [],
+      "testEvidence": [
+        "test:IntegrityAnchorTests.test_an_unexpected_tree_is_detected",
+        "test:IntegrityAnchorTests.test_a_sealed_checkpoint_without_an_anchor_is_detected",
+        "test:IntegrityAnchorTests.test_a_recomputed_anchor_hash_must_match_its_fields",
+        "test:IntegrityAnchorTests.test_a_broken_link_between_anchors_is_detected"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -2250,9 +3082,15 @@
       "sourceRef": "lesson:LSN-0022",
       "description": "Verify an authoritative count must be derived once, never maintained by hand twice",
       "mandatory": true,
-      "status": "NOT_STARTED",
+      "status": "COMPLETE",
       "implementationEvidence": [],
-      "testEvidence": [],
+      "testEvidence": [
+        "test:DerivedCountTests.test_a_forged_count_is_rejected",
+        "test:DerivedCountTests.test_a_markdown_claim_that_contradicts_the_derivation_is_rejected",
+        "test:SourceCardinalityPolicyTests.test_no_comment_or_docstring_states_a_derived_count_claim",
+        "test:SourceCardinalityPolicyTests.test_no_comment_or_docstring_states_the_cardinality_of_a_derived_set",
+        "test:SourceCardinalityPolicyTests"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -2264,9 +3102,12 @@
       "sourceRef": "lesson:LSN-0023",
       "description": "Verify a lesson must cite a source that actually records the finding it claims",
       "mandatory": true,
-      "status": "NOT_STARTED",
+      "status": "COMPLETE",
       "implementationEvidence": [],
-      "testEvidence": [],
+      "testEvidence": [
+        "test:LessonProvenanceTests.test_a_finding_absent_from_the_cited_checkpoint_is_rejected",
+        "test:LessonProvenanceTests.test_a_nonexistent_checkpoint_is_rejected"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -2278,9 +3119,14 @@
       "sourceRef": "lesson:LSN-0024",
       "description": "Verify a control is finished only when its positive path has been executed, not only its refusals",
       "mandatory": true,
-      "status": "NOT_STARTED",
+      "status": "COMPLETE",
       "implementationEvidence": [],
-      "testEvidence": [],
+      "testEvidence": [
+        "test:PositivePromotionTests.test_the_milestone_verdict_is_derived_as_passed",
+        "test:PositivePromotionTests.test_the_subject_is_not_rewritten_by_its_own_audit",
+        "test:SimulationExecutesProductionControlsTests.test_the_sealed_artifact_is_the_tools_own_output",
+        "test:SimulationExecutesProductionControlsTests.test_every_simulated_mirror_is_recorded_as_executed"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -2292,9 +3138,12 @@
       "sourceRef": "lesson:LSN-0025",
       "description": "Verify a generic guardrail derives repository state instead of naming today's checkpoint",
       "mandatory": true,
-      "status": "NOT_STARTED",
+      "status": "COMPLETE",
       "implementationEvidence": [],
-      "testEvidence": [],
+      "testEvidence": [
+        "test:IntegrityAnchorTests.test_the_pending_exclusion_is_the_newest_sealed_checkpoint",
+        "test:SuccessorDurabilityTests.test_the_pending_exclusion_moves_with_the_chain"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -2306,11 +3155,17 @@
       "sourceRef": "lesson:LSN-0026",
       "description": "Verify an adversarial battery without a null-mutation control proves nothing",
       "mandatory": true,
-      "status": "NOT_STARTED",
+      "status": "COMPLETE",
       "implementationEvidence": [],
-      "testEvidence": [],
+      "testEvidence": [
+        "test:InternalAssuranceTests.test_a_report_without_a_null_mutation_control_is_rejected",
+        "test:InternalAssuranceTests.test_a_failed_null_mutation_control_cannot_produce_a_pass",
+        "test:Gate3RedTeamHarnessTests"
+      ],
       "documentationEvidence": [],
-      "validationEvidence": [],
+      "validationEvidence": [
+        "checkpoint:M1-INTERNAL-RED-TEAM.json"
+      ],
       "justification": null,
       "notes": ""
     },
@@ -2320,9 +3175,12 @@
       "sourceRef": "lesson:LSN-0027",
       "description": "Verify a lesson's prose may record a residual limit but may never contradict its status",
       "mandatory": true,
-      "status": "NOT_STARTED",
+      "status": "COMPLETE",
       "implementationEvidence": [],
-      "testEvidence": [],
+      "testEvidence": [
+        "test:MemoryPolicyDocumentTests.test_a_guarded_lesson_may_not_describe_itself_as_unguarded",
+        "test:MemoryPolicyDocumentTests.test_the_repository_memory_has_no_status_contradiction"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -2334,9 +3192,14 @@
       "sourceRef": "lesson:LSN-0028",
       "description": "Verify a configuration key that no code reads is a defect, not documentation",
       "mandatory": true,
-      "status": "NOT_STARTED",
+      "status": "COMPLETE",
       "implementationEvidence": [],
-      "testEvidence": [],
+      "testEvidence": [
+        "test:MemoryPolicyDocumentTests.test_a_setting_no_code_reads_cannot_be_declared",
+        "test:MemoryPolicyDocumentTests.test_the_declared_policy_validates_against_its_schema",
+        "test:test_configuration.test_every_declared_key_is_read_somewhere",
+        "test:test_configuration.test_test_settings_ignore_the_ambient_environment"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -2348,9 +3211,14 @@
       "sourceRef": "lesson:LSN-0029",
       "description": "Verify a required protocol transition must never turn a mandatory gate red",
       "mandatory": true,
-      "status": "NOT_STARTED",
+      "status": "COMPLETE",
       "implementationEvidence": [],
-      "testEvidence": [],
+      "testEvidence": [
+        "test:SuccessorDurabilityTests.test_every_state_of_the_chain_verifies",
+        "test:SuccessorDurabilityTests.test_a_missing_anchor_is_still_detected_after_the_chain_advances",
+        "test:GateTransitionSimulationTests.test_the_first_checkpoint_of_the_next_gate_reaches_review_readiness",
+        "test:GateTransitionSimulationTests.test_its_mirror_audit_passes_with_the_empty_dimensions_inapplicable"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -2362,9 +3230,15 @@
       "sourceRef": "lesson:LSN-0031",
       "description": "Verify an empty applicable set is not a missing required set, and a control must tell them apart",
       "mandatory": true,
-      "status": "NOT_STARTED",
+      "status": "COMPLETE",
       "implementationEvidence": [],
-      "testEvidence": [],
+      "testEvidence": [
+        "test:MirrorApplicabilitySemanticsTests.test_an_empty_applicable_set_is_not_applicable_and_the_mirror_passes",
+        "test:MirrorApplicabilitySemanticsTests.test_a_missing_required_set_fails_rather_than_being_inapplicable",
+        "test:MirrorApplicabilityValidationTests.test_a_registry_bound_dimension_cannot_be_declared_inapplicable",
+        "test:SimulationExecutesProductionControlsTests.test_the_sealed_artifact_is_the_tools_own_output",
+        "test:SimulationExecutesProductionControlsTests.test_every_simulated_mirror_is_recorded_as_executed"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -2376,9 +3250,17 @@
       "sourceRef": "lesson:LSN-0032",
       "description": "Verify a control written while one Gate was the only Gate stops being a control when the next one starts",
       "mandatory": true,
-      "status": "NOT_STARTED",
+      "status": "COMPLETE",
       "implementationEvidence": [],
-      "testEvidence": [],
+      "testEvidence": [
+        "test:Gate1ScopeTests.test_no_future_gate_capability_is_implemented",
+        "test:MonorepoStructureTests.test_no_future_gate_capability_is_implemented",
+        "test:MonorepoStructureTests.test_the_scope_control_detects_an_implementation",
+        "test:MonorepoStructureTests.test_the_scope_control_ignores_a_gate_that_has_already_run",
+        "test:ExpectedRequirementSetTests.test_expected_set_names_the_gate_specification",
+        "test:AssuranceScopeTests.test_assurance_scope_covers_the_runtime_source",
+        "test:TestSuiteRegistryTests.test_declared_suites_are_discovered"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -2390,9 +3272,13 @@
       "sourceRef": "lesson:LSN-0033",
       "description": "Verify a value bound in middleware is absent in the handlers that run outside it",
       "mandatory": true,
-      "status": "NOT_STARTED",
+      "status": "COMPLETE",
       "implementationEvidence": [],
-      "testEvidence": [],
+      "testEvidence": [
+        "test:test_errors_and_correlation.test_internal_error_still_carries_a_correlation_identifier",
+        "test:test_errors_and_correlation.test_internal_error_leaks_nothing",
+        "test:test_errors_and_correlation.test_a_missing_route_uses_the_error_contract"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -2404,9 +3290,13 @@
       "sourceRef": "lesson:LSN-0034",
       "description": "Verify re-deriving what the framework already computed diverges from the framework",
       "mandatory": true,
-      "status": "NOT_STARTED",
+      "status": "COMPLETE",
       "implementationEvidence": [],
-      "testEvidence": [],
+      "testEvidence": [
+        "test:test_observability.test_metrics_endpoint_exposes_request_metrics",
+        "test:test_observability.test_metrics_label_routes_by_template_not_by_url",
+        "test:PrometheusConfigurationTests.test_the_api_instruments_reach_prometheus"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -2418,9 +3308,14 @@
       "sourceRef": "lesson:LSN-0035",
       "description": "Verify captured subprocess output decoded or re-emitted with the platform codepage crashes the tool, not the work",
       "mandatory": true,
-      "status": "NOT_STARTED",
+      "status": "COMPLETE",
       "implementationEvidence": [],
-      "testEvidence": [],
+      "testEvidence": [
+        "test:SubprocessDecodingTests.test_no_capture_relies_on_the_platform_codepage",
+        "test:SubprocessDecodingTests.test_every_tool_that_re_emits_captured_output_configures_its_own_stream",
+        "test:SubprocessDecodingTests.test_the_rule_detects_a_capture_that_would_fail",
+        "test:SubprocessDecodingTests"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -2432,9 +3327,15 @@
       "sourceRef": "lesson:LSN-0036",
       "description": "Verify a gate that runs inside an image measures the image, not the source",
       "mandatory": true,
-      "status": "NOT_STARTED",
+      "status": "COMPLETE",
       "implementationEvidence": [],
-      "testEvidence": [],
+      "testEvidence": [
+        "test:Gate1GuardrailTests.test_every_image_gate_builds_before_it_measures",
+        "test:Gate1GuardrailTests.test_the_image_gate_rule_detects_a_gate_that_would_skip_the_build",
+        "test:Gate3MandatoryGateTests.test_the_gate_builds_both_images_before_it_measures",
+        "test:SandboxScenarioTests.test_the_scenario_builds_what_it_measures_first",
+        "test:SandboxImageProfileTests.test_the_image_is_addressed_by_its_inputs"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -2446,9 +3347,17 @@
       "sourceRef": "lesson:LSN-0037",
       "description": "Verify a shared control that names an identifier the repository derives stops being a control when that identifier moves",
       "mandatory": true,
-      "status": "NOT_STARTED",
+      "status": "COMPLETE",
       "implementationEvidence": [],
-      "testEvidence": [],
+      "testEvidence": [
+        "test:Gate1GuardrailTests.test_no_shared_control_is_bound_to_a_gate_literal",
+        "test:Gate1GuardrailTests.test_the_gate_literal_rule_detects_a_bound_control",
+        "test:Gate1GuardrailTests.test_the_gate_literal_rule_accepts_a_derived_gate_and_a_fixture_root",
+        "test:Gate1GuardrailTests.test_no_control_names_a_migration_revision_literally",
+        "test:Gate1GuardrailTests.test_the_revision_rule_detects_a_named_head",
+        "test:Gate1GuardrailTests.test_the_head_revision_has_one_derivation",
+        "test:Gate3ScopeTests"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -2460,9 +3369,15 @@
       "sourceRef": "lesson:LSN-0038",
       "description": "Verify two representations of one concept in one module disagree, and the safer one loses",
       "mandatory": true,
-      "status": "NOT_STARTED",
+      "status": "COMPLETE",
       "implementationEvidence": [],
-      "testEvidence": [],
+      "testEvidence": [
+        "test:test_common_primitives.test_a_documented_placeholder_is_not_redacted",
+        "test:Gate1GuardrailTests.test_both_redactors_agree_on_every_value_the_example_file_carries",
+        "test:CredentialVocabularyTests.test_no_module_writes_its_own_credential_name_rule",
+        "test:CredentialVocabularyTests.test_the_rule_detects_a_second_opinion",
+        "test:CredentialVocabularyTests.test_the_two_questions_stay_different"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -2474,9 +3389,13 @@
       "sourceRef": "lesson:LSN-0039",
       "description": "Verify a test that writes to the operational database leaves production data behind",
       "mandatory": true,
-      "status": "NOT_STARTED",
+      "status": "COMPLETE",
       "implementationEvidence": [],
-      "testEvidence": [],
+      "testEvidence": [
+        "test:test_gateway_persistence.test_the_operational_catalog_holds_only_providers_the_policy_declares",
+        "test:IntegrationResidueTests.test_nothing_this_suite_writes_is_left_behind",
+        "test:test_the_detail_shows_what_the_sandbox_executed_and_not_its_output"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -2488,9 +3407,15 @@
       "sourceRef": "lesson:LSN-0040",
       "description": "Verify a control that judges sealed history only runs once a successor anchors it",
       "mandatory": true,
-      "status": "NOT_STARTED",
+      "status": "COMPLETE",
       "implementationEvidence": [],
-      "testEvidence": [],
+      "testEvidence": [
+        "test:RecordedInputTests.test_every_sealed_checkpoint_validates_from_its_own_tag",
+        "test:RecordedInputTests.test_the_recorder_never_declares_an_ignored_path_as_an_input",
+        "test:RecordedInputTests.test_an_ignored_input_is_bound_by_content_rather_than_by_presence",
+        "test:RecordedInputTests.test_an_input_the_repository_carries_is_still_required_to_exist",
+        "test:RecordedInputTests.test_an_ignored_input_without_a_bound_digest_is_still_refused"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -2502,9 +3427,15 @@
       "sourceRef": "lesson:LSN-0041",
       "description": "Verify an editing path that consumes a backslash escape leaves a control character, and the control it belonged to silently matches nothing",
       "mandatory": true,
-      "status": "NOT_STARTED",
+      "status": "COMPLETE",
       "implementationEvidence": [],
-      "testEvidence": [],
+      "testEvidence": [
+        "test:SourceIntegrityTests.test_no_source_file_carries_a_stray_control_character",
+        "test:SourceIntegrityTests.test_the_scan_detects_one",
+        "test:FrontendSafetyTests.test_the_page_offers_nothing_that_would_execute_a_tool",
+        "test:RepositoryToolExecutionBoundaryTests.test_the_boundary_has_something_to_scan",
+        "test:SourceIntegrityTests"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -2516,9 +3447,15 @@
       "sourceRef": "lesson:LSN-0042",
       "description": "Verify a naming convention rewrites a CHECK constraint's name and leaves a UNIQUE constraint's alone",
       "mandatory": true,
-      "status": "NOT_STARTED",
+      "status": "COMPLETE",
       "implementationEvidence": [],
-      "testEvidence": [],
+      "testEvidence": [
+        "test:Gate2MigrationTests.test_the_agent_runtime_migration_is_reversible",
+        "test:test_migrations.test_the_declared_model_matches_the_migrated_schema",
+        "test:MigrationConstraintNamingTests.test_a_check_constraint_is_created_and_dropped_by_its_bare_name",
+        "test:MigrationConstraintNamingTests.test_a_unique_constraint_keeps_exactly_the_name_it_was_given",
+        "test:SandboxMigrationTests"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -2530,9 +3467,14 @@
       "sourceRef": "lesson:LSN-0043",
       "description": "Verify a log line is not evidence that another process is ready",
       "mandatory": true,
-      "status": "NOT_STARTED",
+      "status": "COMPLETE",
       "implementationEvidence": [],
-      "testEvidence": [],
+      "testEvidence": [
+        "test:ScenarioReadinessTests.test_readiness_is_asked_of_temporal",
+        "test:ScenarioReadinessTests.test_readiness_is_not_read_from_a_log_line",
+        "test:ScenarioReadinessTests.test_the_harness_asks_the_server_for_the_answer",
+        "test:SandboxBoundaryTests.test_the_health_is_a_poller_and_an_engine_not_a_process"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -2544,9 +3486,18 @@
       "sourceRef": "lesson:LSN-0044",
       "description": "Verify a boundary scan must read the code rather than the prose, and must be shown to fire on a mutated module",
       "mandatory": true,
-      "status": "NOT_STARTED",
+      "status": "COMPLETE",
       "implementationEvidence": [],
-      "testEvidence": [],
+      "testEvidence": [
+        "test:ToolExecutionBoundaryTests.test_the_null_control_detects_a_mutation",
+        "test:test_boundary.test_the_provider_scan_would_catch_one",
+        "test:test_boundary.test_the_credential_scan_would_catch_one",
+        "test:RepositoryToolExecutionBoundaryTests.test_the_scan_detects_a_module_that_does_it",
+        "test:WorkflowDeterminismTests.test_the_determinism_scan_detects_a_module_that_breaks_it",
+        "test:SandboxBoundaryTests.test_the_scan_detects_a_module_that_does_it",
+        "test:SinglePathResolverTests.test_the_scans_detect_a_bypass",
+        "test:WorkflowSandboxDispatchTests.test_the_scan_detects_a_policy_taken_from_the_request"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -2558,9 +3509,13 @@
       "sourceRef": "lesson:LSN-0045",
       "description": "Verify a counted test suite must declare its cases statically, because the denominator is read from the source",
       "mandatory": true,
-      "status": "NOT_STARTED",
+      "status": "COMPLETE",
       "implementationEvidence": [],
-      "testEvidence": [],
+      "testEvidence": [
+        "test:CountedSuiteExpansionTests.test_no_counted_pytest_case_expands_at_run_time",
+        "test:CountedSuiteExpansionTests.test_the_scan_detects_an_expansion",
+        "test:CountedSuiteExpansionTests"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -2572,11 +3527,21 @@
       "sourceRef": "lesson:LSN-0046",
       "description": "Verify a timeout that cancels the task it runs in leaves nothing able to record what happened",
       "mandatory": true,
-      "status": "NOT_STARTED",
+      "status": "COMPLETE",
       "implementationEvidence": [],
-      "testEvidence": [],
+      "testEvidence": [
+        "test:DeadlineEnforcementTests.test_the_engine_is_not_wrapped_in_wait_for",
+        "test:DeadlineEnforcementTests.test_the_deadline_races_an_explicit_child_task",
+        "test:DeadlineEnforcementTests.test_the_wait_accepts_every_way_a_cancelled_activity_surfaces",
+        "test:DeadlineEnforcementTests.test_the_deadline_path_writes_the_failure_down",
+        "test:DeadlineEnforcementTests.test_the_scenario_asserts_the_run_ended_and_said_so",
+        "test:test_a_timeout_kills_the_whole_process_tree",
+        "test:WorkflowSandboxDispatchTests.test_a_sandbox_that_cannot_answer_is_a_failed_result_not_a_wait"
+      ],
       "documentationEvidence": [],
-      "validationEvidence": [],
+      "validationEvidence": [
+        "command:cmd-0072"
+      ],
       "justification": null,
       "notes": ""
     },
@@ -2586,9 +3551,18 @@
       "sourceRef": "lesson:LSN-0047",
       "description": "Verify a refusal that misnames the defect spends the only repair on the wrong correction",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/agent-runtime/src/iacode_agent_runtime/protocol.py",
+        "file:services/agent-runtime/src/iacode_agent_runtime/context.py"
+      ],
+      "testEvidence": [
+        "test:test_content_of_the_wrong_type_is_refused_by_its_real_defect",
+        "test:test_the_runtime_instructions_state_that_content_is_one_string",
+        "test:test_invalid_envelope_is_not_accepted_silently",
+        "test:test_a_wrong_type_is_refused_with_its_own_reason",
+        "test:test_every_hostile_spelling_is_refused_with_its_own_code"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -2600,9 +3574,17 @@
       "sourceRef": "lesson:LSN-0048",
       "description": "Verify a state and the event that explains it, written in two commits, are written event first",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:services/agent-runtime/src/iacode_agent_runtime/engine.py",
+        "file:services/orchestrator/src/iacode_orchestrator/workflows/agent_run.py",
+        "file:apps/api/src/iacode_api/routes/agent_runs.py"
+      ],
+      "testEvidence": [
+        "test:test_a_terminal_state_is_never_visible_before_its_terminal_event",
+        "test:DeadlineEnforcementTests.test_the_workflow_writes_the_terminal_event_before_the_terminal_state",
+        "test:test_a_workflow_that_cannot_start_fails_the_run_rather_than_leaving_it_created"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -2614,9 +3596,19 @@
       "sourceRef": "lesson:LSN-0049",
       "description": "Verify a metric read the instant after the call that moved it is read before the scrape that carries it",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/iacode/gateway_smoke.py",
+        "file:scripts/iacode/smoke.py"
+      ],
+      "testEvidence": [
+        "test:LiveSmokeContractTests.test_the_observability_check_waits_for_a_scrape_and_asks_only_prometheus",
+        "test:LiveSmokeContractTests.test_live_smoke_is_bounded_and_minimal",
+        "test:ObserverCycleTests.test_every_script_that_reads_prometheus_waits_for_a_scrape",
+        "test:ObserverCycleTests.test_the_scan_fires_on_a_read_that_does_not_wait",
+        "test:ObserverCycleTests.test_the_foundation_smoke_waits_for_both_targets_and_asks_only_prometheus",
+        "test:ObserverCycleTests"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
       "justification": null,
@@ -2628,11 +3620,96 @@
       "sourceRef": "lesson:LSN-0050",
       "description": "Verify a checkpoint sealed without naming its own tag cannot be validated from that tag",
       "mandatory": true,
-      "status": "NOT_STARTED",
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/validate_checkpoint.py",
+        "file:scripts/development-ledger/seal_checkpoint.py",
+        "file:docs/adr/ADR-0023-sealed-checkpoint-binds-its-own-tag.md"
+      ],
+      "testEvidence": [
+        "test:DetachedHeadValidationTests.test_sealing_refuses_a_state_that_does_not_name_its_own_tag",
+        "test:DetachedHeadValidationTests.test_a_symbolic_head_validates_from_its_own_canonical_tag",
+        "test:DetachedHeadValidationTests.test_a_symbolic_head_away_from_its_canonical_tag_is_still_refused",
+        "test:RecordedInputTests.test_every_sealed_checkpoint_validates_from_its_own_tag"
+      ],
+      "documentationEvidence": [
+        "file:docs/CHECKPOINT-PROTOCOL.md"
+      ],
+      "validationEvidence": [],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "LESSON-REQ-0050",
+      "source": "LESSON-PREFLIGHT.json LESSON-REQ-0050",
+      "sourceRef": "lesson:LSN-0051",
+      "description": "Verify a payload one service bounds for another must be bounded as the receiver measures it",
+      "mandatory": true,
+      "status": "COMPLETE",
       "implementationEvidence": [],
-      "testEvidence": [],
+      "testEvidence": [
+        "test:Gate3AgentToolPolicyTests.test_the_runtime_accepts_every_result_the_sandbox_hands_over",
+        "test:AgentResultBoundTests"
+      ],
       "documentationEvidence": [],
       "validationEvidence": [],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "LESSON-REQ-0051",
+      "source": "LESSON-PREFLIGHT.json LESSON-REQ-0051",
+      "sourceRef": "lesson:LSN-0052",
+      "description": "Verify two processes that meet on a queue must name what crosses it once, and a real run must exercise both",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "test:WorkflowSandboxDispatchTests.test_both_sides_name_the_result_by_the_shared_key",
+        "test:WorkflowSandboxDispatchTests.test_the_key_scan_detects_a_literal",
+        "test:SandboxActivityTests"
+      ],
+      "documentationEvidence": [],
+      "validationEvidence": [
+        "command:cmd-0071"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "LESSON-REQ-0052",
+      "source": "LESSON-PREFLIGHT.json LESSON-REQ-0052",
+      "sourceRef": "lesson:LSN-0053",
+      "description": "Verify a process sweep that reads what a forking process holds waits on the processes it has to kill",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "implementationEvidence": [],
+      "testEvidence": [
+        "test:test_a_fork_bomb_that_detaches_leaves_a_sandbox_that_still_answers"
+      ],
+      "documentationEvidence": [],
+      "validationEvidence": [
+        "checkpoint:M1-INTERNAL-RED-TEAM.json"
+      ],
+      "justification": null,
+      "notes": ""
+    },
+    {
+      "id": "LESSON-REQ-0053",
+      "source": "LESSON-PREFLIGHT.json LESSON-REQ-0053",
+      "sourceRef": "lesson:LSN-0054",
+      "description": "Verify a pre-push check narrower than the change's reach lets a red gate reach the public remote",
+      "mandatory": false,
+      "status": "COMPLETE",
+      "implementationEvidence": [
+        "file:docs/DEVELOPMENT-CONTRACT.md"
+      ],
+      "testEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [
+        "command:cmd-0076",
+        "command:cmd-0064"
+      ],
       "justification": null,
       "notes": ""
     }

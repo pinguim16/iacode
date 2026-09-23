@@ -18,11 +18,11 @@
     "apps/web",
     "packages/persistence"
   ],
-  "generatedAt": "2026-09-22T23:15:39Z",
+  "generatedAt": "2026-09-23T01:48:38Z",
   "policyVersion": "2.0.0",
-  "inputsFingerprint": "fd9bd88861f362cb097dbfb67acb898eab89da0b1113852c9c309f4837d948bc",
-  "lessonsConsidered": 50,
-  "lessonsApplicable": 49,
+  "inputsFingerprint": "6035434f8ba2194a441a2a042d29d1e04046d3cf3dc0fa4037719f122cddccca",
+  "lessonsConsidered": 54,
+  "lessonsApplicable": 53,
   "applicable": [
     {
       "lessonId": "LSN-0001",
@@ -513,6 +513,46 @@
       "requiredCheck": "Before sealing a checkpoint at any status, confirm that STATE.json currentCommit names the checkpoint's own canonical tag, and that the sealed content validates from that tag with a detached HEAD.",
       "requiredEvidence": "The post-seal validation from the checkpoint's own tag, and the seal tool's refusal of a state that does not name it.",
       "derivedRequirementId": "LESSON-REQ-0049"
+    },
+    {
+      "lessonId": "LSN-0051",
+      "title": "A payload one service bounds for another must be bounded as the receiver measures it",
+      "status": "GUARDED",
+      "severity": "HIGH",
+      "reasonApplicable": "applies to every Gate; category implementation; severity HIGH; already guarded, so the control must keep holding",
+      "requiredCheck": "For every payload one service bounds and another service accepts or refuses by size, confirm both measure it the same way and that the receiver's bound is not smaller than what the sender may hand over.",
+      "requiredEvidence": "A test that reads both bounds from their sources and compares them, and a test that the sender's bound holds for the worst-case rendering.",
+      "derivedRequirementId": "LESSON-REQ-0050"
+    },
+    {
+      "lessonId": "LSN-0052",
+      "title": "Two processes that meet on a queue must name what crosses it once, and a real run must exercise both",
+      "status": "GUARDED",
+      "severity": "HIGH",
+      "reasonApplicable": "applies to every Gate; category architecture; severity HIGH; already guarded, so the control must keep holding",
+      "requiredCheck": "For every payload this Gate sends between two processes, confirm its names are defined once in a shared contract, used by both sides, and exercised once by a run in which neither side is a double.",
+      "requiredEvidence": "The shared definition, a scan of both sides for a literal spelling, and a recorded run through the real producer and consumer.",
+      "derivedRequirementId": "LESSON-REQ-0051"
+    },
+    {
+      "lessonId": "LSN-0053",
+      "title": "A process sweep that reads what a forking process holds waits on the processes it has to kill",
+      "status": "GUARDED",
+      "severity": "HIGH",
+      "reasonApplicable": "applies to every Gate; category security; severity HIGH; already guarded, so the control must keep holding",
+      "requiredCheck": "For every control that must end processes it did not start, confirm it freezes before it kills, reads nothing a forking process holds, and is attacked on the real engine by a process that detaches and forks.",
+      "requiredEvidence": "An engine test in which a detached fork bomb is swept and the next command still runs.",
+      "derivedRequirementId": "LESSON-REQ-0052"
+    },
+    {
+      "lessonId": "LSN-0054",
+      "title": "A pre-push check narrower than the change's reach lets a red gate reach the public remote",
+      "status": "CONFIRMED",
+      "severity": "MEDIUM",
+      "reasonApplicable": "applies to every Gate; category git; severity MEDIUM; status CONFIRMED, so it is not yet prevented automatically",
+      "requiredCheck": "Before each push, run the lint gate and the repository-wide scans as well as the suites of the change, because a change reaches every control that scans the tree.",
+      "requiredEvidence": "Recorded lint and targeted runs between each push and the one before it.",
+      "derivedRequirementId": "LESSON-REQ-0053"
     }
   ],
   "derivedRequirements": [
@@ -858,6 +898,34 @@
       "description": "Verify a checkpoint sealed without naming its own tag cannot be validated from that tag",
       "mandatory": true,
       "requiredEvidence": "The post-seal validation from the checkpoint's own tag, and the seal tool's refusal of a state that does not name it."
+    },
+    {
+      "id": "LESSON-REQ-0050",
+      "lessonId": "LSN-0051",
+      "description": "Verify a payload one service bounds for another must be bounded as the receiver measures it",
+      "mandatory": true,
+      "requiredEvidence": "A test that reads both bounds from their sources and compares them, and a test that the sender's bound holds for the worst-case rendering."
+    },
+    {
+      "id": "LESSON-REQ-0051",
+      "lessonId": "LSN-0052",
+      "description": "Verify two processes that meet on a queue must name what crosses it once, and a real run must exercise both",
+      "mandatory": true,
+      "requiredEvidence": "The shared definition, a scan of both sides for a literal spelling, and a recorded run through the real producer and consumer."
+    },
+    {
+      "id": "LESSON-REQ-0052",
+      "lessonId": "LSN-0053",
+      "description": "Verify a process sweep that reads what a forking process holds waits on the processes it has to kill",
+      "mandatory": true,
+      "requiredEvidence": "An engine test in which a detached fork bomb is swept and the next command still runs."
+    },
+    {
+      "id": "LESSON-REQ-0053",
+      "lessonId": "LSN-0054",
+      "description": "Verify a pre-push check narrower than the change's reach lets a red gate reach the public remote",
+      "mandatory": false,
+      "requiredEvidence": "Recorded lint and targeted runs between each push and the one before it."
     }
   ]
 }

@@ -58,6 +58,10 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 | `LSN-0048` | `GUARDED` | HIGH | implementation | A state and the event that explains it, written in two commits, are written event first | `test_a_terminal_state_is_never_visible_before_its_terminal_event`, `test_the_workflow_writes_the_terminal_event_before_the_terminal_state`, `test_a_workflow_that_cannot_start_fails_the_run_rather_than_leaving_it_created`, `scripts/iacode/agent_runtime_smoke.py` |
 | `LSN-0049` | `GUARDED` | MEDIUM | testing | A metric read the instant after the call that moved it is read before the scrape that carries it | `test_the_observability_check_waits_for_a_scrape_and_asks_only_prometheus`, `test_live_smoke_is_bounded_and_minimal`, `test_every_script_that_reads_prometheus_waits_for_a_scrape`, `test_the_scan_fires_on_a_read_that_does_not_wait`, `test_the_foundation_smoke_waits_for_both_targets_and_asks_only_prometheus` |
 | `LSN-0050` | `GUARDED` | HIGH | checkpoint | A checkpoint sealed without naming its own tag cannot be validated from that tag | `test_sealing_refuses_a_state_that_does_not_name_its_own_tag`, `test_a_symbolic_head_validates_from_its_own_canonical_tag`, `test_a_symbolic_head_away_from_its_canonical_tag_is_still_refused`, `test_every_sealed_checkpoint_validates_from_its_own_tag` |
+| `LSN-0051` | `GUARDED` | HIGH | implementation | A payload one service bounds for another must be bounded as the receiver measures it | `test_the_runtime_accepts_every_result_the_sandbox_hands_over`, `test_an_escaped_output_is_shortened_to_the_bound_and_says_so`, `test_an_output_that_fits_is_handed_over_unchanged` |
+| `LSN-0052` | `GUARDED` | HIGH | architecture | Two processes that meet on a queue must name what crosses it once, and a real run must exercise both | `test_both_sides_name_the_result_by_the_shared_key`, `test_the_key_scan_detects_a_literal`, `test_the_activity_answers_the_agent_result_and_the_execution` |
+| `LSN-0053` | `GUARDED` | HIGH | security | A process sweep that reads what a forking process holds waits on the processes it has to kill | `test_a_fork_bomb_that_detaches_leaves_a_sandbox_that_still_answers`, `test_a_fork_bomb_is_contained_by_the_process_limit`, `test_a_timeout_kills_the_whole_process_tree` |
+| `LSN-0054` | `CONFIRMED` | MEDIUM | git | A pre-push check narrower than the change's reach lets a red gate reach the public remote | _not yet guarded_ |
 
 ## Detail
 
@@ -720,3 +724,53 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
   - `test` test_a_symbolic_head_away_from_its_canonical_tag_is_still_refused — The same state checked out anywhere but at its tag is refused.
   - `test` test_every_sealed_checkpoint_validates_from_its_own_tag — Every anchored checkpoint is validated from its own tag.
 - Evidence: `file:scripts/development-ledger/validate_checkpoint.py`, `file:scripts/development-ledger/seal_checkpoint.py`, `file:docs/adr/ADR-0023-sealed-checkpoint-binds-its-own-tag.md`, `file:tests/test_development_ledger.py`
+
+### LSN-0051 — A payload one service bounds for another must be bounded as the receiver measures it
+
+- Status: `GUARDED`, severity HIGH, category implementation, recurrences 0.
+- Source: GATE-3, GATE-3-CP-0001, finding G3-F-001.
+- Symptom: The sandbox bounded a tool's raw output to 128 KiB, and the agent runtime refuses a tool result above 256 KiB measured as canonical JSON. A file of control characters inside the read limit renders at 768 KiB, so the runtime would have failed the run that read it.
+- Root cause: Two limits on one payload lived in two services and measured two different things: raw bytes on the producer, the escaped JSON rendering on the consumer. Neither service's suite could see the other's measure.
+- Resolution: The sandbox shortens what it hands an agent to SANDBOX_AGENT_RESULT_MAX_BYTES, measured exactly as the runtime measures, explicitly and keeping every artifact reference; a repository test reads both limits from their sources and requires the consumer's to be the larger.
+- Prevention:
+  - `test` test_the_runtime_accepts_every_result_the_sandbox_hands_over — Both limits are read from their sources; the receiver's is at least the sender's.
+  - `test` test_an_escaped_output_is_shortened_to_the_bound_and_says_so — An output that renders three times over the bound is shortened to it, explicitly.
+  - `test` test_an_output_that_fits_is_handed_over_unchanged — The null control: an ordinary output passes the same path unchanged.
+- Evidence: `file:packages/contracts/src/iacode_contracts/sandbox.py`, `file:services/sandbox/src/iacode_sandbox/contracts.py`, `file:docs/checkpoints/GATE-3-CP-0001/DECISIONS.md`
+
+### LSN-0052 — Two processes that meet on a queue must name what crosses it once, and a real run must exercise both
+
+- Status: `GUARDED`, severity HIGH, category architecture, recurrences 0.
+- Source: GATE-3, GATE-3-CP-0001, finding G3-F-003.
+- Symptom: The first real coding run never finished: its workflow task failed with KeyError 'agentResult'. The sandbox's activity answered with the execution record alone, and the workflow read the tool result under a key the answer did not carry.
+- Root cause: The producer and the consumer of one activity result spelled its shape separately, in two processes, and each side's suite drove the other side as a double, so both suites were green over an incompatible pair.
+- Resolution: The keys are named once in iacode_contracts.sandbox and used on both sides; the sandbox suite runs the activity as Temporal runs it; a repository scan refuses a literal spelling of either key on either side; and the coding scenario exercises the real pair.
+- Prevention:
+  - `test` test_both_sides_name_the_result_by_the_shared_key — The workflow and the activity both use the shared names, and neither spells them.
+  - `test` test_the_key_scan_detects_a_literal — The null control: a workflow that spells the key itself is detected.
+  - `test` test_the_activity_answers_the_agent_result_and_the_execution — The activity, run by Temporal's test environment, answers under the shared keys.
+- Evidence: `file:packages/contracts/src/iacode_contracts/sandbox.py`, `file:services/sandbox/src/iacode_sandbox/worker.py`, `file:services/orchestrator/src/iacode_orchestrator/workflows/agent_run.py`, `file:scripts/iacode/scenarios/sandbox_coding_e2e.py`
+
+### LSN-0053 — A process sweep that reads what a forking process holds waits on the processes it has to kill
+
+- Status: `GUARDED`, severity HIGH, category security, recurrences 0.
+- Source: GATE-3, GATE-3-CP-0001, finding G3-F-004.
+- Symptom: A fork bomb that detached from its command wedged a sandbox: the sweep after the command killed a handful of processes in fifteen seconds, the survivors refilled the process table, and the next command could not be started.
+- Root cause: The sweep read every process's command line, which takes that process's memory lock, held by a process in the middle of a fork; and it killed without stopping first, so every slot it freed was refilled before its next round.
+- Resolution: The sweep lists processes and reads only their state, stops every one until no new process appears, and then kills them, with a separate budget for each phase.
+- Prevention:
+  - `test` test_a_fork_bomb_that_detaches_leaves_a_sandbox_that_still_answers — A detached bomb is swept and the sandbox answers the next command with an empty process table.
+  - `test` test_a_fork_bomb_is_contained_by_the_process_limit — A bomb that stays attached is contained by the limit and ended at its timeout.
+  - `test` test_a_timeout_kills_the_whole_process_tree — The same sweep ends a command's escaped children.
+- Evidence: `file:services/sandbox/src/iacode_sandbox/helper.py`, `file:scripts/development-ledger/gate3_sandbox_attacks.py`, `file:docs/checkpoints/GATE-3-CP-0001/DECISIONS.md`
+
+### LSN-0054 — A pre-push check narrower than the change's reach lets a red gate reach the public remote
+
+- Status: `CONFIRMED`, severity MEDIUM, category git, recurrences 0.
+- Source: GATE-3, GATE-3-CP-0001, finding G3-F-002.
+- Symptom: Three pushed commits left a mandatory gate red: the first broke the repository-wide decoding scan, two later ones the lint gate. Each ran the suites of what it changed, not the repository-wide gates the change could reach.
+- Root cause: The pre-push check was chosen by the commit's subject rather than by its reach: a new script is reached by the scans over every script, and any source file by the lint gate.
+- Resolution: Each was repaired by a new commit, never an amend; from then on every push ran the lint gate and the repository-wide scans in addition to the suites of the change.
+- Prevention:
+  - `documentation` docs/DEVELOPMENT-CONTRACT.md — Before each push: status, the staged diff, a secret scan of the staged content and the tests the change can reach.
+- Evidence: `file:docs/checkpoints/GATE-3-CP-0001/DECISIONS.md`, `file:docs/DEVELOPMENT-CONTRACT.md`

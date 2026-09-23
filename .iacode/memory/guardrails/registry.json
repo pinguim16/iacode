@@ -767,6 +767,50 @@
         "LSN-0050"
       ],
       "removingItWouldAllow": "A checkpoint to be sealed in a state from which it can never be validated, discovered only when a successor anchors it and the historical check turns red for good."
+    },
+    {
+      "guardrailId": "GRD-0053",
+      "title": "What a service hands another is bounded as the receiver measures it",
+      "kind": "test",
+      "reference": "test_the_runtime_accepts_every_result_the_sandbox_hands_over",
+      "verifiedBy": [
+        "test_the_runtime_accepts_every_result_the_sandbox_hands_over",
+        "test_an_escaped_output_is_shortened_to_the_bound_and_says_so",
+        "test_an_output_that_fits_is_handed_over_unchanged"
+      ],
+      "lessons": [
+        "LSN-0051"
+      ],
+      "removingItWouldAllow": "A tool result inside the sandbox's own bound to fail the run that asked for it, because the runtime measures it larger."
+    },
+    {
+      "guardrailId": "GRD-0054",
+      "title": "The execute activity's result is named once and used on both sides of the queue",
+      "kind": "test",
+      "reference": "test_both_sides_name_the_result_by_the_shared_key",
+      "verifiedBy": [
+        "test_both_sides_name_the_result_by_the_shared_key",
+        "test_the_key_scan_detects_a_literal",
+        "test_the_activity_answers_the_agent_result_and_the_execution"
+      ],
+      "lessons": [
+        "LSN-0052"
+      ],
+      "removingItWouldAllow": "The workflow and the sandbox to drift into incompatible shapes that every double-driven suite still passes, discovered only when a real run's workflow task fails."
+    },
+    {
+      "guardrailId": "GRD-0055",
+      "title": "The sweep freezes before it kills, and a detached fork bomb leaves a usable sandbox",
+      "kind": "test",
+      "reference": "test_a_fork_bomb_that_detaches_leaves_a_sandbox_that_still_answers",
+      "verifiedBy": [
+        "test_a_fork_bomb_that_detaches_leaves_a_sandbox_that_still_answers",
+        "test_a_fork_bomb_is_contained_by_the_process_limit"
+      ],
+      "lessons": [
+        "LSN-0053"
+      ],
+      "removingItWouldAllow": "A command that detaches a fork bomb to leave its sandbox unable to start another process for the rest of the run."
     }
   ]
 }

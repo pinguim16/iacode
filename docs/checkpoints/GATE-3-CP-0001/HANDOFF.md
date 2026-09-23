@@ -1,7 +1,7 @@
 # Handoff
 
 Current Gate: GATE-3
-Current Status: BASELINING
+Current Status: IN_PROGRESS
 
 Last valid commit: d4a3998ce745dcbfcf6a8498f267ee302834543f
 Current branch: main

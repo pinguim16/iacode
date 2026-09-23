@@ -4,9 +4,9 @@
 - Scope: `sandbox, tool execution, workspace isolation, filesystem, process execution, shell, git, build, test, resource limits, docker, network isolation, path traversal, symlinks, secrets, artifacts, tool results, cancellation, agent-runtime integration`
 - Technologies: `docker`, `git`, `python`, `temporal`, `postgresql`, `minio`
 - Modules: `services/sandbox`, `services/orchestrator`, `services/agent-runtime`, `apps/api`, `apps/web`, `packages/persistence`
-- Generated: `2026-09-22T23:15:39Z`
-- Lessons considered: 50
-- Lessons applicable: 49
+- Generated: `2026-09-23T01:48:38Z`
+- Lessons considered: 54
+- Lessons applicable: 53
 
 Every applicable lesson below is a requirement of this Gate. The derived identifiers must
 appear in `REQUIREMENTS-MATRIX.json`, and the Delivery Completeness Validator fails the
@@ -63,6 +63,10 @@ delivery when one is absent.
 | `LSN-0048` A state and the event that explains it, written in two commits, are written event first | `GUARDED` | HIGH | `LESSON-REQ-0047` | Wherever a state and the record that explains it are written in separate commits, confirm which one a reader between the two can see alone, and that it is the one a reader may act on - the record before the state it explains. |
 | `LSN-0049` A metric read the instant after the call that moved it is read before the scrape that carries it | `GUARDED` | MEDIUM | `LESSON-REQ-0048` | For every check that reads what another process observes on its own cycle - a scrape, a poll, a flush - confirm that the check waits for at least one full cycle, with a bound, and never repeats the action it is observing to make the observation appear. |
 | `LSN-0050` A checkpoint sealed without naming its own tag cannot be validated from that tag | `GUARDED` | HIGH | `LESSON-REQ-0049` | Before sealing a checkpoint at any status, confirm that STATE.json currentCommit names the checkpoint's own canonical tag, and that the sealed content validates from that tag with a detached HEAD. |
+| `LSN-0051` A payload one service bounds for another must be bounded as the receiver measures it | `GUARDED` | HIGH | `LESSON-REQ-0050` | For every payload one service bounds and another service accepts or refuses by size, confirm both measure it the same way and that the receiver's bound is not smaller than what the sender may hand over. |
+| `LSN-0052` Two processes that meet on a queue must name what crosses it once, and a real run must exercise both | `GUARDED` | HIGH | `LESSON-REQ-0051` | For every payload this Gate sends between two processes, confirm its names are defined once in a shared contract, used by both sides, and exercised once by a run in which neither side is a double. |
+| `LSN-0053` A process sweep that reads what a forking process holds waits on the processes it has to kill | `GUARDED` | HIGH | `LESSON-REQ-0052` | For every control that must end processes it did not start, confirm it freezes before it kills, reads nothing a forking process holds, and is attacked on the real engine by a process that detaches and forks. |
+| `LSN-0054` A pre-push check narrower than the change's reach lets a red gate reach the public remote | `CONFIRMED` | MEDIUM | `LESSON-REQ-0053` | Before each push, run the lint gate and the repository-wide scans as well as the suites of the change, because a change reaches every control that scans the tree. |
 
 ## Why each lesson applies
 
@@ -408,3 +412,31 @@ delivery when one is absent.
 - Required check: Before sealing a checkpoint at any status, confirm that STATE.json currentCommit names the checkpoint's own canonical tag, and that the sealed content validates from that tag with a detached HEAD.
 - Required evidence: The post-seal validation from the checkpoint's own tag, and the seal tool's refusal of a state that does not name it.
 - Derived requirement: `LESSON-REQ-0049`
+
+### LSN-0051 — A payload one service bounds for another must be bounded as the receiver measures it
+
+- Reason: applies to every Gate; category implementation; severity HIGH; already guarded, so the control must keep holding
+- Required check: For every payload one service bounds and another service accepts or refuses by size, confirm both measure it the same way and that the receiver's bound is not smaller than what the sender may hand over.
+- Required evidence: A test that reads both bounds from their sources and compares them, and a test that the sender's bound holds for the worst-case rendering.
+- Derived requirement: `LESSON-REQ-0050`
+
+### LSN-0052 — Two processes that meet on a queue must name what crosses it once, and a real run must exercise both
+
+- Reason: applies to every Gate; category architecture; severity HIGH; already guarded, so the control must keep holding
+- Required check: For every payload this Gate sends between two processes, confirm its names are defined once in a shared contract, used by both sides, and exercised once by a run in which neither side is a double.
+- Required evidence: The shared definition, a scan of both sides for a literal spelling, and a recorded run through the real producer and consumer.
+- Derived requirement: `LESSON-REQ-0051`
+
+### LSN-0053 — A process sweep that reads what a forking process holds waits on the processes it has to kill
+
+- Reason: applies to every Gate; category security; severity HIGH; already guarded, so the control must keep holding
+- Required check: For every control that must end processes it did not start, confirm it freezes before it kills, reads nothing a forking process holds, and is attacked on the real engine by a process that detaches and forks.
+- Required evidence: An engine test in which a detached fork bomb is swept and the next command still runs.
+- Derived requirement: `LESSON-REQ-0052`
+
+### LSN-0054 — A pre-push check narrower than the change's reach lets a red gate reach the public remote
+
+- Reason: applies to every Gate; category git; severity MEDIUM; status CONFIRMED, so it is not yet prevented automatically
+- Required check: Before each push, run the lint gate and the repository-wide scans as well as the suites of the change, because a change reaches every control that scans the tree.
+- Required evidence: Recorded lint and targeted runs between each push and the one before it.
+- Derived requirement: `LESSON-REQ-0053`

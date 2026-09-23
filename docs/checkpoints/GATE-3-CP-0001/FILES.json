@@ -1,6 +1,782 @@
 {
   "filesRead": [],
-  "filesCreated": [],
-  "filesModified": [],
+  "filesCreated": [
+    {
+      "path": ".iacode/memory/retrospectives/GATE-3-CP-0001.md",
+      "reason": "The Gate's retrospective.",
+      "hashAfter": "88b5f03e07f8fd65ecd59f43a06a7cad97d37703280394cc1a028c40d756f135"
+    },
+    {
+      "path": ".iacode/policies/sandbox-policy.json",
+      "reason": "The canonical sandbox tool policy: tools, images, resources, network and workspace access.",
+      "hashAfter": "706d5df77a03c163c77637cf8be10e6742748f5fe58a59c38886c9d9f6c9e9a4"
+    },
+    {
+      "path": ".iacode/policies/secret-scan-allowlist.json",
+      "reason": "Reviewed credential-shaped values that are not credentials, allowed by digest for the public-history scan.",
+      "hashAfter": "7e3c86a290cb5468e16c96651323c31cde31d63460bb6a3a79fb7b01a5afda7a"
+    },
+    {
+      "path": "agents/profiles/code-reviewer.json",
+      "reason": "The developer and code-reviewer profiles and the coding team.",
+      "hashAfter": "8fbb58189cb7babdb395c63f22539885c538902ac644e080b4ed877e271be503"
+    },
+    {
+      "path": "agents/profiles/developer.json",
+      "reason": "The developer and code-reviewer profiles and the coding team.",
+      "hashAfter": "57c0ef33aebd1ba16a9e75ec01eefeff1f79aa0fa82d912a147c131091bc5071"
+    },
+    {
+      "path": "agents/prompts/code-reviewer.v1.md",
+      "reason": "The developer and code-reviewer profiles and the coding team.",
+      "hashAfter": "46241d60f7c6307b31caea214ce8cbdc8bff14c60624b60b1c1c4aad7357f367"
+    },
+    {
+      "path": "agents/prompts/developer.v1.md",
+      "reason": "The developer and code-reviewer profiles and the coding team.",
+      "hashAfter": "0f8e463748d434686d06b90299f661dc3ba2f963927d6b5c0457ab0b15f46897"
+    },
+    {
+      "path": "agents/teams/coding.json",
+      "reason": "The developer and code-reviewer profiles and the coding team.",
+      "hashAfter": "58217d47d9cb5f7fecc063448a094f83bb0196062c85fbf0ff2fba2a0fd1bd0a"
+    },
+    {
+      "path": "apps/api/migrations/versions/0004_sandbox.py",
+      "reason": "The Gate 3 migration.",
+      "hashAfter": "f335bbe73e9d922fe0047e38ac367298387e554b8fceb27a75d0902f7c092d1a"
+    },
+    {
+      "path": "apps/api/tests/integration/test_sandbox_runs.py",
+      "reason": "The migration, domain, sandbox-run and stream tests.",
+      "hashAfter": "d189990ad62545ee3d776cae5ca4fb2eae07ec5b761949bd0cdac3ad145e394c"
+    },
+    {
+      "path": "docs/GATE-3-CHECKLIST.md",
+      "reason": "The canonical Gate 3 specification.",
+      "hashAfter": "710205b19d0ea6abf13eb6bd674eed721e14a3bf6e3ba23adb0fbd7d818c0906"
+    },
+    {
+      "path": "docs/adr/ADR-0024-public-remote-and-atomic-commits.md",
+      "reason": "The public remote and atomic commits decision.",
+      "hashAfter": "ca671078fa81a29ccd5aa57a84df8ac7d2c818f4f0a3dceedf9b4a97d9cb471f"
+    },
+    {
+      "path": "docs/adr/ADR-0025-sandbox-isolation-boundary.md",
+      "reason": "The sandbox isolation boundary decision.",
+      "hashAfter": "c951bf3f0c06b2bb9323933326c03448b4e93d669d5c0efcc70181932b5a9882"
+    },
+    {
+      "path": "docs/adr/ADR-0026-workspace-lifecycle.md",
+      "reason": "The workspace lifecycle decision.",
+      "hashAfter": "9af17d4c5e6e3276519981bad3e1fd6b080c44ac15cf8435d1a736476656b86a"
+    },
+    {
+      "path": "docs/adr/ADR-0027-tool-execution-policy.md",
+      "reason": "The tool execution policy decision.",
+      "hashAfter": "78f41be9b3e617c955f3c460a5257137674969d8dc57f466398d3d681b3f7eea"
+    },
+    {
+      "path": "docs/adr/README.md",
+      "reason": "The ADR index (Phase 0 fix E).",
+      "hashAfter": "ae3361ecfffd6476cb12fa463ac6ada6fa6c368df276e508224b3368495df1d2"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0001/CLOSURE-REQUIREMENTS.json",
+      "reason": "The Gate 3 checkpoint: its plan, requirements, evidence, commands, decisions, risks, reports and state.",
+      "hashAfter": "d37567077dd70d212038b982794f3ba1247ab72f33953caf14b3557821b89e4f"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0001/CLOSURE-REQUIREMENTS.md",
+      "reason": "The Gate 3 checkpoint: its plan, requirements, evidence, commands, decisions, risks, reports and state.",
+      "hashAfter": "bc85e54384d08ee07f8dacbde975d3eda9f37e76fd58ad71060d04ea2aed060a"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0001/COMMANDS.jsonl",
+      "reason": "The Gate 3 checkpoint: its plan, requirements, evidence, commands, decisions, risks, reports and state.",
+      "hashAfter": "bcd2c869bc752a830aba0aa51087a1af7c6f2908e63ceb350a1302dee813ae09"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0001/DECISIONS.md",
+      "reason": "The Gate 3 checkpoint: its plan, requirements, evidence, commands, decisions, risks, reports and state.",
+      "hashAfter": "c416302c3f9f39b6bdd97e19a45f8bb3b2a2b5c1392fa68d3e5fa24c8448e8c2"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0001/DIFF-SUMMARY.md",
+      "reason": "The Gate 3 checkpoint: its plan, requirements, evidence, commands, decisions, risks, reports and state.",
+      "hashAfter": "ce24f7e19255cb7be873dea0305a8095067a981b34c151aee3b022ab6aa39890"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0001/FILES.json",
+      "reason": "The Gate 3 checkpoint: its plan, requirements, evidence, commands, decisions, risks, reports and state."
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0001/HANDOFF.md",
+      "reason": "The Gate 3 checkpoint: its plan, requirements, evidence, commands, decisions, risks, reports and state.",
+      "hashAfter": "84ee820a7dd19237a06eecebede0c983701b262320e1df86fffea2ce94632a95"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0001/LESSON-PREFLIGHT.json",
+      "reason": "The Gate 3 checkpoint: its plan, requirements, evidence, commands, decisions, risks, reports and state.",
+      "hashAfter": "f3d43cd82d32a6e947ab456415cb0ef490a4a4bc93db326e2e8ccb9bc474c013"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0001/LESSON-PREFLIGHT.md",
+      "reason": "The Gate 3 checkpoint: its plan, requirements, evidence, commands, decisions, risks, reports and state.",
+      "hashAfter": "cca4c1ec43bf357f201f35187b34c2b306bf7528e56d3bd75e5afb110c51c157"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0001/M1-INTERNAL-RED-TEAM.json",
+      "reason": "The Gate 3 checkpoint: its plan, requirements, evidence, commands, decisions, risks, reports and state.",
+      "hashAfter": "6b15691b28d6fe6f091b265a75e2f50f7a2377d20141f6e670fa63259c30c295"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0001/NEXT.md",
+      "reason": "The Gate 3 checkpoint: its plan, requirements, evidence, commands, decisions, risks, reports and state.",
+      "hashAfter": "1249e5c1cbea15b355f87c9807b25fb559c8dd69b40a5ba49543eaf78d5c9dd3"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0001/PLAN.md",
+      "reason": "The Gate 3 checkpoint: its plan, requirements, evidence, commands, decisions, risks, reports and state.",
+      "hashAfter": "b85b6c2eacabace7815223f93dc928777bcdb9c6391ff9ea87758e1b3beaabb0"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0001/PROVENANCE.json",
+      "reason": "The Gate 3 checkpoint: its plan, requirements, evidence, commands, decisions, risks, reports and state.",
+      "hashAfter": "90a42ad68bc8953f5fa1877f399b5ad894b6b8914c990a7b19539815bf77e21b"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0001/QUALITY.json",
+      "reason": "The Gate 3 checkpoint: its plan, requirements, evidence, commands, decisions, risks, reports and state.",
+      "hashAfter": "124f1eb1577e0920119f7f183f51eb5eb77d3762d96594dc671725eb8132dd05"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0001/RED-TEAM-REPORT.md",
+      "reason": "The Gate 3 checkpoint: its plan, requirements, evidence, commands, decisions, risks, reports and state.",
+      "hashAfter": "fc051f38d22a0f156ff8d46b8e8e5e367c18db5c5d2779e119d409cfe6fd0f21"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0001/REQUIREMENTS-MATRIX.json",
+      "reason": "The Gate 3 checkpoint: its plan, requirements, evidence, commands, decisions, risks, reports and state.",
+      "hashAfter": "eafcecd37d7d40cd0a2a4f40a83f5b778921d30b752d67faf7fc0ff774169b99"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0001/REQUIREMENTS-MATRIX.md",
+      "reason": "The Gate 3 checkpoint: its plan, requirements, evidence, commands, decisions, risks, reports and state.",
+      "hashAfter": "2236c63049bf2749a0a691cfc79b5cb9b6aa7cba55c8590d160c6ec15faaf0ad"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0001/REWORK-LOG.jsonl",
+      "reason": "The Gate 3 checkpoint: its plan, requirements, evidence, commands, decisions, risks, reports and state.",
+      "hashAfter": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0001/RISKS.md",
+      "reason": "The Gate 3 checkpoint: its plan, requirements, evidence, commands, decisions, risks, reports and state.",
+      "hashAfter": "fc05d13e4e3fbebe76a8d925649df5a5060b81b9e9b6f29851710b974b17e31c"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0001/RUN-METADATA.json",
+      "reason": "The Gate 3 checkpoint: its plan, requirements, evidence, commands, decisions, risks, reports and state.",
+      "hashAfter": "fde9571741f2bea66aed1a554cd06329dcba8b0f6ab48af14bdeb9b92b738a37"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0001/STATE.json",
+      "reason": "The Gate 3 checkpoint: its plan, requirements, evidence, commands, decisions, risks, reports and state.",
+      "hashAfter": "48fba72a8f96e3d8d03efc150cf3e9a64ab58c81024614ec63a38b80a1eb7e00"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0001/STATUS.md",
+      "reason": "The Gate 3 checkpoint: its plan, requirements, evidence, commands, decisions, risks, reports and state.",
+      "hashAfter": "9c78f467b4c249b2c5799078d77a0affceee4aec4cd7cb4d250f7d51f309cbdd"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0001/TESTS.json",
+      "reason": "The Gate 3 checkpoint: its plan, requirements, evidence, commands, decisions, risks, reports and state.",
+      "hashAfter": "cc375c92912d7e27764dccd489791df4faac3a769ee64f08f005d3253a2e60fa"
+    },
+    {
+      "path": "docs/runbooks/SANDBOX.md",
+      "reason": "Operating, debugging and securing the sandbox.",
+      "hashAfter": "39612706bce5a3481db060ebcc00cce18ebc3f5151b354a5c5286f423922190c"
+    },
+    {
+      "path": "packages/contracts/src/iacode_contracts/sandbox.py",
+      "reason": "The sandbox's shared vocabulary and views.",
+      "hashAfter": "74b58f68cf12088f4037392ed97293031cb3f01c11c0240f28b1e2604529b340"
+    },
+    {
+      "path": "scripts/development-ledger/gate3_red_team.py",
+      "reason": "The Gate 3 internal Red Team.",
+      "hashAfter": "6325ce183c8a1a4476e640350a4840e1cb54df2b1a360f71dfb5f51475b9382c"
+    },
+    {
+      "path": "scripts/development-ledger/gate3_sandbox_attacks.py",
+      "reason": "The in-image half of the Gate 3 Red Team.",
+      "hashAfter": "76f4186706b6a01ffa055023a2e704f60bef65940468ac0db72c9a1620af939b"
+    },
+    {
+      "path": "scripts/development-ledger/remote_sync.py",
+      "reason": "Asks the authorised remote whether the branch and a tag are there.",
+      "hashAfter": "cf1c98fa87b28eccd5cca3c11a26c51b457ca05dd1c0d5572706843239308b37"
+    },
+    {
+      "path": "scripts/development-ledger/secret_scan.py",
+      "reason": "The credential scan of history, staged and tree content.",
+      "hashAfter": "050dbf4d70d05b7017e8a209e61c0adf4389447c2426acbd7060beed7e4c9d39"
+    },
+    {
+      "path": "scripts/iacode/gates/sandbox_tests.py",
+      "reason": "The sandbox mandatory gate.",
+      "hashAfter": "828601f51a4db48112c35db6d70bbcd6aeae1e303cf88a064fc095d2b80dfb0f"
+    },
+    {
+      "path": "scripts/iacode/sandbox_image.py",
+      "reason": "Builds the content-addressed sandbox image.",
+      "hashAfter": "5e29f5e13929cc9a1200ae97c5d62f2cbc19d0e6a65fddb59409ad7687167d34"
+    },
+    {
+      "path": "scripts/iacode/sandbox_snapshot.py",
+      "reason": "Stores a directory as an authorised workspace snapshot.",
+      "hashAfter": "971f9f771658ca42feb15b12e0b9383ea5528e9c380e75d5e463d52d7035fd98"
+    },
+    {
+      "path": "scripts/iacode/scenarios/sandbox_coding_e2e.py",
+      "reason": "The four recorded sandbox scenarios.",
+      "hashAfter": "47f49708f4d7c3e95a675fa85b28731487af74b6d09b2057e6486d413cde2a0c"
+    },
+    {
+      "path": "services/orchestrator/rehearsal/coding.py",
+      "reason": "The coding rehearsal harness.",
+      "hashAfter": "99a400980e0e4440693968772d9544017c800fbc7f9467e3d9c365eed7dffcd0"
+    },
+    {
+      "path": "services/sandbox/Dockerfile",
+      "reason": "The sandbox service, its image profile and its suite.",
+      "hashAfter": "ab8834676055640f4fd6bafc324dbdd4f47e599fd072ba785d1475232f9482f7"
+    },
+    {
+      "path": "services/sandbox/images/iacode-dev/Dockerfile",
+      "reason": "The sandbox service, its image profile and its suite.",
+      "hashAfter": "f935acbe0485e3ecdc3287cd000b627273ac3297dfebe034016408f8e8803ca7"
+    },
+    {
+      "path": "services/sandbox/images/iacode-dev/gitconfig",
+      "reason": "The sandbox service, its image profile and its suite.",
+      "hashAfter": "ef55ff6db0d9127ac7eff2337e5ef38fe410c48c2c4e776eb6057b76329974b9"
+    },
+    {
+      "path": "services/sandbox/pyproject.toml",
+      "reason": "The sandbox service, its image profile and its suite.",
+      "hashAfter": "27c7ca1ef08700c4e31377f80dd6b97c5c173aaec0cd991a827b44f8fead1d2b"
+    },
+    {
+      "path": "services/sandbox/src/iacode_sandbox/__init__.py",
+      "reason": "The sandbox service, its image profile and its suite.",
+      "hashAfter": "71d250d9128e3b51db09a626ee42f947e5aaeaea78e60390edc456be333432ca"
+    },
+    {
+      "path": "services/sandbox/src/iacode_sandbox/artifacts.py",
+      "reason": "The sandbox service, its image profile and its suite.",
+      "hashAfter": "8f65054b943fbcaa3d675c70587f61c8682713c98d4584c9b3d0b9d1544ac6d5"
+    },
+    {
+      "path": "services/sandbox/src/iacode_sandbox/backend.py",
+      "reason": "The sandbox service, its image profile and its suite.",
+      "hashAfter": "9cc8e17c8f5dcd8f43aab3838e543a3263e5d59930ec331a4d8ca538db819fe6"
+    },
+    {
+      "path": "services/sandbox/src/iacode_sandbox/config.py",
+      "reason": "The sandbox service, its image profile and its suite.",
+      "hashAfter": "387ba495c37cf0e46e3602b5625d2e8daf54badf1d2082a68713a6978ed71267"
+    },
+    {
+      "path": "services/sandbox/src/iacode_sandbox/contracts.py",
+      "reason": "The sandbox service, its image profile and its suite.",
+      "hashAfter": "9a3ee7dda677c78a6235f3ac25807625aa18f2021d1389d4c1f83a5a0647bc91"
+    },
+    {
+      "path": "services/sandbox/src/iacode_sandbox/healthcheck.py",
+      "reason": "The sandbox service, its image profile and its suite.",
+      "hashAfter": "8bfe86167dbfa54091e2d56aa1305ab9126d2916fc241fd50c1ed110913ac49d"
+    },
+    {
+      "path": "services/sandbox/src/iacode_sandbox/helper.py",
+      "reason": "The sandbox service, its image profile and its suite.",
+      "hashAfter": "194f2e3598a40720a40780d49a9ff47f9daa8db6d18844264f43668a1e312f10"
+    },
+    {
+      "path": "services/sandbox/src/iacode_sandbox/image.py",
+      "reason": "The sandbox service, its image profile and its suite.",
+      "hashAfter": "1763d4d105b84e6ccbfd632056b43235d9e4e4c261787012c8b8be47cc0171a5"
+    },
+    {
+      "path": "services/sandbox/src/iacode_sandbox/patching.py",
+      "reason": "The sandbox service, its image profile and its suite.",
+      "hashAfter": "9d827676bfad96d4bfe64b926e4428a7fb8b896f0d939286dfd12d6090be59fc"
+    },
+    {
+      "path": "services/sandbox/src/iacode_sandbox/paths.py",
+      "reason": "The sandbox service, its image profile and its suite.",
+      "hashAfter": "aee0fd2087f5bd12821014bc0102caf06e2553ef60dfb1281a7791a0c37d98fc"
+    },
+    {
+      "path": "services/sandbox/src/iacode_sandbox/policy.py",
+      "reason": "The sandbox service, its image profile and its suite.",
+      "hashAfter": "0fa0c0fbfcfbe25f81af9df91fe5de2ed1a95c18b51e06552e4ce442da58c256"
+    },
+    {
+      "path": "services/sandbox/src/iacode_sandbox/service.py",
+      "reason": "The sandbox service, its image profile and its suite.",
+      "hashAfter": "a364ddaa07097851899f319e4f542c74b6b0d5c77417a0626b748ddac483e555"
+    },
+    {
+      "path": "services/sandbox/src/iacode_sandbox/snapshots.py",
+      "reason": "The sandbox service, its image profile and its suite.",
+      "hashAfter": "ffc2529c85e0ca3c66cbd5bc5619616537c9cdc4188f55dd44b2aca832da5d7e"
+    },
+    {
+      "path": "services/sandbox/src/iacode_sandbox/store.py",
+      "reason": "The sandbox service, its image profile and its suite.",
+      "hashAfter": "aabe967e88b7088d3c8c74121a48aed0c2bbddcd94011ec5514593efbc5159b3"
+    },
+    {
+      "path": "services/sandbox/src/iacode_sandbox/telemetry.py",
+      "reason": "The sandbox service, its image profile and its suite.",
+      "hashAfter": "d0726e6c459e5e7b12f3c4e5e47a04939d3d55213718feda9b08788884d0aa7f"
+    },
+    {
+      "path": "services/sandbox/src/iacode_sandbox/tools.py",
+      "reason": "The sandbox service, its image profile and its suite.",
+      "hashAfter": "f42bf2017801a52eb8d971661b03a8e4e97907125c72edbf894944d9976f6bfb"
+    },
+    {
+      "path": "services/sandbox/src/iacode_sandbox/worker.py",
+      "reason": "The sandbox service, its image profile and its suite.",
+      "hashAfter": "5c43f12a1f811f60b5b295e505c84bd8e2b4e199bf193078ed1fd483963e67fe"
+    },
+    {
+      "path": "services/sandbox/tests/conftest.py",
+      "reason": "The sandbox service, its image profile and its suite.",
+      "hashAfter": "5d6687ab142b99b792d1995d94454e20aced11ea2fc47ea7b6dfdc9a6adc777a"
+    },
+    {
+      "path": "services/sandbox/tests/integration/test_sandbox_stack_integration.py",
+      "reason": "The sandbox service, its image profile and its suite.",
+      "hashAfter": "5ff419f4577b47b5658f22e1929f406461838db4286d5cf64691e80e73004e93"
+    },
+    {
+      "path": "services/sandbox/tests/sandbox_fixtures.py",
+      "reason": "The sandbox service, its image profile and its suite.",
+      "hashAfter": "0c1440649a98ec64091be1d817f6708f81d8ecd7643d69153bf76ee5ed45c4d3"
+    },
+    {
+      "path": "services/sandbox/tests/test_sandbox_backend.py",
+      "reason": "The sandbox service, its image profile and its suite.",
+      "hashAfter": "962d16c752381340b10b6bd5275ccd30f8490bf63439660b94f0f178a1d7835d"
+    },
+    {
+      "path": "services/sandbox/tests/test_sandbox_contracts.py",
+      "reason": "The sandbox service, its image profile and its suite.",
+      "hashAfter": "97762e73a843f2ec824893ed1bf4ca6ad07ce6830d6d26c842d24de785b02b63"
+    },
+    {
+      "path": "services/sandbox/tests/test_sandbox_engine_isolation.py",
+      "reason": "The sandbox service, its image profile and its suite.",
+      "hashAfter": "902afc122b3ef77fc8f0b0a83a6479d0976d9081748ce4a248345c5afd1e22fc"
+    },
+    {
+      "path": "services/sandbox/tests/test_sandbox_engine_lifecycle.py",
+      "reason": "The sandbox service, its image profile and its suite.",
+      "hashAfter": "60fe8288160305cd0e6a8be241e4f936b2fd37eff98897c655410445bc917325"
+    },
+    {
+      "path": "services/sandbox/tests/test_sandbox_engine_limits.py",
+      "reason": "The sandbox service, its image profile and its suite.",
+      "hashAfter": "dee2ad6e5a630cff60e94258387d9e9117ea60033e4ba7afec39fbc140909d4b"
+    },
+    {
+      "path": "services/sandbox/tests/test_sandbox_engine_tools.py",
+      "reason": "The sandbox service, its image profile and its suite.",
+      "hashAfter": "61f58eeb38c5dbfcf98c08de2abf8728b9c104abd696805efba0bb76939f555d"
+    },
+    {
+      "path": "services/sandbox/tests/test_sandbox_patching.py",
+      "reason": "The sandbox service, its image profile and its suite.",
+      "hashAfter": "5ce5874b9d4b32837877746ad3d0aec9b4b205b522d7a6de5457de27c5d12d2d"
+    },
+    {
+      "path": "services/sandbox/tests/test_sandbox_paths.py",
+      "reason": "The sandbox service, its image profile and its suite.",
+      "hashAfter": "f082dcf4ef7c433fb18f7a8fec2c85a34ff6212ae8b88067a3ab43918cb4ea17"
+    },
+    {
+      "path": "services/sandbox/tests/test_sandbox_policy.py",
+      "reason": "The sandbox service, its image profile and its suite.",
+      "hashAfter": "a80b0dd9df2f0880a44180fd402484aa28f035743f5972d03193276d29dfe7be"
+    },
+    {
+      "path": "services/sandbox/tests/test_sandbox_service.py",
+      "reason": "The sandbox service, its image profile and its suite.",
+      "hashAfter": "5390506909a5726f31bd60cc13c056a81ef07b471fc82de6227910359c3de0c4"
+    },
+    {
+      "path": "services/sandbox/tests/test_sandbox_telemetry.py",
+      "reason": "The sandbox service, its image profile and its suite.",
+      "hashAfter": "239fa6980639da007b71616535167a0980484a2b1f4feccb06405505653e00a7"
+    },
+    {
+      "path": "services/sandbox/tests/test_sandbox_tools.py",
+      "reason": "The sandbox service, its image profile and its suite.",
+      "hashAfter": "a771df0c78c545e935ebd6cc32941eb90df4865ef76db34a89b83648f1245e73"
+    },
+    {
+      "path": "services/sandbox/tests/test_sandbox_worker.py",
+      "reason": "The sandbox service, its image profile and its suite.",
+      "hashAfter": "be16339d721ef49806613a2fb08e446b1db8fadacfb8fca2fb534daefffc6454"
+    },
+    {
+      "path": "tests/test_gate3_sandbox.py",
+      "reason": "The Gate 3 control-plane suite.",
+      "hashAfter": "5c056e0658af4d7f09a03b239a2a045d38edb82dd943b3a88fada746cf9b8b27"
+    },
+    {
+      "path": "tests/test_git_policy.py",
+      "reason": "The Git policy suite.",
+      "hashAfter": "7e761e7af71894626dbde53eab54ef5660b1316f159a6d8fa3ae662ea2779e95"
+    }
+  ],
+  "filesModified": [
+    {
+      "path": ".gitattributes",
+      "reason": "Keeps the sandbox image's gitconfig at LF.",
+      "hashAfter": "fc6e5389129d8a50c9d5e11ea5d5d930e1968012d8915982921d82266d379e47",
+      "hashBefore": "2681d5606d36123803d89af7dde47253328b76a6975df94518a8e86b10162a4e"
+    },
+    {
+      "path": ".iacode/anchors/checkpoint-chain.json",
+      "reason": "Anchors GATE-2-CP-0002, the sealed predecessor.",
+      "hashAfter": "73e4cef75167b32b228ecd8a9f9c005cb554d9bcaa3ae5d7c131e54779505f86",
+      "hashBefore": "3b3980e69a1341cfbe4670de73907a763344c152e9e45c6f81327ff19ee77588"
+    },
+    {
+      "path": ".iacode/memory/LESSONS.md",
+      "reason": "The index rendered from the memory.",
+      "hashAfter": "157d6e86e143ec6e217dbe9cc76852ad8db1bc6fb3d201ca3d69dbeb269ff201",
+      "hashBefore": "b578602881c77261323de6d024ebb7ef7f56c9f0528ba6a8702aaede5b095fce"
+    },
+    {
+      "path": ".iacode/memory/POLICY.json",
+      "reason": "Memory policy 2.3.0: the index must be the render of the memory (Phase 0 fix C).",
+      "hashAfter": "013002272837cbe1d10819cfca68ff1d2e7d3bcb29011ea550f599cb7a51ac4e",
+      "hashBefore": "28e63bd7ab08d65a89d3ae1880b4897f8c3ec6a27b6e87466dde0408ba3a0991"
+    },
+    {
+      "path": ".iacode/memory/guardrails/registry.json",
+      "reason": "GRD-0053 to GRD-0055, the guardrails of the Gate's lessons.",
+      "hashAfter": "fbd8d2d09b8b19dcf26b3702ce4c7ddd80d7ad7d72bb9fc1e5b059d3b7916764",
+      "hashBefore": "1e75c4221258aea527207d4708db79777a1c666577c8a448c54104079e0e7937"
+    },
+    {
+      "path": ".iacode/memory/lessons.jsonl",
+      "reason": "LSN-0051 to LSN-0054, the Gate's lessons.",
+      "hashAfter": "0db408ce9f9482f9ca16a771022f5e626f3435195677803ee69aabf9bccc5a69",
+      "hashBefore": "014ed230d256da155da022241fdb3b3f5269e56e471c092c828224b1c2ff150e"
+    },
+    {
+      "path": ".iacode/policies/canonical-requirements.json",
+      "reason": "Mirrors docs/GATE-3-CHECKLIST.md.",
+      "hashAfter": "7dc446c722f6bd88c8937c26e33088ed3ebbbf3a03d3168844bb54ccdf537a73",
+      "hashBefore": "6cf41637a4def405a096abfbcf11b71d07f51292685f1c8a26f9a15fa213314e"
+    },
+    {
+      "path": ".iacode/policies/quality-gates.json",
+      "reason": "The sandboxTests mandatory gate.",
+      "hashAfter": "0a2598099b59fc790235569af45eb9a904f4daecd4f960d918e9f62fbbcd959d",
+      "hashBefore": "d0b8c2c3b1779645ade6f4fbecdd38a3d82ede29f9850c5abf18667353a20b1d"
+    },
+    {
+      "path": ".iacode/policies/secret-policy.md",
+      "reason": "Public history and sandbox rules of the secret policy.",
+      "hashAfter": "f2df78dbbcb8cd1fe572e94c1de5d6eff58c26177ea043190581a19246a7806c",
+      "hashBefore": "d16d6cfa71c3d9d42d28495e97dc2928c655b557d56501854e9429063d4f5330"
+    },
+    {
+      "path": ".iacode/policies/test-suites.json",
+      "reason": "The counted sandbox suite.",
+      "hashAfter": "ceaa8c6a6c06038e6e176526ba1a5791e46a007d9bcc40409db539f46ccdfc80",
+      "hashBefore": "6f9dd588af9b6b24e5f473b658727ce7a5ca79eb0f1c8bb25d4a4de5b595adb3"
+    },
+    {
+      "path": ".iacode/schemas/memory-policy.schema.json",
+      "reason": "Admits memory policies 2.2.0 and 2.3.0 (Phase 0 fixes B and C).",
+      "hashAfter": "f25078b59a6a64f1af3322cfc8593778a671c51f7b49b81810f80bad1cd112df",
+      "hashBefore": "aa3d338b631eac7d9b81865c7a3e80b291a0d747624a618a2fd64eb06ef55134"
+    },
+    {
+      "path": "README.md",
+      "reason": "The delivered boundary of Gate 3.",
+      "hashAfter": "502efed9ed2b7229837b8134ddfb3a8003e14196c1157514272e3eedb626de00",
+      "hashBefore": "f43181289a75c8c86f8afebc40df2cbe86f4041fb84771d7bdc2f31400c26c7c"
+    },
+    {
+      "path": "START-HERE.md",
+      "reason": "The current Gate and the next step of M1.",
+      "hashAfter": "5e82d8a7e1e3a330047986d3e746509673dcb49f953a30bb864de465e61d5d72",
+      "hashBefore": "8420275294e54a3dc52c2e7987c85e5239605a35a4ce662e0455a6f6b171b6d5"
+    },
+    {
+      "path": "agents/README.md",
+      "reason": "The developer and code-reviewer profiles and the coding team.",
+      "hashAfter": "b91f016c21dcdd1e7b38c6aee2e03008537df6e52f2b46684691972c41f68d81",
+      "hashBefore": "bf0001a495dd7438846917bc42e99e0168bff386eaa44e91792d8aaec95cb33b"
+    },
+    {
+      "path": "apps/api/src/iacode_api/routes/agent_runs.py",
+      "reason": "A terminal stream drains every page (Phase 0 fix D).",
+      "hashAfter": "196ac0f2f605a779a0b040125f80042646a0c880415709ae316254264246f227",
+      "hashBefore": "968b3de50c601906b89a5a2d38bdca985fc80de3e92ab39154d8a0e841b80906"
+    },
+    {
+      "path": "apps/api/tests/integration/test_agent_runtime_persistence.py",
+      "reason": "The migration, domain, sandbox-run and stream tests.",
+      "hashAfter": "e0e13efae7fc816fb8dcda8f48822ba20048b8dc7eb5987c84567bd4cffc5f67",
+      "hashBefore": "47f95eae06e77691a868b1a1569f505497d4d967b79951e5edb192a8cee73011"
+    },
+    {
+      "path": "apps/api/tests/integration/test_migrations.py",
+      "reason": "The migration, domain, sandbox-run and stream tests.",
+      "hashAfter": "1566eb8c3fcd9ba6b74c039c2f83386d2d9bcdc8603ef441e20223e67f16c696",
+      "hashBefore": "75af0fff9f9b3ff43c6d2c83e0802ec9cd3204b03d00bd670c64fd4cf726a08a"
+    },
+    {
+      "path": "apps/api/tests/unit/test_agent_runtime_api.py",
+      "reason": "The migration, domain, sandbox-run and stream tests.",
+      "hashAfter": "4d8b739419f6af01874a487a94ed1d82df90d18624b396d3a7cdb4c26650c76a",
+      "hashBefore": "bb13ff9b9d283a78909bcf5c5bd984012436b5979d49f8ecc5aba840fe9eb172"
+    },
+    {
+      "path": "apps/api/tests/unit/test_domain_model.py",
+      "reason": "The migration, domain, sandbox-run and stream tests.",
+      "hashAfter": "bca40a47f3b320cbadcb1ae1a3b81339e49309a5c229d712a4f56e993ed74ccf",
+      "hashBefore": "159ef4e6bfd2375cffa9896151f766660401ed401c0ec1f6996455c0a56eb1d0"
+    },
+    {
+      "path": "apps/web/src/app/agent-runtime/agent-runtime.html",
+      "reason": "Shows the tools a run's sandbox executed.",
+      "hashAfter": "2a837bd62c1bfe7f40abdde6d1a667505570ce6f2d40f9ba8f35ff2c6d5bb53a",
+      "hashBefore": "dd9ef924adf5ff0c5b23c9c908c823858940610d387f4ac527169d92e4a56f2f"
+    },
+    {
+      "path": "apps/web/src/app/agent-runtime/agent-runtime.service.spec.ts",
+      "reason": "Shows the tools a run's sandbox executed.",
+      "hashAfter": "568bd6c4bfecf424585cd672cdc291bfc2a85e54a53b3c07ee5110fa466d5e1f",
+      "hashBefore": "6933f02b83d181c29f0071f2c847e15d8492003092fb3578fea0f0a5c3570a4b"
+    },
+    {
+      "path": "apps/web/src/app/agent-runtime/agent-runtime.service.ts",
+      "reason": "Shows the tools a run's sandbox executed.",
+      "hashAfter": "726fdeddcc3efc21777d1658347f89bf6b475b864544bcd8e0bb79795ffe40b7",
+      "hashBefore": "bfe78a43e4d29f7be98cb1168fef7e0e27f8fe64dc70c9687f28a11350520555"
+    },
+    {
+      "path": "apps/web/src/app/agent-runtime/agent-runtime.spec.ts",
+      "reason": "Shows the tools a run's sandbox executed.",
+      "hashAfter": "b61e01341d0e1af9dc20e2cf8f100368cc8c83ea359438707ef13fb78c103823",
+      "hashBefore": "db6ab09816bf9b2fe7c4d44ba383d2c4929821cbcc4302f0513860a1d5f5aef1"
+    },
+    {
+      "path": "docs/ARCHITECTURE.md",
+      "reason": "The sandbox and its boundaries.",
+      "hashAfter": "40c95ca8b08b408738bdd3e07a7c9c2a878dd447a028c276f97ea89b9a24b9c6",
+      "hashBefore": "81ead9bc185681a8f2d6f118b9e897446c728fc7cf9208ec6d960da74321cf5f"
+    },
+    {
+      "path": "docs/DEVELOPMENT-CONTRACT.md",
+      "reason": "The Git discipline of the public history.",
+      "hashAfter": "8323c1cd307eac6019ee0bd0839eab977e789c3c17e9f4c845c4928bdbdcb267",
+      "hashBefore": "483f2b53e5549f18acb9d02ff288e0619f5fbcdee67dfdc646dd7e1378919e67"
+    },
+    {
+      "path": "docs/DEVELOPMENT.md",
+      "reason": "The sandbox gate, suite and scenarios.",
+      "hashAfter": "e7c2fc859b18c13ac7936893ce9344d4d4fda85c7d51e7e7e4dbc218a56e508b",
+      "hashBefore": "4a5eb93da5a107b38f9f1f6e543da20c05b8947789f23851873602f08eb76535"
+    },
+    {
+      "path": "docs/VERSIONS.md",
+      "reason": "The sandbox's pinned client, base image and Git.",
+      "hashAfter": "5ce17a26e298241b5bff9acb1e626f723e8a21cc09f06124aef155139118d2f3",
+      "hashBefore": "47e6e03839f175c061c5f6c84689552b607d1129a1f220f3942b18e3c6b41828"
+    },
+    {
+      "path": "docs/checkpoints/LATEST.md",
+      "reason": "Names this checkpoint.",
+      "hashAfter": "b263d351e78c4b4b7afc3d605cecb9c78b035dacd3377332afb51ed0748aab73",
+      "hashBefore": "87ed0a12405201b819c7735d5a5d78049cc7d8af284f6ff300a153652cbbe76f"
+    },
+    {
+      "path": "docs/runbooks/AGENT-RUNTIME.md",
+      "reason": "Which stages the sandbox answers.",
+      "hashAfter": "84d62121cb09c4546dc550b413ebc6513807e97abaf77d5aedfe74e4b548d6e8",
+      "hashBefore": "94b8614bcc00b4c5bbb26cb0b6af12f0a8b7bcd7ad5680186fa0019986b7f071"
+    },
+    {
+      "path": "infra/compose/.env.example",
+      "reason": "The sandbox service's settings.",
+      "hashAfter": "e7a5bc120c2d508cdef79598cc70c9454b6428632d843b86cdd866be343aec85",
+      "hashBefore": "54ad0be50fb0943d708f40337d09710101535cad26bb4233f08225a789fb2de9"
+    },
+    {
+      "path": "infra/compose/docker-compose.yml",
+      "reason": "The sandbox service.",
+      "hashAfter": "635a108d8d6648bbd133bd77bfe9fa195acf9aecefa6f2146e48e54597f2f842",
+      "hashBefore": "649db4093cc653f25ad3f334f7ceaac76144e1335834fabc259928679f9b21c7"
+    },
+    {
+      "path": "infra/prometheus/prometheus.yml",
+      "reason": "Scrapes the sandbox service.",
+      "hashAfter": "554a0c5486bf19d773425b0dd3aae4b17c25e38b40644107fd4c3530cc976a72",
+      "hashBefore": "07b0e542b6620deccf8240f33f742d0aafde38f57557f75dcadb938f654279e7"
+    },
+    {
+      "path": "infra/tests/test_compose_definition.py",
+      "reason": "The infrastructure suite knows the sandbox service and its engine socket.",
+      "hashAfter": "0585a14751b2e588e87713a39828be75087b8801803dc05c851c77c38ea23533",
+      "hashBefore": "0b9b1d5f934d3c723e987c81bb26e696c69d6019ba5c56479b1927573b226480"
+    },
+    {
+      "path": "infra/tests/test_running_stack.py",
+      "reason": "The infrastructure suite knows the sandbox service and its engine socket.",
+      "hashAfter": "bb7c6424eccb43ec7508e751bd8bd9eea935ad520b209116cd1b76a4f62e65ac",
+      "hashBefore": "8c110d9ce267bcbc93464d7a6b8c2325866d6fcbb9ca2e038f947662f32f147e"
+    },
+    {
+      "path": "packages/contracts/src/iacode_contracts/agent_runtime.py",
+      "reason": "The sandbox's shared vocabulary and views.",
+      "hashAfter": "fa4cb60c650f4d95593d2863b756c8f1e696c1c153ee507a12def47444c3b7b0",
+      "hashBefore": "5c56741827b3f531845fdf236a843cc031d3533505608fc76a4c4dfcead1a1f4"
+    },
+    {
+      "path": "packages/persistence/src/iacode_persistence/models.py",
+      "reason": "Sandbox sessions and the evolved tool calls.",
+      "hashAfter": "028d608be575e06879eaefb65db789df3a9c89f1522b1d4900d99b8696e5be2a",
+      "hashBefore": "c0ecef2ae514770cf2fea71dcfe99415ae561ea49b5280fbbd9ffd5923d648a8"
+    },
+    {
+      "path": "ruff.toml",
+      "reason": "Per-file lint settings for the sandbox package and its tests.",
+      "hashAfter": "c42ad3c2ee20077b90687f6f6f8b8afbfe440da1180bf80b22ae7b7f3f5fade8",
+      "hashBefore": "0407a55406677ab8c7a2d411df2e71fca2648ffcb4f76e93b2f4b209000239f1"
+    },
+    {
+      "path": "scripts/development-ledger/gate2_red_team.py",
+      "reason": "G2-T plants into a disposable copy (Phase 0 scope fix).",
+      "hashAfter": "3ff6ba03abf8f640bffd1cc043e3e9b0ce265b1895ffcdc6ee316e319f8d9c60",
+      "hashBefore": "7799faebf8382023e4d8b1fa6df9ccb392eea8b899bed842d779cea0d93fad39"
+    },
+    {
+      "path": "scripts/development-ledger/ledger_common.py",
+      "reason": "One command replayability rule (Phase 0 fix A).",
+      "hashAfter": "7644c3acfd75758c4a431e8983be363a23596b45c6e893516e5ac80c81c7d02d",
+      "hashBefore": "e021e473dbc2e6f942b5a9c815fcf3ec0366d83a28ddd25143e729e1d76c19f4"
+    },
+    {
+      "path": "scripts/development-ledger/lessons.py",
+      "reason": "One guardrail resolution function and the index freshness rule (Phase 0 fixes B and C).",
+      "hashAfter": "f35079d18cf03a578b2265685bf641c52cb317464c5ab0fc9a301db4ce0f6ec0",
+      "hashBefore": "0293e1b44e4de81062ac1de0814bfb0fbd7ec56f940351eec51c8d493193ce9b"
+    },
+    {
+      "path": "scripts/development-ledger/record_command.py",
+      "reason": "Refuses an unreplayable command before running it (Phase 0 fix A).",
+      "hashAfter": "6b8a70a40a2cc814b45ae7b6c98ae28c39c703b9c965e3ad0ca507a0c169750f",
+      "hashBefore": "cf66d63660a18f4349c9a642c367a793dba7e0779fd5ee754e8bfde22a764fe4"
+    },
+    {
+      "path": "scripts/development-ledger/validate_checkpoint.py",
+      "reason": "Asks the shared replayability rule (Phase 0 fix A).",
+      "hashAfter": "21ea31b512315e508936e677c1a828b89f34691d62d8e6d1b16a9acbd5c79b1b",
+      "hashBefore": "428c33d97c842d85a8a139a5d8b5d478279f40d7a449e092e129170d4e068252"
+    },
+    {
+      "path": "scripts/development-ledger/validate_lessons.py",
+      "reason": "Validates, renders, then revalidates (Phase 0 fix C).",
+      "hashAfter": "7a80de16bc0d99b2951b539f1b651bd26d7b02d3664de14e96e1b1a12d6b3f97",
+      "hashBefore": "ea676d739e1b40e13679f5fb3dcbb15ddde2e121b02a339452293e160e34386a"
+    },
+    {
+      "path": "scripts/iacode/compose.py",
+      "reason": "The sandbox service among the healthy services.",
+      "hashAfter": "51da8d708d18e317098eb25ab26903def3a90d9600d70026bdabe6e6587890ca",
+      "hashBefore": "ce333633403d8b5e5c3f3a42c70245cbf85fe082ad6dc6e36ddd3c578cab116b"
+    },
+    {
+      "path": "scripts/iacode/gates/lint.py",
+      "reason": "Lints the sandbox package and its tests.",
+      "hashAfter": "ec7c68767990ab5afef7e5a76c4fba178344cf1457c41d3463e3c16dc65d1390",
+      "hashBefore": "29c1b5c831e4c2a4e00dfb7daec18df37d809d562a06a550cb0678c71ffae7c6"
+    },
+    {
+      "path": "scripts/iacode/verify.py",
+      "reason": "The Gate 3 verification stages.",
+      "hashAfter": "a13fd5b96d8d6ac40076e6dd0be46c6794fe6e32c94cfaab1f9942062dd4037c",
+      "hashBefore": "f23fb164483734faf74d12ca0137114ebb6a7e700f78b1841923a9032018974e"
+    },
+    {
+      "path": "services/agent-runtime/src/iacode_agent_runtime/contracts.py",
+      "reason": "Sandbox policies and workspaces in the plan; executed tools in a run's detail.",
+      "hashAfter": "f71a18219648aba7c0eec5369ee727f86c15bb35cd4097c1afbd3593c8f6e86b",
+      "hashBefore": "6cba46ed2694f97797407ca1ddde897674ad07dd41cd32198fb315e461cdcacb"
+    },
+    {
+      "path": "services/agent-runtime/src/iacode_agent_runtime/profiles.py",
+      "reason": "Sandbox policies and workspaces in the plan; executed tools in a run's detail.",
+      "hashAfter": "8c4390546a271952ff429534b01122f73f9989e586194487c1956fa80b4c28da",
+      "hashBefore": "5397e2d21d7458a114e98728ee01162ba58472876df806dce790ec13099255d0"
+    },
+    {
+      "path": "services/agent-runtime/src/iacode_agent_runtime/service.py",
+      "reason": "Sandbox policies and workspaces in the plan; executed tools in a run's detail.",
+      "hashAfter": "9c29a8216ea9427db2de798535c0af639cc3bc2623567540f7a524d5550ac08b",
+      "hashBefore": "066a224c139a3a70d232a875961ecaf0c1f4e10eeda7b93d775868fcf3654968"
+    },
+    {
+      "path": "services/agent-runtime/tests/test_registry.py",
+      "reason": "Sandbox profiles, plans and runs.",
+      "hashAfter": "7ebc8ee9e86219e5a40df5692e624aaea9c4af23ba35f659f0eed9689874789c",
+      "hashBefore": "b6726b69eba9555118fe3ce4e064ff7b0bf6f470799e6f489a108796f4ad17ce"
+    },
+    {
+      "path": "services/agent-runtime/tests/test_runtime_contracts.py",
+      "reason": "Sandbox profiles, plans and runs.",
+      "hashAfter": "96275657c0209a6c96b11764528e53d04363a29ff2e3cd65116138ca12d0a7e8",
+      "hashBefore": "5ec448749ae22423450dcaec919f9996f0ed6739e29e8b1ad62ff0018785889a"
+    },
+    {
+      "path": "services/orchestrator/src/iacode_orchestrator/agent_runtime/activities.py",
+      "reason": "Persists a sandbox result through the store's validation.",
+      "hashAfter": "31d8b946cad619e3b6cdb7d9f87f053d4369d4b8c5976d23d43c1a85faa4f9de",
+      "hashBefore": "fc16b8acb16405b2d2e982b54a728aec3711730cee1959aa5ce1369568d0fca0"
+    },
+    {
+      "path": "services/orchestrator/src/iacode_orchestrator/workflows/agent_run.py",
+      "reason": "Dispatches a sandboxed stage's tool requests to the sandbox and releases it.",
+      "hashAfter": "83ddd4c6f0efe26b39e5a598186258f178cc0d58af8b2eb8fb4b664a9d5c3484",
+      "hashBefore": "c04f3d9d12cba789da36f0c2c677c95ce091f5471745e1ec9db80f5f9d4f524a"
+    },
+    {
+      "path": "services/sandbox/README.md",
+      "reason": "The sandbox service, its image profile and its suite.",
+      "hashAfter": "ffbba7d17fc253148207a162814cea17c1d7edded2d2187940125b18ef3fd5fa",
+      "hashBefore": "526a5415da05259e7ffa6c70d6175d99bc807e7a23812e22d155b8591f5b1c0e"
+    },
+    {
+      "path": "tests/test_gate2_agent_runtime.py",
+      "reason": "Controls generalised so they hold for the Gate after Gate 2.",
+      "hashAfter": "2dea9aa774fb16ca0ff689eb7b3aa5849bba8a532070a548c8b3c3fa056dda43",
+      "hashBefore": "f524b3a9ba4a073b8efe8bb57cc3d0bbafdf9b02a5835cfe99f96b2048978812"
+    }
+  ],
   "filesDeleted": []
 }
