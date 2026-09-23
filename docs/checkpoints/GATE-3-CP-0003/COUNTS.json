@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "1.0.0",
+  "checkpoint": "GATE-3-CP-0003",
+  "generatedAt": "2026-09-23T09:23:45Z",
+  "counts": {
+    "TESTS": {
+      "numerator": 1548,
+      "denominator": 1548,
+      "source": "discovery over every counted suite of .iacode/policies/test-suites.json, cross-checked with TESTS.json and deduplicated by physical execution"
+    },
+    "REQUIREMENTS": {
+      "numerator": 197,
+      "denominator": 197,
+      "source": "REQUIREMENTS-MATRIX.json evaluated against the derived expected set"
+    },
+    "FINDINGS": {
+      "numerator": 3,
+      "denominator": 3,
+      "source": "the sealed audit review reports and the closure record"
+    },
+    "ATTACKS": {
+      "numerator": 27,
+      "denominator": 27,
+      "source": "M1-INTERNAL-RED-TEAM.json"
+    },
+    "LESSONS": {
+      "numerator": 53,
+      "denominator": 56,
+      "source": ".iacode/memory/lessons.jsonl"
+    },
+    "GUARDRAILS": {
+      "numerator": 57,
+      "denominator": 57,
+      "source": ".iacode/memory/guardrails/registry.json measured for effectiveness"
+    }
+  }
+}

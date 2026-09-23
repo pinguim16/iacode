@@ -100,6 +100,7 @@ def main() -> int:
             "coveragePercent": completeness.get("coveragePercent"),
             "evidenceCoveragePercent": completeness.get("evidenceCoveragePercent"),
             "auditor": completeness.get("auditor"),
+            "evidence": ["file:COMPLETENESS-REPORT.json", "command:cmd-0104"],
         })
 
     measured = guardrail_effectiveness(ROOT)

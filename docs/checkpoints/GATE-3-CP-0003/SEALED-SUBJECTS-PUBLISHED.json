@@ -1,0 +1,173 @@
+{
+  "schemaVersion": "1.0.0",
+  "artifact": "SEALED-SUBJECTS",
+  "checkpoint": "GATE-3-CP-0003",
+  "generatedAt": "2026-09-23T08:52:28Z",
+  "anchors": 19,
+  "source": "https://github.com/pinguim16/iacode.git",
+  "subjects": [
+    {
+      "gate": "GATE 0",
+      "checkpoint": "GATE-0-CP-0001",
+      "finalOfGate": true,
+      "tag": "iacode-checkpoints/GATE-0-CP-0001",
+      "commit": "195739ffd5a588a55096ebd8a6a7f64057e1f66d",
+      "status": "INTERNAL_GATE_PASS",
+      "requirements": 118,
+      "coveragePercent": 100.0,
+      "greenKeeper": "PASS",
+      "completeness": "PASS",
+      "validatorOutput": "CHECKPOINT_VALID",
+      "ownRevisionValidator": {
+        "exitCode": 1,
+        "output": "CHECKPOINT_INVALID - COMMANDS.jsonl:3: recorded input does not exist: var/verify-report.json - COMMANDS.jsonl:4: recorded input does not exist: var/verify-report.json"
+      },
+      "checks": {
+        "worktreeCreated": true,
+        "validatesDetachedAtTag": true,
+        "latestNamesTheCheckpoint": true,
+        "statusAsExpected": true,
+        "currentCommitNamesOwnTag": true,
+        "anchoredAtTheTagCommit": true,
+        "worktreeCleanAfterValidation": true
+      },
+      "ok": true
+    },
+    {
+      "gate": "GATE 1",
+      "checkpoint": "GATE-1-CP-0001",
+      "finalOfGate": true,
+      "tag": "iacode-checkpoints/GATE-1-CP-0001",
+      "commit": "4de6b2fb191ab3e7d7879fe81b5a72ce454829b2",
+      "status": "INTERNAL_GATE_PASS",
+      "requirements": 161,
+      "coveragePercent": 100.0,
+      "greenKeeper": "PASS",
+      "completeness": "PASS",
+      "validatorOutput": "CHECKPOINT_VALID",
+      "ownRevisionValidator": {
+        "exitCode": 0,
+        "output": "CHECKPOINT_VALID"
+      },
+      "checks": {
+        "worktreeCreated": true,
+        "validatesDetachedAtTag": true,
+        "latestNamesTheCheckpoint": true,
+        "statusAsExpected": true,
+        "currentCommitNamesOwnTag": true,
+        "anchoredAtTheTagCommit": true,
+        "worktreeCleanAfterValidation": true
+      },
+      "ok": true
+    },
+    {
+      "gate": "GATE 2",
+      "checkpoint": "GATE-2-CP-0001",
+      "finalOfGate": false,
+      "tag": "iacode-checkpoints/GATE-2-CP-0001",
+      "commit": "424650d58167422cda08ebd580cc70fe75433668",
+      "status": "BLOCKED",
+      "requirements": 0,
+      "coveragePercent": 0.0,
+      "greenKeeper": "PASS",
+      "completeness": "FAIL",
+      "validatorOutput": "CHECKPOINT_VALID",
+      "ownRevisionValidator": {
+        "exitCode": 1,
+        "output": "CHECKPOINT_INVALID - detached HEAD validation requires STATE.json currentCommit to name the checkpoint tag"
+      },
+      "checks": {
+        "worktreeCreated": true,
+        "validatesDetachedAtTag": true,
+        "latestNamesTheCheckpoint": true,
+        "statusAsExpected": true,
+        "currentCommitNamesOwnTag": true,
+        "anchoredAtTheTagCommit": true,
+        "worktreeCleanAfterValidation": true
+      },
+      "ok": true
+    },
+    {
+      "gate": "GATE 2",
+      "checkpoint": "GATE-2-CP-0002",
+      "finalOfGate": true,
+      "tag": "iacode-checkpoints/GATE-2-CP-0002",
+      "commit": "d4a3998ce745dcbfcf6a8498f267ee302834543f",
+      "status": "INTERNAL_GATE_PASS",
+      "requirements": 186,
+      "coveragePercent": 100.0,
+      "greenKeeper": "PASS",
+      "completeness": "PASS",
+      "validatorOutput": "CHECKPOINT_VALID",
+      "ownRevisionValidator": {
+        "exitCode": 0,
+        "output": "CHECKPOINT_VALID"
+      },
+      "checks": {
+        "worktreeCreated": true,
+        "validatesDetachedAtTag": true,
+        "latestNamesTheCheckpoint": true,
+        "statusAsExpected": true,
+        "currentCommitNamesOwnTag": true,
+        "anchoredAtTheTagCommit": true,
+        "worktreeCleanAfterValidation": true
+      },
+      "ok": true
+    },
+    {
+      "gate": "GATE 3",
+      "checkpoint": "GATE-3-CP-0001",
+      "finalOfGate": true,
+      "tag": "iacode-checkpoints/GATE-3-CP-0001",
+      "commit": "3bc8e9d8a94d44163d1af9325ad5b2272f71f8ed",
+      "status": "INTERNAL_GATE_PASS",
+      "requirements": 192,
+      "coveragePercent": 100.0,
+      "greenKeeper": "PASS",
+      "completeness": "PASS",
+      "validatorOutput": "CHECKPOINT_VALID",
+      "ownRevisionValidator": {
+        "exitCode": 0,
+        "output": "CHECKPOINT_VALID"
+      },
+      "checks": {
+        "worktreeCreated": true,
+        "validatesDetachedAtTag": true,
+        "latestNamesTheCheckpoint": true,
+        "statusAsExpected": true,
+        "currentCommitNamesOwnTag": true,
+        "anchoredAtTheTagCommit": true,
+        "worktreeCleanAfterValidation": true
+      },
+      "ok": true
+    },
+    {
+      "gate": "GATE 3",
+      "checkpoint": "GATE-3-CP-0002",
+      "finalOfGate": false,
+      "tag": "iacode-checkpoints/GATE-3-CP-0002",
+      "commit": "3a526925cf653ffaa9497cff628d08d50424271a",
+      "status": "REWORK_REQUIRED",
+      "requirements": 193,
+      "coveragePercent": 100.0,
+      "greenKeeper": "PASS",
+      "completeness": "PASS",
+      "validatorOutput": "CHECKPOINT_VALID",
+      "ownRevisionValidator": {
+        "exitCode": 0,
+        "output": "CHECKPOINT_VALID"
+      },
+      "checks": {
+        "worktreeCreated": true,
+        "validatesDetachedAtTag": true,
+        "latestNamesTheCheckpoint": true,
+        "statusAsExpected": true,
+        "currentCommitNamesOwnTag": true,
+        "anchoredAtTheTagCommit": true,
+        "worktreeCleanAfterValidation": true
+      },
+      "ok": true
+    }
+  ],
+  "result": "PASS"
+}

@@ -12,19 +12,39 @@
       "hashAfter": "060a88c790eb9d5356802a74b6952f557a376cfdc063912061b91a6bba7426fb"
     },
     {
+      "path": "docs/checkpoints/GATE-3-CP-0003/CLEAN-CLONE-REPORT.json",
+      "reason": "The full verification of a fresh clone of the published remote after the correction.",
+      "hashAfter": "6392fb3fda98cd683a61ccaab1ea3c3a6a469b5429ef4515f0960f271a14ef96"
+    },
+    {
       "path": "docs/checkpoints/GATE-3-CP-0003/CLOSURE-REQUIREMENTS.json",
       "reason": "The derived requirement set of this checkpoint.",
-      "hashAfter": "fe8fd3220e2bae3e2fcd620b9fcdfd832b8c71d77957d23a1cb82a4cd41d7df2"
+      "hashAfter": "9e5a998b66b9ebe783b4bd378a81fcba72f1707129df9040b170270a3ff5fd30"
     },
     {
       "path": "docs/checkpoints/GATE-3-CP-0003/CLOSURE-REQUIREMENTS.md",
       "reason": "Readable rendering of the closure requirements.",
-      "hashAfter": "08fa32bfc4f4beecaeff3cb17ef5d4fdb2fd0fc50c142678f46bb7840626fd04"
+      "hashAfter": "60423cd9dab1a44873251c5e25e8f5678abb0e176c88e83f2649b0a035a54339"
     },
     {
       "path": "docs/checkpoints/GATE-3-CP-0003/COMMANDS.jsonl",
       "reason": "Append-only command ledger of this run.",
-      "hashAfter": "682fed98f1bd4f1e9ddec4255b831c18bf0e438dd677d80fd7d9e13e13705150"
+      "hashAfter": "86919bcfcc1c291b8939c6cb8b1ebdd42ab33260fd894cf6b626562109080c9d"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0003/COMPLETENESS-REPORT.json",
+      "reason": "Delivery completeness audit of this checkpoint.",
+      "hashAfter": "20b7d6d7c504784273846603f96d9f6952100ca6dbfdaadfcef0876363519fd9"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0003/COMPLETENESS-REPORT.md",
+      "reason": "Readable rendering of the completeness audit.",
+      "hashAfter": "19e7e77e55855ef6a101896f24996d93a7cc5a3c66a6607e88b24da17ce622fd"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0003/COUNTS.json",
+      "reason": "Every count this checkpoint uses as evidence, derived once.",
+      "hashAfter": "b80a5b5e7431211df406b68890fb11de0f38f81a499bca3473d8eea0138f5a28"
     },
     {
       "path": "docs/checkpoints/GATE-3-CP-0003/DECISIONS.md",
@@ -41,9 +61,14 @@
       "reason": "The declared inventory itself."
     },
     {
+      "path": "docs/checkpoints/GATE-3-CP-0003/FINAL-REPORT.md",
+      "reason": "Closing report of this delivery.",
+      "hashAfter": "34d7ee351b9854d1b6160948f6a00cc0cf9c8613a47d412c9358d5c9e5d681d1"
+    },
+    {
       "path": "docs/checkpoints/GATE-3-CP-0003/HANDOFF.md",
       "reason": "Handoff for the next run.",
-      "hashAfter": "b931cd02cde04dcb66ed1dba8f44cbf0c516fcd80af466cbdc13eafac897f8d2"
+      "hashAfter": "7c8cd873644b011f510508824a587d596578779c2074366de2edd2c3a4c78c42"
     },
     {
       "path": "docs/checkpoints/GATE-3-CP-0003/LESSON-PREFLIGHT.json",
@@ -59,6 +84,26 @@
       "path": "docs/checkpoints/GATE-3-CP-0003/LIVE-CODING-RUN.json",
       "reason": "M1-F-001 (envelope shape): the live coding run of the configured model, read from what the stack recorded.",
       "hashAfter": "548aa95a20f13e6fd04f2f1acd6d4e74bc930d50d982918395148d92f7b6bbd7"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0003/M1-FINDINGS-CLOSURE.json",
+      "reason": "The closure of the three findings of audit M1-CP-0002.",
+      "hashAfter": "518cc285f44157544d90cce445c4fd9d4dd017026354f2962fc2f6d2d5d8c05d"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0003/M1-FINDINGS-CLOSURE.md",
+      "reason": "Readable rendering of the findings closure.",
+      "hashAfter": "d7b6aae04655e29333660c98cbc04d26aa2a1e7062ff07a306cc94bbba99ecdd"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0003/M1-INTERNAL-MIRROR.json",
+      "reason": "Internal mirror audit of this checkpoint.",
+      "hashAfter": "03efd318fe5b80aab09556829cbe27fc093bcdf0239c18e10f73508c10f7bc60"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0003/M1-INTERNAL-MIRROR.md",
+      "reason": "Readable rendering of the internal mirror audit.",
+      "hashAfter": "5e64fba2d5def3979242a07e18e3e80ccae7aca6b7f27f69b01bb5318e0bb039"
     },
     {
       "path": "docs/checkpoints/GATE-3-CP-0003/M1-INTERNAL-RED-TEAM.json",
@@ -83,12 +128,12 @@
     {
       "path": "docs/checkpoints/GATE-3-CP-0003/PROVENANCE.json",
       "reason": "Provenance and rights of the artifacts produced here.",
-      "hashAfter": "2d0615c2151ce8e99ee0b1f0ebfa2eb54d41a8b47bb61a794dcb012be174de7d"
+      "hashAfter": "2d6a069c8a6abe316a1a2e2688701781861ffb1c3cc18c746574e08f6723bb79"
     },
     {
       "path": "docs/checkpoints/GATE-3-CP-0003/QUALITY.json",
       "reason": "Quality dimensions of this checkpoint with their evidence.",
-      "hashAfter": "124f1eb1577e0920119f7f183f51eb5eb77d3762d96594dc671725eb8132dd05"
+      "hashAfter": "9fca59c9c7b14501ceffe1a92b4419c51d0a47783fabbdebc15193006382bf71"
     },
     {
       "path": "docs/checkpoints/GATE-3-CP-0003/RED-TEAM-REPORT.md",
@@ -103,12 +148,12 @@
     {
       "path": "docs/checkpoints/GATE-3-CP-0003/REQUIREMENTS-MATRIX.json",
       "reason": "Requirement matrix of this checkpoint.",
-      "hashAfter": "5b39cba7fbe2fbd2649b6aaf7d41e91f2b824380377618690d83876659b42ee9"
+      "hashAfter": "c0434630b7df4aee3c177cae8558b733b3ced43618d3f386fbd5cf1cdef3de26"
     },
     {
       "path": "docs/checkpoints/GATE-3-CP-0003/REQUIREMENTS-MATRIX.md",
       "reason": "Readable rendering of the requirement matrix.",
-      "hashAfter": "b4941e93da54a17be75954636603772af9d97bd1849ba62a4870ce6a37c6bd85"
+      "hashAfter": "6e9e0cc17d7c33b50c7da80a64e568088eb3b24f2eb68bc84036283745ff0ba9"
     },
     {
       "path": "docs/checkpoints/GATE-3-CP-0003/RESUME-VALIDATION.md",
@@ -128,12 +173,17 @@
     {
       "path": "docs/checkpoints/GATE-3-CP-0003/RUN-METADATA.json",
       "reason": "Tool, provider, model, environment and timestamps of this run.",
-      "hashAfter": "65d65ff9f2d1899d6ae72191d199343681ec982994b39be1e41ac04917cb4775"
+      "hashAfter": "e4f4228d52d73095485c793364ebac2969fab330ac403fffade6fffb20f57fb6"
     },
     {
       "path": "docs/checkpoints/GATE-3-CP-0003/SEALED-EVIDENCE-COMMITS-BASELINE.json",
       "reason": "M1-F-003 (published history): the baseline: every commit sealed evidence names and whether a published reference reached it.",
       "hashAfter": "65af420f85722f3df96be636183881d77675b0258c1fd5b56b69cbbcebadbeac"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0003/SEALED-SUBJECTS-PUBLISHED.json",
+      "reason": "M1-F-003 (published history): every sealed M1 checkpoint validated from a clone of the published remote.",
+      "hashAfter": "ea487d3da5696883d7287aae57fcc8091493c9237f1bcaf19a4fb77d82c88853"
     },
     {
       "path": "docs/checkpoints/GATE-3-CP-0003/SECRET-EXPOSURE-CHECK.json",
@@ -143,12 +193,17 @@
     {
       "path": "docs/checkpoints/GATE-3-CP-0003/STATE.json",
       "reason": "Machine-readable state of this checkpoint.",
-      "hashAfter": "e0afd10f8a9d60d67c25e11769ac49cde432f418fe0e7bb6733dfd42fa1c9baa"
+      "hashAfter": "ab5e53819d13f353c37caab7f0f9cf68b8b9a358334af7494ad52be708f1e26a"
     },
     {
       "path": "docs/checkpoints/GATE-3-CP-0003/STATUS.md",
       "reason": "The canonical status.",
-      "hashAfter": "9c78f467b4c249b2c5799078d77a0affceee4aec4cd7cb4d250f7d51f309cbdd"
+      "hashAfter": "59e6444d1015b76b59cb6aa1143753675cf48a96814b94857478e8c5ce4c83e4"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0003/SUITE-SNAPSHOT-FINAL.json",
+      "reason": "The control-plane suite over a snapshot of the final tree, with the observed count.",
+      "hashAfter": "5904b5ca03d823d9115190354bc5c931d7c8689b3dc832b43d3b89d4199ec3f1"
     },
     {
       "path": "docs/checkpoints/GATE-3-CP-0003/SUITE-SNAPSHOT-M1-F-003.json",
@@ -158,7 +213,7 @@
     {
       "path": "docs/checkpoints/GATE-3-CP-0003/TESTS.json",
       "reason": "Test execution recorded for this checkpoint.",
-      "hashAfter": "cc375c92912d7e27764dccd489791df4faac3a769ee64f08f005d3253a2e60fa"
+      "hashAfter": "7ecc2b3654b5ec6d4cf28e40f06cb9f82900e7da295b6451426481e7e427adbf"
     },
     {
       "path": "docs/checkpoints/GATE-3-CP-0003/TOOL-RESULT-ORIGIN.json",
@@ -263,7 +318,7 @@
     {
       "path": "docs/checkpoints/GATE-3-CP-0003/delivery-harness/sync_state.py",
       "reason": "Copies the derived counts into STATE.json.",
-      "hashAfter": "c9a0db5f417a0a9c84c02aeefc4a4b503145e0a10eceaa5af74183dc87b50bf4"
+      "hashAfter": "4ea676f0a93b30b2f932286a24b8e60aace72018dba98912614ac18eeccc3850"
     },
     {
       "path": "docs/checkpoints/GATE-3-CP-0003/delivery-harness/validator_blind_spot.py",

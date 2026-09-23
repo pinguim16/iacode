@@ -1,0 +1,207 @@
+{
+  "schemaVersion": "1.0.0",
+  "artifact": "CLEAN-CLONE-REPORT",
+  "checkpoint": "GATE-3-CP-0003",
+  "generatedAt": "2026-09-23T09:23:13Z",
+  "remote": "https://github.com/pinguim16/iacode.git",
+  "clonedHead": "bd1de7fd2d0b34342c7d0f83a558bd81c63c1100",
+  "checkpointTags": 20,
+  "latestCheckpoint": "Checkpoint: `docs/checkpoints/GATE-3-CP-0003`",
+  "localConfiguration": "infra/compose/.env copied into the disposable clone and deleted with it; no other file came from the working tree",
+  "steps": [
+    {
+      "step": "clone the authorised remote",
+      "exitCode": 0,
+      "seconds": 2.2,
+      "tail": ""
+    },
+    {
+      "step": "validate the latest checkpoint",
+      "exitCode": 0,
+      "seconds": 16.0,
+      "tail": "CHECKPOINT_VALID"
+    },
+    {
+      "step": "verify the integrity chain",
+      "exitCode": 0,
+      "seconds": 4.8,
+      "tail": "INTEGRITY_VALID anchors=19 latest=SETUP-00-CP-0013"
+    },
+    {
+      "step": "validate the engineering memory",
+      "exitCode": 0,
+      "seconds": 0.8,
+      "tail": "LESSONS_VALID total=56 active=56 guarded=53"
+    },
+    {
+      "step": "full verification in the clone",
+      "exitCode": 0,
+      "seconds": 1961.3,
+      "result": "PASS",
+      "stages": [
+        {
+          "name": "gate:tests",
+          "exitCode": 0,
+          "durationSeconds": 944.5
+        },
+        {
+          "name": "gate:staticAnalysis",
+          "exitCode": 0,
+          "durationSeconds": 0.2
+        },
+        {
+          "name": "gate:lessons",
+          "exitCode": 0,
+          "durationSeconds": 0.7
+        },
+        {
+          "name": "gate:integrity",
+          "exitCode": 0,
+          "durationSeconds": 4.2
+        },
+        {
+          "name": "gate:checkpointValidation",
+          "exitCode": 0,
+          "durationSeconds": 8.3
+        },
+        {
+          "name": "gate:apiTests",
+          "exitCode": 0,
+          "durationSeconds": 76.4
+        },
+        {
+          "name": "gate:gatewayTests",
+          "exitCode": 0,
+          "durationSeconds": 8.2
+        },
+        {
+          "name": "gate:agentRuntimeTests",
+          "exitCode": 0,
+          "durationSeconds": 6.7
+        },
+        {
+          "name": "gate:sandboxTests",
+          "exitCode": 0,
+          "durationSeconds": 153.9
+        },
+        {
+          "name": "gate:webTests",
+          "exitCode": 0,
+          "durationSeconds": 14.9
+        },
+        {
+          "name": "gate:lint",
+          "exitCode": 0,
+          "durationSeconds": 6.8
+        },
+        {
+          "name": "gate:infraDefinition",
+          "exitCode": 0,
+          "durationSeconds": 0.6
+        },
+        {
+          "name": "stack",
+          "exitCode": 0,
+          "durationSeconds": 50.1
+        },
+        {
+          "name": "integration",
+          "exitCode": 0,
+          "durationSeconds": 81.8
+        },
+        {
+          "name": "infra",
+          "exitCode": 0,
+          "durationSeconds": 11.4
+        },
+        {
+          "name": "smoke",
+          "exitCode": 0,
+          "durationSeconds": 3.6
+        },
+        {
+          "name": "gateway-smoke",
+          "exitCode": 0,
+          "durationSeconds": 7.3
+        },
+        {
+          "name": "agent-runtime-smoke",
+          "exitCode": 0,
+          "durationSeconds": 7.6
+        },
+        {
+          "name": "agent-durability",
+          "exitCode": 0,
+          "durationSeconds": 37.2
+        },
+        {
+          "name": "agent-cancellation",
+          "exitCode": 0,
+          "durationSeconds": 13.7
+        },
+        {
+          "name": "agent-deadline",
+          "exitCode": 0,
+          "durationSeconds": 16.7
+        },
+        {
+          "name": "sandbox-integration",
+          "exitCode": 0,
+          "durationSeconds": 6.8
+        },
+        {
+          "name": "sandbox-coding",
+          "exitCode": 0,
+          "durationSeconds": 105.8
+        },
+        {
+          "name": "sandbox-timeout",
+          "exitCode": 0,
+          "durationSeconds": 30.7
+        },
+        {
+          "name": "sandbox-cancellation",
+          "exitCode": 0,
+          "durationSeconds": 95.7
+        },
+        {
+          "name": "sandbox-recovery",
+          "exitCode": 0,
+          "durationSeconds": 55.8
+        },
+        {
+          "name": "sandbox-tool-result-origin",
+          "exitCode": 0,
+          "durationSeconds": 52.1
+        },
+        {
+          "name": "backup",
+          "exitCode": 0,
+          "durationSeconds": 17.0
+        },
+        {
+          "name": "dependency-scan",
+          "exitCode": 0,
+          "durationSeconds": 26.9
+        },
+        {
+          "name": "restart",
+          "exitCode": 0,
+          "durationSeconds": 42.7
+        },
+        {
+          "name": "dependency-failure",
+          "exitCode": 0,
+          "durationSeconds": 5.3
+        },
+        {
+          "name": "fresh-install",
+          "exitCode": 0,
+          "durationSeconds": 65.9
+        }
+      ],
+      "tail": "a disposable target, verified read-back\n[PASS] dependency-scan          26.9s  known vulnerabilities in the pinned dependencies\n[PASS] restart                  42.7s  restart with data intact\n[PASS] dependency-failure        5.3s  liveness holds, readiness refuses, both recover\n[PASS] fresh-install            65.9s  a complete installation from no volumes at all\nVERIFY=PASS 32/32 stages in 1959.6s"
+    }
+  ],
+  "result": "PASS"
+}

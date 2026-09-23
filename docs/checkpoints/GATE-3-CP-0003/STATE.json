@@ -2,14 +2,14 @@
   "schemaVersion": "3.2.0",
   "phase": "M1 corrective delivery: close M1-F-003, M1-F-001 and M1-F-002 of audit M1-CP-0002",
   "gate": "GATE-3",
-  "status": "IN_PROGRESS",
+  "status": "READY_FOR_REVIEW",
   "branch": "main",
   "baseCommit": "3a526925cf653ffaa9497cff628d08d50424271a",
-  "currentCommit": "HEAD",
+  "currentCommit": "refs/tags/iacode-checkpoints/GATE-3-CP-0003",
   "dirty": false,
   "startedAt": "2026-09-23T06:23:12Z",
-  "updatedAt": "2026-09-23T08:49:32Z",
-  "nextAllowedAction": "Populate and validate this checkpoint.",
+  "updatedAt": "2026-09-23T09:26:02Z",
+  "nextAllowedAction": "M1 FRESH-SESSION REAUDIT of the sealed GATE-3-CP-0003 in its own audit checkpoint, by a session with no memory of this run. M1 is not passed; GATE 4 does not start. See NEXT.md.",
   "blockedBy": [],
   "secondToolValidation": {
     "status": "PENDING_MANUAL",
@@ -24,11 +24,11 @@
     "path": "REQUIREMENTS-MATRIX.json",
     "total": 197,
     "mandatory": 195,
-    "complete": 0,
+    "complete": 197,
     "partial": 0,
     "missing": 0,
     "notApplicable": 0,
-    "coveragePercent": 0.0
+    "coveragePercent": 100.0
   },
   "greenKeeper": {
     "status": "PASS",
@@ -54,12 +54,15 @@
     ]
   },
   "deliveryCompleteness": {
-    "status": "NOT_EXECUTED",
+    "status": "PASS",
     "report": "COMPLETENESS-REPORT.json",
-    "coveragePercent": 0.0,
-    "evidenceCoveragePercent": 0.0,
-    "auditor": null,
-    "evidence": []
+    "coveragePercent": 100.0,
+    "evidenceCoveragePercent": 100.0,
+    "auditor": "Delivery Completeness Validator",
+    "evidence": [
+      "file:COMPLETENESS-REPORT.json",
+      "command:cmd-0104"
+    ]
   },
   "reworkCycles": 1,
   "independentReview": {
