@@ -717,6 +717,12 @@ def payload_keys_and_policy(source: str) -> tuple[set[str], str]:
     raise AssertionError("the dispatch builds no payload")
 
 
+def result_key_literals(source: str) -> list[str]:
+    """String literals that spell a key of the execute activity's answer instead of naming it."""
+    return [node.value for node in ast.walk(ast.parse(source))
+            if isinstance(node, ast.Constant) and node.value in ("agentResult", "execution")]
+
+
 class WorkflowSandboxDispatchTests(unittest.TestCase):
     """What the workflow sends the sandbox, when, and what it does with the answer."""
 
@@ -781,6 +787,27 @@ class WorkflowSandboxDispatchTests(unittest.TestCase):
         self.assertLess(run.index("release_sandboxes"), run.index("self.state = outcome.state"))
         release = ast.unparse(function(self.source, "release_sandboxes"))
         self.assertIn("SANDBOX_RELEASE_ACTIVITY", release)
+
+    def test_both_sides_name_the_result_by_the_shared_key(self) -> None:
+        """The producer and the consumer of the answer spell its keys once, in the contract.
+
+        They live in two processes that share nothing but a queue. The first version had the
+        workflow read ``"agentResult"`` from an answer that did not carry it, and every suite that
+        drove one side against a double passed.
+        """
+        self.assertEqual(result_key_literals(self.source), [])
+        worker = (SANDBOX_SOURCE / "worker.py").read_text(encoding="utf-8")
+        self.assertEqual(result_key_literals(worker), [])
+        dispatch = ast.unparse(function(self.source, "_execute_in_sandbox"))
+        self.assertIn("body[SANDBOX_AGENT_RESULT_KEY]", dispatch)
+        answer = ast.unparse(function(worker, "execute_tool"))
+        self.assertIn("SANDBOX_AGENT_RESULT_KEY: result.agent_result()", answer)
+
+    def test_the_key_scan_detects_a_literal(self) -> None:
+        """The null control: the identical scan over a workflow that spells the key itself."""
+        mutated = self.source.replace("body[SANDBOX_AGENT_RESULT_KEY]", "body['agentResult']", 1)
+        self.assertNotEqual(mutated, self.source)
+        self.assertEqual(result_key_literals(mutated), ["agentResult"])
 
     def test_the_sandbox_registers_both_activities_on_its_queue(self) -> None:
         worker = (SANDBOX_SOURCE / "worker.py").read_text(encoding="utf-8")
@@ -1015,6 +1042,132 @@ class Gate3AdrTests(unittest.TestCase):
         listed = {identifier for identifier, *_rest in
                   adr_index_rows(ADR_DIRECTORY / "README.md")}
         self.assertTrue(set(self.DECISIONS) <= listed)
+
+
+# ---------------------------------------------------------------------------------------------
+# 5. Verification stages and the deterministic scenarios
+# ---------------------------------------------------------------------------------------------
+
+
+SCENARIO = PROJECT_ROOT / "scripts" / "iacode" / "scenarios" / "sandbox_coding_e2e.py"
+REHEARSAL = PROJECT_ROOT / "services" / "orchestrator" / "rehearsal" / "coding.py"
+VERIFY = PROJECT_ROOT / "scripts" / "iacode" / "verify.py"
+
+#: Modules that let a process start another one or reach a shell.
+EXECUTION_MODULES = frozenset({"subprocess", "multiprocessing", "pty", "docker", "paramiko",
+                               "pexpect", "git", "dulwich", "pygit2"})
+
+#: Calls that execute a process or rewrite the filesystem outside the process's own scratch.
+EXECUTING_CALLS = frozenset({"os.system", "os.popen", "os.execv", "os.spawnv", "os.kill",
+                             "subprocess.run", "subprocess.Popen", "shutil.rmtree", "eval",
+                             "exec", "__import__"})
+
+
+def executes(source: str) -> set[str]:
+    tree = ast.parse(source)
+    found = {name for name in imported_names(source) if name.split(".")[0] in EXECUTION_MODULES}
+    return found | (called(tree) & EXECUTING_CALLS)
+
+
+class Gate3VerificationStageTests(unittest.TestCase):
+    """The verification command covers this Gate, in its targeted and its full mode."""
+
+    STAGES = {"sandbox-integration": '"-m", "integration"',
+              "sandbox-coding": "coding", "sandbox-timeout": "timeout",
+              "sandbox-cancellation": "cancel", "sandbox-recovery": "recovery"}
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.source = VERIFY.read_text(encoding="utf-8")
+
+    def test_the_verification_adds_the_stages_this_gate_introduces(self) -> None:
+        for stage, argument in self.STAGES.items():
+            with self.subTest(stage=stage):
+                self.assertIn(f'"{stage}"', self.source)
+                self.assertIn(argument, self.source)
+
+    def test_the_scenario_stages_run_in_the_targeted_mode_too(self) -> None:
+        """They restart no service of the stack but the sandbox, so they are not destructive."""
+        fast_only = self.source.index("if not fast:")
+        for stage in self.STAGES:
+            with self.subTest(stage=stage):
+                self.assertLess(self.source.index(f'"{stage}"'), fast_only)
+
+    def test_the_mandatory_gate_deselects_what_needs_the_stack(self) -> None:
+        runner = (PROJECT_ROOT / "scripts" / "iacode" / "gates" / "sandbox_tests.py").read_text(
+            encoding="utf-8")
+        self.assertIn('"not integration"', runner)
+        project = (SANDBOX_ROOT / "pyproject.toml").read_text(encoding="utf-8")
+        self.assertIn('"integration:', project)
+
+
+class SandboxScenarioTests(unittest.TestCase):
+    """What the deterministic scenarios exercise, and what they are allowed to substitute."""
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.scenario = SCENARIO.read_text(encoding="utf-8")
+        cls.rehearsal = REHEARSAL.read_text(encoding="utf-8")
+
+    def test_the_four_scenarios_exist(self) -> None:
+        for name in ("scenario_coding", "scenario_timeout", "scenario_cancel",
+                     "scenario_recovery"):
+            with self.subTest(scenario=name):
+                function(self.scenario, name)
+
+    def test_the_scenario_builds_what_it_measures_first(self) -> None:
+        """`LSN-0036`: the worker image, the service image and the sandbox image are all rebuilt."""
+        prepare = ast.unparse(function(self.scenario, "prepare_images"))
+        for built in ("build_service('worker')", "build_service('sandbox')", "sandbox_image.py"):
+            with self.subTest(built=built):
+                self.assertIn(built, prepare)
+        main = ast.unparse(function(self.scenario, "main"))
+        self.assertLess(main.index("prepare_images()"), main.index("start_rehearsal()"))
+
+    def test_only_the_model_is_substituted(self) -> None:
+        """The run is created by the runtime's own service and executed by the real workflow."""
+        self.assertIn("AgentRuntimeService(", self.rehearsal)
+        self.assertIn("service.create_run(", self.rehearsal)
+        self.assertIn("workflows=[AgentRunWorkflow]", self.rehearsal)
+        self.assertIn('@activity.defn(name="iacode_agent_runtime_call_model")', self.rehearsal)
+        activities = {node.id for node in ast.walk(function(self.rehearsal, "run_worker"))
+                      if isinstance(node, ast.Name)}
+        self.assertIn("resolve_tool_request", activities)
+        self.assertNotIn("execute_tool", self.rehearsal,
+                         "the rehearsal answers its own tool requests instead of the sandbox")
+
+    def test_the_rehearsal_executes_nothing(self) -> None:
+        """It asks for tools; the sandbox executes them. The scan over it must find nothing."""
+        self.assertEqual(executes(self.rehearsal), set())
+        self.assertFalse((PROJECT_ROOT / "services" / "orchestrator" / "src" /
+                          "iacode_orchestrator" / "rehearsal").exists())
+
+    def test_the_execution_scan_detects_a_harness_that_executes(self) -> None:
+        """The null control over a mutated harness."""
+        mutated = self.rehearsal + "\nimport subprocess\nsubprocess.run(['sh', '-c', 'id'])\n"
+        self.assertEqual(executes(mutated), {"subprocess", "subprocess.run"})
+
+    def test_the_workspace_is_a_synthetic_snapshot_never_the_working_tree(self) -> None:
+        snapshot = ast.unparse(function(self.scenario, "synthetic_snapshot"))
+        self.assertIn("create_snapshot(source", snapshot)
+        self.assertNotIn("REPOSITORY_ROOT", snapshot)
+        self.assertIn("tempfile.TemporaryDirectory", self.scenario)
+
+    def test_the_host_sentinel_is_compared_by_content(self) -> None:
+        coding = ast.unparse(function(self.scenario, "scenario_coding"))
+        self.assertIn("digest(sentinel) == before", coding)
+        self.assertIn("host.no_file_appeared", coding)
+        self.assertIn("WRITE-{index}=REFUSED", coding)
+
+    def test_the_assertions_read_what_the_run_recorded(self) -> None:
+        """Every verdict is read from the harness's report of the database, not from a request."""
+        for name in ("scenario_coding", "scenario_timeout", "scenario_cancel",
+                     "scenario_recovery"):
+            with self.subTest(scenario=name):
+                self.assertIn("harness('report'", ast.unparse(function(self.scenario, name)))
+        report = ast.unparse(function(self.rehearsal, "report"))
+        for table in ("ToolCall", "ToolResult", "SandboxSession", "RunEvent"):
+            self.assertIn(table, report)
 
 if __name__ == "__main__":
     unittest.main()

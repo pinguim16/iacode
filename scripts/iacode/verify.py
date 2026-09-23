@@ -135,6 +135,37 @@ def build_stages(fast: bool) -> list[Stage]:
                      "a run that is alive and going nowhere is ended by its own deadline",
                      "scripts/iacode/scenarios/agent_runtime_deadline.py", "--report",
                      str(REPOSITORY_ROOT / "var" / "agent-deadline.json")),
+        # The sandbox, end to end. First its store and artifact sink against the stack's own
+        # database and bucket; then the four scenarios: a coding run over a synthetic repository
+        # with a sentinel on the host, a timeout the run survives, a cancellation during a long
+        # command, and a restart of the sandbox service between two tools. They restart nothing of
+        # the stack but the sandbox service, so they belong to the targeted mode as well.
+        Stage(name="sandbox-integration",
+              description="the sandbox's store and artifact sink against the real services",
+              argv=["docker", "compose",
+                    "--project-directory", str(REPOSITORY_ROOT / "infra" / "compose"),
+                    "--file", str(REPOSITORY_ROOT / "infra" / "compose" / "docker-compose.yml"),
+                    "--env-file", str(REPOSITORY_ROOT / "infra" / "compose" / ".env"),
+                    "run", "--rm", "--entrypoint", "", "sandbox",
+                    "python", "-m", "pytest", "/app/sandbox_tests", "-m", "integration",
+                    "-p", "no:cacheprovider", "--no-header"]),
+        python_stage("sandbox-coding",
+                     "a coding team fixes a synthetic repository in a real sandbox; the host is "
+                     "untouched",
+                     "scripts/iacode/scenarios/sandbox_coding_e2e.py", "--scenario", "coding",
+                     "--report", str(REPOSITORY_ROOT / "var" / "sandbox-coding.json")),
+        python_stage("sandbox-timeout",
+                     "a command past its timeout is stopped and the run carries on",
+                     "scripts/iacode/scenarios/sandbox_coding_e2e.py", "--scenario", "timeout",
+                     "--report", str(REPOSITORY_ROOT / "var" / "sandbox-timeout.json")),
+        python_stage("sandbox-cancellation",
+                     "a run cancelled during a long command stops it and leaves no sandbox",
+                     "scripts/iacode/scenarios/sandbox_coding_e2e.py", "--scenario", "cancel",
+                     "--report", str(REPOSITORY_ROOT / "var" / "sandbox-cancellation.json")),
+        python_stage("sandbox-recovery",
+                     "a restarted sandbox service keeps the run's session and its workspace",
+                     "scripts/iacode/scenarios/sandbox_coding_e2e.py", "--scenario", "recovery",
+                     "--report", str(REPOSITORY_ROOT / "var" / "sandbox-recovery.json")),
         python_stage("backup", "backup, restore into a disposable target, verified read-back",
                      "scripts/iacode/backup_restore_check.py"),
         python_stage("dependency-scan", "known vulnerabilities in the pinned dependencies",
