@@ -210,6 +210,8 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 | `LESSON-REQ-0051` | LESSON | `lesson:LSN-0052` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify two processes that meet on a queue must name what crosses it once, and a real run must exercise both |
 | `LESSON-REQ-0052` | LESSON | `lesson:LSN-0053` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify a process sweep that reads what a forking process holds waits on the processes it has to kill |
 | `LESSON-REQ-0053` | LESSON | `lesson:LSN-0054` | no | `NOT_STARTED` | `NOT_STARTED` | Verify a pre-push check narrower than the change's reach lets a red gate reach the public remote |
+| `LESSON-REQ-0054` | LESSON | `lesson:LSN-0055` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify a contract a model must follow has to reach the model, rendered from the definition the parser enforces |
+| `LESSON-REQ-0055` | LESSON | `lesson:LSN-0056` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify a result is accepted only from the executor that owns the request, decided when the request is created |
 
 ## Evidence
 
@@ -2351,6 +2353,28 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 
 - Source reference: LESSON-PREFLIGHT.json LESSON-REQ-0053
 - Description: Verify a pre-push check narrower than the change's reach lets a red gate reach the public remote
+- Implementation: _none_
+- Test: _none_
+- Negative test: _none_
+- Documentation: _none_
+- Validation: _none_
+- Guardrail: _none_
+
+### LESSON-REQ-0054 - lesson:LSN-0055
+
+- Source reference: LESSON-PREFLIGHT.json LESSON-REQ-0054
+- Description: Verify a contract a model must follow has to reach the model, rendered from the definition the parser enforces
+- Implementation: _none_
+- Test: _none_
+- Negative test: _none_
+- Documentation: _none_
+- Validation: _none_
+- Guardrail: _none_
+
+### LESSON-REQ-0055 - lesson:LSN-0056
+
+- Source reference: LESSON-PREFLIGHT.json LESSON-REQ-0055
+- Description: Verify a result is accepted only from the executor that owns the request, decided when the request is created
 - Implementation: _none_
 - Test: _none_
 - Negative test: _none_

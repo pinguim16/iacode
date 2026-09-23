@@ -19,11 +19,11 @@
     "packages/persistence",
     "packages/contracts"
   ],
-  "generatedAt": "2026-09-23T07:12:23Z",
+  "generatedAt": "2026-09-23T07:30:27Z",
   "policyVersion": "2.0.0",
-  "inputsFingerprint": "b6e5dd88974318d7d288992b6504e1d2036a96fe4567c6863a721f2bbd0e3f02",
-  "lessonsConsidered": 54,
-  "lessonsApplicable": 53,
+  "inputsFingerprint": "61f4298f12e9831eabb74001f4efdd7c2ef2e6df0de7c6eebfad069dbabe7e8d",
+  "lessonsConsidered": 56,
+  "lessonsApplicable": 55,
   "applicable": [
     {
       "lessonId": "LSN-0001",
@@ -554,6 +554,26 @@
       "requiredCheck": "Before each push, run the lint gate and the repository-wide scans as well as the suites of the change, because a change reaches every control that scans the tree.",
       "requiredEvidence": "Recorded lint and targeted runs between each push and the one before it.",
       "derivedRequirementId": "LESSON-REQ-0053"
+    },
+    {
+      "lessonId": "LSN-0055",
+      "title": "A contract a model must follow has to reach the model, rendered from the definition the parser enforces",
+      "status": "GUARDED",
+      "severity": "MEDIUM",
+      "reasonApplicable": "applies to every Gate; category model-behavior; severity MEDIUM; already guarded, so the control must keep holding",
+      "requiredCheck": "For every structured answer a model must produce, confirm that the exact shape is in the text every model receives — rendered from the definition the parser enforces, not written beside it — and that a live run of the configured model produces it.",
+      "requiredEvidence": "A test that the instructions contain the rendered shape and follow a change of the schema, and a live run of the configured model that produces the shape.",
+      "derivedRequirementId": "LESSON-REQ-0054"
+    },
+    {
+      "lessonId": "LSN-0056",
+      "title": "A result is accepted only from the executor that owns the request, decided when the request is created",
+      "status": "GUARDED",
+      "severity": "MEDIUM",
+      "reasonApplicable": "applies to every Gate; category security; severity MEDIUM; already guarded, so the control must keep holding",
+      "requiredCheck": "For every result, verdict or callback that more than one producer could deliver, confirm that the owner is recorded when the work is created, that the origin of a delivery comes from the code path and never from the delivery, and that a delivery from any other origin is refused before it is stored.",
+      "requiredEvidence": "A test that a delivery from the wrong origin is refused before and after the owner's, with a null control through the same path, and a run on the real stack.",
+      "derivedRequirementId": "LESSON-REQ-0055"
     }
   ],
   "derivedRequirements": [
@@ -927,6 +947,20 @@
       "description": "Verify a pre-push check narrower than the change's reach lets a red gate reach the public remote",
       "mandatory": false,
       "requiredEvidence": "Recorded lint and targeted runs between each push and the one before it."
+    },
+    {
+      "id": "LESSON-REQ-0054",
+      "lessonId": "LSN-0055",
+      "description": "Verify a contract a model must follow has to reach the model, rendered from the definition the parser enforces",
+      "mandatory": true,
+      "requiredEvidence": "A test that the instructions contain the rendered shape and follow a change of the schema, and a live run of the configured model that produces the shape."
+    },
+    {
+      "id": "LESSON-REQ-0055",
+      "lessonId": "LSN-0056",
+      "description": "Verify a result is accepted only from the executor that owns the request, decided when the request is created",
+      "mandatory": true,
+      "requiredEvidence": "A test that a delivery from the wrong origin is refused before and after the owner's, with a null control through the same path, and a run on the real stack."
     }
   ]
 }

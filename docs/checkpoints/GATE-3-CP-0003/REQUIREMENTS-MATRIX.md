@@ -199,3 +199,5 @@ Expected set derived by: `policies.expected_requirement_refs over docs/GATE-3-CH
 | `LESSON-REQ-0051` | `lesson:LSN-0052` | yes | `NOT_STARTED` | Verify two processes that meet on a queue must name what crosses it once, and a real run must exercise both | LESSON-PREFLIGHT.json LESSON-REQ-0051 |
 | `LESSON-REQ-0052` | `lesson:LSN-0053` | yes | `NOT_STARTED` | Verify a process sweep that reads what a forking process holds waits on the processes it has to kill | LESSON-PREFLIGHT.json LESSON-REQ-0052 |
 | `LESSON-REQ-0053` | `lesson:LSN-0054` | no | `NOT_STARTED` | Verify a pre-push check narrower than the change's reach lets a red gate reach the public remote | LESSON-PREFLIGHT.json LESSON-REQ-0053 |
+| `LESSON-REQ-0054` | `lesson:LSN-0055` | yes | `NOT_STARTED` | Verify a contract a model must follow has to reach the model, rendered from the definition the parser enforces | LESSON-PREFLIGHT.json LESSON-REQ-0054 |
+| `LESSON-REQ-0055` | `lesson:LSN-0056` | yes | `NOT_STARTED` | Verify a result is accepted only from the executor that owns the request, decided when the request is created | LESSON-PREFLIGHT.json LESSON-REQ-0055 |

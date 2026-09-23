@@ -5,10 +5,10 @@
   "status": "IN_PROGRESS",
   "branch": "main",
   "baseCommit": "3a526925cf653ffaa9497cff628d08d50424271a",
-  "currentCommit": "3a526925cf653ffaa9497cff628d08d50424271a",
-  "dirty": true,
+  "currentCommit": "HEAD",
+  "dirty": false,
   "startedAt": "2026-09-23T06:23:12Z",
-  "updatedAt": "2026-09-23T06:28:18Z",
+  "updatedAt": "2026-09-23T08:49:32Z",
   "nextAllowedAction": "Populate and validate this checkpoint.",
   "blockedBy": [],
   "secondToolValidation": {
@@ -22,8 +22,8 @@
   },
   "requirementsMatrix": {
     "path": "REQUIREMENTS-MATRIX.json",
-    "total": 195,
-    "mandatory": 193,
+    "total": 197,
+    "mandatory": 195,
     "complete": 0,
     "partial": 0,
     "missing": 0,
@@ -31,13 +31,27 @@
     "coveragePercent": 0.0
   },
   "greenKeeper": {
-    "status": "NOT_EXECUTED",
-    "cycles": 0,
+    "status": "PASS",
+    "cycles": 1,
     "remainingFailures": 0,
     "unresolvedReworkItems": 0,
     "log": "REWORK-LOG.jsonl",
     "externalBlockers": [],
-    "evidence": []
+    "evidence": [
+      "file:REWORK-LOG.jsonl",
+      "command:cmd-0075",
+      "command:cmd-0076",
+      "command:cmd-0077",
+      "command:cmd-0078",
+      "command:cmd-0079",
+      "command:cmd-0080",
+      "command:cmd-0081",
+      "command:cmd-0082",
+      "command:cmd-0083",
+      "command:cmd-0084",
+      "command:cmd-0085",
+      "command:cmd-0086"
+    ]
   },
   "deliveryCompleteness": {
     "status": "NOT_EXECUTED",
@@ -47,7 +61,7 @@
     "auditor": null,
     "evidence": []
   },
-  "reworkCycles": 0,
+  "reworkCycles": 1,
   "independentReview": {
     "status": "PENDING",
     "tool": null,
@@ -66,9 +80,9 @@
     "path": "LESSON-PREFLIGHT.json",
     "gate": "GATE-3",
     "scope": "corrective delivery, published history, sealed checkpoint validation, clean clone, git, sandbox, tool execution, tool results, tool result origin, agent-runtime integration, agent envelope protocol, model instructions, live model, api, persistence, migration, cancellation, secrets, build, test",
-    "lessonsConsidered": 54,
-    "lessonsApplicable": 53,
-    "derivedRequirements": 53,
+    "lessonsConsidered": 56,
+    "lessonsApplicable": 55,
+    "derivedRequirements": 55,
     "evidence": [
       "checkpoint:LESSON-PREFLIGHT.json"
     ]
@@ -90,11 +104,11 @@
   "externalAuditRequired": false,
   "externalAuditReason": null,
   "guardrailEffectiveness": {
-    "guardrailsTotal": 55,
-    "guardrailsResolved": 55,
-    "guardrailsTested": 55,
-    "guardrailsEffective": 54,
-    "guardrailFailures": 1,
+    "guardrailsTotal": 57,
+    "guardrailsResolved": 57,
+    "guardrailsTested": 57,
+    "guardrailsEffective": 57,
+    "guardrailFailures": 0,
     "evidence": [
       "file:.iacode/memory/guardrails/registry.json",
       "file:.iacode/memory/lessons.jsonl"

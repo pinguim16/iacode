@@ -1,6 +1,541 @@
 {
   "filesRead": [],
-  "filesCreated": [],
-  "filesModified": [],
+  "filesCreated": [
+    {
+      "path": "apps/api/migrations/versions/0005_tool_request_executor.py",
+      "reason": "M1-F-002 (tool result origin): tool_requests.executor, backfilled from the executions the sandbox recorded, with its vocabulary constraint and a real downgrade.",
+      "hashAfter": "078eb3913a232a450ef7c7abd748e3bbfb115c115c8d7a3fe7d36ffd4308d105"
+    },
+    {
+      "path": "docs/adr/ADR-0028-sealed-evidence-is-judged-from-the-published-history.md",
+      "reason": "M1-F-003 (published history): the decision record.",
+      "hashAfter": "060a88c790eb9d5356802a74b6952f557a376cfdc063912061b91a6bba7426fb"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0003/CLOSURE-REQUIREMENTS.json",
+      "reason": "The derived requirement set of this checkpoint.",
+      "hashAfter": "fe8fd3220e2bae3e2fcd620b9fcdfd832b8c71d77957d23a1cb82a4cd41d7df2"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0003/CLOSURE-REQUIREMENTS.md",
+      "reason": "Readable rendering of the closure requirements.",
+      "hashAfter": "08fa32bfc4f4beecaeff3cb17ef5d4fdb2fd0fc50c142678f46bb7840626fd04"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0003/COMMANDS.jsonl",
+      "reason": "Append-only command ledger of this run.",
+      "hashAfter": "682fed98f1bd4f1e9ddec4255b831c18bf0e438dd677d80fd7d9e13e13705150"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0003/DECISIONS.md",
+      "reason": "Decisions taken by this delivery.",
+      "hashAfter": "306937fa79243cc268a00a713b18e890477d3091352548dc0edba12c0aca3678"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0003/DIFF-SUMMARY.md",
+      "reason": "Summary of the change set.",
+      "hashAfter": "56dfea41112f4529980cba5abd5c6ad96596181b1a645e59def24a5d7fd7343c"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0003/FILES.json",
+      "reason": "The declared inventory itself."
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0003/HANDOFF.md",
+      "reason": "Handoff for the next run.",
+      "hashAfter": "b931cd02cde04dcb66ed1dba8f44cbf0c516fcd80af466cbdc13eafac897f8d2"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0003/LESSON-PREFLIGHT.json",
+      "reason": "Lesson preflight of this corrective delivery.",
+      "hashAfter": "a042b09b9e1e39e45884004c871fc0d0ff5b8a230b4eabd0c27c170d5d34b825"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0003/LESSON-PREFLIGHT.md",
+      "reason": "Readable rendering of the preflight.",
+      "hashAfter": "7dcdccac9ed39e7dc13b16d645e64c4f774e9fc2b6b06720d66aa25af2f6c950"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0003/LIVE-CODING-RUN.json",
+      "reason": "M1-F-001 (envelope shape): the live coding run of the configured model, read from what the stack recorded.",
+      "hashAfter": "548aa95a20f13e6fd04f2f1acd6d4e74bc930d50d982918395148d92f7b6bbd7"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0003/M1-INTERNAL-RED-TEAM.json",
+      "reason": "The GATE 3 internal Red Team over this delivery.",
+      "hashAfter": "e5ee0fa87c45f5c43034a5ed6ecd5d9f6dc781849c54e6c88750faa816180099"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0003/NEXT.md",
+      "reason": "The exact next allowed action.",
+      "hashAfter": "0d400ecf967c2ccef55b122189796e6881e3ad08d3c51e05776ddfe699595bb6"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0003/OLD-CODE-M1-F-003.json",
+      "reason": "M1-F-003 (published history): the new tests run against the old tooling fail and against the corrected pass.",
+      "hashAfter": "dc821424cc1c104c2df832fdc767e1edc47b4d254e77a8b1281c0678e5217449"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0003/PLAN.md",
+      "reason": "The plan, written before implementation.",
+      "hashAfter": "89e35f05a50d58db9c8430971bf369deb46668709024887f1cc0bfc8c88389ec"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0003/PROVENANCE.json",
+      "reason": "Provenance and rights of the artifacts produced here.",
+      "hashAfter": "2d0615c2151ce8e99ee0b1f0ebfa2eb54d41a8b47bb61a794dcb012be174de7d"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0003/QUALITY.json",
+      "reason": "Quality dimensions of this checkpoint with their evidence.",
+      "hashAfter": "124f1eb1577e0920119f7f183f51eb5eb77d3762d96594dc671725eb8132dd05"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0003/RED-TEAM-REPORT.md",
+      "reason": "The internal Red Team battery and its null-mutation control.",
+      "hashAfter": "7bdb3b1250eaba677fea52a1980f13a1e4f2e9cff50187d542506b11beeca9ab"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0003/REMOTE-PUBLISHED-OBJECTS.json",
+      "reason": "M1-F-003 (published history): over the remote's transport, the preserved commits are absent without their references and present with them.",
+      "hashAfter": "21f1edcca42581161add8ea4d8c280738b6ef90edb4a14d477511b8d785be3ea"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0003/REQUIREMENTS-MATRIX.json",
+      "reason": "Requirement matrix of this checkpoint.",
+      "hashAfter": "5b39cba7fbe2fbd2649b6aaf7d41e91f2b824380377618690d83876659b42ee9"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0003/REQUIREMENTS-MATRIX.md",
+      "reason": "Readable rendering of the requirement matrix.",
+      "hashAfter": "b4941e93da54a17be75954636603772af9d97bd1849ba62a4870ce6a37c6bd85"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0003/RESUME-VALIDATION.md",
+      "reason": "Cold start and baseline of this delivery.",
+      "hashAfter": "eca7f90a7c677f36d43f4989a5f3536842ee9f334a0c987406627a3e2882e01c"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0003/REWORK-LOG.jsonl",
+      "reason": "Green Keeper cycles of this checkpoint.",
+      "hashAfter": "e16fee308b77d1b526454e771e27bff4992c26978a166d4e23d9f151dffd9189"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0003/RISKS.md",
+      "reason": "Risks this delivery records.",
+      "hashAfter": "b9d36d4db320b2557dea42afb2abb325fa5a1e4bde8bb0d7000cc87b70fbcfe0"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0003/RUN-METADATA.json",
+      "reason": "Tool, provider, model, environment and timestamps of this run.",
+      "hashAfter": "65d65ff9f2d1899d6ae72191d199343681ec982994b39be1e41ac04917cb4775"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0003/SEALED-EVIDENCE-COMMITS-BASELINE.json",
+      "reason": "M1-F-003 (published history): the baseline: every commit sealed evidence names and whether a published reference reached it.",
+      "hashAfter": "65af420f85722f3df96be636183881d77675b0258c1fd5b56b69cbbcebadbeac"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0003/SECRET-EXPOSURE-CHECK.json",
+      "reason": "The owner's check after GitGuardian's report on 7d57721: no real credential value of this machine appears in any blob, commit message or tag message of the history.",
+      "hashAfter": "a53f69beb8e90cccfcc0b915648a4c8c4ad536dc37beac0b82705c3d07f2777e"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0003/STATE.json",
+      "reason": "Machine-readable state of this checkpoint.",
+      "hashAfter": "e0afd10f8a9d60d67c25e11769ac49cde432f418fe0e7bb6733dfd42fa1c9baa"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0003/STATUS.md",
+      "reason": "The canonical status.",
+      "hashAfter": "9c78f467b4c249b2c5799078d77a0affceee4aec4cd7cb4d250f7d51f309cbdd"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0003/SUITE-SNAPSHOT-M1-F-003.json",
+      "reason": "M1-F-003 (published history): the control-plane suite over a snapshot of the corrected tree before its commit.",
+      "hashAfter": "8093ee613fc52985059db12644467bfb3e626e867b9d9405b56876d2c097a1ec"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0003/TESTS.json",
+      "reason": "Test execution recorded for this checkpoint.",
+      "hashAfter": "cc375c92912d7e27764dccd489791df4faac3a769ee64f08f005d3253a2e60fa"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0003/TOOL-RESULT-ORIGIN.json",
+      "reason": "M1-F-002 (tool result origin): the verification stage's report: the forgery refused, the sandbox's result kept.",
+      "hashAfter": "1d33f4ca30eea8e1ea1594df6b45581e657f0e265fe47ec5cb4f286585a17591"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0003/VALIDATOR-BLIND-SPOT.json",
+      "reason": "M1-F-003 (published history): the old validator accepts an unpublished local commit, the corrected one refuses it.",
+      "hashAfter": "ceadc911f9f097da4e96814a9a3cd90e7903e80d520ed19e33972699393967e9"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0003/VERIFICATION-REPORT.json",
+      "reason": "The full verification of this repository.",
+      "hashAfter": "4e909d2c77831075d2345ca1228f56d26d36027fbf66d6d68bc3b3520564c1ba"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0003/delivery-harness/clean_clone.py",
+      "reason": "The full verification of a fresh clone of the published remote.",
+      "hashAfter": "8c655c69d84d5a8c800e1b975263402cb42655c4ebe34b156c00bfd27bcf4f94"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0003/delivery-harness/collect_reports.py",
+      "reason": "Copies the verification's reports from var/ into the checkpoint.",
+      "hashAfter": "86f87ac503818f93cf10c23fe9ae3d74f2af98686148d41d8aa6690e730fce93"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0003/delivery-harness/commit_tests.py",
+      "reason": "Runs targeted tests on exactly one commit's content before its push.",
+      "hashAfter": "eb86c3ace6b1566eea5cecdd9398fa795abf5f4e9aebabe897f8b863e9d2aff3"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0003/delivery-harness/complete_requirements.py",
+      "reason": "Completes the requirement matrix from this delivery's evidence.",
+      "hashAfter": "2e32195e0c8101b5afb2a304c5241f15ffdd5920a68417c1d59ca244af804983"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0003/delivery-harness/declare_inventory.py",
+      "reason": "Declares this change set.",
+      "hashAfter": "c1e9e22340c9a06078cc7c07c34997561cb664080d51383274fb5d9d3f3b59d3"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0003/delivery-harness/findings_closure.py",
+      "reason": "Writes the closure of the three findings.",
+      "hashAfter": "f638cff070fd3cf8ac0df4b8f417b5a800dd3d619fc8779e7844b73f3bfdb662"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0003/delivery-harness/integration_suite.py",
+      "reason": "Runs the API image's suite against the stack, as the verification.",
+      "hashAfter": "bdd1f95daf5585401998afd1a7b8844ca394f927bf2a0e6711932ebeb7fcf31e"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0003/delivery-harness/live_coding_run.py",
+      "reason": "M1-F-001 (envelope shape): the live coding run of the configured model.",
+      "hashAfter": "dadb29f793861c5a7427762a7b2b0db22167c256b45d0d5705be6214e004820d"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0003/delivery-harness/old_code_regression.py",
+      "reason": "Runs the correction's tests against the code before it.",
+      "hashAfter": "2ad467309faeb03c0183666c282205bac05ff792fdbe4dbfb940011744150810"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0003/delivery-harness/real_secret_exposure.py",
+      "reason": "Searches the whole history for the machine's real credential values, recording names only.",
+      "hashAfter": "29d78cc33ee0eded6191f97a6bf333fdb4c2ea174ba152ee0176f6732a32d437"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0003/delivery-harness/record_guardrail_failure.py",
+      "reason": "M1-F-003 (published history): records the GUARDRAIL_FAILURE of GRD-0042 in LSN-0040.",
+      "hashAfter": "c12e722d18829ceedf48886c20d8c2255ed54982d24abff755f2872f00ff4f70"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0003/delivery-harness/record_lessons.py",
+      "reason": "Records LSN-0055, LSN-0056, their guardrails and the LSN-0054 recurrence.",
+      "hashAfter": "49201969422a96de291a1a98fd000d156a22a6698f81285330509403043b00c1"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0003/delivery-harness/remote_published_objects.py",
+      "reason": "M1-F-003 (published history): the acceptance over the remote's transport.",
+      "hashAfter": "3f20689430204c4d95eef38654b7cdb9f67d76f04b69c518729680ad3779cbec"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0003/delivery-harness/resolve_guardrail_failure.py",
+      "reason": "M1-F-003 (published history): resolves LSN-0040's failure in this checkpoint.",
+      "hashAfter": "1d0ff68aa087ae289fb67f589b6a04abeea5fb725f7ab606eeaee5a958310472"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0003/delivery-harness/sealed_evidence_commits.py",
+      "reason": "M1-F-003 (published history): measures the property over the whole ledger, independently of the validator.",
+      "hashAfter": "61c347b9fd0ae1eebc62a4e71533c3fb82b3b8c40edfdec75b750ef8a34e7b96"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0003/delivery-harness/sealed_subjects.py",
+      "reason": "M1-F-003 (published history): validates every sealed M1 checkpoint from the published remote.",
+      "hashAfter": "1df1ff3d5f46caae38b90bb4587c9e48967b12d6a0a941b4a60449fdf685c0f4"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0003/delivery-harness/suite_in_snapshot.py",
+      "reason": "Runs the control-plane suite over a frozen snapshot.",
+      "hashAfter": "50e46c8dbffb45787ef178079ac608e19ab86249f1ae20c04adf2ca86bcc0153"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0003/delivery-harness/sync_state.py",
+      "reason": "Copies the derived counts into STATE.json.",
+      "hashAfter": "c9a0db5f417a0a9c84c02aeefc4a4b503145e0a10eceaa5af74183dc87b50bf4"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0003/delivery-harness/validator_blind_spot.py",
+      "reason": "M1-F-003 (published history): the old validator against the corrected one.",
+      "hashAfter": "a98b8abbab1c1d4797bcea5f714509a35f7ae0a9f9ca8129ef4d7214a0131203"
+    }
+  ],
+  "filesModified": [
+    {
+      "path": ".iacode/anchors/checkpoint-chain.json",
+      "reason": "The nineteenth integrity anchor, for the sealed audit checkpoint GATE-3-CP-0002, which its own checkpoint could not write and which this successor owes it.",
+      "hashAfter": "528265e6ff9593a0bf458033327799247dd3af2ca3e20d07051f712d554a7050",
+      "hashBefore": "e5f9c4acee7111f9edbe9a7851654aba77b3f285d617e8d18666cce23f2e5555"
+    },
+    {
+      "path": ".iacode/memory/LESSONS.md",
+      "reason": "The index rendered from lessons.jsonl.",
+      "hashAfter": "495bcfc5893ca0ea3f3f7dfc51241c2a400fb54dd23093accb06b1732f852a10",
+      "hashBefore": "157d6e86e143ec6e217dbe9cc76852ad8db1bc6fb3d201ca3d69dbeb269ff201"
+    },
+    {
+      "path": ".iacode/memory/guardrails/registry.json",
+      "reason": "GRD-0042 is verified by the tests that fail without the published-history correction; GRD-0056 and GRD-0057 guard the two new lessons.",
+      "hashAfter": "e352253dfdbd7bc5c37040699cf3d2654861d76cfbce02a663e5b83c997d8612",
+      "hashBefore": "fbd8d2d09b8b19dcf26b3702ce4c7ddd80d7ad7d72bb9fc1e5b059d3b7916764"
+    },
+    {
+      "path": ".iacode/memory/lessons.jsonl",
+      "reason": "LSN-0040 records M1-F-003 as a GUARDRAIL_FAILURE of GRD-0042 and its resolution in this checkpoint; LSN-0055 (M1-F-001) and LSN-0056 (M1-F-002) are new; LSN-0054 records a recurrence.",
+      "hashAfter": "1c03755abefa5918ebc7bca4e439183f826beec8fc2f63c745723d3a4d0397cb",
+      "hashBefore": "7df0107e5ed01438d02cf834c364988eda559c9a470791446b477aa0b0310b66"
+    },
+    {
+      "path": ".iacode/policies/audit-registry.json",
+      "reason": "Registers audit M1-CP-0002 exactly as GATE-3-CP-0002/NEXT.md states, so its three findings become anchored requirements of this corrective delivery.",
+      "hashAfter": "c5457d6bc000e9d3aacbf9aba6f5ea34933b1a2653de92d4e2b5b42b1ca19aba",
+      "hashBefore": "c78b0fd48223c3b2c40cb061b65f81e9376e1865934461883f130a134180bab7"
+    },
+    {
+      "path": "apps/api/src/iacode_api/routes/agent_runs.py",
+      "reason": "M1-F-002 (tool result origin): the endpoint answers only what an external producer owns; the typed refusal TOOL_RESULT_ORIGIN_REFUSED maps to 403 and names the executor.",
+      "hashAfter": "6bd1bdc5ee03c6347d1986b5172558da73e8445eb30ba2559548f2f81110b1c4",
+      "hashBefore": "196ac0f2f605a779a0b040125f80042646a0c880415709ae316254264246f227"
+    },
+    {
+      "path": "apps/api/tests/integration/test_agent_runtime_persistence.py",
+      "reason": "M1-F-002 (tool result origin): every existing call declares its origin; the ownership refusals against the real database: forged before, during and after the sandbox's result, wrong run, after terminal, duplicate sandbox result.",
+      "hashAfter": "3c53c81e41af974db9e8a798e3ece866f8e37977c68959c785e9e87be64edb4d",
+      "hashBefore": "e0e13efae7fc816fb8dcda8f48822ba20048b8dc7eb5987c84567bd4cffc5f67"
+    },
+    {
+      "path": "apps/api/tests/integration/test_migrations.py",
+      "reason": "M1-F-002 (tool result origin): migration 0005's backfill, reversal and vocabulary against a disposable database.",
+      "hashAfter": "82968f2afe4f3e960be4e8c34ed4b2eb353b76ab34f158bbfab5bf46d22d3ba9",
+      "hashBefore": "1566eb8c3fcd9ba6b74c039c2f83386d2d9bcdc8603ef441e20223e67f16c696"
+    },
+    {
+      "path": "apps/api/tests/unit/test_agent_runtime_api.py",
+      "reason": "M1-F-002 (tool result origin): the 403 refusal that signals nothing, and a submission that cannot claim an origin.",
+      "hashAfter": "fd66d05e31e85a7658c56a8a77fc895f9e57091beb9aea2f7b95ff2375ea8f93",
+      "hashBefore": "4d8b739419f6af01874a487a94ed1d82df90d18624b396d3a7cdb4c26650c76a"
+    },
+    {
+      "path": "docs/CHECKPOINT-PROTOCOL.md",
+      "reason": "M1-F-003 (published history): the published-history rule for sealed evidence.",
+      "hashAfter": "7aa4a5391979728b9387d01986cebf88b669fb58a7e8554b64e2ffd700c2f7b7",
+      "hashBefore": "f044dc6a2493dc3dc691e0673fda30bef50c8919c2fbad23166de61092d979d0"
+    },
+    {
+      "path": "docs/DEVELOPMENT-CONTRACT.md",
+      "reason": "M1-F-003 (published history): preserved references and what remote synchronisation now requires.",
+      "hashAfter": "9918397f5cc85a4fe040dcf0144e3e62b2dcfddb7ca2e0d242d868923f2f3641",
+      "hashBefore": "8323c1cd307eac6019ee0bd0839eab977e789c3c17e9f4c845c4928bdbdcb267"
+    },
+    {
+      "path": "docs/HANDOFF-PROTOCOL.md",
+      "reason": "M1-F-003 (published history): a sealed checkpoint is validated from a clone of the published history.",
+      "hashAfter": "5a18d15a5454fe27e745bc0428a467b9d40ed8140592612966e016bd00ac3cbb",
+      "hashBefore": "44f6068e681862fd785e14ddeb219ab7a01ce06ef20f16f0aded9d7a9cd113f0"
+    },
+    {
+      "path": "docs/adr/ADR-0022-agent-output-envelope.md",
+      "reason": "M1-F-001 (envelope shape): the amendment: the prompt shows the exact shape rendered from the schema.",
+      "hashAfter": "91cd9132c498d0f1241f8ff3543fb899a0ec0b446bade29491ca41f6d16d4846",
+      "hashBefore": "a673ca5d318de7baab1d31a7d7c8b011b8eee09bc6593dcc2a164b2b376881a7"
+    },
+    {
+      "path": "docs/adr/README.md",
+      "reason": "Lists ADR-0028.",
+      "hashAfter": "ba0faa55c91feac4cd709c1799809161eb026e7e01be72a6c7dd0c0295aa043b",
+      "hashBefore": "ae3361ecfffd6476cb12fa463ac6ada6fa6c368df276e508224b3368495df1d2"
+    },
+    {
+      "path": "docs/checkpoints/LATEST.md",
+      "reason": "Points at this checkpoint.",
+      "hashAfter": "047e886f426de725a84d5c0863676f30ba939b5be78c3cb794158f3465074f04",
+      "hashBefore": "571a1a87e0ba5f5d3b85acbdd82a0db2e8e1bd8dfdadbbbdc0f3695ce960d284"
+    },
+    {
+      "path": "docs/runbooks/AGENT-RUNTIME.md",
+      "reason": "M1-F-002 (tool result origin): the fifth refused shape and who owns the origin.",
+      "hashAfter": "717929c149998ad860e44ca8fadcbe2a5be9f64f51b9b2bd830a14c40f3c00f4",
+      "hashBefore": "84d62121cb09c4546dc550b413ebc6513807e97abaf77d5aedfe74e4b548d6e8"
+    },
+    {
+      "path": "docs/runbooks/SANDBOX.md",
+      "reason": "M1-F-002 (tool result origin): who answers a sandboxed request, and the new stage.",
+      "hashAfter": "7375b62c0cb3a9ab4ef1d06a38c0bb9cae89d3fc7ae62ee616350b61ad79b7a3",
+      "hashBefore": "39612706bce5a3481db060ebcc00cce18ebc3f5151b354a5c5286f423922190c"
+    },
+    {
+      "path": "packages/contracts/src/iacode_contracts/agent_runtime.py",
+      "reason": "M1-F-002 (tool result origin): the executor vocabulary, written once for the database, the row and the runtime.",
+      "hashAfter": "1bc5e3f14fa0a15b30ebe451ba7bbaa2eda4266c3717e087ac775b59235588be",
+      "hashBefore": "fa4cb60c650f4d95593d2863b756c8f1e696c1c153ee507a12def47444c3b7b0"
+    },
+    {
+      "path": "packages/persistence/src/iacode_persistence/models.py",
+      "reason": "M1-F-002 (tool result origin): the executor column and its constraint on the tool request row.",
+      "hashAfter": "b22b3b11d37f7da4057e95b35467f77066fa756cd0b31e514b3f88ce5c523808",
+      "hashBefore": "028d608be575e06879eaefb65db789df3a9c89f1522b1d4900d99b8696e5be2a"
+    },
+    {
+      "path": "scripts/development-ledger/gate3_red_team.py",
+      "reason": "The internal Red Team attacks both runtime findings: G3-Y (forged result, M1-F-002) and G3-AA (unpublished sealed evidence, M1-F-003).",
+      "hashAfter": "a6d7a55d0cf7da7454032506b31cb53d5831a990f3150ce9d08c7e90951af555",
+      "hashBefore": "6325ce183c8a1a4476e640350a4840e1cb54df2b1a360f71dfb5f51475b9382c"
+    },
+    {
+      "path": "scripts/development-ledger/ledger_common.py",
+      "reason": "M1-F-003 (published history): one definition of the published history: the published namespaces, published_reachability and published_clone; the clean-clone copy is a published clone.",
+      "hashAfter": "60dc0f1c8ff2eaac87ffd61a16d1caf9953d71287fb84372dc48334a66038646",
+      "hashBefore": "7644c3acfd75758c4a431e8983be363a23596b45c6e893516e5ac80c81c7d02d"
+    },
+    {
+      "path": "scripts/development-ledger/m0_mirror_audit.py",
+      "reason": "M1-F-003 (published history): MIR-016 clones the published history.",
+      "hashAfter": "6eaaffea54a7d1b1b7090ce086e33fb7110c37d44ff2fffd3cdeb6eaa8759299",
+      "hashBefore": "d3aa86c2644ad268d0ad4f816c606d02adbdbd67043e4cc803b202156760c5bb"
+    },
+    {
+      "path": "scripts/development-ledger/m0_red_team.py",
+      "reason": "M1-F-003 (published history): the attack fixture is a published clone.",
+      "hashAfter": "fad0c3cf0ebb5fe7d9c723bbc35c8692e2116b4e56b7c12e4b4bc09d8c335281",
+      "hashBefore": "be0dadf3c52be378773afdb7c5237e8a66403943a264d197ce0c91892b397ccc"
+    },
+    {
+      "path": "scripts/development-ledger/remote_sync.py",
+      "reason": "M1-F-003 (published history): every local checkpoint and preserved tag must be on the remote.",
+      "hashAfter": "17b1fbe9ac543c42ae85c62719c43b4ecfd904fa8d514a48c2bfc03e83a479af",
+      "hashBefore": "cf1c98fa87b28eccd5cca3c11a26c51b457ca05dd1c0d5572706843239308b37"
+    },
+    {
+      "path": "scripts/development-ledger/validate_checkpoint.py",
+      "reason": "M1-F-003 (published history): a commit named by a checkpoint's evidence must be reachable from a published reference, for every schema version.",
+      "hashAfter": "3dbe6f1e997dd142537e7dbb1ba5b344bee61bc5a2d10bcfda5e5851231e4ea1",
+      "hashBefore": "21ea31b512315e508936e677c1a828b89f34691d62d8e6d1b16a9acbd5c79b1b"
+    },
+    {
+      "path": "scripts/iacode/scenarios/sandbox_coding_e2e.py",
+      "reason": "M1-F-002 (tool result origin): the forged-result scenario: the audit's null control and mutation on the stack.",
+      "hashAfter": "b5b94c3ad1d05ac60fa6bf338087b973f9a40df8a89446836f1dd9dd61d3f273",
+      "hashBefore": "47f49708f4d7c3e95a675fa85b28731487af74b6d09b2057e6486d413cde2a0c"
+    },
+    {
+      "path": "scripts/iacode/verify.py",
+      "reason": "M1-F-002 (tool result origin): the sandbox-tool-result-origin verification stage.",
+      "hashAfter": "a93ba1253ad2b137e5edbb4654a72ce5d5b84f8eed74b81864e142e8527f3ccb",
+      "hashBefore": "a13fd5b96d8d6ac40076e6dd0be46c6794fe6e32c94cfaab1f9942062dd4037c"
+    },
+    {
+      "path": "services/agent-runtime/src/iacode_agent_runtime/context.py",
+      "reason": "M1-F-001 (envelope shape): the runtime instructions carry the rendered envelope contract.",
+      "hashAfter": "c63c1e1203fbf6a16d901f0a6119bbdbc23fd469358e10ae83021e33ac36ec68",
+      "hashBefore": "6aaf6a62836b41e15ead1fc685548c711cb90de1f22a3ca42be2f00438f9fcac"
+    },
+    {
+      "path": "services/agent-runtime/src/iacode_agent_runtime/contracts.py",
+      "reason": "M1-F-002 (tool result origin): a tool request carries its executor.",
+      "hashAfter": "609eb0b29df32e60597d237b1f561d545783d5e4af3c161e435c01fd23ffcc37",
+      "hashBefore": "f71a18219648aba7c0eec5369ee727f86c15bb35cd4097c1afbd3593c8f6e86b"
+    },
+    {
+      "path": "services/agent-runtime/src/iacode_agent_runtime/engine.py",
+      "reason": "M1-F-001 (envelope shape): the repair carries the contract with the stage's tools.",
+      "hashAfter": "b421e55e6657d2e82f22c8f0a70f8df1aa990fbf0a05d7d031c9abe0335388af",
+      "hashBefore": "2032ae6aab07d98c0fe4a189570d8d03fdcdb2a71d2d1f68c3b969310dd760e9"
+    },
+    {
+      "path": "services/agent-runtime/src/iacode_agent_runtime/errors.py",
+      "reason": "M1-F-002 (tool result origin): the typed refusal TOOL_RESULT_ORIGIN_REFUSED.",
+      "hashAfter": "1793b4cd2290466f6abefc0e723ee79d231eb316d16c1363a0dae8908d0077cb",
+      "hashBefore": "7bfb816cbaff8ccb6df4e68aa5005ea2841f3e11756bebaa2a72d1b3b6b2e7f6"
+    },
+    {
+      "path": "services/agent-runtime/src/iacode_agent_runtime/persistence.py",
+      "reason": "M1-F-002 (tool result origin): the store records the executor and refuses a result from any other origin before storing it.",
+      "hashAfter": "b73746ddf1319f4fb9ee1ba052f2dce59430b3813469bbd76ad8a608ce8e3a2a",
+      "hashBefore": "b2cbba4e14bb59914d5e8fdb71984e0d08516b66f4b56e7ccef3fb009ef5363b"
+    },
+    {
+      "path": "services/agent-runtime/src/iacode_agent_runtime/ports.py",
+      "reason": "M1-F-002 (tool result origin): the store port declares the executor and the origin.",
+      "hashAfter": "9c9f0e5a9238e8e427cafc4f58b2811de00da1b00ed202988a2e9774f75f4542",
+      "hashBefore": "bd8ef7768a307945dc3ef2dce3f71920e4ad026971df289dc453bacfa98a45de"
+    },
+    {
+      "path": "services/agent-runtime/src/iacode_agent_runtime/protocol.py",
+      "reason": "M1-F-001 (envelope shape): envelope_contract and envelope_examples rendered from the schema; the tool object is closed; the repair restates the shape.",
+      "hashAfter": "3dc01346ab9fa7c9214f3aecf106a9ceb2ab4389ff259988f4c6c15eec4548a9",
+      "hashBefore": "88007695600e2b400c8a56e7c70968c69f15e527c795d3ecec15a5851c5df513"
+    },
+    {
+      "path": "services/agent-runtime/src/iacode_agent_runtime/service.py",
+      "reason": "M1-F-002 (tool result origin): the API's path resolves with the constant origin EXTERNAL.",
+      "hashAfter": "710ee795b622487b06b361624035c1d2614206d44b0490fecd819ad1b20902b7",
+      "hashBefore": "9c29a8216ea9427db2de798535c0af639cc3bc2623567540f7a524d5550ac08b"
+    },
+    {
+      "path": "services/agent-runtime/tests/test_context.py",
+      "reason": "M1-F-001 (envelope shape): mandate tests A, D and E through the instructions.",
+      "hashAfter": "be4e1f400c0902bd1616cfe1fd984cbe500dbc728cf4b6a2839e9413a4feb990",
+      "hashBefore": "18ae8938c33482bac76c89739fde4babf2cac2577553b1bd711fa4411ee92b23"
+    },
+    {
+      "path": "services/agent-runtime/tests/test_engine.py",
+      "reason": "M1-F-001 (envelope shape): the one repair carries the shape with the stage's tools.",
+      "hashAfter": "2073d3623b1451e1e29153fb3a4311ecded1c57a5fb2eaa19ba63b0669e168e5",
+      "hashBefore": "81f8c7452ef6927a54b76178db61f822e65902ef74777e28b3e751a1a4f0bbeb"
+    },
+    {
+      "path": "services/agent-runtime/tests/test_protocol.py",
+      "reason": "M1-F-001 (envelope shape): mandate tests B, C and D, and arguments outside tool.arguments refused by their real defect.",
+      "hashAfter": "10e7fbcdcb46108781c2b29e9d595572dd15bfb8f54cfa9d4cd0658990207aa0",
+      "hashBefore": "10c47b0198cf9017c22fab798c7c1d978dccde25eb1705bb25df25136ab51a47"
+    },
+    {
+      "path": "services/orchestrator/rehearsal/durability.py",
+      "reason": "M1-F-002 (tool result origin): the rehearsal answers as the API does, with the origin EXTERNAL.",
+      "hashAfter": "82994d77b6811a1d392ea6fddb721c8c885286c7ccd8e62960c8ef588f9efa83",
+      "hashBefore": "7d40b7b149228eec6dd0ebea0058221b12713a8430435547e0755f3cbbd5cf26"
+    },
+    {
+      "path": "services/orchestrator/src/iacode_orchestrator/agent_runtime/activities.py",
+      "reason": "M1-F-002 (tool result origin): the internal activity is the sandbox's path, with the origin SANDBOX; the request's executor is persisted.",
+      "hashAfter": "40cd11934e5e572ddbfebe4e770576ce5cc0f1d88baae95389880182f55d5118",
+      "hashBefore": "31d8b946cad619e3b6cdb7d9f87f053d4369d4b8c5976d23d43c1a85faa4f9de"
+    },
+    {
+      "path": "services/orchestrator/src/iacode_orchestrator/workflows/agent_run.py",
+      "reason": "M1-F-002 (tool result origin): the workflow records the executor from the stage's sandbox policy.",
+      "hashAfter": "81f2136e767f743dc99fe06888e58a398c04e863cf3f23ff3101d102ce45f7da",
+      "hashBefore": "83ddd4c6f0efe26b39e5a598186258f178cc0d58af8b2eb8fb4b664a9d5c3484"
+    },
+    {
+      "path": "tests/test_gate1_model_gateway.py",
+      "reason": "M1-F-003 (published history): the sealed-history test clones the published history.",
+      "hashAfter": "88f9e636a20eb17d472269877b24e49dc3797bcf1fd556f9600f340b1d24e593",
+      "hashBefore": "9aa39a58afd5fd19bf917c6d546327ae156011dbb292477e944d33fc788dc7f2"
+    },
+    {
+      "path": "tests/test_gate3_sandbox.py",
+      "reason": "M1-F-003: published history, preserved references and clone method; M1-F-002: constant origins, the workflow's executor, the submission contract and the scenario stage; the Red Team battery attacks both.",
+      "hashAfter": "6bc5fdecb5b49b947e9d985d81ce17215158b7b558b9532dbb16d963f5d0f251",
+      "hashBefore": "5c056e0658af4d7f09a03b239a2a045d38edb82dd943b3a88fada746cf9b8b27"
+    },
+    {
+      "path": "tests/test_git_policy.py",
+      "reason": "M1-F-003 (published history): remote synchronisation refuses a local checkpoint or preserved tag missing from the remote.",
+      "hashAfter": "cb367796d7829289f114f3967a08e63aa350c46d243f108cffc2bf2b161267c4",
+      "hashBefore": "7e761e7af71894626dbde53eab54ef5660b1316f159a6d8fa3ae662ea2779e95"
+    }
+  ],
   "filesDeleted": []
 }

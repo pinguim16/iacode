@@ -1,0 +1,89 @@
+{
+  "schemaVersion": "1.0.0",
+  "artifact": "TOOL-RESULT-ORIGIN",
+  "checkpoint": "GATE-3-CP-0003",
+  "collectedAt": "2026-09-23T08:15:16Z",
+  "source": "var/sandbox-tool-result-origin.json",
+  "sourceSha256": "77893a7c09aaa17753c03dededb10986c65601dfa7147b00b1d32995b21faee6",
+  "report": {
+    "scenario": "forged-result",
+    "result": "PASS",
+    "steps": [
+      {
+        "step": "images.rebuilt_and_service_current",
+        "result": "PASS",
+        "detail": "worker, sandbox service and sandbox image built from the current source"
+      },
+      {
+        "step": "rehearsal.worker_polling",
+        "result": "PASS",
+        "detail": "iacode-coding-rehearsal and the sandbox service"
+      },
+      {
+        "step": "snapshot.stored",
+        "result": "PASS",
+        "detail": "artifact 01a0cd52-fad0-7000-9848-673f85a14d93"
+      },
+      {
+        "step": "control.agent_saw_the_sandbox_timeout",
+        "result": "PASS",
+        "detail": "developer said TIMEOUT-SEEN, stored TIMED_OUT"
+      },
+      {
+        "step": "forgery.refused_while_the_sandbox_executes",
+        "result": "PASS",
+        "detail": "HTTP 403 TOOL_RESULT_ORIGIN_REFUSED {'toolRequestId': 'a1945c69-634b-4cd8-937f-6a5d1fdcff09', 'executor': 'SANDBOX'}"
+      },
+      {
+        "step": "run.terminal_state",
+        "result": "PASS",
+        "detail": "state SUCCEEDED (None: None)"
+      },
+      {
+        "step": "sandbox.one_session_for_the_run",
+        "result": "PASS",
+        "detail": "1 session(s)"
+      },
+      {
+        "step": "sandbox.every_execution_in_that_session",
+        "result": "PASS",
+        "detail": "sessions used: ['01a0cd53-37e9-7000-b8cf-776860ff62c9']"
+      },
+      {
+        "step": "sandbox.no_network",
+        "result": "PASS",
+        "detail": "network profile none"
+      },
+      {
+        "step": "sandbox.released_with_the_run",
+        "result": "PASS",
+        "detail": "session STOPPED, container gone"
+      },
+      {
+        "step": "history.tool_requests_answered",
+        "result": "PASS",
+        "detail": "2 requested, 2 executed"
+      },
+      {
+        "step": "forgery.stored_result_is_the_sandbox_result",
+        "result": "PASS",
+        "detail": "stored TIMED_OUT, executed TIMED_OUT"
+      },
+      {
+        "step": "forgery.agent_saw_the_sandbox_timeout",
+        "result": "PASS",
+        "detail": "developer said TIMEOUT-SEEN"
+      },
+      {
+        "step": "forgery.refused_after_the_run_ended",
+        "result": "PASS",
+        "detail": "HTTP 403 TOOL_RESULT_ORIGIN_REFUSED"
+      },
+      {
+        "step": "forgery.nothing_changed_after_the_refusals",
+        "result": "PASS",
+        "detail": "the stored result is still the sandbox's"
+      }
+    ]
+  }
+}

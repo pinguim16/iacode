@@ -1,0 +1,428 @@
+{
+  "schemaVersion": "1.1.0",
+  "checkpoint": "GATE-3-CP-0003",
+  "generatedAt": "2026-09-23T08:40:30Z",
+  "targetFingerprint": "13a1871843aa976c824508e4617cbe0740f710ee9baff0df222c6bd85cd8a25f",
+  "source": "scripts/development-ledger/gate3_red_team.py with gate3_sandbox_attacks.py — the internal adversarial battery of GATE 3 — SANDBOX + TOOL EXECUTION, executed against the delivery",
+  "baselineControl": {
+    "result": "VALID",
+    "detail": "the unmutated fixture is accepted by every control this battery mutates: a real sandbox executes unmutated requests (write SUCCEEDED/None, read SUCCEEDED/None, shell SUCCEEDED/None, git.status SUCCEEDED/None); the scope control accepts the real tree (no violation); the boundary scan accepts the real tree (no offender); the canonical requirement set parses and mirrors (139 row(s)); the battery leaves no sandbox behind (0 container(s) left)",
+    "evidence": [
+      "file:services/sandbox/src/iacode_sandbox/service.py",
+      "file:.iacode/policies/sandbox-policy.json"
+    ]
+  },
+  "attacks": [
+    {
+      "attackId": "G3-A",
+      "description": "A tool path that climbs out of the workspace.",
+      "target": "path traversal",
+      "mutation": "read ../ escapes, an absolute host path, a drive, a UNC path and a null byte",
+      "expectedDefense": "every one is DENIED with a PATH_ code before anything is opened",
+      "observed": "../../etc/passwd -> DENIED/PATH_ESCAPE; a/../../etc/shadow -> DENIED/PATH_ESCAPE; /etc/passwd -> DENIED/PATH_ABSOLUTE_OUTSIDE; C:/Windows/win.ini -> DENIED/PATH_DRIVE; //server/share/x -> DENIED/PATH_UNC; notes.txt\\0.png -> DENIED/PATH_NULL_BYTE",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/sandbox/src/iacode_sandbox/paths.py",
+        "test:PathResolverTests"
+      ],
+      "mandatory": true,
+      "origin": "GATE-3 internal Red Team, executed in the sandbox service image"
+    },
+    {
+      "attackId": "G3-B",
+      "description": "A link inside the workspace that points outside it.",
+      "target": "symlink escape",
+      "mutation": "create links to a file, a directory and the root, then read, write and list through them",
+      "expectedDefense": "all three are DENIED with PATH_SYMLINK_ESCAPE",
+      "observed": "links made (exit 0); read, write, list: ['DENIED/PATH_SYMLINK_ESCAPE', 'DENIED/PATH_SYMLINK_ESCAPE', 'DENIED/PATH_SYMLINK_ESCAPE']",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/sandbox/src/iacode_sandbox/paths.py",
+        "test:SymlinkContainmentTests"
+      ],
+      "mandatory": true,
+      "origin": "GATE-3 internal Red Team, executed in the sandbox service image"
+    },
+    {
+      "attackId": "G3-C",
+      "description": "One run looks for another run's files.",
+      "target": "workspace isolation",
+      "mutation": "write a token in run A's workspace and search the whole filesystem of run B's sandbox",
+      "expectedDefense": "the token is not found and naming A's container is DENIED",
+      "observed": "search for the other run's token found nothing; naming its container: DENIED/PATH_ESCAPE",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/sandbox/src/iacode_sandbox/backend.py",
+        "test:CrossSessionIsolationTests"
+      ],
+      "mandatory": true,
+      "origin": "GATE-3 internal Red Team, executed in the sandbox service image"
+    },
+    {
+      "attackId": "G3-D",
+      "description": "A command looks for the host's drives and home.",
+      "target": "host path",
+      "mutation": "probe the host's mount points and read the sandbox's mount table",
+      "expectedDefense": "no host path exists and nothing but the in-memory workspace and tmp is mounted",
+      "observed": "host paths present: none; unexpected mounts: none",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/sandbox/src/iacode_sandbox/backend.py",
+        "test:test_no_host_path_is_mounted"
+      ],
+      "mandatory": true,
+      "origin": "GATE-3 internal Red Team, executed in the sandbox service image"
+    },
+    {
+      "attackId": "G3-E",
+      "description": "A command reads the environment for credentials.",
+      "target": "host secret",
+      "mutation": "set a credential-named sentinel in the controller, then print the sandbox's environment",
+      "expectedDefense": "neither the sentinel nor any controller variable is visible",
+      "observed": "variables of the controller visible in the sandbox: none",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/sandbox/src/iacode_sandbox/backend.py",
+        "test:test_no_variable_of_the_controller_reaches_a_sandbox"
+      ],
+      "mandatory": true,
+      "origin": "GATE-3 internal Red Team, executed in the sandbox service image"
+    },
+    {
+      "attackId": "G3-F",
+      "description": "A command looks for the container engine.",
+      "target": "docker socket",
+      "mutation": "probe the engine's sockets and its TCP port from inside the sandbox",
+      "expectedDefense": "no socket exists and the port cannot be reached",
+      "observed": "socket.gaierror: [Errno -3] Temporary failure in name resolution",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/sandbox/src/iacode_sandbox/backend.py",
+        "test:test_no_docker_socket_or_engine_endpoint_is_reachable"
+      ],
+      "mandatory": true,
+      "origin": "GATE-3 internal Red Team, executed in the sandbox service image"
+    },
+    {
+      "attackId": "G3-G",
+      "description": "A model invents a tool name.",
+      "target": "unknown tool",
+      "mutation": "request shell, bash, a command line, os.system and git.push as tool names",
+      "expectedDefense": "every one is DENIED as UNKNOWN_TOOL and no container is started",
+      "observed": "['DENIED/UNKNOWN_TOOL', 'DENIED/UNKNOWN_TOOL', 'DENIED/UNKNOWN_TOOL', 'DENIED/UNKNOWN_TOOL', 'DENIED/UNKNOWN_TOOL']; containers started: 0",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/sandbox/src/iacode_sandbox/tools.py",
+        "test:test_an_unknown_tool_is_refused_and_never_mapped_to_a_shell"
+      ],
+      "mandatory": true,
+      "origin": "GATE-3 internal Red Team, executed in the sandbox service image"
+    },
+    {
+      "attackId": "G3-H",
+      "description": "A request asks for more than its policy gives.",
+      "target": "policy escalation",
+      "mutation": "add network, memory, a mount, privileges and an image to the request and to the arguments; raise the timeout; allow LD_PRELOAD; write as the reviewer; name an unknown policy",
+      "expectedDefense": "every one is DENIED with its own reason",
+      "observed": "beside the contract ['DENIED/CONTRACT_UNKNOWN_FIELD', 'DENIED/CONTRACT_UNKNOWN_FIELD', 'DENIED/CONTRACT_UNKNOWN_FIELD', 'DENIED/CONTRACT_UNKNOWN_FIELD', 'DENIED/CONTRACT_UNKNOWN_FIELD']; inside the arguments ['DENIED/ARGUMENT_UNKNOWN', 'DENIED/ARGUMENT_OUT_OF_RANGE', 'DENIED/ENVIRONMENT_NOT_ALLOWED']; reviewer write DENIED/TOOL_NOT_IN_POLICY; unknown policy DENIED/POLICY_UNKNOWN",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/sandbox/src/iacode_sandbox/service.py",
+        "test:test_no_request_can_change_the_network_the_limits_or_the_mounts"
+      ],
+      "mandatory": true,
+      "origin": "GATE-3 internal Red Team, executed in the sandbox service image"
+    },
+    {
+      "attackId": "G3-I",
+      "description": "A command that never ends.",
+      "target": "timeout",
+      "mutation": "run sleep 60 with a 2 s timeout",
+      "expectedDefense": "TIMED_OUT within bounds and no sleep left running",
+      "observed": "TIMED_OUT/COMMAND_TIMED_OUT after 2002 ms; sleeps left running: 0",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/sandbox/src/iacode_sandbox/helper.py",
+        "test:test_a_timeout_kills_the_whole_process_tree"
+      ],
+      "mandatory": true,
+      "origin": "GATE-3 internal Red Team, executed in the sandbox service image"
+    },
+    {
+      "attackId": "G3-J",
+      "description": "A command that leaves children in their own session.",
+      "target": "orphan child",
+      "mutation": "start a setsid and a nohup child and let the parent time out",
+      "expectedDefense": "every child is killed with the command",
+      "observed": "TIMED_OUT/COMMAND_TIMED_OUT; escaped sleeps left running: 0",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/sandbox/src/iacode_sandbox/helper.py",
+        "test:test_a_timeout_kills_the_whole_process_tree"
+      ],
+      "mandatory": true,
+      "origin": "GATE-3 internal Red Team, executed in the sandbox service image"
+    },
+    {
+      "attackId": "G3-K",
+      "description": "A command that prints 40 MB.",
+      "target": "output bomb",
+      "mutation": "write 40 MB to standard output",
+      "expectedDefense": "the inline output stays within the policy's bound, the rest is an artifact",
+      "observed": "SUCCEEDED/None, truncated=True, inline 32768 bytes against 32768, artifacts 1",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/sandbox/src/iacode_sandbox/helper.py",
+        "test:test_output_is_bounded_and_the_rest_is_an_artifact"
+      ],
+      "mandatory": true,
+      "origin": "GATE-3 internal Red Team, executed in the sandbox service image"
+    },
+    {
+      "attackId": "G3-L",
+      "description": "A fork bomb.",
+      "target": "PID pressure",
+      "mutation": "run a recursive fork bomb with a 5 s timeout",
+      "expectedDefense": "the process limit contains it and the sandbox answers the next command",
+      "observed": "bomb SUCCEEDED/None, 1294 descendants killed by the sweep; afterwards SUCCEEDED/None ['alive'], 5 processes in the sandbox",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/sandbox/src/iacode_sandbox/backend.py",
+        "test:test_a_fork_bomb_is_contained_by_the_process_limit"
+      ],
+      "mandatory": true,
+      "origin": "GATE-3 internal Red Team, executed in the sandbox service image"
+    },
+    {
+      "attackId": "G3-M",
+      "description": "A process that allocates three times its memory.",
+      "target": "memory cap",
+      "mutation": "allocate 3 GiB in a 1 GiB sandbox",
+      "expectedDefense": "the allocation fails in a controlled way and the sandbox answers the next command",
+      "observed": "3 GiB allocation FAILED/None exit 137; afterwards alive",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/sandbox/src/iacode_sandbox/backend.py",
+        "test:test_a_process_that_exceeds_memory_fails_in_a_controlled_way"
+      ],
+      "mandatory": true,
+      "origin": "GATE-3 internal Red Team, executed in the sandbox service image"
+    },
+    {
+      "attackId": "G3-N",
+      "description": "The agent pushes to a remote.",
+      "target": "remote Git",
+      "mutation": "add the public remote and push from the shell; ask for push, fetch, clone and remote tools",
+      "expectedDefense": "the push fails with no network and no credential; the tools do not exist",
+      "observed": "a push from the shell exited 128; remote tools ['DENIED/UNKNOWN_TOOL', 'DENIED/UNKNOWN_TOOL', 'DENIED/UNKNOWN_TOOL', 'DENIED/UNKNOWN_TOOL']; credential helper: none",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/sandbox/src/iacode_sandbox/tools.py",
+        "test:test_no_remote_operation_is_offered_or_possible"
+      ],
+      "mandatory": true,
+      "origin": "GATE-3 internal Red Team, executed in the sandbox service image"
+    },
+    {
+      "attackId": "G3-O",
+      "description": "The agent rewrites or cleans history.",
+      "target": "destructive Git",
+      "mutation": "ask for reset, clean, rebase and filter-repo; pass an option and a command as a revision",
+      "expectedDefense": "no such tool exists and both revisions are refused",
+      "observed": "tools ['DENIED/UNKNOWN_TOOL', 'DENIED/UNKNOWN_TOOL', 'DENIED/UNKNOWN_TOOL', 'DENIED/UNKNOWN_TOOL']; option-like revision DENIED/GIT_REVISION_INVALID; injected revision DENIED/GIT_REVISION_INVALID",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/sandbox/src/iacode_sandbox/tools.py",
+        "test:test_a_revision_that_looks_like_an_option_is_refused"
+      ],
+      "mandatory": true,
+      "origin": "GATE-3 internal Red Team, executed in the sandbox service image"
+    },
+    {
+      "attackId": "G3-P",
+      "description": "A command reaches the internet.",
+      "target": "network egress",
+      "mutation": "connect to two addresses and a host name, and list the interfaces",
+      "expectedDefense": "every connection fails and only loopback exists",
+      "observed": "REFUSED 1.1.1.1 OSError | REFUSED 8.8.8.8 OSError | REFUSED github.com gaierror | lo",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/sandbox/src/iacode_sandbox/backend.py",
+        "test:test_external_egress_fails"
+      ],
+      "mandatory": true,
+      "origin": "GATE-3 internal Red Team, executed in the sandbox service image"
+    },
+    {
+      "attackId": "G3-Q",
+      "description": "A tool request is delivered again with another command.",
+      "target": "result forgery",
+      "mutation": "execute a request, then deliver the same identifier with a different command",
+      "expectedDefense": "the recorded result is answered and the second command never runs",
+      "observed": "the second delivery was answered from the record (replayed=True, SUCCEEDED/EXECUTION_REPLAYED, exit 0) and the forged command never ran",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/sandbox/src/iacode_sandbox/service.py",
+        "test:test_an_execution_is_never_repeated_for_a_retried_request"
+      ],
+      "mandatory": true,
+      "origin": "GATE-3 internal Red Team, executed in the sandbox service image"
+    },
+    {
+      "attackId": "G3-R",
+      "description": "A request names another run's sandbox.",
+      "target": "cross-run sandbox",
+      "mutation": "name the victim's session and its container in a request of another run",
+      "expectedDefense": "the request is refused and the attacker gets a sandbox of its own",
+      "observed": "naming the victim's session DENIED/CONTRACT_UNKNOWN_FIELD, its container DENIED/CONTRACT_UNKNOWN_FIELD; the attacker got a sandbox of its own",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/sandbox/src/iacode_sandbox/contracts.py",
+        "test:test_one_run_gets_one_session_and_two_runs_get_two"
+      ],
+      "mandatory": true,
+      "origin": "GATE-3 internal Red Team, executed in the sandbox service image"
+    },
+    {
+      "attackId": "G3-S",
+      "description": "The sandbox holds a privilege it should not.",
+      "target": "container privilege",
+      "mutation": "inspect a real sandbox container and write to its root filesystem",
+      "expectedDefense": "unprivileged, no capability, no new privileges, not root, no network, no bind, limited, read-only",
+      "observed": "{\"privileged\": false, \"capAdd\": null, \"capDrop\": [\"ALL\"], \"readOnlyRoot\": true, \"noNewPrivileges\": true, \"user\": \"10001:10001\", \"network\": \"none\", \"binds\": null, \"mounts\": [], \"pidsLimit\": 256, \"memory\": 1073741824}",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/sandbox/src/iacode_sandbox/backend.py",
+        "test:test_the_sandbox_runs_unprivileged_with_no_capability"
+      ],
+      "mandatory": true,
+      "origin": "GATE-3 internal Red Team, executed in the sandbox service image"
+    },
+    {
+      "attackId": "G3-T",
+      "description": "The image inputs changed and the old image is still there.",
+      "target": "stale image",
+      "mutation": "change the sandbox Dockerfile in a copy and run a tool through a service reading the copy",
+      "expectedDefense": "the service refuses with SANDBOX_IMAGE_MISSING and starts no container",
+      "observed": "FAILED/SANDBOX_IMAGE_MISSING; containers started: 0",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/sandbox/src/iacode_sandbox/image.py",
+        "test:test_a_missing_or_stale_image_is_refused_rather_than_substituted"
+      ],
+      "mandatory": true,
+      "origin": "GATE-3 internal Red Team, executed in the sandbox service image"
+    },
+    {
+      "attackId": "G3-U",
+      "description": "A command hidden in a structured argument.",
+      "target": "command injection",
+      "mutation": "put a command in a path and in a search pattern; run a shell command that writes",
+      "expectedDefense": "neither argument is executed, and the shell's own write stays in the sandbox",
+      "observed": "path with a command FAILED/FILE_NOT_FOUND; pattern with a command SUCCEEDED/None; neither ran; the shell's own command stayed inside its sandbox",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/sandbox/src/iacode_sandbox/tools.py",
+        "test:test_an_injected_host_command_only_reaches_the_sandbox"
+      ],
+      "mandatory": true,
+      "origin": "GATE-3 internal Red Team, executed in the sandbox service image"
+    },
+    {
+      "attackId": "G3-V",
+      "description": "The next Gate starts while this one closes.",
+      "target": "gate scope",
+      "mutation": "plant an implementation in a reservation still in force, in a disposable copy",
+      "expectedDefense": "the scope control refuses it, naming the reserved path",
+      "observed": "the scope control refused it: apps/cli is reserved for GATE 5 but carries engine.py",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:.iacode/policies/gate-scope.json",
+        "test:Gate3ScopeTests"
+      ],
+      "mandatory": true,
+      "origin": "GATE-3 internal Red Team, executed on the host"
+    },
+    {
+      "attackId": "G3-W",
+      "description": "The runtime or the API grows an executor of its own.",
+      "target": "sandbox boundary",
+      "mutation": "scan every module outside the sandbox for the sandbox package and a container client, and run the identical scan over a module that imports them",
+      "expectedDefense": "the tree has none and the scan detects the mutated module",
+      "observed": "no module of the API, the runtime, the gateway or the worker imports the sandbox or a container client, and the scan detects one that does (docker, iacode_sandbox.service)",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/sandbox/src/iacode_sandbox/service.py",
+        "test:SandboxBoundaryTests"
+      ],
+      "mandatory": true,
+      "origin": "GATE-3 internal Red Team, executed on the host"
+    },
+    {
+      "attackId": "G3-Z",
+      "description": "A credential is staged on its way to the public remote.",
+      "target": "public history",
+      "mutation": "stage a credential-shaped value in a disposable repository and run the pre-push scan",
+      "expectedDefense": "the scan fails the push, names the finding and never prints the value",
+      "observed": "the staged credential was found and not printed: SECRET_SCAN_FINDINGS mode=staged findings=2 allowlisted=0",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:scripts/development-ledger/secret_scan.py",
+        "test:SecretScanTests"
+      ],
+      "mandatory": true,
+      "origin": "GATE-3 internal Red Team, executed on the host"
+    },
+    {
+      "attackId": "G3-Y",
+      "description": "A result is posted to the API for a request the sandbox is executing (M1-F-002).",
+      "target": "tool result origin",
+      "mutation": "run the timeout scenario, post a SUCCEEDED result while the sandbox runs the command, and post it again after the run ends",
+      "expectedDefense": "403 TOOL_RESULT_ORIGIN_REFUSED both times; the stored result is the sandbox's TIMED_OUT and the agent answers TIMEOUT-SEEN, as in the unmutated control run",
+      "observed": "control: developer said TIMEOUT-SEEN, stored TIMED_OUT; mutation: HTTP 403 TOOL_RESULT_ORIGIN_REFUSED {'toolRequestId': '1c741d29-150b-49a1-91e5-fd77178eb532', 'executor': 'SANDBOX'}; stored TIMED_OUT, executed TIMED_OUT; developer said TIMEOUT-SEEN",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/agent-runtime/src/iacode_agent_runtime/persistence.py",
+        "test:test_a_forged_result_cannot_displace_the_sandbox_result"
+      ],
+      "mandatory": true,
+      "origin": "GATE-3 internal Red Team, executed on the host"
+    },
+    {
+      "attackId": "G3-AA",
+      "description": "A sealed record names a commit no published reference reaches (M1-F-003).",
+      "target": "published history",
+      "mutation": "in a transport clone, delete the preserved reference of a commit a sealed ledger names, leaving the object in the store, and validate that checkpoint from its tag",
+      "expectedDefense": "the validator refuses it as a local object no published reference reaches; with the reference it validates",
+      "observed": "GATE-1-CP-0001 validated with refs/tags/iacode-preserved/gate1-ledger-b59d66f9f3f9 (control) and was refused without it: - COMMANDS.jsonl cmd-0086, COMMANDS.jsonl cmd-0087 names commit b59d66f9f3f9, which exists here only as a local object: no published reference (refs/heads/, refs/tags/, refs/remotes/) reaches it, so n",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:scripts/development-ledger/validate_checkpoint.py",
+        "test:test_every_preserved_reference_is_what_makes_its_checkpoint_valid"
+      ],
+      "mandatory": true,
+      "origin": "GATE-3 internal Red Team, executed on the host"
+    },
+    {
+      "attackId": "G3-X",
+      "description": "The sandbox gate measures an image nobody rebuilt.",
+      "target": "delivery assurance",
+      "mutation": "plant a failing test in the sandbox suite on disk and run the real gate",
+      "expectedDefense": "the gate builds the image first and reports the failure",
+      "observed": "the gate rebuilt and failed on the planted test: [iacode] SANDBOX_TESTS=FAIL",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:scripts/iacode/gates/sandbox_tests.py",
+        "test:Gate3MandatoryGateTests"
+      ],
+      "mandatory": true,
+      "origin": "GATE-3 internal Red Team, executed on the host"
+    }
+  ],
+  "total": 27,
+  "defended": 27,
+  "escaped": 0,
+  "mandatoryTotal": 27,
+  "mandatoryDefended": 27,
+  "result": "RED_TEAM_PASS"
+}

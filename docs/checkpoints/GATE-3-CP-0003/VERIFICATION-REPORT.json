@@ -1,0 +1,240 @@
+{
+  "schemaVersion": "1.0.0",
+  "artifact": "VERIFICATION-REPORT",
+  "checkpoint": "GATE-3-CP-0003",
+  "collectedAt": "2026-09-23T08:15:16Z",
+  "source": "var/verify-report.json",
+  "sourceSha256": "d1a8d631b8445e6f8433a5a064a888ea67a57507957a26d73e29dbf3405bd3fb",
+  "report": {
+    "gate": "GATE-3",
+    "result": "PASS",
+    "fast": false,
+    "durationSeconds": 2536.0,
+    "stages": [
+      {
+        "name": "gate:tests",
+        "description": "mandatory gate tests",
+        "exitCode": 0,
+        "durationSeconds": 1692.4,
+        "result": "PASS"
+      },
+      {
+        "name": "gate:staticAnalysis",
+        "description": "mandatory gate staticAnalysis",
+        "exitCode": 0,
+        "durationSeconds": 0.1,
+        "result": "PASS"
+      },
+      {
+        "name": "gate:lessons",
+        "description": "mandatory gate lessons",
+        "exitCode": 0,
+        "durationSeconds": 0.7,
+        "result": "PASS"
+      },
+      {
+        "name": "gate:integrity",
+        "description": "mandatory gate integrity",
+        "exitCode": 0,
+        "durationSeconds": 5.0,
+        "result": "PASS"
+      },
+      {
+        "name": "gate:checkpointValidation",
+        "description": "mandatory gate checkpointValidation",
+        "exitCode": 0,
+        "durationSeconds": 10.0,
+        "result": "PASS"
+      },
+      {
+        "name": "gate:apiTests",
+        "description": "mandatory gate apiTests",
+        "exitCode": 0,
+        "durationSeconds": 37.5,
+        "result": "PASS"
+      },
+      {
+        "name": "gate:gatewayTests",
+        "description": "mandatory gate gatewayTests",
+        "exitCode": 0,
+        "durationSeconds": 5.8,
+        "result": "PASS"
+      },
+      {
+        "name": "gate:agentRuntimeTests",
+        "description": "mandatory gate agentRuntimeTests",
+        "exitCode": 0,
+        "durationSeconds": 6.9,
+        "result": "PASS"
+      },
+      {
+        "name": "gate:sandboxTests",
+        "description": "mandatory gate sandboxTests",
+        "exitCode": 0,
+        "durationSeconds": 120.1,
+        "result": "PASS"
+      },
+      {
+        "name": "gate:webTests",
+        "description": "mandatory gate webTests",
+        "exitCode": 0,
+        "durationSeconds": 14.4,
+        "result": "PASS"
+      },
+      {
+        "name": "gate:lint",
+        "description": "mandatory gate lint",
+        "exitCode": 0,
+        "durationSeconds": 6.5,
+        "result": "PASS"
+      },
+      {
+        "name": "gate:infraDefinition",
+        "description": "mandatory gate infraDefinition",
+        "exitCode": 0,
+        "durationSeconds": 0.6,
+        "result": "PASS"
+      },
+      {
+        "name": "stack",
+        "description": "start the stack and wait for real health",
+        "exitCode": 0,
+        "durationSeconds": 20.1,
+        "result": "PASS"
+      },
+      {
+        "name": "integration",
+        "description": "the backend suite against the real services",
+        "exitCode": 0,
+        "durationSeconds": 84.7,
+        "result": "PASS"
+      },
+      {
+        "name": "infra",
+        "description": "our configuration of each service, exercised live",
+        "exitCode": 0,
+        "durationSeconds": 11.9,
+        "result": "PASS"
+      },
+      {
+        "name": "smoke",
+        "description": "the API, the web shell, the observability stack and a workflow",
+        "exitCode": 0,
+        "durationSeconds": 3.7,
+        "result": "PASS"
+      },
+      {
+        "name": "gateway-smoke",
+        "description": "the Model Gateway against the real configured provider",
+        "exitCode": 0,
+        "durationSeconds": 15.2,
+        "result": "PASS"
+      },
+      {
+        "name": "agent-runtime-smoke",
+        "description": "the Agent Runtime against the real provider, through the gateway",
+        "exitCode": 0,
+        "durationSeconds": 11.7,
+        "result": "PASS"
+      },
+      {
+        "name": "agent-durability",
+        "description": "a run waiting for a tool survives a real worker restart",
+        "exitCode": 0,
+        "durationSeconds": 39.0,
+        "result": "PASS"
+      },
+      {
+        "name": "agent-cancellation",
+        "description": "a paused run is cancelled, stays cancelled and refuses a late result",
+        "exitCode": 0,
+        "durationSeconds": 14.4,
+        "result": "PASS"
+      },
+      {
+        "name": "agent-deadline",
+        "description": "a run that is alive and going nowhere is ended by its own deadline",
+        "exitCode": 0,
+        "durationSeconds": 18.2,
+        "result": "PASS"
+      },
+      {
+        "name": "sandbox-integration",
+        "description": "the sandbox's store and artifact sink against the real services",
+        "exitCode": 0,
+        "durationSeconds": 7.8,
+        "result": "PASS"
+      },
+      {
+        "name": "sandbox-coding",
+        "description": "a coding team fixes a synthetic repository in a real sandbox; the host is untouched",
+        "exitCode": 0,
+        "durationSeconds": 75.7,
+        "result": "PASS"
+      },
+      {
+        "name": "sandbox-timeout",
+        "description": "a command past its timeout is stopped and the run carries on",
+        "exitCode": 0,
+        "durationSeconds": 31.8,
+        "result": "PASS"
+      },
+      {
+        "name": "sandbox-cancellation",
+        "description": "a run cancelled during a long command stops it and leaves no sandbox",
+        "exitCode": 0,
+        "durationSeconds": 92.4,
+        "result": "PASS"
+      },
+      {
+        "name": "sandbox-recovery",
+        "description": "a restarted sandbox service keeps the run's session and its workspace",
+        "exitCode": 0,
+        "durationSeconds": 53.5,
+        "result": "PASS"
+      },
+      {
+        "name": "sandbox-tool-result-origin",
+        "description": "a result posted to the API for a sandboxed request is refused, and the agent receives the sandbox's own",
+        "exitCode": 0,
+        "durationSeconds": 43.6,
+        "result": "PASS"
+      },
+      {
+        "name": "backup",
+        "description": "backup, restore into a disposable target, verified read-back",
+        "exitCode": 0,
+        "durationSeconds": 16.6,
+        "result": "PASS"
+      },
+      {
+        "name": "dependency-scan",
+        "description": "known vulnerabilities in the pinned dependencies",
+        "exitCode": 0,
+        "durationSeconds": 25.3,
+        "result": "PASS"
+      },
+      {
+        "name": "restart",
+        "description": "restart with data intact",
+        "exitCode": 0,
+        "durationSeconds": 27.4,
+        "result": "PASS"
+      },
+      {
+        "name": "dependency-failure",
+        "description": "liveness holds, readiness refuses, both recover",
+        "exitCode": 0,
+        "durationSeconds": 5.1,
+        "result": "PASS"
+      },
+      {
+        "name": "fresh-install",
+        "description": "a complete installation from no volumes at all",
+        "exitCode": 0,
+        "durationSeconds": 38.0,
+        "result": "PASS"
+      }
+    ]
+  }
+}

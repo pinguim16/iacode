@@ -4,9 +4,9 @@
 - Scope: `corrective delivery, published history, sealed checkpoint validation, clean clone, git, sandbox, tool execution, tool results, tool result origin, agent-runtime integration, agent envelope protocol, model instructions, live model, api, persistence, migration, cancellation, secrets, build, test`
 - Technologies: `docker`, `git`, `python`, `temporal`, `postgresql`, `minio`
 - Modules: `scripts/development-ledger`, `services/agent-runtime`, `services/orchestrator`, `services/sandbox`, `apps/api`, `packages/persistence`, `packages/contracts`
-- Generated: `2026-09-23T07:12:23Z`
-- Lessons considered: 54
-- Lessons applicable: 53
+- Generated: `2026-09-23T07:30:27Z`
+- Lessons considered: 56
+- Lessons applicable: 55
 
 Every applicable lesson below is a requirement of this Gate. The derived identifiers must
 appear in `REQUIREMENTS-MATRIX.json`, and the Delivery Completeness Validator fails the
@@ -67,6 +67,8 @@ delivery when one is absent.
 | `LSN-0052` Two processes that meet on a queue must name what crosses it once, and a real run must exercise both | `GUARDED` | HIGH | `LESSON-REQ-0051` | For every payload this Gate sends between two processes, confirm its names are defined once in a shared contract, used by both sides, and exercised once by a run in which neither side is a double. |
 | `LSN-0053` A process sweep that reads what a forking process holds waits on the processes it has to kill | `GUARDED` | HIGH | `LESSON-REQ-0052` | For every control that must end processes it did not start, confirm it freezes before it kills, reads nothing a forking process holds, and is attacked on the real engine by a process that detaches and forks. |
 | `LSN-0054` A pre-push check narrower than the change's reach lets a red gate reach the public remote | `CONFIRMED` | MEDIUM | `LESSON-REQ-0053` | Before each push, run the lint gate and the repository-wide scans as well as the suites of the change, because a change reaches every control that scans the tree. |
+| `LSN-0055` A contract a model must follow has to reach the model, rendered from the definition the parser enforces | `GUARDED` | MEDIUM | `LESSON-REQ-0054` | For every structured answer a model must produce, confirm that the exact shape is in the text every model receives — rendered from the definition the parser enforces, not written beside it — and that a live run of the configured model produces it. |
+| `LSN-0056` A result is accepted only from the executor that owns the request, decided when the request is created | `GUARDED` | MEDIUM | `LESSON-REQ-0055` | For every result, verdict or callback that more than one producer could deliver, confirm that the owner is recorded when the work is created, that the origin of a delivery comes from the code path and never from the delivery, and that a delivery from any other origin is refused before it is stored. |
 
 ## Why each lesson applies
 
@@ -440,3 +442,17 @@ delivery when one is absent.
 - Required check: Before each push, run the lint gate and the repository-wide scans as well as the suites of the change, because a change reaches every control that scans the tree.
 - Required evidence: Recorded lint and targeted runs between each push and the one before it.
 - Derived requirement: `LESSON-REQ-0053`
+
+### LSN-0055 — A contract a model must follow has to reach the model, rendered from the definition the parser enforces
+
+- Reason: applies to every Gate; category model-behavior; severity MEDIUM; already guarded, so the control must keep holding
+- Required check: For every structured answer a model must produce, confirm that the exact shape is in the text every model receives — rendered from the definition the parser enforces, not written beside it — and that a live run of the configured model produces it.
+- Required evidence: A test that the instructions contain the rendered shape and follow a change of the schema, and a live run of the configured model that produces the shape.
+- Derived requirement: `LESSON-REQ-0054`
+
+### LSN-0056 — A result is accepted only from the executor that owns the request, decided when the request is created
+
+- Reason: applies to every Gate; category security; severity MEDIUM; already guarded, so the control must keep holding
+- Required check: For every result, verdict or callback that more than one producer could deliver, confirm that the owner is recorded when the work is created, that the origin of a delivery comes from the code path and never from the delivery, and that a delivery from any other origin is refused before it is stored.
+- Required evidence: A test that a delivery from the wrong origin is refused before and after the owner's, with a null control through the same path, and a run on the real stack.
+- Derived requirement: `LESSON-REQ-0055`

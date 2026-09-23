@@ -31,9 +31,13 @@ PHASE = "M1 corrective delivery: close M1-F-003, M1-F-001 and M1-F-002 of audit 
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--status", default=None)
+    parser.add_argument("--dirty", choices=("true", "false"), default=None,
+                        help="the working tree state the checkpoint is validated against")
     arguments = parser.parse_args()
     state = load_json(CHECKPOINT / "STATE.json")
     state["phase"] = PHASE
+    if arguments.dirty is not None:
+        state["dirty"] = arguments.dirty == "true"
     if arguments.status:
         state["status"] = arguments.status
         (CHECKPOINT / "STATUS.md").write_text(f"# Status\n\n{arguments.status}\n",
@@ -66,6 +70,37 @@ def main() -> int:
     })
 
     state["integrity"]["anchors"] = len(load_anchors(ROOT))
+    state["integrity"]["chainFile"] = ".iacode/anchors/checkpoint-chain.json"
+
+    # The Green Keeper block is the last cycle of REWORK-LOG.jsonl, read rather than typed.
+    cycles = [json.loads(line) for line in (CHECKPOINT / "REWORK-LOG.jsonl")
+              .read_text(encoding="utf-8").splitlines() if line.strip()]
+    if cycles:
+        last = cycles[-1]
+        state["greenKeeper"].update({
+            "status": "PASS" if last.get("result") == "GREEN"
+            and not last.get("remainingFailures") else "FAIL",
+            "cycles": len(cycles),
+            "remainingFailures": int(last.get("remainingFailures") or 0),
+            "unresolvedReworkItems": 0,
+            "log": "REWORK-LOG.jsonl",
+            "externalBlockers": [],
+            "evidence": ["file:REWORK-LOG.jsonl"] + [
+                f"command:{item['commandId']}" for item in last.get("gateResults") or []],
+        })
+        state["reworkCycles"] = len(cycles)
+
+    # The completeness block is COMPLETENESS-REPORT.json, when the audit has run.
+    completeness_path = CHECKPOINT / "COMPLETENESS-REPORT.json"
+    if completeness_path.is_file():
+        completeness = load_json(completeness_path)
+        state["deliveryCompleteness"].update({
+            "status": completeness.get("result"),
+            "report": "COMPLETENESS-REPORT.json",
+            "coveragePercent": completeness.get("coveragePercent"),
+            "evidenceCoveragePercent": completeness.get("evidenceCoveragePercent"),
+            "auditor": completeness.get("auditor"),
+        })
 
     measured = guardrail_effectiveness(ROOT)
     for key in ("guardrailsTotal", "guardrailsResolved", "guardrailsTested",
