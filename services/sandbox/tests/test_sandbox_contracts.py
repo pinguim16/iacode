@@ -3,7 +3,11 @@
 from __future__ import annotations
 
 import pytest
-from iacode_contracts.sandbox import SANDBOX_CONTRACT_VERSION, TOOL_EXECUTION_STATUSES
+from iacode_contracts.sandbox import (
+    SANDBOX_AGENT_RESULT_MAX_BYTES,
+    SANDBOX_CONTRACT_VERSION,
+    TOOL_EXECUTION_STATUSES,
+)
 from iacode_sandbox.contracts import (
     ArtifactReference,
     CommandExecution,
@@ -15,6 +19,7 @@ from iacode_sandbox.contracts import (
     ToolExecutionResult,
     Workspace,
     WorkspaceSource,
+    rendered_size,
 )
 from sandbox_fixtures import request
 
@@ -95,3 +100,53 @@ class SandboxContractTests:
             WorkspaceSource(kind="host-directory")
         with pytest.raises(ContractError):
             WorkspaceSource(kind="snapshot")
+
+
+class AgentResultBoundTests:
+    """What an agent receives fits the size the runtime accepts, however the output is made.
+
+    A bound on the raw bytes a tool produced is not a bound on the result: JSON renders a control
+    character as six bytes, so a file within the read limit can render three times over the
+    runtime's tool result limit, and the runtime would then fail the run that asked for it.
+    """
+
+    @staticmethod
+    def result(**output) -> ToolExecutionResult:
+        return ToolExecutionResult(tool_request_id="t", tool="filesystem.read",
+                                   status="SUCCEEDED", output=output)
+
+    def test_an_escaped_output_is_shortened_to_the_bound_and_says_so(self) -> None:
+        hostile = chr(1) * (128 * 1024)
+        assert rendered_size({"content": hostile}) > 3 * SANDBOX_AGENT_RESULT_MAX_BYTES
+
+        output = self.result(content=hostile, path="a.txt").agent_result()["output"]
+
+        assert rendered_size(output) <= SANDBOX_AGENT_RESULT_MAX_BYTES
+        assert output["truncated"] is True
+        assert output["shortened"] == ["content"]
+        assert output["content"].endswith("tool result limit ...]")
+        assert output["path"] == "a.txt"
+
+    def test_every_large_field_and_list_is_shortened_and_the_artifacts_are_kept(self) -> None:
+        artifact = ArtifactReference(artifact_id="a1", kind="sandbox.stdout", bucket="b",
+                                     key="k", size_bytes=9, sha256="0" * 64)
+        result = ToolExecutionResult(
+            tool_request_id="t", tool="shell.exec", status="SUCCEEDED", exit_code=0,
+            output={"stdout": chr(2) * 60000, "stderr": chr(3) * 60000,
+                    "matches": [{"text": chr(4) * 300}] * 400},
+            artifacts=(artifact,))
+
+        output = result.agent_result()["output"]
+
+        assert rendered_size(output) <= SANDBOX_AGENT_RESULT_MAX_BYTES
+        assert output["artifacts"] == [artifact.to_dict()]
+        assert set(output["shortened"]) <= {"stdout", "stderr", "matches"}
+        assert output["shortened"]
+
+    def test_an_output_that_fits_is_handed_over_unchanged(self) -> None:
+        """The null control: the same path leaves an ordinary result exactly as it was."""
+        content = "print('ok')" + chr(10)
+        output = self.result(content=content, path="a.py").agent_result()["output"]
+        assert output["content"] == content
+        assert "shortened" not in output
+        assert output["truncated"] is False

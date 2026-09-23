@@ -17,11 +17,13 @@ the contract refuses an exit code on a result that says nothing was started.
 
 from __future__ import annotations
 
+import json
 from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Any, ClassVar
 
 from iacode_contracts.sandbox import (
+    SANDBOX_AGENT_RESULT_MAX_BYTES,
     SANDBOX_CONTRACT_VERSION,
     SANDBOX_SESSION_STATES,
     TOOL_EXECUTION_STATUSES,
@@ -39,6 +41,8 @@ __all__ = [
     "ToolExecutionResult",
     "Workspace",
     "WorkspaceSource",
+    "fit_agent_output",
+    "rendered_size",
 ]
 
 CONTRACT_VERSION = SANDBOX_CONTRACT_VERSION
@@ -373,6 +377,7 @@ class ToolExecutionResult:
         output.setdefault("durationMs", self.duration_ms)
         if self.artifacts:
             output["artifacts"] = [artifact.to_dict() for artifact in self.artifacts]
+        output = fit_agent_output(output, SANDBOX_AGENT_RESULT_MAX_BYTES)
         metadata = {"executor": "sandbox", "tool": self.tool}
         if self.session_id:
             metadata["sandboxSession"] = self.session_id
@@ -380,3 +385,54 @@ class ToolExecutionResult:
             metadata["errorCode"] = self.error_code
         return {"toolRequestId": self.tool_request_id, "status": status, "output": output,
                 "error": self.error, "metadata": metadata}
+
+
+def rendered_size(value: Any) -> int:
+    """How large a value is, measured exactly as the agent runtime measures a tool result."""
+    return len(json.dumps(value, ensure_ascii=False, sort_keys=True, default=str).encode("utf-8"))
+
+
+#: What replaces the end of a shortened text, so the agent reads that it was shortened.
+SHORTENED_MARKER = "\n[... shortened by the sandbox to fit the agent's tool result limit ...]"
+
+
+def fit_agent_output(output: dict[str, Any], limit: int) -> dict[str, Any]:
+    """``output`` unchanged when it fits ``limit``; otherwise explicitly shortened until it does.
+
+    The longest text is shortened first, then the longest list loses its tail, and whatever is
+    shortened is named in ``shortened`` and marks the output ``truncated``. The artifact
+    references are never shortened, because they are where the whole output is. What was cut is not
+    lost: a stream too large for the inline bound is already an artifact, and a file is still in
+    the workspace. When nothing can be shortened enough the output is replaced by a statement that
+    it was omitted, never by a partial object that would read as the whole result.
+    """
+    if rendered_size(output) <= limit:
+        return output
+    fitted = dict(output)
+    shortened: list[str] = []
+    fitted["truncated"] = True
+    fitted["shortened"] = shortened
+    order = sorted((key for key, value in fitted.items() if isinstance(value, (str, list))
+                    and key not in ("shortened", "artifacts")),
+                   key=lambda key: -rendered_size(fitted[key]))
+    for key in order:
+        if rendered_size(fitted) <= limit:
+            break
+        value = fitted[key]
+        low, high = 0, len(value)
+        while low < high:
+            keep = (low + high + 1) // 2
+            candidate = dict(fitted)
+            candidate[key] = (value[:keep] + SHORTENED_MARKER if isinstance(value, str)
+                              else value[:keep])
+            if rendered_size({**candidate, "shortened": [*shortened, key]}) <= limit:
+                low = keep
+            else:
+                high = keep - 1
+        fitted[key] = value[:low] + SHORTENED_MARKER if isinstance(value, str) else value[:low]
+        shortened.append(key)
+    if rendered_size(fitted) <= limit:
+        return fitted
+    return {"omitted": True, "truncated": True,
+            "reason": "the result could not be shortened to the agent's tool result limit",
+            "artifacts": list(output.get("artifacts") or [])[:8]}

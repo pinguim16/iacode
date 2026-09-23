@@ -18,6 +18,7 @@ from pydantic import BaseModel, ConfigDict, Field
 
 __all__ = [
     "SANDBOX_ACTIVE_SESSION_STATES",
+    "SANDBOX_AGENT_RESULT_MAX_BYTES",
     "SANDBOX_CONTRACT_VERSION",
     "SANDBOX_EXECUTE_ACTIVITY",
     "SANDBOX_RELEASE_ACTIVITY",
@@ -59,6 +60,14 @@ SANDBOX_ACTIVE_SESSION_STATES: tuple[str, ...] = ("CREATED", "STARTING", "READY"
 TOOL_EXECUTION_STATUSES: tuple[str, ...] = (
     "SUCCEEDED", "FAILED", "DENIED", "TIMED_OUT", "CANCELLED", "INTERRUPTED",
 )
+
+#: The largest tool result output the sandbox hands to an agent, measured as the agent runtime
+#: measures every payload: the UTF-8 length of the canonical JSON rendering. A bound on the raw
+#: bytes a tool produced is not enough, because JSON escapes a control character into six bytes and
+#: a 128 KiB file of them renders as 768 KiB. The sandbox shortens a result to fit this, explicitly,
+#: and the runtime's own ``max_tool_result_bytes`` must not be smaller, or a result the sandbox
+#: considered deliverable would fail the run that asked for it.
+SANDBOX_AGENT_RESULT_MAX_BYTES = 160 * 1024
 
 #: The artifact kind of an authorised workspace snapshot. A run may be provisioned only from an
 #: artifact of this kind.
