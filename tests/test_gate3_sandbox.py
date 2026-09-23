@@ -618,6 +618,15 @@ class Gate3RedTeamHarnessTests(unittest.TestCase):
         self.assertEqual(executed, declared, "a verdict nobody declared, or a declaration nobody "
                                              "executes")
 
+    def test_the_battery_attacks_what_the_m1_audit_found(self) -> None:
+        """`M1-F-002` and `M1-F-003` are attacked on every run, each with its own control."""
+        source = self.HARNESS.read_text(encoding="utf-8")
+        for identifier, control in (('"G3-Y", "tool result origin"', "forged-result"),
+                                    ('"G3-AA", "published history"', "published_clone(")):
+            with self.subTest(attack=identifier):
+                self.assertIn(identifier, source)
+                self.assertIn(control, source)
+
     def test_the_battery_carries_no_credential_of_its_own(self) -> None:
         """It plants a credential-shaped value, built at run time, never written in its source."""
         for path in (self.HARNESS, self.SANDBOX_HALF):

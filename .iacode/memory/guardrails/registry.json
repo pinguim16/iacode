@@ -816,6 +816,40 @@
         "LSN-0053"
       ],
       "removingItWouldAllow": "A command that detaches a fork bomb to leave its sandbox unable to start another process for the rest of the run."
+    },
+    {
+      "guardrailId": "GRD-0056",
+      "title": "The envelope contract every model receives is rendered from the schema the parser enforces",
+      "kind": "test",
+      "reference": "test_the_runtime_instructions_show_the_exact_envelope_of_every_kind",
+      "verifiedBy": [
+        "test_the_runtime_instructions_show_the_exact_envelope_of_every_kind",
+        "test_the_repair_restates_the_same_shape",
+        "test_the_rendered_contract_follows_the_schema",
+        "test_no_second_envelope_contract_is_written_by_hand",
+        "test_arguments_outside_tool_arguments_are_refused_by_their_real_defect"
+      ],
+      "lessons": [
+        "LSN-0055"
+      ],
+      "removingItWouldAllow": "A model to be asked, again, for a shape it is never shown — or for one written by hand beside the schema that drifts from what the parser accepts."
+    },
+    {
+      "guardrailId": "GRD-0057",
+      "title": "A tool result is accepted only from the executor that owns the request",
+      "kind": "test",
+      "reference": "test_a_forged_result_cannot_displace_the_sandbox_result",
+      "verifiedBy": [
+        "test_a_forged_result_cannot_displace_the_sandbox_result",
+        "test_a_manual_result_for_a_sandbox_request_is_refused",
+        "test_a_result_for_a_request_the_sandbox_owns_is_refused_and_never_signalled",
+        "test_every_caller_declares_a_constant_origin",
+        "test_existing_requests_are_backfilled_from_what_the_sandbox_executed"
+      ],
+      "lessons": [
+        "LSN-0056"
+      ],
+      "removingItWouldAllow": "A result posted to the API to displace the sandbox's own, so an agent acts on a tool outcome that never happened."
     }
   ]
 }

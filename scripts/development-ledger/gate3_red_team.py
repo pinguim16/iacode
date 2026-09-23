@@ -49,6 +49,7 @@ from ledger_common import (
     LedgerError,
     delivered_gate,
     find_root,
+    published_clone,
     resolve_latest,
     scope_fingerprint,
     use_utf8_stdout,
@@ -388,6 +389,98 @@ def build_host_attacks(root: Path, rebuild_gate: bool) -> list[Attack]:
             return False, "the gate passed with a failing test on disk; it measured a stale image"
         return True, ("the gate rebuilt and failed on the planted test: "
                       + (completed.stdout.strip().splitlines() or ["no output"])[-1][:160])
+
+    def a_forged_result_for_a_sandboxed_request() -> tuple[bool, str]:
+        """`M1-F-002` on the stack: the audit's null control and mutation, through the real API."""
+        report = Path(tempfile.mkdtemp(prefix="iacode-g3y-")) / "report.json"
+        completed = subprocess.run(
+            [sys.executable, str(root / "scripts" / "iacode" / "scenarios" /
+                                 "sandbox_coding_e2e.py"),
+             "--scenario", "forged-result", "--report", str(report)],
+            cwd=str(root), text=True, encoding="utf-8", errors="replace",
+            stdout=subprocess.PIPE, stderr=subprocess.STDOUT, check=False, timeout=1800)
+        steps = {item["step"]: item for item in
+                 (json.loads(report.read_text(encoding="utf-8"))["steps"]
+                  if report.is_file() else [])}
+        shutil.rmtree(report.parent, ignore_errors=True)
+        wanted = ("control.agent_saw_the_sandbox_timeout",
+                  "forgery.refused_while_the_sandbox_executes",
+                  "forgery.stored_result_is_the_sandbox_result",
+                  "forgery.agent_saw_the_sandbox_timeout",
+                  "forgery.refused_after_the_run_ended")
+        missing = [name for name in wanted if steps.get(name, {}).get("result") != "PASS"]
+        if completed.returncode != 0 or missing:
+            return False, ("the forgery was not refused as required: " + ", ".join(missing)
+                           + " " + completed.stdout.strip()[-200:])
+        return True, ("control: " + steps[wanted[0]]["detail"] + "; mutation: "
+                      + steps[wanted[1]]["detail"][:120] + "; "
+                      + steps[wanted[2]]["detail"] + "; " + steps[wanted[3]]["detail"])
+
+    attacks.append(Attack(
+        "G3-Y", "tool result origin",
+        "A result is posted to the API for a request the sandbox is executing (M1-F-002).",
+        "run the timeout scenario, post a SUCCEEDED result while the sandbox runs the command, "
+        "and post it again after the run ends",
+        "403 TOOL_RESULT_ORIGIN_REFUSED both times; the stored result is the sandbox's TIMED_OUT "
+        "and the agent answers TIMEOUT-SEEN, as in the unmutated control run",
+        a_forged_result_for_a_sandboxed_request,
+        evidence=("file:services/agent-runtime/src/iacode_agent_runtime/persistence.py",
+                  "test:test_a_forged_result_cannot_displace_the_sandbox_result")))
+
+    def a_sealed_record_names_an_unpublished_commit() -> tuple[bool, str]:
+        """`M1-F-003`: remove a preserved reference; the object stays, the history does not."""
+        with tempfile.TemporaryDirectory(prefix="iacode-g3aa-") as workdir:
+            clone = Path(workdir) / "clone"
+            if not published_clone(root, clone):
+                return False, "the repository could not be cloned over Git's transport"
+            listed = subprocess.run(
+                ["git", "for-each-ref", "--format=%(refname) %(objectname)",
+                 "refs/tags/iacode-preserved"], cwd=str(clone), text=True, encoding="utf-8",
+                capture_output=True, check=False).stdout.split()
+            if len(listed) < 2:
+                return False, "no preserved reference is published, so nothing is attacked"
+            reference, commit = listed[0], listed[1]
+            chain = json.loads((clone / ".iacode" / "anchors" / "checkpoint-chain.json")
+                               .read_text(encoding="utf-8"))
+            subject = next((item["checkpointId"] for item in chain["anchors"]
+                            if commit in (clone / "docs" / "checkpoints" / item["checkpointId"]
+                                          / "COMMANDS.jsonl").read_text(encoding="utf-8")),
+                           None)
+            if subject is None:
+                return False, f"no sealed ledger names {commit[:12]}"
+
+            def validate() -> tuple[int, str]:
+                subprocess.run(["git", "checkout", "--quiet", "--detach",
+                                f"refs/tags/iacode-checkpoints/{subject}"], cwd=str(clone),
+                               check=True, capture_output=True)
+                done = subprocess.run(
+                    [sys.executable, str(root / "scripts" / "development-ledger" /
+                                         "validate_checkpoint.py"), "--root", str(clone)],
+                    cwd=str(root), text=True, encoding="utf-8", errors="replace",
+                    capture_output=True, check=False)
+                return done.returncode, (done.stdout + done.stderr).strip()
+
+            control, _ = validate()
+            subprocess.run(["git", "update-ref", "-d", reference], cwd=str(clone), check=True,
+                           capture_output=True)
+            code, output = validate()
+        if control != 0:
+            return False, f"the unmutated control was refused for {subject}"
+        if code == 0 or "exists here only as a local object" not in output:
+            return False, f"{subject} validated with {commit[:12]} unpublished: {output[:200]}"
+        return True, (f"{subject} validated with {reference} (control) and was refused without "
+                      f"it: {output.splitlines()[-1][:200]}")
+
+    attacks.append(Attack(
+        "G3-AA", "published history",
+        "A sealed record names a commit no published reference reaches (M1-F-003).",
+        "in a transport clone, delete the preserved reference of a commit a sealed ledger names, "
+        "leaving the object in the store, and validate that checkpoint from its tag",
+        "the validator refuses it as a local object no published reference reaches; with the "
+        "reference it validates",
+        a_sealed_record_names_an_unpublished_commit,
+        evidence=("file:scripts/development-ledger/validate_checkpoint.py",
+                  "test:test_every_preserved_reference_is_what_makes_its_checkpoint_valid")))
 
     if rebuild_gate:
         attacks.append(Attack(

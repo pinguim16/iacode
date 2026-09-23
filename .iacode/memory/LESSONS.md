@@ -62,6 +62,8 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 | `LSN-0052` | `GUARDED` | HIGH | architecture | Two processes that meet on a queue must name what crosses it once, and a real run must exercise both | `test_both_sides_name_the_result_by_the_shared_key`, `test_the_key_scan_detects_a_literal`, `test_the_activity_answers_the_agent_result_and_the_execution` |
 | `LSN-0053` | `GUARDED` | HIGH | security | A process sweep that reads what a forking process holds waits on the processes it has to kill | `test_a_fork_bomb_that_detaches_leaves_a_sandbox_that_still_answers`, `test_a_fork_bomb_is_contained_by_the_process_limit`, `test_a_timeout_kills_the_whole_process_tree` |
 | `LSN-0054` | `CONFIRMED` | MEDIUM | git | A pre-push check narrower than the change's reach lets a red gate reach the public remote | _not yet guarded_ |
+| `LSN-0055` | `GUARDED` | MEDIUM | model-behavior | A contract a model must follow has to reach the model, rendered from the definition the parser enforces | `test_the_runtime_instructions_show_the_exact_envelope_of_every_kind`, `test_the_repair_restates_the_same_shape`, `test_the_rendered_contract_follows_the_schema`, `test_no_second_envelope_contract_is_written_by_hand`, `test_arguments_outside_tool_arguments_are_refused_by_their_real_defect` |
+| `LSN-0056` | `GUARDED` | MEDIUM | security | A result is accepted only from the executor that owns the request, decided when the request is created | `test_a_forged_result_cannot_displace_the_sandbox_result`, `test_a_manual_result_for_a_sandbox_request_is_refused`, `test_a_result_for_a_request_the_sandbox_owns_is_refused_and_never_signalled`, `test_every_caller_declares_a_constant_origin`, `test_existing_requests_are_backfilled_from_what_the_sandbox_executed`, `scripts/iacode/scenarios/sandbox_coding_e2e.py` |
 
 ## Detail
 
@@ -772,7 +774,7 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 
 ### LSN-0054 — A pre-push check narrower than the change's reach lets a red gate reach the public remote
 
-- Status: `CONFIRMED`, severity MEDIUM, category git, recurrences 0.
+- Status: `CONFIRMED`, severity MEDIUM, category git, recurrences 1.
 - Source: GATE-3, GATE-3-CP-0001, finding G3-F-002.
 - Symptom: Three pushed commits left a mandatory gate red: the first broke the repository-wide decoding scan, two later ones the lint gate. Each ran the suites of what it changed, not the repository-wide gates the change could reach.
 - Root cause: The pre-push check was chosen by the commit's subject rather than by its reach: a new script is reached by the scans over every script, and any source file by the lint gate.
@@ -780,3 +782,34 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 - Prevention:
   - `documentation` docs/DEVELOPMENT-CONTRACT.md — Before each push: status, the staged diff, a secret scan of the staged content and the tests the change can reach.
 - Evidence: `file:docs/checkpoints/GATE-3-CP-0001/DECISIONS.md`, `file:docs/DEVELOPMENT-CONTRACT.md`
+
+### LSN-0055 — A contract a model must follow has to reach the model, rendered from the definition the parser enforces
+
+- Status: `GUARDED`, severity MEDIUM, category model-behavior, recurrences 0.
+- Source: GATE-3, GATE-3-CP-0002, finding M1-F-001.
+- Symptom: With the operator's configured model the developer stage never produced a valid tool request: the arguments were written at the top level of the envelope, then under 'args' after the one repair, and the run failed INVALID_AGENT_OUTPUT. A second model made two valid requests, then failed the same way.
+- Root cause: The runtime described a tool request only as a tool that 'carries its name and arguments' and never showed the keys. The schema that named them reached a model only as a structured-output request, made only for a model whose capability is known, and the configured provider declares none; the docstring said the schema documented the prompt, and nothing checked that it did. The parser also dropped a stray key in the tool object, so an argument sent under 'args' was lost silently and refused later by the sandbox.
+- Resolution: protocol.envelope_contract renders the version, every kind, one minimal valid envelope per kind with tool.name and tool.arguments, and where the arguments go, from envelope_schema() and the kind table the parser enforces. The runtime instructions carry it on every turn and the repair restates it verbatim with the stage's tools; the parser refuses a key beside name and arguments by its own reason. A live coding run of the configured model then made eleven valid tool requests, all executed in the sandbox, with no repair.
+- Prevention:
+  - `test` test_the_runtime_instructions_show_the_exact_envelope_of_every_kind — The instructions carry the contract rendered from the schema, verbatim, with the stage's tools.
+  - `test` test_the_repair_restates_the_same_shape — The repair restates the same contract.
+  - `test` test_the_rendered_contract_follows_the_schema — A change of the canonical schema changes the rendered text.
+  - `test` test_no_second_envelope_contract_is_written_by_hand — The instructions module spells no envelope key of its own.
+  - `test` test_arguments_outside_tool_arguments_are_refused_by_their_real_defect — Arguments outside tool.arguments are refused by their real defect.
+- Evidence: `file:services/agent-runtime/src/iacode_agent_runtime/protocol.py`, `file:services/agent-runtime/src/iacode_agent_runtime/context.py`, `file:services/agent-runtime/tests/test_protocol.py`, `file:services/agent-runtime/tests/test_context.py`, `file:docs/checkpoints/GATE-3-CP-0002/FINDINGS.json`, `file:docs/checkpoints/GATE-3-CP-0003/LIVE-CODING-RUN.json`
+
+### LSN-0056 — A result is accepted only from the executor that owns the request, decided when the request is created
+
+- Status: `GUARDED`, severity MEDIUM, category security, recurrences 0.
+- Source: GATE-3, GATE-3-CP-0002, finding M1-F-002.
+- Symptom: In the deterministic timeout scenario, a SUCCEEDED result posted to the API while the sandbox executed the command was answered 200; the stored result was the forged one, the sandbox's own execution record still said TIMED_OUT, and the agent answered TIMEOUT-NOT-SEEN.
+- Root cause: resolve_tool_request accepted any PENDING request of the run whatever its executor, and the workflow resumed the agent with the stored result, answering the sandbox's later delivery with the first one. Nothing recorded that a sandboxed stage's request is answered by the sandbox, so every door looked the same.
+- Resolution: A tool request records its executor when it is created: SANDBOX for a stage with a sandbox policy, EXTERNAL otherwise (migration 0005). The store takes the origin of a result from the caller's code path — the API's service passes EXTERNAL, the workflow's internal activity passes SANDBOX — and refuses a mismatch with TOOL_RESULT_ORIGIN_REFUSED (403) before anything is stored or signalled. The audit's null control and mutation are a verification stage.
+- Prevention:
+  - `test` test_a_forged_result_cannot_displace_the_sandbox_result — A forged result before and after the sandbox's own is refused and the stored result is the sandbox's.
+  - `test` test_a_manual_result_for_a_sandbox_request_is_refused — A manual result for a sandbox request is refused and nothing is stored.
+  - `test` test_a_result_for_a_request_the_sandbox_owns_is_refused_and_never_signalled — The API answers 403 TOOL_RESULT_ORIGIN_REFUSED and signals nothing.
+  - `test` test_every_caller_declares_a_constant_origin — Every caller passes a constant origin, never one read from a payload; the scan fires on a mutated source.
+  - `test` test_existing_requests_are_backfilled_from_what_the_sandbox_executed — Existing requests keep their meaning through the migration.
+  - `automated-check` scripts/iacode/scenarios/sandbox_coding_e2e.py — The verification stage sandbox-tool-result-origin: the audit's null control and mutation on the real stack.
+- Evidence: `file:services/agent-runtime/src/iacode_agent_runtime/persistence.py`, `file:services/orchestrator/src/iacode_orchestrator/agent_runtime/activities.py`, `file:apps/api/migrations/versions/0005_tool_request_executor.py`, `file:apps/api/tests/integration/test_agent_runtime_persistence.py`, `file:docs/checkpoints/GATE-3-CP-0002/FORGED-RESULT-PROBE.json`
