@@ -119,13 +119,62 @@ def _processes() -> list[dict[str, Any]]:
     return found
 
 
-def kill_everything_else() -> int:
-    """Kill every process except the init process and this helper. Returns how many."""
-    own = os.getpid()
+#: How long the sweep may take before it gives up on a process table it cannot empty, and how much
+#: of that the freezing may use. Freezing has its own, shorter budget: a process blocked inside the
+#: kernel (state ``D``, a fork waiting on the process limit) cannot stop until it returns, and a
+#: freeze that waited for it would spend the whole sweep and leave no time to kill anything.
+SWEEP_SECONDS = 15.0
+FREEZE_SECONDS = 3.0
+
+
+def _pids() -> set[int]:
+    """The process identifiers in this PID namespace, from the directory listing alone."""
+    return {int(entry) for entry in os.listdir("/proc") if entry.isdigit()}
+
+
+def _state(pid: int) -> str:
+    """A process's state letter, from ``stat`` alone, or ``""`` when it has gone.
+
+    Never ``cmdline``: reading another process's command line takes that process's memory lock,
+    which a process in the middle of a fork holds, so a sweep that read it would wait on exactly
+    the processes it has to kill.
+    """
+    try:
+        with open(f"/proc/{pid}/stat", encoding="utf-8", errors="replace") as handle:
+            stat = handle.read()
+    except OSError:
+        return ""
+    fields = stat[stat.rfind(")") + 2:].split()
+    return fields[0] if fields else ""
+
+
+def kill_everything_else(deadline_seconds: float = SWEEP_SECONDS,
+                         freeze_seconds: float = FREEZE_SECONDS) -> int:
+    """Kill every process except the init process and this helper. Returns how many.
+
+    Freeze first, then kill. A loop of ``SIGKILL`` loses to a fork bomb that detached from the
+    command it came from: while the sweep walks the process table, every survivor forks into the
+    slots the sweep just freed, and the table stays full — the sandbox then cannot start the next
+    command at all. A stopped process cannot fork, so every process is sent ``SIGSTOP`` until a
+    listing shows no process the previous rounds had not already stopped; a process blocked in the
+    kernel is killed on its way out by the ``SIGKILL`` that follows.
+    """
+    keep = {1, os.getpid()}
+    started = time.monotonic()
+    freeze_deadline = started + min(freeze_seconds, deadline_seconds)
+    deadline = started + deadline_seconds
+    frozen: set[int] = set()
+    while time.monotonic() < freeze_deadline:
+        current = _pids() - keep
+        if current <= frozen:
+            break
+        for pid in current:
+            with contextlib.suppress(OSError):
+                os.kill(pid, signal.SIGSTOP)
+        frozen |= current
     killed = 0
-    for _round in range(5):
-        targets = [item["pid"] for item in _processes()
-                   if item["pid"] not in (1, own) and item["state"] != "Z"]
+    while time.monotonic() < deadline:
+        targets = [pid for pid in _pids() - keep if _state(pid) not in ("", "Z")]
         if not targets:
             break
         for pid in targets:
@@ -134,7 +183,7 @@ def kill_everything_else() -> int:
                 killed += 1
             except OSError:
                 pass
-        time.sleep(0.05)
+        time.sleep(0.02)
     return killed
 
 

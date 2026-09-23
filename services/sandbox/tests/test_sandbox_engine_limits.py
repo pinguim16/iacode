@@ -59,6 +59,20 @@ class ResourceLimitTests:
         assert output(after).strip() == "still-answering"
         assert only_init_and_the_observer(processes(harness, run_id))
 
+    def test_a_fork_bomb_that_detaches_leaves_a_sandbox_that_still_answers(self, harness) -> None:
+        """The bomb's command returns at once and its descendants keep forking in the background.
+
+        The internal Red Team found this shape wedging a sandbox: the sweep after the command killed
+        processes while the survivors refilled the process table, and the next command could not be
+        started. The sweep now freezes every process before it kills any.
+        """
+        run_id = harness.run_id()
+        bomb = harness.shell("bomb() { bomb | bomb & }; bomb", run_id=run_id, timeoutSeconds=5)
+        assert bomb.status in ("SUCCEEDED", "FAILED", "TIMED_OUT"), bomb
+        after = harness.shell("echo still-answering", run_id=run_id)
+        assert output(after).strip() == "still-answering", after
+        assert only_init_and_the_observer(processes(harness, run_id))
+
     def test_a_process_that_exceeds_memory_fails_in_a_controlled_way(self, harness) -> None:
         run_id = harness.run_id()
         limit = harness.service.policies.get("developer").resources.memory_mb
