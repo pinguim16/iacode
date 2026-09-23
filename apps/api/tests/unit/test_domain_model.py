@@ -21,13 +21,16 @@ STRUCTURAL_TABLES = {
 # so the two statements stay legible: Gate 0 declared a persistence contract, and Gate 2 added the
 # tables the agent runtime needs *beside* it rather than duplicating any of them.
 AGENT_RUNTIME_TABLES = {"agent_teams", "run_events", "tool_requests", "tool_results"}
+#: GATE 3 adds one table, for what nothing existing could hold: a sandbox session's lifecycle.
+#: Its executions evolve ``tool_calls`` rather than shadowing it.
+SANDBOX_TABLES = {"sandbox_sessions"}
 
 # Append-only facts: something that already happened, and cannot change afterwards.
 APPEND_ONLY = {"model_calls", "tool_calls", "run_events", "tool_results"}
 
 
 def test_structural_tables_exist() -> None:
-    assert set(Base.metadata.tables) == STRUCTURAL_TABLES | AGENT_RUNTIME_TABLES
+    assert set(Base.metadata.tables) == STRUCTURAL_TABLES | AGENT_RUNTIME_TABLES | SANDBOX_TABLES
 
 
 def test_the_agent_runtime_created_no_parallel_entity() -> None:
@@ -119,6 +122,12 @@ def test_relationships_cascade_deliberately() -> None:
         ("tool_requests", "task_run_id"): "CASCADE",
         ("tool_requests", "agent_run_id"): "SET NULL",
         ("tool_results", "tool_request_id"): "CASCADE",
+        # Gate 3. A session belongs to its run; an execution record outlives the request and the
+        # session it names, because it is the record that the tool ran.
+        ("sandbox_sessions", "task_run_id"): "CASCADE",
+        ("sandbox_sessions", "active_tool_request_id"): "SET NULL",
+        ("tool_calls", "tool_request_id"): "SET NULL",
+        ("tool_calls", "sandbox_session_id"): "SET NULL",
     }
     observed = {
         (table_name, next(iter(key.columns)).name): key.ondelete

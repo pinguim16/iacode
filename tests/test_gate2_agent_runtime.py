@@ -548,11 +548,16 @@ class Gate2PersistenceTests(unittest.TestCase):
                               (PROJECT_ROOT / relative).read_text(encoding="utf-8"))
 
     def test_applied_migrations_are_not_edited(self) -> None:
-        """A migration that has been applied is history. This Gate adds one and edits none."""
+        """A migration that has been applied is history. This Gate adds one and edits none.
+
+        The revisions up to this Gate's are asserted as the prefix of the directory rather than as
+        all of it: GATE 3 adds ``0004_sandbox``, and a list that named exactly three files would
+        fail the next Gate for doing what this one did — `LSN-0037`'s class, in file names.
+        """
         versions = PROJECT_ROOT / "apps" / "api" / "migrations" / "versions"
         names = sorted(path.name for path in versions.glob("*.py"))
-        self.assertEqual(names, ["0001_foundation_schema.py", "0002_model_gateway.py",
-                                 "0003_agent_runtime.py"])
+        self.assertEqual(names[:3], ["0001_foundation_schema.py", "0002_model_gateway.py",
+                                     "0003_agent_runtime.py"])
 
         import subprocess
 
@@ -573,8 +578,18 @@ class Gate2PersistenceTests(unittest.TestCase):
 
         versions = PROJECT_ROOT / "apps" / "api" / "migrations" / "versions"
         graph = revision_graph(versions)
-        self.assertEqual(head_revision(versions), "0003_agent_runtime")
         self.assertEqual(graph["0003_agent_runtime"], "0002_model_gateway")
+        # The head is whichever revision the chain from this Gate's migration leads to: a later
+        # Gate's migration follows this one, and a head written as a literal would fail it.
+        descendants = {"0003_agent_runtime"}
+        changed = True
+        while changed:
+            changed = False
+            for revision, parent in graph.items():
+                if parent in descendants and revision not in descendants:
+                    descendants.add(revision)
+                    changed = True
+        self.assertIn(head_revision(versions), descendants)
 
     def test_no_parallel_entity_is_created(self) -> None:
         """Gate 2 evolved the existing entities rather than shadowing one with a table of its own."""

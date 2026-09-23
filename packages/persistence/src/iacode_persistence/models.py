@@ -33,6 +33,11 @@ from iacode_contracts.agent_runtime import (
     TOOL_REQUEST_STATUSES,
     TOOL_RESULT_STATUSES,
 )
+from iacode_contracts.sandbox import (
+    SANDBOX_ACTIVE_SESSION_STATES,
+    SANDBOX_SESSION_STATES,
+    TOOL_EXECUTION_STATUSES,
+)
 from sqlalchemy import (
     Boolean,
     CheckConstraint,
@@ -44,6 +49,7 @@ from sqlalchemy import (
     String,
     Text,
     UniqueConstraint,
+    text,
 )
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import Mapped, mapped_column, relationship
@@ -178,6 +184,10 @@ class TaskRun(TimestampedEntity, Base):
         JSONB, nullable=False, default=dict, server_default="{}",
         doc="The limits this run was created with. Frozen; a later configuration change does not "
             "retroactively widen a running run.")
+    workspace: Mapped[dict[str, Any]] = mapped_column(
+        JSONB, nullable=False, default=dict, server_default="{}",
+        doc="Where the run's sandbox workspace comes from: empty, or an authorised snapshot "
+            "artifact and its digest. Gate 3.")
     budget_used: Mapped[dict[str, Any]] = mapped_column(
         JSONB, nullable=False, default=dict, server_default="{}")
     result: Mapped[str | None] = mapped_column(
@@ -484,15 +494,25 @@ class ModelCall(ImmutableRecord, Base):
 class ToolCall(ImmutableRecord, Base):
     """One tool invocation that **was executed**, append-only, like every other recorded fact.
 
-    Gate 2 writes no row here, and that is not an omission. This table records an execution — a
-    latency, a success, an error code — and Gate 2 executes nothing. What Gate 2 records is a
-    *request* and its *result*, in ``tool_requests`` and ``tool_results``; the sandbox that
-    executes one is Gate 3's, and it is what will fill this table.
+    Gate 2 wrote no row here: it recorded a *request* and its *result*, in ``tool_requests`` and
+    ``tool_results``, and executed nothing. Gate 3's sandbox executes, and this is where it says
+    so —
+    once per tool request, written when the execution ends, carrying the session it ran in, how it
+    ended, the exit code when a process was started and nothing when none was, whether it timed
+    out or was truncated, and the artifacts holding what did not fit inline. It never carries the
+    output itself: that is the agent's, in ``tool_results``, and the artifact store's.
+
+    ``tool_request_id`` is unique, so an execution a Temporal retry asks for twice is recorded once
+    and the second ask is answered from this row rather than by running the tool again.
     """
 
     __tablename__ = "tool_calls"
     __table_args__ = (
         Index("ix_tool_calls_agent_run_id_created_at", "agent_run_id", "created_at"),
+        CheckConstraint("status IN " + _vocabulary(TOOL_EXECUTION_STATUSES),
+                        name="status_is_known"),
+        CheckConstraint("exit_code IS NULL OR status <> 'DENIED'", name="denied_has_no_exit_code"),
+        UniqueConstraint("tool_request_id", name="tool_calls_tool_request_id"),
     )
 
     agent_run_id: Mapped[uuid.UUID] = mapped_column(
@@ -501,6 +521,59 @@ class ToolCall(ImmutableRecord, Base):
     succeeded: Mapped[bool] = mapped_column(Boolean, nullable=False)
     latency_ms: Mapped[int | None] = mapped_column(Integer)
     error_code: Mapped[str | None] = mapped_column(String(128))
+    tool_request_id: Mapped[uuid.UUID | None] = mapped_column(
+        ForeignKey("tool_requests.id", ondelete="SET NULL"))
+    sandbox_session_id: Mapped[uuid.UUID | None] = mapped_column(
+        ForeignKey("sandbox_sessions.id", ondelete="SET NULL"), index=True)
+    status: Mapped[str] = mapped_column(String(32), nullable=False)
+    exit_code: Mapped[int | None] = mapped_column(
+        Integer, doc="NULL unless a process was started. An exit code is never invented.")
+    timed_out: Mapped[bool] = mapped_column(
+        Boolean, nullable=False, default=False, server_default="false")
+    truncated: Mapped[bool] = mapped_column(
+        Boolean, nullable=False, default=False, server_default="false")
+    summary: Mapped[str | None] = mapped_column(
+        String(240), doc="A short verifiable fact about the execution, never its output.")
+    artifact_ids: Mapped[list[str]] = mapped_column(
+        JSONB, nullable=False, default=list, server_default="[]")
+
+
+class SandboxSession(TimestampedEntity, Base):
+    """One disposable execution environment, owned by exactly one run.
+
+    The row is the durable half of a session; the container is the other. The service's memory is
+    neither: after a restart it rebuilds what exists from these rows and from the labels on the
+    engine's containers, and reconciles the two. At most one session per run is active at a time,
+    which the partial unique index states rather than trusts a code path to remember.
+    """
+
+    __tablename__ = "sandbox_sessions"
+    __table_args__ = (
+        CheckConstraint("state IN " + _vocabulary(SANDBOX_SESSION_STATES),
+                        name="state_is_known"),
+        Index("uq_sandbox_sessions_one_active_per_run", "task_run_id", unique=True,
+              postgresql_where=text("state IN " + _vocabulary(SANDBOX_ACTIVE_SESSION_STATES))),
+        UniqueConstraint("container_name", name="sandbox_sessions_container_name"),
+    )
+
+    task_run_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("task_runs.id", ondelete="CASCADE"), nullable=False, index=True)
+    state: Mapped[str] = mapped_column(String(32), nullable=False)
+    policy: Mapped[str] = mapped_column(String(64), nullable=False)
+    image: Mapped[str] = mapped_column(String(256), nullable=False)
+    image_fingerprint: Mapped[str] = mapped_column(String(64), nullable=False)
+    container_name: Mapped[str] = mapped_column(String(128), nullable=False)
+    network_profile: Mapped[str] = mapped_column(String(32), nullable=False)
+    workspace_source: Mapped[dict[str, Any]] = mapped_column(
+        JSONB, nullable=False, default=dict, server_default="{}")
+    resource_limits: Mapped[dict[str, Any]] = mapped_column(
+        JSONB, nullable=False, default=dict, server_default="{}")
+    started_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    stopped_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    expires_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
+    failure_reason: Mapped[str | None] = mapped_column(Text)
+    active_tool_request_id: Mapped[uuid.UUID | None] = mapped_column(
+        ForeignKey("tool_requests.id", ondelete="SET NULL"))
 
 
 class RunEvent(ImmutableRecord, Base):

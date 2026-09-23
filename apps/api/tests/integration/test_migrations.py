@@ -341,3 +341,94 @@ class Gate2MigrationTests:
 
             for state in AGENT_RUN_STATES:
                 assert f"'{state}'" in expression, f"the database refuses {state}"
+
+
+#: The revision GATE 2 left behind, and what GATE 3 adds on top of it.
+GATE2_REVISION = "0003_agent_runtime"
+SANDBOX_TABLES = {"sandbox_sessions"}
+
+
+class SandboxMigrationTests:
+    """`docs/GATE-3-CHECKLIST.md`: a Gate 2 database reaches the Gate 3 head with its rows."""
+
+    def test_fresh_database_reaches_the_sandbox_head(self) -> None:
+        with _DisposableDatabase() as database:
+            assert _alembic(database.url, "upgrade", "head").returncode == 0
+            assert database.tables() >= EXPECTED_TABLES | AGENT_RUNTIME_TABLES | SANDBOX_TABLES
+            assert database.revision() == head_revision()
+
+    def test_gate2_database_upgrades_to_gate3_head(self) -> None:
+        """A tool_calls row written before the sandbox existed keeps its meaning."""
+        with _DisposableDatabase() as database:
+            assert _alembic(database.url, "upgrade", GATE2_REVISION).returncode == 0
+            assert not (database.tables() & SANDBOX_TABLES)
+            engine = create_engine(_sync_url(database.url), future=True)
+            try:
+                with engine.begin() as connection:
+                    connection.execute(text(
+                        "INSERT INTO projects (id, slug, name) "
+                        "VALUES (gen_random_uuid(), 'p', 'P')"))
+                    connection.execute(text(
+                        "INSERT INTO tasks (id, project_id, title, status) "
+                        "SELECT gen_random_uuid(), id, 'a task', 'PENDING' FROM projects"))
+                    connection.execute(text(
+                        "INSERT INTO task_runs (id, task_id, status, attempt) "
+                        "SELECT gen_random_uuid(), id, 'CREATED', 1 FROM tasks"))
+                    connection.execute(text(
+                        "INSERT INTO agents (id, slug, name, role_contract) "
+                        "VALUES (gen_random_uuid(), 'generalist', 'Generalist', 'agents/x.json')"))
+                    connection.execute(text(
+                        "INSERT INTO agent_runs (id, task_run_id, agent_id, status, stage_index) "
+                        "SELECT gen_random_uuid(), task_runs.id, agents.id, 'RUNNING', 0 "
+                        "FROM task_runs, agents"))
+                    for succeeded in ("true", "false"):
+                        connection.execute(text(
+                            "INSERT INTO tool_calls (id, agent_run_id, tool_name, succeeded) "
+                            f"SELECT gen_random_uuid(), id, 'legacy', {succeeded} FROM agent_runs"))
+            finally:
+                engine.dispose()
+
+            result = _alembic(database.url, "upgrade", "head")
+
+            assert result.returncode == 0, result.stdout
+            assert database.revision() == head_revision()
+            engine = create_engine(_sync_url(database.url), future=True)
+            try:
+                with engine.connect() as connection:
+                    statuses = sorted(row[0] for row in connection.execute(text(
+                        "SELECT status FROM tool_calls")).all())
+                    assert statuses == ["FAILED", "SUCCEEDED"]
+                    workspace = connection.execute(text(
+                        "SELECT workspace FROM task_runs")).scalar_one()
+                    assert workspace == {}
+            finally:
+                engine.dispose()
+
+    def test_the_sandbox_migration_is_reversible(self) -> None:
+        with _DisposableDatabase() as database:
+            assert _alembic(database.url, "upgrade", "head").returncode == 0
+            result = _alembic(database.url, "downgrade", GATE2_REVISION)
+            assert result.returncode == 0, result.stdout
+            assert database.revision() == GATE2_REVISION
+            assert not (database.tables() & SANDBOX_TABLES)
+
+    def test_the_session_state_vocabulary_the_database_accepts_is_the_declared_one(self) -> None:
+        from iacode_contracts.sandbox import SANDBOX_SESSION_STATES, TOOL_EXECUTION_STATUSES
+
+        with _DisposableDatabase() as database:
+            assert _alembic(database.url, "upgrade", "head").returncode == 0
+            engine = create_engine(_sync_url(database.url), future=True)
+            try:
+                with engine.connect() as connection:
+                    sessions = connection.execute(text(
+                        "SELECT pg_get_constraintdef(oid) FROM pg_constraint "
+                        "WHERE conname = 'ck_sandbox_sessions_state_is_known'")).scalar_one()
+                    executions = connection.execute(text(
+                        "SELECT pg_get_constraintdef(oid) FROM pg_constraint "
+                        "WHERE conname = 'ck_tool_calls_status_is_known'")).scalar_one()
+            finally:
+                engine.dispose()
+            for state in SANDBOX_SESSION_STATES:
+                assert f"'{state}'" in sessions
+            for status in TOOL_EXECUTION_STATUSES:
+                assert f"'{status}'" in executions
