@@ -137,3 +137,15 @@ character scan run before every stage — and every later edit carrying a backsl
 file written directly. The repository's guardrail (`SourceIntegrityTests`) was never reached, so
 this is recorded as a near miss rather than as a guardrail failure.
 
+
+## D-14 — The first full verification failed two stages, and neither was a defect of the sandbox
+
+`cmd-0096` ran the full verification: 29 of 31 stages passed. `gate:tests` failed on
+`LessonPreflightTests.test_the_repository_preflight_covers_every_applicable_lesson`: the Gate's new
+lessons narrowed their applicability by technology without declaring a scope, which the preflight
+coverage control refuses. The lessons now apply to every technology and every module (`cmd-0097`
+to `cmd-0099`). `infra` failed on the Prometheus target `iacode-sandbox`: the Prometheus container
+had been started before this Gate added the job to its bind-mounted configuration, and nothing
+recreates a container whose definition did not change. The same run's `fresh-install` stage
+recreated it, and the target is up. The verification was then run again in full over the corrected
+content.

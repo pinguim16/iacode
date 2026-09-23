@@ -4,7 +4,7 @@
 - Scope: `sandbox, tool execution, workspace isolation, filesystem, process execution, shell, git, build, test, resource limits, docker, network isolation, path traversal, symlinks, secrets, artifacts, tool results, cancellation, agent-runtime integration`
 - Technologies: `docker`, `git`, `python`, `temporal`, `postgresql`, `minio`
 - Modules: `services/sandbox`, `services/orchestrator`, `services/agent-runtime`, `apps/api`, `apps/web`, `packages/persistence`
-- Generated: `2026-09-23T01:48:38Z`
+- Generated: `2026-09-23T02:20:55Z`
 - Lessons considered: 54
 - Lessons applicable: 53
 
