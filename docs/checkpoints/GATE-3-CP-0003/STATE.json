@@ -1,0 +1,115 @@
+{
+  "schemaVersion": "3.2.0",
+  "phase": "M1 corrective delivery: close M1-F-003, M1-F-001 and M1-F-002 of audit M1-CP-0002",
+  "gate": "GATE-3",
+  "status": "IN_PROGRESS",
+  "branch": "main",
+  "baseCommit": "3a526925cf653ffaa9497cff628d08d50424271a",
+  "currentCommit": "3a526925cf653ffaa9497cff628d08d50424271a",
+  "dirty": true,
+  "startedAt": "2026-09-23T06:23:12Z",
+  "updatedAt": "2026-09-23T06:28:18Z",
+  "nextAllowedAction": "Populate and validate this checkpoint.",
+  "blockedBy": [],
+  "secondToolValidation": {
+    "status": "PENDING_MANUAL",
+    "tool": null,
+    "provider": null,
+    "model": null,
+    "validatedAt": null,
+    "justification": null,
+    "evidence": []
+  },
+  "requirementsMatrix": {
+    "path": "REQUIREMENTS-MATRIX.json",
+    "total": 195,
+    "mandatory": 193,
+    "complete": 0,
+    "partial": 0,
+    "missing": 0,
+    "notApplicable": 0,
+    "coveragePercent": 0.0
+  },
+  "greenKeeper": {
+    "status": "NOT_EXECUTED",
+    "cycles": 0,
+    "remainingFailures": 0,
+    "unresolvedReworkItems": 0,
+    "log": "REWORK-LOG.jsonl",
+    "externalBlockers": [],
+    "evidence": []
+  },
+  "deliveryCompleteness": {
+    "status": "NOT_EXECUTED",
+    "report": "COMPLETENESS-REPORT.json",
+    "coveragePercent": 0.0,
+    "evidenceCoveragePercent": 0.0,
+    "auditor": null,
+    "evidence": []
+  },
+  "reworkCycles": 0,
+  "independentReview": {
+    "status": "PENDING",
+    "tool": null,
+    "reviewedAt": null,
+    "justification": null,
+    "evidence": []
+  },
+  "redTeam": {
+    "status": "PENDING",
+    "tool": null,
+    "executedAt": null,
+    "justification": null,
+    "evidence": []
+  },
+  "lessonPreflight": {
+    "path": "LESSON-PREFLIGHT.json",
+    "gate": "GATE-3",
+    "scope": "corrective delivery, published history, sealed checkpoint validation, clean clone, git, sandbox, tool execution, tool results, tool result origin, agent-runtime integration, agent envelope protocol, model instructions, live model, api, persistence, migration, cancellation, secrets, build, test",
+    "lessonsConsidered": 54,
+    "lessonsApplicable": 53,
+    "derivedRequirements": 53,
+    "evidence": [
+      "checkpoint:LESSON-PREFLIGHT.json"
+    ]
+  },
+  "milestone": {
+    "id": "M1",
+    "title": "IACode V0 foundation",
+    "gates": [
+      "GATE 0",
+      "GATE 1",
+      "GATE 2",
+      "GATE 3"
+    ],
+    "status": "PENDING",
+    "auditor": null,
+    "auditedAt": null,
+    "evidence": []
+  },
+  "externalAuditRequired": false,
+  "externalAuditReason": null,
+  "guardrailEffectiveness": {
+    "guardrailsTotal": 55,
+    "guardrailsResolved": 55,
+    "guardrailsTested": 55,
+    "guardrailsEffective": 54,
+    "guardrailFailures": 1,
+    "evidence": [
+      "file:.iacode/memory/guardrails/registry.json",
+      "file:.iacode/memory/lessons.jsonl"
+    ]
+  },
+  "integrity": {
+    "status": "NOT_EXECUTED",
+    "anchors": 19,
+    "chainFile": ".iacode/anchors/checkpoint-chain.json",
+    "evidence": []
+  },
+  "externalAttestation": {
+    "status": "NONE",
+    "path": null,
+    "auditId": null,
+    "evidence": []
+  }
+}

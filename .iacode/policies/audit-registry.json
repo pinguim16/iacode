@@ -49,6 +49,20 @@
       "correctiveCheckpoint": "SETUP-00-CP-0012",
       "notes": "One finding, CP11-F-001 CRITICAL: the internal mirror audit treats an empty applicable set as a failure, so a delivery that corrects no audit cannot reach a positive terminal status. Thirty-seven scenarios over a null-mutation control, twelve of them mandatory, all defended. Registering this audit does not make its finding satisfiable: the fix is that a delivery which corrects nothing must also be able to pass.",
       "findingsClosureFile": "CP11-FINDINGS-CLOSURE.json"
+    },
+    {
+      "auditId": "M1-CP-0002",
+      "milestone": "M1",
+      "gate": "GATE-3",
+      "auditor": "Claude Code, desktop application, Anthropic, claude-opus-5-5, fresh-session independent milestone audit (FRESH_SESSION_INDEPENDENT_AUDIT); not cross-tool validation",
+      "auditCheckpoint": "GATE-3-CP-0002",
+      "subjectCheckpoint": "GATE-3-CP-0001",
+      "subjectCommit": "3bc8e9d8a94d44163d1af9325ad5b2272f71f8ed",
+      "verdict": "REWORK_REQUIRED",
+      "reviewReport": "docs/checkpoints/GATE-3-CP-0002/REVIEW-REPORT.md",
+      "correctiveCheckpoint": "GATE-3-CP-0003",
+      "notes": "Three findings: M1-F-003 HIGH, the published history cannot validate GATE-1-CP-0001; M1-F-001 MEDIUM, a model is never shown the shape of a tool request; M1-F-002 MEDIUM, the API accepts a tool result for a request the sandbox is executing. No redTeamReport: the audit's fourteen cross-gate attacks use identifiers the registry's attack parser does not read, and none escaped (GATE-3-CP-0002 NEXT.md).",
+      "findingsClosureFile": "M1-FINDINGS-CLOSURE.json"
     }
   ]
 }

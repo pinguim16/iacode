@@ -1,0 +1,136 @@
+{
+  "schemaVersion": "1.0.0",
+  "artifact": "REMOTE-PUBLISHED-OBJECTS",
+  "checkpoint": "GATE-3-CP-0003",
+  "generatedAt": "2026-09-23T06:25:18Z",
+  "remote": "https://github.com/pinguim16/iacode.git",
+  "clonedHead": "3a526925cf653ffaa9497cff628d08d50424271a",
+  "preserved": {
+    "b59d66f9f3f9add2ae9dcd1cd4609fb4a1bf0b55": "iacode-preserved/gate1-ledger-b59d66f9f3f9",
+    "13ab172fcc06c466e62af41286cc09734cd7b5d4": "iacode-preserved/setup00-ledger-13ab172fcc06",
+    "643e721ee519eaa88e0e92a274e8903fb8ba774a": "iacode-preserved/gate2-ledger-643e721ee519"
+  },
+  "withoutPreservedReferences": {
+    "b59d66f9f3f9add2ae9dcd1cd4609fb4a1bf0b55": {
+      "tag": "iacode-preserved/gate1-ledger-b59d66f9f3f9",
+      "objectType": null,
+      "present": false,
+      "reachedBy": []
+    },
+    "13ab172fcc06c466e62af41286cc09734cd7b5d4": {
+      "tag": "iacode-preserved/setup00-ledger-13ab172fcc06",
+      "objectType": null,
+      "present": false,
+      "reachedBy": []
+    },
+    "643e721ee519eaa88e0e92a274e8903fb8ba774a": {
+      "tag": "iacode-preserved/gate2-ledger-643e721ee519",
+      "objectType": null,
+      "present": false,
+      "reachedBy": []
+    }
+  },
+  "withPreservedReferencesOnly": {
+    "b59d66f9f3f9add2ae9dcd1cd4609fb4a1bf0b55": {
+      "tag": "iacode-preserved/gate1-ledger-b59d66f9f3f9",
+      "objectType": "commit",
+      "present": true,
+      "reachedBy": [
+        "refs/tags/iacode-preserved/gate1-ledger-b59d66f9f3f9"
+      ]
+    },
+    "13ab172fcc06c466e62af41286cc09734cd7b5d4": {
+      "tag": "iacode-preserved/setup00-ledger-13ab172fcc06",
+      "objectType": "commit",
+      "present": true,
+      "reachedBy": [
+        "refs/tags/iacode-preserved/setup00-ledger-13ab172fcc06"
+      ]
+    },
+    "643e721ee519eaa88e0e92a274e8903fb8ba774a": {
+      "tag": "iacode-preserved/gate2-ledger-643e721ee519",
+      "objectType": "commit",
+      "present": true,
+      "reachedBy": [
+        "refs/tags/iacode-preserved/gate2-ledger-643e721ee519"
+      ]
+    }
+  },
+  "ordinaryClone": {
+    "b59d66f9f3f9add2ae9dcd1cd4609fb4a1bf0b55": {
+      "tag": "iacode-preserved/gate1-ledger-b59d66f9f3f9",
+      "objectType": "commit",
+      "present": true,
+      "reachedBy": [
+        "refs/tags/iacode-preserved/gate1-ledger-b59d66f9f3f9"
+      ]
+    },
+    "13ab172fcc06c466e62af41286cc09734cd7b5d4": {
+      "tag": "iacode-preserved/setup00-ledger-13ab172fcc06",
+      "objectType": "commit",
+      "present": true,
+      "reachedBy": [
+        "refs/tags/iacode-preserved/setup00-ledger-13ab172fcc06"
+      ]
+    },
+    "643e721ee519eaa88e0e92a274e8903fb8ba774a": {
+      "tag": "iacode-preserved/gate2-ledger-643e721ee519",
+      "objectType": "commit",
+      "present": true,
+      "reachedBy": [
+        "refs/tags/iacode-preserved/gate2-ledger-643e721ee519"
+      ]
+    }
+  },
+  "checks": [
+    {
+      "check": "clone the remote with no tags",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "fetch every checkpoint tag and nothing else",
+      "ok": true,
+      "detail": "20 checkpoint tag(s)"
+    },
+    {
+      "check": "without the preserved references the commits are absent",
+      "ok": true,
+      "detail": {
+        "b59d66f9f3f9": false,
+        "13ab172fcc06": false,
+        "643e721ee519": false
+      }
+    },
+    {
+      "check": "fetching only the preserved references brings every commit",
+      "ok": true,
+      "detail": {
+        "b59d66f9f3f9": [
+          "refs/tags/iacode-preserved/gate1-ledger-b59d66f9f3f9"
+        ],
+        "13ab172fcc06": [
+          "refs/tags/iacode-preserved/setup00-ledger-13ab172fcc06"
+        ],
+        "643e721ee519": [
+          "refs/tags/iacode-preserved/gate2-ledger-643e721ee519"
+        ]
+      }
+    },
+    {
+      "check": "an ordinary clone of the remote holds every preserved commit",
+      "ok": true,
+      "detail": {
+        "b59d66f9f3f9": "commit",
+        "13ab172fcc06": "commit",
+        "643e721ee519": "commit"
+      }
+    },
+    {
+      "check": "every commit the clone's sealed evidence names is reachable there",
+      "ok": true,
+      "detail": "61 commit(s) named, 0 unpublished"
+    }
+  ],
+  "result": "PASS"
+}
