@@ -3,24 +3,27 @@
 IACode is a planned private, autonomous, general-purpose, self-improving software engineering
 platform. This repository contains the development control plane established by **SETUP-00** and the
 runtime foundation delivered by **GATE 0 — FOUNDATION**, the provider-neutral model
-boundary delivered by **GATE 1 — MODEL GATEWAY**, and the durable agent execution
-delivered by **GATE 2 — AGENT RUNTIME**.
+boundary delivered by **GATE 1 — MODEL GATEWAY**, the durable agent execution
+delivered by **GATE 2 — AGENT RUNTIME**, and the isolated tool execution delivered by
+**GATE 3 — SANDBOX + TOOL EXECUTION**.
 
 Begin with [START-HERE.md](START-HERE.md). The repository is the source of truth; chat history is
 not.
 
 ## Current boundary
 
-- Current Gate: `GATE 2 — AGENT RUNTIME`, closed at `INTERNAL_GATE_PASS`, milestone `M1`.
+- Current Gate: `GATE 3 — SANDBOX + TOOL EXECUTION`, the last Gate of milestone `M1`.
 - What runs: an API, a Temporal worker, a web shell, PostgreSQL, Redis, MinIO, Temporal, Prometheus
   and Grafana, locally on Docker Compose — and the Model Gateway, which discovers a provider's
   models and invokes them behind one provider-neutral contract.
 - And the Agent Runtime, which executes a team of agents as a durable Temporal workflow and
   reaches a model only through that gateway.
-- What does not: **tool execution**. An agent that asks for a tool has its request recorded
-  and the run pauses; the sandbox that will execute one is `GATE 3`. Retrieval, the
-  experience store and training belong to later Gates too; the directories reserved for them
-  say so and contain nothing else.
+- And the Sandbox, which executes the tools an agent's policy allows — files, a shell, local
+  Git — inside a disposable, unprivileged container that belongs to the run, with no network, no
+  host path, no engine socket and no credential. A coding team (planner, developer, reviewer)
+  changes a repository there; nothing it asks for runs on the host.
+- What does not: quality scoring, retrieval, the experience store and training belong to later
+  Gates; the directories reserved for them say so and contain nothing else.
 - Canonical agent definitions: `.iacode/agents/`.
 - Latest reconstructible state: [docs/checkpoints/LATEST.md](docs/checkpoints/LATEST.md).
 

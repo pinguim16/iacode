@@ -2,11 +2,12 @@
 
 ## Current state
 
-Four things exist: the **SETUP-00 development control plane**, the **Gate 0 Foundation
-runtime**, the **Gate 1 Model Gateway** and the **Gate 2 Agent Runtime**.
+Five things exist: the **SETUP-00 development control plane**, the **Gate 0 Foundation
+runtime**, the **Gate 1 Model Gateway**, the **Gate 2 Agent Runtime** and the **Gate 3
+Sandbox**.
 
-No sandbox, quality runtime, IDE integration, memory system, learning engine or
-training pipeline has been implemented. The directories reserved for them contain a README declaring
+No quality runtime, IDE integration, memory system, learning engine or training pipeline has
+been implemented. The directories reserved for them contain a README declaring
 the reservation and nothing else, and `.iacode/policies/gate-scope.json` records which Gate owns
 each one. The internal mirror audit fails a delivery that puts an implementation there, so this
 statement is a checked fact rather than a claim.
@@ -158,10 +159,16 @@ files. Distributed tracing is deferred to the Gate that has something to trace �
 | The agent runtime is a library, Temporal is its durable engine, and the schema is shared | [ADR-0020](adr/ADR-0020-agent-runtime-boundary.md) |
 | A tool request is recorded and waited on; execution belongs to Gate 3 | [ADR-0021](adr/ADR-0021-tool-execution-boundary.md) |
 | An agent turn is one versioned envelope, parsed strictly, with one repair | [ADR-0022](adr/ADR-0022-agent-output-envelope.md) |
+| A sealed checkpoint binds its own tag | [ADR-0023](adr/ADR-0023-sealed-checkpoint-binds-its-own-tag.md) |
+| The development history is public, atomic and never rewritten | [ADR-0024](adr/ADR-0024-public-remote-and-atomic-commits.md) |
+| A tool runs only in a disposable, hardened sibling container the sandbox service creates | [ADR-0025](adr/ADR-0025-sandbox-isolation-boundary.md) |
+| One workspace per run, provisioned from an authorised snapshot, removed with the run | [ADR-0026](adr/ADR-0026-workspace-lifecycle.md) |
+| The canonical policy, never the request, decides what a tool may do | [ADR-0027](adr/ADR-0027-tool-execution-policy.md) |
 
 Pinned versions: [VERSIONS.md](VERSIONS.md). Operating it: [runbooks/FOUNDATION.md](runbooks/FOUNDATION.md),
-[runbooks/MODEL-GATEWAY.md](runbooks/MODEL-GATEWAY.md) and
-[runbooks/AGENT-RUNTIME.md](runbooks/AGENT-RUNTIME.md).
+[runbooks/MODEL-GATEWAY.md](runbooks/MODEL-GATEWAY.md),
+[runbooks/AGENT-RUNTIME.md](runbooks/AGENT-RUNTIME.md) and
+[runbooks/SANDBOX.md](runbooks/SANDBOX.md).
 
 ## The model gateway
 
@@ -212,11 +219,12 @@ and produces a result.
 
 ### Boundaries that matter
 
-**A tool request is recorded, and then nothing happens.** An agent that asks for a tool gets its
-request persisted, the run moves to `WAITING_FOR_TOOL`, and the workflow waits on a signal with its
-own timeout. The tool name is never resolved to a command, a path or an import. Execution is
-`GATE 3`'s sandbox, and a boundary scan over the runtime and the worker proves the machinery to run
-anything is not there — [ADR-0021](adr/ADR-0021-tool-execution-boundary.md).
+**The runtime records a tool request; it never executes one.** An agent that asks for a tool
+gets its request persisted and the run moves to `WAITING_FOR_TOOL`. The tool name is never resolved
+to a command, a path or an import inside the runtime or the worker, and a boundary scan over both
+proves the machinery to run anything is not there —
+[ADR-0021](adr/ADR-0021-tool-execution-boundary.md). A stage with a sandbox policy has the request
+executed by `GATE 3`'s sandbox, below; any other stage waits for a result through the API.
 
 **The runtime reaches a model only through the gateway's published contract.** It does not import
 `iacode_model_gateway` at all: it speaks the shared wire shapes and calls `/api/v1/gateway/infer`.
@@ -244,10 +252,53 @@ produced, because the workflow cannot resume without the first and the page cann
 the second. It keeps no prompt, no provider payload and no model's private reasoning: an event
 payload refuses a forbidden key outright, and `model_calls` still has nowhere to put one.
 
+## The sandbox
+
+The hands, and nothing else. It takes a tool request the runtime persisted, decides it against a
+canonical policy the agent cannot change, executes it inside a disposable container that holds only
+the run's own workspace, and returns a bounded result that resumes the run.
+
+```text
+   AgentRunWorkflow  (a stage with a sandbox policy asks for a tool)
+             |
+             |  activity iacode_sandbox_execute_tool, queue iacode-sandbox
+             v
+   services/sandbox  SandboxService       policy, tool registry, one path resolver, sessions
+             |
+             |  docker create / exec  (the only holder of the engine socket)
+             v
+   iacode-sbx-<session>   read-only root, no capability, no new privileges, user 10001,
+             |            network none, memory/CPU/PIDs bounded, tmpfs /workspace and /tmp,
+             v            no volume, no host path, no inherited variable, no credential
+   sandbox_helper (PID 1) files, a shell, local Git; kills every process a tool started
+```
+
+### Boundaries that matter
+
+**Nothing an agent asks for runs outside a sandbox.** Not on the host, not in the API, not in the
+worker, not in the sandbox service's own process. The service holds the engine's socket and never
+hands it on; the containers it creates are siblings with no mount of the host at all —
+[ADR-0025](adr/ADR-0025-sandbox-isolation-boundary.md).
+
+**The policy decides; the request cannot.** `.iacode/policies/sandbox-policy.json` names each
+policy's tools, image, resources, network and workspace access. A request carries a tool name and
+typed arguments; a field the contract does not declare, a tool the policy does not allow, a limit
+it tries to raise and a name the registry does not hold are refused, never mapped to a shell —
+[ADR-0027](adr/ADR-0027-tool-execution-policy.md).
+
+**One workspace per run, from an authorised snapshot.** A run names a snapshot artifact, never a
+path; the development working tree is never an agent's workspace. The session lives in
+`sandbox_sessions`, one active per run by the database's own index, and every execution in the
+evolved `tool_calls`, keyed by the tool request it answers, so a retried request never runs twice —
+[ADR-0026](adr/ADR-0026-workspace-lifecycle.md).
+
+**Isolation is asserted on the real engine.** The sandbox suite runs inside the service's image
+with the engine's socket; the four scenarios and the internal Red Team drive real containers. A
+double is used only for the service's decisions, never for a claim about isolation.
+
 ## Planned runtime boundaries
 
-Later Gates establish, in order, a sandbox, a quality engine and
-VS Code integration. Later releases add experience, knowledge, code graph, project memory, gap
+Later Gates establish, in order, a quality engine and VS Code integration. Later releases add experience, knowledge, code graph, project memory, gap
 detection, research, skills, dataset production, model training, evaluation, shadow mode, promotion
 and autonomous learning.
 

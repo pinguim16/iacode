@@ -172,7 +172,7 @@ class RunPlan:
 
 @dataclass(frozen=True)
 class ToolRequest:
-    """A tool an agent asked for. **Persisted and waited on; never executed in this Gate.**"""
+    """A tool an agent asked for. **Persisted and waited on; never executed by the runtime.**"""
 
     tool_request_id: str
     run_id: str

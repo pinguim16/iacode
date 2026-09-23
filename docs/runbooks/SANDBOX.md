@@ -88,6 +88,12 @@ Output beyond the inline bound goes to the Foundation's MinIO bucket under
 `sandbox/<run>/<tool request>/`, with a row in `artifacts` and its SHA-256. The tool result carries
 the reference.
 
+What reaches the agent is bounded a second time, as the agent runtime measures a tool result: the
+UTF-8 length of its canonical JSON, at most `SANDBOX_AGENT_RESULT_MAX_BYTES` (160 KiB). A bound on the
+raw bytes is not enough — JSON renders a control character as six bytes — so a result that would
+render larger is shortened explicitly, names what was shortened in `shortened`, is marked
+`truncated`, and keeps every artifact reference.
+
 ## Workspace snapshots
 
 A run can start from an authorised snapshot instead of an empty repository:
@@ -112,6 +118,21 @@ python scripts/iacode/sandbox_image.py --check  # fail when the current inputs h
 The service refuses to create a session when the image for the current inputs is missing or carries
 another fingerprint (`SANDBOX_IMAGE_MISSING`, `SANDBOX_IMAGE_STALE`).
 
+## Cleanup and recovery
+
+When a run ends, whatever its outcome, the workflow asks the sandbox to release it: the container
+is removed and the session becomes `STOPPED`. A cancelled run cancels the tool that is running
+first, and the helper kills every process that tool started before the result is recorded as
+`CANCELLED`.
+
+When the service starts it reconciles with the engine rather than with memory: a session whose
+container is alive is kept, a session whose container vanished becomes `FAILED`, and a container
+carrying this service's owner label that no session owns is removed. A sandbox container is a
+sibling of the service, not a child, so a restart of the service loses no workspace — the recovery
+scenario restarts the service between two tools of a run and the second tool reads what the first
+wrote. The sweeper expires, in bounded batches, only sessions past their expiry that are not running
+a tool.
+
 ## Operating
 
 ```bash
@@ -123,6 +144,33 @@ docker ps --filter label=org.iacode.sandbox=1      # the sandboxes that exist ri
 The service reconciles its sessions with the engine at start and sweeps expired ones every
 `IACODE_SANDBOX_SWEEP_INTERVAL_SECONDS`, at most `IACODE_SANDBOX_SWEEP_BATCH` at a time, never one
 that is running a tool. It lists and removes only containers carrying its own owner label.
+
+## Scenarios
+
+Four recorded scenarios drive the real workflow, the real activities, the stack's sandbox service and
+real containers, with only the model scripted (`services/orchestrator/rehearsal/coding.py`):
+
+```bash
+python scripts/iacode/scenarios/sandbox_coding_e2e.py --scenario coding    # fix a repository
+python scripts/iacode/scenarios/sandbox_coding_e2e.py --scenario timeout   # a timeout, survived
+python scripts/iacode/scenarios/sandbox_coding_e2e.py --scenario cancel    # a cancelled command
+python scripts/iacode/scenarios/sandbox_coding_e2e.py --scenario recovery  # a service restart
+```
+
+The coding scenario stores a synthetic repository with a defect and a failing test as a snapshot;
+the developer reads it, runs the red test, patches, runs the green test, probes where its shell
+runs, reads the diff and commits locally; the reviewer inspects the commit read-only and approves
+it. A sentinel file on the host must keep its digest. Each scenario rebuilds the worker, the
+service and the sandbox image first, and every verdict is read from what the run recorded.
+
+## Dependency scanning
+
+The sandbox service installs the one dependency lock the dependency scan audits
+(`apps/api/requirements.lock.txt`), so its Python dependencies are scanned with the API's. Two things
+are pinned but **not** scanned by any tool in this repository: the static Docker client in the
+service image, pinned by version and SHA-256, and the Debian packages of the sandbox image (Git),
+pinned by exact version on a base pinned by digest. Updating them is a deliberate change of those
+pins, reviewed against the upstream advisories.
 
 ## Observability
 

@@ -4,10 +4,12 @@ Everything an operator does with `GATE 2 — AGENT RUNTIME`: starting it, creati
 it, cancelling it, answering a tool request, reading what a run cost, and what to do when something
 is wrong.
 
-One sentence first, because it governs everything below. **This Gate executes no tool.** An agent
-that asks for one has its request recorded and the run pauses at `WAITING_FOR_TOOL`. The sandbox
-that will execute one belongs to `GATE 3` —
-[ADR-0021](../adr/ADR-0021-tool-execution-boundary.md).
+One sentence first, because it governs everything below. **The runtime executes no tool.** An
+agent that asks for one has its request recorded and the run pauses at `WAITING_FOR_TOOL` —
+[ADR-0021](../adr/ADR-0021-tool-execution-boundary.md). Since `GATE 3`, a stage whose agent names a
+sandbox policy has the request executed in the run's sandbox, as an activity on the sandbox's own
+queue, and the run resumes with the result; any other stage still waits for a result delivered
+through the API. The sandbox is operated through [SANDBOX.md](SANDBOX.md).
 
 ## Starting the runtime
 
@@ -108,14 +110,15 @@ arguments are bounded, the request is written to `tool_requests`, a `TOOL_REQUES
 recorded, and the run moves to `WAITING_FOR_TOOL`. **The name is never resolved to a command, a
 path or an import, and no process is started.**
 
-Nothing in this Gate answers a request. Every builtin profile declares no permitted action at all,
-so a run started from the page or the API will not reach this state; the lifecycle is exercised by
-the runtime suite and by the two scenarios below.
+A stage with a sandbox policy — the `developer` and `code-reviewer` of the `coding` team — never
+waits for anyone: the workflow dispatches the request to the sandbox, persists the result through
+the same store validation the endpoint below uses, and resumes. A stage without one waits for a
+result delivered through the API, exactly as it did in `GATE 2`.
 
 ## Tool results
 
-A result is delivered through the API, by whatever is authorised to execute — a test fixture or the
-durability rehearsal today, the sandbox from Gate 3:
+For a stage without a sandbox policy, a result is delivered through the API by whatever is
+authorised to execute — a test fixture or the durability rehearsal:
 
 ```bash
 curl -s -X POST localhost:18080/api/v1/agent-runs/$RUN/tool-results \
@@ -253,10 +256,11 @@ sends a keep-alive comment every fifteen seconds for exactly this; reconnecting 
 `IACODE_REPOSITORY_ROOT` — it is `/app` inside both images, which is where the definitions are
 copied.
 
-## What this Gate does not do
+## What this runtime does not do
 
-No tool execution, no sandbox, no filesystem access, no Git, no browser, no container control. No
-retrieval, no experience store, no quality scoring, no training. No dynamic team composition: a
+No tool execution of its own: files, a shell and local Git exist only inside the sandbox of
+[SANDBOX.md](SANDBOX.md). No browser. No retrieval, no experience store, no quality scoring, no
+training. No dynamic team composition: a
 team is configuration, and no model decides which agents run.
 
 Operating the model boundary underneath it: [MODEL-GATEWAY.md](MODEL-GATEWAY.md). Operating the

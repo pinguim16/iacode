@@ -40,7 +40,7 @@ apps/api/                  the FastAPI application
 apps/web/                  the Angular shell
 services/orchestrator/     the Temporal worker: the smoke workflow and the agent run workflow
   src/                     the workflow, its activities and the process that polls for them
-  rehearsal/               a harness, outside the shipped source, for the durability scenario
+  rehearsal/               harnesses, outside the shipped source, for the agent scenarios
 packages/common/           UUIDv7 and credential redaction
 packages/contracts/        the response shapes that cross a process boundary
 packages/persistence/      the system of record: one declarative schema, shared by both processes
@@ -51,6 +51,11 @@ services/model-gateway/    the provider-neutral model boundary: contracts, adapt
 services/agent-runtime/    the agent runtime: states, events, profiles, protocol, budgets, the
   src/                     tool-request boundary and the engine; it executes nothing
   tests/                   its own suite, with no provider, no database and no Temporal
+services/sandbox/          the sandbox: policy, tool registry, path resolver, the engine backend,
+  src/                     the in-container helper, sessions, store, artifacts, telemetry
+  images/iacode-dev/       the sandbox image profile, built content-addressed
+  tests/                   its suite, against the real container engine; integration/ needs the
+                           stack's database and bucket and runs in the verification
 infra/compose/             the stack
 infra/tests/               what the infrastructure declares, and the live configuration
 scripts/iacode/            operational tooling: stack, migrate, backup, restore, verify, scenarios
@@ -116,18 +121,36 @@ container writes from its environment at start-up, so one image runs against any
 a workflow contract drifting apart surfaces as a deserialisation error inside an activity, which is
 a bad way to learn about a version mismatch.
 
+## Changing the sandbox
+
+`services/sandbox/`. Its suite runs inside the service's image with the engine's socket mounted,
+because isolation, limits and process control cannot be asserted against a double:
+
+```bash
+python scripts/iacode/gates/sandbox_tests.py    # builds both images, then runs the suite
+python scripts/iacode/sandbox_image.py --check  # is there an image for the current inputs?
+```
+
+Anything that decides a path goes through `iacode_sandbox.paths`; anything that starts a process is
+`backend.py` (the container client) or `helper.py` (inside the container), and the control-plane
+suite fails a third. A new tool is a registry entry in `tools.py` and a name in a policy of
+`.iacode/policies/sandbox-policy.json`; an agent reaches it only through a profile whose
+`allowedActions` stay inside that policy.
+
 ## Before you call a change finished
 
 ```bash
 python scripts/iacode/verify.py --fast
 ```
 
-Eleven mandatory gates — `tests`, `staticAnalysis`, `lessons`, `integrity`,
-`checkpointValidation`, `apiTests`, `gatewayTests`, `agentRuntimeTests`, `webTests`, `lint`
-and `infraDefinition` — the stack, the integration suite, the live infrastructure suite, the
-smoke check, the two live provider smokes, the agent runtime's durability and cancellation
-scenarios, a verified backup-and-restore cycle and a dependency scan. `--fast` stops before
-the stages that restart the stack and delete volumes.
+Twelve mandatory gates — `tests`, `staticAnalysis`, `lessons`, `integrity`,
+`checkpointValidation`, `apiTests`, `gatewayTests`, `agentRuntimeTests`, `sandboxTests`,
+`webTests`, `lint` and `infraDefinition` — the stack, the integration suite, the live
+infrastructure suite, the smoke check, the two live provider smokes, the agent runtime's
+durability, cancellation and deadline scenarios, the sandbox's integration cases and its four
+scenarios (`scripts/iacode/scenarios/sandbox_coding_e2e.py`: coding, timeout, cancellation,
+recovery), a verified backup-and-restore cycle and a dependency scan. `--fast` stops before the
+stages that restart the stack and delete volumes.
 
 The full run — `python scripts/iacode/verify.py`, or `.\verify.ps1` on Windows — adds the restart
 scenario, the dependency-failure scenario and a complete installation from no volumes at all. That

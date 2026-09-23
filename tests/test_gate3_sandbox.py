@@ -1025,6 +1025,65 @@ class SandboxImageProfileTests(unittest.TestCase):
         self.assertIn("if digest != expected", service)
 
 
+SANDBOX_RUNBOOK = PROJECT_ROOT / "docs" / "runbooks" / "SANDBOX.md"
+
+
+class Gate3DocumentationTests(unittest.TestCase):
+    """The documents describe what this Gate delivered rather than what was planned."""
+
+    @staticmethod
+    def read(*parts: str) -> str:
+        return PROJECT_ROOT.joinpath(*parts).read_text(encoding="utf-8")
+
+    def test_the_entry_point_names_the_current_gate(self) -> None:
+        text = self.read("START-HERE.md")
+        for expected in ("GATE 3", "docs/GATE-3-CHECKLIST.md", "docs/runbooks/SANDBOX.md",
+                         "READY_FOR_MILESTONE_AUDIT"):
+            with self.subTest(expected=expected):
+                self.assertIn(expected, text)
+
+    def test_the_architecture_describes_the_sandbox_and_its_boundary(self) -> None:
+        text = self.read("docs", "ARCHITECTURE.md")
+        for expected in ("## The sandbox", "ADR-0024", "ADR-0025", "ADR-0026", "ADR-0027",
+                         "iacode-sandbox", "runbooks/SANDBOX.md"):
+            with self.subTest(expected=expected):
+                self.assertIn(expected, text)
+
+    def test_the_readme_and_versions_mention_the_gate(self) -> None:
+        self.assertIn("GATE 3 — SANDBOX", self.read("README.md"))
+        versions = self.read("docs", "VERSIONS.md")
+        for expected in ("sandbox-iacode-dev", "services/sandbox", "29.6.1"):
+            with self.subTest(expected=expected):
+                self.assertIn(expected, versions)
+
+    def test_the_development_document_names_the_gate_and_its_suite(self) -> None:
+        text = self.read("docs", "DEVELOPMENT.md")
+        for expected in ("sandboxTests", "services/sandbox", "sandbox_coding_e2e.py"):
+            with self.subTest(expected=expected):
+                self.assertIn(expected, text)
+
+    def test_the_runbook_covers_the_declared_topics(self) -> None:
+        text = SANDBOX_RUNBOOK.read_text(encoding="utf-8")
+        for topic in ("The security boundary", "## Lifecycle", "## The tool policy",
+                      "## Filesystem", "## Shell", "## Git", "## Network", "## Resources",
+                      "## Artifacts", "## Cleanup and recovery", "## Scenarios",
+                      "## Dependency scanning", "## Observability", "## Debugging"):
+            with self.subTest(topic=topic):
+                self.assertIn(topic, text)
+
+    def test_the_agents_git_identity_is_documented_apart_from_the_owners(self) -> None:
+        text = SANDBOX_RUNBOOK.read_text(encoding="utf-8")
+        self.assertIn("IACode Agent", text)
+        self.assertIn("ADR-0024", text)
+        policy = load_sandbox_policy()["gitIdentity"]
+        self.assertIn(policy["name"], text)
+        self.assertIn(policy["email"], text)
+
+    def test_the_runbook_never_prints_a_credential(self) -> None:
+        text = SANDBOX_RUNBOOK.read_text(encoding="utf-8")
+        self.assertEqual(ledger_common.find_secrets(text), [])
+
+
 class Gate3AdrTests(unittest.TestCase):
     """The structural decisions of this Gate are recorded and indexed."""
 
