@@ -3,7 +3,7 @@
 Result: `RED_TEAM_PASS`
 
 - Checkpoint: `GATE-3-CP-0001`
-- Generated: `2026-09-23T01:43:21Z`
+- Generated: `2026-09-23T03:12:14Z`
 - Source: scripts/development-ledger/gate3_red_team.py with gate3_sandbox_attacks.py — the internal adversarial battery of GATE 3 — SANDBOX + TOOL EXECUTION, executed against the delivery
 - Attacks: 25/25 defended
 
@@ -36,7 +36,7 @@ None.
 | `G3-I` | mandatory | timeout | run sleep 60 with a 2 s timeout | TIMED_OUT within bounds and no sleep left running | TIMED_OUT/COMMAND_TIMED_OUT after 2001 ms; sleeps left running: 0 | `DEFENDED` |
 | `G3-J` | mandatory | orphan child | start a setsid and a nohup child and let the parent time out | every child is killed with the command | TIMED_OUT/COMMAND_TIMED_OUT; escaped sleeps left running: 0 | `DEFENDED` |
 | `G3-K` | mandatory | output bomb | write 40 MB to standard output | the inline output stays within the policy's bound, the rest is an artifact | SUCCEEDED/None, truncated=True, inline 32768 bytes against 32768, artifacts 1 | `DEFENDED` |
-| `G3-L` | mandatory | PID pressure | run a recursive fork bomb with a 5 s timeout | the process limit contains it and the sandbox answers the next command | bomb SUCCEEDED/None, 98 descendants killed by the sweep; afterwards SUCCEEDED/None ['alive'], 5 processes in the sandbox | `DEFENDED` |
+| `G3-L` | mandatory | PID pressure | run a recursive fork bomb with a 5 s timeout | the process limit contains it and the sandbox answers the next command | bomb SUCCEEDED/None, 50 descendants killed by the sweep; afterwards SUCCEEDED/None ['alive'], 5 processes in the sandbox | `DEFENDED` |
 | `G3-M` | mandatory | memory cap | allocate 3 GiB in a 1 GiB sandbox | the allocation fails in a controlled way and the sandbox answers the next command | 3 GiB allocation FAILED/None exit 137; afterwards alive | `DEFENDED` |
 | `G3-N` | mandatory | remote Git | add the public remote and push from the shell; ask for push, fetch, clone and remote tools | the push fails with no network and no credential; the tools do not exist | a push from the shell exited 128; remote tools ['DENIED/UNKNOWN_TOOL', 'DENIED/UNKNOWN_TOOL', 'DENIED/UNKNOWN_TOOL', 'DENIED/UNKNOWN_TOOL']; credential helper: none | `DEFENDED` |
 | `G3-O` | mandatory | destructive Git | ask for reset, clean, rebase and filter-repo; pass an option and a command as a revision | no such tool exists and both revisions are refused | tools ['DENIED/UNKNOWN_TOOL', 'DENIED/UNKNOWN_TOOL', 'DENIED/UNKNOWN_TOOL', 'DENIED/UNKNOWN_TOOL']; option-like revision DENIED/GIT_REVISION_INVALID; injected revision DENIED/GIT_REVISION_INVALID | `DEFENDED` |
@@ -134,7 +134,7 @@ None.
 
 - Mutation: run a recursive fork bomb with a 5 s timeout
 - Expected defence: the process limit contains it and the sandbox answers the next command
-- Observed: bomb SUCCEEDED/None, 98 descendants killed by the sweep; afterwards SUCCEEDED/None ['alive'], 5 processes in the sandbox
+- Observed: bomb SUCCEEDED/None, 50 descendants killed by the sweep; afterwards SUCCEEDED/None ['alive'], 5 processes in the sandbox
 - Evidence: `file:services/sandbox/src/iacode_sandbox/backend.py`, `test:test_a_fork_bomb_is_contained_by_the_process_limit`
 
 ### G3-M — A process that allocates three times its memory.

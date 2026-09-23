@@ -228,7 +228,7 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 - Test: `test:Gate3MandatoryGateTests`
 - Negative test: _none_
 - Documentation: _none_
-- Validation: _none_
+- Validation: `command:cmd-0115`, `command:cmd-0111`, `checkpoint:REWORK-LOG.jsonl`
 - Guardrail: _none_
 
 ### REQ-0003 - canonical:GATE-3#1.3
@@ -239,7 +239,7 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 - Test: `test:Gate3TestSuiteRegistryTests`
 - Negative test: _none_
 - Documentation: _none_
-- Validation: _none_
+- Validation: `command:cmd-0120`, `checkpoint:COUNTS.json`
 - Guardrail: _none_
 
 ### REQ-0004 - canonical:GATE-3#1.4
@@ -250,7 +250,7 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 - Test: `test:Gate3RedTeamHarnessTests`
 - Negative test: _none_
 - Documentation: _none_
-- Validation: `checkpoint:M1-INTERNAL-RED-TEAM.json`, `checkpoint:RED-TEAM-REPORT.md`
+- Validation: `checkpoint:M1-INTERNAL-RED-TEAM.json`, `checkpoint:RED-TEAM-REPORT.md`, `command:cmd-0119`
 - Guardrail: _none_
 
 ### REQ-0005 - canonical:GATE-3#1.5
@@ -272,7 +272,7 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 - Test: `test:Gate3VerificationStageTests`
 - Negative test: _none_
 - Documentation: _none_
-- Validation: _none_
+- Validation: `command:cmd-0105`, `checkpoint:VERIFICATION-REPORT.json`
 - Guardrail: _none_
 
 ### REQ-0007 - canonical:GATE-3#2.1
@@ -1229,7 +1229,7 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 - Test: `test:test_fresh_database_reaches_the_sandbox_head`, `test:test_gate2_database_upgrades_to_gate3_head`, `test:test_the_sandbox_migration_is_reversible`
 - Negative test: _none_
 - Documentation: _none_
-- Validation: _none_
+- Validation: `command:cmd-0105`, `checkpoint:VERIFICATION-REPORT.json`
 - Guardrail: _none_
 
 ### REQ-0094 - canonical:GATE-3#16.4
@@ -1262,7 +1262,7 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 - Test: `test:SqlSandboxStoreTests`
 - Negative test: _none_
 - Documentation: _none_
-- Validation: _none_
+- Validation: `command:cmd-0105`, `command:cmd-0100`, `checkpoint:VERIFICATION-REPORT.json`
 - Guardrail: _none_
 
 ### REQ-0097 - canonical:GATE-3#16.7
@@ -1438,7 +1438,7 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 - Test: `test:test_truncated_output_goes_to_the_artifact_store`, `test:SandboxArtifactStoreTests`
 - Negative test: _none_
 - Documentation: _none_
-- Validation: _none_
+- Validation: `checkpoint:VERIFICATION-REPORT.json`
 - Guardrail: _none_
 
 ### REQ-0113 - canonical:GATE-3#19.2
@@ -1504,7 +1504,7 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 - Test: `test:SandboxImageProfileTests`
 - Negative test: _none_
 - Documentation: `file:docs/runbooks/SANDBOX.md`
-- Validation: _none_
+- Validation: `command:cmd-0105`, `checkpoint:VERIFICATION-REPORT.json`
 - Guardrail: _none_
 
 ### REQ-0119 - canonical:GATE-3#21.1
@@ -1669,7 +1669,7 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 - Test: `test:Gate3VerificationStageTests`
 - Negative test: _none_
 - Documentation: _none_
-- Validation: _none_
+- Validation: `command:cmd-0105`, `checkpoint:VERIFICATION-REPORT.json`
 - Guardrail: _none_
 
 ### REQ-0134 - canonical:GATE-3#25.2
@@ -1724,7 +1724,7 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 - Test: _none_
 - Negative test: _none_
 - Documentation: _none_
-- Validation: _none_
+- Validation: `command:cmd-0121`
 - Guardrail: _none_
 
 ### REQ-0139 - canonical:GATE-3#25.7
@@ -1834,7 +1834,7 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 - Test: `test:MandatoryGatePolicyTests.test_a_cycle_measured_against_no_gate_is_rejected`, `test:MandatoryGatePolicyTests.test_the_policy_declares_a_non_empty_closed_set`, `test:GreenKeeperToolTests.test_red_gate_is_reported_as_still_red`, `test:DeliveryAssuranceGateTests.test_green_keeper_pass_with_a_real_failure_is_rejected`, `test:DeliveryAssuranceGateTests.test_red_tests_block_review`
 - Negative test: _none_
 - Documentation: _none_
-- Validation: _none_
+- Validation: `checkpoint:REWORK-LOG.jsonl`, `command:cmd-0107`
 - Guardrail: _none_
 
 ### LESSON-REQ-0010 - lesson:LSN-0010
@@ -1977,7 +1977,7 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 - Test: `test:DerivedCountTests.test_a_forged_count_is_rejected`, `test:DerivedCountTests.test_a_markdown_claim_that_contradicts_the_derivation_is_rejected`, `test:SourceCardinalityPolicyTests.test_no_comment_or_docstring_states_a_derived_count_claim`, `test:SourceCardinalityPolicyTests.test_no_comment_or_docstring_states_the_cardinality_of_a_derived_set`, `test:SourceCardinalityPolicyTests`
 - Negative test: _none_
 - Documentation: _none_
-- Validation: _none_
+- Validation: `checkpoint:COUNTS.json`, `command:cmd-0120`
 - Guardrail: _none_
 
 ### LESSON-REQ-0023 - lesson:LSN-0023
@@ -2054,7 +2054,7 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 - Test: `test:SuccessorDurabilityTests.test_every_state_of_the_chain_verifies`, `test:SuccessorDurabilityTests.test_a_missing_anchor_is_still_detected_after_the_chain_advances`, `test:GateTransitionSimulationTests.test_the_first_checkpoint_of_the_next_gate_reaches_review_readiness`, `test:GateTransitionSimulationTests.test_its_mirror_audit_passes_with_the_empty_dimensions_inapplicable`
 - Negative test: _none_
 - Documentation: _none_
-- Validation: _none_
+- Validation: `command:cmd-0111`
 - Guardrail: _none_
 
 ### LESSON-REQ-0030 - lesson:LSN-0031
@@ -2318,5 +2318,5 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 - Test: _none_
 - Negative test: _none_
 - Documentation: _none_
-- Validation: `command:cmd-0076`, `command:cmd-0064`
+- Validation: `command:cmd-0076`, `command:cmd-0064`, `command:cmd-0117`
 - Guardrail: _none_

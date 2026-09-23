@@ -1,8 +1,8 @@
 {
   "schemaVersion": "1.1.0",
   "checkpoint": "GATE-3-CP-0001",
-  "generatedAt": "2026-09-23T01:43:21Z",
-  "targetFingerprint": "978b7751c75bbff3a58e682377ce234ed919472b5112f29bf4941d7799dd8d1d",
+  "generatedAt": "2026-09-23T03:12:14Z",
+  "targetFingerprint": "722f3b803bc2e2cb9c9b77315964fe4465dcc7d4f89d4c74694a6b1fcf9849fd",
   "source": "scripts/development-ledger/gate3_red_team.py with gate3_sandbox_attacks.py — the internal adversarial battery of GATE 3 — SANDBOX + TOOL EXECUTION, executed against the delivery",
   "baselineControl": {
     "result": "VALID",
@@ -184,7 +184,7 @@
       "target": "PID pressure",
       "mutation": "run a recursive fork bomb with a 5 s timeout",
       "expectedDefense": "the process limit contains it and the sandbox answers the next command",
-      "observed": "bomb SUCCEEDED/None, 98 descendants killed by the sweep; afterwards SUCCEEDED/None ['alive'], 5 processes in the sandbox",
+      "observed": "bomb SUCCEEDED/None, 50 descendants killed by the sweep; afterwards SUCCEEDED/None ['alive'], 5 processes in the sandbox",
       "result": "DEFENDED",
       "evidence": [
         "file:services/sandbox/src/iacode_sandbox/backend.py",

@@ -2,63 +2,102 @@
   "schemaVersion": "3.2.0",
   "checks": {
     "build": {
-      "status": "NOT_EXECUTED",
-      "evidence": [],
+      "status": "PASS",
+      "evidence": [
+        "command:cmd-0112",
+        "command:cmd-0115",
+        "command:cmd-0116"
+      ],
       "justification": null
     },
     "unitTests": {
-      "status": "NOT_EXECUTED",
-      "evidence": [],
+      "status": "PASS",
+      "evidence": [
+        "file:TESTS.json",
+        "command:cmd-0107"
+      ],
       "justification": null
     },
     "integrationTests": {
-      "status": "NOT_EXECUTED",
-      "evidence": [],
+      "status": "PASS",
+      "evidence": [
+        "file:TESTS.json",
+        "command:cmd-0100"
+      ],
       "justification": null
     },
     "e2e": {
-      "status": "NOT_EXECUTED",
-      "evidence": [],
+      "status": "PASS",
+      "evidence": [
+        "file:TESTS.json",
+        "command:cmd-0106",
+        "command:cmd-0071",
+        "command:cmd-0072",
+        "command:cmd-0073",
+        "command:cmd-0074"
+      ],
       "justification": null
     },
     "lint": {
-      "status": "NOT_EXECUTED",
-      "evidence": [],
+      "status": "PASS",
+      "evidence": [
+        "command:cmd-0117"
+      ],
       "justification": null
     },
     "staticAnalysis": {
-      "status": "NOT_EXECUTED",
-      "evidence": [],
+      "status": "PASS",
+      "evidence": [
+        "command:cmd-0108"
+      ],
       "justification": null
     },
     "security": {
-      "status": "NOT_EXECUTED",
-      "evidence": [],
+      "status": "PASS",
+      "evidence": [
+        "file:M1-INTERNAL-RED-TEAM.json",
+        "command:cmd-0119"
+      ],
       "justification": null
     },
     "documentation": {
-      "status": "NOT_EXECUTED",
-      "evidence": [],
+      "status": "PASS",
+      "evidence": [
+        "file:M1-INTERNAL-MIRROR.json",
+        "file:DIFF-SUMMARY.md",
+        "file:DECISIONS.md",
+        "command:cmd-0126"
+      ],
       "justification": null
     },
     "checkpointValidation": {
-      "status": "NOT_EXECUTED",
-      "evidence": [],
+      "status": "PASS",
+      "evidence": [
+        "file:VERIFICATION-REPORT.json",
+        "command:cmd-0111",
+        "command:cmd-0105"
+      ],
       "justification": null
     },
     "redTeam": {
       "status": "NOT_EXECUTED",
       "evidence": [],
-      "justification": null
+      "justification": "The independent Red Team belongs to the M1 milestone audit, which follows this Gate. The internal battery this closure executed is recorded in M1-INTERNAL-RED-TEAM.json, is 25 of 25 defended with a valid null-mutation control, and is not independent validation."
     },
     "greenKeeper": {
-      "status": "NOT_EXECUTED",
-      "evidence": [],
+      "status": "PASS",
+      "evidence": [
+        "file:REWORK-LOG.jsonl",
+        "command:cmd-0107"
+      ],
       "justification": null
     },
     "deliveryCompleteness": {
-      "status": "NOT_EXECUTED",
-      "evidence": [],
+      "status": "PASS",
+      "evidence": [
+        "file:COMPLETENESS-REPORT.json",
+        "command:cmd-0123"
+      ],
       "justification": null
     }
   }

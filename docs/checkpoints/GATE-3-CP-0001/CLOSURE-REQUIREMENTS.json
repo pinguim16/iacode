@@ -52,7 +52,11 @@
       ],
       "negativeTestEvidence": [],
       "documentationEvidence": [],
-      "validationEvidence": [],
+      "validationEvidence": [
+        "command:cmd-0115",
+        "command:cmd-0111",
+        "checkpoint:REWORK-LOG.jsonl"
+      ],
       "guardrailEvidence": []
     },
     {
@@ -74,7 +78,10 @@
       ],
       "negativeTestEvidence": [],
       "documentationEvidence": [],
-      "validationEvidence": [],
+      "validationEvidence": [
+        "command:cmd-0120",
+        "checkpoint:COUNTS.json"
+      ],
       "guardrailEvidence": []
     },
     {
@@ -98,7 +105,8 @@
       "documentationEvidence": [],
       "validationEvidence": [
         "checkpoint:M1-INTERNAL-RED-TEAM.json",
-        "checkpoint:RED-TEAM-REPORT.md"
+        "checkpoint:RED-TEAM-REPORT.md",
+        "command:cmd-0119"
       ],
       "guardrailEvidence": []
     },
@@ -145,7 +153,10 @@
       ],
       "negativeTestEvidence": [],
       "documentationEvidence": [],
-      "validationEvidence": [],
+      "validationEvidence": [
+        "command:cmd-0105",
+        "checkpoint:VERIFICATION-REPORT.json"
+      ],
       "guardrailEvidence": []
     },
     {
@@ -2188,7 +2199,10 @@
       ],
       "negativeTestEvidence": [],
       "documentationEvidence": [],
-      "validationEvidence": [],
+      "validationEvidence": [
+        "command:cmd-0105",
+        "checkpoint:VERIFICATION-REPORT.json"
+      ],
       "guardrailEvidence": []
     },
     {
@@ -2257,7 +2271,11 @@
       ],
       "negativeTestEvidence": [],
       "documentationEvidence": [],
-      "validationEvidence": [],
+      "validationEvidence": [
+        "command:cmd-0105",
+        "command:cmd-0100",
+        "checkpoint:VERIFICATION-REPORT.json"
+      ],
       "guardrailEvidence": []
     },
     {
@@ -2629,7 +2647,9 @@
       ],
       "negativeTestEvidence": [],
       "documentationEvidence": [],
-      "validationEvidence": [],
+      "validationEvidence": [
+        "checkpoint:VERIFICATION-REPORT.json"
+      ],
       "guardrailEvidence": []
     },
     {
@@ -2770,7 +2790,10 @@
       "documentationEvidence": [
         "file:docs/runbooks/SANDBOX.md"
       ],
-      "validationEvidence": [],
+      "validationEvidence": [
+        "command:cmd-0105",
+        "checkpoint:VERIFICATION-REPORT.json"
+      ],
       "guardrailEvidence": []
     },
     {
@@ -3118,7 +3141,10 @@
       ],
       "negativeTestEvidence": [],
       "documentationEvidence": [],
-      "validationEvidence": [],
+      "validationEvidence": [
+        "command:cmd-0105",
+        "checkpoint:VERIFICATION-REPORT.json"
+      ],
       "guardrailEvidence": []
     },
     {
@@ -3229,7 +3255,9 @@
       "testEvidence": [],
       "negativeTestEvidence": [],
       "documentationEvidence": [],
-      "validationEvidence": [],
+      "validationEvidence": [
+        "command:cmd-0121"
+      ],
       "guardrailEvidence": []
     },
     {
@@ -3451,7 +3479,10 @@
       ],
       "negativeTestEvidence": [],
       "documentationEvidence": [],
-      "validationEvidence": [],
+      "validationEvidence": [
+        "checkpoint:REWORK-LOG.jsonl",
+        "command:cmd-0107"
+      ],
       "guardrailEvidence": []
     },
     {
@@ -3741,7 +3772,10 @@
       ],
       "negativeTestEvidence": [],
       "documentationEvidence": [],
-      "validationEvidence": [],
+      "validationEvidence": [
+        "checkpoint:COUNTS.json",
+        "command:cmd-0120"
+      ],
       "guardrailEvidence": []
     },
     {
@@ -3897,7 +3931,9 @@
       ],
       "negativeTestEvidence": [],
       "documentationEvidence": [],
-      "validationEvidence": [],
+      "validationEvidence": [
+        "command:cmd-0111"
+      ],
       "guardrailEvidence": []
     },
     {
@@ -4481,7 +4517,8 @@
       "documentationEvidence": [],
       "validationEvidence": [
         "command:cmd-0076",
-        "command:cmd-0064"
+        "command:cmd-0064",
+        "command:cmd-0117"
       ],
       "guardrailEvidence": []
     }

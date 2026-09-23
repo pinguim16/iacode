@@ -2,14 +2,14 @@
   "schemaVersion": "3.2.0",
   "phase": "GATE-3 - Sandbox and Tool Execution",
   "gate": "GATE-3",
-  "status": "IN_PROGRESS",
+  "status": "INTERNAL_GATE_PASS",
   "branch": "main",
   "baseCommit": "d4a3998ce745dcbfcf6a8498f267ee302834543f",
-  "currentCommit": "HEAD",
+  "currentCommit": "refs/tags/iacode-checkpoints/GATE-3-CP-0001",
   "dirty": false,
   "startedAt": "2026-09-22T22:50:36Z",
-  "updatedAt": "2026-09-23T01:52:16Z",
-  "nextAllowedAction": "Run the Green Keeper, the full verification, the counts, the completeness audit, the mirror audit and the internal Red Team over the delivery, then finalize at INTERNAL_GATE_PASS. See PLAN.md.",
+  "updatedAt": "2026-09-23T03:18:40Z",
+  "nextAllowedAction": "M1 FRESH-SESSION MILESTONE AUDIT, in a new session that did not implement M1. GATE 4 does not start before it and the owner's authorization. See NEXT.md.",
   "blockedBy": [],
   "secondToolValidation": {
     "status": "PENDING_MANUAL",
@@ -31,23 +31,31 @@
     "coveragePercent": 100.0
   },
   "greenKeeper": {
-    "status": "NOT_EXECUTED",
-    "cycles": 0,
+    "status": "PASS",
+    "cycles": 1,
     "remainingFailures": 0,
     "unresolvedReworkItems": 0,
     "log": "REWORK-LOG.jsonl",
     "externalBlockers": [],
-    "evidence": []
+    "evidence": [
+      "file:REWORK-LOG.jsonl",
+      "command:cmd-0107",
+      "command:cmd-0111",
+      "command:cmd-0115"
+    ]
   },
   "deliveryCompleteness": {
-    "status": "NOT_EXECUTED",
+    "status": "PASS",
     "report": "COMPLETENESS-REPORT.json",
-    "coveragePercent": 0.0,
-    "evidenceCoveragePercent": 0.0,
-    "auditor": null,
-    "evidence": []
+    "coveragePercent": 100.0,
+    "evidenceCoveragePercent": 100.0,
+    "auditor": "internal-delivery-completeness-validator",
+    "evidence": [
+      "file:COMPLETENESS-REPORT.json",
+      "command:cmd-0123"
+    ]
   },
-  "reworkCycles": 0,
+  "reworkCycles": 1,
   "independentReview": {
     "status": "NOT_REQUIRED",
     "tool": null,
@@ -56,11 +64,14 @@
     "evidence": []
   },
   "redTeam": {
-    "status": "PENDING",
-    "tool": null,
-    "executedAt": null,
-    "justification": null,
-    "evidence": []
+    "status": "RED_TEAM_PASS",
+    "tool": "claude-code",
+    "executedAt": "2026-09-23T03:12:14Z",
+    "justification": "25 of 25 attacks defended with a valid null-mutation control, 21 of them against real containers. This is the Gate's own internal battery and is recorded as such: it is not independent validation, and the independent Red Team belongs to the M1 milestone audit.",
+    "evidence": [
+      "file:M1-INTERNAL-RED-TEAM.json",
+      "command:cmd-0119"
+    ]
   },
   "lessonPreflight": {
     "path": "LESSON-PREFLIGHT.json",
@@ -106,7 +117,7 @@
     "anchors": 17,
     "chainFile": ".iacode/anchors/checkpoint-chain.json",
     "evidence": [
-      "command:cmd-0009"
+      "command:cmd-0110"
     ]
   },
   "externalAttestation": {
