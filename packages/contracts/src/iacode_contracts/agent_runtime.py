@@ -25,6 +25,8 @@ from typing import Any
 
 from pydantic import BaseModel, ConfigDict, Field
 
+from iacode_contracts.sandbox import ToolExecutionView
+
 __all__ = [
     "AGENT_RUN_STATES",
     "AGENT_RUN_WORKFLOW",
@@ -169,6 +171,10 @@ class CreateAgentRunRequest(BaseModel):
     toolWaitTimeoutSeconds: int | None = Field(default=None, ge=1, le=86400)
     idempotencyKey: str | None = Field(default=None, min_length=1, max_length=128)
     metadata: dict[str, str] = Field(default_factory=dict)
+    workspaceSnapshot: str | None = Field(
+        default=None, min_length=36, max_length=36,
+        description="The identifier of an authorised workspace snapshot artifact the run's sandbox "
+                    "is provisioned from. Never a path: a run cannot name a directory of the host.")
 
 
 class ToolResultSubmission(BaseModel):
@@ -281,6 +287,10 @@ class AgentRunDetail(BaseModel):
     stages: list[AgentRunStageView] = Field(default_factory=list)
     pendingToolRequest: ToolRequestView | None = None
     toolRequests: list[ToolRequestView] = Field(default_factory=list)
+    toolExecutions: list[ToolExecutionView] = Field(
+        default_factory=list,
+        description="What the sandbox executed for this run: the tool, how it ended, how long it "
+                    "took and which sandbox ran it. Never the output.")
     result: str | None = None
     resultSummary: str | None = None
     errorType: str | None = None
@@ -337,6 +347,8 @@ class AgentProfileSummary(BaseModel):
     promptTemplateVersion: str
     promptTemplateHash: str
     enabled: bool
+    sandboxPolicy: str | None = Field(
+        default=None, description="The sandbox policy this role's tools execute under, if any.")
 
 
 class TeamStageSummary(BaseModel):

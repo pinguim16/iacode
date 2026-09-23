@@ -40,6 +40,7 @@ __all__ = [
     "finish_stage",
     "read_tool_result",
     "record_event",
+    "resolve_tool_request",
     "set_run_state",
     "start_stage",
 ]
@@ -224,6 +225,24 @@ async def read_tool_result(payload: dict[str, Any]) -> dict[str, Any] | None:
     return result.to_dict() if result else None
 
 
+@activity.defn(name="iacode_agent_runtime_resolve_tool_request")
+async def resolve_tool_request(payload: dict[str, Any]) -> dict[str, Any]:
+    """Persist the sandbox's result for a tool request, through the store's own validation.
+
+    Gate 3's sandbox answers a request by returning its result to the workflow, and the workflow
+    records it here before resuming the engine. The store applies exactly the checks the API's
+    tool-result endpoint applies — the request exists, belongs to this run, is still pending and the
+    run is not terminal — and delivering the same result twice resolves the request once.
+    """
+    context = get_context()
+    try:
+        stored = await context.store.resolve_tool_request(
+            str(payload["runId"]), ToolResult.from_dict(dict(payload["result"])))
+    except AgentRuntimeError as error:
+        raise _refuse(error) from None
+    return stored.to_dict()
+
+
 @activity.defn(name="iacode_agent_runtime_cancel_pending_tool_requests")
 async def cancel_pending_tool_requests(payload: dict[str, Any]) -> int:
     context = get_context()
@@ -248,5 +267,6 @@ AGENT_RUNTIME_ACTIVITIES = [
     attach_model_call,
     create_tool_request,
     read_tool_result,
+    resolve_tool_request,
     cancel_pending_tool_requests,
 ]

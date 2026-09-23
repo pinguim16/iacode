@@ -629,22 +629,37 @@ class DeclaredAgentTests(unittest.TestCase):
         return [json.loads(path.read_text(encoding="utf-8"))
                 for path in sorted((AGENTS / "profiles").glob("*.json"))]
 
+    #: The roles this Gate declared. GATE 3 adds the two that execute tools in the sandbox,
+    #: `developer` and `code-reviewer`; a role no Gate declared is still refused.
+    GATE_2_AGENTS = {"engineering-lead", "generalist", "planner", "reviewer"}
+    LATER_AGENTS = {"developer", "code-reviewer"}
+
     def test_builtin_profiles_are_exactly_the_declared_set(self) -> None:
         self.assertEqual({item["agent"] for item in self.profiles()},
-                         {"engineering-lead", "generalist", "planner", "reviewer"})
+                         self.GATE_2_AGENTS | self.LATER_AGENTS)
 
     def test_builtin_teams_are_the_declared_set(self) -> None:
         teams = [json.loads(path.read_text(encoding="utf-8"))
                  for path in sorted((AGENTS / "teams").glob("*.json"))]
+        # GATE 3 adds `coding`: planner, developer and code reviewer over one sandbox.
         self.assertEqual({item["team"] for item in teams},
-                         {"single-agent", "planner-reviewer"})
+                         {"single-agent", "planner-reviewer", "coding"})
 
     def test_no_shipped_profile_is_given_a_tool(self) -> None:
-        """Gate 2 executes nothing, so a profile with a permitted action would be configuration
-        for a capability that does not exist."""
+        """Gate 2 executed nothing, so a profile of its roles with a permitted action would have
+        been configuration for a capability that did not exist — and its roles still have none.
+
+        From GATE 3 a role may be given tools, and only together with the sandbox policy that
+        executes them: that property is `Gate3AgentToolPolicyTests`'s, which also proves that every
+        permitted action is a registered tool the named policy allows.
+        """
         for profile in self.profiles():
             with self.subTest(agent=profile["agent"]):
-                self.assertEqual(profile.get("allowedActions"), [])
+                if profile["agent"] in self.GATE_2_AGENTS:
+                    self.assertEqual(profile.get("allowedActions"), [])
+                else:
+                    self.assertTrue(profile.get("sandboxPolicy"),
+                                    "a role given a tool names no sandbox policy")
 
     def test_prompts_are_versioned_files(self) -> None:
         for profile in self.profiles():

@@ -30,13 +30,15 @@ recorded.
 from __future__ import annotations
 
 import asyncio
-from dataclasses import dataclass
+import contextlib
+from dataclasses import dataclass, field
 from datetime import timedelta
 from typing import Any
 
 from temporalio import workflow
 from temporalio.common import RetryPolicy
 from temporalio.exceptions import ActivityError, ApplicationError
+from temporalio.workflow import ActivityCancellationType
 
 with workflow.unsafe.imports_passed_through():
     from iacode_agent_runtime.budgets import BudgetLedger
@@ -57,6 +59,12 @@ with workflow.unsafe.imports_passed_through():
         CANCEL_SIGNAL,
         TOOL_RESULT_SIGNAL,
     )
+    from iacode_contracts.sandbox import (
+        SANDBOX_CONTRACT_VERSION,
+        SANDBOX_EXECUTE_ACTIVITY,
+        SANDBOX_RELEASE_ACTIVITY,
+        SANDBOX_TASK_QUEUE,
+    )
 
 __all__ = ["AGENT_RUN_WORKFLOW_NAME", "CANCEL_SIGNAL", "TOOL_RESULT_SIGNAL", "AgentRunWorkflow"]
 
@@ -71,6 +79,11 @@ STORE_TIMEOUT = timedelta(seconds=30)
 #: The longest one model call may take. Above the gateway's own read timeout, so the gateway's
 #: classified timeout arrives as a decision rather than as an activity that vanished.
 MODEL_CALL_CEILING_SECONDS = 900
+
+#: How long a sandbox execution may go without reporting that it is alive. The sandbox heartbeats
+#: every few seconds while a tool runs, so this detects a sandbox service that died mid-execution
+#: rather than bounding how long a tool may take - the policy's own timeout does that.
+SANDBOX_HEARTBEAT_TIMEOUT = timedelta(seconds=120)
 
 
 def _activity_error(error: BaseException) -> AgentRuntimeError | None:
@@ -98,11 +111,19 @@ def _activity_error(error: BaseException) -> AgentRuntimeError | None:
 
 @dataclass
 class _WorkflowEffects:
-    """The engine's effects, implemented as activity invocations."""
+    """The engine's effects, implemented as activity invocations.
+
+    Two small maps make the Gate 3 dispatch possible without widening the engine's protocol: which
+    stage an agent run belongs to (from ``start_stage``) and what each tool request asked for (from
+    ``create_tool_request``). Both are filled from activity results and arguments, so a replay
+    rebuilds them identically.
+    """
 
     plan: RunPlan
     workflow_ref: AgentRunWorkflow
     model_timeout: timedelta
+    stages_by_agent_run: dict[str, StagePlan] = field(default_factory=dict)
+    requests: dict[str, dict[str, Any]] = field(default_factory=dict)
 
     async def new_id(self) -> str:
         # Deterministic by construction: the SDK seeds this from the workflow's own identity, so a
@@ -134,7 +155,7 @@ class _WorkflowEffects:
         await self._call("iacode_agent_runtime_set_state", payload)
 
     async def start_stage(self, stage: StagePlan) -> str:
-        return await self._call("iacode_agent_runtime_start_stage", {
+        agent_run_id = await self._call("iacode_agent_runtime_start_stage", {
             "runId": self.plan.run_id,
             "stageIndex": stage.index,
             "stageName": stage.name,
@@ -144,6 +165,8 @@ class _WorkflowEffects:
             "promptTemplateHash": stage.prompt_template_hash,
             "outputName": stage.output_name,
         })
+        self.stages_by_agent_run[str(agent_run_id)] = stage
+        return agent_run_id
 
     async def finish_stage(self, agent_run_id: str, completion: StageCompletion) -> None:
         await self._call("iacode_agent_runtime_finish_stage", {
@@ -204,9 +227,19 @@ class _WorkflowEffects:
             "name": name,
             "arguments": arguments,
         })
+        self.requests[tool_request_id] = {"agentRunId": agent_run_id, "name": name,
+                                          "arguments": dict(arguments)}
 
     async def wait_for_tool(self, tool_request_id: str,
                             timeout_seconds: int) -> ToolResult | None:
+        request = self.requests.get(tool_request_id)
+        stage = (self.stages_by_agent_run.get(str(request["agentRunId"]))
+                 if request else None)
+        if request is not None and stage is not None and stage.sandbox_policy:
+            return await self._execute_in_sandbox(tool_request_id, request, stage,
+                                                  timeout_seconds)
+        # Gate 2's path, unchanged: a stage with no sandbox policy has its tools answered from
+        # outside, through the API's tool-result endpoint and this workflow's signal.
         reference = self.workflow_ref
         reference.awaiting = tool_request_id
         try:
@@ -224,6 +257,81 @@ class _WorkflowEffects:
         if reference.cancel_requested and tool_request_id not in reference.results:
             return None
         return ToolResult.from_dict(reference.results[tool_request_id])
+
+    async def _execute_in_sandbox(self, tool_request_id: str, request: dict[str, Any],
+                                  stage: StagePlan, timeout_seconds: int) -> ToolResult | None:
+        """Dispatch a tool request to the sandbox, persist its result, and resume.
+
+        The sandbox's answer is an activity result: Temporal delivers it durably, so there is no
+        signal to lose. It is recorded through the same store validation the API's tool-result
+        endpoint uses, and the stored result is what resumes the engine. A cancellation cancels the
+        activity, which stops every process the tool started before the run records that it was
+        cancelled.
+        """
+        reference = self.workflow_ref
+        payload = {
+            "contractVersion": SANDBOX_CONTRACT_VERSION,
+            "toolRequestId": tool_request_id,
+            "runId": self.plan.run_id,
+            "agentRunId": request["agentRunId"],
+            "agent": stage.agent,
+            "tool": request["name"],
+            "arguments": request["arguments"],
+            "policy": stage.sandbox_policy,
+            "workspace": dict(self.plan.workspace) or {"kind": "empty"},
+        }
+        handle = workflow.start_activity(
+            SANDBOX_EXECUTE_ACTIVITY, payload, task_queue=SANDBOX_TASK_QUEUE,
+            schedule_to_close_timeout=timedelta(seconds=timeout_seconds),
+            heartbeat_timeout=SANDBOX_HEARTBEAT_TIMEOUT,
+            cancellation_type=ActivityCancellationType.WAIT_CANCELLATION_COMPLETED,
+            retry_policy=RetryPolicy(initial_interval=timedelta(seconds=2),
+                                     maximum_interval=timedelta(seconds=30),
+                                     maximum_attempts=3))
+        reference.awaiting = tool_request_id
+        try:
+            await workflow.wait_condition(lambda: handle.done() or reference.cancel_requested)
+            if not handle.done():
+                handle.cancel()
+                with contextlib.suppress(ActivityError, asyncio.CancelledError):
+                    await handle
+                return None
+            try:
+                body = await handle
+                result = dict(body["agentResult"])
+            except ActivityError as error:
+                # The sandbox could not answer at all - its service down past the retries, or the
+                # schedule exhausted. The agent receives that as a failed tool, rather than the run
+                # waiting for a result that will never come.
+                result = {"toolRequestId": tool_request_id, "status": "FAILED", "output": {},
+                          "error": f"the sandbox did not answer: {type(error.cause).__name__}",
+                          "metadata": {"executor": "sandbox",
+                                       "errorCode": "SANDBOX_UNAVAILABLE"}}
+        except asyncio.CancelledError:
+            handle.cancel()
+            raise
+        finally:
+            reference.awaiting = None
+        stored = await self._call("iacode_agent_runtime_resolve_tool_request",
+                                  {"runId": self.plan.run_id, "result": result})
+        return ToolResult.from_dict(stored)
+
+    async def release_sandboxes(self) -> None:
+        """End the run's sandbox sessions. A failure is logged; the sweeper is the backstop."""
+        if not any(stage.sandbox_policy for stage in self.plan.stages):
+            return
+        try:
+            await workflow.execute_activity(
+                SANDBOX_RELEASE_ACTIVITY, {"runId": self.plan.run_id},
+                task_queue=SANDBOX_TASK_QUEUE,
+                schedule_to_close_timeout=timedelta(minutes=5),
+                retry_policy=RetryPolicy(initial_interval=timedelta(seconds=2),
+                                         maximum_interval=timedelta(seconds=30),
+                                         maximum_attempts=5))
+        except ActivityError as error:
+            workflow.logger.warning(
+                "the run's sandbox sessions were not released; the sweeper will expire them: %s",
+                type(error.cause).__name__)
 
     def cancelled(self) -> bool:
         return self.workflow_ref.cancel_requested
@@ -314,6 +422,8 @@ class AgentRunWorkflow:
             # leaving the run RUNNING for ever.
             outcome = await self._unrecoverable(plan, effects, error)
 
+        # The run is over, whatever the outcome: its sandbox goes with it.
+        await effects.release_sandboxes()
         if outcome.state != str(RunState.SUCCEEDED):
             await effects.cancel_pending_tools()
         self.state = outcome.state

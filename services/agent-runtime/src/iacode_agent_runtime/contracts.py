@@ -52,6 +52,10 @@ class StagePlan:
     prompt_template_version: str
     prompt_template_hash: str
     default_route: str | None = None
+    #: The canonical sandbox policy this stage's tool requests execute under, frozen from the
+    #: agent's profile when the run is created. ``None`` means the stage's tools are answered from
+    #: outside, as in Gate 2; the runtime reads nothing else out of it.
+    sandbox_policy: str | None = None
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -69,6 +73,7 @@ class StagePlan:
             "promptTemplateVersion": self.prompt_template_version,
             "promptTemplateHash": self.prompt_template_hash,
             "defaultRoute": self.default_route,
+            "sandboxPolicy": self.sandbox_policy,
         }
 
     @classmethod
@@ -88,6 +93,7 @@ class StagePlan:
             prompt_template_version=str(payload["promptTemplateVersion"]),
             prompt_template_hash=str(payload["promptTemplateHash"]),
             default_route=payload.get("defaultRoute"),
+            sandbox_policy=payload.get("sandboxPolicy"),
         )
 
 
@@ -113,6 +119,10 @@ class RunPlan:
     correlation_id: str | None = None
     title: str | None = None
     metadata: dict[str, str] = field(default_factory=dict)
+    #: Where the run's sandbox workspace comes from: ``{"kind": "empty"}`` or an authorised
+    #: snapshot, ``{"kind": "snapshot", "artifactId": ..., "checksum": ...}``. Opaque here; the
+    #: sandbox validates it.
+    workspace: dict[str, str] = field(default_factory=dict)
 
     def stage(self, index: int) -> StagePlan:
         for stage in self.stages:
@@ -137,6 +147,7 @@ class RunPlan:
             "correlationId": self.correlation_id,
             "title": self.title,
             "metadata": dict(self.metadata),
+            "workspace": dict(self.workspace),
         }
 
     @classmethod
@@ -154,6 +165,8 @@ class RunPlan:
             correlation_id=payload.get("correlationId"),
             title=payload.get("title"),
             metadata=dict(payload.get("metadata") or {}),
+            workspace={str(key): str(value)
+                       for key, value in (payload.get("workspace") or {}).items()},
         )
 
 

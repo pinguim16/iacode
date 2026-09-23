@@ -23,6 +23,7 @@ first for no gain.
 from __future__ import annotations
 
 import asyncio
+import uuid
 from dataclasses import dataclass, field
 from datetime import UTC, datetime
 from pathlib import Path
@@ -44,7 +45,8 @@ from iacode_contracts.agent_runtime import (
     ToolRequestView,
     ToolResultSubmission,
 )
-from iacode_persistence.models import AgentRun, ModelCall, Project, Task, TaskRun
+from iacode_contracts.sandbox import ToolExecutionView
+from iacode_persistence.models import AgentRun, ModelCall, Project, Task, TaskRun, ToolCall
 from sqlalchemy import func, select
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
@@ -145,7 +147,9 @@ class AgentRuntimeService:
                 prompt_template_version=profile.template.version,
                 prompt_template_hash=profile.template.content_hash,
                 default_route=profile.default_route,
+                sandbox_policy=profile.sandbox_policy,
             ))
+        workspace = await self._workspace_for(request, stages)
 
         if request.idempotencyKey:
             existing = await self._run_by_idempotency_key(request.idempotencyKey)
@@ -180,6 +184,7 @@ class AgentRuntimeService:
                     budget_used=BudgetLedger(budget=budget).to_dict(),
                     correlation_id=correlation_id,
                     metadata_=dict(request.metadata),
+                    workspace=dict(workspace),
                 ))
         except IntegrityError:
             # Two concurrent creations shared an idempotency key. The row the first one wrote is
@@ -206,6 +211,7 @@ class AgentRuntimeService:
             correlation_id=correlation_id,
             title=title,
             metadata=dict(request.metadata),
+            workspace=dict(workspace),
         )
         await self.store.append_event(_created_event(plan))
         record = await self.store.load_run(str(run_id))
@@ -233,8 +239,10 @@ class AgentRuntimeService:
                 select(AgentRun).where(AgentRun.task_run_id == row.id)
                 .order_by(AgentRun.stage_index))).scalars().all()
             usage = await self._usage_for(session, [stage.id for stage in stage_rows])
+            executions = await self._executions_for(session, [stage.id for stage in stage_rows])
         requests = await self.store.list_tool_requests(run_id)
-        return self._detail(row, task, stage_rows, requests, usage)
+        detail = self._detail(row, task, stage_rows, requests, usage)
+        return detail.model_copy(update={"toolExecutions": executions})
 
     async def list_runs(self, limit: int = 25) -> list[AgentRunDetail]:
         async with self.session_factory() as session:
@@ -302,6 +310,39 @@ class AgentRuntimeService:
 
     # -- internals ---------------------------------------------------------------------------------
 
+    async def _workspace_for(self, request: CreateAgentRunRequest,
+                             stages: list[StagePlan]) -> dict[str, str]:
+        """Where the run's sandbox workspace comes from, checked before the run exists.
+
+        A run whose stages have no sandbox policy has no workspace. A run that names a snapshot must
+        name an artifact that is an authorised workspace snapshot; anything else is refused here,
+        with the run not created, rather than discovered by the sandbox on the first tool call.
+        """
+        if not request.workspaceSnapshot:
+            return {"kind": "empty"} if any(stage.sandbox_policy for stage in stages) else {}
+        from iacode_contracts.sandbox import WORKSPACE_SNAPSHOT_ARTIFACT_KIND
+        from iacode_persistence.models import Artifact
+
+        try:
+            identifier = uuid.UUID(request.workspaceSnapshot)
+        except ValueError:
+            identifier = None
+        row = None
+        if identifier is not None:
+            async with self.session_factory() as session:
+                row = await session.get(Artifact, identifier)
+        if row is None or row.kind != WORKSPACE_SNAPSHOT_ARTIFACT_KIND:
+            raise AgentRuntimeError(
+                AgentRuntimeErrorType.INVALID_REQUEST,
+                f"{request.workspaceSnapshot!r} is not an authorised workspace snapshot",
+                details={"workspaceSnapshot": request.workspaceSnapshot})
+        if not any(stage.sandbox_policy for stage in stages):
+            raise AgentRuntimeError(
+                AgentRuntimeErrorType.INVALID_REQUEST,
+                f"team {request.team!r} executes no tool, so it has no workspace to provision",
+                details={"team": request.team})
+        return {"kind": "snapshot", "artifactId": str(row.id), "checksum": row.checksum_sha256}
+
     async def _default_project(self):
         async with self.session_factory() as session, session.begin():
             row = (await session.execute(
@@ -332,7 +373,33 @@ class AgentRuntimeService:
             route=row.route, model=row.model_override,
             correlation_id=row.correlation_id or correlation_id,
             title=(task.title if task else None),
-            metadata={str(k): str(v) for k, v in (row.metadata_ or {}).items()})
+            metadata={str(k): str(v) for k, v in (row.metadata_ or {}).items()},
+            workspace={str(k): str(v) for k, v in (row.workspace or {}).items()})
+
+    @staticmethod
+    async def _executions_for(session: AsyncSession,
+                              agent_run_ids: list[Any]) -> list[ToolExecutionView]:
+        """What the sandbox executed for these agent runs, read from ``tool_calls``.
+
+        The runtime executes nothing; it reads the execution record the sandbox wrote, for the
+        operational page. The record carries no output, so neither does the view.
+        """
+        if not agent_run_ids:
+            return []
+        rows = (await session.execute(
+            select(ToolCall).where(ToolCall.agent_run_id.in_(agent_run_ids))
+            .order_by(ToolCall.created_at))).scalars().all()
+        return [
+            ToolExecutionView(
+                toolRequestId=str(row.tool_request_id or ""), tool=row.tool_name,
+                status=row.status, durationMs=row.latency_ms,
+                sandboxSession=(str(row.sandbox_session_id).replace("-", "")[:12]
+                                if row.sandbox_session_id else None),
+                exitCode=row.exit_code, timedOut=row.timed_out, truncated=row.truncated,
+                errorCode=row.error_code, summary=(row.summary or "")[:240],
+                createdAt=_iso(row.created_at))
+            for row in rows
+        ]
 
     @staticmethod
     async def _usage_for(session: AsyncSession, agent_run_ids: list[Any]) -> dict[str, Any]:

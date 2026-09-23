@@ -20,8 +20,11 @@ ROOT = repository_root()
 
 #: The four the Gate needs to prove the runtime. A profile for a capability this Gate does not
 #: exercise would be configuration with nothing behind it.
-DECLARED_AGENTS = {"engineering-lead", "generalist", "planner", "reviewer"}
-DECLARED_TEAMS = {"single-agent", "planner-reviewer"}
+#: The roles and teams the repository declares. GATE 2 declared the first four roles and two
+#: teams; GATE 3 adds the two roles that execute tools in a sandbox and the team that uses them.
+DECLARED_AGENTS = {"engineering-lead", "generalist", "planner", "reviewer", "developer",
+                   "code-reviewer"}
+DECLARED_TEAMS = {"single-agent", "planner-reviewer", "coding"}
 
 
 def registry() -> AgentRegistry:
@@ -37,7 +40,7 @@ class AgentProfileContractTests:
         assert set(summary) == {
             "agent", "name", "role", "description", "version", "defaultRoute", "maxTurns",
             "allowedActions", "promptTemplate", "promptTemplateVersion", "promptTemplateHash",
-            "enabled"}
+            "enabled", "sandboxPolicy"}
         assert summary["version"]
         assert summary["maxTurns"] >= 1
 
@@ -213,3 +216,41 @@ def test_an_absent_template_is_refused(tmp_path) -> None:
     with pytest.raises(AgentRuntimeError) as raised:
         load_template(tmp_path, "missing.v1.md")
     assert raised.value.error_type is AgentRuntimeErrorType.PROFILE_NOT_FOUND
+
+
+class SandboxProfileTests:
+    """GATE 3: a role given a tool names the sandbox policy that executes it."""
+
+    def test_the_developer_and_the_reviewer_name_their_policies(self) -> None:
+        instance = registry()
+        assert instance.agent("developer").sandbox_policy == "developer"
+        assert instance.agent("code-reviewer").sandbox_policy == "reviewer"
+        for agent in ("planner", "reviewer", "generalist", "engineering-lead"):
+            assert instance.agent(agent).sandbox_policy is None
+            assert instance.agent(agent).allowed_actions == ()
+
+    def test_the_code_reviewer_is_given_no_writing_tool(self) -> None:
+        actions = set(registry().agent("code-reviewer").allowed_actions)
+        assert not actions & {"filesystem.write", "filesystem.apply_patch", "shell.exec",
+                              "git.add", "git.commit"}
+
+    def test_a_profile_with_tools_and_no_policy_is_refused(self, tmp_path) -> None:
+        import json
+        import shutil
+
+        root = tmp_path
+        shutil.copytree(repository_root() / "agents", root / "agents")
+        path = root / "agents" / "profiles" / "developer.json"
+        document = json.loads(path.read_text(encoding="utf-8"))
+        document.pop("sandboxPolicy")
+        path.write_text(json.dumps(document), encoding="utf-8")
+        from iacode_agent_runtime.profiles import load_agent_profile
+
+        with pytest.raises(AgentRuntimeError, match="names no sandboxPolicy"):
+            load_agent_profile(root, path)
+
+    def test_the_coding_team_is_planner_developer_reviewer(self) -> None:
+        team = registry().team("coding")
+        assert [stage.agent for stage in team.stages] == ["planner", "developer",
+                                                          "code-reviewer"]
+        assert team.stages[2].inputs == ("task", "plan", "change")

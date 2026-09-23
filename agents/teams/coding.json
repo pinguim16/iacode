@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "1.0.0",
+  "team": "coding",
+  "name": "Planner, developer and code reviewer",
+  "description": "A planner turns the task into a plan, a developer carries it out in the run's sandbox and commits, and a code reviewer inspects the result read-only. Three agents, in order, sharing one workspace that belongs to the run.",
+  "version": "1.0.0",
+  "enabled": true,
+  "stages": [
+    {
+      "name": "plan",
+      "agent": "planner",
+      "inputs": [
+        "task"
+      ],
+      "outputName": "plan"
+    },
+    {
+      "name": "develop",
+      "agent": "developer",
+      "inputs": [
+        "task",
+        "plan"
+      ],
+      "outputName": "change"
+    },
+    {
+      "name": "review",
+      "agent": "code-reviewer",
+      "inputs": [
+        "task",
+        "plan",
+        "change"
+      ],
+      "outputName": "review"
+    }
+  ]
+}

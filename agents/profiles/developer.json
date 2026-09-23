@@ -1,0 +1,27 @@
+{
+  "schemaVersion": "1.0.0",
+  "agent": "developer",
+  "name": "Developer",
+  "role": "developer",
+  "description": "Changes a repository to satisfy the task: reads it, edits it, runs its tests and commits the result, all inside the run's own sandbox. It has no remote, no network and no authority outside its workspace.",
+  "version": "1.0.0",
+  "promptTemplate": "agents/prompts/developer.v1.md",
+  "defaultRoute": null,
+  "maxTurns": 12,
+  "allowedActions": [
+    "filesystem.list",
+    "filesystem.read",
+    "filesystem.search",
+    "filesystem.write",
+    "filesystem.apply_patch",
+    "shell.exec",
+    "git.status",
+    "git.diff",
+    "git.log",
+    "git.show",
+    "git.add",
+    "git.commit"
+  ],
+  "sandboxPolicy": "developer",
+  "enabled": true
+}

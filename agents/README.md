@@ -1,6 +1,6 @@
 # Agent definitions
 
-Delivered by `GATE 2 — AGENT RUNTIME`. This directory is the declared configuration the agent
+Delivered by `GATE 2 — AGENT RUNTIME` and extended by `GATE 3 — SANDBOX`. This directory is the declared configuration the agent
 runtime loads: who the agents are, what teams they form, and the versioned prompts that give each
 role its instructions.
 
@@ -26,31 +26,39 @@ A **prompt template** carries its version in its file name, and the runtime reco
 its bytes on every agent run. Editing a template without renaming it therefore changes the recorded
 hash, which is how a run that behaved differently can be traced to the definition that produced it.
 
-## The four agents
+## The agents
 
-| Agent | What it does |
-|---|---|
-| `generalist` | Answers a single task end to end. Proves one agent against a real model. |
-| `planner` | Turns a task into a short ordered plan. Plans only. |
-| `reviewer` | Judges the previous stage's output against the task. |
-| `engineering-lead` | Consolidates what earlier stages produced into one answer. |
+| Agent | Gate | What it does | Tools |
+|---|---|---|---|
+| `generalist` | 2 | Answers a single task end to end. Proves one agent against a real model. | none |
+| `planner` | 2 | Turns a task into a short ordered plan. Plans only. | none |
+| `reviewer` | 2 | Judges the previous stage's output against the task. | none |
+| `engineering-lead` | 2 | Consolidates what earlier stages produced into one answer. | none |
+| `developer` | 3 | Changes a repository in the run's sandbox: reads, edits, runs tests, commits locally. | the `developer` sandbox policy |
+| `code-reviewer` | 3 | Inspects what the developer changed, read-only, and approves or asks for changes. | the `reviewer` sandbox policy |
 
-Four, and no more. A profile for a capability this Gate does not exercise would be configuration
-with nothing behind it.
+A role is given a tool only together with the **sandbox policy** that executes it
+(`sandboxPolicy`), and the loader refuses a profile that permits a tool and names no policy. What
+executing a tool may cause is decided by that policy in
+[`.iacode/policies/sandbox-policy.json`](../.iacode/policies/sandbox-policy.json), never by the
+profile and never by the request ([ADR-0027](../docs/adr/ADR-0027-tool-execution-policy.md)). The four
+roles `GATE 2` declared still have no tool.
 
-## The two teams
+## The teams
 
 | Team | Stages |
 |---|---|
 | `single-agent` | `generalist` |
 | `planner-reviewer` | `planner` then `reviewer`, with the plan reaching the reviewer as a labelled artifact |
+| `coding` | `planner`, then `developer`, then `code-reviewer`, sharing the run's one sandbox workspace |
 
-## What is deliberately absent
+## Where tools run
 
-**No tool is permitted to any builtin profile.** `allowedActions` is empty everywhere, because Gate
-2 executes nothing: a tool request is persisted, the run pauses at `WAITING_FOR_TOOL`, and Gate 3's
-sandbox is what will execute one. The tool lifecycle is proved with fixtures rather than by giving a
-real agent a real tool it has nowhere to run.
+From `GATE 3` a tool request from a stage with a sandbox policy is executed automatically inside
+the run's own disposable container by the sandbox service
+([docs/runbooks/SANDBOX.md](../docs/runbooks/SANDBOX.md)), and the result returns to the agent as
+labelled data. Nothing is ever executed on the host. A stage without a sandbox policy keeps `GATE 2`'s
+behaviour: the request is recorded, the run pauses, and a result arrives through the API.
 
 Operating the runtime: [docs/runbooks/AGENT-RUNTIME.md](../docs/runbooks/AGENT-RUNTIME.md). The
 boundary decision: [ADR-0021](../docs/adr/ADR-0021-tool-execution-boundary.md).

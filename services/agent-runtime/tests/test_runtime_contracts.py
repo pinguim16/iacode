@@ -148,3 +148,28 @@ class PayloadLimitTests:
 
     def test_a_payload_within_the_limit_passes(self) -> None:
         enforce_size({"a": "b"}, 1024, what="the tool arguments")
+
+
+class SandboxPlanContractTests:
+    """GATE 3: a stage carries the sandbox policy its tools execute under, and a run its workspace."""
+
+    def test_the_sandbox_policy_and_the_workspace_round_trip(self) -> None:
+        sandboxed = dataclasses.replace(stage(allowed_actions=("filesystem.read",)),
+                                        sandbox_policy="developer")
+        plan = dataclasses.replace(
+            plan_for(sandboxed),
+            workspace={"kind": "snapshot", "artifactId": "a1", "checksum": "0" * 64})
+        restored = RunPlan.from_dict(plan.to_dict())
+        assert restored.stage(0).sandbox_policy == "developer"
+        assert restored.workspace == {"kind": "snapshot", "artifactId": "a1",
+                                      "checksum": "0" * 64}
+
+    def test_a_gate_two_plan_still_reads_as_one(self) -> None:
+        """A plan serialised before GATE 3 has neither field and keeps Gate 2's meaning."""
+        payload = plan_for(stage()).to_dict()
+        payload.pop("workspace")
+        for item in payload["stages"]:
+            item.pop("sandboxPolicy")
+        restored = RunPlan.from_dict(payload)
+        assert restored.stage(0).sandbox_policy is None
+        assert restored.workspace == {}

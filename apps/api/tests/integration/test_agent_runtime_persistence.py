@@ -448,11 +448,15 @@ async def test_profile_bootstrap_is_idempotent(session_factory, clean_registry) 
     first = await bootstrap_registry(session_factory, clean_registry)
     second = await bootstrap_registry(session_factory, clean_registry)
 
-    assert first.agents_created == 4
-    assert first.teams_created == 2
+    # Counted from the registry rather than written down: GATE 3 declares two more roles and one
+    # more team, and a literal would have failed it for adding them (`LSN-0037`).
+    agents, teams = len(clean_registry.agents()), len(clean_registry.teams())
+    assert agents >= 4 and teams >= 2
+    assert first.agents_created == agents
+    assert first.teams_created == teams
     assert second.changed is False
-    assert second.agents_unchanged == 4
-    assert second.teams_unchanged == 2
+    assert second.agents_unchanged == agents
+    assert second.teams_unchanged == teams
 
 
 async def test_bootstrap_does_not_overwrite_a_customised_profile(session_factory,

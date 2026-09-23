@@ -20,6 +20,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import re
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
@@ -65,6 +66,9 @@ class AgentProfile:
     enabled: bool = True
     source_path: str = ""
     definition_digest: str = ""
+    #: The canonical sandbox policy that executes this role's tools. A role given a tool must name
+    #: one; the policy, not the profile, decides what executing that tool may cause.
+    sandbox_policy: str | None = None
 
     def permits(self, tool_name: str) -> bool:
         """Whether this role may ask for a tool.
@@ -89,6 +93,7 @@ class AgentProfile:
             "promptTemplateVersion": self.template.version,
             "promptTemplateHash": self.template.content_hash,
             "enabled": self.enabled,
+            "sandboxPolicy": self.sandbox_policy,
         }
 
 
@@ -203,6 +208,19 @@ def load_agent_profile(root: Path, path: Path) -> AgentProfile:
             AgentRuntimeErrorType.INVALID_REQUEST,
             f"{path.name} declares maxTurns {max_turns}, which would execute nothing",
             details={"definition": path.name})
+    sandbox_policy = payload.get("sandboxPolicy")
+    if sandbox_policy is not None and (not isinstance(sandbox_policy, str)
+                                       or not re.fullmatch(r"[a-z][a-z0-9-]{1,63}",
+                                                           sandbox_policy)):
+        raise AgentRuntimeError(
+            AgentRuntimeErrorType.INVALID_REQUEST,
+            f"{path.name} declares sandboxPolicy {sandbox_policy!r}, which is not a policy name",
+            details={"definition": path.name})
+    if actions and not sandbox_policy:
+        raise AgentRuntimeError(
+            AgentRuntimeErrorType.INVALID_REQUEST,
+            f"{path.name} permits tools but names no sandboxPolicy to execute them under",
+            details={"definition": path.name})
     profile = AgentProfile(
         agent=str(_require(payload, "agent", path)),
         name=str(_require(payload, "name", path)),
@@ -216,6 +234,7 @@ def load_agent_profile(root: Path, path: Path) -> AgentProfile:
         enabled=bool(payload.get("enabled", True)),
         source_path=str(path.relative_to(root)).replace("\\", "/"),
         definition_digest=definition_hash(payload),
+        sandbox_policy=sandbox_policy,
     )
     if profile.agent != path.stem:
         raise AgentRuntimeError(

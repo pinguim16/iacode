@@ -1,0 +1,22 @@
+{
+  "schemaVersion": "1.0.0",
+  "agent": "code-reviewer",
+  "name": "Code reviewer",
+  "role": "code-reviewer",
+  "description": "Reviews what the developer changed by inspecting the run's workspace, its history and its diff, and approves it or says precisely what is wrong. It reads; it cannot write, run a command or commit.",
+  "version": "1.0.0",
+  "promptTemplate": "agents/prompts/code-reviewer.v1.md",
+  "defaultRoute": null,
+  "maxTurns": 6,
+  "allowedActions": [
+    "filesystem.list",
+    "filesystem.read",
+    "filesystem.search",
+    "git.status",
+    "git.diff",
+    "git.log",
+    "git.show"
+  ],
+  "sandboxPolicy": "reviewer",
+  "enabled": true
+}
