@@ -357,7 +357,8 @@ def result_of(identifier: str, status: str, **output) -> ToolResult:
 
 async def test_a_request_records_the_executor_that_owns_it(store, run) -> None:
     sandboxed = await request_owned_by(store, run, SANDBOX)
-    requests = {item.tool_request_id: item for item in await store.list_tool_requests(run["run_id"])}
+    listed = await store.list_tool_requests(run["run_id"])
+    requests = {item.tool_request_id: item for item in listed}
     assert requests[sandboxed].executor == SANDBOX
 
 

@@ -43,9 +43,14 @@ def _vocabulary(values: tuple[str, ...]) -> str:
 def upgrade() -> None:
     op.add_column("tool_requests", sa.Column(
         "executor", sa.String(length=16), server_default=TOOL_EXECUTOR_EXTERNAL, nullable=False))
+    requests = sa.table("tool_requests", sa.column("id", sa.UUID()),
+                        sa.column("executor", sa.String()))
+    executions = sa.table("tool_calls", sa.column("tool_request_id", sa.UUID()))
     op.execute(
-        f"UPDATE tool_requests SET executor = '{TOOL_EXECUTOR_SANDBOX}' WHERE id IN "
-        "(SELECT tool_request_id FROM tool_calls WHERE tool_request_id IS NOT NULL)")
+        requests.update()
+        .where(requests.c.id.in_(sa.select(executions.c.tool_request_id)
+                                 .where(executions.c.tool_request_id.is_not(None))))
+        .values(executor=TOOL_EXECUTOR_SANDBOX))
     op.create_check_constraint(
         "executor_is_known", "tool_requests",
         "executor IN " + _vocabulary(TOOL_REQUEST_EXECUTORS))

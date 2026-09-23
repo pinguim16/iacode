@@ -98,8 +98,9 @@ class AgentEnvelope:
         return payload
 
 
-#: The field each kind carries besides ``version`` and ``kind``. The parser requires exactly this and
-#: :func:`envelope_contract` states it, so the prompt and the parser describe one protocol.
+#: The field each kind carries besides ``version`` and ``kind``. The parser requires exactly
+#: this and :func:`envelope_contract` states it, so the prompt and the parser describe one
+#: protocol.
 KIND_FIELD: dict[EnvelopeKind, str] = {
     EnvelopeKind.FINAL: "content",
     EnvelopeKind.MESSAGE: "content",
