@@ -1,0 +1,102 @@
+{
+  "schemaVersion": "1.0.0",
+  "artifact": "FINDINGS",
+  "checkpoint": "GATE-3-CP-0002",
+  "milestone": "M1",
+  "subjectCheckpoint": "GATE-3-CP-0001",
+  "note": "The findings this fresh-session audit raises about the sealed M1 Gates. M1-F-003 is HIGH and makes the verdict REWORK_REQUIRED: two frozen criteria fail on it (AM-01, AM-05). Following the repository's convention, the corrective delivery registers this audit in .iacode/policies/audit-registry.json when it opens (GATE-3-CP-0003, NEXT.md), which derives one requirement per finding into its matrix and refuses its closure while any finding is open; a new fresh-session audit then judges the corrected milestone.",
+  "findings": [
+    {
+      "id": "M1-F-003",
+      "severity": "HIGH",
+      "status": "OPEN",
+      "disposition": "REWORK_REQUIRED",
+      "correctiveCheckpoint": "GATE-3-CP-0003",
+      "title": "The published history cannot validate GATE-1-CP-0001, so every clean clone of the remote fails the mandatory tests gate",
+      "gates": [
+        "GATE 1",
+        "GATE 3"
+      ],
+      "observed": "The full verification of a fresh clone of https://github.com/pinguim16/iacode.git passed 30 of 31 stages and failed gate:tests (cmd-0023): test_every_sealed_checkpoint_validates_from_its_own_tag fails for GATE-1-CP-0001, 'COMMANDS.jsonl:84: the record claims a clean tree at b59d66f9f3f9 but the input scripts/development-ledger/validate_checkpoint.py does not exist there'. Validating every sealed M1 checkpoint from a clone of the remote reproduces it on its own (cmd-0029, SEALED-SUBJECTS-PUBLISHED.json, 4/5). In this working repository the same checkpoint validates (cmd-0010, 5/5).",
+      "rootCause": "GATE-1-CP-0001's sealed ledger record cmd-0086 names commit b59d66f9f3f9add2ae9dcd1cd4609fb4a1bf0b55 — a first version of the Gate 1 closure commit, replaced before the history was published — and binds its inputs to that commit. No published reference reaches it: it exists only as an unreachable object in this machine's object store. A clone over a transport (git clone of the remote, git clone --no-local) does not carry it; a clone of the local path with --no-hardlinks copies the object store wholesale and does. Every control that checks sealed history — test_every_sealed_checkpoint_validates_from_its_own_tag, the mirror audit's MIR-016, the Gate batteries — clones the local path, so none of them could see it, and a git gc would make the working repository fail the same way.",
+      "impact": "A reviewer or a second tool that clones the public repository gets a red mandatory gate and a sealed M1 checkpoint that does not validate; the milestone cannot be verified from what was published. Two frozen M1 criteria fail on it: AM-01 (the Gates sealed and valid) and AM-05 (a clean clone is green).",
+      "severityRationale": "HIGH, for the reason the repository already applied twice: G1-F-007 (GATE-0-CP-0001 did not validate from its own tag) and G2-F-013 (a sealed checkpoint never valid from its own tag) were both HIGH. It is also a guardrail failure: the control that exists to prevent this class clones in a way that cannot see it.",
+      "requiredCorrection": "Make the sealed content verifiable from the published history without rewriting it — a published reference that preserves the commit the record names — and repair the guardrail so sealed history is checked through a transport clone that carries only published objects (git clone --no-local, or the remote itself), with a test that fails on an unreachable object; then re-run the clean clone of the remote.",
+      "evidence": [
+        "file:docs/checkpoints/GATE-3-CP-0002/CLEAN-CLONE-REPORT.json",
+        "file:docs/checkpoints/GATE-3-CP-0002/SEALED-SUBJECTS-PUBLISHED.json",
+        "file:docs/checkpoints/GATE-1-CP-0001/COMMANDS.jsonl",
+        "file:tests/test_gate1_model_gateway.py"
+      ]
+    },
+    {
+      "id": "M1-F-001",
+      "severity": "MEDIUM",
+      "status": "OPEN",
+      "disposition": "CARRIED_TO_THE_CORRECTIVE_DELIVERY",
+      "correctiveCheckpoint": "GATE-3-CP-0003",
+      "title": "A model is never shown the shape of a tool request, and the operator's configured live model cannot make one",
+      "gates": [
+        "GATE 2",
+        "GATE 3"
+      ],
+      "observed": "Four live coding runs through the deployed stack. With the configured model (openai:gpt-4o-mini) the developer stage failed twice out of two with INVALID_AGENT_OUTPUT: the tool arguments were written at the top of the envelope ('command', 'cwd', 'timeoutSeconds') and, after the one repair, under 'args'. With an explicitly chosen model (openai:gpt-4.1-mini) two tool requests were valid and executed in the sandbox, then the same failure ended the run ('parameters', then 'args'). No run completed the coding task.",
+      "rootCause": "runtime_instructions() describes a TOOL_REQUEST only as '\"tool\" carries its name and arguments' and never names the 'name' and 'arguments' keys of the tool object; repair_instruction() restates the kinds but not the shape. envelope_schema() documents itself as 'the documentation of what the prompt asks for' when native structured output is not requested, but it reaches a model only as a structured-output schema, which the runtime requests only for a model whose capability is known — and every capability of the configured provider is UNKNOWN. So a model is asked for a shape it is never shown.",
+      "impact": "The integration of the four Gates is correct and fails safe: the strict parser refused every malformed request and nothing malformed was executed. But no live coding run can be relied on to use its tools, which is the purpose of the V0 the next two Gates complete.",
+      "severityRationale": "MEDIUM, not HIGH: every frozen M1 criterion holds (the cross-gate crossing itself was executed live, cmd-0016), the failure is a classified, bounded refusal with no isolation or integrity impact, a more capable model already produced valid requests, and the repair is a change to the instructions the runtime sends. The counter-argument — that the product's central flow does not complete with the configured model — is recorded here so a reviewer can weigh it; it is why the finding is registered as mandatory corrective work instead of left as backlog.",
+      "requiredCorrection": "The runtime states the exact envelope of every kind, including the tool object's keys, whenever native structured output is not requested, and the repair instruction restates the shape; a live coding run with the configured model then executes its tools.",
+      "evidence": [
+        "file:docs/checkpoints/GATE-3-CP-0002/CROSS-GATE-LIVE-ATTEMPT-2.json",
+        "file:docs/checkpoints/GATE-3-CP-0002/CROSS-GATE-LIVE-ATTEMPT-3.json",
+        "file:docs/checkpoints/GATE-3-CP-0002/CROSS-GATE-LIVE.json",
+        "file:services/agent-runtime/src/iacode_agent_runtime/context.py",
+        "file:services/agent-runtime/src/iacode_agent_runtime/protocol.py"
+      ]
+    },
+    {
+      "id": "M1-F-002",
+      "severity": "MEDIUM",
+      "status": "OPEN",
+      "disposition": "CARRIED_TO_THE_CORRECTIVE_DELIVERY",
+      "correctiveCheckpoint": "GATE-3-CP-0003",
+      "title": "The API accepts a tool result for a request the sandbox is executing, and the agent receives it instead of the sandbox's",
+      "gates": [
+        "GATE 2",
+        "GATE 3"
+      ],
+      "observed": "Deterministic timeout scenario on the stack. Null control: the developer receives the sandbox's TIMED_OUT result and answers TIMEOUT-SEEN. Mutation: while the sandbox runs the command, POST /api/v1/agent-runs/{run}/tool-results with a SUCCEEDED result for the same request is answered 200; the stored result is the forged one, the sandbox's own execution record still says TIMED_OUT, and the developer answers TIMEOUT-NOT-SEEN.",
+      "rootCause": "resolve_tool_request() accepts any PENDING request of the run whatever its executor, and _execute_in_sandbox() resumes the agent with the stored result, which answers a second delivery with the first one. Nothing records that the executor of a sandboxed stage's request is the sandbox.",
+      "impact": "Under the M1 trust model — an unauthenticated API bound to the loopback interface, one operator — a local process can make an agent see a fabricated tool result. Nothing runs on the host and no isolation is crossed; the sandbox's real execution stays recorded in tool_calls. The integrity of what an agent was told is what is lost, and the quality evidence the next Gate builds on the same boundary would inherit it.",
+      "severityRationale": "MEDIUM: a real integrity gap on a boundary the next Gates depend on, reachable only from the local machine, with no isolation or credential impact.",
+      "requiredCorrection": "A tool result for a request of a stage with a sandbox policy is accepted only from the sandbox: the API refuses it, and the refusal is attacked with a null control.",
+      "evidence": [
+        "file:docs/checkpoints/GATE-3-CP-0002/FORGED-RESULT-PROBE.json",
+        "file:apps/api/src/iacode_api/routes/agent_runs.py",
+        "file:services/agent-runtime/src/iacode_agent_runtime/persistence.py",
+        "file:services/orchestrator/src/iacode_orchestrator/workflows/agent_run.py"
+      ]
+    }
+  ],
+  "observations": [
+    {
+      "id": "M1-O-001",
+      "title": "Two sealed checkpoints do not pass the validator of their own revision",
+      "detail": "GATE-0-CP-0001 (inputs under the ignored var/ directory, G1-F-007) and GATE-2-CP-0001 (sealed at BLOCKED with the symbolic HEAD, G2-F-013). Both were found and repaired in the tooling by the Gates that followed, and the current validator accepts both from their tags, which is the project's rule and is what test_every_sealed_checkpoint_validates_from_its_own_tag asserts. Recorded, not raised."
+    },
+    {
+      "id": "M1-O-002",
+      "title": "Open risks of a sealed Gate are not carried by the next one",
+      "detail": "GATE-3-CP-0001's register closes R-G2-002 and says nothing of R-G2-003 to R-G2-013, which GATE-2-CP-0002 left open. This audit's RISKS.md consolidates every open risk of the milestone. R-G2-009 — a credential exposed in a chat transcript outside the repository, HIGH until the operator rotates it — cannot be verified or closed from the repository and is handed to the owner."
+    },
+    {
+      "id": "M1-O-003",
+      "title": "A fresh installation starts with an empty model catalog",
+      "detail": "After the verification's fresh-install stage the first live run failed with GATEWAY_ERROR (cmd-0013) until the catalog was synchronised, which the gateway smoke otherwise does. The runbook's operator step; recorded as backlog."
+    },
+    {
+      "id": "M1-O-004",
+      "title": "R-G3-001 is bounded by ten proved controls",
+      "detail": "The sandbox controller holds the engine socket; no untrusted input reaches an engine operation (R-G3-001-REVIEW.json 10/10, attack M1-G). Disposition ACCEPTED_LOCAL_ARCHITECTURAL_RISK for the local MVP, with a rootless engine or a restricted socket proxy as backlog."
+    }
+  ]
+}

@@ -1,0 +1,107 @@
+{
+  "schemaVersion": "3.2.0",
+  "checks": {
+    "build": {
+      "status": "PASS",
+      "evidence": [
+        "command:cmd-0040",
+        "command:cmd-0043",
+        "command:cmd-0044"
+      ],
+      "justification": null
+    },
+    "unitTests": {
+      "status": "PASS",
+      "evidence": [
+        "file:TESTS.json",
+        "command:cmd-0035"
+      ],
+      "justification": "Green in this working repository. In a clean clone of the published remote the control-plane suite has one failure, test_every_sealed_checkpoint_validates_from_its_own_tag on GATE-1-CP-0001 (cmd-0023, finding M1-F-003)."
+    },
+    "integrationTests": {
+      "status": "PASS",
+      "evidence": [
+        "file:TESTS.json",
+        "command:cmd-0027"
+      ],
+      "justification": null
+    },
+    "e2e": {
+      "status": "PASS",
+      "evidence": [
+        "file:TESTS.json",
+        "command:cmd-0028",
+        "command:cmd-0016",
+        "command:cmd-0012"
+      ],
+      "justification": null
+    },
+    "lint": {
+      "status": "PASS",
+      "evidence": [
+        "command:cmd-0045"
+      ],
+      "justification": null
+    },
+    "staticAnalysis": {
+      "status": "PASS",
+      "evidence": [
+        "command:cmd-0036"
+      ],
+      "justification": null
+    },
+    "security": {
+      "status": "PASS",
+      "evidence": [
+        "file:M1-INTERNAL-RED-TEAM.json",
+        "command:cmd-0034",
+        "command:cmd-0009",
+        "command:cmd-0011"
+      ],
+      "justification": null
+    },
+    "documentation": {
+      "status": "PASS",
+      "evidence": [
+        "file:REVIEW-REPORT.md",
+        "file:MILESTONE-REPORT.md",
+        "file:DECISIONS.md"
+      ],
+      "justification": null
+    },
+    "checkpointValidation": {
+      "status": "PASS",
+      "evidence": [
+        "file:VERIFICATION-REPORT.json",
+        "command:cmd-0039",
+        "command:cmd-0012"
+      ],
+      "justification": null
+    },
+    "redTeam": {
+      "status": "PASS",
+      "evidence": [
+        "file:M1-INTERNAL-RED-TEAM.json",
+        "file:RED-TEAM-REPORT.md",
+        "command:cmd-0034"
+      ],
+      "justification": null
+    },
+    "greenKeeper": {
+      "status": "PASS",
+      "evidence": [
+        "file:REWORK-LOG.jsonl",
+        "command:cmd-0035"
+      ],
+      "justification": null
+    },
+    "deliveryCompleteness": {
+      "status": "PASS",
+      "evidence": [
+        "file:COMPLETENESS-REPORT.json",
+        "command:cmd-0047"
+      ],
+      "justification": null
+    }
+  }
+}

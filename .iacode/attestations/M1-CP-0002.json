@@ -1,0 +1,22 @@
+{
+  "schemaVersion": "2.0.0",
+  "auditId": "M1-CP-0002",
+  "milestone": "M1",
+  "validationMechanism": "FRESH_SESSION_INDEPENDENT_AUDIT",
+  "crossToolValidation": "AVAILABLE",
+  "auditorRole": "milestone independent auditor",
+  "tool": "Claude Code, desktop application",
+  "provider": "Anthropic",
+  "model": "claude-opus-5-5",
+  "freshSession": true,
+  "subjectCheckpoint": "GATE-3-CP-0001",
+  "subjectCommit": "3bc8e9d8a94d44163d1af9325ad5b2272f71f8ed",
+  "auditCheckpoint": "GATE-3-CP-0002",
+  "reviewResult": "REWORK_REQUIRED",
+  "redTeamResult": "RED_TEAM_PASS",
+  "completeness": 100.0,
+  "evidenceCoverage": 100.0,
+  "testResult": "FAIL",
+  "createdAt": "2026-09-23T04:58:38Z",
+  "notes": "Fresh session of the tool, provider and model that implemented GATE 0 to GATE 3, with no memory of those runs: session independence, not cross-tool validation, and not recorded as one. Cross-tool execution is available on this machine and was not used, because the owner's mandate for this audit names the fresh-session mechanism. The audit closed at REWORK_REQUIRED: a clean clone of the published remote fails the mandatory tests gate because GATE-1-CP-0001's sealed ledger names a commit no published reference reaches (M1-F-003, HIGH), and the same checkpoint does not validate from the published history; two MEDIUM findings (M1-F-001, M1-F-002) go with it. testResult is FAIL because the clean clone's test gate failed, although every suite of this repository passed. Everything else the audit examined held: the full verification of this repository (31/31), one live run across Agent Runtime, Model Gateway and Sandbox, R-G3-001 from ten proved controls, and fourteen cross-gate attacks over a valid null-mutation control. The attestation is kept because it records the audit that happened, and milestone_status.py correctly refuses to derive a pass from it."
+}

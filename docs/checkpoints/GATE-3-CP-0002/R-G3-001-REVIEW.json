@@ -1,0 +1,116 @@
+{
+  "schemaVersion": "1.0.0",
+  "artifact": "R-G3-001-REVIEW",
+  "checkpoint": "GATE-3-CP-0002",
+  "risk": "R-G3-001",
+  "generatedAt": "2026-09-23T04:22:34Z",
+  "controls": [
+    {
+      "id": "C1",
+      "control": "the agent receives no socket",
+      "result": "PASS",
+      "observed": "containers of the stack that mount the engine socket: ['iacode-sandbox']; the worker that runs agents mounts none",
+      "evidence": [
+        "file:infra/compose/docker-compose.yml",
+        "test:test_only_the_sandbox_service_is_given_the_engine_socket"
+      ]
+    },
+    {
+      "id": "C2",
+      "control": "no child sandbox receives the socket",
+      "result": "PASS",
+      "observed": "flags the only container builder can emit that could hand a sandbox a host resource: none; the battery's M1-C inspects a real child",
+      "evidence": [
+        "file:services/sandbox/src/iacode_sandbox/backend.py",
+        "test:ContainerSpecTests"
+      ]
+    },
+    {
+      "id": "C3",
+      "control": "no ToolRequest controls engine arguments",
+      "result": "PASS",
+      "observed": "ContainerSpec fields ['name', 'image', 'session_id', 'run_id', 'policy', 'expires_at_epoch', 'cpus', 'memory_mb', 'pids', 'workspace_mb', 'tmp_mb', 'owner', 'network', 'labels'] are filled from the policy's image and resources and a generated session name; the request contract is closed to ['agent', 'agentRunId', 'arguments', 'contractVersion', 'policy', 'runId', 'tool', 'toolRequestId', 'workspace'], refused beside it by _strict; tool arguments travel as JSON on the helper's stdin",
+      "evidence": [
+        "file:services/sandbox/src/iacode_sandbox/service.py",
+        "file:services/sandbox/src/iacode_sandbox/contracts.py",
+        "test:test_the_image_decides_the_command_not_the_request"
+      ]
+    },
+    {
+      "id": "C4",
+      "control": "no public API accepts a generic engine operation",
+      "result": "PASS",
+      "observed": "the controller serves two activities (['SANDBOX_EXECUTE_ACTIVITY', 'SANDBOX_RELEASE_ACTIVITY']) and no HTTP surface; the API source names no engine client (none)",
+      "evidence": [
+        "file:services/sandbox/src/iacode_sandbox/worker.py",
+        "test:SandboxBoundaryTests"
+      ]
+    },
+    {
+      "id": "C5",
+      "control": "the controller publishes no port",
+      "result": "PASS",
+      "observed": "port bindings none; published ports none",
+      "evidence": [
+        "file:infra/compose/docker-compose.yml"
+      ]
+    },
+    {
+      "id": "C6",
+      "control": "cap_drop and no-new-privileges remain",
+      "result": "PASS",
+      "observed": "CapDrop ['ALL'], CapAdd none, SecurityOpt ['no-new-privileges:true'], Privileged False, User 'iacode'",
+      "evidence": [
+        "file:infra/compose/docker-compose.yml",
+        "file:services/sandbox/Dockerfile"
+      ]
+    },
+    {
+      "id": "C7",
+      "control": "arbitrary host mounts are impossible",
+      "result": "PASS",
+      "observed": "the controller's only mount is ['/var/run/docker.sock:/var/run/docker.sock']; the child builder emits no volume, mount or env-file flag; the battery's M1-G checks the children the engine created",
+      "evidence": [
+        "file:services/sandbox/src/iacode_sandbox/backend.py",
+        "file:infra/compose/docker-compose.yml"
+      ]
+    },
+    {
+      "id": "C8",
+      "control": "the network policy is imposed",
+      "result": "PASS",
+      "observed": "children start with --network from the spec, 'none' unless the policy grants its own internal network; declared profiles ['none']",
+      "evidence": [
+        "file:.iacode/policies/sandbox-policy.json",
+        "test:test_external_egress_fails"
+      ]
+    },
+    {
+      "id": "C9",
+      "control": "the tool policy limits operations",
+      "result": "PASS",
+      "observed": "the registry is closed (an unknown name raises ToolRejectedError), each policy names its tools, and no remote Git verb exists",
+      "evidence": [
+        "file:services/sandbox/src/iacode_sandbox/tools.py",
+        "file:.iacode/policies/sandbox-policy.json",
+        "test:SandboxPolicyTests"
+      ]
+    },
+    {
+      "id": "C10",
+      "control": "only trusted controller code talks to the engine",
+      "result": "PASS",
+      "observed": "modules that start a process: ['services/sandbox/src/iacode_sandbox/backend.py', 'services/sandbox/src/iacode_sandbox/helper.py'] (helper.py runs inside the sandbox, never in the controller); backend refuses any executable but docker and never uses a shell",
+      "evidence": [
+        "file:services/sandbox/src/iacode_sandbox/backend.py",
+        "test:test_the_backend_starts_only_the_container_client"
+      ]
+    }
+  ],
+  "passed": 10,
+  "total": 10,
+  "untrustedInputReachesEngineOperation": false,
+  "disposition": "ACCEPTED_LOCAL_ARCHITECTURAL_RISK",
+  "backlog": "Replace direct socket access by a rootless container engine or a restricted socket proxy that exposes only the create, exec, inspect, list and remove operations the backend uses.",
+  "result": "PASS"
+}

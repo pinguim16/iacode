@@ -1,0 +1,268 @@
+{
+  "schemaVersion": "1.0.0",
+  "artifact": "FINAL-M1-AUDIT-MATRIX",
+  "checkpoint": "GATE-3-CP-0002",
+  "milestone": "M1",
+  "gate": "GATE-3",
+  "subjectCheckpoint": "GATE-3-CP-0001",
+  "subjectCommit": "3bc8e9d8a94d44163d1af9325ad5b2272f71f8ed",
+  "auditMechanism": "FRESH_SESSION_INDEPENDENT_AUDIT",
+  "sameToolAsImplementer": true,
+  "createdAt": "2026-09-23T06:01:02Z",
+  "note": "The rows are the criteria frozen in PLAN.md before execution. Each verdict is computed from an artifact this audit wrote by executing something.",
+  "rows": [
+    {
+      "id": "AM-01",
+      "dimension": "Four Gates sealed and valid",
+      "expectation": "Every sealed M1 checkpoint validates detached at its own canonical tag, from this repository and from a clone of the published remote.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "this repository: 5/5; published remote: 4/5, invalid there: ['GATE-1-CP-0001']",
+      "evidence": [
+        "checkpoint:SEALED-SUBJECTS.json",
+        "checkpoint:SEALED-SUBJECTS-PUBLISHED.json"
+      ],
+      "verdict": "FAIL"
+    },
+    {
+      "id": "AM-02",
+      "dimension": "Integrity and tags",
+      "expectation": "The anchored chain verifies and a moved tag or a rewritten commit is refused.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "18 anchors; every M1 tag at its anchored commit; M1-M DEFENDED (control VALID): moved GATE-2-CP-0002 tag: exit 1 INTEGRITY_INVALID; rewritten with the same tree and the tag moved (exit codes): {'GATE-2-CP-0002': 1, 'GATE-3-CP-0001 anchored, unmutated': 0, 'GATE-3-CP-0001': 1}",
+      "evidence": [
+        "checkpoint:SEALED-SUBJECTS.json",
+        "checkpoint:M1-INTERNAL-RED-TEAM.json",
+        "command:cmd-0003"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AM-03",
+      "dimension": "Remote synchronised",
+      "expectation": "origin/main and every subject tag are on the authorised remote; drift is detected.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "REMOTE_SYNC_PASS remote=origin branch=main tags=iacode-checkpoints/GATE-3-CP-0001; origin is the authorised URL; M1-N DEFENDED (control VALID): unpushed commit: exit 1; tag deleted on the remote: exit 1; remote not the authorised URL: exit 1",
+      "evidence": [
+        "command:cmd-0007",
+        "checkpoint:M1-INTERNAL-RED-TEAM.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AM-04",
+      "dimension": "Full verification",
+      "expectation": "Every stage of the full verification passes in this session.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "PASS 31/31 stages, fast=False",
+      "evidence": [
+        "checkpoint:VERIFICATION-REPORT.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AM-05",
+      "dimension": "Clean clone",
+      "expectation": "A fresh clone of the remote validates, verifies its integrity and passes the full verification.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "clone the authorised remote exit 0; validate the latest checkpoint exit 0; verify the integrity chain exit 0; validate the engineering memory exit 0; full verification in the clone exit 1",
+      "evidence": [
+        "checkpoint:CLEAN-CLONE-REPORT.json"
+      ],
+      "verdict": "FAIL"
+    },
+    {
+      "id": "AM-06",
+      "dimension": "Foundation operational",
+      "expectation": "The stack, its integration suite, infrastructure, smoke, backup, restart and fresh installation pass.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "stack=PASS, integration=PASS, infra=PASS, smoke=PASS, backup=PASS, restart=PASS, dependency-failure=PASS, fresh-install=PASS, gate:apiTests=PASS, gate:webTests=PASS",
+      "evidence": [
+        "checkpoint:VERIFICATION-REPORT.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AM-07",
+      "dimension": "Gateway functional",
+      "expectation": "The gateway suite and the live gateway smoke pass.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "gate:gatewayTests=PASS, gateway-smoke=PASS",
+      "evidence": [
+        "checkpoint:VERIFICATION-REPORT.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AM-08",
+      "dimension": "Agent Runtime functional",
+      "expectation": "The runtime suite, the live runtime smoke, durability, cancellation and deadline pass.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "gate:agentRuntimeTests=PASS, agent-runtime-smoke=PASS, agent-durability=PASS, agent-cancellation=PASS, agent-deadline=PASS",
+      "evidence": [
+        "checkpoint:VERIFICATION-REPORT.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AM-09",
+      "dimension": "Sandbox functional",
+      "expectation": "The sandbox suite, its integration and its four scenarios pass.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "gate:sandboxTests=PASS, sandbox-integration=PASS, sandbox-coding=PASS, sandbox-timeout=PASS, sandbox-cancellation=PASS, sandbox-recovery=PASS",
+      "evidence": [
+        "checkpoint:VERIFICATION-REPORT.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AM-10",
+      "dimension": "Cross-gate flow",
+      "expectation": "Task → Agent Runtime → Model Gateway → ToolRequest → Sandbox → ToolResult → Agent Runtime in one live run.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "model calls through the gateway: 7 model call(s) recorded; the runtime's only model path is the gateway's /api/v1/gateway/infer; tool requests executed in a sandbox: 1 execution(s) in sandbox session(s) ['01a0cc832449']; tool results delivered to the runtime: 2 of 2 tool request(s) RESOLVED; the runtime called the model again after a sandbox result: a MODEL_CALL_STARTED event follows a TOOL_RESULT_RECEIVED event",
+      "evidence": [
+        "checkpoint:CROSS-GATE-LIVE.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AM-11",
+      "dimension": "No tool runs on the host",
+      "expectation": "The live run leaves the host sentinel untouched and a command reports the sandbox as its host.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "host sentinel untouched=True; M1-A DEFENDED (control VALID): the command ran as uid 10001 on host name '9e009c1be9d5', which is the sandbox container's ('9e009c1be9d5') and not the controller's ('dcf117055cf0'); host mount points absent",
+      "evidence": [
+        "checkpoint:CROSS-GATE-LIVE.json",
+        "checkpoint:M1-INTERNAL-RED-TEAM.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AM-12",
+      "dimension": "Host secrets absent from the sandbox",
+      "expectation": "Attack M1-B is defended.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "M1-B DEFENDED (control VALID): controller variables visible: none; secret value visible: False; credential files: none; files holding private key material: none",
+      "evidence": [
+        "checkpoint:M1-INTERNAL-RED-TEAM.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AM-13",
+      "dimension": "Workspace isolation",
+      "expectation": "Attack M1-E is defended.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "M1-E DEFENDED (control VALID): victim container cac301e5b2f2, attacker container 891b1ff37597; files holding the victim's token seen from the attacker's sandbox: none",
+      "evidence": [
+        "checkpoint:M1-INTERNAL-RED-TEAM.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AM-14",
+      "dimension": "Path traversal and link escapes defended",
+      "expectation": "Attack M1-D is defended.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "M1-D DEFENDED (control VALID): ../../../etc/passwd -> DENIED/PATH_ESCAPE; /etc/shadow -> DENIED/PATH_ABSOLUTE_OUTSIDE; ..\\..\\windows -> DENIED/PATH_BACKSLASH; sub/../../x -> DENIED/PATH_ESCAPE; root-link/etc/passwd -> DENIED/PATH_S",
+      "evidence": [
+        "checkpoint:M1-INTERNAL-RED-TEAM.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AM-15",
+      "dimension": "Engine socket absent from an executed sandbox",
+      "expectation": "Attack M1-C is defended and the builder cannot hand a sandbox a host resource.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "M1-C DEFENDED (control VALID): socket paths absent, DOCKER_HOST empty, connecting fails; the container has 0 mount(s) and 0 bind(s); R-G3-001 C2 PASS",
+      "evidence": [
+        "checkpoint:M1-INTERNAL-RED-TEAM.json",
+        "checkpoint:R-G3-001-REVIEW.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AM-16",
+      "dimension": "Git remote unavailable to an agent",
+      "expectation": "Attack M1-H is defended.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "M1-H DEFENDED (control VALID): remotes: none; credential configuration: ['file:/opt/iacode/gitconfig\\tcredential.helper='] (an empty helper disables helpers); exposures: none; push over the network failed; remote tools ['DENIED/UNK",
+      "evidence": [
+        "checkpoint:M1-INTERNAL-RED-TEAM.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AM-17",
+      "dimension": "No unresolved Critical/High finding",
+      "expectation": "No finding of this review, and no open finding of the Gates, is Critical or High unresolved.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "3 finding(s); unresolved Critical/High: ['M1-F-003']",
+      "evidence": [
+        "checkpoint:REVIEW-REPORT.md",
+        "checkpoint:FINDINGS.json"
+      ],
+      "verdict": "FAIL"
+    },
+    {
+      "id": "AM-18",
+      "dimension": "Completeness and evidence of the Gates",
+      "expectation": "Each Gate's matrix, recomputed by the validator from its tag, is complete with every evidence reference resolved, from this repository and from the published remote.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "GATE-0-CP-0001 118 requirements 100.0% completeness PASS; GATE-1-CP-0001 161 requirements 100.0% completeness PASS; GATE-2-CP-0002 186 requirements 100.0% completeness PASS; GATE-3-CP-0001 192 requirements 100.0% completeness PASS; from the published remote the evidence of ['GATE-1-CP-0001'] does not resolve",
+      "evidence": [
+        "checkpoint:SEALED-SUBJECTS.json",
+        "checkpoint:SEALED-SUBJECTS-PUBLISHED.json"
+      ],
+      "verdict": "FAIL"
+    },
+    {
+      "id": "AM-19",
+      "dimension": "R-G3-001 dispositioned from proof",
+      "expectation": "Ten controls proved and no untrusted input reaches an engine operation.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "10/10 controls, disposition ACCEPTED_LOCAL_ARCHITECTURAL_RISK; M1-G DEFENDED (control VALID): [{\"runId\": \"--privileged\", \"result\": \"FAILED/None\", \"privileged\": false, \"binds\": [], \"mounts\": 0, \"capAdd\": [], \"capDrop\": [\"ALL\"], \"network\": \"none\", \"label\": \"--privileged\"}, {\"runId\": \"x --volume ",
+      "evidence": [
+        "checkpoint:R-G3-001-REVIEW.json",
+        "checkpoint:M1-INTERNAL-RED-TEAM.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AM-20",
+      "dimension": "The audit's Red Team",
+      "expectation": "Every attack of the cross-gate battery is defended over a valid null-mutation control.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "RED_TEAM_PASS 14/14 control VALID",
+      "evidence": [
+        "checkpoint:M1-INTERNAL-RED-TEAM.json",
+        "checkpoint:RED-TEAM-REPORT.md"
+      ],
+      "verdict": "PASS"
+    }
+  ],
+  "passed": 16,
+  "total": 20,
+  "result": "FAIL"
+}

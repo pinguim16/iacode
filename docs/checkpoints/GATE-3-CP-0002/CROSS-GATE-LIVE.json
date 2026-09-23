@@ -1,0 +1,186 @@
+{
+  "schemaVersion": "1.0.0",
+  "artifact": "CROSS-GATE-LIVE",
+  "checkpoint": "GATE-3-CP-0002",
+  "startedAt": "2026-09-23T04:25:33Z",
+  "model": "openai:gpt-4.1-mini",
+  "configuredModel": "openai:gpt-4o-mini",
+  "modelChosenExplicitly": true,
+  "team": "coding",
+  "checks": [
+    {
+      "name": "catalog synchronised",
+      "ok": true,
+      "detail": "HTTP 200; added 0, updated 0, unchanged 134"
+    },
+    {
+      "name": "snapshot",
+      "ok": true,
+      "detail": "workspace snapshot 01a0cc83-1042-7000-9292-48dd23bd358e stored"
+    },
+    {
+      "name": "run created",
+      "ok": true,
+      "detail": "HTTP 202 runId=01a0cc83-12ff-7000-bb72-7595f837be2d"
+    },
+    {
+      "name": "run terminal",
+      "ok": true,
+      "detail": "state=FAILED error=INVALID_AGENT_OUTPUT"
+    },
+    {
+      "name": "model calls through the gateway",
+      "ok": true,
+      "detail": "7 model call(s) recorded; the runtime's only model path is the gateway's /api/v1/gateway/infer"
+    },
+    {
+      "name": "tool requests executed in a sandbox",
+      "ok": true,
+      "detail": "1 execution(s) in sandbox session(s) ['01a0cc832449']"
+    },
+    {
+      "name": "tool results delivered to the runtime",
+      "ok": true,
+      "detail": "2 of 2 tool request(s) RESOLVED"
+    },
+    {
+      "name": "the runtime called the model again after a sandbox result",
+      "ok": true,
+      "detail": "a MODEL_CALL_STARTED event follows a TOOL_RESULT_RECEIVED event"
+    },
+    {
+      "name": "sandbox containers existed during the run",
+      "ok": true,
+      "detail": "1 container(s) labelled with the run were observed"
+    },
+    {
+      "name": "no sandbox container outlives the run",
+      "ok": true,
+      "detail": "0 container(s) remain labelled with the run"
+    },
+    {
+      "name": "host sentinel untouched",
+      "ok": true,
+      "detail": "the file on the host is byte-identical after the run"
+    }
+  ],
+  "snapshot": {
+    "artifactId": "01a0cc83-1042-7000-9292-48dd23bd358e",
+    "sha256": "e8dcae63df80f089c74f98d3efb3d69cb117b8f23a494d9e81de0d392dc50a7c"
+  },
+  "runId": "01a0cc83-12ff-7000-bb72-7595f837be2d",
+  "finalState": "FAILED",
+  "summary": {
+    "agentsExecuted": 2,
+    "turns": 4,
+    "modelCalls": 7,
+    "toolsRequested": 2,
+    "toolsResolved": 2,
+    "durationSeconds": 10.804,
+    "finalState": "FAILED",
+    "totalTokens": 8469,
+    "cost": null,
+    "costKnown": false
+  },
+  "stages": [
+    {
+      "name": "plan",
+      "agent": "planner",
+      "state": "SUCCEEDED",
+      "turns": 1,
+      "modelCalls": 1
+    },
+    {
+      "name": "develop",
+      "agent": "developer",
+      "state": "FAILED",
+      "turns": 3,
+      "modelCalls": 4
+    }
+  ],
+  "toolExecutions": [
+    {
+      "toolRequestId": "e20d3684-2630-4f99-ac02-9f64b9609e3b",
+      "tool": "shell.exec",
+      "status": "FAILED",
+      "durationMs": 215,
+      "sandboxSession": "01a0cc832449",
+      "exitCode": 1,
+      "timedOut": false,
+      "truncated": false,
+      "errorCode": null,
+      "summary": "failed, exit 1",
+      "createdAt": "2026-09-23T04:25:42.959Z"
+    },
+    {
+      "toolRequestId": "45938851-3d0b-403d-bb05-66842a9f8392",
+      "tool": "filesystem.read",
+      "status": "DENIED",
+      "durationMs": 0,
+      "sandboxSession": null,
+      "exitCode": null,
+      "timedOut": false,
+      "truncated": false,
+      "errorCode": "ARGUMENT_MISSING",
+      "summary": "denied, ARGUMENT_MISSING",
+      "createdAt": "2026-09-23T04:25:45.658Z"
+    }
+  ],
+  "toolRequests": [
+    {
+      "toolRequestId": "e20d3684-2630-4f99-ac02-9f64b9609e3b",
+      "name": "shell.exec",
+      "status": "RESOLVED",
+      "resultStatus": null
+    },
+    {
+      "toolRequestId": "45938851-3d0b-403d-bb05-66842a9f8392",
+      "name": "filesystem.read",
+      "status": "RESOLVED",
+      "resultStatus": null
+    }
+  ],
+  "eventTypes": [
+    "RUN_CREATED",
+    "RUN_STARTED",
+    "AGENT_STARTED",
+    "MODEL_CALL_STARTED",
+    "MODEL_CALL_COMPLETED",
+    "AGENT_COMPLETED",
+    "AGENT_STARTED",
+    "MODEL_CALL_STARTED",
+    "MODEL_CALL_COMPLETED",
+    "RUN_NOTE",
+    "MODEL_CALL_STARTED",
+    "MODEL_CALL_COMPLETED",
+    "TOOL_REQUESTED",
+    "TOOL_RESULT_RECEIVED",
+    "MODEL_CALL_STARTED",
+    "MODEL_CALL_COMPLETED",
+    "RUN_NOTE",
+    "MODEL_CALL_STARTED",
+    "MODEL_CALL_COMPLETED",
+    "TOOL_REQUESTED",
+    "TOOL_RESULT_RECEIVED",
+    "MODEL_CALL_STARTED",
+    "MODEL_CALL_COMPLETED",
+    "RUN_NOTE",
+    "MODEL_CALL_STARTED",
+    "MODEL_CALL_COMPLETED",
+    "RUN_FAILED"
+  ],
+  "sandboxContainersSeen": [
+    "iacode-sbx-01a0cc8324497000bcdf4bf2b980f79c"
+  ],
+  "observations": {
+    "toolsExecuted": [
+      "shell.exec",
+      "filesystem.read"
+    ],
+    "testsRun": true,
+    "committed": false,
+    "result": ""
+  },
+  "finishedAt": "2026-09-23T04:25:50Z",
+  "result": "PASS"
+}

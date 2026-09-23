@@ -1,0 +1,158 @@
+{
+  "schemaVersion": "3.2.0",
+  "phase": "M1 - fresh-session independent milestone audit of GATE-3-CP-0001 (Gates 0 to 3)",
+  "gate": "GATE-3",
+  "status": "REWORK_REQUIRED",
+  "branch": "main",
+  "baseCommit": "3bc8e9d8a94d44163d1af9325ad5b2272f71f8ed",
+  "currentCommit": "refs/tags/iacode-checkpoints/GATE-3-CP-0002",
+  "dirty": false,
+  "startedAt": "2026-09-23T03:52:30Z",
+  "updatedAt": "2026-09-23T06:03:25Z",
+  "nextAllowedAction": "Return the M1 audit to the implementer: the corrective delivery GATE-3-CP-0003 registers audit M1-CP-0002, closes M1-F-003 (HIGH), M1-F-001 and M1-F-002, and a new fresh-session M1 audit follows. GATE 4 does not start. See NEXT.md.",
+  "blockedBy": [
+    "M1-F-003"
+  ],
+  "secondToolValidation": {
+    "status": "FAILED",
+    "tool": "Claude Code, desktop application, fresh session",
+    "provider": "Anthropic",
+    "model": "claude-opus-5-5",
+    "validatedAt": "2026-09-23T06:15:00Z",
+    "justification": "Fresh-session independent audit of the sealed GATE-3-CP-0001 and the M1 Gates. One HIGH finding: the published history cannot validate GATE-1-CP-0001, so a clean clone of the remote fails the mandatory tests gate (M1-F-003). The tool, provider and model are the implementing runs', so this is session independence and not cross-tool validation, and it is not recorded as one.",
+    "evidence": [
+      "file:REVIEW-REPORT.md",
+      "file:MILESTONE-REPORT.md",
+      "file:AUDIT-EXECUTIONS.json"
+    ]
+  },
+  "requirementsMatrix": {
+    "path": "REQUIREMENTS-MATRIX.json",
+    "total": 193,
+    "mandatory": 190,
+    "complete": 193,
+    "partial": 0,
+    "missing": 0,
+    "notApplicable": 0,
+    "coveragePercent": 100.0
+  },
+  "greenKeeper": {
+    "status": "PASS",
+    "cycles": 1,
+    "remainingFailures": 0,
+    "unresolvedReworkItems": 0,
+    "log": "REWORK-LOG.jsonl",
+    "externalBlockers": [],
+    "evidence": [
+      "file:REWORK-LOG.jsonl",
+      "command:cmd-0035",
+      "command:cmd-0036",
+      "command:cmd-0037",
+      "command:cmd-0038",
+      "command:cmd-0039",
+      "command:cmd-0040",
+      "command:cmd-0041",
+      "command:cmd-0042",
+      "command:cmd-0043",
+      "command:cmd-0044",
+      "command:cmd-0045",
+      "command:cmd-0046"
+    ]
+  },
+  "deliveryCompleteness": {
+    "status": "PASS",
+    "report": "COMPLETENESS-REPORT.json",
+    "coveragePercent": 100.0,
+    "evidenceCoveragePercent": 100.0,
+    "auditor": "Delivery Completeness Validator, M1 fresh-session audit pass",
+    "evidence": [
+      "file:COMPLETENESS-REPORT.json",
+      "command:cmd-0047"
+    ]
+  },
+  "reworkCycles": 1,
+  "independentReview": {
+    "status": "REWORK_REQUIRED",
+    "tool": "Claude Code, fresh session, Anthropic, claude-opus-5-5",
+    "reviewedAt": "2026-09-23T06:15:00Z",
+    "justification": "M1-F-003 (HIGH): GATE-1-CP-0001's sealed ledger names a commit no published reference reaches, so the checkpoint does not validate from the published history and every clean clone of the remote fails the mandatory tests gate; four of twenty frozen criteria fail on it. M1-F-001 and M1-F-002 (MEDIUM) go with it. The isolation, the cross-gate flow, R-G3-001 and the full verification of this repository all hold.",
+    "evidence": [
+      "file:REVIEW-REPORT.md",
+      "file:FINDINGS.json",
+      "file:FINAL-M1-AUDIT-MATRIX.json"
+    ]
+  },
+  "redTeam": {
+    "status": "RED_TEAM_PASS",
+    "tool": "the cross-gate adversarial battery of this audit, independent of the Gates' batteries",
+    "executedAt": "2026-09-23T05:52:00Z",
+    "justification": "Fourteen attacks — nine on real sandboxes on the real engine, five on the stack and disposable clones — over a null-mutation control that was accepted first. None escaped.",
+    "evidence": [
+      "file:RED-TEAM-REPORT.md",
+      "file:M1-INTERNAL-RED-TEAM.json",
+      "command:cmd-0034"
+    ]
+  },
+  "lessonPreflight": {
+    "path": "LESSON-PREFLIGHT.json",
+    "gate": "GATE-3",
+    "scope": "independent-audit",
+    "lessonsConsidered": 54,
+    "lessonsApplicable": 54,
+    "derivedRequirements": 54,
+    "evidence": [
+      "checkpoint:LESSON-PREFLIGHT.json"
+    ]
+  },
+  "milestone": {
+    "id": "M1",
+    "title": "IACode V0 foundation",
+    "gates": [
+      "GATE 0",
+      "GATE 1",
+      "GATE 2",
+      "GATE 3"
+    ],
+    "status": "FAILED",
+    "auditor": "Claude Code fresh-session independent M1 audit (FRESH_SESSION_INDEPENDENT_AUDIT); not cross-tool validation",
+    "auditedAt": "2026-09-23T06:15:00Z",
+    "evidence": [
+      "file:MILESTONE-REPORT.md",
+      "file:REVIEW-REPORT.md",
+      "file:AUDIT-EXECUTIONS.json"
+    ]
+  },
+  "externalAuditRequired": false,
+  "externalAuditReason": null,
+  "guardrailEffectiveness": {
+    "guardrailsTotal": 55,
+    "guardrailsResolved": 55,
+    "guardrailsTested": 55,
+    "guardrailsEffective": 55,
+    "guardrailFailures": 0,
+    "evidence": [
+      "file:.iacode/memory/guardrails/registry.json",
+      "file:.iacode/memory/lessons.jsonl"
+    ]
+  },
+  "integrity": {
+    "status": "PASS",
+    "anchors": 18,
+    "chainFile": ".iacode/anchors/checkpoint-chain.json",
+    "evidence": [
+      "command:cmd-0038",
+      "command:cmd-0003"
+    ]
+  },
+  "externalAttestation": {
+    "status": "PRESENT",
+    "path": ".iacode/attestations/M1-CP-0002.json",
+    "auditId": "M1-CP-0002",
+    "subjectCheckpoint": "GATE-3-CP-0001",
+    "subjectCommit": "3bc8e9d8a94d44163d1af9325ad5b2272f71f8ed",
+    "validationMechanism": "FRESH_SESSION_INDEPENDENT_AUDIT",
+    "evidence": [
+      "file:MILESTONE-REPORT.md"
+    ]
+  }
+}

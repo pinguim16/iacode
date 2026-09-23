@@ -1,0 +1,125 @@
+{
+  "schemaVersion": "1.0.0",
+  "artifact": "CROSS-GATE-LIVE",
+  "checkpoint": "GATE-3-CP-0002",
+  "startedAt": "2026-09-23T04:24:07Z",
+  "model": "openai:gpt-4o-mini",
+  "team": "coding",
+  "checks": [
+    {
+      "name": "catalog synchronised",
+      "ok": true,
+      "detail": "HTTP 200; added 134, updated 0, unchanged 0"
+    },
+    {
+      "name": "snapshot",
+      "ok": true,
+      "detail": "workspace snapshot 01a0cc81-bf95-7000-a6b8-e0c8bd536899 stored"
+    },
+    {
+      "name": "run created",
+      "ok": true,
+      "detail": "HTTP 202 runId=01a0cc81-c215-7000-a9f6-e55c35f44979"
+    },
+    {
+      "name": "run terminal",
+      "ok": true,
+      "detail": "state=FAILED error=INVALID_AGENT_OUTPUT"
+    },
+    {
+      "name": "model calls through the gateway",
+      "ok": true,
+      "detail": "3 model call(s) recorded; the runtime's only model path is the gateway's /api/v1/gateway/infer"
+    },
+    {
+      "name": "tool requests executed in a sandbox",
+      "ok": false,
+      "detail": "0 execution(s) in sandbox session(s) []"
+    },
+    {
+      "name": "tool results delivered to the runtime",
+      "ok": false,
+      "detail": "0 of 0 tool request(s) RESOLVED"
+    },
+    {
+      "name": "the runtime called the model again after a sandbox result",
+      "ok": false,
+      "detail": "a MODEL_CALL_STARTED event follows a TOOL_RESULT_RECEIVED event"
+    },
+    {
+      "name": "sandbox containers existed during the run",
+      "ok": false,
+      "detail": "0 container(s) labelled with the run were observed"
+    },
+    {
+      "name": "no sandbox container outlives the run",
+      "ok": true,
+      "detail": "0 container(s) remain labelled with the run"
+    },
+    {
+      "name": "host sentinel untouched",
+      "ok": true,
+      "detail": "the file on the host is byte-identical after the run"
+    }
+  ],
+  "snapshot": {
+    "artifactId": "01a0cc81-bf95-7000-a6b8-e0c8bd536899",
+    "sha256": "0cf34e9dd803d882b27149830dc7f332cff39325b459132ab77cd7fa13da52da"
+  },
+  "runId": "01a0cc81-c215-7000-a9f6-e55c35f44979",
+  "finalState": "FAILED",
+  "summary": {
+    "agentsExecuted": 2,
+    "turns": 2,
+    "modelCalls": 3,
+    "toolsRequested": 0,
+    "toolsResolved": 0,
+    "durationSeconds": 5.903,
+    "finalState": "FAILED",
+    "totalTokens": 2997,
+    "cost": null,
+    "costKnown": false
+  },
+  "stages": [
+    {
+      "name": "plan",
+      "agent": "planner",
+      "state": "SUCCEEDED",
+      "turns": 1,
+      "modelCalls": 1
+    },
+    {
+      "name": "develop",
+      "agent": "developer",
+      "state": "FAILED",
+      "turns": 1,
+      "modelCalls": 0
+    }
+  ],
+  "toolExecutions": [],
+  "toolRequests": [],
+  "eventTypes": [
+    "RUN_CREATED",
+    "RUN_STARTED",
+    "AGENT_STARTED",
+    "MODEL_CALL_STARTED",
+    "MODEL_CALL_COMPLETED",
+    "AGENT_COMPLETED",
+    "AGENT_STARTED",
+    "MODEL_CALL_STARTED",
+    "MODEL_CALL_COMPLETED",
+    "RUN_NOTE",
+    "MODEL_CALL_STARTED",
+    "MODEL_CALL_COMPLETED",
+    "RUN_FAILED"
+  ],
+  "sandboxContainersSeen": [],
+  "observations": {
+    "toolsExecuted": [],
+    "testsRun": false,
+    "committed": false,
+    "result": ""
+  },
+  "finishedAt": "2026-09-23T04:24:17Z",
+  "result": "FAIL"
+}

@@ -1,0 +1,319 @@
+{
+  "filesRead": [],
+  "filesCreated": [
+    {
+      "path": ".iacode/attestations/M1-CP-0002.json",
+      "reason": "The attestation this fresh-session audit authored about the sealed subject it judged.",
+      "hashAfter": "8e801ec06148ba448bfc44a9163283bda8d4615507dbc4f2fd8fd196cbfb4f4a"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0002/AUDIT-EXECUTIONS.json",
+      "reason": "Machine-readable record of every execution this audit performed.",
+      "hashAfter": "be28672ea6fd09a95043e19afa5b21305e8f9c431c35c3274f1784843e014e2d"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0002/CLEAN-CLONE-REPORT.json",
+      "reason": "The full verification run by this audit in a fresh clone.",
+      "hashAfter": "cac9e50b3b77649ec2fb37094dc36561b20d4d8c9587a59c62c8d67f0ad37514"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0002/CLOSURE-REQUIREMENTS.json",
+      "reason": "Milestone closure requirements of this checkpoint.",
+      "hashAfter": "a155ab231e02ce15a61f2b359f3d72657f577989dd5d639bf7dd8e0f1532f593"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0002/CLOSURE-REQUIREMENTS.md",
+      "reason": "Readable rendering of the closure requirements.",
+      "hashAfter": "ae64fabd70909dfee43a1149a6d48f7239370d91f79849b58bf38cf75efbf76a"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0002/COMMANDS.jsonl",
+      "reason": "Append-only command ledger of this run.",
+      "hashAfter": "98fcdfa602dcc5b9d1e71a0c85ddac3de3e4ca67d00cdc283a70c3d86873ea10"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0002/COMPLETENESS-REPORT.json",
+      "reason": "Delivery completeness audit of this checkpoint.",
+      "hashAfter": "cc83bce6de15223fdb6f385e32e01e9ec88925a67bfcd8ead852d83044ebf772"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0002/COMPLETENESS-REPORT.md",
+      "reason": "Readable rendering of the completeness audit.",
+      "hashAfter": "f13a4094eb8f135d012ca3b652d2ca9ae2e5277991fc5ed2346374d122771935"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0002/COUNTS.json",
+      "reason": "Every count this checkpoint uses as evidence, derived once.",
+      "hashAfter": "5a1be289180ab116241d763dfba2c86f55cdf533c341278ade43ab9dd408ad8d"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0002/CROSS-GATE-LIVE-ATTEMPT-2.json",
+      "reason": "The second live attempt (cmd-0014), the operator's configured model: the developer stage never produced a valid tool request.",
+      "hashAfter": "9aee8d0ca1843b362163483eada936ba79bbebe620c6758d6f54f6c4a3f4128f"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0002/CROSS-GATE-LIVE-ATTEMPT-3.json",
+      "reason": "The third live attempt (cmd-0015), the configured model again: the same failure.",
+      "hashAfter": "9f981d15c5640ffea0134af5e1385812d92dfb44805ba73f2590c819de4f7666"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0002/CROSS-GATE-LIVE.json",
+      "reason": "The fourth live attempt (cmd-0016), an explicitly chosen model: task, Agent Runtime, Model Gateway, tool requests, sandbox, tool results and back, read from what the stack recorded.",
+      "hashAfter": "64439cca6ef808d8f98cf33bc14752b85037c322e713a570c30aee93a4282fea"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0002/DECISIONS.md",
+      "reason": "Decisions taken by this audit.",
+      "hashAfter": "926e6181365a215c3f1d2e8cba7a8faa7713d704cd8bf58f1da4dd2602cea022"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0002/DIFF-SUMMARY.md",
+      "reason": "Summary of the change set.",
+      "hashAfter": "dfc79a86a2d1a8507bde9b37ad300ef9f95cc9096b5525d229a8b6835a6acb1d"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0002/FILES.json",
+      "reason": "The declared inventory itself."
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0002/FINAL-M1-AUDIT-MATRIX.json",
+      "reason": "The eighteen frozen M1 criteria with their observed results.",
+      "hashAfter": "e868e78162d1daabc702f841314502db473807a6656d8f146c656870ebe7aa64"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0002/FINAL-M1-AUDIT-MATRIX.md",
+      "reason": "Readable rendering of the M1 audit matrix.",
+      "hashAfter": "9954326d77b67910ec965f612ac8a78dbab571e8c41ca7eedb91c7395ab204b5"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0002/FINAL-REPORT.md",
+      "reason": "Closing report of this audit.",
+      "hashAfter": "15eb2ac15f01fbea7931ae62a87bee7339a0d1c4e4cd17682aae60994377671c"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0002/FINDINGS.json",
+      "reason": "The findings of this review, with severity, status and disposition.",
+      "hashAfter": "e661d8d6f3dab01d4e95eefe853364cdda102603ec7e37522cd5c7c37b152992"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0002/FORGED-RESULT-PROBE.json",
+      "reason": "The reproduction of finding M1-F-001 on the stack, with its null control.",
+      "hashAfter": "67ccbd765a0b8d36d1a3f7bd1581412df59122b244c0d4183e37769cf2f8b63c"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0002/HANDOFF.md",
+      "reason": "Handoff for the next run.",
+      "hashAfter": "5e87507f8ddef5f44b42f2cb6447ef9ffcecc6210e3d15557af477a6ee40459b"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0002/LESSON-PREFLIGHT.json",
+      "reason": "Lesson preflight for the independent-audit scope.",
+      "hashAfter": "ad80c6b55d19b2770d7f1ea2730df2954eb70de1ce44b2bb011e9c3d517a06ce"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0002/LESSON-PREFLIGHT.md",
+      "reason": "Readable rendering of the preflight.",
+      "hashAfter": "ed8853828b6673c04a67d3c475cbd70cafe99f14299d4491b801233065a822a6"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0002/M1-INTERNAL-MIRROR.json",
+      "reason": "Internal mirror audit of this checkpoint.",
+      "hashAfter": "012499945c5a0c0896330a62cc72d50783bb29180078c9d46ef3466f69130a62"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0002/M1-INTERNAL-MIRROR.md",
+      "reason": "Readable rendering of the internal mirror audit.",
+      "hashAfter": "3f440559b7f104e45b689011522fb43eedbd1bf5d4509bad5189b157f34e69ef"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0002/M1-INTERNAL-RED-TEAM.json",
+      "reason": "The focused cross-gate adversarial battery this audit owns.",
+      "hashAfter": "607b526707d6e84e3faa07864f7a7f640ecedf7e7eb17423c2355d3bd08b2a6e"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0002/MILESTONE-REPORT.md",
+      "reason": "The consolidated M1 milestone report and the verdict it supports.",
+      "hashAfter": "0e305ba01b5b630077e571f1aa3578164d7c729af414e104c964aa7591f3b130"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0002/NEXT.md",
+      "reason": "The exact next allowed action.",
+      "hashAfter": "69059102c414e89a8d9cff8838195a6994358076426886f3341bdec10e43a0e0"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0002/PLAN.md",
+      "reason": "The audit plan, written before execution.",
+      "hashAfter": "345986e845608c6bffd39c8522f739bc66d62ac89d73d3c3982ad3132e1b4f67"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0002/PROVENANCE.json",
+      "reason": "Provenance and rights of the artifacts produced here.",
+      "hashAfter": "5a306d423c239dd07a58eb5fdcd9e56c99e51f04cf003642f532b9ead233fb7a"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0002/QUALITY.json",
+      "reason": "Quality dimensions of this checkpoint with their evidence.",
+      "hashAfter": "8d9956fc8035063622a1361158050e10390a01abef6797c6f605807e93e21d0f"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0002/R-G3-001-REVIEW.json",
+      "reason": "The explicit review of the container engine socket held by the sandbox controller.",
+      "hashAfter": "bc8d9a80b172e627f3513bac3c68c2135bf7e56f1309cb2382d6e83c62e82854"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0002/R-G3-001-REVIEW.md",
+      "reason": "Readable rendering of the R-G3-001 review and its disposition.",
+      "hashAfter": "a83e91f28e2afb8bc241cdac335f33e076784629279a214bea913b048a3ba3c4"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0002/RED-TEAM-REPORT.md",
+      "reason": "The cross-gate adversarial battery and its null-mutation control.",
+      "hashAfter": "d9501595b345eda91e6423ad550fec9eff815ac1a81d7d4cd2bab6988172160a"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0002/REQUIREMENTS-MATRIX.json",
+      "reason": "Requirement matrix of this checkpoint.",
+      "hashAfter": "36a288d5b10e5f9d9a5e4e6c986d2b0a625cd7000285198a722cf05be20d8992"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0002/REQUIREMENTS-MATRIX.md",
+      "reason": "Readable rendering of the requirement matrix.",
+      "hashAfter": "3eea87c51a5ce953c5cf773de48e16385593214fa8f5410a652d89c1a131861c"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0002/RESUME-VALIDATION.md",
+      "reason": "Cold-start, sealed-subject and clean-clone validation of this audit.",
+      "hashAfter": "8b24d73c67ec7bd2dc91d6dbb2337cc59b5d7c257006b837cbe7d73915815f07"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0002/REVIEW-REPORT.md",
+      "reason": "The independent review verdict and its basis.",
+      "hashAfter": "5f647706bf4877c2d29b907a3ea4265c78cf64ae96a6b469e5bd4db7ac3b1ea1"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0002/REWORK-LOG.jsonl",
+      "reason": "Green Keeper cycles of this checkpoint.",
+      "hashAfter": "dc7cc16f1d308e01f301c5bcc7de85d41e789cb2b123bcd8f5646b5c932f2eb0"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0002/RISKS.md",
+      "reason": "Risks this audit records.",
+      "hashAfter": "7b6c0aaadbcc75d43a8ccbf575aec02ba9a577d62400ed8bb3b28d2f2abed390"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0002/RUN-METADATA.json",
+      "reason": "Tool, provider, model, environment and timestamps of this run.",
+      "hashAfter": "b85c8a4b3ffe2b0bfa7dbd4bba9bbfd6015b8735f5ff74dd9b2a0cf23144bfdd"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0002/SEALED-SUBJECTS-PUBLISHED.json",
+      "reason": "Validation of every sealed M1 checkpoint from a clone of the published remote, which carries only what published references reach.",
+      "hashAfter": "f51ef50c8d855c7b84467a6a4c533f5dcb5c1536a7a2d4f811fb6681c857b832"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0002/SEALED-SUBJECTS.json",
+      "reason": "Validation of every sealed checkpoint of M1 from its own canonical tag, detached.",
+      "hashAfter": "06cc6b7d14d247040caddea8d3626e8cce0f56e8af2a21214c68f3e10c40a20a"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0002/STATE.json",
+      "reason": "Machine-readable state of this checkpoint.",
+      "hashAfter": "72518ab0bab7a9845bef07258363b9a9125b6e1b051873da6a8862809545ff1c"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0002/STATUS.md",
+      "reason": "The canonical status.",
+      "hashAfter": "f5e28c4d862256b143fb27ecf969d2104e13da790b01e86662e3642c24230504"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0002/TESTS.json",
+      "reason": "Test execution recorded for this checkpoint.",
+      "hashAfter": "05f3192f4d0189bc007c9e941073da468550cb145f0a05b18b7baa6c89474651"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0002/VERIFICATION-REPORT.json",
+      "reason": "The full verification run by this audit over the audited tree.",
+      "hashAfter": "b7b8887bb4105f058b3205076d0484c224a5e071e24f352165f708fa6da508c4"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0002/audit-harness/EXECUTIONS.jsonl",
+      "reason": "Append-only record of executions, which AUDIT-EXECUTIONS.json is built from.",
+      "hashAfter": "e2e19b18bcf7b373e7a25dec3b5287bc3f782db7da5042b14bb87ffb152241d5"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0002/audit-harness/build_matrix.py",
+      "reason": "Builds the M1 audit matrix from the frozen criteria and the executions.",
+      "hashAfter": "91c7b06666ab2834e406eb0e59350dc8aecdebbeab4a899d0392c9e052c50d38"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0002/audit-harness/clean_clone.py",
+      "reason": "Re-runs the mandatory validations and the full verification in a fresh clone.",
+      "hashAfter": "bc03fe99133f4f943a2dc302a71d0f8cdee363dd78806109ce995a3ca8752863"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0002/audit-harness/complete_requirements.py",
+      "reason": "Completes the requirement matrix from evidence this audit resolved itself.",
+      "hashAfter": "89e0cffdb57296db25035a3af9d642650cabe2facb1e8c483cbb6b542d031c13"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0002/audit-harness/cross_gate_live.py",
+      "reason": "Drives one live coding run through the deployed stack and reads back what it recorded.",
+      "hashAfter": "4f9e5a142f658d219f7536a688a2d750d0c71fa1e8c3d43863e5e79ae2fa386d"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0002/audit-harness/declare_inventory.py",
+      "reason": "Declares this change set.",
+      "hashAfter": "dc5300b3fa6a17964a50e15bb63095986584dee554e444dbf7129fa4ce2884cb"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0002/audit-harness/executions.py",
+      "reason": "Appends one execution record and assembles the execution artifact.",
+      "hashAfter": "15733449d0e6f9171db88d35f6dcb192ca243bc54ce5ba401fc2c46bd5a069fd"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0002/audit-harness/m1_sandbox_attacks.py",
+      "reason": "The in-image half of the battery, against the real engine.",
+      "hashAfter": "571281c540a4963659bb9f991ff9259ef4d55178d599b51bb63ecdf8e1952e9e"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0002/audit-harness/probe_forged_result.py",
+      "reason": "Reproduces finding M1-F-001 on the stack with a null control.",
+      "hashAfter": "e1fb5c98f9c2380ad77fca7585bd71379fd8fcd678495f9c10b708e0c8a9f011"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0002/audit-harness/r_g3_001.py",
+      "reason": "Probes the controls that bound the engine socket the sandbox service holds.",
+      "hashAfter": "66040452eeddc4799395a6a46fca5f1080e8770c9c392b4b36237bbe89bc036e"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0002/audit-harness/red_team.py",
+      "reason": "The focused cross-gate adversarial battery this audit owns.",
+      "hashAfter": "bb7a4062e7457bf1aa49d7e34b37b84e8c6a4a0651bd203445e6f77c4d25a834"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0002/audit-harness/sealed_subjects.py",
+      "reason": "Validates every sealed M1 checkpoint from its own tag, detached.",
+      "hashAfter": "26b050ab40f94fbeaea1baea89f42d9233fd1a685f3a221ce4031f949bf3a57d"
+    },
+    {
+      "path": "docs/checkpoints/GATE-3-CP-0002/audit-harness/sync_state.py",
+      "reason": "Copies the derived counts into STATE.json from the artifacts that own them.",
+      "hashAfter": "a23f6a1f89c5fb780a31e6a83456aa059128590927cbb3f3f578fce513a44bdd"
+    }
+  ],
+  "filesModified": [
+    {
+      "path": ".iacode/anchors/checkpoint-chain.json",
+      "reason": "The eighteenth integrity anchor, for the sealed subject GATE-3-CP-0001, which its own checkpoint could not write and which its successor owes it.",
+      "hashBefore": "73e4cef75167b32b228ecd8a9f9c005cb554d9bcaa3ae5d7c131e54779505f86",
+      "hashAfter": "e5f9c4acee7111f9edbe9a7851654aba77b3f285d617e8d18666cce23f2e5555"
+    },
+    {
+      "path": "docs/checkpoints/LATEST.md",
+      "reason": "Points at this audit checkpoint.",
+      "hashBefore": "b263d351e78c4b4b7afc3d605cecb9c78b035dacd3377332afb51ed0748aab73",
+      "hashAfter": "571a1a87e0ba5f5d3b85acbdd82a0db2e8e1bd8dfdadbbbdc0f3695ce960d284"
+    }
+  ],
+  "filesDeleted": []
+}
