@@ -1,0 +1,20 @@
+{
+  "schemaVersion": "1.0.0",
+  "artifact": "SUITE-SNAPSHOT",
+  "label": "m1-f-003",
+  "checkpoint": "GATE-3-CP-0003",
+  "generatedAt": "2026-09-23T07:10:39Z",
+  "snapshotHead": "f7a44d7cd021f685992fa6fd763887ad015ce1e5",
+  "command": "-m unittest discover -s tests",
+  "exitCode": 1,
+  "seconds": 1136.9,
+  "summary": [
+    "Ran 704 tests in 1136.187s",
+    "FAILED (failures=2)"
+  ],
+  "failures": [
+    "FAIL: test_the_preflight_of_the_current_delivery_is_fresh (test_development_ledger.PreflightFreshnessTests.test_the_preflight_of_the_current_delivery_is_fresh)",
+    "FAIL: test_no_capture_relies_on_the_platform_codepage (test_gate0_foundation.SubprocessDecodingTests.test_no_capture_relies_on_the_platform_codepage)"
+  ],
+  "result": "FAIL"
+}

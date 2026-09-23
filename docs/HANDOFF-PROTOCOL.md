@@ -40,7 +40,11 @@ The receiver must verify the handoff rather than trust it.
 
 ## Validating a sealed checkpoint from a clean clone
 
-1. Clone the repository into a new temporary directory.
+1. Clone the authorised remote into a new temporary directory — or, for a local check, clone this
+   repository with `git clone --no-local`. A clone of the local path without it copies the object
+   store, and a sealed record that depends on an object no published reference reaches then
+   validates in the clone and nowhere else (`M1-F-003`,
+   [ADR-0028](adr/ADR-0028-sealed-evidence-is-judged-from-the-published-history.md)).
 2. Either stay on the default branch, or check out the checkpoint's canonical tag; a detached
    checkout of that tag is supported and validates as long as the worktree stays clean.
 3. Run `python scripts/development-ledger/validate_checkpoint.py` and the handoff's commands.

@@ -4,7 +4,7 @@
 - Scope: `corrective delivery, published history, sealed checkpoint validation, clean clone, git, sandbox, tool execution, tool results, tool result origin, agent-runtime integration, agent envelope protocol, model instructions, live model, api, persistence, migration, cancellation, secrets, build, test`
 - Technologies: `docker`, `git`, `python`, `temporal`, `postgresql`, `minio`
 - Modules: `scripts/development-ledger`, `services/agent-runtime`, `services/orchestrator`, `services/sandbox`, `apps/api`, `packages/persistence`, `packages/contracts`
-- Generated: `2026-09-23T06:26:56Z`
+- Generated: `2026-09-23T07:12:23Z`
 - Lessons considered: 54
 - Lessons applicable: 53
 
@@ -52,7 +52,7 @@ delivery when one is absent.
 | `LSN-0037` A shared control that names an identifier the repository derives stops being a control when that identifier moves | `GUARDED` | MEDIUM | `LESSON-REQ-0036` | Confirm that every control this Gate adds which reasons about an identifier the repository derives -- the current Gate, the newest checkpoint, the head migration -- derives it rather than naming it, and that the repository-wide control still passes. |
 | `LSN-0038` Two representations of one concept in one module disagree, and the safer one loses | `GUARDED` | MEDIUM | `LESSON-REQ-0037` | Where this Gate defines a classification twice — once anchored and once embedded — confirm one definition is authoritative and the other derives from it or is removed. |
 | `LSN-0039` A test that writes to the operational database leaves production data behind | `GUARDED` | HIGH | `LESSON-REQ-0038` | For every test this Gate adds that writes to a shared service rather than to a disposable one, confirm it removes what it created and that an invariant detects residue. |
-| `LSN-0040` A control that judges sealed history only runs once a successor anchors it | `CONFIRMED` | CRITICAL | `LESSON-REQ-0039` | Confirm that every sealed predecessor this Gate anchors validates from a detached checkout of its own tag, and that no command this Gate records declares an input the repository does not carry. |
+| `LSN-0040` A control that judges sealed history only runs once a successor anchors it | `GUARDED` | CRITICAL | `LESSON-REQ-0039` | Confirm that every sealed predecessor this Gate anchors validates from a detached checkout of its own tag in a published clone (Git's transport, never a copy of the local object store), that every commit sealed evidence names is reachable from a published reference, and that no command this Gate records declares an input the repository does not carry. |
 | `LSN-0041` An editing path that consumes a backslash escape leaves a control character, and the control it belonged to silently matches nothing | `GUARDED` | HIGH | `LESSON-REQ-0040` | Confirm that every scan this Gate adds asserts it found something before judging it, and that no source file carries a stray control character. |
 | `LSN-0042` A naming convention rewrites a CHECK constraint's name and leaves a UNIQUE constraint's alone | `GUARDED` | HIGH | `LESSON-REQ-0041` | For every migration this Gate adds, confirm it is applied and reversed against a disposable database, and that autogenerate finds nothing left to do afterwards. |
 | `LSN-0043` A log line is not evidence that another process is ready | `GUARDED` | MEDIUM | `LESSON-REQ-0042` | For every wait this Gate adds on another process, confirm it asks that process or its server for the state rather than reading a log line. |
@@ -338,9 +338,9 @@ delivery when one is absent.
 
 ### LSN-0040 — A control that judges sealed history only runs once a successor anchors it
 
-- Reason: applies to every Gate; category checkpoint; severity CRITICAL; status CONFIRMED, so it is not yet prevented automatically
-- Required check: Confirm that every sealed predecessor this Gate anchors validates from a detached checkout of its own tag, and that no command this Gate records declares an input the repository does not carry.
-- Required evidence: A validation run against each anchored checkpoint from its tag, green.
+- Reason: applies to every Gate; category checkpoint; severity CRITICAL; already guarded, so the control must keep holding
+- Required check: Confirm that every sealed predecessor this Gate anchors validates from a detached checkout of its own tag in a published clone (Git's transport, never a copy of the local object store), that every commit sealed evidence names is reachable from a published reference, and that no command this Gate records declares an input the repository does not carry.
+- Required evidence: A validation run against each anchored checkpoint from its tag in a published clone, green, and a clone of the remote that validates every sealed checkpoint of the milestone.
 - Derived requirement: `LESSON-REQ-0039`
 
 ### LSN-0041 — An editing path that consumes a backslash escape leaves a control character, and the control it belonged to silently matches nothing

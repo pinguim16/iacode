@@ -42,6 +42,9 @@ from ledger_common import (
     INVENTORY_SELF_REFERENTIAL_FILES,
     LEGACY_SCHEMA_VERSION,
     MEMORY_SCHEMA_VERSIONS,
+    PUBLISHED,
+    PUBLISHED_REFERENCE_NAMESPACES,
+    UNPUBLISHED_LOCAL_OBJECT,
     QUALITY_DIMENSIONS,
     QUALITY_DIMENSIONS_V3,
     QUALITY_OUTCOMES,
@@ -61,6 +64,7 @@ from ledger_common import (
     milestone_for,
     normalize_gate,
     requires_external_validation,
+    published_reachability,
     resolve_latest,
     run_git,
     scope_fingerprint,
@@ -503,6 +507,72 @@ def _validate_command_reproducibility(
                     errors.append(
                         f"{prefix}: the record claims a clean tree at {commit[:12]} but the input "
                         f"{reference} had different content there")
+
+
+#: A full commit identifier. Symbolic values (``HEAD``, ``UNBORN``, a tag reference) are resolved
+#: by the rules that own them and are not commits a record can pin.
+COMMIT_ID = re.compile(r"[0-9a-f]{40}")
+
+#: Where a command record names a commit it ran against.
+RECORD_COMMIT_FIELDS = (("commit",), ("subjectCommit",), ("repositoryState", "head"))
+
+#: Where the checkpoint's own metadata names a commit.
+METADATA_COMMIT_FIELDS = (("STATE.json", "baseCommit"), ("STATE.json", "currentCommit"),
+                          ("RUN-METADATA.json", "initialCommit"),
+                          ("RUN-METADATA.json", "finalCommit"))
+
+
+def _validate_published_history(
+    root: Path,
+    records: list[dict[str, Any]],
+    documents: dict[str, object],
+    errors: list[str],
+) -> None:
+    """Every commit the checkpoint's evidence names must be reachable from the published history.
+
+    `M1-F-003`. `GATE-1-CP-0001`'s record ``cmd-0086`` bound its inputs to a commit that was
+    replaced before the history was published. The commit survived as an unreachable object on the
+    machine that made it, so the checkpoint validated there and failed in every clone of the
+    remote — the history a reviewer actually receives. Asking whether the object *exists* cannot
+    tell those two apart; asking whether a published reference *reaches* it can, and it gives the
+    same answer on every machine that holds the published history.
+
+    The rule applies to every schema version, because it is a property of what was published
+    rather than of the checkpoint's format: a record written under any version is evidence only if
+    the commit it names can be obtained by whoever validates it. A commit that is legitimately
+    replaced after a record names it is kept by a published reference of its own
+    (``refs/tags/iacode-preserved/``), never by rewriting the record.
+    """
+    named: dict[str, list[str]] = {}
+    for record in records:
+        label = str(record.get("id") or "a record")
+        for path in RECORD_COMMIT_FIELDS:
+            value: Any = record
+            for key in path:
+                value = value.get(key) if isinstance(value, dict) else None
+            if isinstance(value, str) and COMMIT_ID.fullmatch(value):
+                named.setdefault(value, []).append(f"COMMANDS.jsonl {label}")
+    for filename, key in METADATA_COMMIT_FIELDS:
+        document = documents.get(filename)
+        value = document.get(key) if isinstance(document, dict) else None
+        if isinstance(value, str) and COMMIT_ID.fullmatch(value):
+            named.setdefault(value, []).append(f"{filename} {key}")
+
+    namespaces = ", ".join(f"{item}/" for item in PUBLISHED_REFERENCE_NAMESPACES)
+    for commit, where in sorted(named.items()):
+        state = published_reachability(root, commit)
+        if state == PUBLISHED:
+            continue
+        cited = ", ".join(sorted(set(where))[:4])
+        if state == UNPUBLISHED_LOCAL_OBJECT:
+            errors.append(
+                f"{cited} names commit {commit[:12]}, which exists here only as a local object: no "
+                f"published reference ({namespaces}) reaches it, so no clone of the published "
+                f"history can validate this evidence")
+        else:
+            errors.append(
+                f"{cited} names commit {commit[:12]}, which is absent from this repository: no "
+                f"published reference ({namespaces}) reaches it")
 
 
 def _validate_status_blockers(state: dict[str, Any], errors: list[str]) -> None:
@@ -1748,6 +1818,7 @@ def validate_checkpoint(
                 errors.append(f"COMMANDS.jsonl:{line_number}: invalid JSON: {exc}")
         if command_count == 0:
             errors.append("COMMANDS.jsonl contains no command records")
+    _validate_published_history(root, command_records, documents, errors)
 
     files_path = target / "FILES.json"
     files: dict[str, Any] | None = None

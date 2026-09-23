@@ -1,0 +1,107 @@
+{
+  "schemaVersion": "1.0.0",
+  "artifact": "VALIDATOR-BLIND-SPOT",
+  "finding": "M1-F-003",
+  "checkpoint": "GATE-3-CP-0003",
+  "generatedAt": "2026-09-23T06:49:11Z",
+  "oldToolingCommit": "0e60b960192f036201e39f16e712ac19223a7a59",
+  "cases": [
+    {
+      "reference": "refs/tags/iacode-preserved/gate1-ledger-b59d66f9f3f9",
+      "commit": "b59d66f9f3f9add2ae9dcd1cd4609fb4a1bf0b55",
+      "checkpoint": "GATE-1-CP-0001",
+      "withReference": {
+        "localObjectExists": true,
+        "validators": {
+          "old": {
+            "exitCode": 0,
+            "output": "CHECKPOINT_VALID"
+          },
+          "corrected": {
+            "exitCode": 0,
+            "output": "CHECKPOINT_VALID"
+          }
+        }
+      },
+      "withoutReference": {
+        "localObjectExists": true,
+        "validators": {
+          "old": {
+            "exitCode": 0,
+            "output": "CHECKPOINT_VALID"
+          },
+          "corrected": {
+            "exitCode": 1,
+            "output": "CHECKPOINT_INVALID - COMMANDS.jsonl cmd-0086, COMMANDS.jsonl cmd-0087 names commit b59d66f9f3f9, which exists here only as a local object: no published reference (refs/heads/, refs/tags/, refs/remotes/) reaches it, so no clone of the published history can validate this evidence"
+          }
+        }
+      },
+      "ok": true
+    },
+    {
+      "reference": "refs/tags/iacode-preserved/gate2-ledger-643e721ee519",
+      "commit": "643e721ee519eaa88e0e92a274e8903fb8ba774a",
+      "checkpoint": "GATE-2-CP-0001",
+      "withReference": {
+        "localObjectExists": true,
+        "validators": {
+          "old": {
+            "exitCode": 0,
+            "output": "CHECKPOINT_VALID"
+          },
+          "corrected": {
+            "exitCode": 0,
+            "output": "CHECKPOINT_VALID"
+          }
+        }
+      },
+      "withoutReference": {
+        "localObjectExists": true,
+        "validators": {
+          "old": {
+            "exitCode": 0,
+            "output": "CHECKPOINT_VALID"
+          },
+          "corrected": {
+            "exitCode": 1,
+            "output": "CHECKPOINT_INVALID - COMMANDS.jsonl cmd-0057 names commit 643e721ee519, which exists here only as a local object: no published reference (refs/heads/, refs/tags/, refs/remotes/) reaches it, so no clone of the published history can validate this evidence"
+          }
+        }
+      },
+      "ok": true
+    },
+    {
+      "reference": "refs/tags/iacode-preserved/setup00-ledger-13ab172fcc06",
+      "commit": "13ab172fcc06c466e62af41286cc09734cd7b5d4",
+      "checkpoint": "SETUP-00-CP-0009",
+      "withReference": {
+        "localObjectExists": true,
+        "validators": {
+          "old": {
+            "exitCode": 0,
+            "output": "CHECKPOINT_VALID"
+          },
+          "corrected": {
+            "exitCode": 0,
+            "output": "CHECKPOINT_VALID"
+          }
+        }
+      },
+      "withoutReference": {
+        "localObjectExists": true,
+        "validators": {
+          "old": {
+            "exitCode": 0,
+            "output": "CHECKPOINT_VALID"
+          },
+          "corrected": {
+            "exitCode": 1,
+            "output": "CHECKPOINT_INVALID - COMMANDS.jsonl cmd-0011 names commit 13ab172fcc06, which exists here only as a local object: no published reference (refs/heads/, refs/tags/, refs/remotes/) reaches it, so no clone of the published history can validate this evidence"
+          }
+        }
+      },
+      "ok": true
+    }
+  ],
+  "result": "PASS"
+}

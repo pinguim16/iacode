@@ -44,6 +44,7 @@ from ledger_common import (
     clone_with_worktree,
     find_root,
     load_json,
+    published_clone,
     resolve_latest,
     run_git,
     scope_fingerprint,
@@ -487,8 +488,11 @@ def run_audit(root: Path, checkpoint: Path, clean_clone: bool) -> dict[str, Any]
         validator = str(root / "scripts" / "development-ledger" / "validate_checkpoint.py")
         with tempfile.TemporaryDirectory(prefix="iacode-history-") as workdir:
             clone = Path(workdir) / "clone"
-            subprocess.run(["git", "clone", "--quiet", "--no-hardlinks", str(root), str(clone)],
-                           check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            # A published clone (`M1-F-003`): a copy of the local object store carries objects no
+            # published reference reaches, and this check stayed green over a sealed record that
+            # depended on one. The shared helper is the only clone the history checks use.
+            if not published_clone(root, clone):
+                return False, "the repository could not be cloned over Git's transport"
             for anchor in anchors:
                 identifier = anchor["checkpointId"]
                 code, _ = run_git(clone, "checkout", "--quiet", "--detach",
@@ -506,7 +510,8 @@ def run_audit(root: Path, checkpoint: Path, clean_clone: bool) -> dict[str, Any]
                               if not failures else "; ".join(failures)[:300])
 
     mirror.check("MIR-016", "Historical compatibility",
-                 "Every sealed checkpoint still validates under the tooling this Gate changes.",
+                 "Every sealed checkpoint still validates under the tooling this Gate changes, "
+                 "from a clone that carries only the published history.",
                  ["file:.iacode/anchors/checkpoint-chain.json"], probe_history)
 
     # 17. Clean clone

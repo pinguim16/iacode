@@ -19,9 +19,9 @@
     "packages/persistence",
     "packages/contracts"
   ],
-  "generatedAt": "2026-09-23T06:26:56Z",
+  "generatedAt": "2026-09-23T07:12:23Z",
   "policyVersion": "2.0.0",
-  "inputsFingerprint": "8b147b0a66de864c30e27e4a089f3a4cd3614e2a05c5d8d3c1fe4008fe508d79",
+  "inputsFingerprint": "b6e5dd88974318d7d288992b6504e1d2036a96fe4567c6863a721f2bbd0e3f02",
   "lessonsConsidered": 54,
   "lessonsApplicable": 53,
   "applicable": [
@@ -408,11 +408,11 @@
     {
       "lessonId": "LSN-0040",
       "title": "A control that judges sealed history only runs once a successor anchors it",
-      "status": "CONFIRMED",
+      "status": "GUARDED",
       "severity": "CRITICAL",
-      "reasonApplicable": "applies to every Gate; category checkpoint; severity CRITICAL; status CONFIRMED, so it is not yet prevented automatically",
-      "requiredCheck": "Confirm that every sealed predecessor this Gate anchors validates from a detached checkout of its own tag, and that no command this Gate records declares an input the repository does not carry.",
-      "requiredEvidence": "A validation run against each anchored checkpoint from its tag, green.",
+      "reasonApplicable": "applies to every Gate; category checkpoint; severity CRITICAL; already guarded, so the control must keep holding",
+      "requiredCheck": "Confirm that every sealed predecessor this Gate anchors validates from a detached checkout of its own tag in a published clone (Git's transport, never a copy of the local object store), that every commit sealed evidence names is reachable from a published reference, and that no command this Gate records declares an input the repository does not carry.",
+      "requiredEvidence": "A validation run against each anchored checkpoint from its tag in a published clone, green, and a clone of the remote that validates every sealed checkpoint of the milestone.",
       "derivedRequirementId": "LESSON-REQ-0039"
     },
     {
@@ -828,7 +828,7 @@
       "lessonId": "LSN-0040",
       "description": "Verify a control that judges sealed history only runs once a successor anchors it",
       "mandatory": true,
-      "requiredEvidence": "A validation run against each anchored checkpoint from its tag, green."
+      "requiredEvidence": "A validation run against each anchored checkpoint from its tag in a published clone, green, and a clone of the remote that validates every sealed checkpoint of the milestone."
     },
     {
       "id": "LESSON-REQ-0040",

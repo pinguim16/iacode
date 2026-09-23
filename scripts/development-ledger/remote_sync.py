@@ -7,7 +7,10 @@ tracking ref that is only as fresh as the last fetch. This asks the remote itsel
 
 - ``origin`` must be the authorised URL;
 - the remote ``refs/heads/<branch>`` must name exactly the local branch's commit;
-- every ``--tag`` must exist on the remote and name exactly the commit it names locally.
+- every ``--tag`` must exist on the remote and name exactly the commit it names locally;
+- every local tag in a namespace sealed evidence relies on -- a checkpoint's canonical tag, or a
+  reference that preserves a commit a sealed record names -- must be on the remote at the same
+  commit, because that evidence validates only where the reference is published (`M1-F-003`).
 
 Exit ``0`` means synchronised, ``1`` means not synchronised (the report says what differs), ``2``
 means the remote could not be asked, which is an operational blocker and never a pass.
@@ -29,6 +32,11 @@ from ledger_common import find_root, use_utf8_stdout
 
 AUTHORISED_REMOTE = "https://github.com/pinguim16/iacode.git"
 DEFAULT_BRANCH = "main"
+
+#: The tag namespaces sealed evidence depends on. A checkpoint is validated from its canonical tag,
+#: and a commit a sealed record names but no branch reaches is kept by a preserved tag; either one
+#: that exists only locally makes the evidence valid here and nowhere else.
+EVIDENCE_TAG_NAMESPACES = ("refs/tags/iacode-checkpoints/", "refs/tags/iacode-preserved/")
 
 
 def _git(root: Path, *arguments: str) -> tuple[int, str]:
@@ -85,7 +93,29 @@ def check(root: Path, remote: str, branch: str, tags: list[str],
         elif remote_tag != local_tag:
             problems.append(f"the tag {reference} names {local_tag[:12]} locally and "
                             f"{remote_tag[:12]} on {remote}")
+    for reference, local_tag in sorted(evidence_tags(root).items()):
+        remote_tag = advertised.get(reference)
+        if remote_tag is None:
+            problems.append(f"the tag {reference} exists locally and is not on {remote}; "
+                            f"sealed evidence that depends on it validates only here")
+        elif remote_tag != local_tag:
+            problems.append(f"the tag {reference} names {local_tag[:12]} locally and "
+                            f"{remote_tag[:12]} on {remote}")
     return problems
+
+
+def evidence_tags(root: Path) -> dict[str, str]:
+    """Every local tag sealed evidence may depend on, as ``ref -> commit`` (peeled)."""
+    code, output = _git(root, "for-each-ref", "--format=%(refname) %(objectname) %(*objectname)",
+                        *(namespace.rstrip("/") for namespace in EVIDENCE_TAG_NAMESPACES))
+    if code != 0:
+        raise RuntimeError("the local tags could not be listed")
+    tags: dict[str, str] = {}
+    for line in output.splitlines():
+        parts = line.split()
+        if len(parts) >= 2:
+            tags[parts[0]] = parts[2] if len(parts) > 2 else parts[1]
+    return tags
 
 
 def main(argv: list[str] | None = None) -> int:

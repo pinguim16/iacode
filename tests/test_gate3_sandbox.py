@@ -1280,5 +1280,287 @@ class SandboxScenarioTests(unittest.TestCase):
         for table in ("ToolCall", "ToolResult", "SandboxSession", "RunEvent"):
             self.assertIn(table, report)
 
+
+# ---------------------------------------------------------------------------------------------
+# 6. M1-F-003: sealed evidence is judged from the published history
+# ---------------------------------------------------------------------------------------------
+
+
+def _rev(root: Path, reference: str) -> str:
+    return subprocess.run(["git", "rev-parse", reference], cwd=root, check=True,
+                          capture_output=True, text=True, encoding="utf-8").stdout.strip()
+
+
+def _published_fixture(base: Path) -> tuple[Path, str, str]:
+    """A repository holding one published commit and one commit nothing references.
+
+    The second is made with ``commit-tree``, which writes a commit object and no reference: the
+    state `b59d66f9f3f9` was in, a closure commit replaced before the history was published.
+    """
+    source = base / "source"
+    source.mkdir(parents=True)
+    _git(source, "init", "-q", "-b", "main")
+    _git(source, "config", "user.name", "IACode Tests")
+    _git(source, "config", "user.email", "iacode-tests@example.invalid")
+    (source / "a.txt").write_text("published\n", encoding="utf-8")
+    _git(source, "add", "a.txt")
+    _git(source, "commit", "-q", "-m", "published")
+    published = _rev(source, "HEAD")
+    orphan = subprocess.run(
+        ["git", "commit-tree", _rev(source, "HEAD^{tree}"), "-p", published,
+         "-m", "replaced before publication"],
+        cwd=source, check=True, capture_output=True, text=True,
+        encoding="utf-8").stdout.strip()
+    return source, published, orphan
+
+
+class PublishedHistoryTests(unittest.TestCase):
+    """`M1-F-003`: a local object is not a published one, and the controls ask the second question.
+
+    `GATE-1-CP-0001` named a commit that existed in the working repository's object store and in no
+    published history. Every control over sealed history cloned the local path, which carries such
+    objects, so all of them passed while every clone of the remote failed.
+    """
+
+    def setUp(self) -> None:
+        self._directory = tempfile.TemporaryDirectory(prefix="iacode-published-")
+        self.base = Path(self._directory.name)
+        self.source, self.published, self.orphan = _published_fixture(self.base)
+
+    def tearDown(self) -> None:
+        self._directory.cleanup()
+
+    def test_a_local_object_is_not_a_published_object(self) -> None:
+        self.assertEqual(ledger_common.published_reachability(self.source, self.published),
+                         ledger_common.PUBLISHED)
+        self.assertEqual(ledger_common.published_reachability(self.source, self.orphan),
+                         ledger_common.UNPUBLISHED_LOCAL_OBJECT)
+        self.assertEqual(ledger_common.published_reachability(self.source, "0" * 40),
+                         ledger_common.ABSENT_OBJECT)
+
+    def test_a_published_clone_carries_only_what_a_published_reference_reaches(self) -> None:
+        # The method the first guardrail used, kept here as the demonstration of the defect: a
+        # copy of the object store brings the orphan along.
+        copied = self.base / "copied"
+        subprocess.run(["git", "clone", "--quiet", *LOCAL_OBJECT_STORE_COPY, str(self.source),
+                        str(copied)], check=True, capture_output=True)
+        self.assertEqual(ledger_common.published_reachability(copied, self.orphan),
+                         ledger_common.UNPUBLISHED_LOCAL_OBJECT)
+
+        clone = self.base / "clone"
+        self.assertTrue(ledger_common.published_clone(self.source, clone))
+        self.assertEqual(ledger_common.published_reachability(clone, self.published),
+                         ledger_common.PUBLISHED)
+        self.assertEqual(ledger_common.published_reachability(clone, self.orphan),
+                         ledger_common.ABSENT_OBJECT)
+
+    def test_a_published_reference_is_what_brings_the_object(self) -> None:
+        _git(self.source, "tag", "iacode-preserved/fixture", self.orphan)
+        self.assertEqual(ledger_common.published_reachability(self.source, self.orphan),
+                         ledger_common.PUBLISHED)
+        clone = self.base / "clone"
+        self.assertTrue(ledger_common.published_clone(self.source, clone))
+        self.assertEqual(ledger_common.published_reachability(clone, self.orphan),
+                         ledger_common.PUBLISHED)
+
+    def test_a_private_reference_does_not_publish_an_object(self) -> None:
+        """The reference that protected `b59d66f9f3f9` from garbage collection published nothing."""
+        _git(self.source, "update-ref", "refs/iacode-preserved/fixture", self.orphan)
+        self.assertEqual(ledger_common.published_reachability(self.source, self.orphan),
+                         ledger_common.UNPUBLISHED_LOCAL_OBJECT)
+
+    def test_the_validator_refuses_a_record_naming_an_unpublished_commit(self) -> None:
+        def errors_for(root: Path, commit: str) -> list[str]:
+            found: list[str] = []
+            validate_checkpoint._validate_published_history(
+                root, [{"id": "cmd-0001", "commit": commit,
+                        "repositoryState": {"head": commit}}], {}, found)
+            return found
+
+        # The null control: the identical path accepts a record naming the published commit.
+        self.assertEqual(errors_for(self.source, self.published), [])
+
+        local = errors_for(self.source, self.orphan)
+        self.assertEqual(len(local), 1, local)
+        self.assertIn("exists here only as a local object", local[0])
+        self.assertIn(self.orphan[:12], local[0])
+
+        clone = self.base / "clone"
+        self.assertTrue(ledger_common.published_clone(self.source, clone))
+        absent = errors_for(clone, self.orphan)
+        self.assertEqual(len(absent), 1, absent)
+        self.assertIn("absent from this repository", absent[0])
+
+        _git(self.source, "tag", "iacode-preserved/fixture", self.orphan)
+        self.assertEqual(errors_for(self.source, self.orphan), [])
+        republished = self.base / "republished"
+        self.assertTrue(ledger_common.published_clone(self.source, republished))
+        self.assertEqual(errors_for(republished, self.orphan), [])
+
+    def test_the_checkpoint_metadata_is_judged_by_the_same_rule(self) -> None:
+        found: list[str] = []
+        validate_checkpoint._validate_published_history(
+            self.source, [], {"STATE.json": {"baseCommit": self.orphan, "currentCommit": "HEAD"},
+                              "RUN-METADATA.json": {"initialCommit": self.published}}, found)
+        self.assertEqual(len(found), 1, found)
+        self.assertIn("STATE.json baseCommit", found[0])
+
+
+#: The clone arguments that copy a local object store, unreachable objects included. Only the
+#: demonstration of the defect above may use them.
+LOCAL_OBJECT_STORE_COPY = ("--no-hardlinks",)
+
+
+def preserved_references(root: Path) -> dict[str, str]:
+    listed = subprocess.run(
+        ["git", "for-each-ref", "--format=%(refname) %(objectname)", "refs/tags/iacode-preserved"],
+        cwd=root, check=True, capture_output=True, text=True, encoding="utf-8").stdout
+    return dict(line.split() for line in listed.splitlines() if line.strip())
+
+
+def checkpoint_naming(root: Path, commit: str) -> str | None:
+    """The anchored checkpoint whose sealed ledger names ``commit``, derived rather than named."""
+    anchors = json.loads((root / ".iacode" / "anchors" / "checkpoint-chain.json")
+                         .read_text(encoding="utf-8"))
+    for anchor in anchors["anchors"]:
+        ledger = root / "docs" / "checkpoints" / anchor["checkpointId"] / "COMMANDS.jsonl"
+        if ledger.is_file() and commit in ledger.read_text(encoding="utf-8"):
+            return str(anchor["checkpointId"])
+    return None
+
+
+class PreservedReferenceTests(unittest.TestCase):
+    """`M1-F-003` on the real sealed history: every preserved reference is load-bearing.
+
+    For each published ``refs/tags/iacode-preserved/`` reference, derived from the repository: the
+    sealed checkpoint whose ledger names its commit validates from its own tag with the reference
+    (the null control); without it the object is still in the repository's store and the checkpoint
+    is refused as naming a local object, and a published clone of that repository does not carry
+    the object and refuses it as absent.
+    """
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls._directory = tempfile.TemporaryDirectory(prefix="iacode-preserved-")
+        cls.base = Path(cls._directory.name)
+        cls.source = cls.base / "source"
+        if not ledger_common.published_clone(PROJECT_ROOT, cls.source):
+            raise unittest.SkipTest("the repository could not be cloned over Git's transport")
+        cls.preserved = preserved_references(cls.source)
+        # Derived once, from the branch, before any test checks out a sealed tag whose tree does
+        # not contain the later checkpoints.
+        cls.subjects = {reference: checkpoint_naming(cls.source, commit)
+                        for reference, commit in cls.preserved.items()}
+
+    @classmethod
+    def tearDownClass(cls) -> None:
+        cls._directory.cleanup()
+
+    def validate(self, root: Path, checkpoint: str) -> tuple[int, str]:
+        _git(root, "checkout", "--quiet", "--detach", f"refs/tags/iacode-checkpoints/{checkpoint}")
+        completed = subprocess.run(
+            [sys.executable, str(SCRIPTS / "validate_checkpoint.py"), "--root", str(root)],
+            capture_output=True, text=True, encoding="utf-8", errors="replace", check=False)
+        return completed.returncode, completed.stdout + completed.stderr
+
+    def test_the_repository_publishes_a_preserved_reference(self) -> None:
+        self.assertTrue(self.preserved, "no refs/tags/iacode-preserved/ reference is published")
+
+    def test_every_preserved_reference_is_what_makes_its_checkpoint_valid(self) -> None:
+        for number, (reference, commit) in enumerate(sorted(self.preserved.items())):
+            with self.subTest(reference=reference):
+                checkpoint = self.subjects[reference]
+                self.assertIsNotNone(checkpoint, f"no sealed ledger names {commit[:12]}")
+                code, output = self.validate(self.source, checkpoint)
+                self.assertEqual(code, 0, f"null control: {output[-600:]}")
+
+                _git(self.source, "update-ref", "-d", reference)
+                try:
+                    code, output = self.validate(self.source, checkpoint)
+                    self.assertNotEqual(code, 0, output)
+                    self.assertIn("exists here only as a local object", output)
+                    clone = self.base / f"without-{number}"
+                    self.assertTrue(ledger_common.published_clone(self.source, clone))
+                    code, output = self.validate(clone, checkpoint)
+                    self.assertNotEqual(code, 0, output)
+                    self.assertIn("absent from this repository", output)
+                finally:
+                    _git(self.source, "update-ref", reference, commit)
+                    _git(self.source, "checkout", "--quiet", "main")
+
+
+class CloneMethodTests(unittest.TestCase):
+    """`M1-F-003`: every control that clones this repository clones the published history.
+
+    The rule is structural, so it is read from the syntax tree: a ``git clone`` argument list in the
+    tooling or the suite either goes through ``ledger_common.published_clone`` or carries
+    ``--no-local`` itself. ``--no-hardlinks`` and a bare local clone copy the object store and are
+    what let the sealed-history check stay green over `M1-F-003`.
+    """
+
+    SEARCHED = ("scripts", "tests")
+
+    #: The one named exception: the demonstration of the defect in `PublishedHistoryTests` spells
+    #: the old method through this constant, and nothing else may.
+    DEMONSTRATION = "LOCAL_OBJECT_STORE_COPY"
+
+    @classmethod
+    def offenders(cls, source: str) -> list[int]:
+        lines = []
+        for node in ast.walk(ast.parse(source)):
+            if not isinstance(node, (ast.List, ast.Tuple)):
+                continue
+            constants = [item.value for item in node.elts
+                         if isinstance(item, ast.Constant) and isinstance(item.value, str)]
+            demonstration = any(
+                isinstance(item, ast.Starred) and isinstance(item.value, ast.Name)
+                and item.value.id == cls.DEMONSTRATION for item in node.elts)
+            if ("git" in constants and "clone" in constants and "--no-local" not in constants
+                    and not demonstration):
+                lines.append(node.lineno)
+        return lines
+
+    def test_the_named_exception_is_used_once(self) -> None:
+        uses = []
+        for path in sorted((PROJECT_ROOT / "tests").rglob("*.py")):
+            if "__pycache__" in path.parts:
+                continue
+            for node in ast.walk(ast.parse(path.read_text(encoding="utf-8"))):
+                if isinstance(node, ast.Starred) and isinstance(node.value, ast.Name) \
+                        and node.value.id == self.DEMONSTRATION:
+                    uses.append(path.name)
+        self.assertEqual(uses, ["test_gate3_sandbox.py"])
+
+    def test_every_clone_in_the_tooling_and_the_suite_is_a_published_clone(self) -> None:
+        found: list[str] = []
+        scanned = 0
+        for directory in self.SEARCHED:
+            for path in sorted((PROJECT_ROOT / directory).rglob("*.py")):
+                if "__pycache__" in path.parts:
+                    continue
+                scanned += 1
+                for line in self.offenders(path.read_text(encoding="utf-8")):
+                    found.append(f"{path.relative_to(PROJECT_ROOT).as_posix()}:{line}")
+        self.assertGreater(scanned, 0, "the scan read nothing")
+        self.assertEqual(found, [], "a clone that copies the local object store")
+
+    def test_the_scan_detects_a_clone_of_the_local_object_store(self) -> None:
+        """The null control over mutated sources."""
+        self.assertEqual(self.offenders(
+            'subprocess.run(["git", "clone", "--quiet", "--no-hardlinks", a, b])\n'), [1])
+        self.assertEqual(self.offenders('run(["git", "clone", a, b])\n'), [1])
+        self.assertEqual(self.offenders(
+            'run(["git", "clone", "--quiet", "--no-local", a, b])\n'), [])
+
+    def test_the_shared_helper_is_a_transport_clone(self) -> None:
+        source = ast.unparse(ast.parse(Path(ledger_common.__file__).read_text(encoding="utf-8")))
+        self.assertIn("'--no-local'", source)
+        for module in ("m0_mirror_audit.py", "m0_red_team.py"):
+            with self.subTest(module=module):
+                text = (SCRIPTS / module).read_text(encoding="utf-8")
+                self.assertIn("published_clone(", text)
+                self.assertNotIn("--no-hardlinks", text)
+
+
 if __name__ == "__main__":
     unittest.main()

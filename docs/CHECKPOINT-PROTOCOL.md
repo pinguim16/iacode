@@ -58,6 +58,22 @@ Git commits cannot embed their own hash. Work-in-progress checkpoints may use th
 
 Self-hashes in `FILES.json` are omitted because changing that file changes its own hash. Other hashes are included when useful and stable. Text hashes use UTF-8 with line endings normalized to LF so validation remains portable across Git checkouts.
 
+## Published history
+
+Sealed evidence is judged from the published history, because that is what a reviewer receives
+([ADR-0028](adr/ADR-0028-sealed-evidence-is-judged-from-the-published-history.md)). Every commit a
+checkpoint's evidence names — a command record's `commit`, `subjectCommit` or
+`repositoryState.head`, and the checkpoint's `baseCommit`, `currentCommit`, `initialCommit` and
+`finalCommit` — must be reachable from a published reference: a branch, a tag or a remote-tracking
+branch. An object that exists only in one machine's store is refused, and validation says so,
+whatever schema version the checkpoint declares.
+
+A commit that a record names and that is replaced before it is published is kept reachable by a
+lightweight tag of its own under `refs/tags/iacode-preserved/`, pushed with the history. The record
+is never rewritten. Every control that clones this repository to judge sealed history clones the
+published history only (`ledger_common.published_clone`, Git's transport), never a copy of the
+local object store (`M1-F-003`).
+
 ## Checkout modes
 
 Validation normally runs on an attached branch, where the branch name and the checked-out commit

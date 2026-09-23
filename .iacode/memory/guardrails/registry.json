@@ -597,7 +597,7 @@
     },
     {
       "guardrailId": "GRD-0042",
-      "title": "Every anchored checkpoint validates from a detached checkout of its own tag",
+      "title": "Every anchored checkpoint validates from its own tag in a clone of the published history",
       "kind": "test",
       "reference": "test_every_sealed_checkpoint_validates_from_its_own_tag",
       "verifiedBy": [
@@ -605,12 +605,17 @@
         "test_the_recorder_never_declares_an_ignored_path_as_an_input",
         "test_an_ignored_input_is_bound_by_content_rather_than_by_presence",
         "test_an_input_the_repository_carries_is_still_required_to_exist",
-        "test_an_ignored_input_without_a_bound_digest_is_still_refused"
+        "test_an_ignored_input_without_a_bound_digest_is_still_refused",
+        "test_the_validator_refuses_a_record_naming_an_unpublished_commit",
+        "test_every_preserved_reference_is_what_makes_its_checkpoint_valid",
+        "test_a_published_clone_carries_only_what_a_published_reference_reaches",
+        "test_every_clone_in_the_tooling_and_the_suite_is_a_published_clone",
+        "test_a_preserved_reference_missing_from_the_remote_fails_unnamed"
       ],
       "lessons": [
         "LSN-0040"
       ],
-      "removingItWouldAllow": "A sealed checkpoint to stop validating from its own tag without anything noticing until a successor happens to anchor it, one Gate later."
+      "removingItWouldAllow": "A sealed checkpoint to stop validating from its own tag, or to validate only on the machine whose object store still holds a commit no published reference reaches, without anything noticing until a clone of the remote is verified (M1-F-003)."
     },
     {
       "guardrailId": "GRD-0043",

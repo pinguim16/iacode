@@ -788,6 +788,12 @@ class RecordedInputTests(unittest.TestCase):
     def test_every_sealed_checkpoint_validates_from_its_own_tag(self) -> None:
         """The property `MIR-016` audits, asserted here so a change to the tooling reports it.
 
+        The clone is a published clone (`M1-F-003`): it carries only what this repository's
+        branches and tags reach, exactly as a clone of the remote would. The first version of this
+        test cloned the local path with ``--no-hardlinks``, which copies the whole object store,
+        unreachable objects included, and stayed green over a sealed record that named a commit no
+        published reference reached.
+
         Skipped rather than failed when Git cannot reach the tags, because an unavailable
         repository is not evidence that sealed history is broken.
         """
@@ -801,10 +807,7 @@ class RecordedInputTests(unittest.TestCase):
         validator = PROJECT_ROOT / "scripts" / "development-ledger" / "validate_checkpoint.py"
         with tempfile.TemporaryDirectory(prefix="iacode-sealed-") as workdir:
             clone = Path(workdir) / "clone"
-            cloned = subprocess.run(
-                ["git", "clone", "--quiet", "--no-hardlinks", str(PROJECT_ROOT), str(clone)],
-                capture_output=True, text=True, encoding="utf-8", errors="replace", check=False)
-            if cloned.returncode != 0:
+            if not ledger_common.published_clone(PROJECT_ROOT, clone):
                 self.skipTest("the repository could not be cloned for the sealed-history check")
 
             for identifier in identifiers:

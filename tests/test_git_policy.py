@@ -206,6 +206,29 @@ class RemoteSyncTests(unittest.TestCase):
         self.assertEqual(code, 1, report)
         self.assertIn("is not on origin", report)
 
+    def test_a_preserved_reference_missing_from_the_remote_fails_unnamed(self) -> None:
+        """`M1-F-003`: a reference that keeps a sealed record's commit reachable is published or
+        the evidence validates only on this machine. No ``--tag`` has to name it."""
+        git(self.root, "tag", "iacode-preserved/fixture-ledger")
+        code, report = self.sync()
+        self.assertEqual(code, 1, report)
+        self.assertIn("refs/tags/iacode-preserved/fixture-ledger exists locally and is not on",
+                      report)
+        git(self.root, "push", "-q", "origin", "refs/tags/iacode-preserved/fixture-ledger")
+        code, report = self.sync()
+        self.assertEqual(code, 0, report)
+
+    def test_a_checkpoint_tag_missing_from_the_remote_fails_unnamed(self) -> None:
+        git(self.root, "tag", "iacode-checkpoints/FIXTURE-CP-0002")
+        code, report = self.sync()
+        self.assertEqual(code, 1, report)
+        self.assertIn("iacode-checkpoints/FIXTURE-CP-0002 exists locally", report)
+
+    def test_a_tag_outside_the_evidence_namespaces_is_not_required(self) -> None:
+        git(self.root, "tag", "scratch-label")
+        code, report = self.sync()
+        self.assertEqual(code, 0, report)
+
     def test_a_remote_other_than_the_authorised_one_fails(self) -> None:
         output = io.StringIO()
         with contextlib.redirect_stdout(output):

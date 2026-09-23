@@ -38,6 +38,7 @@ from ledger_common import (
     LedgerError,
     find_root,
     load_json,
+    published_clone,
     resolve_latest,
     run_git,
     scope_fingerprint,
@@ -75,9 +76,10 @@ class Fixture:
 
     # -- construction ------------------------------------------------------------------
     def _build(self) -> None:
-        subprocess.run(
-            ["git", "clone", "--quiet", "--no-hardlinks", str(self.source), str(self.path)],
-            check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        # A published clone (`M1-F-003`): the fixture holds what a reviewer of the remote would,
+        # never an object only this machine's store keeps alive.
+        if not published_clone(self.source, self.path):
+            raise LedgerError("the repository could not be cloned for the attack fixture")
         self._sync_worktree()
         self._model_seal()
 

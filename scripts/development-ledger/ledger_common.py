@@ -461,17 +461,62 @@ def scope_fingerprint(root: Path, extra_paths: list[str] | None = None) -> str:
     return canonical_digest(entries)
 
 
+#: The references this repository treats as published: what a clone over Git's transport carries
+#: (branches and tags) and what a clone of the remote records of it (remote-tracking branches).
+#: Anything else — ``refs/stash``, a reflog, a private namespace such as ``refs/iacode-preserved/`` —
+#: keeps an object alive on one machine and nowhere else.
+PUBLISHED_REFERENCE_NAMESPACES = ("refs/heads", "refs/tags", "refs/remotes")
+
+#: The three answers :func:`published_reachability` gives, named so a refusal can say which.
+PUBLISHED = "PUBLISHED"
+UNPUBLISHED_LOCAL_OBJECT = "UNPUBLISHED_LOCAL_OBJECT"
+ABSENT_OBJECT = "ABSENT_OBJECT"
+
+
+def published_reachability(root: Path, commit: str) -> str:
+    """Whether a published reference reaches ``commit``, and if not, whether the object exists.
+
+    `M1-F-003`: a sealed record named a commit that existed in this repository's object store and
+    in no published history. Every control that asked "does the object exist?" answered yes, and
+    every clone of the remote answered no. The two questions are different and this answers the
+    second one: ``PUBLISHED`` when a branch, a tag or a remote-tracking branch reaches the commit,
+    ``UNPUBLISHED_LOCAL_OBJECT`` when the object exists here and nothing published reaches it, and
+    ``ABSENT_OBJECT`` when the object is not in this repository at all.
+    """
+    code, _ = run_git(root, "cat-file", "-e", f"{commit}^{{commit}}")
+    if code != 0:
+        return ABSENT_OBJECT
+    code, reaching = run_git(root, "for-each-ref", "--contains", commit, "--count=1",
+                             "--format=%(refname)", *PUBLISHED_REFERENCE_NAMESPACES)
+    return PUBLISHED if code == 0 and reaching.strip() else UNPUBLISHED_LOCAL_OBJECT
+
+
+def published_clone(source: Path, destination: Path) -> bool:
+    """Clone ``source`` the way a reviewer receives it: over Git's transport, published objects only.
+
+    ``git clone`` of a local path hard-links the object store, and ``--no-hardlinks`` copies it
+    wholesale; either way the clone holds objects no reference reaches, so a sealed record that
+    depends on one validates in the clone and in no clone of the remote. That is how
+    `test_every_sealed_checkpoint_validates_from_its_own_tag` and `MIR-016` stayed green over
+    `M1-F-003`. ``--no-local`` makes Git use its transport even for a local path: the source packs
+    what its branches and tags reach and nothing else, exactly as the remote does. Every control
+    that clones this repository to judge what it would publish clones through here.
+    """
+    completed = subprocess.run(
+        ["git", "clone", "--quiet", "--no-local", str(source), str(destination)],
+        stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=False)
+    return completed.returncode == 0
+
+
 def clone_with_worktree(root: Path, destination: Path) -> bool:
     """Clone the repository and bring the clone up to the current working tree.
 
     A delivery is validated before it is committed, so a clone of ``HEAD`` would test the previous
     revision. This produces a fresh repository whose content is exactly what is about to be sealed,
-    which is what a clean-clone check is supposed to answer.
+    which is what a clean-clone check is supposed to answer. The clone is a published clone, so it
+    holds no object the remote would not.
     """
-    completed = subprocess.run(
-        ["git", "clone", "--quiet", "--no-hardlinks", str(root), str(destination)],
-        stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=False)
-    if completed.returncode != 0:
+    if not published_clone(root, destination):
         return False
     code, output = run_git(root, "ls-files", "--cached", "--others", "--exclude-standard")
     if code != 0:

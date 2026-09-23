@@ -87,10 +87,13 @@ From `GATE 3` the repository has a public remote, `origin` =
 - every green commit is pushed with `git push origin main`, not held until the Gate closes;
 - a pushed commit is never amended, rebased or reset; a mistake is corrected by a new commit;
 - a sealed checkpoint's tag is pushed and never moved or deleted on the remote;
+- every commit sealed evidence names is reachable from the published history; a commit replaced
+  before publication that a record names is kept by a pushed tag under `refs/tags/iacode-preserved/`
+  ([ADR-0028](adr/ADR-0028-sealed-evidence-is-judged-from-the-published-history.md));
 - authentication stays in the local credential store, never in a URL, a config file, the repository
   or a chat;
 - a Gate claims remote synchronisation only when `git log origin/main..main` is empty and its
-  final tag is on the remote.
+  final tag, and every local checkpoint and preserved tag, is on the remote.
 
 The Git an agent uses inside a sandbox is not this Git: it is local to a disposable workspace, has
 its own identity, and has no remote and no credential

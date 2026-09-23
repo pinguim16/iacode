@@ -1,0 +1,25 @@
+{
+  "schemaVersion": "1.0.0",
+  "artifact": "OLD-CODE-REGRESSION",
+  "finding": "M1-F-003",
+  "checkpoint": "GATE-3-CP-0003",
+  "generatedAt": "2026-09-23T06:45:26Z",
+  "base": "0e60b960192f036201e39f16e712ac19223a7a59",
+  "overlay": [
+    "tests/test_gate3_sandbox.py"
+  ],
+  "tests": [
+    "tests.test_gate3_sandbox.PublishedHistoryTests",
+    "tests.test_gate3_sandbox.PreservedReferenceTests",
+    "tests.test_gate3_sandbox.CloneMethodTests"
+  ],
+  "oldCode": {
+    "exitCode": 1,
+    "summary": "ERROR: test_a_local_object_is_not_a_published_object (tests.test_gate3_sandbox.PublishedHistoryTests.test_a_local_object_is_not_a_published_object) | ERROR: test_a_private_reference_does_not_publish_an_object (tests.test_gate3_sandbox.PublishedHistoryTests.test_a_private_reference_does_not_publish_an_object) | ERROR: test_a_published_clone_carries_only_what_a_published_reference_reaches (tests.test_gate3_sandbox.PublishedHistoryTests.test_a_published_clone_carries_only_what_a_published_reference_reaches) | ERROR: test_a_published_reference_is_what_brings_the_object (tests.test_gate3_sandbox.PublishedHistoryTests.test_a_published_reference_is_what_brings_the_object) | ERROR: test_the_checkpoint_metadata_is_judged_by_the_same_rule (tests.test_gate3_sandbox.PublishedHistoryTests.test_the_checkpoint_metadata_is_judged_by_the_same_rule) | ERROR: test_the_validator_refuses_a_record_naming_an_unpublished_commit (tests.test_gate3_sandbox.PublishedHistoryTests.test_the_validator_refuses_a_record_naming_an_unpublished_commit) | ERROR: setUpClass (tests.test_gate3_sandbox.PreservedReferenceTests) | FAIL: test_every_clone_in_the_tooling_and_the_suite_is_a_published_clone (tests.test_gate3_sandbox.CloneMethodTests.test_every_clone_in_the_tooling_and_the_suite_is_a_published_clone) | FAIL: test_the_shared_helper_is_a_transport_clone (tests.test_gate3_sandbox.CloneMethodTests.test_the_shared_helper_is_a_transport_clone) | Ran 10 tests in 3.313s | FAILED (failures=2, errors=7)"
+  },
+  "correctedCode": {
+    "exitCode": 0,
+    "summary": "Ran 12 tests in 81.195s | OK"
+  },
+  "result": "PASS"
+}
