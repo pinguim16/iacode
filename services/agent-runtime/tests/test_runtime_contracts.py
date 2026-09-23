@@ -151,7 +151,7 @@ class PayloadLimitTests:
 
 
 class SandboxPlanContractTests:
-    """GATE 3: a stage carries the sandbox policy its tools execute under, and a run its workspace."""
+    """GATE 3: a stage carries the sandbox policy its tools run under, and a run its workspace."""
 
     def test_the_sandbox_policy_and_the_workspace_round_trip(self) -> None:
         sandboxed = dataclasses.replace(stage(allowed_actions=("filesystem.read",)),

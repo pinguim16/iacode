@@ -140,7 +140,9 @@
       <tbody>
         @for (execution of current.toolExecutions; track execution.toolRequestId) {
           <tr data-testid="tool-execution">
-            <td><code>{{ execution.tool }}</code></td>
+            <td>
+              <code>{{ execution.tool }}</code>
+            </td>
             <td>
               <span class="badge {{ tone(execution.status) }}">{{ execution.status }}</span>
             </td>
