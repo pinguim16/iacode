@@ -119,6 +119,20 @@
       ]
     },
     {
+      "id": "sandboxTests",
+      "title": "Sandbox suite",
+      "command": [
+        "python",
+        "scripts/iacode/gates/sandbox_tests.py"
+      ],
+      "purpose": "Green Keeper gate: the sandbox's own suite — the contracts, the tool registry and policy, the path resolver, patching, the service's decisions, recovery and the sweeper, telemetry, and the real container engine asserting isolation, privileges, network, secrets, resource limits, timeouts, output bounds, the filesystem, shell and Git tools and the session lifecycle — run in the sandbox service image after that image and the sandbox image profiles are rebuilt from their current inputs, with no dependency on the rest of the stack or on a provider credential.",
+      "mandatory": true,
+      "qualityDimensions": [
+        "unitTests",
+        "security"
+      ]
+    },
+    {
       "id": "webTests",
       "title": "Foundation frontend build and suite",
       "command": [

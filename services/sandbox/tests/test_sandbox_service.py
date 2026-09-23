@@ -46,6 +46,39 @@ class SandboxServiceDecisionTests:
         result = run(service.execute(payload))
         assert (result.status, result.error_code) == ("DENIED", "CONTRACT_UNKNOWN_FIELD")
 
+    def test_no_request_can_change_the_network_the_limits_or_the_mounts(self) -> None:
+        """An agent asking for more than its policy gives is refused, in every spelling of it.
+
+        Each escalation is tried at both places a request has: beside the contract's fields,
+        where the contract refuses it, and inside the tool's arguments, where the tool refuses it.
+        Nothing is started for any of them.
+        """
+        escalations = ({"network": "full"}, {"networkProfile": "local-services"},
+                       {"memory": "unlimited"}, {"cpus": 64}, {"pids": 0},
+                       {"mount": "C:\\"}, {"volumes": ["/:/host"]}, {"privileged": True},
+                       {"image": "alpine:latest"},
+                       {"environment": {"DOCKER_HOST": "tcp://host.docker.internal:2375"}})
+        for escalation in escalations:
+            backend = FakeBackend()
+            service, _store = fake_service(backend)
+            beside = request("shell.exec", {"command": "true"}, run_id="r-1")
+            beside.update(escalation)
+            result = run(service.execute(beside))
+            beside_verdict = (result.status, result.error_code)
+            assert beside_verdict == ("DENIED", "CONTRACT_UNKNOWN_FIELD"), escalation
+            inside = request("shell.exec", {"command": "true", **escalation}, run_id="r-1")
+            result = run(service.execute(inside))
+            inside_verdict = (result.status, result.error_code)
+            assert inside_verdict in (("DENIED", "ARGUMENT_UNKNOWN"),
+                                      ("DENIED", "ENVIRONMENT_NOT_ALLOWED")), inside_verdict
+            assert backend.created == [] and backend.requests == [], escalation
+
+        control = FakeBackend()
+        service, _store = fake_service(control)
+        result = run(service.execute(request("shell.exec", {"command": "true"}, run_id="r-1")))
+        assert result.status == "SUCCEEDED", "the unmutated request must pass the same path"
+        assert len(control.created) == 1
+
     def test_an_execution_is_never_repeated_for_a_retried_request(self) -> None:
         backend = FakeBackend(responses=[{"ok": True, "result": {
             "started": True, "exitCode": 0, "stdout": "once", "stderr": "", "durationMs": 3,

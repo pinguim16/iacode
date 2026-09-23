@@ -33,8 +33,10 @@ SCRIPTS = PROJECT_ROOT / "scripts" / "development-ledger"
 sys.path.insert(0, str(SCRIPTS))
 
 import ledger_common  # noqa: E402
+import policies  # noqa: E402
 import record_command  # noqa: E402
 import validate_checkpoint  # noqa: E402
+from delivery_assurance import collect_test_ids  # noqa: E402
 
 
 def _git(root: Path, *arguments: str) -> None:
@@ -399,6 +401,620 @@ class AdrIndexTests(unittest.TestCase):
                 "# ADR-9999 — A planted decision\n\nStatus: Proposed\n", encoding="utf-8")
             self.assertNotEqual(adr_index_rows(copy / "README.md"), adr_records(copy))
 
+
+
+# ---------------------------------------------------------------------------------------------
+# 1. The Gate's own specification and registries
+# ---------------------------------------------------------------------------------------------
+
+GATE = "GATE-3"
+SPECIFICATION = PROJECT_ROOT / "docs" / "GATE-3-CHECKLIST.md"
+SANDBOX_ROOT = PROJECT_ROOT / "services" / "sandbox"
+SANDBOX_SOURCE = SANDBOX_ROOT / "src" / "iacode_sandbox"
+SANDBOX_POLICY = PROJECT_ROOT / ".iacode" / "policies" / "sandbox-policy.json"
+WORKFLOW = (PROJECT_ROOT / "services" / "orchestrator" / "src" / "iacode_orchestrator"
+            / "workflows" / "agent_run.py")
+
+
+def python_files(root: Path) -> list[Path]:
+    return [path for path in sorted(root.rglob("*.py")) if "__pycache__" not in path.parts]
+
+
+def imported_names(source: str) -> set[str]:
+    names: set[str] = set()
+    for node in ast.walk(ast.parse(source)):
+        if isinstance(node, ast.Import):
+            names.update(alias.name for alias in node.names)
+        elif isinstance(node, ast.ImportFrom) and node.module:
+            names.add(node.module)
+    return names
+
+
+def dotted(node: ast.AST) -> str:
+    parts: list[str] = []
+    while isinstance(node, ast.Attribute):
+        parts.append(node.attr)
+        node = node.value
+    if isinstance(node, ast.Name):
+        parts.append(node.id)
+    return ".".join(reversed(parts))
+
+
+def called(node: ast.AST) -> set[str]:
+    return {dotted(item.func) for item in ast.walk(node)
+            if isinstance(item, ast.Call) and dotted(item.func)}
+
+
+def function(source: str, name: str) -> ast.AST:
+    for node in ast.walk(ast.parse(source)):
+        if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)) and node.name == name:
+            return node
+    raise AssertionError(f"no function {name!r}")
+
+
+def arithmetic(node: ast.AST) -> int:
+    """The value of an integer literal or a product or sum of them; anything else is refused."""
+    if isinstance(node, ast.Constant) and isinstance(node.value, int):
+        return node.value
+    if isinstance(node, ast.BinOp) and isinstance(node.op, ast.Mult):
+        return arithmetic(node.left) * arithmetic(node.right)
+    if isinstance(node, ast.BinOp) and isinstance(node.op, ast.Add):
+        return arithmetic(node.left) + arithmetic(node.right)
+    raise AssertionError(f"not integer arithmetic: {ast.unparse(node)}")
+
+
+def constant_value(source: str, name: str) -> int:
+    """An integer module or class constant, read from the source without importing it."""
+    for node in ast.walk(ast.parse(source)):
+        target = value = None
+        if isinstance(node, ast.Assign) and len(node.targets) == 1:
+            target, value = node.targets[0], node.value
+        elif isinstance(node, ast.AnnAssign) and node.value is not None:
+            target, value = node.target, node.value
+        if isinstance(target, ast.Name) and target.id == name and value is not None:
+            return arithmetic(value)
+    raise AssertionError(f"no constant {name!r}")
+
+
+def load_sandbox_policy() -> dict:
+    return json.loads(SANDBOX_POLICY.read_text(encoding="utf-8"))
+
+
+class Gate3CanonicalSpecificationTests(unittest.TestCase):
+    """The Gate's requirement set comes from a document, re-parsed, and from nothing else."""
+
+    def test_the_specification_exists_and_parses(self) -> None:
+        self.assertTrue(SPECIFICATION.is_file())
+        rows = policies.parse_checklist(SPECIFICATION.read_text(encoding="utf-8"))
+
+        self.assertGreater(len(rows), 100, "the specification parsed as almost nothing")
+        for row in rows:
+            with self.subTest(key=row["key"]):
+                self.assertTrue(row["description"].strip())
+                self.assertTrue(row["artifact"].strip())
+                self.assertTrue(row["evidence"].strip())
+
+    def test_the_registry_mirrors_the_specification_row_for_row(self) -> None:
+        declared = policies.canonical_requirements(PROJECT_ROOT, GATE)
+        parsed = policies.parse_checklist(SPECIFICATION.read_text(encoding="utf-8"))
+
+        self.assertEqual([item["key"] for item in declared], [row["key"] for row in parsed])
+        self.assertEqual([item["description"] for item in declared],
+                         [row["description"] for row in parsed])
+        self.assertTrue(all(item.get("mandatory") for item in declared))
+
+    def test_a_dropped_row_is_refused(self) -> None:
+        """The positive path and the refusal of the mirror control, over a disposable copy."""
+        import shutil
+
+        with tempfile.TemporaryDirectory(prefix="iacode-spec-") as workdir:
+            root = Path(workdir)
+            shutil.copytree(PROJECT_ROOT / ".iacode" / "policies", root / ".iacode" / "policies")
+            (root / "docs").mkdir()
+            shutil.copy2(SPECIFICATION, root / "docs" / SPECIFICATION.name)
+            self.assertEqual(len(policies.canonical_requirements(root, GATE)),
+                             len(policies.canonical_requirements(PROJECT_ROOT, GATE)))
+
+            registry_path = root / ".iacode" / "policies" / "canonical-requirements.json"
+            registry = json.loads(registry_path.read_text(encoding="utf-8"))
+            entry = next(item for item in registry["gates"] if item["gate"] == GATE)
+            entry["requirements"] = entry["requirements"][:-1]
+            registry_path.write_text(json.dumps(registry, indent=2, ensure_ascii=False),
+                                     encoding="utf-8")
+            with self.assertRaises(ledger_common.LedgerError):
+                policies.canonical_requirements(root, GATE)
+
+    def test_the_specification_states_where_a_command_runs(self) -> None:
+        """The Gate is defined by where nothing may run, and the definition is in the document."""
+        text = SPECIFICATION.read_text(encoding="utf-8")
+        self.assertIn("runs **inside a sandbox**", text)
+        self.assertIn("Never on the Windows host", text)
+        self.assertIn("INTERNAL_GATE_PASS", text)
+
+
+class Gate3MandatoryGateTests(unittest.TestCase):
+    """The executable gate this Gate introduces is in the closed registry, not in an invocation."""
+
+    RUNNER = PROJECT_ROOT / "scripts" / "iacode" / "gates" / "sandbox_tests.py"
+
+    def test_the_sandbox_gate_is_mandatory(self) -> None:
+        gates = policies.gate_definitions(PROJECT_ROOT)
+        self.assertIn("sandboxTests", gates)
+        self.assertTrue(gates["sandboxTests"]["mandatory"])
+        self.assertIn("sandboxTests", policies.mandatory_gates(PROJECT_ROOT))
+
+    def test_its_command_is_executable_from_the_repository_root(self) -> None:
+        command = policies.gate_definitions(PROJECT_ROOT)["sandboxTests"]["command"]
+        self.assertEqual(command, ["python", "scripts/iacode/gates/sandbox_tests.py"])
+        self.assertTrue(self.RUNNER.is_file())
+
+    def test_the_gate_builds_both_images_before_it_measures(self) -> None:
+        """`LSN-0036`: a gate that runs inside an image it did not build measures the past.
+
+        The sandbox gate depends on two images: the service's, which carries the suite, and the
+        sandbox profile the suite creates containers from. Both are built before pytest runs.
+        """
+        source = self.RUNNER.read_text(encoding="utf-8")
+        self.assertIn('build_service("sandbox")', source)
+        self.assertIn("sandbox_image.py", source)
+        measured = source.index("pytest")
+        self.assertLess(source.index('build_service("sandbox")'), measured)
+        self.assertLess(source.index("sandbox_image.py"), measured)
+
+
+class Gate3TestSuiteRegistryTests(unittest.TestCase):
+    """The suite this Gate introduces is declared, counted and resolvable as evidence."""
+
+    def test_the_sandbox_suite_is_declared_and_counted(self) -> None:
+        suites = {item["id"]: item for item in policies.load_test_suites(PROJECT_ROOT)}
+        self.assertIn("sandbox", suites)
+        self.assertTrue(suites["sandbox"]["counted"])
+        self.assertEqual(suites["sandbox"]["root"], "services/sandbox/tests")
+        self.assertEqual(suites["sandbox"]["framework"], "python-pytest")
+        self.assertTrue((PROJECT_ROOT / suites["sandbox"]["root"]).is_dir())
+
+    def test_the_suites_case_identifiers_resolve_as_evidence(self) -> None:
+        identifiers = collect_test_ids(PROJECT_ROOT)
+        for reference in ("ContainerIsolationTests", "PathResolverTests", "ResourceLimitTests",
+                          "SessionRecoveryTests", "AgentResultBoundTests", "ToolRegistryTests",
+                          "test_a_timeout_kills_the_whole_process_tree"):
+            with self.subTest(reference=reference):
+                self.assertIn(reference, identifiers)
+
+
+class Gate3ScopeTests(unittest.TestCase):
+    """The reservation this Gate owns is consumed; every later Gate's is still enforced.
+
+    The Gate a scope control is asked about is derived, never named (`LSN-0037`).
+    """
+
+    @staticmethod
+    def current() -> str:
+        return ledger_common.delivered_gate(PROJECT_ROOT)
+
+    def test_the_sandbox_reservation_belongs_to_this_gate_and_is_consumed(self) -> None:
+        reservations = {item["path"]: item for item in policies.load_gate_scope(PROJECT_ROOT)}
+        self.assertIn("services/sandbox", reservations)
+        self.assertEqual(ledger_common.normalize_gate(reservations["services/sandbox"]["gate"]),
+                         ledger_common.normalize_gate(GATE))
+        in_force = {item["path"]
+                    for item in policies.reservations_in_force(PROJECT_ROOT, self.current())}
+        self.assertNotIn("services/sandbox", in_force,
+                         "the Gate that owns the directory is still constrained by it")
+
+    def test_the_delivery_filled_the_directory_it_owns(self) -> None:
+        for name in ("contracts.py", "policy.py", "tools.py", "paths.py", "backend.py",
+                     "service.py", "helper.py", "worker.py"):
+            with self.subTest(module=name):
+                self.assertTrue((SANDBOX_SOURCE / name).is_file())
+        readme = (SANDBOX_ROOT / "README.md").read_text(encoding="utf-8")
+        self.assertNotIn(policies.RESERVATION_MARKER, readme)
+
+    def test_the_command_line_stays_reserved_for_its_own_gate(self) -> None:
+        in_force = {item["path"]: item
+                    for item in policies.reservations_in_force(PROJECT_ROOT, self.current())}
+        self.assertIn("apps/cli", in_force)
+        self.assertEqual(sorted(path.name for path in (PROJECT_ROOT / "apps" / "cli").iterdir()),
+                         ["README.md"])
+        self.assertEqual(policies.scope_violations(PROJECT_ROOT, self.current()), [])
+
+    def test_the_gate_after_this_one_has_not_started(self) -> None:
+        """No directory the next Gate owns carries anything but its reservation notice."""
+        order = policies.gate_order()
+        position = order.index(ledger_common.normalize_gate(GATE))
+        following = order[position + 1]
+        owned = [item for item in policies.load_gate_scope(PROJECT_ROOT)
+                 if ledger_common.normalize_gate(str(item["gate"])) == following]
+        self.assertTrue(owned, "the next Gate owns no reservation, which cannot be right")
+        for reservation in owned:
+            directory = PROJECT_ROOT / str(reservation["path"])
+            with self.subTest(path=str(reservation["path"])):
+                present = sorted(path.name for path in directory.iterdir()) \
+                    if directory.is_dir() else []
+                self.assertTrue(set(present) <= set(policies.RESERVATION_ALLOWED_FILES), present)
+
+
+# ---------------------------------------------------------------------------------------------
+# 2. The boundary between the runtime and the sandbox, read from the whole tree
+# ---------------------------------------------------------------------------------------------
+
+
+#: What only the sandbox service may import: its own package and a container client.
+SANDBOX_ONLY_MODULES = frozenset({"iacode_sandbox", "docker"})
+
+
+def sandbox_imports(source: str) -> set[str]:
+    return {name for name in imported_names(source)
+            if name.split(".")[0] in SANDBOX_ONLY_MODULES}
+
+
+class SandboxBoundaryTests(unittest.TestCase):
+    """Sandbox logic lives in the sandbox service and nowhere else.
+
+    The API routes, the Agent Runtime, the Model Gateway and the orchestrator worker reach the
+    sandbox only through the contract constants and the activity names in `iacode_contracts`; none
+    of them imports the sandbox package or a container client.
+    """
+
+    OUTSIDE = (
+        PROJECT_ROOT / "apps" / "api" / "src",
+        PROJECT_ROOT / "services" / "agent-runtime" / "src",
+        PROJECT_ROOT / "services" / "model-gateway" / "src",
+        PROJECT_ROOT / "services" / "orchestrator" / "src",
+        PROJECT_ROOT / "packages",
+    )
+
+    def outside(self) -> list[Path]:
+        return [path for root in self.OUTSIDE for path in python_files(root)]
+
+    def test_the_boundary_has_something_to_scan(self) -> None:
+        self.assertGreaterEqual(len(self.outside()), 60)
+        self.assertGreaterEqual(len(python_files(SANDBOX_SOURCE)), 10)
+
+    def test_the_sandbox_is_its_own_service_with_its_own_contracts(self) -> None:
+        self.assertTrue((SANDBOX_ROOT / "pyproject.toml").is_file())
+        self.assertTrue((SANDBOX_ROOT / "Dockerfile").is_file())
+        self.assertTrue((SANDBOX_SOURCE / "contracts.py").is_file())
+        self.assertTrue((PROJECT_ROOT / "docs" / "adr" /
+                         "ADR-0025-sandbox-isolation-boundary.md").is_file())
+
+    def test_no_module_outside_the_sandbox_imports_it_or_a_container_client(self) -> None:
+        offenders = [f"{path.relative_to(PROJECT_ROOT).as_posix()}: {sorted(found)}"
+                     for path in self.outside()
+                     if (found := sandbox_imports(path.read_text(encoding="utf-8")))]
+        self.assertEqual(offenders, [], f"sandbox logic escaped its service: {offenders}")
+
+    def test_the_scan_detects_a_module_that_does_it(self) -> None:
+        """The null control over a mutated module, and the unmutated one it must pass."""
+        mutated = "from iacode_sandbox.service import SandboxService\nimport docker\n"
+        self.assertEqual(sandbox_imports(mutated), {"iacode_sandbox.service", "docker"})
+        self.assertEqual(sandbox_imports("from iacode_contracts.sandbox import X\n"), set())
+
+    def test_the_health_is_a_poller_and_an_engine_not_a_process(self) -> None:
+        source = (SANDBOX_SOURCE / "healthcheck.py").read_text(encoding="utf-8")
+        self.assertIn("describe_task_queue", source)
+        self.assertIn("DockerBackend", source)
+
+    def test_the_observability_stack_scrapes_the_service(self) -> None:
+        text = (PROJECT_ROOT / "infra" / "prometheus" / "prometheus.yml").read_text(
+            encoding="utf-8")
+        self.assertIn("job_name: iacode-sandbox", text)
+        self.assertIn('"sandbox:9102"', text)
+
+
+def payload_keys_and_policy(source: str) -> tuple[set[str], str]:
+    """The keys of the payload the workflow sends the sandbox, and where its policy comes from."""
+    dispatch = function(source, "_execute_in_sandbox")
+    for node in ast.walk(dispatch):
+        if (isinstance(node, ast.Assign) and len(node.targets) == 1
+                and isinstance(node.targets[0], ast.Name) and node.targets[0].id == "payload"
+                and isinstance(node.value, ast.Dict)):
+            keys = {key.value for key in node.value.keys if isinstance(key, ast.Constant)}
+            policy = next(ast.unparse(value) for key, value in
+                          zip(node.value.keys, node.value.values, strict=True)
+                          if isinstance(key, ast.Constant) and key.value == "policy")
+            return keys, policy
+    raise AssertionError("the dispatch builds no payload")
+
+
+class WorkflowSandboxDispatchTests(unittest.TestCase):
+    """What the workflow sends the sandbox, when, and what it does with the answer."""
+
+    EXPECTED_PAYLOAD = {"contractVersion", "toolRequestId", "runId", "agentRunId", "agent",
+                        "tool", "arguments", "policy", "workspace"}
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.source = WORKFLOW.read_text(encoding="utf-8")
+
+    def test_only_a_stage_with_a_sandbox_policy_dispatches(self) -> None:
+        wait = function(self.source, "wait_for_tool")
+        text = ast.unparse(wait)
+        self.assertIn("stage.sandbox_policy", text)
+        self.assertIn("self._execute_in_sandbox", text)
+        # The previous Gate's path is still there for every other stage.
+        self.assertIn("iacode_agent_runtime_read_tool_result", text)
+        self.assertIn("workflow.wait_condition", text)
+
+    def test_the_policy_is_the_stages_and_the_request_carries_no_setting(self) -> None:
+        keys, policy = payload_keys_and_policy(self.source)
+        self.assertEqual(keys, self.EXPECTED_PAYLOAD)
+        self.assertEqual(policy, "stage.sandbox_policy")
+
+    def test_the_scan_detects_a_policy_taken_from_the_request(self) -> None:
+        """The null control: the identical scan over a mutated dispatch."""
+        mutated = self.source.replace('"policy": stage.sandbox_policy',
+                                      '"policy": request["arguments"].get("policy")', 1)
+        self.assertNotEqual(mutated, self.source)
+        self.assertNotEqual(payload_keys_and_policy(mutated)[1], "stage.sandbox_policy")
+
+    def test_the_execution_is_an_activity_on_the_sandbox_queue_and_bounded(self) -> None:
+        dispatch = ast.unparse(function(self.source, "_execute_in_sandbox"))
+        self.assertIn("workflow.start_activity(SANDBOX_EXECUTE_ACTIVITY", dispatch)
+        self.assertIn("task_queue=SANDBOX_TASK_QUEUE", dispatch)
+        self.assertIn("schedule_to_close_timeout=timedelta(seconds=timeout_seconds)", dispatch)
+        self.assertIn("heartbeat_timeout=SANDBOX_HEARTBEAT_TIMEOUT", dispatch)
+
+    def test_a_sandbox_that_cannot_answer_is_a_failed_result_not_a_wait(self) -> None:
+        dispatch = ast.unparse(function(self.source, "_execute_in_sandbox"))
+        self.assertIn("except ActivityError", dispatch)
+        self.assertIn("SANDBOX_UNAVAILABLE", dispatch)
+        self.assertIn("'status': 'FAILED'", dispatch)
+
+    def test_the_result_is_persisted_through_the_store_before_the_run_resumes(self) -> None:
+        dispatch = ast.unparse(function(self.source, "_execute_in_sandbox"))
+        self.assertIn("iacode_agent_runtime_resolve_tool_request", dispatch)
+        self.assertIn("ToolResult.from_dict(stored)", dispatch)
+        activities = (PROJECT_ROOT / "services" / "orchestrator" / "src" / "iacode_orchestrator"
+                      / "agent_runtime" / "activities.py").read_text(encoding="utf-8")
+        self.assertIn('@activity.defn(name="iacode_agent_runtime_resolve_tool_request")',
+                      activities)
+
+    def test_a_cancellation_cancels_the_execution_and_waits_for_it(self) -> None:
+        dispatch = ast.unparse(function(self.source, "_execute_in_sandbox"))
+        self.assertIn("handle.cancel()", dispatch)
+        self.assertIn("ActivityCancellationType.WAIT_CANCELLATION_COMPLETED", dispatch)
+
+    def test_the_sandbox_is_released_when_the_run_ends(self) -> None:
+        run = ast.unparse(function(self.source, "run"))
+        self.assertIn("await effects.release_sandboxes()", run)
+        self.assertLess(run.index("release_sandboxes"), run.index("self.state = outcome.state"))
+        release = ast.unparse(function(self.source, "release_sandboxes"))
+        self.assertIn("SANDBOX_RELEASE_ACTIVITY", release)
+
+    def test_the_sandbox_registers_both_activities_on_its_queue(self) -> None:
+        worker = (SANDBOX_SOURCE / "worker.py").read_text(encoding="utf-8")
+        self.assertIn("@activity.defn(name=SANDBOX_EXECUTE_ACTIVITY)", worker)
+        self.assertIn("@activity.defn(name=SANDBOX_RELEASE_ACTIVITY)", worker)
+        self.assertIn("task_queue=SANDBOX_TASK_QUEUE", worker)
+
+
+# ---------------------------------------------------------------------------------------------
+# 3. One path resolver
+# ---------------------------------------------------------------------------------------------
+
+
+#: The helper operations that take a path or a working directory from the request.
+PATH_TAKING_OPERATIONS = ("op_list", "op_read", "op_write", "op_search", "op_exec")
+
+
+def unresolved_operations(source: str) -> list[str]:
+    """Helper operations that read a path from the request without the one resolver."""
+    offenders = []
+    for name in PATH_TAKING_OPERATIONS:
+        node = function(source, name)
+        reads_a_path = any(
+            isinstance(item, ast.Constant) and item.value in ("path", "cwd")
+            for item in ast.walk(node))
+        if reads_a_path and "_resolve" not in called(node):
+            offenders.append(name)
+    return offenders
+
+
+def refusals_outside_the_resolver(paths: list[Path]) -> list[str]:
+    return [path.name for path in paths if path.name != "paths.py"
+            and "PathRejectedError" in called(ast.parse(path.read_text(encoding="utf-8")))]
+
+
+class SinglePathResolverTests(unittest.TestCase):
+    """One canonical resolver decides every path; no module re-implements path safety.
+
+    The property is "no resolved path leaves the workspace", and the one place that decides it is
+    `iacode_sandbox.paths`. What is asserted here is that every path a tool touches reaches it: the
+    request normaliser on the controller, the helper's operations and the patch applier inside the
+    sandbox — and that no other module raises the resolver's refusal on its own account.
+    """
+
+    HELPER = SANDBOX_SOURCE / "helper.py"
+
+    def test_every_path_taking_operation_goes_through_the_resolver(self) -> None:
+        source = self.HELPER.read_text(encoding="utf-8")
+        self.assertEqual(unresolved_operations(source), [])
+        self.assertIn("resolve_workspace_path", called(function(source, "_resolve")))
+
+    def test_the_patch_and_the_request_normaliser_use_the_same_resolver(self) -> None:
+        patching = (SANDBOX_SOURCE / "patching.py").read_text(encoding="utf-8")
+        self.assertIn("resolve_workspace_path", called(ast.parse(patching)))
+        tools = (SANDBOX_SOURCE / "tools.py").read_text(encoding="utf-8")
+        self.assertIn("normalize_request_path", called(ast.parse(tools)))
+
+    def test_no_other_module_decides_a_path_refusal(self) -> None:
+        self.assertEqual(refusals_outside_the_resolver(python_files(SANDBOX_SOURCE)), [])
+
+    def test_the_sandbox_runs_the_resolver_the_repository_tests(self) -> None:
+        dockerfile = (SANDBOX_ROOT / "images" / "iacode-dev" / "Dockerfile").read_text(
+            encoding="utf-8")
+        self.assertIn("COPY services/sandbox/src/iacode_sandbox/paths.py /opt/iacode/paths.py",
+                      dockerfile)
+
+    def test_the_scans_detect_a_bypass(self) -> None:
+        """The null control: an operation that opens the requested path directly is caught."""
+        source = self.HELPER.read_text(encoding="utf-8")
+        mutated = source.replace(
+            'path = _resolve(request.get("path"), allow_root=False)',
+            'path = Path(WORKSPACE) / str(request.get("path"))', 1)
+        self.assertNotEqual(mutated, source)
+        self.assertEqual(unresolved_operations(mutated), ["op_read"])
+
+        with tempfile.TemporaryDirectory(prefix="iacode-resolver-") as workdir:
+            planted = Path(workdir) / "shortcut.py"
+            planted.write_text("def check(p):\n    raise PathRejectedError('PATH_ESCAPE', p)\n",
+                               encoding="utf-8")
+            self.assertEqual(refusals_outside_the_resolver([planted]), ["shortcut.py"])
+
+
+# ---------------------------------------------------------------------------------------------
+# 4. Agents, policies and the sandbox image
+# ---------------------------------------------------------------------------------------------
+
+
+def profile_policy_violations(profiles: dict[str, dict], policy: dict) -> list[str]:
+    """Profiles whose permitted actions are not inside their sandbox policy's tools."""
+    tools = {item["name"]: set(item["tools"]) for item in policy["sandboxPolicies"]}
+    violations = []
+    for name, profile in sorted(profiles.items()):
+        actions = set(profile.get("allowedActions") or [])
+        governing = profile.get("sandboxPolicy")
+        if actions and governing not in tools:
+            violations.append(f"{name}: tools with no sandbox policy")
+        elif actions - tools.get(governing, set()):
+            violations.append(f"{name}: {sorted(actions - tools[governing])} outside {governing}")
+    return violations
+
+
+def load_profiles() -> dict[str, dict]:
+    return {path.stem: json.loads(path.read_text(encoding="utf-8"))
+            for path in sorted((PROJECT_ROOT / "agents" / "profiles").glob("*.json"))}
+
+
+WRITING_TOOLS = {"filesystem.write", "filesystem.apply_patch", "shell.exec", "git.add",
+                 "git.commit"}
+
+
+class Gate3AgentToolPolicyTests(unittest.TestCase):
+    """No agent is given a tool its sandbox policy does not allow, and no agent gets everything."""
+
+    def test_every_profiles_actions_are_inside_its_policy(self) -> None:
+        self.assertEqual(profile_policy_violations(load_profiles(), load_sandbox_policy()), [])
+
+    def test_the_scan_detects_a_profile_that_exceeds_its_policy(self) -> None:
+        """The null control: one planted action over the unmutated profiles."""
+        profiles = load_profiles()
+        self.assertEqual(profile_policy_violations(profiles, load_sandbox_policy()), [])
+        profiles["code-reviewer"] = dict(profiles["code-reviewer"])
+        profiles["code-reviewer"]["allowedActions"] = [
+            *profiles["code-reviewer"]["allowedActions"], "filesystem.write"]
+        self.assertEqual(len(profile_policy_violations(profiles, load_sandbox_policy())), 1)
+
+    def test_no_agent_is_given_every_tool_by_default(self) -> None:
+        profiles = load_profiles()
+        with_tools = {name for name, item in profiles.items() if item.get("allowedActions")}
+        self.assertEqual(with_tools, {"developer", "code-reviewer"})
+        self.assertFalse(set(profiles["code-reviewer"]["allowedActions"]) & WRITING_TOOLS)
+
+    def test_the_planner_has_no_tool_and_no_policy(self) -> None:
+        planner = load_profiles()["planner"]
+        self.assertEqual(planner.get("allowedActions"), [])
+        self.assertIsNone(planner.get("sandboxPolicy"))
+
+    def test_a_read_only_policy_offers_no_writing_tool(self) -> None:
+        for item in load_sandbox_policy()["sandboxPolicies"]:
+            if item["workspaceAccess"] == "read-only":
+                with self.subTest(policy=item["name"]):
+                    self.assertFalse(set(item["tools"]) & WRITING_TOOLS)
+
+    def test_the_runtime_accepts_every_result_the_sandbox_hands_over(self) -> None:
+        """Two limits in two services that must agree are read from their sources and compared.
+
+        The sandbox shortens what it hands an agent to its bound; the runtime refuses a tool
+        result larger than its own. A runtime bound below the sandbox's would fail a run for a
+        result the sandbox considered deliverable.
+        """
+        sandbox = constant_value(
+            (PROJECT_ROOT / "packages" / "contracts" / "src" / "iacode_contracts" / "sandbox.py")
+            .read_text(encoding="utf-8"), "SANDBOX_AGENT_RESULT_MAX_BYTES")
+        runtime = constant_value(
+            (PROJECT_ROOT / "services" / "agent-runtime" / "src" / "iacode_agent_runtime"
+             / "limits.py").read_text(encoding="utf-8"), "max_tool_result_bytes")
+        self.assertGreater(sandbox, 0)
+        self.assertLessEqual(sandbox, runtime)
+        contracts = (SANDBOX_SOURCE / "contracts.py").read_text(encoding="utf-8")
+        self.assertIn("fit_agent_output", called(function(contracts, "agent_result")))
+
+
+class SandboxImageProfileTests(unittest.TestCase):
+    """The image a sandbox runs is declared, pinned, built from known inputs and unprivileged."""
+
+    @staticmethod
+    def dockerfile(profile: dict) -> str:
+        return (PROJECT_ROOT / profile["context"] / "Dockerfile").read_text(encoding="utf-8")
+
+    def test_the_registry_declares_a_functional_profile(self) -> None:
+        profiles = {item["name"]: item for item in load_sandbox_policy()["imageProfiles"]}
+        self.assertIn("iacode-dev", profiles)
+        used = {item["imageProfile"] for item in load_sandbox_policy()["sandboxPolicies"]}
+        self.assertTrue(used <= set(profiles), "a policy names an image profile nobody declares")
+
+    def test_every_profile_is_pinned_and_unprivileged(self) -> None:
+        import re
+
+        for profile in load_sandbox_policy()["imageProfiles"]:
+            text = self.dockerfile(profile)
+            with self.subTest(profile=profile["name"]):
+                bases = re.findall(r"(?m)^FROM\s+(\S+)", text)
+                self.assertTrue(bases)
+                for base in bases:
+                    self.assertRegex(base, r"@sha256:[0-9a-f]{64}$")
+                    self.assertNotIn(":latest", base)
+                installs = re.findall(r"apt-get install[^&]*", text)
+                for install in installs:
+                    for package in install.split()[2:]:
+                        if not package.startswith("-") and package != chr(92):
+                            self.assertIn("=", package, f"{package} is not pinned")
+                users = re.findall(r"(?m)^USER\s+(\S+)", text)
+                self.assertTrue(users)
+                self.assertNotIn(users[-1], ("root", "0"))
+
+    def test_the_project_profile_carries_git_and_python(self) -> None:
+        text = self.dockerfile({"context": "services/sandbox/images/iacode-dev"})
+        self.assertIn("git=", text)
+        self.assertIn("FROM python:3.13", text)
+
+    def test_the_image_is_addressed_by_its_inputs(self) -> None:
+        builder = (PROJECT_ROOT / "scripts" / "iacode" / "sandbox_image.py").read_text(
+            encoding="utf-8")
+        image = (SANDBOX_SOURCE / "image.py").read_text(encoding="utf-8")
+        self.assertIn('FINGERPRINT_LABEL = "org.iacode.sandbox.fingerprint"', image)
+        self.assertIn("input_fingerprint", builder)
+        self.assertIn("FINGERPRINT_LABEL", builder)
+
+    def test_the_service_installs_the_scanned_lock_and_a_pinned_client(self) -> None:
+        service = (SANDBOX_ROOT / "Dockerfile").read_text(encoding="utf-8")
+        scan = (PROJECT_ROOT / "scripts" / "iacode" / "dependency_scan.py").read_text(
+            encoding="utf-8")
+        self.assertIn("COPY apps/api/requirements.lock.txt", service)
+        self.assertIn('"apps" / "api" / "requirements.lock.txt"', scan)
+        self.assertRegex(service, r"ARG DOCKER_SHA256=[0-9a-f]{64}")
+        self.assertIn("if digest != expected", service)
+
+
+class Gate3AdrTests(unittest.TestCase):
+    """The structural decisions of this Gate are recorded and indexed."""
+
+    DECISIONS = ("ADR-0024", "ADR-0025", "ADR-0026", "ADR-0027")
+
+    def test_every_decision_is_recorded(self) -> None:
+        records = {identifier: (title, status)
+                   for identifier, title, status, _name in adr_records(ADR_DIRECTORY)}
+        for identifier in self.DECISIONS:
+            with self.subTest(adr=identifier):
+                self.assertIn(identifier, records)
+                self.assertEqual(records[identifier][1], "Accepted")
+
+    def test_the_index_lists_them(self) -> None:
+        listed = {identifier for identifier, *_rest in
+                  adr_index_rows(ADR_DIRECTORY / "README.md")}
+        self.assertTrue(set(self.DECISIONS) <= listed)
 
 if __name__ == "__main__":
     unittest.main()

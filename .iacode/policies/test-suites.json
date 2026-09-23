@@ -35,6 +35,14 @@
       "purpose": "The agent runtime: the state machine, the event log, profiles and teams, the turn protocol, context assembly, budgets, the tool-request lifecycle and the engine."
     },
     {
+      "id": "sandbox",
+      "title": "Sandbox suite",
+      "root": "services/sandbox/tests",
+      "framework": "python-pytest",
+      "counted": true,
+      "purpose": "The sandbox: its contracts, tool registry and policy, the path resolver, patching, the service's decisions, recovery, telemetry, and the isolation, limits, tools and lifecycle asserted against the real container engine."
+    },
+    {
       "id": "infra",
       "title": "Foundation infrastructure smoke suite",
       "root": "infra/tests",
