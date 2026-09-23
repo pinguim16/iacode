@@ -56,6 +56,24 @@ export interface ToolRequestView {
   readonly resolvedAt: string | null;
 }
 
+/**
+ * One tool the sandbox executed for the run (Gate 3): what, how it ended, how long, where. The page
+ * never receives a tool's output; that stays with the agent and the artifact store.
+ */
+export interface ToolExecutionView {
+  readonly toolRequestId: string;
+  readonly tool: string;
+  readonly status: string;
+  readonly durationMs: number | null;
+  readonly sandboxSession: string | null;
+  readonly exitCode: number | null;
+  readonly timedOut: boolean;
+  readonly truncated: boolean;
+  readonly errorCode: string | null;
+  readonly summary: string;
+  readonly createdAt: string;
+}
+
 export interface RunSummaryView {
   readonly agentsExecuted: number;
   readonly turns: number;
@@ -87,6 +105,7 @@ export interface AgentRun {
   readonly stages: readonly StageView[];
   readonly pendingToolRequest: ToolRequestView | null;
   readonly toolRequests: readonly ToolRequestView[];
+  readonly toolExecutions: readonly ToolExecutionView[];
   readonly result: string | null;
   readonly resultSummary: string | null;
   readonly errorType: string | null;

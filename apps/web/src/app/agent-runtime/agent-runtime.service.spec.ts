@@ -66,6 +66,7 @@ const RUN = {
   stages: [],
   pendingToolRequest: null,
   toolRequests: [],
+  toolExecutions: [],
   result: null,
   resultSummary: null,
   errorType: null,

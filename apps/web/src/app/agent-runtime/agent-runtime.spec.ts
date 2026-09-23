@@ -95,6 +95,7 @@ function run(overrides: Record<string, unknown> = {}) {
     ],
     pendingToolRequest: null,
     toolRequests: [],
+    toolExecutions: [],
     result: 'IACODE_AGENT_OK',
     resultSummary: 'IACODE_AGENT_OK',
     errorType: null,
@@ -340,6 +341,58 @@ describe('Agent Runtime page', () => {
     expect(element.querySelector('[data-testid="stages"]')?.textContent).toContain('generalist');
     expect(element.querySelector('[data-testid="budget"]')?.textContent).toContain('1/8 turns');
     expect(element.querySelector('[data-testid="cost"]')?.textContent).toContain('UNKNOWN');
+  });
+
+  it('shows the tools the sandbox executed, summarised and without their output', async () => {
+    stubBackend({
+      detail: run({
+        toolExecutions: [
+          {
+            toolRequestId: 'tr-1',
+            tool: 'shell.exec',
+            status: 'SUCCEEDED',
+            durationMs: 412,
+            sandboxSession: '0199aa0000ab',
+            exitCode: 0,
+            timedOut: false,
+            truncated: false,
+            errorCode: null,
+            summary: 'succeeded, exit 0',
+            createdAt: '2026-09-22T12:00:04.000Z',
+          },
+          {
+            toolRequestId: 'tr-2',
+            tool: 'filesystem.read',
+            status: 'DENIED',
+            durationMs: 3,
+            sandboxSession: null,
+            exitCode: null,
+            timedOut: false,
+            truncated: false,
+            errorCode: 'PATH_ESCAPE',
+            summary: 'denied, PATH_ESCAPE',
+            createdAt: '2026-09-22T12:00:05.000Z',
+          },
+        ],
+      }),
+    });
+    const fixture = await render();
+    const element = fixture.nativeElement as HTMLElement;
+    (element.querySelector('[data-testid="start"]') as HTMLButtonElement).click();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    const rows = element.querySelectorAll('[data-testid="tool-execution"]');
+    expect(rows).toHaveLength(2);
+    expect(rows[0].textContent).toContain('shell.exec');
+    expect(rows[0].textContent).toContain('SUCCEEDED');
+    expect(rows[0].textContent).toContain('412 ms');
+    expect(rows[0].textContent).toContain('0199aa0000ab');
+    expect(rows[0].textContent).toContain('succeeded, exit 0');
+    expect(rows[1].textContent).toContain('DENIED');
+    expect(rows[1].textContent).toContain('PATH_ESCAPE');
+    const table = element.querySelector('[data-testid="tool-executions"]');
+    expect(table?.querySelectorAll('button, a, input')).toHaveLength(0);
   });
 
   it('cancels a run that is still executing', async () => {
