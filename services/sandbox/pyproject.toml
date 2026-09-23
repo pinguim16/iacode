@@ -29,4 +29,5 @@ python_classes = ["Test*", "*Tests"]
 addopts = "-q --strict-markers --strict-config"
 markers = [
   "engine: the case drives a real container engine and runs inside the sandbox service image",
+  "integration: the case needs the running stack's database and bucket; the verification runs it, the mandatory gate deselects it",
 ]

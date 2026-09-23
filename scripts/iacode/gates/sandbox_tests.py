@@ -10,6 +10,9 @@ Two builds come first, in order. The service image, because a gate that runs ins
 not build measures the past (`LSN-0036`). Then the sandbox image profiles, addressed by the content
 of their inputs, because the suite creates sandboxes from exactly the image the current inputs
 describe and refuses any other.
+
+The cases marked ``integration`` need the stack's database and bucket; they are deselected here and
+run in the verification's ``sandbox-integration`` stage, against the running stack.
 """
 
 from __future__ import annotations
@@ -32,7 +35,8 @@ def main() -> int:
         return images.returncode
     result = compose(
         "run", "--rm", "--no-deps", "--entrypoint", "", "sandbox",
-        "python", "-m", "pytest", "/app/sandbox_tests", "-p", "no:cacheprovider", "--no-header",
+        "python", "-m", "pytest", "/app/sandbox_tests", "-m", "not integration",
+        "-p", "no:cacheprovider", "--no-header",
         capture=False)
     log(f"SANDBOX_TESTS={'PASS' if result.ok else 'FAIL'}")
     return result.exit_code
