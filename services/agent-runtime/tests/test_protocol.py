@@ -9,6 +9,8 @@ from iacode_agent_runtime.errors import InvalidAgentOutputError
 from iacode_agent_runtime.protocol import (
     ENVELOPE_VERSION,
     EnvelopeKind,
+    envelope_contract,
+    envelope_examples,
     envelope_schema,
     parse_envelope,
     repair_instruction,
@@ -167,3 +169,109 @@ def test_a_summary_is_bounded() -> None:
     parsed = parse_envelope(json.dumps({
         "kind": "FINAL", "content": "x", "summary": "y" * 5000}))
     assert len(parsed.summary) <= 400
+
+
+# ---------------------------------------------------------------------------------------------
+# M1-F-001: the exact shape, rendered from the schema, in the instructions and in the repair
+# ---------------------------------------------------------------------------------------------
+
+TOOLS = ("shell.exec", "filesystem.read")
+
+
+def test_every_example_is_a_valid_envelope_of_its_kind() -> None:
+    """The shape a model is shown is one the parser accepts, kind by kind (mandate test B)."""
+    examples = envelope_examples(tool_names=TOOLS)
+    assert list(examples) == [str(kind) for kind in EnvelopeKind]
+    for kind, example in examples.items():
+        parsed = parse_envelope(json.dumps(example))
+        assert str(parsed.kind) == kind
+        assert parsed.version == ENVELOPE_VERSION
+
+
+def test_the_tool_request_example_carries_a_name_and_arguments() -> None:
+    """Mandate test B: tool.name and tool.arguments, nested, with a tool the stage may request."""
+    example = envelope_examples(tool_names=TOOLS)["TOOL_REQUEST"]
+    assert set(example) == {"version", "kind", "tool"}
+    assert set(example["tool"]) == {"name", "arguments"}
+    assert example["tool"]["name"] in TOOLS
+    assert isinstance(example["tool"]["arguments"], dict)
+    parsed = parse_envelope(json.dumps(example))
+    assert parsed.tool is not None and parsed.tool.name in TOOLS
+
+    unnamed = envelope_examples()["TOOL_REQUEST"]
+    assert unnamed["tool"]["name"] == "<tool name>"
+
+
+def test_the_contract_states_the_version_every_kind_and_the_tool_keys() -> None:
+    contract = envelope_contract(tool_names=TOOLS)
+    assert ENVELOPE_VERSION in contract
+    for kind, example in envelope_examples(tool_names=TOOLS).items():
+        assert kind in contract
+        assert json.dumps(example, ensure_ascii=False) in contract
+    for key in envelope_schema()["properties"]:
+        assert f'"{key}"' in contract
+    assert '"name"' in contract and '"arguments"' in contract
+    assert "never at the top level" in contract
+
+
+def test_the_repair_restates_the_same_shape() -> None:
+    """Mandate test C: the repair carries the contract the instructions carry, verbatim."""
+    reason = "the agent output carries unknown field(s): command, cwd, timeoutSeconds"
+    instruction = repair_instruction(reason, tool_names=TOOLS)
+    assert reason in instruction
+    assert envelope_contract(tool_names=TOOLS) in instruction
+    for forbidden in ("you should answer", "for example", "try:"):
+        assert forbidden not in instruction.lower()
+
+
+def test_the_rendered_contract_follows_the_schema() -> None:
+    """Mandate test D: change the canonical schema and the rendered text changes with it."""
+    import copy
+
+    schema = copy.deepcopy(envelope_schema())
+    tool = schema["properties"]["tool"]
+    tool["properties"] = {"tool_id": {"type": "string", "minLength": 1},
+                          "parameters": {"type": "object"}}
+    tool["required"] = ["tool_id"]
+    schema["properties"]["kind"]["enum"] = ["FINAL", "TOOL_REQUEST"]
+
+    contract = envelope_contract(tool_names=TOOLS, schema=schema, version="agent-envelope/9.9")
+
+    assert '"tool_id"' in contract and '"parameters"' in contract
+    assert '"arguments"' not in contract
+    assert "agent-envelope/9.9" in contract
+    assert "MESSAGE" not in contract
+    example = envelope_examples(tool_names=TOOLS, schema=schema)["TOOL_REQUEST"]
+    assert set(example["tool"]) == {"tool_id", "parameters"}
+
+
+TOOL_ARGUMENTS_IN_THE_WRONG_PLACE = (
+    ({"kind": "TOOL_REQUEST", "command": "ls", "cwd": ".", "tool": {"name": "shell.exec"}},
+     "unknown-field", 'go inside "tool"'),
+    ({"kind": "TOOL_REQUEST", "tool": {"name": "shell.exec", "args": {"command": "ls"}}},
+     "tool-unknown-field", "args"),
+    ({"kind": "TOOL_REQUEST", "tool": {"name": "filesystem.read", "parameters": {"path": "a"}}},
+     "tool-unknown-field", "parameters"),
+    ({"kind": "TOOL_REQUEST", "tool": {"name": "filesystem.read", "path": "a"}},
+     "tool-unknown-field", "path"),
+)
+
+
+def test_arguments_outside_tool_arguments_are_refused_by_their_real_defect() -> None:
+    """M1-F-001: the configured live model put its arguments at the top level, then under "args".
+
+    The first was refused as an unknown field without saying where arguments belong; the second
+    was *accepted* with no arguments, because the parser ignored a stray key in the tool object,
+    and the sandbox then refused a request for an argument the model had in fact sent. Both are
+    refused now, each by its own reason, and the sentence says where the arguments go (LSN-0047).
+    """
+    for body, reason, named in TOOL_ARGUMENTS_IN_THE_WRONG_PLACE:
+        with pytest.raises(InvalidAgentOutputError) as raised:
+            parse_envelope(json.dumps(body))
+        assert raised.value.details["reason"] == reason, body
+        assert named in str(raised.value), body
+        assert '"arguments"' in str(raised.value), body
+
+    accepted = parse_envelope(json.dumps(
+        {"kind": "TOOL_REQUEST", "tool": {"name": "shell.exec", "arguments": {"command": "ls"}}}))
+    assert accepted.tool is not None and accepted.tool.arguments == {"command": "ls"}

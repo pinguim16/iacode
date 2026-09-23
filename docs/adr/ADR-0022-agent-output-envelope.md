@@ -95,3 +95,19 @@ attempt.
 **No repair at all.** Considered seriously. One malformed answer is a frequent and recoverable
 event, and refusing to ask again would fail runs for a missing brace. One attempt, charged and
 recorded, is the smallest tolerance that is still bounded.
+
+## Amendment — GATE-3-CP-0003: the prompt shows the exact shape
+
+The decision said the schema served the prompt as well as the structured-output request. It did
+not: the prompt described a tool request as a tool "carrying its name and arguments", structured
+output is requested only for a model whose capability is known, and the configured provider
+declares none, so no model was ever shown the keys (`M1-F-001`). The configured live model wrote
+its arguments at the top level, then under `args`, and never formed a tool request.
+
+The shape is now rendered from `envelope_schema()` by `protocol.envelope_contract`: the version,
+every kind, one minimal valid envelope per kind with `tool.name` and `tool.arguments`, and where the
+arguments go. The runtime instructions carry it on every turn, whether or not the gateway honours a
+structured-output request, and the one repair restates it verbatim with the stage's tools. The
+parser closes the tool object as the schema always did: a key beside `name` and `arguments` is
+refused with its own reason instead of being dropped with the arguments it held. The version, the
+kinds and the repair budget are unchanged.

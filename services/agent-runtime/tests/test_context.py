@@ -135,3 +135,64 @@ def test_the_structured_output_request_uses_the_one_schema() -> None:
     assert request["name"] == "iacode_agent_envelope"
     assert request["schema"] == envelope_schema()
     assert request["strict"] is True
+
+
+def test_the_runtime_instructions_show_the_exact_envelope_of_every_kind() -> None:
+    """M1-F-001, mandate test A: the textual instructions carry the shape derived from the schema.
+
+    The gateway requests native structured output only for a model whose capability is known, and
+    the configured provider publishes none, so this text is the only place a model learns the
+    shape. It is the contract rendered from the schema, verbatim, with the stage's tools.
+    """
+    from iacode_agent_runtime.protocol import ENVELOPE_VERSION, envelope_contract
+
+    tools = ("git.status", "shell.exec")
+    instructions = runtime_instructions(tool_names=tools)
+    assert envelope_contract(tool_names=tools) in instructions
+    assert ENVELOPE_VERSION in instructions
+    for kind in ("FINAL", "MESSAGE", "TOOL_REQUEST"):
+        assert kind in instructions
+    assert '"tool": {"name": "git.status", "arguments": {' in instructions
+    assert "shell.exec" in instructions
+    assert envelope_contract() in runtime_instructions()
+
+
+def test_the_instructions_follow_a_change_of_the_canonical_schema(monkeypatch) -> None:
+    """Mandate test D, through the instructions: they are rendered from the schema at call time."""
+    import copy
+
+    from iacode_agent_runtime import protocol
+
+    original = protocol.envelope_schema
+
+    def changed() -> dict:
+        schema = copy.deepcopy(original())
+        schema["properties"]["tool"]["properties"] = {
+            "tool_id": {"type": "string"}, "parameters": {"type": "object"}}
+        schema["properties"]["tool"]["required"] = ["tool_id"]
+        return schema
+
+    monkeypatch.setattr(protocol, "envelope_schema", changed)
+    instructions = runtime_instructions(tool_names=("shell.exec",))
+    assert '"tool_id"' in instructions and '"parameters"' in instructions
+    assert '"arguments"' not in instructions
+
+
+def test_no_second_envelope_contract_is_written_by_hand() -> None:
+    """Mandate test E: the runtime instructions spell no envelope key of their own.
+
+    The line that described a tool request as a tool "carrying its name and arguments" was a
+    second, vaguer protocol beside the schema. The instructions module may name the protocol's
+    version, but every key and every example comes from the protocol module.
+    """
+    import ast
+    from pathlib import Path
+
+    import iacode_agent_runtime.context as context_module
+
+    tree = ast.parse(Path(context_module.__file__).read_text(encoding="utf-8"))
+    constants = [node.value for node in ast.walk(tree)
+                 if isinstance(node, ast.Constant) and isinstance(node.value, str)]
+    for spelled in ('"arguments"', '"name"', "TOOL_REQUEST  you need", "carries its name",
+                    '{"version"'):
+        assert not any(spelled in value for value in constants), spelled

@@ -30,7 +30,7 @@ from enum import StrEnum
 from typing import Any
 
 from iacode_agent_runtime.limits import RuntimeLimits, enforce_size
-from iacode_agent_runtime.protocol import ENVELOPE_VERSION, EnvelopeKind, envelope_schema
+from iacode_agent_runtime.protocol import ENVELOPE_VERSION, envelope_contract, envelope_schema
 
 __all__ = [
     "AssembledContext",
@@ -103,8 +103,13 @@ def runtime_instructions(*, tool_names: tuple[str, ...] = ()) -> str:
     It states the protocol and two prohibitions. The second one matters for this repository
     specifically: the Development Contract forbids storing private chain-of-thought, so the runtime
     asks for a short verifiable summary and explicitly does not ask for reasoning.
+
+    The protocol is the exact shape of every kind, rendered by
+    :func:`~iacode_agent_runtime.protocol.envelope_contract` from the schema the parser enforces
+    (`M1-F-001`). It is stated whether or not structured output is requested: the engine asks for
+    it on every turn, and the gateway client honours that only for a model whose capability is
+    known, so the text is the one thing every model is sure to receive.
     """
-    kinds = ", ".join(str(kind) for kind in EnvelopeKind)
     if tool_names:
         tools = (
             "You may request one of these tools, and no other: "
@@ -121,11 +126,9 @@ def runtime_instructions(*, tool_names: tuple[str, ...] = ()) -> str:
         "You are one agent inside the IACode agent runtime.",
         "",
         "Answer with a single JSON object and nothing else. No prose before it, no prose after it.",
-        f'The object follows protocol "{ENVELOPE_VERSION}" and its "kind" is one of: {kinds}.',
+        f'The object follows protocol "{ENVELOPE_VERSION}".',
         "",
-        "FINAL         you have the answer; the object carries it in \"content\".",
-        "MESSAGE       you need another turn; \"content\" says what you have so far.",
-        "TOOL_REQUEST  you need a tool; \"tool\" carries its name and arguments.",
+        envelope_contract(tool_names=tool_names),
         "",
         '"content" is always one JSON string. An answer with several lines or steps is still one',
         "string, with its lines separated by newline characters, and never an array or an object.",

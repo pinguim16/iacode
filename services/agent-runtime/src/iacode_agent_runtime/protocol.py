@@ -38,6 +38,8 @@ __all__ = [
     "AgentEnvelope",
     "EnvelopeKind",
     "ToolRequestIntent",
+    "envelope_contract",
+    "envelope_examples",
     "envelope_schema",
     "parse_envelope",
     "repair_instruction",
@@ -96,12 +98,32 @@ class AgentEnvelope:
         return payload
 
 
+#: The field each kind carries besides ``version`` and ``kind``. The parser requires exactly this and
+#: :func:`envelope_contract` states it, so the prompt and the parser describe one protocol.
+KIND_FIELD: dict[EnvelopeKind, str] = {
+    EnvelopeKind.FINAL: "content",
+    EnvelopeKind.MESSAGE: "content",
+    EnvelopeKind.TOOL_REQUEST: "tool",
+}
+
+#: When an agent answers with each kind, in the words the contract uses.
+KIND_PURPOSE: dict[EnvelopeKind, str] = {
+    EnvelopeKind.FINAL: "you have the answer and the stage is over",
+    EnvelopeKind.MESSAGE: "you need another turn and say what you have so far",
+    EnvelopeKind.TOOL_REQUEST: "you need one tool",
+}
+
+
 def envelope_schema() -> dict[str, Any]:
     """The JSON Schema of the envelope.
 
     Used two ways from one definition: as the structured-output schema when a model declares the
-    capability, and as the documentation of what the prompt asks for when it does not. A second
-    schema written into the prompt text would be a second thing to keep in step.
+    capability, and — rendered by :func:`envelope_contract` — as the contract the prompt states when
+    it does not. `M1-F-001` found the second use claimed and never made: the prompt described a tool
+    request only as a tool "carrying its name and arguments", every capability of the configured
+    provider was ``UNKNOWN``, so no model was ever shown the keys, and the configured live model
+    could not form one tool request. A second shape written into the prompt by hand would be a
+    second thing to keep in step, so the prompt's shape is rendered from this one.
     """
     return {
         "type": "object",
@@ -123,6 +145,91 @@ def envelope_schema() -> dict[str, Any]:
             },
         },
     }
+
+
+def _tool_keys(schema: dict[str, Any]) -> tuple[str, str]:
+    """The tool object's two keys, read from the schema: the name (a required string) and the
+    arguments (an object)."""
+    tool = schema["properties"]["tool"]
+    properties = tool["properties"]
+    required = [key for key in tool.get("required") or [] if key in properties]
+    name = next(key for key in required if properties[key].get("type") == "string")
+    arguments = next(key for key, value in properties.items() if value.get("type") == "object")
+    return name, arguments
+
+
+def envelope_examples(*, tool_names: tuple[str, ...] = (),
+                      schema: dict[str, Any] | None = None,
+                      version: str = ENVELOPE_VERSION) -> dict[str, dict[str, Any]]:
+    """One minimal valid envelope per kind, built from the schema rather than written by hand.
+
+    The values are placeholders a model replaces — the runtime proposes no answer — except the tool
+    name, which is one of the tools the stage may request when it has any, so the example is a
+    request the policy would accept by name.
+    """
+    schema = schema or envelope_schema()
+    name_key, arguments_key = _tool_keys(schema)
+    tool_name = sorted(tool_names)[0] if tool_names else "<tool name>"
+    placeholders = {
+        "content": {EnvelopeKind.FINAL: "<your answer, one string>",
+                    EnvelopeKind.MESSAGE: "<what you have so far, one string>"},
+    }
+    examples: dict[str, dict[str, Any]] = {}
+    for raw_kind in schema["properties"]["kind"]["enum"]:
+        kind = EnvelopeKind(raw_kind)
+        field = KIND_FIELD[kind]
+        example: dict[str, Any] = {"version": version, "kind": raw_kind}
+        if field == "tool":
+            example["tool"] = {name_key: tool_name,
+                               arguments_key: {"<argument name>": "<argument value>"}}
+        else:
+            example[field] = placeholders[field][kind]
+        examples[raw_kind] = example
+    return examples
+
+
+def envelope_contract(*, tool_names: tuple[str, ...] = (),
+                      schema: dict[str, Any] | None = None,
+                      version: str = ENVELOPE_VERSION) -> str:
+    """The exact shape of the envelope, as text a model can follow, rendered from the schema.
+
+    It is what a model sees whenever the gateway does not constrain its output with the schema
+    itself — which is every model whose structured-output capability is not known, and the
+    configured provider publishes none. The runtime cannot know at prompt time whether the gateway
+    will honour a structured-output request, so the contract is always stated; with native
+    structured output it restates what the schema already enforces.
+
+    Every key, the version, the kinds and the examples come from :func:`envelope_schema` and
+    :data:`KIND_FIELD`; a change to either changes this text. Nothing here is a second protocol.
+    """
+    schema = schema or envelope_schema()
+    properties = schema["properties"]
+    kinds = list(properties["kind"]["enum"])
+    name_key, arguments_key = _tool_keys(schema)
+    examples = envelope_examples(tool_names=tool_names, schema=schema, version=version)
+    keys = ", ".join(f'"{key}"' for key in properties)
+    lines = [
+        f"The object has only these keys: {keys}. Any other key is refused.",
+        f'"version" is "{version}". "kind" is exactly one of: {", ".join(kinds)}.',
+        "",
+    ]
+    for raw_kind in kinds:
+        kind = EnvelopeKind(raw_kind)
+        lines.append(f'{raw_kind} — {KIND_PURPOSE[kind]}; it carries "{KIND_FIELD[kind]}":')
+        lines.append(json.dumps(examples[raw_kind], ensure_ascii=False))
+        lines.append("")
+    tool_kinds = [kind for kind in kinds if KIND_FIELD[EnvelopeKind(kind)] == "tool"]
+    content_kinds = [kind for kind in kinds if KIND_FIELD[EnvelopeKind(kind)] == "content"]
+    for tool_kind in tool_kinds:
+        lines.append(
+            f'In a {tool_kind}, "tool" is an object with exactly two keys: "{name_key}", the '
+            f'tool\'s name as listed, and "{arguments_key}", an object holding that tool\'s own '
+            f'arguments. The arguments always go inside "tool", under "{arguments_key}" — never at '
+            f'the top level of the object and never under another key. A {tool_kind} carries no '
+            f'"content".')
+    if content_kinds:
+        lines.append(f'{" and ".join(content_kinds)} carry no "tool".')
+    return "\n".join(lines)
 
 
 def _json_type(value: Any) -> str:
@@ -165,10 +272,15 @@ def parse_envelope(text: str) -> AgentEnvelope:
             "the agent output is valid JSON but not an object",
             details={"reason": "not-an-object"})
 
-    unknown = sorted(set(payload) - {"version", "kind", "content", "summary", "tool"})
+    schema = envelope_schema()
+    unknown = sorted(set(payload) - set(schema["properties"]))
     if unknown:
+        name_key, arguments_key = _tool_keys(schema)
+        hint = (f'; a tool\'s arguments go inside "tool": {{"{name_key}": ..., '
+                f'"{arguments_key}": {{...}}}}, never at the top level'
+                if payload.get("kind") == str(EnvelopeKind.TOOL_REQUEST) else "")
         raise InvalidAgentOutputError(
-            f"the agent output carries unknown field(s): {', '.join(unknown)}",
+            f"the agent output carries unknown field(s): {', '.join(unknown)}{hint}",
             details={"reason": "unknown-field"})
 
     raw_kind = payload.get("kind")
@@ -189,12 +301,25 @@ def parse_envelope(text: str) -> AgentEnvelope:
     summary = str(payload.get("summary") or "")[:MAX_SUMMARY]
 
     if kind is EnvelopeKind.TOOL_REQUEST:
+        name_key, arguments_key = _tool_keys(schema)
         tool = payload.get("tool")
-        if not isinstance(tool, dict) or not str(tool.get("name") or "").strip():
+        if not isinstance(tool, dict) or not str(tool.get(name_key) or "").strip():
             raise InvalidAgentOutputError(
                 "a TOOL_REQUEST must carry a tool object with a name",
                 details={"reason": "tool-missing-name"})
-        arguments = tool.get("arguments", {})
+        # M1-F-001: a key beside the name and the arguments used to be dropped, so a model that
+        # wrote its arguments under "args" or "parameters" had a request accepted with none, and
+        # the sandbox refused it for a missing argument the model had in fact sent. The schema
+        # already closed the tool object; the parser now agrees with it and says where the
+        # arguments belong.
+        stray = sorted(set(tool) - set(schema["properties"]["tool"]["properties"]))
+        if stray:
+            raise InvalidAgentOutputError(
+                f"the tool object carries unknown field(s): {', '.join(stray)}; its only keys are "
+                f'"{name_key}" and "{arguments_key}", and the tool\'s own arguments go inside '
+                f'"{arguments_key}"',
+                details={"reason": "tool-unknown-field"})
+        arguments = tool.get(arguments_key, {})
         if not isinstance(arguments, dict):
             raise InvalidAgentOutputError(
                 "tool arguments must be an object",
@@ -205,7 +330,7 @@ def parse_envelope(text: str) -> AgentEnvelope:
                 details={"reason": "tool-with-content"})
         return AgentEnvelope(
             kind=kind, version=version, summary=summary,
-            tool=ToolRequestIntent(name=str(tool["name"]).strip(), arguments=dict(arguments)))
+            tool=ToolRequestIntent(name=str(tool[name_key]).strip(), arguments=dict(arguments)))
 
     content = payload.get("content")
     if content is not None and not isinstance(content, str):
@@ -228,16 +353,20 @@ def parse_envelope(text: str) -> AgentEnvelope:
     return AgentEnvelope(kind=kind, version=version, content=content, summary=summary)
 
 
-def repair_instruction(reason: str) -> str:
+def repair_instruction(reason: str, *, tool_names: tuple[str, ...] = ()) -> str:
     """The one corrective instruction the runtime is allowed to send.
 
-    It quotes what was wrong and restates the contract. It does not suggest an answer: a repair
-    prompt that proposes content is a runtime writing the agent's reply.
+    It quotes what was wrong and restates the contract — the exact shape, rendered by
+    :func:`envelope_contract` from the same schema as the runtime instructions, because a repair
+    that says only "answer with valid JSON" leaves the model guessing at the correction
+    (`M1-F-001`: the configured model moved its arguments from the top level to "args" and was
+    refused again). It does not suggest an answer: the shape's values are placeholders, and a
+    repair prompt that proposed content would be the runtime writing the agent's reply.
     """
     return (
         "Your previous answer was rejected: "
         f"{reason}\n\n"
         "Answer again with one JSON object and nothing else — no prose before or after it. "
-        f"Use protocol \"{ENVELOPE_VERSION}\" and one of the kinds FINAL, MESSAGE or "
-        "TOOL_REQUEST, exactly as the instructions describe."
+        f"Use protocol \"{ENVELOPE_VERSION}\" and follow this shape exactly:\n\n"
+        + envelope_contract(tool_names=tool_names)
     )

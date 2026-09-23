@@ -253,6 +253,24 @@ async def test_repair_is_attempted_at_most_once() -> None:
     assert notes and notes[0].payload["repairAttempt"] is True
 
 
+async def test_the_repair_carries_the_shape_with_the_stage_tools() -> None:
+    """M1-F-001: the one repair restates the exact envelope, with the tools of the stage."""
+    from iacode_agent_runtime.protocol import envelope_contract
+
+    tools = ("filesystem.read", "shell.exec")
+    model = ScriptedModel(script=['{"kind": "TOOL_REQUEST", "command": "ls"}',
+                                  envelope("FINAL", "recovered")])
+    engine, _ = build(plan_for(stage(allowed_actions=tools)), model)
+
+    outcome = await engine.execute()
+
+    assert outcome.state == str(RunState.SUCCEEDED)
+    first, repair = model.requests
+    assert envelope_contract(tool_names=tools) in first.instructions
+    assert "unknown field(s): command" in repair.instructions
+    assert repair.instructions.count(envelope_contract(tool_names=tools)) == 2
+
+
 async def test_repair_counts_against_the_budget() -> None:
     model = ScriptedModel(script=["nonsense", envelope("FINAL", "recovered")])
     engine, _ = build(plan_for(stage()), model, budget=Budget(max_turns=4, max_model_calls=4))

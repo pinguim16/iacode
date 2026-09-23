@@ -307,7 +307,8 @@ class AgentRunEngine:
                                   "reason": first.message, "repairAttempt": True})
             repair = replace(
                 request,
-                instructions=request.instructions + "\n\n" + repair_instruction(first.message),
+                instructions=request.instructions + "\n\n" + repair_instruction(
+                    first.message, tool_names=request.allowed_actions),
                 repair_of=f"{stage.index}:{request.turn}",
                 structured_output=request.structured_output,
             )
