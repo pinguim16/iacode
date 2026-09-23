@@ -18,7 +18,12 @@ from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Any
 
-from iacode_contracts.agent_runtime import TOOL_REQUEST_STATUSES, TOOL_RESULT_STATUSES
+from iacode_contracts.agent_runtime import (
+    TOOL_EXECUTOR_EXTERNAL,
+    TOOL_REQUEST_EXECUTORS,
+    TOOL_REQUEST_STATUSES,
+    TOOL_RESULT_STATUSES,
+)
 
 from iacode_agent_runtime.budgets import Budget
 from iacode_agent_runtime.errors import AgentRuntimeError, AgentRuntimeErrorType
@@ -182,6 +187,8 @@ class ToolRequest:
     status: str = "PENDING"
     created_at: datetime | None = None
     resolved_at: datetime | None = None
+    #: Who answers it (`M1-F-002`): ``SANDBOX`` or ``EXTERNAL``, from the stage that asked.
+    executor: str = TOOL_EXECUTOR_EXTERNAL
 
     def __post_init__(self) -> None:
         if self.status not in TOOL_REQUEST_STATUSES:
@@ -189,6 +196,11 @@ class ToolRequest:
                 AgentRuntimeErrorType.INTERNAL_AGENT_RUNTIME_ERROR,
                 f"{self.status!r} is not a tool request status",
                 details={"status": self.status})
+        if self.executor not in TOOL_REQUEST_EXECUTORS:
+            raise AgentRuntimeError(
+                AgentRuntimeErrorType.INTERNAL_AGENT_RUNTIME_ERROR,
+                f"{self.executor!r} is not a tool request executor",
+                details={"executor": self.executor})
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -198,6 +210,7 @@ class ToolRequest:
             "name": self.name,
             "arguments": dict(self.arguments),
             "status": self.status,
+            "executor": self.executor,
             "createdAt": self.created_at.isoformat() if self.created_at else None,
             "resolvedAt": self.resolved_at.isoformat() if self.resolved_at else None,
         }
@@ -211,6 +224,7 @@ class ToolRequest:
             name=str(payload["name"]),
             arguments=dict(payload.get("arguments") or {}),
             status=str(payload.get("status") or "PENDING"),
+            executor=str(payload.get("executor") or TOOL_EXECUTOR_EXTERNAL),
         )
 
 

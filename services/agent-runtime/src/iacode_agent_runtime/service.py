@@ -31,6 +31,7 @@ from typing import Any
 
 from iacode_common.identifiers import uuid7
 from iacode_contracts.agent_runtime import (
+    TOOL_EXECUTOR_EXTERNAL,
     AgentProfileSummary,
     AgentRunCreated,
     AgentRunDetail,
@@ -288,7 +289,10 @@ class AgentRuntimeService:
             error=submission.error,
             metadata=dict(submission.metadata),
         )
-        return await self.store.resolve_tool_request(run_id, result)
+        # The API's endpoint is the external producers' door. Its origin is a constant of this
+        # code path, never a field of the submission: a caller cannot claim to be the sandbox.
+        return await self.store.resolve_tool_request(run_id, result,
+                                                     origin=TOOL_EXECUTOR_EXTERNAL)
 
     # -- registry listings -------------------------------------------------------------------------
 

@@ -31,6 +31,17 @@ Session states: `CREATED`, `STARTING`, `READY`, `RUNNING`, `STOPPING`, `STOPPED`
 `EXPIRED`. One active session per run, enforced by the database. See
 [ADR-0026](../adr/ADR-0026-workspace-lifecycle.md).
 
+## Who answers a sandboxed request
+
+A tool request records its executor when it is created: `SANDBOX` for a stage whose agent names a
+sandbox policy, `EXTERNAL` otherwise (`tool_requests.executor`). A `SANDBOX` request is answered by
+the sandbox alone: its result reaches the store through the workflow's internal activity, and a
+result posted to `POST /api/v1/agent-runs/{run}/tool-results` for it is refused
+`403 TOOL_RESULT_ORIGIN_REFUSED` — before the sandbox answers, while it executes, or after the run
+ended — with nothing stored and nothing signalled (`M1-F-002`). A retried delivery of the sandbox's
+own result resolves the request once. The verification stage `sandbox-tool-result-origin` attacks it
+on the stack with a null control.
+
 ## The tool policy
 
 The canonical policy is [`.iacode/policies/sandbox-policy.json`](../../.iacode/policies/sandbox-policy.json).
@@ -191,3 +202,4 @@ environment.
 | `DENIED` with a `PATH_*` code | The path left the workspace; the code names how. |
 | `DENIED` with `TOOL_NOT_IN_POLICY` | The agent's policy does not allow that tool. |
 | `TIMED_OUT` | The command outlived its timeout and every process it started was killed. |
+| `403 TOOL_RESULT_ORIGIN_REFUSED` on a posted result | The request belongs to a sandboxed stage; only the sandbox answers it. |

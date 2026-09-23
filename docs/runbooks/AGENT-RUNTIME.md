@@ -126,14 +126,19 @@ curl -s -X POST localhost:18080/api/v1/agent-runs/$RUN/tool-results \
   -d '{"toolRequestId": "…", "status": "SUCCEEDED", "output": {"body": "…"}}'
 ```
 
-It is validated against the database before the workflow hears about it. Four shapes are refused:
+It is validated against the database before the workflow hears about it. Five shapes are refused:
 
 | Shape | Answer |
 |---|---|
 | a request that does not exist | `409 TOOL_RESULT_INVALID` |
 | a request belonging to another run | `409 TOOL_RESULT_INVALID` |
+| a request the sandbox owns (a stage with a sandbox policy) | `403 TOOL_RESULT_ORIGIN_REFUSED` |
 | a request that is no longer pending | `409 TOOL_RESULT_INVALID` |
 | a run that has already finished | `409 TOOL_RESULT_INVALID` |
+
+The origin of a result is the endpoint's, fixed in code — `EXTERNAL` — and a submission cannot name
+one. A sandboxed stage's request is answered only by the sandbox, through the workflow's internal
+activity; see [SANDBOX.md](SANDBOX.md) (`M1-F-002`).
 
 The same result delivered twice is not a refusal: it resolves the request once and resumes the run
 once, because the uniqueness constraint on `tool_results` is the mechanism rather than the

@@ -57,6 +57,8 @@ with workflow.unsafe.imports_passed_through():
     from iacode_contracts.agent_runtime import (
         AGENT_RUN_WORKFLOW,
         CANCEL_SIGNAL,
+        TOOL_EXECUTOR_EXTERNAL,
+        TOOL_EXECUTOR_SANDBOX,
         TOOL_RESULT_SIGNAL,
     )
     from iacode_contracts.sandbox import (
@@ -221,12 +223,18 @@ class _WorkflowEffects:
 
     async def create_tool_request(self, tool_request_id: str, agent_run_id: str, name: str,
                                   arguments: dict[str, Any]) -> None:
+        # The executor is decided here, from the stage that asked, and written with the request:
+        # a sandboxed stage's request is answered by the sandbox alone (`M1-F-002`).
+        stage = self.stages_by_agent_run.get(str(agent_run_id))
+        executor = (TOOL_EXECUTOR_SANDBOX if stage is not None and stage.sandbox_policy
+                    else TOOL_EXECUTOR_EXTERNAL)
         await self._call("iacode_agent_runtime_create_tool_request", {
             "runId": self.plan.run_id,
             "agentRunId": agent_run_id,
             "toolRequestId": tool_request_id,
             "name": name,
             "arguments": arguments,
+            "executor": executor,
         })
         self.requests[tool_request_id] = {"agentRunId": agent_run_id, "name": name,
                                           "arguments": dict(arguments)}

@@ -34,6 +34,9 @@ __all__ = [
     "CANCEL_SIGNAL",
     "RUN_EVENT_TYPES",
     "TERMINAL_RUN_STATES",
+    "TOOL_EXECUTOR_EXTERNAL",
+    "TOOL_EXECUTOR_SANDBOX",
+    "TOOL_REQUEST_EXECUTORS",
     "TOOL_REQUEST_STATUSES",
     "TOOL_RESULT_SIGNAL",
     "TOOL_RESULT_STATUSES",
@@ -97,6 +100,16 @@ ALLOWED_RUN_TRANSITIONS: dict[str, tuple[str, ...]] = {
 #: What can happen to a tool request. ``PENDING`` until something answers it; ``RESOLVED`` when a
 #: result arrives; ``REJECTED`` when the result is refused; ``CANCELLED`` when the run ends first.
 TOOL_REQUEST_STATUSES: tuple[str, ...] = ("PENDING", "RESOLVED", "REJECTED", "CANCELLED")
+
+#: Who answers a tool request. Recorded when the request is created, from the stage that made
+#: it, and never taken from a result. ``SANDBOX``: the stage has a sandbox policy, the sandbox
+#: executes the request and only its result - delivered by the workflow's internal activity -
+#: may resolve it. ``EXTERNAL``: the stage has no sandbox policy and its result arrives through
+#: the API's tool-result endpoint. `M1-F-002`: without this, the endpoint accepted a result for
+#: a request the sandbox was executing, and the agent received it instead of the sandbox's.
+TOOL_EXECUTOR_EXTERNAL = "EXTERNAL"
+TOOL_EXECUTOR_SANDBOX = "SANDBOX"
+TOOL_REQUEST_EXECUTORS: tuple[str, ...] = (TOOL_EXECUTOR_EXTERNAL, TOOL_EXECUTOR_SANDBOX)
 
 #: What a tool result says happened. Gate 2 never produces one of these itself — it accepts one
 #: from whatever is authorised to execute, which in this Gate is a test fixture or the internal

@@ -40,6 +40,7 @@ class AgentRuntimeErrorType(StrEnum):
     CONTEXT_OVERFLOW = "CONTEXT_OVERFLOW"
     GATEWAY_ERROR = "GATEWAY_ERROR"
     TOOL_RESULT_INVALID = "TOOL_RESULT_INVALID"
+    TOOL_RESULT_ORIGIN_REFUSED = "TOOL_RESULT_ORIGIN_REFUSED"
     TOOL_NOT_PERMITTED = "TOOL_NOT_PERMITTED"
     TOOL_WAIT_TIMEOUT = "TOOL_WAIT_TIMEOUT"
     RUN_DEADLINE_EXCEEDED = "RUN_DEADLINE_EXCEEDED"
@@ -125,6 +126,19 @@ class ToolResultInvalidError(AgentRuntimeError):
 
     def __init__(self, message: str, *, details: dict[str, Any] | None = None) -> None:
         super().__init__(AgentRuntimeErrorType.TOOL_RESULT_INVALID, message, details=details)
+
+
+class ToolResultOriginRefusedError(AgentRuntimeError):
+    """A result delivered by something other than the executor that owns the request.
+
+    `M1-F-002`: a request of a sandboxed stage is answered by the sandbox alone. A result for it
+    posted to the API - before the sandbox answers, while it runs, or after - is refused with
+    this, and nothing is stored or signalled.
+    """
+
+    def __init__(self, message: str, *, details: dict[str, Any] | None = None) -> None:
+        super().__init__(AgentRuntimeErrorType.TOOL_RESULT_ORIGIN_REFUSED, message,
+                         details=details)
 
 
 class RunCancelledError(AgentRuntimeError):

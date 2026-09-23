@@ -22,6 +22,8 @@ from dataclasses import dataclass, field
 from datetime import UTC, datetime
 from typing import Any, Protocol, runtime_checkable
 
+from iacode_contracts.agent_runtime import TOOL_EXECUTOR_EXTERNAL
+
 from iacode_agent_runtime.contracts import (
     ModelCallOutcome,
     ToolRequest,
@@ -134,18 +136,23 @@ class AgentRunStore(Protocol):
         """Record what a stage produced."""
 
     async def create_tool_request(self, run_id: str, *, agent_run_id: str | None, name: str,
-                                  arguments: dict[str, Any],
-                                  tool_request_id: str) -> ToolRequest:
-        """Persist a tool request. Idempotent on the identifier the caller supplies."""
+                                  arguments: dict[str, Any], tool_request_id: str,
+                                  executor: str = TOOL_EXECUTOR_EXTERNAL) -> ToolRequest:
+        """Persist a tool request with the executor that owns it. Idempotent on the identifier
+        the caller supplies; the executor is written once and never changed."""
 
     async def pending_tool_request(self, run_id: str) -> ToolRequest | None:
         """The request this run is waiting on, if any."""
 
-    async def resolve_tool_request(self, run_id: str, result: ToolResult) -> ToolResult:
-        """Record the answer to a tool request.
+    async def resolve_tool_request(self, run_id: str, result: ToolResult, *,
+                                   origin: str) -> ToolResult:
+        """Record the answer to a tool request, delivered by ``origin``.
 
-        Refuses a request that belongs to another run, does not exist, or is no longer pending, and
-        is idempotent when the same result is delivered twice.
+        Refuses a request that belongs to another run, does not exist, or is no longer pending,
+        and a result whose ``origin`` is not the executor that owns the request; is idempotent
+        when the owning executor delivers the same result twice. ``origin`` is supplied by the
+        caller's own code path - the API passes ``EXTERNAL``, the workflow's internal activity
+        passes ``SANDBOX`` - and never read from the result.
         """
 
     async def attach_model_call(self, agent_run_id: str, gateway_request_id: str) -> str | None:

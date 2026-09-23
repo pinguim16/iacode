@@ -338,6 +338,7 @@ CLASSIFIED_FAILURE_STATUSES = (
     (AgentRuntimeErrorType.INVALID_REQUEST, 400),
     (AgentRuntimeErrorType.PAYLOAD_TOO_LARGE, 413),
     (AgentRuntimeErrorType.TOOL_RESULT_INVALID, 409),
+    (AgentRuntimeErrorType.TOOL_RESULT_ORIGIN_REFUSED, 403),
     (AgentRuntimeErrorType.TOOL_NOT_PERMITTED, 403),
     (AgentRuntimeErrorType.BUDGET_EXCEEDED, 409),
     (AgentRuntimeErrorType.GATEWAY_ERROR, 502),
@@ -523,6 +524,36 @@ def test_a_refused_tool_result_never_reaches_the_workflow(wired) -> None:
         "toolRequestId": "tr-1", "status": "SUCCEEDED"})
 
     assert response.status_code == 409
+    assert temporal.signals == []
+
+
+def test_a_result_for_a_request_the_sandbox_owns_is_refused_and_never_signalled(
+        wired) -> None:
+    """M1-F-002: the API is not the sandbox's door. The refusal is typed and says who owns it."""
+    client, service, temporal, _ = wired
+    service.submit_error = AgentRuntimeError(
+        AgentRuntimeErrorType.TOOL_RESULT_ORIGIN_REFUSED,
+        "tool request tr-1 is answered by its SANDBOX executor; a result from EXTERNAL is not "
+        "accepted for it", details={"toolRequestId": "tr-1", "executor": "SANDBOX",
+                                    "internalPath": "/app/src/x.py"})
+
+    response = client.post(f"{RUNS}/{RUN_ID}/tool-results", json={
+        "toolRequestId": "tr-1", "status": "SUCCEEDED", "output": {"stdout": "forged"}})
+
+    assert response.status_code == 403
+    body = response.json()
+    assert body["code"] == "TOOL_RESULT_ORIGIN_REFUSED"
+    assert body["details"]["executor"] == "SANDBOX"
+    assert "internalPath" not in body["details"]
+    assert temporal.signals == []
+
+
+def test_the_submission_cannot_claim_an_origin(wired) -> None:
+    """The origin is the endpoint's, fixed in code; a field that names one is refused."""
+    client, _, temporal, _ = wired
+    for field in ("origin", "executor"):
+        assert client.post(f"{RUNS}/{RUN_ID}/tool-results", json={
+            "toolRequestId": "tr-1", "status": "SUCCEEDED", field: "SANDBOX"}).status_code == 422
     assert temporal.signals == []
 
 

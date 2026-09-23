@@ -30,6 +30,8 @@ from typing import Any
 from iacode_contracts.agent_runtime import (
     AGENT_RUN_STATES,
     RUN_EVENT_TYPES,
+    TOOL_EXECUTOR_EXTERNAL,
+    TOOL_REQUEST_EXECUTORS,
     TOOL_REQUEST_STATUSES,
     TOOL_RESULT_STATUSES,
 )
@@ -631,6 +633,8 @@ class ToolRequest(TimestampedEntity, Base):
     __table_args__ = (
         CheckConstraint("status IN " + _vocabulary(TOOL_REQUEST_STATUSES),
                         name="status_is_known"),
+        CheckConstraint("executor IN " + _vocabulary(TOOL_REQUEST_EXECUTORS),
+                        name="executor_is_known"),
         Index("ix_tool_requests_task_run_id_created_at", "task_run_id", "created_at"),
     )
 
@@ -644,6 +648,11 @@ class ToolRequest(TimestampedEntity, Base):
     status: Mapped[str] = mapped_column(
         String(32), nullable=False, default="PENDING", server_default="PENDING")
     resolved_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    #: Who may answer the request (`M1-F-002`): the sandbox, for a stage with a sandbox policy,
+    #: or an external producer through the API. Written with the request, never by a result.
+    executor: Mapped[str] = mapped_column(
+        String(16), nullable=False, default=TOOL_EXECUTOR_EXTERNAL,
+        server_default=TOOL_EXECUTOR_EXTERNAL)
 
     task_run: Mapped[TaskRun] = relationship(back_populates="tool_requests")
     result: Mapped[ToolResult | None] = relationship(

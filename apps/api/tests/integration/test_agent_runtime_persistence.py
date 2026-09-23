@@ -18,13 +18,19 @@ from pathlib import Path
 
 import pytest
 from iacode_agent_runtime.contracts import ToolResult
-from iacode_agent_runtime.errors import AgentRuntimeError, ToolResultInvalidError
+from iacode_agent_runtime.errors import (
+    AgentRuntimeError,
+    ToolResultInvalidError,
+    ToolResultOriginRefusedError,
+)
 from iacode_agent_runtime.events import RunEvent
 from iacode_agent_runtime.persistence import SqlAgentRunStore, bootstrap_registry
 from iacode_agent_runtime.ports import StageCompletion
 from iacode_agent_runtime.registry import AgentRegistry
 from iacode_agent_runtime.states import RunState
 from iacode_api.db import engine as db_engine
+from iacode_contracts.agent_runtime import TOOL_EXECUTOR_EXTERNAL as EXTERNAL
+from iacode_contracts.agent_runtime import TOOL_EXECUTOR_SANDBOX as SANDBOX
 from iacode_persistence.models import (
     Agent,
     AgentRun,
@@ -253,8 +259,8 @@ async def test_duplicate_tool_result_is_idempotent(store, run) -> None:
                                     tool_request_id=identifier)
     result = ToolResult(tool_request_id=identifier, status="SUCCEEDED", output={"body": "hello"})
 
-    first = await store.resolve_tool_request(run["run_id"], result)
-    second = await store.resolve_tool_request(run["run_id"], result)
+    first = await store.resolve_tool_request(run["run_id"], result, origin=EXTERNAL)
+    second = await store.resolve_tool_request(run["run_id"], result, origin=EXTERNAL)
 
     assert first.output == second.output == {"body": "hello"}
     requests = await store.list_tool_requests(run["run_id"])
@@ -275,14 +281,15 @@ async def test_tool_result_for_another_run_is_refused(store, session_factory, ru
 
     with pytest.raises(ToolResultInvalidError):
         await store.resolve_tool_request(
-            other_id, ToolResult(tool_request_id=identifier, status="SUCCEEDED"))
+            other_id, ToolResult(tool_request_id=identifier, status="SUCCEEDED"),
+            origin=EXTERNAL)
 
 
 async def test_a_tool_result_for_an_unknown_request_is_refused(store, run) -> None:
     with pytest.raises(ToolResultInvalidError):
         await store.resolve_tool_request(
             run["run_id"],
-            ToolResult(tool_request_id=str(uuid.uuid4()), status="SUCCEEDED"))
+            ToolResult(tool_request_id=str(uuid.uuid4()), status="SUCCEEDED"), origin=EXTERNAL)
 
 
 async def test_tool_result_after_a_terminal_state_is_refused(store, run) -> None:
@@ -297,7 +304,8 @@ async def test_tool_result_after_a_terminal_state_is_refused(store, run) -> None
 
     with pytest.raises(ToolResultInvalidError):
         await store.resolve_tool_request(
-            run["run_id"], ToolResult(tool_request_id=identifier, status="SUCCEEDED"))
+            run["run_id"], ToolResult(tool_request_id=identifier, status="SUCCEEDED"),
+            origin=EXTERNAL)
 
 
 async def test_cancelling_a_run_closes_the_requests_nobody_will_answer(store, run) -> None:
@@ -321,11 +329,124 @@ async def test_a_tool_request_carries_at_most_one_result(store, session_factory,
                                     name="repo.read", arguments={},
                                     tool_request_id=identifier)
     await store.resolve_tool_request(
-        run["run_id"], ToolResult(tool_request_id=identifier, status="SUCCEEDED"))
+        run["run_id"], ToolResult(tool_request_id=identifier, status="SUCCEEDED"),
+        origin=EXTERNAL)
 
     with pytest.raises(IntegrityError):
         async with session_factory() as session, session.begin():
             session.add(ToolResultRow(tool_request_id=uuid.UUID(identifier), status="FAILED"))
+
+
+# ---------------------------------------------------------------------------------------------
+# M1-F-002: a result is accepted only from the executor that owns the request
+# ---------------------------------------------------------------------------------------------
+
+
+async def request_owned_by(store, run, executor: str) -> str:
+    agent_run_id = await start_stage(store, run)
+    identifier = str(uuid.uuid4())
+    await store.create_tool_request(run["run_id"], agent_run_id=agent_run_id,
+                                    name="shell.exec", arguments={"command": "sleep 60"},
+                                    tool_request_id=identifier, executor=executor)
+    return identifier
+
+
+def result_of(identifier: str, status: str, **output) -> ToolResult:
+    return ToolResult(tool_request_id=identifier, status=status, output=output)
+
+
+async def test_a_request_records_the_executor_that_owns_it(store, run) -> None:
+    sandboxed = await request_owned_by(store, run, SANDBOX)
+    requests = {item.tool_request_id: item for item in await store.list_tool_requests(run["run_id"])}
+    assert requests[sandboxed].executor == SANDBOX
+
+
+async def test_a_manual_result_for_a_manual_request_is_accepted(store, run) -> None:
+    """The null control: the external door still answers what an external producer owns."""
+    identifier = await request_owned_by(store, run, EXTERNAL)
+    stored = await store.resolve_tool_request(
+        run["run_id"], result_of(identifier, "SUCCEEDED", body="hello"), origin=EXTERNAL)
+    assert stored.status == "SUCCEEDED"
+
+
+async def test_a_manual_result_for_a_sandbox_request_is_refused(store, run) -> None:
+    identifier = await request_owned_by(store, run, SANDBOX)
+    with pytest.raises(ToolResultOriginRefusedError) as raised:
+        await store.resolve_tool_request(
+            run["run_id"], result_of(identifier, "SUCCEEDED", stdout="forged"), origin=EXTERNAL)
+    assert raised.value.details["executor"] == SANDBOX
+    assert await store.tool_result_for(identifier) is None
+    assert (await store.pending_tool_request(run["run_id"])).tool_request_id == identifier
+
+
+async def test_a_forged_result_cannot_displace_the_sandbox_result(store, run) -> None:
+    """The M1 audit's scenario at the store: forged before, sandbox, forged after."""
+    identifier = await request_owned_by(store, run, SANDBOX)
+    with pytest.raises(ToolResultOriginRefusedError):
+        await store.resolve_tool_request(
+            run["run_id"], result_of(identifier, "SUCCEEDED", stdout="forged"), origin=EXTERNAL)
+
+    real = await store.resolve_tool_request(
+        run["run_id"], result_of(identifier, "TIMED_OUT", timedOut=True), origin=SANDBOX)
+    assert real.status == "TIMED_OUT"
+
+    with pytest.raises(ToolResultOriginRefusedError):
+        await store.resolve_tool_request(
+            run["run_id"], result_of(identifier, "SUCCEEDED", stdout="forged"), origin=EXTERNAL)
+    stored = await store.tool_result_for(identifier)
+    assert stored is not None and stored.status == "TIMED_OUT"
+    assert stored.output == {"timedOut": True}
+
+
+async def test_a_duplicate_sandbox_result_is_idempotent(store, run) -> None:
+    identifier = await request_owned_by(store, run, SANDBOX)
+    first = await store.resolve_tool_request(
+        run["run_id"], result_of(identifier, "TIMED_OUT", timedOut=True), origin=SANDBOX)
+    second = await store.resolve_tool_request(
+        run["run_id"], result_of(identifier, "TIMED_OUT", timedOut=True), origin=SANDBOX)
+    assert first.to_dict() == second.to_dict()
+    requests = await store.list_tool_requests(run["run_id"])
+    assert [item.status for item in requests] == ["RESOLVED"]
+
+
+async def test_a_sandbox_result_for_a_manual_request_is_refused(store, run) -> None:
+    identifier = await request_owned_by(store, run, EXTERNAL)
+    with pytest.raises(ToolResultOriginRefusedError):
+        await store.resolve_tool_request(
+            run["run_id"], result_of(identifier, "SUCCEEDED"), origin=SANDBOX)
+
+
+async def test_a_sandbox_request_of_another_run_is_refused_as_another_run(
+        store, session_factory, run) -> None:
+    identifier = await request_owned_by(store, run, SANDBOX)
+    async with session_factory() as session, session.begin():
+        other = TaskRun(task_id=run["task_id"], status=str(RunState.RUNNING), attempt=4)
+        session.add(other)
+        await session.flush()
+        other_id = str(other.id)
+    with pytest.raises(ToolResultInvalidError):
+        await store.resolve_tool_request(
+            other_id, result_of(identifier, "SUCCEEDED"), origin=SANDBOX)
+
+
+async def test_a_forged_result_after_the_run_ended_is_refused(store, run) -> None:
+    identifier = await request_owned_by(store, run, SANDBOX)
+    await store.set_run_state(run["run_id"], str(RunState.QUEUED))
+    await store.set_run_state(run["run_id"], str(RunState.RUNNING))
+    await store.set_run_state(run["run_id"], str(RunState.CANCELLED), finished=True)
+    with pytest.raises(ToolResultOriginRefusedError):
+        await store.resolve_tool_request(
+            run["run_id"], result_of(identifier, "SUCCEEDED"), origin=EXTERNAL)
+    with pytest.raises(ToolResultInvalidError):
+        await store.resolve_tool_request(
+            run["run_id"], result_of(identifier, "SUCCEEDED"), origin=SANDBOX)
+
+
+async def test_an_origin_outside_the_vocabulary_is_refused(store, run) -> None:
+    identifier = await request_owned_by(store, run, SANDBOX)
+    with pytest.raises(AgentRuntimeError):
+        await store.resolve_tool_request(
+            run["run_id"], result_of(identifier, "SUCCEEDED"), origin="sandbox")
 
 
 # ---------------------------------------------------------------------------------------------

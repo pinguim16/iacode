@@ -20,6 +20,12 @@ request exists, whether it belongs to this run, whether it is still pending and 
 still alive are all answered by the store, in one transaction. Only then is the workflow signalled.
 A design that signalled first and validated later would let a forged result wake a run.
 
+**This endpoint answers only what an external producer owns.** A request of a stage with a
+sandbox policy is answered by the sandbox, through the workflow's internal activity, and a result
+posted here for it is refused ``403 TOOL_RESULT_ORIGIN_REFUSED`` whether it arrives before, during
+or after the sandbox's execution (`M1-F-002`). The origin is fixed by this code path, never read
+from the submission.
+
 **Nothing here executes a tool.** The endpoint that accepts a result is an inbox. There is no
 endpoint that runs one, and the page offers no button that would.
 """
@@ -67,6 +73,7 @@ HTTP_STATUS: dict[AgentRuntimeErrorType, int] = {
     AgentRuntimeErrorType.TEAM_NOT_FOUND: status.HTTP_404_NOT_FOUND,
     AgentRuntimeErrorType.PAYLOAD_TOO_LARGE: 413,
     AgentRuntimeErrorType.TOOL_RESULT_INVALID: status.HTTP_409_CONFLICT,
+    AgentRuntimeErrorType.TOOL_RESULT_ORIGIN_REFUSED: status.HTTP_403_FORBIDDEN,
     AgentRuntimeErrorType.TOOL_NOT_PERMITTED: status.HTTP_403_FORBIDDEN,
     AgentRuntimeErrorType.INVALID_STATE_TRANSITION: status.HTTP_409_CONFLICT,
     AgentRuntimeErrorType.BUDGET_EXCEEDED: status.HTTP_409_CONFLICT,
@@ -85,6 +92,7 @@ HTTP_STATUS: dict[AgentRuntimeErrorType, int] = {
 PUBLIC_DETAIL_KEYS = frozenset({
     "limit", "value", "maximum", "setting", "state", "stage", "team", "agent", "available",
     "requested", "permitted", "toolRequestId", "tool", "status", "what", "size", "runId",
+    "executor",
 })
 
 #: How long an idle event stream waits before sending a keep-alive comment. A proxy that sees no
@@ -308,11 +316,13 @@ async def cancel_agent_run(request: Request, run_id: str) -> AgentRunDetail:
              summary="Answer a tool request and resume the run")
 async def submit_tool_result(request: Request, run_id: str,
                              payload: ToolResultSubmission) -> AgentRunDetail:
-    """Accept a result from whatever is authorised to execute. **This endpoint executes nothing.**
+    """Accept a result from an external producer. **This endpoint executes nothing.**
 
-    Gate 2 has no executor, so the authorised producer is a test fixture or the development
-    simulator. From Gate 3 it is the sandbox. Either way the validation is the same and it happens
-    here, against the database, before the workflow is told anything.
+    It answers the requests of stages with no sandbox policy — a test fixture, the durability
+    rehearsal, an operator. A request the sandbox owns is refused here, with nothing stored and
+    nothing signalled: the sandbox's result reaches the store through the workflow's own activity
+    and nowhere else (`M1-F-002`). The validation happens against the database before the
+    workflow is told anything.
     """
     resources = get_resources(request)
     runtime = resources.agent_runtime

@@ -432,3 +432,91 @@ class SandboxMigrationTests:
                 assert f"'{state}'" in sessions
             for status in TOOL_EXECUTION_STATUSES:
                 assert f"'{status}'" in executions
+
+
+SANDBOX_REVISION = "0004_sandbox"
+
+
+class ToolRequestExecutorMigrationTests:
+    """`M1-F-002`: every tool request records who may answer it, and old rows keep their meaning."""
+
+    def test_existing_requests_are_backfilled_from_what_the_sandbox_executed(self) -> None:
+        with _DisposableDatabase() as database:
+            assert _alembic(database.url, "upgrade", SANDBOX_REVISION).returncode == 0
+            engine = create_engine(_sync_url(database.url), future=True)
+            sandboxed, external = uuid.uuid4(), uuid.uuid4()
+            try:
+                with engine.begin() as connection:
+                    connection.execute(text(
+                        "INSERT INTO projects (id, slug, name) "
+                        "VALUES (gen_random_uuid(), 'p', 'P')"))
+                    connection.execute(text(
+                        "INSERT INTO tasks (id, project_id, title, status) "
+                        "SELECT gen_random_uuid(), id, 'a task', 'PENDING' FROM projects"))
+                    connection.execute(text(
+                        "INSERT INTO task_runs (id, task_id, status, attempt) "
+                        "SELECT gen_random_uuid(), id, 'CREATED', 1 FROM tasks"))
+                    connection.execute(text(
+                        "INSERT INTO agents (id, slug, name, role_contract) "
+                        "VALUES (gen_random_uuid(), 'developer', 'Developer', 'agents/x.json')"))
+                    connection.execute(text(
+                        "INSERT INTO agent_runs (id, task_run_id, agent_id, status, stage_index) "
+                        "SELECT gen_random_uuid(), task_runs.id, agents.id, 'RUNNING', 0 "
+                        "FROM task_runs, agents"))
+                    for identifier in (sandboxed, external):
+                        connection.execute(text(
+                            "INSERT INTO tool_requests (id, task_run_id, agent_run_id, tool_name, "
+                            "status) SELECT :id, task_run_id, id, 'shell.exec', 'RESOLVED' "
+                            "FROM agent_runs"), {"id": identifier})
+                    connection.execute(text(
+                        "INSERT INTO tool_calls (id, agent_run_id, tool_name, succeeded, "
+                        "tool_request_id, status) SELECT gen_random_uuid(), id, 'shell.exec', "
+                        "true, :id, 'SUCCEEDED' FROM agent_runs"), {"id": sandboxed})
+            finally:
+                engine.dispose()
+
+            result = _alembic(database.url, "upgrade", "head")
+
+            assert result.returncode == 0, result.stdout
+            engine = create_engine(_sync_url(database.url), future=True)
+            try:
+                with engine.connect() as connection:
+                    rows = dict(connection.execute(text(
+                        "SELECT id, executor FROM tool_requests")).all())
+            finally:
+                engine.dispose()
+            assert rows == {sandboxed: "SANDBOX", external: "EXTERNAL"}
+
+    def test_the_executor_migration_is_reversible(self) -> None:
+        with _DisposableDatabase() as database:
+            assert _alembic(database.url, "upgrade", "head").returncode == 0
+            result = _alembic(database.url, "downgrade", SANDBOX_REVISION)
+            assert result.returncode == 0, result.stdout
+            assert database.revision() == SANDBOX_REVISION
+            engine = create_engine(_sync_url(database.url), future=True)
+            try:
+                with engine.connect() as connection:
+                    columns = {row[0] for row in connection.execute(text(
+                        "SELECT column_name FROM information_schema.columns "
+                        "WHERE table_name = 'tool_requests'")).all()}
+            finally:
+                engine.dispose()
+            assert "executor" not in columns
+            assert _alembic(database.url, "upgrade", "head").returncode == 0
+
+    def test_the_executor_vocabulary_the_database_accepts_is_the_declared_one(self) -> None:
+        from iacode_contracts.agent_runtime import TOOL_REQUEST_EXECUTORS
+
+        with _DisposableDatabase() as database:
+            assert _alembic(database.url, "upgrade", "head").returncode == 0
+            engine = create_engine(_sync_url(database.url), future=True)
+            try:
+                with engine.connect() as connection:
+                    constraint = connection.execute(text(
+                        "SELECT pg_get_constraintdef(oid) FROM pg_constraint "
+                        "WHERE conname = 'ck_tool_requests_executor_is_known'")).scalar_one()
+            finally:
+                engine.dispose()
+            assert set(TOOL_REQUEST_EXECUTORS) == {"EXTERNAL", "SANDBOX"}
+            for executor in TOOL_REQUEST_EXECUTORS:
+                assert f"'{executor}'" in constraint

@@ -30,6 +30,10 @@ from datetime import UTC, datetime
 from typing import Any
 
 from iacode_common.identifiers import uuid7
+from iacode_contracts.agent_runtime import (
+    TOOL_EXECUTOR_EXTERNAL,
+    TOOL_REQUEST_EXECUTORS,
+)
 from iacode_persistence.models import (
     Agent,
     AgentRun,
@@ -56,6 +60,7 @@ from iacode_agent_runtime.errors import (
     AgentRuntimeError,
     AgentRuntimeErrorType,
     ToolResultInvalidError,
+    ToolResultOriginRefusedError,
 )
 from iacode_agent_runtime.events import RunEvent
 from iacode_agent_runtime.ports import AgentRunRecord, RunRecord, StageCompletion
@@ -318,8 +323,13 @@ class SqlAgentRunStore:
     # -- tools ---------------------------------------------------------------------------------
 
     async def create_tool_request(self, run_id: str, *, agent_run_id: str | None, name: str,
-                                  arguments: dict[str, Any],
-                                  tool_request_id: str) -> ToolRequest:
+                                  arguments: dict[str, Any], tool_request_id: str,
+                                  executor: str = TOOL_EXECUTOR_EXTERNAL) -> ToolRequest:
+        if executor not in TOOL_REQUEST_EXECUTORS:
+            raise AgentRuntimeError(
+                AgentRuntimeErrorType.INTERNAL_AGENT_RUNTIME_ERROR,
+                f"{executor!r} is not a tool request executor",
+                details={"executor": executor})
         request_uuid = _uuid(tool_request_id, what="the tool request identifier")
         async with self._sessions() as session, session.begin():
             existing = await session.get(ToolRequestRow, request_uuid)
@@ -332,6 +342,7 @@ class SqlAgentRunStore:
                     tool_name=name,
                     arguments=dict(arguments),
                     status="PENDING",
+                    executor=executor,
                 )
                 session.add(existing)
                 await session.flush()
@@ -354,14 +365,27 @@ class SqlAgentRunStore:
                 .order_by(ToolRequestRow.created_at))).scalars().all()
             return [_tool_request_from_row(row, run_id) for row in rows]
 
-    async def resolve_tool_request(self, run_id: str, result: ToolResult) -> ToolResult:
+    async def resolve_tool_request(self, run_id: str, result: ToolResult, *,
+                                   origin: str) -> ToolResult:
         """Record the answer to a tool request, refusing every shape that is not this run's.
 
-        The four refusals are deliberate and each has a test: a request that does not exist, a
-        request belonging to another run, a request that is no longer pending, and a run that has
-        already finished. The fifth case — the same result delivered twice — is not a refusal, it
-        is the idempotent answer.
+        The five refusals are deliberate and each has a test: a request that does not exist, a
+        request belonging to another run, a result from something other than the executor that
+        owns the request, a request that is no longer pending, and a run that has already
+        finished. The same result delivered twice by the owning executor is not a refusal, it is
+        the idempotent answer.
+
+        The ownership check comes before the idempotent answer and before the terminal check
+        (`M1-F-002`). The first version stored whatever result arrived first for any pending
+        request and answered every later delivery with it, so a result posted to the API while
+        the sandbox ran became what the agent received, and the sandbox's own was discarded. A
+        result from the wrong origin is now refused whenever it arrives, and it never learns what
+        the stored result says.
         """
+        if origin not in TOOL_REQUEST_EXECUTORS:
+            raise AgentRuntimeError(
+                AgentRuntimeErrorType.INTERNAL_AGENT_RUNTIME_ERROR,
+                f"{origin!r} is not a tool result origin", details={"executor": origin})
         request_uuid = _uuid(result.tool_request_id, what="the tool request identifier")
         run_uuid = _uuid(run_id, what="the run identifier")
         async with self._sessions() as session, session.begin():
@@ -376,6 +400,12 @@ class SqlAgentRunStore:
                 raise ToolResultInvalidError(
                     "that tool request belongs to a different run",
                     details={"toolRequestId": result.tool_request_id, "runId": run_id})
+            if row.executor != origin:
+                raise ToolResultOriginRefusedError(
+                    f"tool request {result.tool_request_id} is answered by its {row.executor} "
+                    f"executor; a result from {origin} is not accepted for it",
+                    details={"toolRequestId": result.tool_request_id,
+                             "executor": row.executor})
             if is_terminal(run.status):
                 raise ToolResultInvalidError(
                     f"run {run_id} is already {run.status}; a tool result cannot be accepted",
@@ -470,6 +500,7 @@ def _tool_request_from_row(row: ToolRequestRow, run_id: str) -> ToolRequest:
         name=row.tool_name,
         arguments=dict(row.arguments or {}),
         status=row.status,
+        executor=row.executor,
         created_at=row.created_at,
         resolved_at=row.resolved_at,
     )

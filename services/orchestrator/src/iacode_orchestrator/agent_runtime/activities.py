@@ -25,6 +25,7 @@ from iacode_agent_runtime.errors import AgentRuntimeError, AgentRuntimeErrorType
 from iacode_agent_runtime.events import RunEvent
 from iacode_agent_runtime.ports import StageCompletion
 from iacode_agent_runtime.telemetry import runtime_log_fields
+from iacode_contracts.agent_runtime import TOOL_EXECUTOR_EXTERNAL, TOOL_EXECUTOR_SANDBOX
 from iacode_telemetry.logging import get_logger
 from temporalio import activity
 from temporalio.exceptions import ApplicationError
@@ -203,6 +204,7 @@ async def create_tool_request(payload: dict[str, Any]) -> dict[str, Any]:
             name=str(payload["name"]),
             arguments=dict(payload.get("arguments") or {}),
             tool_request_id=str(payload["toolRequestId"]),
+            executor=str(payload.get("executor") or TOOL_EXECUTOR_EXTERNAL),
         )
     except AgentRuntimeError as error:
         raise _refuse(error) from None
@@ -230,14 +232,18 @@ async def resolve_tool_request(payload: dict[str, Any]) -> dict[str, Any]:
     """Persist the sandbox's result for a tool request, through the store's own validation.
 
     Gate 3's sandbox answers a request by returning its result to the workflow, and the workflow
-    records it here before resuming the engine. The store applies exactly the checks the API's
-    tool-result endpoint applies — the request exists, belongs to this run, is still pending and the
-    run is not terminal — and delivering the same result twice resolves the request once.
+    records it here before resuming the engine. This activity is the sandbox's internal path: it
+    is registered on the worker and scheduled only by `_execute_in_sandbox`, and no HTTP route
+    reaches it, so its origin is ``SANDBOX`` by construction (`M1-F-002`). The store applies the
+    same checks the API's endpoint gets — the request exists, belongs to this run, is owned by
+    the sandbox, is still pending and the run is not terminal — and a retried delivery of the same
+    result resolves the request once.
     """
     context = get_context()
     try:
         stored = await context.store.resolve_tool_request(
-            str(payload["runId"]), ToolResult.from_dict(dict(payload["result"])))
+            str(payload["runId"]), ToolResult.from_dict(dict(payload["result"])),
+            origin=TOOL_EXECUTOR_SANDBOX)
     except AgentRuntimeError as error:
         raise _refuse(error) from None
     return stored.to_dict()

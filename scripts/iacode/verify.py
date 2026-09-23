@@ -166,6 +166,14 @@ def build_stages(fast: bool) -> list[Stage]:
                      "a restarted sandbox service keeps the run's session and its workspace",
                      "scripts/iacode/scenarios/sandbox_coding_e2e.py", "--scenario", "recovery",
                      "--report", str(REPOSITORY_ROOT / "var" / "sandbox-recovery.json")),
+        # M1-F-002: the audit's null control and mutation, kept as a stage so the refusal of a
+        # forged tool result is measured on the real stack by every verification.
+        python_stage("sandbox-tool-result-origin",
+                     "a result posted to the API for a sandboxed request is refused, and the "
+                     "agent receives the sandbox's own",
+                     "scripts/iacode/scenarios/sandbox_coding_e2e.py", "--scenario",
+                     "forged-result", "--report",
+                     str(REPOSITORY_ROOT / "var" / "sandbox-tool-result-origin.json")),
         python_stage("backup", "backup, restore into a disposable target, verified read-back",
                      "scripts/iacode/backup_restore_check.py"),
         python_stage("dependency-scan", "known vulnerabilities in the pinned dependencies",

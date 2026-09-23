@@ -44,6 +44,7 @@ from iacode_common.identifiers import uuid7
 from iacode_contracts.agent_runtime import (
     AGENT_RUN_WORKFLOW,
     CANCEL_SIGNAL,
+    TOOL_EXECUTOR_EXTERNAL,
     TOOL_RESULT_SIGNAL,
 )
 from iacode_persistence.engine import create_engine, create_session_factory
@@ -294,7 +295,7 @@ async def resolve(run_id: str) -> int:
         result = ToolResult(tool_request_id=pending.tool_request_id, status="SUCCEEDED",
                             output={"body": "the rehearsal supplied this"},
                             metadata={"by": "durability-rehearsal"})
-        await store.resolve_tool_request(run_id, result)
+        await store.resolve_tool_request(run_id, result, origin=TOOL_EXECUTOR_EXTERNAL)
         configuration = settings()
         client = await Client.connect(configuration.temporal_target,
                                       namespace=configuration.namespace)
@@ -339,7 +340,7 @@ async def try_resolve(run_id: str) -> int:
         result = ToolResult(tool_request_id=requests[-1].tool_request_id, status="SUCCEEDED",
                             output={"body": "too late"})
         try:
-            await store.resolve_tool_request(run_id, result)
+            await store.resolve_tool_request(run_id, result, origin=TOOL_EXECUTOR_EXTERNAL)
         except Exception as error:  # noqa: BLE001 - the refusal is the subject of the check
             print(json.dumps({"accepted": False, "reason": str(error),
                               "errorClass": type(error).__name__}), flush=True)

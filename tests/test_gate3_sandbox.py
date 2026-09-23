@@ -1185,7 +1185,8 @@ class Gate3VerificationStageTests(unittest.TestCase):
 
     STAGES = {"sandbox-integration": '"-m", "integration"',
               "sandbox-coding": "coding", "sandbox-timeout": "timeout",
-              "sandbox-cancellation": "cancel", "sandbox-recovery": "recovery"}
+              "sandbox-cancellation": "cancel", "sandbox-recovery": "recovery",
+              "sandbox-tool-result-origin": "forged-result"}
 
     @classmethod
     def setUpClass(cls) -> None:
@@ -1222,7 +1223,7 @@ class SandboxScenarioTests(unittest.TestCase):
 
     def test_the_four_scenarios_exist(self) -> None:
         for name in ("scenario_coding", "scenario_timeout", "scenario_cancel",
-                     "scenario_recovery"):
+                     "scenario_recovery", "scenario_forged_result"):
             with self.subTest(scenario=name):
                 function(self.scenario, name)
 
@@ -1273,7 +1274,7 @@ class SandboxScenarioTests(unittest.TestCase):
     def test_the_assertions_read_what_the_run_recorded(self) -> None:
         """Every verdict is read from the harness's report of the database, not from a request."""
         for name in ("scenario_coding", "scenario_timeout", "scenario_cancel",
-                     "scenario_recovery"):
+                     "scenario_recovery", "scenario_forged_result"):
             with self.subTest(scenario=name):
                 self.assertIn("harness('report'", ast.unparse(function(self.scenario, name)))
         report = ast.unparse(function(self.rehearsal, "report"))
@@ -1561,6 +1562,111 @@ class CloneMethodTests(unittest.TestCase):
                 self.assertIn("published_clone(", text)
                 self.assertNotIn("--no-hardlinks", text)
 
+
+
+# ---------------------------------------------------------------------------------------------
+# 7. M1-F-002: a tool result is accepted only from the executor that owns the request
+# ---------------------------------------------------------------------------------------------
+
+
+ORIGIN_CONSTANTS = {"TOOL_EXECUTOR_EXTERNAL", "TOOL_EXECUTOR_SANDBOX", "EXTERNAL", "SANDBOX"}
+
+
+def origin_arguments(source: str) -> list[tuple[int, str]]:
+    """Every ``resolve_tool_request`` call and the expression its ``origin`` keyword is given."""
+    found = []
+    for node in ast.walk(ast.parse(source)):
+        if not isinstance(node, ast.Call):
+            continue
+        name = getattr(node.func, "attr", None) or getattr(node.func, "id", None)
+        if name != "resolve_tool_request":
+            continue
+        keyword = next((item for item in node.keywords if item.arg == "origin"), None)
+        found.append((node.lineno, ast.unparse(keyword.value) if keyword else "<missing>"))
+    return found
+
+
+class ToolResultOriginTests(unittest.TestCase):
+    """The origin of a result is fixed by the code path that delivers it, never read from it.
+
+    The store refuses a result whose origin is not the request's executor, so the control is only
+    as good as the origin it is given. It is given by exactly two paths: the API's service method
+    passes ``EXTERNAL`` and the workflow's internal activity passes ``SANDBOX``, each a constant.
+    """
+
+    SEARCHED = ("apps/api/src", "services/agent-runtime/src", "services/orchestrator",
+                "scripts")
+
+    def test_every_caller_declares_a_constant_origin(self) -> None:
+        calls: list[str] = []
+        offenders: list[str] = []
+        for directory in self.SEARCHED:
+            for path in sorted((PROJECT_ROOT / directory).rglob("*.py")):
+                if "__pycache__" in path.parts:
+                    continue
+                for line, origin in origin_arguments(path.read_text(encoding="utf-8")):
+                    where = f"{path.relative_to(PROJECT_ROOT).as_posix()}:{line}"
+                    calls.append(where)
+                    if origin not in ORIGIN_CONSTANTS:
+                        offenders.append(f"{where} origin={origin}")
+        self.assertGreaterEqual(len(calls), 3, f"the scan found too few callers: {calls}")
+        self.assertEqual(offenders, [])
+
+    def test_the_scan_detects_an_origin_taken_from_a_payload(self) -> None:
+        """The null control over mutated sources."""
+        self.assertEqual(origin_arguments(
+            "store.resolve_tool_request(run, result, origin=TOOL_EXECUTOR_SANDBOX)\n"),
+            [(1, "TOOL_EXECUTOR_SANDBOX")])
+        for mutated in ("store.resolve_tool_request(run, result, origin=payload['origin'])\n",
+                        "store.resolve_tool_request(run, result)\n",
+                        "store.resolve_tool_request(run, result, origin=submission.executor)\n"):
+            with self.subTest(source=mutated):
+                (_, origin), = origin_arguments(mutated)
+                self.assertNotIn(origin, ORIGIN_CONSTANTS)
+
+    def test_the_api_path_is_external_and_the_activity_path_is_sandbox(self) -> None:
+        service = (PROJECT_ROOT / "services/agent-runtime/src/iacode_agent_runtime/service.py")
+        activities = (PROJECT_ROOT / "services/orchestrator/src/iacode_orchestrator/agent_runtime/"
+                      "activities.py")
+        self.assertEqual([origin for _, origin in origin_arguments(
+            service.read_text(encoding="utf-8"))], ["TOOL_EXECUTOR_EXTERNAL"])
+        self.assertEqual([origin for _, origin in origin_arguments(
+            activities.read_text(encoding="utf-8"))], ["TOOL_EXECUTOR_SANDBOX"])
+
+    def test_the_workflow_records_the_executor_from_the_stage_policy(self) -> None:
+        workflow_source = (PROJECT_ROOT / "services/orchestrator/src/iacode_orchestrator/"
+                           "workflows/agent_run.py").read_text(encoding="utf-8")
+        create = next(node for node in ast.walk(ast.parse(workflow_source))
+                      if isinstance(node, ast.AsyncFunctionDef)
+                      and node.name == "create_tool_request")
+        text = ast.unparse(create)
+        self.assertIn("stage.sandbox_policy", text)
+        self.assertIn("'executor': executor", text)
+        self.assertIn("TOOL_EXECUTOR_SANDBOX", text)
+
+    def test_a_submission_cannot_name_an_origin(self) -> None:
+        contracts = (PROJECT_ROOT / "packages/contracts/src/iacode_contracts/agent_runtime.py"
+                     ).read_text(encoding="utf-8")
+        submission = next(node for node in ast.walk(ast.parse(contracts))
+                          if isinstance(node, ast.ClassDef)
+                          and node.name == "ToolResultSubmission")
+        fields = {node.target.id for node in submission.body
+                  if isinstance(node, ast.AnnAssign) and isinstance(node.target, ast.Name)}
+        self.assertTrue(fields, "the submission declares no field")
+        self.assertFalse(fields & {"origin", "executor"}, fields)
+        self.assertIn("extra='forbid'", ast.unparse(submission))
+
+    def test_the_executor_vocabulary_is_written_once(self) -> None:
+        """The database constraint, the row and the runtime read one tuple (`LSN-0052`)."""
+        for relative in ("packages/persistence/src/iacode_persistence/models.py",
+                         "apps/api/migrations/versions/0005_tool_request_executor.py",
+                         "services/agent-runtime/src/iacode_agent_runtime/contracts.py",
+                         "services/agent-runtime/src/iacode_agent_runtime/persistence.py"):
+            with self.subTest(module=relative):
+                source = (PROJECT_ROOT / relative).read_text(encoding="utf-8")
+                self.assertIn("TOOL_REQUEST_EXECUTORS", source)
+                self.assertNotIn("('EXTERNAL', 'SANDBOX')", source)
+                self.assertNotIn('("EXTERNAL", "SANDBOX")', source)
 
 if __name__ == "__main__":
     unittest.main()
