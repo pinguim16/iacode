@@ -150,7 +150,7 @@ class PrometheusConfigurationTests(RunningStackTestCase):
         payload = _json(f"http://127.0.0.1:{port}/api/v1/targets?state=active")
         health = {item["labels"]["job"]: item["health"]
                   for item in payload["data"]["activeTargets"]}
-        for job in ("iacode-api", "iacode-worker"):
+        for job in ("iacode-api", "iacode-worker", "iacode-sandbox"):
             with self.subTest(job=job):
                 self.assertEqual(health.get(job), "up",
                                  f"{job} is {health.get(job)!r}; targets={health}")

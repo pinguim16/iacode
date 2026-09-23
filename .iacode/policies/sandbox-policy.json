@@ -1,0 +1,99 @@
+{
+  "schemaVersion": "1.0.0",
+  "policy": "The canonical Sandbox Tool Policy. It is the only source of what a sandbox may do: which tools a named policy allows, which image a session runs, which resources it gets, which network it sees, whether its workspace is writable and which environment variables a command may set. A tool request names a policy by the name its agent's profile froze into the run; it can never supply a limit, a mount, an image or a network, and the sandbox reads everything else from here. Every value is validated against hard bounds in iacode_sandbox.policy, so zero, negative and absurd values are refused rather than applied.",
+  "imageProfiles": [
+    {
+      "name": "iacode-dev",
+      "description": "Git and Python 3.13 on Debian bookworm slim, enough to run the synthetic repository's tests and the ledger tests of IACode itself. Node is deliberately absent until a Gate needs it.",
+      "context": "services/sandbox/images/iacode-dev",
+      "repository": "iacode/sandbox-iacode-dev"
+    }
+  ],
+  "networkProfiles": [
+    {
+      "name": "none",
+      "description": "No network interface but loopback. The default of every policy."
+    },
+    {
+      "name": "local-services",
+      "description": "A network of the session's own, created internal, so nothing on it reaches the internet or another session. Reserved for a controlled integration a later Gate attaches to it; no policy of this Gate uses it."
+    }
+  ],
+  "resourceProfiles": [
+    {
+      "name": "standard",
+      "cpus": 1.0,
+      "memoryMb": 1024,
+      "pids": 256,
+      "workspaceMb": 256,
+      "tmpMb": 64,
+      "commandTimeoutSeconds": 300,
+      "gitTimeoutSeconds": 60,
+      "outputBytes": 32768,
+      "artifactBytes": 4194304,
+      "readBytes": 131072,
+      "writeBytes": 32768,
+      "patchBytes": 32768,
+      "listEntries": 500,
+      "searchResults": 200,
+      "searchSeconds": 10,
+      "searchFileBytes": 1048576,
+      "sessionTtlSeconds": 7200
+    }
+  ],
+  "requestEnvironment": {
+    "allowedNames": [
+      "CI",
+      "PYTHONHASHSEED",
+      "PYTHONWARNINGS",
+      "TZ",
+      "NO_COLOR"
+    ],
+    "maxValueLength": 256
+  },
+  "gitIdentity": {
+    "name": "IACode Agent",
+    "email": "agent@sandbox.iacode.invalid"
+  },
+  "sandboxPolicies": [
+    {
+      "name": "developer",
+      "description": "Reads, searches, writes and patches the workspace, runs commands such as a build or a test suite, and commits locally. No remote Git operation exists.",
+      "tools": [
+        "filesystem.list",
+        "filesystem.read",
+        "filesystem.search",
+        "filesystem.write",
+        "filesystem.apply_patch",
+        "shell.exec",
+        "git.status",
+        "git.diff",
+        "git.log",
+        "git.show",
+        "git.add",
+        "git.commit"
+      ],
+      "imageProfile": "iacode-dev",
+      "resourceProfile": "standard",
+      "networkProfile": "none",
+      "workspaceAccess": "read-write"
+    },
+    {
+      "name": "reviewer",
+      "description": "Reads, searches and inspects history and diffs. It cannot write, patch, run a command or commit.",
+      "tools": [
+        "filesystem.list",
+        "filesystem.read",
+        "filesystem.search",
+        "git.status",
+        "git.diff",
+        "git.log",
+        "git.show"
+      ],
+      "imageProfile": "iacode-dev",
+      "resourceProfile": "standard",
+      "networkProfile": "none",
+      "workspaceAccess": "read-only"
+    }
+  ]
+}

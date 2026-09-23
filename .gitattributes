@@ -18,4 +18,6 @@
 *.conf text eol=lf
 Dockerfile text eol=lf
 .dockerignore text eol=lf
+# Copied byte for byte into the sandbox image, where Git reads it on Linux.
+gitconfig text eol=lf
 *.ps1 text eol=crlf

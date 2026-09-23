@@ -1,0 +1,27 @@
+# The Git configuration of every sandbox, read through GIT_CONFIG_GLOBAL.
+#
+# The identity is the sandbox's, never a person's: a commit an agent makes in a disposable workspace
+# is attributed to "IACode Agent" at an address under the reserved .invalid domain. The owner's
+# development identity lives on the host and never enters a sandbox.
+#
+# No credential helper, no remote protocol but file, no hooks, no pager, no prompt. A sandbox has no
+# network either; this makes a remote operation fail for a second, independent reason.
+[user]
+	name = IACode Agent
+	email = agent@sandbox.iacode.invalid
+[credential]
+	helper =
+[protocol]
+	allow = never
+[protocol "file"]
+	allow = always
+[core]
+	hooksPath = /dev/null
+	pager = cat
+	autocrlf = false
+[init]
+	defaultBranch = main
+[advice]
+	detachedHead = false
+[safe]
+	directory = /workspace

@@ -93,7 +93,8 @@ From `GATE 3` the repository has a public remote, `origin` =
   final tag is on the remote.
 
 The Git an agent uses inside a sandbox is not this Git: it is local to a disposable workspace, has
-its own identity, and has no remote and no credential.
+its own identity, and has no remote and no credential
+([ADR-0027](adr/ADR-0027-tool-execution-policy.md)).
 
 ## Gate discipline
 

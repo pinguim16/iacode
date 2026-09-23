@@ -50,3 +50,13 @@ scrape_configs:
       - targets: ["worker:9101"]
         labels:
           component: agent-runtime
+
+  # Gate 3: the sandbox service's own instruments - sessions created and active, tool executions
+  # by tool and status, their duration, failures, timeouts and policy refusals. Labels are tool
+  # names, policies, statuses and reason codes; never a command, a path or an output.
+  - job_name: iacode-sandbox
+    metrics_path: /metrics
+    static_configs:
+      - targets: ["sandbox:9102"]
+        labels:
+          component: sandbox

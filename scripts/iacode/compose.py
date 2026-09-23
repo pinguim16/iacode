@@ -36,6 +36,7 @@ HEALTHY_SERVICES = (
     "temporal",
     "api",
     "worker",
+    "sandbox",
     "web",
     "prometheus",
     "grafana",

@@ -34,3 +34,6 @@ exist, or a title or status that disagrees with its record fails the suite.
 | [ADR-0022](ADR-0022-agent-output-envelope.md) | An agent turn is one versioned envelope, parsed strictly, with exactly one repair | Accepted |
 | [ADR-0023](ADR-0023-sealed-checkpoint-binds-its-own-tag.md) | A sealed checkpoint is bound to its own canonical tag | Accepted |
 | [ADR-0024](ADR-0024-public-remote-and-atomic-commits.md) | A public remote, atomic commits and a push per advance | Accepted |
+| [ADR-0025](ADR-0025-sandbox-isolation-boundary.md) | Agent tools execute in disposable hardened containers, driven by one controller | Accepted |
+| [ADR-0026](ADR-0026-workspace-lifecycle.md) | A workspace belongs to one run, lives in memory, and is recovered from the store | Accepted |
+| [ADR-0027](ADR-0027-tool-execution-policy.md) | What a tool may do is canonical policy, and the agent can neither choose nor change it | Accepted |

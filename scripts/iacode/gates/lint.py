@@ -33,6 +33,8 @@ PYTHON_ROOTS = (
     "services/orchestrator/src",
     "services/agent-runtime/src",
     "services/agent-runtime/tests",
+    "services/sandbox/src",
+    "services/sandbox/tests",
     "packages",
     "scripts/iacode",
     "infra/tests",

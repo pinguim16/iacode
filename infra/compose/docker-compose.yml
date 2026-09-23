@@ -335,6 +335,65 @@ services:
     networks: [iacode]
 
   # ------------------------------------------------------------------------------------------
+  # The sandbox service (Gate 3): the controller that runs an agent's tools in disposable,
+  # hardened containers.
+  # ------------------------------------------------------------------------------------------
+  # This is the only service given the container engine's socket, because creating a sandbox
+  # is what it is for. It is not a sandbox and runs nothing an agent wrote: every tool executes in
+  # a sibling container the controller creates from the canonical policy — read-only root, no
+  # capabilities, no new privileges, an unprivileged user, no network, bounded CPU, memory,
+  # processes and disk, and **no** volume, bind mount or inherited variable of any kind. The
+  # socket reaches this container only; `ContainerSpecTests` asserts it never reaches a sandbox.
+  #
+  # The socket is owned by root:root with mode 660, so the unprivileged service user joins group 0
+  # for that file and for nothing else; the process itself is never root. It publishes no port:
+  # the orchestrator reaches it through Temporal, and Prometheus scrapes it on the internal network.
+  sandbox:
+    build:
+      context: ../..
+      dockerfile: services/sandbox/Dockerfile
+      args: *build-args
+    image: ${COMPOSE_PROJECT_NAME:-iacode}/sandbox:${IACODE_VERSION:-0.1.0}
+    container_name: ${COMPOSE_PROJECT_NAME:-iacode}-sandbox
+    restart: unless-stopped
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+      temporal:
+        condition: service_healthy
+      minio-bootstrap:
+        condition: service_completed_successfully
+    group_add: ["0"]
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: ["ALL"]
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      IACODE_SERVICE_NAME: iacode-sandbox
+      IACODE_VERSION: ${IACODE_VERSION:-0.1.0}
+      IACODE_LOG_LEVEL: ${IACODE_LOG_LEVEL:-INFO}
+      IACODE_DATABASE_URL: ${IACODE_DATABASE_URL}
+      IACODE_MINIO_ENDPOINT: ${IACODE_MINIO_ENDPOINT}
+      IACODE_MINIO_ACCESS_KEY: ${IACODE_MINIO_ACCESS_KEY}
+      IACODE_MINIO_SECRET_KEY: ${IACODE_MINIO_SECRET_KEY}
+      IACODE_MINIO_SECURE: ${IACODE_MINIO_SECURE:-false}
+      IACODE_MINIO_BUCKET: ${IACODE_MINIO_BUCKET:-iacode-artifacts}
+      IACODE_TEMPORAL_TARGET: ${IACODE_TEMPORAL_TARGET}
+      IACODE_TEMPORAL_NAMESPACE: ${IACODE_TEMPORAL_NAMESPACE:-default}
+      IACODE_SANDBOX_OWNER: ${COMPOSE_PROJECT_NAME:-iacode}
+      IACODE_SANDBOX_METRICS_PORT: ${IACODE_SANDBOX_METRICS_PORT:-9102}
+      IACODE_SANDBOX_SWEEP_INTERVAL_SECONDS: ${IACODE_SANDBOX_SWEEP_INTERVAL_SECONDS:-60}
+      IACODE_SANDBOX_SWEEP_BATCH: ${IACODE_SANDBOX_SWEEP_BATCH:-10}
+    healthcheck:
+      # A poller on the sandbox queue and an engine that answers, not a process that exists.
+      test: ["CMD", "python", "-m", "iacode_sandbox.healthcheck"]
+      interval: 15s
+      timeout: 15s
+      retries: 6
+      start_period: 45s
+    networks: [iacode]
+
+  # ------------------------------------------------------------------------------------------
   # The web shell.
   # ------------------------------------------------------------------------------------------
   web:

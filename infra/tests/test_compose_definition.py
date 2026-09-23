@@ -39,11 +39,14 @@ ENV_EXAMPLE = COMPOSE_DIRECTORY / ".env.example"
 EXPECTED_SERVICES = {
     "postgres", "redis", "minio", "minio-bootstrap", "temporal", "temporal-ui",
     "migrate", "api", "worker", "web", "prometheus", "grafana",
+    # Gate 3: the controller that runs an agent's tools in disposable sandboxes.
+    "sandbox",
 }
 
 # Services with a long-running process that can report on itself.
 SERVICES_REQUIRING_HEALTHCHECKS = {
     "postgres", "redis", "minio", "temporal", "api", "worker", "web", "prometheus", "grafana",
+    "sandbox",
 }
 
 # Durable state that must survive `docker compose down`.
@@ -181,6 +184,22 @@ class ComposeDefinitionTests(unittest.TestCase):
             with self.subTest(service=name):
                 self.assertEqual(self.services()[name].get("restart"), "no")
 
+    def test_only_the_sandbox_service_is_given_the_engine_socket(self) -> None:
+        """Gate 3: the controller holds the socket so it can create sandboxes; nothing else does,
+        and the controller is not privileged, drops every capability and publishes no port."""
+        holders = []
+        for name, service in self.services().items():
+            for volume in service.get("volumes") or []:
+                source = volume.get("source") if isinstance(volume, dict) else str(volume)
+                if source and "docker.sock" in str(source):
+                    holders.append(name)
+        self.assertEqual(holders, ["sandbox"])
+        sandbox = self.services()["sandbox"]
+        self.assertFalse(sandbox.get("privileged"))
+        self.assertEqual(sandbox.get("cap_drop"), ["ALL"])
+        self.assertIn("no-new-privileges:true", sandbox.get("security_opt") or [])
+        self.assertFalse(sandbox.get("ports"))
+
     def test_every_service_is_on_the_explicit_network(self) -> None:
         for name, service in self.services().items():
             with self.subTest(service=name):
@@ -260,6 +279,8 @@ class DockerfileTests(unittest.TestCase):
         REPOSITORY_ROOT / "apps" / "api" / "Dockerfile",
         REPOSITORY_ROOT / "apps" / "web" / "Dockerfile",
         REPOSITORY_ROOT / "services" / "orchestrator" / "Dockerfile",
+        REPOSITORY_ROOT / "services" / "sandbox" / "Dockerfile",
+        REPOSITORY_ROOT / "services" / "sandbox" / "images" / "iacode-dev" / "Dockerfile",
     )
 
     def test_dockerfiles_pin_and_drop_root(self) -> None:

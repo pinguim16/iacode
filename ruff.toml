@@ -54,6 +54,16 @@ ignore = [
 # The sandbox's view of an executed tool is read as JSON by the same page. Same decision.
 "packages/contracts/src/iacode_contracts/sandbox.py" = ["N815"]
 
+# `/tmp` inside a sandbox is a size-limited, noexec tmpfs private to that container: the backend
+# creates it and the helper points a command's HOME at it. It is the sandbox's own scratch space,
+# never the controller's or the host's, which is the distinction S108 cannot see.
+"services/sandbox/src/iacode_sandbox/backend.py" = ["S108"]
+"services/sandbox/src/iacode_sandbox/helper.py" = ["S108"]
+
+# The sandbox suite asserts those same mount strings, and plants synthetic command text whose only
+# purpose is to prove it never reaches a metric label or a log record.
+"services/sandbox/tests/**" = ["S105", "S108"]
+
 # The application binds 0.0.0.0 *inside a container*, where the alternative is a service nothing can
 # reach. The published port is the security boundary, and the compose file binds that to 127.0.0.1;
 # `infra/tests/test_compose_definition.py` is the control that keeps it there.
