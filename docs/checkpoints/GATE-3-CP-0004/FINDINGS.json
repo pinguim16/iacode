@@ -1,0 +1,47 @@
+{
+  "schemaVersion": "1.0.0",
+  "artifact": "FINDINGS",
+  "checkpoint": "GATE-3-CP-0004",
+  "milestone": "M1",
+  "subjectCheckpoint": "GATE-3-CP-0003",
+  "note": "This fresh-session audit stopped at the frozen Critical/High stop condition. The full verification failed its dependency advisory gate and an immediate independent repetition reproduced the blocking npm findings with both advisory sources available. Product corrections are outside the auditor role.",
+  "findings": [
+    {
+      "id": "M1-F-004",
+      "severity": "CRITICAL",
+      "status": "OPEN",
+      "disposition": "REWORK_REQUIRED",
+      "correctiveCheckpoint": "GATE-3-CP-0005",
+      "title": "The pinned frontend dependency graph contains two Critical and four High advisories",
+      "gates": [
+        "GATE 0",
+        "GATE 3"
+      ],
+      "observed": "The complete verification passed 31 of 32 stages and failed only dependency-scan (cmd-0016). The first scan reported the npm graph at critical=2 and high=4 while the PyPI source timed out. An immediate independent repetition with both advisory sources available reproduced npm critical=2 and high=4, with PyPI at zero findings (cmd-0017, DEPENDENCY-SCAN-REPORT.json). Blocking packages are @angular/build (Critical, via piscina), @angular/cli (High, via @modelcontextprotocol/sdk), @angular/router (High), @modelcontextprotocol/sdk (High), piscina (Critical), and source-map-js (High).",
+      "rootCause": "The sealed subject pins frontend dependencies and a lock graph that now fall within ranges covered by live npm advisories. The mandatory scanner correctly treats current Critical and High advisories as blocking; this is newly observed audit state, not a scanner availability artifact.",
+      "impact": "The graph includes a Critical prototype-pollution/RCE gadget in piscina and High advisories covering Angular router denial of service, MCP OAuth credential redirection, and source-map event-loop denial of service. Some affected packages are build-time dependencies, but the repository policy deliberately makes every relevant Critical or High dependency finding gate-blocking, and @angular/router is a runtime dependency.",
+      "severityRationale": "CRITICAL because the authoritative scanner classifies two reachable packages in the pinned graph as Critical, including an RCE-class advisory. The frozen AM-17 criterion and the audit stop condition do not permit risk acceptance or deferral of a Critical/High finding.",
+      "requiredCorrection": "In an implementing checkpoint, update the direct frontend pins and package-lock.json to versions whose resolved graph has no relevant Critical or High advisories, review whether each transitive path is actually needed, run the complete verification with both advisory sources available, and submit the sealed correction to a new independent M1 audit. Do not suppress advisories, weaken the severity denominator, or edit the scanner to obtain green.",
+      "evidence": [
+        "file:docs/checkpoints/GATE-3-CP-0004/VERIFICATION-REPORT.json",
+        "file:docs/checkpoints/GATE-3-CP-0004/DEPENDENCY-SCAN-REPORT.json",
+        "command:cmd-0016",
+        "command:cmd-0017",
+        "file:apps/web/package.json",
+        "file:apps/web/package-lock.json"
+      ]
+    }
+  ],
+  "observations": [
+    {
+      "id": "M1-O-006",
+      "title": "The three findings from the previous M1 audit remain closed in the evidence executed before the stop",
+      "detail": "Every sealed subject validates locally and from the published transport clone; every commit named by sealed evidence is reachable from published references; R-G3-001 remains bounded by ten passing controls. The full verification also passed sandbox-tool-result-origin, sandbox-coding and every other live stage before dependency-scan. The dedicated AM-21 and AM-22 repetitions were not run because the frozen Critical/High stop condition fired first."
+    },
+    {
+      "id": "M1-O-007",
+      "title": "The remaining frozen criteria were intentionally not executed after the stop condition",
+      "detail": "The cross-gate live repetition, configured-model repetition, dedicated forged-result probe, audit Red Team and clean-clone verification are UNVERIFIED in this audit checkpoint. This is not evidence of failure in those dimensions; it is the required consequence of stopping on M1-F-004."
+    }
+  ]
+}

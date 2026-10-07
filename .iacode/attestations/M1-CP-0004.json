@@ -1,0 +1,22 @@
+{
+  "schemaVersion": "2.0.0",
+  "auditId": "M1-CP-0004",
+  "milestone": "M1",
+  "validationMechanism": "FRESH_SESSION_INDEPENDENT_AUDIT",
+  "crossToolValidation": "AVAILABLE",
+  "auditorRole": "milestone independent auditor",
+  "tool": "Codex desktop application",
+  "provider": "OpenAI",
+  "model": "GPT-5",
+  "freshSession": true,
+  "subjectCheckpoint": "GATE-3-CP-0003",
+  "subjectCommit": "f61f84ca7e830002db1674f1df2aca8172f6e483",
+  "auditCheckpoint": "GATE-3-CP-0004",
+  "reviewResult": "REWORK_REQUIRED",
+  "redTeamResult": "NOT_EXECUTED_STOP_CONDITION",
+  "completeness": 100.0,
+  "evidenceCoverage": 100.0,
+  "testResult": "FAIL",
+  "createdAt": "2026-10-07T17:39:59Z",
+  "notes": "Fresh Codex/OpenAI audit of the sealed Claude/Anthropic corrective delivery. This is FRESH_SESSION_INDEPENDENT_AUDIT, not a cross-tool milestone verdict. The complete verification passed 31 of 32 stages; dependency-scan failed and an immediate repetition with both advisory sources available confirmed two Critical and four High npm advisories (M1-F-004). The frozen stop condition required REWORK_REQUIRED before the dedicated Red Team and remaining live/clean-clone criteria, so they remain unverified. The attestation records the audit that happened; it cannot grant a milestone pass."
+}

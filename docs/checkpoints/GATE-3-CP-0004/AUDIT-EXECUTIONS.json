@@ -1,0 +1,128 @@
+{
+  "schemaVersion": "1.0.0",
+  "artifact": "AUDIT-EXECUTIONS",
+  "checkpoint": "GATE-3-CP-0004",
+  "milestone": "M1",
+  "subjectCheckpoint": "GATE-3-CP-0003",
+  "auditMechanism": "FRESH_SESSION_INDEPENDENT_AUDIT",
+  "note": "Every execution this audit relied on, appended as it happened. A non-zero exit code is kept rather than removed: some executions are deliberately negative, and the dimension says which.",
+  "generatedAt": "2026-10-07T16:57:46Z",
+  "executions": [
+    {
+      "id": "EX-001",
+      "dimension": "Integrity baseline",
+      "command": "python scripts/development-ledger/verify_integrity.py",
+      "exitCode": 0,
+      "observed": "Integrity chain valid with 20 anchors after anchoring GATE-3-CP-0003.",
+      "evidence": [
+        "command:cmd-0003"
+      ],
+      "recordedAt": "2026-10-07T16:57:44Z"
+    },
+    {
+      "id": "EX-002",
+      "dimension": "Lesson preflight",
+      "command": "python scripts/development-ledger/lesson_preflight.py --gate GATE-3 --scope independent-audit --write",
+      "exitCode": 0,
+      "observed": "56 lessons considered, applicable, and derived before audit execution.",
+      "evidence": [
+        "command:cmd-0004"
+      ],
+      "recordedAt": "2026-10-07T16:57:44Z"
+    },
+    {
+      "id": "EX-003",
+      "dimension": "Remote synchronisation",
+      "command": "python scripts/development-ledger/remote_sync.py --tag iacode-checkpoints/GATE-3-CP-0003",
+      "exitCode": 0,
+      "observed": "origin/main and the sealed subject tag matched the authorised remote.",
+      "evidence": [
+        "command:cmd-0007"
+      ],
+      "recordedAt": "2026-10-07T16:57:45Z"
+    },
+    {
+      "id": "EX-004",
+      "dimension": "History secret scan",
+      "command": "python scripts/development-ledger/secret_scan.py --history",
+      "exitCode": 0,
+      "observed": "Complete history scan clean with 0 findings and 43 allowlisted values.",
+      "evidence": [
+        "command:cmd-0009"
+      ],
+      "recordedAt": "2026-10-07T16:57:45Z"
+    },
+    {
+      "id": "EX-005",
+      "dimension": "Local sealed subjects",
+      "command": "python docs/checkpoints/GATE-3-CP-0004/audit-harness/sealed_subjects.py --report docs/checkpoints/GATE-3-CP-0004/SEALED-SUBJECTS.json",
+      "exitCode": 0,
+      "observed": "All seven sealed M1 checkpoints validated detached at their canonical tags.",
+      "evidence": [
+        "command:cmd-0010",
+        "checkpoint:SEALED-SUBJECTS.json"
+      ],
+      "recordedAt": "2026-10-07T16:57:45Z"
+    },
+    {
+      "id": "EX-006",
+      "dimension": "Published sealed subjects",
+      "command": "python docs/checkpoints/GATE-3-CP-0004/audit-harness/sealed_subjects.py --remote --report docs/checkpoints/GATE-3-CP-0004/SEALED-SUBJECTS-PUBLISHED.json",
+      "exitCode": 0,
+      "observed": "All seven sealed M1 checkpoints validated from a transport clone of the authorised remote.",
+      "evidence": [
+        "command:cmd-0011",
+        "checkpoint:SEALED-SUBJECTS-PUBLISHED.json"
+      ],
+      "recordedAt": "2026-10-07T16:57:45Z"
+    },
+    {
+      "id": "EX-007",
+      "dimension": "Published evidence objects",
+      "command": "python docs/checkpoints/GATE-3-CP-0004/audit-harness/remote_published_objects.py --report docs/checkpoints/GATE-3-CP-0004/REMOTE-PUBLISHED-OBJECTS.json",
+      "exitCode": 0,
+      "observed": "Every commit named by sealed evidence is reachable from published references, including three preserved objects; 70 named commits and 0 unpublished.",
+      "evidence": [
+        "command:cmd-0012",
+        "checkpoint:REMOTE-PUBLISHED-OBJECTS.json"
+      ],
+      "recordedAt": "2026-10-07T16:57:45Z"
+    },
+    {
+      "id": "EX-008",
+      "dimension": "R-G3-001 control review",
+      "command": "python docs/checkpoints/GATE-3-CP-0004/audit-harness/r_g3_001.py --report docs/checkpoints/GATE-3-CP-0004/R-G3-001-REVIEW.json",
+      "exitCode": 0,
+      "observed": "Ten of ten controls passed and no untrusted input reaches an engine operation.",
+      "evidence": [
+        "command:cmd-0013",
+        "checkpoint:R-G3-001-REVIEW.json"
+      ],
+      "recordedAt": "2026-10-07T16:57:45Z"
+    },
+    {
+      "id": "EX-009",
+      "dimension": "Complete M1 verification",
+      "command": "python scripts/iacode/verify.py --report var/m1-reaudit-verify-report.json --keep-going",
+      "exitCode": 1,
+      "observed": "31 of 32 stages passed; dependency-scan failed with two Critical and four High npm advisories while PyPI timed out.",
+      "evidence": [
+        "command:cmd-0016",
+        "checkpoint:VERIFICATION-REPORT.json"
+      ],
+      "recordedAt": "2026-10-07T16:57:46Z"
+    },
+    {
+      "id": "EX-010",
+      "dimension": "Dependency finding reproduction",
+      "command": "python scripts/iacode/dependency_scan.py --json --report docs/checkpoints/GATE-3-CP-0004/DEPENDENCY-SCAN-REPORT.json",
+      "exitCode": 1,
+      "observed": "Both advisory sources were available; PyPI had zero findings and npm reproduced two Critical plus four High findings. Frozen stop condition fired.",
+      "evidence": [
+        "command:cmd-0017",
+        "checkpoint:DEPENDENCY-SCAN-REPORT.json"
+      ],
+      "recordedAt": "2026-10-07T16:57:46Z"
+    }
+  ]
+}

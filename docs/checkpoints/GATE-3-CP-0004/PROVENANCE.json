@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "3.2.0",
+  "artifacts": [
+    {
+      "artifact": "docs\\checkpoints\\GATE-3-CP-0004",
+      "sourceType": "repository-generated",
+      "provider": "OpenAI Codex and local repository scripts",
+      "model": "GPT-5 where model-authored; not-applicable for deterministic outputs",
+      "ownership": "project",
+      "license": "project-policy",
+      "rights": {
+        "storageAllowed": true,
+        "ragAllowed": false,
+        "trainingAllowed": false,
+        "distillationAllowed": false
+      },
+      "evidence": "Audit artifacts and command records in GATE-3-CP-0004.",
+      "notes": "Project-owned audit evidence; no source prompt, completion, credential, or private dataset is stored."
+    },
+    {
+      "artifact": "docs/checkpoints/GATE-3-CP-0004/DEPENDENCY-SCAN-REPORT.json",
+      "sourceType": "external-advisory-derived",
+      "provider": "PyPI and npm advisory services through repository scanners",
+      "model": "not-applicable",
+      "ownership": "project evidence derived from public advisory metadata",
+      "license": "source-service terms apply",
+      "rights": {
+        "storageAllowed": true,
+        "ragAllowed": false,
+        "trainingAllowed": false,
+        "distillationAllowed": false
+      },
+      "evidence": "command:cmd-0017",
+      "notes": "Stores package names, severity classes and advisory titles only; no credentials or user content."
+    }
+  ]
+}

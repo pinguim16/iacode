@@ -1,0 +1,170 @@
+{
+  "schemaVersion": "3.2.0",
+  "phase": "M1 fresh-session independent milestone re-audit of GATE-3-CP-0003 (Gates 0 to 3)",
+  "gate": "GATE-3",
+  "status": "REWORK_REQUIRED",
+  "branch": "main",
+  "baseCommit": "f61f84ca7e830002db1674f1df2aca8172f6e483",
+  "currentCommit": "refs/tags/iacode-checkpoints/GATE-3-CP-0004",
+  "dirty": false,
+  "startedAt": "2026-10-07T12:59:43Z",
+  "updatedAt": "2026-10-07T18:42:22Z",
+  "nextAllowedAction": "Open implementing checkpoint GATE-3-CP-0005, register audit M1-CP-0004, close M1-F-004 by updating the pinned frontend dependency graph without weakening the advisory gate, seal the correction, and run a new independent M1 audit. GATE 4 must not start.",
+  "blockedBy": [
+    "M1-F-004"
+  ],
+  "secondToolValidation": {
+    "status": "FAILED",
+    "tool": "Codex desktop application, fresh session",
+    "provider": "OpenAI",
+    "model": "GPT-5",
+    "validatedAt": "2026-10-07T17:39:59Z",
+    "justification": "Fresh-session independent audit of sealed GATE-3-CP-0003. The complete verification passed 31/32 stages, but the dependency advisory gate and its independent repetition found two Critical and four High npm advisories (M1-F-004). The auditor stopped under the frozen Critical/High rule and made no product correction.",
+    "evidence": [
+      "file:REVIEW-REPORT.md",
+      "file:FINDINGS.json",
+      "file:AUDIT-EXECUTIONS.json"
+    ]
+  },
+  "requirementsMatrix": {
+    "path": "REQUIREMENTS-MATRIX.json",
+    "total": 195,
+    "mandatory": 192,
+    "complete": 195,
+    "partial": 0,
+    "missing": 0,
+    "notApplicable": 0,
+    "coveragePercent": 100.0
+  },
+  "greenKeeper": {
+    "status": "PASS",
+    "cycles": 2,
+    "remainingFailures": 0,
+    "unresolvedReworkItems": 0,
+    "log": "REWORK-LOG.jsonl",
+    "externalBlockers": [],
+    "evidence": [
+      "file:REWORK-LOG.jsonl",
+      "command:cmd-0027",
+      "command:cmd-0028",
+      "command:cmd-0029",
+      "command:cmd-0030",
+      "command:cmd-0031",
+      "command:cmd-0032",
+      "command:cmd-0033",
+      "command:cmd-0034",
+      "command:cmd-0035",
+      "command:cmd-0036",
+      "command:cmd-0037",
+      "command:cmd-0038",
+      "command:cmd-0043",
+      "command:cmd-0044",
+      "command:cmd-0045",
+      "command:cmd-0046",
+      "command:cmd-0047",
+      "command:cmd-0048",
+      "command:cmd-0049",
+      "command:cmd-0050",
+      "command:cmd-0051",
+      "command:cmd-0052",
+      "command:cmd-0053",
+      "command:cmd-0054"
+    ]
+  },
+  "deliveryCompleteness": {
+    "status": "PASS",
+    "report": "COMPLETENESS-REPORT.json",
+    "coveragePercent": 100.0,
+    "evidenceCoveragePercent": 100.0,
+    "auditor": "Delivery Completeness Validator, M1 fresh-session audit stop-condition closure",
+    "evidence": [
+      "file:COMPLETENESS-REPORT.json",
+      "command:cmd-0024"
+    ]
+  },
+  "reworkCycles": 2,
+  "independentReview": {
+    "status": "REWORK_REQUIRED",
+    "tool": "Codex desktop application, OpenAI, GPT-5, fresh session",
+    "reviewedAt": "2026-10-07T17:39:59Z",
+    "justification": "M1-F-004 is Critical: the mandatory advisory scan reproducibly found two Critical and four High npm advisories in the pinned frontend graph. Frozen criteria AM-04 and AM-17 fail; later criteria are UNVERIFIED because the predeclared stop condition fired.",
+    "evidence": [
+      "file:REVIEW-REPORT.md",
+      "file:FINDINGS.json",
+      "file:FINAL-M1-AUDIT-MATRIX.json"
+    ]
+  },
+  "redTeam": {
+    "status": "NOT_REQUIRED",
+    "tool": "not executed after the frozen Critical/High stop condition",
+    "executedAt": null,
+    "justification": "The audit was already required to return REWORK_REQUIRED on M1-F-004. Continuing the dedicated Red Team after a Critical finding would violate PLAN.md's stop condition; its criteria remain UNVERIFIED rather than passed.",
+    "evidence": [
+      "file:PLAN.md",
+      "file:FINAL-M1-AUDIT-MATRIX.json",
+      "file:FINDINGS.json"
+    ]
+  },
+  "lessonPreflight": {
+    "path": "LESSON-PREFLIGHT.json",
+    "gate": "GATE-3",
+    "scope": "independent-audit",
+    "lessonsConsidered": 56,
+    "lessonsApplicable": 56,
+    "derivedRequirements": 56,
+    "evidence": [
+      "checkpoint:LESSON-PREFLIGHT.json"
+    ]
+  },
+  "milestone": {
+    "id": "M1",
+    "title": "IACode V0 foundation",
+    "gates": [
+      "GATE 0",
+      "GATE 1",
+      "GATE 2",
+      "GATE 3"
+    ],
+    "status": "FAILED",
+    "auditor": "Codex desktop application, OpenAI, GPT-5, fresh-session independent M1 audit (FRESH_SESSION_INDEPENDENT_AUDIT); not cross-tool validation",
+    "auditedAt": "2026-10-07T17:39:59Z",
+    "evidence": [
+      "file:MILESTONE-REPORT.md",
+      "file:REVIEW-REPORT.md",
+      "file:AUDIT-EXECUTIONS.json"
+    ]
+  },
+  "externalAuditRequired": false,
+  "externalAuditReason": null,
+  "guardrailEffectiveness": {
+    "guardrailsTotal": 57,
+    "guardrailsResolved": 57,
+    "guardrailsTested": 57,
+    "guardrailsEffective": 57,
+    "guardrailFailures": 0,
+    "evidence": [
+      "file:.iacode/memory/guardrails/registry.json",
+      "file:.iacode/memory/lessons.jsonl"
+    ]
+  },
+  "integrity": {
+    "status": "PASS",
+    "anchors": 20,
+    "chainFile": ".iacode/anchors/checkpoint-chain.json",
+    "evidence": [
+      "command:cmd-0003",
+      "command:cmd-0030"
+    ]
+  },
+  "externalAttestation": {
+    "status": "PRESENT",
+    "path": ".iacode/attestations/M1-CP-0004.json",
+    "auditId": "M1-CP-0004",
+    "subjectCheckpoint": "GATE-3-CP-0003",
+    "subjectCommit": "f61f84ca7e830002db1674f1df2aca8172f6e483",
+    "validationMechanism": "FRESH_SESSION_INDEPENDENT_AUDIT",
+    "evidence": [
+      "file:MILESTONE-REPORT.md"
+    ]
+  }
+}

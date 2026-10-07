@@ -1,0 +1,65 @@
+{
+  "schemaVersion": "3.2.0",
+  "checks": {
+    "build": {
+      "status": "PASS",
+      "evidence": ["command:cmd-0032", "command:cmd-0035", "command:cmd-0036"],
+      "justification": null
+    },
+    "unitTests": {
+      "status": "PASS",
+      "evidence": ["file:TESTS.json", "command:cmd-0027", "command:cmd-0039"],
+      "justification": null
+    },
+    "integrationTests": {
+      "status": "PASS",
+      "evidence": ["file:TESTS.json", "command:cmd-0039"],
+      "justification": null
+    },
+    "e2e": {
+      "status": "PASS",
+      "evidence": ["file:TESTS.json", "command:cmd-0040", "file:VERIFICATION-REPORT.json"],
+      "justification": null
+    },
+    "lint": {
+      "status": "PASS",
+      "evidence": ["command:cmd-0037"],
+      "justification": null
+    },
+    "staticAnalysis": {
+      "status": "PASS",
+      "evidence": ["command:cmd-0028", "command:cmd-0037", "command:cmd-0038"],
+      "justification": null
+    },
+    "security": {
+      "status": "FAIL",
+      "evidence": ["file:DEPENDENCY-SCAN-REPORT.json", "file:FINDINGS.json", "file:VERIFICATION-REPORT.json"],
+      "justification": "M1-F-004: the reproducible npm advisory scan found two Critical and four High findings. History secret scanning, isolation stages and deterministic security tests passed, but policy makes this dependency result blocking."
+    },
+    "documentation": {
+      "status": "PASS",
+      "evidence": ["file:REVIEW-REPORT.md", "file:MILESTONE-REPORT.md", "file:FINAL-REPORT.md"],
+      "justification": null
+    },
+    "checkpointValidation": {
+      "status": "PASS",
+      "evidence": ["command:cmd-0031"],
+      "justification": null
+    },
+    "redTeam": {
+      "status": "NOT_EXECUTED",
+      "evidence": ["file:PLAN.md", "file:FINAL-M1-AUDIT-MATRIX.json"],
+      "justification": "The dedicated audit Red Team was not executed because PLAN.md requires an immediate stop on a real Critical/High finding. No Red Team pass is claimed."
+    },
+    "greenKeeper": {
+      "status": "PASS",
+      "evidence": ["file:REWORK-LOG.jsonl", "command:cmd-0043", "command:cmd-0054"],
+      "justification": "All twelve canonical Green Keeper gates passed on the final assurance-scope fingerprint in cycle 2. This does not include or override the separate blocking dependency advisory gate."
+    },
+    "deliveryCompleteness": {
+      "status": "PASS",
+      "evidence": ["file:COMPLETENESS-REPORT.json", "command:cmd-0024"],
+      "justification": null
+    }
+  }
+}

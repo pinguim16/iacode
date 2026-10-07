@@ -1,0 +1,27 @@
+{
+  "schemaVersion": "1.0.0",
+  "checkpoint": "GATE-3-CP-0004",
+  "generatedAt": "2026-10-07T17:44:09Z",
+  "counts": {
+    "TESTS": {
+      "numerator": 1548,
+      "denominator": 1548,
+      "source": "discovery over every counted suite of .iacode/policies/test-suites.json, cross-checked with TESTS.json and deduplicated by physical execution"
+    },
+    "REQUIREMENTS": {
+      "numerator": 195,
+      "denominator": 195,
+      "source": "REQUIREMENTS-MATRIX.json evaluated against the derived expected set"
+    },
+    "LESSONS": {
+      "numerator": 53,
+      "denominator": 56,
+      "source": ".iacode/memory/lessons.jsonl"
+    },
+    "GUARDRAILS": {
+      "numerator": 57,
+      "denominator": 57,
+      "source": ".iacode/memory/guardrails/registry.json measured for effectiveness"
+    }
+  }
+}
