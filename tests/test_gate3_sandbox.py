@@ -31,7 +31,9 @@ from unittest import mock
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 SCRIPTS = PROJECT_ROOT / "scripts" / "development-ledger"
 sys.path.insert(0, str(SCRIPTS))
+sys.path.insert(0, str(PROJECT_ROOT / "scripts" / "iacode"))
 
+import dependency_scan  # noqa: E402
 import ledger_common  # noqa: E402
 import policies  # noqa: E402
 import record_command  # noqa: E402
@@ -1030,6 +1032,40 @@ class Gate3AgentToolPolicyTests(unittest.TestCase):
         self.assertIn("fit_agent_output", called(function(contracts, "agent_result")))
 
 
+class DependencyAdvisoryGateTests(unittest.TestCase):
+    """The control that caught M1-F-004 must keep its denominator and fail closed."""
+
+    @staticmethod
+    def run_with(*scans: dict[str, object]) -> int:
+        with (
+            mock.patch.object(dependency_scan, "require_docker"),
+            mock.patch.object(dependency_scan, "scan_backend", return_value=scans[0]),
+            mock.patch.object(dependency_scan, "scan_frontend", return_value=scans[1]),
+            mock.patch.object(sys, "argv", ["dependency_scan.py"]),
+            contextlib.redirect_stdout(io.StringIO()),
+        ):
+            return dependency_scan.main()
+
+    def test_the_dependency_scan_blocks_critical_and_high_findings(self) -> None:
+        clean = {"ecosystem": "pypi", "status": "SCANNED", "counts": {"total": 0},
+                 "blocking": [], "findings": []}
+        clean_npm = {"ecosystem": "npm", "status": "SCANNED", "counts": {},
+                     "blocking": [], "findings": []}
+        self.assertEqual(dependency_scan.BLOCKING, {"critical", "high"})
+        self.assertEqual(self.run_with(clean, clean_npm), 0, "the null control must pass")
+
+        for severity in ("critical", "high"):
+            blocked = dict(clean_npm)
+            blocked["blocking"] = [{"name": "fixture", "severity": severity}]
+            with self.subTest(severity=severity):
+                self.assertEqual(self.run_with(clean, blocked), 1)
+
+        unavailable = {"ecosystem": "npm", "status": "UNAVAILABLE",
+                       "detail": "fixture source unavailable"}
+        self.assertEqual(self.run_with(clean, unavailable), 1,
+                         "an unavailable required source must fail closed")
+
+
 class SandboxImageProfileTests(unittest.TestCase):
     """The image a sandbox runs is declared, pinned, built from known inputs and unprivileged."""
 
@@ -1429,13 +1465,27 @@ def preserved_references(root: Path) -> dict[str, str]:
 
 
 def checkpoint_naming(root: Path, commit: str) -> str | None:
-    """The anchored checkpoint whose sealed ledger names ``commit``, derived rather than named."""
+    """The anchored checkpoint whose sealed evidence fields name ``commit``.
+
+    A SHA in a command argument can be the object a later checkpoint is preserving, not the commit
+    that checkpoint's evidence ran against.  Selection therefore uses exactly the command fields
+    the validator judges, rather than a substring search over the JSONL.
+    """
     anchors = json.loads((root / ".iacode" / "anchors" / "checkpoint-chain.json")
                          .read_text(encoding="utf-8"))
     for anchor in anchors["anchors"]:
         ledger = root / "docs" / "checkpoints" / anchor["checkpointId"] / "COMMANDS.jsonl"
-        if ledger.is_file() and commit in ledger.read_text(encoding="utf-8"):
-            return str(anchor["checkpointId"])
+        if not ledger.is_file():
+            continue
+        records = [json.loads(line) for line in ledger.read_text(encoding="utf-8").splitlines()
+                   if line.strip()]
+        for record in records:
+            for path in validate_checkpoint.RECORD_COMMIT_FIELDS:
+                value: object = record
+                for key in path:
+                    value = value.get(key) if isinstance(value, dict) else None
+                if value == commit:
+                    return str(anchor["checkpointId"])
     return None
 
 
@@ -1475,6 +1525,23 @@ class PreservedReferenceTests(unittest.TestCase):
 
     def test_the_repository_publishes_a_preserved_reference(self) -> None:
         self.assertTrue(self.preserved, "no refs/tags/iacode-preserved/ reference is published")
+
+    def test_a_preserved_commit_maps_to_the_checkpoint_whose_evidence_names_it(self) -> None:
+        for reference, commit in sorted(self.preserved.items()):
+            with self.subTest(reference=reference):
+                checkpoint = self.subjects[reference]
+                ledger = self.source / "docs" / "checkpoints" / checkpoint / "COMMANDS.jsonl"
+                records = [json.loads(line) for line in ledger.read_text(encoding="utf-8").splitlines()
+                           if line.strip()]
+                values = set()
+                for record in records:
+                    for path in validate_checkpoint.RECORD_COMMIT_FIELDS:
+                        value: object = record
+                        for key in path:
+                            value = value.get(key) if isinstance(value, dict) else None
+                        if isinstance(value, str):
+                            values.add(value)
+                self.assertIn(commit, values)
 
     def test_every_preserved_reference_is_what_makes_its_checkpoint_valid(self) -> None:
         for number, (reference, commit) in enumerate(sorted(self.preserved.items())):

@@ -1,0 +1,53 @@
+{
+  "schemaVersion": "3.2.0",
+  "artifacts": [
+    {
+      "artifact": "docs\\checkpoints\\GATE-3-CP-0005",
+      "sourceType": "repository-generated",
+      "provider": "OpenAI Codex and local repository scripts",
+      "model": "GPT-5 where model-authored; not-applicable for deterministic outputs",
+      "ownership": "project",
+      "license": "project-policy",
+      "rights": {
+        "storageAllowed": true,
+        "ragAllowed": false,
+        "trainingAllowed": false,
+        "distillationAllowed": false
+      },
+      "evidence": "Corrective delivery artifacts and command records in GATE-3-CP-0005.",
+      "notes": "Project-owned evidence; no source prompt, completion, credential or private dataset is stored."
+    },
+    {
+      "artifact": "code, tests, policy, memory and documentation declared outside the checkpoint in FILES.json",
+      "sourceType": "repository-generated",
+      "provider": "OpenAI Codex and local repository scripts",
+      "model": "GPT-5 where model-authored; not-applicable for deterministic outputs",
+      "ownership": "project",
+      "license": "project-policy",
+      "rights": {
+        "storageAllowed": true,
+        "ragAllowed": false,
+        "trainingAllowed": false,
+        "distillationAllowed": false
+      },
+      "evidence": "FILES.json and M1-CP-0004-FINDINGS-CLOSURE.json",
+      "notes": "Created or modified solely to close M1-F-004 and preserve delivery guardrails."
+    },
+    {
+      "artifact": "DEPENDENCY-SCAN-BASELINE.json and DEPENDENCY-SCAN-REPORT.json",
+      "sourceType": "external-advisory-derived",
+      "provider": "PyPI and npm advisory services through repository scanners",
+      "model": "not-applicable",
+      "ownership": "project evidence derived from public advisory metadata",
+      "license": "source-service terms apply",
+      "rights": {
+        "storageAllowed": true,
+        "ragAllowed": false,
+        "trainingAllowed": false,
+        "distillationAllowed": false
+      },
+      "evidence": "commands cmd-0019, cmd-0020, cmd-0023 and cmd-0024",
+      "notes": "Stores package/advisory metadata and aggregate severity counts only; no credentials or user content."
+    }
+  ]
+}

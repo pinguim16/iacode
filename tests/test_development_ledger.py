@@ -4656,6 +4656,11 @@ class SealedReportRenderingTests(unittest.TestCase):
         for earlier in ("CP9-F-001", "CP9-F-005"):
             self.assertNotIn(earlier, findings)
 
+    def test_a_singular_finding_section_in_a_sealed_audit_is_parsed(self) -> None:
+        findings = parse_findings(self._report("GATE-3-CP-0004", "REVIEW-REPORT.md"))
+        self.assertEqual([item["id"] for item in findings], ["M1-F-004"])
+        self.assertEqual(findings[0]["severity"], "CRITICAL")
+
     def test_a_report_whose_findings_cannot_be_parsed_is_refused_rather_than_read_as_empty(
             self) -> None:
         """A missing required set is never an empty applicable set, not even in the parser."""

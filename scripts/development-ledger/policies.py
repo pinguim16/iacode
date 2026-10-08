@@ -364,7 +364,10 @@ def parse_findings(text: str) -> list[dict[str, str]]:
         if heading and not line.startswith("###"):
             section = heading.group("title").strip().strip("`").lower()
             continue
-        if section != FINDINGS_SECTION:
+        # Sealed audits use both ``## Findings`` and ``## Finding`` when exactly one finding was
+        # raised.  They are the same bounded section; refusing the singular rendering would make
+        # the canonical requirement derivation unable to consume that sealed audit at all.
+        if section not in (FINDINGS_SECTION, "finding"):
             continue
         match = FINDING_HEADING.match(line)
         if match:

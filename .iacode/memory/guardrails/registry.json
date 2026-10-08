@@ -610,7 +610,8 @@
         "test_every_preserved_reference_is_what_makes_its_checkpoint_valid",
         "test_a_published_clone_carries_only_what_a_published_reference_reaches",
         "test_every_clone_in_the_tooling_and_the_suite_is_a_published_clone",
-        "test_a_preserved_reference_missing_from_the_remote_fails_unnamed"
+        "test_a_preserved_reference_missing_from_the_remote_fails_unnamed",
+        "test_a_preserved_commit_maps_to_the_checkpoint_whose_evidence_names_it"
       ],
       "lessons": [
         "LSN-0040"
@@ -850,6 +851,48 @@
         "LSN-0056"
       ],
       "removingItWouldAllow": "A result posted to the API to displace the sandbox's own, so an agent acts on a tool outcome that never happened."
+    },
+    {
+      "guardrailId": "GRD-0058",
+      "title": "Critical and High dependency advisories remain release-blocking",
+      "kind": "automated-check",
+      "reference": "scripts/iacode/dependency_scan.py",
+      "verifiedBy": [
+        "test_the_dependency_scan_blocks_critical_and_high_findings"
+      ],
+      "lessons": [
+        "LSN-0057"
+      ],
+      "removingItWouldAllow": "A pinned graph with a current Critical or High advisory, or an unavailable advisory source, to be handed off as green."
+    },
+    {
+      "guardrailId": "GRD-0059",
+      "title": "Host-published services are exercised through their real loopback ports",
+      "kind": "test",
+      "reference": "test_grafana_is_healthy",
+      "verifiedBy": [
+        "test_grafana_is_healthy",
+        "test_grafana_refuses_anonymous_access",
+        "test_minio_is_pinned_and_persistent",
+        "test_redis_answers_on_the_published_port"
+      ],
+      "lessons": [
+        "LSN-0058"
+      ],
+      "removingItWouldAllow": "A stack whose containers are healthy but whose host-published ports close every connection to be reported as operational."
+    },
+    {
+      "guardrailId": "GRD-0060",
+      "title": "Lesson preflight exclusions declare their scope",
+      "kind": "test",
+      "reference": "test_the_repository_preflight_covers_every_applicable_lesson",
+      "verifiedBy": [
+        "test_the_repository_preflight_covers_every_applicable_lesson"
+      ],
+      "lessons": [
+        "LSN-0059"
+      ],
+      "removingItWouldAllow": "A technology or module selector to silently exclude an active lesson without declaring the scope boundary reviewers must evaluate."
     }
   ]
 }

@@ -1,0 +1,117 @@
+{
+  "result": "FAIL",
+  "blockingSeverities": [
+    "critical",
+    "high"
+  ],
+  "scans": [
+    {
+      "ecosystem": "pypi",
+      "status": "SCANNED",
+      "counts": {
+        "total": 0
+      },
+      "blocking": [],
+      "findings": []
+    },
+    {
+      "ecosystem": "npm",
+      "status": "SCANNED",
+      "counts": {
+        "info": 0,
+        "low": 0,
+        "moderate": 0,
+        "high": 4,
+        "critical": 2
+      },
+      "blocking": [
+        {
+          "name": "@angular/build",
+          "severity": "critical",
+          "via": [
+            "piscina"
+          ]
+        },
+        {
+          "name": "@angular/cli",
+          "severity": "high",
+          "via": [
+            "@modelcontextprotocol/sdk"
+          ]
+        },
+        {
+          "name": "@angular/router",
+          "severity": "high",
+          "via": [
+            "Angular Server-Side Rendering (SSR): Denial of Service via Numeric URL Matrix Parameters"
+          ]
+        },
+        {
+          "name": "@modelcontextprotocol/sdk",
+          "severity": "high",
+          "via": [
+            "MCP TypeScript SDK: OAuth client could send credentials to an authorization server chosen by the MCP server"
+          ]
+        },
+        {
+          "name": "piscina",
+          "severity": "critical",
+          "via": [
+            "piscina: Prototype-pollution gadget in ThreadPool.options allows RCE via execArgv / loadBalancer / env"
+          ]
+        },
+        {
+          "name": "source-map-js",
+          "severity": "high",
+          "via": [
+            "source-map-js allows event-loop denial of service through indexed source-map section offsets"
+          ]
+        }
+      ],
+      "findings": [
+        {
+          "name": "@angular/build",
+          "severity": "critical",
+          "via": [
+            "piscina"
+          ]
+        },
+        {
+          "name": "@angular/cli",
+          "severity": "high",
+          "via": [
+            "@modelcontextprotocol/sdk"
+          ]
+        },
+        {
+          "name": "@angular/router",
+          "severity": "high",
+          "via": [
+            "Angular Server-Side Rendering (SSR): Denial of Service via Numeric URL Matrix Parameters"
+          ]
+        },
+        {
+          "name": "@modelcontextprotocol/sdk",
+          "severity": "high",
+          "via": [
+            "MCP TypeScript SDK: OAuth client could send credentials to an authorization server chosen by the MCP server"
+          ]
+        },
+        {
+          "name": "piscina",
+          "severity": "critical",
+          "via": [
+            "piscina: Prototype-pollution gadget in ThreadPool.options allows RCE via execArgv / loadBalancer / env"
+          ]
+        },
+        {
+          "name": "source-map-js",
+          "severity": "high",
+          "via": [
+            "source-map-js allows event-loop denial of service through indexed source-map section offsets"
+          ]
+        }
+      ]
+    }
+  ]
+}

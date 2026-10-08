@@ -1,0 +1,47 @@
+{
+  "schemaVersion": "1.0.0",
+  "checkpoint": "GATE-3-CP-0005",
+  "auditId": "M1-CP-0004",
+  "source": "docs/checkpoints/GATE-3-CP-0004/REVIEW-REPORT.md",
+  "findings": [
+    {
+      "findingId": "M1-F-004",
+      "severity": "CRITICAL",
+      "title": "The pinned frontend dependency graph contained two Critical and four High advisories",
+      "originalExpected": "Update the direct frontend pins and package-lock.json until the unchanged mandatory scanner reaches both advisory sources and reports no relevant Critical or High findings, without suppressing advisories or weakening the denominator.",
+      "originalObserved": "The sealed audit reproduced npm critical=2 and high=4 through @angular/build, @angular/cli, @angular/router, @modelcontextprotocol/sdk, piscina and source-map-js; PyPI had zero findings.",
+      "rootCause": "The exact Angular 22.1 pins and their resolved transitive graph entered ranges covered by live npm advisories after they were locked. A reproducible graph is not permanently safe, so the unchanged advisory gate correctly stopped M1.",
+      "implementation": [
+        "All Angular runtime/compiler packages moved together from 22.1.7 to 22.2.1.",
+        "@angular/build and @angular/cli moved together from 22.1.8 to 22.2.2.",
+        "npm 12 on Node 22.23.2 regenerated package-lock.json from a clean directory without --force, --legacy-peer-deps, overrides or advisory suppression.",
+        "LSN-0057 and GRD-0058 make Critical/High and unavailable sources structurally blocking."
+      ],
+      "regressionTest": [
+        "tests/test_gate3_sandbox.py test_the_dependency_scan_blocks_critical_and_high_findings",
+        "scripts/iacode/gates/web_tests.py: production build and 49 frontend tests",
+        "scripts/iacode/gates/lint.py: TypeScript and Prettier checks"
+      ],
+      "negativeTest": [
+        "DEPENDENCY-SCAN-BASELINE.json reproduces two Critical and four High npm findings with both sources SCANNED.",
+        "The guardrail test injects Critical, High and unavailable-source outcomes; each returns nonzero while the clean null control passes."
+      ],
+      "verificationCommand": "python scripts/iacode/dependency_scan.py --json --report docs/checkpoints/GATE-3-CP-0005/DEPENDENCY-SCAN-REPORT.json",
+      "evidence": [
+        "command:cmd-0010",
+        "command:cmd-0019",
+        "checkpoint:DEPENDENCY-SCAN-BASELINE.json",
+        "checkpoint:DEPENDENCY-SCAN-REPORT.json",
+        "command:cmd-0020",
+        "command:cmd-0023",
+        "command:cmd-0024"
+      ],
+      "lesson": "LSN-0057",
+      "guardrail": "GRD-0058",
+      "status": "CLOSED"
+    }
+  ],
+  "total": 1,
+  "closed": 1,
+  "result": "CLOSED"
+}

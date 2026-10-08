@@ -47,7 +47,7 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 | `LSN-0037` | `GUARDED` | MEDIUM | tooling | A shared control that names an identifier the repository derives stops being a control when that identifier moves | `test_no_shared_control_is_bound_to_a_gate_literal`, `test_the_gate_literal_rule_detects_a_bound_control`, `test_no_control_names_a_migration_revision_literally`, `test_the_revision_rule_detects_a_named_head`, `test_the_head_revision_has_one_derivation` |
 | `LSN-0038` | `GUARDED` | MEDIUM | implementation | Two representations of one concept in one module disagree, and the safer one loses | `test_a_documented_placeholder_is_not_redacted`, `test_both_redactors_agree_on_every_value_the_example_file_carries`, `test_no_module_writes_its_own_credential_name_rule`, `test_the_two_questions_stay_different` |
 | `LSN-0039` | `GUARDED` | HIGH | testing | A test that writes to the operational database leaves production data behind | `test_the_operational_catalog_holds_only_providers_the_policy_declares` |
-| `LSN-0040` | `GUARDED` | CRITICAL | checkpoint | A control that judges sealed history only runs once a successor anchors it | `test_every_sealed_checkpoint_validates_from_its_own_tag`, `test_the_recorder_never_declares_an_ignored_path_as_an_input`, `test_an_input_the_repository_carries_is_still_required_to_exist`, `scripts/development-ledger/validate_checkpoint.py`, `test_the_validator_refuses_a_record_naming_an_unpublished_commit`, `test_every_preserved_reference_is_what_makes_its_checkpoint_valid`, `test_a_published_clone_carries_only_what_a_published_reference_reaches`, `test_every_clone_in_the_tooling_and_the_suite_is_a_published_clone`, `test_a_preserved_reference_missing_from_the_remote_fails_unnamed` |
+| `LSN-0040` | `GUARDED` | CRITICAL | checkpoint | A control that judges sealed history only runs once a successor anchors it | `test_every_sealed_checkpoint_validates_from_its_own_tag`, `test_the_recorder_never_declares_an_ignored_path_as_an_input`, `test_an_input_the_repository_carries_is_still_required_to_exist`, `scripts/development-ledger/validate_checkpoint.py`, `test_the_validator_refuses_a_record_naming_an_unpublished_commit`, `test_every_preserved_reference_is_what_makes_its_checkpoint_valid`, `test_a_published_clone_carries_only_what_a_published_reference_reaches`, `test_every_clone_in_the_tooling_and_the_suite_is_a_published_clone`, `test_a_preserved_reference_missing_from_the_remote_fails_unnamed`, `test_a_preserved_commit_maps_to_the_checkpoint_whose_evidence_names_it` |
 | `LSN-0041` | `GUARDED` | HIGH | testing | An editing path that consumes a backslash escape leaves a control character, and the control it belonged to silently matches nothing | `test_no_source_file_carries_a_stray_control_character`, `test_the_scan_detects_one`, `test_the_page_offers_nothing_that_would_execute_a_tool`, `test_the_boundary_has_something_to_scan` |
 | `LSN-0042` | `GUARDED` | HIGH | implementation | A naming convention rewrites a CHECK constraint's name and leaves a UNIQUE constraint's alone | `test_the_agent_runtime_migration_is_reversible`, `test_the_declared_model_matches_the_migrated_schema`, `test_a_check_constraint_is_created_and_dropped_by_its_bare_name`, `test_a_unique_constraint_keeps_exactly_the_name_it_was_given` |
 | `LSN-0043` | `GUARDED` | MEDIUM | testing | A log line is not evidence that another process is ready | `test_readiness_is_asked_of_temporal`, `test_readiness_is_not_read_from_a_log_line`, `test_the_harness_asks_the_server_for_the_answer` |
@@ -64,6 +64,9 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 | `LSN-0054` | `CONFIRMED` | MEDIUM | git | A pre-push check narrower than the change's reach lets a red gate reach the public remote | _not yet guarded_ |
 | `LSN-0055` | `GUARDED` | MEDIUM | model-behavior | A contract a model must follow has to reach the model, rendered from the definition the parser enforces | `test_the_runtime_instructions_show_the_exact_envelope_of_every_kind`, `test_the_repair_restates_the_same_shape`, `test_the_rendered_contract_follows_the_schema`, `test_no_second_envelope_contract_is_written_by_hand`, `test_arguments_outside_tool_arguments_are_refused_by_their_real_defect` |
 | `LSN-0056` | `GUARDED` | MEDIUM | security | A result is accepted only from the executor that owns the request, decided when the request is created | `test_a_forged_result_cannot_displace_the_sandbox_result`, `test_a_manual_result_for_a_sandbox_request_is_refused`, `test_a_result_for_a_request_the_sandbox_owns_is_refused_and_never_signalled`, `test_every_caller_declares_a_constant_origin`, `test_existing_requests_are_backfilled_from_what_the_sandbox_executed`, `scripts/iacode/scenarios/sandbox_coding_e2e.py` |
+| `LSN-0057` | `GUARDED` | CRITICAL | security | A pinned lock can become unsafe without changing, so advisory state is live evidence | `scripts/iacode/dependency_scan.py`, `test_the_dependency_scan_blocks_critical_and_high_findings` |
+| `LSN-0058` | `GUARDED` | MEDIUM | environment | Container health does not prove Docker Desktop host-port forwarding | `test_grafana_is_healthy` |
+| `LSN-0059` | `GUARDED` | MEDIUM | process | A lesson exclusion must declare the scope it excludes | `test_the_repository_preflight_covers_every_applicable_lesson` |
 
 ## Detail
 
@@ -577,7 +580,7 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 
 ### LSN-0040 — A control that judges sealed history only runs once a successor anchors it
 
-- Status: `GUARDED`, severity CRITICAL, category checkpoint, recurrences 1.
+- Status: `GUARDED`, severity CRITICAL, category checkpoint, recurrences 2.
 - Source: GATE-1, GATE-1-CP-0001, finding G1-F-007.
 - Symptom: MIR-016 failed with GATE-0-CP-0001: CHECKPOINT_INVALID. Six of that sealed checkpoint's recorded commands name var/verify-report.json as an input; var/ is ignored by Git, so no checkout of the tag carries it, and the validator required every declared input to exist.
 - Root cause: Two causes in one failure. The recorder declared a generated, ignored artifact as a command input, which makes the record unreplayable from a checkout. And the defect was invisible for a whole Gate because a checkpoint cannot anchor its own tag: GATE-0-CP-0001 entered the anchor chain only when its successor built the chain, so the first execution of the control over it happened one Gate after the content it judges was sealed.
@@ -592,7 +595,8 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
   - `test` test_a_published_clone_carries_only_what_a_published_reference_reaches — A published clone does not carry an unreachable object that a copy of the object store does.
   - `test` test_every_clone_in_the_tooling_and_the_suite_is_a_published_clone — A syntax-tree scan refuses any git clone in the tooling or the suite that is not a transport clone.
   - `test` test_a_preserved_reference_missing_from_the_remote_fails_unnamed — remote_sync.py refuses a local preserved or checkpoint tag that is not on the remote.
-- Evidence: `file:scripts/development-ledger/validate_checkpoint.py`, `file:scripts/development-ledger/record_command.py`, `file:tests/test_gate1_model_gateway.py`, `file:docs/checkpoints/GATE-3-CP-0002/REVIEW-REPORT.md`, `file:docs/adr/ADR-0028-sealed-evidence-is-judged-from-the-published-history.md`, `file:scripts/development-ledger/ledger_common.py`, `file:tests/test_gate3_sandbox.py`
+  - `test` test_a_preserved_commit_maps_to_the_checkpoint_whose_evidence_names_it — Every preserved commit is associated only with a checkpoint whose canonical command evidence fields name it; a SHA appearing merely in an argument cannot capture the guardrail's subject.
+- Evidence: `file:scripts/development-ledger/validate_checkpoint.py`, `file:scripts/development-ledger/record_command.py`, `file:tests/test_gate1_model_gateway.py`, `file:docs/checkpoints/GATE-3-CP-0002/REVIEW-REPORT.md`, `file:docs/adr/ADR-0028-sealed-evidence-is-judged-from-the-published-history.md`, `file:scripts/development-ledger/ledger_common.py`, `file:tests/test_gate3_sandbox.py`, `file:docs/checkpoints/GATE-3-CP-0005/PRESERVED-REFERENCE-PROBE.json`
 
 ### LSN-0041 — An editing path that consumes a backslash escape leaves a control character, and the control it belonged to silently matches nothing
 
@@ -813,3 +817,37 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
   - `test` test_existing_requests_are_backfilled_from_what_the_sandbox_executed — Existing requests keep their meaning through the migration.
   - `automated-check` scripts/iacode/scenarios/sandbox_coding_e2e.py — The verification stage sandbox-tool-result-origin: the audit's null control and mutation on the real stack.
 - Evidence: `file:services/agent-runtime/src/iacode_agent_runtime/persistence.py`, `file:services/orchestrator/src/iacode_orchestrator/agent_runtime/activities.py`, `file:apps/api/migrations/versions/0005_tool_request_executor.py`, `file:apps/api/tests/integration/test_agent_runtime_persistence.py`, `file:docs/checkpoints/GATE-3-CP-0002/FORGED-RESULT-PROBE.json`
+
+### LSN-0057 — A pinned lock can become unsafe without changing, so advisory state is live evidence
+
+- Status: `GUARDED`, severity CRITICAL, category security, recurrences 0.
+- Source: GATE-3, GATE-3-CP-0004, finding M1-F-004.
+- Symptom: A sealed delivery whose implementation checks passed later failed the unchanged dependency gate with two Critical and four High npm advisories in its pinned graph.
+- Root cause: The lockfile was reproducible but advisory state changed after it was pinned. Reproducibility fixes the graph; it does not make the graph permanently safe.
+- Resolution: Update the direct frontend pins and resolved lock graph to non-vulnerable versions, then require a live scan of both npm and PyPI advisory sources before handoff.
+- Prevention:
+  - `automated-check` scripts/iacode/dependency_scan.py — The mandatory scan fails closed when either advisory source is unavailable and blocks every relevant Critical or High finding.
+  - `test` test_the_dependency_scan_blocks_critical_and_high_findings — The dependency scanner's blocking severities and fail-closed source policy are structural assertions, so weakening either turns the suite red.
+- Evidence: `file:docs/checkpoints/GATE-3-CP-0004/FINDINGS.json`, `file:docs/checkpoints/GATE-3-CP-0004/DEPENDENCY-SCAN-REPORT.json`, `file:scripts/iacode/dependency_scan.py`
+
+### LSN-0058 — Container health does not prove Docker Desktop host-port forwarding
+
+- Status: `GUARDED`, severity MEDIUM, category environment, recurrences 0.
+- Source: GATE-3, GATE-3-CP-0005, finding cmd-0046-infra.
+- Symptom: The complete verifier and two targeted reruns found Grafana, MinIO and Redis accepting host connections and immediately closing them, while Compose reported every affected container healthy.
+- Root cause: Docker Desktop's host-side published-port forwarding had entered a stale state. Container-local health checks remained green, so health alone could not observe it.
+- Resolution: Restart the full stack without deleting volumes, wait for every service to recover, and repeat the live host-facing infrastructure suite. The unchanged 49-test suite then passed.
+- Prevention:
+  - `test` test_grafana_is_healthy — Live tests connect through the actual loopback-published Grafana, MinIO and Redis ports instead of trusting container health metadata.
+- Evidence: `file:docs/checkpoints/GATE-3-CP-0005/COMMANDS.jsonl`, `file:infra/tests/test_running_stack.py`
+
+### LSN-0059 — A lesson exclusion must declare the scope it excludes
+
+- Status: `GUARDED`, severity MEDIUM, category process, recurrences 0.
+- Source: GATE-3, GATE-3-CP-0005, finding cmd-0064.
+- Symptom: The full suite rejected LSN-0058 because technology and module selectors excluded it from a generic preflight while its scopes list was empty.
+- Root cause: Applicability dimensions were used as incidental metadata. In this model they are selectors, so they silently narrowed where the lesson constrained delivery.
+- Resolution: Remove selectors that were not intended to narrow LSN-0058. Reserve non-empty selectors for deliberate exclusions, with scopes naming the boundary explicitly.
+- Prevention:
+  - `test` test_the_repository_preflight_covers_every_applicable_lesson — Every active lesson excluded from a canonical preflight must carry a non-empty scopes declaration that makes the exclusion reviewable.
+- Evidence: `file:docs/checkpoints/GATE-3-CP-0005/COMMANDS.jsonl`, `file:tests/test_development_ledger.py`
