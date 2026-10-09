@@ -21,3 +21,11 @@ complete suite remains mandatory and will run through Green Keeper before handof
 The first Gate 4 test run (`cmd-0007`) failed because the new test compared the normal form
 `GATE4` with the documentary spelling `GATE-4`. The repository policy was correct; the test mixed
 representations. The repair normalizes both operands, and `cmd-0008` passes all seven kickoff tests.
+
+## D-04 — A pre-commit chain must stop explicitly on every failed command
+
+The kickoff commit `f0b18f3` was pushed after `git diff --cached --check` reported one trailing blank
+line in `BASELINE.md`. PowerShell continued because the commands were separated by semicolons and
+the later commit and push succeeded. No secret or behavioral defect was involved, but a reported
+quality failure reached the remote. This corrective commit removes the whitespace, and subsequent
+delivery chains inspect `$LASTEXITCODE` after every check before commit or push.

@@ -43,4 +43,3 @@
 - Any required stack represented only by a mock, assertion, or documentation.
 - Any attempt to start Gate 5 or Gate 20 capability.
 - Any divergence from the sealed predecessor, canonical requirement set, or authorised remote.
-
