@@ -4,8 +4,8 @@
 
 The owner mandate, master plan, inherited architecture, and engineering lessons were consolidated
 into `docs/GATE-4-CHECKLIST.md`. The canonical parser derives 105 Gate rows. The lesson preflight
-originally derived 58 more; the recorded persistence and cancellation-test failures added two
-applicable requirements, so implementation is now measured against 165 requirements. The registry is only a
+originally derived 58 more; three observed implementation failures added three applicable
+requirements, so implementation is now measured against 166 requirements. The registry is only a
 row-for-row mirror and cannot shrink the source document.
 
 ## D-02 — The baseline is focused; the complete suite belongs to Green Keeper

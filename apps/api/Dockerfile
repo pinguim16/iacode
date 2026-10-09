@@ -38,10 +38,11 @@ COPY packages/persistence /build/packages/persistence
 COPY packages/telemetry /build/packages/telemetry
 COPY services/model-gateway /build/services/model-gateway
 COPY services/agent-runtime /build/services/agent-runtime
+COPY services/evaluator /build/services/evaluator
 RUN pip install --no-cache-dir --no-deps \
       /build/packages/common /build/packages/contracts /build/packages/persistence \
       /build/packages/telemetry /build/services/model-gateway \
-      /build/services/agent-runtime
+      /build/services/agent-runtime /build/services/evaluator
 
 # ---------------------------------------------------------------------------------------------
 # Runtime

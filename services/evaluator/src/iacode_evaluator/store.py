@@ -37,6 +37,11 @@ def _result_state_error(state: str) -> QualityError:
     return QualityError("EARLY_RESULT", "a non-running quality run refuses results")
 
 
+def _plan_material(plan: QualityPlan) -> dict[str, Any]:
+    """The content addressed by planId; observation time and first owner are not plan inputs."""
+    return plan.model_dump(mode="json", exclude={"createdAt"})
+
+
 @dataclass(frozen=True)
 class PlanRecord:
     storage_id: str
@@ -87,6 +92,12 @@ class QualityStore(Protocol):
 
     async def run(self, run_id: str) -> RunRecord | None: ...
 
+    async def bind_workflow(self, run_id: str, workflow_id: str) -> RunRecord: ...
+
+    async def list_runs(
+        self, *, after: str | None = None, limit: int = 25
+    ) -> tuple[RunRecord, ...]: ...
+
     async def plan_for_run(self, run_id: str) -> PlanRecord | None: ...
 
     async def results_for_run(self, run_id: str) -> tuple[QualityResult, ...]: ...
@@ -122,7 +133,7 @@ class MemoryQualityStore:
         existing = self.plans.get(plan.planId)
         candidate = PlanRecord(str(uuid7()), plan, owner_run_id)
         if existing is not None:
-            if existing.plan != plan or existing.owner_run_id != owner_run_id:
+            if _plan_material(existing.plan) != _plan_material(plan):
                 raise QualityError("PLAN_ID_CONFLICT", "the plan digest names different content")
             return existing
         self.plans[plan.planId] = candidate
@@ -173,6 +184,35 @@ class MemoryQualityStore:
 
     async def run(self, run_id: str) -> RunRecord | None:
         return self.runs.get(run_id)
+
+    async def bind_workflow(self, run_id: str, workflow_id: str) -> RunRecord:
+        run = self.runs.get(run_id)
+        if run is None:
+            raise QualityError("RUN_NOT_FOUND", "the quality run does not exist")
+        if run.workflow_id not in (None, workflow_id):
+            raise QualityError(
+                "WORKFLOW_ID_CONFLICT", "the quality run is owned by another workflow"
+            )
+        bound = replace(run, workflow_id=workflow_id)
+        self.runs[run_id] = bound
+        return bound
+
+    async def list_runs(
+        self, *, after: str | None = None, limit: int = 25
+    ) -> tuple[RunRecord, ...]:
+        if limit < 1 or limit > 100:
+            raise QualityError("PAGE_LIMIT_INVALID", "run limit must be between 1 and 100")
+        ordered = sorted(
+            self.runs.values(),
+            key=lambda item: (item.created_at or _now(), item.run_id),
+            reverse=True,
+        )
+        if after is not None:
+            positions = [index for index, item in enumerate(ordered) if item.run_id == after]
+            if not positions:
+                raise QualityError("PAGE_CURSOR_INVALID", "the run cursor does not exist")
+            ordered = ordered[positions[0] + 1 :]
+        return tuple(ordered[:limit])
 
     async def plan_for_run(self, run_id: str) -> PlanRecord | None:
         run = self.runs.get(run_id)
@@ -285,7 +325,9 @@ class MemoryQualityStore:
             raise QualityError("RUN_OWNER_MISMATCH", "the result owner does not own the run")
         if result.origin != QUALITY_RESULT_ORIGIN:
             raise QualityError("RESULT_ORIGIN_MISMATCH", "only the evaluator may record a result")
-        if run.state != "RUNNING":
+        if run.state != "RUNNING" and not (
+            run.state == "CANCELLING" and result.status == "CANCELLED"
+        ):
             raise _result_state_error(run.state)
         key = (result.runId, result.checkId)
         existing = self.results.get(key)
@@ -316,9 +358,10 @@ class MemoryQualityStore:
         run = self.runs.get(verdict.runId)
         if run is None:
             raise QualityError("RUN_NOT_FOUND", "the quality run does not exist")
-        if run.state != "RUNNING":
+        if run.state not in {"RUNNING", "CANCELLING"}:
             raise QualityError(
-                "VERDICT_RUN_NOT_ACTIVE", "a verdict can be recorded only for a running run"
+                "VERDICT_RUN_NOT_ACTIVE",
+                "a verdict can be recorded only while execution or cancellation is active",
             )
         plan = next((item for item in self.plans.values() if item.storage_id == run.plan_id), None)
         if plan is None or plan.plan.planId != verdict.planId:
@@ -407,11 +450,12 @@ class SqlQualityStore:
                     + (f" at {constraint}" if constraint else ""),
                 ) from error
             actual_owner = str(existing.owner_task_run_id) if existing.owner_task_run_id else None
-            if existing.content != body or actual_owner != owner_run_id:
+            existing_plan = QualityPlan.model_validate(existing.content)
+            if _plan_material(existing_plan) != _plan_material(plan):
                 raise QualityError(
                     "PLAN_ID_CONFLICT", "the plan digest names different content"
                 ) from None
-            return PlanRecord(str(existing.id), plan, actual_owner)
+            return PlanRecord(str(existing.id), existing_plan, actual_owner)
         return PlanRecord(str(row_id), plan, owner_run_id)
 
     @staticmethod
@@ -501,6 +545,20 @@ class SqlQualityStore:
                     "IDEMPOTENCY_CONFLICT", "the key is already bound to another quality run"
                 ) from None
             return record
+        return self._run_record(row)
+
+    async def bind_workflow(self, run_id: str, workflow_id: str) -> RunRecord:
+        from iacode_persistence.models import QualityRun as RunRow
+
+        async with self.session_factory() as session, session.begin():
+            row = await session.get(RunRow, uuid.UUID(run_id), with_for_update=True)
+            if row is None:
+                raise QualityError("RUN_NOT_FOUND", "the quality run does not exist")
+            if row.workflow_id not in (None, workflow_id):
+                raise QualityError(
+                    "WORKFLOW_ID_CONFLICT", "the quality run is owned by another workflow"
+                )
+            row.workflow_id = workflow_id
         return self._run_record(row)
 
     async def append_event(
@@ -691,7 +749,9 @@ class SqlQualityStore:
                     raise QualityError(
                         "RESULT_ORIGIN_MISMATCH", "only the evaluator may record a result"
                     )
-                if run.state != "RUNNING":
+                if run.state != "RUNNING" and not (
+                    run.state == "CANCELLING" and result.status == "CANCELLED"
+                ):
                     raise _result_state_error(run.state)
                 callback = (
                     (
@@ -818,10 +878,10 @@ class SqlQualityStore:
                             "the re-derived verdict differs from the immutable verdict",
                         )
                     return verdict
-                if run.state != "RUNNING":
+                if run.state not in {"RUNNING", "CANCELLING"}:
                     raise QualityError(
                         "VERDICT_RUN_NOT_ACTIVE",
-                        "a verdict can be recorded only for a running run",
+                        "a verdict can be recorded only while execution or cancellation is active",
                     )
                 plan = await session.get(PlanRow, run.quality_plan_id)
                 if plan is None or plan.plan_digest != verdict.planId:
@@ -874,6 +934,35 @@ class SqlQualityStore:
         async with self.session_factory() as session:
             row = await session.get(RunRow, uuid.UUID(run_id))
         return self._run_record(row) if row else None
+
+    async def list_runs(
+        self, *, after: str | None = None, limit: int = 25
+    ) -> tuple[RunRecord, ...]:
+        from iacode_persistence.models import QualityRun as RunRow
+        from sqlalchemy import and_, or_, select
+
+        if limit < 1 or limit > 100:
+            raise QualityError("PAGE_LIMIT_INVALID", "run limit must be between 1 and 100")
+        statement = select(RunRow)
+        if after is not None:
+            try:
+                cursor_id = uuid.UUID(after)
+            except ValueError:
+                raise QualityError("PAGE_CURSOR_INVALID", "the run cursor is malformed") from None
+            async with self.session_factory() as session:
+                cursor = await session.get(RunRow, cursor_id)
+            if cursor is None:
+                raise QualityError("PAGE_CURSOR_INVALID", "the run cursor does not exist")
+            statement = statement.where(
+                or_(
+                    RunRow.created_at < cursor.created_at,
+                    and_(RunRow.created_at == cursor.created_at, RunRow.id < cursor.id),
+                )
+            )
+        statement = statement.order_by(RunRow.created_at.desc(), RunRow.id.desc()).limit(limit)
+        async with self.session_factory() as session:
+            rows = (await session.execute(statement)).scalars().all()
+        return tuple(self._run_record(row) for row in rows)
 
     async def plan_for_run(self, run_id: str) -> PlanRecord | None:
         from iacode_persistence.models import QualityPlan as PlanRow

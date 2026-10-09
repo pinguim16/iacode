@@ -5,6 +5,11 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 
+# These are input repositories for live evaluator scenarios, not tests of the evaluator package.
+# Keeping them under ``tests/fixtures`` makes their provenance obvious, while excluding them from
+# collection prevents equal module names in independent snapshots from colliding in pytest.
+collect_ignore_glob = ["fixtures/**"]
+
 ROOT = next(
     parent
     for parent in Path(__file__).resolve().parents

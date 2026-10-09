@@ -340,6 +340,17 @@ class SandboxService:
                                    status="DENIED", error=message, error_code=code,
                                    session_id=session_id)
 
+    @staticmethod
+    def _active_agent_tool_request(request: ToolExecutionRequest) -> str | None:
+        """Return the agent-owned FK only when this request has an agent-run owner.
+
+        Quality checks share the execution contract and use stable UUID request identities, but
+        their durable owner is ``quality_results`` rather than ``tool_requests``.  Keeping this
+        decision explicit prevents the session's agent-only foreign key from turning a valid
+        evaluator request into a persistence failure.
+        """
+        return request.tool_request_id if request.agent_run_id else None
+
     async def execute(self, payload: dict[str, Any] | ToolExecutionRequest, *,
                       heartbeat: Callable[[], None] = lambda: None) -> ToolExecutionResult:
         """Execute one tool request; a cancellation is cleaned up and then re-raised."""
@@ -385,8 +396,16 @@ class SandboxService:
                     tool_request_id=request.tool_request_id, tool=request.tool, status="FAILED",
                     error=str(error)[:500], error_code=error.code)
                 return await self._record(request, None, result, started)
-            await self.store.update_session(session.session_id, state="RUNNING",
-                                            active_tool_request_id=request.tool_request_id)
+            # Agent-runtime requests have a durable ``tool_requests`` row and may be linked by the
+            # session foreign key. Evaluator-owned requests are instead durable in
+            # ``quality_results``; their deterministic UUID must not be forged into the agent
+            # table merely to satisfy that unrelated foreign key.
+            active_request = self._active_agent_tool_request(request)
+            await self.store.update_session(
+                session.session_id,
+                state="RUNNING",
+                active_tool_request_id=active_request,
+            )
             timeout = float(helper_request.get("timeoutSeconds") or 60)
             cancel = threading.Event()
             loop = asyncio.get_running_loop()
@@ -517,4 +536,3 @@ def _summary(result: ToolExecutionResult) -> str:
     if result.tool == "filesystem.apply_patch" and "files" in result.output:
         parts.append(f"{len(result.output['files'])} file(s)")
     return ", ".join(parts)[:240]
-

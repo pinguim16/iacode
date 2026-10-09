@@ -5,14 +5,15 @@ platform. This repository contains the development control plane established by 
 runtime foundation delivered by **GATE 0 — FOUNDATION**, the provider-neutral model
 boundary delivered by **GATE 1 — MODEL GATEWAY**, the durable agent execution
 delivered by **GATE 2 — AGENT RUNTIME**, and the isolated tool execution delivered by
-**GATE 3 — SANDBOX + TOOL EXECUTION**.
+**GATE 3 — SANDBOX + TOOL EXECUTION**, and the evidence-backed validation delivered by
+**GATE 4 — QUALITY ENGINE**.
 
 Begin with [START-HERE.md](START-HERE.md). The repository is the source of truth; chat history is
 not.
 
 ## Current boundary
 
-- Current Gate: `GATE 3 — SANDBOX + TOOL EXECUTION`, the last Gate of milestone `M1`.
+- Current Gate: `GATE 4 — QUALITY ENGINE`, the first Gate of milestone `M2`.
 - What runs: an API, a Temporal worker, a web shell, PostgreSQL, Redis, MinIO, Temporal, Prometheus
   and Grafana, locally on Docker Compose — and the Model Gateway, which discovers a provider's
   models and invokes them behind one provider-neutral contract.
@@ -22,8 +23,12 @@ not.
   Git — inside a disposable, unprivileged container that belongs to the run, with no network, no
   host path, no engine socket and no credential. A coding team (planner, developer, reviewer)
   changes a repository there; nothing it asks for runs on the host.
-- What does not: quality scoring, retrieval, the experience store and training belong to later
-  Gates; the directories reserved for them say so and contain nothing else.
+- And the Quality Engine, which detects a project profile, freezes a canonical plan, executes every
+  applicable check through stack-specific sandbox images, stores immutable evidence and derives the
+  only verdict exposed by the API. PASS, FAIL, cancellation, timeout and reproduction are durable
+  workflow facts rather than caller assertions.
+- What does not: held-out model evaluation, retrieval, the experience store and training belong to
+  later Gates; the directories reserved for them say so and contain nothing else.
 - Canonical agent definitions: `.iacode/agents/`.
 - Latest reconstructible state: [docs/checkpoints/LATEST.md](docs/checkpoints/LATEST.md).
 
@@ -77,6 +82,7 @@ from nothing, because that is the claim this Gate makes.
 | How do I work on this? | [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md) |
 | How do I operate the stack? | [docs/runbooks/FOUNDATION.md](docs/runbooks/FOUNDATION.md) |
 | How do I configure and operate a model provider? | [docs/runbooks/MODEL-GATEWAY.md](docs/runbooks/MODEL-GATEWAY.md) |
+| How do I run and troubleshoot quality checks? | [docs/runbooks/QUALITY-ENGINE.md](docs/runbooks/QUALITY-ENGINE.md) |
 | How do I back it up and restore it? | [docs/runbooks/BACKUP-RESTORE.md](docs/runbooks/BACKUP-RESTORE.md) |
 | What is the shape of the system? | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) |
 | What version is everything on? | [docs/VERSIONS.md](docs/VERSIONS.md) |

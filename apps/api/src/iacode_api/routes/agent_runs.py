@@ -84,16 +84,34 @@ HTTP_STATUS: dict[AgentRuntimeErrorType, int] = {
     AgentRuntimeErrorType.RUN_CANCELLED: status.HTTP_409_CONFLICT,
     AgentRuntimeErrorType.INVALID_AGENT_OUTPUT: status.HTTP_502_BAD_GATEWAY,
     AgentRuntimeErrorType.WORKFLOW_ERROR: status.HTTP_503_SERVICE_UNAVAILABLE,
+    AgentRuntimeErrorType.QUALITY_GATE_FAILED: status.HTTP_409_CONFLICT,
     AgentRuntimeErrorType.INTERNAL_AGENT_RUNTIME_ERROR: status.HTTP_500_INTERNAL_SERVER_ERROR,
 }
 
 #: Detail keys safe to return. An allow-list rather than a deny-list: a key added to a failure
 #: somewhere in the runtime must be considered before it reaches a response.
-PUBLIC_DETAIL_KEYS = frozenset({
-    "limit", "value", "maximum", "setting", "state", "stage", "team", "agent", "available",
-    "requested", "permitted", "toolRequestId", "tool", "status", "what", "size", "runId",
-    "executor",
-})
+PUBLIC_DETAIL_KEYS = frozenset(
+    {
+        "limit",
+        "value",
+        "maximum",
+        "setting",
+        "state",
+        "stage",
+        "team",
+        "agent",
+        "available",
+        "requested",
+        "permitted",
+        "toolRequestId",
+        "tool",
+        "status",
+        "what",
+        "size",
+        "runId",
+        "executor",
+    }
+)
 
 #: How long an idle event stream waits before sending a keep-alive comment. A proxy that sees no
 #: bytes for a minute closes the connection, and a run thinking for two minutes is normal.
@@ -119,13 +137,13 @@ def register_agent_runtime_errors(app: FastAPI) -> None:
 
     @app.exception_handler(AgentRuntimeError)
     async def _handle(request: Request, error: AgentRuntimeError) -> JSONResponse:
-        http_status = HTTP_STATUS.get(error.error_type,
-                                      status.HTTP_500_INTERNAL_SERVER_ERROR)
+        http_status = HTTP_STATUS.get(error.error_type, status.HTTP_500_INTERNAL_SERVER_ERROR)
         correlation_id = getattr(request.state, "correlation_id", None) or get_correlation_id()
-        logger.warning("agent runtime failure", extra={
-            "errorType": str(error.error_type), "stage": error.stage, "status": http_status})
-        details = {key: value for key, value in error.details.items()
-                   if key in PUBLIC_DETAIL_KEYS}
+        logger.warning(
+            "agent runtime failure",
+            extra={"errorType": str(error.error_type), "stage": error.stage, "status": http_status},
+        )
+        details = {key: value for key, value in error.details.items() if key in PUBLIC_DETAIL_KEYS}
         if error.stage:
             details["stage"] = error.stage
         if error.upstream_type:
@@ -138,8 +156,11 @@ def register_agent_runtime_errors(app: FastAPI) -> None:
         )
         response = JSONResponse(status_code=http_status, content=body.model_dump(mode="json"))
         if correlation_id:
-            header = getattr(getattr(request.app.state, "settings", None), "correlation_header",
-                             "X-Correlation-ID")
+            header = getattr(
+                getattr(request.app.state, "settings", None),
+                "correlation_header",
+                "X-Correlation-ID",
+            )
             response.headers[header] = correlation_id
         return response
 
@@ -149,9 +170,12 @@ def register_agent_runtime_errors(app: FastAPI) -> None:
 # ---------------------------------------------------------------------------------------------
 
 
-@router.post("/agent-runs", response_model=AgentRunCreated,
-             status_code=status.HTTP_202_ACCEPTED,
-             summary="Create a run and start its durable workflow")
+@router.post(
+    "/agent-runs",
+    response_model=AgentRunCreated,
+    status_code=status.HTTP_202_ACCEPTED,
+    summary="Create a run and start its durable workflow",
+)
 async def create_agent_run(request: Request, payload: CreateAgentRunRequest) -> AgentRunCreated:
     """Persist the run, freeze the plan and hand it to Temporal.
 
@@ -160,8 +184,7 @@ async def create_agent_run(request: Request, payload: CreateAgentRunRequest) -> 
     """
     resources = get_resources(request)
     runtime = resources.agent_runtime
-    plan, created = await runtime.service.create_run(
-        payload, correlation_id=get_correlation_id())
+    plan, created = await runtime.service.create_run(payload, correlation_id=get_correlation_id())
     if created.idempotentReplay:
         return created
 
@@ -172,7 +195,11 @@ async def create_agent_run(request: Request, payload: CreateAgentRunRequest) -> 
             workflow_id=workflow_id,
             payload=plan.to_dict(),
             task_queue=runtime.task_queue,
-            execution_timeout_seconds=runtime.execution_timeout_seconds,
+            execution_timeout_seconds=(
+                runtime.execution_timeout_seconds
+                + resources.quality.service.registry.max_run_seconds
+                + 300
+            ),
         )
     except AgentRuntimeError:
         raise
@@ -181,28 +208,42 @@ async def create_agent_run(request: Request, payload: CreateAgentRunRequest) -> 
         # keeps the two consistent: a run stuck at CREATED with no explanation is worse than a run
         # that failed and says why. The log says so first and the state second, as the engine
         # does, so no reader ever finds a FAILED run whose log never ended. G2-F-010.
-        await runtime.store.append_event(RunEvent(
-            run_id=created.runId, type="RUN_FAILED", dedupe_key="run-not-started",
-            payload={"errorType": str(AgentRuntimeErrorType.WORKFLOW_ERROR),
-                     "message": "the durable workflow could not be started"}))
+        await runtime.store.append_event(
+            RunEvent(
+                run_id=created.runId,
+                type="RUN_FAILED",
+                dedupe_key="run-not-started",
+                payload={
+                    "errorType": str(AgentRuntimeErrorType.WORKFLOW_ERROR),
+                    "message": "the durable workflow could not be started",
+                },
+            )
+        )
         await runtime.store.set_run_state(
-            created.runId, str(RunState.FAILED),
+            created.runId,
+            str(RunState.FAILED),
             error_type=str(AgentRuntimeErrorType.WORKFLOW_ERROR),
-            error_summary="the durable workflow could not be started", finished=True)
+            error_summary="the durable workflow could not be started",
+            finished=True,
+        )
         logger.error("could not start the agent run workflow", exc_info=error)
         raise AgentRuntimeError(
             AgentRuntimeErrorType.WORKFLOW_ERROR,
             "the durable workflow could not be started",
-            details={"runId": created.runId}) from error
+            details={"runId": created.runId},
+        ) from error
 
     await runtime.service.mark_queued(created.runId, workflow_id)
     return AgentRunCreated(
-        runId=created.runId, taskId=created.taskId, state=str(RunState.QUEUED),
-        team=created.team, createdAt=created.createdAt)
+        runId=created.runId,
+        taskId=created.taskId,
+        state=str(RunState.QUEUED),
+        team=created.team,
+        createdAt=created.createdAt,
+    )
 
 
-@router.get("/agent-runs", response_model=AgentRunListResponse,
-            summary="The most recent runs")
+@router.get("/agent-runs", response_model=AgentRunListResponse, summary="The most recent runs")
 async def list_agent_runs(
     request: Request,
     limit: int = Query(default=25, ge=1, le=100),
@@ -211,14 +252,20 @@ async def list_agent_runs(
     return AgentRunListResponse(total=len(runs), runs=runs)
 
 
-@router.get("/agent-runs/{run_id}", response_model=AgentRunDetail,
-            summary="One run: its state, its stages, its budget and its result")
+@router.get(
+    "/agent-runs/{run_id}",
+    response_model=AgentRunDetail,
+    summary="One run: its state, its stages, its budget and its result",
+)
 async def read_agent_run(request: Request, run_id: str) -> AgentRunDetail:
     return await get_resources(request).agent_runtime.service.detail(run_id)
 
 
-@router.get("/agent-runs/{run_id}/events", response_model=RunEventPage,
-            summary="A page of a run's events, from a cursor")
+@router.get(
+    "/agent-runs/{run_id}/events",
+    response_model=RunEventPage,
+    summary="A page of a run's events, from a cursor",
+)
 async def read_agent_run_events(
     request: Request,
     run_id: str,
@@ -226,11 +273,14 @@ async def read_agent_run_events(
     limit: int = Query(default=200, ge=1, le=1000),
 ) -> RunEventPage:
     return await get_resources(request).agent_runtime.service.events(
-        run_id, after=after, limit=limit)
+        run_id, after=after, limit=limit
+    )
 
 
-@router.get("/agent-runs/{run_id}/events/stream",
-            summary="A run's events as they happen, over Server-Sent Events")
+@router.get(
+    "/agent-runs/{run_id}/events/stream",
+    summary="A run's events as they happen, over Server-Sent Events",
+)
 async def stream_agent_run_events(
     request: Request,
     run_id: str,
@@ -293,8 +343,7 @@ async def stream_agent_run_events(
     )
 
 
-@router.post("/agent-runs/{run_id}/cancel", response_model=AgentRunDetail,
-             summary="Cancel a run")
+@router.post("/agent-runs/{run_id}/cancel", response_model=AgentRunDetail, summary="Cancel a run")
 async def cancel_agent_run(request: Request, run_id: str) -> AgentRunDetail:
     """Record the request, then tell the workflow.
 
@@ -306,16 +355,22 @@ async def cancel_agent_run(request: Request, run_id: str) -> AgentRunDetail:
     runtime = resources.agent_runtime
     detail = await runtime.service.request_cancellation(run_id)
     delivered = await resources.temporal.signal_agent_run(
-        workflow_id=workflow_id_for(run_id), signal=CANCEL_SIGNAL, payload="operator request")
-    logger.info("agent run cancellation requested", extra={
-        "runId": run_id, "signalDelivered": delivered})
+        workflow_id=workflow_id_for(run_id), signal=CANCEL_SIGNAL, payload="operator request"
+    )
+    logger.info(
+        "agent run cancellation requested", extra={"runId": run_id, "signalDelivered": delivered}
+    )
     return detail
 
 
-@router.post("/agent-runs/{run_id}/tool-results", response_model=AgentRunDetail,
-             summary="Answer a tool request and resume the run")
-async def submit_tool_result(request: Request, run_id: str,
-                             payload: ToolResultSubmission) -> AgentRunDetail:
+@router.post(
+    "/agent-runs/{run_id}/tool-results",
+    response_model=AgentRunDetail,
+    summary="Answer a tool request and resume the run",
+)
+async def submit_tool_result(
+    request: Request, run_id: str, payload: ToolResultSubmission
+) -> AgentRunDetail:
     """Accept a result from an external producer. **This endpoint executes nothing.**
 
     It answers the requests of stages with no sandbox policy — a test fixture, the durability
@@ -332,8 +387,14 @@ async def submit_tool_result(request: Request, run_id: str,
         signal=TOOL_RESULT_SIGNAL,
         payload=payload.model_dump(mode="json"),
     )
-    logger.info("tool result accepted", extra={
-        "runId": run_id, "toolRequestId": payload.toolRequestId, "signalDelivered": delivered})
+    logger.info(
+        "tool result accepted",
+        extra={
+            "runId": run_id,
+            "toolRequestId": payload.toolRequestId,
+            "signalDelivered": delivered,
+        },
+    )
     return await runtime.service.detail(run_id)
 
 
@@ -342,14 +403,14 @@ async def submit_tool_result(request: Request, run_id: str,
 # ---------------------------------------------------------------------------------------------
 
 
-@router.get("/agents", response_model=list[AgentProfileSummary],
-            summary="The declared agent profiles")
+@router.get(
+    "/agents", response_model=list[AgentProfileSummary], summary="The declared agent profiles"
+)
 async def list_agents(request: Request) -> list[AgentProfileSummary]:
     return get_resources(request).agent_runtime.service.agent_summaries()
 
 
-@router.get("/agent-teams", response_model=list[TeamProfileSummary],
-            summary="The declared teams")
+@router.get("/agent-teams", response_model=list[TeamProfileSummary], summary="The declared teams")
 async def list_agent_teams(request: Request) -> list[TeamProfileSummary]:
     return get_resources(request).agent_runtime.service.team_summaries()
 

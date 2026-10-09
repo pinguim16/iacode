@@ -18,6 +18,7 @@ import sys
 from pathlib import Path
 from typing import Any
 
+from check_functional_acceptance import evaluate as evaluate_functional_acceptance
 from delivery_assurance import completeness_scope, evaluate_matrix, load_matrix
 from ledger_common import (
     LedgerError,
@@ -64,10 +65,13 @@ def render_markdown(report: dict[str, Any], matrix: dict[str, Any]) -> str:
     if report["findings"]:
         lines += ["| Requirement | Severity | Detail |", "|---|---|---|"]
         for finding in report["findings"]:
-            lines.append("| `%s` | %s | %s |" % (
-                finding["requirement"], finding["severity"], finding["detail"]))
+            lines.append(
+                f"| `{finding['requirement']}` | {finding['severity']} | {finding['detail']} |"
+            )
     else:
-        lines.append("No finding. Every requirement is satisfied and every evidence reference resolved.")
+        lines.append(
+            "No finding. Every requirement is satisfied and every evidence reference resolved."
+        )
     lines += [
         "",
         "## Per-requirement audit",
@@ -77,14 +81,20 @@ def render_markdown(report: dict[str, Any], matrix: dict[str, Any]) -> str:
     ]
     for item in matrix.get("requirements", []):
         references = []
-        for key in ("implementationEvidence", "testEvidence", "documentationEvidence", "validationEvidence"):
+        for key in (
+            "implementationEvidence",
+            "testEvidence",
+            "documentationEvidence",
+            "validationEvidence",
+        ):
             references.extend(item.get(key) or [])
-        lines.append("| `%s` | %s | `%s` | %s |" % (
-            item.get("id"),
-            "yes" if item.get("mandatory") else "no",
-            item.get("status"),
-            ", ".join("`%s`" % value for value in references) if references else "_none_",
-        ))
+        mandatory = "yes" if item.get("mandatory") else "no"
+        rendered_references = (
+            ", ".join(f"`{value}`" for value in references) if references else "_none_"
+        )
+        lines.append(
+            f"| `{item.get('id')}` | {mandatory} | `{item.get('status')}` | {rendered_references} |"
+        )
     while lines and not lines[-1]:
         lines.pop()
     return "\n".join(lines) + "\n"
@@ -95,7 +105,9 @@ def main() -> int:
     parser.add_argument("--root", type=Path)
     parser.add_argument("--checkpoint", type=Path)
     parser.add_argument("--auditor", default="Delivery Completeness Validator")
-    parser.add_argument("--write", action="store_true", help="write COMPLETENESS-REPORT.json and .md")
+    parser.add_argument(
+        "--write", action="store_true", help="write COMPLETENESS-REPORT.json and .md"
+    )
     args = parser.parse_args()
 
     root = find_root(args.root) if args.root else find_root()
@@ -114,6 +126,46 @@ def main() -> int:
             return 2
 
     report = evaluate_matrix(root, checkpoint, matrix)
+    state = load_json(checkpoint / "STATE.json")
+    if state.get("gate") == "GATE-4":
+        functional_path = checkpoint / "FUNCTIONAL-ACCEPTANCE.json"
+        functional_schema = root / ".iacode" / "schemas" / "functional-acceptance.schema.json"
+        if not functional_path.is_file():
+            report["findings"].append(
+                {
+                    "requirement": "FUNCTIONAL-ACCEPTANCE",
+                    "severity": "BLOCKING",
+                    "detail": "mandatory functional acceptance artifact is missing",
+                }
+            )
+            report["result"] = "FAIL"
+        else:
+            functional = load_json(functional_path)
+            functional_errors = validate_schema(functional, load_json(functional_schema))
+            if functional_errors:
+                report["findings"].append(
+                    {
+                        "requirement": "FUNCTIONAL-ACCEPTANCE",
+                        "severity": "BLOCKING",
+                        "detail": "functional acceptance schema is invalid: "
+                        + "; ".join(functional_errors),
+                    }
+                )
+                report["result"] = "FAIL"
+            else:
+                functional_report = evaluate_functional_acceptance(root, checkpoint, functional)
+                for requirement in functional_report["missing"]:
+                    report["findings"].append(
+                        {
+                            "requirement": requirement,
+                            "severity": "BLOCKING",
+                            "detail": (
+                                "mandatory functional requirement lacks a passing executed scenario"
+                            ),
+                        }
+                    )
+                if functional_report["result"] != "PASS":
+                    report["result"] = "FAIL"
     report = {
         "schemaVersion": "2.0.0",
         "checkpoint": checkpoint.name,
@@ -135,14 +187,20 @@ def main() -> int:
 
     if args.write:
         (checkpoint / "COMPLETENESS-REPORT.json").write_text(
-            json.dumps(report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8", newline="\n")
+            json.dumps(report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8", newline="\n"
+        )
         (checkpoint / "COMPLETENESS-REPORT.md").write_text(
-            render_markdown(report, matrix), encoding="utf-8", newline="\n")
+            render_markdown(report, matrix), encoding="utf-8", newline="\n"
+        )
 
-    print(f"DELIVERY_COMPLETENESS_GATE={report['result']} "
-          f"coverage={report['coveragePercent']:.2f} evidenceCoverage={report['evidenceCoveragePercent']:.2f} "
-          f"total={report['totalRequirements']} complete={report['complete']} "
-          f"partial={report['partial']} missing={report['missing']} notApplicable={report['notApplicable']}")
+    print(
+        f"DELIVERY_COMPLETENESS_GATE={report['result']} "
+        f"coverage={report['coveragePercent']:.2f} "
+        f"evidenceCoverage={report['evidenceCoveragePercent']:.2f} "
+        f"total={report['totalRequirements']} complete={report['complete']} "
+        f"partial={report['partial']} missing={report['missing']} "
+        f"notApplicable={report['notApplicable']}"
+    )
     for finding in report["findings"]:
         print(f"- [{finding['severity']}] {finding['requirement']}: {finding['detail']}")
     return 0 if report["result"] == "PASS" else 1

@@ -26,9 +26,10 @@ COPY packages/contracts /build/packages/contracts
 COPY packages/persistence /build/packages/persistence
 COPY packages/telemetry /build/packages/telemetry
 COPY services/agent-runtime /build/services/agent-runtime
+COPY services/evaluator /build/services/evaluator
 RUN pip install --no-cache-dir --no-deps \
       /build/packages/common /build/packages/contracts /build/packages/persistence \
-      /build/packages/telemetry /build/services/agent-runtime
+      /build/packages/telemetry /build/services/agent-runtime /build/services/evaluator
 
 FROM python:3.13.15-slim-bookworm AS runtime
 
@@ -56,6 +57,7 @@ COPY --chown=iacode:iacode services/orchestrator/pyproject.toml /app/pyproject.t
 # ``IACODE_REPOSITORY_ROOT``, which is /app in this image, so the profiles the worker executes
 # are the ones the repository declares rather than a copy somebody kept in step by hand.
 COPY --chown=iacode:iacode agents /app/agents
+COPY --chown=iacode:iacode .iacode/policies /app/.iacode/policies
 # The durability rehearsal. It lands beside the source rather than inside it, so the running
 # worker cannot import any of it: the separation is a path, not a promise. The API image
 # carries its suites the same way and for the same reason.

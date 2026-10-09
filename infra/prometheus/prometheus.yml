@@ -1,6 +1,6 @@
 # Prometheus scrape configuration for the Foundation.
 #
-# Three targets: Prometheus itself, the API and the worker. Static targets rather than service
+# Fixed targets for Prometheus itself and the runtime services. Static targets rather than service
 # discovery, because the Foundation stack is a fixed set of Compose services and a discovery
 # mechanism would be machinery with nothing to discover.
 #
@@ -60,3 +60,13 @@ scrape_configs:
       - targets: ["sandbox:9102"]
         labels:
           component: sandbox
+
+  # Gate 4: quality-run lifecycle, bounded check outcomes and durations, findings by closed
+  # severity/category, evidence writes, and verdict derivations. Identifiers, commands, paths,
+  # output, messages and digests are deliberately absent from labels.
+  - job_name: iacode-evaluator
+    metrics_path: /metrics
+    static_configs:
+      - targets: ["evaluator:9103"]
+        labels:
+          component: evaluator

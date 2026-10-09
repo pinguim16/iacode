@@ -61,6 +61,7 @@ with workflow.unsafe.imports_passed_through():
         TOOL_EXECUTOR_SANDBOX,
         TOOL_RESULT_SIGNAL,
     )
+    from iacode_contracts.quality import QUALITY_RUN_WORKFLOW, QUALITY_TASK_QUEUE
     from iacode_contracts.sandbox import (
         SANDBOX_AGENT_RESULT_KEY,
         SANDBOX_CONTRACT_VERSION,
@@ -134,23 +135,32 @@ class _WorkflowEffects:
         return str(workflow.uuid4())
 
     async def record_event(self, event: RunEvent) -> None:
-        await self._call("iacode_agent_runtime_record_event", {
-            "runId": event.run_id,
-            "type": event.type,
-            "dedupeKey": event.dedupe_key,
-            "stage": event.stage,
-            "agentRunId": event.agent_run_id,
-            "payload": dict(event.payload),
-            "team": self.plan.team,
-        })
+        await self._call(
+            "iacode_agent_runtime_record_event",
+            {
+                "runId": event.run_id,
+                "type": event.type,
+                "dedupeKey": event.dedupe_key,
+                "stage": event.stage,
+                "agentRunId": event.agent_run_id,
+                "payload": dict(event.payload),
+                "team": self.plan.team,
+            },
+        )
 
     async def set_state(self, state: str, **fields: Any) -> None:
         payload = {"runId": self.plan.run_id, "state": state}
         mapping = {
-            "current_stage": "currentStage", "budget_used": "budgetUsed", "result": "result",
-            "result_summary": "resultSummary", "error_type": "errorType",
-            "error_summary": "errorSummary", "failed_stage": "failedStage",
-            "workflow_id": "workflowId", "started": "started", "finished": "finished",
+            "current_stage": "currentStage",
+            "budget_used": "budgetUsed",
+            "result": "result",
+            "result_summary": "resultSummary",
+            "error_type": "errorType",
+            "error_summary": "errorSummary",
+            "failed_stage": "failedStage",
+            "workflow_id": "workflowId",
+            "started": "started",
+            "finished": "finished",
         }
         for key, value in fields.items():
             if value is not None and key in mapping:
@@ -158,44 +168,54 @@ class _WorkflowEffects:
         await self._call("iacode_agent_runtime_set_state", payload)
 
     async def start_stage(self, stage: StagePlan) -> str:
-        agent_run_id = await self._call("iacode_agent_runtime_start_stage", {
-            "runId": self.plan.run_id,
-            "stageIndex": stage.index,
-            "stageName": stage.name,
-            "agent": stage.agent,
-            "profileVersion": stage.profile_version,
-            "promptTemplateVersion": stage.prompt_template_version,
-            "promptTemplateHash": stage.prompt_template_hash,
-            "outputName": stage.output_name,
-        })
+        agent_run_id = await self._call(
+            "iacode_agent_runtime_start_stage",
+            {
+                "runId": self.plan.run_id,
+                "stageIndex": stage.index,
+                "stageName": stage.name,
+                "agent": stage.agent,
+                "profileVersion": stage.profile_version,
+                "promptTemplateVersion": stage.prompt_template_version,
+                "promptTemplateHash": stage.prompt_template_hash,
+                "outputName": stage.output_name,
+            },
+        )
         self.stages_by_agent_run[str(agent_run_id)] = stage
         return agent_run_id
 
     async def finish_stage(self, agent_run_id: str, completion: StageCompletion) -> None:
-        await self._call("iacode_agent_runtime_finish_stage", {
-            "agentRunId": agent_run_id,
-            "state": completion.state,
-            "output": completion.output,
-            "outputSummary": completion.output_summary,
-            "turns": completion.turns,
-            "modelCalls": completion.model_calls,
-            "errorType": completion.error_type,
-            "errorSummary": completion.error_summary,
-        })
+        await self._call(
+            "iacode_agent_runtime_finish_stage",
+            {
+                "agentRunId": agent_run_id,
+                "state": completion.state,
+                "output": completion.output,
+                "outputSummary": completion.output_summary,
+                "turns": completion.turns,
+                "modelCalls": completion.model_calls,
+                "errorType": completion.error_type,
+                "errorSummary": completion.error_summary,
+            },
+        )
 
     async def call_model(self, request: TurnRequest) -> ModelCallOutcome:
-        body = await self._call("iacode_agent_runtime_call_model", {
-            "runId": request.run_id,
-            "stageIndex": request.stage_index,
-            "turn": request.turn,
-            "instructions": request.instructions,
-            "data": request.data,
-            "route": request.route,
-            "model": request.model,
-            "allowedActions": list(request.allowed_actions),
-            "structuredOutput": request.structured_output,
-            "repairOf": request.repair_of,
-        }, start_to_close=self.model_timeout)
+        body = await self._call(
+            "iacode_agent_runtime_call_model",
+            {
+                "runId": request.run_id,
+                "stageIndex": request.stage_index,
+                "turn": request.turn,
+                "instructions": request.instructions,
+                "data": request.data,
+                "route": request.route,
+                "model": request.model,
+                "allowedActions": list(request.allowed_actions),
+                "structuredOutput": request.structured_output,
+                "repairOf": request.repair_of,
+            },
+            start_to_close=self.model_timeout,
+        )
         return ModelCallOutcome(
             text=str(body.get("text") or ""),
             model_call_id=body.get("modelCallId"),
@@ -214,39 +234,47 @@ class _WorkflowEffects:
             repair_attempt=bool(body.get("repairAttempt")),
         )
 
-    async def attach_model_call(self, agent_run_id: str,
-                                gateway_request_id: str) -> str | None:
+    async def attach_model_call(self, agent_run_id: str, gateway_request_id: str) -> str | None:
         if not gateway_request_id:
             return None
-        return await self._call("iacode_agent_runtime_attach_model_call", {
-            "agentRunId": agent_run_id, "gatewayRequestId": gateway_request_id})
+        return await self._call(
+            "iacode_agent_runtime_attach_model_call",
+            {"agentRunId": agent_run_id, "gatewayRequestId": gateway_request_id},
+        )
 
-    async def create_tool_request(self, tool_request_id: str, agent_run_id: str, name: str,
-                                  arguments: dict[str, Any]) -> None:
+    async def create_tool_request(
+        self, tool_request_id: str, agent_run_id: str, name: str, arguments: dict[str, Any]
+    ) -> None:
         # The executor is decided here, from the stage that asked, and written with the request:
         # a sandboxed stage's request is answered by the sandbox alone (`M1-F-002`).
         stage = self.stages_by_agent_run.get(str(agent_run_id))
-        executor = (TOOL_EXECUTOR_SANDBOX if stage is not None and stage.sandbox_policy
-                    else TOOL_EXECUTOR_EXTERNAL)
-        await self._call("iacode_agent_runtime_create_tool_request", {
-            "runId": self.plan.run_id,
+        executor = (
+            TOOL_EXECUTOR_SANDBOX
+            if stage is not None and stage.sandbox_policy
+            else TOOL_EXECUTOR_EXTERNAL
+        )
+        await self._call(
+            "iacode_agent_runtime_create_tool_request",
+            {
+                "runId": self.plan.run_id,
+                "agentRunId": agent_run_id,
+                "toolRequestId": tool_request_id,
+                "name": name,
+                "arguments": arguments,
+                "executor": executor,
+            },
+        )
+        self.requests[tool_request_id] = {
             "agentRunId": agent_run_id,
-            "toolRequestId": tool_request_id,
             "name": name,
-            "arguments": arguments,
-            "executor": executor,
-        })
-        self.requests[tool_request_id] = {"agentRunId": agent_run_id, "name": name,
-                                          "arguments": dict(arguments)}
+            "arguments": dict(arguments),
+        }
 
-    async def wait_for_tool(self, tool_request_id: str,
-                            timeout_seconds: int) -> ToolResult | None:
+    async def wait_for_tool(self, tool_request_id: str, timeout_seconds: int) -> ToolResult | None:
         request = self.requests.get(tool_request_id)
-        stage = (self.stages_by_agent_run.get(str(request["agentRunId"]))
-                 if request else None)
+        stage = self.stages_by_agent_run.get(str(request["agentRunId"])) if request else None
         if request is not None and stage is not None and stage.sandbox_policy:
-            return await self._execute_in_sandbox(tool_request_id, request, stage,
-                                                  timeout_seconds)
+            return await self._execute_in_sandbox(tool_request_id, request, stage, timeout_seconds)
         # Gate 2's path, unchanged: a stage with no sandbox policy has its tools answered from
         # outside, through the API's tool-result endpoint and this workflow's signal.
         reference = self.workflow_ref
@@ -254,12 +282,14 @@ class _WorkflowEffects:
         try:
             await workflow.wait_condition(
                 lambda: tool_request_id in reference.results or reference.cancel_requested,
-                timeout=timedelta(seconds=timeout_seconds))
+                timeout=timedelta(seconds=timeout_seconds),
+            )
         except TimeoutError:
             # The signal may simply have been lost. The stored row is authoritative, so the wait
             # ends by asking the database rather than by assuming the worst.
-            stored = await self._call("iacode_agent_runtime_read_tool_result",
-                                      {"toolRequestId": tool_request_id})
+            stored = await self._call(
+                "iacode_agent_runtime_read_tool_result", {"toolRequestId": tool_request_id}
+            )
             return ToolResult.from_dict(stored) if stored else None
         finally:
             reference.awaiting = None
@@ -267,8 +297,9 @@ class _WorkflowEffects:
             return None
         return ToolResult.from_dict(reference.results[tool_request_id])
 
-    async def _execute_in_sandbox(self, tool_request_id: str, request: dict[str, Any],
-                                  stage: StagePlan, timeout_seconds: int) -> ToolResult | None:
+    async def _execute_in_sandbox(
+        self, tool_request_id: str, request: dict[str, Any], stage: StagePlan, timeout_seconds: int
+    ) -> ToolResult | None:
         """Dispatch a tool request to the sandbox, persist its result, and resume.
 
         The sandbox's answer is an activity result: Temporal delivers it durably, so there is no
@@ -290,13 +321,18 @@ class _WorkflowEffects:
             "workspace": dict(self.plan.workspace) or {"kind": "empty"},
         }
         handle = workflow.start_activity(
-            SANDBOX_EXECUTE_ACTIVITY, payload, task_queue=SANDBOX_TASK_QUEUE,
+            SANDBOX_EXECUTE_ACTIVITY,
+            payload,
+            task_queue=SANDBOX_TASK_QUEUE,
             schedule_to_close_timeout=timedelta(seconds=timeout_seconds),
             heartbeat_timeout=SANDBOX_HEARTBEAT_TIMEOUT,
             cancellation_type=ActivityCancellationType.WAIT_CANCELLATION_COMPLETED,
-            retry_policy=RetryPolicy(initial_interval=timedelta(seconds=2),
-                                     maximum_interval=timedelta(seconds=30),
-                                     maximum_attempts=3))
+            retry_policy=RetryPolicy(
+                initial_interval=timedelta(seconds=2),
+                maximum_interval=timedelta(seconds=30),
+                maximum_attempts=3,
+            ),
+        )
         reference.awaiting = tool_request_id
         try:
             await workflow.wait_condition(lambda: handle.done() or reference.cancel_requested)
@@ -312,17 +348,22 @@ class _WorkflowEffects:
                 # The sandbox could not answer at all - its service down past the retries, or the
                 # schedule exhausted. The agent receives that as a failed tool, rather than the run
                 # waiting for a result that will never come.
-                result = {"toolRequestId": tool_request_id, "status": "FAILED", "output": {},
-                          "error": f"the sandbox did not answer: {type(error.cause).__name__}",
-                          "metadata": {"executor": "sandbox",
-                                       "errorCode": "SANDBOX_UNAVAILABLE"}}
+                result = {
+                    "toolRequestId": tool_request_id,
+                    "status": "FAILED",
+                    "output": {},
+                    "error": f"the sandbox did not answer: {type(error.cause).__name__}",
+                    "metadata": {"executor": "sandbox", "errorCode": "SANDBOX_UNAVAILABLE"},
+                }
         except asyncio.CancelledError:
             handle.cancel()
             raise
         finally:
             reference.awaiting = None
-        stored = await self._call("iacode_agent_runtime_resolve_tool_request",
-                                  {"runId": self.plan.run_id, "result": result})
+        stored = await self._call(
+            "iacode_agent_runtime_resolve_tool_request",
+            {"runId": self.plan.run_id, "result": result},
+        )
         return ToolResult.from_dict(stored)
 
     async def release_sandboxes(self) -> None:
@@ -331,37 +372,64 @@ class _WorkflowEffects:
             return
         try:
             await workflow.execute_activity(
-                SANDBOX_RELEASE_ACTIVITY, {"runId": self.plan.run_id},
+                SANDBOX_RELEASE_ACTIVITY,
+                {"runId": self.plan.run_id},
                 task_queue=SANDBOX_TASK_QUEUE,
                 schedule_to_close_timeout=timedelta(minutes=5),
-                retry_policy=RetryPolicy(initial_interval=timedelta(seconds=2),
-                                         maximum_interval=timedelta(seconds=30),
-                                         maximum_attempts=5))
+                retry_policy=RetryPolicy(
+                    initial_interval=timedelta(seconds=2),
+                    maximum_interval=timedelta(seconds=30),
+                    maximum_attempts=5,
+                ),
+            )
         except ActivityError as error:
             workflow.logger.warning(
                 "the run's sandbox sessions were not released; the sweeper will expire them: %s",
-                type(error.cause).__name__)
+                type(error.cause).__name__,
+            )
 
     def cancelled(self) -> bool:
         return self.workflow_ref.cancel_requested
 
     async def cancel_pending_tools(self) -> int:
         """Close every request nobody will answer, so a finished run leaves nothing pending."""
-        return await self._call("iacode_agent_runtime_cancel_pending_tool_requests",
-                                {"runId": self.plan.run_id})
+        return await self._call(
+            "iacode_agent_runtime_cancel_pending_tool_requests", {"runId": self.plan.run_id}
+        )
 
-    async def _call(self, name: str, payload: dict[str, Any],
-                    start_to_close: timedelta = STORE_TIMEOUT) -> Any:
+    async def quality_gate(self) -> dict[str, Any] | None:
+        """Run quality as a child workflow when the agent run owns a frozen snapshot."""
+        planned = await self._call(
+            "iacode_agent_quality_plan",
+            {"runId": self.plan.run_id, "workspace": dict(self.plan.workspace)},
+        )
+        if not planned.get("applicable"):
+            return None
+        await workflow.execute_child_workflow(
+            QUALITY_RUN_WORKFLOW,
+            {"runId": planned["runId"]},
+            id=str(planned["workflowId"]),
+            task_queue=QUALITY_TASK_QUEUE,
+            execution_timeout=timedelta(seconds=int(planned["maxRunSeconds"]) + 300),
+        )
+        return await self._call("iacode_agent_quality_result", {"runId": str(planned["runId"])})
+
+    async def _call(
+        self, name: str, payload: dict[str, Any], start_to_close: timedelta = STORE_TIMEOUT
+    ) -> Any:
         # Named `start_to_close` rather than `timeout`: it is Temporal's activity timeout, not a
         # timeout on this coroutine, and a parameter called `timeout` on an async function reads
         # as the latter to every reader and to the linter alike.
         try:
             return await workflow.execute_activity(
-                name, payload,
+                name,
+                payload,
                 start_to_close_timeout=start_to_close,
-                retry_policy=RetryPolicy(initial_interval=timedelta(seconds=1),
-                                         maximum_interval=timedelta(seconds=30),
-                                         maximum_attempts=5),
+                retry_policy=RetryPolicy(
+                    initial_interval=timedelta(seconds=1),
+                    maximum_interval=timedelta(seconds=30),
+                    maximum_attempts=5,
+                ),
             )
         except ActivityError as error:
             classified = _activity_error(error)
@@ -414,8 +482,9 @@ class AgentRunWorkflow:
         effects = _WorkflowEffects(
             plan=plan,
             workflow_ref=self,
-            model_timeout=timedelta(seconds=min(MODEL_CALL_CEILING_SECONDS,
-                                                plan.budget.max_duration_seconds)),
+            model_timeout=timedelta(
+                seconds=min(MODEL_CALL_CEILING_SECONDS, plan.budget.max_duration_seconds)
+            ),
         )
         engine = AgentRunEngine(
             plan=plan,
@@ -439,8 +508,9 @@ class AgentRunWorkflow:
         self.summary = outcome.to_dict()
         return self.summary
 
-    async def _run_within_deadline(self, plan: RunPlan, effects: _WorkflowEffects,
-                                   engine: AgentRunEngine) -> RunOutcome:
+    async def _run_within_deadline(
+        self, plan: RunPlan, effects: _WorkflowEffects, engine: AgentRunEngine
+    ) -> RunOutcome:
         """The engine, raced against its own wall-clock deadline.
 
         Deliberately *not* ``asyncio.wait_for``. From Python 3.11 that helper implements its
@@ -481,35 +551,61 @@ class AgentRunWorkflow:
             # run ended — the deadline is — so the deadline is what gets recorded. `LSN-0046`.
             workflow.logger.info(
                 "the engine stopped with %s while the deadline was being applied",
-                type(error).__name__)
+                type(error).__name__,
+            )
         return await self._deadline_exceeded(plan, effects, engine)
 
-    async def _deadline_exceeded(self, plan: RunPlan, effects: _WorkflowEffects,
-                                 engine: AgentRunEngine) -> RunOutcome:
+    async def _deadline_exceeded(
+        self, plan: RunPlan, effects: _WorkflowEffects, engine: AgentRunEngine
+    ) -> RunOutcome:
         error = AgentRuntimeError(
             AgentRuntimeErrorType.RUN_DEADLINE_EXCEEDED,
             f"the run exceeded its deadline of {plan.budget.max_duration_seconds}s",
-            details={"limit": "maxDurationSeconds",
-                     "value": plan.budget.max_duration_seconds})
+            details={"limit": "maxDurationSeconds", "value": plan.budget.max_duration_seconds},
+        )
         # The terminal event before the terminal state, as the engine does. G2-F-010.
-        await effects.record_event(RunEvent(
-            run_id=plan.run_id, type="RUN_FAILED", dedupe_key="run-deadline",
-            payload={"errorType": str(error.error_type), "message": error.message}))
+        await effects.record_event(
+            RunEvent(
+                run_id=plan.run_id,
+                type="RUN_FAILED",
+                dedupe_key="run-deadline",
+                payload={"errorType": str(error.error_type), "message": error.message},
+            )
+        )
         await effects.set_state(
-            str(RunState.FAILED), error_type=str(error.error_type),
-            error_summary=error.message, budget_used=engine.ledger.to_dict(), finished=True)
-        return RunOutcome(state=str(RunState.FAILED), error_type=str(error.error_type),
-                          error_summary=error.message,
-                          turns=engine.ledger.turns_used,
-                          model_calls=engine.ledger.model_calls_used)
+            str(RunState.FAILED),
+            error_type=str(error.error_type),
+            error_summary=error.message,
+            budget_used=engine.ledger.to_dict(),
+            finished=True,
+        )
+        return RunOutcome(
+            state=str(RunState.FAILED),
+            error_type=str(error.error_type),
+            error_summary=error.message,
+            turns=engine.ledger.turns_used,
+            model_calls=engine.ledger.model_calls_used,
+        )
 
-    async def _unrecoverable(self, plan: RunPlan, effects: _WorkflowEffects,
-                             error: AgentRuntimeError) -> RunOutcome:
-        await effects.record_event(RunEvent(
-            run_id=plan.run_id, type="RUN_FAILED", dedupe_key="run-unrecoverable",
-            payload={"errorType": str(error.error_type), "message": error.message}))
+    async def _unrecoverable(
+        self, plan: RunPlan, effects: _WorkflowEffects, error: AgentRuntimeError
+    ) -> RunOutcome:
+        await effects.record_event(
+            RunEvent(
+                run_id=plan.run_id,
+                type="RUN_FAILED",
+                dedupe_key="run-unrecoverable",
+                payload={"errorType": str(error.error_type), "message": error.message},
+            )
+        )
         await effects.set_state(
-            str(RunState.FAILED), error_type=str(error.error_type),
-            error_summary=error.message, finished=True)
-        return RunOutcome(state=str(RunState.FAILED), error_type=str(error.error_type),
-                          error_summary=error.message)
+            str(RunState.FAILED),
+            error_type=str(error.error_type),
+            error_summary=error.message,
+            finished=True,
+        )
+        return RunOutcome(
+            state=str(RunState.FAILED),
+            error_type=str(error.error_type),
+            error_summary=error.message,
+        )

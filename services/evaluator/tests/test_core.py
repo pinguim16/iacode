@@ -5,6 +5,7 @@ from __future__ import annotations
 import ast
 import asyncio
 import json
+import uuid
 from datetime import UTC, datetime
 from pathlib import Path
 
@@ -19,7 +20,7 @@ from iacode_contracts.quality import (
 )
 from iacode_evaluator.engine import execute_plan
 from iacode_evaluator.errors import QualityError
-from iacode_evaluator.executor import sandbox_request
+from iacode_evaluator.executor import quality_tool_request_id, sandbox_request
 from iacode_evaluator.findings import deduplicate, finding_fingerprint
 from iacode_evaluator.planner import build_plan
 from iacode_evaluator.policy import load_policy
@@ -513,6 +514,12 @@ class CoverageVerdictTests:
 
 
 class QualityExecutionBoundaryTests:
+    def test_quality_tool_identity_is_a_stable_uuid(self) -> None:
+        first = quality_tool_request_id("run-1", "q001-build")
+        assert uuid.UUID(first)
+        assert first == quality_tool_request_id("run-1", "q001-build")
+        assert first != quality_tool_request_id("run-1", "q002-unit")
+
     def test_every_stack_maps_to_a_policy_owned_sandbox_request(self) -> None:
         registry = load_policy(POLICY)
         fixtures = {

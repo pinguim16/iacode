@@ -69,6 +69,12 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 | `LSN-0059` | `GUARDED` | MEDIUM | process | A lesson exclusion must declare the scope it excludes | `test_the_repository_preflight_covers_every_applicable_lesson` |
 | `LSN-0060` | `GUARDED` | MEDIUM | implementation | Parent and child facts without an ORM relationship require an explicit flush boundary | `test_plan_run_results_verdict_and_events_round_trip` |
 | `LSN-0061` | `GUARDED` | MEDIUM | testing | Cancellation completion must not bypass cleanup acknowledgement | `test_results_enforce_owner_idempotency_and_late_refusal` |
+| `LSN-0062` | `GUARDED` | MEDIUM | implementation | Provenance digests are a set even when their sources are distinct | `test_a_sandbox_answer_becomes_redacted_immutable_evidence` |
+| `LSN-0063` | `GUARDED` | HIGH | architecture | An identity shared across services must satisfy the strictest persistence type and remain stable | `test_quality_tool_identity_is_a_stable_uuid` |
+| `LSN-0064` | `GUARDED` | HIGH | architecture | A shared execution resource needs an explicit exclusive owner for every owning domain | `test_a_sandbox_session_has_exactly_one_run_owner_and_one_active_slot_per_owner`, `test_plan_run_results_verdict_and_events_round_trip` |
+| `LSN-0065` | `GUARDED` | HIGH | implementation | A shared execution identifier must not be written into a foreign key owned by another domain | `test_only_agent_requests_bind_the_agent_tool_request_foreign_key` |
+| `LSN-0066` | `GUARDED` | HIGH | architecture | Immutable content identity excludes observation time and the first observer | `test_content_addressed_plan_reuse_ignores_observation_time_and_first_owner` |
+| `LSN-0067` | `GUARDED` | HIGH | implementation | Cancellation semantics must survive orchestration-library exception wrapping | `test_an_acknowledged_activity_cancellation_stays_a_cancellation` |
 
 ## Detail
 
@@ -875,3 +881,70 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 - Prevention:
   - `test` test_results_enforce_owner_idempotency_and_late_refusal — The store test executes both cancellation transitions and then proves that a callback delivered after cleanup completion is refused.
 - Evidence: `file:docs/checkpoints/GATE-4-CP-0001/COMMANDS.jsonl`, `file:services/evaluator/tests/test_persistence.py`
+
+### LSN-0062 — Provenance digests are a set even when their sources are distinct
+
+- Status: `GUARDED`, severity MEDIUM, category implementation, recurrences 0.
+- Source: GATE-4, GATE-4-CP-0001, finding quality workflow adapter focused test.
+- Symptom: The first workflow-adapter test failed when the snapshot and policy fixtures intentionally shared a digest, because the evidence contract refuses duplicate sourceDigests.
+- Root cause: The activity treated semantic source slots as if they implied distinct content hashes. Two different source roles may legitimately resolve to identical bytes, while the evidence contract records the unique content set.
+- Resolution: Deduplicate source digests by value while preserving their first-seen order before constructing immutable evidence.
+- Prevention:
+  - `test` test_a_sandbox_answer_becomes_redacted_immutable_evidence — The adapter test uses equal snapshot and policy digests and proves that redacted evidence is still accepted and persisted once.
+- Evidence: `file:services/evaluator/src/iacode_evaluator/activities.py`, `file:services/evaluator/tests/test_workflow.py`
+
+### LSN-0063 — An identity shared across services must satisfy the strictest persistence type and remain stable
+
+- Status: `GUARDED`, severity HIGH, category architecture, recurrences 0.
+- Source: GATE-4, GATE-4-CP-0001, finding first live quality execution.
+- Symptom: The first end-to-end quality run reached the sandbox and failed when its readable quality-check identity was parsed for a UUID database column.
+- Root cause: The evaluator treated toolRequestId as an opaque string while the shared sandbox store persists it as UUID. The contract's syntax was looser than the receiver's durable representation.
+- Resolution: Derive each quality execution identity as UUIDv5 from the immutable run and check identities, retaining both retry stability and database compatibility.
+- Prevention:
+  - `test` test_quality_tool_identity_is_a_stable_uuid — The same run and check always derive the same valid UUID, while another check derives a different one.
+- Evidence: `file:services/evaluator/src/iacode_evaluator/executor.py`, `file:services/evaluator/tests/test_core.py`
+
+### LSN-0064 — A shared execution resource needs an explicit exclusive owner for every owning domain
+
+- Status: `GUARDED`, severity HIGH, category architecture, recurrences 0.
+- Source: GATE-4, GATE-4-CP-0001, finding first live sandbox persistence for a quality run.
+- Symptom: A real evaluator run could not create its sandbox session because sandbox_sessions required task_run_id even though no task run owned the quality run.
+- Root cause: Gate 3 encoded the then-only owner in the table shape. Reusing the sandbox from a second durable domain without evolving ownership would have required a fake task run or a nullable unowned session.
+- Resolution: Add quality_run_id, constrain exactly one owner with num_nonnulls, and enforce a separate one-active-session partial unique index for each owner domain.
+- Prevention:
+  - `test` test_a_sandbox_session_has_exactly_one_run_owner_and_one_active_slot_per_owner — The declared model requires one and only one owner and one active slot for both task and quality runs.
+  - `test` test_plan_run_results_verdict_and_events_round_trip — Real PostgreSQL accepts a quality-owned session through the lifecycle.
+- Evidence: `file:packages/persistence/src/iacode_persistence/models.py`, `file:apps/api/migrations/versions/0006_quality_engine.py`, `file:apps/api/tests/unit/test_domain_model.py`, `file:services/evaluator/tests/integration/test_quality_persistence_integration.py`
+
+### LSN-0065 — A shared execution identifier must not be written into a foreign key owned by another domain
+
+- Status: `GUARDED`, severity HIGH, category implementation, recurrences 0.
+- Source: GATE-4, GATE-4-CP-0001, finding live evaluator sandbox execution after owner migration.
+- Symptom: After the session gained a quality owner, execution still failed when active_tool_request_id tried to reference the evaluator's stable UUID in tool_requests, where only agent-runtime requests exist.
+- Root cause: The sandbox used one request shape for two domains but treated every request identifier as an agent tool-request foreign key. Syntactic compatibility did not imply ownership compatibility.
+- Resolution: Bind active_tool_request_id only when agentRunId proves an agent-runtime owner; evaluator execution remains durable through its quality result and session owner.
+- Prevention:
+  - `test` test_only_agent_requests_bind_the_agent_tool_request_foreign_key — An evaluator request yields no agent FK while an agent request preserves its durable tool-request reference.
+- Evidence: `file:services/sandbox/src/iacode_sandbox/service.py`, `file:services/sandbox/tests/test_sandbox_service.py`
+
+### LSN-0066 — Immutable content identity excludes observation time and the first observer
+
+- Status: `GUARDED`, severity HIGH, category architecture, recurrences 0.
+- Source: GATE-4, GATE-4-CP-0001, finding live quality plan replay.
+- Symptom: Re-running the same snapshot and policy conflicted with its existing frozen quality plan because createdAt and the first owner differed.
+- Root cause: The reuse check compared the complete serialized record rather than the material inputs that define plan content, so observational metadata was mistaken for a conflicting plan definition.
+- Resolution: Compare plan material identity from snapshot, policy, project profile and frozen checks while retaining the original immutable creation time and owner as provenance.
+- Prevention:
+  - `test` test_content_addressed_plan_reuse_ignores_observation_time_and_first_owner — The same material plan reuses one row despite a later observation time and a different owner.
+- Evidence: `file:services/evaluator/src/iacode_evaluator/store.py`, `file:services/evaluator/tests/test_persistence.py`
+
+### LSN-0067 — Cancellation semantics must survive orchestration-library exception wrapping
+
+- Status: `GUARDED`, severity HIGH, category implementation, recurrences 0.
+- Source: GATE-4, GATE-4-CP-0001, finding live running cancellation scenario.
+- Symptom: The sandbox acknowledged cancellation and cleaned up, but the evaluator persisted ERROR because Temporal delivered the cancelled activity as ActivityError rather than asyncio.CancelledError.
+- Root cause: The workflow classified the Python exception wrapper instead of combining the durable cancellation request with the sandbox's acknowledged activity cancellation semantics.
+- Resolution: When cancellation was requested, translate the activity failure that completes WAIT_CANCELLATION_COMPLETED into a CANCELLED quality result and preserve ERROR for activity failures without that request.
+- Prevention:
+  - `test` test_an_acknowledged_activity_cancellation_stays_a_cancellation — A cancellation-requested activity wrapped as ActivityError produces CANCELLED, while the non-cancelled error path remains distinct.
+- Evidence: `file:services/evaluator/src/iacode_evaluator/workflow.py`, `file:services/evaluator/tests/test_workflow.py`, `file:var/gate4-quality-cancel.json`

@@ -7,6 +7,7 @@ without substituting text assertions for behavior.
 
 from __future__ import annotations
 
+import hashlib
 import json
 import shutil
 import subprocess
@@ -19,8 +20,11 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 LEDGER = PROJECT_ROOT / "scripts" / "development-ledger"
 sys.path.insert(0, str(LEDGER))
 
+import check_functional_acceptance  # noqa: E402
 import ledger_common  # noqa: E402
 import policies  # noqa: E402
+import program_state  # noqa: E402
+import review_bundle  # noqa: E402
 
 GATE = "GATE-4"
 SPECIFICATION = PROJECT_ROOT / "docs" / "GATE-4-CHECKLIST.md"
@@ -181,6 +185,21 @@ class Gate4MandatoryGateTests(unittest.TestCase):
         self.assertIn('"/app/tests/integration/test_migrations.py"', scenario)
         self.assertIn('"/app/evaluator_tests/integration"', scenario)
 
+    def test_verification_names_every_quality_lifecycle_proof(self) -> None:
+        source = (PROJECT_ROOT / "scripts" / "iacode" / "verify.py").read_text(encoding="utf-8")
+        for stage in (
+            "quality-pass",
+            "quality-fail",
+            "quality-iacode",
+            "quality-reproduction",
+            "quality-recovery",
+            "quality-cancellation",
+            "quality-timeout",
+            "quality-false-pass",
+        ):
+            with self.subTest(stage=stage):
+                self.assertIn(f'"{stage}"', source)
+
 
 class Gate4QualityImageTests(unittest.TestCase):
     """Each supported stack maps to an isolated, immutable sandbox toolchain."""
@@ -217,6 +236,105 @@ class Gate4QualityImageTests(unittest.TestCase):
             "gradle",
         ):
             self.assertIn(f'"{profile}"', source)
+
+
+class FunctionalAcceptanceTests(unittest.TestCase):
+    def _document(
+        self, checkpoint: str, requirements: tuple[str, ...], result: str = "PASS"
+    ) -> dict:
+        return {
+            "schemaVersion": "1.0.0",
+            "gate": GATE,
+            "checkpoint": checkpoint,
+            "status": "PASS" if result == "PASS" else "FAIL",
+            "generatedAt": "2026-10-09T19:00:00Z",
+            "scenarios": [
+                {
+                    "scenarioId": "G4-FUNCTIONAL-CONTROL",
+                    "requirementIds": list(requirements),
+                    "feature": "functional acceptance control",
+                    "scenario": "An executed observation is compared with its expected result.",
+                    "environment": "test process",
+                    "preconditions": ["canonical requirements are available"],
+                    "execution": ["execute the observable control"],
+                    "expected": ["the control passes"],
+                    "observed": ["the control passed"],
+                    "result": result,
+                    "evidence": ["file:docs/GATE-4-CHECKLIST.md"],
+                    "timestamp": "2026-10-09T19:00:00Z",
+                    "artifactReferences": [],
+                }
+            ],
+        }
+
+    def test_functional_scope_is_derived_from_the_canonical_gate(self) -> None:
+        requirements = check_functional_acceptance.functional_requirement_ids(PROJECT_ROOT, GATE)
+        self.assertIn("GATE-4-16.1", requirements)
+        self.assertIn("GATE-4-16.5", requirements)
+        self.assertIn("GATE-4-12.2", requirements)
+        self.assertNotIn("GATE-4-1.1", requirements)
+
+    def test_only_executed_resolved_pass_scenarios_cover_the_denominator(self) -> None:
+        requirements = check_functional_acceptance.functional_requirement_ids(PROJECT_ROOT, GATE)
+        with tempfile.TemporaryDirectory(prefix="iacode-g4-functional-") as directory:
+            checkpoint = Path(directory) / "GATE-4-CP-9000"
+            checkpoint.mkdir()
+            (checkpoint / "STATE.json").write_text(
+                json.dumps({"gate": GATE}) + "\n", encoding="utf-8"
+            )
+            (checkpoint / "COMMANDS.jsonl").write_text("", encoding="utf-8")
+            passing = check_functional_acceptance.evaluate(
+                PROJECT_ROOT,
+                checkpoint,
+                self._document(checkpoint.name, requirements),
+            )
+            blocked = check_functional_acceptance.evaluate(
+                PROJECT_ROOT,
+                checkpoint,
+                self._document(checkpoint.name, requirements, "BLOCKED"),
+            )
+        self.assertEqual(passing["result"], "PASS")
+        self.assertEqual(passing["missing"], [])
+        self.assertEqual(blocked["result"], "FAIL")
+        self.assertEqual(set(blocked["missing"]), set(requirements))
+
+    def test_functional_artifact_schema_requires_observation_and_evidence(self) -> None:
+        requirements = check_functional_acceptance.functional_requirement_ids(PROJECT_ROOT, GATE)
+        document = self._document("GATE-4-CP-9000", requirements)
+        schema = ledger_common.load_json(
+            PROJECT_ROOT / ".iacode" / "schemas" / "functional-acceptance.schema.json"
+        )
+        self.assertEqual(ledger_common.validate_schema(document, schema), [])
+        document["scenarios"][0]["observed"] = []
+        self.assertTrue(ledger_common.validate_schema(document, schema))
+
+
+class ProgramStateTests(unittest.TestCase):
+    def test_gate_4_is_derived_as_milestone_2(self) -> None:
+        self.assertEqual(program_state.milestone_for(GATE), "M2")
+
+    def test_timestamp_is_the_only_ignored_program_state_difference(self) -> None:
+        state = {"gate": GATE, "updatedAt": "first"}
+        later = {"gate": GATE, "updatedAt": "second"}
+        self.assertEqual(program_state.comparable(state), program_state.comparable(later))
+        later["gate"] = "GATE-5"
+        self.assertNotEqual(program_state.comparable(state), program_state.comparable(later))
+
+
+class ReviewBundleTests(unittest.TestCase):
+    def test_manifest_binds_order_size_and_digest(self) -> None:
+        declared = review_bundle.manifest({"z.txt": b"z", "a.txt": b"alpha"})
+        self.assertEqual([item["path"] for item in declared["entries"]], ["a.txt", "z.txt"])
+        self.assertEqual(declared["entries"][0]["sizeBytes"], 5)
+        self.assertEqual(
+            declared["entries"][0]["sha256"],
+            hashlib.sha256(b"alpha").hexdigest(),
+        )
+
+    def test_archive_timestamp_is_constant_and_review_output_is_ignored(self) -> None:
+        self.assertEqual(review_bundle.ZIP_TIME, (1980, 1, 1, 0, 0, 0))
+        ignored = (PROJECT_ROOT / ".gitignore").read_text(encoding="utf-8").splitlines()
+        self.assertIn("artifacts/review/", ignored)
 
 
 if __name__ == "__main__":

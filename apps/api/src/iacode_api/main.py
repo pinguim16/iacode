@@ -33,7 +33,7 @@ from iacode_api.errors import register_error_handlers
 from iacode_api.lifespan import lifespan
 from iacode_api.middleware.correlation import REQUEST_ID_HEADER, CorrelationMiddleware
 from iacode_api.observability.metrics import Metrics, MetricsMiddleware
-from iacode_api.routes import agent_runs, gateway, health, version
+from iacode_api.routes import agent_runs, gateway, health, quality, version
 
 logger = get_logger(__name__)
 
@@ -55,7 +55,8 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     """Build an application instance from explicit settings."""
     settings = settings or get_settings()
     configure_logging(
-        service=settings.service_name, level=settings.log_level, version=settings.version)
+        service=settings.service_name, level=settings.log_level, version=settings.version
+    )
 
     app = FastAPI(
         title="IACode API",
@@ -91,10 +92,12 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     # is what keeps Gate 0 independent of Gate 1.
     gateway.register_gateway_errors(app)
     agent_runs.register_agent_runtime_errors(app)
+    quality.register_quality_errors(app)
     app.include_router(health.router)
     app.include_router(version.router)
     app.include_router(gateway.router)
     app.include_router(agent_runs.router)
+    app.include_router(quality.router)
     return app
 
 

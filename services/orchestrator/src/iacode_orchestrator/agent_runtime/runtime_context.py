@@ -23,7 +23,12 @@ from iacode_agent_runtime.limits import RuntimeLimits
 from iacode_agent_runtime.persistence import SqlAgentRunStore
 from iacode_agent_runtime.registry import AgentRegistry
 from iacode_agent_runtime.telemetry import AgentRuntimeMetrics
+from iacode_evaluator.policy import load_policy
+from iacode_evaluator.service import QualityService
+from iacode_evaluator.snapshots import SnapshotProjectReader
+from iacode_evaluator.store import SqlQualityStore
 from iacode_persistence.engine import create_engine, create_session_factory
+from minio import Minio
 from prometheus_client import CollectorRegistry
 from sqlalchemy.ext.asyncio import AsyncEngine
 
@@ -44,6 +49,9 @@ class RuntimeContext:
     limits: RuntimeLimits
     prometheus: CollectorRegistry
     engine: AsyncEngine
+    quality_store: SqlQualityStore
+    quality_service: QualityService
+    quality_snapshots: SnapshotProjectReader
 
     async def close(self) -> None:
         await self.engine.dispose()
@@ -52,8 +60,9 @@ class RuntimeContext:
 _context: RuntimeContext | None = None
 
 
-def build_context(settings: WorkerSettings,
-                  registry: CollectorRegistry | None = None) -> RuntimeContext:
+def build_context(
+    settings: WorkerSettings, registry: CollectorRegistry | None = None
+) -> RuntimeContext:
     """Compose the runtime for this process. No I/O happens here: every client connects lazily."""
     prometheus = registry if registry is not None else CollectorRegistry()
     engine = create_engine(
@@ -62,9 +71,17 @@ def build_context(settings: WorkerSettings,
         max_overflow=settings.database_max_overflow,
         connect_timeout_seconds=settings.database_connect_timeout_seconds,
     )
+    factory = create_session_factory(engine)
+    quality_store = SqlQualityStore(factory)
+    objects = Minio(
+        settings.minio_endpoint,
+        access_key=settings.minio_access_key,
+        secret_key=settings.minio_secret_key,
+        secure=settings.minio_secure,
+    )
     return RuntimeContext(
         settings=settings,
-        store=SqlAgentRunStore(create_session_factory(engine)),
+        store=SqlAgentRunStore(factory),
         model_client=GatewayModelClient(
             base_url=settings.agent_runtime_gateway_url,
             max_output_tokens=settings.agent_runtime_max_output_tokens,
@@ -75,6 +92,14 @@ def build_context(settings: WorkerSettings,
         limits=RuntimeLimits(),
         prometheus=prometheus,
         engine=engine,
+        quality_store=quality_store,
+        quality_service=QualityService(
+            registry=load_policy(
+                Path(settings.repository_root) / ".iacode" / "policies" / "quality-policy.json"
+            ),
+            store=quality_store,
+        ),
+        quality_snapshots=SnapshotProjectReader(factory, objects),
     )
 
 
@@ -86,5 +111,6 @@ def set_context(context: RuntimeContext | None) -> None:
 def get_context() -> RuntimeContext:
     if _context is None:
         raise RuntimeError(
-            "the agent runtime context is not installed; the worker installs it at start-up")
+            "the agent runtime context is not installed; the worker installs it at start-up"
+        )
     return _context

@@ -378,14 +378,103 @@ class CreateQualityRunRequest(QualityModel):
         return self
 
 
+class QualityCheckSummary(QualityModel):
+    checkId: str = Field(pattern=IDENTIFIER_PATTERN)
+    kind: str
+    mandatory: bool
+    applicable: bool
+    applicabilityReason: str = Field(min_length=1, max_length=1024)
+
+
+class QualityRunCreated(QualityModel):
+    runId: str = Field(pattern=IDENTIFIER_PATTERN)
+    planId: str = Field(pattern=SHA256_PATTERN)
+    state: str
+    profile: str = Field(pattern=IDENTIFIER_PATTERN)
+    checks: tuple[QualityCheckSummary, ...]
+    idempotentReplay: bool = False
+
+    @field_validator("state")
+    @classmethod
+    def known_state(cls, value: str) -> str:
+        if value not in QUALITY_RUN_STATES:
+            raise ValueError(f"unknown quality run state: {value}")
+        return value
+
+
+class QualityRunSummary(QualityModel):
+    runId: str = Field(pattern=IDENTIFIER_PATTERN)
+    planId: str = Field(pattern=SHA256_PATTERN)
+    state: str
+    profile: str = Field(pattern=IDENTIFIER_PATTERN)
+    ownerRunId: str | None = None
+    reproductionOfRunId: str | None = None
+    createdAt: datetime
+    finishedAt: datetime | None = None
+    verdict: str | None = None
+
+    @field_validator("state")
+    @classmethod
+    def known_state(cls, value: str) -> str:
+        if value not in QUALITY_RUN_STATES:
+            raise ValueError(f"unknown quality run state: {value}")
+        return value
+
+
+class QualityRunList(QualityModel):
+    runs: tuple[QualityRunSummary, ...]
+    nextCursor: str | None = None
+
+
+class QualityRunDetail(QualityModel):
+    run: QualityRunSummary
+    checks: tuple[QualityCheckSummary, ...]
+    results: tuple[QualityResult, ...]
+    findings: tuple[QualityFinding, ...]
+    evidence: tuple[QualityEvidence, ...]
+    verdict: QualityVerdict | None = None
+
+
+class QualityRunEvent(QualityModel):
+    sequence: int = Field(ge=1)
+    eventType: str
+    payload: dict[str, Any]
+    createdAt: datetime
+
+    @field_validator("eventType")
+    @classmethod
+    def known_event(cls, value: str) -> str:
+        if value not in QUALITY_RUN_EVENT_TYPES:
+            raise ValueError(f"unknown quality event: {value}")
+        return value
+
+
+class QualityRunEventPage(QualityModel):
+    events: tuple[QualityRunEvent, ...]
+    nextCursor: int
+    terminal: bool
+
+
+class ReproduceQualityRunRequest(QualityModel):
+    idempotencyKey: str = Field(min_length=1, max_length=128)
+
+
 __all__ = [name for name in globals() if name.startswith("QUALITY_")] + [
     "CreateQualityRunRequest",
     "QualityCheck",
+    "QualityCheckSummary",
     "QualityEvidence",
     "QualityFinding",
     "QualityPlan",
     "QualityPolicy",
     "QualityResult",
     "QualityRun",
+    "QualityRunCreated",
+    "QualityRunDetail",
+    "QualityRunEvent",
+    "QualityRunEventPage",
+    "QualityRunList",
+    "QualityRunSummary",
     "QualityVerdict",
+    "ReproduceQualityRunRequest",
 ]

@@ -169,3 +169,9 @@ Expected set derived by: `policies.expected_requirement_refs over docs/GATE-4-CH
 | `LESSON-REQ-0058` | `lesson:LSN-0059` | yes | `NOT_STARTED` | Verify a lesson exclusion must declare the scope it excludes | LESSON-PREFLIGHT.json LESSON-REQ-0058 |
 | `LESSON-REQ-0059` | `lesson:LSN-0060` | yes | `NOT_STARTED` | Verify parent and child facts without an ORM relationship require an explicit flush boundary | LESSON-PREFLIGHT.json LESSON-REQ-0059 |
 | `LESSON-REQ-0060` | `lesson:LSN-0061` | yes | `NOT_STARTED` | Verify cancellation completion must not bypass cleanup acknowledgement | LESSON-PREFLIGHT.json LESSON-REQ-0060 |
+| `LESSON-REQ-0061` | `lesson:LSN-0062` | yes | `NOT_STARTED` | Verify provenance digests are a set even when their sources are distinct | LESSON-PREFLIGHT.json LESSON-REQ-0061 |
+| `LESSON-REQ-0062` | `lesson:LSN-0063` | yes | `NOT_STARTED` | Verify an identity shared across services must satisfy the strictest persistence type and remain stable | LESSON-PREFLIGHT.json LESSON-REQ-0062 |
+| `LESSON-REQ-0063` | `lesson:LSN-0064` | yes | `NOT_STARTED` | Verify a shared execution resource needs an explicit exclusive owner for every owning domain | LESSON-PREFLIGHT.json LESSON-REQ-0063 |
+| `LESSON-REQ-0064` | `lesson:LSN-0065` | yes | `NOT_STARTED` | Verify a shared execution identifier must not be written into a foreign key owned by another domain | LESSON-PREFLIGHT.json LESSON-REQ-0064 |
+| `LESSON-REQ-0065` | `lesson:LSN-0066` | yes | `NOT_STARTED` | Verify immutable content identity excludes observation time and the first observer | LESSON-PREFLIGHT.json LESSON-REQ-0065 |
+| `LESSON-REQ-0066` | `lesson:LSN-0067` | yes | `NOT_STARTED` | Verify cancellation semantics must survive orchestration-library exception wrapping | LESSON-PREFLIGHT.json LESSON-REQ-0066 |

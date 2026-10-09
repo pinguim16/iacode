@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import shlex
+import uuid
 
 from iacode_contracts.quality import QualityCheck, QualityPlan
 from iacode_contracts.sandbox import SANDBOX_CONTRACT_VERSION
@@ -15,6 +16,11 @@ SANDBOX_POLICY_BY_STACK = {
     "maven": "quality-java",
     "gradle": "quality-java",
 }
+
+
+def quality_tool_request_id(run_id: str, check_id: str) -> str:
+    """Derive the UUID identity required by the sandbox store from immutable check ownership."""
+    return str(uuid.uuid5(uuid.NAMESPACE_URL, f"iacode-quality-tool:{run_id}:{check_id}"))
 
 
 def sandbox_request(

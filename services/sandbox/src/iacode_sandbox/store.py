@@ -151,7 +151,8 @@ class SqlSandboxStore:
     @staticmethod
     def _record(row: Any) -> SessionRecord:
         return SessionRecord(
-            session_id=str(row.id), run_id=str(row.task_run_id), state=row.state,
+            session_id=str(row.id), run_id=str(row.task_run_id or row.quality_run_id),
+            state=row.state,
             policy=row.policy, image=row.image, image_fingerprint=row.image_fingerprint,
             container_name=row.container_name, network_profile=row.network_profile,
             workspace_source=dict(row.workspace_source or {}),
@@ -164,12 +165,16 @@ class SqlSandboxStore:
 
     async def active_session_for_run(self, run_id: str) -> SessionRecord | None:
         from iacode_persistence.models import SandboxSession
-        from sqlalchemy import select
+        from sqlalchemy import or_, select
 
+        identifier = uuid.UUID(run_id)
         async with self.session_factory() as session:
             row = (await session.execute(
                 select(SandboxSession).where(
-                    SandboxSession.task_run_id == uuid.UUID(run_id),
+                    or_(
+                        SandboxSession.task_run_id == identifier,
+                        SandboxSession.quality_run_id == identifier,
+                    ),
                     SandboxSession.state.in_(SANDBOX_ACTIVE_SESSION_STATES)))).scalars().first()
         return self._record(row) if row else None
 
@@ -192,17 +197,32 @@ class SqlSandboxStore:
         return [self._record(row) for row in rows]
 
     async def create_session(self, record: SessionRecord) -> SessionRecord:
-        from iacode_persistence.models import SandboxSession
+        from iacode_persistence.models import QualityRun, SandboxSession, TaskRun
         from sqlalchemy.exc import IntegrityError
 
-        row = SandboxSession(
-            id=uuid.UUID(record.session_id), task_run_id=uuid.UUID(record.run_id),
-            state=record.state, policy=record.policy, image=record.image,
-            image_fingerprint=record.image_fingerprint, container_name=record.container_name,
-            network_profile=record.network_profile, workspace_source=record.workspace_source,
-            resource_limits=record.resource_limits, expires_at=record.expires_at)
+        owner_id = uuid.UUID(record.run_id)
         try:
             async with self.session_factory() as session, session.begin():
+                task_owner = await session.get(TaskRun, owner_id)
+                quality_owner = (
+                    None
+                    if task_owner is not None
+                    else await session.get(QualityRun, owner_id)
+                )
+                if task_owner is None and quality_owner is None:
+                    raise StoreConflictError(
+                        f"the sandbox session owner {record.run_id} does not exist"
+                    )
+                row = SandboxSession(
+                    id=uuid.UUID(record.session_id),
+                    task_run_id=owner_id if task_owner is not None else None,
+                    quality_run_id=owner_id if quality_owner is not None else None,
+                    state=record.state, policy=record.policy, image=record.image,
+                    image_fingerprint=record.image_fingerprint,
+                    container_name=record.container_name,
+                    network_profile=record.network_profile,
+                    workspace_source=record.workspace_source,
+                    resource_limits=record.resource_limits, expires_at=record.expires_at)
                 session.add(row)
         except IntegrityError as error:
             raise StoreConflictError(f"the sandbox session for run {record.run_id} could not be "
@@ -263,12 +283,15 @@ class SqlSandboxStore:
 
     async def record_artifact(self, *, run_id: str, kind: str, bucket: str, key: str,
                               content_type: str, size_bytes: int, sha256: str) -> str:
-        from iacode_persistence.models import Artifact
+        from iacode_persistence.models import Artifact, TaskRun
 
-        row = Artifact(task_run_id=uuid.UUID(run_id), kind=kind, storage_bucket=bucket,
-                       storage_key=key, content_type=content_type, size_bytes=size_bytes,
-                       checksum_sha256=sha256)
+        owner_id = uuid.UUID(run_id)
         async with self.session_factory() as session, session.begin():
+            task_owner = await session.get(TaskRun, owner_id)
+            row = Artifact(task_run_id=owner_id if task_owner is not None else None, kind=kind,
+                           storage_bucket=bucket, storage_key=key,
+                           content_type=content_type, size_bytes=size_bytes,
+                           checksum_sha256=sha256)
             session.add(row)
             await session.flush()
             identifier = str(row.id)

@@ -77,15 +77,17 @@ class Effects(Protocol):
 
     async def call_model(self, request: TurnRequest) -> ModelCallOutcome: ...
 
-    async def attach_model_call(self, agent_run_id: str,
-                                gateway_request_id: str) -> str | None: ...
+    async def attach_model_call(self, agent_run_id: str, gateway_request_id: str) -> str | None: ...
 
-    async def create_tool_request(self, tool_request_id: str, agent_run_id: str, name: str,
-                                  arguments: dict[str, Any]) -> None: ...
+    async def create_tool_request(
+        self, tool_request_id: str, agent_run_id: str, name: str, arguments: dict[str, Any]
+    ) -> None: ...
 
-    async def wait_for_tool(self, tool_request_id: str,
-                            timeout_seconds: int) -> ToolResult | None:
+    async def wait_for_tool(self, tool_request_id: str, timeout_seconds: int) -> ToolResult | None:
         """Wait for the answer, or return ``None`` when the wait times out."""
+
+    async def quality_gate(self) -> dict[str, Any] | None:
+        """Return bounded quality data for a snapshot-backed run, or None when not applicable."""
 
     def cancelled(self) -> bool:
         """Whether a cancellation has been requested. Read, never awaited: the loop checks it
@@ -152,9 +154,15 @@ class AgentRunEngine:
         stage: StagePlan | None = None
         try:
             await self.effects.set_state(str(RunState.RUNNING), started=True)
-            await self._event("RUN_STARTED", "run-started", payload={
-                "team": self.plan.team, "teamVersion": self.plan.team_version,
-                "stages": len(self.plan.stages)})
+            await self._event(
+                "RUN_STARTED",
+                "run-started",
+                payload={
+                    "team": self.plan.team,
+                    "teamVersion": self.plan.team_version,
+                    "stages": len(self.plan.stages),
+                },
+            )
 
             for stage in self.plan.stages:
                 self._guard_cancellation(stage.name)
@@ -162,61 +170,114 @@ class AgentRunEngine:
                 artifacts[stage.output_name] = output
                 self._stages_done += 1
 
-            final = artifacts.get(
-                self.plan.stages[-1].output_name if self.plan.stages else "", "")
+            final = artifacts.get(self.plan.stages[-1].output_name if self.plan.stages else "", "")
+            quality = await self.effects.quality_gate()
+            if quality is not None:
+                quality_data = dict(quality.get("data") or quality)
+                await self._event(
+                    "RUN_NOTE",
+                    "quality-verdict",
+                    payload={
+                        "kind": "QUALITY_RESULT",
+                        "qualityRunId": str(quality_data.get("runId") or ""),
+                        "verdict": str(quality_data.get("verdict") or "FAIL"),
+                        "findingsCount": int(quality_data.get("findingsCount") or 0),
+                        "evidenceCount": int(quality_data.get("evidenceCount") or 0),
+                    },
+                )
+                if quality_data.get("verdict") != "PASS":
+                    raise AgentRuntimeError(
+                        AgentRuntimeErrorType.QUALITY_GATE_FAILED,
+                        "the derived quality verdict is FAIL",
+                        details={"qualityRunId": quality_data.get("runId"), "verdict": "FAIL"},
+                    )
             outcome = self._outcome(str(RunState.SUCCEEDED), result=final)
             # The terminal event is written before the terminal state, never after. They are two
             # commits, and whoever reads between them sees one of the two without the other; the
             # only safe half to see first is the event. A reader that waits for a terminal state
             # and then reads the log — the live smoke, the SSE stream opened on a finished run —
             # otherwise finds a SUCCEEDED run whose log never says so. G2-F-010.
-            await self._event("RUN_COMPLETED", "run-completed", payload={
-                "agentsExecuted": outcome.stages_executed, "turns": outcome.turns,
-                "modelCalls": outcome.model_calls})
+            await self._event(
+                "RUN_COMPLETED",
+                "run-completed",
+                payload={
+                    "agentsExecuted": outcome.stages_executed,
+                    "turns": outcome.turns,
+                    "modelCalls": outcome.model_calls,
+                },
+            )
             await self.effects.set_state(
-                str(RunState.SUCCEEDED), result=final,
+                str(RunState.SUCCEEDED),
+                result=final,
                 result_summary=_summarise(final),
-                budget_used=self.ledger.to_dict(), finished=True)
+                budget_used=self.ledger.to_dict(),
+                finished=True,
+            )
             return outcome
 
         except RunCancelledError as cancelled:
             return await self._terminate(
-                str(RunState.CANCELLED), cancelled, "RUN_CANCELLED", "run-cancelled",
-                stage.name if stage else None)
+                str(RunState.CANCELLED),
+                cancelled,
+                "RUN_CANCELLED",
+                "run-cancelled",
+                stage.name if stage else None,
+            )
         except AgentRuntimeError as error:
             return await self._terminate(
-                str(RunState.FAILED), error, "RUN_FAILED", "run-failed",
-                error.stage or (stage.name if stage else None))
+                str(RunState.FAILED),
+                error,
+                "RUN_FAILED",
+                "run-failed",
+                error.stage or (stage.name if stage else None),
+            )
 
-    async def _terminate(self, state: str, error: AgentRuntimeError, event: str, key: str,
-                         stage_name: str | None) -> RunOutcome:
+    async def _terminate(
+        self, state: str, error: AgentRuntimeError, event: str, key: str, stage_name: str | None
+    ) -> RunOutcome:
         outcome = self._outcome(state, error=error, failed_stage=stage_name)
         # Event first, then state, for the reason the success path gives. G2-F-010.
-        await self._event(event, key, stage=stage_name, payload={
-            "errorType": str(error.error_type), "message": error.message})
+        await self._event(
+            event,
+            key,
+            stage=stage_name,
+            payload={"errorType": str(error.error_type), "message": error.message},
+        )
         await self.effects.set_state(
-            state, error_type=str(error.error_type), error_summary=error.message,
-            failed_stage=stage_name, budget_used=self.ledger.to_dict(), finished=True)
+            state,
+            error_type=str(error.error_type),
+            error_summary=error.message,
+            failed_stage=stage_name,
+            budget_used=self.ledger.to_dict(),
+            finished=True,
+        )
         return outcome
 
     # -- one stage -------------------------------------------------------------------------------
 
     async def _run_stage(self, stage: StagePlan, artifacts: dict[str, str]) -> str:
         agent_run_id = await self.effects.start_stage(stage)
-        await self._event("AGENT_STARTED", f"agent-started-{stage.index}", stage=stage.name,
-                          agent_run_id=agent_run_id, payload={
-                              "agent": stage.agent, "profileVersion": stage.profile_version,
-                              "promptTemplateVersion": stage.prompt_template_version,
-                              "promptTemplateHash": stage.prompt_template_hash,
-                              "stageIndex": stage.index})
+        await self._event(
+            "AGENT_STARTED",
+            f"agent-started-{stage.index}",
+            stage=stage.name,
+            agent_run_id=agent_run_id,
+            payload={
+                "agent": stage.agent,
+                "profileVersion": stage.profile_version,
+                "promptTemplateVersion": stage.prompt_template_version,
+                "promptTemplateHash": stage.prompt_template_hash,
+                "stageIndex": stage.index,
+            },
+        )
 
         stage_turns = 0
         stage_calls = 0
         tool_results: list[tuple[str, str]] = []
         transcript: list[tuple[str, str]] = []
         selected = tuple(
-            (name, artifacts[name]) for name in stage.inputs
-            if name != "task" and name in artifacts)
+            (name, artifacts[name]) for name in stage.inputs if name != "task" and name in artifacts
+        )
 
         try:
             while True:
@@ -226,7 +287,8 @@ class AgentRunEngine:
                         AgentRuntimeErrorType.BUDGET_EXCEEDED,
                         f"stage {stage.name!r} reached its limit of {stage.max_turns} turns",
                         stage=stage.name,
-                        details={"limit": "stageMaxTurns", "value": stage.max_turns})
+                        details={"limit": "stageMaxTurns", "value": stage.max_turns},
+                    )
                 self.ledger.start_turn(stage=stage.name)
                 stage_turns += 1
 
@@ -263,33 +325,51 @@ class AgentRunEngine:
                     transcript.append((stage.agent, envelope.content))
                     continue
 
-                enforce_size(envelope.content, self.limits.max_agent_output_bytes,
-                             what=f"the output of stage {stage.name!r}")
-                await self.effects.finish_stage(agent_run_id, StageCompletion(
-                    state=str(RunState.SUCCEEDED),
-                    output=envelope.content,
-                    output_summary=envelope.summary or _summarise(envelope.content),
-                    turns=stage_turns,
-                    model_calls=stage_calls,
-                ))
-                await self._event("AGENT_COMPLETED", f"agent-completed-{stage.index}",
-                                  stage=stage.name, agent_run_id=agent_run_id, payload={
-                                      "agent": stage.agent, "turns": stage_turns,
-                                      "modelCalls": stage_calls,
-                                      "outputName": stage.output_name,
-                                      "summary": envelope.summary or _summarise(
-                                          envelope.content)})
+                enforce_size(
+                    envelope.content,
+                    self.limits.max_agent_output_bytes,
+                    what=f"the output of stage {stage.name!r}",
+                )
+                await self.effects.finish_stage(
+                    agent_run_id,
+                    StageCompletion(
+                        state=str(RunState.SUCCEEDED),
+                        output=envelope.content,
+                        output_summary=envelope.summary or _summarise(envelope.content),
+                        turns=stage_turns,
+                        model_calls=stage_calls,
+                    ),
+                )
+                await self._event(
+                    "AGENT_COMPLETED",
+                    f"agent-completed-{stage.index}",
+                    stage=stage.name,
+                    agent_run_id=agent_run_id,
+                    payload={
+                        "agent": stage.agent,
+                        "turns": stage_turns,
+                        "modelCalls": stage_calls,
+                        "outputName": stage.output_name,
+                        "summary": envelope.summary or _summarise(envelope.content),
+                    },
+                )
                 return envelope.content
 
         except AgentRuntimeError as error:
-            await self.effects.finish_stage(agent_run_id, StageCompletion(
-                state=str(RunState.CANCELLED if isinstance(error, RunCancelledError)
-                          else RunState.FAILED),
-                turns=stage_turns,
-                model_calls=stage_calls,
-                error_type=str(error.error_type),
-                error_summary=error.message,
-            ))
+            await self.effects.finish_stage(
+                agent_run_id,
+                StageCompletion(
+                    state=str(
+                        RunState.CANCELLED
+                        if isinstance(error, RunCancelledError)
+                        else RunState.FAILED
+                    ),
+                    turns=stage_turns,
+                    model_calls=stage_calls,
+                    error_type=str(error.error_type),
+                    error_summary=error.message,
+                ),
+            )
             raise replace_stage(error, stage.name) from None
 
     # -- one turn --------------------------------------------------------------------------------
@@ -301,14 +381,22 @@ class AgentRunEngine:
         try:
             return parse_envelope(outcome.text), calls
         except InvalidAgentOutputError as first:
-            await self._event("RUN_NOTE", f"repair-{stage.index}-{request.turn}",
-                              stage=stage.name, agent_run_id=agent_run_id, payload={
-                                  "note": "invalid agent output; one repair attempt follows",
-                                  "reason": first.message, "repairAttempt": True})
+            await self._event(
+                "RUN_NOTE",
+                f"repair-{stage.index}-{request.turn}",
+                stage=stage.name,
+                agent_run_id=agent_run_id,
+                payload={
+                    "note": "invalid agent output; one repair attempt follows",
+                    "reason": first.message,
+                    "repairAttempt": True,
+                },
+            )
             repair = replace(
                 request,
-                instructions=request.instructions + "\n\n" + repair_instruction(
-                    first.message, tool_names=request.allowed_actions),
+                instructions=request.instructions
+                + "\n\n"
+                + repair_instruction(first.message, tool_names=request.allowed_actions),
                 repair_of=f"{stage.index}:{request.turn}",
                 structured_output=request.structured_output,
             )
@@ -320,29 +408,49 @@ class AgentRunEngine:
                     AgentRuntimeErrorType.INVALID_AGENT_OUTPUT,
                     f"the agent answered with an invalid envelope twice: {second.message}",
                     stage=stage.name,
-                    details={"repairAttempted": True}) from None
+                    details={"repairAttempted": True},
+                ) from None
 
-    async def _call(self, stage: StagePlan, agent_run_id: str, request: TurnRequest,
-                    calls: list[ModelCallOutcome], *, repair: bool = False) -> ModelCallOutcome:
+    async def _call(
+        self,
+        stage: StagePlan,
+        agent_run_id: str,
+        request: TurnRequest,
+        calls: list[ModelCallOutcome],
+        *,
+        repair: bool = False,
+    ) -> ModelCallOutcome:
         self._guard_cancellation(stage.name)
         # Charged before the call, so a run can never make the call it cannot afford. The repair
         # counts exactly like any other call: hiding it outside the budget would make one turn cost
         # two without the budget noticing.
         self.ledger.start_model_call(stage=stage.name, repair=repair)
-        await self._event("MODEL_CALL_STARTED", f"call-{stage.index}-{request.turn}-{len(calls)}",
-                          stage=stage.name, agent_run_id=agent_run_id, payload={
-                              "turn": request.turn, "repairAttempt": repair,
-                              "route": request.route, "model": request.model})
+        await self._event(
+            "MODEL_CALL_STARTED",
+            f"call-{stage.index}-{request.turn}-{len(calls)}",
+            stage=stage.name,
+            agent_run_id=agent_run_id,
+            payload={
+                "turn": request.turn,
+                "repairAttempt": repair,
+                "route": request.route,
+                "model": request.model,
+            },
+        )
         outcome = await self.effects.call_model(request)
         model_call_id = await self.effects.attach_model_call(
-            agent_run_id, outcome.gateway_request_id)
+            agent_run_id, outcome.gateway_request_id
+        )
         outcome = replace(outcome, model_call_id=model_call_id)
         calls.append(outcome)
         self.ledger.record_usage(outcome.total_tokens, stage=stage.name)
-        await self._event("MODEL_CALL_COMPLETED",
-                          f"call-done-{stage.index}-{request.turn}-{len(calls)}",
-                          stage=stage.name, agent_run_id=agent_run_id,
-                          payload={k: v for k, v in outcome.to_dict().items() if k != "text"})
+        await self._event(
+            "MODEL_CALL_COMPLETED",
+            f"call-done-{stage.index}-{request.turn}-{len(calls)}",
+            stage=stage.name,
+            agent_run_id=agent_run_id,
+            payload={k: v for k, v in outcome.to_dict().items() if k != "text"},
+        )
         return outcome
 
     # -- the tool pause ---------------------------------------------------------------------------
@@ -358,23 +466,35 @@ class AgentRunEngine:
                 AgentRuntimeErrorType.TOOL_NOT_PERMITTED,
                 f"agent {stage.agent!r} requested {tool.name!r}, which its profile does not permit",
                 stage=stage.name,
-                details={"requested": tool.name,
-                         "permitted": list(stage.allowed_actions)})
-        enforce_size(tool.arguments, self.limits.max_tool_arguments_bytes,
-                     what=f"the arguments of tool {tool.name!r}")
+                details={"requested": tool.name, "permitted": list(stage.allowed_actions)},
+            )
+        enforce_size(
+            tool.arguments,
+            self.limits.max_tool_arguments_bytes,
+            what=f"the arguments of tool {tool.name!r}",
+        )
 
         tool_request_id = await self.effects.new_id()
         await self.effects.create_tool_request(
-            tool_request_id, agent_run_id, tool.name, dict(tool.arguments))
+            tool_request_id, agent_run_id, tool.name, dict(tool.arguments)
+        )
         self._tools_requested += 1
-        await self._event("TOOL_REQUESTED", f"tool-requested-{tool_request_id}",
-                          stage=stage.name, agent_run_id=agent_run_id, payload={
-                              "toolRequestId": tool_request_id, "tool": tool.name,
-                              "argumentCount": len(tool.arguments)})
+        await self._event(
+            "TOOL_REQUESTED",
+            f"tool-requested-{tool_request_id}",
+            stage=stage.name,
+            agent_run_id=agent_run_id,
+            payload={
+                "toolRequestId": tool_request_id,
+                "tool": tool.name,
+                "argumentCount": len(tool.arguments),
+            },
+        )
         await self.effects.set_state(str(RunState.WAITING_FOR_TOOL), current_stage=stage.name)
 
         result = await self.effects.wait_for_tool(
-            tool_request_id, self.plan.budget.tool_wait_timeout_seconds)
+            tool_request_id, self.plan.budget.tool_wait_timeout_seconds
+        )
         if result is None:
             if self.effects.cancelled():
                 raise RunCancelledError(stage=stage.name)
@@ -383,16 +503,23 @@ class AgentRunEngine:
                 f"no result arrived for tool {tool.name!r} within "
                 f"{self.plan.budget.tool_wait_timeout_seconds}s",
                 stage=stage.name,
-                details={"toolRequestId": tool_request_id, "tool": tool.name})
+                details={"toolRequestId": tool_request_id, "tool": tool.name},
+            )
 
-        enforce_size(result.output, self.limits.max_tool_result_bytes,
-                     what=f"the result of tool {tool.name!r}")
+        enforce_size(
+            result.output,
+            self.limits.max_tool_result_bytes,
+            what=f"the result of tool {tool.name!r}",
+        )
         self._tools_resolved += 1
         await self.effects.set_state(str(RunState.RUNNING), current_stage=stage.name)
-        await self._event("TOOL_RESULT_RECEIVED", f"tool-result-{tool_request_id}",
-                          stage=stage.name, agent_run_id=agent_run_id, payload={
-                              "toolRequestId": tool_request_id, "tool": tool.name,
-                              "status": result.status})
+        await self._event(
+            "TOOL_RESULT_RECEIVED",
+            f"tool-result-{tool_request_id}",
+            stage=stage.name,
+            agent_run_id=agent_run_id,
+            payload={"toolRequestId": tool_request_id, "tool": tool.name, "status": result.status},
+        )
         return tool_request_id, _render_tool_result(result)
 
     # -- helpers ----------------------------------------------------------------------------------
@@ -401,21 +528,34 @@ class AgentRunEngine:
         if self.effects.cancelled():
             raise RunCancelledError(stage=stage_name)
 
-    async def _event(self, event_type: str, key: str, *, stage: str | None = None,
-                     agent_run_id: str | None = None,
-                     payload: dict[str, Any] | None = None) -> None:
-        await self.effects.record_event(RunEvent(
-            run_id=self.plan.run_id,
-            type=event_type,
-            dedupe_key=key,
-            stage=stage,
-            agent_run_id=agent_run_id,
-            payload=safe_payload(payload, self.limits),
-        ))
+    async def _event(
+        self,
+        event_type: str,
+        key: str,
+        *,
+        stage: str | None = None,
+        agent_run_id: str | None = None,
+        payload: dict[str, Any] | None = None,
+    ) -> None:
+        await self.effects.record_event(
+            RunEvent(
+                run_id=self.plan.run_id,
+                type=event_type,
+                dedupe_key=key,
+                stage=stage,
+                agent_run_id=agent_run_id,
+                payload=safe_payload(payload, self.limits),
+            )
+        )
 
-    def _outcome(self, state: str, *, result: str = "",
-                 error: AgentRuntimeError | None = None,
-                 failed_stage: str | None = None) -> RunOutcome:
+    def _outcome(
+        self,
+        state: str,
+        *,
+        result: str = "",
+        error: AgentRuntimeError | None = None,
+        failed_stage: str | None = None,
+    ) -> RunOutcome:
         return RunOutcome(
             state=state,
             result=result,

@@ -60,15 +60,22 @@ class TemporalGateway:
         client = await self.connect()
         await asyncio.wait_for(
             client.workflow_service.describe_namespace(
-                _describe_namespace_request(self._settings.temporal_namespace)),
+                _describe_namespace_request(self._settings.temporal_namespace)
+            ),
             timeout=self._settings.readiness_timeout_seconds,
         )
 
     # --- Gate 2: starting and steering an agent run -------------------------------------------
 
-    async def start_agent_run(self, *, workflow: str, workflow_id: str,
-                              payload: dict[str, Any], task_queue: str,
-                              execution_timeout_seconds: int) -> str:
+    async def start_agent_run(
+        self,
+        *,
+        workflow: str,
+        workflow_id: str,
+        payload: dict[str, Any],
+        task_queue: str,
+        execution_timeout_seconds: int,
+    ) -> str:
         """Start the durable run, or adopt the one already running under this identifier.
 
         The workflow identifier is derived from the run identifier, so starting the same run twice
@@ -88,8 +95,7 @@ class TemporalGateway:
         except WorkflowAlreadyStartedError:
             return workflow_id
 
-    async def signal_agent_run(self, *, workflow_id: str, signal: str,
-                               payload: Any = None) -> bool:
+    async def signal_agent_run(self, *, workflow_id: str, signal: str, payload: Any = None) -> bool:
         """Deliver a signal, answering whether there was a running workflow to receive it.
 
         ``False`` rather than an exception when the workflow has already finished: a tool result
@@ -106,6 +112,35 @@ class TemporalGateway:
             return True
         except RPCError:
             return False
+
+    async def start_quality_run(
+        self,
+        *,
+        workflow: str,
+        workflow_id: str,
+        payload: dict[str, Any],
+        task_queue: str,
+        execution_timeout_seconds: int,
+    ) -> str:
+        """Start or adopt the workflow whose identity is derived from the quality run."""
+        client = await self.connect()
+        try:
+            handle = await client.start_workflow(
+                workflow,
+                payload,
+                id=workflow_id,
+                task_queue=task_queue,
+                execution_timeout=timedelta(seconds=execution_timeout_seconds),
+            )
+            return handle.id
+        except WorkflowAlreadyStartedError:
+            return workflow_id
+
+    async def signal_quality_run(
+        self, *, workflow_id: str, signal: str, payload: Any = None
+    ) -> bool:
+        """Signal a quality workflow without exposing a generic workflow handle to the route."""
+        return await self.signal_agent_run(workflow_id=workflow_id, signal=signal, payload=payload)
 
     async def close(self) -> None:
         """Drop the cached client.

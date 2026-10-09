@@ -179,6 +179,12 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 | `LESSON-REQ-0058` | LESSON | `lesson:LSN-0059` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify a lesson exclusion must declare the scope it excludes |
 | `LESSON-REQ-0059` | LESSON | `lesson:LSN-0060` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify parent and child facts without an ORM relationship require an explicit flush boundary |
 | `LESSON-REQ-0060` | LESSON | `lesson:LSN-0061` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify cancellation completion must not bypass cleanup acknowledgement |
+| `LESSON-REQ-0061` | LESSON | `lesson:LSN-0062` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify provenance digests are a set even when their sources are distinct |
+| `LESSON-REQ-0062` | LESSON | `lesson:LSN-0063` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify an identity shared across services must satisfy the strictest persistence type and remain stable |
+| `LESSON-REQ-0063` | LESSON | `lesson:LSN-0064` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify a shared execution resource needs an explicit exclusive owner for every owning domain |
+| `LESSON-REQ-0064` | LESSON | `lesson:LSN-0065` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify a shared execution identifier must not be written into a foreign key owned by another domain |
+| `LESSON-REQ-0065` | LESSON | `lesson:LSN-0066` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify immutable content identity excludes observation time and the first observer |
+| `LESSON-REQ-0066` | LESSON | `lesson:LSN-0067` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify cancellation semantics must survive orchestration-library exception wrapping |
 
 ## Evidence
 
@@ -1990,6 +1996,72 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 
 - Source reference: LESSON-PREFLIGHT.json LESSON-REQ-0060
 - Description: Verify cancellation completion must not bypass cleanup acknowledgement
+- Implementation: _none_
+- Test: _none_
+- Negative test: _none_
+- Documentation: _none_
+- Validation: _none_
+- Guardrail: _none_
+
+### LESSON-REQ-0061 - lesson:LSN-0062
+
+- Source reference: LESSON-PREFLIGHT.json LESSON-REQ-0061
+- Description: Verify provenance digests are a set even when their sources are distinct
+- Implementation: _none_
+- Test: _none_
+- Negative test: _none_
+- Documentation: _none_
+- Validation: _none_
+- Guardrail: _none_
+
+### LESSON-REQ-0062 - lesson:LSN-0063
+
+- Source reference: LESSON-PREFLIGHT.json LESSON-REQ-0062
+- Description: Verify an identity shared across services must satisfy the strictest persistence type and remain stable
+- Implementation: _none_
+- Test: _none_
+- Negative test: _none_
+- Documentation: _none_
+- Validation: _none_
+- Guardrail: _none_
+
+### LESSON-REQ-0063 - lesson:LSN-0064
+
+- Source reference: LESSON-PREFLIGHT.json LESSON-REQ-0063
+- Description: Verify a shared execution resource needs an explicit exclusive owner for every owning domain
+- Implementation: _none_
+- Test: _none_
+- Negative test: _none_
+- Documentation: _none_
+- Validation: _none_
+- Guardrail: _none_
+
+### LESSON-REQ-0064 - lesson:LSN-0065
+
+- Source reference: LESSON-PREFLIGHT.json LESSON-REQ-0064
+- Description: Verify a shared execution identifier must not be written into a foreign key owned by another domain
+- Implementation: _none_
+- Test: _none_
+- Negative test: _none_
+- Documentation: _none_
+- Validation: _none_
+- Guardrail: _none_
+
+### LESSON-REQ-0065 - lesson:LSN-0066
+
+- Source reference: LESSON-PREFLIGHT.json LESSON-REQ-0065
+- Description: Verify immutable content identity excludes observation time and the first observer
+- Implementation: _none_
+- Test: _none_
+- Negative test: _none_
+- Documentation: _none_
+- Validation: _none_
+- Guardrail: _none_
+
+### LESSON-REQ-0066 - lesson:LSN-0067
+
+- Source reference: LESSON-PREFLIGHT.json LESSON-REQ-0066
+- Description: Verify cancellation semantics must survive orchestration-library exception wrapping
 - Implementation: _none_
 - Test: _none_
 - Negative test: _none_

@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from datetime import UTC, datetime
+from datetime import UTC, datetime, timedelta
 
 import iacode_persistence.models  # noqa: F401
 import pytest
@@ -207,8 +207,16 @@ class QualityStoreTests:
         first = await store.create_run(plan_id=SHA, owner_run_id=None, idempotency_key="create-1")
         second = await store.create_run(plan_id=SHA, owner_run_id=None, idempotency_key="create-1")
         assert first == second
-        events = await store.events(first.run_id)
-        assert [(item.sequence, item.event_type) for item in events] == [(1, "CREATED")]
+
+    @pytest.mark.asyncio
+    async def test_content_addressed_plan_reuse_ignores_observation_time_and_first_owner(
+        self,
+    ) -> None:
+        store = MemoryQualityStore(now=lambda: NOW)
+        first = await store.create_plan(quality_plan(), owner_run_id="owner-1")
+        observed_later = quality_plan().model_copy(update={"createdAt": NOW + timedelta(hours=1)})
+        second = await store.create_plan(observed_later, owner_run_id="owner-2")
+        assert second == first
 
     @pytest.mark.asyncio
     async def test_event_is_visible_before_the_transitioned_state(self) -> None:

@@ -25,6 +25,7 @@ from iacode_contracts.quality import (
     QUALITY_RUN_STATES,
     QUALITY_VERDICTS,
 )
+from iacode_contracts.sandbox import SANDBOX_ACTIVE_SESSION_STATES
 from sqlalchemy.dialects import postgresql
 
 revision: str = "0006_quality_engine"
@@ -143,6 +144,46 @@ def upgrade() -> None:
         "ix_quality_runs_reproduction_of_run_id", "quality_runs", ["reproduction_of_run_id"]
     )
     op.create_index("ix_quality_runs_state_created_at", "quality_runs", ["state", "created_at"])
+
+    # A sandbox session is owned by an agent task run or by a quality run, never both. Gate 3's
+    # schema could name only task runs; retaining that foreign key as the sole owner would force
+    # the Quality Engine to create a fake task merely to execute a check.
+    op.drop_index("uq_sandbox_sessions_one_active_per_run", table_name="sandbox_sessions")
+    op.alter_column("sandbox_sessions", "task_run_id", nullable=True)
+    op.add_column("sandbox_sessions", sa.Column("quality_run_id", sa.UUID(), nullable=True))
+    op.create_foreign_key(
+        op.f("fk_sandbox_sessions_quality_run_id_quality_runs"),
+        "sandbox_sessions",
+        "quality_runs",
+        ["quality_run_id"],
+        ["id"],
+        ondelete="CASCADE",
+    )
+    op.create_check_constraint(
+        "exactly_one_run_owner",
+        "sandbox_sessions",
+        "num_nonnulls(task_run_id, quality_run_id) = 1",
+    )
+    op.create_index(
+        "ix_sandbox_sessions_quality_run_id",
+        "sandbox_sessions",
+        ["quality_run_id"],
+    )
+    active_states = _vocabulary(SANDBOX_ACTIVE_SESSION_STATES)
+    op.create_index(
+        "uq_sandbox_sessions_one_active_per_run",
+        "sandbox_sessions",
+        ["task_run_id"],
+        unique=True,
+        postgresql_where=sa.text(f"task_run_id IS NOT NULL AND state IN {active_states}"),
+    )
+    op.create_index(
+        "uq_sandbox_sessions_one_active_per_quality_run",
+        "sandbox_sessions",
+        ["quality_run_id"],
+        unique=True,
+        postgresql_where=sa.text(f"quality_run_id IS NOT NULL AND state IN {active_states}"),
+    )
 
     op.create_table(
         "quality_results",
@@ -318,6 +359,32 @@ def downgrade() -> None:
     op.drop_index("ix_quality_results_sandbox_session_id", table_name="quality_results")
     op.drop_index("ix_quality_results_quality_run_id", table_name="quality_results")
     op.drop_table("quality_results")
+    op.drop_index(
+        "uq_sandbox_sessions_one_active_per_quality_run", table_name="sandbox_sessions"
+    )
+    op.drop_index("uq_sandbox_sessions_one_active_per_run", table_name="sandbox_sessions")
+    op.drop_index("ix_sandbox_sessions_quality_run_id", table_name="sandbox_sessions")
+    op.drop_constraint(
+        op.f("ck_sandbox_sessions_exactly_one_run_owner"),
+        "sandbox_sessions",
+        type_="check",
+    )
+    op.drop_constraint(
+        op.f("fk_sandbox_sessions_quality_run_id_quality_runs"),
+        "sandbox_sessions",
+        type_="foreignkey",
+    )
+    op.execute(sa.text("DELETE FROM sandbox_sessions WHERE quality_run_id IS NOT NULL"))
+    op.drop_column("sandbox_sessions", "quality_run_id")
+    op.alter_column("sandbox_sessions", "task_run_id", nullable=False)
+    active_states = _vocabulary(SANDBOX_ACTIVE_SESSION_STATES)
+    op.create_index(
+        "uq_sandbox_sessions_one_active_per_run",
+        "sandbox_sessions",
+        ["task_run_id"],
+        unique=True,
+        postgresql_where=sa.text(f"state IN {active_states}"),
+    )
     op.drop_index("ix_quality_runs_state_created_at", table_name="quality_runs")
     op.drop_index("ix_quality_runs_reproduction_of_run_id", table_name="quality_runs")
     op.drop_index("ix_quality_runs_owner_task_run_id", table_name="quality_runs")

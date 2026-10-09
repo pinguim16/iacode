@@ -2,18 +2,20 @@
 
 IACode is a planned private, autonomous, general-purpose software engineering platform. The repository is self-contained context and is the only source of truth.
 
-- Phase: `M1 — IACode V0 foundation`.
-- Current Gate: `GATE 3 — SANDBOX + TOOL EXECUTION`, the last Gate of `M1`, closing at
-  `INTERNAL_GATE_PASS`.
-- Previous Gates: `GATE 2 — AGENT RUNTIME`, `GATE 1 — MODEL GATEWAY` and
-  `GATE 0 — FOUNDATION`, all closed at `INTERNAL_GATE_PASS`; before them `SETUP-00`, closed,
-  with `M0` having passed its independent audit.
+- Phase: `M2 — IACode V0 completion and experience`.
+- Current Gate: `GATE 4 — QUALITY ENGINE`, the first Gate of `M2`. Its implementing run stops at
+  `READY_FOR_REVIEW`; only a later independent run may grant `GATE_PASS`.
+- Previous Gates: `GATE 3 — SANDBOX + TOOL EXECUTION`, `GATE 2 — AGENT RUNTIME`,
+  `GATE 1 — MODEL GATEWAY` and `GATE 0 — FOUNDATION`; before them `SETUP-00`.
 - Latest checkpoint: follow [docs/checkpoints/LATEST.md](docs/checkpoints/LATEST.md).
-- `M1` is `READY_FOR_MILESTONE_AUDIT` once this Gate closes. Its verdict belongs to a
-  fresh-session milestone audit, never to this Gate; `GATE 4` does not begin before it.
+- `M1` passed its independent milestone audit. Gate 4 begins M2 without changing that sealed
+  verdict.
 - **A tool an agent asks for runs only inside a sandbox**: a disposable container that belongs to
   the run, with no network, no host path, no engine socket and no credential. Nothing an agent
   asks for runs on the host, in the API, in the worker or in the sandbox service's own process.
+- **A quality verdict is derived, never submitted**: a frozen plan selects closed runners, every
+  command executes in a stack-specific sandbox, evidence is re-hashed before use and any missing,
+  denied, failed, cancelled or timed-out mandatory result makes the verdict FAIL.
 - The development history is public at `pinguim16/iacode`: atomic commits, pushed while green,
   never rewritten once pushed, with every push preceded by a secret scan of what it carries.
 
@@ -22,6 +24,8 @@ to configure and operate a model provider, read
 [docs/runbooks/MODEL-GATEWAY.md](docs/runbooks/MODEL-GATEWAY.md); to run and follow an
 agent, read [docs/runbooks/AGENT-RUNTIME.md](docs/runbooks/AGENT-RUNTIME.md); to see how its
 tools execute and what bounds them, read [docs/runbooks/SANDBOX.md](docs/runbooks/SANDBOX.md);
+to run and troubleshoot project validation, read
+[docs/runbooks/QUALITY-ENGINE.md](docs/runbooks/QUALITY-ENGINE.md);
 to work on it, read [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md). Neither replaces the start protocol
 below for anyone about to change the repository.
 
@@ -29,7 +33,8 @@ below for anyone about to change the repository.
 
 1. Read [docs/DEVELOPMENT-CONTRACT.md](docs/DEVELOPMENT-CONTRACT.md).
 2. Read [docs/MASTER-PLAN.md](docs/MASTER-PLAN.md) and the canonical specification of the current
-   Gate: [docs/GATE-3-CHECKLIST.md](docs/GATE-3-CHECKLIST.md) now,
+   Gate: [docs/GATE-4-CHECKLIST.md](docs/GATE-4-CHECKLIST.md) now,
+   [docs/GATE-3-CHECKLIST.md](docs/GATE-3-CHECKLIST.md),
    [docs/GATE-2-CHECKLIST.md](docs/GATE-2-CHECKLIST.md),
    [docs/GATE-1-CHECKLIST.md](docs/GATE-1-CHECKLIST.md),
    [docs/GATE-0-CHECKLIST.md](docs/GATE-0-CHECKLIST.md) and

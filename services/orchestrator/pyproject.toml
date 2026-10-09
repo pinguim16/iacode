@@ -9,6 +9,7 @@ description = "The IACode Temporal worker: durable execution of agent runs."
 requires-python = ">=3.12"
 dependencies = [
   "iacode-agent-runtime==0.1.0",
+  "iacode-evaluator==0.1.0",
   "iacode-common==0.1.0",
   "iacode-persistence==0.1.0",
   "iacode-telemetry==0.1.0",

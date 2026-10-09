@@ -296,9 +296,48 @@ evolved `tool_calls`, keyed by the tool request it answers, so a retried request
 with the engine's socket; the four scenarios and the internal Red Team drive real containers. A
 double is used only for the service's decisions, never for a claim about isolation.
 
+## The Quality Engine
+
+The Quality Engine turns an authorised immutable project snapshot into a reproducible verdict. The
+API accepts a snapshot, canonical policy name and narrowing configuration; it never accepts a
+command, runner implementation, image, evidence, result or verdict.
+
+```text
+  API create/reproduce/cancel/read
+             |
+             v
+  QualityRunWorkflow (Temporal, queue iacode-quality)
+       | profile + frozen content-addressed plan
+       | one structured activity per applicable check
+       v
+  SandboxService (queue iacode-sandbox) -> stack-specific content-addressed container
+       |
+       v
+  immutable result + finding + MinIO evidence reference -> pure derived verdict
+```
+
+Detection reads bounded manifests without executing project code. An exact Python, Node,
+TypeScript, Angular, Maven or Gradle profile selects a closed runner set from
+`.iacode/policies/quality-policy.json`; ambiguity is unsupported, never guessed. The plan freezes
+snapshot and policy digests, ordered checks, commands, images and limits before execution —
+[ADR-0031](adr/ADR-0031-project-profiles-select-closed-quality-runners.md).
+
+Only `services/sandbox` holds the engine socket. `services/evaluator` has no host project mount,
+credential or container-engine access and receives bounded normalized execution results. Plans,
+results, findings, evidence references, verdicts and events are immutable database facts; complete
+output is a redacted, content-addressed artifact that is downloaded and re-hashed before it can
+support a verdict — [ADR-0029](adr/ADR-0029-quality-execution-boundary.md) and
+[ADR-0030](adr/ADR-0030-quality-evidence-and-verdict-immutability.md).
+
+PASS requires the exact applicable mandatory result set, every status PASSED and all required
+evidence resolved. Failure, denial, timeout, cancellation, execution error, a missing result or
+stale input is FAIL. Reproduction creates a new run against the original frozen plan; restart and
+cancellation recovery belong to the durable workflow, and terminal state is recorded only after
+sandbox cleanup.
+
 ## Planned runtime boundaries
 
-Later Gates establish, in order, a quality engine and VS Code integration. Later releases add experience, knowledge, code graph, project memory, gap
+The next Gate establishes VS Code integration. Later releases add experience, knowledge, code graph, project memory, gap
 detection, research, skills, dataset production, model training, evaluation, shadow mode, promotion
 and autonomous learning.
 

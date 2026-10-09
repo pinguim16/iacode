@@ -919,6 +919,85 @@
         "LSN-0061"
       ],
       "removingItWouldAllow": "A running task to claim cancellation completed before its executor has entered and acknowledged the cleanup phase."
+    },
+    {
+      "guardrailId": "GRD-0063",
+      "title": "Evidence provenance deduplicates equal content digests",
+      "kind": "test",
+      "reference": "test_a_sandbox_answer_becomes_redacted_immutable_evidence",
+      "verifiedBy": [
+        "test_a_sandbox_answer_becomes_redacted_immutable_evidence"
+      ],
+      "lessons": [
+        "LSN-0062"
+      ],
+      "removingItWouldAllow": "Distinct source roles carrying identical bytes to produce an invalid duplicate sourceDigests tuple and abort evidence persistence."
+    },
+    {
+      "guardrailId": "GRD-0064",
+      "title": "Cross-service quality execution identities are stable UUIDs",
+      "kind": "test",
+      "reference": "test_quality_tool_identity_is_a_stable_uuid",
+      "verifiedBy": [
+        "test_quality_tool_identity_is_a_stable_uuid"
+      ],
+      "lessons": [
+        "LSN-0063"
+      ],
+      "removingItWouldAllow": "A semantically valid quality check identity to be rejected by the sandbox's UUID persistence boundary, or to change across a retry."
+    },
+    {
+      "guardrailId": "GRD-0065",
+      "title": "Every sandbox session has exactly one real run owner",
+      "kind": "test",
+      "reference": "test_a_sandbox_session_has_exactly_one_run_owner_and_one_active_slot_per_owner",
+      "verifiedBy": [
+        "test_a_sandbox_session_has_exactly_one_run_owner_and_one_active_slot_per_owner",
+        "test_plan_run_results_verdict_and_events_round_trip"
+      ],
+      "lessons": [
+        "LSN-0064"
+      ],
+      "removingItWouldAllow": "An evaluator session to invent a task-run owner, have two owners, have none, or bypass the one-active-session invariant."
+    },
+    {
+      "guardrailId": "GRD-0066",
+      "title": "Evaluator requests never bind the agent-only active request foreign key",
+      "kind": "test",
+      "reference": "test_only_agent_requests_bind_the_agent_tool_request_foreign_key",
+      "verifiedBy": [
+        "test_only_agent_requests_bind_the_agent_tool_request_foreign_key"
+      ],
+      "lessons": [
+        "LSN-0065"
+      ],
+      "removingItWouldAllow": "A quality request to be rejected because its stable execution identity has no unrelated agent tool_requests row."
+    },
+    {
+      "guardrailId": "GRD-0067",
+      "title": "Plan reuse compares immutable material rather than observation metadata",
+      "kind": "test",
+      "reference": "test_content_addressed_plan_reuse_ignores_observation_time_and_first_owner",
+      "verifiedBy": [
+        "test_content_addressed_plan_reuse_ignores_observation_time_and_first_owner"
+      ],
+      "lessons": [
+        "LSN-0066"
+      ],
+      "removingItWouldAllow": "The same snapshot and policy to conflict with their own frozen plan merely because another request observed them later or under another owner."
+    },
+    {
+      "guardrailId": "GRD-0068",
+      "title": "Acknowledged activity cancellation remains cancellation through Temporal wrapping",
+      "kind": "test",
+      "reference": "test_an_acknowledged_activity_cancellation_stays_a_cancellation",
+      "verifiedBy": [
+        "test_an_acknowledged_activity_cancellation_stays_a_cancellation"
+      ],
+      "lessons": [
+        "LSN-0067"
+      ],
+      "removingItWouldAllow": "A cleanup-acknowledged cancellation to be persisted as an evaluator error merely because Temporal delivered it through ActivityError."
     }
   ]
 }

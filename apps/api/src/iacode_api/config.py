@@ -48,23 +48,27 @@ class Settings(BaseSettings):
     version: str = Field(default="0.1.0", min_length=1)
     commit: str = Field(
         default="unknown",
-        description="Git commit the image was built from; 'unknown' outside a built image.")
+        description="Git commit the image was built from; 'unknown' outside a built image.",
+    )
     build_timestamp: str | None = Field(
-        default=None, description="RFC 3339 instant the image was built.")
+        default=None, description="RFC 3339 instant the image was built."
+    )
 
     # --- http ---------------------------------------------------------------------------------
     host: str = "0.0.0.0"
     port: Annotated[int, Field(ge=1, le=65535)] = 8000
     root_path: str = Field(
         default="",
-        description="Prefix the API is served under when it sits behind a reverse proxy.")
+        description="Prefix the API is served under when it sits behind a reverse proxy.",
+    )
     # ``NoDecode`` is load-bearing. Without it pydantic-settings sees a list-typed field and tries
     # to JSON-decode the environment variable before any validator runs, so the natural value —
     # ``http://a,http://b`` — fails to parse and the process dies at start-up with a message about
     # JSON. The splitting is done by the validator below instead.
     cors_allow_origins: Annotated[list[str], NoDecode] = Field(
         default_factory=list,
-        description="Exact origins allowed to call the API. A wildcard is rejected.")
+        description="Exact origins allowed to call the API. A wildcard is rejected.",
+    )
     correlation_header: str = Field(default="X-Correlation-ID", min_length=1)
 
     # --- logging ------------------------------------------------------------------------------
@@ -73,7 +77,8 @@ class Settings(BaseSettings):
     # --- postgresql ---------------------------------------------------------------------------
     database_url: str = Field(
         default="postgresql+asyncpg://iacode:iacode@localhost:5432/iacode",
-        description="SQLAlchemy async URL of the system of record.")
+        description="SQLAlchemy async URL of the system of record.",
+    )
     database_pool_size: Annotated[int, Field(ge=1, le=100)] = 5
     database_max_overflow: Annotated[int, Field(ge=0, le=100)] = 5
     database_connect_timeout_seconds: Annotated[float, Field(gt=0, le=60)] = 5.0
@@ -84,7 +89,8 @@ class Settings(BaseSettings):
     # --- object storage -----------------------------------------------------------------------
     minio_endpoint: str = Field(
         default="localhost:9000",
-        description="Host and port only; the scheme is decided by minio_secure.")
+        description="Host and port only; the scheme is decided by minio_secure.",
+    )
     minio_access_key: SecretStr = SecretStr("")
     minio_secret_key: SecretStr = SecretStr("")
     minio_secure: bool = False
@@ -116,16 +122,19 @@ class Settings(BaseSettings):
     gateway_policy_dir: str = Field(
         default=".iacode/policies",
         description="Directory holding providers.json and model-routes.json. The image carries a "
-                    "copy, so this is an absolute path inside the container and a repository-"
-                    "relative one on a developer's machine.")
+        "copy, so this is an absolute path inside the container and a repository-"
+        "relative one on a developer's machine.",
+    )
     gateway_default_model: str | None = Field(
         default=None,
         description="'provider:model' used when a request names neither a model nor a route. "
-                    "Without it such a request fails, which is deliberate: choosing one silently "
-                    "would spend tokens on a model nobody authorised.")
+        "Without it such a request fails, which is deliberate: choosing one silently "
+        "would spend tokens on a model nobody authorised.",
+    )
     gateway_smoke_model: str | None = Field(
         default=None,
-        description="'provider:model' the live smoke check is authorised to spend tokens on.")
+        description="'provider:model' the live smoke check is authorised to spend tokens on.",
+    )
     gateway_connect_timeout_seconds: Annotated[float, Field(gt=0, le=120)] = 5.0
     gateway_read_timeout_seconds: Annotated[float, Field(gt=0, le=900)] = 120.0
     gateway_max_attempts: Annotated[int, Field(ge=1, le=10)] = 3
@@ -144,7 +153,8 @@ class Settings(BaseSettings):
     gateway_persist_prompts: bool = Field(
         default=False,
         description="Opt-in debug capture of request content. False in every shipped "
-                    "configuration; turning it on is a rights decision, not a convenience.")
+        "configuration; turning it on is a rights decision, not a convenience.",
+    )
 
     # --- agent runtime ---------------------------------------------------------------------------
     # What the API needs to create a run: where the declared agents live, which task queue the
@@ -154,18 +164,29 @@ class Settings(BaseSettings):
     repository_root: str = Field(
         default=".",
         description="Where agents/ lives in this process. '.' resolves to the image's working "
-                    "directory, which carries the declared profiles, and to the repository root "
-                    "on a developer's machine.")
+        "directory, which carries the declared profiles, and to the repository root "
+        "on a developer's machine.",
+    )
     agent_runtime_task_queue: str = Field(
-        default="iacode-agent-runtime", min_length=1,
+        default="iacode-agent-runtime",
+        min_length=1,
         description="The Temporal task queue agent runs are started on. A queue of its own, so a "
-                    "run paused on a tool cannot starve the Foundation smoke workflow.")
+        "run paused on a tool cannot starve the Foundation smoke workflow.",
+    )
     agent_runtime_max_turns: Annotated[int, Field(ge=1, le=100)] = 8
     agent_runtime_max_model_calls: Annotated[int, Field(ge=1, le=200)] = 12
     agent_runtime_max_duration_seconds: Annotated[int, Field(ge=1, le=86400)] = 900
     agent_runtime_tool_wait_timeout_seconds: Annotated[int, Field(ge=1, le=86400)] = 3600
     agent_runtime_max_task_bytes: Annotated[int, Field(ge=256, le=4_194_304)] = 65_536
     agent_runtime_event_stream_poll_seconds: Annotated[float, Field(gt=0, le=10)] = 0.5
+
+    # --- quality engine ----------------------------------------------------------------------
+    quality_task_queue: str = Field(
+        default="iacode-quality",
+        min_length=1,
+        description="Temporal queue for durable quality workflows and persistence activities.",
+    )
+    quality_event_stream_poll_seconds: Annotated[float, Field(gt=0, le=10)] = 0.5
 
     @field_validator("cors_allow_origins", mode="before")
     @classmethod
@@ -186,7 +207,8 @@ class Settings(BaseSettings):
         """
         if any(origin.strip() == "*" for origin in value):
             raise ValueError(
-                "IACODE_CORS_ALLOW_ORIGINS may not contain '*'; list the exact origins")
+                "IACODE_CORS_ALLOW_ORIGINS may not contain '*'; list the exact origins"
+            )
         for origin in value:
             if not origin.startswith(("http://", "https://")):
                 raise ValueError(f"CORS origin must include a scheme: {origin!r}")
@@ -202,7 +224,8 @@ class Settings(BaseSettings):
         if not value.startswith("postgresql+asyncpg://"):
             raise ValueError(
                 "IACODE_DATABASE_URL must use the postgresql+asyncpg driver, found "
-                f"{value.split('://', 1)[0]!r}")
+                f"{value.split('://', 1)[0]!r}"
+            )
         return value
 
     @field_validator("redis_url")
@@ -222,7 +245,8 @@ class Settings(BaseSettings):
         """
         if "://" in value:
             raise ValueError(
-                "IACODE_MINIO_ENDPOINT is host:port without a scheme; use IACODE_MINIO_SECURE")
+                "IACODE_MINIO_ENDPOINT is host:port without a scheme; use IACODE_MINIO_SECURE"
+            )
         return value
 
     @property
@@ -311,11 +335,14 @@ def settings_for_tests(**overrides: object) -> Settings:
         "agent_runtime_tool_wait_timeout_seconds": 30,
         "agent_runtime_max_task_bytes": 8192,
         "agent_runtime_event_stream_poll_seconds": 0.05,
+        "quality_task_queue": "iacode-quality",
+        "quality_event_stream_poll_seconds": 0.05,
     }
     values.update(overrides)
     missing = set(Settings.model_fields) - set(values)
     if missing:
         raise AssertionError(
             "settings_for_tests must supply every field so no test reads the ambient environment; "
-            f"missing: {', '.join(sorted(missing))}")
+            f"missing: {', '.join(sorted(missing))}"
+        )
     return Settings(_env_file=None, **values)  # type: ignore[arg-type]

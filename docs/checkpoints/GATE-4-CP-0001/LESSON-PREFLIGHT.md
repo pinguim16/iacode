@@ -2,11 +2,11 @@
 
 - Gate: `GATE-4`
 - Scope: `quality engine, evaluation runners, immutable evidence store, verdict rules, false-PASS rejection, reproducible evidence, sandboxed execution, agent-runtime integration, promotion evidence`
-- Technologies: _none declared_
-- Modules: _none declared_
-- Generated: `2026-10-09T18:09:49Z`
-- Lessons considered: 61
-- Lessons applicable: 60
+- Technologies: `python`, `postgresql`, `minio`, `temporal`, `docker`
+- Modules: `services/evaluator`, `services/sandbox`, `services/orchestrator`, `services/agent-runtime`, `packages/persistence`, `apps/api`, `apps/web`
+- Generated: `2026-10-09T19:29:29Z`
+- Lessons considered: 67
+- Lessons applicable: 66
 
 Every applicable lesson below is a requirement of this Gate. The derived identifiers must
 appear in `REQUIREMENTS-MATRIX.json`, and the Delivery Completeness Validator fails the
@@ -74,6 +74,12 @@ delivery when one is absent.
 | `LSN-0059` A lesson exclusion must declare the scope it excludes | `GUARDED` | MEDIUM | `LESSON-REQ-0058` | Confirm every active lesson excluded from a preflight declares a non-empty scope selector, and that incidental metadata does not narrow applicability. |
 | `LSN-0060` Parent and child facts without an ORM relationship require an explicit flush boundary | `GUARDED` | MEDIUM | `LESSON-REQ-0059` | Whenever one transaction inserts parent and child ORM facts using raw foreign-key identifiers without a relationship edge, confirm the parent is flushed before the child is added. |
 | `LSN-0061` Cancellation completion must not bypass cleanup acknowledgement | `GUARDED` | MEDIUM | `LESSON-REQ-0060` | For every running task that can be cancelled, prove the lifecycle records cancellation requested before it records cancellation completed. |
+| `LSN-0062` Provenance digests are a set even when their sources are distinct | `GUARDED` | MEDIUM | `LESSON-REQ-0061` | Whenever provenance is represented by content digests, normalize it as a unique ordered set rather than assuming each semantic source has different bytes. |
+| `LSN-0063` An identity shared across services must satisfy the strictest persistence type and remain stable | `GUARDED` | HIGH | `LESSON-REQ-0062` | For every identity crossing a service boundary, verify it satisfies the strictest persisted representation and is stable across delivery retries. |
+| `LSN-0064` A shared execution resource needs an explicit exclusive owner for every owning domain | `GUARDED` | HIGH | `LESSON-REQ-0063` | When another durable domain reuses an owned resource, model its real ownership explicitly, require exactly one owner, and preserve every per-owner exclusivity invariant. |
+| `LSN-0065` A shared execution identifier must not be written into a foreign key owned by another domain | `GUARDED` | HIGH | `LESSON-REQ-0064` | For a shared execution contract, prove each durable foreign key is populated only for the domain that owns the referenced row, using trusted ownership context rather than identifier shape. |
+| `LSN-0066` Immutable content identity excludes observation time and the first observer | `GUARDED` | HIGH | `LESSON-REQ-0065` | For every content-addressed or reusable immutable record, define material identity separately from creation metadata and ownership provenance. |
+| `LSN-0067` Cancellation semantics must survive orchestration-library exception wrapping | `GUARDED` | HIGH | `LESSON-REQ-0066` | For cancellation across an orchestration boundary, test the exception shape the real library delivers and derive outcome from the durable request plus executor acknowledgement rather than the wrapper class alone. |
 
 ## Why each lesson applies
 
@@ -496,3 +502,45 @@ delivery when one is absent.
 - Required check: For every running task that can be cancelled, prove the lifecycle records cancellation requested before it records cancellation completed.
 - Required evidence: A lifecycle test that enters the intermediate cancelling state, acknowledges cleanup, reaches cancelled, and rejects late delivery.
 - Derived requirement: `LESSON-REQ-0060`
+
+### LSN-0062 — Provenance digests are a set even when their sources are distinct
+
+- Reason: applies to every Gate; category implementation; severity MEDIUM; already guarded, so the control must keep holding
+- Required check: Whenever provenance is represented by content digests, normalize it as a unique ordered set rather than assuming each semantic source has different bytes.
+- Required evidence: A test in which distinct provenance roles share one digest and the stored provenance contains it once.
+- Derived requirement: `LESSON-REQ-0061`
+
+### LSN-0063 — An identity shared across services must satisfy the strictest persistence type and remain stable
+
+- Reason: applies to every Gate; category architecture; severity HIGH; already guarded, so the control must keep holding
+- Required check: For every identity crossing a service boundary, verify it satisfies the strictest persisted representation and is stable across delivery retries.
+- Required evidence: A contract or unit test proving syntactic validity, deterministic replay identity and separation between distinct work items.
+- Derived requirement: `LESSON-REQ-0062`
+
+### LSN-0064 — A shared execution resource needs an explicit exclusive owner for every owning domain
+
+- Reason: applies to every Gate; category architecture; severity HIGH; already guarded, so the control must keep holding
+- Required check: When another durable domain reuses an owned resource, model its real ownership explicitly, require exactly one owner, and preserve every per-owner exclusivity invariant.
+- Required evidence: A structural test of the ownership and uniqueness constraints plus a real-database lifecycle test for the new owner.
+- Derived requirement: `LESSON-REQ-0063`
+
+### LSN-0065 — A shared execution identifier must not be written into a foreign key owned by another domain
+
+- Reason: applies to every Gate; category implementation; severity HIGH; already guarded, so the control must keep holding
+- Required check: For a shared execution contract, prove each durable foreign key is populated only for the domain that owns the referenced row, using trusted ownership context rather than identifier shape.
+- Required evidence: A test with both owner domains showing that only the owning domain binds the foreign key.
+- Derived requirement: `LESSON-REQ-0064`
+
+### LSN-0066 — Immutable content identity excludes observation time and the first observer
+
+- Reason: applies to every Gate; category architecture; severity HIGH; already guarded, so the control must keep holding
+- Required check: For every content-addressed or reusable immutable record, define material identity separately from creation metadata and ownership provenance.
+- Required evidence: A replay test where material inputs are equal but time and first observer differ, proving reuse without rewriting the original record.
+- Derived requirement: `LESSON-REQ-0065`
+
+### LSN-0067 — Cancellation semantics must survive orchestration-library exception wrapping
+
+- Reason: applies to every Gate; category implementation; severity HIGH; already guarded, so the control must keep holding
+- Required check: For cancellation across an orchestration boundary, test the exception shape the real library delivers and derive outcome from the durable request plus executor acknowledgement rather than the wrapper class alone.
+- Required evidence: A workflow test for the wrapped cancellation and a live running-cancellation scenario proving cleanup, terminal cancellation and idempotent repeat.
+- Derived requirement: `LESSON-REQ-0066`

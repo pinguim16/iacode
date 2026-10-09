@@ -9,8 +9,8 @@
       "expectedBehavior": "The Gate starts from a fixed, independently derived denominator and a truthful baseline.",
       "implementation": ["docs/GATE-4-CHECKLIST.md", ".iacode/policies/canonical-requirements.json", "LESSON-PREFLIGHT.json", "REQUIREMENTS-MATRIX.json", "BASELINE.md", "PLAN.md"],
       "tests": ["canonical requirement parser", "lesson preflight", "requirement derivation", "control-plane baseline"],
-      "functionalProof": "The original derivation reported 105 canonical plus 58 lesson requirements; two recorded implementation failures added LSN-0060 and LSN-0061, so the current fixed denominator is 105 canonical plus 60 lesson requirements.",
-      "evidence": ["cmd-0002", "cmd-0003", "cmd-0005", "cmd-0006", "cmd-0008"],
+      "functionalProof": "The original derivation reported 105 canonical plus 58 lesson requirements; eight observed implementation failures added LSN-0060 through LSN-0067, while one earlier lesson remains explicitly out of scope, so the current fixed denominator is 105 canonical plus 66 lesson requirements.",
+      "evidence": ["cmd-0038", "cmd-0039", "cmd-0005", "cmd-0006", "cmd-0008"],
       "status": "COMPLETE"
     },
     {
@@ -87,13 +87,41 @@
       "stepId": "G4-S04",
       "requirements": ["GATE-4-12.1..14.4", "GATE-4-17.1..17.4"],
       "expectedBehavior": "Quality runs survive restarts, cancel and time out safely, and are exposed through stable bounded interfaces.",
-      "implementation": [], "tests": [], "functionalProof": null, "evidence": [], "status": "IN_PROGRESS"
+      "implementation": [
+        "services/evaluator/src/iacode_evaluator/activities.py",
+        "services/evaluator/src/iacode_evaluator/workflow.py",
+        "services/evaluator/src/iacode_evaluator/worker.py",
+        "apps/api/src/iacode_api/routes/quality.py",
+        "services/orchestrator/src/iacode_orchestrator/workflows/agent_run.py",
+        "services/agent-runtime/src/iacode_agent_runtime/engine.py",
+        "infra/prometheus/prometheus.yml"
+      ],
+      "tests": [
+        "services/evaluator/tests/test_workflow.py",
+        "apps/api/tests/unit/test_quality_api.py",
+        "services/agent-runtime/tests/test_engine.py",
+        "scripts/iacode/scenarios/quality_engine_e2e.py"
+      ],
+      "functionalProof": "The real API, Temporal evaluator worker, PostgreSQL, MinIO and Gate 3 sandbox completed PASS and FAIL runs; a worker restart preserved exactly-once results, running cancellation cleaned up and ended CANCELLED, and the deadline path ended TIMED_OUT with complete evidence and no active session.",
+      "evidence": ["cmd-0042", "file:var/gate4-quality-cancel.json", "file:var/gate4-quality-timeout.json", "file:var/gate4-quality-recovery.json"],
+      "status": "COMPLETE"
     },
     {
       "stepId": "G4-S05",
       "requirements": ["GATE-4-15.1..15.4", "GATE-4-18.1..18.3", "GATE-4-20.5"],
       "expectedBehavior": "Functional acceptance, resumable program state, and review bundles are permanent validated controls.",
-      "implementation": [], "tests": [], "functionalProof": null, "evidence": [], "status": "NOT_STARTED"
+      "implementation": [
+        ".iacode/schemas/functional-acceptance.schema.json",
+        ".iacode/schemas/program-state.schema.json",
+        "scripts/development-ledger/check_functional_acceptance.py",
+        "scripts/development-ledger/program_state.py",
+        "scripts/development-ledger/review_bundle.py",
+        "scripts/development-ledger/check_completeness.py"
+      ],
+      "tests": ["tests/test_gate4_quality_engine.py"],
+      "functionalProof": "Permanent controls derive the functional denominator from the canonical Gate, resolve every reference, reject missing or non-PASS evidence, derive resumable program state, and build deterministic secret-scanned review bundles; live checkpoint artifacts remain for closure.",
+      "evidence": ["cmd-0043"],
+      "status": "IN_PROGRESS"
     },
     {
       "stepId": "G4-S06",

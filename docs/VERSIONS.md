@@ -21,12 +21,15 @@ Nothing here is an alpha, a beta, a release candidate or a nightly.
 
 | Component | Version | Where it is pinned |
 |---|---|---|
-| Python (API, worker, tooling) | 3.13.15 | `apps/api/Dockerfile`, `services/orchestrator/Dockerfile` |
+| Python (API, worker, evaluator, tooling) | 3.13.15 | `apps/api/Dockerfile`, `services/orchestrator/Dockerfile`, `services/evaluator/Dockerfile` |
 | Node (frontend toolchain only) | 22.23.2 | `apps/web/Dockerfile` |
 | npm | 12.0.2 | `apps/web/Dockerfile` |
 | Docker client (sandbox service only) | 29.6.1, SHA-256 `b0df4a43…b29f` of the static archive | `services/sandbox/Dockerfile` |
 | Sandbox base image | `python:3.13.15-slim-bookworm` by digest `sha256:2325bb28…5e26` | `services/sandbox/images/iacode-dev/Dockerfile` |
 | Git (sandbox image) | `1:2.39.5-0+deb12u3` | `services/sandbox/images/iacode-dev/Dockerfile` |
+| Quality Python image | content-addressed from pinned Python 3.13.15 | `services/sandbox/images/quality-python/Dockerfile` |
+| Quality Node image | content-addressed from pinned Node 22.23.2 | `services/sandbox/images/quality-node/Dockerfile` |
+| Quality Java image | content-addressed from pinned Eclipse Temurin JDK 21 | `services/sandbox/images/quality-java/Dockerfile` |
 
 The sandbox image `iacode/sandbox-iacode-dev` is tagged with the first sixteen characters of the
 SHA-256 of its inputs and labelled with the whole digest; `scripts/iacode/sandbox_image.py` builds
@@ -52,6 +55,7 @@ with `--no-deps`, so the dependency lock stays authoritative.
 | `services/agent-runtime` | 0.1.0 | the agent runtime: lifecycle, protocol, budgets, tool boundary |
 | `services/orchestrator` | 0.1.0 | the Temporal worker and the agent run workflow |
 | `services/sandbox` | 0.1.0 | the sandbox: policy-isolated execution of agent tools |
+| `services/evaluator` | 0.1.0 | the Quality Engine: frozen plans, sandbox checks, immutable evidence and derived verdicts |
 
 ## Services
 

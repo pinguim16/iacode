@@ -59,16 +59,25 @@ def tool_envelope(name: str, **arguments: Any) -> str:
     """A tool request envelope. Nothing that reads it will execute anything."""
     import json
 
-    return json.dumps({
-        "version": ENVELOPE_VERSION,
-        "kind": "TOOL_REQUEST",
-        "tool": {"name": name, "arguments": arguments},
-    })
+    return json.dumps(
+        {
+            "version": ENVELOPE_VERSION,
+            "kind": "TOOL_REQUEST",
+            "tool": {"name": name, "arguments": arguments},
+        }
+    )
 
 
-def stage(index: int = 0, name: str = "answer", agent: str = "generalist", *,
-          inputs: tuple[str, ...] = ("task",), output_name: str = "answer",
-          max_turns: int = 4, allowed_actions: tuple[str, ...] = ()) -> StagePlan:
+def stage(
+    index: int = 0,
+    name: str = "answer",
+    agent: str = "generalist",
+    *,
+    inputs: tuple[str, ...] = ("task",),
+    output_name: str = "answer",
+    max_turns: int = 4,
+    allowed_actions: tuple[str, ...] = (),
+) -> StagePlan:
     return StagePlan(
         index=index,
         name=name,
@@ -86,8 +95,14 @@ def stage(index: int = 0, name: str = "answer", agent: str = "generalist", *,
     )
 
 
-def plan_for(*stages: StagePlan, task: str = "Say IACODE_AGENT_OK.", run_id: str = "run-1",
-             budget=None, route: str | None = None, model: str | None = None) -> RunPlan:
+def plan_for(
+    *stages: StagePlan,
+    task: str = "Say IACODE_AGENT_OK.",
+    run_id: str = "run-1",
+    budget=None,
+    route: str | None = None,
+    model: str | None = None,
+) -> RunPlan:
     from iacode_agent_runtime.budgets import Budget
 
     return RunPlan(
@@ -123,7 +138,8 @@ class ScriptedModel:
         else:
             raise AssertionError(
                 "the scripted model ran out of answers; the engine asked for a turn the test did "
-                "not expect")
+                "not expect"
+            )
         if isinstance(answer, BaseException):
             raise answer
         if callable(answer):
@@ -168,6 +184,7 @@ class RecordingEffects:
     cancel_after_events: int | None = None
     tool_wait_returns_none: bool = False
     waits: list[tuple[str, int]] = field(default_factory=list)
+    quality_result: dict[str, Any] | None = None
     #: The event types the log held at each state change: which of the two a reader sees first.
     log_at_state: list[tuple[str, tuple[str, ...]]] = field(default_factory=list)
     _identifiers: int = 0
@@ -185,8 +202,7 @@ class RecordingEffects:
         self._sequence += 1
         object.__setattr__(event, "sequence", self._sequence)
         self.events.append(event)
-        if (self.cancel_after_events is not None
-                and len(self.events) >= self.cancel_after_events):
+        if self.cancel_after_events is not None and len(self.events) >= self.cancel_after_events:
             self.cancel = True
 
     async def set_state(self, state: str, **fields: Any) -> None:
@@ -208,27 +224,35 @@ class RecordingEffects:
             raise AssertionError("the engine called a model after cancellation was requested")
         return await self.model.complete(request)
 
-    async def attach_model_call(self, agent_run_id: str,
-                                gateway_request_id: str) -> str | None:
+    async def attach_model_call(self, agent_run_id: str, gateway_request_id: str) -> str | None:
         self.attached.append((agent_run_id, gateway_request_id))
         return f"model-call-{len(self.attached)}"
 
-    async def create_tool_request(self, tool_request_id: str, agent_run_id: str, name: str,
-                                  arguments: dict[str, Any]) -> None:
-        self.tool_requests.append({
-            "toolRequestId": tool_request_id, "agentRunId": agent_run_id,
-            "name": name, "arguments": dict(arguments)})
+    async def create_tool_request(
+        self, tool_request_id: str, agent_run_id: str, name: str, arguments: dict[str, Any]
+    ) -> None:
+        self.tool_requests.append(
+            {
+                "toolRequestId": tool_request_id,
+                "agentRunId": agent_run_id,
+                "name": name,
+                "arguments": dict(arguments),
+            }
+        )
 
-    async def wait_for_tool(self, tool_request_id: str,
-                            timeout_seconds: int) -> ToolResult | None:
+    async def wait_for_tool(self, tool_request_id: str, timeout_seconds: int) -> ToolResult | None:
         self.waits.append((tool_request_id, timeout_seconds))
         if self.tool_wait_returns_none or self.cancel:
             return None
         answer = self.tool_answers.get(tool_request_id)
         if answer is None:
             raise AssertionError(
-                f"the engine waited on {tool_request_id} and the test scripted no answer")
+                f"the engine waited on {tool_request_id} and the test scripted no answer"
+            )
         return answer
+
+    async def quality_gate(self) -> dict[str, Any] | None:
+        return dict(self.quality_result) if self.quality_result is not None else None
 
     def cancelled(self) -> bool:
         return self.cancel
@@ -245,7 +269,8 @@ class RecordingEffects:
 def gateway_failure(message: str = "the provider is unavailable") -> AgentRuntimeError:
     """A gateway failure shaped exactly as the real client raises one."""
     return AgentRuntimeError(
-        AgentRuntimeErrorType.GATEWAY_ERROR, message, upstream_type="PROVIDER_UNAVAILABLE")
+        AgentRuntimeErrorType.GATEWAY_ERROR, message, upstream_type="PROVIDER_UNAVAILABLE"
+    )
 
 
 def repository_root() -> Path:

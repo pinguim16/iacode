@@ -653,17 +653,35 @@ class SandboxSession(TimestampedEntity, Base):
     __tablename__ = "sandbox_sessions"
     __table_args__ = (
         CheckConstraint("state IN " + _vocabulary(SANDBOX_SESSION_STATES), name="state_is_known"),
+        CheckConstraint(
+            "num_nonnulls(task_run_id, quality_run_id) = 1", name="exactly_one_run_owner"
+        ),
         Index(
             "uq_sandbox_sessions_one_active_per_run",
             "task_run_id",
             unique=True,
-            postgresql_where=text("state IN " + _vocabulary(SANDBOX_ACTIVE_SESSION_STATES)),
+            postgresql_where=text(
+                "task_run_id IS NOT NULL AND state IN "
+                + _vocabulary(SANDBOX_ACTIVE_SESSION_STATES)
+            ),
+        ),
+        Index(
+            "uq_sandbox_sessions_one_active_per_quality_run",
+            "quality_run_id",
+            unique=True,
+            postgresql_where=text(
+                "quality_run_id IS NOT NULL AND state IN "
+                + _vocabulary(SANDBOX_ACTIVE_SESSION_STATES)
+            ),
         ),
         UniqueConstraint("container_name", name="sandbox_sessions_container_name"),
     )
 
-    task_run_id: Mapped[uuid.UUID] = mapped_column(
-        ForeignKey("task_runs.id", ondelete="CASCADE"), nullable=False, index=True
+    task_run_id: Mapped[uuid.UUID | None] = mapped_column(
+        ForeignKey("task_runs.id", ondelete="CASCADE"), nullable=True, index=True
+    )
+    quality_run_id: Mapped[uuid.UUID | None] = mapped_column(
+        ForeignKey("quality_runs.id", ondelete="CASCADE"), nullable=True, index=True
     )
     state: Mapped[str] = mapped_column(String(32), nullable=False)
     policy: Mapped[str] = mapped_column(String(64), nullable=False)

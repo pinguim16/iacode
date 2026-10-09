@@ -56,6 +56,9 @@ services/sandbox/          the sandbox: policy, tool registry, path resolver, th
   images/iacode-dev/       the sandbox image profile, built content-addressed
   tests/                   its suite, against the real container engine; integration/ needs the
                            stack's database and bucket and runs in the verification
+services/evaluator/        the Quality Engine: profiles, policy, plans, runners, evidence, verdict,
+  src/                     durable workflow activities, persistence, telemetry and health
+  tests/                   contracts and behavior; integration/ uses PostgreSQL and MinIO
 infra/compose/             the stack
 infra/tests/               what the infrastructure declares, and the live configuration
 scripts/iacode/            operational tooling: stack, migrate, backup, restore, verify, scenarios
@@ -137,19 +140,40 @@ suite fails a third. A new tool is a registry entry in `tools.py` and a name in 
 `.iacode/policies/sandbox-policy.json`; an agent reaches it only through a profile whose
 `allowedActions` stay inside that policy.
 
+## Changing the Quality Engine
+
+`services/evaluator/` is the only service that plans checks, normalizes their sandbox results,
+persists evidence and derives verdicts. The API exposes its bounded lifecycle; it does not accept a
+command, image, result, evidence item or verdict. The evaluator has no engine socket or project
+mount and dispatches every project command to the Gate 3 sandbox queue.
+
+```bash
+python scripts/iacode/gates/evaluator_tests.py
+python scripts/iacode/scenarios/quality_persistence.py
+python scripts/iacode/scenarios/quality_engine_e2e.py --scenario pass
+```
+
+A new stack requires an exact detector/profile match, registered policy-owned runners and a pinned
+content-addressed image under `services/sandbox/images/`. Never add a repository-name branch or a
+fallback runner. Changes to result or evidence semantics need a reversible migration and a live
+PostgreSQL/MinIO test. Operational behavior is in
+[`docs/runbooks/QUALITY-ENGINE.md`](runbooks/QUALITY-ENGINE.md).
+
 ## Before you call a change finished
 
 ```bash
 python scripts/iacode/verify.py --fast
 ```
 
-Twelve mandatory gates — `tests`, `staticAnalysis`, `lessons`, `integrity`,
+Thirteen mandatory gates — `tests`, `staticAnalysis`, `lessons`, `integrity`,
 `checkpointValidation`, `apiTests`, `gatewayTests`, `agentRuntimeTests`, `sandboxTests`,
-`webTests`, `lint` and `infraDefinition` — the stack, the integration suite, the live
+`evaluatorTests`, `webTests`, `lint` and `infraDefinition` — the stack, the integration suite, the live
 infrastructure suite, the smoke check, the two live provider smokes, the agent runtime's
 durability, cancellation and deadline scenarios, the sandbox's integration cases and its four
 scenarios (`scripts/iacode/scenarios/sandbox_coding_e2e.py`: coding, timeout, cancellation,
-recovery), a verified backup-and-restore cycle and a dependency scan. `--fast` stops before the
+recovery), the quality persistence test and the Quality Engine's PASS, FAIL, IACode, reproduction,
+recovery, cancellation, timeout and false-PASS scenarios, a verified backup-and-restore cycle and
+a dependency scan. `--fast` stops before the
 stages that restart the stack and delete volumes.
 
 The full run — `python scripts/iacode/verify.py`, or `.\verify.ps1` on Windows — adds the restart

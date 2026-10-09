@@ -33,6 +33,7 @@ from iacode_api.config import Settings
 from iacode_api.db import engine as db_engine
 from iacode_api.gateway.runtime import GatewayRuntime, build_runtime
 from iacode_api.observability.metrics import Metrics
+from iacode_api.quality.runtime import QualityApiRuntime, build_quality_runtime
 from iacode_api.storage import client as storage_client
 from iacode_api.workflows.client import TemporalGateway
 
@@ -52,19 +53,21 @@ class Resources:
     temporal: TemporalGateway
     gateway: GatewayRuntime
     agent_runtime: AgentRuntimeRuntime
+    quality: QualityApiRuntime
 
 
 def build_resources(settings: Settings, metrics: Metrics) -> Resources:
     """Construct every client without performing any I/O."""
     engine = db_engine.create_engine(settings)
     session_factory = db_engine.create_session_factory(engine)
+    minio = storage_client.create_client(settings)
     return Resources(
         settings=settings,
         metrics=metrics,
         engine=engine,
         session_factory=session_factory,
         redis=cache_client.create_client(settings),
-        minio=storage_client.create_client(settings),
+        minio=minio,
         temporal=TemporalGateway(settings),
         # Reading the provider policy here rather than on first use means a missing or malformed
         # policy file stops the process at start-up, where it is one clear failure, instead of
@@ -74,6 +77,7 @@ def build_resources(settings: Settings, metrics: Metrics) -> Resources:
         # policy is: a malformed definition stops the process at start-up, where it is one
         # clear failure, instead of turning every run creation into a confusing refusal.
         agent_runtime=build_agent_runtime(settings, session_factory),
+        quality=build_quality_runtime(settings, session_factory, minio),
     )
 
 

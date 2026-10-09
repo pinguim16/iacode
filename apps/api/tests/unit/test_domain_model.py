@@ -161,6 +161,7 @@ def test_relationships_cascade_deliberately() -> None:
         # Gate 3. A session belongs to its run; an execution record outlives the request and the
         # session it names, because it is the record that the tool ran.
         ("sandbox_sessions", "task_run_id"): "CASCADE",
+        ("sandbox_sessions", "quality_run_id"): "CASCADE",
         ("sandbox_sessions", "active_tool_request_id"): "SET NULL",
         ("tool_calls", "tool_request_id"): "SET NULL",
         ("tool_calls", "sandbox_session_id"): "SET NULL",
@@ -190,6 +191,27 @@ def test_relationships_cascade_deliberately() -> None:
     }
 
     assert observed == expected
+
+
+def test_a_sandbox_session_has_exactly_one_run_owner_and_one_active_slot_per_owner() -> None:
+    """Agent and quality runs share execution without inventing a task-run owner."""
+    table = Base.metadata.tables["sandbox_sessions"]
+    check_sql = {
+        str(constraint.sqltext)
+        for constraint in table.constraints
+        if getattr(constraint, "sqltext", None) is not None
+    }
+    assert "num_nonnulls(task_run_id, quality_run_id) = 1" in check_sql
+
+    indexes = {index.name: index for index in table.indexes}
+    task = indexes["uq_sandbox_sessions_one_active_per_run"]
+    quality = indexes["uq_sandbox_sessions_one_active_per_quality_run"]
+    assert task.unique and tuple(column.name for column in task.columns) == ("task_run_id",)
+    assert quality.unique and tuple(column.name for column in quality.columns) == (
+        "quality_run_id",
+    )
+    assert "task_run_id IS NOT NULL" in str(task.dialect_options["postgresql"]["where"])
+    assert "quality_run_id IS NOT NULL" in str(quality.dialect_options["postgresql"]["where"])
 
 
 def test_rights_default_to_denial() -> None:

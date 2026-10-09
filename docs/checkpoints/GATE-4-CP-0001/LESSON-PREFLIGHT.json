@@ -2,13 +2,27 @@
   "schemaVersion": "2.0.0",
   "gate": "GATE-4",
   "scope": "quality engine, evaluation runners, immutable evidence store, verdict rules, false-PASS rejection, reproducible evidence, sandboxed execution, agent-runtime integration, promotion evidence",
-  "technologies": [],
-  "modules": [],
-  "generatedAt": "2026-10-09T18:09:49Z",
+  "technologies": [
+    "python",
+    "postgresql",
+    "minio",
+    "temporal",
+    "docker"
+  ],
+  "modules": [
+    "services/evaluator",
+    "services/sandbox",
+    "services/orchestrator",
+    "services/agent-runtime",
+    "packages/persistence",
+    "apps/api",
+    "apps/web"
+  ],
+  "generatedAt": "2026-10-09T19:29:29Z",
   "policyVersion": "2.0.0",
-  "inputsFingerprint": "35dd696ab8db2e2110f1b38acfcc37261203b7ab32e050825b18134038d267af",
-  "lessonsConsidered": 61,
-  "lessonsApplicable": 60,
+  "inputsFingerprint": "2cb5f612e3196f05abe49d9e70a9c248441ba675815a2d10b551523558c49b23",
+  "lessonsConsidered": 67,
+  "lessonsApplicable": 66,
   "applicable": [
     {
       "lessonId": "LSN-0001",
@@ -609,6 +623,66 @@
       "requiredCheck": "For every running task that can be cancelled, prove the lifecycle records cancellation requested before it records cancellation completed.",
       "requiredEvidence": "A lifecycle test that enters the intermediate cancelling state, acknowledges cleanup, reaches cancelled, and rejects late delivery.",
       "derivedRequirementId": "LESSON-REQ-0060"
+    },
+    {
+      "lessonId": "LSN-0062",
+      "title": "Provenance digests are a set even when their sources are distinct",
+      "status": "GUARDED",
+      "severity": "MEDIUM",
+      "reasonApplicable": "applies to every Gate; category implementation; severity MEDIUM; already guarded, so the control must keep holding",
+      "requiredCheck": "Whenever provenance is represented by content digests, normalize it as a unique ordered set rather than assuming each semantic source has different bytes.",
+      "requiredEvidence": "A test in which distinct provenance roles share one digest and the stored provenance contains it once.",
+      "derivedRequirementId": "LESSON-REQ-0061"
+    },
+    {
+      "lessonId": "LSN-0063",
+      "title": "An identity shared across services must satisfy the strictest persistence type and remain stable",
+      "status": "GUARDED",
+      "severity": "HIGH",
+      "reasonApplicable": "applies to every Gate; category architecture; severity HIGH; already guarded, so the control must keep holding",
+      "requiredCheck": "For every identity crossing a service boundary, verify it satisfies the strictest persisted representation and is stable across delivery retries.",
+      "requiredEvidence": "A contract or unit test proving syntactic validity, deterministic replay identity and separation between distinct work items.",
+      "derivedRequirementId": "LESSON-REQ-0062"
+    },
+    {
+      "lessonId": "LSN-0064",
+      "title": "A shared execution resource needs an explicit exclusive owner for every owning domain",
+      "status": "GUARDED",
+      "severity": "HIGH",
+      "reasonApplicable": "applies to every Gate; category architecture; severity HIGH; already guarded, so the control must keep holding",
+      "requiredCheck": "When another durable domain reuses an owned resource, model its real ownership explicitly, require exactly one owner, and preserve every per-owner exclusivity invariant.",
+      "requiredEvidence": "A structural test of the ownership and uniqueness constraints plus a real-database lifecycle test for the new owner.",
+      "derivedRequirementId": "LESSON-REQ-0063"
+    },
+    {
+      "lessonId": "LSN-0065",
+      "title": "A shared execution identifier must not be written into a foreign key owned by another domain",
+      "status": "GUARDED",
+      "severity": "HIGH",
+      "reasonApplicable": "applies to every Gate; category implementation; severity HIGH; already guarded, so the control must keep holding",
+      "requiredCheck": "For a shared execution contract, prove each durable foreign key is populated only for the domain that owns the referenced row, using trusted ownership context rather than identifier shape.",
+      "requiredEvidence": "A test with both owner domains showing that only the owning domain binds the foreign key.",
+      "derivedRequirementId": "LESSON-REQ-0064"
+    },
+    {
+      "lessonId": "LSN-0066",
+      "title": "Immutable content identity excludes observation time and the first observer",
+      "status": "GUARDED",
+      "severity": "HIGH",
+      "reasonApplicable": "applies to every Gate; category architecture; severity HIGH; already guarded, so the control must keep holding",
+      "requiredCheck": "For every content-addressed or reusable immutable record, define material identity separately from creation metadata and ownership provenance.",
+      "requiredEvidence": "A replay test where material inputs are equal but time and first observer differ, proving reuse without rewriting the original record.",
+      "derivedRequirementId": "LESSON-REQ-0065"
+    },
+    {
+      "lessonId": "LSN-0067",
+      "title": "Cancellation semantics must survive orchestration-library exception wrapping",
+      "status": "GUARDED",
+      "severity": "HIGH",
+      "reasonApplicable": "applies to every Gate; category implementation; severity HIGH; already guarded, so the control must keep holding",
+      "requiredCheck": "For cancellation across an orchestration boundary, test the exception shape the real library delivers and derive outcome from the durable request plus executor acknowledgement rather than the wrapper class alone.",
+      "requiredEvidence": "A workflow test for the wrapped cancellation and a live running-cancellation scenario proving cleanup, terminal cancellation and idempotent repeat.",
+      "derivedRequirementId": "LESSON-REQ-0066"
     }
   ],
   "derivedRequirements": [
@@ -1031,6 +1105,48 @@
       "description": "Verify cancellation completion must not bypass cleanup acknowledgement",
       "mandatory": true,
       "requiredEvidence": "A lifecycle test that enters the intermediate cancelling state, acknowledges cleanup, reaches cancelled, and rejects late delivery."
+    },
+    {
+      "id": "LESSON-REQ-0061",
+      "lessonId": "LSN-0062",
+      "description": "Verify provenance digests are a set even when their sources are distinct",
+      "mandatory": true,
+      "requiredEvidence": "A test in which distinct provenance roles share one digest and the stored provenance contains it once."
+    },
+    {
+      "id": "LESSON-REQ-0062",
+      "lessonId": "LSN-0063",
+      "description": "Verify an identity shared across services must satisfy the strictest persistence type and remain stable",
+      "mandatory": true,
+      "requiredEvidence": "A contract or unit test proving syntactic validity, deterministic replay identity and separation between distinct work items."
+    },
+    {
+      "id": "LESSON-REQ-0063",
+      "lessonId": "LSN-0064",
+      "description": "Verify a shared execution resource needs an explicit exclusive owner for every owning domain",
+      "mandatory": true,
+      "requiredEvidence": "A structural test of the ownership and uniqueness constraints plus a real-database lifecycle test for the new owner."
+    },
+    {
+      "id": "LESSON-REQ-0064",
+      "lessonId": "LSN-0065",
+      "description": "Verify a shared execution identifier must not be written into a foreign key owned by another domain",
+      "mandatory": true,
+      "requiredEvidence": "A test with both owner domains showing that only the owning domain binds the foreign key."
+    },
+    {
+      "id": "LESSON-REQ-0065",
+      "lessonId": "LSN-0066",
+      "description": "Verify immutable content identity excludes observation time and the first observer",
+      "mandatory": true,
+      "requiredEvidence": "A replay test where material inputs are equal but time and first observer differ, proving reuse without rewriting the original record."
+    },
+    {
+      "id": "LESSON-REQ-0066",
+      "lessonId": "LSN-0067",
+      "description": "Verify cancellation semantics must survive orchestration-library exception wrapping",
+      "mandatory": true,
+      "requiredEvidence": "A workflow test for the wrapped cancellation and a live running-cancellation scenario proving cleanup, terminal cancellation and idempotent repeat."
     }
   ]
 }

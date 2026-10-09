@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://iacode.local/schemas/program-state.schema.json",
+  "title": "IACode resumable program state",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "milestone",
+    "gate",
+    "checkpoint",
+    "step",
+    "lastCompletedStep",
+    "localCommit",
+    "remoteCommit",
+    "branch",
+    "status",
+    "blockers",
+    "nextAction",
+    "updatedAt"
+  ],
+  "properties": {
+    "schemaVersion": {"const": "1.0.0"},
+    "milestone": {"type": "string", "pattern": "^M[0-9]+$"},
+    "gate": {"type": "string", "pattern": "^GATE-[0-9]+$"},
+    "checkpoint": {"type": "string", "pattern": "^GATE-[0-9]+-CP-[0-9]{4}$"},
+    "step": {"type": ["string", "null"], "pattern": "^G[0-9]+-S[0-9]{2}$"},
+    "lastCompletedStep": {"type": ["string", "null"], "pattern": "^G[0-9]+-S[0-9]{2}$"},
+    "localCommit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "remoteCommit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "branch": {"type": "string", "minLength": 1, "maxLength": 255},
+    "status": {
+      "enum": ["IN_PROGRESS", "READY_FOR_REVIEW", "BLOCKED", "GATE_PASS", "MILESTONE_PASS"]
+    },
+    "blockers": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1, "maxLength": 1024}
+    },
+    "nextAction": {"type": "string", "minLength": 1, "maxLength": 2048},
+    "updatedAt": {"type": "string", "format": "date-time"}
+  }
+}

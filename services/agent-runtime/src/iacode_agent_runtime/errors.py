@@ -50,6 +50,7 @@ class AgentRuntimeErrorType(StrEnum):
     TEAM_NOT_FOUND = "TEAM_NOT_FOUND"
     PAYLOAD_TOO_LARGE = "PAYLOAD_TOO_LARGE"
     WORKFLOW_ERROR = "WORKFLOW_ERROR"
+    QUALITY_GATE_FAILED = "QUALITY_GATE_FAILED"
     INTERNAL_AGENT_RUNTIME_ERROR = "INTERNAL_AGENT_RUNTIME_ERROR"
 
 
@@ -99,19 +100,23 @@ class AgentRuntimeError(Exception):
 class InvalidAgentOutputError(AgentRuntimeError):
     """The agent answered with something that is not a valid envelope."""
 
-    def __init__(self, message: str, *, stage: str | None = None,
-                 details: dict[str, Any] | None = None) -> None:
-        super().__init__(AgentRuntimeErrorType.INVALID_AGENT_OUTPUT, message,
-                         stage=stage, details=details)
+    def __init__(
+        self, message: str, *, stage: str | None = None, details: dict[str, Any] | None = None
+    ) -> None:
+        super().__init__(
+            AgentRuntimeErrorType.INVALID_AGENT_OUTPUT, message, stage=stage, details=details
+        )
 
 
 class BudgetExceededError(AgentRuntimeError):
     """The run reached a limit it was created with."""
 
-    def __init__(self, message: str, *, stage: str | None = None,
-                 details: dict[str, Any] | None = None) -> None:
-        super().__init__(AgentRuntimeErrorType.BUDGET_EXCEEDED, message,
-                         stage=stage, details=details)
+    def __init__(
+        self, message: str, *, stage: str | None = None, details: dict[str, Any] | None = None
+    ) -> None:
+        super().__init__(
+            AgentRuntimeErrorType.BUDGET_EXCEEDED, message, stage=stage, details=details
+        )
 
 
 class InvalidStateTransitionError(AgentRuntimeError):
@@ -137,13 +142,11 @@ class ToolResultOriginRefusedError(AgentRuntimeError):
     """
 
     def __init__(self, message: str, *, details: dict[str, Any] | None = None) -> None:
-        super().__init__(AgentRuntimeErrorType.TOOL_RESULT_ORIGIN_REFUSED, message,
-                         details=details)
+        super().__init__(AgentRuntimeErrorType.TOOL_RESULT_ORIGIN_REFUSED, message, details=details)
 
 
 class RunCancelledError(AgentRuntimeError):
     """The run was cancelled. Terminal, and not a defect."""
 
-    def __init__(self, message: str = "the run was cancelled", *,
-                 stage: str | None = None) -> None:
+    def __init__(self, message: str = "the run was cancelled", *, stage: str | None = None) -> None:
         super().__init__(AgentRuntimeErrorType.RUN_CANCELLED, message, stage=stage)

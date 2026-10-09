@@ -20,6 +20,7 @@ from __future__ import annotations
 
 from typing import Any
 
+from iacode_agent_runtime.context import quality_result_data
 from iacode_agent_runtime.contracts import ToolResult
 from iacode_agent_runtime.errors import AgentRuntimeError, AgentRuntimeErrorType
 from iacode_agent_runtime.events import RunEvent
@@ -39,6 +40,8 @@ __all__ = [
     "cancel_pending_tool_requests",
     "create_tool_request",
     "finish_stage",
+    "quality_plan",
+    "quality_result",
     "read_tool_result",
     "record_event",
     "resolve_tool_request",
@@ -75,9 +78,16 @@ async def record_event(payload: dict[str, Any]) -> dict[str, Any]:
     except AgentRuntimeError as error:
         raise _refuse(error) from None
     _record_metrics(context, stored, payload.get("agent"), payload.get("team"))
-    logger.info("agent run event", extra=runtime_log_fields(
-        run_id=stored.run_id, agent_run_id=stored.agent_run_id, stage=stored.stage,
-        event_type=stored.type, status=str(stored.sequence)))
+    logger.info(
+        "agent run event",
+        extra=runtime_log_fields(
+            run_id=stored.run_id,
+            agent_run_id=stored.agent_run_id,
+            stage=stored.stage,
+            event_type=stored.type,
+            status=str(stored.sequence),
+        ),
+    )
     return {"sequence": stored.sequence, "type": stored.type}
 
 
@@ -106,7 +116,8 @@ async def set_run_state(payload: dict[str, Any]) -> str:
     context = get_context()
     try:
         return await context.store.set_run_state(
-            str(payload["runId"]), str(payload["state"]),
+            str(payload["runId"]),
+            str(payload["state"]),
             current_stage=payload.get("currentStage"),
             budget_used=payload.get("budgetUsed"),
             result=payload.get("result"),
@@ -145,15 +156,18 @@ async def start_stage(payload: dict[str, Any]) -> str:
 async def finish_stage(payload: dict[str, Any]) -> None:
     context = get_context()
     try:
-        await context.store.finish_stage(str(payload["agentRunId"]), StageCompletion(
-            state=str(payload["state"]),
-            output=str(payload.get("output") or ""),
-            output_summary=str(payload.get("outputSummary") or ""),
-            turns=int(payload.get("turns") or 0),
-            model_calls=int(payload.get("modelCalls") or 0),
-            error_type=payload.get("errorType"),
-            error_summary=payload.get("errorSummary"),
-        ))
+        await context.store.finish_stage(
+            str(payload["agentRunId"]),
+            StageCompletion(
+                state=str(payload["state"]),
+                output=str(payload.get("output") or ""),
+                output_summary=str(payload.get("outputSummary") or ""),
+                turns=int(payload.get("turns") or 0),
+                model_calls=int(payload.get("modelCalls") or 0),
+                error_type=payload.get("errorType"),
+                error_summary=payload.get("errorSummary"),
+            ),
+        )
     except AgentRuntimeError as error:
         raise _refuse(error) from None
 
@@ -188,7 +202,8 @@ async def attach_model_call(payload: dict[str, Any]) -> str | None:
     context = get_context()
     try:
         return await context.store.attach_model_call(
-            str(payload["agentRunId"]), str(payload.get("gatewayRequestId") or ""))
+            str(payload["agentRunId"]), str(payload.get("gatewayRequestId") or "")
+        )
     except AgentRuntimeError as error:
         raise _refuse(error) from None
 
@@ -242,8 +257,10 @@ async def resolve_tool_request(payload: dict[str, Any]) -> dict[str, Any]:
     context = get_context()
     try:
         stored = await context.store.resolve_tool_request(
-            str(payload["runId"]), ToolResult.from_dict(dict(payload["result"])),
-            origin=TOOL_EXECUTOR_SANDBOX)
+            str(payload["runId"]),
+            ToolResult.from_dict(dict(payload["result"])),
+            origin=TOOL_EXECUTOR_SANDBOX,
+        )
     except AgentRuntimeError as error:
         raise _refuse(error) from None
     return stored.to_dict()
@@ -256,6 +273,91 @@ async def cancel_pending_tool_requests(payload: dict[str, Any]) -> int:
         return await context.store.cancel_pending_tool_requests(str(payload["runId"]))
     except AgentRuntimeError as error:
         raise _refuse(error) from None
+
+
+@activity.defn(name="iacode_agent_quality_plan")
+async def quality_plan(payload: dict[str, Any]) -> dict[str, Any]:
+    """Freeze a quality plan for the agent run's authorised snapshot."""
+    context = get_context()
+    workspace = dict(payload.get("workspace") or {})
+    if workspace.get("kind") != "snapshot":
+        return {"applicable": False, "reason": "the agent run has no frozen snapshot"}
+    snapshot_id = str(workspace.get("artifactId") or "")
+    snapshot_digest = str(workspace.get("checksum") or "")
+    try:
+        files = await context.quality_snapshots.read(snapshot_id, snapshot_digest)
+        planned = await context.quality_service.create_profile_and_plan(
+            snapshot_id=snapshot_id,
+            snapshot_digest=snapshot_digest,
+            project_files=files,
+            configuration=None,
+            owner_run_id=str(payload["runId"]),
+        )
+        run = await context.quality_service.start_run(
+            plan_id=planned.plan.planId,
+            owner_run_id=str(payload["runId"]),
+            idempotency_key=f"agent:{payload['runId']}:quality",
+        )
+        workflow_id = f"iacode-quality-run-{run.run_id}"
+        run = await context.quality_store.bind_workflow(run.run_id, workflow_id)
+    except Exception as error:
+        raise ApplicationError(
+            "the quality plan could not be created",
+            {"message": str(error)[:500]},
+            type="QUALITY_PLAN_FAILED",
+            non_retryable=True,
+        ) from None
+    return {
+        "applicable": True,
+        "runId": run.run_id,
+        "workflowId": workflow_id,
+        "planId": planned.plan.planId,
+        "profile": planned.plan.projectProfile,
+        "maxRunSeconds": planned.plan.policy.maxRunSeconds,
+        "checks": [
+            {
+                "checkId": check.checkId,
+                "kind": check.kind,
+                "mandatory": check.mandatory,
+                "applicable": check.applicable,
+            }
+            for check in planned.plan.checks
+        ],
+    }
+
+
+@activity.defn(name="iacode_agent_quality_result")
+async def quality_result(payload: dict[str, Any]) -> dict[str, Any]:
+    """Return bounded, labelled quality data; never commands or evidence bodies."""
+    context = get_context()
+    view = await context.quality_service.get_run(str(payload["runId"]))
+    verdict = view.verdict.verdict if view.verdict else "FAIL"
+    data = {
+        "runId": view.run.run_id,
+        "planId": view.plan.planId,
+        "verdict": verdict,
+        "findingsCount": len(view.findings),
+        "evidenceCount": len(view.evidence),
+        "findings": [
+            {
+                "severity": finding.severity,
+                "category": finding.category,
+                "message": finding.message[:512],
+            }
+            for finding in view.findings[:100]
+        ],
+        "artifacts": [
+            {
+                "artifactId": evidence.artifactId,
+                "kind": evidence.kind,
+                "digest": evidence.digest,
+                "mediaType": evidence.mediaType,
+                "sizeBytes": evidence.sizeBytes,
+            }
+            for evidence in view.evidence[:100]
+        ],
+    }
+    return quality_result_data(view.run.run_id, data)
 
 
 def tool_result_from(payload: dict[str, Any]) -> ToolResult:
@@ -275,4 +377,6 @@ AGENT_RUNTIME_ACTIVITIES = [
     read_tool_result,
     resolve_tool_request,
     cancel_pending_tool_requests,
+    quality_plan,
+    quality_result,
 ]

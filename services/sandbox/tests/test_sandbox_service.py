@@ -5,6 +5,7 @@ from __future__ import annotations
 import asyncio
 from datetime import timedelta
 
+from iacode_sandbox.contracts import ToolExecutionRequest
 from iacode_sandbox.service import SandboxService
 from sandbox_fixtures import FakeBackend, fake_service, request, utc
 
@@ -14,6 +15,20 @@ def run(coroutine):
 
 
 class SandboxServiceDecisionTests:
+    def test_only_agent_requests_bind_the_agent_tool_request_foreign_key(self) -> None:
+        shared = {
+            "tool_request_id": "00000000-0000-4000-8000-000000000001",
+            "run_id": "run-1",
+            "tool": "git.status",
+            "arguments": {},
+            "policy": "developer",
+        }
+        evaluator = ToolExecutionRequest(**shared, agent_run_id=None, agent="quality-engine")
+        agent = ToolExecutionRequest(**shared, agent_run_id="agent-run-1", agent="developer")
+
+        assert SandboxService._active_agent_tool_request(evaluator) is None
+        assert SandboxService._active_agent_tool_request(agent) == shared["tool_request_id"]
+
     def test_an_unknown_tool_is_denied_and_nothing_is_started(self) -> None:
         backend = FakeBackend()
         service, store = fake_service(backend)
