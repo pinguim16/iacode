@@ -23,6 +23,7 @@ from ledger_common import (
     find_root,
     git_snapshot,
     resolve_latest,
+    run_git,
     runtime_label,
     use_utf8_stdout,
 )
@@ -89,11 +90,22 @@ def main() -> int:
     if not checkpoint.is_absolute():
         checkpoint = root / checkpoint
 
+    subject_commit = args.subject_commit
+    subject_error = None
+    if subject_commit:
+        code, resolved = run_git(root, "rev-parse", "--verify", f"{subject_commit}^{{commit}}")
+        if code != 0 or not resolved:
+            subject_error = f"the subject commit {subject_commit!r} does not resolve to a commit"
+        else:
+            subject_commit = resolved
+
     # The replay rule is asked before anything runs. A command the validator would refuse is
     # refused here instead, and the refusal is recorded: an operation that was attempted and
     # declined stays visible, without an exit code, because no process was launched. `LSN-0003`.
     command = " ".join(argv)
     replay_errors = command_replay_errors(root, command)
+    if subject_error:
+        replay_errors.append(subject_error)
     if replay_errors:
         snapshot = git_snapshot(root)
         record = build_command_record(
@@ -115,7 +127,7 @@ def main() -> int:
                             "observed": message, "satisfied": False}
                            for message in replay_errors],
             failure_reason="; ".join(replay_errors),
-            subject_commit=args.subject_commit or snapshot["head"],
+            subject_commit=subject_commit or snapshot["head"],
             repository_state={
                 "branch": snapshot["branch"],
                 "head": snapshot["head"],
@@ -135,7 +147,7 @@ def main() -> int:
     else:
         runtime = runtime_label(executable[0])
 
-    inputs = _detect_inputs(root, argv) + [item for item in args.input if item]
+    inputs = list(dict.fromkeys(_detect_inputs(root, argv) + [item for item in args.input if item]))
     started = time.monotonic()
     completed = subprocess.run(
         executable, cwd=root, text=True, encoding="utf-8", errors="replace",
@@ -159,7 +171,7 @@ def main() -> int:
         stderr_artifact=args.stderr_artifact,
         operation=args.operation,
         phase=args.phase,
-        subject_commit=args.subject_commit or snapshot["head"],
+        subject_commit=subject_commit or snapshot["head"],
         repository_state={
             "branch": snapshot["branch"],
             "head": snapshot["head"],

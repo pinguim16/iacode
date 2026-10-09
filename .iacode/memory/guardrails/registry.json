@@ -1135,6 +1135,19 @@
         "LSN-0077"
       ],
       "removingItWouldAllow": "A legitimate large quality plan to outlive a fixture-sized harness wait and be reported as an infrastructure failure before its durable verdict."
+    },
+    {
+      "guardrailId": "GRD-0079",
+      "title": "Recorded subjects resolve and provenance inputs are canonical",
+      "kind": "test",
+      "reference": "test_inputs_are_canonicalized_and_an_unknown_subject_is_refused",
+      "verifiedBy": [
+        "test_inputs_are_canonicalized_and_an_unknown_subject_is_refused"
+      ],
+      "lessons": [
+        "LSN-0078"
+      ],
+      "removingItWouldAllow": "A command to execute while its evidence names a nonexistent commit, or repeated caller inputs to produce non-canonical provenance."
     }
   ]
 }

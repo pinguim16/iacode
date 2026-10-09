@@ -85,6 +85,7 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 | `LSN-0075` | `GUARDED` | HIGH | implementation | Offline package installation requires its build backend inside the quality image | `test_python_unit_runner_installs_metadata_and_exposes_monorepo_policy` |
 | `LSN-0076` | `GUARDED` | HIGH | architecture | Projected nested configuration requires an explicit monorepo root | `test_python_unit_runner_installs_metadata_and_exposes_monorepo_policy`, `test_no_evaluator_module_can_start_a_process` |
 | `LSN-0077` | `GUARDED` | HIGH | quality | Harness wait bounds must reflect workload size without changing product deadlines | `test_real_repository_scenario_has_a_separate_bounded_wait` |
+| `LSN-0078` | `GUARDED` | HIGH | quality | Evidence recorders must resolve caller-supplied commit references before execution | `test_inputs_are_canonicalized_and_an_unknown_subject_is_refused` |
 
 ## Detail
 
@@ -1075,3 +1076,14 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 - Prevention:
   - `test` test_real_repository_scenario_has_a_separate_bounded_wait — AST-bound control proves the IACode scenario passes a distinct bound at least twice the ordinary wait while all other scenarios retain the default.
 - Evidence: `file:docs/checkpoints/GATE-4-CP-0001/COMMANDS.jsonl`, `file:scripts/iacode/scenarios/quality_engine_e2e.py`, `file:tests/test_gate4_quality_engine.py`
+
+### LSN-0078 — Evidence recorders must resolve caller-supplied commit references before execution
+
+- Status: `GUARDED`, severity HIGH, category quality, recurrences 0.
+- Source: GATE-4, GATE-4-CP-0001, finding cmd-0096.
+- Symptom: A successful real-repository command record accepted a mistyped 40-character subjectCommit and duplicated an input that was both detected and explicitly declared, leaving evidence metadata that would fail published-history validation.
+- Root cause: The recorder validated command replayability but trusted the optional subject commit as opaque text and concatenated detected and caller-supplied inputs without canonicalization.
+- Resolution: Resolve every supplied subject through git rev-parse before launching the command, record the canonical full commit, refuse unresolved subjects with an appended precondition record, and deduplicate the ordered input set.
+- Prevention:
+  - `test` test_inputs_are_canonicalized_and_an_unknown_subject_is_refused — The same recorder path proves duplicate inputs collapse and a nonexistent subject is recorded as a refusal without executing the command.
+- Evidence: `file:docs/checkpoints/GATE-4-CP-0001/COMMANDS.jsonl`, `file:scripts/development-ledger/record_command.py`, `file:tests/test_gate3_sandbox.py`

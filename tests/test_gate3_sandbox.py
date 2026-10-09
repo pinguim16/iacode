@@ -72,9 +72,12 @@ class LedgerCommandReplayabilityTests(unittest.TestCase):
     def tearDown(self) -> None:
         self._directory.cleanup()
 
-    def record(self, *command: str) -> tuple[int, list[dict]]:
+    def record(
+        self, *command: str, options: tuple[str, ...] = ()
+    ) -> tuple[int, list[dict]]:
         argv = ["record_command.py", "--root", str(self.root), "--checkpoint",
-                str(self.checkpoint), "--quiet", "--purpose", "fixture", "--", *command]
+                str(self.checkpoint), "--quiet", "--purpose", "fixture", *options,
+                "--", *command]
         with mock.patch.object(sys, "argv", argv), contextlib.redirect_stdout(io.StringIO()):
             exit_code = record_command.main()
         commands = self.checkpoint / "COMMANDS.jsonl"
@@ -97,6 +100,22 @@ class LedgerCommandReplayabilityTests(unittest.TestCase):
         errors: list[str] = []
         validate_checkpoint._validate_command_reproducibility(self.root, records[0], 1, errors)
         self.assertEqual(errors, [])
+
+    def test_inputs_are_canonicalized_and_an_unknown_subject_is_refused(self) -> None:
+        exit_code, records = self.record(
+            "python", "probe.py", options=("--input", "probe.py")
+        )
+        self.assertEqual(exit_code, 0)
+        self.assertEqual(records[0]["inputs"], ["probe.py"])
+
+        (self.root / "executed.marker").unlink()
+        exit_code, records = self.record(
+            "python", "probe.py", options=("--subject-commit", "f" * 40)
+        )
+        self.assertNotEqual(exit_code, 0)
+        self.assertFalse(self.executed())
+        self.assertEqual(records[-1]["resultCode"], "E_UNREPLAYABLE_COMMAND")
+        self.assertIn("does not resolve", records[-1]["failureReason"])
 
     def test_unsupported_runtime_is_rejected_before_execution(self) -> None:
         exit_code, records = self.record(sys.executable, "probe.py")
