@@ -1,0 +1,114 @@
+{
+  "schemaVersion": "3.2.0",
+  "phase": "GATE 4 — Quality Engine",
+  "gate": "GATE-4",
+  "status": "IN_PROGRESS",
+  "branch": "main",
+  "baseCommit": "92020769ffd19adeb78d432141da5b1fd492f969",
+  "currentCommit": "92020769ffd19adeb78d432141da5b1fd492f969",
+  "dirty": true,
+  "startedAt": "2026-10-09T16:25:45Z",
+  "updatedAt": "2026-10-09T16:39:27Z",
+  "nextAllowedAction": "Implement G4-S01: quality contracts, policy, profiles, planning, runners, and verdict derivation.",
+  "blockedBy": [],
+  "secondToolValidation": {
+    "status": "PENDING_MANUAL",
+    "tool": null,
+    "provider": null,
+    "model": null,
+    "validatedAt": null,
+    "justification": null,
+    "evidence": []
+  },
+  "requirementsMatrix": {
+    "path": "REQUIREMENTS-MATRIX.json",
+    "total": 163,
+    "mandatory": 163,
+    "complete": 0,
+    "partial": 0,
+    "missing": 163,
+    "notApplicable": 0,
+    "coveragePercent": 0.0
+  },
+  "greenKeeper": {
+    "status": "NOT_EXECUTED",
+    "cycles": 0,
+    "remainingFailures": 0,
+    "unresolvedReworkItems": 0,
+    "log": "REWORK-LOG.jsonl",
+    "externalBlockers": [],
+    "evidence": []
+  },
+  "deliveryCompleteness": {
+    "status": "NOT_EXECUTED",
+    "report": "COMPLETENESS-REPORT.json",
+    "coveragePercent": 0.0,
+    "evidenceCoveragePercent": 0.0,
+    "auditor": null,
+    "evidence": []
+  },
+  "reworkCycles": 1,
+  "independentReview": {
+    "status": "PENDING",
+    "tool": null,
+    "reviewedAt": null,
+    "justification": null,
+    "evidence": []
+  },
+  "redTeam": {
+    "status": "PENDING",
+    "tool": null,
+    "executedAt": null,
+    "justification": null,
+    "evidence": []
+  },
+  "lessonPreflight": {
+    "path": "LESSON-PREFLIGHT.json",
+    "gate": "GATE-4",
+    "scope": "quality engine, evaluation runners, immutable evidence store, verdict rules, false-PASS rejection, reproducible evidence, sandboxed execution, agent-runtime integration, promotion evidence",
+    "lessonsConsidered": 59,
+    "lessonsApplicable": 58,
+    "derivedRequirements": 58,
+    "evidence": [
+      "LESSON-PREFLIGHT.json",
+      "LESSON-PREFLIGHT.md",
+      "cmd-0002"
+    ]
+  },
+  "milestone": {
+    "id": "M2",
+    "title": "IACode V0 completion and experience",
+    "gates": [
+      "GATE 4",
+      "GATE 5",
+      "GATE 6",
+      "GATE 7"
+    ],
+    "status": "PENDING",
+    "auditor": null,
+    "auditedAt": null,
+    "evidence": []
+  },
+  "externalAuditRequired": false,
+  "externalAuditReason": null,
+  "guardrailEffectiveness": {
+    "guardrailsTotal": 0,
+    "guardrailsResolved": 0,
+    "guardrailsTested": 0,
+    "guardrailsEffective": 0,
+    "guardrailFailures": 0,
+    "evidence": []
+  },
+  "integrity": {
+    "status": "NOT_EXECUTED",
+    "anchors": 0,
+    "chainFile": ".iacode/anchors/checkpoint-chain.json",
+    "evidence": []
+  },
+  "externalAttestation": {
+    "status": "NONE",
+    "path": null,
+    "auditId": null,
+    "evidence": []
+  }
+}

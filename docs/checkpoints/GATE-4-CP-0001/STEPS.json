@@ -1,0 +1,59 @@
+{
+  "schemaVersion": "1.0.0",
+  "gate": "GATE-4",
+  "checkpoint": "GATE-4-CP-0001",
+  "steps": [
+    {
+      "stepId": "G4-S00",
+      "requirements": ["GATE-4-1.1", "GATE-4-18.3", "LESSON-REQ-*"],
+      "expectedBehavior": "The Gate starts from a fixed, independently derived denominator and a truthful baseline.",
+      "implementation": ["docs/GATE-4-CHECKLIST.md", ".iacode/policies/canonical-requirements.json", "LESSON-PREFLIGHT.json", "REQUIREMENTS-MATRIX.json", "BASELINE.md", "PLAN.md"],
+      "tests": ["canonical requirement parser", "lesson preflight", "requirement derivation", "control-plane baseline"],
+      "functionalProof": "The derivation reports exactly 105 canonical plus 58 lesson requirements.",
+      "evidence": ["cmd-0002", "cmd-0003", "cmd-0005", "cmd-0006", "cmd-0008"],
+      "status": "COMPLETE"
+    },
+    {
+      "stepId": "G4-S01",
+      "requirements": ["GATE-4-2.1..6.6", "GATE-4-10.1..10.7"],
+      "expectedBehavior": "Valid profiles deterministically produce closed plans and only complete evidence-backed results can derive PASS.",
+      "implementation": [], "tests": [], "functionalProof": null, "evidence": [], "status": "IN_PROGRESS"
+    },
+    {
+      "stepId": "G4-S02",
+      "requirements": ["GATE-4-7.1..8.7"],
+      "expectedBehavior": "All supported stacks execute only inside content-addressed sandbox images.",
+      "implementation": [], "tests": [], "functionalProof": null, "evidence": [], "status": "NOT_STARTED"
+    },
+    {
+      "stepId": "G4-S03",
+      "requirements": ["GATE-4-9.1..13.1"],
+      "expectedBehavior": "Evidence and lifecycle facts are immutable, durable, origin-checked, resolvable, and reproducible.",
+      "implementation": [], "tests": [], "functionalProof": null, "evidence": [], "status": "NOT_STARTED"
+    },
+    {
+      "stepId": "G4-S04",
+      "requirements": ["GATE-4-12.1..14.4", "GATE-4-17.1..17.4"],
+      "expectedBehavior": "Quality runs survive restarts, cancel and time out safely, and are exposed through stable bounded interfaces.",
+      "implementation": [], "tests": [], "functionalProof": null, "evidence": [], "status": "NOT_STARTED"
+    },
+    {
+      "stepId": "G4-S05",
+      "requirements": ["GATE-4-15.1..15.4", "GATE-4-18.1..18.3", "GATE-4-20.5"],
+      "expectedBehavior": "Functional acceptance, resumable program state, and review bundles are permanent validated controls.",
+      "implementation": [], "tests": [], "functionalProof": null, "evidence": [], "status": "NOT_STARTED"
+    },
+    {
+      "stepId": "G4-S06",
+      "requirements": ["GATE-4-16.1..16.5", "GATE-4-19.1..19.4"],
+      "expectedBehavior": "Real PASS, FAIL, IACode, reproduction, and adversarial scenarios distinguish truthfully without host effects.",
+      "implementation": [], "tests": [], "functionalProof": null, "evidence": [], "status": "NOT_STARTED"
+    },
+    {
+      "stepId": "G4-S07",
+      "requirements": ["GATE-4-20.1..20.8", "all remaining derived requirements"],
+      "expectedBehavior": "All mandatory gates and evidence are complete and the implementing run stops at READY_FOR_REVIEW.",
+      "implementation": [], "tests": [], "functionalProof": null, "evidence": [], "status": "NOT_STARTED"
+    }
+  ]
+}

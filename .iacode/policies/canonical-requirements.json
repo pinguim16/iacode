@@ -4487,6 +4487,853 @@
           "mandatory": true
         }
       ]
+    },
+    {
+      "gate": "GATE-4",
+      "specification": "docs/GATE-4-CHECKLIST.md",
+      "parser": "scripts/development-ledger/policies.py:parse_checklist",
+      "requirements": [
+        {
+          "key": "1.1",
+          "section": "1. Canonical scope and delivery controls",
+          "description": "This checklist is the canonical, machine-readable requirement source for the Gate and its registry mirror has exactly the same ordered rows.",
+          "artifact": "`docs/GATE-4-CHECKLIST.md`, `.iacode/policies/canonical-requirements.json`",
+          "evidence": "`Gate4CanonicalSpecificationTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "1.2",
+          "section": "1. Canonical scope and delivery controls",
+          "description": "The evaluator reservation is consumed by this Gate while every later-Gate reservation remains enforced.",
+          "artifact": "`.iacode/policies/gate-scope.json`, `services/evaluator/`",
+          "evidence": "`Gate4ScopeTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "1.3",
+          "section": "1. Canonical scope and delivery controls",
+          "description": "The closed mandatory gate registry includes an evaluator gate that builds every image it executes before measuring it.",
+          "artifact": "`.iacode/policies/quality-gates.json`, `scripts/iacode/gates/evaluator_tests.py`",
+          "evidence": "`Gate4MandatoryGateTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "1.4",
+          "section": "1. Canonical scope and delivery controls",
+          "description": "The evaluator suite is canonical, counted, and available to evidence resolution.",
+          "artifact": "`.iacode/policies/test-suites.json`",
+          "evidence": "`Gate4TestSuiteRegistryTests`; derived `COUNTS.json`.",
+          "mandatory": true
+        },
+        {
+          "key": "1.5",
+          "section": "1. Canonical scope and delivery controls",
+          "description": "Gate 4 introduces no held-out model evaluation capability reserved for Gate 20 and no CLI or VS Code capability reserved for Gate 5.",
+          "artifact": "`.iacode/policies/gate-scope.json`",
+          "evidence": "`Gate4ScopeTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "1.6",
+          "section": "1. Canonical scope and delivery controls",
+          "description": "Generated review archives are permanently excluded from Git, while their validation result and digest remain checkpoint evidence.",
+          "artifact": "`.gitignore`, `scripts/development-ledger/review_bundle.py`",
+          "evidence": "`ReviewBundleTests`; staged secret scan.",
+          "mandatory": true
+        },
+        {
+          "key": "2.1",
+          "section": "2. Versioned quality contracts",
+          "description": "Versioned contracts exist for `QualityPlan`, `QualityCheck`, `QualityRun`, `QualityResult`, `QualityFinding`, `QualityEvidence`, `QualityPolicy`, and `QualityVerdict`.",
+          "artifact": "`packages/contracts/src/iacode_contracts/quality.py`",
+          "evidence": "`QualityContractTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "2.2",
+          "section": "2. Versioned quality contracts",
+          "description": "Contract vocabularies are closed and reject missing fields, extra fields, wrong types, invalid values, duplicate identifiers, and unsupported versions with distinct reasons.",
+          "artifact": "`packages/contracts/src/iacode_contracts/quality.py`",
+          "evidence": "`QualityContractTests`; `test_contract_failures_name_the_actual_defect`.",
+          "mandatory": true
+        },
+        {
+          "key": "2.3",
+          "section": "2. Versioned quality contracts",
+          "description": "Every contract round-trips without losing identity, ordering, timestamps, digests, policy references, sandbox references, or artifact references.",
+          "artifact": "`packages/contracts/src/iacode_contracts/quality.py`",
+          "evidence": "`test_every_quality_contract_round_trips`.",
+          "mandatory": true
+        },
+        {
+          "key": "2.4",
+          "section": "2. Versioned quality contracts",
+          "description": "Every reusable artifact defaults to `trainingAllowed=false`; a quality contract carries no credential, secret, chain-of-thought, or whole environment.",
+          "artifact": "`packages/contracts/src/iacode_contracts/quality.py`",
+          "evidence": "`QualityRightsTests`; `QualitySecretContainmentTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "2.5",
+          "section": "2. Versioned quality contracts",
+          "description": "Payload sizes are bounded as the receiver measures them, and oversized plans, output summaries, findings, and evidence metadata are refused before persistence.",
+          "artifact": "`packages/contracts/src/iacode_contracts/quality.py`, `services/evaluator/src/iacode_evaluator/limits.py`",
+          "evidence": "`QualityLimitTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "3.1",
+          "section": "3. Project profile and detection",
+          "description": "A project profile records the detected stacks, manifests, workspace root, configuration source, confidence, and unresolved ambiguity without depending on IACode-specific paths.",
+          "artifact": "`services/evaluator/src/iacode_evaluator/projects.py`",
+          "evidence": "`ProjectProfileTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "3.2",
+          "section": "3. Project profile and detection",
+          "description": "Detection recognizes Python, Node, TypeScript, Angular, Maven, and Gradle from repository evidence and supports mixed projects.",
+          "artifact": "`services/evaluator/src/iacode_evaluator/projects.py`",
+          "evidence": "`ProjectProfileTests`; six stack fixtures.",
+          "mandatory": true
+        },
+        {
+          "key": "3.3",
+          "section": "3. Project profile and detection",
+          "description": "Detection never executes project code, follows no symlink outside the snapshot, ignores generated/vendor directories, and reads only bounded manifest content.",
+          "artifact": "`services/evaluator/src/iacode_evaluator/projects.py`",
+          "evidence": "`ProjectDetectionSecurityTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "3.4",
+          "section": "3. Project profile and detection",
+          "description": "Ambiguous or unknown toolchains produce an explicit unsupported/ambiguous result and never an invented stack or a false `PASS`.",
+          "artifact": "`services/evaluator/src/iacode_evaluator/projects.py`",
+          "evidence": "`test_unknown_and_ambiguous_projects_do_not_invent_a_profile`.",
+          "mandatory": true
+        },
+        {
+          "key": "3.5",
+          "section": "3. Project profile and detection",
+          "description": "A versioned project configuration may select declared checks and commands but cannot select an image, mount, network, resource bound, verdict, or undeclared runner.",
+          "artifact": "`iacode-quality.json`, `services/evaluator/src/iacode_evaluator/configuration.py`",
+          "evidence": "`QualityConfigurationTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "3.6",
+          "section": "3. Project profile and detection",
+          "description": "The same source code onboards Python, Java, and TypeScript/Node fixtures through profiles rather than repository-specific branches.",
+          "artifact": "`services/evaluator/tests/fixtures/`",
+          "evidence": "`ProjectAgnosticScenarioTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "4.1",
+          "section": "4. Canonical quality policy",
+          "description": "One canonical policy registry declares profiles, runners, mandatory checks, applicability, timeouts, output limits, evidence requirements, and verdict rules.",
+          "artifact": "`.iacode/policies/quality-policy.json`",
+          "evidence": "`QualityPolicyTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "4.2",
+          "section": "4. Canonical quality policy",
+          "description": "Unknown policy keys, runner names, check kinds, result states, evidence kinds, or verdict rules are refused when policy loads.",
+          "artifact": "`services/evaluator/src/iacode_evaluator/policy.py`",
+          "evidence": "`QualityPolicyTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "4.3",
+          "section": "4. Canonical quality policy",
+          "description": "The requested project configuration may add checks or lower limits but cannot remove a mandatory check, raise a limit, weaken a threshold, or alter a verdict rule.",
+          "artifact": "`services/evaluator/src/iacode_evaluator/policy.py`",
+          "evidence": "`test_project_configuration_cannot_weaken_policy`.",
+          "mandatory": true
+        },
+        {
+          "key": "4.4",
+          "section": "4. Canonical quality policy",
+          "description": "Applicability is derived from the project profile: an empty applicable set is justified `NOT_APPLICABLE`, while a missing required set is `FAIL`.",
+          "artifact": "`services/evaluator/src/iacode_evaluator/policy.py`",
+          "evidence": "`test_empty_applicability_is_not_a_missing_requirement`.",
+          "mandatory": true
+        },
+        {
+          "key": "4.5",
+          "section": "4. Canonical quality policy",
+          "description": "Every policy key has an implementation consumer, and the policy and its schema are content-addressed inputs to every plan.",
+          "artifact": "`.iacode/policies/quality-policy.json`, `.iacode/schemas/quality-policy.schema.json`",
+          "evidence": "`QualityPolicyCoverageTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "5.1",
+          "section": "5. Deterministic quality planning",
+          "description": "Planning freezes the project snapshot checksum, profile, policy digest, ordered checks, commands, runner images, limits, and environment before execution begins.",
+          "artifact": "`services/evaluator/src/iacode_evaluator/planner.py`",
+          "evidence": "`QualityPlannerTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "5.2",
+          "section": "5. Deterministic quality planning",
+          "description": "Plan identity is a deterministic digest of canonical content; equal inputs produce the same plan and any material input change produces a different plan.",
+          "artifact": "`services/evaluator/src/iacode_evaluator/planner.py`",
+          "evidence": "`test_plan_identity_is_deterministic_and_input_bound`.",
+          "mandatory": true
+        },
+        {
+          "key": "5.3",
+          "section": "5. Deterministic quality planning",
+          "description": "Check identifiers are unique, stable, and independent of execution order; dependencies form an acyclic graph and unknown dependencies are refused.",
+          "artifact": "`services/evaluator/src/iacode_evaluator/planner.py`",
+          "evidence": "`QualityPlannerTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "5.4",
+          "section": "5. Deterministic quality planning",
+          "description": "A plan cannot carry a caller-authored expected verdict, result, evidence digest, sandbox result, or hidden command.",
+          "artifact": "`services/evaluator/src/iacode_evaluator/planner.py`",
+          "evidence": "`test_a_plan_cannot_smuggle_a_verdict_or_result`.",
+          "mandatory": true
+        },
+        {
+          "key": "5.5",
+          "section": "5. Deterministic quality planning",
+          "description": "The plan exposes why every check is mandatory, optional, or not applicable and identifies the policy rule that decided it.",
+          "artifact": "`services/evaluator/src/iacode_evaluator/planner.py`",
+          "evidence": "`test_each_planned_check_has_a_policy_reason`.",
+          "mandatory": true
+        },
+        {
+          "key": "6.1",
+          "section": "6. Runner registry and check kinds",
+          "description": "A closed runner registry maps declared runner identifiers to structured sandbox command requests; unknown identifiers never fall back to a shell command.",
+          "artifact": "`services/evaluator/src/iacode_evaluator/runners.py`",
+          "evidence": "`RunnerRegistryTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "6.2",
+          "section": "6. Runner registry and check kinds",
+          "description": "Initial check kinds cover build, unit, integration, lint, static analysis, dependency/security, secret scan, configured coverage, applicable migration checks, and diff integrity.",
+          "artifact": "`.iacode/policies/quality-policy.json`, `services/evaluator/src/iacode_evaluator/runners.py`",
+          "evidence": "`QualityCheckKindTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "6.3",
+          "section": "6. Runner registry and check kinds",
+          "description": "Commands are argument vectors or policy-owned command text, never concatenated from untrusted project values, and every working directory resolves within the snapshot.",
+          "artifact": "`services/evaluator/src/iacode_evaluator/runners.py`",
+          "evidence": "`RunnerSecurityTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "6.4",
+          "section": "6. Runner registry and check kinds",
+          "description": "A runner normalizes exit code, timeout, denial, cancellation, truncation, duration, sandbox identity, and artifacts without inventing an exit code for work that never started.",
+          "artifact": "`services/evaluator/src/iacode_evaluator/runners.py`",
+          "evidence": "`QualityRunnerResultTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "6.5",
+          "section": "6. Runner registry and check kinds",
+          "description": "Required checks execute despite an earlier failure unless their declared dependency makes execution impossible; every skipped check records the exact dependency reason.",
+          "artifact": "`services/evaluator/src/iacode_evaluator/engine.py`",
+          "evidence": "`test_failure_does_not_hide_independent_check_results`.",
+          "mandatory": true
+        },
+        {
+          "key": "6.6",
+          "section": "6. Runner registry and check kinds",
+          "description": "A cancelled or timed-out run reaches one terminal state, records the reason before the state, and leaves no running check or sandbox session.",
+          "artifact": "`services/evaluator/src/iacode_evaluator/engine.py`",
+          "evidence": "`QualityCancellationTests`; live scenario.",
+          "mandatory": true
+        },
+        {
+          "key": "7.1",
+          "section": "7. Sandbox-only execution boundary",
+          "description": "Every project command is dispatched through the Gate 3 sandbox task queue; the evaluator, API, orchestrator, and host never execute a project command.",
+          "artifact": "`services/evaluator/src/iacode_evaluator/executor.py`",
+          "evidence": "`QualityExecutionBoundaryTests`; live sandbox proof.",
+          "mandatory": true
+        },
+        {
+          "key": "7.2",
+          "section": "7. Sandbox-only execution boundary",
+          "description": "Only the sandbox service has the container engine socket, and the evaluator service has no host mount, project bind mount, credential, or engine access.",
+          "artifact": "`infra/compose/docker-compose.yml`",
+          "evidence": "`QualityInfrastructureBoundaryTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "7.3",
+          "section": "7. Sandbox-only execution boundary",
+          "description": "The executor origin is frozen as `EVALUATOR` when a quality check is created; a result from another origin is refused before storage.",
+          "artifact": "`services/evaluator/src/iacode_evaluator/executor.py`, `packages/contracts/src/iacode_contracts/quality.py`",
+          "evidence": "`QualityResultOriginTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "7.4",
+          "section": "7. Sandbox-only execution boundary",
+          "description": "The snapshot, policy, image, resources, network, mounts, and limits cannot be changed by an executing check or its project.",
+          "artifact": "`services/evaluator/src/iacode_evaluator/executor.py`, `.iacode/policies/sandbox-policy.json`",
+          "evidence": "`QualitySandboxPolicyTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "7.5",
+          "section": "7. Sandbox-only execution boundary",
+          "description": "A host sentinel and host process observation prove that passing and failing fixtures execute inside the sandbox and cause no host side effect.",
+          "artifact": "`scripts/iacode/scenarios/quality_engine_e2e.py`",
+          "evidence": "Recorded functional acceptance; `QualityScenarioTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "8.1",
+          "section": "8. Initial stack support",
+          "description": "Python projects have policy-owned runners for build/package validation, unit/integration tests, lint/static checks, dependency/security, secret, configured coverage, migration, and diff integrity as applicable.",
+          "artifact": "`.iacode/policies/quality-policy.json`",
+          "evidence": "Python passing and failing fixture results.",
+          "mandatory": true
+        },
+        {
+          "key": "8.2",
+          "section": "8. Initial stack support",
+          "description": "Node and TypeScript projects have policy-owned runners for install integrity, build, unit/integration tests, lint/static checks, dependency/security, secret, configured coverage, migration, and diff integrity as applicable.",
+          "artifact": "`.iacode/policies/quality-policy.json`",
+          "evidence": "Node and TypeScript fixture results.",
+          "mandatory": true
+        },
+        {
+          "key": "8.3",
+          "section": "8. Initial stack support",
+          "description": "Angular projects have policy-owned runners for production build, unit tests, lint/static checks, dependency/security, secret, configured coverage, and diff integrity.",
+          "artifact": "`.iacode/policies/quality-policy.json`",
+          "evidence": "Angular fixture results.",
+          "mandatory": true
+        },
+        {
+          "key": "8.4",
+          "section": "8. Initial stack support",
+          "description": "Maven projects have policy-owned runners for package, unit/integration tests, static checks, dependency/security, secret, configured coverage, migration, and diff integrity as applicable.",
+          "artifact": "`.iacode/policies/quality-policy.json`",
+          "evidence": "Maven fixture results.",
+          "mandatory": true
+        },
+        {
+          "key": "8.5",
+          "section": "8. Initial stack support",
+          "description": "Gradle projects have policy-owned runners for build, unit/integration tests, static checks, dependency/security, secret, configured coverage, migration, and diff integrity as applicable.",
+          "artifact": "`.iacode/policies/quality-policy.json`",
+          "evidence": "Gradle fixture results.",
+          "mandatory": true
+        },
+        {
+          "key": "8.6",
+          "section": "8. Initial stack support",
+          "description": "Sandbox image profiles are extensible and content-addressed; a missing or stale required image is a recorded failure and never silently replaced.",
+          "artifact": "`services/sandbox/images/`, `.iacode/policies/sandbox-policy.json`",
+          "evidence": "`QualityImageProfileTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "8.7",
+          "section": "8. Initial stack support",
+          "description": "Dependency installation and checks have no internet access; lockfiles and prebuilt image toolchains decide what can execute reproducibly.",
+          "artifact": "`.iacode/policies/sandbox-policy.json`, `services/sandbox/images/`",
+          "evidence": "`QualityNetworkIsolationTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "9.1",
+          "section": "9. Evidence store and immutability",
+          "description": "Quality evidence uses the existing artifact store and records a content digest, byte size, media type, producer, source inputs, creation time, retention class, and rights.",
+          "artifact": "`services/evaluator/src/iacode_evaluator/evidence.py`",
+          "evidence": "`QualityEvidenceTests`; integration test against MinIO.",
+          "mandatory": true
+        },
+        {
+          "key": "9.2",
+          "section": "9. Evidence store and immutability",
+          "description": "Evidence is content-addressed and immutable: a digest collision with different bytes, overwrite, rename, or deletion through the evaluator is refused.",
+          "artifact": "`services/evaluator/src/iacode_evaluator/evidence.py`",
+          "evidence": "`test_evidence_cannot_be_replaced_or_mutated`.",
+          "mandatory": true
+        },
+        {
+          "key": "9.3",
+          "section": "9. Evidence store and immutability",
+          "description": "A stored evidence reference is resolved and re-hashed before it can support a verdict; missing, truncated-without-artifact, or digest-mismatched evidence fails the run.",
+          "artifact": "`services/evaluator/src/iacode_evaluator/evidence.py`",
+          "evidence": "`QualityEvidenceResolutionTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "9.4",
+          "section": "9. Evidence store and immutability",
+          "description": "Inline summaries are bounded and secret-redacted; complete output is an artifact, never a database field, API response, metric label, or log record.",
+          "artifact": "`services/evaluator/src/iacode_evaluator/evidence.py`",
+          "evidence": "`QualitySecretContainmentTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "9.5",
+          "section": "9. Evidence store and immutability",
+          "description": "Evidence reproduction replays the frozen plan against the same snapshot and policy, records a new run, and compares result/evidence digests without rewriting the original.",
+          "artifact": "`services/evaluator/src/iacode_evaluator/reproduce.py`",
+          "evidence": "`QualityReproductionTests`; live reproduction report.",
+          "mandatory": true
+        },
+        {
+          "key": "10.1",
+          "section": "10. Results, findings, and verdict rules",
+          "description": "Each check produces exactly one terminal result and zero or more typed findings linked to resolvable evidence.",
+          "artifact": "`services/evaluator/src/iacode_evaluator/verdict.py`",
+          "evidence": "`QualityVerdictTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "10.2",
+          "section": "10. Results, findings, and verdict rules",
+          "description": "A mandatory failure, denial, timeout, cancellation, execution error, missing result, unresolved evidence, stale input, or incomplete check set makes the verdict `FAIL`.",
+          "artifact": "`services/evaluator/src/iacode_evaluator/verdict.py`",
+          "evidence": "`FalsePassRejectionTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "10.3",
+          "section": "10. Results, findings, and verdict rules",
+          "description": "`PASS` requires the exact applicable mandatory set, every result successful, every required evidence reference resolved, and every configured threshold satisfied.",
+          "artifact": "`services/evaluator/src/iacode_evaluator/verdict.py`",
+          "evidence": "`FalsePassRejectionTests`; positive simulation.",
+          "mandatory": true
+        },
+        {
+          "key": "10.4",
+          "section": "10. Results, findings, and verdict rules",
+          "description": "Coverage is evaluated only when configured; below-threshold or unreadable coverage fails, while legitimately unconfigured coverage is justified `NOT_APPLICABLE` and never counted as `PASS`.",
+          "artifact": "`services/evaluator/src/iacode_evaluator/verdict.py`",
+          "evidence": "`CoverageVerdictTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "10.5",
+          "section": "10. Results, findings, and verdict rules",
+          "description": "Severity, category, location, fingerprint, message, check identity, and evidence identify a finding; equal findings deduplicate deterministically without hiding recurrence.",
+          "artifact": "`services/evaluator/src/iacode_evaluator/findings.py`",
+          "evidence": "`QualityFindingTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "10.6",
+          "section": "10. Results, findings, and verdict rules",
+          "description": "The verdict is a pure derivation from the frozen policy, plan, results, and resolved evidence; no API, runner, database row, or caller may submit it.",
+          "artifact": "`services/evaluator/src/iacode_evaluator/verdict.py`",
+          "evidence": "`test_no_public_input_accepts_a_verdict`.",
+          "mandatory": true
+        },
+        {
+          "key": "10.7",
+          "section": "10. Results, findings, and verdict rules",
+          "description": "Re-deriving a stored verdict must produce the same value and digest; disagreement marks the run invalid and never overwrites history.",
+          "artifact": "`services/evaluator/src/iacode_evaluator/verdict.py`",
+          "evidence": "`test_stored_verdict_is_rederived_not_trusted`.",
+          "mandatory": true
+        },
+        {
+          "key": "11.1",
+          "section": "11. Persistence and migration",
+          "description": "Relational persistence records quality plans, runs, checks, results, findings, evidence references, verdicts, and append-only run events with foreign keys and closed status constraints.",
+          "artifact": "`packages/persistence/src/iacode_persistence/models.py`, `apps/api/migrations/versions/0006_quality_engine.py`",
+          "evidence": "`QualityMigrationTests`; `QualityStoreTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "11.2",
+          "section": "11. Persistence and migration",
+          "description": "Plan content, result content, and verdict content are immutable after insertion; lifecycle updates may change only the declared run state and timestamps.",
+          "artifact": "`services/evaluator/src/iacode_evaluator/store.py`",
+          "evidence": "`QualityStoreImmutabilityTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "11.3",
+          "section": "11. Persistence and migration",
+          "description": "Idempotency keys and uniqueness constraints make duplicate create, dispatch, callback, event, and verdict operations return the recorded fact rather than create a second one.",
+          "artifact": "`services/evaluator/src/iacode_evaluator/store.py`",
+          "evidence": "`QualityIdempotencyTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "11.4",
+          "section": "11. Persistence and migration",
+          "description": "The event that explains a state is committed before the state a reader may act on, including every terminal transition.",
+          "artifact": "`services/evaluator/src/iacode_evaluator/store.py`",
+          "evidence": "`test_events_precede_observable_terminal_states`.",
+          "mandatory": true
+        },
+        {
+          "key": "11.5",
+          "section": "11. Persistence and migration",
+          "description": "Migration `0006` upgrades from zero and from `0005`, downgrades cleanly, and leaves no Alembic autogenerate diff.",
+          "artifact": "`apps/api/migrations/versions/0006_quality_engine.py`",
+          "evidence": "Recorded migration reversibility and autogenerate checks.",
+          "mandatory": true
+        },
+        {
+          "key": "11.6",
+          "section": "11. Persistence and migration",
+          "description": "No quality table stores a credential, full command output, host environment, or training eligibility defaulting to true.",
+          "artifact": "`packages/persistence/src/iacode_persistence/models.py`",
+          "evidence": "`QualityPersistenceSecurityTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "12.1",
+          "section": "12. Durable run lifecycle",
+          "description": "A durable workflow plans, starts, executes, cancels, resumes, reproduces, and finishes a quality run with a queryable event history.",
+          "artifact": "`services/evaluator/src/iacode_evaluator/workflow.py`, `services/evaluator/src/iacode_evaluator/worker.py`",
+          "evidence": "`QualityWorkflowTests`; live restart scenario.",
+          "mandatory": true
+        },
+        {
+          "key": "12.2",
+          "section": "12. Durable run lifecycle",
+          "description": "A worker restart during a check preserves the run identity and either receives the owned result or records an explicit failure; it never silently passes or duplicates execution.",
+          "artifact": "`scripts/iacode/scenarios/quality_engine_e2e.py`",
+          "evidence": "Recorded recovery scenario.",
+          "mandatory": true
+        },
+        {
+          "key": "12.3",
+          "section": "12. Durable run lifecycle",
+          "description": "Cancellation is idempotent, propagates to the sandbox, refuses late results, and finishes only after cleanup is observed.",
+          "artifact": "`services/evaluator/src/iacode_evaluator/workflow.py`",
+          "evidence": "`QualityCancellationTests`; live cancellation scenario.",
+          "mandatory": true
+        },
+        {
+          "key": "12.4",
+          "section": "12. Durable run lifecycle",
+          "description": "A run deadline and per-check deadlines are policy-owned; when either fires, the store still records the event, result, and terminal verdict.",
+          "artifact": "`services/evaluator/src/iacode_evaluator/workflow.py`",
+          "evidence": "`QualityDeadlineTests`; live timeout scenario.",
+          "mandatory": true
+        },
+        {
+          "key": "12.5",
+          "section": "12. Durable run lifecycle",
+          "description": "The evaluator health check proves a Temporal poller, database access, artifact-store access, and sandbox availability rather than process existence.",
+          "artifact": "`services/evaluator/src/iacode_evaluator/healthcheck.py`",
+          "evidence": "`QualityHealthTests`; Compose health observation.",
+          "mandatory": true
+        },
+        {
+          "key": "13.1",
+          "section": "13. Stable service and API boundary",
+          "description": "A stable internal service API creates a profile and plan, starts a run, retrieves plan/run/results/findings/evidence metadata/verdict, cancels a run, and requests reproduction.",
+          "artifact": "`services/evaluator/src/iacode_evaluator/service.py`",
+          "evidence": "`QualityServiceTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "13.2",
+          "section": "13. Stable service and API boundary",
+          "description": "The HTTP API exposes the stable quality lifecycle for the future Gate 5 client without exposing commands, credentials, full output, host paths, mutable verdicts, or direct sandbox control.",
+          "artifact": "`apps/api/src/iacode_api/routes/quality.py`",
+          "evidence": "`QualityApiTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "13.3",
+          "section": "13. Stable service and API boundary",
+          "description": "List and event endpoints are bounded and cursor-paginated; a terminal stream drains every event after the cursor before closing.",
+          "artifact": "`apps/api/src/iacode_api/routes/quality.py`",
+          "evidence": "`QualityApiPaginationTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "13.4",
+          "section": "13. Stable service and API boundary",
+          "description": "Every response, including validation errors and failures outside middleware, carries correlation identity and canonical error code.",
+          "artifact": "`apps/api/src/iacode_api/routes/quality.py`",
+          "evidence": "`QualityApiErrorTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "13.5",
+          "section": "13. Stable service and API boundary",
+          "description": "API input selects only a snapshot and declared policy/configuration; no request field selects a command, runner implementation, sandbox image, limit, evidence, result, or verdict.",
+          "artifact": "`apps/api/src/iacode_api/routes/quality.py`",
+          "evidence": "`QualityApiSecurityTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "14.1",
+          "section": "14. Agent Runtime integration",
+          "description": "An agent run may request a quality plan for its frozen workspace snapshot and receives only the bounded plan identity and applicable check summary.",
+          "artifact": "`services/orchestrator/src/iacode_orchestrator/agent_runtime/activities.py`",
+          "evidence": "`AgentQualityIntegrationTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "14.2",
+          "section": "14. Agent Runtime integration",
+          "description": "A quality run is owned by its requesting agent run, and a result or callback from another owner/origin is refused before storage or workflow signalling.",
+          "artifact": "`services/evaluator/src/iacode_evaluator/store.py`",
+          "evidence": "`QualityOwnershipTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "14.3",
+          "section": "14. Agent Runtime integration",
+          "description": "The agent receives the derived verdict, findings summary, and artifact references as labelled tool data, never as an instruction or unbounded output.",
+          "artifact": "`services/agent-runtime/src/iacode_agent_runtime/context.py`",
+          "evidence": "`AgentQualityContextTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "14.4",
+          "section": "14. Agent Runtime integration",
+          "description": "Quality failure cannot be transformed into agent-run success by prose, review approval, a missing callback, or a manually posted result.",
+          "artifact": "`services/orchestrator/src/iacode_orchestrator/workflows/agent_run.py`",
+          "evidence": "`AgentQualityPromotionTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "15.1",
+          "section": "15. Functional acceptance mechanism",
+          "description": "A schema-bound functional acceptance artifact records requirement, feature, scenario, environment, preconditions, execution, expected, observed, result, evidence, timestamp, and artifact references.",
+          "artifact": "`.iacode/schemas/functional-acceptance.schema.json`, `FUNCTIONAL-ACCEPTANCE.json`",
+          "evidence": "`FunctionalAcceptanceTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "15.2",
+          "section": "15. Functional acceptance mechanism",
+          "description": "Functional `PASS` requires observable executed evidence; `FAIL`, `BLOCKED`, and justified `NOT_APPLICABLE` remain distinct and are never counted as passing.",
+          "artifact": "`scripts/development-ledger/check_functional_acceptance.py`",
+          "evidence": "`FunctionalAcceptanceTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "15.3",
+          "section": "15. Functional acceptance mechanism",
+          "description": "Completeness fails when a mandatory functional requirement lacks a passing functional scenario with resolved evidence.",
+          "artifact": "`scripts/development-ledger/check_completeness.py`",
+          "evidence": "`FunctionalCompletenessTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "15.4",
+          "section": "15. Functional acceptance mechanism",
+          "description": "The mechanism is reusable by later Gates and derives its mandatory functional set from canonical requirements rather than caller arguments.",
+          "artifact": "`scripts/development-ledger/check_functional_acceptance.py`",
+          "evidence": "`FunctionalAcceptanceScopeTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "16.1",
+          "section": "16. Required functional proofs",
+          "description": "A passing fixture runs through the real evaluator workflow, artifact store, database, Temporal worker, sandbox service, and container engine and derives `PASS`.",
+          "artifact": "`scripts/iacode/scenarios/quality_engine_e2e.py`",
+          "evidence": "`FUNCTIONAL-ACCEPTANCE.json`; passing report.",
+          "mandatory": true
+        },
+        {
+          "key": "16.2",
+          "section": "16. Required functional proofs",
+          "description": "A failing fixture runs through the same path and derives `FAIL` with the failed check, finding, and evidence preserved.",
+          "artifact": "`scripts/iacode/scenarios/quality_engine_e2e.py`",
+          "evidence": "`FUNCTIONAL-ACCEPTANCE.json`; failing report.",
+          "mandatory": true
+        },
+        {
+          "key": "16.3",
+          "section": "16. Required functional proofs",
+          "description": "A real snapshot of IACode runs through the engine with its canonical profile, and the verdict is compared with the repository's own mandatory gate results.",
+          "artifact": "`scripts/iacode/scenarios/quality_engine_e2e.py`",
+          "evidence": "`FUNCTIONAL-ACCEPTANCE.json`; IACode report.",
+          "mandatory": true
+        },
+        {
+          "key": "16.4",
+          "section": "16. Required functional proofs",
+          "description": "The passing run is reproduced from stored inputs, and the report proves equal plan identity and equivalent results while preserving distinct run identity.",
+          "artifact": "`scripts/iacode/scenarios/quality_engine_e2e.py`",
+          "evidence": "Reproduction report.",
+          "mandatory": true
+        },
+        {
+          "key": "16.5",
+          "section": "16. Required functional proofs",
+          "description": "A false-PASS battery removes a result, flips an exit code, forges evidence, changes policy, changes snapshot, posts from the wrong origin, times out, denies, cancels, and supplies an unknown status; every mutation is rejected and a null control passes.",
+          "artifact": "`scripts/development-ledger/gate4_red_team.py`",
+          "evidence": "`M2-INTERNAL-RED-TEAM.json` with `baselineControl=VALID`.",
+          "mandatory": true
+        },
+        {
+          "key": "17.1",
+          "section": "17. Observability and operations",
+          "description": "Metrics cover planned, active, completed, failed, cancelled, and timed-out runs; check duration/status; findings by bounded severity/category; evidence writes; and verdict derivations.",
+          "artifact": "`services/evaluator/src/iacode_evaluator/telemetry.py`",
+          "evidence": "`QualityMetricsTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "17.2",
+          "section": "17. Observability and operations",
+          "description": "Metric labels are closed and low-cardinality; project path, command, output, finding message, digest, run identifier, and artifact identifier are never labels.",
+          "artifact": "`services/evaluator/src/iacode_evaluator/telemetry.py`",
+          "evidence": "`test_quality_metric_labels_are_bounded`.",
+          "mandatory": true
+        },
+        {
+          "key": "17.3",
+          "section": "17. Observability and operations",
+          "description": "Logs carry correlation, run, plan, check, sandbox, status, duration, and reason but never full output, command content, secret, host environment, or evidence body.",
+          "artifact": "`services/evaluator/src/iacode_evaluator/telemetry.py`",
+          "evidence": "`QualityLogTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "17.4",
+          "section": "17. Observability and operations",
+          "description": "Prometheus scrapes the evaluator and the operations runbook covers lifecycle, policy, runners, sandbox boundary, evidence, reproduction, recovery, and troubleshooting.",
+          "artifact": "`infra/prometheus/prometheus.yml`, `docs/runbooks/QUALITY-ENGINE.md`",
+          "evidence": "`QualityDocumentationTests`; live scrape.",
+          "mandatory": true
+        },
+        {
+          "key": "18.1",
+          "section": "18. Program state and resumability",
+          "description": "A schema-bound program state records current milestone, Gate, checkpoint, step, last completed step, local and remote commits, status, blockers, next action, and update time.",
+          "artifact": "`docs/program/PROGRAM-STATE.json`, `.iacode/schemas/program-state.schema.json`",
+          "evidence": "`ProgramStateTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "18.2",
+          "section": "18. Program state and resumability",
+          "description": "Program state is derived and validated against the checkpoint, Git, remote state, and master plan; contradictory or stale state is refused rather than reconciled silently.",
+          "artifact": "`scripts/development-ledger/program_state.py`",
+          "evidence": "`ProgramStateTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "18.3",
+          "section": "18. Program state and resumability",
+          "description": "Each Gate slice records step identity, requirements, expected behavior, implementation, tests, functional proof, evidence, and truthful status.",
+          "artifact": "`docs/checkpoints/GATE-4-CP-0001/STEPS.json`",
+          "evidence": "`GateStepTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "19.1",
+          "section": "19. Security and provenance",
+          "description": "Untrusted project content is data: manifest text, filenames, output, findings, and artifacts cannot alter policy, plan, instruction hierarchy, runner selection, or verdict logic.",
+          "artifact": "`services/evaluator/src/iacode_evaluator/`",
+          "evidence": "`QualityPromptInjectionTests`; internal Red Team.",
+          "mandatory": true
+        },
+        {
+          "key": "19.2",
+          "section": "19. Security and provenance",
+          "description": "Secret scanning runs before evidence persistence and before every push; evidence containing a detected secret is quarantined without exposing the value.",
+          "artifact": "`services/evaluator/src/iacode_evaluator/evidence.py`, `scripts/development-ledger/secret_scan.py`",
+          "evidence": "`QualitySecretContainmentTests`; recorded staged scans.",
+          "mandatory": true
+        },
+        {
+          "key": "19.3",
+          "section": "19. Security and provenance",
+          "description": "Every evaluator artifact records provenance, ownership, license, storage/RAG/training/distillation rights, and `trainingAllowed=false` absent explicit rights evidence.",
+          "artifact": "`services/evaluator/src/iacode_evaluator/evidence.py`",
+          "evidence": "`QualityRightsTests`; checkpoint provenance validation.",
+          "mandatory": true
+        },
+        {
+          "key": "19.4",
+          "section": "19. Security and provenance",
+          "description": "Current advisory scans cover every delivered dependency lock and refuse unsuppressed Critical or High findings without narrowing the source set.",
+          "artifact": "`scripts/iacode/dependency_scan.py`",
+          "evidence": "Recorded dependency scan; `DependencyScanTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "20.1",
+          "section": "20. Verification, documentation, and closure",
+          "description": "The repository's one verification command covers evaluator unit, integration, functional, reproduction, recovery, cancellation, timeout, and false-PASS stages in targeted and full modes.",
+          "artifact": "`scripts/iacode/verify.py`",
+          "evidence": "`Gate4VerificationStageTests`; recorded verification.",
+          "mandatory": true
+        },
+        {
+          "key": "20.2",
+          "section": "20. Verification, documentation, and closure",
+          "description": "Architecture, development, version, entry, and model-usage documents describe the delivered quality engine and its limits rather than planned behavior.",
+          "artifact": "`docs/ARCHITECTURE.md`, `docs/DEVELOPMENT.md`, `docs/VERSIONS.md`, `README.md`, `START-HERE.md`, `docs/MODEL-USAGE-POLICY.md`",
+          "evidence": "`QualityDocumentationTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "20.3",
+          "section": "20. Verification, documentation, and closure",
+          "description": "Structural decisions for the quality boundary, immutable evidence/verdict derivation, and project profiles/runners are recorded as indexed ADRs.",
+          "artifact": "`docs/adr/`",
+          "evidence": "`Gate4AdrTests`.",
+          "mandatory": true
+        },
+        {
+          "key": "20.4",
+          "section": "20. Verification, documentation, and closure",
+          "description": "The Gate retrospective records reusable lessons, and every important confirmed failure becomes an effective automated guardrail before handoff.",
+          "artifact": "`.iacode/memory/retrospectives/GATE-4-CP-0001.md`, `.iacode/memory/lessons.jsonl`",
+          "evidence": "`validate_lessons.py`; guardrail effectiveness report.",
+          "mandatory": true
+        },
+        {
+          "key": "20.5",
+          "section": "20. Verification, documentation, and closure",
+          "description": "A deterministic review bundle contains the complete checkpoint, changed source, tests, migrations, schemas, policies, documentation, functional acceptance, quality results, Red Team, changeset, Git/remote state, manifest, and checksums; validation opens it, checks hashes and required files, and scans it for secrets.",
+          "artifact": "`scripts/development-ledger/review_bundle.py`",
+          "evidence": "`ReviewBundleTests`; review validation report.",
+          "mandatory": true
+        },
+        {
+          "key": "20.6",
+          "section": "20. Verification, documentation, and closure",
+          "description": "Every Gate commit and the checkpoint tag are on the authorised remote when the Gate reaches its later independent verdict.",
+          "artifact": "`scripts/development-ledger/remote_sync.py`",
+          "evidence": "Recorded remote synchronization check.",
+          "mandatory": true
+        },
+        {
+          "key": "20.7",
+          "section": "20. Verification, documentation, and closure",
+          "description": "This implementing run ends at `READY_FOR_REVIEW` with complete functional and quality evidence, no blocker, and no claim of independent validation or Gate pass.",
+          "artifact": "`docs/checkpoints/GATE-4-CP-0001/STATE.json`",
+          "evidence": "Checkpoint validation; completeness; internal reviews.",
+          "mandatory": true
+        },
+        {
+          "key": "20.8",
+          "section": "20. Verification, documentation, and closure",
+          "description": "A later independent run performs review, Red Team, and the Gate verdict before Gate 5 begins; Gate 4 starts no Gate 5 implementation.",
+          "artifact": "`docs/DEVELOPMENT-CONTRACT.md`, `docs/checkpoints/GATE-4-CP-0001/NEXT.md`",
+          "evidence": "Independent review checkpoint.",
+          "mandatory": true
+        }
+      ]
     }
   ]
 }
