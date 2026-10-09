@@ -1,0 +1,309 @@
+{
+  "schemaVersion": "1.1.0",
+  "checkpoint": "GATE-3-CP-0006",
+  "generatedAt": "2026-10-09T15:23:12Z",
+  "targetFingerprint": "bc7ea3b357f5069fc1c0ce52db99b3141dbb1a813a6879b0e8dd65e419b653c7",
+  "source": "docs/checkpoints/GATE-3-CP-0006/audit-harness/red_team.py with m1_sandbox_attacks.py — the focused cross-gate adversarial battery of the M1 fresh-session milestone audit",
+  "baselineControl": {
+    "result": "VALID",
+    "detail": "the unmutated fixture is accepted by every control this battery mutates: the unmutated sandbox requests are accepted by the identical service (write SUCCEEDED/None, read SUCCEEDED/None, shell SUCCEEDED/None, reviewer read SUCCEEDED/None); the in-image half leaves no sandbox behind (0 container(s) left); the unmutated run request is accepted (HTTP 202, runId 01a12137-14d5-7000-b504-05afdb8e0abe, cancelled at once); the unmutated clone verifies (INTEGRITY_VALID anchors=21 latest=SETUP-00-CP-0013); the synchronised clone passes (REMOTE_SYNC_PASS remote=origin branch=main tags=iacode-checkpoints/GATE-3-CP-0005); the dependency scanner's clean null graph is accepted in the same test (the targeted test executes clean, Critical, High and unavailable-source paths); the identical forged-result null scenario receives the sandbox timeout ({'step': 'control.agent_saw_the_sandbox_timeout', 'result': 'PASS', 'detail': 'developer said TIMEOUT-SEEN, stored TIMED_OUT'}); the published transport clone succeeds before preserved refs are removed (); the equivalent unmutated coding scenario completes (exit 0; [iacode] SANDBOX_CODING=PASS 27/27 steps); a legitimate attestation over sealed history is accepted by the same suite (the suite executes the positive attestation before its forgery cases)",
+    "evidence": [
+      "file:services/sandbox/src/iacode_sandbox/service.py",
+      "file:scripts/development-ledger/verify_integrity.py",
+      "file:scripts/development-ledger/remote_sync.py"
+    ]
+  },
+  "attacks": [
+    {
+      "attackId": "M1-A",
+      "description": "A tool command runs anywhere but the run's own container.",
+      "target": "host execution",
+      "mutation": "run a shell command that reports its host name and user and probes the host's mount points",
+      "expectedDefense": "the host name is the sandbox container's, the user is 10001, no host mount point exists",
+      "observed": "the command ran as uid 10001 on host name 'ac6eb635f685', which is the sandbox container's ('ac6eb635f685') and not the controller's ('51d12989de2d'); host mount points absent",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/sandbox/src/iacode_sandbox/backend.py",
+        "test:test_an_injected_host_command_only_reaches_the_sandbox"
+      ],
+      "mandatory": true,
+      "origin": "M1 fresh-session audit, executed in the sandbox service image"
+    },
+    {
+      "attackId": "M1-B",
+      "description": "A credential of the controller reaches a sandbox.",
+      "target": "secret isolation",
+      "mutation": "give the controller a variable named like the provider key, then read env, /proc/1/environ and search the filesystem for credential files from inside a sandbox",
+      "expectedDefense": "no controller variable, no secret value and no credential file is visible",
+      "observed": "controller variables visible: none; secret value visible: False; credential files: none; files holding private key material: none",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/sandbox/src/iacode_sandbox/backend.py",
+        "test:test_the_environment_is_the_allowlist_and_nothing_else"
+      ],
+      "mandatory": true,
+      "origin": "M1 fresh-session audit, executed in the sandbox service image"
+    },
+    {
+      "attackId": "M1-C",
+      "description": "The container engine is reachable from a sandbox.",
+      "target": "engine socket",
+      "mutation": "look for the socket, DOCKER_HOST and connect to the socket path; inspect the container",
+      "expectedDefense": "no socket, no endpoint, no mount and no bind in the sandbox container",
+      "observed": "socket paths absent, DOCKER_HOST empty, connecting fails; the container has 0 mount(s) and 0 bind(s)",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/sandbox/src/iacode_sandbox/backend.py",
+        "test:test_no_docker_socket_or_engine_endpoint_is_reachable"
+      ],
+      "mandatory": true,
+      "origin": "M1 fresh-session audit, executed in the sandbox service image"
+    },
+    {
+      "attackId": "M1-D",
+      "description": "A path or a link leaves the workspace.",
+      "target": "workspace escape",
+      "mutation": "read ../, an absolute path, a Windows path, a climbing sub-path; read and write through links to / and to /etc/passwd",
+      "expectedDefense": "every one is DENIED with a PATH_ code",
+      "observed": "../../../etc/passwd -> DENIED/PATH_ESCAPE; /etc/shadow -> DENIED/PATH_ABSOLUTE_OUTSIDE; ..\\..\\windows -> DENIED/PATH_BACKSLASH; sub/../../x -> DENIED/PATH_ESCAPE; root-link/etc/passwd -> DENIED/PATH_SYMLINK_ESCAPE; pw-link -> DENIED/PATH_SYMLINK_ESCAPE; write through root-link -> DENIED/PATH_SYMLINK_ESCAPE",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/sandbox/src/iacode_sandbox/paths.py",
+        "test:PathResolverTests"
+      ],
+      "mandatory": true,
+      "origin": "M1 fresh-session audit, executed in the sandbox service image"
+    },
+    {
+      "attackId": "M1-E",
+      "description": "One run sees another run's workspace.",
+      "target": "cross-run isolation",
+      "mutation": "write a token in one run's workspace and search the whole filesystem of another run's sandbox for it",
+      "expectedDefense": "two containers, and the token is not visible from the second",
+      "observed": "victim container 50a10933ba9c, attacker container ab7f76dd91f7; files holding the victim's token seen from the attacker's sandbox: none",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/sandbox/src/iacode_sandbox/service.py",
+        "test:test_one_run_gets_one_session_and_two_runs_get_two"
+      ],
+      "mandatory": true,
+      "origin": "M1 fresh-session audit, executed in the sandbox service image"
+    },
+    {
+      "attackId": "M1-F",
+      "description": "A request widens what its policy allows.",
+      "target": "tool policy escalation",
+      "mutation": "a reviewer writes and runs a shell, an unknown docker.run tool, a raised timeout, fields beside the contract (privileged, image, mounts) and an unknown policy",
+      "expectedDefense": "every one is DENIED before a process starts",
+      "observed": "reviewer write DENIED/TOOL_NOT_IN_POLICY; reviewer shell DENIED/TOOL_NOT_IN_POLICY; unknown tool DENIED/UNKNOWN_TOOL; raised timeout DENIED/ARGUMENT_OUT_OF_RANGE; fields beside the contract DENIED/CONTRACT_UNKNOWN_FIELD; unknown policy DENIED/POLICY_UNKNOWN",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/sandbox/src/iacode_sandbox/tools.py",
+        "test:SandboxPolicyTests"
+      ],
+      "mandatory": true,
+      "origin": "M1 fresh-session audit, executed in the sandbox service image"
+    },
+    {
+      "attackId": "M1-G",
+      "description": "Something a request carries becomes an argument of the engine.",
+      "target": "engine operation from untrusted input (R-G3-001)",
+      "mutation": "run identifiers shaped like engine flags, a command shaped like engine flags, and a workspace naming a host path",
+      "expectedDefense": "the containers are created from the policy alone: not privileged, no bind, no mount, no added capability, network none; the host-path workspace is refused",
+      "observed": "[{\"runId\": \"--privileged\", \"result\": \"FAILED/None\", \"privileged\": false, \"binds\": [], \"mounts\": 0, \"capAdd\": [], \"capDrop\": [\"ALL\"], \"network\": \"none\", \"label\": \"--privileged\"}, {\"runId\": \"x --volume /:/host --cap-add ALL\", \"result\": \"FAILED/None\", \"privileged\": false, \"binds\": [], \"mounts\": 0, \"capAdd\": [], \"capDrop\": [\"ALL\"], \"network\": \"none\", \"label\": \"x --volume /:/host --; workspace naming a host path DENIED/CONTRACT_UNKNOWN_FIELD",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/sandbox/src/iacode_sandbox/backend.py",
+        "test:ContainerSpecTests"
+      ],
+      "mandatory": true,
+      "origin": "M1 fresh-session audit, executed in the sandbox service image"
+    },
+    {
+      "attackId": "M1-H",
+      "description": "An agent's Git reaches a remote or a credential.",
+      "target": "Git remote exposure",
+      "mutation": "list remotes and credential helpers, look for SSH keys and a credential store, push to the public repository, and ask for git.push, git.fetch and git.clone",
+      "expectedDefense": "no remote, no credential, the push fails for lack of network and the tools do not exist",
+      "observed": "remotes: none; credential configuration: ['file:/opt/iacode/gitconfig\\tcredential.helper='] (an empty helper disables helpers); exposures: none; push over the network failed; remote tools ['DENIED/UNKNOWN_TOOL', 'DENIED/UNKNOWN_TOOL', 'DENIED/UNKNOWN_TOOL']",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/sandbox/src/iacode_sandbox/tools.py",
+        "test:test_no_remote_operation_is_offered_or_possible"
+      ],
+      "mandatory": true,
+      "origin": "M1 fresh-session audit, executed in the sandbox service image"
+    },
+    {
+      "attackId": "M1-I",
+      "description": "A sandbox reaches the internet or the stack.",
+      "target": "network egress",
+      "mutation": "connect to a public address, the API, Temporal, the host and the database",
+      "expectedDefense": "every connection fails",
+      "observed": "refused 1.1.1.1 443 OSError | refused api 8000 gaierror | refused temporal 7233 gaierror | refused host.docker.internal 18080 gaierror | refused iacode-postgres 5432 gaierror",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/sandbox/src/iacode_sandbox/backend.py",
+        "test:test_external_egress_fails"
+      ],
+      "mandatory": true,
+      "origin": "M1 fresh-session audit, executed in the sandbox service image"
+    },
+    {
+      "attackId": "M1-J",
+      "description": "A run reaches a provider other than through the gateway, or a caller names one.",
+      "target": "direct provider bypass",
+      "mutation": "create runs carrying a provider address, a key, headers and a provider object; read the variable names of the worker, the sandbox and the web; scan the runtime, the worker and the sandbox for a provider module",
+      "expectedDefense": "every forged request is refused with 422, no provider variable exists outside the API, and no provider module is imported below the gateway",
+      "observed": "forged provider fields {'baseUrl': 422, 'apiKey': 422, 'headers': 422, 'provider': 422}; provider variables in worker, sandbox and web {'iacode-worker': [], 'iacode-sandbox': [], 'iacode-web': []}; provider modules in runtime, worker or sandbox none",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:packages/contracts/src/iacode_contracts/agent_runtime.py",
+        "test:test_creation_cannot_supply_a_credential_or_address"
+      ],
+      "mandatory": true,
+      "origin": "M1 fresh-session audit, executed on the host"
+    },
+    {
+      "attackId": "M1-K",
+      "description": "A cancelled run keeps executing a tool, or leaves its sandbox behind.",
+      "target": "cancellation",
+      "mutation": "cancel a coding run while its sandbox runs a long command (scenario cancel, on the stack)",
+      "expectedDefense": "the command stops, the run ends CANCELLED and no sandbox container remains",
+      "observed": "exit 0; [iacode] SANDBOX_CANCEL=PASS 14/14 steps",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:scripts/iacode/scenarios/sandbox_coding_e2e.py",
+        "test:test_a_cancelled_run_stops_its_command_and_leaves_nothing_running"
+      ],
+      "mandatory": true,
+      "origin": "M1 fresh-session audit, executed on the host"
+    },
+    {
+      "attackId": "M1-L",
+      "description": "A run that goes nowhere outlives its deadline.",
+      "target": "deadline",
+      "mutation": "a run waiting on a tool past its own deadline (scenario deadline, on the stack)",
+      "expectedDefense": "the run is ended by its deadline and records why",
+      "observed": "exit 0; [iacode] AGENT_RUNTIME_DEADLINE=PASS 7/7 steps",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:scripts/iacode/scenarios/agent_runtime_deadline.py",
+        "test:test_the_deadline_path_writes_the_failure_down"
+      ],
+      "mandatory": true,
+      "origin": "M1 fresh-session audit, executed on the host"
+    },
+    {
+      "attackId": "M1-M",
+      "description": "A sealed checkpoint's tag is moved, or its commit rewritten, without a control noticing.",
+      "target": "history integrity",
+      "mutation": "in disposable clones: move GATE-2-CP-0002's tag to another commit; replace GATE-3-CP-0001's commit by one with the same tree and move its tag",
+      "expectedDefense": "verify_integrity.py refuses both",
+      "observed": "moved GATE-2-CP-0002 tag: exit 1 INTEGRITY_INVALID; rewritten with the same tree and the tag moved (exit codes): {'GATE-2-CP-0002': 1, 'GATE-3-CP-0001 anchored, unmutated': 0, 'GATE-3-CP-0001': 1}",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:scripts/development-ledger/anchors.py",
+        "test:IntegrityAnchorTests"
+      ],
+      "mandatory": true,
+      "origin": "M1 fresh-session audit, executed on the host"
+    },
+    {
+      "attackId": "M1-N",
+      "description": "A delivery claims synchronisation it does not have.",
+      "target": "remote synchronisation",
+      "mutation": "in a disposable clone with its own remote: an unpushed commit, a tag deleted on the remote, and a remote that is not the authorised URL",
+      "expectedDefense": "remote_sync.py reports NOT_SYNCHRONISED for each",
+      "observed": "unpushed commit: exit 1; tag deleted on the remote: exit 1; remote not the authorised URL: exit 1",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:scripts/development-ledger/remote_sync.py",
+        "test:RemoteSyncTests"
+      ],
+      "mandatory": true,
+      "origin": "M1 fresh-session audit, executed on the host"
+    },
+    {
+      "attackId": "M1-O",
+      "description": "Critical, High or unavailable advisory input is accepted as a clean dependency graph.",
+      "target": "dependency false PASS",
+      "mutation": "execute the scanner's clean null control, then inject Critical, High and UNAVAILABLE inputs",
+      "expectedDefense": "the clean control passes and every blocking/unavailable mutation returns failure",
+      "observed": "exit 0; Ran 1 test in 0.003s  OK",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:scripts/iacode/dependency_scan.py",
+        "test:DependencyAdvisoryGateTests.test_the_dependency_scan_blocks_critical_and_high_findings"
+      ],
+      "mandatory": true,
+      "origin": "M1 fresh-session audit, executed on the host"
+    },
+    {
+      "attackId": "M1-P",
+      "description": "An EXTERNAL result displaces the result owned by the SANDBOX executor.",
+      "target": "forged ToolResult",
+      "mutation": "inject SUCCEEDED during sandbox execution and again after completion",
+      "expectedDefense": "both injections are refused; the null and mutated runs consume the sandbox TIMED_OUT result",
+      "observed": "exit 0; result=PASS; control=PASS; tail=['[iacode] SANDBOX_FORGED_RESULT=PASS 15/15 steps']",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:scripts/iacode/scenarios/sandbox_coding_e2e.py",
+        "test:test_a_forged_result_cannot_displace_the_sandbox_result"
+      ],
+      "mandatory": true,
+      "origin": "M1 fresh-session audit, executed on the host"
+    },
+    {
+      "attackId": "M1-Q",
+      "description": "A sealed record naming an unpublished object validates because the local object still exists.",
+      "target": "published-history false PASS",
+      "mutation": "clone over transport, remove preserved refs, validate absence, then fetch only those refs",
+      "expectedDefense": "the commits are absent without published refs and reachable after fetching them",
+      "observed": "exit 0; result=PASS; checks=6/6",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:scripts/development-ledger/validate_checkpoint.py",
+        "test:test_every_preserved_reference_is_what_makes_its_checkpoint_valid"
+      ],
+      "mandatory": true,
+      "origin": "M1 fresh-session audit, executed on the host"
+    },
+    {
+      "attackId": "M1-R",
+      "description": "A command survives its timeout or prevents the run from completing.",
+      "target": "timeout bypass",
+      "mutation": "run the identical coding harness first normally and then with a command beyond its timeout",
+      "expectedDefense": "the control succeeds; the timed command is killed and the run reaches its expected terminal state",
+      "observed": "exit 0; [iacode] SANDBOX_TIMEOUT=PASS 13/13 steps",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:scripts/iacode/scenarios/sandbox_coding_e2e.py",
+        "test:test_a_timeout_kills_the_whole_process_tree"
+      ],
+      "mandatory": true,
+      "origin": "M1 fresh-session audit, executed on the host"
+    },
+    {
+      "attackId": "M1-S",
+      "description": "A self-authored, wrong-subject, wrong-commit, incomplete or wrong-mechanism attestation passes.",
+      "target": "checkpoint and attestation forgery",
+      "mutation": "run the canonical positive attestation followed by every forgery case",
+      "expectedDefense": "the positive path passes and every forgery is rejected",
+      "observed": "exit 0; Ran 23 tests in 321.314s  OK",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:scripts/development-ledger/attestation.py",
+        "test:AuditAttestationModelTests"
+      ],
+      "mandatory": true,
+      "origin": "M1 fresh-session audit, executed on the host"
+    }
+  ],
+  "total": 19,
+  "defended": 19,
+  "escaped": 0,
+  "mandatoryTotal": 19,
+  "mandatoryDefended": 19,
+  "result": "RED_TEAM_PASS"
+}

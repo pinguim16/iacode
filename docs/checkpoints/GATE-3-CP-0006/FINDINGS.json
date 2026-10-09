@@ -1,0 +1,50 @@
+{
+  "schemaVersion": "1.0.0",
+  "artifact": "FINDINGS",
+  "checkpoint": "GATE-3-CP-0006",
+  "milestone": "M1",
+  "subjectCheckpoint": "GATE-3-CP-0005",
+  "summary": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 1,
+    "blocking": 0
+  },
+  "findings": [
+    {
+      "id": "M1-F-005",
+      "severity": "LOW",
+      "status": "OPEN_NON_BLOCKING",
+      "disposition": "FOLLOW_UP_RECOMMENDED",
+      "requirement": "AM-13",
+      "title": "The unconstrained live coding prompt can exhaust its turn budget after proving the full tool path",
+      "observation": "Two unchanged executions of the broad cross-Gate coding prompt each traversed the gateway, emitted and executed eleven Sandbox-owned tool requests, returned authoritative results, called the model again and cleaned every container, but ended FAILED/BUDGET_EXCEEDED at maxTurns=12.",
+      "reproduction": "Run `python docs/checkpoints/GATE-3-CP-0006/audit-harness/cross_gate_live.py --report docs/checkpoints/GATE-3-CP-0006/CROSS-GATE-LIVE.json` with the configured provider/model. The preserved first and second command records are cmd-0015 and cmd-0016.",
+      "expected": "A bounded audit prompt should complete SUCCEEDED after the real tool round-trip it is intended to prove.",
+      "observed": "Both broad-prompt repetitions reached FAILED/BUDGET_EXCEEDED only after multiple valid end-to-end tool cycles. The separately executed configured-model scenario reached SUCCEEDED with seven Sandbox tool executions, no repair and an APPROVED result, so the required production path itself has positive evidence.",
+      "evidence": [
+        "file:docs/checkpoints/GATE-3-CP-0006/CROSS-GATE-LIVE-ATTEMPT-1.json",
+        "file:docs/checkpoints/GATE-3-CP-0006/CROSS-GATE-LIVE.json",
+        "file:docs/checkpoints/GATE-3-CP-0006/LIVE-CODING-RUN.json",
+        "command:cmd-0015",
+        "command:cmd-0016"
+      ],
+      "impact": "This is audit-scenario nondeterminism and may waste time or provider calls; it does not create host execution, bypass the Sandbox, lose a ToolResult, or leave a run indefinitely RUNNING. Critical and High thresholds remain clear.",
+      "recommendedCorrection": "In a later implementing checkpoint, make the diagnostic cross-Gate prompt deterministically terminate within its declared turn budget or give the scenario a task-specific completion contract. Preserve the production budgets and do not weaken the requirement that a positive proof end SUCCEEDED.",
+      "auditorImplementedCorrection": false
+    }
+  ],
+  "observations": [
+    {
+      "id": "M1-O-008",
+      "title": "The positive cross-Gate proof is the configured-model run",
+      "detail": "LIVE-CODING-RUN.json records the configured model, ten gateway calls, seven canonical ToolRequests, seven Sandbox executions, seven authoritative results, a later model call, no host-sentinel change, no surviving container, zero repair attempts and terminal SUCCEEDED/APPROVED. The two budget-exhausted broad-prompt attempts are retained rather than substituted or hidden."
+    },
+    {
+      "id": "M1-O-009",
+      "title": "The first 19-attack Red Team attempt exposed an audit-reader defect, not an escaped defense",
+      "detail": "All nineteen mutations were DEFENDED, but the audit reader looked for a nonexistent top-level nullControl field and therefore marked its baseline invalid. RED-TEAM-ATTEMPT-1.json preserves the failed report hash and cause. Only the audit-only reader was corrected, after which the whole battery was required to repeat."
+    }
+  ]
+}

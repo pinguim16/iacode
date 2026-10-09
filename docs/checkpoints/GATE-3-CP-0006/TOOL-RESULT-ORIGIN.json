@@ -1,0 +1,94 @@
+{
+  "schemaVersion": "1.0.0",
+  "artifact": "FORGED-RESULT-PROBE",
+  "finding": "M1-F-002",
+  "checkpoint": "GATE-3-CP-0006",
+  "generatedAt": "2026-10-09T13:53:32Z",
+  "nullControl": {
+    "ok": true,
+    "runId": "01a120f0-5ad0-7000-9471-73a180466753",
+    "forged": null,
+    "forgedAfter": null,
+    "state": "SUCCEEDED",
+    "result": "CHANGES-REQUESTED",
+    "developerOutput": "TIMEOUT-SEEN",
+    "execution": {
+      "requestStatus": "RESOLVED",
+      "resultStatus": "TIMED_OUT",
+      "resultOutput": {
+        "stderr": "",
+        "stdout": "",
+        "exitCode": null,
+        "timedOut": true,
+        "truncated": false,
+        "durationMs": 3001,
+        "stderrBytes": 0,
+        "stdoutBytes": 0,
+        "orphansKilled": 0
+      },
+      "executionStatus": "TIMED_OUT",
+      "timedOut": true,
+      "exitCode": null
+    }
+  },
+  "forgery": {
+    "runId": "01a120f0-935c-7000-ac10-e8b302b2f356",
+    "forged": {
+      "toolRequestId": "cc9f61d0-4a2e-48f9-9e8e-7eb19d480895",
+      "httpStatus": 403,
+      "response": "{\"code\":\"TOOL_RESULT_ORIGIN_REFUSED\",\"message\":\"tool request cc9f61d0-4a2e-48f9-9e8e-7eb19d480895 is answered by its SANDBOX executor; a result from EXTERNAL is"
+    },
+    "forgedAfter": {
+      "toolRequestId": "cc9f61d0-4a2e-48f9-9e8e-7eb19d480895",
+      "httpStatus": 403,
+      "response": "{\"code\":\"TOOL_RESULT_ORIGIN_REFUSED\",\"message\":\"tool request cc9f61d0-4a2e-48f9-9e8e-7eb19d480895 is answered by its SANDBOX executor; a result from EXTERNAL is"
+    },
+    "state": "SUCCEEDED",
+    "result": "CHANGES-REQUESTED",
+    "developerOutput": "TIMEOUT-SEEN",
+    "execution": {
+      "requestStatus": "RESOLVED",
+      "resultStatus": "TIMED_OUT",
+      "resultOutput": {
+        "stderr": "",
+        "stdout": "",
+        "exitCode": null,
+        "timedOut": true,
+        "truncated": false,
+        "durationMs": 3001,
+        "stderrBytes": 0,
+        "stdoutBytes": 0,
+        "orphansKilled": 0
+      },
+      "executionStatus": "TIMED_OUT",
+      "timedOut": true,
+      "exitCode": null
+    }
+  },
+  "steps": [
+    {
+      "step": "forgery.refused_while_the_sandbox_executes",
+      "result": "PASS"
+    },
+    {
+      "step": "forgery.stored_result_is_the_sandbox_result",
+      "result": "PASS"
+    },
+    {
+      "step": "forgery.refused_after_the_run_ended",
+      "result": "PASS"
+    },
+    {
+      "step": "forgery.nothing_changed_after_the_refusals",
+      "result": "PASS"
+    }
+  ],
+  "observed": {
+    "duringExecutionRefused": true,
+    "afterExecutionRefused": true,
+    "agentReceivedTheForgedResult": false,
+    "sandboxRecordedItsOwnResult": true
+  },
+  "reproduced": false,
+  "result": "PASS"
+}

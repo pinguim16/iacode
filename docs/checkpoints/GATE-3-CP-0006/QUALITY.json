@@ -1,0 +1,113 @@
+{
+  "schemaVersion": "3.2.0",
+  "checks": {
+    "build": {
+      "status": "PASS",
+      "evidence": [
+        "command:cmd-0040",
+        "file:VERIFICATION-REPORT.json"
+      ],
+      "justification": null
+    },
+    "unitTests": {
+      "status": "PASS",
+      "evidence": [
+        "command:cmd-0031",
+        "file:TESTS.json"
+      ],
+      "justification": null
+    },
+    "integrationTests": {
+      "status": "PASS",
+      "evidence": [
+        "command:cmd-0036",
+        "command:cmd-0037",
+        "command:cmd-0038",
+        "command:cmd-0039",
+        "file:TESTS.json"
+      ],
+      "justification": null
+    },
+    "e2e": {
+      "status": "PASS",
+      "evidence": [
+        "file:VERIFICATION-REPORT.json",
+        "file:SSE-TERMINAL-DRAIN.json"
+      ],
+      "justification": null
+    },
+    "lint": {
+      "status": "PASS",
+      "evidence": [
+        "command:cmd-0041"
+      ],
+      "justification": null
+    },
+    "staticAnalysis": {
+      "status": "PASS",
+      "evidence": [
+        "command:cmd-0032"
+      ],
+      "justification": null
+    },
+    "security": {
+      "status": "PASS",
+      "evidence": [
+        "file:DEPENDENCY-SCAN-REPORT.json",
+        "file:M1-INTERNAL-RED-TEAM.json",
+        "command:cmd-0006"
+      ],
+      "justification": null
+    },
+    "documentation": {
+      "status": "PASS",
+      "evidence": [
+        "file:DOCUMENTATION-AND-MEMORY-REVIEW.json",
+        "file:FINAL-REPORT.md"
+      ],
+      "justification": null
+    },
+    "checkpointValidation": {
+      "status": "PASS",
+      "evidence": [
+        "command:cmd-0035"
+      ],
+      "justification": null
+    },
+    "redTeam": {
+      "status": "PASS",
+      "evidence": [
+        "file:M1-INTERNAL-RED-TEAM.json",
+        "command:cmd-0021"
+      ],
+      "justification": null
+    },
+    "greenKeeper": {
+      "status": "PASS",
+      "evidence": [
+        "file:REWORK-LOG.jsonl",
+        "command:cmd-0031",
+        "command:cmd-0032",
+        "command:cmd-0033",
+        "command:cmd-0034",
+        "command:cmd-0035",
+        "command:cmd-0036",
+        "command:cmd-0037",
+        "command:cmd-0038",
+        "command:cmd-0039",
+        "command:cmd-0040",
+        "command:cmd-0041",
+        "command:cmd-0042"
+      ],
+      "justification": null
+    },
+    "deliveryCompleteness": {
+      "status": "PASS",
+      "evidence": [
+        "file:COMPLETENESS-REPORT.json",
+        "command:cmd-0027"
+      ],
+      "justification": null
+    }
+  }
+}

@@ -1,0 +1,320 @@
+{
+  "schemaVersion": "1.0.0",
+  "artifact": "LIVE-CODING-RUN",
+  "finding": "M1-F-001",
+  "checkpoint": "GATE-3-CP-0006",
+  "startedAt": "2026-10-09T13:42:51Z",
+  "model": "openai:gpt-4o-mini",
+  "configuredModel": "openai:gpt-4o-mini",
+  "modelChosenExplicitly": false,
+  "team": "coding",
+  "checks": [
+    {
+      "name": "catalog synchronised",
+      "ok": true,
+      "detail": "HTTP 200; added 135, updated 0, unchanged 0"
+    },
+    {
+      "name": "snapshot",
+      "ok": true,
+      "detail": "workspace snapshot 01a120e7-2392-7000-9f63-4c917fcec2ae stored"
+    },
+    {
+      "name": "run created",
+      "ok": true,
+      "detail": "HTTP 202 runId=01a120e7-2bbe-7000-8674-f7fb871d394e"
+    },
+    {
+      "name": "run terminal",
+      "ok": true,
+      "detail": "state=SUCCEEDED error=None"
+    },
+    {
+      "name": "model calls through the gateway",
+      "ok": true,
+      "detail": "10 model call(s) recorded; the runtime's only model path is the gateway's /api/v1/gateway/infer"
+    },
+    {
+      "name": "the configured model made a valid tool request",
+      "ok": true,
+      "detail": "7 TOOL_REQUESTED event(s), 7 tool request(s) persisted"
+    },
+    {
+      "name": "at least one tool executed in a sandbox",
+      "ok": true,
+      "detail": "7 execution(s) with a process in sandbox session(s) ['01a120e75546']: [('shell.exec', 'FAILED'), ('filesystem.read', 'FAILED'), ('filesystem.list', 'SUCCEEDED'), ('filesystem.read', 'SUCCEEDED'), ('filesystem.apply_patch', 'FAILED'), ('filesystem.apply_patch', 'FAILED'), ('filesystem.apply_patch', 'SUCCEEDED')]"
+    },
+    {
+      "name": "tool results delivered to the runtime",
+      "ok": true,
+      "detail": "7 of 7 tool request(s) RESOLVED"
+    },
+    {
+      "name": "the runtime called the model again after a sandbox result",
+      "ok": true,
+      "detail": "a MODEL_CALL_STARTED event follows a TOOL_RESULT_RECEIVED event"
+    },
+    {
+      "name": "sandbox containers existed during the run",
+      "ok": true,
+      "detail": "1 container(s) labelled with the run were observed"
+    },
+    {
+      "name": "no sandbox container outlives the run",
+      "ok": true,
+      "detail": "0 container(s) remain labelled with the run"
+    },
+    {
+      "name": "host sentinel untouched",
+      "ok": true,
+      "detail": "the file on the host is byte-identical after the run"
+    }
+  ],
+  "snapshot": {
+    "artifactId": "01a120e7-2392-7000-9f63-4c917fcec2ae",
+    "sha256": "2082a0c020f3da6da08d25671480cb49e50ad5b19d50f4a60358e932307c9d03"
+  },
+  "runId": "01a120e7-2bbe-7000-8674-f7fb871d394e",
+  "finalState": "SUCCEEDED",
+  "summary": {
+    "agentsExecuted": 3,
+    "turns": 10,
+    "modelCalls": 10,
+    "toolsRequested": 7,
+    "toolsResolved": 7,
+    "durationSeconds": 39.136,
+    "finalState": "SUCCEEDED",
+    "totalTokens": 17133,
+    "cost": null,
+    "costKnown": false
+  },
+  "stages": [
+    {
+      "name": "plan",
+      "agent": "planner",
+      "state": "SUCCEEDED",
+      "turns": 1,
+      "modelCalls": 1
+    },
+    {
+      "name": "develop",
+      "agent": "developer",
+      "state": "SUCCEEDED",
+      "turns": 8,
+      "modelCalls": 8
+    },
+    {
+      "name": "review",
+      "agent": "code-reviewer",
+      "state": "SUCCEEDED",
+      "turns": 1,
+      "modelCalls": 1
+    }
+  ],
+  "toolExecutions": [
+    {
+      "toolRequestId": "f9fbc297-8439-431e-96d1-2046578e2dd5",
+      "tool": "shell.exec",
+      "status": "FAILED",
+      "durationMs": 617,
+      "sandboxSession": "01a120e75546",
+      "exitCode": 1,
+      "timedOut": false,
+      "truncated": false,
+      "errorCode": null,
+      "summary": "failed, exit 1",
+      "createdAt": "2026-10-09T13:43:18.141Z"
+    },
+    {
+      "toolRequestId": "de769a31-0e67-4e1a-8d2d-f172a3e9ec97",
+      "tool": "filesystem.read",
+      "status": "FAILED",
+      "durationMs": 862,
+      "sandboxSession": "01a120e75546",
+      "exitCode": null,
+      "timedOut": false,
+      "truncated": false,
+      "errorCode": "FILE_NOT_FOUND",
+      "summary": "failed, FILE_NOT_FOUND",
+      "createdAt": "2026-10-09T13:43:21.349Z"
+    },
+    {
+      "toolRequestId": "6bcb2311-a3bc-4308-ad5f-40fbb2ede021",
+      "tool": "filesystem.list",
+      "status": "SUCCEEDED",
+      "durationMs": 933,
+      "sandboxSession": "01a120e75546",
+      "exitCode": null,
+      "timedOut": false,
+      "truncated": false,
+      "errorCode": null,
+      "summary": "succeeded",
+      "createdAt": "2026-10-09T13:43:24.469Z"
+    },
+    {
+      "toolRequestId": "a4148ed3-8084-44cc-b448-8f44b1a994e9",
+      "tool": "filesystem.read",
+      "status": "SUCCEEDED",
+      "durationMs": 860,
+      "sandboxSession": "01a120e75546",
+      "exitCode": null,
+      "timedOut": false,
+      "truncated": false,
+      "errorCode": null,
+      "summary": "succeeded, 66 bytes",
+      "createdAt": "2026-10-09T13:43:27.309Z"
+    },
+    {
+      "toolRequestId": "f195fdab-e3a5-47ab-ac86-38e683415113",
+      "tool": "filesystem.apply_patch",
+      "status": "FAILED",
+      "durationMs": 939,
+      "sandboxSession": "01a120e75546",
+      "exitCode": null,
+      "timedOut": false,
+      "truncated": false,
+      "errorCode": "PATCH_CONTEXT_MISMATCH",
+      "summary": "failed, PATCH_CONTEXT_MISMATCH",
+      "createdAt": "2026-10-09T13:43:31.103Z"
+    },
+    {
+      "toolRequestId": "96eaea24-1f36-4e84-8a84-c7992718201e",
+      "tool": "filesystem.apply_patch",
+      "status": "FAILED",
+      "durationMs": 1108,
+      "sandboxSession": "01a120e75546",
+      "exitCode": null,
+      "timedOut": false,
+      "truncated": false,
+      "errorCode": "PATCH_CONTEXT_MISMATCH",
+      "summary": "failed, PATCH_CONTEXT_MISMATCH",
+      "createdAt": "2026-10-09T13:43:35.603Z"
+    },
+    {
+      "toolRequestId": "986dd303-d66b-47b1-9b79-4e28f7cd152b",
+      "tool": "filesystem.apply_patch",
+      "status": "SUCCEEDED",
+      "durationMs": 766,
+      "sandboxSession": "01a120e75546",
+      "exitCode": null,
+      "timedOut": false,
+      "truncated": false,
+      "errorCode": null,
+      "summary": "succeeded, 1 file(s)",
+      "createdAt": "2026-10-09T13:43:39.852Z"
+    }
+  ],
+  "toolRequests": [
+    {
+      "toolRequestId": "f9fbc297-8439-431e-96d1-2046578e2dd5",
+      "name": "shell.exec",
+      "status": "RESOLVED",
+      "resultStatus": null
+    },
+    {
+      "toolRequestId": "de769a31-0e67-4e1a-8d2d-f172a3e9ec97",
+      "name": "filesystem.read",
+      "status": "RESOLVED",
+      "resultStatus": null
+    },
+    {
+      "toolRequestId": "6bcb2311-a3bc-4308-ad5f-40fbb2ede021",
+      "name": "filesystem.list",
+      "status": "RESOLVED",
+      "resultStatus": null
+    },
+    {
+      "toolRequestId": "a4148ed3-8084-44cc-b448-8f44b1a994e9",
+      "name": "filesystem.read",
+      "status": "RESOLVED",
+      "resultStatus": null
+    },
+    {
+      "toolRequestId": "f195fdab-e3a5-47ab-ac86-38e683415113",
+      "name": "filesystem.apply_patch",
+      "status": "RESOLVED",
+      "resultStatus": null
+    },
+    {
+      "toolRequestId": "96eaea24-1f36-4e84-8a84-c7992718201e",
+      "name": "filesystem.apply_patch",
+      "status": "RESOLVED",
+      "resultStatus": null
+    },
+    {
+      "toolRequestId": "986dd303-d66b-47b1-9b79-4e28f7cd152b",
+      "name": "filesystem.apply_patch",
+      "status": "RESOLVED",
+      "resultStatus": null
+    }
+  ],
+  "eventTypes": [
+    "RUN_CREATED",
+    "RUN_STARTED",
+    "AGENT_STARTED",
+    "MODEL_CALL_STARTED",
+    "MODEL_CALL_COMPLETED",
+    "AGENT_COMPLETED",
+    "AGENT_STARTED",
+    "MODEL_CALL_STARTED",
+    "MODEL_CALL_COMPLETED",
+    "TOOL_REQUESTED",
+    "TOOL_RESULT_RECEIVED",
+    "MODEL_CALL_STARTED",
+    "MODEL_CALL_COMPLETED",
+    "TOOL_REQUESTED",
+    "TOOL_RESULT_RECEIVED",
+    "MODEL_CALL_STARTED",
+    "MODEL_CALL_COMPLETED",
+    "TOOL_REQUESTED",
+    "TOOL_RESULT_RECEIVED",
+    "MODEL_CALL_STARTED",
+    "MODEL_CALL_COMPLETED",
+    "TOOL_REQUESTED",
+    "TOOL_RESULT_RECEIVED",
+    "MODEL_CALL_STARTED",
+    "MODEL_CALL_COMPLETED",
+    "TOOL_REQUESTED",
+    "TOOL_RESULT_RECEIVED",
+    "MODEL_CALL_STARTED",
+    "MODEL_CALL_COMPLETED",
+    "TOOL_REQUESTED",
+    "TOOL_RESULT_RECEIVED",
+    "MODEL_CALL_STARTED",
+    "MODEL_CALL_COMPLETED",
+    "TOOL_REQUESTED",
+    "TOOL_RESULT_RECEIVED",
+    "MODEL_CALL_STARTED",
+    "MODEL_CALL_COMPLETED",
+    "AGENT_COMPLETED",
+    "AGENT_STARTED",
+    "MODEL_CALL_STARTED",
+    "MODEL_CALL_COMPLETED",
+    "AGENT_COMPLETED",
+    "RUN_COMPLETED"
+  ],
+  "sandboxContainersSeen": [
+    "iacode-sbx-01a120e75546700082364b2e22579f76"
+  ],
+  "observations": {
+    "finalState": "SUCCEEDED",
+    "errorType": null,
+    "repairAttempts": 0,
+    "repairReasons": [],
+    "deniedExecutions": [],
+    "toolsExecuted": [
+      "shell.exec",
+      "filesystem.read",
+      "filesystem.list",
+      "filesystem.read",
+      "filesystem.apply_patch",
+      "filesystem.apply_patch",
+      "filesystem.apply_patch"
+    ],
+    "testsRun": true,
+    "committed": false,
+    "result": "APPROVED"
+  },
+  "finishedAt": "2026-10-09T13:43:46Z",
+  "result": "PASS"
+}

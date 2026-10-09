@@ -1,0 +1,53 @@
+{
+  "schemaVersion": "3.2.0",
+  "artifacts": [
+    {
+      "artifact": "docs/checkpoints/GATE-3-CP-0006",
+      "sourceType": "repository-generated",
+      "provider": "OpenAI",
+      "model": "GPT-5",
+      "ownership": "project",
+      "license": "project-policy",
+      "rights": {
+        "storageAllowed": true,
+        "ragAllowed": false,
+        "trainingAllowed": false,
+        "distillationAllowed": false
+      },
+      "evidence": "Audit artifacts generated from repository state, local executions and published Git history.",
+      "notes": "No provider prompt, completion, credential, runtime database or backup payload is retained."
+    },
+    {
+      "artifact": ".iacode/attestations/M1-CP-0006.json",
+      "sourceType": "repository-generated",
+      "provider": "OpenAI",
+      "model": "GPT-5",
+      "ownership": "project",
+      "license": "project-policy",
+      "rights": {
+        "storageAllowed": true,
+        "ragAllowed": false,
+        "trainingAllowed": false,
+        "distillationAllowed": false
+      },
+      "evidence": "Fresh-session audit attestation over sealed GATE-3-CP-0005.",
+      "notes": "Session independence only; crossToolValidation is NOT_AVAILABLE."
+    },
+    {
+      "artifact": "artifacts/review/GATE-3-CP-0006-review.zip",
+      "sourceType": "repository-generated",
+      "provider": "local-script",
+      "model": "not-applicable",
+      "ownership": "project",
+      "license": "project-policy",
+      "rights": {
+        "storageAllowed": true,
+        "ragAllowed": false,
+        "trainingAllowed": false,
+        "distillationAllowed": false
+      },
+      "evidence": "Post-seal deterministic review-bundle builder and adjacent validation report.",
+      "notes": "Ignored runtime configuration, secrets, provider content, databases and backups are excluded by construction."
+    }
+  ]
+}

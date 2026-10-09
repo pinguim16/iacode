@@ -1,0 +1,169 @@
+{
+  "schemaVersion": "3.2.0",
+  "phase": "M1 final fresh-session independent audit of sealed GATE-3-CP-0005",
+  "gate": "GATE-3",
+  "status": "MILESTONE_INDEPENDENT_AUDIT_PASS",
+  "branch": "main",
+  "baseCommit": "3ef2bf77ddbddd378d35f5c4d32f2d90d42fc97d",
+  "currentCommit": "refs/tags/iacode-checkpoints/GATE-3-CP-0006",
+  "dirty": false,
+  "startedAt": "2026-10-09T09:57:39Z",
+  "updatedAt": "2026-10-09T16:12:13Z",
+  "nextAllowedAction": "M1 is independently approved. Do not start GATE 4 without explicit owner authorisation and a new pre-Gate checkpoint.",
+  "blockedBy": [],
+  "secondToolValidation": {
+    "status": "PASSED",
+    "tool": "Codex desktop application, fresh session",
+    "provider": "OpenAI",
+    "model": "GPT-5",
+    "validatedAt": "2026-10-09T14:24:45Z",
+    "justification": "Fresh-session independent audit of sealed GATE-3-CP-0005. No different tool or provider was exposed in this task, so this is session independence and cannot be recorded as MILESTONE_EXTERNAL_PASS.",
+    "evidence": [
+      "file:FINAL-M1-AUDIT-MATRIX.json",
+      "file:REVIEW-REPORT.md",
+      "file:AUDIT-EXECUTIONS.json"
+    ]
+  },
+  "requirementsMatrix": {
+    "path": "REQUIREMENTS-MATRIX.json",
+    "total": 198,
+    "mandatory": 195,
+    "complete": 198,
+    "partial": 0,
+    "missing": 0,
+    "notApplicable": 0,
+    "coveragePercent": 100.0
+  },
+  "greenKeeper": {
+    "status": "PASS",
+    "cycles": 1,
+    "remainingFailures": 0,
+    "unresolvedReworkItems": 0,
+    "log": "REWORK-LOG.jsonl",
+    "externalBlockers": [],
+    "requiredGates": [
+      "tests",
+      "staticAnalysis",
+      "lessons",
+      "integrity",
+      "checkpointValidation",
+      "apiTests",
+      "gatewayTests",
+      "agentRuntimeTests",
+      "sandboxTests",
+      "webTests",
+      "lint",
+      "infraDefinition"
+    ],
+    "evidence": [
+      "command:cmd-0031",
+      "command:cmd-0032",
+      "command:cmd-0033",
+      "command:cmd-0034",
+      "command:cmd-0035",
+      "command:cmd-0036",
+      "command:cmd-0037",
+      "command:cmd-0038",
+      "command:cmd-0039",
+      "command:cmd-0040",
+      "command:cmd-0041",
+      "command:cmd-0042"
+    ]
+  },
+  "deliveryCompleteness": {
+    "status": "PASS",
+    "report": "COMPLETENESS-REPORT.json",
+    "coveragePercent": 100.0,
+    "evidenceCoveragePercent": 100.0,
+    "auditor": "Delivery Completeness Validator, GATE-3-CP-0006 independent audit",
+    "evidence": [
+      "file:COMPLETENESS-REPORT.json",
+      "command:cmd-0027"
+    ]
+  },
+  "reworkCycles": 1,
+  "independentReview": {
+    "status": "APPROVED",
+    "tool": "Codex/OpenAI GPT-5, fresh session",
+    "reviewedAt": "2026-10-09T14:24:45Z",
+    "justification": "The frozen milestone criteria pass; Critical=0, High=0. One LOW diagnostic finding is non-blocking and was not repaired by the auditor.",
+    "evidence": [
+      "file:FINAL-M1-AUDIT-MATRIX.json",
+      "file:REVIEW-REPORT.md",
+      "file:FINDINGS.json"
+    ]
+  },
+  "redTeam": {
+    "status": "RED_TEAM_PASS",
+    "tool": "fresh M1 adversarial battery of this audit",
+    "executedAt": "2026-10-09T15:23:12Z",
+    "justification": "All 19 fresh milestone attacks were defended over a VALID null-mutation control; no escape remained.",
+    "evidence": [
+      "file:M1-INTERNAL-RED-TEAM.json",
+      "file:RED-TEAM-REPORT.md",
+      "command:cmd-0021"
+    ]
+  },
+  "lessonPreflight": {
+    "path": "LESSON-PREFLIGHT.json",
+    "gate": "GATE-3",
+    "scope": "independent-audit",
+    "lessonsConsidered": 59,
+    "lessonsApplicable": 59,
+    "derivedRequirements": 59,
+    "evidence": [
+      "checkpoint:LESSON-PREFLIGHT.json"
+    ]
+  },
+  "milestone": {
+    "id": "M1",
+    "title": "IACode V0 foundation",
+    "gates": [
+      "GATE 0",
+      "GATE 1",
+      "GATE 2",
+      "GATE 3"
+    ],
+    "status": "PASSED",
+    "auditor": "Codex/OpenAI GPT-5 fresh-session independent M1 audit; not cross-tool validation",
+    "auditedAt": "2026-10-09T14:24:45Z",
+    "evidence": [
+      "file:MILESTONE-REPORT.md",
+      "file:FINAL-M1-AUDIT-MATRIX.json",
+      "file:AUDIT-EXECUTIONS.json"
+    ]
+  },
+  "externalAuditRequired": false,
+  "externalAuditReason": null,
+  "guardrailEffectiveness": {
+    "guardrailsTotal": 60,
+    "guardrailsResolved": 60,
+    "guardrailsTested": 60,
+    "guardrailsEffective": 60,
+    "guardrailFailures": 0,
+    "evidence": [
+      "file:.iacode/memory/guardrails/registry.json",
+      "file:DOCUMENTATION-AND-MEMORY-REVIEW.json"
+    ]
+  },
+  "integrity": {
+    "status": "PASS",
+    "anchors": 22,
+    "chainFile": ".iacode/anchors/checkpoint-chain.json",
+    "evidence": [
+      "command:cmd-0034"
+    ]
+  },
+  "externalAttestation": {
+    "status": "VERIFIED",
+    "path": ".iacode/attestations/M1-CP-0006.json",
+    "auditId": "M1-CP-0006",
+    "subjectCheckpoint": "GATE-3-CP-0005",
+    "subjectCommit": "3ef2bf77ddbddd378d35f5c4d32f2d90d42fc97d",
+    "validationMechanism": "FRESH_SESSION_INDEPENDENT_AUDIT",
+    "evidence": [
+      "file:MILESTONE-REPORT.md",
+      "file:FINAL-M1-AUDIT-MATRIX.json"
+    ]
+  }
+}

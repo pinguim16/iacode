@@ -1,0 +1,22 @@
+{
+  "schemaVersion": "2.0.0",
+  "auditId": "M1-CP-0006",
+  "milestone": "M1",
+  "validationMechanism": "FRESH_SESSION_INDEPENDENT_AUDIT",
+  "crossToolValidation": "NOT_AVAILABLE",
+  "auditorRole": "milestone independent auditor",
+  "tool": "Codex desktop application",
+  "provider": "OpenAI",
+  "model": "GPT-5",
+  "freshSession": true,
+  "subjectCheckpoint": "GATE-3-CP-0005",
+  "subjectCommit": "3ef2bf77ddbddd378d35f5c4d32f2d90d42fc97d",
+  "auditCheckpoint": "GATE-3-CP-0006",
+  "reviewResult": "APPROVED",
+  "redTeamResult": "RED_TEAM_PASS",
+  "completeness": 100.0,
+  "evidenceCoverage": 100.0,
+  "testResult": "PASS",
+  "createdAt": "2026-10-09T14:24:45Z",
+  "notes": "Fresh Codex/OpenAI audit of the sealed GATE-3-CP-0005 in a new session with no memory of the implementing run. No different tool or provider is exposed in this task, so crossToolValidation is NOT_AVAILABLE and this attestation may derive only MILESTONE_INDEPENDENT_AUDIT_PASS, never MILESTONE_EXTERNAL_PASS. The complete non-fast verification passed 32/32 stages in a fresh clone of the authorised remote; both live dependency sources reported zero Critical and High findings; a configured-model run completed SUCCEEDED through Model Gateway, Agent Runtime, canonical ToolRequests, Sandbox and authoritative ToolResults with zero repair and no host execution; the fresh milestone Red Team defended 19/19 attacks over a VALID null control; completeness and evidence coverage are 100.0. One LOW, non-blocking diagnostic finding records two broader prompts that exhausted maxTurns only after completing multiple valid tool round-trips; it does not contradict the positive SUCCEEDED proof and no Critical or High finding remains."
+}

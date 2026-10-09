@@ -1,0 +1,57 @@
+{
+  "schemaVersion": "1.0.0",
+  "artifact": "REVIEW-BUNDLE-VALIDATION",
+  "checkpoint": "GATE-3-CP-0006",
+  "archive": "E:\\iacode\\artifacts\\review\\GATE-3-CP-0006-preseal-review.zip",
+  "archiveSha256": "9f66666bb50726c4da400d3b1ae0c8c9018e75191de32b2e749f41c55aef3a9c",
+  "checks": [
+    {
+      "check": "archive CRC",
+      "ok": true,
+      "observed": "all members readable"
+    },
+    {
+      "check": "member names are unique",
+      "ok": true,
+      "observed": "90 members, 90 unique"
+    },
+    {
+      "check": "member paths are safe",
+      "ok": true,
+      "observed": "no absolute, parent, drive or backslash path"
+    },
+    {
+      "check": "mandatory evidence is present",
+      "ok": true,
+      "observed": "19 required members"
+    },
+    {
+      "check": "embedded checksums",
+      "ok": true,
+      "observed": "89/89 verified; malformed=0; mismatch=[]"
+    },
+    {
+      "check": "manifest parses",
+      "ok": true,
+      "observed": "checkpoint=GATE-3-CP-0006 finalCommit=HEAD"
+    },
+    {
+      "check": "manifest file hashes",
+      "ok": true,
+      "observed": "88 declared; mismatches=[]"
+    },
+    {
+      "check": "manifest identity",
+      "ok": true,
+      "observed": "checkpoint=GATE-3-CP-0006 milestone=M1 tag=refs/tags/iacode-checkpoints/GATE-3-CP-0006"
+    },
+    {
+      "check": "secret scan",
+      "ok": true,
+      "observed": "blocking=0 allowlisted=0; values are never recorded"
+    }
+  ],
+  "passed": 9,
+  "total": 9,
+  "result": "PASS"
+}

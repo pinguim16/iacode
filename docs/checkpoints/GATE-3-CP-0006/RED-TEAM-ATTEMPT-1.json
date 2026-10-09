@@ -1,0 +1,17 @@
+{
+  "schemaVersion": "1.0.0",
+  "checkpoint": "GATE-3-CP-0006",
+  "commandId": "cmd-0019",
+  "reportSha256": "23849115484ca84e2de7b4df4d0e8d5b5da60b1cc1448886ae50a7f35728ed2e",
+  "result": "RED_TEAM_FAIL",
+  "attacks": {
+    "total": 19,
+    "defended": 19,
+    "escaped": 0
+  },
+  "baselineControl": "INVALID",
+  "classification": "AUDIT_HARNESS_OBSERVATION_ERROR",
+  "cause": "The canonical forged-result scenario writes its null control as a named item in steps, while the first audit harness attempted to read a nonexistent top-level nullControl member.",
+  "disposition": "The failed attempt is preserved. The audit-only reader was corrected to require the named control step to pass, and the complete Red Team battery must be repeated unchanged apart from that observation correction.",
+  "productChanged": false
+}

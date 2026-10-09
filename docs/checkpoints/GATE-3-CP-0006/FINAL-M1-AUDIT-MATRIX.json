@@ -1,0 +1,431 @@
+{
+  "schemaVersion": "1.0.0",
+  "artifact": "FINAL-M1-AUDIT-MATRIX",
+  "checkpoint": "GATE-3-CP-0006",
+  "milestone": "M1",
+  "gate": "GATE-3",
+  "subjectCheckpoint": "GATE-3-CP-0005",
+  "subjectCommit": "3ef2bf77ddbddd378d35f5c4d32f2d90d42fc97d",
+  "auditMechanism": "FRESH_SESSION_INDEPENDENT_AUDIT",
+  "sameToolAsImplementer": true,
+  "createdAt": "2026-10-09T16:03:57Z",
+  "rows": [
+    {
+      "id": "AM-01",
+      "criterion": "Subject identity and immutability",
+      "expectation": "Local and remote tags bind the frozen commit.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "local=3ef2bf77ddbddd378d35f5c4d32f2d90d42fc97d remote=3ef2bf77ddbddd378d35f5c4d32f2d90d42fc97d expected=3ef2bf77ddbddd378d35f5c4d32f2d90d42fc97d",
+      "evidence": [
+        "checkpoint:SEALED-SUBJECTS.json",
+        "checkpoint:SEALED-SUBJECTS-PUBLISHED.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AM-02",
+      "criterion": "Local subject validity",
+      "expectation": "Checkpoint, lessons and anchored integrity pass.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "result=PASS subject=True anchors=22",
+      "evidence": [
+        "checkpoint:SEALED-SUBJECTS.json",
+        "command:cmd-0001",
+        "command:cmd-0002"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AM-03",
+      "criterion": "Published history",
+      "expectation": "Every sealed M1 checkpoint validates from a transport clone.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "result=PASS valid=9/9",
+      "evidence": [
+        "checkpoint:SEALED-SUBJECTS-PUBLISHED.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AM-04",
+      "criterion": "Remote synchronization",
+      "expectation": "Main, tags and preserved evidence are published.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "objects=PASS subjects=PASS remote=https://github.com/pinguim16/iacode.git",
+      "evidence": [
+        "checkpoint:REMOTE-PUBLISHED-OBJECTS.json",
+        "command:cmd-0005"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AM-05",
+      "criterion": "Unpublished-evidence negative control",
+      "expectation": "Removing/restoring preserved refs fails/passes causally.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "result=PASS checks=6/6",
+      "evidence": [
+        "checkpoint:REMOTE-PUBLISHED-OBJECTS.json",
+        "checkpoint:M1-INTERNAL-RED-TEAM.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AM-06",
+      "criterion": "Fresh dependency security",
+      "expectation": "Both sources scan; Critical=0 and High=0.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "result=PASS pypi=SCANNED npm=SCANNED critical=0 high=0",
+      "evidence": [
+        "checkpoint:DEPENDENCY-SCAN-REPORT.json",
+        "command:cmd-0007",
+        "command:cmd-0008"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AM-07",
+      "criterion": "Dependency graph reality",
+      "expectation": "Resolved npm and Python graphs, not direct manifests, are evaluated.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "package-lock packages plus pip-audit inputs present; live scan PASS",
+      "evidence": [
+        "file:apps/web/package-lock.json",
+        "file:scripts/iacode/dependency_scan.py",
+        "checkpoint:DEPENDENCY-SCAN-REPORT.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AM-08",
+      "criterion": "Full verification",
+      "expectation": "All 32 non-fast stages pass now.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "result=PASS fast=False passed=32/32 clone=PASS",
+      "evidence": [
+        "checkpoint:VERIFICATION-REPORT.json",
+        "checkpoint:CLEAN-CLONE-REPORT.json",
+        "command:cmd-0013"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AM-09",
+      "criterion": "Count integrity",
+      "expectation": "Discovered and deduplicated passed test counts match.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "TESTS=1551/1551 categories=714/0:clean-clone-full-verification:gate-tests,788/0:clean-clone-full-verification:image-and-service-suites,49/0:clean-clone-full-verification:infra-and-live-scenarios",
+      "evidence": [
+        "checkpoint:TESTS.json",
+        "checkpoint:COUNTS.json",
+        "checkpoint:VERIFICATION-REPORT.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AM-10",
+      "criterion": "Foundation functional path",
+      "expectation": "Startup through fresh install passes.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "stack=PASS, integration=PASS, infra=PASS, smoke=PASS, backup=PASS, restart=PASS, dependency-failure=PASS, fresh-install=PASS",
+      "evidence": [
+        "checkpoint:VERIFICATION-REPORT.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AM-11",
+      "criterion": "Configured Model Gateway",
+      "expectation": "The configured model runs through the gateway without substitution.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "result=PASS state=SUCCEEDED model=openai:gpt-4o-mini configured=openai:gpt-4o-mini",
+      "evidence": [
+        "checkpoint:LIVE-CODING-RUN.json",
+        "checkpoint:VERIFICATION-REPORT.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AM-12",
+      "criterion": "Agent Runtime functional path",
+      "expectation": "A live run traverses queue, workflow, events and terminal completion.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "live=SUCCEEDED; gate:agentRuntimeTests=PASS, agent-runtime-smoke=PASS, agent-durability=PASS",
+      "evidence": [
+        "checkpoint:LIVE-CODING-RUN.json",
+        "checkpoint:VERIFICATION-REPORT.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AM-13",
+      "criterion": "Cross-Gate tool path",
+      "expectation": "One SUCCEEDED configured-model run completes the full tool round-trip.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "result=PASS state=SUCCEEDED; model calls through the gateway=True, the configured model made a valid tool request=True, at least one tool executed in a sandbox=True, tool results delivered to the runtime=True, the runtime called the model again after a sandbox result=True, host sentinel untouched=True, no sandbox container outlives the run=True",
+      "evidence": [
+        "checkpoint:LIVE-CODING-RUN.json",
+        "checkpoint:CROSS-GATE-LIVE.json",
+        "checkpoint:FINDINGS.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AM-14",
+      "criterion": "Live ToolRequest contract",
+      "expectation": "The model emits canonical requests with zero repair.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "result=PASS repairs=0 requests=7",
+      "evidence": [
+        "checkpoint:LIVE-CODING-RUN.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AM-15",
+      "criterion": "Forged ToolResult defense",
+      "expectation": "During/after forgeries are refused and never stored.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "probe=PASS steps={'forgery.refused_while_the_sandbox_executes': 'PASS', 'forgery.stored_result_is_the_sandbox_result': 'PASS', 'forgery.refused_after_the_run_ended': 'PASS', 'forgery.nothing_changed_after_the_refusals': 'PASS'}; M1-P=DEFENDED, control=VALID",
+      "evidence": [
+        "checkpoint:TOOL-RESULT-ORIGIN.json",
+        "checkpoint:M1-INTERNAL-RED-TEAM.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AM-16",
+      "criterion": "Sandbox filesystem isolation",
+      "expectation": "Traversal, links and cross-run access are defended.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "M1-D=DEFENDED, M1-E=DEFENDED, control=VALID",
+      "evidence": [
+        "checkpoint:M1-INTERNAL-RED-TEAM.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AM-17",
+      "criterion": "Sandbox privilege boundary",
+      "expectation": "Host, engine, mount and policy escalation fail.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "M1-A=DEFENDED, M1-C=DEFENDED, M1-F=DEFENDED, M1-G=DEFENDED, control=VALID; hostSentinel=True",
+      "evidence": [
+        "checkpoint:M1-INTERNAL-RED-TEAM.json",
+        "checkpoint:LIVE-CODING-RUN.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AM-18",
+      "criterion": "Host secret isolation",
+      "expectation": "Synthetic controller secrets remain absent.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "M1-B=DEFENDED, control=VALID",
+      "evidence": [
+        "checkpoint:M1-INTERNAL-RED-TEAM.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AM-19",
+      "criterion": "Network boundary",
+      "expectation": "Network-none blocks external and stack egress.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "M1-I=DEFENDED, control=VALID",
+      "evidence": [
+        "checkpoint:M1-INTERNAL-RED-TEAM.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AM-20",
+      "criterion": "Resource, timeout and cleanup",
+      "expectation": "Limits, timeout, cancellation and cleanup hold.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "M1-K=DEFENDED, M1-R=DEFENDED, control=VALID; gate:sandboxTests=PASS, sandbox-timeout=PASS, sandbox-cancellation=PASS",
+      "evidence": [
+        "checkpoint:M1-INTERNAL-RED-TEAM.json",
+        "checkpoint:VERIFICATION-REPORT.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AM-21",
+      "criterion": "R-G3-001",
+      "expectation": "Ten controls pass and untrusted input reaches no engine operation.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "result=PASS controls=10/10 untrusted=False; M1-G=DEFENDED, control=VALID",
+      "evidence": [
+        "checkpoint:R-G3-001-REVIEW.json",
+        "checkpoint:M1-INTERNAL-RED-TEAM.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AM-22",
+      "criterion": "Durability",
+      "expectation": "Durability, restart, deadlines, recovery and ToolResults pass.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "agent-durability=PASS, agent-cancellation=PASS, agent-deadline=PASS, sandbox-recovery=PASS, sandbox-tool-result-origin=PASS, restart=PASS",
+      "evidence": [
+        "checkpoint:VERIFICATION-REPORT.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AM-23",
+      "criterion": "SSE terminal drain",
+      "expectation": "The dedicated multi-page terminal SSE regression passes.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "result=PASS exit=0 test=test_a_terminal_stream_drains_every_page_after_the_cursor",
+      "evidence": [
+        "checkpoint:SSE-TERMINAL-DRAIN.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AM-24",
+      "criterion": "Secret and public-history scans",
+      "expectation": "History and checkpoint content scan clean.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "history=[('cmd-0006', 0)] checkpointValidation=PASS",
+      "evidence": [
+        "command:cmd-0006",
+        "checkpoint:VERIFICATION-REPORT.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AM-25",
+      "criterion": "Documentation and runbooks",
+      "expectation": "Runbooks exist and reproduce current behavior.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "review=PASS checks=3/3",
+      "evidence": [
+        "checkpoint:DOCUMENTATION-AND-MEMORY-REVIEW.json",
+        "checkpoint:VERIFICATION-REPORT.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AM-26",
+      "criterion": "Engineering Memory",
+      "expectation": "Lessons, preflight and guardrails validate with zero failure.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "review=PASS effective=60/60 failures=0",
+      "evidence": [
+        "checkpoint:DOCUMENTATION-AND-MEMORY-REVIEW.json",
+        "checkpoint:LESSON-PREFLIGHT.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AM-27",
+      "criterion": "Accumulated M1 completeness",
+      "expectation": "Four Gates and the audit have 100% evidence coverage.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "finalGates=4/4 current=PASS coverage=100.0 evidence=100.0",
+      "evidence": [
+        "checkpoint:SEALED-SUBJECTS.json",
+        "checkpoint:COMPLETENESS-REPORT.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AM-28",
+      "criterion": "Independent Red Team",
+      "expectation": "All fresh attacks are defended over a valid control.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "result=RED_TEAM_PASS defended=19/19 escaped=0 control=VALID",
+      "evidence": [
+        "checkpoint:M1-INTERNAL-RED-TEAM.json",
+        "checkpoint:RED-TEAM-ATTEMPT-1.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AM-29",
+      "criterion": "Findings threshold",
+      "expectation": "Critical=0, High=0 and finding fields are complete.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "total=1 blocking=none requiredFields=True",
+      "evidence": [
+        "checkpoint:FINDINGS.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AM-30",
+      "criterion": "Audit-checkpoint assurance",
+      "expectation": "Green Keeper, completeness and quality pass before seal.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "green=PASS completeness=PASS mirror=PASS; build=PASS, unitTests=PASS, integrationTests=PASS, e2e=PASS, lint=PASS, staticAnalysis=PASS, security=PASS, documentation=PASS, checkpointValidation=PASS, greenKeeper=PASS, deliveryCompleteness=PASS",
+      "evidence": [
+        "checkpoint:STATE.json",
+        "checkpoint:QUALITY.json",
+        "checkpoint:COMPLETENESS-REPORT.json",
+        "checkpoint:M1-INTERNAL-MIRROR.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AM-31",
+      "criterion": "Attestation and derived verdict",
+      "expectation": "A truthful fresh-session attestation is ready for post-seal derivation.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "attestation=present mechanism=FRESH_SESSION_INDEPENDENT_AUDIT fresh=True review=APPROVED; verdict derives post-seal",
+      "evidence": [
+        "file:.iacode/attestations/M1-CP-0006.json"
+      ],
+      "verdict": "PASS"
+    },
+    {
+      "id": "AM-32",
+      "criterion": "Review bundle",
+      "expectation": "CRC, manifest, checksums, mandatory files and secret scan pass.",
+      "mandatory": true,
+      "status": "COMPLETE",
+      "observed": "pre-seal=PASS 9/9; regenerated and revalidated after publication",
+      "evidence": [
+        "checkpoint:REVIEW-BUNDLE-VALIDATION.json",
+        "file:docs/checkpoints/GATE-3-CP-0006/audit-harness/validate_review_bundle.py"
+      ],
+      "verdict": "PASS"
+    }
+  ],
+  "passed": 32,
+  "total": 32,
+  "result": "PASS"
+}

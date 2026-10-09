@@ -1,0 +1,391 @@
+{
+  "schemaVersion": "1.0.0",
+  "artifact": "CROSS-GATE-LIVE",
+  "checkpoint": "GATE-3-CP-0006",
+  "startedAt": "2026-10-09T13:47:13Z",
+  "model": "openai:gpt-4o-mini",
+  "configuredModel": "openai:gpt-4o-mini",
+  "modelChosenExplicitly": false,
+  "team": "coding",
+  "checks": [
+    {
+      "name": "catalog synchronised",
+      "ok": true,
+      "detail": "HTTP 200; added 0, updated 0, unchanged 135, errors=[]"
+    },
+    {
+      "name": "snapshot",
+      "ok": true,
+      "detail": "workspace snapshot 01a120eb-3c0f-7000-a5d5-4d7706d3d789 stored"
+    },
+    {
+      "name": "run created",
+      "ok": true,
+      "detail": "HTTP 202 runId=01a120eb-5d41-7000-aca5-b83535d0ee57"
+    },
+    {
+      "name": "run terminal",
+      "ok": false,
+      "detail": "state=FAILED error=BUDGET_EXCEEDED"
+    },
+    {
+      "name": "model calls through the gateway",
+      "ok": true,
+      "detail": "12 model call(s) recorded; the runtime's only model path is the gateway's /api/v1/gateway/infer"
+    },
+    {
+      "name": "tool requests executed in a sandbox",
+      "ok": true,
+      "detail": "11 execution(s) in sandbox session(s) ['01a120ec3d56']"
+    },
+    {
+      "name": "tool results delivered to the runtime",
+      "ok": true,
+      "detail": "11 of 11 tool request(s) RESOLVED"
+    },
+    {
+      "name": "the runtime called the model again after a sandbox result",
+      "ok": true,
+      "detail": "a MODEL_CALL_STARTED event follows a TOOL_RESULT_RECEIVED event"
+    },
+    {
+      "name": "sandbox containers existed during the run",
+      "ok": true,
+      "detail": "1 container(s) labelled with the run were observed"
+    },
+    {
+      "name": "no sandbox container outlives the run",
+      "ok": true,
+      "detail": "0 container(s) remain labelled with the run"
+    },
+    {
+      "name": "host sentinel untouched",
+      "ok": true,
+      "detail": "the file on the host is byte-identical after the run"
+    }
+  ],
+  "snapshot": {
+    "artifactId": "01a120eb-3c0f-7000-a5d5-4d7706d3d789",
+    "sha256": "8f710053cc9deef3d18f51223e5937a722b0c9b9e2322171e15843412396ae9a"
+  },
+  "runId": "01a120eb-5d41-7000-aca5-b83535d0ee57",
+  "finalState": "FAILED",
+  "summary": {
+    "agentsExecuted": 2,
+    "turns": 12,
+    "modelCalls": 12,
+    "toolsRequested": 11,
+    "toolsResolved": 11,
+    "durationSeconds": 184.012,
+    "finalState": "FAILED",
+    "totalTokens": 23617,
+    "cost": null,
+    "costKnown": false
+  },
+  "stages": [
+    {
+      "name": "plan",
+      "agent": "planner",
+      "state": "SUCCEEDED",
+      "turns": 1,
+      "modelCalls": 1
+    },
+    {
+      "name": "develop",
+      "agent": "developer",
+      "state": "FAILED",
+      "turns": 11,
+      "modelCalls": 11
+    }
+  ],
+  "toolExecutions": [
+    {
+      "toolRequestId": "0a3261a9-c9d5-4991-b40b-108f49f6323a",
+      "tool": "shell.exec",
+      "status": "FAILED",
+      "durationMs": 873,
+      "sandboxSession": "01a120ec3d56",
+      "exitCode": 1,
+      "timedOut": false,
+      "truncated": false,
+      "errorCode": null,
+      "summary": "failed, exit 1",
+      "createdAt": "2026-10-09T13:49:23.334Z"
+    },
+    {
+      "toolRequestId": "0d24b021-c20b-40e0-812d-636acebfd901",
+      "tool": "filesystem.read",
+      "status": "FAILED",
+      "durationMs": 590,
+      "sandboxSession": "01a120ec3d56",
+      "exitCode": null,
+      "timedOut": false,
+      "truncated": false,
+      "errorCode": "FILE_NOT_FOUND",
+      "summary": "failed, FILE_NOT_FOUND",
+      "createdAt": "2026-10-09T13:49:26.466Z"
+    },
+    {
+      "toolRequestId": "e52eed0b-6059-4a39-b5a7-9b1e3b18777f",
+      "tool": "filesystem.list",
+      "status": "SUCCEEDED",
+      "durationMs": 694,
+      "sandboxSession": "01a120ec3d56",
+      "exitCode": null,
+      "timedOut": false,
+      "truncated": false,
+      "errorCode": null,
+      "summary": "succeeded",
+      "createdAt": "2026-10-09T13:49:29.230Z"
+    },
+    {
+      "toolRequestId": "cdc251e4-ed72-46f7-a5c9-8e46060cb7fa",
+      "tool": "filesystem.read",
+      "status": "SUCCEEDED",
+      "durationMs": 493,
+      "sandboxSession": "01a120ec3d56",
+      "exitCode": null,
+      "timedOut": false,
+      "truncated": false,
+      "errorCode": null,
+      "summary": "succeeded, 66 bytes",
+      "createdAt": "2026-10-09T13:49:32.038Z"
+    },
+    {
+      "toolRequestId": "95a7ac10-748c-42cc-a2c5-23d24e2c7310",
+      "tool": "filesystem.apply_patch",
+      "status": "SUCCEEDED",
+      "durationMs": 567,
+      "sandboxSession": "01a120ec3d56",
+      "exitCode": null,
+      "timedOut": false,
+      "truncated": false,
+      "errorCode": null,
+      "summary": "succeeded, 1 file(s)",
+      "createdAt": "2026-10-09T13:49:47.351Z"
+    },
+    {
+      "toolRequestId": "525d7312-49b9-47cd-a268-a284be454cfd",
+      "tool": "filesystem.apply_patch",
+      "status": "FAILED",
+      "durationMs": 1933,
+      "sandboxSession": "01a120ec3d56",
+      "exitCode": null,
+      "timedOut": false,
+      "truncated": false,
+      "errorCode": "PATCH_CONTEXT_MISMATCH",
+      "summary": "failed, PATCH_CONTEXT_MISMATCH",
+      "createdAt": "2026-10-09T13:49:52.366Z"
+    },
+    {
+      "toolRequestId": "7fb1ad05-af48-4270-83de-7ad4918ddd3a",
+      "tool": "filesystem.write",
+      "status": "SUCCEEDED",
+      "durationMs": 734,
+      "sandboxSession": "01a120ec3d56",
+      "exitCode": null,
+      "timedOut": false,
+      "truncated": false,
+      "errorCode": null,
+      "summary": "succeeded, 66 bytes",
+      "createdAt": "2026-10-09T13:49:56.007Z"
+    },
+    {
+      "toolRequestId": "522150b3-ae5a-450e-8e0b-3e27cbd27132",
+      "tool": "filesystem.apply_patch",
+      "status": "FAILED",
+      "durationMs": 675,
+      "sandboxSession": "01a120ec3d56",
+      "exitCode": null,
+      "timedOut": false,
+      "truncated": false,
+      "errorCode": "PATCH_CONTEXT_MISMATCH",
+      "summary": "failed, PATCH_CONTEXT_MISMATCH",
+      "createdAt": "2026-10-09T13:49:59.393Z"
+    },
+    {
+      "toolRequestId": "d226fb17-1354-44d3-b575-6d1c112019ca",
+      "tool": "filesystem.apply_patch",
+      "status": "FAILED",
+      "durationMs": 583,
+      "sandboxSession": "01a120ec3d56",
+      "exitCode": null,
+      "timedOut": false,
+      "truncated": false,
+      "errorCode": "PATCH_CONTEXT_MISMATCH",
+      "summary": "failed, PATCH_CONTEXT_MISMATCH",
+      "createdAt": "2026-10-09T13:50:03.049Z"
+    },
+    {
+      "toolRequestId": "44e65bac-35c6-4a5f-b0c2-1e5e382f25dc",
+      "tool": "filesystem.write",
+      "status": "SUCCEEDED",
+      "durationMs": 420,
+      "sandboxSession": "01a120ec3d56",
+      "exitCode": null,
+      "timedOut": false,
+      "truncated": false,
+      "errorCode": null,
+      "summary": "succeeded, 66 bytes",
+      "createdAt": "2026-10-09T13:50:05.721Z"
+    },
+    {
+      "toolRequestId": "708bc30f-b9de-4982-93d5-4c050291764a",
+      "tool": "filesystem.write",
+      "status": "SUCCEEDED",
+      "durationMs": 22051,
+      "sandboxSession": "01a120ec3d56",
+      "exitCode": null,
+      "timedOut": false,
+      "truncated": false,
+      "errorCode": null,
+      "summary": "succeeded, 66 bytes",
+      "createdAt": "2026-10-09T13:50:33.663Z"
+    }
+  ],
+  "toolRequests": [
+    {
+      "toolRequestId": "0a3261a9-c9d5-4991-b40b-108f49f6323a",
+      "name": "shell.exec",
+      "status": "RESOLVED",
+      "resultStatus": null
+    },
+    {
+      "toolRequestId": "0d24b021-c20b-40e0-812d-636acebfd901",
+      "name": "filesystem.read",
+      "status": "RESOLVED",
+      "resultStatus": null
+    },
+    {
+      "toolRequestId": "e52eed0b-6059-4a39-b5a7-9b1e3b18777f",
+      "name": "filesystem.list",
+      "status": "RESOLVED",
+      "resultStatus": null
+    },
+    {
+      "toolRequestId": "cdc251e4-ed72-46f7-a5c9-8e46060cb7fa",
+      "name": "filesystem.read",
+      "status": "RESOLVED",
+      "resultStatus": null
+    },
+    {
+      "toolRequestId": "95a7ac10-748c-42cc-a2c5-23d24e2c7310",
+      "name": "filesystem.apply_patch",
+      "status": "RESOLVED",
+      "resultStatus": null
+    },
+    {
+      "toolRequestId": "525d7312-49b9-47cd-a268-a284be454cfd",
+      "name": "filesystem.apply_patch",
+      "status": "RESOLVED",
+      "resultStatus": null
+    },
+    {
+      "toolRequestId": "7fb1ad05-af48-4270-83de-7ad4918ddd3a",
+      "name": "filesystem.write",
+      "status": "RESOLVED",
+      "resultStatus": null
+    },
+    {
+      "toolRequestId": "522150b3-ae5a-450e-8e0b-3e27cbd27132",
+      "name": "filesystem.apply_patch",
+      "status": "RESOLVED",
+      "resultStatus": null
+    },
+    {
+      "toolRequestId": "d226fb17-1354-44d3-b575-6d1c112019ca",
+      "name": "filesystem.apply_patch",
+      "status": "RESOLVED",
+      "resultStatus": null
+    },
+    {
+      "toolRequestId": "44e65bac-35c6-4a5f-b0c2-1e5e382f25dc",
+      "name": "filesystem.write",
+      "status": "RESOLVED",
+      "resultStatus": null
+    },
+    {
+      "toolRequestId": "708bc30f-b9de-4982-93d5-4c050291764a",
+      "name": "filesystem.write",
+      "status": "RESOLVED",
+      "resultStatus": null
+    }
+  ],
+  "eventTypes": [
+    "RUN_CREATED",
+    "RUN_STARTED",
+    "AGENT_STARTED",
+    "MODEL_CALL_STARTED",
+    "MODEL_CALL_COMPLETED",
+    "AGENT_COMPLETED",
+    "AGENT_STARTED",
+    "MODEL_CALL_STARTED",
+    "MODEL_CALL_COMPLETED",
+    "TOOL_REQUESTED",
+    "TOOL_RESULT_RECEIVED",
+    "MODEL_CALL_STARTED",
+    "MODEL_CALL_COMPLETED",
+    "TOOL_REQUESTED",
+    "TOOL_RESULT_RECEIVED",
+    "MODEL_CALL_STARTED",
+    "MODEL_CALL_COMPLETED",
+    "TOOL_REQUESTED",
+    "TOOL_RESULT_RECEIVED",
+    "MODEL_CALL_STARTED",
+    "MODEL_CALL_COMPLETED",
+    "TOOL_REQUESTED",
+    "TOOL_RESULT_RECEIVED",
+    "MODEL_CALL_STARTED",
+    "MODEL_CALL_COMPLETED",
+    "TOOL_REQUESTED",
+    "TOOL_RESULT_RECEIVED",
+    "MODEL_CALL_STARTED",
+    "MODEL_CALL_COMPLETED",
+    "TOOL_REQUESTED",
+    "TOOL_RESULT_RECEIVED",
+    "MODEL_CALL_STARTED",
+    "MODEL_CALL_COMPLETED",
+    "TOOL_REQUESTED",
+    "TOOL_RESULT_RECEIVED",
+    "MODEL_CALL_STARTED",
+    "MODEL_CALL_COMPLETED",
+    "TOOL_REQUESTED",
+    "TOOL_RESULT_RECEIVED",
+    "MODEL_CALL_STARTED",
+    "MODEL_CALL_COMPLETED",
+    "TOOL_REQUESTED",
+    "TOOL_RESULT_RECEIVED",
+    "MODEL_CALL_STARTED",
+    "MODEL_CALL_COMPLETED",
+    "TOOL_REQUESTED",
+    "TOOL_RESULT_RECEIVED",
+    "MODEL_CALL_STARTED",
+    "MODEL_CALL_COMPLETED",
+    "TOOL_REQUESTED",
+    "TOOL_RESULT_RECEIVED",
+    "RUN_FAILED"
+  ],
+  "sandboxContainersSeen": [
+    "iacode-sbx-01a120ec3d56700090ce360c05d8b99f"
+  ],
+  "observations": {
+    "toolsExecuted": [
+      "shell.exec",
+      "filesystem.read",
+      "filesystem.list",
+      "filesystem.read",
+      "filesystem.apply_patch",
+      "filesystem.apply_patch",
+      "filesystem.write",
+      "filesystem.apply_patch",
+      "filesystem.apply_patch",
+      "filesystem.write",
+      "filesystem.write"
+    ],
+    "testsRun": true,
+    "committed": false,
+    "result": ""
+  },
+  "finishedAt": "2026-10-09T13:50:46Z",
+  "result": "FAIL"
+}

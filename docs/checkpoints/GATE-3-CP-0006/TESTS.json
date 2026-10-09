@@ -1,0 +1,27 @@
+{
+  "schemaVersion": "3.2.0",
+  "unit": {
+    "executed": true,
+    "passed": 714,
+    "failed": 0,
+    "command": "python -m unittest discover -s tests",
+    "runId": "clean-clone-full-verification:gate-tests",
+    "evidence": "VERIFICATION-REPORT.json stage gate:tests; command cmd-0013"
+  },
+  "integration": {
+    "executed": true,
+    "passed": 788,
+    "failed": 0,
+    "command": "python scripts/iacode/verify.py --keep-going",
+    "runId": "clean-clone-full-verification:image-and-service-suites",
+    "evidence": "VERIFICATION-REPORT.json gate API/Gateway/Runtime/Sandbox and integration stages; command cmd-0013"
+  },
+  "e2e": {
+    "executed": true,
+    "passed": 49,
+    "failed": 0,
+    "command": "python scripts/iacode/verify.py --keep-going",
+    "runId": "clean-clone-full-verification:infra-and-live-scenarios",
+    "evidence": "VERIFICATION-REPORT.json infrastructure and live scenario stages; command cmd-0013"
+  }
+}
