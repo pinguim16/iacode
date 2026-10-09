@@ -5,6 +5,7 @@ from __future__ import annotations
 import ast
 import asyncio
 import json
+import os
 import uuid
 from datetime import UTC, datetime
 from pathlib import Path
@@ -30,10 +31,14 @@ from iacode_evaluator.runners import RUNNERS, get_runner
 from iacode_evaluator.verdict import derive_verdict
 from pydantic import ValidationError
 
-ROOT = next(
-    parent
-    for parent in Path(__file__).resolve().parents
-    if (parent / ".iacode" / "policies").is_dir()
+ROOT = (
+    Path(os.environ["IACODE_REPOSITORY_ROOT"]).resolve()
+    if os.environ.get("IACODE_REPOSITORY_ROOT")
+    else next(
+        parent
+        for parent in Path(__file__).resolve().parents
+        if (parent / ".iacode" / "policies").is_dir()
+    )
 )
 POLICY = ROOT / ".iacode" / "policies" / "quality-policy.json"
 NOW = datetime(2026, 1, 2, 3, 4, 5, tzinfo=UTC)

@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import os
 import sys
 from pathlib import Path
 
@@ -10,10 +11,14 @@ from pathlib import Path
 # collection prevents equal module names in independent snapshots from colliding in pytest.
 collect_ignore_glob = ["fixtures/**"]
 
-ROOT = next(
-    parent
-    for parent in Path(__file__).resolve().parents
-    if (parent / ".iacode" / "policies").is_dir()
+ROOT = (
+    Path(os.environ["IACODE_REPOSITORY_ROOT"]).resolve()
+    if os.environ.get("IACODE_REPOSITORY_ROOT")
+    else next(
+        parent
+        for parent in Path(__file__).resolve().parents
+        if (parent / ".iacode" / "policies").is_dir()
+    )
 )
 for source in (
     Path(__file__).resolve().parents[1] / "src",

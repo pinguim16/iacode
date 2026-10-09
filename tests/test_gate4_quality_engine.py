@@ -32,6 +32,37 @@ SPECIFICATION = PROJECT_ROOT / "docs" / "GATE-4-CHECKLIST.md"
 
 
 class Gate4QualityCoverageTests(unittest.TestCase):
+    def test_real_repository_scenario_has_a_separate_bounded_wait(self) -> None:
+        source = (
+            PROJECT_ROOT / "scripts" / "iacode" / "scenarios" / "quality_engine_e2e.py"
+        ).read_text(encoding="utf-8")
+        module = ast.parse(source)
+        assignments = {
+            target.id: ast.literal_eval(node.value)
+            for node in module.body
+            if isinstance(node, ast.Assign)
+            for target in node.targets
+            if isinstance(target, ast.Name)
+            and target.id in {"WAIT_SECONDS", "IACODE_WAIT_SECONDS"}
+        }
+        self.assertGreaterEqual(assignments["IACODE_WAIT_SECONDS"], 2 * assignments["WAIT_SECONDS"])
+        scenario = next(
+            node
+            for node in module.body
+            if isinstance(node, ast.FunctionDef) and node.name == "scenario_iacode"
+        )
+        waits = [
+            node
+            for node in ast.walk(scenario)
+            if isinstance(node, ast.Call)
+            and isinstance(node.func, ast.Name)
+            and node.func.id == "wait_terminal"
+        ]
+        self.assertEqual(len(waits), 1)
+        seconds = next(keyword.value for keyword in waits[0].keywords if keyword.arg == "seconds")
+        self.assertIsInstance(seconds, ast.Name)
+        self.assertEqual(seconds.id, "IACODE_WAIT_SECONDS")
+
     def test_mandatory_lint_covers_every_python_project_root(self) -> None:
         source = (PROJECT_ROOT / "scripts" / "iacode" / "gates" / "lint.py").read_text(
             encoding="utf-8"

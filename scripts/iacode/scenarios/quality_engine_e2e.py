@@ -47,6 +47,7 @@ from sandbox_snapshot import create as create_snapshot
 FIXTURES = REPOSITORY_ROOT / "services" / "evaluator" / "tests" / "fixtures"
 TERMINAL = {"SUCCEEDED", "FAILED", "CANCELLED", "TIMED_OUT", "INVALID"}
 WAIT_SECONDS = 300.0
+IACODE_WAIT_SECONDS = 900.0
 POLL_SECONDS = 0.5
 
 
@@ -133,12 +134,12 @@ def wait_for(description: str, probe: Callable[[], Any], seconds: float = WAIT_S
     raise StackError(f"{description} did not happen within {seconds:g}s; last={last!r}")
 
 
-def wait_terminal(run_id: str) -> dict[str, Any]:
+def wait_terminal(run_id: str, seconds: float = WAIT_SECONDS) -> dict[str, Any]:
     def probe() -> dict[str, Any] | None:
         detail = request("GET", f"/{run_id}")
         return detail if detail["run"]["state"] in TERMINAL else None
 
-    return wait_for(f"quality run {run_id} to become terminal", probe)
+    return wait_for(f"quality run {run_id} to become terminal", probe, seconds=seconds)
 
 
 def events(run_id: str) -> list[dict[str, Any]]:
@@ -458,7 +459,7 @@ def scenario_iacode() -> dict[str, Any]:
             archive.extractall(source, filter="data")
         stored = snapshot(source, "iacode", steps)
         created = start(stored, "iacode")
-        detail = wait_terminal(created["runId"])
+        detail = wait_terminal(created["runId"], seconds=IACODE_WAIT_SECONDS)
     expected = "PASS"
     observed = detail["run"]["verdict"]
     steps.record(

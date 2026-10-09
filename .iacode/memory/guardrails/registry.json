@@ -1108,6 +1108,33 @@
         "LSN-0075"
       ],
       "removingItWouldAllow": "A no-network quality run to fail before tests because the project build backend exists only on the public package index or by accident in a base image."
+    },
+    {
+      "guardrailId": "GRD-0077",
+      "title": "Projected nested policy does not replace the trusted repository root",
+      "kind": "test",
+      "reference": "test_python_unit_runner_installs_metadata_and_exposes_monorepo_policy",
+      "verifiedBy": [
+        "test_python_unit_runner_installs_metadata_and_exposes_monorepo_policy",
+        "test_no_evaluator_module_can_start_a_process"
+      ],
+      "lessons": [
+        "LSN-0076"
+      ],
+      "removingItWouldAllow": "A nested compatibility projection to be mistaken for repository ownership and silently shrink a source-boundary scan to zero files."
+    },
+    {
+      "guardrailId": "GRD-0078",
+      "title": "The real-repository harness has a separate finite wait bound",
+      "kind": "test",
+      "reference": "test_real_repository_scenario_has_a_separate_bounded_wait",
+      "verifiedBy": [
+        "test_real_repository_scenario_has_a_separate_bounded_wait"
+      ],
+      "lessons": [
+        "LSN-0077"
+      ],
+      "removingItWouldAllow": "A legitimate large quality plan to outlive a fixture-sized harness wait and be reported as an infrastructure failure before its durable verdict."
     }
   ]
 }

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import asyncio
+import os
 from pathlib import Path
 
 import pytest
@@ -11,10 +12,14 @@ from iacode_evaluator.policy import load_policy
 from iacode_evaluator.service import QualityService
 from iacode_evaluator.store import MemoryQualityStore
 
-ROOT = next(
-    parent
-    for parent in Path(__file__).resolve().parents
-    if (parent / ".iacode" / "policies").is_dir()
+ROOT = (
+    Path(os.environ["IACODE_REPOSITORY_ROOT"]).resolve()
+    if os.environ.get("IACODE_REPOSITORY_ROOT")
+    else next(
+        parent
+        for parent in Path(__file__).resolve().parents
+        if (parent / ".iacode" / "policies").is_dir()
+    )
 )
 POLICY = ROOT / ".iacode" / "policies" / "quality-policy.json"
 SHA = "a" * 64

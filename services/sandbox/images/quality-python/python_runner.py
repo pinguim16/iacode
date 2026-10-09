@@ -62,6 +62,7 @@ def main() -> int:
         print("usage: iacode-quality-python COMMAND [ARG ...]", file=sys.stderr)
         return 2
     environment = os.environ.copy()
+    environment["IACODE_REPOSITORY_ROOT"] = "/workspace"
     inherited = environment.get("PYTHONPATH")
     entries = local_sources(Path("/workspace"))
     if inherited:

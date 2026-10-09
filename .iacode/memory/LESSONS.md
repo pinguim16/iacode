@@ -83,6 +83,8 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 | `LSN-0073` | `GUARDED` | HIGH | quality | The canonical lint denominator must cover every detected project root | `test_mandatory_lint_covers_every_python_project_root` |
 | `LSN-0074` | `GUARDED` | HIGH | implementation | An importable source tree is not an installed or repository-configured test environment | `test_python_unit_runner_installs_metadata_and_exposes_monorepo_policy` |
 | `LSN-0075` | `GUARDED` | HIGH | implementation | Offline package installation requires its build backend inside the quality image | `test_python_unit_runner_installs_metadata_and_exposes_monorepo_policy` |
+| `LSN-0076` | `GUARDED` | HIGH | architecture | Projected nested configuration requires an explicit monorepo root | `test_python_unit_runner_installs_metadata_and_exposes_monorepo_policy`, `test_no_evaluator_module_can_start_a_process` |
+| `LSN-0077` | `GUARDED` | HIGH | quality | Harness wait bounds must reflect workload size without changing product deadlines | `test_real_repository_scenario_has_a_separate_bounded_wait` |
 
 ## Detail
 
@@ -1038,7 +1040,7 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 - Resolution: Before a pytest command, install the current project offline with no dependency resolution into sandbox-local temporary site packages and expose the repository's .iacode directory at the nested project root with an internal workspace symlink.
 - Prevention:
   - `test` test_python_unit_runner_installs_metadata_and_exposes_monorepo_policy — A real nested-package snapshot proves distribution metadata and repository policy are both visible through the quality-python wrapper.
-- Evidence: `file:docs/checkpoints/GATE-4-CP-0001/COMMANDS.jsonl`, `file:services/sandbox/images/quality-python/python_runner.py`, `file:services/sandbox/tests/test_quality_images.py`, `file:docs/checkpoints/GATE-4-CP-0001/QUALITY-IACODE.json`
+- Evidence: `file:docs/checkpoints/GATE-4-CP-0001/COMMANDS.jsonl`, `file:services/sandbox/images/quality-python/python_runner.py`, `file:services/sandbox/tests/test_quality_images.py`, `file:docs/checkpoints/GATE-4-CP-0001/QUALITY-IACODE-FAIL-CMD-0070.json`
 
 ### LSN-0075 — Offline package installation requires its build backend inside the quality image
 
@@ -1050,3 +1052,26 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 - Prevention:
   - `test` test_python_unit_runner_installs_metadata_and_exposes_monorepo_policy — A real no-network quality image must build and install a setuptools project before its tests query distribution metadata.
 - Evidence: `file:docs/checkpoints/GATE-4-CP-0001/COMMANDS.jsonl`, `file:services/sandbox/images/quality-python/Dockerfile`, `file:services/sandbox/images/quality-python/python_runner.py`, `file:services/sandbox/tests/test_quality_images.py`
+
+### LSN-0076 — Projected nested configuration requires an explicit monorepo root
+
+- Status: `GUARDED`, severity HIGH, category architecture, recurrences 0.
+- Source: GATE-4, GATE-4-CP-0001, finding cmd-0084.
+- Symptom: The post-rework IACode evaluation reached all 52 applicable results but the evaluator unit suite treated its projected package-local .iacode directory as the repository root and therefore found no evaluator source files.
+- Root cause: The sandbox projected repository policy into a nested working directory for relative configuration consumers, while source-boundary tests inferred ownership from the first .iacode directory they encountered. Projection and discovery then gave the same marker two incompatible meanings.
+- Resolution: The quality-python wrapper now exports the immutable sandbox repository root explicitly, and evaluator tests prefer that trusted root while retaining filesystem discovery for ordinary checkout execution.
+- Prevention:
+  - `test` test_python_unit_runner_installs_metadata_and_exposes_monorepo_policy — A real nested snapshot receives both package-local policy compatibility and the canonical absolute repository root.
+  - `test` test_no_evaluator_module_can_start_a_process — The evaluator boundary scan resolves and inspects every source module when executed from its nested project root.
+- Evidence: `file:docs/checkpoints/GATE-4-CP-0001/COMMANDS.jsonl`, `file:services/sandbox/images/quality-python/python_runner.py`, `file:services/sandbox/tests/test_quality_images.py`, `file:services/evaluator/tests/test_core.py`
+
+### LSN-0077 — Harness wait bounds must reflect workload size without changing product deadlines
+
+- Status: `GUARDED`, severity HIGH, category quality, recurrences 0.
+- Source: GATE-4, GATE-4-CP-0001, finding cmd-0084.
+- Symptom: The real IACode scenario stopped waiting after 300 seconds while its durable 57-check workflow was still running and later reached a legitimate terminal verdict.
+- Root cause: The harness reused the small-fixture wait bound for the full polyglot repository even though per-check isolated package preparation intentionally increased execution time.
+- Resolution: Keep the normal scenario bound at 300 seconds, give only the real-repository scenario a separate 900-second bound, and leave every product check timeout and workflow deadline unchanged.
+- Prevention:
+  - `test` test_real_repository_scenario_has_a_separate_bounded_wait — AST-bound control proves the IACode scenario passes a distinct bound at least twice the ordinary wait while all other scenarios retain the default.
+- Evidence: `file:docs/checkpoints/GATE-4-CP-0001/COMMANDS.jsonl`, `file:scripts/iacode/scenarios/quality_engine_e2e.py`, `file:tests/test_gate4_quality_engine.py`

@@ -107,10 +107,12 @@ class QualityImageExecutionTests:
                 "VALUE = 1\n", encoding="utf-8"
             )
             (project / "tests" / "test_package.py").write_text(
-                "from importlib.metadata import version\nfrom pathlib import Path\n"
+                "import os\nfrom importlib.metadata import version\nfrom pathlib import Path\n"
                 "def test_installed_and_configured():\n"
                 "    assert version('sample-quality-project') == '1.0.0'\n"
-                "    assert Path('.iacode/policies/marker.txt').is_file()\n",
+                "    assert Path('.iacode/policies/marker.txt').is_file()\n"
+                "    root = Path(os.environ['IACODE_REPOSITORY_ROOT'])\n"
+                "    assert (root / '.iacode/policies/marker.txt').is_file()\n",
                 encoding="utf-8",
             )
             archive = build_snapshot(source)
