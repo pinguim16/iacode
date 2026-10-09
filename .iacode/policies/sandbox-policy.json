@@ -7,6 +7,24 @@
       "description": "Git and Python 3.13 on Debian bookworm slim, enough to run the synthetic repository's tests and the ledger tests of IACode itself. Node is deliberately absent until a Gate needs it.",
       "context": "services/sandbox/images/iacode-dev",
       "repository": "iacode/sandbox-iacode-dev"
+    },
+    {
+      "name": "quality-python",
+      "description": "Pinned Python quality toolchain with build, test, lint, coverage, migration, dependency, secret and diff checks.",
+      "context": "services/sandbox/images/quality-python",
+      "repository": "iacode/sandbox-quality-python"
+    },
+    {
+      "name": "quality-node",
+      "description": "Pinned Node, TypeScript and Angular quality toolchain with an offline dependency cache.",
+      "context": "services/sandbox/images/quality-node",
+      "repository": "iacode/sandbox-quality-node"
+    },
+    {
+      "name": "quality-java",
+      "description": "Pinned JDK, Maven and Gradle quality toolchain with offline build support.",
+      "context": "services/sandbox/images/quality-java",
+      "repository": "iacode/sandbox-quality-java"
     }
   ],
   "networkProfiles": [
@@ -39,6 +57,26 @@
       "searchSeconds": 10,
       "searchFileBytes": 1048576,
       "sessionTtlSeconds": 7200
+    },
+    {
+      "name": "quality",
+      "cpus": 2.0,
+      "memoryMb": 4096,
+      "pids": 512,
+      "workspaceMb": 1024,
+      "tmpMb": 512,
+      "commandTimeoutSeconds": 1800,
+      "gitTimeoutSeconds": 120,
+      "outputBytes": 131072,
+      "artifactBytes": 16777216,
+      "readBytes": 4194304,
+      "writeBytes": 4194304,
+      "patchBytes": 4194304,
+      "listEntries": 10000,
+      "searchResults": 5000,
+      "searchSeconds": 120,
+      "searchFileBytes": 16777216,
+      "sessionTtlSeconds": 14400
     }
   ],
   "requestEnvironment": {
@@ -94,6 +132,33 @@
       "resourceProfile": "standard",
       "networkProfile": "none",
       "workspaceAccess": "read-only"
+    },
+    {
+      "name": "quality-python",
+      "description": "Runs the frozen Python quality plan against an immutable workspace snapshot without network access.",
+      "tools": ["shell.exec"],
+      "imageProfile": "quality-python",
+      "resourceProfile": "quality",
+      "networkProfile": "none",
+      "workspaceAccess": "read-write"
+    },
+    {
+      "name": "quality-node",
+      "description": "Runs the frozen Node, TypeScript or Angular quality plan against an immutable workspace snapshot without network access.",
+      "tools": ["shell.exec"],
+      "imageProfile": "quality-node",
+      "resourceProfile": "quality",
+      "networkProfile": "none",
+      "workspaceAccess": "read-write"
+    },
+    {
+      "name": "quality-java",
+      "description": "Runs the frozen Maven or Gradle quality plan against an immutable workspace snapshot without network access.",
+      "tools": ["shell.exec"],
+      "imageProfile": "quality-java",
+      "resourceProfile": "quality",
+      "networkProfile": "none",
+      "workspaceAccess": "read-write"
     }
   ]
 }

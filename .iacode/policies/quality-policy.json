@@ -15,31 +15,31 @@
     },
     "node": {
       "stacks": ["node"],
-      "runners": ["node.build", "node.unit", "node.lint", "node.dependency", "common.secret", "common.diff"],
+      "runners": ["node.dependency", "node.build", "node.unit", "node.lint", "common.secret", "common.diff"],
       "optionalRunners": ["node.integration", "node.coverage", "node.migration"],
       "coverageThreshold": null
     },
     "node+typescript": {
       "stacks": ["node", "typescript"],
-      "runners": ["node.build", "node.unit", "node.lint", "typescript.static", "node.dependency", "common.secret", "common.diff"],
+      "runners": ["node.dependency", "node.build", "node.unit", "node.lint", "typescript.static", "common.secret", "common.diff"],
       "optionalRunners": ["node.integration", "node.coverage", "node.migration"],
       "coverageThreshold": null
     },
     "node+typescript+angular": {
       "stacks": ["node", "typescript", "angular"],
-      "runners": ["angular.build", "angular.unit", "node.lint", "typescript.static", "node.dependency", "common.secret", "common.diff"],
+      "runners": ["node.dependency", "angular.build", "angular.unit", "node.lint", "typescript.static", "common.secret", "common.diff"],
       "optionalRunners": ["node.integration", "node.coverage", "node.migration"],
       "coverageThreshold": null
     },
     "maven": {
       "stacks": ["maven"],
-      "runners": ["maven.build", "maven.unit", "maven.static", "maven.dependency", "common.secret", "common.diff"],
+      "runners": ["maven.dependency", "maven.build", "maven.unit", "maven.static", "common.secret", "common.diff"],
       "optionalRunners": ["maven.integration", "maven.coverage", "maven.migration"],
       "coverageThreshold": null
     },
     "gradle": {
       "stacks": ["gradle"],
-      "runners": ["gradle.build", "gradle.unit", "gradle.static", "gradle.dependency", "common.secret", "common.diff"],
+      "runners": ["gradle.dependency", "gradle.build", "gradle.unit", "gradle.static", "common.secret", "common.diff"],
       "optionalRunners": ["gradle.integration", "gradle.coverage", "gradle.migration"],
       "coverageThreshold": null
     }

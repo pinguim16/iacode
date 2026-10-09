@@ -19,11 +19,27 @@ def document() -> dict:
 class SandboxPolicyTests:
     def test_the_canonical_policy_loads(self) -> None:
         registry = policies()
-        assert set(registry.policies) == {"developer", "reviewer"}
+        assert set(registry.policies) == {
+            "developer",
+            "reviewer",
+            "quality-python",
+            "quality-node",
+            "quality-java",
+        }
         developer = registry.get("developer")
         assert developer.network_profile == "none"
         assert developer.workspace_access == "read-write"
         assert developer.tools <= set(REGISTRY)
+
+    def test_quality_policies_are_shell_only_offline_and_profile_owned(self) -> None:
+        registry = policies()
+        for name in ("quality-python", "quality-node", "quality-java"):
+            policy = registry.get(name)
+            assert policy.tools == {"shell.exec"}
+            assert policy.network_profile == "none"
+            assert policy.workspace_access == "read-write"
+            assert policy.image.name == name
+            assert policy.resources.name == "quality"
 
     def test_the_reviewer_is_read_only(self) -> None:
         reviewer = policies().get("reviewer")
@@ -38,8 +54,9 @@ class SandboxPolicyTests:
     def test_no_policy_offers_a_remote_git_operation(self) -> None:
         for policy in policies().policies.values():
             for tool in policy.tools:
-                assert not any(word in tool for word in ("push", "fetch", "pull", "clone",
-                                                         "remote")), tool
+                assert not any(
+                    word in tool for word in ("push", "fetch", "pull", "clone", "remote")
+                ), tool
 
     def test_the_sandbox_git_identity_is_not_a_person(self) -> None:
         developer = policies().get("developer")
@@ -60,8 +77,16 @@ class SandboxPolicyTests:
             parse_policy_document(mutated)
 
     def test_a_credential_cannot_be_allowed_into_a_command_environment(self) -> None:
-        for name in ("DEVWORLD_API_KEY", "GITHUB_TOKEN", "SSH_AUTH_SOCK", "DOCKER_HOST",
-                     "AWS_SECRET_ACCESS_KEY", "OPENAI_API_KEY", "GIT_ASKPASS", "LD_PRELOAD"):
+        for name in (
+            "DEVWORLD_API_KEY",
+            "GITHUB_TOKEN",
+            "SSH_AUTH_SOCK",
+            "DOCKER_HOST",
+            "AWS_SECRET_ACCESS_KEY",
+            "OPENAI_API_KEY",
+            "GIT_ASKPASS",
+            "LD_PRELOAD",
+        ):
             mutated = document()
             mutated["requestEnvironment"]["allowedNames"].append(name)
             with pytest.raises(PolicyError):
@@ -103,6 +128,6 @@ class ResourceLimitValidationTests:
             parse_policy_document(mutated)
 
     def test_every_limit_the_policy_applies_is_inside_its_bound(self) -> None:
-        profile = copy.deepcopy(document()["resourceProfiles"][0])
-        for key, (low, high) in BOUNDS.items():
-            assert low <= profile[key] <= high, key
+        for profile in copy.deepcopy(document()["resourceProfiles"]):
+            for key, (low, high) in BOUNDS.items():
+                assert low <= profile[key] <= high, (profile["name"], key)

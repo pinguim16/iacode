@@ -38,3 +38,20 @@ wire names, matching the existing gateway, agent-runtime and sandbox contracts. 
 only `quality.py` from N815; implementation modules retain normal Python naming rules. The first
 repository lint run (`cmd-0018`) exposed 105 issues in the new slice, and the repaired full run
 (`cmd-0019`) is green without disabling any behavioral or security check.
+
+## D-06 — Quality toolchains extend the Gate 3 boundary
+
+ADR-0029 records the structural choice: the evaluator never runs project processes. Three
+stack-specific image profiles map Python, Node/TypeScript/Angular and Maven/Gradle plans onto
+shell-only, `network=none` sandbox policies. The images pin their base digests and tool versions;
+Node dependency installation consumes a prebuilt offline cache, and Java resolution consumes an
+immutable local repository. `image-inputs.json` extends the image fingerprint to source files such
+as the Node lockfile that live outside an image context, refusing unsafe or missing paths.
+
+## D-07 — A stripped environment must still expose every declared tool
+
+The first complete sandbox run (`cmd-0022`) passed 147 tests and failed the Java toolchain smoke
+test because Gate 3 correctly strips the image's inherited `PATH`; the JDK lived only under
+`/opt/java`. The repair links the pinned JDK executables into `/usr/local/bin`, which is part of the
+helper's fixed environment. The next full run (`cmd-0023`) passed all 148 tests with network and
+privilege isolation unchanged.

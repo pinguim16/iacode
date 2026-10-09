@@ -170,5 +170,42 @@ class Gate4MandatoryGateTests(unittest.TestCase):
         self.assertNotIn("group_add", evaluator)
 
 
+class Gate4QualityImageTests(unittest.TestCase):
+    """Each supported stack maps to an isolated, immutable sandbox toolchain."""
+
+    def test_quality_profiles_are_closed_offline_and_content_addressed(self) -> None:
+        policy = json.loads(
+            (PROJECT_ROOT / ".iacode" / "policies" / "sandbox-policy.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        images = {item["name"]: item for item in policy["imageProfiles"]}
+        sandboxes = {item["name"]: item for item in policy["sandboxPolicies"]}
+        for name in ("quality-python", "quality-node", "quality-java"):
+            with self.subTest(name=name):
+                image = images[name]
+                sandbox = sandboxes[name]
+                dockerfile = PROJECT_ROOT / image["context"] / "Dockerfile"
+                self.assertTrue(dockerfile.is_file())
+                self.assertIn("@sha256:", dockerfile.read_text(encoding="utf-8"))
+                self.assertEqual(sandbox["tools"], ["shell.exec"])
+                self.assertEqual(sandbox["networkProfile"], "none")
+                self.assertEqual(sandbox["imageProfile"], name)
+
+    def test_every_stack_maps_to_exactly_one_quality_policy(self) -> None:
+        source = (
+            PROJECT_ROOT / "services" / "evaluator" / "src" / "iacode_evaluator" / "executor.py"
+        ).read_text(encoding="utf-8")
+        for profile in (
+            "python",
+            "node",
+            "node+typescript",
+            "node+typescript+angular",
+            "maven",
+            "gradle",
+        ):
+            self.assertIn(f'"{profile}"', source)
+
+
 if __name__ == "__main__":
     unittest.main()

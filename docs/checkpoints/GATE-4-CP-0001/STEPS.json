@@ -37,13 +37,31 @@
       "stepId": "G4-S02",
       "requirements": ["GATE-4-7.1..8.7"],
       "expectedBehavior": "All supported stacks execute only inside content-addressed sandbox images.",
-      "implementation": [], "tests": [], "functionalProof": null, "evidence": [], "status": "IN_PROGRESS"
+      "implementation": [
+        ".iacode/policies/sandbox-policy.json",
+        "services/sandbox/images/quality-python",
+        "services/sandbox/images/quality-node",
+        "services/sandbox/images/quality-java",
+        "services/sandbox/src/iacode_sandbox/image.py",
+        "services/evaluator/src/iacode_evaluator/runners.py",
+        "docs/adr/ADR-0029-quality-execution-boundary.md"
+      ],
+      "tests": [
+        "services/sandbox/tests/test_quality_images.py",
+        "services/sandbox/tests/test_sandbox_images.py",
+        "services/sandbox/tests/test_sandbox_policy.py",
+        "tests/test_gate4_quality_engine.py",
+        "repository-wide lint"
+      ],
+      "functionalProof": "The real container engine ran all three content-addressed quality images through shell-only, network-none policies and verified pinned Python, Node/npm, JDK/Maven/Gradle toolchains, secret scanning, diff integrity and failed internet sockets; the complete sandbox suite passed 148 tests.",
+      "evidence": ["cmd-0023", "cmd-0024", "cmd-0025", "cmd-0026"],
+      "status": "COMPLETE"
     },
     {
       "stepId": "G4-S03",
       "requirements": ["GATE-4-9.1..13.1"],
       "expectedBehavior": "Evidence and lifecycle facts are immutable, durable, origin-checked, resolvable, and reproducible.",
-      "implementation": [], "tests": [], "functionalProof": null, "evidence": [], "status": "NOT_STARTED"
+      "implementation": [], "tests": [], "functionalProof": null, "evidence": [], "status": "IN_PROGRESS"
     },
     {
       "stepId": "G4-S04",

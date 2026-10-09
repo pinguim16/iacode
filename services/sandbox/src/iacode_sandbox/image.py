@@ -18,6 +18,7 @@ Standard library only: the verification script on the host computes the same fin
 from __future__ import annotations
 
 import hashlib
+import json
 from pathlib import Path
 
 __all__ = [
@@ -39,16 +40,34 @@ HELPER_MODULES = (
     "services/sandbox/src/iacode_sandbox/patching.py",
 )
 
+EXTRA_INPUTS_FILE = "image-inputs.json"
+
 
 def image_inputs(root: Path, context: str) -> list[str]:
     """Every repository-relative file that decides what the image contains, sorted."""
     directory = root / context
     if not directory.is_dir():
         raise FileNotFoundError(f"the image context {context!r} does not exist under {root}")
-    files = sorted(str(path.relative_to(root)).replace("\\", "/")
-                   for path in directory.rglob("*")
-                   if path.is_file() and "__pycache__" not in path.parts)
-    return sorted(set(files) | set(HELPER_MODULES))
+    files = sorted(
+        str(path.relative_to(root)).replace("\\", "/")
+        for path in directory.rglob("*")
+        if path.is_file() and "__pycache__" not in path.parts
+    )
+    inputs = set(files) | set(HELPER_MODULES)
+    manifest = directory / EXTRA_INPUTS_FILE
+    if manifest.is_file():
+        document = json.loads(manifest.read_text(encoding="utf-8"))
+        if not isinstance(document, list) or not all(isinstance(item, str) for item in document):
+            raise ValueError(f"{EXTRA_INPUTS_FILE} must be an array of repository-relative paths")
+        for item in document:
+            path = Path(item)
+            if path.is_absolute() or ".." in path.parts:
+                raise ValueError(f"unsafe image input path: {item!r}")
+            resolved = root / path
+            if not resolved.is_file():
+                raise FileNotFoundError(f"the image input {item!r} does not exist under {root}")
+            inputs.add(path.as_posix())
+    return sorted(inputs)
 
 
 def input_fingerprint(root: Path, context: str) -> str:

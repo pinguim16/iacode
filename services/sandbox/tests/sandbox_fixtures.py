@@ -38,9 +38,15 @@ def policies():
     return load_policy_registry(repository_root())
 
 
-def request(tool: str, arguments: dict[str, Any] | None = None, *, run_id: str,
-            policy: str = "developer", tool_request_id: str | None = None,
-            workspace: dict[str, Any] | None = None) -> dict[str, Any]:
+def request(
+    tool: str,
+    arguments: dict[str, Any] | None = None,
+    *,
+    run_id: str,
+    policy: str = "developer",
+    tool_request_id: str | None = None,
+    workspace: dict[str, Any] | None = None,
+) -> dict[str, Any]:
     return {
         "contractVersion": SANDBOX_CONTRACT_VERSION,
         "toolRequestId": tool_request_id or str(uuid.uuid4()),
@@ -69,13 +75,22 @@ class EngineHarness:
         self.runs.append(identifier)
         return identifier
 
-    def execute(self, tool: str, arguments: dict[str, Any] | None = None, *, run_id: str,
-                policy: str = "developer"):
-        return asyncio.run(self.service.execute(request(tool, arguments, run_id=run_id,
-                                                        policy=policy)))
+    def execute(
+        self,
+        tool: str,
+        arguments: dict[str, Any] | None = None,
+        *,
+        run_id: str,
+        policy: str = "developer",
+    ):
+        return asyncio.run(
+            self.service.execute(request(tool, arguments, run_id=run_id, policy=policy))
+        )
 
-    def shell(self, command: str, *, run_id: str, **extra: Any):
-        return self.execute("shell.exec", {"command": command, **extra}, run_id=run_id)
+    def shell(self, command: str, *, run_id: str, policy: str = "developer", **extra: Any):
+        return self.execute(
+            "shell.exec", {"command": command, **extra}, run_id=run_id, policy=policy
+        )
 
     def session(self, run_id: str):
         return asyncio.run(self.store.active_session_for_run(run_id))
@@ -90,17 +105,27 @@ def engine_harness(now=None, owner: str | None = None) -> EngineHarness:
     store = MemorySandboxStore()
     artifacts = MemoryArtifactSink(store)
     registry = CollectorRegistry()
-    service = SandboxService(root=repository_root(), policies=policies(), backend=DockerBackend(),
-                             store=store, artifacts=artifacts, metrics=SandboxMetrics(registry),
-                             now=now, owner=owner or f"iacode-test-{uuid.uuid4().hex[:12]}")
+    service = SandboxService(
+        root=repository_root(),
+        policies=policies(),
+        backend=DockerBackend(),
+        store=store,
+        artifacts=artifacts,
+        metrics=SandboxMetrics(registry),
+        now=now,
+        owner=owner or f"iacode-test-{uuid.uuid4().hex[:12]}",
+    )
     return EngineHarness(service=service, store=store, artifacts=artifacts, registry=registry)
 
 
 class FakeBackend:
     """A double of the engine that records what the service asked of it."""
 
-    def __init__(self, responses: list[dict[str, Any] | None] | None = None,
-                 labels: dict[str, str] | None = None) -> None:
+    def __init__(
+        self,
+        responses: list[dict[str, Any] | None] | None = None,
+        labels: dict[str, str] | None = None,
+    ) -> None:
         self.responses = list(responses or [])
         self.created: list[Any] = []
         self.removed: list[str] = []
@@ -114,9 +139,15 @@ class FakeBackend:
 
     def create(self, spec) -> str:
         self.created.append(spec)
-        self.containers.append({"name": spec.name, "state": "running",
-                                "session": spec.session_id, "run": spec.run_id,
-                                "expiresAt": str(spec.expires_at_epoch)})
+        self.containers.append(
+            {
+                "name": spec.name,
+                "state": "running",
+                "session": spec.session_id,
+                "run": spec.run_id,
+                "expiresAt": str(spec.expires_at_epoch),
+            }
+        )
         return spec.name
 
     def remove(self, name: str) -> bool:
@@ -141,12 +172,20 @@ class FakeBackend:
         self.stopped.append(name)
         return 0
 
-    def exec_helper(self, name: str, payload: dict[str, Any], *, deadline_seconds: float,
-                    cancelled=lambda: False, tick=lambda: None) -> HelperOutcome:
+    def exec_helper(
+        self,
+        name: str,
+        payload: dict[str, Any],
+        *,
+        deadline_seconds: float,
+        cancelled=lambda: False,
+        tick=lambda: None,
+    ) -> HelperOutcome:
         self.requests.append(payload)
         if payload.get("op") == "workspace.init":
-            return HelperOutcome(response={"ok": True, "result": {"files": 0}}, exit_code=0,
-                                 stderr="")
+            return HelperOutcome(
+                response={"ok": True, "result": {"files": 0}}, exit_code=0, stderr=""
+            )
         response = self.responses.pop(0) if self.responses else {"ok": True, "result": {}}
         return HelperOutcome(response=response, exit_code=0, stderr="")
 
@@ -154,9 +193,15 @@ class FakeBackend:
 def fake_service(backend: FakeBackend, *, now=None) -> tuple[SandboxService, MemorySandboxStore]:
     """A service whose image check passes: the double reports the expected fingerprint."""
     store = MemorySandboxStore()
-    service = SandboxService(root=repository_root(), policies=policies(), backend=backend,
-                             store=store, artifacts=MemoryArtifactSink(store),
-                             metrics=SandboxMetrics(CollectorRegistry()), now=now)
+    service = SandboxService(
+        root=repository_root(),
+        policies=policies(),
+        backend=backend,
+        store=store,
+        artifacts=MemoryArtifactSink(store),
+        metrics=SandboxMetrics(CollectorRegistry()),
+        now=now,
+    )
     if backend.labels is None:
         policy = service.policies.get("developer")
         _reference, fingerprint = service.expected_image(policy)

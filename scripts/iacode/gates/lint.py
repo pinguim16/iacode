@@ -35,6 +35,7 @@ PYTHON_ROOTS = (
     "services/agent-runtime/tests",
     "services/sandbox/src",
     "services/sandbox/tests",
+    "services/sandbox/images",
     "services/evaluator/src",
     "services/evaluator/tests",
     "packages",
