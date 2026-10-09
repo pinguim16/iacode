@@ -85,6 +85,61 @@ class QualityImageExecutionTests:
         )
         assert result.status == "SUCCEEDED", result
 
+    def test_python_unit_runner_installs_metadata_and_exposes_monorepo_policy(
+        self, harness
+    ) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            source = Path(directory)
+            project = source / "services" / "sample"
+            (source / ".iacode" / "policies").mkdir(parents=True)
+            (source / ".iacode" / "policies" / "marker.txt").write_text(
+                "policy-owned\n", encoding="utf-8"
+            )
+            (project / "src" / "sample").mkdir(parents=True)
+            (project / "tests").mkdir()
+            (project / "pyproject.toml").write_text(
+                "[build-system]\nrequires=['setuptools>=80.9.0']\n"
+                "build-backend='setuptools.build_meta'\n\n"
+                "[project]\nname='sample-quality-project'\nversion='1.0.0'\n",
+                encoding="utf-8",
+            )
+            (project / "src" / "sample" / "__init__.py").write_text(
+                "VALUE = 1\n", encoding="utf-8"
+            )
+            (project / "tests" / "test_package.py").write_text(
+                "from importlib.metadata import version\nfrom pathlib import Path\n"
+                "def test_installed_and_configured():\n"
+                "    assert version('sample-quality-project') == '1.0.0'\n"
+                "    assert Path('.iacode/policies/marker.txt').is_file()\n",
+                encoding="utf-8",
+            )
+            archive = build_snapshot(source)
+        checksum = harness.service.snapshot_reader.add("snapshot-python-package", archive)
+        run_id = harness.run_id()
+        result = asyncio.run(
+            harness.service.execute(
+                {
+                    "contractVersion": "1.0.0",
+                    "toolRequestId": harness.run_id(),
+                    "runId": run_id,
+                    "agentRunId": None,
+                    "agent": "quality-engine",
+                    "tool": "shell.exec",
+                    "arguments": {
+                        "command": "iacode-quality-python python -m pytest tests -q",
+                        "cwd": "services/sample",
+                    },
+                    "policy": "quality-python",
+                    "workspace": {
+                        "kind": "snapshot",
+                        "artifactId": "snapshot-python-package",
+                        "checksum": checksum,
+                    },
+                }
+            )
+        )
+        assert result.status == "SUCCEEDED", result
+
     @pytest.mark.parametrize(("policy", "command", "expected"), TOOLCHAINS)
     def test_pinned_toolchain_runs_in_its_real_sandbox(
         self, harness, policy: str, command: str, expected: tuple[str, ...]

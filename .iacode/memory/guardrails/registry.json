@@ -1082,6 +1082,32 @@
         "LSN-0073"
       ],
       "removingItWouldAllow": "A green lint verdict to describe only a manually selected subset while a detected project root accumulates unchecked findings."
+    },
+    {
+      "guardrailId": "GRD-0075",
+      "title": "Nested Python tests receive package metadata and repository policy inside the sandbox",
+      "kind": "test",
+      "reference": "test_python_unit_runner_installs_metadata_and_exposes_monorepo_policy",
+      "verifiedBy": [
+        "test_python_unit_runner_installs_metadata_and_exposes_monorepo_policy"
+      ],
+      "lessons": [
+        "LSN-0074"
+      ],
+      "removingItWouldAllow": "A source-import-only environment to fail tests that require installed metadata or repository-root configuration despite having all immutable snapshot bytes."
+    },
+    {
+      "guardrailId": "GRD-0076",
+      "title": "Offline Python metadata installation has a pinned build backend",
+      "kind": "test",
+      "reference": "test_python_unit_runner_installs_metadata_and_exposes_monorepo_policy",
+      "verifiedBy": [
+        "test_python_unit_runner_installs_metadata_and_exposes_monorepo_policy"
+      ],
+      "lessons": [
+        "LSN-0075"
+      ],
+      "removingItWouldAllow": "A no-network quality run to fail before tests because the project build backend exists only on the public package index or by accident in a base image."
     }
   ]
 }

@@ -81,6 +81,8 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 | `LSN-0071` | `GUARDED` | HIGH | implementation | Every quality image must provision snapshots on its oldest runtime and prepare each isolated check | `test_every_quality_helper_provisions_a_real_snapshot`, `test_isolated_language_checks_prepare_their_policy_owned_toolchain` |
 | `LSN-0072` | `GUARDED` | HIGH | security | Secret findings and reviewed false positives must share one policy-owned taxonomy | `test_quality_images_bind_the_policy_owned_secret_scanner`, `test_a_non_allowlisted_credential_shape_fails_the_secret_check` |
 | `LSN-0073` | `GUARDED` | HIGH | quality | The canonical lint denominator must cover every detected project root | `test_mandatory_lint_covers_every_python_project_root` |
+| `LSN-0074` | `GUARDED` | HIGH | implementation | An importable source tree is not an installed or repository-configured test environment | `test_python_unit_runner_installs_metadata_and_exposes_monorepo_policy` |
+| `LSN-0075` | `GUARDED` | HIGH | implementation | Offline package installation requires its build backend inside the quality image | `test_python_unit_runner_installs_metadata_and_exposes_monorepo_policy` |
 
 ## Detail
 
@@ -1026,3 +1028,25 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 - Prevention:
   - `test` test_mandatory_lint_covers_every_python_project_root — Every Python project root discovered from repository manifests is covered by at least one canonical lint root.
 - Evidence: `file:docs/checkpoints/GATE-4-CP-0001/COMMANDS.jsonl`, `file:scripts/iacode/gates/lint.py`, `file:tests/test_gate4_quality_engine.py`, `file:services/model-gateway/src/iacode_model_gateway/config.py`, `file:services/orchestrator/rehearsal/coding.py`
+
+### LSN-0074 — An importable source tree is not an installed or repository-configured test environment
+
+- Status: `GUARDED`, severity HIGH, category implementation, recurrences 0.
+- Source: GATE-4, GATE-4-CP-0001, finding cmd-0070.
+- Symptom: The real repository evaluation imported local Python sources successfully but failed package tests that queried distribution metadata and API tests that resolved repository policy relative to their nested package root.
+- Root cause: The quality wrapper treated PYTHONPATH as equivalent to package installation and assumed a package-root working directory exposed repository-root configuration. Neither property is true in an isolated monorepo sandbox.
+- Resolution: Before a pytest command, install the current project offline with no dependency resolution into sandbox-local temporary site packages and expose the repository's .iacode directory at the nested project root with an internal workspace symlink.
+- Prevention:
+  - `test` test_python_unit_runner_installs_metadata_and_exposes_monorepo_policy — A real nested-package snapshot proves distribution metadata and repository policy are both visible through the quality-python wrapper.
+- Evidence: `file:docs/checkpoints/GATE-4-CP-0001/COMMANDS.jsonl`, `file:services/sandbox/images/quality-python/python_runner.py`, `file:services/sandbox/tests/test_quality_images.py`, `file:docs/checkpoints/GATE-4-CP-0001/QUALITY-IACODE.json`
+
+### LSN-0075 — Offline package installation requires its build backend inside the quality image
+
+- Status: `GUARDED`, severity HIGH, category implementation, recurrences 0.
+- Source: GATE-4, GATE-4-CP-0001, finding cmd-0072.
+- Symptom: The real sandbox guard for installed Python metadata failed before tests because pip could not import setuptools.build_meta while network access and build isolation were deliberately disabled.
+- Root cause: The quality wrapper correctly requested an offline no-isolation install, but the image assumed the Python base image supplied the project build backend instead of pinning that backend as part of the policy-owned toolchain.
+- Resolution: Pin setuptools 80.9.0 in the content-addressed quality-python image and keep the real nested-package guard running through the canonical sandbox gate that rebuilds the service and image inputs first.
+- Prevention:
+  - `test` test_python_unit_runner_installs_metadata_and_exposes_monorepo_policy — A real no-network quality image must build and install a setuptools project before its tests query distribution metadata.
+- Evidence: `file:docs/checkpoints/GATE-4-CP-0001/COMMANDS.jsonl`, `file:services/sandbox/images/quality-python/Dockerfile`, `file:services/sandbox/images/quality-python/python_runner.py`, `file:services/sandbox/tests/test_quality_images.py`

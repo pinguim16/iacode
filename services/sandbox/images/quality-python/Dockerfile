@@ -9,7 +9,8 @@ COPY apps/api/requirements.lock.txt /tmp/requirements.lock.txt
 RUN apt-get update \
  && apt-get install -y --no-install-recommends git=1:2.39.5-0+deb12u3 \
  && rm -rf /var/lib/apt/lists/* \
- && python -m pip install --no-cache-dir -r /tmp/requirements.lock.txt coverage==7.13.4 \
+ && python -m pip install --no-cache-dir -r /tmp/requirements.lock.txt \
+      coverage==7.13.4 setuptools==80.9.0 \
  && rm /tmp/requirements.lock.txt \
  && groupadd --gid 10001 sandbox \
  && useradd --uid 10001 --gid 10001 --no-create-home --home-dir /tmp \
