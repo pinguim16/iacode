@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://iacode.local/schemas/quality-policy.schema.json",
+  "title": "IACode Quality Engine policy",
+  "type": "object",
+  "required": ["schemaVersion", "policy", "defaults", "profiles"],
+  "properties": {
+    "schemaVersion": {"const": "1.0.0"},
+    "policy": {"type": "string", "minLength": 1},
+    "defaults": {
+      "type": "object",
+      "required": ["maxRunSeconds", "maxCheckSeconds", "maxOutputBytes"],
+      "properties": {
+        "maxRunSeconds": {"type": "integer", "minimum": 1, "maximum": 14400},
+        "maxCheckSeconds": {"type": "integer", "minimum": 1, "maximum": 3600},
+        "maxOutputBytes": {"type": "integer", "minimum": 1024, "maximum": 4194304}
+      },
+      "additionalProperties": false
+    },
+    "profiles": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "object",
+        "required": ["stacks", "runners", "optionalRunners", "coverageThreshold"],
+        "properties": {
+          "stacks": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string"}},
+          "runners": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string"}},
+          "optionalRunners": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+          "coverageThreshold": {"type": ["number", "null"], "minimum": 0, "maximum": 100}
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

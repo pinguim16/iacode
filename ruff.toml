@@ -54,6 +54,11 @@ ignore = [
 # The sandbox's view of an executed tool is read as JSON by the same page. Same decision.
 "packages/contracts/src/iacode_contracts/sandbox.py" = ["N815"]
 
+# Quality plans, results, findings and evidence are persisted and exchanged between the API,
+# Temporal workers and sandbox executors. Their camelCase names are therefore the versioned wire
+# contract, not local Python implementation names; keep the exception isolated to that contract.
+"packages/contracts/src/iacode_contracts/quality.py" = ["N815"]
+
 # `/tmp` inside a sandbox is a size-limited, noexec tmpfs private to that container: the backend
 # creates it and the helper points a command's HOME at it. It is the sandbox's own scratch space,
 # never the controller's or the host's, which is the distinction S108 cannot see.

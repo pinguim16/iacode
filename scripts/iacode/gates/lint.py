@@ -35,6 +35,8 @@ PYTHON_ROOTS = (
     "services/agent-runtime/tests",
     "services/sandbox/src",
     "services/sandbox/tests",
+    "services/evaluator/src",
+    "services/evaluator/tests",
     "packages",
     "scripts/iacode",
     "infra/tests",
@@ -43,14 +45,27 @@ PYTHON_ROOTS = (
 
 def ruff() -> int:
     completed = subprocess.run(
-        ["docker", "run", "--rm",
-         # The image runs as a non-root user with a read-only /app, so ruff cannot write its cache
-         # there. Sending it to a writable path keeps the run cached without loosening the image.
-         "--env", "RUFF_CACHE_DIR=/tmp/ruff-cache",
-         "--volume", f"{REPOSITORY_ROOT}:/repo:ro",
-         "--workdir", "/repo",
-         API_IMAGE, "ruff", "check", *PYTHON_ROOTS],
-        cwd=str(REPOSITORY_ROOT), text=True, check=False)
+        [
+            "docker",
+            "run",
+            "--rm",
+            # The image runs as a non-root user with a read-only /app, so ruff cannot write its
+            # cache there. A writable cache path keeps the image's security posture unchanged.
+            "--env",
+            "RUFF_CACHE_DIR=/tmp/ruff-cache",
+            "--volume",
+            f"{REPOSITORY_ROOT}:/repo:ro",
+            "--workdir",
+            "/repo",
+            API_IMAGE,
+            "ruff",
+            "check",
+            *PYTHON_ROOTS,
+        ],
+        cwd=str(REPOSITORY_ROOT),
+        text=True,
+        check=False,
+    )
     return completed.returncode
 
 
@@ -58,7 +73,10 @@ def frontend() -> int:
     build_toolchain()
     completed = subprocess.run(
         ["docker", "run", "--rm", "--workdir", "/build", BUILDER_IMAGE, "npm", "run", "lint"],
-        cwd=str(REPOSITORY_ROOT), text=True, check=False)
+        cwd=str(REPOSITORY_ROOT),
+        text=True,
+        check=False,
+    )
     return completed.returncode
 
 
@@ -71,8 +89,10 @@ def main() -> int:
     if frontend() != 0:
         failures.append("frontend")
 
-    log(f"LINT={'PASS' if not failures else 'FAIL'}"
-        + (f" failing={','.join(failures)}" if failures else ""))
+    log(
+        f"LINT={'PASS' if not failures else 'FAIL'}"
+        + (f" failing={','.join(failures)}" if failures else "")
+    )
     return 0 if not failures else 1
 
 

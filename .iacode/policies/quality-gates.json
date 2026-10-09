@@ -133,6 +133,21 @@
       ]
     },
     {
+      "id": "evaluatorTests",
+      "title": "Quality Engine suite",
+      "command": [
+        "python",
+        "scripts/iacode/gates/evaluator_tests.py"
+      ],
+      "purpose": "Green Keeper gate: the Quality Engine contracts, project profiles, policy, deterministic planning, sandbox dispatch boundary, immutable evidence and fail-closed verdict derivation, run inside the evaluator image after it is rebuilt from the current sources.",
+      "mandatory": true,
+      "qualityDimensions": [
+        "unitTests",
+        "integrationTests",
+        "security"
+      ]
+    },
+    {
       "id": "webTests",
       "title": "Foundation frontend build and suite",
       "command": [

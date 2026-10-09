@@ -14,12 +14,32 @@ from iacode_contracts.foundation import (
     ServiceStatus,
     VersionResponse,
 )
+from iacode_contracts.quality import (
+    CreateQualityRunRequest,
+    QualityCheck,
+    QualityEvidence,
+    QualityFinding,
+    QualityPlan,
+    QualityPolicy,
+    QualityResult,
+    QualityRun,
+    QualityVerdict,
+)
 
 __all__ = [
+    "CreateQualityRunRequest",
     "DependencyReport",
     "DependencyStatus",
     "ErrorResponse",
     "HealthResponse",
+    "QualityCheck",
+    "QualityEvidence",
+    "QualityFinding",
+    "QualityPlan",
+    "QualityPolicy",
+    "QualityResult",
+    "QualityRun",
+    "QualityVerdict",
     "ReadinessResponse",
     "ReadinessStatus",
     "ServiceStatus",

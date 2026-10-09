@@ -394,6 +394,50 @@ services:
     networks: [iacode]
 
   # ------------------------------------------------------------------------------------------
+  # The Quality Engine (Gate 4): plans and derives quality; project commands run in sandbox.
+  # ------------------------------------------------------------------------------------------
+  evaluator:
+    build:
+      context: ../..
+      dockerfile: services/evaluator/Dockerfile
+      args: *build-args
+    image: ${COMPOSE_PROJECT_NAME:-iacode}/evaluator:${IACODE_VERSION:-0.1.0}
+    container_name: ${COMPOSE_PROJECT_NAME:-iacode}-evaluator
+    restart: unless-stopped
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+      temporal:
+        condition: service_healthy
+      minio-bootstrap:
+        condition: service_completed_successfully
+      sandbox:
+        condition: service_healthy
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: ["ALL"]
+    environment:
+      IACODE_SERVICE_NAME: iacode-evaluator
+      IACODE_VERSION: ${IACODE_VERSION:-0.1.0}
+      IACODE_LOG_LEVEL: ${IACODE_LOG_LEVEL:-INFO}
+      IACODE_DATABASE_URL: ${IACODE_DATABASE_URL}
+      IACODE_MINIO_ENDPOINT: ${IACODE_MINIO_ENDPOINT}
+      IACODE_MINIO_ACCESS_KEY: ${IACODE_MINIO_ACCESS_KEY}
+      IACODE_MINIO_SECRET_KEY: ${IACODE_MINIO_SECRET_KEY}
+      IACODE_MINIO_SECURE: ${IACODE_MINIO_SECURE:-false}
+      IACODE_MINIO_BUCKET: ${IACODE_MINIO_BUCKET:-iacode-artifacts}
+      IACODE_TEMPORAL_TARGET: ${IACODE_TEMPORAL_TARGET}
+      IACODE_TEMPORAL_NAMESPACE: ${IACODE_TEMPORAL_NAMESPACE:-default}
+      IACODE_QUALITY_TASK_QUEUE: ${IACODE_QUALITY_TASK_QUEUE:-iacode-quality}
+      IACODE_QUALITY_METRICS_PORT: ${IACODE_QUALITY_METRICS_PORT:-9103}
+    healthcheck:
+      test: ["CMD", "python", "-m", "iacode_evaluator.healthcheck"]
+      interval: 15s
+      timeout: 15s
+      retries: 6
+      start_period: 45s
+    networks: [iacode]
+
+  # ------------------------------------------------------------------------------------------
   # The web shell.
   # ------------------------------------------------------------------------------------------
   web:

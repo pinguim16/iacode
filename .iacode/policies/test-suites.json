@@ -43,6 +43,14 @@
       "purpose": "The sandbox: its contracts, tool registry and policy, the path resolver, patching, the service's decisions, recovery, telemetry, and the isolation, limits, tools and lifecycle asserted against the real container engine."
     },
     {
+      "id": "evaluator",
+      "title": "Quality Engine suite",
+      "root": "services/evaluator/tests",
+      "framework": "python-pytest",
+      "counted": true,
+      "purpose": "The Quality Engine: contracts, project profiles, policy, planning, sandbox-only execution, immutable evidence, persistence, lifecycle, APIs, and fail-closed verdicts."
+    },
+    {
       "id": "infra",
       "title": "Foundation infrastructure smoke suite",
       "root": "infra/tests",

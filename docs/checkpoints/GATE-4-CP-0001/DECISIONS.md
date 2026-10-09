@@ -29,3 +29,12 @@ line in `BASELINE.md`. PowerShell continued because the commands were separated 
 the later commit and push succeeded. No secret or behavioral defect was involved, but a reported
 quality failure reached the remote. This corrective commit removes the whitespace, and subsequent
 delivery chains inspect `$LASTEXITCODE` after every check before commit or push.
+
+## D-05 — Quality contract casing is a bounded wire-format exception
+
+Quality plans, runs, results, findings, evidence and verdicts cross the API, Temporal and sandbox
+boundaries and are persisted as versioned JSON. Their camelCase fields therefore remain literal
+wire names, matching the existing gateway, agent-runtime and sandbox contracts. `ruff.toml` exempts
+only `quality.py` from N815; implementation modules retain normal Python naming rules. The first
+repository lint run (`cmd-0018`) exposed 105 issues in the new slice, and the repaired full run
+(`cmd-0019`) is green without disabling any behavioral or security check.

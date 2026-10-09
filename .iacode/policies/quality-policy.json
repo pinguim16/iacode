@@ -1,0 +1,47 @@
+{
+  "schemaVersion": "1.0.0",
+  "policy": "Canonical Quality Engine policy. Profiles select only registered runners. Project configuration may add checks or lower limits, never remove a mandatory check, raise a limit, select execution infrastructure, submit evidence, or author a verdict.",
+  "defaults": {
+    "maxRunSeconds": 3600,
+    "maxCheckSeconds": 1800,
+    "maxOutputBytes": 131072
+  },
+  "profiles": {
+    "python": {
+      "stacks": ["python"],
+      "runners": ["python.build", "python.unit", "python.lint", "python.static", "python.dependency", "common.secret", "common.diff"],
+      "optionalRunners": ["python.integration", "python.coverage", "python.migration"],
+      "coverageThreshold": null
+    },
+    "node": {
+      "stacks": ["node"],
+      "runners": ["node.build", "node.unit", "node.lint", "node.dependency", "common.secret", "common.diff"],
+      "optionalRunners": ["node.integration", "node.coverage", "node.migration"],
+      "coverageThreshold": null
+    },
+    "node+typescript": {
+      "stacks": ["node", "typescript"],
+      "runners": ["node.build", "node.unit", "node.lint", "typescript.static", "node.dependency", "common.secret", "common.diff"],
+      "optionalRunners": ["node.integration", "node.coverage", "node.migration"],
+      "coverageThreshold": null
+    },
+    "node+typescript+angular": {
+      "stacks": ["node", "typescript", "angular"],
+      "runners": ["angular.build", "angular.unit", "node.lint", "typescript.static", "node.dependency", "common.secret", "common.diff"],
+      "optionalRunners": ["node.integration", "node.coverage", "node.migration"],
+      "coverageThreshold": null
+    },
+    "maven": {
+      "stacks": ["maven"],
+      "runners": ["maven.build", "maven.unit", "maven.static", "maven.dependency", "common.secret", "common.diff"],
+      "optionalRunners": ["maven.integration", "maven.coverage", "maven.migration"],
+      "coverageThreshold": null
+    },
+    "gradle": {
+      "stacks": ["gradle"],
+      "runners": ["gradle.build", "gradle.unit", "gradle.static", "gradle.dependency", "common.secret", "common.diff"],
+      "optionalRunners": ["gradle.integration", "gradle.coverage", "gradle.migration"],
+      "coverageThreshold": null
+    }
+  }
+}

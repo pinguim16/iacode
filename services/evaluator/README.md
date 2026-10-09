@@ -1,13 +1,9 @@
-# Evaluator
+# Quality Engine
 
-**Status: RESERVED — NOT IMPLEMENTED.** This directory is scheduled for `GATE 4`.
+Delivered by `GATE 4 — QUALITY ENGINE`. The service detects a project profile, freezes a quality
+plan from canonical policy, dispatches every project command through the Gate 3 sandbox, stores
+content-addressed evidence, and derives the verdict from complete resolved results.
 
-The quality engine and its evidence store.
-
-Gate 0 creates the directory because the monorepo layout is part of the Foundation, and creates
-nothing inside it because a placeholder that behaves like a feature is worse than an absence. There
-is no implementation here, no stub that answers as if it worked, and no configuration that suggests
-the capability exists.
-
-See [docs/MASTER-PLAN.md](../../docs/MASTER-PLAN.md) for the Gate that owns this directory and the
-acceptance criteria it must meet.
+The evaluator never starts a process and never accepts a result, evidence body, or verdict from an
+HTTP caller. Initial profiles cover Python, Node, TypeScript, Angular, Maven, and Gradle. See
+[`docs/runbooks/QUALITY-ENGINE.md`](../../docs/runbooks/QUALITY-ENGINE.md) for operation and limits.

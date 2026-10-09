@@ -1,0 +1,91 @@
+"""Deterministic quality plan construction."""
+
+from __future__ import annotations
+
+from datetime import UTC, datetime
+
+from iacode_contracts.quality import QualityCheck, QualityPlan
+
+from iacode_evaluator.canonical import digest
+from iacode_evaluator.errors import QualityError
+from iacode_evaluator.policy import PolicyRegistry
+from iacode_evaluator.projects import ProjectProfile
+from iacode_evaluator.runners import get_runner
+
+
+def select_profile(project: ProjectProfile, registry: PolicyRegistry) -> str:
+    if project.confidence == "UNSUPPORTED":
+        raise QualityError("PROJECT_UNSUPPORTED", "no supported toolchain was detected")
+    candidates = [
+        profile.name
+        for profile in registry.profiles.values()
+        if set(profile.stacks) == set(project.stacks)
+    ]
+    if len(candidates) != 1:
+        reason = (
+            "no exact policy profile" if not candidates else "more than one exact policy profile"
+        )
+        raise QualityError("PROJECT_PROFILE_AMBIGUOUS", f"{reason} for {project.profile_id}")
+    return candidates[0]
+
+
+def _identity(
+    snapshot_id: str,
+    snapshot_digest: str,
+    project: ProjectProfile,
+    policy_digest: str,
+    checks: tuple[QualityCheck, ...],
+) -> str:
+    return digest(
+        {
+            "contractVersion": "1.0.0",
+            "snapshotId": snapshot_id,
+            "snapshotDigest": snapshot_digest,
+            "projectProfile": project.profile_id,
+            "projectProfileDigest": project.digest,
+            "policyDigest": policy_digest,
+            "checks": [check.model_dump(mode="json") for check in checks],
+        }
+    )
+
+
+def build_plan(
+    *,
+    snapshot_id: str,
+    snapshot_digest: str,
+    project: ProjectProfile,
+    registry: PolicyRegistry,
+    configuration: dict | None = None,
+    created_at: datetime | None = None,
+) -> QualityPlan:
+    profile = registry.profile(select_profile(project, registry))
+    policy = registry.contract(profile, configuration)
+    checks: list[QualityCheck] = []
+    selected = profile.runners + tuple((configuration or {}).get("additionalRunners") or ())
+    for index, identifier in enumerate(selected, start=1):
+        runner = get_runner(identifier)
+        timeout = min(runner.timeout_seconds, policy.maxCheckSeconds)
+        checks.append(
+            QualityCheck(
+                checkId=f"q{index:03d}-{runner.kind}",
+                kind=runner.kind,
+                runner=runner.identifier,
+                command=runner.command,
+                mandatory=True,
+                applicable=True,
+                applicabilityReason=f"profile {profile.name} requires {runner.kind}",
+                timeoutSeconds=timeout,
+                requiredEvidenceKinds=runner.evidence_kinds,
+            )
+        )
+    frozen = tuple(checks)
+    return QualityPlan(
+        planId=_identity(snapshot_id, snapshot_digest, project, policy.digest, frozen),
+        snapshotId=snapshot_id,
+        snapshotDigest=snapshot_digest,
+        projectProfile=project.profile_id,
+        projectProfileDigest=project.digest,
+        policy=policy,
+        checks=frozen,
+        createdAt=created_at or datetime.now(UTC),
+    )

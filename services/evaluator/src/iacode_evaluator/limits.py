@@ -1,0 +1,8 @@
+"""Hard ceilings above which canonical quality policy is invalid."""
+
+MAX_PLAN_CHECKS = 128
+MAX_RUN_SECONDS = 14_400
+MAX_CHECK_SECONDS = 3_600
+MAX_OUTPUT_BYTES = 4 * 1024 * 1024
+MAX_SUMMARY_BYTES = 2_048
+MAX_EVIDENCE_BYTES = 64 * 1024 * 1024

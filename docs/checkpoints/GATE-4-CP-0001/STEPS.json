@@ -17,13 +17,27 @@
       "stepId": "G4-S01",
       "requirements": ["GATE-4-2.1..6.6", "GATE-4-10.1..10.7"],
       "expectedBehavior": "Valid profiles deterministically produce closed plans and only complete evidence-backed results can derive PASS.",
-      "implementation": [], "tests": [], "functionalProof": null, "evidence": [], "status": "IN_PROGRESS"
+      "implementation": [
+        "packages/contracts/src/iacode_contracts/quality.py",
+        ".iacode/policies/quality-policy.json",
+        "services/evaluator/src/iacode_evaluator",
+        "services/evaluator/Dockerfile",
+        "infra/compose/docker-compose.yml"
+      ],
+      "tests": [
+        "services/evaluator/tests/test_core.py",
+        "tests/test_gate4_quality_engine.py",
+        "repository-wide lint"
+      ],
+      "functionalProof": "Thirty-five evaluator tests demonstrate strict contracts and policy loading, deterministic plans, a structured sandbox-only execution boundary, complete evidence requirements, finding recurrence, and fail-closed verdict mutations; eleven control tests prove the closed Gate and compose registration.",
+      "evidence": ["cmd-0019", "cmd-0020", "cmd-0021"],
+      "status": "COMPLETE"
     },
     {
       "stepId": "G4-S02",
       "requirements": ["GATE-4-7.1..8.7"],
       "expectedBehavior": "All supported stacks execute only inside content-addressed sandbox images.",
-      "implementation": [], "tests": [], "functionalProof": null, "evidence": [], "status": "NOT_STARTED"
+      "implementation": [], "tests": [], "functionalProof": null, "evidence": [], "status": "IN_PROGRESS"
     },
     {
       "stepId": "G4-S03",
