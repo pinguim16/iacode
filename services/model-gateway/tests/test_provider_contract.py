@@ -12,7 +12,8 @@ import json
 
 import httpx
 import pytest
-from fixtures.doubles import descriptor, provider_config, request as build_request, settings
+from fixtures.doubles import descriptor, provider_config, settings
+from fixtures.doubles import request as build_request
 from iacode_model_gateway.config import ResolvedProvider
 from iacode_model_gateway.contracts import Endpoint, FinishReason
 from iacode_model_gateway.errors import GatewayError, GatewayErrorType

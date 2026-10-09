@@ -1,6 +1,7 @@
 """Cost, when cost is known.
 
-`docs/GATE-1-CHECKLIST.md` row 10.2 is short and absolute: **an unknown cost is absent, never zero.**
+`docs/GATE-1-CHECKLIST.md` row 10.2 is short and absolute: **an unknown cost is absent, never
+zero.**
 Zero is a number with a meaning — the call was free — and writing it where "we do not know" belongs
 produces a spend report that is confidently wrong and silently useless.
 

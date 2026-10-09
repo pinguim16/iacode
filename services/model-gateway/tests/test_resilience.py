@@ -13,7 +13,11 @@ from fixtures.doubles import (
     completion,
     descriptor,
     failure,
+)
+from fixtures.doubles import (
     request as build_request,
+)
+from fixtures.doubles import (
     settings as build_settings,
 )
 from iacode_model_gateway.contracts import GatewayMessage, MessageRole, ToolDefinition

@@ -9,7 +9,8 @@ A second shape of the same idea, with three differences that matter to a gateway
 
 The adapter exists because the catalog is allowed to say that a model speaks this protocol and not
 the other one. `docs/GATE-1-CHECKLIST.md` row 4.5 forbids assuming every model accepts
-``/chat/completions``; an adapter that only knew one protocol would make that assumption unavoidable.
+``/chat/completions``; an adapter that only knew one protocol would make that assumption
+unavoidable.
 """
 
 from __future__ import annotations

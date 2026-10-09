@@ -20,9 +20,9 @@ classification vocabulary decide the error class; the message is written by us. 
 echoes a request header back inside an error — which happens — would otherwise put an
 ``Authorization`` value into an exception, and from there into a log.
 
-**Cancellation is propagated, not swallowed.** ``CancelledError`` closes the upstream connection and
-is re-raised. Converting it into an ordinary error would leave the caller's ``asyncio.CancelledError``
-contract broken and the task tree in a state nothing can reason about.
+**Cancellation is propagated, not swallowed.** ``CancelledError`` closes the upstream connection
+and is re-raised. Converting it into an ordinary error would leave the caller's
+``asyncio.CancelledError`` contract broken and the task tree in a state nothing can reason about.
 """
 
 from __future__ import annotations
@@ -196,7 +196,7 @@ class HttpModelProvider:
         except GatewayError as error:
             return ProviderHealth(self.provider_id, False, error.message,
                                   round((time.perf_counter() - started) * 1000, 2))
-        except Exception as error:  # noqa: BLE001 - every transport failure is a health answer
+        except Exception as error:
             classified = self._translate(error)
             return ProviderHealth(self.provider_id, False, classified.message,
                                   round((time.perf_counter() - started) * 1000, 2))
@@ -283,16 +283,15 @@ class HttpModelProvider:
         decoder = adapter.decoder()
 
         try:
-            async with self._client() as client:
-                async with client.stream(
-                        call.method, call.path, headers=self._headers(call, adapter),
-                        json=call.json_body) as response:
-                    if response.status_code >= 400:
-                        body = await self._read_bounded(response)
-                        raise self._failure(response, self._json(body), adapter,
-                                            model.ref.model_id)
-                    async for chunk in self._decode(response, decoder, model):
-                        yield chunk
+            async with self._client() as client, client.stream(
+                    call.method, call.path, headers=self._headers(call, adapter),
+                    json=call.json_body) as response:
+                if response.status_code >= 400:
+                    body = await self._read_bounded(response)
+                    raise self._failure(response, self._json(body), adapter,
+                                        model.ref.model_id)
+                async for chunk in self._decode(response, decoder, model):
+                    yield chunk
         except GatewayError:
             raise
         except GeneratorExit:

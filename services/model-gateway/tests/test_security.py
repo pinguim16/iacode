@@ -3,7 +3,8 @@
 from __future__ import annotations
 
 import pytest
-from fixtures.doubles import provider_config, request as build_request
+from fixtures.doubles import provider_config
+from fixtures.doubles import request as build_request
 from iacode_model_gateway.config import resolve_provider
 from iacode_model_gateway.contracts import GatewayRequest
 from iacode_model_gateway.errors import GatewayError, GatewayErrorType

@@ -462,7 +462,10 @@ def scenario_iacode() -> dict[str, Any]:
     expected = "PASS"
     observed = detail["run"]["verdict"]
     steps.record(
-        "canonical_profile.detected", created["profile"] == "python", created["profile"], "python"
+        "canonical_profile.detected",
+        created["profile"] == "python+node+typescript+angular",
+        created["profile"],
+        "python+node+typescript+angular",
     )
     steps.record("quality.matches_mandatory_gates", observed == expected, observed, expected)
     steps.record(

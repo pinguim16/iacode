@@ -10,15 +10,18 @@ from fixtures.doubles import (
     completion,
     descriptor,
     provider_config,
-    request as build_request,
     route_policy,
+)
+from fixtures.doubles import (
+    request as build_request,
+)
+from fixtures.doubles import (
     settings as build_settings,
 )
 from iacode_model_gateway.config import RouteAlias
 from iacode_model_gateway.contracts import (
     Capability,
     CapabilityState,
-    Endpoint,
     GatewayMessage,
     MessageRole,
     ReasoningEffort,

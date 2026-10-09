@@ -31,17 +31,49 @@ def _runner(
 RUNNERS: dict[str, Runner] = {
     runner.identifier: runner
     for runner in (
-        _runner("python.build", "python", "build", ("python", "-m", "compileall", "-q", ".")),
-        _runner("python.unit", "python", "unit", ("python", "-m", "unittest", "discover"), 900),
+        _runner(
+            "python.build",
+            "python",
+            "build",
+            ("iacode-quality-python", "python", "-m", "compileall", "-q", "."),
+        ),
+        _runner(
+            "python.unit",
+            "python",
+            "unit",
+            (
+                "iacode-quality-python",
+                "python",
+                "-m",
+                "pytest",
+                "tests",
+                "-m",
+                "not integration and not engine",
+                "-p",
+                "no:cacheprovider",
+                "--no-header",
+            ),
+            900,
+        ),
         _runner(
             "python.integration",
             "python",
             "integration",
-            ("python", "-m", "pytest", "tests", "-m", "integration"),
+            ("iacode-quality-python", "python", "-m", "pytest", "tests", "-m", "integration"),
             1200,
         ),
-        _runner("python.lint", "python", "lint", ("python", "-m", "ruff", "check", ".")),
-        _runner("python.static", "python", "static", ("python", "-m", "compileall", "-q", ".")),
+        _runner(
+            "python.lint",
+            "python",
+            "lint",
+            ("iacode-quality-python", "python", "-m", "ruff", "check", "."),
+        ),
+        _runner(
+            "python.static",
+            "python",
+            "static",
+            ("iacode-quality-python", "python", "-m", "compileall", "-q", "."),
+        ),
         _runner(
             "python.dependency", "python", "dependency-security", ("python", "-m", "pip", "check")
         ),
@@ -49,19 +81,42 @@ RUNNERS: dict[str, Runner] = {
             "python.coverage",
             "python",
             "coverage",
-            ("python", "-m", "coverage", "run", "-m", "pytest"),
+            ("iacode-quality-python", "python", "-m", "coverage", "run", "-m", "pytest"),
             1200,
             ("coverage",),
         ),
         _runner(
-            "python.migration", "python", "migration", ("alembic", "check"), 600, ("migration",)
+            "python.migration",
+            "python",
+            "migration",
+            ("iacode-quality-python", "alembic", "check"),
+            600,
+            ("migration",),
         ),
-        _runner("node.build", "node", "build", ("npm", "run", "build", "--if-present"), 900),
-        _runner("node.unit", "node", "unit", ("npm", "test", "--", "--runInBand"), 900),
+        _runner(
+            "node.build",
+            "node",
+            "build",
+            ("sh", "-c", "iacode-quality-node-install && npm run build --if-present"),
+            900,
+        ),
+        _runner(
+            "node.unit",
+            "node",
+            "unit",
+            ("sh", "-c", "iacode-quality-node-install && npm test -- --runInBand"),
+            900,
+        ),
         _runner(
             "node.integration", "node", "integration", ("npm", "run", "test:integration"), 1200
         ),
-        _runner("node.lint", "node", "lint", ("npm", "run", "lint", "--if-present"), 600),
+        _runner(
+            "node.lint",
+            "node",
+            "lint",
+            ("sh", "-c", "iacode-quality-node-install && npm run lint --if-present"),
+            600,
+        ),
         _runner(
             "node.dependency",
             "node",
@@ -81,15 +136,31 @@ RUNNERS: dict[str, Runner] = {
             600,
             ("migration",),
         ),
-        _runner("typescript.static", "typescript", "static", ("npx", "tsc", "--noEmit"), 600),
+        _runner(
+            "typescript.static",
+            "typescript",
+            "static",
+            ("sh", "-c", "iacode-quality-node-install && npx tsc --noEmit"),
+            600,
+        ),
         _runner(
             "angular.build",
             "angular",
             "build",
-            ("npx", "ng", "build", "--configuration", "production"),
+            (
+                "sh",
+                "-c",
+                "iacode-quality-node-install && npx ng build --configuration production",
+            ),
             1200,
         ),
-        _runner("angular.unit", "angular", "unit", ("npx", "ng", "test", "--watch=false"), 1200),
+        _runner(
+            "angular.unit",
+            "angular",
+            "unit",
+            ("sh", "-c", "iacode-quality-node-install && npx ng test --watch=false"),
+            1200,
+        ),
         _runner(
             "maven.build",
             "maven",

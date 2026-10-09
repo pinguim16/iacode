@@ -16,6 +16,8 @@ from iacode_sandbox.service import SandboxService
 from iacode_sandbox.snapshots import SnapshotError, build_snapshot
 from sandbox_fixtures import engine_harness, request
 
+pytestmark = pytest.mark.engine
+
 
 class MemorySnapshots:
     """A snapshot reader over archives held in memory, checked by digest like the real one."""

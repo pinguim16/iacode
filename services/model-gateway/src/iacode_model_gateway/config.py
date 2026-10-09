@@ -158,8 +158,8 @@ class ProviderConfig(BaseModel):
 class ResolvedProvider(BaseModel):
     """A provider configuration with its address and credential resolved from the environment.
 
-    This object exists only inside a call. ``credential`` is a ``SecretStr``: it does not appear in a
-    repr, in a log record, or in ``model_dump()`` output unless somebody asks for the secret value
+    This object exists only inside a call. ``credential`` is a ``SecretStr``: it does not appear in
+    a repr, in a log record, or in ``model_dump()`` output unless somebody asks for the secret value
     explicitly, and the only place that asks is the adapter building the authorization header.
     """
 

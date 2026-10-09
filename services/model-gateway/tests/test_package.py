@@ -22,14 +22,14 @@ def test_gateway_package_is_importable() -> None:
                                         prefix="iacode_model_gateway."):
         try:
             importlib.import_module(module.name)
-        except Exception as error:  # noqa: BLE001 - the failure is the finding
+        except Exception as error:
             failures.append(f"{module.name}: {type(error).__name__}: {error}")
 
     assert failures == [], failures
 
 
 def test_the_public_surface_is_the_contract() -> None:
-    """What a consumer is offered at the top level is the contract and the gateway, not internals."""
+    """The top level offers the contract and gateway, not internals."""
     exported = set(iacode_model_gateway.__all__)
 
     assert {"GatewayRequest", "GatewayResponse", "StreamEvent", "ModelGateway", "GatewayError",

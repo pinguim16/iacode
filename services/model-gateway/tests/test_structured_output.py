@@ -10,8 +10,12 @@ from fixtures.doubles import (
     completion,
     descriptor,
     provider_config,
-    request as build_request,
     route_policy,
+)
+from fixtures.doubles import (
+    request as build_request,
+)
+from fixtures.doubles import (
     settings as build_settings,
 )
 from iacode_model_gateway.contracts import (
@@ -99,7 +103,7 @@ def test_the_responses_adapter_sends_a_text_format() -> None:
 
 
 def test_the_messages_adapter_forces_a_tool_rather_than_dropping_the_requirement() -> None:
-    """This protocol has no schema field; silently ignoring the request would be the worst option."""
+    """A protocol without a schema field may not silently ignore the request."""
     call = AnthropicMessagesAdapter().build_generate(
         build_request(response_format=_format()), descriptor(), stream=False,
         path="/v1/messages", max_output_tokens=16)

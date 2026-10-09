@@ -1,4 +1,4 @@
-"""The catalog: what normalization records, what it refuses to invent, and what a sync may not do."""
+"""Catalog normalization, explicit unknowns, and sync boundaries."""
 
 from __future__ import annotations
 

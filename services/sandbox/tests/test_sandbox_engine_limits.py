@@ -13,6 +13,8 @@ import time
 import pytest
 from sandbox_fixtures import engine_harness, request
 
+pytestmark = pytest.mark.engine
+
 
 @pytest.fixture
 def harness():

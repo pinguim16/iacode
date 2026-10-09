@@ -15,6 +15,8 @@ import uuid
 import pytest
 from sandbox_fixtures import engine_harness
 
+pytestmark = pytest.mark.engine
+
 #: Mount points Docker manages inside every container, network or not. They come from the engine's
 #: own VM, never from the host's user filesystem, and they are read-only files, not directories.
 ENGINE_MANAGED_MOUNTS = {"/etc/hosts", "/etc/hostname", "/etc/resolv.conf"}

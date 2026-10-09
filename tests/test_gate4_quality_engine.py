@@ -7,6 +7,7 @@ without substituting text assertions for behavior.
 
 from __future__ import annotations
 
+import ast
 import hashlib
 import json
 import shutil
@@ -28,6 +29,40 @@ import review_bundle  # noqa: E402
 
 GATE = "GATE-4"
 SPECIFICATION = PROJECT_ROOT / "docs" / "GATE-4-CHECKLIST.md"
+
+
+class Gate4QualityCoverageTests(unittest.TestCase):
+    def test_mandatory_lint_covers_every_python_project_root(self) -> None:
+        source = (PROJECT_ROOT / "scripts" / "iacode" / "gates" / "lint.py").read_text(
+            encoding="utf-8"
+        )
+        module = ast.parse(source)
+        assignment = next(
+            node
+            for node in module.body
+            if isinstance(node, ast.Assign)
+            and any(
+                isinstance(target, ast.Name) and target.id == "PYTHON_ROOTS"
+                for target in node.targets
+            )
+        )
+        lint_roots = tuple(Path(value).as_posix() for value in ast.literal_eval(assignment.value))
+        projects = [
+            manifest.parent.relative_to(PROJECT_ROOT).as_posix()
+            for manifest in PROJECT_ROOT.rglob("pyproject.toml")
+            if "fixtures" not in manifest.parts
+        ]
+        uncovered = [
+            project
+            for project in projects
+            if not any(
+                project == root
+                or project.startswith(root.rstrip("/") + "/")
+                or root.startswith(project.rstrip("/") + "/")
+                for root in lint_roots
+            )
+        ]
+        self.assertEqual(uncovered, [])
 
 
 class Gate4CanonicalSpecificationTests(unittest.TestCase):
@@ -223,19 +258,35 @@ class Gate4QualityImageTests(unittest.TestCase):
                 self.assertEqual(sandbox["networkProfile"], "none")
                 self.assertEqual(sandbox["imageProfile"], name)
 
-    def test_every_stack_maps_to_exactly_one_quality_policy(self) -> None:
+    def test_every_declared_stack_maps_to_exactly_one_quality_policy(self) -> None:
         source = (
             PROJECT_ROOT / "services" / "evaluator" / "src" / "iacode_evaluator" / "executor.py"
         ).read_text(encoding="utf-8")
-        for profile in (
-            "python",
-            "node",
-            "node+typescript",
-            "node+typescript+angular",
-            "maven",
-            "gradle",
-        ):
-            self.assertIn(f'"{profile}"', source)
+        module = ast.parse(source)
+        assignment = next(
+            node
+            for node in module.body
+            if isinstance(node, ast.Assign)
+            and any(
+                isinstance(target, ast.Name) and target.id == "SANDBOX_POLICY_BY_STACK"
+                for target in node.targets
+            )
+        )
+        mapping = ast.literal_eval(assignment.value)
+        quality_policy = json.loads(
+            (PROJECT_ROOT / ".iacode" / "policies" / "quality-policy.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        stacks = {
+            stack
+            for profile in quality_policy["profiles"].values()
+            for stack in profile["stacks"]
+        }
+        self.assertEqual(set(mapping), stacks)
+        self.assertEqual(
+            set(mapping.values()), {"quality-python", "quality-node", "quality-java"}
+        )
 
 
 class FunctionalAcceptanceTests(unittest.TestCase):

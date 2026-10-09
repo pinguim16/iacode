@@ -177,3 +177,7 @@ Expected set derived by: `policies.expected_requirement_refs over docs/GATE-4-CH
 | `LESSON-REQ-0066` | `lesson:LSN-0067` | yes | `NOT_STARTED` | Verify cancellation semantics must survive orchestration-library exception wrapping | LESSON-PREFLIGHT.json LESSON-REQ-0066 |
 | `LESSON-REQ-0067` | `lesson:LSN-0068` | yes | `NOT_STARTED` | Verify a bounded parser must apply each content limit only to content it interprets | LESSON-PREFLIGHT.json LESSON-REQ-0067 |
 | `LESSON-REQ-0068` | `lesson:LSN-0069` | yes | `NOT_STARTED` | Verify a polyglot plan binds each check to both its project root and its toolchain | LESSON-PREFLIGHT.json LESSON-REQ-0068 |
+| `LESSON-REQ-0069` | `lesson:LSN-0070` | yes | `NOT_STARTED` | Verify project discovery must separate deployable roots, nested fixtures and check applicability | LESSON-PREFLIGHT.json LESSON-REQ-0069 |
+| `LESSON-REQ-0070` | `lesson:LSN-0071` | yes | `NOT_STARTED` | Verify every quality image must provision snapshots on its oldest runtime and prepare each isolated check | LESSON-PREFLIGHT.json LESSON-REQ-0070 |
+| `LESSON-REQ-0071` | `lesson:LSN-0072` | yes | `NOT_STARTED` | Verify secret findings and reviewed false positives must share one policy-owned taxonomy | LESSON-PREFLIGHT.json LESSON-REQ-0071 |
+| `LESSON-REQ-0072` | `lesson:LSN-0073` | yes | `NOT_STARTED` | Verify the canonical lint denominator must cover every detected project root | LESSON-PREFLIGHT.json LESSON-REQ-0072 |

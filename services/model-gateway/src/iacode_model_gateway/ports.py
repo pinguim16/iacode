@@ -175,4 +175,5 @@ class RealJitter:
     """
 
     def uniform(self, low: float, high: float) -> float:
-        return random.uniform(low, high)
+        # Retry jitter is scheduling noise, not a security token or a fairness decision.
+        return random.uniform(low, high)  # noqa: S311

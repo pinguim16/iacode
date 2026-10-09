@@ -5,11 +5,12 @@ ENV DEBIAN_FRONTEND=noninteractive \
     PYTHONUNBUFFERED=1 \
     PIP_DISABLE_PIP_VERSION_CHECK=1
 
+COPY apps/api/requirements.lock.txt /tmp/requirements.lock.txt
 RUN apt-get update \
  && apt-get install -y --no-install-recommends git=1:2.39.5-0+deb12u3 \
  && rm -rf /var/lib/apt/lists/* \
- && python -m pip install --no-cache-dir \
-      alembic==1.20.0 coverage==7.13.4 pytest==9.1.1 ruff==0.16.8 \
+ && python -m pip install --no-cache-dir -r /tmp/requirements.lock.txt coverage==7.13.4 \
+ && rm /tmp/requirements.lock.txt \
  && groupadd --gid 10001 sandbox \
  && useradd --uid 10001 --gid 10001 --no-create-home --home-dir /tmp \
       --shell /usr/sbin/nologin sandbox \
@@ -19,10 +20,13 @@ RUN apt-get update \
 COPY services/sandbox/src/iacode_sandbox/helper.py /opt/iacode/sandbox_helper.py
 COPY services/sandbox/src/iacode_sandbox/paths.py /opt/iacode/paths.py
 COPY services/sandbox/src/iacode_sandbox/patching.py /opt/iacode/patching.py
+COPY .iacode/policies/secret-scan-allowlist.json /opt/iacode/secret-scan-allowlist.json
 COPY services/sandbox/images/quality-python/gitconfig /opt/iacode/gitconfig
-COPY services/sandbox/images/quality-python/secret_scan.py /usr/local/bin/iacode-quality-secret-scan
+COPY services/sandbox/images/quality-python/python_runner.py /usr/local/bin/iacode-quality-python
+COPY services/sandbox/images/quality_secret_scan.py /usr/local/bin/iacode-quality-secret-scan
 RUN chmod -R a=rX /opt/iacode \
- && chmod 0555 /usr/local/bin/iacode-quality-secret-scan
+ && chmod 0555 /usr/local/bin/iacode-quality-python \
+      /usr/local/bin/iacode-quality-secret-scan
 
 USER sandbox
 WORKDIR /workspace

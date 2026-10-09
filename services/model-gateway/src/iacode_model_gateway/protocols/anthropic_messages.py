@@ -250,11 +250,16 @@ class AnthropicMessagesAdapter(ProtocolAdapter):
             # return unvalidated prose to a caller that asked for a structured answer, so the model
             # is given the schema as a tool it must use — the documented way to get a typed result
             # here — and the caller still receives a tool call rather than a fabricated guarantee.
-            body["tools"] = list(body.get("tools") or []) + [{
-                "name": request.response_format.name,
-                "description": "Return the answer through this tool, matching the schema exactly.",
-                "input_schema": request.response_format.json_schema,
-            }]
+            body["tools"] = [
+                *(body.get("tools") or []),
+                {
+                    "name": request.response_format.name,
+                    "description": (
+                        "Return the answer through this tool, matching the schema exactly."
+                    ),
+                    "input_schema": request.response_format.json_schema,
+                },
+            ]
             body["tool_choice"] = {"type": "tool", "name": request.response_format.name}
 
         return HttpCall(

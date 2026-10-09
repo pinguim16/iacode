@@ -1,7 +1,7 @@
 """Choosing which model to call, deterministically.
 
-The router answers one question — *given this request, this catalog and this policy, which candidates
-may serve it and in what order* — and it answers it the same way every time. There is no learning
+The router answers one question — *given this request, this catalog and this policy, which
+candidates may serve it and in what order* — and it answers it the same way every time. No learning
 here, no score and no measured preference, because this project has measured nothing yet.
 `docs/GATE-1-CHECKLIST.md` row 7.8 forbids inventing one: a hardcoded "model X is better at coding"
 is a claim, and a claim with no evaluation behind it is worse than no claim, because it gets acted

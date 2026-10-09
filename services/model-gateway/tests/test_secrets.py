@@ -16,6 +16,8 @@ from fixtures.doubles import (
     gateway_source_root,
     policy_dir,
     provider_config,
+)
+from fixtures.doubles import (
     request as build_request,
 )
 from iacode_model_gateway.config import (

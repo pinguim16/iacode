@@ -21,9 +21,10 @@ RUN cd /opt/iacode/node-toolchain \
 COPY services/sandbox/src/iacode_sandbox/helper.py /opt/iacode/sandbox_helper.py
 COPY services/sandbox/src/iacode_sandbox/paths.py /opt/iacode/paths.py
 COPY services/sandbox/src/iacode_sandbox/patching.py /opt/iacode/patching.py
+COPY .iacode/policies/secret-scan-allowlist.json /opt/iacode/secret-scan-allowlist.json
 COPY services/sandbox/images/quality-node/gitconfig /opt/iacode/gitconfig
 COPY services/sandbox/images/quality-node/node_install.sh /usr/local/bin/iacode-quality-node-install
-COPY services/sandbox/images/quality-node/secret_scan.py /usr/local/bin/iacode-quality-secret-scan
+COPY services/sandbox/images/quality_secret_scan.py /usr/local/bin/iacode-quality-secret-scan
 RUN chmod -R a=rX /opt/iacode \
  && chmod 0555 /usr/local/bin/iacode-quality-node-install \
       /usr/local/bin/iacode-quality-secret-scan

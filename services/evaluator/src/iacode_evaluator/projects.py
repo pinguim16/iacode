@@ -36,6 +36,7 @@ STACK_ORDER = ("python", "node", "typescript", "angular", "maven", "gradle")
 MANIFEST_NAMES = frozenset(
     {item for values in STACK_MARKERS.values() for item in values} | {"iacode-quality.json"}
 )
+NON_PROJECT_MANIFEST_PARTS = frozenset({"fixtures"})
 
 
 @dataclass(frozen=True)
@@ -44,6 +45,7 @@ class ProjectProfile:
     stacks: tuple[str, ...]
     manifests: tuple[str, ...]
     workspace_roots: tuple[tuple[str, str], ...]
+    source_paths: tuple[str, ...]
     confidence: str
     ambiguities: tuple[str, ...]
     configuration_source: str | None
@@ -65,6 +67,7 @@ def _safe_relative(value: str) -> str:
 def detect_project(files: Mapping[str, bytes | str]) -> ProjectProfile:
     """Detect from a bounded snapshot inventory; never execute or import its content."""
     safe: dict[str, int] = {}
+    source_paths: list[str] = []
     for raw_path, content in files.items():
         try:
             path = _safe_relative(raw_path)
@@ -72,7 +75,11 @@ def detect_project(files: Mapping[str, bytes | str]) -> ProjectProfile:
             if error.code == "PROJECT_PATH_IGNORED":
                 continue
             raise
-        if PurePosixPath(path).name not in MANIFEST_NAMES:
+        source_paths.append(path)
+        candidate = PurePosixPath(path)
+        if candidate.name not in MANIFEST_NAMES or any(
+            part in NON_PROJECT_MANIFEST_PARTS for part in candidate.parts[:-1]
+        ):
             continue
         size = len(content.encode("utf-8")) if isinstance(content, str) else len(content)
         if size > MAX_MANIFEST_BYTES:
@@ -130,6 +137,7 @@ def detect_project(files: Mapping[str, bytes | str]) -> ProjectProfile:
         "stacks": found,
         "manifests": manifests,
         "workspaceRoots": workspace_roots,
+        "sourcePaths": tuple(sorted(source_paths)),
         "confidence": confidence,
         "ambiguities": ambiguities,
         "configuration": configuration,
@@ -139,6 +147,7 @@ def detect_project(files: Mapping[str, bytes | str]) -> ProjectProfile:
         found,
         manifests,
         workspace_roots,
+        tuple(sorted(source_paths)),
         confidence,
         ambiguities,
         configuration,

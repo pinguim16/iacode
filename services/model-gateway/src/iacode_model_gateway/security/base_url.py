@@ -30,7 +30,7 @@ from __future__ import annotations
 import ipaddress
 from urllib.parse import urlsplit
 
-__all__ = ["BaseUrlError", "normalise_base_url", "is_loopback_host"]
+__all__ = ["BaseUrlError", "is_loopback_host", "normalise_base_url"]
 
 _LOOPBACK_NAMES = frozenset({"localhost", "localhost.localdomain", "ip6-localhost"})
 
@@ -82,11 +82,13 @@ def normalise_base_url(value: str, *, allow_plain_http_loopback: bool = True) ->
             "a provider base URL carries no query string and no fragment; the adapter appends a "
             "path to it")
 
-    if parts.scheme == "http":
-        if not allow_plain_http_loopback or not is_loopback_host(parts.hostname):
-            raise BaseUrlError(
-                "plain HTTP is allowed only for a loopback provider; a remote provider must be "
-                "reached over HTTPS so the credential is not sent in clear text")
+    if parts.scheme == "http" and (
+        not allow_plain_http_loopback or not is_loopback_host(parts.hostname)
+    ):
+        raise BaseUrlError(
+            "plain HTTP is allowed only for a loopback provider; a remote provider must be "
+            "reached over HTTPS so the credential is not sent in clear text"
+        )
 
     path = parts.path.rstrip("/")
     authority = parts.netloc

@@ -1,8 +1,9 @@
 """The rules the router applies to a candidate, separated from the act of choosing one.
 
 Keeping them here rather than inside :mod:`iacode_model_gateway.routing.router` is what makes each
-one testable on its own: "would this model be rejected, and what would the reason be" is a question
-answered by a pure function over a descriptor, with no catalog, no clock and no HTTP client in sight.
+one testable on its own: "would this model be rejected, and what would the reason be" is a
+question answered by a pure function over a descriptor, with no catalog, no clock and no HTTP
+client in sight.
 
 Two rules are worth reading twice.
 
@@ -60,13 +61,17 @@ def evaluate_candidate(request: GatewayRequest, model: ModelDescriptor,
                 f"the model has never declared {capability!s} and the policy refuses an unknown "
                 f"capability")
 
-    if request.reasoning_effort is not None and model.reasoning_levels:
-        if request.reasoning_effort not in model.reasoning_levels:
-            declared = ", ".join(str(level) for level in model.reasoning_levels)
-            return CandidateVerdict(
-                False,
-                f"the model declares reasoning levels {declared} and not "
-                f"{request.reasoning_effort!s}")
+    if (
+        request.reasoning_effort is not None
+        and model.reasoning_levels
+        and request.reasoning_effort not in model.reasoning_levels
+    ):
+        declared = ", ".join(str(level) for level in model.reasoning_levels)
+        return CandidateVerdict(
+            False,
+            f"the model declares reasoning levels {declared} and not "
+            f"{request.reasoning_effort!s}",
+        )
 
     return CandidateVerdict(True)
 

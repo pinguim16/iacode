@@ -17,6 +17,12 @@ class SandboxImageInputTests:
         assert "apps/web/package-lock.json" in inputs
         assert "services/sandbox/src/iacode_sandbox/helper.py" in inputs
 
+    @pytest.mark.parametrize("profile", ["quality-python", "quality-node", "quality-java"])
+    def test_quality_images_bind_the_policy_owned_secret_scanner(self, profile: str) -> None:
+        inputs = image_inputs(repository_root(), f"services/sandbox/images/{profile}")
+        assert ".iacode/policies/secret-scan-allowlist.json" in inputs
+        assert "services/sandbox/images/quality_secret_scan.py" in inputs
+
     def test_an_external_input_changes_the_fingerprint(self, tmp_path: Path) -> None:
         root = tmp_path
         context = root / "images" / "quality"

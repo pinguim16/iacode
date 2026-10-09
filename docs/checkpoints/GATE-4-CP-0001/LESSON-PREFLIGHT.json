@@ -2,27 +2,13 @@
   "schemaVersion": "2.0.0",
   "gate": "GATE-4",
   "scope": "quality engine, evaluation runners, immutable evidence store, verdict rules, false-PASS rejection, reproducible evidence, sandboxed execution, agent-runtime integration, promotion evidence",
-  "technologies": [
-    "python",
-    "postgresql",
-    "minio",
-    "temporal",
-    "docker"
-  ],
-  "modules": [
-    "services/evaluator",
-    "services/sandbox",
-    "services/orchestrator",
-    "services/agent-runtime",
-    "packages/persistence",
-    "apps/api",
-    "apps/web"
-  ],
-  "generatedAt": "2026-10-09T19:47:11Z",
+  "technologies": [],
+  "modules": [],
+  "generatedAt": "2026-10-09T20:23:14Z",
   "policyVersion": "2.0.0",
-  "inputsFingerprint": "0033be690a674220151311c9a2e7e8d748253b35c5557bfd02e5257228878d66",
-  "lessonsConsidered": 69,
-  "lessonsApplicable": 68,
+  "inputsFingerprint": "0d4d7f8b077cf7bab6c4418d30483056498700ee1285afe24f98a10e47a9d9e2",
+  "lessonsConsidered": 73,
+  "lessonsApplicable": 72,
   "applicable": [
     {
       "lessonId": "LSN-0001",
@@ -703,6 +689,46 @@
       "requiredCheck": "For every polyglot or multi-root project plan, prove each check is expanded at the roots that declared its stack and selects execution policy from the frozen runner rather than one run-wide guessed toolchain.",
       "requiredEvidence": "A deterministic planning test over multiple roots and stacks, an execution-boundary test for per-runner images, and a successful real polyglot repository evaluation.",
       "derivedRequirementId": "LESSON-REQ-0068"
+    },
+    {
+      "lessonId": "LSN-0070",
+      "title": "Project discovery must separate deployable roots, nested fixtures and check applicability",
+      "status": "GUARDED",
+      "severity": "HIGH",
+      "reasonApplicable": "applies to every Gate; category architecture; severity HIGH; already guarded, so the control must keep holding",
+      "requiredCheck": "For project discovery over a monorepo, prove nested fixture manifests do not become execution roots and every non-applicable unit check is derived from the frozen source inventory rather than from a failed command.",
+      "requiredEvidence": "Paired planner tests proving no-test roots are explicitly non-applicable, test-bearing roots remain mandatory, fixture manifests are excluded, and a real repository evaluation succeeds.",
+      "derivedRequirementId": "LESSON-REQ-0069"
+    },
+    {
+      "lessonId": "LSN-0071",
+      "title": "Every quality image must provision snapshots on its oldest runtime and prepare each isolated check",
+      "status": "GUARDED",
+      "severity": "HIGH",
+      "reasonApplicable": "applies to every Gate; category implementation; severity HIGH; already guarded, so the control must keep holding",
+      "requiredCheck": "For every shared helper and isolated quality runner, test the oldest pinned runtime actually used by an image and prove each check prepares all dependencies it needs without relying on a previous sandbox session.",
+      "requiredEvidence": "A real snapshot-provisioning test across every quality image, closed-runner assertions for self-contained preparation, and a successful real polyglot repository evaluation.",
+      "derivedRequirementId": "LESSON-REQ-0070"
+    },
+    {
+      "lessonId": "LSN-0072",
+      "title": "Secret findings and reviewed false positives must share one policy-owned taxonomy",
+      "status": "GUARDED",
+      "severity": "HIGH",
+      "reasonApplicable": "applies to every Gate; category security; severity HIGH; already guarded, so the control must keep holding",
+      "requiredCheck": "Whenever more than one gate scans secrets, prove all scanners share the policy-owned finding taxonomy and digest-bound allowance source, and that an unallowlisted match remains blocking.",
+      "requiredEvidence": "Content-addressing tests for scanner and policy inputs, a real negative scan in every execution image, and consistent PASS over the same reviewed repository snapshot.",
+      "derivedRequirementId": "LESSON-REQ-0071"
+    },
+    {
+      "lessonId": "LSN-0073",
+      "title": "The canonical lint denominator must cover every detected project root",
+      "status": "GUARDED",
+      "severity": "HIGH",
+      "reasonApplicable": "applies to every Gate; category quality; severity HIGH; already guarded, so the control must keep holding",
+      "requiredCheck": "For every manually scoped repository-wide quality command, derive or test its denominator against the current project inventory so a newly detected root cannot remain outside a green gate.",
+      "requiredEvidence": "A denominator test over all non-fixture manifests plus a successful canonical lint execution and matching real repository Quality Engine verdict.",
+      "derivedRequirementId": "LESSON-REQ-0072"
     }
   ],
   "derivedRequirements": [
@@ -1181,6 +1207,34 @@
       "description": "Verify a polyglot plan binds each check to both its project root and its toolchain",
       "mandatory": true,
       "requiredEvidence": "A deterministic planning test over multiple roots and stacks, an execution-boundary test for per-runner images, and a successful real polyglot repository evaluation."
+    },
+    {
+      "id": "LESSON-REQ-0069",
+      "lessonId": "LSN-0070",
+      "description": "Verify project discovery must separate deployable roots, nested fixtures and check applicability",
+      "mandatory": true,
+      "requiredEvidence": "Paired planner tests proving no-test roots are explicitly non-applicable, test-bearing roots remain mandatory, fixture manifests are excluded, and a real repository evaluation succeeds."
+    },
+    {
+      "id": "LESSON-REQ-0070",
+      "lessonId": "LSN-0071",
+      "description": "Verify every quality image must provision snapshots on its oldest runtime and prepare each isolated check",
+      "mandatory": true,
+      "requiredEvidence": "A real snapshot-provisioning test across every quality image, closed-runner assertions for self-contained preparation, and a successful real polyglot repository evaluation."
+    },
+    {
+      "id": "LESSON-REQ-0071",
+      "lessonId": "LSN-0072",
+      "description": "Verify secret findings and reviewed false positives must share one policy-owned taxonomy",
+      "mandatory": true,
+      "requiredEvidence": "Content-addressing tests for scanner and policy inputs, a real negative scan in every execution image, and consistent PASS over the same reviewed repository snapshot."
+    },
+    {
+      "id": "LESSON-REQ-0072",
+      "lessonId": "LSN-0073",
+      "description": "Verify the canonical lint denominator must cover every detected project root",
+      "mandatory": true,
+      "requiredEvidence": "A denominator test over all non-fixture manifests plus a successful canonical lint execution and matching real repository Quality Engine verdict."
     }
   ]
 }

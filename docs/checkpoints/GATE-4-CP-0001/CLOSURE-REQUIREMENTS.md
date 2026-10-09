@@ -187,6 +187,10 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 | `LESSON-REQ-0066` | LESSON | `lesson:LSN-0067` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify cancellation semantics must survive orchestration-library exception wrapping |
 | `LESSON-REQ-0067` | LESSON | `lesson:LSN-0068` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify a bounded parser must apply each content limit only to content it interprets |
 | `LESSON-REQ-0068` | LESSON | `lesson:LSN-0069` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify a polyglot plan binds each check to both its project root and its toolchain |
+| `LESSON-REQ-0069` | LESSON | `lesson:LSN-0070` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify project discovery must separate deployable roots, nested fixtures and check applicability |
+| `LESSON-REQ-0070` | LESSON | `lesson:LSN-0071` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify every quality image must provision snapshots on its oldest runtime and prepare each isolated check |
+| `LESSON-REQ-0071` | LESSON | `lesson:LSN-0072` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify secret findings and reviewed false positives must share one policy-owned taxonomy |
+| `LESSON-REQ-0072` | LESSON | `lesson:LSN-0073` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify the canonical lint denominator must cover every detected project root |
 
 ## Evidence
 
@@ -2086,6 +2090,50 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 
 - Source reference: LESSON-PREFLIGHT.json LESSON-REQ-0068
 - Description: Verify a polyglot plan binds each check to both its project root and its toolchain
+- Implementation: _none_
+- Test: _none_
+- Negative test: _none_
+- Documentation: _none_
+- Validation: _none_
+- Guardrail: _none_
+
+### LESSON-REQ-0069 - lesson:LSN-0070
+
+- Source reference: LESSON-PREFLIGHT.json LESSON-REQ-0069
+- Description: Verify project discovery must separate deployable roots, nested fixtures and check applicability
+- Implementation: _none_
+- Test: _none_
+- Negative test: _none_
+- Documentation: _none_
+- Validation: _none_
+- Guardrail: _none_
+
+### LESSON-REQ-0070 - lesson:LSN-0071
+
+- Source reference: LESSON-PREFLIGHT.json LESSON-REQ-0070
+- Description: Verify every quality image must provision snapshots on its oldest runtime and prepare each isolated check
+- Implementation: _none_
+- Test: _none_
+- Negative test: _none_
+- Documentation: _none_
+- Validation: _none_
+- Guardrail: _none_
+
+### LESSON-REQ-0071 - lesson:LSN-0072
+
+- Source reference: LESSON-PREFLIGHT.json LESSON-REQ-0071
+- Description: Verify secret findings and reviewed false positives must share one policy-owned taxonomy
+- Implementation: _none_
+- Test: _none_
+- Negative test: _none_
+- Documentation: _none_
+- Validation: _none_
+- Guardrail: _none_
+
+### LESSON-REQ-0072 - lesson:LSN-0073
+
+- Source reference: LESSON-PREFLIGHT.json LESSON-REQ-0072
+- Description: Verify the canonical lint denominator must cover every detected project root
 - Implementation: _none_
 - Test: _none_
 - Negative test: _none_

@@ -361,7 +361,7 @@ class ModelGateway:
                                 finish = chunk.finish_reason
                 except GatewayError as failure:
                     error = failure
-                except Exception as failure:  # noqa: BLE001 - classified inside the gateway
+                except Exception as failure:
                     error = GatewayError(
                         GatewayErrorType.INTERNAL_GATEWAY_ERROR,
                         f"the gateway failed while streaming ({type(failure).__name__})",
@@ -510,7 +510,7 @@ class ModelGateway:
                     request, candidate.model, endpoint, output_tokens=output_tokens)
             except GatewayError as failure:
                 error = failure
-            except Exception as failure:  # noqa: BLE001 - classified inside the gateway
+            except Exception as failure:
                 error = GatewayError(
                     GatewayErrorType.INTERNAL_GATEWAY_ERROR,
                     f"the gateway failed while calling the provider ({type(failure).__name__})",
@@ -615,7 +615,7 @@ class ModelGateway:
         )
         try:
             await self.call_store.record(record)
-        except Exception as error:  # noqa: BLE001 - recording must not fail the call
+        except Exception as error:
             logger.error("the model call could not be recorded", exc_info=error,
                          extra=call_fields(request_id=request.request_id,
                                            provider=candidate.provider.provider_id,

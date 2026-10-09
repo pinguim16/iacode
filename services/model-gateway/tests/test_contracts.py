@@ -3,7 +3,8 @@
 from __future__ import annotations
 
 import pytest
-from fixtures.doubles import descriptor, request as build_request
+from fixtures.doubles import descriptor
+from fixtures.doubles import request as build_request
 from iacode_model_gateway.contracts import (
     CONTRACT_VERSION,
     Capability,

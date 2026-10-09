@@ -13,6 +13,23 @@ from iacode_evaluator.projects import ProjectProfile
 from iacode_evaluator.runners import get_runner
 
 
+def _has_unit_tests(project: ProjectProfile, root: str, stack: str) -> bool:
+    """Derive unit-check applicability from the frozen inventory, without executing content."""
+    prefix = "" if root == "." else f"{root.rstrip('/')}/"
+    paths = tuple(path[len(prefix) :] for path in project.source_paths if path.startswith(prefix))
+    if stack == "python":
+        return any(
+            path.startswith("tests/")
+            and (path.rsplit("/", 1)[-1].startswith("test_") or path.endswith("_test.py"))
+            and path.endswith(".py")
+            for path in paths
+        )
+    if stack in {"node", "typescript", "angular"}:
+        suffixes = (".spec.ts", ".test.ts", ".spec.js", ".test.js")
+        return any(path.endswith(suffixes) for path in paths)
+    return True
+
+
 def select_profile(project: ProjectProfile, registry: PolicyRegistry) -> str:
     if project.confidence == "UNSUPPORTED":
         raise QualityError("PROJECT_UNSUPPORTED", "no supported toolchain was detected")
@@ -75,6 +92,7 @@ def build_plan(
         for root in roots:
             index += 1
             timeout = min(runner.timeout_seconds, policy.maxCheckSeconds)
+            applicable = runner.kind != "unit" or _has_unit_tests(project, root, runner.stack)
             checks.append(
                 QualityCheck(
                     checkId=f"q{index:03d}-{runner.kind}",
@@ -82,10 +100,12 @@ def build_plan(
                     runner=runner.identifier,
                     command=runner.command,
                     workingDirectory=root,
-                    mandatory=True,
-                    applicable=True,
+                    mandatory=applicable,
+                    applicable=applicable,
                     applicabilityReason=(
                         f"profile {profile.name} requires {runner.kind} in {root}"
+                        if applicable
+                        else f"no {runner.stack} unit-test source was found in {root}"
                     ),
                     timeoutSeconds=timeout,
                     requiredEvidenceKinds=runner.evidence_kinds,

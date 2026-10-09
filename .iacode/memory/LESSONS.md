@@ -77,6 +77,10 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 | `LSN-0067` | `GUARDED` | HIGH | implementation | Cancellation semantics must survive orchestration-library exception wrapping | `test_an_acknowledged_activity_cancellation_stays_a_cancellation` |
 | `LSN-0068` | `GUARDED` | HIGH | implementation | A bounded parser must apply each content limit only to content it interprets | `test_large_non_manifest_content_does_not_block_project_detection`, `test_paths_and_manifest_sizes_are_bounded` |
 | `LSN-0069` | `GUARDED` | HIGH | architecture | A polyglot plan binds each check to both its project root and its toolchain | `test_polyglot_monorepo_checks_keep_their_stack_roots`, `test_a_polyglot_plan_selects_each_check_image_from_its_frozen_runner` |
+| `LSN-0070` | `GUARDED` | HIGH | architecture | Project discovery must separate deployable roots, nested fixtures and check applicability | `test_nested_fixture_manifests_do_not_become_workspace_roots`, `test_unit_checks_are_not_applicable_without_test_sources`, `test_unit_checks_are_mandatory_when_test_sources_exist` |
+| `LSN-0071` | `GUARDED` | HIGH | implementation | Every quality image must provision snapshots on its oldest runtime and prepare each isolated check | `test_every_quality_helper_provisions_a_real_snapshot`, `test_isolated_language_checks_prepare_their_policy_owned_toolchain` |
+| `LSN-0072` | `GUARDED` | HIGH | security | Secret findings and reviewed false positives must share one policy-owned taxonomy | `test_quality_images_bind_the_policy_owned_secret_scanner`, `test_a_non_allowlisted_credential_shape_fails_the_secret_check` |
+| `LSN-0073` | `GUARDED` | HIGH | quality | The canonical lint denominator must cover every detected project root | `test_mandatory_lint_covers_every_python_project_root` |
 
 ## Detail
 
@@ -974,3 +978,51 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
   - `test` test_polyglot_monorepo_checks_keep_their_stack_roots — A Python and Angular/TypeScript monorepo produces checks at each declared root and common checks once at the repository root.
   - `test` test_a_polyglot_plan_selects_each_check_image_from_its_frozen_runner — Python, Angular and common checks select only their policy-owned quality images from frozen runner identity.
 - Evidence: `file:docs/checkpoints/GATE-4-CP-0001/COMMANDS.jsonl`, `file:.iacode/policies/quality-policy.json`, `file:services/evaluator/src/iacode_evaluator/projects.py`, `file:services/evaluator/src/iacode_evaluator/planner.py`, `file:services/evaluator/src/iacode_evaluator/executor.py`, `file:services/evaluator/src/iacode_evaluator/workflow.py`, `file:services/evaluator/tests/test_core.py`
+
+### LSN-0070 — Project discovery must separate deployable roots, nested fixtures and check applicability
+
+- Status: `GUARDED`, severity HIGH, category architecture, recurrences 0.
+- Source: GATE-4, GATE-4-CP-0001, finding cmd-0054.
+- Symptom: The real IACode evaluation treated deliberately failing evaluator fixtures as independent projects and executed unit runners in packages that had no unit-test sources, producing failures unrelated to the committed repository's quality.
+- Root cause: The profile inventory classified every nested manifest as a deployable workspace root and the planner marked every profile runner applicable without preserving enough source inventory to decide whether a unit suite existed.
+- Resolution: Preserve the bounded source-path inventory in the content-addressed profile, exclude fixture manifests from workspace-root discovery, and freeze unit checks as non-applicable and non-mandatory only when the corresponding root contains no test source.
+- Prevention:
+  - `test` test_nested_fixture_manifests_do_not_become_workspace_roots — A manifest below a fixtures directory remains test data and never expands the execution plan.
+  - `test` test_unit_checks_are_not_applicable_without_test_sources — A source-only package records an explicit non-applicability reason instead of executing an empty suite.
+  - `test` test_unit_checks_are_mandatory_when_test_sources_exist — The same rule cannot suppress a unit check when a test source exists.
+- Evidence: `file:docs/checkpoints/GATE-4-CP-0001/COMMANDS.jsonl`, `file:services/evaluator/src/iacode_evaluator/projects.py`, `file:services/evaluator/src/iacode_evaluator/planner.py`, `file:services/evaluator/tests/test_core.py`
+
+### LSN-0071 — Every quality image must provision snapshots on its oldest runtime and prepare each isolated check
+
+- Status: `GUARDED`, severity HIGH, category implementation, recurrences 0.
+- Source: GATE-4, GATE-4-CP-0001, finding cmd-0054.
+- Symptom: All Node checks failed before obtaining a sandbox because the shared helper called Python 3.12's tar extraction filter inside the Node image's Python 3.11, while successful provisioning would still have left later isolated checks without dependencies installed by an earlier sandbox.
+- Root cause: A shared helper was validated only on its newest interpreter, and the plan assumed dependency installation survived between checks even though toolchain changes intentionally release each sandbox session.
+- Resolution: Replace version-specific bulk extraction with manually validated regular-file extraction supported by every pinned runtime, exercise snapshot provisioning in every real quality image, expose local Python packages through a policy-owned wrapper, and make every Node check bootstrap its pinned offline dependency cache.
+- Prevention:
+  - `test` test_every_quality_helper_provisions_a_real_snapshot — Each pinned quality image provisions and reads an authorised snapshot through its actual helper runtime.
+  - `test` test_isolated_language_checks_prepare_their_policy_owned_toolchain — Closed Python and Node runners prove their per-check dependency preparation is part of the frozen command.
+- Evidence: `file:docs/checkpoints/GATE-4-CP-0001/COMMANDS.jsonl`, `file:services/sandbox/src/iacode_sandbox/helper.py`, `file:services/sandbox/tests/test_quality_images.py`, `file:services/evaluator/src/iacode_evaluator/runners.py`, `file:services/evaluator/tests/test_core.py`
+
+### LSN-0072 — Secret findings and reviewed false positives must share one policy-owned taxonomy
+
+- Status: `GUARDED`, severity HIGH, category security, recurrences 0.
+- Source: GATE-4, GATE-4-CP-0001, finding cmd-0054.
+- Symptom: The repository's mandatory secret gate passed with reviewed digest-bound false positives, but the Quality Engine failed the same immutable snapshot because its three image-local scanners used a different broader pattern and had no policy-owned allowance mechanism.
+- Root cause: Secret detection logic was duplicated per image and diverged from the canonical finding kinds and allowlist semantics, so identical evidence received contradictory verdicts.
+- Resolution: Use one offline scanner across all quality images, bind its canonical pattern taxonomy and reviewed digest allowlist into every content-addressed image, validate the policy structure fail-closed, and continue rejecting every matching value not explicitly allowed by policy.
+- Prevention:
+  - `test` test_quality_images_bind_the_policy_owned_secret_scanner — Every quality image fingerprint includes the shared scanner and the canonical reviewed allowlist.
+  - `test` test_a_non_allowlisted_credential_shape_fails_the_secret_check — The shared scanner still fails an unreviewed credential-shaped value in every real quality image.
+- Evidence: `file:docs/checkpoints/GATE-4-CP-0001/COMMANDS.jsonl`, `file:services/sandbox/images/quality_secret_scan.py`, `file:.iacode/policies/secret-scan-allowlist.json`, `file:services/sandbox/tests/test_sandbox_images.py`, `file:services/sandbox/tests/test_quality_images.py`
+
+### LSN-0073 — The canonical lint denominator must cover every detected project root
+
+- Status: `GUARDED`, severity HIGH, category quality, recurrences 0.
+- Source: GATE-4, GATE-4-CP-0001, finding cmd-0054.
+- Symptom: The mandatory lint gate reported PASS while the sandboxed Quality Engine found dozens of findings in the Model Gateway and Orchestrator rehearsal roots of the same committed snapshot.
+- Root cause: The lint command carried a manually curated root tuple that omitted two Python project areas, so its green verdict described only a subset of the repository profile detected by the Quality Engine.
+- Resolution: Add every omitted source and test root to the canonical lint command, repair the real findings, and enforce that each non-fixture pyproject root intersects the lint denominator.
+- Prevention:
+  - `test` test_mandatory_lint_covers_every_python_project_root — Every Python project root discovered from repository manifests is covered by at least one canonical lint root.
+- Evidence: `file:docs/checkpoints/GATE-4-CP-0001/COMMANDS.jsonl`, `file:scripts/iacode/gates/lint.py`, `file:tests/test_gate4_quality_engine.py`, `file:services/model-gateway/src/iacode_model_gateway/config.py`, `file:services/orchestrator/rehearsal/coding.py`

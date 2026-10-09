@@ -69,6 +69,10 @@ ignore = [
 # purpose is to prove it never reaches a metric label or a log record.
 "services/sandbox/tests/**" = ["S105", "S108"]
 
+# Rehearsals execute inside the worker container. Their /tmp is a private container filesystem,
+# used only as a short-lived synchronization point for the durability scenario.
+"services/orchestrator/rehearsal/**" = ["S108"]
+
 # The application binds 0.0.0.0 *inside a container*, where the alternative is a service nothing can
 # reach. The published port is the security boundary, and the compose file binds that to 127.0.0.1;
 # `infra/tests/test_compose_definition.py` is the control that keeps it there.

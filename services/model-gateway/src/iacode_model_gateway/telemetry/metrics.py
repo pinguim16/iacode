@@ -20,7 +20,7 @@ from __future__ import annotations
 
 from prometheus_client import CollectorRegistry, Counter, Gauge, Histogram
 
-__all__ = ["GatewayMetrics", "LATENCY_BUCKETS"]
+__all__ = ["LATENCY_BUCKETS", "GatewayMetrics"]
 
 #: Seconds. A small model answers in under a second; a reasoning model with a large output can take
 #: minutes, and the read timeout allows it.

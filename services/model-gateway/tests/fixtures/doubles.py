@@ -188,8 +188,8 @@ class ScriptedProvider:
 
     ``completions`` and ``streams`` are consumed one entry per call, so a test can say "fail, then
     fail, then succeed" and get exactly that. An entry that is an exception is raised; anything else
-    is returned. Running out of entries is an error rather than a repeat of the last one: a test that
-    made more calls than it scripted has proved something other than what it meant to.
+    is returned. Running out of entries is an error rather than a repeat of the last one: a test
+    that made more calls than it scripted has proved something other than what it meant to.
     """
 
     provider_id: str
@@ -301,8 +301,7 @@ def descriptor(provider_id: str = "alpha", model_id: str = "model-one", *,
         max_output_tokens=max_output_tokens,
         supported_endpoints=endpoints,
         capabilities=states,
-        capability_provenance={
-            capability: CapabilityProvenance.PROVIDER_METADATA for capability in states},
+        capability_provenance=dict.fromkeys(states, CapabilityProvenance.PROVIDER_METADATA),
         reasoning_levels=reasoning_levels,
         active=active,
         synced_at=EPOCH,

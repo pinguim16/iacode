@@ -11,8 +11,10 @@ from fixtures.doubles import (
     descriptor,
     failure,
     provider_config,
-    request as build_request,
     route_policy,
+)
+from fixtures.doubles import (
+    request as build_request,
 )
 from iacode_model_gateway.config import RouteAlias
 from iacode_model_gateway.contracts import (
@@ -151,8 +153,10 @@ async def test_no_fallback_after_the_first_delivered_content() -> None:
     store = InMemoryCatalogStore()
     store.seed(descriptor(model_id="first"))
     store.seed(descriptor("beta", "second"))
-    first = ScriptedProvider("alpha", streams=[
-        _text("partial") + [failure(GatewayErrorType.PROVIDER_UNAVAILABLE)]])
+    first = ScriptedProvider(
+        "alpha",
+        streams=[[*_text("partial"), failure(GatewayErrorType.PROVIDER_UNAVAILABLE)]],
+    )
     second = ScriptedProvider("beta", streams=[_finished("should not be reached")])
     gateway = build_gateway(
         providers={"alpha": provider_config("alpha"), "beta": provider_config("beta")},
@@ -174,8 +178,15 @@ async def test_no_two_models_are_concatenated_in_one_stream() -> None:
     store = InMemoryCatalogStore()
     store.seed(descriptor(model_id="first"))
     store.seed(descriptor("beta", "second"))
-    first = ScriptedProvider("alpha", streams=[
-        _text("alpha-one ", "alpha-two ") + [failure(GatewayErrorType.TRANSIENT_PROVIDER_ERROR)]])
+    first = ScriptedProvider(
+        "alpha",
+        streams=[
+            [
+                *_text("alpha-one ", "alpha-two "),
+                failure(GatewayErrorType.TRANSIENT_PROVIDER_ERROR),
+            ]
+        ],
+    )
     second = ScriptedProvider("beta", streams=[_finished("beta-one")])
     gateway = build_gateway(
         providers={"alpha": provider_config("alpha"), "beta": provider_config("beta")},
@@ -194,8 +205,10 @@ async def test_no_two_models_are_concatenated_in_one_stream() -> None:
 
 
 async def test_failure_after_content_ends_with_an_error_event() -> None:
-    provider = ScriptedProvider("alpha", streams=[
-        _text("some") + [failure(GatewayErrorType.TRANSIENT_PROVIDER_ERROR)]])
+    provider = ScriptedProvider(
+        "alpha",
+        streams=[[*_text("some"), failure(GatewayErrorType.TRANSIENT_PROVIDER_ERROR)]],
+    )
     gateway = build_gateway(factory=lambda config: provider, max_attempts=1)
 
     events = await _collect(gateway)
@@ -217,9 +230,13 @@ async def test_a_retry_is_allowed_only_before_anything_was_delivered() -> None:
     events = await _collect(gateway)
     assert "".join(event.text or "" for event in events) == "recovered"
 
-    after_output = ScriptedProvider("alpha", streams=[
-        _text("partial") + [failure(GatewayErrorType.PROVIDER_TIMEOUT)],
-        _finished("never")])
+    after_output = ScriptedProvider(
+        "alpha",
+        streams=[
+            [*_text("partial"), failure(GatewayErrorType.PROVIDER_TIMEOUT)],
+            _finished("never"),
+        ],
+    )
     second = build_gateway(catalog=store, factory=lambda config: after_output, max_attempts=2)
 
     events = await _collect(second)
@@ -248,8 +265,10 @@ async def test_a_truncated_stream_is_recorded_as_a_failure() -> None:
     store = InMemoryCatalogStore()
     store.seed(descriptor())
     calls = InMemoryModelCallStore()
-    provider = ScriptedProvider("alpha", streams=[
-        _text("a") + [failure(GatewayErrorType.TRANSIENT_PROVIDER_ERROR)]])
+    provider = ScriptedProvider(
+        "alpha",
+        streams=[[*_text("a"), failure(GatewayErrorType.TRANSIENT_PROVIDER_ERROR)]],
+    )
     gateway = build_gateway(catalog=store, calls=calls, factory=lambda config: provider,
                             max_attempts=1)
 

@@ -15,8 +15,10 @@ from fixtures.doubles import (
     descriptor,
     failure,
     provider_config,
-    request as build_request,
     route_policy,
+)
+from fixtures.doubles import (
+    request as build_request,
 )
 from iacode_model_gateway.config import RouteAlias
 from iacode_model_gateway.contracts import (

@@ -2,11 +2,11 @@
 
 - Gate: `GATE-4`
 - Scope: `quality engine, evaluation runners, immutable evidence store, verdict rules, false-PASS rejection, reproducible evidence, sandboxed execution, agent-runtime integration, promotion evidence`
-- Technologies: `python`, `postgresql`, `minio`, `temporal`, `docker`
-- Modules: `services/evaluator`, `services/sandbox`, `services/orchestrator`, `services/agent-runtime`, `packages/persistence`, `apps/api`, `apps/web`
-- Generated: `2026-10-09T19:47:11Z`
-- Lessons considered: 69
-- Lessons applicable: 68
+- Technologies: _none declared_
+- Modules: _none declared_
+- Generated: `2026-10-09T20:23:14Z`
+- Lessons considered: 73
+- Lessons applicable: 72
 
 Every applicable lesson below is a requirement of this Gate. The derived identifiers must
 appear in `REQUIREMENTS-MATRIX.json`, and the Delivery Completeness Validator fails the
@@ -82,6 +82,10 @@ delivery when one is absent.
 | `LSN-0067` Cancellation semantics must survive orchestration-library exception wrapping | `GUARDED` | HIGH | `LESSON-REQ-0066` | For cancellation across an orchestration boundary, test the exception shape the real library delivers and derive outcome from the durable request plus executor acknowledgement rather than the wrapper class alone. |
 | `LSN-0068` A bounded parser must apply each content limit only to content it interprets | `GUARDED` | HIGH | `LESSON-REQ-0067` | For every parser-specific content limit applied to a broader inventory, prove unrelated content bypasses that limit while every interpreted candidate remains bounded. |
 | `LSN-0069` A polyglot plan binds each check to both its project root and its toolchain | `GUARDED` | HIGH | `LESSON-REQ-0068` | For every polyglot or multi-root project plan, prove each check is expanded at the roots that declared its stack and selects execution policy from the frozen runner rather than one run-wide guessed toolchain. |
+| `LSN-0070` Project discovery must separate deployable roots, nested fixtures and check applicability | `GUARDED` | HIGH | `LESSON-REQ-0069` | For project discovery over a monorepo, prove nested fixture manifests do not become execution roots and every non-applicable unit check is derived from the frozen source inventory rather than from a failed command. |
+| `LSN-0071` Every quality image must provision snapshots on its oldest runtime and prepare each isolated check | `GUARDED` | HIGH | `LESSON-REQ-0070` | For every shared helper and isolated quality runner, test the oldest pinned runtime actually used by an image and prove each check prepares all dependencies it needs without relying on a previous sandbox session. |
+| `LSN-0072` Secret findings and reviewed false positives must share one policy-owned taxonomy | `GUARDED` | HIGH | `LESSON-REQ-0071` | Whenever more than one gate scans secrets, prove all scanners share the policy-owned finding taxonomy and digest-bound allowance source, and that an unallowlisted match remains blocking. |
+| `LSN-0073` The canonical lint denominator must cover every detected project root | `GUARDED` | HIGH | `LESSON-REQ-0072` | For every manually scoped repository-wide quality command, derive or test its denominator against the current project inventory so a newly detected root cannot remain outside a green gate. |
 
 ## Why each lesson applies
 
@@ -560,3 +564,31 @@ delivery when one is absent.
 - Required check: For every polyglot or multi-root project plan, prove each check is expanded at the roots that declared its stack and selects execution policy from the frozen runner rather than one run-wide guessed toolchain.
 - Required evidence: A deterministic planning test over multiple roots and stacks, an execution-boundary test for per-runner images, and a successful real polyglot repository evaluation.
 - Derived requirement: `LESSON-REQ-0068`
+
+### LSN-0070 — Project discovery must separate deployable roots, nested fixtures and check applicability
+
+- Reason: applies to every Gate; category architecture; severity HIGH; already guarded, so the control must keep holding
+- Required check: For project discovery over a monorepo, prove nested fixture manifests do not become execution roots and every non-applicable unit check is derived from the frozen source inventory rather than from a failed command.
+- Required evidence: Paired planner tests proving no-test roots are explicitly non-applicable, test-bearing roots remain mandatory, fixture manifests are excluded, and a real repository evaluation succeeds.
+- Derived requirement: `LESSON-REQ-0069`
+
+### LSN-0071 — Every quality image must provision snapshots on its oldest runtime and prepare each isolated check
+
+- Reason: applies to every Gate; category implementation; severity HIGH; already guarded, so the control must keep holding
+- Required check: For every shared helper and isolated quality runner, test the oldest pinned runtime actually used by an image and prove each check prepares all dependencies it needs without relying on a previous sandbox session.
+- Required evidence: A real snapshot-provisioning test across every quality image, closed-runner assertions for self-contained preparation, and a successful real polyglot repository evaluation.
+- Derived requirement: `LESSON-REQ-0070`
+
+### LSN-0072 — Secret findings and reviewed false positives must share one policy-owned taxonomy
+
+- Reason: applies to every Gate; category security; severity HIGH; already guarded, so the control must keep holding
+- Required check: Whenever more than one gate scans secrets, prove all scanners share the policy-owned finding taxonomy and digest-bound allowance source, and that an unallowlisted match remains blocking.
+- Required evidence: Content-addressing tests for scanner and policy inputs, a real negative scan in every execution image, and consistent PASS over the same reviewed repository snapshot.
+- Derived requirement: `LESSON-REQ-0071`
+
+### LSN-0073 — The canonical lint denominator must cover every detected project root
+
+- Reason: applies to every Gate; category quality; severity HIGH; already guarded, so the control must keep holding
+- Required check: For every manually scoped repository-wide quality command, derive or test its denominator against the current project inventory so a newly detected root cannot remain outside a green gate.
+- Required evidence: A denominator test over all non-fixture manifests plus a successful canonical lint execution and matching real repository Quality Engine verdict.
+- Derived requirement: `LESSON-REQ-0072`

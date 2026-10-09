@@ -31,10 +31,10 @@ from enum import StrEnum
 from typing import Any
 
 __all__ = [
-    "GatewayError",
-    "GatewayErrorType",
     "FALLBACKABLE_ERRORS",
     "RETRYABLE_ERRORS",
+    "GatewayError",
+    "GatewayErrorType",
 ]
 
 

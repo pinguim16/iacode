@@ -42,7 +42,12 @@ SHA = "a" * 64
 
 def python_plan() -> QualityPlan:
     registry = load_policy(POLICY)
-    project = detect_project({"pyproject.toml": "[project]\nname='fixture'\n"})
+    project = detect_project(
+        {
+            "pyproject.toml": "[project]\nname='fixture'\n",
+            "tests/test_fixture.py": "def test_fixture(): pass\n",
+        }
+    )
     return build_plan(
         snapshot_id="snapshot-1",
         snapshot_digest=SHA,
@@ -224,6 +229,18 @@ class ProjectProfileTests:
         assert profile.stacks == ("python",)
         assert profile.manifests == ("pyproject.toml",)
 
+    def test_nested_fixture_manifests_do_not_become_workspace_roots(self) -> None:
+        profile = detect_project(
+            {
+                "services/evaluator/pyproject.toml": "[project]\nname='evaluator'\n",
+                "services/evaluator/tests/test_core.py": "def test_core(): pass\n",
+                "services/evaluator/tests/fixtures/broken/pyproject.toml": "[project]\n",
+                "services/evaluator/tests/fixtures/broken/test_failure.py": "assert False\n",
+            }
+        )
+        assert profile.workspace_roots == (("python", "services/evaluator"),)
+        assert profile.manifests == ("services/evaluator/pyproject.toml",)
+
     def test_inventory_refuses_a_manifest_symlink(self, tmp_path: Path) -> None:
         target = tmp_path / "actual.toml"
         target.write_text("[project]\n", encoding="utf-8")
@@ -284,7 +301,9 @@ class QualityPolicyTests:
 
     def test_configured_coverage_and_migration_become_mandatory_checks(self) -> None:
         registry = load_policy(POLICY)
-        project = detect_project({"pyproject.toml": ""})
+        project = detect_project(
+            {"pyproject.toml": "", "tests/test_fixture.py": "def test_fixture(): pass\n"}
+        )
         plan = build_plan(
             snapshot_id="snapshot-1",
             snapshot_digest=SHA,
@@ -306,6 +325,13 @@ class QualityPolicyTests:
         )
         with pytest.raises(QualityError, match="unknown quality runner"):
             get_runner("a project supplied this")
+
+    def test_isolated_language_checks_prepare_their_policy_owned_toolchain(self) -> None:
+        assert get_runner("python.unit").command[0] == "iacode-quality-python"
+        for identifier in ("node.build", "node.unit", "node.lint", "typescript.static"):
+            command = get_runner(identifier).command
+            assert command[:2] == ("sh", "-c")
+            assert "iacode-quality-node-install &&" in command[2]
 
     def test_the_registry_supports_every_required_check_kind(self) -> None:
         assert {
@@ -355,6 +381,43 @@ class QualityPlannerTests:
         assert python_roots == {"apps/api", "services/evaluator"}
         assert angular_roots == {"apps/web"}
         assert common_roots == {"."}
+
+    def test_unit_checks_are_not_applicable_without_test_sources(self) -> None:
+        registry = load_policy(POLICY)
+        project = detect_project(
+            {
+                "packages/library/pyproject.toml": "[project]\nname='library'\n",
+                "packages/library/src/library/__init__.py": "VALUE = 1\n",
+            }
+        )
+        plan = build_plan(
+            snapshot_id="snapshot-1",
+            snapshot_digest=SHA,
+            project=project,
+            registry=registry,
+            created_at=NOW,
+        )
+        unit = next(check for check in plan.checks if check.kind == "unit")
+        assert (unit.applicable, unit.mandatory) == (False, False)
+        assert "no python unit-test source" in unit.applicabilityReason
+
+    def test_unit_checks_are_mandatory_when_test_sources_exist(self) -> None:
+        registry = load_policy(POLICY)
+        project = detect_project(
+            {
+                "service/pyproject.toml": "[project]\nname='service'\n",
+                "service/tests/test_service.py": "def test_service(): pass\n",
+            }
+        )
+        plan = build_plan(
+            snapshot_id="snapshot-1",
+            snapshot_digest=SHA,
+            project=project,
+            registry=registry,
+            created_at=NOW,
+        )
+        unit = next(check for check in plan.checks if check.kind == "unit")
+        assert unit.applicable and unit.mandatory
 
     def test_equal_inputs_make_the_same_plan_identity(self) -> None:
         registry = load_policy(POLICY)

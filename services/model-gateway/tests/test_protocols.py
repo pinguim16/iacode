@@ -10,7 +10,8 @@ from __future__ import annotations
 import json
 
 import pytest
-from fixtures.doubles import descriptor, request as build_request
+from fixtures.doubles import descriptor, provider_config
+from fixtures.doubles import request as build_request
 from iacode_model_gateway.contracts import (
     Capability,
     CapabilityState,
@@ -29,8 +30,6 @@ from iacode_model_gateway.protocols.anthropic_messages import AnthropicMessagesA
 from iacode_model_gateway.protocols.openai_chat import OpenAiChatAdapter
 from iacode_model_gateway.protocols.openai_responses import OpenAiResponsesAdapter
 from iacode_model_gateway.protocols.selection import EndpointSource
-
-from fixtures.doubles import provider_config
 
 
 def _drain(decoder, frames: list[tuple[str | None, str]]):

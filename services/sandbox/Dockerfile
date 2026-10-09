@@ -81,6 +81,7 @@ WORKDIR /app
 # refuses to run a sandbox from an image built from anything else.
 COPY --chown=iacode:iacode .iacode/policies /app/.iacode/policies
 COPY --chown=iacode:iacode services/sandbox/images /app/services/sandbox/images
+COPY --chown=iacode:iacode apps/api/requirements.lock.txt /app/apps/api/requirements.lock.txt
 COPY --chown=iacode:iacode apps/web/package.json apps/web/package-lock.json /app/apps/web/
 COPY --chown=iacode:iacode services/sandbox/src/iacode_sandbox/helper.py services/sandbox/src/iacode_sandbox/paths.py services/sandbox/src/iacode_sandbox/patching.py /app/services/sandbox/src/iacode_sandbox/
 # The suite, beside the source rather than inside it, as the API image carries its suites, and the

@@ -25,9 +25,10 @@ RUN mvn --batch-mode --file /tmp/seed-pom.xml dependency:go-offline \
 COPY services/sandbox/src/iacode_sandbox/helper.py /opt/iacode/sandbox_helper.py
 COPY services/sandbox/src/iacode_sandbox/paths.py /opt/iacode/paths.py
 COPY services/sandbox/src/iacode_sandbox/patching.py /opt/iacode/patching.py
+COPY .iacode/policies/secret-scan-allowlist.json /opt/iacode/secret-scan-allowlist.json
 COPY services/sandbox/images/quality-java/gitconfig /opt/iacode/gitconfig
 COPY services/sandbox/images/quality-java/java_dependencies.py /usr/local/bin/iacode-quality-java-dependencies
-COPY services/sandbox/images/quality-java/secret_scan.py /usr/local/bin/iacode-quality-secret-scan
+COPY services/sandbox/images/quality_secret_scan.py /usr/local/bin/iacode-quality-secret-scan
 RUN chmod -R a=rX /opt/iacode \
  && chmod 0555 /usr/local/bin/iacode-quality-java-dependencies \
       /usr/local/bin/iacode-quality-secret-scan

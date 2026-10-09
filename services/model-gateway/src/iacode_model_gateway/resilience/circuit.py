@@ -32,7 +32,7 @@ from enum import StrEnum
 
 from iacode_model_gateway.ports import Clock
 
-__all__ = ["CircuitBreaker", "CircuitState", "CircuitSettings"]
+__all__ = ["CircuitBreaker", "CircuitSettings", "CircuitState"]
 
 
 class CircuitState(StrEnum):

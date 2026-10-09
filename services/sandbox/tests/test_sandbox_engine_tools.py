@@ -7,6 +7,8 @@ import json
 import pytest
 from sandbox_fixtures import engine_harness
 
+pytestmark = pytest.mark.engine
+
 BUGGY = "def add(a, b):\n    return a - b\n"
 FIX = ("--- a/calc.py\n+++ b/calc.py\n@@ -1,2 +1,2 @@\n def add(a, b):\n"
        "-    return a - b\n+    return a + b\n")

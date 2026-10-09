@@ -47,13 +47,6 @@ from iacode_contracts.agent_runtime import (
     TOOL_EXECUTOR_EXTERNAL,
     TOOL_RESULT_SIGNAL,
 )
-from iacode_persistence.engine import create_engine, create_session_factory
-from iacode_persistence.models import Agent, Project, Task, TaskRun
-from sqlalchemy import select
-from temporalio import activity
-from temporalio.client import Client
-from temporalio.worker import Worker
-
 from iacode_orchestrator.agent_runtime import runtime_context
 from iacode_orchestrator.agent_runtime.activities import (
     attach_model_call,
@@ -67,6 +60,12 @@ from iacode_orchestrator.agent_runtime.activities import (
 )
 from iacode_orchestrator.config import get_worker_settings
 from iacode_orchestrator.workflows.agent_run import AgentRunWorkflow
+from iacode_persistence.engine import create_engine, create_session_factory
+from iacode_persistence.models import Agent, Project, Task, TaskRun
+from sqlalchemy import select
+from temporalio import activity
+from temporalio.client import Client
+from temporalio.worker import Worker
 
 #: A queue of its own, so the rehearsal never takes a task from the worker that serves real runs.
 TASK_QUEUE = "iacode-agent-runtime-rehearsal"
@@ -341,7 +340,7 @@ async def try_resolve(run_id: str) -> int:
                             output={"body": "too late"})
         try:
             await store.resolve_tool_request(run_id, result, origin=TOOL_EXECUTOR_EXTERNAL)
-        except Exception as error:  # noqa: BLE001 - the refusal is the subject of the check
+        except Exception as error:
             print(json.dumps({"accepted": False, "reason": str(error),
                               "errorClass": type(error).__name__}), flush=True)
             return 0

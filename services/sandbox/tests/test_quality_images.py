@@ -2,8 +2,16 @@
 
 from __future__ import annotations
 
+import asyncio
+import hashlib
+import tempfile
+from pathlib import Path
+
 import pytest
+from iacode_sandbox.snapshots import SnapshotError, build_snapshot
 from sandbox_fixtures import engine_harness
+
+pytestmark = pytest.mark.engine
 
 TOOLCHAINS = (
     (
@@ -24,14 +32,59 @@ TOOLCHAINS = (
 )
 
 
+class MemorySnapshots:
+    def __init__(self) -> None:
+        self.archives: dict[str, bytes] = {}
+
+    def add(self, identifier: str, data: bytes) -> str:
+        self.archives[identifier] = data
+        return hashlib.sha256(data).hexdigest()
+
+    async def read(self, artifact_id: str, checksum: str | None = None) -> bytes:
+        data = self.archives[artifact_id]
+        if checksum and hashlib.sha256(data).hexdigest() != checksum:
+            raise SnapshotError("SNAPSHOT_CHECKSUM_MISMATCH", "digest mismatch")
+        return data
+
+
 @pytest.fixture
 def harness():
     created = engine_harness()
+    created.service.snapshot_reader = MemorySnapshots()
     yield created
     created.close()
 
 
 class QualityImageExecutionTests:
+    @pytest.mark.parametrize("policy", [item[0] for item in TOOLCHAINS])
+    def test_every_quality_helper_provisions_a_real_snapshot(self, harness, policy: str) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            source = Path(directory)
+            (source / "quality.txt").write_text("snapshot=true\n", encoding="utf-8")
+            archive = build_snapshot(source)
+        checksum = harness.service.snapshot_reader.add(f"snapshot-{policy}", archive)
+        run_id = harness.run_id()
+        result = asyncio.run(
+            harness.service.execute(
+                {
+                    "contractVersion": "1.0.0",
+                    "toolRequestId": harness.run_id(),
+                    "runId": run_id,
+                    "agentRunId": None,
+                    "agent": "quality-engine",
+                    "tool": "shell.exec",
+                    "arguments": {"command": "test -f quality.txt"},
+                    "policy": policy,
+                    "workspace": {
+                        "kind": "snapshot",
+                        "artifactId": f"snapshot-{policy}",
+                        "checksum": checksum,
+                    },
+                }
+            )
+        )
+        assert result.status == "SUCCEEDED", result
+
     @pytest.mark.parametrize(("policy", "command", "expected"), TOOLCHAINS)
     def test_pinned_toolchain_runs_in_its_real_sandbox(
         self, harness, policy: str, command: str, expected: tuple[str, ...]
@@ -67,3 +120,17 @@ class QualityImageExecutionTests:
         result = harness.shell(command, run_id=run_id, policy=policy)
         assert result.status == "SUCCEEDED", result
         assert "QUALITY_SECRET_SCAN=PASS" in str(result.output.get("stdout", ""))
+
+    @pytest.mark.parametrize("policy", [item[0] for item in TOOLCHAINS])
+    def test_a_non_allowlisted_credential_shape_fails_the_secret_check(
+        self, harness, policy: str
+    ) -> None:
+        run_id = harness.run_id()
+        command = (
+            "printf 'API_' > leaked.env; "
+            "printf 'KEY=realistic-unreviewed-value-928471\\n' >> leaked.env; "
+            "iacode-quality-secret-scan; test $? -eq 1"
+        )
+        result = harness.shell(command, run_id=run_id, policy=policy)
+        assert result.status == "SUCCEEDED", result
+        assert "QUALITY_SECRET_SCAN=FAIL" in str(result.output.get("stdout", ""))

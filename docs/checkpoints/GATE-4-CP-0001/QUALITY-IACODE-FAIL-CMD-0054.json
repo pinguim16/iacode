@@ -1,0 +1,63 @@
+{
+  "schemaVersion": "1.0.0",
+  "result": "FAIL",
+  "scenarios": [
+    {
+      "schemaVersion": "1.0.0",
+      "scenario": "iacode",
+      "result": "FAIL",
+      "environment": "real-compose-temporal-postgresql-minio-sandbox-container-engine",
+      "steps": [
+        {
+          "step": "snapshot.stored",
+          "result": "PASS",
+          "expected": [
+            "artifactId",
+            "key",
+            "sha256",
+            "sizeBytes"
+          ],
+          "observed": [
+            "artifactId",
+            "key",
+            "sha256",
+            "sizeBytes"
+          ]
+        },
+        {
+          "step": "canonical_profile.detected",
+          "result": "FAIL",
+          "expected": "python",
+          "observed": "python+node+typescript+angular"
+        },
+        {
+          "step": "quality.matches_mandatory_gates",
+          "result": "FAIL",
+          "expected": "PASS",
+          "observed": "FAIL"
+        },
+        {
+          "step": "run.succeeded",
+          "result": "FAIL",
+          "expected": "SUCCEEDED",
+          "observed": "FAILED"
+        }
+      ],
+      "artifacts": [
+        {
+          "kind": "snapshot",
+          "artifactId": "01a12238-9807-7000-8771-50e435060659",
+          "digest": "ae7c7f2304b359fcfdf1b5eca3928be18ce7014815911f906c10ca9339b9e8c4",
+          "sizeBytes": 4032868
+        },
+        {
+          "kind": "quality-run",
+          "runId": "01a12238-a196-7000-979f-80d9ef7f49ff",
+          "planId": "74f68ec4278bada13c2617589423f56b7571121a52492c5901611f6d740e9b9d"
+        }
+      ],
+      "recordedAt": "2026-10-09T19:55:12Z"
+    }
+  ],
+  "recordedAt": "2026-10-09T19:55:12Z"
+}

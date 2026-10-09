@@ -308,9 +308,14 @@ class OpenAiChatAdapter(ProtocolAdapter):
                 name = function.get("name")
                 if not isinstance(name, str) or not name:
                     continue
-                tool_calls.append(build_tool_call(
-                    str(raw.get("id") or f"call_{index}"), name,
-                    function.get("arguments") if isinstance(function.get("arguments"), str) else ""))
+                arguments = function.get("arguments")
+                tool_calls.append(
+                    build_tool_call(
+                        str(raw.get("id") or f"call_{index}"),
+                        name,
+                        arguments if isinstance(arguments, str) else "",
+                    )
+                )
         return ParsedCompletion(
             content=content if isinstance(content, str) else "",
             tool_calls=tuple(tool_calls),

@@ -49,21 +49,6 @@ from iacode_agent_runtime.registry import AgentRegistry
 from iacode_agent_runtime.service import AgentRuntimeService
 from iacode_contracts.agent_runtime import AGENT_RUN_WORKFLOW, CANCEL_SIGNAL, CreateAgentRunRequest
 from iacode_contracts.sandbox import SANDBOX_TASK_QUEUE
-from iacode_persistence.engine import create_engine, create_session_factory
-from iacode_persistence.models import (
-    AgentRun,
-    RunEvent,
-    SandboxSession,
-    TaskRun,
-    ToolCall,
-    ToolRequest,
-    ToolResult,
-)
-from sqlalchemy import select
-from temporalio import activity
-from temporalio.client import Client
-from temporalio.worker import Worker
-
 from iacode_orchestrator.agent_runtime import runtime_context
 from iacode_orchestrator.agent_runtime.activities import (
     attach_model_call,
@@ -78,6 +63,20 @@ from iacode_orchestrator.agent_runtime.activities import (
 )
 from iacode_orchestrator.config import get_worker_settings
 from iacode_orchestrator.workflows.agent_run import AgentRunWorkflow
+from iacode_persistence.engine import create_engine, create_session_factory
+from iacode_persistence.models import (
+    AgentRun,
+    RunEvent,
+    SandboxSession,
+    TaskRun,
+    ToolCall,
+    ToolRequest,
+    ToolResult,
+)
+from sqlalchemy import select
+from temporalio import activity
+from temporalio.client import Client
+from temporalio.worker import Worker
 
 #: A queue of its own, so the rehearsal never takes a task from the worker that serves real runs.
 TASK_QUEUE = "iacode-agent-runtime-coding-rehearsal"

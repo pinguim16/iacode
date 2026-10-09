@@ -32,6 +32,7 @@ import io
 import json
 import os
 import re
+import shutil
 import signal
 import subprocess
 import sys
@@ -438,12 +439,17 @@ def op_git(request: dict[str, Any]) -> dict[str, Any]:
 def _safe_members(archive: tarfile.TarFile, limit: int) -> list[tarfile.TarInfo]:
     total = 0
     members = []
+    names: set[str] = set()
     for member in archive.getmembers():
         if member.isdev() or member.isfifo():
             raise HelperError("SNAPSHOT_UNSAFE", f"{member.name!r} is a device or a fifo")
         if member.issym() or member.islnk():
             raise HelperError("SNAPSHOT_UNSAFE", f"{member.name!r} is a link; snapshots carry "
                                                  "regular files only")
+        if not (member.isfile() or member.isdir()):
+            raise HelperError("SNAPSHOT_UNSAFE", f"{member.name!r} is not a file or directory")
+        if member.name in names:
+            raise HelperError("SNAPSHOT_UNSAFE", f"{member.name!r} occurs more than once")
         try:
             resolve_workspace_path(WORKSPACE, member.name, allow_root=True)
         except PathRejectedError as rejected:
@@ -451,8 +457,25 @@ def _safe_members(archive: tarfile.TarFile, limit: int) -> list[tarfile.TarInfo]
         total += member.size
         if total > limit:
             raise HelperError("SNAPSHOT_TOO_LARGE", f"the snapshot exceeds {limit} bytes")
+        names.add(member.name)
         members.append(member)
     return members
+
+
+def _extract_safe_members(archive: tarfile.TarFile, members: list[tarfile.TarInfo]) -> None:
+    """Extract only the entries already validated by ``_safe_members``, on every Python version."""
+    for member in members:
+        target = resolve_workspace_path(WORKSPACE, member.name, allow_root=False, for_write=True)
+        if member.isdir():
+            target.mkdir(parents=True, exist_ok=True)
+            continue
+        target.parent.mkdir(parents=True, exist_ok=True)
+        source = archive.extractfile(member)
+        if source is None:
+            raise HelperError("SNAPSHOT_UNSAFE", f"{member.name!r} has no regular-file payload")
+        with source, target.open("xb") as destination:
+            shutil.copyfileobj(source, destination, length=1024 * 1024)
+        target.chmod(member.mode & 0o1777)
 
 
 def op_workspace_init(request: dict[str, Any]) -> dict[str, Any]:
@@ -465,9 +488,9 @@ def op_workspace_init(request: dict[str, Any]) -> dict[str, Any]:
         data = base64.b64decode(payload)
         with tarfile.open(fileobj=io.BytesIO(data), mode="r:*") as archive:
             members = _safe_members(archive, int(request["maxBytes"]))
-            # The "data" filter refuses absolute names, escapes, links out and special files a
-            # second time, in the library that does the writing.
-            archive.extractall(root, members=members, filter="data")
+            # Manual extraction keeps the same security boundary on Python 3.11, 3.12 and 3.13;
+            # ``extractall(filter=...)`` is not available on the oldest quality image.
+            _extract_safe_members(archive, members)
             files = sum(1 for member in members if member.isfile())
     git_environment = _environment(None)
     steps = []

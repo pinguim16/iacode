@@ -1026,6 +1026,62 @@
         "LSN-0069"
       ],
       "removingItWouldAllow": "A supported polyglot monorepo to be refused as an unknown combination, or to execute a check from the wrong directory or in the wrong toolchain image."
+    },
+    {
+      "guardrailId": "GRD-0071",
+      "title": "Project roots and unit applicability come from the frozen source inventory",
+      "kind": "test",
+      "reference": "test_nested_fixture_manifests_do_not_become_workspace_roots",
+      "verifiedBy": [
+        "test_nested_fixture_manifests_do_not_become_workspace_roots",
+        "test_unit_checks_are_not_applicable_without_test_sources",
+        "test_unit_checks_are_mandatory_when_test_sources_exist"
+      ],
+      "lessons": [
+        "LSN-0070"
+      ],
+      "removingItWouldAllow": "Nested fixtures to execute as products, empty suites to fail as if tests failed, or a real suite to be suppressed as non-applicable."
+    },
+    {
+      "guardrailId": "GRD-0072",
+      "title": "Every isolated quality check works on the oldest pinned helper runtime",
+      "kind": "test",
+      "reference": "test_every_quality_helper_provisions_a_real_snapshot",
+      "verifiedBy": [
+        "test_every_quality_helper_provisions_a_real_snapshot",
+        "test_isolated_language_checks_prepare_their_policy_owned_toolchain"
+      ],
+      "lessons": [
+        "LSN-0071"
+      ],
+      "removingItWouldAllow": "A shared helper to crash in one pinned image or a check to rely on dependencies that existed only in a sandbox already released."
+    },
+    {
+      "guardrailId": "GRD-0073",
+      "title": "Quality images share the policy-owned secret taxonomy and allowance set",
+      "kind": "test",
+      "reference": "test_quality_images_bind_the_policy_owned_secret_scanner",
+      "verifiedBy": [
+        "test_quality_images_bind_the_policy_owned_secret_scanner",
+        "test_a_non_allowlisted_credential_shape_fails_the_secret_check"
+      ],
+      "lessons": [
+        "LSN-0072"
+      ],
+      "removingItWouldAllow": "Two mandatory secret gates to contradict each other on the same bytes or a project-authored allowance to hide an actual credential."
+    },
+    {
+      "guardrailId": "GRD-0074",
+      "title": "Mandatory lint intersects every detected non-fixture Python project root",
+      "kind": "test",
+      "reference": "test_mandatory_lint_covers_every_python_project_root",
+      "verifiedBy": [
+        "test_mandatory_lint_covers_every_python_project_root"
+      ],
+      "lessons": [
+        "LSN-0073"
+      ],
+      "removingItWouldAllow": "A green lint verdict to describe only a manually selected subset while a detected project root accumulates unchecked findings."
     }
   ]
 }
