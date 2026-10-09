@@ -40,6 +40,13 @@ after the service restarts.
   gone is `FAILED` (its workspace went with it), a session caught mid-tool is stopped and returned to
   `READY`, and a labelled container no active session owns is removed.
 
+Gate 4 extends ownership to quality runs without changing the agent-runtime rule above. An agent
+run still keeps one workspace across its collaborating stages. A quality run instead evaluates an
+immutable snapshot and may own multiple **sequential** sessions, releasing one check before the
+next so a polyglot plan can select a different policy-owned toolchain. The database continues to
+allow at most one active session for the quality run, and no workspace state is carried from one
+quality check to the next. ADR-0031 defines that per-check selection.
+
 ## Consequences
 
 **A workspace does not survive its container.** Keeping it in memory buys a kernel-enforced size

@@ -1012,6 +1012,20 @@
         "LSN-0068"
       ],
       "removingItWouldAllow": "An unrelated large source, policy or generated record to make an otherwise supported repository impossible to evaluate before any quality check runs."
+    },
+    {
+      "guardrailId": "GRD-0070",
+      "title": "Polyglot plans bind every check to its detected root and policy-owned toolchain",
+      "kind": "test",
+      "reference": "test_polyglot_monorepo_checks_keep_their_stack_roots",
+      "verifiedBy": [
+        "test_polyglot_monorepo_checks_keep_their_stack_roots",
+        "test_a_polyglot_plan_selects_each_check_image_from_its_frozen_runner"
+      ],
+      "lessons": [
+        "LSN-0069"
+      ],
+      "removingItWouldAllow": "A supported polyglot monorepo to be refused as an unknown combination, or to execute a check from the wrong directory or in the wrong toolchain image."
     }
   ]
 }

@@ -31,6 +31,12 @@
       "optionalRunners": ["node.integration", "node.coverage", "node.migration"],
       "coverageThreshold": null
     },
+    "python+node+typescript+angular": {
+      "stacks": ["python", "node", "typescript", "angular"],
+      "runners": ["python.build", "python.unit", "python.lint", "python.static", "python.dependency", "node.dependency", "angular.build", "angular.unit", "node.lint", "typescript.static", "common.secret", "common.diff"],
+      "optionalRunners": ["python.integration", "python.coverage", "python.migration", "node.integration", "node.coverage", "node.migration"],
+      "coverageThreshold": null
+    },
     "maven": {
       "stacks": ["maven"],
       "runners": ["maven.dependency", "maven.build", "maven.unit", "maven.static", "common.secret", "common.diff"],

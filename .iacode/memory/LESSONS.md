@@ -76,6 +76,7 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 | `LSN-0066` | `GUARDED` | HIGH | architecture | Immutable content identity excludes observation time and the first observer | `test_content_addressed_plan_reuse_ignores_observation_time_and_first_owner` |
 | `LSN-0067` | `GUARDED` | HIGH | implementation | Cancellation semantics must survive orchestration-library exception wrapping | `test_an_acknowledged_activity_cancellation_stays_a_cancellation` |
 | `LSN-0068` | `GUARDED` | HIGH | implementation | A bounded parser must apply each content limit only to content it interprets | `test_large_non_manifest_content_does_not_block_project_detection`, `test_paths_and_manifest_sizes_are_bounded` |
+| `LSN-0069` | `GUARDED` | HIGH | architecture | A polyglot plan binds each check to both its project root and its toolchain | `test_polyglot_monorepo_checks_keep_their_stack_roots`, `test_a_polyglot_plan_selects_each_check_image_from_its_frozen_runner` |
 
 ## Detail
 
@@ -961,3 +962,15 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
   - `test` test_large_non_manifest_content_does_not_block_project_detection — A supported project containing an unrelated oversized policy file is still detected from its real manifest.
   - `test` test_paths_and_manifest_sizes_are_bounded — The same detector still refuses an oversized actual manifest and unsafe paths.
 - Evidence: `file:docs/checkpoints/GATE-4-CP-0001/COMMANDS.jsonl`, `file:services/evaluator/src/iacode_evaluator/projects.py`, `file:services/evaluator/tests/test_core.py`
+
+### LSN-0069 — A polyglot plan binds each check to both its project root and its toolchain
+
+- Status: `GUARDED`, severity HIGH, category architecture, recurrences 0.
+- Source: GATE-4, GATE-4-CP-0001, finding cmd-0049.
+- Symptom: After unrelated large files were ignored correctly, the real IACode snapshot was still refused because its Python plus Angular/TypeScript stacks had no exact single-stack policy profile.
+- Root cause: Detection collapsed a monorepo into a set of stacks but discarded which roots declared each stack, while execution chose one sandbox policy for the whole run. An exact composite profile alone would still have run commands from the repository root and reused the wrong image.
+- Resolution: Preserve every detected stack/root pair in the content-addressed profile, add the exact closed composite policy, expand each policy runner at its matching roots, select sandbox policy from the frozen runner, and release sessions between checks so a run may change toolchains without changing ownership.
+- Prevention:
+  - `test` test_polyglot_monorepo_checks_keep_their_stack_roots — A Python and Angular/TypeScript monorepo produces checks at each declared root and common checks once at the repository root.
+  - `test` test_a_polyglot_plan_selects_each_check_image_from_its_frozen_runner — Python, Angular and common checks select only their policy-owned quality images from frozen runner identity.
+- Evidence: `file:docs/checkpoints/GATE-4-CP-0001/COMMANDS.jsonl`, `file:.iacode/policies/quality-policy.json`, `file:services/evaluator/src/iacode_evaluator/projects.py`, `file:services/evaluator/src/iacode_evaluator/planner.py`, `file:services/evaluator/src/iacode_evaluator/executor.py`, `file:services/evaluator/src/iacode_evaluator/workflow.py`, `file:services/evaluator/tests/test_core.py`

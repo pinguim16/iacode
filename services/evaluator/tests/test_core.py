@@ -244,6 +244,7 @@ class QualityPolicyTests:
             "node",
             "node+typescript",
             "node+typescript+angular",
+            "python+node+typescript+angular",
             "maven",
             "gradle",
         }
@@ -322,6 +323,39 @@ class QualityPolicyTests:
 
 
 class QualityPlannerTests:
+    def test_polyglot_monorepo_checks_keep_their_stack_roots(self) -> None:
+        registry = load_policy(POLICY)
+        project = detect_project(
+            {
+                "apps/api/pyproject.toml": "",
+                "services/evaluator/pyproject.toml": "",
+                "apps/web/package.json": "{}",
+                "apps/web/tsconfig.json": "{}",
+                "apps/web/angular.json": "{}",
+            }
+        )
+        plan = build_plan(
+            snapshot_id="snapshot-1",
+            snapshot_digest=SHA,
+            project=project,
+            registry=registry,
+            created_at=NOW,
+        )
+
+        python_roots = {
+            check.workingDirectory for check in plan.checks if check.runner == "python.build"
+        }
+        angular_roots = {
+            check.workingDirectory for check in plan.checks if check.runner == "angular.build"
+        }
+        common_roots = {
+            check.workingDirectory for check in plan.checks if check.runner == "common.secret"
+        }
+        assert plan.projectProfile == "python+node+typescript+angular"
+        assert python_roots == {"apps/api", "services/evaluator"}
+        assert angular_roots == {"apps/web"}
+        assert common_roots == {"."}
+
     def test_equal_inputs_make_the_same_plan_identity(self) -> None:
         registry = load_policy(POLICY)
         project = detect_project({"pyproject.toml": ""})
@@ -565,6 +599,32 @@ class QualityExecutionBoundaryTests:
             assert request["tool"] == "shell.exec"
             assert not ({"image", "mount", "network", "resources", "verdict"} & set(request))
             assert plan.projectProfile == name
+
+    def test_a_polyglot_plan_selects_each_check_image_from_its_frozen_runner(self) -> None:
+        plan = build_plan(
+            snapshot_id="snapshot-1",
+            snapshot_digest=SHA,
+            project=detect_project(
+                {
+                    "api/pyproject.toml": "",
+                    "web/package.json": "{}",
+                    "web/tsconfig.json": "{}",
+                    "web/angular.json": "{}",
+                }
+            ),
+            registry=load_policy(POLICY),
+            created_at=NOW,
+        )
+        policies = {
+            check.runner: sandbox_request(
+                run_id="run-1", tool_request_id=str(uuid.uuid4()), plan=plan, check=check
+            )["policy"]
+            for check in plan.checks
+        }
+
+        assert policies["python.build"] == "quality-python"
+        assert policies["angular.build"] == "quality-node"
+        assert policies["common.secret"] == "quality-python"
 
     def test_no_evaluator_module_can_start_a_process(self) -> None:
         source_root = ROOT / "services" / "evaluator" / "src"

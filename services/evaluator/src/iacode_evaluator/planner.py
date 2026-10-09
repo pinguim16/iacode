@@ -62,22 +62,35 @@ def build_plan(
     policy = registry.contract(profile, configuration)
     checks: list[QualityCheck] = []
     selected = profile.runners + tuple((configuration or {}).get("additionalRunners") or ())
-    for index, identifier in enumerate(selected, start=1):
+    index = 0
+    for identifier in selected:
         runner = get_runner(identifier)
-        timeout = min(runner.timeout_seconds, policy.maxCheckSeconds)
-        checks.append(
-            QualityCheck(
-                checkId=f"q{index:03d}-{runner.kind}",
-                kind=runner.kind,
-                runner=runner.identifier,
-                command=runner.command,
-                mandatory=True,
-                applicable=True,
-                applicabilityReason=f"profile {profile.name} requires {runner.kind}",
-                timeoutSeconds=timeout,
-                requiredEvidenceKinds=runner.evidence_kinds,
+        roots = (
+            (".",)
+            if runner.stack == "common"
+            else tuple(
+                root for stack, root in project.workspace_roots if stack == runner.stack
             )
         )
+        for root in roots:
+            index += 1
+            timeout = min(runner.timeout_seconds, policy.maxCheckSeconds)
+            checks.append(
+                QualityCheck(
+                    checkId=f"q{index:03d}-{runner.kind}",
+                    kind=runner.kind,
+                    runner=runner.identifier,
+                    command=runner.command,
+                    workingDirectory=root,
+                    mandatory=True,
+                    applicable=True,
+                    applicabilityReason=(
+                        f"profile {profile.name} requires {runner.kind} in {root}"
+                    ),
+                    timeoutSeconds=timeout,
+                    requiredEvidenceKinds=runner.evidence_kinds,
+                )
+            )
     frozen = tuple(checks)
     return QualityPlan(
         planId=_identity(snapshot_id, snapshot_digest, project, policy.digest, frozen),

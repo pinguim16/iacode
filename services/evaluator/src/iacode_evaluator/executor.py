@@ -8,14 +8,28 @@ import uuid
 from iacode_contracts.quality import QualityCheck, QualityPlan
 from iacode_contracts.sandbox import SANDBOX_CONTRACT_VERSION
 
+from iacode_evaluator.runners import get_runner
+
 SANDBOX_POLICY_BY_STACK = {
     "python": "quality-python",
     "node": "quality-node",
-    "node+typescript": "quality-node",
-    "node+typescript+angular": "quality-node",
+    "typescript": "quality-node",
+    "angular": "quality-node",
     "maven": "quality-java",
     "gradle": "quality-java",
 }
+
+
+def sandbox_policy(plan: QualityPlan, check: QualityCheck) -> str:
+    """Select an image policy from the frozen runner, never from project-authored input."""
+    stack = get_runner(check.runner).stack
+    if stack == "common":
+        stack = next(
+            candidate
+            for candidate in ("python", "node", "typescript", "angular", "maven", "gradle")
+            if candidate in plan.projectProfile.split("+")
+        )
+    return SANDBOX_POLICY_BY_STACK[stack]
 
 
 def quality_tool_request_id(run_id: str, check_id: str) -> str:
@@ -27,7 +41,7 @@ def sandbox_request(
     *, run_id: str, tool_request_id: str, plan: QualityPlan, check: QualityCheck
 ) -> dict:
     """Build a request that names policy and snapshot but cannot carry infrastructure settings."""
-    policy = SANDBOX_POLICY_BY_STACK[plan.projectProfile]
+    policy = sandbox_policy(plan, check)
     return {
         "contractVersion": SANDBOX_CONTRACT_VERSION,
         "toolRequestId": tool_request_id,

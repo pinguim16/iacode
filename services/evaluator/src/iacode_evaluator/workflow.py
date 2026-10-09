@@ -165,7 +165,7 @@ class QualityRunWorkflow:
             retry_policy=ACTIVITY_RETRY,
         )
 
-    async def _release(self) -> None:
+    async def _release(self, reason: str) -> None:
         released = await workflow.execute_activity(
             SANDBOX_RELEASE_ACTIVITY,
             {"runId": self.run_id},
@@ -176,7 +176,7 @@ class QualityRunWorkflow:
         await self._transition(
             self.state,
             "SANDBOX_RELEASED",
-            "workflow:sandbox-released",
+            f"workflow:sandbox-released:{reason}",
             {"released": int(released.get("released") or 0)},
         )
 
@@ -190,7 +190,7 @@ class QualityRunWorkflow:
             )
         if self.state == "CANCELLED":
             return {"runId": self.run_id, "state": self.state, "verdict": "FAIL"}
-        await self._release()
+        await self._release("cancellation")
         verdict = await self._verdict()
         await self._transition(
             "CANCELLED",
@@ -279,12 +279,13 @@ class QualityRunWorkflow:
             await self._record(check.checkId, execution)
             if self.cancel_requested or execution["status"] == "CANCELLED":
                 return await self._finish_cancelled(plan)
+            await self._release(check.checkId)
             if execution["status"] == "TIMED_OUT":
                 deadline_hit = True
 
         self.current_check = None
         verdict = await self._verdict()
-        await self._release()
+        await self._release("final")
         if deadline_hit:
             terminal = "TIMED_OUT"
             reason = "one or more policy-owned quality deadlines expired"

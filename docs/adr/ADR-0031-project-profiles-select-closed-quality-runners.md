@@ -16,19 +16,24 @@ the manifests are ambiguous.
 
 Bounded manifest inspection produces a versioned project profile. Detection reads regular files
 only, follows no link outside the snapshot, ignores generated or vendor directories and records
-every detected stack, manifest, confidence and ambiguity. A supported profile must match exactly
+every detected stack, manifest, stack-specific workspace root, confidence and ambiguity. A
+supported profile must match exactly
 one profile in `.iacode/policies/quality-policy.json`; unknown and ambiguous combinations stop
 planning.
 
 The canonical policy maps that profile to a closed ordered runner set. Each runner owns its argument
-vector, check kind, timeout ceiling and required evidence kinds. Project configuration may add only
+vector, stack, check kind, timeout ceiling and required evidence kinds. Planning expands a runner
+once at every detected root that declares its stack, while common checks run once at the repository
+root. Project configuration may add only
 a runner the profile already declares optional, lower a timeout or raise a coverage threshold. It
 cannot select an image, mount, network, resource bound, hidden command, result, evidence or verdict.
 The frozen plan content-addresses the snapshot, profile, policy and ordered checks before execution.
 
-Stack-specific sandbox image profiles are content-addressed separately. A missing or stale image is
-a recorded failure; another image is never substituted. This keeps profile detection independent
-of infrastructure while preserving the sandbox as the sole executor.
+Stack-specific sandbox image profiles are content-addressed separately and selected per check from
+the frozen runner. A session is released between checks, so a polyglot run can change policy-owned
+toolchains without sharing one image across incompatible stacks. A missing or stale image is a
+recorded failure; another image is never substituted. This keeps profile detection independent of
+infrastructure while preserving the sandbox as the sole executor.
 
 ## Consequences
 

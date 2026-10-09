@@ -18,11 +18,11 @@
     "apps/api",
     "apps/web"
   ],
-  "generatedAt": "2026-10-09T19:37:44Z",
+  "generatedAt": "2026-10-09T19:47:11Z",
   "policyVersion": "2.0.0",
-  "inputsFingerprint": "7e5e1d6be730dc3547e0b125dd2e6444f6788361b80eb2b1d679720feb60f855",
-  "lessonsConsidered": 68,
-  "lessonsApplicable": 67,
+  "inputsFingerprint": "0033be690a674220151311c9a2e7e8d748253b35c5557bfd02e5257228878d66",
+  "lessonsConsidered": 69,
+  "lessonsApplicable": 68,
   "applicable": [
     {
       "lessonId": "LSN-0001",
@@ -693,6 +693,16 @@
       "requiredCheck": "For every parser-specific content limit applied to a broader inventory, prove unrelated content bypasses that limit while every interpreted candidate remains bounded.",
       "requiredEvidence": "A paired test with an oversized unrelated file accepted and an oversized interpreted file refused, plus a successful real repository evaluation.",
       "derivedRequirementId": "LESSON-REQ-0067"
+    },
+    {
+      "lessonId": "LSN-0069",
+      "title": "A polyglot plan binds each check to both its project root and its toolchain",
+      "status": "GUARDED",
+      "severity": "HIGH",
+      "reasonApplicable": "applies to every Gate; category architecture; severity HIGH; already guarded, so the control must keep holding",
+      "requiredCheck": "For every polyglot or multi-root project plan, prove each check is expanded at the roots that declared its stack and selects execution policy from the frozen runner rather than one run-wide guessed toolchain.",
+      "requiredEvidence": "A deterministic planning test over multiple roots and stacks, an execution-boundary test for per-runner images, and a successful real polyglot repository evaluation.",
+      "derivedRequirementId": "LESSON-REQ-0068"
     }
   ],
   "derivedRequirements": [
@@ -1164,6 +1174,13 @@
       "description": "Verify a bounded parser must apply each content limit only to content it interprets",
       "mandatory": true,
       "requiredEvidence": "A paired test with an oversized unrelated file accepted and an oversized interpreted file refused, plus a successful real repository evaluation."
+    },
+    {
+      "id": "LESSON-REQ-0068",
+      "lessonId": "LSN-0069",
+      "description": "Verify a polyglot plan binds each check to both its project root and its toolchain",
+      "mandatory": true,
+      "requiredEvidence": "A deterministic planning test over multiple roots and stacks, an execution-boundary test for per-runner images, and a successful real polyglot repository evaluation."
     }
   ]
 }

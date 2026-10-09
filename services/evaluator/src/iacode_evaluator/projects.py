@@ -43,6 +43,7 @@ class ProjectProfile:
     profile_id: str
     stacks: tuple[str, ...]
     manifests: tuple[str, ...]
+    workspace_roots: tuple[tuple[str, str], ...]
     confidence: str
     ambiguities: tuple[str, ...]
     configuration_source: str | None
@@ -78,19 +79,32 @@ def detect_project(files: Mapping[str, bytes | str]) -> ProjectProfile:
             raise QualityError("PROJECT_MANIFEST_TOO_LARGE", f"{path!r} exceeds manifest limit")
         safe[path] = size
 
-    basenames = {PurePosixPath(path).name: path for path in sorted(safe)}
+    paths_by_name = {
+        name: tuple(path for path in sorted(safe) if PurePosixPath(path).name == name)
+        for name in MANIFEST_NAMES
+    }
     found = tuple(
         stack
         for stack in STACK_ORDER
-        if any(marker in basenames for marker in STACK_MARKERS[stack])
+        if any(paths_by_name[marker] for marker in STACK_MARKERS[stack])
     )
     manifests = tuple(
         sorted(
             {
-                basenames[marker]
+                path
                 for stack in found
                 for marker in STACK_MARKERS[stack]
-                if marker in basenames
+                for path in paths_by_name[marker]
+            }
+        )
+    )
+    workspace_roots = tuple(
+        sorted(
+            {
+                (stack, PurePosixPath(path).parent.as_posix())
+                for stack in found
+                for marker in STACK_MARKERS[stack]
+                for path in paths_by_name[marker]
             }
         )
     )
@@ -106,17 +120,29 @@ def detect_project(files: Mapping[str, bytes | str]) -> ProjectProfile:
             confidence = "AMBIGUOUS"
             ambiguities_list.append("both Maven and Gradle manifests are present")
         ambiguities = tuple(ambiguities_list)
-    configuration = basenames.get("iacode-quality.json")
+    configurations = paths_by_name["iacode-quality.json"]
+    configuration = configurations[0] if len(configurations) == 1 else None
+    if len(configurations) > 1:
+        confidence = "AMBIGUOUS"
+        ambiguities = (*ambiguities, "more than one iacode-quality.json was found")
     content = {
         "profile": profile_id,
         "stacks": found,
         "manifests": manifests,
+        "workspaceRoots": workspace_roots,
         "confidence": confidence,
         "ambiguities": ambiguities,
         "configuration": configuration,
     }
     return ProjectProfile(
-        profile_id, found, manifests, confidence, ambiguities, configuration, digest(content)
+        profile_id,
+        found,
+        manifests,
+        workspace_roots,
+        confidence,
+        ambiguities,
+        configuration,
+        digest(content),
     )
 
 
