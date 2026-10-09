@@ -4,9 +4,9 @@
 - Scope: `quality engine, evaluation runners, immutable evidence store, verdict rules, false-PASS rejection, reproducible evidence, sandboxed execution, agent-runtime integration, promotion evidence`
 - Technologies: `python`, `postgresql`, `minio`, `temporal`, `docker`
 - Modules: `services/evaluator`, `services/sandbox`, `services/orchestrator`, `services/agent-runtime`, `packages/persistence`, `apps/api`, `apps/web`
-- Generated: `2026-10-09T19:29:29Z`
-- Lessons considered: 67
-- Lessons applicable: 66
+- Generated: `2026-10-09T19:37:44Z`
+- Lessons considered: 68
+- Lessons applicable: 67
 
 Every applicable lesson below is a requirement of this Gate. The derived identifiers must
 appear in `REQUIREMENTS-MATRIX.json`, and the Delivery Completeness Validator fails the
@@ -80,6 +80,7 @@ delivery when one is absent.
 | `LSN-0065` A shared execution identifier must not be written into a foreign key owned by another domain | `GUARDED` | HIGH | `LESSON-REQ-0064` | For a shared execution contract, prove each durable foreign key is populated only for the domain that owns the referenced row, using trusted ownership context rather than identifier shape. |
 | `LSN-0066` Immutable content identity excludes observation time and the first observer | `GUARDED` | HIGH | `LESSON-REQ-0065` | For every content-addressed or reusable immutable record, define material identity separately from creation metadata and ownership provenance. |
 | `LSN-0067` Cancellation semantics must survive orchestration-library exception wrapping | `GUARDED` | HIGH | `LESSON-REQ-0066` | For cancellation across an orchestration boundary, test the exception shape the real library delivers and derive outcome from the durable request plus executor acknowledgement rather than the wrapper class alone. |
+| `LSN-0068` A bounded parser must apply each content limit only to content it interprets | `GUARDED` | HIGH | `LESSON-REQ-0067` | For every parser-specific content limit applied to a broader inventory, prove unrelated content bypasses that limit while every interpreted candidate remains bounded. |
 
 ## Why each lesson applies
 
@@ -544,3 +545,10 @@ delivery when one is absent.
 - Required check: For cancellation across an orchestration boundary, test the exception shape the real library delivers and derive outcome from the durable request plus executor acknowledgement rather than the wrapper class alone.
 - Required evidence: A workflow test for the wrapped cancellation and a live running-cancellation scenario proving cleanup, terminal cancellation and idempotent repeat.
 - Derived requirement: `LESSON-REQ-0066`
+
+### LSN-0068 — A bounded parser must apply each content limit only to content it interprets
+
+- Reason: applies to every Gate; category implementation; severity HIGH; already guarded, so the control must keep holding
+- Required check: For every parser-specific content limit applied to a broader inventory, prove unrelated content bypasses that limit while every interpreted candidate remains bounded.
+- Required evidence: A paired test with an oversized unrelated file accepted and an oversized interpreted file refused, plus a successful real repository evaluation.
+- Derived requirement: `LESSON-REQ-0067`

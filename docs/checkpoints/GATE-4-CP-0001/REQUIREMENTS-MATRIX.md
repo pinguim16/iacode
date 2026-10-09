@@ -175,3 +175,4 @@ Expected set derived by: `policies.expected_requirement_refs over docs/GATE-4-CH
 | `LESSON-REQ-0064` | `lesson:LSN-0065` | yes | `NOT_STARTED` | Verify a shared execution identifier must not be written into a foreign key owned by another domain | LESSON-PREFLIGHT.json LESSON-REQ-0064 |
 | `LESSON-REQ-0065` | `lesson:LSN-0066` | yes | `NOT_STARTED` | Verify immutable content identity excludes observation time and the first observer | LESSON-PREFLIGHT.json LESSON-REQ-0065 |
 | `LESSON-REQ-0066` | `lesson:LSN-0067` | yes | `NOT_STARTED` | Verify cancellation semantics must survive orchestration-library exception wrapping | LESSON-PREFLIGHT.json LESSON-REQ-0066 |
+| `LESSON-REQ-0067` | `lesson:LSN-0068` | yes | `NOT_STARTED` | Verify a bounded parser must apply each content limit only to content it interprets | LESSON-PREFLIGHT.json LESSON-REQ-0067 |

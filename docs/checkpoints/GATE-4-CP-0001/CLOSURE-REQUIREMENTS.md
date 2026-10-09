@@ -185,6 +185,7 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 | `LESSON-REQ-0064` | LESSON | `lesson:LSN-0065` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify a shared execution identifier must not be written into a foreign key owned by another domain |
 | `LESSON-REQ-0065` | LESSON | `lesson:LSN-0066` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify immutable content identity excludes observation time and the first observer |
 | `LESSON-REQ-0066` | LESSON | `lesson:LSN-0067` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify cancellation semantics must survive orchestration-library exception wrapping |
+| `LESSON-REQ-0067` | LESSON | `lesson:LSN-0068` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify a bounded parser must apply each content limit only to content it interprets |
 
 ## Evidence
 
@@ -2062,6 +2063,17 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 
 - Source reference: LESSON-PREFLIGHT.json LESSON-REQ-0066
 - Description: Verify cancellation semantics must survive orchestration-library exception wrapping
+- Implementation: _none_
+- Test: _none_
+- Negative test: _none_
+- Documentation: _none_
+- Validation: _none_
+- Guardrail: _none_
+
+### LESSON-REQ-0067 - lesson:LSN-0068
+
+- Source reference: LESSON-PREFLIGHT.json LESSON-REQ-0067
+- Description: Verify a bounded parser must apply each content limit only to content it interprets
 - Implementation: _none_
 - Test: _none_
 - Negative test: _none_

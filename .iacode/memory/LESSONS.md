@@ -75,6 +75,7 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 | `LSN-0065` | `GUARDED` | HIGH | implementation | A shared execution identifier must not be written into a foreign key owned by another domain | `test_only_agent_requests_bind_the_agent_tool_request_foreign_key` |
 | `LSN-0066` | `GUARDED` | HIGH | architecture | Immutable content identity excludes observation time and the first observer | `test_content_addressed_plan_reuse_ignores_observation_time_and_first_owner` |
 | `LSN-0067` | `GUARDED` | HIGH | implementation | Cancellation semantics must survive orchestration-library exception wrapping | `test_an_acknowledged_activity_cancellation_stays_a_cancellation` |
+| `LSN-0068` | `GUARDED` | HIGH | implementation | A bounded parser must apply each content limit only to content it interprets | `test_large_non_manifest_content_does_not_block_project_detection`, `test_paths_and_manifest_sizes_are_bounded` |
 
 ## Detail
 
@@ -948,3 +949,15 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 - Prevention:
   - `test` test_an_acknowledged_activity_cancellation_stays_a_cancellation — A cancellation-requested activity wrapped as ActivityError produces CANCELLED, while the non-cancelled error path remains distinct.
 - Evidence: `file:services/evaluator/src/iacode_evaluator/workflow.py`, `file:services/evaluator/tests/test_workflow.py`, `file:var/gate4-quality-cancel.json`
+
+### LSN-0068 — A bounded parser must apply each content limit only to content it interprets
+
+- Status: `GUARDED`, severity HIGH, category implementation, recurrences 0.
+- Source: GATE-4, GATE-4-CP-0001, finding cmd-0044.
+- Symptom: The complete functional battery passed six scenario classes but could not evaluate the IACode snapshot because a large canonical-requirements JSON file was rejected as an oversized project manifest.
+- Root cause: detect_project received a whole snapshot inventory and applied MAX_MANIFEST_BYTES before deciding whether a path was one of the manifest names it reads. An unrelated file therefore inherited a parser-specific limit.
+- Resolution: Normalize every path, ignore non-manifest basenames before measuring content, and retain the same fail-closed size check for every actual stack manifest and iacode-quality.json.
+- Prevention:
+  - `test` test_large_non_manifest_content_does_not_block_project_detection — A supported project containing an unrelated oversized policy file is still detected from its real manifest.
+  - `test` test_paths_and_manifest_sizes_are_bounded — The same detector still refuses an oversized actual manifest and unsafe paths.
+- Evidence: `file:docs/checkpoints/GATE-4-CP-0001/COMMANDS.jsonl`, `file:services/evaluator/src/iacode_evaluator/projects.py`, `file:services/evaluator/tests/test_core.py`

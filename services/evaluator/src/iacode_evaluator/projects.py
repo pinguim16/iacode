@@ -33,6 +33,9 @@ STACK_MARKERS: dict[str, tuple[str, ...]] = {
     "gradle": ("build.gradle", "build.gradle.kts", "gradlew"),
 }
 STACK_ORDER = ("python", "node", "typescript", "angular", "maven", "gradle")
+MANIFEST_NAMES = frozenset(
+    {item for values in STACK_MARKERS.values() for item in values} | {"iacode-quality.json"}
+)
 
 
 @dataclass(frozen=True)
@@ -68,6 +71,8 @@ def detect_project(files: Mapping[str, bytes | str]) -> ProjectProfile:
             if error.code == "PROJECT_PATH_IGNORED":
                 continue
             raise
+        if PurePosixPath(path).name not in MANIFEST_NAMES:
+            continue
         size = len(content.encode("utf-8")) if isinstance(content, str) else len(content)
         if size > MAX_MANIFEST_BYTES:
             raise QualityError("PROJECT_MANIFEST_TOO_LARGE", f"{path!r} exceeds manifest limit")
@@ -119,9 +124,6 @@ def inventory_project(root: Path) -> dict[str, bytes]:
     """Read manifest candidates under ``root`` without following links outside it."""
     resolved_root = root.resolve(strict=True)
     inventory: dict[str, bytes] = {}
-    markers = {item for values in STACK_MARKERS.values() for item in values} | {
-        "iacode-quality.json",
-    }
     for current, directories, filenames in os.walk(resolved_root, followlinks=False):
         current_path = Path(current)
         directories[:] = [
@@ -130,7 +132,7 @@ def inventory_project(root: Path) -> dict[str, bytes]:
             if name not in IGNORED_PARTS and not (current_path / name).is_symlink()
         ]
         for name in filenames:
-            if name not in markers:
+            if name not in MANIFEST_NAMES:
                 continue
             path = current_path / name
             if path.is_symlink():

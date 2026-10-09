@@ -18,11 +18,11 @@
     "apps/api",
     "apps/web"
   ],
-  "generatedAt": "2026-10-09T19:29:29Z",
+  "generatedAt": "2026-10-09T19:37:44Z",
   "policyVersion": "2.0.0",
-  "inputsFingerprint": "2cb5f612e3196f05abe49d9e70a9c248441ba675815a2d10b551523558c49b23",
-  "lessonsConsidered": 67,
-  "lessonsApplicable": 66,
+  "inputsFingerprint": "7e5e1d6be730dc3547e0b125dd2e6444f6788361b80eb2b1d679720feb60f855",
+  "lessonsConsidered": 68,
+  "lessonsApplicable": 67,
   "applicable": [
     {
       "lessonId": "LSN-0001",
@@ -683,6 +683,16 @@
       "requiredCheck": "For cancellation across an orchestration boundary, test the exception shape the real library delivers and derive outcome from the durable request plus executor acknowledgement rather than the wrapper class alone.",
       "requiredEvidence": "A workflow test for the wrapped cancellation and a live running-cancellation scenario proving cleanup, terminal cancellation and idempotent repeat.",
       "derivedRequirementId": "LESSON-REQ-0066"
+    },
+    {
+      "lessonId": "LSN-0068",
+      "title": "A bounded parser must apply each content limit only to content it interprets",
+      "status": "GUARDED",
+      "severity": "HIGH",
+      "reasonApplicable": "applies to every Gate; category implementation; severity HIGH; already guarded, so the control must keep holding",
+      "requiredCheck": "For every parser-specific content limit applied to a broader inventory, prove unrelated content bypasses that limit while every interpreted candidate remains bounded.",
+      "requiredEvidence": "A paired test with an oversized unrelated file accepted and an oversized interpreted file refused, plus a successful real repository evaluation.",
+      "derivedRequirementId": "LESSON-REQ-0067"
     }
   ],
   "derivedRequirements": [
@@ -1147,6 +1157,13 @@
       "description": "Verify cancellation semantics must survive orchestration-library exception wrapping",
       "mandatory": true,
       "requiredEvidence": "A workflow test for the wrapped cancellation and a live running-cancellation scenario proving cleanup, terminal cancellation and idempotent repeat."
+    },
+    {
+      "id": "LESSON-REQ-0067",
+      "lessonId": "LSN-0068",
+      "description": "Verify a bounded parser must apply each content limit only to content it interprets",
+      "mandatory": true,
+      "requiredEvidence": "A paired test with an oversized unrelated file accepted and an oversized interpreted file refused, plus a successful real repository evaluation."
     }
   ]
 }

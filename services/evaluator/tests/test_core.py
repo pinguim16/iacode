@@ -213,6 +213,17 @@ class ProjectProfileTests:
         profile = detect_project({"node_modules/package.json": "{}", "pyproject.toml": ""})
         assert profile.stacks == ("python",)
 
+    def test_large_non_manifest_content_does_not_block_project_detection(self) -> None:
+        profile = detect_project(
+            {
+                "pyproject.toml": "[project]\nname='fixture'\n",
+                ".iacode/policies/canonical-requirements.json": b"x"
+                * (MAX_MANIFEST_BYTES + 1),
+            }
+        )
+        assert profile.stacks == ("python",)
+        assert profile.manifests == ("pyproject.toml",)
+
     def test_inventory_refuses_a_manifest_symlink(self, tmp_path: Path) -> None:
         target = tmp_path / "actual.toml"
         target.write_text("[project]\n", encoding="utf-8")

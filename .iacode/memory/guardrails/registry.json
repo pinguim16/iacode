@@ -998,6 +998,20 @@
         "LSN-0067"
       ],
       "removingItWouldAllow": "A cleanup-acknowledged cancellation to be persisted as an evaluator error merely because Temporal delivered it through ActivityError."
+    },
+    {
+      "guardrailId": "GRD-0069",
+      "title": "Manifest limits apply only to files the detector interprets as manifests",
+      "kind": "test",
+      "reference": "test_large_non_manifest_content_does_not_block_project_detection",
+      "verifiedBy": [
+        "test_large_non_manifest_content_does_not_block_project_detection",
+        "test_paths_and_manifest_sizes_are_bounded"
+      ],
+      "lessons": [
+        "LSN-0068"
+      ],
+      "removingItWouldAllow": "An unrelated large source, policy or generated record to make an otherwise supported repository impossible to evaluate before any quality check runs."
     }
   ]
 }
