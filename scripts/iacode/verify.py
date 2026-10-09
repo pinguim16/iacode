@@ -21,6 +21,8 @@ Stages, in order, because each one depends on the last being true:
     agent-durability     a run waiting for a tool survives a real worker restart
     agent-cancellation   a paused run is cancelled and refuses a late result
     agent-deadline       a run that outlives its deadline is ended, not left running
+    sandbox-integration  sandbox persistence and artifacts against PostgreSQL and MinIO
+    quality-integration  quality lifecycle and evidence against PostgreSQL and MinIO
     backup         a backup, a restore into a disposable target, and a verified read-back
     scan           known vulnerabilities in the pinned dependency locks
     scenarios      restart with data intact, dependency failure and recovery
@@ -72,10 +74,13 @@ class Stage:
         return self.exit_code == 0
 
 
-def python_stage(name: str, description: str, *arguments: str,
-                 destructive: bool = False) -> Stage:
-    return Stage(name=name, description=description,
-                 argv=[sys.executable, *arguments], destructive=destructive)
+def python_stage(name: str, description: str, *arguments: str, destructive: bool = False) -> Stage:
+    return Stage(
+        name=name,
+        description=description,
+        argv=[sys.executable, *arguments],
+        destructive=destructive,
+    )
 
 
 def build_stages(fast: bool) -> list[Stage]:
@@ -87,107 +92,221 @@ def build_stages(fast: bool) -> list[Stage]:
         argv = list(command)
         if argv and argv[0] == "python":
             argv[0] = sys.executable
-        stages.append(Stage(name=f"gate:{identifier}",
-                            description=f"mandatory gate {identifier}", argv=argv))
+        stages.append(
+            Stage(name=f"gate:{identifier}", description=f"mandatory gate {identifier}", argv=argv)
+        )
 
     stages += [
-        python_stage("stack", "start the stack and wait for real health",
-                     "scripts/iacode/stack.py", "up"),
-        Stage(name="integration",
-              description="the backend suite against the real services",
-              argv=["docker", "compose",
-                    "--project-directory", str(REPOSITORY_ROOT / "infra" / "compose"),
-                    "--file", str(REPOSITORY_ROOT / "infra" / "compose" / "docker-compose.yml"),
-                    "--env-file", str(REPOSITORY_ROOT / "infra" / "compose" / ".env"),
-                    "run", "--rm", "--entrypoint", "", "api",
-                    "python", "-m", "pytest", "tests", "-p", "no:cacheprovider", "--no-header"]),
-        Stage(name="infra",
-              description="our configuration of each service, exercised live",
-              argv=[sys.executable, "-m", "unittest", "discover",
-                    "-s", str(REPOSITORY_ROOT / "infra" / "tests"),
-                    "-t", str(REPOSITORY_ROOT / "infra" / "tests")]),
-        python_stage("smoke", "the API, the web shell, the observability stack and a workflow",
-                     "scripts/iacode/smoke.py"),
+        python_stage(
+            "stack", "start the stack and wait for real health", "scripts/iacode/stack.py", "up"
+        ),
+        Stage(
+            name="integration",
+            description="the backend suite against the real services",
+            argv=[
+                "docker",
+                "compose",
+                "--project-directory",
+                str(REPOSITORY_ROOT / "infra" / "compose"),
+                "--file",
+                str(REPOSITORY_ROOT / "infra" / "compose" / "docker-compose.yml"),
+                "--env-file",
+                str(REPOSITORY_ROOT / "infra" / "compose" / ".env"),
+                "run",
+                "--rm",
+                "--entrypoint",
+                "",
+                "api",
+                "python",
+                "-m",
+                "pytest",
+                "tests",
+                "-p",
+                "no:cacheprovider",
+                "--no-header",
+            ],
+        ),
+        Stage(
+            name="infra",
+            description="our configuration of each service, exercised live",
+            argv=[
+                sys.executable,
+                "-m",
+                "unittest",
+                "discover",
+                "-s",
+                str(REPOSITORY_ROOT / "infra" / "tests"),
+                "-t",
+                str(REPOSITORY_ROOT / "infra" / "tests"),
+            ],
+        ),
+        python_stage(
+            "smoke",
+            "the API, the web shell, the observability stack and a workflow",
+            "scripts/iacode/smoke.py",
+        ),
         # The live provider check. It exits BLOCKED, not FAIL, when no credential is configured
         # here: "not set up on this machine" and "broken" are different states, and reporting the
         # first as the second sends somebody looking for a defect that does not exist.
-        python_stage("gateway-smoke", "the Model Gateway against the real configured provider",
-                     "scripts/iacode/gateway_smoke.py", "--report",
-                     str(REPOSITORY_ROOT / "var" / "gateway-smoke.json")),
+        python_stage(
+            "gateway-smoke",
+            "the Model Gateway against the real configured provider",
+            "scripts/iacode/gateway_smoke.py",
+            "--report",
+            str(REPOSITORY_ROOT / "var" / "gateway-smoke.json"),
+        ),
         # The agent runtime, end to end. Like the gateway smoke it exits BLOCKED rather than FAIL
         # when no credential is configured here, and it never substitutes the configured model.
-        python_stage("agent-runtime-smoke",
-                     "the Agent Runtime against the real provider, through the gateway",
-                     "scripts/iacode/agent_runtime_smoke.py", "--report",
-                     str(REPOSITORY_ROOT / "var" / "agent-runtime-smoke.json")),
+        python_stage(
+            "agent-runtime-smoke",
+            "the Agent Runtime against the real provider, through the gateway",
+            "scripts/iacode/agent_runtime_smoke.py",
+            "--report",
+            str(REPOSITORY_ROOT / "var" / "agent-runtime-smoke.json"),
+        ),
         # The two claims of this Gate that only a real workflow can settle. They restart a
         # container of their own rather than the stack, so they belong before the destructive
         # stages and inside the targeted mode.
-        python_stage("agent-durability",
-                     "a run waiting for a tool survives a real worker restart",
-                     "scripts/iacode/scenarios/agent_runtime_durability.py", "--report",
-                     str(REPOSITORY_ROOT / "var" / "agent-durability.json")),
-        python_stage("agent-cancellation",
-                     "a paused run is cancelled, stays cancelled and refuses a late result",
-                     "scripts/iacode/scenarios/agent_runtime_cancellation.py", "--report",
-                     str(REPOSITORY_ROOT / "var" / "agent-cancellation.json")),
-        python_stage("agent-deadline",
-                     "a run that is alive and going nowhere is ended by its own deadline",
-                     "scripts/iacode/scenarios/agent_runtime_deadline.py", "--report",
-                     str(REPOSITORY_ROOT / "var" / "agent-deadline.json")),
+        python_stage(
+            "agent-durability",
+            "a run waiting for a tool survives a real worker restart",
+            "scripts/iacode/scenarios/agent_runtime_durability.py",
+            "--report",
+            str(REPOSITORY_ROOT / "var" / "agent-durability.json"),
+        ),
+        python_stage(
+            "agent-cancellation",
+            "a paused run is cancelled, stays cancelled and refuses a late result",
+            "scripts/iacode/scenarios/agent_runtime_cancellation.py",
+            "--report",
+            str(REPOSITORY_ROOT / "var" / "agent-cancellation.json"),
+        ),
+        python_stage(
+            "agent-deadline",
+            "a run that is alive and going nowhere is ended by its own deadline",
+            "scripts/iacode/scenarios/agent_runtime_deadline.py",
+            "--report",
+            str(REPOSITORY_ROOT / "var" / "agent-deadline.json"),
+        ),
         # The sandbox, end to end. First its store and artifact sink against the stack's own
         # database and bucket; then the four scenarios: a coding run over a synthetic repository
         # with a sentinel on the host, a timeout the run survives, a cancellation during a long
         # command, and a restart of the sandbox service between two tools. They restart nothing of
         # the stack but the sandbox service, so they belong to the targeted mode as well.
-        Stage(name="sandbox-integration",
-              description="the sandbox's store and artifact sink against the real services",
-              argv=["docker", "compose",
-                    "--project-directory", str(REPOSITORY_ROOT / "infra" / "compose"),
-                    "--file", str(REPOSITORY_ROOT / "infra" / "compose" / "docker-compose.yml"),
-                    "--env-file", str(REPOSITORY_ROOT / "infra" / "compose" / ".env"),
-                    "run", "--rm", "--entrypoint", "", "sandbox",
-                    "python", "-m", "pytest", "/app/sandbox_tests", "-m", "integration",
-                    "-p", "no:cacheprovider", "--no-header"]),
-        python_stage("sandbox-coding",
-                     "a coding team fixes a synthetic repository in a real sandbox; the host is "
-                     "untouched",
-                     "scripts/iacode/scenarios/sandbox_coding_e2e.py", "--scenario", "coding",
-                     "--report", str(REPOSITORY_ROOT / "var" / "sandbox-coding.json")),
-        python_stage("sandbox-timeout",
-                     "a command past its timeout is stopped and the run carries on",
-                     "scripts/iacode/scenarios/sandbox_coding_e2e.py", "--scenario", "timeout",
-                     "--report", str(REPOSITORY_ROOT / "var" / "sandbox-timeout.json")),
-        python_stage("sandbox-cancellation",
-                     "a run cancelled during a long command stops it and leaves no sandbox",
-                     "scripts/iacode/scenarios/sandbox_coding_e2e.py", "--scenario", "cancel",
-                     "--report", str(REPOSITORY_ROOT / "var" / "sandbox-cancellation.json")),
-        python_stage("sandbox-recovery",
-                     "a restarted sandbox service keeps the run's session and its workspace",
-                     "scripts/iacode/scenarios/sandbox_coding_e2e.py", "--scenario", "recovery",
-                     "--report", str(REPOSITORY_ROOT / "var" / "sandbox-recovery.json")),
+        Stage(
+            name="sandbox-integration",
+            description="the sandbox's store and artifact sink against the real services",
+            argv=[
+                "docker",
+                "compose",
+                "--project-directory",
+                str(REPOSITORY_ROOT / "infra" / "compose"),
+                "--file",
+                str(REPOSITORY_ROOT / "infra" / "compose" / "docker-compose.yml"),
+                "--env-file",
+                str(REPOSITORY_ROOT / "infra" / "compose" / ".env"),
+                "run",
+                "--rm",
+                "--entrypoint",
+                "",
+                "sandbox",
+                "python",
+                "-m",
+                "pytest",
+                "/app/sandbox_tests",
+                "-m",
+                "integration",
+                "-p",
+                "no:cacheprovider",
+                "--no-header",
+            ],
+        ),
+        python_stage(
+            "quality-integration",
+            "quality lifecycle and immutable evidence against the real services",
+            "scripts/iacode/scenarios/quality_persistence.py",
+        ),
+        python_stage(
+            "sandbox-coding",
+            "a coding team fixes a synthetic repository in a real sandbox; the host is untouched",
+            "scripts/iacode/scenarios/sandbox_coding_e2e.py",
+            "--scenario",
+            "coding",
+            "--report",
+            str(REPOSITORY_ROOT / "var" / "sandbox-coding.json"),
+        ),
+        python_stage(
+            "sandbox-timeout",
+            "a command past its timeout is stopped and the run carries on",
+            "scripts/iacode/scenarios/sandbox_coding_e2e.py",
+            "--scenario",
+            "timeout",
+            "--report",
+            str(REPOSITORY_ROOT / "var" / "sandbox-timeout.json"),
+        ),
+        python_stage(
+            "sandbox-cancellation",
+            "a run cancelled during a long command stops it and leaves no sandbox",
+            "scripts/iacode/scenarios/sandbox_coding_e2e.py",
+            "--scenario",
+            "cancel",
+            "--report",
+            str(REPOSITORY_ROOT / "var" / "sandbox-cancellation.json"),
+        ),
+        python_stage(
+            "sandbox-recovery",
+            "a restarted sandbox service keeps the run's session and its workspace",
+            "scripts/iacode/scenarios/sandbox_coding_e2e.py",
+            "--scenario",
+            "recovery",
+            "--report",
+            str(REPOSITORY_ROOT / "var" / "sandbox-recovery.json"),
+        ),
         # M1-F-002: the audit's null control and mutation, kept as a stage so the refusal of a
         # forged tool result is measured on the real stack by every verification.
-        python_stage("sandbox-tool-result-origin",
-                     "a result posted to the API for a sandboxed request is refused, and the "
-                     "agent receives the sandbox's own",
-                     "scripts/iacode/scenarios/sandbox_coding_e2e.py", "--scenario",
-                     "forged-result", "--report",
-                     str(REPOSITORY_ROOT / "var" / "sandbox-tool-result-origin.json")),
-        python_stage("backup", "backup, restore into a disposable target, verified read-back",
-                     "scripts/iacode/backup_restore_check.py"),
-        python_stage("dependency-scan", "known vulnerabilities in the pinned dependencies",
-                     "scripts/iacode/dependency_scan.py"),
+        python_stage(
+            "sandbox-tool-result-origin",
+            "a result posted to the API for a sandboxed request is refused, and the "
+            "agent receives the sandbox's own",
+            "scripts/iacode/scenarios/sandbox_coding_e2e.py",
+            "--scenario",
+            "forged-result",
+            "--report",
+            str(REPOSITORY_ROOT / "var" / "sandbox-tool-result-origin.json"),
+        ),
+        python_stage(
+            "backup",
+            "backup, restore into a disposable target, verified read-back",
+            "scripts/iacode/backup_restore_check.py",
+        ),
+        python_stage(
+            "dependency-scan",
+            "known vulnerabilities in the pinned dependencies",
+            "scripts/iacode/dependency_scan.py",
+        ),
     ]
 
     if not fast:
         stages += [
-            python_stage("restart", "restart with data intact",
-                         "scripts/iacode/scenarios/restart.py", destructive=True),
-            python_stage("dependency-failure", "liveness holds, readiness refuses, both recover",
-                         "scripts/iacode/scenarios/dependency_failure.py", destructive=True),
-            python_stage("fresh-install", "a complete installation from no volumes at all",
-                         "scripts/iacode/scenarios/fresh_install.py", "--yes", destructive=True),
+            python_stage(
+                "restart",
+                "restart with data intact",
+                "scripts/iacode/scenarios/restart.py",
+                destructive=True,
+            ),
+            python_stage(
+                "dependency-failure",
+                "liveness holds, readiness refuses, both recover",
+                "scripts/iacode/scenarios/dependency_failure.py",
+                destructive=True,
+            ),
+            python_stage(
+                "fresh-install",
+                "a complete installation from no volumes at all",
+                "scripts/iacode/scenarios/fresh_install.py",
+                "--yes",
+                destructive=True,
+            ),
         ]
     return stages
 
@@ -196,9 +315,15 @@ def run(stage: Stage, quiet: bool) -> Stage:
     log(f"--- {stage.name}: {stage.description}")
     started = time.monotonic()
     completed = subprocess.run(
-        stage.argv, cwd=str(REPOSITORY_ROOT), text=True, encoding="utf-8", errors="replace",
+        stage.argv,
+        cwd=str(REPOSITORY_ROOT),
+        text=True,
+        encoding="utf-8",
+        errors="replace",
         stdout=subprocess.PIPE if quiet else None,
-        stderr=subprocess.STDOUT if quiet else None, check=False)
+        stderr=subprocess.STDOUT if quiet else None,
+        check=False,
+    )
     stage.duration_seconds = round(time.monotonic() - started, 1)
     stage.exit_code = completed.returncode
     if quiet and completed.stdout:
@@ -210,17 +335,29 @@ def run(stage: Stage, quiet: bool) -> Stage:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description=__doc__,
-                                     formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("--fast", action="store_true",
-                        help="skip the stages that restart the stack or delete volumes")
+    parser = argparse.ArgumentParser(
+        description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
+    )
+    parser.add_argument(
+        "--fast",
+        action="store_true",
+        help="skip the stages that restart the stack or delete volumes",
+    )
     parser.add_argument("--list", action="store_true", help="print the stages and exit")
-    parser.add_argument("--quiet", action="store_true",
-                        help="capture stage output and print only the tail of a failing stage")
-    parser.add_argument("--report", type=Path, default=None,
-                        help="write a machine-readable result document to this path")
-    parser.add_argument("--keep-going", action="store_true",
-                        help="run every stage even after one fails")
+    parser.add_argument(
+        "--quiet",
+        action="store_true",
+        help="capture stage output and print only the tail of a failing stage",
+    )
+    parser.add_argument(
+        "--report",
+        type=Path,
+        default=None,
+        help="write a machine-readable result document to this path",
+    )
+    parser.add_argument(
+        "--keep-going", action="store_true", help="run every stage even after one fails"
+    )
     arguments = parser.parse_args()
 
     stages = build_stages(fast=arguments.fast)
@@ -238,15 +375,16 @@ def main() -> int:
     # this and this command did not, which made the same gate green under one runner and red under
     # the other.
     refresh_declared_hashes(REPOSITORY_ROOT)
-    log(f"verifying {gate}: {len(stages)} stage(s)"
-        + (", targeted mode" if arguments.fast else ""))
+    log(f"verifying {gate}: {len(stages)} stage(s)" + (", targeted mode" if arguments.fast else ""))
     started = time.monotonic()
     executed: list[Stage] = []
     for stage in stages:
         executed.append(run(stage, quiet=arguments.quiet))
         if not stage.ok and not arguments.keep_going:
-            log(f"stopping at the first failure: {stage.name}. "
-                f"Re-run with --keep-going to see the rest.")
+            log(
+                f"stopping at the first failure: {stage.name}. "
+                f"Re-run with --keep-going to see the rest."
+            )
             break
 
     failed = [stage for stage in executed if not stage.ok]
@@ -255,24 +393,38 @@ def main() -> int:
 
     if arguments.report:
         arguments.report.parent.mkdir(parents=True, exist_ok=True)
-        arguments.report.write_text(json.dumps({
-            "gate": gate,
-            "result": result,
-            "fast": arguments.fast,
-            "durationSeconds": elapsed,
-            "stages": [
-                {"name": stage.name, "description": stage.description,
-                 "exitCode": stage.exit_code, "durationSeconds": stage.duration_seconds,
-                 "result": "PASS" if stage.ok else "FAIL"}
-                for stage in executed
-            ],
-        }, indent=2) + "\n", encoding="utf-8", newline="\n")
+        arguments.report.write_text(
+            json.dumps(
+                {
+                    "gate": gate,
+                    "result": result,
+                    "fast": arguments.fast,
+                    "durationSeconds": elapsed,
+                    "stages": [
+                        {
+                            "name": stage.name,
+                            "description": stage.description,
+                            "exitCode": stage.exit_code,
+                            "durationSeconds": stage.duration_seconds,
+                            "result": "PASS" if stage.ok else "FAIL",
+                        }
+                        for stage in executed
+                    ],
+                },
+                indent=2,
+            )
+            + "\n",
+            encoding="utf-8",
+            newline="\n",
+        )
         log(f"wrote {arguments.report}")
 
     print()
     for stage in executed:
-        print(f"[{'PASS' if stage.ok else 'FAIL'}] {stage.name:22} "
-              f"{stage.duration_seconds:>6.1f}s  {stage.description}")
+        print(
+            f"[{'PASS' if stage.ok else 'FAIL'}] {stage.name:22} "
+            f"{stage.duration_seconds:>6.1f}s  {stage.description}"
+        )
     skipped = len(stages) - len(executed)
     if skipped:
         print(f"[SKIP] {skipped} stage(s) were not reached")

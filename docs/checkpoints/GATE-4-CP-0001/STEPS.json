@@ -9,7 +9,7 @@
       "expectedBehavior": "The Gate starts from a fixed, independently derived denominator and a truthful baseline.",
       "implementation": ["docs/GATE-4-CHECKLIST.md", ".iacode/policies/canonical-requirements.json", "LESSON-PREFLIGHT.json", "REQUIREMENTS-MATRIX.json", "BASELINE.md", "PLAN.md"],
       "tests": ["canonical requirement parser", "lesson preflight", "requirement derivation", "control-plane baseline"],
-      "functionalProof": "The derivation reports exactly 105 canonical plus 58 lesson requirements.",
+      "functionalProof": "The original derivation reported 105 canonical plus 58 lesson requirements; two recorded implementation failures added LSN-0060 and LSN-0061, so the current fixed denominator is 105 canonical plus 60 lesson requirements.",
       "evidence": ["cmd-0002", "cmd-0003", "cmd-0005", "cmd-0006", "cmd-0008"],
       "status": "COMPLETE"
     },
@@ -61,13 +61,33 @@
       "stepId": "G4-S03",
       "requirements": ["GATE-4-9.1..13.1"],
       "expectedBehavior": "Evidence and lifecycle facts are immutable, durable, origin-checked, resolvable, and reproducible.",
-      "implementation": [], "tests": [], "functionalProof": null, "evidence": [], "status": "IN_PROGRESS"
+      "implementation": [
+        "apps/api/migrations/versions/0006_quality_engine.py",
+        "packages/contracts/src/iacode_contracts/quality.py",
+        "packages/persistence/src/iacode_persistence/models.py",
+        "services/evaluator/src/iacode_evaluator/evidence.py",
+        "services/evaluator/src/iacode_evaluator/reproduce.py",
+        "services/evaluator/src/iacode_evaluator/service.py",
+        "services/evaluator/src/iacode_evaluator/store.py",
+        "services/evaluator/src/iacode_evaluator/verdict.py",
+        "docs/adr/ADR-0030-quality-evidence-and-verdict-immutability.md"
+      ],
+      "tests": [
+        "services/evaluator/tests/test_persistence.py",
+        "services/evaluator/tests/test_service.py",
+        "services/evaluator/tests/integration/test_quality_persistence_integration.py",
+        "apps/api/tests/integration/test_migrations.py",
+        "tests/test_gate4_quality_engine.py"
+      ],
+      "functionalProof": "A rebuilt evaluator passed 58 focused tests; 14 permanent Gate controls passed; migration 0006 passed 21 reversible migration tests and the lifecycle passed three integrations against real PostgreSQL and MinIO. The two red evaluator runs remain in the ledger and produced guarded lessons for cancellation ordering and precise late-callback refusal.",
+      "evidence": ["cmd-0028", "cmd-0029", "cmd-0030", "cmd-0031", "cmd-0032", "cmd-0033"],
+      "status": "COMPLETE"
     },
     {
       "stepId": "G4-S04",
       "requirements": ["GATE-4-12.1..14.4", "GATE-4-17.1..17.4"],
       "expectedBehavior": "Quality runs survive restarts, cancel and time out safely, and are exposed through stable bounded interfaces.",
-      "implementation": [], "tests": [], "functionalProof": null, "evidence": [], "status": "NOT_STARTED"
+      "implementation": [], "tests": [], "functionalProof": null, "evidence": [], "status": "IN_PROGRESS"
     },
     {
       "stepId": "G4-S05",

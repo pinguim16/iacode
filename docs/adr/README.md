@@ -39,3 +39,4 @@ exist, or a title or status that disagrees with its record fails the suite.
 | [ADR-0027](ADR-0027-tool-execution-policy.md) | What a tool may do is canonical policy, and the agent can neither choose nor change it | Accepted |
 | [ADR-0028](ADR-0028-sealed-evidence-is-judged-from-the-published-history.md) | Sealed evidence is judged from the published history | Accepted |
 | [ADR-0029](ADR-0029-quality-execution-boundary.md) | Quality plans execute through stack-specific content-addressed sandboxes | Accepted |
+| [ADR-0030](ADR-0030-quality-evidence-and-verdict-immutability.md) | Quality evidence and verdicts are immutable derived facts | Accepted |

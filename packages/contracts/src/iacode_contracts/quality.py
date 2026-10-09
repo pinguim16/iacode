@@ -61,6 +61,20 @@ QUALITY_EVIDENCE_KINDS = (
     "reproduction",
 )
 QUALITY_RESULT_ORIGIN = "EVALUATOR"
+QUALITY_RUN_EVENT_TYPES = (
+    "CREATED",
+    "PLANNED",
+    "QUEUED",
+    "STARTED",
+    "CHECK_DISPATCHED",
+    "CHECK_RECORDED",
+    "CANCELLATION_REQUESTED",
+    "SANDBOX_RELEASED",
+    "VERDICT_DERIVED",
+    "COMPLETED",
+    "REPRODUCTION_REQUESTED",
+    "INVALIDATED",
+)
 QUALITY_TASK_QUEUE = "iacode-quality"
 QUALITY_RUN_WORKFLOW = "IACodeQualityRun"
 QUALITY_CANCEL_SIGNAL = "cancel_quality_run"
@@ -245,6 +259,7 @@ class QualityResult(QualityModel):
     timedOut: bool = False
     truncated: bool = False
     summary: str = Field(max_length=2048)
+    coveragePercent: float | None = Field(default=None, ge=0, le=100)
     sandboxId: str | None = Field(default=None, max_length=128)
     evidence: tuple[QualityEvidence, ...] = ()
     findings: tuple[QualityFinding, ...] = ()
@@ -267,6 +282,21 @@ class QualityResult(QualityModel):
             raise ValueError("a timed-out result must say timedOut=true")
         if self.status != "TIMED_OUT" and self.timedOut:
             raise ValueError("timedOut=true requires TIMED_OUT status")
+        evidence_ids = [item.evidenceId for item in self.evidence]
+        evidence_digests = [item.digest for item in self.evidence]
+        if len(evidence_ids) != len(set(evidence_ids)):
+            raise ValueError("a result cannot contain the same evidence reference twice")
+        if len(evidence_digests) != len(set(evidence_digests)):
+            raise ValueError("a result cannot contain the same evidence digest twice")
+        known_evidence = set(evidence_ids)
+        for finding in self.findings:
+            if finding.checkId != self.checkId:
+                raise ValueError("a finding must belong to the result's check")
+            unknown = sorted(set(finding.evidenceIds) - known_evidence)
+            if unknown:
+                raise ValueError(
+                    "a finding references evidence outside its result: " + ", ".join(unknown)
+                )
         return self
 
 

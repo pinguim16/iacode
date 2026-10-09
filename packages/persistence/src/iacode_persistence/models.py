@@ -35,6 +35,16 @@ from iacode_contracts.agent_runtime import (
     TOOL_REQUEST_STATUSES,
     TOOL_RESULT_STATUSES,
 )
+from iacode_contracts.quality import (
+    QUALITY_CHECK_KINDS,
+    QUALITY_EVIDENCE_KINDS,
+    QUALITY_FINDING_SEVERITIES,
+    QUALITY_RESULT_ORIGIN,
+    QUALITY_RESULT_STATUSES,
+    QUALITY_RUN_EVENT_TYPES,
+    QUALITY_RUN_STATES,
+    QUALITY_VERDICTS,
+)
 from iacode_contracts.sandbox import (
     SANDBOX_ACTIVE_SESSION_STATES,
     SANDBOX_SESSION_STATES,
@@ -88,21 +98,20 @@ class Project(TimestampedEntity, Base):
     description: Mapped[str | None] = mapped_column(Text)
 
     repositories: Mapped[list[Repository]] = relationship(
-        back_populates="project", cascade="all, delete-orphan")
-    tasks: Mapped[list[Task]] = relationship(
-        back_populates="project", cascade="all, delete-orphan")
+        back_populates="project", cascade="all, delete-orphan"
+    )
+    tasks: Mapped[list[Task]] = relationship(back_populates="project", cascade="all, delete-orphan")
 
 
 class Repository(TimestampedEntity, Base):
     """A source repository attached to a project."""
 
     __tablename__ = "repositories"
-    __table_args__ = (
-        UniqueConstraint("project_id", "name", name="project_id_name"),
-    )
+    __table_args__ = (UniqueConstraint("project_id", "name", name="project_id_name"),)
 
     project_id: Mapped[uuid.UUID] = mapped_column(
-        ForeignKey("projects.id", ondelete="CASCADE"), nullable=False, index=True)
+        ForeignKey("projects.id", ondelete="CASCADE"), nullable=False, index=True
+    )
     name: Mapped[str] = mapped_column(String(256), nullable=False)
     url: Mapped[str] = mapped_column(Text, nullable=False)
     default_branch: Mapped[str] = mapped_column(String(256), nullable=False, default="main")
@@ -115,20 +124,20 @@ class Task(TimestampedEntity, Base):
 
     __tablename__ = "tasks"
     __table_args__ = (
-        CheckConstraint(
-            "status IN " + _vocabulary(TASK_STATUSES), name="status_is_known"),
+        CheckConstraint("status IN " + _vocabulary(TASK_STATUSES), name="status_is_known"),
     )
 
     project_id: Mapped[uuid.UUID] = mapped_column(
-        ForeignKey("projects.id", ondelete="CASCADE"), nullable=False, index=True)
+        ForeignKey("projects.id", ondelete="CASCADE"), nullable=False, index=True
+    )
     title: Mapped[str] = mapped_column(String(512), nullable=False)
     description: Mapped[str | None] = mapped_column(Text)
     status: Mapped[str] = mapped_column(
-        String(32), nullable=False, default="PENDING", server_default="PENDING")
+        String(32), nullable=False, default="PENDING", server_default="PENDING"
+    )
 
     project: Mapped[Project] = relationship(back_populates="tasks")
-    runs: Mapped[list[TaskRun]] = relationship(
-        back_populates="task", cascade="all, delete-orphan")
+    runs: Mapped[list[TaskRun]] = relationship(back_populates="task", cascade="all, delete-orphan")
 
 
 class TaskRun(TimestampedEntity, Base):
@@ -153,66 +162,93 @@ class TaskRun(TimestampedEntity, Base):
         CheckConstraint("status IN " + _vocabulary(RUN_STATUSES), name="status_is_known"),
         CheckConstraint(
             "finished_at IS NULL OR started_at IS NULL OR finished_at >= started_at",
-            name="finished_after_started"),
+            name="finished_after_started",
+        ),
         Index("ix_task_runs_task_id_created_at", "task_id", "created_at"),
         UniqueConstraint("idempotency_key", name="idempotency_key"),
     )
 
     task_id: Mapped[uuid.UUID] = mapped_column(
-        ForeignKey("tasks.id", ondelete="CASCADE"), nullable=False)
+        ForeignKey("tasks.id", ondelete="CASCADE"), nullable=False
+    )
     status: Mapped[str] = mapped_column(
-        String(32), nullable=False, default="PENDING", server_default="PENDING")
+        String(32), nullable=False, default="PENDING", server_default="PENDING"
+    )
     attempt: Mapped[int] = mapped_column(Integer, nullable=False, default=1, server_default="1")
     workflow_id: Mapped[str | None] = mapped_column(
-        String(256), doc="Temporal workflow identifier of the run that executes this attempt.")
+        String(256), doc="Temporal workflow identifier of the run that executes this attempt."
+    )
     started_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     finished_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
 
     # --- Gate 2: what the run is, what it may spend and what it answered -----------------------
     team_slug: Mapped[str | None] = mapped_column(
-        String(128), doc="The team profile this run executes, frozen when the run was created.")
+        String(128), doc="The team profile this run executes, frozen when the run was created."
+    )
     team_version: Mapped[str | None] = mapped_column(String(32))
     route: Mapped[str | None] = mapped_column(
-        String(64), doc="A configured route alias the gateway resolves. Never a provider address.")
+        String(64), doc="A configured route alias the gateway resolves. Never a provider address."
+    )
     model_override: Mapped[str | None] = mapped_column(
         String(384),
         doc="An explicit 'provider:model' the caller asked for. The gateway decides whether it "
-            "can serve the request; nothing here inspects provider metadata.")
+        "can serve the request; nothing here inspects provider metadata.",
+    )
     idempotency_key: Mapped[str | None] = mapped_column(
         String(128),
-        doc="Unique when present: a repeated creation request returns the run the first one made.")
+        doc="Unique when present: a repeated creation request returns the run the first one made.",
+    )
     current_stage: Mapped[str | None] = mapped_column(String(128))
     budget: Mapped[dict[str, Any]] = mapped_column(
-        JSONB, nullable=False, default=dict, server_default="{}",
+        JSONB,
+        nullable=False,
+        default=dict,
+        server_default="{}",
         doc="The limits this run was created with. Frozen; a later configuration change does not "
-            "retroactively widen a running run.")
+        "retroactively widen a running run.",
+    )
     workspace: Mapped[dict[str, Any]] = mapped_column(
-        JSONB, nullable=False, default=dict, server_default="{}",
+        JSONB,
+        nullable=False,
+        default=dict,
+        server_default="{}",
         doc="Where the run's sandbox workspace comes from: empty, or an authorised snapshot "
-            "artifact and its digest. Gate 3.")
+        "artifact and its digest. Gate 3.",
+    )
     budget_used: Mapped[dict[str, Any]] = mapped_column(
-        JSONB, nullable=False, default=dict, server_default="{}")
+        JSONB, nullable=False, default=dict, server_default="{}"
+    )
     result: Mapped[str | None] = mapped_column(
-        Text, doc="The run's final answer, kept so the page can render it after a restart.")
+        Text, doc="The run's final answer, kept so the page can render it after a restart."
+    )
     result_summary: Mapped[str | None] = mapped_column(String(1024))
     error_type: Mapped[str | None] = mapped_column(
-        String(128), doc="The runtime's classified error type, never a traceback.")
+        String(128), doc="The runtime's classified error type, never a traceback."
+    )
     error_summary: Mapped[str | None] = mapped_column(String(2048))
     failed_stage: Mapped[str | None] = mapped_column(String(128))
     correlation_id: Mapped[str | None] = mapped_column(String(128))
     cancel_requested: Mapped[bool] = mapped_column(
-        Boolean, nullable=False, default=False, server_default="false")
+        Boolean, nullable=False, default=False, server_default="false"
+    )
     training_allowed: Mapped[bool] = mapped_column(
-        Boolean, nullable=False, default=False, server_default="false",
-        doc="Denied by default. Nothing in this Gate grants it, and no run enters a dataset.")
+        Boolean,
+        nullable=False,
+        default=False,
+        server_default="false",
+        doc="Denied by default. Nothing in this Gate grants it, and no run enters a dataset.",
+    )
 
     task: Mapped[Task] = relationship(back_populates="runs")
     agent_runs: Mapped[list[AgentRun]] = relationship(
-        back_populates="task_run", cascade="all, delete-orphan")
+        back_populates="task_run", cascade="all, delete-orphan"
+    )
     events: Mapped[list[RunEvent]] = relationship(
-        back_populates="task_run", cascade="all, delete-orphan")
+        back_populates="task_run", cascade="all, delete-orphan"
+    )
     tool_requests: Mapped[list[ToolRequest]] = relationship(
-        back_populates="task_run", cascade="all, delete-orphan")
+        back_populates="task_run", cascade="all, delete-orphan"
+    )
 
 
 class Agent(TimestampedEntity, Base):
@@ -229,11 +265,17 @@ class Agent(TimestampedEntity, Base):
     slug: Mapped[str] = mapped_column(String(128), nullable=False, unique=True)
     name: Mapped[str] = mapped_column(String(256), nullable=False)
     role_contract: Mapped[str] = mapped_column(
-        Text, nullable=False,
-        doc="Repository path of the canonical role contract in .iacode/agents/.")
+        Text,
+        nullable=False,
+        doc="Repository path of the canonical role contract in .iacode/agents/.",
+    )
     enabled: Mapped[bool] = mapped_column(
-        Boolean, nullable=False, default=False, server_default="false",
-        doc="Disabled by default: an agent runs only when a Gate that can run it enables it.")
+        Boolean,
+        nullable=False,
+        default=False,
+        server_default="false",
+        doc="Disabled by default: an agent runs only when a Gate that can run it enables it.",
+    )
 
     # --- Gate 2: the configuration the runtime reads -------------------------------------------
     role: Mapped[str | None] = mapped_column(String(128))
@@ -241,23 +283,34 @@ class Agent(TimestampedEntity, Base):
     profile_version: Mapped[str | None] = mapped_column(
         String(32),
         doc="The version the definition declares. Distinct from the inherited optimistic-locking "
-            "``version``, which counts writes to this row: one number is about the profile and "
-            "the other is about the row, and sharing a name would make both unreadable.")
+        "``version``, which counts writes to this row: one number is about the profile and "
+        "the other is about the row, and sharing a name would make both unreadable.",
+    )
     default_route: Mapped[str | None] = mapped_column(String(64))
     max_turns: Mapped[int | None] = mapped_column(Integer)
     allowed_actions: Mapped[list[str]] = mapped_column(
-        JSONB, nullable=False, default=list, server_default="[]",
+        JSONB,
+        nullable=False,
+        default=list,
+        server_default="[]",
         doc="The tool names this role may request. A request outside the set is refused before "
-            "anything is persisted; nothing here executes one.")
+        "anything is persisted; nothing here executes one.",
+    )
     prompt_template: Mapped[str | None] = mapped_column(
-        String(256), doc="Repository path of the versioned prompt template.")
+        String(256), doc="Repository path of the versioned prompt template."
+    )
     prompt_template_version: Mapped[str | None] = mapped_column(String(32))
     prompt_template_hash: Mapped[str | None] = mapped_column(String(64))
     definition_hash: Mapped[str | None] = mapped_column(
-        String(64), doc="Digest of the repository definition this row was loaded from.")
+        String(64), doc="Digest of the repository definition this row was loaded from."
+    )
     customised: Mapped[bool] = mapped_column(
-        Boolean, nullable=False, default=False, server_default="false",
-        doc="Set by an operator who edited the row. Bootstrap leaves a customised row alone.")
+        Boolean,
+        nullable=False,
+        default=False,
+        server_default="false",
+        doc="Set by an operator who edited the row. Bootstrap leaves a customised row alone.",
+    )
 
     runs: Mapped[list[AgentRun]] = relationship(back_populates="agent")
 
@@ -276,14 +329,18 @@ class AgentTeam(TimestampedEntity, Base):
     name: Mapped[str] = mapped_column(String(256), nullable=False)
     description: Mapped[str | None] = mapped_column(Text)
     profile_version: Mapped[str] = mapped_column(
-        String(32), nullable=False, default="1.0.0", server_default="1.0.0")
+        String(32), nullable=False, default="1.0.0", server_default="1.0.0"
+    )
     stages: Mapped[list[dict[str, Any]]] = mapped_column(
-        JSONB, nullable=False, default=list, server_default="[]")
+        JSONB, nullable=False, default=list, server_default="[]"
+    )
     enabled: Mapped[bool] = mapped_column(
-        Boolean, nullable=False, default=True, server_default="true")
+        Boolean, nullable=False, default=True, server_default="true"
+    )
     definition_hash: Mapped[str | None] = mapped_column(String(64))
     customised: Mapped[bool] = mapped_column(
-        Boolean, nullable=False, default=False, server_default="false")
+        Boolean, nullable=False, default=False, server_default="false"
+    )
 
 
 class AgentRun(TimestampedEntity, Base):
@@ -306,31 +363,34 @@ class AgentRun(TimestampedEntity, Base):
     )
 
     task_run_id: Mapped[uuid.UUID] = mapped_column(
-        ForeignKey("task_runs.id", ondelete="CASCADE"), nullable=False)
+        ForeignKey("task_runs.id", ondelete="CASCADE"), nullable=False
+    )
     agent_id: Mapped[uuid.UUID] = mapped_column(
-        ForeignKey("agents.id", ondelete="RESTRICT"), nullable=False, index=True)
+        ForeignKey("agents.id", ondelete="RESTRICT"), nullable=False, index=True
+    )
     status: Mapped[str] = mapped_column(
-        String(32), nullable=False, default="PENDING", server_default="PENDING")
+        String(32), nullable=False, default="PENDING", server_default="PENDING"
+    )
     started_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     finished_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
 
     # --- Gate 2: which stage this is, what produced it and what it answered ---------------------
-    stage_index: Mapped[int] = mapped_column(
-        Integer, nullable=False, default=0, server_default="0")
+    stage_index: Mapped[int] = mapped_column(Integer, nullable=False, default=0, server_default="0")
     stage_name: Mapped[str | None] = mapped_column(String(128))
     agent_slug: Mapped[str | None] = mapped_column(String(128))
     profile_version: Mapped[str | None] = mapped_column(String(32))
     prompt_template_version: Mapped[str | None] = mapped_column(String(32))
     prompt_template_hash: Mapped[str | None] = mapped_column(String(64))
     turns: Mapped[int] = mapped_column(Integer, nullable=False, default=0, server_default="0")
-    model_calls: Mapped[int] = mapped_column(
-        Integer, nullable=False, default=0, server_default="0")
+    model_calls: Mapped[int] = mapped_column(Integer, nullable=False, default=0, server_default="0")
     output_name: Mapped[str | None] = mapped_column(String(128))
     output: Mapped[str | None] = mapped_column(
-        Text, doc="What this agent produced, as the next stage will receive it.")
+        Text, doc="What this agent produced, as the next stage will receive it."
+    )
     output_summary: Mapped[str | None] = mapped_column(
         String(1024),
-        doc="A short verifiable summary of the outcome. Never a model's private reasoning.")
+        doc="A short verifiable summary of the outcome. Never a model's private reasoning.",
+    )
     error_type: Mapped[str | None] = mapped_column(String(128))
     error_summary: Mapped[str | None] = mapped_column(String(2048))
 
@@ -351,28 +411,34 @@ class Provider(TimestampedEntity, Base):
     slug: Mapped[str] = mapped_column(String(128), nullable=False, unique=True)
     name: Mapped[str] = mapped_column(String(256), nullable=False)
     kind: Mapped[str] = mapped_column(
-        String(64), nullable=False,
-        doc="Transport family, for example 'http-api' or 'local-runtime'.")
+        String(64),
+        nullable=False,
+        doc="Transport family, for example 'http-api' or 'local-runtime'.",
+    )
     enabled: Mapped[bool] = mapped_column(
-        Boolean, nullable=False, default=False, server_default="false")
+        Boolean, nullable=False, default=False, server_default="false"
+    )
     adapter: Mapped[str | None] = mapped_column(
         String(64),
-        doc="The adapter family that serves this provider, mirrored from the provider policy.")
+        doc="The adapter family that serves this provider, mirrored from the provider policy.",
+    )
     healthy: Mapped[bool | None] = mapped_column(
         Boolean,
         doc="Result of the last health probe. NULL means never probed, which is not the same as "
-            "unhealthy and is not rendered as one.")
+        "unhealthy and is not rendered as one.",
+    )
     last_health_check: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     last_sync: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
-    model_count: Mapped[int] = mapped_column(
-        Integer, nullable=False, default=0, server_default="0")
+    model_count: Mapped[int] = mapped_column(Integer, nullable=False, default=0, server_default="0")
     detail: Mapped[str | None] = mapped_column(
         Text,
         doc="Why the last probe or synchronisation failed, already classified. Never a provider's "
-            "raw error body, which can echo a request header back at us.")
+        "raw error body, which can echo a request header back at us.",
+    )
 
     models: Mapped[list[Model]] = relationship(
-        back_populates="provider", cascade="all, delete-orphan")
+        back_populates="provider", cascade="all, delete-orphan"
+    )
 
 
 class Model(TimestampedEntity, Base):
@@ -391,37 +457,57 @@ class Model(TimestampedEntity, Base):
     """
 
     __tablename__ = "models"
-    __table_args__ = (
-        UniqueConstraint("provider_id", "slug", name="provider_id_slug"),
-    )
+    __table_args__ = (UniqueConstraint("provider_id", "slug", name="provider_id_slug"),)
 
     provider_id: Mapped[uuid.UUID] = mapped_column(
-        ForeignKey("providers.id", ondelete="CASCADE"), nullable=False, index=True)
+        ForeignKey("providers.id", ondelete="CASCADE"), nullable=False, index=True
+    )
     slug: Mapped[str] = mapped_column(String(256), nullable=False)
     display_name: Mapped[str] = mapped_column(String(256), nullable=False)
     family: Mapped[str | None] = mapped_column(String(128))
     context_window: Mapped[int | None] = mapped_column(Integer)
     max_output_tokens: Mapped[int | None] = mapped_column(Integer)
     supported_endpoints: Mapped[list[str]] = mapped_column(
-        JSONB, nullable=False, default=list, server_default="[]",
+        JSONB,
+        nullable=False,
+        default=list,
+        server_default="[]",
         doc="Protocol families the model accepts. Empty means the provider did not say, which the "
-            "endpoint selection treats differently from 'accepts none'.")
+        "endpoint selection treats differently from 'accepts none'.",
+    )
     capabilities: Mapped[dict[str, Any]] = mapped_column(
-        JSONB, nullable=False, default=dict, server_default="{}",
-        doc="Capability to SUPPORTED, UNSUPPORTED or UNKNOWN. An absent key is UNKNOWN.")
+        JSONB,
+        nullable=False,
+        default=dict,
+        server_default="{}",
+        doc="Capability to SUPPORTED, UNSUPPORTED or UNKNOWN. An absent key is UNKNOWN.",
+    )
     capability_provenance: Mapped[dict[str, Any]] = mapped_column(
-        JSONB, nullable=False, default=dict, server_default="{}",
-        doc="Capability to PROVIDER_METADATA, MANUAL_CONFIGURATION or OBSERVED.")
+        JSONB,
+        nullable=False,
+        default=dict,
+        server_default="{}",
+        doc="Capability to PROVIDER_METADATA, MANUAL_CONFIGURATION or OBSERVED.",
+    )
     reasoning_levels: Mapped[list[str]] = mapped_column(
-        JSONB, nullable=False, default=list, server_default="[]")
+        JSONB, nullable=False, default=list, server_default="[]"
+    )
     active: Mapped[bool] = mapped_column(
-        Boolean, nullable=False, default=True, server_default="true",
+        Boolean,
+        nullable=False,
+        default=True,
+        server_default="true",
         doc="Whether the provider still lists the model. A model that disappears is deactivated "
-            "rather than deleted, because model_calls rows point at it.")
+        "rather than deleted, because model_calls rows point at it.",
+    )
     raw_metadata: Mapped[dict[str, Any]] = mapped_column(
-        JSONB, nullable=False, default=dict, server_default="{}",
+        JSONB,
+        nullable=False,
+        default=dict,
+        server_default="{}",
         doc="The provider's own record, kept for diagnosis. Routing reads the normalised columns; "
-            "nothing decides behaviour from this.")
+        "nothing decides behaviour from this.",
+    )
     synced_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
 
     provider: Mapped[Provider] = relationship(back_populates="models")
@@ -452,15 +538,17 @@ class ModelCall(ImmutableRecord, Base):
         Index("ix_model_calls_provider_id_created_at", "provider_id", "created_at"),
         CheckConstraint(
             "finished_at IS NULL OR started_at IS NULL OR finished_at >= started_at",
-            name="finished_after_started"),
+            name="finished_after_started",
+        ),
     )
 
-    model_id: Mapped[uuid.UUID | None] = mapped_column(
-        ForeignKey("models.id", ondelete="RESTRICT"))
+    model_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("models.id", ondelete="RESTRICT"))
     provider_id: Mapped[uuid.UUID | None] = mapped_column(
-        ForeignKey("providers.id", ondelete="RESTRICT"))
+        ForeignKey("providers.id", ondelete="RESTRICT")
+    )
     agent_run_id: Mapped[uuid.UUID | None] = mapped_column(
-        ForeignKey("agent_runs.id", ondelete="SET NULL"), index=True)
+        ForeignKey("agent_runs.id", ondelete="SET NULL"), index=True
+    )
     request_id: Mapped[str] = mapped_column(String(128), nullable=False)
     correlation_id: Mapped[str | None] = mapped_column(String(128))
     request_fingerprint: Mapped[str | None] = mapped_column(String(64))
@@ -468,7 +556,8 @@ class ModelCall(ImmutableRecord, Base):
     route: Mapped[str | None] = mapped_column(String(64))
     purpose: Mapped[str] = mapped_column(String(128), nullable=False)
     status: Mapped[str] = mapped_column(
-        String(32), nullable=False, default="UNKNOWN", server_default="UNKNOWN")
+        String(32), nullable=False, default="UNKNOWN", server_default="UNKNOWN"
+    )
     started_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     finished_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     input_tokens: Mapped[int | None] = mapped_column(Integer)
@@ -477,18 +566,21 @@ class ModelCall(ImmutableRecord, Base):
     reasoning_tokens: Mapped[int | None] = mapped_column(
         Integer,
         doc="How many reasoning tokens the provider reported. The reasoning itself is never "
-            "stored: a model's private deliberation is not ours to keep.")
+        "stored: a model's private deliberation is not ours to keep.",
+    )
     cost: Mapped[Decimal | None] = mapped_column(
         Numeric(18, 8),
-        doc="NULL unless pricing is configured. Zero would state that the call was free.")
+        doc="NULL unless pricing is configured. Zero would state that the call was free.",
+    )
     latency_ms: Mapped[int | None] = mapped_column(Integer)
-    retry_count: Mapped[int] = mapped_column(
-        Integer, nullable=False, default=0, server_default="0")
+    retry_count: Mapped[int] = mapped_column(Integer, nullable=False, default=0, server_default="0")
     fallback_count: Mapped[int] = mapped_column(
-        Integer, nullable=False, default=0, server_default="0")
+        Integer, nullable=False, default=0, server_default="0"
+    )
     succeeded: Mapped[bool] = mapped_column(Boolean, nullable=False)
     error_code: Mapped[str | None] = mapped_column(
-        String(128), doc="The gateway's classified error type, never a provider's raw message.")
+        String(128), doc="The gateway's classified error type, never a provider's raw message."
+    )
 
     model: Mapped[Model] = relationship(back_populates="calls")
 
@@ -511,33 +603,42 @@ class ToolCall(ImmutableRecord, Base):
     __tablename__ = "tool_calls"
     __table_args__ = (
         Index("ix_tool_calls_agent_run_id_created_at", "agent_run_id", "created_at"),
-        CheckConstraint("status IN " + _vocabulary(TOOL_EXECUTION_STATUSES),
-                        name="status_is_known"),
+        CheckConstraint(
+            "status IN " + _vocabulary(TOOL_EXECUTION_STATUSES), name="status_is_known"
+        ),
         CheckConstraint("exit_code IS NULL OR status <> 'DENIED'", name="denied_has_no_exit_code"),
         UniqueConstraint("tool_request_id", name="tool_calls_tool_request_id"),
     )
 
     agent_run_id: Mapped[uuid.UUID] = mapped_column(
-        ForeignKey("agent_runs.id", ondelete="CASCADE"), nullable=False)
+        ForeignKey("agent_runs.id", ondelete="CASCADE"), nullable=False
+    )
     tool_name: Mapped[str] = mapped_column(String(128), nullable=False)
     succeeded: Mapped[bool] = mapped_column(Boolean, nullable=False)
     latency_ms: Mapped[int | None] = mapped_column(Integer)
     error_code: Mapped[str | None] = mapped_column(String(128))
     tool_request_id: Mapped[uuid.UUID | None] = mapped_column(
-        ForeignKey("tool_requests.id", ondelete="SET NULL"))
+        ForeignKey("tool_requests.id", ondelete="SET NULL")
+    )
     sandbox_session_id: Mapped[uuid.UUID | None] = mapped_column(
-        ForeignKey("sandbox_sessions.id", ondelete="SET NULL"), index=True)
+        ForeignKey("sandbox_sessions.id", ondelete="SET NULL"), index=True
+    )
     status: Mapped[str] = mapped_column(String(32), nullable=False)
     exit_code: Mapped[int | None] = mapped_column(
-        Integer, doc="NULL unless a process was started. An exit code is never invented.")
+        Integer, doc="NULL unless a process was started. An exit code is never invented."
+    )
     timed_out: Mapped[bool] = mapped_column(
-        Boolean, nullable=False, default=False, server_default="false")
+        Boolean, nullable=False, default=False, server_default="false"
+    )
     truncated: Mapped[bool] = mapped_column(
-        Boolean, nullable=False, default=False, server_default="false")
+        Boolean, nullable=False, default=False, server_default="false"
+    )
     summary: Mapped[str | None] = mapped_column(
-        String(240), doc="A short verifiable fact about the execution, never its output.")
+        String(240), doc="A short verifiable fact about the execution, never its output."
+    )
     artifact_ids: Mapped[list[str]] = mapped_column(
-        JSONB, nullable=False, default=list, server_default="[]")
+        JSONB, nullable=False, default=list, server_default="[]"
+    )
 
 
 class SandboxSession(TimestampedEntity, Base):
@@ -551,15 +652,19 @@ class SandboxSession(TimestampedEntity, Base):
 
     __tablename__ = "sandbox_sessions"
     __table_args__ = (
-        CheckConstraint("state IN " + _vocabulary(SANDBOX_SESSION_STATES),
-                        name="state_is_known"),
-        Index("uq_sandbox_sessions_one_active_per_run", "task_run_id", unique=True,
-              postgresql_where=text("state IN " + _vocabulary(SANDBOX_ACTIVE_SESSION_STATES))),
+        CheckConstraint("state IN " + _vocabulary(SANDBOX_SESSION_STATES), name="state_is_known"),
+        Index(
+            "uq_sandbox_sessions_one_active_per_run",
+            "task_run_id",
+            unique=True,
+            postgresql_where=text("state IN " + _vocabulary(SANDBOX_ACTIVE_SESSION_STATES)),
+        ),
         UniqueConstraint("container_name", name="sandbox_sessions_container_name"),
     )
 
     task_run_id: Mapped[uuid.UUID] = mapped_column(
-        ForeignKey("task_runs.id", ondelete="CASCADE"), nullable=False, index=True)
+        ForeignKey("task_runs.id", ondelete="CASCADE"), nullable=False, index=True
+    )
     state: Mapped[str] = mapped_column(String(32), nullable=False)
     policy: Mapped[str] = mapped_column(String(64), nullable=False)
     image: Mapped[str] = mapped_column(String(256), nullable=False)
@@ -567,15 +672,18 @@ class SandboxSession(TimestampedEntity, Base):
     container_name: Mapped[str] = mapped_column(String(128), nullable=False)
     network_profile: Mapped[str] = mapped_column(String(32), nullable=False)
     workspace_source: Mapped[dict[str, Any]] = mapped_column(
-        JSONB, nullable=False, default=dict, server_default="{}")
+        JSONB, nullable=False, default=dict, server_default="{}"
+    )
     resource_limits: Mapped[dict[str, Any]] = mapped_column(
-        JSONB, nullable=False, default=dict, server_default="{}")
+        JSONB, nullable=False, default=dict, server_default="{}"
+    )
     started_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     stopped_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     expires_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
     failure_reason: Mapped[str | None] = mapped_column(Text)
     active_tool_request_id: Mapped[uuid.UUID | None] = mapped_column(
-        ForeignKey("tool_requests.id", ondelete="SET NULL"))
+        ForeignKey("tool_requests.id", ondelete="SET NULL")
+    )
 
 
 class RunEvent(ImmutableRecord, Base):
@@ -594,28 +702,37 @@ class RunEvent(ImmutableRecord, Base):
 
     __tablename__ = "run_events"
     __table_args__ = (
-        CheckConstraint("event_type IN " + _vocabulary(RUN_EVENT_TYPES),
-                        name="event_type_is_known"),
+        CheckConstraint(
+            "event_type IN " + _vocabulary(RUN_EVENT_TYPES), name="event_type_is_known"
+        ),
         UniqueConstraint("task_run_id", "sequence", name="task_run_id_sequence"),
         UniqueConstraint("task_run_id", "dedupe_key", name="task_run_id_dedupe_key"),
         Index("ix_run_events_task_run_id_sequence", "task_run_id", "sequence"),
     )
 
     task_run_id: Mapped[uuid.UUID] = mapped_column(
-        ForeignKey("task_runs.id", ondelete="CASCADE"), nullable=False)
+        ForeignKey("task_runs.id", ondelete="CASCADE"), nullable=False
+    )
     agent_run_id: Mapped[uuid.UUID | None] = mapped_column(
-        ForeignKey("agent_runs.id", ondelete="SET NULL"))
+        ForeignKey("agent_runs.id", ondelete="SET NULL")
+    )
     sequence: Mapped[int] = mapped_column(Integer, nullable=False)
     event_type: Mapped[str] = mapped_column(String(64), nullable=False)
     stage: Mapped[str | None] = mapped_column(String(128))
     dedupe_key: Mapped[str] = mapped_column(
-        String(128), nullable=False,
+        String(128),
+        nullable=False,
         doc="Identifies the occurrence, not the row: the same occurrence appended twice is one "
-            "event.")
+        "event.",
+    )
     payload: Mapped[dict[str, Any]] = mapped_column(
-        JSONB, nullable=False, default=dict, server_default="{}",
+        JSONB,
+        nullable=False,
+        default=dict,
+        server_default="{}",
         doc="Short, verifiable facts about the moment. Never a prompt, a completion or a model's "
-            "private reasoning.")
+        "private reasoning.",
+    )
 
     task_run: Mapped[TaskRun] = relationship(back_populates="events")
 
@@ -631,32 +748,40 @@ class ToolRequest(TimestampedEntity, Base):
 
     __tablename__ = "tool_requests"
     __table_args__ = (
-        CheckConstraint("status IN " + _vocabulary(TOOL_REQUEST_STATUSES),
-                        name="status_is_known"),
-        CheckConstraint("executor IN " + _vocabulary(TOOL_REQUEST_EXECUTORS),
-                        name="executor_is_known"),
+        CheckConstraint("status IN " + _vocabulary(TOOL_REQUEST_STATUSES), name="status_is_known"),
+        CheckConstraint(
+            "executor IN " + _vocabulary(TOOL_REQUEST_EXECUTORS), name="executor_is_known"
+        ),
         Index("ix_tool_requests_task_run_id_created_at", "task_run_id", "created_at"),
     )
 
     task_run_id: Mapped[uuid.UUID] = mapped_column(
-        ForeignKey("task_runs.id", ondelete="CASCADE"), nullable=False)
+        ForeignKey("task_runs.id", ondelete="CASCADE"), nullable=False
+    )
     agent_run_id: Mapped[uuid.UUID | None] = mapped_column(
-        ForeignKey("agent_runs.id", ondelete="SET NULL"), index=True)
+        ForeignKey("agent_runs.id", ondelete="SET NULL"), index=True
+    )
     tool_name: Mapped[str] = mapped_column(String(128), nullable=False)
     arguments: Mapped[dict[str, Any]] = mapped_column(
-        JSONB, nullable=False, default=dict, server_default="{}")
+        JSONB, nullable=False, default=dict, server_default="{}"
+    )
     status: Mapped[str] = mapped_column(
-        String(32), nullable=False, default="PENDING", server_default="PENDING")
+        String(32), nullable=False, default="PENDING", server_default="PENDING"
+    )
     resolved_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     #: Who may answer the request (`M1-F-002`): the sandbox, for a stage with a sandbox policy,
     #: or an external producer through the API. Written with the request, never by a result.
     executor: Mapped[str] = mapped_column(
-        String(16), nullable=False, default=TOOL_EXECUTOR_EXTERNAL,
-        server_default=TOOL_EXECUTOR_EXTERNAL)
+        String(16),
+        nullable=False,
+        default=TOOL_EXECUTOR_EXTERNAL,
+        server_default=TOOL_EXECUTOR_EXTERNAL,
+    )
 
     task_run: Mapped[TaskRun] = relationship(back_populates="tool_requests")
     result: Mapped[ToolResult | None] = relationship(
-        back_populates="request", cascade="all, delete-orphan", uselist=False)
+        back_populates="request", cascade="all, delete-orphan", uselist=False
+    )
 
 
 class ToolResult(ImmutableRecord, Base):
@@ -674,14 +799,21 @@ class ToolResult(ImmutableRecord, Base):
     )
 
     tool_request_id: Mapped[uuid.UUID] = mapped_column(
-        ForeignKey("tool_requests.id", ondelete="CASCADE"), nullable=False)
+        ForeignKey("tool_requests.id", ondelete="CASCADE"), nullable=False
+    )
     status: Mapped[str] = mapped_column(String(32), nullable=False)
     output: Mapped[dict[str, Any]] = mapped_column(
-        JSONB, nullable=False, default=dict, server_default="{}")
+        JSONB, nullable=False, default=dict, server_default="{}"
+    )
     error: Mapped[str | None] = mapped_column(Text)
     result_metadata: Mapped[dict[str, Any]] = mapped_column(
-        "result_metadata", JSONB, nullable=False, default=dict, server_default="{}",
-        doc="Whatever the executor wants to record about the execution. Opaque to this Gate.")
+        "result_metadata",
+        JSONB,
+        nullable=False,
+        default=dict,
+        server_default="{}",
+        doc="Whatever the executor wants to record about the execution. Opaque to this Gate.",
+    )
 
     request: Mapped[ToolRequest] = relationship(back_populates="result")
 
@@ -696,13 +828,262 @@ class Artifact(TimestampedEntity, Base):
     __tablename__ = "artifacts"
 
     task_run_id: Mapped[uuid.UUID | None] = mapped_column(
-        ForeignKey("task_runs.id", ondelete="SET NULL"), index=True)
+        ForeignKey("task_runs.id", ondelete="SET NULL"), index=True
+    )
     kind: Mapped[str] = mapped_column(String(128), nullable=False)
     storage_bucket: Mapped[str] = mapped_column(String(128), nullable=False)
     storage_key: Mapped[str] = mapped_column(Text, nullable=False, unique=True)
     content_type: Mapped[str] = mapped_column(String(256), nullable=False)
     size_bytes: Mapped[int] = mapped_column(Integer, nullable=False)
     checksum_sha256: Mapped[str] = mapped_column(String(64), nullable=False)
+
+
+class QualityPlan(ImmutableRecord, Base):
+    """A frozen quality plan; its canonical body and all input digests are append-only."""
+
+    __tablename__ = "quality_plans"
+    __table_args__ = (
+        UniqueConstraint("plan_digest", name="quality_plans_plan_digest"),
+        Index("ix_quality_plans_snapshot_digest", "snapshot_digest"),
+    )
+
+    owner_task_run_id: Mapped[uuid.UUID | None] = mapped_column(
+        ForeignKey("task_runs.id", ondelete="SET NULL"), index=True
+    )
+    snapshot_artifact_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("artifacts.id", ondelete="RESTRICT"), nullable=False
+    )
+    plan_digest: Mapped[str] = mapped_column(String(64), nullable=False)
+    snapshot_digest: Mapped[str] = mapped_column(String(64), nullable=False)
+    project_profile: Mapped[str] = mapped_column(String(128), nullable=False)
+    project_profile_digest: Mapped[str] = mapped_column(String(64), nullable=False)
+    policy_id: Mapped[str] = mapped_column(String(64), nullable=False)
+    policy_version: Mapped[str] = mapped_column(String(32), nullable=False)
+    policy_digest: Mapped[str] = mapped_column(String(64), nullable=False)
+    content: Mapped[dict[str, Any]] = mapped_column(JSONB, nullable=False)
+
+
+class QualityCheck(ImmutableRecord, Base):
+    """One ordered check frozen into a quality plan."""
+
+    __tablename__ = "quality_checks"
+    __table_args__ = (
+        CheckConstraint("kind IN " + _vocabulary(QUALITY_CHECK_KINDS), name="kind_is_known"),
+        UniqueConstraint(
+            "quality_plan_id", "check_id", name="quality_checks_quality_plan_id_check_id"
+        ),
+        UniqueConstraint(
+            "quality_plan_id", "ordinal", name="quality_checks_quality_plan_id_ordinal"
+        ),
+    )
+
+    quality_plan_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("quality_plans.id", ondelete="CASCADE"), nullable=False, index=True
+    )
+    check_id: Mapped[str] = mapped_column(String(128), nullable=False)
+    ordinal: Mapped[int] = mapped_column(Integer, nullable=False)
+    kind: Mapped[str] = mapped_column(String(32), nullable=False)
+    runner: Mapped[str] = mapped_column(String(128), nullable=False)
+    content: Mapped[dict[str, Any]] = mapped_column(JSONB, nullable=False)
+
+
+class QualityRun(TimestampedEntity, Base):
+    """The mutable lifecycle envelope around immutable quality facts."""
+
+    __tablename__ = "quality_runs"
+    __table_args__ = (
+        CheckConstraint("state IN " + _vocabulary(QUALITY_RUN_STATES), name="state_is_known"),
+        CheckConstraint(
+            "finished_at IS NULL OR started_at IS NULL OR finished_at >= started_at",
+            name="finished_after_started",
+        ),
+        UniqueConstraint("idempotency_key", name="quality_runs_idempotency_key"),
+        UniqueConstraint("workflow_id", name="quality_runs_workflow_id"),
+        Index("ix_quality_runs_state_created_at", "state", "created_at"),
+    )
+
+    quality_plan_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("quality_plans.id", ondelete="RESTRICT"), nullable=False, index=True
+    )
+    owner_task_run_id: Mapped[uuid.UUID | None] = mapped_column(
+        ForeignKey("task_runs.id", ondelete="SET NULL"), index=True
+    )
+    reproduction_of_run_id: Mapped[uuid.UUID | None] = mapped_column(
+        ForeignKey("quality_runs.id", ondelete="SET NULL"), index=True
+    )
+    state: Mapped[str] = mapped_column(
+        String(32), nullable=False, default="CREATED", server_default="CREATED"
+    )
+    idempotency_key: Mapped[str] = mapped_column(String(128), nullable=False)
+    workflow_id: Mapped[str | None] = mapped_column(String(256))
+    deadline_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    started_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    finished_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    terminal_reason: Mapped[str | None] = mapped_column(String(2048))
+    cancel_requested: Mapped[bool] = mapped_column(
+        Boolean, nullable=False, default=False, server_default="false"
+    )
+    training_allowed: Mapped[bool] = mapped_column(
+        Boolean, nullable=False, default=False, server_default="false"
+    )
+
+
+class QualityResult(ImmutableRecord, Base):
+    """Exactly one append-only terminal result for one run and planned check."""
+
+    __tablename__ = "quality_results"
+    __table_args__ = (
+        CheckConstraint(
+            "status IN " + _vocabulary(QUALITY_RESULT_STATUSES), name="status_is_known"
+        ),
+        CheckConstraint(f"origin = '{QUALITY_RESULT_ORIGIN}'", name="origin_is_evaluator"),
+        CheckConstraint("exit_code IS NULL OR status <> 'DENIED'", name="denied_has_no_exit_code"),
+        UniqueConstraint(
+            "quality_run_id", "quality_check_id", name="quality_results_quality_run_id_check_id"
+        ),
+        UniqueConstraint("result_id", name="quality_results_result_id"),
+        UniqueConstraint("callback_key", name="quality_results_callback_key"),
+    )
+
+    quality_run_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("quality_runs.id", ondelete="CASCADE"), nullable=False, index=True
+    )
+    quality_check_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("quality_checks.id", ondelete="RESTRICT"), nullable=False
+    )
+    result_id: Mapped[str] = mapped_column(String(128), nullable=False)
+    result_digest: Mapped[str] = mapped_column(String(64), nullable=False)
+    callback_key: Mapped[str] = mapped_column(String(128), nullable=False)
+    origin: Mapped[str] = mapped_column(
+        String(32),
+        nullable=False,
+        default=QUALITY_RESULT_ORIGIN,
+        server_default=QUALITY_RESULT_ORIGIN,
+    )
+    status: Mapped[str] = mapped_column(String(32), nullable=False)
+    sandbox_session_id: Mapped[uuid.UUID | None] = mapped_column(
+        ForeignKey("sandbox_sessions.id", ondelete="SET NULL"), index=True
+    )
+    exit_code: Mapped[int | None] = mapped_column(Integer)
+    duration_ms: Mapped[int] = mapped_column(Integer, nullable=False)
+    timed_out: Mapped[bool] = mapped_column(Boolean, nullable=False, server_default="false")
+    truncated: Mapped[bool] = mapped_column(Boolean, nullable=False, server_default="false")
+    summary: Mapped[str] = mapped_column(String(2048), nullable=False)
+    content: Mapped[dict[str, Any]] = mapped_column(JSONB, nullable=False)
+
+
+class QualityEvidence(ImmutableRecord, Base):
+    """A content-addressed evidence object and the rights governing its reuse."""
+
+    __tablename__ = "quality_evidence"
+    __table_args__ = (
+        CheckConstraint("kind IN " + _vocabulary(QUALITY_EVIDENCE_KINDS), name="kind_is_known"),
+        UniqueConstraint("evidence_id", name="quality_evidence_evidence_id"),
+        UniqueConstraint("quality_run_id", "digest", name="quality_evidence_quality_run_id_digest"),
+        Index("ix_quality_evidence_digest", "digest"),
+    )
+
+    quality_run_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("quality_runs.id", ondelete="CASCADE"), nullable=False, index=True
+    )
+    quality_result_id: Mapped[uuid.UUID | None] = mapped_column(
+        ForeignKey("quality_results.id", ondelete="CASCADE"), index=True
+    )
+    artifact_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("artifacts.id", ondelete="RESTRICT"), nullable=False, index=True
+    )
+    evidence_id: Mapped[str] = mapped_column(String(128), nullable=False)
+    kind: Mapped[str] = mapped_column(String(32), nullable=False)
+    digest: Mapped[str] = mapped_column(String(64), nullable=False)
+    size_bytes: Mapped[int] = mapped_column(Integer, nullable=False)
+    media_type: Mapped[str] = mapped_column(String(128), nullable=False)
+    producer: Mapped[str] = mapped_column(String(128), nullable=False)
+    source_digests: Mapped[list[str]] = mapped_column(JSONB, nullable=False, server_default="[]")
+    retention_class: Mapped[str] = mapped_column(String(64), nullable=False)
+    storage_allowed: Mapped[bool] = mapped_column(Boolean, nullable=False, server_default="true")
+    rag_allowed: Mapped[bool] = mapped_column(Boolean, nullable=False, server_default="false")
+    training_allowed: Mapped[bool] = mapped_column(Boolean, nullable=False, server_default="false")
+    distillation_allowed: Mapped[bool] = mapped_column(
+        Boolean, nullable=False, server_default="false"
+    )
+    artifact: Mapped[Artifact] = relationship()
+    result: Mapped[QualityResult | None] = relationship()
+
+
+class QualityFinding(ImmutableRecord, Base):
+    """A normalized finding; recurrence increments only in a newly inserted fact."""
+
+    __tablename__ = "quality_findings"
+    __table_args__ = (
+        CheckConstraint(
+            "severity IN " + _vocabulary(QUALITY_FINDING_SEVERITIES), name="severity_is_known"
+        ),
+        UniqueConstraint("finding_id", name="quality_findings_finding_id"),
+        UniqueConstraint(
+            "quality_run_id", "fingerprint", name="quality_findings_quality_run_id_fingerprint"
+        ),
+    )
+
+    quality_run_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("quality_runs.id", ondelete="CASCADE"), nullable=False, index=True
+    )
+    quality_result_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("quality_results.id", ondelete="CASCADE"), nullable=False, index=True
+    )
+    finding_id: Mapped[str] = mapped_column(String(128), nullable=False)
+    check_id: Mapped[str] = mapped_column(String(128), nullable=False)
+    severity: Mapped[str] = mapped_column(String(16), nullable=False)
+    category: Mapped[str] = mapped_column(String(64), nullable=False)
+    fingerprint: Mapped[str] = mapped_column(String(64), nullable=False)
+    message: Mapped[str] = mapped_column(String(2048), nullable=False)
+    location: Mapped[str | None] = mapped_column(String(512))
+    recurrence_count: Mapped[int] = mapped_column(Integer, nullable=False, server_default="1")
+    evidence_ids: Mapped[list[str]] = mapped_column(JSONB, nullable=False, server_default="[]")
+
+
+class QualityVerdict(ImmutableRecord, Base):
+    """One derived immutable verdict per run."""
+
+    __tablename__ = "quality_verdicts"
+    __table_args__ = (
+        CheckConstraint("verdict IN " + _vocabulary(QUALITY_VERDICTS), name="verdict_is_known"),
+        UniqueConstraint("quality_run_id", name="quality_verdicts_quality_run_id"),
+        UniqueConstraint("digest", name="quality_verdicts_digest"),
+    )
+
+    quality_run_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("quality_runs.id", ondelete="CASCADE"), nullable=False
+    )
+    verdict: Mapped[str] = mapped_column(String(8), nullable=False)
+    digest: Mapped[str] = mapped_column(String(64), nullable=False)
+    content: Mapped[dict[str, Any]] = mapped_column(JSONB, nullable=False)
+
+
+class QualityRunEvent(ImmutableRecord, Base):
+    """An append-only, cursor-ordered quality lifecycle fact."""
+
+    __tablename__ = "quality_run_events"
+    __table_args__ = (
+        CheckConstraint(
+            "event_type IN " + _vocabulary(QUALITY_RUN_EVENT_TYPES),
+            name="event_type_is_known",
+        ),
+        UniqueConstraint(
+            "quality_run_id", "sequence", name="quality_run_events_quality_run_id_sequence"
+        ),
+        UniqueConstraint(
+            "quality_run_id", "dedupe_key", name="quality_run_events_quality_run_id_dedupe_key"
+        ),
+        Index("ix_quality_run_events_run_sequence", "quality_run_id", "sequence"),
+    )
+
+    quality_run_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("quality_runs.id", ondelete="CASCADE"), nullable=False
+    )
+    sequence: Mapped[int] = mapped_column(Integer, nullable=False)
+    event_type: Mapped[str] = mapped_column(String(64), nullable=False)
+    dedupe_key: Mapped[str] = mapped_column(String(128), nullable=False)
+    payload: Mapped[dict[str, Any]] = mapped_column(JSONB, nullable=False, server_default="{}")
 
 
 class Experience(TimestampedEntity, Base):
@@ -714,25 +1095,32 @@ class Experience(TimestampedEntity, Base):
     """
 
     __tablename__ = "experiences"
-    __table_args__ = (
-        Index("ix_experiences_kind_created_at", "kind", "created_at"),
-    )
+    __table_args__ = (Index("ix_experiences_kind_created_at", "kind", "created_at"),)
 
     task_run_id: Mapped[uuid.UUID | None] = mapped_column(
-        ForeignKey("task_runs.id", ondelete="SET NULL"), index=True)
+        ForeignKey("task_runs.id", ondelete="SET NULL"), index=True
+    )
     kind: Mapped[str] = mapped_column(String(128), nullable=False)
     summary: Mapped[str] = mapped_column(Text, nullable=False)
     body: Mapped[dict[str, Any]] = mapped_column(
-        JSONB, nullable=False, default=dict, server_default="{}")
+        JSONB, nullable=False, default=dict, server_default="{}"
+    )
     source_type: Mapped[str] = mapped_column(String(64), nullable=False)
     ownership: Mapped[str] = mapped_column(String(64), nullable=False)
     license: Mapped[str] = mapped_column(String(128), nullable=False)
     storage_allowed: Mapped[bool] = mapped_column(
-        Boolean, nullable=False, default=True, server_default="true")
+        Boolean, nullable=False, default=True, server_default="true"
+    )
     rag_allowed: Mapped[bool] = mapped_column(
-        Boolean, nullable=False, default=False, server_default="false")
+        Boolean, nullable=False, default=False, server_default="false"
+    )
     training_allowed: Mapped[bool] = mapped_column(
-        Boolean, nullable=False, default=False, server_default="false",
-        doc="Denied by default; granted only with recorded rights evidence.")
+        Boolean,
+        nullable=False,
+        default=False,
+        server_default="false",
+        doc="Denied by default; granted only with recorded rights evidence.",
+    )
     distillation_allowed: Mapped[bool] = mapped_column(
-        Boolean, nullable=False, default=False, server_default="false")
+        Boolean, nullable=False, default=False, server_default="false"
+    )

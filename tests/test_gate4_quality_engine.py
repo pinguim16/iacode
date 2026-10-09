@@ -169,6 +169,18 @@ class Gate4MandatoryGateTests(unittest.TestCase):
         self.assertNotIn("ports", evaluator)
         self.assertNotIn("group_add", evaluator)
 
+    def test_complete_verification_runs_evaluator_integration_against_the_stack(self) -> None:
+        source = (PROJECT_ROOT / "scripts" / "iacode" / "verify.py").read_text(encoding="utf-8")
+        scenario = (
+            PROJECT_ROOT / "scripts" / "iacode" / "scenarios" / "quality_persistence.py"
+        ).read_text(encoding="utf-8")
+        self.assertIn('"quality-integration"', source)
+        self.assertIn('"scripts/iacode/scenarios/quality_persistence.py"', source)
+        self.assertIn('build_service("api")', scenario)
+        self.assertIn('build_service("evaluator")', scenario)
+        self.assertIn('"/app/tests/integration/test_migrations.py"', scenario)
+        self.assertIn('"/app/evaluator_tests/integration"', scenario)
+
 
 class Gate4QualityImageTests(unittest.TestCase):
     """Each supported stack maps to an isolated, immutable sandbox toolchain."""

@@ -167,3 +167,5 @@ Expected set derived by: `policies.expected_requirement_refs over docs/GATE-4-CH
 | `LESSON-REQ-0056` | `lesson:LSN-0057` | yes | `NOT_STARTED` | Verify a pinned lock can become unsafe without changing, so advisory state is live evidence | LESSON-PREFLIGHT.json LESSON-REQ-0056 |
 | `LESSON-REQ-0057` | `lesson:LSN-0058` | yes | `NOT_STARTED` | Verify container health does not prove Docker Desktop host-port forwarding | LESSON-PREFLIGHT.json LESSON-REQ-0057 |
 | `LESSON-REQ-0058` | `lesson:LSN-0059` | yes | `NOT_STARTED` | Verify a lesson exclusion must declare the scope it excludes | LESSON-PREFLIGHT.json LESSON-REQ-0058 |
+| `LESSON-REQ-0059` | `lesson:LSN-0060` | yes | `NOT_STARTED` | Verify parent and child facts without an ORM relationship require an explicit flush boundary | LESSON-PREFLIGHT.json LESSON-REQ-0059 |
+| `LESSON-REQ-0060` | `lesson:LSN-0061` | yes | `NOT_STARTED` | Verify cancellation completion must not bypass cleanup acknowledgement | LESSON-PREFLIGHT.json LESSON-REQ-0060 |

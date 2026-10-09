@@ -3,8 +3,9 @@
 ## D-01 — The Gate 4 denominator is fixed before product code
 
 The owner mandate, master plan, inherited architecture, and engineering lessons were consolidated
-into `docs/GATE-4-CHECKLIST.md`. The canonical parser derives 105 Gate rows and the lesson preflight
-derives 58 more, so implementation is measured against 163 requirements. The registry is only a
+into `docs/GATE-4-CHECKLIST.md`. The canonical parser derives 105 Gate rows. The lesson preflight
+originally derived 58 more; the recorded persistence and cancellation-test failures added two
+applicable requirements, so implementation is now measured against 165 requirements. The registry is only a
 row-for-row mirror and cannot shrink the source document.
 
 ## D-02 — The baseline is focused; the complete suite belongs to Green Keeper
@@ -55,3 +56,31 @@ test because Gate 3 correctly strips the image's inherited `PATH`; the JDK lived
 `/opt/java`. The repair links the pinned JDK executables into `/usr/local/bin`, which is part of the
 helper's fixed environment. The next full run (`cmd-0023`) passed all 148 tests with network and
 privilege isolation unchanged.
+
+## D-08 — Constraint names are table-qualified
+
+PostgreSQL exposes unique-constraint backing indexes in a schema-wide namespace. The first live
+migration attempt found collisions when generic names such as `idempotency_key` were repeated
+across quality tables. Migration 0006 therefore uses table-qualified names. This preserves the
+closed uniqueness rules without relying on database-specific implicit names.
+
+## D-09 — Artifact bytes are shared; evidence references are run-scoped
+
+Immutable evidence bytes are content-addressed in MinIO and may be shared when an exact reproduction
+emits identical content. Each run still receives its own immutable evidence reference in PostgreSQL,
+including producer, result association and provenance. Reproduction can therefore compare digests
+without pretending that two executions are the same event.
+
+## D-10 — Raw foreign keys require an explicit persistence boundary
+
+The first real PostgreSQL lifecycle run attempted to insert child checks before their new plan
+because the objects were connected only by UUID values, not an ORM relationship. The store now
+flushes a new plan before its checks and a new run before its first event. LSN-0060 and GRD-0061
+make the real-database lifecycle test a permanent guardrail against this ordering failure.
+
+## D-11 — Early and late results are different refusal classes
+
+The first repaired evaluator rerun (`cmd-0030`) showed that the terminal callback was refused with
+the right code but the generic message used for a run that had not started. The store now reports
+`EARLY_RESULT` for CREATED, PLANNED or QUEUED runs and `LATE_RESULT` for CANCELLING or terminal runs.
+This preserves fail-closed behavior while giving callers an actionable and truthful reason.

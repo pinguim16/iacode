@@ -2,11 +2,11 @@
 
 - Gate: `GATE-4`
 - Scope: `quality engine, evaluation runners, immutable evidence store, verdict rules, false-PASS rejection, reproducible evidence, sandboxed execution, agent-runtime integration, promotion evidence`
-- Technologies: `python`, `postgresql`, `minio`, `temporal`, `docker`
-- Modules: `services/evaluator`, `services/sandbox`, `services/orchestrator`, `services/agent-runtime`, `packages/persistence`, `apps/api`, `apps/web`
-- Generated: `2026-10-09T16:25:45Z`
-- Lessons considered: 59
-- Lessons applicable: 58
+- Technologies: _none declared_
+- Modules: _none declared_
+- Generated: `2026-10-09T18:09:49Z`
+- Lessons considered: 61
+- Lessons applicable: 60
 
 Every applicable lesson below is a requirement of this Gate. The derived identifiers must
 appear in `REQUIREMENTS-MATRIX.json`, and the Delivery Completeness Validator fails the
@@ -72,6 +72,8 @@ delivery when one is absent.
 | `LSN-0057` A pinned lock can become unsafe without changing, so advisory state is live evidence | `GUARDED` | CRITICAL | `LESSON-REQ-0056` | For every pinned dependency graph delivered by a Gate, run the current advisory scan against every required source and refuse Critical or High findings without suppressing advisories or narrowing the denominator. |
 | `LSN-0058` Container health does not prove Docker Desktop host-port forwarding | `GUARDED` | MEDIUM | `LESSON-REQ-0057` | Exercise every required host-published service through its actual loopback port; do not substitute container health for host reachability. |
 | `LSN-0059` A lesson exclusion must declare the scope it excludes | `GUARDED` | MEDIUM | `LESSON-REQ-0058` | Confirm every active lesson excluded from a preflight declares a non-empty scope selector, and that incidental metadata does not narrow applicability. |
+| `LSN-0060` Parent and child facts without an ORM relationship require an explicit flush boundary | `GUARDED` | MEDIUM | `LESSON-REQ-0059` | Whenever one transaction inserts parent and child ORM facts using raw foreign-key identifiers without a relationship edge, confirm the parent is flushed before the child is added. |
+| `LSN-0061` Cancellation completion must not bypass cleanup acknowledgement | `GUARDED` | MEDIUM | `LESSON-REQ-0060` | For every running task that can be cancelled, prove the lifecycle records cancellation requested before it records cancellation completed. |
 
 ## Why each lesson applies
 
@@ -480,3 +482,17 @@ delivery when one is absent.
 - Required check: Confirm every active lesson excluded from a preflight declares a non-empty scope selector, and that incidental metadata does not narrow applicability.
 - Required evidence: A passing repository-preflight coverage test over the complete active lesson set.
 - Derived requirement: `LESSON-REQ-0058`
+
+### LSN-0060 — Parent and child facts without an ORM relationship require an explicit flush boundary
+
+- Reason: applies to every Gate; category implementation; severity MEDIUM; already guarded, so the control must keep holding
+- Required check: Whenever one transaction inserts parent and child ORM facts using raw foreign-key identifiers without a relationship edge, confirm the parent is flushed before the child is added.
+- Required evidence: A real-database integration test that creates the parent and child together and observes both after commit.
+- Derived requirement: `LESSON-REQ-0059`
+
+### LSN-0061 — Cancellation completion must not bypass cleanup acknowledgement
+
+- Reason: applies to every Gate; category testing; severity MEDIUM; already guarded, so the control must keep holding
+- Required check: For every running task that can be cancelled, prove the lifecycle records cancellation requested before it records cancellation completed.
+- Required evidence: A lifecycle test that enters the intermediate cancelling state, acknowledges cleanup, reaches cancelled, and rejects late delivery.
+- Derived requirement: `LESSON-REQ-0060`

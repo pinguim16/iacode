@@ -177,6 +177,8 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 | `LESSON-REQ-0056` | LESSON | `lesson:LSN-0057` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify a pinned lock can become unsafe without changing, so advisory state is live evidence |
 | `LESSON-REQ-0057` | LESSON | `lesson:LSN-0058` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify container health does not prove Docker Desktop host-port forwarding |
 | `LESSON-REQ-0058` | LESSON | `lesson:LSN-0059` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify a lesson exclusion must declare the scope it excludes |
+| `LESSON-REQ-0059` | LESSON | `lesson:LSN-0060` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify parent and child facts without an ORM relationship require an explicit flush boundary |
+| `LESSON-REQ-0060` | LESSON | `lesson:LSN-0061` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify cancellation completion must not bypass cleanup acknowledgement |
 
 ## Evidence
 
@@ -1966,6 +1968,28 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 
 - Source reference: LESSON-PREFLIGHT.json LESSON-REQ-0058
 - Description: Verify a lesson exclusion must declare the scope it excludes
+- Implementation: _none_
+- Test: _none_
+- Negative test: _none_
+- Documentation: _none_
+- Validation: _none_
+- Guardrail: _none_
+
+### LESSON-REQ-0059 - lesson:LSN-0060
+
+- Source reference: LESSON-PREFLIGHT.json LESSON-REQ-0059
+- Description: Verify parent and child facts without an ORM relationship require an explicit flush boundary
+- Implementation: _none_
+- Test: _none_
+- Negative test: _none_
+- Documentation: _none_
+- Validation: _none_
+- Guardrail: _none_
+
+### LESSON-REQ-0060 - lesson:LSN-0061
+
+- Source reference: LESSON-PREFLIGHT.json LESSON-REQ-0060
+- Description: Verify cancellation completion must not bypass cleanup acknowledgement
 - Implementation: _none_
 - Test: _none_
 - Negative test: _none_

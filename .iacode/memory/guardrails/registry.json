@@ -893,6 +893,32 @@
         "LSN-0059"
       ],
       "removingItWouldAllow": "A technology or module selector to silently exclude an active lesson without declaring the scope boundary reviewers must evaluate."
+    },
+    {
+      "guardrailId": "GRD-0061",
+      "title": "Parent facts are flushed before child facts without an ORM dependency edge",
+      "kind": "test",
+      "reference": "test_plan_run_results_verdict_and_events_round_trip",
+      "verifiedBy": [
+        "test_plan_run_results_verdict_and_events_round_trip"
+      ],
+      "lessons": [
+        "LSN-0060"
+      ],
+      "removingItWouldAllow": "A store to add parent and child facts by raw UUID in one unit of work and discover only in production PostgreSQL that the child insert can precede its parent."
+    },
+    {
+      "guardrailId": "GRD-0062",
+      "title": "Running cancellation records cleanup acknowledgement before completion",
+      "kind": "test",
+      "reference": "test_results_enforce_owner_idempotency_and_late_refusal",
+      "verifiedBy": [
+        "test_results_enforce_owner_idempotency_and_late_refusal"
+      ],
+      "lessons": [
+        "LSN-0061"
+      ],
+      "removingItWouldAllow": "A running task to claim cancellation completed before its executor has entered and acknowledged the cleanup phase."
     }
   ]
 }

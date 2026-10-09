@@ -10,7 +10,40 @@ from iacode_evaluator.canonical import digest
 
 
 def result_digest(result: QualityResult) -> str:
-    return digest(result.model_dump(mode="json"))
+    evidence_by_id = {item.evidenceId: item.digest for item in result.evidence}
+    return digest(
+        {
+            "contractVersion": result.contractVersion,
+            "checkId": result.checkId,
+            "origin": result.origin,
+            "status": result.status,
+            "exitCode": result.exitCode,
+            "timedOut": result.timedOut,
+            "truncated": result.truncated,
+            "summary": result.summary,
+            "coveragePercent": result.coveragePercent,
+            "evidenceDigests": sorted(evidence_by_id.values()),
+            "findings": [
+                {
+                    "checkId": finding.checkId,
+                    "severity": finding.severity,
+                    "category": finding.category,
+                    "fingerprint": finding.fingerprint,
+                    "message": finding.message,
+                    "location": finding.location,
+                    "evidenceDigests": sorted(
+                        evidence_by_id[identifier] for identifier in finding.evidenceIds
+                    ),
+                    "recurrenceCount": finding.recurrenceCount,
+                }
+                for finding in sorted(result.findings, key=lambda item: item.fingerprint)
+            ],
+        }
+    )
+
+
+def verdict_digest(verdict: QualityVerdict) -> str:
+    return digest(verdict.model_dump(mode="python", exclude={"digest"}))
 
 
 def derive_verdict(
@@ -51,6 +84,21 @@ def derive_verdict(
         for item in result.evidence:
             if item.digest not in resolved_evidence_digests:
                 reasons.append(f"{check_id} has unresolved evidence {item.evidenceId}")
+    if plan.policy.coverageThreshold is not None:
+        coverage_checks = [check for check in expected.values() if check.kind == "coverage"]
+        if len(coverage_checks) != 1:
+            reasons.append("configured coverage requires exactly one mandatory coverage check")
+        else:
+            coverage_result = by_check.get(coverage_checks[0].checkId)
+            if coverage_result is not None:
+                if coverage_result.coveragePercent is None:
+                    reasons.append(f"{coverage_checks[0].checkId} has unreadable coverage")
+                elif coverage_result.coveragePercent < plan.policy.coverageThreshold:
+                    reasons.append(
+                        f"{coverage_checks[0].checkId} coverage "
+                        f"{coverage_result.coveragePercent:g} is below "
+                        f"{plan.policy.coverageThreshold:g}"
+                    )
     if not expected:
         reasons.append("the required check set is missing")
     verdict = "FAIL" if reasons else "PASS"
@@ -69,6 +117,6 @@ def derive_verdict(
         "reasons": reasons,
         "resultDigests": result_digests,
         "evidenceDigests": evidence_digests,
-        "derivedAt": instant.isoformat(),
+        "derivedAt": instant,
     }
     return QualityVerdict(**content, digest=digest(content))

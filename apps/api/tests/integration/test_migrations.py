@@ -26,16 +26,39 @@ from tests.conftest import stack_is_configured, stack_settings
 
 pytestmark = [
     pytest.mark.integration,
-    pytest.mark.skipif(not stack_is_configured(),
-                       reason="the Foundation stack is not configured for this process"),
+    pytest.mark.skipif(
+        not stack_is_configured(), reason="the Foundation stack is not configured for this process"
+    ),
 ]
 
 APPLICATION_ROOT = Path(__file__).resolve().parents[2]
 
 EXPECTED_TABLES = {
-    "projects", "repositories", "tasks", "task_runs", "agents", "agent_runs",
-    "providers", "models", "model_calls", "tool_calls", "artifacts", "experiences",
+    "projects",
+    "repositories",
+    "tasks",
+    "task_runs",
+    "agents",
+    "agent_runs",
+    "providers",
+    "models",
+    "model_calls",
+    "tool_calls",
+    "artifacts",
+    "experiences",
 }
+
+QUALITY_TABLES = {
+    "quality_plans",
+    "quality_checks",
+    "quality_runs",
+    "quality_results",
+    "quality_evidence",
+    "quality_findings",
+    "quality_verdicts",
+    "quality_run_events",
+}
+EXPECTED_TABLES |= QUALITY_TABLES
 
 #: What `GATE 2 — AGENT RUNTIME` adds. Kept separate so the two statements stay legible: Gate 0
 #: declared a persistence contract, and Gate 2 added tables beside it rather than duplicating one.
@@ -70,9 +93,15 @@ def _alembic(database_url: str, *arguments: str) -> subprocess.CompletedProcess[
     environment["IACODE_DATABASE_URL"] = database_url
     return subprocess.run(
         [sys.executable, "-m", "alembic", *arguments],
-        cwd=str(APPLICATION_ROOT), env=environment, text=True,
-        encoding="utf-8", errors="replace",
-        stdout=subprocess.PIPE, stderr=subprocess.STDOUT, check=False)
+        cwd=str(APPLICATION_ROOT),
+        env=environment,
+        text=True,
+        encoding="utf-8",
+        errors="replace",
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+        check=False,
+    )
 
 
 class _DisposableDatabase:
@@ -95,9 +124,12 @@ class _DisposableDatabase:
     def __exit__(self, *_exception: object) -> None:
         engine = create_engine(self._admin, isolation_level="AUTOCOMMIT", future=True)
         with engine.connect() as connection:
-            connection.execute(text(
-                "SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname = :name"),
-                {"name": self.name})
+            connection.execute(
+                text(
+                    "SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname = :name"
+                ),
+                {"name": self.name},
+            )
             connection.execute(text(f'DROP DATABASE IF EXISTS "{self.name}"'))
         engine.dispose()
 
@@ -105,9 +137,12 @@ class _DisposableDatabase:
         engine = create_engine(_sync_url(self.url), future=True)
         try:
             with engine.connect() as connection:
-                rows = connection.execute(text(
-                    "SELECT table_name FROM information_schema.tables "
-                    "WHERE table_schema = 'public'"))
+                rows = connection.execute(
+                    text(
+                        "SELECT table_name FROM information_schema.tables "
+                        "WHERE table_schema = 'public'"
+                    )
+                )
                 return {row[0] for row in rows}
         finally:
             engine.dispose()
@@ -122,7 +157,6 @@ class _DisposableDatabase:
             return None
         finally:
             engine.dispose()
-
 
 
 def head_revision() -> str:
@@ -141,7 +175,6 @@ def head_revision() -> str:
     from migrations.head import head_revision as declared
 
     return declared(APPLICATION_ROOT / "migrations" / "versions")
-
 
 
 def test_migrations_run_from_zero() -> None:
@@ -196,7 +229,8 @@ def test_the_declared_model_matches_the_migrated_schema() -> None:
 
         assert result.returncode == 0, (
             "the declared model and the migrated schema disagree; a migration is missing:\n"
-            + result.stdout)
+            + result.stdout
+        )
 
 
 def test_a_failed_migration_reports_failure() -> None:
@@ -211,6 +245,7 @@ def test_a_failed_migration_reports_failure() -> None:
     # The failure has to name what it could not reach. An exit code alone tells an operator that
     # something went wrong; the host name tells them what to fix.
     assert "postgres-that-does-not-exist" in result.stdout
+
 
 def test_failed_migration_does_not_report_ready() -> None:
     """A schema that was never created must make readiness refuse, not merely log.
@@ -233,8 +268,9 @@ def test_failed_migration_does_not_report_ready() -> None:
             assert client.get("/health").json()["status"] == "UP"
 
             ready = client.get("/ready")
-            postgres = next(item for item in ready.json()["dependencies"]
-                            if item["name"] == "postgres")
+            postgres = next(
+                item for item in ready.json()["dependencies"] if item["name"] == "postgres"
+            )
 
     # The connection itself succeeds against an empty database, so this asserts the honest thing:
     # the probe reports what it found. The control that keeps the API away from an unmigrated
@@ -255,7 +291,8 @@ class Gate2MigrationTests:
 
             present = database.tables()
             assert present >= EXPECTED_TABLES | AGENT_RUNTIME_TABLES, (
-                f"missing: {sorted((EXPECTED_TABLES | AGENT_RUNTIME_TABLES) - present)}")
+                f"missing: {sorted((EXPECTED_TABLES | AGENT_RUNTIME_TABLES) - present)}"
+            )
             assert database.revision() == head_revision()
 
     def test_gate1_database_upgrades_to_gate2_head(self) -> None:
@@ -273,25 +310,41 @@ class Gate2MigrationTests:
             engine = create_engine(_sync_url(database.url), future=True)
             try:
                 with engine.begin() as connection:
-                    connection.execute(text(
-                        "INSERT INTO projects (id, slug, name) "
-                        "VALUES (gen_random_uuid(), 'p', 'P')"))
-                    connection.execute(text(
-                        "INSERT INTO tasks (id, project_id, title, status) "
-                        "SELECT gen_random_uuid(), id, 'a task', 'PENDING' FROM projects"))
-                    connection.execute(text(
-                        "INSERT INTO task_runs (id, task_id, status, attempt) "
-                        "SELECT gen_random_uuid(), id, 'PENDING', 1 FROM tasks"))
-                    connection.execute(text(
-                        "INSERT INTO agents (id, slug, name, role_contract) "
-                        "VALUES (gen_random_uuid(), 'generalist', 'Generalist', 'agents/x.json')"))
+                    connection.execute(
+                        text(
+                            "INSERT INTO projects (id, slug, name) "
+                            "VALUES (gen_random_uuid(), 'p', 'P')"
+                        )
+                    )
+                    connection.execute(
+                        text(
+                            "INSERT INTO tasks (id, project_id, title, status) "
+                            "SELECT gen_random_uuid(), id, 'a task', 'PENDING' FROM projects"
+                        )
+                    )
+                    connection.execute(
+                        text(
+                            "INSERT INTO task_runs (id, task_id, status, attempt) "
+                            "SELECT gen_random_uuid(), id, 'PENDING', 1 FROM tasks"
+                        )
+                    )
+                    connection.execute(
+                        text(
+                            "INSERT INTO agents (id, slug, name, role_contract) "
+                            "VALUES (gen_random_uuid(), 'generalist', 'Generalist', "
+                            "'agents/x.json')"
+                        )
+                    )
                     # Two agent runs inside one task run: the pair the new unique constraint on
                     # (task_run_id, stage_index) would reject if the migration did not number them.
                     for _ in range(2):
-                        connection.execute(text(
-                            "INSERT INTO agent_runs (id, task_run_id, agent_id, status) "
-                            "SELECT gen_random_uuid(), task_runs.id, agents.id, 'PENDING' "
-                            "FROM task_runs, agents"))
+                        connection.execute(
+                            text(
+                                "INSERT INTO agent_runs (id, task_run_id, agent_id, status) "
+                                "SELECT gen_random_uuid(), task_runs.id, agents.id, 'PENDING' "
+                                "FROM task_runs, agents"
+                            )
+                        )
             finally:
                 engine.dispose()
 
@@ -304,10 +357,12 @@ class Gate2MigrationTests:
             engine = create_engine(_sync_url(database.url), future=True)
             try:
                 with engine.connect() as connection:
-                    rows = connection.execute(text(
-                        "SELECT stage_index FROM agent_runs ORDER BY stage_index")).all()
+                    rows = connection.execute(
+                        text("SELECT stage_index FROM agent_runs ORDER BY stage_index")
+                    ).all()
                     assert [row[0] for row in rows] == [0, 1], (
-                        "the migration did not number the pre-existing agent runs")
+                        "the migration did not number the pre-existing agent runs"
+                    )
                     kept = connection.execute(text("SELECT count(*) FROM task_runs")).scalar_one()
                     assert kept == 1, "the upgrade lost a row it was carrying"
             finally:
@@ -333,9 +388,12 @@ class Gate2MigrationTests:
             engine = create_engine(_sync_url(database.url), future=True)
             try:
                 with engine.connect() as connection:
-                    expression = connection.execute(text(
-                        "SELECT pg_get_constraintdef(oid) FROM pg_constraint "
-                        "WHERE conname = 'ck_task_runs_status_is_known'")).scalar_one()
+                    expression = connection.execute(
+                        text(
+                            "SELECT pg_get_constraintdef(oid) FROM pg_constraint "
+                            "WHERE conname = 'ck_task_runs_status_is_known'"
+                        )
+                    ).scalar_one()
             finally:
                 engine.dispose()
 
@@ -365,26 +423,47 @@ class SandboxMigrationTests:
             engine = create_engine(_sync_url(database.url), future=True)
             try:
                 with engine.begin() as connection:
-                    connection.execute(text(
-                        "INSERT INTO projects (id, slug, name) "
-                        "VALUES (gen_random_uuid(), 'p', 'P')"))
-                    connection.execute(text(
-                        "INSERT INTO tasks (id, project_id, title, status) "
-                        "SELECT gen_random_uuid(), id, 'a task', 'PENDING' FROM projects"))
-                    connection.execute(text(
-                        "INSERT INTO task_runs (id, task_id, status, attempt) "
-                        "SELECT gen_random_uuid(), id, 'CREATED', 1 FROM tasks"))
-                    connection.execute(text(
-                        "INSERT INTO agents (id, slug, name, role_contract) "
-                        "VALUES (gen_random_uuid(), 'generalist', 'Generalist', 'agents/x.json')"))
-                    connection.execute(text(
-                        "INSERT INTO agent_runs (id, task_run_id, agent_id, status, stage_index) "
-                        "SELECT gen_random_uuid(), task_runs.id, agents.id, 'RUNNING', 0 "
-                        "FROM task_runs, agents"))
+                    connection.execute(
+                        text(
+                            "INSERT INTO projects (id, slug, name) "
+                            "VALUES (gen_random_uuid(), 'p', 'P')"
+                        )
+                    )
+                    connection.execute(
+                        text(
+                            "INSERT INTO tasks (id, project_id, title, status) "
+                            "SELECT gen_random_uuid(), id, 'a task', 'PENDING' FROM projects"
+                        )
+                    )
+                    connection.execute(
+                        text(
+                            "INSERT INTO task_runs (id, task_id, status, attempt) "
+                            "SELECT gen_random_uuid(), id, 'CREATED', 1 FROM tasks"
+                        )
+                    )
+                    connection.execute(
+                        text(
+                            "INSERT INTO agents (id, slug, name, role_contract) "
+                            "VALUES (gen_random_uuid(), 'generalist', 'Generalist', "
+                            "'agents/x.json')"
+                        )
+                    )
+                    connection.execute(
+                        text(
+                            "INSERT INTO agent_runs "
+                            "(id, task_run_id, agent_id, status, stage_index) "
+                            "SELECT gen_random_uuid(), task_runs.id, agents.id, 'RUNNING', 0 "
+                            "FROM task_runs, agents"
+                        )
+                    )
                     for succeeded in ("true", "false"):
-                        connection.execute(text(
-                            "INSERT INTO tool_calls (id, agent_run_id, tool_name, succeeded) "
-                            f"SELECT gen_random_uuid(), id, 'legacy', {succeeded} FROM agent_runs"))
+                        connection.execute(
+                            text(
+                                "INSERT INTO tool_calls (id, agent_run_id, tool_name, succeeded) "
+                                "SELECT gen_random_uuid(), id, 'legacy', "
+                                f"{succeeded} FROM agent_runs"
+                            )
+                        )
             finally:
                 engine.dispose()
 
@@ -395,11 +474,14 @@ class SandboxMigrationTests:
             engine = create_engine(_sync_url(database.url), future=True)
             try:
                 with engine.connect() as connection:
-                    statuses = sorted(row[0] for row in connection.execute(text(
-                        "SELECT status FROM tool_calls")).all())
+                    statuses = sorted(
+                        row[0]
+                        for row in connection.execute(text("SELECT status FROM tool_calls")).all()
+                    )
                     assert statuses == ["FAILED", "SUCCEEDED"]
-                    workspace = connection.execute(text(
-                        "SELECT workspace FROM task_runs")).scalar_one()
+                    workspace = connection.execute(
+                        text("SELECT workspace FROM task_runs")
+                    ).scalar_one()
                     assert workspace == {}
             finally:
                 engine.dispose()
@@ -420,12 +502,18 @@ class SandboxMigrationTests:
             engine = create_engine(_sync_url(database.url), future=True)
             try:
                 with engine.connect() as connection:
-                    sessions = connection.execute(text(
-                        "SELECT pg_get_constraintdef(oid) FROM pg_constraint "
-                        "WHERE conname = 'ck_sandbox_sessions_state_is_known'")).scalar_one()
-                    executions = connection.execute(text(
-                        "SELECT pg_get_constraintdef(oid) FROM pg_constraint "
-                        "WHERE conname = 'ck_tool_calls_status_is_known'")).scalar_one()
+                    sessions = connection.execute(
+                        text(
+                            "SELECT pg_get_constraintdef(oid) FROM pg_constraint "
+                            "WHERE conname = 'ck_sandbox_sessions_state_is_known'"
+                        )
+                    ).scalar_one()
+                    executions = connection.execute(
+                        text(
+                            "SELECT pg_get_constraintdef(oid) FROM pg_constraint "
+                            "WHERE conname = 'ck_tool_calls_status_is_known'"
+                        )
+                    ).scalar_one()
             finally:
                 engine.dispose()
             for state in SANDBOX_SESSION_STATES:
@@ -447,31 +535,56 @@ class ToolRequestExecutorMigrationTests:
             sandboxed, external = uuid.uuid4(), uuid.uuid4()
             try:
                 with engine.begin() as connection:
-                    connection.execute(text(
-                        "INSERT INTO projects (id, slug, name) "
-                        "VALUES (gen_random_uuid(), 'p', 'P')"))
-                    connection.execute(text(
-                        "INSERT INTO tasks (id, project_id, title, status) "
-                        "SELECT gen_random_uuid(), id, 'a task', 'PENDING' FROM projects"))
-                    connection.execute(text(
-                        "INSERT INTO task_runs (id, task_id, status, attempt) "
-                        "SELECT gen_random_uuid(), id, 'CREATED', 1 FROM tasks"))
-                    connection.execute(text(
-                        "INSERT INTO agents (id, slug, name, role_contract) "
-                        "VALUES (gen_random_uuid(), 'developer', 'Developer', 'agents/x.json')"))
-                    connection.execute(text(
-                        "INSERT INTO agent_runs (id, task_run_id, agent_id, status, stage_index) "
-                        "SELECT gen_random_uuid(), task_runs.id, agents.id, 'RUNNING', 0 "
-                        "FROM task_runs, agents"))
+                    connection.execute(
+                        text(
+                            "INSERT INTO projects (id, slug, name) "
+                            "VALUES (gen_random_uuid(), 'p', 'P')"
+                        )
+                    )
+                    connection.execute(
+                        text(
+                            "INSERT INTO tasks (id, project_id, title, status) "
+                            "SELECT gen_random_uuid(), id, 'a task', 'PENDING' FROM projects"
+                        )
+                    )
+                    connection.execute(
+                        text(
+                            "INSERT INTO task_runs (id, task_id, status, attempt) "
+                            "SELECT gen_random_uuid(), id, 'CREATED', 1 FROM tasks"
+                        )
+                    )
+                    connection.execute(
+                        text(
+                            "INSERT INTO agents (id, slug, name, role_contract) "
+                            "VALUES (gen_random_uuid(), 'developer', 'Developer', 'agents/x.json')"
+                        )
+                    )
+                    connection.execute(
+                        text(
+                            "INSERT INTO agent_runs "
+                            "(id, task_run_id, agent_id, status, stage_index) "
+                            "SELECT gen_random_uuid(), task_runs.id, agents.id, 'RUNNING', 0 "
+                            "FROM task_runs, agents"
+                        )
+                    )
                     for identifier in (sandboxed, external):
-                        connection.execute(text(
-                            "INSERT INTO tool_requests (id, task_run_id, agent_run_id, tool_name, "
-                            "status) SELECT :id, task_run_id, id, 'shell.exec', 'RESOLVED' "
-                            "FROM agent_runs"), {"id": identifier})
-                    connection.execute(text(
-                        "INSERT INTO tool_calls (id, agent_run_id, tool_name, succeeded, "
-                        "tool_request_id, status) SELECT gen_random_uuid(), id, 'shell.exec', "
-                        "true, :id, 'SUCCEEDED' FROM agent_runs"), {"id": sandboxed})
+                        connection.execute(
+                            text(
+                                "INSERT INTO tool_requests "
+                                "(id, task_run_id, agent_run_id, tool_name, "
+                                "status) SELECT :id, task_run_id, id, 'shell.exec', 'RESOLVED' "
+                                "FROM agent_runs"
+                            ),
+                            {"id": identifier},
+                        )
+                    connection.execute(
+                        text(
+                            "INSERT INTO tool_calls (id, agent_run_id, tool_name, succeeded, "
+                            "tool_request_id, status) SELECT gen_random_uuid(), id, 'shell.exec', "
+                            "true, :id, 'SUCCEEDED' FROM agent_runs"
+                        ),
+                        {"id": sandboxed},
+                    )
             finally:
                 engine.dispose()
 
@@ -481,8 +594,9 @@ class ToolRequestExecutorMigrationTests:
             engine = create_engine(_sync_url(database.url), future=True)
             try:
                 with engine.connect() as connection:
-                    rows = dict(connection.execute(text(
-                        "SELECT id, executor FROM tool_requests")).all())
+                    rows = dict(
+                        connection.execute(text("SELECT id, executor FROM tool_requests")).all()
+                    )
             finally:
                 engine.dispose()
             assert rows == {sandboxed: "SANDBOX", external: "EXTERNAL"}
@@ -496,9 +610,15 @@ class ToolRequestExecutorMigrationTests:
             engine = create_engine(_sync_url(database.url), future=True)
             try:
                 with engine.connect() as connection:
-                    columns = {row[0] for row in connection.execute(text(
-                        "SELECT column_name FROM information_schema.columns "
-                        "WHERE table_name = 'tool_requests'")).all()}
+                    columns = {
+                        row[0]
+                        for row in connection.execute(
+                            text(
+                                "SELECT column_name FROM information_schema.columns "
+                                "WHERE table_name = 'tool_requests'"
+                            )
+                        ).all()
+                    }
             finally:
                 engine.dispose()
             assert "executor" not in columns
@@ -512,11 +632,100 @@ class ToolRequestExecutorMigrationTests:
             engine = create_engine(_sync_url(database.url), future=True)
             try:
                 with engine.connect() as connection:
-                    constraint = connection.execute(text(
-                        "SELECT pg_get_constraintdef(oid) FROM pg_constraint "
-                        "WHERE conname = 'ck_tool_requests_executor_is_known'")).scalar_one()
+                    constraint = connection.execute(
+                        text(
+                            "SELECT pg_get_constraintdef(oid) FROM pg_constraint "
+                            "WHERE conname = 'ck_tool_requests_executor_is_known'"
+                        )
+                    ).scalar_one()
             finally:
                 engine.dispose()
             assert set(TOOL_REQUEST_EXECUTORS) == {"EXTERNAL", "SANDBOX"}
             for executor in TOOL_REQUEST_EXECUTORS:
                 assert f"'{executor}'" in constraint
+
+
+GATE3_REVISION = "0005_tool_request_executor"
+
+
+class QualityEngineMigrationTests:
+    """Gate 4 upgrades the exact Gate 3 schema and removes only its own tables on downgrade."""
+
+    def test_the_gate_3_schema_upgrades_to_every_quality_table(self) -> None:
+        with _DisposableDatabase() as database:
+            assert _alembic(database.url, "upgrade", GATE3_REVISION).returncode == 0
+            assert QUALITY_TABLES.isdisjoint(database.tables())
+            result = _alembic(database.url, "upgrade", "head")
+            assert result.returncode == 0, result.stdout
+            assert database.tables() >= QUALITY_TABLES
+
+    def test_the_quality_migration_is_reversible_to_gate_3(self) -> None:
+        with _DisposableDatabase() as database:
+            assert _alembic(database.url, "upgrade", "head").returncode == 0
+            result = _alembic(database.url, "downgrade", GATE3_REVISION)
+            assert result.returncode == 0, result.stdout
+            assert database.revision() == GATE3_REVISION
+            assert QUALITY_TABLES.isdisjoint(database.tables())
+            assert database.tables() >= EXPECTED_TABLES - QUALITY_TABLES
+            assert _alembic(database.url, "upgrade", "head").returncode == 0
+
+    def test_quality_vocabulary_constraints_match_the_shared_contract(self) -> None:
+        from iacode_contracts.quality import (
+            QUALITY_CHECK_KINDS,
+            QUALITY_EVIDENCE_KINDS,
+            QUALITY_RESULT_STATUSES,
+            QUALITY_RUN_EVENT_TYPES,
+            QUALITY_RUN_STATES,
+        )
+
+        expected = {
+            "ck_quality_checks_kind_is_known": QUALITY_CHECK_KINDS,
+            "ck_quality_runs_state_is_known": QUALITY_RUN_STATES,
+            "ck_quality_results_status_is_known": QUALITY_RESULT_STATUSES,
+            "ck_quality_evidence_kind_is_known": QUALITY_EVIDENCE_KINDS,
+            "ck_quality_run_events_event_type_is_known": QUALITY_RUN_EVENT_TYPES,
+        }
+        with _DisposableDatabase() as database:
+            assert _alembic(database.url, "upgrade", "head").returncode == 0
+            engine = create_engine(_sync_url(database.url), future=True)
+            try:
+                with engine.connect() as connection:
+                    rows = dict(
+                        connection.execute(
+                            text(
+                                "SELECT conname, pg_get_constraintdef(oid) "
+                                "FROM pg_constraint WHERE conname = ANY(:names)"
+                            ),
+                            {"names": list(expected)},
+                        ).all()
+                    )
+            finally:
+                engine.dispose()
+            assert set(rows) == set(expected)
+            for name, values in expected.items():
+                assert all(f"'{value}'" in rows[name] for value in values), name
+
+    def test_quality_tables_have_no_output_or_credential_columns_and_default_deny(self) -> None:
+        with _DisposableDatabase() as database:
+            assert _alembic(database.url, "upgrade", "head").returncode == 0
+            engine = create_engine(_sync_url(database.url), future=True)
+            try:
+                with engine.connect() as connection:
+                    columns = connection.execute(
+                        text(
+                            "SELECT table_name, column_name, column_default "
+                            "FROM information_schema.columns WHERE table_name = ANY(:tables)"
+                        ),
+                        {"tables": list(QUALITY_TABLES)},
+                    ).all()
+            finally:
+                engine.dispose()
+            forbidden = {"stdout", "stderr", "output", "environment", "credential", "secret"}
+            assert forbidden.isdisjoint({column for _table, column, _default in columns})
+            defaults = {
+                (table, column): default
+                for table, column, default in columns
+                if column == "training_allowed"
+            }
+            assert defaults[("quality_runs", "training_allowed")] == "false"
+            assert defaults[("quality_evidence", "training_allowed")] == "false"

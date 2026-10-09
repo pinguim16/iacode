@@ -24,6 +24,7 @@ from iacode_evaluator.findings import deduplicate, finding_fingerprint
 from iacode_evaluator.planner import build_plan
 from iacode_evaluator.policy import load_policy
 from iacode_evaluator.projects import MAX_MANIFEST_BYTES, detect_project, inventory_project
+from iacode_evaluator.reproduce import compare_reproduction
 from iacode_evaluator.runners import RUNNERS, get_runner
 from iacode_evaluator.verdict import derive_verdict
 from pydantic import ValidationError
@@ -452,6 +453,65 @@ class FalsePassRejectionTests:
         assert any("required check set is missing" in reason for reason in verdict.reasons)
 
 
+class CoverageVerdictTests:
+    @staticmethod
+    def plan() -> QualityPlan:
+        base = python_plan()
+        coverage = QualityCheck(
+            checkId="q999-coverage",
+            kind="coverage",
+            runner="python.coverage",
+            command=("python", "-m", "coverage", "report"),
+            applicabilityReason="coverage threshold is configured",
+            timeoutSeconds=600,
+            requiredEvidenceKinds=("coverage",),
+        )
+        policy = base.policy.model_copy(
+            update={
+                "coverageThreshold": 80.0,
+                "mandatoryCheckKinds": (*base.policy.mandatoryCheckKinds, "coverage"),
+            }
+        )
+        return base.model_copy(update={"policy": policy, "checks": (*base.checks, coverage)})
+
+    @pytest.mark.parametrize(
+        ("coverage", "expected"),
+        ((80.0, "PASS"), (79.99, "FAIL"), (None, "FAIL")),
+    )
+    def test_configured_coverage_is_measured_not_inferred(
+        self, coverage: float | None, expected: str
+    ) -> None:
+        plan = self.plan()
+        results = list(passing_results(plan))
+        results[-1] = results[-1].model_copy(update={"coveragePercent": coverage})
+        resolved = {item.digest for result in results for item in result.evidence}
+        verdict = derive_verdict(
+            run_id="run-1",
+            plan=plan,
+            results=tuple(results),
+            resolved_evidence_digests=resolved,
+            derived_at=NOW,
+        )
+        assert verdict.verdict == expected
+
+    def test_a_threshold_without_a_coverage_check_fails_closed(self) -> None:
+        base = python_plan()
+        plan = base.model_copy(
+            update={"policy": base.policy.model_copy(update={"coverageThreshold": 80.0})}
+        )
+        results = passing_results(plan)
+        resolved = {item.digest for result in results for item in result.evidence}
+        verdict = derive_verdict(
+            run_id="run-1",
+            plan=plan,
+            results=results,
+            resolved_evidence_digests=resolved,
+            derived_at=NOW,
+        )
+        assert verdict.verdict == "FAIL"
+        assert any("coverage check" in reason for reason in verdict.reasons)
+
+
 class QualityExecutionBoundaryTests:
     def test_every_stack_maps_to_a_policy_owned_sandbox_request(self) -> None:
         registry = load_policy(POLICY)
@@ -561,3 +621,50 @@ class QualityFindingTests:
         assert len(result) == 1
         assert result[0].recurrenceCount == 2
         assert result[0].evidenceIds == ("evidence-1", "evidence-2")
+
+
+class QualityReproductionTests:
+    def test_a_new_run_compares_stable_outcomes_without_rewriting_identity(self) -> None:
+        plan = python_plan()
+        original = passing_results(plan)
+        reproduced = tuple(
+            item.model_copy(
+                update={
+                    "resultId": f"reproduced-{index}",
+                    "runId": "run-2",
+                    "durationMs": item.durationMs + 100,
+                    "sandboxId": "another-sandbox",
+                }
+            )
+            for index, item in enumerate(original, start=1)
+        )
+        comparison = compare_reproduction(
+            original_run_id="run-1",
+            reproduced_run_id="run-2",
+            plan=plan,
+            original_results=original,
+            reproduced_results=reproduced,
+        )
+        assert comparison.matches
+        assert comparison.original_result_digests == comparison.reproduced_result_digests
+        assert comparison.original_evidence_digests == comparison.reproduced_evidence_digests
+
+    def test_a_changed_outcome_is_a_reproduction_mismatch(self) -> None:
+        plan = python_plan()
+        original = passing_results(plan)
+        reproduced = tuple(
+            item.model_copy(update={"resultId": f"copy-{index}", "runId": "run-2"})
+            for index, item in enumerate(original, start=1)
+        )
+        reproduced = (
+            reproduced[0].model_copy(update={"status": "FAILED", "exitCode": 1}),
+            *reproduced[1:],
+        )
+        comparison = compare_reproduction(
+            original_run_id="run-1",
+            reproduced_run_id="run-2",
+            plan=plan,
+            original_results=original,
+            reproduced_results=reproduced,
+        )
+        assert not comparison.matches

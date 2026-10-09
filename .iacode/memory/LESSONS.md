@@ -67,6 +67,8 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 | `LSN-0057` | `GUARDED` | CRITICAL | security | A pinned lock can become unsafe without changing, so advisory state is live evidence | `scripts/iacode/dependency_scan.py`, `test_the_dependency_scan_blocks_critical_and_high_findings` |
 | `LSN-0058` | `GUARDED` | MEDIUM | environment | Container health does not prove Docker Desktop host-port forwarding | `test_grafana_is_healthy` |
 | `LSN-0059` | `GUARDED` | MEDIUM | process | A lesson exclusion must declare the scope it excludes | `test_the_repository_preflight_covers_every_applicable_lesson` |
+| `LSN-0060` | `GUARDED` | MEDIUM | implementation | Parent and child facts without an ORM relationship require an explicit flush boundary | `test_plan_run_results_verdict_and_events_round_trip` |
+| `LSN-0061` | `GUARDED` | MEDIUM | testing | Cancellation completion must not bypass cleanup acknowledgement | `test_results_enforce_owner_idempotency_and_late_refusal` |
 
 ## Detail
 
@@ -851,3 +853,25 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 - Prevention:
   - `test` test_the_repository_preflight_covers_every_applicable_lesson — Every active lesson excluded from a canonical preflight must carry a non-empty scopes declaration that makes the exclusion reviewable.
 - Evidence: `file:docs/checkpoints/GATE-3-CP-0005/COMMANDS.jsonl`, `file:tests/test_development_ledger.py`
+
+### LSN-0060 — Parent and child facts without an ORM relationship require an explicit flush boundary
+
+- Status: `GUARDED`, severity MEDIUM, category implementation, recurrences 0.
+- Source: GATE-4, GATE-4-CP-0001, finding quality persistence integration failure.
+- Symptom: The first real PostgreSQL quality-plan insert attempted to persist quality_checks before their quality_plans parent and failed its foreign key, although both objects had been added to one SQLAlchemy session.
+- Root cause: The store assigned the foreign-key UUID directly but declared no ORM relationship between the newly created plan and check objects. The unit of work therefore had no object dependency edge that guaranteed the parent insert first.
+- Resolution: Insert and flush the quality plan before adding its checks, and insert and flush a quality run before adding its initial event. Keep the real PostgreSQL lifecycle test in complete verification.
+- Prevention:
+  - `test` test_plan_run_results_verdict_and_events_round_trip — The real PostgreSQL integration creates the plan with its child checks, creates the run with its first event, and reads the complete lifecycle back.
+- Evidence: `file:services/evaluator/src/iacode_evaluator/store.py`, `file:services/evaluator/tests/integration/test_quality_persistence_integration.py`
+
+### LSN-0061 — Cancellation completion must not bypass cleanup acknowledgement
+
+- Status: `GUARDED`, severity MEDIUM, category testing, recurrences 0.
+- Source: GATE-4, GATE-4-CP-0001, finding cmd-0029.
+- Symptom: The rebuilt evaluator suite failed because its late-callback test tried to transition a running quality run directly to CANCELLED.
+- Root cause: The test used the terminal label as setup and skipped the CANCELLING state that records the cancellation request and reserves time for sandbox cleanup acknowledgement.
+- Resolution: Drive the test through RUNNING to CANCELLING with CANCELLATION_REQUESTED, then to CANCELLED with COMPLETED before testing rejection of a late callback.
+- Prevention:
+  - `test` test_results_enforce_owner_idempotency_and_late_refusal — The store test executes both cancellation transitions and then proves that a callback delivered after cleanup completion is refused.
+- Evidence: `file:docs/checkpoints/GATE-4-CP-0001/COMMANDS.jsonl`, `file:services/evaluator/tests/test_persistence.py`

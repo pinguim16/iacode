@@ -13,8 +13,18 @@ from iacode_persistence.base import Base, ImmutableRecord, TimestampedEntity
 
 # The set from `docs/GATE-0-CHECKLIST.md` row 5.6.
 STRUCTURAL_TABLES = {
-    "projects", "repositories", "tasks", "task_runs", "agents", "agent_runs",
-    "providers", "models", "model_calls", "tool_calls", "artifacts", "experiences",
+    "projects",
+    "repositories",
+    "tasks",
+    "task_runs",
+    "agents",
+    "agent_runs",
+    "providers",
+    "models",
+    "model_calls",
+    "tool_calls",
+    "artifacts",
+    "experiences",
 }
 
 # What `docs/GATE-2-CHECKLIST.md` adds. Kept as its own set rather than merged into the one above,
@@ -24,13 +34,37 @@ AGENT_RUNTIME_TABLES = {"agent_teams", "run_events", "tool_requests", "tool_resu
 #: GATE 3 adds one table, for what nothing existing could hold: a sandbox session's lifecycle.
 #: Its executions evolve ``tool_calls`` rather than shadowing it.
 SANDBOX_TABLES = {"sandbox_sessions"}
+QUALITY_TABLES = {
+    "quality_plans",
+    "quality_checks",
+    "quality_runs",
+    "quality_results",
+    "quality_evidence",
+    "quality_findings",
+    "quality_verdicts",
+    "quality_run_events",
+}
 
 # Append-only facts: something that already happened, and cannot change afterwards.
-APPEND_ONLY = {"model_calls", "tool_calls", "run_events", "tool_results"}
+APPEND_ONLY = {
+    "model_calls",
+    "tool_calls",
+    "run_events",
+    "tool_results",
+    "quality_plans",
+    "quality_checks",
+    "quality_results",
+    "quality_evidence",
+    "quality_findings",
+    "quality_verdicts",
+    "quality_run_events",
+}
 
 
 def test_structural_tables_exist() -> None:
-    assert set(Base.metadata.tables) == STRUCTURAL_TABLES | AGENT_RUNTIME_TABLES | SANDBOX_TABLES
+    assert set(Base.metadata.tables) == (
+        STRUCTURAL_TABLES | AGENT_RUNTIME_TABLES | SANDBOX_TABLES | QUALITY_TABLES
+    )
 
 
 def test_the_agent_runtime_created_no_parallel_entity() -> None:
@@ -42,8 +76,7 @@ def test_the_agent_runtime_created_no_parallel_entity() -> None:
     """
     for table in AGENT_RUNTIME_TABLES:
         for structural in STRUCTURAL_TABLES:
-            assert structural not in table, (
-                f"{table} looks like a second home for {structural}")
+            assert structural not in table, f"{table} looks like a second home for {structural}"
 
 
 def test_common_columns_follow_the_convention() -> None:
@@ -67,8 +100,11 @@ def test_common_columns_follow_the_convention() -> None:
 
 def test_the_two_base_classes_are_used_deliberately() -> None:
     for table_name in APPEND_ONLY:
-        model = next(mapper.class_ for mapper in Base.registry.mappers
-                     if mapper.class_.__tablename__ == table_name)
+        model = next(
+            mapper.class_
+            for mapper in Base.registry.mappers
+            if mapper.class_.__tablename__ == table_name
+        )
         assert issubclass(model, ImmutableRecord)
         assert not issubclass(model, TimestampedEntity)
 
@@ -128,6 +164,24 @@ def test_relationships_cascade_deliberately() -> None:
         ("sandbox_sessions", "active_tool_request_id"): "SET NULL",
         ("tool_calls", "tool_request_id"): "SET NULL",
         ("tool_calls", "sandbox_session_id"): "SET NULL",
+        # Gate 4. Plans and their checks are frozen. Runs own their results, evidence, findings,
+        # verdict and event history; durable pre-existing inputs are restricted or cleared.
+        ("quality_plans", "owner_task_run_id"): "SET NULL",
+        ("quality_plans", "snapshot_artifact_id"): "RESTRICT",
+        ("quality_checks", "quality_plan_id"): "CASCADE",
+        ("quality_runs", "quality_plan_id"): "RESTRICT",
+        ("quality_runs", "owner_task_run_id"): "SET NULL",
+        ("quality_runs", "reproduction_of_run_id"): "SET NULL",
+        ("quality_results", "quality_run_id"): "CASCADE",
+        ("quality_results", "quality_check_id"): "RESTRICT",
+        ("quality_results", "sandbox_session_id"): "SET NULL",
+        ("quality_evidence", "quality_run_id"): "CASCADE",
+        ("quality_evidence", "quality_result_id"): "CASCADE",
+        ("quality_evidence", "artifact_id"): "RESTRICT",
+        ("quality_findings", "quality_run_id"): "CASCADE",
+        ("quality_findings", "quality_result_id"): "CASCADE",
+        ("quality_verdicts", "quality_run_id"): "CASCADE",
+        ("quality_run_events", "quality_run_id"): "CASCADE",
     }
     observed = {
         (table_name, next(iter(key.columns)).name): key.ondelete
@@ -148,6 +202,14 @@ def test_rights_default_to_denial() -> None:
     # Storage is the one that defaults to permitted: an experience that cannot be stored is not an
     # experience, and the restriction that matters is what may be done with it afterwards.
     assert experiences.columns["storage_allowed"].server_default.arg == "true"
+    assert (
+        Base.metadata.tables["quality_runs"].columns["training_allowed"].server_default.arg
+        == "false"
+    )
+    quality_evidence = Base.metadata.tables["quality_evidence"]
+    assert quality_evidence.columns["training_allowed"].server_default.arg == "false"
+    assert quality_evidence.columns["rag_allowed"].server_default.arg == "false"
+    assert quality_evidence.columns["distillation_allowed"].server_default.arg == "false"
 
 
 def test_providers_and_agents_are_disabled_by_default() -> None:
@@ -177,11 +239,14 @@ def test_a_model_is_governed_by_its_provider_rather_than_by_a_switch_of_its_own(
 def test_lifecycle_vocabularies_are_constrained() -> None:
     """A status column with no constraint accepts a typo as a new state."""
     for table_name in ("tasks", "task_runs", "agent_runs"):
-        names = {constraint.name
-                 for constraint in Base.metadata.tables[table_name].constraints
-                 if constraint.name}
-        assert any("status_is_known" in name for name in names), \
+        names = {
+            constraint.name
+            for constraint in Base.metadata.tables[table_name].constraints
+            if constraint.name
+        }
+        assert any("status_is_known" in name for name in names), (
             f"{table_name}.status accepts any string"
+        )
 
 
 def test_an_artifact_points_at_exactly_one_object() -> None:
@@ -200,11 +265,13 @@ def test_no_table_stores_a_credential() -> None:
 
     credential = re.compile(
         r"(?i)(password|passwd|secret|api[_-]?key|access[_-]?key|private[_-]?key|credential"
-        r"|(^|_)token(_|$))")
+        r"|(^|_)token(_|$))"
+    )
     for name, table in Base.metadata.tables.items():
         for column in table.columns:
-            assert credential.search(column.name) is None, \
+            assert credential.search(column.name) is None, (
                 f"{name}.{column.name} looks like a credential column"
+            )
 
 
 def test_provider_registry_persists_operational_metadata() -> None:
@@ -216,12 +283,30 @@ def test_provider_registry_persists_operational_metadata() -> None:
     """
     columns = set(models.Provider.__table__.columns.keys())
 
-    for expected in ("slug", "name", "kind", "adapter", "enabled", "healthy",
-                     "last_health_check", "last_sync", "model_count", "detail"):
+    for expected in (
+        "slug",
+        "name",
+        "kind",
+        "adapter",
+        "enabled",
+        "healthy",
+        "last_health_check",
+        "last_sync",
+        "model_count",
+        "detail",
+    ):
         assert expected in columns, f"providers does not record {expected}"
 
-    for forbidden in ("api_key", "credential", "secret", "token", "password",
-                      "base_url", "endpoint", "authorization"):
+    for forbidden in (
+        "api_key",
+        "credential",
+        "secret",
+        "token",
+        "password",
+        "base_url",
+        "endpoint",
+        "authorization",
+    ):
         assert forbidden not in columns, f"providers carries {forbidden}"
 
     # Health is tri-state: unknown until something has asked. A boolean defaulting to false would
@@ -244,8 +329,11 @@ def test_run_event_log_is_append_only() -> None:
     assert "updated_at" not in columns
     assert "version" not in columns
 
-    model = next(mapper.class_ for mapper in Base.registry.mappers
-                 if mapper.class_.__tablename__ == "run_events")
+    model = next(
+        mapper.class_
+        for mapper in Base.registry.mappers
+        if mapper.class_.__tablename__ == "run_events"
+    )
     assert issubclass(model, ImmutableRecord)
     assert not issubclass(model, TimestampedEntity)
 
@@ -274,8 +362,11 @@ def test_a_tool_request_carries_at_most_one_result() -> None:
 
     assert ("tool_request_id",) in unique
 
-    model = next(mapper.class_ for mapper in Base.registry.mappers
-                 if mapper.class_.__tablename__ == "tool_results")
+    model = next(
+        mapper.class_
+        for mapper in Base.registry.mappers
+        if mapper.class_.__tablename__ == "tool_results"
+    )
     assert issubclass(model, ImmutableRecord)
 
 
@@ -299,15 +390,23 @@ def test_nothing_this_gate_persists_is_training_eligible() -> None:
     assert task_runs.columns["training_allowed"].server_default.arg == "false"
     for table in ("run_events", "tool_requests", "tool_results", "agent_teams"):
         assert "training_allowed" not in Base.metadata.tables[table].columns, (
-            f"{table} carries a rights flag nothing in this Gate grants")
+            f"{table} carries a rights flag nothing in this Gate grants"
+        )
 
 
 def test_no_raw_provider_prompt_is_persisted() -> None:
     """`model_calls` has nowhere to put one, and the run keeps its own task rather than a prompt."""
     for table_name in ("model_calls", "task_runs", "agent_runs", "run_events"):
         columns = set(Base.metadata.tables[table_name].columns.keys())
-        for forbidden in ("prompt", "prompts", "messages", "completion", "raw_request",
-                          "system_prompt", "transcript"):
+        for forbidden in (
+            "prompt",
+            "prompts",
+            "messages",
+            "completion",
+            "raw_request",
+            "system_prompt",
+            "transcript",
+        ):
             assert forbidden not in columns, f"{table_name} can hold a {forbidden}"
 
     # What the run does keep is its own instruction and its own answer, which is what lets the

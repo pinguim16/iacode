@@ -2,27 +2,13 @@
   "schemaVersion": "2.0.0",
   "gate": "GATE-4",
   "scope": "quality engine, evaluation runners, immutable evidence store, verdict rules, false-PASS rejection, reproducible evidence, sandboxed execution, agent-runtime integration, promotion evidence",
-  "technologies": [
-    "python",
-    "postgresql",
-    "minio",
-    "temporal",
-    "docker"
-  ],
-  "modules": [
-    "services/evaluator",
-    "services/sandbox",
-    "services/orchestrator",
-    "services/agent-runtime",
-    "packages/persistence",
-    "apps/api",
-    "apps/web"
-  ],
-  "generatedAt": "2026-10-09T16:25:45Z",
+  "technologies": [],
+  "modules": [],
+  "generatedAt": "2026-10-09T18:09:49Z",
   "policyVersion": "2.0.0",
-  "inputsFingerprint": "abe12fca2eff74c85931668b3f64b094ed83c3b2ea3f0733303efb33a4cddb62",
-  "lessonsConsidered": 59,
-  "lessonsApplicable": 58,
+  "inputsFingerprint": "35dd696ab8db2e2110f1b38acfcc37261203b7ab32e050825b18134038d267af",
+  "lessonsConsidered": 61,
+  "lessonsApplicable": 60,
   "applicable": [
     {
       "lessonId": "LSN-0001",
@@ -603,6 +589,26 @@
       "requiredCheck": "Confirm every active lesson excluded from a preflight declares a non-empty scope selector, and that incidental metadata does not narrow applicability.",
       "requiredEvidence": "A passing repository-preflight coverage test over the complete active lesson set.",
       "derivedRequirementId": "LESSON-REQ-0058"
+    },
+    {
+      "lessonId": "LSN-0060",
+      "title": "Parent and child facts without an ORM relationship require an explicit flush boundary",
+      "status": "GUARDED",
+      "severity": "MEDIUM",
+      "reasonApplicable": "applies to every Gate; category implementation; severity MEDIUM; already guarded, so the control must keep holding",
+      "requiredCheck": "Whenever one transaction inserts parent and child ORM facts using raw foreign-key identifiers without a relationship edge, confirm the parent is flushed before the child is added.",
+      "requiredEvidence": "A real-database integration test that creates the parent and child together and observes both after commit.",
+      "derivedRequirementId": "LESSON-REQ-0059"
+    },
+    {
+      "lessonId": "LSN-0061",
+      "title": "Cancellation completion must not bypass cleanup acknowledgement",
+      "status": "GUARDED",
+      "severity": "MEDIUM",
+      "reasonApplicable": "applies to every Gate; category testing; severity MEDIUM; already guarded, so the control must keep holding",
+      "requiredCheck": "For every running task that can be cancelled, prove the lifecycle records cancellation requested before it records cancellation completed.",
+      "requiredEvidence": "A lifecycle test that enters the intermediate cancelling state, acknowledges cleanup, reaches cancelled, and rejects late delivery.",
+      "derivedRequirementId": "LESSON-REQ-0060"
     }
   ],
   "derivedRequirements": [
@@ -1011,6 +1017,20 @@
       "description": "Verify a lesson exclusion must declare the scope it excludes",
       "mandatory": true,
       "requiredEvidence": "A passing repository-preflight coverage test over the complete active lesson set."
+    },
+    {
+      "id": "LESSON-REQ-0059",
+      "lessonId": "LSN-0060",
+      "description": "Verify parent and child facts without an ORM relationship require an explicit flush boundary",
+      "mandatory": true,
+      "requiredEvidence": "A real-database integration test that creates the parent and child together and observes both after commit."
+    },
+    {
+      "id": "LESSON-REQ-0060",
+      "lessonId": "LSN-0061",
+      "description": "Verify cancellation completion must not bypass cleanup acknowledgement",
+      "mandatory": true,
+      "requiredEvidence": "A lifecycle test that enters the intermediate cancelling state, acknowledges cleanup, reaches cancelled, and rejects late delivery."
     }
   ]
 }
