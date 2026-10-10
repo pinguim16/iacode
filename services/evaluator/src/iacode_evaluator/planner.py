@@ -19,9 +19,11 @@ def _has_unit_tests(project: ProjectProfile, root: str, stack: str) -> bool:
     paths = tuple(path[len(prefix) :] for path in project.source_paths if path.startswith(prefix))
     if stack == "python":
         return any(
-            path.startswith("tests/")
-            and (path.rsplit("/", 1)[-1].startswith("test_") or path.endswith("_test.py"))
-            and path.endswith(".py")
+            path.endswith(".py")
+            and (
+                path.rsplit("/", 1)[-1].startswith("test_")
+                or path.rsplit("/", 1)[-1].endswith("_test.py")
+            )
             for path in paths
         )
     if stack in {"node", "typescript", "angular"}:

@@ -408,21 +408,27 @@ class QualityPlannerTests:
 
     def test_unit_checks_are_mandatory_when_test_sources_exist(self) -> None:
         registry = load_policy(POLICY)
-        project = detect_project(
-            {
-                "service/pyproject.toml": "[project]\nname='service'\n",
-                "service/tests/test_service.py": "def test_service(): pass\n",
-            }
-        )
-        plan = build_plan(
-            snapshot_id="snapshot-1",
-            snapshot_digest=SHA,
-            project=project,
-            registry=registry,
-            created_at=NOW,
-        )
-        unit = next(check for check in plan.checks if check.kind == "unit")
-        assert unit.applicable and unit.mandatory
+        for test_path in (
+            "service/test_service.py",
+            "service/tests/test_service.py",
+            "service/src/service/test_feature.py",
+            "service/src/service/feature_test.py",
+        ):
+            project = detect_project(
+                {
+                    "service/pyproject.toml": "[project]\nname='service'\n",
+                    test_path: "def test_service(): pass\n",
+                }
+            )
+            plan = build_plan(
+                snapshot_id="snapshot-1",
+                snapshot_digest=SHA,
+                project=project,
+                registry=registry,
+                created_at=NOW,
+            )
+            unit = next(check for check in plan.checks if check.kind == "unit")
+            assert unit.applicable and unit.mandatory, test_path
 
     def test_equal_inputs_make_the_same_plan_identity(self) -> None:
         registry = load_policy(POLICY)

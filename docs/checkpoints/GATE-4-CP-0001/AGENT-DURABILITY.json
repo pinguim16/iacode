@@ -1,0 +1,56 @@
+{
+  "result": "PASS",
+  "container": "iacode-durability-rehearsal",
+  "steps": [
+    {
+      "step": "rehearsal.worker_started",
+      "result": "PASS",
+      "detail": "iacode-durability-rehearsal is polling"
+    },
+    {
+      "step": "run.created",
+      "result": "PASS",
+      "detail": "run 01a123d1-dba6-7000-9273-4ad1a6b45ec5"
+    },
+    {
+      "step": "run.waiting_for_tool",
+      "result": "PASS",
+      "detail": "pending tool rehearsal.read (94fd0085-63fd-49ab-8c4f-c1a7a38e3de5)"
+    },
+    {
+      "step": "worker.restarted",
+      "result": "PASS",
+      "detail": "the container started again at 2026-10-10T03:18:45.645002424Z"
+    },
+    {
+      "step": "run.survived_the_restart",
+      "result": "PASS",
+      "detail": "state WAITING_FOR_TOOL after the restart"
+    },
+    {
+      "step": "tool.result_delivered",
+      "result": "PASS",
+      "detail": "the result was stored and the workflow signalled"
+    },
+    {
+      "step": "run.resumed_and_completed",
+      "result": "PASS",
+      "detail": "state SUCCEEDED"
+    },
+    {
+      "step": "run.answered",
+      "result": "PASS",
+      "detail": "the answer produced after the restart is the run's result"
+    },
+    {
+      "step": "history.records_the_pause_and_the_resume",
+      "result": "PASS",
+      "detail": "RUN_STARTED, AGENT_STARTED, MODEL_CALL_STARTED, MODEL_CALL_COMPLETED, TOOL_REQUESTED, TOOL_RESULT_RECEIVED, MODEL_CALL_STARTED, MODEL_CALL_COMPLETED, AGENT_COMPLETED, RUN_COMPLETED"
+    },
+    {
+      "step": "history.is_ordered",
+      "result": "PASS",
+      "detail": "10 event(s) in sequence order"
+    }
+  ]
+}

@@ -4,7 +4,7 @@
 - Scope: `quality engine, evaluation runners, immutable evidence store, verdict rules, false-PASS rejection, reproducible evidence, sandboxed execution, agent-runtime integration, promotion evidence`
 - Technologies: _none declared_
 - Modules: _none declared_
-- Generated: `2026-10-10T03:16:55Z`
+- Generated: `2026-10-10T03:24:31Z`
 - Lessons considered: 87
 - Lessons applicable: 86
 

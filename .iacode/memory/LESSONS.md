@@ -86,7 +86,7 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 | `LSN-0076` | `GUARDED` | HIGH | architecture | Projected nested configuration requires an explicit monorepo root | `test_python_unit_runner_installs_metadata_and_exposes_monorepo_policy`, `test_no_evaluator_module_can_start_a_process` |
 | `LSN-0077` | `GUARDED` | HIGH | quality | Harness wait bounds must reflect workload size without changing product deadlines | `test_real_repository_scenario_has_a_separate_bounded_wait` |
 | `LSN-0078` | `GUARDED` | HIGH | quality | Evidence recorders must resolve caller-supplied commit references before execution | `test_inputs_are_canonicalized_and_an_unknown_subject_is_refused` |
-| `LSN-0079` | `GUARDED` | HIGH | testing | Test discovery and the unit runner must cover the same project scope | `test_isolated_language_checks_prepare_their_policy_owned_toolchain` |
+| `LSN-0079` | `GUARDED` | HIGH | testing | Test discovery and the unit runner must cover the same project scope | `test_isolated_language_checks_prepare_their_policy_owned_toolchain`, `test_unit_checks_are_mandatory_when_test_sources_exist` |
 | `LSN-0080` | `GUARDED` | HIGH | quality | A failed verification stage must not leave an older PASS report addressable | `test_verification_removes_a_stale_stage_report_before_execution` |
 | `LSN-0081` | `GUARDED` | HIGH | testing | Canonical requirement evidence must name a test the repository actually discovers | `test_every_test_the_specifications_name_exists` |
 | `LSN-0082` | `GUARDED` | HIGH | quality | Engineering memory cannot depend on an ephemeral generated report | `test_engineering_memory_never_depends_on_ephemeral_var_evidence` |
@@ -1100,14 +1100,15 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 
 ### LSN-0079 — Test discovery and the unit runner must cover the same project scope
 
-- Status: `GUARDED`, severity HIGH, category testing, recurrences 0.
+- Status: `GUARDED`, severity HIGH, category testing, recurrences 1.
 - Source: GATE-4, GATE-4-CP-0001, finding cmd-0105.
 - Symptom: The intentionally failing Python fixture produced six passing quality results because project detection saw its root-level test_calculator.py while the unit runner collected only the tests directory and executed zero tests.
 - Root cause: Applicability used a repository-wide test-source rule, but the closed runner embedded a narrower conventional directory. The plan therefore made a mandatory check applicable and then silently measured a different denominator.
 - Resolution: Run pytest from the entire frozen project root and rely on policy-owned markers and project conftest exclusions, so every source that makes a unit check applicable is within the runner's collection scope.
 - Prevention:
   - `test` test_isolated_language_checks_prepare_their_policy_owned_toolchain — The closed Python unit runner is bound to the project root rather than a narrower tests directory; the real failing fixture remains required closure evidence.
-- Evidence: `file:docs/checkpoints/GATE-4-CP-0001/VERIFY-FAIL-CMD-0105.json`, `file:services/evaluator/src/iacode_evaluator/runners.py`, `file:services/evaluator/tests/test_core.py`, `file:scripts/iacode/scenarios/quality_engine_e2e.py`
+  - `test` test_unit_checks_are_mandatory_when_test_sources_exist — The planner makes Python unit checks mandatory for root, tests-directory, nested test_*, and *_test.py sources covered by pytest collection.
+- Evidence: `file:docs/checkpoints/GATE-4-CP-0001/VERIFY-FAIL-CMD-0105.json`, `file:services/evaluator/src/iacode_evaluator/runners.py`, `file:services/evaluator/tests/test_core.py`, `file:scripts/iacode/scenarios/quality_engine_e2e.py`, `file:services/evaluator/src/iacode_evaluator/planner.py`, `file:docs/checkpoints/GATE-4-CP-0001/QUALITY-FALSE-PASS-CMD-0161.json`, `file:docs/checkpoints/GATE-4-CP-0001/COMMANDS.jsonl`
 
 ### LSN-0080 — A failed verification stage must not leave an older PASS report addressable
 
