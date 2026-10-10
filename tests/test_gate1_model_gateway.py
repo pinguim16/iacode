@@ -1130,9 +1130,15 @@ class Gate1GuardrailTests(unittest.TestCase):
             "def check():\n"
             "    return policies.reservations_in_force(REPOSITORY_ROOT, 'GATE-0')\n"
         )
+        ordered = (
+            "GATE = 'GATE-0'\n"
+            "def check():\n"
+            "    return policies.gate_order().index(normalize_gate(GATE))\n"
+        )
 
         self.assertTrue(_gate_literal_findings(offender))
         self.assertTrue(_gate_literal_findings(direct))
+        self.assertTrue(_gate_literal_findings(ordered))
 
     def test_the_gate_literal_rule_accepts_a_derived_gate_and_a_fixture_root(self) -> None:
         derived = (
@@ -1326,7 +1332,23 @@ def _gate_literal_findings(source: str) -> list[str]:
 
     findings: list[str] = []
     for node in ast.walk(tree):
-        if not isinstance(node, ast.Call) or _called_name(node) not in _GATE_SCOPED_CONTROLS:
+        if not isinstance(node, ast.Call):
+            continue
+        if isinstance(node.func, ast.Attribute) and node.func.attr == "index" and node.args:
+            normalized = node.args[0]
+            if isinstance(normalized, ast.Call) and _called_name(normalized) == "normalize_gate" \
+                    and normalized.args:
+                argument = normalized.args[0]
+                literal = bound.get(argument.id) if isinstance(argument, ast.Name) else None
+                if isinstance(argument, ast.Constant) and isinstance(argument.value, str):
+                    literal = argument.value
+                if literal is not None and _GATE_LITERAL.match(literal):
+                    findings.append(
+                        f"line {node.lineno}: ordered Gate scope is anchored to the "
+                        f"hard-coded Gate {literal!r}"
+                    )
+            continue
+        if _called_name(node) not in _GATE_SCOPED_CONTROLS:
             continue
         arguments = list(node.args)
         if not arguments or not isinstance(arguments[0], ast.Name) \

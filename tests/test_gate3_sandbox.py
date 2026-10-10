@@ -204,7 +204,10 @@ def validate_memory_cli(root: Path, *extra: str) -> tuple[int, str]:
         [sys.executable, str(root / "scripts" / "development-ledger" / "validate_lessons.py"),
          "--root", str(root), *extra],
         cwd=root, capture_output=True, text=True, encoding="utf-8", errors="replace")
-    return completed.returncode, completed.stdout + completed.stderr
+    output = completed.stdout + completed.stderr
+    if not output.strip():
+        output = f"VALIDATE_LESSONS_PROCESS_EXIT={completed.returncode}"
+    return completed.returncode, output
 
 
 class GuardrailRegistryResolutionTests(unittest.TestCase):
@@ -239,6 +242,13 @@ class GuardrailRegistryResolutionTests(unittest.TestCase):
         code, output = validate_memory_cli(self.root)
         self.assertEqual(code, 0, output)
         self.assertIn("LESSONS_VALID", output)
+
+    def test_an_empty_validator_failure_keeps_its_process_exit_code(self) -> None:
+        completed = subprocess.CompletedProcess(args=[], returncode=9, stdout="", stderr="")
+        with mock.patch.object(subprocess, "run", return_value=completed):
+            code, output = validate_memory_cli(self.root)
+        self.assertEqual(code, 9)
+        self.assertEqual(output, "VALIDATE_LESSONS_PROCESS_EXIT=9")
 
     def test_a_test_guardrail_that_names_a_file_is_refused(self) -> None:
         entry = self.mutate(lambda item: item.update(
@@ -703,7 +713,7 @@ class Gate3ScopeTests(unittest.TestCase):
     def test_the_gate_after_this_one_has_not_started(self) -> None:
         """No directory the next Gate owns carries anything but its reservation notice."""
         order = policies.gate_order()
-        position = order.index(ledger_common.normalize_gate(GATE))
+        position = order.index(ledger_common.normalize_gate(self.current()))
         following = order[position + 1]
         owned = [item for item in policies.load_gate_scope(PROJECT_ROOT)
                  if ledger_common.normalize_gate(str(item["gate"])) == following]
@@ -1153,8 +1163,9 @@ class Gate3DocumentationTests(unittest.TestCase):
 
     def test_the_entry_point_names_the_current_gate(self) -> None:
         text = self.read("START-HERE.md")
-        for expected in ("GATE 3", "docs/GATE-3-CHECKLIST.md", "docs/runbooks/SANDBOX.md",
-                         "READY_FOR_MILESTONE_AUDIT"):
+        current = ledger_common.delivered_gate(PROJECT_ROOT).replace("-", " ")
+        for expected in (current, "GATE 3", "docs/GATE-3-CHECKLIST.md",
+                         "docs/runbooks/SANDBOX.md", "READY_FOR_REVIEW"):
             with self.subTest(expected=expected):
                 self.assertIn(expected, text)
 
@@ -1247,20 +1258,29 @@ def executes(source: str) -> set[str]:
 class Gate3VerificationStageTests(unittest.TestCase):
     """The verification command covers this Gate, in its targeted and its full mode."""
 
-    STAGES = {"sandbox-integration": '"-m", "integration"',
-              "sandbox-coding": "coding", "sandbox-timeout": "timeout",
-              "sandbox-cancellation": "cancel", "sandbox-recovery": "recovery",
-              "sandbox-tool-result-origin": "forged-result"}
+    STAGES = {"sandbox-integration": ("-m", "integration"),
+              "sandbox-coding": ("coding",), "sandbox-timeout": ("timeout",),
+              "sandbox-cancellation": ("cancel",), "sandbox-recovery": ("recovery",),
+              "sandbox-tool-result-origin": ("forged-result",)}
 
     @classmethod
     def setUpClass(cls) -> None:
         cls.source = VERIFY.read_text(encoding="utf-8")
 
     def test_the_verification_adds_the_stages_this_gate_introduces(self) -> None:
-        for stage, argument in self.STAGES.items():
+        calls: dict[str, ast.Call] = {}
+        for call in (node for node in ast.walk(function(self.source, "build_stages"))
+                     if isinstance(node, ast.Call)):
+            name_node = call.args[0] if call.args else next(
+                (keyword.value for keyword in call.keywords if keyword.arg == "name"), None)
+            if isinstance(name_node, ast.Constant) and isinstance(name_node.value, str):
+                calls[name_node.value] = call
+        for stage, arguments in self.STAGES.items():
             with self.subTest(stage=stage):
-                self.assertIn(f'"{stage}"', self.source)
-                self.assertIn(argument, self.source)
+                self.assertIn(stage, calls)
+                literals = {node.value for node in ast.walk(calls[stage])
+                            if isinstance(node, ast.Constant) and isinstance(node.value, str)}
+                self.assertTrue(set(arguments) <= literals, (stage, arguments, literals))
 
     def test_the_scenario_stages_run_in_the_targeted_mode_too(self) -> None:
         """They restart no service of the stack but the sandbox, so they are not destructive."""

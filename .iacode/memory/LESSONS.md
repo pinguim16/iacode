@@ -86,6 +86,14 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 | `LSN-0076` | `GUARDED` | HIGH | architecture | Projected nested configuration requires an explicit monorepo root | `test_python_unit_runner_installs_metadata_and_exposes_monorepo_policy`, `test_no_evaluator_module_can_start_a_process` |
 | `LSN-0077` | `GUARDED` | HIGH | quality | Harness wait bounds must reflect workload size without changing product deadlines | `test_real_repository_scenario_has_a_separate_bounded_wait` |
 | `LSN-0078` | `GUARDED` | HIGH | quality | Evidence recorders must resolve caller-supplied commit references before execution | `test_inputs_are_canonicalized_and_an_unknown_subject_is_refused` |
+| `LSN-0079` | `GUARDED` | HIGH | testing | Test discovery and the unit runner must cover the same project scope | `test_isolated_language_checks_prepare_their_policy_owned_toolchain` |
+| `LSN-0080` | `GUARDED` | HIGH | quality | A failed verification stage must not leave an older PASS report addressable | `test_verification_removes_a_stale_stage_report_before_execution` |
+| `LSN-0081` | `GUARDED` | HIGH | testing | Canonical requirement evidence must name a test the repository actually discovers | `test_every_test_the_specifications_name_exists` |
+| `LSN-0082` | `GUARDED` | HIGH | quality | Engineering memory cannot depend on an ephemeral generated report | `test_engineering_memory_never_depends_on_ephemeral_var_evidence` |
+| `LSN-0083` | `GUARDED` | MEDIUM | tooling | A command that decodes captured UTF-8 must also configure the stream that re-emits it | `test_every_tool_that_re_emits_captured_output_configures_its_own_stream` |
+| `LSN-0084` | `GUARDED` | MEDIUM | testing | A historical Gate documentation test must derive the current entry-point state | `test_the_entry_point_names_the_current_gate` |
+| `LSN-0085` | `GUARDED` | MEDIUM | testing | A source-based control must assert syntax semantics rather than formatter layout | `test_the_verification_adds_the_stages_this_gate_introduces` |
+| `LSN-0086` | `GUARDED` | MEDIUM | testing | A subprocess assertion must preserve the exit code when both streams are empty | `test_an_empty_validator_failure_keeps_its_process_exit_code` |
 
 ## Detail
 
@@ -559,7 +567,7 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 
 ### LSN-0037 — A shared control that names an identifier the repository derives stops being a control when that identifier moves
 
-- Status: `GUARDED`, severity MEDIUM, category tooling, recurrences 1.
+- Status: `GUARDED`, severity MEDIUM, category tooling, recurrences 3.
 - Source: GATE-1, GATE-1-CP-0001, finding G1-F-002.
 - Symptom: Twice in one Gate. First: test_no_future_gate_capability_is_implemented failed at the start of GATE 1 with 'services/model-gateway is reserved for GATE 1 but carries ...', because the control called scope_violations(root, 'GATE-0'). Then: the fresh-installation scenario failed with alembic_version='0002_model_gateway', because it compared the recorded revision with the literal '0001_foundation'.
 - Root cause: A control that names today's state is a control with an expiry date nobody recorded. The identifier's kind does not matter -- a Gate, a checkpoint, a migration revision -- and the first formulation of this lesson said 'a Gate', so the scan it produced looked for Gate literals and saw nothing else.
@@ -675,7 +683,7 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 
 ### LSN-0045 — A counted test suite must declare its cases statically, because the denominator is read from the source
 
-- Status: `GUARDED`, severity MEDIUM, category testing, recurrences 0.
+- Status: `GUARDED`, severity MEDIUM, category testing, recurrences 1.
 - Source: GATE-2, GATE-2-CP-0001, finding G2-F-007.
 - Symptom: Ninety-five cases of the ledger suite errored at once, all of them on the same message: a test in a counted suite is parametrised and the TESTS denominator cannot reproduce a runtime expansion.
 - Root cause: The denominator is derived by reading the source, so a case produced at run time by a parametrisation cannot be counted. The counter already refuses one, but it refuses from inside the counting step, several layers below the file that caused it, so the failure arrives as a wall of unrelated-looking errors rather than as a statement about one function.
@@ -683,7 +691,7 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 - Prevention:
   - `test` test_no_counted_pytest_case_expands_at_run_time — No test function in a counted pytest suite carries a parametrisation.
   - `test` test_the_scan_detects_an_expansion — The null control: the same scan fires on a parametrised module and stays quiet on a plain one.
-- Evidence: `file:tests/test_gate2_agent_runtime.py`, `file:scripts/development-ledger/derive_counts.py`, `file:.iacode/policies/test-suites.json`
+- Evidence: `file:tests/test_gate2_agent_runtime.py`, `file:scripts/development-ledger/derive_counts.py`, `file:.iacode/policies/test-suites.json`, `file:docs/checkpoints/GATE-4-CP-0001/VERIFY.json`, `file:services/evaluator/tests/test_core.py`, `file:services/sandbox/tests/test_quality_images.py`
 
 ### LSN-0046 — A timeout that cancels the task it runs in leaves nothing able to record what happened
 
@@ -958,7 +966,7 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 - Resolution: When cancellation was requested, translate the activity failure that completes WAIT_CANCELLATION_COMPLETED into a CANCELLED quality result and preserve ERROR for activity failures without that request.
 - Prevention:
   - `test` test_an_acknowledged_activity_cancellation_stays_a_cancellation — A cancellation-requested activity wrapped as ActivityError produces CANCELLED, while the non-cancelled error path remains distinct.
-- Evidence: `file:services/evaluator/src/iacode_evaluator/workflow.py`, `file:services/evaluator/tests/test_workflow.py`, `file:var/gate4-quality-cancel.json`
+- Evidence: `file:services/evaluator/src/iacode_evaluator/workflow.py`, `file:services/evaluator/tests/test_workflow.py`, `file:docs/checkpoints/GATE-4-CP-0001/COMMANDS.jsonl`
 
 ### LSN-0068 — A bounded parser must apply each content limit only to content it interprets
 
@@ -1068,14 +1076,14 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 
 ### LSN-0077 — Harness wait bounds must reflect workload size without changing product deadlines
 
-- Status: `GUARDED`, severity HIGH, category quality, recurrences 0.
+- Status: `GUARDED`, severity HIGH, category quality, recurrences 1.
 - Source: GATE-4, GATE-4-CP-0001, finding cmd-0084.
 - Symptom: The real IACode scenario stopped waiting after 300 seconds while its durable 57-check workflow was still running and later reached a legitimate terminal verdict.
 - Root cause: The harness reused the small-fixture wait bound for the full polyglot repository even though per-check isolated package preparation intentionally increased execution time.
-- Resolution: Keep the normal scenario bound at 300 seconds, give only the real-repository scenario a separate 900-second bound, and leave every product check timeout and workflow deadline unchanged.
+- Resolution: Keep short infrastructure probes at 300 seconds, give large repository and durable workflow completion a separate 900-second observation bound, and leave every product check timeout and workflow deadline unchanged.
 - Prevention:
-  - `test` test_real_repository_scenario_has_a_separate_bounded_wait — AST-bound control proves the IACode scenario passes a distinct bound at least twice the ordinary wait while all other scenarios retain the default.
-- Evidence: `file:docs/checkpoints/GATE-4-CP-0001/COMMANDS.jsonl`, `file:scripts/iacode/scenarios/quality_engine_e2e.py`, `file:tests/test_gate4_quality_engine.py`
+  - `test` test_real_repository_scenario_has_a_separate_bounded_wait — AST-bound control proves the real-repository and durable quality scenarios plus sandbox workflow completion use distinct finite bounds at least twice the ordinary wait.
+- Evidence: `file:docs/checkpoints/GATE-4-CP-0001/COMMANDS.jsonl`, `file:docs/checkpoints/GATE-4-CP-0001/VERIFY.json`, `file:scripts/iacode/scenarios/quality_engine_e2e.py`, `file:scripts/iacode/scenarios/sandbox_coding_e2e.py`, `file:tests/test_gate4_quality_engine.py`
 
 ### LSN-0078 — Evidence recorders must resolve caller-supplied commit references before execution
 
@@ -1087,3 +1095,91 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 - Prevention:
   - `test` test_inputs_are_canonicalized_and_an_unknown_subject_is_refused — The same recorder path proves duplicate inputs collapse and a nonexistent subject is recorded as a refusal without executing the command.
 - Evidence: `file:docs/checkpoints/GATE-4-CP-0001/COMMANDS.jsonl`, `file:scripts/development-ledger/record_command.py`, `file:tests/test_gate3_sandbox.py`
+
+### LSN-0079 — Test discovery and the unit runner must cover the same project scope
+
+- Status: `GUARDED`, severity HIGH, category testing, recurrences 0.
+- Source: GATE-4, GATE-4-CP-0001, finding cmd-0105.
+- Symptom: The intentionally failing Python fixture produced six passing quality results because project detection saw its root-level test_calculator.py while the unit runner collected only the tests directory and executed zero tests.
+- Root cause: Applicability used a repository-wide test-source rule, but the closed runner embedded a narrower conventional directory. The plan therefore made a mandatory check applicable and then silently measured a different denominator.
+- Resolution: Run pytest from the entire frozen project root and rely on policy-owned markers and project conftest exclusions, so every source that makes a unit check applicable is within the runner's collection scope.
+- Prevention:
+  - `test` test_isolated_language_checks_prepare_their_policy_owned_toolchain — The closed Python unit runner is bound to the project root rather than a narrower tests directory; the real failing fixture remains required closure evidence.
+- Evidence: `file:docs/checkpoints/GATE-4-CP-0001/VERIFY.json`, `file:services/evaluator/src/iacode_evaluator/runners.py`, `file:services/evaluator/tests/test_core.py`, `file:scripts/iacode/scenarios/quality_engine_e2e.py`
+
+### LSN-0080 — A failed verification stage must not leave an older PASS report addressable
+
+- Status: `GUARDED`, severity HIGH, category quality, recurrences 0.
+- Source: GATE-4, GATE-4-CP-0001, finding cmd-0105.
+- Symptom: The agent-durability stage failed in the complete verification, but var/agent-durability.json still contained a PASS report from the previous day, making a direct artifact inspection contradict the current stage verdict.
+- Root cause: The verification reused fixed generated report paths and did not remove the prior artifact before launching a stage. A stage that exited before writing its report left historical success at the current path.
+- Resolution: Before every stage carrying a --report argument, remove only that generated path when it resolves inside the repository, so failure yields an absent report rather than stale positive evidence.
+- Prevention:
+  - `test` test_verification_removes_a_stale_stage_report_before_execution — A prior PASS artifact at a stage report path is removed before the stage process can run.
+- Evidence: `file:docs/checkpoints/GATE-4-CP-0001/VERIFY.json`, `file:scripts/iacode/verify.py`, `file:tests/test_gate4_quality_engine.py`
+
+### LSN-0081 — Canonical requirement evidence must name a test the repository actually discovers
+
+- Status: `GUARDED`, severity HIGH, category testing, recurrences 0.
+- Source: GATE-4, GATE-4-CP-0001, finding cmd-0112.
+- Symptom: Fourteen Gate 4 checklist rows named intended test labels that no declared suite defined, so the repository-wide specification-evidence control rejected the canonical requirement source.
+- Root cause: The checklist was written against conceptual test names before the executable suites settled on their final discoverable identities, and the registry faithfully mirrored the stale labels.
+- Resolution: Bind every affected checklist and canonical-registry row to the existing test identity that exercises its behavior, preserving the requirement text and test denominator.
+- Prevention:
+  - `test` test_every_test_the_specifications_name_exists — Every backticked test identity in every canonical Gate checklist resolves in the declared test suites.
+- Evidence: `file:docs/GATE-4-CHECKLIST.md`, `file:.iacode/policies/canonical-requirements.json`, `file:tests/test_gate1_model_gateway.py`
+
+### LSN-0082 — Engineering memory cannot depend on an ephemeral generated report
+
+- Status: `GUARDED`, severity HIGH, category quality, recurrences 0.
+- Source: GATE-4, GATE-4-CP-0001, finding cmd-0112.
+- Symptom: Lesson validation failed after the verifier correctly cleared var/gate4-quality-cancel.json before a rerun, because LSN-0067 treated that replaceable report as durable evidence.
+- Root cause: The lesson registry referenced a path in var even though verification owns that directory as regenerable current-run output and is allowed to remove stale reports.
+- Resolution: Replace the ephemeral reference with checkpoint-owned command evidence and add a repository control that refuses every file:var/ evidence reference in engineering memory.
+- Prevention:
+  - `test` test_engineering_memory_never_depends_on_ephemeral_var_evidence — No lesson may cite a generated file under var as durable evidence.
+- Evidence: `file:.iacode/memory/lessons.jsonl`, `file:docs/checkpoints/GATE-4-CP-0001/COMMANDS.jsonl`, `file:tests/test_gate4_quality_engine.py`
+
+### LSN-0083 — A command that decodes captured UTF-8 must also configure the stream that re-emits it
+
+- Status: `GUARDED`, severity MEDIUM, category tooling, recurrences 0.
+- Source: GATE-4, GATE-4-CP-0001, finding cmd-0112.
+- Symptom: The canonical suite found program_state.py and review_bundle.py capturing subprocess output safely but re-emitting it through the Windows platform codepage without configuring stdout.
+- Root cause: The two entry points predated the shared UTF-8 output guard and retained local exception wrappers instead of adopting its stream setup.
+- Resolution: Import and call use_utf8_stdout before either command enters its exception-handling main path, preserving their existing exit and error behavior.
+- Prevention:
+  - `test` test_every_tool_that_re_emits_captured_output_configures_its_own_stream — Every executable script that captures child output configures UTF-8 output directly or through the shared main guard.
+- Evidence: `file:scripts/development-ledger/program_state.py`, `file:scripts/development-ledger/review_bundle.py`, `file:tests/test_gate0_foundation.py`
+
+### LSN-0084 — A historical Gate documentation test must derive the current entry-point state
+
+- Status: `GUARDED`, severity MEDIUM, category testing, recurrences 0.
+- Source: GATE-4, GATE-4-CP-0001, finding cmd-0120.
+- Symptom: The Gate 3 documentation suite required the current START-HERE.md to contain READY_FOR_MILESTONE_AUDIT even after Gate 4 correctly changed the implementing-run destination to READY_FOR_REVIEW.
+- Root cause: A predecessor's regression test mixed preserved historical references with a current-state assertion and hard-coded the predecessor's next lifecycle state.
+- Resolution: Keep assertions that the Gate 3 checklist and sandbox runbook remain linked, derive the active Gate from the current checkpoint, and assert the repository-wide implementing-run destination READY_FOR_REVIEW.
+- Prevention:
+  - `test` test_the_entry_point_names_the_current_gate — The predecessor documentation control derives the active Gate while retaining its historical links and the current implementing-run handoff contract.
+- Evidence: `file:tests/test_gate3_sandbox.py`, `file:START-HERE.md`, `file:docs/checkpoints/GATE-4-CP-0001/COMMANDS.jsonl`
+
+### LSN-0085 — A source-based control must assert syntax semantics rather than formatter layout
+
+- Status: `GUARDED`, severity MEDIUM, category testing, recurrences 0.
+- Source: GATE-4, GATE-4-CP-0001, finding cmd-0126.
+- Symptom: The Gate 3 verification-stage test rejected a correct sandbox integration command only because the adjacent tokens -m and integration were formatted on separate lines.
+- Root cause: The control searched raw source for one exact whitespace and quoting layout even though Python syntax already represented the stage call and its argument literals independently of formatting.
+- Resolution: Parse build_stages with the AST, resolve each declared stage call, and compare its literal argument set to the expected semantic tokens.
+- Prevention:
+  - `test` test_the_verification_adds_the_stages_this_gate_introduces — The stage control resolves calls and literal arguments through Python syntax rather than substring layout.
+- Evidence: `file:tests/test_gate3_sandbox.py`, `file:scripts/iacode/verify.py`, `file:docs/checkpoints/GATE-4-CP-0001/COMMANDS.jsonl`
+
+### LSN-0086 — A subprocess assertion must preserve the exit code when both streams are empty
+
+- Status: `GUARDED`, severity MEDIUM, category testing, recurrences 0.
+- Source: GATE-4, GATE-4-CP-0001, finding cmd-0132.
+- Symptom: The combined canonical suite observed a validator subprocess fail with empty stdout and stderr, and the assertion reported only that its expected marker was absent, erasing the process exit fact needed for diagnosis.
+- Root cause: The test helper returned only concatenated streams as diagnostic context and did not synthesize any message when both were empty.
+- Resolution: When captured streams are empty, return a stable diagnostic containing the validator process exit code; do not retry or reinterpret the outcome.
+- Prevention:
+  - `test` test_an_empty_validator_failure_keeps_its_process_exit_code — A mocked empty-stream failure preserves its exact process exit code in the assertion output.
+- Evidence: `file:tests/test_gate3_sandbox.py`, `file:docs/checkpoints/GATE-4-CP-0001/COMMANDS.jsonl`

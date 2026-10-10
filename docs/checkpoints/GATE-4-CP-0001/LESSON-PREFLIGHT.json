@@ -4,11 +4,11 @@
   "scope": "quality engine, evaluation runners, immutable evidence store, verdict rules, false-PASS rejection, reproducible evidence, sandboxed execution, agent-runtime integration, promotion evidence",
   "technologies": [],
   "modules": [],
-  "generatedAt": "2026-10-09T20:23:14Z",
+  "generatedAt": "2026-10-10T02:38:19Z",
   "policyVersion": "2.0.0",
-  "inputsFingerprint": "0d4d7f8b077cf7bab6c4418d30483056498700ee1285afe24f98a10e47a9d9e2",
-  "lessonsConsidered": 73,
-  "lessonsApplicable": 72,
+  "inputsFingerprint": "d0a5a4f1c29adfd3721f30a870af90f487b280b44ecb8e2e7fed3b6067d1c1aa",
+  "lessonsConsidered": 86,
+  "lessonsApplicable": 85,
   "applicable": [
     {
       "lessonId": "LSN-0001",
@@ -729,6 +729,136 @@
       "requiredCheck": "For every manually scoped repository-wide quality command, derive or test its denominator against the current project inventory so a newly detected root cannot remain outside a green gate.",
       "requiredEvidence": "A denominator test over all non-fixture manifests plus a successful canonical lint execution and matching real repository Quality Engine verdict.",
       "derivedRequirementId": "LESSON-REQ-0072"
+    },
+    {
+      "lessonId": "LSN-0074",
+      "title": "An importable source tree is not an installed or repository-configured test environment",
+      "status": "GUARDED",
+      "severity": "HIGH",
+      "reasonApplicable": "applies to every Gate; category implementation; severity HIGH; already guarded, so the control must keep holding",
+      "requiredCheck": "For Python tests executed from a nested project root, prove the sandbox provides installed distribution metadata and repository-root policy/configuration without reading or writing the host.",
+      "requiredEvidence": "A real snapshot test for metadata and monorepo configuration plus a successful evaluation of a committed multi-package repository.",
+      "derivedRequirementId": "LESSON-REQ-0073"
+    },
+    {
+      "lessonId": "LSN-0075",
+      "title": "Offline package installation requires its build backend inside the quality image",
+      "status": "GUARDED",
+      "severity": "HIGH",
+      "reasonApplicable": "applies to every Gate; category implementation; severity HIGH; already guarded, so the control must keep holding",
+      "requiredCheck": "Whenever a sandbox performs an offline package installation, prove every declared build backend is pinned in the content-addressed execution image and usable by the non-root runtime.",
+      "requiredEvidence": "A real no-network package-installation test through the canonical image-rebuilding sandbox gate.",
+      "derivedRequirementId": "LESSON-REQ-0074"
+    },
+    {
+      "lessonId": "LSN-0076",
+      "title": "Projected nested configuration requires an explicit monorepo root",
+      "status": "GUARDED",
+      "severity": "HIGH",
+      "reasonApplicable": "applies to every Gate; category architecture; severity HIGH; already guarded, so the control must keep holding",
+      "requiredCheck": "When repository configuration is projected into a nested project, provide an explicit trusted repository root and prove source-boundary scans do not reinterpret the projection as ownership.",
+      "requiredEvidence": "A real nested sandbox test that observes the explicit root plus the complete source-boundary scan from that environment.",
+      "derivedRequirementId": "LESSON-REQ-0075"
+    },
+    {
+      "lessonId": "LSN-0077",
+      "title": "Harness wait bounds must reflect workload size without changing product deadlines",
+      "status": "GUARDED",
+      "severity": "HIGH",
+      "reasonApplicable": "applies to every Gate; category quality; severity HIGH; already guarded, so the control must keep holding",
+      "requiredCheck": "For a functional harness whose workload cardinality differs materially by scenario, prove its bounded wait covers the largest legitimate execution without weakening the product's own timeout or deadline.",
+      "requiredEvidence": "A control that binds every large-workload terminal wait to a distinct finite bound plus successful real executions within that bound.",
+      "derivedRequirementId": "LESSON-REQ-0076"
+    },
+    {
+      "lessonId": "LSN-0078",
+      "title": "Evidence recorders must resolve caller-supplied commit references before execution",
+      "status": "GUARDED",
+      "severity": "HIGH",
+      "reasonApplicable": "applies to every Gate; category quality; severity HIGH; already guarded, so the control must keep holding",
+      "requiredCheck": "Before an evidence recorder executes a command, resolve every caller-supplied commit reference to a real canonical commit and normalize repeated provenance inputs.",
+      "requiredEvidence": "A positive canonicalization test and a negative unresolved-commit test proving the command was not executed and the refusal was appended.",
+      "derivedRequirementId": "LESSON-REQ-0077"
+    },
+    {
+      "lessonId": "LSN-0079",
+      "title": "Test discovery and the unit runner must cover the same project scope",
+      "status": "GUARDED",
+      "severity": "HIGH",
+      "reasonApplicable": "applies to every Gate; category testing; severity HIGH; already guarded, so the control must keep holding",
+      "requiredCheck": "For every test applicability rule, prove the corresponding closed runner collects the same project scope and that a failing source at each recognized location is observed.",
+      "requiredEvidence": "A runner-registry assertion plus a real failing fixture whose root-level test produces FAIL with preserved finding and evidence.",
+      "derivedRequirementId": "LESSON-REQ-0078"
+    },
+    {
+      "lessonId": "LSN-0080",
+      "title": "A failed verification stage must not leave an older PASS report addressable",
+      "status": "GUARDED",
+      "severity": "HIGH",
+      "reasonApplicable": "applies to every Gate; category quality; severity HIGH; already guarded, so the control must keep holding",
+      "requiredCheck": "Whenever a verification stage writes to a reusable report path, prove the old artifact is removed before execution and cannot survive a failed rerun as current evidence.",
+      "requiredEvidence": "A control that starts with a stale PASS file and observes it absent before the stage command is launched.",
+      "derivedRequirementId": "LESSON-REQ-0079"
+    },
+    {
+      "lessonId": "LSN-0081",
+      "title": "Canonical requirement evidence must name a test the repository actually discovers",
+      "status": "GUARDED",
+      "severity": "HIGH",
+      "reasonApplicable": "applies to every Gate; category testing; severity HIGH; already guarded, so the control must keep holding",
+      "requiredCheck": "Before a canonical checklist is accepted, resolve every named test identity against the suite registry rather than treating prose-like test labels as evidence.",
+      "requiredEvidence": "A repository-wide specification-evidence test that rejects an unknown identity and passes every canonical row.",
+      "derivedRequirementId": "LESSON-REQ-0080"
+    },
+    {
+      "lessonId": "LSN-0082",
+      "title": "Engineering memory cannot depend on an ephemeral generated report",
+      "status": "GUARDED",
+      "severity": "HIGH",
+      "reasonApplicable": "applies to every Gate; category quality; severity HIGH; already guarded, so the control must keep holding",
+      "requiredCheck": "Keep organizational memory evidence in committed source or checkpoint-owned artifacts; reject references to regenerable runtime output.",
+      "requiredEvidence": "A repository-wide control proving no lesson evidence path begins with file:var/.",
+      "derivedRequirementId": "LESSON-REQ-0081"
+    },
+    {
+      "lessonId": "LSN-0083",
+      "title": "A command that decodes captured UTF-8 must also configure the stream that re-emits it",
+      "status": "GUARDED",
+      "severity": "MEDIUM",
+      "reasonApplicable": "applies to every Gate; category tooling; severity MEDIUM; already guarded, so the control must keep holding",
+      "requiredCheck": "For every executable command that captures text from a child process and prints it, configure both the child decoder and the parent output stream explicitly.",
+      "requiredEvidence": "A repository-wide entry-point scan plus a rejecting fixture for an unconfigured captured-output command.",
+      "derivedRequirementId": "LESSON-REQ-0082"
+    },
+    {
+      "lessonId": "LSN-0084",
+      "title": "A historical Gate documentation test must derive the current entry-point state",
+      "status": "GUARDED",
+      "severity": "MEDIUM",
+      "reasonApplicable": "applies to every Gate; category testing; severity MEDIUM; already guarded, so the control must keep holding",
+      "requiredCheck": "When a predecessor regression test inspects a current entry point, derive current lifecycle identifiers and keep only genuinely historical references fixed.",
+      "requiredEvidence": "A documentation test that resolves the current Gate from repository state while retaining predecessor checklist and runbook links.",
+      "derivedRequirementId": "LESSON-REQ-0083"
+    },
+    {
+      "lessonId": "LSN-0085",
+      "title": "A source-based control must assert syntax semantics rather than formatter layout",
+      "status": "GUARDED",
+      "severity": "MEDIUM",
+      "reasonApplicable": "applies to every Gate; category testing; severity MEDIUM; already guarded, so the control must keep holding",
+      "requiredCheck": "When a control judges source structure, parse the language representation and compare semantic nodes instead of binding the rule to formatter whitespace or quote style.",
+      "requiredEvidence": "A source-control test that resolves the relevant syntax nodes and their values without substring adjacency assumptions.",
+      "derivedRequirementId": "LESSON-REQ-0084"
+    },
+    {
+      "lessonId": "LSN-0086",
+      "title": "A subprocess assertion must preserve the exit code when both streams are empty",
+      "status": "GUARDED",
+      "severity": "MEDIUM",
+      "reasonApplicable": "applies to every Gate; category testing; severity MEDIUM; already guarded, so the control must keep holding",
+      "requiredCheck": "For every subprocess-backed assertion, preserve return code and a non-empty diagnostic even when the child emits nothing; never add a retry that could conceal the outcome.",
+      "requiredEvidence": "A mutation test for nonzero return with empty stdout and stderr that observes the exact exit code.",
+      "derivedRequirementId": "LESSON-REQ-0085"
     }
   ],
   "derivedRequirements": [
@@ -1235,6 +1365,97 @@
       "description": "Verify the canonical lint denominator must cover every detected project root",
       "mandatory": true,
       "requiredEvidence": "A denominator test over all non-fixture manifests plus a successful canonical lint execution and matching real repository Quality Engine verdict."
+    },
+    {
+      "id": "LESSON-REQ-0073",
+      "lessonId": "LSN-0074",
+      "description": "Verify an importable source tree is not an installed or repository-configured test environment",
+      "mandatory": true,
+      "requiredEvidence": "A real snapshot test for metadata and monorepo configuration plus a successful evaluation of a committed multi-package repository."
+    },
+    {
+      "id": "LESSON-REQ-0074",
+      "lessonId": "LSN-0075",
+      "description": "Verify offline package installation requires its build backend inside the quality image",
+      "mandatory": true,
+      "requiredEvidence": "A real no-network package-installation test through the canonical image-rebuilding sandbox gate."
+    },
+    {
+      "id": "LESSON-REQ-0075",
+      "lessonId": "LSN-0076",
+      "description": "Verify projected nested configuration requires an explicit monorepo root",
+      "mandatory": true,
+      "requiredEvidence": "A real nested sandbox test that observes the explicit root plus the complete source-boundary scan from that environment."
+    },
+    {
+      "id": "LESSON-REQ-0076",
+      "lessonId": "LSN-0077",
+      "description": "Verify harness wait bounds must reflect workload size without changing product deadlines",
+      "mandatory": true,
+      "requiredEvidence": "A control that binds every large-workload terminal wait to a distinct finite bound plus successful real executions within that bound."
+    },
+    {
+      "id": "LESSON-REQ-0077",
+      "lessonId": "LSN-0078",
+      "description": "Verify evidence recorders must resolve caller-supplied commit references before execution",
+      "mandatory": true,
+      "requiredEvidence": "A positive canonicalization test and a negative unresolved-commit test proving the command was not executed and the refusal was appended."
+    },
+    {
+      "id": "LESSON-REQ-0078",
+      "lessonId": "LSN-0079",
+      "description": "Verify test discovery and the unit runner must cover the same project scope",
+      "mandatory": true,
+      "requiredEvidence": "A runner-registry assertion plus a real failing fixture whose root-level test produces FAIL with preserved finding and evidence."
+    },
+    {
+      "id": "LESSON-REQ-0079",
+      "lessonId": "LSN-0080",
+      "description": "Verify a failed verification stage must not leave an older PASS report addressable",
+      "mandatory": true,
+      "requiredEvidence": "A control that starts with a stale PASS file and observes it absent before the stage command is launched."
+    },
+    {
+      "id": "LESSON-REQ-0080",
+      "lessonId": "LSN-0081",
+      "description": "Verify canonical requirement evidence must name a test the repository actually discovers",
+      "mandatory": true,
+      "requiredEvidence": "A repository-wide specification-evidence test that rejects an unknown identity and passes every canonical row."
+    },
+    {
+      "id": "LESSON-REQ-0081",
+      "lessonId": "LSN-0082",
+      "description": "Verify engineering memory cannot depend on an ephemeral generated report",
+      "mandatory": true,
+      "requiredEvidence": "A repository-wide control proving no lesson evidence path begins with file:var/."
+    },
+    {
+      "id": "LESSON-REQ-0082",
+      "lessonId": "LSN-0083",
+      "description": "Verify a command that decodes captured UTF-8 must also configure the stream that re-emits it",
+      "mandatory": true,
+      "requiredEvidence": "A repository-wide entry-point scan plus a rejecting fixture for an unconfigured captured-output command."
+    },
+    {
+      "id": "LESSON-REQ-0083",
+      "lessonId": "LSN-0084",
+      "description": "Verify a historical Gate documentation test must derive the current entry-point state",
+      "mandatory": true,
+      "requiredEvidence": "A documentation test that resolves the current Gate from repository state while retaining predecessor checklist and runbook links."
+    },
+    {
+      "id": "LESSON-REQ-0084",
+      "lessonId": "LSN-0085",
+      "description": "Verify a source-based control must assert syntax semantics rather than formatter layout",
+      "mandatory": true,
+      "requiredEvidence": "A source-control test that resolves the relevant syntax nodes and their values without substring adjacency assumptions."
+    },
+    {
+      "id": "LESSON-REQ-0085",
+      "lessonId": "LSN-0086",
+      "description": "Verify a subprocess assertion must preserve the exit code when both streams are empty",
+      "mandatory": true,
+      "requiredEvidence": "A mutation test for nonzero return with empty stdout and stderr that observes the exact exit code."
     }
   ]
 }

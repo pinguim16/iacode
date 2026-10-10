@@ -9,8 +9,8 @@
       "expectedBehavior": "The Gate starts from a fixed, independently derived denominator and a truthful baseline.",
       "implementation": ["docs/GATE-4-CHECKLIST.md", ".iacode/policies/canonical-requirements.json", "LESSON-PREFLIGHT.json", "REQUIREMENTS-MATRIX.json", "BASELINE.md", "PLAN.md"],
       "tests": ["canonical requirement parser", "lesson preflight", "requirement derivation", "control-plane baseline"],
-      "functionalProof": "The original derivation reported 105 canonical plus 58 lesson requirements; fourteen observed implementation failures added LSN-0060 through LSN-0073, while one earlier lesson remains explicitly out of scope, so the current fixed denominator is 105 canonical plus 72 lesson requirements.",
-      "evidence": ["cmd-0050", "cmd-0051", "cmd-0005", "cmd-0006", "cmd-0008"],
+      "functionalProof": "The original derivation reported 105 canonical plus 58 lesson requirements. Twenty-seven confirmed failure classes observed through implementation and canonical verification added LSN-0060 through LSN-0086; one earlier lesson remains explicitly out of scope, so the current fixed denominator is 105 canonical plus 85 lesson requirements.",
+      "evidence": ["cmd-0136", "cmd-0138", "cmd-0139", "cmd-0140"],
       "status": "COMPLETE"
     },
     {

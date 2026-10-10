@@ -1125,7 +1125,7 @@
     },
     {
       "guardrailId": "GRD-0078",
-      "title": "The real-repository harness has a separate finite wait bound",
+      "title": "Large functional workflows have separate finite wait bounds",
       "kind": "test",
       "reference": "test_real_repository_scenario_has_a_separate_bounded_wait",
       "verifiedBy": [
@@ -1134,7 +1134,7 @@
       "lessons": [
         "LSN-0077"
       ],
-      "removingItWouldAllow": "A legitimate large quality plan to outlive a fixture-sized harness wait and be reported as an infrastructure failure before its durable verdict."
+      "removingItWouldAllow": "A legitimate large quality or sandbox workflow to outlive a fixture-sized harness wait and be reported as an infrastructure failure before its durable verdict."
     },
     {
       "guardrailId": "GRD-0079",
@@ -1148,6 +1148,110 @@
         "LSN-0078"
       ],
       "removingItWouldAllow": "A command to execute while its evidence names a nonexistent commit, or repeated caller inputs to produce non-canonical provenance."
+    },
+    {
+      "guardrailId": "GRD-0080",
+      "title": "Unit collection covers the scope that made the check applicable",
+      "kind": "test",
+      "reference": "test_isolated_language_checks_prepare_their_policy_owned_toolchain",
+      "verifiedBy": [
+        "test_isolated_language_checks_prepare_their_policy_owned_toolchain"
+      ],
+      "lessons": [
+        "LSN-0079"
+      ],
+      "removingItWouldAllow": "A recognized root-level test to make a unit check mandatory while the runner collects only a narrower directory and reports a vacuous PASS."
+    },
+    {
+      "guardrailId": "GRD-0081",
+      "title": "Verification stages clear reusable reports before execution",
+      "kind": "test",
+      "reference": "test_verification_removes_a_stale_stage_report_before_execution",
+      "verifiedBy": [
+        "test_verification_removes_a_stale_stage_report_before_execution"
+      ],
+      "lessons": [
+        "LSN-0080"
+      ],
+      "removingItWouldAllow": "A failed current stage to leave an older PASS artifact at the path reviewers treat as the current report."
+    },
+    {
+      "guardrailId": "GRD-0082",
+      "title": "Canonical requirement evidence resolves to discovered tests",
+      "kind": "test",
+      "reference": "test_every_test_the_specifications_name_exists",
+      "verifiedBy": [
+        "test_every_test_the_specifications_name_exists"
+      ],
+      "lessons": [
+        "LSN-0081"
+      ],
+      "removingItWouldAllow": "A canonical requirement to cite an intended test label that no declared suite executes."
+    },
+    {
+      "guardrailId": "GRD-0083",
+      "title": "Engineering memory cites no ephemeral var report",
+      "kind": "test",
+      "reference": "test_engineering_memory_never_depends_on_ephemeral_var_evidence",
+      "verifiedBy": [
+        "test_engineering_memory_never_depends_on_ephemeral_var_evidence"
+      ],
+      "lessons": [
+        "LSN-0082"
+      ],
+      "removingItWouldAllow": "A lesson to become invalid whenever a verifier clears or replaces the current generated report under var."
+    },
+    {
+      "guardrailId": "GRD-0084",
+      "title": "Captured UTF-8 is re-emitted through an explicitly configured stream",
+      "kind": "test",
+      "reference": "test_every_tool_that_re_emits_captured_output_configures_its_own_stream",
+      "verifiedBy": [
+        "test_every_tool_that_re_emits_captured_output_configures_its_own_stream"
+      ],
+      "lessons": [
+        "LSN-0083"
+      ],
+      "removingItWouldAllow": "A successful child command to make its Windows entry point fail while printing decoded non-ASCII output."
+    },
+    {
+      "guardrailId": "GRD-0085",
+      "title": "Historical Gate documentation tests derive current entry-point state",
+      "kind": "test",
+      "reference": "test_the_entry_point_names_the_current_gate",
+      "verifiedBy": [
+        "test_the_entry_point_names_the_current_gate"
+      ],
+      "lessons": [
+        "LSN-0084"
+      ],
+      "removingItWouldAllow": "A predecessor regression test to require its historical next state from the repository's current entry point."
+    },
+    {
+      "guardrailId": "GRD-0086",
+      "title": "Source controls compare syntax semantics, not formatter layout",
+      "kind": "test",
+      "reference": "test_the_verification_adds_the_stages_this_gate_introduces",
+      "verifiedBy": [
+        "test_the_verification_adds_the_stages_this_gate_introduces"
+      ],
+      "lessons": [
+        "LSN-0085"
+      ],
+      "removingItWouldAllow": "A formatter-only line break or quote change to make a semantic source control reject correct code."
+    },
+    {
+      "guardrailId": "GRD-0087",
+      "title": "Empty subprocess streams retain the exit diagnostic",
+      "kind": "test",
+      "reference": "test_an_empty_validator_failure_keeps_its_process_exit_code",
+      "verifiedBy": [
+        "test_an_empty_validator_failure_keeps_its_process_exit_code"
+      ],
+      "lessons": [
+        "LSN-0086"
+      ],
+      "removingItWouldAllow": "A subprocess-backed assertion to erase the only observable failure fact when stdout and stderr are both empty."
     }
   ]
 }

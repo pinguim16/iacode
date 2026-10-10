@@ -23,6 +23,7 @@ from ledger_common import (
     normalize_gate,
     resolve_latest,
     utc_now,
+    use_utf8_stdout,
     validate_schema,
 )
 
@@ -140,6 +141,7 @@ def main() -> int:
 
 
 if __name__ == "__main__":
+    use_utf8_stdout()
     try:
         sys.exit(main())
     except LedgerError as error:

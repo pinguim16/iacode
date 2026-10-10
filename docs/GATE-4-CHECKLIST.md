@@ -34,8 +34,8 @@ ends at `READY_FOR_REVIEW` and a later run owns the Gate verdict.
 | Key | Requirement | Artifact | Evidence |
 |---|---|---|---|
 | 2.1 | Versioned contracts exist for `QualityPlan`, `QualityCheck`, `QualityRun`, `QualityResult`, `QualityFinding`, `QualityEvidence`, `QualityPolicy`, and `QualityVerdict`. | `packages/contracts/src/iacode_contracts/quality.py` | `QualityContractTests`. |
-| 2.2 | Contract vocabularies are closed and reject missing fields, extra fields, wrong types, invalid values, duplicate identifiers, and unsupported versions with distinct reasons. | `packages/contracts/src/iacode_contracts/quality.py` | `QualityContractTests`; `test_contract_failures_name_the_actual_defect`. |
-| 2.3 | Every contract round-trips without losing identity, ordering, timestamps, digests, policy references, sandbox references, or artifact references. | `packages/contracts/src/iacode_contracts/quality.py` | `test_every_quality_contract_round_trips`. |
+| 2.2 | Contract vocabularies are closed and reject missing fields, extra fields, wrong types, invalid values, duplicate identifiers, and unsupported versions with distinct reasons. | `packages/contracts/src/iacode_contracts/quality.py` | `QualityContractTests`; `test_unknown_fields_and_unsupported_versions_are_refused`. |
+| 2.3 | Every contract round-trips without losing identity, ordering, timestamps, digests, policy references, sandbox references, or artifact references. | `packages/contracts/src/iacode_contracts/quality.py` | `test_contracts_round_trip_without_losing_the_frozen_plan`. |
 | 2.4 | Every reusable artifact defaults to `trainingAllowed=false`; a quality contract carries no credential, secret, chain-of-thought, or whole environment. | `packages/contracts/src/iacode_contracts/quality.py` | `QualityRightsTests`; `QualitySecretContainmentTests`. |
 | 2.5 | Payload sizes are bounded as the receiver measures them, and oversized plans, output summaries, findings, and evidence metadata are refused before persistence. | `packages/contracts/src/iacode_contracts/quality.py`, `services/evaluator/src/iacode_evaluator/limits.py` | `QualityLimitTests`. |
 
@@ -46,7 +46,7 @@ ends at `READY_FOR_REVIEW` and a later run owns the Gate verdict.
 | 3.1 | A project profile records the detected stacks, manifests, workspace root, configuration source, confidence, and unresolved ambiguity without depending on IACode-specific paths. | `services/evaluator/src/iacode_evaluator/projects.py` | `ProjectProfileTests`. |
 | 3.2 | Detection recognizes Python, Node, TypeScript, Angular, Maven, and Gradle from repository evidence and supports mixed projects. | `services/evaluator/src/iacode_evaluator/projects.py` | `ProjectProfileTests`; six stack fixtures. |
 | 3.3 | Detection never executes project code, follows no symlink outside the snapshot, ignores generated/vendor directories, and reads only bounded manifest content. | `services/evaluator/src/iacode_evaluator/projects.py` | `ProjectDetectionSecurityTests`. |
-| 3.4 | Ambiguous or unknown toolchains produce an explicit unsupported/ambiguous result and never an invented stack or a false `PASS`. | `services/evaluator/src/iacode_evaluator/projects.py` | `test_unknown_and_ambiguous_projects_do_not_invent_a_profile`. |
+| 3.4 | Ambiguous or unknown toolchains produce an explicit unsupported/ambiguous result and never an invented stack or a false `PASS`. | `services/evaluator/src/iacode_evaluator/projects.py` | `test_unknown_and_ambiguous_projects_are_explicit`. |
 | 3.5 | A versioned project configuration may select declared checks and commands but cannot select an image, mount, network, resource bound, verdict, or undeclared runner. | `iacode-quality.json`, `services/evaluator/src/iacode_evaluator/configuration.py` | `QualityConfigurationTests`. |
 | 3.6 | The same source code onboards Python, Java, and TypeScript/Node fixtures through profiles rather than repository-specific branches. | `services/evaluator/tests/fixtures/` | `ProjectAgnosticScenarioTests`. |
 
@@ -56,8 +56,8 @@ ends at `READY_FOR_REVIEW` and a later run owns the Gate verdict.
 |---|---|---|---|
 | 4.1 | One canonical policy registry declares profiles, runners, mandatory checks, applicability, timeouts, output limits, evidence requirements, and verdict rules. | `.iacode/policies/quality-policy.json` | `QualityPolicyTests`. |
 | 4.2 | Unknown policy keys, runner names, check kinds, result states, evidence kinds, or verdict rules are refused when policy loads. | `services/evaluator/src/iacode_evaluator/policy.py` | `QualityPolicyTests`. |
-| 4.3 | The requested project configuration may add checks or lower limits but cannot remove a mandatory check, raise a limit, weaken a threshold, or alter a verdict rule. | `services/evaluator/src/iacode_evaluator/policy.py` | `test_project_configuration_cannot_weaken_policy`. |
-| 4.4 | Applicability is derived from the project profile: an empty applicable set is justified `NOT_APPLICABLE`, while a missing required set is `FAIL`. | `services/evaluator/src/iacode_evaluator/policy.py` | `test_empty_applicability_is_not_a_missing_requirement`. |
+| 4.3 | The requested project configuration may add checks or lower limits but cannot remove a mandatory check, raise a limit, weaken a threshold, or alter a verdict rule. | `services/evaluator/src/iacode_evaluator/policy.py` | `test_configuration_can_only_add_declared_checks_or_lower_a_limit`. |
+| 4.4 | Applicability is derived from the project profile: an empty applicable set is justified `NOT_APPLICABLE`, while a missing required set is `FAIL`. | `services/evaluator/src/iacode_evaluator/policy.py` | `test_unit_checks_are_not_applicable_without_test_sources`; `test_an_empty_applicable_set_is_not_a_vacuous_pass`. |
 | 4.5 | Every policy key has an implementation consumer, and the policy and its schema are content-addressed inputs to every plan. | `.iacode/policies/quality-policy.json`, `.iacode/schemas/quality-policy.schema.json` | `QualityPolicyCoverageTests`. |
 
 ## 5. Deterministic quality planning
@@ -65,10 +65,10 @@ ends at `READY_FOR_REVIEW` and a later run owns the Gate verdict.
 | Key | Requirement | Artifact | Evidence |
 |---|---|---|---|
 | 5.1 | Planning freezes the project snapshot checksum, profile, policy digest, ordered checks, commands, runner images, limits, and environment before execution begins. | `services/evaluator/src/iacode_evaluator/planner.py` | `QualityPlannerTests`. |
-| 5.2 | Plan identity is a deterministic digest of canonical content; equal inputs produce the same plan and any material input change produces a different plan. | `services/evaluator/src/iacode_evaluator/planner.py` | `test_plan_identity_is_deterministic_and_input_bound`. |
+| 5.2 | Plan identity is a deterministic digest of canonical content; equal inputs produce the same plan and any material input change produces a different plan. | `services/evaluator/src/iacode_evaluator/planner.py` | `test_equal_inputs_make_the_same_plan_identity`. |
 | 5.3 | Check identifiers are unique, stable, and independent of execution order; dependencies form an acyclic graph and unknown dependencies are refused. | `services/evaluator/src/iacode_evaluator/planner.py` | `QualityPlannerTests`. |
-| 5.4 | A plan cannot carry a caller-authored expected verdict, result, evidence digest, sandbox result, or hidden command. | `services/evaluator/src/iacode_evaluator/planner.py` | `test_a_plan_cannot_smuggle_a_verdict_or_result`. |
-| 5.5 | The plan exposes why every check is mandatory, optional, or not applicable and identifies the policy rule that decided it. | `services/evaluator/src/iacode_evaluator/planner.py` | `test_each_planned_check_has_a_policy_reason`. |
+| 5.4 | A plan cannot carry a caller-authored expected verdict, result, evidence digest, sandbox result, or hidden command. | `services/evaluator/src/iacode_evaluator/planner.py` | `test_a_request_cannot_smuggle_execution_or_a_verdict`. |
+| 5.5 | The plan exposes why every check is mandatory, optional, or not applicable and identifies the policy rule that decided it. | `services/evaluator/src/iacode_evaluator/planner.py` | `test_plan_freezes_commands_policy_limits_and_reasons`. |
 
 ## 6. Runner registry and check kinds
 
@@ -78,7 +78,7 @@ ends at `READY_FOR_REVIEW` and a later run owns the Gate verdict.
 | 6.2 | Initial check kinds cover build, unit, integration, lint, static analysis, dependency/security, secret scan, configured coverage, applicable migration checks, and diff integrity. | `.iacode/policies/quality-policy.json`, `services/evaluator/src/iacode_evaluator/runners.py` | `QualityCheckKindTests`. |
 | 6.3 | Commands are argument vectors or policy-owned command text, never concatenated from untrusted project values, and every working directory resolves within the snapshot. | `services/evaluator/src/iacode_evaluator/runners.py` | `RunnerSecurityTests`. |
 | 6.4 | A runner normalizes exit code, timeout, denial, cancellation, truncation, duration, sandbox identity, and artifacts without inventing an exit code for work that never started. | `services/evaluator/src/iacode_evaluator/runners.py` | `QualityRunnerResultTests`. |
-| 6.5 | Required checks execute despite an earlier failure unless their declared dependency makes execution impossible; every skipped check records the exact dependency reason. | `services/evaluator/src/iacode_evaluator/engine.py` | `test_failure_does_not_hide_independent_check_results`. |
+| 6.5 | Required checks execute despite an earlier failure unless their declared dependency makes execution impossible; every skipped check records the exact dependency reason. | `services/evaluator/src/iacode_evaluator/engine.py` | `test_one_failure_does_not_hide_independent_results`. |
 | 6.6 | A cancelled or timed-out run reaches one terminal state, records the reason before the state, and leaves no running check or sandbox session. | `services/evaluator/src/iacode_evaluator/engine.py` | `QualityCancellationTests`; live scenario. |
 
 ## 7. Sandbox-only execution boundary
@@ -108,7 +108,7 @@ ends at `READY_FOR_REVIEW` and a later run owns the Gate verdict.
 | Key | Requirement | Artifact | Evidence |
 |---|---|---|---|
 | 9.1 | Quality evidence uses the existing artifact store and records a content digest, byte size, media type, producer, source inputs, creation time, retention class, and rights. | `services/evaluator/src/iacode_evaluator/evidence.py` | `QualityEvidenceTests`; integration test against MinIO. |
-| 9.2 | Evidence is content-addressed and immutable: a digest collision with different bytes, overwrite, rename, or deletion through the evaluator is refused. | `services/evaluator/src/iacode_evaluator/evidence.py` | `test_evidence_cannot_be_replaced_or_mutated`. |
+| 9.2 | Evidence is content-addressed and immutable: a digest collision with different bytes, overwrite, rename, or deletion through the evaluator is refused. | `services/evaluator/src/iacode_evaluator/evidence.py` | `test_evidence_tampering_missing_bytes_and_metadata_conflicts_fail`. |
 | 9.3 | A stored evidence reference is resolved and re-hashed before it can support a verdict; missing, truncated-without-artifact, or digest-mismatched evidence fails the run. | `services/evaluator/src/iacode_evaluator/evidence.py` | `QualityEvidenceResolutionTests`. |
 | 9.4 | Inline summaries are bounded and secret-redacted; complete output is an artifact, never a database field, API response, metric label, or log record. | `services/evaluator/src/iacode_evaluator/evidence.py` | `QualitySecretContainmentTests`. |
 | 9.5 | Evidence reproduction replays the frozen plan against the same snapshot and policy, records a new run, and compares result/evidence digests without rewriting the original. | `services/evaluator/src/iacode_evaluator/reproduce.py` | `QualityReproductionTests`; live reproduction report. |
@@ -122,8 +122,8 @@ ends at `READY_FOR_REVIEW` and a later run owns the Gate verdict.
 | 10.3 | `PASS` requires the exact applicable mandatory set, every result successful, every required evidence reference resolved, and every configured threshold satisfied. | `services/evaluator/src/iacode_evaluator/verdict.py` | `FalsePassRejectionTests`; positive simulation. |
 | 10.4 | Coverage is evaluated only when configured; below-threshold or unreadable coverage fails, while legitimately unconfigured coverage is justified `NOT_APPLICABLE` and never counted as `PASS`. | `services/evaluator/src/iacode_evaluator/verdict.py` | `CoverageVerdictTests`. |
 | 10.5 | Severity, category, location, fingerprint, message, check identity, and evidence identify a finding; equal findings deduplicate deterministically without hiding recurrence. | `services/evaluator/src/iacode_evaluator/findings.py` | `QualityFindingTests`. |
-| 10.6 | The verdict is a pure derivation from the frozen policy, plan, results, and resolved evidence; no API, runner, database row, or caller may submit it. | `services/evaluator/src/iacode_evaluator/verdict.py` | `test_no_public_input_accepts_a_verdict`. |
-| 10.7 | Re-deriving a stored verdict must produce the same value and digest; disagreement marks the run invalid and never overwrites history. | `services/evaluator/src/iacode_evaluator/verdict.py` | `test_stored_verdict_is_rederived_not_trusted`. |
+| 10.6 | The verdict is a pure derivation from the frozen policy, plan, results, and resolved evidence; no API, runner, database row, or caller may submit it. | `services/evaluator/src/iacode_evaluator/verdict.py` | `test_complete_resolved_success_is_the_only_pass`; `test_a_request_cannot_smuggle_execution_or_a_verdict`. |
+| 10.7 | Re-deriving a stored verdict must produce the same value and digest; disagreement marks the run invalid and never overwrites history. | `services/evaluator/src/iacode_evaluator/verdict.py` | `test_a_stored_verdict_is_rederived_not_overwritten`. |
 
 ## 11. Persistence and migration
 
@@ -132,7 +132,7 @@ ends at `READY_FOR_REVIEW` and a later run owns the Gate verdict.
 | 11.1 | Relational persistence records quality plans, runs, checks, results, findings, evidence references, verdicts, and append-only run events with foreign keys and closed status constraints. | `packages/persistence/src/iacode_persistence/models.py`, `apps/api/migrations/versions/0006_quality_engine.py` | `QualityMigrationTests`; `QualityStoreTests`. |
 | 11.2 | Plan content, result content, and verdict content are immutable after insertion; lifecycle updates may change only the declared run state and timestamps. | `services/evaluator/src/iacode_evaluator/store.py` | `QualityStoreImmutabilityTests`. |
 | 11.3 | Idempotency keys and uniqueness constraints make duplicate create, dispatch, callback, event, and verdict operations return the recorded fact rather than create a second one. | `services/evaluator/src/iacode_evaluator/store.py` | `QualityIdempotencyTests`. |
-| 11.4 | The event that explains a state is committed before the state a reader may act on, including every terminal transition. | `services/evaluator/src/iacode_evaluator/store.py` | `test_events_precede_observable_terminal_states`. |
+| 11.4 | The event that explains a state is committed before the state a reader may act on, including every terminal transition. | `services/evaluator/src/iacode_evaluator/store.py` | `test_event_is_visible_before_the_transitioned_state`. |
 | 11.5 | Migration `0006` upgrades from zero and from `0005`, downgrades cleanly, and leaves no Alembic autogenerate diff. | `apps/api/migrations/versions/0006_quality_engine.py` | Recorded migration reversibility and autogenerate checks. |
 | 11.6 | No quality table stores a credential, full command output, host environment, or training eligibility defaulting to true. | `packages/persistence/src/iacode_persistence/models.py` | `QualityPersistenceSecurityTests`. |
 
@@ -189,7 +189,7 @@ ends at `READY_FOR_REVIEW` and a later run owns the Gate verdict.
 | Key | Requirement | Artifact | Evidence |
 |---|---|---|---|
 | 17.1 | Metrics cover planned, active, completed, failed, cancelled, and timed-out runs; check duration/status; findings by bounded severity/category; evidence writes; and verdict derivations. | `services/evaluator/src/iacode_evaluator/telemetry.py` | `QualityMetricsTests`. |
-| 17.2 | Metric labels are closed and low-cardinality; project path, command, output, finding message, digest, run identifier, and artifact identifier are never labels. | `services/evaluator/src/iacode_evaluator/telemetry.py` | `test_quality_metric_labels_are_bounded`. |
+| 17.2 | Metric labels are closed and low-cardinality; project path, command, output, finding message, digest, run identifier, and artifact identifier are never labels. | `services/evaluator/src/iacode_evaluator/telemetry.py` | `test_metric_names_and_labels_are_closed_and_low_cardinality`. |
 | 17.3 | Logs carry correlation, run, plan, check, sandbox, status, duration, and reason but never full output, command content, secret, host environment, or evidence body. | `services/evaluator/src/iacode_evaluator/telemetry.py` | `QualityLogTests`. |
 | 17.4 | Prometheus scrapes the evaluator and the operations runbook covers lifecycle, policy, runners, sandbox boundary, evidence, reproduction, recovery, and troubleshooting. | `infra/prometheus/prometheus.yml`, `docs/runbooks/QUALITY-ENGINE.md` | `QualityDocumentationTests`; live scrape. |
 

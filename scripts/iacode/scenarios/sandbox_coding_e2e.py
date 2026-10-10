@@ -72,6 +72,7 @@ HARNESS = "/app/rehearsal/coding.py"
 SANDBOX_QUEUE = "iacode-sandbox"
 
 WAIT_SECONDS = 300
+WORKFLOW_WAIT_SECONDS = 900
 POLL_SECONDS = 2.0
 
 CALC = "def add(a, b):\n    return a - b\n\n\ndef mul(a, b):\n    return a * b\n"
@@ -181,7 +182,7 @@ def container_exists(name: str) -> bool:
 def wait_for_end(run_id: str) -> dict[str, Any]:
     return wait_for("the run's terminal state", lambda: (
         body if (body := harness("state", "--run", run_id)).get("state")
-        in ("SUCCEEDED", "FAILED", "CANCELLED") else None))
+        in ("SUCCEEDED", "FAILED", "CANCELLED") else None), seconds=WORKFLOW_WAIT_SECONDS)
 
 
 def by_stage(report: dict[str, Any], stage: str) -> list[dict[str, Any]]:

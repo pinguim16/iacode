@@ -4554,7 +4554,7 @@
           "section": "2. Versioned quality contracts",
           "description": "Contract vocabularies are closed and reject missing fields, extra fields, wrong types, invalid values, duplicate identifiers, and unsupported versions with distinct reasons.",
           "artifact": "`packages/contracts/src/iacode_contracts/quality.py`",
-          "evidence": "`QualityContractTests`; `test_contract_failures_name_the_actual_defect`.",
+          "evidence": "`QualityContractTests`; `test_unknown_fields_and_unsupported_versions_are_refused`.",
           "mandatory": true
         },
         {
@@ -4562,7 +4562,7 @@
           "section": "2. Versioned quality contracts",
           "description": "Every contract round-trips without losing identity, ordering, timestamps, digests, policy references, sandbox references, or artifact references.",
           "artifact": "`packages/contracts/src/iacode_contracts/quality.py`",
-          "evidence": "`test_every_quality_contract_round_trips`.",
+          "evidence": "`test_contracts_round_trip_without_losing_the_frozen_plan`.",
           "mandatory": true
         },
         {
@@ -4610,7 +4610,7 @@
           "section": "3. Project profile and detection",
           "description": "Ambiguous or unknown toolchains produce an explicit unsupported/ambiguous result and never an invented stack or a false `PASS`.",
           "artifact": "`services/evaluator/src/iacode_evaluator/projects.py`",
-          "evidence": "`test_unknown_and_ambiguous_projects_do_not_invent_a_profile`.",
+          "evidence": "`test_unknown_and_ambiguous_projects_are_explicit`.",
           "mandatory": true
         },
         {
@@ -4650,7 +4650,7 @@
           "section": "4. Canonical quality policy",
           "description": "The requested project configuration may add checks or lower limits but cannot remove a mandatory check, raise a limit, weaken a threshold, or alter a verdict rule.",
           "artifact": "`services/evaluator/src/iacode_evaluator/policy.py`",
-          "evidence": "`test_project_configuration_cannot_weaken_policy`.",
+          "evidence": "`test_configuration_can_only_add_declared_checks_or_lower_a_limit`.",
           "mandatory": true
         },
         {
@@ -4658,7 +4658,7 @@
           "section": "4. Canonical quality policy",
           "description": "Applicability is derived from the project profile: an empty applicable set is justified `NOT_APPLICABLE`, while a missing required set is `FAIL`.",
           "artifact": "`services/evaluator/src/iacode_evaluator/policy.py`",
-          "evidence": "`test_empty_applicability_is_not_a_missing_requirement`.",
+          "evidence": "`test_unit_checks_are_not_applicable_without_test_sources`; `test_an_empty_applicable_set_is_not_a_vacuous_pass`.",
           "mandatory": true
         },
         {
@@ -4682,7 +4682,7 @@
           "section": "5. Deterministic quality planning",
           "description": "Plan identity is a deterministic digest of canonical content; equal inputs produce the same plan and any material input change produces a different plan.",
           "artifact": "`services/evaluator/src/iacode_evaluator/planner.py`",
-          "evidence": "`test_plan_identity_is_deterministic_and_input_bound`.",
+          "evidence": "`test_equal_inputs_make_the_same_plan_identity`.",
           "mandatory": true
         },
         {
@@ -4698,7 +4698,7 @@
           "section": "5. Deterministic quality planning",
           "description": "A plan cannot carry a caller-authored expected verdict, result, evidence digest, sandbox result, or hidden command.",
           "artifact": "`services/evaluator/src/iacode_evaluator/planner.py`",
-          "evidence": "`test_a_plan_cannot_smuggle_a_verdict_or_result`.",
+          "evidence": "`test_a_request_cannot_smuggle_execution_or_a_verdict`.",
           "mandatory": true
         },
         {
@@ -4706,7 +4706,7 @@
           "section": "5. Deterministic quality planning",
           "description": "The plan exposes why every check is mandatory, optional, or not applicable and identifies the policy rule that decided it.",
           "artifact": "`services/evaluator/src/iacode_evaluator/planner.py`",
-          "evidence": "`test_each_planned_check_has_a_policy_reason`.",
+          "evidence": "`test_plan_freezes_commands_policy_limits_and_reasons`.",
           "mandatory": true
         },
         {
@@ -4746,7 +4746,7 @@
           "section": "6. Runner registry and check kinds",
           "description": "Required checks execute despite an earlier failure unless their declared dependency makes execution impossible; every skipped check records the exact dependency reason.",
           "artifact": "`services/evaluator/src/iacode_evaluator/engine.py`",
-          "evidence": "`test_failure_does_not_hide_independent_check_results`.",
+          "evidence": "`test_one_failure_does_not_hide_independent_results`.",
           "mandatory": true
         },
         {
@@ -4866,7 +4866,7 @@
           "section": "9. Evidence store and immutability",
           "description": "Evidence is content-addressed and immutable: a digest collision with different bytes, overwrite, rename, or deletion through the evaluator is refused.",
           "artifact": "`services/evaluator/src/iacode_evaluator/evidence.py`",
-          "evidence": "`test_evidence_cannot_be_replaced_or_mutated`.",
+          "evidence": "`test_evidence_tampering_missing_bytes_and_metadata_conflicts_fail`.",
           "mandatory": true
         },
         {
@@ -4938,7 +4938,7 @@
           "section": "10. Results, findings, and verdict rules",
           "description": "The verdict is a pure derivation from the frozen policy, plan, results, and resolved evidence; no API, runner, database row, or caller may submit it.",
           "artifact": "`services/evaluator/src/iacode_evaluator/verdict.py`",
-          "evidence": "`test_no_public_input_accepts_a_verdict`.",
+          "evidence": "`test_complete_resolved_success_is_the_only_pass`; `test_a_request_cannot_smuggle_execution_or_a_verdict`.",
           "mandatory": true
         },
         {
@@ -4946,7 +4946,7 @@
           "section": "10. Results, findings, and verdict rules",
           "description": "Re-deriving a stored verdict must produce the same value and digest; disagreement marks the run invalid and never overwrites history.",
           "artifact": "`services/evaluator/src/iacode_evaluator/verdict.py`",
-          "evidence": "`test_stored_verdict_is_rederived_not_trusted`.",
+          "evidence": "`test_a_stored_verdict_is_rederived_not_overwritten`.",
           "mandatory": true
         },
         {
@@ -4978,7 +4978,7 @@
           "section": "11. Persistence and migration",
           "description": "The event that explains a state is committed before the state a reader may act on, including every terminal transition.",
           "artifact": "`services/evaluator/src/iacode_evaluator/store.py`",
-          "evidence": "`test_events_precede_observable_terminal_states`.",
+          "evidence": "`test_event_is_visible_before_the_transitioned_state`.",
           "mandatory": true
         },
         {
@@ -5194,7 +5194,7 @@
           "section": "17. Observability and operations",
           "description": "Metric labels are closed and low-cardinality; project path, command, output, finding message, digest, run identifier, and artifact identifier are never labels.",
           "artifact": "`services/evaluator/src/iacode_evaluator/telemetry.py`",
-          "evidence": "`test_quality_metric_labels_are_bounded`.",
+          "evidence": "`test_metric_names_and_labels_are_closed_and_low_cardinality`.",
           "mandatory": true
         },
         {

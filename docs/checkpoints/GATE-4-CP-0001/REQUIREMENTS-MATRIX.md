@@ -181,3 +181,16 @@ Expected set derived by: `policies.expected_requirement_refs over docs/GATE-4-CH
 | `LESSON-REQ-0070` | `lesson:LSN-0071` | yes | `NOT_STARTED` | Verify every quality image must provision snapshots on its oldest runtime and prepare each isolated check | LESSON-PREFLIGHT.json LESSON-REQ-0070 |
 | `LESSON-REQ-0071` | `lesson:LSN-0072` | yes | `NOT_STARTED` | Verify secret findings and reviewed false positives must share one policy-owned taxonomy | LESSON-PREFLIGHT.json LESSON-REQ-0071 |
 | `LESSON-REQ-0072` | `lesson:LSN-0073` | yes | `NOT_STARTED` | Verify the canonical lint denominator must cover every detected project root | LESSON-PREFLIGHT.json LESSON-REQ-0072 |
+| `LESSON-REQ-0073` | `lesson:LSN-0074` | yes | `NOT_STARTED` | Verify an importable source tree is not an installed or repository-configured test environment | LESSON-PREFLIGHT.json LESSON-REQ-0073 |
+| `LESSON-REQ-0074` | `lesson:LSN-0075` | yes | `NOT_STARTED` | Verify offline package installation requires its build backend inside the quality image | LESSON-PREFLIGHT.json LESSON-REQ-0074 |
+| `LESSON-REQ-0075` | `lesson:LSN-0076` | yes | `NOT_STARTED` | Verify projected nested configuration requires an explicit monorepo root | LESSON-PREFLIGHT.json LESSON-REQ-0075 |
+| `LESSON-REQ-0076` | `lesson:LSN-0077` | yes | `NOT_STARTED` | Verify harness wait bounds must reflect workload size without changing product deadlines | LESSON-PREFLIGHT.json LESSON-REQ-0076 |
+| `LESSON-REQ-0077` | `lesson:LSN-0078` | yes | `NOT_STARTED` | Verify evidence recorders must resolve caller-supplied commit references before execution | LESSON-PREFLIGHT.json LESSON-REQ-0077 |
+| `LESSON-REQ-0078` | `lesson:LSN-0079` | yes | `NOT_STARTED` | Verify test discovery and the unit runner must cover the same project scope | LESSON-PREFLIGHT.json LESSON-REQ-0078 |
+| `LESSON-REQ-0079` | `lesson:LSN-0080` | yes | `NOT_STARTED` | Verify a failed verification stage must not leave an older PASS report addressable | LESSON-PREFLIGHT.json LESSON-REQ-0079 |
+| `LESSON-REQ-0080` | `lesson:LSN-0081` | yes | `NOT_STARTED` | Verify canonical requirement evidence must name a test the repository actually discovers | LESSON-PREFLIGHT.json LESSON-REQ-0080 |
+| `LESSON-REQ-0081` | `lesson:LSN-0082` | yes | `NOT_STARTED` | Verify engineering memory cannot depend on an ephemeral generated report | LESSON-PREFLIGHT.json LESSON-REQ-0081 |
+| `LESSON-REQ-0082` | `lesson:LSN-0083` | yes | `NOT_STARTED` | Verify a command that decodes captured UTF-8 must also configure the stream that re-emits it | LESSON-PREFLIGHT.json LESSON-REQ-0082 |
+| `LESSON-REQ-0083` | `lesson:LSN-0084` | yes | `NOT_STARTED` | Verify a historical Gate documentation test must derive the current entry-point state | LESSON-PREFLIGHT.json LESSON-REQ-0083 |
+| `LESSON-REQ-0084` | `lesson:LSN-0085` | yes | `NOT_STARTED` | Verify a source-based control must assert syntax semantics rather than formatter layout | LESSON-PREFLIGHT.json LESSON-REQ-0084 |
+| `LESSON-REQ-0085` | `lesson:LSN-0086` | yes | `NOT_STARTED` | Verify a subprocess assertion must preserve the exit code when both streams are empty | LESSON-PREFLIGHT.json LESSON-REQ-0085 |

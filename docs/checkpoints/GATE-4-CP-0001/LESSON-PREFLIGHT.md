@@ -4,9 +4,9 @@
 - Scope: `quality engine, evaluation runners, immutable evidence store, verdict rules, false-PASS rejection, reproducible evidence, sandboxed execution, agent-runtime integration, promotion evidence`
 - Technologies: _none declared_
 - Modules: _none declared_
-- Generated: `2026-10-09T20:23:14Z`
-- Lessons considered: 73
-- Lessons applicable: 72
+- Generated: `2026-10-10T02:38:19Z`
+- Lessons considered: 86
+- Lessons applicable: 85
 
 Every applicable lesson below is a requirement of this Gate. The derived identifiers must
 appear in `REQUIREMENTS-MATRIX.json`, and the Delivery Completeness Validator fails the
@@ -86,6 +86,19 @@ delivery when one is absent.
 | `LSN-0071` Every quality image must provision snapshots on its oldest runtime and prepare each isolated check | `GUARDED` | HIGH | `LESSON-REQ-0070` | For every shared helper and isolated quality runner, test the oldest pinned runtime actually used by an image and prove each check prepares all dependencies it needs without relying on a previous sandbox session. |
 | `LSN-0072` Secret findings and reviewed false positives must share one policy-owned taxonomy | `GUARDED` | HIGH | `LESSON-REQ-0071` | Whenever more than one gate scans secrets, prove all scanners share the policy-owned finding taxonomy and digest-bound allowance source, and that an unallowlisted match remains blocking. |
 | `LSN-0073` The canonical lint denominator must cover every detected project root | `GUARDED` | HIGH | `LESSON-REQ-0072` | For every manually scoped repository-wide quality command, derive or test its denominator against the current project inventory so a newly detected root cannot remain outside a green gate. |
+| `LSN-0074` An importable source tree is not an installed or repository-configured test environment | `GUARDED` | HIGH | `LESSON-REQ-0073` | For Python tests executed from a nested project root, prove the sandbox provides installed distribution metadata and repository-root policy/configuration without reading or writing the host. |
+| `LSN-0075` Offline package installation requires its build backend inside the quality image | `GUARDED` | HIGH | `LESSON-REQ-0074` | Whenever a sandbox performs an offline package installation, prove every declared build backend is pinned in the content-addressed execution image and usable by the non-root runtime. |
+| `LSN-0076` Projected nested configuration requires an explicit monorepo root | `GUARDED` | HIGH | `LESSON-REQ-0075` | When repository configuration is projected into a nested project, provide an explicit trusted repository root and prove source-boundary scans do not reinterpret the projection as ownership. |
+| `LSN-0077` Harness wait bounds must reflect workload size without changing product deadlines | `GUARDED` | HIGH | `LESSON-REQ-0076` | For a functional harness whose workload cardinality differs materially by scenario, prove its bounded wait covers the largest legitimate execution without weakening the product's own timeout or deadline. |
+| `LSN-0078` Evidence recorders must resolve caller-supplied commit references before execution | `GUARDED` | HIGH | `LESSON-REQ-0077` | Before an evidence recorder executes a command, resolve every caller-supplied commit reference to a real canonical commit and normalize repeated provenance inputs. |
+| `LSN-0079` Test discovery and the unit runner must cover the same project scope | `GUARDED` | HIGH | `LESSON-REQ-0078` | For every test applicability rule, prove the corresponding closed runner collects the same project scope and that a failing source at each recognized location is observed. |
+| `LSN-0080` A failed verification stage must not leave an older PASS report addressable | `GUARDED` | HIGH | `LESSON-REQ-0079` | Whenever a verification stage writes to a reusable report path, prove the old artifact is removed before execution and cannot survive a failed rerun as current evidence. |
+| `LSN-0081` Canonical requirement evidence must name a test the repository actually discovers | `GUARDED` | HIGH | `LESSON-REQ-0080` | Before a canonical checklist is accepted, resolve every named test identity against the suite registry rather than treating prose-like test labels as evidence. |
+| `LSN-0082` Engineering memory cannot depend on an ephemeral generated report | `GUARDED` | HIGH | `LESSON-REQ-0081` | Keep organizational memory evidence in committed source or checkpoint-owned artifacts; reject references to regenerable runtime output. |
+| `LSN-0083` A command that decodes captured UTF-8 must also configure the stream that re-emits it | `GUARDED` | MEDIUM | `LESSON-REQ-0082` | For every executable command that captures text from a child process and prints it, configure both the child decoder and the parent output stream explicitly. |
+| `LSN-0084` A historical Gate documentation test must derive the current entry-point state | `GUARDED` | MEDIUM | `LESSON-REQ-0083` | When a predecessor regression test inspects a current entry point, derive current lifecycle identifiers and keep only genuinely historical references fixed. |
+| `LSN-0085` A source-based control must assert syntax semantics rather than formatter layout | `GUARDED` | MEDIUM | `LESSON-REQ-0084` | When a control judges source structure, parse the language representation and compare semantic nodes instead of binding the rule to formatter whitespace or quote style. |
+| `LSN-0086` A subprocess assertion must preserve the exit code when both streams are empty | `GUARDED` | MEDIUM | `LESSON-REQ-0085` | For every subprocess-backed assertion, preserve return code and a non-empty diagnostic even when the child emits nothing; never add a retry that could conceal the outcome. |
 
 ## Why each lesson applies
 
@@ -592,3 +605,94 @@ delivery when one is absent.
 - Required check: For every manually scoped repository-wide quality command, derive or test its denominator against the current project inventory so a newly detected root cannot remain outside a green gate.
 - Required evidence: A denominator test over all non-fixture manifests plus a successful canonical lint execution and matching real repository Quality Engine verdict.
 - Derived requirement: `LESSON-REQ-0072`
+
+### LSN-0074 — An importable source tree is not an installed or repository-configured test environment
+
+- Reason: applies to every Gate; category implementation; severity HIGH; already guarded, so the control must keep holding
+- Required check: For Python tests executed from a nested project root, prove the sandbox provides installed distribution metadata and repository-root policy/configuration without reading or writing the host.
+- Required evidence: A real snapshot test for metadata and monorepo configuration plus a successful evaluation of a committed multi-package repository.
+- Derived requirement: `LESSON-REQ-0073`
+
+### LSN-0075 — Offline package installation requires its build backend inside the quality image
+
+- Reason: applies to every Gate; category implementation; severity HIGH; already guarded, so the control must keep holding
+- Required check: Whenever a sandbox performs an offline package installation, prove every declared build backend is pinned in the content-addressed execution image and usable by the non-root runtime.
+- Required evidence: A real no-network package-installation test through the canonical image-rebuilding sandbox gate.
+- Derived requirement: `LESSON-REQ-0074`
+
+### LSN-0076 — Projected nested configuration requires an explicit monorepo root
+
+- Reason: applies to every Gate; category architecture; severity HIGH; already guarded, so the control must keep holding
+- Required check: When repository configuration is projected into a nested project, provide an explicit trusted repository root and prove source-boundary scans do not reinterpret the projection as ownership.
+- Required evidence: A real nested sandbox test that observes the explicit root plus the complete source-boundary scan from that environment.
+- Derived requirement: `LESSON-REQ-0075`
+
+### LSN-0077 — Harness wait bounds must reflect workload size without changing product deadlines
+
+- Reason: applies to every Gate; category quality; severity HIGH; already guarded, so the control must keep holding
+- Required check: For a functional harness whose workload cardinality differs materially by scenario, prove its bounded wait covers the largest legitimate execution without weakening the product's own timeout or deadline.
+- Required evidence: A control that binds every large-workload terminal wait to a distinct finite bound plus successful real executions within that bound.
+- Derived requirement: `LESSON-REQ-0076`
+
+### LSN-0078 — Evidence recorders must resolve caller-supplied commit references before execution
+
+- Reason: applies to every Gate; category quality; severity HIGH; already guarded, so the control must keep holding
+- Required check: Before an evidence recorder executes a command, resolve every caller-supplied commit reference to a real canonical commit and normalize repeated provenance inputs.
+- Required evidence: A positive canonicalization test and a negative unresolved-commit test proving the command was not executed and the refusal was appended.
+- Derived requirement: `LESSON-REQ-0077`
+
+### LSN-0079 — Test discovery and the unit runner must cover the same project scope
+
+- Reason: applies to every Gate; category testing; severity HIGH; already guarded, so the control must keep holding
+- Required check: For every test applicability rule, prove the corresponding closed runner collects the same project scope and that a failing source at each recognized location is observed.
+- Required evidence: A runner-registry assertion plus a real failing fixture whose root-level test produces FAIL with preserved finding and evidence.
+- Derived requirement: `LESSON-REQ-0078`
+
+### LSN-0080 — A failed verification stage must not leave an older PASS report addressable
+
+- Reason: applies to every Gate; category quality; severity HIGH; already guarded, so the control must keep holding
+- Required check: Whenever a verification stage writes to a reusable report path, prove the old artifact is removed before execution and cannot survive a failed rerun as current evidence.
+- Required evidence: A control that starts with a stale PASS file and observes it absent before the stage command is launched.
+- Derived requirement: `LESSON-REQ-0079`
+
+### LSN-0081 — Canonical requirement evidence must name a test the repository actually discovers
+
+- Reason: applies to every Gate; category testing; severity HIGH; already guarded, so the control must keep holding
+- Required check: Before a canonical checklist is accepted, resolve every named test identity against the suite registry rather than treating prose-like test labels as evidence.
+- Required evidence: A repository-wide specification-evidence test that rejects an unknown identity and passes every canonical row.
+- Derived requirement: `LESSON-REQ-0080`
+
+### LSN-0082 — Engineering memory cannot depend on an ephemeral generated report
+
+- Reason: applies to every Gate; category quality; severity HIGH; already guarded, so the control must keep holding
+- Required check: Keep organizational memory evidence in committed source or checkpoint-owned artifacts; reject references to regenerable runtime output.
+- Required evidence: A repository-wide control proving no lesson evidence path begins with file:var/.
+- Derived requirement: `LESSON-REQ-0081`
+
+### LSN-0083 — A command that decodes captured UTF-8 must also configure the stream that re-emits it
+
+- Reason: applies to every Gate; category tooling; severity MEDIUM; already guarded, so the control must keep holding
+- Required check: For every executable command that captures text from a child process and prints it, configure both the child decoder and the parent output stream explicitly.
+- Required evidence: A repository-wide entry-point scan plus a rejecting fixture for an unconfigured captured-output command.
+- Derived requirement: `LESSON-REQ-0082`
+
+### LSN-0084 — A historical Gate documentation test must derive the current entry-point state
+
+- Reason: applies to every Gate; category testing; severity MEDIUM; already guarded, so the control must keep holding
+- Required check: When a predecessor regression test inspects a current entry point, derive current lifecycle identifiers and keep only genuinely historical references fixed.
+- Required evidence: A documentation test that resolves the current Gate from repository state while retaining predecessor checklist and runbook links.
+- Derived requirement: `LESSON-REQ-0083`
+
+### LSN-0085 — A source-based control must assert syntax semantics rather than formatter layout
+
+- Reason: applies to every Gate; category testing; severity MEDIUM; already guarded, so the control must keep holding
+- Required check: When a control judges source structure, parse the language representation and compare semantic nodes instead of binding the rule to formatter whitespace or quote style.
+- Required evidence: A source-control test that resolves the relevant syntax nodes and their values without substring adjacency assumptions.
+- Derived requirement: `LESSON-REQ-0084`
+
+### LSN-0086 — A subprocess assertion must preserve the exit code when both streams are empty
+
+- Reason: applies to every Gate; category testing; severity MEDIUM; already guarded, so the control must keep holding
+- Required check: For every subprocess-backed assertion, preserve return code and a non-empty diagnostic even when the child emits nothing; never add a retry that could conceal the outcome.
+- Required evidence: A mutation test for nonzero return with empty stdout and stderr that observes the exact exit code.
+- Derived requirement: `LESSON-REQ-0085`

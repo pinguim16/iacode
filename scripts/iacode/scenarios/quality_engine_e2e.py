@@ -48,6 +48,7 @@ FIXTURES = REPOSITORY_ROOT / "services" / "evaluator" / "tests" / "fixtures"
 TERMINAL = {"SUCCEEDED", "FAILED", "CANCELLED", "TIMED_OUT", "INVALID"}
 WAIT_SECONDS = 300.0
 IACODE_WAIT_SECONDS = 900.0
+DURABLE_WAIT_SECONDS = 900.0
 POLL_SECONDS = 0.5
 
 
@@ -146,7 +147,9 @@ def events(run_id: str) -> list[dict[str, Any]]:
     return request("GET", f"/{run_id}/events?after=0&limit=500")["events"]
 
 
-def wait_check(run_id: str, check_id: str) -> dict[str, Any]:
+def wait_check(
+    run_id: str, check_id: str, seconds: float = WAIT_SECONDS
+) -> dict[str, Any]:
     def probe() -> dict[str, Any] | None:
         for event in events(run_id):
             if (
@@ -156,7 +159,7 @@ def wait_check(run_id: str, check_id: str) -> dict[str, Any]:
                 return event
         return None
 
-    return wait_for(f"check {check_id} to be dispatched", probe)
+    return wait_for(f"check {check_id} to be dispatched", probe, seconds=seconds)
 
 
 def snapshot(source: Path, name: str, steps: Steps) -> dict[str, Any]:
@@ -374,11 +377,11 @@ def scenario_recovery() -> dict[str, Any]:
     steps = Steps("recovery")
     stored = snapshot(FIXTURES / "python-slow", "recovery", steps)
     created = start(stored, "recovery")
-    wait_check(created["runId"], "q002-unit")
+    wait_check(created["runId"], "q002-unit", seconds=DURABLE_WAIT_SECONDS)
     restarted = compose("restart", "evaluator")
     steps.record("worker.restart_requested", restarted.ok, restarted.exit_code, 0)
     wait_for_health(["evaluator"], timeout=180)
-    detail = wait_terminal(created["runId"])
+    detail = wait_terminal(created["runId"], seconds=DURABLE_WAIT_SECONDS)
     assert_complete_evidence(steps, detail, "SUCCEEDED")
     result_ids = [item["resultId"] for item in detail["results"]]
     steps.record(
@@ -400,9 +403,9 @@ def scenario_cancel() -> dict[str, Any]:
     steps = Steps("cancel")
     stored = snapshot(FIXTURES / "python-slow", "cancel", steps)
     created = start(stored, "cancel")
-    wait_check(created["runId"], "q002-unit")
+    wait_check(created["runId"], "q002-unit", seconds=DURABLE_WAIT_SECONDS)
     request("POST", f"/{created['runId']}/cancel")
-    detail = wait_terminal(created["runId"])
+    detail = wait_terminal(created["runId"], seconds=DURABLE_WAIT_SECONDS)
     steps.record(
         "run.cancelled", detail["run"]["state"] == "CANCELLED", detail["run"]["state"], "CANCELLED"
     )

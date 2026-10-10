@@ -46,7 +46,7 @@ RUNNERS: dict[str, Runner] = {
                 "python",
                 "-m",
                 "pytest",
-                "tests",
+                ".",
                 "-m",
                 "not integration and not engine",
                 "-p",

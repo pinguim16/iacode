@@ -17,11 +17,11 @@ class SandboxImageInputTests:
         assert "apps/web/package-lock.json" in inputs
         assert "services/sandbox/src/iacode_sandbox/helper.py" in inputs
 
-    @pytest.mark.parametrize("profile", ["quality-python", "quality-node", "quality-java"])
-    def test_quality_images_bind_the_policy_owned_secret_scanner(self, profile: str) -> None:
-        inputs = image_inputs(repository_root(), f"services/sandbox/images/{profile}")
-        assert ".iacode/policies/secret-scan-allowlist.json" in inputs
-        assert "services/sandbox/images/quality_secret_scan.py" in inputs
+    def test_quality_images_bind_the_policy_owned_secret_scanner(self) -> None:
+        for profile in ("quality-python", "quality-node", "quality-java"):
+            inputs = image_inputs(repository_root(), f"services/sandbox/images/{profile}")
+            assert ".iacode/policies/secret-scan-allowlist.json" in inputs, profile
+            assert "services/sandbox/images/quality_secret_scan.py" in inputs, profile
 
     def test_an_external_input_changes_the_fingerprint(self, tmp_path: Path) -> None:
         root = tmp_path
@@ -46,14 +46,10 @@ class SandboxImageInputTests:
         lock.write_text("version=2\n", encoding="utf-8")
         assert input_fingerprint(root, "images/quality") != before
 
-    @pytest.mark.parametrize("entry", ["../escape", "/absolute", "missing.lock"])
-    def test_unsafe_or_missing_external_inputs_are_refused(
-        self, tmp_path: Path, entry: str
-    ) -> None:
+    def test_unsafe_or_missing_external_inputs_are_refused(self, tmp_path: Path) -> None:
         context = tmp_path / "images" / "quality"
         context.mkdir(parents=True)
         (context / "Dockerfile").write_text("FROM scratch\n", encoding="utf-8")
-        (context / "image-inputs.json").write_text(json.dumps([entry]), encoding="utf-8")
         for helper in (
             "services/sandbox/src/iacode_sandbox/helper.py",
             "services/sandbox/src/iacode_sandbox/paths.py",
@@ -62,5 +58,9 @@ class SandboxImageInputTests:
             path = tmp_path / helper
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_text(helper, encoding="utf-8")
-        with pytest.raises((ValueError, FileNotFoundError)):
-            image_inputs(tmp_path, "images/quality")
+        for entry in ("../escape", "/absolute", "missing.lock"):
+            (context / "image-inputs.json").write_text(
+                json.dumps([entry]), encoding="utf-8"
+            )
+            with pytest.raises((ValueError, FileNotFoundError)):
+                image_inputs(tmp_path, "images/quality")

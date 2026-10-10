@@ -18,7 +18,7 @@ import zipfile
 from pathlib import Path, PurePosixPath
 from typing import Any
 
-from ledger_common import LedgerError, find_root, load_json, resolve_latest, utc_now
+from ledger_common import LedgerError, find_root, load_json, resolve_latest, use_utf8_stdout, utc_now
 from secret_scan import load_allowlist, scan_text
 
 ZIP_TIME = (1980, 1, 1, 0, 0, 0)
@@ -235,6 +235,7 @@ def main() -> int:
 
 
 if __name__ == "__main__":
+    use_utf8_stdout()
     try:
         sys.exit(main())
     except (LedgerError, OSError, zipfile.BadZipFile) as error:

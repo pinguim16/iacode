@@ -188,9 +188,8 @@ class QualityContractTests:
 
 
 class ProjectProfileTests:
-    @pytest.mark.parametrize(
-        ("files", "stacks"),
-        (
+    def test_every_initial_stack_is_detected_without_execution(self) -> None:
+        cases = (
             ({"pyproject.toml": ""}, ("python",)),
             ({"package.json": "{}"}, ("node",)),
             ({"package.json": "{}", "tsconfig.json": "{}"}, ("node", "typescript")),
@@ -200,12 +199,11 @@ class ProjectProfileTests:
             ),
             ({"pom.xml": "<project/>"}, ("maven",)),
             ({"build.gradle": "plugins {}"}, ("gradle",)),
-        ),
-    )
-    def test_every_initial_stack_is_detected_without_execution(self, files, stacks) -> None:
-        profile = detect_project(files)
-        assert profile.stacks == stacks
-        assert profile.confidence == "HIGH"
+        )
+        for files, stacks in cases:
+            profile = detect_project(files)
+            assert profile.stacks == stacks
+            assert profile.confidence == "HIGH"
 
     def test_unknown_and_ambiguous_projects_are_explicit(self) -> None:
         unknown = detect_project({"README.md": "not a manifest"})
@@ -332,7 +330,9 @@ class QualityPolicyTests:
             get_runner("a project supplied this")
 
     def test_isolated_language_checks_prepare_their_policy_owned_toolchain(self) -> None:
-        assert get_runner("python.unit").command[0] == "iacode-quality-python"
+        python_unit = get_runner("python.unit").command
+        assert python_unit[0] == "iacode-quality-python"
+        assert python_unit[4] == "."
         for identifier in ("node.build", "node.unit", "node.lint", "typescript.static"):
             command = get_runner(identifier).command
             assert command[:2] == ("sh", "-c")
@@ -511,44 +511,44 @@ class FalsePassRejectionTests:
         )
         assert again.digest == verdict.digest
 
-    @pytest.mark.parametrize(
-        "mutation",
-        (
+    def test_each_false_pass_mutation_is_rejected(self) -> None:
+        mutations = (
             "missing-result",
             "failed-result",
             "unresolved-evidence",
             "duplicate-result",
             "wrong-run",
             "unexpected-result",
-        ),
-    )
-    def test_each_false_pass_mutation_is_rejected(self, mutation: str) -> None:
-        plan = python_plan()
-        results = list(passing_results(plan))
-        resolved = {item.digest for result in results for item in result.evidence}
-        if mutation == "missing-result":
-            results.pop()
-        elif mutation == "failed-result":
-            results[0] = results[0].model_copy(update={"status": "FAILED", "exitCode": 1})
-        elif mutation == "unresolved-evidence":
-            resolved.remove(results[0].evidence[0].digest)
-        elif mutation == "duplicate-result":
-            results.append(results[0].model_copy(update={"resultId": "duplicate"}))
-        elif mutation == "wrong-run":
-            results[0] = results[0].model_copy(update={"runId": "other-run"})
-        elif mutation == "unexpected-result":
-            results.append(
-                results[0].model_copy(update={"resultId": "unexpected", "checkId": "not-planned"})
-            )
-        verdict = derive_verdict(
-            run_id="run-1",
-            plan=plan,
-            results=tuple(results),
-            resolved_evidence_digests=resolved,
-            derived_at=NOW,
         )
-        assert verdict.verdict == "FAIL"
-        assert verdict.reasons
+        for mutation in mutations:
+            plan = python_plan()
+            results = list(passing_results(plan))
+            resolved = {item.digest for result in results for item in result.evidence}
+            if mutation == "missing-result":
+                results.pop()
+            elif mutation == "failed-result":
+                results[0] = results[0].model_copy(update={"status": "FAILED", "exitCode": 1})
+            elif mutation == "unresolved-evidence":
+                resolved.remove(results[0].evidence[0].digest)
+            elif mutation == "duplicate-result":
+                results.append(results[0].model_copy(update={"resultId": "duplicate"}))
+            elif mutation == "wrong-run":
+                results[0] = results[0].model_copy(update={"runId": "other-run"})
+            elif mutation == "unexpected-result":
+                results.append(
+                    results[0].model_copy(
+                        update={"resultId": "unexpected", "checkId": "not-planned"}
+                    )
+                )
+            verdict = derive_verdict(
+                run_id="run-1",
+                plan=plan,
+                results=tuple(results),
+                resolved_evidence_digests=resolved,
+                derived_at=NOW,
+            )
+            assert verdict.verdict == "FAIL", mutation
+            assert verdict.reasons, mutation
 
     def test_an_empty_applicable_set_is_not_a_vacuous_pass(self) -> None:
         plan = python_plan()
@@ -588,25 +588,20 @@ class CoverageVerdictTests:
         )
         return base.model_copy(update={"policy": policy, "checks": (*base.checks, coverage)})
 
-    @pytest.mark.parametrize(
-        ("coverage", "expected"),
-        ((80.0, "PASS"), (79.99, "FAIL"), (None, "FAIL")),
-    )
-    def test_configured_coverage_is_measured_not_inferred(
-        self, coverage: float | None, expected: str
-    ) -> None:
-        plan = self.plan()
-        results = list(passing_results(plan))
-        results[-1] = results[-1].model_copy(update={"coveragePercent": coverage})
-        resolved = {item.digest for result in results for item in result.evidence}
-        verdict = derive_verdict(
-            run_id="run-1",
-            plan=plan,
-            results=tuple(results),
-            resolved_evidence_digests=resolved,
-            derived_at=NOW,
-        )
-        assert verdict.verdict == expected
+    def test_configured_coverage_is_measured_not_inferred(self) -> None:
+        for coverage, expected in ((80.0, "PASS"), (79.99, "FAIL"), (None, "FAIL")):
+            plan = self.plan()
+            results = list(passing_results(plan))
+            results[-1] = results[-1].model_copy(update={"coveragePercent": coverage})
+            resolved = {item.digest for result in results for item in result.evidence}
+            verdict = derive_verdict(
+                run_id="run-1",
+                plan=plan,
+                results=tuple(results),
+                resolved_evidence_digests=resolved,
+                derived_at=NOW,
+            )
+            assert verdict.verdict == expected, coverage
 
     def test_a_threshold_without_a_coverage_check_fails_closed(self) -> None:
         base = python_plan()

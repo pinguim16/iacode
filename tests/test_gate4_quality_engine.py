@@ -19,6 +19,8 @@ from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 LEDGER = PROJECT_ROOT / "scripts" / "development-ledger"
+IACODE = PROJECT_ROOT / "scripts" / "iacode"
+sys.path.insert(0, str(IACODE))
 sys.path.insert(0, str(LEDGER))
 
 import check_functional_acceptance  # noqa: E402
@@ -26,42 +28,109 @@ import ledger_common  # noqa: E402
 import policies  # noqa: E402
 import program_state  # noqa: E402
 import review_bundle  # noqa: E402
+import verify as repository_verify  # noqa: E402
 
-GATE = "GATE-4"
+GATE = ledger_common.delivered_gate(PROJECT_ROOT)
 SPECIFICATION = PROJECT_ROOT / "docs" / "GATE-4-CHECKLIST.md"
 
 
 class Gate4QualityCoverageTests(unittest.TestCase):
+    def test_engineering_memory_never_depends_on_ephemeral_var_evidence(self) -> None:
+        lessons = [
+            json.loads(line)
+            for line in (PROJECT_ROOT / ".iacode" / "memory" / "lessons.jsonl")
+            .read_text(encoding="utf-8")
+            .splitlines()
+            if line.strip()
+        ]
+        offenders = {
+            lesson["lessonId"]: evidence
+            for lesson in lessons
+            for evidence in lesson.get("evidence", [])
+            if evidence.startswith("file:var/")
+        }
+        self.assertEqual(offenders, {})
+
+    def test_verification_removes_a_stale_stage_report_before_execution(self) -> None:
+        with tempfile.TemporaryDirectory(dir=PROJECT_ROOT / "var") as directory:
+            report = Path(directory) / "scenario.json"
+            report.write_text('{"result":"PASS"}\n', encoding="utf-8")
+            stage = repository_verify.Stage(
+                name="fixture",
+                description="stale report control",
+                argv=[sys.executable, "probe.py", "--report", str(report)],
+            )
+            repository_verify.clear_stage_report(stage)
+            self.assertFalse(report.exists())
+
     def test_real_repository_scenario_has_a_separate_bounded_wait(self) -> None:
-        source = (
+        quality_source = (
             PROJECT_ROOT / "scripts" / "iacode" / "scenarios" / "quality_engine_e2e.py"
         ).read_text(encoding="utf-8")
-        module = ast.parse(source)
-        assignments = {
+        quality_module = ast.parse(quality_source)
+        quality_assignments = {
             target.id: ast.literal_eval(node.value)
-            for node in module.body
+            for node in quality_module.body
             if isinstance(node, ast.Assign)
             for target in node.targets
             if isinstance(target, ast.Name)
-            and target.id in {"WAIT_SECONDS", "IACODE_WAIT_SECONDS"}
+            and target.id in {"WAIT_SECONDS", "IACODE_WAIT_SECONDS", "DURABLE_WAIT_SECONDS"}
         }
-        self.assertGreaterEqual(assignments["IACODE_WAIT_SECONDS"], 2 * assignments["WAIT_SECONDS"])
-        scenario = next(
-            node
-            for node in module.body
-            if isinstance(node, ast.FunctionDef) and node.name == "scenario_iacode"
+        for scenario_name, bound in (
+            ("scenario_iacode", "IACODE_WAIT_SECONDS"),
+            ("scenario_recovery", "DURABLE_WAIT_SECONDS"),
+            ("scenario_cancel", "DURABLE_WAIT_SECONDS"),
+        ):
+            self.assertGreaterEqual(
+                quality_assignments[bound], 2 * quality_assignments["WAIT_SECONDS"]
+            )
+            scenario = next(
+                node
+                for node in quality_module.body
+                if isinstance(node, ast.FunctionDef) and node.name == scenario_name
+            )
+            bounded_waits = [
+                node
+                for node in ast.walk(scenario)
+                if isinstance(node, ast.Call)
+                and isinstance(node.func, ast.Name)
+                and node.func.id in {"wait_terminal", "wait_check"}
+            ]
+            self.assertTrue(bounded_waits)
+            for wait in bounded_waits:
+                seconds = next(
+                    keyword.value for keyword in wait.keywords if keyword.arg == "seconds"
+                )
+                self.assertIsInstance(seconds, ast.Name)
+                self.assertEqual(seconds.id, bound)
+
+        sandbox_source = (
+            PROJECT_ROOT / "scripts" / "iacode" / "scenarios" / "sandbox_coding_e2e.py"
+        ).read_text(encoding="utf-8")
+        sandbox_module = ast.parse(sandbox_source)
+        sandbox_assignments = {
+            target.id: ast.literal_eval(node.value)
+            for node in sandbox_module.body
+            if isinstance(node, ast.Assign)
+            for target in node.targets
+            if isinstance(target, ast.Name)
+            and target.id in {"WAIT_SECONDS", "WORKFLOW_WAIT_SECONDS"}
+        }
+        self.assertGreaterEqual(
+            sandbox_assignments["WORKFLOW_WAIT_SECONDS"],
+            2 * sandbox_assignments["WAIT_SECONDS"],
         )
-        waits = [
+        wait_for_end = next(
             node
-            for node in ast.walk(scenario)
-            if isinstance(node, ast.Call)
-            and isinstance(node.func, ast.Name)
-            and node.func.id == "wait_terminal"
-        ]
-        self.assertEqual(len(waits), 1)
-        seconds = next(keyword.value for keyword in waits[0].keywords if keyword.arg == "seconds")
-        self.assertIsInstance(seconds, ast.Name)
-        self.assertEqual(seconds.id, "IACODE_WAIT_SECONDS")
+            for node in sandbox_module.body
+            if isinstance(node, ast.FunctionDef) and node.name == "wait_for_end"
+        )
+        workflow_wait = next(
+            node
+            for node in ast.walk(wait_for_end)
+            if isinstance(node, ast.Name) and node.id == "WORKFLOW_WAIT_SECONDS"
+        )
+        self.assertEqual(workflow_wait.id, "WORKFLOW_WAIT_SECONDS")
 
     def test_mandatory_lint_covers_every_python_project_root(self) -> None:
         source = (PROJECT_ROOT / "scripts" / "iacode" / "gates" / "lint.py").read_text(

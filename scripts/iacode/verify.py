@@ -387,8 +387,25 @@ def build_stages(fast: bool) -> list[Stage]:
     return stages
 
 
+def clear_stage_report(stage: Stage) -> None:
+    """Remove a generated stage report so a failed rerun cannot expose stale PASS evidence."""
+    try:
+        marker = stage.argv.index("--report")
+        candidate = Path(stage.argv[marker + 1])
+    except (ValueError, IndexError):
+        return
+    resolved = (candidate if candidate.is_absolute() else REPOSITORY_ROOT / candidate).resolve()
+    try:
+        resolved.relative_to(REPOSITORY_ROOT.resolve())
+    except ValueError:
+        return
+    if resolved.is_file():
+        resolved.unlink()
+
+
 def run(stage: Stage, quiet: bool) -> Stage:
     log(f"--- {stage.name}: {stage.description}")
+    clear_stage_report(stage)
     started = time.monotonic()
     completed = subprocess.run(
         stage.argv,
