@@ -195,3 +195,4 @@ Expected set derived by: `policies.expected_requirement_refs over docs/GATE-4-CH
 | `LESSON-REQ-0084` | `lesson:LSN-0085` | yes | `NOT_STARTED` | Verify a source-based control must assert syntax semantics rather than formatter layout | LESSON-PREFLIGHT.json LESSON-REQ-0084 |
 | `LESSON-REQ-0085` | `lesson:LSN-0086` | yes | `NOT_STARTED` | Verify a subprocess assertion must preserve the exit code when both streams are empty | LESSON-PREFLIGHT.json LESSON-REQ-0085 |
 | `LESSON-REQ-0086` | `lesson:LSN-0087` | yes | `NOT_STARTED` | Verify a rehearsal worker must register every workflow activity boundary | LESSON-PREFLIGHT.json LESSON-REQ-0086 |
+| `LESSON-REQ-0087` | `lesson:LSN-0088` | yes | `NOT_STARTED` | Verify a test inside a built image can consume only inputs copied into that image | LESSON-PREFLIGHT.json LESSON-REQ-0087 |

@@ -30,6 +30,7 @@ TOOLCHAINS = (
         ("21.0.10", "Apache Maven 3.9.12", "Gradle 8.14.3", "Python 3.12.3"),
     ),
 )
+QUALITY_FIXTURES = Path("/app/quality_fixtures")
 
 
 class MemorySnapshots:
@@ -56,6 +57,47 @@ def harness():
 
 
 class QualityImageExecutionTests:
+    def test_python_functional_fixtures_reach_their_intended_test_outcome(
+        self, harness
+    ) -> None:
+        for fixture, expected_status in (
+            ("python-pass", "SUCCEEDED"),
+            ("python-fail", "FAILED"),
+            ("python-slow", "SUCCEEDED"),
+        ):
+            archive = build_snapshot(QUALITY_FIXTURES / fixture)
+            checksum = harness.service.snapshot_reader.add(f"snapshot-{fixture}", archive)
+            run_id = harness.run_id()
+            result = asyncio.run(
+                harness.service.execute(
+                    {
+                        "contractVersion": "1.0.0",
+                        "toolRequestId": harness.run_id(),
+                        "runId": run_id,
+                        "agentRunId": None,
+                        "agent": "quality-engine",
+                        "tool": "shell.exec",
+                        "arguments": {
+                            "command": (
+                                "iacode-quality-python python -m pytest . "
+                                "-m 'not integration and not engine' -q"
+                            )
+                        },
+                        "policy": "quality-python",
+                        "workspace": {
+                            "kind": "snapshot",
+                            "artifactId": f"snapshot-{fixture}",
+                            "checksum": checksum,
+                        },
+                    }
+                )
+            )
+            output = str(result.output.get("stdout", "")) + str(
+                result.output.get("stderr", "")
+            )
+            assert result.status == expected_status, (fixture, result)
+            assert "metadata-generation-failed" not in output, (fixture, output)
+
     def test_every_quality_helper_provisions_a_real_snapshot(self, harness) -> None:
         with tempfile.TemporaryDirectory() as directory:
             source = Path(directory)

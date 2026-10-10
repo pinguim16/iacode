@@ -81,7 +81,7 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 | `LSN-0071` | `GUARDED` | HIGH | implementation | Every quality image must provision snapshots on its oldest runtime and prepare each isolated check | `test_every_quality_helper_provisions_a_real_snapshot`, `test_isolated_language_checks_prepare_their_policy_owned_toolchain` |
 | `LSN-0072` | `GUARDED` | HIGH | security | Secret findings and reviewed false positives must share one policy-owned taxonomy | `test_quality_images_bind_the_policy_owned_secret_scanner`, `test_a_non_allowlisted_credential_shape_fails_the_secret_check` |
 | `LSN-0073` | `GUARDED` | HIGH | quality | The canonical lint denominator must cover every detected project root | `test_mandatory_lint_covers_every_python_project_root` |
-| `LSN-0074` | `GUARDED` | HIGH | implementation | An importable source tree is not an installed or repository-configured test environment | `test_python_unit_runner_installs_metadata_and_exposes_monorepo_policy` |
+| `LSN-0074` | `GUARDED` | HIGH | implementation | An importable source tree is not an installed or repository-configured test environment | `test_python_unit_runner_installs_metadata_and_exposes_monorepo_policy`, `test_python_functional_fixtures_reach_their_intended_test_outcome` |
 | `LSN-0075` | `GUARDED` | HIGH | implementation | Offline package installation requires its build backend inside the quality image | `test_python_unit_runner_installs_metadata_and_exposes_monorepo_policy` |
 | `LSN-0076` | `GUARDED` | HIGH | architecture | Projected nested configuration requires an explicit monorepo root | `test_python_unit_runner_installs_metadata_and_exposes_monorepo_policy`, `test_no_evaluator_module_can_start_a_process` |
 | `LSN-0077` | `GUARDED` | HIGH | quality | Harness wait bounds must reflect workload size without changing product deadlines | `test_real_repository_scenario_has_a_separate_bounded_wait` |
@@ -95,6 +95,7 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 | `LSN-0085` | `GUARDED` | MEDIUM | testing | A source-based control must assert syntax semantics rather than formatter layout | `test_the_verification_adds_the_stages_this_gate_introduces` |
 | `LSN-0086` | `GUARDED` | MEDIUM | testing | A subprocess assertion must preserve the exit code when both streams are empty | `test_an_empty_validator_failure_keeps_its_process_exit_code` |
 | `LSN-0087` | `GUARDED` | HIGH | implementation | A rehearsal worker must register every workflow activity boundary | `test_rehearsal_workers_register_the_post_run_quality_boundary` |
+| `LSN-0088` | `GUARDED` | HIGH | testing | A test inside a built image can consume only inputs copied into that image | `test_built_sandbox_test_image_carries_declared_external_fixture_inputs`, `test_python_functional_fixtures_reach_their_intended_test_outcome` |
 
 ## Detail
 
@@ -1044,14 +1045,15 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 
 ### LSN-0074 — An importable source tree is not an installed or repository-configured test environment
 
-- Status: `GUARDED`, severity HIGH, category implementation, recurrences 0.
+- Status: `GUARDED`, severity HIGH, category implementation, recurrences 1.
 - Source: GATE-4, GATE-4-CP-0001, finding cmd-0070.
 - Symptom: The real repository evaluation imported local Python sources successfully but failed package tests that queried distribution metadata and API tests that resolved repository policy relative to their nested package root.
 - Root cause: The quality wrapper treated PYTHONPATH as equivalent to package installation and assumed a package-root working directory exposed repository-root configuration. Neither property is true in an isolated monorepo sandbox.
 - Resolution: Before a pytest command, install the current project offline with no dependency resolution into sandbox-local temporary site packages and expose the repository's .iacode directory at the nested project root with an internal workspace symlink.
 - Prevention:
   - `test` test_python_unit_runner_installs_metadata_and_exposes_monorepo_policy — A real nested-package snapshot proves distribution metadata and repository policy are both visible through the quality-python wrapper.
-- Evidence: `file:docs/checkpoints/GATE-4-CP-0001/COMMANDS.jsonl`, `file:services/sandbox/images/quality-python/python_runner.py`, `file:services/sandbox/tests/test_quality_images.py`, `file:docs/checkpoints/GATE-4-CP-0001/QUALITY-IACODE-FAIL-CMD-0070.json`
+  - `test` test_python_functional_fixtures_reach_their_intended_test_outcome — Every Python functional fixture is installed and executed in the real no-network quality image, and none may fail during metadata generation.
+- Evidence: `file:docs/checkpoints/GATE-4-CP-0001/COMMANDS.jsonl`, `file:services/sandbox/images/quality-python/python_runner.py`, `file:services/sandbox/tests/test_quality_images.py`, `file:docs/checkpoints/GATE-4-CP-0001/QUALITY-IACODE-FAIL-CMD-0070.json`, `file:services/evaluator/tests/fixtures/python-pass/pyproject.toml`, `file:services/evaluator/tests/fixtures/python-fail/pyproject.toml`, `file:services/evaluator/tests/fixtures/python-slow/pyproject.toml`, `file:docs/checkpoints/GATE-4-CP-0001/QUALITY-RECOVERY-PACKAGING-FAIL-CMD-0173.json`
 
 ### LSN-0075 — Offline package installation requires its build backend inside the quality image
 
@@ -1197,3 +1199,15 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 - Prevention:
   - `test` test_rehearsal_workers_register_the_post_run_quality_boundary — The durability rehearsal worker's actual Temporal activity list includes both post-run quality activities required by the shared workflow.
 - Evidence: `file:services/orchestrator/rehearsal/durability.py`, `file:tests/test_gate4_quality_engine.py`, `file:docs/checkpoints/GATE-4-CP-0001/COMMANDS.jsonl`
+
+### LSN-0088 — A test inside a built image can consume only inputs copied into that image
+
+- Status: `GUARDED`, severity HIGH, category testing, recurrences 0.
+- Source: GATE-4, GATE-4-CP-0001, finding cmd-0174.
+- Symptom: The complete sandbox gate failed before exercising the new Python fixture behavior because the test resolved /evaluator/tests/fixtures from its host source layout, while the built sandbox image contained only /app/sandbox_tests and no evaluator fixture directory.
+- Root cause: The test was authored against the repository filesystem visible to the editor rather than the explicit COPY boundary of the image in which pytest actually runs.
+- Resolution: Copy the evaluator quality fixtures to a declared /app/quality_fixtures path in the sandbox test image and bind the test to that in-image path.
+- Prevention:
+  - `test` test_built_sandbox_test_image_carries_declared_external_fixture_inputs — The Dockerfile copy destination and the test fixture root are parsed and required to agree.
+  - `test` test_python_functional_fixtures_reach_their_intended_test_outcome — The real built image reads and executes every copied functional fixture.
+- Evidence: `file:services/sandbox/Dockerfile`, `file:services/sandbox/tests/test_quality_images.py`, `file:tests/test_gate4_quality_engine.py`, `file:docs/checkpoints/GATE-4-CP-0001/COMMANDS.jsonl`

@@ -4,11 +4,11 @@
   "scope": "quality engine, evaluation runners, immutable evidence store, verdict rules, false-PASS rejection, reproducible evidence, sandboxed execution, agent-runtime integration, promotion evidence",
   "technologies": [],
   "modules": [],
-  "generatedAt": "2026-10-10T03:24:31Z",
+  "generatedAt": "2026-10-10T03:33:47Z",
   "policyVersion": "2.0.0",
-  "inputsFingerprint": "0e7863574004b4473aaeb6fc96714c424393ea51d833a1fd65a6ddf8939c64a0",
-  "lessonsConsidered": 87,
-  "lessonsApplicable": 86,
+  "inputsFingerprint": "d1a1851e10f4d33d4f2d6df0ea2d46d8d4be47816fe85a745cb7bd109c9434f0",
+  "lessonsConsidered": 88,
+  "lessonsApplicable": 87,
   "applicable": [
     {
       "lessonId": "LSN-0001",
@@ -869,6 +869,16 @@
       "requiredCheck": "Every purpose-built worker that hosts a shared workflow must register every activity boundary that workflow can schedule, including not-applicable branches whose decision is made inside an activity.",
       "requiredEvidence": "A worker-registration control plus a successful real restart rehearsal through the workflow's terminal state.",
       "derivedRequirementId": "LESSON-REQ-0086"
+    },
+    {
+      "lessonId": "LSN-0088",
+      "title": "A test inside a built image can consume only inputs copied into that image",
+      "status": "GUARDED",
+      "severity": "HIGH",
+      "reasonApplicable": "applies to every Gate; category testing; severity HIGH; already guarded, so the control must keep holding",
+      "requiredCheck": "Whenever a test runs inside a built image and consumes repository content outside its own copied suite, prove the Dockerfile carries that input and the test resolves the same in-image destination.",
+      "requiredEvidence": "A source-boundary control that binds COPY source and in-image path plus a successful execution through the built image.",
+      "derivedRequirementId": "LESSON-REQ-0087"
     }
   ],
   "derivedRequirements": [
@@ -1473,6 +1483,13 @@
       "description": "Verify a rehearsal worker must register every workflow activity boundary",
       "mandatory": true,
       "requiredEvidence": "A worker-registration control plus a successful real restart rehearsal through the workflow's terminal state."
+    },
+    {
+      "id": "LESSON-REQ-0087",
+      "lessonId": "LSN-0088",
+      "description": "Verify a test inside a built image can consume only inputs copied into that image",
+      "mandatory": true,
+      "requiredEvidence": "A source-boundary control that binds COPY source and in-image path plus a successful execution through the built image."
     }
   ]
 }

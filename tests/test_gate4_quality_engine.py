@@ -35,6 +35,30 @@ SPECIFICATION = PROJECT_ROOT / "docs" / "GATE-4-CHECKLIST.md"
 
 
 class Gate4QualityCoverageTests(unittest.TestCase):
+    def test_built_sandbox_test_image_carries_declared_external_fixture_inputs(self) -> None:
+        dockerfile = (PROJECT_ROOT / "services" / "sandbox" / "Dockerfile").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn(
+            "COPY --chown=iacode:iacode services/evaluator/tests/fixtures "
+            "/app/quality_fixtures",
+            dockerfile,
+        )
+        source = (
+            PROJECT_ROOT / "services" / "sandbox" / "tests" / "test_quality_images.py"
+        ).read_text(encoding="utf-8")
+        module = ast.parse(source)
+        assignment = next(
+            node
+            for node in module.body
+            if isinstance(node, ast.Assign)
+            and any(
+                isinstance(target, ast.Name) and target.id == "QUALITY_FIXTURES"
+                for target in node.targets
+            )
+        )
+        self.assertEqual(ast.unparse(assignment.value), "Path('/app/quality_fixtures')")
+
     def test_durability_scenario_rebuilds_its_rehearsal_worker(self) -> None:
         source = (
             PROJECT_ROOT / "scripts" / "iacode" / "scenarios" / "agent_runtime_durability.py"

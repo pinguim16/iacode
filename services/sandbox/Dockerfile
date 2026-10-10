@@ -88,6 +88,7 @@ COPY --chown=iacode:iacode services/sandbox/src/iacode_sandbox/helper.py service
 # project file whose pytest settings collect it.
 COPY --chown=iacode:iacode services/sandbox/pyproject.toml /app/pyproject.toml
 COPY --chown=iacode:iacode services/sandbox/tests /app/sandbox_tests
+COPY --chown=iacode:iacode services/evaluator/tests/fixtures /app/quality_fixtures
 
 USER iacode
 

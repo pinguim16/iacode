@@ -5,11 +5,11 @@
   "status": "IN_PROGRESS",
   "branch": "main",
   "baseCommit": "92020769ffd19adeb78d432141da5b1fd492f969",
-  "currentCommit": "21a0a267804fcff48c509063c5110a329b777660",
+  "currentCommit": "4feda99a04384f635ad550918098883410496287",
   "dirty": true,
   "startedAt": "2026-10-09T16:25:45Z",
-  "updatedAt": "2026-10-10T03:24:56Z",
-  "nextAllowedAction": "Publish the unit-applicability false-PASS repair, then repeat the negative Quality Engine scenario against that committed tree.",
+  "updatedAt": "2026-10-10T03:33:56Z",
+  "nextAllowedAction": "Publish the offline-installable fixture and built-image input repair, then repeat the sandbox gate and Quality Engine recovery scenario.",
   "blockedBy": [],
   "secondToolValidation": {
     "status": "PENDING_MANUAL",
@@ -22,11 +22,11 @@
   },
   "requirementsMatrix": {
     "path": "REQUIREMENTS-MATRIX.json",
-    "total": 191,
-    "mandatory": 191,
+    "total": 192,
+    "mandatory": 192,
     "complete": 0,
     "partial": 0,
-    "missing": 191,
+    "missing": 192,
     "notApplicable": 0,
     "coveragePercent": 0.0
   },
@@ -66,13 +66,13 @@
     "path": "LESSON-PREFLIGHT.json",
     "gate": "GATE-4",
     "scope": "quality engine, evaluation runners, immutable evidence store, verdict rules, false-PASS rejection, reproducible evidence, sandboxed execution, agent-runtime integration, promotion evidence",
-    "lessonsConsidered": 87,
-    "lessonsApplicable": 86,
-    "derivedRequirements": 86,
+    "lessonsConsidered": 88,
+    "lessonsApplicable": 87,
+    "derivedRequirements": 87,
     "evidence": [
       "LESSON-PREFLIGHT.json",
       "LESSON-PREFLIGHT.md",
-      "cmd-0151"
+      "cmd-0177"
     ]
   },
   "milestone": {

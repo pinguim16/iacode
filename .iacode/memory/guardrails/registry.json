@@ -1090,7 +1090,8 @@
       "kind": "test",
       "reference": "test_python_unit_runner_installs_metadata_and_exposes_monorepo_policy",
       "verifiedBy": [
-        "test_python_unit_runner_installs_metadata_and_exposes_monorepo_policy"
+        "test_python_unit_runner_installs_metadata_and_exposes_monorepo_policy",
+        "test_python_functional_fixtures_reach_their_intended_test_outcome"
       ],
       "lessons": [
         "LSN-0074"
@@ -1267,6 +1268,20 @@
         "LSN-0087"
       ],
       "removingItWouldAllow": "A purpose-built worker to resume the shared workflow and then fail on an unregistered post-run activity, leaving its durable row nonterminal."
+    },
+    {
+      "guardrailId": "GRD-0089",
+      "title": "Built test images carry every external fixture they consume",
+      "kind": "test",
+      "reference": "test_built_sandbox_test_image_carries_declared_external_fixture_inputs",
+      "verifiedBy": [
+        "test_built_sandbox_test_image_carries_declared_external_fixture_inputs",
+        "test_python_functional_fixtures_reach_their_intended_test_outcome"
+      ],
+      "lessons": [
+        "LSN-0088"
+      ],
+      "removingItWouldAllow": "A test that passes on the host to address a repository path that the built image never received, so the real gate fails before exercising its intended behavior."
     }
   ]
 }
