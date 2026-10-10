@@ -6,7 +6,8 @@ The owner mandate, master plan, inherited architecture, and engineering lessons 
 into `docs/GATE-4-CHECKLIST.md`. The canonical parser derives 105 Gate rows. The lesson preflight
 originally derived 58 more; thirty confirmed failure classes observed through implementation and
 canonical verification added LSN-0060 through LSN-0089. One earlier lesson remains explicitly out
-of scope, so implementation is now measured against 193 requirements. The registry is only a
+of scope, so implementation was initially measured against 193 requirements. The clean-clone
+finding `LSN-0090` added one final mandatory lesson row, making the closure denominator 194. The registry is only a
 row-for-row mirror and cannot shrink the source document.
 
 ## D-02 — The baseline is focused; the complete suite belongs to Green Keeper
@@ -85,3 +86,24 @@ The first repaired evaluator rerun (`cmd-0030`) showed that the terminal callbac
 the right code but the generic message used for a run that had not started. The store now reports
 `EARLY_RESULT` for CREATED, PLANNED or QUEUED runs and `LATE_RESULT` for CANCELLING or terminal runs.
 This preserves fail-closed behavior while giving callers an actionable and truthful reason.
+
+## D-12 — Program state is a timestamped pre-seal snapshot
+
+`docs/program/PROGRAM-STATE.json` is derived from checkpoint, Git, remote and master-plan truth
+immediately before final assurance. Its `localCommit` and `remoteCommit` therefore name the last
+published product commit at the recorded `updatedAt`. A tracked file cannot contain the hash of
+the commit that contains itself, so the canonical checkpoint tag remains the authoritative pointer
+after sealing. The snapshot is never rewritten by hand to predict a future commit.
+
+## D-13 — Internal assurance remains distinct from independent verdicts
+
+The Gate 4 attack battery and M2 mirror audit are executed by this implementing run. Their PASS
+outcomes are quality evidence only. `STATE.json.independentReview`, `STATE.json.redTeam` and the
+milestone verdict remain pending; only a later independent checkpoint may grant them.
+
+## D-14 — Repository controls use the versioned Compose environment
+
+The first internal mirror exposed that the evaluator isolation test depended on ignored local
+`.env` state. The control now invokes Compose with `infra/compose/.env.example`, which is the
+versioned vocabulary required to render structure without credentials. Operator and live-stack
+runs continue to use their local `.env`; the structural gate no longer inherits workstation state.

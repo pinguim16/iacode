@@ -1,24 +1,27 @@
 {
   "schemaVersion": "3.2.0",
   "unit": {
-    "executed": false,
-    "passed": 0,
+    "executed": true,
+    "passed": 746,
     "failed": 0,
-    "command": null,
-    "evidence": null
+    "command": "python -m unittest discover -s tests",
+    "evidence": "command:cmd-0250",
+    "runId": "green-keeper-ledger-suite"
   },
   "integration": {
-    "executed": false,
-    "passed": 0,
+    "executed": true,
+    "passed": 929,
     "failed": 0,
-    "command": null,
-    "evidence": null
+    "command": "python scripts/iacode/verify.py --keep-going --report docs/checkpoints/GATE-4-CP-0001/VERIFY.json",
+    "evidence": "command:cmd-0207",
+    "runId": "complete-gate4-verification"
   },
   "e2e": {
-    "executed": false,
-    "passed": 0,
+    "executed": true,
+    "passed": 42,
     "failed": 0,
-    "command": null,
-    "evidence": null
+    "command": "python scripts/iacode/verify.py --keep-going --report docs/checkpoints/GATE-4-CP-0001/VERIFY.json",
+    "evidence": "command:cmd-0207",
+    "runId": "complete-gate4-verification"
   }
 }

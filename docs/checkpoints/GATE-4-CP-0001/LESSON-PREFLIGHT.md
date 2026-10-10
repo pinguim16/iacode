@@ -4,9 +4,9 @@
 - Scope: `quality engine, evaluation runners, immutable evidence store, verdict rules, false-PASS rejection, reproducible evidence, sandboxed execution, agent-runtime integration, promotion evidence`
 - Technologies: _none declared_
 - Modules: _none declared_
-- Generated: `2026-10-10T03:56:16Z`
-- Lessons considered: 89
-- Lessons applicable: 88
+- Generated: `2026-10-10T07:50:10Z`
+- Lessons considered: 90
+- Lessons applicable: 89
 
 Every applicable lesson below is a requirement of this Gate. The derived identifiers must
 appear in `REQUIREMENTS-MATRIX.json`, and the Delivery Completeness Validator fails the
@@ -102,6 +102,7 @@ delivery when one is absent.
 | `LSN-0087` A rehearsal worker must register every workflow activity boundary | `GUARDED` | HIGH | `LESSON-REQ-0086` | Every purpose-built worker that hosts a shared workflow must register every activity boundary that workflow can schedule, including not-applicable branches whose decision is made inside an activity. |
 | `LSN-0088` A test inside a built image can consume only inputs copied into that image | `GUARDED` | HIGH | `LESSON-REQ-0087` | Whenever a test runs inside a built image and consumes repository content outside its own copied suite, prove the Dockerfile carries that input and the test resolves the same in-image destination. |
 | `LSN-0089` Domain not-applicability and operational failure need distinct orchestration outcomes | `GUARDED` | HIGH | `LESSON-REQ-0088` | At every optional domain boundary, prove not-applicable conditions return a bounded negative applicability result while operational errors enter a shared failure taxonomy that can write terminal state. |
+| `LSN-0090` A clean-clone control must use only versioned configuration inputs | `GUARDED` | HIGH | `LESSON-REQ-0089` | Every clean-clone or repository control must consume only versioned configuration inputs; ignored developer-local files may not be preconditions for a passing gate. |
 
 ## Why each lesson applies
 
@@ -720,3 +721,10 @@ delivery when one is absent.
 - Required check: At every optional domain boundary, prove not-applicable conditions return a bounded negative applicability result while operational errors enter a shared failure taxonomy that can write terminal state.
 - Required evidence: A classification control plus real scenarios for the not-applicable and failure paths.
 - Derived requirement: `LESSON-REQ-0088`
+
+### LSN-0090 — A clean-clone control must use only versioned configuration inputs
+
+- Reason: applies to every Gate; category testing; severity HIGH; already guarded, so the control must keep holding
+- Required check: Every clean-clone or repository control must consume only versioned configuration inputs; ignored developer-local files may not be preconditions for a passing gate.
+- Required evidence: A test that executes the controlled command with an explicitly versioned configuration file and a passing clean-clone reproduction.
+- Derived requirement: `LESSON-REQ-0089`

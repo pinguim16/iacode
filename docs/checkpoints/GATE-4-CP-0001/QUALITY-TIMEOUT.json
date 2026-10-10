@@ -1,0 +1,107 @@
+{
+  "schemaVersion": "1.0.0",
+  "result": "PASS",
+  "scenarios": [
+    {
+      "schemaVersion": "1.0.0",
+      "scenario": "timeout",
+      "result": "PASS",
+      "environment": "real-compose-temporal-postgresql-minio-sandbox-container-engine",
+      "steps": [
+        {
+          "step": "snapshot.stored",
+          "result": "PASS",
+          "expected": [
+            "artifactId",
+            "key",
+            "sha256",
+            "sizeBytes"
+          ],
+          "observed": [
+            "artifactId",
+            "key",
+            "sha256",
+            "sizeBytes"
+          ]
+        },
+        {
+          "step": "run.timed_out",
+          "result": "PASS",
+          "expected": "TIMED_OUT",
+          "observed": "TIMED_OUT"
+        },
+        {
+          "step": "check.timeout_recorded",
+          "result": "PASS",
+          "expected": "contains TIMED_OUT",
+          "observed": [
+            "PASSED",
+            "TIMED_OUT",
+            "PASSED",
+            "PASSED",
+            "PASSED",
+            "PASSED",
+            "PASSED"
+          ]
+        },
+        {
+          "step": "verdict.fail_closed",
+          "result": "PASS",
+          "expected": "FAIL",
+          "observed": "FAIL"
+        },
+        {
+          "step": "run.terminal",
+          "result": "PASS",
+          "expected": "TIMED_OUT",
+          "observed": "TIMED_OUT"
+        },
+        {
+          "step": "results.complete",
+          "result": "PASS",
+          "expected": 7,
+          "observed": 7
+        },
+        {
+          "step": "evidence.one_or_more_per_result",
+          "result": "PASS",
+          "expected": ">=7",
+          "observed": 7
+        },
+        {
+          "step": "findings.evidence_resolved",
+          "result": "PASS",
+          "expected": [],
+          "observed": []
+        },
+        {
+          "step": "evidence.rights_closed",
+          "result": "PASS",
+          "expected": "every evidence item trainingAllowed=false and ragAllowed=false",
+          "observed": 7
+        },
+        {
+          "step": "sandbox.no_active_session",
+          "result": "PASS",
+          "expected": "0",
+          "observed": "0"
+        }
+      ],
+      "artifacts": [
+        {
+          "kind": "snapshot",
+          "artifactId": "01a1242f-581f-7000-8415-daff353cb111",
+          "digest": "99d983de58c01dfc38802de09161ffb3e6616bfd5ad4492e713d32430fe15abe",
+          "sizeBytes": 504
+        },
+        {
+          "kind": "quality-run",
+          "runId": "01a1242f-5ff9-7000-8391-6d11283811c6",
+          "planId": "1f17b494121f86c5e1fc0ac6821708288a64fc6bc30ebaa3f5a3e28f2ec3bb9b"
+        }
+      ],
+      "recordedAt": "2026-10-10T05:01:02Z"
+    }
+  ],
+  "recordedAt": "2026-10-10T05:01:02Z"
+}

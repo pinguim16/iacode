@@ -1,0 +1,109 @@
+{
+  "schemaVersion": "1.0.0",
+  "result": "PASS",
+  "scenarios": [
+    {
+      "schemaVersion": "1.0.0",
+      "scenario": "pass",
+      "result": "PASS",
+      "environment": "real-compose-temporal-postgresql-minio-sandbox-container-engine",
+      "steps": [
+        {
+          "step": "snapshot.stored",
+          "result": "PASS",
+          "expected": [
+            "artifactId",
+            "key",
+            "sha256",
+            "sizeBytes"
+          ],
+          "observed": [
+            "artifactId",
+            "key",
+            "sha256",
+            "sizeBytes"
+          ]
+        },
+        {
+          "step": "run.terminal",
+          "result": "PASS",
+          "expected": "SUCCEEDED",
+          "observed": "SUCCEEDED"
+        },
+        {
+          "step": "results.complete",
+          "result": "PASS",
+          "expected": 7,
+          "observed": 7
+        },
+        {
+          "step": "evidence.one_or_more_per_result",
+          "result": "PASS",
+          "expected": ">=7",
+          "observed": 7
+        },
+        {
+          "step": "findings.evidence_resolved",
+          "result": "PASS",
+          "expected": [],
+          "observed": []
+        },
+        {
+          "step": "evidence.rights_closed",
+          "result": "PASS",
+          "expected": "every evidence item trainingAllowed=false and ragAllowed=false",
+          "observed": 7
+        },
+        {
+          "step": "sandbox.no_active_session",
+          "result": "PASS",
+          "expected": "0",
+          "observed": "0"
+        },
+        {
+          "step": "verdict.pass",
+          "result": "PASS",
+          "expected": "PASS",
+          "observed": "PASS"
+        },
+        {
+          "step": "checks.all_passed",
+          "result": "PASS",
+          "expected": [
+            "PASSED"
+          ],
+          "observed": [
+            "PASSED",
+            "PASSED",
+            "PASSED",
+            "PASSED",
+            "PASSED",
+            "PASSED",
+            "PASSED"
+          ]
+        },
+        {
+          "step": "host.sentinel_unchanged",
+          "result": "PASS",
+          "expected": "ec06da5b0924f7972b628373fea9282007c2bfbf4cbfa43521c6d064501a0df6",
+          "observed": "ec06da5b0924f7972b628373fea9282007c2bfbf4cbfa43521c6d064501a0df6"
+        }
+      ],
+      "artifacts": [
+        {
+          "kind": "snapshot",
+          "artifactId": "01a12425-a842-7000-ba1e-2de46fd60739",
+          "digest": "fcbb7d3483d9a8e998c8225ec21967386af569bb9e52ca2071abd9300785f258",
+          "sizeBytes": 607
+        },
+        {
+          "kind": "quality-run",
+          "runId": "01a12425-b06e-7000-b2d0-94f98e97b84c",
+          "planId": "9acba33b69c06ed9285c2f4919b147f0d16354cb8ba3615dcc3ed4a1d427cc5f"
+        }
+      ],
+      "recordedAt": "2026-10-10T04:50:33Z"
+    }
+  ],
+  "recordedAt": "2026-10-10T04:50:33Z"
+}

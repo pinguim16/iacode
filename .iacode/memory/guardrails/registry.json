@@ -1295,6 +1295,19 @@
         "LSN-0089"
       ],
       "removingItWouldAllow": "An unsupported snapshot to fail an otherwise successful agent run, or an operational quality-planning error to escape the runtime taxonomy and leave its durable row nonterminal."
+    },
+    {
+      "guardrailId": "GRD-0091",
+      "title": "Clean-clone controls use only versioned configuration inputs",
+      "kind": "test",
+      "reference": "test_the_evaluator_service_has_no_engine_socket_or_host_project_mount",
+      "verifiedBy": [
+        "test_the_evaluator_service_has_no_engine_socket_or_host_project_mount"
+      ],
+      "lessons": [
+        "LSN-0090"
+      ],
+      "removingItWouldAllow": "A mandatory repository control to pass only when an ignored developer-local configuration file happens to exist."
     }
   ]
 }

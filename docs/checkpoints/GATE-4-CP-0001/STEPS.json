@@ -119,21 +119,29 @@
         "scripts/development-ledger/check_completeness.py"
       ],
       "tests": ["tests/test_gate4_quality_engine.py"],
-      "functionalProof": "Permanent controls derive the functional denominator from the canonical Gate, resolve every reference, reject missing or non-PASS evidence, derive resumable program state, and build deterministic secret-scanned review bundles; live checkpoint artifacts remain for closure.",
-      "evidence": ["cmd-0043"],
-      "status": "IN_PROGRESS"
+      "functionalProof": "Permanent controls derive the functional denominator from the canonical Gate, resolve every reference, reject missing or non-PASS evidence, and the live acceptance artifact passes all 12 derived functional requirements. Program state and the deterministic review bundle remain part of the final closure sequence.",
+      "evidence": ["cmd-0043", "cmd-0208", "FUNCTIONAL-ACCEPTANCE.json", "FUNCTIONAL-ACCEPTANCE-VALIDATION.json"],
+      "status": "COMPLETE"
     },
     {
       "stepId": "G4-S06",
       "requirements": ["GATE-4-16.1..16.5", "GATE-4-19.1..19.4"],
       "expectedBehavior": "Real PASS, FAIL, IACode, reproduction, and adversarial scenarios distinguish truthfully without host effects.",
-      "implementation": [], "tests": [], "functionalProof": null, "evidence": [], "status": "NOT_STARTED"
+      "implementation": ["scripts/iacode/scenarios/quality_engine_e2e.py", "scripts/iacode/scenarios/sandbox_coding_e2e.py", "scripts/development-ledger/gate4_red_team.py"],
+      "tests": ["python scripts/iacode/verify.py --keep-going", "python scripts/development-ledger/check_functional_acceptance.py --write"],
+      "functionalProof": "The complete verifier passed all 42 stages, including real PASS, FAIL, IACode, reproduction, recovery, cancellation, timeout, sandbox coding and forged-result rejection; functional acceptance covers 12/12 derived requirements.",
+      "evidence": ["cmd-0207", "cmd-0208", "VERIFY.json", "FUNCTIONAL-ACCEPTANCE.json"],
+      "status": "COMPLETE"
     },
     {
       "stepId": "G4-S07",
       "requirements": ["GATE-4-20.1..20.8", "all remaining derived requirements"],
       "expectedBehavior": "All mandatory gates and evidence are complete and the implementing run stops at READY_FOR_REVIEW.",
-      "implementation": [], "tests": [], "functionalProof": null, "evidence": [], "status": "NOT_STARTED"
+      "implementation": ["REQUIREMENTS-MATRIX.json", "VERIFY.json", ".iacode/memory/retrospectives/GATE-4-CP-0001.md"],
+      "tests": ["mandatory Green Keeper gate set", "delivery completeness audit", "internal Red Team", "internal mirror audit"],
+      "functionalProof": "All 194 requirements carry resolvable implementation and validation evidence; the complete verifier passed 42/42 stages, the final Green Keeper cycle passed 13/13 mandatory gates, completeness passed 194/194 at 100% evidence coverage, and the internal false-PASS battery defended 10/10 attacks over a valid control.",
+      "evidence": ["cmd-0207", "cmd-0208", "cmd-0250", "cmd-0262", "cmd-0263", "cmd-0264", "cmd-0265", "cmd-0266", "cmd-0267", "REQUIREMENTS-MATRIX.json", "COMPLETENESS-REPORT.json", "M2-INTERNAL-RED-TEAM.json", "M2-INTERNAL-MIRROR.json", "REVIEW-BUNDLE-VALIDATION.json"],
+      "status": "COMPLETE"
     }
   ]
 }

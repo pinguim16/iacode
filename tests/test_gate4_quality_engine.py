@@ -395,6 +395,8 @@ class Gate4MandatoryGateTests(unittest.TestCase):
 
     def test_the_evaluator_service_has_no_engine_socket_or_host_project_mount(self) -> None:
         compose_directory = PROJECT_ROOT / "infra" / "compose"
+        environment_file = compose_directory / ".env.example"
+        self.assertTrue(environment_file.is_file())
         completed = subprocess.run(
             [
                 "docker",
@@ -404,7 +406,7 @@ class Gate4MandatoryGateTests(unittest.TestCase):
                 "--file",
                 str(compose_directory / "docker-compose.yml"),
                 "--env-file",
-                str(compose_directory / ".env"),
+                str(environment_file),
                 "config",
                 "--format",
                 "json",

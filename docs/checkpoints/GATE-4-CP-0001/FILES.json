@@ -1,1 +1,1268 @@
-{"filesRead":[],"filesCreated":[{"path":".iacode/policies/quality-policy.json","reason":"Closed policy or schema required by the Gate 4 quality controls.","hashAfter":"99ed225e7e84b2a5244d7c01bcd2a12a2d6f2409ee91e512eabbc68a6a3045fd"},{"path":".iacode/schemas/functional-acceptance.schema.json","reason":"Closed policy or schema required by the Gate 4 quality controls.","hashAfter":"95a98bfed2c830ddb8317135247ae72cf7d864af631c9ab8589f294a4d0977a5"},{"path":".iacode/schemas/program-state.schema.json","reason":"Closed policy or schema required by the Gate 4 quality controls.","hashAfter":"dd1ac21505d9e5ed1a0f94861d43215712b5d6f26d5fe62808adfa723a93ac5c"},{"path":".iacode/schemas/quality-policy.schema.json","reason":"Closed policy or schema required by the Gate 4 quality controls.","hashAfter":"070d39501840e4e6e1ece528df77e9b8eff418b76afc767736d468735fe40fcc"},{"path":"apps/api/migrations/versions/0006_quality_engine.py","reason":"API, contract, or persistence integration for the Gate 4 quality lifecycle.","hashAfter":"1a140c9f67056aaf9f210b26f9b1773bfa4934cd43e6eabaa0ede7c30fc0529b"},{"path":"apps/api/src/iacode_api/quality/__init__.py","reason":"API, contract, or persistence integration for the Gate 4 quality lifecycle.","hashAfter":"6ff157824d7281b5e31003fe3fed19d81e21d936e217165c0b885e40456134d0"},{"path":"apps/api/src/iacode_api/quality/runtime.py","reason":"API, contract, or persistence integration for the Gate 4 quality lifecycle.","hashAfter":"f04859ffe47325c6805908d738c4aa6d4f4a323be37cf3a63f8fdd9bc94c31d4"},{"path":"apps/api/src/iacode_api/routes/quality.py","reason":"API, contract, or persistence integration for the Gate 4 quality lifecycle.","hashAfter":"3e7d1e56b2ab4e3284f48035c4e2315d046913939adeef6d8950f522d08a9435"},{"path":"apps/api/tests/unit/test_quality_api.py","reason":"API, contract, or persistence integration for the Gate 4 quality lifecycle.","hashAfter":"de2694c2585b70d2a73bbd6acd82b67464a4ddd9b5ef3288cb6a54cedd0fb316"},{"path":"docs/GATE-4-CHECKLIST.md","reason":"Repository documentation updated for the Gate 4 Quality Engine and its operating contract.","hashAfter":"7d292a9d5780a8c2134e6e520087ecd4df5b4e23faa58631a240be834fcb4f0b"},{"path":"docs/adr/ADR-0029-quality-execution-boundary.md","reason":"Architecture decision record for a structural Gate 4 decision.","hashAfter":"e0a99e9553fc8102429c8f01af2614f55b450eb764d45c56b4f0b20c7cc6b487"},{"path":"docs/adr/ADR-0030-quality-evidence-and-verdict-immutability.md","reason":"Architecture decision record for a structural Gate 4 decision.","hashAfter":"b865c8822b4761497e154f05a702f2f197796c7c39bc03d5e7aa24265251e2e8"},{"path":"docs/adr/ADR-0031-project-profiles-select-closed-quality-runners.md","reason":"Architecture decision record for a structural Gate 4 decision.","hashAfter":"c683e5b134369807707a10b243a211ccc45abc638bfb0b40da46daedb18b6b65"},{"path":"docs/checkpoints/GATE-4-CP-0001/AGENT-DURABILITY.json","reason":"Gate 4 checkpoint evidence, state, or delivery record.","hashAfter":"698ae914251a1afbc86e82743af588a3dc967978639feef2eb917c790264036f"},{"path":"docs/checkpoints/GATE-4-CP-0001/BASELINE.md","reason":"Gate 4 checkpoint evidence, state, or delivery record.","hashAfter":"15ec13af91e884b2386580e3ed4efb74711cafdfe8ae7726a857f7df9cb704fa"},{"path":"docs/checkpoints/GATE-4-CP-0001/CLOSURE-REQUIREMENTS.json","reason":"Gate 4 checkpoint evidence, state, or delivery record.","hashAfter":"1bbbd5a0384e2b0962fc71fb55b5db99a062e6dce792766ea92288804d210c65"},{"path":"docs/checkpoints/GATE-4-CP-0001/CLOSURE-REQUIREMENTS.md","reason":"Gate 4 checkpoint evidence, state, or delivery record.","hashAfter":"3d0fabda45b2365980a86ca64a4c0e9c7762a6aca0f745670da495dce48281c8"},{"path":"docs/checkpoints/GATE-4-CP-0001/COMMANDS.jsonl","reason":"Gate 4 checkpoint evidence, state, or delivery record.","hashAfter":"f631b8ec90b82ab9f399e99a5dc0f0d4f6252f0b8b4a8b4dfc169a7c1d4e16f2"},{"path":"docs/checkpoints/GATE-4-CP-0001/DECISIONS.md","reason":"Gate 4 checkpoint evidence, state, or delivery record.","hashAfter":"352da02bacbb540cad111f679818d5f75a7407b7129a6572e9114f92200d1fb8"},{"path":"docs/checkpoints/GATE-4-CP-0001/DIFF-SUMMARY.md","reason":"Gate 4 checkpoint evidence, state, or delivery record.","hashAfter":"ce24f7e19255cb7be873dea0305a8095067a981b34c151aee3b022ab6aa39890"},{"path":"docs/checkpoints/GATE-4-CP-0001/FILES.json","reason":"Gate 4 checkpoint evidence, state, or delivery record."},{"path":"docs/checkpoints/GATE-4-CP-0001/HANDOFF.md","reason":"Gate 4 checkpoint evidence, state, or delivery record.","hashAfter":"f907ec4d1ebdf2eb0f9f1f9f883bb2d83a10e54f58ad555adb518911a7ccbee9"},{"path":"docs/checkpoints/GATE-4-CP-0001/LESSON-PREFLIGHT.json","reason":"Gate 4 checkpoint evidence, state, or delivery record.","hashAfter":"4bc127cc77b5fd1867d98ef860eee1628b738142976bc2f74f5f0482c150325c"},{"path":"docs/checkpoints/GATE-4-CP-0001/LESSON-PREFLIGHT.md","reason":"Gate 4 checkpoint evidence, state, or delivery record.","hashAfter":"7d121d6183017b6ce3163d576790d2e4e84c2f4b87aff6369b23e2ebd31987c0"},{"path":"docs/checkpoints/GATE-4-CP-0001/NEXT.md","reason":"Gate 4 checkpoint evidence, state, or delivery record.","hashAfter":"1249e5c1cbea15b355f87c9807b25fb559c8dd69b40a5ba49543eaf78d5c9dd3"},{"path":"docs/checkpoints/GATE-4-CP-0001/PLAN.md","reason":"Gate 4 checkpoint evidence, state, or delivery record.","hashAfter":"c49f5115d196fc455f39254d1916b615c9f8527188c3f229bec0daee45b84713"},{"path":"docs/checkpoints/GATE-4-CP-0001/PROVENANCE.json","reason":"Gate 4 checkpoint evidence, state, or delivery record.","hashAfter":"260ed42c964a862d8880a155a840c8352c696cb7283f23bf34ed775dd29d9d47"},{"path":"docs/checkpoints/GATE-4-CP-0001/QUALITY-CANCELLATION.json","reason":"Gate 4 checkpoint evidence, state, or delivery record.","hashAfter":"212a2b13215cdb9b0a25086fcd76c905ee2dec522c846ba04bdb325d61549a83"},{"path":"docs/checkpoints/GATE-4-CP-0001/QUALITY-FAIL.json","reason":"Gate 4 checkpoint evidence, state, or delivery record.","hashAfter":"1d837080aba86513ae7de4287b422aef17085e8731c60f5904b13346a2f90a52"},{"path":"docs/checkpoints/GATE-4-CP-0001/QUALITY-FALSE-PASS-CMD-0161.json","reason":"Gate 4 checkpoint evidence, state, or delivery record.","hashAfter":"4272bf336ba099c0483a7532040f6fb76d1d91273e242d80a08187e95dec6d50"},{"path":"docs/checkpoints/GATE-4-CP-0001/QUALITY-IACODE-FAIL-CMD-0054.json","reason":"Gate 4 checkpoint evidence, state, or delivery record.","hashAfter":"816b90938f814e64e49c33a5baee4188b30b71fd222d79d3d47cc1dd2445dd46"},{"path":"docs/checkpoints/GATE-4-CP-0001/QUALITY-IACODE-FAIL-CMD-0070.json","reason":"Gate 4 checkpoint evidence, state, or delivery record.","hashAfter":"e08d6bb70119c72c2e7f0d1bf235cbea77bb0204530ccff9b9f75b0cfdfb0010"},{"path":"docs/checkpoints/GATE-4-CP-0001/QUALITY-IACODE.json","reason":"Gate 4 checkpoint evidence, state, or delivery record.","hashAfter":"beb990cc7081b42c42e0f56e06396b247e9695d6310bf6c7544fce65879b5262"},{"path":"docs/checkpoints/GATE-4-CP-0001/QUALITY-RECOVERY-PACKAGING-FAIL-CMD-0173.json","reason":"Gate 4 checkpoint evidence, state, or delivery record.","hashAfter":"5a9616cfda7b7d3de65bb07f6ee928033bc12b66d16e838348641ef1af4d35af"},{"path":"docs/checkpoints/GATE-4-CP-0001/QUALITY-RECOVERY.json","reason":"Gate 4 checkpoint evidence, state, or delivery record.","hashAfter":"e7edce380b43309c93ae91a3483a91438cbb424d84a107a5e84ef4c267c27f08"},{"path":"docs/checkpoints/GATE-4-CP-0001/QUALITY.json","reason":"Gate 4 checkpoint evidence, state, or delivery record.","hashAfter":"124f1eb1577e0920119f7f183f51eb5eb77d3762d96594dc671725eb8132dd05"},{"path":"docs/checkpoints/GATE-4-CP-0001/REQUIREMENTS-MATRIX.json","reason":"Gate 4 checkpoint evidence, state, or delivery record.","hashAfter":"3860062d2731895e21c611779ee2254e460832b1beadecbc5f0f90fb21a19549"},{"path":"docs/checkpoints/GATE-4-CP-0001/REQUIREMENTS-MATRIX.md","reason":"Gate 4 checkpoint evidence, state, or delivery record.","hashAfter":"455cbc6169063f1213dd8262df523f5064bc3dc72921972f3e5c7c35b0619f0f"},{"path":"docs/checkpoints/GATE-4-CP-0001/REWORK-LOG.jsonl","reason":"Gate 4 checkpoint evidence, state, or delivery record.","hashAfter":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"},{"path":"docs/checkpoints/GATE-4-CP-0001/RISKS.md","reason":"Gate 4 checkpoint evidence, state, or delivery record.","hashAfter":"fc05d13e4e3fbebe76a8d925649df5a5060b81b9e9b6f29851710b974b17e31c"},{"path":"docs/checkpoints/GATE-4-CP-0001/RUN-METADATA.json","reason":"Gate 4 checkpoint evidence, state, or delivery record.","hashAfter":"26832aa4b47033e2846b71ab48da2f7b4acf89c43fdf8678e77d9a7773392040"},{"path":"docs/checkpoints/GATE-4-CP-0001/SANDBOX-CODING.json","reason":"Gate 4 checkpoint evidence, state, or delivery record.","hashAfter":"396c82d164870e5dd6c5d5d507e2ef10bd5a98c212b07b6acc945f7c544b1c5f"},{"path":"docs/checkpoints/GATE-4-CP-0001/SANDBOX-FORGED-RESULT.json","reason":"Gate 4 checkpoint evidence, state, or delivery record.","hashAfter":"1bcbd2226a9cf169e33f1781b5b4a394be63f54884b0389442fff6d3d14da013"},{"path":"docs/checkpoints/GATE-4-CP-0001/SANDBOX-RECOVERY.json","reason":"Gate 4 checkpoint evidence, state, or delivery record.","hashAfter":"f3b22b077ae605bdbf2aff075b132c2ad66af4723dd4935cec971830303f25dc"},{"path":"docs/checkpoints/GATE-4-CP-0001/SANDBOX-TIMEOUT.json","reason":"Gate 4 checkpoint evidence, state, or delivery record.","hashAfter":"208b1dbdfd904a05c3c2278c0637df593b1c934f7efe360686e394508de4b679"},{"path":"docs/checkpoints/GATE-4-CP-0001/STATE.json","reason":"Gate 4 checkpoint evidence, state, or delivery record.","hashAfter":"7e54c28e7742457bd911d70f00a2de731e5f9c52dbf60b89f056624e3024f92d"},{"path":"docs/checkpoints/GATE-4-CP-0001/STATUS.md","reason":"Gate 4 checkpoint evidence, state, or delivery record.","hashAfter":"97a848e985e220cf451474b94e389185b43d9b3d0a09661849320351a0f3a8af"},{"path":"docs/checkpoints/GATE-4-CP-0001/STEPS.json","reason":"Gate 4 checkpoint evidence, state, or delivery record.","hashAfter":"e33feacd55918517f8b0d02b7d3e9b6d04f26f078cf0a3c49905f27fbdafa9a7"},{"path":"docs/checkpoints/GATE-4-CP-0001/TESTS.json","reason":"Gate 4 checkpoint evidence, state, or delivery record.","hashAfter":"cc375c92912d7e27764dccd489791df4faac3a769ee64f08f005d3253a2e60fa"},{"path":"docs/checkpoints/GATE-4-CP-0001/VERIFY-FAIL-CMD-0105.json","reason":"Gate 4 checkpoint evidence, state, or delivery record.","hashAfter":"580651753bf6852a324c816f9e50c868be05400ef7cca72181cb7b2f3f47cdeb"},{"path":"docs/runbooks/QUALITY-ENGINE.md","reason":"Repository documentation updated for the Gate 4 Quality Engine and its operating contract.","hashAfter":"9ae857fdaf676aee605dec577dac1d9a6b51bbe888c09346f5e29759225b52f0"},{"path":"packages/contracts/src/iacode_contracts/quality.py","reason":"API, contract, or persistence integration for the Gate 4 quality lifecycle.","hashAfter":"748e0ee46faa8b2ad4987594703eb265205648e70b35633581a0a2c7622fb27f"},{"path":"scripts/development-ledger/check_functional_acceptance.py","reason":"Executable Gate 4 validation, scenario, delivery, or quality-gate control.","hashAfter":"4b787ab311d8d2b02922bc046f3df133465da4e18b5f8cbbeab89f5e20387d6c"},{"path":"scripts/development-ledger/gate4_red_team.py","reason":"Executable Gate 4 validation, scenario, delivery, or quality-gate control.","hashAfter":"c10af94e97797cdfc5057e41babb6ced9cc090416021086b4fedd79f3bf1c20e"},{"path":"scripts/development-ledger/program_state.py","reason":"Executable Gate 4 validation, scenario, delivery, or quality-gate control.","hashAfter":"c19b87bf7bba5aa564df7dd77ac438bbdbe3fa1481247372d92d4d764f3d848d"},{"path":"scripts/development-ledger/review_bundle.py","reason":"Executable Gate 4 validation, scenario, delivery, or quality-gate control.","hashAfter":"e93ccfefe00c3db01093d32771d319b84942e60ee58e7836b2aa2d3a40466729"},{"path":"scripts/iacode/gates/evaluator_tests.py","reason":"Executable Gate 4 validation, scenario, delivery, or quality-gate control.","hashAfter":"cc14dac12f9a21b7a07419f1f8e8298ff4570f9f567f705e036d25be8b868462"},{"path":"scripts/iacode/scenarios/quality_engine_e2e.py","reason":"Executable Gate 4 validation, scenario, delivery, or quality-gate control.","hashAfter":"bc1518525525688c4a7a7d845f9779986e266d5fa702aa0faa6dc6bc1880ea5e"},{"path":"scripts/iacode/scenarios/quality_persistence.py","reason":"Executable Gate 4 validation, scenario, delivery, or quality-gate control.","hashAfter":"7f4e19f3e33c4cad96725d6c04fcb679587a4f1101ec8a737d064d2ee6a9e79f"},{"path":"services/evaluator/Dockerfile","reason":"Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.","hashAfter":"206b591561c06970f7c7103454bb8314bb02abf291b9b3a6bb923e253f66047a"},{"path":"services/evaluator/pyproject.toml","reason":"Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.","hashAfter":"ff5199f1e0605feb5babc2dbfd160f665cf035cf908deac5a088f43ecc0def0f"},{"path":"services/evaluator/src/iacode_evaluator/__init__.py","reason":"Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.","hashAfter":"c3b9287f4cdc1f7f2903b6f016f5f541930ddb605cd0387008b348941f0ea290"},{"path":"services/evaluator/src/iacode_evaluator/activities.py","reason":"Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.","hashAfter":"926909efa6e5b93df3d2b5bb98503e190307e813f431dab0e0a057649df05820"},{"path":"services/evaluator/src/iacode_evaluator/canonical.py","reason":"Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.","hashAfter":"127226e2c6c2309adcde957fdd071a87f8329ca1927020fc35381414595a3a20"},{"path":"services/evaluator/src/iacode_evaluator/config.py","reason":"Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.","hashAfter":"a1db86d7fa5f13bb2a1e504fb8c0efd41b503c3730863bf4cd1ad03af0fbad8d"},{"path":"services/evaluator/src/iacode_evaluator/configuration.py","reason":"Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.","hashAfter":"ea3c2130d99da08440754604350b9f1e695dfbcce7c3a3a1fa75d0f995382166"},{"path":"services/evaluator/src/iacode_evaluator/engine.py","reason":"Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.","hashAfter":"4d41280460ecbb9e2a749549bfc23bd1fa30c8b9afa25904a9b5336b9168d0be"},{"path":"services/evaluator/src/iacode_evaluator/errors.py","reason":"Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.","hashAfter":"8f3446b27c4730005aa066a9e5dab276c1a924e7ad12756031235454feda3b67"},{"path":"services/evaluator/src/iacode_evaluator/evidence.py","reason":"Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.","hashAfter":"3c0fbe34f8d58313703224b9ab2fa961324c0b0d52c4f2407e1b6fe2ac30c3ab"},{"path":"services/evaluator/src/iacode_evaluator/executor.py","reason":"Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.","hashAfter":"6d28f9c9fc094bb7fb29f9fbd8bee9d3972f4652240b67dfd89550e5c2bf3b80"},{"path":"services/evaluator/src/iacode_evaluator/findings.py","reason":"Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.","hashAfter":"f5471694423ed95ee0ad5283ab2d1ddef7e5670cd29457fc3edee1938d7ae74e"},{"path":"services/evaluator/src/iacode_evaluator/healthcheck.py","reason":"Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.","hashAfter":"5ae459228d04da84eae2b34ca7b95a2f3b75513314ffec6f3633a82628034551"},{"path":"services/evaluator/src/iacode_evaluator/limits.py","reason":"Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.","hashAfter":"b9a4ecf99073bf4ebe1dcdc923dcde4cc182e0f05a894e10cc6a006d1fc46c8e"},{"path":"services/evaluator/src/iacode_evaluator/planner.py","reason":"Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.","hashAfter":"b2b1c512d7618e844fae86de08cf4332e843c75be03d578c572d4b2407576d88"},{"path":"services/evaluator/src/iacode_evaluator/policy.py","reason":"Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.","hashAfter":"38d0050e7d65c8dd8bbb4c54ccc326c28a5575f230d75b8a3c4d6b5984777b5e"},{"path":"services/evaluator/src/iacode_evaluator/projects.py","reason":"Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.","hashAfter":"65d37093af0dfcf4efef5a07499e5c5462a3a0b4614126466f8b2c385f9dbabd"},{"path":"services/evaluator/src/iacode_evaluator/reproduce.py","reason":"Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.","hashAfter":"11ed17e76dee86aba72f91186078f32d652ae39b6f5d89fa241f11a74207954e"},{"path":"services/evaluator/src/iacode_evaluator/runners.py","reason":"Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.","hashAfter":"dd50d9c8c5910a3fe9d3623ba10e1b15b1f7f371fadca07cb72a34f7500a41e2"},{"path":"services/evaluator/src/iacode_evaluator/runtime.py","reason":"Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.","hashAfter":"2d2e656d59b48511b8c765f08a483c40665eb15474317b155f47ffab9210e85c"},{"path":"services/evaluator/src/iacode_evaluator/service.py","reason":"Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.","hashAfter":"fab48d88a1d4c3e4ece2b71301db6b35548c40357c3165d5fcd975f58bbb53b7"},{"path":"services/evaluator/src/iacode_evaluator/snapshots.py","reason":"Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.","hashAfter":"9f8259782bfc8cd932dce6cccc54cf2f1826c01c8a6880698421850673a8f560"},{"path":"services/evaluator/src/iacode_evaluator/store.py","reason":"Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.","hashAfter":"17337c107b90390cd9fa6f5a15d9436842c98f250254de14b5974f174ac3fe66"},{"path":"services/evaluator/src/iacode_evaluator/telemetry.py","reason":"Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.","hashAfter":"ee9a5eec823ab193a305bd6c90dd129dd1a72d6def41a250eebe18ce4c2f1d24"},{"path":"services/evaluator/src/iacode_evaluator/verdict.py","reason":"Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.","hashAfter":"8dbb0d75a76a6b9dc6b7c9ab46a21ff72a3b9477eb0cdfa6320311f99a997300"},{"path":"services/evaluator/src/iacode_evaluator/worker.py","reason":"Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.","hashAfter":"80d8efe04e66d55f4bae2d5bdf57b666490a11087d5724a3010edbfb4f45a747"},{"path":"services/evaluator/src/iacode_evaluator/workflow.py","reason":"Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.","hashAfter":"65896b93b30180a37704b8b470a6c8df90e3184a54651f52817308e4e45e7fb2"},{"path":"services/evaluator/tests/conftest.py","reason":"Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.","hashAfter":"b9dfeb3f2df40b852ce96fc68db34e6a1cb238aa5fbfbe338c74c772772af061"},{"path":"services/evaluator/tests/fixtures/python-fail/calculator.py","reason":"Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.","hashAfter":"1a0005a7735fd488d4c0dad61b5a0e614aa01c1239879a48ebf3b23bf58338a6"},{"path":"services/evaluator/tests/fixtures/python-fail/pyproject.toml","reason":"Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.","hashAfter":"6085123fefd2f542e2b59daf4afb80d8206e56edd2c80de4a0c38eb052c15055"},{"path":"services/evaluator/tests/fixtures/python-fail/test_calculator.py","reason":"Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.","hashAfter":"cbffd70f9bb9cb4cea597937f2ca0f85c0bbea09a1ae291db8471b8ae6a32687"},{"path":"services/evaluator/tests/fixtures/python-pass/calculator.py","reason":"Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.","hashAfter":"1b330dff4c0e577e667a1dc348f831f03802464b775c7f2001ab0ddbf6aaed2b"},{"path":"services/evaluator/tests/fixtures/python-pass/pyproject.toml","reason":"Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.","hashAfter":"db8fe212c0845f44e67afd679820d0fa1f20f66a10f5501556fbcc3a1e748679"},{"path":"services/evaluator/tests/fixtures/python-pass/test_calculator.py","reason":"Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.","hashAfter":"cbffd70f9bb9cb4cea597937f2ca0f85c0bbea09a1ae291db8471b8ae6a32687"},{"path":"services/evaluator/tests/fixtures/python-slow/calculator.py","reason":"Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.","hashAfter":"1b330dff4c0e577e667a1dc348f831f03802464b775c7f2001ab0ddbf6aaed2b"},{"path":"services/evaluator/tests/fixtures/python-slow/pyproject.toml","reason":"Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.","hashAfter":"d7020374b047d241ec75a0dcce003631978caf2807d70393d71b7bea00c108fc"},{"path":"services/evaluator/tests/fixtures/python-slow/test_calculator.py","reason":"Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.","hashAfter":"055eff6ce31ceab06131fd1cc2edd966f07c4713af2330e337410454271b55d1"},{"path":"services/evaluator/tests/integration/test_quality_persistence_integration.py","reason":"Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.","hashAfter":"e1abfb519b750c03c37c6be27b2f192388375e830fe6a876ea473ea37e5e8e8e"},{"path":"services/evaluator/tests/test_core.py","reason":"Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.","hashAfter":"ad2d56f039b944ce026e7306476b0bc4823eaa0d8dad441f8196e9b99f6b7794"},{"path":"services/evaluator/tests/test_persistence.py","reason":"Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.","hashAfter":"d92329885cc8f377b5b89fb087dca766100e820d18af79a2bcd4c4fa3d427867"},{"path":"services/evaluator/tests/test_service.py","reason":"Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.","hashAfter":"ac7e98dc2556aaae48f3dd863ed508efac51f872a54947ba7f54610eb89ad51c"},{"path":"services/evaluator/tests/test_workflow.py","reason":"Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.","hashAfter":"b6c7a18cf95959b8502a4c77307159b2c6d599053a2215023a62ec4f569f14ee"},{"path":"services/sandbox/images/quality-java/Dockerfile","reason":"Sandbox integration, quality image, or regression control required for isolated Gate 4 execution.","hashAfter":"17f1f3d37c7dc5472c288eac5d013cc0502544a9892511e5baee7ae4fb6e389c"},{"path":"services/sandbox/images/quality-java/gitconfig","reason":"Sandbox integration, quality image, or regression control required for isolated Gate 4 execution.","hashAfter":"eea5120eab514b8f9e719a697a21a4df3f3ca0d28bca6bf4dc6eaba15faee848"},{"path":"services/sandbox/images/quality-java/image-inputs.json","reason":"Sandbox integration, quality image, or regression control required for isolated Gate 4 execution.","hashAfter":"639c133341125cd2191ba4526f171b6aeec7d030ca43df5a6e1798ce12f71ee5"},{"path":"services/sandbox/images/quality-java/java_dependencies.py","reason":"Sandbox integration, quality image, or regression control required for isolated Gate 4 execution.","hashAfter":"ad2d6e02a78e34e8b493a2350b8fda9c618c544ace0ce4898898aac56e54194b"},{"path":"services/sandbox/images/quality-java/seed-pom.xml","reason":"Sandbox integration, quality image, or regression control required for isolated Gate 4 execution.","hashAfter":"50fa39c062032dc90cce14e4bd3ee739d502d1c7378d8ddb31fe1b81cd764994"},{"path":"services/sandbox/images/quality-node/Dockerfile","reason":"Sandbox integration, quality image, or regression control required for isolated Gate 4 execution.","hashAfter":"b0a63cbe97316e4b4c0f2d3ce42244843453a1ad7bc4c4f1778f5c383e2be45b"},{"path":"services/sandbox/images/quality-node/gitconfig","reason":"Sandbox integration, quality image, or regression control required for isolated Gate 4 execution.","hashAfter":"eea5120eab514b8f9e719a697a21a4df3f3ca0d28bca6bf4dc6eaba15faee848"},{"path":"services/sandbox/images/quality-node/image-inputs.json","reason":"Sandbox integration, quality image, or regression control required for isolated Gate 4 execution.","hashAfter":"b38b5ca0b3a26bcef7a53dd2cdebdf546e582e188b77ca19c7ee9074663a19cd"},{"path":"services/sandbox/images/quality-node/node_install.sh","reason":"Sandbox integration, quality image, or regression control required for isolated Gate 4 execution.","hashAfter":"f4b94bb9215adb6f5d0017c3e009788d8b530623788ca8aded4f2f59b15eb5d3"},{"path":"services/sandbox/images/quality-python/Dockerfile","reason":"Sandbox integration, quality image, or regression control required for isolated Gate 4 execution.","hashAfter":"51ba69671f0c45ecdeb25b3cc141aeff018798a2b58573a14eada02ee095b231"},{"path":"services/sandbox/images/quality-python/gitconfig","reason":"Sandbox integration, quality image, or regression control required for isolated Gate 4 execution.","hashAfter":"eea5120eab514b8f9e719a697a21a4df3f3ca0d28bca6bf4dc6eaba15faee848"},{"path":"services/sandbox/images/quality-python/image-inputs.json","reason":"Sandbox integration, quality image, or regression control required for isolated Gate 4 execution.","hashAfter":"620db75d694ce43a71d7e030522a7ab5a1b8558984ea76d79e5f00d5e9cba3c7"},{"path":"services/sandbox/images/quality-python/python_runner.py","reason":"Sandbox integration, quality image, or regression control required for isolated Gate 4 execution.","hashAfter":"6f19c4f1ca15b674f4a253f09b3990d80b2e5437628260b9fbe4b7c46fad9282"},{"path":"services/sandbox/images/quality_secret_scan.py","reason":"Sandbox integration, quality image, or regression control required for isolated Gate 4 execution.","hashAfter":"bd2d0f208d5239f420fa6e557dfe5874eb00346e09949e8d9c0b432f2157e845"},{"path":"services/sandbox/tests/test_quality_images.py","reason":"Sandbox integration, quality image, or regression control required for isolated Gate 4 execution.","hashAfter":"05441dcadd276d0b8b4dfe78650d272edf98b4e6416b085273022ddc008f4035"},{"path":"services/sandbox/tests/test_sandbox_images.py","reason":"Sandbox integration, quality image, or regression control required for isolated Gate 4 execution.","hashAfter":"953242716d6ecd24ca74e7299eee6284a3fcc239fe8d46b37effe1d207831dc7"},{"path":"tests/test_gate4_quality_engine.py","reason":"Permanent Gate 4 regression and policy guardrail.","hashAfter":"307eb75649083a9f0b24ef13ded2d89f13693b33e69a8c276943e21723080604"}],"filesModified":[{"path":".gitignore","reason":"Repository configuration updated for the Gate 4 Quality Engine and its verified delivery.","hashAfter":"f04894c0cd14f504f23038e8b46ec6cb4cab072e577ecf8edabeb9495aa1bdb8","hashBefore":"86312be93b99b47d27a407b1080593e35f6f3810e721a3d1889ead3180be367f"},{"path":".iacode/anchors/checkpoint-chain.json","reason":"Repository configuration updated for the Gate 4 Quality Engine and its verified delivery.","hashAfter":"bec0872c9264dd3a0e7139adb676867a3cf5cec4aec27562552a479ed38a72cf","hashBefore":"87d680e18aed41d360e30e4328d0499b2d67c065a6b3766ab9f060565eae308c"},{"path":".iacode/memory/LESSONS.md","reason":"Engineering-memory lesson or guardrail updated from failures observed during Gate 4.","hashAfter":"2944f7c55d892cd96b77ec3fa4ef29e6d7f17433dc76544921ac40afc6d6cd35","hashBefore":"8a196411b75b90eec21bb64059e495f2c6e273666b5f90b02e502468c98c24d2"},{"path":".iacode/memory/guardrails/registry.json","reason":"Engineering-memory lesson or guardrail updated from failures observed during Gate 4.","hashAfter":"8509b49e743b2aff864a37b8a754f89fc2fce5b74ade4671d4bfaa4da7c66c2e","hashBefore":"6d042ce05143697525ed4ce9b7b8098478132b5e5361f4d23b0ff47fa96d9457"},{"path":".iacode/memory/lessons.jsonl","reason":"Engineering-memory lesson or guardrail updated from failures observed during Gate 4.","hashAfter":"840456139a23dad77b00ba6aa24b3d9e6760e0b509df23cd8cbf70943e1cc275","hashBefore":"69420e45d8b471cedb2ca67efd253c42e4d7a6719d416a372e1c1ceb6fcda5e6"},{"path":".iacode/policies/canonical-requirements.json","reason":"Closed policy or schema required by the Gate 4 quality controls.","hashAfter":"90e34f744a66db1aa6db70f33ae1fe691439b85d24e9bab2b7a4f300f5487ed3","hashBefore":"7dc446c722f6bd88c8937c26e33088ed3ebbbf3a03d3168844bb54ccdf537a73"},{"path":".iacode/policies/quality-gates.json","reason":"Closed policy or schema required by the Gate 4 quality controls.","hashAfter":"dd2cea1bc42ec38a17aea12f26843477ca5b43dd89451fe933e6c52943a6a265","hashBefore":"0a2598099b59fc790235569af45eb9a904f4daecd4f960d918e9f62fbbcd959d"},{"path":".iacode/policies/sandbox-policy.json","reason":"Closed policy or schema required by the Gate 4 quality controls.","hashAfter":"c76ce058004df5b33a900357c29601a39e5e3385c9ad5d49dc00b7da3c412197","hashBefore":"706d5df77a03c163c77637cf8be10e6742748f5fe58a59c38886c9d9f6c9e9a4"},{"path":".iacode/policies/test-suites.json","reason":"Closed policy or schema required by the Gate 4 quality controls.","hashAfter":"41f2ee429f8762d77f19a7af5dd68f6f84bcb928b6a9237542958a96be5ef1d1","hashBefore":"ceaa8c6a6c06038e6e176526ba1a5791e46a007d9bcc40409db539f46ccdfc80"},{"path":"README.md","reason":"Repository documentation updated for the Gate 4 Quality Engine and its operating contract.","hashAfter":"e57d99d8b207ac8fb9cf0b3957c11e7b34744e0c8329fdb5d98621fa52fbe985","hashBefore":"502efed9ed2b7229837b8134ddfb3a8003e14196c1157514272e3eedb626de00"},{"path":"START-HERE.md","reason":"Repository documentation updated for the Gate 4 Quality Engine and its operating contract.","hashAfter":"b9db6cea147bc52b6e3c54470b4624eeef2c5a2405d96390a0708fc18a46c683","hashBefore":"5e82d8a7e1e3a330047986d3e746509673dcb49f953a30bb864de465e61d5d72"},{"path":"apps/api/Dockerfile","reason":"API, contract, or persistence integration for the Gate 4 quality lifecycle.","hashAfter":"aab757c05e5add34720db2d55db36a0f7121e62ed3c151059c557254256e2495","hashBefore":"801ed8a3407db045e90ef68590079f19dda343a262f3dbf39db549a30e744fde"},{"path":"apps/api/pyproject.toml","reason":"API, contract, or persistence integration for the Gate 4 quality lifecycle.","hashAfter":"339de92f0d3f87fefeb429cd4b39d19121c3c5abd41a29eb740ce6785310496f","hashBefore":"1d225e78c0155fed50a9fdf1482927165dcf1227b86ee5ad0ea76297647868cf"},{"path":"apps/api/src/iacode_api/config.py","reason":"API, contract, or persistence integration for the Gate 4 quality lifecycle.","hashAfter":"60e2f652ec6759c44b720894b335da8d51b4966720d9e662b86c6bfccbf9b708","hashBefore":"4b640f1c78d220a2615623443fc6f776bed2aa5de357a4379d141e8cc33fee5e"},{"path":"apps/api/src/iacode_api/lifespan.py","reason":"API, contract, or persistence integration for the Gate 4 quality lifecycle.","hashAfter":"8709ec57adec370db89ad1c6aca8d1293320706da8171023ba018247aedf3f60","hashBefore":"fd3392aaaca8514d478f1722a9b89aeb2cdbaaa660b84974ba5dae93d5363ed8"},{"path":"apps/api/src/iacode_api/main.py","reason":"API, contract, or persistence integration for the Gate 4 quality lifecycle.","hashAfter":"d11402ef5b4f55814b0b3f392b24f25987e0ab4d733a4fd67263554df6b1f520","hashBefore":"23064a64c308666110660d1210f4d50f8378ab6e2134932bece1f54a26738062"},{"path":"apps/api/src/iacode_api/routes/agent_runs.py","reason":"API, contract, or persistence integration for the Gate 4 quality lifecycle.","hashAfter":"b80aa96a3d3b9e70d595ff7be3366ce40b2a2ac2dd8ccc6ee07d021968b70a9f","hashBefore":"6bd1bdc5ee03c6347d1986b5172558da73e8445eb30ba2559548f2f81110b1c4"},{"path":"apps/api/src/iacode_api/workflows/client.py","reason":"API, contract, or persistence integration for the Gate 4 quality lifecycle.","hashAfter":"2e8d15e8a342ca8e0d39dd8310d69ce6ae129bb6e3f14efefde66cfc7f35f584","hashBefore":"1d2fbec3c7978394fbd5f4eff83390a7cbab11360ba85533c3c2cc3daf581798"},{"path":"apps/api/tests/integration/test_migrations.py","reason":"API, contract, or persistence integration for the Gate 4 quality lifecycle.","hashAfter":"599620441e1e05943a6511b1d39dc760f3206370f6e2c652603ae33395a23d86","hashBefore":"82968f2afe4f3e960be4e8c34ed4b2eb353b76ab34f158bbfab5bf46d22d3ba9"},{"path":"apps/api/tests/unit/test_domain_model.py","reason":"API, contract, or persistence integration for the Gate 4 quality lifecycle.","hashAfter":"333da53c22a1e12093a312b19c57286f6aacaccf9f681fcdd4ac8151ee3e2958","hashBefore":"bca40a47f3b320cbadcb1ae1a3b81339e49309a5c229d712a4f56e993ed74ccf"},{"path":"docs/ARCHITECTURE.md","reason":"Repository documentation updated for the Gate 4 Quality Engine and its operating contract.","hashAfter":"fbfc770c3f4ffb3f3ad85798634276486aafb81bc158e38cf17604f467db8aca","hashBefore":"40c95ca8b08b408738bdd3e07a7c9c2a878dd447a028c276f97ea89b9a24b9c6"},{"path":"docs/DEVELOPMENT.md","reason":"Repository documentation updated for the Gate 4 Quality Engine and its operating contract.","hashAfter":"d451b511ee1fac18d4a3e5454358e8e9fc0148d3194faa9a90f7ac1a4e00acaf","hashBefore":"e7c2fc859b18c13ac7936893ce9344d4d4fda85c7d51e7e7e4dbc218a56e508b"},{"path":"docs/MODEL-USAGE-POLICY.md","reason":"Repository documentation updated for the Gate 4 Quality Engine and its operating contract.","hashAfter":"d5fa872501335e04c6223a0e2b9c32b6ef6b5651904b12b3124930eb41ff6b6c","hashBefore":"772d048246943f2236281318490f6f4ed29fe6bd68c8303d101e2362012fb3e0"},{"path":"docs/VERSIONS.md","reason":"Repository documentation updated for the Gate 4 Quality Engine and its operating contract.","hashAfter":"4cbafeb86b5c7e51293bf560939cee72e8a92942645cdc8bfe473c0bb19dbfbf","hashBefore":"5ce17a26e298241b5bff9acb1e626f723e8a21cc09f06124aef155139118d2f3"},{"path":"docs/adr/ADR-0026-workspace-lifecycle.md","reason":"Architecture decision record for a structural Gate 4 decision.","hashAfter":"32079deb53dad420444414acc67d7319dca796129ba15593c91b58dd70a3bb54","hashBefore":"9af17d4c5e6e3276519981bad3e1fd6b080c44ac15cf8435d1a736476656b86a"},{"path":"docs/adr/README.md","reason":"Architecture decision record for a structural Gate 4 decision.","hashAfter":"cd2ccdaa82d0c4806f7c79001a65bd0a65b5811385da86b151f0276f4a68b9a2","hashBefore":"ba0faa55c91feac4cd709c1799809161eb026e7e01be72a6c7dd0c0295aa043b"},{"path":"docs/checkpoints/LATEST.md","reason":"Gate 4 checkpoint evidence, state, or delivery record.","hashAfter":"161393533a5cf603f299ac8310ad1af9cbe709551a323e444616414dffa5074d","hashBefore":"9dec4673c89f9df4d6a83562551ba9bc8d915b1daa9d343c4fd1d00a489bad2e"},{"path":"infra/compose/.env.example","reason":"Infrastructure wiring or observability required by the Gate 4 Quality Engine.","hashAfter":"e596c9dff1608b87db143dcd2c2867483f2c2e66ee0a9f0fac86342037515337","hashBefore":"e7a5bc120c2d508cdef79598cc70c9454b6428632d843b86cdd866be343aec85"},{"path":"infra/compose/docker-compose.yml","reason":"Infrastructure wiring or observability required by the Gate 4 Quality Engine.","hashAfter":"ccb6cce7eae0aa40d02302e8ff9b81f9fe849c7743a48ab67cad6b2a6ad287e2","hashBefore":"635a108d8d6648bbd133bd77bfe9fa195acf9aecefa6f2146e48e54597f2f842"},{"path":"infra/prometheus/prometheus.yml","reason":"Infrastructure wiring or observability required by the Gate 4 Quality Engine.","hashAfter":"afe41e4848bd9f63c4b2014ff638b76f06527aab76a7cde93fb3762933172b57","hashBefore":"554a0c5486bf19d773425b0dd3aae4b17c25e38b40644107fd4c3530cc976a72"},{"path":"infra/tests/test_compose_definition.py","reason":"Infrastructure wiring or observability required by the Gate 4 Quality Engine.","hashAfter":"20926c9073f4ef4b694d4f01e6bd13c5f2e660fe5d5a12de610492e6220ce28f","hashBefore":"0585a14751b2e588e87713a39828be75087b8801803dc05c851c77c38ea23533"},{"path":"packages/contracts/src/iacode_contracts/__init__.py","reason":"API, contract, or persistence integration for the Gate 4 quality lifecycle.","hashAfter":"257434a6eaadd815dff6e9ceef57a2e28ed2d296c69821947dd3114f29ecd5a1","hashBefore":"5d9aee1ea0b0f9b462ddd381c5db9bd47f66c963ffa56b53a5b9e00e35fdb165"},{"path":"packages/persistence/src/iacode_persistence/models.py","reason":"API, contract, or persistence integration for the Gate 4 quality lifecycle.","hashAfter":"00f01a7efb013694d50ce4640eed2a8d360cc2007260a9bdb40213e9d8e09b04","hashBefore":"b22b3b11d37f7da4057e95b35467f77066fa756cd0b31e514b3f88ce5c523808"},{"path":"ruff.toml","reason":"Repository configuration updated for the Gate 4 Quality Engine and its verified delivery.","hashAfter":"b461c88d9ec79a5a1612583827b710180c034a57245e14c9ff99cf58fbffaa8e","hashBefore":"c42ad3c2ee20077b90687f6f6f8b8afbfe440da1180bf80b22ae7b7f3f5fade8"},{"path":"scripts/development-ledger/check_completeness.py","reason":"Executable Gate 4 validation, scenario, delivery, or quality-gate control.","hashAfter":"2b03b215db2f924659f24421e49f5af23a37cbbfda30ebc585a9d719e5b47c90","hashBefore":"8d2c5d04450e7c530d31c406ffa62551dd99dab6d51bda895a1009a764577c3b"},{"path":"scripts/development-ledger/record_command.py","reason":"Executable Gate 4 validation, scenario, delivery, or quality-gate control.","hashAfter":"7446058965b0defe86e978c19b6844583e6f7407666b1ed106995656380f53c3","hashBefore":"6b8a70a40a2cc814b45ae7b6c98ae28c39c703b9c965e3ad0ca507a0c169750f"},{"path":"scripts/iacode/gates/lint.py","reason":"Executable Gate 4 validation, scenario, delivery, or quality-gate control.","hashAfter":"dd94e329db0b6b265b7dd6b2af07ce96e856bc20a926420d47c682b31689aaf9","hashBefore":"ec7c68767990ab5afef7e5a76c4fba178344cf1457c41d3463e3c16dc65d1390"},{"path":"scripts/iacode/scenarios/agent_runtime_durability.py","reason":"Executable Gate 4 validation, scenario, delivery, or quality-gate control.","hashAfter":"b61ec063cfb1daa81b565c0424250a61fad5d00dc573b47ce57c00bfcb8d6863","hashBefore":"4d3db042863e32cf6abce062f637967efe4aed198a6493bf8e4d9a30efd67e73"},{"path":"scripts/iacode/scenarios/sandbox_coding_e2e.py","reason":"Executable Gate 4 validation, scenario, delivery, or quality-gate control.","hashAfter":"30a12216fabf84215f3b5905728546bc217a35af56a4fa5f647723414ad13d2d","hashBefore":"b5b94c3ad1d05ac60fa6bf338087b973f9a40df8a89446836f1dd9dd61d3f273"},{"path":"scripts/iacode/verify.py","reason":"Executable Gate 4 validation, scenario, delivery, or quality-gate control.","hashAfter":"d684b136e6300cbdb330fde22c5af43d2297fa96269aa2f9ca7a2d4026077e36","hashBefore":"a93ba1253ad2b137e5edbb4654a72ce5d5b84f8eed74b81864e142e8527f3ccb"},{"path":"services/agent-runtime/src/iacode_agent_runtime/context.py","reason":"Agent-run integration or rehearsal support for durable Gate 4 quality execution.","hashAfter":"dbab4b749c418ccd9fab9c9baa316cd8c3f669881ce4f65dbe44d1f736e0ea37","hashBefore":"c63c1e1203fbf6a16d901f0a6119bbdbc23fd469358e10ae83021e33ac36ec68"},{"path":"services/agent-runtime/src/iacode_agent_runtime/engine.py","reason":"Agent-run integration or rehearsal support for durable Gate 4 quality execution.","hashAfter":"f6ca4967312e98c3680a0aef4c74a1b3d2d956b3e793942499b88520621ca3e2","hashBefore":"b421e55e6657d2e82f22c8f0a70f8df1aa990fbf0a05d7d031c9abe0335388af"},{"path":"services/agent-runtime/src/iacode_agent_runtime/errors.py","reason":"Agent-run integration or rehearsal support for durable Gate 4 quality execution.","hashAfter":"8b20542ddb9a01beb4d562fb07e0f12a27f194bcaea2234536a0dbd0b247f749","hashBefore":"1793b4cd2290466f6abefc0e723ee79d231eb316d16c1363a0dae8908d0077cb"},{"path":"services/agent-runtime/tests/runtime_doubles.py","reason":"Agent-run integration or rehearsal support for durable Gate 4 quality execution.","hashAfter":"51d6c025ebe32be0be16ed0bafb08f5bcb750b239a63c625beb7193e7155daad","hashBefore":"7e78fd0189d0bf1ab97c34aaf1ca75398badc63015d51fa3779b83fd3fbb33c1"},{"path":"services/agent-runtime/tests/test_context.py","reason":"Agent-run integration or rehearsal support for durable Gate 4 quality execution.","hashAfter":"a86d6bfa00c83f529eac87430fb1caac2925192d3bed75ff24fcbcfde577ef64","hashBefore":"be4e1f400c0902bd1616cfe1fd984cbe500dbc728cf4b6a2839e9413a4feb990"},{"path":"services/agent-runtime/tests/test_engine.py","reason":"Agent-run integration or rehearsal support for durable Gate 4 quality execution.","hashAfter":"94edd22cb85fed4807b0985049cced57ba5036fc27e20e1bd8f65d9ca883352f","hashBefore":"2073d3623b1451e1e29153fb3a4311ecded1c57a5fb2eaa19ba63b0669e168e5"},{"path":"services/evaluator/README.md","reason":"Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.","hashAfter":"6f6986a0ff313cfe5df7f1234f5922ae09e63db89df4aba19d3c07af927f73f9","hashBefore":"9a315ce59eda030b3ae0675607fbb0593519e5f0b60b7285fc97dc002efa40df"},{"path":"services/model-gateway/src/iacode_model_gateway/config.py","reason":"Cross-gate compatibility repair required by the canonical Gate 4 verification.","hashAfter":"83269d8b6149b00718b72235b5e664f6b9524ebc5c393f10c66eac0fc2b0c7ae","hashBefore":"c339dbd09454fc107feb9d3855ef40708d33cf7e5acb9aee4b4430e8edf5e129"},{"path":"services/model-gateway/src/iacode_model_gateway/errors.py","reason":"Cross-gate compatibility repair required by the canonical Gate 4 verification.","hashAfter":"528549a7e290bae28d53b4529fcb47b535ee652e409a37c003ea3eb83b65458f","hashBefore":"fed8c1280889cbd0071ee436117ed58d02ed7d690d2f4557fb3bbc025389d4cd"},{"path":"services/model-gateway/src/iacode_model_gateway/gateway.py","reason":"Cross-gate compatibility repair required by the canonical Gate 4 verification.","hashAfter":"e6db79258102459d178b69c9bfe59d02a2470851654a4b6dfb4b0befeff3f1c5","hashBefore":"c6c3fd4629e4edd1ec764c3e91b42e451578fcf0ca5e258b74490c3d26ce111f"},{"path":"services/model-gateway/src/iacode_model_gateway/ports.py","reason":"Cross-gate compatibility repair required by the canonical Gate 4 verification.","hashAfter":"50783725cac7240105ddbc9e785e6c0d680f37622abb88a54659120bda30ba44","hashBefore":"f8d47dde5c7865e4eb3c7f6c4e81909945da922a7bdaddee842de813f56550cf"},{"path":"services/model-gateway/src/iacode_model_gateway/pricing.py","reason":"Cross-gate compatibility repair required by the canonical Gate 4 verification.","hashAfter":"732f7ace781c19e90fc3e3bd8aad1cf59b21b4f894ed2df68f5d7a5759d1f3ef","hashBefore":"becc7cf77cf9340ebcf75fd83953f150af5426519fc15931d6e1f4fee8fce509"},{"path":"services/model-gateway/src/iacode_model_gateway/protocols/anthropic_messages.py","reason":"Cross-gate compatibility repair required by the canonical Gate 4 verification.","hashAfter":"4d65995a8b7b9e9673777e1bced1fae75702b3c10c8684ae289b9bc978d81c89","hashBefore":"3309c067e0564e0e6216773afbf60932ceca8486b962304e9275fa14f1290f8a"},{"path":"services/model-gateway/src/iacode_model_gateway/protocols/openai_chat.py","reason":"Cross-gate compatibility repair required by the canonical Gate 4 verification.","hashAfter":"1364c2768009928989123cff59c5f630c2df8a7aff5035348103c72e345017d5","hashBefore":"ae93848cfa776eb8852258102610d7c2eb9d9e53c9ca90c467b0f68815aee6b6"},{"path":"services/model-gateway/src/iacode_model_gateway/protocols/openai_responses.py","reason":"Cross-gate compatibility repair required by the canonical Gate 4 verification.","hashAfter":"539a4a1d5336f721265fd4fbaa5440250cfc2c7bce71d6a30bba928669044a00","hashBefore":"224ddc1c9606daf6460293083e0674e283fa60f6c933ec90b1aa3778378465ff"},{"path":"services/model-gateway/src/iacode_model_gateway/providers/http_provider.py","reason":"Cross-gate compatibility repair required by the canonical Gate 4 verification.","hashAfter":"0240267c3a6d26caaa4bec9c1b517b09d1705e28b5d566abd79eef940dbb90b7","hashBefore":"3f16f6ffec82f26c5b635b9b10f92668d7c9e56cab51346b0f09bb9612fbcd28"},{"path":"services/model-gateway/src/iacode_model_gateway/resilience/circuit.py","reason":"Cross-gate compatibility repair required by the canonical Gate 4 verification.","hashAfter":"b533f6627fc1e7297e5f0322f6383413ebb6be19aef5a69c6871046e9a0d5518","hashBefore":"ec155c802f8629cc9c287533da4c197f2db7c6f7ee57a782796006f98a5fb526"},{"path":"services/model-gateway/src/iacode_model_gateway/routing/policy.py","reason":"Cross-gate compatibility repair required by the canonical Gate 4 verification.","hashAfter":"43d9be03aa2815afbd98b09a5fc84f7a6cfeb3113e8f712a0f38c37cb5a3894a","hashBefore":"8348a5a2c9fa5eb0b163c959708ca8b8b3d33aa1c8ebe78d8c8200fb39ab57b0"},{"path":"services/model-gateway/src/iacode_model_gateway/routing/router.py","reason":"Cross-gate compatibility repair required by the canonical Gate 4 verification.","hashAfter":"14b07af3dcb975406b0f752bb6ef6fd4356189e2a2e1d8900e6155e77786c6d2","hashBefore":"43879e1b82b0c62543a9b8dc09753e0a237b3f3e101ae4eb651b82c16b6c23b5"},{"path":"services/model-gateway/src/iacode_model_gateway/security/base_url.py","reason":"Cross-gate compatibility repair required by the canonical Gate 4 verification.","hashAfter":"b45a6fcebb8bdc7d96cbf5fb5a956b884df03bac85b9c41bdea91ddc39e83980","hashBefore":"702e94c58db3bcec7718871160d337096554ee5577d1491a1fa0c7cf2a1702c0"},{"path":"services/model-gateway/src/iacode_model_gateway/telemetry/metrics.py","reason":"Cross-gate compatibility repair required by the canonical Gate 4 verification.","hashAfter":"ee75db3c425c36edc1a221b2b98570de39ee246614c637d1b480f3e43a53d626","hashBefore":"9cfaabbcf8738b51bc85789aa95db881078134512c7a2553fe8f3126e7a24943"},{"path":"services/model-gateway/tests/fixtures/doubles.py","reason":"Cross-gate compatibility repair required by the canonical Gate 4 verification.","hashAfter":"189c89ff982ab770315ce998989d82925355ad91d76a50bf562fef9610390988","hashBefore":"5539bbf760859be886edadc8744032f1c7e788125d302edc15c9a99770fcb2b4"},{"path":"services/model-gateway/tests/test_catalog.py","reason":"Cross-gate compatibility repair required by the canonical Gate 4 verification.","hashAfter":"af46e7595b9f94ebdd5cf97d9dda1827ca91ded97effb43bdc89e282aef3e3e7","hashBefore":"f4d0bf343ab3583c94022c53dbbcdb9d15ef0b2d68402eddab4b4a6e6208148b"},{"path":"services/model-gateway/tests/test_contracts.py","reason":"Cross-gate compatibility repair required by the canonical Gate 4 verification.","hashAfter":"86c4a7ad0ac07e3663c656b861a44348b9d9869304bb6087c65cbccc760ea7e3","hashBefore":"a40936238afe1ee598983f7bc76cdabc86772420e44169e6a5e0e5329d1187b4"},{"path":"services/model-gateway/tests/test_gateway.py","reason":"Cross-gate compatibility repair required by the canonical Gate 4 verification.","hashAfter":"e092d3dd08a01fc3fe3c6126c7a89c270db4a4243f541a8dc0a44b38f5d6d7f3","hashBefore":"9d7c4163bbca84dc7e4142962d0c8e8ea77ca419a1e9b4640f43b79c646aa244"},{"path":"services/model-gateway/tests/test_package.py","reason":"Cross-gate compatibility repair required by the canonical Gate 4 verification.","hashAfter":"af25d9cd25391254455651d3cec213adf361c9b2520196fc4e2b2ecfefc70ded","hashBefore":"ea2a96248e81cb58b04f2ffd94323ef963c91864284bc8ee6f125a6fe88e52cf"},{"path":"services/model-gateway/tests/test_protocols.py","reason":"Cross-gate compatibility repair required by the canonical Gate 4 verification.","hashAfter":"d3db0d322eb473e49d9d86859c2fbc1acdec6af692f4a73834c41f8e0204b5ed","hashBefore":"42e274175f3ac9339584b3351f9a55ea43c83de65cde4b25c9c6063af28430a0"},{"path":"services/model-gateway/tests/test_provider_contract.py","reason":"Cross-gate compatibility repair required by the canonical Gate 4 verification.","hashAfter":"ae86cfc6c8d428ccb7c8918abed742a547cf2d3992e3dcaf5ba3b0d394f94957","hashBefore":"3be3f12d5709d12738d57272c5a123fb22af37e86189d4dc702ecf368df4649a"},{"path":"services/model-gateway/tests/test_resilience.py","reason":"Cross-gate compatibility repair required by the canonical Gate 4 verification.","hashAfter":"55a3b46e30463d5504abb717671aed502a903b75f2a8a3e10b0a275978d2b8c1","hashBefore":"4facef9e67dd0e05b1049d844cd8cd6e6ce7cfe772896bb3cb33d5dcc643f4d8"},{"path":"services/model-gateway/tests/test_routing.py","reason":"Cross-gate compatibility repair required by the canonical Gate 4 verification.","hashAfter":"2a673dd3197706051126e1c9176637e7fa601035b4b6114d9d1a1f01a8774c74","hashBefore":"90db78d0dd039d1327307b38f599f80c77fd807effcdbeb86c69c795a35644c2"},{"path":"services/model-gateway/tests/test_secrets.py","reason":"Cross-gate compatibility repair required by the canonical Gate 4 verification.","hashAfter":"e5199dc4c08f8b015a47c997b45c161c76a4b6e2e5099e2e111bfc830e7f5305","hashBefore":"bcc5b04863805df863d873f6aa536be08c2340e09b56b5bc66cac0da7085dc25"},{"path":"services/model-gateway/tests/test_security.py","reason":"Cross-gate compatibility repair required by the canonical Gate 4 verification.","hashAfter":"0d46c5c0dfb86b0bd389b119291c0bcf1e2c5f3822de725c44a41660f895b4f2","hashBefore":"01c9f95181c2874e77012415470672daba3037abc5715b27390da076d1f06c72"},{"path":"services/model-gateway/tests/test_streaming.py","reason":"Cross-gate compatibility repair required by the canonical Gate 4 verification.","hashAfter":"68380121921742d8408169b5bd1b08ba1ecbbcbb5dc6e255af263bdfe2e43dc8","hashBefore":"8bd03ce60a90c2ce3fc11c9b9977460a68c7c6b04c902050cacfdb87e9b12637"},{"path":"services/model-gateway/tests/test_structured_output.py","reason":"Cross-gate compatibility repair required by the canonical Gate 4 verification.","hashAfter":"4f8f7ba5dd6e24c5daf785a7313dd6e4a8befd019b2cc0d42da30c5cef812f2d","hashBefore":"51ad965aad511d1e0dd890a83946da4c42feed8ba0b921fb089cd98abe64733b"},{"path":"services/orchestrator/Dockerfile","reason":"Agent-run integration or rehearsal support for durable Gate 4 quality execution.","hashAfter":"35281817f833f12c1f3fccae9ae96bae9d421f513c29938ee255a535e5b46e0d","hashBefore":"3e9e27172fd4dde363c1f0006c88a1e50d4c5375dbd8b92cddaee9f0b80638ab"},{"path":"services/orchestrator/pyproject.toml","reason":"Agent-run integration or rehearsal support for durable Gate 4 quality execution.","hashAfter":"bcc07a6eeda07e425405cde0fbea1e742578d3ba6b4dda2b7dbdb2f5549d2bd1","hashBefore":"4f52a2ec9b2be7c501a51c4f1744666d05e14420d43088cb0e638eff71521879"},{"path":"services/orchestrator/rehearsal/coding.py","reason":"Agent-run integration or rehearsal support for durable Gate 4 quality execution.","hashAfter":"4ab43279567e5d89a858c12614c77736bc770c6a65e59752a036e813881c2c7a","hashBefore":"99a400980e0e4440693968772d9544017c800fbc7f9467e3d9c365eed7dffcd0"},{"path":"services/orchestrator/rehearsal/durability.py","reason":"Agent-run integration or rehearsal support for durable Gate 4 quality execution.","hashAfter":"ee963b4766d2281e8a160ec0bfa3b9572bd5b921c38809986da818566d7f2c45","hashBefore":"82994d77b6811a1d392ea6fddb721c8c885286c7ccd8e62960c8ef588f9efa83"},{"path":"services/orchestrator/src/iacode_orchestrator/agent_runtime/activities.py","reason":"Agent-run integration or rehearsal support for durable Gate 4 quality execution.","hashAfter":"8302c8ce375e8785965e7f88806fb49b76656227a094549dde07c812ad224566","hashBefore":"40cd11934e5e572ddbfebe4e770576ce5cc0f1d88baae95389880182f55d5118"},{"path":"services/orchestrator/src/iacode_orchestrator/agent_runtime/runtime_context.py","reason":"Agent-run integration or rehearsal support for durable Gate 4 quality execution.","hashAfter":"07e90e826406e988cf4105bf5f2005397dbef224d28ced9f88b34aa66059eadd","hashBefore":"f7e950a6209b773841023e99cc5735393e0f080f28b1c0f6ec505595541cedec"},{"path":"services/orchestrator/src/iacode_orchestrator/config.py","reason":"Agent-run integration or rehearsal support for durable Gate 4 quality execution.","hashAfter":"4ee1a95091defab149062712a8691ffde230a756ebc22969eafd4111bdaef15c","hashBefore":"24f15011b0a965430f05d4cd3f979e460077dbe14aabdb0b3971303ffb7570bc"},{"path":"services/orchestrator/src/iacode_orchestrator/workflows/agent_run.py","reason":"Agent-run integration or rehearsal support for durable Gate 4 quality execution.","hashAfter":"4ee96f780741ed1b82c80348caee99e77dc45baf2354ad45073d84c591f0938e","hashBefore":"81f2136e767f743dc99fe06888e58a398c04e863cf3f23ff3101d102ce45f7da"},{"path":"services/sandbox/Dockerfile","reason":"Sandbox integration, quality image, or regression control required for isolated Gate 4 execution.","hashAfter":"bab18bc72640cd218c88fcfcf8d23655afa0dceeba3b527b00253d605f218c9e","hashBefore":"ab8834676055640f4fd6bafc324dbdd4f47e599fd072ba785d1475232f9482f7"},{"path":"services/sandbox/src/iacode_sandbox/helper.py","reason":"Sandbox integration, quality image, or regression control required for isolated Gate 4 execution.","hashAfter":"507af627707f3676ed3659e63c7bcb6817f1c686d5c0bbc290f463bb3a6865ff","hashBefore":"194f2e3598a40720a40780d49a9ff47f9daa8db6d18844264f43668a1e312f10"},{"path":"services/sandbox/src/iacode_sandbox/image.py","reason":"Sandbox integration, quality image, or regression control required for isolated Gate 4 execution.","hashAfter":"5a275b4a181202120401959b1a2629f7c71aefcd79d0bf25e2b0fef0bdc2a91d","hashBefore":"1763d4d105b84e6ccbfd632056b43235d9e4e4c261787012c8b8be47cc0171a5"},{"path":"services/sandbox/src/iacode_sandbox/service.py","reason":"Sandbox integration, quality image, or regression control required for isolated Gate 4 execution.","hashAfter":"67637f0ef554b0a90ed0c01b59ad5eb08419d12536e95bb083be9c87a0900522","hashBefore":"a364ddaa07097851899f319e4f542c74b6b0d5c77417a0626b748ddac483e555"},{"path":"services/sandbox/src/iacode_sandbox/store.py","reason":"Sandbox integration, quality image, or regression control required for isolated Gate 4 execution.","hashAfter":"6adb00e669e8722d2d5a1f9414c47b9aa82a4c506a5dcd07b5e5fc6f1e72e82d","hashBefore":"aabe967e88b7088d3c8c74121a48aed0c2bbddcd94011ec5514593efbc5159b3"},{"path":"services/sandbox/tests/sandbox_fixtures.py","reason":"Sandbox integration, quality image, or regression control required for isolated Gate 4 execution.","hashAfter":"1e5e6e3e57d945078fb6579b9de9828147b29d2b6f410adc56651f34fd592279","hashBefore":"0c1440649a98ec64091be1d817f6708f81d8ecd7643d69153bf76ee5ed45c4d3"},{"path":"services/sandbox/tests/test_sandbox_engine_isolation.py","reason":"Sandbox integration, quality image, or regression control required for isolated Gate 4 execution.","hashAfter":"23ad7adcbdefd8543e1df40048ae7eb9c9c05c187d5cc3a253e49c3822c741b5","hashBefore":"902afc122b3ef77fc8f0b0a83a6479d0976d9081748ce4a248345c5afd1e22fc"},{"path":"services/sandbox/tests/test_sandbox_engine_lifecycle.py","reason":"Sandbox integration, quality image, or regression control required for isolated Gate 4 execution.","hashAfter":"9343852b0cc655c5fcc58d06ee7981ea3a6d7e39c9e2d17232a0bbf668ae164d","hashBefore":"60fe8288160305cd0e6a8be241e4f936b2fd37eff98897c655410445bc917325"},{"path":"services/sandbox/tests/test_sandbox_engine_limits.py","reason":"Sandbox integration, quality image, or regression control required for isolated Gate 4 execution.","hashAfter":"0fda1b2db137e68c56370e8badc17fb4a15aa89ab36cc74d10ad2c8fb3524cb3","hashBefore":"dee2ad6e5a630cff60e94258387d9e9117ea60033e4ba7afec39fbc140909d4b"},{"path":"services/sandbox/tests/test_sandbox_engine_tools.py","reason":"Sandbox integration, quality image, or regression control required for isolated Gate 4 execution.","hashAfter":"1db1188b822aa5c3c8675b9aa597dba3d6d16446d24172627dacf28648b4463d","hashBefore":"61f58eeb38c5dbfcf98c08de2abf8728b9c104abd696805efba0bb76939f555d"},{"path":"services/sandbox/tests/test_sandbox_policy.py","reason":"Sandbox integration, quality image, or regression control required for isolated Gate 4 execution.","hashAfter":"80f07b70e81fe90f189f565b417aa29f761fd84788a81e3b879a9237172459d8","hashBefore":"a80b0dd9df2f0880a44180fd402484aa28f035743f5972d03193276d29dfe7be"},{"path":"services/sandbox/tests/test_sandbox_service.py","reason":"Sandbox integration, quality image, or regression control required for isolated Gate 4 execution.","hashAfter":"d33ee9ae18934045072a9dc8939c083a87ab03e5d5ca663f5992c500dbaf4829","hashBefore":"5390506909a5726f31bd60cc13c056a81ef07b471fc82de6227910359c3de0c4"},{"path":"tests/test_gate1_model_gateway.py","reason":"Cross-gate compatibility repair required by the canonical Gate 4 verification.","hashAfter":"0e545cafe9093f36409f43516d89545ee555ccb08fa048d98d0f5c73bde846e8","hashBefore":"88f9e636a20eb17d472269877b24e49dc3797bcf1fd556f9600f340b1d24e593"},{"path":"tests/test_gate3_sandbox.py","reason":"Sandbox integration, quality image, or regression control required for isolated Gate 4 execution.","hashAfter":"dccad647cb78f5e6459cf244de7bc08846ab33f4742addc5c8e83751d912770e","hashBefore":"4ed1f3b119758a7958337a1b91d9cc151e52f5dd8060f6ba145d8b9d0930f53d"}],"filesDeleted":[]}
+{
+  "filesRead": [],
+  "filesCreated": [
+    {
+      "path": ".iacode/memory/retrospectives/GATE-4-CP-0001.md",
+      "reason": "Engineering-memory lesson, guardrail or retrospective updated from failures observed during Gate 4.",
+      "hashAfter": "307bd7ced08f7ac3d50dd1e782ff1d050d464d942ef493f5f847ae286db14107"
+    },
+    {
+      "path": ".iacode/policies/quality-policy.json",
+      "reason": "Closed policy or schema required by the Gate 4 quality controls.",
+      "hashAfter": "99ed225e7e84b2a5244d7c01bcd2a12a2d6f2409ee91e512eabbc68a6a3045fd"
+    },
+    {
+      "path": ".iacode/schemas/functional-acceptance.schema.json",
+      "reason": "Closed policy or schema required by the Gate 4 quality controls.",
+      "hashAfter": "95a98bfed2c830ddb8317135247ae72cf7d864af631c9ab8589f294a4d0977a5"
+    },
+    {
+      "path": ".iacode/schemas/program-state.schema.json",
+      "reason": "Closed policy or schema required by the Gate 4 quality controls.",
+      "hashAfter": "dd1ac21505d9e5ed1a0f94861d43215712b5d6f26d5fe62808adfa723a93ac5c"
+    },
+    {
+      "path": ".iacode/schemas/quality-policy.schema.json",
+      "reason": "Closed policy or schema required by the Gate 4 quality controls.",
+      "hashAfter": "070d39501840e4e6e1ece528df77e9b8eff418b76afc767736d468735fe40fcc"
+    },
+    {
+      "path": "apps/api/migrations/versions/0006_quality_engine.py",
+      "reason": "API, contract, or persistence integration for the Gate 4 quality lifecycle.",
+      "hashAfter": "1a140c9f67056aaf9f210b26f9b1773bfa4934cd43e6eabaa0ede7c30fc0529b"
+    },
+    {
+      "path": "apps/api/src/iacode_api/quality/__init__.py",
+      "reason": "API, contract, or persistence integration for the Gate 4 quality lifecycle.",
+      "hashAfter": "6ff157824d7281b5e31003fe3fed19d81e21d936e217165c0b885e40456134d0"
+    },
+    {
+      "path": "apps/api/src/iacode_api/quality/runtime.py",
+      "reason": "API, contract, or persistence integration for the Gate 4 quality lifecycle.",
+      "hashAfter": "f04859ffe47325c6805908d738c4aa6d4f4a323be37cf3a63f8fdd9bc94c31d4"
+    },
+    {
+      "path": "apps/api/src/iacode_api/routes/quality.py",
+      "reason": "API, contract, or persistence integration for the Gate 4 quality lifecycle.",
+      "hashAfter": "3e7d1e56b2ab4e3284f48035c4e2315d046913939adeef6d8950f522d08a9435"
+    },
+    {
+      "path": "apps/api/tests/unit/test_quality_api.py",
+      "reason": "API, contract, or persistence integration for the Gate 4 quality lifecycle.",
+      "hashAfter": "de2694c2585b70d2a73bbd6acd82b67464a4ddd9b5ef3288cb6a54cedd0fb316"
+    },
+    {
+      "path": "docs/GATE-4-CHECKLIST.md",
+      "reason": "Repository documentation updated for the Gate 4 Quality Engine and its operating contract.",
+      "hashAfter": "7d292a9d5780a8c2134e6e520087ecd4df5b4e23faa58631a240be834fcb4f0b"
+    },
+    {
+      "path": "docs/adr/ADR-0029-quality-execution-boundary.md",
+      "reason": "Architecture decision record for a structural Gate 4 decision.",
+      "hashAfter": "e0a99e9553fc8102429c8f01af2614f55b450eb764d45c56b4f0b20c7cc6b487"
+    },
+    {
+      "path": "docs/adr/ADR-0030-quality-evidence-and-verdict-immutability.md",
+      "reason": "Architecture decision record for a structural Gate 4 decision.",
+      "hashAfter": "b865c8822b4761497e154f05a702f2f197796c7c39bc03d5e7aa24265251e2e8"
+    },
+    {
+      "path": "docs/adr/ADR-0031-project-profiles-select-closed-quality-runners.md",
+      "reason": "Architecture decision record for a structural Gate 4 decision.",
+      "hashAfter": "c683e5b134369807707a10b243a211ccc45abc638bfb0b40da46daedb18b6b65"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0001/AGENT-DURABILITY.json",
+      "reason": "Gate 4 checkpoint evidence, state, or delivery record.",
+      "hashAfter": "698ae914251a1afbc86e82743af588a3dc967978639feef2eb917c790264036f"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0001/BASELINE.md",
+      "reason": "Gate 4 checkpoint evidence, state, or delivery record.",
+      "hashAfter": "15ec13af91e884b2386580e3ed4efb74711cafdfe8ae7726a857f7df9cb704fa"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0001/CLOSURE-REQUIREMENTS.json",
+      "reason": "Gate 4 checkpoint evidence, state, or delivery record.",
+      "hashAfter": "496cac43b7bf7bf67c51ce30f4b603e893a1d50775641c99408b054e8338ba8a"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0001/CLOSURE-REQUIREMENTS.md",
+      "reason": "Gate 4 checkpoint evidence, state, or delivery record.",
+      "hashAfter": "ddfc379b22a7792fb9635b6c55b6e7cccf18f61f833b6b4e239fc00263d36026"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0001/COMMANDS.jsonl",
+      "reason": "Gate 4 checkpoint evidence, state, or delivery record.",
+      "hashAfter": "bc297507dc8c8e7035828c51e9180569042522369397868d268ce653553411ef"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0001/DECISIONS.md",
+      "reason": "Gate 4 checkpoint evidence, state, or delivery record.",
+      "hashAfter": "cd6ffc84c014c19d98934300e3f373c2d497f78aff991f34a72855f8aa4d17d3"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0001/DIFF-SUMMARY.md",
+      "reason": "Gate 4 checkpoint evidence, state, or delivery record.",
+      "hashAfter": "7ae4f999913b81866672b5b76a59fdda527a47e5562966bfb2f9bdd99aa279c3"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0001/FILES.json",
+      "reason": "Gate 4 checkpoint evidence, state, or delivery record."
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0001/FUNCTIONAL-ACCEPTANCE-VALIDATION.json",
+      "reason": "Gate 4 checkpoint evidence, state, or delivery record.",
+      "hashAfter": "dab3a33347feebc78a9473a2eb5ebd2051bb029774e78790495c467f4c07b248"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0001/FUNCTIONAL-ACCEPTANCE.json",
+      "reason": "Gate 4 checkpoint evidence, state, or delivery record.",
+      "hashAfter": "224f684ef447dd2e8600ca36aa084512f6d101e490108ec817752b1c9915e4a7"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0001/HANDOFF.md",
+      "reason": "Gate 4 checkpoint evidence, state, or delivery record.",
+      "hashAfter": "faae0f038ea679eb0328b3e4616a8009891a31419f3385147763fe857b282d50"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0001/LESSON-PREFLIGHT.json",
+      "reason": "Gate 4 checkpoint evidence, state, or delivery record.",
+      "hashAfter": "48f05491adae50c42c19ae3a9b57659bca028f47e3385e846d5b3c4cea6717e2"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0001/LESSON-PREFLIGHT.md",
+      "reason": "Gate 4 checkpoint evidence, state, or delivery record.",
+      "hashAfter": "50ac87aaa350f5f4f23d32598c4979b6b0068bd4db01bd8ffc483591af6255c8"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0001/NEXT.md",
+      "reason": "Gate 4 checkpoint evidence, state, or delivery record.",
+      "hashAfter": "0ec1760b87ef3e459d483cef648dab17eae7e4320bed5ba0f7b9b1bb239c9333"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0001/PLAN.md",
+      "reason": "Gate 4 checkpoint evidence, state, or delivery record.",
+      "hashAfter": "ddcb67c1ca25ab0d11f668d57d4b22b6fee56b12b0fe08eaac68f93d51d611ef"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0001/PROVENANCE.json",
+      "reason": "Gate 4 checkpoint evidence, state, or delivery record.",
+      "hashAfter": "73110097440d68c4154797e563c43681d7a602d5942160d3fb4c854bb6c897c9"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0001/QUALITY-CANCELLATION.json",
+      "reason": "Gate 4 checkpoint evidence, state, or delivery record.",
+      "hashAfter": "212a2b13215cdb9b0a25086fcd76c905ee2dec522c846ba04bdb325d61549a83"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0001/QUALITY-FAIL.json",
+      "reason": "Gate 4 checkpoint evidence, state, or delivery record.",
+      "hashAfter": "1d837080aba86513ae7de4287b422aef17085e8731c60f5904b13346a2f90a52"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0001/QUALITY-FALSE-PASS-CMD-0161.json",
+      "reason": "Gate 4 checkpoint evidence, state, or delivery record.",
+      "hashAfter": "4272bf336ba099c0483a7532040f6fb76d1d91273e242d80a08187e95dec6d50"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0001/QUALITY-IACODE-FAIL-CMD-0054.json",
+      "reason": "Gate 4 checkpoint evidence, state, or delivery record.",
+      "hashAfter": "816b90938f814e64e49c33a5baee4188b30b71fd222d79d3d47cc1dd2445dd46"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0001/QUALITY-IACODE-FAIL-CMD-0070.json",
+      "reason": "Gate 4 checkpoint evidence, state, or delivery record.",
+      "hashAfter": "e08d6bb70119c72c2e7f0d1bf235cbea77bb0204530ccff9b9f75b0cfdfb0010"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0001/QUALITY-IACODE.json",
+      "reason": "Gate 4 checkpoint evidence, state, or delivery record.",
+      "hashAfter": "beb990cc7081b42c42e0f56e06396b247e9695d6310bf6c7544fce65879b5262"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0001/QUALITY-PASS.json",
+      "reason": "Gate 4 checkpoint evidence, state, or delivery record.",
+      "hashAfter": "54c4801fad2cf4ae94e0019f2c572c5b16a83ee3c4237c72bd6fcb01b0206ee2"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0001/QUALITY-RECOVERY-PACKAGING-FAIL-CMD-0173.json",
+      "reason": "Gate 4 checkpoint evidence, state, or delivery record.",
+      "hashAfter": "5a9616cfda7b7d3de65bb07f6ee928033bc12b66d16e838348641ef1af4d35af"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0001/QUALITY-RECOVERY.json",
+      "reason": "Gate 4 checkpoint evidence, state, or delivery record.",
+      "hashAfter": "e7edce380b43309c93ae91a3483a91438cbb424d84a107a5e84ef4c267c27f08"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0001/QUALITY-REPRODUCTION.json",
+      "reason": "Gate 4 checkpoint evidence, state, or delivery record.",
+      "hashAfter": "c765d55d22a78e913d5cf044902e0124ad651840d2e841e009dac4b05f959103"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0001/QUALITY-TIMEOUT.json",
+      "reason": "Gate 4 checkpoint evidence, state, or delivery record.",
+      "hashAfter": "228bc0713c63bc6abc5b7d397e3275c01aff5fea690ab1d24c16a85c7e33435b"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0001/QUALITY.json",
+      "reason": "Gate 4 checkpoint evidence, state, or delivery record.",
+      "hashAfter": "b150e758ccda9425de8b0316f0caa2a62c0684e1597aa2b357f9a3958d74c1ee"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0001/REQUIREMENTS-MATRIX.json",
+      "reason": "Gate 4 checkpoint evidence, state, or delivery record.",
+      "hashAfter": "8884a33847546ca68a2f19e666b722d5c66063fc3344a5284b533f4d654af6cd"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0001/REQUIREMENTS-MATRIX.md",
+      "reason": "Gate 4 checkpoint evidence, state, or delivery record.",
+      "hashAfter": "5b056e118856bc4a03691f5d40e9a67ee10be520d0709771bd302c4fab34c367"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0001/REWORK-LOG.jsonl",
+      "reason": "Gate 4 checkpoint evidence, state, or delivery record.",
+      "hashAfter": "b76c3f335f30e5f22e05296fca1fd7898e4fd9db9cb4fc72817c5ab0c00efbd0"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0001/RISKS.md",
+      "reason": "Gate 4 checkpoint evidence, state, or delivery record.",
+      "hashAfter": "0a2f307faf8d64913347c77af46404e4ab2451f074aad2330dad781659e065ac"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0001/RUN-METADATA.json",
+      "reason": "Gate 4 checkpoint evidence, state, or delivery record.",
+      "hashAfter": "3daa72a528e686ae11710701e7929d5ea34c130954203f7c31d2c316476e2968"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0001/SANDBOX-CODING.json",
+      "reason": "Gate 4 checkpoint evidence, state, or delivery record.",
+      "hashAfter": "396c82d164870e5dd6c5d5d507e2ef10bd5a98c212b07b6acc945f7c544b1c5f"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0001/SANDBOX-FORGED-RESULT.json",
+      "reason": "Gate 4 checkpoint evidence, state, or delivery record.",
+      "hashAfter": "1bcbd2226a9cf169e33f1781b5b4a394be63f54884b0389442fff6d3d14da013"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0001/SANDBOX-RECOVERY.json",
+      "reason": "Gate 4 checkpoint evidence, state, or delivery record.",
+      "hashAfter": "f3b22b077ae605bdbf2aff075b132c2ad66af4723dd4935cec971830303f25dc"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0001/SANDBOX-TIMEOUT.json",
+      "reason": "Gate 4 checkpoint evidence, state, or delivery record.",
+      "hashAfter": "208b1dbdfd904a05c3c2278c0637df593b1c934f7efe360686e394508de4b679"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0001/STATE.json",
+      "reason": "Gate 4 checkpoint evidence, state, or delivery record.",
+      "hashAfter": "73c7a20446bf743c1713d0598bec830ada1fe20648a7978d5c5827dac2de43d1"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0001/STATUS.md",
+      "reason": "Gate 4 checkpoint evidence, state, or delivery record.",
+      "hashAfter": "dbec08007e5d21d94d9fd60fbaab58d04d65b98b057cb063b498fc7597f3e620"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0001/STEPS.json",
+      "reason": "Gate 4 checkpoint evidence, state, or delivery record.",
+      "hashAfter": "cb04ed3d4352b9f56e0cb97ff98d0a7da8cccd5cf156b9949490e72c9ae14812"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0001/TESTS.json",
+      "reason": "Gate 4 checkpoint evidence, state, or delivery record.",
+      "hashAfter": "93d582ed01c198cdc3b7101e3646d8aec5f8959a652031d93650a29fbff46e34"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0001/VERIFY-FAIL-CMD-0105.json",
+      "reason": "Gate 4 checkpoint evidence, state, or delivery record.",
+      "hashAfter": "580651753bf6852a324c816f9e50c868be05400ef7cca72181cb7b2f3f47cdeb"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0001/VERIFY.json",
+      "reason": "Gate 4 checkpoint evidence, state, or delivery record.",
+      "hashAfter": "7397b86a34c41a46b187f3477046aa6bd4f7b79407bad12360a02837e9f33448"
+    },
+    {
+      "path": "docs/runbooks/QUALITY-ENGINE.md",
+      "reason": "Repository documentation updated for the Gate 4 Quality Engine and its operating contract.",
+      "hashAfter": "9ae857fdaf676aee605dec577dac1d9a6b51bbe888c09346f5e29759225b52f0"
+    },
+    {
+      "path": "packages/contracts/src/iacode_contracts/quality.py",
+      "reason": "API, contract, or persistence integration for the Gate 4 quality lifecycle.",
+      "hashAfter": "748e0ee46faa8b2ad4987594703eb265205648e70b35633581a0a2c7622fb27f"
+    },
+    {
+      "path": "scripts/development-ledger/check_functional_acceptance.py",
+      "reason": "Executable Gate 4 validation, scenario, delivery, or quality-gate control.",
+      "hashAfter": "4b787ab311d8d2b02922bc046f3df133465da4e18b5f8cbbeab89f5e20387d6c"
+    },
+    {
+      "path": "scripts/development-ledger/gate4_red_team.py",
+      "reason": "Executable Gate 4 validation, scenario, delivery, or quality-gate control.",
+      "hashAfter": "c10af94e97797cdfc5057e41babb6ced9cc090416021086b4fedd79f3bf1c20e"
+    },
+    {
+      "path": "scripts/development-ledger/program_state.py",
+      "reason": "Executable Gate 4 validation, scenario, delivery, or quality-gate control.",
+      "hashAfter": "c19b87bf7bba5aa564df7dd77ac438bbdbe3fa1481247372d92d4d764f3d848d"
+    },
+    {
+      "path": "scripts/development-ledger/review_bundle.py",
+      "reason": "Executable Gate 4 validation, scenario, delivery, or quality-gate control.",
+      "hashAfter": "e93ccfefe00c3db01093d32771d319b84942e60ee58e7836b2aa2d3a40466729"
+    },
+    {
+      "path": "scripts/iacode/gates/evaluator_tests.py",
+      "reason": "Executable Gate 4 validation, scenario, delivery, or quality-gate control.",
+      "hashAfter": "cc14dac12f9a21b7a07419f1f8e8298ff4570f9f567f705e036d25be8b868462"
+    },
+    {
+      "path": "scripts/iacode/scenarios/quality_engine_e2e.py",
+      "reason": "Executable Gate 4 validation, scenario, delivery, or quality-gate control.",
+      "hashAfter": "bc1518525525688c4a7a7d845f9779986e266d5fa702aa0faa6dc6bc1880ea5e"
+    },
+    {
+      "path": "scripts/iacode/scenarios/quality_persistence.py",
+      "reason": "Executable Gate 4 validation, scenario, delivery, or quality-gate control.",
+      "hashAfter": "7f4e19f3e33c4cad96725d6c04fcb679587a4f1101ec8a737d064d2ee6a9e79f"
+    },
+    {
+      "path": "services/evaluator/Dockerfile",
+      "reason": "Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.",
+      "hashAfter": "206b591561c06970f7c7103454bb8314bb02abf291b9b3a6bb923e253f66047a"
+    },
+    {
+      "path": "services/evaluator/pyproject.toml",
+      "reason": "Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.",
+      "hashAfter": "ff5199f1e0605feb5babc2dbfd160f665cf035cf908deac5a088f43ecc0def0f"
+    },
+    {
+      "path": "services/evaluator/src/iacode_evaluator/__init__.py",
+      "reason": "Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.",
+      "hashAfter": "c3b9287f4cdc1f7f2903b6f016f5f541930ddb605cd0387008b348941f0ea290"
+    },
+    {
+      "path": "services/evaluator/src/iacode_evaluator/activities.py",
+      "reason": "Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.",
+      "hashAfter": "926909efa6e5b93df3d2b5bb98503e190307e813f431dab0e0a057649df05820"
+    },
+    {
+      "path": "services/evaluator/src/iacode_evaluator/canonical.py",
+      "reason": "Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.",
+      "hashAfter": "127226e2c6c2309adcde957fdd071a87f8329ca1927020fc35381414595a3a20"
+    },
+    {
+      "path": "services/evaluator/src/iacode_evaluator/config.py",
+      "reason": "Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.",
+      "hashAfter": "a1db86d7fa5f13bb2a1e504fb8c0efd41b503c3730863bf4cd1ad03af0fbad8d"
+    },
+    {
+      "path": "services/evaluator/src/iacode_evaluator/configuration.py",
+      "reason": "Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.",
+      "hashAfter": "ea3c2130d99da08440754604350b9f1e695dfbcce7c3a3a1fa75d0f995382166"
+    },
+    {
+      "path": "services/evaluator/src/iacode_evaluator/engine.py",
+      "reason": "Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.",
+      "hashAfter": "4d41280460ecbb9e2a749549bfc23bd1fa30c8b9afa25904a9b5336b9168d0be"
+    },
+    {
+      "path": "services/evaluator/src/iacode_evaluator/errors.py",
+      "reason": "Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.",
+      "hashAfter": "8f3446b27c4730005aa066a9e5dab276c1a924e7ad12756031235454feda3b67"
+    },
+    {
+      "path": "services/evaluator/src/iacode_evaluator/evidence.py",
+      "reason": "Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.",
+      "hashAfter": "3c0fbe34f8d58313703224b9ab2fa961324c0b0d52c4f2407e1b6fe2ac30c3ab"
+    },
+    {
+      "path": "services/evaluator/src/iacode_evaluator/executor.py",
+      "reason": "Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.",
+      "hashAfter": "6d28f9c9fc094bb7fb29f9fbd8bee9d3972f4652240b67dfd89550e5c2bf3b80"
+    },
+    {
+      "path": "services/evaluator/src/iacode_evaluator/findings.py",
+      "reason": "Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.",
+      "hashAfter": "f5471694423ed95ee0ad5283ab2d1ddef7e5670cd29457fc3edee1938d7ae74e"
+    },
+    {
+      "path": "services/evaluator/src/iacode_evaluator/healthcheck.py",
+      "reason": "Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.",
+      "hashAfter": "5ae459228d04da84eae2b34ca7b95a2f3b75513314ffec6f3633a82628034551"
+    },
+    {
+      "path": "services/evaluator/src/iacode_evaluator/limits.py",
+      "reason": "Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.",
+      "hashAfter": "b9a4ecf99073bf4ebe1dcdc923dcde4cc182e0f05a894e10cc6a006d1fc46c8e"
+    },
+    {
+      "path": "services/evaluator/src/iacode_evaluator/planner.py",
+      "reason": "Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.",
+      "hashAfter": "b2b1c512d7618e844fae86de08cf4332e843c75be03d578c572d4b2407576d88"
+    },
+    {
+      "path": "services/evaluator/src/iacode_evaluator/policy.py",
+      "reason": "Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.",
+      "hashAfter": "38d0050e7d65c8dd8bbb4c54ccc326c28a5575f230d75b8a3c4d6b5984777b5e"
+    },
+    {
+      "path": "services/evaluator/src/iacode_evaluator/projects.py",
+      "reason": "Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.",
+      "hashAfter": "65d37093af0dfcf4efef5a07499e5c5462a3a0b4614126466f8b2c385f9dbabd"
+    },
+    {
+      "path": "services/evaluator/src/iacode_evaluator/reproduce.py",
+      "reason": "Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.",
+      "hashAfter": "11ed17e76dee86aba72f91186078f32d652ae39b6f5d89fa241f11a74207954e"
+    },
+    {
+      "path": "services/evaluator/src/iacode_evaluator/runners.py",
+      "reason": "Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.",
+      "hashAfter": "dd50d9c8c5910a3fe9d3623ba10e1b15b1f7f371fadca07cb72a34f7500a41e2"
+    },
+    {
+      "path": "services/evaluator/src/iacode_evaluator/runtime.py",
+      "reason": "Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.",
+      "hashAfter": "2d2e656d59b48511b8c765f08a483c40665eb15474317b155f47ffab9210e85c"
+    },
+    {
+      "path": "services/evaluator/src/iacode_evaluator/service.py",
+      "reason": "Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.",
+      "hashAfter": "fab48d88a1d4c3e4ece2b71301db6b35548c40357c3165d5fcd975f58bbb53b7"
+    },
+    {
+      "path": "services/evaluator/src/iacode_evaluator/snapshots.py",
+      "reason": "Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.",
+      "hashAfter": "9f8259782bfc8cd932dce6cccc54cf2f1826c01c8a6880698421850673a8f560"
+    },
+    {
+      "path": "services/evaluator/src/iacode_evaluator/store.py",
+      "reason": "Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.",
+      "hashAfter": "17337c107b90390cd9fa6f5a15d9436842c98f250254de14b5974f174ac3fe66"
+    },
+    {
+      "path": "services/evaluator/src/iacode_evaluator/telemetry.py",
+      "reason": "Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.",
+      "hashAfter": "ee9a5eec823ab193a305bd6c90dd129dd1a72d6def41a250eebe18ce4c2f1d24"
+    },
+    {
+      "path": "services/evaluator/src/iacode_evaluator/verdict.py",
+      "reason": "Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.",
+      "hashAfter": "8dbb0d75a76a6b9dc6b7c9ab46a21ff72a3b9477eb0cdfa6320311f99a997300"
+    },
+    {
+      "path": "services/evaluator/src/iacode_evaluator/worker.py",
+      "reason": "Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.",
+      "hashAfter": "80d8efe04e66d55f4bae2d5bdf57b666490a11087d5724a3010edbfb4f45a747"
+    },
+    {
+      "path": "services/evaluator/src/iacode_evaluator/workflow.py",
+      "reason": "Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.",
+      "hashAfter": "65896b93b30180a37704b8b470a6c8df90e3184a54651f52817308e4e45e7fb2"
+    },
+    {
+      "path": "services/evaluator/tests/conftest.py",
+      "reason": "Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.",
+      "hashAfter": "b9dfeb3f2df40b852ce96fc68db34e6a1cb238aa5fbfbe338c74c772772af061"
+    },
+    {
+      "path": "services/evaluator/tests/fixtures/python-fail/calculator.py",
+      "reason": "Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.",
+      "hashAfter": "1a0005a7735fd488d4c0dad61b5a0e614aa01c1239879a48ebf3b23bf58338a6"
+    },
+    {
+      "path": "services/evaluator/tests/fixtures/python-fail/pyproject.toml",
+      "reason": "Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.",
+      "hashAfter": "6085123fefd2f542e2b59daf4afb80d8206e56edd2c80de4a0c38eb052c15055"
+    },
+    {
+      "path": "services/evaluator/tests/fixtures/python-fail/test_calculator.py",
+      "reason": "Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.",
+      "hashAfter": "cbffd70f9bb9cb4cea597937f2ca0f85c0bbea09a1ae291db8471b8ae6a32687"
+    },
+    {
+      "path": "services/evaluator/tests/fixtures/python-pass/calculator.py",
+      "reason": "Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.",
+      "hashAfter": "1b330dff4c0e577e667a1dc348f831f03802464b775c7f2001ab0ddbf6aaed2b"
+    },
+    {
+      "path": "services/evaluator/tests/fixtures/python-pass/pyproject.toml",
+      "reason": "Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.",
+      "hashAfter": "db8fe212c0845f44e67afd679820d0fa1f20f66a10f5501556fbcc3a1e748679"
+    },
+    {
+      "path": "services/evaluator/tests/fixtures/python-pass/test_calculator.py",
+      "reason": "Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.",
+      "hashAfter": "cbffd70f9bb9cb4cea597937f2ca0f85c0bbea09a1ae291db8471b8ae6a32687"
+    },
+    {
+      "path": "services/evaluator/tests/fixtures/python-slow/calculator.py",
+      "reason": "Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.",
+      "hashAfter": "1b330dff4c0e577e667a1dc348f831f03802464b775c7f2001ab0ddbf6aaed2b"
+    },
+    {
+      "path": "services/evaluator/tests/fixtures/python-slow/pyproject.toml",
+      "reason": "Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.",
+      "hashAfter": "d7020374b047d241ec75a0dcce003631978caf2807d70393d71b7bea00c108fc"
+    },
+    {
+      "path": "services/evaluator/tests/fixtures/python-slow/test_calculator.py",
+      "reason": "Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.",
+      "hashAfter": "055eff6ce31ceab06131fd1cc2edd966f07c4713af2330e337410454271b55d1"
+    },
+    {
+      "path": "services/evaluator/tests/integration/test_quality_persistence_integration.py",
+      "reason": "Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.",
+      "hashAfter": "e1abfb519b750c03c37c6be27b2f192388375e830fe6a876ea473ea37e5e8e8e"
+    },
+    {
+      "path": "services/evaluator/tests/test_core.py",
+      "reason": "Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.",
+      "hashAfter": "ad2d56f039b944ce026e7306476b0bc4823eaa0d8dad441f8196e9b99f6b7794"
+    },
+    {
+      "path": "services/evaluator/tests/test_persistence.py",
+      "reason": "Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.",
+      "hashAfter": "d92329885cc8f377b5b89fb087dca766100e820d18af79a2bcd4c4fa3d427867"
+    },
+    {
+      "path": "services/evaluator/tests/test_service.py",
+      "reason": "Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.",
+      "hashAfter": "ac7e98dc2556aaae48f3dd863ed508efac51f872a54947ba7f54610eb89ad51c"
+    },
+    {
+      "path": "services/evaluator/tests/test_workflow.py",
+      "reason": "Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.",
+      "hashAfter": "b6c7a18cf95959b8502a4c77307159b2c6d599053a2215023a62ec4f569f14ee"
+    },
+    {
+      "path": "services/sandbox/images/quality-java/Dockerfile",
+      "reason": "Sandbox integration, quality image, or regression control required for isolated Gate 4 execution.",
+      "hashAfter": "17f1f3d37c7dc5472c288eac5d013cc0502544a9892511e5baee7ae4fb6e389c"
+    },
+    {
+      "path": "services/sandbox/images/quality-java/gitconfig",
+      "reason": "Sandbox integration, quality image, or regression control required for isolated Gate 4 execution.",
+      "hashAfter": "eea5120eab514b8f9e719a697a21a4df3f3ca0d28bca6bf4dc6eaba15faee848"
+    },
+    {
+      "path": "services/sandbox/images/quality-java/image-inputs.json",
+      "reason": "Sandbox integration, quality image, or regression control required for isolated Gate 4 execution.",
+      "hashAfter": "639c133341125cd2191ba4526f171b6aeec7d030ca43df5a6e1798ce12f71ee5"
+    },
+    {
+      "path": "services/sandbox/images/quality-java/java_dependencies.py",
+      "reason": "Sandbox integration, quality image, or regression control required for isolated Gate 4 execution.",
+      "hashAfter": "ad2d6e02a78e34e8b493a2350b8fda9c618c544ace0ce4898898aac56e54194b"
+    },
+    {
+      "path": "services/sandbox/images/quality-java/seed-pom.xml",
+      "reason": "Sandbox integration, quality image, or regression control required for isolated Gate 4 execution.",
+      "hashAfter": "50fa39c062032dc90cce14e4bd3ee739d502d1c7378d8ddb31fe1b81cd764994"
+    },
+    {
+      "path": "services/sandbox/images/quality-node/Dockerfile",
+      "reason": "Sandbox integration, quality image, or regression control required for isolated Gate 4 execution.",
+      "hashAfter": "b0a63cbe97316e4b4c0f2d3ce42244843453a1ad7bc4c4f1778f5c383e2be45b"
+    },
+    {
+      "path": "services/sandbox/images/quality-node/gitconfig",
+      "reason": "Sandbox integration, quality image, or regression control required for isolated Gate 4 execution.",
+      "hashAfter": "eea5120eab514b8f9e719a697a21a4df3f3ca0d28bca6bf4dc6eaba15faee848"
+    },
+    {
+      "path": "services/sandbox/images/quality-node/image-inputs.json",
+      "reason": "Sandbox integration, quality image, or regression control required for isolated Gate 4 execution.",
+      "hashAfter": "b38b5ca0b3a26bcef7a53dd2cdebdf546e582e188b77ca19c7ee9074663a19cd"
+    },
+    {
+      "path": "services/sandbox/images/quality-node/node_install.sh",
+      "reason": "Sandbox integration, quality image, or regression control required for isolated Gate 4 execution.",
+      "hashAfter": "f4b94bb9215adb6f5d0017c3e009788d8b530623788ca8aded4f2f59b15eb5d3"
+    },
+    {
+      "path": "services/sandbox/images/quality-python/Dockerfile",
+      "reason": "Sandbox integration, quality image, or regression control required for isolated Gate 4 execution.",
+      "hashAfter": "51ba69671f0c45ecdeb25b3cc141aeff018798a2b58573a14eada02ee095b231"
+    },
+    {
+      "path": "services/sandbox/images/quality-python/gitconfig",
+      "reason": "Sandbox integration, quality image, or regression control required for isolated Gate 4 execution.",
+      "hashAfter": "eea5120eab514b8f9e719a697a21a4df3f3ca0d28bca6bf4dc6eaba15faee848"
+    },
+    {
+      "path": "services/sandbox/images/quality-python/image-inputs.json",
+      "reason": "Sandbox integration, quality image, or regression control required for isolated Gate 4 execution.",
+      "hashAfter": "620db75d694ce43a71d7e030522a7ab5a1b8558984ea76d79e5f00d5e9cba3c7"
+    },
+    {
+      "path": "services/sandbox/images/quality-python/python_runner.py",
+      "reason": "Sandbox integration, quality image, or regression control required for isolated Gate 4 execution.",
+      "hashAfter": "6f19c4f1ca15b674f4a253f09b3990d80b2e5437628260b9fbe4b7c46fad9282"
+    },
+    {
+      "path": "services/sandbox/images/quality_secret_scan.py",
+      "reason": "Sandbox integration, quality image, or regression control required for isolated Gate 4 execution.",
+      "hashAfter": "bd2d0f208d5239f420fa6e557dfe5874eb00346e09949e8d9c0b432f2157e845"
+    },
+    {
+      "path": "services/sandbox/tests/test_quality_images.py",
+      "reason": "Sandbox integration, quality image, or regression control required for isolated Gate 4 execution.",
+      "hashAfter": "05441dcadd276d0b8b4dfe78650d272edf98b4e6416b085273022ddc008f4035"
+    },
+    {
+      "path": "services/sandbox/tests/test_sandbox_images.py",
+      "reason": "Sandbox integration, quality image, or regression control required for isolated Gate 4 execution.",
+      "hashAfter": "953242716d6ecd24ca74e7299eee6284a3fcc239fe8d46b37effe1d207831dc7"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0001/COMPLETENESS-REPORT.json",
+      "reason": "Delivery Completeness Validator evidence for the Gate 4 closure.",
+      "hashAfter": "aa18ab6f66e409042f18e950b1fc9bea98e56f13825c685b95de859701cbbdc3"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0001/COMPLETENESS-REPORT.md",
+      "reason": "Human-readable delivery-completeness evidence for the Gate 4 closure.",
+      "hashAfter": "f0d0eed94bf3fda956fc8e708d200fd8c663e4580a8ec8198e3fd30b4061fec6"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0001/COUNTS.json",
+      "reason": "Canonical machine-derived counts for the Gate 4 closure.",
+      "hashAfter": "7196a91c252296078dd04e7acbcf3ebf9eb54e7e5e863e7a649569f5b65dbceb"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0001/M2-INTERNAL-RED-TEAM.json",
+      "reason": "Internal adversarial assurance evidence; explicitly not independent validation.",
+      "hashAfter": "63966d285837001c0c8d8a7982a9e98cbd3a3a989fb5370764aeb09110debe9a"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0001/RED-TEAM-REPORT.md",
+      "reason": "Human-readable internal adversarial assurance evidence.",
+      "hashAfter": "b424432c335e5f52d8b977ca415d9615ca1a109decb4181ff4b90235d5a658ad"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0001/FINAL-REPORT.md",
+      "reason": "Final implementing-run report and independent-review handoff.",
+      "hashAfter": "186154aef6b4f1b9d4e8671ffa1374da6b9c8110392d9879890bae2fb5f5c609"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0001/M2-INTERNAL-MIRROR.json",
+      "reason": "Latest internal M2 closure mirror; same-session assurance, not independent validation.",
+      "hashAfter": "e728645ba15775c15c8c65a2833eede484c16ed2a2280689c31827962ec1562a"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0001/M2-INTERNAL-MIRROR.md",
+      "reason": "Human-readable latest internal M2 closure mirror.",
+      "hashAfter": "1ad52cabcfeee75639f62eec3378f60207a8f9c89e861ddb53091020fde26fec"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0001/REVIEW-BUNDLE-VALIDATION.json",
+      "reason": "Deterministic, secret-scanned Gate 4 review-bundle validation evidence.",
+      "hashAfter": "1cdb93a675129aa97c46a77429e87c9f988f48b63a7a9b271f088c62d635b929"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0001/M2-INTERNAL-MIRROR-FAIL-CMD-0243.json",
+      "reason": "Preserved first internal mirror failure that exposed a clean-clone local-environment dependency.",
+      "hashAfter": "a950c8123cfa8bf0a9b005094e4e5988d2322fd5a8ef0ce1d66d5f7b69c29ac5"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0001/M2-INTERNAL-MIRROR-FAIL-CMD-0243.md",
+      "reason": "Human-readable preserved first internal mirror failure.",
+      "hashAfter": "4331b8ccd34fad74f712decdaa0c0527f67d339c63b863a60707f0b325d69ba9"
+    },
+    {
+      "path": "docs/program/PROGRAM-STATE.json",
+      "reason": "Schema-bound resumable program-state snapshot derived from checkpoint, Git, remote, and master-plan truth.",
+      "hashAfter": "e4ac0e0523884eb65769225214ede3bcfe547fd7b2d63ce186bf09732a01075a"
+    },
+    {
+      "path": "tests/test_gate4_quality_engine.py",
+      "reason": "Permanent Gate 4 regression and policy guardrail.",
+      "hashAfter": "bd9a69cee1115466a3137264b894eb4c5c950227f4579ce55c95783c76e24277"
+    }
+  ],
+  "filesModified": [
+    {
+      "path": ".gitignore",
+      "reason": "Repository configuration updated for the Gate 4 Quality Engine and its verified delivery.",
+      "hashAfter": "f04894c0cd14f504f23038e8b46ec6cb4cab072e577ecf8edabeb9495aa1bdb8",
+      "hashBefore": "86312be93b99b47d27a407b1080593e35f6f3810e721a3d1889ead3180be367f"
+    },
+    {
+      "path": ".iacode/anchors/checkpoint-chain.json",
+      "reason": "Repository configuration updated for the Gate 4 Quality Engine and its verified delivery.",
+      "hashAfter": "bec0872c9264dd3a0e7139adb676867a3cf5cec4aec27562552a479ed38a72cf",
+      "hashBefore": "87d680e18aed41d360e30e4328d0499b2d67c065a6b3766ab9f060565eae308c"
+    },
+    {
+      "path": ".iacode/memory/LESSONS.md",
+      "reason": "Engineering-memory lesson, guardrail or retrospective updated from failures observed during Gate 4.",
+      "hashAfter": "1085e0501ef9983120b19081b597b05da0353aff24547a5e5b0f487e446a9bc7",
+      "hashBefore": "8a196411b75b90eec21bb64059e495f2c6e273666b5f90b02e502468c98c24d2"
+    },
+    {
+      "path": ".iacode/memory/guardrails/registry.json",
+      "reason": "Engineering-memory lesson, guardrail or retrospective updated from failures observed during Gate 4.",
+      "hashAfter": "6e785762eb4ab32533bf1f1737adc879589288ae82389912bd5c0d1a67d15926",
+      "hashBefore": "6d042ce05143697525ed4ce9b7b8098478132b5e5361f4d23b0ff47fa96d9457"
+    },
+    {
+      "path": ".iacode/memory/lessons.jsonl",
+      "reason": "Engineering-memory lesson, guardrail or retrospective updated from failures observed during Gate 4.",
+      "hashAfter": "5db639ee81412e8e10383120fa5c82df4d942b95c3241d7fc17a4dd4f218ed0f",
+      "hashBefore": "69420e45d8b471cedb2ca67efd253c42e4d7a6719d416a372e1c1ceb6fcda5e6"
+    },
+    {
+      "path": ".iacode/policies/canonical-requirements.json",
+      "reason": "Closed policy or schema required by the Gate 4 quality controls.",
+      "hashAfter": "90e34f744a66db1aa6db70f33ae1fe691439b85d24e9bab2b7a4f300f5487ed3",
+      "hashBefore": "7dc446c722f6bd88c8937c26e33088ed3ebbbf3a03d3168844bb54ccdf537a73"
+    },
+    {
+      "path": ".iacode/policies/quality-gates.json",
+      "reason": "Closed policy or schema required by the Gate 4 quality controls.",
+      "hashAfter": "dd2cea1bc42ec38a17aea12f26843477ca5b43dd89451fe933e6c52943a6a265",
+      "hashBefore": "0a2598099b59fc790235569af45eb9a904f4daecd4f960d918e9f62fbbcd959d"
+    },
+    {
+      "path": ".iacode/policies/sandbox-policy.json",
+      "reason": "Closed policy or schema required by the Gate 4 quality controls.",
+      "hashAfter": "c76ce058004df5b33a900357c29601a39e5e3385c9ad5d49dc00b7da3c412197",
+      "hashBefore": "706d5df77a03c163c77637cf8be10e6742748f5fe58a59c38886c9d9f6c9e9a4"
+    },
+    {
+      "path": ".iacode/policies/test-suites.json",
+      "reason": "Closed policy or schema required by the Gate 4 quality controls.",
+      "hashAfter": "41f2ee429f8762d77f19a7af5dd68f6f84bcb928b6a9237542958a96be5ef1d1",
+      "hashBefore": "ceaa8c6a6c06038e6e176526ba1a5791e46a007d9bcc40409db539f46ccdfc80"
+    },
+    {
+      "path": "README.md",
+      "reason": "Repository documentation updated for the Gate 4 Quality Engine and its operating contract.",
+      "hashAfter": "e57d99d8b207ac8fb9cf0b3957c11e7b34744e0c8329fdb5d98621fa52fbe985",
+      "hashBefore": "502efed9ed2b7229837b8134ddfb3a8003e14196c1157514272e3eedb626de00"
+    },
+    {
+      "path": "START-HERE.md",
+      "reason": "Repository documentation updated for the Gate 4 Quality Engine and its operating contract.",
+      "hashAfter": "b9db6cea147bc52b6e3c54470b4624eeef2c5a2405d96390a0708fc18a46c683",
+      "hashBefore": "5e82d8a7e1e3a330047986d3e746509673dcb49f953a30bb864de465e61d5d72"
+    },
+    {
+      "path": "apps/api/Dockerfile",
+      "reason": "API, contract, or persistence integration for the Gate 4 quality lifecycle.",
+      "hashAfter": "aab757c05e5add34720db2d55db36a0f7121e62ed3c151059c557254256e2495",
+      "hashBefore": "801ed8a3407db045e90ef68590079f19dda343a262f3dbf39db549a30e744fde"
+    },
+    {
+      "path": "apps/api/pyproject.toml",
+      "reason": "API, contract, or persistence integration for the Gate 4 quality lifecycle.",
+      "hashAfter": "339de92f0d3f87fefeb429cd4b39d19121c3c5abd41a29eb740ce6785310496f",
+      "hashBefore": "1d225e78c0155fed50a9fdf1482927165dcf1227b86ee5ad0ea76297647868cf"
+    },
+    {
+      "path": "apps/api/src/iacode_api/config.py",
+      "reason": "API, contract, or persistence integration for the Gate 4 quality lifecycle.",
+      "hashAfter": "60e2f652ec6759c44b720894b335da8d51b4966720d9e662b86c6bfccbf9b708",
+      "hashBefore": "4b640f1c78d220a2615623443fc6f776bed2aa5de357a4379d141e8cc33fee5e"
+    },
+    {
+      "path": "apps/api/src/iacode_api/lifespan.py",
+      "reason": "API, contract, or persistence integration for the Gate 4 quality lifecycle.",
+      "hashAfter": "8709ec57adec370db89ad1c6aca8d1293320706da8171023ba018247aedf3f60",
+      "hashBefore": "fd3392aaaca8514d478f1722a9b89aeb2cdbaaa660b84974ba5dae93d5363ed8"
+    },
+    {
+      "path": "apps/api/src/iacode_api/main.py",
+      "reason": "API, contract, or persistence integration for the Gate 4 quality lifecycle.",
+      "hashAfter": "d11402ef5b4f55814b0b3f392b24f25987e0ab4d733a4fd67263554df6b1f520",
+      "hashBefore": "23064a64c308666110660d1210f4d50f8378ab6e2134932bece1f54a26738062"
+    },
+    {
+      "path": "apps/api/src/iacode_api/routes/agent_runs.py",
+      "reason": "API, contract, or persistence integration for the Gate 4 quality lifecycle.",
+      "hashAfter": "b80aa96a3d3b9e70d595ff7be3366ce40b2a2ac2dd8ccc6ee07d021968b70a9f",
+      "hashBefore": "6bd1bdc5ee03c6347d1986b5172558da73e8445eb30ba2559548f2f81110b1c4"
+    },
+    {
+      "path": "apps/api/src/iacode_api/workflows/client.py",
+      "reason": "API, contract, or persistence integration for the Gate 4 quality lifecycle.",
+      "hashAfter": "2e8d15e8a342ca8e0d39dd8310d69ce6ae129bb6e3f14efefde66cfc7f35f584",
+      "hashBefore": "1d2fbec3c7978394fbd5f4eff83390a7cbab11360ba85533c3c2cc3daf581798"
+    },
+    {
+      "path": "apps/api/tests/integration/test_migrations.py",
+      "reason": "API, contract, or persistence integration for the Gate 4 quality lifecycle.",
+      "hashAfter": "599620441e1e05943a6511b1d39dc760f3206370f6e2c652603ae33395a23d86",
+      "hashBefore": "82968f2afe4f3e960be4e8c34ed4b2eb353b76ab34f158bbfab5bf46d22d3ba9"
+    },
+    {
+      "path": "apps/api/tests/unit/test_domain_model.py",
+      "reason": "API, contract, or persistence integration for the Gate 4 quality lifecycle.",
+      "hashAfter": "333da53c22a1e12093a312b19c57286f6aacaccf9f681fcdd4ac8151ee3e2958",
+      "hashBefore": "bca40a47f3b320cbadcb1ae1a3b81339e49309a5c229d712a4f56e993ed74ccf"
+    },
+    {
+      "path": "docs/ARCHITECTURE.md",
+      "reason": "Repository documentation updated for the Gate 4 Quality Engine and its operating contract.",
+      "hashAfter": "fbfc770c3f4ffb3f3ad85798634276486aafb81bc158e38cf17604f467db8aca",
+      "hashBefore": "40c95ca8b08b408738bdd3e07a7c9c2a878dd447a028c276f97ea89b9a24b9c6"
+    },
+    {
+      "path": "docs/DEVELOPMENT.md",
+      "reason": "Repository documentation updated for the Gate 4 Quality Engine and its operating contract.",
+      "hashAfter": "d451b511ee1fac18d4a3e5454358e8e9fc0148d3194faa9a90f7ac1a4e00acaf",
+      "hashBefore": "e7c2fc859b18c13ac7936893ce9344d4d4fda85c7d51e7e7e4dbc218a56e508b"
+    },
+    {
+      "path": "docs/MODEL-USAGE-POLICY.md",
+      "reason": "Repository documentation updated for the Gate 4 Quality Engine and its operating contract.",
+      "hashAfter": "d5fa872501335e04c6223a0e2b9c32b6ef6b5651904b12b3124930eb41ff6b6c",
+      "hashBefore": "772d048246943f2236281318490f6f4ed29fe6bd68c8303d101e2362012fb3e0"
+    },
+    {
+      "path": "docs/VERSIONS.md",
+      "reason": "Repository documentation updated for the Gate 4 Quality Engine and its operating contract.",
+      "hashAfter": "4cbafeb86b5c7e51293bf560939cee72e8a92942645cdc8bfe473c0bb19dbfbf",
+      "hashBefore": "5ce17a26e298241b5bff9acb1e626f723e8a21cc09f06124aef155139118d2f3"
+    },
+    {
+      "path": "docs/adr/ADR-0026-workspace-lifecycle.md",
+      "reason": "Architecture decision record for a structural Gate 4 decision.",
+      "hashAfter": "32079deb53dad420444414acc67d7319dca796129ba15593c91b58dd70a3bb54",
+      "hashBefore": "9af17d4c5e6e3276519981bad3e1fd6b080c44ac15cf8435d1a736476656b86a"
+    },
+    {
+      "path": "docs/adr/README.md",
+      "reason": "Architecture decision record for a structural Gate 4 decision.",
+      "hashAfter": "cd2ccdaa82d0c4806f7c79001a65bd0a65b5811385da86b151f0276f4a68b9a2",
+      "hashBefore": "ba0faa55c91feac4cd709c1799809161eb026e7e01be72a6c7dd0c0295aa043b"
+    },
+    {
+      "path": "docs/checkpoints/LATEST.md",
+      "reason": "Gate 4 checkpoint evidence, state, or delivery record.",
+      "hashAfter": "161393533a5cf603f299ac8310ad1af9cbe709551a323e444616414dffa5074d",
+      "hashBefore": "9dec4673c89f9df4d6a83562551ba9bc8d915b1daa9d343c4fd1d00a489bad2e"
+    },
+    {
+      "path": "infra/compose/.env.example",
+      "reason": "Infrastructure wiring or observability required by the Gate 4 Quality Engine.",
+      "hashAfter": "e596c9dff1608b87db143dcd2c2867483f2c2e66ee0a9f0fac86342037515337",
+      "hashBefore": "e7a5bc120c2d508cdef79598cc70c9454b6428632d843b86cdd866be343aec85"
+    },
+    {
+      "path": "infra/compose/docker-compose.yml",
+      "reason": "Infrastructure wiring or observability required by the Gate 4 Quality Engine.",
+      "hashAfter": "ccb6cce7eae0aa40d02302e8ff9b81f9fe849c7743a48ab67cad6b2a6ad287e2",
+      "hashBefore": "635a108d8d6648bbd133bd77bfe9fa195acf9aecefa6f2146e48e54597f2f842"
+    },
+    {
+      "path": "infra/prometheus/prometheus.yml",
+      "reason": "Infrastructure wiring or observability required by the Gate 4 Quality Engine.",
+      "hashAfter": "afe41e4848bd9f63c4b2014ff638b76f06527aab76a7cde93fb3762933172b57",
+      "hashBefore": "554a0c5486bf19d773425b0dd3aae4b17c25e38b40644107fd4c3530cc976a72"
+    },
+    {
+      "path": "infra/tests/test_compose_definition.py",
+      "reason": "Infrastructure wiring or observability required by the Gate 4 Quality Engine.",
+      "hashAfter": "20926c9073f4ef4b694d4f01e6bd13c5f2e660fe5d5a12de610492e6220ce28f",
+      "hashBefore": "0585a14751b2e588e87713a39828be75087b8801803dc05c851c77c38ea23533"
+    },
+    {
+      "path": "packages/contracts/src/iacode_contracts/__init__.py",
+      "reason": "API, contract, or persistence integration for the Gate 4 quality lifecycle.",
+      "hashAfter": "257434a6eaadd815dff6e9ceef57a2e28ed2d296c69821947dd3114f29ecd5a1",
+      "hashBefore": "5d9aee1ea0b0f9b462ddd381c5db9bd47f66c963ffa56b53a5b9e00e35fdb165"
+    },
+    {
+      "path": "packages/persistence/src/iacode_persistence/models.py",
+      "reason": "API, contract, or persistence integration for the Gate 4 quality lifecycle.",
+      "hashAfter": "00f01a7efb013694d50ce4640eed2a8d360cc2007260a9bdb40213e9d8e09b04",
+      "hashBefore": "b22b3b11d37f7da4057e95b35467f77066fa756cd0b31e514b3f88ce5c523808"
+    },
+    {
+      "path": "ruff.toml",
+      "reason": "Repository configuration updated for the Gate 4 Quality Engine and its verified delivery.",
+      "hashAfter": "b461c88d9ec79a5a1612583827b710180c034a57245e14c9ff99cf58fbffaa8e",
+      "hashBefore": "c42ad3c2ee20077b90687f6f6f8b8afbfe440da1180bf80b22ae7b7f3f5fade8"
+    },
+    {
+      "path": "scripts/development-ledger/check_completeness.py",
+      "reason": "Executable Gate 4 validation, scenario, delivery, or quality-gate control.",
+      "hashAfter": "2b03b215db2f924659f24421e49f5af23a37cbbfda30ebc585a9d719e5b47c90",
+      "hashBefore": "8d2c5d04450e7c530d31c406ffa62551dd99dab6d51bda895a1009a764577c3b"
+    },
+    {
+      "path": "scripts/development-ledger/record_command.py",
+      "reason": "Executable Gate 4 validation, scenario, delivery, or quality-gate control.",
+      "hashAfter": "7446058965b0defe86e978c19b6844583e6f7407666b1ed106995656380f53c3",
+      "hashBefore": "6b8a70a40a2cc814b45ae7b6c98ae28c39c703b9c965e3ad0ca507a0c169750f"
+    },
+    {
+      "path": "scripts/iacode/gates/lint.py",
+      "reason": "Executable Gate 4 validation, scenario, delivery, or quality-gate control.",
+      "hashAfter": "dd94e329db0b6b265b7dd6b2af07ce96e856bc20a926420d47c682b31689aaf9",
+      "hashBefore": "ec7c68767990ab5afef7e5a76c4fba178344cf1457c41d3463e3c16dc65d1390"
+    },
+    {
+      "path": "scripts/iacode/scenarios/agent_runtime_durability.py",
+      "reason": "Executable Gate 4 validation, scenario, delivery, or quality-gate control.",
+      "hashAfter": "b61ec063cfb1daa81b565c0424250a61fad5d00dc573b47ce57c00bfcb8d6863",
+      "hashBefore": "4d3db042863e32cf6abce062f637967efe4aed198a6493bf8e4d9a30efd67e73"
+    },
+    {
+      "path": "scripts/iacode/scenarios/sandbox_coding_e2e.py",
+      "reason": "Executable Gate 4 validation, scenario, delivery, or quality-gate control.",
+      "hashAfter": "30a12216fabf84215f3b5905728546bc217a35af56a4fa5f647723414ad13d2d",
+      "hashBefore": "b5b94c3ad1d05ac60fa6bf338087b973f9a40df8a89446836f1dd9dd61d3f273"
+    },
+    {
+      "path": "scripts/iacode/verify.py",
+      "reason": "Executable Gate 4 validation, scenario, delivery, or quality-gate control.",
+      "hashAfter": "d684b136e6300cbdb330fde22c5af43d2297fa96269aa2f9ca7a2d4026077e36",
+      "hashBefore": "a93ba1253ad2b137e5edbb4654a72ce5d5b84f8eed74b81864e142e8527f3ccb"
+    },
+    {
+      "path": "services/agent-runtime/src/iacode_agent_runtime/context.py",
+      "reason": "Agent-run integration or rehearsal support for durable Gate 4 quality execution.",
+      "hashAfter": "dbab4b749c418ccd9fab9c9baa316cd8c3f669881ce4f65dbe44d1f736e0ea37",
+      "hashBefore": "c63c1e1203fbf6a16d901f0a6119bbdbc23fd469358e10ae83021e33ac36ec68"
+    },
+    {
+      "path": "services/agent-runtime/src/iacode_agent_runtime/engine.py",
+      "reason": "Agent-run integration or rehearsal support for durable Gate 4 quality execution.",
+      "hashAfter": "f6ca4967312e98c3680a0aef4c74a1b3d2d956b3e793942499b88520621ca3e2",
+      "hashBefore": "b421e55e6657d2e82f22c8f0a70f8df1aa990fbf0a05d7d031c9abe0335388af"
+    },
+    {
+      "path": "services/agent-runtime/src/iacode_agent_runtime/errors.py",
+      "reason": "Agent-run integration or rehearsal support for durable Gate 4 quality execution.",
+      "hashAfter": "8b20542ddb9a01beb4d562fb07e0f12a27f194bcaea2234536a0dbd0b247f749",
+      "hashBefore": "1793b4cd2290466f6abefc0e723ee79d231eb316d16c1363a0dae8908d0077cb"
+    },
+    {
+      "path": "services/agent-runtime/tests/runtime_doubles.py",
+      "reason": "Agent-run integration or rehearsal support for durable Gate 4 quality execution.",
+      "hashAfter": "51d6c025ebe32be0be16ed0bafb08f5bcb750b239a63c625beb7193e7155daad",
+      "hashBefore": "7e78fd0189d0bf1ab97c34aaf1ca75398badc63015d51fa3779b83fd3fbb33c1"
+    },
+    {
+      "path": "services/agent-runtime/tests/test_context.py",
+      "reason": "Agent-run integration or rehearsal support for durable Gate 4 quality execution.",
+      "hashAfter": "a86d6bfa00c83f529eac87430fb1caac2925192d3bed75ff24fcbcfde577ef64",
+      "hashBefore": "be4e1f400c0902bd1616cfe1fd984cbe500dbc728cf4b6a2839e9413a4feb990"
+    },
+    {
+      "path": "services/agent-runtime/tests/test_engine.py",
+      "reason": "Agent-run integration or rehearsal support for durable Gate 4 quality execution.",
+      "hashAfter": "94edd22cb85fed4807b0985049cced57ba5036fc27e20e1bd8f65d9ca883352f",
+      "hashBefore": "2073d3623b1451e1e29153fb3a4311ecded1c57a5fb2eaa19ba63b0669e168e5"
+    },
+    {
+      "path": "services/evaluator/README.md",
+      "reason": "Quality Engine implementation, runtime packaging, tests, or executable fixture for Gate 4.",
+      "hashAfter": "6f6986a0ff313cfe5df7f1234f5922ae09e63db89df4aba19d3c07af927f73f9",
+      "hashBefore": "9a315ce59eda030b3ae0675607fbb0593519e5f0b60b7285fc97dc002efa40df"
+    },
+    {
+      "path": "services/model-gateway/src/iacode_model_gateway/config.py",
+      "reason": "Cross-gate compatibility repair required by the canonical Gate 4 verification.",
+      "hashAfter": "83269d8b6149b00718b72235b5e664f6b9524ebc5c393f10c66eac0fc2b0c7ae",
+      "hashBefore": "c339dbd09454fc107feb9d3855ef40708d33cf7e5acb9aee4b4430e8edf5e129"
+    },
+    {
+      "path": "services/model-gateway/src/iacode_model_gateway/errors.py",
+      "reason": "Cross-gate compatibility repair required by the canonical Gate 4 verification.",
+      "hashAfter": "528549a7e290bae28d53b4529fcb47b535ee652e409a37c003ea3eb83b65458f",
+      "hashBefore": "fed8c1280889cbd0071ee436117ed58d02ed7d690d2f4557fb3bbc025389d4cd"
+    },
+    {
+      "path": "services/model-gateway/src/iacode_model_gateway/gateway.py",
+      "reason": "Cross-gate compatibility repair required by the canonical Gate 4 verification.",
+      "hashAfter": "e6db79258102459d178b69c9bfe59d02a2470851654a4b6dfb4b0befeff3f1c5",
+      "hashBefore": "c6c3fd4629e4edd1ec764c3e91b42e451578fcf0ca5e258b74490c3d26ce111f"
+    },
+    {
+      "path": "services/model-gateway/src/iacode_model_gateway/ports.py",
+      "reason": "Cross-gate compatibility repair required by the canonical Gate 4 verification.",
+      "hashAfter": "50783725cac7240105ddbc9e785e6c0d680f37622abb88a54659120bda30ba44",
+      "hashBefore": "f8d47dde5c7865e4eb3c7f6c4e81909945da922a7bdaddee842de813f56550cf"
+    },
+    {
+      "path": "services/model-gateway/src/iacode_model_gateway/pricing.py",
+      "reason": "Cross-gate compatibility repair required by the canonical Gate 4 verification.",
+      "hashAfter": "732f7ace781c19e90fc3e3bd8aad1cf59b21b4f894ed2df68f5d7a5759d1f3ef",
+      "hashBefore": "becc7cf77cf9340ebcf75fd83953f150af5426519fc15931d6e1f4fee8fce509"
+    },
+    {
+      "path": "services/model-gateway/src/iacode_model_gateway/protocols/anthropic_messages.py",
+      "reason": "Cross-gate compatibility repair required by the canonical Gate 4 verification.",
+      "hashAfter": "4d65995a8b7b9e9673777e1bced1fae75702b3c10c8684ae289b9bc978d81c89",
+      "hashBefore": "3309c067e0564e0e6216773afbf60932ceca8486b962304e9275fa14f1290f8a"
+    },
+    {
+      "path": "services/model-gateway/src/iacode_model_gateway/protocols/openai_chat.py",
+      "reason": "Cross-gate compatibility repair required by the canonical Gate 4 verification.",
+      "hashAfter": "1364c2768009928989123cff59c5f630c2df8a7aff5035348103c72e345017d5",
+      "hashBefore": "ae93848cfa776eb8852258102610d7c2eb9d9e53c9ca90c467b0f68815aee6b6"
+    },
+    {
+      "path": "services/model-gateway/src/iacode_model_gateway/protocols/openai_responses.py",
+      "reason": "Cross-gate compatibility repair required by the canonical Gate 4 verification.",
+      "hashAfter": "539a4a1d5336f721265fd4fbaa5440250cfc2c7bce71d6a30bba928669044a00",
+      "hashBefore": "224ddc1c9606daf6460293083e0674e283fa60f6c933ec90b1aa3778378465ff"
+    },
+    {
+      "path": "services/model-gateway/src/iacode_model_gateway/providers/http_provider.py",
+      "reason": "Cross-gate compatibility repair required by the canonical Gate 4 verification.",
+      "hashAfter": "0240267c3a6d26caaa4bec9c1b517b09d1705e28b5d566abd79eef940dbb90b7",
+      "hashBefore": "3f16f6ffec82f26c5b635b9b10f92668d7c9e56cab51346b0f09bb9612fbcd28"
+    },
+    {
+      "path": "services/model-gateway/src/iacode_model_gateway/resilience/circuit.py",
+      "reason": "Cross-gate compatibility repair required by the canonical Gate 4 verification.",
+      "hashAfter": "b533f6627fc1e7297e5f0322f6383413ebb6be19aef5a69c6871046e9a0d5518",
+      "hashBefore": "ec155c802f8629cc9c287533da4c197f2db7c6f7ee57a782796006f98a5fb526"
+    },
+    {
+      "path": "services/model-gateway/src/iacode_model_gateway/routing/policy.py",
+      "reason": "Cross-gate compatibility repair required by the canonical Gate 4 verification.",
+      "hashAfter": "43d9be03aa2815afbd98b09a5fc84f7a6cfeb3113e8f712a0f38c37cb5a3894a",
+      "hashBefore": "8348a5a2c9fa5eb0b163c959708ca8b8b3d33aa1c8ebe78d8c8200fb39ab57b0"
+    },
+    {
+      "path": "services/model-gateway/src/iacode_model_gateway/routing/router.py",
+      "reason": "Cross-gate compatibility repair required by the canonical Gate 4 verification.",
+      "hashAfter": "14b07af3dcb975406b0f752bb6ef6fd4356189e2a2e1d8900e6155e77786c6d2",
+      "hashBefore": "43879e1b82b0c62543a9b8dc09753e0a237b3f3e101ae4eb651b82c16b6c23b5"
+    },
+    {
+      "path": "services/model-gateway/src/iacode_model_gateway/security/base_url.py",
+      "reason": "Cross-gate compatibility repair required by the canonical Gate 4 verification.",
+      "hashAfter": "b45a6fcebb8bdc7d96cbf5fb5a956b884df03bac85b9c41bdea91ddc39e83980",
+      "hashBefore": "702e94c58db3bcec7718871160d337096554ee5577d1491a1fa0c7cf2a1702c0"
+    },
+    {
+      "path": "services/model-gateway/src/iacode_model_gateway/telemetry/metrics.py",
+      "reason": "Cross-gate compatibility repair required by the canonical Gate 4 verification.",
+      "hashAfter": "ee75db3c425c36edc1a221b2b98570de39ee246614c637d1b480f3e43a53d626",
+      "hashBefore": "9cfaabbcf8738b51bc85789aa95db881078134512c7a2553fe8f3126e7a24943"
+    },
+    {
+      "path": "services/model-gateway/tests/fixtures/doubles.py",
+      "reason": "Cross-gate compatibility repair required by the canonical Gate 4 verification.",
+      "hashAfter": "189c89ff982ab770315ce998989d82925355ad91d76a50bf562fef9610390988",
+      "hashBefore": "5539bbf760859be886edadc8744032f1c7e788125d302edc15c9a99770fcb2b4"
+    },
+    {
+      "path": "services/model-gateway/tests/test_catalog.py",
+      "reason": "Cross-gate compatibility repair required by the canonical Gate 4 verification.",
+      "hashAfter": "af46e7595b9f94ebdd5cf97d9dda1827ca91ded97effb43bdc89e282aef3e3e7",
+      "hashBefore": "f4d0bf343ab3583c94022c53dbbcdb9d15ef0b2d68402eddab4b4a6e6208148b"
+    },
+    {
+      "path": "services/model-gateway/tests/test_contracts.py",
+      "reason": "Cross-gate compatibility repair required by the canonical Gate 4 verification.",
+      "hashAfter": "86c4a7ad0ac07e3663c656b861a44348b9d9869304bb6087c65cbccc760ea7e3",
+      "hashBefore": "a40936238afe1ee598983f7bc76cdabc86772420e44169e6a5e0e5329d1187b4"
+    },
+    {
+      "path": "services/model-gateway/tests/test_gateway.py",
+      "reason": "Cross-gate compatibility repair required by the canonical Gate 4 verification.",
+      "hashAfter": "e092d3dd08a01fc3fe3c6126c7a89c270db4a4243f541a8dc0a44b38f5d6d7f3",
+      "hashBefore": "9d7c4163bbca84dc7e4142962d0c8e8ea77ca419a1e9b4640f43b79c646aa244"
+    },
+    {
+      "path": "services/model-gateway/tests/test_package.py",
+      "reason": "Cross-gate compatibility repair required by the canonical Gate 4 verification.",
+      "hashAfter": "af25d9cd25391254455651d3cec213adf361c9b2520196fc4e2b2ecfefc70ded",
+      "hashBefore": "ea2a96248e81cb58b04f2ffd94323ef963c91864284bc8ee6f125a6fe88e52cf"
+    },
+    {
+      "path": "services/model-gateway/tests/test_protocols.py",
+      "reason": "Cross-gate compatibility repair required by the canonical Gate 4 verification.",
+      "hashAfter": "d3db0d322eb473e49d9d86859c2fbc1acdec6af692f4a73834c41f8e0204b5ed",
+      "hashBefore": "42e274175f3ac9339584b3351f9a55ea43c83de65cde4b25c9c6063af28430a0"
+    },
+    {
+      "path": "services/model-gateway/tests/test_provider_contract.py",
+      "reason": "Cross-gate compatibility repair required by the canonical Gate 4 verification.",
+      "hashAfter": "ae86cfc6c8d428ccb7c8918abed742a547cf2d3992e3dcaf5ba3b0d394f94957",
+      "hashBefore": "3be3f12d5709d12738d57272c5a123fb22af37e86189d4dc702ecf368df4649a"
+    },
+    {
+      "path": "services/model-gateway/tests/test_resilience.py",
+      "reason": "Cross-gate compatibility repair required by the canonical Gate 4 verification.",
+      "hashAfter": "55a3b46e30463d5504abb717671aed502a903b75f2a8a3e10b0a275978d2b8c1",
+      "hashBefore": "4facef9e67dd0e05b1049d844cd8cd6e6ce7cfe772896bb3cb33d5dcc643f4d8"
+    },
+    {
+      "path": "services/model-gateway/tests/test_routing.py",
+      "reason": "Cross-gate compatibility repair required by the canonical Gate 4 verification.",
+      "hashAfter": "2a673dd3197706051126e1c9176637e7fa601035b4b6114d9d1a1f01a8774c74",
+      "hashBefore": "90db78d0dd039d1327307b38f599f80c77fd807effcdbeb86c69c795a35644c2"
+    },
+    {
+      "path": "services/model-gateway/tests/test_secrets.py",
+      "reason": "Cross-gate compatibility repair required by the canonical Gate 4 verification.",
+      "hashAfter": "e5199dc4c08f8b015a47c997b45c161c76a4b6e2e5099e2e111bfc830e7f5305",
+      "hashBefore": "bcc5b04863805df863d873f6aa536be08c2340e09b56b5bc66cac0da7085dc25"
+    },
+    {
+      "path": "services/model-gateway/tests/test_security.py",
+      "reason": "Cross-gate compatibility repair required by the canonical Gate 4 verification.",
+      "hashAfter": "0d46c5c0dfb86b0bd389b119291c0bcf1e2c5f3822de725c44a41660f895b4f2",
+      "hashBefore": "01c9f95181c2874e77012415470672daba3037abc5715b27390da076d1f06c72"
+    },
+    {
+      "path": "services/model-gateway/tests/test_streaming.py",
+      "reason": "Cross-gate compatibility repair required by the canonical Gate 4 verification.",
+      "hashAfter": "68380121921742d8408169b5bd1b08ba1ecbbcbb5dc6e255af263bdfe2e43dc8",
+      "hashBefore": "8bd03ce60a90c2ce3fc11c9b9977460a68c7c6b04c902050cacfdb87e9b12637"
+    },
+    {
+      "path": "services/model-gateway/tests/test_structured_output.py",
+      "reason": "Cross-gate compatibility repair required by the canonical Gate 4 verification.",
+      "hashAfter": "4f8f7ba5dd6e24c5daf785a7313dd6e4a8befd019b2cc0d42da30c5cef812f2d",
+      "hashBefore": "51ad965aad511d1e0dd890a83946da4c42feed8ba0b921fb089cd98abe64733b"
+    },
+    {
+      "path": "services/orchestrator/Dockerfile",
+      "reason": "Agent-run integration or rehearsal support for durable Gate 4 quality execution.",
+      "hashAfter": "35281817f833f12c1f3fccae9ae96bae9d421f513c29938ee255a535e5b46e0d",
+      "hashBefore": "3e9e27172fd4dde363c1f0006c88a1e50d4c5375dbd8b92cddaee9f0b80638ab"
+    },
+    {
+      "path": "services/orchestrator/pyproject.toml",
+      "reason": "Agent-run integration or rehearsal support for durable Gate 4 quality execution.",
+      "hashAfter": "bcc07a6eeda07e425405cde0fbea1e742578d3ba6b4dda2b7dbdb2f5549d2bd1",
+      "hashBefore": "4f52a2ec9b2be7c501a51c4f1744666d05e14420d43088cb0e638eff71521879"
+    },
+    {
+      "path": "services/orchestrator/rehearsal/coding.py",
+      "reason": "Agent-run integration or rehearsal support for durable Gate 4 quality execution.",
+      "hashAfter": "4ab43279567e5d89a858c12614c77736bc770c6a65e59752a036e813881c2c7a",
+      "hashBefore": "99a400980e0e4440693968772d9544017c800fbc7f9467e3d9c365eed7dffcd0"
+    },
+    {
+      "path": "services/orchestrator/rehearsal/durability.py",
+      "reason": "Agent-run integration or rehearsal support for durable Gate 4 quality execution.",
+      "hashAfter": "ee963b4766d2281e8a160ec0bfa3b9572bd5b921c38809986da818566d7f2c45",
+      "hashBefore": "82994d77b6811a1d392ea6fddb721c8c885286c7ccd8e62960c8ef588f9efa83"
+    },
+    {
+      "path": "services/orchestrator/src/iacode_orchestrator/agent_runtime/activities.py",
+      "reason": "Agent-run integration or rehearsal support for durable Gate 4 quality execution.",
+      "hashAfter": "8302c8ce375e8785965e7f88806fb49b76656227a094549dde07c812ad224566",
+      "hashBefore": "40cd11934e5e572ddbfebe4e770576ce5cc0f1d88baae95389880182f55d5118"
+    },
+    {
+      "path": "services/orchestrator/src/iacode_orchestrator/agent_runtime/runtime_context.py",
+      "reason": "Agent-run integration or rehearsal support for durable Gate 4 quality execution.",
+      "hashAfter": "07e90e826406e988cf4105bf5f2005397dbef224d28ced9f88b34aa66059eadd",
+      "hashBefore": "f7e950a6209b773841023e99cc5735393e0f080f28b1c0f6ec505595541cedec"
+    },
+    {
+      "path": "services/orchestrator/src/iacode_orchestrator/config.py",
+      "reason": "Agent-run integration or rehearsal support for durable Gate 4 quality execution.",
+      "hashAfter": "4ee1a95091defab149062712a8691ffde230a756ebc22969eafd4111bdaef15c",
+      "hashBefore": "24f15011b0a965430f05d4cd3f979e460077dbe14aabdb0b3971303ffb7570bc"
+    },
+    {
+      "path": "services/orchestrator/src/iacode_orchestrator/workflows/agent_run.py",
+      "reason": "Agent-run integration or rehearsal support for durable Gate 4 quality execution.",
+      "hashAfter": "4ee96f780741ed1b82c80348caee99e77dc45baf2354ad45073d84c591f0938e",
+      "hashBefore": "81f2136e767f743dc99fe06888e58a398c04e863cf3f23ff3101d102ce45f7da"
+    },
+    {
+      "path": "services/sandbox/Dockerfile",
+      "reason": "Sandbox integration, quality image, or regression control required for isolated Gate 4 execution.",
+      "hashAfter": "bab18bc72640cd218c88fcfcf8d23655afa0dceeba3b527b00253d605f218c9e",
+      "hashBefore": "ab8834676055640f4fd6bafc324dbdd4f47e599fd072ba785d1475232f9482f7"
+    },
+    {
+      "path": "services/sandbox/src/iacode_sandbox/helper.py",
+      "reason": "Sandbox integration, quality image, or regression control required for isolated Gate 4 execution.",
+      "hashAfter": "507af627707f3676ed3659e63c7bcb6817f1c686d5c0bbc290f463bb3a6865ff",
+      "hashBefore": "194f2e3598a40720a40780d49a9ff47f9daa8db6d18844264f43668a1e312f10"
+    },
+    {
+      "path": "services/sandbox/src/iacode_sandbox/image.py",
+      "reason": "Sandbox integration, quality image, or regression control required for isolated Gate 4 execution.",
+      "hashAfter": "5a275b4a181202120401959b1a2629f7c71aefcd79d0bf25e2b0fef0bdc2a91d",
+      "hashBefore": "1763d4d105b84e6ccbfd632056b43235d9e4e4c261787012c8b8be47cc0171a5"
+    },
+    {
+      "path": "services/sandbox/src/iacode_sandbox/service.py",
+      "reason": "Sandbox integration, quality image, or regression control required for isolated Gate 4 execution.",
+      "hashAfter": "67637f0ef554b0a90ed0c01b59ad5eb08419d12536e95bb083be9c87a0900522",
+      "hashBefore": "a364ddaa07097851899f319e4f542c74b6b0d5c77417a0626b748ddac483e555"
+    },
+    {
+      "path": "services/sandbox/src/iacode_sandbox/store.py",
+      "reason": "Sandbox integration, quality image, or regression control required for isolated Gate 4 execution.",
+      "hashAfter": "6adb00e669e8722d2d5a1f9414c47b9aa82a4c506a5dcd07b5e5fc6f1e72e82d",
+      "hashBefore": "aabe967e88b7088d3c8c74121a48aed0c2bbddcd94011ec5514593efbc5159b3"
+    },
+    {
+      "path": "services/sandbox/tests/sandbox_fixtures.py",
+      "reason": "Sandbox integration, quality image, or regression control required for isolated Gate 4 execution.",
+      "hashAfter": "1e5e6e3e57d945078fb6579b9de9828147b29d2b6f410adc56651f34fd592279",
+      "hashBefore": "0c1440649a98ec64091be1d817f6708f81d8ecd7643d69153bf76ee5ed45c4d3"
+    },
+    {
+      "path": "services/sandbox/tests/test_sandbox_engine_isolation.py",
+      "reason": "Sandbox integration, quality image, or regression control required for isolated Gate 4 execution.",
+      "hashAfter": "23ad7adcbdefd8543e1df40048ae7eb9c9c05c187d5cc3a253e49c3822c741b5",
+      "hashBefore": "902afc122b3ef77fc8f0b0a83a6479d0976d9081748ce4a248345c5afd1e22fc"
+    },
+    {
+      "path": "services/sandbox/tests/test_sandbox_engine_lifecycle.py",
+      "reason": "Sandbox integration, quality image, or regression control required for isolated Gate 4 execution.",
+      "hashAfter": "9343852b0cc655c5fcc58d06ee7981ea3a6d7e39c9e2d17232a0bbf668ae164d",
+      "hashBefore": "60fe8288160305cd0e6a8be241e4f936b2fd37eff98897c655410445bc917325"
+    },
+    {
+      "path": "services/sandbox/tests/test_sandbox_engine_limits.py",
+      "reason": "Sandbox integration, quality image, or regression control required for isolated Gate 4 execution.",
+      "hashAfter": "0fda1b2db137e68c56370e8badc17fb4a15aa89ab36cc74d10ad2c8fb3524cb3",
+      "hashBefore": "dee2ad6e5a630cff60e94258387d9e9117ea60033e4ba7afec39fbc140909d4b"
+    },
+    {
+      "path": "services/sandbox/tests/test_sandbox_engine_tools.py",
+      "reason": "Sandbox integration, quality image, or regression control required for isolated Gate 4 execution.",
+      "hashAfter": "1db1188b822aa5c3c8675b9aa597dba3d6d16446d24172627dacf28648b4463d",
+      "hashBefore": "61f58eeb38c5dbfcf98c08de2abf8728b9c104abd696805efba0bb76939f555d"
+    },
+    {
+      "path": "services/sandbox/tests/test_sandbox_policy.py",
+      "reason": "Sandbox integration, quality image, or regression control required for isolated Gate 4 execution.",
+      "hashAfter": "80f07b70e81fe90f189f565b417aa29f761fd84788a81e3b879a9237172459d8",
+      "hashBefore": "a80b0dd9df2f0880a44180fd402484aa28f035743f5972d03193276d29dfe7be"
+    },
+    {
+      "path": "services/sandbox/tests/test_sandbox_service.py",
+      "reason": "Sandbox integration, quality image, or regression control required for isolated Gate 4 execution.",
+      "hashAfter": "d33ee9ae18934045072a9dc8939c083a87ab03e5d5ca663f5992c500dbaf4829",
+      "hashBefore": "5390506909a5726f31bd60cc13c056a81ef07b471fc82de6227910359c3de0c4"
+    },
+    {
+      "path": "tests/test_gate1_model_gateway.py",
+      "reason": "Cross-gate compatibility repair required by the canonical Gate 4 verification.",
+      "hashAfter": "0e545cafe9093f36409f43516d89545ee555ccb08fa048d98d0f5c73bde846e8",
+      "hashBefore": "88f9e636a20eb17d472269877b24e49dc3797bcf1fd556f9600f340b1d24e593"
+    },
+    {
+      "path": "tests/test_gate3_sandbox.py",
+      "reason": "Sandbox integration, quality image, or regression control required for isolated Gate 4 execution.",
+      "hashAfter": "dccad647cb78f5e6459cf244de7bc08846ab33f4742addc5c8e83751d912770e",
+      "hashBefore": "4ed1f3b119758a7958337a1b91d9cc151e52f5dd8060f6ba145d8b9d0930f53d"
+    }
+  ],
+  "filesDeleted": []
+}

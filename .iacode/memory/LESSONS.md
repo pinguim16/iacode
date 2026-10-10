@@ -97,6 +97,7 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 | `LSN-0087` | `GUARDED` | HIGH | implementation | A rehearsal worker must register every workflow activity boundary | `test_rehearsal_workers_register_the_post_run_quality_boundary` |
 | `LSN-0088` | `GUARDED` | HIGH | testing | A test inside a built image can consume only inputs copied into that image | `test_built_sandbox_test_image_carries_declared_external_fixture_inputs`, `test_python_functional_fixtures_reach_their_intended_test_outcome` |
 | `LSN-0089` | `GUARDED` | HIGH | architecture | Domain not-applicability and operational failure need distinct orchestration outcomes | `test_agent_quality_classifies_unsupported_and_failed_plans_without_stranding_run` |
+| `LSN-0090` | `GUARDED` | HIGH | testing | A clean-clone control must use only versioned configuration inputs | `test_the_evaluator_service_has_no_engine_socket_or_host_project_mount` |
 
 ## Detail
 
@@ -1223,3 +1224,14 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 - Prevention:
   - `test` test_agent_quality_classifies_unsupported_and_failed_plans_without_stranding_run — The activity syntax must carry the explicit unsupported branch and map both known and unexpected planning failures to the Agent Runtime quality-failure taxonomy.
 - Evidence: `file:services/orchestrator/src/iacode_orchestrator/agent_runtime/activities.py`, `file:tests/test_gate4_quality_engine.py`, `file:docs/checkpoints/GATE-4-CP-0001/COMMANDS.jsonl`
+
+### LSN-0090 — A clean-clone control must use only versioned configuration inputs
+
+- Status: `GUARDED`, severity HIGH, category testing, recurrences 0.
+- Source: GATE-4, GATE-4-CP-0001, finding cmd-0243.
+- Symptom: The internal milestone mirror passed every pre-clone dimension but the canonical suite failed in its clean clone because the evaluator compose control required infra/compose/.env, an intentionally ignored workstation file.
+- Root cause: The structural compose test selected the developer-local .env even though the repository already carries .env.example with the same closed configuration vocabulary. Green Keeper inherited the local file and could not expose the dependency; a published clone correctly did.
+- Resolution: Run the structural compose configuration check with the versioned .env.example and assert that input exists before invoking Docker Compose.
+- Prevention:
+  - `test` test_the_evaluator_service_has_no_engine_socket_or_host_project_mount — The isolation control resolves Compose exclusively with the versioned .env.example, so it executes identically in a clean clone.
+- Evidence: `file:tests/test_gate4_quality_engine.py`, `file:infra/compose/.env.example`, `file:docs/checkpoints/GATE-4-CP-0001/M2-INTERNAL-MIRROR.json`, `file:docs/checkpoints/GATE-4-CP-0001/COMMANDS.jsonl`

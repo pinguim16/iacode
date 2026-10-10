@@ -1,0 +1,172 @@
+{
+  "schemaVersion": "1.1.0",
+  "checkpoint": "GATE-4-CP-0001",
+  "generatedAt": "2026-10-10T08:27:01Z",
+  "targetFingerprint": "2a598cb83e23b1468bcff8bb5bb9bc5d9784f73bdb527f1db328381e734dd803",
+  "source": "scripts/development-ledger/gate4_red_team.py — Gate 4 internal false-PASS battery",
+  "baselineControl": {
+    "result": "VALID",
+    "detail": "unmutated complete result derived PASS",
+    "evidence": [
+      "file:services/evaluator/src/iacode_evaluator/verdict.py"
+    ]
+  },
+  "attacks": [
+    {
+      "attackId": "G4-A",
+      "description": "missing result",
+      "target": "missing result",
+      "mutation": "remove the only mandatory result",
+      "expectedDefense": "derived verdict FAIL names the missing check",
+      "observed": "verdict=FAIL; reasons=('missing result for q001-unit',)",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/evaluator/src/iacode_evaluator/verdict.py",
+        "file:packages/contracts/src/iacode_contracts/quality.py"
+      ],
+      "mandatory": true,
+      "origin": "Gate 4 internal Red Team in the rebuilt evaluator image"
+    },
+    {
+      "attackId": "G4-B",
+      "description": "exit-code forgery",
+      "target": "exit-code forgery",
+      "mutation": "keep PASSED and flip exitCode to 1",
+      "expectedDefense": "the result contract refuses the contradictory shape",
+      "observed": "contract refused non-zero PASS",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/evaluator/src/iacode_evaluator/verdict.py",
+        "file:packages/contracts/src/iacode_contracts/quality.py"
+      ],
+      "mandatory": true,
+      "origin": "Gate 4 internal Red Team in the rebuilt evaluator image"
+    },
+    {
+      "attackId": "G4-C",
+      "description": "forged evidence",
+      "target": "forged evidence",
+      "mutation": "replace the resolved digest set",
+      "expectedDefense": "the evidence reference is unresolved and verdict is FAIL",
+      "observed": "verdict=FAIL; reasons=('q001-unit has unresolved evidence evidence-red-team',)",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/evaluator/src/iacode_evaluator/verdict.py",
+        "file:packages/contracts/src/iacode_contracts/quality.py"
+      ],
+      "mandatory": true,
+      "origin": "Gate 4 internal Red Team in the rebuilt evaluator image"
+    },
+    {
+      "attackId": "G4-D",
+      "description": "policy mutation",
+      "target": "policy mutation",
+      "mutation": "change maxCheckSeconds under the same planId",
+      "expectedDefense": "the immutable store refuses PLAN_ID_CONFLICT",
+      "observed": "store refused PLAN_ID_CONFLICT",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/evaluator/src/iacode_evaluator/verdict.py",
+        "file:packages/contracts/src/iacode_contracts/quality.py"
+      ],
+      "mandatory": true,
+      "origin": "Gate 4 internal Red Team in the rebuilt evaluator image"
+    },
+    {
+      "attackId": "G4-E",
+      "description": "snapshot mutation",
+      "target": "snapshot mutation",
+      "mutation": "change snapshotDigest under the same planId",
+      "expectedDefense": "the immutable store refuses PLAN_ID_CONFLICT",
+      "observed": "store refused PLAN_ID_CONFLICT",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/evaluator/src/iacode_evaluator/verdict.py",
+        "file:packages/contracts/src/iacode_contracts/quality.py"
+      ],
+      "mandatory": true,
+      "origin": "Gate 4 internal Red Team in the rebuilt evaluator image"
+    },
+    {
+      "attackId": "G4-F",
+      "description": "wrong origin",
+      "target": "wrong origin",
+      "mutation": "post a result with origin CALLER",
+      "expectedDefense": "the closed origin contract refuses it",
+      "observed": "contract refused origin",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/evaluator/src/iacode_evaluator/verdict.py",
+        "file:packages/contracts/src/iacode_contracts/quality.py"
+      ],
+      "mandatory": true,
+      "origin": "Gate 4 internal Red Team in the rebuilt evaluator image"
+    },
+    {
+      "attackId": "G4-G",
+      "description": "timed_out result",
+      "target": "timed_out result",
+      "mutation": "replace PASSED with TIMED_OUT",
+      "expectedDefense": "the derived verdict is FAIL",
+      "observed": "verdict=FAIL; reasons=('q001-unit ended TIMED_OUT',)",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/evaluator/src/iacode_evaluator/verdict.py",
+        "file:packages/contracts/src/iacode_contracts/quality.py"
+      ],
+      "mandatory": true,
+      "origin": "Gate 4 internal Red Team in the rebuilt evaluator image"
+    },
+    {
+      "attackId": "G4-H",
+      "description": "denied result",
+      "target": "denied result",
+      "mutation": "replace PASSED with DENIED",
+      "expectedDefense": "the derived verdict is FAIL",
+      "observed": "verdict=FAIL; reasons=('q001-unit ended DENIED',)",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/evaluator/src/iacode_evaluator/verdict.py",
+        "file:packages/contracts/src/iacode_contracts/quality.py"
+      ],
+      "mandatory": true,
+      "origin": "Gate 4 internal Red Team in the rebuilt evaluator image"
+    },
+    {
+      "attackId": "G4-I",
+      "description": "cancelled result",
+      "target": "cancelled result",
+      "mutation": "replace PASSED with CANCELLED",
+      "expectedDefense": "the derived verdict is FAIL",
+      "observed": "verdict=FAIL; reasons=('q001-unit ended CANCELLED',)",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/evaluator/src/iacode_evaluator/verdict.py",
+        "file:packages/contracts/src/iacode_contracts/quality.py"
+      ],
+      "mandatory": true,
+      "origin": "Gate 4 internal Red Team in the rebuilt evaluator image"
+    },
+    {
+      "attackId": "G4-J",
+      "description": "unknown status",
+      "target": "unknown status",
+      "mutation": "submit status ASSERTED_GOOD",
+      "expectedDefense": "the closed result-status contract refuses it",
+      "observed": "contract refused status",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/evaluator/src/iacode_evaluator/verdict.py",
+        "file:packages/contracts/src/iacode_contracts/quality.py"
+      ],
+      "mandatory": true,
+      "origin": "Gate 4 internal Red Team in the rebuilt evaluator image"
+    }
+  ],
+  "escaped": 0,
+  "defended": 10,
+  "total": 10,
+  "mandatoryTotal": 10,
+  "mandatoryDefended": 10,
+  "result": "RED_TEAM_PASS"
+}

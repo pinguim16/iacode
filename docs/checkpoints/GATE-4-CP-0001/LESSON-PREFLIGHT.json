@@ -4,11 +4,11 @@
   "scope": "quality engine, evaluation runners, immutable evidence store, verdict rules, false-PASS rejection, reproducible evidence, sandboxed execution, agent-runtime integration, promotion evidence",
   "technologies": [],
   "modules": [],
-  "generatedAt": "2026-10-10T03:56:16Z",
+  "generatedAt": "2026-10-10T07:50:10Z",
   "policyVersion": "2.0.0",
-  "inputsFingerprint": "1292415bcb55e42097d81a3c8ba297ef1615c2d5a6c0d0044f6c3e17e557b393",
-  "lessonsConsidered": 89,
-  "lessonsApplicable": 88,
+  "inputsFingerprint": "4b301710c4817083997b5509800c7d75fe4ace3ee19e9f1a5efa81021e2cc7b0",
+  "lessonsConsidered": 90,
+  "lessonsApplicable": 89,
   "applicable": [
     {
       "lessonId": "LSN-0001",
@@ -889,6 +889,16 @@
       "requiredCheck": "At every optional domain boundary, prove not-applicable conditions return a bounded negative applicability result while operational errors enter a shared failure taxonomy that can write terminal state.",
       "requiredEvidence": "A classification control plus real scenarios for the not-applicable and failure paths.",
       "derivedRequirementId": "LESSON-REQ-0088"
+    },
+    {
+      "lessonId": "LSN-0090",
+      "title": "A clean-clone control must use only versioned configuration inputs",
+      "status": "GUARDED",
+      "severity": "HIGH",
+      "reasonApplicable": "applies to every Gate; category testing; severity HIGH; already guarded, so the control must keep holding",
+      "requiredCheck": "Every clean-clone or repository control must consume only versioned configuration inputs; ignored developer-local files may not be preconditions for a passing gate.",
+      "requiredEvidence": "A test that executes the controlled command with an explicitly versioned configuration file and a passing clean-clone reproduction.",
+      "derivedRequirementId": "LESSON-REQ-0089"
     }
   ],
   "derivedRequirements": [
@@ -1507,6 +1517,13 @@
       "description": "Verify domain not-applicability and operational failure need distinct orchestration outcomes",
       "mandatory": true,
       "requiredEvidence": "A classification control plus real scenarios for the not-applicable and failure paths."
+    },
+    {
+      "id": "LESSON-REQ-0089",
+      "lessonId": "LSN-0090",
+      "description": "Verify a clean-clone control must use only versioned configuration inputs",
+      "mandatory": true,
+      "requiredEvidence": "A test that executes the controlled command with an explicitly versioned configuration file and a passing clean-clone reproduction."
     }
   ]
 }
