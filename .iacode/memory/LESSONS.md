@@ -1195,10 +1195,10 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 - Source: GATE-4, GATE-4-CP-0001, finding cmd-0143.
 - Symptom: The real Agent Runtime durability rehearsal resumed after a worker restart and completed its agent stage, but Temporal then failed the workflow because the rehearsal worker had not registered the new quality planning activity; the database row remained RUNNING.
 - Root cause: Gate 4 extended the shared AgentRunWorkflow with post-run quality activities, while the purpose-built durability worker kept a hand-maintained activity list from Gate 2 and therefore no longer implemented the full workflow contract.
-- Resolution: Register quality_plan and quality_result on the durability rehearsal worker even when its empty workspace makes quality not applicable.
+- Resolution: Register quality_plan and quality_result on every purpose-built rehearsal worker even when its workspace makes quality not applicable, and scan every rehearsal module that defines run_worker.
 - Prevention:
   - `test` test_rehearsal_workers_register_the_post_run_quality_boundary — The durability rehearsal worker's actual Temporal activity list includes both post-run quality activities required by the shared workflow.
-- Evidence: `file:services/orchestrator/rehearsal/durability.py`, `file:tests/test_gate4_quality_engine.py`, `file:docs/checkpoints/GATE-4-CP-0001/COMMANDS.jsonl`
+- Evidence: `file:services/orchestrator/rehearsal/durability.py`, `file:tests/test_gate4_quality_engine.py`, `file:docs/checkpoints/GATE-4-CP-0001/COMMANDS.jsonl`, `file:services/orchestrator/rehearsal/coding.py`
 
 ### LSN-0088 — A test inside a built image can consume only inputs copied into that image
 

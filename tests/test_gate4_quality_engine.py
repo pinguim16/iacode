@@ -92,31 +92,37 @@ class Gate4QualityCoverageTests(unittest.TestCase):
         self.assertIn("--build", literals)
 
     def test_rehearsal_workers_register_the_post_run_quality_boundary(self) -> None:
-        source = (
-            PROJECT_ROOT / "services" / "orchestrator" / "rehearsal" / "durability.py"
-        ).read_text(encoding="utf-8")
-        module = ast.parse(source)
-        worker_function = next(
-            node
-            for node in module.body
-            if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef))
-            and node.name == "run_worker"
-        )
-        worker_call = next(
-            node
-            for node in ast.walk(worker_function)
-            if isinstance(node, ast.Call)
-            and isinstance(node.func, ast.Name)
-            and node.func.id == "Worker"
-        )
-        activities = next(
-            keyword.value for keyword in worker_call.keywords if keyword.arg == "activities"
-        )
-        self.assertIsInstance(activities, (ast.List, ast.Tuple))
-        registered = {
-            element.id for element in activities.elts if isinstance(element, ast.Name)
-        }
-        self.assertGreaterEqual(registered, {"quality_plan", "quality_result"})
+        rehearsal_root = PROJECT_ROOT / "services" / "orchestrator" / "rehearsal"
+        for worker_path in sorted(rehearsal_root.glob("*.py")):
+            source = worker_path.read_text(encoding="utf-8")
+            module = ast.parse(source)
+            worker_functions = [
+                node
+                for node in module.body
+                if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef))
+                and node.name == "run_worker"
+            ]
+            if not worker_functions:
+                continue
+            worker_call = next(
+                node
+                for node in ast.walk(worker_functions[0])
+                if isinstance(node, ast.Call)
+                and isinstance(node.func, ast.Name)
+                and node.func.id == "Worker"
+            )
+            activities = next(
+                keyword.value for keyword in worker_call.keywords if keyword.arg == "activities"
+            )
+            self.assertIsInstance(activities, (ast.List, ast.Tuple))
+            registered = {
+                element.id for element in activities.elts if isinstance(element, ast.Name)
+            }
+            self.assertGreaterEqual(
+                registered,
+                {"quality_plan", "quality_result"},
+                worker_path.name,
+            )
 
     def test_engineering_memory_never_depends_on_ephemeral_var_evidence(self) -> None:
         lessons = [
