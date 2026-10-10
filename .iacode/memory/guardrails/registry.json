@@ -1282,6 +1282,19 @@
         "LSN-0088"
       ],
       "removingItWouldAllow": "A test that passes on the host to address a repository path that the built image never received, so the real gate fails before exercising its intended behavior."
+    },
+    {
+      "guardrailId": "GRD-0090",
+      "title": "Quality planning distinguishes not-applicable snapshots from terminal failures",
+      "kind": "test",
+      "reference": "test_agent_quality_classifies_unsupported_and_failed_plans_without_stranding_run",
+      "verifiedBy": [
+        "test_agent_quality_classifies_unsupported_and_failed_plans_without_stranding_run"
+      ],
+      "lessons": [
+        "LSN-0089"
+      ],
+      "removingItWouldAllow": "An unsupported snapshot to fail an otherwise successful agent run, or an operational quality-planning error to escape the runtime taxonomy and leave its durable row nonterminal."
     }
   ]
 }

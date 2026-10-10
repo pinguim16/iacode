@@ -5,11 +5,11 @@
   "status": "IN_PROGRESS",
   "branch": "main",
   "baseCommit": "92020769ffd19adeb78d432141da5b1fd492f969",
-  "currentCommit": "eccabaa26cb5fc097180f25c36b2727e4b5f6734",
+  "currentCommit": "b38687d09fce1a1d3eee8ecac378714d227d9055",
   "dirty": true,
   "startedAt": "2026-10-09T16:25:45Z",
-  "updatedAt": "2026-10-10T03:43:29Z",
-  "nextAllowedAction": "Publish the generalized rehearsal-worker activity registration and repeat the four previously failing sandbox scenarios.",
+  "updatedAt": "2026-10-10T03:56:24Z",
+  "nextAllowedAction": "Publish the unsupported-snapshot classification repair, then repeat the sandbox coding scenario.",
   "blockedBy": [],
   "secondToolValidation": {
     "status": "PENDING_MANUAL",
@@ -22,11 +22,11 @@
   },
   "requirementsMatrix": {
     "path": "REQUIREMENTS-MATRIX.json",
-    "total": 192,
-    "mandatory": 192,
+    "total": 193,
+    "mandatory": 193,
     "complete": 0,
     "partial": 0,
-    "missing": 192,
+    "missing": 193,
     "notApplicable": 0,
     "coveragePercent": 0.0
   },
@@ -66,13 +66,13 @@
     "path": "LESSON-PREFLIGHT.json",
     "gate": "GATE-4",
     "scope": "quality engine, evaluation runners, immutable evidence store, verdict rules, false-PASS rejection, reproducible evidence, sandboxed execution, agent-runtime integration, promotion evidence",
-    "lessonsConsidered": 88,
-    "lessonsApplicable": 87,
-    "derivedRequirements": 87,
+    "lessonsConsidered": 89,
+    "lessonsApplicable": 88,
+    "derivedRequirements": 88,
     "evidence": [
       "LESSON-PREFLIGHT.json",
       "LESSON-PREFLIGHT.md",
-      "cmd-0177"
+      "cmd-0196"
     ]
   },
   "milestone": {

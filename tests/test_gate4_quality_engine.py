@@ -35,6 +35,32 @@ SPECIFICATION = PROJECT_ROOT / "docs" / "GATE-4-CHECKLIST.md"
 
 
 class Gate4QualityCoverageTests(unittest.TestCase):
+    def test_agent_quality_classifies_unsupported_and_failed_plans_without_stranding_run(
+        self,
+    ) -> None:
+        source = (
+            PROJECT_ROOT
+            / "services"
+            / "orchestrator"
+            / "src"
+            / "iacode_orchestrator"
+            / "agent_runtime"
+            / "activities.py"
+        ).read_text(encoding="utf-8")
+        module = ast.parse(source)
+        quality_plan = next(
+            node
+            for node in module.body
+            if isinstance(node, ast.AsyncFunctionDef) and node.name == "quality_plan"
+        )
+        rendered = ast.unparse(quality_plan)
+        self.assertIn("error.code == 'PROJECT_UNSUPPORTED'", rendered)
+        self.assertIn("'applicable': False", rendered)
+        self.assertGreaterEqual(
+            rendered.count("AgentRuntimeErrorType.QUALITY_GATE_FAILED"),
+            2,
+        )
+
     def test_built_sandbox_test_image_carries_declared_external_fixture_inputs(self) -> None:
         dockerfile = (PROJECT_ROOT / "services" / "sandbox" / "Dockerfile").read_text(
             encoding="utf-8"

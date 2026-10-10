@@ -96,6 +96,7 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 | `LSN-0086` | `GUARDED` | MEDIUM | testing | A subprocess assertion must preserve the exit code when both streams are empty | `test_an_empty_validator_failure_keeps_its_process_exit_code` |
 | `LSN-0087` | `GUARDED` | HIGH | implementation | A rehearsal worker must register every workflow activity boundary | `test_rehearsal_workers_register_the_post_run_quality_boundary` |
 | `LSN-0088` | `GUARDED` | HIGH | testing | A test inside a built image can consume only inputs copied into that image | `test_built_sandbox_test_image_carries_declared_external_fixture_inputs`, `test_python_functional_fixtures_reach_their_intended_test_outcome` |
+| `LSN-0089` | `GUARDED` | HIGH | architecture | Domain not-applicability and operational failure need distinct orchestration outcomes | `test_agent_quality_classifies_unsupported_and_failed_plans_without_stranding_run` |
 
 ## Detail
 
@@ -1211,3 +1212,14 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
   - `test` test_built_sandbox_test_image_carries_declared_external_fixture_inputs — The Dockerfile copy destination and the test fixture root are parsed and required to agree.
   - `test` test_python_functional_fixtures_reach_their_intended_test_outcome — The real built image reads and executes every copied functional fixture.
 - Evidence: `file:services/sandbox/Dockerfile`, `file:services/sandbox/tests/test_quality_images.py`, `file:tests/test_gate4_quality_engine.py`, `file:docs/checkpoints/GATE-4-CP-0001/COMMANDS.jsonl`
+
+### LSN-0089 — Domain not-applicability and operational failure need distinct orchestration outcomes
+
+- Status: `GUARDED`, severity HIGH, category architecture, recurrences 0.
+- Source: GATE-4, GATE-4-CP-0001, finding cmd-0193.
+- Symptom: The real sandbox-coding run completed all agent stages over a synthetic snapshot, then the post-run quality activity raised QUALITY_PLAN_FAILED because no supported project stack was detected. Temporal failed the workflow while the durable run row remained RUNNING.
+- Root cause: The quality activity collapsed an expected domain result, PROJECT_UNSUPPORTED, and every unexpected planning exception into an application error name outside the Agent Runtime taxonomy. The first should have meant not applicable; the second could not be reconstructed into the classified failure path that writes a terminal state.
+- Resolution: Return applicable=false only for PROJECT_UNSUPPORTED, and classify every other planning failure as QUALITY_GATE_FAILED so the engine records RUN_FAILED and a terminal row.
+- Prevention:
+  - `test` test_agent_quality_classifies_unsupported_and_failed_plans_without_stranding_run — The activity syntax must carry the explicit unsupported branch and map both known and unexpected planning failures to the Agent Runtime quality-failure taxonomy.
+- Evidence: `file:services/orchestrator/src/iacode_orchestrator/agent_runtime/activities.py`, `file:tests/test_gate4_quality_engine.py`, `file:docs/checkpoints/GATE-4-CP-0001/COMMANDS.jsonl`

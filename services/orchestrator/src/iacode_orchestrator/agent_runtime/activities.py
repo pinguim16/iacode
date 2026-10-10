@@ -27,6 +27,7 @@ from iacode_agent_runtime.events import RunEvent
 from iacode_agent_runtime.ports import StageCompletion
 from iacode_agent_runtime.telemetry import runtime_log_fields
 from iacode_contracts.agent_runtime import TOOL_EXECUTOR_EXTERNAL, TOOL_EXECUTOR_SANDBOX
+from iacode_evaluator.errors import QualityError
 from iacode_telemetry.logging import get_logger
 from temporalio import activity
 from temporalio.exceptions import ApplicationError
@@ -300,11 +301,23 @@ async def quality_plan(payload: dict[str, Any]) -> dict[str, Any]:
         )
         workflow_id = f"iacode-quality-run-{run.run_id}"
         run = await context.quality_store.bind_workflow(run.run_id, workflow_id)
+    except QualityError as error:
+        if error.code == "PROJECT_UNSUPPORTED":
+            return {
+                "applicable": False,
+                "reason": "the frozen snapshot has no supported quality stack",
+            }
+        raise ApplicationError(
+            "the quality plan could not be created",
+            {"message": str(error)[:500], "qualityCode": error.code},
+            type=str(AgentRuntimeErrorType.QUALITY_GATE_FAILED),
+            non_retryable=True,
+        ) from None
     except Exception as error:
         raise ApplicationError(
             "the quality plan could not be created",
             {"message": str(error)[:500]},
-            type="QUALITY_PLAN_FAILED",
+            type=str(AgentRuntimeErrorType.QUALITY_GATE_FAILED),
             non_retryable=True,
         ) from None
     return {

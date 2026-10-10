@@ -4,11 +4,11 @@
   "scope": "quality engine, evaluation runners, immutable evidence store, verdict rules, false-PASS rejection, reproducible evidence, sandboxed execution, agent-runtime integration, promotion evidence",
   "technologies": [],
   "modules": [],
-  "generatedAt": "2026-10-10T03:43:21Z",
+  "generatedAt": "2026-10-10T03:56:16Z",
   "policyVersion": "2.0.0",
-  "inputsFingerprint": "d1a1851e10f4d33d4f2d6df0ea2d46d8d4be47816fe85a745cb7bd109c9434f0",
-  "lessonsConsidered": 88,
-  "lessonsApplicable": 87,
+  "inputsFingerprint": "1292415bcb55e42097d81a3c8ba297ef1615c2d5a6c0d0044f6c3e17e557b393",
+  "lessonsConsidered": 89,
+  "lessonsApplicable": 88,
   "applicable": [
     {
       "lessonId": "LSN-0001",
@@ -879,6 +879,16 @@
       "requiredCheck": "Whenever a test runs inside a built image and consumes repository content outside its own copied suite, prove the Dockerfile carries that input and the test resolves the same in-image destination.",
       "requiredEvidence": "A source-boundary control that binds COPY source and in-image path plus a successful execution through the built image.",
       "derivedRequirementId": "LESSON-REQ-0087"
+    },
+    {
+      "lessonId": "LSN-0089",
+      "title": "Domain not-applicability and operational failure need distinct orchestration outcomes",
+      "status": "GUARDED",
+      "severity": "HIGH",
+      "reasonApplicable": "applies to every Gate; category architecture; severity HIGH; already guarded, so the control must keep holding",
+      "requiredCheck": "At every optional domain boundary, prove not-applicable conditions return a bounded negative applicability result while operational errors enter a shared failure taxonomy that can write terminal state.",
+      "requiredEvidence": "A classification control plus real scenarios for the not-applicable and failure paths.",
+      "derivedRequirementId": "LESSON-REQ-0088"
     }
   ],
   "derivedRequirements": [
@@ -1490,6 +1500,13 @@
       "description": "Verify a test inside a built image can consume only inputs copied into that image",
       "mandatory": true,
       "requiredEvidence": "A source-boundary control that binds COPY source and in-image path plus a successful execution through the built image."
+    },
+    {
+      "id": "LESSON-REQ-0088",
+      "lessonId": "LSN-0089",
+      "description": "Verify domain not-applicability and operational failure need distinct orchestration outcomes",
+      "mandatory": true,
+      "requiredEvidence": "A classification control plus real scenarios for the not-applicable and failure paths."
     }
   ]
 }

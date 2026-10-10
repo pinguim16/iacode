@@ -206,6 +206,7 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 | `LESSON-REQ-0085` | LESSON | `lesson:LSN-0086` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify a subprocess assertion must preserve the exit code when both streams are empty |
 | `LESSON-REQ-0086` | LESSON | `lesson:LSN-0087` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify a rehearsal worker must register every workflow activity boundary |
 | `LESSON-REQ-0087` | LESSON | `lesson:LSN-0088` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify a test inside a built image can consume only inputs copied into that image |
+| `LESSON-REQ-0088` | LESSON | `lesson:LSN-0089` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify domain not-applicability and operational failure need distinct orchestration outcomes |
 
 ## Evidence
 
@@ -2314,6 +2315,17 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 
 - Source reference: LESSON-PREFLIGHT.json LESSON-REQ-0087
 - Description: Verify a test inside a built image can consume only inputs copied into that image
+- Implementation: _none_
+- Test: _none_
+- Negative test: _none_
+- Documentation: _none_
+- Validation: _none_
+- Guardrail: _none_
+
+### LESSON-REQ-0088 - lesson:LSN-0089
+
+- Source reference: LESSON-PREFLIGHT.json LESSON-REQ-0088
+- Description: Verify domain not-applicability and operational failure need distinct orchestration outcomes
 - Implementation: _none_
 - Test: _none_
 - Negative test: _none_

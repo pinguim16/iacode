@@ -4,9 +4,9 @@
 - Scope: `quality engine, evaluation runners, immutable evidence store, verdict rules, false-PASS rejection, reproducible evidence, sandboxed execution, agent-runtime integration, promotion evidence`
 - Technologies: _none declared_
 - Modules: _none declared_
-- Generated: `2026-10-10T03:43:21Z`
-- Lessons considered: 88
-- Lessons applicable: 87
+- Generated: `2026-10-10T03:56:16Z`
+- Lessons considered: 89
+- Lessons applicable: 88
 
 Every applicable lesson below is a requirement of this Gate. The derived identifiers must
 appear in `REQUIREMENTS-MATRIX.json`, and the Delivery Completeness Validator fails the
@@ -101,6 +101,7 @@ delivery when one is absent.
 | `LSN-0086` A subprocess assertion must preserve the exit code when both streams are empty | `GUARDED` | MEDIUM | `LESSON-REQ-0085` | For every subprocess-backed assertion, preserve return code and a non-empty diagnostic even when the child emits nothing; never add a retry that could conceal the outcome. |
 | `LSN-0087` A rehearsal worker must register every workflow activity boundary | `GUARDED` | HIGH | `LESSON-REQ-0086` | Every purpose-built worker that hosts a shared workflow must register every activity boundary that workflow can schedule, including not-applicable branches whose decision is made inside an activity. |
 | `LSN-0088` A test inside a built image can consume only inputs copied into that image | `GUARDED` | HIGH | `LESSON-REQ-0087` | Whenever a test runs inside a built image and consumes repository content outside its own copied suite, prove the Dockerfile carries that input and the test resolves the same in-image destination. |
+| `LSN-0089` Domain not-applicability and operational failure need distinct orchestration outcomes | `GUARDED` | HIGH | `LESSON-REQ-0088` | At every optional domain boundary, prove not-applicable conditions return a bounded negative applicability result while operational errors enter a shared failure taxonomy that can write terminal state. |
 
 ## Why each lesson applies
 
@@ -712,3 +713,10 @@ delivery when one is absent.
 - Required check: Whenever a test runs inside a built image and consumes repository content outside its own copied suite, prove the Dockerfile carries that input and the test resolves the same in-image destination.
 - Required evidence: A source-boundary control that binds COPY source and in-image path plus a successful execution through the built image.
 - Derived requirement: `LESSON-REQ-0087`
+
+### LSN-0089 — Domain not-applicability and operational failure need distinct orchestration outcomes
+
+- Reason: applies to every Gate; category architecture; severity HIGH; already guarded, so the control must keep holding
+- Required check: At every optional domain boundary, prove not-applicable conditions return a bounded negative applicability result while operational errors enter a shared failure taxonomy that can write terminal state.
+- Required evidence: A classification control plus real scenarios for the not-applicable and failure paths.
+- Derived requirement: `LESSON-REQ-0088`
