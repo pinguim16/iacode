@@ -1,0 +1,141 @@
+{
+  "scenario": "coding",
+  "result": "PASS",
+  "steps": [
+    {
+      "step": "images.rebuilt_and_service_current",
+      "result": "PASS",
+      "detail": "worker, sandbox service and sandbox image built from the current source"
+    },
+    {
+      "step": "rehearsal.worker_polling",
+      "result": "PASS",
+      "detail": "iacode-coding-rehearsal and the sandbox service"
+    },
+    {
+      "step": "snapshot.stored",
+      "result": "PASS",
+      "detail": "artifact 01a123f5-c2a6-7000-8b3a-85780491934a"
+    },
+    {
+      "step": "run.created_over_the_snapshot",
+      "result": "PASS",
+      "detail": "run 01a123f5-cfa2-7000-b810-85436d49cd86, policies [None, 'developer', 'reviewer']"
+    },
+    {
+      "step": "run.terminal_state",
+      "result": "PASS",
+      "detail": "state SUCCEEDED (None: None)"
+    },
+    {
+      "step": "sandbox.one_session_for_the_run",
+      "result": "PASS",
+      "detail": "1 session(s)"
+    },
+    {
+      "step": "sandbox.every_execution_in_that_session",
+      "result": "PASS",
+      "detail": "sessions used: ['01a123f5-d441-7000-8aa4-69343611bbca']"
+    },
+    {
+      "step": "sandbox.no_network",
+      "result": "PASS",
+      "detail": "network profile none"
+    },
+    {
+      "step": "sandbox.released_with_the_run",
+      "result": "PASS",
+      "detail": "session STOPPED, container gone"
+    },
+    {
+      "step": "history.tool_requests_answered",
+      "result": "PASS",
+      "detail": "9 requested, 9 executed"
+    },
+    {
+      "step": "team.planner_developer_reviewer",
+      "result": "PASS",
+      "detail": "[('plan', 'planner', 'SUCCEEDED'), ('develop', 'developer', 'SUCCEEDED'), ('review', 'code-reviewer', 'SUCCEEDED')]"
+    },
+    {
+      "step": "planner.executed_nothing",
+      "result": "PASS",
+      "detail": "no tool requested"
+    },
+    {
+      "step": "developer.tool_sequence",
+      "result": "PASS",
+      "detail": "filesystem.read, shell.exec, filesystem.apply_patch, shell.exec, shell.exec, git.diff, git.add, git.commit"
+    },
+    {
+      "step": "read.returned_the_defect",
+      "result": "PASS",
+      "detail": "SUCCEEDED"
+    },
+    {
+      "step": "tests.red_before_the_fix",
+      "result": "PASS",
+      "detail": "exit 1"
+    },
+    {
+      "step": "patch.applied",
+      "result": "PASS",
+      "detail": "{'files': [{'path': 'calc.py', 'change': 'modified'}], 'exitCode': None, 'timedOut': False, 'truncated': False, 'durationMs': 386}"
+    },
+    {
+      "step": "tests.green_after_the_fix",
+      "result": "PASS",
+      "detail": "exit 0"
+    },
+    {
+      "step": "shell.ran_unprivileged_in_the_sandbox",
+      "result": "PASS",
+      "detail": "UID=10001 PID1=python3 -I /opt/iacode/sandbox_helper.py --init"
+    },
+    {
+      "step": "shell.saw_no_engine_socket",
+      "result": "PASS",
+      "detail": "no docker.sock"
+    },
+    {
+      "step": "shell.host_drive_not_mounted",
+      "result": "PASS",
+      "detail": "WRITE-0=SANDBOX-ONLY WRITE-1=REFUSED WRITE-2=REFUSED WRITE-3=REFUSED"
+    },
+    {
+      "step": "host.sentinel_unchanged",
+      "result": "PASS",
+      "detail": "the host file has the digest it had before the run"
+    },
+    {
+      "step": "host.no_file_appeared",
+      "result": "PASS",
+      "detail": "the host directory holds only the sentinel"
+    },
+    {
+      "step": "diff.shows_the_fix",
+      "result": "PASS",
+      "detail": "179 characters of diff"
+    },
+    {
+      "step": "git.committed_locally",
+      "result": "PASS",
+      "detail": "commit exit 0"
+    },
+    {
+      "step": "reviewer.read_only_inspection",
+      "result": "PASS",
+      "detail": "['git.show']"
+    },
+    {
+      "step": "commit.carries_the_sandbox_identity",
+      "result": "PASS",
+      "detail": "the commit's author is the sandbox's identity, not a person"
+    },
+    {
+      "step": "review.approved_what_it_saw",
+      "result": "PASS",
+      "detail": "result APPROVED"
+    }
+  ]
+}
