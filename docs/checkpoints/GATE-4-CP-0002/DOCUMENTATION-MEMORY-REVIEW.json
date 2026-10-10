@@ -1,0 +1,2408 @@
+{
+  "schemaVersion": "1.0.0",
+  "artifact": "GATE-4-DOCUMENTATION-AND-MEMORY-REVIEW",
+  "checkpoint": "GATE-4-CP-0002",
+  "generatedAt": "2026-10-10T15:45:41Z",
+  "checks": [
+    {
+      "check": "Gate 4 entry, architecture, operational and decision documents exist",
+      "result": "PASS",
+      "observed": {
+        "entry": {
+          "path": "START-HERE.md",
+          "nonEmpty": true,
+          "namesQuality": true
+        },
+        "architecture": {
+          "path": "docs/ARCHITECTURE.md",
+          "nonEmpty": true,
+          "namesQuality": true
+        },
+        "development": {
+          "path": "docs/DEVELOPMENT.md",
+          "nonEmpty": true,
+          "namesQuality": true
+        },
+        "versions": {
+          "path": "docs/VERSIONS.md",
+          "nonEmpty": true,
+          "namesQuality": true
+        },
+        "model usage": {
+          "path": "docs/MODEL-USAGE-POLICY.md",
+          "nonEmpty": true,
+          "namesQuality": true
+        },
+        "quality runbook": {
+          "path": "docs/runbooks/QUALITY-ENGINE.md",
+          "nonEmpty": true,
+          "namesQuality": true
+        },
+        "Gate checklist": {
+          "path": "docs/GATE-4-CHECKLIST.md",
+          "nonEmpty": true,
+          "namesQuality": true
+        },
+        "execution ADR": {
+          "path": "docs/adr/ADR-0029-quality-execution-boundary.md",
+          "nonEmpty": true,
+          "namesQuality": true
+        },
+        "evidence ADR": {
+          "path": "docs/adr/ADR-0030-quality-evidence-and-verdict-immutability.md",
+          "nonEmpty": true,
+          "namesQuality": true
+        },
+        "profiles ADR": {
+          "path": "docs/adr/ADR-0031-project-profiles-select-closed-quality-runners.md",
+          "nonEmpty": true,
+          "namesQuality": true
+        }
+      },
+      "evidence": [
+        "file:START-HERE.md",
+        "file:docs/ARCHITECTURE.md",
+        "file:docs/DEVELOPMENT.md",
+        "file:docs/VERSIONS.md",
+        "file:docs/MODEL-USAGE-POLICY.md",
+        "file:docs/runbooks/QUALITY-ENGINE.md",
+        "file:docs/GATE-4-CHECKLIST.md",
+        "file:docs/adr/ADR-0029-quality-execution-boundary.md",
+        "file:docs/adr/ADR-0030-quality-evidence-and-verdict-immutability.md",
+        "file:docs/adr/ADR-0031-project-profiles-select-closed-quality-runners.md"
+      ]
+    },
+    {
+      "check": "documented Quality Engine behavior was reproduced",
+      "result": "PASS",
+      "observed": {
+        "verification": "PASS",
+        "stages": {
+          "backup": {
+            "result": "PASS",
+            "exitCode": 0
+          },
+          "dependency-failure": {
+            "result": "PASS",
+            "exitCode": 0
+          },
+          "dependency-scan": {
+            "result": "PASS",
+            "exitCode": 0
+          },
+          "fresh-install": {
+            "result": "PASS",
+            "exitCode": 0
+          },
+          "quality-cancellation": {
+            "result": "PASS",
+            "exitCode": 0
+          },
+          "quality-fail": {
+            "result": "PASS",
+            "exitCode": 0
+          },
+          "quality-false-pass": {
+            "result": "PASS",
+            "exitCode": 0
+          },
+          "quality-iacode": {
+            "result": "PASS",
+            "exitCode": 0
+          },
+          "quality-integration": {
+            "result": "PASS",
+            "exitCode": 0
+          },
+          "quality-pass": {
+            "result": "PASS",
+            "exitCode": 0
+          },
+          "quality-recovery": {
+            "result": "PASS",
+            "exitCode": 0
+          },
+          "quality-reproduction": {
+            "result": "PASS",
+            "exitCode": 0
+          },
+          "quality-timeout": {
+            "result": "PASS",
+            "exitCode": 0
+          },
+          "restart": {
+            "result": "PASS",
+            "exitCode": 0
+          },
+          "sandbox-coding": {
+            "result": "PASS",
+            "exitCode": 0
+          },
+          "sandbox-tool-result-origin": {
+            "result": "PASS",
+            "exitCode": 0
+          }
+        }
+      },
+      "evidence": [
+        "checkpoint:VERIFICATION-REPORT.json",
+        "checkpoint:CLEAN-CLONE-REPORT.json"
+      ]
+    },
+    {
+      "check": "Engineering Memory validates",
+      "result": "PASS",
+      "observed": {
+        "exitCode": 0,
+        "tail": "LESSONS_VALID total=90 active=90 guarded=87"
+      },
+      "evidence": [
+        "file:.iacode/memory/lessons.jsonl",
+        "file:.iacode/memory/guardrails/registry.json"
+      ]
+    },
+    {
+      "check": "independent-audit lesson preflight is fresh and complete",
+      "result": "PASS",
+      "observed": {
+        "scope": "independent-audit",
+        "considered": 90,
+        "applicable": 90,
+        "derived": 90,
+        "staleness": []
+      },
+      "evidence": [
+        "checkpoint:LESSON-PREFLIGHT.json",
+        "checkpoint:LESSON-PREFLIGHT.md"
+      ]
+    },
+    {
+      "check": "all registered guardrails are resolved, tested and effective",
+      "result": "PASS",
+      "observed": {
+        "guardrailsTotal": 91,
+        "guardrailsResolved": 91,
+        "guardrailsTested": 91,
+        "guardrailsEffective": 91,
+        "guardrailFailures": 0,
+        "lessonsWithUnresolvedFailures": [],
+        "guardrails": [
+          {
+            "guardrailId": "GRD-0001",
+            "kind": "test",
+            "reference": "DetachedHeadValidationTests.test_detached_head_at_checkpoint_tag_validates",
+            "lessons": [
+              "LSN-0001"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0002",
+            "kind": "invariant",
+            "reference": "validate_checkpoint._validate_delta_inventory",
+            "lessons": [
+              "LSN-0002"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0003",
+            "kind": "validator",
+            "reference": "scripts/development-ledger/finalize_checkpoint.py",
+            "lessons": [
+              "LSN-0003"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0004",
+            "kind": "invariant",
+            "reference": "validate_checkpoint._validate_status_blockers",
+            "lessons": [
+              "LSN-0004"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0005",
+            "kind": "test",
+            "reference": "SetupChecklistTests.test_checklist_exists_and_is_referenced",
+            "lessons": [
+              "LSN-0006"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0006",
+            "kind": "invariant",
+            "reference": "green_keeper._refresh_declared_hashes",
+            "lessons": [
+              "LSN-0011"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0007",
+            "kind": "invariant",
+            "reference": "validate_checkpoint._validate_quality_evidence",
+            "lessons": [
+              "LSN-0005"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0008",
+            "kind": "validator",
+            "reference": "scripts/development-ledger/attestation.py",
+            "lessons": [
+              "LSN-0007"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0009",
+            "kind": "validator",
+            "reference": "scripts/development-ledger/policies.py",
+            "lessons": [
+              "LSN-0008"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0010",
+            "kind": "policy",
+            "reference": ".iacode/policies/quality-gates.json",
+            "lessons": [
+              "LSN-0009"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0011",
+            "kind": "invariant",
+            "reference": "validate_checkpoint._validate_command_reproducibility",
+            "lessons": [
+              "LSN-0010"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0012",
+            "kind": "validator",
+            "reference": "scripts/development-ledger/anchors.py",
+            "lessons": [
+              "LSN-0012"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0013",
+            "kind": "invariant",
+            "reference": "validate_checkpoint._validate_seal_chronology",
+            "lessons": [
+              "LSN-0014"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0014",
+            "kind": "invariant",
+            "reference": "validate_checkpoint._validate_delivery_assurance",
+            "lessons": [
+              "LSN-0015"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0015",
+            "kind": "invariant",
+            "reference": "validate_checkpoint._validate_green_keeper_cycle",
+            "lessons": [
+              "LSN-0016"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0016",
+            "kind": "invariant",
+            "reference": "policies.expected_requirement_refs",
+            "lessons": [
+              "LSN-0017"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0017",
+            "kind": "invariant",
+            "reference": "lessons.resolve_control",
+            "lessons": [
+              "LSN-0018"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0018",
+            "kind": "invariant",
+            "reference": "lessons.preflight_staleness",
+            "lessons": [
+              "LSN-0019"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0019",
+            "kind": "invariant",
+            "reference": "ledger_common.build_command_record",
+            "lessons": [
+              "LSN-0020"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0020",
+            "kind": "invariant",
+            "reference": "anchors.verify_chain",
+            "lessons": [
+              "LSN-0021"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0021",
+            "kind": "invariant",
+            "reference": "validate_checkpoint._validate_derived_counts",
+            "lessons": [
+              "LSN-0022"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0022",
+            "kind": "invariant",
+            "reference": "lessons._resolve_source_locator",
+            "lessons": [
+              "LSN-0023"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0023",
+            "kind": "automated-check",
+            "reference": "scripts/development-ledger/promotion_simulation.py",
+            "lessons": [
+              "LSN-0024"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0024",
+            "kind": "invariant",
+            "reference": "anchors.pending_anchor_exclusion",
+            "lessons": [
+              "LSN-0025"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0025",
+            "kind": "invariant",
+            "reference": "validate_checkpoint._validate_internal_assurance",
+            "lessons": [
+              "LSN-0026"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0026",
+            "kind": "test",
+            "reference": "SourceCardinalityPolicyTests",
+            "lessons": [
+              "LSN-0022"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0027",
+            "kind": "invariant",
+            "reference": "lessons.validate_lessons",
+            "lessons": [
+              "LSN-0027"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0028",
+            "kind": "schema",
+            "reference": ".iacode/schemas/memory-policy.schema.json",
+            "lessons": [
+              "LSN-0028"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0029",
+            "kind": "automated-check",
+            "reference": "scripts/development-ledger/successor_durability.py",
+            "lessons": [
+              "LSN-0029"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0030",
+            "kind": "automated-check",
+            "reference": "scripts/development-ledger/mirror_semantics_validation.py",
+            "lessons": [
+              "LSN-0031"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0031",
+            "kind": "test",
+            "reference": "SimulationExecutesProductionControlsTests.test_the_sealed_artifact_is_the_tools_own_output",
+            "lessons": [
+              "LSN-0024",
+              "LSN-0031"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0032",
+            "kind": "automated-check",
+            "reference": "scripts/development-ledger/gate_transition_simulation.py",
+            "lessons": [
+              "LSN-0029"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0033",
+            "kind": "test",
+            "reference": "test_every_declared_key_is_read_somewhere",
+            "lessons": [
+              "LSN-0028"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0034",
+            "kind": "policy",
+            "reference": ".iacode/policies/gate-scope.json",
+            "lessons": [
+              "LSN-0032"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0035",
+            "kind": "test",
+            "reference": "test_internal_error_still_carries_a_correlation_identifier",
+            "lessons": [
+              "LSN-0033"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0036",
+            "kind": "test",
+            "reference": "test_metrics_label_routes_by_template_not_by_url",
+            "lessons": [
+              "LSN-0034"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0037",
+            "kind": "test",
+            "reference": "test_no_capture_relies_on_the_platform_codepage",
+            "lessons": [
+              "LSN-0035"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0038",
+            "kind": "test",
+            "reference": "test_every_image_gate_builds_before_it_measures",
+            "lessons": [
+              "LSN-0036"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0039",
+            "kind": "test",
+            "reference": "test_no_shared_control_is_bound_to_a_gate_literal",
+            "lessons": [
+              "LSN-0037"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0040",
+            "kind": "test",
+            "reference": "test_both_redactors_agree_on_every_value_the_example_file_carries",
+            "lessons": [
+              "LSN-0038"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0041",
+            "kind": "test",
+            "reference": "test_the_operational_catalog_holds_only_providers_the_policy_declares",
+            "lessons": [
+              "LSN-0039"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0042",
+            "kind": "test",
+            "reference": "test_every_sealed_checkpoint_validates_from_its_own_tag",
+            "lessons": [
+              "LSN-0040"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0043",
+            "kind": "test",
+            "reference": "test_no_source_file_carries_a_stray_control_character",
+            "lessons": [
+              "LSN-0041"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0044",
+            "kind": "test",
+            "reference": "test_the_agent_runtime_migration_is_reversible",
+            "lessons": [
+              "LSN-0042"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0045",
+            "kind": "test",
+            "reference": "test_readiness_is_asked_of_temporal",
+            "lessons": [
+              "LSN-0043"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0046",
+            "kind": "test",
+            "reference": "test_the_null_control_detects_a_mutation",
+            "lessons": [
+              "LSN-0044"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0047",
+            "kind": "test",
+            "reference": "test_no_counted_pytest_case_expands_at_run_time",
+            "lessons": [
+              "LSN-0045"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0048",
+            "kind": "automated-check",
+            "reference": "scripts/iacode/scenarios/agent_runtime_deadline.py",
+            "lessons": [
+              "LSN-0046"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0049",
+            "kind": "test",
+            "reference": "test_content_of_the_wrong_type_is_refused_by_its_real_defect",
+            "lessons": [
+              "LSN-0047"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0050",
+            "kind": "test",
+            "reference": "test_a_terminal_state_is_never_visible_before_its_terminal_event",
+            "lessons": [
+              "LSN-0048"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0051",
+            "kind": "test",
+            "reference": "test_every_script_that_reads_prometheus_waits_for_a_scrape",
+            "lessons": [
+              "LSN-0049"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0052",
+            "kind": "test",
+            "reference": "test_sealing_refuses_a_state_that_does_not_name_its_own_tag",
+            "lessons": [
+              "LSN-0050"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0053",
+            "kind": "test",
+            "reference": "test_the_runtime_accepts_every_result_the_sandbox_hands_over",
+            "lessons": [
+              "LSN-0051"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0054",
+            "kind": "test",
+            "reference": "test_both_sides_name_the_result_by_the_shared_key",
+            "lessons": [
+              "LSN-0052"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0055",
+            "kind": "test",
+            "reference": "test_a_fork_bomb_that_detaches_leaves_a_sandbox_that_still_answers",
+            "lessons": [
+              "LSN-0053"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0056",
+            "kind": "test",
+            "reference": "test_the_runtime_instructions_show_the_exact_envelope_of_every_kind",
+            "lessons": [
+              "LSN-0055"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0057",
+            "kind": "test",
+            "reference": "test_a_forged_result_cannot_displace_the_sandbox_result",
+            "lessons": [
+              "LSN-0056"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0058",
+            "kind": "automated-check",
+            "reference": "scripts/iacode/dependency_scan.py",
+            "lessons": [
+              "LSN-0057"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0059",
+            "kind": "test",
+            "reference": "test_grafana_is_healthy",
+            "lessons": [
+              "LSN-0058"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0060",
+            "kind": "test",
+            "reference": "test_the_repository_preflight_covers_every_applicable_lesson",
+            "lessons": [
+              "LSN-0059"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0061",
+            "kind": "test",
+            "reference": "test_plan_run_results_verdict_and_events_round_trip",
+            "lessons": [
+              "LSN-0060"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0062",
+            "kind": "test",
+            "reference": "test_results_enforce_owner_idempotency_and_late_refusal",
+            "lessons": [
+              "LSN-0061"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0063",
+            "kind": "test",
+            "reference": "test_a_sandbox_answer_becomes_redacted_immutable_evidence",
+            "lessons": [
+              "LSN-0062"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0064",
+            "kind": "test",
+            "reference": "test_quality_tool_identity_is_a_stable_uuid",
+            "lessons": [
+              "LSN-0063"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0065",
+            "kind": "test",
+            "reference": "test_a_sandbox_session_has_exactly_one_run_owner_and_one_active_slot_per_owner",
+            "lessons": [
+              "LSN-0064"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0066",
+            "kind": "test",
+            "reference": "test_only_agent_requests_bind_the_agent_tool_request_foreign_key",
+            "lessons": [
+              "LSN-0065"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0067",
+            "kind": "test",
+            "reference": "test_content_addressed_plan_reuse_ignores_observation_time_and_first_owner",
+            "lessons": [
+              "LSN-0066"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0068",
+            "kind": "test",
+            "reference": "test_an_acknowledged_activity_cancellation_stays_a_cancellation",
+            "lessons": [
+              "LSN-0067"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0069",
+            "kind": "test",
+            "reference": "test_large_non_manifest_content_does_not_block_project_detection",
+            "lessons": [
+              "LSN-0068"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0070",
+            "kind": "test",
+            "reference": "test_polyglot_monorepo_checks_keep_their_stack_roots",
+            "lessons": [
+              "LSN-0069"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0071",
+            "kind": "test",
+            "reference": "test_nested_fixture_manifests_do_not_become_workspace_roots",
+            "lessons": [
+              "LSN-0070"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0072",
+            "kind": "test",
+            "reference": "test_every_quality_helper_provisions_a_real_snapshot",
+            "lessons": [
+              "LSN-0071"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0073",
+            "kind": "test",
+            "reference": "test_quality_images_bind_the_policy_owned_secret_scanner",
+            "lessons": [
+              "LSN-0072"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0074",
+            "kind": "test",
+            "reference": "test_mandatory_lint_covers_every_python_project_root",
+            "lessons": [
+              "LSN-0073"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0075",
+            "kind": "test",
+            "reference": "test_python_unit_runner_installs_metadata_and_exposes_monorepo_policy",
+            "lessons": [
+              "LSN-0074"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0076",
+            "kind": "test",
+            "reference": "test_python_unit_runner_installs_metadata_and_exposes_monorepo_policy",
+            "lessons": [
+              "LSN-0075"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0077",
+            "kind": "test",
+            "reference": "test_python_unit_runner_installs_metadata_and_exposes_monorepo_policy",
+            "lessons": [
+              "LSN-0076"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0078",
+            "kind": "test",
+            "reference": "test_real_repository_scenario_has_a_separate_bounded_wait",
+            "lessons": [
+              "LSN-0077"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0079",
+            "kind": "test",
+            "reference": "test_inputs_are_canonicalized_and_an_unknown_subject_is_refused",
+            "lessons": [
+              "LSN-0078"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0080",
+            "kind": "test",
+            "reference": "test_isolated_language_checks_prepare_their_policy_owned_toolchain",
+            "lessons": [
+              "LSN-0079"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0081",
+            "kind": "test",
+            "reference": "test_verification_removes_a_stale_stage_report_before_execution",
+            "lessons": [
+              "LSN-0080"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0082",
+            "kind": "test",
+            "reference": "test_every_test_the_specifications_name_exists",
+            "lessons": [
+              "LSN-0081"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0083",
+            "kind": "test",
+            "reference": "test_engineering_memory_never_depends_on_ephemeral_var_evidence",
+            "lessons": [
+              "LSN-0082"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0084",
+            "kind": "test",
+            "reference": "test_every_tool_that_re_emits_captured_output_configures_its_own_stream",
+            "lessons": [
+              "LSN-0083"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0085",
+            "kind": "test",
+            "reference": "test_the_entry_point_names_the_current_gate",
+            "lessons": [
+              "LSN-0084"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0086",
+            "kind": "test",
+            "reference": "test_the_verification_adds_the_stages_this_gate_introduces",
+            "lessons": [
+              "LSN-0085"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0087",
+            "kind": "test",
+            "reference": "test_an_empty_validator_failure_keeps_its_process_exit_code",
+            "lessons": [
+              "LSN-0086"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0088",
+            "kind": "test",
+            "reference": "test_rehearsal_workers_register_the_post_run_quality_boundary",
+            "lessons": [
+              "LSN-0087"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0089",
+            "kind": "test",
+            "reference": "test_built_sandbox_test_image_carries_declared_external_fixture_inputs",
+            "lessons": [
+              "LSN-0088"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0090",
+            "kind": "test",
+            "reference": "test_agent_quality_classifies_unsupported_and_failed_plans_without_stranding_run",
+            "lessons": [
+              "LSN-0089"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          },
+          {
+            "guardrailId": "GRD-0091",
+            "kind": "test",
+            "reference": "test_the_evaluator_service_has_no_engine_socket_or_host_project_mount",
+            "lessons": [
+              "LSN-0090"
+            ],
+            "resolved": true,
+            "tested": true,
+            "effective": true,
+            "detail": null
+          }
+        ]
+      },
+      "evidence": [
+        "file:.iacode/memory/guardrails/registry.json",
+        "file:.iacode/memory/lessons.jsonl"
+      ]
+    },
+    {
+      "check": "sealed Gate 4 retrospective exists and names evidence and limits",
+      "result": "PASS",
+      "observed": {
+        "path": ".iacode/memory/retrospectives/GATE-4-CP-0001.md",
+        "size": 6524
+      },
+      "evidence": [
+        "file:.iacode/memory/retrospectives/GATE-4-CP-0001.md"
+      ]
+    }
+  ],
+  "guardrailEffectiveness": {
+    "guardrailsTotal": 91,
+    "guardrailsResolved": 91,
+    "guardrailsTested": 91,
+    "guardrailsEffective": 91,
+    "guardrailFailures": 0,
+    "lessonsWithUnresolvedFailures": [],
+    "guardrails": [
+      {
+        "guardrailId": "GRD-0001",
+        "kind": "test",
+        "reference": "DetachedHeadValidationTests.test_detached_head_at_checkpoint_tag_validates",
+        "lessons": [
+          "LSN-0001"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0002",
+        "kind": "invariant",
+        "reference": "validate_checkpoint._validate_delta_inventory",
+        "lessons": [
+          "LSN-0002"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0003",
+        "kind": "validator",
+        "reference": "scripts/development-ledger/finalize_checkpoint.py",
+        "lessons": [
+          "LSN-0003"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0004",
+        "kind": "invariant",
+        "reference": "validate_checkpoint._validate_status_blockers",
+        "lessons": [
+          "LSN-0004"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0005",
+        "kind": "test",
+        "reference": "SetupChecklistTests.test_checklist_exists_and_is_referenced",
+        "lessons": [
+          "LSN-0006"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0006",
+        "kind": "invariant",
+        "reference": "green_keeper._refresh_declared_hashes",
+        "lessons": [
+          "LSN-0011"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0007",
+        "kind": "invariant",
+        "reference": "validate_checkpoint._validate_quality_evidence",
+        "lessons": [
+          "LSN-0005"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0008",
+        "kind": "validator",
+        "reference": "scripts/development-ledger/attestation.py",
+        "lessons": [
+          "LSN-0007"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0009",
+        "kind": "validator",
+        "reference": "scripts/development-ledger/policies.py",
+        "lessons": [
+          "LSN-0008"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0010",
+        "kind": "policy",
+        "reference": ".iacode/policies/quality-gates.json",
+        "lessons": [
+          "LSN-0009"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0011",
+        "kind": "invariant",
+        "reference": "validate_checkpoint._validate_command_reproducibility",
+        "lessons": [
+          "LSN-0010"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0012",
+        "kind": "validator",
+        "reference": "scripts/development-ledger/anchors.py",
+        "lessons": [
+          "LSN-0012"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0013",
+        "kind": "invariant",
+        "reference": "validate_checkpoint._validate_seal_chronology",
+        "lessons": [
+          "LSN-0014"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0014",
+        "kind": "invariant",
+        "reference": "validate_checkpoint._validate_delivery_assurance",
+        "lessons": [
+          "LSN-0015"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0015",
+        "kind": "invariant",
+        "reference": "validate_checkpoint._validate_green_keeper_cycle",
+        "lessons": [
+          "LSN-0016"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0016",
+        "kind": "invariant",
+        "reference": "policies.expected_requirement_refs",
+        "lessons": [
+          "LSN-0017"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0017",
+        "kind": "invariant",
+        "reference": "lessons.resolve_control",
+        "lessons": [
+          "LSN-0018"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0018",
+        "kind": "invariant",
+        "reference": "lessons.preflight_staleness",
+        "lessons": [
+          "LSN-0019"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0019",
+        "kind": "invariant",
+        "reference": "ledger_common.build_command_record",
+        "lessons": [
+          "LSN-0020"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0020",
+        "kind": "invariant",
+        "reference": "anchors.verify_chain",
+        "lessons": [
+          "LSN-0021"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0021",
+        "kind": "invariant",
+        "reference": "validate_checkpoint._validate_derived_counts",
+        "lessons": [
+          "LSN-0022"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0022",
+        "kind": "invariant",
+        "reference": "lessons._resolve_source_locator",
+        "lessons": [
+          "LSN-0023"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0023",
+        "kind": "automated-check",
+        "reference": "scripts/development-ledger/promotion_simulation.py",
+        "lessons": [
+          "LSN-0024"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0024",
+        "kind": "invariant",
+        "reference": "anchors.pending_anchor_exclusion",
+        "lessons": [
+          "LSN-0025"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0025",
+        "kind": "invariant",
+        "reference": "validate_checkpoint._validate_internal_assurance",
+        "lessons": [
+          "LSN-0026"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0026",
+        "kind": "test",
+        "reference": "SourceCardinalityPolicyTests",
+        "lessons": [
+          "LSN-0022"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0027",
+        "kind": "invariant",
+        "reference": "lessons.validate_lessons",
+        "lessons": [
+          "LSN-0027"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0028",
+        "kind": "schema",
+        "reference": ".iacode/schemas/memory-policy.schema.json",
+        "lessons": [
+          "LSN-0028"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0029",
+        "kind": "automated-check",
+        "reference": "scripts/development-ledger/successor_durability.py",
+        "lessons": [
+          "LSN-0029"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0030",
+        "kind": "automated-check",
+        "reference": "scripts/development-ledger/mirror_semantics_validation.py",
+        "lessons": [
+          "LSN-0031"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0031",
+        "kind": "test",
+        "reference": "SimulationExecutesProductionControlsTests.test_the_sealed_artifact_is_the_tools_own_output",
+        "lessons": [
+          "LSN-0024",
+          "LSN-0031"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0032",
+        "kind": "automated-check",
+        "reference": "scripts/development-ledger/gate_transition_simulation.py",
+        "lessons": [
+          "LSN-0029"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0033",
+        "kind": "test",
+        "reference": "test_every_declared_key_is_read_somewhere",
+        "lessons": [
+          "LSN-0028"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0034",
+        "kind": "policy",
+        "reference": ".iacode/policies/gate-scope.json",
+        "lessons": [
+          "LSN-0032"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0035",
+        "kind": "test",
+        "reference": "test_internal_error_still_carries_a_correlation_identifier",
+        "lessons": [
+          "LSN-0033"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0036",
+        "kind": "test",
+        "reference": "test_metrics_label_routes_by_template_not_by_url",
+        "lessons": [
+          "LSN-0034"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0037",
+        "kind": "test",
+        "reference": "test_no_capture_relies_on_the_platform_codepage",
+        "lessons": [
+          "LSN-0035"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0038",
+        "kind": "test",
+        "reference": "test_every_image_gate_builds_before_it_measures",
+        "lessons": [
+          "LSN-0036"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0039",
+        "kind": "test",
+        "reference": "test_no_shared_control_is_bound_to_a_gate_literal",
+        "lessons": [
+          "LSN-0037"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0040",
+        "kind": "test",
+        "reference": "test_both_redactors_agree_on_every_value_the_example_file_carries",
+        "lessons": [
+          "LSN-0038"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0041",
+        "kind": "test",
+        "reference": "test_the_operational_catalog_holds_only_providers_the_policy_declares",
+        "lessons": [
+          "LSN-0039"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0042",
+        "kind": "test",
+        "reference": "test_every_sealed_checkpoint_validates_from_its_own_tag",
+        "lessons": [
+          "LSN-0040"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0043",
+        "kind": "test",
+        "reference": "test_no_source_file_carries_a_stray_control_character",
+        "lessons": [
+          "LSN-0041"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0044",
+        "kind": "test",
+        "reference": "test_the_agent_runtime_migration_is_reversible",
+        "lessons": [
+          "LSN-0042"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0045",
+        "kind": "test",
+        "reference": "test_readiness_is_asked_of_temporal",
+        "lessons": [
+          "LSN-0043"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0046",
+        "kind": "test",
+        "reference": "test_the_null_control_detects_a_mutation",
+        "lessons": [
+          "LSN-0044"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0047",
+        "kind": "test",
+        "reference": "test_no_counted_pytest_case_expands_at_run_time",
+        "lessons": [
+          "LSN-0045"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0048",
+        "kind": "automated-check",
+        "reference": "scripts/iacode/scenarios/agent_runtime_deadline.py",
+        "lessons": [
+          "LSN-0046"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0049",
+        "kind": "test",
+        "reference": "test_content_of_the_wrong_type_is_refused_by_its_real_defect",
+        "lessons": [
+          "LSN-0047"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0050",
+        "kind": "test",
+        "reference": "test_a_terminal_state_is_never_visible_before_its_terminal_event",
+        "lessons": [
+          "LSN-0048"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0051",
+        "kind": "test",
+        "reference": "test_every_script_that_reads_prometheus_waits_for_a_scrape",
+        "lessons": [
+          "LSN-0049"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0052",
+        "kind": "test",
+        "reference": "test_sealing_refuses_a_state_that_does_not_name_its_own_tag",
+        "lessons": [
+          "LSN-0050"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0053",
+        "kind": "test",
+        "reference": "test_the_runtime_accepts_every_result_the_sandbox_hands_over",
+        "lessons": [
+          "LSN-0051"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0054",
+        "kind": "test",
+        "reference": "test_both_sides_name_the_result_by_the_shared_key",
+        "lessons": [
+          "LSN-0052"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0055",
+        "kind": "test",
+        "reference": "test_a_fork_bomb_that_detaches_leaves_a_sandbox_that_still_answers",
+        "lessons": [
+          "LSN-0053"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0056",
+        "kind": "test",
+        "reference": "test_the_runtime_instructions_show_the_exact_envelope_of_every_kind",
+        "lessons": [
+          "LSN-0055"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0057",
+        "kind": "test",
+        "reference": "test_a_forged_result_cannot_displace_the_sandbox_result",
+        "lessons": [
+          "LSN-0056"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0058",
+        "kind": "automated-check",
+        "reference": "scripts/iacode/dependency_scan.py",
+        "lessons": [
+          "LSN-0057"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0059",
+        "kind": "test",
+        "reference": "test_grafana_is_healthy",
+        "lessons": [
+          "LSN-0058"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0060",
+        "kind": "test",
+        "reference": "test_the_repository_preflight_covers_every_applicable_lesson",
+        "lessons": [
+          "LSN-0059"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0061",
+        "kind": "test",
+        "reference": "test_plan_run_results_verdict_and_events_round_trip",
+        "lessons": [
+          "LSN-0060"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0062",
+        "kind": "test",
+        "reference": "test_results_enforce_owner_idempotency_and_late_refusal",
+        "lessons": [
+          "LSN-0061"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0063",
+        "kind": "test",
+        "reference": "test_a_sandbox_answer_becomes_redacted_immutable_evidence",
+        "lessons": [
+          "LSN-0062"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0064",
+        "kind": "test",
+        "reference": "test_quality_tool_identity_is_a_stable_uuid",
+        "lessons": [
+          "LSN-0063"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0065",
+        "kind": "test",
+        "reference": "test_a_sandbox_session_has_exactly_one_run_owner_and_one_active_slot_per_owner",
+        "lessons": [
+          "LSN-0064"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0066",
+        "kind": "test",
+        "reference": "test_only_agent_requests_bind_the_agent_tool_request_foreign_key",
+        "lessons": [
+          "LSN-0065"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0067",
+        "kind": "test",
+        "reference": "test_content_addressed_plan_reuse_ignores_observation_time_and_first_owner",
+        "lessons": [
+          "LSN-0066"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0068",
+        "kind": "test",
+        "reference": "test_an_acknowledged_activity_cancellation_stays_a_cancellation",
+        "lessons": [
+          "LSN-0067"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0069",
+        "kind": "test",
+        "reference": "test_large_non_manifest_content_does_not_block_project_detection",
+        "lessons": [
+          "LSN-0068"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0070",
+        "kind": "test",
+        "reference": "test_polyglot_monorepo_checks_keep_their_stack_roots",
+        "lessons": [
+          "LSN-0069"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0071",
+        "kind": "test",
+        "reference": "test_nested_fixture_manifests_do_not_become_workspace_roots",
+        "lessons": [
+          "LSN-0070"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0072",
+        "kind": "test",
+        "reference": "test_every_quality_helper_provisions_a_real_snapshot",
+        "lessons": [
+          "LSN-0071"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0073",
+        "kind": "test",
+        "reference": "test_quality_images_bind_the_policy_owned_secret_scanner",
+        "lessons": [
+          "LSN-0072"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0074",
+        "kind": "test",
+        "reference": "test_mandatory_lint_covers_every_python_project_root",
+        "lessons": [
+          "LSN-0073"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0075",
+        "kind": "test",
+        "reference": "test_python_unit_runner_installs_metadata_and_exposes_monorepo_policy",
+        "lessons": [
+          "LSN-0074"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0076",
+        "kind": "test",
+        "reference": "test_python_unit_runner_installs_metadata_and_exposes_monorepo_policy",
+        "lessons": [
+          "LSN-0075"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0077",
+        "kind": "test",
+        "reference": "test_python_unit_runner_installs_metadata_and_exposes_monorepo_policy",
+        "lessons": [
+          "LSN-0076"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0078",
+        "kind": "test",
+        "reference": "test_real_repository_scenario_has_a_separate_bounded_wait",
+        "lessons": [
+          "LSN-0077"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0079",
+        "kind": "test",
+        "reference": "test_inputs_are_canonicalized_and_an_unknown_subject_is_refused",
+        "lessons": [
+          "LSN-0078"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0080",
+        "kind": "test",
+        "reference": "test_isolated_language_checks_prepare_their_policy_owned_toolchain",
+        "lessons": [
+          "LSN-0079"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0081",
+        "kind": "test",
+        "reference": "test_verification_removes_a_stale_stage_report_before_execution",
+        "lessons": [
+          "LSN-0080"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0082",
+        "kind": "test",
+        "reference": "test_every_test_the_specifications_name_exists",
+        "lessons": [
+          "LSN-0081"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0083",
+        "kind": "test",
+        "reference": "test_engineering_memory_never_depends_on_ephemeral_var_evidence",
+        "lessons": [
+          "LSN-0082"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0084",
+        "kind": "test",
+        "reference": "test_every_tool_that_re_emits_captured_output_configures_its_own_stream",
+        "lessons": [
+          "LSN-0083"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0085",
+        "kind": "test",
+        "reference": "test_the_entry_point_names_the_current_gate",
+        "lessons": [
+          "LSN-0084"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0086",
+        "kind": "test",
+        "reference": "test_the_verification_adds_the_stages_this_gate_introduces",
+        "lessons": [
+          "LSN-0085"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0087",
+        "kind": "test",
+        "reference": "test_an_empty_validator_failure_keeps_its_process_exit_code",
+        "lessons": [
+          "LSN-0086"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0088",
+        "kind": "test",
+        "reference": "test_rehearsal_workers_register_the_post_run_quality_boundary",
+        "lessons": [
+          "LSN-0087"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0089",
+        "kind": "test",
+        "reference": "test_built_sandbox_test_image_carries_declared_external_fixture_inputs",
+        "lessons": [
+          "LSN-0088"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0090",
+        "kind": "test",
+        "reference": "test_agent_quality_classifies_unsupported_and_failed_plans_without_stranding_run",
+        "lessons": [
+          "LSN-0089"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      },
+      {
+        "guardrailId": "GRD-0091",
+        "kind": "test",
+        "reference": "test_the_evaluator_service_has_no_engine_socket_or_host_project_mount",
+        "lessons": [
+          "LSN-0090"
+        ],
+        "resolved": true,
+        "tested": true,
+        "effective": true,
+        "detail": null
+      }
+    ]
+  },
+  "passed": 6,
+  "total": 6,
+  "result": "PASS"
+}

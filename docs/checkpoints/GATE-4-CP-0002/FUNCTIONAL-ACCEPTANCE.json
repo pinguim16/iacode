@@ -1,0 +1,211 @@
+{
+  "schemaVersion": "1.0.0",
+  "gate": "GATE-4",
+  "checkpoint": "GATE-4-CP-0002",
+  "status": "PASS",
+  "generatedAt": "2026-10-10T15:49:28.023891Z",
+  "scenarios": [
+    {
+      "scenarioId": "G4-FA-SANDBOX",
+      "requirementIds": [
+        "GATE-4-7.1",
+        "GATE-4-7.5"
+      ],
+      "feature": "Sandbox-only quality and coding execution",
+      "scenario": "Execute a real coding run through the Gate 3 sandbox and prove that all project commands stay inside one no-network session without host effects.",
+      "environment": "real Compose stack, Temporal worker, sandbox service and container engine",
+      "preconditions": [
+        "Current worker and sandbox images are rebuilt from the checked-out source.",
+        "A host sentinel exists outside the sandbox workspace."
+      ],
+      "execution": [
+        "Run scripts/iacode/scenarios/sandbox_coding_e2e.py for the coding scenario.",
+        "Observe tool execution, host sentinel, sandbox identity and release."
+      ],
+      "expected": [
+        "Every project command executes through the sandbox task queue.",
+        "The host sentinel is unchanged and no host file is created.",
+        "The sandbox session is released after the run."
+      ],
+      "observed": [
+        "The run succeeded with nine requested and nine executed tools in one no-network session.",
+        "The host sentinel digest stayed unchanged and no file appeared on the host.",
+        "The sandbox session stopped and its container was removed."
+      ],
+      "result": "PASS",
+      "evidence": [
+        "checkpoint:VERIFICATION-REPORT.json"
+      ],
+      "timestamp": "2026-10-10T15:49:28.023891Z",
+      "artifactReferences": [
+        "checkpoint:VERIFICATION-REPORT.json"
+      ]
+    },
+    {
+      "scenarioId": "G4-FA-REPRODUCTION",
+      "requirementIds": [
+        "GATE-4-9.5",
+        "GATE-4-16.4"
+      ],
+      "feature": "Immutable quality reproduction",
+      "scenario": "Reproduce a passing run from stored inputs under the same frozen plan while preserving a distinct run identity.",
+      "environment": "real Compose stack with Temporal, PostgreSQL, MinIO, sandbox service and container engine",
+      "preconditions": [
+        "A complete passing quality run and its immutable evidence have been stored."
+      ],
+      "execution": [
+        "Request reproduction through the real evaluator workflow.",
+        "Compare plan, lineage, results and verdicts between the original and reproduced run."
+      ],
+      "expected": [
+        "The reproduced run has a distinct run identity and the same plan identity.",
+        "Results and verdict are equivalent without rewriting the original."
+      ],
+      "observed": [
+        "The reproduced run used a distinct run id and the identical plan digest.",
+        "All seven check outcomes and the PASS verdict were equivalent, with lineage recorded to the original."
+      ],
+      "result": "PASS",
+      "evidence": [
+        "checkpoint:VERIFICATION-REPORT.json"
+      ],
+      "timestamp": "2026-10-10T15:49:28.023891Z",
+      "artifactReferences": [
+        "checkpoint:VERIFICATION-REPORT.json"
+      ]
+    },
+    {
+      "scenarioId": "G4-FA-RECOVERY",
+      "requirementIds": [
+        "GATE-4-12.1",
+        "GATE-4-12.2"
+      ],
+      "feature": "Durable quality workflow recovery",
+      "scenario": "Restart the evaluator worker during an active quality run and observe recovery without duplicate results or identity loss.",
+      "environment": "real Compose stack with Temporal evaluator worker, PostgreSQL, MinIO and sandbox service",
+      "preconditions": [
+        "A slow quality run is active and has persisted its run identity."
+      ],
+      "execution": [
+        "Stop and restart the evaluator worker during the active check.",
+        "Wait for the workflow to reach its terminal state and inspect stored results."
+      ],
+      "expected": [
+        "The same run identity resumes after restart.",
+        "Every expected check has exactly one terminal result and no sandbox remains active."
+      ],
+      "observed": [
+        "The original run identity reached SUCCEEDED after worker restart.",
+        "Seven unique results were stored, identity was preserved and the sandbox session was cleaned up."
+      ],
+      "result": "PASS",
+      "evidence": [
+        "checkpoint:VERIFICATION-REPORT.json"
+      ],
+      "timestamp": "2026-10-10T15:49:28.023891Z",
+      "artifactReferences": [
+        "checkpoint:VERIFICATION-REPORT.json"
+      ]
+    },
+    {
+      "scenarioId": "G4-FA-TERMINATION",
+      "requirementIds": [
+        "GATE-4-12.3",
+        "GATE-4-12.4"
+      ],
+      "feature": "Fail-closed cancellation and timeout",
+      "scenario": "Cancel one active quality run and allow another to exceed its policy-owned deadline.",
+      "environment": "real Compose stack with Temporal, evaluator, sandbox service and container engine",
+      "preconditions": [
+        "Slow quality fixtures are available inside the built quality image."
+      ],
+      "execution": [
+        "Cancel an active slow run and observe cleanup plus late-result refusal.",
+        "Run the timeout fixture until the policy-owned deadline fires."
+      ],
+      "expected": [
+        "Cancellation is idempotent, cleans the sandbox and derives a fail-closed verdict.",
+        "Timeout records a timed-out check, complete evidence and a FAIL verdict."
+      ],
+      "observed": [
+        "The cancelled run ended CANCELLED after cleanup, remained fail-closed and had no active sandbox.",
+        "The timed-out run stored seven results including TIMED_OUT, retained evidence and derived FAIL."
+      ],
+      "result": "PASS",
+      "evidence": [
+        "checkpoint:VERIFICATION-REPORT.json"
+      ],
+      "timestamp": "2026-10-10T15:49:28.023891Z",
+      "artifactReferences": [
+        "checkpoint:VERIFICATION-REPORT.json"
+      ]
+    },
+    {
+      "scenarioId": "G4-FA-PASS-FAIL",
+      "requirementIds": [
+        "GATE-4-16.1",
+        "GATE-4-16.2"
+      ],
+      "feature": "Truthful PASS and FAIL derivation",
+      "scenario": "Run passing and deliberately failing Python fixtures through the same complete Quality Engine path.",
+      "environment": "real Compose stack with Temporal, PostgreSQL, MinIO, sandbox service and container engine",
+      "preconditions": [
+        "Passing and failing fixtures are copied into the built quality image."
+      ],
+      "execution": [
+        "Execute the passing fixture and inspect the complete check set and evidence.",
+        "Execute the failing fixture and inspect the failed unit check, finding and evidence."
+      ],
+      "expected": [
+        "Only the complete successful check set derives PASS.",
+        "The deliberate defect derives FAIL with its failed check and finding preserved."
+      ],
+      "observed": [
+        "The passing run stored seven successful results with evidence and derived PASS.",
+        "The failing run stored the failed unit check and one evidence-linked finding and derived FAIL."
+      ],
+      "result": "PASS",
+      "evidence": [
+        "checkpoint:VERIFICATION-REPORT.json"
+      ],
+      "timestamp": "2026-10-10T15:49:28.023891Z",
+      "artifactReferences": [
+        "checkpoint:VERIFICATION-REPORT.json"
+      ]
+    },
+    {
+      "scenarioId": "G4-FA-IACODE-ADVERSARIAL",
+      "requirementIds": [
+        "GATE-4-16.3",
+        "GATE-4-16.5"
+      ],
+      "feature": "Canonical IACode evaluation and false-PASS rejection",
+      "scenario": "Evaluate the committed IACode tree through its canonical profile and execute every required false-PASS mutation plus an unmutated control.",
+      "environment": "current committed IACode source, rebuilt evaluator image and real Compose stack",
+      "preconditions": [
+        "The IACode snapshot and canonical quality policy are frozen.",
+        "The mandatory false-PASS battery is derived from the Gate 4 checklist."
+      ],
+      "execution": [
+        "Run the IACode scenario through the real Quality Engine.",
+        "Execute the false-PASS stage in the complete verifier."
+      ],
+      "expected": [
+        "The IACode verdict agrees with its canonical mandatory gate results.",
+        "Every mutation is rejected and the unmutated control remains valid."
+      ],
+      "observed": [
+        "The IACode scenario completed against its canonical profile with durable evidence.",
+        "The complete verifier reported quality-false-pass PASS and all 42 stages green."
+      ],
+      "result": "PASS",
+      "evidence": [
+        "checkpoint:VERIFICATION-REPORT.json"
+      ],
+      "timestamp": "2026-10-10T15:49:28.023891Z",
+      "artifactReferences": [
+        "checkpoint:VERIFICATION-REPORT.json"
+      ]
+    }
+  ]
+}

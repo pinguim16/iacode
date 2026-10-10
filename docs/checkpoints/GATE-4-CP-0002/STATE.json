@@ -1,0 +1,141 @@
+{
+  "schemaVersion": "3.2.0",
+  "phase": "Gate 4 fresh-session independent audit of sealed GATE-4-CP-0001",
+  "gate": "GATE-4",
+  "status": "REWORK_REQUIRED",
+  "branch": "main",
+  "baseCommit": "70a22e824705f414e0c295bbdf89187db9b391f7",
+  "currentCommit": "refs/tags/iacode-checkpoints/GATE-4-CP-0002",
+  "dirty": false,
+  "startedAt": "2026-10-10T14:13:02Z",
+  "updatedAt": "2026-10-10T17:11:37Z",
+  "nextAllowedAction": "Open implementing checkpoint GATE-4-CP-0003, correct and close G4-F-001, seal the correction, then perform a later fresh independent Gate 4 audit. Do not start Gate 5.",
+  "blockedBy": [
+    "G4-F-001"
+  ],
+  "secondToolValidation": {
+    "status": "FAILED",
+    "tool": "Codex desktop application, fresh session",
+    "provider": "OpenAI",
+    "model": "GPT-5",
+    "validatedAt": "2026-10-10T17:09:28.410584Z",
+    "justification": "The sealed Gate 4 subject was independently reproduced, but G4-F-001 proves that detected credential-shaped quality output can be durably persisted instead of quarantined.",
+    "evidence": [
+      "file:REVIEW-REPORT.md",
+      "file:FINDINGS.json",
+      "file:SECRET-EVIDENCE-PROBE.json"
+    ]
+  },
+  "requirementsMatrix": {
+    "path": "REQUIREMENTS-MATRIX.json",
+    "total": 195,
+    "mandatory": 192,
+    "complete": 194,
+    "partial": 0,
+    "missing": 1,
+    "notApplicable": 0,
+    "coveragePercent": 99.49
+  },
+  "greenKeeper": {
+    "status": "PASS",
+    "cycles": 2,
+    "remainingFailures": 0,
+    "unresolvedReworkItems": 0,
+    "log": "REWORK-LOG.jsonl",
+    "externalBlockers": [],
+    "evidence": [
+      "file:GREEN-KEEPER-REPORT.json"
+    ]
+  },
+  "deliveryCompleteness": {
+    "status": "FAIL",
+    "report": "COMPLETENESS-REPORT.json",
+    "coveragePercent": 99.49,
+    "evidenceCoveragePercent": 100.0,
+    "auditor": "Delivery Completeness Validator, Gate 4 fresh-session audit",
+    "evidence": [
+      "file:COMPLETENESS-REPORT.json"
+    ]
+  },
+  "reworkCycles": 2,
+  "independentReview": {
+    "status": "REWORK_REQUIRED",
+    "tool": "Codex desktop application, OpenAI, GPT-5, fresh session",
+    "reviewedAt": "2026-10-10T17:09:28.410584Z",
+    "justification": "G4-F-001 is HIGH and violates canonical Gate 4 requirement 19.2.",
+    "evidence": [
+      "file:REVIEW-REPORT.md",
+      "file:FINDINGS.json",
+      "file:FINAL-GATE-4-AUDIT-MATRIX.json"
+    ]
+  },
+  "redTeam": {
+    "status": "RED_TEAM_FAIL",
+    "tool": "Fresh-session Gate 4 independent adversarial harness",
+    "executedAt": "2026-10-10T17:09:28.410584Z",
+    "justification": "G4-X7 escaped the pre-persistence credential-containment boundary.",
+    "evidence": [
+      "file:GATE-4-INDEPENDENT-RED-TEAM.json",
+      "file:RED-TEAM-REPORT.md"
+    ]
+  },
+  "lessonPreflight": {
+    "path": "LESSON-PREFLIGHT.json",
+    "gate": "GATE-4",
+    "scope": "independent-audit",
+    "lessonsConsidered": 90,
+    "lessonsApplicable": 90,
+    "derivedRequirements": 90,
+    "evidence": [
+      "checkpoint:LESSON-PREFLIGHT.json"
+    ]
+  },
+  "milestone": {
+    "id": "M2",
+    "title": "IACode V0 completion and experience",
+    "gates": [
+      "GATE 4",
+      "GATE 5",
+      "GATE 6",
+      "GATE 7"
+    ],
+    "status": "PENDING",
+    "auditor": null,
+    "auditedAt": null,
+    "evidence": []
+  },
+  "externalAuditRequired": false,
+  "externalAuditReason": null,
+  "guardrailEffectiveness": {
+    "guardrailsTotal": 91,
+    "guardrailsResolved": 91,
+    "guardrailsTested": 91,
+    "guardrailsEffective": 91,
+    "guardrailFailures": 0,
+    "evidence": [
+      "file:.iacode/memory/guardrails/registry.json",
+      "checkpoint:DOCUMENTATION-MEMORY-REVIEW.json"
+    ]
+  },
+  "integrity": {
+    "status": "PASS",
+    "anchors": 24,
+    "chainFile": ".iacode/anchors/checkpoint-chain.json",
+    "evidence": [
+      "command:cmd-0004",
+      "file:SEALED-SUBJECT-AUDIT.json"
+    ]
+  },
+  "externalAttestation": {
+    "status": "PRESENT",
+    "path": ".iacode/attestations/G4-CP-0002.json",
+    "auditId": "G4-CP-0002",
+    "subjectCheckpoint": "GATE-4-CP-0001",
+    "subjectCommit": "70a22e824705f414e0c295bbdf89187db9b391f7",
+    "validationMechanism": "FRESH_SESSION_INDEPENDENT_AUDIT",
+    "evidence": [
+      "file:REVIEW-REPORT.md",
+      "file:RED-TEAM-REPORT.md"
+    ]
+  }
+}

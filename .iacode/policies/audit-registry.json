@@ -78,6 +78,21 @@
       "correctiveCheckpoint": "GATE-3-CP-0005",
       "notes": "One Critical finding, M1-F-004: the unchanged dependency advisory gate reproducibly found two Critical and four High npm advisories. The frozen stop condition ended substantive audit work before the dedicated Red Team, so this audit has no redTeamReport.",
       "findingsClosureFile": "M1-CP-0004-FINDINGS-CLOSURE.json"
+    },
+    {
+      "auditId": "G4-CP-0002",
+      "milestone": "M2",
+      "gate": "GATE-4",
+      "auditor": "Codex desktop application, OpenAI, fresh-session independent Gate audit (FRESH_SESSION_INDEPENDENT_AUDIT); not cross-tool validation",
+      "auditCheckpoint": "GATE-4-CP-0002",
+      "subjectCheckpoint": "GATE-4-CP-0001",
+      "subjectCommit": "70a22e824705f414e0c295bbdf89187db9b391f7",
+      "verdict": "REWORK_REQUIRED",
+      "reviewReport": "docs/checkpoints/GATE-4-CP-0002/REVIEW-REPORT.md",
+      "redTeamReport": "docs/checkpoints/GATE-4-CP-0002/RED-TEAM-REPORT.md",
+      "correctiveCheckpoint": "GATE-4-CP-0003",
+      "notes": "One HIGH finding, G4-F-001: credential-shaped structured quality output recognized by the canonical scanner is persisted and resolvable instead of quarantined. Independent attack G4-X7 escaped; no product correction was made by the auditor.",
+      "findingsClosureFile": "G4-CP-0002-FINDINGS-CLOSURE.json"
     }
   ]
 }

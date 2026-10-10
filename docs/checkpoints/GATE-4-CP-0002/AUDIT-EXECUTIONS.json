@@ -1,0 +1,50 @@
+{
+  "schemaVersion": "1.0.0",
+  "artifact": "AUDIT-EXECUTIONS",
+  "checkpoint": "GATE-4-CP-0002",
+  "generatedAt": "2026-10-10T17:09:28.410584Z",
+  "subjectCommit": "70a22e824705f414e0c295bbdf89187db9b391f7",
+  "executions": [
+    {
+      "name": "sealed subject and bundle",
+      "result": "PASS",
+      "evidence": "SEALED-SUBJECT-AUDIT.json"
+    },
+    {
+      "name": "published evidence objects",
+      "result": "PASS",
+      "evidence": "REMOTE-PUBLISHED-OBJECTS.json"
+    },
+    {
+      "name": "architecture review",
+      "result": "PASS",
+      "evidence": "ARCHITECTURE-REVIEW.json"
+    },
+    {
+      "name": "clean-clone complete verification",
+      "result": "PASS",
+      "evidence": "VERIFICATION-REPORT.json"
+    },
+    {
+      "name": "documentation and memory",
+      "result": "PASS",
+      "evidence": "DOCUMENTATION-MEMORY-REVIEW.json"
+    },
+    {
+      "name": "secret evidence boundary",
+      "result": "FAIL",
+      "evidence": "SECRET-EVIDENCE-PROBE.json"
+    },
+    {
+      "name": "independent Red Team",
+      "result": "RED_TEAM_FAIL",
+      "evidence": "GATE-4-INDEPENDENT-RED-TEAM.json"
+    },
+    {
+      "name": "delivery completeness",
+      "result": "FAIL",
+      "evidence": "COMPLETENESS-REPORT.json"
+    }
+  ],
+  "verdict": "REWORK_REQUIRED"
+}

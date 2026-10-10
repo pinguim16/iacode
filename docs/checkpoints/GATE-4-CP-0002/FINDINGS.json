@@ -1,0 +1,35 @@
+{
+  "schemaVersion": "1.0.0",
+  "artifact": "FINDINGS",
+  "checkpoint": "GATE-4-CP-0002",
+  "milestone": "M2",
+  "subjectCheckpoint": "GATE-4-CP-0001",
+  "subjectCommit": "70a22e824705f414e0c295bbdf89187db9b391f7",
+  "note": "Fresh-session independent audit of the sealed Gate 4 subject. The auditor made no product correction.",
+  "findings": [
+    {
+      "id": "G4-F-001",
+      "severity": "HIGH",
+      "status": "OPEN",
+      "disposition": "REWORK_REQUIRED",
+      "correctiveCheckpoint": "GATE-4-CP-0003",
+      "title": "Detected credential-shaped quality output is durably persisted instead of quarantined",
+      "gates": ["GATE 4"],
+      "requirements": ["canonical:GATE-4#19.2"],
+      "observed": "The delivered evaluator image reproduced the exact record_execution path with a synthetic GitHub-token-shaped marker assembled only in memory. The canonical scanner detected the marker, but redact_mapping did not redact it; QualityEvidenceStore.put committed it and resolve returned it unchanged. The report stores only the marker digest and booleans, never the marker itself.",
+      "rootCause": "The execution activity applies key/value redaction before writing the JSON evidence object, but the evidence store has no canonical secret scan or fail-closed quarantine before persistence. The generic redaction patterns do not cover this credential shape when it appears under an unremarkable key. The later repository quality-secret-scan runner is not a pre-persistence boundary for execution evidence.",
+      "impact": "A runner or tool can place a detected credential in structured quality output and have it committed to the durable evidence store. That contradicts the Gate 4 containment requirement and the documented claim that secret-bearing output is quarantined rather than persisted.",
+      "severityRationale": "HIGH because the failure crosses a durable security boundary and can retain a credential in evidence. The reproducer uses only a synthetic marker and proves detection, persistence, and retrieval without exposing a credential.",
+      "requiredCorrection": "In a later implementing checkpoint, apply the canonical credential scanner to the fully serialized evidence object before any durable commit, quarantine or fail closed when detection occurs, ensure the prohibited bytes cannot be resolved, and add a regression test for an unremarkable structured key. Do not weaken the scanner, denominator, or Gate 4 requirement.",
+      "evidence": [
+        "file:docs/checkpoints/GATE-4-CP-0002/SECRET-EVIDENCE-PROBE.json",
+        "file:docs/checkpoints/GATE-4-CP-0002/GATE-4-INDEPENDENT-RED-TEAM.json",
+        "command:cmd-0014",
+        "file:services/control-plane/src/iacode_control_plane/workflows/activities.py",
+        "file:services/control-plane/src/iacode_control_plane/quality/evidence.py",
+        "file:services/control-plane/src/iacode_control_plane/common/redaction.py"
+      ]
+    }
+  ],
+  "observations": []
+}

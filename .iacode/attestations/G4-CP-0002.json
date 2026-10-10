@@ -1,0 +1,22 @@
+{
+  "schemaVersion": "2.0.0",
+  "auditId": "G4-CP-0002",
+  "milestone": "M2",
+  "validationMechanism": "FRESH_SESSION_INDEPENDENT_AUDIT",
+  "crossToolValidation": "NOT_AVAILABLE",
+  "auditorRole": "Gate independent auditor",
+  "tool": "Codex desktop application",
+  "provider": "OpenAI",
+  "model": "GPT-5",
+  "freshSession": true,
+  "subjectCheckpoint": "GATE-4-CP-0001",
+  "subjectCommit": "70a22e824705f414e0c295bbdf89187db9b391f7",
+  "auditCheckpoint": "GATE-4-CP-0002",
+  "reviewResult": "REWORK_REQUIRED",
+  "redTeamResult": "RED_TEAM_FAIL",
+  "completeness": 99.49,
+  "evidenceCoverage": 100.0,
+  "testResult": "FAIL",
+  "createdAt": "2026-10-10T17:09:28.410584Z",
+  "notes": "The attestation records a failed fresh-session audit; it does not grant Gate 4 or milestone approval. G4-F-001 is HIGH and G4-X7 escaped."
+}

@@ -1,0 +1,95 @@
+{
+  "schemaVersion": "3.2.0",
+  "checks": {
+    "build": {
+      "status": "PASS",
+      "evidence": [
+        "file:VERIFICATION-REPORT.json",
+        "file:CLEAN-CLONE-REPORT.json"
+      ],
+      "justification": null
+    },
+    "unitTests": {
+      "status": "PASS",
+      "evidence": [
+        "file:VERIFICATION-REPORT.json",
+        "file:CLEAN-CLONE-REPORT.json"
+      ],
+      "justification": null
+    },
+    "integrationTests": {
+      "status": "PASS",
+      "evidence": [
+        "file:VERIFICATION-REPORT.json",
+        "file:CLEAN-CLONE-REPORT.json"
+      ],
+      "justification": null
+    },
+    "e2e": {
+      "status": "PASS",
+      "evidence": [
+        "file:VERIFICATION-REPORT.json",
+        "file:CLEAN-CLONE-REPORT.json"
+      ],
+      "justification": null
+    },
+    "lint": {
+      "status": "PASS",
+      "evidence": [
+        "file:VERIFICATION-REPORT.json",
+        "file:CLEAN-CLONE-REPORT.json"
+      ],
+      "justification": null
+    },
+    "staticAnalysis": {
+      "status": "PASS",
+      "evidence": [
+        "file:VERIFICATION-REPORT.json",
+        "file:CLEAN-CLONE-REPORT.json"
+      ],
+      "justification": null
+    },
+    "security": {
+      "status": "FAIL",
+      "evidence": [
+        "file:FINDINGS.json",
+        "file:SECRET-EVIDENCE-PROBE.json"
+      ],
+      "justification": "G4-F-001: detected credential-shaped output crossed the durable evidence boundary."
+    },
+    "documentation": {
+      "status": "PASS",
+      "evidence": [
+        "file:DOCUMENTATION-MEMORY-REVIEW.json",
+        "file:REVIEW-REPORT.md"
+      ],
+      "justification": null
+    },
+    "checkpointValidation": {
+      "status": "NOT_EXECUTED",
+      "evidence": [],
+      "justification": "Final validation runs during finalization and sealing."
+    },
+    "redTeam": {
+      "status": "FAIL",
+      "evidence": [
+        "file:GATE-4-INDEPENDENT-RED-TEAM.json"
+      ],
+      "justification": "G4-X7 escaped."
+    },
+    "greenKeeper": {
+      "status": "PASS",
+      "evidence": [
+        "file:GREEN-KEEPER-REPORT.json"
+      ],
+      "justification": "Canonical executable gates do not override the independent security finding."
+    },
+    "deliveryCompleteness": {
+      "status": "FAIL",
+      "evidence": [
+        "file:COMPLETENESS-REPORT.json"
+      ],
+      "justification": "Canonical requirement 19.2 is missing because G4-F-001 remains open."
+    }
+  }
+}

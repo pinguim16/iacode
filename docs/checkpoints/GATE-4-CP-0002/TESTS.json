@@ -1,0 +1,27 @@
+{
+  "schemaVersion": "3.2.0",
+  "unit": {
+    "executed": true,
+    "passed": 746,
+    "failed": 0,
+    "command": "python -m unittest discover -s tests",
+    "evidence": "command:cmd-0015",
+    "runId": "clean-clone-ledger-suite"
+  },
+  "integration": {
+    "executed": true,
+    "passed": 929,
+    "failed": 0,
+    "command": "python scripts/iacode/verify.py --keep-going",
+    "evidence": "command:cmd-0015",
+    "runId": "clean-clone-complete-verification"
+  },
+  "e2e": {
+    "executed": true,
+    "passed": 42,
+    "failed": 0,
+    "command": "python scripts/iacode/verify.py --keep-going",
+    "evidence": "command:cmd-0015",
+    "runId": "clean-clone-complete-verification"
+  }
+}

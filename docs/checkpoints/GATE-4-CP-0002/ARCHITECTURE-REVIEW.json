@@ -1,0 +1,227 @@
+{
+  "schemaVersion": "1.0.0",
+  "artifact": "GATE-4-ARCHITECTURE-REVIEW",
+  "checkpoint": "GATE-4-CP-0002",
+  "subjectCommit": "70a22e824705f414e0c295bbdf89187db9b391f7",
+  "generatedAt": "2026-10-10T14:22:54Z",
+  "checks": [
+    {
+      "id": "AR-01",
+      "area": "host execution boundary",
+      "expectation": "evaluator implementation imports no host/container execution client",
+      "observed": {
+        "parsedModules": 25,
+        "forbiddenImports": []
+      },
+      "result": "PASS",
+      "evidence": [
+        "file:services/evaluator/src/iacode_evaluator",
+        "file:services/evaluator/src/iacode_evaluator/executor.py"
+      ]
+    },
+    {
+      "id": "AR-02",
+      "area": "quality contracts",
+      "expectation": "contracts are closed, immutable, versioned and refuse caller-owned verdict/origin/rights",
+      "observed": {
+        "closedAndFrozen": true,
+        "passVerdictNotAccepted": true,
+        "originLiteral": true,
+        "trainingDenied": true,
+        "acyclicPlan": true
+      },
+      "result": "PASS",
+      "evidence": [
+        "file:packages/contracts/src/iacode_contracts/quality.py"
+      ]
+    },
+    {
+      "id": "AR-03",
+      "area": "closed runner registry",
+      "expectation": "all required stacks resolve through closed offline-capable runner definitions",
+      "observed": {
+        "python": true,
+        "node": true,
+        "typescript": true,
+        "angular": true,
+        "maven": true,
+        "gradle": true,
+        "mavenOffline": true,
+        "gradleOffline": true,
+        "closedLookup": true
+      },
+      "result": "PASS",
+      "evidence": [
+        "file:services/evaluator/src/iacode_evaluator/runners.py",
+        "file:.iacode/policies/quality-policy.json"
+      ]
+    },
+    {
+      "id": "AR-04",
+      "area": "sandbox request construction",
+      "expectation": "execution is a structured Gate 3 request bound to frozen runner policy and snapshot",
+      "observed": {
+        "allStackPolicies": true,
+        "shellOnly": true,
+        "snapshotBound": true,
+        "policyFromRunner": true,
+        "noNetworkField": true,
+        "noMountField": true
+      },
+      "result": "PASS",
+      "evidence": [
+        "file:services/evaluator/src/iacode_evaluator/executor.py",
+        "file:.iacode/policies/sandbox-policies.json"
+      ]
+    },
+    {
+      "id": "AR-05",
+      "area": "policy narrowing",
+      "expectation": "project configuration can only narrow canonical policy and declared optional runners",
+      "observed": {
+        "closedConfiguration": true,
+        "noRunnerExpansion": true,
+        "noThresholdWeakening": true,
+        "noLimitRaise": true,
+        "unknownFieldRefused": true
+      },
+      "result": "PASS",
+      "evidence": [
+        "file:services/evaluator/src/iacode_evaluator/policy.py",
+        "file:.iacode/policies/quality-policy.json"
+      ]
+    },
+    {
+      "id": "AR-06",
+      "area": "fail-closed verdict",
+      "expectation": "pure derivation rejects every missing, foreign, duplicate, failed or unresolved input",
+      "observed": {
+        "missingFails": true,
+        "duplicateFails": true,
+        "foreignFails": true,
+        "unexpectedFails": true,
+        "nonPassFails": true,
+        "evidenceFails": true,
+        "emptySetFails": true,
+        "pureDerivedVerdict": true
+      },
+      "result": "PASS",
+      "evidence": [
+        "file:services/evaluator/src/iacode_evaluator/verdict.py"
+      ]
+    },
+    {
+      "id": "AR-07",
+      "area": "immutable evidence",
+      "expectation": "evidence is re-hashed, secret-contained, write-once and rights-bound",
+      "observed": {
+        "rehashBeforeReturn": true,
+        "secretContainment": true,
+        "immutableObject": true,
+        "rightsBound": true
+      },
+      "result": "PASS",
+      "evidence": [
+        "file:services/evaluator/src/iacode_evaluator/evidence.py",
+        "file:services/evaluator/src/iacode_evaluator/activities.py",
+        "file:services/evaluator/src/iacode_evaluator/store.py"
+      ]
+    },
+    {
+      "id": "AR-08",
+      "area": "durable workflow",
+      "expectation": "Temporal lifecycle binds sandbox execution, cancellation cleanup, deadline and derived verdict",
+      "observed": {
+        "temporalWorkflow": true,
+        "sandboxActivity": true,
+        "singleAttemptExecution": true,
+        "cleanupBeforeCancelled": true,
+        "deadlineFails": true,
+        "derivedVerdict": true
+      },
+      "result": "PASS",
+      "evidence": [
+        "file:services/evaluator/src/iacode_evaluator/workflow.py",
+        "file:services/evaluator/src/iacode_evaluator/activities.py"
+      ]
+    },
+    {
+      "id": "AR-09",
+      "area": "persistence and origin",
+      "expectation": "store enforces owner, origin, lifecycle ordering, idempotency and append-only events",
+      "observed": {
+        "ownerMismatch": true,
+        "originMismatch": true,
+        "earlyResult": true,
+        "lateResult": true,
+        "idempotency": true,
+        "appendEvents": true
+      },
+      "result": "PASS",
+      "evidence": [
+        "file:services/evaluator/src/iacode_evaluator/store.py",
+        "file:apps/api/migrations/versions/0006_quality_engine.py"
+      ]
+    },
+    {
+      "id": "AR-10",
+      "area": "observability",
+      "expectation": "metric labels remain bounded and sensitive/high-cardinality values are not labels",
+      "observed": {
+        "forbiddenMetricLabels": [],
+        "qualityLogPresent": true
+      },
+      "result": "PASS",
+      "evidence": [
+        "file:services/evaluator/src/iacode_evaluator/telemetry.py",
+        "file:infra/prometheus/prometheus.yml"
+      ]
+    },
+    {
+      "id": "AR-11",
+      "area": "documentation and decisions",
+      "expectation": "entry, architecture, operations and structural ADRs describe delivered quality behavior",
+      "observed": {
+        "START-HERE.md": true,
+        "README.md": true,
+        "docs/ARCHITECTURE.md": true,
+        "docs/DEVELOPMENT.md": true,
+        "docs/VERSIONS.md": true,
+        "docs/MODEL-USAGE-POLICY.md": true,
+        "docs/runbooks/QUALITY-ENGINE.md": true,
+        "docs/adr/ADR-0029-quality-execution-boundary.md": true,
+        "docs/adr/ADR-0030-quality-evidence-and-verdict-immutability.md": true,
+        "docs/adr/ADR-0031-project-profiles-select-closed-quality-runners.md": true
+      },
+      "result": "PASS",
+      "evidence": [
+        "file:START-HERE.md",
+        "file:README.md",
+        "file:docs/ARCHITECTURE.md",
+        "file:docs/DEVELOPMENT.md",
+        "file:docs/VERSIONS.md",
+        "file:docs/MODEL-USAGE-POLICY.md",
+        "file:docs/runbooks/QUALITY-ENGINE.md",
+        "file:docs/adr/ADR-0029-quality-execution-boundary.md",
+        "file:docs/adr/ADR-0030-quality-evidence-and-verdict-immutability.md",
+        "file:docs/adr/ADR-0031-project-profiles-select-closed-quality-runners.md"
+      ]
+    },
+    {
+      "id": "AR-12",
+      "area": "Gate scope",
+      "expectation": "Gate 4 changed no Gate 5–7 or Gate 20 implementation surface",
+      "observed": {
+        "changedPaths": 233,
+        "forbiddenScope": []
+      },
+      "result": "PASS",
+      "evidence": [
+        "git:diff-GATE-3-CP-0006..GATE-4-CP-0001"
+      ]
+    }
+  ],
+  "passed": 12,
+  "total": 12,
+  "result": "PASS"
+}

@@ -1,0 +1,143 @@
+{
+  "schemaVersion": "1.0.0",
+  "artifact": "GATE-4-SEALED-SUBJECT-AUDIT",
+  "checkpoint": "GATE-4-CP-0002",
+  "subjectCheckpoint": "GATE-4-CP-0001",
+  "subjectTag": "refs/tags/iacode-checkpoints/GATE-4-CP-0001",
+  "subjectCommit": "70a22e824705f414e0c295bbdf89187db9b391f7",
+  "generatedAt": "2026-10-10T14:17:47Z",
+  "checks": [
+    {
+      "id": "G4A-SUBJECT-LOCAL",
+      "expectation": "canonical local subject tag resolves to the expected commit",
+      "observed": {
+        "tag": "refs/tags/iacode-checkpoints/GATE-4-CP-0001",
+        "commit": "70a22e824705f414e0c295bbdf89187db9b391f7",
+        "tree": "b1f642ea69369f4388b2f82fc84613d9f0410f50"
+      },
+      "result": "PASS",
+      "evidence": [
+        "git:local-subject-tag"
+      ]
+    },
+    {
+      "id": "G4A-SUBJECT-REMOTE",
+      "expectation": "published main and subject tag resolve to the exact subject commit",
+      "observed": {
+        "refs/heads/main": "70a22e824705f414e0c295bbdf89187db9b391f7",
+        "refs/tags/iacode-checkpoints/GATE-4-CP-0001": "70a22e824705f414e0c295bbdf89187db9b391f7"
+      },
+      "result": "PASS",
+      "evidence": [
+        "git:ls-remote-origin"
+      ]
+    },
+    {
+      "id": "G4A-REMOTE-IDENTITY",
+      "expectation": "origin is the authorised public remote",
+      "observed": "https://github.com/pinguim16/iacode.git",
+      "result": "PASS",
+      "evidence": [
+        "git:remote-origin"
+      ]
+    },
+    {
+      "id": "G4A-SUBJECT-STATE",
+      "expectation": "sealed subject is READY_FOR_REVIEW with pending independent verdicts and no blocker",
+      "observed": {
+        "status": "READY_FOR_REVIEW",
+        "currentCommit": "refs/tags/iacode-checkpoints/GATE-4-CP-0001",
+        "blockedBy": [],
+        "secondToolValidation": "PENDING_MANUAL",
+        "independentReview": "PENDING",
+        "redTeam": "PENDING"
+      },
+      "result": "PASS",
+      "evidence": [
+        "file:docs/checkpoints/GATE-4-CP-0001/STATE.json"
+      ]
+    },
+    {
+      "id": "G4A-SEALED-BUNDLE",
+      "expectation": "sealed bundle has the handed-off digest and passes independent structural validation",
+      "observed": {
+        "path": "E:\\iacode\\artifacts\\review\\GATE-4-CP-0001-sealed.zip",
+        "sha256": "af98bb766d34beaf82f1d9963fc77377816a3cad9a850671313c528ea8701df7",
+        "validationResult": "PASS",
+        "entries": 236,
+        "findings": []
+      },
+      "result": "PASS",
+      "evidence": [
+        "artifact:artifacts/review/GATE-4-CP-0001-sealed.zip"
+      ]
+    },
+    {
+      "id": "G4A-SUBJECT-DENOMINATOR",
+      "expectation": "subject matrix equals the independently derived expected set and every row is complete",
+      "observed": {
+        "actual": 194,
+        "expected": 194,
+        "missing": [],
+        "extra": [],
+        "complete": 194,
+        "rowsWithRequiredEvidenceShape": true
+      },
+      "result": "PASS",
+      "evidence": [
+        "file:docs/checkpoints/GATE-4-CP-0001/REQUIREMENTS-MATRIX.json"
+      ]
+    },
+    {
+      "id": "G4A-SUBJECT-COUNTS",
+      "expectation": "subject counts preserve the delivered test, requirement and attack denominators",
+      "observed": {
+        "TESTS": {
+          "numerator": 1675,
+          "denominator": 1675,
+          "source": "discovery over every counted suite of .iacode/policies/test-suites.json, cross-checked with TESTS.json and deduplicated by physical execution"
+        },
+        "REQUIREMENTS": {
+          "numerator": 194,
+          "denominator": 194,
+          "source": "REQUIREMENTS-MATRIX.json evaluated against the derived expected set"
+        },
+        "ATTACKS": {
+          "numerator": 10,
+          "denominator": 10,
+          "source": "M2-INTERNAL-RED-TEAM.json"
+        },
+        "LESSONS": {
+          "numerator": 87,
+          "denominator": 90,
+          "source": ".iacode/memory/lessons.jsonl"
+        },
+        "GUARDRAILS": {
+          "numerator": 91,
+          "denominator": 91,
+          "source": ".iacode/memory/guardrails/registry.json measured for effectiveness"
+        }
+      },
+      "result": "PASS",
+      "evidence": [
+        "file:docs/checkpoints/GATE-4-CP-0001/COUNTS.json"
+      ]
+    },
+    {
+      "id": "G4A-SUBJECT-VERIFICATION-CLAIM",
+      "expectation": "subject records a complete passing 42-stage verification for later reproduction",
+      "observed": {
+        "result": "PASS",
+        "stages": 42,
+        "passed": 42
+      },
+      "result": "PASS",
+      "evidence": [
+        "file:docs/checkpoints/GATE-4-CP-0001/VERIFY.json"
+      ]
+    }
+  ],
+  "passed": 8,
+  "total": 8,
+  "result": "PASS"
+}

@@ -1,0 +1,225 @@
+{
+  "schemaVersion": "1.0.0",
+  "artifact": "GATE-4-INDEPENDENT-RED-TEAM",
+  "checkpoint": "GATE-4-CP-0002",
+  "subjectCheckpoint": "GATE-4-CP-0001",
+  "subjectCommit": "70a22e824705f414e0c295bbdf89187db9b391f7",
+  "generatedAt": "2026-10-10T15:48:42Z",
+  "independence": "Fresh-session audit of the sealed published subject. Independent of the implementing run, not cross-tool independent.",
+  "baselineControl": {
+    "result": "VALID",
+    "observations": [
+      {
+        "name": "transport clone",
+        "ok": true
+      },
+      {
+        "name": "detached subject checkout",
+        "ok": true
+      },
+      {
+        "name": "subject identity",
+        "ok": true,
+        "observed": "70a22e824705f414e0c295bbdf89187db9b391f7"
+      },
+      {
+        "name": "canonical false-PASS null control",
+        "ok": true,
+        "detail": {
+          "result": "VALID",
+          "detail": "unmutated complete result derived PASS",
+          "evidence": [
+            "file:services/evaluator/src/iacode_evaluator/verdict.py"
+          ]
+        }
+      },
+      {
+        "name": "unmutated sealed bundle",
+        "ok": true,
+        "detail": "REVIEW_BUNDLE=PASS entries=236 sha256=af98bb766d34beaf82f1d9963fc77377816a3cad9a850671313c528ea8701df7"
+      },
+      {
+        "name": "live adversarial stage control",
+        "ok": true,
+        "detail": {
+          "quality-recovery": "PASS",
+          "quality-cancellation": "PASS",
+          "quality-timeout": "PASS",
+          "sandbox-tool-result-origin": "PASS"
+        }
+      }
+    ]
+  },
+  "attacks": [
+    {
+      "attackId": "G4-A",
+      "target": "missing result",
+      "mutation": "remove the only mandatory result",
+      "expectedDefense": "derived verdict FAIL names the missing check",
+      "observed": "verdict=FAIL; reasons=('missing result for q001-unit',)",
+      "result": "DEFENDED",
+      "source": "canonical Gate 4 battery executed in the transport clone against the subject image rebuilt by the immediately preceding clean-clone verifier"
+    },
+    {
+      "attackId": "G4-B",
+      "target": "exit-code forgery",
+      "mutation": "keep PASSED and flip exitCode to 1",
+      "expectedDefense": "the result contract refuses the contradictory shape",
+      "observed": "contract refused non-zero PASS",
+      "result": "DEFENDED",
+      "source": "canonical Gate 4 battery executed in the transport clone against the subject image rebuilt by the immediately preceding clean-clone verifier"
+    },
+    {
+      "attackId": "G4-C",
+      "target": "forged evidence",
+      "mutation": "replace the resolved digest set",
+      "expectedDefense": "the evidence reference is unresolved and verdict is FAIL",
+      "observed": "verdict=FAIL; reasons=('q001-unit has unresolved evidence evidence-red-team',)",
+      "result": "DEFENDED",
+      "source": "canonical Gate 4 battery executed in the transport clone against the subject image rebuilt by the immediately preceding clean-clone verifier"
+    },
+    {
+      "attackId": "G4-D",
+      "target": "policy mutation",
+      "mutation": "change maxCheckSeconds under the same planId",
+      "expectedDefense": "the immutable store refuses PLAN_ID_CONFLICT",
+      "observed": "store refused PLAN_ID_CONFLICT",
+      "result": "DEFENDED",
+      "source": "canonical Gate 4 battery executed in the transport clone against the subject image rebuilt by the immediately preceding clean-clone verifier"
+    },
+    {
+      "attackId": "G4-E",
+      "target": "snapshot mutation",
+      "mutation": "change snapshotDigest under the same planId",
+      "expectedDefense": "the immutable store refuses PLAN_ID_CONFLICT",
+      "observed": "store refused PLAN_ID_CONFLICT",
+      "result": "DEFENDED",
+      "source": "canonical Gate 4 battery executed in the transport clone against the subject image rebuilt by the immediately preceding clean-clone verifier"
+    },
+    {
+      "attackId": "G4-F",
+      "target": "wrong origin",
+      "mutation": "post a result with origin CALLER",
+      "expectedDefense": "the closed origin contract refuses it",
+      "observed": "contract refused origin",
+      "result": "DEFENDED",
+      "source": "canonical Gate 4 battery executed in the transport clone against the subject image rebuilt by the immediately preceding clean-clone verifier"
+    },
+    {
+      "attackId": "G4-G",
+      "target": "timed_out result",
+      "mutation": "replace PASSED with TIMED_OUT",
+      "expectedDefense": "the derived verdict is FAIL",
+      "observed": "verdict=FAIL; reasons=('q001-unit ended TIMED_OUT',)",
+      "result": "DEFENDED",
+      "source": "canonical Gate 4 battery executed in the transport clone against the subject image rebuilt by the immediately preceding clean-clone verifier"
+    },
+    {
+      "attackId": "G4-H",
+      "target": "denied result",
+      "mutation": "replace PASSED with DENIED",
+      "expectedDefense": "the derived verdict is FAIL",
+      "observed": "verdict=FAIL; reasons=('q001-unit ended DENIED',)",
+      "result": "DEFENDED",
+      "source": "canonical Gate 4 battery executed in the transport clone against the subject image rebuilt by the immediately preceding clean-clone verifier"
+    },
+    {
+      "attackId": "G4-I",
+      "target": "cancelled result",
+      "mutation": "replace PASSED with CANCELLED",
+      "expectedDefense": "the derived verdict is FAIL",
+      "observed": "verdict=FAIL; reasons=('q001-unit ended CANCELLED',)",
+      "result": "DEFENDED",
+      "source": "canonical Gate 4 battery executed in the transport clone against the subject image rebuilt by the immediately preceding clean-clone verifier"
+    },
+    {
+      "attackId": "G4-J",
+      "target": "unknown status",
+      "mutation": "submit status ASSERTED_GOOD",
+      "expectedDefense": "the closed result-status contract refuses it",
+      "observed": "contract refused status",
+      "result": "DEFENDED",
+      "source": "canonical Gate 4 battery executed in the transport clone against the subject image rebuilt by the immediately preceding clean-clone verifier"
+    },
+    {
+      "attackId": "G4-X1",
+      "target": "bundle content tampering",
+      "mutation": "bundle content tampering",
+      "expectedDefense": "validator refuses a payload whose bytes no longer match the manifest",
+      "observed": "REVIEW_BUNDLE=FAIL entries=236 sha256=49f10aeb90da6eadeda5cd5313714c924e795d2d915cc4257165a9fafbbb79ca\n- digest mismatch: bundle/CHANGESET.diff",
+      "result": "DEFENDED",
+      "source": "independent review-bundle mutation"
+    },
+    {
+      "attackId": "G4-X2",
+      "target": "required evidence removal",
+      "mutation": "required evidence removal",
+      "expectedDefense": "validator refuses a bundle missing a required checkpoint artifact",
+      "observed": "REVIEW_BUNDLE=FAIL entries=235 sha256=177bbbe5051650975d63c88f0374b62d22d0033b44bc97a3832f96320358328f\n- manifest member set differs from archive payload\n- missing required checkpoint artifact: STATE.json",
+      "result": "DEFENDED",
+      "source": "independent review-bundle mutation"
+    },
+    {
+      "attackId": "G4-X3",
+      "target": "unsafe archive path",
+      "mutation": "unsafe archive path",
+      "expectedDefense": "validator refuses path traversal members",
+      "observed": "REVIEW_BUNDLE=FAIL entries=237 sha256=188a6565c28d6b29488c0804b7d224737bc73d7668e644b9b8c134051f2070db\n- unsafe archive member: ../escape.txt\n- manifest member set differs from archive payload",
+      "result": "DEFENDED",
+      "source": "independent review-bundle mutation"
+    },
+    {
+      "attackId": "G4-X4",
+      "target": "secret-shaped payload",
+      "mutation": "secret-shaped payload",
+      "expectedDefense": "validator refuses an unallowlisted credential-shaped value",
+      "observed": "REVIEW_BUNDLE=FAIL entries=237 sha256=e254be961ab04477c8dc254ca629bfe74228c99d2482a9953432e7416e3b49fc\n- manifest member set differs from archive payload\n- secret scan found 1 blocking match(es)",
+      "result": "DEFENDED",
+      "source": "independent review-bundle mutation"
+    },
+    {
+      "attackId": "G4-X5",
+      "target": "duplicate archive member",
+      "mutation": "duplicate archive member",
+      "expectedDefense": "validator refuses duplicate member names",
+      "observed": "REVIEW_BUNDLE=FAIL entries=237 sha256=e3a4573907046995d12d7163e00e5471d8f549df9720d7f2564a034a26002ff7\n- archive contains duplicate member names",
+      "result": "DEFENDED",
+      "source": "independent review-bundle mutation"
+    },
+    {
+      "attackId": "G4-X6",
+      "target": "live restart, cancellation, timeout and forged-origin boundaries",
+      "mutation": "execute the four live adverse scenarios against the real stack",
+      "expectedDefense": "all scenarios terminate with their fail-closed invariant preserved",
+      "observed": {
+        "quality-recovery": "PASS",
+        "quality-cancellation": "PASS",
+        "quality-timeout": "PASS",
+        "sandbox-tool-result-origin": "PASS"
+      },
+      "result": "DEFENDED",
+      "source": "clean-clone full verification"
+    },
+    {
+      "attackId": "G4-X7",
+      "target": "pre-persistence containment of detected credential-shaped quality output",
+      "mutation": "inject a synthetic GitHub-token-shaped marker into the exact record_execution redaction and evidence-store path without logging the marker",
+      "expectedDefense": "a value detected by the canonical secret scanner is redacted or quarantined before the durable evidence object is committed",
+      "observed": {
+        "scannerDetected": true,
+        "redactionRemovedMarker": false,
+        "persistenceAccepted": true,
+        "storedContentContainsMarker": true,
+        "storedEvidenceResolved": true
+      },
+      "result": "ESCAPED",
+      "source": "independent delivered-image secret evidence probe"
+    }
+  ],
+  "defended": 16,
+  "total": 17,
+  "escaped": [
+    "G4-X7"
+  ],
+  "result": "RED_TEAM_FAIL"
+}
