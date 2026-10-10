@@ -540,7 +540,8 @@
       "reference": "test_every_image_gate_builds_before_it_measures",
       "verifiedBy": [
         "test_every_image_gate_builds_before_it_measures",
-        "test_the_image_gate_rule_detects_a_gate_that_would_skip_the_build"
+        "test_the_image_gate_rule_detects_a_gate_that_would_skip_the_build",
+        "test_durability_scenario_rebuilds_its_rehearsal_worker"
       ],
       "lessons": [
         "LSN-0036"
@@ -1252,6 +1253,19 @@
         "LSN-0086"
       ],
       "removingItWouldAllow": "A subprocess-backed assertion to erase the only observable failure fact when stdout and stderr are both empty."
+    },
+    {
+      "guardrailId": "GRD-0088",
+      "title": "Rehearsal workers register the shared workflow's quality boundary",
+      "kind": "test",
+      "reference": "test_rehearsal_workers_register_the_post_run_quality_boundary",
+      "verifiedBy": [
+        "test_rehearsal_workers_register_the_post_run_quality_boundary"
+      ],
+      "lessons": [
+        "LSN-0087"
+      ],
+      "removingItWouldAllow": "A purpose-built worker to resume the shared workflow and then fail on an unregistered post-run activity, leaving its durable row nonterminal."
     }
   ]
 }

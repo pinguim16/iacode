@@ -4,11 +4,11 @@
   "scope": "quality engine, evaluation runners, immutable evidence store, verdict rules, false-PASS rejection, reproducible evidence, sandboxed execution, agent-runtime integration, promotion evidence",
   "technologies": [],
   "modules": [],
-  "generatedAt": "2026-10-10T02:38:19Z",
+  "generatedAt": "2026-10-10T03:16:55Z",
   "policyVersion": "2.0.0",
-  "inputsFingerprint": "d0a5a4f1c29adfd3721f30a870af90f487b280b44ecb8e2e7fed3b6067d1c1aa",
-  "lessonsConsidered": 86,
-  "lessonsApplicable": 85,
+  "inputsFingerprint": "43a4b26cf2f9bacfc5363607011b51192665c2779c5d0ebfcb86f8c1399d9360",
+  "lessonsConsidered": 87,
+  "lessonsApplicable": 86,
   "applicable": [
     {
       "lessonId": "LSN-0001",
@@ -859,6 +859,16 @@
       "requiredCheck": "For every subprocess-backed assertion, preserve return code and a non-empty diagnostic even when the child emits nothing; never add a retry that could conceal the outcome.",
       "requiredEvidence": "A mutation test for nonzero return with empty stdout and stderr that observes the exact exit code.",
       "derivedRequirementId": "LESSON-REQ-0085"
+    },
+    {
+      "lessonId": "LSN-0087",
+      "title": "A rehearsal worker must register every workflow activity boundary",
+      "status": "GUARDED",
+      "severity": "HIGH",
+      "reasonApplicable": "applies to every Gate; category implementation; severity HIGH; already guarded, so the control must keep holding",
+      "requiredCheck": "Every purpose-built worker that hosts a shared workflow must register every activity boundary that workflow can schedule, including not-applicable branches whose decision is made inside an activity.",
+      "requiredEvidence": "A worker-registration control plus a successful real restart rehearsal through the workflow's terminal state.",
+      "derivedRequirementId": "LESSON-REQ-0086"
     }
   ],
   "derivedRequirements": [
@@ -1456,6 +1466,13 @@
       "description": "Verify a subprocess assertion must preserve the exit code when both streams are empty",
       "mandatory": true,
       "requiredEvidence": "A mutation test for nonzero return with empty stdout and stderr that observes the exact exit code."
+    },
+    {
+      "id": "LESSON-REQ-0086",
+      "lessonId": "LSN-0087",
+      "description": "Verify a rehearsal worker must register every workflow activity boundary",
+      "mandatory": true,
+      "requiredEvidence": "A worker-registration control plus a successful real restart rehearsal through the workflow's terminal state."
     }
   ]
 }

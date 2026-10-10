@@ -4,9 +4,9 @@
 - Scope: `quality engine, evaluation runners, immutable evidence store, verdict rules, false-PASS rejection, reproducible evidence, sandboxed execution, agent-runtime integration, promotion evidence`
 - Technologies: _none declared_
 - Modules: _none declared_
-- Generated: `2026-10-10T02:38:19Z`
-- Lessons considered: 86
-- Lessons applicable: 85
+- Generated: `2026-10-10T03:16:55Z`
+- Lessons considered: 87
+- Lessons applicable: 86
 
 Every applicable lesson below is a requirement of this Gate. The derived identifiers must
 appear in `REQUIREMENTS-MATRIX.json`, and the Delivery Completeness Validator fails the
@@ -99,6 +99,7 @@ delivery when one is absent.
 | `LSN-0084` A historical Gate documentation test must derive the current entry-point state | `GUARDED` | MEDIUM | `LESSON-REQ-0083` | When a predecessor regression test inspects a current entry point, derive current lifecycle identifiers and keep only genuinely historical references fixed. |
 | `LSN-0085` A source-based control must assert syntax semantics rather than formatter layout | `GUARDED` | MEDIUM | `LESSON-REQ-0084` | When a control judges source structure, parse the language representation and compare semantic nodes instead of binding the rule to formatter whitespace or quote style. |
 | `LSN-0086` A subprocess assertion must preserve the exit code when both streams are empty | `GUARDED` | MEDIUM | `LESSON-REQ-0085` | For every subprocess-backed assertion, preserve return code and a non-empty diagnostic even when the child emits nothing; never add a retry that could conceal the outcome. |
+| `LSN-0087` A rehearsal worker must register every workflow activity boundary | `GUARDED` | HIGH | `LESSON-REQ-0086` | Every purpose-built worker that hosts a shared workflow must register every activity boundary that workflow can schedule, including not-applicable branches whose decision is made inside an activity. |
 
 ## Why each lesson applies
 
@@ -696,3 +697,10 @@ delivery when one is absent.
 - Required check: For every subprocess-backed assertion, preserve return code and a non-empty diagnostic even when the child emits nothing; never add a retry that could conceal the outcome.
 - Required evidence: A mutation test for nonzero return with empty stdout and stderr that observes the exact exit code.
 - Derived requirement: `LESSON-REQ-0085`
+
+### LSN-0087 — A rehearsal worker must register every workflow activity boundary
+
+- Reason: applies to every Gate; category implementation; severity HIGH; already guarded, so the control must keep holding
+- Required check: Every purpose-built worker that hosts a shared workflow must register every activity boundary that workflow can schedule, including not-applicable branches whose decision is made inside an activity.
+- Required evidence: A worker-registration control plus a successful real restart rehearsal through the workflow's terminal state.
+- Derived requirement: `LESSON-REQ-0086`

@@ -72,7 +72,7 @@ def start_container() -> None:
     completed = subprocess.run(
         ["docker", "compose", "--project-directory", str(COMPOSE_DIRECTORY),
          "--file", str(COMPOSE_FILE), "--env-file", str(ENV_FILE),
-         "run", "-d", "--no-deps", "--name", CONTAINER, "--entrypoint", "", "worker",
+         "run", "--build", "-d", "--no-deps", "--name", CONTAINER, "--entrypoint", "", "worker",
          "python", HARNESS, "worker"],
         text=True, encoding="utf-8", errors="replace",
         stdout=subprocess.PIPE, stderr=subprocess.STDOUT, check=False)

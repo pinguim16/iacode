@@ -43,7 +43,7 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 | `LSN-0033` | `GUARDED` | MEDIUM | implementation | A value bound in middleware is absent in the handlers that run outside it | `test_internal_error_still_carries_a_correlation_identifier`, `test_a_missing_route_uses_the_error_contract` |
 | `LSN-0034` | `GUARDED` | MEDIUM | implementation | Re-deriving what the framework already computed diverges from the framework | `test_metrics_endpoint_exposes_request_metrics`, `test_metrics_label_routes_by_template_not_by_url`, `test_the_api_instruments_reach_prometheus` |
 | `LSN-0035` | `GUARDED` | HIGH | tooling | Captured subprocess output decoded or re-emitted with the platform codepage crashes the tool, not the work | `test_no_capture_relies_on_the_platform_codepage`, `test_every_tool_that_re_emits_captured_output_configures_its_own_stream`, `test_the_rule_detects_a_capture_that_would_fail` |
-| `LSN-0036` | `GUARDED` | HIGH | tooling | A gate that runs inside an image measures the image, not the source | `test_every_image_gate_builds_before_it_measures`, `test_the_image_gate_rule_detects_a_gate_that_would_skip_the_build` |
+| `LSN-0036` | `GUARDED` | HIGH | tooling | A gate that runs inside an image measures the image, not the source | `test_every_image_gate_builds_before_it_measures`, `test_the_image_gate_rule_detects_a_gate_that_would_skip_the_build`, `test_durability_scenario_rebuilds_its_rehearsal_worker` |
 | `LSN-0037` | `GUARDED` | MEDIUM | tooling | A shared control that names an identifier the repository derives stops being a control when that identifier moves | `test_no_shared_control_is_bound_to_a_gate_literal`, `test_the_gate_literal_rule_detects_a_bound_control`, `test_no_control_names_a_migration_revision_literally`, `test_the_revision_rule_detects_a_named_head`, `test_the_head_revision_has_one_derivation` |
 | `LSN-0038` | `GUARDED` | MEDIUM | implementation | Two representations of one concept in one module disagree, and the safer one loses | `test_a_documented_placeholder_is_not_redacted`, `test_both_redactors_agree_on_every_value_the_example_file_carries`, `test_no_module_writes_its_own_credential_name_rule`, `test_the_two_questions_stay_different` |
 | `LSN-0039` | `GUARDED` | HIGH | testing | A test that writes to the operational database leaves production data behind | `test_the_operational_catalog_holds_only_providers_the_policy_declares` |
@@ -94,6 +94,7 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 | `LSN-0084` | `GUARDED` | MEDIUM | testing | A historical Gate documentation test must derive the current entry-point state | `test_the_entry_point_names_the_current_gate` |
 | `LSN-0085` | `GUARDED` | MEDIUM | testing | A source-based control must assert syntax semantics rather than formatter layout | `test_the_verification_adds_the_stages_this_gate_introduces` |
 | `LSN-0086` | `GUARDED` | MEDIUM | testing | A subprocess assertion must preserve the exit code when both streams are empty | `test_an_empty_validator_failure_keeps_its_process_exit_code` |
+| `LSN-0087` | `GUARDED` | HIGH | implementation | A rehearsal worker must register every workflow activity boundary | `test_rehearsal_workers_register_the_post_run_quality_boundary` |
 
 ## Detail
 
@@ -555,7 +556,7 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 
 ### LSN-0036 — A gate that runs inside an image measures the image, not the source
 
-- Status: `GUARDED`, severity HIGH, category tooling, recurrences 0.
+- Status: `GUARDED`, severity HIGH, category tooling, recurrences 1.
 - Source: GATE-1, GATE-1-CP-0001, finding G1-F-001.
 - Symptom: A red test was found at HEAD during GATE 1: test_a_documented_placeholder_is_not_redacted failed because the redactor's placeholder pattern read change[-_]?me\b while the repository's documented placeholder is change-me-before-starting. The test had existed and the apiTests gate had reported PASS throughout GATE 0.
 - Root cause: The apiTests gate executes pytest inside the API image, and nothing rebuilt that image before measuring. The gate therefore reported on whatever source happened to be baked into the last build. A gate in that shape does not fail when the code is wrong; it reports on code nobody is running, so a defect can be introduced, committed and sealed behind a green gate.
@@ -563,7 +564,8 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 - Prevention:
   - `test` test_every_image_gate_builds_before_it_measures — Every gate command that runs inside an image builds that image first.
   - `test` test_the_image_gate_rule_detects_a_gate_that_would_skip_the_build — The rule is exercised against a gate module it must reject.
-- Evidence: `file:scripts/iacode/compose.py`, `file:scripts/iacode/gates/api_tests.py`, `file:scripts/iacode/gates/gateway_tests.py`, `file:tests/test_gate1_model_gateway.py`
+  - `test` test_durability_scenario_rebuilds_its_rehearsal_worker — The shared durability/cancellation/deadline harness rebuilds its worker image before starting the rehearsal container.
+- Evidence: `file:scripts/iacode/compose.py`, `file:scripts/iacode/gates/api_tests.py`, `file:scripts/iacode/gates/gateway_tests.py`, `file:tests/test_gate1_model_gateway.py`, `file:scripts/iacode/scenarios/agent_runtime_durability.py`, `file:tests/test_gate4_quality_engine.py`, `file:docs/checkpoints/GATE-4-CP-0001/COMMANDS.jsonl`
 
 ### LSN-0037 — A shared control that names an identifier the repository derives stops being a control when that identifier moves
 
@@ -691,7 +693,7 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 - Prevention:
   - `test` test_no_counted_pytest_case_expands_at_run_time — No test function in a counted pytest suite carries a parametrisation.
   - `test` test_the_scan_detects_an_expansion — The null control: the same scan fires on a parametrised module and stays quiet on a plain one.
-- Evidence: `file:tests/test_gate2_agent_runtime.py`, `file:scripts/development-ledger/derive_counts.py`, `file:.iacode/policies/test-suites.json`, `file:docs/checkpoints/GATE-4-CP-0001/VERIFY.json`, `file:services/evaluator/tests/test_core.py`, `file:services/sandbox/tests/test_quality_images.py`
+- Evidence: `file:tests/test_gate2_agent_runtime.py`, `file:scripts/development-ledger/derive_counts.py`, `file:.iacode/policies/test-suites.json`, `file:docs/checkpoints/GATE-4-CP-0001/VERIFY-FAIL-CMD-0105.json`, `file:services/evaluator/tests/test_core.py`, `file:services/sandbox/tests/test_quality_images.py`
 
 ### LSN-0046 — A timeout that cancels the task it runs in leaves nothing able to record what happened
 
@@ -1083,7 +1085,7 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 - Resolution: Keep short infrastructure probes at 300 seconds, give large repository and durable workflow completion a separate 900-second observation bound, and leave every product check timeout and workflow deadline unchanged.
 - Prevention:
   - `test` test_real_repository_scenario_has_a_separate_bounded_wait — AST-bound control proves the real-repository and durable quality scenarios plus sandbox workflow completion use distinct finite bounds at least twice the ordinary wait.
-- Evidence: `file:docs/checkpoints/GATE-4-CP-0001/COMMANDS.jsonl`, `file:docs/checkpoints/GATE-4-CP-0001/VERIFY.json`, `file:scripts/iacode/scenarios/quality_engine_e2e.py`, `file:scripts/iacode/scenarios/sandbox_coding_e2e.py`, `file:tests/test_gate4_quality_engine.py`
+- Evidence: `file:docs/checkpoints/GATE-4-CP-0001/COMMANDS.jsonl`, `file:docs/checkpoints/GATE-4-CP-0001/VERIFY-FAIL-CMD-0105.json`, `file:scripts/iacode/scenarios/quality_engine_e2e.py`, `file:scripts/iacode/scenarios/sandbox_coding_e2e.py`, `file:tests/test_gate4_quality_engine.py`
 
 ### LSN-0078 — Evidence recorders must resolve caller-supplied commit references before execution
 
@@ -1105,7 +1107,7 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 - Resolution: Run pytest from the entire frozen project root and rely on policy-owned markers and project conftest exclusions, so every source that makes a unit check applicable is within the runner's collection scope.
 - Prevention:
   - `test` test_isolated_language_checks_prepare_their_policy_owned_toolchain — The closed Python unit runner is bound to the project root rather than a narrower tests directory; the real failing fixture remains required closure evidence.
-- Evidence: `file:docs/checkpoints/GATE-4-CP-0001/VERIFY.json`, `file:services/evaluator/src/iacode_evaluator/runners.py`, `file:services/evaluator/tests/test_core.py`, `file:scripts/iacode/scenarios/quality_engine_e2e.py`
+- Evidence: `file:docs/checkpoints/GATE-4-CP-0001/VERIFY-FAIL-CMD-0105.json`, `file:services/evaluator/src/iacode_evaluator/runners.py`, `file:services/evaluator/tests/test_core.py`, `file:scripts/iacode/scenarios/quality_engine_e2e.py`
 
 ### LSN-0080 — A failed verification stage must not leave an older PASS report addressable
 
@@ -1116,7 +1118,7 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 - Resolution: Before every stage carrying a --report argument, remove only that generated path when it resolves inside the repository, so failure yields an absent report rather than stale positive evidence.
 - Prevention:
   - `test` test_verification_removes_a_stale_stage_report_before_execution — A prior PASS artifact at a stage report path is removed before the stage process can run.
-- Evidence: `file:docs/checkpoints/GATE-4-CP-0001/VERIFY.json`, `file:scripts/iacode/verify.py`, `file:tests/test_gate4_quality_engine.py`
+- Evidence: `file:docs/checkpoints/GATE-4-CP-0001/VERIFY-FAIL-CMD-0105.json`, `file:scripts/iacode/verify.py`, `file:tests/test_gate4_quality_engine.py`
 
 ### LSN-0081 — Canonical requirement evidence must name a test the repository actually discovers
 
@@ -1183,3 +1185,14 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 - Prevention:
   - `test` test_an_empty_validator_failure_keeps_its_process_exit_code — A mocked empty-stream failure preserves its exact process exit code in the assertion output.
 - Evidence: `file:tests/test_gate3_sandbox.py`, `file:docs/checkpoints/GATE-4-CP-0001/COMMANDS.jsonl`
+
+### LSN-0087 — A rehearsal worker must register every workflow activity boundary
+
+- Status: `GUARDED`, severity HIGH, category implementation, recurrences 0.
+- Source: GATE-4, GATE-4-CP-0001, finding cmd-0143.
+- Symptom: The real Agent Runtime durability rehearsal resumed after a worker restart and completed its agent stage, but Temporal then failed the workflow because the rehearsal worker had not registered the new quality planning activity; the database row remained RUNNING.
+- Root cause: Gate 4 extended the shared AgentRunWorkflow with post-run quality activities, while the purpose-built durability worker kept a hand-maintained activity list from Gate 2 and therefore no longer implemented the full workflow contract.
+- Resolution: Register quality_plan and quality_result on the durability rehearsal worker even when its empty workspace makes quality not applicable.
+- Prevention:
+  - `test` test_rehearsal_workers_register_the_post_run_quality_boundary — The durability rehearsal worker's actual Temporal activity list includes both post-run quality activities required by the shared workflow.
+- Evidence: `file:services/orchestrator/rehearsal/durability.py`, `file:tests/test_gate4_quality_engine.py`, `file:docs/checkpoints/GATE-4-CP-0001/COMMANDS.jsonl`

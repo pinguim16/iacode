@@ -53,6 +53,8 @@ from iacode_orchestrator.agent_runtime.activities import (
     cancel_pending_tool_requests,
     create_tool_request,
     finish_stage,
+    quality_plan,
+    quality_result,
     read_tool_result,
     record_event,
     set_run_state,
@@ -180,6 +182,7 @@ async def run_worker() -> int:
         activities=[
             record_event, set_run_state, start_stage, finish_stage, attach_model_call,
             create_tool_request, read_tool_result, cancel_pending_tool_requests,
+            quality_plan, quality_result,
             scripted_call_model,
         ],
         identity="iacode-durability-rehearsal",

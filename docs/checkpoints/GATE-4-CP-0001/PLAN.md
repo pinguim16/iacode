@@ -1,6 +1,6 @@
 # Plan — GATE 4 Quality Engine
 
-The derived requirement set is 190 rows: 105 canonical Gate requirements and 85 lesson-derived
+The derived requirement set is 191 rows: 105 canonical Gate requirements and 86 lesson-derived
 requirements. Every slice below ends with targeted tests, an observable functional proof where it
 has runnable behavior, completeness evidence for its assigned rows, a staged secret scan, an atomic
 commit, and an authorised push. A red check causes rework in the same slice.
@@ -9,7 +9,7 @@ commit, and an authorised push. A red check causes rework in the same slice.
 
 | Step | Scope | Principal requirements | Exit evidence |
 |---|---|---|---|
-| `G4-S00` | Specification, preflight, derived requirements, baseline, plan | 1.1, 18.3, lesson controls | Canonical mirror, 190-row matrix, this baseline and plan |
+| `G4-S00` | Specification, preflight, derived requirements, baseline, plan | 1.1, 18.3, lesson controls | Canonical mirror, 191-row matrix, this baseline and plan |
 | `G4-S01` | Contracts, policy schema/loader, profiles, planner, runner registry, verdict kernel | 2.1–6.6, 10.1–10.7 | Unit suites with positive and false-PASS cases |
 | `G4-S02` | Sandbox profiles and stack support | 7.1–8.7 | Python/Node/TypeScript/Angular/Maven/Gradle fixture executions in containers |
 | `G4-S03` | Immutable evidence, persistence, migration, service | 9.1–13.1 | MinIO/PostgreSQL integration, migration reversal, reproduction |
