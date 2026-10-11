@@ -113,6 +113,34 @@ def observation_evidence() -> dict[str, list[str]]:
     return evidence
 
 
+def publication_evidence() -> dict[str, list[str]]:
+    return {
+        "implementationEvidence": [
+            "checkpoint:RUN-PUBLISHED-FULL-VERIFICATION.py",
+        ],
+        "testEvidence": [
+            "test:test_published_full_verification_counts_the_canonical_result_field",
+            "test:test_published_report_reconciliation_allows_only_the_generated_report",
+        ],
+        "negativeTestEvidence": [
+            "command:cmd-0052",
+            "command:cmd-0055",
+        ],
+        "documentationEvidence": [
+            "file:.iacode/memory/retrospectives/GATE-4-CP-0005.md",
+        ],
+        "validationEvidence": [
+            "checkpoint:VERIFY.json",
+            "checkpoint:PUBLISHED-CLEAN-CLONE-REPORT.json",
+            "command:cmd-0058",
+        ],
+        "guardrailEvidence": [
+            "file:.iacode/memory/guardrails/registry.json",
+            "file:.iacode/memory/lessons.jsonl",
+        ],
+    }
+
+
 def attack_evidence(identifier: str) -> dict[str, list[str]]:
     implementation = ["file:scripts/development-ledger/gate4_red_team.py"]
     if identifier in "ABCDEFGHIJQRS":
@@ -131,7 +159,6 @@ def attack_evidence(identifier: str) -> dict[str, list[str]]:
         "implementationEvidence": implementation,
         "testEvidence": [
             "file:docs/checkpoints/GATE-4-CP-0004/GATE-4-INDEPENDENT-RED-TEAM.json",
-            "checkpoint:M2-INTERNAL-RED-TEAM.json",
         ],
         "negativeTestEvidence": [
             "file:docs/checkpoints/GATE-4-CP-0004/GATE-4-INDEPENDENT-RED-TEAM.json",
@@ -140,7 +167,6 @@ def attack_evidence(identifier: str) -> dict[str, list[str]]:
             "file:docs/checkpoints/GATE-4-CP-0004/INDEPENDENT-RED-TEAM-REPORT.md",
         ],
         "validationEvidence": [
-            "checkpoint:M2-INTERNAL-RED-TEAM.json",
             "checkpoint:VERIFY.json",
         ],
         "guardrailEvidence": ["file:scripts/development-ledger/gate4_red_team.py"],
@@ -167,7 +193,7 @@ def main() -> None:
             complete(
                 row,
                 attack_evidence(reference.removeprefix("attack:")),
-                "Preserved from the sealed independent twenty-attack battery and replayed by the current internal Red Team.",
+                "Preserved unchanged from the sealed independent twenty-attack battery; the current internal replay follows completeness in the mandatory delivery order.",
             )
             attacks += 1
         elif reference in {"finding:G4-F-002", "lesson:LSN-0095"}:
@@ -175,6 +201,9 @@ def main() -> None:
             corrected += 1
         elif reference == "lesson:LSN-0049":
             complete(row, observation_evidence(), "Re-proved after the Prometheus observer guardrail recurred in infrastructure verification.")
+            corrected += 1
+        elif reference == "lesson:LSN-0096":
+            complete(row, publication_evidence(), "Guarded after cmd-0052 exposed a noncanonical publication result alias.")
             corrected += 1
         elif reference in prior and (
             reference.startswith("canonical:") or reference.startswith("lesson:")
@@ -192,7 +221,7 @@ def main() -> None:
         else:
             raise RuntimeError(f"no evidence policy for derived requirement {reference}")
 
-    if (inherited, corrected, attacks, len(document["requirements"])) != (197, 3, 20, 220):
+    if (inherited, corrected, attacks, len(document["requirements"])) != (197, 4, 20, 221):
         raise RuntimeError(
             "unexpected denominator: "
             f"inherited={inherited} corrected={corrected} attacks={attacks} "

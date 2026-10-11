@@ -1,0 +1,53 @@
+{
+  "schemaVersion": "1.0.0",
+  "checkpoint": "GATE-4-CP-0005",
+  "auditId": "G4-CP-0004",
+  "source": "docs/checkpoints/GATE-4-CP-0004/FINDINGS.json",
+  "findings": [
+    {
+      "findingId": "G4-F-002",
+      "severity": "HIGH",
+      "title": "Published full verification is not stable in one clean-clone run",
+      "originalObserved": "The detached published subject completed all 42 stages but returned 40/42 because infra and smoke failed only in the complete ordered run; isolated reruns did not supersede that failure.",
+      "rootCause": "Independent checkouts shared one Compose project, fixed published ports, volumes and image identity; the stack stage could also measure images built by another checkout. Prometheus was queried before a complete configured scrape cycle in the affected infrastructure path.",
+      "implementation": [
+        "The complete verifier derives a checkout-scoped Compose project, requests Docker-allocated published ports, freezes that environment across all 42 stages and refuses cleanup outside its owned prefix.",
+        "The stack stage builds repository images before measurement and performs bounded pre-run and post-run cleanup of only its owned namespace.",
+        "Infrastructure and smoke share the versioned Prometheus scrape-cycle observer without retrying actions, restarting the stack, extending policy timeouts or changing the stage denominator.",
+        "Failed stages retain diagnostic output tails, and the publication harness consumes the verifier's canonical result schema."
+      ],
+      "regressionTest": [
+        "test_full_verification_uses_a_checkout_owned_compose_project_and_dynamic_ports",
+        "test_each_stage_receives_the_frozen_verification_environment",
+        "test_cleanup_refuses_the_shared_developer_project",
+        "test_live_stack_stage_builds_every_image_before_it_is_exercised",
+        "test_prometheus_observation_waits_on_the_versioned_scrape_cycle",
+        "test_order_isolation_probe_preserves_the_historical_contiguous_stage_order",
+        "test_published_full_verification_counts_the_canonical_result_field"
+      ],
+      "negativeTest": [
+        "The original sealed 40/42 report remains unchanged and authoritative as the red baseline.",
+        "The historical stack, integration, infra and smoke sequence passed two predeclared clean cycles without a retry after failure.",
+        "The published clean-clone verifier executed once at commit a7ad2f53209923f189a786a1fd162dba764b1efa and passed all 42 stages, including infra and smoke, with pre-run and post-run cleanup PASS.",
+        "The independent twenty-attack Red Team evidence, including G4-X7, remains unchanged."
+      ],
+      "verificationCommand": "python scripts/iacode/verify.py --keep-going --report docs/checkpoints/GATE-4-CP-0005/PUBLISHED-VERIFY.json",
+      "evidence": [
+        "command:cmd-0052",
+        "command:cmd-0058",
+        "checkpoint:VERIFY.json",
+        "checkpoint:PUBLISHED-CLEAN-CLONE-REPORT.json",
+        "checkpoint:ORDER-ISOLATION-PROBE.json",
+        "file:docs/checkpoints/GATE-4-CP-0004/VERIFICATION-REPORT.json",
+        "file:docs/checkpoints/GATE-4-CP-0004/GATE-4-INDEPENDENT-RED-TEAM.json",
+        "file:docs/adr/ADR-0033-verification-runtime-is-owned-by-one-checkout.md"
+      ],
+      "lesson": "LSN-0095",
+      "guardrail": "GRD-0096",
+      "status": "CLOSED"
+    }
+  ],
+  "total": 1,
+  "closed": 1,
+  "result": "CLOSED"
+}

@@ -4,9 +4,9 @@
 - Scope: `quality engine corrective implementation, G4-F-002 full verification determinism, infrastructure and smoke isolation, order and state independence, clean clone`
 - Technologies: `python`, `docker-compose`
 - Modules: `scripts/iacode`, `infra/tests`
-- Generated: `2026-10-11T14:53:09Z`
-- Lessons considered: 95
-- Lessons applicable: 94
+- Generated: `2026-10-11T16:35:40Z`
+- Lessons considered: 96
+- Lessons applicable: 95
 
 Every applicable lesson below is a requirement of this Gate. The derived identifiers must
 appear in `REQUIREMENTS-MATRIX.json`, and the Delivery Completeness Validator fails the
@@ -108,6 +108,7 @@ delivery when one is absent.
 | `LSN-0093` Disposable control repositories must carry every imported repository package | `GUARDED` | HIGH | `LESSON-REQ-0092` | Whenever a repository tool is copied into a disposable or clean repository, copy every versioned repository package it imports and prove the copied entry point imports from that isolated boundary. |
 | `LSN-0094` A review bundle must include unchanged canonical artifact categories | `GUARDED` | HIGH | `LESSON-REQ-0093` | Build review transport from both the truthful changeset and the tracked canonical review context; do not infer that an unchanged mandatory category is irrelevant. |
 | `LSN-0095` A complete verifier must own its Compose runtime by checkout | `GUARDED` | HIGH | `LESSON-REQ-0094` | Every live multi-stage verifier must prove that one checkout exclusively owns its Compose project, published ports, volumes and image build inputs for the whole ordered run, while cleanup is restricted to that owned namespace. |
+| `LSN-0096` Evidence publishers must consume the producer's canonical result schema | `GUARDED` | HIGH | `LESSON-REQ-0095` | Every evidence publisher must consume the producer's canonical versioned result fields and prove the mapping behaviorally with a contradictory-alias fixture. |
 
 ## Why each lesson applies
 
@@ -768,3 +769,10 @@ delivery when one is absent.
 - Required check: Every live multi-stage verifier must prove that one checkout exclusively owns its Compose project, published ports, volumes and image build inputs for the whole ordered run, while cleanup is restricted to that owned namespace.
 - Required evidence: Repository controls for project derivation, frozen stage environment, dynamic ports, build-before-measurement and cleanup refusal, plus a clean ordered live execution.
 - Derived requirement: `LESSON-REQ-0094`
+
+### LSN-0096 — Evidence publishers must consume the producer's canonical result schema
+
+- Reason: applies to every Gate; category checkpoint; severity HIGH; already guarded, so the control must keep holding
+- Required check: Every evidence publisher must consume the producer's canonical versioned result fields and prove the mapping behaviorally with a contradictory-alias fixture.
+- Required evidence: Regressions against the actual publisher plus a publication report bound to the producer result, denominator and cleanup state.
+- Derived requirement: `LESSON-REQ-0095`

@@ -27,6 +27,10 @@ The first published full-verification harness decoded child output as UTF-8 but 
 its own Windows stdout. Angular emitted U+276F during `gate:webTests`, reproducing `LSN-0083` and
 ending `cmd-0040` before a verifier report could be written.
 
+The corrected published execution in `cmd-0052` passed all 42 stages, but its publication wrapper
+initially counted a non-existent `stage.status` alias instead of the canonical `stage.result` field.
+The preserved verifier report remained authoritative and was reconciled without a verifier rerun.
+
 ## What repeated
 
 `LSN-0049` recurred for a second time and is recorded as a `GUARDRAIL_FAILURE`, not a new unrelated
@@ -52,10 +56,12 @@ current checkpoint's executable evidence harness. The same control now scans bot
 | asynchronous observation before its cycle | `LSN-0049` | `GRD-0051` | shared observer policy and infrastructure/smoke regression |
 | Compose runtime shared across checkouts | `LSN-0095` | `GRD-0096` | verifier ownership, cleanup, build, frozen-environment and order controls |
 | captured UTF-8 re-emitted through platform codepage | `LSN-0083` | `GRD-0084` | repository-wide script/current-harness stream scan |
+| publisher reads a noncanonical result alias | `LSN-0096` | `GRD-0097` | behavioral test against the actual checkpoint publisher |
 
 ## New lessons
 
-`LSN-0095` records checkout-scoped ownership of the complete verifier runtime.
+`LSN-0095` records checkout-scoped ownership of the complete verifier runtime. `LSN-0096` records
+that evidence publishers must consume the producer's canonical result schema.
 
 ## Updated lessons
 

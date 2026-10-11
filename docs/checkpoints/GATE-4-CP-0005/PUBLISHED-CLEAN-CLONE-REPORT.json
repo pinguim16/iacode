@@ -1,0 +1,39 @@
+{
+  "schemaVersion": "1.0.0",
+  "artifact": "PUBLISHED-CLEAN-CLONE-VERIFICATION",
+  "generatedAt": "2026-10-11T16:34:36.531498Z",
+  "remote": "https://github.com/pinguim16/iacode.git",
+  "publishedCommit": "a7ad2f53209923f189a786a1fd162dba764b1efa",
+  "observedCommit": "a7ad2f53209923f189a786a1fd162dba764b1efa",
+  "remoteMainEqualsCommit": true,
+  "checkoutMode": "attached-main",
+  "clonePath": "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-g4-cp0005-published-a7ad2f5",
+  "gitStateBeforeVerification": "CLEAN",
+  "workstationConfiguration": {
+    "source": "ignored infra/compose/.env",
+    "valuesRecorded": false,
+    "gitStateAfterInjection": "CLEAN"
+  },
+  "invocationCount": 1,
+  "retryCount": 0,
+  "stageDenominator": 42,
+  "stagesPassed": 42,
+  "stagesFailed": 0,
+  "result": "PASS",
+  "exitCode": 0,
+  "verificationReport": "VERIFY.json",
+  "isolation": {
+    "composeProject": "iacode-verify-f7beaf2e11bd",
+    "publishedPorts": "docker-allocated",
+    "preRunCleanup": "PASS",
+    "postRunCleanup": "PASS"
+  },
+  "clonePreserved": true,
+  "publicationReconciliation": {
+    "mode": "existing-verifier-report",
+    "verificationExecutionCommand": "cmd-0052",
+    "verifierRerun": false,
+    "preservedCloneState": "ONLY_GENERATED_VERIFICATION_REPORT",
+    "reason": "publisher counted a non-existent status alias instead of the canonical result field"
+  }
+}

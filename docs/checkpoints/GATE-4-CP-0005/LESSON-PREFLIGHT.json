@@ -10,11 +10,11 @@
     "scripts/iacode",
     "infra/tests"
   ],
-  "generatedAt": "2026-10-11T14:53:09Z",
+  "generatedAt": "2026-10-11T16:35:40Z",
   "policyVersion": "2.0.0",
-  "inputsFingerprint": "cd649442f035a18d24a7f81da0d550ba01af9d5551cc004f8d3bca67e85e5999",
-  "lessonsConsidered": 95,
-  "lessonsApplicable": 94,
+  "inputsFingerprint": "72f5857246a8a75c5053304fd74e002671df9a6a53fd30f7fd2255c3aba138a5",
+  "lessonsConsidered": 96,
+  "lessonsApplicable": 95,
   "applicable": [
     {
       "lessonId": "LSN-0001",
@@ -955,6 +955,16 @@
       "requiredCheck": "Every live multi-stage verifier must prove that one checkout exclusively owns its Compose project, published ports, volumes and image build inputs for the whole ordered run, while cleanup is restricted to that owned namespace.",
       "requiredEvidence": "Repository controls for project derivation, frozen stage environment, dynamic ports, build-before-measurement and cleanup refusal, plus a clean ordered live execution.",
       "derivedRequirementId": "LESSON-REQ-0094"
+    },
+    {
+      "lessonId": "LSN-0096",
+      "title": "Evidence publishers must consume the producer's canonical result schema",
+      "status": "GUARDED",
+      "severity": "HIGH",
+      "reasonApplicable": "applies to every Gate; category checkpoint; severity HIGH; already guarded, so the control must keep holding",
+      "requiredCheck": "Every evidence publisher must consume the producer's canonical versioned result fields and prove the mapping behaviorally with a contradictory-alias fixture.",
+      "requiredEvidence": "Regressions against the actual publisher plus a publication report bound to the producer result, denominator and cleanup state.",
+      "derivedRequirementId": "LESSON-REQ-0095"
     }
   ],
   "derivedRequirements": [
@@ -1615,6 +1625,13 @@
       "description": "Verify a complete verifier must own its Compose runtime by checkout",
       "mandatory": true,
       "requiredEvidence": "Repository controls for project derivation, frozen stage environment, dynamic ports, build-before-measurement and cleanup refusal, plus a clean ordered live execution."
+    },
+    {
+      "id": "LESSON-REQ-0095",
+      "lessonId": "LSN-0096",
+      "description": "Verify evidence publishers must consume the producer's canonical result schema",
+      "mandatory": true,
+      "requiredEvidence": "Regressions against the actual publisher plus a publication report bound to the producer result, denominator and cleanup state."
     }
   ]
 }

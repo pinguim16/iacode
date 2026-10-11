@@ -10,6 +10,7 @@ from __future__ import annotations
 import ast
 import hashlib
 import json
+import runpy
 import shutil
 import subprocess
 import sys
@@ -37,6 +38,43 @@ SPECIFICATION = PROJECT_ROOT / "docs" / "GATE-4-CHECKLIST.md"
 
 
 class Gate4QualityCoverageTests(unittest.TestCase):
+    def test_published_full_verification_counts_the_canonical_result_field(self) -> None:
+        harness = runpy.run_path(
+            str(
+                PROJECT_ROOT
+                / "docs"
+                / "checkpoints"
+                / "GATE-4-CP-0005"
+                / "RUN-PUBLISHED-FULL-VERIFICATION.py"
+            )
+        )
+        summarize = harness["summarize_stages"]
+        report = {
+            "stages": [
+                {"result": "PASS", "status": "FAIL"}
+                for _ in range(42)
+            ]
+        }
+
+        self.assertEqual(summarize(report), (42, 42, 0))
+
+    def test_published_report_reconciliation_allows_only_the_generated_report(self) -> None:
+        harness = runpy.run_path(
+            str(
+                PROJECT_ROOT
+                / "docs"
+                / "checkpoints"
+                / "GATE-4-CP-0005"
+                / "RUN-PUBLISHED-FULL-VERIFICATION.py"
+            )
+        )
+        require_state = harness["require_expected_clone_state"]
+        generated = "?? docs/checkpoints/GATE-4-CP-0005/PUBLISHED-VERIFY.json"
+
+        require_state(generated, summarize_existing=True)
+        with self.assertRaises(RuntimeError):
+            require_state(f"{generated}\n M scripts/iacode/verify.py", summarize_existing=True)
+
     def test_runtime_and_ledger_share_the_canonical_secret_taxonomy(self) -> None:
         from iacode_common.secret_scanning import SECRET_PATTERNS, find_secret_kinds
 

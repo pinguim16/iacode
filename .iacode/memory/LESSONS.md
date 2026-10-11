@@ -103,6 +103,7 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 | `LSN-0093` | `GUARDED` | HIGH | testing | Disposable control repositories must carry every imported repository package | `test_disposable_ledger_runtime_carries_its_canonical_scanner_dependency`, `test_full_delivery_assurance_flow_reaches_ready_for_review` |
 | `LSN-0094` | `GUARDED` | HIGH | checkpoint | A review bundle must include unchanged canonical artifact categories | `test_review_context_includes_unchanged_migrations_schemas_and_policies`, `scripts/development-ledger/review_bundle.py` |
 | `LSN-0095` | `GUARDED` | HIGH | testing | A complete verifier must own its Compose runtime by checkout | `test_full_verification_uses_a_checkout_owned_compose_project_and_dynamic_ports`, `test_each_stage_receives_the_frozen_verification_environment`, `test_cleanup_refuses_the_shared_developer_project`, `test_live_stack_stage_builds_every_image_before_it_is_exercised`, `test_order_isolation_probe_preserves_the_historical_contiguous_stage_order` |
+| `LSN-0096` | `GUARDED` | HIGH | checkpoint | Evidence publishers must consume the producer's canonical result schema | `test_published_full_verification_counts_the_canonical_result_field`, `test_published_report_reconciliation_allows_only_the_generated_report` |
 
 ## Detail
 
@@ -1305,3 +1306,15 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
   - `test` test_live_stack_stage_builds_every_image_before_it_is_exercised — The ordered stack stage builds repository images before any live measurement.
   - `test` test_order_isolation_probe_preserves_the_historical_contiguous_stage_order — The targeted two-cycle probe preserves stack, integration, infrastructure, and smoke order without retrying a failed cycle.
 - Evidence: `file:scripts/iacode/verify.py`, `file:scripts/iacode/compose.py`, `file:scripts/iacode/scenarios/verification_order_isolation.py`, `file:tests/test_gate4_quality_engine.py`, `file:docs/adr/ADR-0033-verification-runtime-is-owned-by-one-checkout.md`, `file:docs/checkpoints/GATE-4-CP-0005/ORDER-ISOLATION-PROBE.json`
+
+### LSN-0096 — Evidence publishers must consume the producer's canonical result schema
+
+- Status: `GUARDED`, severity HIGH, category checkpoint, recurrences 0.
+- Source: GATE-4, GATE-4-CP-0005, finding cmd-0052.
+- Symptom: The canonical published-clone verifier returned PASS for all 42 stages and performed post-run cleanup, but the checkpoint wrapper reported 0/42 because it read a non-existent status alias from each stage.
+- Root cause: The evidence publisher duplicated knowledge of the verifier schema without a behavioral regression and counted stage.status even though the producer's versioned field is stage.result.
+- Resolution: Centralize strict stage summarization on the canonical result field, require exactly 42 PASS/FAIL stage results, bind publication PASS to the top-level verifier result and both cleanup results, return nonzero for a failed publication summary, and reconcile cmd-0052 from its preserved clone without rerunning the verifier while accepting no Git delta except that generated report.
+- Prevention:
+  - `test` test_published_full_verification_counts_the_canonical_result_field — The real checkpoint publisher counts the producer's result field and ignores a contradictory status alias.
+  - `test` test_published_report_reconciliation_allows_only_the_generated_report — Reconciliation accepts only the verifier's generated report in the preserved clone and rejects any additional delta.
+- Evidence: `file:docs/checkpoints/GATE-4-CP-0005/RUN-PUBLISHED-FULL-VERIFICATION.py`, `file:docs/checkpoints/GATE-4-CP-0005/VERIFY.json`, `file:docs/checkpoints/GATE-4-CP-0005/PUBLISHED-CLEAN-CLONE-REPORT.json`, `file:tests/test_gate4_quality_engine.py`

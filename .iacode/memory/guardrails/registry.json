@@ -1385,6 +1385,20 @@
         "LSN-0095"
       ],
       "removingItWouldAllow": "Two checkouts to share Compose containers, fixed ports, volumes or stale image tags, so a complete verifier can fail by order while an isolated rerun inherits a converged runtime and passes."
+    },
+    {
+      "guardrailId": "GRD-0097",
+      "title": "Evidence publishers consume canonical result fields",
+      "kind": "test",
+      "reference": "test_published_full_verification_counts_the_canonical_result_field",
+      "verifiedBy": [
+        "test_published_full_verification_counts_the_canonical_result_field",
+        "test_published_report_reconciliation_allows_only_the_generated_report"
+      ],
+      "lessons": [
+        "LSN-0096"
+      ],
+      "removingItWouldAllow": "A complete verifier to pass every canonical stage while a wrapper silently republishes the result as zero passes by reading an invented schema alias."
     }
   ]
 }
