@@ -1740,12 +1740,12 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 
 - Source reference: LESSON-PREFLIGHT.json LESSON-REQ-0011
 - Description: Verify a control over a checkpoint's own evidence must be scoped to the moment it matters
-- Implementation: `file:.iacode/memory/lessons.jsonl`
-- Test: `file:docs/checkpoints/GATE-4-CP-0001/TESTS.json`
-- Negative test: `file:docs/checkpoints/GATE-4-CP-0001/M2-INTERNAL-RED-TEAM.json`
-- Documentation: `file:.iacode/memory/LESSONS.md`
-- Validation: `file:docs/checkpoints/GATE-4-CP-0001/VERIFY.json`
-- Guardrail: `file:.iacode/memory/guardrails/registry.json`
+- Implementation: `file:scripts/development-ledger/green_keeper.py`, `file:scripts/development-ledger/finalize_checkpoint.py`
+- Test: `test:test_green_keeper_declares_its_in_progress_evidence_dirty_before_validation`, `test:test_every_runner_of_the_mandatory_gates_refreshes_the_declared_hashes`
+- Negative test: `checkpoint:REWORK-LOG.jsonl`, `file:.iacode/memory/retrospectives/GATE-4-CP-0005.md`
+- Documentation: `file:.iacode/memory/retrospectives/GATE-4-CP-0005.md`
+- Validation: `command:cmd-0089`, `checkpoint:REWORK-LOG.jsonl`
+- Guardrail: `file:.iacode/memory/guardrails/registry.json`, `file:.iacode/memory/lessons.jsonl`
 
 ### LESSON-REQ-0012 - lesson:LSN-0012
 
@@ -2666,7 +2666,7 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 - Description: Verify evidence publishers must consume the producer's canonical result schema
 - Implementation: `checkpoint:RUN-PUBLISHED-FULL-VERIFICATION.py`
 - Test: `test:test_published_full_verification_counts_the_canonical_result_field`, `test:test_published_report_reconciliation_allows_only_the_generated_report`
-- Negative test: `command:cmd-0052`, `command:cmd-0055`
+- Negative test: `command:cmd-0052`, `file:.iacode/memory/retrospectives/GATE-4-CP-0005.md`
 - Documentation: `file:.iacode/memory/retrospectives/GATE-4-CP-0005.md`
 - Validation: `checkpoint:VERIFY.json`, `checkpoint:PUBLISHED-CLEAN-CLONE-REPORT.json`, `command:cmd-0058`
 - Guardrail: `file:.iacode/memory/guardrails/registry.json`, `file:.iacode/memory/lessons.jsonl`

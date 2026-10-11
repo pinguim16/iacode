@@ -1809,6 +1809,20 @@ class DeliveryAssuranceGateTests(unittest.TestCase):
 
 
 class GreenKeeperToolTests(unittest.TestCase):
+    def test_green_keeper_declares_its_in_progress_evidence_dirty_before_validation(self) -> None:
+        from green_keeper import _declare_in_progress_evidence_dirty
+
+        with tempfile.TemporaryDirectory() as temporary:
+            checkpoint = Path(temporary)
+            write_json_file(
+                checkpoint / "STATE.json",
+                {"schemaVersion": "3.2.0", "status": "IN_PROGRESS", "dirty": False},
+            )
+
+            _declare_in_progress_evidence_dirty(checkpoint)
+
+            self.assertIs(read_json(checkpoint / "STATE.json")["dirty"], True)
+
     """The Green Keeper harness must refuse to report green while a gate is red."""
 
     def _bootstrap(self, root: Path, failing: bool) -> Path:

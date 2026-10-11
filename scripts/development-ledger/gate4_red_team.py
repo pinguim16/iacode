@@ -10,7 +10,9 @@ from __future__ import annotations
 
 import argparse
 import asyncio
+import hashlib
 import json
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -45,6 +47,7 @@ def _in_image_battery() -> dict[str, Any]:
         QualityResult,
     )
     from iacode_evaluator.errors import QualityError
+    from iacode_evaluator import evidence as evidence_module
     from iacode_evaluator.activities import derive_run_verdict, record_execution, set_runtime
     from iacode_evaluator.evidence import (
         MemoryEvidenceRepository,
@@ -368,6 +371,183 @@ def _in_image_battery() -> dict[str, Any]:
         lambda: asyncio.run(secret_evidence_containment()),
     )
 
+    class TracingEvidenceRepository(MemoryEvidenceRepository):
+        def __init__(self, timeline: list[str]) -> None:
+            super().__init__()
+            self.timeline = timeline
+
+        async def by_digest(self, run_id: str, digest: str):  # type: ignore[no-untyped-def]
+            self.timeline.append("repository.by_digest")
+            return await super().by_digest(run_id, digest)
+
+        async def by_evidence_id(self, evidence_id: str):  # type: ignore[no-untyped-def]
+            self.timeline.append("repository.by_evidence_id")
+            return await super().by_evidence_id(evidence_id)
+
+        async def record(self, record):  # type: ignore[no-untyped-def]
+            self.timeline.append("repository.record")
+            return await super().record(record)
+
+    class TracingObjectStore(MemoryObjectStore):
+        def __init__(self, timeline: list[str]) -> None:
+            super().__init__()
+            self.timeline = timeline
+
+        def stat_object(self, bucket: str, key: str) -> object:
+            self.timeline.append("object.stat")
+            return super().stat_object(bucket, key)
+
+        def put_object(self, bucket, key, data, length, **options):  # type: ignore[no-untyped-def]
+            self.timeline.append("object.put")
+            return super().put_object(bucket, key, data, length, **options)
+
+        def get_object(self, bucket: str, key: str):  # type: ignore[no-untyped-def]
+            self.timeline.append("object.get")
+            return super().get_object(bucket, key)
+
+    async def scanner_failure_containment() -> tuple[bool, str]:
+        timeline: list[str] = []
+        store = MemoryQualityStore(now=lambda: now)
+        await store.create_plan(canonical_plan)
+        run = await store.create_run(
+            plan_id=canonical_plan.planId,
+            owner_run_id=None,
+            idempotency_key="red-team-scanner-failure",
+        )
+        for state, event_type in (
+            ("PLANNED", "PLANNED"),
+            ("QUEUED", "QUEUED"),
+            ("RUNNING", "STARTED"),
+        ):
+            await store.transition(
+                run.run_id,
+                state=state,
+                event_type=event_type,
+                dedupe_key=f"scanner-failure:{state}",
+                payload={},
+            )
+        objects = TracingObjectStore(timeline)
+        repository = TracingEvidenceRepository(timeline)
+        evidence_store = QualityEvidenceStore(
+            client=objects,
+            bucket="red-team",
+            repository=repository,
+            now=lambda: now,
+        )
+        original_scanner = evidence_module.find_secret_kinds
+
+        def unavailable(_text: str) -> list[str]:
+            timeline.append("scanner.scan")
+            raise RuntimeError("synthetic scanner unavailable")
+
+        evidence_module.find_secret_kinds = unavailable
+        set_runtime(
+            SimpleNamespace(
+                store=store,
+                evidence=evidence_store,
+                metrics=QualityMetrics(CollectorRegistry()),
+            )
+        )
+        try:
+            recorded = await record_execution(
+                {
+                    "runId": run.run_id,
+                    "checkId": "q001-unit",
+                    "finishedAt": now.isoformat(),
+                    "execution": {
+                        "status": "SUCCEEDED",
+                        "exitCode": 0,
+                        "durationMs": 1,
+                        "output": {"stdout": "otherwise clean output"},
+                    },
+                }
+            )
+            verdict = await derive_run_verdict(
+                {"runId": run.run_id, "derivedAt": now.isoformat()}
+            )
+        finally:
+            set_runtime(None)
+            evidence_module.find_secret_kinds = original_scanner
+        scan_before_store = timeline == ["scanner.scan"]
+        defended = (
+            scan_before_store
+            and recorded["status"] == "ERROR"
+            and not recorded["evidence"]
+            and verdict["verdict"] == "FAIL"
+            and not objects.objects
+            and not repository.records
+        )
+        observed = (
+            f"scan-before-store={scan_before_store}; status={recorded['status']}; "
+            f"verdict={verdict['verdict']}; objects={len(objects.objects)}; "
+            f"records={len(repository.records)}"
+        )
+        return defended, observed
+
+    attack(
+        "R",
+        "scanner availability",
+        "make the canonical evidence scanner throw before it can classify clean bytes",
+        "fail closed before any lookup or write and derive FAIL",
+        lambda: asyncio.run(scanner_failure_containment()),
+    )
+
+    async def legacy_object_containment() -> tuple[bool, str]:
+        timeline: list[str] = []
+        objects = TracingObjectStore(timeline)
+        repository = TracingEvidenceRepository(timeline)
+        evidence_store = QualityEvidenceStore(
+            client=objects,
+            bucket="red-team",
+            repository=repository,
+            now=lambda: now,
+        )
+        stored = await evidence_store.put(
+            run_id=run_id,
+            result_id="result-red-team",
+            kind="report",
+            content=b"clean legacy object",
+            media_type="text/plain",
+            producer="iacode-evaluator",
+        )
+        object_key = next(iter(objects.objects))
+        objects.objects[object_key] = ("gh" + "p_" + "y" * 24).encode("utf-8")
+        timeline.clear()
+        original_scanner = evidence_module.find_secret_kinds
+
+        def traced_scanner(text: str) -> list[str]:
+            timeline.append("scanner.scan")
+            return original_scanner(text)
+
+        evidence_module.find_secret_kinds = traced_scanner
+        try:
+            resolved = await evidence_store.resolve(stored)
+        finally:
+            evidence_module.find_secret_kinds = original_scanner
+        legacy_result = result(evidence=(stored,))
+        verdict = derive_verdict(
+            run_id=run_id,
+            plan=canonical_plan,
+            results=(legacy_result,),
+            resolved_evidence_digests=set() if not resolved else {stored.digest},
+            derived_at=now,
+        )
+        rescanned_after_read = "object.get" in timeline and timeline[-1] == "scanner.scan"
+        defended = not resolved and rescanned_after_read and verdict.verdict == "FAIL"
+        observed = (
+            f"resolved={resolved}; rescanned-after-read={rescanned_after_read}; "
+            f"verdict={verdict.verdict}"
+        )
+        return defended, observed
+
+    attack(
+        "S",
+        "legacy persisted object",
+        "replace already persisted clean bytes with a canonical credential shape",
+        "rescan after read, refuse resolution and derive FAIL",
+        lambda: asyncio.run(legacy_object_containment()),
+    )
+
     escaped = [item for item in attacks if item["result"] == "ESCAPED"]
     return {
         "baselineControl": {
@@ -410,10 +590,11 @@ def _compose(root: Path, *arguments: str) -> subprocess.CompletedProcess[str]:
 def _host_attacks(root: Path, checkpoint: Path) -> list[dict[str, Any]]:
     """Exercise the audit's host-side bundle and live-lifecycle attacks.
 
-    The evaluator image owns A-J and Q.  K-O target the host review transport, and P consumes the
-    four current live scenario reports that precede this stage in the full verifier.  Keeping those
-    operations on their real side of the boundary avoids pretending that an evaluator container can
-    inspect a Git review archive or the host orchestration reports.
+    The evaluator image owns A-J and Q-S.  K-O target the host review transport, P consumes the four
+    current live scenario reports that precede this stage in the full verifier, and T rebuilds the
+    review transport in a detached clone. Keeping those operations on their real side of the
+    boundary avoids pretending that an evaluator container can inspect a Git review archive or the
+    host orchestration reports.
     """
     from review_bundle import manifest as bundle_manifest
     from review_bundle import validate as validate_bundle
@@ -583,6 +764,99 @@ def _host_attacks(root: Path, checkpoint: Path) -> list[dict[str, Any]]:
             "file:scripts/iacode/verify.py",
         ],
     )
+
+    with tempfile.TemporaryDirectory(prefix="gate4-red-team-transport-") as temporary:
+        clone = Path(temporary) / "repository"
+        cloned = subprocess.run(
+            ["git", "clone", "--quiet", "--no-local", str(root), str(clone)],
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            check=False,
+        )
+        detached = subprocess.run(
+            ["git", "checkout", "--quiet", "--detach", "HEAD"],
+            cwd=clone,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            check=False,
+        ) if cloned.returncode == 0 else cloned
+        status = subprocess.run(
+            ["git", "status", "--porcelain=v1", "--untracked-files=all"],
+            cwd=root,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            check=False,
+        )
+        copied = cloned.returncode == 0 and detached.returncode == 0 and status.returncode == 0
+        if copied:
+            for line in status.stdout.splitlines():
+                if len(line) < 4:
+                    continue
+                relative = Path(line[3:].split(" -> ")[-1])
+                source = root / relative
+                destination = clone / relative
+                if source.is_file():
+                    destination.parent.mkdir(parents=True, exist_ok=True)
+                    shutil.copy2(source, destination)
+                elif destination.exists():
+                    destination.unlink()
+        checkpoint_relative = checkpoint.relative_to(root)
+        first_bundle = Path(".git") / "gate4-red-team-review-first.zip"
+        second_bundle = Path(".git") / "gate4-red-team-review-second.zip"
+
+        def rebuild(bundle: Path) -> subprocess.CompletedProcess[str]:
+            return subprocess.run(
+                [
+                    sys.executable,
+                    str(clone / "scripts" / "development-ledger" / "review_bundle.py"),
+                    "--root",
+                    str(clone),
+                    "--checkpoint",
+                    str(checkpoint_relative),
+                    "--bundle",
+                    str(bundle),
+                ],
+                cwd=clone,
+                text=True,
+                encoding="utf-8",
+                errors="replace",
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT,
+                check=False,
+            )
+
+        first = rebuild(first_bundle) if copied else cloned
+        second = rebuild(second_bundle) if copied else cloned
+        first_path = clone / first_bundle
+        second_path = clone / second_bundle
+        deterministic = (
+            first.returncode == 0
+            and second.returncode == 0
+            and first_path.is_file()
+            and second_path.is_file()
+            and hashlib.sha256(first_path.read_bytes()).digest()
+            == hashlib.sha256(second_path.read_bytes()).digest()
+        )
+        portable = first.returncode == 0 and second.returncode == 0
+        categories = portable and "REVIEW_BUNDLE=PASS" in first.stdout and "REVIEW_BUNDLE=PASS" in second.stdout
+        record(
+            "T",
+            "review bundle portability and determinism",
+            "rebuild twice from a detached transport clone and validate there",
+            "byte-identical rebuilds and complete secret-clean portable validation",
+            deterministic and portable and categories,
+            f"deterministic={deterministic}; portable={portable}; categories={categories}",
+            ["file:scripts/development-ledger/review_bundle.py"],
+        )
     return attacks
 
 
@@ -656,7 +930,7 @@ def main() -> int:
         checkpoint = root / checkpoint
     observed = run_in_image(root, rebuild=not arguments.skip_gate_rebuild)
     attacks = observed["attacks"] + _host_attacks(root, checkpoint)
-    order = {identifier: index for index, identifier in enumerate("ABCDEFGHIJKLMNOPQ")}
+    order = {identifier: index for index, identifier in enumerate("ABCDEFGHIJKLMNOPQRST")}
     attacks.sort(key=lambda item: order[str(item["attackId"])])
     escaped = [item for item in attacks if item["result"] == "ESCAPED"]
     observed = {

@@ -4302,24 +4302,29 @@
       "implementationStatus": "COMPLETE",
       "finalStatus": "COMPLETE",
       "justification": null,
-      "notes": "Inherited from sealed Gate 4 implementation evidence and revalidated by the published complete verifier.",
+      "notes": "Re-proved after Green Keeper cycle 1 exposed its own append-only dirty-state transition.",
       "implementationEvidence": [
-        "file:.iacode/memory/lessons.jsonl"
+        "file:scripts/development-ledger/green_keeper.py",
+        "file:scripts/development-ledger/finalize_checkpoint.py"
       ],
       "testEvidence": [
-        "file:docs/checkpoints/GATE-4-CP-0001/TESTS.json"
+        "test:test_green_keeper_declares_its_in_progress_evidence_dirty_before_validation",
+        "test:test_every_runner_of_the_mandatory_gates_refreshes_the_declared_hashes"
       ],
       "negativeTestEvidence": [
-        "file:docs/checkpoints/GATE-4-CP-0001/M2-INTERNAL-RED-TEAM.json"
+        "checkpoint:REWORK-LOG.jsonl",
+        "file:.iacode/memory/retrospectives/GATE-4-CP-0005.md"
       ],
       "documentationEvidence": [
-        "file:.iacode/memory/LESSONS.md"
+        "file:.iacode/memory/retrospectives/GATE-4-CP-0005.md"
       ],
       "validationEvidence": [
-        "file:docs/checkpoints/GATE-4-CP-0001/VERIFY.json"
+        "command:cmd-0089",
+        "checkpoint:REWORK-LOG.jsonl"
       ],
       "guardrailEvidence": [
-        "file:.iacode/memory/guardrails/registry.json"
+        "file:.iacode/memory/guardrails/registry.json",
+        "file:.iacode/memory/lessons.jsonl"
       ]
     },
     {
@@ -6881,7 +6886,7 @@
       ],
       "negativeTestEvidence": [
         "command:cmd-0052",
-        "command:cmd-0055"
+        "file:.iacode/memory/retrospectives/GATE-4-CP-0005.md"
       ],
       "documentationEvidence": [
         "file:.iacode/memory/retrospectives/GATE-4-CP-0005.md"

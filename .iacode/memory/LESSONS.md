@@ -18,7 +18,7 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 | `LSN-0008` | `GUARDED` | CRITICAL | process | Requirement completeness must be total and evidence-backed before handoff | `DeliveryCompletenessMatrixTests.test_one_requirement_short_of_total_fails`, `DeliveryAssuranceGateTests.test_completeness_validator_not_executed_blocks_review`, `scripts/development-ledger/check_completeness.py`, `ExpectedRequirementSetTests.test_deleting_a_requirement_and_recomputing_the_counts_still_fails` |
 | `LSN-0009` | `GUARDED` | CRITICAL | testing | A red gate requires rework, never a waiver, and never a weakened check | `GreenKeeperToolTests.test_red_gate_is_reported_as_still_red`, `DeliveryAssuranceGateTests.test_green_keeper_pass_with_a_real_failure_is_rejected`, `DeliveryAssuranceGateTests.test_red_tests_block_review`, `.iacode/policies/quality-gates.json`, `MandatoryGatePolicyTests.test_a_cycle_measured_against_no_gate_is_rejected` |
 | `LSN-0010` | `GUARDED` | HIGH | tooling | A recorded command must carry runtime, working directory, commit and purpose to be replayable | `CommandReproducibilityTests.test_bare_script_name_is_rejected`, `CommandReproducibilityTests.test_unresolvable_script_path_is_rejected`, `.iacode/schemas/command.schema.json`, `validate_checkpoint._validate_command_reproducibility`, `CommandInputBindingTests.test_a_record_without_a_digest_is_rejected` |
-| `LSN-0011` | `GUARDED` | MEDIUM | tooling | A control over a checkpoint's own evidence must be scoped to the moment it matters | `DeliveryAssuranceGateTests.test_gate_consistency_is_provisional_while_work_is_in_progress`, `green_keeper._refresh_declared_hashes`, `test_every_runner_of_the_mandatory_gates_refreshes_the_declared_hashes` |
+| `LSN-0011` | `GUARDED` | HIGH | tooling | A control over a checkpoint's own evidence must be scoped to the moment it matters | `DeliveryAssuranceGateTests.test_gate_consistency_is_provisional_while_work_is_in_progress`, `green_keeper._refresh_declared_hashes`, `test_every_runner_of_the_mandatory_gates_refreshes_the_declared_hashes`, `test_green_keeper_declares_its_in_progress_evidence_dirty_before_validation` |
 | `LSN-0012` | `GUARDED` | CRITICAL | git | Sealed checkpoints and their tags are immutable, and tooling must keep validating them | `HistoricalCheckpointCompatibilityTests.test_first_sealed_checkpoint_still_validates`, `HistoricalCheckpointCompatibilityTests.test_fourth_sealed_checkpoint_still_validates`, `docs/CHECKPOINT-PROTOCOL.md`, `scripts/development-ledger/anchors.py`, `IntegrityAnchorTests.test_a_moved_historical_tag_is_detected` |
 | `LSN-0013` | `CONFIRMED` | MEDIUM | environment | An installed capability must be detected by resolved path, not by a bare command lookup | _not yet guarded_ |
 | `LSN-0014` | `GUARDED` | MEDIUM | process | Evidence must be recorded as it happens, not reconstructed at the end of a run | `scripts/development-ledger/record_command.py`, `validate_checkpoint._validate_seal_chronology`, `SealChronologyTests.test_a_record_after_the_end_of_the_run_is_rejected` |
@@ -247,16 +247,17 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 
 ### LSN-0011 — A control over a checkpoint's own evidence must be scoped to the moment it matters
 
-- Status: `GUARDED`, severity MEDIUM, category tooling, recurrences 1.
+- Status: `GUARDED`, severity HIGH, category tooling, recurrences 2.
 - Source: SETUP-00, SETUP-00-CP-0005, finding REWORK-LOG cycles 1 to 3 and 6.
 - Symptom: The gate that validates the checkpoint kept failing because running it appends to the very ledger and inventory the validation binds.
 - Root cause: Consistency rules written for a finished delivery were applied while the delivery was still writing its own evidence, which no ordering of steps can satisfy.
-- Resolution: Gate consistency is enforced when the delivery is offered for review and treated as provisional while work is in progress, and the harness re-derives declared hashes immediately before validating.
+- Resolution: Gate consistency is strict at handoff and provisional while work is in progress; every mandatory-gate runner re-derives declared hashes, and the Green Keeper declares its own append-only in-progress evidence dirty before its first gate.
 - Prevention:
   - `test` DeliveryAssuranceGateTests.test_gate_consistency_is_provisional_while_work_is_in_progress — Provisional in progress, strict at handoff.
   - `invariant` green_keeper._refresh_declared_hashes — Declared hashes are re-derived before the validation gate runs, never invented.
   - `test` test_every_runner_of_the_mandatory_gates_refreshes_the_declared_hashes — Every command that executes the mandatory gate set re-derives the checkpoint's declared hashes before it does.
-- Evidence: `file:docs/checkpoints/SETUP-00-CP-0005/DECISIONS.md`, `file:docs/checkpoints/SETUP-00-CP-0005/REWORK-LOG.jsonl`, `file:scripts/development-ledger/finalize_checkpoint.py`, `file:scripts/iacode/verify.py`, `file:tests/test_gate1_model_gateway.py`
+  - `test` test_green_keeper_declares_its_in_progress_evidence_dirty_before_validation — An in-progress cycle expects its own command and rework evidence to make the tree dirty before checkpoint validation.
+- Evidence: `file:docs/checkpoints/SETUP-00-CP-0005/DECISIONS.md`, `file:docs/checkpoints/SETUP-00-CP-0005/REWORK-LOG.jsonl`, `file:docs/checkpoints/GATE-4-CP-0005/REWORK-LOG.jsonl`, `file:scripts/development-ledger/finalize_checkpoint.py`, `file:scripts/development-ledger/green_keeper.py`, `file:scripts/iacode/verify.py`, `file:tests/test_development_ledger.py`, `file:tests/test_gate1_model_gateway.py`
 
 ### LSN-0012 — Sealed checkpoints and their tags are immutable, and tooling must keep validating them
 

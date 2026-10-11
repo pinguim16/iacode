@@ -4,7 +4,7 @@
 - Scope: `quality engine corrective implementation, G4-F-002 full verification determinism, infrastructure and smoke isolation, order and state independence, clean clone`
 - Technologies: `python`, `docker-compose`
 - Modules: `scripts/iacode`, `infra/tests`
-- Generated: `2026-10-11T16:35:40Z`
+- Generated: `2026-10-11T17:48:33Z`
 - Lessons considered: 96
 - Lessons applicable: 95
 
@@ -24,7 +24,7 @@ delivery when one is absent.
 | `LSN-0008` Requirement completeness must be total and evidence-backed before handoff | `GUARDED` | CRITICAL | `LESSON-REQ-0008` | Extract every requirement before implementing and audit completeness before handoff. |
 | `LSN-0009` A red gate requires rework, never a waiver, and never a weakened check | `GUARDED` | CRITICAL | `LESSON-REQ-0009` | Run the Green Keeper until every mandatory gate is green, repairing causes rather than checks. |
 | `LSN-0010` A recorded command must carry runtime, working directory, commit and purpose to be replayable | `GUARDED` | HIGH | `LESSON-REQ-0010` | Record commands with the tooling so each one is executable from its declared working directory. |
-| `LSN-0011` A control over a checkpoint's own evidence must be scoped to the moment it matters | `GUARDED` | MEDIUM | `LESSON-REQ-0011` | Check whether any new control would be invalidated by the evidence its own run produces. |
+| `LSN-0011` A control over a checkpoint's own evidence must be scoped to the moment it matters | `GUARDED` | HIGH | `LESSON-REQ-0011` | Check whether any new control would be invalidated by the evidence its own run produces. |
 | `LSN-0012` Sealed checkpoints and their tags are immutable, and tooling must keep validating them | `GUARDED` | CRITICAL | `LESSON-REQ-0012` | Confirm that every sealed checkpoint still validates under the tooling this Gate changes. |
 | `LSN-0013` An installed capability must be detected by resolved path, not by a bare command lookup | `CONFIRMED` | MEDIUM | `LESSON-REQ-0013` | When this Gate records a capability, resolve the executable path before concluding anything about availability. |
 | `LSN-0014` Evidence must be recorded as it happens, not reconstructed at the end of a run | `GUARDED` | MEDIUM | `LESSON-REQ-0014` | Record each command through the tooling while the work happens. |
@@ -184,7 +184,7 @@ delivery when one is absent.
 
 ### LSN-0011 — A control over a checkpoint's own evidence must be scoped to the moment it matters
 
-- Reason: applies to every Gate; category tooling; severity MEDIUM; already guarded, so the control must keep holding
+- Reason: applies to every Gate; category tooling; severity HIGH; already guarded, so the control must keep holding
 - Required check: Check whether any new control would be invalidated by the evidence its own run produces.
 - Required evidence: A passing validation executed by the gate harness itself.
 - Derived requirement: `LESSON-REQ-0011`

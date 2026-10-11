@@ -49,6 +49,23 @@ from ledger_common import (
 from policies import gate_definitions, mandatory_gates
 
 
+def _declare_in_progress_evidence_dirty(checkpoint: Path) -> None:
+    """Make the Green Keeper's own append-only evidence part of the expected state.
+
+    A finalizer sets ``dirty`` false for the post-commit handoff it prepares.  Starting a new
+    Green Keeper cycle immediately appends command and rework evidence, so an in-progress
+    checkpoint must expect a dirty tree before the first gate runs.  Terminal/review states remain
+    untouched and therefore retain their strict clean-tree contract.
+    """
+    state_path = checkpoint / "STATE.json"
+    if not state_path.is_file():
+        return
+    state = load_json(state_path)
+    if state.get("status") == "IN_PROGRESS" and state.get("dirty") is not True:
+        state["dirty"] = True
+        write_json(state_path, state)
+
+
 def _refresh_declared_hashes(root: Path, checkpoint: Path) -> None:
     """Re-derive the declared inventory hashes before validating the checkpoint.
 
@@ -142,6 +159,8 @@ def main() -> int:
     checkpoint = args.checkpoint or resolve_latest(root)
     if not checkpoint.is_absolute():
         checkpoint = root / checkpoint
+
+    _declare_in_progress_evidence_dirty(checkpoint)
 
     definitions = gate_definitions(root)
     required = list(mandatory_gates(root))

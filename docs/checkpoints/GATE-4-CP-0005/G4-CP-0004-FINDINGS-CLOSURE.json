@@ -8,6 +8,7 @@
       "findingId": "G4-F-002",
       "severity": "HIGH",
       "title": "Published full verification is not stable in one clean-clone run",
+      "originalExpected": "One representative published clean-clone invocation must pass the complete ordered 42-stage verifier without retries, timeout changes, denominator reduction, stage reordering or weakened assertions.",
       "originalObserved": "The detached published subject completed all 42 stages but returned 40/42 because infra and smoke failed only in the complete ordered run; isolated reruns did not supersede that failure.",
       "rootCause": "Independent checkouts shared one Compose project, fixed published ports, volumes and image identity; the stack stage could also measure images built by another checkout. Prometheus was queried before a complete configured scrape cycle in the affected infrastructure path.",
       "implementation": [

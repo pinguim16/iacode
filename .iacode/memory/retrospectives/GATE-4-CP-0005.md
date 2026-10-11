@@ -40,6 +40,12 @@ the running-stack infrastructure test.
 `LSN-0083` recurred once because `GRD-0084` scanned executable files under `scripts/` but not the
 current checkpoint's executable evidence harness. The same control now scans both locations.
 
+`LSN-0011` recurred a second time when an intermediate finalizer set `STATE.dirty=false` before a
+Green Keeper cycle. The cycle's own command evidence made the tree dirty before
+`checkpointValidation`; hashes were refreshed, but the expected dirty state was not. Cycle 1
+remains red, and `GRD-0006` now requires every in-progress Green Keeper cycle to declare its own
+append-only evidence dirty before running any gate.
+
 ## What was learned
 
 - A verifier that names an order but does not own the state traversed by that order is not
@@ -57,6 +63,7 @@ current checkpoint's executable evidence harness. The same control now scans bot
 | Compose runtime shared across checkouts | `LSN-0095` | `GRD-0096` | verifier ownership, cleanup, build, frozen-environment and order controls |
 | captured UTF-8 re-emitted through platform codepage | `LSN-0083` | `GRD-0084` | repository-wide script/current-harness stream scan |
 | publisher reads a noncanonical result alias | `LSN-0096` | `GRD-0097` | behavioral test against the actual checkpoint publisher |
+| gate invalidated by its own append-only evidence | `LSN-0011` | `GRD-0006` | in-progress dirty-state declaration plus shared hash refresh |
 
 ## New lessons
 
@@ -68,6 +75,8 @@ that evidence publishers must consume the producer's canonical result schema.
 `LSN-0049` was escalated to `HIGH`, its recurrence count advanced to two, and its guardrail was
 widened to the infrastructure test path. `LSN-0083` was escalated to `HIGH`, its recurrence count
 advanced to one, and its guardrail was widened to the current checkpoint evidence harness.
+`LSN-0011` was escalated to `HIGH`, its recurrence count advanced to two, and its guardrail was
+widened from hash refresh alone to the Green Keeper's expected dirty state.
 
 ## Retired lessons
 

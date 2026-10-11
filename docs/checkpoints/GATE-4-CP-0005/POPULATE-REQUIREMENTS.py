@@ -124,7 +124,7 @@ def publication_evidence() -> dict[str, list[str]]:
         ],
         "negativeTestEvidence": [
             "command:cmd-0052",
-            "command:cmd-0055",
+            "file:.iacode/memory/retrospectives/GATE-4-CP-0005.md",
         ],
         "documentationEvidence": [
             "file:.iacode/memory/retrospectives/GATE-4-CP-0005.md",
@@ -133,6 +133,34 @@ def publication_evidence() -> dict[str, list[str]]:
             "checkpoint:VERIFY.json",
             "checkpoint:PUBLISHED-CLEAN-CLONE-REPORT.json",
             "command:cmd-0058",
+        ],
+        "guardrailEvidence": [
+            "file:.iacode/memory/guardrails/registry.json",
+            "file:.iacode/memory/lessons.jsonl",
+        ],
+    }
+
+
+def assurance_evidence() -> dict[str, list[str]]:
+    return {
+        "implementationEvidence": [
+            "file:scripts/development-ledger/green_keeper.py",
+            "file:scripts/development-ledger/finalize_checkpoint.py",
+        ],
+        "testEvidence": [
+            "test:test_green_keeper_declares_its_in_progress_evidence_dirty_before_validation",
+            "test:test_every_runner_of_the_mandatory_gates_refreshes_the_declared_hashes",
+        ],
+        "negativeTestEvidence": [
+            "checkpoint:REWORK-LOG.jsonl",
+            "file:.iacode/memory/retrospectives/GATE-4-CP-0005.md",
+        ],
+        "documentationEvidence": [
+            "file:.iacode/memory/retrospectives/GATE-4-CP-0005.md",
+        ],
+        "validationEvidence": [
+            "command:cmd-0089",
+            "checkpoint:REWORK-LOG.jsonl",
         ],
         "guardrailEvidence": [
             "file:.iacode/memory/guardrails/registry.json",
@@ -205,6 +233,9 @@ def main() -> None:
         elif reference == "lesson:LSN-0096":
             complete(row, publication_evidence(), "Guarded after cmd-0052 exposed a noncanonical publication result alias.")
             corrected += 1
+        elif reference == "lesson:LSN-0011":
+            complete(row, assurance_evidence(), "Re-proved after Green Keeper cycle 1 exposed its own append-only dirty-state transition.")
+            corrected += 1
         elif reference in prior and (
             reference.startswith("canonical:") or reference.startswith("lesson:")
         ):
@@ -221,7 +252,7 @@ def main() -> None:
         else:
             raise RuntimeError(f"no evidence policy for derived requirement {reference}")
 
-    if (inherited, corrected, attacks, len(document["requirements"])) != (197, 4, 20, 221):
+    if (inherited, corrected, attacks, len(document["requirements"])) != (196, 5, 20, 221):
         raise RuntimeError(
             "unexpected denominator: "
             f"inherited={inherited} corrected={corrected} attacks={attacks} "

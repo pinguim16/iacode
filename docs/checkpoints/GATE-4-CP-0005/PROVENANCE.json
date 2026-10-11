@@ -3,9 +3,9 @@
   "artifacts": [
     {
       "artifact": "docs\\checkpoints\\GATE-4-CP-0005",
-      "sourceType": "repository-generated",
-      "provider": "local-script",
-      "model": "not-applicable",
+      "sourceType": "ai-assisted-project-artifact",
+      "provider": "OpenAI",
+      "model": "GPT-5 via Codex desktop application",
       "ownership": "project",
       "license": "project-policy",
       "rights": {
@@ -14,8 +14,8 @@
         "trainingAllowed": false,
         "distillationAllowed": false
       },
-      "evidence": "Created by new_checkpoint.py.",
-      "notes": "Review rights before reuse."
+      "evidence": "Repository commands and human-reviewable checkpoint artifacts declared in FILES.json and COMMANDS.jsonl.",
+      "notes": "Project-owned delivery artifact. trainingAllowed remains false; no rights evidence authorizes training or distillation."
     }
   ]
 }

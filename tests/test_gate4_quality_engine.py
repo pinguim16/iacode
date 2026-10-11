@@ -38,6 +38,35 @@ SPECIFICATION = PROJECT_ROOT / "docs" / "GATE-4-CHECKLIST.md"
 
 
 class Gate4QualityCoverageTests(unittest.TestCase):
+    def test_internal_red_team_preserves_the_sealed_twenty_attack_denominator(self) -> None:
+        sealed = ledger_common.load_json(
+            PROJECT_ROOT
+            / "docs"
+            / "checkpoints"
+            / "GATE-4-CP-0004"
+            / "GATE-4-INDEPENDENT-RED-TEAM.json"
+        )
+        current = ledger_common.load_json(
+            PROJECT_ROOT
+            / "docs"
+            / "checkpoints"
+            / "GATE-4-CP-0005"
+            / "M2-INTERNAL-RED-TEAM.json"
+        )
+        expected_ids = list("ABCDEFGHIJKLMNOPQRST")
+        self.assertEqual([item["attackId"] for item in sealed["attacks"]], expected_ids)
+        self.assertEqual([item["attackId"] for item in current["attacks"]], expected_ids)
+        self.assertEqual(current["mandatoryTotal"], 20)
+        self.assertEqual(current["mandatoryDefended"], 20)
+
+        sealed_q = next(item for item in sealed["attacks"] if item["attackId"] == "Q")
+        current_q = next(item for item in current["attacks"] if item["attackId"] == "Q")
+        for field in ("target", "mutation", "expectedDefense"):
+            self.assertEqual(current_q[field], sealed_q[field])
+        self.assertEqual(current_q["result"], "DEFENDED")
+        for invariant in ("status=ERROR", "verdict=FAIL", "objects=0", "records=0"):
+            self.assertIn(invariant, current_q["observed"])
+
     def test_published_full_verification_counts_the_canonical_result_field(self) -> None:
         harness = runpy.run_path(
             str(

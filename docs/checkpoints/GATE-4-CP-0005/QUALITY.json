@@ -2,64 +2,64 @@
   "schemaVersion": "3.2.0",
   "checks": {
     "build": {
-      "status": "NOT_EXECUTED",
-      "evidence": [],
+      "status": "PASS",
+      "evidence": ["file:VERIFY.json", "command:cmd-0052"],
       "justification": null
     },
     "unitTests": {
-      "status": "NOT_EXECUTED",
-      "evidence": [],
+      "status": "PASS",
+      "evidence": ["file:TESTS.json", "command:cmd-0139"],
       "justification": null
     },
     "integrationTests": {
-      "status": "NOT_EXECUTED",
-      "evidence": [],
+      "status": "PASS",
+      "evidence": ["file:TESTS.json", "file:VERIFY.json", "command:cmd-0052"],
       "justification": null
     },
     "e2e": {
-      "status": "NOT_EXECUTED",
-      "evidence": [],
+      "status": "PASS",
+      "evidence": ["file:TESTS.json", "file:VERIFY.json", "file:FUNCTIONAL-ACCEPTANCE-VALIDATION.json", "command:cmd-0052"],
       "justification": null
     },
     "lint": {
-      "status": "NOT_EXECUTED",
-      "evidence": [],
+      "status": "PASS",
+      "evidence": ["command:cmd-0150"],
       "justification": null
     },
     "staticAnalysis": {
-      "status": "NOT_EXECUTED",
-      "evidence": [],
+      "status": "PASS",
+      "evidence": ["command:cmd-0140"],
       "justification": null
     },
     "security": {
-      "status": "NOT_EXECUTED",
-      "evidence": [],
+      "status": "PASS",
+      "evidence": ["file:VERIFY.json", "command:cmd-0052", "command:cmd-0143"],
       "justification": null
     },
     "documentation": {
-      "status": "NOT_EXECUTED",
-      "evidence": [],
+      "status": "PASS",
+      "evidence": ["file:DIFF-SUMMARY.md", "file:DECISIONS.md", "command:cmd-0139"],
       "justification": null
     },
     "checkpointValidation": {
-      "status": "NOT_EXECUTED",
-      "evidence": [],
+      "status": "PASS",
+      "evidence": ["command:cmd-0143"],
       "justification": null
     },
     "redTeam": {
-      "status": "NOT_EXECUTED",
-      "evidence": [],
-      "justification": null
+      "status": "PASS",
+      "evidence": ["file:M2-INTERNAL-RED-TEAM.json", "command:cmd-0153"],
+      "justification": "Same-session internal Red Team defended all 20 mandatory attacks A-T with a valid null-mutation control; this is not independent review."
     },
     "greenKeeper": {
-      "status": "NOT_EXECUTED",
-      "evidence": [],
-      "justification": null
+      "status": "PASS",
+      "evidence": ["file:REWORK-LOG.jsonl", "command:cmd-0139", "command:cmd-0143", "command:cmd-0151"],
+      "justification": "Cycle 4 passed all 13 policy-derived mandatory gates after the complete 65-path declaration; earlier red cycles remain preserved in COMMANDS.jsonl and REWORK-LOG.jsonl."
     },
     "deliveryCompleteness": {
-      "status": "NOT_EXECUTED",
-      "evidence": [],
-      "justification": null
+      "status": "PASS",
+      "evidence": ["file:COMPLETENESS-REPORT.json", "command:cmd-0152"],
+      "justification": "All 221 derived requirements are complete with 100% evidence coverage; the auditor is the implementing session, not an independent reviewer."
     }
   }
 }

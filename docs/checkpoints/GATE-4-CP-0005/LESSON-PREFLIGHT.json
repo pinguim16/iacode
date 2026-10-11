@@ -10,9 +10,9 @@
     "scripts/iacode",
     "infra/tests"
   ],
-  "generatedAt": "2026-10-11T16:35:40Z",
+  "generatedAt": "2026-10-11T17:48:33Z",
   "policyVersion": "2.0.0",
-  "inputsFingerprint": "72f5857246a8a75c5053304fd74e002671df9a6a53fd30f7fd2255c3aba138a5",
+  "inputsFingerprint": "7b2f8512a524a7e1d03e5673d2f900849e1f3c759a97ba265193d79e71a78777",
   "lessonsConsidered": 96,
   "lessonsApplicable": 95,
   "applicable": [
@@ -120,8 +120,8 @@
       "lessonId": "LSN-0011",
       "title": "A control over a checkpoint's own evidence must be scoped to the moment it matters",
       "status": "GUARDED",
-      "severity": "MEDIUM",
-      "reasonApplicable": "applies to every Gate; category tooling; severity MEDIUM; already guarded, so the control must keep holding",
+      "severity": "HIGH",
+      "reasonApplicable": "applies to every Gate; category tooling; severity HIGH; already guarded, so the control must keep holding",
       "requiredCheck": "Check whether any new control would be invalidated by the evidence its own run produces.",
       "requiredEvidence": "A passing validation executed by the gate harness itself.",
       "derivedRequirementId": "LESSON-REQ-0011"

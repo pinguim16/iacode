@@ -78,6 +78,7 @@
       "reference": "green_keeper._refresh_declared_hashes",
       "verifiedBy": [
         "DeliveryAssuranceGateTests.test_gate_consistency_is_provisional_while_work_is_in_progress",
+        "test_green_keeper_declares_its_in_progress_evidence_dirty_before_validation",
         "test_every_runner_of_the_mandatory_gates_refreshes_the_declared_hashes",
         "test_the_refresh_has_one_definition",
         "test_no_other_module_executes_the_mandatory_gate_set"
