@@ -25,6 +25,7 @@ exactly the anchored set: no omission, no substitution, and no unexpected anchor
 
 from __future__ import annotations
 
+import json
 import re
 from pathlib import Path
 from typing import Any
@@ -543,11 +544,47 @@ def open_audits(root: Path, gate: str, checkpoint: str) -> list[dict[str, Any]]:
     ]
 
 
+def _audit_findings_report(audit: dict[str, Any]) -> str | None:
+    """The sealed artifact that owns an audit's findings.
+
+    Historical audits rendered findings directly in ``reviewReport``.  Newer audits may also
+    publish a schema-bound ``findingsReport`` beside the human review.  The registry chooses the
+    owner explicitly so requirement derivation never guesses from mentions elsewhere in a review.
+    """
+    report = audit.get("findingsReport") or audit.get("reviewReport")
+    return str(report) if report else None
+
+
 def audit_findings(root: Path, audit: dict[str, Any]) -> list[dict[str, str]]:
-    report = audit.get("reviewReport")
+    report = _audit_findings_report(audit)
     if not report:
-        raise LedgerError(f"audit {audit.get('auditId')!r} names no review report")
-    findings = parse_findings(_read(root, report))
+        raise LedgerError(f"audit {audit.get('auditId')!r} names no findings report")
+    text = _read(root, report)
+    if Path(report).suffix.lower() == ".json":
+        try:
+            document = json.loads(text)
+        except json.JSONDecodeError as exc:
+            raise LedgerError(f"findings report is not valid JSON: {report}: {exc}") from exc
+        rows = document.get("findings") if isinstance(document, dict) else None
+        if not isinstance(rows, list):
+            raise LedgerError(f"findings report declares no findings array: {report}")
+        findings = [
+            {
+                "id": str(row.get("id", "")),
+                "severity": str(row.get("severity", "")),
+                "title": str(row.get("title", "")),
+            }
+            for row in rows
+            if isinstance(row, dict)
+            and isinstance(row.get("id"), str)
+            and isinstance(row.get("severity"), str)
+            and isinstance(row.get("title"), str)
+            and row["id"].strip()
+            and row["severity"].strip()
+            and row["title"].strip()
+        ]
+    else:
+        findings = parse_findings(text)
     if not findings:
         raise LedgerError(f"no finding could be parsed from {report}")
     return findings
@@ -557,7 +594,36 @@ def audit_attacks(root: Path, audit: dict[str, Any]) -> list[dict[str, str]]:
     report = audit.get("redTeamReport")
     if not report:
         return []
-    attacks = parse_attacks(_read(root, report))
+    text = _read(root, report)
+    if Path(str(report)).suffix.lower() == ".json":
+        try:
+            document = json.loads(text)
+        except json.JSONDecodeError as exc:
+            raise LedgerError(f"Red Team report is not valid JSON: {report}: {exc}") from exc
+        rows = document.get("attacks") if isinstance(document, dict) else None
+        if not isinstance(rows, list):
+            raise LedgerError(f"Red Team report declares no attacks array: {report}")
+        attacks = [
+            {
+                "id": str(row.get("attackId", "")),
+                "target": str(row.get("target", "")),
+                "mutation": str(row.get("mutation", "")),
+                "expectedDefense": str(row.get("expectedDefense", "")),
+                "observed": str(row.get("observed", "")),
+                "result": str(row.get("result", "")),
+                "mandatory": "true" if row.get("mandatory") is True else "false",
+            }
+            for row in rows
+            if isinstance(row, dict)
+            and isinstance(row.get("attackId"), str)
+            and isinstance(row.get("mutation"), str)
+            and isinstance(row.get("result"), str)
+            and row["attackId"].strip()
+            and row["mutation"].strip()
+            and row["result"].strip()
+        ]
+    else:
+        attacks = parse_attacks(text)
     if not attacks:
         raise LedgerError(f"no attack could be parsed from {report}")
     return attacks
@@ -655,7 +721,9 @@ def expected_requirement_refs(
             expected[reference] = {
                 "sourceRef": reference,
                 "source": "AUDIT_FINDING",
-                "sourceReference": f"{identifier} {audit.get('reviewReport')} {finding['id']}",
+                "sourceReference": (
+                    f"{identifier} {_audit_findings_report(audit)} {finding['id']}"
+                ),
                 "description": finding["title"],
                 "mandatory": True,
             }

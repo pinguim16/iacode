@@ -17,7 +17,7 @@ import shutil
 import subprocess
 import sys
 import time
-from collections.abc import Iterable, Sequence
+from collections.abc import Iterable, Mapping, Sequence
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -72,7 +72,10 @@ def require_docker() -> None:
             "dependency-free: install Docker Desktop or the Docker engine and try again.")
 
 
-def read_env_file(path: Path = ENV_FILE) -> dict[str, str]:
+def read_env_file(
+    path: Path = ENV_FILE,
+    environment: Mapping[str, str] | None = None,
+) -> dict[str, str]:
     """Parse the Compose environment file.
 
     Deliberately small: Compose's own ``.env`` format is ``KEY=value`` with ``#`` comments and no
@@ -90,7 +93,23 @@ def read_env_file(path: Path = ENV_FILE) -> dict[str, str]:
             continue
         key, _, value = stripped.partition("=")
         values[key.strip()] = value.strip()
+    # Docker Compose gives the process environment precedence over its env file.  Host-side
+    # helpers must observe the same effective values or an isolated verification can start one
+    # project and inspect or delete another.  Only declared keys are overlaid, so this function
+    # never turns the whole host environment into configuration or evidence.
+    effective = os.environ if environment is None else environment
+    for key in tuple(values):
+        if key in effective:
+            values[key] = effective[key]
     return values
+
+
+def project_image(service: str, path: Path = ENV_FILE) -> str:
+    """The image tag selected by the effective Compose project configuration."""
+    values = read_env_file(path)
+    project = values.get("COMPOSE_PROJECT_NAME", "iacode")
+    version = values.get("IACODE_VERSION", "0.1.0")
+    return f"{project}/{service}:{version}"
 
 
 

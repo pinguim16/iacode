@@ -16,6 +16,7 @@ import sys
 import tempfile
 import unittest
 from pathlib import Path
+from unittest import mock
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 LEDGER = PROJECT_ROOT / "scripts" / "development-ledger"
@@ -29,6 +30,7 @@ import policies  # noqa: E402
 import program_state  # noqa: E402
 import review_bundle  # noqa: E402
 import verify as repository_verify  # noqa: E402
+import compose as stack_compose  # noqa: E402
 
 GATE = ledger_common.delivered_gate(PROJECT_ROOT)
 SPECIFICATION = PROJECT_ROOT / "docs" / "GATE-4-CHECKLIST.md"
@@ -204,6 +206,102 @@ class Gate4QualityCoverageTests(unittest.TestCase):
             )
             repository_verify.clear_stage_report(stage)
             self.assertFalse(report.exists())
+
+    def test_full_verification_uses_a_checkout_owned_compose_project_and_dynamic_ports(self) -> None:
+        first = repository_verify.verification_environment(
+            PROJECT_ROOT / "first-checkout", {"COMPOSE_PROJECT_NAME": "iacode"}
+        )
+        second = repository_verify.verification_environment(
+            PROJECT_ROOT / "second-checkout", {"COMPOSE_PROJECT_NAME": "iacode"}
+        )
+        self.assertNotEqual(first["COMPOSE_PROJECT_NAME"], "iacode")
+        self.assertNotEqual(first["COMPOSE_PROJECT_NAME"], second["COMPOSE_PROJECT_NAME"])
+        self.assertTrue(first["COMPOSE_PROJECT_NAME"].startswith("iacode-verify-"))
+        for name in repository_verify.VERIFICATION_PORT_VARIABLES:
+            self.assertEqual(first[name], "0", name)
+
+    def test_each_stage_receives_the_frozen_verification_environment(self) -> None:
+        completed = subprocess.CompletedProcess(args=[], returncode=0, stdout="ok\n")
+        stage = repository_verify.Stage("fixture", "environment boundary", ["probe"])
+        environment = {"COMPOSE_PROJECT_NAME": "iacode-verify-fixture"}
+        with mock.patch.object(repository_verify.subprocess, "run", return_value=completed) as run:
+            repository_verify.run(stage, quiet=True, environment=environment)
+        self.assertEqual(run.call_args.kwargs["env"], environment)
+
+    def test_failed_stage_keeps_its_diagnostic_tail(self) -> None:
+        lines = "\n".join(f"line-{index}" for index in range(40)) + "\n"
+        completed = subprocess.CompletedProcess(args=[], returncode=7, stdout=lines)
+        stage = repository_verify.Stage("fixture", "diagnostic evidence", ["probe"])
+        with mock.patch.object(repository_verify.subprocess, "run", return_value=completed):
+            repository_verify.run(stage, quiet=True, environment={})
+        self.assertEqual(stage.exit_code, 7)
+        self.assertNotIn("line-14", stage.output_tail)
+        self.assertIn("line-15", stage.output_tail)
+        self.assertTrue(stage.output_tail.endswith("line-39"))
+
+    def test_cleanup_refuses_the_shared_developer_project(self) -> None:
+        with self.assertRaisesRegex(ValueError, "non-verification Compose project"):
+            repository_verify.clean_verification_project({"COMPOSE_PROJECT_NAME": "iacode"})
+
+    def test_host_helpers_observe_the_same_environment_precedence_as_compose(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            env_file = Path(directory) / ".env"
+            env_file.write_text(
+                "COMPOSE_PROJECT_NAME=iacode\nIACODE_VERSION=0.1.0\nIACODE_API_PORT=18080\n",
+                encoding="utf-8",
+                newline="\n",
+            )
+            environment = {
+                "COMPOSE_PROJECT_NAME": "iacode-verify-fixture",
+                "IACODE_API_PORT": "0",
+            }
+            values = stack_compose.read_env_file(env_file, environment)
+            with mock.patch.dict(stack_compose.os.environ, environment, clear=True):
+                image = stack_compose.project_image("api", env_file)
+        self.assertEqual(values["COMPOSE_PROJECT_NAME"], "iacode-verify-fixture")
+        self.assertEqual(values["IACODE_API_PORT"], "0")
+        self.assertEqual(image, "iacode-verify-fixture/api:0.1.0")
+
+    def test_live_stack_stage_builds_every_image_before_it_is_exercised(self) -> None:
+        stack = next(stage for stage in repository_verify.build_stages(False) if stage.name == "stack")
+        self.assertEqual(stack.argv[-1], "--build")
+
+    def test_prometheus_observation_waits_on_the_versioned_scrape_cycle(self) -> None:
+        from observability import prometheus_wait_budget_seconds, wait_for_prometheus_targets
+
+        class Clock:
+            value = 0.0
+
+            def monotonic(self) -> float:
+                return self.value
+
+            def sleep(self, seconds: float) -> None:
+                self.value += seconds
+
+        clock = Clock()
+        samples = iter([
+            {"status": "success", "data": {"activeTargets": [
+                {"labels": {"job": "iacode-api"}, "health": "down"}
+            ]}},
+            {"status": "success", "data": {"activeTargets": [
+                {"labels": {"job": "iacode-api"}, "health": "up"}
+            ]}},
+        ])
+        _payload, _targets, by_job = wait_for_prometheus_targets(
+            lambda: next(samples),
+            ("iacode-api",),
+            monotonic=clock.monotonic,
+            sleeper=clock.sleep,
+        )
+        self.assertEqual(by_job, {"iacode-api": "up"})
+        self.assertGreater(clock.value, 0.0)
+        self.assertEqual(prometheus_wait_budget_seconds(), 45.0)
+
+    def test_order_isolation_probe_preserves_the_historical_contiguous_stage_order(self) -> None:
+        from scenarios import verification_order_isolation as probe
+
+        self.assertEqual(probe.ORDER, ("stack", "integration", "infra", "smoke"))
+        self.assertEqual([stage.name for stage in probe.ordered_stages()], list(probe.ORDER))
 
     def test_real_repository_scenario_has_a_separate_bounded_wait(self) -> None:
         quality_source = (

@@ -14,10 +14,17 @@ from __future__ import annotations
 import json
 import shutil
 import subprocess
+import sys
 import unittest
 import urllib.error
 import urllib.request
 from pathlib import Path
+
+SCRIPTS = Path(__file__).resolve().parents[2] / "scripts" / "iacode"
+if str(SCRIPTS) not in sys.path:
+    sys.path.insert(0, str(SCRIPTS))
+
+from observability import wait_for_prometheus_targets  # noqa: E402
 
 REPOSITORY_ROOT = Path(__file__).resolve().parents[2]
 COMPOSE_DIRECTORY = REPOSITORY_ROOT / "infra" / "compose"
@@ -147,10 +154,13 @@ class TemporalConfigurationTests(RunningStackTestCase):
 class PrometheusConfigurationTests(RunningStackTestCase):
     def test_prometheus_scrapes_the_foundation_targets(self) -> None:
         port = _port("prometheus", 9090)
-        payload = _json(f"http://127.0.0.1:{port}/api/v1/targets?state=active")
-        health = {item["labels"]["job"]: item["health"]
-                  for item in payload["data"]["activeTargets"]}
-        for job in ("iacode-api", "iacode-worker", "iacode-sandbox"):
+        required = ("iacode-api", "iacode-worker", "iacode-sandbox")
+        payload, _targets, health = wait_for_prometheus_targets(
+            lambda: _json(f"http://127.0.0.1:{port}/api/v1/targets?state=active"),
+            required,
+        )
+        self.assertEqual(payload.get("status"), "success", payload)
+        for job in required:
             with self.subTest(job=job):
                 self.assertEqual(health.get(job), "up",
                                  f"{job} is {health.get(job)!r}; targets={health}")

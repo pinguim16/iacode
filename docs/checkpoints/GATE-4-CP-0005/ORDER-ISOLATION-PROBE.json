@@ -1,0 +1,80 @@
+{
+  "schemaVersion": "1.0.0",
+  "artifact": "G4-F-002-ORDER-ISOLATION-PROBE",
+  "composeProject": "iacode-verify-1997d3b5ed1b",
+  "publishedPorts": "docker-allocated",
+  "order": [
+    "stack",
+    "integration",
+    "infra",
+    "smoke"
+  ],
+  "cycles": [
+    {
+      "cycle": 1,
+      "precondition": "no verification containers or volumes",
+      "stages": [
+        {
+          "name": "stack",
+          "result": "PASS",
+          "exitCode": 0,
+          "durationSeconds": 122.2
+        },
+        {
+          "name": "integration",
+          "result": "PASS",
+          "exitCode": 0,
+          "durationSeconds": 127.5
+        },
+        {
+          "name": "infra",
+          "result": "PASS",
+          "exitCode": 0,
+          "durationSeconds": 66.3
+        },
+        {
+          "name": "smoke",
+          "result": "PASS",
+          "exitCode": 0,
+          "durationSeconds": 15.6
+        }
+      ],
+      "cleanup": "PASS",
+      "result": "PASS"
+    },
+    {
+      "cycle": 2,
+      "precondition": "no verification containers or volumes",
+      "stages": [
+        {
+          "name": "stack",
+          "result": "PASS",
+          "exitCode": 0,
+          "durationSeconds": 77.5
+        },
+        {
+          "name": "integration",
+          "result": "PASS",
+          "exitCode": 0,
+          "durationSeconds": 120.7
+        },
+        {
+          "name": "infra",
+          "result": "PASS",
+          "exitCode": 0,
+          "durationSeconds": 68.5
+        },
+        {
+          "name": "smoke",
+          "result": "PASS",
+          "exitCode": 0,
+          "durationSeconds": 15.0
+        }
+      ],
+      "cleanup": "PASS",
+      "result": "PASS"
+    }
+  ],
+  "durationSeconds": 632.7,
+  "result": "PASS"
+}

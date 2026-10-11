@@ -29,7 +29,12 @@ from pathlib import Path
 from typing import Any
 
 from ledger_common import LedgerError, find_root, load_json, resolve_latest, utc_now, validate_schema
-from policies import expected_requirement_refs, gate_specification, open_audits
+from policies import (
+    _audit_findings_report,
+    expected_requirement_refs,
+    gate_specification,
+    open_audits,
+)
 
 EVIDENCE_FIELDS = (
     "implementationEvidence",
@@ -128,7 +133,7 @@ def build(root: Path, checkpoint: Path, gate: str) -> tuple[dict[str, Any], dict
     letter = ord("C")
     for audit in open_audits(root, gate, checkpoint.name):
         sources.append(
-            f"SOURCE {chr(letter)}: {audit.get('reviewReport')}, the findings of "
+            f"SOURCE {chr(letter)}: {_audit_findings_report(audit)}, the findings of "
             f"{audit.get('auditId')}")
         letter += 1
         if audit.get("redTeamReport"):

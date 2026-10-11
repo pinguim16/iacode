@@ -22,7 +22,6 @@ from __future__ import annotations
 import argparse
 import json
 import sys
-import time
 import urllib.error
 import urllib.request
 from dataclasses import dataclass
@@ -31,6 +30,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from compose import StackError, log, main_guard, published_port, read_env_file, run_in
+from observability import wait_for_prometheus_targets
 
 TIMEOUT_SECONDS = 15
 
@@ -115,30 +115,14 @@ def check_web(base: str) -> list[Check]:
     ]
 
 
-#: Prometheus scrapes every fifteen seconds (`infra/prometheus/prometheus.yml`). On a stack that has
-#: just started, the last scrape of a target can predate that target's readiness, and the target
-#: reads "down" until the next one: the fresh installation of GATE-2-CP-0002's verification failed
-#: on exactly that. The check waits up to three scrape intervals for both targets, asking only
-#: Prometheus. G2-F-014, LSN-0049.
-TARGET_WAIT_SECONDS = 45.0
-TARGET_POLL_SECONDS = 3.0
 REQUIRED_TARGETS = ("iacode-api", "iacode-worker")
 
 
-def _active_targets(base: str) -> tuple[dict, list, dict]:
-    _status, payload = http_json(f"{base}/api/v1/targets?state=active")
-    targets = payload.get("data", {}).get("activeTargets", [])
-    return payload, targets, {item.get("labels", {}).get("job"): item.get("health")
-                              for item in targets}
-
-
 def check_prometheus(base: str) -> list[Check]:
-    started = time.monotonic()
-    payload, targets, by_job = _active_targets(base)
-    while any(by_job.get(job) != "up" for job in REQUIRED_TARGETS) and (
-            time.monotonic() - started < TARGET_WAIT_SECONDS):
-        time.sleep(TARGET_POLL_SECONDS)
-        payload, targets, by_job = _active_targets(base)
+    def fetch() -> dict:
+        return http_json(f"{base}/api/v1/targets?state=active")[1]
+
+    payload, targets, by_job = wait_for_prometheus_targets(fetch, REQUIRED_TARGETS)
     checks = [Check("prometheus.reachable", payload.get("status") == "success",
                     f"{len(targets)} active target(s)")]
     for job in REQUIRED_TARGETS:

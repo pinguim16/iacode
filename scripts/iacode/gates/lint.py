@@ -18,10 +18,8 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from compose import REPOSITORY_ROOT, log, main_guard, require_docker
+from compose import REPOSITORY_ROOT, build_service, log, main_guard, project_image, require_docker
 from gates.web_tests import BUILDER_IMAGE, build_toolchain
-
-API_IMAGE = "iacode/api:0.1.0"
 
 # What ruff is pointed at. `ruff.toml` excludes the sealed development-ledger tooling; naming the
 # roots here as well keeps the gate from walking the whole tree, `var/` and `node_modules`
@@ -48,6 +46,7 @@ PYTHON_ROOTS = (
 
 
 def ruff() -> int:
+    build_service("api")
     completed = subprocess.run(
         [
             "docker",
@@ -61,7 +60,7 @@ def ruff() -> int:
             f"{REPOSITORY_ROOT}:/repo:ro",
             "--workdir",
             "/repo",
-            API_IMAGE,
+            project_image("api"),
             "ruff",
             "check",
             *PYTHON_ROOTS,

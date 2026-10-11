@@ -72,8 +72,12 @@ python scripts/iacode/verify.py --fast   # everything that does not restart the 
 python scripts/iacode/verify.py          # everything, including a fresh installation
 ```
 
-On Windows, `.\verify.ps1` does the same. The full run ends by deleting every volume and rebuilding
-from nothing, because that is the claim this Gate makes.
+On Windows, `.\verify.ps1` does the same. Verification derives a Compose project owned by the
+resolved checkout, asks Docker to allocate its host ports, builds the live images, starts from no
+containers or volumes, and removes only that isolated project when it finishes. A running developer
+stack named `iacode` is neither reused nor stopped. The full run still includes deleting the
+verification project's volumes and rebuilding from nothing, because that is the claim this Gate
+makes.
 
 ## Reading it
 

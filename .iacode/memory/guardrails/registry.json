@@ -752,12 +752,13 @@
         "test_every_script_that_reads_prometheus_waits_for_a_scrape",
         "test_the_scan_fires_on_a_read_that_does_not_wait",
         "test_the_foundation_smoke_waits_for_both_targets_and_asks_only_prometheus",
-        "test_the_observability_check_waits_for_a_scrape_and_asks_only_prometheus"
+        "test_the_observability_check_waits_for_a_scrape_and_asks_only_prometheus",
+        "test_prometheus_observation_waits_on_the_versioned_scrape_cycle"
       ],
       "lessons": [
         "LSN-0049"
       ],
-      "removingItWouldAllow": "A smoke to pass or fail by how long the stack had been running - the gateway smoke on a rebuilt stack, the Foundation smoke on a fresh installation - and a green check to mean only that the timing was lucky."
+      "removingItWouldAllow": "A smoke or infrastructure check to pass or fail by how long the stack had been running - the gateway smoke on a rebuilt stack, the Foundation smoke or running-stack check on a fresh installation - and a green check to mean only that the timing was lucky."
     },
     {
       "guardrailId": "GRD-0052",
@@ -1367,6 +1368,23 @@
         "LSN-0094"
       ],
       "removingItWouldAllow": "A narrow corrective changeset to produce a review bundle with no migrations, schemas, or policies, preventing a reviewer from interpreting the delivery against its canonical repository context."
+    },
+    {
+      "guardrailId": "GRD-0096",
+      "title": "Full verification owns one checkout-scoped Compose runtime",
+      "kind": "test",
+      "reference": "test_full_verification_uses_a_checkout_owned_compose_project_and_dynamic_ports",
+      "verifiedBy": [
+        "test_full_verification_uses_a_checkout_owned_compose_project_and_dynamic_ports",
+        "test_each_stage_receives_the_frozen_verification_environment",
+        "test_cleanup_refuses_the_shared_developer_project",
+        "test_live_stack_stage_builds_every_image_before_it_is_exercised",
+        "test_order_isolation_probe_preserves_the_historical_contiguous_stage_order"
+      ],
+      "lessons": [
+        "LSN-0095"
+      ],
+      "removingItWouldAllow": "Two checkouts to share Compose containers, fixed ports, volumes or stale image tags, so a complete verifier can fail by order while an isolated rerun inherits a converged runtime and passes."
     }
   ]
 }

@@ -4683,6 +4683,49 @@ class SealedReportRenderingTests(unittest.TestCase):
         self.assertEqual([item["id"] for item in findings], ["G4-F-001"])
         self.assertEqual(findings[0]["severity"], "HIGH")
 
+    def test_a_structured_findings_artifact_in_a_sealed_audit_is_parsed(self) -> None:
+        audits = open_audits(PROJECT_ROOT, "GATE-4", "GATE-4-CP-0005")
+        self.assertEqual([audit["auditId"] for audit in audits], ["G4-CP-0004"])
+        findings = audit_findings(PROJECT_ROOT, audits[0])
+        self.assertEqual([item["id"] for item in findings], ["G4-F-002"])
+        self.assertEqual(findings[0]["severity"], "HIGH")
+
+    def test_a_structured_findings_report_without_valid_rows_is_refused(self) -> None:
+        with tempfile.TemporaryDirectory() as workdir:
+            root = Path(workdir)
+            write_json_file(root / "findings.json", {
+                "findings": [{"id": "", "severity": "HIGH", "title": "missing identity"}],
+                "observations": [{"id": "G4-F-999", "severity": "HIGH", "title": "not a finding"}],
+            })
+            with self.assertRaises(LedgerError) as refused:
+                audit_findings(root, {
+                    "auditId": "X",
+                    "reviewReport": "review.md",
+                    "findingsReport": "findings.json",
+                })
+        self.assertIn("no finding could be parsed", str(refused.exception))
+
+    def test_a_structured_red_team_artifact_preserves_the_complete_attack_battery(self) -> None:
+        audits = open_audits(PROJECT_ROOT, "GATE-4", "GATE-4-CP-0005")
+        attacks = audit_attacks(PROJECT_ROOT, audits[0])
+        self.assertEqual([item["id"] for item in attacks], list("ABCDEFGHIJKLMNOPQRST"))
+        self.assertTrue(all(item["mandatory"] == "true" for item in attacks))
+        self.assertTrue(all(item["mutation"].strip() for item in attacks))
+        self.assertEqual(
+            next(item for item in attacks if item["id"] == "Q")["mutation"],
+            "send a canonical scanner-detected marker under an ordinary structured output key",
+        )
+
+    def test_a_structured_red_team_report_without_valid_rows_is_refused(self) -> None:
+        with tempfile.TemporaryDirectory() as workdir:
+            root = Path(workdir)
+            write_json_file(root / "red-team.json", {
+                "attacks": [{"attackId": "A", "mutation": "", "result": "DEFENDED"}],
+            })
+            with self.assertRaises(LedgerError) as refused:
+                audit_attacks(root, {"auditId": "X", "redTeamReport": "red-team.json"})
+        self.assertIn("no attack could be parsed", str(refused.exception))
+
     def test_blocking_finding_prose_is_bounded_to_its_section(self) -> None:
         findings = parse_findings(
             "# Review\n\n## History\n\n`G4-F-001` is HIGH: only discussed here\n")

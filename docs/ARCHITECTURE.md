@@ -165,6 +165,7 @@ files. Distributed tracing is deferred to the Gate that has something to trace â
 | A tool runs only in a disposable, hardened sibling container the sandbox service creates | [ADR-0025](adr/ADR-0025-sandbox-isolation-boundary.md) |
 | One workspace per run, provisioned from an authorised snapshot, removed with the run | [ADR-0026](adr/ADR-0026-workspace-lifecycle.md) |
 | The canonical policy, never the request, decides what a tool may do | [ADR-0027](adr/ADR-0027-tool-execution-policy.md) |
+| A verification runtime is owned by one checkout | [ADR-0033](adr/ADR-0033-verification-runtime-is-owned-by-one-checkout.md) |
 
 Pinned versions: [VERSIONS.md](VERSIONS.md). Operating it: [runbooks/FOUNDATION.md](runbooks/FOUNDATION.md),
 [runbooks/MODEL-GATEWAY.md](runbooks/MODEL-GATEWAY.md),
@@ -338,6 +339,11 @@ evidence resolved. Failure, denial, timeout, cancellation, execution error, a mi
 stale input is FAIL. Reproduction creates a new run against the original frozen plan; restart and
 cancellation recovery belong to the durable workflow, and terminal state is recorded only after
 sandbox cleanup.
+
+Repository verification has a separate runtime boundary from the developer stack. One resolved
+checkout owns one derived Compose project, Docker-allocated host ports and disposable volumes for
+the complete verification battery; pre/post cleanup cannot target the shared `iacode` project â€”
+[ADR-0033](adr/ADR-0033-verification-runtime-is-owned-by-one-checkout.md).
 
 ## Planned runtime boundaries
 

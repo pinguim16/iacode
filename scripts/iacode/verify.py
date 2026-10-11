@@ -41,16 +41,19 @@ Gate the repository is delivering rather than the one this file was written duri
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
+import os
 import subprocess
 import sys
 import time
+from collections.abc import Mapping
 from dataclasses import dataclass, field
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from compose import REPOSITORY_ROOT, log, main_guard
+from compose import REPOSITORY_ROOT, StackError, log, main_guard
 from policies_bridge import (
     delivered_gate,
     mandatory_gate_commands,
@@ -72,6 +75,67 @@ class Stage:
     @property
     def ok(self) -> bool:
         return self.exit_code == 0
+
+
+VERIFICATION_PORT_VARIABLES = (
+    "IACODE_API_PORT",
+    "IACODE_WEB_PORT",
+    "IACODE_POSTGRES_PORT",
+    "IACODE_REDIS_PORT",
+    "IACODE_MINIO_API_PORT",
+    "IACODE_MINIO_CONSOLE_PORT",
+    "IACODE_TEMPORAL_PORT",
+    "IACODE_TEMPORAL_UI_PORT",
+    "IACODE_PROMETHEUS_PORT",
+    "IACODE_GRAFANA_PORT",
+)
+
+
+def verification_environment(
+    root: Path = REPOSITORY_ROOT,
+    base: Mapping[str, str] | None = None,
+) -> dict[str, str]:
+    """Freeze a Compose identity owned by this checkout, never by local developer config."""
+    environment = dict(os.environ if base is None else base)
+    identity = str(root.resolve()).replace("\\", "/").casefold().encode("utf-8")
+    environment["COMPOSE_PROJECT_NAME"] = (
+        f"iacode-verify-{hashlib.sha256(identity).hexdigest()[:12]}"
+    )
+    # Docker allocates the host ports. Every host-side check discovers the result through
+    # `docker compose port`, so two verification projects cannot race for a fixed local port.
+    for name in VERIFICATION_PORT_VARIABLES:
+        environment[name] = "0"
+    return environment
+
+
+def clean_verification_project(environment: Mapping[str, str]) -> subprocess.CompletedProcess[str]:
+    """Remove only the checkout-owned verification project and its disposable volumes."""
+    project = environment.get("COMPOSE_PROJECT_NAME", "")
+    if not project.startswith("iacode-verify-"):
+        raise ValueError(f"refusing to clean non-verification Compose project {project!r}")
+    return subprocess.run(
+        [
+            "docker",
+            "compose",
+            "--project-directory",
+            str(REPOSITORY_ROOT / "infra" / "compose"),
+            "--file",
+            str(REPOSITORY_ROOT / "infra" / "compose" / "docker-compose.yml"),
+            "--env-file",
+            str(REPOSITORY_ROOT / "infra" / "compose" / ".env"),
+            "down",
+            "--volumes",
+            "--remove-orphans",
+        ],
+        cwd=str(REPOSITORY_ROOT),
+        env=dict(environment),
+        text=True,
+        encoding="utf-8",
+        errors="replace",
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+        check=False,
+    )
 
 
 def python_stage(name: str, description: str, *arguments: str, destructive: bool = False) -> Stage:
@@ -98,7 +162,11 @@ def build_stages(fast: bool) -> list[Stage]:
 
     stages += [
         python_stage(
-            "stack", "start the stack and wait for real health", "scripts/iacode/stack.py", "up"
+            "stack",
+            "build and start an isolated stack, then wait for real health",
+            "scripts/iacode/stack.py",
+            "up",
+            "--build",
         ),
         Stage(
             name="integration",
@@ -403,7 +471,7 @@ def clear_stage_report(stage: Stage) -> None:
         resolved.unlink()
 
 
-def run(stage: Stage, quiet: bool) -> Stage:
+def run(stage: Stage, quiet: bool, environment: Mapping[str, str] | None = None) -> Stage:
     log(f"--- {stage.name}: {stage.description}")
     clear_stage_report(stage)
     started = time.monotonic()
@@ -413,15 +481,20 @@ def run(stage: Stage, quiet: bool) -> Stage:
         text=True,
         encoding="utf-8",
         errors="replace",
-        stdout=subprocess.PIPE if quiet else None,
-        stderr=subprocess.STDOUT if quiet else None,
+        env=dict(environment) if environment is not None else None,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
         check=False,
     )
     stage.duration_seconds = round(time.monotonic() - started, 1)
     stage.exit_code = completed.returncode
-    if quiet and completed.stdout:
+    if completed.stdout:
         stage.output_tail = "\n".join(completed.stdout.strip().splitlines()[-25:])
-        if not stage.ok:
+        if not quiet:
+            sys.stdout.write(completed.stdout)
+            if not completed.stdout.endswith("\n"):
+                sys.stdout.write("\n")
+        elif not stage.ok:
             sys.stdout.write(stage.output_tail + "\n")
     log(f"--- {stage.name}: {'PASS' if stage.ok else 'FAIL'} in {stage.duration_seconds:g}s")
     return stage
@@ -461,6 +534,15 @@ def main() -> int:
         return 0
 
     gate = delivered_gate(REPOSITORY_ROOT)
+    environment = verification_environment()
+    project_name = environment["COMPOSE_PROJECT_NAME"]
+    log(f"isolated Compose project={project_name}; published ports allocated by Docker")
+    before = clean_verification_project(environment)
+    if before.returncode != 0:
+        detail = "\n".join(before.stdout.strip().splitlines()[-25:])
+        raise StackError(
+            f"pre-run cleanup failed for isolated Compose project {project_name}:\n{detail}"
+        )
     # The mandatory set includes `checkpointValidation`, and the checkpoint's append-only evidence
     # has grown since the author last bound its hashes — every recorded command since then is in
     # it. Re-derive the declared hashes through the ledger's own function, which never adds or
@@ -471,18 +553,30 @@ def main() -> int:
     log(f"verifying {gate}: {len(stages)} stage(s)" + (", targeted mode" if arguments.fast else ""))
     started = time.monotonic()
     executed: list[Stage] = []
-    for stage in stages:
-        executed.append(run(stage, quiet=arguments.quiet))
-        if not stage.ok and not arguments.keep_going:
-            log(
-                f"stopping at the first failure: {stage.name}. "
-                f"Re-run with --keep-going to see the rest."
-            )
-            break
+    cleanup: subprocess.CompletedProcess[str] | None = None
+    try:
+        for stage in stages:
+            executed.append(run(stage, quiet=arguments.quiet, environment=environment))
+            if not stage.ok and not arguments.keep_going:
+                log(
+                    f"stopping at the first failure: {stage.name}. "
+                    f"Re-run with --keep-going to see the rest."
+                )
+                break
+    finally:
+        cleanup = clean_verification_project(environment)
+        if cleanup.returncode != 0:
+            detail = "\n".join(cleanup.stdout.strip().splitlines()[-25:])
+            log(f"isolated project cleanup failed:\n{detail}")
 
     failed = [stage for stage in executed if not stage.ok]
     elapsed = round(time.monotonic() - started, 1)
-    result = "PASS" if not failed and len(executed) == len(stages) else "FAIL"
+    cleanup_ok = cleanup is not None and cleanup.returncode == 0
+    result = (
+        "PASS"
+        if not failed and len(executed) == len(stages) and cleanup_ok
+        else "FAIL"
+    )
 
     if arguments.report:
         arguments.report.parent.mkdir(parents=True, exist_ok=True)
@@ -500,9 +594,16 @@ def main() -> int:
                             "exitCode": stage.exit_code,
                             "durationSeconds": stage.duration_seconds,
                             "result": "PASS" if stage.ok else "FAIL",
+                            **({"outputTail": stage.output_tail} if not stage.ok else {}),
                         }
                         for stage in executed
                     ],
+                    "isolation": {
+                        "composeProject": project_name,
+                        "publishedPorts": "docker-allocated",
+                        "preRunCleanup": "PASS",
+                        "postRunCleanup": "PASS" if cleanup_ok else "FAIL",
+                    },
                 },
                 indent=2,
             )
@@ -521,6 +622,7 @@ def main() -> int:
     skipped = len(stages) - len(executed)
     if skipped:
         print(f"[SKIP] {skipped} stage(s) were not reached")
+    print(f"[{'PASS' if cleanup_ok else 'FAIL'}] verification-cleanup     isolated project removed")
     print(f"VERIFY={result} {len(executed) - len(failed)}/{len(stages)} stages in {elapsed:g}s")
     return 0 if result == "PASS" else 1
 

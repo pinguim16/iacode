@@ -93,6 +93,23 @@
       "correctiveCheckpoint": "GATE-4-CP-0003",
       "notes": "One HIGH finding, G4-F-001: credential-shaped structured quality output recognized by the canonical scanner is persisted and resolvable instead of quarantined. Independent attack G4-X7 escaped; no product correction was made by the auditor.",
       "findingsClosureFile": "G4-CP-0002-FINDINGS-CLOSURE.json"
+    },
+    {
+      "auditId": "G4-CP-0004",
+      "milestone": "M2",
+      "gate": "GATE-4",
+      "auditor": "Codex desktop application, OpenAI, GPT-5, fresh-session independent Gate audit (FRESH_SESSION_INDEPENDENT_AUDIT); not cross-tool validation",
+      "auditCheckpoint": "GATE-4-CP-0004",
+      "auditCommit": "73cfa5eeb7fca2bf9312ec777d02f9ddfb2ad3d5",
+      "subjectCheckpoint": "GATE-4-CP-0003",
+      "subjectCommit": "5d47200fde08c47b7a6410be2204b4c1b9fbadc1",
+      "verdict": "REWORK_REQUIRED",
+      "reviewReport": "docs/checkpoints/GATE-4-CP-0004/REVIEW-REPORT.md",
+      "findingsReport": "docs/checkpoints/GATE-4-CP-0004/FINDINGS.json",
+      "redTeamReport": "docs/checkpoints/GATE-4-CP-0004/GATE-4-INDEPENDENT-RED-TEAM.json",
+      "correctiveCheckpoint": "GATE-4-CP-0005",
+      "notes": "One HIGH finding, G4-F-002: the published full clean-clone verifier returned 40/42 because infra and smoke failed in the single mandatory run; isolated reruns do not replace the red run. The independent Red Team defended all twenty attacks.",
+      "findingsClosureFile": "G4-CP-0004-FINDINGS-CLOSURE.json"
     }
   ]
 }

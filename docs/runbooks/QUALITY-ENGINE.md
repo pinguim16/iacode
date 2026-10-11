@@ -76,6 +76,24 @@ probe. Prometheus scrapes `evaluator:9103/metrics`. Useful metric families start
   committed. Treat the runner output as credential-bearing, rotate any real credential outside
   IACode, remove it at the producer, and start a reproduction. Do not bypass or weaken the scanner.
 
+## Repository verification runtime
+
+`python scripts/iacode/verify.py --fast` and the full command use a Compose project derived from the
+resolved checkout, not the developer project's `COMPOSE_PROJECT_NAME`. Docker allocates its
+published host ports and every stage receives the same frozen environment. The verifier removes
+only that project and its volumes before and after execution, so a transport clone cannot reuse,
+replace or delete another checkout's stack.
+
+The live stack stage builds every image before measuring it. Prometheus target checks in both
+`infra` and `smoke` wait only by reading Prometheus; their budget is three cycles derived from
+`infra/prometheus/prometheus.yml`. They do not restart a target, rerun a failed check or promote a
+later green observation over an earlier red stage. A failed stage's diagnostic tail is stored in
+the verification JSON report.
+
+If cleanup fails, the overall verification is `FAIL` even when every counted stage passed. Inspect
+the report's `isolation` object and remove only the named `iacode-verify-*` project after confirming
+its identity. Never point cleanup at `iacode` or at another checkout's project.
+
 Routine recovery is `docker compose ... up -d evaluator sandbox`, followed by the evaluator health
 check and an event-history read. Destructive database or object-store repair is not part of this
 runbook.

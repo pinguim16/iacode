@@ -56,7 +56,7 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 | `LSN-0046` | `GUARDED` | CRITICAL | implementation | A timeout that cancels the task it runs in leaves nothing able to record what happened | `scripts/iacode/scenarios/agent_runtime_deadline.py`, `test_the_engine_is_not_wrapped_in_wait_for`, `test_the_wait_accepts_every_way_a_cancelled_activity_surfaces`, `test_the_deadline_path_writes_the_failure_down`, `test_the_scenario_asserts_the_run_ended_and_said_so` |
 | `LSN-0047` | `GUARDED` | HIGH | implementation | A refusal that misnames the defect spends the only repair on the wrong correction | `test_content_of_the_wrong_type_is_refused_by_its_real_defect`, `test_the_runtime_instructions_state_that_content_is_one_string`, `scripts/iacode/agent_runtime_smoke.py` |
 | `LSN-0048` | `GUARDED` | HIGH | implementation | A state and the event that explains it, written in two commits, are written event first | `test_a_terminal_state_is_never_visible_before_its_terminal_event`, `test_the_workflow_writes_the_terminal_event_before_the_terminal_state`, `test_a_workflow_that_cannot_start_fails_the_run_rather_than_leaving_it_created`, `scripts/iacode/agent_runtime_smoke.py` |
-| `LSN-0049` | `GUARDED` | MEDIUM | testing | A metric read the instant after the call that moved it is read before the scrape that carries it | `test_the_observability_check_waits_for_a_scrape_and_asks_only_prometheus`, `test_live_smoke_is_bounded_and_minimal`, `test_every_script_that_reads_prometheus_waits_for_a_scrape`, `test_the_scan_fires_on_a_read_that_does_not_wait`, `test_the_foundation_smoke_waits_for_both_targets_and_asks_only_prometheus` |
+| `LSN-0049` | `GUARDED` | HIGH | testing | A metric read the instant after the call that moved it is read before the scrape that carries it | `test_the_observability_check_waits_for_a_scrape_and_asks_only_prometheus`, `test_live_smoke_is_bounded_and_minimal`, `test_every_script_that_reads_prometheus_waits_for_a_scrape`, `test_the_scan_fires_on_a_read_that_does_not_wait`, `test_the_foundation_smoke_waits_for_both_targets_and_asks_only_prometheus`, `test_prometheus_observation_waits_on_the_versioned_scrape_cycle` |
 | `LSN-0050` | `GUARDED` | CRITICAL | checkpoint | A checkpoint sealed without naming its own tag cannot be validated from that tag | `test_sealing_refuses_a_state_that_does_not_name_its_own_tag`, `test_a_symbolic_head_validates_from_its_own_canonical_tag`, `test_a_symbolic_head_away_from_its_canonical_tag_is_still_refused`, `test_every_sealed_checkpoint_validates_from_its_own_tag` |
 | `LSN-0051` | `GUARDED` | HIGH | implementation | A payload one service bounds for another must be bounded as the receiver measures it | `test_the_runtime_accepts_every_result_the_sandbox_hands_over`, `test_an_escaped_output_is_shortened_to_the_bound_and_says_so`, `test_an_output_that_fits_is_handed_over_unchanged` |
 | `LSN-0052` | `GUARDED` | HIGH | architecture | Two processes that meet on a queue must name what crosses it once, and a real run must exercise both | `test_both_sides_name_the_result_by_the_shared_key`, `test_the_key_scan_detects_a_literal`, `test_the_activity_answers_the_agent_result_and_the_execution` |
@@ -102,6 +102,7 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 | `LSN-0092` | `GUARDED` | HIGH | tooling | Canonical audit parsers must consume every bounded sealed report rendering | `test_a_blocking_finding_paragraph_in_a_sealed_audit_is_parsed`, `test_blocking_finding_prose_is_bounded_to_its_section` |
 | `LSN-0093` | `GUARDED` | HIGH | testing | Disposable control repositories must carry every imported repository package | `test_disposable_ledger_runtime_carries_its_canonical_scanner_dependency`, `test_full_delivery_assurance_flow_reaches_ready_for_review` |
 | `LSN-0094` | `GUARDED` | HIGH | checkpoint | A review bundle must include unchanged canonical artifact categories | `test_review_context_includes_unchanged_migrations_schemas_and_policies`, `scripts/development-ledger/review_bundle.py` |
+| `LSN-0095` | `GUARDED` | HIGH | testing | A complete verifier must own its Compose runtime by checkout | `test_full_verification_uses_a_checkout_owned_compose_project_and_dynamic_ports`, `test_each_stage_receives_the_frozen_verification_environment`, `test_cleanup_refuses_the_shared_developer_project`, `test_live_stack_stage_builds_every_image_before_it_is_exercised`, `test_order_isolation_probe_preserves_the_historical_contiguous_stage_order` |
 
 ## Detail
 
@@ -746,18 +747,19 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 
 ### LSN-0049 — A metric read the instant after the call that moved it is read before the scrape that carries it
 
-- Status: `GUARDED`, severity MEDIUM, category testing, recurrences 1.
+- Status: `GUARDED`, severity HIGH, category testing, recurrences 2.
 - Source: GATE-2, GATE-2-CP-0002, finding G2-F-012.
 - Symptom: The live gateway smoke failed one check of twenty on a call that had succeeded: observability.scraped found no gateway request series. The stack had been rebuilt seconds before, so the API's counter had restarted and Prometheus had not scraped it since the smoke's own requests.
 - Root cause: The check asked Prometheus once, immediately after the inference, while Prometheus scrapes the API every fifteen seconds. Whether the counter had been scraped yet was a matter of timing, so the check passed on a stack that had been running for a while and failed on a freshly started one - the result described the clock, not the gateway.
-- Resolution: The check waits for the scrape, bounded by three scrape intervals and polling only Prometheus: the provider is never called again to make the metric appear, so the live check stays one inference and one stream.
+- Resolution: Every Prometheus target observation now uses one policy-derived helper bounded by three versioned scrape intervals and polling only Prometheus; neither the action nor the stack is retried.
 - Prevention:
   - `test` test_the_observability_check_waits_for_a_scrape_and_asks_only_prometheus — A scrape that arrives after the call is waited for, one that never arrives fails within the bound, and every read goes to Prometheus.
   - `test` test_live_smoke_is_bounded_and_minimal — The live check still makes exactly one inference and one stream.
   - `test` test_every_script_that_reads_prometheus_waits_for_a_scrape — Every script that reads Prometheus's API waits for a scrape within a bound; the control is the class, read from the syntax tree.
   - `test` test_the_scan_fires_on_a_read_that_does_not_wait — The null control of that scan.
   - `test` test_the_foundation_smoke_waits_for_both_targets_and_asks_only_prometheus — The Foundation smoke waits for both targets and asks only Prometheus.
-- Evidence: `file:scripts/iacode/gateway_smoke.py`, `file:tests/test_gate1_model_gateway.py`, `file:infra/prometheus/prometheus.yml`, `file:scripts/iacode/smoke.py`, `file:tests/test_gate2_agent_runtime.py`
+  - `test` test_prometheus_observation_waits_on_the_versioned_scrape_cycle — The infrastructure and smoke paths share the versioned scrape-cycle budget and do not repeat the observed action.
+- Evidence: `file:scripts/iacode/gateway_smoke.py`, `file:tests/test_gate1_model_gateway.py`, `file:infra/prometheus/prometheus.yml`, `file:scripts/iacode/smoke.py`, `file:tests/test_gate2_agent_runtime.py`, `file:scripts/iacode/observability.py`, `file:infra/tests/test_running_stack.py`, `file:tests/test_gate4_quality_engine.py`
 
 ### LSN-0050 — A checkpoint sealed without naming its own tag cannot be validated from that tag
 
@@ -1288,3 +1290,18 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
   - `test` test_review_context_includes_unchanged_migrations_schemas_and_policies — The collected review context always contains tracked migrations, schemas, and policies even when none changed in the current slice.
   - `automated-check` scripts/development-ledger/review_bundle.py — Bundle validation rejects a package missing any mandatory artifact category and scans the complete payload.
 - Evidence: `file:scripts/development-ledger/review_bundle.py`, `file:tests/test_gate4_quality_engine.py`, `file:docs/checkpoints/GATE-4-CP-0003/COMMANDS.jsonl`
+
+### LSN-0095 — A complete verifier must own its Compose runtime by checkout
+
+- Status: `GUARDED`, severity HIGH, category testing, recurrences 0.
+- Source: GATE-4, GATE-4-CP-0004, finding G4-F-002.
+- Symptom: The published detached full verifier completed 42 stages but returned 40/42 because infrastructure and smoke failed only inside the complete ordered run; exact isolated reruns then passed.
+- Root cause: Independent checkouts defaulted to the same Compose project, fixed host ports, image tags, volumes, and runtime state, while the stack stage did not require a build. One checkout could therefore observe or replace another checkout's mutable verification environment, and an isolated rerun inherited the converged state.
+- Resolution: Derive a stable verification-only Compose project from the checkout path, request Docker-allocated host ports, freeze that environment across all 42 stages, build the full stack before measurement, clean only that owned project before and after the run, and retain failed-stage output tails.
+- Prevention:
+  - `test` test_full_verification_uses_a_checkout_owned_compose_project_and_dynamic_ports — Distinct checkouts receive distinct verification projects and every published port is Docker allocated.
+  - `test` test_each_stage_receives_the_frozen_verification_environment — All stages in one verifier run receive the same immutable ownership environment.
+  - `test` test_cleanup_refuses_the_shared_developer_project — Verification cleanup cannot target the default shared developer project.
+  - `test` test_live_stack_stage_builds_every_image_before_it_is_exercised — The ordered stack stage builds repository images before any live measurement.
+  - `test` test_order_isolation_probe_preserves_the_historical_contiguous_stage_order — The targeted two-cycle probe preserves stack, integration, infrastructure, and smoke order without retrying a failed cycle.
+- Evidence: `file:scripts/iacode/verify.py`, `file:scripts/iacode/compose.py`, `file:scripts/iacode/scenarios/verification_order_isolation.py`, `file:tests/test_gate4_quality_engine.py`, `file:docs/adr/ADR-0033-verification-runtime-is-owned-by-one-checkout.md`, `file:docs/checkpoints/GATE-4-CP-0005/ORDER-ISOLATION-PROBE.json`

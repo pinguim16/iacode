@@ -178,10 +178,16 @@ stages that restart the stack and delete volumes.
 
 The full run — `python scripts/iacode/verify.py`, or `.\verify.ps1` on Windows — adds the restart
 scenario, the dependency-failure scenario and a complete installation from no volumes at all. That
-is what the Gate is verified by.
+is what the Gate is verified by. The verifier freezes a checkout-owned Compose project, uses
+Docker-allocated host ports, builds every live image and removes that project's containers and
+volumes before and after the battery. It never reuses or stops the normal developer project
+`iacode`. `infra` and `smoke` observe Prometheus through the same bounded wait derived from the
+versioned scrape interval; neither reruns the action under test.
 
 The mandatory gate set comes from `.iacode/policies/quality-gates.json`. The verification reads that
 file rather than carrying its own list, so a gate added to the registry is covered immediately.
+The machine-readable report retains the diagnostic tail of every failed stage. A later isolated
+green command is useful diagnosis but never replaces a red complete run.
 
 ## Conventions worth knowing
 
