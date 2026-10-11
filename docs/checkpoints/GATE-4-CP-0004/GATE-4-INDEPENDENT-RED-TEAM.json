@@ -1,0 +1,301 @@
+{
+  "schemaVersion": "1.0.0",
+  "artifact": "GATE-4-INDEPENDENT-RED-TEAM",
+  "checkpoint": "GATE-4-CP-0004",
+  "subjectCheckpoint": "GATE-4-CP-0003",
+  "subjectCommit": "5d47200fde08c47b7a6410be2204b4c1b9fbadc1",
+  "generatedAt": "2026-10-11T10:48:09.254041Z",
+  "baselineControl": {
+    "result": "VALID",
+    "components": {
+      "canonicalVerdictControl": "VALID",
+      "activityPersistenceControl": "VALID",
+      "subjectBundleControl": true
+    }
+  },
+  "attacks": [
+    {
+      "attackId": "A",
+      "description": "missing result",
+      "target": "missing result",
+      "mutation": "remove the only mandatory result",
+      "expectedDefense": "derived verdict FAIL names the missing check",
+      "observed": "verdict=FAIL; reasons=('missing result for q001-unit',)",
+      "result": "DEFENDED",
+      "evidence": [
+        "checkpoint:M2-INTERNAL-RED-TEAM.json"
+      ],
+      "mandatory": true,
+      "origin": "fresh execution by the independent Gate 4 audit"
+    },
+    {
+      "attackId": "B",
+      "description": "exit-code forgery",
+      "target": "exit-code forgery",
+      "mutation": "keep PASSED and flip exitCode to 1",
+      "expectedDefense": "the result contract refuses the contradictory shape",
+      "observed": "contract refused non-zero PASS",
+      "result": "DEFENDED",
+      "evidence": [
+        "checkpoint:M2-INTERNAL-RED-TEAM.json"
+      ],
+      "mandatory": true,
+      "origin": "fresh execution by the independent Gate 4 audit"
+    },
+    {
+      "attackId": "C",
+      "description": "forged evidence",
+      "target": "forged evidence",
+      "mutation": "replace the resolved digest set",
+      "expectedDefense": "the evidence reference is unresolved and verdict is FAIL",
+      "observed": "verdict=FAIL; reasons=('q001-unit has unresolved evidence evidence-red-team',)",
+      "result": "DEFENDED",
+      "evidence": [
+        "checkpoint:M2-INTERNAL-RED-TEAM.json"
+      ],
+      "mandatory": true,
+      "origin": "fresh execution by the independent Gate 4 audit"
+    },
+    {
+      "attackId": "D",
+      "description": "policy mutation",
+      "target": "policy mutation",
+      "mutation": "change maxCheckSeconds under the same planId",
+      "expectedDefense": "the immutable store refuses PLAN_ID_CONFLICT",
+      "observed": "store refused PLAN_ID_CONFLICT",
+      "result": "DEFENDED",
+      "evidence": [
+        "checkpoint:M2-INTERNAL-RED-TEAM.json"
+      ],
+      "mandatory": true,
+      "origin": "fresh execution by the independent Gate 4 audit"
+    },
+    {
+      "attackId": "E",
+      "description": "snapshot mutation",
+      "target": "snapshot mutation",
+      "mutation": "change snapshotDigest under the same planId",
+      "expectedDefense": "the immutable store refuses PLAN_ID_CONFLICT",
+      "observed": "store refused PLAN_ID_CONFLICT",
+      "result": "DEFENDED",
+      "evidence": [
+        "checkpoint:M2-INTERNAL-RED-TEAM.json"
+      ],
+      "mandatory": true,
+      "origin": "fresh execution by the independent Gate 4 audit"
+    },
+    {
+      "attackId": "F",
+      "description": "wrong origin",
+      "target": "wrong origin",
+      "mutation": "post a result with origin CALLER",
+      "expectedDefense": "the closed origin contract refuses it",
+      "observed": "contract refused origin",
+      "result": "DEFENDED",
+      "evidence": [
+        "checkpoint:M2-INTERNAL-RED-TEAM.json"
+      ],
+      "mandatory": true,
+      "origin": "fresh execution by the independent Gate 4 audit"
+    },
+    {
+      "attackId": "G",
+      "description": "timed_out result",
+      "target": "timed_out result",
+      "mutation": "replace PASSED with TIMED_OUT",
+      "expectedDefense": "the derived verdict is FAIL",
+      "observed": "verdict=FAIL; reasons=('q001-unit ended TIMED_OUT',)",
+      "result": "DEFENDED",
+      "evidence": [
+        "checkpoint:M2-INTERNAL-RED-TEAM.json"
+      ],
+      "mandatory": true,
+      "origin": "fresh execution by the independent Gate 4 audit"
+    },
+    {
+      "attackId": "H",
+      "description": "denied result",
+      "target": "denied result",
+      "mutation": "replace PASSED with DENIED",
+      "expectedDefense": "the derived verdict is FAIL",
+      "observed": "verdict=FAIL; reasons=('q001-unit ended DENIED',)",
+      "result": "DEFENDED",
+      "evidence": [
+        "checkpoint:M2-INTERNAL-RED-TEAM.json"
+      ],
+      "mandatory": true,
+      "origin": "fresh execution by the independent Gate 4 audit"
+    },
+    {
+      "attackId": "I",
+      "description": "cancelled result",
+      "target": "cancelled result",
+      "mutation": "replace PASSED with CANCELLED",
+      "expectedDefense": "the derived verdict is FAIL",
+      "observed": "verdict=FAIL; reasons=('q001-unit ended CANCELLED',)",
+      "result": "DEFENDED",
+      "evidence": [
+        "checkpoint:M2-INTERNAL-RED-TEAM.json"
+      ],
+      "mandatory": true,
+      "origin": "fresh execution by the independent Gate 4 audit"
+    },
+    {
+      "attackId": "J",
+      "description": "unknown status",
+      "target": "unknown status",
+      "mutation": "submit status ASSERTED_GOOD",
+      "expectedDefense": "the closed result-status contract refuses it",
+      "observed": "contract refused status",
+      "result": "DEFENDED",
+      "evidence": [
+        "checkpoint:M2-INTERNAL-RED-TEAM.json"
+      ],
+      "mandatory": true,
+      "origin": "fresh execution by the independent Gate 4 audit"
+    },
+    {
+      "attackId": "K",
+      "description": "bundle integrity",
+      "target": "bundle integrity",
+      "mutation": "alter one payload byte",
+      "expectedDefense": "validator refuses with digest mismatch",
+      "observed": "result=FAIL; expected-finding=True",
+      "result": "DEFENDED",
+      "evidence": [
+        "checkpoint:M2-INTERNAL-RED-TEAM.json"
+      ],
+      "mandatory": true,
+      "origin": "fresh execution by the independent Gate 4 audit"
+    },
+    {
+      "attackId": "L",
+      "description": "mandatory bundle evidence",
+      "target": "mandatory bundle evidence",
+      "mutation": "remove subject STATE.json",
+      "expectedDefense": "validator refuses with missing required checkpoint artifact: STATE.json",
+      "observed": "result=FAIL; expected-finding=True",
+      "result": "DEFENDED",
+      "evidence": [
+        "checkpoint:M2-INTERNAL-RED-TEAM.json"
+      ],
+      "mandatory": true,
+      "origin": "fresh execution by the independent Gate 4 audit"
+    },
+    {
+      "attackId": "M",
+      "description": "archive path safety",
+      "target": "archive path safety",
+      "mutation": "add a traversal member",
+      "expectedDefense": "validator refuses with unsafe archive member",
+      "observed": "result=FAIL; expected-finding=True",
+      "result": "DEFENDED",
+      "evidence": [
+        "checkpoint:M2-INTERNAL-RED-TEAM.json"
+      ],
+      "mandatory": true,
+      "origin": "fresh execution by the independent Gate 4 audit"
+    },
+    {
+      "attackId": "N",
+      "description": "bundle secret scan",
+      "target": "bundle secret scan",
+      "mutation": "add canonical credential-shaped bytes",
+      "expectedDefense": "validator refuses with secret scan found",
+      "observed": "result=FAIL; expected-finding=True",
+      "result": "DEFENDED",
+      "evidence": [
+        "checkpoint:M2-INTERNAL-RED-TEAM.json"
+      ],
+      "mandatory": true,
+      "origin": "fresh execution by the independent Gate 4 audit"
+    },
+    {
+      "attackId": "O",
+      "description": "archive uniqueness",
+      "target": "archive uniqueness",
+      "mutation": "duplicate a member name",
+      "expectedDefense": "validator refuses with duplicate member names",
+      "observed": "result=FAIL; expected-finding=True",
+      "result": "DEFENDED",
+      "evidence": [
+        "checkpoint:M2-INTERNAL-RED-TEAM.json"
+      ],
+      "mandatory": true,
+      "origin": "fresh execution by the independent Gate 4 audit"
+    },
+    {
+      "attackId": "P",
+      "description": "live adverse lifecycle",
+      "target": "live adverse lifecycle",
+      "mutation": "execute restart, cancellation, timeout and forged-origin scenarios",
+      "expectedDefense": "every fail-closed invariant survives in the current verifier run",
+      "observed": "quality-recovery=PASS; quality-cancellation=PASS; quality-timeout=PASS; sandbox-tool-result-origin=PASS",
+      "result": "DEFENDED",
+      "evidence": [
+        "checkpoint:VERIFICATION-REPORT.json"
+      ],
+      "mandatory": true,
+      "origin": "fresh execution by the independent Gate 4 audit"
+    },
+    {
+      "attackId": "Q",
+      "description": "pre-persistence secret containment",
+      "target": "pre-persistence secret containment",
+      "mutation": "send a canonical scanner-detected marker under an ordinary structured output key",
+      "expectedDefense": "reject before object or metadata persistence and derive FAIL from a sanitized result",
+      "observed": "scannerKinds=['GitHub credential']; scan-before-store=True; status=ERROR; verdict=FAIL; objects=0; records=0; evidence=0; logs-clean=True",
+      "result": "DEFENDED",
+      "evidence": [
+        "checkpoint:G4-X7-INDEPENDENT-PROBE.json"
+      ],
+      "mandatory": true,
+      "origin": "fresh execution by the independent Gate 4 audit"
+    },
+    {
+      "attackId": "R",
+      "target": "scanner availability",
+      "mutation": "make the canonical evidence scanner throw before it can classify clean bytes",
+      "expectedDefense": "fail closed before any lookup or write and derive FAIL",
+      "observed": "scan-before-store=True; status=ERROR; verdict=FAIL; objects=0; records=0",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "evidence": [
+        "checkpoint:G4-X7-INDEPENDENT-PROBE.json"
+      ],
+      "origin": "audit-owned evaluator-image probe"
+    },
+    {
+      "attackId": "S",
+      "target": "legacy persisted object",
+      "mutation": "replace already persisted clean bytes with a canonical credential shape",
+      "expectedDefense": "rescan after read, refuse resolution and derive FAIL",
+      "observed": "resolved=False; rescanned-after-read=True; verdict=FAIL",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "evidence": [
+        "checkpoint:G4-X7-INDEPENDENT-PROBE.json"
+      ],
+      "origin": "audit-owned evaluator-image probe"
+    },
+    {
+      "attackId": "T",
+      "target": "review bundle portability and determinism",
+      "mutation": "rebuild twice from a detached transport clone and validate there",
+      "expectedDefense": "byte-identical rebuilds and complete secret-clean portable validation",
+      "observed": "deterministic=True; portable=True; categories=True",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "evidence": [
+        "checkpoint:SUBJECT-BUNDLE-AUDIT.json"
+      ],
+      "origin": "audit-owned transport-clone bundle probe"
+    }
+  ],
+  "mandatoryTotal": 20,
+  "mandatoryDefended": 20,
+  "defended": 20,
+  "escaped": 0,
+  "total": 20,
+  "result": "RED_TEAM_PASS"
+}

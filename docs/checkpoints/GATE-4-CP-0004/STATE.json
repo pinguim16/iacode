@@ -1,0 +1,171 @@
+{
+  "schemaVersion": "3.2.0",
+  "phase": "Gate 4 fresh-session independent re-audit of sealed GATE-4-CP-0003",
+  "gate": "GATE-4",
+  "status": "REWORK_REQUIRED",
+  "branch": "main",
+  "baseCommit": "5d47200fde08c47b7a6410be2204b4c1b9fbadc1",
+  "currentCommit": "refs/tags/iacode-checkpoints/GATE-4-CP-0004",
+  "dirty": false,
+  "startedAt": "2026-10-11T09:28:10Z",
+  "updatedAt": "2026-10-11T12:29:27Z",
+  "nextAllowedAction": "Finalize, seal, tag and publish the REWORK_REQUIRED audit checkpoint; do not start Gate 5.",
+  "blockedBy": [
+    "G4-F-002"
+  ],
+  "secondToolValidation": {
+    "status": "FAILED",
+    "tool": "Codex desktop application, fresh session",
+    "provider": "OpenAI",
+    "model": "GPT-5",
+    "validatedAt": "2026-10-11T12:23:17.339291Z",
+    "justification": "The fresh published verification failed infra and smoke in its single full run.",
+    "evidence": [
+      "file:REVIEW-REPORT.md",
+      "file:FINDINGS.json",
+      "command:cmd-0014"
+    ]
+  },
+  "requirementsMatrix": {
+    "path": "REQUIREMENTS-MATRIX.json",
+    "total": 198,
+    "mandatory": 196,
+    "complete": 198,
+    "partial": 0,
+    "missing": 0,
+    "notApplicable": 0,
+    "coveragePercent": 100.0
+  },
+  "greenKeeper": {
+    "status": "PASS",
+    "cycles": 1,
+    "remainingFailures": 0,
+    "unresolvedReworkItems": 0,
+    "log": "REWORK-LOG.jsonl",
+    "externalBlockers": [],
+    "requiredGates": [
+      "tests",
+      "staticAnalysis",
+      "lessons",
+      "integrity",
+      "checkpointValidation",
+      "apiTests",
+      "gatewayTests",
+      "agentRuntimeTests",
+      "sandboxTests",
+      "evaluatorTests",
+      "webTests",
+      "lint",
+      "infraDefinition"
+    ],
+    "evidence": [
+      "cmd-0027",
+      "cmd-0028",
+      "cmd-0029",
+      "cmd-0030",
+      "cmd-0031",
+      "cmd-0032",
+      "cmd-0033",
+      "cmd-0034",
+      "cmd-0035",
+      "cmd-0036",
+      "cmd-0037",
+      "cmd-0038",
+      "cmd-0039"
+    ]
+  },
+  "deliveryCompleteness": {
+    "status": "PASS",
+    "report": "COMPLETENESS-REPORT.json",
+    "coveragePercent": 100.0,
+    "evidenceCoveragePercent": 100.0,
+    "auditor": "Delivery Completeness Validator (audit checkpoint, not independent)",
+    "evidence": [
+      "file:COMPLETENESS-REPORT.json"
+    ]
+  },
+  "reworkCycles": 1,
+  "independentReview": {
+    "status": "REWORK_REQUIRED",
+    "tool": "Codex desktop application, OpenAI, GPT-5, fresh session",
+    "reviewedAt": "2026-10-11T12:23:17.339291Z",
+    "justification": "G4-F-002 is HIGH: the published full clean-clone verifier returned FAIL at 40/42; isolated reruns cannot replace that red run.",
+    "evidence": [
+      "file:REVIEW-REPORT.md",
+      "file:FINDINGS.json",
+      "file:FINAL-GATE-4-AUDIT-MATRIX.json",
+      "command:cmd-0014"
+    ]
+  },
+  "redTeam": {
+    "status": "RED_TEAM_PASS",
+    "tool": "Fresh-session Gate 4 independent adversarial harness",
+    "executedAt": "2026-10-11T12:23:17.339291Z",
+    "justification": "All 20 mandatory attacks were defended over valid controls; G4-F-002 is not a Red Team escape.",
+    "evidence": [
+      "file:GATE-4-INDEPENDENT-RED-TEAM.json",
+      "command:cmd-0018"
+    ]
+  },
+  "lessonPreflight": {
+    "path": "LESSON-PREFLIGHT.json",
+    "gate": "GATE-4",
+    "scope": "fresh-session independent Gate 4 audit",
+    "lessonsConsidered": 94,
+    "lessonsApplicable": 93,
+    "derivedRequirements": 93,
+    "fingerprint": "481eb4952d555a06dde28d92c5da5feb1ae1673bdcdc4050bafe71472d1814c0",
+    "evidence": [
+      "checkpoint:LESSON-PREFLIGHT.json",
+      "command:cmd-0002"
+    ]
+  },
+  "milestone": {
+    "id": "M2",
+    "title": "IACode V0 completion and experience",
+    "gates": [
+      "GATE 4",
+      "GATE 5",
+      "GATE 6",
+      "GATE 7"
+    ],
+    "status": "PENDING",
+    "auditor": null,
+    "auditedAt": null,
+    "evidence": []
+  },
+  "externalAuditRequired": false,
+  "externalAuditReason": null,
+  "guardrailEffectiveness": {
+    "guardrailsTotal": 95,
+    "guardrailsResolved": 95,
+    "guardrailsTested": 95,
+    "guardrailsEffective": 95,
+    "guardrailFailures": 0,
+    "evidence": [
+      "file:.iacode/memory/guardrails/registry.json",
+      "file:VERIFICATION-REPORT.json"
+    ]
+  },
+  "integrity": {
+    "status": "PASS",
+    "anchors": 26,
+    "chainFile": ".iacode/anchors/checkpoint-chain.json",
+    "evidence": [
+      "file:.iacode/anchors/checkpoint-chain.json",
+      "command:cmd-0004"
+    ]
+  },
+  "externalAttestation": {
+    "status": "PRESENT",
+    "path": ".iacode/attestations/G4-CP-0004.json",
+    "auditId": "G4-CP-0004",
+    "subjectCheckpoint": "GATE-4-CP-0003",
+    "subjectCommit": "5d47200fde08c47b7a6410be2204b4c1b9fbadc1",
+    "validationMechanism": "FRESH_SESSION_INDEPENDENT_AUDIT",
+    "evidence": [
+      "file:REVIEW-REPORT.md",
+      "file:INDEPENDENT-RED-TEAM-REPORT.md"
+    ]
+  }
+}

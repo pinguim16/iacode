@@ -1,0 +1,34 @@
+{
+  "schemaVersion": "1.0.0",
+  "artifact": "FINDINGS",
+  "checkpoint": "GATE-4-CP-0004",
+  "subjectCheckpoint": "GATE-4-CP-0003",
+  "subjectCommit": "5d47200fde08c47b7a6410be2204b4c1b9fbadc1",
+  "generatedAt": "2026-10-11T12:23:26.317291Z",
+  "findings": [
+    {
+      "id": "G4-F-002",
+      "severity": "HIGH",
+      "status": "OPEN",
+      "disposition": "REWORK_REQUIRED",
+      "criterion": "G4A-22",
+      "impactedCriteria": [
+        "G4A-07",
+        "G4A-21",
+        "G4A-22",
+        "G4A-31",
+        "G4A-34"
+      ],
+      "title": "Published full verification is not stable in one clean-clone run",
+      "observed": "The detached published subject completed 42 stages but returned FAIL at 40/42: infra and smoke failed in the single mandatory run. Exact isolated reruns then passed, so the failure is intermittent or order-dependent; isolated PASS does not replace the red full-run evidence.",
+      "evidence": [
+        "file:VERIFICATION-REPORT.json",
+        "file:CLEAN-CLONE-REPORT.json",
+        "command:cmd-0014",
+        "command:cmd-0015",
+        "command:cmd-0016"
+      ]
+    }
+  ],
+  "observations": []
+}

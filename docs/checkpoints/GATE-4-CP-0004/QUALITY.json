@@ -1,0 +1,99 @@
+{
+  "schemaVersion": "3.2.0",
+  "checks": {
+    "build": {
+      "status": "PASS",
+      "evidence": [
+        "file:VERIFICATION-REPORT.json"
+      ],
+      "justification": null
+    },
+    "unitTests": {
+      "status": "PASS",
+      "evidence": [
+        "file:VERIFICATION-REPORT.json",
+        "file:TESTS.json"
+      ],
+      "justification": null
+    },
+    "integrationTests": {
+      "status": "PASS",
+      "evidence": [
+        "command:cmd-0015",
+        "file:VERIFICATION-REPORT.json"
+      ],
+      "justification": "The full run was red, but the failed infra stage passed on exact isolated repetition; the instability remains G4-F-002."
+    },
+    "e2e": {
+      "status": "PASS",
+      "evidence": [
+        "command:cmd-0016",
+        "file:FUNCTIONAL-ACCEPTANCE-VALIDATION.json"
+      ],
+      "justification": "Gate 4 functional acceptance passed 12/12 and the failed smoke stage passed on exact isolated repetition; the red full run remains blocking."
+    },
+    "lint": {
+      "status": "PASS",
+      "evidence": [
+        "file:VERIFICATION-REPORT.json"
+      ],
+      "justification": null
+    },
+    "staticAnalysis": {
+      "status": "PASS",
+      "evidence": [
+        "command:cmd-0006",
+        "file:ARCHITECTURE-REVIEW.json"
+      ],
+      "justification": null
+    },
+    "security": {
+      "status": "PASS",
+      "evidence": [
+        "command:cmd-0010",
+        "command:cmd-0007",
+        "file:G4-X7-INDEPENDENT-PROBE.json"
+      ],
+      "justification": null
+    },
+    "documentation": {
+      "status": "PASS",
+      "evidence": [
+        "command:cmd-0006",
+        "file:ARCHITECTURE-REVIEW.json"
+      ],
+      "justification": null
+    },
+    "checkpointValidation": {
+      "status": "PASS",
+      "evidence": [
+        "command:cmd-0031"
+      ],
+      "justification": null
+    },
+    "redTeam": {
+      "status": "PASS",
+      "evidence": [
+        "command:cmd-0018",
+        "file:GATE-4-INDEPENDENT-RED-TEAM.json"
+      ],
+      "justification": null
+    },
+    "greenKeeper": {
+      "status": "PASS",
+      "evidence": [
+        "file:REWORK-LOG.jsonl",
+        "command:cmd-0031"
+      ],
+      "justification": "Every policy-owned mandatory gate was green; G4-F-002 is the later independent full-run finding."
+    },
+    "deliveryCompleteness": {
+      "status": "PASS",
+      "evidence": [
+        "file:COMPLETENESS-REPORT.json",
+        "command:cmd-0040"
+      ],
+      "justification": "The audit requirement denominator and evidence coverage are complete; review still requires rework."
+    }
+  }
+}

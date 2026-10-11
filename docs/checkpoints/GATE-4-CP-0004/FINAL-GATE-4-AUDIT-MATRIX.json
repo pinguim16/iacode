@@ -1,0 +1,340 @@
+{
+  "schemaVersion": "1.0.0",
+  "artifact": "FINAL-GATE-4-AUDIT-MATRIX",
+  "checkpoint": "GATE-4-CP-0004",
+  "subjectCheckpoint": "GATE-4-CP-0003",
+  "subjectCommit": "5d47200fde08c47b7a6410be2204b4c1b9fbadc1",
+  "generatedAt": "2026-10-11T12:23:26.317291Z",
+  "criteria": [
+    {
+      "criterion": "G4A-01",
+      "title": "Subject identity and immutability",
+      "result": "PASS",
+      "observed": "sealed=5d47200fde08c47b7a6410be2204b4c1b9fbadc1 content=4d0cc8e3bb9a329e50af99cf58f01c19087c3433",
+      "evidence": [
+        "file:SUBJECT-BUNDLE-AUDIT.json"
+      ]
+    },
+    {
+      "criterion": "G4A-02",
+      "title": "Review bundle identity",
+      "result": "PASS",
+      "observed": "sha256=197cd4c82b7e6fa75f51c72d7db3daf2e84cb7df03ac4028e0efa572a80562cd",
+      "evidence": [
+        "file:SUBJECT-BUNDLE-AUDIT.json"
+      ]
+    },
+    {
+      "criterion": "G4A-03",
+      "title": "Bundle completeness",
+      "result": "PASS",
+      "observed": "categories={'tests': True, 'migrations': True, 'schemas': True, 'policies': True, 'documentation': True, 'changeset': True, 'gitState': True, 'manifest': True}",
+      "evidence": [
+        "file:SUBJECT-BUNDLE-AUDIT.json"
+      ]
+    },
+    {
+      "criterion": "G4A-04",
+      "title": "Bundle determinism and portability",
+      "result": "PASS",
+      "observed": "rebuilt=['ec394cae89d2f6df750ae1d5ccd802791a0ffc1982b5ead72175f1b9ed3d8e1e', 'ec394cae89d2f6df750ae1d5ccd802791a0ffc1982b5ead72175f1b9ed3d8e1e']",
+      "evidence": [
+        "file:SUBJECT-BUNDLE-AUDIT.json"
+      ]
+    },
+    {
+      "criterion": "G4A-05",
+      "title": "Local checkpoint validity",
+      "result": "PASS",
+      "observed": "published clone validations all exited zero",
+      "evidence": [
+        "file:SUBJECT-BUNDLE-AUDIT.json"
+      ]
+    },
+    {
+      "criterion": "G4A-06",
+      "title": "Published detached validity",
+      "result": "PASS",
+      "observed": "detached subject returned CHECKPOINT_VALID",
+      "evidence": [
+        "file:SUBJECT-BUNDLE-AUDIT.json"
+      ]
+    },
+    {
+      "criterion": "G4A-07",
+      "title": "Historical compatibility",
+      "result": "FAIL",
+      "observed": "integrity and complete verification passed from published content",
+      "evidence": [
+        "file:SUBJECT-BUNDLE-AUDIT.json",
+        "file:VERIFICATION-REPORT.json"
+      ]
+    },
+    {
+      "criterion": "G4A-08",
+      "title": "Canonical denominator",
+      "result": "PASS",
+      "observed": "subject=216 audit=198",
+      "evidence": [
+        "file:REQUIREMENTS-MATRIX.json",
+        "file:docs/checkpoints/GATE-4-CP-0003/REQUIREMENTS-MATRIX.json"
+      ]
+    },
+    {
+      "criterion": "G4A-09",
+      "title": "Requirement evidence",
+      "result": "PASS",
+      "observed": "subjectComplete=True auditComplete=True",
+      "evidence": [
+        "file:REQUIREMENTS-MATRIX.json",
+        "file:docs/checkpoints/GATE-4-CP-0003/REQUIREMENTS-MATRIX.json"
+      ]
+    },
+    {
+      "criterion": "G4A-10",
+      "title": "Quality contracts",
+      "result": "PASS",
+      "observed": "architecture=PASS Gate4Stages=True",
+      "evidence": [
+        "file:ARCHITECTURE-REVIEW.json",
+        "file:VERIFICATION-REPORT.json"
+      ]
+    },
+    {
+      "criterion": "G4A-11",
+      "title": "Detection and planning",
+      "result": "PASS",
+      "observed": "architecture=PASS Gate4Stages=True",
+      "evidence": [
+        "file:ARCHITECTURE-REVIEW.json",
+        "file:VERIFICATION-REPORT.json"
+      ]
+    },
+    {
+      "criterion": "G4A-12",
+      "title": "Sandbox-only runners",
+      "result": "PASS",
+      "observed": "architecture=PASS Gate4Stages=True",
+      "evidence": [
+        "file:ARCHITECTURE-REVIEW.json",
+        "file:VERIFICATION-REPORT.json"
+      ]
+    },
+    {
+      "criterion": "G4A-13",
+      "title": "Evidence immutability",
+      "result": "PASS",
+      "observed": "architecture=PASS Gate4Stages=True",
+      "evidence": [
+        "file:ARCHITECTURE-REVIEW.json",
+        "file:VERIFICATION-REPORT.json"
+      ]
+    },
+    {
+      "criterion": "G4A-14",
+      "title": "Verdict derivation",
+      "result": "PASS",
+      "observed": "architecture=PASS Gate4Stages=True",
+      "evidence": [
+        "file:ARCHITECTURE-REVIEW.json",
+        "file:VERIFICATION-REPORT.json"
+      ]
+    },
+    {
+      "criterion": "G4A-15",
+      "title": "Durable lifecycle",
+      "result": "PASS",
+      "observed": "architecture=PASS Gate4Stages=True",
+      "evidence": [
+        "file:ARCHITECTURE-REVIEW.json",
+        "file:VERIFICATION-REPORT.json"
+      ]
+    },
+    {
+      "criterion": "G4A-16",
+      "title": "Ownership and origin",
+      "result": "PASS",
+      "observed": "architecture=PASS Gate4Stages=True",
+      "evidence": [
+        "file:ARCHITECTURE-REVIEW.json",
+        "file:VERIFICATION-REPORT.json"
+      ]
+    },
+    {
+      "criterion": "G4A-17",
+      "title": "API and runtime integration",
+      "result": "PASS",
+      "observed": "architecture=PASS Gate4Stages=True",
+      "evidence": [
+        "file:ARCHITECTURE-REVIEW.json",
+        "file:VERIFICATION-REPORT.json"
+      ]
+    },
+    {
+      "criterion": "G4A-18",
+      "title": "Functional PASS and FAIL",
+      "result": "PASS",
+      "observed": "quality-pass and quality-fail both passed",
+      "evidence": [
+        "file:VERIFICATION-REPORT.json"
+      ]
+    },
+    {
+      "criterion": "G4A-19",
+      "title": "IACode self-evaluation and reproduction",
+      "result": "PASS",
+      "observed": "quality-iacode and quality-reproduction passed",
+      "evidence": [
+        "file:VERIFICATION-REPORT.json"
+      ]
+    },
+    {
+      "criterion": "G4A-20",
+      "title": "Recovery, cancellation and timeout",
+      "result": "PASS",
+      "observed": "quality-recovery=PASS; quality-cancellation=PASS; quality-timeout=PASS",
+      "evidence": [
+        "file:VERIFICATION-REPORT.json"
+      ]
+    },
+    {
+      "criterion": "G4A-21",
+      "title": "Cross-Gate regression",
+      "result": "FAIL",
+      "observed": "verification=FAIL stages=42",
+      "evidence": [
+        "file:VERIFICATION-REPORT.json"
+      ]
+    },
+    {
+      "criterion": "G4A-22",
+      "title": "Full clean-clone verification",
+      "result": "FAIL",
+      "observed": "verification=FAIL stages=42",
+      "evidence": [
+        "file:CLEAN-CLONE-REPORT.json",
+        "file:VERIFICATION-REPORT.json"
+      ]
+    },
+    {
+      "criterion": "G4A-23",
+      "title": "Test and count integrity",
+      "result": "PASS",
+      "observed": "policy-owned counted suites passed=True",
+      "evidence": [
+        "file:VERIFICATION-REPORT.json"
+      ]
+    },
+    {
+      "criterion": "G4A-24",
+      "title": "Security and dependencies",
+      "result": "PASS",
+      "observed": "dependency=PASS redTeam=RED_TEAM_PASS",
+      "evidence": [
+        "file:VERIFICATION-REPORT.json",
+        "file:GATE-4-INDEPENDENT-RED-TEAM.json"
+      ]
+    },
+    {
+      "criterion": "G4A-25",
+      "title": "Documentation and architecture",
+      "result": "PASS",
+      "observed": "architecture=12/12",
+      "evidence": [
+        "file:ARCHITECTURE-REVIEW.json"
+      ]
+    },
+    {
+      "criterion": "G4A-26",
+      "title": "Lessons and guardrails",
+      "result": "PASS",
+      "observed": "memory=PASS",
+      "evidence": [
+        "file:ARCHITECTURE-REVIEW.json",
+        "file:VERIFICATION-REPORT.json"
+      ]
+    },
+    {
+      "criterion": "G4A-27",
+      "title": "G4-F-001 closure",
+      "result": "PASS",
+      "observed": "probe=PASS scannerKinds=['GitHub credential']",
+      "evidence": [
+        "file:G4-X7-INDEPENDENT-PROBE.json"
+      ]
+    },
+    {
+      "criterion": "G4A-28",
+      "title": "G4-X7 live evaluator path",
+      "result": "PASS",
+      "observed": "status=ERROR verdict=FAIL objects=0 records=0",
+      "evidence": [
+        "file:G4-X7-INDEPENDENT-PROBE.json"
+      ]
+    },
+    {
+      "criterion": "G4A-29",
+      "title": "Scanner failure",
+      "result": "PASS",
+      "observed": "status=ERROR verdict=FAIL",
+      "evidence": [
+        "file:G4-X7-INDEPENDENT-PROBE.json"
+      ]
+    },
+    {
+      "criterion": "G4A-30",
+      "title": "Legacy persisted object",
+      "result": "PASS",
+      "observed": "resolved=False verdict=FAIL",
+      "evidence": [
+        "file:G4-X7-INDEPENDENT-PROBE.json"
+      ]
+    },
+    {
+      "criterion": "G4A-31",
+      "title": "Independent review",
+      "result": "FAIL",
+      "observed": "one or more prior criteria failed",
+      "evidence": [
+        "file:ARCHITECTURE-REVIEW.json",
+        "file:G4-X7-INDEPENDENT-PROBE.json"
+      ]
+    },
+    {
+      "criterion": "G4A-32",
+      "title": "Independent Red Team",
+      "result": "PASS",
+      "observed": "result=RED_TEAM_PASS defended=20/20",
+      "evidence": [
+        "file:GATE-4-INDEPENDENT-RED-TEAM.json"
+      ]
+    },
+    {
+      "criterion": "G4A-33",
+      "title": "Audit checkpoint assurance",
+      "result": "PASS",
+      "observed": "green=GREEN completeness=PASS mirror=PASS",
+      "evidence": [
+        "file:REWORK-LOG.jsonl",
+        "file:COMPLETENESS-REPORT.json",
+        "file:M2-INTERNAL-MIRROR.json"
+      ]
+    },
+    {
+      "criterion": "G4A-34",
+      "title": "Gate verdict",
+      "result": "FAIL",
+      "observed": "secondTool=FAILED review=REWORK_REQUIRED redTeam=RED_TEAM_PASS",
+      "evidence": [
+        "file:STATE.json",
+        "file:REVIEW-REPORT.md",
+        "file:GATE-4-INDEPENDENT-RED-TEAM.json"
+      ]
+    }
+  ],
+  "passed": 29,
+  "failed": 5,
+  "notExecuted": 0,
+  "total": 34,
+  "result": "REWORK_REQUIRED"
+}

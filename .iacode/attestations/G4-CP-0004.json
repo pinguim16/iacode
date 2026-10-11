@@ -1,0 +1,22 @@
+{
+  "schemaVersion": "2.0.0",
+  "auditId": "G4-CP-0004",
+  "milestone": "M2",
+  "validationMechanism": "FRESH_SESSION_INDEPENDENT_AUDIT",
+  "crossToolValidation": "NOT_AVAILABLE",
+  "auditorRole": "Gate independent auditor",
+  "tool": "Codex desktop application",
+  "provider": "OpenAI",
+  "model": "GPT-5",
+  "freshSession": true,
+  "subjectCheckpoint": "GATE-4-CP-0003",
+  "subjectCommit": "5d47200fde08c47b7a6410be2204b4c1b9fbadc1",
+  "auditCheckpoint": "GATE-4-CP-0004",
+  "reviewResult": "REWORK_REQUIRED",
+  "redTeamResult": "RED_TEAM_PASS",
+  "completeness": 100.0,
+  "evidenceCoverage": 100.0,
+  "testResult": "FAIL",
+  "createdAt": "2026-10-11T12:23:17.339291Z",
+  "notes": "G4-F-002 blocks Gate 4: the single full clean-clone run failed at 40/42 although exact isolated reruns passed. M2 remains PENDING; Gate 5 was not started."
+}

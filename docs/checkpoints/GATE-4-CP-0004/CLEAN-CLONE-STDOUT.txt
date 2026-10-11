@@ -1,0 +1,21 @@
+[PASS] clone authorised remote over transport (2.4s)
+[PASS] checkout immutable subject tag detached (0.3s)
+[PASS] subject identity 5d47200fde08c47b7a6410be2204b4c1b9fbadc1
+[PASS] validate sealed subject detached (26.1s)
+CHECKPOINT_VALID
+[PASS] verify checkpoint integrity chain (11.4s)
+INTEGRITY_VALID anchors=25 latest=SETUP-00-CP-0013
+[PASS] validate engineering memory (1.2s)
+LESSONS_VALID total=94 active=94 guarded=91
+[PASS] confirm subject tag and branch are published (1.0s)
+REMOTE_SYNC_PASS remote=origin branch=main tags=iacode-checkpoints/GATE-4-CP-0003
+[FAIL] complete non-fast 42-stage verification (4057.0s)
+attery rejects every mandatory mutation
+[PASS] backup                   48.9s  backup, restore into a disposable target, verified read-back
+[PASS] dependency-scan          27.9s  known vulnerabilities in the pinned dependencies
+[PASS] restart                  42.9s  restart with data intact
+[PASS] dependency-failure       12.9s  liveness holds, readiness refuses, both recover
+[PASS] fresh-install            68.3s  a complete installation from no volumes at all
+VERIFY=FAIL 40/42 stages in 4055.2s
+CLEAN_CLONE_AUDIT=FAIL steps=8/9 verification=FAIL stages=42
+[ledger cmd-0014] exit=1 duration_ms=4100161

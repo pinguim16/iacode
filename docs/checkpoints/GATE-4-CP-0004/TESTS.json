@@ -1,0 +1,27 @@
+{
+  "schemaVersion": "3.2.0",
+  "unit": {
+    "executed": true,
+    "passed": 751,
+    "failed": 0,
+    "command": "python -m unittest discover -s tests",
+    "evidence": "file:VERIFICATION-REPORT.json",
+    "runId": "published-subject-counted-ledger-suite"
+  },
+  "integration": {
+    "executed": true,
+    "passed": 934,
+    "failed": 0,
+    "command": "python scripts/iacode/verify.py --keep-going plus exact isolated reruns",
+    "evidence": "command:cmd-0015",
+    "runId": "published-subject-counted-service-suites"
+  },
+  "e2e": {
+    "executed": true,
+    "passed": 42,
+    "failed": 0,
+    "command": "python scripts/iacode/verify.py --keep-going plus exact isolated reruns",
+    "evidence": "command:cmd-0016",
+    "runId": "published-subject-counted-service-suites"
+  }
+}

@@ -1,0 +1,114 @@
+{
+  "schemaVersion": "1.0.0",
+  "artifact": "GATE-4-CLEAN-CLONE-AUDIT",
+  "checkpoint": "GATE-4-CP-0004",
+  "subjectCheckpoint": "GATE-4-CP-0003",
+  "subjectTag": "refs/tags/iacode-checkpoints/GATE-4-CP-0003",
+  "expectedCommit": "5d47200fde08c47b7a6410be2204b4c1b9fbadc1",
+  "observedCommit": "5d47200fde08c47b7a6410be2204b4c1b9fbadc1",
+  "observedTree": "12ce6967290b8c63f3fddcb3a3d883653c35c58a",
+  "remote": "https://github.com/pinguim16/iacode.git",
+  "generatedAt": "2026-10-11T10:46:20Z",
+  "localConfiguration": "ignored infra/compose/.env copied as machine configuration only; all versioned content came from the remote subject tag",
+  "verificationResult": "FAIL",
+  "verificationStages": 42,
+  "steps": [
+    {
+      "step": "clone authorised remote over transport",
+      "command": [
+        "git",
+        "clone",
+        "--quiet",
+        "https://github.com/pinguim16/iacode.git",
+        "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-g4-audit-clone-uc6e59px\\iacode"
+      ],
+      "exitCode": 0,
+      "durationSeconds": 2.4,
+      "tail": ""
+    },
+    {
+      "step": "checkout immutable subject tag detached",
+      "command": [
+        "git",
+        "checkout",
+        "--detach",
+        "--quiet",
+        "iacode-checkpoints/GATE-4-CP-0003"
+      ],
+      "exitCode": 0,
+      "durationSeconds": 0.3,
+      "tail": ""
+    },
+    {
+      "step": "subject identity",
+      "exitCode": 0,
+      "expectedCommit": "5d47200fde08c47b7a6410be2204b4c1b9fbadc1",
+      "observedCommit": "5d47200fde08c47b7a6410be2204b4c1b9fbadc1",
+      "observedTree": "12ce6967290b8c63f3fddcb3a3d883653c35c58a"
+    },
+    {
+      "step": "validate sealed subject detached",
+      "command": [
+        "C:\\Program Files\\Python313\\python.exe",
+        "scripts/development-ledger/validate_checkpoint.py"
+      ],
+      "exitCode": 0,
+      "durationSeconds": 26.1,
+      "tail": "CHECKPOINT_VALID"
+    },
+    {
+      "step": "verify checkpoint integrity chain",
+      "command": [
+        "C:\\Program Files\\Python313\\python.exe",
+        "scripts/development-ledger/verify_integrity.py"
+      ],
+      "exitCode": 0,
+      "durationSeconds": 11.4,
+      "tail": "INTEGRITY_VALID anchors=25 latest=SETUP-00-CP-0013"
+    },
+    {
+      "step": "validate engineering memory",
+      "command": [
+        "C:\\Program Files\\Python313\\python.exe",
+        "scripts/development-ledger/validate_lessons.py"
+      ],
+      "exitCode": 0,
+      "durationSeconds": 1.2,
+      "tail": "LESSONS_VALID total=94 active=94 guarded=91"
+    },
+    {
+      "step": "confirm subject tag and branch are published",
+      "command": [
+        "C:\\Program Files\\Python313\\python.exe",
+        "scripts/development-ledger/remote_sync.py",
+        "--tag",
+        "iacode-checkpoints/GATE-4-CP-0003"
+      ],
+      "exitCode": 0,
+      "durationSeconds": 1.0,
+      "tail": "REMOTE_SYNC_PASS remote=origin branch=main tags=iacode-checkpoints/GATE-4-CP-0003"
+    },
+    {
+      "step": "complete non-fast 42-stage verification",
+      "command": [
+        "C:\\Program Files\\Python313\\python.exe",
+        "scripts/iacode/verify.py",
+        "--keep-going",
+        "--report",
+        "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-g4-audit-clone-uc6e59px\\iacode\\var\\gate4-audit-verification.json"
+      ],
+      "exitCode": 1,
+      "durationSeconds": 4057.0,
+      "tail": "adlines record timeout evidence and a FAIL verdict\n[PASS] sandbox-coding           90.9s  a coding team fixes a synthetic repository in a real sandbox; the host is untouched\n[PASS] sandbox-timeout          47.1s  a command past its timeout is stopped and the run carries on\n[PASS] sandbox-cancellation    104.0s  a run cancelled during a long command stops it and leaves no sandbox\n[PASS] sandbox-recovery         65.8s  a restarted sandbox service keeps the run's session and its workspace\n[PASS] sandbox-tool-result-origin   70.2s  a result posted to the API for a sandboxed request is refused, and the agent receives the sandbox's own\n[PASS] quality-false-pass        4.3s  the Gate 4 false-PASS battery rejects every mandatory mutation\n[PASS] backup                   48.9s  backup, restore into a disposable target, verified read-back\n[PASS] dependency-scan          27.9s  known vulnerabilities in the pinned dependencies\n[PASS] restart                  42.9s  restart with data intact\n[PASS] dependency-failure       12.9s  liveness holds, readiness refuses, both recover\n[PASS] fresh-install            68.3s  a complete installation from no volumes at all\nVERIFY=FAIL 40/42 stages in 4055.2s"
+    },
+    {
+      "step": "published checkout has no unexpected repository mutation",
+      "exitCode": 0,
+      "observed": [],
+      "allowed": [
+        "?? var/"
+      ]
+    }
+  ],
+  "result": "FAIL"
+}
