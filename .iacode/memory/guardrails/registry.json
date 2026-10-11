@@ -812,7 +812,8 @@
       "reference": "test_a_fork_bomb_that_detaches_leaves_a_sandbox_that_still_answers",
       "verifiedBy": [
         "test_a_fork_bomb_that_detaches_leaves_a_sandbox_that_still_answers",
-        "test_a_fork_bomb_is_contained_by_the_process_limit"
+        "test_a_fork_bomb_is_contained_by_the_process_limit",
+        "test_the_sweep_waits_for_zombies_to_be_reaped_before_returning"
       ],
       "lessons": [
         "LSN-0053"
@@ -1308,6 +1309,64 @@
         "LSN-0090"
       ],
       "removingItWouldAllow": "A mandatory repository control to pass only when an ignored developer-local configuration file happens to exist."
+    },
+    {
+      "guardrailId": "GRD-0092",
+      "title": "Quality evidence rejects canonical secret shapes before persistence",
+      "kind": "test",
+      "reference": "test_canonical_secret_is_rejected_before_any_durable_operation",
+      "verifiedBy": [
+        "test_canonical_secret_is_rejected_before_any_durable_operation",
+        "test_scanner_failure_is_fail_closed_before_any_durable_operation",
+        "test_secret_bearing_legacy_object_cannot_resolve",
+        "test_secret_bearing_execution_is_contained_and_derives_fail"
+      ],
+      "lessons": [
+        "LSN-0091"
+      ],
+      "removingItWouldAllow": "Credential-shaped bytes recognized by the canonical scanner to enter immutable Quality Engine evidence, resolve successfully, and support a verdict."
+    },
+    {
+      "guardrailId": "GRD-0093",
+      "title": "Sealed blocking-finding prose remains canonically derivable",
+      "kind": "test",
+      "reference": "test_a_blocking_finding_paragraph_in_a_sealed_audit_is_parsed",
+      "verifiedBy": [
+        "test_a_blocking_finding_paragraph_in_a_sealed_audit_is_parsed",
+        "test_blocking_finding_prose_is_bounded_to_its_section"
+      ],
+      "lessons": [
+        "LSN-0092"
+      ],
+      "removingItWouldAllow": "A sealed audit with a bounded blocking-finding paragraph to become unparseable or for historical mentions to inflate the corrective requirement set."
+    },
+    {
+      "guardrailId": "GRD-0094",
+      "title": "Disposable ledger repositories carry imported repository packages",
+      "kind": "test",
+      "reference": "test_disposable_ledger_runtime_carries_its_canonical_scanner_dependency",
+      "verifiedBy": [
+        "test_disposable_ledger_runtime_carries_its_canonical_scanner_dependency",
+        "test_repaired_gate_is_reported_as_green_in_a_new_cycle",
+        "test_full_delivery_assurance_flow_reaches_ready_for_review"
+      ],
+      "lessons": [
+        "LSN-0093"
+      ],
+      "removingItWouldAllow": "A repository control fixture to copy executable ledger scripts without the versioned repository package they import, so host execution passes while isolated execution fails before exercising the control."
+    },
+    {
+      "guardrailId": "GRD-0095",
+      "title": "Review bundles carry unchanged mandatory artifact categories",
+      "kind": "test",
+      "reference": "test_review_context_includes_unchanged_migrations_schemas_and_policies",
+      "verifiedBy": [
+        "test_review_context_includes_unchanged_migrations_schemas_and_policies"
+      ],
+      "lessons": [
+        "LSN-0094"
+      ],
+      "removingItWouldAllow": "A narrow corrective changeset to produce a review bundle with no migrations, schemas, or policies, preventing a reviewer from interpreting the delivery against its canonical repository context."
     }
   ]
 }

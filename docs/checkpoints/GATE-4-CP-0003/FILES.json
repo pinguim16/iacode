@@ -1,0 +1,380 @@
+{
+  "filesRead": [
+    {
+      "path": "START-HERE.md",
+      "reason": "Required repository entry point read before alteration."
+    },
+    {
+      "path": "docs/DEVELOPMENT-CONTRACT.md",
+      "reason": "Canonical delivery and checkpoint contract."
+    },
+    {
+      "path": "docs/MASTER-PLAN.md",
+      "reason": "Current Gate and milestone scope."
+    },
+    {
+      "path": "docs/GATE-4-CHECKLIST.md",
+      "reason": "Canonical Gate 4 requirement source."
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0002/STATE.json",
+      "reason": "Sealed predecessor state and independent verdict."
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0002/REVIEW-REPORT.md",
+      "reason": "Independent finding G4-F-001."
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0002/RED-TEAM-REPORT.md",
+      "reason": "Independent mandatory attacks A-Q and escaped G4-X7 observation."
+    }
+  ],
+  "filesCreated": [
+    {
+      "path": "docs/adr/ADR-0032-quality-evidence-is-scanned-before-durable-commit.md",
+      "reason": "Architecture decision for the pre-persistence quality-evidence containment boundary.",
+      "hashAfter": "35f0f374a5e04ea09a1dffbd152d52d11636d387a4d4f9e3f2604c6507b7f6a9"
+    },
+    {
+      "path": "packages/common/src/iacode_common/secret_scanning.py",
+      "reason": "Shared canonical credential-shape taxonomy used by runtime and delivery controls.",
+      "hashAfter": "5278bb6eba50b6db2d3f930422b712c9b2db637dffbc5dc93141a529704b4a5e"
+    },
+    {
+      "path": "services/sandbox/tests/test_sandbox_helper.py",
+      "reason": "Deterministic guard that the process sweep waits for zombies to leave the PID cgroup before returning.",
+      "hashAfter": "eb3804317241c7a43902f51222c95d57c3ab9f766cbd54a32d14ff3d882af156"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0003/BASELINE.md",
+      "reason": "Gate 4 corrective checkpoint evidence, state, assurance, or reproducible matrix-population record.",
+      "hashAfter": "538a3ad92aa027910a3c8383eb00d8ff5fefe48b5b74792b7a4214cae0199de1"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0003/CLOSURE-REQUIREMENTS.json",
+      "reason": "Gate 4 corrective checkpoint evidence, state, assurance, or reproducible matrix-population record.",
+      "hashAfter": "39793ef8b361d36a61a78d2c0e7258ab22e07e596acb527c1c4c4ccafd4bf97c"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0003/CLOSURE-REQUIREMENTS.md",
+      "reason": "Gate 4 corrective checkpoint evidence, state, assurance, or reproducible matrix-population record.",
+      "hashAfter": "232433a2b93149e76c32f860376c61a97eb10edda39cf59f9706d262e66e63dc"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0003/COMPLETENESS-REPORT.json",
+      "reason": "Delivery Completeness Validator report for the 215-row corrective requirement set.",
+      "hashAfter": "41bd25d4188fc5568c82f387b4ea33b30a954db86c08a77ed65eb0dbe8ed01d7"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0003/COMPLETENESS-REPORT.md",
+      "reason": "Human-readable Delivery Completeness Validator report for the corrective checkpoint.",
+      "hashAfter": "3429004d6190bb8f87ecb004abbb0030e9266440f5f3510f4afae375e3580d9d"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0003/COUNTS.json",
+      "reason": "Evidence-derived checkpoint totals for tests, requirements, findings, attacks, lessons, and guardrails.",
+      "hashAfter": "31f2df8244a0c35a3c0e524b1bb2cf298bed39efdb90752437ef30edde70332d"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0003/COMMANDS.jsonl",
+      "reason": "Gate 4 corrective checkpoint evidence, state, assurance, or reproducible matrix-population record.",
+      "hashAfter": "58e0962a4c396b3b842b380a1dcf43838990499faff87b29018771297c78e9f6"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0003/DECISIONS.md",
+      "reason": "Gate 4 corrective checkpoint evidence, state, assurance, or reproducible matrix-population record.",
+      "hashAfter": "a7e3cd529a9e31b4aace472b5a0ea7dded71a9e33253fc39fb07eabd4685138d"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0003/DIFF-SUMMARY.md",
+      "reason": "Gate 4 corrective checkpoint evidence, state, assurance, or reproducible matrix-population record.",
+      "hashAfter": "ec62fdc2f14de1342bde8a4e23378df0aa6dd1600c97cc11b166611ca8939695"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0003/FILES.json",
+      "reason": "Gate 4 corrective checkpoint evidence, state, assurance, or reproducible matrix-population record."
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0003/FUNCTIONAL-ACCEPTANCE-VALIDATION.json",
+      "reason": "Gate 4 corrective checkpoint evidence, state, assurance, or reproducible matrix-population record.",
+      "hashAfter": "9241dac1a050d31e1c9231b351edd5277e5e0fed773173d76fd280f5bd400951"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0003/FUNCTIONAL-ACCEPTANCE.json",
+      "reason": "Gate 4 corrective checkpoint evidence, state, assurance, or reproducible matrix-population record.",
+      "hashAfter": "8bc25b50dd471e01745b8a5d26e4d397b7a5fc82e9aa9ca4d24b2750fa53a979"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0003/FINAL-REPORT.md",
+      "reason": "Consolidated implementing-run result and explicit independent-review boundary.",
+      "hashAfter": "1bc8d76af84358d392f8ff748469b2e49be2d0e749bcc63921e4d73fcacebcff"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0003/G4-CP-0002-FINDINGS-CLOSURE.json",
+      "reason": "Gate 4 corrective checkpoint evidence, state, assurance, or reproducible matrix-population record.",
+      "hashAfter": "4166f25e01402d82ef5ddd63374e7af11c411c4faf3477ea500d61db016bf68c"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0003/G4-CP-0002-FINDINGS-CLOSURE.md",
+      "reason": "Gate 4 corrective checkpoint evidence, state, assurance, or reproducible matrix-population record.",
+      "hashAfter": "4e21089d86ada32dfbccb7a31f2b3358196890b7fd704b3f4338bf48ec492e0c"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0003/HANDOFF.md",
+      "reason": "Gate 4 corrective checkpoint evidence, state, assurance, or reproducible matrix-population record.",
+      "hashAfter": "2f759be0db9beb8f09e59494e56977ad2343cbec185048ec76fdaad0624b4740"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0003/LESSON-PREFLIGHT.json",
+      "reason": "Gate 4 corrective checkpoint evidence, state, assurance, or reproducible matrix-population record.",
+      "hashAfter": "e47e0fa58f96a456ecad46b6ae1fc379df8165120409fcd7563a1bd3990a2090"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0003/LESSON-PREFLIGHT.md",
+      "reason": "Gate 4 corrective checkpoint evidence, state, assurance, or reproducible matrix-population record.",
+      "hashAfter": "e0f337b3fafd71671910d6c98358fa92bb87dd31626ba088d57624d453bdb3ae"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0003/M2-INTERNAL-MIRROR.json",
+      "reason": "Machine-readable same-session clean-clone milestone mirror evidence.",
+      "hashAfter": "c95a1edfd0027bc9a593299a5fad0a49f47e8844abac4aab336e1101a0ab0d4e"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0003/M2-INTERNAL-MIRROR.md",
+      "reason": "Human-readable same-session milestone mirror evidence.",
+      "hashAfter": "0cd3f64f32d7bff608a613f6e073a18822edde044a8b7c593acc76a30fb0a0ae"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0003/M2-INTERNAL-RED-TEAM.json",
+      "reason": "Machine-readable internal A-Q Red Team result; explicitly non-independent.",
+      "hashAfter": "323d25f106eb2c4a6ffd1bc05041b5c6b3d5ed71cbd6d9894943eeaf7430910a"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0003/NEXT.md",
+      "reason": "Gate 4 corrective checkpoint evidence, state, assurance, or reproducible matrix-population record.",
+      "hashAfter": "9d74b7f022d1d0aecaf573ca9c58893d702349da2c7ce3b20d01988a1bfed9eb"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0003/PLAN.md",
+      "reason": "Gate 4 corrective checkpoint evidence, state, assurance, or reproducible matrix-population record.",
+      "hashAfter": "f24a269743b3d49df78af0b3baaa98f6752a528cb22c7ab564981ee22e4f7149"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0003/POPULATE-REQUIREMENTS.py",
+      "reason": "Gate 4 corrective checkpoint evidence, state, assurance, or reproducible matrix-population record.",
+      "hashAfter": "adf15b2418cb19adf594a86cc0d18f8e7a119f449f7e6a321c008ccca359813a"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0003/PROVENANCE.json",
+      "reason": "Gate 4 corrective checkpoint evidence, state, assurance, or reproducible matrix-population record.",
+      "hashAfter": "2b09194349cf5ad5e96d882be50bbb0ee4288932060c10cf5f23f468866a2f18"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0003/QUALITY.json",
+      "reason": "Gate 4 corrective checkpoint evidence, state, assurance, or reproducible matrix-population record.",
+      "hashAfter": "efb2fa3e758dad364de8e81683eb0bac3aebc5c0d616603d235746daabf83127"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0003/REQUIREMENTS-MATRIX.json",
+      "reason": "Gate 4 corrective checkpoint evidence, state, assurance, or reproducible matrix-population record.",
+      "hashAfter": "31ed4a816e1b449b6eb59c4cc147337dd0407ddcf71f2f7ab07576cc4dcb1a97"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0003/REQUIREMENTS-MATRIX.md",
+      "reason": "Gate 4 corrective checkpoint evidence, state, assurance, or reproducible matrix-population record.",
+      "hashAfter": "475c7e774bd22466236bad493f00a7e647f605a1e51394958586b324cc6aac9e"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0003/RED-TEAM-REPORT.md",
+      "reason": "Human-readable internal A-Q Red Team report; explicitly non-independent.",
+      "hashAfter": "e431e8fedc35df48e4c9954bb485d693340f40d65dd355471fc6ab814dae0934"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0003/REVIEW-BUNDLE-VALIDATION.json",
+      "reason": "Deterministic review-bundle manifest and validation evidence.",
+      "hashAfter": "cbf081a32c97bd3ace79330beadd020d291592d3cfd1b7cc158cdf95c2759303"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0003/REWORK-LOG.jsonl",
+      "reason": "Gate 4 corrective checkpoint evidence, state, assurance, or reproducible matrix-population record.",
+      "hashAfter": "c66e175b4e4f7d3ee11a254a9f1a3d5a19dcdbc7556bb7b19c9f54415a12f06f"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0003/RISKS.md",
+      "reason": "Gate 4 corrective checkpoint evidence, state, assurance, or reproducible matrix-population record.",
+      "hashAfter": "440568533a028144a64e83e5d7a0e39ffe33bfc7c05aa2ed41c7a9cd9854125c"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0003/RUN-METADATA.json",
+      "reason": "Gate 4 corrective checkpoint evidence, state, assurance, or reproducible matrix-population record.",
+      "hashAfter": "d8cefdd228ea9c804821f858bcb04d371a6d29daeb58768769fc020014744474"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0003/STATE.json",
+      "reason": "Gate 4 corrective checkpoint evidence, state, assurance, or reproducible matrix-population record.",
+      "hashAfter": "9d65d3dc2163bbefa63f64368bc3b9527271cd7c004063d403be69812b993dd6"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0003/STATUS.md",
+      "reason": "Gate 4 corrective checkpoint evidence, state, assurance, or reproducible matrix-population record.",
+      "hashAfter": "59e6444d1015b76b59cb6aa1143753675cf48a96814b94857478e8c5ce4c83e4"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0003/TESTS.json",
+      "reason": "Gate 4 corrective checkpoint evidence, state, assurance, or reproducible matrix-population record.",
+      "hashAfter": "b026baf5ecc2845130436a55a1180eb5c5582c49108d4ecee4b2fc970f0db19c"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0003/VERIFY.json",
+      "reason": "Complete 42-stage post-correction verification, including the preserved initial root-suite failure used for rework.",
+      "hashAfter": "b126d204c2132cb88b21ea141077b0268c462ea8369546a542054587bd9c5c6d"
+    }
+  ],
+  "filesModified": [
+    {
+      "path": "scripts/development-ledger/promotion_fixture.py",
+      "reason": "Disposable ledger repositories now carry the shared common package imported by the copied tools.",
+      "hashAfter": "fd2ba77867d9583f5411b1deebf2f877efd16a98542cd145491147379aab8c42",
+      "hashBefore": "007b8f409875b5cde6a7e72953dbf9c0e52245a53f4dedc419722bbae1504c89"
+    },
+    {
+      "path": ".iacode/anchors/checkpoint-chain.json",
+      "reason": "Integrity chain rebuilt to anchor the sealed GATE-4-CP-0002 predecessor.",
+      "hashAfter": "62af3c35d52cedaa9bc736d3c27ceb99add914f6252b53e0f0ee1b7ea0a7124a",
+      "hashBefore": "81c05b6c42c110b7ef455ec8b256208313be44d9a44dbd95840173cad5dcdd2a"
+    },
+    {
+      "path": ".iacode/memory/LESSONS.md",
+      "reason": "Engineering lesson or automated guardrail created from confirmed corrective failures.",
+      "hashAfter": "1b12aa7944174d288998dcf85f3762ce453540e46ff4a945adab90d07973c25e",
+      "hashBefore": "1085e0501ef9983120b19081b597b05da0353aff24547a5e5b0f487e446a9bc7"
+    },
+    {
+      "path": ".iacode/memory/guardrails/registry.json",
+      "reason": "Engineering lesson or automated guardrail created from confirmed corrective failures.",
+      "hashAfter": "fe181b4b8cd054de38740706c30fb05378d397be1d9702961e60b7e0c83d116b",
+      "hashBefore": "6e785762eb4ab32533bf1f1737adc879589288ae82389912bd5c0d1a67d15926"
+    },
+    {
+      "path": ".iacode/memory/lessons.jsonl",
+      "reason": "Engineering lesson or automated guardrail created from confirmed corrective failures.",
+      "hashAfter": "50239833c0a48b2cc990c5efd0e3babb5bab96491be44ee983d7968a836909c3",
+      "hashBefore": "5db639ee81412e8e10383120fa5c82df4d942b95c3241d7fc17a4dd4f218ed0f"
+    },
+    {
+      "path": "docs/ARCHITECTURE.md",
+      "reason": "Architecture, development, version, ADR index, or operations documentation updated for containment semantics.",
+      "hashAfter": "5fdc796449656d5a0e94d057d12474127b2af88b3eed1a697b73af7c4ea74f2f",
+      "hashBefore": "fbfc770c3f4ffb3f3ad85798634276486aafb81bc158e38cf17604f467db8aca"
+    },
+    {
+      "path": "docs/DEVELOPMENT.md",
+      "reason": "Architecture, development, version, ADR index, or operations documentation updated for containment semantics.",
+      "hashAfter": "202e4c3644f903abef7e9d426d7ffedd5c9f9836d4a7eaf082e3ae0c1b3470bc",
+      "hashBefore": "d451b511ee1fac18d4a3e5454358e8e9fc0148d3194faa9a90f7ac1a4e00acaf"
+    },
+    {
+      "path": "docs/VERSIONS.md",
+      "reason": "Architecture, development, version, ADR index, or operations documentation updated for containment semantics.",
+      "hashAfter": "d7dcc092663a23aec0d3238d507d9bca07fb72bee36fd8c7edfa17ef23a01c20",
+      "hashBefore": "4cbafeb86b5c7e51293bf560939cee72e8a92942645cdc8bfe473c0bb19dbfbf"
+    },
+    {
+      "path": "docs/adr/README.md",
+      "reason": "Architecture, development, version, ADR index, or operations documentation updated for containment semantics.",
+      "hashAfter": "932c279a4b2ea0f4d0cb327abcef522ad0efdad137356da93ec85d4a1b3369ec",
+      "hashBefore": "cd2ccdaa82d0c4806f7c79001a65bd0a65b5811385da86b151f0276f4a68b9a2"
+    },
+    {
+      "path": "docs/checkpoints/LATEST.md",
+      "reason": "Latest working checkpoint advanced to GATE-4-CP-0003.",
+      "hashAfter": "cee7f12eccf1b7fce5f79f5b3bdfc89c2b2e629aa79261e1c7d54531e41e30fe",
+      "hashBefore": "cb517733e791e730f5b35bffc6ab16f9d7c36f86d100e95bcc009e7afe7ad6f5"
+    },
+    {
+      "path": "docs/runbooks/QUALITY-ENGINE.md",
+      "reason": "Architecture, development, version, ADR index, or operations documentation updated for containment semantics.",
+      "hashAfter": "b9e45b8fbff9c90699895b6db3973eb6b56f26141a080efc1e46fe36f7e17b43",
+      "hashBefore": "9ae857fdaf676aee605dec577dac1d9a6b51bbe888c09346f5e29759225b52f0"
+    },
+    {
+      "path": "packages/common/src/iacode_common/__init__.py",
+      "reason": "Common package exports the shared canonical credential-shape taxonomy.",
+      "hashAfter": "1cc968cb8e59e419c972e93d69d57bd6db51917f8747deabaa57a968192ac3e3",
+      "hashBefore": "bf15737d6cc13507ffd8e2944baa53646e1fdc8ca4e2e77280e812dbeb898cf4"
+    },
+    {
+      "path": "scripts/development-ledger/gate4_red_team.py",
+      "reason": "Mandatory A-Q Red Team replay and verification ordering for current live evidence.",
+      "hashAfter": "4e70e093c24a82633ff8284049241dd3aae4f4a378b3c252ab8d85279f29d301",
+      "hashBefore": "c10af94e97797cdfc5057e41babb6ced9cc090416021086b4fedd79f3bf1c20e"
+    },
+    {
+      "path": "scripts/development-ledger/ledger_common.py",
+      "reason": "Development ledger now derives its secret taxonomy from the shared canonical source.",
+      "hashAfter": "fc21eeb58a446e296cb3eef7c999c27c8fb23a3453f31407cf2d0e643e3a7472",
+      "hashBefore": "60dc0f1c8ff2eaac87ffd61a16d1caf9953d71287fb84372dc48334a66038646"
+    },
+    {
+      "path": "scripts/development-ledger/policies.py",
+      "reason": "Bounded parser compatibility for the sealed Gate 4 independent finding report.",
+      "hashAfter": "4c572325ccfd56862d25b4878ab8035cea40a1c841efc6da1231c9e7609376ff",
+      "hashBefore": "2961b4a4b3ffc0c87d7f97b133fbb8e8aa8c9dd11c0734a0b9cb4e70bbdf44e0"
+    },
+    {
+      "path": "scripts/development-ledger/review_bundle.py",
+      "reason": "Review transport now carries tracked canonical policies, schemas, and migrations even when the corrective changeset does not modify those categories.",
+      "hashBefore": "e93ccfefe00c3db01093d32771d319b84942e60ee58e7836b2aa2d3a40466729",
+      "hashAfter": "489baa7d11094fb7d28ca96e18d97caea6f72624baf47edc66cf5062665ea286"
+    },
+    {
+      "path": "scripts/iacode/verify.py",
+      "reason": "Mandatory A-Q Red Team replay and verification ordering for current live evidence.",
+      "hashAfter": "6d9ee0ffa119fc49bcc574fba686cbf6ba8ed9796af2d0929c5f80272d5420a5",
+      "hashBefore": "d684b136e6300cbdb330fde22c5af43d2297fa96269aa2f9ca7a2d4026077e36"
+    },
+    {
+      "path": "services/sandbox/src/iacode_sandbox/helper.py",
+      "reason": "The bounded process sweep now waits for killed zombies to be reaped before allowing the next command.",
+      "hashBefore": "507af627707f3676ed3659e63c7bcb6817f1c686d5c0bbc290f463bb3a6865ff",
+      "hashAfter": "c1fa355e6dfe6f90205df153ffa164149890ec1c96ef25bab68dc15c2d1038e8"
+    },
+    {
+      "path": "services/evaluator/src/iacode_evaluator/activities.py",
+      "reason": "Quality evidence containment implementation or regression coverage for G4-F-001.",
+      "hashAfter": "07cc3b5fddb9953cd5cfbdb981c7809e2d9c322b3bb90d1099e6afeae01758eb",
+      "hashBefore": "926909efa6e5b93df3d2b5bb98503e190307e813f431dab0e0a057649df05820"
+    },
+    {
+      "path": "services/evaluator/src/iacode_evaluator/evidence.py",
+      "reason": "Quality evidence containment implementation or regression coverage for G4-F-001.",
+      "hashAfter": "e0096529833d46dd625a16036198508bdb4d886d236333fbc980880382729d36",
+      "hashBefore": "3c0fbe34f8d58313703224b9ab2fa961324c0b0d52c4f2407e1b6fe2ac30c3ab"
+    },
+    {
+      "path": "services/evaluator/tests/test_persistence.py",
+      "reason": "Quality evidence containment implementation or regression coverage for G4-F-001.",
+      "hashAfter": "20d14404dff4fda03e1e03f90d83be719bf5cfb11f16e4ded05889d81f92d143",
+      "hashBefore": "d92329885cc8f377b5b89fb087dca766100e820d18af79a2bcd4c4fa3d427867"
+    },
+    {
+      "path": "services/evaluator/tests/test_workflow.py",
+      "reason": "Quality evidence containment implementation or regression coverage for G4-F-001.",
+      "hashAfter": "136927eb4d32fec751df4705f716e97a927560dfec9915b26bb8892192317499",
+      "hashBefore": "b6c7a18cf95959b8502a4c77307159b2c6d599053a2215023a62ec4f569f14ee"
+    },
+    {
+      "path": "tests/test_development_ledger.py",
+      "reason": "Bounded parser compatibility for the sealed Gate 4 independent finding report.",
+      "hashAfter": "a168eaed0e0e0c5aa21961b0e89df910c9ba93f37f01585b1a1f78ecef52ae22",
+      "hashBefore": "6e237a5df97f6ac83aeb0f15173490499db3da934bbb5b70ce25ac3af1687f2e"
+    },
+    {
+      "path": "tests/test_gate4_quality_engine.py",
+      "reason": "Repository control proving scanner taxonomy ownership and Gate 4 behavior.",
+      "hashAfter": "01d655deaca41c37eda2ea6d7a4ab9da57232f6fed9895b21ac5487eab079770",
+      "hashBefore": "bd9a69cee1115466a3137264b894eb4c5c950227f4579ce55c95783c76e24277"
+    }
+  ],
+  "filesDeleted": []
+}

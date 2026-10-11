@@ -80,9 +80,10 @@ anyone the API is down.
 **Configuration is typed and validated at start-up.** A process refuses to start with an invalid
 database URL rather than discovering it on the first request.
 
-**Credentials are redacted at the boundary.** `packages/common` redacts by key, by connection-string
-shape and by text, and every log record passes through it. The call sites are supposed to keep
-credentials out of log arguments; one day one of them will not.
+**Credentials are redacted and durable evidence is scanned at the boundary.** `packages/common`
+redacts by key, by connection-string shape and by text, and every log record passes through it. It
+also owns the canonical credential-shape taxonomy used before quality evidence can become durable.
+The call sites are supposed to keep credentials out of log arguments; one day one of them will not.
 
 **The model gateway is a boundary, not a service.** `services/model-gateway/` is a library the API
 composes in process. It declares the storage it needs as ports and the application implements them,
@@ -324,10 +325,13 @@ snapshot and policy digests, ordered checks, commands, images and limits before 
 
 Only `services/sandbox` holds the engine socket. `services/evaluator` has no host project mount,
 credential or container-engine access and receives bounded normalized execution results. Plans,
-results, findings, evidence references, verdicts and events are immutable database facts; complete
-output is a redacted, content-addressed artifact that is downloaded and re-hashed before it can
-support a verdict — [ADR-0029](adr/ADR-0029-quality-execution-boundary.md) and
-[ADR-0030](adr/ADR-0030-quality-evidence-and-verdict-immutability.md).
+results, findings, evidence references, verdicts and events are immutable database facts. Complete
+output is redacted, then scanned with the shared canonical credential taxonomy before any durable
+lookup or write. Detection and scanner failure produce a sanitized error result with no artifact.
+Stored bytes are downloaded, rescanned, and re-hashed before they can support a verdict —
+[ADR-0029](adr/ADR-0029-quality-execution-boundary.md),
+[ADR-0030](adr/ADR-0030-quality-evidence-and-verdict-immutability.md), and
+[ADR-0032](adr/ADR-0032-quality-evidence-is-scanned-before-durable-commit.md).
 
 PASS requires the exact applicable mandatory result set, every status PASSED and all required
 evidence resolved. Failure, denial, timeout, cancellation, execution error, a missing result or

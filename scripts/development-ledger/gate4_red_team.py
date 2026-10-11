@@ -13,9 +13,13 @@ import asyncio
 import json
 import subprocess
 import sys
+import tempfile
+import warnings
+import zipfile
 from collections.abc import Callable
 from datetime import UTC, datetime
 from pathlib import Path
+from types import SimpleNamespace
 from typing import Any
 
 if "--in-image" not in sys.argv:
@@ -41,8 +45,16 @@ def _in_image_battery() -> dict[str, Any]:
         QualityResult,
     )
     from iacode_evaluator.errors import QualityError
+    from iacode_evaluator.activities import derive_run_verdict, record_execution, set_runtime
+    from iacode_evaluator.evidence import (
+        MemoryEvidenceRepository,
+        MemoryObjectStore,
+        QualityEvidenceStore,
+    )
     from iacode_evaluator.store import MemoryQualityStore
+    from iacode_evaluator.telemetry import QualityMetrics
     from iacode_evaluator.verdict import derive_verdict
+    from prometheus_client import CollectorRegistry
     from pydantic import ValidationError
 
     now = datetime(2026, 10, 9, 20, tzinfo=UTC)
@@ -165,7 +177,7 @@ def _in_image_battery() -> dict[str, Any]:
         return verdict.verdict == "FAIL", f"verdict={verdict.verdict}; reasons={verdict.reasons}"
 
     attack(
-        "G4-A",
+        "A",
         "missing result",
         "remove the only mandatory result",
         "derived verdict FAIL names the missing check",
@@ -183,7 +195,7 @@ def _in_image_battery() -> dict[str, Any]:
         return False, "contract accepted a non-zero PASS"
 
     attack(
-        "G4-B",
+        "B",
         "exit-code forgery",
         "keep PASSED and flip exitCode to 1",
         "the result contract refuses the contradictory shape",
@@ -201,7 +213,7 @@ def _in_image_battery() -> dict[str, Any]:
         return verdict.verdict == "FAIL", f"verdict={verdict.verdict}; reasons={verdict.reasons}"
 
     attack(
-        "G4-C",
+        "C",
         "forged evidence",
         "replace the resolved digest set",
         "the evidence reference is unresolved and verdict is FAIL",
@@ -223,14 +235,14 @@ def _in_image_battery() -> dict[str, Any]:
         return False, "store accepted changed material under the frozen plan identity"
 
     attack(
-        "G4-D",
+        "D",
         "policy mutation",
         "change maxCheckSeconds under the same planId",
         "the immutable store refuses PLAN_ID_CONFLICT",
         lambda: asyncio.run(plan_conflict("policy")),
     )
     attack(
-        "G4-E",
+        "E",
         "snapshot mutation",
         "change snapshotDigest under the same planId",
         "the immutable store refuses PLAN_ID_CONFLICT",
@@ -247,16 +259,16 @@ def _in_image_battery() -> dict[str, Any]:
         return False, f"contract accepted {field}={value}"
 
     attack(
-        "G4-F",
+        "F",
         "wrong origin",
         "post a result with origin CALLER",
         "the closed origin contract refuses it",
         lambda: invalid_contract("origin", "CALLER", "EVALUATOR"),
     )
     for identifier, status, updates in (
-        ("G4-G", "TIMED_OUT", {"timedOut": True, "exitCode": 124}),
-        ("G4-H", "DENIED", {"exitCode": None}),
-        ("G4-I", "CANCELLED", {"exitCode": None}),
+        ("G", "TIMED_OUT", {"timedOut": True, "exitCode": 124}),
+        ("H", "DENIED", {"exitCode": None}),
+        ("I", "CANCELLED", {"exitCode": None}),
     ):
         attack(
             identifier,
@@ -266,11 +278,94 @@ def _in_image_battery() -> dict[str, Any]:
             lambda status=status, updates=updates: verdict_mutation(result(status, **updates)),
         )
     attack(
-        "G4-J",
+        "J",
         "unknown status",
         "submit status ASSERTED_GOOD",
         "the closed result-status contract refuses it",
         lambda: invalid_contract("status", "ASSERTED_GOOD", "unknown quality result status"),
+    )
+
+    async def secret_evidence_containment() -> tuple[bool, str]:
+        store = MemoryQualityStore(now=lambda: now)
+        await store.create_plan(canonical_plan)
+        run = await store.create_run(
+            plan_id=canonical_plan.planId,
+            owner_run_id=None,
+            idempotency_key="red-team-secret-containment",
+        )
+        for state, event_type in (
+            ("PLANNED", "PLANNED"),
+            ("QUEUED", "QUEUED"),
+            ("RUNNING", "STARTED"),
+        ):
+            await store.transition(
+                run.run_id,
+                state=state,
+                event_type=event_type,
+                dedupe_key=f"secret:{state}",
+                payload={},
+            )
+        objects = MemoryObjectStore()
+        repository = MemoryEvidenceRepository()
+        evidence_store = QualityEvidenceStore(
+            client=objects,
+            bucket="red-team",
+            repository=repository,
+            now=lambda: now,
+        )
+        set_runtime(
+            SimpleNamespace(
+                store=store,
+                evidence=evidence_store,
+                metrics=QualityMetrics(CollectorRegistry()),
+            )
+        )
+        marker = "gh" + "p_" + "z" * 20
+        try:
+            recorded = await record_execution(
+                {
+                    "runId": run.run_id,
+                    "checkId": "q001-unit",
+                    "finishedAt": now.isoformat(),
+                    "execution": {
+                        "status": "SUCCEEDED",
+                        "exitCode": 0,
+                        "durationMs": 1,
+                        "output": {"stdout": marker},
+                    },
+                }
+            )
+            verdict = await derive_run_verdict(
+                {"runId": run.run_id, "derivedAt": now.isoformat()}
+            )
+        finally:
+            set_runtime(None)
+        serialized = json.dumps(
+            {"result": recorded, "verdict": verdict},
+            ensure_ascii=False,
+            sort_keys=True,
+        )
+        defended = (
+            recorded["status"] == "ERROR"
+            and not recorded["evidence"]
+            and verdict["verdict"] == "FAIL"
+            and not objects.objects
+            and not repository.records
+            and marker not in serialized
+        )
+        observed = (
+            f"status={recorded['status']}; verdict={verdict['verdict']}; "
+            f"objects={len(objects.objects)}; records={len(repository.records)}; "
+            f"prohibited-bytes-absent={marker not in serialized}"
+        )
+        return defended, observed
+
+    attack(
+        "Q",
+        "pre-persistence secret containment",
+        "send a canonical scanner-detected marker under an ordinary structured output key",
+        "reject before object or metadata persistence and derive FAIL from a sanitized result",
+        lambda: asyncio.run(secret_evidence_containment()),
     )
 
     escaped = [item for item in attacks if item["result"] == "ESCAPED"]
@@ -310,6 +405,185 @@ def _compose(root: Path, *arguments: str) -> subprocess.CompletedProcess[str]:
         check=False,
         timeout=1800,
     )
+
+
+def _host_attacks(root: Path, checkpoint: Path) -> list[dict[str, Any]]:
+    """Exercise the audit's host-side bundle and live-lifecycle attacks.
+
+    The evaluator image owns A-J and Q.  K-O target the host review transport, and P consumes the
+    four current live scenario reports that precede this stage in the full verifier.  Keeping those
+    operations on their real side of the boundary avoids pretending that an evaluator container can
+    inspect a Git review archive or the host orchestration reports.
+    """
+    from review_bundle import manifest as bundle_manifest
+    from review_bundle import validate as validate_bundle
+
+    attacks: list[dict[str, Any]] = []
+
+    def record(
+        identifier: str,
+        target: str,
+        mutation: str,
+        expected: str,
+        defended: bool,
+        observed: str,
+        evidence: list[str],
+    ) -> None:
+        attacks.append(
+            {
+                "attackId": identifier,
+                "description": target,
+                "target": target,
+                "mutation": mutation,
+                "expectedDefense": expected,
+                "observed": observed,
+                "result": "DEFENDED" if defended else "ESCAPED",
+                "evidence": evidence,
+                "mandatory": True,
+                "origin": "Gate 4 internal Red Team on the host review boundary",
+            }
+        )
+
+    prefix = f"repository/{checkpoint.relative_to(root).as_posix()}/"
+    base_payload = {
+        **{prefix + name: b"{}\n" for name in (
+            "STATE.json",
+            "REQUIREMENTS-MATRIX.json",
+            "FUNCTIONAL-ACCEPTANCE.json",
+            "QUALITY.json",
+            "M2-INTERNAL-RED-TEAM.json",
+            "COMPLETENESS-REPORT.json",
+            "FILES.json",
+            "COMMANDS.jsonl",
+        )},
+        "repository/tests/test_control.py": b"# control\n",
+        "repository/apps/api/migrations/control.py": b"# migration\n",
+        "repository/.iacode/schemas/control.json": b"{}\n",
+        "repository/.iacode/policies/control.json": b"{}\n",
+        "repository/docs/control.md": b"# control\n",
+        "bundle/CHANGESET.diff": b"",
+        "bundle/REVIEW-STATE.json": b"{}\n",
+    }
+
+    with tempfile.TemporaryDirectory(dir=root / "var") as temporary:
+        directory = Path(temporary)
+
+        def write_bundle(
+            name: str,
+            mutate: Callable[[dict[str, bytes]], None] | None = None,
+            duplicate: str | None = None,
+        ) -> Path:
+            payload = dict(base_payload)
+            if mutate:
+                mutate(payload)
+            declared = bundle_manifest(payload)
+            archive = directory / f"{name}.zip"
+            with zipfile.ZipFile(archive, "w", compression=zipfile.ZIP_DEFLATED) as bundle:
+                for member, content in sorted(payload.items()):
+                    bundle.writestr(member, content)
+                bundle.writestr(
+                    "bundle/MANIFEST.json",
+                    json.dumps(declared, sort_keys=True, separators=(",", ":")) + "\n",
+                )
+                if duplicate:
+                    with warnings.catch_warnings():
+                        warnings.simplefilter("ignore", UserWarning)
+                        bundle.writestr(duplicate, payload[duplicate])
+            return archive
+
+        def outcome(
+            identifier: str,
+            target: str,
+            mutation: str,
+            expected_fragment: str,
+            bundle: Path,
+        ) -> None:
+            report = validate_bundle(root, checkpoint, bundle)
+            defended = report["result"] == "FAIL" and any(
+                expected_fragment in finding for finding in report["findings"]
+            )
+            record(
+                identifier,
+                target,
+                mutation,
+                f"validator refuses with {expected_fragment}",
+                defended,
+                f"result={report['result']}; expected-finding={defended}",
+                ["file:scripts/development-ledger/review_bundle.py"],
+            )
+
+        altered = write_bundle("altered")
+        with zipfile.ZipFile(altered, "a", compression=zipfile.ZIP_DEFLATED) as bundle:
+            with warnings.catch_warnings():
+                warnings.simplefilter("ignore", UserWarning)
+                bundle.writestr("bundle/CHANGESET.diff", b"altered")
+        outcome("K", "bundle integrity", "alter one payload byte", "digest mismatch", altered)
+
+        missing = write_bundle(
+            "missing-state",
+            lambda payload: payload.pop(prefix + "STATE.json"),
+        )
+        outcome(
+            "L",
+            "mandatory bundle evidence",
+            "remove subject STATE.json",
+            "missing required checkpoint artifact: STATE.json",
+            missing,
+        )
+
+        traversal = write_bundle(
+            "traversal",
+            lambda payload: payload.__setitem__("../escape", b"refused"),
+        )
+        outcome("M", "archive path safety", "add a traversal member", "unsafe archive member", traversal)
+
+        probe_bundle = write_bundle(
+            "secret",
+            lambda payload: payload.__setitem__(
+                "repository/docs/ordinary.txt",
+                ("gh" + "p_" + "x" * 20).encode("utf-8"),
+            ),
+        )
+        outcome(
+            "N",
+            "bundle secret scan",
+            "add canonical credential-shaped bytes",
+            "secret scan found",
+            probe_bundle,
+        )
+
+        duplicate_name = "repository/docs/control.md"
+        duplicate = write_bundle("duplicate", duplicate=duplicate_name)
+        outcome("O", "archive uniqueness", "duplicate a member name", "duplicate member names", duplicate)
+
+    reports = {
+        "recovery": root / "var" / "quality-recovery.json",
+        "cancellation": root / "var" / "quality-cancellation.json",
+        "timeout": root / "var" / "quality-timeout.json",
+        "forged-origin": root / "var" / "sandbox-tool-result-origin.json",
+    }
+    observed: dict[str, str] = {}
+    for name, path in reports.items():
+        try:
+            document = json.loads(path.read_text(encoding="utf-8"))
+            observed[name] = str(document.get("result"))
+        except (OSError, json.JSONDecodeError):
+            observed[name] = "MISSING"
+    defended = all(value == "PASS" for value in observed.values())
+    record(
+        "P",
+        "live adverse lifecycle",
+        "execute restart, cancellation, timeout and forged-origin scenarios",
+        "every fail-closed invariant survives in the current verifier run",
+        defended,
+        "; ".join(f"{name}={value}" for name, value in observed.items()),
+        [
+            "file:scripts/iacode/scenarios/quality_engine_e2e.py",
+            "file:scripts/iacode/scenarios/sandbox_coding_e2e.py",
+            "file:scripts/iacode/verify.py",
+        ],
+    )
+    return attacks
 
 
 def run_in_image(root: Path, rebuild: bool) -> dict[str, Any]:
@@ -381,6 +655,17 @@ def main() -> int:
     if not checkpoint.is_absolute():
         checkpoint = root / checkpoint
     observed = run_in_image(root, rebuild=not arguments.skip_gate_rebuild)
+    attacks = observed["attacks"] + _host_attacks(root, checkpoint)
+    order = {identifier: index for index, identifier in enumerate("ABCDEFGHIJKLMNOPQ")}
+    attacks.sort(key=lambda item: order[str(item["attackId"])])
+    escaped = [item for item in attacks if item["result"] == "ESCAPED"]
+    observed = {
+        **observed,
+        "attacks": attacks,
+        "escaped": len(escaped),
+        "defended": len(attacks) - len(escaped),
+        "total": len(attacks),
+    }
     report = {
         "schemaVersion": "1.1.0",
         "checkpoint": checkpoint.name,

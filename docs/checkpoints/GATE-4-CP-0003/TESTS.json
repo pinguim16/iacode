@@ -1,0 +1,27 @@
+{
+  "schemaVersion": "3.2.0",
+  "unit": {
+    "executed": true,
+    "passed": 751,
+    "failed": 0,
+    "command": "python -m unittest discover -s tests",
+    "evidence": "command:cmd-0183",
+    "runId": "green-keeper-cycle-7-ledger-suite"
+  },
+  "integration": {
+    "executed": true,
+    "passed": 934,
+    "failed": 0,
+    "command": "python scripts/iacode/verify.py --keep-going --report docs/checkpoints/GATE-4-CP-0003/VERIFY.json",
+    "evidence": "command:cmd-0114",
+    "runId": "gate4-correction-post-bundle-verification"
+  },
+  "e2e": {
+    "executed": true,
+    "passed": 42,
+    "failed": 0,
+    "command": "python scripts/iacode/verify.py --keep-going --report docs/checkpoints/GATE-4-CP-0003/VERIFY.json",
+    "evidence": "command:cmd-0114",
+    "runId": "gate4-correction-post-bundle-verification"
+  }
+}

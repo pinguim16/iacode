@@ -47,7 +47,7 @@ with `--no-deps`, so the dependency lock stays authoritative.
 
 | Package | Version | What it owns |
 |---|---|---|
-| `packages/common` | 0.1.0 | UUIDv7 and credential redaction |
+| `packages/common` | 0.1.0 | UUIDv7, credential redaction and canonical secret detection |
 | `packages/contracts` | 0.1.0 | the shapes that cross a process boundary, and the agent runtime vocabulary |
 | `packages/persistence` | 0.1.0 | the declarative schema, shared by the API and the worker |
 | `packages/telemetry` | 0.1.0 | the logging contract and the ambient correlation context |
@@ -107,7 +107,7 @@ Installed from the repository, versioned together, and pinned by exact version i
 
 | Package | Version | Consumed by |
 |---|---|---|
-| `iacode-common` | 0.1.0 | the API, the worker, the gateway |
+| `iacode-common` | 0.1.0 | the API, the worker, the gateway, the evaluator, and ledger controls |
 | `iacode-contracts` | 0.1.0 | the API |
 | `iacode-telemetry` | 0.1.0 | the API, the worker, the gateway |
 | `iacode-model-gateway` | 0.1.0 | the API |

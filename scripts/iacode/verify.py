@@ -297,12 +297,6 @@ def build_stages(fast: bool) -> list[Stage]:
             str(REPOSITORY_ROOT / "var" / "quality-timeout.json"),
         ),
         python_stage(
-            "quality-false-pass",
-            "the Gate 4 false-PASS battery rejects every mandatory mutation",
-            "scripts/development-ledger/gate4_red_team.py",
-            "--skip-gate-rebuild",
-        ),
-        python_stage(
             "sandbox-coding",
             "a coding team fixes a synthetic repository in a real sandbox; the host is untouched",
             "scripts/iacode/scenarios/sandbox_coding_e2e.py",
@@ -349,6 +343,12 @@ def build_stages(fast: bool) -> list[Stage]:
             "forged-result",
             "--report",
             str(REPOSITORY_ROOT / "var" / "sandbox-tool-result-origin.json"),
+        ),
+        python_stage(
+            "quality-false-pass",
+            "the Gate 4 false-PASS battery rejects every mandatory mutation",
+            "scripts/development-ledger/gate4_red_team.py",
+            "--skip-gate-rebuild",
         ),
         python_stage(
             "backup",

@@ -35,6 +35,33 @@ SPECIFICATION = PROJECT_ROOT / "docs" / "GATE-4-CHECKLIST.md"
 
 
 class Gate4QualityCoverageTests(unittest.TestCase):
+    def test_runtime_and_ledger_share_the_canonical_secret_taxonomy(self) -> None:
+        from iacode_common.secret_scanning import SECRET_PATTERNS, find_secret_kinds
+
+        self.assertIs(ledger_common.SECRET_PATTERNS, SECRET_PATTERNS)
+        marker = "gh" + "p_" + "d" * 20
+        self.assertEqual(ledger_common.find_secrets(marker), find_secret_kinds(marker))
+        evaluator = ast.parse(
+            (
+                PROJECT_ROOT
+                / "services"
+                / "evaluator"
+                / "src"
+                / "iacode_evaluator"
+                / "evidence.py"
+            ).read_text(encoding="utf-8")
+        )
+        imports = {
+            (node.module, alias.name)
+            for node in evaluator.body
+            if isinstance(node, ast.ImportFrom)
+            for alias in node.names
+        }
+        self.assertIn(
+            ("iacode_common.secret_scanning", "find_secret_kinds"),
+            imports,
+        )
+
     def test_agent_quality_classifies_unsupported_and_failed_plans_without_stranding_run(
         self,
     ) -> None:
@@ -590,6 +617,12 @@ class ProgramStateTests(unittest.TestCase):
 
 
 class ReviewBundleTests(unittest.TestCase):
+    def test_review_context_includes_unchanged_migrations_schemas_and_policies(self) -> None:
+        paths = review_bundle._review_context_paths(PROJECT_ROOT)
+        self.assertTrue(any("migrations" in path.parts for path in paths))
+        self.assertTrue(any(path.parts[:2] == (".iacode", "schemas") for path in paths))
+        self.assertTrue(any(path.parts[:2] == (".iacode", "policies") for path in paths))
+
     def test_manifest_binds_order_size_and_digest(self) -> None:
         declared = review_bundle.manifest({"z.txt": b"z", "a.txt": b"alpha"})
         self.assertEqual([item["path"] for item in declared["entries"]], ["a.txt", "z.txt"])

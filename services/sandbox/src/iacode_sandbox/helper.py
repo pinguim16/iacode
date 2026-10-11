@@ -175,15 +175,20 @@ def kill_everything_else(deadline_seconds: float = SWEEP_SECONDS,
         frozen |= current
     killed = 0
     while time.monotonic() < deadline:
-        targets = [pid for pid in _pids() - keep if _state(pid) not in ("", "Z")]
-        if not targets:
+        remaining = _pids() - keep
+        if not remaining:
             break
+        targets = [pid for pid in remaining if _state(pid) not in ("", "Z")]
         for pid in targets:
             try:
                 os.kill(pid, signal.SIGKILL)
                 killed += 1
             except OSError:
                 pass
+        # A killed child remains in the PID cgroup as a zombie until the container's init reaps
+        # it. Returning merely because no *live* target remains races the next docker exec against
+        # a full PID table: the exec can fail even though the sweep killed every process. Keep the
+        # bounded loop alive until /proc proves the zombies have actually disappeared.
         time.sleep(0.02)
     return killed
 

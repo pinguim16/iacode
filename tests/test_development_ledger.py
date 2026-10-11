@@ -254,8 +254,9 @@ def copy_ledger_tooling(root: Path) -> None:
     Copying the names without the files makes the fixture fail for its own reasons, which is what
     happened when GATE 0 added four gates whose commands live outside `scripts/development-ledger`.
     """
-    shutil.copytree(SCRIPTS, root / "scripts" / "development-ledger",
-                    ignore=shutil.ignore_patterns("__pycache__"))
+    from promotion_fixture import copy_ledger_runtime
+
+    copy_ledger_runtime(root)
     for name in (".gitignore", ".gitattributes"):
         if (PROJECT_ROOT / name).is_file():
             shutil.copy2(PROJECT_ROOT / name, root / name)
@@ -264,6 +265,22 @@ def copy_ledger_tooling(root: Path) -> None:
         from promotion_fixture import restrict_policies_to_available_content
 
         restrict_policies_to_available_content(root)
+
+
+class LedgerRuntimePackagingTests(unittest.TestCase):
+    def test_disposable_ledger_runtime_carries_its_canonical_scanner_dependency(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            copy_ledger_tooling(root)
+
+            copied = root / "packages" / "common" / "src" / "iacode_common" / "secret_scanning.py"
+            self.assertTrue(copied.is_file())
+            imported = run([
+                sys.executable,
+                str(root / "scripts" / "development-ledger" / "new_checkpoint.py"),
+                "--help",
+            ], root)
+            self.assertEqual(imported.returncode, 0, imported.stdout)
 
 
 def read_json(path: Path) -> dict:
@@ -4660,6 +4677,16 @@ class SealedReportRenderingTests(unittest.TestCase):
         findings = parse_findings(self._report("GATE-3-CP-0004", "REVIEW-REPORT.md"))
         self.assertEqual([item["id"] for item in findings], ["M1-F-004"])
         self.assertEqual(findings[0]["severity"], "CRITICAL")
+
+    def test_a_blocking_finding_paragraph_in_a_sealed_audit_is_parsed(self) -> None:
+        findings = parse_findings(self._report("GATE-4-CP-0002", "REVIEW-REPORT.md"))
+        self.assertEqual([item["id"] for item in findings], ["G4-F-001"])
+        self.assertEqual(findings[0]["severity"], "HIGH")
+
+    def test_blocking_finding_prose_is_bounded_to_its_section(self) -> None:
+        findings = parse_findings(
+            "# Review\n\n## History\n\n`G4-F-001` is HIGH: only discussed here\n")
+        self.assertEqual(findings, [])
 
     def test_a_report_whose_findings_cannot_be_parsed_is_refused_rather_than_read_as_empty(
             self) -> None:

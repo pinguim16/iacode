@@ -32,6 +32,11 @@ REQUIRED_CHECKPOINT_FILES = {
     "FILES.json",
     "COMMANDS.jsonl",
 }
+REVIEW_CONTEXT_PATTERNS = (
+    ".iacode/policies/**",
+    ".iacode/schemas/**",
+    ":(glob)**/migrations/**",
+)
 
 
 def git(root: Path, *arguments: str, binary: bool = False) -> str | bytes:
@@ -57,10 +62,22 @@ def _changed_paths(root: Path, base: str) -> set[Path]:
     return {path for path in paths if (root / path).is_file()}
 
 
+def _review_context_paths(root: Path) -> set[Path]:
+    """Return tracked canonical inputs a reviewer needs even when this Gate did not change them."""
+
+    listing = str(git(root, "ls-files", "--", *REVIEW_CONTEXT_PATTERNS))
+    return {
+        Path(line)
+        for line in listing.splitlines()
+        if line.strip() and (root / Path(line)).is_file()
+    }
+
+
 def collect(root: Path, checkpoint: Path) -> dict[str, bytes]:
     state = load_json(checkpoint / "STATE.json")
     relative_checkpoint = checkpoint.relative_to(root)
     paths = _changed_paths(root, str(state["baseCommit"]))
+    paths.update(_review_context_paths(root))
     paths.update(path.relative_to(root) for path in checkpoint.rglob("*") if path.is_file())
     payload = {
         f"repository/{path.as_posix()}": (root / path).read_bytes()

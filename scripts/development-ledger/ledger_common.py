@@ -12,6 +12,17 @@ from pathlib import Path
 from typing import Any
 
 
+COMMON_SOURCE = Path(__file__).resolve().parents[2] / "packages" / "common" / "src"
+if str(COMMON_SOURCE) not in sys.path:
+    sys.path.insert(0, str(COMMON_SOURCE))
+
+from iacode_common.secret_scanning import (  # noqa: E402
+    SECRET_PATTERNS,
+    find_secret_kinds,
+    redact_secret_patterns,
+)
+
+
 SCHEMA_VERSION = "1.0.0"
 LEGACY_SCHEMA_VERSION = "1.0.0"
 EVIDENCE_SCHEMA_VERSION = "2.0.0"
@@ -800,45 +811,9 @@ def validate_schema(value: Any, schema: dict[str, Any], path: str = "$", root_sc
     return errors
 
 
-SECRET_PATTERNS: tuple[tuple[str, re.Pattern[str], str], ...] = (
-    (
-        "authorization header",
-        re.compile(r"(?i)(authorization[\"']?\s*:\s*[\"']?)(?!\[REDACTED\])(?:(?:Bearer|Basic)\s+)?[-A-Za-z0-9._~+/=]{6,}"),
-        r"\1[REDACTED]",
-    ),
-    (
-        "bearer credential",
-        re.compile(r"(?i)\bBearer\s+(?!\[REDACTED\]|credentials?\b|tokens?\b|authentication\b)[-A-Za-z0-9._~+/=]{8,}"),
-        "Bearer [REDACTED]",
-    ),
-    (
-        "named secret assignment",
-        re.compile(r"(?i)\b((?:[A-Z0-9]+_)*(?:API_KEY|TOKEN|SECRET|PASSWORD|ACCESS_KEY_ID|SECRET_ACCESS_KEY)[\"']?\s*[:=]\s*[\"']?)(?!\[REDACTED\]|example\b|placeholder\b|change[_-]?me[_-a-z0-9]*|not[_-]?set\b|your[_-])[-A-Za-z0-9._~+/=:@]{6,}"),
-        r"\1[REDACTED]",
-    ),
-    ("DevWorld credential", re.compile(r"\bdw_live_[A-Za-z0-9_-]{8,}\b"), "[REDACTED]"),
-    ("OpenAI-style key", re.compile(r"\bsk-[A-Za-z0-9_-]{12,}\b"), "[REDACTED]"),
-    ("GitHub credential", re.compile(r"\bgh[pousr]_[A-Za-z0-9]{20,}\b"), "[REDACTED]"),
-    ("GitHub fine-grained credential", re.compile(r"\bgithub_pat_[A-Za-z0-9_]{20,}\b"), "[REDACTED]"),
-    (
-        "private SSH key block",
-        re.compile(r"-----BEGIN ((?:OPENSSH|RSA|EC|DSA) PRIVATE KEY)-----[\s\S]*?-----END \1-----", re.IGNORECASE),
-        "[REDACTED]",
-    ),
-    (
-        "private SSH key header",
-        re.compile(r"-----BEGIN (?:OPENSSH|RSA|EC|DSA) PRIVATE KEY-----", re.IGNORECASE),
-        "[REDACTED]",
-    ),
-)
-
-
 def find_secrets(text: str) -> list[str]:
-    return [name for name, pattern, _replacement in SECRET_PATTERNS if pattern.search(text)]
+    return find_secret_kinds(text)
 
 
 def redact_text(text: str) -> str:
-    result = text
-    for _name, pattern, replacement in SECRET_PATTERNS:
-        result = pattern.sub(replacement, result)
-    return result
+    return redact_secret_patterns(text)

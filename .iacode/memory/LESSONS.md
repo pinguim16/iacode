@@ -57,10 +57,10 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 | `LSN-0047` | `GUARDED` | HIGH | implementation | A refusal that misnames the defect spends the only repair on the wrong correction | `test_content_of_the_wrong_type_is_refused_by_its_real_defect`, `test_the_runtime_instructions_state_that_content_is_one_string`, `scripts/iacode/agent_runtime_smoke.py` |
 | `LSN-0048` | `GUARDED` | HIGH | implementation | A state and the event that explains it, written in two commits, are written event first | `test_a_terminal_state_is_never_visible_before_its_terminal_event`, `test_the_workflow_writes_the_terminal_event_before_the_terminal_state`, `test_a_workflow_that_cannot_start_fails_the_run_rather_than_leaving_it_created`, `scripts/iacode/agent_runtime_smoke.py` |
 | `LSN-0049` | `GUARDED` | MEDIUM | testing | A metric read the instant after the call that moved it is read before the scrape that carries it | `test_the_observability_check_waits_for_a_scrape_and_asks_only_prometheus`, `test_live_smoke_is_bounded_and_minimal`, `test_every_script_that_reads_prometheus_waits_for_a_scrape`, `test_the_scan_fires_on_a_read_that_does_not_wait`, `test_the_foundation_smoke_waits_for_both_targets_and_asks_only_prometheus` |
-| `LSN-0050` | `GUARDED` | HIGH | checkpoint | A checkpoint sealed without naming its own tag cannot be validated from that tag | `test_sealing_refuses_a_state_that_does_not_name_its_own_tag`, `test_a_symbolic_head_validates_from_its_own_canonical_tag`, `test_a_symbolic_head_away_from_its_canonical_tag_is_still_refused`, `test_every_sealed_checkpoint_validates_from_its_own_tag` |
+| `LSN-0050` | `GUARDED` | CRITICAL | checkpoint | A checkpoint sealed without naming its own tag cannot be validated from that tag | `test_sealing_refuses_a_state_that_does_not_name_its_own_tag`, `test_a_symbolic_head_validates_from_its_own_canonical_tag`, `test_a_symbolic_head_away_from_its_canonical_tag_is_still_refused`, `test_every_sealed_checkpoint_validates_from_its_own_tag` |
 | `LSN-0051` | `GUARDED` | HIGH | implementation | A payload one service bounds for another must be bounded as the receiver measures it | `test_the_runtime_accepts_every_result_the_sandbox_hands_over`, `test_an_escaped_output_is_shortened_to_the_bound_and_says_so`, `test_an_output_that_fits_is_handed_over_unchanged` |
 | `LSN-0052` | `GUARDED` | HIGH | architecture | Two processes that meet on a queue must name what crosses it once, and a real run must exercise both | `test_both_sides_name_the_result_by_the_shared_key`, `test_the_key_scan_detects_a_literal`, `test_the_activity_answers_the_agent_result_and_the_execution` |
-| `LSN-0053` | `GUARDED` | HIGH | security | A process sweep that reads what a forking process holds waits on the processes it has to kill | `test_a_fork_bomb_that_detaches_leaves_a_sandbox_that_still_answers`, `test_a_fork_bomb_is_contained_by_the_process_limit`, `test_a_timeout_kills_the_whole_process_tree` |
+| `LSN-0053` | `GUARDED` | HIGH | security | A process sweep that reads what a forking process holds waits on the processes it has to kill | `test_a_fork_bomb_that_detaches_leaves_a_sandbox_that_still_answers`, `test_a_fork_bomb_is_contained_by_the_process_limit`, `test_a_timeout_kills_the_whole_process_tree`, `test_the_sweep_waits_for_zombies_to_be_reaped_before_returning` |
 | `LSN-0054` | `CONFIRMED` | MEDIUM | git | A pre-push check narrower than the change's reach lets a red gate reach the public remote | _not yet guarded_ |
 | `LSN-0055` | `GUARDED` | MEDIUM | model-behavior | A contract a model must follow has to reach the model, rendered from the definition the parser enforces | `test_the_runtime_instructions_show_the_exact_envelope_of_every_kind`, `test_the_repair_restates_the_same_shape`, `test_the_rendered_contract_follows_the_schema`, `test_no_second_envelope_contract_is_written_by_hand`, `test_arguments_outside_tool_arguments_are_refused_by_their_real_defect` |
 | `LSN-0056` | `GUARDED` | MEDIUM | security | A result is accepted only from the executor that owns the request, decided when the request is created | `test_a_forged_result_cannot_displace_the_sandbox_result`, `test_a_manual_result_for_a_sandbox_request_is_refused`, `test_a_result_for_a_request_the_sandbox_owns_is_refused_and_never_signalled`, `test_every_caller_declares_a_constant_origin`, `test_existing_requests_are_backfilled_from_what_the_sandbox_executed`, `scripts/iacode/scenarios/sandbox_coding_e2e.py` |
@@ -98,6 +98,10 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 | `LSN-0088` | `GUARDED` | HIGH | testing | A test inside a built image can consume only inputs copied into that image | `test_built_sandbox_test_image_carries_declared_external_fixture_inputs`, `test_python_functional_fixtures_reach_their_intended_test_outcome` |
 | `LSN-0089` | `GUARDED` | HIGH | architecture | Domain not-applicability and operational failure need distinct orchestration outcomes | `test_agent_quality_classifies_unsupported_and_failed_plans_without_stranding_run` |
 | `LSN-0090` | `GUARDED` | HIGH | testing | A clean-clone control must use only versioned configuration inputs | `test_the_evaluator_service_has_no_engine_socket_or_host_project_mount` |
+| `LSN-0091` | `GUARDED` | HIGH | security | Secret detection must run on the exact bytes at the durable evidence boundary | `test_canonical_secret_is_rejected_before_any_durable_operation`, `test_secret_bearing_execution_is_contained_and_derives_fail` |
+| `LSN-0092` | `GUARDED` | HIGH | tooling | Canonical audit parsers must consume every bounded sealed report rendering | `test_a_blocking_finding_paragraph_in_a_sealed_audit_is_parsed`, `test_blocking_finding_prose_is_bounded_to_its_section` |
+| `LSN-0093` | `GUARDED` | HIGH | testing | Disposable control repositories must carry every imported repository package | `test_disposable_ledger_runtime_carries_its_canonical_scanner_dependency`, `test_full_delivery_assurance_flow_reaches_ready_for_review` |
+| `LSN-0094` | `GUARDED` | HIGH | checkpoint | A review bundle must include unchanged canonical artifact categories | `test_review_context_includes_unchanged_migrations_schemas_and_policies`, `scripts/development-ledger/review_bundle.py` |
 
 ## Detail
 
@@ -155,7 +159,7 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 
 ### LSN-0005 — A PASS requires evidence that can be executed or resolved, not a statement
 
-- Status: `GUARDED`, severity CRITICAL, category quality, recurrences 1.
+- Status: `GUARDED`, severity CRITICAL, category quality, recurrences 4.
 - Source: SETUP-00, SETUP-00-CP-0003, finding R6.
 - Symptom: A quality dimension was recorded as PASS in a checkpoint that contained no corresponding execution.
 - Root cause: Quality results were bare verdicts with no link to the run that produced them, so a verdict could be inherited from an earlier checkpoint without re-execution.
@@ -165,7 +169,7 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
   - `test` QualityEvidenceTests.test_pass_referencing_a_failed_command_fails — A PASS pointing at a failed command is rejected.
   - `validator` scripts/development-ledger/validate_checkpoint.py — _validate_quality_evidence resolves every reference.
   - `invariant` validate_checkpoint._validate_quality_evidence — A PASS without resolvable evidence is refused for every positive terminal status.
-  - `test` PromotionInvariantTests.test_every_positive_status_rejects_every_red_quality_dimension — Every positive status is exercised against every mandatory red dimension.
+  - `test` PromotionInvariantTests.test_every_positive_status_rejects_every_red_quality_dimension — Every positive status is exercised against every mandatory red quality dimension.
 - Evidence: `file:docs/adr/ADR-0007-checkpoint-schema-2-and-independent-promotion.md`, `file:docs/QUALITY-GATES.md`
 
 ### LSN-0006 — The repository must be self-contained; a specification may not live outside it
@@ -757,7 +761,7 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 
 ### LSN-0050 — A checkpoint sealed without naming its own tag cannot be validated from that tag
 
-- Status: `GUARDED`, severity HIGH, category checkpoint, recurrences 0.
+- Status: `GUARDED`, severity CRITICAL, category checkpoint, recurrences 1.
 - Source: GATE-2, GATE-2-CP-0002, finding G2-F-013.
 - Symptom: Once GATE-2-CP-0002 anchored its predecessor, test_every_sealed_checkpoint_validates_from_its_own_tag failed for GATE-2-CP-0001: 'detached HEAD validation requires STATE.json currentCommit to name the checkpoint tag'. The checkpoint had been sealed at BLOCKED with currentCommit HEAD and had never been valid from its own tag.
 - Root cause: Three rules disagreed. The protocol lets a work-in-progress status keep the symbolic HEAD; the seal tool sealed whatever state it was given; and validation from a tag required the state to spell that tag. A checkpoint sealed at BLOCKED satisfied the first two and could never satisfy the third, and nothing looked until a successor anchored it.
@@ -797,16 +801,17 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 
 ### LSN-0053 — A process sweep that reads what a forking process holds waits on the processes it has to kill
 
-- Status: `GUARDED`, severity HIGH, category security, recurrences 0.
+- Status: `GUARDED`, severity HIGH, category security, recurrences 1.
 - Source: GATE-3, GATE-3-CP-0001, finding G3-F-004.
 - Symptom: A fork bomb that detached from its command wedged a sandbox: the sweep after the command killed a handful of processes in fifteen seconds, the survivors refilled the process table, and the next command could not be started.
 - Root cause: The sweep read every process's command line, which takes that process's memory lock, held by a process in the middle of a fork; and it killed without stopping first, so every slot it freed was refilled before its next round.
-- Resolution: The sweep lists processes and reads only their state, stops every one until no new process appears, and then kills them, with a separate budget for each phase.
+- Resolution: The sweep lists processes and reads only their state, stops every one until no new process appears, kills them, and remains inside its bounded loop until /proc proves the init has reaped the resulting zombies.
 - Prevention:
   - `test` test_a_fork_bomb_that_detaches_leaves_a_sandbox_that_still_answers — A detached bomb is swept and the sandbox answers the next command with an empty process table.
   - `test` test_a_fork_bomb_is_contained_by_the_process_limit — A bomb that stays attached is contained by the limit and ended at its timeout.
   - `test` test_a_timeout_kills_the_whole_process_tree — The same sweep ends a command's escaped children.
-- Evidence: `file:services/sandbox/src/iacode_sandbox/helper.py`, `file:scripts/development-ledger/gate3_sandbox_attacks.py`, `file:docs/checkpoints/GATE-3-CP-0001/DECISIONS.md`
+  - `test` test_the_sweep_waits_for_zombies_to_be_reaped_before_returning — The deterministic sweep does not return while a zombie still occupies the PID cgroup.
+- Evidence: `file:services/sandbox/src/iacode_sandbox/helper.py`, `file:services/sandbox/tests/test_sandbox_helper.py`, `file:scripts/development-ledger/gate3_sandbox_attacks.py`, `file:docs/checkpoints/GATE-3-CP-0001/DECISIONS.md`
 
 ### LSN-0054 — A pre-push check narrower than the change's reach lets a red gate reach the public remote
 
@@ -1235,3 +1240,51 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 - Prevention:
   - `test` test_the_evaluator_service_has_no_engine_socket_or_host_project_mount — The isolation control resolves Compose exclusively with the versioned .env.example, so it executes identically in a clean clone.
 - Evidence: `file:tests/test_gate4_quality_engine.py`, `file:infra/compose/.env.example`, `file:docs/checkpoints/GATE-4-CP-0001/M2-INTERNAL-MIRROR.json`, `file:docs/checkpoints/GATE-4-CP-0001/COMMANDS.jsonl`
+
+### LSN-0091 — Secret detection must run on the exact bytes at the durable evidence boundary
+
+- Status: `GUARDED`, severity HIGH, category security, recurrences 0.
+- Source: GATE-4, GATE-4-CP-0002, finding G4-F-001.
+- Symptom: The independent G4-X7 attack sent a credential-shaped value under an ordinary structured key; normal mapping redaction left it intact and the Quality Engine persisted and resolved the serialized evidence.
+- Root cause: Runtime redaction and the canonical repository scanner owned different taxonomies, and the evidence store performed no fail-closed scan of the exact serialized bytes before content-addressed lookup and commit.
+- Resolution: Move the canonical credential-shape taxonomy into the shared common package, scan serialized evidence before every lookup or write, refuse scanner failure, recheck downloaded objects during resolution, and persist only a sanitized ERROR result that derives FAIL.
+- Prevention:
+  - `test` test_canonical_secret_is_rejected_before_any_durable_operation — A canonical synthetic marker under an ordinary key is refused with zero object and metadata writes.
+  - `test` test_secret_bearing_execution_is_contained_and_derives_fail — The exact activity-to-store path terminates as sanitized ERROR and derives FAIL without retaining prohibited bytes.
+- Evidence: `file:docs/checkpoints/GATE-4-CP-0002/REVIEW-REPORT.md`, `file:docs/checkpoints/GATE-4-CP-0002/RED-TEAM-REPORT.md`, `file:packages/common/src/iacode_common/secret_scanning.py`, `file:services/evaluator/src/iacode_evaluator/evidence.py`, `file:services/evaluator/tests/test_persistence.py`, `file:services/evaluator/tests/test_workflow.py`, `file:scripts/development-ledger/gate4_red_team.py`
+
+### LSN-0092 — Canonical audit parsers must consume every bounded sealed report rendering
+
+- Status: `GUARDED`, severity HIGH, category tooling, recurrences 0.
+- Source: GATE-4, GATE-4-CP-0003, finding cmd-0003.
+- Symptom: Requirement derivation refused the sealed Gate 4 audit because its single blocking finding was rendered as a severity-bearing paragraph rather than a level-three finding heading.
+- Root cause: The canonical parser recognized earlier plural and singular heading layouts but did not recognize the bounded Blocking finding paragraph used by the new sealed audit.
+- Resolution: Parse a severity-bearing backticked finding only inside the exact Blocking finding section, retain the fail-closed empty-parse rule, and test both the sealed report and an identical mention outside the bounded section.
+- Prevention:
+  - `test` test_a_blocking_finding_paragraph_in_a_sealed_audit_is_parsed — The exact sealed Gate 4 review yields G4-F-001 and HIGH.
+  - `test` test_blocking_finding_prose_is_bounded_to_its_section — An identical historical mention outside the finding section is not imported as new corrective work.
+- Evidence: `file:scripts/development-ledger/policies.py`, `file:tests/test_development_ledger.py`, `file:docs/checkpoints/GATE-4-CP-0003/COMMANDS.jsonl`
+
+### LSN-0093 — Disposable control repositories must carry every imported repository package
+
+- Status: `GUARDED`, severity HIGH, category testing, recurrences 0.
+- Source: GATE-4, GATE-4-CP-0003, finding cmd-0022.
+- Symptom: The complete verifier reached every product and live scenario successfully, but the root suite failed when copied ledger tools imported iacode_common from disposable repositories that contained only scripts/development-ledger.
+- Root cause: The disposable-repository boundary copied executable ledger scripts but did not copy their versioned packages/common runtime dependency after the canonical secret taxonomy moved there.
+- Resolution: Centralize fixture installation in copy_ledger_runtime, copy both the ledger scripts and packages/common, and make every isolated test helper use that same source boundary without adding a fallback or a second scanner implementation.
+- Prevention:
+  - `test` test_disposable_ledger_runtime_carries_its_canonical_scanner_dependency — A disposable ledger installation contains the canonical scanner package and can import a copied ledger entry point in isolation.
+  - `test` test_full_delivery_assurance_flow_reaches_ready_for_review — The isolated end-to-end delivery path executes its copied lessons, integrity and checkpoint controls successfully.
+- Evidence: `file:scripts/development-ledger/promotion_fixture.py`, `file:tests/test_development_ledger.py`
+
+### LSN-0094 — A review bundle must include unchanged canonical artifact categories
+
+- Status: `GUARDED`, severity HIGH, category checkpoint, recurrences 0.
+- Source: GATE-4, GATE-4-CP-0003, finding cmd-0097.
+- Symptom: The deterministic review bundle failed its own category validation because a corrective slice had no changed migrations, schemas, or policies, so those mandatory review surfaces were absent.
+- Root cause: Bundle collection equated the Git changeset with the complete review surface even though Gate 4 requires both changed files and canonical migrations, schemas, and policies needed to interpret them.
+- Resolution: Include every tracked canonical policy, schema, and migration in the deterministic bundle in addition to the complete checkpoint and changed paths, while keeping the generated changeset truthful about what actually changed.
+- Prevention:
+  - `test` test_review_context_includes_unchanged_migrations_schemas_and_policies — The collected review context always contains tracked migrations, schemas, and policies even when none changed in the current slice.
+  - `automated-check` scripts/development-ledger/review_bundle.py — Bundle validation rejects a package missing any mandatory artifact category and scans the complete payload.
+- Evidence: `file:scripts/development-ledger/review_bundle.py`, `file:tests/test_gate4_quality_engine.py`, `file:docs/checkpoints/GATE-4-CP-0003/COMMANDS.jsonl`

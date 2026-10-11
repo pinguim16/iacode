@@ -1,0 +1,154 @@
+{
+  "schemaVersion": "3.2.0",
+  "phase": "GATE 4 corrective implementation for G4-F-001",
+  "gate": "GATE-4",
+  "status": "READY_FOR_REVIEW",
+  "branch": "main",
+  "baseCommit": "a3a12a84480a84be61d3e445001c923379a70cdc",
+  "currentCommit": "refs/tags/iacode-checkpoints/GATE-4-CP-0003",
+  "dirty": false,
+  "startedAt": "2026-10-10T18:19:05Z",
+  "updatedAt": "2026-10-11T09:21:16Z",
+  "nextAllowedAction": "Commit the finalized checkpoint, seal and tag it, publish main and the canonical tag, run post-commit validation and stop for independent review.",
+  "blockedBy": [],
+  "secondToolValidation": {
+    "status": "PENDING_MANUAL",
+    "tool": null,
+    "provider": null,
+    "model": null,
+    "validatedAt": null,
+    "justification": null,
+    "evidence": []
+  },
+  "requirementsMatrix": {
+    "path": "REQUIREMENTS-MATRIX.json",
+    "total": 216,
+    "mandatory": 214,
+    "complete": 216,
+    "partial": 0,
+    "missing": 0,
+    "notApplicable": 0,
+    "coveragePercent": 100.0
+  },
+  "greenKeeper": {
+    "status": "PASS",
+    "cycles": 7,
+    "remainingFailures": 0,
+    "unresolvedReworkItems": 0,
+    "log": "REWORK-LOG.jsonl",
+    "externalBlockers": [],
+    "requiredGates": [
+      "tests",
+      "staticAnalysis",
+      "lessons",
+      "integrity",
+      "checkpointValidation",
+      "apiTests",
+      "gatewayTests",
+      "agentRuntimeTests",
+      "sandboxTests",
+      "evaluatorTests",
+      "webTests",
+      "lint",
+      "infraDefinition"
+    ],
+    "evidence": [
+      "REWORK-LOG.jsonl",
+      "cmd-0183",
+      "cmd-0184",
+      "cmd-0185",
+      "cmd-0186",
+      "cmd-0187",
+      "cmd-0188",
+      "cmd-0189",
+      "cmd-0190",
+      "cmd-0191",
+      "cmd-0192",
+      "cmd-0193",
+      "cmd-0194",
+      "cmd-0195"
+    ]
+  },
+  "deliveryCompleteness": {
+    "status": "PASS",
+    "report": "COMPLETENESS-REPORT.json",
+    "coveragePercent": 100.0,
+    "evidenceCoveragePercent": 100.0,
+    "auditor": "Delivery Completeness Validator (implementing session, not independent)",
+    "evidence": [
+      "file:COMPLETENESS-REPORT.json",
+      "command:cmd-0196"
+    ]
+  },
+  "reworkCycles": 7,
+  "independentReview": {
+    "status": "PENDING",
+    "tool": null,
+    "reviewedAt": null,
+    "justification": null,
+    "evidence": []
+  },
+  "redTeam": {
+    "status": "PENDING",
+    "tool": null,
+    "executedAt": null,
+    "justification": null,
+    "evidence": []
+  },
+  "lessonPreflight": {
+    "path": "LESSON-PREFLIGHT.json",
+    "gate": "GATE-4",
+    "scope": "quality engine, immutable evidence, secret containment, verdict rules, sandbox execution, audit correction, review bundle",
+    "lessonsConsidered": 94,
+    "lessonsApplicable": 93,
+    "derivedRequirements": 93,
+    "evidence": [
+      "checkpoint:LESSON-PREFLIGHT.json",
+      "command:cmd-0172"
+    ]
+  },
+  "milestone": {
+    "id": "M2",
+    "title": "IACode V0 completion and experience",
+    "gates": [
+      "GATE 4",
+      "GATE 5",
+      "GATE 6",
+      "GATE 7"
+    ],
+    "status": "PENDING",
+    "auditor": null,
+    "auditedAt": null,
+    "evidence": []
+  },
+  "externalAuditRequired": false,
+  "externalAuditReason": null,
+  "guardrailEffectiveness": {
+    "guardrailsTotal": 95,
+    "guardrailsResolved": 95,
+    "guardrailsTested": 95,
+    "guardrailsEffective": 95,
+    "guardrailFailures": 0,
+    "evidence": [
+      "file:.iacode/memory/guardrails/registry.json",
+      "command:cmd-0185",
+      "command:cmd-0195",
+      "command:cmd-0198"
+    ]
+  },
+  "integrity": {
+    "status": "PASS",
+    "anchors": 25,
+    "chainFile": ".iacode/anchors/checkpoint-chain.json",
+    "evidence": [
+      "file:.iacode/anchors/checkpoint-chain.json",
+      "command:cmd-0007"
+    ]
+  },
+  "externalAttestation": {
+    "status": "NONE",
+    "path": null,
+    "auditId": null,
+    "evidence": []
+  }
+}

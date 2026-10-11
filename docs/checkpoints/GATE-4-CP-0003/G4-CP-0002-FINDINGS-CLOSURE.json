@@ -1,0 +1,53 @@
+{
+  "schemaVersion": "1.0.0",
+  "checkpoint": "GATE-4-CP-0003",
+  "auditId": "G4-CP-0002",
+  "source": "docs/checkpoints/GATE-4-CP-0002/REVIEW-REPORT.md",
+  "findings": [
+    {
+      "findingId": "G4-F-001",
+      "severity": "HIGH",
+      "title": "Credential-shaped structured quality output crossed the durable evidence boundary",
+      "originalExpected": "Scan the fully serialized evidence object before durable commit, quarantine or fail closed on detection, prove that the object cannot be resolved, and add a regression test for credential material under an unremarkable structured key.",
+      "originalObserved": "Independent attack G4-X7 assembled a synthetic canonical scanner marker in memory, passed it through record_execution under an ordinary output key, and observed that the existing redaction missed it while the evidence store persisted and resolved it unchanged.",
+      "rootCause": "Runtime mapping redaction and the repository secret scanner owned different detection taxonomies, while QualityEvidenceStore trusted redacted input and began content-addressed lookup and persistence without scanning the exact serialized bytes.",
+      "implementation": [
+        "packages/common now owns the canonical credential-shape taxonomy consumed by both ledger controls and the evaluator image.",
+        "QualityEvidenceStore scans exact serialized bytes before digest calculation, repository lookup, object stat, upload, or metadata commit; detection and scanner failure use stable fail-closed error codes.",
+        "Evidence resolution rescans downloaded bytes before accepting size and digest, so legacy or injected prohibited content cannot support a verdict.",
+        "record_execution catches only containment error codes and persists a sanitized ERROR result with no evidence or finding payload; pure verdict derivation returns FAIL.",
+        "ADR-0032, LSN-0091, and GRD-0092 make the boundary and its regression controls permanent."
+      ],
+      "regressionTest": [
+        "test_canonical_secret_is_rejected_before_any_durable_operation",
+        "test_scanner_failure_is_fail_closed_before_any_durable_operation",
+        "test_secret_bearing_legacy_object_cannot_resolve",
+        "test_secret_bearing_execution_is_contained_and_derives_fail",
+        "test_runtime_and_ledger_share_the_canonical_secret_taxonomy"
+      ],
+      "negativeTest": [
+        "G4-X7 sends a canonical scanner-detected marker under stdout, then requires ERROR, FAIL, zero object writes, zero metadata records, and absence from serialized result and verdict.",
+        "The scanner-failure mutation raises before any durable operation instead of treating an unavailable scanner as a clean scan."
+      ],
+      "verificationCommand": "python scripts/development-ledger/gate4_red_team.py --skip-gate-rebuild",
+      "evidence": [
+        "command:cmd-0008",
+        "command:cmd-0009",
+        "command:cmd-0015",
+        "command:cmd-0016",
+        "file:packages/common/src/iacode_common/secret_scanning.py",
+        "file:services/evaluator/src/iacode_evaluator/evidence.py",
+        "file:services/evaluator/src/iacode_evaluator/activities.py",
+        "file:services/evaluator/tests/test_persistence.py",
+        "file:services/evaluator/tests/test_workflow.py",
+        "file:scripts/development-ledger/gate4_red_team.py"
+      ],
+      "lesson": "LSN-0091",
+      "guardrail": "GRD-0092",
+      "status": "CLOSED"
+    }
+  ],
+  "total": 1,
+  "closed": 1,
+  "result": "CLOSED"
+}

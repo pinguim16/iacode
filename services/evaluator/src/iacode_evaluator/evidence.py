@@ -11,6 +11,7 @@ from dataclasses import dataclass
 from datetime import UTC, datetime
 from typing import Any, Protocol
 
+from iacode_common.secret_scanning import find_secret_kinds
 from iacode_contracts.quality import QualityEvidence
 from minio.error import S3Error
 
@@ -19,6 +20,30 @@ from iacode_evaluator.errors import QualityError
 MAX_INLINE_SUMMARY_BYTES = 4096
 REDACTION = re.compile(r"(?i)(api[_-]?key|password|secret|token)(\s*[:=]\s*)[^\s,;]+")
 MISSING_OBJECT_CODES = frozenset({"NoSuchKey", "NoSuchObject"})
+SECRET_EVIDENCE_ERROR_CODES = frozenset(
+    {"EVIDENCE_SECRET_DETECTED", "EVIDENCE_SECRET_SCAN_FAILED"}
+)
+
+
+def _require_secret_free(content: bytes) -> None:
+    """Reject prohibited bytes before any content-addressed lookup or durable write.
+
+    The detector returns only taxonomy names, but even those names are unnecessary at this
+    boundary.  A stable reason code is enough for the workflow to fail closed without making an
+    error message or log into a second copy of the rejected material.
+    """
+    try:
+        findings = find_secret_kinds(content.decode("utf-8", errors="replace"))
+    except Exception as error:
+        raise QualityError(
+            "EVIDENCE_SECRET_SCAN_FAILED",
+            "quality evidence could not be proven free of prohibited credential material",
+        ) from error
+    if findings:
+        raise QualityError(
+            "EVIDENCE_SECRET_DETECTED",
+            "quality evidence contains prohibited credential material",
+        )
 
 
 def _object_missing(error: Exception) -> bool:
@@ -165,6 +190,7 @@ class QualityEvidenceStore:
         producer: str,
         source_digests: tuple[str, ...] = (),
     ) -> QualityEvidence:
+        _require_secret_free(content)
         digest = hashlib.sha256(content).hexdigest()
         existing = await self.repository.by_digest(run_id, digest)
         if existing is not None:
@@ -238,6 +264,10 @@ class QualityEvidenceStore:
             return False
         try:
             content = await self._read(record.key)
+        except QualityError:
+            return False
+        try:
+            _require_secret_free(content)
         except QualityError:
             return False
         return (

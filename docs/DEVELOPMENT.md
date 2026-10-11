@@ -41,7 +41,7 @@ apps/web/                  the Angular shell
 services/orchestrator/     the Temporal worker: the smoke workflow and the agent run workflow
   src/                     the workflow, its activities and the process that polls for them
   rehearsal/               harnesses, outside the shipped source, for the agent scenarios
-packages/common/           UUIDv7 and credential redaction
+packages/common/           UUIDv7, credential redaction and canonical secret detection
 packages/contracts/        the response shapes that cross a process boundary
 packages/persistence/      the system of record: one declarative schema, shared by both processes
 packages/telemetry/        the logging contract and the ambient correlation context
@@ -155,8 +155,8 @@ python scripts/iacode/scenarios/quality_engine_e2e.py --scenario pass
 
 A new stack requires an exact detector/profile match, registered policy-owned runners and a pinned
 content-addressed image under `services/sandbox/images/`. Never add a repository-name branch or a
-fallback runner. Changes to result or evidence semantics need a reversible migration and a live
-PostgreSQL/MinIO test. Operational behavior is in
+fallback runner. Changes to result or evidence semantics need a reversible migration when storage
+shapes change and a live PostgreSQL/MinIO test. Operational behavior is in
 [`docs/runbooks/QUALITY-ENGINE.md`](runbooks/QUALITY-ENGINE.md).
 
 ## Before you call a change finished

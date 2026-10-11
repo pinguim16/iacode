@@ -7,7 +7,7 @@ from types import SimpleNamespace
 
 import pytest
 from iacode_contracts.quality import QualityCheck, QualityPlan, QualityPolicy
-from iacode_evaluator.activities import record_execution, set_runtime
+from iacode_evaluator.activities import derive_run_verdict, record_execution, set_runtime
 from iacode_evaluator.config import EvaluatorSettings
 from iacode_evaluator.evidence import (
     MemoryEvidenceRepository,
@@ -123,6 +123,66 @@ class QualityWorkflowAdapterTests:
         content = next(iter(objects.objects.values())).decode("utf-8")
         assert "should-not-survive" not in content
         assert "[REDACTED]" in content
+
+    @pytest.mark.asyncio
+    async def test_secret_bearing_execution_is_contained_and_derives_fail(self) -> None:
+        store = MemoryQualityStore(now=lambda: NOW)
+        await store.create_plan(_plan())
+        run = await store.create_run(plan_id=SHA, owner_run_id=None, idempotency_key="run-secret")
+        for state, event in (("PLANNED", "PLANNED"), ("QUEUED", "QUEUED"), ("RUNNING", "STARTED")):
+            await store.transition(
+                run.run_id,
+                state=state,
+                event_type=event,
+                dedupe_key=f"secret:{state}",
+                payload={},
+            )
+        objects = MemoryObjectStore()
+        repository = MemoryEvidenceRepository()
+        evidence = QualityEvidenceStore(
+            client=objects,
+            bucket="artifacts",
+            repository=repository,
+            now=lambda: NOW,
+        )
+        set_runtime(
+            SimpleNamespace(
+                store=store,
+                evidence=evidence,
+                metrics=QualityMetrics(CollectorRegistry()),
+            )
+        )
+        marker = "gh" + "p_" + "c" * 20
+        try:
+            result = await record_execution(
+                {
+                    "runId": run.run_id,
+                    "checkId": "q001-unit",
+                    "finishedAt": NOW.isoformat(),
+                    "execution": {
+                        "status": "SUCCEEDED",
+                        "exitCode": 0,
+                        "durationMs": 12,
+                        "output": {"stdout": marker},
+                    },
+                }
+            )
+            verdict = await derive_run_verdict(
+                {"runId": run.run_id, "derivedAt": NOW.isoformat()}
+            )
+        finally:
+            set_runtime(None)
+
+        assert result["status"] == "ERROR"
+        assert result["exitCode"] is None
+        assert result["evidence"] == []
+        assert result["findings"] == []
+        assert result["summary"] == "quality evidence was rejected before persistence"
+        assert verdict["verdict"] == "FAIL"
+        assert repository.records == {}
+        assert objects.objects == {}
+        assert marker not in str(result)
+        assert marker not in str(verdict)
 
 
 class QualityOperationsTests:

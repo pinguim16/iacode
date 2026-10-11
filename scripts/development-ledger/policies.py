@@ -58,6 +58,17 @@ SECTION_HEADING = re.compile(r"^#{2,}\s+(?P<title>.+?)\s*$")
 # ``audit_findings`` rather than read as a report without findings.
 FINDING_HEADING = re.compile(r"^###\s+`?(?P<id>[A-Z0-9]+-F-[0-9]{3})`?\s*[-—]\s*(?P<rest>.+?)\s*$")
 
+# A bounded single-finding rendering used by a sealed audit:
+#     ## Blocking finding
+#     `G4-F-001` is HIGH: concise title and explanation...
+#
+# This is deliberately scoped to that exact section by ``parse_findings``.  Matching the same
+# prose anywhere else would re-import findings merely discussed as history or closure evidence.
+BLOCKING_FINDING_PROSE = re.compile(
+    r"^`?(?P<id>[A-Z0-9]+-F-[0-9]{3})`?\s+is\s+"
+    r"(?P<severity>CRITICAL|HIGH|MEDIUM|LOW):\s+(?P<title>.+?)\s*$"
+)
+
 # The section whose findings belong to the report that writes them. An audit report also discusses
 # the findings of the audit it follows, under its own heading, and those are that audit's findings
 # and not this one's: reading them as new work would make a corrective delivery re-close findings a
@@ -367,6 +378,15 @@ def parse_findings(text: str) -> list[dict[str, str]]:
         # Sealed audits use both ``## Findings`` and ``## Finding`` when exactly one finding was
         # raised.  They are the same bounded section; refusing the singular rendering would make
         # the canonical requirement derivation unable to consume that sealed audit at all.
+        if section == "blocking finding":
+            match = BLOCKING_FINDING_PROSE.match(line)
+            if match:
+                findings.append({
+                    "id": match.group("id"),
+                    "severity": match.group("severity"),
+                    "title": match.group("title"),
+                })
+            continue
         if section not in (FINDINGS_SECTION, "finding"):
             continue
         match = FINDING_HEADING.match(line)

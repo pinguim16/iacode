@@ -41,3 +41,4 @@ exist, or a title or status that disagrees with its record fails the suite.
 | [ADR-0029](ADR-0029-quality-execution-boundary.md) | Quality plans execute through stack-specific content-addressed sandboxes | Accepted |
 | [ADR-0030](ADR-0030-quality-evidence-and-verdict-immutability.md) | Quality evidence and verdicts are immutable derived facts | Accepted |
 | [ADR-0031](ADR-0031-project-profiles-select-closed-quality-runners.md) | Project profiles select closed policy-owned quality runners | Accepted |
+| [ADR-0032](ADR-0032-quality-evidence-is-scanned-before-durable-commit.md) | Quality evidence is scanned before durable commit | Accepted |

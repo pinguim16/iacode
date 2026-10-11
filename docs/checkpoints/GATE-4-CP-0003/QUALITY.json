@@ -1,0 +1,65 @@
+{
+  "schemaVersion": "3.2.0",
+  "checks": {
+    "build": {
+      "status": "PASS",
+      "evidence": ["command:cmd-0114"],
+      "justification": null
+    },
+    "unitTests": {
+      "status": "PASS",
+      "evidence": ["file:TESTS.json", "command:cmd-0183"],
+      "justification": null
+    },
+    "integrationTests": {
+      "status": "PASS",
+      "evidence": ["file:TESTS.json", "command:cmd-0114"],
+      "justification": null
+    },
+    "e2e": {
+      "status": "PASS",
+      "evidence": ["file:VERIFY.json", "file:FUNCTIONAL-ACCEPTANCE-VALIDATION.json", "command:cmd-0114"],
+      "justification": null
+    },
+    "lint": {
+      "status": "PASS",
+      "evidence": ["command:cmd-0194"],
+      "justification": null
+    },
+    "staticAnalysis": {
+      "status": "PASS",
+      "evidence": ["command:cmd-0184"],
+      "justification": null
+    },
+    "security": {
+      "status": "PASS",
+      "evidence": ["file:VERIFY.json", "command:cmd-0114", "command:cmd-0187"],
+      "justification": null
+    },
+    "documentation": {
+      "status": "PASS",
+      "evidence": ["file:DIFF-SUMMARY.md", "file:DECISIONS.md", "command:cmd-0183"],
+      "justification": null
+    },
+    "checkpointValidation": {
+      "status": "PASS",
+      "evidence": ["command:cmd-0187"],
+      "justification": null
+    },
+    "redTeam": {
+      "status": "PASS",
+      "evidence": ["file:M2-INTERNAL-RED-TEAM.json", "command:cmd-0197"],
+      "justification": "Same-session internal Red Team defended all 17 mandatory attacks with a valid null-mutation control; this is not independent review."
+    },
+    "greenKeeper": {
+      "status": "PASS",
+      "evidence": ["file:REWORK-LOG.jsonl", "command:cmd-0187", "command:cmd-0195"],
+      "justification": "Cycle 7 passed all 13 policy-derived mandatory gates after the holistic metadata audit; earlier failures remain preserved in COMMANDS.jsonl and REWORK-LOG.jsonl."
+    },
+    "deliveryCompleteness": {
+      "status": "PASS",
+      "evidence": ["file:COMPLETENESS-REPORT.json", "command:cmd-0196"],
+      "justification": "All 216 derived requirements are complete with 100% evidence coverage; the auditor is the implementing session, not an independent reviewer."
+    }
+  }
+}

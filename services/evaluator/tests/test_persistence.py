@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from datetime import UTC, datetime, timedelta
 
+import iacode_evaluator.evidence as evidence_module
 import iacode_persistence.models  # noqa: F401
 import pytest
 from iacode_contracts.quality import (
@@ -196,6 +197,77 @@ class QualityEvidenceTests:
         assert "[REDACTED]" in summary
         assert len(summary.encode("utf-8")) <= 4096
         assert "full output stored as quality evidence" in summary
+
+    @pytest.mark.asyncio
+    async def test_canonical_secret_is_rejected_before_any_durable_operation(self) -> None:
+        objects = MemoryObjectStore()
+        repository = MemoryEvidenceRepository()
+        store = QualityEvidenceStore(
+            client=objects, bucket="iacode-artifacts", repository=repository, now=lambda: NOW
+        )
+        synthetic = ("gh" + "p_" + "a" * 20).encode("utf-8")
+
+        with pytest.raises(QualityError) as rejected:
+            await store.put(
+                run_id="run-1",
+                result_id="result-1",
+                kind="report",
+                content=b'{"ordinary": "' + synthetic + b'"}',
+                media_type="application/json",
+                producer="pytest",
+            )
+
+        assert rejected.value.code == "EVIDENCE_SECRET_DETECTED"
+        assert repository.records == {}
+        assert objects.objects == {}
+
+    @pytest.mark.asyncio
+    async def test_scanner_failure_is_fail_closed_before_any_durable_operation(
+        self, monkeypatch: pytest.MonkeyPatch
+    ) -> None:
+        objects = MemoryObjectStore()
+        repository = MemoryEvidenceRepository()
+        store = QualityEvidenceStore(
+            client=objects, bucket="iacode-artifacts", repository=repository, now=lambda: NOW
+        )
+
+        def unavailable(_text: str) -> list[str]:
+            raise RuntimeError("synthetic scanner failure")
+
+        monkeypatch.setattr(evidence_module, "find_secret_kinds", unavailable)
+        with pytest.raises(QualityError) as rejected:
+            await store.put(
+                run_id="run-1",
+                result_id="result-1",
+                kind="report",
+                content=b"otherwise clean",
+                media_type="text/plain",
+                producer="pytest",
+            )
+
+        assert rejected.value.code == "EVIDENCE_SECRET_SCAN_FAILED"
+        assert repository.records == {}
+        assert objects.objects == {}
+
+    @pytest.mark.asyncio
+    async def test_secret_bearing_legacy_object_cannot_resolve(self) -> None:
+        objects = MemoryObjectStore()
+        repository = MemoryEvidenceRepository()
+        store = QualityEvidenceStore(
+            client=objects, bucket="iacode-artifacts", repository=repository, now=lambda: NOW
+        )
+        evidence = await store.put(
+            run_id="run-1",
+            result_id="result-1",
+            kind="report",
+            content=b"clean",
+            media_type="text/plain",
+            producer="pytest",
+        )
+        key = next(iter(objects.objects))
+        objects.objects[key] = ("gh" + "p_" + "b" * 20).encode("utf-8")
+
+        assert not await store.resolve(evidence)
 
 
 class QualityStoreTests:

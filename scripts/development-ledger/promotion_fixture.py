@@ -56,6 +56,7 @@ from policies import mandatory_gates
 
 SCRIPTS = Path(__file__).resolve().parent
 PROJECT_ROOT = SCRIPTS.parent.parent
+COMMON_PACKAGE = PROJECT_ROOT / "packages" / "common"
 
 FIXTURE_TEST = "FixtureTests.test_case"
 
@@ -144,6 +145,27 @@ def declare_inventory(root: Path, checkpoint: Path,
 # --------------------------------------------------------------------------------------------
 
 
+def copy_ledger_runtime(root: Path) -> None:
+    """Copy the ledger and every repository package it imports into an isolated fixture.
+
+    The fixture executes the copied tools as a real repository.  Copying only their script
+    directory would make an in-repository dependency such as ``iacode_common`` accidentally resolve
+    from the author's checkout, or fail in a genuinely isolated clone.  The package remains the
+    single source of the scanner taxonomy; this copies that source boundary rather than duplicating
+    its implementation.
+    """
+    shutil.copytree(
+        SCRIPTS,
+        root / "scripts" / "development-ledger",
+        ignore=shutil.ignore_patterns("__pycache__"),
+    )
+    shutil.copytree(
+        COMMON_PACKAGE,
+        root / "packages" / "common",
+        ignore=shutil.ignore_patterns("__pycache__"),
+    )
+
+
 def build_fixture_repository(root: Path) -> None:
     """A minimal IACode repository: the policies, the tooling, a suite, and its own memory."""
     root.mkdir(parents=True, exist_ok=True)
@@ -154,8 +176,7 @@ def build_fixture_repository(root: Path) -> None:
                  root / "docs" / "SETUP-00-CHECKLIST.md")
     (root / "docs" / "CHECKPOINT-PROTOCOL.md").write_text(
         "# Checkpoint Protocol\n\nFixture document.\n", encoding="utf-8", newline="\n")
-    shutil.copytree(SCRIPTS, root / "scripts" / "development-ledger",
-                    ignore=shutil.ignore_patterns("__pycache__"))
+    copy_ledger_runtime(root)
     for name in (".gitignore", ".gitattributes"):
         if (PROJECT_ROOT / name).is_file():
             shutil.copy2(PROJECT_ROOT / name, root / name)

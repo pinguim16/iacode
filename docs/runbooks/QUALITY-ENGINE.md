@@ -42,9 +42,12 @@ evidence, verdict, and state transition.
 
 ## Evidence and reproduction
 
-Complete redacted check output is stored in MinIO as immutable, content-addressed evidence. The
-database stores bounded summaries and metadata. Evidence is re-downloaded and re-hashed before it
-can support a verdict. Reproduce a terminal run with
+Complete redacted check output is serialized and scanned with the canonical credential taxonomy
+before any content-addressed lookup, object upload, or metadata commit. A detected secret or a
+scanner failure creates no evidence object or metadata row; the activity records a sanitized
+`ERROR` result and normal verdict derivation returns `FAIL`. The database stores bounded summaries
+and metadata. Evidence is re-downloaded, scanned, and re-hashed before it can support a verdict, so
+a legacy or externally injected prohibited object does not resolve. Reproduce a terminal run with
 `POST /api/v1/quality-runs/{runId}/reproductions`; the new run keeps a distinct identity while using
 the same frozen plan, snapshot, policy digest, runners, images, commands, and limits. The original
 run is never rewritten.
@@ -69,8 +72,9 @@ probe. Prometheus scrapes `evaluator:9103/metrics`. Useful metric families start
   visible.
 - A worker restart: wait for the evaluator to become healthy and reread the same run. Do not create
   a replacement run unless an operator intentionally requests reproduction.
-- Suspected secret in output: evidence persistence redacts and scans before storage. Keep the
-  quarantined artifact unavailable and rotate the affected credential outside IACode.
+- `ERROR` with summary `quality evidence was rejected before persistence`: no evidence artifact was
+  committed. Treat the runner output as credential-bearing, rotate any real credential outside
+  IACode, remove it at the producer, and start a reproduction. Do not bypass or weaken the scanner.
 
 Routine recovery is `docker compose ... up -d evaluator sandbox`, followed by the evaluator health
 check and an event-history read. Destructive database or object-store repair is not part of this

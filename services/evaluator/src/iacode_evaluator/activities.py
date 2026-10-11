@@ -14,7 +14,7 @@ from temporalio import activity
 
 from iacode_evaluator.canonical import digest
 from iacode_evaluator.errors import QualityError
-from iacode_evaluator.evidence import inline_summary
+from iacode_evaluator.evidence import SECRET_EVIDENCE_ERROR_CODES, inline_summary
 from iacode_evaluator.runtime import EvaluatorRuntime
 from iacode_evaluator.telemetry import quality_log_fields
 from iacode_evaluator.verdict import derive_verdict
@@ -139,28 +139,40 @@ async def record_execution(payload: dict[str, Any]) -> dict[str, Any]:
         separators=(",", ":"),
     ).encode("utf-8")
     result_id = _result_id(run_id, check_id)
-    evidence = await runtime.evidence.put(
-        run_id=run_id,
-        result_id=None,
-        kind=check.requiredEvidenceKinds[0],
-        content=report,
-        media_type="application/json",
-        producer="iacode-evaluator",
-        source_digests=tuple(
-            dict.fromkeys((plan_record.plan.snapshotDigest, plan_record.plan.policy.digest))
-        ),
-    )
-    status = _quality_status(execution)
-    output = dict(execution.get("output") or {})
-    raw_summary = str(
-        execution.get("error")
-        or output.get("stderr")
-        or output.get("stdout")
-        or f"{check.kind} check ended {status}"
-    )
-    summary = inline_summary(redact_text(raw_summary))[:2048]
+    containment_reason: str | None = None
+    evidence_items = ()
+    try:
+        evidence = await runtime.evidence.put(
+            run_id=run_id,
+            result_id=None,
+            kind=check.requiredEvidenceKinds[0],
+            content=report,
+            media_type="application/json",
+            producer="iacode-evaluator",
+            source_digests=tuple(
+                dict.fromkeys((plan_record.plan.snapshotDigest, plan_record.plan.policy.digest))
+            ),
+        )
+        evidence_items = (evidence,)
+    except QualityError as error:
+        if error.code not in SECRET_EVIDENCE_ERROR_CODES:
+            raise
+        containment_reason = error.code
+
+    status = "ERROR" if containment_reason else _quality_status(execution)
+    output = {} if containment_reason else dict(execution.get("output") or {})
+    if containment_reason:
+        summary = "quality evidence was rejected before persistence"
+    else:
+        raw_summary = str(
+            execution.get("error")
+            or output.get("stderr")
+            or output.get("stdout")
+            or f"{check.kind} check ended {status}"
+        )
+        summary = inline_summary(redact_text(raw_summary))[:2048]
     findings: tuple[QualityFinding, ...] = ()
-    if status != "PASSED":
+    if status != "PASSED" and not containment_reason:
         finding_content = {
             "checkId": check_id,
             "status": status,
@@ -174,7 +186,7 @@ async def record_execution(payload: dict[str, Any]) -> dict[str, Any]:
                 category=check.kind,
                 fingerprint=digest(finding_content),
                 message=summary or f"{check.kind} check ended {status}",
-                evidenceIds=(evidence.evidenceId,),
+                evidenceIds=(evidence_items[0].evidenceId,),
             ),
         )
     result = QualityResult(
@@ -191,7 +203,7 @@ async def record_execution(payload: dict[str, Any]) -> dict[str, Any]:
         summary=summary,
         coveragePercent=output.get("coveragePercent"),
         sandboxId=execution.get("sessionId"),
-        evidence=(evidence,),
+        evidence=evidence_items,
         findings=findings,
         finishedAt=datetime.fromisoformat(str(payload["finishedAt"]).replace("Z", "+00:00")),
     )
@@ -203,7 +215,8 @@ async def record_execution(payload: dict[str, Any]) -> dict[str, Any]:
         owner_run_id=run_record.owner_run_id,
     )
     if first_delivery:
-        runtime.metrics.evidence()
+        if evidence_items:
+            runtime.metrics.evidence()
         runtime.metrics.check(check.kind, recorded.status, recorded.durationMs)
         for finding in recorded.findings:
             runtime.metrics.finding(finding.severity, finding.category)
@@ -217,7 +230,7 @@ async def record_execution(payload: dict[str, Any]) -> dict[str, Any]:
             sandbox_id=recorded.sandboxId,
             status=recorded.status,
             duration_ms=recorded.durationMs,
-            reason=execution.get("errorCode"),
+            reason=containment_reason or execution.get("errorCode"),
         ),
     )
     return recorded.model_dump(mode="json")
