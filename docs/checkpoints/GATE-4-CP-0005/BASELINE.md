@@ -60,3 +60,19 @@ boundary removes it.
 This checkpoint may close only `G4-F-002` and the directly required ledger compatibility,
 verification isolation, observability coordination, evidence and guardrails. It may not weaken or
 reopen G4-X7, reduce the 42-stage denominator, grant `GATE_PASS`, approve M2, or start Gate 5.
+
+## Published full-verification attempt 1 — preserved red
+
+`cmd-0040` ran the canonical verifier once from published commit
+`8324662c33cc26a2ebd8d8131d98f66138a4d679`. It remains red and is summarized without
+replacement in `PUBLISHED-FULL-VERIFY-FAIL-CMD-0040.json`:
+
+- `gate:tests` ran 763 tests and failed one assertion plus one setup path because the existing
+  observer guard required local `time` calls instead of accepting the canonical delegated helper;
+- `gate:checkpointValidation` correctly refused a detached pre-final commit with no checkpoint tag;
+- the transport harness then reproduced `LSN-0083` by re-emitting Angular's U+276F through cp1252,
+  so it ended before the verifier could write its JSON report.
+
+The verifier cleaned its owned Compose project in `finally`; the shared audit-owned `iacode`
+project remained untouched. The next complete execution is a new rework cycle, never an isolated
+rerun or a replacement for `cmd-0040`.

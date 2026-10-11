@@ -90,7 +90,7 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 | `LSN-0080` | `GUARDED` | HIGH | quality | A failed verification stage must not leave an older PASS report addressable | `test_verification_removes_a_stale_stage_report_before_execution` |
 | `LSN-0081` | `GUARDED` | HIGH | testing | Canonical requirement evidence must name a test the repository actually discovers | `test_every_test_the_specifications_name_exists` |
 | `LSN-0082` | `GUARDED` | HIGH | quality | Engineering memory cannot depend on an ephemeral generated report | `test_engineering_memory_never_depends_on_ephemeral_var_evidence` |
-| `LSN-0083` | `GUARDED` | MEDIUM | tooling | A command that decodes captured UTF-8 must also configure the stream that re-emits it | `test_every_tool_that_re_emits_captured_output_configures_its_own_stream` |
+| `LSN-0083` | `GUARDED` | HIGH | tooling | A command that decodes captured UTF-8 must also configure the stream that re-emits it | `test_every_tool_that_re_emits_captured_output_configures_its_own_stream` |
 | `LSN-0084` | `GUARDED` | MEDIUM | testing | A historical Gate documentation test must derive the current entry-point state | `test_the_entry_point_names_the_current_gate` |
 | `LSN-0085` | `GUARDED` | MEDIUM | testing | A source-based control must assert syntax semantics rather than formatter layout | `test_the_verification_adds_the_stages_this_gate_introduces` |
 | `LSN-0086` | `GUARDED` | MEDIUM | testing | A subprocess assertion must preserve the exit code when both streams are empty | `test_an_empty_validator_failure_keeps_its_process_exit_code` |
@@ -1156,14 +1156,14 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 
 ### LSN-0083 — A command that decodes captured UTF-8 must also configure the stream that re-emits it
 
-- Status: `GUARDED`, severity MEDIUM, category tooling, recurrences 0.
+- Status: `GUARDED`, severity HIGH, category tooling, recurrences 1.
 - Source: GATE-4, GATE-4-CP-0001, finding cmd-0112.
 - Symptom: The canonical suite found program_state.py and review_bundle.py capturing subprocess output safely but re-emitting it through the Windows platform codepage without configuring stdout.
-- Root cause: The two entry points predated the shared UTF-8 output guard and retained local exception wrappers instead of adopting its stream setup.
-- Resolution: Import and call use_utf8_stdout before either command enters its exception-handling main path, preserving their existing exit and error behavior.
+- Root cause: The entry points decoded child output explicitly but their own stdout still used the Windows platform codepage; the original guardrail scanned scripts but not executable checkpoint evidence harnesses.
+- Resolution: Every capturing entry point calls use_utf8_stdout or the shared main guard before re-emitting child output, and the repository control scans both scripts and the current checkpoint's executable evidence harnesses.
 - Prevention:
-  - `test` test_every_tool_that_re_emits_captured_output_configures_its_own_stream — Every executable script that captures child output configures UTF-8 output directly or through the shared main guard.
-- Evidence: `file:scripts/development-ledger/program_state.py`, `file:scripts/development-ledger/review_bundle.py`, `file:tests/test_gate0_foundation.py`
+  - `test` test_every_tool_that_re_emits_captured_output_configures_its_own_stream — Every executable script and current-checkpoint evidence harness that captures child output configures UTF-8 output directly or through the shared main guard.
+- Evidence: `file:scripts/development-ledger/program_state.py`, `file:scripts/development-ledger/review_bundle.py`, `file:tests/test_gate0_foundation.py`, `file:docs/checkpoints/GATE-4-CP-0005/RUN-PUBLISHED-FULL-VERIFICATION.py`, `file:docs/checkpoints/GATE-4-CP-0005/PUBLISHED-FULL-VERIFY-FAIL-CMD-0040.json`
 
 ### LSN-0084 — A historical Gate documentation test must derive the current entry-point state
 

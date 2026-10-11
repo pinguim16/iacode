@@ -16,3 +16,14 @@ required target state; it does not restart services or rerun a failed check.
 
 The 42 verification stages retain their order and membership. The G4-X7 scanner path, scanner
 failure control and legacy-object resolution are not weakened or replaced.
+
+## D-004 — Separate pre-final published identity from final detached validation
+
+Before the canonical checkpoint tag exists, the representative transport clone remains attached to
+`main` at the exact remote commit so checkpoint validation judges a legitimate in-progress
+checkpoint. Final validation still uses a detached checkout of the sealed canonical tag.
+
+## D-005 — Include executable checkpoint harnesses in the UTF-8 guard
+
+Executable evidence harnesses under the current checkpoint use `use_utf8_stdout` and enter the same
+repository control as ordinary scripts. Evidence transport is not exempt from output portability.

@@ -23,11 +23,18 @@ The infrastructure test queried Prometheus immediately after stack start. That w
 asynchronous-observation class already guarded by `LSN-0049`, but its control covered scripts and
 not the infrastructure test path.
 
+The first published full-verification harness decoded child output as UTF-8 but did not configure
+its own Windows stdout. Angular emitted U+276F during `gate:webTests`, reproducing `LSN-0083` and
+ending `cmd-0040` before a verifier report could be written.
+
 ## What repeated
 
 `LSN-0049` recurred for a second time and is recorded as a `GUARDRAIL_FAILURE`, not a new unrelated
 defect. `GRD-0051` now includes the shared, versioned scrape-cycle observer used by both smoke and
 the running-stack infrastructure test.
+
+`LSN-0083` recurred once because `GRD-0084` scanned executable files under `scripts/` but not the
+current checkpoint's executable evidence harness. The same control now scans both locations.
 
 ## What was learned
 
@@ -44,6 +51,7 @@ the running-stack infrastructure test.
 |---|---|---|---|
 | asynchronous observation before its cycle | `LSN-0049` | `GRD-0051` | shared observer policy and infrastructure/smoke regression |
 | Compose runtime shared across checkouts | `LSN-0095` | `GRD-0096` | verifier ownership, cleanup, build, frozen-environment and order controls |
+| captured UTF-8 re-emitted through platform codepage | `LSN-0083` | `GRD-0084` | repository-wide script/current-harness stream scan |
 
 ## New lessons
 
@@ -52,7 +60,8 @@ the running-stack infrastructure test.
 ## Updated lessons
 
 `LSN-0049` was escalated to `HIGH`, its recurrence count advanced to two, and its guardrail was
-widened to the infrastructure test path.
+widened to the infrastructure test path. `LSN-0083` was escalated to `HIGH`, its recurrence count
+advanced to one, and its guardrail was widened to the current checkpoint evidence harness.
 
 ## Retired lessons
 

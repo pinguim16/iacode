@@ -10,9 +10,9 @@
     "scripts/iacode",
     "infra/tests"
   ],
-  "generatedAt": "2026-10-11T13:48:23Z",
+  "generatedAt": "2026-10-11T14:53:09Z",
   "policyVersion": "2.0.0",
-  "inputsFingerprint": "7c3eacde0fd70cb9b03b2c9f561b9b7911dbe841df72aab0b734a2bb062ce193",
+  "inputsFingerprint": "cd649442f035a18d24a7f81da0d550ba01af9d5551cc004f8d3bca67e85e5999",
   "lessonsConsidered": 95,
   "lessonsApplicable": 94,
   "applicable": [
@@ -830,8 +830,8 @@
       "lessonId": "LSN-0083",
       "title": "A command that decodes captured UTF-8 must also configure the stream that re-emits it",
       "status": "GUARDED",
-      "severity": "MEDIUM",
-      "reasonApplicable": "applies to every Gate; category tooling; severity MEDIUM; already guarded, so the control must keep holding",
+      "severity": "HIGH",
+      "reasonApplicable": "applies to every Gate; category tooling; severity HIGH; already guarded, so the control must keep holding",
       "requiredCheck": "For every executable command that captures text from a child process and prints it, configure both the child decoder and the parent output stream explicitly.",
       "requiredEvidence": "A repository-wide entry-point scan plus a rejecting fixture for an unconfigured captured-output command.",
       "derivedRequirementId": "LESSON-REQ-0082"

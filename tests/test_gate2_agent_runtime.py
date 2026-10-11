@@ -1147,9 +1147,9 @@ def unbounded_prometheus_reads(source: str) -> list[str]:
     """Why a module that reads Prometheus's API does not wait for a scrape, or nothing if it does.
 
     Read from the syntax tree, never from the text: a module reads Prometheus when a string
-    constant names one of its query endpoints, and it waits when it calls ``time.monotonic`` and
-    ``time.sleep`` and declares a ``*_WAIT_SECONDS`` bound of at least two fifteen-second scrape
-    intervals and at most one minute.
+    constant names one of its query endpoints. It must either delegate to the canonical
+    ``wait_for_prometheus_targets`` observer or carry its own monotonic clock, sleep and bounded
+    ``*_WAIT_SECONDS`` declaration.
     """
     tree = ast.parse(source)
     reads = any(isinstance(node, ast.Constant) and isinstance(node.value, str)
@@ -1159,6 +1159,8 @@ def unbounded_prometheus_reads(source: str) -> list[str]:
         return []
     problems: list[str] = []
     calls = called(source)
+    if "wait_for_prometheus_targets" in calls:
+        return []
     for needed in ("time.monotonic", "time.sleep"):
         if needed not in calls:
             problems.append(f"never calls {needed}")
@@ -1211,6 +1213,7 @@ class ObserverCycleTests(unittest.TestCase):
         operational = str(PROJECT_ROOT / "scripts" / "iacode")
         if operational not in sys.path:
             sys.path.insert(0, operational)
+        import observability
         import smoke
 
         down = {"status": "success", "data": {"activeTargets": [
@@ -1231,9 +1234,9 @@ class ObserverCycleTests(unittest.TestCase):
         def fake_sleep(seconds):
             clock["now"] += seconds
 
-        originals = (smoke.http_json, smoke.time.sleep, smoke.time.monotonic)
-        smoke.time.sleep = fake_sleep
-        smoke.time.monotonic = lambda: clock["now"]
+        originals = (smoke.http_json, observability.time.sleep, observability.time.monotonic)
+        observability.time.sleep = fake_sleep
+        observability.time.monotonic = lambda: clock["now"]
         try:
             smoke.http_json = answer(3)
             late = smoke.check_prometheus("http://prometheus.invalid")
@@ -1243,12 +1246,12 @@ class ObserverCycleTests(unittest.TestCase):
             smoke.http_json = answer(10_000)
             never = smoke.check_prometheus("http://prometheus.invalid")
         finally:
-            smoke.http_json, smoke.time.sleep, smoke.time.monotonic = originals
+            smoke.http_json, observability.time.sleep, observability.time.monotonic = originals
 
         self.assertTrue(all(check.ok for check in late), [c.detail for c in late])
         self.assertEqual(len(asked_late), 3)
         self.assertFalse(all(check.ok for check in never), "targets that never came up passed")
-        self.assertLessEqual(clock["now"], smoke.TARGET_WAIT_SECONDS + smoke.TARGET_POLL_SECONDS)
+        self.assertLessEqual(clock["now"], observability.prometheus_wait_budget_seconds())
         for url in asked_late + asked:
             self.assertTrue(url.startswith("http://prometheus.invalid/api/v1/targets"), url)
 

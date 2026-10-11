@@ -38,14 +38,16 @@ def wait_for_prometheus_targets(
     required_jobs: Sequence[str],
     *,
     config_path: Path = PROMETHEUS_CONFIG,
-    monotonic: Callable[[], float] = time.monotonic,
-    sleeper: Callable[[float], None] = time.sleep,
+    monotonic: Callable[[], float] | None = None,
+    sleeper: Callable[[float], None] | None = None,
 ) -> tuple[dict[str, Any], list[dict[str, Any]], dict[str | None, Any]]:
     """Observe until every required job is up or the configured scrape budget expires.
 
     ``fetch`` only reads Prometheus.  The helper never restarts a target and never repeats the
     action being judged, so a failed service or check cannot be converted into a pass by retry.
     """
+    monotonic = monotonic or time.monotonic
+    sleeper = sleeper or time.sleep
     scrape_interval = prometheus_scrape_interval_seconds(config_path)
     deadline = monotonic() + scrape_interval * OBSERVATION_SCRAPE_CYCLES
     poll_seconds = min(3.0, max(0.1, scrape_interval / 5.0))

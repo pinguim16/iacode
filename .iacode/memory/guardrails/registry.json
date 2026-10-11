@@ -1208,7 +1208,7 @@
     },
     {
       "guardrailId": "GRD-0084",
-      "title": "Captured UTF-8 is re-emitted through an explicitly configured stream",
+      "title": "Captured UTF-8 is re-emitted through an explicitly configured stream in scripts and current evidence harnesses",
       "kind": "test",
       "reference": "test_every_tool_that_re_emits_captured_output_configures_its_own_stream",
       "verifiedBy": [
@@ -1217,7 +1217,7 @@
       "lessons": [
         "LSN-0083"
       ],
-      "removingItWouldAllow": "A successful child command to make its Windows entry point fail while printing decoded non-ASCII output."
+      "removingItWouldAllow": "A successful child command to make a Windows script or current checkpoint evidence harness fail while printing decoded non-ASCII output."
     },
     {
       "guardrailId": "GRD-0085",

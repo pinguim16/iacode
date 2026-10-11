@@ -4,7 +4,7 @@
 - Scope: `quality engine corrective implementation, G4-F-002 full verification determinism, infrastructure and smoke isolation, order and state independence, clean clone`
 - Technologies: `python`, `docker-compose`
 - Modules: `scripts/iacode`, `infra/tests`
-- Generated: `2026-10-11T13:48:23Z`
+- Generated: `2026-10-11T14:53:09Z`
 - Lessons considered: 95
 - Lessons applicable: 94
 
@@ -95,7 +95,7 @@ delivery when one is absent.
 | `LSN-0080` A failed verification stage must not leave an older PASS report addressable | `GUARDED` | HIGH | `LESSON-REQ-0079` | Whenever a verification stage writes to a reusable report path, prove the old artifact is removed before execution and cannot survive a failed rerun as current evidence. |
 | `LSN-0081` Canonical requirement evidence must name a test the repository actually discovers | `GUARDED` | HIGH | `LESSON-REQ-0080` | Before a canonical checklist is accepted, resolve every named test identity against the suite registry rather than treating prose-like test labels as evidence. |
 | `LSN-0082` Engineering memory cannot depend on an ephemeral generated report | `GUARDED` | HIGH | `LESSON-REQ-0081` | Keep organizational memory evidence in committed source or checkpoint-owned artifacts; reject references to regenerable runtime output. |
-| `LSN-0083` A command that decodes captured UTF-8 must also configure the stream that re-emits it | `GUARDED` | MEDIUM | `LESSON-REQ-0082` | For every executable command that captures text from a child process and prints it, configure both the child decoder and the parent output stream explicitly. |
+| `LSN-0083` A command that decodes captured UTF-8 must also configure the stream that re-emits it | `GUARDED` | HIGH | `LESSON-REQ-0082` | For every executable command that captures text from a child process and prints it, configure both the child decoder and the parent output stream explicitly. |
 | `LSN-0084` A historical Gate documentation test must derive the current entry-point state | `GUARDED` | MEDIUM | `LESSON-REQ-0083` | When a predecessor regression test inspects a current entry point, derive current lifecycle identifiers and keep only genuinely historical references fixed. |
 | `LSN-0085` A source-based control must assert syntax semantics rather than formatter layout | `GUARDED` | MEDIUM | `LESSON-REQ-0084` | When a control judges source structure, parse the language representation and compare semantic nodes instead of binding the rule to formatter whitespace or quote style. |
 | `LSN-0086` A subprocess assertion must preserve the exit code when both streams are empty | `GUARDED` | MEDIUM | `LESSON-REQ-0085` | For every subprocess-backed assertion, preserve return code and a non-empty diagnostic even when the child emits nothing; never add a retry that could conceal the outcome. |
@@ -680,7 +680,7 @@ delivery when one is absent.
 
 ### LSN-0083 — A command that decodes captured UTF-8 must also configure the stream that re-emits it
 
-- Reason: applies to every Gate; category tooling; severity MEDIUM; already guarded, so the control must keep holding
+- Reason: applies to every Gate; category tooling; severity HIGH; already guarded, so the control must keep holding
 - Required check: For every executable command that captures text from a child process and prints it, configure both the child decoder and the parent output stream explicitly.
 - Required evidence: A repository-wide entry-point scan plus a rejecting fixture for an unconfigured captured-output command.
 - Derived requirement: `LESSON-REQ-0082`

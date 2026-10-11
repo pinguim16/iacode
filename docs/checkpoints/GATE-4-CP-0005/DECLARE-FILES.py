@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import json
 import subprocess
+import sys
 from pathlib import Path
 
 
@@ -17,6 +18,9 @@ CHECKPOINT = Path(__file__).resolve().parent
 ROOT = CHECKPOINT.parents[2]
 STATE = json.loads((CHECKPOINT / "STATE.json").read_text(encoding="utf-8"))
 BASE = str(STATE["baseCommit"])
+sys.path.insert(0, str(ROOT / "scripts" / "development-ledger"))
+
+from ledger_common import use_utf8_stdout  # noqa: E402
 
 
 def git(*arguments: str, check: bool = True) -> subprocess.CompletedProcess[bytes]:
@@ -66,6 +70,7 @@ def reason(path: str) -> str:
 
 
 def main() -> None:
+    use_utf8_stdout()
     changed = paths(git("diff", "--name-only", "-z", BASE, "--").stdout)
     changed.update(paths(git("ls-files", "--others", "--exclude-standard", "-z").stdout))
 

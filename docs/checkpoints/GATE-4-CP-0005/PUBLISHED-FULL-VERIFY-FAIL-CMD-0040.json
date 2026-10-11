@@ -1,0 +1,52 @@
+{
+  "schemaVersion": "1.0.0",
+  "artifact": "FAILED-PUBLISHED-FULL-VERIFICATION",
+  "command": "cmd-0040",
+  "publishedCommit": "8324662c33cc26a2ebd8d8131d98f66138a4d679",
+  "clonePath": "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-g4-cp0005-published-8324662",
+  "invocationCount": 1,
+  "retryCount": 0,
+  "result": "FAIL",
+  "exitCode": 1,
+  "verifierReportProduced": false,
+  "stdoutArtifactProduced": false,
+  "observedFailures": [
+    {
+      "stage": "gate:tests",
+      "result": "FAIL",
+      "testsRun": 763,
+      "failures": 1,
+      "errors": 1,
+      "causes": [
+        "The repository-wide Prometheus control recognized only a local time/sleep implementation and rejected delegation to the canonical observer.",
+        "The Foundation smoke regression patched smoke.time even though the clock moved to observability.time."
+      ]
+    },
+    {
+      "stage": "gate:checkpointValidation",
+      "result": "FAIL",
+      "causes": [
+        "The pre-final publication harness detached HEAD before the final checkpoint tag existed; the validator correctly required that tag."
+      ]
+    },
+    {
+      "stage": "harness-output",
+      "result": "FAIL",
+      "causes": [
+        "The harness decoded child UTF-8 but re-emitted Angular's U+276F through cp1252 and raised UnicodeEncodeError."
+      ]
+    }
+  ],
+  "stagesObservedPassingBeforeHarnessFailure": [
+    "gate:staticAnalysis",
+    "gate:lessons",
+    "gate:integrity",
+    "gate:apiTests",
+    "gate:gatewayTests",
+    "gate:agentRuntimeTests",
+    "gate:sandboxTests",
+    "gate:evaluatorTests"
+  ],
+  "disposition": "PRESERVED_RED_REWORK_REQUIRED",
+  "notes": "The harness failed while gate:webTests was emitting output. No stage or isolated rerun supersedes this red attempt; a new full invocation is allowed only after correcting all three causes."
+}

@@ -457,16 +457,18 @@ class SubprocessDecodingTests(unittest.TestCase):
         script goes through.
         """
         offenders = []
-        for path in sorted((PROJECT_ROOT / "scripts").rglob("*.py")):
-            if "__pycache__" in path.parts:
-                continue
-            source = path.read_text(encoding="utf-8")
-            if '__name__ == "__main__"' not in source:
-                continue
-            if not self._captures(ast.parse(source, filename=str(path))):
-                continue
-            if "use_utf8_stdout()" not in source and "main_guard(" not in source:
-                offenders.append(path.relative_to(PROJECT_ROOT).as_posix())
+        roots = [PROJECT_ROOT / "scripts", ledger_common.resolve_latest(PROJECT_ROOT)]
+        for root in roots:
+            for path in sorted(root.rglob("*.py")):
+                if "__pycache__" in path.parts:
+                    continue
+                source = path.read_text(encoding="utf-8")
+                if '__name__ == "__main__"' not in source:
+                    continue
+                if not self._captures(ast.parse(source, filename=str(path))):
+                    continue
+                if "use_utf8_stdout()" not in source and "main_guard(" not in source:
+                    offenders.append(path.relative_to(PROJECT_ROOT).as_posix())
 
         self.assertEqual(offenders, [], "entry points that re-emit captured output unconfigured")
 
