@@ -116,6 +116,21 @@ class LedgerCommandReplayabilityTests(unittest.TestCase):
         self.assertFalse(self.executed())
         self.assertEqual(records[-1]["resultCode"], "E_UNREPLAYABLE_COMMAND")
         self.assertIn("does not resolve", records[-1]["failureReason"])
+        self.assertEqual(
+            records[-1]["preconditions"][0]["name"],
+            "subject-commit-resolves",
+        )
+        errors: list[str] = []
+        validate_checkpoint._validate_command_reproducibility(
+            self.root, records[-1], len(records), errors
+        )
+        self.assertEqual(errors, [])
+
+        history_errors: list[str] = []
+        validate_checkpoint._validate_published_history(
+            self.root, [records[-1]], {}, history_errors
+        )
+        self.assertEqual(history_errors, [])
 
     def test_unsupported_runtime_is_rejected_before_execution(self) -> None:
         exit_code, records = self.record(sys.executable, "probe.py")

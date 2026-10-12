@@ -1,0 +1,18 @@
+{
+  "schemaVersion": "1.0.0",
+  "artifact": "CHECKPOINT-VALIDATION-FAILURE",
+  "generatedAt": "2026-10-12T21:01:17Z",
+  "subjectCommit": "5ad3169be78be37c9d99cb5e98658f426a964065",
+  "command": "python scripts/development-ledger/validate_checkpoint.py",
+  "exitCode": 1,
+  "result": "FAIL",
+  "findings": [
+    "cmd-0033's truthful invalid-subject refusal was not recomputable as a refusal",
+    "cmd-0033's never-executed subject was incorrectly included in published-history evidence",
+    "cmd-0050 declared a mistyped explicit audit-registry input path",
+    "REWORK-LOG.jsonl used a result outside the canonical schema",
+    "RUN-METADATA.json finalCommit did not match the symbolic in-progress STATE.json currentCommit"
+  ],
+  "superseded": false,
+  "notes": "This failed validation is preserved and cannot be replaced by focused tests. A later clean validation must close every finding."
+}

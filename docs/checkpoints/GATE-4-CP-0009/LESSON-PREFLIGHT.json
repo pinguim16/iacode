@@ -11,11 +11,11 @@
     "review-bundle",
     "evaluator"
   ],
-  "generatedAt": "2026-10-12T20:52:13Z",
+  "generatedAt": "2026-10-12T21:03:51Z",
   "policyVersion": "2.0.0",
-  "inputsFingerprint": "3927b7037e100a97cd87fabcd4cc16f509abdbf2cbd9c8e48c066358652e09c1",
-  "lessonsConsidered": 98,
-  "lessonsApplicable": 97,
+  "inputsFingerprint": "f76cf765d1e6b15f45c3ed1a72c7f7f9eac1afe8429545e9331f1f2a7f81bd25",
+  "lessonsConsidered": 99,
+  "lessonsApplicable": 98,
   "applicable": [
     {
       "lessonId": "LSN-0001",
@@ -986,6 +986,16 @@
       "requiredCheck": "Any signal accepted while a workflow awaits a dispatch-persistence boundary must be rechecked before the corresponding long-running activity is created.",
       "requiredEvidence": "A deterministic ordering regression plus the rebuilt evaluator suite and a complete verifier cancellation scenario.",
       "derivedRequirementId": "LESSON-REQ-0097"
+    },
+    {
+      "lessonId": "LSN-0099",
+      "title": "A refused subject is an attempted input, not executed commit evidence",
+      "status": "GUARDED",
+      "severity": "HIGH",
+      "reasonApplicable": "applies to every Gate; category checkpoint; severity HIGH; already guarded, so the control must keep holding",
+      "requiredCheck": "A command refused before execution must retain a recomputable refusal without making its deliberately invalid subject part of the published-history evidence denominator.",
+      "requiredEvidence": "A behavioral recorder/validator regression proving no process executes, the refusal remains valid ledger evidence, and the unresolved subject is not treated as a commit that produced evidence.",
+      "derivedRequirementId": "LESSON-REQ-0098"
     }
   ],
   "derivedRequirements": [
@@ -1667,6 +1677,13 @@
       "description": "Verify cancellation must be rechecked after a dispatch event and before activity creation",
       "mandatory": true,
       "requiredEvidence": "A deterministic ordering regression plus the rebuilt evaluator suite and a complete verifier cancellation scenario."
+    },
+    {
+      "id": "LESSON-REQ-0098",
+      "lessonId": "LSN-0099",
+      "description": "Verify a refused subject is an attempted input, not executed commit evidence",
+      "mandatory": true,
+      "requiredEvidence": "A behavioral recorder/validator regression proving no process executes, the refusal remains valid ledger evidence, and the unresolved subject is not treated as a commit that produced evidence."
     }
   ]
 }

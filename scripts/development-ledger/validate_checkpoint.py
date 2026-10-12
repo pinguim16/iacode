@@ -422,6 +422,20 @@ def _recorded_transport_refusal_is_valid(root: Path, record: dict[str, Any]) -> 
         )
         if match and command_input_transport_error(root, match.group("path")) is not None:
             return True
+        subject_match = re.search(
+            r"the subject commit (?P<quote>['\"])(?P<commit>[0-9a-f]{40})(?P=quote) "
+            r"does not resolve to a commit",
+            observed,
+        )
+        if subject_match:
+            code, _resolved = run_git(
+                root,
+                "rev-parse",
+                "--verify",
+                f"{subject_match.group('commit')}^{{commit}}",
+            )
+            if code != 0:
+                return True
     return False
 
 
@@ -581,6 +595,11 @@ def _validate_published_history(
     """
     named: dict[str, list[str]] = {}
     for record in records:
+        # A precondition refusal records an attempted input, not a commit that executed evidence.
+        # Requiring an intentionally unresolved subject to be published would make the truthful
+        # refusal itself invalidate the checkpoint it protected.
+        if record.get("result") == "PRECONDITION_REJECTED":
+            continue
         label = str(record.get("id") or "a record")
         for path in RECORD_COMMIT_FIELDS:
             value: Any = record

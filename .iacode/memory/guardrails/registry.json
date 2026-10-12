@@ -1434,6 +1434,19 @@
         "LSN-0098"
       ],
       "removingItWouldAllow": "A cancellation signal accepted while CHECK_DISPATCHED is persisted to miss the absent activity handle, after which the workflow starts a full-length sandbox check despite the accepted cancellation."
+    },
+    {
+      "guardrailId": "GRD-0100",
+      "title": "Refused subjects remain valid attempts without becoming commit evidence",
+      "kind": "test",
+      "reference": "test_inputs_are_canonicalized_and_an_unknown_subject_is_refused",
+      "verifiedBy": [
+        "test_inputs_are_canonicalized_and_an_unknown_subject_is_refused"
+      ],
+      "lessons": [
+        "LSN-0099"
+      ],
+      "removingItWouldAllow": "A recorder to refuse an unresolved subject truthfully but leave a checkpoint permanently invalid by treating the never-executed subject as published evidence."
     }
   ]
 }

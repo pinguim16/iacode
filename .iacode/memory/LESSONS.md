@@ -106,6 +106,7 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 | `LSN-0096` | `GUARDED` | HIGH | checkpoint | Evidence publishers must consume the producer's canonical result schema | `test_published_full_verification_counts_the_canonical_result_field`, `test_published_report_reconciliation_allows_only_the_generated_report` |
 | `LSN-0097` | `GUARDED` | HIGH | checkpoint | A review-bundle declaration must bind an immutable reconstruction subject | `test_immutable_subject_rebuilds_are_byte_identical_and_exclude_only_the_sidecar`, `test_declared_digest_and_size_are_rebuilt_not_trusted`, `test_full_delivery_assurance_flow_reaches_ready_for_review` |
 | `LSN-0098` | `GUARDED` | HIGH | implementation | Cancellation must be rechecked after a dispatch event and before activity creation | `test_cancellation_is_rechecked_after_dispatch_before_activity_start` |
+| `LSN-0099` | `GUARDED` | HIGH | checkpoint | A refused subject is an attempted input, not executed commit evidence | `test_inputs_are_canonicalized_and_an_unknown_subject_is_refused` |
 
 ## Detail
 
@@ -1352,3 +1353,14 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 - Prevention:
   - `test` test_cancellation_is_rechecked_after_dispatch_before_activity_start — The workflow source contract keeps the cancellation boundary after CHECK_DISPATCHED and before workflow.start_activity.
 - Evidence: `file:docs/checkpoints/GATE-4-CP-0009/VERIFY-FAIL-CMD-0023.json`, `file:docs/checkpoints/GATE-4-CP-0009/COMMANDS.jsonl`, `file:services/evaluator/src/iacode_evaluator/workflow.py`, `file:services/evaluator/tests/test_workflow.py`
+
+### LSN-0099 — A refused subject is an attempted input, not executed commit evidence
+
+- Status: `GUARDED`, severity HIGH, category checkpoint, recurrences 0.
+- Source: GATE-4, GATE-4-CP-0009, finding cmd-0033-invalid-subject-refusal.
+- Symptom: A truthful PRECONDITION_REJECTED record for a mistyped subject commit made CP0009 invalid because replay validation no longer recognized the subject-specific refusal and published-history validation required the deliberately unresolved subject to be reachable.
+- Root cause: The recorder resolved caller-supplied subjects before execution, but encoded a subject-resolution failure as a generic command replay refusal. The validator could recompute transport-input refusals only, and its published-history scan treated every commit-shaped field as executed evidence even when the command never ran.
+- Resolution: Record subject resolution as its own failed precondition, recompute both old and new subject-refusal records during validation, and exclude PRECONDITION_REJECTED records from the published-history evidence denominator while continuing to validate their refusal semantics.
+- Prevention:
+  - `test` test_inputs_are_canonicalized_and_an_unknown_subject_is_refused — An unknown subject is refused before execution, its subject-specific precondition is recorded, command validation accepts the truthful refusal, and published-history validation does not treat it as executed evidence.
+- Evidence: `file:docs/checkpoints/GATE-4-CP-0009/COMMANDS.jsonl`, `file:scripts/development-ledger/record_command.py`, `file:scripts/development-ledger/validate_checkpoint.py`, `file:tests/test_gate3_sandbox.py`

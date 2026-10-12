@@ -20,3 +20,8 @@
 - Reserve `iacode-preserved/` for commits already named by sealed evidence. Publish exact pre-seal
   verifier inputs under `iacode-subjects/`; cmd-0038 removed only the misclassified remote tag after
   cmd-0037 published the same commit in the correct namespace.
+- Treat a pre-execution subject-resolution refusal as an attempted input, never as executed commit
+  evidence. Preserve cmd-0033 and make its refusal recomputable; do not publish its mistyped hash.
+- Correct cmd-0050's unsealed explicit input metadata to the canonical
+  `.iacode/policies/audit-registry.json` path that requirement derivation actually consumed. The
+  command, result, timestamp and repository state are unchanged.

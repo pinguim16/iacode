@@ -227,3 +227,4 @@ Expected set derived by: `policies.expected_requirement_refs over docs/GATE-4-CH
 | `LESSON-REQ-0095` | `lesson:LSN-0096` | yes | `NOT_STARTED` | Verify evidence publishers must consume the producer's canonical result schema | LESSON-PREFLIGHT.json LESSON-REQ-0095 |
 | `LESSON-REQ-0096` | `lesson:LSN-0097` | yes | `NOT_STARTED` | Verify a review-bundle declaration must bind an immutable reconstruction subject | LESSON-PREFLIGHT.json LESSON-REQ-0096 |
 | `LESSON-REQ-0097` | `lesson:LSN-0098` | yes | `NOT_STARTED` | Verify cancellation must be rechecked after a dispatch event and before activity creation | LESSON-PREFLIGHT.json LESSON-REQ-0097 |
+| `LESSON-REQ-0098` | `lesson:LSN-0099` | yes | `NOT_STARTED` | Verify a refused subject is an attempted input, not executed commit evidence | LESSON-PREFLIGHT.json LESSON-REQ-0098 |

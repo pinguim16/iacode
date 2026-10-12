@@ -4,9 +4,9 @@
 - Scope: `corrective sealed review-bundle reconstruction`
 - Technologies: `Python`, `Temporal`
 - Modules: `development-ledger`, `review-bundle`, `evaluator`
-- Generated: `2026-10-12T20:52:13Z`
-- Lessons considered: 98
-- Lessons applicable: 97
+- Generated: `2026-10-12T21:03:51Z`
+- Lessons considered: 99
+- Lessons applicable: 98
 
 Every applicable lesson below is a requirement of this Gate. The derived identifiers must
 appear in `REQUIREMENTS-MATRIX.json`, and the Delivery Completeness Validator fails the
@@ -111,6 +111,7 @@ delivery when one is absent.
 | `LSN-0096` Evidence publishers must consume the producer's canonical result schema | `GUARDED` | HIGH | `LESSON-REQ-0095` | Every evidence publisher must consume the producer's canonical versioned result fields and prove the mapping behaviorally with a contradictory-alias fixture. |
 | `LSN-0097` A review-bundle declaration must bind an immutable reconstruction subject | `GUARDED` | HIGH | `LESSON-REQ-0096` | A review-bundle declaration must identify an immutable reconstruction subject, and validation must rebuild twice from transported Git content and compare digest and size with the declaration before handoff. |
 | `LSN-0098` Cancellation must be rechecked after a dispatch event and before activity creation | `GUARDED` | HIGH | `LESSON-REQ-0097` | Any signal accepted while a workflow awaits a dispatch-persistence boundary must be rechecked before the corresponding long-running activity is created. |
+| `LSN-0099` A refused subject is an attempted input, not executed commit evidence | `GUARDED` | HIGH | `LESSON-REQ-0098` | A command refused before execution must retain a recomputable refusal without making its deliberately invalid subject part of the published-history evidence denominator. |
 
 ## Why each lesson applies
 
@@ -792,3 +793,10 @@ delivery when one is absent.
 - Required check: Any signal accepted while a workflow awaits a dispatch-persistence boundary must be rechecked before the corresponding long-running activity is created.
 - Required evidence: A deterministic ordering regression plus the rebuilt evaluator suite and a complete verifier cancellation scenario.
 - Derived requirement: `LESSON-REQ-0097`
+
+### LSN-0099 — A refused subject is an attempted input, not executed commit evidence
+
+- Reason: applies to every Gate; category checkpoint; severity HIGH; already guarded, so the control must keep holding
+- Required check: A command refused before execution must retain a recomputable refusal without making its deliberately invalid subject part of the published-history evidence denominator.
+- Required evidence: A behavioral recorder/validator regression proving no process executes, the refusal remains valid ledger evidence, and the unresolved subject is not treated as a commit that produced evidence.
+- Derived requirement: `LESSON-REQ-0098`

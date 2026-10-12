@@ -113,6 +113,10 @@ def main() -> int:
     replay_errors = command_errors + input_errors
     if replay_errors:
         snapshot = git_snapshot(root)
+        subject_refusal = (
+            subject_error is not None
+            and subject_error in replay_errors
+        )
         record = build_command_record(
             root,
             command=command,
@@ -131,6 +135,9 @@ def main() -> int:
             preconditions=[
                 {
                     "name": (
+                        "subject-commit-resolves"
+                        if subject_refusal and message == subject_error
+                        else
                         "command-is-replayable"
                         if message in command_errors
                         else "command-input-is-transportable"

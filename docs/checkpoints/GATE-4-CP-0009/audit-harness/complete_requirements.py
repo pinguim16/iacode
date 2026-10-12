@@ -30,6 +30,7 @@ CORRECTIVE_REFS = {
     "finding:G4-F-004",
     "lesson:LSN-0097",
     "lesson:LSN-0098",
+    "lesson:LSN-0099",
 }
 
 
@@ -65,6 +66,7 @@ def corrective_evidence() -> dict[str, list[str]]:
             "file:scripts/development-ledger/review_bundle.py",
             "file:scripts/development-ledger/seal_checkpoint.py",
             "file:scripts/development-ledger/validate_checkpoint.py",
+            "file:scripts/development-ledger/record_command.py",
             "file:services/evaluator/src/iacode_evaluator/workflow.py",
             "file:.iacode/schemas/checkpoint.schema.json",
         ],
@@ -74,6 +76,7 @@ def corrective_evidence() -> dict[str, list[str]]:
             "test:test_pending_declaration_is_allowed_only_before_handoff_or_inside_sealing",
             "test:test_full_delivery_assurance_flow_reaches_ready_for_review",
             "test:test_cancellation_is_rechecked_after_dispatch_before_activity_start",
+            "test:test_inputs_are_canonicalized_and_an_unknown_subject_is_refused",
         ],
         "negativeTestEvidence": [
             "checkpoint:BASELINE-BUNDLE-AUDIT.json",
@@ -203,7 +206,7 @@ def main() -> int:
         row["justification"] = None
         row["notes"] = source["notes"]
 
-    if (len(closure["requirements"]), inherited, corrected, defended) != (223, 199, 4, 20):
+    if (len(closure["requirements"]), inherited, corrected, defended) != (224, 199, 5, 20):
         errors.append(
             f"unexpected denominator total={len(closure['requirements'])} inherited={inherited} "
             f"corrected={corrected} defended={defended}"
