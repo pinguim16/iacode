@@ -1,0 +1,339 @@
+{
+  "schemaVersion": "1.0.0",
+  "artifact": "FINAL-GATE-4-AUDIT-MATRIX",
+  "checkpoint": "GATE-4-CP-0006",
+  "subjectCheckpoint": "GATE-4-CP-0005",
+  "subjectCommit": "c631270e49c095a9777825c0bc18818694c07ffb",
+  "generatedAt": "2026-10-12T02:26:30.122682Z",
+  "criteria": [
+    {
+      "criterion": "G4A-01",
+      "title": "Subject identity and immutability",
+      "result": "PASS",
+      "observed": "sealed=c631270e49c095a9777825c0bc18818694c07ffb content=cac77ddef9c351ce828442d9312db69083aab81e",
+      "evidence": [
+        "file:SUBJECT-BUNDLE-AUDIT.json"
+      ]
+    },
+    {
+      "criterion": "G4A-02",
+      "title": "Subject anchor",
+      "result": "PASS",
+      "observed": "checkpoint=GATE-4-CP-0005 commit=c631270e49c095a9777825c0bc18818694c07ffb",
+      "evidence": [
+        "file:.iacode/anchors/checkpoint-chain.json"
+      ]
+    },
+    {
+      "criterion": "G4A-03",
+      "title": "Review bundle identity",
+      "result": "PASS",
+      "observed": "sha256=bb130be4e4e871af158bb71b0bc4c0f0a1da73af50a5db74df49f870b2d14d59",
+      "evidence": [
+        "file:SUBJECT-BUNDLE-AUDIT.json"
+      ]
+    },
+    {
+      "criterion": "G4A-04",
+      "title": "Bundle determinism and portability",
+      "result": "PASS",
+      "observed": "rebuilt=['6fdd6f990f7c0c7c67cc623ad5e428b8edcac50b8292d79f7dcb0c73a3e30499', '6fdd6f990f7c0c7c67cc623ad5e428b8edcac50b8292d79f7dcb0c73a3e30499']",
+      "evidence": [
+        "file:SUBJECT-BUNDLE-AUDIT.json"
+      ]
+    },
+    {
+      "criterion": "G4A-05",
+      "title": "Published detached validity",
+      "result": "PASS",
+      "observed": "detached subject returned CHECKPOINT_VALID",
+      "evidence": [
+        "file:SUBJECT-BUNDLE-AUDIT.json"
+      ]
+    },
+    {
+      "criterion": "G4A-06",
+      "title": "Historical compatibility",
+      "result": "PASS",
+      "observed": "27 sealed checkpoints validate under this tooling",
+      "evidence": [
+        "file:SUBJECT-MIRROR-AUDIT.json"
+      ]
+    },
+    {
+      "criterion": "G4A-07",
+      "title": "Canonical requirement denominator",
+      "result": "PASS",
+      "observed": "subject=221 audit=200",
+      "evidence": [
+        "file:REQUIREMENTS-MATRIX.json",
+        "file:docs/checkpoints/GATE-4-CP-0005/REQUIREMENTS-MATRIX.json"
+      ]
+    },
+    {
+      "criterion": "G4A-08",
+      "title": "Requirement evidence",
+      "result": "PASS",
+      "observed": "subject=221/221 auditComplete=True",
+      "evidence": [
+        "file:SUBJECT-COUNTS-AUDIT.json",
+        "file:REQUIREMENTS-MATRIX.json"
+      ]
+    },
+    {
+      "criterion": "G4A-09",
+      "title": "Quality architecture",
+      "result": "PASS",
+      "observed": "architecture=12/12 Gate4Stages=True",
+      "evidence": [
+        "file:ARCHITECTURE-REVIEW.json",
+        "file:VERIFICATION-REPORT.json"
+      ]
+    },
+    {
+      "criterion": "G4A-10",
+      "title": "Cross-Gate integration",
+      "result": "PASS",
+      "observed": "countedSuites=True verification=PASS",
+      "evidence": [
+        "file:VERIFICATION-REPORT.json"
+      ]
+    },
+    {
+      "criterion": "G4A-11",
+      "title": "Full published verification",
+      "result": "PASS",
+      "observed": "stages=42/42 exit=0",
+      "evidence": [
+        "file:PUBLISHED-CLEAN-CLONE-REPORT.json",
+        "file:VERIFICATION-REPORT.json"
+      ]
+    },
+    {
+      "criterion": "G4A-12",
+      "title": "No hidden rerun",
+      "result": "PASS",
+      "observed": "invocationCount=1 retryCount=0 verifierRerun=False",
+      "evidence": [
+        "file:PUBLISHED-CLEAN-CLONE-REPORT.json"
+      ]
+    },
+    {
+      "criterion": "G4A-13",
+      "title": "Historical infra/smoke order",
+      "result": "PASS",
+      "observed": "canonicalOrder=True contiguous=True infra=PASS smoke=PASS",
+      "evidence": [
+        "file:VERIFICATION-REPORT.json"
+      ]
+    },
+    {
+      "criterion": "G4A-14",
+      "title": "Compose isolation",
+      "result": "PASS",
+      "observed": "project=iacode-verify-09b742f9550c ports=docker-allocated",
+      "evidence": [
+        "file:PUBLISHED-CLEAN-CLONE-REPORT.json",
+        "file:COMPOSE-ISOLATION-AUDIT.json"
+      ]
+    },
+    {
+      "criterion": "G4A-15",
+      "title": "Cleanup and shared-project preservation",
+      "result": "PASS",
+      "observed": "pre=PASS post=PASS sharedUnchanged=True ownedRemoved=True",
+      "evidence": [
+        "file:COMPOSE-ISOLATION-AUDIT.json"
+      ]
+    },
+    {
+      "criterion": "G4A-16",
+      "title": "G4-F-002 closure",
+      "result": "PASS",
+      "observed": "singleRun=PASS focusedGuardrails=True",
+      "evidence": [
+        "file:VERIFICATION-REPORT.json",
+        "command:cmd-0012"
+      ]
+    },
+    {
+      "criterion": "G4A-17",
+      "title": "G4-F-001 closure",
+      "result": "PASS",
+      "observed": "probe=PASS scannerKinds=['GitHub credential']",
+      "evidence": [
+        "file:G4-X7-INDEPENDENT-PROBE.json"
+      ]
+    },
+    {
+      "criterion": "G4A-18",
+      "title": "G4-X7 marker containment",
+      "result": "PASS",
+      "observed": "status=ERROR verdict=FAIL objects=0 records=0",
+      "evidence": [
+        "file:G4-X7-INDEPENDENT-PROBE.json"
+      ]
+    },
+    {
+      "criterion": "G4A-19",
+      "title": "Scanner unavailable",
+      "result": "PASS",
+      "observed": "status=ERROR verdict=FAIL",
+      "evidence": [
+        "file:G4-X7-INDEPENDENT-PROBE.json"
+      ]
+    },
+    {
+      "criterion": "G4A-20",
+      "title": "Legacy object",
+      "result": "PASS",
+      "observed": "resolved=False verdict=FAIL",
+      "evidence": [
+        "file:G4-X7-INDEPENDENT-PROBE.json"
+      ]
+    },
+    {
+      "criterion": "G4A-21",
+      "title": "Independent Red Team A-T",
+      "result": "PASS",
+      "observed": "result=RED_TEAM_PASS defended=20/20",
+      "evidence": [
+        "file:GATE-4-INDEPENDENT-RED-TEAM.json"
+      ]
+    },
+    {
+      "criterion": "G4A-22",
+      "title": "Test denominator",
+      "result": "PASS",
+      "observed": "tests=1701/1701 verification=PASS",
+      "evidence": [
+        "file:SUBJECT-COUNTS-AUDIT.json",
+        "file:VERIFICATION-REPORT.json"
+      ]
+    },
+    {
+      "criterion": "G4A-23",
+      "title": "Guardrail denominator",
+      "result": "PASS",
+      "observed": "guardrails=97/97 failures=0",
+      "evidence": [
+        "file:SUBJECT-COUNTS-AUDIT.json"
+      ]
+    },
+    {
+      "criterion": "G4A-24",
+      "title": "Lessons and recurrence",
+      "result": "PASS",
+      "observed": "lessons=93/96 focusedGuardrails=True",
+      "evidence": [
+        "file:SUBJECT-COUNTS-AUDIT.json",
+        "command:cmd-0012"
+      ]
+    },
+    {
+      "criterion": "G4A-25",
+      "title": "Wrapper schema",
+      "result": "PASS",
+      "observed": "canonical result-field and contradictory-alias guard passed",
+      "evidence": [
+        "command:cmd-0012"
+      ]
+    },
+    {
+      "criterion": "G4A-26",
+      "title": "Ledger auto-invalidation",
+      "result": "PASS",
+      "observed": "Green Keeper, Red Team and mirror staleness guards passed",
+      "evidence": [
+        "command:cmd-0012"
+      ]
+    },
+    {
+      "criterion": "G4A-27",
+      "title": "Security and dependencies",
+      "result": "PASS",
+      "observed": "dependency=PASS falsePass=PASS",
+      "evidence": [
+        "file:VERIFICATION-REPORT.json",
+        "file:GATE-4-INDEPENDENT-RED-TEAM.json"
+      ]
+    },
+    {
+      "criterion": "G4A-28",
+      "title": "Documentation and architecture",
+      "result": "PASS",
+      "observed": "architecture=12/12 docs=202/202 relative documentation links resolve",
+      "evidence": [
+        "file:ARCHITECTURE-REVIEW.json",
+        "file:SUBJECT-MIRROR-AUDIT.json"
+      ]
+    },
+    {
+      "criterion": "G4A-29",
+      "title": "Review-bundle content",
+      "result": "PASS",
+      "observed": "categories={'tests': True, 'migrations': True, 'schemas': True, 'policies': True, 'documentation': True, 'changeset': True, 'gitState': True, 'manifest': True}",
+      "evidence": [
+        "file:SUBJECT-BUNDLE-AUDIT.json"
+      ]
+    },
+    {
+      "criterion": "G4A-30",
+      "title": "Audit checkpoint assurance",
+      "result": "PASS",
+      "observed": "green=GREEN completeness=PASS mirror=PASS",
+      "evidence": [
+        "file:REWORK-LOG.jsonl",
+        "file:COMPLETENESS-REPORT.json",
+        "file:M2-INTERNAL-RED-TEAM.json",
+        "file:M2-INTERNAL-MIRROR.json"
+      ]
+    },
+    {
+      "criterion": "G4A-31",
+      "title": "Independent review",
+      "result": "PASS",
+      "observed": "Critical=0 High=0; no blocking criterion failed",
+      "evidence": [
+        "file:ARCHITECTURE-REVIEW.json",
+        "file:G4-X7-INDEPENDENT-PROBE.json"
+      ]
+    },
+    {
+      "criterion": "G4A-32",
+      "title": "Second-tool/session validation",
+      "result": "PASS",
+      "observed": "fresh-session evidence executed by Codex/OpenAI; no internal subject verdict relabelled",
+      "evidence": [
+        "file:REVIEW-REPORT.md",
+        "file:GATE-4-INDEPENDENT-RED-TEAM.json"
+      ]
+    },
+    {
+      "criterion": "G4A-33",
+      "title": "Audit attestation",
+      "result": "PASS",
+      "observed": "state=VERIFIED audit=G4-CP-0006",
+      "evidence": [
+        "file:.iacode/attestations/G4-CP-0006.json",
+        "file:STATE.json"
+      ]
+    },
+    {
+      "criterion": "G4A-34",
+      "title": "Gate verdict",
+      "result": "PASS",
+      "observed": "secondTool=PASSED review=APPROVED redTeam=RED_TEAM_PASS",
+      "evidence": [
+        "file:STATE.json",
+        "file:REVIEW-REPORT.md",
+        "file:GATE-4-INDEPENDENT-RED-TEAM.json"
+      ]
+    }
+  ],
+  "passed": 34,
+  "failed": 0,
+  "notExecuted": 0,
+  "total": 34,
+  "result": "APPROVED"
+}

@@ -1,0 +1,168 @@
+{
+  "schemaVersion": "1.0.0",
+  "artifact": "GATE-4-SUBJECT-AND-BUNDLE-AUDIT",
+  "checkpoint": "GATE-4-CP-0006",
+  "subjectCheckpoint": "GATE-4-CP-0005",
+  "subjectCommit": "c631270e49c095a9777825c0bc18818694c07ffb",
+  "contentCommit": "cac77ddef9c351ce828442d9312db69083aab81e",
+  "generatedAt": "2026-10-11T21:41:39.207096Z",
+  "identity": {
+    "originMain": "c631270e49c095a9777825c0bc18818694c07ffb",
+    "tagCommit": "c631270e49c095a9777825c0bc18818694c07ffb",
+    "contentCommit": "cac77ddef9c351ce828442d9312db69083aab81e",
+    "tree": "cc63f56a6d49caf8aa3f137d00dbf15f8c271719",
+    "matchesExpected": true
+  },
+  "publishedValidationSteps": [
+    {
+      "command": [
+        "git",
+        "clone",
+        "--quiet",
+        "https://github.com/pinguim16/iacode.git",
+        "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-g4-bundle-audit-pmrkkcd9\\iacode"
+      ],
+      "exitCode": 0,
+      "tail": ""
+    },
+    {
+      "command": [
+        "C:\\Program Files\\Python313\\python.exe",
+        "scripts/development-ledger/remote_sync.py",
+        "--authorised-url",
+        "https://github.com/pinguim16/iacode.git",
+        "--tag",
+        "iacode-checkpoints/GATE-4-CP-0005"
+      ],
+      "exitCode": 0,
+      "tail": "REMOTE_SYNC_PASS remote=origin branch=main tags=iacode-checkpoints/GATE-4-CP-0005"
+    },
+    {
+      "command": [
+        "git",
+        "checkout",
+        "--detach",
+        "--quiet",
+        "iacode-checkpoints/GATE-4-CP-0005"
+      ],
+      "exitCode": 0,
+      "tail": ""
+    },
+    {
+      "command": [
+        "C:\\Program Files\\Python313\\python.exe",
+        "scripts/development-ledger/validate_checkpoint.py"
+      ],
+      "exitCode": 0,
+      "tail": "CHECKPOINT_VALID"
+    },
+    {
+      "command": [
+        "C:\\Program Files\\Python313\\python.exe",
+        "scripts/development-ledger/verify_integrity.py"
+      ],
+      "exitCode": 0,
+      "tail": "INTEGRITY_VALID anchors=27 latest=SETUP-00-CP-0013"
+    },
+    {
+      "command": [
+        "C:\\Program Files\\Python313\\python.exe",
+        "scripts/development-ledger/validate_lessons.py"
+      ],
+      "exitCode": 0,
+      "tail": "LESSONS_VALID total=96 active=96 guarded=93"
+    }
+  ],
+  "declaredBundleValidation": {
+    "schemaVersion": "1.0.0",
+    "checkpoint": "GATE-4-CP-0005",
+    "bundle": "artifacts/review/GATE-4-CP-0005.zip",
+    "sha256": "bb130be4e4e871af158bb71b0bc4c0f0a1da73af50a5db74df49f870b2d14d59",
+    "sizeBytes": 807433,
+    "entries": 126,
+    "result": "PASS",
+    "findings": [],
+    "secretFindings": [],
+    "validatedAt": "2026-10-11T21:23:19Z"
+  },
+  "originalBundleSha256": "bb130be4e4e871af158bb71b0bc4c0f0a1da73af50a5db74df49f870b2d14d59",
+  "originalInspection": {
+    "entries": 126,
+    "uniqueEntries": 126,
+    "crcFailure": null,
+    "manifestEntries": 125,
+    "manifestMatchesPayload": true,
+    "hashMismatches": [],
+    "categories": {
+      "tests": true,
+      "migrations": true,
+      "schemas": true,
+      "policies": true,
+      "documentation": true,
+      "changeset": true,
+      "gitState": true,
+      "manifest": true
+    },
+    "reviewState": {
+      "baseCommit": "73cfa5eeb7fca2bf9312ec777d02f9ddfb2ad3d5",
+      "branch": "main",
+      "checkpoint": "GATE-4-CP-0005",
+      "dirty": true,
+      "headCommit": "b93d7e113a23cfe1f42f3458b4b4465f57afd947",
+      "remoteHead": "b93d7e113a23cfe1f42f3458b4b4465f57afd947",
+      "schemaVersion": "1.0.0"
+    }
+  },
+  "originalPortableValidation": {
+    "schemaVersion": "1.0.0",
+    "checkpoint": "GATE-4-CP-0005",
+    "bundle": "artifacts/review/GATE-4-CP-0005.zip",
+    "sha256": "bb130be4e4e871af158bb71b0bc4c0f0a1da73af50a5db74df49f870b2d14d59",
+    "sizeBytes": 807433,
+    "entries": 126,
+    "result": "PASS",
+    "findings": [],
+    "secretFindings": [],
+    "validatedAt": "2026-10-11T21:41:32Z"
+  },
+  "rebuiltSha256": [
+    "6fdd6f990f7c0c7c67cc623ad5e428b8edcac50b8292d79f7dcb0c73a3e30499",
+    "6fdd6f990f7c0c7c67cc623ad5e428b8edcac50b8292d79f7dcb0c73a3e30499"
+  ],
+  "rebuiltValidations": [
+    {
+      "schemaVersion": "1.0.0",
+      "checkpoint": "GATE-4-CP-0005",
+      "bundle": "artifacts/review/rebuilt-a.zip",
+      "sha256": "6fdd6f990f7c0c7c67cc623ad5e428b8edcac50b8292d79f7dcb0c73a3e30499",
+      "sizeBytes": 843985,
+      "entries": 126,
+      "result": "PASS",
+      "findings": [],
+      "secretFindings": [],
+      "validatedAt": "2026-10-11T21:41:35Z"
+    },
+    {
+      "schemaVersion": "1.0.0",
+      "checkpoint": "GATE-4-CP-0005",
+      "bundle": "artifacts/review/rebuilt-b.zip",
+      "sha256": "6fdd6f990f7c0c7c67cc623ad5e428b8edcac50b8292d79f7dcb0c73a3e30499",
+      "sizeBytes": 843985,
+      "entries": 126,
+      "result": "PASS",
+      "findings": [],
+      "secretFindings": [],
+      "validatedAt": "2026-10-11T21:41:38Z"
+    }
+  ],
+  "checks": {
+    "subjectIdentity": true,
+    "publishedCommands": true,
+    "declaredBundleIdentity": true,
+    "originalArchiveStructure": true,
+    "originalPortableValidation": true,
+    "deterministicRebuild": true,
+    "rebuiltPortableValidation": true
+  },
+  "result": "PASS"
+}

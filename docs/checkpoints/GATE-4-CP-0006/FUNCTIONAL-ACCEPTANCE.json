@@ -1,0 +1,247 @@
+{
+  "schemaVersion": "1.0.0",
+  "gate": "GATE-4",
+  "checkpoint": "GATE-4-CP-0006",
+  "status": "PASS",
+  "generatedAt": "2026-10-12T02:26:30.122682Z",
+  "scenarios": [
+    {
+      "scenarioId": "G4-FA-SANDBOX",
+      "requirementIds": [
+        "GATE-4-7.1",
+        "GATE-4-7.5"
+      ],
+      "feature": "Sandbox-only quality and coding execution",
+      "scenario": "Execute real coding work through the sandbox while leaving the host unchanged.",
+      "environment": "published clean-clone Compose stack, Temporal worker, sandbox service and container engine",
+      "preconditions": [
+        "The isolated stack was built from the published subject commit."
+      ],
+      "execution": [
+        "Execute the canonical sandbox coding and containment stages."
+      ],
+      "expected": [
+        "Project commands remain inside the no-network sandbox and cleanup completes."
+      ],
+      "observed": [
+        "Fresh-session full verification and independent adversarial evidence reproduced this scenario."
+      ],
+      "result": "PASS",
+      "evidence": [
+        "checkpoint:VERIFICATION-REPORT.json"
+      ],
+      "timestamp": "2026-10-12T02:26:30.122682Z",
+      "artifactReferences": [
+        "checkpoint:VERIFICATION-REPORT.json"
+      ]
+    },
+    {
+      "scenarioId": "G4-FA-REPRODUCTION",
+      "requirementIds": [
+        "GATE-4-9.5",
+        "GATE-4-16.4"
+      ],
+      "feature": "Immutable quality reproduction",
+      "scenario": "Reproduce a quality run from stored inputs under the same frozen plan.",
+      "environment": "published clean-clone stack with Temporal, PostgreSQL, MinIO and sandbox service",
+      "preconditions": [
+        "A complete immutable quality run exists."
+      ],
+      "execution": [
+        "Run the canonical quality reproduction stage."
+      ],
+      "expected": [
+        "The reproduced run has distinct identity and equivalent results without rewriting the original."
+      ],
+      "observed": [
+        "Fresh-session full verification and independent adversarial evidence reproduced this scenario."
+      ],
+      "result": "PASS",
+      "evidence": [
+        "checkpoint:VERIFICATION-REPORT.json"
+      ],
+      "timestamp": "2026-10-12T02:26:30.122682Z",
+      "artifactReferences": [
+        "checkpoint:VERIFICATION-REPORT.json"
+      ]
+    },
+    {
+      "scenarioId": "G4-FA-RECOVERY",
+      "requirementIds": [
+        "GATE-4-12.1",
+        "GATE-4-12.2"
+      ],
+      "feature": "Durable quality workflow recovery",
+      "scenario": "Restart the evaluator during an active quality run and observe recovery without duplicate results.",
+      "environment": "published clean-clone stack with Temporal evaluator worker and durable services",
+      "preconditions": [
+        "A slow quality run is active with durable identity."
+      ],
+      "execution": [
+        "Run the canonical evaluator-recovery scenario."
+      ],
+      "expected": [
+        "The same run resumes, records each result once and releases its sandbox."
+      ],
+      "observed": [
+        "Fresh-session full verification and independent adversarial evidence reproduced this scenario."
+      ],
+      "result": "PASS",
+      "evidence": [
+        "checkpoint:VERIFICATION-REPORT.json"
+      ],
+      "timestamp": "2026-10-12T02:26:30.122682Z",
+      "artifactReferences": [
+        "checkpoint:VERIFICATION-REPORT.json"
+      ]
+    },
+    {
+      "scenarioId": "G4-FA-TERMINATION",
+      "requirementIds": [
+        "GATE-4-12.3",
+        "GATE-4-12.4"
+      ],
+      "feature": "Fail-closed cancellation and timeout",
+      "scenario": "Cancel one active quality run and allow another to exceed its policy-owned deadline.",
+      "environment": "published clean-clone stack with evaluator and sandbox service",
+      "preconditions": [
+        "Slow quality fixtures are present in the built image."
+      ],
+      "execution": [
+        "Run canonical cancellation and timeout scenarios."
+      ],
+      "expected": [
+        "Both paths terminate after cleanup and derive FAIL without late contradictory work."
+      ],
+      "observed": [
+        "Fresh-session full verification and independent adversarial evidence reproduced this scenario."
+      ],
+      "result": "PASS",
+      "evidence": [
+        "checkpoint:VERIFICATION-REPORT.json"
+      ],
+      "timestamp": "2026-10-12T02:26:30.122682Z",
+      "artifactReferences": [
+        "checkpoint:VERIFICATION-REPORT.json"
+      ]
+    },
+    {
+      "scenarioId": "G4-FA-PASS-FAIL",
+      "requirementIds": [
+        "GATE-4-16.1",
+        "GATE-4-16.2"
+      ],
+      "feature": "Truthful PASS and FAIL derivation",
+      "scenario": "Run passing and deliberately failing fixtures through the complete Quality Engine.",
+      "environment": "published clean-clone stack and immutable evidence stores",
+      "preconditions": [
+        "Passing and failing fixtures are present in the built image."
+      ],
+      "execution": [
+        "Execute both fixtures and inspect their stored results and verdicts."
+      ],
+      "expected": [
+        "Only the complete successful set derives PASS; the deliberate defect derives FAIL."
+      ],
+      "observed": [
+        "Fresh-session full verification and independent adversarial evidence reproduced this scenario."
+      ],
+      "result": "PASS",
+      "evidence": [
+        "checkpoint:VERIFICATION-REPORT.json"
+      ],
+      "timestamp": "2026-10-12T02:26:30.122682Z",
+      "artifactReferences": [
+        "checkpoint:VERIFICATION-REPORT.json"
+      ]
+    },
+    {
+      "scenarioId": "G4-FA-IACODE-ADVERSARIAL",
+      "requirementIds": [
+        "GATE-4-16.3",
+        "GATE-4-16.5"
+      ],
+      "feature": "Canonical IACode evaluation and false-PASS rejection",
+      "scenario": "Evaluate IACode under its canonical profile and preserve the full twenty-attack battery.",
+      "environment": "published clean-clone stack plus sealed independent Red Team evidence",
+      "preconditions": [
+        "The canonical policy, subject commit and attack denominator are frozen."
+      ],
+      "execution": [
+        "Run the canonical IACode and false-PASS stages and inspect the sealed A-T battery."
+      ],
+      "expected": [
+        "The canonical verdict is truthful and every one of twenty mandatory mutations is defended."
+      ],
+      "observed": [
+        "Fresh-session full verification and independent adversarial evidence reproduced this scenario."
+      ],
+      "result": "PASS",
+      "evidence": [
+        "checkpoint:VERIFICATION-REPORT.json"
+      ],
+      "timestamp": "2026-10-12T02:26:30.122682Z",
+      "artifactReferences": [
+        "checkpoint:VERIFICATION-REPORT.json"
+      ]
+    },
+    {
+      "scenarioId": "G4-FA-SECRET-CONTAINMENT",
+      "requirementIds": [
+        "GATE-4-16.5"
+      ],
+      "feature": "Pre-persistence credential containment",
+      "scenario": "Preserve G4-X7 against the exact scanner-to-store boundary without changing its assertions.",
+      "environment": "sealed independent evaluator-image probe",
+      "preconditions": [
+        "The synthetic marker is assembled only in memory and the null control is valid."
+      ],
+      "execution": [
+        "Inspect the unchanged independent G4-X7 observation set."
+      ],
+      "expected": [
+        "No object or metadata is created; the result is sanitized ERROR and the verdict is FAIL."
+      ],
+      "observed": [
+        "The audit-owned evaluator-image probe observed scan-before-store, ERROR, FAIL, zero objects, zero metadata, no evidence, no findings and no marker in logs."
+      ],
+      "result": "PASS",
+      "evidence": [
+        "checkpoint:G4-X7-INDEPENDENT-PROBE.json"
+      ],
+      "timestamp": "2026-10-12T02:26:30.122682Z",
+      "artifactReferences": [
+        "checkpoint:G4-X7-INDEPENDENT-PROBE.json"
+      ]
+    },
+    {
+      "scenarioId": "G4-FA-PUBLISHED-ORDERED-VERIFY",
+      "requirementIds": [
+        "GATE-4-16.3"
+      ],
+      "feature": "Deterministic published full verification",
+      "scenario": "Execute all 42 canonical stages once from a fresh transport clone of the published subject.",
+      "environment": "attached main at published commit a7ad2f53209923f189a786a1fd162dba764b1efa with checkout-owned Compose runtime",
+      "preconditions": [
+        "The remote main commit, clone Git state, stage denominator and project namespace are verified before execution."
+      ],
+      "execution": [
+        "Run the canonical verifier once with keep-going and preserve the generated report."
+      ],
+      "expected": [
+        "All 42 stages pass in order; infra and smoke pass in the same run; owned resources are removed afterward."
+      ],
+      "observed": [
+        "Fresh-session full verification and independent adversarial evidence reproduced this scenario."
+      ],
+      "result": "PASS",
+      "evidence": [
+        "checkpoint:VERIFICATION-REPORT.json"
+      ],
+      "timestamp": "2026-10-12T02:26:30.122682Z",
+      "artifactReferences": [
+        "checkpoint:VERIFICATION-REPORT.json"
+      ]
+    }
+  ]
+}

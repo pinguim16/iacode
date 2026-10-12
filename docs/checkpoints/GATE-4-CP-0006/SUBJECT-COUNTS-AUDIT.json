@@ -1,0 +1,147 @@
+{
+  "schemaVersion": "1.0.0",
+  "artifact": "GATE-4-SUBJECT-COUNTS-AUDIT",
+  "checkpoint": "GATE-4-CP-0006",
+  "subjectCheckpoint": "GATE-4-CP-0005",
+  "subjectCommit": "c631270e49c095a9777825c0bc18818694c07ffb",
+  "generatedAt": "2026-10-11T21:46:47.143247Z",
+  "steps": [
+    {
+      "command": [
+        "git",
+        "clone",
+        "--quiet",
+        "--no-local",
+        "https://github.com/pinguim16/iacode.git",
+        "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-g4-subject-counts-c8023jv1\\repository"
+      ],
+      "exitCode": 0,
+      "tail": ""
+    },
+    {
+      "command": [
+        "git",
+        "checkout",
+        "--quiet",
+        "--detach",
+        "iacode-checkpoints/GATE-4-CP-0005"
+      ],
+      "exitCode": 0,
+      "tail": ""
+    },
+    {
+      "command": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "exitCode": 0,
+      "tail": "c631270e49c095a9777825c0bc18818694c07ffb"
+    },
+    {
+      "command": [
+        "C:\\Program Files\\Python313\\python.exe",
+        "scripts/development-ledger/validate_checkpoint.py"
+      ],
+      "exitCode": 0,
+      "tail": "CHECKPOINT_VALID"
+    },
+    {
+      "command": [
+        "C:\\Program Files\\Python313\\python.exe",
+        "scripts/development-ledger/derive_requirements.py",
+        "--checkpoint",
+        "docs/checkpoints/GATE-4-CP-0005",
+        "--gate",
+        "GATE-4"
+      ],
+      "exitCode": 0,
+      "tail": "REQUIREMENTS_DERIVED gate=GATE-4 checkpoint=GATE-4-CP-0005 total=221\n- AUDIT_ATTACK: 20\n- AUDIT_FINDING: 1\n- GATE_SPECIFICATION: 105\n- LESSON: 95"
+    },
+    {
+      "command": [
+        "C:\\Program Files\\Python313\\python.exe",
+        "scripts/development-ledger/check_completeness.py",
+        "--checkpoint",
+        "docs/checkpoints/GATE-4-CP-0005",
+        "--auditor",
+        "fresh-session independent Gate 4 audit"
+      ],
+      "exitCode": 0,
+      "tail": "DELIVERY_COMPLETENESS_GATE=PASS coverage=100.00 evidenceCoverage=100.00 total=221 complete=221 partial=0 missing=0 notApplicable=0"
+    },
+    {
+      "command": [
+        "C:\\Program Files\\Python313\\python.exe",
+        "scripts/development-ledger/derive_counts.py",
+        "--checkpoint",
+        "docs/checkpoints/GATE-4-CP-0005"
+      ],
+      "exitCode": 0,
+      "tail": "COUNTS_DERIVED TESTS=1701/1701 REQUIREMENTS=221/221 FINDINGS=1/1 ATTACKS=20/20 LESSONS=93/96 GUARDRAILS=97/97"
+    },
+    {
+      "command": [
+        "C:\\Program Files\\Python313\\python.exe",
+        "scripts/development-ledger/validate_lessons.py"
+      ],
+      "exitCode": 0,
+      "tail": "LESSONS_VALID total=96 active=96 guarded=93"
+    },
+    {
+      "command": [
+        "C:\\Program Files\\Python313\\python.exe",
+        "scripts/development-ledger/verify_integrity.py"
+      ],
+      "exitCode": 0,
+      "tail": "INTEGRITY_VALID anchors=27 latest=SETUP-00-CP-0013"
+    }
+  ],
+  "counts": {
+    "TESTS": {
+      "numerator": 1701,
+      "denominator": 1701,
+      "source": "discovery over every counted suite of .iacode/policies/test-suites.json, cross-checked with TESTS.json and deduplicated by physical execution"
+    },
+    "REQUIREMENTS": {
+      "numerator": 221,
+      "denominator": 221,
+      "source": "REQUIREMENTS-MATRIX.json evaluated against the derived expected set"
+    },
+    "FINDINGS": {
+      "numerator": 1,
+      "denominator": 1,
+      "source": "the sealed audit review reports and the closure record"
+    },
+    "ATTACKS": {
+      "numerator": 20,
+      "denominator": 20,
+      "source": "M2-INTERNAL-RED-TEAM.json"
+    },
+    "LESSONS": {
+      "numerator": 93,
+      "denominator": 96,
+      "source": ".iacode/memory/lessons.jsonl"
+    },
+    "GUARDRAILS": {
+      "numerator": 97,
+      "denominator": 97,
+      "source": ".iacode/memory/guardrails/registry.json measured for effectiveness"
+    }
+  },
+  "completeness": {
+    "result": "PASS",
+    "total": 221,
+    "complete": 221,
+    "coveragePercent": 100.0,
+    "evidenceCoveragePercent": 100.0
+  },
+  "guardrailFailures": 0,
+  "redTeamResult": "RED_TEAM_PASS",
+  "lessons": {
+    "numerator": 93,
+    "denominator": 96,
+    "source": ".iacode/memory/lessons.jsonl"
+  },
+  "result": "PASS"
+}

@@ -1,0 +1,228 @@
+{
+  "schemaVersion": "1.0.0",
+  "artifact": "GATE-4-INDEPENDENT-ARCHITECTURE-REVIEW",
+  "checkpoint": "GATE-4-CP-0006",
+  "subjectCheckpoint": "GATE-4-CP-0005",
+  "subjectCommit": "c631270e49c095a9777825c0bc18818694c07ffb",
+  "generatedAt": "2026-10-11T21:38:59.140559Z",
+  "checks": [
+    {
+      "id": "AR-01",
+      "area": "host execution boundary",
+      "expectation": "the evaluator imports no host/container execution client",
+      "observed": {
+        "parsedModules": 25,
+        "forbiddenImports": []
+      },
+      "result": "PASS",
+      "evidence": [
+        "file:services/evaluator/src/iacode_evaluator"
+      ]
+    },
+    {
+      "id": "AR-02",
+      "area": "quality contracts",
+      "expectation": "quality contracts are closed, frozen, rights-safe and refuse a submitted verdict",
+      "observed": {
+        "closedFrozen": true,
+        "originOwned": true,
+        "trainingDenied": true,
+        "acyclic": true,
+        "noSubmittedVerdict": true
+      },
+      "result": "PASS",
+      "evidence": [
+        "file:packages/contracts/src/iacode_contracts/quality.py"
+      ]
+    },
+    {
+      "id": "AR-03",
+      "area": "closed runners",
+      "expectation": "all supported stacks use closed offline-capable runner definitions",
+      "observed": {
+        "python": true,
+        "node": true,
+        "typescript": true,
+        "angular": true,
+        "maven": true,
+        "gradle": true,
+        "mavenOffline": true,
+        "gradleOffline": true,
+        "unknownRefused": true
+      },
+      "result": "PASS",
+      "evidence": [
+        "file:services/evaluator/src/iacode_evaluator/runners.py",
+        "file:.iacode/policies/quality-policy.json"
+      ]
+    },
+    {
+      "id": "AR-04",
+      "area": "sandbox request construction",
+      "expectation": "execution is a structured Gate 3 request bound to the frozen runner and snapshot",
+      "observed": {
+        "allProfiles": true,
+        "structuredTool": true,
+        "snapshotBound": true,
+        "policyFromRunner": true,
+        "noCallerNetwork": true,
+        "noCallerMount": true
+      },
+      "result": "PASS",
+      "evidence": [
+        "file:services/evaluator/src/iacode_evaluator/executor.py",
+        "file:.iacode/policies/sandbox-policies.json"
+      ]
+    },
+    {
+      "id": "AR-05",
+      "area": "policy narrowing",
+      "expectation": "project configuration can only narrow canonical policy",
+      "observed": {
+        "closedConfiguration": true,
+        "noRunnerExpansion": true,
+        "noThresholdWeakening": true,
+        "noLimitRaise": true,
+        "unknownRefused": true
+      },
+      "result": "PASS",
+      "evidence": [
+        "file:services/evaluator/src/iacode_evaluator/policy.py"
+      ]
+    },
+    {
+      "id": "AR-06",
+      "area": "verdict derivation",
+      "expectation": "pure derivation fails closed for every invalid or incomplete input",
+      "observed": {
+        "missing": true,
+        "duplicate": true,
+        "foreign": true,
+        "unexpected": true,
+        "nonPass": true,
+        "unresolved": true,
+        "emptyRequiredSet": true,
+        "pureVerdict": true
+      },
+      "result": "PASS",
+      "evidence": [
+        "file:services/evaluator/src/iacode_evaluator/verdict.py"
+      ]
+    },
+    {
+      "id": "AR-07",
+      "area": "pre-persistence evidence containment",
+      "expectation": "the shared scanner runs on exact bytes before lookup/write and resolution rescans legacy bytes",
+      "observed": {
+        "sharedScannerImport": true,
+        "scanIsFirstPutStatement": true,
+        "scannerFailureCode": true,
+        "scannerDetectionCode": true,
+        "resolveRescans": true,
+        "immutableObject": true,
+        "firstPutStatement": "_require_secret_free(content)"
+      },
+      "result": "PASS",
+      "evidence": [
+        "file:packages/common/src/iacode_common/secret_scanning.py",
+        "file:services/evaluator/src/iacode_evaluator/evidence.py",
+        "file:docs/adr/ADR-0032-quality-evidence-is-scanned-before-durable-commit.md"
+      ]
+    },
+    {
+      "id": "AR-08",
+      "area": "activity containment semantics",
+      "expectation": "only containment failures become sanitized ERROR results with no evidence/findings",
+      "observed": {
+        "exactSerialization": true,
+        "boundedCatch": true,
+        "sanitizedError": true,
+        "noRejectedEvidence": true,
+        "noRejectedFindings": true,
+        "derivedVerdict": true
+      },
+      "result": "PASS",
+      "evidence": [
+        "file:services/evaluator/src/iacode_evaluator/activities.py"
+      ]
+    },
+    {
+      "id": "AR-09",
+      "area": "durable lifecycle",
+      "expectation": "Temporal owns sandbox execution, deadlines, cleanup and derived verdict",
+      "observed": {
+        "temporal": true,
+        "sandbox": true,
+        "singleAttempt": true,
+        "deadline": true,
+        "verdict": true
+      },
+      "result": "PASS",
+      "evidence": [
+        "file:services/evaluator/src/iacode_evaluator/workflow.py"
+      ]
+    },
+    {
+      "id": "AR-10",
+      "area": "documentation and ADRs",
+      "expectation": "entry, architecture, operations and ADRs describe current quality behavior",
+      "observed": {
+        "START-HERE.md": true,
+        "README.md": true,
+        "docs/ARCHITECTURE.md": true,
+        "docs/DEVELOPMENT.md": true,
+        "docs/VERSIONS.md": true,
+        "docs/runbooks/QUALITY-ENGINE.md": true,
+        "docs/adr/ADR-0029-quality-execution-boundary.md": true,
+        "docs/adr/ADR-0030-quality-evidence-and-verdict-immutability.md": true,
+        "docs/adr/ADR-0031-project-profiles-select-closed-quality-runners.md": true,
+        "docs/adr/ADR-0032-quality-evidence-is-scanned-before-durable-commit.md": true
+      },
+      "result": "PASS",
+      "evidence": [
+        "file:START-HERE.md",
+        "file:README.md",
+        "file:docs/ARCHITECTURE.md",
+        "file:docs/DEVELOPMENT.md",
+        "file:docs/VERSIONS.md",
+        "file:docs/runbooks/QUALITY-ENGINE.md",
+        "file:docs/adr/ADR-0029-quality-execution-boundary.md",
+        "file:docs/adr/ADR-0030-quality-evidence-and-verdict-immutability.md",
+        "file:docs/adr/ADR-0031-project-profiles-select-closed-quality-runners.md",
+        "file:docs/adr/ADR-0032-quality-evidence-is-scanned-before-durable-commit.md"
+      ]
+    },
+    {
+      "id": "AR-11",
+      "area": "memory and guardrail",
+      "expectation": "the confirmed failure is a lesson guarded by direct persistence and workflow controls",
+      "observed": {
+        "lesson": true,
+        "guardrail": true,
+        "persistenceTest": true,
+        "workflowTest": true
+      },
+      "result": "PASS",
+      "evidence": [
+        "file:.iacode/memory/lessons.jsonl",
+        "file:.iacode/memory/guardrails/registry.json"
+      ]
+    },
+    {
+      "id": "AR-12",
+      "area": "Gate scope",
+      "expectation": "Gate 4 introduced no Gate 5–7 or Gate 20 implementation surface",
+      "observed": {
+        "changedPaths": 449,
+        "forbiddenScope": []
+      },
+      "result": "PASS",
+      "evidence": [
+        "git:diff-GATE-3-CP-0006..GATE-4-CP-0005"
+      ]
+    }
+  ],
+  "passed": 12,
+  "total": 12,
+  "result": "PASS"
+}

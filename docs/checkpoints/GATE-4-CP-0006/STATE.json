@@ -1,0 +1,168 @@
+{
+  "schemaVersion": "3.2.0",
+  "phase": "Gate 4 fresh-session independent re-audit of sealed GATE-4-CP-0005",
+  "gate": "GATE-4",
+  "status": "GATE_PASS",
+  "branch": "main",
+  "baseCommit": "c631270e49c095a9777825c0bc18818694c07ffb",
+  "currentCommit": "refs/tags/iacode-checkpoints/GATE-4-CP-0006",
+  "dirty": false,
+  "startedAt": "2026-10-11T21:31:51Z",
+  "updatedAt": "2026-10-12T02:29:14Z",
+  "nextAllowedAction": "Finalize, seal, tag and publish GATE-4-CP-0006; then verify the published branch and tag.",
+  "blockedBy": [],
+  "secondToolValidation": {
+    "status": "PASSED",
+    "tool": "Codex desktop application, fresh session",
+    "provider": "OpenAI",
+    "model": "GPT-5",
+    "validatedAt": "2026-10-12T01:33:02.220538Z",
+    "justification": "The sealed Gate 4 correction was independently reproduced and every executable audit and adversarial criterion passed.",
+    "evidence": [
+      "file:REVIEW-REPORT.md",
+      "file:GATE-4-INDEPENDENT-RED-TEAM.json",
+      "file:FINAL-GATE-4-AUDIT-MATRIX.json"
+    ]
+  },
+  "requirementsMatrix": {
+    "path": "REQUIREMENTS-MATRIX.json",
+    "total": 200,
+    "mandatory": 198,
+    "complete": 200,
+    "partial": 0,
+    "missing": 0,
+    "notApplicable": 0,
+    "coveragePercent": 100.0
+  },
+  "greenKeeper": {
+    "status": "PASS",
+    "cycles": 2,
+    "remainingFailures": 0,
+    "unresolvedReworkItems": 0,
+    "log": "REWORK-LOG.jsonl",
+    "externalBlockers": [],
+    "requiredGates": [
+      "tests",
+      "staticAnalysis",
+      "lessons",
+      "integrity",
+      "checkpointValidation",
+      "apiTests",
+      "gatewayTests",
+      "agentRuntimeTests",
+      "sandboxTests",
+      "evaluatorTests",
+      "webTests",
+      "lint",
+      "infraDefinition"
+    ],
+    "evidence": [
+      "cmd-0039",
+      "cmd-0040",
+      "cmd-0041",
+      "cmd-0042",
+      "cmd-0043",
+      "cmd-0044",
+      "cmd-0045",
+      "cmd-0046",
+      "cmd-0047",
+      "cmd-0048",
+      "cmd-0049",
+      "cmd-0050",
+      "cmd-0051"
+    ]
+  },
+  "deliveryCompleteness": {
+    "status": "PASS",
+    "report": "COMPLETENESS-REPORT.json",
+    "coveragePercent": 100.0,
+    "evidenceCoveragePercent": 100.0,
+    "auditor": "Delivery Completeness Validator (fresh-session audit checkpoint, not an independent milestone auditor)",
+    "evidence": [
+      "file:COMPLETENESS-REPORT.json"
+    ]
+  },
+  "reworkCycles": 2,
+  "independentReview": {
+    "status": "APPROVED",
+    "tool": "Codex desktop application, OpenAI, GPT-5, fresh session",
+    "reviewedAt": "2026-10-12T01:33:02.220538Z",
+    "justification": "Every independently executable subject criterion passed with no Critical or High finding; audit-checkpoint assurance is recorded separately.",
+    "evidence": [
+      "file:REVIEW-REPORT.md",
+      "file:FINDINGS.json",
+      "file:FINAL-GATE-4-AUDIT-MATRIX.json"
+    ]
+  },
+  "redTeam": {
+    "status": "RED_TEAM_PASS",
+    "tool": "Fresh-session Gate 4 independent adversarial harness",
+    "executedAt": "2026-10-12T01:33:02.220538Z",
+    "justification": "The fresh audit executed and defended the exact canonical A-T denominator, 20/20, over valid controls.",
+    "evidence": [
+      "file:GATE-4-INDEPENDENT-RED-TEAM.json",
+      "file:INDEPENDENT-RED-TEAM-REPORT.md"
+    ]
+  },
+  "lessonPreflight": {
+    "path": "LESSON-PREFLIGHT.json",
+    "gate": "GATE-4",
+    "scope": "fresh-session independent Gate 4 audit",
+    "lessonsConsidered": 96,
+    "lessonsApplicable": 95,
+    "derivedRequirements": 95,
+    "fingerprint": "012533678efbfc7e0e0ce477b6ce1a436ea3109608fd73728563323d72acb256",
+    "evidence": [
+      "checkpoint:LESSON-PREFLIGHT.json",
+      "command:cmd-0002"
+    ]
+  },
+  "milestone": {
+    "id": "M2",
+    "title": "IACode V0 completion and experience",
+    "gates": [
+      "GATE 4",
+      "GATE 5",
+      "GATE 6",
+      "GATE 7"
+    ],
+    "status": "PENDING",
+    "auditor": null,
+    "auditedAt": null,
+    "evidence": []
+  },
+  "externalAuditRequired": false,
+  "externalAuditReason": null,
+  "guardrailEffectiveness": {
+    "guardrailsTotal": 97,
+    "guardrailsResolved": 97,
+    "guardrailsTested": 97,
+    "guardrailsEffective": 97,
+    "guardrailFailures": 0,
+    "evidence": [
+      "file:.iacode/memory/guardrails/registry.json",
+      "command:cmd-0015"
+    ]
+  },
+  "integrity": {
+    "status": "PASS",
+    "anchors": 28,
+    "chainFile": ".iacode/anchors/checkpoint-chain.json",
+    "evidence": [
+      "file:.iacode/anchors/checkpoint-chain.json",
+      "command:cmd-0004"
+    ]
+  },
+  "externalAttestation": {
+    "status": "VERIFIED",
+    "path": ".iacode/attestations/G4-CP-0006.json",
+    "auditId": "G4-CP-0006",
+    "subjectCheckpoint": "GATE-4-CP-0005",
+    "subjectCommit": "c631270e49c095a9777825c0bc18818694c07ffb",
+    "validationMechanism": "FRESH_SESSION_INDEPENDENT_AUDIT",
+    "evidence": [
+      "file:REVIEW-REPORT.md",
+      "file:INDEPENDENT-RED-TEAM-REPORT.md"
+    ]
+  }
+}
