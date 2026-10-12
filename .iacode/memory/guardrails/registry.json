@@ -1406,6 +1406,34 @@
         "LSN-0096"
       ],
       "removingItWouldAllow": "A complete verifier to pass every canonical stage while a wrapper silently republishes the result as zero passes by reading an invented schema alias."
+    },
+    {
+      "guardrailId": "GRD-0098",
+      "title": "Review-bundle declarations are reconstructed from immutable transported content",
+      "kind": "test",
+      "reference": "test_immutable_subject_rebuilds_are_byte_identical_and_exclude_only_the_sidecar",
+      "verifiedBy": [
+        "test_immutable_subject_rebuilds_are_byte_identical_and_exclude_only_the_sidecar",
+        "test_declared_digest_and_size_are_rebuilt_not_trusted",
+        "test_full_delivery_assurance_flow_reaches_ready_for_review"
+      ],
+      "lessons": [
+        "LSN-0097"
+      ],
+      "removingItWouldAllow": "A review archive declaration to describe mutable pre-seal bytes that cannot be reconstructed from its sealed published Git subject."
+    },
+    {
+      "guardrailId": "GRD-0099",
+      "title": "Quality cancellation is rechecked before sandbox activity creation",
+      "kind": "test",
+      "reference": "test_cancellation_is_rechecked_after_dispatch_before_activity_start",
+      "verifiedBy": [
+        "test_cancellation_is_rechecked_after_dispatch_before_activity_start"
+      ],
+      "lessons": [
+        "LSN-0098"
+      ],
+      "removingItWouldAllow": "A cancellation signal accepted while CHECK_DISPATCHED is persisted to miss the absent activity handle, after which the workflow starts a full-length sandbox check despite the accepted cancellation."
     }
   ]
 }

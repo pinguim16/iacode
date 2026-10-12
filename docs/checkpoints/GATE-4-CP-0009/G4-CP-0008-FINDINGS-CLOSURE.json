@@ -1,0 +1,51 @@
+{
+  "schemaVersion": "1.0.0",
+  "checkpoint": "GATE-4-CP-0009",
+  "auditId": "G4-CP-0008",
+  "source": "docs/checkpoints/GATE-4-CP-0008/FINDINGS.json",
+  "findings": [
+    {
+      "findingId": "G4-F-004",
+      "severity": "HIGH",
+      "title": "The declared CP0007 review bundle cannot be reconstructed from its sealed subject",
+      "originalExpected": "A sealed review-bundle declaration identifies immutable published content from which the declared digest and size can be reproduced exactly.",
+      "originalObserved": "Two valid byte-identical archives rebuilt from CP0007's final published subject had digest 07bb328a4316297d0b6bd2df986c7b5f5fb41b30c8b2fb58cd99a8d96c24c168, not the declared digest 8856ce50acebfa02528ad318247c22e6e460c224eb62774c99a35cb5cd734578.",
+      "rootCause": "The schema 3.3 producer collected mutable working-tree and live remote observations, and wrote its declaration before finalization and sealing changed checkpoint content. No immutable subject or declared-versus-rebuilt comparison existed, and the declaration's self-reference boundary was implicit.",
+      "implementation": [
+        "Checkpoint schema 3.4.0 defines the archive over a named immutable Git content commit and tree.",
+        "The producer reads canonical bytes only from Git objects and excludes exactly REVIEW-BUNDLE-VALIDATION.json to break declaration self-reference.",
+        "Sealing clones through non-local Git transport, checks out the content commit detached, executes the subject-carried producer twice, and requires valid byte-identical archives before writing the declaration.",
+        "Checkpoint validation independently performs two transported reconstructions and compares their digest, size and entry count with the declaration.",
+        "The seal evidence chronology permits the declaration sidecar and no broader delivery change."
+      ],
+      "regressionTest": [
+        "test_immutable_subject_rebuilds_are_byte_identical_and_exclude_only_the_sidecar",
+        "test_declared_digest_and_size_are_rebuilt_not_trusted",
+        "test_pending_declaration_is_allowed_only_before_handoff_or_inside_sealing",
+        "test_full_delivery_assurance_flow_reaches_ready_for_review"
+      ],
+      "negativeTest": [
+        "BASELINE-BUNDLE-AUDIT.json preserves the CP0007 declaration mismatch as the red control.",
+        "test_declared_digest_and_size_are_rebuilt_not_trusted mutates the declaration digest and requires refusal.",
+        "Attack T reconstructs twice through detached Git transport and rejects a stale declaration."
+      ],
+      "verificationCommand": "python scripts/development-ledger/review_bundle.py --checkpoint docs/checkpoints/GATE-4-CP-0009 --verify-declaration",
+      "evidence": [
+        "checkpoint:BASELINE-BUNDLE-AUDIT.json",
+        "checkpoint:REVIEW-BUNDLE-VALIDATION.json",
+        "file:docs/adr/ADR-0035-review-bundles-bind-immutable-content.md",
+        "file:scripts/development-ledger/review_bundle.py",
+        "file:scripts/development-ledger/seal_checkpoint.py",
+        "file:scripts/development-ledger/validate_checkpoint.py",
+        "file:tests/test_gate4_quality_engine.py",
+        "file:tests/test_development_ledger.py"
+      ],
+      "lesson": "LSN-0097",
+      "guardrail": "GRD-0098",
+      "status": "CLOSED"
+    }
+  ],
+  "total": 1,
+  "closed": 1,
+  "result": "CLOSED"
+}

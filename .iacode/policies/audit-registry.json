@@ -125,6 +125,23 @@
       "correctiveCheckpoint": "GATE-4-CP-0007",
       "notes": "One HIGH publication finding, G4-F-003: COMMANDS.jsonl declared an archive under .git as an input, so the canonical tag failed validation in a fresh remote transport clone. The sealed checkpoint and tag remain immutable.",
       "findingsClosureFile": "G4-CP-0006-PUBLICATION-FINDINGS-CLOSURE.json"
+    },
+    {
+      "auditId": "G4-CP-0008",
+      "milestone": "M2",
+      "gate": "GATE-4",
+      "auditor": "Codex desktop application, OpenAI, GPT-5, fresh-session independent Gate audit (FRESH_SESSION_INDEPENDENT_AUDIT); not cross-tool validation",
+      "auditCheckpoint": "GATE-4-CP-0008",
+      "auditCommit": "e7879006d516898d441217f253e8282f69fa0b80",
+      "subjectCheckpoint": "GATE-4-CP-0007",
+      "subjectCommit": "e21d30fde473f302d0f8f60b59acf008fa52e250",
+      "verdict": "REWORK_REQUIRED",
+      "reviewReport": "docs/checkpoints/GATE-4-CP-0008/REVIEW-REPORT.md",
+      "findingsReport": "docs/checkpoints/GATE-4-CP-0008/FINDINGS.json",
+      "redTeamReport": "docs/checkpoints/GATE-4-CP-0008/GATE-4-INDEPENDENT-RED-TEAM.json",
+      "correctiveCheckpoint": "GATE-4-CP-0009",
+      "notes": "One HIGH finding, G4-F-004: CP0007's declared review-bundle digest and size cannot be reconstructed from its final sealed published subject. Independent attack T escaped; product verification passed 42/42.",
+      "findingsClosureFile": "G4-CP-0008-FINDINGS-CLOSURE.json"
     }
   ]
 }

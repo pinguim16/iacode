@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import inspect
 from datetime import UTC, datetime
 from types import SimpleNamespace
 
@@ -78,6 +79,14 @@ class QualityWorkflowAdapterTests:
         assert cancelled["errorCode"] == "QUALITY_CANCELLED"
         assert failed["status"] == "ERROR"
         assert failed["errorCode"] == "SANDBOX_ACTIVITY_FAILED"
+
+    def test_cancellation_is_rechecked_after_dispatch_before_activity_start(self) -> None:
+        source = inspect.getsource(QualityRunWorkflow.run)
+        dispatch = source.index('"CHECK_DISPATCHED"')
+        boundary = source.index("if self.cancel_requested", dispatch)
+        activity = source.index("workflow.start_activity", dispatch)
+
+        assert dispatch < boundary < activity
 
     @pytest.mark.asyncio
     async def test_a_sandbox_answer_becomes_redacted_immutable_evidence(self) -> None:

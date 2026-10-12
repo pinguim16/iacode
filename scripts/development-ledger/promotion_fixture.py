@@ -185,6 +185,9 @@ def build_fixture_repository(root: Path) -> None:
         "import unittest\n\n\nclass FixtureTests(unittest.TestCase):\n"
         "    def test_case(self):\n        self.assertEqual(1, 1)\n",
         encoding="utf-8", newline="\n")
+    (root / "apps" / "api" / "migrations").mkdir(parents=True)
+    (root / "apps" / "api" / "migrations" / "fixture.py").write_text(
+        "# fixture migration review context\n", encoding="utf-8", newline="\n")
     # A fresh repository has sealed nothing, so it inherits no integrity anchors, no engineering
     # memory and no open audit: all three are statements about the real repository's history. The
     # memory is installed once the first checkpoint exists, because a lesson must cite one.

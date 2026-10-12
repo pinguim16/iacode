@@ -27,8 +27,9 @@ inventory described below. Version `3.0.0` adds the delivery-assurance blocks, t
 command record, and the delivery gates. Version `3.1.0` adds the engineering memory preflight and
 the milestone validation policy. Version `3.2.0` adds milestone-closure controls, and version
 `3.3.0` binds new command inputs to Git transport. Validation applies the rules of the version a
-checkpoint declares, so a sealed checkpoint never becomes invalid because the tooling advanced.
-New checkpoints use `3.3.0`.
+checkpoint declares. Version `3.4.0` binds a review-bundle declaration to an immutable content
+commit and makes exact reconstruction part of sealing and validation. A sealed checkpoint never
+becomes invalid merely because the tooling advanced. New checkpoints use `3.4.0`.
 
 ## Status and blockers
 
@@ -183,9 +184,17 @@ Sealing is monotonic and post-commit, in two steps:
    run after that record, refreshes the declared inventory hashes, commits the append-only evidence
    and creates the canonical tag.
 
+For a `3.4.0` checkpoint the second step also clones the repository through non-local Git transport,
+checks out the content commit detached, runs the producer carried by that commit twice, and requires
+the two valid archives to be byte-identical. The evidence commit adds the resulting
+`REVIEW-BUNDLE-VALIDATION.json` declaration alongside the other permitted seal evidence. The
+declaration names the content commit and tree and records the exact digest, size and entry count.
+The archive itself stays outside Git.
+
 Validation then requires a `post-commit-validation` record that exited zero over a clean tree and
 describes `HEAD` or `HEAD^`; in the second case the difference between them may be nothing but
-`COMMANDS.jsonl`, `FILES.json` and `RUN-METADATA.json`. No command timestamp may be later than
+`COMMANDS.jsonl`, `FILES.json`, `RUN-METADATA.json` and, for `3.4.0`,
+`REVIEW-BUNDLE-VALIDATION.json`. No command timestamp may be later than
 `RUN-METADATA.finishedAt`.
 
 The residual limit is stated plainly: a commit cannot contain a validation of itself, so the evidence
@@ -202,3 +211,18 @@ Earlier sealed schemas retain their digest-bound compatibility for generated inp
 interpretation rule for historical evidence, not permission for a new checkpoint to depend on a
 local artifact. A review ZIP is an output; the repository carries its validation report, manifest
 and digest instead.
+
+## Immutable review-bundle reconstruction
+
+`schemaVersion` `3.4.0` retains the `3.3.0` transport rule and adds the lifecycle invariant from
+[ADR-0035](adr/ADR-0035-review-bundles-bind-immutable-content.md). The canonical review payload is
+read exclusively from the declared content commit's Git objects: complete checkpoint content,
+changed paths and the tracked tests, migrations, schemas and policies needed for review. Dirty
+working-tree files, live remote refs, generated timestamps and other observations cannot affect its
+bytes.
+
+The declaration is a sidecar and therefore the single checkpoint file excluded from that payload;
+including a digest declaration in the bytes it hashes would be self-referential. Validation permits
+this exact exclusion and no broader one. A handoff-ready `3.4.0` checkpoint is refused unless two
+fresh reconstructions are valid and byte-identical and both digest, size and entry count match the
+sealed declaration.

@@ -26,6 +26,7 @@ from validate_checkpoint import (  # noqa: E402
     _validate_delivery_assurance,
     _validate_memory_policy,
     _validate_quality_evidence,
+    _validate_review_transport,
     _validate_second_tool,
     _validate_status_blockers,
 )
@@ -2061,6 +2062,9 @@ class DeliveryLifecycleTests(unittest.TestCase):
             (root / "tests" / "test_fixture.py").write_text(
                 "import unittest\n\n\nclass FixtureTests(unittest.TestCase):\n"
                 "    def test_case(self):\n        self.assertEqual(1, 1)\n", encoding="utf-8")
+            (root / "apps" / "api" / "migrations").mkdir(parents=True)
+            (root / "apps" / "api" / "migrations" / "0001_fixture.py").write_text(
+                '"""Fixture migration carried by the review transport."""\n', encoding="utf-8")
             self._git(root, "init", "-b", "main")
             self._git(root, "config", "user.name", "IACode Tests")
             self._git(root, "config", "user.email", "iacode-tests@example.invalid")
@@ -2093,6 +2097,17 @@ class DeliveryLifecycleTests(unittest.TestCase):
             self.assertEqual(len(matrix["requirements"]), canonical + 1)
 
             write_final_report(checkpoint)
+            write_json_file(checkpoint / "FUNCTIONAL-ACCEPTANCE.json", {
+                "schemaVersion": "1.0.0", "checkpoint": checkpoint.name,
+                "result": "PASS", "scenarios": [], "findings": []})
+            write_json_file(checkpoint / "M2-INTERNAL-RED-TEAM.json", {
+                "schemaVersion": "1.1.0", "checkpoint": checkpoint.name,
+                "generatedAt": NOW, "targetFingerprint": scope_fingerprint(root),
+                "source": "fixture", "baselineControl": {
+                    "result": "VALID", "detail": "null-mutation control"},
+                "attacks": [], "total": 0, "defended": 0, "escaped": 0,
+                "mandatoryTotal": 0, "mandatoryDefended": 0,
+                "result": "RED_TEAM_PASS"})
             result = {"executed": True, "passed": 1, "failed": 0,
                       "command": "python -m unittest discover -s tests",
                       "evidence": "fixture suite"}
@@ -3881,6 +3896,30 @@ class SealChronologyTests(ClosureFixture):
         text = (SCRIPTS / "validate_checkpoint.py").read_text(encoding="utf-8")
         self.assertNotIn("--allow-pending-seal", text)
         self.assertNotIn("--allow-dirty", text)
+
+
+class ReviewTransportValidationTests(unittest.TestCase):
+    def test_pending_declaration_is_allowed_only_before_handoff_or_inside_sealing(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            checkpoint = Path(temporary)
+            (checkpoint / "REVIEW-BUNDLE-VALIDATION.json").write_text(
+                json.dumps({"schemaVersion": "2.0.0", "result": "PENDING"}) + "\n",
+                encoding="utf-8",
+            )
+            errors: list[str] = []
+            _validate_review_transport(
+                PROJECT_ROOT, checkpoint, {"status": "IN_PROGRESS"}, errors, False)
+            self.assertEqual(errors, [])
+
+            errors = []
+            _validate_review_transport(
+                PROJECT_ROOT, checkpoint, {"status": "READY_FOR_REVIEW"}, errors, False)
+            self.assertTrue(any("PASS review-bundle declaration" in item for item in errors))
+
+            errors = []
+            _validate_review_transport(
+                PROJECT_ROOT, checkpoint, {"status": "READY_FOR_REVIEW"}, errors, True)
+            self.assertEqual(errors, [])
 
 
 class InternalAssuranceTests(ClosureFixture):

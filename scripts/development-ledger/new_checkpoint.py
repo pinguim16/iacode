@@ -194,6 +194,15 @@ def main() -> int:
             for dimension in QUALITY_DIMENSIONS_V3
         },
     })
+    write_json(checkpoint / "REVIEW-BUNDLE-VALIDATION.json", {
+        "schemaVersion": "2.0.0",
+        "checkpoint": name,
+        "result": "PENDING",
+        "justification": (
+            "The immutable content commit does not exist until finalization and commit; "
+            "seal_checkpoint.py must reconstruct it twice through Git transport before tagging."
+        ),
+    })
     (checkpoint / "REWORK-LOG.jsonl").write_text("", encoding="utf-8", newline="\n")
     write_json(checkpoint / "REQUIREMENTS-MATRIX.json", {
         "schemaVersion": "2.0.0", "gate": args.gate, "checkpoint": name, "requirements": [],

@@ -233,6 +233,12 @@ class QualityRunWorkflow:
                 f"workflow:dispatch:{check.checkId}",
                 {"checkId": check.checkId, "kind": check.kind},
             )
+            # A cancellation signal can be delivered while the transition activity above is
+            # awaited. At that instant no sandbox activity exists for the signal handler to
+            # cancel. Recheck before creating the activity so the run cannot start a full-length
+            # check after cancellation was already accepted.
+            if self.cancel_requested:
+                return await self._finish_cancelled(plan)
             elapsed = (workflow.now() - started).total_seconds()
             remaining = plan.policy.maxRunSeconds - elapsed
             if remaining <= 0:

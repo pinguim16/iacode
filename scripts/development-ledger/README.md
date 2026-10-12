@@ -184,4 +184,8 @@ two totals in a report can overlap or drift.
 
 `seal_checkpoint.py` validates the committed content with a clean worktree, records that run as
 `post-commit-validation`, stamps the end of the run after it, and commits the append-only evidence
-before creating the canonical tag.
+before creating the canonical tag. For schema `3.4.0`, it additionally clones the content through
+non-local Git transport, checks out the content commit detached, rebuilds the review archive twice
+with the producer carried by that commit, and seals only if both valid archives are byte-identical.
+The evidence commit records the immutable subject tree and the exact archive digest, size and entry
+count in `REVIEW-BUNDLE-VALIDATION.json`; validation reconstructs the declaration independently.

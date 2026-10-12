@@ -104,6 +104,8 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 | `LSN-0094` | `GUARDED` | HIGH | checkpoint | A review bundle must include unchanged canonical artifact categories | `test_review_context_includes_unchanged_migrations_schemas_and_policies`, `scripts/development-ledger/review_bundle.py` |
 | `LSN-0095` | `GUARDED` | HIGH | testing | A complete verifier must own its Compose runtime by checkout | `test_full_verification_uses_a_checkout_owned_compose_project_and_dynamic_ports`, `test_each_stage_receives_the_frozen_verification_environment`, `test_cleanup_refuses_the_shared_developer_project`, `test_live_stack_stage_builds_every_image_before_it_is_exercised`, `test_order_isolation_probe_preserves_the_historical_contiguous_stage_order` |
 | `LSN-0096` | `GUARDED` | HIGH | checkpoint | Evidence publishers must consume the producer's canonical result schema | `test_published_full_verification_counts_the_canonical_result_field`, `test_published_report_reconciliation_allows_only_the_generated_report` |
+| `LSN-0097` | `GUARDED` | HIGH | checkpoint | A review-bundle declaration must bind an immutable reconstruction subject | `test_immutable_subject_rebuilds_are_byte_identical_and_exclude_only_the_sidecar`, `test_declared_digest_and_size_are_rebuilt_not_trusted`, `test_full_delivery_assurance_flow_reaches_ready_for_review` |
+| `LSN-0098` | `GUARDED` | HIGH | implementation | Cancellation must be rechecked after a dispatch event and before activity creation | `test_cancellation_is_rechecked_after_dispatch_before_activity_start` |
 
 ## Detail
 
@@ -1326,3 +1328,27 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
   - `test` test_published_full_verification_counts_the_canonical_result_field — The real checkpoint publisher counts the producer's result field and ignores a contradictory status alias.
   - `test` test_published_report_reconciliation_allows_only_the_generated_report — Reconciliation accepts only the verifier's generated report in the preserved clone and rejects any additional delta.
 - Evidence: `file:docs/checkpoints/GATE-4-CP-0005/RUN-PUBLISHED-FULL-VERIFICATION.py`, `file:docs/checkpoints/GATE-4-CP-0005/VERIFY.json`, `file:docs/checkpoints/GATE-4-CP-0005/PUBLISHED-CLEAN-CLONE-REPORT.json`, `file:tests/test_gate4_quality_engine.py`
+
+### LSN-0097 — A review-bundle declaration must bind an immutable reconstruction subject
+
+- Status: `GUARDED`, severity HIGH, category checkpoint, recurrences 0.
+- Source: GATE-4, GATE-4-CP-0008, finding G4-F-004.
+- Symptom: Two valid byte-identical review bundles rebuilt from the final published CP0007 tag did not match the digest or size CP0007 declared before its finalization and seal.
+- Root cause: The bundle producer collected a mutable working tree and wrote its declaration before finalization and post-commit sealing changed checkpoint evidence. No immutable reconstruction subject or mandatory declared-versus-rebuilt comparison bound the report to the content it claimed to represent.
+- Resolution: Checkpoint schema 3.4 now constructs the review payload only from an immutable Git content commit, excludes exactly the declaration sidecar to break self-reference, reconstructs twice through non-local detached Git transport while sealing, and independently reconstructs twice during validation before accepting the declared digest, size and entry count.
+- Prevention:
+  - `test` test_immutable_subject_rebuilds_are_byte_identical_and_exclude_only_the_sidecar — Two immutable-subject builds are byte-identical and exclude only the self-referential declaration sidecar.
+  - `test` test_declared_digest_and_size_are_rebuilt_not_trusted — Validation rebuilds the subject and refuses a stale declared digest.
+  - `test` test_full_delivery_assurance_flow_reaches_ready_for_review — The real seal lifecycle crosses non-local Git transport, records a reconstruction declaration and validates the sealed result.
+- Evidence: `file:docs/checkpoints/GATE-4-CP-0008/FINDINGS.json`, `file:docs/checkpoints/GATE-4-CP-0008/SUBJECT-BUNDLE-AUDIT.json`, `file:docs/checkpoints/GATE-4-CP-0008/GATE-4-INDEPENDENT-RED-TEAM.json`, `file:docs/adr/ADR-0035-review-bundles-bind-immutable-content.md`, `file:scripts/development-ledger/review_bundle.py`, `file:scripts/development-ledger/seal_checkpoint.py`, `file:scripts/development-ledger/validate_checkpoint.py`, `file:tests/test_gate4_quality_engine.py`, `file:tests/test_development_ledger.py`
+
+### LSN-0098 — Cancellation must be rechecked after a dispatch event and before activity creation
+
+- Status: `GUARDED`, severity HIGH, category implementation, recurrences 0.
+- Source: GATE-4, GATE-4-CP-0009, finding cmd-0023-quality-cancellation.
+- Symptom: The one-shot verifier's quality-cancellation scenario waited 900 seconds without reaching a terminal state after cancellation had been accepted; the stage failed after 950.3 seconds.
+- Root cause: The workflow awaited persistence of CHECK_DISPATCHED before assigning its sandbox activity handle. A cancellation signal delivered during that await set cancel_requested while the handle was still absent, so the handler had nothing to cancel and the workflow started the full-length slow activity without rechecking the flag.
+- Resolution: Recheck cancel_requested immediately after the awaited CHECK_DISPATCHED transition and before creating the sandbox activity. Signals delivered earlier now finish cancellation directly; signals delivered after the synchronous assignment see the activity handle and cancel it.
+- Prevention:
+  - `test` test_cancellation_is_rechecked_after_dispatch_before_activity_start — The workflow source contract keeps the cancellation boundary after CHECK_DISPATCHED and before workflow.start_activity.
+- Evidence: `file:docs/checkpoints/GATE-4-CP-0009/VERIFY-FAIL-CMD-0023.json`, `file:docs/checkpoints/GATE-4-CP-0009/COMMANDS.jsonl`, `file:services/evaluator/src/iacode_evaluator/workflow.py`, `file:services/evaluator/tests/test_workflow.py`

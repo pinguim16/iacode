@@ -5304,9 +5304,9 @@
         {
           "key": "20.5",
           "section": "20. Verification, documentation, and closure",
-          "description": "A deterministic review bundle contains the complete checkpoint, changed source, tests, migrations, schemas, policies, documentation, functional acceptance, quality results, Red Team, changeset, Git/remote state, manifest, and checksums; validation opens it, checks hashes and required files, and scans it for secrets.",
-          "artifact": "`scripts/development-ledger/review_bundle.py`",
-          "evidence": "`ReviewBundleTests`; review validation report.",
+          "description": "A deterministic review bundle contains the complete checkpoint, changed source, tests, migrations, schemas, policies, documentation, functional acceptance, quality results, Red Team, changeset, immutable Git subject, manifest, and checksums; sealing and validation each reconstruct the transported subject twice, require byte identity, compare digest and size with the sidecar declaration, check required files, and scan for secrets.",
+          "artifact": "`scripts/development-ledger/review_bundle.py`, `scripts/development-ledger/seal_checkpoint.py`",
+          "evidence": "`ReviewBundleTests`; seal lifecycle test; attack T; review validation declaration.",
           "mandatory": true
         },
         {

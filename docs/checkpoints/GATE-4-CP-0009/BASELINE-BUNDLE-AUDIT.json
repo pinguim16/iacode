@@ -1,0 +1,159 @@
+{
+  "schemaVersion": "1.0.0",
+  "artifact": "GATE-4-PUBLISHED-SUBJECT-BUNDLE-AUDIT",
+  "checkpoint": "GATE-4-CP-0008",
+  "subjectCheckpoint": "GATE-4-CP-0007",
+  "subjectCommit": "e21d30fde473f302d0f8f60b59acf008fa52e250",
+  "contentCommit": "c9adc70032584ce8ff3ad52616f9eae6410c805f",
+  "generatedAt": "2026-10-12T15:08:22.191555Z",
+  "identity": {
+    "originMain": "e7879006d516898d441217f253e8282f69fa0b80",
+    "tagCommit": "e21d30fde473f302d0f8f60b59acf008fa52e250",
+    "contentCommit": "c9adc70032584ce8ff3ad52616f9eae6410c805f",
+    "tree": "a4cd6541ef5eb7cf28100df5a4c44ba1beb16b02",
+    "matchesExpected": false
+  },
+  "publishedValidationSteps": [
+    {
+      "command": [
+        "git",
+        "clone",
+        "--quiet",
+        "--no-local",
+        "https://github.com/pinguim16/iacode.git",
+        "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-g4-cp0008-bundle-6brrrsu4\\repository"
+      ],
+      "exitCode": 0,
+      "tail": ""
+    },
+    {
+      "command": [
+        "git",
+        "checkout",
+        "--quiet",
+        "--detach",
+        "iacode-checkpoints/GATE-4-CP-0007"
+      ],
+      "exitCode": 0,
+      "tail": ""
+    },
+    {
+      "command": [
+        "C:\\Program Files\\Python313\\python.exe",
+        "scripts/development-ledger/validate_checkpoint.py"
+      ],
+      "exitCode": 0,
+      "tail": "CHECKPOINT_VALID"
+    },
+    {
+      "command": [
+        "C:\\Program Files\\Python313\\python.exe",
+        "scripts/development-ledger/verify_integrity.py"
+      ],
+      "exitCode": 0,
+      "tail": "INTEGRITY_VALID anchors=29 latest=SETUP-00-CP-0013"
+    },
+    {
+      "command": [
+        "C:\\Program Files\\Python313\\python.exe",
+        "scripts/development-ledger/validate_lessons.py"
+      ],
+      "exitCode": 0,
+      "tail": "LESSONS_VALID total=96 active=96 guarded=93"
+    }
+  ],
+  "declaredBundleValidation": {
+    "schemaVersion": "1.0.0",
+    "checkpoint": "GATE-4-CP-0007",
+    "bundle": "artifacts/review/GATE-4-CP-0007.zip",
+    "sha256": "8856ce50acebfa02528ad318247c22e6e460c224eb62774c99a35cb5cd734578",
+    "sizeBytes": 562710,
+    "entries": 113,
+    "result": "PASS",
+    "findings": [],
+    "secretFindings": [],
+    "validatedAt": "2026-10-12T10:01:32Z"
+  },
+  "rebuiltSha256": [
+    "07bb328a4316297d0b6bd2df986c7b5f5fb41b30c8b2fb58cd99a8d96c24c168",
+    "07bb328a4316297d0b6bd2df986c7b5f5fb41b30c8b2fb58cd99a8d96c24c168"
+  ],
+  "rebuiltValidations": [
+    {
+      "schemaVersion": "1.0.0",
+      "checkpoint": "GATE-4-CP-0007",
+      "bundle": "artifacts/review/rebuild-a.zip",
+      "sha256": "07bb328a4316297d0b6bd2df986c7b5f5fb41b30c8b2fb58cd99a8d96c24c168",
+      "sizeBytes": 751518,
+      "entries": 113,
+      "result": "PASS",
+      "findings": [],
+      "secretFindings": [],
+      "validatedAt": "2026-10-12T15:08:20Z"
+    },
+    {
+      "schemaVersion": "1.0.0",
+      "checkpoint": "GATE-4-CP-0007",
+      "bundle": "artifacts/review/rebuild-b.zip",
+      "sha256": "07bb328a4316297d0b6bd2df986c7b5f5fb41b30c8b2fb58cd99a8d96c24c168",
+      "sizeBytes": 751518,
+      "entries": 113,
+      "result": "PASS",
+      "findings": [],
+      "secretFindings": [],
+      "validatedAt": "2026-10-12T15:08:22Z"
+    }
+  ],
+  "rebuiltInspections": [
+    {
+      "entries": 113,
+      "uniqueEntries": 113,
+      "crcFailure": null,
+      "manifestEntries": 112,
+      "manifestMatchesPayload": true,
+      "hashMismatches": [],
+      "categories": {
+        "tests": true,
+        "migrations": true,
+        "schemas": true,
+        "policies": true,
+        "documentation": true,
+        "changeset": true,
+        "gitState": true,
+        "manifest": true
+      }
+    },
+    {
+      "entries": 113,
+      "uniqueEntries": 113,
+      "crcFailure": null,
+      "manifestEntries": 112,
+      "manifestMatchesPayload": true,
+      "hashMismatches": [],
+      "categories": {
+        "tests": true,
+        "migrations": true,
+        "schemas": true,
+        "policies": true,
+        "documentation": true,
+        "changeset": true,
+        "gitState": true,
+        "manifest": true
+      }
+    }
+  ],
+  "checks": {
+    "subjectIdentity": false,
+    "publishedValidation": true,
+    "declaredDigest": true,
+    "deterministicRebuild": true,
+    "declaredDigestReconstructed": false,
+    "portableValidation": true,
+    "archiveIntegrity": true,
+    "originalPortableValidation": true,
+    "rebuiltPortableValidation": true,
+    "originalArchiveStructure": true
+  },
+  "result": "FAIL",
+  "transportNote": "No producer-local ZIP is an input. Both archives were reconstructed from the detached published subject and discarded after validation; the checkpoint stores only the canonical digest and report."
+}

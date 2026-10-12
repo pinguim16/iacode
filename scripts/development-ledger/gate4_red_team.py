@@ -596,8 +596,10 @@ def _host_attacks(root: Path, checkpoint: Path) -> list[dict[str, Any]]:
     boundary avoids pretending that an evaluator container can inspect a Git review archive or the
     host orchestration reports.
     """
+    from review_bundle import declaration_from_reconstruction
     from review_bundle import manifest as bundle_manifest
     from review_bundle import validate as validate_bundle
+    from review_bundle import verify_declaration
 
     attacks: list[dict[str, Any]] = []
 
@@ -824,6 +826,8 @@ def _host_attacks(root: Path, checkpoint: Path) -> list[dict[str, Any]]:
                     str(checkpoint_relative),
                     "--bundle",
                     str(bundle),
+                    "--subject",
+                    "HEAD",
                 ],
                 cwd=clone,
                 text=True,
@@ -848,13 +852,47 @@ def _host_attacks(root: Path, checkpoint: Path) -> list[dict[str, Any]]:
         )
         portable = first.returncode == 0 and second.returncode == 0
         categories = portable and "REVIEW_BUNDLE=PASS" in first.stdout and "REVIEW_BUNDLE=PASS" in second.stdout
+        declaration_valid = False
+        stale_declaration_refused = False
+        if deterministic and categories:
+            subject_commit = subprocess.run(
+                ["git", "rev-parse", "HEAD"], cwd=clone, text=True, encoding="utf-8",
+                errors="replace", stdout=subprocess.PIPE, stderr=subprocess.STDOUT, check=False,
+            ).stdout.strip()
+            subject_tree = subprocess.run(
+                ["git", "rev-parse", "HEAD^{tree}"], cwd=clone, text=True, encoding="utf-8",
+                errors="replace", stdout=subprocess.PIPE, stderr=subprocess.STDOUT, check=False,
+            ).stdout.strip()
+            with zipfile.ZipFile(first_path) as archive:
+                entry_count = len(archive.namelist())
+            digest = hashlib.sha256(first_path.read_bytes()).hexdigest()
+            reconstruction = {
+                "mode": "git-clone-no-local-detached",
+                "subjectCommit": subject_commit,
+                "subjectTree": subject_tree,
+                "sha256": [digest, digest],
+                "sizeBytes": [first_path.stat().st_size, second_path.stat().st_size],
+                "entries": [entry_count, entry_count],
+                "validationResults": ["PASS", "PASS"],
+                "byteIdentical": True,
+                "result": "PASS",
+            }
+            declaration = declaration_from_reconstruction(
+                clone, clone / checkpoint_relative, first_path, reconstruction)
+            declaration_valid = verify_declaration(
+                clone, clone / checkpoint_relative, declaration, reconstruction)["result"] == "PASS"
+            stale = json.loads(json.dumps(declaration))
+            stale["sha256"] = "0" * 64
+            stale_declaration_refused = verify_declaration(
+                clone, clone / checkpoint_relative, stale, reconstruction)["result"] == "FAIL"
         record(
             "T",
-            "review bundle portability and determinism",
-            "rebuild twice from a detached transport clone and validate there",
-            "byte-identical rebuilds and complete secret-clean portable validation",
-            deterministic and portable and categories,
-            f"deterministic={deterministic}; portable={portable}; categories={categories}",
+            "review bundle portability, determinism and declaration binding",
+            "rebuild twice from a detached transport clone, validate there and mutate the declaration",
+            "byte-identical secret-clean rebuilds match the declaration and a stale digest is refused",
+            deterministic and portable and categories and declaration_valid and stale_declaration_refused,
+            f"deterministic={deterministic}; portable={portable}; categories={categories}; "
+            f"declaration={declaration_valid}; stale-refused={stale_declaration_refused}",
             ["file:scripts/development-ledger/review_bundle.py"],
         )
     return attacks

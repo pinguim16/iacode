@@ -782,6 +782,20 @@ class ProgramStateTests(unittest.TestCase):
 
 
 class ReviewBundleTests(unittest.TestCase):
+    def _head_checkpoint(self) -> Path:
+        pointer = subprocess.run(
+            ["git", "show", "HEAD:docs/checkpoints/LATEST.md"],
+            cwd=PROJECT_ROOT,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            check=True,
+        ).stdout
+        relative = pointer.split("`", 2)[1]
+        return PROJECT_ROOT / relative
+
     def test_review_context_includes_unchanged_migrations_schemas_and_policies(self) -> None:
         paths = review_bundle._review_context_paths(PROJECT_ROOT)
         self.assertTrue(any("migrations" in path.parts for path in paths))
@@ -801,6 +815,44 @@ class ReviewBundleTests(unittest.TestCase):
         self.assertEqual(review_bundle.ZIP_TIME, (1980, 1, 1, 0, 0, 0))
         ignored = (PROJECT_ROOT / ".gitignore").read_text(encoding="utf-8").splitlines()
         self.assertIn("artifacts/review/", ignored)
+
+    def test_immutable_subject_rebuilds_are_byte_identical_and_exclude_only_the_sidecar(self) -> None:
+        checkpoint = self._head_checkpoint()
+        with tempfile.TemporaryDirectory(dir=PROJECT_ROOT / "var") as temporary:
+            directory = Path(temporary)
+            first = directory / "first.zip"
+            second = directory / "second.zip"
+            first_digest = review_bundle.create(PROJECT_ROOT, checkpoint, first, "HEAD")
+            second_digest = review_bundle.create(PROJECT_ROOT, checkpoint, second, "HEAD")
+            self.assertEqual(first_digest, second_digest)
+            self.assertEqual(first.read_bytes(), second.read_bytes())
+            with review_bundle.zipfile.ZipFile(first) as archive:
+                names = archive.namelist()
+                excluded = (
+                    f"repository/{checkpoint.relative_to(PROJECT_ROOT).as_posix()}/"
+                    "REVIEW-BUNDLE-VALIDATION.json"
+                )
+                self.assertNotIn(excluded, names)
+                state = json.loads(archive.read("bundle/REVIEW-STATE.json"))
+            self.assertEqual(state["source"], "immutable-git-objects")
+            self.assertNotIn("remoteHead", state)
+
+    def test_declared_digest_and_size_are_rebuilt_not_trusted(self) -> None:
+        checkpoint = self._head_checkpoint()
+        with tempfile.TemporaryDirectory(dir=PROJECT_ROOT / "var") as temporary:
+            bundle = Path(temporary) / "declared.zip"
+            reconstruction = review_bundle.reconstruct_twice(
+                PROJECT_ROOT, checkpoint, "HEAD", bundle)
+            declaration = review_bundle.declaration_from_reconstruction(
+                PROJECT_ROOT, checkpoint, bundle, reconstruction)
+            self.assertEqual(
+                review_bundle.verify_declaration(PROJECT_ROOT, checkpoint, declaration)["result"],
+                "PASS",
+            )
+            declaration["sha256"] = "0" * 64
+            refused = review_bundle.verify_declaration(PROJECT_ROOT, checkpoint, declaration)
+            self.assertEqual(refused["result"], "FAIL")
+            self.assertTrue(any("declared sha256" in item for item in refused["findings"]))
 
 
 if __name__ == "__main__":

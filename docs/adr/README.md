@@ -44,3 +44,4 @@ exist, or a title or status that disagrees with its record fails the suite.
 | [ADR-0032](ADR-0032-quality-evidence-is-scanned-before-durable-commit.md) | Quality evidence is scanned before durable commit | Accepted |
 | [ADR-0033](ADR-0033-verification-runtime-is-owned-by-one-checkout.md) | A verification runtime is owned by one checkout | Accepted |
 | [ADR-0034](ADR-0034-command-inputs-must-cross-git-transport.md) | Command inputs must cross Git transport | Accepted |
+| [ADR-0035](ADR-0035-review-bundles-bind-immutable-content.md) | Review bundles bind immutable content | Accepted |

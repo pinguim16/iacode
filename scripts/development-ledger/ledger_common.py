@@ -30,7 +30,8 @@ DELIVERY_SCHEMA_VERSION = "3.0.0"
 MEMORY_SCHEMA_VERSION = "3.1.0"
 CLOSURE_SCHEMA_VERSION = "3.2.0"
 TRANSPORT_SCHEMA_VERSION = "3.3.0"
-CURRENT_SCHEMA_VERSION = TRANSPORT_SCHEMA_VERSION
+REVIEW_TRANSPORT_SCHEMA_VERSION = "3.4.0"
+CURRENT_SCHEMA_VERSION = REVIEW_TRANSPORT_SCHEMA_VERSION
 SUPPORTED_SCHEMA_VERSIONS = (
     LEGACY_SCHEMA_VERSION,
     EVIDENCE_SCHEMA_VERSION,
@@ -38,6 +39,7 @@ SUPPORTED_SCHEMA_VERSIONS = (
     MEMORY_SCHEMA_VERSION,
     CLOSURE_SCHEMA_VERSION,
     TRANSPORT_SCHEMA_VERSION,
+    REVIEW_TRANSPORT_SCHEMA_VERSION,
 )
 
 # Versions that carry the delivery-assurance gates. 3.1.0 adds the engineering memory preflight and
@@ -49,6 +51,7 @@ DELIVERY_SCHEMA_VERSIONS = (
     MEMORY_SCHEMA_VERSION,
     CLOSURE_SCHEMA_VERSION,
     TRANSPORT_SCHEMA_VERSION,
+    REVIEW_TRANSPORT_SCHEMA_VERSION,
 )
 
 # Versions that carry the engineering memory and the milestone validation policy.
@@ -56,14 +59,23 @@ MEMORY_SCHEMA_VERSIONS = (
     MEMORY_SCHEMA_VERSION,
     CLOSURE_SCHEMA_VERSION,
     TRANSPORT_SCHEMA_VERSION,
+    REVIEW_TRANSPORT_SCHEMA_VERSION,
 )
 
 # Versions that carry the M0 closure controls.
-CLOSURE_SCHEMA_VERSIONS = (CLOSURE_SCHEMA_VERSION, TRANSPORT_SCHEMA_VERSION)
+CLOSURE_SCHEMA_VERSIONS = (
+    CLOSURE_SCHEMA_VERSION,
+    TRANSPORT_SCHEMA_VERSION,
+    REVIEW_TRANSPORT_SCHEMA_VERSION,
+)
 
 # Checkpoints from 3.3.0 onward may cite only command inputs that Git transport can carry. Earlier
 # schemas retain their content-digest compatibility rule for sealed generated inputs.
-TRANSPORT_SCHEMA_VERSIONS = (TRANSPORT_SCHEMA_VERSION,)
+TRANSPORT_SCHEMA_VERSIONS = (TRANSPORT_SCHEMA_VERSION, REVIEW_TRANSPORT_SCHEMA_VERSION)
+
+# Schema 3.4.0 requires the review transport declaration to bind an immutable Git subject and to
+# be reconstructed from transported content during sealing and ordinary checkpoint validation.
+REVIEW_TRANSPORT_SCHEMA_VERSIONS = (REVIEW_TRANSPORT_SCHEMA_VERSION,)
 
 QUALITY_DIMENSIONS = (
     "build",

@@ -34,6 +34,7 @@ from pathlib import Path
 
 from ledger_common import (
     LedgerError,
+    REVIEW_TRANSPORT_SCHEMA_VERSIONS,
     append_command_record,
     build_command_record,
     canonical_hash_path,
@@ -142,9 +143,70 @@ def main() -> int:
         print("- the committed content did not validate; repair the cause and commit again")
         return 1
 
+    state = load_json(checkpoint / "STATE.json")
+    if state.get("schemaVersion") in REVIEW_TRANSPORT_SCHEMA_VERSIONS:
+        from review_bundle import (
+            declaration_from_reconstruction,
+            reconstruct_twice_from_transport,
+        )
+
+        bundle_started = time.monotonic()
+        bundle = root / "artifacts" / "review" / f"{checkpoint.name}.zip"
+        reconstruction = reconstruct_twice_from_transport(
+            root, checkpoint, content_commit, bundle)
+        declaration = declaration_from_reconstruction(
+            root, checkpoint, bundle, reconstruction)
+        write_json(checkpoint / "REVIEW-BUNDLE-VALIDATION.json", declaration)
+        bundle_record = build_command_record(
+            root,
+            command=(
+                "python scripts/development-ledger/review_bundle.py "
+                f"--checkpoint {checkpoint.relative_to(root).as_posix()} "
+                f"--subject {content_commit} --verify-declaration"
+            ),
+            arguments=[
+                "scripts/development-ledger/review_bundle.py",
+                "--checkpoint", checkpoint.relative_to(root).as_posix(),
+                "--subject", content_commit,
+                "--verify-declaration",
+            ],
+            purpose=(
+                "Reconstruct the finalized content commit twice through non-local Git transport "
+                "and bind the byte-identical archive digest and size before creating the seal tag."
+            ),
+            working_directory=str(root),
+            runtime=runtime_label("python"),
+            inputs=["scripts/development-ledger/review_bundle.py"],
+            result="COMPLETED",
+            result_code="OK" if declaration["result"] == "PASS" else "E_RECONSTRUCTION_MISMATCH",
+            exit_code=0 if declaration["result"] == "PASS" else 1,
+            duration_ms=int((time.monotonic() - bundle_started) * 1000),
+            operation="review-bundle-reconstruction",
+            phase="seal",
+            subject_commit=content_commit,
+            commit=content_commit,
+            repository_state={
+                "branch": snapshot["branch"],
+                "head": content_commit,
+                "dirty": True,
+                "detached": False,
+            },
+        )
+        bundle_identifier = append_command_record(checkpoint / "COMMANDS.jsonl", bundle_record)
+        print(
+            f"[ledger {bundle_identifier}] transported review reconstruction of "
+            f"{content_commit[:12]} result={declaration['result']}"
+        )
+        if declaration["result"] != "PASS":
+            print("CHECKPOINT_NOT_SEALED")
+            print("- transported review-bundle reconstructions did not match")
+            for index, output in enumerate(reconstruction.get("producerOutput", []), start=1):
+                if output:
+                    print(f"- reconstruction {index}: {output}")
+            return 1
+
     from finalize_checkpoint import _refresh_inventory_hashes
 
-    state = load_json(checkpoint / "STATE.json")
     metadata = load_json(checkpoint / "RUN-METADATA.json")
     metadata["finishedAt"] = utc_now()
     write_json(checkpoint / "RUN-METADATA.json", metadata)
@@ -158,11 +220,16 @@ def main() -> int:
         return 0
 
     message = args.message or f"seal: record the post-commit validation of {checkpoint.name}"
+    staged_paths = [
+        str((checkpoint / name).relative_to(root)).replace("\\", "/")
+        for name in ("COMMANDS.jsonl", "FILES.json", "RUN-METADATA.json")
+    ]
+    if (checkpoint / "REVIEW-BUNDLE-VALIDATION.json").is_file():
+        staged_paths.append(
+            str((checkpoint / "REVIEW-BUNDLE-VALIDATION.json").relative_to(root)).replace("\\", "/")
+        )
     for argv in (
-        ["git", "add", "--",
-         str((checkpoint / "COMMANDS.jsonl").relative_to(root)).replace("\\", "/"),
-         str((checkpoint / "FILES.json").relative_to(root)).replace("\\", "/"),
-         str((checkpoint / "RUN-METADATA.json").relative_to(root)).replace("\\", "/")],
+        ["git", "add", "--", *staged_paths],
         ["git", "commit", "-m", message],
         ["git", "tag", f"iacode-checkpoints/{checkpoint.name}"],
     ):

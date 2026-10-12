@@ -6,7 +6,10 @@ from __future__ import annotations
 import argparse
 import json
 import re
+import subprocess
 import sys
+import tempfile
+import zipfile
 from datetime import datetime
 from pathlib import Path
 from typing import Any
@@ -72,6 +75,7 @@ from ledger_common import (
     validate_schema,
     is_generated_local_input,
     TRANSPORT_SCHEMA_VERSIONS,
+    REVIEW_TRANSPORT_SCHEMA_VERSIONS,
 )
 
 # Schema versions whose FILES.json is a hash-bound description of the real change set.
@@ -1210,10 +1214,13 @@ def _validate_seal_chronology(
     if diff_code != 0:
         errors.append("unable to compare the sealed content commit with HEAD")
         return
+    evidence_names = ["COMMANDS.jsonl", "FILES.json", "RUN-METADATA.json"]
+    if state.get("schemaVersion") in REVIEW_TRANSPORT_SCHEMA_VERSIONS:
+        evidence_names.append("REVIEW-BUNDLE-VALIDATION.json")
     allowed = {
         value for value in (
             _relative_to_root(root, target / name)
-            for name in ("COMMANDS.jsonl", "FILES.json", "RUN-METADATA.json")
+            for name in evidence_names
         ) if value
     }
     unexpected = sorted({line.replace("\\", "/") for line in diff.splitlines() if line} - allowed)
@@ -1221,6 +1228,67 @@ def _validate_seal_chronology(
         errors.append(
             "the sealing commit changed more than the append-only validation evidence: "
             + ", ".join(unexpected))
+
+
+def _validate_review_transport(
+    root: Path,
+    target: Path,
+    state: dict[str, Any],
+    errors: list[str],
+    allow_pending_seal: bool,
+) -> None:
+    """Schema 3.4: the sealed declaration must reproduce from its immutable Git subject."""
+
+    report_path = target / "REVIEW-BUNDLE-VALIDATION.json"
+    if not report_path.is_file():
+        errors.append(
+            "schemaVersion 3.4.0 requires REVIEW-BUNDLE-VALIDATION.json from checkpoint creation"
+        )
+        return
+    try:
+        declaration = load_json(report_path)
+    except LedgerError as error:
+        errors.append(str(error))
+        return
+    result = declaration.get("result") if isinstance(declaration, dict) else None
+    if result == "PENDING" and (
+        allow_pending_seal or state.get("status") not in HANDOFF_READY_STATUSES
+    ):
+        return
+    if result != "PASS":
+        errors.append(
+            "schemaVersion 3.4.0 requires a PASS review-bundle declaration reconstructed during seal"
+        )
+        return
+    try:
+        from review_bundle import reconstruct_twice_from_transport, verify_declaration
+
+        subject = declaration.get("subject") if isinstance(declaration.get("subject"), dict) else {}
+        commit = subject.get("commit")
+        if not isinstance(commit, str):
+            errors.append("REVIEW-BUNDLE-VALIDATION.json: declaration subject commit is missing")
+            return
+        with tempfile.TemporaryDirectory(prefix="iacode-review-validator-") as temporary:
+            rebuilt = reconstruct_twice_from_transport(
+                root, target, commit, Path(temporary) / "review.zip")
+            verified = verify_declaration(root, target, declaration, rebuilt)
+    except (LedgerError, OSError, subprocess.SubprocessError, zipfile.BadZipFile) as error:
+        errors.append(f"review-bundle declaration verification failed: {error}")
+        return
+    for finding in verified.get("findings") or []:
+        errors.append(f"REVIEW-BUNDLE-VALIDATION.json: {finding}")
+
+    transport = declaration.get("transportReconstruction") or {}
+    digests = transport.get("sha256") or []
+    sizes = transport.get("sizeBytes") or []
+    if transport.get("mode") != "git-clone-no-local-detached":
+        errors.append("review-bundle declaration lacks a detached non-local Git transport proof")
+    if transport.get("result") != "PASS" or not transport.get("byteIdentical"):
+        errors.append("review-bundle transported reconstructions are not byte-identical PASS results")
+    if len(digests) != 2 or any(value != declaration.get("sha256") for value in digests):
+        errors.append("review-bundle transported digests do not both match the declaration")
+    if len(sizes) != 2 or any(value != declaration.get("sizeBytes") for value in sizes):
+        errors.append("review-bundle transported sizes do not both match the declaration")
 
 
 def _validate_internal_assurance(
@@ -1960,6 +2028,8 @@ def validate_checkpoint(
         if version in CLOSURE_SCHEMA_VERSIONS:
             _validate_closure_controls(
                 root, target, state, metadata, command_records, errors, allow_pending_seal)
+        if version in REVIEW_TRANSPORT_SCHEMA_VERSIONS:
+            _validate_review_transport(root, target, state, errors, allow_pending_seal)
 
         if version in HASHED_INVENTORY_VERSIONS and files is not None:
             if state.get("baseCommit") == "UNBORN":
