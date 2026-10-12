@@ -36,6 +36,10 @@ the permitted evidence commit before the canonical tag is created. Validation in
 the declared subject twice and compares both outputs with the declaration. Historical schemas retain
 their original interpretation.
 
+Pre-seal published subjects use `refs/tags/iacode-subjects/`. They are exact inputs to verification,
+not sealed-evidence retention. `refs/tags/iacode-preserved/` remains reserved for historical commits
+that a sealed checkpoint's evidence names and whose removal would make that checkpoint invalid.
+
 ## Consequences
 
 A schema `3.4.0` checkpoint cannot reach or retain `READY_FOR_REVIEW` with a mutable, missing, stale
@@ -57,4 +61,6 @@ Declaring a pre-finalization working-tree archive was rejected because later che
 its payload. Embedding the declaration in the archive was rejected as mathematically self-referential.
 Hashing only the product changes and omitting the checkpoint was rejected because review evidence is
 part of the Gate subject. Trusting one local rebuild was rejected because it does not prove transport
-or byte determinism. Rewriting CP0007 was rejected because sealed subjects remain immutable.
+or byte determinism. Reusing `refs/tags/iacode-preserved/` for an unfinished verification subject
+was rejected because every reference in that namespace is intentionally load-bearing for a sealed
+checkpoint. Rewriting CP0007 was rejected because sealed subjects remain immutable.

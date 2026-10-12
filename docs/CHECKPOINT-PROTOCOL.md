@@ -76,6 +76,12 @@ is never rewritten. Every control that clones this repository to judge sealed hi
 published history only (`ledger_common.published_clone`, Git's transport), never a copy of the
 local object store (`M1-F-003`).
 
+An exact commit published only to run pre-seal verification uses
+`refs/tags/iacode-subjects/`. That namespace does not assert that a sealed checkpoint names the
+commit and is not part of the preserved-evidence denominator. If the later sealed ledger names that
+commit and ordinary published history no longer reaches it, a distinct `iacode-preserved/` tag is
+created then; a work-in-progress subject is never pre-classified as sealed evidence.
+
 ## Checkout modes
 
 Validation normally runs on an attached branch, where the branch name and the checked-out commit

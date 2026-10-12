@@ -35,7 +35,6 @@ REQUIRED_CHECKPOINT_FILES = {
     "REQUIREMENTS-MATRIX.json",
     "FUNCTIONAL-ACCEPTANCE.json",
     "QUALITY.json",
-    "M2-INTERNAL-RED-TEAM.json",
     "COMPLETENESS-REPORT.json",
     "FILES.json",
     "COMMANDS.jsonl",
@@ -103,6 +102,73 @@ def _subject_bytes(root: Path, subject: str, path: Path) -> bytes:
     return bytes(git(root, "show", f"{subject}:{path.as_posix()}", binary=True))
 
 
+def required_checkpoint_files(state: dict[str, Any]) -> set[str]:
+    """Return transport-mandatory files without hard-coding one milestone's report name."""
+
+    milestone = state.get("milestone") if isinstance(state.get("milestone"), dict) else {}
+    milestone_id = str(milestone.get("id") or "").strip()
+    if not milestone_id:
+        raise LedgerError("review bundle checkpoint state has no milestone id")
+    return {*REQUIRED_CHECKPOINT_FILES, f"{milestone_id}-INTERNAL-RED-TEAM.json"}
+
+
+def subject_checkpoint_complete(root: Path, checkpoint: Path, subject: str) -> bool:
+    """Report whether an immutable subject contains a transport-complete checkpoint."""
+
+    commit = resolve_subject(root, subject)
+    relative = checkpoint.relative_to(root)
+    try:
+        state = json.loads(
+            _subject_bytes(root, commit, relative / "STATE.json").decode("utf-8")
+        )
+        required = required_checkpoint_files(state)
+    except (LedgerError, UnicodeDecodeError, json.JSONDecodeError, ValueError):
+        return False
+    tracked = _subject_paths(root, commit, relative.as_posix())
+    return all(relative / name in tracked for name in required)
+
+
+def resolve_complete_checkpoint(
+    root: Path,
+    subject: str,
+    preferred: Path | None = None,
+) -> Path:
+    """Resolve the newest transport-complete checkpoint carried by an immutable subject.
+
+    An implementation commit can legitimately have a newer ``IN_PROGRESS`` checkpoint. Tests and
+    adversarial transport probes still need a complete predecessor to exercise the current bundle
+    producer without pretending the unfinished checkpoint is ready for review.
+    """
+
+    commit = resolve_subject(root, subject)
+    candidates: list[Path] = []
+    if preferred is not None:
+        candidate = preferred if preferred.is_absolute() else root / preferred
+        candidates.append(candidate)
+    state_paths = sorted(
+        (
+            path
+            for path in _subject_paths(root, commit, "docs/checkpoints")
+            if path.name == "STATE.json" and len(path.parts) == 4
+        ),
+        key=lambda path: path.as_posix(),
+        reverse=True,
+    )
+    candidates.extend(root / path.parent for path in state_paths)
+    seen: set[Path] = set()
+    for candidate in candidates:
+        resolved = candidate.resolve()
+        if resolved in seen:
+            continue
+        seen.add(resolved)
+        try:
+            if subject_checkpoint_complete(root, resolved, commit):
+                return resolved
+        except ValueError:
+            continue
+    raise LedgerError(f"subject {commit} contains no transport-complete checkpoint")
+
+
 def collect_subject(root: Path, checkpoint: Path, subject: str) -> dict[str, bytes]:
     """Collect a bundle solely from immutable Git objects.
 
@@ -164,7 +230,8 @@ def collect_subject(root: Path, checkpoint: Path, subject: str) -> dict[str, byt
     )
     checkpoint_prefix = f"repository/{relative_checkpoint.as_posix()}/"
     missing = sorted(
-        name for name in REQUIRED_CHECKPOINT_FILES if checkpoint_prefix + name not in payload
+        name for name in required_checkpoint_files(state)
+        if checkpoint_prefix + name not in payload
     )
     if missing:
         raise LedgerError("review bundle checkpoint is incomplete: " + ", ".join(missing))
@@ -201,7 +268,8 @@ def collect(root: Path, checkpoint: Path) -> dict[str, bytes]:
     )
     checkpoint_prefix = f"repository/{relative_checkpoint.as_posix()}/"
     missing = sorted(
-        name for name in REQUIRED_CHECKPOINT_FILES if checkpoint_prefix + name not in payload
+        name for name in required_checkpoint_files(state)
+        if checkpoint_prefix + name not in payload
     )
     if missing:
         raise LedgerError("review bundle checkpoint is incomplete: " + ", ".join(missing))
@@ -276,7 +344,13 @@ def validate(root: Path, checkpoint: Path, bundle: Path) -> dict[str, Any]:
             if hashlib.sha256(content).hexdigest() != item.get("sha256"):
                 findings.append(f"digest mismatch: {name}")
         prefix = f"repository/{checkpoint.relative_to(root).as_posix()}/"
-        for required in sorted(REQUIRED_CHECKPOINT_FILES):
+        try:
+            checkpoint_state = json.loads(archive.read(prefix + "STATE.json"))
+            required_files = required_checkpoint_files(checkpoint_state)
+        except (KeyError, UnicodeDecodeError, json.JSONDecodeError, LedgerError) as error:
+            findings.append(f"required checkpoint state is missing or invalid: {error}")
+            required_files = set(REQUIRED_CHECKPOINT_FILES)
+        for required in sorted(required_files):
             if prefix + required not in names:
                 findings.append(f"missing required checkpoint artifact: {required}")
         categories = {

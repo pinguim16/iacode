@@ -783,18 +783,7 @@ class ProgramStateTests(unittest.TestCase):
 
 class ReviewBundleTests(unittest.TestCase):
     def _head_checkpoint(self) -> Path:
-        pointer = subprocess.run(
-            ["git", "show", "HEAD:docs/checkpoints/LATEST.md"],
-            cwd=PROJECT_ROOT,
-            text=True,
-            encoding="utf-8",
-            errors="replace",
-            stdout=subprocess.PIPE,
-            stderr=subprocess.STDOUT,
-            check=True,
-        ).stdout
-        relative = pointer.split("`", 2)[1]
-        return PROJECT_ROOT / relative
+        return review_bundle.resolve_complete_checkpoint(PROJECT_ROOT, "HEAD")
 
     def test_review_context_includes_unchanged_migrations_schemas_and_policies(self) -> None:
         paths = review_bundle._review_context_paths(PROJECT_ROOT)

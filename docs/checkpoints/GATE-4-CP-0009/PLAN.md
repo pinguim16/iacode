@@ -18,3 +18,17 @@
 8. Finalize only `READY_FOR_REVIEW`, create the immutable content and seal-evidence commits, publish
    `main` and the CP0009 tag, then rebuild twice from a fresh remote clone and require exact agreement
    with the sealed declaration. Do not start Gate 5 or claim independent validation.
+
+## Rework amendment
+
+The first published-subject verifier passed 40/42. Preserve it. Repair the confirmed cancellation
+signal/activity-handle race, promote its lesson only after the rebuilt evaluator suite passes, publish
+an immutable CP0009 implementation subject, and execute the whole 42-stage verifier again. The new
+run must defend attack T with the schema 3.4 producer and pass `quality-cancellation`; neither failed
+stage may be replaced by an isolated rerun.
+
+The second published-subject verifier passed the cancellation repair and exposed only deterministic
+fixture, incomplete-subject selection, and reference-classification defects. Preserve that 39/42
+run. Close those defects under the existing Gate 4 scope, require focused promotion/succession,
+lesson, preserved-reference, bundle and twenty-attack controls to pass, then publish a new exact
+subject under `iacode-subjects/` for one complete 42-stage execution.

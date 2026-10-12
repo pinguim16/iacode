@@ -4,7 +4,7 @@
 - Scope: `corrective sealed review-bundle reconstruction`
 - Technologies: `Python`, `Temporal`
 - Modules: `development-ledger`, `review-bundle`, `evaluator`
-- Generated: `2026-10-12T17:44:05Z`
+- Generated: `2026-10-12T20:52:13Z`
 - Lessons considered: 98
 - Lessons applicable: 97
 

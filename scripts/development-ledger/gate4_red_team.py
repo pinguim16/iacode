@@ -811,7 +811,10 @@ def _host_attacks(root: Path, checkpoint: Path) -> list[dict[str, Any]]:
                     shutil.copy2(source, destination)
                 elif destination.exists():
                     destination.unlink()
-        checkpoint_relative = checkpoint.relative_to(root)
+        from review_bundle import resolve_complete_checkpoint
+
+        complete_checkpoint = resolve_complete_checkpoint(root, "HEAD", checkpoint)
+        checkpoint_relative = complete_checkpoint.relative_to(root)
         first_bundle = Path(".git") / "gate4-red-team-review-first.zip"
         second_bundle = Path(".git") / "gate4-red-team-review-second.zip"
 
