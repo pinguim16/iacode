@@ -1,0 +1,73 @@
+{
+  "schemaVersion": "1.0.0",
+  "artifact": "GATE-4-INDEPENDENT-G4-X7-PROBE",
+  "checkpoint": "GATE-4-CP-0008",
+  "subjectCheckpoint": "GATE-4-CP-0007",
+  "subjectCommit": "e21d30fde473f302d0f8f60b59acf008fa52e250",
+  "generatedAt": "2026-10-12T12:04:18.084938Z",
+  "syntheticMarkerSha256": "7c965942fb2ef8fe905ca4ad76ec57368a98babf8531e677ac7f0745280bf320",
+  "nullControl": {
+    "status": "VALID",
+    "resultStatus": "PASSED",
+    "verdict": "PASS",
+    "objects": 1,
+    "records": 1,
+    "timeline": [
+      "scanner.scan",
+      "repository.by_digest",
+      "object.stat",
+      "object.put",
+      "repository.record",
+      "repository.by_evidence_id",
+      "object.get",
+      "scanner.scan"
+    ]
+  },
+  "canonicalMarker": {
+    "scannerKinds": [
+      "GitHub credential"
+    ],
+    "scanPrecededDurableOperation": true,
+    "timeline": [
+      "scanner.scan"
+    ],
+    "resultStatus": "ERROR",
+    "resultExitCode": null,
+    "resultSummary": "quality evidence was rejected before persistence",
+    "evidenceCount": 0,
+    "findingCount": 0,
+    "verdict": "FAIL",
+    "objectCount": 0,
+    "metadataCount": 0,
+    "resolvableEvidenceCount": 0,
+    "serializedOutputContainsMarker": false,
+    "capturedLogsContainMarker": false
+  },
+  "scannerFailure": {
+    "scanPrecededDurableOperation": true,
+    "timeline": [
+      "scanner.scan"
+    ],
+    "resultStatus": "ERROR",
+    "resultSummary": "quality evidence was rejected before persistence",
+    "evidenceCount": 0,
+    "findingCount": 0,
+    "verdict": "FAIL",
+    "objectCount": 0,
+    "metadataCount": 0,
+    "capturedLogsContainInput": false
+  },
+  "legacyObject": {
+    "resolutionAccepted": false,
+    "verdict": "FAIL",
+    "timeline": [
+      "repository.by_evidence_id",
+      "object.get",
+      "scanner.scan"
+    ],
+    "rescannedAfterRead": true
+  },
+  "safety": "The synthetic value was assembled only in memory and never emitted. This report contains only its SHA-256 digest, canonical finding kind and non-secret observations.",
+  "result": "PASS",
+  "sourceProbe": "docs/checkpoints/GATE-4-CP-0006/audit-harness/g4x7_probe.py"
+}

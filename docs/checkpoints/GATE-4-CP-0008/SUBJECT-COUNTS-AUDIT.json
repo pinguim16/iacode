@@ -1,0 +1,178 @@
+{
+  "schemaVersion": "1.0.0",
+  "artifact": "GATE-4-SUBJECT-COUNTS-AUDIT",
+  "checkpoint": "GATE-4-CP-0008",
+  "subjectCheckpoint": "GATE-4-CP-0007",
+  "subjectCommit": "e21d30fde473f302d0f8f60b59acf008fa52e250",
+  "generatedAt": "2026-10-12T11:50:29.534195Z",
+  "steps": [
+    {
+      "command": [
+        "git",
+        "clone",
+        "--quiet",
+        "--no-local",
+        "https://github.com/pinguim16/iacode.git",
+        "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-g4-cp0008-counts-cp2bevqj\\repository"
+      ],
+      "exitCode": 0,
+      "tail": ""
+    },
+    {
+      "command": [
+        "git",
+        "checkout",
+        "--quiet",
+        "--detach",
+        "iacode-checkpoints/GATE-4-CP-0007"
+      ],
+      "exitCode": 0,
+      "tail": ""
+    },
+    {
+      "command": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "exitCode": 0,
+      "tail": "e21d30fde473f302d0f8f60b59acf008fa52e250"
+    },
+    {
+      "command": [
+        "C:\\Program Files\\Python313\\python.exe",
+        "scripts/development-ledger/validate_checkpoint.py"
+      ],
+      "exitCode": 0,
+      "tail": "CHECKPOINT_VALID"
+    },
+    {
+      "command": [
+        "C:\\Program Files\\Python313\\python.exe",
+        "scripts/development-ledger/derive_requirements.py",
+        "--checkpoint",
+        "docs/checkpoints/GATE-4-CP-0007",
+        "--gate",
+        "GATE-4"
+      ],
+      "exitCode": 0,
+      "tail": "REQUIREMENTS_DERIVED gate=GATE-4 checkpoint=GATE-4-CP-0007 total=201\n- AUDIT_FINDING: 1\n- GATE_SPECIFICATION: 105\n- LESSON: 95"
+    },
+    {
+      "command": [
+        "C:\\Program Files\\Python313\\python.exe",
+        "scripts/development-ledger/check_completeness.py",
+        "--checkpoint",
+        "docs/checkpoints/GATE-4-CP-0007",
+        "--auditor",
+        "fresh-session independent Gate 4 audit"
+      ],
+      "exitCode": 0,
+      "tail": "DELIVERY_COMPLETENESS_GATE=PASS coverage=100.00 evidenceCoverage=100.00 total=201 complete=201 partial=0 missing=0 notApplicable=0"
+    },
+    {
+      "command": [
+        "C:\\Program Files\\Python313\\python.exe",
+        "scripts/development-ledger/derive_counts.py",
+        "--checkpoint",
+        "docs/checkpoints/GATE-4-CP-0007"
+      ],
+      "exitCode": 0,
+      "tail": "COUNTS_DERIVED TESTS=1709/1709 REQUIREMENTS=201/201 FINDINGS=1/1 ATTACKS=20/20 LESSONS=93/96 GUARDRAILS=97/97"
+    },
+    {
+      "command": [
+        "C:\\Program Files\\Python313\\python.exe",
+        "scripts/development-ledger/validate_lessons.py"
+      ],
+      "exitCode": 0,
+      "tail": "LESSONS_VALID total=96 active=96 guarded=93"
+    },
+    {
+      "command": [
+        "C:\\Program Files\\Python313\\python.exe",
+        "scripts/development-ledger/verify_integrity.py"
+      ],
+      "exitCode": 0,
+      "tail": "INTEGRITY_VALID anchors=29 latest=SETUP-00-CP-0013"
+    }
+  ],
+  "counts": {
+    "TESTS": {
+      "numerator": 1709,
+      "denominator": 1709,
+      "source": "discovery over every counted suite of .iacode/policies/test-suites.json, cross-checked with TESTS.json and deduplicated by physical execution"
+    },
+    "REQUIREMENTS": {
+      "numerator": 201,
+      "denominator": 201,
+      "source": "REQUIREMENTS-MATRIX.json evaluated against the derived expected set"
+    },
+    "FINDINGS": {
+      "numerator": 1,
+      "denominator": 1,
+      "source": "the sealed audit review reports and the closure record"
+    },
+    "ATTACKS": {
+      "numerator": 20,
+      "denominator": 20,
+      "source": "M2-INTERNAL-RED-TEAM.json"
+    },
+    "LESSONS": {
+      "numerator": 93,
+      "denominator": 96,
+      "source": ".iacode/memory/lessons.jsonl"
+    },
+    "GUARDRAILS": {
+      "numerator": 97,
+      "denominator": 97,
+      "source": ".iacode/memory/guardrails/registry.json measured for effectiveness"
+    }
+  },
+  "greenKeeper": {
+    "status": "PASS",
+    "requiredGates": [
+      "tests",
+      "staticAnalysis",
+      "lessons",
+      "integrity",
+      "checkpointValidation",
+      "apiTests",
+      "gatewayTests",
+      "agentRuntimeTests",
+      "sandboxTests",
+      "evaluatorTests",
+      "webTests",
+      "lint",
+      "infraDefinition"
+    ],
+    "requiredGateCount": 13,
+    "remainingFailures": 0
+  },
+  "completeness": {
+    "result": "PASS",
+    "total": 201,
+    "complete": 201,
+    "coveragePercent": 100.0,
+    "evidenceCoveragePercent": 100.0
+  },
+  "closedFindings": [
+    "G4-F-001",
+    "G4-F-002",
+    "G4-F-003"
+  ],
+  "checks": {
+    "publishedCloneCommands": true,
+    "subjectIdentity": true,
+    "requirements": true,
+    "tests": true,
+    "guardrails": true,
+    "attacks": true,
+    "completeness": true,
+    "greenKeeper": true,
+    "internalRedTeam": true,
+    "findingClosure": true,
+    "guardrailFailures": true
+  },
+  "result": "PASS"
+}

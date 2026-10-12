@@ -1,0 +1,163 @@
+{
+  "schemaVersion": "1.0.0",
+  "gate": "GATE-4",
+  "checkpoint": "GATE-4-CP-0008",
+  "status": "PASS",
+  "generatedAt": "2026-10-12T12:09:50.740319Z",
+  "scenarios": [
+    {
+      "scenarioId": "G4-FA-CP0007-SANDBOX",
+      "requirementIds": [
+        "GATE-4-7.1",
+        "GATE-4-7.5"
+      ],
+      "feature": "Sandbox-only quality and coding execution",
+      "scenario": "Execute real coding and quality work through the sandbox while leaving the host unchanged.",
+      "environment": "Checkout-owned isolated Compose stack, sandbox service and container engine.",
+      "preconditions": [
+        "The complete verifier created a fresh isolated runtime for the corrective checkout."
+      ],
+      "execution": [
+        "Execute sandbox integration, coding, timeout, cancellation, recovery and forged-origin scenarios."
+      ],
+      "expected": [
+        "Commands stay inside disposable sandboxes, adverse termination remains fail-closed and cleanup completes."
+      ],
+      "observed": [
+        "The canonical verifier passed all six sandbox stages and removed the isolated project."
+      ],
+      "result": "PASS",
+      "evidence": [
+        "checkpoint:VERIFICATION-REPORT.json"
+      ],
+      "timestamp": "2026-10-12T07:43:18Z",
+      "artifactReferences": [
+        "checkpoint:VERIFICATION-REPORT.json"
+      ]
+    },
+    {
+      "scenarioId": "G4-FA-CP0007-REPRODUCTION",
+      "requirementIds": [
+        "GATE-4-9.5",
+        "GATE-4-16.4"
+      ],
+      "feature": "Immutable quality reproduction",
+      "scenario": "Reproduce a stored quality run under its frozen plan and snapshot identity.",
+      "environment": "Isolated stack with Temporal, PostgreSQL, MinIO, evaluator and sandbox services.",
+      "preconditions": [
+        "A complete immutable quality run was created by the canonical verifier."
+      ],
+      "execution": [
+        "Run the canonical quality-reproduction stage."
+      ],
+      "expected": [
+        "The reproduced run has distinct identity and equivalent results without rewriting the original."
+      ],
+      "observed": [
+        "quality-reproduction passed in the complete 42-stage verifier."
+      ],
+      "result": "PASS",
+      "evidence": [
+        "checkpoint:VERIFICATION-REPORT.json"
+      ],
+      "timestamp": "2026-10-12T07:43:18Z",
+      "artifactReferences": [
+        "checkpoint:VERIFICATION-REPORT.json"
+      ]
+    },
+    {
+      "scenarioId": "G4-FA-CP0007-DURABILITY",
+      "requirementIds": [
+        "GATE-4-12.1",
+        "GATE-4-12.2",
+        "GATE-4-12.3",
+        "GATE-4-12.4"
+      ],
+      "feature": "Durable recovery, cancellation and timeout",
+      "scenario": "Restart the evaluator during active work, cancel another run and allow a third to exceed its policy deadline.",
+      "environment": "Checkout-owned live evaluator, Temporal, persistence and sandbox services.",
+      "preconditions": [
+        "Active quality runs and slow fixtures were created by the verifier."
+      ],
+      "execution": [
+        "Run quality-recovery, quality-cancellation and quality-timeout."
+      ],
+      "expected": [
+        "Recovery resumes the same run without duplicates; cancellation and timeout finish cleanup and derive FAIL."
+      ],
+      "observed": [
+        "All three adverse lifecycle stages passed in the complete verifier."
+      ],
+      "result": "PASS",
+      "evidence": [
+        "checkpoint:VERIFICATION-REPORT.json"
+      ],
+      "timestamp": "2026-10-12T07:43:18Z",
+      "artifactReferences": [
+        "checkpoint:VERIFICATION-REPORT.json"
+      ]
+    },
+    {
+      "scenarioId": "G4-FA-CP0007-VERDICTS",
+      "requirementIds": [
+        "GATE-4-16.1",
+        "GATE-4-16.2",
+        "GATE-4-16.3"
+      ],
+      "feature": "Truthful PASS, FAIL and canonical IACode evaluation",
+      "scenario": "Run passing, deliberately failing and repository-wide IACode fixtures through the complete Quality Engine.",
+      "environment": "Isolated evaluator stack with immutable evidence stores and canonical project profile.",
+      "preconditions": [
+        "Passing and failing fixtures and the repository snapshot were available to the built images."
+      ],
+      "execution": [
+        "Run quality-pass, quality-fail and quality-iacode."
+      ],
+      "expected": [
+        "Only complete successful evidence derives PASS; the deliberate defect remains FAIL; IACode uses its canonical profile."
+      ],
+      "observed": [
+        "All three verdict stages passed in the complete verifier."
+      ],
+      "result": "PASS",
+      "evidence": [
+        "checkpoint:VERIFICATION-REPORT.json"
+      ],
+      "timestamp": "2026-10-12T07:43:18Z",
+      "artifactReferences": [
+        "checkpoint:VERIFICATION-REPORT.json"
+      ]
+    },
+    {
+      "scenarioId": "G4-FA-CP0007-FALSE-PASS",
+      "requirementIds": [
+        "GATE-4-16.5"
+      ],
+      "feature": "False-PASS and credential-containment resistance",
+      "scenario": "Execute the canonical false-PASS stage and the independent pre-persistence secret-containment probe.",
+      "environment": "Rebuilt evaluator image plus host review-bundle boundary and current live adverse-scenario reports.",
+      "preconditions": [
+        "The null-mutation control derived PASS and the review transport contained every mandatory artifact category."
+      ],
+      "execution": [
+        "Run quality-false-pass in the complete verifier and execute G4-X7 against the rebuilt evaluator image."
+      ],
+      "expected": [
+        "Forged or credential-shaped evidence cannot produce a passing durable quality result."
+      ],
+      "observed": [
+        "quality-false-pass passed in the single published verifier and G4-X7 failed closed with zero objects and zero metadata; G4-F-004 is a separate review-transport failure."
+      ],
+      "result": "PASS",
+      "evidence": [
+        "checkpoint:VERIFICATION-REPORT.json",
+        "checkpoint:G4-X7-INDEPENDENT-PROBE.json"
+      ],
+      "timestamp": "2026-10-12T07:43:18Z",
+      "artifactReferences": [
+        "checkpoint:VERIFICATION-REPORT.json",
+        "checkpoint:G4-X7-INDEPENDENT-PROBE.json"
+      ]
+    }
+  ]
+}

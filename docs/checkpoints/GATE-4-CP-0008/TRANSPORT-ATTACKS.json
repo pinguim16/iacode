@@ -1,0 +1,28 @@
+{
+  "schemaVersion": "1.0.0",
+  "artifact": "COMMAND-INPUT-TRANSPORT-ATTACKS",
+  "checkpoint": "GATE-4-CP-0008",
+  "subjectCheckpoint": "GATE-4-CP-0007",
+  "generatedAt": "2026-10-12T11:47:56.563468Z",
+  "directRefusals": {
+    "gitMetadata": "Git metadata is never carried in a checkout",
+    "absoluteTemporary": "absolute paths are outside the repository transport",
+    "ignoredOutput": "the path is ignored and Git transport does not carry it"
+  },
+  "untrackedLifecycle": {
+    "classification": "ELIGIBLE_ONLY_IF_COMMITTED_BEFORE_SEALING",
+    "recorderExitCode": 0,
+    "recorderAcceptedInProgress": true,
+    "validationExitCodeAfterLocalFileRemoval": 1,
+    "validationRefusedMissingInput": true,
+    "validationTail": "CHECKPOINT_INVALID\n- COMMANDS.jsonl:63: recorded input does not exist: audit-untracked-input.txt\n- FILES.json: hash mismatch for docs/checkpoints/GATE-4-CP-0007/COMMANDS.jsonl\n- detached HEAD validation requires a clean worktree and dirty=false\n- COMMANDS.jsonl cmd-0063 is timestamped after RUN-METADATA.finishedAt; sealing must be monotonic\n- FILES.json hashAfter does not match the repository content of docs/checkpoints/GATE-4-CP-0007/COMMANDS.jsonl"
+  },
+  "checks": {
+    "gitMetadataRefused": true,
+    "absoluteTemporaryRefused": true,
+    "ignoredOutputRefused": true,
+    "untrackedCannotRemainLocalOnly": true
+  },
+  "result": "PASS",
+  "interpretation": "Git metadata, absolute temporary paths and ignored outputs are refused before execution. A non-ignored untracked source is provisionally eligible only because the checkpoint must commit it before sealing; removing it proves the validator refuses a local-only record."
+}

@@ -1,0 +1,343 @@
+{
+  "schemaVersion": "1.0.0",
+  "artifact": "GATE-4-INDEPENDENT-RED-TEAM",
+  "checkpoint": "GATE-4-CP-0008",
+  "subjectCheckpoint": "GATE-4-CP-0007",
+  "subjectCommit": "e21d30fde473f302d0f8f60b59acf008fa52e250",
+  "generatedAt": "2026-10-12T12:04:55.334025Z",
+  "baselineControl": {
+    "result": "VALID",
+    "components": {
+      "canonicalVerdictControl": "VALID",
+      "activityPersistenceControl": "VALID",
+      "subjectBundleControl": true
+    }
+  },
+  "attacks": [
+    {
+      "attackId": "A",
+      "description": "missing result",
+      "target": "missing result",
+      "mutation": "remove the only mandatory result",
+      "expectedDefense": "derived verdict FAIL names the missing check",
+      "observed": "verdict=FAIL; reasons=('missing result for q001-unit',)",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:scripts/development-ledger/gate4_red_team.py",
+        "checkpoint:G4-X7-INDEPENDENT-PROBE.json"
+      ],
+      "mandatory": true,
+      "origin": "fresh execution by the independent Gate 4 audit"
+    },
+    {
+      "attackId": "B",
+      "description": "exit-code forgery",
+      "target": "exit-code forgery",
+      "mutation": "keep PASSED and flip exitCode to 1",
+      "expectedDefense": "the result contract refuses the contradictory shape",
+      "observed": "contract refused non-zero PASS",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:scripts/development-ledger/gate4_red_team.py",
+        "checkpoint:G4-X7-INDEPENDENT-PROBE.json"
+      ],
+      "mandatory": true,
+      "origin": "fresh execution by the independent Gate 4 audit"
+    },
+    {
+      "attackId": "C",
+      "description": "forged evidence",
+      "target": "forged evidence",
+      "mutation": "replace the resolved digest set",
+      "expectedDefense": "the evidence reference is unresolved and verdict is FAIL",
+      "observed": "verdict=FAIL; reasons=('q001-unit has unresolved evidence evidence-red-team',)",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:scripts/development-ledger/gate4_red_team.py",
+        "checkpoint:G4-X7-INDEPENDENT-PROBE.json"
+      ],
+      "mandatory": true,
+      "origin": "fresh execution by the independent Gate 4 audit"
+    },
+    {
+      "attackId": "D",
+      "description": "policy mutation",
+      "target": "policy mutation",
+      "mutation": "change maxCheckSeconds under the same planId",
+      "expectedDefense": "the immutable store refuses PLAN_ID_CONFLICT",
+      "observed": "store refused PLAN_ID_CONFLICT",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:scripts/development-ledger/gate4_red_team.py",
+        "checkpoint:G4-X7-INDEPENDENT-PROBE.json"
+      ],
+      "mandatory": true,
+      "origin": "fresh execution by the independent Gate 4 audit"
+    },
+    {
+      "attackId": "E",
+      "description": "snapshot mutation",
+      "target": "snapshot mutation",
+      "mutation": "change snapshotDigest under the same planId",
+      "expectedDefense": "the immutable store refuses PLAN_ID_CONFLICT",
+      "observed": "store refused PLAN_ID_CONFLICT",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:scripts/development-ledger/gate4_red_team.py",
+        "checkpoint:G4-X7-INDEPENDENT-PROBE.json"
+      ],
+      "mandatory": true,
+      "origin": "fresh execution by the independent Gate 4 audit"
+    },
+    {
+      "attackId": "F",
+      "description": "wrong origin",
+      "target": "wrong origin",
+      "mutation": "post a result with origin CALLER",
+      "expectedDefense": "the closed origin contract refuses it",
+      "observed": "contract refused origin",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:scripts/development-ledger/gate4_red_team.py",
+        "checkpoint:G4-X7-INDEPENDENT-PROBE.json"
+      ],
+      "mandatory": true,
+      "origin": "fresh execution by the independent Gate 4 audit"
+    },
+    {
+      "attackId": "G",
+      "description": "timed_out result",
+      "target": "timed_out result",
+      "mutation": "replace PASSED with TIMED_OUT",
+      "expectedDefense": "the derived verdict is FAIL",
+      "observed": "verdict=FAIL; reasons=('q001-unit ended TIMED_OUT',)",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:scripts/development-ledger/gate4_red_team.py",
+        "checkpoint:G4-X7-INDEPENDENT-PROBE.json"
+      ],
+      "mandatory": true,
+      "origin": "fresh execution by the independent Gate 4 audit"
+    },
+    {
+      "attackId": "H",
+      "description": "denied result",
+      "target": "denied result",
+      "mutation": "replace PASSED with DENIED",
+      "expectedDefense": "the derived verdict is FAIL",
+      "observed": "verdict=FAIL; reasons=('q001-unit ended DENIED',)",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:scripts/development-ledger/gate4_red_team.py",
+        "checkpoint:G4-X7-INDEPENDENT-PROBE.json"
+      ],
+      "mandatory": true,
+      "origin": "fresh execution by the independent Gate 4 audit"
+    },
+    {
+      "attackId": "I",
+      "description": "cancelled result",
+      "target": "cancelled result",
+      "mutation": "replace PASSED with CANCELLED",
+      "expectedDefense": "the derived verdict is FAIL",
+      "observed": "verdict=FAIL; reasons=('q001-unit ended CANCELLED',)",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:scripts/development-ledger/gate4_red_team.py",
+        "checkpoint:G4-X7-INDEPENDENT-PROBE.json"
+      ],
+      "mandatory": true,
+      "origin": "fresh execution by the independent Gate 4 audit"
+    },
+    {
+      "attackId": "J",
+      "description": "unknown status",
+      "target": "unknown status",
+      "mutation": "submit status ASSERTED_GOOD",
+      "expectedDefense": "the closed result-status contract refuses it",
+      "observed": "contract refused status",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:scripts/development-ledger/gate4_red_team.py",
+        "checkpoint:G4-X7-INDEPENDENT-PROBE.json"
+      ],
+      "mandatory": true,
+      "origin": "fresh execution by the independent Gate 4 audit"
+    },
+    {
+      "attackId": "K",
+      "description": "bundle integrity",
+      "target": "bundle integrity",
+      "mutation": "alter one payload byte",
+      "expectedDefense": "validator refuses with digest mismatch",
+      "observed": "result=FAIL; expected-finding=True",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:scripts/development-ledger/review_bundle.py"
+      ],
+      "mandatory": true,
+      "origin": "fresh execution by the independent Gate 4 audit"
+    },
+    {
+      "attackId": "L",
+      "description": "mandatory bundle evidence",
+      "target": "mandatory bundle evidence",
+      "mutation": "remove subject STATE.json",
+      "expectedDefense": "validator refuses with missing required checkpoint artifact: STATE.json",
+      "observed": "result=FAIL; expected-finding=True",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:scripts/development-ledger/review_bundle.py"
+      ],
+      "mandatory": true,
+      "origin": "fresh execution by the independent Gate 4 audit"
+    },
+    {
+      "attackId": "M",
+      "description": "archive path safety",
+      "target": "archive path safety",
+      "mutation": "add a traversal member",
+      "expectedDefense": "validator refuses with unsafe archive member",
+      "observed": "result=FAIL; expected-finding=True",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:scripts/development-ledger/review_bundle.py"
+      ],
+      "mandatory": true,
+      "origin": "fresh execution by the independent Gate 4 audit"
+    },
+    {
+      "attackId": "N",
+      "description": "bundle secret scan",
+      "target": "bundle secret scan",
+      "mutation": "add canonical credential-shaped bytes",
+      "expectedDefense": "validator refuses with secret scan found",
+      "observed": "result=FAIL; expected-finding=True",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:scripts/development-ledger/review_bundle.py"
+      ],
+      "mandatory": true,
+      "origin": "fresh execution by the independent Gate 4 audit"
+    },
+    {
+      "attackId": "O",
+      "description": "archive uniqueness",
+      "target": "archive uniqueness",
+      "mutation": "duplicate a member name",
+      "expectedDefense": "validator refuses with duplicate member names",
+      "observed": "result=FAIL; expected-finding=True",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:scripts/development-ledger/review_bundle.py"
+      ],
+      "mandatory": true,
+      "origin": "fresh execution by the independent Gate 4 audit"
+    },
+    {
+      "attackId": "P",
+      "target": "live adverse lifecycle",
+      "mutation": "execute restart, cancellation, timeout and forged-origin scenarios",
+      "expectedDefense": "every fail-closed invariant survives in the current verifier run",
+      "observed": "quality-recovery=PASS; quality-cancellation=PASS; quality-timeout=PASS; sandbox-tool-result-origin=PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "evidence": [
+        "checkpoint:VERIFICATION-REPORT.json"
+      ],
+      "origin": "single integral published verifier run"
+    },
+    {
+      "attackId": "Q",
+      "description": "pre-persistence secret containment",
+      "target": "pre-persistence secret containment",
+      "mutation": "send a canonical scanner-detected marker under an ordinary structured output key",
+      "expectedDefense": "reject before object or metadata persistence and derive FAIL from a sanitized result",
+      "observed": "scannerKinds=['GitHub credential']; scan-before-store=True; status=ERROR; verdict=FAIL; objects=0; records=0; evidence=0; logs-clean=True",
+      "result": "DEFENDED",
+      "evidence": [
+        "checkpoint:G4-X7-INDEPENDENT-PROBE.json"
+      ],
+      "mandatory": true,
+      "origin": "fresh execution by the independent Gate 4 audit"
+    },
+    {
+      "attackId": "R",
+      "description": "scanner availability",
+      "target": "scanner availability",
+      "mutation": "make the canonical evidence scanner throw before it can classify clean bytes",
+      "expectedDefense": "fail closed before any lookup or write and derive FAIL",
+      "observed": "scan-before-store=True; status=ERROR; verdict=FAIL; objects=0; records=0",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:scripts/development-ledger/gate4_red_team.py",
+        "checkpoint:G4-X7-INDEPENDENT-PROBE.json"
+      ],
+      "mandatory": true,
+      "origin": "fresh execution by the independent Gate 4 audit"
+    },
+    {
+      "attackId": "S",
+      "description": "legacy persisted object",
+      "target": "legacy persisted object",
+      "mutation": "replace already persisted clean bytes with a canonical credential shape",
+      "expectedDefense": "rescan after read, refuse resolution and derive FAIL",
+      "observed": "resolved=False; rescanned-after-read=True; verdict=FAIL",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:scripts/development-ledger/gate4_red_team.py",
+        "checkpoint:G4-X7-INDEPENDENT-PROBE.json"
+      ],
+      "mandatory": true,
+      "origin": "fresh execution by the independent Gate 4 audit"
+    },
+    {
+      "attackId": "T",
+      "target": "review transport determinism and command-input portability",
+      "mutation": "rebuild twice from a detached published clone; reference Git metadata, an absolute temporary path, ignored output and a local-only untracked input",
+      "expectedDefense": "byte-identical secret-clean archives and no local-only input can support a sealed checkpoint",
+      "observed": "bundle=FAIL; digest=07bb328a4316297d0b6bd2df986c7b5f5fb41b30c8b2fb58cd99a8d96c24c168,07bb328a4316297d0b6bd2df986c7b5f5fb41b30c8b2fb58cd99a8d96c24c168; git-metadata=True; absolute-temp=True; ignored=True; untracked-local-only=True",
+      "result": "ESCAPED",
+      "mandatory": true,
+      "evidence": [
+        "checkpoint:SUBJECT-BUNDLE-AUDIT.json",
+        "checkpoint:TRANSPORT-ATTACKS.json"
+      ],
+      "origin": "audit-owned published-clone and disposable transport probes"
+    }
+  ],
+  "mandatoryTotal": 20,
+  "mandatoryDefended": 19,
+  "defended": 19,
+  "escaped": 1,
+  "total": 20,
+  "result": "RED_TEAM_FAIL",
+  "transportBoundary": {
+    "schemaVersion": "1.0.0",
+    "artifact": "COMMAND-INPUT-TRANSPORT-ATTACKS",
+    "checkpoint": "GATE-4-CP-0008",
+    "subjectCheckpoint": "GATE-4-CP-0007",
+    "generatedAt": "2026-10-12T11:47:56.563468Z",
+    "directRefusals": {
+      "gitMetadata": "Git metadata is never carried in a checkout",
+      "absoluteTemporary": "absolute paths are outside the repository transport",
+      "ignoredOutput": "the path is ignored and Git transport does not carry it"
+    },
+    "untrackedLifecycle": {
+      "classification": "ELIGIBLE_ONLY_IF_COMMITTED_BEFORE_SEALING",
+      "recorderExitCode": 0,
+      "recorderAcceptedInProgress": true,
+      "validationExitCodeAfterLocalFileRemoval": 1,
+      "validationRefusedMissingInput": true,
+      "validationTail": "CHECKPOINT_INVALID\n- COMMANDS.jsonl:63: recorded input does not exist: audit-untracked-input.txt\n- FILES.json: hash mismatch for docs/checkpoints/GATE-4-CP-0007/COMMANDS.jsonl\n- detached HEAD validation requires a clean worktree and dirty=false\n- COMMANDS.jsonl cmd-0063 is timestamped after RUN-METADATA.finishedAt; sealing must be monotonic\n- FILES.json hashAfter does not match the repository content of docs/checkpoints/GATE-4-CP-0007/COMMANDS.jsonl"
+    },
+    "checks": {
+      "gitMetadataRefused": true,
+      "absoluteTemporaryRefused": true,
+      "ignoredOutputRefused": true,
+      "untrackedCannotRemainLocalOnly": true
+    },
+    "result": "PASS",
+    "interpretation": "Git metadata, absolute temporary paths and ignored outputs are refused before execution. A non-ignored untracked source is provisionally eligible only because the checkpoint must commit it before sealing; removing it proves the validator refuses a local-only record."
+  }
+}

@@ -1,0 +1,98 @@
+{
+  "schemaVersion": "3.3.0",
+  "checks": {
+    "build": {
+      "status": "PASS",
+      "evidence": [
+        "command:cmd-0004",
+        "file:VERIFICATION-REPORT.json"
+      ],
+      "justification": null
+    },
+    "unitTests": {
+      "status": "PASS",
+      "evidence": [
+        "command:cmd-0004",
+        "file:TESTS.json"
+      ],
+      "justification": null
+    },
+    "integrationTests": {
+      "status": "PASS",
+      "evidence": [
+        "command:cmd-0004",
+        "file:VERIFICATION-REPORT.json"
+      ],
+      "justification": null
+    },
+    "e2e": {
+      "status": "PASS",
+      "evidence": [
+        "command:cmd-0004",
+        "file:FUNCTIONAL-ACCEPTANCE-VALIDATION.json"
+      ],
+      "justification": null
+    },
+    "lint": {
+      "status": "PASS",
+      "evidence": [
+        "command:cmd-0004"
+      ],
+      "justification": null
+    },
+    "staticAnalysis": {
+      "status": "PASS",
+      "evidence": [
+        "command:cmd-0014",
+        "file:ARCHITECTURE-REVIEW.json"
+      ],
+      "justification": null
+    },
+    "security": {
+      "status": "PASS",
+      "evidence": [
+        "command:cmd-0013",
+        "file:G4-X7-INDEPENDENT-PROBE.json",
+        "file:TRANSPORT-ATTACKS.json"
+      ],
+      "justification": null
+    },
+    "documentation": {
+      "status": "PASS",
+      "evidence": [
+        "file:REVIEW-REPORT.md",
+        "file:ARCHITECTURE-REVIEW.json"
+      ],
+      "justification": null
+    },
+    "checkpointValidation": {
+      "status": "PASS",
+      "evidence": [
+        "command:cmd-0042"
+      ],
+      "justification": null
+    },
+    "redTeam": {
+      "status": "FAIL",
+      "evidence": [
+        "file:GATE-4-INDEPENDENT-RED-TEAM.json"
+      ],
+      "justification": "Attack T escaped because the declared subject bundle digest is not reconstructible; the preserved nonzero harness command is diagnostic evidence, not a passing quality input."
+    },
+    "greenKeeper": {
+      "status": "PASS",
+      "evidence": [
+        "file:REWORK-LOG.jsonl"
+      ],
+      "justification": "Every policy-derived checkpoint-assurance gate passed; the independent subject finding remains blocking."
+    },
+    "deliveryCompleteness": {
+      "status": "PASS",
+      "evidence": [
+        "file:COMPLETENESS-REPORT.json",
+        "command:cmd-0053"
+      ],
+      "justification": "Audit coverage is complete; complete evidence does not imply approval."
+    }
+  }
+}

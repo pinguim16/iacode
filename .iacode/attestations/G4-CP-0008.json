@@ -1,0 +1,22 @@
+{
+  "schemaVersion": "2.0.0",
+  "auditId": "G4-CP-0008",
+  "milestone": "M2",
+  "validationMechanism": "FRESH_SESSION_INDEPENDENT_AUDIT",
+  "crossToolValidation": "NOT_AVAILABLE",
+  "auditorRole": "Gate independent auditor",
+  "tool": "Codex desktop application",
+  "provider": "OpenAI",
+  "model": "GPT-5",
+  "freshSession": true,
+  "subjectCheckpoint": "GATE-4-CP-0007",
+  "subjectCommit": "e21d30fde473f302d0f8f60b59acf008fa52e250",
+  "auditCheckpoint": "GATE-4-CP-0008",
+  "reviewResult": "REWORK_REQUIRED",
+  "redTeamResult": "RED_TEAM_FAIL",
+  "completeness": 100.0,
+  "evidenceCoverage": 100.0,
+  "testResult": "PASS",
+  "createdAt": "2026-10-12T12:09:50.740319Z",
+  "notes": "Fresh-session Gate 4 audit failed on G4-F-004; M2 remains PENDING and Gate 5 was not started."
+}

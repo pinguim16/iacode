@@ -1,0 +1,172 @@
+{
+  "schemaVersion": "3.3.0",
+  "phase": "Gate 4 fresh-session independent final audit of sealed GATE-4-CP-0007",
+  "gate": "GATE-4",
+  "status": "REWORK_REQUIRED",
+  "branch": "main",
+  "baseCommit": "e21d30fde473f302d0f8f60b59acf008fa52e250",
+  "currentCommit": "refs/tags/iacode-checkpoints/GATE-4-CP-0008",
+  "dirty": false,
+  "startedAt": "2026-10-12T10:11:29Z",
+  "updatedAt": "2026-10-12T14:52:31Z",
+  "nextAllowedAction": "Finalize, seal, tag and publish the REWORK_REQUIRED audit checkpoint; do not start Gate 5.",
+  "blockedBy": [
+    "G4-F-004"
+  ],
+  "secondToolValidation": {
+    "status": "FAILED",
+    "tool": "Codex desktop application, fresh session",
+    "provider": "OpenAI",
+    "model": "GPT-5",
+    "validatedAt": "2026-10-12T14:50:07.537178Z",
+    "justification": "The published subject passed its full verifier, but its declared review-bundle digest was not reconstructible and attack T escaped.",
+    "evidence": [
+      "file:REVIEW-REPORT.md",
+      "file:FINDINGS.json",
+      "command:cmd-0012",
+      "command:cmd-0015"
+    ]
+  },
+  "requirementsMatrix": {
+    "path": "REQUIREMENTS-MATRIX.json",
+    "total": 200,
+    "mandatory": 198,
+    "complete": 200,
+    "partial": 0,
+    "missing": 0,
+    "notApplicable": 0,
+    "coveragePercent": 100.0
+  },
+  "greenKeeper": {
+    "status": "PASS",
+    "cycles": 2,
+    "remainingFailures": 0,
+    "unresolvedReworkItems": 0,
+    "log": "REWORK-LOG.jsonl",
+    "externalBlockers": [],
+    "requiredGates": [
+      "tests",
+      "staticAnalysis",
+      "lessons",
+      "integrity",
+      "checkpointValidation",
+      "apiTests",
+      "gatewayTests",
+      "agentRuntimeTests",
+      "sandboxTests",
+      "evaluatorTests",
+      "webTests",
+      "lint",
+      "infraDefinition"
+    ],
+    "evidence": [
+      "cmd-0038",
+      "cmd-0039",
+      "cmd-0040",
+      "cmd-0041",
+      "cmd-0042",
+      "cmd-0043",
+      "cmd-0044",
+      "cmd-0045",
+      "cmd-0046",
+      "cmd-0047",
+      "cmd-0048",
+      "cmd-0049",
+      "cmd-0050"
+    ]
+  },
+  "deliveryCompleteness": {
+    "status": "PASS",
+    "report": "COMPLETENESS-REPORT.json",
+    "coveragePercent": 100.0,
+    "evidenceCoveragePercent": 100.0,
+    "auditor": "Delivery Completeness Validator (audit checkpoint, not independent Gate approval)",
+    "evidence": [
+      "file:COMPLETENESS-REPORT.json"
+    ]
+  },
+  "reworkCycles": 2,
+  "independentReview": {
+    "status": "REWORK_REQUIRED",
+    "tool": "Codex desktop application, OpenAI, GPT-5, fresh session",
+    "reviewedAt": "2026-10-12T14:50:07.537178Z",
+    "justification": "G4-F-004 is HIGH: the sealed subject's declared review-bundle digest cannot be reconstructed from the published subject.",
+    "evidence": [
+      "file:REVIEW-REPORT.md",
+      "file:FINDINGS.json",
+      "file:FINAL-GATE-4-AUDIT-MATRIX.json"
+    ]
+  },
+  "redTeam": {
+    "status": "RED_TEAM_FAIL",
+    "tool": "Fresh-session Gate 4 independent adversarial harness",
+    "executedAt": "2026-10-12T14:50:07.537178Z",
+    "justification": "Nineteen of twenty attacks were defended; attack T escaped because the declared bundle digest was not reconstructible.",
+    "evidence": [
+      "file:GATE-4-INDEPENDENT-RED-TEAM.json",
+      "file:INDEPENDENT-RED-TEAM-REPORT.md",
+      "command:cmd-0015"
+    ]
+  },
+  "lessonPreflight": {
+    "path": "LESSON-PREFLIGHT.json",
+    "gate": "GATE-4",
+    "scope": "fresh-session independent Gate 4 final audit",
+    "lessonsConsidered": 96,
+    "lessonsApplicable": 95,
+    "derivedRequirements": 95,
+    "fingerprint": "74c2505adfe15a9d323cce9e02365bb66a2be27cd004a0a538a91e9167e55dc9",
+    "evidence": [
+      "checkpoint:LESSON-PREFLIGHT.json",
+      "command:cmd-0002"
+    ]
+  },
+  "milestone": {
+    "id": "M2",
+    "title": "IACode V0 completion and experience",
+    "gates": [
+      "GATE 4",
+      "GATE 5",
+      "GATE 6",
+      "GATE 7"
+    ],
+    "status": "PENDING",
+    "auditor": null,
+    "auditedAt": null,
+    "evidence": []
+  },
+  "externalAuditRequired": false,
+  "externalAuditReason": null,
+  "guardrailEffectiveness": {
+    "guardrailsTotal": 97,
+    "guardrailsResolved": 97,
+    "guardrailsTested": 97,
+    "guardrailsEffective": 97,
+    "guardrailFailures": 0,
+    "evidence": [
+      "file:.iacode/memory/guardrails/registry.json",
+      "command:cmd-0004"
+    ]
+  },
+  "integrity": {
+    "status": "PASS",
+    "anchors": 30,
+    "chainFile": ".iacode/anchors/checkpoint-chain.json",
+    "evidence": [
+      "file:.iacode/anchors/checkpoint-chain.json",
+      "command:cmd-0018"
+    ]
+  },
+  "externalAttestation": {
+    "status": "PRESENT",
+    "path": ".iacode/attestations/G4-CP-0008.json",
+    "auditId": "G4-CP-0008",
+    "subjectCheckpoint": "GATE-4-CP-0007",
+    "subjectCommit": "e21d30fde473f302d0f8f60b59acf008fa52e250",
+    "validationMechanism": "FRESH_SESSION_INDEPENDENT_AUDIT",
+    "evidence": [
+      "file:REVIEW-REPORT.md",
+      "file:INDEPENDENT-RED-TEAM-REPORT.md"
+    ]
+  }
+}

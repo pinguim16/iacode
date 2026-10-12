@@ -1,0 +1,27 @@
+{
+  "schemaVersion": "3.3.0",
+  "unit": {
+    "executed": true,
+    "passed": 775,
+    "failed": 0,
+    "command": "python -m unittest discover -s tests",
+    "evidence": "file:VERIFICATION-REPORT.json",
+    "runId": "published-subject-single-verifier"
+  },
+  "integration": {
+    "executed": true,
+    "passed": 934,
+    "failed": 0,
+    "command": "python scripts/iacode/verify.py --keep-going --report docs/checkpoints/GATE-4-CP-0007/VERIFY.json",
+    "evidence": "file:VERIFICATION-REPORT.json",
+    "runId": "published-subject-single-verifier"
+  },
+  "e2e": {
+    "executed": true,
+    "passed": 42,
+    "failed": 0,
+    "command": "python scripts/iacode/verify.py --keep-going --report docs/checkpoints/GATE-4-CP-0007/VERIFY.json",
+    "evidence": "file:VERIFICATION-REPORT.json",
+    "runId": "published-subject-single-verifier"
+  }
+}

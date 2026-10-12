@@ -1,0 +1,394 @@
+{
+  "filesRead": [
+    {
+      "path": "START-HERE.md",
+      "reason": "Required repository entry point."
+    },
+    {
+      "path": "docs/DEVELOPMENT-CONTRACT.md",
+      "reason": "Canonical delivery contract."
+    },
+    {
+      "path": "docs/MASTER-PLAN.md",
+      "reason": "Gate and milestone scope."
+    },
+    {
+      "path": "docs/GATE-4-CHECKLIST.md",
+      "reason": "Canonical Gate 4 requirements."
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0007/STATE.json",
+      "reason": "Immutable sealed subject state."
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0007/HANDOFF.md",
+      "reason": "Subject handoff and audit target."
+    }
+  ],
+  "filesCreated": [
+    {
+      "path": ".iacode/attestations/G4-CP-0008.json",
+      "reason": "Fresh-session failed Gate 4 audit attestation naming the immutable subject.",
+      "hashAfter": "9dce6a7cfc0ab27851da7553cea89fb76f0aae0e36e1a2a05731b53d104f8be4"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0008/ARCHITECTURE-REVIEW.json",
+      "reason": "Gate 4 independent audit evidence, assurance record, or handoff artifact.",
+      "hashAfter": "4f5f6da8f9bec851b1ff942cfa19d31c564effd07ee48e049632a06769a4614d"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0008/BASELINE.md",
+      "reason": "Gate 4 independent audit evidence, assurance record, or handoff artifact.",
+      "hashAfter": "775c6101a3628540587bbba14e1b2dab4d10d5235c3e6e8f34e98c3b7b60a83e"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0008/CLOSURE-REQUIREMENTS.json",
+      "reason": "Gate 4 independent audit evidence, assurance record, or handoff artifact.",
+      "hashAfter": "fab35048ecf1de7f5dc135619c8940aa43b8b2d42d76b0c61e265edc3725d60d"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0008/CLOSURE-REQUIREMENTS.md",
+      "reason": "Gate 4 independent audit evidence, assurance record, or handoff artifact.",
+      "hashAfter": "e181b4f9c6c28adcc0c3fe39bf77fe02dcbcc1029399585c6f18e18cd4211c2a"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0008/COMMANDS.jsonl",
+      "reason": "Gate 4 independent audit evidence, assurance record, or handoff artifact.",
+      "hashAfter": "f09e72930fa70f7763c49ea8034323482689b16b7ed70dee3974a810ba18e689"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0008/COMPLETENESS-REPORT.json",
+      "reason": "Gate 4 independent audit evidence, assurance record, or handoff artifact.",
+      "hashAfter": "9df9b9234783f4dbabadb6fe07330040d6da895972547f375debf269130e3e0f"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0008/COMPLETENESS-REPORT.md",
+      "reason": "Gate 4 independent audit evidence, assurance record, or handoff artifact.",
+      "hashAfter": "effc22c0d1512eb013ad3527bc8af121e109e20489318b7198938677031ed8dd"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0008/COMPOSE-ISOLATION-AUDIT.json",
+      "reason": "Gate 4 independent audit evidence, assurance record, or handoff artifact.",
+      "hashAfter": "dd2b5433483922c2591f3ffc9121ec6e0aa08f3b5439786e0e7d2ebd971e9fb8"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0008/COUNTS.json",
+      "reason": "Gate 4 independent audit evidence, assurance record, or handoff artifact.",
+      "hashAfter": "ed8dd64e017adf32d1f73e851444bd7f4762f701eaa378d76760b99011b51334"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0008/DECISIONS.md",
+      "reason": "Gate 4 independent audit evidence, assurance record, or handoff artifact.",
+      "hashAfter": "813cb1f0225d86d69db14f91f934aa8ace66118930dfc38b02aa8212242856b3"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0008/DIFF-SUMMARY.md",
+      "reason": "Gate 4 independent audit evidence, assurance record, or handoff artifact.",
+      "hashAfter": "aaad084324bbf9e7dcee8d59a5f0576bc2054ab69470331c6f6c6d8ac8d3bd63"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0008/FILES.json",
+      "reason": "Gate 4 independent audit evidence, assurance record, or handoff artifact."
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0008/FINAL-GATE-4-AUDIT-MATRIX.json",
+      "reason": "Gate 4 independent audit evidence, assurance record, or handoff artifact.",
+      "hashAfter": "408f504b57eb263e114c28339ca0ed8723d1b2dc09b9fbaf4956c1d67002720f"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0008/FINAL-GATE-4-AUDIT-MATRIX.md",
+      "reason": "Gate 4 independent audit evidence, assurance record, or handoff artifact.",
+      "hashAfter": "24186cfb5116c1a37a620e3347d58737586ef9a04c988ec449b60c2ae125342f"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0008/FINAL-REPORT.md",
+      "reason": "Gate 4 independent audit evidence, assurance record, or handoff artifact.",
+      "hashAfter": "65b85b5a47fc460ac36041ae267bb62d53a3500696e39de63e3ae3af52fc6dce"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0008/FINDINGS.json",
+      "reason": "Gate 4 independent audit evidence, assurance record, or handoff artifact.",
+      "hashAfter": "b7d69f06d5567e6ece5f14bd30e5546c704420eb8767c0f985017d1946308add"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0008/FUNCTIONAL-ACCEPTANCE-VALIDATION.json",
+      "reason": "Gate 4 independent audit evidence, assurance record, or handoff artifact.",
+      "hashAfter": "c55bbe6b79be4315870f409eacb0fc44da32d6ab5f68b286dd91b51bd28504a6"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0008/FUNCTIONAL-ACCEPTANCE.json",
+      "reason": "Gate 4 independent audit evidence, assurance record, or handoff artifact.",
+      "hashAfter": "e814cd0f86b095d0b1f4d0357f43b0c420f9bb675b0a842b3caf862d60daa338"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0008/G4-X7-INDEPENDENT-PROBE.json",
+      "reason": "Gate 4 independent audit evidence, assurance record, or handoff artifact.",
+      "hashAfter": "67d979e9eaaed40b2b4a45bd72174f2052ec0141bf8026adb471cf9f2137604b"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0008/GATE-4-INDEPENDENT-RED-TEAM.json",
+      "reason": "Gate 4 independent audit evidence, assurance record, or handoff artifact.",
+      "hashAfter": "f5e96502b00dec2cf556b65b2db0f8993157b21d274b1d70947545f95c874bfe"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0008/HANDOFF.md",
+      "reason": "Gate 4 independent audit evidence, assurance record, or handoff artifact.",
+      "hashAfter": "e7cb38a3382da557582b3eab2fa0377b6dd615774f20a6499b81eee94c6a412b"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0008/INDEPENDENT-RED-TEAM-REPORT.md",
+      "reason": "Gate 4 independent audit evidence, assurance record, or handoff artifact.",
+      "hashAfter": "08f4ed2888a48cdc23a3cd79b0fa10016b9708b429777a1944b42eba4c54594d"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0008/LESSON-PREFLIGHT.json",
+      "reason": "Gate 4 independent audit evidence, assurance record, or handoff artifact.",
+      "hashAfter": "9bf892e2799c2ca978fb9dbcdbe600ce1f73fa861a0ceb80502c574954255dc2"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0008/LESSON-PREFLIGHT.md",
+      "reason": "Gate 4 independent audit evidence, assurance record, or handoff artifact.",
+      "hashAfter": "f3aee580f2da4339e67da6fa4b505f62402c5b9d3413ee347c06534dba7bcd8c"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0008/M2-INTERNAL-MIRROR.json",
+      "reason": "Gate 4 independent audit evidence, assurance record, or handoff artifact.",
+      "hashAfter": "3b06632292ef6d80c229d90b7401b20db8913cd4708970cb693cf2d6b6ae8706"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0008/M2-INTERNAL-MIRROR.md",
+      "reason": "Gate 4 independent audit evidence, assurance record, or handoff artifact.",
+      "hashAfter": "55b99b0773d26ed439bb939fa341f7d291b6af7c9a3a2eabdb0d671639e8841f"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0008/M2-INTERNAL-RED-TEAM.json",
+      "reason": "Gate 4 independent audit evidence, assurance record, or handoff artifact.",
+      "hashAfter": "723905b111b516e079c54cf46a17dda9a6cbeeb6259f9478a0a75eeaa9191406"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0008/NEXT.md",
+      "reason": "Gate 4 independent audit evidence, assurance record, or handoff artifact.",
+      "hashAfter": "0e0a7f5bb80094589885da978fe9cbb0a8da11cebfd84fd254277ba17603a5a0"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0008/PLAN.md",
+      "reason": "Gate 4 independent audit evidence, assurance record, or handoff artifact.",
+      "hashAfter": "bfe3f638a66ff1ee1542d15835ab70f31d7a4e2114cac3501b062f891e32c5dc"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0008/PROVENANCE.json",
+      "reason": "Gate 4 independent audit evidence, assurance record, or handoff artifact.",
+      "hashAfter": "cf579e2a23c69adcb3a1e3e0e54fe54b0282ace86a2b756ebd663072e7ea6531"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0008/PUBLISHED-CLEAN-CLONE-REPORT.json",
+      "reason": "Gate 4 independent audit evidence, assurance record, or handoff artifact.",
+      "hashAfter": "b5198bf2e2131eba1c1a86696de2116f4aa57dda13a802ed78807d1e4f444919"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0008/QUALITY.json",
+      "reason": "Gate 4 independent audit evidence, assurance record, or handoff artifact.",
+      "hashAfter": "e561278f312b3becf5f399c5aae803b8a02164a6e8f9063f483302af5d921488"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0008/RED-TEAM-REPORT.md",
+      "reason": "Gate 4 independent audit evidence, assurance record, or handoff artifact.",
+      "hashAfter": "0b46a15e76f90248035ae641f6f8a8a064db76ebb4e7a811df8763a5e30c9653"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0008/REQUIREMENTS-MATRIX.json",
+      "reason": "Gate 4 independent audit evidence, assurance record, or handoff artifact.",
+      "hashAfter": "8216754d27733c7235309d20f902e2055fd5542e66f2f676fa9b8290e7a98132"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0008/REQUIREMENTS-MATRIX.md",
+      "reason": "Gate 4 independent audit evidence, assurance record, or handoff artifact.",
+      "hashAfter": "df3e8d56c29651ec1c6bf58891f7d4c42e847bb30d2a60fc19df74ec66e95dda"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0008/REVIEW-REPORT.md",
+      "reason": "Gate 4 independent audit evidence, assurance record, or handoff artifact.",
+      "hashAfter": "4e802f7e30055f254c8ebaeb65ead7477cf8bf95bb0235ff57c416ec4f7338a7"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0008/REWORK-LOG.jsonl",
+      "reason": "Gate 4 independent audit evidence, assurance record, or handoff artifact.",
+      "hashAfter": "37b143ec753e27be45f291a534e3a6f4a0b4578a1af391b03d612d60b2a4a222"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0008/RISKS.md",
+      "reason": "Gate 4 independent audit evidence, assurance record, or handoff artifact.",
+      "hashAfter": "2d5d3aa844a3a9aa7c2adf938f1404a1584fb54c09dd9f8adc28741104f245ae"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0008/RUN-METADATA.json",
+      "reason": "Gate 4 independent audit evidence, assurance record, or handoff artifact.",
+      "hashAfter": "365917ad5579d40b61bf81b258fc55874134c42206b027c609346cdf1cfa0f6b"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0008/STATE.json",
+      "reason": "Gate 4 independent audit evidence, assurance record, or handoff artifact.",
+      "hashAfter": "74ee69cb69dcbece91baff02e1a1b6d3fba39c7371ce57a97d4fdb45146cd3f3"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0008/STATUS.md",
+      "reason": "Gate 4 independent audit evidence, assurance record, or handoff artifact.",
+      "hashAfter": "f5e28c4d862256b143fb27ecf969d2104e13da790b01e86662e3642c24230504"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0008/SUBJECT-BUNDLE-AUDIT.json",
+      "reason": "Gate 4 independent audit evidence, assurance record, or handoff artifact.",
+      "hashAfter": "cb592c0e53dc93f02bf190b00797b24e0c6281eb1d09ab46ceaf3b313a8eaac2"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0008/SUBJECT-COUNTS-AUDIT.json",
+      "reason": "Gate 4 independent audit evidence, assurance record, or handoff artifact.",
+      "hashAfter": "8baadfd62bca3ca1a606480fd7ac890ab3d0f33ed09024efcfa39878d328b80e"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0008/SUBJECT-INVENTORY-AUDIT.json",
+      "reason": "Gate 4 independent audit evidence, assurance record, or handoff artifact.",
+      "hashAfter": "37f38fab6b53b4a22ecdfb091cfe32503bc33b2a5d69987f15b8d41f2ceee1b3"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0008/SUBJECT-MIRROR-AUDIT.json",
+      "reason": "Gate 4 independent audit evidence, assurance record, or handoff artifact.",
+      "hashAfter": "6f660fcb630f0df267500f90e0cb3939433bfc55e6b57afb3ad97fd2ebdb558d"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0008/TESTS.json",
+      "reason": "Gate 4 independent audit evidence, assurance record, or handoff artifact.",
+      "hashAfter": "9f2bca577ecdfbc30c49083772c92e796d47451ab9b0afe6f239a9e87e410eb2"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0008/TRANSPORT-ATTACKS.json",
+      "reason": "Gate 4 independent audit evidence, assurance record, or handoff artifact.",
+      "hashAfter": "9a53994e29106c6053939da1decc17b29537820389dfbf92fe980377f1190e5f"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0008/VERIFICATION-REPORT.json",
+      "reason": "Gate 4 independent audit evidence, assurance record, or handoff artifact.",
+      "hashAfter": "2611f350092b713435914701bb747b7b76a26e8636332f2c7fd45b2af345aa79"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0008/VERIFIER-RUNTIME-REPORTS.json",
+      "reason": "Gate 4 independent audit evidence, assurance record, or handoff artifact.",
+      "hashAfter": "e0a76a8c272efea524c971889f87e839b027bedc61328945ca5cce8b654ffb87"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0008/audit-harness/architecture_review.py",
+      "reason": "Reproducible audit-owned harness; it does not alter product behavior.",
+      "hashAfter": "223edd793f63f3994d2152c47bf88a0940f048ddc989f5357c51a45e80f5aaf2"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0008/audit-harness/build_rework_artifacts.py",
+      "reason": "Reproducible audit-owned harness; it does not alter product behavior.",
+      "hashAfter": "0fc8e6bfbbc1d119a9652c37050844102b3acd1cdfdf4d928f69750277fffdaa"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0008/audit-harness/bundle_subject_audit.py",
+      "reason": "Reproducible audit-owned harness; it does not alter product behavior.",
+      "hashAfter": "0ef4923bc6b4d3f32bfcd88715403a04209a1ebe65ed156bc1464ecf8ea70819"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0008/audit-harness/clean_clone.py",
+      "reason": "Reproducible audit-owned harness; it does not alter product behavior.",
+      "hashAfter": "830663404eb65ba5583b7eeb2019023ef7ecc82d33ae3623c225ee6f571726ef"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0008/audit-harness/collect_verifier_runtime_reports.py",
+      "reason": "Reproducible audit-owned harness; it does not alter product behavior.",
+      "hashAfter": "ee38f17e442828c9424d9e95a57232433cfcb6c5f75b7c32d0eada10e79ae270"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0008/audit-harness/complete_requirements.py",
+      "reason": "Reproducible audit-owned harness; it does not alter product behavior.",
+      "hashAfter": "086d270d56774832f81aeffbbe3753af014ce9dc894ea008278ccdd2cd50a661"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0008/audit-harness/declare_inventory.py",
+      "reason": "Reproducible audit-owned harness; it does not alter product behavior.",
+      "hashAfter": "6eb64347ea14471d582d356ced57c24cada96ffaa5cc7ff8675128ed6ef1a1b6"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0008/audit-harness/independent_red_team.py",
+      "reason": "Reproducible audit-owned harness; it does not alter product behavior.",
+      "hashAfter": "3c8b58dca8c9ad5dc4507864b645294b7773789c95ec0f79d8c1f98cbace3aff"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0008/audit-harness/run_g4x7_probe.py",
+      "reason": "Reproducible audit-owned harness; it does not alter product behavior.",
+      "hashAfter": "b4f30e11be5604e43e0b354ca2d4c38e590af2c5ca5f79a81c5cc96992cdfa78"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0008/audit-harness/run_internal_red_team.py",
+      "reason": "Reproducible audit-owned harness; it does not alter product behavior.",
+      "hashAfter": "ea359356cd15283ec72289f76b088916b4c8c4460bab0316d7af7f17a8fc4c3e"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0008/audit-harness/run_published_full_verification.py",
+      "reason": "Reproducible audit-owned harness; it does not alter product behavior.",
+      "hashAfter": "da3e97634d3ae2b6588fbf7420e0179e04f322792f8ecfdb624c1e3e0d0f21e9"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0008/audit-harness/subject_counts_audit.py",
+      "reason": "Reproducible audit-owned harness; it does not alter product behavior.",
+      "hashAfter": "d7c3e218fc50c18d73e41ef0e8acdeb45cb4666846a0ea633b0ccaf4002f5637"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0008/audit-harness/subject_inventory_audit.py",
+      "reason": "Reproducible audit-owned harness; it does not alter product behavior.",
+      "hashAfter": "063dbd4a75ebe06f63ba15e29a39b2550b3d7f3c9bf8bbfad7417d62658c3015"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0008/audit-harness/subject_mirror_audit.py",
+      "reason": "Reproducible audit-owned harness; it does not alter product behavior.",
+      "hashAfter": "ac2d74cc49c48f0af1bf23db5d62c3d324ae9d7f6a3fcf230e495a0074276b1e"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0008/audit-harness/transport_attacks.py",
+      "reason": "Reproducible audit-owned harness; it does not alter product behavior.",
+      "hashAfter": "ef5fb209e7d305de02bc36c79b32c9735877eb183b6d44ba587b2f3d15fa990e"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0008/audit-harness/write_rework_metadata.py",
+      "reason": "Reproducible audit-owned harness; it does not alter product behavior.",
+      "hashAfter": "c5138241a360316dc2f2b916a72f5bdd031bf628f942dc625a5d21ca17bc7133"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0008/runtime-reports/quality-cancellation.json",
+      "reason": "Gate 4 independent audit evidence, assurance record, or handoff artifact.",
+      "hashAfter": "c4b538844e20475b180a0cbb092638593a1023fc1f5658de50683ad3dc90aa57"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0008/runtime-reports/quality-recovery.json",
+      "reason": "Gate 4 independent audit evidence, assurance record, or handoff artifact.",
+      "hashAfter": "5afa34bbe0da17cb7aea034a4602918b5b62ba88e5f8a263582cc9c325418dd0"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0008/runtime-reports/quality-timeout.json",
+      "reason": "Gate 4 independent audit evidence, assurance record, or handoff artifact.",
+      "hashAfter": "9797270b541ef5eaa5e4996aa6128bd7b70b2300361d899cb3effdc151b130d4"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0008/runtime-reports/sandbox-tool-result-origin.json",
+      "reason": "Gate 4 independent audit evidence, assurance record, or handoff artifact.",
+      "hashAfter": "a3c533a411b507847525e24e2e1f1e605f94dff069c4c4b03fabf766a93a257e"
+    }
+  ],
+  "filesModified": [
+    {
+      "path": ".iacode/anchors/checkpoint-chain.json",
+      "reason": "Integrity chain rebuilt to anchor sealed CP0007 before auditing it.",
+      "hashBefore": "7c330d8562cb2665d5446bfc62b1bb450b391040e94e8999076b55d0448b906d",
+      "hashAfter": "6c36d0cb15ceddfd7c0b9252503949b3c3ff73656da849d462db943eb0a3ced4"
+    },
+    {
+      "path": "docs/checkpoints/LATEST.md",
+      "reason": "Canonical pointer advanced to the independent Gate 4 audit checkpoint.",
+      "hashBefore": "b98b94f8cd4409ff5a8ce787b368507c7ee373f49977540888c0fc7ec1b0f791",
+      "hashAfter": "1cae355e0bb64e4338d24ec8f629c332852007949a6c08a8ea86715a004c3fd8"
+    }
+  ],
+  "filesDeleted": []
+}

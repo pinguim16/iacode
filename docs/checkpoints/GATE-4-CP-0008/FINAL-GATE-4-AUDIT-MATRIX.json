@@ -1,0 +1,217 @@
+{
+  "schemaVersion": "1.0.0",
+  "artifact": "FINAL-GATE-4-AUDIT-MATRIX",
+  "checkpoint": "GATE-4-CP-0008",
+  "subjectCheckpoint": "GATE-4-CP-0007",
+  "subjectCommit": "e21d30fde473f302d0f8f60b59acf008fa52e250",
+  "generatedAt": "2026-10-12T12:09:50.740319Z",
+  "criteria": [
+    {
+      "criterion": "G4A-01",
+      "title": "Sealed subject identity",
+      "result": "PASS",
+      "observed": "tag/origin/HEAD=e21d30fde473f302d0f8f60b59acf008fa52e250",
+      "evidence": [
+        "file:SUBJECT-INVENTORY-AUDIT.json"
+      ]
+    },
+    {
+      "criterion": "G4A-02",
+      "title": "Published checkpoint and Git integrity",
+      "result": "PASS",
+      "observed": "files=41 commands=62",
+      "evidence": [
+        "file:SUBJECT-INVENTORY-AUDIT.json"
+      ]
+    },
+    {
+      "criterion": "G4A-03",
+      "title": "Single full verifier",
+      "result": "PASS",
+      "observed": "stages=42/42",
+      "evidence": [
+        "file:PUBLISHED-CLEAN-CLONE-REPORT.json",
+        "file:VERIFICATION-REPORT.json"
+      ]
+    },
+    {
+      "criterion": "G4A-04",
+      "title": "No verifier retry",
+      "result": "PASS",
+      "observed": "invocation=1 retry=0 rerun=False",
+      "evidence": [
+        "file:PUBLISHED-CLEAN-CLONE-REPORT.json"
+      ]
+    },
+    {
+      "criterion": "G4A-05",
+      "title": "Compose isolation and cleanup",
+      "result": "PASS",
+      "observed": "project=iacode-verify-67b6ff3ce117 sharedUnchanged=True ownedRemoved=True",
+      "evidence": [
+        "file:COMPOSE-ISOLATION-AUDIT.json"
+      ]
+    },
+    {
+      "criterion": "G4A-06",
+      "title": "Requirements",
+      "result": "PASS",
+      "observed": "201/201",
+      "evidence": [
+        "file:SUBJECT-COUNTS-AUDIT.json"
+      ]
+    },
+    {
+      "criterion": "G4A-07",
+      "title": "Tests",
+      "result": "PASS",
+      "observed": "1709/1709",
+      "evidence": [
+        "file:SUBJECT-COUNTS-AUDIT.json",
+        "file:VERIFICATION-REPORT.json"
+      ]
+    },
+    {
+      "criterion": "G4A-08",
+      "title": "Guardrails",
+      "result": "PASS",
+      "observed": "97/97; zero unresolved guardrail failures",
+      "evidence": [
+        "file:SUBJECT-COUNTS-AUDIT.json"
+      ]
+    },
+    {
+      "criterion": "G4A-09",
+      "title": "Green Keeper",
+      "result": "PASS",
+      "observed": "13/13 subject gates",
+      "evidence": [
+        "file:SUBJECT-COUNTS-AUDIT.json"
+      ]
+    },
+    {
+      "criterion": "G4A-10",
+      "title": "Prior findings",
+      "result": "PASS",
+      "observed": "G4-F-001, G4-F-002, G4-F-003",
+      "evidence": [
+        "file:SUBJECT-COUNTS-AUDIT.json"
+      ]
+    },
+    {
+      "criterion": "G4A-11",
+      "title": "Internal mirror evidence",
+      "result": "PASS",
+      "observed": "passed=17/18 notApplicable=1; internal evidence only",
+      "evidence": [
+        "file:SUBJECT-MIRROR-AUDIT.json"
+      ]
+    },
+    {
+      "criterion": "G4A-12",
+      "title": "Architecture and Gate scope",
+      "result": "PASS",
+      "observed": "12/12",
+      "evidence": [
+        "file:ARCHITECTURE-REVIEW.json"
+      ]
+    },
+    {
+      "criterion": "G4A-13",
+      "title": "G4-X7 secret containment",
+      "result": "PASS",
+      "observed": "ERROR, FAIL, objects=0, metadata=0",
+      "evidence": [
+        "file:G4-X7-INDEPENDENT-PROBE.json"
+      ]
+    },
+    {
+      "criterion": "G4A-14",
+      "title": "G4-X7 scanner unavailable",
+      "result": "PASS",
+      "observed": "ERROR, FAIL, objects=0, metadata=0",
+      "evidence": [
+        "file:G4-X7-INDEPENDENT-PROBE.json"
+      ]
+    },
+    {
+      "criterion": "G4A-15",
+      "title": "G4-X7 legacy object",
+      "result": "PASS",
+      "observed": "resolution refused after re-scan; verdict FAIL",
+      "evidence": [
+        "file:G4-X7-INDEPENDENT-PROBE.json"
+      ]
+    },
+    {
+      "criterion": "G4A-16",
+      "title": "Command-input transport",
+      "result": "PASS",
+      "observed": ".git, absolute temporary and ignored refused; untracked local-only refused at validation",
+      "evidence": [
+        "file:TRANSPORT-ATTACKS.json"
+      ]
+    },
+    {
+      "criterion": "G4A-17",
+      "title": "Bundle deterministic rebuild",
+      "result": "PASS",
+      "observed": "rebuilt=['07bb328a4316297d0b6bd2df986c7b5f5fb41b30c8b2fb58cd99a8d96c24c168', '07bb328a4316297d0b6bd2df986c7b5f5fb41b30c8b2fb58cd99a8d96c24c168']",
+      "evidence": [
+        "file:SUBJECT-BUNDLE-AUDIT.json"
+      ]
+    },
+    {
+      "criterion": "G4A-18",
+      "title": "Bundle portable validation",
+      "result": "PASS",
+      "observed": "both rebuilt archives secret-clean, manifest-complete and portable",
+      "evidence": [
+        "file:SUBJECT-BUNDLE-AUDIT.json"
+      ]
+    },
+    {
+      "criterion": "G4A-19",
+      "title": "Declared bundle reconstructibility",
+      "result": "FAIL",
+      "observed": "declared=8856ce50acebfa02528ad318247c22e6e460c224eb62774c99a35cb5cd734578 rebuilt=['07bb328a4316297d0b6bd2df986c7b5f5fb41b30c8b2fb58cd99a8d96c24c168', '07bb328a4316297d0b6bd2df986c7b5f5fb41b30c8b2fb58cd99a8d96c24c168']; declaredSize=562710 rebuiltSize=751518",
+      "evidence": [
+        "file:SUBJECT-BUNDLE-AUDIT.json",
+        "file:docs/checkpoints/GATE-4-CP-0007/REVIEW-BUNDLE-VALIDATION.json"
+      ]
+    },
+    {
+      "criterion": "G4A-20",
+      "title": "Independent Red Team control",
+      "result": "PASS",
+      "observed": "VALID",
+      "evidence": [
+        "file:GATE-4-INDEPENDENT-RED-TEAM.json"
+      ]
+    },
+    {
+      "criterion": "G4A-21",
+      "title": "Independent Red Team A-T",
+      "result": "FAIL",
+      "observed": "19/20 defended; T escaped",
+      "evidence": [
+        "file:GATE-4-INDEPENDENT-RED-TEAM.json"
+      ]
+    },
+    {
+      "criterion": "G4A-22",
+      "title": "Independent review",
+      "result": "FAIL",
+      "observed": "HIGH G4-F-004 blocks approval",
+      "evidence": [
+        "file:FINDINGS.json",
+        "file:REVIEW-REPORT.md"
+      ]
+    }
+  ],
+  "passed": 19,
+  "failed": 3,
+  "notExecuted": 0,
+  "total": 22,
+  "result": "REWORK_REQUIRED"
+}
