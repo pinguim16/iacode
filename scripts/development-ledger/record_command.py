@@ -19,6 +19,7 @@ from ledger_common import (
     LedgerError,
     append_command_record,
     build_command_record,
+    command_input_transport_error,
     command_replay_errors,
     find_root,
     git_snapshot,
@@ -47,19 +48,21 @@ def _detect_inputs(root: Path, arguments: list[str]) -> list[str]:
             # A path Git ignores is a generated artifact, not an input the repository carries.
             # Declaring one makes the record unreplayable from a checkout, which is how six of
             # GATE-0-CP-0001's records named a file no clone has (G1-F-007).
-            if _git_ignores(root, value):
+            if command_input_transport_error(root, value) is not None:
                 continue
             if value not in inputs:
                 inputs.append(value)
     return inputs
 
 
-def _git_ignores(root: Path, reference: str) -> bool:
-    """Whether Git deliberately does not carry ``reference``."""
-    completed = subprocess.run(
-        ["git", "check-ignore", "--quiet", "--no-index", reference],
-        cwd=root, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=False)
-    return completed.returncode == 0
+def _explicit_input_errors(root: Path, references: list[str]) -> list[str]:
+    """Reject a caller attempt to turn local output into published command input."""
+    errors: list[str] = []
+    for reference in references:
+        reason = command_input_transport_error(root, reference)
+        if reason is not None:
+            errors.append(f"declared input {reference!r} is not transportable: {reason}")
+    return errors
 
 
 def main() -> int:
@@ -103,9 +106,11 @@ def main() -> int:
     # refused here instead, and the refusal is recorded: an operation that was attempted and
     # declined stays visible, without an exit code, because no process was launched. `LSN-0003`.
     command = " ".join(argv)
-    replay_errors = command_replay_errors(root, command)
+    command_errors = command_replay_errors(root, command)
     if subject_error:
-        replay_errors.append(subject_error)
+        command_errors.append(subject_error)
+    input_errors = _explicit_input_errors(root, args.input)
+    replay_errors = command_errors + input_errors
     if replay_errors:
         snapshot = git_snapshot(root)
         record = build_command_record(
@@ -118,14 +123,28 @@ def main() -> int:
             else runtime_label("python"),
             inputs=[],
             result="PRECONDITION_REJECTED",
-            result_code="E_UNREPLAYABLE_COMMAND",
+            result_code=("E_UNREPLAYABLE_COMMAND" if command_errors else "E_NONTRANSPORT_INPUT"),
             exit_code=None,
             duration_ms=0,
             operation=args.operation,
             phase=args.phase,
-            preconditions=[{"name": "command-is-replayable", "expected": "no replay error",
-                            "observed": message, "satisfied": False}
-                           for message in replay_errors],
+            preconditions=[
+                {
+                    "name": (
+                        "command-is-replayable"
+                        if message in command_errors
+                        else "command-input-is-transportable"
+                    ),
+                    "expected": (
+                        "no replay error"
+                        if message in command_errors
+                        else "every declared input is eligible for Git transport"
+                    ),
+                    "observed": message,
+                    "satisfied": False,
+                }
+                for message in replay_errors
+            ],
             failure_reason="; ".join(replay_errors),
             subject_commit=subject_commit or snapshot["head"],
             repository_state={
@@ -136,7 +155,8 @@ def main() -> int:
             },
         )
         identifier = append_command_record(checkpoint / "COMMANDS.jsonl", record)
-        print(f"[ledger {identifier}] PRECONDITION_REJECTED E_UNREPLAYABLE_COMMAND: "
+        result_code = "E_UNREPLAYABLE_COMMAND" if command_errors else "E_NONTRANSPORT_INPUT"
+        print(f"[ledger {identifier}] PRECONDITION_REJECTED {result_code}: "
               + "; ".join(replay_errors))
         return 2
 

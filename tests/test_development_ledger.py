@@ -1457,6 +1457,66 @@ class CommandReproducibilityTests(unittest.TestCase):
         errors = self._errors(result="PRECONDITION_REJECTED", resultCode="E_DETACHED_HEAD", exitCode=None)
         self.assertTrue(any("requires a failureReason" in error for error in errors), errors)
 
+    def test_a_nontransport_input_refusal_is_recomputed_from_its_precondition(self) -> None:
+        observed = (
+            "declared input '.git/review.zip' is not transportable: "
+            "Git metadata is never carried in a checkout"
+        )
+        errors = self._errors(
+            result="PRECONDITION_REJECTED",
+            resultCode="E_NONTRANSPORT_INPUT",
+            exitCode=None,
+            failureReason=observed,
+            preconditions=[{
+                "name": "command-input-is-transportable",
+                "expected": "every declared input is eligible for Git transport",
+                "observed": observed,
+                "satisfied": False,
+            }],
+        )
+
+        self.assertEqual(errors, [])
+
+    def test_a_fabricated_nontransport_input_refusal_is_rejected(self) -> None:
+        observed = (
+            "declared input 'scripts/development-ledger/validate_checkpoint.py' is not "
+            "transportable: fabricated"
+        )
+        errors = self._errors(
+            result="PRECONDITION_REJECTED",
+            resultCode="E_NONTRANSPORT_INPUT",
+            exitCode=None,
+            failureReason=observed,
+            preconditions=[{
+                "name": "command-input-is-transportable",
+                "expected": "every declared input is eligible for Git transport",
+                "observed": observed,
+                "satisfied": False,
+            }],
+        )
+
+        self.assertTrue(any("no recorded input still violates" in error for error in errors), errors)
+
+    def test_the_first_transport_refusal_record_keeps_valid_legacy_classification(self) -> None:
+        observed = (
+            "declared input '.git/HEAD' is not transportable: "
+            "Git metadata is never carried in a checkout"
+        )
+        errors = self._errors(
+            result="PRECONDITION_REJECTED",
+            resultCode="E_UNREPLAYABLE_COMMAND",
+            exitCode=None,
+            failureReason=observed,
+            preconditions=[{
+                "name": "command-is-replayable",
+                "expected": "no replay error",
+                "observed": observed,
+                "satisfied": False,
+            }],
+        )
+
+        self.assertEqual(errors, [])
+
     def test_completed_record_requires_an_exit_code(self) -> None:
         errors = self._errors(exitCode=None)
         self.assertTrue(any("requires an integer exitCode" in error for error in errors), errors)

@@ -1,0 +1,57 @@
+{
+  "schemaVersion": "1.0.0",
+  "checkpoint": "GATE-4-CP-0007",
+  "auditId": "G4-CP-0006-PUBLICATION",
+  "source": "DIVERGENCE.md",
+  "findings": [
+    {
+      "findingId": "G4-F-003",
+      "severity": "HIGH",
+      "title": "Published checkpoint evidence names a non-transportable input",
+      "originalExpected": "A canonical checkpoint tag must validate from a fresh remote transport clone without depending on repository metadata, ignored output or producer-local temporary files.",
+      "originalObserved": "GATE-4-CP-0006 validated locally but failed from its published canonical tag because COMMANDS.jsonl cmd-0061 declared .git/gate4-cp0006-pre-red-retry.zip as an input.",
+      "rootCause": "The recorder and validator delegated generated-input classification to git check-ignore, which does not classify Git's own metadata namespace. Validation also accepted local presence before transportability, and explicit or directly constructed input lists could bypass auto-detection.",
+      "implementation": [
+        "Checkpoint schema 3.3.0 adds a forward-only invariant that every declared command input is eligible for Git transport.",
+        "One shared classifier rejects Git metadata, ignored output, absolute paths and repository escapes for auto-detection, explicit inputs and checkpoint validation.",
+        "The recorder rejects an explicit local-only input before execution and records the refused attempt with a dedicated result code.",
+        "Schemas through 3.2.0 retain digest-bound compatibility for immutable generated inputs, so current tooling can audit sealed predecessors without rewriting them.",
+        "The corrective checkpoint carries validation reports and digests while generated review ZIPs remain outputs outside the input set."
+      ],
+      "regressionTest": [
+        "test_git_metadata_is_local_even_though_git_check_ignore_does_not_classify_it",
+        "test_schema_3_3_refuses_a_digest_bound_git_metadata_input",
+        "test_schema_3_3_refuses_an_ignored_input_even_when_it_exists",
+        "test_the_recorder_excludes_git_metadata_and_refuses_it_when_explicit",
+        "test_a_nontransport_input_refusal_is_recomputed_from_its_precondition",
+        "test_a_fabricated_nontransport_input_refusal_is_rejected",
+        "test_every_sealed_checkpoint_validates_from_its_own_tag"
+      ],
+      "negativeTest": [
+        "cmd-0005 preserves the original remote-clone failure under CP0006's tag-carried validator.",
+        "cmd-0010 records the expected E_NONTRANSPORT_INPUT refusal for an explicit .git/HEAD input before the child command starts.",
+        "CP0006 and its canonical tag remain unchanged."
+      ],
+      "verificationCommand": "python docs/checkpoints/GATE-4-CP-0007/audit-harness/transport_checkpoint_validation.py --tag iacode-checkpoints/GATE-4-CP-0006 --expected-commit dfa2871c4fcecf9eedd7df9f135a5cfcdebce9d5 --validator scripts/development-ledger/validate_checkpoint.py --report docs/checkpoints/GATE-4-CP-0007/CP0006-CURRENT-TOOL-REMOTE-TRANSPORT.json",
+      "evidence": [
+        "checkpoint:CP0006-REMOTE-TRANSPORT-BASELINE.json",
+        "checkpoint:CP0006-CURRENT-TOOL-REMOTE-TRANSPORT.json",
+        "command:cmd-0009",
+        "command:cmd-0014",
+        "file:DIVERGENCE.md",
+        "file:docs/adr/ADR-0034-command-inputs-must-cross-git-transport.md",
+        "file:scripts/development-ledger/ledger_common.py",
+        "file:scripts/development-ledger/record_command.py",
+        "file:scripts/development-ledger/validate_checkpoint.py",
+        "file:tests/test_development_ledger.py",
+        "file:tests/test_gate1_model_gateway.py"
+      ],
+      "lesson": "LSN-0040",
+      "guardrail": "GRD-0042",
+      "status": "CLOSED"
+    }
+  ],
+  "total": 1,
+  "closed": 1,
+  "result": "CLOSED"
+}

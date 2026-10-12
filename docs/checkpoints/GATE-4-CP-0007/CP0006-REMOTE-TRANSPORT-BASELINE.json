@@ -1,0 +1,14 @@
+{
+  "schemaVersion": "1.0.0",
+  "artifact": "PUBLISHED-CHECKPOINT-TRANSPORT-VALIDATION",
+  "generatedAt": "2026-10-12T02:40:38.261006Z",
+  "source": "https://github.com/pinguim16/iacode.git",
+  "tag": "iacode-checkpoints/GATE-4-CP-0006",
+  "expectedCommit": "dfa2871c4fcecf9eedd7df9f135a5cfcdebce9d5",
+  "observedCommit": "dfa2871c4fcecf9eedd7df9f135a5cfcdebce9d5",
+  "cloneExitCode": 0,
+  "checkoutExitCode": 0,
+  "validationExitCode": 1,
+  "validationOutput": "CHECKPOINT_INVALID\n- COMMANDS.jsonl:61: recorded input does not exist: .git/gate4-cp0006-pre-red-retry.zip",
+  "result": "FAIL"
+}

@@ -1,0 +1,154 @@
+{
+  "schemaVersion": "3.3.0",
+  "phase": "Gate 4 corrective delivery for published checkpoint transport portability",
+  "gate": "GATE-4",
+  "status": "READY_FOR_REVIEW",
+  "branch": "main",
+  "baseCommit": "dfa2871c4fcecf9eedd7df9f135a5cfcdebce9d5",
+  "currentCommit": "refs/tags/iacode-checkpoints/GATE-4-CP-0007",
+  "dirty": false,
+  "startedAt": "2026-10-12T02:37:05Z",
+  "updatedAt": "2026-10-12T10:02:57Z",
+  "nextAllowedAction": "A later independent run may review sealed GATE-4-CP-0007; do not start Gate 5 and do not grant GATE_PASS in this implementing run.",
+  "blockedBy": [],
+  "secondToolValidation": {
+    "status": "PENDING_MANUAL",
+    "tool": null,
+    "provider": null,
+    "model": null,
+    "validatedAt": null,
+    "justification": null,
+    "evidence": []
+  },
+  "requirementsMatrix": {
+    "path": "REQUIREMENTS-MATRIX.json",
+    "total": 201,
+    "mandatory": 199,
+    "complete": 201,
+    "partial": 0,
+    "missing": 0,
+    "notApplicable": 0,
+    "coveragePercent": 100.0
+  },
+  "greenKeeper": {
+    "status": "PASS",
+    "cycles": 3,
+    "remainingFailures": 0,
+    "unresolvedReworkItems": 0,
+    "log": "REWORK-LOG.jsonl",
+    "externalBlockers": [],
+    "evidence": [
+      "checkpoint:REWORK-LOG.jsonl",
+      "command:cmd-0037",
+      "command:cmd-0038",
+      "command:cmd-0039",
+      "command:cmd-0040",
+      "command:cmd-0041",
+      "command:cmd-0042",
+      "command:cmd-0043",
+      "command:cmd-0044",
+      "command:cmd-0045",
+      "command:cmd-0046",
+      "command:cmd-0047",
+      "command:cmd-0048",
+      "command:cmd-0049"
+    ],
+    "requiredGates": [
+      "tests",
+      "staticAnalysis",
+      "lessons",
+      "integrity",
+      "checkpointValidation",
+      "apiTests",
+      "gatewayTests",
+      "agentRuntimeTests",
+      "sandboxTests",
+      "evaluatorTests",
+      "webTests",
+      "lint",
+      "infraDefinition"
+    ]
+  },
+  "deliveryCompleteness": {
+    "status": "PASS",
+    "report": "COMPLETENESS-REPORT.json",
+    "coveragePercent": 100.0,
+    "evidenceCoveragePercent": 100.0,
+    "auditor": "same-session Delivery Completeness Validator; audit only, not independent Gate approval",
+    "evidence": [
+      "file:COMPLETENESS-REPORT.json",
+      "command:cmd-0050"
+    ]
+  },
+  "reworkCycles": 3,
+  "independentReview": {
+    "status": "PENDING",
+    "tool": null,
+    "reviewedAt": null,
+    "justification": null,
+    "evidence": []
+  },
+  "redTeam": {
+    "status": "PENDING",
+    "tool": null,
+    "executedAt": null,
+    "justification": null,
+    "evidence": []
+  },
+  "lessonPreflight": {
+    "path": "LESSON-PREFLIGHT.json",
+    "gate": "GATE-4",
+    "scope": "corrective checkpoint transport portability",
+    "lessonsConsidered": 96,
+    "lessonsApplicable": 95,
+    "derivedRequirements": 95,
+    "fingerprint": "799d2019d1f5c2dd2369a1bcb62303cfd897cb31cc1d5b580e2fe2ededd4244b",
+    "evidence": [
+      "checkpoint:LESSON-PREFLIGHT.json",
+      "command:cmd-0011"
+    ]
+  },
+  "milestone": {
+    "id": "M2",
+    "title": "IACode V0 completion and experience",
+    "gates": [
+      "GATE 4",
+      "GATE 5",
+      "GATE 6",
+      "GATE 7"
+    ],
+    "status": "PENDING",
+    "auditor": null,
+    "auditedAt": null,
+    "evidence": []
+  },
+  "externalAuditRequired": false,
+  "externalAuditReason": null,
+  "guardrailEffectiveness": {
+    "guardrailsTotal": 97,
+    "guardrailsResolved": 97,
+    "guardrailsTested": 97,
+    "guardrailsEffective": 97,
+    "guardrailFailures": 0,
+    "evidence": [
+      "file:.iacode/memory/guardrails/registry.json",
+      "command:cmd-0013",
+      "command:cmd-0039"
+    ]
+  },
+  "integrity": {
+    "status": "PASS",
+    "anchors": 29,
+    "chainFile": ".iacode/anchors/checkpoint-chain.json",
+    "evidence": [
+      "file:.iacode/anchors/checkpoint-chain.json",
+      "command:cmd-0017"
+    ]
+  },
+  "externalAttestation": {
+    "status": "NONE",
+    "path": null,
+    "auditId": null,
+    "evidence": []
+  }
+}

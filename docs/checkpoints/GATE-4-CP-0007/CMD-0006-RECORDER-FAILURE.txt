@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "E:\\iacode\\scripts\\development-ledger\\record_command.py", line 195, in <module>
+    sys.exit(main())
+             ~~~~^^
+  File "E:\\iacode\\scripts\\development-ledger\\record_command.py", line 155, in main
+    completed = subprocess.run(
+                ^^^^^^^^^^
+NameError: name 'subprocess' is not defined. Did you forget to import 'subprocess'?

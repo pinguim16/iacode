@@ -613,12 +613,18 @@
         "test_a_published_clone_carries_only_what_a_published_reference_reaches",
         "test_every_clone_in_the_tooling_and_the_suite_is_a_published_clone",
         "test_a_preserved_reference_missing_from_the_remote_fails_unnamed",
-        "test_a_preserved_commit_maps_to_the_checkpoint_whose_evidence_names_it"
+        "test_a_preserved_commit_maps_to_the_checkpoint_whose_evidence_names_it",
+        "test_git_metadata_is_local_even_though_git_check_ignore_does_not_classify_it",
+        "test_schema_3_3_refuses_a_digest_bound_git_metadata_input",
+        "test_schema_3_3_refuses_an_ignored_input_even_when_it_exists",
+        "test_the_recorder_excludes_git_metadata_and_refuses_it_when_explicit",
+        "test_a_nontransport_input_refusal_is_recomputed_from_its_precondition",
+        "test_a_fabricated_nontransport_input_refusal_is_rejected"
       ],
       "lessons": [
         "LSN-0040"
       ],
-      "removingItWouldAllow": "A sealed checkpoint to stop validating from its own tag, or to validate only on the machine whose object store still holds a commit no published reference reaches, without anything noticing until a clone of the remote is verified (M1-F-003)."
+      "removingItWouldAllow": "A sealed checkpoint to stop validating from its own tag, to depend on a generated input that Git transport cannot carry, or to validate only on the machine whose object store still holds unpublished state, without anything noticing until a clone of the remote is verified (M1-F-003 and G4-F-003)."
     },
     {
       "guardrailId": "GRD-0043",

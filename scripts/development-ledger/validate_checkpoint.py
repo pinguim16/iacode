@@ -56,6 +56,7 @@ from ledger_common import (
     blob_hash,
     canonical_hash_path,
     command_replay_errors,
+    command_input_transport_error,
     find_root,
     find_secrets,
     git_delta,
@@ -69,6 +70,8 @@ from ledger_common import (
     run_git,
     scope_fingerprint,
     validate_schema,
+    is_generated_local_input,
+    TRANSPORT_SCHEMA_VERSIONS,
 )
 
 # Schema versions whose FILES.json is a hash-bound description of the real change set.
@@ -402,12 +405,29 @@ def _validate_empty_project_inventory(root: Path, files: Any, files_path: Path, 
             errors.append(f"FILES.json created entry lacks hashAfter: {item.get('path')}")
 
 
+def _recorded_transport_refusal_is_valid(root: Path, record: dict[str, Any]) -> bool:
+    """Recompute a recorder refusal without turning the refused path into an ``inputs`` entry."""
+    for precondition in record.get("preconditions") or []:
+        if not isinstance(precondition, dict) or precondition.get("satisfied") is not False:
+            continue
+        observed = str(precondition.get("observed") or "")
+        match = re.search(
+            r"declared input (?P<quote>['\"])(?P<path>.+?)(?P=quote) "
+            r"is not transportable:",
+            observed,
+        )
+        if match and command_input_transport_error(root, match.group("path")) is not None:
+            return True
+    return False
+
+
 def _validate_command_reproducibility(
     root: Path,
     record: dict[str, Any],
     line_number: int,
     errors: list[str],
     bind_inputs: bool = False,
+    strict_transport_inputs: bool = False,
 ) -> None:
     """R3.2 and RT-02: a recorded command must be auditable and runnable where it says it ran."""
     prefix = f"COMMANDS.jsonl:{line_number}"
@@ -438,10 +458,16 @@ def _validate_command_reproducibility(
         # that cannot be replayed; nothing ran, and with no exit code it can never be evidence of
         # a PASS. What must hold is that the shared rule really refuses it: a replayable command
         # recorded as refused would be a false record of an operation that was never attempted.
-        if not replay_errors:
+        if not replay_errors and not _recorded_transport_refusal_is_valid(root, record):
             errors.append(
                 f"{prefix}: recorded as refused for being unreplayable, but the replay rule "
                 f"does not refuse {command!r}")
+        return
+    if result == "PRECONDITION_REJECTED" and record.get("resultCode") == "E_NONTRANSPORT_INPUT":
+        if not _recorded_transport_refusal_is_valid(root, record):
+            errors.append(
+                f"{prefix}: recorded as refused for a non-transportable input, but no recorded "
+                "input still violates the shared Git transport rule")
         return
     for message in replay_errors:
         errors.append(f"{prefix}: {message}")
@@ -452,6 +478,12 @@ def _validate_command_reproducibility(
         for item in (record.get("inputsDigest") or []) if isinstance(item, dict)
     }
     for reference in inputs:
+        transport_error = command_input_transport_error(root, reference)
+        if strict_transport_inputs and transport_error is not None:
+            errors.append(
+                f"{prefix}: declared input is not carried by Git transport: {reference} "
+                f"({transport_error})")
+            continue
         if (root / reference).exists():
             continue
         # A path the repository deliberately does not carry cannot be required to be present in a
@@ -1500,8 +1532,7 @@ def path_is_ignored(root: Path, reference: str) -> bool:
     """
     key = (str(root.resolve()), reference)
     if key not in _IGNORED_PATHS:
-        code, _ = run_git(root, "check-ignore", "--quiet", "--no-index", reference)
-        _IGNORED_PATHS[key] = code == 0
+        _IGNORED_PATHS[key] = is_generated_local_input(root, reference)
     return _IGNORED_PATHS[key]
 
 
@@ -1806,7 +1837,8 @@ def validate_checkpoint(
                 if version in DELIVERY_SCHEMA_VERSIONS and isinstance(command, dict):
                     _validate_command_reproducibility(
                         root, command, line_number, errors,
-                        bind_inputs=version in CLOSURE_SCHEMA_VERSIONS)
+                        bind_inputs=version in CLOSURE_SCHEMA_VERSIONS,
+                        strict_transport_inputs=version in TRANSPORT_SCHEMA_VERSIONS)
                 if isinstance(command, dict):
                     command_records.append(command)
                 if isinstance(identifier, str) and isinstance(command, dict):

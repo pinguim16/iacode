@@ -110,6 +110,21 @@
       "correctiveCheckpoint": "GATE-4-CP-0005",
       "notes": "One HIGH finding, G4-F-002: the published full clean-clone verifier returned 40/42 because infra and smoke failed in the single mandatory run; isolated reruns do not replace the red run. The independent Red Team defended all twenty attacks.",
       "findingsClosureFile": "G4-CP-0004-FINDINGS-CLOSURE.json"
+    },
+    {
+      "auditId": "G4-CP-0006-PUBLICATION",
+      "milestone": "M2",
+      "gate": "GATE-4",
+      "auditor": "Gate 4 published-transport validation after the fresh-session audit",
+      "auditCheckpoint": "GATE-4-CP-0006",
+      "auditCommit": "dfa2871c4fcecf9eedd7df9f135a5cfcdebce9d5",
+      "subjectCheckpoint": "GATE-4-CP-0006",
+      "subjectCommit": "dfa2871c4fcecf9eedd7df9f135a5cfcdebce9d5",
+      "verdict": "REWORK_REQUIRED",
+      "reviewReport": "DIVERGENCE.md",
+      "correctiveCheckpoint": "GATE-4-CP-0007",
+      "notes": "One HIGH publication finding, G4-F-003: COMMANDS.jsonl declared an archive under .git as an input, so the canonical tag failed validation in a fresh remote transport clone. The sealed checkpoint and tag remain immutable.",
+      "findingsClosureFile": "G4-CP-0006-PUBLICATION-FINDINGS-CLOSURE.json"
     }
   ]
 }

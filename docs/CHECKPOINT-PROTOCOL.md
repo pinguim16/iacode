@@ -25,9 +25,10 @@ format used by the first sealed SETUP-00 checkpoints. Version `2.0.0` adds the s
 validation state, evidence-referenced quality results, command identifiers, and the bound file
 inventory described below. Version `3.0.0` adds the delivery-assurance blocks, the reproducible
 command record, and the delivery gates. Version `3.1.0` adds the engineering memory preflight and
-the milestone validation policy. Validation applies the rules of the version a checkpoint declares,
-so a sealed checkpoint never becomes invalid because the tooling advanced. New checkpoints use
-`3.1.0`.
+the milestone validation policy. Version `3.2.0` adds milestone-closure controls, and version
+`3.3.0` binds new command inputs to Git transport. Validation applies the rules of the version a
+checkpoint declares, so a sealed checkpoint never becomes invalid because the tooling advanced.
+New checkpoints use `3.3.0`.
 
 ## Status and blockers
 
@@ -189,3 +190,15 @@ describes `HEAD` or `HEAD^`; in the second case the difference between them may 
 
 The residual limit is stated plainly: a commit cannot contain a validation of itself, so the evidence
 commit is validated by the reader and anchored by the next checkpoint.
+
+## Transport-bound command inputs
+
+`schemaVersion` `3.3.0` retains every `3.2.0` closure control and adds the transport rule from
+[ADR-0034](adr/ADR-0034-command-inputs-must-cross-git-transport.md). Every declared command input
+must be eligible to appear in the checkpoint's Git transport. Git metadata, absolute or escaping
+paths, and ignored output are refused even when they happen to exist on the producing machine.
+
+Earlier sealed schemas retain their digest-bound compatibility for generated inputs. That is an
+interpretation rule for historical evidence, not permission for a new checkpoint to depend on a
+local artifact. A review ZIP is an output; the repository carries its validation report, manifest
+and digest instead.

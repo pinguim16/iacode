@@ -29,26 +29,41 @@ EVIDENCE_SCHEMA_VERSION = "2.0.0"
 DELIVERY_SCHEMA_VERSION = "3.0.0"
 MEMORY_SCHEMA_VERSION = "3.1.0"
 CLOSURE_SCHEMA_VERSION = "3.2.0"
-CURRENT_SCHEMA_VERSION = CLOSURE_SCHEMA_VERSION
+TRANSPORT_SCHEMA_VERSION = "3.3.0"
+CURRENT_SCHEMA_VERSION = TRANSPORT_SCHEMA_VERSION
 SUPPORTED_SCHEMA_VERSIONS = (
     LEGACY_SCHEMA_VERSION,
     EVIDENCE_SCHEMA_VERSION,
     DELIVERY_SCHEMA_VERSION,
     MEMORY_SCHEMA_VERSION,
     CLOSURE_SCHEMA_VERSION,
+    TRANSPORT_SCHEMA_VERSION,
 )
 
 # Versions that carry the delivery-assurance gates. 3.1.0 adds the engineering memory preflight and
 # the milestone validation policy on top of them; 3.2.0 adds the M0 closure controls: derived
 # expected requirement sets, the closed mandatory gate set, preflight freshness, external audit
 # attestations, checkpoint integrity anchors and derived counts.
-DELIVERY_SCHEMA_VERSIONS = (DELIVERY_SCHEMA_VERSION, MEMORY_SCHEMA_VERSION, CLOSURE_SCHEMA_VERSION)
+DELIVERY_SCHEMA_VERSIONS = (
+    DELIVERY_SCHEMA_VERSION,
+    MEMORY_SCHEMA_VERSION,
+    CLOSURE_SCHEMA_VERSION,
+    TRANSPORT_SCHEMA_VERSION,
+)
 
 # Versions that carry the engineering memory and the milestone validation policy.
-MEMORY_SCHEMA_VERSIONS = (MEMORY_SCHEMA_VERSION, CLOSURE_SCHEMA_VERSION)
+MEMORY_SCHEMA_VERSIONS = (
+    MEMORY_SCHEMA_VERSION,
+    CLOSURE_SCHEMA_VERSION,
+    TRANSPORT_SCHEMA_VERSION,
+)
 
 # Versions that carry the M0 closure controls.
-CLOSURE_SCHEMA_VERSIONS = (CLOSURE_SCHEMA_VERSION,)
+CLOSURE_SCHEMA_VERSIONS = (CLOSURE_SCHEMA_VERSION, TRANSPORT_SCHEMA_VERSION)
+
+# Checkpoints from 3.3.0 onward may cite only command inputs that Git transport can carry. Earlier
+# schemas retain their content-digest compatibility rule for sealed generated inputs.
+TRANSPORT_SCHEMA_VERSIONS = (TRANSPORT_SCHEMA_VERSION,)
 
 QUALITY_DIMENSIONS = (
     "build",
@@ -114,6 +129,8 @@ RESULT_CODES = {
     "E_ABORTED": "The operation was interrupted before producing a result.",
     "E_UNREPLAYABLE_COMMAND": "Refused before execution: the recorded command could not be "
                               "replayed from the working directory it names.",
+    "E_NONTRANSPORT_INPUT": "Refused before execution: a declared command input cannot be "
+                            "carried by Git transport.",
 }
 
 # Runtime tokens that make a recorded command literally executable from its working directory.
@@ -300,6 +317,47 @@ def run_git(root: Path, *args: str) -> tuple[int, str]:
         check=False,
     )
     return completed.returncode, completed.stdout.strip()
+
+
+def command_input_transport_error(root: Path, reference: str) -> str | None:
+    """Why a command input cannot be carried by a future Git checkout, or ``None``.
+
+    An untracked, non-ignored file is allowed while a checkpoint is in progress because the file
+    inventory and final commit will bind it. Git's metadata and ignored output can never become a
+    repository input merely because they happen to exist on the producing machine.
+    """
+    value = str(reference).strip().replace("\\", "/")
+    if not value:
+        return "the input path is empty"
+    candidate_path = Path(value)
+    if candidate_path.is_absolute():
+        return "absolute paths are outside the repository transport"
+    parts = [part for part in value.split("/") if part not in ("", ".")]
+    if not parts or any(part == ".." for part in parts):
+        return "the input path does not stay inside the repository"
+    if parts[0].casefold() == ".git":
+        return "Git metadata is never carried in a checkout"
+    candidate = (root / value).resolve()
+    try:
+        candidate.relative_to(root.resolve())
+    except ValueError:
+        return "the input path resolves outside the repository"
+    code, _ = run_git(root, "check-ignore", "--quiet", "--no-index", value)
+    if code == 0:
+        return "the path is ignored and Git transport does not carry it"
+    return None
+
+
+def is_generated_local_input(root: Path, reference: str) -> bool:
+    """Whether ``reference`` is a digest-bound legacy input Git deliberately does not carry."""
+    value = str(reference).strip().replace("\\", "/")
+    parts = [part for part in value.split("/") if part not in ("", ".")]
+    if not parts or any(part == ".." for part in parts) or Path(value).is_absolute():
+        return False
+    if parts[0].casefold() == ".git":
+        return True
+    code, _ = run_git(root, "check-ignore", "--quiet", "--no-index", value)
+    return code == 0
 
 
 def run_git_bytes(root: Path, *args: str) -> tuple[int, bytes]:

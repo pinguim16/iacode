@@ -728,11 +728,23 @@ class RecordedInputTests(unittest.TestCase):
             "durationMs": 1,
         }
 
-    def _errors(self, inputs: list[str], digests: list[dict[str, str]]) -> list[str]:
+    def _errors(
+        self,
+        inputs: list[str],
+        digests: list[dict[str, str]],
+        *,
+        strict_transport_inputs: bool = False,
+    ) -> list[str]:
         validator = _validator_module()
         errors: list[str] = []
         validator._validate_command_reproducibility(
-            PROJECT_ROOT, self._record(inputs, digests), 1, errors, bind_inputs=True)
+            PROJECT_ROOT,
+            self._record(inputs, digests),
+            1,
+            errors,
+            bind_inputs=True,
+            strict_transport_inputs=strict_transport_inputs,
+        )
         return errors
 
     #: Ignored by `.gitignore`, and absent: `var/` holds generated artifacts, and this particular
@@ -784,6 +796,67 @@ class RecordedInputTests(unittest.TestCase):
 
         self.assertIn("scripts/development-ledger/validate_checkpoint.py", detected)
         self.assertNotIn("var/a-generated-artifact-for-this-test.json", detected)
+
+    def test_git_metadata_is_local_even_though_git_check_ignore_does_not_classify_it(self) -> None:
+        validator = _validator_module()
+        metadata = ".git/a-review-archive-no-checkout-carries.zip"
+
+        self.assertTrue(validator.path_is_ignored(PROJECT_ROOT, metadata))
+        errors = self._errors(
+            [metadata],
+            [{"path": metadata, "hash": "c" * 64}],
+        )
+
+        self.assertEqual(errors, [], "sealed pre-3.3 evidence keeps digest-bound compatibility")
+
+    def test_schema_3_3_refuses_a_digest_bound_git_metadata_input(self) -> None:
+        metadata = ".git/a-review-archive-no-checkout-carries.zip"
+
+        errors = self._errors(
+            [metadata],
+            [{"path": metadata, "hash": "d" * 64}],
+            strict_transport_inputs=True,
+        )
+
+        self.assertTrue(any("not carried by Git transport" in message for message in errors), errors)
+
+    def test_schema_3_3_refuses_an_ignored_input_even_when_it_exists(self) -> None:
+        artifact = PROJECT_ROOT / "var" / "transport-policy-existing-output.json"
+        artifact.parent.mkdir(parents=True, exist_ok=True)
+        artifact.write_text("{}", encoding="utf-8")
+        try:
+            errors = self._errors(
+                ["var/transport-policy-existing-output.json"],
+                [{"path": "var/transport-policy-existing-output.json", "hash": "e" * 64}],
+                strict_transport_inputs=True,
+            )
+        finally:
+            artifact.unlink(missing_ok=True)
+
+        self.assertTrue(any("not carried by Git transport" in message for message in errors), errors)
+
+    def test_the_recorder_excludes_git_metadata_and_refuses_it_when_explicit(self) -> None:
+        recorder = _recorder_module()
+        metadata = ".git/HEAD"
+        self.assertTrue((PROJECT_ROOT / metadata).is_file(), "the Git metadata control is missing")
+
+        detected = recorder._detect_inputs(PROJECT_ROOT, [metadata])
+        explicit_errors = recorder._explicit_input_errors(PROJECT_ROOT, [metadata])
+
+        self.assertEqual(detected, [])
+        self.assertTrue(any("not transportable" in message for message in explicit_errors),
+                        explicit_errors)
+
+    def test_schema_3_3_accepts_a_repository_carried_input(self) -> None:
+        reference = "scripts/development-ledger/validate_checkpoint.py"
+
+        errors = self._errors(
+            [reference],
+            [{"path": reference, "hash": "f" * 64}],
+            strict_transport_inputs=True,
+        )
+
+        self.assertEqual(errors, [])
 
     def test_every_sealed_checkpoint_validates_from_its_own_tag(self) -> None:
         """The property `MIR-016` audits, asserted here so a change to the tooling reports it.

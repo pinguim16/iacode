@@ -1,0 +1,65 @@
+{
+  "schemaVersion": "3.3.0",
+  "checks": {
+    "build": {
+      "status": "PASS",
+      "evidence": ["file:VERIFY.json", "command:cmd-0031"],
+      "justification": null
+    },
+    "unitTests": {
+      "status": "PASS",
+      "evidence": ["file:TESTS.json", "command:cmd-0037"],
+      "justification": null
+    },
+    "integrationTests": {
+      "status": "PASS",
+      "evidence": ["file:TESTS.json", "file:VERIFY.json", "command:cmd-0031"],
+      "justification": null
+    },
+    "e2e": {
+      "status": "PASS",
+      "evidence": ["file:TESTS.json", "file:VERIFY.json", "file:FUNCTIONAL-ACCEPTANCE-VALIDATION.json", "command:cmd-0031", "command:cmd-0033"],
+      "justification": null
+    },
+    "lint": {
+      "status": "PASS",
+      "evidence": ["command:cmd-0048"],
+      "justification": null
+    },
+    "staticAnalysis": {
+      "status": "PASS",
+      "evidence": ["command:cmd-0038"],
+      "justification": null
+    },
+    "security": {
+      "status": "PASS",
+      "evidence": ["file:VERIFY.json", "file:M2-INTERNAL-RED-TEAM.json", "command:cmd-0031", "command:cmd-0051"],
+      "justification": null
+    },
+    "documentation": {
+      "status": "PASS",
+      "evidence": ["file:DIFF-SUMMARY.md", "file:DECISIONS.md", "command:cmd-0037"],
+      "justification": null
+    },
+    "checkpointValidation": {
+      "status": "PASS",
+      "evidence": ["command:cmd-0041"],
+      "justification": null
+    },
+    "redTeam": {
+      "status": "PASS",
+      "evidence": ["file:M2-INTERNAL-RED-TEAM.json", "command:cmd-0051"],
+      "justification": "Same-session internal Red Team defended all 20 mandatory attacks A-T with a valid control; this is not independent review."
+    },
+    "greenKeeper": {
+      "status": "PASS",
+      "evidence": ["file:REWORK-LOG.jsonl", "command:cmd-0037", "command:cmd-0041", "command:cmd-0049"],
+      "justification": "Cycle 3 passed the closed 13-gate mandatory denominator after two preserved full-verifier red cycles."
+    },
+    "deliveryCompleteness": {
+      "status": "PASS",
+      "evidence": ["file:COMPLETENESS-REPORT.json", "command:cmd-0050"],
+      "justification": "All 201 derived requirements are COMPLETE with 100% requirement and evidence coverage; this same-session audit is not independent approval."
+    }
+  }
+}

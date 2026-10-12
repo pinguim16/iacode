@@ -58,6 +58,11 @@ referenced repository inputs, the repository commit, the purpose, the canonical 
 code, and the duration. The recorded command keeps the portable `python` token while execution uses
 the current interpreter, so the record replays from the working directory it names.
 
+From checkpoint schema `3.3.0`, every declared input must be eligible for Git transport. Paths under
+`.git`, ignored outputs, absolute paths and paths that escape the repository are refused. Automatic
+detection leaves generated outputs out of `inputs`; an explicit attempt is recorded as a
+precondition rejection before execution.
+
 ## Green Keeper
 
 ```text
