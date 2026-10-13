@@ -25,3 +25,12 @@
 - Correct cmd-0050's unsealed explicit input metadata to the canonical
   `.iacode/policies/audit-registry.json` path that requirement derivation actually consumed. The
   command, result, timestamp and repository state are unchanged.
+- Escalate the cmd-0060 cancellation recurrence as a `GUARDRAIL_FAILURE`. A Temporal signal remains
+  the low-latency path, but persisted `CANCELLING` is authoritative: re-read it after dispatch and
+  poll it while the sandbox activity is in flight, cancelling the activity when either path fires.
+- Preserve cmd-0068 as focused red evidence. When an accepted cancellation races with a normal
+  sandbox response, cancellation wins before persistence; recording the normal response into an
+  already `CANCELLING` run is correctly forbidden and must never strand the workflow.
+- Adopt ADR-0036's pre-seal checkout mode. A clean detached `IN_PROGRESS` checkpoint may bind its
+  symbolic HEAD to a matching `iacode-subjects/<checkpoint>...` tag, while every handoff-ready or
+  sealed state continues to require `iacode-checkpoints/<checkpoint>`.

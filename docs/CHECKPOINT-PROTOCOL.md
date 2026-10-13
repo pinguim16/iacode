@@ -85,12 +85,14 @@ created then; a work-in-progress subject is never pre-classified as sealed evide
 ## Checkout modes
 
 Validation normally runs on an attached branch, where the branch name and the checked-out commit
-must both match `STATE.json`. A sealed checkpoint may also be validated from a detached checkout,
-which is how another tool inspects an immutable reference. Detached validation removes the branch
-control, so every remaining anchor becomes mandatory: the worktree must be clean and `dirty` must be
-`false`, `currentCommit` must name the checkpoint's canonical `refs/tags/iacode-checkpoints/` tag,
-that tag must exist, and it must resolve to the checked-out commit. Finalization always requires an
-attached branch; a detached checkout is read-only.
+must both match `STATE.json`. A detached checkout is also valid in two narrowly separated modes.
+A sealed checkpoint must use its canonical `refs/tags/iacode-checkpoints/` tag. An `IN_PROGRESS`
+checkpoint whose `currentCommit` is the symbolic `HEAD` may instead be inspected at an exact
+pre-seal tag under `refs/tags/iacode-subjects/` whose name begins with that checkpoint's identity.
+The subject exception does not apply to any handoff-ready or terminal state and never substitutes
+for the canonical seal tag. Both modes require a clean worktree, `dirty=false`, and an exact ref to
+the checked-out commit. Finalization always requires an attached branch; a detached checkout is
+read-only.
 
 ## File inventory binding
 

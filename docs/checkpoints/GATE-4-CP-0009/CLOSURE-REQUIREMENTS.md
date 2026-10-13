@@ -238,8 +238,9 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 | `LESSON-REQ-0094` | LESSON | `lesson:LSN-0095` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify a complete verifier must own its Compose runtime by checkout |
 | `LESSON-REQ-0095` | LESSON | `lesson:LSN-0096` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify evidence publishers must consume the producer's canonical result schema |
 | `LESSON-REQ-0096` | LESSON | `lesson:LSN-0097` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify a review-bundle declaration must bind an immutable reconstruction subject |
-| `LESSON-REQ-0097` | LESSON | `lesson:LSN-0098` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify cancellation must be rechecked after a dispatch event and before activity creation |
+| `LESSON-REQ-0097` | LESSON | `lesson:LSN-0098` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify accepted cancellation must be enforced from durable state across activity boundaries |
 | `LESSON-REQ-0098` | LESSON | `lesson:LSN-0099` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify a refused subject is an attempted input, not executed commit evidence |
+| `LESSON-REQ-0099` | LESSON | `lesson:LSN-0100` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify pre-seal detached validation must bind the explicit subject namespace |
 
 ## Evidence
 
@@ -2688,7 +2689,7 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 ### LESSON-REQ-0097 - lesson:LSN-0098
 
 - Source reference: LESSON-PREFLIGHT.json LESSON-REQ-0097
-- Description: Verify cancellation must be rechecked after a dispatch event and before activity creation
+- Description: Verify accepted cancellation must be enforced from durable state across activity boundaries
 - Implementation: _none_
 - Test: _none_
 - Negative test: _none_
@@ -2700,6 +2701,17 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 
 - Source reference: LESSON-PREFLIGHT.json LESSON-REQ-0098
 - Description: Verify a refused subject is an attempted input, not executed commit evidence
+- Implementation: _none_
+- Test: _none_
+- Negative test: _none_
+- Documentation: _none_
+- Validation: _none_
+- Guardrail: _none_
+
+### LESSON-REQ-0099 - lesson:LSN-0100
+
+- Source reference: LESSON-PREFLIGHT.json LESSON-REQ-0099
+- Description: Verify pre-seal detached validation must bind the explicit subject namespace
 - Implementation: _none_
 - Test: _none_
 - Negative test: _none_

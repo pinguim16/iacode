@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import asyncio
+import contextlib
 import math
 from datetime import timedelta
 from typing import Any
@@ -42,6 +43,22 @@ SANDBOX_HEARTBEAT_TIMEOUT = timedelta(seconds=120)
 ACTIVITY_RETRY = RetryPolicy(maximum_attempts=5)
 
 
+def cancelled_sandbox_execution() -> dict[str, Any]:
+    return {
+        "status": "CANCELLED",
+        "errorCode": "QUALITY_CANCELLED",
+        "error": "the quality check was cancelled and sandbox cleanup acknowledged",
+        "durationMs": 0,
+    }
+
+
+def enforce_accepted_cancellation(
+    execution: dict[str, Any], *, cancel_requested: bool
+) -> dict[str, Any]:
+    """Let accepted cancellation win a race with a normal activity response."""
+    return cancelled_sandbox_execution() if cancel_requested else execution
+
+
 def failed_sandbox_execution(error: ActivityError, *, cancel_requested: bool) -> dict[str, Any]:
     """Normalize Temporal's activity failure without losing an acknowledged cancellation.
 
@@ -51,12 +68,7 @@ def failed_sandbox_execution(error: ActivityError, *, cancel_requested: bool) ->
     correctly reject the non-cancellation callback while the run remains CANCELLING forever.
     """
     if cancel_requested:
-        return {
-            "status": "CANCELLED",
-            "errorCode": "QUALITY_CANCELLED",
-            "error": "the quality check was cancelled and sandbox cleanup acknowledged",
-            "durationMs": 0,
-        }
+        return cancelled_sandbox_execution()
     return {
         "status": "ERROR",
         "errorCode": "SANDBOX_ACTIVITY_FAILED",
@@ -141,6 +153,31 @@ class QualityRunWorkflow:
             retry_policy=ACTIVITY_RETRY,
         )
         return QualityPlan.model_validate(result)
+
+    async def _watch_durable_cancellation(self) -> None:
+        """Cancel the active sandbox check when the authoritative run row says to stop.
+
+        The API persists ``CANCELLING`` before it signals Temporal. The signal is the low-latency
+        path, but it cannot be the only path: a delivered workflow signal and its in-memory flag
+        are not evidence that survives every worker scheduling boundary. Polling the durable row
+        while a long activity is in flight makes the accepted store transition authoritative and
+        gives cancellation a deterministic backstop.
+        """
+        while self._sandbox_activity is not None:
+            if self.cancel_requested:
+                self._sandbox_activity.cancel()
+                return
+            await workflow.sleep(timedelta(seconds=5))
+            if self._sandbox_activity is None:
+                return
+            if self.cancel_requested:
+                self._sandbox_activity.cancel()
+                return
+            durable = await self._read_run()
+            if durable.get("state") == "CANCELLING":
+                self.cancel_requested = True
+                self._sandbox_activity.cancel()
+                return
 
     async def _record(self, check_id: str, execution: dict[str, Any]) -> dict[str, Any]:
         return await workflow.execute_activity(
@@ -233,10 +270,13 @@ class QualityRunWorkflow:
                 f"workflow:dispatch:{check.checkId}",
                 {"checkId": check.checkId, "kind": check.kind},
             )
-            # A cancellation signal can be delivered while the transition activity above is
-            # awaited. At that instant no sandbox activity exists for the signal handler to
-            # cancel. Recheck before creating the activity so the run cannot start a full-length
-            # check after cancellation was already accepted.
+            # Cancellation is persisted before the API signals Temporal. Re-read that durable
+            # state after the dispatch await, then also honor a signal delivered at the boundary.
+            # This prevents a full-length check from starting after cancellation was accepted even
+            # when the workflow signal has not yet been scheduled on this worker.
+            durable = await self._read_run()
+            if durable.get("state") == "CANCELLING":
+                self.cancel_requested = True
             if self.cancel_requested:
                 return await self._finish_cancelled(plan)
             elapsed = (workflow.now() - started).total_seconds()
@@ -268,20 +308,29 @@ class QualityRunWorkflow:
                 cancellation_type=ActivityCancellationType.WAIT_CANCELLATION_COMPLETED,
                 retry_policy=RetryPolicy(maximum_attempts=1),
             )
+            # A signal processed while start_activity creates its handle may set the flag before
+            # the handler can see the assigned handle. Close that last synchronous handoff too.
+            if self.cancel_requested:
+                self._sandbox_activity.cancel()
+            cancellation_watch = asyncio.ensure_future(self._watch_durable_cancellation())
             try:
                 response = await self._sandbox_activity
                 execution = dict(response[SANDBOX_EXECUTION_KEY])
             except asyncio.CancelledError:
-                execution = {
-                    "status": "CANCELLED",
-                    "errorCode": "QUALITY_CANCELLED",
-                    "error": "the quality check was cancelled and sandbox cleanup acknowledged",
-                    "durationMs": 0,
-                }
+                execution = cancelled_sandbox_execution()
             except ActivityError as error:
                 execution = failed_sandbox_execution(error, cancel_requested=self.cancel_requested)
             finally:
                 self._sandbox_activity = None
+                cancellation_watch.cancel()
+                with contextlib.suppress(asyncio.CancelledError):
+                    await cancellation_watch
+            # The activity can finish normally at the same moment cancellation becomes durable.
+            # Persisting its success into CANCELLING is correctly refused by the store and would
+            # strand the run. Accepted cancellation is authoritative in this race.
+            execution = enforce_accepted_cancellation(
+                execution, cancel_requested=self.cancel_requested
+            )
             await self._record(check.checkId, execution)
             if self.cancel_requested or execution["status"] == "CANCELLED":
                 return await self._finish_cancelled(plan)
@@ -311,4 +360,9 @@ class QualityRunWorkflow:
         return {"runId": self.run_id, "state": self.state, "verdict": verdict["verdict"]}
 
 
-__all__ = ["QualityRunWorkflow", "failed_sandbox_execution"]
+__all__ = [
+    "QualityRunWorkflow",
+    "cancelled_sandbox_execution",
+    "enforce_accepted_cancellation",
+    "failed_sandbox_execution",
+]

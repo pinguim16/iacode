@@ -29,7 +29,7 @@ def reason(path: str) -> str:
     if path == ".iacode/anchors/checkpoint-chain.json":
         return "Integrity chain extended to anchor immutable published predecessor CP0008."
     if path.startswith(".iacode/memory/"):
-        return "LSN-0097 recorded, automated, tested and promoted to guarded."
+        return "Corrective lessons and guardrails record review reconstruction, provenance and cancellation recurrence evidence."
     if path == ".iacode/policies/audit-registry.json":
         return "Sealed G4-F-004 audit registered as mandatory corrective work."
     if path == ".iacode/policies/canonical-requirements.json" or path == "docs/GATE-4-CHECKLIST.md":
@@ -40,10 +40,14 @@ def reason(path: str) -> str:
         return "Checkpoint protocol documents schema 3.4 reconstruction and seal chronology."
     if path == "docs/adr/ADR-0035-review-bundles-bind-immutable-content.md":
         return "Structural decision for immutable review-bundle reconstruction."
+    if path == "docs/adr/ADR-0036-pre-seal-validation-binds-an-explicit-subject.md":
+        return "Structural decision for exact detached pre-seal subject validation."
+    if path.startswith("services/evaluator/"):
+        return "Durable cancellation enforcement and regressions close the repeated non-terminal cancellation class."
     if path.startswith("scripts/development-ledger/"):
         return "Ledger production, sealing, validation or adversarial controls for G4-F-004."
     if path.startswith("tests/"):
-        return "Automated regressions prevent stale or mutable review declarations."
+        return "Automated regressions prevent stale review declarations and invalid detached subject binding."
     if path == "docs/checkpoints/LATEST.md":
         return "Canonical pointer advanced to the Gate 4 corrective successor."
     if path.startswith("docs/checkpoints/GATE-4-CP-0009/audit-harness/"):

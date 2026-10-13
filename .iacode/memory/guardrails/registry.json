@@ -1424,16 +1424,19 @@
     },
     {
       "guardrailId": "GRD-0099",
-      "title": "Quality cancellation is rechecked before sandbox activity creation",
+      "title": "Quality cancellation is enforced from durable state across sandbox activity boundaries",
       "kind": "test",
       "reference": "test_cancellation_is_rechecked_after_dispatch_before_activity_start",
       "verifiedBy": [
-        "test_cancellation_is_rechecked_after_dispatch_before_activity_start"
+        "test_cancellation_is_rechecked_after_dispatch_before_activity_start",
+        "test_durable_cancelling_state_stops_an_active_sandbox_activity",
+        "test_a_signal_flag_set_before_handle_assignment_still_cancels_the_activity",
+        "test_accepted_cancellation_wins_over_a_racing_success_response"
       ],
       "lessons": [
         "LSN-0098"
       ],
-      "removingItWouldAllow": "A cancellation signal accepted while CHECK_DISPATCHED is persisted to miss the absent activity handle, after which the workflow starts a full-length sandbox check despite the accepted cancellation."
+      "removingItWouldAllow": "An accepted persisted cancellation to miss an in-memory workflow signal boundary and leave a full-length sandbox check running without a durable cancellation backstop."
     },
     {
       "guardrailId": "GRD-0100",
@@ -1447,6 +1450,20 @@
         "LSN-0099"
       ],
       "removingItWouldAllow": "A recorder to refuse an unresolved subject truthfully but leave a checkpoint permanently invalid by treating the never-executed subject as published evidence."
+    },
+    {
+      "guardrailId": "GRD-0101",
+      "title": "Detached pre-seal validation binds an exact checkpoint subject",
+      "kind": "test",
+      "reference": "test_in_progress_symbolic_head_validates_from_its_matching_subject_tag",
+      "verifiedBy": [
+        "test_in_progress_symbolic_head_validates_from_its_matching_subject_tag",
+        "test_subject_tag_never_substitutes_for_a_sealed_checkpoint_tag"
+      ],
+      "lessons": [
+        "LSN-0100"
+      ],
+      "removingItWouldAllow": "A detached verifier either to demand a premature seal tag for unfinished content or to use a pre-seal subject tag as if it were canonical sealed checkpoint identity."
     }
   ]
 }

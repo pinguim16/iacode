@@ -259,7 +259,7 @@ def _validate_git_binding(
     errors: list[str],
     checkpoint_id: str | None = None,
 ) -> None:
-    """R1: bind the checkpoint to a commit, accepting a detached HEAD only at its own tag."""
+    """R1: bind the checkpoint to a commit at its seal or explicit pre-seal subject."""
     expected_commit = state.get("currentCommit")
     resolved_commit = _resolve_expected_commit(root, expected_commit, actual["head"], allow_pending_ref)
     if resolved_commit is None:
@@ -276,8 +276,9 @@ def _validate_git_binding(
             errors.append(f"dirty-state mismatch: expected {state.get('dirty')!r}, observed {actual['dirty']!r}")
         return
 
-    # Detached HEAD is a legitimate way to inspect a sealed checkpoint, but it removes the
-    # branch identity control, so every remaining anchor is mandatory and no relaxation applies.
+    # Detached HEAD is a legitimate way to inspect either a sealed checkpoint or an explicitly
+    # published pre-seal subject. It removes the branch identity control, so the worktree must be
+    # clean and the remaining ref must identify both this checkpoint and the exact commit.
     if actual["dirty"] or state.get("dirty") is not False:
         errors.append("detached HEAD validation requires a clean worktree and dirty=false")
     if isinstance(expected_commit, str) and expected_commit.startswith("refs/tags/iacode-checkpoints/"):
@@ -289,6 +290,30 @@ def _validate_git_binding(
         # checkpoint's own canonical tag, derived from its identity rather than read from a field
         # it never carried. A HEAD at any other commit is still refused.
         tag_ref = f"refs/tags/iacode-checkpoints/{checkpoint_id}"
+        code, tag_commit = run_git(root, "rev-parse", "--verify", f"{tag_ref}^{{commit}}")
+        if code != 0 and state.get("status") == "IN_PROGRESS":
+            refs_code, refs_output = run_git(
+                root, "for-each-ref", "--format=%(refname)", "refs/tags/iacode-subjects"
+            )
+            matching_subjects: list[str] = []
+            if refs_code == 0:
+                for candidate in refs_output.splitlines():
+                    candidate = candidate.strip()
+                    suffix = candidate.removeprefix("refs/tags/iacode-subjects/")
+                    if suffix != checkpoint_id and not suffix.startswith(f"{checkpoint_id}-"):
+                        continue
+                    candidate_code, candidate_commit = run_git(
+                        root, "rev-parse", "--verify", f"{candidate}^{{commit}}"
+                    )
+                    if candidate_code == 0 and candidate_commit == actual["head"]:
+                        matching_subjects.append(candidate)
+            if matching_subjects:
+                return
+            errors.append(
+                "detached IN_PROGRESS validation with STATE.json currentCommit=HEAD requires "
+                f"an exact subject tag under refs/tags/iacode-subjects/{checkpoint_id}"
+            )
+            return
     else:
         errors.append("detached HEAD validation requires STATE.json currentCommit to name the checkpoint tag")
         return

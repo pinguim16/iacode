@@ -105,8 +105,9 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 | `LSN-0095` | `GUARDED` | HIGH | testing | A complete verifier must own its Compose runtime by checkout | `test_full_verification_uses_a_checkout_owned_compose_project_and_dynamic_ports`, `test_each_stage_receives_the_frozen_verification_environment`, `test_cleanup_refuses_the_shared_developer_project`, `test_live_stack_stage_builds_every_image_before_it_is_exercised`, `test_order_isolation_probe_preserves_the_historical_contiguous_stage_order` |
 | `LSN-0096` | `GUARDED` | HIGH | checkpoint | Evidence publishers must consume the producer's canonical result schema | `test_published_full_verification_counts_the_canonical_result_field`, `test_published_report_reconciliation_allows_only_the_generated_report` |
 | `LSN-0097` | `GUARDED` | HIGH | checkpoint | A review-bundle declaration must bind an immutable reconstruction subject | `test_immutable_subject_rebuilds_are_byte_identical_and_exclude_only_the_sidecar`, `test_declared_digest_and_size_are_rebuilt_not_trusted`, `test_full_delivery_assurance_flow_reaches_ready_for_review` |
-| `LSN-0098` | `GUARDED` | HIGH | implementation | Cancellation must be rechecked after a dispatch event and before activity creation | `test_cancellation_is_rechecked_after_dispatch_before_activity_start` |
+| `LSN-0098` | `GUARDED` | CRITICAL | implementation | Accepted cancellation must be enforced from durable state across activity boundaries | `test_cancellation_is_rechecked_after_dispatch_before_activity_start`, `test_durable_cancelling_state_stops_an_active_sandbox_activity`, `test_a_signal_flag_set_before_handle_assignment_still_cancels_the_activity`, `test_accepted_cancellation_wins_over_a_racing_success_response` |
 | `LSN-0099` | `GUARDED` | HIGH | checkpoint | A refused subject is an attempted input, not executed commit evidence | `test_inputs_are_canonicalized_and_an_unknown_subject_is_refused` |
+| `LSN-0100` | `GUARDED` | HIGH | checkpoint | Pre-seal detached validation must bind the explicit subject namespace | `test_in_progress_symbolic_head_validates_from_its_matching_subject_tag`, `test_subject_tag_never_substitutes_for_a_sealed_checkpoint_tag` |
 
 ## Detail
 
@@ -1343,16 +1344,19 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
   - `test` test_full_delivery_assurance_flow_reaches_ready_for_review — The real seal lifecycle crosses non-local Git transport, records a reconstruction declaration and validates the sealed result.
 - Evidence: `file:docs/checkpoints/GATE-4-CP-0008/FINDINGS.json`, `file:docs/checkpoints/GATE-4-CP-0008/SUBJECT-BUNDLE-AUDIT.json`, `file:docs/checkpoints/GATE-4-CP-0008/GATE-4-INDEPENDENT-RED-TEAM.json`, `file:docs/adr/ADR-0035-review-bundles-bind-immutable-content.md`, `file:scripts/development-ledger/review_bundle.py`, `file:scripts/development-ledger/seal_checkpoint.py`, `file:scripts/development-ledger/validate_checkpoint.py`, `file:tests/test_gate4_quality_engine.py`, `file:tests/test_development_ledger.py`
 
-### LSN-0098 — Cancellation must be rechecked after a dispatch event and before activity creation
+### LSN-0098 — Accepted cancellation must be enforced from durable state across activity boundaries
 
-- Status: `GUARDED`, severity HIGH, category implementation, recurrences 0.
-- Source: GATE-4, GATE-4-CP-0009, finding cmd-0023-quality-cancellation.
-- Symptom: The one-shot verifier's quality-cancellation scenario waited 900 seconds without reaching a terminal state after cancellation had been accepted; the stage failed after 950.3 seconds.
-- Root cause: The workflow awaited persistence of CHECK_DISPATCHED before assigning its sandbox activity handle. A cancellation signal delivered during that await set cancel_requested while the handle was still absent, so the handler had nothing to cancel and the workflow started the full-length slow activity without rechecking the flag.
-- Resolution: Recheck cancel_requested immediately after the awaited CHECK_DISPATCHED transition and before creating the sandbox activity. Signals delivered earlier now finish cancellation directly; signals delivered after the synchronous assignment see the activity handle and cancel it.
+- Status: `GUARDED`, severity CRITICAL, category implementation, recurrences 1.
+- Source: GATE-4, GATE-4-CP-0009, finding cmd-0023, cmd-0060 and focused diagnostic cmd-0068.
+- Symptom: Two complete verifiers observed an accepted quality cancellation remain non-terminal for the full 900-second observation bound. The focused cmd-0068 reproduction proved the run was already CANCELLING when a racing sandbox response completed normally; persisting that success was correctly refused as late, and the workflow never reached terminal cancellation.
+- Root cause: The first guard covered one in-memory signal race after CHECK_DISPATCHED but not the whole accepted-cancellation state machine. A flag already set before activity-handle assignment could make the watcher exit without cancelling, and a normal response racing with persisted CANCELLING was recorded before cancellation precedence was applied. The store correctly refused that non-cancelled result, leaving the workflow failed and the run non-terminal.
+- Resolution: Treat persisted CANCELLING as authoritative before creation and throughout the activity. Cancel immediately when the flag is already set, poll durable state while waiting, and normalize any normal response that races with accepted cancellation to CANCELLED before persistence; release the sandbox before the terminal transition. Cmd-0071 proved the complete path in a disposable real stack.
 - Prevention:
-  - `test` test_cancellation_is_rechecked_after_dispatch_before_activity_start — The workflow source contract keeps the cancellation boundary after CHECK_DISPATCHED and before workflow.start_activity.
-- Evidence: `file:docs/checkpoints/GATE-4-CP-0009/VERIFY-FAIL-CMD-0023.json`, `file:docs/checkpoints/GATE-4-CP-0009/COMMANDS.jsonl`, `file:services/evaluator/src/iacode_evaluator/workflow.py`, `file:services/evaluator/tests/test_workflow.py`
+  - `test` test_cancellation_is_rechecked_after_dispatch_before_activity_start — The workflow re-reads durable run state after CHECK_DISPATCHED and before workflow.start_activity.
+  - `test` test_durable_cancelling_state_stops_an_active_sandbox_activity — A CANCELLING run observed while an activity is in flight cancels that activity even without relying on the signal handler.
+  - `test` test_a_signal_flag_set_before_handle_assignment_still_cancels_the_activity — An already accepted signal cannot make the durable watcher exit while leaving the newly assigned activity running.
+  - `test` test_accepted_cancellation_wins_over_a_racing_success_response — A normal activity response racing with accepted cancellation is persisted as CANCELLED, never as late success.
+- Evidence: `file:docs/checkpoints/GATE-4-CP-0009/VERIFY-FAIL-CMD-0023.json`, `file:docs/checkpoints/GATE-4-CP-0009/VERIFY-FAIL-CMD-0060.json`, `file:docs/checkpoints/GATE-4-CP-0009/QUALITY-CANCELLATION-ISOLATION-FAIL-CMD-0068.json`, `file:docs/checkpoints/GATE-4-CP-0009/QUALITY-CANCELLATION-GUARDRAIL.json`, `file:docs/checkpoints/GATE-4-CP-0009/QUALITY-CANCELLATION-ISOLATION.json`, `file:docs/checkpoints/GATE-4-CP-0009/COMMANDS.jsonl`, `file:services/evaluator/src/iacode_evaluator/workflow.py`, `file:services/evaluator/tests/test_workflow.py`
 
 ### LSN-0099 — A refused subject is an attempted input, not executed commit evidence
 
@@ -1364,3 +1368,15 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 - Prevention:
   - `test` test_inputs_are_canonicalized_and_an_unknown_subject_is_refused — An unknown subject is refused before execution, its subject-specific precondition is recorded, command validation accepts the truthful refusal, and published-history validation does not treat it as executed evidence.
 - Evidence: `file:docs/checkpoints/GATE-4-CP-0009/COMMANDS.jsonl`, `file:scripts/development-ledger/record_command.py`, `file:scripts/development-ledger/validate_checkpoint.py`, `file:tests/test_gate3_sandbox.py`
+
+### LSN-0100 — Pre-seal detached validation must bind the explicit subject namespace
+
+- Status: `GUARDED`, severity HIGH, category checkpoint, recurrences 0.
+- Source: GATE-4, GATE-4-CP-0009, finding cmd-0060-checkpointValidation.
+- Symptom: The exact published CP0009 subject passed its repository tests but checkpoint validation failed because the detached validator required a canonical checkpoint seal tag that correctly did not exist before assurance completed.
+- Root cause: Detached validation modeled only sealed checkpoint inspection. The repository had already separated exact pre-seal inputs under iacode-subjects from canonical seals under iacode-checkpoints, but the validator could not express the pre-seal mode and therefore demanded premature seal identity.
+- Resolution: Permit a clean detached symbolic-HEAD checkpoint only while it is IN_PROGRESS and only when an exact iacode-subjects tag whose name begins with that checkpoint identifier resolves to the checked-out commit. Every other detached status continues to require the canonical checkpoint tag.
+- Prevention:
+  - `test` test_in_progress_symbolic_head_validates_from_its_matching_subject_tag — A transported IN_PROGRESS checkpoint validates from its own exact pre-seal subject tag.
+  - `test` test_subject_tag_never_substitutes_for_a_sealed_checkpoint_tag — A handoff-ready or sealed checkpoint still requires its canonical checkpoint tag even when an exact subject tag exists.
+- Evidence: `file:docs/checkpoints/GATE-4-CP-0009/VERIFY-FAIL-CMD-0060.json`, `file:docs/adr/ADR-0036-pre-seal-validation-binds-an-explicit-subject.md`, `file:scripts/development-ledger/validate_checkpoint.py`, `file:tests/test_development_ledger.py`

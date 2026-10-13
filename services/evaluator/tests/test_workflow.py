@@ -6,6 +6,7 @@ import inspect
 from datetime import UTC, datetime
 from types import SimpleNamespace
 
+import iacode_evaluator.workflow as workflow_module
 import pytest
 from iacode_contracts.quality import QualityCheck, QualityPlan, QualityPolicy
 from iacode_evaluator.activities import derive_run_verdict, record_execution, set_runtime
@@ -17,7 +18,11 @@ from iacode_evaluator.evidence import (
 )
 from iacode_evaluator.store import MemoryQualityStore
 from iacode_evaluator.telemetry import METRIC_NAMES, PERMITTED_LABELS, QualityMetrics
-from iacode_evaluator.workflow import QualityRunWorkflow, failed_sandbox_execution
+from iacode_evaluator.workflow import (
+    QualityRunWorkflow,
+    enforce_accepted_cancellation,
+    failed_sandbox_execution,
+)
 from prometheus_client import CollectorRegistry, generate_latest
 from temporalio.exceptions import ActivityError
 
@@ -80,13 +85,79 @@ class QualityWorkflowAdapterTests:
         assert failed["status"] == "ERROR"
         assert failed["errorCode"] == "SANDBOX_ACTIVITY_FAILED"
 
+    def test_accepted_cancellation_wins_over_a_racing_success_response(self) -> None:
+        succeeded = {"status": "SUCCEEDED", "exitCode": 0, "durationMs": 12}
+
+        execution = enforce_accepted_cancellation(succeeded, cancel_requested=True)
+
+        assert execution["status"] == "CANCELLED"
+        assert execution["errorCode"] == "QUALITY_CANCELLED"
+        assert enforce_accepted_cancellation(succeeded, cancel_requested=False) is succeeded
+
     def test_cancellation_is_rechecked_after_dispatch_before_activity_start(self) -> None:
         source = inspect.getsource(QualityRunWorkflow.run)
         dispatch = source.index('"CHECK_DISPATCHED"')
+        durable_read = source.index("durable = await self._read_run()", dispatch)
         boundary = source.index("if self.cancel_requested", dispatch)
         activity = source.index("workflow.start_activity", dispatch)
 
-        assert dispatch < boundary < activity
+        assert dispatch < durable_read < boundary < activity
+
+    @pytest.mark.asyncio
+    async def test_durable_cancelling_state_stops_an_active_sandbox_activity(
+        self, monkeypatch: pytest.MonkeyPatch
+    ) -> None:
+        instance = QualityRunWorkflow()
+        instance.run_id = "quality-run-1"
+
+        class ActivityHandle:
+            cancelled = False
+
+            def cancel(self) -> None:
+                self.cancelled = True
+
+        activity = ActivityHandle()
+        instance._sandbox_activity = activity
+
+        async def immediate_sleep(_delay: object) -> None:
+            return None
+
+        async def read_cancelling_run() -> dict[str, str]:
+            instance.state = "CANCELLING"
+            return {"state": "CANCELLING"}
+
+        monkeypatch.setattr(workflow_module.workflow, "sleep", immediate_sleep)
+        instance._read_run = read_cancelling_run  # type: ignore[method-assign]
+
+        await instance._watch_durable_cancellation()
+
+        assert instance.cancel_requested is True
+        assert activity.cancelled is True
+
+    @pytest.mark.asyncio
+    async def test_a_signal_flag_set_before_handle_assignment_still_cancels_the_activity(
+        self, monkeypatch: pytest.MonkeyPatch
+    ) -> None:
+        instance = QualityRunWorkflow()
+        instance.cancel_requested = True
+
+        class ActivityHandle:
+            cancelled = False
+
+            def cancel(self) -> None:
+                self.cancelled = True
+
+        activity = ActivityHandle()
+        instance._sandbox_activity = activity
+
+        async def must_not_sleep(_delay: object) -> None:
+            raise AssertionError("an already accepted cancellation must not wait for polling")
+
+        monkeypatch.setattr(workflow_module.workflow, "sleep", must_not_sleep)
+
+        await instance._watch_durable_cancellation()
+
+        assert activity.cancelled is True
 
     @pytest.mark.asyncio
     async def test_a_sandbox_answer_becomes_redacted_immutable_evidence(self) -> None:

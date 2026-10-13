@@ -31,6 +31,7 @@ CORRECTIVE_REFS = {
     "lesson:LSN-0097",
     "lesson:LSN-0098",
     "lesson:LSN-0099",
+    "lesson:LSN-0100",
 }
 
 
@@ -76,7 +77,12 @@ def corrective_evidence() -> dict[str, list[str]]:
             "test:test_pending_declaration_is_allowed_only_before_handoff_or_inside_sealing",
             "test:test_full_delivery_assurance_flow_reaches_ready_for_review",
             "test:test_cancellation_is_rechecked_after_dispatch_before_activity_start",
+            "test:test_durable_cancelling_state_stops_an_active_sandbox_activity",
+            "test:test_a_signal_flag_set_before_handle_assignment_still_cancels_the_activity",
+            "test:test_accepted_cancellation_wins_over_a_racing_success_response",
             "test:test_inputs_are_canonicalized_and_an_unknown_subject_is_refused",
+            "test:test_in_progress_symbolic_head_validates_from_its_matching_subject_tag",
+            "test:test_subject_tag_never_substitutes_for_a_sealed_checkpoint_tag",
         ],
         "negativeTestEvidence": [
             "checkpoint:BASELINE-BUNDLE-AUDIT.json",
@@ -84,6 +90,7 @@ def corrective_evidence() -> dict[str, list[str]]:
         ],
         "documentationEvidence": [
             "file:docs/adr/ADR-0035-review-bundles-bind-immutable-content.md",
+            "file:docs/adr/ADR-0036-pre-seal-validation-binds-an-explicit-subject.md",
             "file:docs/CHECKPOINT-PROTOCOL.md",
             "file:docs/GATE-4-CHECKLIST.md",
         ],
@@ -93,6 +100,8 @@ def corrective_evidence() -> dict[str, list[str]]:
             "checkpoint:M2-INTERNAL-RED-TEAM.json",
             "checkpoint:REVIEW-BUNDLE-VALIDATION.json",
             "checkpoint:G4-CP-0008-FINDINGS-CLOSURE.json",
+            "checkpoint:QUALITY-CANCELLATION-GUARDRAIL.json",
+            "checkpoint:QUALITY-CANCELLATION-ISOLATION.json",
         ],
         "guardrailEvidence": [
             "file:.iacode/memory/lessons.jsonl",
@@ -147,8 +156,9 @@ def main() -> int:
         elif reference in CORRECTIVE_REFS:
             evidence = deepcopy(current)
             notes = (
-                "Closed by the schema 3.4 immutable review subject, exact sidecar exclusion, "
-                "transported double reconstruction, seal integration and independent validator path."
+                "Closed by CP0009 corrective implementation and focused evidence for immutable "
+                "review reconstruction, durable cancellation, refused-subject provenance or "
+                "detached pre-seal subject binding, as selected by the source requirement."
             )
             corrected += 1
         else:
@@ -206,7 +216,7 @@ def main() -> int:
         row["justification"] = None
         row["notes"] = source["notes"]
 
-    if (len(closure["requirements"]), inherited, corrected, defended) != (224, 199, 5, 20):
+    if (len(closure["requirements"]), inherited, corrected, defended) != (225, 199, 6, 20):
         errors.append(
             f"unexpected denominator total={len(closure['requirements'])} inherited={inherited} "
             f"corrected={corrected} defended={defended}"

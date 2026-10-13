@@ -24,6 +24,7 @@ from ledger_common import (  # noqa: E402
 from validate_checkpoint import (  # noqa: E402
     _validate_command_reproducibility,
     _validate_delivery_assurance,
+    _validate_git_binding,
     _validate_memory_policy,
     _validate_quality_evidence,
     _validate_review_transport,
@@ -981,8 +982,8 @@ class DetachedHeadValidationTests(DeltaCheckpointFixture):
             self.assertNotEqual(result.returncode, 0)
             self.assertIn("branch mismatch", result.stdout)
 
-    def _seal_with_symbolic_head(self, root: Path, checkpoint: Path) -> None:
-        """Finalize at a status that may keep the symbolic HEAD, commit and tag: G2-F-013's shape."""
+    def _commit_with_symbolic_head(self, root: Path, checkpoint: Path) -> None:
+        """Finalize at a status that may keep the symbolic HEAD, then commit it."""
         declare_inventory(root, checkpoint)
         finalized = run([
             sys.executable, str(SCRIPTS / "finalize_checkpoint.py"), "--root", str(root),
@@ -992,7 +993,49 @@ class DetachedHeadValidationTests(DeltaCheckpointFixture):
         self.assertEqual(self._read(checkpoint, "STATE.json")["currentCommit"], "HEAD")
         self._git(root, "add", "-A")
         self._git(root, "commit", "-m", "test: checkpoint committed with the symbolic HEAD")
+
+    def _seal_with_symbolic_head(self, root: Path, checkpoint: Path) -> None:
+        """Commit and canonically tag the symbolic-HEAD shape from G2-F-013."""
+        self._commit_with_symbolic_head(root, checkpoint)
         self._git(root, "tag", "-f", self.TAG)
+
+    def test_in_progress_symbolic_head_validates_from_its_matching_subject_tag(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            checkpoint = self._build(root)
+            self._commit_with_symbolic_head(root, checkpoint)
+            subject = "iacode-subjects/TEST-CP-0001-verification"
+            self._git(root, "tag", subject)
+            self._git(root, "checkout", "--detach", f"refs/tags/{subject}")
+            result = self._validate(root)
+            self.assertEqual(result.returncode, 0, result.stdout)
+
+    def test_subject_tag_never_substitutes_for_a_sealed_checkpoint_tag(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            self._build(root)
+            head = self._git(root, "rev-parse", "HEAD")
+            self._git(root, "tag", "iacode-subjects/TEST-CP-0001-verification")
+            errors: list[str] = []
+            _validate_git_binding(
+                root,
+                {
+                    "currentCommit": "HEAD",
+                    "branch": "main",
+                    "dirty": False,
+                    "status": "READY_FOR_REVIEW",
+                },
+                {"head": head, "branch": None, "dirty": False, "detached": True},
+                False,
+                False,
+                errors,
+                checkpoint_id="TEST-CP-0001",
+            )
+            self.assertIn(
+                "detached HEAD validation requires an existing checkpoint tag: "
+                "refs/tags/iacode-checkpoints/TEST-CP-0001",
+                errors,
+            )
 
     def test_a_symbolic_head_validates_from_its_own_canonical_tag(self) -> None:
         """G2-F-013: GATE-2-CP-0001 was sealed at BLOCKED with currentCommit HEAD and then could

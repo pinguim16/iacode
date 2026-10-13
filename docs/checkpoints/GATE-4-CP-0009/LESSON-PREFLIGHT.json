@@ -11,11 +11,11 @@
     "review-bundle",
     "evaluator"
   ],
-  "generatedAt": "2026-10-12T21:03:51Z",
+  "generatedAt": "2026-10-13T01:18:27Z",
   "policyVersion": "2.0.0",
-  "inputsFingerprint": "f76cf765d1e6b15f45c3ed1a72c7f7f9eac1afe8429545e9331f1f2a7f81bd25",
-  "lessonsConsidered": 99,
-  "lessonsApplicable": 98,
+  "inputsFingerprint": "860bbaecbc1fc372cfd1b43264dc35252e972445b20c003c6ed663cb3b5a0715",
+  "lessonsConsidered": 100,
+  "lessonsApplicable": 99,
   "applicable": [
     {
       "lessonId": "LSN-0001",
@@ -979,12 +979,12 @@
     },
     {
       "lessonId": "LSN-0098",
-      "title": "Cancellation must be rechecked after a dispatch event and before activity creation",
+      "title": "Accepted cancellation must be enforced from durable state across activity boundaries",
       "status": "GUARDED",
-      "severity": "HIGH",
-      "reasonApplicable": "applies to every Gate; category implementation; severity HIGH; already guarded, so the control must keep holding",
-      "requiredCheck": "Any signal accepted while a workflow awaits a dispatch-persistence boundary must be rechecked before the corresponding long-running activity is created.",
-      "requiredEvidence": "A deterministic ordering regression plus the rebuilt evaluator suite and a complete verifier cancellation scenario.",
+      "severity": "CRITICAL",
+      "reasonApplicable": "applies to every Gate; category implementation; severity CRITICAL; already guarded, so the control must keep holding",
+      "requiredCheck": "When cancellation is accepted durably, the workflow must observe it before starting and while awaiting a long-running activity, cancel any newly assigned handle, give cancellation precedence over a racing normal response, and wait for cleanup before becoming terminal.",
+      "requiredEvidence": "Deterministic dispatch, handle-handoff, in-flight durable-state and response-precedence regressions, the rebuilt evaluator suite, and a live checkout-owned cancellation scenario that reaches CANCELLED with cancellation evidence and cleanup.",
       "derivedRequirementId": "LESSON-REQ-0097"
     },
     {
@@ -996,6 +996,16 @@
       "requiredCheck": "A command refused before execution must retain a recomputable refusal without making its deliberately invalid subject part of the published-history evidence denominator.",
       "requiredEvidence": "A behavioral recorder/validator regression proving no process executes, the refusal remains valid ledger evidence, and the unresolved subject is not treated as a commit that produced evidence.",
       "derivedRequirementId": "LESSON-REQ-0098"
+    },
+    {
+      "lessonId": "LSN-0100",
+      "title": "Pre-seal detached validation must bind the explicit subject namespace",
+      "status": "GUARDED",
+      "severity": "HIGH",
+      "reasonApplicable": "applies to every Gate; category checkpoint; severity HIGH; already guarded, so the control must keep holding",
+      "requiredCheck": "An exact detached pre-seal verifier must bind an IN_PROGRESS checkpoint to its checkpoint-named iacode-subjects ref without allowing that ref to substitute for the canonical seal tag.",
+      "requiredEvidence": "Positive and negative detached-checkout regressions proving the subject mode is exact, checkpoint-specific and unavailable after pre-seal work.",
+      "derivedRequirementId": "LESSON-REQ-0099"
     }
   ],
   "derivedRequirements": [
@@ -1674,9 +1684,9 @@
     {
       "id": "LESSON-REQ-0097",
       "lessonId": "LSN-0098",
-      "description": "Verify cancellation must be rechecked after a dispatch event and before activity creation",
+      "description": "Verify accepted cancellation must be enforced from durable state across activity boundaries",
       "mandatory": true,
-      "requiredEvidence": "A deterministic ordering regression plus the rebuilt evaluator suite and a complete verifier cancellation scenario."
+      "requiredEvidence": "Deterministic dispatch, handle-handoff, in-flight durable-state and response-precedence regressions, the rebuilt evaluator suite, and a live checkout-owned cancellation scenario that reaches CANCELLED with cancellation evidence and cleanup."
     },
     {
       "id": "LESSON-REQ-0098",
@@ -1684,6 +1694,13 @@
       "description": "Verify a refused subject is an attempted input, not executed commit evidence",
       "mandatory": true,
       "requiredEvidence": "A behavioral recorder/validator regression proving no process executes, the refusal remains valid ledger evidence, and the unresolved subject is not treated as a commit that produced evidence."
+    },
+    {
+      "id": "LESSON-REQ-0099",
+      "lessonId": "LSN-0100",
+      "description": "Verify pre-seal detached validation must bind the explicit subject namespace",
+      "mandatory": true,
+      "requiredEvidence": "Positive and negative detached-checkout regressions proving the subject mode is exact, checkpoint-specific and unavailable after pre-seal work."
     }
   ]
 }

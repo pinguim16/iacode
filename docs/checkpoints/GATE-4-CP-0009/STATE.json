@@ -8,7 +8,7 @@
   "currentCommit": "HEAD",
   "dirty": false,
   "startedAt": "2026-10-12T15:03:38Z",
-  "updatedAt": "2026-10-12T20:52:39Z",
+  "updatedAt": "2026-10-13T01:29:06Z",
   "nextAllowedAction": "Populate and validate this checkpoint.",
   "blockedBy": [],
   "secondToolValidation": {
@@ -66,11 +66,11 @@
     "path": "LESSON-PREFLIGHT.json",
     "gate": "GATE-4",
     "scope": "corrective sealed review-bundle reconstruction",
-    "lessonsConsidered": 99,
-    "lessonsApplicable": 98,
-    "derivedRequirements": 98,
+    "lessonsConsidered": 100,
+    "lessonsApplicable": 99,
+    "derivedRequirements": 99,
     "evidence": [
-      "command:cmd-0056"
+      "command:cmd-0073"
     ]
   },
   "milestone": {
@@ -90,12 +90,16 @@
   "externalAuditRequired": false,
   "externalAuditReason": null,
   "guardrailEffectiveness": {
-    "guardrailsTotal": 0,
-    "guardrailsResolved": 0,
-    "guardrailsTested": 0,
-    "guardrailsEffective": 0,
+    "guardrailsTotal": 101,
+    "guardrailsResolved": 101,
+    "guardrailsTested": 101,
+    "guardrailsEffective": 101,
     "guardrailFailures": 0,
-    "evidence": []
+    "evidence": [
+      "command:cmd-0060",
+      "command:cmd-0069",
+      "command:cmd-0071"
+    ]
   },
   "integrity": {
     "status": "PASS",

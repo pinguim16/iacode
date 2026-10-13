@@ -32,3 +32,10 @@ fixture, incomplete-subject selection, and reference-classification defects. Pre
 run. Close those defects under the existing Gate 4 scope, require focused promotion/succession,
 lesson, preserved-reference, bundle and twenty-attack controls to pass, then publish a new exact
 subject under `iacode-subjects/` for one complete 42-stage execution.
+
+The third published-subject verifier again passed 39/42. Preserve it and classify cancellation as
+a recurrence of LSN-0098/GRD-0099, leaving the guardrail failure unresolved until persisted
+`CANCELLING` state stops a real in-flight sandbox activity in a disposable checkout-owned stack.
+Add the ADR-0036 detached pre-seal subject contract and its positive/negative regressions. Only
+after those focused proofs, refreshed lesson preflight and requirement derivation may a new exact
+subject be published for another single complete 42-stage execution.

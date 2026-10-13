@@ -4,9 +4,9 @@
 - Scope: `corrective sealed review-bundle reconstruction`
 - Technologies: `Python`, `Temporal`
 - Modules: `development-ledger`, `review-bundle`, `evaluator`
-- Generated: `2026-10-12T21:03:51Z`
-- Lessons considered: 99
-- Lessons applicable: 98
+- Generated: `2026-10-13T01:18:27Z`
+- Lessons considered: 100
+- Lessons applicable: 99
 
 Every applicable lesson below is a requirement of this Gate. The derived identifiers must
 appear in `REQUIREMENTS-MATRIX.json`, and the Delivery Completeness Validator fails the
@@ -110,8 +110,9 @@ delivery when one is absent.
 | `LSN-0095` A complete verifier must own its Compose runtime by checkout | `GUARDED` | HIGH | `LESSON-REQ-0094` | Every live multi-stage verifier must prove that one checkout exclusively owns its Compose project, published ports, volumes and image build inputs for the whole ordered run, while cleanup is restricted to that owned namespace. |
 | `LSN-0096` Evidence publishers must consume the producer's canonical result schema | `GUARDED` | HIGH | `LESSON-REQ-0095` | Every evidence publisher must consume the producer's canonical versioned result fields and prove the mapping behaviorally with a contradictory-alias fixture. |
 | `LSN-0097` A review-bundle declaration must bind an immutable reconstruction subject | `GUARDED` | HIGH | `LESSON-REQ-0096` | A review-bundle declaration must identify an immutable reconstruction subject, and validation must rebuild twice from transported Git content and compare digest and size with the declaration before handoff. |
-| `LSN-0098` Cancellation must be rechecked after a dispatch event and before activity creation | `GUARDED` | HIGH | `LESSON-REQ-0097` | Any signal accepted while a workflow awaits a dispatch-persistence boundary must be rechecked before the corresponding long-running activity is created. |
+| `LSN-0098` Accepted cancellation must be enforced from durable state across activity boundaries | `GUARDED` | CRITICAL | `LESSON-REQ-0097` | When cancellation is accepted durably, the workflow must observe it before starting and while awaiting a long-running activity, cancel any newly assigned handle, give cancellation precedence over a racing normal response, and wait for cleanup before becoming terminal. |
 | `LSN-0099` A refused subject is an attempted input, not executed commit evidence | `GUARDED` | HIGH | `LESSON-REQ-0098` | A command refused before execution must retain a recomputable refusal without making its deliberately invalid subject part of the published-history evidence denominator. |
+| `LSN-0100` Pre-seal detached validation must bind the explicit subject namespace | `GUARDED` | HIGH | `LESSON-REQ-0099` | An exact detached pre-seal verifier must bind an IN_PROGRESS checkpoint to its checkpoint-named iacode-subjects ref without allowing that ref to substitute for the canonical seal tag. |
 
 ## Why each lesson applies
 
@@ -787,11 +788,11 @@ delivery when one is absent.
 - Required evidence: A producer/validator regression, an attack-T failure fixture for stale declarations, and two byte-identical detached-transport rebuilds matching the sealed declaration.
 - Derived requirement: `LESSON-REQ-0096`
 
-### LSN-0098 — Cancellation must be rechecked after a dispatch event and before activity creation
+### LSN-0098 — Accepted cancellation must be enforced from durable state across activity boundaries
 
-- Reason: applies to every Gate; category implementation; severity HIGH; already guarded, so the control must keep holding
-- Required check: Any signal accepted while a workflow awaits a dispatch-persistence boundary must be rechecked before the corresponding long-running activity is created.
-- Required evidence: A deterministic ordering regression plus the rebuilt evaluator suite and a complete verifier cancellation scenario.
+- Reason: applies to every Gate; category implementation; severity CRITICAL; already guarded, so the control must keep holding
+- Required check: When cancellation is accepted durably, the workflow must observe it before starting and while awaiting a long-running activity, cancel any newly assigned handle, give cancellation precedence over a racing normal response, and wait for cleanup before becoming terminal.
+- Required evidence: Deterministic dispatch, handle-handoff, in-flight durable-state and response-precedence regressions, the rebuilt evaluator suite, and a live checkout-owned cancellation scenario that reaches CANCELLED with cancellation evidence and cleanup.
 - Derived requirement: `LESSON-REQ-0097`
 
 ### LSN-0099 — A refused subject is an attempted input, not executed commit evidence
@@ -800,3 +801,10 @@ delivery when one is absent.
 - Required check: A command refused before execution must retain a recomputable refusal without making its deliberately invalid subject part of the published-history evidence denominator.
 - Required evidence: A behavioral recorder/validator regression proving no process executes, the refusal remains valid ledger evidence, and the unresolved subject is not treated as a commit that produced evidence.
 - Derived requirement: `LESSON-REQ-0098`
+
+### LSN-0100 — Pre-seal detached validation must bind the explicit subject namespace
+
+- Reason: applies to every Gate; category checkpoint; severity HIGH; already guarded, so the control must keep holding
+- Required check: An exact detached pre-seal verifier must bind an IN_PROGRESS checkpoint to its checkpoint-named iacode-subjects ref without allowing that ref to substitute for the canonical seal tag.
+- Required evidence: Positive and negative detached-checkout regressions proving the subject mode is exact, checkpoint-specific and unavailable after pre-seal work.
+- Derived requirement: `LESSON-REQ-0099`
