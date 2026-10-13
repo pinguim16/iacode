@@ -8,8 +8,8 @@
   "currentCommit": "HEAD",
   "dirty": false,
   "startedAt": "2026-10-12T15:03:38Z",
-  "updatedAt": "2026-10-13T01:29:06Z",
-  "nextAllowedAction": "Populate and validate this checkpoint.",
+  "updatedAt": "2026-10-13T04:08:36Z",
+  "nextAllowedAction": "Freeze and publish the replacement exact subject, then execute one complete 42-stage verifier.",
   "blockedBy": [],
   "secondToolValidation": {
     "status": "PENDING_MANUAL",
@@ -47,7 +47,7 @@
     "auditor": null,
     "evidence": []
   },
-  "reworkCycles": 0,
+  "reworkCycles": 12,
   "independentReview": {
     "status": "PENDING",
     "tool": null,
@@ -66,11 +66,11 @@
     "path": "LESSON-PREFLIGHT.json",
     "gate": "GATE-4",
     "scope": "corrective sealed review-bundle reconstruction",
-    "lessonsConsidered": 100,
-    "lessonsApplicable": 99,
-    "derivedRequirements": 99,
+    "lessonsConsidered": 101,
+    "lessonsApplicable": 100,
+    "derivedRequirements": 100,
     "evidence": [
-      "command:cmd-0073"
+      "command:cmd-0103"
     ]
   },
   "milestone": {
@@ -90,15 +90,25 @@
   "externalAuditRequired": false,
   "externalAuditReason": null,
   "guardrailEffectiveness": {
-    "guardrailsTotal": 101,
-    "guardrailsResolved": 101,
-    "guardrailsTested": 101,
-    "guardrailsEffective": 101,
+    "guardrailsTotal": 102,
+    "guardrailsResolved": 102,
+    "guardrailsTested": 102,
+    "guardrailsEffective": 102,
     "guardrailFailures": 0,
     "evidence": [
       "command:cmd-0060",
       "command:cmd-0069",
-      "command:cmd-0071"
+      "command:cmd-0071",
+      "command:cmd-0083",
+      "command:cmd-0084",
+      "command:cmd-0085",
+      "command:cmd-0086",
+      "command:cmd-0091",
+      "command:cmd-0092",
+      "command:cmd-0093",
+      "command:cmd-0096",
+      "command:cmd-0097",
+      "command:cmd-0106"
     ]
   },
   "integrity": {

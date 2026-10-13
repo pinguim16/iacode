@@ -28,10 +28,13 @@ FIELDS = (
 CORRECTIVE_REFS = {
     "canonical:GATE-4#20.5",
     "finding:G4-F-004",
+    "lesson:LSN-0011",
+    "lesson:LSN-0013",
     "lesson:LSN-0097",
     "lesson:LSN-0098",
     "lesson:LSN-0099",
     "lesson:LSN-0100",
+    "lesson:LSN-0101",
 }
 
 
@@ -83,6 +86,12 @@ def corrective_evidence() -> dict[str, list[str]]:
             "test:test_inputs_are_canonicalized_and_an_unknown_subject_is_refused",
             "test:test_in_progress_symbolic_head_validates_from_its_matching_subject_tag",
             "test:test_subject_tag_never_substitutes_for_a_sealed_checkpoint_tag",
+            "test:test_the_index_lists_every_record_with_its_title_and_status",
+            "test:test_a_record_missing_from_the_index_is_detected",
+            "test:test_gate_consistency_is_provisional_while_work_is_in_progress",
+            "test:test_green_keeper_declares_its_in_progress_evidence_dirty_before_validation",
+            "test:test_every_runner_of_the_mandatory_gates_refreshes_the_declared_hashes",
+            "test:test_the_refresh_has_one_definition",
         ],
         "negativeTestEvidence": [
             "checkpoint:BASELINE-BUNDLE-AUDIT.json",
@@ -92,6 +101,7 @@ def corrective_evidence() -> dict[str, list[str]]:
             "file:docs/adr/ADR-0035-review-bundles-bind-immutable-content.md",
             "file:docs/adr/ADR-0036-pre-seal-validation-binds-an-explicit-subject.md",
             "file:docs/CHECKPOINT-PROTOCOL.md",
+            "file:docs/TOOL-CAPABILITIES.md",
             "file:docs/GATE-4-CHECKLIST.md",
         ],
         "validationEvidence": [
@@ -216,7 +226,7 @@ def main() -> int:
         row["justification"] = None
         row["notes"] = source["notes"]
 
-    if (len(closure["requirements"]), inherited, corrected, defended) != (225, 199, 6, 20):
+    if (len(closure["requirements"]), inherited, corrected, defended) != (226, 198, 8, 20):
         errors.append(
             f"unexpected denominator total={len(closure['requirements'])} inherited={inherited} "
             f"corrected={corrected} defended={defended}"

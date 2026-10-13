@@ -4,9 +4,9 @@
 - Scope: `corrective sealed review-bundle reconstruction`
 - Technologies: `Python`, `Temporal`
 - Modules: `development-ledger`, `review-bundle`, `evaluator`
-- Generated: `2026-10-13T01:18:27Z`
-- Lessons considered: 100
-- Lessons applicable: 99
+- Generated: `2026-10-13T04:06:04Z`
+- Lessons considered: 101
+- Lessons applicable: 100
 
 Every applicable lesson below is a requirement of this Gate. The derived identifiers must
 appear in `REQUIREMENTS-MATRIX.json`, and the Delivery Completeness Validator fails the
@@ -24,9 +24,9 @@ delivery when one is absent.
 | `LSN-0008` Requirement completeness must be total and evidence-backed before handoff | `GUARDED` | CRITICAL | `LESSON-REQ-0008` | Extract every requirement before implementing and audit completeness before handoff. |
 | `LSN-0009` A red gate requires rework, never a waiver, and never a weakened check | `GUARDED` | CRITICAL | `LESSON-REQ-0009` | Run the Green Keeper until every mandatory gate is green, repairing causes rather than checks. |
 | `LSN-0010` A recorded command must carry runtime, working directory, commit and purpose to be replayable | `GUARDED` | HIGH | `LESSON-REQ-0010` | Record commands with the tooling so each one is executable from its declared working directory. |
-| `LSN-0011` A control over a checkpoint's own evidence must be scoped to the moment it matters | `GUARDED` | HIGH | `LESSON-REQ-0011` | Check whether any new control would be invalidated by the evidence its own run produces. |
+| `LSN-0011` A control over a checkpoint's own evidence must be scoped to the moment it matters | `GUARDED` | CRITICAL | `LESSON-REQ-0011` | Check whether any new control would be invalidated by the evidence its own run produces. |
 | `LSN-0012` Sealed checkpoints and their tags are immutable, and tooling must keep validating them | `GUARDED` | CRITICAL | `LESSON-REQ-0012` | Confirm that every sealed checkpoint still validates under the tooling this Gate changes. |
-| `LSN-0013` An installed capability must be detected by resolved path, not by a bare command lookup | `CONFIRMED` | MEDIUM | `LESSON-REQ-0013` | When this Gate records a capability, resolve the executable path before concluding anything about availability. |
+| `LSN-0013` An installed capability must be detected by resolved path, not by a bare command lookup | `CONFIRMED` | HIGH | `LESSON-REQ-0013` | When this Gate records a capability, resolve the executable path before concluding anything about availability. |
 | `LSN-0014` Evidence must be recorded as it happens, not reconstructed at the end of a run | `GUARDED` | MEDIUM | `LESSON-REQ-0014` | Record each command through the tooling while the work happens. |
 | `LSN-0015` Every positive terminal status needs one shared promotion invariant | `GUARDED` | CRITICAL | `LESSON-REQ-0015` | Confirm that every positive terminal status this Gate can produce is covered by the shared promotion invariant, not only the status this delivery ends at. |
 | `LSN-0016` A mandatory set must be closed by policy, never chosen by the caller | `GUARDED` | CRITICAL | `LESSON-REQ-0016` | Confirm that every control whose scope could be narrowed by an argument derives that scope from policy instead. |
@@ -94,7 +94,7 @@ delivery when one is absent.
 | `LSN-0079` Test discovery and the unit runner must cover the same project scope | `GUARDED` | HIGH | `LESSON-REQ-0078` | For every test applicability rule, prove the corresponding closed runner collects the same project scope and that a failing source at each recognized location is observed. |
 | `LSN-0080` A failed verification stage must not leave an older PASS report addressable | `GUARDED` | HIGH | `LESSON-REQ-0079` | Whenever a verification stage writes to a reusable report path, prove the old artifact is removed before execution and cannot survive a failed rerun as current evidence. |
 | `LSN-0081` Canonical requirement evidence must name a test the repository actually discovers | `GUARDED` | HIGH | `LESSON-REQ-0080` | Before a canonical checklist is accepted, resolve every named test identity against the suite registry rather than treating prose-like test labels as evidence. |
-| `LSN-0082` Engineering memory cannot depend on an ephemeral generated report | `GUARDED` | HIGH | `LESSON-REQ-0081` | Keep organizational memory evidence in committed source or checkpoint-owned artifacts; reject references to regenerable runtime output. |
+| `LSN-0082` Engineering memory cannot depend on an ephemeral generated report | `GUARDED` | CRITICAL | `LESSON-REQ-0081` | Keep organizational memory evidence in committed source or checkpoint-owned file artifacts; reject unsupported evidence kinds and references to regenerable runtime output. |
 | `LSN-0083` A command that decodes captured UTF-8 must also configure the stream that re-emits it | `GUARDED` | HIGH | `LESSON-REQ-0082` | For every executable command that captures text from a child process and prints it, configure both the child decoder and the parent output stream explicitly. |
 | `LSN-0084` A historical Gate documentation test must derive the current entry-point state | `GUARDED` | MEDIUM | `LESSON-REQ-0083` | When a predecessor regression test inspects a current entry point, derive current lifecycle identifiers and keep only genuinely historical references fixed. |
 | `LSN-0085` A source-based control must assert syntax semantics rather than formatter layout | `GUARDED` | MEDIUM | `LESSON-REQ-0084` | When a control judges source structure, parse the language representation and compare semantic nodes instead of binding the rule to formatter whitespace or quote style. |
@@ -113,6 +113,7 @@ delivery when one is absent.
 | `LSN-0098` Accepted cancellation must be enforced from durable state across activity boundaries | `GUARDED` | CRITICAL | `LESSON-REQ-0097` | When cancellation is accepted durably, the workflow must observe it before starting and while awaiting a long-running activity, cancel any newly assigned handle, give cancellation precedence over a racing normal response, and wait for cleanup before becoming terminal. |
 | `LSN-0099` A refused subject is an attempted input, not executed commit evidence | `GUARDED` | HIGH | `LESSON-REQ-0098` | A command refused before execution must retain a recomputable refusal without making its deliberately invalid subject part of the published-history evidence denominator. |
 | `LSN-0100` Pre-seal detached validation must bind the explicit subject namespace | `GUARDED` | HIGH | `LESSON-REQ-0099` | An exact detached pre-seal verifier must bind an IN_PROGRESS checkpoint to its checkpoint-named iacode-subjects ref without allowing that ref to substitute for the canonical seal tag. |
+| `LSN-0101` A structural record and its canonical index are one atomic change | `GUARDED` | HIGH | `LESSON-REQ-0100` | Whenever a structural record is created or changed, its canonical index must enumerate the same record, title and status before publication. |
 
 ## Why each lesson applies
 
@@ -188,7 +189,7 @@ delivery when one is absent.
 
 ### LSN-0011 — A control over a checkpoint's own evidence must be scoped to the moment it matters
 
-- Reason: applies to every Gate; category tooling; severity HIGH; already guarded, so the control must keep holding
+- Reason: applies to every Gate; category tooling; severity CRITICAL; already guarded, so the control must keep holding
 - Required check: Check whether any new control would be invalidated by the evidence its own run produces.
 - Required evidence: A passing validation executed by the gate harness itself.
 - Derived requirement: `LESSON-REQ-0011`
@@ -202,7 +203,7 @@ delivery when one is absent.
 
 ### LSN-0013 — An installed capability must be detected by resolved path, not by a bare command lookup
 
-- Reason: applies to every Gate; category environment; severity MEDIUM; status CONFIRMED, so it is not yet prevented automatically
+- Reason: applies to every Gate; category environment; severity HIGH; status CONFIRMED, so it is not yet prevented automatically
 - Required check: When this Gate records a capability, resolve the executable path before concluding anything about availability.
 - Required evidence: A capability record naming the resolved path, or a justification that this Gate detects no capability.
 - Derived requirement: `LESSON-REQ-0013`
@@ -678,9 +679,9 @@ delivery when one is absent.
 
 ### LSN-0082 — Engineering memory cannot depend on an ephemeral generated report
 
-- Reason: applies to every Gate; category quality; severity HIGH; already guarded, so the control must keep holding
-- Required check: Keep organizational memory evidence in committed source or checkpoint-owned artifacts; reject references to regenerable runtime output.
-- Required evidence: A repository-wide control proving no lesson evidence path begins with file:var/.
+- Reason: applies to every Gate; category quality; severity CRITICAL; already guarded, so the control must keep holding
+- Required check: Keep organizational memory evidence in committed source or checkpoint-owned file artifacts; reject unsupported evidence kinds and references to regenerable runtime output.
+- Required evidence: Lesson validation proving every evidence reference is a resolvable repository file and no lesson evidence path begins with file:var/.
 - Derived requirement: `LESSON-REQ-0081`
 
 ### LSN-0083 — A command that decodes captured UTF-8 must also configure the stream that re-emits it
@@ -808,3 +809,10 @@ delivery when one is absent.
 - Required check: An exact detached pre-seal verifier must bind an IN_PROGRESS checkpoint to its checkpoint-named iacode-subjects ref without allowing that ref to substitute for the canonical seal tag.
 - Required evidence: Positive and negative detached-checkout regressions proving the subject mode is exact, checkpoint-specific and unavailable after pre-seal work.
 - Derived requirement: `LESSON-REQ-0099`
+
+### LSN-0101 — A structural record and its canonical index are one atomic change
+
+- Reason: applies to every Gate; category checkpoint; severity HIGH; already guarded, so the control must keep holding
+- Required check: Whenever a structural record is created or changed, its canonical index must enumerate the same record, title and status before publication.
+- Required evidence: A positive full-enumeration test and a negative mutation test proving a missing index row is rejected.
+- Derived requirement: `LESSON-REQ-0100`

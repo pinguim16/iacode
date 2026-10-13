@@ -22,3 +22,6 @@
 - Detached subject validation must never become an alternate seal path. It is restricted to clean
   `IN_PROGRESS` checkpoints whose symbolic HEAD is reached by a checkpoint-named
   `iacode-subjects/` tag; all later statuses still require the canonical checkpoint tag.
+- A structural decision can be technically valid yet undiscoverable when its canonical index is not
+  updated atomically. Cmd-0083 caught ADR-0036's missing index row; both complete enumeration and a
+  missing-row mutation control must pass before the replacement subject is published.

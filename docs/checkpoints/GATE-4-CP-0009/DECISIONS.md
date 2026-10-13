@@ -34,3 +34,6 @@
 - Adopt ADR-0036's pre-seal checkout mode. A clean detached `IN_PROGRESS` checkpoint may bind its
   symbolic HEAD to a matching `iacode-subjects/<checkpoint>...` tag, while every handoff-ready or
   sealed state continues to require `iacode-checkpoints/<checkpoint>`.
+- Preserve cmd-0083 as the complete 41/42 red cycle. Treat an ADR and its canonical index row as one
+  atomic structural change; repair the index and prove both enumeration and missing-row detection
+  rather than waiving the root test or reusing the 41 passing stages.

@@ -45,3 +45,4 @@ exist, or a title or status that disagrees with its record fails the suite.
 | [ADR-0033](ADR-0033-verification-runtime-is-owned-by-one-checkout.md) | A verification runtime is owned by one checkout | Accepted |
 | [ADR-0034](ADR-0034-command-inputs-must-cross-git-transport.md) | Command inputs must cross Git transport | Accepted |
 | [ADR-0035](ADR-0035-review-bundles-bind-immutable-content.md) | Review bundles bind immutable content | Accepted |
+| [ADR-0036](ADR-0036-pre-seal-validation-binds-an-explicit-subject.md) | Pre-seal validation binds an explicit subject | Accepted |

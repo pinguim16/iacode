@@ -142,7 +142,7 @@ Expected set derived by: `policies.expected_requirement_refs over docs/GATE-4-CH
 | `LESSON-REQ-0010` | `lesson:LSN-0010` | yes | `NOT_STARTED` | Verify a recorded command must carry runtime, working directory, commit and purpose to be replayable | LESSON-PREFLIGHT.json LESSON-REQ-0010 |
 | `LESSON-REQ-0011` | `lesson:LSN-0011` | yes | `NOT_STARTED` | Verify a control over a checkpoint's own evidence must be scoped to the moment it matters | LESSON-PREFLIGHT.json LESSON-REQ-0011 |
 | `LESSON-REQ-0012` | `lesson:LSN-0012` | yes | `NOT_STARTED` | Verify sealed checkpoints and their tags are immutable, and tooling must keep validating them | LESSON-PREFLIGHT.json LESSON-REQ-0012 |
-| `LESSON-REQ-0013` | `lesson:LSN-0013` | no | `NOT_STARTED` | Verify an installed capability must be detected by resolved path, not by a bare command lookup | LESSON-PREFLIGHT.json LESSON-REQ-0013 |
+| `LESSON-REQ-0013` | `lesson:LSN-0013` | yes | `NOT_STARTED` | Verify an installed capability must be detected by resolved path, not by a bare command lookup | LESSON-PREFLIGHT.json LESSON-REQ-0013 |
 | `LESSON-REQ-0014` | `lesson:LSN-0014` | yes | `NOT_STARTED` | Verify evidence must be recorded as it happens, not reconstructed at the end of a run | LESSON-PREFLIGHT.json LESSON-REQ-0014 |
 | `LESSON-REQ-0015` | `lesson:LSN-0015` | yes | `NOT_STARTED` | Verify every positive terminal status needs one shared promotion invariant | LESSON-PREFLIGHT.json LESSON-REQ-0015 |
 | `LESSON-REQ-0016` | `lesson:LSN-0016` | yes | `NOT_STARTED` | Verify a mandatory set must be closed by policy, never chosen by the caller | LESSON-PREFLIGHT.json LESSON-REQ-0016 |
@@ -229,3 +229,4 @@ Expected set derived by: `policies.expected_requirement_refs over docs/GATE-4-CH
 | `LESSON-REQ-0097` | `lesson:LSN-0098` | yes | `NOT_STARTED` | Verify accepted cancellation must be enforced from durable state across activity boundaries | LESSON-PREFLIGHT.json LESSON-REQ-0097 |
 | `LESSON-REQ-0098` | `lesson:LSN-0099` | yes | `NOT_STARTED` | Verify a refused subject is an attempted input, not executed commit evidence | LESSON-PREFLIGHT.json LESSON-REQ-0098 |
 | `LESSON-REQ-0099` | `lesson:LSN-0100` | yes | `NOT_STARTED` | Verify pre-seal detached validation must bind the explicit subject namespace | LESSON-PREFLIGHT.json LESSON-REQ-0099 |
+| `LESSON-REQ-0100` | `lesson:LSN-0101` | yes | `NOT_STARTED` | Verify a structural record and its canonical index are one atomic change | LESSON-PREFLIGHT.json LESSON-REQ-0100 |

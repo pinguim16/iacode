@@ -1464,6 +1464,20 @@
         "LSN-0100"
       ],
       "removingItWouldAllow": "A detached verifier either to demand a premature seal tag for unfinished content or to use a pre-seal subject tag as if it were canonical sealed checkpoint identity."
+    },
+    {
+      "guardrailId": "GRD-0102",
+      "title": "Structural records are atomically represented in their canonical index",
+      "kind": "test",
+      "reference": "test_the_index_lists_every_record_with_its_title_and_status",
+      "verifiedBy": [
+        "test_the_index_lists_every_record_with_its_title_and_status",
+        "test_a_record_missing_from_the_index_is_detected"
+      ],
+      "lessons": [
+        "LSN-0101"
+      ],
+      "removingItWouldAllow": "A new ADR or other indexed structural record to exist without discoverable canonical index membership, while narrower focused tests still pass."
     }
   ]
 }

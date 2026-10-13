@@ -11,11 +11,11 @@
     "review-bundle",
     "evaluator"
   ],
-  "generatedAt": "2026-10-13T01:18:27Z",
+  "generatedAt": "2026-10-13T04:06:04Z",
   "policyVersion": "2.0.0",
-  "inputsFingerprint": "860bbaecbc1fc372cfd1b43264dc35252e972445b20c003c6ed663cb3b5a0715",
-  "lessonsConsidered": 100,
-  "lessonsApplicable": 99,
+  "inputsFingerprint": "fd36f126a8e38ebb11d0114099ebce14d8184f1d72272a637870f69128ca926b",
+  "lessonsConsidered": 101,
+  "lessonsApplicable": 100,
   "applicable": [
     {
       "lessonId": "LSN-0001",
@@ -121,8 +121,8 @@
       "lessonId": "LSN-0011",
       "title": "A control over a checkpoint's own evidence must be scoped to the moment it matters",
       "status": "GUARDED",
-      "severity": "HIGH",
-      "reasonApplicable": "applies to every Gate; category tooling; severity HIGH; already guarded, so the control must keep holding",
+      "severity": "CRITICAL",
+      "reasonApplicable": "applies to every Gate; category tooling; severity CRITICAL; already guarded, so the control must keep holding",
       "requiredCheck": "Check whether any new control would be invalidated by the evidence its own run produces.",
       "requiredEvidence": "A passing validation executed by the gate harness itself.",
       "derivedRequirementId": "LESSON-REQ-0011"
@@ -141,8 +141,8 @@
       "lessonId": "LSN-0013",
       "title": "An installed capability must be detected by resolved path, not by a bare command lookup",
       "status": "CONFIRMED",
-      "severity": "MEDIUM",
-      "reasonApplicable": "applies to every Gate; category environment; severity MEDIUM; status CONFIRMED, so it is not yet prevented automatically",
+      "severity": "HIGH",
+      "reasonApplicable": "applies to every Gate; category environment; severity HIGH; status CONFIRMED, so it is not yet prevented automatically",
       "requiredCheck": "When this Gate records a capability, resolve the executable path before concluding anything about availability.",
       "requiredEvidence": "A capability record naming the resolved path, or a justification that this Gate detects no capability.",
       "derivedRequirementId": "LESSON-REQ-0013"
@@ -821,10 +821,10 @@
       "lessonId": "LSN-0082",
       "title": "Engineering memory cannot depend on an ephemeral generated report",
       "status": "GUARDED",
-      "severity": "HIGH",
-      "reasonApplicable": "applies to every Gate; category quality; severity HIGH; already guarded, so the control must keep holding",
-      "requiredCheck": "Keep organizational memory evidence in committed source or checkpoint-owned artifacts; reject references to regenerable runtime output.",
-      "requiredEvidence": "A repository-wide control proving no lesson evidence path begins with file:var/.",
+      "severity": "CRITICAL",
+      "reasonApplicable": "applies to every Gate; category quality; severity CRITICAL; already guarded, so the control must keep holding",
+      "requiredCheck": "Keep organizational memory evidence in committed source or checkpoint-owned file artifacts; reject unsupported evidence kinds and references to regenerable runtime output.",
+      "requiredEvidence": "Lesson validation proving every evidence reference is a resolvable repository file and no lesson evidence path begins with file:var/.",
       "derivedRequirementId": "LESSON-REQ-0081"
     },
     {
@@ -1006,6 +1006,16 @@
       "requiredCheck": "An exact detached pre-seal verifier must bind an IN_PROGRESS checkpoint to its checkpoint-named iacode-subjects ref without allowing that ref to substitute for the canonical seal tag.",
       "requiredEvidence": "Positive and negative detached-checkout regressions proving the subject mode is exact, checkpoint-specific and unavailable after pre-seal work.",
       "derivedRequirementId": "LESSON-REQ-0099"
+    },
+    {
+      "lessonId": "LSN-0101",
+      "title": "A structural record and its canonical index are one atomic change",
+      "status": "GUARDED",
+      "severity": "HIGH",
+      "reasonApplicable": "applies to every Gate; category checkpoint; severity HIGH; already guarded, so the control must keep holding",
+      "requiredCheck": "Whenever a structural record is created or changed, its canonical index must enumerate the same record, title and status before publication.",
+      "requiredEvidence": "A positive full-enumeration test and a negative mutation test proving a missing index row is rejected.",
+      "derivedRequirementId": "LESSON-REQ-0100"
     }
   ],
   "derivedRequirements": [
@@ -1097,7 +1107,7 @@
       "id": "LESSON-REQ-0013",
       "lessonId": "LSN-0013",
       "description": "Verify an installed capability must be detected by resolved path, not by a bare command lookup",
-      "mandatory": false,
+      "mandatory": true,
       "requiredEvidence": "A capability record naming the resolved path, or a justification that this Gate detects no capability."
     },
     {
@@ -1574,7 +1584,7 @@
       "lessonId": "LSN-0082",
       "description": "Verify engineering memory cannot depend on an ephemeral generated report",
       "mandatory": true,
-      "requiredEvidence": "A repository-wide control proving no lesson evidence path begins with file:var/."
+      "requiredEvidence": "Lesson validation proving every evidence reference is a resolvable repository file and no lesson evidence path begins with file:var/."
     },
     {
       "id": "LESSON-REQ-0082",
@@ -1701,6 +1711,13 @@
       "description": "Verify pre-seal detached validation must bind the explicit subject namespace",
       "mandatory": true,
       "requiredEvidence": "Positive and negative detached-checkout regressions proving the subject mode is exact, checkpoint-specific and unavailable after pre-seal work."
+    },
+    {
+      "id": "LESSON-REQ-0100",
+      "lessonId": "LSN-0101",
+      "description": "Verify a structural record and its canonical index are one atomic change",
+      "mandatory": true,
+      "requiredEvidence": "A positive full-enumeration test and a negative mutation test proving a missing index row is rejected."
     }
   ]
 }

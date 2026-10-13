@@ -39,3 +39,9 @@ a recurrence of LSN-0098/GRD-0099, leaving the guardrail failure unresolved unti
 Add the ADR-0036 detached pre-seal subject contract and its positive/negative regressions. Only
 after those focused proofs, refreshed lesson preflight and requirement derivation may a new exact
 subject be published for another single complete 42-stage execution.
+
+The fourth published-subject verifier passed 41/42 and proved every live Gate 4 behavior, including
+the cancellation repair, checkpoint validation and all twenty false-PASS attacks. Preserve cmd-0083.
+Repair the sole root-test failure by adding ADR-0036 to the canonical ADR index, formalize the atomic
+record/index lesson, run both positive and mutation index controls, refresh the lesson preflight and
+requirement denominator, then publish one replacement subject for another complete verifier.
