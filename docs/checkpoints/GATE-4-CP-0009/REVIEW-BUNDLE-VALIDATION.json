@@ -1,6 +1,57 @@
 {
   "schemaVersion": "2.0.0",
   "checkpoint": "GATE-4-CP-0009",
-  "result": "PENDING",
-  "justification": "The immutable content commit does not exist until finalization and commit; seal_checkpoint.py must reconstruct it twice through Git transport before tagging."
+  "bundle": "artifacts/review/GATE-4-CP-0009.zip",
+  "subject": {
+    "kind": "git-commit",
+    "commit": "47f8b13ce944f99dca4254feafb38c3fef3f2f39",
+    "tree": "80b94b0f81494b65ba8acf107d84033fdf821063"
+  },
+  "payloadPolicy": {
+    "source": "immutable-git-objects",
+    "excludedCheckpointFiles": [
+      "REVIEW-BUNDLE-VALIDATION.json"
+    ],
+    "reason": "The digest declaration is a sidecar and cannot be a member of the bytes it hashes."
+  },
+  "sha256": "54d1baf801f0b63f4784e0464e042e640038a07fd477a327dc353b2dde2f4b6c",
+  "sizeBytes": 1316206,
+  "entries": 230,
+  "result": "PASS",
+  "findings": [],
+  "secretFindings": [],
+  "transportReconstruction": {
+    "mode": "git-clone-no-local-detached",
+    "subjectCommit": "47f8b13ce944f99dca4254feafb38c3fef3f2f39",
+    "subjectTree": "80b94b0f81494b65ba8acf107d84033fdf821063",
+    "cloneExitCode": 0,
+    "checkoutExitCode": 0,
+    "producerExitCodes": [
+      0,
+      0
+    ],
+    "producerOutput": [
+      "REVIEW_BUNDLE_CREATED path=artifacts\\review\\rebuild-a.zip sha256=54d1baf801f0b63f4784e0464e042e640038a07fd477a327dc353b2dde2f4b6c\nREVIEW_BUNDLE=PASS entries=230 sha256=54d1baf801f0b63f4784e0464e042e640038a07fd477a327dc353b2dde2f4b6c",
+      "REVIEW_BUNDLE_CREATED path=artifacts\\review\\rebuild-b.zip sha256=54d1baf801f0b63f4784e0464e042e640038a07fd477a327dc353b2dde2f4b6c\nREVIEW_BUNDLE=PASS entries=230 sha256=54d1baf801f0b63f4784e0464e042e640038a07fd477a327dc353b2dde2f4b6c"
+    ],
+    "sha256": [
+      "54d1baf801f0b63f4784e0464e042e640038a07fd477a327dc353b2dde2f4b6c",
+      "54d1baf801f0b63f4784e0464e042e640038a07fd477a327dc353b2dde2f4b6c"
+    ],
+    "sizeBytes": [
+      1316206,
+      1316206
+    ],
+    "entries": [
+      230,
+      230
+    ],
+    "validationResults": [
+      "PASS",
+      "PASS"
+    ],
+    "byteIdentical": true,
+    "result": "PASS"
+  },
+  "validatedAt": "2026-10-15T18:46:53Z"
 }
