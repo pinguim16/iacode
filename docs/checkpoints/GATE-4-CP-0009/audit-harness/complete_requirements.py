@@ -15,6 +15,7 @@ SUBJECT = "GATE-4-CP-0007"
 sys.path.insert(0, str(ROOT / "scripts" / "development-ledger"))
 
 from delivery_assurance import collect_test_ids, load_command_results, resolve_evidence  # noqa: E402
+from derive_requirements import render_closure, render_matrix  # noqa: E402
 from ledger_common import load_json, use_utf8_stdout, write_json  # noqa: E402
 
 FIELDS = (
@@ -35,6 +36,7 @@ CORRECTIVE_REFS = {
     "lesson:LSN-0099",
     "lesson:LSN-0100",
     "lesson:LSN-0101",
+    "lesson:LSN-0102",
 }
 
 
@@ -138,6 +140,13 @@ def attack_evidence() -> dict[str, list[str]]:
     return evidence
 
 
+def expected_breakdown(total: int) -> tuple[int, int, int]:
+    """Derive the closure partition instead of duplicating a stale corrective-row count."""
+    defended = 20
+    corrected = len(CORRECTIVE_REFS)
+    return total - corrected - defended, corrected, defended
+
+
 def main() -> int:
     use_utf8_stdout()
     closure_path = CHECKPOINT / "CLOSURE-REQUIREMENTS.json"
@@ -226,10 +235,11 @@ def main() -> int:
         row["justification"] = None
         row["notes"] = source["notes"]
 
-    if (len(closure["requirements"]), inherited, corrected, defended) != (226, 198, 8, 20):
+    expected = expected_breakdown(len(closure["requirements"]))
+    if (inherited, corrected, defended) != expected:
         errors.append(
             f"unexpected denominator total={len(closure['requirements'])} inherited={inherited} "
-            f"corrected={corrected} defended={defended}"
+            f"corrected={corrected} defended={defended}; expected={expected}"
         )
     if errors:
         print(f"REQUIREMENT_COMPLETION=FAIL errors={len(errors)}")
@@ -239,6 +249,12 @@ def main() -> int:
 
     write_json(closure_path, closure)
     write_json(matrix_path, matrix)
+    (CHECKPOINT / "CLOSURE-REQUIREMENTS.md").write_text(
+        render_closure(closure), encoding="utf-8", newline="\n",
+    )
+    (CHECKPOINT / "REQUIREMENTS-MATRIX.md").write_text(
+        render_matrix(matrix), encoding="utf-8", newline="\n",
+    )
     print(
         "REQUIREMENT_COMPLETION=PASS "
         f"total={len(closure['requirements'])} inherited={inherited} "

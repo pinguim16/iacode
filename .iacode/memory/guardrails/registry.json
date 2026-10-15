@@ -1478,6 +1478,19 @@
         "LSN-0101"
       ],
       "removingItWouldAllow": "A new ADR or other indexed structural record to exist without discoverable canonical index membership, while narrower focused tests still pass."
+    },
+    {
+      "guardrailId": "GRD-0103",
+      "title": "Assurance category counts derive from their current source sets",
+      "kind": "test",
+      "reference": "test_corrective_partition_is_derived_from_the_current_reference_set",
+      "verifiedBy": [
+        "test_corrective_partition_is_derived_from_the_current_reference_set"
+      ],
+      "lessons": [
+        "LSN-0102"
+      ],
+      "removingItWouldAllow": "An assurance harness to update its canonical corrective identifier set while retaining a stale duplicate numeric partition that rejects truthful evidence."
     }
   ]
 }

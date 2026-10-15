@@ -1,24 +1,27 @@
 {
   "schemaVersion": "3.4.0",
   "unit": {
-    "executed": false,
-    "passed": 0,
+    "executed": true,
+    "passed": 781,
     "failed": 0,
-    "command": null,
-    "evidence": null
+    "command": "python -m unittest discover -s tests",
+    "evidence": "command:cmd-0249",
+    "runId": "green-keeper-cycle-19-ledger-suite"
   },
   "integration": {
-    "executed": false,
-    "passed": 0,
+    "executed": true,
+    "passed": 938,
     "failed": 0,
-    "command": null,
-    "evidence": null
+    "command": "python docs/checkpoints/GATE-4-CP-0009/audit-harness/run_published_full_verification.py",
+    "evidence": "command:cmd-0109",
+    "runId": "complete-published-corrective-verification"
   },
   "e2e": {
-    "executed": false,
-    "passed": 0,
+    "executed": true,
+    "passed": 42,
     "failed": 0,
-    "command": null,
-    "evidence": null
+    "command": "python docs/checkpoints/GATE-4-CP-0009/audit-harness/run_published_full_verification.py",
+    "evidence": "command:cmd-0109",
+    "runId": "complete-published-corrective-verification"
   }
 }

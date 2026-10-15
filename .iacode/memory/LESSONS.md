@@ -66,7 +66,7 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 | `LSN-0056` | `GUARDED` | MEDIUM | security | A result is accepted only from the executor that owns the request, decided when the request is created | `test_a_forged_result_cannot_displace_the_sandbox_result`, `test_a_manual_result_for_a_sandbox_request_is_refused`, `test_a_result_for_a_request_the_sandbox_owns_is_refused_and_never_signalled`, `test_every_caller_declares_a_constant_origin`, `test_existing_requests_are_backfilled_from_what_the_sandbox_executed`, `scripts/iacode/scenarios/sandbox_coding_e2e.py` |
 | `LSN-0057` | `GUARDED` | CRITICAL | security | A pinned lock can become unsafe without changing, so advisory state is live evidence | `scripts/iacode/dependency_scan.py`, `test_the_dependency_scan_blocks_critical_and_high_findings` |
 | `LSN-0058` | `GUARDED` | MEDIUM | environment | Container health does not prove Docker Desktop host-port forwarding | `test_grafana_is_healthy` |
-| `LSN-0059` | `GUARDED` | MEDIUM | process | A lesson exclusion must declare the scope it excludes | `test_the_repository_preflight_covers_every_applicable_lesson` |
+| `LSN-0059` | `GUARDED` | HIGH | process | A lesson exclusion must declare the scope it excludes | `test_the_repository_preflight_covers_every_applicable_lesson` |
 | `LSN-0060` | `GUARDED` | MEDIUM | implementation | Parent and child facts without an ORM relationship require an explicit flush boundary | `test_plan_run_results_verdict_and_events_round_trip` |
 | `LSN-0061` | `GUARDED` | MEDIUM | testing | Cancellation completion must not bypass cleanup acknowledgement | `test_results_enforce_owner_idempotency_and_late_refusal` |
 | `LSN-0062` | `GUARDED` | MEDIUM | implementation | Provenance digests are a set even when their sources are distinct | `test_a_sandbox_answer_becomes_redacted_immutable_evidence` |
@@ -109,6 +109,7 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 | `LSN-0099` | `GUARDED` | HIGH | checkpoint | A refused subject is an attempted input, not executed commit evidence | `test_inputs_are_canonicalized_and_an_unknown_subject_is_refused` |
 | `LSN-0100` | `GUARDED` | HIGH | checkpoint | Pre-seal detached validation must bind the explicit subject namespace | `test_in_progress_symbolic_head_validates_from_its_matching_subject_tag`, `test_subject_tag_never_substitutes_for_a_sealed_checkpoint_tag` |
 | `LSN-0101` | `GUARDED` | HIGH | checkpoint | A structural record and its canonical index are one atomic change | `test_the_index_lists_every_record_with_its_title_and_status`, `test_a_record_missing_from_the_index_is_detected` |
+| `LSN-0102` | `GUARDED` | HIGH | quality | Assurance denominators must derive category counts from the current source set | `test_corrective_partition_is_derived_from_the_current_reference_set` |
 
 ## Detail
 
@@ -166,7 +167,7 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 
 ### LSN-0005 — A PASS requires evidence that can be executed or resolved, not a statement
 
-- Status: `GUARDED`, severity CRITICAL, category quality, recurrences 4.
+- Status: `GUARDED`, severity CRITICAL, category quality, recurrences 6.
 - Source: SETUP-00, SETUP-00-CP-0003, finding R6.
 - Symptom: A quality dimension was recorded as PASS in a checkpoint that contained no corresponding execution.
 - Root cause: Quality results were bare verdicts with no link to the run that produced them, so a verdict could be inherited from an earlier checkpoint without re-execution.
@@ -177,7 +178,7 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
   - `validator` scripts/development-ledger/validate_checkpoint.py — _validate_quality_evidence resolves every reference.
   - `invariant` validate_checkpoint._validate_quality_evidence — A PASS without resolvable evidence is refused for every positive terminal status.
   - `test` PromotionInvariantTests.test_every_positive_status_rejects_every_red_quality_dimension — Every positive status is exercised against every mandatory red quality dimension.
-- Evidence: `file:docs/adr/ADR-0007-checkpoint-schema-2-and-independent-promotion.md`, `file:docs/QUALITY-GATES.md`
+- Evidence: `file:docs/adr/ADR-0007-checkpoint-schema-2-and-independent-promotion.md`, `file:docs/QUALITY-GATES.md`, `file:docs/checkpoints/GATE-4-CP-0009/COMMANDS.jsonl`, `file:docs/checkpoints/GATE-4-CP-0009/REWORK-LOG.jsonl`
 
 ### LSN-0006 — The repository must be self-contained; a specification may not live outside it
 
@@ -208,11 +209,11 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 
 ### LSN-0008 — Requirement completeness must be total and evidence-backed before handoff
 
-- Status: `GUARDED`, severity CRITICAL, category process, recurrences 1.
+- Status: `GUARDED`, severity CRITICAL, category process, recurrences 2.
 - Source: SETUP-00, SETUP-00-CP-0005, finding prompt sections 9 and 10.
 - Symptom: The independent tool was spending its effort discovering unimplemented requirements and missing evidence rather than auditing design.
 - Root cause: No artifact held the complete requirement set, so completeness was a judgement made from memory of the conversation.
-- Resolution: Requirements are extracted into REQUIREMENTS-MATRIX.json before implementation and audited by a validator that resolves every evidence reference and refuses anything short of total coverage.
+- Resolution: Requirements are extracted into REQUIREMENTS-MATRIX.json before implementation and audited by a validator that resolves every evidence reference and refuses anything short of total coverage; the terminal finalizer also refuses a handoff whose canonical final-report structure is incomplete.
 - Prevention:
   - `test` DeliveryCompletenessMatrixTests.test_one_requirement_short_of_total_fails — Coverage below total fails the audit.
   - `test` DeliveryAssuranceGateTests.test_completeness_validator_not_executed_blocks_review — An unexecuted completeness audit blocks readiness.
@@ -252,11 +253,11 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 
 ### LSN-0011 — A control over a checkpoint's own evidence must be scoped to the moment it matters
 
-- Status: `GUARDED`, severity CRITICAL, category tooling, recurrences 4.
+- Status: `GUARDED`, severity CRITICAL, category tooling, recurrences 8.
 - Source: SETUP-00, SETUP-00-CP-0005, finding REWORK-LOG cycles 1 to 3 and 6.
 - Symptom: The gate that validates the checkpoint kept failing because running it appends to the very ledger and inventory the validation binds.
 - Root cause: Consistency rules written for a finished delivery were applied while the delivery was still writing its own evidence, which no ordering of steps can satisfy.
-- Resolution: Gate consistency is strict at handoff and provisional while work is in progress; every validation runner declares in-progress append-only evidence dirty and re-derives hashes through finalize_checkpoint.refresh_declared_hashes immediately before validation. The finalizer is used only at the clean post-commit boundary, not immediately before another recorded command.
+- Resolution: Gate consistency is strict at handoff and provisional while work is in progress; every in-progress validation procedure uses the checkpoint-owned harness to declare append-only evidence dirty and re-derive hashes through finalize_checkpoint.refresh_declared_hashes immediately before validation. Self-observing process checks exclude their complete observer ancestry before classifying a matching process. Pre-finalization RUN-METADATA retains a valid RFC 3339 observation timestamp and HEAD; the finalizer alone replaces that timestamp with the true terminal boundary and writes final status and final commit immediately before the content commit. Direct validate_checkpoint.py is the post-finalization clean-boundary command, not the append-only in-progress runner.
 - Prevention:
   - `test` DeliveryAssuranceGateTests.test_gate_consistency_is_provisional_while_work_is_in_progress — Provisional in progress, strict at handoff.
   - `invariant` green_keeper._refresh_declared_hashes — Declared hashes are re-derived before the validation gate runs, never invented.
@@ -389,11 +390,11 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 
 ### LSN-0022 — An authoritative count must be derived once, never maintained by hand twice
 
-- Status: `GUARDED`, severity CRITICAL, category documentation, recurrences 1.
+- Status: `GUARDED`, severity CRITICAL, category documentation, recurrences 2.
 - Source: SETUP-00, SETUP-00-CP-0007, finding M0-F-008.
 - Symptom: The sealed CP-0006 state declared 47 mandatory requirements while the matrix and the completeness report both computed 45, and validation never compared them.
 - Root cause: The same number was written by hand in several artifacts, so the artifacts could disagree without any tool noticing.
-- Resolution: Counts used as evidence are derived into one machine-readable artifact, cross-checked against state and report aggregates, and verified wherever a report states them.
+- Resolution: Counts used as evidence are derived into machine-readable artifacts, cross-checked against state and report aggregates, and verified wherever a report states them; the terminal finalizer remains the authoritative cross-check before promotion.
 - Prevention:
   - `invariant` validate_checkpoint._validate_derived_counts — Counts used as evidence are derived once and verified wherever they are stated.
   - `test` DerivedCountTests.test_a_markdown_claim_that_contradicts_the_derivation_is_rejected — A report that states a count contradicting the derivation is refused.
@@ -896,14 +897,14 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 
 ### LSN-0059 — A lesson exclusion must declare the scope it excludes
 
-- Status: `GUARDED`, severity MEDIUM, category process, recurrences 0.
+- Status: `GUARDED`, severity HIGH, category process, recurrences 1.
 - Source: GATE-3, GATE-3-CP-0005, finding cmd-0064.
 - Symptom: The full suite rejected LSN-0058 because technology and module selectors excluded it from a generic preflight while its scopes list was empty.
 - Root cause: Applicability dimensions were used as incidental metadata. In this model they are selectors, so they silently narrowed where the lesson constrained delivery.
 - Resolution: Remove selectors that were not intended to narrow LSN-0058. Reserve non-empty selectors for deliberate exclusions, with scopes naming the boundary explicitly.
 - Prevention:
   - `test` test_the_repository_preflight_covers_every_applicable_lesson — Every active lesson excluded from a canonical preflight must carry a non-empty scopes declaration that makes the exclusion reviewable.
-- Evidence: `file:docs/checkpoints/GATE-3-CP-0005/COMMANDS.jsonl`, `file:tests/test_development_ledger.py`
+- Evidence: `file:docs/checkpoints/GATE-3-CP-0005/COMMANDS.jsonl`, `file:docs/checkpoints/GATE-4-CP-0009/COMMANDS.jsonl`, `file:tests/test_development_ledger.py`
 
 ### LSN-0060 — Parent and child facts without an ORM relationship require an explicit flush boundary
 
@@ -1394,3 +1395,14 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
   - `test` test_the_index_lists_every_record_with_its_title_and_status — The canonical ADR index must list every ADR with the exact title and status parsed from the record.
   - `test` test_a_record_missing_from_the_index_is_detected — A disposable mutation that removes an ADR index row must be detected.
 - Evidence: `file:docs/checkpoints/GATE-4-CP-0009/VERIFY-FAIL-CMD-0083.json`, `file:docs/checkpoints/GATE-4-CP-0009/COMMANDS.jsonl`, `file:docs/adr/README.md`, `file:docs/adr/ADR-0036-pre-seal-validation-binds-an-explicit-subject.md`, `file:tests/test_gate3_sandbox.py`
+
+### LSN-0102 — Assurance denominators must derive category counts from the current source set
+
+- Status: `GUARDED`, severity HIGH, category quality, recurrences 0.
+- Source: GATE-4, GATE-4-CP-0009, finding cmd-0112-requirement-completion.
+- Symptom: The requirement closer resolved all rows but returned failure because its expected partition still hard-coded eight corrective rows after the current corrective reference set had grown to nine.
+- Root cause: The harness maintained the corrective reference set and a duplicate numeric partition literal. Adding a required lesson changed the source set without changing the second representation, so the assurance step rejected its own truthful count.
+- Resolution: Derive corrected and inherited partition counts from CORRECTIVE_REFS and the fixed sealed twenty-attack denominator, then compare the observed partition with that single-source calculation.
+- Prevention:
+  - `test` test_corrective_partition_is_derived_from_the_current_reference_set — Adding a corrective reference changes the expected partition automatically without editing a second count.
+- Evidence: `file:docs/checkpoints/GATE-4-CP-0009/COMMANDS.jsonl`, `file:docs/checkpoints/GATE-4-CP-0009/audit-harness/complete_requirements.py`, `file:tests/test_checkpoint_audit_harnesses.py`

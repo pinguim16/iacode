@@ -2,14 +2,14 @@
   "schemaVersion": "3.4.0",
   "phase": "Gate 4 corrective delivery for sealed review-bundle reconstruction",
   "gate": "GATE-4",
-  "status": "IN_PROGRESS",
+  "status": "READY_FOR_REVIEW",
   "branch": "main",
   "baseCommit": "e7879006d516898d441217f253e8282f69fa0b80",
-  "currentCommit": "HEAD",
+  "currentCommit": "refs/tags/iacode-checkpoints/GATE-4-CP-0009",
   "dirty": false,
   "startedAt": "2026-10-12T15:03:38Z",
-  "updatedAt": "2026-10-13T04:08:36Z",
-  "nextAllowedAction": "Freeze and publish the replacement exact subject, then execute one complete 42-stage verifier.",
+  "updatedAt": "2026-10-15T18:43:16Z",
+  "nextAllowedAction": "Complete canonical sealing and published detached validation, then hand CP0009 to a later independent run for review, Red Team and the Gate 4 verdict; Gate 5 remains unauthorized.",
   "blockedBy": [],
   "secondToolValidation": {
     "status": "PENDING_MANUAL",
@@ -22,32 +22,65 @@
   },
   "requirementsMatrix": {
     "path": "REQUIREMENTS-MATRIX.json",
-    "total": 0,
-    "mandatory": 0,
-    "complete": 0,
+    "total": 227,
+    "mandatory": 226,
+    "complete": 227,
     "partial": 0,
     "missing": 0,
     "notApplicable": 0,
-    "coveragePercent": 0.0
+    "coveragePercent": 100
   },
   "greenKeeper": {
-    "status": "NOT_EXECUTED",
-    "cycles": 0,
+    "status": "PASS",
+    "cycles": 19,
     "remainingFailures": 0,
     "unresolvedReworkItems": 0,
     "log": "REWORK-LOG.jsonl",
     "externalBlockers": [],
-    "evidence": []
+    "evidence": [
+      "checkpoint:REWORK-LOG.jsonl",
+      "command:cmd-0249",
+      "command:cmd-0250",
+      "command:cmd-0251",
+      "command:cmd-0252",
+      "command:cmd-0253",
+      "command:cmd-0254",
+      "command:cmd-0255",
+      "command:cmd-0256",
+      "command:cmd-0257",
+      "command:cmd-0258",
+      "command:cmd-0259",
+      "command:cmd-0260",
+      "command:cmd-0261"
+    ],
+    "requiredGates": [
+      "tests",
+      "staticAnalysis",
+      "lessons",
+      "integrity",
+      "checkpointValidation",
+      "apiTests",
+      "gatewayTests",
+      "agentRuntimeTests",
+      "sandboxTests",
+      "evaluatorTests",
+      "webTests",
+      "lint",
+      "infraDefinition"
+    ]
   },
   "deliveryCompleteness": {
-    "status": "NOT_EXECUTED",
+    "status": "PASS",
     "report": "COMPLETENESS-REPORT.json",
-    "coveragePercent": 0.0,
-    "evidenceCoveragePercent": 0.0,
-    "auditor": null,
-    "evidence": []
+    "coveragePercent": 100,
+    "evidenceCoveragePercent": 100,
+    "auditor": "same-session Delivery Completeness Validator; audit only, independent approval pending",
+    "evidence": [
+      "checkpoint:COMPLETENESS-REPORT.json",
+      "command:cmd-0262"
+    ]
   },
-  "reworkCycles": 12,
+  "reworkCycles": 19,
   "independentReview": {
     "status": "PENDING",
     "tool": null,
@@ -66,11 +99,11 @@
     "path": "LESSON-PREFLIGHT.json",
     "gate": "GATE-4",
     "scope": "corrective sealed review-bundle reconstruction",
-    "lessonsConsidered": 101,
-    "lessonsApplicable": 100,
-    "derivedRequirements": 100,
+    "lessonsConsidered": 102,
+    "lessonsApplicable": 101,
+    "derivedRequirements": 101,
     "evidence": [
-      "command:cmd-0103"
+      "command:cmd-0246"
     ]
   },
   "milestone": {
@@ -90,10 +123,10 @@
   "externalAuditRequired": false,
   "externalAuditReason": null,
   "guardrailEffectiveness": {
-    "guardrailsTotal": 102,
-    "guardrailsResolved": 102,
-    "guardrailsTested": 102,
-    "guardrailsEffective": 102,
+    "guardrailsTotal": 103,
+    "guardrailsResolved": 103,
+    "guardrailsTested": 103,
+    "guardrailsEffective": 103,
     "guardrailFailures": 0,
     "evidence": [
       "command:cmd-0060",
@@ -108,7 +141,11 @@
       "command:cmd-0093",
       "command:cmd-0096",
       "command:cmd-0097",
-      "command:cmd-0106"
+      "command:cmd-0106",
+      "command:cmd-0113",
+      "command:cmd-0134",
+      "command:cmd-0142",
+      "command:cmd-0156"
     ]
   },
   "integrity": {
@@ -116,7 +153,7 @@
     "anchors": 31,
     "chainFile": ".iacode/anchors/checkpoint-chain.json",
     "evidence": [
-      "command:cmd-0021"
+      "command:cmd-0252"
     ]
   },
   "externalAttestation": {

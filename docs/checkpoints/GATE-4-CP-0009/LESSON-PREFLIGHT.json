@@ -11,11 +11,11 @@
     "review-bundle",
     "evaluator"
   ],
-  "generatedAt": "2026-10-13T04:06:04Z",
+  "generatedAt": "2026-10-15T15:42:10Z",
   "policyVersion": "2.0.0",
-  "inputsFingerprint": "fd36f126a8e38ebb11d0114099ebce14d8184f1d72272a637870f69128ca926b",
-  "lessonsConsidered": 101,
-  "lessonsApplicable": 100,
+  "inputsFingerprint": "4e3d95e0c7c56488a3cc6c3a9b4fd2e878c86d2e8e229aeb568a6896eb104567",
+  "lessonsConsidered": 102,
+  "lessonsApplicable": 101,
   "applicable": [
     {
       "lessonId": "LSN-0001",
@@ -591,8 +591,8 @@
       "lessonId": "LSN-0059",
       "title": "A lesson exclusion must declare the scope it excludes",
       "status": "GUARDED",
-      "severity": "MEDIUM",
-      "reasonApplicable": "applies to every Gate; category process; severity MEDIUM; already guarded, so the control must keep holding",
+      "severity": "HIGH",
+      "reasonApplicable": "applies to every Gate; category process; severity HIGH; already guarded, so the control must keep holding",
       "requiredCheck": "Confirm every active lesson excluded from a preflight declares a non-empty scope selector, and that incidental metadata does not narrow applicability.",
       "requiredEvidence": "A passing repository-preflight coverage test over the complete active lesson set.",
       "derivedRequirementId": "LESSON-REQ-0058"
@@ -1016,6 +1016,16 @@
       "requiredCheck": "Whenever a structural record is created or changed, its canonical index must enumerate the same record, title and status before publication.",
       "requiredEvidence": "A positive full-enumeration test and a negative mutation test proving a missing index row is rejected.",
       "derivedRequirementId": "LESSON-REQ-0100"
+    },
+    {
+      "lessonId": "LSN-0102",
+      "title": "Assurance denominators must derive category counts from the current source set",
+      "status": "GUARDED",
+      "severity": "HIGH",
+      "reasonApplicable": "applies to every Gate; category quality; severity HIGH; already guarded, so the control must keep holding",
+      "requiredCheck": "Any assurance partition must derive category counts from its canonical identifier sets instead of maintaining a duplicate literal that can drift.",
+      "requiredEvidence": "A regression mutating the corrective source set and proving the expected partition changes automatically.",
+      "derivedRequirementId": "LESSON-REQ-0101"
     }
   ],
   "derivedRequirements": [
@@ -1718,6 +1728,13 @@
       "description": "Verify a structural record and its canonical index are one atomic change",
       "mandatory": true,
       "requiredEvidence": "A positive full-enumeration test and a negative mutation test proving a missing index row is rejected."
+    },
+    {
+      "id": "LESSON-REQ-0101",
+      "lessonId": "LSN-0102",
+      "description": "Verify assurance denominators must derive category counts from the current source set",
+      "mandatory": true,
+      "requiredEvidence": "A regression mutating the corrective source set and proving the expected partition changes automatically."
     }
   ]
 }

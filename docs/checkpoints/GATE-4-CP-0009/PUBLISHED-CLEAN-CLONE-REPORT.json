@@ -1,0 +1,42 @@
+{
+  "schemaVersion": "1.0.0",
+  "artifact": "PUBLISHED-CLEAN-CLONE-VERIFICATION",
+  "generatedAt": "2026-10-13T06:15:51.452204Z",
+  "remote": "https://github.com/pinguim16/iacode.git",
+  "publishedCommit": "3964587ad7ba88297b8aa04c7deb3be1396bc87b",
+  "observedCommit": "3964587ad7ba88297b8aa04c7deb3be1396bc87b",
+  "remoteMainEqualsCommit": true,
+  "subjectTag": "iacode-subjects/GATE-4-CP-0009-verification-4",
+  "subjectTagEqualsCommit": true,
+  "checkoutMode": "detached-subject-tag",
+  "clonePath": "E:\\iacode-cp0009-full-verification-6",
+  "gitStateBeforeVerification": "CLEAN",
+  "workstationConfiguration": {
+    "source": "ignored infra/compose/.env",
+    "valuesRecorded": false,
+    "gitStateAfterInjection": "CLEAN"
+  },
+  "invocationCount": 1,
+  "retryCount": 0,
+  "verifierRerun": false,
+  "stageDenominator": 42,
+  "stagesPassed": 42,
+  "stagesFailed": 0,
+  "result": "PASS",
+  "exitCode": 0,
+  "verificationReport": "VERIFICATION-REPORT.json",
+  "isolation": {
+    "composeProject": "iacode-verify-f64606e2ed82",
+    "publishedPorts": "docker-allocated",
+    "preRunCleanup": "PASS",
+    "postRunCleanup": "PASS"
+  },
+  "sharedComposeProject": {
+    "name": "iacode",
+    "beforeSha256": "19c45a4ed90904272393d95acd2cde0c54d82343d2b3edfbfc84e81038226f88",
+    "afterSha256": "19c45a4ed90904272393d95acd2cde0c54d82343d2b3edfbfc84e81038226f88",
+    "unchanged": true
+  },
+  "ownedComposeProjectRemoved": true,
+  "clonePreserved": true
+}

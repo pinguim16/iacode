@@ -4,9 +4,9 @@
 - Scope: `corrective sealed review-bundle reconstruction`
 - Technologies: `Python`, `Temporal`
 - Modules: `development-ledger`, `review-bundle`, `evaluator`
-- Generated: `2026-10-13T04:06:04Z`
-- Lessons considered: 101
-- Lessons applicable: 100
+- Generated: `2026-10-15T15:42:10Z`
+- Lessons considered: 102
+- Lessons applicable: 101
 
 Every applicable lesson below is a requirement of this Gate. The derived identifiers must
 appear in `REQUIREMENTS-MATRIX.json`, and the Delivery Completeness Validator fails the
@@ -71,7 +71,7 @@ delivery when one is absent.
 | `LSN-0056` A result is accepted only from the executor that owns the request, decided when the request is created | `GUARDED` | MEDIUM | `LESSON-REQ-0055` | For every result, verdict or callback that more than one producer could deliver, confirm that the owner is recorded when the work is created, that the origin of a delivery comes from the code path and never from the delivery, and that a delivery from any other origin is refused before it is stored. |
 | `LSN-0057` A pinned lock can become unsafe without changing, so advisory state is live evidence | `GUARDED` | CRITICAL | `LESSON-REQ-0056` | For every pinned dependency graph delivered by a Gate, run the current advisory scan against every required source and refuse Critical or High findings without suppressing advisories or narrowing the denominator. |
 | `LSN-0058` Container health does not prove Docker Desktop host-port forwarding | `GUARDED` | MEDIUM | `LESSON-REQ-0057` | Exercise every required host-published service through its actual loopback port; do not substitute container health for host reachability. |
-| `LSN-0059` A lesson exclusion must declare the scope it excludes | `GUARDED` | MEDIUM | `LESSON-REQ-0058` | Confirm every active lesson excluded from a preflight declares a non-empty scope selector, and that incidental metadata does not narrow applicability. |
+| `LSN-0059` A lesson exclusion must declare the scope it excludes | `GUARDED` | HIGH | `LESSON-REQ-0058` | Confirm every active lesson excluded from a preflight declares a non-empty scope selector, and that incidental metadata does not narrow applicability. |
 | `LSN-0060` Parent and child facts without an ORM relationship require an explicit flush boundary | `GUARDED` | MEDIUM | `LESSON-REQ-0059` | Whenever one transaction inserts parent and child ORM facts using raw foreign-key identifiers without a relationship edge, confirm the parent is flushed before the child is added. |
 | `LSN-0061` Cancellation completion must not bypass cleanup acknowledgement | `GUARDED` | MEDIUM | `LESSON-REQ-0060` | For every running task that can be cancelled, prove the lifecycle records cancellation requested before it records cancellation completed. |
 | `LSN-0062` Provenance digests are a set even when their sources are distinct | `GUARDED` | MEDIUM | `LESSON-REQ-0061` | Whenever provenance is represented by content digests, normalize it as a unique ordered set rather than assuming each semantic source has different bytes. |
@@ -114,6 +114,7 @@ delivery when one is absent.
 | `LSN-0099` A refused subject is an attempted input, not executed commit evidence | `GUARDED` | HIGH | `LESSON-REQ-0098` | A command refused before execution must retain a recomputable refusal without making its deliberately invalid subject part of the published-history evidence denominator. |
 | `LSN-0100` Pre-seal detached validation must bind the explicit subject namespace | `GUARDED` | HIGH | `LESSON-REQ-0099` | An exact detached pre-seal verifier must bind an IN_PROGRESS checkpoint to its checkpoint-named iacode-subjects ref without allowing that ref to substitute for the canonical seal tag. |
 | `LSN-0101` A structural record and its canonical index are one atomic change | `GUARDED` | HIGH | `LESSON-REQ-0100` | Whenever a structural record is created or changed, its canonical index must enumerate the same record, title and status before publication. |
+| `LSN-0102` Assurance denominators must derive category counts from the current source set | `GUARDED` | HIGH | `LESSON-REQ-0101` | Any assurance partition must derive category counts from its canonical identifier sets instead of maintaining a duplicate literal that can drift. |
 
 ## Why each lesson applies
 
@@ -518,7 +519,7 @@ delivery when one is absent.
 
 ### LSN-0059 — A lesson exclusion must declare the scope it excludes
 
-- Reason: applies to every Gate; category process; severity MEDIUM; already guarded, so the control must keep holding
+- Reason: applies to every Gate; category process; severity HIGH; already guarded, so the control must keep holding
 - Required check: Confirm every active lesson excluded from a preflight declares a non-empty scope selector, and that incidental metadata does not narrow applicability.
 - Required evidence: A passing repository-preflight coverage test over the complete active lesson set.
 - Derived requirement: `LESSON-REQ-0058`
@@ -816,3 +817,10 @@ delivery when one is absent.
 - Required check: Whenever a structural record is created or changed, its canonical index must enumerate the same record, title and status before publication.
 - Required evidence: A positive full-enumeration test and a negative mutation test proving a missing index row is rejected.
 - Derived requirement: `LESSON-REQ-0100`
+
+### LSN-0102 — Assurance denominators must derive category counts from the current source set
+
+- Reason: applies to every Gate; category quality; severity HIGH; already guarded, so the control must keep holding
+- Required check: Any assurance partition must derive category counts from its canonical identifier sets instead of maintaining a duplicate literal that can drift.
+- Required evidence: A regression mutating the corrective source set and proving the expected partition changes automatically.
+- Derived requirement: `LESSON-REQ-0101`
