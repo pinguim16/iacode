@@ -244,6 +244,9 @@ async def derive_run_verdict(payload: dict[str, Any]) -> dict[str, Any]:
     if plan_record is None:
         raise QualityError("RUN_NOT_FOUND", "the quality run does not exist")
     results = await runtime.store.results_for_run(run_id)
+    run_record = await runtime.store.run(run_id)
+    if run_record is None:
+        raise QualityError("RUN_NOT_FOUND", "the quality run does not exist")
     resolved: set[str] = set()
     for result in results:
         for evidence in result.evidence:
@@ -255,6 +258,7 @@ async def derive_run_verdict(payload: dict[str, Any]) -> dict[str, Any]:
         results=results,
         resolved_evidence_digests=resolved,
         derived_at=datetime.fromisoformat(str(payload["derivedAt"]).replace("Z", "+00:00")),
+        cancel_requested=run_record.cancel_requested or run_record.state == "CANCELLING",
     )
     existing = await runtime.store.verdict_for_run(run_id)
     recorded = await runtime.store.record_verdict(verdict)

@@ -46,3 +46,5 @@ exist, or a title or status that disagrees with its record fails the suite.
 | [ADR-0034](ADR-0034-command-inputs-must-cross-git-transport.md) | Command inputs must cross Git transport | Accepted |
 | [ADR-0035](ADR-0035-review-bundles-bind-immutable-content.md) | Review bundles bind immutable content | Accepted |
 | [ADR-0036](ADR-0036-pre-seal-validation-binds-an-explicit-subject.md) | Pre-seal validation binds an explicit subject | Accepted |
+| [ADR-0037](ADR-0037-intermediate-gates-use-internal-closure.md) | Intermediate Gates use internal closure | Accepted |
+| [ADR-0038](ADR-0038-cancellation-and-verdict-commit-are-serialized.md) | Cancellation and verdict commit are serialized | Accepted |

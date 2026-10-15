@@ -496,6 +496,31 @@ class QualityPlannerTests:
 
 
 class FalsePassRejectionTests:
+    def test_cancellation_preserves_the_digest_of_an_already_failing_derivation(self) -> None:
+        plan = python_plan()
+        original = derive_verdict(
+            run_id="run-1", plan=plan, results=(), resolved_evidence_digests=set(), derived_at=NOW,
+        )
+        cancelled = derive_verdict(
+            run_id="run-1", plan=plan, results=(), resolved_evidence_digests=set(), derived_at=NOW,
+            cancel_requested=True,
+        )
+        assert original.verdict == cancelled.verdict == "FAIL"
+        assert original.digest == cancelled.digest
+
+    def test_accepted_cancellation_is_fail_even_when_every_check_passed(self) -> None:
+        plan = python_plan()
+        results = passing_results(plan)
+        verdict = derive_verdict(
+            run_id="run-1", plan=plan, results=results,
+            resolved_evidence_digests={
+                item.digest for result in results for item in result.evidence
+            },
+            derived_at=NOW, cancel_requested=True,
+        )
+        assert verdict.verdict == "FAIL"
+        assert "quality run cancellation was accepted" in verdict.reasons
+
     def test_complete_resolved_success_is_the_only_pass(self) -> None:
         plan = python_plan()
         results = passing_results(plan)

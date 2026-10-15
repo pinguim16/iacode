@@ -15,8 +15,8 @@ Project snapshot → Project profile → Quality policy → Quality plan
 ```
 
 The engine is project-agnostic. Initial support covers Python, Node, TypeScript, Angular, Java with
-Maven, and Java with Gradle. `GATE 4` is the first Gate of milestone `M2`; this implementing run
-ends at `READY_FOR_REVIEW` and a later run owns the Gate verdict.
+Maven, and Java with Gradle. `GATE 4` is the first Gate of milestone `M2`; it may close internally
+at `INTERNAL_GATE_PASS`. Independent validation remains due at M2 closure, never asserted here.
 
 ## 1. Canonical scope and delivery controls
 
@@ -219,6 +219,6 @@ ends at `READY_FOR_REVIEW` and a later run owns the Gate verdict.
 | 20.3 | Structural decisions for the quality boundary, immutable evidence/verdict derivation, and project profiles/runners are recorded as indexed ADRs. | `docs/adr/` | `Gate4AdrTests`. |
 | 20.4 | The Gate retrospective records reusable lessons, and every important confirmed failure becomes an effective automated guardrail before handoff. | `.iacode/memory/retrospectives/GATE-4-CP-0001.md`, `.iacode/memory/lessons.jsonl` | `validate_lessons.py`; guardrail effectiveness report. |
 | 20.5 | A deterministic review bundle contains the complete checkpoint, changed source, tests, migrations, schemas, policies, documentation, functional acceptance, quality results, Red Team, changeset, immutable Git subject, manifest, and checksums; sealing and validation each reconstruct the transported subject twice, require byte identity, compare digest and size with the sidecar declaration, check required files, and scan for secrets. | `scripts/development-ledger/review_bundle.py`, `scripts/development-ledger/seal_checkpoint.py` | `ReviewBundleTests`; seal lifecycle test; attack T; review validation declaration. |
-| 20.6 | Every Gate commit and the checkpoint tag are on the authorised remote when the Gate reaches its later independent verdict. | `scripts/development-ledger/remote_sync.py` | Recorded remote synchronization check. |
-| 20.7 | This implementing run ends at `READY_FOR_REVIEW` with complete functional and quality evidence, no blocker, and no claim of independent validation or Gate pass. | `docs/checkpoints/GATE-4-CP-0001/STATE.json` | Checkpoint validation; completeness; internal reviews. |
-| 20.8 | A later independent run performs review, Red Team, and the Gate verdict before Gate 5 begins; Gate 4 starts no Gate 5 implementation. | `docs/DEVELOPMENT-CONTRACT.md`, `docs/checkpoints/GATE-4-CP-0001/NEXT.md` | Independent review checkpoint. |
+| 20.6 | Every Gate commit and the checkpoint tag are on the authorised remote before advancement, whether closure is internal or independently audited. | `scripts/development-ledger/remote_sync.py` | Recorded remote synchronization check. |
+| 20.7 | An intermediate closure reaches `INTERNAL_GATE_PASS` only with complete fresh functional and internal quality evidence, no blocker, and no claim of independent validation; an independent handoff remains `READY_FOR_REVIEW`. | `docs/MILESTONE-VALIDATION.md`, `docs/adr/ADR-0037-intermediate-gates-use-internal-closure.md` | Checkpoint validation; completeness; internal reviews. |
+| 20.8 | Gate 5 requires a sealed valid Gate 4 internal closure and explicit owner authorization; the separate independent review and Red Team remain mandatory at M2 closure, and Gate 4 implements no Gate 5 capability. | `docs/DEVELOPMENT-CONTRACT.md`, `docs/checkpoints/GATE-4-CP-0010/AUTHORIZATION.md` | Internal closure checkpoint; pending milestone audit; scope tests. |

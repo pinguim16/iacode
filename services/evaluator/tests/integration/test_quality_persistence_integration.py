@@ -216,6 +216,85 @@ def stack() -> Iterator[Fixture]:
 
 
 class SqlQualityLifecycleTests:
+    def test_cancellation_before_verdict_refuses_stale_pass(self, stack: Fixture) -> None:
+        self._assert_cancellation_commit_order(stack, True)
+
+    def test_verdict_before_cancellation_refuses_late_acceptance(self, stack: Fixture) -> None:
+        self._assert_cancellation_commit_order(stack, False)
+
+    def test_concurrent_cancellation_and_verdict_have_one_winner(self, stack: Fixture) -> None:
+        self._assert_cancellation_commit_order(stack, None)
+
+    def _assert_cancellation_commit_order(
+        self, stack: Fixture, cancel_first: bool | None
+    ) -> None:
+        async def exercise():
+            plan, run_id = await stack.quality_run("cancellation-barrier")
+            for state, event in (
+                ("PLANNED", "PLANNED"), ("QUEUED", "QUEUED"), ("RUNNING", "STARTED")
+            ):
+                await stack.store.transition(
+                    run_id, state=state, event_type=event, dedupe_key=state, payload={}
+                )
+            content = {
+                "contractVersion": "1.0.0",
+                "runId": run_id, "planId": plan.planId, "verdict": "PASS", "reasons": ("passed",),
+                "resultDigests": (), "evidenceDigests": (), "derivedAt": datetime.now(UTC),
+            }
+            verdict = QualityVerdict(**content, digest=digest(content))
+
+            async def cancel():
+                return await stack.store.transition(
+                    run_id, state="CANCELLING", event_type="CANCELLATION_REQUESTED",
+                    dedupe_key="cancel", payload={},
+                )
+
+            async def record():
+                return await stack.store.record_verdict(verdict)
+
+            if cancel_first is True:
+                cancellation = await cancel()
+                with pytest.raises(QualityError) as refusal:
+                    await record()
+                commitment = refusal.value
+            elif cancel_first is False:
+                commitment = await record()
+                with pytest.raises(QualityError) as refusal:
+                    await cancel()
+                cancellation = refusal.value
+            else:
+                cancellation, commitment = await asyncio.gather(
+                    cancel(), record(), return_exceptions=True
+                )
+
+            if isinstance(cancellation, QualityError):
+                assert cancellation.code == "CANCELLATION_WINDOW_CLOSED"
+                assert commitment == verdict
+                row = await stack.store.run(run_id)
+                assert not row.cancel_requested and row.state == "RUNNING"
+                events = await stack.store.events(run_id)
+                assert all(event.event_type != "CANCELLATION_REQUESTED" for event in events)
+                assert await stack.store.verdict_for_run(run_id) == verdict
+            else:
+                assert cancellation.state == "CANCELLING"
+                assert isinstance(commitment, QualityError)
+                assert commitment.code == "CANCELLED_VERDICT_MISMATCH"
+                assert await stack.store.verdict_for_run(run_id) is None
+                failed = {
+                    **content, "verdict": "FAIL",
+                    "reasons": ("quality run cancellation was accepted",),
+                }
+                recorded = QualityVerdict(**failed, digest=digest(failed))
+                assert await stack.store.record_verdict(recorded) == recorded
+                cancelled = await stack.store.transition(
+                    run_id, state="CANCELLED", event_type="COMPLETED", dedupe_key="done",
+                    payload={"verdict": "FAIL"}, reason="cancelled after cleanup",
+                )
+                assert cancelled.state == "CANCELLED"
+                assert (await stack.store.verdict_for_run(run_id)).verdict == "FAIL"
+
+        run(exercise())
+
     def test_plan_run_results_verdict_and_events_round_trip(self, stack: Fixture) -> None:
         plan = stack.plan()
         first_plan = run(stack.store.create_plan(plan, owner_run_id=stack.owner_run_id))

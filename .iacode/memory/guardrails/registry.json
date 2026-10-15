@@ -81,7 +81,10 @@
         "test_green_keeper_declares_its_in_progress_evidence_dirty_before_validation",
         "test_every_runner_of_the_mandatory_gates_refreshes_the_declared_hashes",
         "test_the_refresh_has_one_definition",
-        "test_no_other_module_executes_the_mandatory_gate_set"
+        "test_no_other_module_executes_the_mandatory_gate_set",
+        "test_preflight_aggregates_and_commit_semantics_are_derived_without_promotion",
+        "test_a_sealed_or_terminal_checkpoint_is_never_rewritten",
+        "test_a_different_gate_preflight_is_refused_not_reconciled"
       ],
       "lessons": [
         "LSN-0011"
@@ -1431,7 +1434,12 @@
         "test_cancellation_is_rechecked_after_dispatch_before_activity_start",
         "test_durable_cancelling_state_stops_an_active_sandbox_activity",
         "test_a_signal_flag_set_before_handle_assignment_still_cancels_the_activity",
-        "test_accepted_cancellation_wins_over_a_racing_success_response"
+        "test_accepted_cancellation_wins_over_a_racing_success_response",
+        "test_durable_cancellation_at_activity_completion_finishes_without_a_signal",
+        "test_durable_cancellation_during_result_write_finishes_without_a_signal",
+        "test_durable_cancellation_during_verdict_write_finishes_without_a_signal",
+        "test_unrelated_activity_failure_is_not_hidden_as_cancellation",
+        "test_concurrent_cancellation_and_verdict_have_one_winner"
       ],
       "lessons": [
         "LSN-0098"
@@ -1491,6 +1499,33 @@
         "LSN-0102"
       ],
       "removingItWouldAllow": "An assurance harness to update its canonical corrective identifier set while retaining a stale duplicate numeric partition that rejects truthful evidence."
+    },
+    {
+      "guardrailId": "GRD-0104",
+      "title": "Cancellation fixtures reach the intended boundary with canonical verdicts",
+      "kind": "test",
+      "reference": "test_verdict_before_cancellation_refuses_late_acceptance",
+      "verifiedBy": ["test_verdict_before_cancellation_refuses_late_acceptance", "test_cancellation_before_verdict_refuses_pass"],
+      "lessons": ["LSN-0103"],
+      "removingItWouldAllow": "An unrelated digest refusal to masquerade as a defended cancellation race without a valid positive commitment."
+    },
+    {
+      "guardrailId": "GRD-0105",
+      "title": "Internal closure cannot assert independent verdicts",
+      "kind": "test",
+      "reference": "test_internal_closure_cannot_claim_independent_review_or_red_team",
+      "verifiedBy": ["test_internal_closure_cannot_claim_independent_review_or_red_team", "test_internal_closure_leaves_independent_milestone_validation_pending"],
+      "lessons": ["LSN-0104"],
+      "removingItWouldAllow": "The implementing session to mislabel an internal review or Red Team as independent approval."
+    },
+    {
+      "guardrailId": "GRD-0106",
+      "title": "Changed test sources remain subject to mandatory lint",
+      "kind": "automated-check",
+      "reference": "scripts/iacode/gates/lint.py",
+      "verifiedBy": ["test_mandatory_lint_covers_every_python_project_root"],
+      "lessons": ["LSN-0105"],
+      "removingItWouldAllow": "New behavioral tests to be published with unmeasured formatting or static-analysis failures."
     }
   ]
 }

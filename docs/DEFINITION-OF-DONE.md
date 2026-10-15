@@ -38,9 +38,11 @@ Work is done only when all applicable items are evidenced:
   post-commit with a clean worktree;
 - readiness and blockage are never claimed at once: `blockedBy` is empty at `READY_FOR_REVIEW`;
 - every recorded command is reproducible from its declared working directory;
-- independent review is `APPROVED`;
-- Red Team is `RED_TEAM_PASS`;
-- the Gate verdict is granted by a run independent of the implementing run;
+- the internal Red Team passes for every delivery; independent review and independent Red Team
+  are required for the independent milestone verdict, not asserted by an intermediate closure;
+- an intermediate `INTERNAL_GATE_PASS` leaves independent milestone validation pending; its
+  checkpoint-specific independent review and Red Team are justified `NOT_REQUIRED`;
+- `GATE_PASS` and milestone audit verdicts are granted only by the later independent auditing run;
 - secrets scan passes;
 - provenance is complete with training denied unless explicitly authorized;
 - checkpoint validates, handoff is executable, and next action is exact;

@@ -18,7 +18,7 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 | `LSN-0008` | `GUARDED` | CRITICAL | process | Requirement completeness must be total and evidence-backed before handoff | `DeliveryCompletenessMatrixTests.test_one_requirement_short_of_total_fails`, `DeliveryAssuranceGateTests.test_completeness_validator_not_executed_blocks_review`, `scripts/development-ledger/check_completeness.py`, `ExpectedRequirementSetTests.test_deleting_a_requirement_and_recomputing_the_counts_still_fails` |
 | `LSN-0009` | `GUARDED` | CRITICAL | testing | A red gate requires rework, never a waiver, and never a weakened check | `GreenKeeperToolTests.test_red_gate_is_reported_as_still_red`, `DeliveryAssuranceGateTests.test_green_keeper_pass_with_a_real_failure_is_rejected`, `DeliveryAssuranceGateTests.test_red_tests_block_review`, `.iacode/policies/quality-gates.json`, `MandatoryGatePolicyTests.test_a_cycle_measured_against_no_gate_is_rejected` |
 | `LSN-0010` | `GUARDED` | HIGH | tooling | A recorded command must carry runtime, working directory, commit and purpose to be replayable | `CommandReproducibilityTests.test_bare_script_name_is_rejected`, `CommandReproducibilityTests.test_unresolvable_script_path_is_rejected`, `.iacode/schemas/command.schema.json`, `validate_checkpoint._validate_command_reproducibility`, `CommandInputBindingTests.test_a_record_without_a_digest_is_rejected` |
-| `LSN-0011` | `GUARDED` | CRITICAL | tooling | A control over a checkpoint's own evidence must be scoped to the moment it matters | `DeliveryAssuranceGateTests.test_gate_consistency_is_provisional_while_work_is_in_progress`, `green_keeper._refresh_declared_hashes`, `test_every_runner_of_the_mandatory_gates_refreshes_the_declared_hashes`, `test_green_keeper_declares_its_in_progress_evidence_dirty_before_validation` |
+| `LSN-0011` | `GUARDED` | CRITICAL | tooling | A control over a checkpoint's own evidence must be scoped to the moment it matters | `DeliveryAssuranceGateTests.test_gate_consistency_is_provisional_while_work_is_in_progress`, `green_keeper._refresh_declared_hashes`, `test_every_runner_of_the_mandatory_gates_refreshes_the_declared_hashes`, `test_green_keeper_declares_its_in_progress_evidence_dirty_before_validation`, `test_preflight_aggregates_and_commit_semantics_are_derived_without_promotion`, `test_a_sealed_or_terminal_checkpoint_is_never_rewritten` |
 | `LSN-0012` | `GUARDED` | CRITICAL | git | Sealed checkpoints and their tags are immutable, and tooling must keep validating them | `HistoricalCheckpointCompatibilityTests.test_first_sealed_checkpoint_still_validates`, `HistoricalCheckpointCompatibilityTests.test_fourth_sealed_checkpoint_still_validates`, `docs/CHECKPOINT-PROTOCOL.md`, `scripts/development-ledger/anchors.py`, `IntegrityAnchorTests.test_a_moved_historical_tag_is_detected` |
 | `LSN-0013` | `CONFIRMED` | HIGH | environment | An installed capability must be detected by resolved path, not by a bare command lookup | _not yet guarded_ |
 | `LSN-0014` | `GUARDED` | MEDIUM | process | Evidence must be recorded as it happens, not reconstructed at the end of a run | `scripts/development-ledger/record_command.py`, `validate_checkpoint._validate_seal_chronology`, `SealChronologyTests.test_a_record_after_the_end_of_the_run_is_rejected` |
@@ -105,11 +105,14 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 | `LSN-0095` | `GUARDED` | HIGH | testing | A complete verifier must own its Compose runtime by checkout | `test_full_verification_uses_a_checkout_owned_compose_project_and_dynamic_ports`, `test_each_stage_receives_the_frozen_verification_environment`, `test_cleanup_refuses_the_shared_developer_project`, `test_live_stack_stage_builds_every_image_before_it_is_exercised`, `test_order_isolation_probe_preserves_the_historical_contiguous_stage_order` |
 | `LSN-0096` | `GUARDED` | HIGH | checkpoint | Evidence publishers must consume the producer's canonical result schema | `test_published_full_verification_counts_the_canonical_result_field`, `test_published_report_reconciliation_allows_only_the_generated_report` |
 | `LSN-0097` | `GUARDED` | HIGH | checkpoint | A review-bundle declaration must bind an immutable reconstruction subject | `test_immutable_subject_rebuilds_are_byte_identical_and_exclude_only_the_sidecar`, `test_declared_digest_and_size_are_rebuilt_not_trusted`, `test_full_delivery_assurance_flow_reaches_ready_for_review` |
-| `LSN-0098` | `GUARDED` | CRITICAL | implementation | Accepted cancellation must be enforced from durable state across activity boundaries | `test_cancellation_is_rechecked_after_dispatch_before_activity_start`, `test_durable_cancelling_state_stops_an_active_sandbox_activity`, `test_a_signal_flag_set_before_handle_assignment_still_cancels_the_activity`, `test_accepted_cancellation_wins_over_a_racing_success_response` |
+| `LSN-0098` | `GUARDED` | CRITICAL | implementation | Accepted cancellation must be enforced from durable state across activity boundaries | `test_cancellation_is_rechecked_after_dispatch_before_activity_start`, `test_durable_cancelling_state_stops_an_active_sandbox_activity`, `test_a_signal_flag_set_before_handle_assignment_still_cancels_the_activity`, `test_accepted_cancellation_wins_over_a_racing_success_response`, `test_durable_cancellation_during_result_write_finishes_without_a_signal`, `test_concurrent_cancellation_and_verdict_have_one_winner` |
 | `LSN-0099` | `GUARDED` | HIGH | checkpoint | A refused subject is an attempted input, not executed commit evidence | `test_inputs_are_canonicalized_and_an_unknown_subject_is_refused` |
 | `LSN-0100` | `GUARDED` | HIGH | checkpoint | Pre-seal detached validation must bind the explicit subject namespace | `test_in_progress_symbolic_head_validates_from_its_matching_subject_tag`, `test_subject_tag_never_substitutes_for_a_sealed_checkpoint_tag` |
 | `LSN-0101` | `GUARDED` | HIGH | checkpoint | A structural record and its canonical index are one atomic change | `test_the_index_lists_every_record_with_its_title_and_status`, `test_a_record_missing_from_the_index_is_detected` |
 | `LSN-0102` | `GUARDED` | HIGH | quality | Assurance denominators must derive category counts from the current source set | `test_corrective_partition_is_derived_from_the_current_reference_set` |
+| `LSN-0103` | `GUARDED` | HIGH | testing | Adversarial fixtures must hash the complete validated contract | `test_verdict_before_cancellation_refuses_late_acceptance` |
+| `LSN-0104` | `GUARDED` | HIGH | process | Intermediate closure and independent validation must have unambiguous contracts | `test_internal_closure_cannot_claim_independent_review_or_red_team` |
+| `LSN-0105` | `GUARDED` | LOW | testing | New behavioral tests must satisfy the unchanged source-quality contract | `test_mandatory_lint_covers_every_python_project_root` |
 
 ## Detail
 
@@ -253,17 +256,19 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 
 ### LSN-0011 — A control over a checkpoint's own evidence must be scoped to the moment it matters
 
-- Status: `GUARDED`, severity CRITICAL, category tooling, recurrences 8.
+- Status: `GUARDED`, severity CRITICAL, category tooling, recurrences 10.
 - Source: SETUP-00, SETUP-00-CP-0005, finding REWORK-LOG cycles 1 to 3 and 6.
 - Symptom: The gate that validates the checkpoint kept failing because running it appends to the very ledger and inventory the validation binds.
 - Root cause: Consistency rules written for a finished delivery were applied while the delivery was still writing its own evidence, which no ordering of steps can satisfy.
-- Resolution: Gate consistency is strict at handoff and provisional while work is in progress; every in-progress validation procedure uses the checkpoint-owned harness to declare append-only evidence dirty and re-derive hashes through finalize_checkpoint.refresh_declared_hashes immediately before validation. Self-observing process checks exclude their complete observer ancestry before classifying a matching process. Pre-finalization RUN-METADATA retains a valid RFC 3339 observation timestamp and HEAD; the finalizer alone replaces that timestamp with the true terminal boundary and writes final status and final commit immediately before the content commit. Direct validate_checkpoint.py is the post-finalization clean-boundary command, not the append-only in-progress runner.
+- Resolution: Gate consistency is strict at handoff and provisional while work is in progress; every in-progress validation procedure uses the checkpoint-owned harness to declare append-only evidence dirty and re-derive hashes through finalize_checkpoint.refresh_declared_hashes immediately before validation. Self-observing process checks exclude their complete observer ancestry before classifying a matching process. Pre-finalization RUN-METADATA retains a valid RFC 3339 observation timestamp and HEAD; the finalizer alone replaces that timestamp with the true terminal boundary and writes final status and final commit immediately before the content commit. Direct validate_checkpoint.py is the post-finalization clean-boundary command, not the append-only in-progress runner. CP0010 adds guarded, unsealed-only derived metadata synchronization; evidence producers must finish before inventory declaration and validation.
 - Prevention:
   - `test` DeliveryAssuranceGateTests.test_gate_consistency_is_provisional_while_work_is_in_progress — Provisional in progress, strict at handoff.
   - `invariant` green_keeper._refresh_declared_hashes — Declared hashes are re-derived before the validation gate runs, never invented.
   - `test` test_every_runner_of_the_mandatory_gates_refreshes_the_declared_hashes — Every command that executes the mandatory gate set re-derives the checkpoint's declared hashes before it does.
   - `test` test_green_keeper_declares_its_in_progress_evidence_dirty_before_validation — An in-progress cycle expects its own command and rework evidence to make the tree dirty before checkpoint validation.
-- Evidence: `file:docs/checkpoints/SETUP-00-CP-0005/DECISIONS.md`, `file:docs/checkpoints/SETUP-00-CP-0005/REWORK-LOG.jsonl`, `file:docs/checkpoints/GATE-4-CP-0005/REWORK-LOG.jsonl`, `file:docs/checkpoints/GATE-4-CP-0009/COMMANDS.jsonl`, `file:docs/checkpoints/GATE-4-CP-0009/REWORK-LOG.jsonl`, `file:docs/checkpoints/GATE-4-CP-0009/audit-harness/run_checkpoint_validation.py`, `file:scripts/development-ledger/finalize_checkpoint.py`, `file:scripts/development-ledger/green_keeper.py`, `file:scripts/iacode/verify.py`, `file:tests/test_development_ledger.py`, `file:tests/test_gate1_model_gateway.py`
+  - `test` test_preflight_aggregates_and_commit_semantics_are_derived_without_promotion — The in-progress preflight aggregates and finalCommit semantics are derived together without altering status, verdicts or evidence.
+  - `test` test_a_sealed_or_terminal_checkpoint_is_never_rewritten — Synchronization cannot rewrite immutable or terminal evidence.
+- Evidence: `file:docs/checkpoints/SETUP-00-CP-0005/DECISIONS.md`, `file:docs/checkpoints/SETUP-00-CP-0005/REWORK-LOG.jsonl`, `file:docs/checkpoints/GATE-4-CP-0005/REWORK-LOG.jsonl`, `file:docs/checkpoints/GATE-4-CP-0009/COMMANDS.jsonl`, `file:docs/checkpoints/GATE-4-CP-0009/REWORK-LOG.jsonl`, `file:docs/checkpoints/GATE-4-CP-0009/audit-harness/run_checkpoint_validation.py`, `file:scripts/development-ledger/finalize_checkpoint.py`, `file:scripts/development-ledger/green_keeper.py`, `file:scripts/iacode/verify.py`, `file:tests/test_development_ledger.py`, `file:tests/test_gate1_model_gateway.py`, `file:docs/checkpoints/GATE-4-CP-0010/COMMANDS.jsonl`, `file:docs/checkpoints/GATE-4-CP-0010/FINDINGS.json`, `file:scripts/development-ledger/sync_in_progress_metadata.py`, `file:tests/test_in_progress_metadata.py`
 
 ### LSN-0012 — Sealed checkpoints and their tags are immutable, and tooling must keep validating them
 
@@ -1349,17 +1354,19 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 
 ### LSN-0098 — Accepted cancellation must be enforced from durable state across activity boundaries
 
-- Status: `GUARDED`, severity CRITICAL, category implementation, recurrences 1.
+- Status: `GUARDED`, severity CRITICAL, category implementation, recurrences 2.
 - Source: GATE-4, GATE-4-CP-0009, finding cmd-0023, cmd-0060 and focused diagnostic cmd-0068.
 - Symptom: Two complete verifiers observed an accepted quality cancellation remain non-terminal for the full 900-second observation bound. The focused cmd-0068 reproduction proved the run was already CANCELLING when a racing sandbox response completed normally; persisting that success was correctly refused as late, and the workflow never reached terminal cancellation.
 - Root cause: The first guard covered one in-memory signal race after CHECK_DISPATCHED but not the whole accepted-cancellation state machine. A flag already set before activity-handle assignment could make the watcher exit without cancelling, and a normal response racing with persisted CANCELLING was recorded before cancellation precedence was applied. The store correctly refused that non-cancelled result, leaving the workflow failed and the run non-terminal.
-- Resolution: Treat persisted CANCELLING as authoritative before creation and throughout the activity. Cancel immediately when the flag is already set, poll durable state while waiting, and normalize any normal response that races with accepted cancellation to CANCELLED before persistence; release the sandbox before the terminal transition. Cmd-0071 proved the complete path in a disposable real stack.
+- Resolution: Treat persisted CANCELLING as authoritative before creation and throughout the activity. Cancel immediately when the flag is already set, poll durable state while waiting, and normalize any normal response that races with accepted cancellation to CANCELLED before persistence; release the sandbox before the terminal transition. Cmd-0071 proved the complete path in a disposable real stack. CP0010 closes result and verdict persistence races with durable reconciliation and a cancellation/verdict commit barrier (ADR-0038).
 - Prevention:
   - `test` test_cancellation_is_rechecked_after_dispatch_before_activity_start — The workflow re-reads durable run state after CHECK_DISPATCHED and before workflow.start_activity.
   - `test` test_durable_cancelling_state_stops_an_active_sandbox_activity — A CANCELLING run observed while an activity is in flight cancels that activity even without relying on the signal handler.
   - `test` test_a_signal_flag_set_before_handle_assignment_still_cancels_the_activity — An already accepted signal cannot make the durable watcher exit while leaving the newly assigned activity running.
   - `test` test_accepted_cancellation_wins_over_a_racing_success_response — A normal activity response racing with accepted cancellation is persisted as CANCELLED, never as late success.
-- Evidence: `file:docs/checkpoints/GATE-4-CP-0009/VERIFY-FAIL-CMD-0023.json`, `file:docs/checkpoints/GATE-4-CP-0009/VERIFY-FAIL-CMD-0060.json`, `file:docs/checkpoints/GATE-4-CP-0009/QUALITY-CANCELLATION-ISOLATION-FAIL-CMD-0068.json`, `file:docs/checkpoints/GATE-4-CP-0009/QUALITY-CANCELLATION-GUARDRAIL.json`, `file:docs/checkpoints/GATE-4-CP-0009/QUALITY-CANCELLATION-ISOLATION.json`, `file:docs/checkpoints/GATE-4-CP-0009/COMMANDS.jsonl`, `file:services/evaluator/src/iacode_evaluator/workflow.py`, `file:services/evaluator/tests/test_workflow.py`
+  - `test` test_durable_cancellation_during_result_write_finishes_without_a_signal — A database cancellation arriving after the durable read recovers from the rejected result callback, reaches CANCELLED and derives FAIL without a signal.
+  - `test` test_concurrent_cancellation_and_verdict_have_one_winner — PostgreSQL serializes cancellation acceptance with immutable verdict commitment under the same run-row lock.
+- Evidence: `file:docs/checkpoints/GATE-4-CP-0009/VERIFY-FAIL-CMD-0023.json`, `file:docs/checkpoints/GATE-4-CP-0009/VERIFY-FAIL-CMD-0060.json`, `file:docs/checkpoints/GATE-4-CP-0009/QUALITY-CANCELLATION-ISOLATION-FAIL-CMD-0068.json`, `file:docs/checkpoints/GATE-4-CP-0009/QUALITY-CANCELLATION-GUARDRAIL.json`, `file:docs/checkpoints/GATE-4-CP-0009/QUALITY-CANCELLATION-ISOLATION.json`, `file:docs/checkpoints/GATE-4-CP-0009/COMMANDS.jsonl`, `file:services/evaluator/src/iacode_evaluator/workflow.py`, `file:services/evaluator/tests/test_workflow.py`, `file:docs/checkpoints/GATE-4-CP-0010/FINDINGS.json`, `file:docs/checkpoints/GATE-4-CP-0010/COMMANDS.jsonl`, `file:docs/checkpoints/GATE-4-CP-0010/QUALITY-CANCELLATION-GUARDRAIL.json`, `file:docs/checkpoints/GATE-4-CP-0010/QUALITY-CANCELLATION-ISOLATION.json`
 
 ### LSN-0099 — A refused subject is an attempted input, not executed commit evidence
 
@@ -1406,3 +1413,36 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 - Prevention:
   - `test` test_corrective_partition_is_derived_from_the_current_reference_set — Adding a corrective reference changes the expected partition automatically without editing a second count.
 - Evidence: `file:docs/checkpoints/GATE-4-CP-0009/COMMANDS.jsonl`, `file:docs/checkpoints/GATE-4-CP-0009/audit-harness/complete_requirements.py`, `file:tests/test_checkpoint_audit_harnesses.py`
+
+### LSN-0103 — Adversarial fixtures must hash the complete validated contract
+
+- Status: `GUARDED`, severity HIGH, category testing, recurrences 0.
+- Source: GATE-4, GATE-4-CP-0010, finding G4-INT-003.
+- Symptom: The new cancellation barrier fixtures were refused for VERDICT_DIGEST_MISMATCH before reaching the intended race.
+- Root cause: The fixture digest omitted contractVersion, a default emitted by model validation.
+- Resolution: Construct the complete canonical verdict before hashing and execute a valid commitment before attributing a refusal to cancellation.
+- Prevention:
+  - `test` test_verdict_before_cancellation_refuses_late_acceptance — The positive and negative regression must execute the intended boundary with canonical inputs.
+- Evidence: `file:docs/checkpoints/GATE-4-CP-0010/FINDINGS.json`, `file:docs/checkpoints/GATE-4-CP-0010/COMMANDS.jsonl`
+
+### LSN-0104 — Intermediate closure and independent validation must have unambiguous contracts
+
+- Status: `GUARDED`, severity HIGH, category process, recurrences 0.
+- Source: GATE-4, GATE-4-CP-0010, finding G4-INT-002.
+- Symptom: Live contracts simultaneously required per-Gate independent approval and allowed internal intermediate closure.
+- Root cause: The milestone policy was added without reconciling older entry, handoff and Gate-specific wording.
+- Resolution: Keep adapters and live Gate rows aligned with the milestone cadence, preserve internal controls and reject independent verdicts on INTERNAL_GATE_PASS.
+- Prevention:
+  - `test` test_internal_closure_cannot_claim_independent_review_or_red_team — The positive and negative regression must execute the intended boundary with canonical inputs.
+- Evidence: `file:docs/checkpoints/GATE-4-CP-0010/FINDINGS.json`, `file:docs/checkpoints/GATE-4-CP-0010/COMMANDS.jsonl`
+
+### LSN-0105 — New behavioral tests must satisfy the unchanged source-quality contract
+
+- Status: `GUARDED`, severity LOW, category testing, recurrences 0.
+- Source: GATE-4, GATE-4-CP-0010, finding G4-INT-004.
+- Symptom: The lint gate refused overlong declarations and expressions in new regression tests.
+- Root cause: Behavioral proof was expanded without checking the source formatting budget first.
+- Resolution: Run the existing mandatory lint over every changed source and test path before publishing; repair formatting without weakening lint or assertions.
+- Prevention:
+  - `test` test_mandatory_lint_covers_every_python_project_root — The positive and negative regression must execute the intended boundary with canonical inputs.
+- Evidence: `file:docs/checkpoints/GATE-4-CP-0010/FINDINGS.json`, `file:docs/checkpoints/GATE-4-CP-0010/COMMANDS.jsonl`

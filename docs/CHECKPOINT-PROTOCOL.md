@@ -127,9 +127,12 @@ evidence.
 
 ## Promotion
 
-The run that implements a Gate closes its checkpoint at `READY_FOR_REVIEW`. `GATE_PASS` is granted by
-a later, independent run, and for `schemaVersion` `2.0.0` the validator refuses `GATE_PASS` unless
-`secondToolValidation.status` is `PASSED`, or `NOT_REQUIRED` with a recorded justification.
+An intermediate Gate closes at `INTERNAL_GATE_PASS` after all internal controls; a delivery offered
+for independent audit closes at `READY_FOR_REVIEW`. The intermediate checkpoint justifies its
+independent review and independent Red Team as `NOT_REQUIRED` there, leaves `secondToolValidation`
+`PENDING_MANUAL`, and leaves the milestone `PENDING`. `GATE_PASS` is granted only by a later,
+independent run. An internal verdict never satisfies the independent milestone boundary. See
+[ADR-0037](adr/ADR-0037-intermediate-gates-use-internal-closure.md).
 
 ## Divergence
 

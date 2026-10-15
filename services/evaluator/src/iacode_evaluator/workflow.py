@@ -240,6 +240,20 @@ class QualityRunWorkflow:
 
     @workflow.run
     async def run(self, payload: dict[str, Any]) -> dict[str, Any]:
+        try:
+            return await self._run_plan(payload)
+        except ActivityError:
+            # Cancellation can win a database lock after the last durable read. A rejected
+            # callback/transition is then expected, not a reason to strand the workflow.
+            durable = await self._read_run()
+            if durable.get("state") == "CANCELLING":
+                self.cancel_requested = True
+                return await self._finish_cancelled(await self._read_plan())
+            if durable.get("state") == "CANCELLED":
+                return {"runId": self.run_id, "state": "CANCELLED", "verdict": "FAIL"}
+            raise
+
+    async def _run_plan(self, payload: dict[str, Any]) -> dict[str, Any]:
         self.run_id = str(payload["runId"])
         plan = await self._read_plan()
         started = workflow.now()
@@ -325,6 +339,9 @@ class QualityRunWorkflow:
                 cancellation_watch.cancel()
                 with contextlib.suppress(asyncio.CancelledError):
                     await cancellation_watch
+            durable = await self._read_run()
+            if durable.get("state") == "CANCELLING":
+                self.cancel_requested = True
             # The activity can finish normally at the same moment cancellation becomes durable.
             # Persisting its success into CANCELLING is correctly refused by the store and would
             # strand the run. Accepted cancellation is authoritative in this race.
@@ -339,6 +356,10 @@ class QualityRunWorkflow:
                 deadline_hit = True
 
         self.current_check = None
+        durable = await self._read_run()
+        if self.cancel_requested or durable.get("state") == "CANCELLING":
+            self.cancel_requested = True
+            return await self._finish_cancelled(plan)
         verdict = await self._verdict()
         await self._release("final")
         if deadline_hit:

@@ -35,6 +35,13 @@ Cancel with `POST /api/v1/quality-runs/{runId}/cancel`. Cancellation is idempote
 sandbox activity is cancelled, its cleanup is awaited, a cancellation result and evidence are
 recorded, and only then does the run become `CANCELLED`. Late callbacks are refused.
 
+Cancellation acceptance and immutable verdict commitment are serialized on the run row. Accepted
+cancellation is authoritative even if the workflow signal is delayed or a normal sandbox response
+races the result write; the derived verdict is FAIL. If the immutable verdict was already committed,
+the cancellation endpoint returns HTTP 409 `CANCELLATION_WINDOW_CLOSED` without accepting or
+signalling cancellation. The existing verdict and results are never rewritten. A persistence race
+may leave the interrupted check without a result; missing mandatory evidence also derives FAIL.
+
 Temporal owns workflow durability. Restarting `iacode-evaluator` recreates workflow state from
 history; the database idempotency keys prevent duplicate results, events, or verdicts. Per-check and
 whole-run deadlines come from the frozen policy. A deadline still produces a terminal result,

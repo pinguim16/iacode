@@ -287,6 +287,11 @@ class MemoryQualityStore:
             raise QualityError(
                 "RUN_TRANSITION_INVALID", f"quality run cannot transition {run.state} -> {state}"
             )
+        if state == "CANCELLING" and run_id in self.verdicts:
+            raise QualityError(
+                "CANCELLATION_WINDOW_CLOSED",
+                "the immutable quality verdict is committed; cancellation was not accepted",
+            )
         if state in QUALITY_TERMINAL_RUN_STATES and not reason:
             raise QualityError("TERMINAL_REASON_REQUIRED", "a terminal state requires its reason")
         await self.append_event(
@@ -370,6 +375,10 @@ class MemoryQualityStore:
             )
         if verdict_digest(verdict) != verdict.digest:
             raise QualityError("VERDICT_DIGEST_MISMATCH", "the verdict digest is not canonical")
+        if run.cancel_requested and verdict.verdict != "FAIL":
+            raise QualityError(
+                "CANCELLED_VERDICT_MISMATCH", "an accepted cancellation requires verdict FAIL"
+            )
         self.verdicts[verdict.runId] = verdict
         await self.append_event(
             verdict.runId,
@@ -649,6 +658,7 @@ class SqlQualityStore:
     ) -> RunRecord:
         from iacode_persistence.models import QualityRun as RunRow
         from iacode_persistence.models import QualityRunEvent
+        from iacode_persistence.models import QualityVerdict as VerdictRow
         from sqlalchemy import func, select
 
         if state not in QUALITY_RUN_STATES or event_type not in QUALITY_RUN_EVENT_TYPES:
@@ -662,6 +672,17 @@ class SqlQualityStore:
                     "RUN_TRANSITION_INVALID",
                     f"quality run cannot transition {row.state} -> {state}",
                 )
+            if state == "CANCELLING" and state != row.state:
+                committed_verdict = (
+                    await session.execute(
+                        select(VerdictRow.id).where(VerdictRow.quality_run_id == row.id)
+                    )
+                ).scalar_one_or_none()
+                if committed_verdict is not None:
+                    raise QualityError(
+                        "CANCELLATION_WINDOW_CLOSED",
+                        "the immutable quality verdict is committed; cancellation was not accepted",
+                    )
             if state in QUALITY_TERMINAL_RUN_STATES and not reason:
                 raise QualityError(
                     "TERMINAL_REASON_REQUIRED", "a terminal state requires its reason"
@@ -891,6 +912,11 @@ class SqlQualityStore:
                 if verdict_digest(verdict) != verdict.digest:
                     raise QualityError(
                         "VERDICT_DIGEST_MISMATCH", "the verdict digest is not canonical"
+                    )
+                if run.cancel_requested and verdict.verdict != "FAIL":
+                    raise QualityError(
+                        "CANCELLED_VERDICT_MISMATCH",
+                        "an accepted cancellation requires verdict FAIL",
                     )
                 session.add(
                     VerdictRow(

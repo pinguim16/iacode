@@ -2742,6 +2742,20 @@ class MemoryPolicyValidationTests(unittest.TestCase):
         self.assertTrue(
             any("an independently audited PASS belongs to" in error for error in errors), errors)
 
+    def test_internal_closure_cannot_claim_independent_review_or_red_team(self) -> None:
+        errors = self._errors(self._state(
+            status="INTERNAL_GATE_PASS", independentReview={"status": "APPROVED"},
+            redTeam={"status": "RED_TEAM_PASS"}))
+        self.assertTrue(any("cannot assert independentReview" in error for error in errors), errors)
+        self.assertTrue(any("independent Red Team verdict" in error for error in errors), errors)
+
+    def test_internal_closure_leaves_independent_milestone_validation_pending(self) -> None:
+        self.assertEqual(self._errors(self._state(
+            status="INTERNAL_GATE_PASS",
+            independentReview={"status": "NOT_REQUIRED", "justification": "due at milestone closure"},
+            redTeam={"status": "NOT_REQUIRED", "justification": "internal battery executed; independent due at closure"},
+        )), [])
+
     def test_an_offered_checkpoint_requires_the_preflight_artifact(self) -> None:
         (self.checkpoint / "LESSON-PREFLIGHT.json").unlink()
         errors = self._errors(self._state(status="READY_FOR_REVIEW"))

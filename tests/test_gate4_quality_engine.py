@@ -522,7 +522,8 @@ class Gate4CanonicalSpecificationTests(unittest.TestCase):
             "passing fixture",
             "failing fixture",
             "real snapshot of IACode",
-            "ends at `READY_FOR_REVIEW`",
+            "at `INTERNAL_GATE_PASS`",
+            "Independent validation remains due at M2 closure",
         ):
             with self.subTest(statement=statement):
                 self.assertIn(statement, text)

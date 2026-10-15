@@ -98,7 +98,10 @@ One set of checks governs every positive terminal status: `READY_FOR_REVIEW`, `R
 gate to pass, delivery completeness to be total with total evidence coverage, no `PARTIAL` or
 `MISSING` requirement, and every mandatory quality dimension executed and not `FAIL`. Each status then
 adds its own requirements: a review-ready checkpoint leaves the independent verdicts `PENDING`, and a
-terminal status requires them to have been given.
+terminal status requires them to have been given or justified `NOT_REQUIRED`. For
+`INTERNAL_GATE_PASS`, only the checkpoint-specific independent steps are `NOT_REQUIRED` under the
+milestone cadence; all internal assurance still executes and the independent milestone verdict stays
+pending. A milestone boundary cannot be crossed on an internal verdict.
 
 ## Freshness
 

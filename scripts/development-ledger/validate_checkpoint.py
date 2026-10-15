@@ -1162,6 +1162,11 @@ def _validate_memory_policy(
         errors.append(
             "INTERNAL_GATE_PASS records the project's own verdict; an independently audited PASS "
             f"belongs to {INDEPENDENT_AUDIT_PASS_STATUS} or {EXTERNAL_PASS_STATUS}")
+    if status == "INTERNAL_GATE_PASS":
+        if isinstance(review, dict) and review.get("status") == "APPROVED":
+            errors.append("INTERNAL_GATE_PASS cannot assert independentReview APPROVED")
+        if isinstance(red_team, dict) and red_team.get("status") == "RED_TEAM_PASS":
+            errors.append("INTERNAL_GATE_PASS cannot assert an independent Red Team verdict")
 
 
 COUNT_CLAIM = re.compile(

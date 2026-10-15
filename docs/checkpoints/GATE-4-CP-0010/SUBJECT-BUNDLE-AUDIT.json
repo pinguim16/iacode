@@ -1,0 +1,48 @@
+{
+  "schemaVersion": "1.0.0",
+  "reviewKind": "SAME_SESSION_INTERNAL_REVIEW",
+  "subjectCheckpoint": "GATE-4-CP-0009",
+  "subjectCommit": "ff2814f7d7bf06fa8a99858b958daf3f22197496",
+  "generatedAt": "2026-10-15T20:37:03.447959Z",
+  "declaration": {
+    "sha256": "54d1baf801f0b63f4784e0464e042e640038a07fd477a327dc353b2dde2f4b6c",
+    "sizeBytes": 1316206,
+    "entries": 230
+  },
+  "reconstruction": {
+    "subjectCommit": "47f8b13ce944f99dca4254feafb38c3fef3f2f39",
+    "subjectTree": "80b94b0f81494b65ba8acf107d84033fdf821063",
+    "sha256": [
+      "54d1baf801f0b63f4784e0464e042e640038a07fd477a327dc353b2dde2f4b6c",
+      "54d1baf801f0b63f4784e0464e042e640038a07fd477a327dc353b2dde2f4b6c"
+    ],
+    "sizeBytes": [
+      1316206,
+      1316206
+    ],
+    "entries": [
+      230,
+      230
+    ],
+    "validationResults": [
+      "PASS",
+      "PASS"
+    ],
+    "byteIdentical": true,
+    "result": "PASS"
+  },
+  "positiveControl": "PASS",
+  "checks": {
+    "coldStartCheckpoint": true,
+    "integrity": true,
+    "declaredReconstruction": true,
+    "byteIdentity": true,
+    "twoValidArchives": true,
+    "refusesMutatedsha256": true,
+    "refusesMutatedsizeBytes": true,
+    "refusesWiderExclusion": true,
+    "sealedSubjectUnchanged": true
+  },
+  "result": "PASS",
+  "temporaryCloneRemoved": true
+}

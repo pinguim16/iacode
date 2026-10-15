@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import asyncio
 import inspect
 from datetime import UTC, datetime
 from types import SimpleNamespace
@@ -63,6 +64,144 @@ def _plan() -> QualityPlan:
 
 
 class QualityWorkflowAdapterTests:
+    @pytest.mark.asyncio
+    async def test_durable_cancellation_at_activity_completion_finishes_without_a_signal(
+        self, monkeypatch: pytest.MonkeyPatch
+    ) -> None:
+        await self._assert_cancellation_boundary(monkeypatch, "activity")
+
+    @pytest.mark.asyncio
+    async def test_durable_cancellation_during_result_write_finishes_without_a_signal(
+        self, monkeypatch
+    ):
+        await self._assert_cancellation_boundary(monkeypatch, "result")
+
+    @pytest.mark.asyncio
+    async def test_durable_cancellation_during_verdict_write_finishes_without_a_signal(
+        self, monkeypatch
+    ):
+        await self._assert_cancellation_boundary(monkeypatch, "verdict")
+
+    @pytest.mark.asyncio
+    async def test_cancellation_after_verdict_commit_is_not_accepted(self, monkeypatch):
+        await self._assert_cancellation_boundary(monkeypatch, "after_verdict")
+
+    @pytest.mark.asyncio
+    async def test_workflow_without_cancellation_completes_successfully(self, monkeypatch):
+        await self._assert_cancellation_boundary(monkeypatch, "none")
+
+    @pytest.mark.asyncio
+    async def test_unrelated_activity_failure_is_not_hidden_as_cancellation(self, monkeypatch):
+        await self._assert_cancellation_boundary(monkeypatch, "unrelated_error")
+
+    async def _assert_cancellation_boundary(
+        self, monkeypatch: pytest.MonkeyPatch, cancel_at: str
+    ) -> None:
+        from iacode_contracts.sandbox import SANDBOX_EXECUTION_KEY, SANDBOX_RELEASE_ACTIVITY
+        from iacode_evaluator import activities
+        from iacode_evaluator.errors import QualityError
+
+        store = MemoryQualityStore(now=lambda: NOW)
+        await store.create_plan(_plan())
+        run = await store.create_run(plan_id=SHA, owner_run_id=None, idempotency_key="race")
+
+        async def accept_cancellation():
+            await store.transition(
+                run.run_id, state="CANCELLING", event_type="CANCELLATION_REQUESTED",
+                dedupe_key="race-cancel", payload={"reason": "operator"},
+            )
+
+        original_result = store.record_result
+        original_verdict = store.record_verdict
+        injected = False
+
+        async def record_result(*args, **kwargs):
+            if cancel_at == "result":
+                await accept_cancellation()
+            if cancel_at == "unrelated_error":
+                raise QualityError("UNRELATED_STORE_FAILURE", "not a cancellation")
+            return await original_result(*args, **kwargs)
+
+        async def record_verdict(verdict):
+            nonlocal injected
+            if cancel_at == "verdict" and not injected:
+                injected = True
+                await accept_cancellation()
+            recorded = await original_verdict(verdict)
+            if cancel_at == "after_verdict":
+                with pytest.raises(QualityError) as refusal:
+                    await accept_cancellation()
+                assert refusal.value.code == "CANCELLATION_WINDOW_CLOSED"
+            return recorded
+
+        store.record_result = record_result
+        store.record_verdict = record_verdict
+        runtime = SimpleNamespace(
+            store=store,
+            evidence=QualityEvidenceStore(
+                client=MemoryObjectStore(), bucket="artifacts",
+                repository=MemoryEvidenceRepository(), now=lambda: NOW,
+            ),
+            metrics=QualityMetrics(CollectorRegistry()),
+        )
+        calls = {
+            activities.READ_PLAN_ACTIVITY: activities.read_plan,
+            activities.READ_RUN_ACTIVITY: activities.read_run,
+            activities.TRANSITION_ACTIVITY: activities.transition_run,
+            activities.RECORD_EXECUTION_ACTIVITY: activities.record_execution,
+            activities.DERIVE_VERDICT_ACTIVITY: activities.derive_run_verdict,
+        }
+
+        async def execute(name, payload, **_kwargs):
+            if name == SANDBOX_RELEASE_ACTIVITY:
+                return {"released": 0}
+            try:
+                return await calls[name](payload)
+            except QualityError as error:
+                raise ActivityError(
+                    str(error), scheduled_event_id=1, started_event_id=2,
+                    identity="evaluator-test", activity_type=name,
+                    activity_id="race-activity", retry_state=None,
+                ) from error
+
+        class CompletedActivity:
+            def cancel(self):
+                pass
+
+            def __await__(self):
+                async def complete():
+                    if cancel_at == "activity":
+                        await accept_cancellation()
+                    return {SANDBOX_EXECUTION_KEY: {
+                        "status": "SUCCEEDED", "exitCode": 0, "durationMs": 1,
+                    }}
+                return complete().__await__()
+
+        monkeypatch.setattr(workflow_module.workflow, "execute_activity", execute)
+        monkeypatch.setattr(
+            workflow_module.workflow, "start_activity", lambda *_a, **_k: CompletedActivity()
+        )
+        monkeypatch.setattr(workflow_module.workflow, "now", lambda: NOW)
+        set_runtime(runtime)
+        try:
+            if cancel_at == "unrelated_error":
+                with pytest.raises(ActivityError, match="not a cancellation"):
+                    await QualityRunWorkflow().run({"runId": run.run_id})
+                assert (await store.run(run.run_id)).state == "RUNNING"
+                assert await store.verdict_for_run(run.run_id) is None
+                return
+            outcome = await QualityRunWorkflow().run({"runId": run.run_id})
+        finally:
+            set_runtime(None)
+            await asyncio.sleep(0)
+
+        expected_state = "SUCCEEDED" if cancel_at in {"none", "after_verdict"} else "CANCELLED"
+        expected_verdict = "PASS" if expected_state == "SUCCEEDED" else "FAIL"
+        assert outcome["state"] == expected_state
+        assert outcome["verdict"] == expected_verdict
+        assert (await store.run(run.run_id)).state == expected_state
+        assert (await store.verdict_for_run(run.run_id)).verdict == expected_verdict
+
     def test_the_temporal_workflow_uses_the_shared_name(self) -> None:
         definition = getattr(QualityRunWorkflow, "__temporal_workflow_definition")
         assert definition.name == "IACodeQualityRun"
@@ -95,7 +234,7 @@ class QualityWorkflowAdapterTests:
         assert enforce_accepted_cancellation(succeeded, cancel_requested=False) is succeeded
 
     def test_cancellation_is_rechecked_after_dispatch_before_activity_start(self) -> None:
-        source = inspect.getsource(QualityRunWorkflow.run)
+        source = inspect.getsource(QualityRunWorkflow._run_plan)
         dispatch = source.index('"CHECK_DISPATCHED"')
         durable_read = source.index("durable = await self._read_run()", dispatch)
         boundary = source.index("if self.cancel_requested", dispatch)

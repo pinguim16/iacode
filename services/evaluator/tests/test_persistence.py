@@ -371,6 +371,52 @@ class QualityStoreTests:
             )
 
     @pytest.mark.asyncio
+    async def test_cancellation_before_verdict_refuses_pass(self) -> None:
+        await self._assert_cancellation_commit_order(True)
+
+    @pytest.mark.asyncio
+    async def test_verdict_before_cancellation_refuses_late_acceptance(self) -> None:
+        await self._assert_cancellation_commit_order(False)
+
+    async def _assert_cancellation_commit_order(self, cancel_first: bool) -> None:
+        store = MemoryQualityStore(now=lambda: NOW)
+        await store.create_plan(quality_plan())
+        run = await store.create_run(plan_id=SHA, owner_run_id=None, idempotency_key="barrier")
+        for state, event in (("PLANNED", "PLANNED"), ("QUEUED", "QUEUED"), ("RUNNING", "STARTED")):
+            await store.transition(
+                run.run_id, state=state, event_type=event, dedupe_key=state, payload={}
+            )
+        content = {
+            "contractVersion": "1.0.0",
+            "runId": run.run_id, "planId": SHA, "verdict": "PASS", "reasons": ("passed",),
+            "resultDigests": (), "evidenceDigests": (), "derivedAt": NOW,
+        }
+        verdict = QualityVerdict(**content, digest=digest(content))
+
+        async def cancel():
+            return await store.transition(
+                run.run_id, state="CANCELLING", event_type="CANCELLATION_REQUESTED",
+                dedupe_key="cancel", payload={},
+            )
+
+        if cancel_first:
+            await cancel()
+            with pytest.raises(QualityError) as refusal:
+                await store.record_verdict(verdict)
+            assert refusal.value.code == "CANCELLED_VERDICT_MISMATCH"
+            assert await store.verdict_for_run(run.run_id) is None
+        else:
+            await store.record_verdict(verdict)
+            events = await store.events(run.run_id)
+            with pytest.raises(QualityError) as refusal:
+                await cancel()
+            assert refusal.value.code == "CANCELLATION_WINDOW_CLOSED"
+            assert (await store.run(run.run_id)).state == "RUNNING"
+            assert not (await store.run(run.run_id)).cancel_requested
+            assert await store.events(run.run_id) == events
+            assert await store.verdict_for_run(run.run_id) == verdict
+
+    @pytest.mark.asyncio
     async def test_a_stored_verdict_is_rederived_not_overwritten(self) -> None:
         store = MemoryQualityStore(now=lambda: NOW)
         await store.create_plan(quality_plan())

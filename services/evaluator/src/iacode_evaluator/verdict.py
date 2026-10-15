@@ -53,6 +53,7 @@ def derive_verdict(
     results: tuple[QualityResult, ...],
     resolved_evidence_digests: set[str],
     derived_at: datetime | None = None,
+    cancel_requested: bool = False,
 ) -> QualityVerdict:
     reasons: list[str] = []
     expected = {
@@ -101,6 +102,10 @@ def derive_verdict(
                     )
     if not expected:
         reasons.append("the required check set is missing")
+    # Preserve the canonical digest of already-failing historical derivations. Cancellation
+    # adds a reason only when the results would otherwise permit PASS.
+    if cancel_requested and not reasons:
+        reasons.append("quality run cancellation was accepted")
     verdict = "FAIL" if reasons else "PASS"
     if not reasons:
         reasons.append("every applicable mandatory check passed with resolved required evidence")

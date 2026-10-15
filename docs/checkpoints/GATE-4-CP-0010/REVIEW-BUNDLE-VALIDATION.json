@@ -1,0 +1,6 @@
+{
+  "schemaVersion": "2.0.0",
+  "checkpoint": "GATE-4-CP-0010",
+  "result": "PENDING",
+  "justification": "The immutable content commit does not exist until finalization and commit; seal_checkpoint.py must reconstruct it twice through Git transport before tagging."
+}

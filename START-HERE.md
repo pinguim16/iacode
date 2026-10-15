@@ -3,8 +3,9 @@
 IACode is a planned private, autonomous, general-purpose software engineering platform. The repository is self-contained context and is the only source of truth.
 
 - Phase: `M2 — IACode V0 completion and experience`.
-- Current Gate: `GATE 4 — QUALITY ENGINE`, the first Gate of `M2`. Its implementing run stops at
-  `READY_FOR_REVIEW`; only a later independent run may grant `GATE_PASS`.
+- Current Gate: `GATE 4 — QUALITY ENGINE`, the first Gate of `M2`. Its internal closure is
+  `INTERNAL_GATE_PASS`; independent validation remains due at M2 closure. `GATE_PASS` is never
+  granted by the implementing run.
 - Previous Gates: `GATE 3 — SANDBOX + TOOL EXECUTION`, `GATE 2 — AGENT RUNTIME`,
   `GATE 1 — MODEL GATEWAY` and `GATE 0 — FOUNDATION`; before them `SETUP-00`.
 - Latest checkpoint: follow [docs/checkpoints/LATEST.md](docs/checkpoints/LATEST.md).
@@ -53,8 +54,10 @@ Every delivery runs, in order: the lesson preflight, requirement derivation into
 [Test Rework / Green Keeper](.iacode/agents/test-rework-greenkeeper.md),
 [Delivery Completeness Validator](.iacode/agents/delivery-completeness-validator.md),
 the internal Red Team, the [Milestone Closure Auditor](.iacode/agents/m0-closure-auditor.md),
-`READY_FOR_REVIEW`, independent tool review, Red Team, and only then `GATE_PASS`. No step may be
-skipped, and nothing red, incomplete or unattacked is handed to the independent tool.
+`INTERNAL_GATE_PASS` for an intermediate Gate, or `READY_FOR_REVIEW` for an independent handoff.
+At milestone closure the separate independent review, Red Team and attestation follow before
+advancement to another milestone. No internal control may be skipped and nothing red, incomplete
+or unattacked is handed off. See [ADR-0037](docs/adr/ADR-0037-intermediate-gates-use-internal-closure.md).
 
 The requirement set is derived, not transcribed: the canonical Gate checklist, the lesson preflight
 and the open audit findings decide it, and a delivery that declares anything else is refused.

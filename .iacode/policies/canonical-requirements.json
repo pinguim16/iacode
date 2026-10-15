@@ -5312,7 +5312,7 @@
         {
           "key": "20.6",
           "section": "20. Verification, documentation, and closure",
-          "description": "Every Gate commit and the checkpoint tag are on the authorised remote when the Gate reaches its later independent verdict.",
+          "description": "Every Gate commit and the checkpoint tag are on the authorised remote before advancement, whether closure is internal or independently audited.",
           "artifact": "`scripts/development-ledger/remote_sync.py`",
           "evidence": "Recorded remote synchronization check.",
           "mandatory": true
@@ -5320,17 +5320,17 @@
         {
           "key": "20.7",
           "section": "20. Verification, documentation, and closure",
-          "description": "This implementing run ends at `READY_FOR_REVIEW` with complete functional and quality evidence, no blocker, and no claim of independent validation or Gate pass.",
-          "artifact": "`docs/checkpoints/GATE-4-CP-0001/STATE.json`",
+          "description": "An intermediate closure reaches `INTERNAL_GATE_PASS` only with complete fresh functional and internal quality evidence, no blocker, and no claim of independent validation; an independent handoff remains `READY_FOR_REVIEW`.",
+          "artifact": "`docs/MILESTONE-VALIDATION.md`, `docs/adr/ADR-0037-intermediate-gates-use-internal-closure.md`",
           "evidence": "Checkpoint validation; completeness; internal reviews.",
           "mandatory": true
         },
         {
           "key": "20.8",
           "section": "20. Verification, documentation, and closure",
-          "description": "A later independent run performs review, Red Team, and the Gate verdict before Gate 5 begins; Gate 4 starts no Gate 5 implementation.",
-          "artifact": "`docs/DEVELOPMENT-CONTRACT.md`, `docs/checkpoints/GATE-4-CP-0001/NEXT.md`",
-          "evidence": "Independent review checkpoint.",
+          "description": "Gate 5 requires a sealed valid Gate 4 internal closure and explicit owner authorization; the separate independent review and Red Team remain mandatory at M2 closure, and Gate 4 implements no Gate 5 capability.",
+          "artifact": "`docs/DEVELOPMENT-CONTRACT.md`, `docs/checkpoints/GATE-4-CP-0010/AUTHORIZATION.md`",
+          "evidence": "Internal closure checkpoint; pending milestone audit; scope tests.",
           "mandatory": true
         }
       ]

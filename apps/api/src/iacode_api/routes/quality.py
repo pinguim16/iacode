@@ -49,6 +49,7 @@ def _status(code: str) -> int:
         "RUN_TRANSITION_INVALID",
         "REPRODUCTION_SOURCE_ACTIVE",
         "LATE_RESULT",
+        "CANCELLATION_WINDOW_CLOSED",
     }:
         return status.HTTP_409_CONFLICT
     if code in {"EVIDENCE_STORE_UNAVAILABLE"}:

@@ -153,6 +153,24 @@ def wired():
 
 
 class QualityApiTests:
+    def test_cancellation_after_verdict_commit_returns_conflict_without_a_signal(
+        self, wired
+    ) -> None:
+        client, _store, temporal = wired
+
+        async def refuse_cancel(*_args, **_kwargs):
+            raise QualityError(
+                "CANCELLATION_WINDOW_CLOSED",
+                "the immutable quality verdict is committed; cancellation was not accepted",
+            )
+
+        client.app.state.resources.quality.service.request_cancel = refuse_cancel
+        response = client.post(f"{RUNS}/{RUN_ID}/cancel")
+
+        assert response.status_code == 409
+        assert response.json()["code"] == "CANCELLATION_WINDOW_CLOSED"
+        assert temporal.signals == []
+
     def test_creation_starts_the_owned_workflow_and_hides_commands(self, wired) -> None:
         client, _store, temporal = wired
         response = client.post(

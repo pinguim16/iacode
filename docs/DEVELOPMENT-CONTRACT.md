@@ -12,7 +12,7 @@ A partial feature is not complete. Functional placeholders, production fakes, fi
 - Keep documentation and the Engineering Ledger current.
 - Never store secrets, credentials, private keys, or authentication values.
 - Create checkpoints at the events listed in `CHECKPOINT-PROTOCOL.md`.
-- Require review independent of the implementer and an adversarial Red Team before Gate PASS.
+- Require independent review and adversarial Red Team before any independent Gate or milestone verdict; internal closure never represents that validation.
 - Meet `DEFINITION-OF-DONE.md` and the Gate's acceptance criteria.
 
 ## Mandatory delivery order
@@ -30,10 +30,11 @@ Every delivery follows this sequence. Skipping a step is a contract violation, n
 7. Delivery Completeness Validator.
 8. Internal Red Team over the mandatory attack battery.
 9. Milestone Closure Auditor, the internal mirror of the independent audit.
-10. `READY_FOR_REVIEW`.
-11. Independent tool review.
-12. Red Team.
-13. `GATE_PASS`.
+10. `INTERNAL_GATE_PASS` for an intermediate Gate, or `READY_FOR_REVIEW` for independent handoff.
+11. At milestone closure: independent tool review in a separate audit checkpoint.
+12. Independent Red Team.
+13. Attestation-derived milestone verdict before the next milestone; `GATE_PASS`, when used,
+    still requires the later independent run.
 
 Steps 6 to 9 exist so the independent tool never has to discover an unimplemented requirement, a
 forgotten prompt item, missing documentation, a red test, a red quality gate, a partial artifact,
@@ -101,7 +102,11 @@ its own identity, and has no remote and no credential
 
 ## Gate discipline
 
-The previous Gate is mandatory. A Gate may advance only when it is `GATE_PASS` and the next Gate is explicitly authorized. Blocked or failed work remains explicit; scope never changes silently.
+The previous Gate is mandatory. Within one milestone, a sealed and validated `INTERNAL_GATE_PASS`
+permits advancement only with explicit owner authorization of the next Gate. Crossing a milestone
+boundary additionally requires its independently derived passing verdict. `READY_FOR_REVIEW` alone
+never permits advancement. Blocked or failed work remains explicit; scope never changes silently.
+See [ADR-0037](adr/ADR-0037-intermediate-gates-use-internal-closure.md).
 
 ## Evidence discipline
 

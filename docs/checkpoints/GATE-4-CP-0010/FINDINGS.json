@@ -1,0 +1,67 @@
+{
+  "schemaVersion": "1.0.0",
+  "reviewKind": "SAME_SESSION_INTERNAL_REVIEW",
+  "subjectCheckpoint": "GATE-4-CP-0009",
+  "subjectCommit": "ff2814f7d7bf06fa8a99858b958daf3f22197496",
+  "findings": [
+    {
+      "id": "G4-INT-001",
+      "severity": "HIGH",
+      "title": "Durable cancellation can race result and verdict finalization",
+      "status": "OPEN",
+      "evidence": [
+        "command:cmd-0005",
+        "file:services/evaluator/tests/test_workflow.py"
+      ],
+      "observed": "The behavioral workflow regression ended with ActivityError/LATE_RESULT rather than terminal CANCELLED after the store accepted CANCELLING at activity completion. The existing watcher and flag-only success normalization do not close this persistence boundary.",
+      "classification": "GUARDRAIL_FAILURE: LSN-0098 / GRD-0099",
+      "requiredCorrection": "Recover from cancellation races using authoritative state, fail closed at verdict persistence, and serialize cancellation against immutable verdict commitment. Prove both arrival orders and preserve unrelated failures."
+    },
+    {
+      "id": "G4-INT-002",
+      "severity": "MEDIUM",
+      "title": "Per-Gate handoff prose contradicts the canonical milestone cadence",
+      "status": "OPEN",
+      "evidence": [
+        "file:START-HERE.md",
+        "file:docs/DEVELOPMENT-CONTRACT.md",
+        "file:docs/MILESTONE-VALIDATION.md"
+      ],
+      "observed": "The same contracts unconditionally require per-Gate independence and also permit INTERNAL_GATE_PASS for intermediate Gates. The owner explicitly authorized internal correction and Gate 5 advancement with independent audit deferred.",
+      "requiredCorrection": "Record the authorization and structural decision, reconcile adapters and live canonical rows without editing sealed subjects, preserve the mandatory gate set, and leave M2 independent validation pending."
+    },
+    {
+      "id": "G4-INT-003",
+      "severity": "MEDIUM",
+      "title": "New verdict fixtures omitted the default contractVersion from their digest",
+      "status": "FIXED_PENDING_FINAL_ASSURANCE",
+      "evidence": [
+        "command:cmd-0009",
+        "command:cmd-0013"
+      ],
+      "observed": "The barrier tests initially reached VERDICT_DIGEST_MISMATCH, not the intended race; the corrected complete payload passes the rebuilt suite.",
+      "requiredCorrection": "Preserve the red attempt, include the canonical contract defaults in the digest, and execute the positive commitment and both cancellation arrival orders."
+    },
+    {
+      "id": "G4-INT-005",
+      "severity": "HIGH",
+      "title": "In-progress evidence producers and derived metadata were not quiescent before validation",
+      "status": "FIXED_PENDING_FINAL_ASSURANCE",
+      "classification": "GUARDRAIL_FAILURE: LSN-0011 / GRD-0006",
+      "evidence": ["command:cmd-0022", "command:cmd-0024", "command:cmd-0029"],
+      "observed": "Validation refused stale preflight aggregates, old finalCommit semantics and a report/command produced concurrently after inventory binding.",
+      "requiredCorrection": "Finish evidence producers, derive in-progress metadata without promotion, declare every output, then bind hashes and validate; refuse synchronization of sealed, terminal or wrong-Gate state."
+    },
+    {
+      "id": "G4-INT-004",
+      "severity": "LOW",
+      "title": "New regression sources exceeded the existing lint line-length contract",
+      "status": "FIXED_PENDING_FINAL_ASSURANCE",
+      "evidence": [
+        "command:cmd-0014"
+      ],
+      "observed": "Mandatory lint reported overlong new test declarations and expressions; no control or assertion was weakened.",
+      "requiredCorrection": "Reformat only the changed source and re-execute lint before publication."
+    }
+  ]
+}

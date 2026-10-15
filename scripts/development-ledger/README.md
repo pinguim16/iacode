@@ -31,6 +31,12 @@ that resolves to the checked-out commit.
 
 ## Finalize
 
+Before validating an unsealed `IN_PROGRESS` checkpoint after refreshing its lesson preflight, run
+`python scripts/development-ledger/sync_in_progress_metadata.py`. It derives the preflight aggregates
+and run commit semantics without changing verdicts, requirements or terminal status, and refuses
+sealed, terminal or wrong-Gate inputs. Finish every evidence producer before declaring its outputs
+and binding inventory hashes; synchronization never invents a path declaration.
+
 ```text
 python scripts/development-ledger/finalize_checkpoint.py --status READY_FOR_REVIEW
 python scripts/development-ledger/finalize_checkpoint.py --status GATE_PASS --commit-ref refs/tags/iacode-checkpoints/SETUP-00-CP-0001
