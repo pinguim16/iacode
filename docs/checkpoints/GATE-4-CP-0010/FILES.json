@@ -37,13 +37,33 @@
     },
     {
       "path": "docs/adr/ADR-0037-intermediate-gates-use-internal-closure.md",
-      "reason": "Atomically record and index the authorized cadence and cancellation serialization decisions.",
+      "reason": "Atomically record and index cadence, cancellation, output-durability and count-policy decisions.",
       "hashAfter": "85445d214f1f323ed8a76150398e93f8b8675d68983e685053ee45cfe7c5242c"
     },
     {
       "path": "docs/adr/ADR-0038-cancellation-and-verdict-commit-are-serialized.md",
-      "reason": "Atomically record and index the authorized cadence and cancellation serialization decisions.",
-      "hashAfter": "7faa96c9f80a8f5e81d3bf7f1a95d147ceb81b8f2526655928f04942b7833134"
+      "reason": "Atomically record and index cadence, cancellation, output-durability and count-policy decisions.",
+      "hashAfter": "656819c8c81e05c9b363c0ba49a9b963c333d7ad0bba00ea4d0b3bfafa0381e8"
+    },
+    {
+      "path": "docs/adr/ADR-0039-sandbox-output-is-scanned-before-durable-delivery.md",
+      "reason": "Atomically record and index cadence, cancellation, output-durability and count-policy decisions.",
+      "hashAfter": "8edd05de686814bc369c6e2758b8372cf78579f94270d23e734242a259f16f24"
+    },
+    {
+      "path": "docs/adr/ADR-0040-test-counts-follow-policy-bound-collection.md",
+      "reason": "Atomically record and index cadence, cancellation, output-durability and count-policy decisions.",
+      "hashAfter": "8f8ce724b26642c3c07aa9b4f6f70c793ba95ab85fa214cf4fdd380eb0174f30"
+    },
+    {
+      "path": "docs/adr/ADR-0041-polling-cleanup-preserves-completed-checks.md",
+      "reason": "Atomically record and index cadence, cancellation, output-durability and count-policy decisions.",
+      "hashAfter": "3846d75f3365d0c9a6725531b96adfd5ba415bd4d173bb20f44c4fe17028e630"
+    },
+    {
+      "path": "docs/adr/ADR-0042-internal-verdict-semantics-follow-subject-policy.md",
+      "reason": "Atomically record and index cadence, cancellation, output-durability and count-policy decisions.",
+      "hashAfter": "e06a4fa470970f9a884ff5875e32024f6a683d2790334d2a36b1f883edfa8b4c"
     },
     {
       "path": "docs/checkpoints/GATE-4-CP-0010/AUTHORIZATION.md",
@@ -58,22 +78,22 @@
     {
       "path": "docs/checkpoints/GATE-4-CP-0010/CLOSURE-REQUIREMENTS.json",
       "reason": "Declare reproducible Gate 4 internal review, correction, assurance and closure evidence.",
-      "hashAfter": "1c7189a392e571740d0b139654cf5bb3917e1a7ae206f83a4994802ec474ca00"
+      "hashAfter": "f31da2073cfda09ada7ab2b0c52b16829b21897152f53c4c43c9e358cc92127f"
     },
     {
       "path": "docs/checkpoints/GATE-4-CP-0010/CLOSURE-REQUIREMENTS.md",
       "reason": "Declare reproducible Gate 4 internal review, correction, assurance and closure evidence.",
-      "hashAfter": "9f99d541644bf8cf3206d43ff104dc096a3de8e0043ff1999922f85afa91580c"
+      "hashAfter": "97a319fb915ea93637c385d1f81dd57394b5f61549aca37798c78c5f1b727e92"
     },
     {
       "path": "docs/checkpoints/GATE-4-CP-0010/COMMANDS.jsonl",
       "reason": "Declare reproducible Gate 4 internal review, correction, assurance and closure evidence.",
-      "hashAfter": "92ee0283023d2bcc80be8681e448d7f7aec3143deda6f744cf1f9fb32f3f83f5"
+      "hashAfter": "4822a4b89ce80c97c065fac93a5fa80d49a0254f3abd8ed8f6f4e71e53f6b3a1"
     },
     {
       "path": "docs/checkpoints/GATE-4-CP-0010/DECISIONS.md",
       "reason": "Declare reproducible Gate 4 internal review, correction, assurance and closure evidence.",
-      "hashAfter": "d562ee631c547cf4ec93a295ef819a15424fddf737c9df9bbaeae40cd77c9bad"
+      "hashAfter": "e4a758361f5b33f4ecfee8cffb950adbd166b79224a1d5d49687a40bb149cd20"
     },
     {
       "path": "docs/checkpoints/GATE-4-CP-0010/DIFF-SUMMARY.md",
@@ -87,42 +107,62 @@
     {
       "path": "docs/checkpoints/GATE-4-CP-0010/FINAL-REPORT.md",
       "reason": "Declare reproducible Gate 4 internal review, correction, assurance and closure evidence.",
-      "hashAfter": "caa2f7efa14cf99be56f4e1a11351771e826c1983a2e85e6df72e5058aa3878d"
+      "hashAfter": "0ee6dd874305a60cb5ca4ae5d3c42017f0c4d22354b35e986e0120132c3e7337"
     },
     {
       "path": "docs/checkpoints/GATE-4-CP-0010/FINDINGS.json",
       "reason": "Declare reproducible Gate 4 internal review, correction, assurance and closure evidence.",
-      "hashAfter": "70b3b14a811922ed580eafff3d38d6716196556a7af78f2d3f40b913e766976b"
+      "hashAfter": "72d89c3819b1acd70156c1728f1351214327034463f8c5625af5bf2be84be86e"
     },
     {
       "path": "docs/checkpoints/GATE-4-CP-0010/HANDOFF.md",
       "reason": "Declare reproducible Gate 4 internal review, correction, assurance and closure evidence.",
-      "hashAfter": "fed1d319c65ae67933eff3a5d909ebedd725fa20029d9945181ad925ecee4699"
+      "hashAfter": "d581a14f725cbe4ba8ddee527b93dc75d62dbbae78bcd9fd5d4a6da7281c186e"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0010/HISTORICAL-SCAN-REVIEW.json",
+      "reason": "Declare reproducible Gate 4 internal review, correction, assurance and closure evidence.",
+      "hashAfter": "86d2670cc2064ce1d80aebf9f6e190255212b8529ede719afaebaf98c8a6fc1f"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0010/HISTORICAL-SCAN-REVIEW.md",
+      "reason": "Declare reproducible Gate 4 internal review, correction, assurance and closure evidence.",
+      "hashAfter": "0752df08d15bb1105e8225c463439ee16678462ebfbf8ae4c2993e05281d6323"
     },
     {
       "path": "docs/checkpoints/GATE-4-CP-0010/LESSON-PREFLIGHT.json",
       "reason": "Declare reproducible Gate 4 internal review, correction, assurance and closure evidence.",
-      "hashAfter": "d8a616a1d439e565e12470a9c2a8bb1fc33d69f54ab4c9a0de234436b5e1677d"
+      "hashAfter": "a1ea624c35527afd8f4b1a6e2fa0d8f4919a5c257d40901f01ab71ae2865021b"
     },
     {
       "path": "docs/checkpoints/GATE-4-CP-0010/LESSON-PREFLIGHT.md",
       "reason": "Declare reproducible Gate 4 internal review, correction, assurance and closure evidence.",
-      "hashAfter": "0bd569b5f85998e5104606cb0cb84d35a60e67182bc604c62128be4255514db2"
+      "hashAfter": "05c5432971a56e5e266177071f257b91bc93387d1f8dc9b2f05afed8b90a722a"
     },
     {
       "path": "docs/checkpoints/GATE-4-CP-0010/NEXT.md",
       "reason": "Declare reproducible Gate 4 internal review, correction, assurance and closure evidence.",
-      "hashAfter": "c95331fcbdfcf6d3f6f752570f568a2804c643ba030d193dc9b693966ddcbf63"
+      "hashAfter": "7d4da391f3ec8145fb2506831fb06f430073a1d1b48d397d76ae64451c983fab"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0010/OUTPUT-PROOF-LIVE-OBSERVATION.json",
+      "reason": "Declare reproducible Gate 4 internal review, correction, assurance and closure evidence.",
+      "hashAfter": "d6edc7719d00249c417fc85fd1ea6a49307855e1a1ba8ff76c413638701282ab"
     },
     {
       "path": "docs/checkpoints/GATE-4-CP-0010/PLAN.md",
       "reason": "Declare reproducible Gate 4 internal review, correction, assurance and closure evidence.",
-      "hashAfter": "5e51245d13575b7e017dd6cd487c531c8ddf8db4bff6659ec4c7738c393e784f"
+      "hashAfter": "2b37def285d0f6c99746ddd76c6a3c156043d779cf5d34ef1cb34626edd9a67b"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0010/POLICY-COMPATIBILITY.json",
+      "reason": "Declare reproducible Gate 4 internal review, correction, assurance and closure evidence.",
+      "hashAfter": "bafed55249380486c7746c07587c8419ee3de848339dd54a3cd98caaa7481e8f"
     },
     {
       "path": "docs/checkpoints/GATE-4-CP-0010/PROVENANCE.json",
       "reason": "Declare reproducible Gate 4 internal review, correction, assurance and closure evidence.",
-      "hashAfter": "69475a6fb2d771a17a361c9a379db0b346a6239470ede24d5e7708a1ee19c9f8"
+      "hashAfter": "bb1cbf4e25497dde281805a46bd1e067d4fc89edf42fadb6f82c082b8c126fcf"
     },
     {
       "path": "docs/checkpoints/GATE-4-CP-0010/QUALITY-CANCELLATION-GUARDRAIL.json",
@@ -135,6 +175,51 @@
       "hashAfter": "5ce8014d916b9f72234df13af954e4241cc915052a71af4dc29983acde416794"
     },
     {
+      "path": "docs/checkpoints/GATE-4-CP-0010/QUALITY-OUTPUT-CONTAINMENT-ATTEMPT-1.json",
+      "reason": "Declare reproducible Gate 4 internal review, correction, assurance and closure evidence.",
+      "hashAfter": "c6cdea73c4432a36c0683159a8559c0c7aa3b772b675c5e51e32aabb11f47e6b"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0010/QUALITY-OUTPUT-CONTAINMENT-ATTEMPT-3.json",
+      "reason": "Declare reproducible Gate 4 internal review, correction, assurance and closure evidence.",
+      "hashAfter": "b3fc0086e1593218089a665dabf0cf51bd3e724a9a4e69f4327245d0695de206"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0010/QUALITY-OUTPUT-CONTAINMENT-ATTEMPT-4.json",
+      "reason": "Declare reproducible Gate 4 internal review, correction, assurance and closure evidence.",
+      "hashAfter": "0540f91946cc8d3186b47d15d5eb8058614cc3c2ee650cdb4f5e543fceb81d36"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0010/QUALITY-OUTPUT-CONTAINMENT.json",
+      "reason": "Declare reproducible Gate 4 internal review, correction, assurance and closure evidence.",
+      "hashAfter": "b2322aa460d68a31d5a8a91d5ce84609b02297d2be3c63331b68700a962b7f23"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0010/QUALITY-OUTPUT-ISOLATION-ATTEMPT-1.json",
+      "reason": "Declare reproducible Gate 4 internal review, correction, assurance and closure evidence.",
+      "hashAfter": "c9e27e7bf72f608eedb5398abb2a3f95f67cd7fcf6eb4a972eeaad02a22b72de"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0010/QUALITY-OUTPUT-ISOLATION-ATTEMPT-2.json",
+      "reason": "Declare reproducible Gate 4 internal review, correction, assurance and closure evidence.",
+      "hashAfter": "80667804a8ad300bd689a29a46b988946ac746b49ac566c29854837abab026ac"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0010/QUALITY-OUTPUT-ISOLATION-ATTEMPT-3.json",
+      "reason": "Declare reproducible Gate 4 internal review, correction, assurance and closure evidence.",
+      "hashAfter": "d068bb4b9539e12acc985b54992192a767e58b8365304f08bd3a0b74cde75b0e"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0010/QUALITY-OUTPUT-ISOLATION-ATTEMPT-4.json",
+      "reason": "Declare reproducible Gate 4 internal review, correction, assurance and closure evidence.",
+      "hashAfter": "2354f46eb100579abe715ea01fd137c81345e0d0794f3903ef5f4298cdbba6c8"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0010/QUALITY-OUTPUT-ISOLATION.json",
+      "reason": "Declare reproducible Gate 4 internal review, correction, assurance and closure evidence.",
+      "hashAfter": "68b105a21ea7a80332e21fd982dd273f7ca9aef4ee55678b36d77faca756d2d2"
+    },
+    {
       "path": "docs/checkpoints/GATE-4-CP-0010/QUALITY.json",
       "reason": "Declare reproducible Gate 4 internal review, correction, assurance and closure evidence.",
       "hashAfter": "10ae4b5a2907e42f509882c730d56e98c58238e50b72c7fc5db4f4a91d21cdd2"
@@ -142,12 +227,12 @@
     {
       "path": "docs/checkpoints/GATE-4-CP-0010/REQUIREMENTS-MATRIX.json",
       "reason": "Declare reproducible Gate 4 internal review, correction, assurance and closure evidence.",
-      "hashAfter": "10c2bbfa4562858c223a63bc158c3e76a65b569cd2a2afb6394091affdc626ee"
+      "hashAfter": "662f255110165953efe3b5a9c10ca98b40292ce6f2bd2ffa55f86c6cf037161f"
     },
     {
       "path": "docs/checkpoints/GATE-4-CP-0010/REQUIREMENTS-MATRIX.md",
       "reason": "Declare reproducible Gate 4 internal review, correction, assurance and closure evidence.",
-      "hashAfter": "420aee07f41b634701eb5a444c525eb63bb1f90abeec204d1e0a1ecf8ee1fe8b"
+      "hashAfter": "f750447a3ba82797d31c9d5c9851e8eeeea579d7dbedb4de30f1d8ddafae1f92"
     },
     {
       "path": "docs/checkpoints/GATE-4-CP-0010/REVIEW-BUNDLE-VALIDATION.json",
@@ -162,17 +247,17 @@
     {
       "path": "docs/checkpoints/GATE-4-CP-0010/RISKS.md",
       "reason": "Declare reproducible Gate 4 internal review, correction, assurance and closure evidence.",
-      "hashAfter": "a899e64413b56863355ff92ce2042561a2bd85bdb8c71bb75c17b65504b80b10"
+      "hashAfter": "8bfbdca6c8a14b72662b1c891dc97ca32936a8df9ec5456fbaff012a51a49544"
     },
     {
       "path": "docs/checkpoints/GATE-4-CP-0010/RUN-METADATA.json",
       "reason": "Declare reproducible Gate 4 internal review, correction, assurance and closure evidence.",
-      "hashAfter": "ac77ff2936f7785e3a3b88c21c0fc403b52ff768c7332d4b5913e4c6a989a1d1"
+      "hashAfter": "2d43ebe25ee2adea84a22e9f82ac1a543982d14e43a6ab061856fe11efd105c9"
     },
     {
       "path": "docs/checkpoints/GATE-4-CP-0010/STATE.json",
       "reason": "Declare reproducible Gate 4 internal review, correction, assurance and closure evidence.",
-      "hashAfter": "7ffd2b56723e446b7a38a7b5889ac1530fac3f53e0810d112c0c54e07e5400cc"
+      "hashAfter": "cc299e9221e316e655b1ee473913758799900ae48d15a021d7fb2eb3ea6c6fa2"
     },
     {
       "path": "docs/checkpoints/GATE-4-CP-0010/STATUS.md",
@@ -190,14 +275,94 @@
       "hashAfter": "a422e9098d60d54b957e0b95f66185012ec084b699f6232f217b873a054c348d"
     },
     {
+      "path": "docs/checkpoints/GATE-4-CP-0010/V1-POLLING-FAILURE.json",
+      "reason": "Declare reproducible Gate 4 internal review, correction, assurance and closure evidence.",
+      "hashAfter": "a969fb56ea5814bcb7d448bd0f3a22fd8ce8cf1f07647614b0d9ec5c065961ff"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0010/VERIFICATION-ATTEMPT-ARCHIVE.json",
+      "reason": "Declare reproducible Gate 4 internal review, correction, assurance and closure evidence.",
+      "hashAfter": "c1a5696cfc824facd03a17e16d53f12b3f11a78467cde7157d861790eab08a47"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0010/attempts/published-v1/COMPOSE-ISOLATION-AUDIT.json",
+      "reason": "Declare reproducible Gate 4 internal review, correction, assurance and closure evidence.",
+      "hashAfter": "865add36a0c661f3e013826238b1c0673e74dd19f7c2bc0b5d4ae3e771004a7a"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0010/attempts/published-v1/FULL-VERIFY-PROGRESS.json",
+      "reason": "Declare reproducible Gate 4 internal review, correction, assurance and closure evidence.",
+      "hashAfter": "61c4a29daf24db9a853a1441967aa3cf0d917be89b6b23d2bef806d004c2ee68"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0010/attempts/published-v1/FUNCTIONAL-SCENARIOS.json",
+      "reason": "Declare reproducible Gate 4 internal review, correction, assurance and closure evidence.",
+      "hashAfter": "883efb42505e5cdf78631b185db92ff1605caf17f279a1d95bf2973caa6211a7"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0010/attempts/published-v1/PUBLISHED-CLEAN-CLONE-REPORT.json",
+      "reason": "Declare reproducible Gate 4 internal review, correction, assurance and closure evidence.",
+      "hashAfter": "4e06ff4f05abfd04d03c50ce6074cb4c77124d477fbf12358a5f8cdce37f0db9"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0010/attempts/published-v1/VERIFY.json",
+      "reason": "Declare reproducible Gate 4 internal review, correction, assurance and closure evidence.",
+      "hashAfter": "8247413463292d8fff40f090550bcbe6741161b900b2eccef3da986f22b232fe"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0010/audit-harness/archive_v1_verification.py",
+      "reason": "Declare reproducible Gate 4 internal review, correction, assurance and closure evidence.",
+      "hashAfter": "23d865635cec7282017f026e731ad096e5b26db66cc99b226878507435d1aee7"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0010/audit-harness/audit_policy_compatibility.py",
+      "reason": "Declare reproducible Gate 4 internal review, correction, assurance and closure evidence.",
+      "hashAfter": "d005b69ce5d0090db0e3f48b24b518df3fd12e65531824224bce2191bf09902f"
+    },
+    {
       "path": "docs/checkpoints/GATE-4-CP-0010/audit-harness/audit_subject_bundle.py",
       "reason": "Declare reproducible Gate 4 internal review, correction, assurance and closure evidence.",
       "hashAfter": "2e0fbbed59c23637301b74d2ebf227cbfcfdf788ee7de2a00f80a92220bbd094"
     },
     {
+      "path": "docs/checkpoints/GATE-4-CP-0010/audit-harness/check_escaped_output.py",
+      "reason": "Declare reproducible Gate 4 internal review, correction, assurance and closure evidence.",
+      "hashAfter": "bc75eb538f528ff9d0d496a0bdc9d8e79e0b3ae0d3b3a3ba033e1dc30106d997"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0010/audit-harness/check_sandbox_output.py",
+      "reason": "Declare reproducible Gate 4 internal review, correction, assurance and closure evidence.",
+      "hashAfter": "0176eaae1d128695e3e54aa36eace35e371d5bb12142f017f0f0fd6cf2639c09"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0010/audit-harness/check_temporal_polling_cancellation.py",
+      "reason": "Declare reproducible Gate 4 internal review, correction, assurance and closure evidence.",
+      "hashAfter": "39377978ca47505dc2b24b876056800b91e8d8c1ae0c340842f123b2d477802e"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0010/audit-harness/complete_functional_acceptance.py",
+      "reason": "Declare reproducible Gate 4 internal review, correction, assurance and closure evidence.",
+      "hashAfter": "05d552abeec7b3ffca949b8c97acf6feca1d7811f953bcf46c671d7b8f75e0b3"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0010/audit-harness/complete_requirements.py",
+      "reason": "Declare reproducible Gate 4 internal review, correction, assurance and closure evidence.",
+      "hashAfter": "dea615755a2dc95f94b731d02313e8fa7cd17f98c7a5a97cf0eed9f028974157"
+    },
+    {
       "path": "docs/checkpoints/GATE-4-CP-0010/audit-harness/declare_inventory.py",
       "reason": "Declare reproducible Gate 4 internal review, correction, assurance and closure evidence.",
-      "hashAfter": "54875d36ec12efe316893c9b6620577756c996b99537191d9732874d493db38d"
+      "hashAfter": "b57f6669c112bb17fc6c2c46f4c2bf4b6116ebacd24af009f0953780cde55ec1"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0010/audit-harness/inspect_historical_scan_views.py",
+      "reason": "Declare reproducible Gate 4 internal review, correction, assurance and closure evidence.",
+      "hashAfter": "dcc263076da8757736f72c1c1cebddf46bf911990d6299d7af357f9382fd22cb"
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0010/audit-harness/inspect_owned_output.py",
+      "reason": "Declare reproducible Gate 4 internal review, correction, assurance and closure evidence.",
+      "hashAfter": "71a02ba16af051958fff9dc3d42c001c90400dffb2be74db37a09742d3e526df"
     },
     {
       "path": "docs/checkpoints/GATE-4-CP-0010/audit-harness/run_checkpoint_validation.py",
@@ -210,6 +375,11 @@
       "hashAfter": "ed9c0df7f2565450fc17f3180ef69a1802121f7d72bdd403f872cc7ba5bf6efe"
     },
     {
+      "path": "docs/checkpoints/GATE-4-CP-0010/audit-harness/run_owned_output_containment.py",
+      "reason": "Declare reproducible Gate 4 internal review, correction, assurance and closure evidence.",
+      "hashAfter": "1bfacb15a9091ac922b71bf048206e92d8f085789bdc983471f349c6c0a0bf6b"
+    },
+    {
       "path": "docs/checkpoints/GATE-4-CP-0010/audit-harness/run_owned_quality_cancellation.py",
       "reason": "Declare reproducible Gate 4 internal review, correction, assurance and closure evidence.",
       "hashAfter": "ec44b9e29775d90c1fc86082bd20c14f34482d5060bc3200372531838901494d"
@@ -220,9 +390,59 @@
       "hashAfter": "22b04871de19cb0af0be191f4bb868a29537c740851ad2e2007ee59bbef93ecd"
     },
     {
+      "path": "services/evaluator/tests/fixtures/python-secret-output-full/calculator.py",
+      "reason": "Close durable cancellation races and prove early output containment with causal fixtures and evidence regressions.",
+      "hashAfter": "1b330dff4c0e577e667a1dc348f831f03802464b775c7f2001ab0ddbf6aaed2b"
+    },
+    {
+      "path": "services/evaluator/tests/fixtures/python-secret-output-full/pyproject.toml",
+      "reason": "Close durable cancellation races and prove early output containment with causal fixtures and evidence regressions.",
+      "hashAfter": "7254639efb521738861bcff334be580387127dea37dd574ec209a5b5dee5a3cc"
+    },
+    {
+      "path": "services/evaluator/tests/fixtures/python-secret-output-full/test_calculator.py",
+      "reason": "Close durable cancellation races and prove early output containment with causal fixtures and evidence regressions.",
+      "hashAfter": "1cc46804f1506efa6df8a244bfa15c6347058cc9a5aefd62018d67e77c14f0d0"
+    },
+    {
+      "path": "services/evaluator/tests/fixtures/python-secret-output/calculator.py",
+      "reason": "Close durable cancellation races and prove early output containment with causal fixtures and evidence regressions.",
+      "hashAfter": "1b330dff4c0e577e667a1dc348f831f03802464b775c7f2001ab0ddbf6aaed2b"
+    },
+    {
+      "path": "services/evaluator/tests/fixtures/python-secret-output/pyproject.toml",
+      "reason": "Close durable cancellation races and prove early output containment with causal fixtures and evidence regressions.",
+      "hashAfter": "fff5ac7378a83afba8af9903a36a0914a9c0c833ce568cb2e7a41ba799db5cc0"
+    },
+    {
+      "path": "services/evaluator/tests/fixtures/python-secret-output/test_calculator.py",
+      "reason": "Close durable cancellation races and prove early output containment with causal fixtures and evidence regressions.",
+      "hashAfter": "51db350681885c877e9a71d561433ef0a737a8aa6eb1796341c195e4bbc06b93"
+    },
+    {
+      "path": "services/sandbox/src/iacode_sandbox/output_security.py",
+      "reason": "Close the Gate 4 integration defect at the earlier sandbox output and durable artifact boundaries.",
+      "hashAfter": "d798164cfe3247a5402cfc2ef7b7de2328ebf138d3ca862861be92a4fe7cf3a9"
+    },
+    {
+      "path": "services/sandbox/tests/test_sandbox_output_security.py",
+      "reason": "Close the Gate 4 integration defect at the earlier sandbox output and durable artifact boundaries.",
+      "hashAfter": "38328f11d16df36a86d1d4b2b7e5ecb5e30f50533c278216c6ea3d57dedb5e2b"
+    },
+    {
       "path": "tests/test_in_progress_metadata.py",
       "reason": "Prove and enforce honest internal closure without self-asserted independent verdicts.",
-      "hashAfter": "36b7293b462addb5c8ce84e7283987efebb4d2c22909b1f174bf93dcc7ac12d2"
+      "hashAfter": "231e50261a856b3fafefe9103c8c2aba13cdbbf9786537985c230fbb7df943c3"
+    },
+    {
+      "path": "tests/test_secret_scan_transports.py",
+      "reason": "Prove and enforce honest internal closure without self-asserted independent verdicts.",
+      "hashAfter": "1d4754bf062f7d4a20438e4cb7af787243b64da4acbe5dd33f8e7971dc64f12a"
+    },
+    {
+      "path": "tests/test_test_suite_input_repositories.py",
+      "reason": "Prove and enforce honest internal closure without self-asserted independent verdicts.",
+      "hashAfter": "6ad84837249b2baaa080fd38ffab2dfdc271b575709d3e0f2de895e2780fb765"
     }
   ],
   "filesModified": [
@@ -236,37 +456,67 @@
       "path": ".iacode/memory/LESSONS.md",
       "reason": "Record the internal audit findings, cancellation recurrence and executed guardrails.",
       "hashBefore": "bf72a5935b78b300e30725e50f304f9fc36bdaf57c2a6e81ed78c4e0898cd22f",
-      "hashAfter": "8c742f2f55558134244a64b2ef04707cfcfa090926c1f90274cfa25122ccde45"
+      "hashAfter": "411ca07bb1fbcbeffd0b2492a297c99728653d062f8d9626ea1d12731690375f"
+    },
+    {
+      "path": ".iacode/memory/POLICY.json",
+      "reason": "Record the internal audit findings, cancellation recurrence and executed guardrails.",
+      "hashBefore": "013002272837cbe1d10819cfca68ff1d2e7d3bcb29011ea550f599cb7a51ac4e",
+      "hashAfter": "d597721946826bc2a63859361db8c8257e998708ad065205e68f617ba6142184"
     },
     {
       "path": ".iacode/memory/guardrails/registry.json",
       "reason": "Record the internal audit findings, cancellation recurrence and executed guardrails.",
       "hashBefore": "9369e29f604db51639d702d97084331d893c7601f5b8b893cbd573d6d5645fac",
-      "hashAfter": "66604d14c47438d65d1b5d542044782ea716bd7f7b6ce741e1fbaf9e61a86970"
+      "hashAfter": "0556f80e7a28cda9b9f6dbdee1febff421c8739d9860448c808731dfda3db5bc"
     },
     {
       "path": ".iacode/memory/lessons.jsonl",
       "reason": "Record the internal audit findings, cancellation recurrence and executed guardrails.",
       "hashBefore": "853d99b93d240cb6f68241374a89b6b26c3b62d5f6019097a718426a015a40cc",
-      "hashAfter": "febd14b584a625834644fd1377858557072b1123169b07ad4cb00e6f24c9b631"
+      "hashAfter": "6bf01769fb57bb06579fc2961bbd8895c571a0775d0f0d761ca5adb9190b73b3"
     },
     {
       "path": ".iacode/policies/canonical-requirements.json",
       "reason": "Reconcile Gate 4 closure cadence under explicit owner authorization without dropping requirement rows.",
       "hashBefore": "b222d443b4f4fedea68c9ce1fe092324ea3c81971f718a93b09ec4426e911c46",
-      "hashAfter": "62de50131e833c7cee7b11b2ee55f6ed93a23780a24b79cdcbd0371b08d1f308"
+      "hashAfter": "c78c7129af95add61063f98f8413697708dbe21075aa8d3b2cc5ca1fea047f6a"
+    },
+    {
+      "path": ".iacode/policies/secret-scan-allowlist.json",
+      "reason": "Review only two exact decoded alphabet-sequence redaction-fixture component digests from immutable public test history.",
+      "hashBefore": "7e3c86a290cb5468e16c96651323c31cde31d63460bb6a3a79fb7b01a5afda7a",
+      "hashAfter": "2086a574ee4378f4a4bdd69861d940d4d740356ba018f67b293f43671f5d6f4f"
+    },
+    {
+      "path": ".iacode/policies/test-suites.json",
+      "reason": "Bind test counts and evidence to canonical runner collection; live input scenarios remain mandatory.",
+      "hashBefore": "41f2ee429f8762d77f19a7af5dd68f6f84bcb928b6a9237542958a96be5ef1d1",
+      "hashAfter": "e8f6a51422dc3779c21c0feeb187c5cc958d69fb13c5831e21cfd8acb338699c"
+    },
+    {
+      "path": ".iacode/schemas/memory-policy.schema.json",
+      "reason": "Version strict internal-verdict semantics without retroactively invalidating sealed subject policies.",
+      "hashBefore": "f25078b59a6a64f1af3322cfc8593778a671c51f7b49b81810f80bad1cd112df",
+      "hashAfter": "d16327ed9e897e1807235549b814b5cf110df2417e3c7dd7b94bd16a63a08148"
+    },
+    {
+      "path": ".iacode/schemas/test-suites.schema.json",
+      "reason": "Bind test counts and evidence to canonical runner collection; live input scenarios remain mandatory.",
+      "hashBefore": "80742cd678f3e56c19b5e9d94b5d20322998fb09c578befbeca913dcc3853a07",
+      "hashAfter": "ca7a160976fceda8ece34f5b30cfffddc3071a30983b61e0f11a60d08eb993d1"
     },
     {
       "path": "AGENTS.md",
       "reason": "Align live contracts and tool adapters with the owner-authorized intermediate milestone cadence.",
       "hashBefore": "0eb8f2b01648fc687930a5cb38783dfd937d0647cb848371e568a03ec475e6f5",
-      "hashAfter": "73378f3f868405d256ca3dceb024c89ecc02dceeb2f9884653857c63ad936078"
+      "hashAfter": "e86162e7ef148825cf2b08733fadf25e49d53fc883780785aaca7a1a2d2617e3"
     },
     {
       "path": "CLAUDE.md",
       "reason": "Align live contracts and tool adapters with the owner-authorized intermediate milestone cadence.",
       "hashBefore": "2ccc7ebc984e03bd2ff51f5543d98a7c096466f1ad215b9ad5f2ed2f5fee2c90",
-      "hashAfter": "ce72ec7d8e1fd8351b0002ec1aa37fd4c04b88abf423a505650ab711cfc1a815"
+      "hashAfter": "3b69a243811754ca326f3cb7d80807ae574cee46fe6b668bed961ea7229a3514"
     },
     {
       "path": "START-HERE.md",
@@ -276,21 +526,33 @@
     },
     {
       "path": "apps/api/src/iacode_api/routes/quality.py",
-      "reason": "Report rejected late cancellation as HTTP conflict without issuing a workflow signal.",
+      "reason": "Prove canonical JSON transport detection and report late cancellation conflicts without workflow signals.",
       "hashBefore": "3e7d1e56b2ab4e3284f48035c4e2315d046913939adeef6d8950f522d08a9435",
       "hashAfter": "06bb6103cedcf8e00d46dc9b4c47228546d9359310f785b328441077d2812e4b"
     },
     {
+      "path": "apps/api/tests/unit/test_common_primitives.py",
+      "reason": "Prove canonical JSON transport detection and report late cancellation conflicts without workflow signals.",
+      "hashBefore": "4a3dbdbd8b304a1a1cf812de886cdf3e71c38e2b54082f3dc0c1df9852349636",
+      "hashAfter": "e09b6399c9e2dce3e1e0556a989021a4913852a519855db05e073d872ed4ce44"
+    },
+    {
       "path": "apps/api/tests/unit/test_quality_api.py",
-      "reason": "Report rejected late cancellation as HTTP conflict without issuing a workflow signal.",
+      "reason": "Prove canonical JSON transport detection and report late cancellation conflicts without workflow signals.",
       "hashBefore": "de2694c2585b70d2a73bbd6acd82b67464a4ddd9b5ef3288cb6a54cedd0fb316",
       "hashAfter": "0ebb1f4ec874c29d1a4a26f4bc02c40f581e799a08e92e3f51eddff193af61de"
+    },
+    {
+      "path": "docs/ARCHITECTURE.md",
+      "reason": "Document actual sandbox output containment before evaluator and Temporal durability.",
+      "hashBefore": "8f239119b6b8e479f8e8d17c34be9983d0982678a58f56d10c8347cef3f22719",
+      "hashAfter": "56e8f399a242b4c9e53d5a4e9a9d03a9158cb2e0e3fa37abeba1535e7dc6c2cc"
     },
     {
       "path": "docs/CHECKPOINT-PROTOCOL.md",
       "reason": "Align live contracts and tool adapters with the owner-authorized intermediate milestone cadence.",
       "hashBefore": "b45f0849e73746096763f7b6a9a923e42dcf34af0fdedb492a8c1013d1b0ffd8",
-      "hashAfter": "c9a279a622de5865788e4e5692fd4d4d04de3031227953f49ce515181e4983ce"
+      "hashAfter": "f42cd3fd272ee7e1dae7f3327a113a0fa1b00389cfbda183c8c622a3466a3a46"
     },
     {
       "path": "docs/DEFINITION-OF-DONE.md",
@@ -302,13 +564,19 @@
       "path": "docs/DEVELOPMENT-CONTRACT.md",
       "reason": "Align live contracts and tool adapters with the owner-authorized intermediate milestone cadence.",
       "hashBefore": "9918397f5cc85a4fe040dcf0144e3e62b2dcfddb7ca2e0d242d868923f2f3641",
-      "hashAfter": "88534aad5a8a4df685cf3d988f7e3a9bbc86684080d8bf6af1a4287ed351ea63"
+      "hashAfter": "9e4c12474e2c9bd78ab7b650f41e31d39a56906a2f8029d58ba886b5cc1e073b"
+    },
+    {
+      "path": "docs/ENGINEERING-MEMORY.md",
+      "reason": "Align live contracts and tool adapters with the owner-authorized intermediate milestone cadence.",
+      "hashBefore": "e418d12644f7b80a9fa94a8ef4d3ccea4884d76ae0e8ba68d7fae7cf2909367f",
+      "hashAfter": "a629a0a3be34692b46578f316aec2884ea6cdc280b22a6c102f25745568039bf"
     },
     {
       "path": "docs/GATE-4-CHECKLIST.md",
       "reason": "Reconcile Gate 4 closure cadence under explicit owner authorization without dropping requirement rows.",
       "hashBefore": "d1f8b5345bccc921b910ddc20a77260b2ebc1ab9f80d886ba34426b3127a695d",
-      "hashAfter": "c7adf835631bb15607954b8d65f863b8dceb3bcaa9aa3ccaa34514e1f9648e0a"
+      "hashAfter": "a9a4dc212b3c838b098b5636739efd45b4b8770dc6d499edf08d75dede00b638"
     },
     {
       "path": "docs/HANDOFF-PROTOCOL.md",
@@ -317,16 +585,28 @@
       "hashAfter": "095a7f34169c38de7624ef0e1570dc28d4150faf7f26734ed7562badc6090c9d"
     },
     {
+      "path": "docs/MASTER-PLAN.md",
+      "reason": "Align live contracts and tool adapters with the owner-authorized intermediate milestone cadence.",
+      "hashBefore": "f11a9e341144a1788ec2ab7c8a6fceb89213824b7ebab563e20ddc631545db17",
+      "hashAfter": "c1505e198ff872ad85d4c9c43d02615046c7137613a79739f2d7e8331f62e487"
+    },
+    {
       "path": "docs/QUALITY-GATES.md",
       "reason": "Align live contracts and tool adapters with the owner-authorized intermediate milestone cadence.",
       "hashBefore": "6694c48305418201ff0e276948752e2708cd5574ac009f0febc31bfd0d4ff139",
       "hashAfter": "68800e30378ac6963ef62699e7e0de07a653d0de0452eb98fdc900440c7d40f6"
     },
     {
+      "path": "docs/ROADMAP.md",
+      "reason": "Align live contracts and tool adapters with the owner-authorized intermediate milestone cadence.",
+      "hashBefore": "68ff84ed48b4d6eeeac8da12ff924ee50ff5e874830609e10a50b32420ea9041",
+      "hashAfter": "645e01bf977a825629b17360af80ef05e0345eb75c6dba1200da80336c14c283"
+    },
+    {
       "path": "docs/adr/README.md",
-      "reason": "Atomically record and index the authorized cadence and cancellation serialization decisions.",
+      "reason": "Atomically record and index cadence, cancellation, output-durability and count-policy decisions.",
       "hashBefore": "a9197632a36d07dadfae2c797e682a195fcaa6dd599a8bc9e0da217e5b4c32e8",
-      "hashAfter": "0c918dcfa0a7a0eed3d767ea02f3c3d2d276a3a4d7aa907c9e69947b6d45baef"
+      "hashAfter": "a353b6dced8b74556e69ac412f416d86811648ee5754487c575c416cbc74df56"
     },
     {
       "path": "docs/checkpoints/LATEST.md",
@@ -336,9 +616,15 @@
     },
     {
       "path": "docs/runbooks/QUALITY-ENGINE.md",
-      "reason": "Document the precise cancellation acceptance barrier and fail-closed recovery.",
+      "reason": "Document cancellation acceptance, fail-closed recovery and the first durable output boundary.",
       "hashBefore": "bd4440da9f247baf54a1d67d89e3447380bb9cc99710ece87607c9a6ede2e8b9",
-      "hashAfter": "6c5f8f2f16cfd9429e65e0cc32b48f30f21699f33cd212bca3c20862c6b81f22"
+      "hashAfter": "0e833fbfbdfb9fcfa9976b1698615d29309e5b253a13770b8daae537887b0e8a"
+    },
+    {
+      "path": "packages/common/src/iacode_common/secret_scanning.py",
+      "reason": "Implement and prove canonical output containment at every Gate 4 durable integration boundary.",
+      "hashBefore": "5278bb6eba50b6db2d3f930422b712c9b2db637dffbc5dc93141a529704b4a5e",
+      "hashAfter": "b46300da3a084c8cbeae9f910984602fdd2e661cb5e5457c1ea97f583002f94d"
     },
     {
       "path": "scripts/development-ledger/README.md",
@@ -347,70 +633,148 @@
       "hashAfter": "2e7ce48c758b7b75b1cd8402316e7ca94c8e249f0a48f3240725b564cc2e364f"
     },
     {
+      "path": "scripts/development-ledger/delivery_assurance.py",
+      "reason": "Prove and enforce honest internal closure without self-asserted independent verdicts.",
+      "hashBefore": "f95e6fd33a1371b86bef7536dad2ef3f870279417cc81f782cb142ed49e9c5a2",
+      "hashAfter": "33fcfc589be58f0f4549076f8efccdb94550b2aae068b2ec5df2a510171a4783"
+    },
+    {
+      "path": "scripts/development-ledger/derive_counts.py",
+      "reason": "Prove and enforce honest internal closure without self-asserted independent verdicts.",
+      "hashBefore": "8abd83cc0ddbeb425f4780225971a48d5721eea82c24c321c80cb8154e50f2cb",
+      "hashAfter": "886ebeca0f82d0833f8755499c1e4ed120cb07c7aba1085bd76baee8de38823a"
+    },
+    {
+      "path": "scripts/development-ledger/gate4_red_team.py",
+      "reason": "Prove and enforce honest internal closure without self-asserted independent verdicts.",
+      "hashBefore": "23de20b666b369d3064876ff356ea09629f5d30692afaba2f3108bf193509332",
+      "hashAfter": "225aaed139b84919a1f24d996d74dbeaf5155b1aa36505982389f5fd17c2f382"
+    },
+    {
+      "path": "scripts/development-ledger/lessons.py",
+      "reason": "Prove and enforce honest internal closure without self-asserted independent verdicts.",
+      "hashBefore": "f35079d18cf03a578b2265685bf641c52cb317464c5ab0fc9a301db4ce0f6ec0",
+      "hashAfter": "f91348a62858a9f377b5bc10053ef9e22ef8f3c7528e10e759ed5e66c76add40"
+    },
+    {
+      "path": "scripts/development-ledger/policies.py",
+      "reason": "Prove and enforce honest internal closure without self-asserted independent verdicts.",
+      "hashBefore": "f0e033b3b9fae7f056605b2bc7ee4b709bab517cf9dfb5f94657d86c9d0ef285",
+      "hashAfter": "1e40ad67a446a87f41f1fcc525847fac6dbf2b1638fadcb032ccb03bf39b2ad5"
+    },
+    {
+      "path": "scripts/development-ledger/secret_scan.py",
+      "reason": "Prove and enforce honest internal closure without self-asserted independent verdicts.",
+      "hashBefore": "050dbf4d70d05b7017e8a209e61c0adf4389447c2426acbd7060beed7e4c9d39",
+      "hashAfter": "902e475dfb551ba6ccf1a667fbd9b66b4d5edf64b5c63863be05f3f310bbe9c8"
+    },
+    {
       "path": "scripts/development-ledger/validate_checkpoint.py",
       "reason": "Prove and enforce honest internal closure without self-asserted independent verdicts.",
       "hashBefore": "9db03633d3732d6e41b86941ef416d0b800ac91ada5741e68da3153be9a99575",
-      "hashAfter": "2abfd74e2c7e8a8b18594a3b0f4da0031313ffc5c7bcd14af7fc1316435fd6ed"
+      "hashAfter": "0dc3bd5fd42c3b428b514e7d14e7c98da231c8a459ace92461490586c16991d3"
+    },
+    {
+      "path": "scripts/iacode/scenarios/quality_engine_e2e.py",
+      "reason": "Implement and prove canonical output containment at every Gate 4 durable integration boundary.",
+      "hashBefore": "bc1518525525688c4a7a7d845f9779986e266d5fa702aa0faa6dc6bc1880ea5e",
+      "hashAfter": "a3faf7d93f620494e507aec599ae4ef3334667d71c3b2f53d743ac5a03df3936"
+    },
+    {
+      "path": "scripts/iacode/verify.py",
+      "reason": "Implement and prove canonical output containment at every Gate 4 durable integration boundary.",
+      "hashBefore": "3e98188a33cf499ccc98484ba2a8bccc2d64a38629e27044432887573c1ba3f6",
+      "hashAfter": "a61c486c8f9669e2f71029b41d7f108a2430e07325993f715681a2a8b82cec09"
     },
     {
       "path": "services/evaluator/src/iacode_evaluator/activities.py",
-      "reason": "Close durable cancellation races at result and verdict persistence with regression proof.",
+      "reason": "Close durable cancellation races and prove early output containment with causal fixtures and evidence regressions.",
       "hashBefore": "07cc3b5fddb9953cd5cfbdb981c7809e2d9c322b3bb90d1099e6afeae01758eb",
       "hashAfter": "cec747c22a44b10ddf763c38156f53d69667ad01ae5ddba8b019d73d522ac1c9"
     },
     {
       "path": "services/evaluator/src/iacode_evaluator/store.py",
-      "reason": "Close durable cancellation races at result and verdict persistence with regression proof.",
+      "reason": "Close durable cancellation races and prove early output containment with causal fixtures and evidence regressions.",
       "hashBefore": "17337c107b90390cd9fa6f5a15d9436842c98f250254de14b5974f174ac3fe66",
       "hashAfter": "33a2beb985803974b52b0b92354c98e98ee1fef7f8e30157bd85feb5d087992c"
     },
     {
       "path": "services/evaluator/src/iacode_evaluator/verdict.py",
-      "reason": "Close durable cancellation races at result and verdict persistence with regression proof.",
+      "reason": "Close durable cancellation races and prove early output containment with causal fixtures and evidence regressions.",
       "hashBefore": "8dbb0d75a76a6b9dc6b7c9ab46a21ff72a3b9477eb0cdfa6320311f99a997300",
       "hashAfter": "8bf1f169c5dd4023e24d3a0b044b493f2102d68473d1d29db72b52cf653c1493"
     },
     {
       "path": "services/evaluator/src/iacode_evaluator/workflow.py",
-      "reason": "Close durable cancellation races at result and verdict persistence with regression proof.",
+      "reason": "Close durable cancellation races and prove early output containment with causal fixtures and evidence regressions.",
       "hashBefore": "9a08e65a0932bf8e506b2fd4cc156905c93d4c42634cbbb0f2f0dab470816439",
-      "hashAfter": "c0e8c5e7c6ca72be4f1d9659af577ca956948bf898f0a88d73bfdcec85f5a46c"
+      "hashAfter": "1dc29353c44564ff3ffc2688451b85e9870a3ef0015608862fd0ebb7eb8b9933"
     },
     {
       "path": "services/evaluator/tests/integration/test_quality_persistence_integration.py",
-      "reason": "Close durable cancellation races at result and verdict persistence with regression proof.",
+      "reason": "Close durable cancellation races and prove early output containment with causal fixtures and evidence regressions.",
       "hashBefore": "e1abfb519b750c03c37c6be27b2f192388375e830fe6a876ea473ea37e5e8e8e",
       "hashAfter": "5ff7f2c2251f4dc4cd3930e7c8ea49dadea5c92cb1befe0c280568f0e65a8e61"
     },
     {
       "path": "services/evaluator/tests/test_core.py",
-      "reason": "Close durable cancellation races at result and verdict persistence with regression proof.",
+      "reason": "Close durable cancellation races and prove early output containment with causal fixtures and evidence regressions.",
       "hashBefore": "ad2d56f039b944ce026e7306476b0bc4823eaa0d8dad441f8196e9b99f6b7794",
       "hashAfter": "50debe1528915fc3f23526dea009912effb00f011a356c34ac07297aa7ea8cd9"
     },
     {
       "path": "services/evaluator/tests/test_persistence.py",
-      "reason": "Close durable cancellation races at result and verdict persistence with regression proof.",
+      "reason": "Close durable cancellation races and prove early output containment with causal fixtures and evidence regressions.",
       "hashBefore": "20d14404dff4fda03e1e03f90d83be719bf5cfb11f16e4ded05889d81f92d143",
-      "hashAfter": "6a7b997704cebd99630317deab984005efa72dfabd1a08d9c161d6e2e4e5f493"
+      "hashAfter": "dfa7d44c3cf69406d02567fbb2831a6ee51cb1ece322fdc416f2f3faa6515a0f"
     },
     {
       "path": "services/evaluator/tests/test_workflow.py",
-      "reason": "Close durable cancellation races at result and verdict persistence with regression proof.",
+      "reason": "Close durable cancellation races and prove early output containment with causal fixtures and evidence regressions.",
       "hashBefore": "ee7f13d993d35d85aea06ffa01f96446be18f5d67635fef6dbbea2f4734be7e7",
-      "hashAfter": "f0ee1d55447ccf815545279527694c0dea43bd8d1b59a6b142a07ef46890f8fc"
+      "hashAfter": "b16c19e9546c16c4b3b0f95a93d9d86c0f6a1b4e11989be0c763ee5acbc8828f"
+    },
+    {
+      "path": "services/sandbox/src/iacode_sandbox/artifacts.py",
+      "reason": "Close the Gate 4 integration defect at the earlier sandbox output and durable artifact boundaries.",
+      "hashBefore": "8f65054b943fbcaa3d675c70587f61c8682713c98d4584c9b3d0b9d1544ac6d5",
+      "hashAfter": "289a19b5de96f9759c6f34f90f9373c7c7b8e3f4cb0f1777d03490772fb3fe0f"
+    },
+    {
+      "path": "services/sandbox/src/iacode_sandbox/service.py",
+      "reason": "Close the Gate 4 integration defect at the earlier sandbox output and durable artifact boundaries.",
+      "hashBefore": "67637f0ef554b0a90ed0c01b59ad5eb08419d12536e95bb083be9c87a0900522",
+      "hashAfter": "44ee24b0ddc61382fc811afee64d4e1e4c630860c41813a4c7ee0c073430bfe0"
+    },
+    {
+      "path": "services/sandbox/tests/test_sandbox_engine_limits.py",
+      "reason": "Close the Gate 4 integration defect at the earlier sandbox output and durable artifact boundaries.",
+      "hashBefore": "0fda1b2db137e68c56370e8badc17fb4a15aa89ab36cc74d10ad2c8fb3524cb3",
+      "hashAfter": "0b5119326981375c526a4ce511d7b483bbbdc32737526b627f40dca7c0df4b0f"
+    },
+    {
+      "path": "services/sandbox/tests/test_sandbox_service.py",
+      "reason": "Close the Gate 4 integration defect at the earlier sandbox output and durable artifact boundaries.",
+      "hashBefore": "d33ee9ae18934045072a9dc8939c083a87ab03e5d5ca663f5992c500dbaf4829",
+      "hashAfter": "a28b30dc52e8fb8dea493ef28d73392212b851508f3f8396f4140ed00985f34e"
+    },
+    {
+      "path": "services/sandbox/tests/test_sandbox_worker.py",
+      "reason": "Close the Gate 4 integration defect at the earlier sandbox output and durable artifact boundaries.",
+      "hashBefore": "be16339d721ef49806613a2fb08e446b1db8fadacfb8fca2fb534daefffc6454",
+      "hashAfter": "a4b5e99b5146dd41df06a950877adb0da5995c9ebdc1de356dae9d42ef3339b6"
     },
     {
       "path": "tests/test_development_ledger.py",
       "reason": "Prove and enforce honest internal closure without self-asserted independent verdicts.",
       "hashBefore": "7389ec5a85677a85c59237ae99ac87d48b4d43e5aa4d703c4c2aedcc05a1917b",
-      "hashAfter": "76a5aaab5cdcb86b8dc68e74bc558a4f36c9a394383d192e955b33e9a2311f42"
+      "hashAfter": "8f8dc6554fbfe0b55cd42edbc6f564105afcf21d06ba6f7ce09cd65c81a0a611"
     },
     {
       "path": "tests/test_gate4_quality_engine.py",
       "reason": "Prove and enforce honest internal closure without self-asserted independent verdicts.",
       "hashBefore": "dc27b99e5f6d7f31f5d635d82038ed2a0b4ab20348795da5a8a9d52c8f81a81a",
-      "hashAfter": "94d571ad082d8ca89c4380dfed1af7b599339244d50eaf1925190d9e58c472ce"
+      "hashAfter": "b40e45bd2dfe44948f20638e5e66d77e24a8634f9b3d3d8d7259903fdb9ea2bb"
     }
   ],
   "filesDeleted": []

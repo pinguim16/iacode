@@ -27,6 +27,7 @@ from policies import (
     declared_requirement_refs,
     expected_requirement_refs,
     source_ref,
+    test_suite_source_files,
 )
 
 EVIDENCE_KINDS = ("file", "checkpoint", "command", "test")
@@ -100,17 +101,16 @@ def collect_test_ids(root: Path) -> set[str]:
     if cache_key in _TEST_ID_CACHE:
         return _TEST_ID_CACHE[cache_key]
     identifiers: set[str] = set()
-    directories = [
-        root / str(suite["root"]) for suite in counted_test_suites(root)
+    suites = [
+        suite for suite in counted_test_suites(root)
         if str(suite.get("framework", "")).startswith("python-")
     ]
-    if not any(directory.is_dir() for directory in directories):
+    if not any((root / str(suite["root"])).is_dir() for suite in suites):
         _TEST_ID_CACHE[cache_key] = identifiers
         return identifiers
 
     files = sorted(
-        {path for directory in directories if directory.is_dir()
-         for path in directory.rglob("*.py")}
+        {path for suite in suites for path in test_suite_source_files(root, suite)}
     )
     for path in files:
         if "__pycache__" in path.parts:

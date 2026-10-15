@@ -38,6 +38,61 @@ SPECIFICATION = PROJECT_ROOT / "docs" / "GATE-4-CHECKLIST.md"
 
 
 class Gate4QualityCoverageTests(unittest.TestCase):
+    def test_live_output_adverse_timeout_retains_diagnostics_and_stays_red(self) -> None:
+        from types import SimpleNamespace
+
+        namespace = runpy.run_path(str(IACODE / "scenarios/quality_engine_e2e.py"))
+        scenario = namespace["scenario_secret_output"]
+        start = mock.Mock(side_effect=[{"runId": "control"}, {"runId": "adverse"}])
+        with mock.patch.dict(scenario.__globals__, {
+            "snapshot": mock.Mock(return_value={}), "start": start, "log": mock.Mock(),
+            "wait_terminal": mock.Mock(side_effect=[
+                {"run": {"state": "SUCCEEDED"}, "verdict": {"verdict": "PASS"}},
+                stack_compose.StackError("deadline"),
+            ]),
+            "request": mock.Mock(return_value={"run": {"state": "RUNNING"}}),
+            "compose": mock.Mock(return_value=SimpleNamespace(ok=True, stdout='{"bounded": true}')),
+        }):
+            report = scenario()
+        self.assertEqual(report["result"], "FAIL")
+        self.assertEqual(report["artifacts"][0]["runId"], "adverse")
+        self.assertEqual(start.call_count, 2)
+
+    def test_live_output_control_timeout_retains_bounded_diagnostics_and_stays_red(self) -> None:
+        from types import SimpleNamespace
+
+        namespace = runpy.run_path(str(IACODE / "scenarios/quality_engine_e2e.py"))
+        scenario = namespace["scenario_secret_output"]
+        diagnostic = {"pendingActivityTypes": ["sandbox.execute"], "payloadsScanned": 1}
+        start = mock.Mock(return_value={"runId": "control-run"})
+        with mock.patch.dict(scenario.__globals__, {
+            "snapshot": mock.Mock(return_value={}), "start": start, "log": mock.Mock(),
+            "wait_terminal": mock.Mock(side_effect=stack_compose.StackError("deadline")),
+            "request": mock.Mock(return_value={"run": {"state": "RUNNING"}}),
+            "compose": mock.Mock(return_value=SimpleNamespace(
+                ok=True, stdout=json.dumps(diagnostic),
+            )),
+        }):
+            report = scenario()
+        self.assertEqual(report["result"], "FAIL")
+        self.assertEqual(report["artifacts"][0]["observation"], diagnostic)
+        self.assertEqual(start.call_count, 1)
+        self.assertEqual(report["steps"][0]["observed"], "RUNNING")
+
+    def test_full_verification_executes_live_output_containment_before_false_pass_verdict(self) -> None:
+        stage = next(item for item in repository_verify.build_stages(fast=False)
+                     if item.name == "quality-false-pass")
+        self.assertIn("--execute-output-boundary-proof", stage.argv)
+
+    def test_runtime_and_ledger_share_json_transport_detection(self) -> None:
+        from iacode_common.secret_scanning import find_secret_kinds
+
+        marker = "gh" + "p_" + "r" * 20
+        for content in (json.dumps({"ordinary": "\n" + marker}),
+                        json.dumps({"ordinary": marker}).replace("g", "\\u0067", 1)):
+            self.assertTrue(find_secret_kinds(content))
+            self.assertEqual(ledger_common.find_secrets(content), find_secret_kinds(content))
+
     def test_internal_red_team_preserves_the_sealed_twenty_attack_denominator(self) -> None:
         sealed = ledger_common.load_json(
             PROJECT_ROOT
@@ -733,6 +788,7 @@ class FunctionalAcceptanceTests(unittest.TestCase):
         self.assertIn("GATE-4-16.1", requirements)
         self.assertIn("GATE-4-16.5", requirements)
         self.assertIn("GATE-4-12.2", requirements)
+        self.assertIn("GATE-4-19.2", requirements)
         self.assertNotIn("GATE-4-1.1", requirements)
 
     def test_only_executed_resolved_pass_scenarios_cover_the_denominator(self) -> None:

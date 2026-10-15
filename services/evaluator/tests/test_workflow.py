@@ -26,6 +26,7 @@ from iacode_evaluator.workflow import (
 )
 from prometheus_client import CollectorRegistry, generate_latest
 from temporalio.exceptions import ActivityError
+from temporalio.exceptions import CancelledError as TemporalCancelledError
 
 NOW = datetime(2026, 10, 9, 18, tzinfo=UTC)
 SHA = "a" * 64
@@ -94,6 +95,22 @@ class QualityWorkflowAdapterTests:
     async def test_unrelated_activity_failure_is_not_hidden_as_cancellation(self, monkeypatch):
         await self._assert_cancellation_boundary(monkeypatch, "unrelated_error")
 
+    @pytest.mark.asyncio
+    async def test_completed_check_joins_cancelled_durable_read_without_cancelling_run(
+        self, monkeypatch,
+    ):
+        await self._assert_cancellation_boundary(monkeypatch, "watcher_read_cancelled")
+
+    @pytest.mark.asyncio
+    async def test_unrelated_watcher_failure_is_not_hidden_by_join_cleanup(self, monkeypatch):
+        await self._assert_cancellation_boundary(monkeypatch, "watcher_unrelated_error")
+
+    @pytest.mark.asyncio
+    async def test_precompleted_watcher_cancellation_is_not_claimed_as_own_cleanup(
+        self, monkeypatch,
+    ):
+        await self._assert_cancellation_boundary(monkeypatch, "watcher_cancelled_before_cleanup")
+
     async def _assert_cancellation_boundary(
         self, monkeypatch: pytest.MonkeyPatch, cancel_at: str
     ) -> None:
@@ -114,6 +131,8 @@ class QualityWorkflowAdapterTests:
         original_result = store.record_result
         original_verdict = store.record_verdict
         injected = False
+        watcher_task = None
+        watcher_read_started = asyncio.Event()
 
         async def record_result(*args, **kwargs):
             if cancel_at == "result":
@@ -155,6 +174,27 @@ class QualityWorkflowAdapterTests:
         async def execute(name, payload, **_kwargs):
             if name == SANDBOX_RELEASE_ACTIVITY:
                 return {"released": 0}
+            if (name == activities.READ_RUN_ACTIVITY
+                    and asyncio.current_task() is watcher_task):
+                watcher_read_started.set()
+                if cancel_at == "watcher_cancelled_before_cleanup":
+                    raise ActivityError(
+                        "polling read ended before cleanup",
+                        scheduled_event_id=1, started_event_id=2,
+                        identity="evaluator-test", activity_type=name,
+                        activity_id="watcher-read", retry_state=None,
+                    ) from TemporalCancelledError("not requested by the owner's join")
+                try:
+                    await asyncio.Future()
+                except asyncio.CancelledError:
+                    cause = (TemporalCancelledError("polling read cancelled by its owner")
+                             if cancel_at == "watcher_read_cancelled"
+                             else QualityError("UNRELATED_READ_FAILURE", "unrelated watcher read"))
+                    raise ActivityError(
+                        "polling read ended", scheduled_event_id=1, started_event_id=2,
+                        identity="evaluator-test", activity_type=name,
+                        activity_id="watcher-read", retry_state=None,
+                    ) from cause
             try:
                 return await calls[name](payload)
             except QualityError as error:
@@ -170,6 +210,8 @@ class QualityWorkflowAdapterTests:
 
             def __await__(self):
                 async def complete():
+                    if cancel_at.startswith("watcher_"):
+                        await watcher_read_started.wait()
                     if cancel_at == "activity":
                         await accept_cancellation()
                     return {SANDBOX_EXECUTION_KEY: {
@@ -182,11 +224,36 @@ class QualityWorkflowAdapterTests:
             workflow_module.workflow, "start_activity", lambda *_a, **_k: CompletedActivity()
         )
         monkeypatch.setattr(workflow_module.workflow, "now", lambda: NOW)
+        if cancel_at.startswith("watcher_"):
+            original_watch = QualityRunWorkflow._watch_durable_cancellation
+
+            async def watch(instance):
+                nonlocal watcher_task
+                watcher_task = asyncio.current_task()
+                return await original_watch(instance)
+
+            async def immediate_sleep(_delay):
+                await asyncio.sleep(0)
+
+            monkeypatch.setattr(QualityRunWorkflow, "_watch_durable_cancellation", watch)
+            monkeypatch.setattr(workflow_module.workflow, "sleep", immediate_sleep)
         set_runtime(runtime)
         try:
-            if cancel_at == "unrelated_error":
-                with pytest.raises(ActivityError, match="not a cancellation"):
+            if cancel_at in {
+                "unrelated_error", "watcher_unrelated_error", "watcher_cancelled_before_cleanup",
+            }:
+                message = ("polling read ended" if cancel_at.startswith("watcher_")
+                           else "not a cancellation")
+                with pytest.raises(ActivityError, match=message) as raised:
                     await QualityRunWorkflow().run({"runId": run.run_id})
+                if cancel_at == "watcher_cancelled_before_cleanup":
+                    assert isinstance(raised.value.cause, TemporalCancelledError)
+                else:
+                    assert isinstance(raised.value.cause, QualityError)
+                    assert raised.value.cause.code == (
+                        "UNRELATED_READ_FAILURE" if cancel_at == "watcher_unrelated_error"
+                        else "UNRELATED_STORE_FAILURE"
+                    )
                 assert (await store.run(run.run_id)).state == "RUNNING"
                 assert await store.verdict_for_run(run.run_id) is None
                 return
@@ -195,7 +262,9 @@ class QualityWorkflowAdapterTests:
             set_runtime(None)
             await asyncio.sleep(0)
 
-        expected_state = "SUCCEEDED" if cancel_at in {"none", "after_verdict"} else "CANCELLED"
+        expected_state = ("SUCCEEDED" if cancel_at in {
+            "none", "after_verdict", "watcher_read_cancelled",
+        } else "CANCELLED")
         expected_verdict = "PASS" if expected_state == "SUCCEEDED" else "FAIL"
         assert outcome["state"] == expected_state
         assert outcome["verdict"] == expected_verdict
@@ -241,6 +310,27 @@ class QualityWorkflowAdapterTests:
         activity = source.index("workflow.start_activity", dispatch)
 
         assert dispatch < durable_read < boundary < activity
+
+    @pytest.mark.asyncio
+    async def test_durable_read_completion_after_handle_clear_keeps_cancellation_authoritative(
+        self, monkeypatch,
+    ):
+        instance = QualityRunWorkflow()
+        instance.run_id = "read-completion-race"
+        instance._sandbox_activity = SimpleNamespace(cancel=lambda: None)
+
+        async def immediate_sleep(_delay):
+            return None
+
+        async def complete_after_handle_clear():
+            instance._sandbox_activity = None
+            return {"state": "CANCELLING"}
+
+        monkeypatch.setattr(workflow_module.workflow, "sleep", immediate_sleep)
+        instance._read_run = complete_after_handle_clear
+        await instance._watch_durable_cancellation()
+        assert instance.cancel_requested is True
+        assert instance._sandbox_activity is None
 
     @pytest.mark.asyncio
     async def test_durable_cancelling_state_stops_an_active_sandbox_activity(

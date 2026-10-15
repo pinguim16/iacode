@@ -11,3 +11,10 @@
   stages, remove a correct test, increase a product timeout or edit historical sealed evidence.
 - Gate 5 is authorized by the owner but cannot begin until this Gate 4 checkpoint actually seals
   a valid internal closure. No authorization for Gate 6 is inferred.
+- A clean-control live run once stalled after its first result. The complete repeat passed without
+  increasing the deadline, but the original ephemeral history was not retained. Bounded pre-cleanup
+  diagnostics now guard recurrence. A matching polling-cleanup race was reproduced and corrected,
+  but that is not reconstruction of the lost history. Fresh full verification must not hide or
+  reuse that attempt.
+- Plain, escaped, nested JSON and beyond-inline output must remain rejected at the first durable
+  boundary. Matching digests do not exempt legacy objects from rescanning.

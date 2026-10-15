@@ -11,6 +11,7 @@ import asyncio
 import time
 
 import pytest
+from iacode_common.secret_scanning import find_secret_kinds
 from sandbox_fixtures import engine_harness, request
 
 pytestmark = pytest.mark.engine
@@ -43,6 +44,30 @@ def only_init_and_the_observer(listing: str) -> bool:
 
 
 class ResourceLimitTests:
+    def test_live_secret_output_is_contained_before_durable_delivery(self, harness) -> None:
+        run_id = harness.run_id()
+        result = harness.shell(
+            "python3 -c \"print('gh'+'p_'+'z'*20)\"", run_id=run_id
+        )
+        assert result.status == "FAILED"
+        assert result.error_code == "SANDBOX_OUTPUT_SECRET_DETECTED"
+        assert result.output == {} and result.artifacts == ()
+        assert harness.artifacts.objects == {}
+        assert harness.shell("echo safe", run_id=run_id).status == "SUCCEEDED"
+
+    def test_live_secret_beyond_inline_limit_creates_no_full_output_artifact(self, harness) -> None:
+        run_id = harness.run_id()
+        size = harness.service.policies.get("developer").resources.output_bytes + 128
+        assert find_secret_kinds("x" * size + "\n" + "gh" + "p_" + "z" * 20)
+        result = harness.shell(
+            f"python3 -c \"print('x'*{size}+'\\n'+'gh'+'p_'+'z'*20)\"", run_id=run_id
+        )
+        assert result.status == "FAILED"
+        assert result.error_code == "SANDBOX_OUTPUT_SECRET_DETECTED"
+        assert result.output == {} and result.artifacts == ()
+        assert harness.artifacts.objects == {}
+        assert harness.shell("echo safe", run_id=run_id).status == "SUCCEEDED"
+
     def test_a_fork_bomb_is_contained_by_the_process_limit(self, harness) -> None:
         run_id = harness.run_id()
         bomb = ("python3 -c \"import os, time\n"

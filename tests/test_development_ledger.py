@@ -2749,6 +2749,21 @@ class MemoryPolicyValidationTests(unittest.TestCase):
         self.assertTrue(any("cannot assert independentReview" in error for error in errors), errors)
         self.assertTrue(any("independent Red Team verdict" in error for error in errors), errors)
 
+    def test_live_policy_requires_strict_internal_verdict_semantics(self) -> None:
+        from lessons import STRICT_INTERNAL_VERDICT_MEMORY_POLICY, memory_policy_version
+
+        self.assertEqual(memory_policy_version(PROJECT_ROOT), STRICT_INTERNAL_VERDICT_MEMORY_POLICY)
+
+    def test_legacy_internal_red_team_fields_keep_their_subject_policy_semantics(self) -> None:
+        from unittest import mock
+
+        with mock.patch("validate_checkpoint.memory_policy_version", return_value="2.3.0"):
+            errors = self._errors(self._state(
+                status="INTERNAL_GATE_PASS", independentReview={"status": "NOT_REQUIRED"},
+                redTeam={"status": "RED_TEAM_PASS"},
+            ))
+        self.assertEqual(errors, [])
+
     def test_internal_closure_leaves_independent_milestone_validation_pending(self) -> None:
         self.assertEqual(self._errors(self._state(
             status="INTERNAL_GATE_PASS",

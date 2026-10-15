@@ -8,7 +8,7 @@ sentinel; the unchanged digest proves project content could not turn that refere
 
 Scenarios are independently runnable so ``verify.py`` can name the exact failing proof:
 
-    pass, fail, reproduce, recovery, cancel, timeout, iacode, all
+    pass, fail, reproduce, recovery, cancel, timeout, iacode, secret-output, all
 """
 
 from __future__ import annotations
@@ -50,6 +50,91 @@ WAIT_SECONDS = 300.0
 IACODE_WAIT_SECONDS = 900.0
 DURABLE_WAIT_SECONDS = 900.0
 POLL_SECONDS = 0.5
+
+# This observer runs inside the API image. It returns only counts and booleans, never history
+# payloads, object contents, environment values or the synthetic marker.
+HISTORY_OUTPUT_OBSERVER = r'''
+import asyncio
+import base64
+import json
+import os
+import sys
+from minio import Minio
+from temporalio.client import Client
+from iacode_common.secret_scanning import find_secret_kinds
+
+async def main():
+    run_id = sys.argv[1]
+    marker = ("gh" + "p_" + "q" * 20).encode()
+    client = await Client.connect(
+        os.environ.get("IACODE_TEMPORAL_TARGET", "temporal:7233"),
+        namespace=os.environ.get("IACODE_TEMPORAL_NAMESPACE", "default"),
+    )
+    handle = client.get_workflow_handle("iacode-quality-run-" + run_id)
+    history = await handle.fetch_history()
+    description = await handle.describe()
+    payloads = []
+    def visit(value):
+        if isinstance(value, dict):
+            for key, item in value.items():
+                if key == "data" and isinstance(item, str):
+                    payloads.append(base64.b64decode(item, validate=True))
+                else:
+                    visit(item)
+        elif isinstance(value, list):
+            for item in value:
+                visit(item)
+    document = json.loads(history.to_json())
+    visit(document)
+    failures = []
+    scheduled = {}
+    completed = set()
+    def failure_metadata(value):
+        if not isinstance(value, dict):
+            return
+        message = str(value.get("message", ""))
+        failures.append({
+            "type": value.get("applicationFailureInfo", {}).get("type"),
+            "activityType": value.get("activityFailureInfo", {}).get(
+                "activityType", {}).get("name"),
+            "cancelled": "canceledFailureInfo" in value,
+            "message": "[redacted]" if find_secret_kinds(message) else message[:300],
+        })
+        if value.get("cause"):
+            failure_metadata(value["cause"])
+    for event in document.get("events", []):
+        for key, value in event.items():
+            if key == "activityTaskScheduledEventAttributes":
+                scheduled[str(event["eventId"])] = value.get("activityType", {}).get("name")
+            elif key in {
+                "activityTaskCompletedEventAttributes", "activityTaskFailedEventAttributes",
+                "activityTaskCanceledEventAttributes", "activityTaskTimedOutEventAttributes",
+            }:
+                completed.add(str(value.get("scheduledEventId")))
+            if isinstance(value, dict) and value.get("failure"):
+                failure_metadata(value["failure"])
+    objects = Minio(
+        os.environ["IACODE_MINIO_ENDPOINT"],
+        access_key=os.environ["IACODE_MINIO_ACCESS_KEY"],
+        secret_key=os.environ["IACODE_MINIO_SECRET_KEY"],
+        secure=os.environ.get("IACODE_MINIO_SECURE", "false").lower() == "true",
+    )
+    count = len(list(objects.list_objects(
+        os.environ.get("IACODE_MINIO_BUCKET", "iacode-artifacts"),
+        prefix="sandbox/" + run_id + "/", recursive=True,
+    )))
+    clean = bool(payloads) and all(marker not in item for item in payloads)
+    print(json.dumps({"prohibitedBytesAbsent": clean, "payloadsScanned": len(payloads),
+                      "workflowStatus": (description.status.name
+                                         if description.status else "UNKNOWN"),
+                      "sandboxObjects": count, "failures": failures[-10:],
+                      "pendingActivityTypes": [v for k, v in scheduled.items()
+                                               if k not in completed],
+                      "containmentRefusals": sum(b"SANDBOX_OUTPUT_SECRET_DETECTED" in p
+                                                 for p in payloads)}))
+
+asyncio.run(main())
+'''
 
 
 class Steps:
@@ -315,6 +400,86 @@ def scenario_fail() -> dict[str, Any]:
     return steps.report()
 
 
+def scenario_secret_output() -> dict[str, Any]:
+    steps = Steps("secret-output")
+    def terminal(identifier: str, label: str) -> dict[str, Any] | None:
+        try:
+            return wait_terminal(identifier)
+        except StackError:
+            try:
+                state = request("GET", f"/{identifier}")["run"]["state"]
+            except StackError:
+                state = "UNAVAILABLE"
+            steps.record(f"{label}.terminal", False, state,
+                         "terminal within the unchanged deadline")
+            observed = compose(
+                "exec", "-T", "api", "python", "-c", HISTORY_OUTPUT_OBSERVER,
+                identifier, merge_stderr=False,
+            )
+            steps.record(f"{label}.diagnostics_available", observed.ok, observed.ok, True)
+            if observed.ok:
+                steps.artifacts.append({"kind": "control-history-diagnostics",
+                                        "runId": identifier,
+                                        "observation": json.loads(observed.stdout)})
+            return None
+
+    control = start(snapshot(FIXTURES / "python-pass", "output-control", steps), "output-control")
+    control_detail = terminal(control["runId"], "control")
+    if control_detail is None:
+        return steps.report()
+    steps.record(
+        "control.accepted",
+        control_detail["run"]["state"] == "SUCCEEDED"
+        and control_detail["verdict"]["verdict"] == "PASS",
+        control_detail["run"]["state"], "SUCCEEDED with PASS",
+    )
+    marker = "gh" + "p_" + "q" * 20
+    for fixture in ("python-secret-output", "python-secret-output-full"):
+        created = start(snapshot(FIXTURES / fixture, fixture, steps), fixture)
+        detail = terminal(created["runId"], fixture)
+        if detail is None:
+            return steps.report()
+        assert_complete_evidence(steps, detail, "FAILED")
+        steps.record(
+            f"{fixture}.verdict_fail", detail["verdict"]["verdict"] == "FAIL",
+            detail["verdict"]["verdict"], "FAIL",
+        )
+        steps.record(
+            f"{fixture}.api_output_clean", marker not in json.dumps(detail),
+            marker not in json.dumps(detail), True,
+        )
+        observed = compose(
+            "exec", "-T", "api", "python", "-c", HISTORY_OUTPUT_OBSERVER,
+            created["runId"], merge_stderr=False,
+        )
+        if not observed.ok:
+            raise StackError("the bounded history/object observer failed; no payload is recorded")
+        proof = json.loads(observed.stdout)
+        steps.record(
+            f"{fixture}.history_clean", proof.get("prohibitedBytesAbsent") is True,
+            proof, "decoded durable payloads contain no prohibited bytes",
+        )
+        steps.record(
+            f"{fixture}.no_sandbox_artifact", proof.get("sandboxObjects") == 0,
+            proof.get("sandboxObjects"), 0,
+        )
+        steps.record(
+            f"{fixture}.causal_containment_refusal", proof.get("containmentRefusals", 0) > 0,
+            proof.get("containmentRefusals"), "one or more explicit output-containment refusals",
+        )
+        steps.artifacts.append({"kind": "quality-run", "runId": created["runId"],
+                                "planId": created["planId"]})
+    after = start(snapshot(FIXTURES / "python-pass", "after-output-refusal", steps),
+                  "after-output-refusal")
+    after_detail = terminal(after["runId"], "control.after_refusal")
+    if after_detail is None:
+        return steps.report()
+    assert_complete_evidence(steps, after_detail, "SUCCEEDED")
+    steps.record("control.after_refusal_pass", after_detail["verdict"]["verdict"] == "PASS",
+                 after_detail["verdict"]["verdict"], "PASS")
+    return steps.report()
+
+
 def scenario_reproduce() -> dict[str, Any]:
     steps = Steps("reproduce")
     stored = snapshot(FIXTURES / "python-pass", "reproduce", steps)
@@ -489,6 +654,7 @@ SCENARIOS: dict[str, Callable[[], dict[str, Any]]] = {
     "cancel": scenario_cancel,
     "timeout": scenario_timeout,
     "iacode": scenario_iacode,
+    "secret-output": scenario_secret_output,
 }
 
 

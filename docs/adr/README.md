@@ -48,3 +48,7 @@ exist, or a title or status that disagrees with its record fails the suite.
 | [ADR-0036](ADR-0036-pre-seal-validation-binds-an-explicit-subject.md) | Pre-seal validation binds an explicit subject | Accepted |
 | [ADR-0037](ADR-0037-intermediate-gates-use-internal-closure.md) | Intermediate Gates use internal closure | Accepted |
 | [ADR-0038](ADR-0038-cancellation-and-verdict-commit-are-serialized.md) | Cancellation and verdict commit are serialized | Accepted |
+| [ADR-0039](ADR-0039-sandbox-output-is-scanned-before-durable-delivery.md) | Sandbox output is scanned before durable delivery | Accepted |
+| [ADR-0040](ADR-0040-test-counts-follow-policy-bound-collection.md) | Test counts follow policy-bound collection | Accepted |
+| [ADR-0041](ADR-0041-polling-cleanup-preserves-completed-checks.md) | Polling cleanup preserves completed checks | Accepted |
+| [ADR-0042](ADR-0042-internal-verdict-semantics-follow-subject-policy.md) | Internal verdict semantics follow subject policy | Accepted |

@@ -1,0 +1,312 @@
+{
+  "schemaVersion": "1.0.0",
+  "result": "PASS",
+  "scenarios": [
+    {
+      "schemaVersion": "1.0.0",
+      "scenario": "secret-output",
+      "result": "PASS",
+      "environment": "real-compose-temporal-postgresql-minio-sandbox-container-engine",
+      "steps": [
+        {
+          "step": "snapshot.stored",
+          "result": "PASS",
+          "expected": [
+            "artifactId",
+            "key",
+            "sha256",
+            "sizeBytes"
+          ],
+          "observed": [
+            "artifactId",
+            "key",
+            "sha256",
+            "sizeBytes"
+          ]
+        },
+        {
+          "step": "control.accepted",
+          "result": "PASS",
+          "expected": "SUCCEEDED with PASS",
+          "observed": "SUCCEEDED"
+        },
+        {
+          "step": "snapshot.stored",
+          "result": "PASS",
+          "expected": [
+            "artifactId",
+            "key",
+            "sha256",
+            "sizeBytes"
+          ],
+          "observed": [
+            "artifactId",
+            "key",
+            "sha256",
+            "sizeBytes"
+          ]
+        },
+        {
+          "step": "run.terminal",
+          "result": "PASS",
+          "expected": "FAILED",
+          "observed": "FAILED"
+        },
+        {
+          "step": "results.complete",
+          "result": "PASS",
+          "expected": 7,
+          "observed": 7
+        },
+        {
+          "step": "evidence.one_or_more_per_result",
+          "result": "PASS",
+          "expected": ">=7",
+          "observed": 7
+        },
+        {
+          "step": "findings.evidence_resolved",
+          "result": "PASS",
+          "expected": [],
+          "observed": []
+        },
+        {
+          "step": "evidence.rights_closed",
+          "result": "PASS",
+          "expected": "every evidence item trainingAllowed=false and ragAllowed=false",
+          "observed": 7
+        },
+        {
+          "step": "sandbox.no_active_session",
+          "result": "PASS",
+          "expected": "0",
+          "observed": "0"
+        },
+        {
+          "step": "python-secret-output.verdict_fail",
+          "result": "PASS",
+          "expected": "FAIL",
+          "observed": "FAIL"
+        },
+        {
+          "step": "python-secret-output.api_output_clean",
+          "result": "PASS",
+          "expected": true,
+          "observed": true
+        },
+        {
+          "step": "python-secret-output.history_clean",
+          "result": "PASS",
+          "expected": "decoded durable payloads contain no prohibited bytes",
+          "observed": {
+            "prohibitedBytesAbsent": true,
+            "payloadsScanned": 122,
+            "workflowStatus": "COMPLETED",
+            "sandboxObjects": 0,
+            "failures": [],
+            "pendingActivityTypes": [],
+            "containmentRefusals": 2
+          }
+        },
+        {
+          "step": "python-secret-output.no_sandbox_artifact",
+          "result": "PASS",
+          "expected": 0,
+          "observed": 0
+        },
+        {
+          "step": "python-secret-output.causal_containment_refusal",
+          "result": "PASS",
+          "expected": "one or more explicit output-containment refusals",
+          "observed": 2
+        },
+        {
+          "step": "snapshot.stored",
+          "result": "PASS",
+          "expected": [
+            "artifactId",
+            "key",
+            "sha256",
+            "sizeBytes"
+          ],
+          "observed": [
+            "artifactId",
+            "key",
+            "sha256",
+            "sizeBytes"
+          ]
+        },
+        {
+          "step": "run.terminal",
+          "result": "PASS",
+          "expected": "FAILED",
+          "observed": "FAILED"
+        },
+        {
+          "step": "results.complete",
+          "result": "PASS",
+          "expected": 7,
+          "observed": 7
+        },
+        {
+          "step": "evidence.one_or_more_per_result",
+          "result": "PASS",
+          "expected": ">=7",
+          "observed": 7
+        },
+        {
+          "step": "findings.evidence_resolved",
+          "result": "PASS",
+          "expected": [],
+          "observed": []
+        },
+        {
+          "step": "evidence.rights_closed",
+          "result": "PASS",
+          "expected": "every evidence item trainingAllowed=false and ragAllowed=false",
+          "observed": 7
+        },
+        {
+          "step": "sandbox.no_active_session",
+          "result": "PASS",
+          "expected": "0",
+          "observed": "0"
+        },
+        {
+          "step": "python-secret-output-full.verdict_fail",
+          "result": "PASS",
+          "expected": "FAIL",
+          "observed": "FAIL"
+        },
+        {
+          "step": "python-secret-output-full.api_output_clean",
+          "result": "PASS",
+          "expected": true,
+          "observed": true
+        },
+        {
+          "step": "python-secret-output-full.history_clean",
+          "result": "PASS",
+          "expected": "decoded durable payloads contain no prohibited bytes",
+          "observed": {
+            "prohibitedBytesAbsent": true,
+            "payloadsScanned": 122,
+            "workflowStatus": "COMPLETED",
+            "sandboxObjects": 0,
+            "failures": [],
+            "pendingActivityTypes": [],
+            "containmentRefusals": 2
+          }
+        },
+        {
+          "step": "python-secret-output-full.no_sandbox_artifact",
+          "result": "PASS",
+          "expected": 0,
+          "observed": 0
+        },
+        {
+          "step": "python-secret-output-full.causal_containment_refusal",
+          "result": "PASS",
+          "expected": "one or more explicit output-containment refusals",
+          "observed": 2
+        },
+        {
+          "step": "snapshot.stored",
+          "result": "PASS",
+          "expected": [
+            "artifactId",
+            "key",
+            "sha256",
+            "sizeBytes"
+          ],
+          "observed": [
+            "artifactId",
+            "key",
+            "sha256",
+            "sizeBytes"
+          ]
+        },
+        {
+          "step": "run.terminal",
+          "result": "PASS",
+          "expected": "SUCCEEDED",
+          "observed": "SUCCEEDED"
+        },
+        {
+          "step": "results.complete",
+          "result": "PASS",
+          "expected": 7,
+          "observed": 7
+        },
+        {
+          "step": "evidence.one_or_more_per_result",
+          "result": "PASS",
+          "expected": ">=7",
+          "observed": 7
+        },
+        {
+          "step": "findings.evidence_resolved",
+          "result": "PASS",
+          "expected": [],
+          "observed": []
+        },
+        {
+          "step": "evidence.rights_closed",
+          "result": "PASS",
+          "expected": "every evidence item trainingAllowed=false and ragAllowed=false",
+          "observed": 7
+        },
+        {
+          "step": "sandbox.no_active_session",
+          "result": "PASS",
+          "expected": "0",
+          "observed": "0"
+        },
+        {
+          "step": "control.after_refusal_pass",
+          "result": "PASS",
+          "expected": "PASS",
+          "observed": "PASS"
+        }
+      ],
+      "artifacts": [
+        {
+          "kind": "snapshot",
+          "artifactId": "01a141ba-c227-7000-bb7d-f32fee005b9b",
+          "digest": "ec127c9685788650d1150f62310b97918f34df38e181767b18a07ac556ccfb4f",
+          "sizeBytes": 476
+        },
+        {
+          "kind": "snapshot",
+          "artifactId": "01a141bb-6b54-7000-b94d-9bc32a3cb7a3",
+          "digest": "afb0efb538d2f2b5f45a163b768140cec8a6bd2b4da6d294309df271245fc5d4",
+          "sizeBytes": 549
+        },
+        {
+          "kind": "quality-run",
+          "runId": "01a141bb-7207-7000-9a42-cf84435bcc2a",
+          "planId": "f57991d1fd0b45bb6f7f151641e092fcff76eb3468e238d824f0092dd6e76810"
+        },
+        {
+          "kind": "snapshot",
+          "artifactId": "01a141bc-0870-7000-83b6-a888c0ecd8bb",
+          "digest": "82149b45bb7115345c12dd604499dc0255c657ed233b996c86985b33488cd9ad",
+          "sizeBytes": 530
+        },
+        {
+          "kind": "quality-run",
+          "runId": "01a141bc-0e70-7000-8ebd-d8769a02d7b9",
+          "planId": "710c626ece27320f3b0c9a8a1f7a30b1e7d1c7b98230a8fbbb1da4a84da5e3f4"
+        },
+        {
+          "kind": "snapshot",
+          "artifactId": "01a141bc-adcb-7000-a71b-311af5c019ac",
+          "digest": "8e1a11b4e2a9d290baa744e469ba0b358292777bfa34af56611b59ca332cb55f",
+          "sizeBytes": 476
+        }
+      ],
+      "recordedAt": "2026-10-15T22:44:45Z"
+    }
+  ],
+  "recordedAt": "2026-10-15T22:44:45Z"
+}

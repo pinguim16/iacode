@@ -10,11 +10,24 @@ from unittest import mock
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
 
-from ledger_common import LedgerError, write_json
+from ledger_common import LedgerError, validate_schema, write_json
 from sync_in_progress_metadata import synchronize
 
 
 class InProgressMetadataTests(unittest.TestCase):
+    def test_lesson_timestamp_transport_rejects_locale_rendering(self) -> None:
+        lesson = next(
+            json.loads(line) for line in (ROOT / ".iacode/memory/lessons.jsonl").read_text(
+                encoding="utf-8",
+            ).splitlines() if json.loads(line)["lessonId"] == "LSN-0105"
+        )
+        schema = json.loads((ROOT / ".iacode/schemas/lesson.schema.json").read_text())
+        transported = json.loads(json.dumps(lesson))
+        self.assertEqual(validate_schema(transported, schema), [])
+        transported["guardrailFailures"][0]["observedAt"] = "10/15/2026 18:27:52"
+        errors = validate_schema(transported, schema)
+        self.assertTrue(any("observedAt: invalid date-time" in value for value in errors))
+
     def test_preflight_aggregates_and_commit_semantics_are_derived_without_promotion(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             checkpoint = Path(directory)

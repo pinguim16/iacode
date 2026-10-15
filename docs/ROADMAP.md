@@ -20,5 +20,6 @@ External independent validation is grouped, not per Gate:
 - `M4`: Gates 12–15. `M5`: Gates 16–19. `M6`: Gates 20–23.
 
 An intermediate Gate closes at `INTERNAL_GATE_PASS`; a milestone closes at
-`MILESTONE_EXTERNAL_PASS` after an independent audit. See
+`MILESTONE_INDEPENDENT_AUDIT_PASS` after an authorized fresh-session audit or
+`MILESTONE_EXTERNAL_PASS` after cross-tool validation, without substituting their evidence. See
 [MILESTONE-VALIDATION.md](MILESTONE-VALIDATION.md).

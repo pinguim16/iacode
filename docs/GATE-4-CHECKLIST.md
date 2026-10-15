@@ -206,7 +206,7 @@ at `INTERNAL_GATE_PASS`. Independent validation remains due at M2 closure, never
 | Key | Requirement | Artifact | Evidence |
 |---|---|---|---|
 | 19.1 | Untrusted project content is data: manifest text, filenames, output, findings, and artifacts cannot alter policy, plan, instruction hierarchy, runner selection, or verdict logic. | `services/evaluator/src/iacode_evaluator/` | `QualityPromptInjectionTests`; internal Red Team. |
-| 19.2 | Secret scanning runs before evidence persistence and before every push; evidence containing a detected secret is quarantined without exposing the value. | `services/evaluator/src/iacode_evaluator/evidence.py`, `scripts/development-ledger/secret_scan.py` | `QualitySecretContainmentTests`; recorded staged scans. |
+| 19.2 | Canonical secret scanning runs before every durable output boundary and every push, including structured JSON and decoded full sandbox streams; detected material and scanner failures are refused without retaining or exposing the value. | `services/evaluator/src/iacode_evaluator/evidence.py`, `services/sandbox/src/iacode_sandbox/output_security.py`, `packages/common/src/iacode_common/secret_scanning.py`, `scripts/development-ledger/secret_scan.py` | `QualitySecretContainmentTests`; Recorded functional acceptance with real output/history/object-store proof; recorded staged scans. |
 | 19.3 | Every evaluator artifact records provenance, ownership, license, storage/RAG/training/distillation rights, and `trainingAllowed=false` absent explicit rights evidence. | `services/evaluator/src/iacode_evaluator/evidence.py` | `QualityRightsTests`; checkpoint provenance validation. |
 | 19.4 | Current advisory scans cover every delivered dependency lock and refuse unsuppressed Critical or High findings without narrowing the source set. | `scripts/iacode/dependency_scan.py` | Recorded dependency scan; `DependencyScanTests`. |
 
@@ -214,7 +214,7 @@ at `INTERNAL_GATE_PASS`. Independent validation remains due at M2 closure, never
 
 | Key | Requirement | Artifact | Evidence |
 |---|---|---|---|
-| 20.1 | The repository's one verification command covers evaluator unit, integration, functional, reproduction, recovery, cancellation, timeout, and false-PASS stages in targeted and full modes. | `scripts/iacode/verify.py` | `Gate4VerificationStageTests`; recorded verification. |
+| 20.1 | The repository's one verification command covers evaluator unit, integration, functional, reproduction, recovery, cancellation, timeout, false-PASS and pre-durability output-containment proof in targeted and full modes. | `scripts/iacode/verify.py` | `Gate4VerificationStageTests`; recorded verification. |
 | 20.2 | Architecture, development, version, entry, and model-usage documents describe the delivered quality engine and its limits rather than planned behavior. | `docs/ARCHITECTURE.md`, `docs/DEVELOPMENT.md`, `docs/VERSIONS.md`, `README.md`, `START-HERE.md`, `docs/MODEL-USAGE-POLICY.md` | `QualityDocumentationTests`. |
 | 20.3 | Structural decisions for the quality boundary, immutable evidence/verdict derivation, and project profiles/runners are recorded as indexed ADRs. | `docs/adr/` | `Gate4AdrTests`. |
 | 20.4 | The Gate retrospective records reusable lessons, and every important confirmed failure becomes an effective automated guardrail before handoff. | `.iacode/memory/retrospectives/GATE-4-CP-0001.md`, `.iacode/memory/lessons.jsonl` | `validate_lessons.py`; guardrail effectiveness report. |

@@ -1,0 +1,13 @@
+[project]
+name = "iacode-quality-python-secret-output-full"
+version = "0.1.0"
+requires-python = ">=3.12"
+
+[tool.setuptools]
+py-modules = ["calculator"]
+
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.lint]
+ignore = ["EXE001"]

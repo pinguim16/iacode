@@ -3,8 +3,12 @@
 from __future__ import annotations
 
 import asyncio
+import base64
+import json
 from datetime import timedelta
 
+from iacode_sandbox import output_security
+from iacode_sandbox.backend import HelperOutcome
 from iacode_sandbox.contracts import ToolExecutionRequest
 from iacode_sandbox.service import SandboxService
 from sandbox_fixtures import FakeBackend, fake_service, request, utc
@@ -15,6 +19,128 @@ def run(coroutine):
 
 
 class SandboxServiceDecisionTests:
+    def test_canonical_secret_output_workspace_diagnostic_never_reaches_session_record(
+        self,
+    ) -> None:
+        marker = "gh" + "p_" + "w" * 20
+
+        class DiagnosticBackend(FakeBackend):
+            def exec_helper(self, _name, _payload, **_options):
+                return HelperOutcome(response={"ok": False}, exit_code=1, stderr=marker)
+
+        service, store = fake_service(DiagnosticBackend())
+        result = run(service.execute(request("git.status", run_id="workspace-diagnostic")))
+        assert result.error_code == "SANDBOX_OUTPUT_SECRET_DETECTED"
+        assert marker not in json.dumps(result.to_dict())
+        sessions = run(store.sessions())
+        assert len(sessions) == 1 and sessions[0].state == "FAILED"
+        assert marker not in (sessions[0].failure_reason or "")
+
+    def test_canonical_secret_output_clean_workspace_diagnostic_is_preserved(self) -> None:
+        class DiagnosticBackend(FakeBackend):
+            def exec_helper(self, _name, _payload, **_options):
+                return HelperOutcome(response={"ok": False}, exit_code=1,
+                                     stderr="clean workspace refusal")
+
+        service, store = fake_service(DiagnosticBackend())
+        result = run(service.execute(request("git.status", run_id="clean-workspace-diagnostic")))
+        assert result.error_code == "WORKSPACE_INIT_FAILED"
+        assert result.error == "clean workspace refusal"
+        assert run(store.sessions())[0].failure_reason == "clean workspace refusal"
+
+    def test_canonical_secret_output_in_second_stream_commits_neither_stream(self) -> None:
+        marker = "gh" + "p_" + "z" * 20
+        self._assert_output_refused({"ok": True, "result": {
+            "started": True, "exitCode": 0, "stdout": "clean", "stderr": "bounded prefix",
+            "stdoutFull": base64.b64encode(b"clean complete stdout").decode(),
+            "stderrFull": base64.b64encode(marker.encode()).decode(),
+        }}, marker)
+
+    def test_canonical_secret_output_scanner_failure_is_fail_closed(self, monkeypatch) -> None:
+        def unavailable(_text):
+            raise RuntimeError("must not become durable output")
+
+        monkeypatch.setattr(output_security, "find_secret_kinds", unavailable)
+        service, store = fake_service(FakeBackend(responses=[{
+            "ok": True, "result": {"started": True, "exitCode": 0, "stdout": "clean"},
+        }]))
+        result = run(service.execute(request("shell.exec", {"command": "true"}, run_id="r-1")))
+        assert result.status == "FAILED"
+        assert result.error_code == "SANDBOX_OUTPUT_SECRET_SCAN_FAILED"
+        assert "must not become" not in json.dumps(result.to_dict())
+        assert store.artifacts == [] and service.artifacts.objects == {}
+
+    def test_canonical_secret_output_malformed_full_stream_is_fail_closed(self) -> None:
+        service, store = fake_service(FakeBackend(responses=[{
+            "ok": True, "result": {"stdoutFull": "not valid base64!"},
+        }]))
+        result = run(service.execute(request("shell.exec", {"command": "true"}, run_id="r-1")))
+        assert result.status == "FAILED"
+        assert result.error_code == "SANDBOX_OUTPUT_SECRET_SCAN_FAILED"
+        assert store.artifacts == [] and service.artifacts.objects == {}
+
+    def test_canonical_secret_output_clean_control_keeps_both_streams_unchanged(self) -> None:
+        stdout, stderr = b"clean stdout", b"clean stderr"
+        service, store = fake_service(FakeBackend(responses=[{"ok": True, "result": {
+            "started": True, "exitCode": 0, "stdout": "clean", "stderr": "clean",
+            "stdoutFull": base64.b64encode(stdout).decode(),
+            "stderrFull": base64.b64encode(stderr).decode(),
+        }}]))
+        result = run(service.execute(request("shell.exec", {"command": "true"}, run_id="r-1")))
+        assert result.status == "SUCCEEDED"
+        assert len(store.artifacts) == 2
+        assert sorted(service.artifacts.objects.values()) == sorted([stdout, stderr])
+
+    def test_canonical_secret_output_is_rejected_before_durable_delivery(self) -> None:
+        marker = "gh" + "p_" + "z" * 20
+        self._assert_output_refused({
+            "ok": True, "result": {"started": True, "exitCode": 0, "stdout": marker}
+        }, marker)
+
+    def test_canonical_secret_output_after_a_newline_is_rejected(self) -> None:
+        marker = "gh" + "p_" + "z" * 20
+        self._assert_output_refused({
+            "ok": True, "result": {"started": True, "exitCode": 0, "stdout": "\n" + marker}
+        }, marker)
+
+    def test_canonical_secret_output_nested_json_is_rejected(self) -> None:
+        marker = "gh" + "p_" + "z" * 20
+        nested = json.dumps(json.dumps({"ordinary": "\n" + marker}))
+        self._assert_output_refused({
+            "ok": True, "result": {"started": True, "exitCode": 0, "stdout": nested},
+        }, marker)
+
+    def test_canonical_secret_output_json_in_mixed_logs_is_rejected(self) -> None:
+        marker = "gh" + "p_" + "z" * 20
+        nested = json.dumps(json.dumps({"ordinary": "\n" + marker}))
+        self._assert_output_refused({
+            "ok": True, "result": {"started": True, "exitCode": 0,
+                                    "stdout": "pytest passed\n" + nested + "\nshutdown"},
+        }, marker)
+
+    def test_canonical_secret_output_full_stream_is_rejected_before_artifact_upload(self) -> None:
+        marker = "gh" + "p_" + "z" * 20
+        self._assert_output_refused({"ok": True, "result": {
+            "started": True, "exitCode": 0, "stdout": "bounded clean prefix",
+            "stdoutFull": base64.b64encode(marker.encode()).decode(),
+        }}, marker)
+
+    def test_canonical_secret_output_error_is_rejected_before_workflow_delivery(self) -> None:
+        marker = "gh" + "p_" + "z" * 20
+        self._assert_output_refused({
+            "ok": False, "errorCode": "TOOL_FAILED", "error": marker,
+        }, marker)
+
+    def _assert_output_refused(self, body: dict, marker: str) -> None:
+        service, store = fake_service(FakeBackend(responses=[body]))
+        result = run(service.execute(request("shell.exec", {"command": "true"}, run_id="r-1")))
+        assert result.status == "FAILED"
+        assert result.error_code == "SANDBOX_OUTPUT_SECRET_DETECTED"
+        assert store.artifacts == []
+        assert service.artifacts.objects == {}
+        assert marker not in json.dumps(result.to_dict())
+        assert marker not in json.dumps(result.agent_result())
+
     def test_only_agent_requests_bind_the_agent_tool_request_foreign_key(self) -> None:
         shared = {
             "tool_request_id": "00000000-0000-4000-8000-000000000001",

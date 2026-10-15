@@ -1,0 +1,77 @@
+{
+  "sourceContexts": [
+    "test_redactor_replaces_known_shapes"
+  ],
+  "sourceReference": "aedc17a:tests/test_development_ledger.py",
+  "classification": "SYNTHETIC_REDACTION_TEST_MARKERS",
+  "matches": [
+    {
+      "mode": "current",
+      "kind": "bearer credential",
+      "sha256": "56adb9668e74ad2bb590a18eddf3f2fe6f9ba2053011557f518a76cdf13ae1c9",
+      "carrierLine": 157,
+      "redactedShape": "Bearer [REDACTED]",
+      "viewContainsEscapes": false,
+      "redactedView": "Authorization: [REDACTED]\nBearer [REDACTED]\nAPI_KEY=[REDACTED]\n",
+      "matchingSourceLiterals": [
+        {
+          "line": 157,
+          "function": "test_redactor_replaces_known_shapes"
+        }
+      ],
+      "componentIsAlphabetSequence": true,
+      "viewLength": 71
+    },
+    {
+      "mode": "current",
+      "kind": "named secret assignment",
+      "sha256": "9177a001c5871a5d722c79a9a4784cd8900e143ced57b3c56f4303e59c6587ea",
+      "carrierLine": 157,
+      "redactedShape": "API_KEY=[REDACTED]",
+      "viewContainsEscapes": false,
+      "redactedView": "Authorization: [REDACTED]\nBearer [REDACTED]\nAPI_KEY=[REDACTED]\n",
+      "matchingSourceLiterals": [
+        {
+          "line": 157,
+          "function": "test_redactor_replaces_known_shapes"
+        }
+      ],
+      "componentIsAlphabetSequence": true,
+      "viewLength": 71
+    },
+    {
+      "mode": "without-unescaped-fast-path",
+      "kind": "bearer credential",
+      "sha256": "56adb9668e74ad2bb590a18eddf3f2fe6f9ba2053011557f518a76cdf13ae1c9",
+      "carrierLine": 157,
+      "redactedShape": "Bearer [REDACTED]",
+      "viewContainsEscapes": false,
+      "redactedView": "Authorization: [REDACTED]\nBearer [REDACTED]\nAPI_KEY=[REDACTED]\n",
+      "matchingSourceLiterals": [
+        {
+          "line": 157,
+          "function": "test_redactor_replaces_known_shapes"
+        }
+      ],
+      "componentIsAlphabetSequence": true,
+      "viewLength": 71
+    },
+    {
+      "mode": "without-unescaped-fast-path",
+      "kind": "named secret assignment",
+      "sha256": "9177a001c5871a5d722c79a9a4784cd8900e143ced57b3c56f4303e59c6587ea",
+      "carrierLine": 157,
+      "redactedShape": "API_KEY=[REDACTED]",
+      "viewContainsEscapes": false,
+      "redactedView": "Authorization: [REDACTED]\nBearer [REDACTED]\nAPI_KEY=[REDACTED]\n",
+      "matchingSourceLiterals": [
+        {
+          "line": 157,
+          "function": "test_redactor_replaces_known_shapes"
+        }
+      ],
+      "componentIsAlphabetSequence": true,
+      "viewLength": 71
+    }
+  ]
+}

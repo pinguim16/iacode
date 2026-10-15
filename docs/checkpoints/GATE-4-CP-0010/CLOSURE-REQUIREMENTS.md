@@ -108,10 +108,10 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 | `REQ-0092` | GATE_SPECIFICATION | `canonical:GATE-4#18.2` | yes | `NOT_STARTED` | `NOT_STARTED` | Program state is derived and validated against the checkpoint, Git, remote state, and master plan; contradictory or stale state is refused rather than reconciled silently. |
 | `REQ-0093` | GATE_SPECIFICATION | `canonical:GATE-4#18.3` | yes | `NOT_STARTED` | `NOT_STARTED` | Each Gate slice records step identity, requirements, expected behavior, implementation, tests, functional proof, evidence, and truthful status. |
 | `REQ-0094` | GATE_SPECIFICATION | `canonical:GATE-4#19.1` | yes | `NOT_STARTED` | `NOT_STARTED` | Untrusted project content is data: manifest text, filenames, output, findings, and artifacts cannot alter policy, plan, instruction hierarchy, runner selection, or verdict logic. |
-| `REQ-0095` | GATE_SPECIFICATION | `canonical:GATE-4#19.2` | yes | `NOT_STARTED` | `NOT_STARTED` | Secret scanning runs before evidence persistence and before every push; evidence containing a detected secret is quarantined without exposing the value. |
+| `REQ-0095` | GATE_SPECIFICATION | `canonical:GATE-4#19.2` | yes | `NOT_STARTED` | `NOT_STARTED` | Canonical secret scanning runs before every durable output boundary and every push, including structured JSON and decoded full sandbox streams; detected material and scanner failures are refused without retaining or exposing the value. |
 | `REQ-0096` | GATE_SPECIFICATION | `canonical:GATE-4#19.3` | yes | `NOT_STARTED` | `NOT_STARTED` | Every evaluator artifact records provenance, ownership, license, storage/RAG/training/distillation rights, and `trainingAllowed=false` absent explicit rights evidence. |
 | `REQ-0097` | GATE_SPECIFICATION | `canonical:GATE-4#19.4` | yes | `NOT_STARTED` | `NOT_STARTED` | Current advisory scans cover every delivered dependency lock and refuse unsuppressed Critical or High findings without narrowing the source set. |
-| `REQ-0098` | GATE_SPECIFICATION | `canonical:GATE-4#20.1` | yes | `NOT_STARTED` | `NOT_STARTED` | The repository's one verification command covers evaluator unit, integration, functional, reproduction, recovery, cancellation, timeout, and false-PASS stages in targeted and full modes. |
+| `REQ-0098` | GATE_SPECIFICATION | `canonical:GATE-4#20.1` | yes | `NOT_STARTED` | `NOT_STARTED` | The repository's one verification command covers evaluator unit, integration, functional, reproduction, recovery, cancellation, timeout, false-PASS and pre-durability output-containment proof in targeted and full modes. |
 | `REQ-0099` | GATE_SPECIFICATION | `canonical:GATE-4#20.2` | yes | `NOT_STARTED` | `NOT_STARTED` | Architecture, development, version, entry, and model-usage documents describe the delivered quality engine and its limits rather than planned behavior. |
 | `REQ-0100` | GATE_SPECIFICATION | `canonical:GATE-4#20.3` | yes | `NOT_STARTED` | `NOT_STARTED` | Structural decisions for the quality boundary, immutable evidence/verdict derivation, and project profiles/runners are recorded as indexed ADRs. |
 | `REQ-0101` | GATE_SPECIFICATION | `canonical:GATE-4#20.4` | yes | `NOT_STARTED` | `NOT_STARTED` | The Gate retrospective records reusable lessons, and every important confirmed failure becomes an effective automated guardrail before handoff. |
@@ -223,6 +223,14 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 | `LESSON-REQ-0102` | LESSON | `lesson:LSN-0103` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify adversarial fixtures must hash the complete validated contract |
 | `LESSON-REQ-0103` | LESSON | `lesson:LSN-0104` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify intermediate closure and independent validation must have unambiguous contracts |
 | `LESSON-REQ-0104` | LESSON | `lesson:LSN-0105` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify new behavioral tests must satisfy the unchanged source-quality contract |
+| `LESSON-REQ-0105` | LESSON | `lesson:LSN-0106` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify a security repair must execute at the causal output boundary, not a similarly shaped branch |
+| `LESSON-REQ-0106` | LESSON | `lesson:LSN-0107` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify an adversarial marker must satisfy the canonical detector before it can judge containment |
+| `LESSON-REQ-0107` | LESSON | `lesson:LSN-0108` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify evidence timestamp transport must preserve RFC3339 rather than a shell locale rendering |
+| `LESSON-REQ-0108` | LESSON | `lesson:LSN-0109` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify regression counts and evidence must exclude only policy-bound live input repositories |
+| `LESSON-REQ-0109` | LESSON | `lesson:LSN-0110` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify a timed-out live proof retains bounded diagnostics before owned cleanup |
+| `LESSON-REQ-0110` | LESSON | `lesson:LSN-0111` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify polling watcher cleanup must preserve completed checks and accepted cancellation |
+| `LESSON-REQ-0111` | LESSON | `lesson:LSN-0112` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify canonical scanner consumers must share transport decoding, not only patterns |
+| `LESSON-REQ-0112` | LESSON | `lesson:LSN-0113` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify stronger delivery controls must follow the immutable subject policy version |
 
 ## Evidence
 
@@ -1263,7 +1271,7 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 ### REQ-0095 - canonical:GATE-4#19.2
 
 - Source reference: docs/GATE-4-CHECKLIST.md row 19.2
-- Description: Secret scanning runs before evidence persistence and before every push; evidence containing a detected secret is quarantined without exposing the value.
+- Description: Canonical secret scanning runs before every durable output boundary and every push, including structured JSON and decoded full sandbox streams; detected material and scanner failures are refused without retaining or exposing the value.
 - Implementation: _none_
 - Test: _none_
 - Negative test: _none_
@@ -1296,7 +1304,7 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 ### REQ-0098 - canonical:GATE-4#20.1
 
 - Source reference: docs/GATE-4-CHECKLIST.md row 20.1
-- Description: The repository's one verification command covers evaluator unit, integration, functional, reproduction, recovery, cancellation, timeout, and false-PASS stages in targeted and full modes.
+- Description: The repository's one verification command covers evaluator unit, integration, functional, reproduction, recovery, cancellation, timeout, false-PASS and pre-durability output-containment proof in targeted and full modes.
 - Implementation: _none_
 - Test: _none_
 - Negative test: _none_
@@ -2518,6 +2526,94 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 
 - Source reference: LESSON-PREFLIGHT.json LESSON-REQ-0104
 - Description: Verify new behavioral tests must satisfy the unchanged source-quality contract
+- Implementation: _none_
+- Test: _none_
+- Negative test: _none_
+- Documentation: _none_
+- Validation: _none_
+- Guardrail: _none_
+
+### LESSON-REQ-0105 - lesson:LSN-0106
+
+- Source reference: LESSON-PREFLIGHT.json LESSON-REQ-0105
+- Description: Verify a security repair must execute at the causal output boundary, not a similarly shaped branch
+- Implementation: _none_
+- Test: _none_
+- Negative test: _none_
+- Documentation: _none_
+- Validation: _none_
+- Guardrail: _none_
+
+### LESSON-REQ-0106 - lesson:LSN-0107
+
+- Source reference: LESSON-PREFLIGHT.json LESSON-REQ-0106
+- Description: Verify an adversarial marker must satisfy the canonical detector before it can judge containment
+- Implementation: _none_
+- Test: _none_
+- Negative test: _none_
+- Documentation: _none_
+- Validation: _none_
+- Guardrail: _none_
+
+### LESSON-REQ-0107 - lesson:LSN-0108
+
+- Source reference: LESSON-PREFLIGHT.json LESSON-REQ-0107
+- Description: Verify evidence timestamp transport must preserve RFC3339 rather than a shell locale rendering
+- Implementation: _none_
+- Test: _none_
+- Negative test: _none_
+- Documentation: _none_
+- Validation: _none_
+- Guardrail: _none_
+
+### LESSON-REQ-0108 - lesson:LSN-0109
+
+- Source reference: LESSON-PREFLIGHT.json LESSON-REQ-0108
+- Description: Verify regression counts and evidence must exclude only policy-bound live input repositories
+- Implementation: _none_
+- Test: _none_
+- Negative test: _none_
+- Documentation: _none_
+- Validation: _none_
+- Guardrail: _none_
+
+### LESSON-REQ-0109 - lesson:LSN-0110
+
+- Source reference: LESSON-PREFLIGHT.json LESSON-REQ-0109
+- Description: Verify a timed-out live proof retains bounded diagnostics before owned cleanup
+- Implementation: _none_
+- Test: _none_
+- Negative test: _none_
+- Documentation: _none_
+- Validation: _none_
+- Guardrail: _none_
+
+### LESSON-REQ-0110 - lesson:LSN-0111
+
+- Source reference: LESSON-PREFLIGHT.json LESSON-REQ-0110
+- Description: Verify polling watcher cleanup must preserve completed checks and accepted cancellation
+- Implementation: _none_
+- Test: _none_
+- Negative test: _none_
+- Documentation: _none_
+- Validation: _none_
+- Guardrail: _none_
+
+### LESSON-REQ-0111 - lesson:LSN-0112
+
+- Source reference: LESSON-PREFLIGHT.json LESSON-REQ-0111
+- Description: Verify canonical scanner consumers must share transport decoding, not only patterns
+- Implementation: _none_
+- Test: _none_
+- Negative test: _none_
+- Documentation: _none_
+- Validation: _none_
+- Guardrail: _none_
+
+### LESSON-REQ-0112 - lesson:LSN-0113
+
+- Source reference: LESSON-PREFLIGHT.json LESSON-REQ-0112
+- Description: Verify stronger delivery controls must follow the immutable subject policy version
 - Implementation: _none_
 - Test: _none_
 - Negative test: _none_

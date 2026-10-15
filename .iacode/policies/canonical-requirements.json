@@ -5248,9 +5248,9 @@
         {
           "key": "19.2",
           "section": "19. Security and provenance",
-          "description": "Secret scanning runs before evidence persistence and before every push; evidence containing a detected secret is quarantined without exposing the value.",
-          "artifact": "`services/evaluator/src/iacode_evaluator/evidence.py`, `scripts/development-ledger/secret_scan.py`",
-          "evidence": "`QualitySecretContainmentTests`; recorded staged scans.",
+          "description": "Canonical secret scanning runs before every durable output boundary and every push, including structured JSON and decoded full sandbox streams; detected material and scanner failures are refused without retaining or exposing the value.",
+          "artifact": "`services/evaluator/src/iacode_evaluator/evidence.py`, `services/sandbox/src/iacode_sandbox/output_security.py`, `packages/common/src/iacode_common/secret_scanning.py`, `scripts/development-ledger/secret_scan.py`",
+          "evidence": "`QualitySecretContainmentTests`; Recorded functional acceptance with real output/history/object-store proof; recorded staged scans.",
           "mandatory": true
         },
         {
@@ -5272,7 +5272,7 @@
         {
           "key": "20.1",
           "section": "20. Verification, documentation, and closure",
-          "description": "The repository's one verification command covers evaluator unit, integration, functional, reproduction, recovery, cancellation, timeout, and false-PASS stages in targeted and full modes.",
+          "description": "The repository's one verification command covers evaluator unit, integration, functional, reproduction, recovery, cancellation, timeout, false-PASS and pre-durability output-containment proof in targeted and full modes.",
           "artifact": "`scripts/iacode/verify.py`",
           "evidence": "`Gate4VerificationStageTests`; recorded verification.",
           "mandatory": true

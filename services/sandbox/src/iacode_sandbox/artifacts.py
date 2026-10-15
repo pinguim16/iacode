@@ -14,6 +14,7 @@ import io
 from typing import Any, Protocol
 
 from iacode_sandbox.contracts import ArtifactReference
+from iacode_sandbox.output_security import require_safe_bytes
 
 __all__ = ["ArtifactSink", "MemoryArtifactSink", "MinioArtifactSink"]
 
@@ -39,6 +40,7 @@ class MemoryArtifactSink:
     async def put(self, *, run_id: str, tool_request_id: str, name: str, content: bytes,
                   kind: str, content_type: str = "text/plain; charset=utf-8"
                   ) -> ArtifactReference:
+        require_safe_bytes(content)
         key = _key(run_id, tool_request_id, name)
         self.objects[key] = content
         digest = hashlib.sha256(content).hexdigest()
@@ -63,6 +65,7 @@ class MinioArtifactSink:
                   ) -> ArtifactReference:
         import asyncio
 
+        require_safe_bytes(content)
         key = _key(run_id, tool_request_id, name)
         digest = hashlib.sha256(content).hexdigest()
         await asyncio.to_thread(self.client.put_object, self.bucket, key, io.BytesIO(content),

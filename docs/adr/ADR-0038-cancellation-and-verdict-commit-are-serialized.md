@@ -20,8 +20,9 @@ verdict derivation. Both stores refuse a non-FAIL verdict once cancellation has 
 
 Cancellation acceptance and immutable verdict commitment share the run-row lock in PostgreSQL.
 If cancellation wins, verdict commitment must be FAIL; a stale PASS derivation is refused and the
-workflow resumes the cancellation path. If verdict commitment wins, subsequent cancellation is
-refused with CANCELLATION_WINDOW_CLOSED (HTTP 409) before any cancellation event or signal. The
+workflow resumes the cancellation path. If verdict commitment wins while the run is still
+finalizing, cancellation is refused with CANCELLATION_WINDOW_CLOSED (HTTP 409) before any event
+or signal. An already-terminal run returns its existing state idempotently. The
 already committed verdict is never overwritten. The memory store enforces the same semantics.
 
 ## Consequences

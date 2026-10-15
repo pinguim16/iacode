@@ -6,6 +6,7 @@ installed and exercised. A separate suite for two modules would be a suite nobod
 
 from __future__ import annotations
 
+import json
 import threading
 import uuid
 
@@ -18,6 +19,7 @@ from iacode_common.redaction import (
     redact_text,
     redact_url,
 )
+from iacode_common.secret_scanning import find_secret_kinds
 
 # The fixtures are assembled rather than written out. A credential-shaped literal in a source file
 # is indistinguishable from a real one to the repository's secret scan, and suppressing that scan
@@ -30,6 +32,63 @@ LEAKED_MESSAGES = (
     ("Authoriz" + "ation: Bearer " + CREDENTIAL, CREDENTIAL),
     ("connecting to postgresql://u:" + CREDENTIAL + "@host:5432/db", CREDENTIAL),
 )
+
+
+def test_canonical_detection_survives_json_newline_and_unicode_transport() -> None:
+    marker = "gh" + "p_" + "m" * 20
+    assert find_secret_kinds(marker)
+    assert find_secret_kinds(json.dumps({"ordinary": "\n" + marker}))
+    encoded = json.dumps({"ordinary": marker}).replace("g", "\\u0067", 1)
+    assert find_secret_kinds(encoded)
+
+
+def test_canonical_detection_normalizes_escaped_sensitive_json_keys() -> None:
+    encoded = json.dumps({"api_" + "key": "synthetic-value-only"}).replace("a", "\\u0061", 1)
+    assert find_secret_kinds(encoded)
+
+
+def test_canonical_detection_survives_nested_json_transport() -> None:
+    marker = "gh" + "p_" + "m" * 20
+    value = json.dumps({"ordinary": "\n" + marker}).replace("g", "\\u0067", 1)
+    for _layer in range(5):
+        assert find_secret_kinds(value)
+        value = json.dumps({"output": json.dumps(value)})
+
+
+def test_canonical_detection_finds_json_fragments_in_mixed_tool_logs() -> None:
+    marker = "gh" + "p_" + "m" * 20
+    record = json.dumps(json.dumps({"ordinary": "\n" + marker}))
+    assert find_secret_kinds("pytest passed\n" + record + "\nnormal shutdown")
+    assert find_secret_kinds('prefix " incomplete ' + record + " suffix")
+    named = json.dumps({"api_" + "key": "synthetic-value-only"}).replace("a", "\\u0061", 1)
+    assert find_secret_kinds("ordinary prefix " + named + " trailing log")
+
+
+def test_canonical_json_fragment_work_exhaustion_is_explicit_not_a_clean_result() -> None:
+    value = json.dumps("z" * 40000 + "\n")
+    for _layer in range(40):
+        value = '{"ordinary":' + value + '}'
+    with pytest.raises(ValueError, match="work limit"):
+        find_secret_kinds("log prefix " + value)
+    unterminated = 'prefix "' + ('\\"' + 'a' * 1000) * 50
+    with pytest.raises(ValueError, match="work limit"):
+        find_secret_kinds(unterminated)
+
+
+def test_canonical_detection_keeps_clean_json_and_plain_text_usable() -> None:
+    assert find_secret_kinds(json.dumps({"output": "clean\noutput", "count": 1})) == []
+    assert find_secret_kinds("a regular build completed") == []
+
+
+def test_unescaped_lexical_scanning_never_depends_on_json_decoding(monkeypatch) -> None:
+    import iacode_common.secret_scanning as scanning
+
+    def unavailable(_text):
+        raise AssertionError("unescaped text must not require transport decoding")
+
+    monkeypatch.setattr(scanning.json, "loads", unavailable)
+    assert scanning.find_secret_kinds("a clean ordinary log") == []
+    assert scanning.find_secret_kinds("gh" + "p_" + "m" * 20) == ["GitHub credential"]
 
 
 def test_uuid7_is_ordered_and_well_formed() -> None:

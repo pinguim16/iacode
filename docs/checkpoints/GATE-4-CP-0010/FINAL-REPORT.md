@@ -18,7 +18,9 @@ This session carries the implementing history and makes no independence claim.
 
 Durable cancellation/result/verdict race correction; explicit late-cancellation conflict; behavioral
 and real database regressions; owner-authorized milestone cadence reconciliation; indexed
-ADR-0037/0038; Engineering Memory and reconstructible internal review evidence.
+ADR-0037 through ADR-0042; first-durable-boundary output containment; mixed/nested JSON scanning;
+polling-cleanup race correction; policy-bound test discovery; Engineering Memory and reconstructible
+internal review evidence.
 
 ## Files Created
 
@@ -34,6 +36,12 @@ No sealed subject or future-Gate capability is modified.
 The targeted Gate 4 contract and memory-policy controls, rebuilt evaluator suite, lint, real
 PostgreSQL concurrency and live cancellation/cleanup scenario passed. Integral verification and
 the ordered final assurance sequence remain pending; historical results are not new executions.
+The real output proof passed 34 steps with decoded history, MinIO absence, before/after
+clean controls, SQL integration and cleanup (cmd-0119). Subsequent shared-view extraction also has
+145 passing API cases and five publication transport controls. The old published v1 execution is red
+and archived byte-for-byte; required future full verification of the corrected subject supersedes
+it, never isolated greens. Current policy compatibility and the strengthened complete public-history
+scan passed without modifying historical checkpoints or broadly excluding any scan scope.
 
 ## Tests
 

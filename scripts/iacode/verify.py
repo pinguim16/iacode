@@ -417,6 +417,7 @@ def build_stages(fast: bool) -> list[Stage]:
             "the Gate 4 false-PASS battery rejects every mandatory mutation",
             "scripts/development-ledger/gate4_red_team.py",
             "--skip-gate-rebuild",
+            "--execute-output-boundary-proof",
         ),
         python_stage(
             "backup",

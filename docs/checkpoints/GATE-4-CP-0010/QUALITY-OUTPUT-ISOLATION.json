@@ -1,0 +1,510 @@
+{
+  "schemaVersion": "1.0.0",
+  "generatedAt": "2026-10-15T22:44:58.232402Z",
+  "composeProject": "iacode-verify-1997d3b5ed1b",
+  "preRunCleanup": "PASS",
+  "stackExitCode": 0,
+  "scenarioExitCode": 0,
+  "qualityPersistenceExitCode": 0,
+  "scenarioResult": "PASS",
+  "postRunCleanup": "PASS",
+  "sharedProjectUnchanged": true,
+  "sharedBefore": {
+    "project": "iacode",
+    "containers": [
+      {
+        "id": "084884b16929fabca4130098224d8991e04ccac5b2ab340372c66f954eddc4e6",
+        "name": "/iacode-api",
+        "created": "2026-10-11T10:45:26.616780143Z",
+        "imageId": "sha256:4e3fcf1ba3ed80db573e9ba5ab91bae012ed66f3b5f12164639b68a1e57e9346",
+        "declaredImage": "iacode/api:0.1.0",
+        "status": "exited",
+        "startedAt": "2026-10-13T22:53:34.082404626Z",
+        "finishedAt": "2026-10-15T15:38:33.702537387Z",
+        "exitCode": 137,
+        "restartCount": 0,
+        "health": "unhealthy"
+      },
+      {
+        "id": "f435dc20d454cd6f87bd340fc6e436d9e14c6725f08550a7c78a92f67a532683",
+        "name": "/iacode-evaluator",
+        "created": "2026-10-11T10:45:26.795343849Z",
+        "imageId": "sha256:6cec782f69ce1956da76c938173c1e033fdc306ed3e9b7821efb62b5a5eb905c",
+        "declaredImage": "iacode/evaluator:0.1.0",
+        "status": "exited",
+        "startedAt": "2026-10-15T15:37:06.106679534Z",
+        "finishedAt": "2026-10-15T15:38:33.659470439Z",
+        "exitCode": 137,
+        "restartCount": 1152,
+        "health": "unhealthy"
+      },
+      {
+        "id": "f1eff2f32a2dae3862c9a8030fc10ef2083e5a0cbe26d3c3474b90b8f1c85995",
+        "name": "/iacode-grafana",
+        "created": "2026-10-11T10:45:26.474563906Z",
+        "imageId": "sha256:c26daa778ea9fd817be3fe606ba4b78ea4c217a7a27c1ba8f5faa4418ecc48dd",
+        "declaredImage": "grafana/grafana:13.0.9",
+        "status": "exited",
+        "startedAt": "2026-10-13T22:53:34.022473896Z",
+        "finishedAt": "2026-10-15T15:38:30.818840521Z",
+        "exitCode": 0,
+        "restartCount": 0,
+        "health": "unhealthy"
+      },
+      {
+        "id": "db41331b72f2441fbc24fb1efdbf265e0ce036d95fbc6e6a797d16ca0924f861",
+        "name": "/iacode-migrate",
+        "created": "2026-10-11T10:45:26.469825661Z",
+        "imageId": "sha256:4e3fcf1ba3ed80db573e9ba5ab91bae012ed66f3b5f12164639b68a1e57e9346",
+        "declaredImage": "iacode/api:0.1.0",
+        "status": "exited",
+        "startedAt": "2026-10-11T10:45:34.045888465Z",
+        "finishedAt": "2026-10-11T10:45:36.157364249Z",
+        "exitCode": 0,
+        "restartCount": 0,
+        "health": null
+      },
+      {
+        "id": "e3d61392a46d39f3f25cafe34248f9c970e58509c93d3cef06cb1ad856c3cde7",
+        "name": "/iacode-minio",
+        "created": "2026-10-11T10:45:26.312350157Z",
+        "imageId": "sha256:14cea493d9a34af32f524e538b8346cf79f3321eff8e708c1e2960462bd8936e",
+        "declaredImage": "quay.io/minio/minio:RELEASE.2025-09-07T16-13-09Z",
+        "status": "exited",
+        "startedAt": "2026-10-13T22:53:34.003142186Z",
+        "finishedAt": "2026-10-15T15:38:44.192045647Z",
+        "exitCode": 0,
+        "restartCount": 0,
+        "health": "unhealthy"
+      },
+      {
+        "id": "648872625eb0cefd837a04d6b7c436162f88495c04a058314f8ad1b10b40baca",
+        "name": "/iacode-minio-bootstrap",
+        "created": "2026-10-11T10:45:26.399071394Z",
+        "imageId": "sha256:a7fe349ef4bd8521fb8497f55c6042871b2ae640607cf99d9bede5e9bdf11727",
+        "declaredImage": "quay.io/minio/mc:RELEASE.2025-08-13T08-35-41Z",
+        "status": "exited",
+        "startedAt": "2026-10-11T10:45:33.377262925Z",
+        "finishedAt": "2026-10-11T10:45:33.704992211Z",
+        "exitCode": 0,
+        "restartCount": 0,
+        "health": null
+      },
+      {
+        "id": "0a20a920e959720fd1afa32451f5055ade26ba8782fa15f0ce93c529f7e09212",
+        "name": "/iacode-postgres",
+        "created": "2026-10-11T10:45:26.322242548Z",
+        "imageId": "sha256:cf134a767f474095eeba57e0117be8e568e011a63f33fbf252f14c9b760f8e6f",
+        "declaredImage": "pgvector/pgvector:0.8.6-pg17",
+        "status": "exited",
+        "startedAt": "2026-10-13T22:53:34.086149301Z",
+        "finishedAt": "2026-10-15T15:38:44.307610044Z",
+        "exitCode": 0,
+        "restartCount": 0,
+        "health": "unhealthy"
+      },
+      {
+        "id": "85ef8915d075738cd8142b6fd8d114d2fbedc9b7b6c7c360b194abd52969aa13",
+        "name": "/iacode-prometheus",
+        "created": "2026-10-11T10:45:26.330719442Z",
+        "imageId": "sha256:332c2f43e7e389d74d3893b55bb02fbbd684208e681eeb604641d5d769c0fe2a",
+        "declaredImage": "prom/prometheus:v3.5.5",
+        "status": "exited",
+        "startedAt": "2026-10-11T10:45:27.934857836Z",
+        "finishedAt": "2026-10-13T14:20:15.523034701Z",
+        "exitCode": 127,
+        "restartCount": 0,
+        "health": "starting"
+      },
+      {
+        "id": "1786c2851d84e15328d726e7d31e9d7fcc1c34f96f08b7428d8e96a8de8bdd47",
+        "name": "/iacode-redis",
+        "created": "2026-10-11T10:45:26.324250202Z",
+        "imageId": "sha256:8d02c1dc547ea659066d2ca18fce4e80f0a84cfe56a61af2ced2c2a48de3597c",
+        "declaredImage": "redis:8.2.10-alpine",
+        "status": "exited",
+        "startedAt": "2026-10-13T22:53:34.04304283Z",
+        "finishedAt": "2026-10-15T15:38:34.44426306Z",
+        "exitCode": 0,
+        "restartCount": 0,
+        "health": "unhealthy"
+      },
+      {
+        "id": "4ab558622c98ca15e9a786cc592a9f2d749649b5a7cc0b8c4ec0483baac40731",
+        "name": "/iacode-sandbox",
+        "created": "2026-10-11T10:45:26.629043172Z",
+        "imageId": "sha256:f04176312c6bb178c5884f7ad7e42e31880260fa7b65f8a3d979e682b64df2ac",
+        "declaredImage": "iacode/sandbox:0.1.0",
+        "status": "exited",
+        "startedAt": "2026-10-15T15:37:32.931812063Z",
+        "finishedAt": "2026-10-15T15:38:40.622124008Z",
+        "exitCode": 137,
+        "restartCount": 1153,
+        "health": "unhealthy"
+      },
+      {
+        "id": "20892c06d61d6382132642dac7c8e8e78db148da90c62afe0fd3d12fe0296963",
+        "name": "/iacode-temporal",
+        "created": "2026-10-11T10:45:26.486986838Z",
+        "imageId": "sha256:f14912b699cf73015ad5c4fc18d522d4b014db90e794039214dfb7c022c2644f",
+        "declaredImage": "temporalio/auto-setup:1.29.7",
+        "status": "exited",
+        "startedAt": "2026-10-15T15:38:16.833208523Z",
+        "finishedAt": "2026-10-15T15:38:17.435811391Z",
+        "exitCode": 1,
+        "restartCount": 2434,
+        "health": "unhealthy"
+      },
+      {
+        "id": "4309b39493297837a88bdfcbdf3d88fb2c498c336917266999e2c3773008c292",
+        "name": "/iacode-temporal-ui",
+        "created": "2026-10-11T10:45:26.612191643Z",
+        "imageId": "sha256:ff0943fe532b8e33c46cd28b29e81e0ce0b6f55b9ee50a38ef1b437cc4de3fa5",
+        "declaredImage": "temporalio/ui:2.54.1",
+        "status": "exited",
+        "startedAt": "2026-10-13T22:53:34.037963463Z",
+        "finishedAt": "2026-10-15T15:38:30.634583089Z",
+        "exitCode": 2,
+        "restartCount": 0,
+        "health": null
+      },
+      {
+        "id": "aa063691b1b7963d62db3c58b1fbd957387f044c8190b0372d46902d29c4945b",
+        "name": "/iacode-web",
+        "created": "2026-10-11T10:45:26.342252797Z",
+        "imageId": "sha256:9d30399928f027c5889cd373a42f8d4d9577ed0a3ed6b8129767864757a7cf36",
+        "declaredImage": "iacode/web:0.1.0",
+        "status": "exited",
+        "startedAt": "2026-10-13T22:53:33.913980341Z",
+        "finishedAt": "2026-10-15T15:38:30.878171042Z",
+        "exitCode": 0,
+        "restartCount": 0,
+        "health": "unhealthy"
+      },
+      {
+        "id": "00c99897900a3ba2f8b19850869204f3a7a35aab1a26e87462e5d27031223fef",
+        "name": "/iacode-worker",
+        "created": "2026-10-11T10:45:26.612928613Z",
+        "imageId": "sha256:87334077b35855ce77b9c94fad1a8160255ec2ba727ce36cc2bf8230f3599215",
+        "declaredImage": "iacode/worker:0.1.0",
+        "status": "exited",
+        "startedAt": "2026-10-15T15:38:19.847301093Z",
+        "finishedAt": "2026-10-15T15:38:33.692277576Z",
+        "exitCode": 137,
+        "restartCount": 782,
+        "health": "unhealthy"
+      }
+    ],
+    "volumes": [
+      {
+        "name": "iacode_grafana-data",
+        "driver": "local",
+        "createdAt": "2026-10-11T10:45:26Z",
+        "labels": {
+          "com.docker.compose.config-hash": "4f0084deaabcd463ffff942b367e17bc2dba8f0c3dbd3a63698d2af7193c4f4e",
+          "com.docker.compose.project": "iacode",
+          "com.docker.compose.version": "5.5.1",
+          "com.docker.compose.volume": "grafana-data"
+        }
+      },
+      {
+        "name": "iacode_minio-data",
+        "driver": "local",
+        "createdAt": "2026-10-11T10:45:26Z",
+        "labels": {
+          "com.docker.compose.config-hash": "2496cdc20f3dc4bb702ba0bfbc9eb7376d8c3b3c7b05c821dd22ea274d68c82f",
+          "com.docker.compose.project": "iacode",
+          "com.docker.compose.version": "5.5.1",
+          "com.docker.compose.volume": "minio-data"
+        }
+      },
+      {
+        "name": "iacode_postgres-data",
+        "driver": "local",
+        "createdAt": "2026-10-11T10:45:26Z",
+        "labels": {
+          "com.docker.compose.config-hash": "0a2806496e826a37723450ae952d59b181d270f58defdbf4758cc367ee5dd6e3",
+          "com.docker.compose.project": "iacode",
+          "com.docker.compose.version": "5.5.1",
+          "com.docker.compose.volume": "postgres-data"
+        }
+      },
+      {
+        "name": "iacode_prometheus-data",
+        "driver": "local",
+        "createdAt": "2026-10-11T10:45:26Z",
+        "labels": {
+          "com.docker.compose.config-hash": "e962e368d6c03de0699c150d5e07892b828a65105e874446723477d99321ee8e",
+          "com.docker.compose.project": "iacode",
+          "com.docker.compose.version": "5.5.1",
+          "com.docker.compose.volume": "prometheus-data"
+        }
+      }
+    ],
+    "networks": [
+      {
+        "id": "1ff2b9da89c7b328e8422d69e794a21b0dacd7616f3ec80ef5addb98a43770d0",
+        "name": "iacode-network",
+        "created": "2026-10-11T10:45:26.259664976Z",
+        "driver": "bridge",
+        "labels": {
+          "com.docker.compose.config-hash": "b3493eb7608f8b4744148f4985bfd1350fcce00dc471c6b2b0ad3e3ad12c258f",
+          "com.docker.compose.network": "iacode",
+          "com.docker.compose.project": "iacode",
+          "com.docker.compose.version": "5.5.1"
+        }
+      }
+    ],
+    "sha256": "0af8790dd6fdc87dd907714b3fa8a879e8b8ebe7c5401fb83b92466995abe07c"
+  },
+  "sharedAfter": {
+    "project": "iacode",
+    "containers": [
+      {
+        "id": "084884b16929fabca4130098224d8991e04ccac5b2ab340372c66f954eddc4e6",
+        "name": "/iacode-api",
+        "created": "2026-10-11T10:45:26.616780143Z",
+        "imageId": "sha256:4e3fcf1ba3ed80db573e9ba5ab91bae012ed66f3b5f12164639b68a1e57e9346",
+        "declaredImage": "iacode/api:0.1.0",
+        "status": "exited",
+        "startedAt": "2026-10-13T22:53:34.082404626Z",
+        "finishedAt": "2026-10-15T15:38:33.702537387Z",
+        "exitCode": 137,
+        "restartCount": 0,
+        "health": "unhealthy"
+      },
+      {
+        "id": "f435dc20d454cd6f87bd340fc6e436d9e14c6725f08550a7c78a92f67a532683",
+        "name": "/iacode-evaluator",
+        "created": "2026-10-11T10:45:26.795343849Z",
+        "imageId": "sha256:6cec782f69ce1956da76c938173c1e033fdc306ed3e9b7821efb62b5a5eb905c",
+        "declaredImage": "iacode/evaluator:0.1.0",
+        "status": "exited",
+        "startedAt": "2026-10-15T15:37:06.106679534Z",
+        "finishedAt": "2026-10-15T15:38:33.659470439Z",
+        "exitCode": 137,
+        "restartCount": 1152,
+        "health": "unhealthy"
+      },
+      {
+        "id": "f1eff2f32a2dae3862c9a8030fc10ef2083e5a0cbe26d3c3474b90b8f1c85995",
+        "name": "/iacode-grafana",
+        "created": "2026-10-11T10:45:26.474563906Z",
+        "imageId": "sha256:c26daa778ea9fd817be3fe606ba4b78ea4c217a7a27c1ba8f5faa4418ecc48dd",
+        "declaredImage": "grafana/grafana:13.0.9",
+        "status": "exited",
+        "startedAt": "2026-10-13T22:53:34.022473896Z",
+        "finishedAt": "2026-10-15T15:38:30.818840521Z",
+        "exitCode": 0,
+        "restartCount": 0,
+        "health": "unhealthy"
+      },
+      {
+        "id": "db41331b72f2441fbc24fb1efdbf265e0ce036d95fbc6e6a797d16ca0924f861",
+        "name": "/iacode-migrate",
+        "created": "2026-10-11T10:45:26.469825661Z",
+        "imageId": "sha256:4e3fcf1ba3ed80db573e9ba5ab91bae012ed66f3b5f12164639b68a1e57e9346",
+        "declaredImage": "iacode/api:0.1.0",
+        "status": "exited",
+        "startedAt": "2026-10-11T10:45:34.045888465Z",
+        "finishedAt": "2026-10-11T10:45:36.157364249Z",
+        "exitCode": 0,
+        "restartCount": 0,
+        "health": null
+      },
+      {
+        "id": "e3d61392a46d39f3f25cafe34248f9c970e58509c93d3cef06cb1ad856c3cde7",
+        "name": "/iacode-minio",
+        "created": "2026-10-11T10:45:26.312350157Z",
+        "imageId": "sha256:14cea493d9a34af32f524e538b8346cf79f3321eff8e708c1e2960462bd8936e",
+        "declaredImage": "quay.io/minio/minio:RELEASE.2025-09-07T16-13-09Z",
+        "status": "exited",
+        "startedAt": "2026-10-13T22:53:34.003142186Z",
+        "finishedAt": "2026-10-15T15:38:44.192045647Z",
+        "exitCode": 0,
+        "restartCount": 0,
+        "health": "unhealthy"
+      },
+      {
+        "id": "648872625eb0cefd837a04d6b7c436162f88495c04a058314f8ad1b10b40baca",
+        "name": "/iacode-minio-bootstrap",
+        "created": "2026-10-11T10:45:26.399071394Z",
+        "imageId": "sha256:a7fe349ef4bd8521fb8497f55c6042871b2ae640607cf99d9bede5e9bdf11727",
+        "declaredImage": "quay.io/minio/mc:RELEASE.2025-08-13T08-35-41Z",
+        "status": "exited",
+        "startedAt": "2026-10-11T10:45:33.377262925Z",
+        "finishedAt": "2026-10-11T10:45:33.704992211Z",
+        "exitCode": 0,
+        "restartCount": 0,
+        "health": null
+      },
+      {
+        "id": "0a20a920e959720fd1afa32451f5055ade26ba8782fa15f0ce93c529f7e09212",
+        "name": "/iacode-postgres",
+        "created": "2026-10-11T10:45:26.322242548Z",
+        "imageId": "sha256:cf134a767f474095eeba57e0117be8e568e011a63f33fbf252f14c9b760f8e6f",
+        "declaredImage": "pgvector/pgvector:0.8.6-pg17",
+        "status": "exited",
+        "startedAt": "2026-10-13T22:53:34.086149301Z",
+        "finishedAt": "2026-10-15T15:38:44.307610044Z",
+        "exitCode": 0,
+        "restartCount": 0,
+        "health": "unhealthy"
+      },
+      {
+        "id": "85ef8915d075738cd8142b6fd8d114d2fbedc9b7b6c7c360b194abd52969aa13",
+        "name": "/iacode-prometheus",
+        "created": "2026-10-11T10:45:26.330719442Z",
+        "imageId": "sha256:332c2f43e7e389d74d3893b55bb02fbbd684208e681eeb604641d5d769c0fe2a",
+        "declaredImage": "prom/prometheus:v3.5.5",
+        "status": "exited",
+        "startedAt": "2026-10-11T10:45:27.934857836Z",
+        "finishedAt": "2026-10-13T14:20:15.523034701Z",
+        "exitCode": 127,
+        "restartCount": 0,
+        "health": "starting"
+      },
+      {
+        "id": "1786c2851d84e15328d726e7d31e9d7fcc1c34f96f08b7428d8e96a8de8bdd47",
+        "name": "/iacode-redis",
+        "created": "2026-10-11T10:45:26.324250202Z",
+        "imageId": "sha256:8d02c1dc547ea659066d2ca18fce4e80f0a84cfe56a61af2ced2c2a48de3597c",
+        "declaredImage": "redis:8.2.10-alpine",
+        "status": "exited",
+        "startedAt": "2026-10-13T22:53:34.04304283Z",
+        "finishedAt": "2026-10-15T15:38:34.44426306Z",
+        "exitCode": 0,
+        "restartCount": 0,
+        "health": "unhealthy"
+      },
+      {
+        "id": "4ab558622c98ca15e9a786cc592a9f2d749649b5a7cc0b8c4ec0483baac40731",
+        "name": "/iacode-sandbox",
+        "created": "2026-10-11T10:45:26.629043172Z",
+        "imageId": "sha256:f04176312c6bb178c5884f7ad7e42e31880260fa7b65f8a3d979e682b64df2ac",
+        "declaredImage": "iacode/sandbox:0.1.0",
+        "status": "exited",
+        "startedAt": "2026-10-15T15:37:32.931812063Z",
+        "finishedAt": "2026-10-15T15:38:40.622124008Z",
+        "exitCode": 137,
+        "restartCount": 1153,
+        "health": "unhealthy"
+      },
+      {
+        "id": "20892c06d61d6382132642dac7c8e8e78db148da90c62afe0fd3d12fe0296963",
+        "name": "/iacode-temporal",
+        "created": "2026-10-11T10:45:26.486986838Z",
+        "imageId": "sha256:f14912b699cf73015ad5c4fc18d522d4b014db90e794039214dfb7c022c2644f",
+        "declaredImage": "temporalio/auto-setup:1.29.7",
+        "status": "exited",
+        "startedAt": "2026-10-15T15:38:16.833208523Z",
+        "finishedAt": "2026-10-15T15:38:17.435811391Z",
+        "exitCode": 1,
+        "restartCount": 2434,
+        "health": "unhealthy"
+      },
+      {
+        "id": "4309b39493297837a88bdfcbdf3d88fb2c498c336917266999e2c3773008c292",
+        "name": "/iacode-temporal-ui",
+        "created": "2026-10-11T10:45:26.612191643Z",
+        "imageId": "sha256:ff0943fe532b8e33c46cd28b29e81e0ce0b6f55b9ee50a38ef1b437cc4de3fa5",
+        "declaredImage": "temporalio/ui:2.54.1",
+        "status": "exited",
+        "startedAt": "2026-10-13T22:53:34.037963463Z",
+        "finishedAt": "2026-10-15T15:38:30.634583089Z",
+        "exitCode": 2,
+        "restartCount": 0,
+        "health": null
+      },
+      {
+        "id": "aa063691b1b7963d62db3c58b1fbd957387f044c8190b0372d46902d29c4945b",
+        "name": "/iacode-web",
+        "created": "2026-10-11T10:45:26.342252797Z",
+        "imageId": "sha256:9d30399928f027c5889cd373a42f8d4d9577ed0a3ed6b8129767864757a7cf36",
+        "declaredImage": "iacode/web:0.1.0",
+        "status": "exited",
+        "startedAt": "2026-10-13T22:53:33.913980341Z",
+        "finishedAt": "2026-10-15T15:38:30.878171042Z",
+        "exitCode": 0,
+        "restartCount": 0,
+        "health": "unhealthy"
+      },
+      {
+        "id": "00c99897900a3ba2f8b19850869204f3a7a35aab1a26e87462e5d27031223fef",
+        "name": "/iacode-worker",
+        "created": "2026-10-11T10:45:26.612928613Z",
+        "imageId": "sha256:87334077b35855ce77b9c94fad1a8160255ec2ba727ce36cc2bf8230f3599215",
+        "declaredImage": "iacode/worker:0.1.0",
+        "status": "exited",
+        "startedAt": "2026-10-15T15:38:19.847301093Z",
+        "finishedAt": "2026-10-15T15:38:33.692277576Z",
+        "exitCode": 137,
+        "restartCount": 782,
+        "health": "unhealthy"
+      }
+    ],
+    "volumes": [
+      {
+        "name": "iacode_grafana-data",
+        "driver": "local",
+        "createdAt": "2026-10-11T10:45:26Z",
+        "labels": {
+          "com.docker.compose.config-hash": "4f0084deaabcd463ffff942b367e17bc2dba8f0c3dbd3a63698d2af7193c4f4e",
+          "com.docker.compose.project": "iacode",
+          "com.docker.compose.version": "5.5.1",
+          "com.docker.compose.volume": "grafana-data"
+        }
+      },
+      {
+        "name": "iacode_minio-data",
+        "driver": "local",
+        "createdAt": "2026-10-11T10:45:26Z",
+        "labels": {
+          "com.docker.compose.config-hash": "2496cdc20f3dc4bb702ba0bfbc9eb7376d8c3b3c7b05c821dd22ea274d68c82f",
+          "com.docker.compose.project": "iacode",
+          "com.docker.compose.version": "5.5.1",
+          "com.docker.compose.volume": "minio-data"
+        }
+      },
+      {
+        "name": "iacode_postgres-data",
+        "driver": "local",
+        "createdAt": "2026-10-11T10:45:26Z",
+        "labels": {
+          "com.docker.compose.config-hash": "0a2806496e826a37723450ae952d59b181d270f58defdbf4758cc367ee5dd6e3",
+          "com.docker.compose.project": "iacode",
+          "com.docker.compose.version": "5.5.1",
+          "com.docker.compose.volume": "postgres-data"
+        }
+      },
+      {
+        "name": "iacode_prometheus-data",
+        "driver": "local",
+        "createdAt": "2026-10-11T10:45:26Z",
+        "labels": {
+          "com.docker.compose.config-hash": "e962e368d6c03de0699c150d5e07892b828a65105e874446723477d99321ee8e",
+          "com.docker.compose.project": "iacode",
+          "com.docker.compose.version": "5.5.1",
+          "com.docker.compose.volume": "prometheus-data"
+        }
+      }
+    ],
+    "networks": [
+      {
+        "id": "1ff2b9da89c7b328e8422d69e794a21b0dacd7616f3ec80ef5addb98a43770d0",
+        "name": "iacode-network",
+        "created": "2026-10-11T10:45:26.259664976Z",
+        "driver": "bridge",
+        "labels": {
+          "com.docker.compose.config-hash": "b3493eb7608f8b4744148f4985bfd1350fcce00dc471c6b2b0ad3e3ad12c258f",
+          "com.docker.compose.network": "iacode",
+          "com.docker.compose.project": "iacode",
+          "com.docker.compose.version": "5.5.1"
+        }
+      }
+    ],
+    "sha256": "0af8790dd6fdc87dd907714b3fa8a879e8b8ebe7c5401fb83b92466995abe07c"
+  },
+  "ownedProjectRemoved": true,
+  "result": "PASS"
+}

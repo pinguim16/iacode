@@ -37,9 +37,10 @@ recorded, and only then does the run become `CANCELLED`. Late callbacks are refu
 
 Cancellation acceptance and immutable verdict commitment are serialized on the run row. Accepted
 cancellation is authoritative even if the workflow signal is delayed or a normal sandbox response
-races the result write; the derived verdict is FAIL. If the immutable verdict was already committed,
-the cancellation endpoint returns HTTP 409 `CANCELLATION_WINDOW_CLOSED` without accepting or
-signalling cancellation. The existing verdict and results are never rewritten. A persistence race
+races the result write; the derived verdict is FAIL. If the immutable verdict was already committed
+but the run is still finalizing, the endpoint returns HTTP 409 `CANCELLATION_WINDOW_CLOSED` without
+accepting or signalling cancellation. An already-terminal run returns its existing state
+idempotently. The existing verdict and results are never rewritten. A persistence race
 may leave the interrupted check without a result; missing mandatory evidence also derives FAIL.
 
 Temporal owns workflow durability. Restarting `iacode-evaluator` recreates workflow state from
@@ -48,6 +49,12 @@ whole-run deadlines come from the frozen policy. A deadline still produces a ter
 evidence, verdict, and state transition.
 
 ## Evidence and reproduction
+
+Sandbox output is checked before its first durable boundary: structured results, decoded full
+streams and workspace diagnostics cannot reach object storage, session failure records or Temporal
+history with canonical prohibited material. JSON transport is decoded through nested string layers.
+Refusal uses `SANDBOX_OUTPUT_SECRET_DETECTED` or `SANDBOX_OUTPUT_SECRET_SCAN_FAILED` and never
+returns rejected values. Every full stream is checked before the first stream can be uploaded.
 
 Complete redacted check output is serialized and scanned with the canonical credential taxonomy
 before any content-addressed lookup, object upload, or metadata commit. A detected secret or a

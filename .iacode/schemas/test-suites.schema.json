@@ -51,6 +51,19 @@
         "purpose": {
           "type": "string",
           "minLength": 1
+        },
+        "inputRepositories": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["root", "collectionIgnoreGlob", "notCountedReason"],
+            "properties": {
+              "root": {"type": "string", "minLength": 1},
+              "collectionIgnoreGlob": {"type": "string", "minLength": 1},
+              "notCountedReason": {"type": "string", "minLength": 1}
+            },
+            "additionalProperties": false
+          }
         }
       },
       "additionalProperties": false

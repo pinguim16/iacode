@@ -1323,19 +1323,26 @@
     },
     {
       "guardrailId": "GRD-0092",
-      "title": "Quality evidence rejects canonical secret shapes before persistence",
+      "title": "Canonical output containment precedes every durable sandbox and quality boundary",
       "kind": "test",
       "reference": "test_canonical_secret_is_rejected_before_any_durable_operation",
       "verifiedBy": [
         "test_canonical_secret_is_rejected_before_any_durable_operation",
         "test_scanner_failure_is_fail_closed_before_any_durable_operation",
         "test_secret_bearing_legacy_object_cannot_resolve",
-        "test_secret_bearing_execution_is_contained_and_derives_fail"
+        "test_secret_bearing_execution_is_contained_and_derives_fail",
+        "test_canonical_secret_output_is_rejected_before_durable_delivery",
+        "test_canonical_secret_output_never_becomes_the_activity_response",
+        "test_live_secret_beyond_inline_limit_creates_no_full_output_artifact",
+        "test_json_escaped_secret_is_refused_before_persistence_and_after_legacy_read",
+        "test_canonical_secret_output_json_in_mixed_logs_is_rejected",
+        "test_canonical_detection_finds_json_fragments_in_mixed_tool_logs",
+        "test_canonical_json_fragment_work_exhaustion_is_explicit_not_a_clean_result"
       ],
       "lessons": [
         "LSN-0091"
       ],
-      "removingItWouldAllow": "Credential-shaped bytes recognized by the canonical scanner to enter immutable Quality Engine evidence, resolve successfully, and support a verdict."
+      "removingItWouldAllow": "Canonical credential-shaped output, including JSON escapes and decoded full streams, to enter sandbox objects or Temporal history before evaluator scanning."
     },
     {
       "guardrailId": "GRD-0093",
@@ -1526,6 +1533,74 @@
       "verifiedBy": ["test_mandatory_lint_covers_every_python_project_root"],
       "lessons": ["LSN-0105"],
       "removingItWouldAllow": "New behavioral tests to be published with unmeasured formatting or static-analysis failures."
+    },
+    {
+      "guardrailId": "GRD-0107",
+      "title": "Security containment executes at the actual service output boundary",
+      "kind": "test",
+      "reference": "test_canonical_secret_output_is_rejected_before_durable_delivery",
+      "verifiedBy": ["test_canonical_secret_output_is_rejected_before_durable_delivery", "test_canonical_secret_output_never_becomes_the_activity_response"],
+      "lessons": ["LSN-0106"],
+      "removingItWouldAllow": "A guard placed in a similarly named provisioning response branch to leave the actual result path unprotected."
+    },
+    {
+      "guardrailId": "GRD-0108",
+      "title": "The live adverse marker satisfies the canonical detection premise",
+      "kind": "test",
+      "reference": "test_live_secret_beyond_inline_limit_creates_no_full_output_artifact",
+      "verifiedBy": ["test_live_secret_beyond_inline_limit_creates_no_full_output_artifact", "test_canonical_secret_output_clean_control_keeps_both_streams_unchanged"],
+      "lessons": ["LSN-0107"],
+      "removingItWouldAllow": "An unrecognized synthetic input to masquerade as a test of the secret-containment boundary."
+    },
+    {
+      "guardrailId": "GRD-0109",
+      "title": "Lesson timestamp transport preserves canonical RFC3339",
+      "kind": "test",
+      "reference": "test_lesson_timestamp_transport_rejects_locale_rendering",
+      "verifiedBy": ["test_lesson_timestamp_transport_rejects_locale_rendering"],
+      "lessons": ["LSN-0108"],
+      "removingItWouldAllow": "Locale-rendered shell DateTime values to enter evidence metadata instead of the original command timestamp."
+    },
+    {
+      "guardrailId": "GRD-0110",
+      "title": "Count and evidence exclusions equal canonical runner collection",
+      "kind": "test",
+      "reference": "test_only_declared_runner_exclusions_leave_both_count_and_evidence",
+      "verifiedBy": ["test_only_declared_runner_exclusions_leave_both_count_and_evidence", "test_a_registry_exclusion_cannot_remove_a_runner_collected_test", "test_policy_count_matches_collected_suite_not_live_input_projects"],
+      "lessons": ["LSN-0109"],
+      "removingItWouldAllow": "Uncollected live input repositories to inflate regression totals, or policy-only exclusions to remove collected tests."
+    },
+    {
+      "guardrailId": "GRD-0111",
+      "title": "A clean-control timeout remains red with bounded pre-cleanup diagnostics",
+      "kind": "test",
+      "reference": "test_live_output_control_timeout_retains_bounded_diagnostics_and_stays_red",
+      "verifiedBy": ["test_live_output_control_timeout_retains_bounded_diagnostics_and_stays_red", "test_live_output_adverse_timeout_retains_diagnostics_and_stays_red"],
+      "lessons": ["LSN-0110"],
+      "removingItWouldAllow": "An exception before report writing to erase the causal observations when owned-stack cleanup removes the ephemeral runtime."
+    },
+    {
+      "guardrailId": "GRD-0112",
+      "title": "Polling cleanup distinguishes owned cancellation from real or precompleted failure",
+      "kind": "test",
+      "reference": "test_completed_check_joins_cancelled_durable_read_without_cancelling_run",
+      "verifiedBy": ["test_completed_check_joins_cancelled_durable_read_without_cancelling_run", "test_unrelated_watcher_failure_is_not_hidden_by_join_cleanup", "test_precompleted_watcher_cancellation_is_not_claimed_as_own_cleanup", "test_durable_read_completion_after_handle_clear_keeps_cancellation_authoritative"],
+      "lessons": ["LSN-0098", "LSN-0111"],
+      "removingItWouldAllow": "A completed check or accepted cancellation to be lost during poller cleanup, or an unrelated polling read failure to be silently treated as expected cleanup."
+    },
+    {
+      "guardrailId": "GRD-0113", "title": "Publication and runtime share bounded transport interpretation",
+      "kind": "test", "reference": "PublicationTransportScanningTests",
+      "verifiedBy": ["test_publication_scan_rejects_nested_json_in_mixed_logs", "test_raw_allowlist_cannot_mask_another_encoded_value_of_the_same_kind", "test_reviewed_url_component_remains_allowed_after_json_transport", "test_encoded_allowlist_matches_only_the_reviewed_component", "test_clean_mixed_transport_stays_usable"],
+      "lessons": ["LSN-0112"],
+      "removingItWouldAllow": "A publication scanner using the same regex names but weaker JSON interpretation to publish material the runtime refuses."
+    },
+    {
+      "guardrailId": "GRD-0114", "title": "Strict current verdict semantics preserve legacy subject contracts",
+      "kind": "test", "reference": "test_live_policy_requires_strict_internal_verdict_semantics",
+      "verifiedBy": ["test_live_policy_requires_strict_internal_verdict_semantics", "test_legacy_internal_red_team_fields_keep_their_subject_policy_semantics", "test_internal_closure_cannot_claim_independent_review_or_red_team", "test_every_sealed_checkpoint_validates_from_its_own_tag"],
+      "lessons": ["LSN-0012", "LSN-0113"],
+      "removingItWouldAllow": "A stronger current guard either to reinterpret immutable historical field semantics or to be bypassed by a live-policy downgrade."
     }
   ]
 }

@@ -68,8 +68,9 @@ investigated. See [ENGINEERING-MEMORY.md](ENGINEERING-MEMORY.md).
 ## External validation cadence
 
 An intermediate Gate closes at `INTERNAL_GATE_PASS` on the project's own controls. Independent
-external validation happens once per milestone, over the group of Gates, and produces
-`MILESTONE_EXTERNAL_PASS`. An internal verdict is never described as independent external
+validation happens once per milestone, over the group of Gates. `MILESTONE_INDEPENDENT_AUDIT_PASS`
+records a later fresh-session audit; `MILESTONE_EXTERNAL_PASS` records cross-tool validation.
+Neither status substitutes for the other. An internal verdict is never described as independent
 validation. An extraordinary audit before the milestone requires `externalAuditRequired` with a
 recorded trigger. See [MILESTONE-VALIDATION.md](MILESTONE-VALIDATION.md).
 

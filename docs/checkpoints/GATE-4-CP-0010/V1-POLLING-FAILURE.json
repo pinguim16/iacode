@@ -1,0 +1,66 @@
+{
+  "runId": "01a141a9-051f-7000-b050-ddf31bc36dcd",
+  "state": "RUNNING",
+  "subjectCommit": "33c3f42c0d5faf112c3e037a55006dd750c4bfe1",
+  "observedAt": "2026-10-15T22:33:54.289277Z",
+  "completedChecks": [
+    {
+      "checkId": "q001-build",
+      "status": "PASSED"
+    },
+    {
+      "checkId": "q002-build",
+      "status": "PASSED"
+    },
+    {
+      "checkId": "q003-build",
+      "status": "PASSED"
+    },
+    {
+      "checkId": "q004-build",
+      "status": "PASSED"
+    },
+    {
+      "checkId": "q005-build",
+      "status": "PASSED"
+    },
+    {
+      "checkId": "q006-build",
+      "status": "PASSED"
+    },
+    {
+      "checkId": "q007-build",
+      "status": "PASSED"
+    },
+    {
+      "checkId": "q008-build",
+      "status": "PASSED"
+    },
+    {
+      "checkId": "q009-build",
+      "status": "PASSED"
+    }
+  ],
+  "observation": {
+    "prohibitedBytesAbsent": true,
+    "payloadsScanned": 151,
+    "workflowStatus": "FAILED",
+    "sandboxObjects": 0,
+    "failures": [
+      {
+        "type": null,
+        "activityType": "iacode_quality_read_run",
+        "cancelled": false,
+        "message": "Activity cancelled"
+      },
+      {
+        "type": null,
+        "activityType": null,
+        "cancelled": true,
+        "message": ""
+      }
+    ],
+    "pendingActivityTypes": [],
+    "containmentRefusals": 0
+  }
+}

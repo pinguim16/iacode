@@ -20,3 +20,12 @@
    specification, lessons, requirements, baseline, design, implementation and complete assurance.
 
 No Gate 5 code belongs in this checkpoint. Stop on unexpected divergence or a real external blocker.
+
+## Security rework amendment
+
+Cmd-0043 reproduced G4-INT-006 while the initial subject's complete verifier was running.
+Preserve that execution as evidence about its exact subject, never as final approval of later
+corrections. Extend LSN-0091/GRD-0092 to the earlier sandbox output and artifact boundaries, prove
+inline, full-stream, error, scanner-failure and clean-control paths, and record the structural
+decision. Run a replacement complete verifier on one new immutable published subject after the
+correction. No partial stage reuse can close this finding.

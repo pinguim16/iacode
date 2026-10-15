@@ -148,8 +148,14 @@ and `externalAuditReason` in `STATE.json`, and a checkpoint offered for review a
 Validation checks that the recorded preflight counts match the artifact, that the milestone
 identifier and gate grouping match the published plan, that an extraordinary audit names a recorded
 trigger, and that the engineering memory itself is valid. `INTERNAL_GATE_PASS` records the project's
-own verdict; only `MILESTONE_EXTERNAL_PASS` records an independent one, and it requires both the
-milestone and the cross-tool validation to be `PASSED`.
+own verdict. `MILESTONE_INDEPENDENT_AUDIT_PASS` records a later fresh-session audit;
+`MILESTONE_EXTERNAL_PASS` records cross-tool validation. Both require a passed milestone and
+attestation-bound validation under their own mechanism. Neither mechanism substitutes for the other.
+
+Memory policy 2.4.0 enforces strict independent-field separation on internal closure. Earlier sealed
+subjects keep their own field semantics, including a Red Team field used for an internal battery;
+compatibility never grants an independent attestation. The live policy cannot be downgraded by an
+invocation. See ADR-0042.
 
 Every completed Gate also produces a retrospective in `.iacode/memory/retrospectives/`.
 

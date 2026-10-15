@@ -52,11 +52,17 @@ RESOLVED_GUARDRAIL_MEMORY_POLICY = "2.2.0"
 # stale, and they keep validating from their own tags under the rules they were written for.
 DERIVED_INDEX_MEMORY_POLICY = "2.3.0"
 
+# 2.4.0 makes independent review/Red Team fields incompatible with internal closure. Older
+# subjects used the Red Team field for their internal battery and retain their declared semantics.
+STRICT_INTERNAL_VERDICT_MEMORY_POLICY = "2.4.0"
+
 RESOLVING_MEMORY_POLICIES = (RESOLVING_MEMORY_POLICY, CONSISTENT_PROSE_MEMORY_POLICY,
-                             RESOLVED_GUARDRAIL_MEMORY_POLICY, DERIVED_INDEX_MEMORY_POLICY)
+                             RESOLVED_GUARDRAIL_MEMORY_POLICY, DERIVED_INDEX_MEMORY_POLICY,
+                             STRICT_INTERNAL_VERDICT_MEMORY_POLICY)
 CONSISTENT_PROSE_MEMORY_POLICIES = RESOLVING_MEMORY_POLICIES[1:]
 RESOLVED_GUARDRAIL_MEMORY_POLICIES = RESOLVING_MEMORY_POLICIES[2:]
 DERIVED_INDEX_MEMORY_POLICIES = RESOLVING_MEMORY_POLICIES[3:]
+STRICT_INTERNAL_VERDICT_MEMORY_POLICIES = RESOLVING_MEMORY_POLICIES[4:]
 
 # The applicability and derivation rules the preflight implements. It is part of the preflight
 # fingerprint, so changing how lessons are selected makes every existing preflight stale.

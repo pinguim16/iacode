@@ -1,0 +1,35 @@
+{
+  "runId": "01a141bc-0e70-7000-8ebd-d8769a02d7b9",
+  "state": "RUNNING",
+  "subjectCommit": null,
+  "observedAt": "2026-10-15T22:43:51.131304Z",
+  "completedChecks": [
+    {
+      "checkId": "q001-build",
+      "status": "PASSED"
+    },
+    {
+      "checkId": "q002-unit",
+      "status": "FAILED"
+    },
+    {
+      "checkId": "q003-lint",
+      "status": "PASSED"
+    },
+    {
+      "checkId": "q004-static",
+      "status": "PASSED"
+    }
+  ],
+  "observation": {
+    "prohibitedBytesAbsent": true,
+    "payloadsScanned": 74,
+    "workflowStatus": "RUNNING",
+    "sandboxObjects": 0,
+    "failures": [],
+    "pendingActivityTypes": [
+      "iacode_sandbox_execute_tool"
+    ],
+    "containmentRefusals": 2
+  }
+}

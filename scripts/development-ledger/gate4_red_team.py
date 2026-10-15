@@ -744,6 +744,7 @@ def _host_attacks(root: Path, checkpoint: Path) -> list[dict[str, Any]]:
         "cancellation": root / "var" / "quality-cancellation.json",
         "timeout": root / "var" / "quality-timeout.json",
         "forged-origin": root / "var" / "sandbox-tool-result-origin.json",
+        "secret-output": root / "var" / "quality-secret-output.json",
     }
     observed: dict[str, str] = {}
     for name, path in reports.items():
@@ -958,6 +959,7 @@ def main() -> int:
     parser.add_argument("--checkpoint", type=Path)
     parser.add_argument("--write", action="store_true")
     parser.add_argument("--skip-gate-rebuild", action="store_true")
+    parser.add_argument("--execute-output-boundary-proof", action="store_true")
     parser.add_argument("--in-image", action="store_true", help=argparse.SUPPRESS)
     arguments = parser.parse_args()
     if arguments.in_image:
@@ -969,6 +971,15 @@ def main() -> int:
     checkpoint = arguments.checkpoint or resolve_latest(root)
     if not checkpoint.is_absolute():
         checkpoint = root / checkpoint
+    if arguments.execute_output_boundary_proof:
+        proof = subprocess.run(
+            [sys.executable, "scripts/iacode/scenarios/quality_engine_e2e.py", "--scenario",
+             "secret-output", "--skip-build", "--report", "var/quality-secret-output.json"],
+            cwd=root, check=False,
+        )
+        if proof.returncode:
+            print("RED_TEAM_FAIL: live output-boundary proof did not pass")
+            return proof.returncode
     observed = run_in_image(root, rebuild=not arguments.skip_gate_rebuild)
     attacks = observed["attacks"] + _host_attacks(root, checkpoint)
     order = {identifier: index for index, identifier in enumerate("ABCDEFGHIJKLMNOPQRST")}

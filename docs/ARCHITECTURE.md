@@ -334,6 +334,12 @@ Stored bytes are downloaded, rescanned, and re-hashed before they can support a 
 [ADR-0030](adr/ADR-0030-quality-evidence-and-verdict-immutability.md), and
 [ADR-0032](adr/ADR-0032-quality-evidence-is-scanned-before-durable-commit.md).
 
+The earlier sandbox boundary also scans structured results, decoded full streams and workspace
+initialization diagnostics before object writes, session failure persistence or Temporal activity
+delivery. The same taxonomy decodes nested JSON transport without relaxing plain-text detection;
+matches and scanner failures return only sanitized failure codes. See
+[ADR-0039](adr/ADR-0039-sandbox-output-is-scanned-before-durable-delivery.md).
+
 PASS requires the exact applicable mandatory result set, every status PASSED and all required
 evidence resolved. Failure, denial, timeout, cancellation, execution error, a missing result or
 stale input is FAIL. Reproduction creates a new run against the original frozen plan; restart and

@@ -25,6 +25,7 @@ exactly the anchored set: no omission, no substitution, and no unexpected anchor
 
 from __future__ import annotations
 
+import ast
 import json
 import re
 from pathlib import Path
@@ -186,6 +187,58 @@ def load_test_suites(root: Path) -> list[dict[str, Any]]:
 def counted_test_suites(root: Path) -> list[dict[str, Any]]:
     """The declared suites whose cases the count derivation and evidence resolution may use."""
     return [suite for suite in load_test_suites(root) if suite.get("counted")]
+
+
+def test_suite_source_files(
+    root: Path, suite: dict[str, Any], pattern: str = "*.py",
+) -> list[Path]:
+    """Source files admitted by policy and the runner's literal input-repository exclusions.
+
+    This is not a caller-selectable denominator. Only the canonical registry declares input
+    repositories, and their exclusions must equal pytest's existing collection configuration.
+    Both the count derivation and evidence resolver use this boundary.
+    """
+    directory = (root / str(suite["root"])).resolve()
+    if not directory.is_dir():
+        return []
+    declared = suite.get("inputRepositories", [])
+    excluded: list[Path] = []
+    globs: set[str] = set()
+    for entry in declared:
+        relative = entry.get("root", "") if isinstance(entry, dict) else ""
+        reason = entry.get("notCountedReason", "") if isinstance(entry, dict) else ""
+        target = (directory / relative).resolve()
+        if (not relative or Path(relative).is_absolute() or ".." in Path(relative).parts
+                or target == directory or not target.is_relative_to(directory) or not reason):
+            raise LedgerError("input repository exclusion must name a justified suite subdirectory")
+        expected_glob = relative.replace("\\", "/").rstrip("/") + "/**"
+        if entry.get("collectionIgnoreGlob") != expected_glob:
+            raise LedgerError("input repository exclusion differs from its collection glob")
+        globs.add(expected_glob)
+        excluded.append(target)
+    conftest = directory / "conftest.py"
+    runner_globs: set[str] = set()
+    if suite.get("framework") == "python-pytest" and conftest.is_file():
+        tree = ast.parse(conftest.read_text(encoding="utf-8"))
+        for node in tree.body:
+            if isinstance(node, ast.Assign) and any(
+                isinstance(target, ast.Name) and target.id == "collect_ignore_glob"
+                for target in node.targets
+            ):
+                try:
+                    values = ast.literal_eval(node.value)
+                except (ValueError, TypeError) as error:
+                    raise LedgerError("pytest input exclusions must be literal policy") from error
+                if not isinstance(values, list) or not all(isinstance(v, str) for v in values):
+                    raise LedgerError("pytest input exclusions must be a literal string list")
+                runner_globs.update(values)
+    if runner_globs != globs:
+        raise LedgerError("test suite input exclusions disagree with pytest collection policy")
+    return sorted(
+        path for path in directory.rglob(pattern)
+        if "__pycache__" not in path.parts
+        and not any(path.is_relative_to(target) for target in excluded)
+    )
 
 
 # --------------------------------------------------------------------------------------------

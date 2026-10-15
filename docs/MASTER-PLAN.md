@@ -6,7 +6,9 @@ Each Gate requires its named previous Gate to have passed. Acceptance requires i
 
 An intermediate Gate closes at `INTERNAL_GATE_PASS` on the project's own controls: the lesson
 preflight, the requirements matrix, the Green Keeper, and the Delivery Completeness Validator.
-Independent external validation happens once per milestone and produces `MILESTONE_EXTERNAL_PASS`.
+Independent validation happens once per milestone. A later fresh-session audit produces
+`MILESTONE_INDEPENDENT_AUDIT_PASS`; cross-tool validation produces `MILESTONE_EXTERNAL_PASS`.
+The accepted mechanisms and their distinct evidence are defined in `MILESTONE-VALIDATION.md`.
 
 | Milestone | Scope | Gates |
 |---|---|---|

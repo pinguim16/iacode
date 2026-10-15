@@ -2,6 +2,9 @@
 
 from __future__ import annotations
 
+import hashlib
+import json
+from dataclasses import replace
 from datetime import UTC, datetime, timedelta
 
 import iacode_evaluator.evidence as evidence_module
@@ -220,6 +223,43 @@ class QualityEvidenceTests:
         assert rejected.value.code == "EVIDENCE_SECRET_DETECTED"
         assert repository.records == {}
         assert objects.objects == {}
+
+    @pytest.mark.asyncio
+    async def test_json_escaped_secret_is_refused_before_persistence_and_after_legacy_read(
+        self, monkeypatch: pytest.MonkeyPatch,
+    ) -> None:
+        objects = MemoryObjectStore()
+        repository = MemoryEvidenceRepository()
+        store = QualityEvidenceStore(
+            client=objects, bucket="iacode-artifacts", repository=repository, now=lambda: NOW,
+        )
+        marker = "gh" + "p_" + "n" * 20
+        content = json.dumps(json.dumps({"ordinary": "\n" + marker})).encode()
+        with pytest.raises(QualityError) as refusal:
+            await store.put(
+                run_id="run-1", result_id=None, kind="report", content=content,
+                media_type="application/json", producer="pytest",
+            )
+        assert refusal.value.code == "EVIDENCE_SECRET_DETECTED"
+        assert objects.objects == {} and repository.records == {}
+        clean = await store.put(
+            run_id="run-1", result_id=None, kind="report", content=b"clean",
+            media_type="text/plain", producer="pytest",
+        )
+        assert await store.resolve(clean)
+        record = next(iter(repository.records.values()))
+        legacy = clean.model_copy(update={
+            "digest": hashlib.sha256(content).hexdigest(), "sizeBytes": len(content),
+        })
+        repository.records.clear()
+        repository.records[(record.run_id, legacy.digest)] = replace(record, contract=legacy)
+        objects.objects[(record.bucket, record.key)] = content
+        # A digest/size mismatch must not be the reason this attack is refused. Deliberately
+        # remove only the scanner inside this fixture, prove acceptance, then restore it.
+        with monkeypatch.context() as removed_control:
+            removed_control.setattr(evidence_module, "find_secret_kinds", lambda _text: [])
+            assert await store.resolve(legacy)
+        assert not await store.resolve(legacy)
 
     @pytest.mark.asyncio
     async def test_scanner_failure_is_fail_closed_before_any_durable_operation(

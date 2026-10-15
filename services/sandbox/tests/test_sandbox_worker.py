@@ -10,6 +10,7 @@ runs it, and the names it answers with are the shared contract's.
 from __future__ import annotations
 
 import asyncio
+import json
 
 from iacode_contracts.sandbox import SANDBOX_AGENT_RESULT_KEY, SANDBOX_EXECUTION_KEY
 from iacode_sandbox import worker
@@ -30,6 +31,17 @@ def execute(payload: dict, backend: FakeBackend) -> dict:
 
 
 class SandboxActivityTests:
+    def test_canonical_secret_output_never_becomes_the_activity_response(self) -> None:
+        marker = "gh" + "p_" + "w" * 20
+        body = execute(request("shell.exec", {"command": "true"}, run_id="r-1"), FakeBackend(
+            responses=[{"ok": True, "result": {
+                "started": True, "exitCode": 0, "stdout": marker,
+            }}]
+        ))
+        assert body[SANDBOX_EXECUTION_KEY]["status"] == "FAILED"
+        assert body[SANDBOX_AGENT_RESULT_KEY]["status"] == "FAILED"
+        assert marker not in json.dumps(body)
+
     def test_the_activity_answers_the_agent_result_and_the_execution(self) -> None:
         backend = FakeBackend(responses=[{"ok": True, "result": {
             "content": "print('ok')\n", "path": "a.py", "size": 12}}])

@@ -2,11 +2,11 @@
 
 - Gate: `GATE-4`
 - Scope: `internal audit and milestone cadence alignment`
-- Technologies: `python`
-- Modules: `evaluator`
-- Generated: `2026-10-15T20:42:54Z`
-- Lessons considered: 105
-- Lessons applicable: 104
+- Technologies: _none declared_
+- Modules: `evaluator`, `sandbox`
+- Generated: `2026-10-15T23:21:26Z`
+- Lessons considered: 113
+- Lessons applicable: 112
 
 Every applicable lesson below is a requirement of this Gate. The derived identifiers must
 appear in `REQUIREMENTS-MATRIX.json`, and the Delivery Completeness Validator fails the
@@ -103,7 +103,7 @@ delivery when one is absent.
 | `LSN-0088` A test inside a built image can consume only inputs copied into that image | `GUARDED` | HIGH | `LESSON-REQ-0087` | Whenever a test runs inside a built image and consumes repository content outside its own copied suite, prove the Dockerfile carries that input and the test resolves the same in-image destination. |
 | `LSN-0089` Domain not-applicability and operational failure need distinct orchestration outcomes | `GUARDED` | HIGH | `LESSON-REQ-0088` | At every optional domain boundary, prove not-applicable conditions return a bounded negative applicability result while operational errors enter a shared failure taxonomy that can write terminal state. |
 | `LSN-0090` A clean-clone control must use only versioned configuration inputs | `GUARDED` | HIGH | `LESSON-REQ-0089` | Every clean-clone or repository control must consume only versioned configuration inputs; ignored developer-local files may not be preconditions for a passing gate. |
-| `LSN-0091` Secret detection must run on the exact bytes at the durable evidence boundary | `GUARDED` | HIGH | `LESSON-REQ-0090` | For every durable evidence boundary, scan the exact serialized bytes with the canonical taxonomy before lookup or write, fail closed when scanning cannot complete, and prove rejected bytes cannot resolve or support a verdict. |
+| `LSN-0091` Secret detection must run on the exact bytes at the durable evidence boundary | `GUARDED` | CRITICAL | `LESSON-REQ-0090` | For every durable evidence boundary, scan the exact serialized bytes with the canonical taxonomy before lookup or write, fail closed when scanning cannot complete, and prove rejected bytes cannot resolve or support a verdict. |
 | `LSN-0092` Canonical audit parsers must consume every bounded sealed report rendering | `GUARDED` | HIGH | `LESSON-REQ-0091` | Whenever a sealed audit introduces a bounded report rendering, prove canonical derivation parses its own findings without importing mentions from historical or closure sections. |
 | `LSN-0093` Disposable control repositories must carry every imported repository package | `GUARDED` | HIGH | `LESSON-REQ-0092` | Whenever a repository tool is copied into a disposable or clean repository, copy every versioned repository package it imports and prove the copied entry point imports from that isolated boundary. |
 | `LSN-0094` A review bundle must include unchanged canonical artifact categories | `GUARDED` | HIGH | `LESSON-REQ-0093` | Build review transport from both the truthful changeset and the tracked canonical review context; do not infer that an unchanged mandatory category is irrelevant. |
@@ -117,7 +117,15 @@ delivery when one is absent.
 | `LSN-0102` Assurance denominators must derive category counts from the current source set | `GUARDED` | HIGH | `LESSON-REQ-0101` | Any assurance partition must derive category counts from its canonical identifier sets instead of maintaining a duplicate literal that can drift. |
 | `LSN-0103` Adversarial fixtures must hash the complete validated contract | `GUARDED` | HIGH | `LESSON-REQ-0102` | Construct the complete canonical verdict before hashing and execute a valid commitment before attributing a refusal to cancellation. |
 | `LSN-0104` Intermediate closure and independent validation must have unambiguous contracts | `GUARDED` | HIGH | `LESSON-REQ-0103` | Keep adapters and live Gate rows aligned with the milestone cadence, preserve internal controls and reject independent verdicts on INTERNAL_GATE_PASS. |
-| `LSN-0105` New behavioral tests must satisfy the unchanged source-quality contract | `GUARDED` | LOW | `LESSON-REQ-0104` | Run the existing mandatory lint over every changed source and test path before publishing; repair formatting without weakening lint or assertions. |
+| `LSN-0105` New behavioral tests must satisfy the unchanged source-quality contract | `GUARDED` | CRITICAL | `LESSON-REQ-0104` | Run the existing mandatory lint over every changed source and test path before publishing; repair formatting without weakening lint or assertions. |
+| `LSN-0106` A security repair must execute at the causal output boundary, not a similarly shaped branch | `GUARDED` | HIGH | `LESSON-REQ-0105` | Bind changes to the intended function and execute its real positive and negative service/activity paths before claiming the repair. |
+| `LSN-0107` An adversarial marker must satisfy the canonical detector before it can judge containment | `GUARDED` | HIGH | `LESSON-REQ-0106` | Prove the generated adverse bytes are recognized by the canonical detector before judging rejection, and retain a clean positive path through the identical execution. |
+| `LSN-0108` Evidence timestamp transport must preserve RFC3339 rather than a shell locale rendering | `GUARDED` | LOW | `LESSON-REQ-0107` | Read the raw command record as JSON and preserve its exact timestamp; validate lesson datetime fields and reject locale renderings before evidence publication. |
+| `LSN-0109` Regression counts and evidence must exclude only policy-bound live input repositories | `GUARDED` | HIGH | `LESSON-REQ-0108` | Declare input repositories in canonical policy with reasons and require exact agreement with literal pytest collection; use one boundary for counts and evidence while retaining every mandatory live scenario. |
+| `LSN-0110` A timed-out live proof retains bounded diagnostics before owned cleanup | `GUARDED` | MEDIUM | `LESSON-REQ-0109` | Keep the deadline unchanged, write a red report with sanitized history failure metadata and pending activity types before cleanup, and never continue adverse cases after a failed clean control. |
+| `LSN-0111` Polling watcher cleanup must preserve completed checks and accepted cancellation | `GUARDED` | HIGH | `LESSON-REQ-0110` | Accept typed activity cancellation only when this cleanup requested it, propagate unrelated and precompleted failures, and recheck active handle lifetime after durable reads without losing the accepted cancellation flag. |
+| `LSN-0112` Canonical scanner consumers must share transport decoding, not only patterns | `GUARDED` | HIGH | `LESSON-REQ-0111` | Use the identical bounded in-memory transport views for runtime and publication, retain exact component-digest review, never expose values, and keep raw/encoded clean and negative controls. |
+| `LSN-0113` Stronger delivery controls must follow the immutable subject policy version | `GUARDED` | HIGH | `LESSON-REQ-0112` | Version the strict invariant in canonical memory policy 2.4.0, require that live policy through a mandatory regression, preserve older subject semantics and validate every affected canonical sealed anchor. |
 
 ## Why each lesson applies
 
@@ -746,7 +754,7 @@ delivery when one is absent.
 
 ### LSN-0091 — Secret detection must run on the exact bytes at the durable evidence boundary
 
-- Reason: applies to every Gate; category security; severity HIGH; already guarded, so the control must keep holding
+- Reason: applies to every Gate; category security; severity CRITICAL; already guarded, so the control must keep holding
 - Required check: For every durable evidence boundary, scan the exact serialized bytes with the canonical taxonomy before lookup or write, fail closed when scanning cannot complete, and prove rejected bytes cannot resolve or support a verdict.
 - Required evidence: A direct zero-write persistence test, a scanner-failure test, a resolution test, and an end-to-end activity attack that derives a failing verdict.
 - Derived requirement: `LESSON-REQ-0090`
@@ -844,7 +852,63 @@ delivery when one is absent.
 
 ### LSN-0105 — New behavioral tests must satisfy the unchanged source-quality contract
 
-- Reason: applies to every Gate; category testing; severity LOW; already guarded, so the control must keep holding
+- Reason: applies to every Gate; category testing; severity CRITICAL; already guarded, so the control must keep holding
 - Required check: Run the existing mandatory lint over every changed source and test path before publishing; repair formatting without weakening lint or assertions.
 - Required evidence: Executed positive/negative controls and the fresh mandatory gate suite; failures stay in the ledger.
 - Derived requirement: `LESSON-REQ-0104`
+
+### LSN-0106 — A security repair must execute at the causal output boundary, not a similarly shaped branch
+
+- Reason: applies to every Gate; category implementation; severity HIGH; already guarded, so the control must keep holding
+- Required check: Bind changes to the intended function and execute its real positive and negative service/activity paths before claiming the repair.
+- Required evidence: A valid positive control, a premise check and behavioral proof at the actual target; the complete current mandatory suite.
+- Derived requirement: `LESSON-REQ-0105`
+
+### LSN-0107 — An adversarial marker must satisfy the canonical detector before it can judge containment
+
+- Reason: applies to every Gate; category testing; severity HIGH; already guarded, so the control must keep holding
+- Required check: Prove the generated adverse bytes are recognized by the canonical detector before judging rejection, and retain a clean positive path through the identical execution.
+- Required evidence: A valid positive control, a premise check and behavioral proof at the actual target; the complete current mandatory suite.
+- Derived requirement: `LESSON-REQ-0106`
+
+### LSN-0108 — Evidence timestamp transport must preserve RFC3339 rather than a shell locale rendering
+
+- Reason: applies to every Gate; category process; severity LOW; already guarded, so the control must keep holding
+- Required check: Read the raw command record as JSON and preserve its exact timestamp; validate lesson datetime fields and reject locale renderings before evidence publication.
+- Required evidence: A valid positive control, a premise check and behavioral proof at the actual target; the complete current mandatory suite.
+- Derived requirement: `LESSON-REQ-0107`
+
+### LSN-0109 — Regression counts and evidence must exclude only policy-bound live input repositories
+
+- Reason: applies to every Gate; category testing; severity HIGH; already guarded, so the control must keep holding
+- Required check: Declare input repositories in canonical policy with reasons and require exact agreement with literal pytest collection; use one boundary for counts and evidence while retaining every mandatory live scenario.
+- Required evidence: A valid positive control, a premise check and behavioral proof at the actual target; the complete current mandatory suite.
+- Derived requirement: `LESSON-REQ-0108`
+
+### LSN-0110 — A timed-out live proof retains bounded diagnostics before owned cleanup
+
+- Reason: applies to every Gate; category testing; severity MEDIUM; already guarded, so the control must keep holding
+- Required check: Keep the deadline unchanged, write a red report with sanitized history failure metadata and pending activity types before cleanup, and never continue adverse cases after a failed clean control.
+- Required evidence: A valid positive control, a premise check and behavioral proof at the actual target; the complete current mandatory suite.
+- Derived requirement: `LESSON-REQ-0109`
+
+### LSN-0111 — Polling watcher cleanup must preserve completed checks and accepted cancellation
+
+- Reason: applies to every Gate; category implementation; severity HIGH; already guarded, so the control must keep holding
+- Required check: Accept typed activity cancellation only when this cleanup requested it, propagate unrelated and precompleted failures, and recheck active handle lifetime after durable reads without losing the accepted cancellation flag.
+- Required evidence: A valid positive control, a premise check and behavioral proof at the actual target; the complete current mandatory suite.
+- Derived requirement: `LESSON-REQ-0110`
+
+### LSN-0112 — Canonical scanner consumers must share transport decoding, not only patterns
+
+- Reason: applies to every Gate; category security; severity HIGH; already guarded, so the control must keep holding
+- Required check: Use the identical bounded in-memory transport views for runtime and publication, retain exact component-digest review, never expose values, and keep raw/encoded clean and negative controls.
+- Required evidence: A valid positive control, a premise check and behavioral proof at the actual target; the complete current mandatory suite.
+- Derived requirement: `LESSON-REQ-0111`
+
+### LSN-0113 — Stronger delivery controls must follow the immutable subject policy version
+
+- Reason: applies to every Gate; category checkpoint; severity HIGH; already guarded, so the control must keep holding
+- Required check: Version the strict invariant in canonical memory policy 2.4.0, require that live policy through a mandatory regression, preserve older subject semantics and validate every affected canonical sealed anchor.
+- Required evidence: A valid positive control, a premise check and behavioral proof at the actual target; the complete current mandatory suite.
+- Derived requirement: `LESSON-REQ-0112`

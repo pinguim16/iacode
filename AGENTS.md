@@ -60,4 +60,4 @@ independence when a single session performs both.
 - A repeat of a guarded failure class is a `GUARDRAIL_FAILURE`; escalate it rather than repairing it quietly.
 - The memory is the project's, not the user's. No personal data, no chain-of-thought, no secrets.
 - As the milestone independent auditor, evaluate the milestone as a whole: accumulated completeness, integration between Gates, architecture, regressions, quality, documentation, lessons and guardrails, Red Team, and the inconsistencies that per-Gate validation cannot see. Findings return to the implementer; do not implement corrections.
-- `INTERNAL_GATE_PASS` is the project's own verdict; only `MILESTONE_EXTERNAL_PASS` records an independent one.
+- `INTERNAL_GATE_PASS` is the project's own verdict. `MILESTONE_INDEPENDENT_AUDIT_PASS` records a later fresh-session audit; `MILESTONE_EXTERNAL_PASS` additionally records cross-tool validation. Neither independent status substitutes for the other.

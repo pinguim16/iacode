@@ -24,6 +24,7 @@ from delivery_assurance import (
 )
 from lessons import (
     RESOLVING_MEMORY_POLICIES,
+    STRICT_INTERNAL_VERDICT_MEMORY_POLICIES,
     guardrail_effectiveness,
     memory_policy_version,
     preflight_staleness,
@@ -1162,7 +1163,8 @@ def _validate_memory_policy(
         errors.append(
             "INTERNAL_GATE_PASS records the project's own verdict; an independently audited PASS "
             f"belongs to {INDEPENDENT_AUDIT_PASS_STATUS} or {EXTERNAL_PASS_STATUS}")
-    if status == "INTERNAL_GATE_PASS":
+    if (status == "INTERNAL_GATE_PASS"
+            and memory_policy_version(root) in STRICT_INTERNAL_VERDICT_MEMORY_POLICIES):
         if isinstance(review, dict) and review.get("status") == "APPROVED":
             errors.append("INTERNAL_GATE_PASS cannot assert independentReview APPROVED")
         if isinstance(red_team, dict) and red_team.get("status") == "RED_TEAM_PASS":

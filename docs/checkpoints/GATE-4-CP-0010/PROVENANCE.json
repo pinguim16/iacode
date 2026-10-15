@@ -15,7 +15,23 @@
         "distillationAllowed": false
       },
       "evidence": "Created by new_checkpoint.py.",
-      "notes": "Review rights before reuse."
+      "notes": "Repository-owned evidence and sanitized historical observations; no source payload, credential or private reasoning is retained. Review rights before reuse."
+    },
+    {
+      "artifact": "Gate 4 corrective source, tests, fixtures, contracts, guardrails and ADRs explicitly declared in FILES.json",
+      "sourceType": "assistant-authored-project-correction",
+      "provider": "OpenAI",
+      "model": "not-exposed",
+      "ownership": "project; pre-existing ownership is preserved",
+      "license": "project-policy; no additional reuse rights asserted",
+      "rights": {
+        "storageAllowed": true,
+        "ragAllowed": false,
+        "trainingAllowed": false,
+        "distillationAllowed": false
+      },
+      "evidence": "Owner-authorized repository work recorded in AUTHORIZATION.md, FILES.json, COMMANDS.jsonl and the relevant ADRs; synthetic fixtures are assembled locally and the historical review records only exact digests and sanitized provenance.",
+      "notes": "No external source content or independent-model approval is claimed. Storage authorization does not imply RAG, training or distillation permission."
     }
   ]
 }

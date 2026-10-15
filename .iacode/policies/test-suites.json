@@ -48,6 +48,13 @@
       "root": "services/evaluator/tests",
       "framework": "python-pytest",
       "counted": true,
+      "inputRepositories": [
+        {
+          "root": "fixtures",
+          "collectionIgnoreGlob": "fixtures/**",
+          "notCountedReason": "Input projects executed by live quality scenarios, including intentional failures, are not evaluator regression cases. The unchanged evaluator conftest already excludes these repositories from pytest collection. Live scenario evidence remains mandatory."
+        }
+      ],
       "purpose": "The Quality Engine: contracts, project profiles, policy, planning, sandbox-only execution, immutable evidence, persistence, lifecycle, APIs, and fail-closed verdicts."
     },
     {

@@ -1,5 +1,11 @@
 # Engineering Memory
 
+The current memory policy is 2.4.0. It inherits the resolved-reference, truthful-status and derived
+index rules and binds strict internal-versus-independent verdict fields to the subject's declared
+policy. Earlier sealed subjects retain their original meanings; this does not grant independence.
+The live policy is protected by a mandatory downgrade regression. See
+[ADR-0042](adr/ADR-0042-internal-verdict-semantics-follow-subject-policy.md).
+
 The IACode engineering memory is the project's record of what its own engineering has learned. It
 lives in [.iacode/memory/](../.iacode/memory/README.md), it belongs to the engineering organization,
 and it is not the user's personal memory. It holds no preferences, no profile, and no private

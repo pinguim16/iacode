@@ -11,6 +11,7 @@ from typing import Any
 from temporalio import workflow
 from temporalio.common import RetryPolicy
 from temporalio.exceptions import ActivityError
+from temporalio.exceptions import CancelledError as TemporalCancelledError
 from temporalio.workflow import ActivityCancellationType
 
 with workflow.unsafe.imports_passed_through():
@@ -176,7 +177,9 @@ class QualityRunWorkflow:
             durable = await self._read_run()
             if durable.get("state") == "CANCELLING":
                 self.cancel_requested = True
-                self._sandbox_activity.cancel()
+                active = self._sandbox_activity
+                if active is not None:
+                    active.cancel()
                 return
 
     async def _record(self, check_id: str, execution: dict[str, Any]) -> dict[str, Any]:
@@ -336,9 +339,17 @@ class QualityRunWorkflow:
                 execution = failed_sandbox_execution(error, cancel_requested=self.cancel_requested)
             finally:
                 self._sandbox_activity = None
-                cancellation_watch.cancel()
+                watch_cancel_requested = cancellation_watch.cancel()
                 with contextlib.suppress(asyncio.CancelledError):
-                    await cancellation_watch
+                    try:
+                        await cancellation_watch
+                    except ActivityError as error:
+                        # A polling read cancelled by this cleanup can finish as a typed
+                        # Temporal activity cancellation rather than asyncio cancellation.
+                        # It is not an operator cancellation and must not discard the check.
+                        if (not watch_cancel_requested
+                                or not isinstance(error.cause, TemporalCancelledError)):
+                            raise
             durable = await self._read_run()
             if durable.get("state") == "CANCELLING":
                 self.cancel_requested = True

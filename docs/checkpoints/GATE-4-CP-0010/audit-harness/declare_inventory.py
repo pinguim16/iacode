@@ -30,25 +30,38 @@ def reason(path: str) -> str:
         return "Anchor immutable sealed predecessor CP0009; historical anchors are preserved."
     if path.startswith(".iacode/memory/"):
         return "Record the internal audit findings, cancellation recurrence and executed guardrails."
+    if path == ".iacode/schemas/memory-policy.schema.json":
+        return "Version strict internal-verdict semantics without retroactively invalidating sealed subject policies."
+    if path == ".iacode/policies/secret-scan-allowlist.json":
+        return "Review only two exact decoded alphabet-sequence redaction-fixture component digests from immutable public test history."
+    if path in {".iacode/policies/test-suites.json", ".iacode/schemas/test-suites.schema.json"}:
+        return "Bind test counts and evidence to canonical runner collection; live input scenarios remain mandatory."
     if path in {".iacode/policies/canonical-requirements.json", "docs/GATE-4-CHECKLIST.md"}:
         return "Reconcile Gate 4 closure cadence under explicit owner authorization without dropping requirement rows."
     if path.startswith("services/evaluator/"):
-        return "Close durable cancellation races at result and verdict persistence with regression proof."
+        return "Close durable cancellation races and prove early output containment with causal fixtures and evidence regressions."
+    if path.startswith("services/sandbox/"):
+        return "Close the Gate 4 integration defect at the earlier sandbox output and durable artifact boundaries."
     if path.startswith("apps/api/"):
-        return "Report rejected late cancellation as HTTP conflict without issuing a workflow signal."
+        return "Prove canonical JSON transport detection and report late cancellation conflicts without workflow signals."
     if path.startswith("tests/") or path.startswith("scripts/development-ledger/"):
         return "Prove and enforce honest internal closure without self-asserted independent verdicts."
+    if path.startswith("scripts/iacode/") or path.startswith("packages/common/"):
+        return "Implement and prove canonical output containment at every Gate 4 durable integration boundary."
     if path.startswith("docs/adr/"):
-        return "Atomically record and index the authorized cadence and cancellation serialization decisions."
+        return "Atomically record and index cadence, cancellation, output-durability and count-policy decisions."
     if path == "docs/runbooks/QUALITY-ENGINE.md":
-        return "Document the precise cancellation acceptance barrier and fail-closed recovery."
+        return "Document cancellation acceptance, fail-closed recovery and the first durable output boundary."
+    if path == "docs/ARCHITECTURE.md":
+        return "Document actual sandbox output containment before evaluator and Temporal durability."
     if path == "docs/checkpoints/LATEST.md":
         return "Advance the live pointer to the internal corrective audit, preserving sealed CP0009."
     if path.startswith("docs/checkpoints/GATE-4-CP-0010/"):
         return "Declare reproducible Gate 4 internal review, correction, assurance and closure evidence."
     if path in {"START-HERE.md", "AGENTS.md", "CLAUDE.md",
                 "docs/CHECKPOINT-PROTOCOL.md", "docs/DEFINITION-OF-DONE.md",
-                "docs/DEVELOPMENT-CONTRACT.md", "docs/HANDOFF-PROTOCOL.md", "docs/QUALITY-GATES.md"}:
+                "docs/DEVELOPMENT-CONTRACT.md", "docs/HANDOFF-PROTOCOL.md", "docs/QUALITY-GATES.md",
+                "docs/MASTER-PLAN.md", "docs/ROADMAP.md", "docs/ENGINEERING-MEMORY.md"}:
         return "Align live contracts and tool adapters with the owner-authorized intermediate milestone cadence."
     raise RuntimeError(f"no authored Gate 4 inventory reason for {path!r}")
 

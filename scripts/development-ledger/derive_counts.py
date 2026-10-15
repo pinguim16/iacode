@@ -37,7 +37,7 @@ from ledger_common import (
     utc_now,
     validate_schema,
 )
-from policies import counted_test_suites
+from policies import counted_test_suites, test_suite_source_files
 
 COUNT_LABELS = ("TESTS", "REQUIREMENTS", "FINDINGS", "ATTACKS", "LESSONS", "GUARDRAILS")
 
@@ -60,7 +60,7 @@ def count_unittest_cases(root: Path, relative: str) -> int:
     return len(identifiers)
 
 
-def count_pytest_cases(root: Path, relative: str) -> int:
+def count_pytest_cases(root: Path, relative: str, *, suite: dict[str, Any] | None = None) -> int:
     """Distinct cases a ``pytest`` suite declares under ``relative``, read rather than executed.
 
     The suite is parsed with ``ast`` for the same reason the evidence resolver parses it: deriving
@@ -76,7 +76,9 @@ def count_pytest_cases(root: Path, relative: str) -> int:
     if not directory.is_dir():
         return 0
     total = 0
-    for path in sorted(directory.rglob("test_*.py")):
+    paths = (test_suite_source_files(root, suite, "test_*.py") if suite is not None
+             else sorted(directory.rglob("test_*.py")))
+    for path in paths:
         if "__pycache__" in path.parts:
             continue
         try:
@@ -106,7 +108,7 @@ def count_test_cases(root: Path) -> int:
         if framework == "python-unittest":
             total += count_unittest_cases(root, relative)
         elif framework == "python-pytest":
-            total += count_pytest_cases(root, relative)
+            total += count_pytest_cases(root, relative, suite=suite)
     return total
 
 

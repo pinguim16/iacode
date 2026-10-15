@@ -98,7 +98,7 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 | `LSN-0088` | `GUARDED` | HIGH | testing | A test inside a built image can consume only inputs copied into that image | `test_built_sandbox_test_image_carries_declared_external_fixture_inputs`, `test_python_functional_fixtures_reach_their_intended_test_outcome` |
 | `LSN-0089` | `GUARDED` | HIGH | architecture | Domain not-applicability and operational failure need distinct orchestration outcomes | `test_agent_quality_classifies_unsupported_and_failed_plans_without_stranding_run` |
 | `LSN-0090` | `GUARDED` | HIGH | testing | A clean-clone control must use only versioned configuration inputs | `test_the_evaluator_service_has_no_engine_socket_or_host_project_mount` |
-| `LSN-0091` | `GUARDED` | HIGH | security | Secret detection must run on the exact bytes at the durable evidence boundary | `test_canonical_secret_is_rejected_before_any_durable_operation`, `test_secret_bearing_execution_is_contained_and_derives_fail` |
+| `LSN-0091` | `GUARDED` | CRITICAL | security | Secret detection must run on the exact bytes at the durable evidence boundary | `test_canonical_secret_is_rejected_before_any_durable_operation`, `test_secret_bearing_execution_is_contained_and_derives_fail` |
 | `LSN-0092` | `GUARDED` | HIGH | tooling | Canonical audit parsers must consume every bounded sealed report rendering | `test_a_blocking_finding_paragraph_in_a_sealed_audit_is_parsed`, `test_blocking_finding_prose_is_bounded_to_its_section` |
 | `LSN-0093` | `GUARDED` | HIGH | testing | Disposable control repositories must carry every imported repository package | `test_disposable_ledger_runtime_carries_its_canonical_scanner_dependency`, `test_full_delivery_assurance_flow_reaches_ready_for_review` |
 | `LSN-0094` | `GUARDED` | HIGH | checkpoint | A review bundle must include unchanged canonical artifact categories | `test_review_context_includes_unchanged_migrations_schemas_and_policies`, `scripts/development-ledger/review_bundle.py` |
@@ -112,7 +112,15 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 | `LSN-0102` | `GUARDED` | HIGH | quality | Assurance denominators must derive category counts from the current source set | `test_corrective_partition_is_derived_from_the_current_reference_set` |
 | `LSN-0103` | `GUARDED` | HIGH | testing | Adversarial fixtures must hash the complete validated contract | `test_verdict_before_cancellation_refuses_late_acceptance` |
 | `LSN-0104` | `GUARDED` | HIGH | process | Intermediate closure and independent validation must have unambiguous contracts | `test_internal_closure_cannot_claim_independent_review_or_red_team` |
-| `LSN-0105` | `GUARDED` | LOW | testing | New behavioral tests must satisfy the unchanged source-quality contract | `test_mandatory_lint_covers_every_python_project_root` |
+| `LSN-0105` | `GUARDED` | CRITICAL | testing | New behavioral tests must satisfy the unchanged source-quality contract | `test_mandatory_lint_covers_every_python_project_root` |
+| `LSN-0106` | `GUARDED` | HIGH | implementation | A security repair must execute at the causal output boundary, not a similarly shaped branch | `test_canonical_secret_output_is_rejected_before_durable_delivery` |
+| `LSN-0107` | `GUARDED` | HIGH | testing | An adversarial marker must satisfy the canonical detector before it can judge containment | `test_live_secret_beyond_inline_limit_creates_no_full_output_artifact` |
+| `LSN-0108` | `GUARDED` | LOW | process | Evidence timestamp transport must preserve RFC3339 rather than a shell locale rendering | `test_lesson_timestamp_transport_rejects_locale_rendering` |
+| `LSN-0109` | `GUARDED` | HIGH | testing | Regression counts and evidence must exclude only policy-bound live input repositories | `test_only_declared_runner_exclusions_leave_both_count_and_evidence` |
+| `LSN-0110` | `GUARDED` | MEDIUM | testing | A timed-out live proof retains bounded diagnostics before owned cleanup | `test_live_output_control_timeout_retains_bounded_diagnostics_and_stays_red` |
+| `LSN-0111` | `GUARDED` | HIGH | implementation | Polling watcher cleanup must preserve completed checks and accepted cancellation | `test_completed_check_joins_cancelled_durable_read_without_cancelling_run`, `test_unrelated_watcher_failure_is_not_hidden_by_join_cleanup` |
+| `LSN-0112` | `GUARDED` | HIGH | security | Canonical scanner consumers must share transport decoding, not only patterns | `PublicationTransportScanningTests` |
+| `LSN-0113` | `GUARDED` | HIGH | checkpoint | Stronger delivery controls must follow the immutable subject policy version | `test_live_policy_requires_strict_internal_verdict_semantics` |
 
 ## Detail
 
@@ -272,7 +280,7 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 
 ### LSN-0012 — Sealed checkpoints and their tags are immutable, and tooling must keep validating them
 
-- Status: `GUARDED`, severity CRITICAL, category git, recurrences 1.
+- Status: `GUARDED`, severity CRITICAL, category git, recurrences 2.
 - Source: SETUP-00, SETUP-00-CP-0002, finding checkpoint protocol.
 - Symptom: Every correction cycle created pressure to edit or retag an earlier checkpoint so the new rules would fit it.
 - Root cause: Control-plane rules evolve while history does not, so without version dispatch a new rule silently invalidates sealed evidence.
@@ -1266,15 +1274,15 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 
 ### LSN-0091 — Secret detection must run on the exact bytes at the durable evidence boundary
 
-- Status: `GUARDED`, severity HIGH, category security, recurrences 0.
+- Status: `GUARDED`, severity CRITICAL, category security, recurrences 1.
 - Source: GATE-4, GATE-4-CP-0002, finding G4-F-001.
 - Symptom: The independent G4-X7 attack sent a credential-shaped value under an ordinary structured key; normal mapping redaction left it intact and the Quality Engine persisted and resolved the serialized evidence.
-- Root cause: Runtime redaction and the canonical repository scanner owned different taxonomies, and the evidence store performed no fail-closed scan of the exact serialized bytes before content-addressed lookup and commit.
+- Root cause: Runtime redaction and the canonical repository scanner owned different taxonomies, and the evidence store performed no fail-closed scan of the exact serialized bytes before content-addressed lookup and commit. CP0010 also reproduced JSON newline and Unicode escapes hiding a marker that the same detector recognizes before serialization.
 - Resolution: Move the canonical credential-shape taxonomy into the shared common package, scan serialized evidence before every lookup or write, refuse scanner failure, recheck downloaded objects during resolution, and persist only a sanitized ERROR result that derives FAIL.
 - Prevention:
   - `test` test_canonical_secret_is_rejected_before_any_durable_operation — A canonical synthetic marker under an ordinary key is refused with zero object and metadata writes.
   - `test` test_secret_bearing_execution_is_contained_and_derives_fail — The exact activity-to-store path terminates as sanitized ERROR and derives FAIL without retaining prohibited bytes.
-- Evidence: `file:docs/checkpoints/GATE-4-CP-0002/REVIEW-REPORT.md`, `file:docs/checkpoints/GATE-4-CP-0002/RED-TEAM-REPORT.md`, `file:packages/common/src/iacode_common/secret_scanning.py`, `file:services/evaluator/src/iacode_evaluator/evidence.py`, `file:services/evaluator/tests/test_persistence.py`, `file:services/evaluator/tests/test_workflow.py`, `file:scripts/development-ledger/gate4_red_team.py`
+- Evidence: `file:docs/checkpoints/GATE-4-CP-0002/REVIEW-REPORT.md`, `file:docs/checkpoints/GATE-4-CP-0002/RED-TEAM-REPORT.md`, `file:packages/common/src/iacode_common/secret_scanning.py`, `file:services/evaluator/src/iacode_evaluator/evidence.py`, `file:services/evaluator/tests/test_persistence.py`, `file:services/evaluator/tests/test_workflow.py`, `file:scripts/development-ledger/gate4_red_team.py`, `file:docs/checkpoints/GATE-4-CP-0010/FINDINGS.json`, `file:docs/checkpoints/GATE-4-CP-0010/COMMANDS.jsonl`, `file:services/sandbox/tests/test_sandbox_service.py`, `file:docs/checkpoints/GATE-4-CP-0010/audit-harness/check_escaped_output.py`
 
 ### LSN-0092 — Canonical audit parsers must consume every bounded sealed report rendering
 
@@ -1354,7 +1362,7 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 
 ### LSN-0098 — Accepted cancellation must be enforced from durable state across activity boundaries
 
-- Status: `GUARDED`, severity CRITICAL, category implementation, recurrences 2.
+- Status: `GUARDED`, severity CRITICAL, category implementation, recurrences 3.
 - Source: GATE-4, GATE-4-CP-0009, finding cmd-0023, cmd-0060 and focused diagnostic cmd-0068.
 - Symptom: Two complete verifiers observed an accepted quality cancellation remain non-terminal for the full 900-second observation bound. The focused cmd-0068 reproduction proved the run was already CANCELLING when a racing sandbox response completed normally; persisting that success was correctly refused as late, and the workflow never reached terminal cancellation.
 - Root cause: The first guard covered one in-memory signal race after CHECK_DISPATCHED but not the whole accepted-cancellation state machine. A flag already set before activity-handle assignment could make the watcher exit without cancelling, and a normal response racing with persisted CANCELLING was recorded before cancellation precedence was applied. The store correctly refused that non-cancelled result, leaving the workflow failed and the run non-terminal.
@@ -1416,7 +1424,7 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 
 ### LSN-0103 — Adversarial fixtures must hash the complete validated contract
 
-- Status: `GUARDED`, severity HIGH, category testing, recurrences 0.
+- Status: `GUARDED`, severity HIGH, category testing, recurrences 1.
 - Source: GATE-4, GATE-4-CP-0010, finding G4-INT-003.
 - Symptom: The new cancellation barrier fixtures were refused for VERDICT_DIGEST_MISMATCH before reaching the intended race.
 - Root cause: The fixture digest omitted contractVersion, a default emitted by model validation.
@@ -1438,11 +1446,100 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 
 ### LSN-0105 — New behavioral tests must satisfy the unchanged source-quality contract
 
-- Status: `GUARDED`, severity LOW, category testing, recurrences 0.
+- Status: `GUARDED`, severity CRITICAL, category testing, recurrences 4.
 - Source: GATE-4, GATE-4-CP-0010, finding G4-INT-004.
 - Symptom: The lint gate refused overlong declarations and expressions in new regression tests.
 - Root cause: Behavioral proof was expanded without checking the source formatting budget first.
 - Resolution: Run the existing mandatory lint over every changed source and test path before publishing; repair formatting without weakening lint or assertions.
 - Prevention:
   - `test` test_mandatory_lint_covers_every_python_project_root — The positive and negative regression must execute the intended boundary with canonical inputs.
+- Evidence: `file:docs/checkpoints/GATE-4-CP-0010/FINDINGS.json`, `file:docs/checkpoints/GATE-4-CP-0010/COMMANDS.jsonl`
+
+### LSN-0106 — A security repair must execute at the causal output boundary, not a similarly shaped branch
+
+- Status: `GUARDED`, severity HIGH, category implementation, recurrences 0.
+- Source: GATE-4, GATE-4-CP-0010, finding G4-INT-007.
+- Symptom: A security repair must execute at the causal output boundary, not a similarly shaped branch
+- Root cause: An ambiguous patch context placed output containment in workspace provisioning rather than the tool result path; the direct behavioral probes remained red.
+- Resolution: Bind changes to the intended function and execute its real positive and negative service/activity paths before claiming the repair.
+- Prevention:
+  - `test` test_canonical_secret_output_is_rejected_before_durable_delivery — Exercise the real causal boundary with the valid control and the intended adverse input.
+- Evidence: `file:docs/checkpoints/GATE-4-CP-0010/FINDINGS.json`, `file:docs/checkpoints/GATE-4-CP-0010/COMMANDS.jsonl`, `file:services/sandbox/tests/test_sandbox_service.py`, `file:services/sandbox/tests/test_sandbox_engine_limits.py`
+
+### LSN-0107 — An adversarial marker must satisfy the canonical detector before it can judge containment
+
+- Status: `GUARDED`, severity HIGH, category testing, recurrences 0.
+- Source: GATE-4, GATE-4-CP-0010, finding G4-INT-008.
+- Symptom: An adversarial marker must satisfy the canonical detector before it can judge containment; cmd-0059 additionally showed pytest captured the passing fixture's marker before it reached the process output boundary.
+- Root cause: The beyond-inline probe concatenated a credential-shaped suffix directly to word characters, so the canonical word-boundary precondition was false and the test reported an unrelated failure.
+- Resolution: Prove the generated adverse bytes are recognized by the canonical detector before judging rejection, and retain a clean positive path through the identical execution. Emit at process exit outside pytest capture, then prove the real workflow fails and decoded Temporal payloads and object storage contain no marker.
+- Prevention:
+  - `test` test_live_secret_beyond_inline_limit_creates_no_full_output_artifact — Exercise the real causal boundary with the valid control and the intended adverse input.
+- Evidence: `file:docs/checkpoints/GATE-4-CP-0010/FINDINGS.json`, `file:docs/checkpoints/GATE-4-CP-0010/COMMANDS.jsonl`, `file:services/sandbox/tests/test_sandbox_service.py`, `file:services/sandbox/tests/test_sandbox_engine_limits.py`
+
+### LSN-0108 — Evidence timestamp transport must preserve RFC3339 rather than a shell locale rendering
+
+- Status: `GUARDED`, severity LOW, category process, recurrences 0.
+- Source: GATE-4, GATE-4-CP-0010, finding G4-INT-009.
+- Symptom: Cmd-0056 refused a guardrail observation whose RFC3339 timestamp had been auto-converted and locale-rendered by the shell.
+- Root cause: A shell JSON round-trip changed a canonical timestamp's type before the new lesson copied it.
+- Resolution: Read the raw command record as JSON and preserve its exact timestamp; validate lesson datetime fields and reject locale renderings before evidence publication.
+- Prevention:
+  - `test` test_lesson_timestamp_transport_rejects_locale_rendering — Execute the real positive control and reject the observed invalid input without weakening policy.
+- Evidence: `file:docs/checkpoints/GATE-4-CP-0010/FINDINGS.json`, `file:docs/checkpoints/GATE-4-CP-0010/COMMANDS.jsonl`, `file:services/sandbox/tests/test_sandbox_service.py`, `file:services/sandbox/tests/test_sandbox_engine_limits.py`
+
+### LSN-0109 — Regression counts and evidence must exclude only policy-bound live input repositories
+
+- Status: `GUARDED`, severity HIGH, category testing, recurrences 0.
+- Source: GATE-4, GATE-4-CP-0010, finding G4-INT-010.
+- Symptom: Static discovery counted 90 evaluator cases while the runner collected 85; five live input-project tests were never part of evaluator collection.
+- Root cause: The static counter and test-reference resolver ignored the runner's pre-existing fixtures collection exclusion.
+- Resolution: Declare input repositories in canonical policy with reasons and require exact agreement with literal pytest collection; use one boundary for counts and evidence while retaining every mandatory live scenario.
+- Prevention:
+  - `test` test_only_declared_runner_exclusions_leave_both_count_and_evidence — Execute the real positive control and reject the observed invalid input without weakening policy.
+- Evidence: `file:docs/checkpoints/GATE-4-CP-0010/FINDINGS.json`, `file:docs/checkpoints/GATE-4-CP-0010/COMMANDS.jsonl`, `file:services/sandbox/tests/test_sandbox_service.py`, `file:services/sandbox/tests/test_sandbox_engine_limits.py`
+
+### LSN-0110 — A timed-out live proof retains bounded diagnostics before owned cleanup
+
+- Status: `GUARDED`, severity MEDIUM, category testing, recurrences 0.
+- Source: GATE-4, GATE-4-CP-0010, finding G4-INT-012.
+- Symptom: Cmd-0066 timed out in its clean control before writing the scenario report; mandatory cleanup then removed the ephemeral history.
+- Root cause: The proof let a terminal-wait exception bypass its structured failure report and pre-cleanup observer.
+- Resolution: Keep the deadline unchanged, write a red report with sanitized history failure metadata and pending activity types before cleanup, and never continue adverse cases after a failed clean control.
+- Prevention:
+  - `test` test_live_output_control_timeout_retains_bounded_diagnostics_and_stays_red — Inject a control timeout into the actual scenario entry point and require a red diagnostic report without starting adverse inputs.
+- Evidence: `file:docs/checkpoints/GATE-4-CP-0010/FINDINGS.json`, `file:docs/checkpoints/GATE-4-CP-0010/COMMANDS.jsonl`, `file:services/sandbox/tests/test_sandbox_service.py`, `file:services/sandbox/tests/test_sandbox_engine_limits.py`
+
+### LSN-0111 — Polling watcher cleanup must preserve completed checks and accepted cancellation
+
+- Status: `GUARDED`, severity HIGH, category implementation, recurrences 0.
+- Source: GATE-4, GATE-4-CP-0010, finding G4-INT-013.
+- Symptom: A completed check can abort when its polling read is cancelled, and an accepted cancellation read can dereference a handle cleared during its await.
+- Root cause: Watcher cleanup assumed only asyncio cancellation and assumed the active handle survived a durable read. The pinned SDK can return typed activity cancellation instead.
+- Resolution: Accept typed activity cancellation only when this cleanup requested it, propagate unrelated and precompleted failures, and recheck active handle lifetime after durable reads without losing the accepted cancellation flag.
+- Prevention:
+  - `test` test_completed_check_joins_cancelled_durable_read_without_cancelling_run — Complete the real workflow adapter while its polling read is pending, preserving normal result/verdict commitment.
+  - `test` test_unrelated_watcher_failure_is_not_hidden_by_join_cleanup — An unrelated read failure still propagates rather than becoming a successful check.
+- Evidence: `file:docs/checkpoints/GATE-4-CP-0010/FINDINGS.json`, `file:docs/checkpoints/GATE-4-CP-0010/COMMANDS.jsonl`, `file:services/sandbox/tests/test_sandbox_service.py`, `file:services/sandbox/tests/test_sandbox_engine_limits.py`, `file:docs/checkpoints/GATE-4-CP-0010/V1-POLLING-FAILURE.json`
+
+### LSN-0112 — Canonical scanner consumers must share transport decoding, not only patterns
+
+- Status: `GUARDED`, severity HIGH, category security, recurrences 0.
+- Source: GATE-4, GATE-4-CP-0010, finding G4-INT-014.
+- Symptom: Publication scanning missed nested JSON markers that the runtime detector rejected, and an approved raw value could mask another encoded value of the same kind.
+- Root cause: The publication scanner reused SECRET_PATTERNS but scanned only raw text, bypassing the shared transport interpretation.
+- Resolution: Use the identical bounded in-memory transport views for runtime and publication, retain exact component-digest review, never expose values, and keep raw/encoded clean and negative controls.
+- Prevention:
+  - `test` PublicationTransportScanningTests — Execute the causal positive and negative controls without reducing canonical membership or approval rules.
+- Evidence: `file:docs/checkpoints/GATE-4-CP-0010/FINDINGS.json`, `file:docs/checkpoints/GATE-4-CP-0010/COMMANDS.jsonl`
+
+### LSN-0113 — Stronger delivery controls must follow the immutable subject policy version
+
+- Status: `GUARDED`, severity HIGH, category checkpoint, recurrences 0.
+- Source: GATE-4, GATE-4-CP-0010, finding G4-INT-015.
+- Symptom: A current internal-verdict guard invalidated sealed historical checkpoints whose Red Team field had a different declared meaning.
+- Root cause: The new invariant was applied unconditionally rather than being bound to the subject's governance policy.
+- Resolution: Version the strict invariant in canonical memory policy 2.4.0, require that live policy through a mandatory regression, preserve older subject semantics and validate every affected canonical sealed anchor.
+- Prevention:
+  - `test` test_live_policy_requires_strict_internal_verdict_semantics — Execute the causal positive and negative controls without reducing canonical membership or approval rules.
 - Evidence: `file:docs/checkpoints/GATE-4-CP-0010/FINDINGS.json`, `file:docs/checkpoints/GATE-4-CP-0010/COMMANDS.jsonl`

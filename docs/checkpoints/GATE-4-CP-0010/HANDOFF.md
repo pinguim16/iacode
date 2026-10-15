@@ -57,6 +57,41 @@ preserved. FINDINGS.json and Engineering Memory classify these observations.
 
 See RISKS.md.
 
+## Corrective evidence update
+
+- Published v1 subject remains 33c3f42c0d5faf112c3e037a55006dd750c4bfe1, tagged
+  iacode-subjects/GATE-4-CP-0010-internal-corrective-v1. It is not the corrected final subject.
+- The completed v1 execution has a red root suite and a red quality-iacode stage. Its
+  bounded V1-POLLING-FAILURE.json proves a FAILED Temporal workflow caused by a cancelled durable
+  polling read while the API remained RUNNING. All reports are archived in attempts/published-v1;
+  VERIFICATION-ATTEMPT-ARCHIVE.json binds their unchanged bytes. Its 40 of 42 green stages do not
+  approve the corrected subject.
+- ADR-0039 implements first-durable-boundary output containment, including full decoded streams,
+  provisioning diagnostics, nested JSON and JSON records mixed with ordinary tool output.
+- ADR-0040 fixes static counts/evidence that included uncollected live input projects; no actual
+  regression or functional input is removed. ADR-0041 fixes typed polling cleanup and handle lifetime.
+- Rebuilt evaluator: 83 passed, 6 integration deselected (cmd-0094). Sandbox: 165 passed,
+  8 integration deselected (cmd-0114). API: 145 passed (cmd-0134). Lint: PASS (cmd-0148).
+- Cmd-0119 passed the current 34-step real output proof, SQL integration, decoded Temporal history,
+  MinIO absence, clean controls before/after refusals and owned cleanup; shared resources unchanged.
+  Failed attempts 1, 2 and 4 and superseded passing attempt 3 remain separate artifacts.
+- The publication scanner now consumes the identical bounded transport views; five positive and
+  negative controls passed (cmd-0155). Two decoded historical alphabet-sequence redaction markers
+  were reviewed only by exact kind/component digest, with sanitized AST provenance. The full
+  strengthened history scan passed with zero blocking findings (cmd-0149).
+- ADR-0042 versions internal-verdict semantics in live policy 2.4.0. Both affected sealed legacy
+  subjects passed current-tool remote-clone validation with unchanged Git state (cmd-0140).
+- Cmd-0156 passed all 35 selected promotion and memory-policy controls, including the honest sealed
+  subject/audit sequence and refusal to substitute a fresh-session audit for external validation.
+- The latest derived set contains 105 canonical and 112 applicable lesson obligations. Requirements
+  are not marked complete until the corrected immutable-subject verifier passes.
+- Functional acceptance now derives the original twelve requirements plus mandatory output
+  containment. The guarded writer complete_functional_acceptance.py may run only after a new
+  complete published execution passes. No acceptance verdict has been generated prematurely.
+
+No final Gate verdict is asserted by these targeted executions. The requirement matrix remains
+derived but uncompleted until the corrected immutable-subject verifier passes.
+
 ## Do not repeat
 
 Do not edit CP0009, assert same-session independence, mark M2 PASSED, reduce a denominator,

@@ -2,17 +2,16 @@
   "schemaVersion": "2.0.0",
   "gate": "GATE-4",
   "scope": "internal audit and milestone cadence alignment",
-  "technologies": [
-    "python"
-  ],
+  "technologies": [],
   "modules": [
-    "evaluator"
+    "evaluator",
+    "sandbox"
   ],
-  "generatedAt": "2026-10-15T20:42:54Z",
+  "generatedAt": "2026-10-15T23:21:26Z",
   "policyVersion": "2.0.0",
-  "inputsFingerprint": "42feff5629b75278b7b1a1abe8a90b7bc3cf1c82dbb8dd6d0b78f56b8f276123",
-  "lessonsConsidered": 105,
-  "lessonsApplicable": 104,
+  "inputsFingerprint": "6e2226f0ea2f87c84b5b788ca69bcd97180164969048f8b985d748f7c39b995d",
+  "lessonsConsidered": 113,
+  "lessonsApplicable": 112,
   "applicable": [
     {
       "lessonId": "LSN-0001",
@@ -908,8 +907,8 @@
       "lessonId": "LSN-0091",
       "title": "Secret detection must run on the exact bytes at the durable evidence boundary",
       "status": "GUARDED",
-      "severity": "HIGH",
-      "reasonApplicable": "applies to every Gate; category security; severity HIGH; already guarded, so the control must keep holding",
+      "severity": "CRITICAL",
+      "reasonApplicable": "applies to every Gate; category security; severity CRITICAL; already guarded, so the control must keep holding",
       "requiredCheck": "For every durable evidence boundary, scan the exact serialized bytes with the canonical taxonomy before lookup or write, fail closed when scanning cannot complete, and prove rejected bytes cannot resolve or support a verdict.",
       "requiredEvidence": "A direct zero-write persistence test, a scanner-failure test, a resolution test, and an end-to-end activity attack that derives a failing verdict.",
       "derivedRequirementId": "LESSON-REQ-0090"
@@ -1048,11 +1047,91 @@
       "lessonId": "LSN-0105",
       "title": "New behavioral tests must satisfy the unchanged source-quality contract",
       "status": "GUARDED",
-      "severity": "LOW",
-      "reasonApplicable": "applies to every Gate; category testing; severity LOW; already guarded, so the control must keep holding",
+      "severity": "CRITICAL",
+      "reasonApplicable": "applies to every Gate; category testing; severity CRITICAL; already guarded, so the control must keep holding",
       "requiredCheck": "Run the existing mandatory lint over every changed source and test path before publishing; repair formatting without weakening lint or assertions.",
       "requiredEvidence": "Executed positive/negative controls and the fresh mandatory gate suite; failures stay in the ledger.",
       "derivedRequirementId": "LESSON-REQ-0104"
+    },
+    {
+      "lessonId": "LSN-0106",
+      "title": "A security repair must execute at the causal output boundary, not a similarly shaped branch",
+      "status": "GUARDED",
+      "severity": "HIGH",
+      "reasonApplicable": "applies to every Gate; category implementation; severity HIGH; already guarded, so the control must keep holding",
+      "requiredCheck": "Bind changes to the intended function and execute its real positive and negative service/activity paths before claiming the repair.",
+      "requiredEvidence": "A valid positive control, a premise check and behavioral proof at the actual target; the complete current mandatory suite.",
+      "derivedRequirementId": "LESSON-REQ-0105"
+    },
+    {
+      "lessonId": "LSN-0107",
+      "title": "An adversarial marker must satisfy the canonical detector before it can judge containment",
+      "status": "GUARDED",
+      "severity": "HIGH",
+      "reasonApplicable": "applies to every Gate; category testing; severity HIGH; already guarded, so the control must keep holding",
+      "requiredCheck": "Prove the generated adverse bytes are recognized by the canonical detector before judging rejection, and retain a clean positive path through the identical execution.",
+      "requiredEvidence": "A valid positive control, a premise check and behavioral proof at the actual target; the complete current mandatory suite.",
+      "derivedRequirementId": "LESSON-REQ-0106"
+    },
+    {
+      "lessonId": "LSN-0108",
+      "title": "Evidence timestamp transport must preserve RFC3339 rather than a shell locale rendering",
+      "status": "GUARDED",
+      "severity": "LOW",
+      "reasonApplicable": "applies to every Gate; category process; severity LOW; already guarded, so the control must keep holding",
+      "requiredCheck": "Read the raw command record as JSON and preserve its exact timestamp; validate lesson datetime fields and reject locale renderings before evidence publication.",
+      "requiredEvidence": "A valid positive control, a premise check and behavioral proof at the actual target; the complete current mandatory suite.",
+      "derivedRequirementId": "LESSON-REQ-0107"
+    },
+    {
+      "lessonId": "LSN-0109",
+      "title": "Regression counts and evidence must exclude only policy-bound live input repositories",
+      "status": "GUARDED",
+      "severity": "HIGH",
+      "reasonApplicable": "applies to every Gate; category testing; severity HIGH; already guarded, so the control must keep holding",
+      "requiredCheck": "Declare input repositories in canonical policy with reasons and require exact agreement with literal pytest collection; use one boundary for counts and evidence while retaining every mandatory live scenario.",
+      "requiredEvidence": "A valid positive control, a premise check and behavioral proof at the actual target; the complete current mandatory suite.",
+      "derivedRequirementId": "LESSON-REQ-0108"
+    },
+    {
+      "lessonId": "LSN-0110",
+      "title": "A timed-out live proof retains bounded diagnostics before owned cleanup",
+      "status": "GUARDED",
+      "severity": "MEDIUM",
+      "reasonApplicable": "applies to every Gate; category testing; severity MEDIUM; already guarded, so the control must keep holding",
+      "requiredCheck": "Keep the deadline unchanged, write a red report with sanitized history failure metadata and pending activity types before cleanup, and never continue adverse cases after a failed clean control.",
+      "requiredEvidence": "A valid positive control, a premise check and behavioral proof at the actual target; the complete current mandatory suite.",
+      "derivedRequirementId": "LESSON-REQ-0109"
+    },
+    {
+      "lessonId": "LSN-0111",
+      "title": "Polling watcher cleanup must preserve completed checks and accepted cancellation",
+      "status": "GUARDED",
+      "severity": "HIGH",
+      "reasonApplicable": "applies to every Gate; category implementation; severity HIGH; already guarded, so the control must keep holding",
+      "requiredCheck": "Accept typed activity cancellation only when this cleanup requested it, propagate unrelated and precompleted failures, and recheck active handle lifetime after durable reads without losing the accepted cancellation flag.",
+      "requiredEvidence": "A valid positive control, a premise check and behavioral proof at the actual target; the complete current mandatory suite.",
+      "derivedRequirementId": "LESSON-REQ-0110"
+    },
+    {
+      "lessonId": "LSN-0112",
+      "title": "Canonical scanner consumers must share transport decoding, not only patterns",
+      "status": "GUARDED",
+      "severity": "HIGH",
+      "reasonApplicable": "applies to every Gate; category security; severity HIGH; already guarded, so the control must keep holding",
+      "requiredCheck": "Use the identical bounded in-memory transport views for runtime and publication, retain exact component-digest review, never expose values, and keep raw/encoded clean and negative controls.",
+      "requiredEvidence": "A valid positive control, a premise check and behavioral proof at the actual target; the complete current mandatory suite.",
+      "derivedRequirementId": "LESSON-REQ-0111"
+    },
+    {
+      "lessonId": "LSN-0113",
+      "title": "Stronger delivery controls must follow the immutable subject policy version",
+      "status": "GUARDED",
+      "severity": "HIGH",
+      "reasonApplicable": "applies to every Gate; category checkpoint; severity HIGH; already guarded, so the control must keep holding",
+      "requiredCheck": "Version the strict invariant in canonical memory policy 2.4.0, require that live policy through a mandatory regression, preserve older subject semantics and validate every affected canonical sealed anchor.",
+      "requiredEvidence": "A valid positive control, a premise check and behavioral proof at the actual target; the complete current mandatory suite.",
+      "derivedRequirementId": "LESSON-REQ-0112"
     }
   ],
   "derivedRequirements": [
@@ -1783,6 +1862,62 @@
       "description": "Verify new behavioral tests must satisfy the unchanged source-quality contract",
       "mandatory": true,
       "requiredEvidence": "Executed positive/negative controls and the fresh mandatory gate suite; failures stay in the ledger."
+    },
+    {
+      "id": "LESSON-REQ-0105",
+      "lessonId": "LSN-0106",
+      "description": "Verify a security repair must execute at the causal output boundary, not a similarly shaped branch",
+      "mandatory": true,
+      "requiredEvidence": "A valid positive control, a premise check and behavioral proof at the actual target; the complete current mandatory suite."
+    },
+    {
+      "id": "LESSON-REQ-0106",
+      "lessonId": "LSN-0107",
+      "description": "Verify an adversarial marker must satisfy the canonical detector before it can judge containment",
+      "mandatory": true,
+      "requiredEvidence": "A valid positive control, a premise check and behavioral proof at the actual target; the complete current mandatory suite."
+    },
+    {
+      "id": "LESSON-REQ-0107",
+      "lessonId": "LSN-0108",
+      "description": "Verify evidence timestamp transport must preserve RFC3339 rather than a shell locale rendering",
+      "mandatory": true,
+      "requiredEvidence": "A valid positive control, a premise check and behavioral proof at the actual target; the complete current mandatory suite."
+    },
+    {
+      "id": "LESSON-REQ-0108",
+      "lessonId": "LSN-0109",
+      "description": "Verify regression counts and evidence must exclude only policy-bound live input repositories",
+      "mandatory": true,
+      "requiredEvidence": "A valid positive control, a premise check and behavioral proof at the actual target; the complete current mandatory suite."
+    },
+    {
+      "id": "LESSON-REQ-0109",
+      "lessonId": "LSN-0110",
+      "description": "Verify a timed-out live proof retains bounded diagnostics before owned cleanup",
+      "mandatory": true,
+      "requiredEvidence": "A valid positive control, a premise check and behavioral proof at the actual target; the complete current mandatory suite."
+    },
+    {
+      "id": "LESSON-REQ-0110",
+      "lessonId": "LSN-0111",
+      "description": "Verify polling watcher cleanup must preserve completed checks and accepted cancellation",
+      "mandatory": true,
+      "requiredEvidence": "A valid positive control, a premise check and behavioral proof at the actual target; the complete current mandatory suite."
+    },
+    {
+      "id": "LESSON-REQ-0111",
+      "lessonId": "LSN-0112",
+      "description": "Verify canonical scanner consumers must share transport decoding, not only patterns",
+      "mandatory": true,
+      "requiredEvidence": "A valid positive control, a premise check and behavioral proof at the actual target; the complete current mandatory suite."
+    },
+    {
+      "id": "LESSON-REQ-0112",
+      "lessonId": "LSN-0113",
+      "description": "Verify stronger delivery controls must follow the immutable subject policy version",
+      "mandatory": true,
+      "requiredEvidence": "A valid positive control, a premise check and behavioral proof at the actual target; the complete current mandatory suite."
     }
   ]
 }

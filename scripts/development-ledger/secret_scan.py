@@ -34,6 +34,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from ledger_common import SECRET_PATTERNS, find_root, use_utf8_stdout
+from iacode_common.secret_scanning import iter_secret_scan_views
 
 # The canonical patterns redact command records and gate the checkpoint tree. A public history
 # needs a wider net: key material in formats the canonical set does not name, cloud access key
@@ -118,10 +119,12 @@ def load_allowlist(root: Path) -> Allowlist:
 def scan_text(text: str, allowlist: Allowlist = frozenset()) -> list[tuple[str, int, bool]]:
     """Return ``(kind, line, allowlisted)`` for every pattern match in ``text``."""
     results: set[tuple[str, int, bool]] = set()
-    for name, pattern in ALL_PATTERNS:
-        for match in pattern.finditer(text):
-            allowed = (name, component_digest(name, match.group(0))) in allowlist
-            results.add((name, text.count(NEWLINE, 0, match.start()) + 1, allowed))
+    for view, carrier_line in iter_secret_scan_views(text):
+        for name, pattern in ALL_PATTERNS:
+            for match in pattern.finditer(view):
+                allowed = (name, component_digest(name, match.group(0))) in allowlist
+                line = carrier_line or view.count(NEWLINE, 0, match.start()) + 1
+                results.add((name, line, allowed))
     return sorted(results, key=lambda item: (item[1], item[0], item[2]))
 
 

@@ -45,6 +45,11 @@ from iacode_sandbox.contracts import (
     ToolExecutionResult,
 )
 from iacode_sandbox.image import FINGERPRINT_LABEL, image_reference, input_fingerprint
+from iacode_sandbox.output_security import (
+    OutputSecurityError,
+    require_safe_bytes,
+    require_safe_output,
+)
 from iacode_sandbox.policy import PolicyRegistry, SandboxPolicy
 from iacode_sandbox.snapshots import SnapshotError
 from iacode_sandbox.store import ExecutionRecord, SandboxStore, SessionRecord, StoreConflictError
@@ -214,6 +219,13 @@ class SandboxService:
         outcome = await asyncio.to_thread(self.backend.exec_helper, record.container_name, payload,
                                           deadline_seconds=300)
         response = outcome.response or {}
+        try:
+            require_safe_output(response)
+            require_safe_bytes(outcome.stderr.encode("utf-8"))
+        except OutputSecurityError as error:
+            raise SessionUnavailableError(
+                error.code, "workspace response was rejected before durable delivery"
+            ) from None
         if not response.get("ok"):
             raise SessionUnavailableError(str(response.get("errorCode") or "WORKSPACE_INIT_FAILED"),
                                           str(response.get("error") or outcome.stderr or
@@ -455,6 +467,13 @@ class SandboxService:
             return ToolExecutionResult(**base, status="FAILED", error_code="SANDBOX_HELPER_FAILED",
                                        error=("the sandbox helper returned no answer"
                                               + ("" if running else "; the container stopped")))
+        try:
+            require_safe_output(response)
+        except OutputSecurityError as error:
+            return ToolExecutionResult(
+                **base, status="FAILED", error_code=error.code,
+                error="sandbox output was rejected before durable delivery",
+            )
         if not response.get("ok"):
             code = str(response.get("errorCode") or "TOOL_FAILED")
             status = "DENIED" if code in DENIAL_CODES else "FAILED"
