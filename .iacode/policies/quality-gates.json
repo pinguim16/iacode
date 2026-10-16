@@ -176,6 +176,14 @@
       ]
     },
     {
+      "id": "clientTests",
+      "title": "Desktop client build, packages and complete decision suite",
+      "command": ["python", "scripts/iacode/gates/client_tests.py"],
+      "purpose": "Build both dependency-free production packages twice, compare exact outputs and execute every CLI/core/editor decision case on the pinned minimum Node runtime. Actual native installation and real-runtime acceptance remain mandatory full-verifier stages.",
+      "mandatory": true,
+      "qualityDimensions": ["build", "unitTests", "security", "staticAnalysis"]
+    },
+    {
       "id": "infraDefinition",
       "title": "Infrastructure declaration",
       "command": [

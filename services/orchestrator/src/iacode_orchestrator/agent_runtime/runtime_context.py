@@ -33,6 +33,7 @@ from prometheus_client import CollectorRegistry
 from sqlalchemy.ext.asyncio import AsyncEngine
 
 from iacode_orchestrator.config import WorkerSettings
+from iacode_orchestrator.desktop_transport import AuthenticatedRuntimeTransport
 
 __all__ = ["RuntimeContext", "build_context", "get_context", "set_context"]
 
@@ -86,6 +87,14 @@ def build_context(
             base_url=settings.agent_runtime_gateway_url,
             max_output_tokens=settings.agent_runtime_max_output_tokens,
             timeout_seconds=settings.agent_runtime_request_timeout_seconds,
+            transport=(
+                AuthenticatedRuntimeTransport(
+                    settings.desktop_token.get_secret_value(),
+                    upstream_response_bytes=settings.gateway_max_response_bytes,
+                )
+                if settings.desktop_token.get_secret_value()
+                else None
+            ),
         ),
         registry=AgentRegistry(Path(settings.repository_root)),
         metrics=AgentRuntimeMetrics(prometheus, service="iacode-agent-runtime"),

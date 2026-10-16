@@ -1,0 +1,86 @@
+{
+  "schemaVersion": "1.0.0",
+  "scenario": "desktop-e2e",
+  "result": "FAIL",
+  "environment": "fresh-installed-cli-and-native-vscode-real-authenticated-compose-provider-postgresql-redis-minio-temporal-sandbox-quality",
+  "subjectCommit": "44f6da5b092b5f3243331253ca4fc2bf7c45d603",
+  "sourceDirty": true,
+  "sourceFingerprint": "3bf02de4f335f3050ec23e14c1eb0f201910a2c5e7bd7691d09b3bf763eca991",
+  "steps": [
+    {
+      "name": "fresh-owned-authenticated-stack-healthy",
+      "result": "PASS",
+      "authorizedModel": "openai:gpt-4o-mini"
+    },
+    {
+      "name": "fresh-offline-cli-install-and-authenticated-contract",
+      "result": "PASS"
+    },
+    {
+      "name": "unauthenticated-domain-refused-before-effects",
+      "result": "PASS"
+    },
+    {
+      "name": "closed-ipc-refuses-tool-result",
+      "result": "PASS"
+    },
+    {
+      "name": "closed-ipc-refuses-quality-verdict",
+      "result": "PASS"
+    },
+    {
+      "name": "closed-ipc-refuses-shell.exec",
+      "result": "PASS"
+    },
+    {
+      "name": "secret-adverse-premise",
+      "result": "PASS"
+    },
+    {
+      "name": "secret-upload-refused-before-sql-or-object-persistence",
+      "result": "PASS"
+    },
+    {
+      "name": "replay-clean-control",
+      "result": "PASS"
+    }
+  ],
+  "composeProject": "iacode-desktop-3c01c00e8947",
+  "packages": {
+    "kind": "CLIENT_BUILD_NOT_FUNCTIONAL_ACCEPTANCE",
+    "result": "PASS",
+    "protocolDigest": "fe92b2d97a7f200bf08e2f5d4fb5f90b6b2bab4f9b1afddec8f0f1e6fa0fc1d3",
+    "sourceHashes": {
+      "apps/cli/README.md": "2d4bb607a39d3a49273728c0388d4dc58034b9063491b4daa068629e6ebe2920",
+      "apps/cli/bin/iacode.cjs": "6c23b8fa184ddc239591d74c0c5d377ce567c002aac7f2f6bc84fde076191c36",
+      "apps/cli/package.json": "9b3291b1ac527c4f90d3a14174ee30108f186de34e2dcf5b9c1fe6158317e1dd",
+      "apps/cli/src/client.cjs": "a58518416b7bd5bcf2fbee5d55c605f91c47941b7e186c2b4555a9765d471202",
+      "apps/cli/src/snapshot.cjs": "aa853912c12ee1069b2eb59c91f9a688e46946cffc7091db9540886670152be5",
+      "apps/vscode-extension/README.md": "a1dfb573533fbb1788e09a11a019d1b2adf71511fecb7827cff2a5c2c9a22be4",
+      "apps/vscode-extension/package.json": "a891592b6e0165feb0d47f4763eb38c4e8005da19b7150640083ab90e2a3e27a",
+      "apps/vscode-extension/src/extension.cjs": "2bfcf7b629be948573ac8ecd9993cceeea5fb10632442dd6c109380f4020fc97",
+      "packages/contracts/src/iacode_contracts/desktop_protocol.json": "fe92b2d97a7f200bf08e2f5d4fb5f90b6b2bab4f9b1afddec8f0f1e6fa0fc1d3"
+    },
+    "artifacts": {
+      "iacode-cli-0.1.0.tgz": {
+        "sha256": "78ff8d5b24af585466c02579117d0cc79c9add14e960373ac98c0d0e1f6c69b5",
+        "sizeBytes": 14029
+      },
+      "iacode-0.1.0.vsix": {
+        "sha256": "3613954def44ea259cdd88e5101fe091bd72e751dde997144b819f121040b447",
+        "sizeBytes": 19843
+      }
+    }
+  },
+  "cliRuntime": "v24.19.0",
+  "cleanup": {
+    "composeExitCode": 0,
+    "remainingContainers": 0,
+    "remainingVolumes": 0
+  },
+  "failure": {
+    "type": "ConnectionRefusedError",
+    "message": "[WinError 10061] Nenhuma conex\u00e3o p\u00f4de ser feita porque a m\u00e1quina de destino as recusou ativamente"
+  },
+  "failureCleanupExitCode": 0
+}

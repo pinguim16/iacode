@@ -1,0 +1,125 @@
+{
+  "kind": "SAME_SESSION_SOURCE_COMPONENT_REVIEW_NOT_INDEPENDENT",
+  "checkpoint": "GATE-5-CP-0001",
+  "result": "REVIEWED",
+  "findings": [
+    {
+      "path": "apps/api/src/iacode_api/config.py",
+      "line": 74,
+      "kind": "named secret assignment",
+      "sha256": "52ccf1ffd10c958a19da47f403911ea146eccbc60b2c02e721f2f0470902010f",
+      "classification": "EXISTING_POLICY_REVIEW",
+      "reason": "Typed field annotation; the assigned SecretStr constructor contains only an empty default, never a configured value. Exact code-reference review and source hashes are recorded in GATE-5-CP-0001/SOURCE-SCAN-REVIEW.json (cmd-0027). Only this component digest is allowed, never a file, another value or a runtime output.",
+      "sourceHash": "3c530c0fbf4cb4fcfbf15ef2b94ed504bac993090b0ec86622105bc5c45442e2"
+    },
+    {
+      "path": "apps/api/src/iacode_api/config.py",
+      "line": 86,
+      "kind": "named secret assignment",
+      "sha256": "98821e7209f668713a6875ceb0df92125aa0e94f737ef84d0f02ab68f95f9ab0",
+      "classification": "EXISTING_POLICY_REVIEW",
+      "reason": "Source expression reading the runtime credential; no literal credential is present in this component. Exact code-reference review and source hashes are recorded in GATE-5-CP-0001/SOURCE-SCAN-REVIEW.json (cmd-0027). Only this component digest is allowed, never a file, another value or a runtime output.",
+      "sourceHash": "3c530c0fbf4cb4fcfbf15ef2b94ed504bac993090b0ec86622105bc5c45442e2"
+    },
+    {
+      "path": "apps/api/src/iacode_api/config.py",
+      "line": 100,
+      "kind": "URL with credentials",
+      "sha256": "ae2cee3739b216b610e30bc5f78c84824bac7bbf7dcd02722138dd4014048798",
+      "classification": "EXISTING_POLICY_REVIEW",
+      "reason": "The documented password of the localhost-only default database URL used when no environment configures one. It authenticates nothing outside a developer's own machine; the stack generates its real credentials into the ignored infra/compose/.env.",
+      "sourceHash": "3c530c0fbf4cb4fcfbf15ef2b94ed504bac993090b0ec86622105bc5c45442e2"
+    },
+    {
+      "path": "apps/api/src/iacode_api/config.py",
+      "line": 321,
+      "kind": "URL with credentials",
+      "sha256": "ae2cee3739b216b610e30bc5f78c84824bac7bbf7dcd02722138dd4014048798",
+      "classification": "EXISTING_POLICY_REVIEW",
+      "reason": "The documented password of the localhost-only default database URL used when no environment configures one. It authenticates nothing outside a developer's own machine; the stack generates its real credentials into the ignored infra/compose/.env.",
+      "sourceHash": "3c530c0fbf4cb4fcfbf15ef2b94ed504bac993090b0ec86622105bc5c45442e2"
+    },
+    {
+      "path": "apps/api/src/iacode_api/middleware/desktop_auth.py",
+      "line": 27,
+      "kind": "named secret assignment",
+      "sha256": "d190333c76e9627fc14aee871856888520426be03c01f7bfce9bbab44be9fb84",
+      "classification": "EXISTING_POLICY_REVIEW",
+      "reason": "Source expression reading the configured credential; no runtime value is recorded in this component. Exact code-reference review and source hashes are recorded in GATE-5-CP-0001/SOURCE-SCAN-REVIEW.json (cmd-0027). Only this component digest is allowed, never a file, another value or a runtime output.",
+      "sourceHash": "cbee97cf36f62961fca65c311813366e5ec7fc68fd4bbe9558cd554bbee8242f"
+    },
+    {
+      "path": "apps/api/tests/unit/test_desktop_api.py",
+      "line": 27,
+      "kind": "named secret assignment",
+      "sha256": "1f05ecca06417a4600a43a849e5ad8769ce8102e91a52813dda970bc96531cf0",
+      "classification": "EXISTING_POLICY_REVIEW",
+      "reason": "Test-source expression deriving a deterministic decision-test fixture, not an operational credential. Exact code-reference review and source hashes are recorded in GATE-5-CP-0001/SOURCE-SCAN-REVIEW.json (cmd-0027). Only this component digest is allowed, never a file, another value or a runtime output.",
+      "sourceHash": "9715bdc805d23b8273225f58bb087417fa44d01ba466f479c9a393f7e3bc28f4"
+    },
+    {
+      "path": "apps/api/tests/unit/test_desktop_api.py",
+      "line": 42,
+      "kind": "named secret assignment",
+      "sha256": "d73f25e68b2420eba36ef2fdca8c3ec88b4fc65fac745512d4be4e8d61d2bcc6",
+      "classification": "EXISTING_POLICY_REVIEW",
+      "reason": "Test-source keyword references the deterministic fixture identifier rather than its evaluated value. Exact code-reference review and source hashes are recorded in GATE-5-CP-0001/SOURCE-SCAN-REVIEW.json (cmd-0027). Only this component digest is allowed, never a file, another value or a runtime output.",
+      "sourceHash": "9715bdc805d23b8273225f58bb087417fa44d01ba466f479c9a393f7e3bc28f4"
+    },
+    {
+      "path": "apps/api/tests/unit/test_desktop_api.py",
+      "line": 99,
+      "kind": "named secret assignment",
+      "sha256": "a7e5cf26041f84c900e1e4ce7b31a2de2bd377aa9449a858f68a90f8222100f9",
+      "classification": "EXISTING_POLICY_REVIEW",
+      "reason": "Test-source keyword references the deterministic fixture identifier, including the intentionally wrong-signature control. Exact code-reference review and source hashes are recorded in GATE-5-CP-0001/SOURCE-SCAN-REVIEW.json (cmd-0027). Only this component digest is allowed, never a file, another value or a runtime output.",
+      "sourceHash": "9715bdc805d23b8273225f58bb087417fa44d01ba466f479c9a393f7e3bc28f4"
+    },
+    {
+      "path": "apps/api/tests/unit/test_desktop_api.py",
+      "line": 161,
+      "kind": "named secret assignment",
+      "sha256": "6ba1f355a861c64ea687a4023412cde8f417aa3991aee72b6297342b5df99ed1",
+      "classification": "EXISTING_POLICY_REVIEW",
+      "reason": "Test-source dictionary entry references the deterministic fixture identifier rather than its evaluated value. Exact code-reference review and source hashes are recorded in GATE-5-CP-0001/SOURCE-SCAN-REVIEW.json (cmd-0027). Only this component digest is allowed, never a file, another value or a runtime output.",
+      "sourceHash": "9715bdc805d23b8273225f58bb087417fa44d01ba466f479c9a393f7e3bc28f4"
+    },
+    {
+      "path": "apps/api/tests/unit/test_desktop_api.py",
+      "line": 163,
+      "kind": "named secret assignment",
+      "sha256": "6ba1f355a861c64ea687a4023412cde8f417aa3991aee72b6297342b5df99ed1",
+      "classification": "EXISTING_POLICY_REVIEW",
+      "reason": "Test-source dictionary entry references the deterministic fixture identifier rather than its evaluated value. Exact code-reference review and source hashes are recorded in GATE-5-CP-0001/SOURCE-SCAN-REVIEW.json (cmd-0027). Only this component digest is allowed, never a file, another value or a runtime output.",
+      "sourceHash": "9715bdc805d23b8273225f58bb087417fa44d01ba466f479c9a393f7e3bc28f4"
+    },
+    {
+      "path": "apps/cli/src/client.cjs",
+      "line": 95,
+      "kind": "named secret assignment",
+      "sha256": "d4703448d4ff9c42ccc50018281936c161f81122711694cbcf7cc0dc2e2771ba",
+      "classification": "EXISTING_POLICY_REVIEW",
+      "reason": "JavaScript private-field assignment from its constructor parameter; both sides are source identifiers, not a literal credential. Exact code-reference review and source hashes are recorded in GATE-5-CP-0001/SOURCE-SCAN-REVIEW.json (cmd-0027). Only this component digest is allowed, never a file, another value or a runtime output.",
+      "sourceHash": "4ecc724421af1083af23769e6eaac050a18c08ce449eee1fd3aae6ea060c0b21"
+    },
+    {
+      "path": "services/orchestrator/src/iacode_orchestrator/config.py",
+      "line": 73,
+      "kind": "named secret assignment",
+      "sha256": "52ccf1ffd10c958a19da47f403911ea146eccbc60b2c02e721f2f0470902010f",
+      "classification": "EXISTING_POLICY_REVIEW",
+      "reason": "Typed field annotation; the assigned SecretStr constructor contains only an empty default, never a configured value. Exact code-reference review and source hashes are recorded in GATE-5-CP-0001/SOURCE-SCAN-REVIEW.json (cmd-0027). Only this component digest is allowed, never a file, another value or a runtime output.",
+      "sourceHash": "fa5b6b773c59917e289a5fe0e6c99f040f8196827daff1c334e4d2b0b9578e86"
+    },
+    {
+      "path": "services/orchestrator/src/iacode_orchestrator/config.py",
+      "line": 48,
+      "kind": "URL with credentials",
+      "sha256": "ae2cee3739b216b610e30bc5f78c84824bac7bbf7dcd02722138dd4014048798",
+      "classification": "EXISTING_POLICY_REVIEW",
+      "reason": "The documented password of the localhost-only default database URL used when no environment configures one. It authenticates nothing outside a developer's own machine; the stack generates its real credentials into the ignored infra/compose/.env.",
+      "sourceHash": "fa5b6b773c59917e289a5fe0e6c99f040f8196827daff1c334e4d2b0b9578e86"
+    }
+  ],
+  "limits": "Only exact code-reference component digests are reviewed. No filename, scanner rule, runtime secret boundary or different value is exempted."
+}

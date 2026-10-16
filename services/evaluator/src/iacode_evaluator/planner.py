@@ -27,7 +27,16 @@ def _has_unit_tests(project: ProjectProfile, root: str, stack: str) -> bool:
             for path in paths
         )
     if stack in {"node", "typescript", "angular"}:
-        suffixes = (".spec.ts", ".test.ts", ".spec.js", ".test.js")
+        suffixes = (
+            ".spec.ts",
+            ".test.ts",
+            ".spec.js",
+            ".test.js",
+            ".spec.cjs",
+            ".test.cjs",
+            ".spec.mjs",
+            ".test.mjs",
+        )
         return any(path.endswith(suffixes) for path in paths)
     return True
 
@@ -87,10 +96,13 @@ def build_plan(
         roots = (
             (".",)
             if runner.stack == "common"
-            else tuple(
-                root for stack, root in project.workspace_roots if stack == runner.stack
-            )
+            else tuple(root for stack, root in project.workspace_roots if stack == runner.stack)
         )
+        if runner.identifier in {"node.build", "node.unit"}:
+            # Angular owns build/unit for its own roots. Additional plain-Node roots still
+            # receive the Node checks in a mixed monorepo; none may disappear behind Angular.
+            angular_roots = {root for stack, root in project.workspace_roots if stack == "angular"}
+            roots = tuple(root for root in roots if root not in angular_roots)
         for root in roots:
             index += 1
             timeout = min(runner.timeout_seconds, policy.maxCheckSeconds)

@@ -1,0 +1,177 @@
+{
+  "schemaVersion": "1.0.0",
+  "scenario": "desktop-e2e",
+  "result": "FAIL",
+  "environment": "fresh-installed-cli-and-native-vscode-real-authenticated-compose-provider-postgresql-redis-minio-temporal-sandbox-quality",
+  "subjectCommit": "44f6da5b092b5f3243331253ca4fc2bf7c45d603",
+  "sourceDirty": true,
+  "sourceFingerprint": "043996ae9e5d14b31ea61c73e3eebfa9c337cc1a0c0de0e28303e8a11bdfff32",
+  "steps": [
+    {
+      "name": "fresh-owned-authenticated-stack-healthy",
+      "result": "PASS",
+      "authorizedModel": "openai:gpt-4o-mini"
+    },
+    {
+      "name": "fresh-offline-cli-install-and-authenticated-contract",
+      "result": "PASS"
+    },
+    {
+      "name": "unauthenticated-domain-refused-before-effects",
+      "result": "PASS"
+    },
+    {
+      "name": "closed-ipc-refuses-tool-result",
+      "result": "PASS"
+    },
+    {
+      "name": "closed-ipc-refuses-quality-verdict",
+      "result": "PASS"
+    },
+    {
+      "name": "closed-ipc-refuses-shell.exec",
+      "result": "PASS"
+    },
+    {
+      "name": "secret-adverse-premise",
+      "result": "PASS"
+    },
+    {
+      "name": "secret-upload-refused-before-sql-or-object-persistence",
+      "result": "PASS"
+    },
+    {
+      "name": "replay-clean-control",
+      "result": "PASS"
+    },
+    {
+      "name": "redis-replay-refusal-survives-api-restart",
+      "result": "PASS"
+    },
+    {
+      "name": "cli-preview-is-bounded-and-excludes-private-path",
+      "result": "PASS"
+    },
+    {
+      "name": "cli-changed-or-wrong-consent-refused-locally",
+      "result": "PASS"
+    },
+    {
+      "name": "real-snapshot-persistence-stable-retry-and-rights",
+      "result": "PASS"
+    },
+    {
+      "name": "read-only-snapshot-reconciliation",
+      "result": "PASS"
+    },
+    {
+      "name": "actual-native-snapshot-and-uncertain-accepted-create",
+      "result": "PASS"
+    },
+    {
+      "name": "lost-response-has-one-real-persisted-run",
+      "result": "PASS"
+    },
+    {
+      "name": "actual-new-host-secretstorage-recovery-provider-sandbox-quality",
+      "result": "FAIL"
+    }
+  ],
+  "composeProject": "iacode-desktop-15416be214fe",
+  "packages": {
+    "kind": "CLIENT_BUILD_NOT_FUNCTIONAL_ACCEPTANCE",
+    "result": "PASS",
+    "protocolDigest": "fe92b2d97a7f200bf08e2f5d4fb5f90b6b2bab4f9b1afddec8f0f1e6fa0fc1d3",
+    "sourceHashes": {
+      "apps/cli/README.md": "2d4bb607a39d3a49273728c0388d4dc58034b9063491b4daa068629e6ebe2920",
+      "apps/cli/bin/iacode.cjs": "6c23b8fa184ddc239591d74c0c5d377ce567c002aac7f2f6bc84fde076191c36",
+      "apps/cli/package.json": "9b3291b1ac527c4f90d3a14174ee30108f186de34e2dcf5b9c1fe6158317e1dd",
+      "apps/cli/src/client.cjs": "a58518416b7bd5bcf2fbee5d55c605f91c47941b7e186c2b4555a9765d471202",
+      "apps/cli/src/snapshot.cjs": "aa853912c12ee1069b2eb59c91f9a688e46946cffc7091db9540886670152be5",
+      "apps/vscode-extension/README.md": "a1dfb573533fbb1788e09a11a019d1b2adf71511fecb7827cff2a5c2c9a22be4",
+      "apps/vscode-extension/package.json": "a891592b6e0165feb0d47f4763eb38c4e8005da19b7150640083ab90e2a3e27a",
+      "apps/vscode-extension/src/extension.cjs": "a80e1664b9fddf9f1fd5ecd4a0c267324252ee6900c01b5e4cc3962dec4449b9",
+      "packages/contracts/src/iacode_contracts/desktop_protocol.json": "fe92b2d97a7f200bf08e2f5d4fb5f90b6b2bab4f9b1afddec8f0f1e6fa0fc1d3"
+    },
+    "artifacts": {
+      "iacode-cli-0.1.0.tgz": {
+        "sha256": "78ff8d5b24af585466c02579117d0cc79c9add14e960373ac98c0d0e1f6c69b5",
+        "sizeBytes": 14029
+      },
+      "iacode-0.1.0.vsix": {
+        "sha256": "6b3a8ded89361e5fae5a95b883ab411890b5b2a4ef5888eb212e6fd4666b0f15",
+        "sizeBytes": 19867
+      }
+    }
+  },
+  "cliRuntime": "v24.19.0",
+  "nativeStart": {
+    "kind": "ACTUAL_ISOLATED_VSCODE_EXTENSION_HOST",
+    "result": "PASS",
+    "mode": "start",
+    "editorVersion": "1.138.0",
+    "nodeVersion": "v24.18.1",
+    "processId": 21944,
+    "steps": [
+      {
+        "name": "fresh-installed-extension-active",
+        "result": "PASS",
+        "commands": 19,
+        "extensionPath": "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-desktop-live-hsoer7_k\\editor\\extensions\\iacode.iacode-0.1.0"
+      },
+      {
+        "name": "native-default-cancel-sends-no-upload",
+        "result": "PASS"
+      },
+      {
+        "name": "native-exact-snapshot-approved",
+        "result": "PASS",
+        "snapshotId": "cb371c14-354d-5b32-85e6-9e610f62fea5",
+        "snapshotDigest": "798aefda2f02161005f7c67b407a6eeca44e56ba85359b9f74eb21a3f7b75ebb"
+      },
+      {
+        "name": "actual-uncertain-create-retains-stable-identity-without-retry",
+        "result": "PASS",
+        "code": "TRANSPORT_UNAVAILABLE",
+        "idempotencyKey": "3fac02ca-3032-42ef-a101-b950f9ddb5ea"
+      }
+    ],
+    "pending": {
+      "operation": "start",
+      "idempotencyKey": "3fac02ca-3032-42ef-a101-b950f9ddb5ea"
+    },
+    "exitCode": 0
+  },
+  "nativeResume": {
+    "kind": "ACTUAL_ISOLATED_VSCODE_EXTENSION_HOST",
+    "result": "FAIL",
+    "mode": "resume",
+    "editorVersion": "1.138.0",
+    "nodeVersion": "v24.18.1",
+    "processId": 41816,
+    "steps": [
+      {
+        "name": "fresh-installed-extension-active",
+        "result": "PASS",
+        "commands": 19,
+        "extensionPath": "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-desktop-live-hsoer7_k\\editor\\extensions\\iacode.iacode-0.1.0"
+      }
+    ],
+    "failure": {
+      "name": "AssertionError",
+      "message": "pending identity must survive host exit"
+    },
+    "exitCode": 1,
+    "outputTail": ":renderer] Protocol connection established; clientId=638fac4a-b120-4984-8696-2ae6c4059725\n[AccountPolicyGate] apply: state=inactive, reason=undefined, isRestricted=false\nLoading development extension at c:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-desktop-live-hsoer7_k\\editor\\driver\nUnknown channel: agentHostClientByokLm\nUnknown channel: agentHostClientProxy\n[ChatModelSelection] event=no-model-at-toolbar-build surface=\"workbench\" sessionKey=\"local\" conversationKey=\"vscode-chat-session://local/OGQ2YzBjM2YtMmY4Yi00YmU4LWIwY2YtYTI2ZjBkZmVlOTA3\" modelTarget=undefined storageKey=\"chat.currentLanguageModel.panel\" widgetViewKind=\"view\"\n[ChatModelSelection] event=no-model-at-toolbar-build surface=\"workbench\" sessionKey=\"local\" conversationKey=\"vscode-chat-session://local/OGQ2YzBjM2YtMmY4Yi00YmU4LWIwY2YtYTI2ZjBkZmVlOTA3\" modelTarget=undefined storageKey=\"chat.currentLanguageModel.panel\" widgetViewKind=\"view\"\n[AgentHost] No signed-in session resolved for resource: https://api.github.com\n[AgentHost] No signed-in session resolved for resource: https://api.github.com/repos\n[AgentHost] No signed-in session resolved for resource: https://api.github.com\n[AgentHost] No signed-in session resolved for resource: https://api.github.com/repos\nUnknown channel: agentHostClientProxy\n[ChatModelSelection] event=no-model-at-toolbar-build surface=\"workbench\" sessionKey=\"local\" conversationKey=\"vscode-chat-session://local/OGQ2YzBjM2YtMmY4Yi00YmU4LWIwY2YtYTI2ZjBkZmVlOTA3\" modelTarget=undefined storageKey=\"chat.currentLanguageModel.panel\" widgetViewKind=\"view\"\nSettings Sync: Account status changed from uninitialized to unavailable\nAssertionError [ERR_ASSERTION]: pending identity must survive host exit\n\tat Object.run (e:\\iacode\\apps\\vscode-extension\\host-tests\\index.cjs:180:18)\n[main 2026-10-16T17:36:49.204Z] Extension host with pid 41816 exited with code: 0, signal: unknown.\n[main 2026-10-16T17:36:50.223Z] AgentHostStarter: cannot create window connection: Agent Host process manager is shutting down.\n"
+  },
+  "cleanup": {
+    "composeExitCode": 0,
+    "remainingContainers": 0,
+    "remainingVolumes": 0
+  },
+  "failure": {
+    "type": "StackError",
+    "message": "live desktop control failed: actual-new-host-secretstorage-recovery-provider-sandbox-quality"
+  },
+  "failureCleanupExitCode": 0
+}

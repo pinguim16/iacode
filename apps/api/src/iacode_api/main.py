@@ -32,8 +32,9 @@ from iacode_api.config import Settings, get_settings
 from iacode_api.errors import register_error_handlers
 from iacode_api.lifespan import lifespan
 from iacode_api.middleware.correlation import REQUEST_ID_HEADER, CorrelationMiddleware
+from iacode_api.middleware.desktop_auth import DesktopAuthMiddleware
 from iacode_api.observability.metrics import Metrics, MetricsMiddleware
-from iacode_api.routes import agent_runs, gateway, health, quality, version
+from iacode_api.routes import agent_runs, desktop, gateway, health, quality, version
 
 logger = get_logger(__name__)
 
@@ -74,6 +75,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     app.state.metrics = metrics
     app.state.resources = None
 
+    app.add_middleware(DesktopAuthMiddleware, settings=settings)
     app.add_middleware(MetricsMiddleware, metrics=metrics)
     app.add_middleware(CorrelationMiddleware, header_name=settings.correlation_header)
     app.add_middleware(
@@ -98,6 +100,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     app.include_router(gateway.router)
     app.include_router(agent_runs.router)
     app.include_router(quality.router)
+    app.include_router(desktop.router)
     return app
 
 

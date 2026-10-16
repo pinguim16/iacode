@@ -36,7 +36,10 @@
           "enum": [
             "python-unittest",
             "python-pytest",
-            "angular-karma"
+            "angular-karma",
+            "angular-vitest",
+            "node-test",
+            "vscode-extension-host"
           ]
         },
         "counted": {
@@ -73,7 +76,8 @@
     "schemaVersion": {
       "enum": [
         "1.0.0",
-        "1.1.0"
+        "1.1.0",
+        "1.2.0"
       ]
     },
     "policy": {
@@ -89,6 +93,12 @@
     }
   },
   "allOf": [
+    {
+      "if": {"properties": {"schemaVersion": {"enum": ["1.0.0", "1.1.0"]}}},
+      "then": {"properties": {"suites": {"items": {
+        "properties": {"framework": {"enum": ["python-unittest", "python-pytest", "angular-karma"]}}
+      }}}}
+    },
     {
       "if": {"properties": {"schemaVersion": {"const": "1.0.0"}}},
       "then": {"properties": {"suites": {"items": {

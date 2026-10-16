@@ -1,0 +1,141 @@
+{
+  "name": "iacode",
+  "displayName": "IACode Governed Workflows",
+  "publisher": "iacode",
+  "version": "0.1.0",
+  "description": "Authenticated local runtime workflows, explicit approvals and truthful quality evidence",
+  "license": "UNLICENSED",
+  "private": true,
+  "engines": {
+    "vscode": "^1.138.0"
+  },
+  "extensionKind": [
+    "ui"
+  ],
+  "categories": [
+    "Other"
+  ],
+  "main": "./out/extension.cjs",
+  "scripts": {
+    "test": "node scripts/test.cjs",
+    "lint": "node --check src/extension.cjs",
+    "build": "npm run lint"
+  },
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": "limited",
+      "description": "Read-only runtime inspection; workspace mutations always require trust."
+    },
+    "virtualWorkspaces": false
+  },
+  "activationEvents": [
+    "onView:iacode.status"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "iacode.configure",
+        "title": "IACode: Configure Local Runtime"
+      },
+      {
+        "command": "iacode.connect",
+        "title": "IACode: Connect / Reconnect"
+      },
+      {
+        "command": "iacode.disconnect",
+        "title": "IACode: Disconnect (Keep Remote Work)"
+      },
+      {
+        "command": "iacode.preview",
+        "title": "IACode: Preview Workspace Inventory"
+      },
+      {
+        "command": "iacode.snapshot",
+        "title": "IACode: Approve Workspace Snapshot"
+      },
+      {
+        "command": "iacode.start",
+        "title": "IACode: Approve New Task"
+      },
+      {
+        "command": "iacode.refresh",
+        "title": "IACode: Refresh Runtime Truth"
+      },
+      {
+        "command": "iacode.read",
+        "title": "IACode: Inspect Task / Result"
+      },
+      {
+        "command": "iacode.events",
+        "title": "IACode: Read Next Task Event Page"
+      },
+      {
+        "command": "iacode.cancel",
+        "title": "IACode: Approve Task Cancellation"
+      },
+      {
+        "command": "iacode.qualityStart",
+        "title": "IACode: Approve Quality Run"
+      },
+      {
+        "command": "iacode.qualityRead",
+        "title": "IACode: Inspect Quality / Evidence / Verdict"
+      },
+      {
+        "command": "iacode.qualityEvents",
+        "title": "IACode: Read Next Quality Event Page"
+      },
+      {
+        "command": "iacode.qualityCancel",
+        "title": "IACode: Approve Quality Cancellation"
+      },
+      {
+        "command": "iacode.qualityReproduce",
+        "title": "IACode: Approve Quality Reproduction"
+      },
+      {
+        "command": "iacode.select",
+        "title": "IACode: Select Existing Task"
+      },
+      {
+        "command": "iacode.recover",
+        "title": "IACode: Reconcile Pending Operation (Read Only)"
+      },
+      {
+        "command": "iacode.agents",
+        "title": "IACode: Inspect Declared Agents"
+      },
+      {
+        "command": "iacode.teams",
+        "title": "IACode: Inspect Declared Teams"
+      }
+    ],
+    "views": {
+      "explorer": [
+        {
+          "id": "iacode.status",
+          "name": "IACode Runtime"
+        }
+      ]
+    },
+    "menus": {
+      "view/title": [
+        {
+          "command": "iacode.refresh",
+          "when": "view == iacode.status",
+          "group": "navigation"
+        },
+        {
+          "command": "iacode.connect",
+          "when": "view == iacode.status",
+          "group": "connection"
+        },
+        {
+          "command": "iacode.recover",
+          "when": "view == iacode.status",
+          "group": "connection"
+        }
+      ]
+    }
+  }
+}

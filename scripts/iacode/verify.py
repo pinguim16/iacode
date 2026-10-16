@@ -106,6 +106,10 @@ def verification_environment(
     # `docker compose port`, so two verification projects cannot race for a fixed local port.
     for name in VERIFICATION_PORT_VARIABLES:
         environment[name] = "0"
+    # Inherited Foundation stages exercise explicit legacy development mode in their own stack.
+    # The independent desktop stage creates its own finite capability and hardened namespace.
+    environment["IACODE_DESKTOP_TOKEN"] = ""
+    environment["IACODE_DESKTOP_TOKEN_EXPIRES_AT"] = ""
     return environment
 
 
@@ -432,6 +436,23 @@ def build_stages(fast: bool) -> list[Stage]:
         ),
     ]
 
+    stages += [
+        python_stage(
+            "native-client-installation",
+            "fresh actual VSIX installation, workspace trust and owned storage/process cleanup",
+            "scripts/iacode/native_editor.py",
+            "--report",
+            str(REPOSITORY_ROOT / "var/native-editor-package.json"),
+        ),
+        python_stage(
+            "desktop-client-e2e",
+            "fresh CLI/native recovery through real hardened provider/sandbox/quality workflows",
+            "scripts/iacode/scenarios/desktop_e2e.py",
+            "--report",
+            str(REPOSITORY_ROOT / "var/desktop-e2e.json"),
+        ),
+    ]
+
     if not fast:
         stages += [
             python_stage(
@@ -493,8 +514,11 @@ def failure_diagnostics(output: str) -> dict[str, object]:
             headers.append(header)
         else:
             truncated = True
-    return {"failureHeaders": headers, "failureHeaderCount": total,
-            "failureHeadersTruncated": truncated}
+    return {
+        "failureHeaders": headers,
+        "failureHeaderCount": total,
+        "failureHeadersTruncated": truncated,
+    }
 
 
 def run(stage: Stage, quiet: bool, environment: Mapping[str, str] | None = None) -> Stage:
@@ -539,6 +563,11 @@ def main() -> int:
     )
     parser.add_argument("--list", action="store_true", help="print the stages and exit")
     parser.add_argument(
+        "--node",
+        type=Path,
+        help="explicit supported actual Node executable for desktop installation proof",
+    )
+    parser.add_argument(
         "--quiet",
         action="store_true",
         help="capture stage output and print only the tail of a failing stage",
@@ -563,6 +592,8 @@ def main() -> int:
 
     gate = delivered_gate(REPOSITORY_ROOT)
     environment = verification_environment()
+    if arguments.node is not None:
+        environment["IACODE_NODE_EXECUTABLE"] = str(arguments.node.resolve(strict=True))
     project_name = environment["COMPOSE_PROJECT_NAME"]
     log(f"isolated Compose project={project_name}; published ports allocated by Docker")
     before = clean_verification_project(environment)
@@ -600,11 +631,7 @@ def main() -> int:
     failed = [stage for stage in executed if not stage.ok]
     elapsed = round(time.monotonic() - started, 1)
     cleanup_ok = cleanup is not None and cleanup.returncode == 0
-    result = (
-        "PASS"
-        if not failed and len(executed) == len(stages) and cleanup_ok
-        else "FAIL"
-    )
+    result = "PASS" if not failed and len(executed) == len(stages) and cleanup_ok else "FAIL"
 
     if arguments.report:
         arguments.report.parent.mkdir(parents=True, exist_ok=True)

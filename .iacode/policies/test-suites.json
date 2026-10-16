@@ -1,5 +1,5 @@
 {
-  "schemaVersion": "1.1.0",
+  "schemaVersion": "1.2.0",
   "policy": "The suites a delivery is measured by are declared here, not discovered by guesswork and not chosen by the caller. A suite that counts contributes its discovered cases to the TESTS denominator and its case identifiers to evidence resolution, so a test reference cannot resolve against a suite nobody declared and a suite cannot be dropped from the denominator by an invocation. A suite that does not count says why, because a silent omission and a justified one are different states.",
   "suites": [
     {
@@ -69,10 +69,19 @@
       "id": "web",
       "title": "Foundation frontend suite",
       "root": "apps/web/src",
-      "framework": "angular-karma",
+      "framework": "angular-vitest",
       "counted": false,
-      "notCountedReason": "The cases are TypeScript and are collected by Karma inside the toolchain container. The Python count derivation cannot enumerate them without executing the frontend toolchain, and a number it cannot re-derive would be a claim rather than a measurement. The suite is evidenced by its recorded execution instead, and its absence from the denominator is declared here rather than implied.",
+      "notCountedReason": "The cases are TypeScript and are collected by Angular/Vitest inside the toolchain container. The Python static count derivation cannot enumerate them. Their complete recorded mandatory webTests execution is evidence, not an invented Python denominator.",
       "purpose": "The Angular application shell, the Foundation status rendering and the API configuration."
-    }
+    },
+    {"id": "cli", "title": "Desktop CLI and shared authenticated core", "root": "apps/cli/tests", "framework": "node-test", "counted": false,
+     "notCountedReason": "Node collects the CommonJS cases at execution. The Python static enumerator cannot derive these IDs; the complete mandatory clientTests gate executes them, and a counted Python mutation guard executes its actual causal Node case.",
+     "purpose": "CLI, authenticated protocol, consent preview, bounded transport and truthful uncertain recovery decisions."},
+    {"id": "editor", "title": "Native editor API decision suite", "root": "apps/vscode-extension/tests", "framework": "node-test", "counted": false,
+     "notCountedReason": "Node collects API decision cases at execution. Mandatory clientTests runs every case; these explicit doubles are not native installation or live runtime acceptance.",
+     "purpose": "Trust, exact approvals, stale consent, plaintext, SecretStorage boundary, lifecycle recovery and disposal decisions."},
+    {"id": "editor-host", "title": "Actual isolated VS Code Extension Host", "root": "apps/vscode-extension/host-tests", "framework": "vscode-extension-host", "counted": false,
+     "notCountedReason": "A real isolated editor host executes the native installation/workflow proof. It cannot be enumerated by Python without executing the editor; the mandatory full verifier records its separate live acceptance.",
+     "purpose": "Fresh VSIX installation, actual native approvals, trusted/untrusted workspaces, real runtime task and reload recovery."}
   ]
 }

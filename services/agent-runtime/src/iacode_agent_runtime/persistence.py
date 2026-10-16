@@ -183,12 +183,15 @@ class SqlAgentRunStore:
         async with self._sessions() as session, session.begin():
             row = await self._run_row(session, run_id, required=True)
             assert row is not None
-            if is_terminal(row.status):
+            if is_terminal(row.status) and row.status != "CANCELLED":
                 raise AgentRuntimeError(
                     AgentRuntimeErrorType.INVALID_STATE_TRANSITION,
                     f"run {run_id} is already {row.status} and cannot be cancelled",
                     details={"state": row.status})
-            row.cancel_requested = True
+            # A repeated cancellation observes the same immutable terminal result. It cannot
+            # restart work, alter its result, or imply a new request against a completed run.
+            if row.status != "CANCELLED":
+                row.cancel_requested = True
         record = await self.load_run(run_id)
         assert record is not None
         return record

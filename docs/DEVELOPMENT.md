@@ -13,10 +13,14 @@ is finished.
 | Docker with Compose v2 | every service, every build and every gate runs in a container |
 | Python 3.12 or newer | the operational tooling and the development ledger |
 | Git | the ledger records repository state |
+| Desktop VS Code 1.138.0+ | Gate 5 native installation/trust/runtime acceptance in isolated profiles |
 
-That is the whole list. No Node, no PostgreSQL client, no `pip install` on the host: the tooling is
-standard library only and everything else happens inside an image. The frontend toolchain needs
-Node 22 and runs in its own container, so the Node version on your machine is irrelevant.
+No PostgreSQL client or `pip install` is needed on the host. Operational tooling is standard
+library only; runtime/project commands execute in containers. Native editor acceptance additionally
+uses the installed VS Code in owned profiles. The standalone CLI requires Node 22.23.2+ or
+24.19.0+ in those major lines; its mandatory decision suite uses pinned Node 22 in Docker, and its
+fresh-install proof uses an explicit supported host runtime. The frontend toolchain stays in its
+own image. See [Desktop setup and validation](runbooks/DESKTOP-CLIENTS.md).
 
 ## First run
 
@@ -38,6 +42,8 @@ apps/api/                  the FastAPI application
   tests/unit/              no external service; the mandatory gate runs these
   tests/integration/       the real PostgreSQL, Redis, MinIO and Temporal
 apps/web/                  the Angular shell
+apps/cli/                  standalone authenticated CLI and shared desktop core
+apps/vscode-extension/     native editor commands, status/consent and lifecycle recovery
 services/orchestrator/     the Temporal worker: the smoke workflow and the agent run workflow
   src/                     the workflow, its activities and the process that polls for them
   rehearsal/               harnesses, outside the shipped source, for the agent scenarios

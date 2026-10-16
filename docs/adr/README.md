@@ -55,3 +55,7 @@ exist, or a title or status that disagrees with its record fails the suite.
 | [ADR-0043](ADR-0043-collection-semantics-follow-subject-policy.md) | Collection semantics follow subject policy | Accepted |
 | [ADR-0044](ADR-0044-process-recorders-bind-launch-inputs.md) | Process recorders bind launch inputs | Accepted |
 | [ADR-0045](ADR-0045-live-program-state-is-generated-after-git-boundaries.md) | Live program state is generated after Git boundaries | Accepted |
+| [ADR-0046](ADR-0046-desktop-clients-are-authenticated-runtime-adapters.md) | Desktop clients are authenticated runtime adapters | Accepted |
+| [ADR-0047](ADR-0047-native-client-suites-and-packages-are-explicit.md) | Native client suites and packages are explicit | Accepted |
+| [ADR-0048](ADR-0048-native-recovery-proofs-use-persistent-owned-hosts.md) | Native recovery proofs use persistent owned hosts | Accepted |
+| [ADR-0049](ADR-0049-root-assurance-inputs-follow-subject-policy.md) | Root assurance inputs follow subject policy | Accepted |

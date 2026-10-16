@@ -1186,7 +1186,8 @@
       "kind": "test",
       "reference": "test_verification_removes_a_stale_stage_report_before_execution",
       "verifiedBy": [
-        "test_verification_removes_a_stale_stage_report_before_execution"
+          "test_verification_removes_a_stale_stage_report_before_execution",
+          "test_standalone_live_proof_retires_old_pass_before_dependency_import_failure"
       ],
       "lessons": [
         "LSN-0080"
@@ -1238,7 +1239,10 @@
       "kind": "test",
       "reference": "test_the_entry_point_names_the_current_gate",
       "verifiedBy": [
-        "test_the_entry_point_names_the_current_gate"
+        "test_the_entry_point_names_the_current_gate",
+        "test_historical_gate4_controls_keep_their_owning_gate",
+        "test_scope_controls_evaluate_the_live_tree_with_current_gate",
+        "test_wrong_historical_selector_is_observed_by_the_unchanged_assertion"
       ],
       "lessons": [
         "LSN-0084"
@@ -1503,7 +1507,9 @@
       "kind": "test",
       "reference": "test_corrective_partition_is_derived_from_the_current_reference_set",
       "verifiedBy": [
-        "test_corrective_partition_is_derived_from_the_current_reference_set"
+          "test_corrective_partition_is_derived_from_the_current_reference_set",
+          "test_policy_count_matches_collected_suite_not_live_input_projects",
+          "test_current_collection_partition_survives_added_regression_cases"
       ],
       "lessons": [
         "LSN-0102"
@@ -1739,6 +1745,80 @@
       ],
       "lessons": ["LSN-0116"],
       "removingItWouldAllow": "A stale committed program pointer, unsupported internal closure, contradictory steps or redirected output to prevent truthful resumption or overwrite repository content."
-    }
+    },
+    {
+      "guardrailId": "GRD-0119",
+      "title": "Architecture overview retains the delivered Quality Engine",
+      "kind": "test",
+      "reference": "test_architecture_rollup_does_not_deny_its_delivered_quality_engine",
+      "verifiedBy": ["test_architecture_rollup_does_not_deny_its_delivered_quality_engine"],
+      "lessons": ["LSN-0117"],
+      "removingItWouldAllow": "The architecture overview to deny the delivered quality runtime described in the same document."
+    },
+    {
+      "guardrailId": "GRD-0120",
+      "title": "Strict checkpoint source scanning and real credential protection remain unchanged",
+      "kind": "test",
+      "reference": "test_strict_checkpoint_sources_do_not_rely_on_publication_allowances",
+      "verifiedBy": [
+        "test_strict_checkpoint_sources_do_not_rely_on_publication_allowances",
+        "test_every_current_changed_path_uses_the_strict_detector_including_checkpoint_harnesses",
+        "test_desktop_credential_remains_a_secret_type_and_safe_dump_redacts_it"
+      ],
+      "lessons": ["LSN-0119"],
+      "removingItWouldAllow": "A publication-clean result to be mistaken for strict checkpoint acceptance, or a source refactor to erase the actual secret type/redaction guarantee."
+    },
+    {"guardrailId": "GRD-0121", "title": "Accepted mutation semantic refusals retain uncertainty and original identity",
+     "kind": "test", "reference": "test_signed_malformed_mutation_keeps_uncertainty_identity_and_one_effect",
+     "verifiedBy": ["test_signed_malformed_mutation_keeps_uncertainty_identity_and_one_effect"],
+     "lessons": ["LSN-0118"], "removingItWouldAllow": "A response validator to erase a remotely accepted mutation's uncertain outcome, stable identity or no-retry guarantee."},
+    {"guardrailId": "GRD-0122", "title": "Native installer resolves the actual contained installed CLI adapter",
+     "kind": "test", "reference": "test_installed_cli_adapter_resolves_versioned_layout_and_refuses_escape",
+     "verifiedBy": ["test_installed_cli_adapter_resolves_versioned_layout_and_refuses_escape"],
+     "lessons": ["LSN-0120"], "removingItWouldAllow": "A graphical executable guess or escaping/unsupported installed script path to be accepted as a native package installer."},
+    {"guardrailId": "GRD-0123", "title": "Host desktop probe starts without application/site dependencies",
+     "kind": "test", "reference": "test_live_desktop_harness_cold_start_needs_only_the_standard_library",
+     "verifiedBy": ["test_live_desktop_harness_cold_start_needs_only_the_standard_library"],
+     "lessons": ["LSN-0121"], "removingItWouldAllow": "A host-only standard-library probe to initialize Pydantic or another application dependency before it can execute its actual integration proof."},
+    {"guardrailId": "GRD-0124", "title": "Restarted dynamic endpoints are rediscovered and host-authenticated",
+     "kind": "test", "reference": "test_restarted_api_rediscovers_its_port_and_checks_actual_authenticated_forwarding",
+     "verifiedBy": ["test_restarted_api_rediscovers_its_port_and_checks_actual_authenticated_forwarding"],
+     "lessons": ["LSN-0122"], "removingItWouldAllow": "A test actor to retain a former daemon-allocated port or hide a real authentication refusal behind transport readiness retries."},
+    {"guardrailId": "GRD-0125", "title": "Editor preview is bound to workspace identity and exact canonical input",
+     "kind": "test", "reference": "test_editor_preview_binding_uses_workspace_identity_not_path_spelling",
+     "verifiedBy": ["test_editor_preview_binding_uses_workspace_identity_not_path_spelling"],
+     "lessons": ["LSN-0123"], "removingItWouldAllow": "A valid filesystem spelling alias to prevent approval, or root/content changes to reuse a stale preview."}
+    ,{"guardrailId": "GRD-0126", "title": "Native recovery uses persistent storage rather than extension-test memory",
+     "kind": "test", "reference": "test_native_recovery_proof_uses_persistent_storage_context",
+     "verifiedBy": ["test_native_recovery_proof_uses_persistent_storage_context"],
+     "lessons": ["LSN-0124"], "removingItWouldAllow": "An in-memory native test environment or an invented report to be presented as durable editor recovery."},
+    {"guardrailId": "GRD-0127", "title": "Owned native children and temporary profile removal are observed",
+     "kind": "test", "reference": "test_native_process_tree_is_drained_even_after_parent_exits",
+     "verifiedBy": ["test_native_process_tree_is_drained_even_after_parent_exits", "test_owned_profile_cleanup_refuses_broad_targets_and_retries_only_sharing_locks", "test_native_installer_and_host_both_pin_their_owned_shared_storage"],
+     "lessons": ["LSN-0125"], "removingItWouldAllow": "Parent exit to be mistaken for full child cleanup, or profile removal failures to be skipped or retried without safe target validation and a deadline."}
+    ,{"guardrailId": "GRD-0128", "title": "Known authentication material never reaches replay/domain IO",
+     "kind": "test", "reference": "test_authentication_material_is_refused_before_replay_and_domain_io",
+     "verifiedBy": ["test_authentication_material_is_refused_before_replay_and_domain_io"],
+     "lessons": ["LSN-0126"], "removingItWouldAllow": "A bare known capability in encoded operation data to evade unknown-secret shape scanning and reach durable domain work."}
+    ,{"guardrailId": "GRD-0129", "title": "Fresh catalog setup preserves the exact authorized model",
+     "kind": "test", "reference": "test_fresh_catalog_requires_sync_and_the_exact_authorized_model_without_substitution",
+     "verifiedBy": ["test_fresh_catalog_requires_sync_and_the_exact_authorized_model_without_substitution"],
+     "lessons": ["LSN-0127"], "removingItWouldAllow": "A fresh healthy runtime with no catalog to fail misleadingly, or a proof to substitute a different model rather than establish its explicit prerequisite."}
+    ,{"guardrailId": "GRD-0130", "title": "Forgery premises use actual public executed tool identities",
+     "kind": "test", "reference": "test_forgery_premise_joins_public_request_ids_to_actual_successful_sandbox_executions",
+     "verifiedBy": ["test_forgery_premise_joins_public_request_ids_to_actual_successful_sandbox_executions", "test_cleanup_membership_derives_every_canonical_active_state_including_running"],
+     "lessons": ["LSN-0128"], "removingItWouldAllow": "A guessed non-public executor field to stop the adversarial proof before it reaches the real result-origin boundary."}
+    ,{"guardrailId": "GRD-0131", "title": "Repeated CANCELLED cancellation preserves immutable terminal truth",
+     "kind": "test", "reference": "test_repeated_cancel_of_cancelled_run_returns_unchanged_terminal_truth",
+     "verifiedBy": ["test_repeated_cancel_of_cancelled_run_returns_unchanged_terminal_truth", "test_cancel_of_success_or_failure_still_refuses_without_mutation", "test_running_cancel_sets_only_request_flag_not_terminal_state"],
+     "lessons": ["LSN-0129"], "removingItWouldAllow": "Repeated cancellation to fail on an already cancelled result, or a correction to relabel successful/failed work or a request as completed cancellation."}
+    ,{"guardrailId": "GRD-0132", "title": "Client executables use explicit LF in transport and packaging",
+     "kind": "test", "reference": "test_commonjs_and_esm_exports_have_explicit_lf_attributes",
+     "verifiedBy": ["test_commonjs_and_esm_exports_have_explicit_lf_attributes", "test_builder_refuses_a_crlf_executable_instead_of_shipping_a_broken_linux_shebang"],
+     "lessons": ["LSN-0130"], "removingItWouldAllow": "Windows autocrlf or an editor CRLF rewrite to change exported executable bytes and the Linux shebang while same-checkout deterministic builds still agree."}
+    ,{"guardrailId": "GRD-0133", "title": "Exact-byte copied observations survive actual Git transport",
+     "kind": "test", "reference": "test_exact_byte_evidence_survives_git_transport_and_detects_normalization",
+     "verifiedBy": ["test_exact_byte_evidence_survives_git_transport_and_detects_normalization"],
+     "lessons": ["LSN-0131"], "removingItWouldAllow": "Git newline normalization to change the published bytes of an archived actual observation while its recorded raw SHA-256 still names the workstation bytes."}
   ]
 }

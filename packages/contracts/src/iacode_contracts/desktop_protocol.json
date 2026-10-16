@@ -1,0 +1,363 @@
+{
+  "version": "1.0.0",
+  "path": "/api/v1/desktop/operations",
+  "maxRequestBytes": 8388608,
+  "maxResponseBytes": 8388608,
+  "maxJsonDepth": 64,
+  "maxJsonNodes": 100000,
+  "maxSnapshotBytes": 2097152,
+  "maxFileBytes": 1048576,
+  "maxFiles": 512,
+  "maxLocalEntries": 4096,
+  "requestTimeoutSeconds": 30,
+  "clockWindowSeconds": 30,
+  "replaySeconds": 120,
+  "headers": {
+    "requestId": "X-IACode-Request-Id",
+    "timestamp": "X-IACode-Timestamp",
+    "signature": "X-IACode-Signature"
+  },
+  "excludedDirectories": [
+    ".git",
+    ".hg",
+    ".svn",
+    ".ssh",
+    ".aws",
+    ".azure",
+    ".iacode",
+    "__pycache__",
+    "node_modules",
+    ".venv",
+    "venv",
+    ".pytest_cache",
+    ".ruff_cache",
+    ".mypy_cache",
+    "dist",
+    "build",
+    "var",
+    "backups"
+  ],
+  "excludedNames": [
+    ".env",
+    ".npmrc",
+    ".pypirc",
+    "credentials",
+    "id_rsa",
+    "id_ed25519"
+  ],
+  "excludedSuffixes": [
+    ".pem",
+    ".key",
+    ".p12",
+    ".pfx",
+    ".keystore"
+  ],
+  "preEffectRefusalCodes": [
+    "AUTHENTICATION_REQUIRED", "AUTHENTICATION_INVALID", "AUTHENTICATION_EXPIRED",
+    "AUTHENTICATION_STALE", "AUTHENTICATION_REPLAY", "AUTHENTICATION_STATE_UNAVAILABLE",
+    "BROWSER_ORIGIN_REFUSED", "AUTHENTICATION_MATERIAL_REFUSED", "REQUEST_TOO_LARGE", "REQUEST_TIMEOUT", "REQUEST_ID_MISMATCH",
+    "FIELD_TYPE_INVALID", "FIELD_MISSING", "FIELD_UNKNOWN", "FIELD_VALUE_INVALID", "FIELD_DUPLICATE",
+    "JSON_INVALID", "VERSION_UNSUPPORTED", "OPERATION_UNKNOWN", "OPERATION_NOT_IMPLEMENTED",
+    "SNAPSHOT_FILE_COUNT_INVALID", "SNAPSHOT_PATH_REFUSED", "SNAPSHOT_TOO_LARGE",
+    "SNAPSHOT_SECRET_REFUSED", "SNAPSHOT_CONSENT_MISMATCH", "SNAPSHOT_SCAN_UNAVAILABLE",
+    "SNAPSHOT_NOT_AUTHORISED", "SNAPSHOT_DIGEST_MISMATCH"
+  ],
+  "mutations": [
+    "snapshot",
+    "start",
+    "cancel",
+    "quality-start",
+    "quality-cancel",
+    "quality-reproduce"
+  ],
+  "operations": {
+    "hello": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {},
+      "required": []
+    },
+    "agents": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {},
+      "required": []
+    },
+    "teams": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {},
+      "required": []
+    },
+    "list": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100
+        }
+      },
+      "required": []
+    },
+    "lookup": {
+      "type": "object", "additionalProperties": false,
+      "properties": {"idempotencyKey": {"type": "string", "minLength": 1, "maxLength": 36, "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"}},
+      "required": ["idempotencyKey"]
+    },
+    "quality-lookup": {
+      "type": "object", "additionalProperties": false,
+      "properties": {"idempotencyKey": {"type": "string", "minLength": 1, "maxLength": 36, "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"}},
+      "required": ["idempotencyKey"]
+    },
+    "snapshot-lookup": {
+      "type": "object", "additionalProperties": false,
+      "properties": {"manifestDigest": {"type": "string", "minLength": 1, "maxLength": 64, "pattern": "^[0-9a-f]{64}$"}},
+      "required": ["manifestDigest"]
+    },
+    "snapshot": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "manifestDigest": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64,
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "files": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 512,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "path": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 240
+              },
+              "content": {
+                "type": "string",
+                "maxLength": 1048576
+              }
+            },
+            "required": [
+              "path",
+              "content"
+            ]
+          }
+        }
+      },
+      "required": [
+        "manifestDigest",
+        "files"
+      ]
+    },
+    "start": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "snapshotId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 36,
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "task": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 8192
+        },
+        "team": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9._:-]+$"
+        },
+        "idempotencyKey": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 36,
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "model": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 384
+        }
+      },
+      "required": [
+        "snapshotId",
+        "task",
+        "team",
+        "idempotencyKey"
+      ]
+    },
+    "read": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "runId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 36,
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        }
+      },
+      "required": [
+        "runId"
+      ]
+    },
+    "events": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "runId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 36,
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "after": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2147483647
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 200
+        }
+      },
+      "required": [
+        "runId",
+        "after"
+      ]
+    },
+    "cancel": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "runId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 36,
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        }
+      },
+      "required": [
+        "runId"
+      ]
+    },
+    "quality-start": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "snapshotId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 36,
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "snapshotDigest": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64,
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "idempotencyKey": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 36,
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        }
+      },
+      "required": [
+        "snapshotId",
+        "snapshotDigest",
+        "idempotencyKey"
+      ]
+    },
+    "quality-read": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "runId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9._:-]+$"
+        }
+      },
+      "required": [
+        "runId"
+      ]
+    },
+    "quality-events": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "runId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9._:-]+$"
+        },
+        "after": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2147483647
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 200
+        }
+      },
+      "required": [
+        "runId",
+        "after"
+      ]
+    },
+    "quality-cancel": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "runId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9._:-]+$"
+        }
+      },
+      "required": [
+        "runId"
+      ]
+    },
+    "quality-reproduce": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "runId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9._:-]+$"
+        },
+        "idempotencyKey": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 36,
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        }
+      },
+      "required": [
+        "runId",
+        "idempotencyKey"
+      ]
+    }
+  }
+}

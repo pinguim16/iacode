@@ -1,0 +1,35 @@
+{
+  "kind": "SAME_SESSION_SOURCE_COMPONENT_REVIEW_NOT_INDEPENDENT",
+  "checkpoint": "GATE-5-CP-0001",
+  "result": "REVIEWED",
+  "findings": [
+    {
+      "path": "apps/api/src/iacode_api/config.py",
+      "line": 101,
+      "kind": "URL with credentials",
+      "sha256": "ae2cee3739b216b610e30bc5f78c84824bac7bbf7dcd02722138dd4014048798",
+      "classification": "EXISTING_POLICY_REVIEW",
+      "reason": "The documented password of the localhost-only default database URL used when no environment configures one. It authenticates nothing outside a developer's own machine; the stack generates its real credentials into the ignored infra/compose/.env.",
+      "sourceHash": "36f85a80cd05f6ab184554fee6671afa7ea24acb06e22c8f3e5a0546fa3ce83e"
+    },
+    {
+      "path": "apps/api/src/iacode_api/config.py",
+      "line": 322,
+      "kind": "URL with credentials",
+      "sha256": "ae2cee3739b216b610e30bc5f78c84824bac7bbf7dcd02722138dd4014048798",
+      "classification": "EXISTING_POLICY_REVIEW",
+      "reason": "The documented password of the localhost-only default database URL used when no environment configures one. It authenticates nothing outside a developer's own machine; the stack generates its real credentials into the ignored infra/compose/.env.",
+      "sourceHash": "36f85a80cd05f6ab184554fee6671afa7ea24acb06e22c8f3e5a0546fa3ce83e"
+    },
+    {
+      "path": "services/orchestrator/src/iacode_orchestrator/config.py",
+      "line": 49,
+      "kind": "URL with credentials",
+      "sha256": "ae2cee3739b216b610e30bc5f78c84824bac7bbf7dcd02722138dd4014048798",
+      "classification": "EXISTING_POLICY_REVIEW",
+      "reason": "The documented password of the localhost-only default database URL used when no environment configures one. It authenticates nothing outside a developer's own machine; the stack generates its real credentials into the ignored infra/compose/.env.",
+      "sourceHash": "d21802d1867b109008ec1f36c7ee217b141699e9d356ea1ced582534e5f4cead"
+    }
+  ],
+  "limits": "Only exact code-reference component digests are reviewed. No filename, scanner rule, runtime secret boundary or different value is exempted."
+}

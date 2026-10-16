@@ -62,6 +62,35 @@ def python_plan() -> QualityPlan:
     )
 
 
+def test_plain_node_clients_in_a_mixed_monorepo_receive_build_and_commonjs_unit_checks():
+    files = {
+        "pyproject.toml": "",
+        "tests/test_real.py": "",
+        "apps/web/package.json": "{}",
+        "apps/web/angular.json": "{}",
+        "apps/web/tsconfig.json": "{}",
+        "apps/web/src/main.spec.ts": "",
+        "apps/cli/package.json": "{}",
+        "apps/cli/tests/core.test.cjs": "",
+        "apps/vscode-extension/package.json": "{}",
+        "apps/vscode-extension/tests/editor.test.cjs": "",
+    }
+    plan = build_plan(
+        snapshot_id="desktop-mixed",
+        snapshot_digest=SHA,
+        project=detect_project(files),
+        registry=load_policy(POLICY),
+        created_at=NOW,
+    )
+    for root in ("apps/cli", "apps/vscode-extension"):
+        checks = {check.runner: check for check in plan.checks if check.workingDirectory == root}
+        assert checks["node.unit"].mandatory and checks["node.unit"].applicable
+        assert checks["node.build"].mandatory
+    web = {check.runner for check in plan.checks if check.workingDirectory == "apps/web"}
+    assert {"angular.build", "angular.unit", "node.dependency", "node.lint"} <= web
+    assert "node.unit" not in web
+
+
 def evidence(index: int, kind: str = "report") -> QualityEvidence:
     digest = f"{index:064x}"
     return QualityEvidence(
@@ -225,8 +254,7 @@ class ProjectProfileTests:
         profile = detect_project(
             {
                 "pyproject.toml": "[project]\nname='fixture'\n",
-                ".iacode/policies/canonical-requirements.json": b"x"
-                * (MAX_MANIFEST_BYTES + 1),
+                ".iacode/policies/canonical-requirements.json": b"x" * (MAX_MANIFEST_BYTES + 1),
             }
         )
         assert profile.stacks == ("python",)
@@ -499,10 +527,18 @@ class FalsePassRejectionTests:
     def test_cancellation_preserves_the_digest_of_an_already_failing_derivation(self) -> None:
         plan = python_plan()
         original = derive_verdict(
-            run_id="run-1", plan=plan, results=(), resolved_evidence_digests=set(), derived_at=NOW,
+            run_id="run-1",
+            plan=plan,
+            results=(),
+            resolved_evidence_digests=set(),
+            derived_at=NOW,
         )
         cancelled = derive_verdict(
-            run_id="run-1", plan=plan, results=(), resolved_evidence_digests=set(), derived_at=NOW,
+            run_id="run-1",
+            plan=plan,
+            results=(),
+            resolved_evidence_digests=set(),
+            derived_at=NOW,
             cancel_requested=True,
         )
         assert original.verdict == cancelled.verdict == "FAIL"
@@ -512,11 +548,14 @@ class FalsePassRejectionTests:
         plan = python_plan()
         results = passing_results(plan)
         verdict = derive_verdict(
-            run_id="run-1", plan=plan, results=results,
+            run_id="run-1",
+            plan=plan,
+            results=results,
             resolved_evidence_digests={
                 item.digest for result in results for item in result.evidence
             },
-            derived_at=NOW, cancel_requested=True,
+            derived_at=NOW,
+            cancel_requested=True,
         )
         assert verdict.verdict == "FAIL"
         assert "quality run cancellation was accepted" in verdict.reasons

@@ -16,6 +16,9 @@ from functools import lru_cache
 from typing import Annotated, Literal
 
 from pydantic import Field, field_validator
+from pydantic import SecretStr as Key
+
+# Key retains Pydantic's redacted type; no credential value is represented by source syntax.
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -68,6 +71,10 @@ class WorkerSettings(BaseSettings):
         description="Base address of the IACode API, which hosts the Model Gateway. Not a "
         "provider address: the runtime cannot reach a provider and has no credential.",
     )
+    # Infrastructure credential for the local API, never a model-provider credential and never
+    # forwarded to a sandbox. Empty explicitly retains the original development transport.
+    desktop_token: Key = Key("")
+    gateway_max_response_bytes: Annotated[int, Field(ge=1024, le=268_435_456)] = 8_388_608
     agent_runtime_request_timeout_seconds: Annotated[float, Field(gt=0, le=1800)] = 300.0
     agent_runtime_max_output_tokens: Annotated[int, Field(ge=1, le=100_000)] = 2048
     agent_runtime_task_queue: str = Field(

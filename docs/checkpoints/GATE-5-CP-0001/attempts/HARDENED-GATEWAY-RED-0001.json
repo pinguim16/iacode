@@ -1,0 +1,27 @@
+{
+  "project": "iacode-desktop-53d0a14bdfaa",
+  "authorizedModel": "openai:gpt-4o-mini",
+  "result": "FAIL",
+  "worker": {
+    "kind": "ACTUAL_HARDENED_WORKER_GATEWAY_DIAGNOSIS_NOT_TASK_ACCEPTANCE",
+    "steps": [
+      {
+        "name": "catalog",
+        "result": "PASS",
+        "modelCount": 0,
+        "hasContent": false
+      },
+      {
+        "name": "infer",
+        "result": "FAIL",
+        "errorType": "GATEWAY_ERROR",
+        "upstreamType": "NO_CANDIDATE",
+        "reason": "EXPLICIT_MODEL",
+        "status": 409,
+        "causeType": "NoneType"
+      }
+    ],
+    "result": "FAIL"
+  },
+  "cleanupExitCode": 0
+}

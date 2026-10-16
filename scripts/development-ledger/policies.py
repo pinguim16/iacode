@@ -155,7 +155,7 @@ def _test_suite_policy_version(root: Path) -> str | None:
         return None
     registry = load_json(path)
     version = registry.get("schemaVersion") if isinstance(registry, dict) else None
-    if version is not None and version not in {"1.0.0", "1.1.0"}:
+    if version is not None and version not in {"1.0.0", "1.1.0", "1.2.0"}:
         raise LedgerError("unsupported test-suite policy version")
     return version
 
@@ -191,6 +191,11 @@ def load_test_suites(root: Path) -> list[dict[str, Any]]:
             raise LedgerError("every declared test suite needs an id and a root")
         if version == "1.0.0" and "inputRepositories" in suite:
             raise LedgerError("input repositories require test-suite policy version 1.1.0")
+        if suite.get("framework") in {"node-test", "vscode-extension-host", "angular-vitest"}:
+            if version != "1.2.0":
+                raise LedgerError("native client suites require test-suite policy version 1.2.0")
+            if suite.get("counted"):
+                raise LedgerError("native suite cases require executed evidence, not a Python static count")
         if not suite.get("counted") and not str(suite.get("notCountedReason") or "").strip():
             raise LedgerError(
                 f"test suite {suite['id']!r} is not counted and records no reason; an omission "

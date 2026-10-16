@@ -1,0 +1,23 @@
+{
+  "name": "@iacode/cli",
+  "version": "0.1.0",
+  "description": "Governed local IACode workflows without host tool execution",
+  "private": true,
+  "license": "UNLICENSED",
+  "engines": {
+    "node": "^22.23.2 || ^24.19.0"
+  },
+  "bin": {
+    "iacode": "bin/iacode.cjs"
+  },
+  "scripts": {
+    "test": "node scripts/test.cjs",
+    "lint": "node --check bin/iacode.cjs && node --check src/client.cjs && node --check src/snapshot.cjs",
+    "build": "npm run lint"
+  },
+  "files": [
+    "bin",
+    "src",
+    "README.md"
+  ]
+}

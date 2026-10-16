@@ -1,0 +1,210 @@
+{
+  "schemaVersion": "1.0.0",
+  "scenario": "desktop-e2e",
+  "result": "FAIL",
+  "environment": "fresh-installed-cli-and-native-vscode-real-authenticated-compose-provider-postgresql-redis-minio-temporal-sandbox-quality",
+  "subjectCommit": "44f6da5b092b5f3243331253ca4fc2bf7c45d603",
+  "sourceDirty": true,
+  "sourceFingerprint": "295374c6b0760470bec47b9b02c2ca349417cc6530685f06b672965cb814f6b9",
+  "steps": [
+    {
+      "name": "fresh-owned-authenticated-stack-healthy",
+      "result": "PASS",
+      "authorizedModel": "openai:gpt-4o-mini"
+    },
+    {
+      "name": "fresh-offline-cli-install-and-authenticated-contract",
+      "result": "PASS"
+    },
+    {
+      "name": "unauthenticated-domain-refused-before-effects",
+      "result": "PASS"
+    },
+    {
+      "name": "closed-ipc-refuses-tool-result",
+      "result": "PASS"
+    },
+    {
+      "name": "closed-ipc-refuses-quality-verdict",
+      "result": "PASS"
+    },
+    {
+      "name": "closed-ipc-refuses-shell.exec",
+      "result": "PASS"
+    },
+    {
+      "name": "secret-adverse-premise",
+      "result": "PASS"
+    },
+    {
+      "name": "secret-upload-refused-before-sql-or-object-persistence",
+      "result": "PASS"
+    },
+    {
+      "name": "replay-clean-control",
+      "result": "PASS"
+    },
+    {
+      "name": "redis-replay-refusal-survives-api-restart",
+      "result": "PASS"
+    },
+    {
+      "name": "cli-preview-is-bounded-and-excludes-private-path",
+      "result": "PASS"
+    },
+    {
+      "name": "cli-changed-or-wrong-consent-refused-locally",
+      "result": "PASS"
+    },
+    {
+      "name": "real-snapshot-persistence-stable-retry-and-rights",
+      "result": "PASS"
+    },
+    {
+      "name": "read-only-snapshot-reconciliation",
+      "result": "PASS"
+    },
+    {
+      "name": "actual-native-snapshot-and-uncertain-accepted-create",
+      "result": "PASS"
+    },
+    {
+      "name": "lost-response-has-one-real-persisted-run",
+      "result": "PASS"
+    },
+    {
+      "name": "actual-new-host-secretstorage-recovery-provider-sandbox-quality",
+      "result": "FAIL"
+    }
+  ],
+  "composeProject": "iacode-desktop-99c6841da33c",
+  "packages": {
+    "kind": "CLIENT_BUILD_NOT_FUNCTIONAL_ACCEPTANCE",
+    "result": "PASS",
+    "protocolDigest": "07afdf6772f9d54cf5ee2d84d2fb3222220c1b454a0ae08e5d8c30eeea1ceab9",
+    "sourceHashes": {
+      "apps/cli/README.md": "2d4bb607a39d3a49273728c0388d4dc58034b9063491b4daa068629e6ebe2920",
+      "apps/cli/bin/iacode.cjs": "9105ef8f928015eaa5803f4358e3cf553d4d55fbd670dc08ec0d77c5a4b5c5f5",
+      "apps/cli/package.json": "9b3291b1ac527c4f90d3a14174ee30108f186de34e2dcf5b9c1fe6158317e1dd",
+      "apps/cli/src/client.cjs": "50782a810b2df89641a4eb51b56c1b05f5c5fd5050ac2087009f7b2a45bc670e",
+      "apps/cli/src/snapshot.cjs": "aa853912c12ee1069b2eb59c91f9a688e46946cffc7091db9540886670152be5",
+      "apps/vscode-extension/README.md": "a1dfb573533fbb1788e09a11a019d1b2adf71511fecb7827cff2a5c2c9a22be4",
+      "apps/vscode-extension/package.json": "a891592b6e0165feb0d47f4763eb38c4e8005da19b7150640083ab90e2a3e27a",
+      "apps/vscode-extension/src/extension.cjs": "f1351d4d736c3dd50bc8733e6711463c80d0b0d161a09053ef6aa40dcfda596e",
+      "packages/contracts/src/iacode_contracts/desktop_protocol.json": "07afdf6772f9d54cf5ee2d84d2fb3222220c1b454a0ae08e5d8c30eeea1ceab9"
+    },
+    "artifacts": {
+      "iacode-cli-0.1.0.tgz": {
+        "sha256": "c0a1f1e523f6173b21e02b460adc66db264eebf4f762f9f24ad40264940753a8",
+        "sizeBytes": 14680
+      },
+      "iacode-0.1.0.vsix": {
+        "sha256": "767fc514ea229bad884ab3da731aae7f274e4731845f6a84c34d0d8368080711",
+        "sizeBytes": 21086
+      }
+    }
+  },
+  "cliRuntime": "v24.19.0",
+  "nativeStart": {
+    "kind": "ACTUAL_ISOLATED_VSCODE_EXTENSION_HOST",
+    "result": "PASS",
+    "mode": "start",
+    "editorVersion": "1.138.0",
+    "nodeVersion": "v24.18.1",
+    "processId": 49576,
+    "steps": [
+      {
+        "name": "fresh-installed-extension-active",
+        "result": "PASS",
+        "commands": 19,
+        "extensionPath": "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-desktop-live-w0vbn48x\\editor\\extensions\\iacode.iacode-0.1.0"
+      },
+      {
+        "name": "native-default-cancel-sends-no-upload",
+        "result": "PASS"
+      },
+      {
+        "name": "native-exact-snapshot-approved",
+        "result": "PASS",
+        "snapshotId": "cb371c14-354d-5b32-85e6-9e610f62fea5",
+        "snapshotDigest": "798aefda2f02161005f7c67b407a6eeca44e56ba85359b9f74eb21a3f7b75ebb"
+      },
+      {
+        "name": "actual-uncertain-create-retains-stable-identity-without-retry",
+        "result": "PASS",
+        "code": "TRANSPORT_UNAVAILABLE",
+        "idempotencyKey": "f9ba6c70-e279-4ee2-993e-e24a09a8b6b4"
+      }
+    ],
+    "pending": {
+      "operation": "start",
+      "idempotencyKey": "f9ba6c70-e279-4ee2-993e-e24a09a8b6b4"
+    },
+    "exitCode": 0,
+    "processCleanup": {
+      "jobOwned": true,
+      "remainingBeforeCleanup": 0,
+      "remainingAfterCleanup": 0
+    },
+    "sharedStorageObservedOwned": true
+  },
+  "acceptedRunId": "01a145fa-e03e-7000-a518-232d66debfbd",
+  "nativeResume": {
+    "kind": "ACTUAL_ISOLATED_VSCODE_EXTENSION_HOST",
+    "result": "FAIL",
+    "mode": "resume",
+    "editorVersion": "1.138.0",
+    "nodeVersion": "v24.18.1",
+    "processId": 27680,
+    "steps": [
+      {
+        "name": "fresh-installed-extension-active",
+        "result": "PASS",
+        "commands": 19,
+        "extensionPath": "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-desktop-live-w0vbn48x\\editor\\extensions\\iacode.iacode-0.1.0"
+      },
+      {
+        "name": "new-host-read-only-recovery",
+        "result": "PASS",
+        "runId": "01a145fa-e03e-7000-a518-232d66debfbd"
+      }
+    ],
+    "taskObservation": {
+      "runId": "01a145fa-e03e-7000-a518-232d66debfbd",
+      "state": "FAILED",
+      "errorType": "GATEWAY_ERROR",
+      "modelCalls": 1,
+      "sandboxExecutions": 0
+    },
+    "failure": {
+      "name": "AssertionError",
+      "message": "actual task failed: GATEWAY_ERROR\n+ actual - expected\n\n+ 'FAILED'\n- 'SUCCEEDED'\n"
+    },
+    "exitCode": 0,
+    "processCleanup": {
+      "jobOwned": true,
+      "remainingBeforeCleanup": 0,
+      "remainingAfterCleanup": 0
+    },
+    "sharedStorageObservedOwned": true,
+    "outputTail": "\n[main 2026-10-16T18:30:36.838Z] StorageMainService: creating application shared storage\n[main 2026-10-16T18:30:37.125Z] [shared storage] Creating shared storage database at 'c:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-desktop-live-w0vbn48x\\editor\\shared\\sharedStorage\\state.vscdb' (wasCreated: false)\n[main 2026-10-16T18:30:37.125Z] [shared storage] Initializing fallback application storage (path: c:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-desktop-live-w0vbn48x\\editor\\profile\\User\\globalStorage\\state.vscdb)\n[main 2026-10-16T18:30:37.157Z] [shared storage] Fallback application storage initialized with 75 items\n[main 2026-10-16T18:30:38.842Z] update#disable - updates are disabled by user preference\n[main 2026-10-16T18:30:38.842Z] update#setState disabled\n[main 2026-10-16T18:30:38.894Z] AgentHostProcessManager: agent host started\n[main 2026-10-16T18:30:44.912Z] [AgentHost:stderr] (node:45812) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.\n(Use `Code --trace-deprecation ...` to show where the warning was created)\n\nUnknown channel: agentHostClientByokLm\nUnknown channel: agentHostClientProxy\nUnknown channel: agentHostClientProxy\n[main 2026-10-16T18:30:51.508Z] Extension host with pid 27680 exited with code: 0, signal: unknown.\n"
+  },
+  "sandboxCleanup": {
+    "remainingContainers": 0,
+    "remainingNetworks": 0
+  },
+  "cleanup": {
+    "composeExitCode": 0,
+    "remainingContainers": 0,
+    "remainingVolumes": 0
+  },
+  "failure": {
+    "type": "StackError",
+    "message": "live desktop control failed: actual-new-host-secretstorage-recovery-provider-sandbox-quality"
+  },
+  "failureCleanupExitCode": 0,
+  "failureSandboxCleanup": {
+    "remainingContainers": 0,
+    "remainingNetworks": 0
+  }
+}

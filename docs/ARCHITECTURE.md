@@ -2,15 +2,15 @@
 
 ## Current state
 
-Five things exist: the **SETUP-00 development control plane**, the **Gate 0 Foundation
-runtime**, the **Gate 1 Model Gateway**, the **Gate 2 Agent Runtime** and the **Gate 3
-Sandbox**.
+Delivered foundations include the **SETUP-00 development control plane**, **Gate 0 Foundation
+runtime**, **Gate 1 Model Gateway**, **Gate 2 Agent Runtime**, **Gate 3 Sandbox** and **Gate 4
+Quality Engine**. Their detailed boundaries are recorded below.
 
-No quality runtime, IDE integration, memory system, learning engine or training pipeline has
-been implemented. The directories reserved for them contain a README declaring
-the reservation and nothing else, and `.iacode/policies/gate-scope.json` records which Gate owns
-each one. The internal mirror audit fails a delivery that puts an implementation there, so this
-statement is a checked fact rather than a claim.
+**Gate 5 — VS Code + CLI** is in progress; its partial adapters are not yet an accepted editor or
+CLI delivery. The latest checkpoint, not this architecture overview, records executed acceptance.
+Experience, knowledge, runtime project memory, learning and training remain later-Gate work.
+`.iacode/policies/gate-scope.json` preserves those reservations. Engineering memory in `.iacode/`
+is a delivered control-plane capability, not the future runtime experience or project-memory API.
 
 ## Control plane
 

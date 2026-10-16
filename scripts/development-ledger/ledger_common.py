@@ -495,11 +495,25 @@ ASSURANCE_SCOPE_FILES = (
 )
 
 
-def in_assurance_scope(path: str) -> bool:
+def assurance_root_files(root: Path, *, required: bool = False) -> tuple[str, ...]:
+    policy = root / ".iacode/policies/assurance-scope.json"
+    if not policy.is_file():
+        if required:
+            raise LedgerError("Gate 5+ requires the versioned root assurance-scope policy")
+        return ()
+    document = load_json(policy)
+    expected = [".gitignore", "ruff.toml"]
+    if (not isinstance(document, dict) or document.get("schemaVersion") != "1.0.0"
+            or document.get("additionalRootFiles") != expected):
+        raise LedgerError("unsupported or narrowed root assurance-scope policy")
+    return tuple(expected)
+
+
+def in_assurance_scope(path: str, additional_root_files: tuple[str, ...] = ()) -> bool:
     normalized = path.replace("\\", "/")
     if any(part in normalized for part in ASSURANCE_SCOPE_EXCLUSIONS):
         return False
-    if normalized in ASSURANCE_SCOPE_FILES:
+    if normalized in ASSURANCE_SCOPE_FILES or normalized in additional_root_files:
         return True
     return any(normalized.startswith(prefix) for prefix in ASSURANCE_SCOPE_PREFIXES)
 
@@ -510,12 +524,14 @@ def assurance_scope_files(root: Path) -> list[str]:
     if code != 0:
         raise LedgerError("unable to enumerate the assurance scope")
     paths = {line.replace("\\", "/") for line in output.splitlines() if line.strip()}
+    additional_root_files = assurance_root_files(root)
+    paths.update(additional_root_files)
     # A file that Git still has in the index but that no longer exists on disk contributes nothing
     # to the content the gates judged, and including it would make the fingerprint change the
     # moment the deletion is committed rather than the moment the content changed.
     return sorted(
         path for path in paths
-        if in_assurance_scope(path) and (root / path).is_file()
+        if in_assurance_scope(path, additional_root_files) and (root / path).is_file()
     )
 
 

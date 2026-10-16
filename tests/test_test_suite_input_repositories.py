@@ -4,6 +4,7 @@ import json
 import sys
 import tempfile
 import unittest
+from unittest import mock
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -33,7 +34,7 @@ class TestSuiteInputRepositoriesTests(unittest.TestCase):
 
     def test_live_policy_requires_the_collection_boundary_version(self) -> None:
         document = json.loads((ROOT / ".iacode/policies/test-suites.json").read_text())
-        self.assertEqual(document["schemaVersion"], "1.1.0")
+        self.assertEqual(document["schemaVersion"], "1.2.0")
 
     def test_legacy_source_counts_keep_their_declared_policy_semantics(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
@@ -59,9 +60,33 @@ class TestSuiteInputRepositoriesTests(unittest.TestCase):
 
     def test_policy_count_matches_collected_suite_not_live_input_projects(self) -> None:
         suite = next(s for s in counted_test_suites(ROOT) if s["id"] == "evaluator")
-        self.assertEqual(count_pytest_cases(ROOT, suite["root"], suite=suite), 89)
-        self.assertEqual(count_pytest_cases(ROOT, suite["root"]), 94)
-        self.assertEqual(count_pytest_cases(ROOT, suite["root"] + "/fixtures"), 5)
+        raw = count_pytest_cases(ROOT, suite["root"])
+        inputs = sum(count_pytest_cases(ROOT, suite["root"] + "/" + entry["root"])
+                     for entry in suite["inputRepositories"])
+        self.assertGreater(inputs, 0)
+        self.assertEqual(count_pytest_cases(ROOT, suite["root"], suite=suite), raw - inputs)
+
+    def test_current_collection_partition_survives_added_regression_cases(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            suite = self._write_versioned_fixture(root, "1.2.0")
+            suite.update({"id": "evaluator", "inputRepositories": [{"root": "fixtures",
+                "collectionIgnoreGlob": "fixtures/**", "notCountedReason": "explicit live input"}]})
+            (root / ".iacode/policies/test-suites.json").write_text(json.dumps({
+                "schemaVersion": "1.2.0", "suites": [suite]}), encoding="utf-8")
+            with mock.patch.dict(self.test_policy_count_matches_collected_suite_not_live_input_projects.__globals__, {"ROOT": root}):
+                self.test_policy_count_matches_collected_suite_not_live_input_projects()
+                (root / "suite/test_added.py").write_text("def test_added(): pass\n", encoding="utf-8")
+                self.test_policy_count_matches_collected_suite_not_live_input_projects()
+                self.assertEqual(count_pytest_cases(root, "suite", suite=suite), 2)
+                self.assertEqual(count_pytest_cases(root, "suite"), 3)
+                original = count_pytest_cases
+                def uncollected_input_leaks(project, relative, *, suite=None):
+                    return original(project, relative)  # Deliberate adverse policy-boundary mutation.
+                with mock.patch.dict(self.test_policy_count_matches_collected_suite_not_live_input_projects.__globals__,
+                                     {"count_pytest_cases": uncollected_input_leaks}):
+                    with self.assertRaises(AssertionError):
+                        self.test_policy_count_matches_collected_suite_not_live_input_projects()
 
     def test_only_declared_runner_exclusions_leave_both_count_and_evidence(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:

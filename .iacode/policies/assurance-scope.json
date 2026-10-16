@@ -1,0 +1,5 @@
+{
+  "schemaVersion": "1.0.0",
+  "additionalRootFiles": [".gitignore", "ruff.toml"],
+  "policy": "Gate 5 and later bind root ignore/lint settings as assurance inputs, even if an ignore rule hides an untracked root file. Subjects without this versioned policy retain their historical fingerprint semantics."
+}

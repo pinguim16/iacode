@@ -11,3 +11,6 @@ dependencies = ["pydantic==2.13.5"]
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.setuptools.package-data]
+iacode_contracts = ["desktop_protocol.json"]

@@ -93,6 +93,10 @@ ignore = [
 # those is the job; none of them takes external input.
 "scripts/iacode/**" = ["E402", "S108", "S310", "S608"]
 
+# BaseHTTPRequestHandler dispatches to this exact standard-library hook name. Renaming it
+# removes the owned test proxy's POST handler; this is not an application naming choice.
+"scripts/iacode/desktop_test_support.py" = ["N802"]
+
 # The infrastructure suite shells out to Docker and reads the stack over HTTP for the same reasons.
 # `setUpClass` is unittest's own hook name: renaming it does not rename the hook, it removes it.
 "infra/tests/**" = ["N802", "S108", "S310", "S608"]

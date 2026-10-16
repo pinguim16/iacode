@@ -1,0 +1,769 @@
+{
+  "filesRead": [
+    {
+      "path": "START-HERE.md",
+      "reason": "Required entry contract."
+    },
+    {
+      "path": "docs/DEVELOPMENT-CONTRACT.md",
+      "reason": "Canonical delivery contract."
+    },
+    {
+      "path": "docs/MASTER-PLAN.md",
+      "reason": "Authorized Gate scope and milestones."
+    },
+    {
+      "path": "docs/GATE-5-CHECKLIST.md",
+      "reason": "Complete current canonical requirements."
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0010/STATE.json",
+      "reason": "Immutable sealed predecessor state."
+    },
+    {
+      "path": "docs/checkpoints/GATE-4-CP-0010/HANDOFF.md",
+      "reason": "Predecessor handoff and entry conditions."
+    }
+  ],
+  "filesCreated": [
+    {
+      "path": ".iacode/policies/assurance-scope.json",
+      "reason": "Version explicit native suite declarations and preserve historical collection semantics, all counted suites and every inherited mandatory gate; ignore generated client artifacts only.",
+      "hashAfter": "6e930693a7512329c5fbc123d18d1d48bf4fe6a8ac3cdff3b2f7863880d0d493"
+    },
+    {
+      "path": "apps/api/src/iacode_api/desktop_snapshots.py",
+      "reason": "Implement and test authenticated desktop ingress, closed governed adapters and consent-bound scanned snapshots without host tool execution.",
+      "hashAfter": "6e9d7f7724ad1932507fdf0d2f3d1a7245f590a0ed4eb3d686a3cc89567b1cf8"
+    },
+    {
+      "path": "apps/api/src/iacode_api/middleware/desktop_auth.py",
+      "reason": "Implement and test authenticated desktop ingress, closed governed adapters and consent-bound scanned snapshots without host tool execution.",
+      "hashAfter": "92af332ff181a62816397bf3ea2de01f7801c081ddecf8c3c14158a1e1ecb76c"
+    },
+    {
+      "path": "apps/api/src/iacode_api/routes/desktop.py",
+      "reason": "Implement and test authenticated desktop ingress, closed governed adapters and consent-bound scanned snapshots without host tool execution.",
+      "hashAfter": "b5f41e87be10ed5e5e7ccbff7c2d6d6d4bab4075539264767adb15a2be197782"
+    },
+    {
+      "path": "apps/api/tests/unit/test_desktop_api.py",
+      "reason": "Implement and test authenticated desktop ingress, closed governed adapters and consent-bound scanned snapshots without host tool execution.",
+      "hashAfter": "a53afc61c3efe44f2d568d214afc34c87085a83447736b6c9ff6f4eb10e5a200"
+    },
+    {
+      "path": "apps/cli/bin/iacode.cjs",
+      "reason": "Implement and test the bounded authenticated shared core, consent preview and standalone CLI; actual installation/runtime acceptance remains separate evidence.",
+      "hashAfter": "9105ef8f928015eaa5803f4358e3cf553d4d55fbd670dc08ec0d77c5a4b5c5f5"
+    },
+    {
+      "path": "apps/cli/package-lock.json",
+      "reason": "Implement and test the bounded authenticated shared core, consent preview and standalone CLI; actual installation/runtime acceptance remains separate evidence.",
+      "hashAfter": "e4195fd7ff1eebfd8f7b2db498cfa7e8cc1e53e97eb2dd81ea57466f4ebecde7"
+    },
+    {
+      "path": "apps/cli/package.json",
+      "reason": "Implement and test the bounded authenticated shared core, consent preview and standalone CLI; actual installation/runtime acceptance remains separate evidence.",
+      "hashAfter": "9b3291b1ac527c4f90d3a14174ee30108f186de34e2dcf5b9c1fe6158317e1dd"
+    },
+    {
+      "path": "apps/cli/scripts/test.cjs",
+      "reason": "Implement and test the bounded authenticated shared core, consent preview and standalone CLI; actual installation/runtime acceptance remains separate evidence.",
+      "hashAfter": "1480f193d0154585f88f476228ab3be694140de979daaf13f360acfc6cf3706c"
+    },
+    {
+      "path": "apps/cli/src/client.cjs",
+      "reason": "Implement and test the bounded authenticated shared core, consent preview and standalone CLI; actual installation/runtime acceptance remains separate evidence.",
+      "hashAfter": "50782a810b2df89641a4eb51b56c1b05f5c5fd5050ac2087009f7b2a45bc670e"
+    },
+    {
+      "path": "apps/cli/src/snapshot.cjs",
+      "reason": "Implement and test the bounded authenticated shared core, consent preview and standalone CLI; actual installation/runtime acceptance remains separate evidence.",
+      "hashAfter": "aa853912c12ee1069b2eb59c91f9a688e46946cffc7091db9540886670152be5"
+    },
+    {
+      "path": "apps/cli/tests/cli.test.cjs",
+      "reason": "Implement and test the bounded authenticated shared core, consent preview and standalone CLI; actual installation/runtime acceptance remains separate evidence.",
+      "hashAfter": "5685acefc99571f6208358401e74b008733cae058c77b028c4580959a870e44f"
+    },
+    {
+      "path": "apps/cli/tests/core.test.cjs",
+      "reason": "Implement and test the bounded authenticated shared core, consent preview and standalone CLI; actual installation/runtime acceptance remains separate evidence.",
+      "hashAfter": "cb319ed736d96a60c92a9956a7b5e6083cbca5be6300a6b802368b5c2cb472ec"
+    },
+    {
+      "path": "apps/vscode-extension/host-tests/driver.cjs",
+      "reason": "Implement and test native editor commands, trust and exact consent, SecretStorage, plaintext results and stable recovery without host execution.",
+      "hashAfter": "7b7475c618995184a515131ec73fef33243041df431356ec60f1f9a514f672f1"
+    },
+    {
+      "path": "apps/vscode-extension/host-tests/index.cjs",
+      "reason": "Implement and test native editor commands, trust and exact consent, SecretStorage, plaintext results and stable recovery without host execution.",
+      "hashAfter": "79a719d6356fd0af8712a1a3324e54add88dcc8b31d54e059f79bf69471dca4f"
+    },
+    {
+      "path": "apps/vscode-extension/package-lock.json",
+      "reason": "Implement and test native editor commands, trust and exact consent, SecretStorage, plaintext results and stable recovery without host execution.",
+      "hashAfter": "a7302812e09b6464387c43a62b15d0ec5f8ef4ae4bf27b72900234ea091810e4"
+    },
+    {
+      "path": "apps/vscode-extension/package.json",
+      "reason": "Implement and test native editor commands, trust and exact consent, SecretStorage, plaintext results and stable recovery without host execution.",
+      "hashAfter": "a891592b6e0165feb0d47f4763eb38c4e8005da19b7150640083ab90e2a3e27a"
+    },
+    {
+      "path": "apps/vscode-extension/scripts/test.cjs",
+      "reason": "Implement and test native editor commands, trust and exact consent, SecretStorage, plaintext results and stable recovery without host execution.",
+      "hashAfter": "c829d3c1d87981afdecd385359a0eeec73c4c61aa8dba5e2d041155e92a89e9d"
+    },
+    {
+      "path": "apps/vscode-extension/src/extension.cjs",
+      "reason": "Implement and test native editor commands, trust and exact consent, SecretStorage, plaintext results and stable recovery without host execution.",
+      "hashAfter": "f1351d4d736c3dd50bc8733e6711463c80d0b0d161a09053ef6aa40dcfda596e"
+    },
+    {
+      "path": "apps/vscode-extension/tests/extension.test.cjs",
+      "reason": "Implement and test native editor commands, trust and exact consent, SecretStorage, plaintext results and stable recovery without host execution.",
+      "hashAfter": "4eb4fa949f65aadbd90db000e4da440cc2ce50dca57c0f15e4d5b305184f800e"
+    },
+    {
+      "path": "docs/GATE-5-CHECKLIST.md",
+      "reason": "Establish the complete Gate 5 canonical requirement set before implementation; preserve every predecessor row.",
+      "hashAfter": "0376c1088a2e44c36a6a1c1e64075c85242a0a4df297b8d5e01dbd1b6d590b01"
+    },
+    {
+      "path": "docs/adr/ADR-0046-desktop-clients-are-authenticated-runtime-adapters.md",
+      "reason": "Record and atomically index the authenticated runtime-adapter architecture before structural changes.",
+      "hashAfter": "62b3f6d9f34a1ccbb190222aa716a4719b23339202540e2e946236511129db61"
+    },
+    {
+      "path": "docs/adr/ADR-0047-native-client-suites-and-packages-are-explicit.md",
+      "reason": "Record and atomically index the authenticated runtime-adapter architecture before structural changes.",
+      "hashAfter": "e9987307ed3b4bec35a06c457285fb41023738f217ae5bc09f73f14266b79c2a"
+    },
+    {
+      "path": "docs/adr/ADR-0048-native-recovery-proofs-use-persistent-owned-hosts.md",
+      "reason": "Record and atomically index the authenticated runtime-adapter architecture before structural changes.",
+      "hashAfter": "3abb084f65a1914cba7522e49ba3866f48c1042866c39d69fef681052af16815"
+    },
+    {
+      "path": "docs/adr/ADR-0049-root-assurance-inputs-follow-subject-policy.md",
+      "reason": "Record and atomically index the authenticated runtime-adapter architecture before structural changes.",
+      "hashAfter": "71e5ad97968e1f4da4314dd5bf2107e9eec9caa81f6967bcdf1cecacf56155b2"
+    },
+    {
+      "path": "docs/checkpoints/GATE-5-CP-0001/AUTHORIZATION.md",
+      "reason": "Record truthful in-progress Gate 5 authorization, requirements, baseline, plan, implementation observations and executable continuation.",
+      "hashAfter": "a4330fc1152b558835fa120990acd3fe0a72dd7cdcf9c3300337a29311b4fa76"
+    },
+    {
+      "path": "docs/checkpoints/GATE-5-CP-0001/BASELINE.md",
+      "reason": "Record truthful in-progress Gate 5 authorization, requirements, baseline, plan, implementation observations and executable continuation.",
+      "hashAfter": "5c019b82e4eb6993ef2228fc49cd73e788d316df5ec0dc17313c348e6072e0f8"
+    },
+    {
+      "path": "docs/checkpoints/GATE-5-CP-0001/CLIENT-CORE-UNIT.json",
+      "reason": "Record truthful in-progress Gate 5 authorization, requirements, baseline, plan, implementation observations and executable continuation.",
+      "hashAfter": "d05f743f067a441bd6dc77ed239d7c55377ac43e014b86f923c93c0bf997778f"
+    },
+    {
+      "path": "docs/checkpoints/GATE-5-CP-0001/CLOSURE-REQUIREMENTS.json",
+      "reason": "Record truthful in-progress Gate 5 authorization, requirements, baseline, plan, implementation observations and executable continuation.",
+      "hashAfter": "a15133546016830e6e904569265eb4036e0887f9d449f5a54d6c37b12d946093"
+    },
+    {
+      "path": "docs/checkpoints/GATE-5-CP-0001/CLOSURE-REQUIREMENTS.md",
+      "reason": "Record truthful in-progress Gate 5 authorization, requirements, baseline, plan, implementation observations and executable continuation.",
+      "hashAfter": "c6455f4421b348795502b995e32aa26504bd82e75d5027657e75e02243e8c934"
+    },
+    {
+      "path": "docs/checkpoints/GATE-5-CP-0001/COMMANDS.jsonl",
+      "reason": "Record truthful in-progress Gate 5 authorization, requirements, baseline, plan, implementation observations and executable continuation.",
+      "hashAfter": "27ed1ec4d020f12a0df6501c22f3f0af1ea46563c121ad607e30f6ce387b7814"
+    },
+    {
+      "path": "docs/checkpoints/GATE-5-CP-0001/COUNTS.json",
+      "reason": "Record truthful in-progress Gate 5 authorization, requirements, baseline, plan, implementation observations and executable continuation.",
+      "hashAfter": "2f33a24e83af2643853e2de53c45de1075fcbf9c823824b428ebeee3ae9143f4"
+    },
+    {
+      "path": "docs/checkpoints/GATE-5-CP-0001/DECISIONS.md",
+      "reason": "Record truthful in-progress Gate 5 authorization, requirements, baseline, plan, implementation observations and executable continuation.",
+      "hashAfter": "5e687f191690dad3562cc403d6d1b6a8d7b27120e6ec69b740a474136461c7e2"
+    },
+    {
+      "path": "docs/checkpoints/GATE-5-CP-0001/DESKTOP-LIVE.json",
+      "reason": "Record truthful in-progress Gate 5 authorization, requirements, baseline, plan, implementation observations and executable continuation.",
+      "hashAfter": "2c97758623a10a844d661e7ea18a9d330e7d3b84ae0e6cf514b621e4e4a1c72c"
+    },
+    {
+      "path": "docs/checkpoints/GATE-5-CP-0001/DIFF-SUMMARY.md",
+      "reason": "Record truthful in-progress Gate 5 authorization, requirements, baseline, plan, implementation observations and executable continuation.",
+      "hashAfter": "8b6d4956309d73306dc6f54fa95dd96f9dd743287c31e51dc8e07ddab779c584"
+    },
+    {
+      "path": "docs/checkpoints/GATE-5-CP-0001/FILES.json",
+      "reason": "Record truthful in-progress Gate 5 authorization, requirements, baseline, plan, implementation observations and executable continuation."
+    },
+    {
+      "path": "docs/checkpoints/GATE-5-CP-0001/FINDINGS.json",
+      "reason": "Record truthful in-progress Gate 5 authorization, requirements, baseline, plan, implementation observations and executable continuation.",
+      "hashAfter": "c782184802476a78793dbf817196b888445ec578a4c6acd54f94b59c636c8f1e"
+    },
+    {
+      "path": "docs/checkpoints/GATE-5-CP-0001/HANDOFF.md",
+      "reason": "Record truthful in-progress Gate 5 authorization, requirements, baseline, plan, implementation observations and executable continuation.",
+      "hashAfter": "a6863e84d2cc855b938bcf42b606fd73d333721bc6e3d9fd25ec9ca9b7206a61"
+    },
+    {
+      "path": "docs/checkpoints/GATE-5-CP-0001/HARDENED-GATEWAY.json",
+      "reason": "Record truthful in-progress Gate 5 authorization, requirements, baseline, plan, implementation observations and executable continuation.",
+      "hashAfter": "de23c959c19af2cc068d9855e8a86bf414428b4306973c45c0a01405474a99b1"
+    },
+    {
+      "path": "docs/checkpoints/GATE-5-CP-0001/LESSON-PREFLIGHT.json",
+      "reason": "Record truthful in-progress Gate 5 authorization, requirements, baseline, plan, implementation observations and executable continuation.",
+      "hashAfter": "f934d921e3dd98897dfdeb8b484c271052656ca53c0cc40d9ee96460966f5d8f"
+    },
+    {
+      "path": "docs/checkpoints/GATE-5-CP-0001/LESSON-PREFLIGHT.md",
+      "reason": "Record truthful in-progress Gate 5 authorization, requirements, baseline, plan, implementation observations and executable continuation.",
+      "hashAfter": "2d074ee567bb4f639dfa3f7c35fdc148a92405cce8bae431534c831102e70bea"
+    },
+    {
+      "path": "docs/checkpoints/GATE-5-CP-0001/NEXT.md",
+      "reason": "Record truthful in-progress Gate 5 authorization, requirements, baseline, plan, implementation observations and executable continuation.",
+      "hashAfter": "a775b2d079c42810e9e94f44b6c672a41537f4fe98d7ad09f818f14dbefa3bf7"
+    },
+    {
+      "path": "docs/checkpoints/GATE-5-CP-0001/PLAN.md",
+      "reason": "Record truthful in-progress Gate 5 authorization, requirements, baseline, plan, implementation observations and executable continuation.",
+      "hashAfter": "7888e86de0feb80e27613a40a20d2f7c370ced237bd4201ff3596209ca43a865"
+    },
+    {
+      "path": "docs/checkpoints/GATE-5-CP-0001/PROGRESS.md",
+      "reason": "Record truthful in-progress Gate 5 authorization, requirements, baseline, plan, implementation observations and executable continuation.",
+      "hashAfter": "d4a164b1dd006a154d253e41971640d8a04488af9224776280ca520b37643e56"
+    },
+    {
+      "path": "docs/checkpoints/GATE-5-CP-0001/PROVENANCE.json",
+      "reason": "Record truthful in-progress Gate 5 authorization, requirements, baseline, plan, implementation observations and executable continuation.",
+      "hashAfter": "f92edbb4a3fbeb4380c897f483e37274eeb3396ac019ecd24595f6a6430d0a8e"
+    },
+    {
+      "path": "docs/checkpoints/GATE-5-CP-0001/QUALITY.json",
+      "reason": "Record truthful in-progress Gate 5 authorization, requirements, baseline, plan, implementation observations and executable continuation.",
+      "hashAfter": "10ae4b5a2907e42f509882c730d56e98c58238e50b72c7fc5db4f4a91d21cdd2"
+    },
+    {
+      "path": "docs/checkpoints/GATE-5-CP-0001/REQUIREMENTS-MATRIX.json",
+      "reason": "Record truthful in-progress Gate 5 authorization, requirements, baseline, plan, implementation observations and executable continuation.",
+      "hashAfter": "c37a2905028517b52f90cf7affce3221cccc4b3e01599f585c65cb41460d4947"
+    },
+    {
+      "path": "docs/checkpoints/GATE-5-CP-0001/REQUIREMENTS-MATRIX.md",
+      "reason": "Record truthful in-progress Gate 5 authorization, requirements, baseline, plan, implementation observations and executable continuation.",
+      "hashAfter": "29248194a52995ba59ed4353883a53b3236268a4c10e5a07fa0ad6d6c008d4df"
+    },
+    {
+      "path": "docs/checkpoints/GATE-5-CP-0001/REVIEW-BUNDLE-VALIDATION.json",
+      "reason": "Record truthful in-progress Gate 5 authorization, requirements, baseline, plan, implementation observations and executable continuation.",
+      "hashAfter": "8a5c74d9428e17869d2657fe868290cdb7def78c468fd2187f2249e4fbaba9aa"
+    },
+    {
+      "path": "docs/checkpoints/GATE-5-CP-0001/REWORK-LOG.jsonl",
+      "reason": "Record truthful in-progress Gate 5 authorization, requirements, baseline, plan, implementation observations and executable continuation.",
+      "hashAfter": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/checkpoints/GATE-5-CP-0001/RISKS.md",
+      "reason": "Record truthful in-progress Gate 5 authorization, requirements, baseline, plan, implementation observations and executable continuation.",
+      "hashAfter": "5590affacfb1d96e056dfee4680a787cf8d195ed44554b9aa0510821354d02c8"
+    },
+    {
+      "path": "docs/checkpoints/GATE-5-CP-0001/RUN-METADATA.json",
+      "reason": "Record truthful in-progress Gate 5 authorization, requirements, baseline, plan, implementation observations and executable continuation.",
+      "hashAfter": "981f806e19e5a2d5c7043169b648bc8666dc124514c1511ecd405a8a9c21548e"
+    },
+    {
+      "path": "docs/checkpoints/GATE-5-CP-0001/SOURCE-SCAN-REVIEW.json",
+      "reason": "Record truthful in-progress Gate 5 authorization, requirements, baseline, plan, implementation observations and executable continuation.",
+      "hashAfter": "04d77491af7e0317863564da7e6c4e2e8faf1c54fea9a7e4fd70863d3e76a331"
+    },
+    {
+      "path": "docs/checkpoints/GATE-5-CP-0001/STATE.json",
+      "reason": "Record truthful in-progress Gate 5 authorization, requirements, baseline, plan, implementation observations and executable continuation.",
+      "hashAfter": "c6ef651feb33a9dd45c620a8dc4aae97165d3ef8f7f8a13c28d7522d69330965"
+    },
+    {
+      "path": "docs/checkpoints/GATE-5-CP-0001/STATUS.md",
+      "reason": "Record truthful in-progress Gate 5 authorization, requirements, baseline, plan, implementation observations and executable continuation.",
+      "hashAfter": "9c78f467b4c249b2c5799078d77a0affceee4aec4cd7cb4d250f7d51f309cbdd"
+    },
+    {
+      "path": "docs/checkpoints/GATE-5-CP-0001/STEPS.json",
+      "reason": "Record truthful in-progress Gate 5 authorization, requirements, baseline, plan, implementation observations and executable continuation.",
+      "hashAfter": "0869ea46a00ec974e93e706b4c0fe841db781a0d5a8a72810e6f9853e03da1bc"
+    },
+    {
+      "path": "docs/checkpoints/GATE-5-CP-0001/TESTS.json",
+      "reason": "Record truthful in-progress Gate 5 authorization, requirements, baseline, plan, implementation observations and executable continuation.",
+      "hashAfter": "3d692f74d52f89ddfcfbcdef0a300fc37e5b8f9883a260cdb9ea3386d3c90eff"
+    },
+    {
+      "path": "docs/checkpoints/GATE-5-CP-0001/attempts/CLIENT-CORE-RED-0001.json",
+      "reason": "Record truthful in-progress Gate 5 authorization, requirements, baseline, plan, implementation observations and executable continuation.",
+      "hashAfter": "ee4cb115bb0710341bf6404a4cf7849dbfa4f708e3f919d43c37a89817eef340"
+    },
+    {
+      "path": "docs/checkpoints/GATE-5-CP-0001/attempts/DESKTOP-LIVE-RED-0001.json",
+      "reason": "Record truthful in-progress Gate 5 authorization, requirements, baseline, plan, implementation observations and executable continuation.",
+      "hashAfter": "10e893274ddea097c2c765e8bc26026b47af1b4e630b1774d91cbc159a4f6a7f"
+    },
+    {
+      "path": "docs/checkpoints/GATE-5-CP-0001/attempts/DESKTOP-LIVE-RED-0002.json",
+      "reason": "Record truthful in-progress Gate 5 authorization, requirements, baseline, plan, implementation observations and executable continuation.",
+      "hashAfter": "004386081aef002cef1a766200b28df2b01bfd97b317c2a27027780c3c9c1ead"
+    },
+    {
+      "path": "docs/checkpoints/GATE-5-CP-0001/attempts/DESKTOP-LIVE-RED-0003.json",
+      "reason": "Record truthful in-progress Gate 5 authorization, requirements, baseline, plan, implementation observations and executable continuation.",
+      "hashAfter": "4437c9ecc00da47ea358bb29c160c14a962dd771fde9913214495cfe570f5d77"
+    },
+    {
+      "path": "docs/checkpoints/GATE-5-CP-0001/attempts/DESKTOP-LIVE-RED-0004.json",
+      "reason": "Record truthful in-progress Gate 5 authorization, requirements, baseline, plan, implementation observations and executable continuation.",
+      "hashAfter": "909d3b7f547d4fba7b85d7a613709041e69f33715bee94a3a03c6f5bab9df684"
+    },
+    {
+      "path": "docs/checkpoints/GATE-5-CP-0001/attempts/DESKTOP-LIVE-RED-0005.json",
+      "reason": "Record truthful in-progress Gate 5 authorization, requirements, baseline, plan, implementation observations and executable continuation.",
+      "hashAfter": "5ea7b941f1985c6ad5b184882113a618f8bd5fbf1b2e5f268ac5622c10beddcb"
+    },
+    {
+      "path": "docs/checkpoints/GATE-5-CP-0001/attempts/DESKTOP-LIVE-RED-0006.json",
+      "reason": "Record truthful in-progress Gate 5 authorization, requirements, baseline, plan, implementation observations and executable continuation.",
+      "hashAfter": "e7312725ea20a49a784772a530f24d5a2c945fa28e084a672e1c4d5e4d33c7b1"
+    },
+    {
+      "path": "docs/checkpoints/GATE-5-CP-0001/attempts/DESKTOP-LIVE-RED-0007.json",
+      "reason": "Record truthful in-progress Gate 5 authorization, requirements, baseline, plan, implementation observations and executable continuation.",
+      "hashAfter": "ed099af6468eb3b5d27b73cddb62910312af612ea4ef2a5822a2ad0a97d31236"
+    },
+    {
+      "path": "docs/checkpoints/GATE-5-CP-0001/attempts/DESKTOP-LIVE-RED-0008.json",
+      "reason": "Record truthful in-progress Gate 5 authorization, requirements, baseline, plan, implementation observations and executable continuation.",
+      "hashAfter": "7de39a4969e00a727db7c2d15bb87240ff9113db0b8ca306ff5843d6b7444bc2"
+    },
+    {
+      "path": "docs/checkpoints/GATE-5-CP-0001/attempts/HARDENED-GATEWAY-RED-0001.json",
+      "reason": "Record truthful in-progress Gate 5 authorization, requirements, baseline, plan, implementation observations and executable continuation.",
+      "hashAfter": "94d0b137724fa246e0df19a3c23cbd348b1d573d185b334ca76fd661a041127b"
+    },
+    {
+      "path": "docs/checkpoints/GATE-5-CP-0001/attempts/NATIVE-INSTALLATION-RED-0001.json",
+      "reason": "Record truthful in-progress Gate 5 authorization, requirements, baseline, plan, implementation observations and executable continuation.",
+      "hashAfter": "9b9552b95b083cf4bb50942cd64ef213bd0784e78605a51efe371f87359a1243"
+    },
+    {
+      "path": "docs/checkpoints/GATE-5-CP-0001/attempts/NATIVE-INSTALLATION-RED-0002.json",
+      "reason": "Record truthful in-progress Gate 5 authorization, requirements, baseline, plan, implementation observations and executable continuation.",
+      "hashAfter": "e9faaa36b42070f8d7ebd2d648f8f390bf7414404e869b11b218783013533891"
+    },
+    {
+      "path": "docs/checkpoints/GATE-5-CP-0001/attempts/SOURCE-SCAN-REVIEW-PRE-REFACTOR.json",
+      "reason": "Record truthful in-progress Gate 5 authorization, requirements, baseline, plan, implementation observations and executable continuation.",
+      "hashAfter": "8e2efe36be1f23050afd123ca58a08c68d4618dab4c3db57881153fb43161356"
+    },
+    {
+      "path": "docs/checkpoints/GATE-5-CP-0001/audit-harness/archive_client_red.py",
+      "reason": "Record truthful in-progress Gate 5 authorization, requirements, baseline, plan, implementation observations and executable continuation.",
+      "hashAfter": "b1bf80bc25e3d73c79b998eb37cecafaa00695786e7358ccbf3f70a7f934fb3d"
+    },
+    {
+      "path": "docs/checkpoints/GATE-5-CP-0001/audit-harness/archive_desktop_attempt.py",
+      "reason": "Record truthful in-progress Gate 5 authorization, requirements, baseline, plan, implementation observations and executable continuation.",
+      "hashAfter": "31d72568a7bb17bfef06bac319d214a2d4229c3d3291230436d5bf05375f2c8a"
+    },
+    {
+      "path": "docs/checkpoints/GATE-5-CP-0001/audit-harness/archive_evidence.py",
+      "reason": "Record truthful in-progress Gate 5 authorization, requirements, baseline, plan, implementation observations and executable continuation.",
+      "hashAfter": "ea1082c9d7049ad0cae70e5638ca241157f59778f62e65a0985c75ddcfa9cba2"
+    },
+    {
+      "path": "docs/checkpoints/GATE-5-CP-0001/audit-harness/assemble_progress.py",
+      "reason": "Record truthful in-progress Gate 5 authorization, requirements, baseline, plan, implementation observations and executable continuation.",
+      "hashAfter": "64567238903fc3995367fa1f378ae3e0ef20ee03443004958e6786b244b0758b"
+    },
+    {
+      "path": "docs/checkpoints/GATE-5-CP-0001/audit-harness/capture_desktop_proof.py",
+      "reason": "Record truthful in-progress Gate 5 authorization, requirements, baseline, plan, implementation observations and executable continuation.",
+      "hashAfter": "15d940cfbdaecb9eb48bd7cfb661e42e352fba46dc8fdd4def4209ac0339e1b4"
+    },
+    {
+      "path": "docs/checkpoints/GATE-5-CP-0001/audit-harness/capture_gateway_proof.py",
+      "reason": "Record truthful in-progress Gate 5 authorization, requirements, baseline, plan, implementation observations and executable continuation.",
+      "hashAfter": "7cc9ba9b0c3a0daee27cb145d84b81c391daa62c5a13e6bd7d6953d87e0c79df"
+    },
+    {
+      "path": "docs/checkpoints/GATE-5-CP-0001/audit-harness/cleanup_failed_native.py",
+      "reason": "Record truthful in-progress Gate 5 authorization, requirements, baseline, plan, implementation observations and executable continuation.",
+      "hashAfter": "b7c20abbd6ae7c5d0c02f6173f7740946ea50b87c4eae02f2ee224249c2428bd"
+    },
+    {
+      "path": "docs/checkpoints/GATE-5-CP-0001/audit-harness/declare_inventory.py",
+      "reason": "Record truthful in-progress Gate 5 authorization, requirements, baseline, plan, implementation observations and executable continuation.",
+      "hashAfter": "b5e75473933d34b6b8c9ba9d9e8c9e987a8c98452fd365e0ba638b27747e4805"
+    },
+    {
+      "path": "docs/checkpoints/GATE-5-CP-0001/audit-harness/escalate_observed_recurrences.py",
+      "reason": "Record truthful in-progress Gate 5 authorization, requirements, baseline, plan, implementation observations and executable continuation.",
+      "hashAfter": "d237a91c6cc50ffb503f72b6479d983b604eae51438488d1286dae34839a4ed6"
+    },
+    {
+      "path": "docs/checkpoints/GATE-5-CP-0001/audit-harness/probe_hardened_gateway.py",
+      "reason": "Record truthful in-progress Gate 5 authorization, requirements, baseline, plan, implementation observations and executable continuation.",
+      "hashAfter": "db05047c942a1c11fa036b557afaac0494c47cec9827621b9d752e4f187733f6"
+    },
+    {
+      "path": "docs/checkpoints/GATE-5-CP-0001/audit-harness/probe_native_locks.py",
+      "reason": "Record truthful in-progress Gate 5 authorization, requirements, baseline, plan, implementation observations and executable continuation.",
+      "hashAfter": "9ceb17e2db32fd01ffd58e0b09123058ea06d2e3f87fc45180f3318be262e968"
+    },
+    {
+      "path": "docs/checkpoints/GATE-5-CP-0001/audit-harness/probe_native_storage.py",
+      "reason": "Record truthful in-progress Gate 5 authorization, requirements, baseline, plan, implementation observations and executable continuation.",
+      "hashAfter": "b93a06ac30bec0ba4b3dd207359fea6cdba3ba405b6848a5fc0ef7a89ec967e6"
+    },
+    {
+      "path": "docs/checkpoints/GATE-5-CP-0001/audit-harness/probe_restart_port.py",
+      "reason": "Record truthful in-progress Gate 5 authorization, requirements, baseline, plan, implementation observations and executable continuation.",
+      "hashAfter": "cb04961d154e3e684387c5c3b2fb368b5db177111685b0d0702a2a7cc92b28e9"
+    },
+    {
+      "path": "docs/checkpoints/GATE-5-CP-0001/audit-harness/prove_client_core.py",
+      "reason": "Record truthful in-progress Gate 5 authorization, requirements, baseline, plan, implementation observations and executable continuation.",
+      "hashAfter": "54791de6db3a0ca1be0de2ede88c41c5275f860970c4f067c9db131cee2b3469"
+    },
+    {
+      "path": "docs/checkpoints/GATE-5-CP-0001/audit-harness/resolve_observed_recurrences.py",
+      "reason": "Record truthful in-progress Gate 5 authorization, requirements, baseline, plan, implementation observations and executable continuation.",
+      "hashAfter": "c389df0030457fcd49236d76e41054ec6c838097f903e797fc05de4ba4e3464b"
+    },
+    {
+      "path": "docs/checkpoints/GATE-5-CP-0001/audit-harness/review_source_findings.py",
+      "reason": "Record truthful in-progress Gate 5 authorization, requirements, baseline, plan, implementation observations and executable continuation.",
+      "hashAfter": "eca9df6092e30ee54e20c90702e0ab0bcc0133e2f14233af353c27de6b20e5eb"
+    },
+    {
+      "path": "docs/checkpoints/GATE-5-CP-0001/audit-harness/run_checkpoint_validation.py",
+      "reason": "Record truthful in-progress Gate 5 authorization, requirements, baseline, plan, implementation observations and executable continuation.",
+      "hashAfter": "a7a85477768edbc1acac1c60ceae5dd774d7be76eed864f44315d74198c6c238"
+    },
+    {
+      "path": "docs/checkpoints/GATE-5-CP-0001/audit-harness/run_full_verification.py",
+      "reason": "Record truthful in-progress Gate 5 authorization, requirements, baseline, plan, implementation observations and executable continuation.",
+      "hashAfter": "959c1061659d63217509fe598884331c95bcfda2d7518e3fab97690b95b2f63f"
+    },
+    {
+      "path": "docs/checkpoints/GATE-5-CP-0001/audit-harness/verify_evidence_transport.py",
+      "reason": "Record truthful in-progress Gate 5 authorization, requirements, baseline, plan, implementation observations and executable continuation.",
+      "hashAfter": "d47554590bc6d61d7da5af405084bfbfe36a075e7dcc6e3ce2f35173ab29fcc6"
+    },
+    {
+      "path": "docs/runbooks/DESKTOP-CLIENTS.md",
+      "reason": "Document authenticated desktop installation, limits, exact approvals, truthful status/recovery, failure and removal procedures.",
+      "hashAfter": "75df34f2f2e6fbbaea6486124c5a39013d4253cb8f00f47a961348a0be94c460"
+    },
+    {
+      "path": "packages/common/src/iacode_common/desktop_auth.py",
+      "reason": "Define one byte-exact authenticated desktop protocol, shared contracts and strict request validation.",
+      "hashAfter": "d0ff1840c872e60fc24d42cc10945f99a9359e35a1eaf5da1923854b0866e7f3"
+    },
+    {
+      "path": "packages/contracts/src/iacode_contracts/desktop.py",
+      "reason": "Define one byte-exact authenticated desktop protocol, shared contracts and strict request validation.",
+      "hashAfter": "830781e4c462bbec6e44821916170603e229a8c1951c0b842e6c7f60621cc90b"
+    },
+    {
+      "path": "packages/contracts/src/iacode_contracts/desktop_protocol.json",
+      "reason": "Define one byte-exact authenticated desktop protocol, shared contracts and strict request validation.",
+      "hashAfter": "07afdf6772f9d54cf5ee2d84d2fb3222220c1b454a0ae08e5d8c30eeea1ceab9"
+    },
+    {
+      "path": "scripts/iacode/build_clients.py",
+      "reason": "Build closed deterministic client packages, execute complete client tests, lint and graph checks, and extend mandatory live verification without dropping inherited controls.",
+      "hashAfter": "7700922abe1acccfc4ae73cacbae523b680b33f3323627628bc40bc751738f55"
+    },
+    {
+      "path": "scripts/iacode/client_checks.py",
+      "reason": "Build closed deterministic client packages, execute complete client tests, lint and graph checks, and extend mandatory live verification without dropping inherited controls.",
+      "hashAfter": "7fdd67d8f97163d6b1302a6aa1d059c14d7001edfb579b1ea13b3d6210d6b33e"
+    },
+    {
+      "path": "scripts/iacode/desktop_test_support.py",
+      "reason": "Build closed deterministic client packages, execute complete client tests, lint and graph checks, and extend mandatory live verification without dropping inherited controls.",
+      "hashAfter": "fe5f69bf5703fb89c293b7bf7841201c88c7ff9e284dbc31511d0d23a8788627"
+    },
+    {
+      "path": "scripts/iacode/gates/client_tests.py",
+      "reason": "Build closed deterministic client packages, execute complete client tests, lint and graph checks, and extend mandatory live verification without dropping inherited controls.",
+      "hashAfter": "e86811804504f3a77f4151046cf26db9f91c974565050f970b8530a596381d5d"
+    },
+    {
+      "path": "scripts/iacode/native_editor.py",
+      "reason": "Build closed deterministic client packages, execute complete client tests, lint and graph checks, and extend mandatory live verification without dropping inherited controls.",
+      "hashAfter": "2e3cced22aa5bc0b57c588723ee4e3fdcef668df4a9e03fe406c49c8e372029a"
+    },
+    {
+      "path": "scripts/iacode/native_process.py",
+      "reason": "Build closed deterministic client packages, execute complete client tests, lint and graph checks, and extend mandatory live verification without dropping inherited controls.",
+      "hashAfter": "535c94128f60aa85c1e6c30ba01b61a0766033bf518210f1feebe8ad18b63959"
+    },
+    {
+      "path": "scripts/iacode/scenarios/desktop_e2e.py",
+      "reason": "Build closed deterministic client packages, execute complete client tests, lint and graph checks, and extend mandatory live verification without dropping inherited controls.",
+      "hashAfter": "9e3ab0868abb0fe0a61c687f44873e415ddb18e9294224dc456a3ef96280f855"
+    },
+    {
+      "path": "services/agent-runtime/tests/test_cancellation_store.py",
+      "reason": "Repair the observed Gate5 repeated-cancellation integration by preserving an already cancelled terminal result, while retaining refusal of successful/failed terminals and requested-versus-completed semantics.",
+      "hashAfter": "94cf503f1b8aaea79880b1fce642ef00687cfcbc89ee5b640826e4792d870a99"
+    },
+    {
+      "path": "services/orchestrator/src/iacode_orchestrator/desktop_transport.py",
+      "reason": "Supply infrastructure API authentication outside the provider-neutral agent domain and preserve explicit legacy development mode.",
+      "hashAfter": "c81d9297ec3b4b6a1aab127baf5cbf861a2369f1f1c5536c6c8cffb551ffdb45"
+    },
+    {
+      "path": "tests/test_gate5_clients.py",
+      "reason": "Separate historical fixture ownership from live scope, prove a future Gate transition and guard the observed documentation contradiction.",
+      "hashAfter": "74a3c996b59272465695588cfe754ceded2fade2643bbad5d12050abc24e0852"
+    }
+  ],
+  "filesModified": [
+    {
+      "path": ".gitattributes",
+      "reason": "Version explicit native suite declarations and preserve historical collection semantics, all counted suites and every inherited mandatory gate; ignore generated client artifacts only.",
+      "hashBefore": "fc6e5389129d8a50c9d5e11ea5d5d930e1968012d8915982921d82266d379e47",
+      "hashAfter": "66effbe2ff14c7b7631892ba2cfdc0148ed89f146d567ac222196dd52cebd8e0"
+    },
+    {
+      "path": ".gitignore",
+      "reason": "Version explicit native suite declarations and preserve historical collection semantics, all counted suites and every inherited mandatory gate; ignore generated client artifacts only.",
+      "hashBefore": "f04894c0cd14f504f23038e8b46ec6cb4cab072e577ecf8edabeb9495aa1bdb8",
+      "hashAfter": "6af262fa11b8bcaca0557941751310b50305cb854d2a91c9e2a4bf6056bf7436"
+    },
+    {
+      "path": ".iacode/anchors/checkpoint-chain.json",
+      "reason": "Anchor sealed Gate 4 CP0010 with the canonical chain rebuilder, preserving every historical tag, commit and tree identity.",
+      "hashBefore": "a73aea454b489c20aa85efff1284660f78441f0bb23b94e29b13624126b14bd4",
+      "hashAfter": "ceba3893a14dda9429ff4bb8d6bfc8fe79a966450ad9392920aca0fafc64debe"
+    },
+    {
+      "path": ".iacode/memory/LESSONS.md",
+      "reason": "Preserve and resolve the observed historical/current Gate recurrence and causal architecture-rollup failure with executable guards.",
+      "hashBefore": "a8cfd7bff902dd45ef4ceb4786886e5f82d0cc3b43d6252b7218c0b908b44abf",
+      "hashAfter": "a17dc8489d6fac15f8a2be4ec636410c6123efbb316649c5da0acd92af372013"
+    },
+    {
+      "path": ".iacode/memory/guardrails/registry.json",
+      "reason": "Preserve and resolve the observed historical/current Gate recurrence and causal architecture-rollup failure with executable guards.",
+      "hashBefore": "71a4445bb80b5152fa226e08697643abd62e9b343914aa33986b8fc371ed9d13",
+      "hashAfter": "0b044303a37e943ff647ae5b352dab9f9453e0e9cd50a3fc6cd13a439d6253a4"
+    },
+    {
+      "path": ".iacode/memory/lessons.jsonl",
+      "reason": "Preserve and resolve the observed historical/current Gate recurrence and causal architecture-rollup failure with executable guards.",
+      "hashBefore": "b3b496801b086bb416217b2d48eaed0db60188b322fd70ee3cf9312383f4cdff",
+      "hashAfter": "6149dedea873df70b3ffc5e9bd39d175d1ecbe341071fd780936bd2b1ca83a39"
+    },
+    {
+      "path": ".iacode/policies/canonical-requirements.json",
+      "reason": "Establish the complete Gate 5 canonical requirement set before implementation; preserve every predecessor row.",
+      "hashBefore": "3b817d6535cf9c6efe2167b7f65d9226b916708fe06e0d4ae210b699837e81f7",
+      "hashAfter": "34cc8986ee0d83e2bbec45f850665b0ea8233f01694adbdc297a7dbb75a187f9"
+    },
+    {
+      "path": ".iacode/policies/quality-gates.json",
+      "reason": "Version explicit native suite declarations and preserve historical collection semantics, all counted suites and every inherited mandatory gate; ignore generated client artifacts only.",
+      "hashBefore": "dd2cea1bc42ec38a17aea12f26843477ca5b43dd89451fe933e6c52943a6a265",
+      "hashAfter": "314534b56c84f2f8c084f5f9e0a3a5331c7c80beb6c8b1a310a34310853ef24e"
+    },
+    {
+      "path": ".iacode/policies/quality-policy.json",
+      "reason": "Version explicit native suite declarations and preserve historical collection semantics, all counted suites and every inherited mandatory gate; ignore generated client artifacts only.",
+      "hashBefore": "99ed225e7e84b2a5244d7c01bcd2a12a2d6f2409ee91e512eabbc68a6a3045fd",
+      "hashAfter": "19367e5ca6c6da58d1145349f30cabbff1748fe0bd14b0a94de45fd6fee7f56d"
+    },
+    {
+      "path": ".iacode/policies/test-suites.json",
+      "reason": "Version explicit native suite declarations and preserve historical collection semantics, all counted suites and every inherited mandatory gate; ignore generated client artifacts only.",
+      "hashBefore": "b98a9673cf192b8740e733863d69c7750f043e8a69a612a0144fb4b92909cbc7",
+      "hashAfter": "1987574cb69492fd956adf9d1486f89ae8b4cf9eed44f4e384055ec7bee08c09"
+    },
+    {
+      "path": ".iacode/schemas/test-suites.schema.json",
+      "reason": "Version explicit native suite declarations and preserve historical collection semantics, all counted suites and every inherited mandatory gate; ignore generated client artifacts only.",
+      "hashBefore": "959fce095b242d0b3e167bcf3c7b5380087747d040c84250a33b4ced62dcc268",
+      "hashAfter": "9f5041c28c1a29a57de27a30aa606ad4504b4a820f57c0a83bbb9d47997658a7"
+    },
+    {
+      "path": "START-HERE.md",
+      "reason": "Align current entry and architecture with sealed Gate 4 and truthful Gate 5 work in progress, without claiming client acceptance.",
+      "hashBefore": "e8ac7b13e7bc540d09ad401979977a5d6acbb7e528815b0f2e9915a4db88e37d",
+      "hashAfter": "fea17d76e28eb7caf95bcaf6efbedd5e2c765f3ae529284215c2a156c044592f"
+    },
+    {
+      "path": "apps/api/src/iacode_api/config.py",
+      "reason": "Implement and test authenticated desktop ingress, closed governed adapters and consent-bound scanned snapshots without host tool execution.",
+      "hashBefore": "60e2f652ec6759c44b720894b335da8d51b4966720d9e662b86c6bfccbf9b708",
+      "hashAfter": "7427e96b69a6a36890ca18d7ced260609755aded0d0b79e993cf69063a2ed1cf"
+    },
+    {
+      "path": "apps/api/src/iacode_api/main.py",
+      "reason": "Implement and test authenticated desktop ingress, closed governed adapters and consent-bound scanned snapshots without host tool execution.",
+      "hashBefore": "d11402ef5b4f55814b0b3f392b24f25987e0ab4d733a4fd67263554df6b1f520",
+      "hashAfter": "0041a404a8794f18a1fe3fb88d3035b8ba20275d3388d1982bb881ef678d62d7"
+    },
+    {
+      "path": "apps/cli/README.md",
+      "reason": "Implement and test the bounded authenticated shared core, consent preview and standalone CLI; actual installation/runtime acceptance remains separate evidence.",
+      "hashBefore": "a045cc4a54b34e97108f1a10a23371ccc47bdc1999de0e6fa65ba8b054f8e00d",
+      "hashAfter": "d3a4cb495abe5cea7beb01fe4b01ab07a58f825a1f4747f11ea00cb2392d1647"
+    },
+    {
+      "path": "apps/vscode-extension/README.md",
+      "reason": "Implement and test native editor commands, trust and exact consent, SecretStorage, plaintext results and stable recovery without host execution.",
+      "hashBefore": "d9d4ad1c08eff6d3d53567ca840d6221aa0c8d46c3e85b94114dca17e953b457",
+      "hashAfter": "d161ae51e43a323897668724e23e79eddc41872e22d72dbfb49ef9cbb23a8ebd"
+    },
+    {
+      "path": "docs/ARCHITECTURE.md",
+      "reason": "Align current entry and architecture with sealed Gate 4 and truthful Gate 5 work in progress, without claiming client acceptance.",
+      "hashBefore": "56e8f399a242b4c9e53d5a4e9a9d03a9158cb2e0e3fa37abeba1535e7dc6c2cc",
+      "hashAfter": "1c42c747caedb4aa829db4105d702d3a124ca819547dd93b87ddaa2b2499cfe0"
+    },
+    {
+      "path": "docs/DEVELOPMENT.md",
+      "reason": "Align current entry and architecture with sealed Gate 4 and truthful Gate 5 work in progress, without claiming client acceptance.",
+      "hashBefore": "266984f0accd905fd6bca1adea721722b45c272e9bdab013b5d2ba7056b7f417",
+      "hashAfter": "306e46e534eb25b6f9493b22dabf89f5986420d03e5aba854d3f455bae9f62f9"
+    },
+    {
+      "path": "docs/adr/README.md",
+      "reason": "Record and atomically index the authenticated runtime-adapter architecture before structural changes.",
+      "hashBefore": "a484b20ae1850a5b430261a9290835a7a490c50e8afee840b8b27d4e10ff2b1b",
+      "hashAfter": "8f5804eb47147bf3f590dcd7c48ce995634e6f3acdb4a257de3dd76a1d7bf3fe"
+    },
+    {
+      "path": "docs/checkpoints/LATEST.md",
+      "reason": "Advance the live pointer to the separately authorized Gate 5 checkpoint.",
+      "hashBefore": "b21d4b06d9bc68e4380290de770b401c563c0281e9e5035b52056375efb4da9c",
+      "hashAfter": "54f779ad5f9ad05e1fcbfec8f9c6003a1ebd5cb97e83d6e47a95cd8aa2409764"
+    },
+    {
+      "path": "infra/compose/.env.example",
+      "reason": "Supply infrastructure API authentication outside the provider-neutral agent domain and preserve explicit legacy development mode.",
+      "hashBefore": "e596c9dff1608b87db143dcd2c2867483f2c2e66ee0a9f0fac86342037515337",
+      "hashAfter": "ee529eba3e1ff7a85b2818a0af60de6020e703a49dbcf6f20e928ee9f8234200"
+    },
+    {
+      "path": "infra/compose/docker-compose.yml",
+      "reason": "Supply infrastructure API authentication outside the provider-neutral agent domain and preserve explicit legacy development mode.",
+      "hashBefore": "ccb6cce7eae0aa40d02302e8ff9b81f9fe849c7743a48ab67cad6b2a6ad287e2",
+      "hashAfter": "fd9cd290f7343e99ee1ab3663987841bf365c15425c8c21c223a695f78285f10"
+    },
+    {
+      "path": "packages/contracts/pyproject.toml",
+      "reason": "Define one byte-exact authenticated desktop protocol, shared contracts and strict request validation.",
+      "hashBefore": "bf2c90eb3cc03db3a87375a5a384c0b1a367fc43154ba3f734fdd82143c01a5c",
+      "hashAfter": "aed87bf80034a1a5ec0376f4edd051e2773a422cb03597266e0d4b68e94142ec"
+    },
+    {
+      "path": "ruff.toml",
+      "reason": "Version explicit native suite declarations and preserve historical collection semantics, all counted suites and every inherited mandatory gate; ignore generated client artifacts only.",
+      "hashBefore": "b461c88d9ec79a5a1612583827b710180c034a57245e14c9ff99cf58fbffaa8e",
+      "hashAfter": "895e4733c204d42dc8480992690d6826f8a90aa0c8330c353e3acdcd2fcb1885"
+    },
+    {
+      "path": "scripts/development-ledger/ledger_common.py",
+      "reason": "Version explicit native suite declarations and preserve historical collection semantics, all counted suites and every inherited mandatory gate; ignore generated client artifacts only.",
+      "hashBefore": "278b2b0624540ddba98843081fe971a142e472dd354526a21f4a5ac8d6020730",
+      "hashAfter": "dd9e05724d60e023267c3a8e2f2f57ed1d20d5b7906b8908c463f3337507d9fb"
+    },
+    {
+      "path": "scripts/development-ledger/policies.py",
+      "reason": "Version explicit native suite declarations and preserve historical collection semantics, all counted suites and every inherited mandatory gate; ignore generated client artifacts only.",
+      "hashBefore": "f03d2019c3f6e9ba277e947d1d96bba1b970814efa9693f9f2a9da5caa57d92a",
+      "hashAfter": "7f291a91a270ae6bfc468eca9c04be68290fcbbc224e0be7c385cb4c519b465e"
+    },
+    {
+      "path": "scripts/development-ledger/validate_checkpoint.py",
+      "reason": "Version explicit native suite declarations and preserve historical collection semantics, all counted suites and every inherited mandatory gate; ignore generated client artifacts only.",
+      "hashBefore": "0dc3bd5fd42c3b428b514e7d14e7c98da231c8a459ace92461490586c16991d3",
+      "hashAfter": "06ad114867ebf0d6ba235c20a915b6fc23e0ed4dd00c2491cd9ecf933048a87b"
+    },
+    {
+      "path": "scripts/iacode/dependency_scan.py",
+      "reason": "Build closed deterministic client packages, execute complete client tests, lint and graph checks, and extend mandatory live verification without dropping inherited controls.",
+      "hashBefore": "1c9c652e7501e938f8c472ef29ce9a88bb73b8c9a8a252d0a20a0c75cdce4d18",
+      "hashAfter": "c44c67a59486a992102d2420ce847e973cfdc648112929655681c98c31476665"
+    },
+    {
+      "path": "scripts/iacode/gates/lint.py",
+      "reason": "Build closed deterministic client packages, execute complete client tests, lint and graph checks, and extend mandatory live verification without dropping inherited controls.",
+      "hashBefore": "7771b11fecede65235261b83e7757b1a9587fa7c3d65b6df065a469b5a57c7a7",
+      "hashAfter": "32f3b3ba7442b24259bfd5ad844728b4292b024f3298e4bb9d710a00055bf8bc"
+    },
+    {
+      "path": "scripts/iacode/verify.py",
+      "reason": "Build closed deterministic client packages, execute complete client tests, lint and graph checks, and extend mandatory live verification without dropping inherited controls.",
+      "hashBefore": "cb644dbd4c7b612e0ad52f1a66b848da0e0a075fe351f4ff853df1b6b975978f",
+      "hashAfter": "16f5bcae3898d408d1a046d2a7d532e472d771c856b021ab6074afc92c84e3b1"
+    },
+    {
+      "path": "services/agent-runtime/src/iacode_agent_runtime/persistence.py",
+      "reason": "Repair the observed Gate5 repeated-cancellation integration by preserving an already cancelled terminal result, while retaining refusal of successful/failed terminals and requested-versus-completed semantics.",
+      "hashBefore": "b73746ddf1319f4fb9ee1ba052f2dce59430b3813469bbd76ad8a608ce8e3a2a",
+      "hashAfter": "8b31907af9d3827fbd43a64aacfcc3163f71c39ce09fca1202c696c3a4c3e48c"
+    },
+    {
+      "path": "services/evaluator/src/iacode_evaluator/planner.py",
+      "reason": "Include CommonJS/ESM tests and plain Node client roots in real mixed-project quality planning, preserving Angular and inherited checks.",
+      "hashBefore": "b2b1c512d7618e844fae86de08cf4332e843c75be03d578c572d4b2407576d88",
+      "hashAfter": "3d017d857f5790b81948ad165ecd590ce5230c4dcf61a5ffd8d84f8cedc5b6b6"
+    },
+    {
+      "path": "services/evaluator/tests/test_core.py",
+      "reason": "Include CommonJS/ESM tests and plain Node client roots in real mixed-project quality planning, preserving Angular and inherited checks.",
+      "hashBefore": "50debe1528915fc3f23526dea009912effb00f011a356c34ac07297aa7ea8cd9",
+      "hashAfter": "3b733db6fcfdfa6f6d2b5cfd4d47668a1e7e87dd72f23a8f29a4461459e4afff"
+    },
+    {
+      "path": "services/orchestrator/src/iacode_orchestrator/agent_runtime/runtime_context.py",
+      "reason": "Supply infrastructure API authentication outside the provider-neutral agent domain and preserve explicit legacy development mode.",
+      "hashBefore": "07e90e826406e988cf4105bf5f2005397dbef224d28ced9f88b34aa66059eadd",
+      "hashAfter": "c210036aa740313e1dd17b41ce2dd38816b2cdee1501d25753a5a38d1d0352d0"
+    },
+    {
+      "path": "services/orchestrator/src/iacode_orchestrator/config.py",
+      "reason": "Supply infrastructure API authentication outside the provider-neutral agent domain and preserve explicit legacy development mode.",
+      "hashBefore": "4ee1a95091defab149062712a8691ffde230a756ebc22969eafd4111bdaef15c",
+      "hashAfter": "816983dd154a4a90fd140c2e426ac0da43e3c780da1a6c65ae9cc1dee098031a"
+    },
+    {
+      "path": "tests/test_gate4_quality_engine.py",
+      "reason": "Separate historical fixture ownership from live scope, prove a future Gate transition and guard the observed documentation contradiction.",
+      "hashBefore": "b40e45bd2dfe44948f20638e5e66d77e24a8634f9b3d3d8d7259903fdb9ea2bb",
+      "hashAfter": "409e97ff41c5de9e5ae54c83632184f9f7c7e51f9450ed4f72110fa8c796ccde"
+    },
+    {
+      "path": "tests/test_test_suite_input_repositories.py",
+      "reason": "Version explicit native suite declarations and preserve historical collection semantics, all counted suites and every inherited mandatory gate; ignore generated client artifacts only.",
+      "hashBefore": "8610ef3983bb1919a15fc28892a01faa132c3d238770a63cfb9cbb1de79b35ec",
+      "hashAfter": "e21cc4f38f782f0e9c4992ed27b1e1c9ee37d77f38a55d3e85675ff7ff42f5ac"
+    }
+  ],
+  "filesDeleted": []
+}

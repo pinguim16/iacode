@@ -33,8 +33,10 @@ import review_bundle  # noqa: E402
 import verify as repository_verify  # noqa: E402
 import compose as stack_compose  # noqa: E402
 
-GATE = ledger_common.delivered_gate(PROJECT_ROOT)
 SPECIFICATION = PROJECT_ROOT / "docs" / "GATE-4-CHECKLIST.md"
+# These controls own the preserved specification, not whichever Gate is being delivered now.
+GATE = SPECIFICATION.stem.removesuffix("-CHECKLIST")
+CURRENT_GATE = ledger_common.delivered_gate(PROJECT_ROOT)
 
 
 class Gate4QualityCoverageTests(unittest.TestCase):
@@ -615,7 +617,7 @@ class Gate4InitialScopeTests(unittest.TestCase):
     def test_the_evaluator_reservation_is_consumed_and_later_scope_is_clean(self) -> None:
         in_force = {item["path"] for item in policies.reservations_in_force(PROJECT_ROOT, GATE)}
         self.assertNotIn("services/evaluator", in_force)
-        self.assertEqual(policies.scope_violations(PROJECT_ROOT, GATE), [])
+        self.assertEqual(policies.scope_violations(PROJECT_ROOT, CURRENT_GATE), [])
         readme = (PROJECT_ROOT / "services" / "evaluator" / "README.md").read_text(encoding="utf-8")
         self.assertNotIn(policies.RESERVATION_MARKER, readme)
 

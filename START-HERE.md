@@ -3,13 +3,14 @@
 IACode is a planned private, autonomous, general-purpose software engineering platform. The repository is self-contained context and is the only source of truth.
 
 - Phase: `M2 — IACode V0 completion and experience`.
-- Current Gate: `GATE 4 — QUALITY ENGINE`, the first Gate of `M2`. Its internal closure is
-  `INTERNAL_GATE_PASS`; independent validation remains due at M2 closure. `GATE_PASS` is never
-  granted by the implementing run.
-- Previous Gates: `GATE 3 — SANDBOX + TOOL EXECUTION`, `GATE 2 — AGENT RUNTIME`,
+- Current Gate: `GATE 5 — VS Code + CLI`, in progress after the sealed Gate 4 internal closure.
+  An intermediate closure requires `INTERNAL_GATE_PASS`; independent validation remains due at
+  M2 closure. `GATE_PASS` is never granted by the implementing run. No client feature is claimed
+  complete merely by opening this Gate.
+- Previous Gates: `GATE 4 — QUALITY ENGINE`, `GATE 3 — SANDBOX + TOOL EXECUTION`, `GATE 2 — AGENT RUNTIME`,
   `GATE 1 — MODEL GATEWAY` and `GATE 0 — FOUNDATION`; before them `SETUP-00`.
 - Latest checkpoint: follow [docs/checkpoints/LATEST.md](docs/checkpoints/LATEST.md).
-- `M1` passed its independent milestone audit. Gate 4 begins M2 without changing that sealed
+- `M1` passed its independent milestone audit. Gate 5 continues M2 without changing that sealed
   verdict.
 - **A tool an agent asks for runs only inside a sandbox**: a disposable container that belongs to
   the run, with no network, no host path, no engine socket and no credential. Nothing an agent
@@ -34,7 +35,8 @@ below for anyone about to change the repository.
 
 1. Read [docs/DEVELOPMENT-CONTRACT.md](docs/DEVELOPMENT-CONTRACT.md).
 2. Read [docs/MASTER-PLAN.md](docs/MASTER-PLAN.md) and the canonical specification of the current
-   Gate: [docs/GATE-4-CHECKLIST.md](docs/GATE-4-CHECKLIST.md) now,
+   Gate: [docs/GATE-5-CHECKLIST.md](docs/GATE-5-CHECKLIST.md) now,
+   [docs/GATE-4-CHECKLIST.md](docs/GATE-4-CHECKLIST.md),
    [docs/GATE-3-CHECKLIST.md](docs/GATE-3-CHECKLIST.md),
    [docs/GATE-2-CHECKLIST.md](docs/GATE-2-CHECKLIST.md),
    [docs/GATE-1-CHECKLIST.md](docs/GATE-1-CHECKLIST.md),

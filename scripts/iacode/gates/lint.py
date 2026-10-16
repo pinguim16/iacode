@@ -83,6 +83,30 @@ def frontend() -> int:
     return completed.returncode
 
 
+def clients() -> int:
+    # Use the existing pinned formatter, without adding any production client dependency.
+    completed = subprocess.run(
+        [
+            "docker",
+            "run",
+            "--rm",
+            "--volume",
+            f"{REPOSITORY_ROOT}:/repo:ro",
+            "--workdir",
+            "/build",
+            BUILDER_IMAGE,
+            "node_modules/.bin/prettier",
+            "--check",
+            "/repo/apps/cli/**/*.{cjs,json}",
+            "/repo/apps/vscode-extension/**/*.{cjs,json}",
+        ],
+        cwd=REPOSITORY_ROOT,
+        text=True,
+        check=False,
+    )
+    return completed.returncode
+
+
 def main() -> int:
     require_docker()
     failures: list[str] = []
@@ -91,6 +115,8 @@ def main() -> int:
         failures.append("python")
     if frontend() != 0:
         failures.append("frontend")
+    if clients() != 0:
+        failures.append("clients")
 
     log(
         f"LINT={'PASS' if not failures else 'FAIL'}"

@@ -1,0 +1,47 @@
+{
+  "schemaVersion": "1.0.0",
+  "gate": "GATE-5",
+  "checkpoint": "GATE-5-CP-0001",
+  "steps": [
+    {
+      "stepId": "G5-S00",
+      "requirements": ["GATE-5 canonical scope", "LESSON-REQ-*"],
+      "expectedBehavior": "Read current contracts, validate the sealed predecessor, anchor it, run lesson preflight, establish the canonical Gate 5 checklist and derive all requirements before baseline and planning.",
+      "implementation": ["AUTHORIZATION.md", "LESSON-PREFLIGHT.json", "REQUIREMENTS-MATRIX.json", "BASELINE.md"],
+      "tests": ["predecessor validation", "integrity", "requirement derivation", "baseline"],
+      "functionalProof": "Entry, canonical requirement derivation, baseline and plan are recorded. The red 49-case baseline remains preserved; causal rework passed the same 49 cases plus the strengthened transition controls. This completes entry only, not Gate 5 implementation or assurance.",
+      "evidence": ["cmd-0001", "cmd-0002", "cmd-0003", "cmd-0004", "cmd-0008", "cmd-0012", "cmd-0013", "cmd-0021", "cmd-0022"],
+      "status": "COMPLETE"
+    },
+    {
+      "stepId": "G5-S01",
+      "requirements": ["all derived client, IPC, security and experience requirements"],
+      "expectedBehavior": "Implement the bounded CLI and VS Code experience against real runtime contracts, with secure IPC, truthful status, explicit approvals and recovery.",
+      "implementation": ["PLAN.md", "apps/cli/", "apps/vscode-extension/", "docs/adr/"],
+      "tests": ["client contract tests", "negative security controls", "real runtime integration", "fresh extension installation"],
+      "functionalProof": "Cmd-0199 executes and passes all 33 complete real native/CLI/provider/sandbox/quality/recovery/cancellation/tamper/cleanup controls, preserved byte-exactly by cmd-0200. Cmd-0194 passes all 35 client decisions and deterministic LF-only packages; cmd-0206 passes whole Python/frontend/client lint. All recorded causal findings are closed. This completes implementation and its scoped proof only; full immutable verification and internal assurance remain G5-S02, not an inferred Gate verdict.",
+      "evidence": ["cmd-0128", "cmd-0131", "cmd-0185", "cmd-0193", "cmd-0194", "cmd-0199", "cmd-0200", "cmd-0201", "cmd-0202", "cmd-0206"],
+      "status": "COMPLETE"
+    },
+    {
+      "stepId": "G5-S02",
+      "requirements": ["all derived requirements", "mandatory quality gates"],
+      "expectedBehavior": "Run complete test and quality verification, Green Keeper, completeness, internal Red Team and milestone closure mirror in the required order.",
+      "implementation": ["TESTS.json", "QUALITY.json", "REQUIREMENTS-MATRIX.json", "COMPLETENESS-REPORT.json"],
+      "tests": ["full verifier", "all mandatory Green Keeper gates", "completeness", "internal Red Team", "closure mirror"],
+      "functionalProof": "Preparing the immutable runtime subject after scoped complete functional proof. Whole non-fast verification and ordered internal assurance are not yet executed; no readiness or pass is claimed.",
+      "evidence": [],
+      "status": "IN_PROGRESS"
+    },
+    {
+      "stepId": "G5-S03",
+      "requirements": ["truthful internal closure and handoff"],
+      "expectedBehavior": "Assemble evidence, declared paths, counts and resumable handoff for pre-seal validation; post-commit sealing/publication remain separately gated subsequent actions.",
+      "implementation": ["STATE.json", "FILES.json", "COUNTS.json", "HANDOFF.md", "FINAL-REPORT.md"],
+      "tests": ["evidence resolution", "canonical count derivation", "checkpoint validation"],
+      "functionalProof": "Not executed. Gate 6 is not authorized.",
+      "evidence": [],
+      "status": "NOT_STARTED"
+    }
+  ]
+}

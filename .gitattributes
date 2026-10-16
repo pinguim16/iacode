@@ -2,11 +2,17 @@
 *.md text eol=lf
 *.json text eol=lf
 *.jsonl text eol=lf
+# Immutable copied observations retain their original byte digest across Git transport.
+docs/checkpoints/**/attempts/*.json -text
+docs/checkpoints/**/DESKTOP-LIVE.json -text
+docs/checkpoints/**/HARDENED-GATEWAY.json -text
 *.py text eol=lf
 *.txt text eol=lf
 *.yml text eol=lf
 *.yaml text eol=lf
 *.ts text eol=lf
+*.cjs text eol=lf
+*.mjs text eol=lf
 *.html text eol=lf
 *.css text eol=lf
 *.scss text eol=lf

@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "3.4.0",
+  "artifacts": [
+    {
+      "artifact": "docs/checkpoints/GATE-5-CP-0001",
+      "sourceType": "repository-generated and AI-assisted engineering evidence",
+      "provider": "OpenAI / local execution",
+      "model": "not-exposed",
+      "ownership": "project-generated evidence",
+      "license": "project-policy",
+      "rights": {
+        "storageAllowed": true,
+        "ragAllowed": false,
+        "trainingAllowed": false,
+        "distillationAllowed": false
+      },
+      "evidence": "COMMANDS.jsonl, FILES.json, BASELINE.md, FINDINGS.json, PROGRESS.md",
+      "notes": "Same-session internal work, never an independent audit. No private reasoning, matched secret value, external-model raw transcript or inferred training right is recorded."
+    },
+    {
+      "artifact": "Gate 5 changed implementation, contracts, clients, tests, configuration, policies and documentation declared in FILES.json",
+      "sourceType": "AI-assisted modifications to repository-owned requirements and source",
+      "provider": "OpenAI",
+      "model": "not-exposed",
+      "ownership": "project-authored modifications; no external ownership transfer inferred",
+      "license": "project-policy; existing dependency licenses are not changed",
+      "rights": {
+        "storageAllowed": true,
+        "ragAllowed": false,
+        "trainingAllowed": false,
+        "distillationAllowed": false
+      },
+      "evidence": "PLAN.md, docs/adr/ADR-0046-desktop-clients-are-authenticated-runtime-adapters.md, FILES.json, COMMANDS.jsonl",
+      "notes": "Only the declared modifications are covered. No provider credential enters a sandbox or ledger. Official VS Code documentation informed API choices and is linked by ADR-0046; no third-party source was copied into a runtime client."
+    }
+  ]
+}

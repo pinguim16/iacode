@@ -1,0 +1,36 @@
+{
+  "project": "iacode-desktop-805e6564dbda",
+  "authorizedModel": "openai:gpt-4o-mini",
+  "result": "PASS",
+  "worker": {
+    "kind": "ACTUAL_HARDENED_WORKER_GATEWAY_DIAGNOSIS_NOT_TASK_ACCEPTANCE",
+    "steps": [
+      {
+        "name": "sync",
+        "result": "PASS",
+        "modelCount": 0,
+        "authorizedModelPresent": false,
+        "hasContent": false,
+        "syncErrorCount": 0
+      },
+      {
+        "name": "catalog",
+        "result": "PASS",
+        "modelCount": 135,
+        "authorizedModelPresent": true,
+        "hasContent": false,
+        "syncErrorCount": 0
+      },
+      {
+        "name": "infer",
+        "result": "PASS",
+        "modelCount": 0,
+        "authorizedModelPresent": false,
+        "hasContent": true,
+        "syncErrorCount": 0
+      }
+    ],
+    "result": "PASS"
+  },
+  "cleanupExitCode": 0
+}

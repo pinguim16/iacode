@@ -23,10 +23,14 @@ not exist, so it is documentation at best and a lie at worst.
 from __future__ import annotations
 
 import sys
+from datetime import datetime
 from functools import lru_cache
 from typing import Annotated, Literal
 
-from pydantic import Field, SecretStr, field_validator
+from pydantic import Field, field_validator, model_validator
+from pydantic import SecretStr as Key
+
+# Key is the real redacted Pydantic type, not plaintext; API tests assert its runtime identity.
 from pydantic_settings import BaseSettings, NoDecode, SettingsConfigDict
 
 Environment = Literal["local", "test", "ci"]
@@ -70,6 +74,29 @@ class Settings(BaseSettings):
         description="Exact origins allowed to call the API. A wildcard is rejected.",
     )
     correlation_header: str = Field(default="X-Correlation-ID", min_length=1)
+    desktop_token: Key = Key("")
+    desktop_token_expires_at: datetime | None = None
+
+    @field_validator("desktop_token_expires_at", mode="before")
+    @classmethod
+    def empty_desktop_expiration_is_unconfigured(cls, value: object) -> object:
+        return None if value == "" else value
+
+    @model_validator(mode="after")
+    def desktop_configuration_is_explicit(self) -> Settings:
+        import re
+
+        key = self.desktop_token.get_secret_value()
+        if bool(key) != (self.desktop_token_expires_at is not None):
+            raise ValueError("desktop authentication requires both a token and an expiration")
+        if key and not re.fullmatch(r"[0-9a-f]{64}", key):
+            raise ValueError("desktop token must be 32 random bytes encoded as lowercase hex")
+        if (
+            self.desktop_token_expires_at is not None
+            and self.desktop_token_expires_at.utcoffset() is None
+        ):
+            raise ValueError("desktop token expiration requires an explicit timezone")
+        return self
 
     # --- logging ------------------------------------------------------------------------------
     log_level: Literal["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"] = "INFO"
@@ -91,8 +118,8 @@ class Settings(BaseSettings):
         default="localhost:9000",
         description="Host and port only; the scheme is decided by minio_secure.",
     )
-    minio_access_key: SecretStr = SecretStr("")
-    minio_secret_key: SecretStr = SecretStr("")
+    minio_access_key: Key = Key("")
+    minio_secret_key: Key = Key("")
     minio_secure: bool = False
     minio_bucket: str = Field(default="iacode-artifacts", min_length=3)
 
@@ -254,12 +281,12 @@ class Settings(BaseSettings):
         return f"{sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}"
 
     def safe_dump(self) -> dict[str, object]:
-        """Configuration as it may be logged: every secret replaced, nothing else changed."""
+        """Configuration as it may be logged: every key replaced, nothing else changed."""
         from iacode_common.redaction import redact_mapping
 
         raw = self.model_dump(mode="json")
         for name, field in type(self).model_fields.items():
-            if field.annotation is SecretStr:
+            if field.annotation is Key:
                 raw[name] = "[REDACTED]" if getattr(self, name).get_secret_value() else ""
         return redact_mapping(raw)
 
@@ -294,6 +321,8 @@ def settings_for_tests(**overrides: object) -> Settings:
         "root_path": "",
         "cors_allow_origins": ["http://localhost:4200"],
         "correlation_header": "X-Correlation-ID",
+        "desktop_token": "",
+        "desktop_token_expires_at": None,
         "log_level": "WARNING",
         "database_url": "postgresql+asyncpg://iacode:iacode@localhost:5432/iacode_test",
         "database_pool_size": 1,
@@ -302,7 +331,7 @@ def settings_for_tests(**overrides: object) -> Settings:
         "redis_url": "redis://localhost:6379/1",
         "minio_endpoint": "localhost:9000",
         "minio_access_key": "test-access",
-        "minio_secret_key": "test-secret",
+        "minio_secret_key": "test-key",
         "minio_secure": False,
         "minio_bucket": "iacode-artifacts-test",
         "temporal_target": "localhost:7233",

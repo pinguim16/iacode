@@ -57,6 +57,7 @@ from ledger_common import (
     STATUSES,
     UNBLOCKED_STATUSES,
     LedgerError,
+    assurance_root_files,
     blob_hash,
     canonical_hash_path,
     command_replay_errors,
@@ -1931,6 +1932,13 @@ def validate_checkpoint(
             errors.append(str(exc))
 
     state = documents.get("STATE.json")
+    if isinstance(state, dict):
+        current_gate = re.fullmatch(r"GATE-(\d+)", str(state.get("gate", "")))
+        if current_gate and int(current_gate.group(1)) >= 5:
+            try:
+                assurance_root_files(root, required=True)
+            except LedgerError as error:
+                errors.append(str(error))
     version = _schema_version(state)
 
     commands_path = target / "COMMANDS.jsonl"

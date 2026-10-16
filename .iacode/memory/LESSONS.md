@@ -87,11 +87,11 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 | `LSN-0077` | `GUARDED` | HIGH | quality | Harness wait bounds must reflect workload size without changing product deadlines | `test_real_repository_scenario_has_a_separate_bounded_wait` |
 | `LSN-0078` | `GUARDED` | HIGH | quality | Evidence recorders must resolve caller-supplied commit references before execution | `test_inputs_are_canonicalized_and_an_unknown_subject_is_refused` |
 | `LSN-0079` | `GUARDED` | HIGH | testing | Test discovery and the unit runner must cover the same project scope | `test_isolated_language_checks_prepare_their_policy_owned_toolchain`, `test_unit_checks_are_mandatory_when_test_sources_exist` |
-| `LSN-0080` | `GUARDED` | HIGH | quality | A failed verification stage must not leave an older PASS report addressable | `test_verification_removes_a_stale_stage_report_before_execution` |
+| `LSN-0080` | `GUARDED` | HIGH | quality | A failed verification stage must not leave an older PASS report addressable | `test_verification_removes_a_stale_stage_report_before_execution`, `test_standalone_live_proof_retires_old_pass_before_dependency_import_failure` |
 | `LSN-0081` | `GUARDED` | HIGH | testing | Canonical requirement evidence must name a test the repository actually discovers | `test_every_test_the_specifications_name_exists` |
 | `LSN-0082` | `GUARDED` | CRITICAL | quality | Engineering memory cannot depend on an ephemeral generated report | `test_engineering_memory_never_depends_on_ephemeral_var_evidence`, `scripts/development-ledger/validate_lessons.py` |
 | `LSN-0083` | `GUARDED` | CRITICAL | tooling | A command that decodes captured UTF-8 must also configure the stream that re-emits it | `test_every_tool_that_re_emits_captured_output_configures_its_own_stream` |
-| `LSN-0084` | `GUARDED` | MEDIUM | testing | A historical Gate documentation test must derive the current entry-point state | `test_the_entry_point_names_the_current_gate` |
+| `LSN-0084` | `GUARDED` | HIGH | testing | A historical Gate documentation test must derive the current entry-point state | `test_the_entry_point_names_the_current_gate`, `test_historical_gate4_controls_keep_their_owning_gate` |
 | `LSN-0085` | `GUARDED` | MEDIUM | testing | A source-based control must assert syntax semantics rather than formatter layout | `test_the_verification_adds_the_stages_this_gate_introduces` |
 | `LSN-0086` | `GUARDED` | MEDIUM | testing | A subprocess assertion must preserve the exit code when both streams are empty | `test_an_empty_validator_failure_keeps_its_process_exit_code` |
 | `LSN-0087` | `GUARDED` | HIGH | implementation | A rehearsal worker must register every workflow activity boundary | `test_rehearsal_workers_register_the_post_run_quality_boundary` |
@@ -109,7 +109,7 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 | `LSN-0099` | `GUARDED` | HIGH | checkpoint | A refused subject is an attempted input, not executed commit evidence | `test_inputs_are_canonicalized_and_an_unknown_subject_is_refused` |
 | `LSN-0100` | `GUARDED` | HIGH | checkpoint | Pre-seal detached validation must bind the explicit subject namespace | `test_in_progress_symbolic_head_validates_from_its_matching_subject_tag`, `test_subject_tag_never_substitutes_for_a_sealed_checkpoint_tag` |
 | `LSN-0101` | `GUARDED` | HIGH | checkpoint | A structural record and its canonical index are one atomic change | `test_the_index_lists_every_record_with_its_title_and_status`, `test_a_record_missing_from_the_index_is_detected` |
-| `LSN-0102` | `GUARDED` | HIGH | quality | Assurance denominators must derive category counts from the current source set | `test_corrective_partition_is_derived_from_the_current_reference_set` |
+| `LSN-0102` | `GUARDED` | HIGH | quality | Assurance denominators must derive category counts from the current source set | `test_corrective_partition_is_derived_from_the_current_reference_set`, `test_current_collection_partition_survives_added_regression_cases` |
 | `LSN-0103` | `GUARDED` | HIGH | testing | Adversarial fixtures must hash the complete validated contract | `test_verdict_before_cancellation_refuses_late_acceptance` |
 | `LSN-0104` | `GUARDED` | HIGH | process | Intermediate closure and independent validation must have unambiguous contracts | `test_internal_closure_cannot_claim_independent_review_or_red_team` |
 | `LSN-0105` | `GUARDED` | CRITICAL | testing | New behavioral tests must satisfy the unchanged source-quality contract | `test_mandatory_lint_covers_every_python_project_root` |
@@ -124,6 +124,21 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 | `LSN-0114` | `GUARDED` | MEDIUM | performance | Transport line metadata must not repeatedly scan the source prefix | `test_fragment_carrier_lines_count_each_source_range_at_most_once`, `test_json_error_line_index_matches_builtin_string_coordinates` |
 | `LSN-0115` | `GUARDED` | MEDIUM | tooling | A failing full verifier retains every bounded case identifier beyond its output tail | `test_failed_case_identifiers_survive_a_tail_longer_than_the_report_limit` |
 | `LSN-0116` | `GUARDED` | CRITICAL | tooling | A live resumability pointer is generated after Git boundaries, not committed into its own subject | `test_real_cli_roundtrip_is_clean_and_supports_internal_closure` |
+| `LSN-0117` | `GUARDED` | MEDIUM | documentation | An architecture rollup must not contradict the delivered capability described below it | `test_architecture_rollup_does_not_deny_its_delivered_quality_engine` |
+| `LSN-0118` | `GUARDED` | HIGH | implementation | Post-response validation failures must preserve an accepted mutation's uncertain outcome | `test_signed_malformed_mutation_keeps_uncertainty_identity_and_one_effect` |
+| `LSN-0119` | `GUARDED` | CRITICAL | quality | A clean publication scan does not replace the stricter checkpoint secret scan | `test_strict_checkpoint_sources_do_not_rely_on_publication_allowances`, `test_desktop_credential_remains_a_secret_type_and_safe_dump_redacts_it`, `test_every_current_changed_path_uses_the_strict_detector_including_checkpoint_harnesses` |
+| `LSN-0120` | `GUARDED` | MEDIUM | quality | Native installation proofs must resolve the installed CLI entrypoint | `test_installed_cli_adapter_resolves_versioned_layout_and_refuses_escape` |
+| `LSN-0121` | `GUARDED` | MEDIUM | quality | Standard-library host probes must not initialize application dependency graphs | `test_live_desktop_harness_cold_start_needs_only_the_standard_library` |
+| `LSN-0122` | `GUARDED` | MEDIUM | environment | Engine-allocated host ports must be rediscovered after container restart | `test_restarted_api_rediscovers_its_port_and_checks_actual_authenticated_forwarding` |
+| `LSN-0123` | `GUARDED` | HIGH | implementation | Consent binds workspace identity, not an uncanonicalized path spelling | `test_editor_preview_binding_uses_workspace_identity_not_path_spelling` |
+| `LSN-0124` | `GUARDED` | HIGH | testing | Durable editor recovery must not use an in-memory test host | `test_native_recovery_proof_uses_persistent_storage_context` |
+| `LSN-0125` | `GUARDED` | HIGH | environment | Native parent exit is not proof of process and profile cleanup | `test_native_process_tree_is_drained_even_after_parent_exits`, `test_owned_profile_cleanup_refuses_broad_targets_and_retries_only_sharing_locks`, `test_native_installer_and_host_both_pin_their_owned_shared_storage` |
+| `LSN-0126` | `GUARDED` | HIGH | security | Known authentication material is not domain or presentation data | `test_authentication_material_is_refused_before_replay_and_domain_io` |
+| `LSN-0127` | `GUARDED` | HIGH | environment | Fresh runtime health does not initialize an operator-managed model catalog | `test_fresh_catalog_requires_sync_and_the_exact_authorized_model_without_substitution` |
+| `LSN-0128` | `GUARDED` | HIGH | testing | Adversarial premises must use the actual public contract | `test_forgery_premise_joins_public_request_ids_to_actual_successful_sandbox_executions`, `test_cleanup_membership_derives_every_canonical_active_state_including_running` |
+| `LSN-0129` | `GUARDED` | HIGH | implementation | Repeated cancellation must preserve an already cancelled terminal result | `test_repeated_cancel_of_cancelled_run_returns_unchanged_terminal_truth` |
+| `LSN-0130` | `GUARDED` | HIGH | quality | Executable export line endings belong to the source and packaging contract | `test_commonjs_and_esm_exports_have_explicit_lf_attributes`, `test_builder_refuses_a_crlf_executable_instead_of_shipping_a_broken_linux_shebang` |
+| `LSN-0131` | `GUARDED` | HIGH | quality | Raw evidence digests require byte-preserving Git export, not text normalization | `test_exact_byte_evidence_survives_git_transport_and_detects_normalization` |
 
 ## Detail
 
@@ -1156,14 +1171,15 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 
 ### LSN-0080 — A failed verification stage must not leave an older PASS report addressable
 
-- Status: `GUARDED`, severity HIGH, category quality, recurrences 0.
+- Status: `GUARDED`, severity HIGH, category quality, recurrences 1.
 - Source: GATE-4, GATE-4-CP-0001, finding cmd-0105.
 - Symptom: The agent-durability stage failed in the complete verification, but var/agent-durability.json still contained a PASS report from the previous day, making a direct artifact inspection contradict the current stage verdict.
 - Root cause: The verification reused fixed generated report paths and did not remove the prior artifact before launching a stage. A stage that exited before writing its report left historical success at the current path.
-- Resolution: Before every stage carrying a --report argument, remove only that generated path when it resolves inside the repository, so failure yields an absent report rather than stale positive evidence.
+- Resolution: Before every stage carrying a --report argument, remove only that generated path when it resolves inside the repository, so failure yields an absent report rather than stale positive evidence. Gate 5 also retires validated standalone desktop reports before project imports. Cmd-0085 preserved the causal stale-PASS/cold-import red control; cmd-0086 re-executed it unchanged green. The full-verifier pre-launch retirement remains intact.
 - Prevention:
   - `test` test_verification_removes_a_stale_stage_report_before_execution — A prior PASS artifact at a stage report path is removed before the stage process can run.
-- Evidence: `file:docs/checkpoints/GATE-4-CP-0001/VERIFY-FAIL-CMD-0105.json`, `file:scripts/iacode/verify.py`, `file:tests/test_gate4_quality_engine.py`
+  - `test` test_standalone_live_proof_retires_old_pass_before_dependency_import_failure — Copy the actual standalone probe, seed an old PASS and corrupt its canonical startup data. The real isolated child must fail after retiring the old report, before any runtime stack exists.
+- Evidence: `file:docs/checkpoints/GATE-4-CP-0001/VERIFY-FAIL-CMD-0105.json`, `file:scripts/iacode/verify.py`, `file:tests/test_gate4_quality_engine.py`, `file:tests/test_gate5_clients.py`, `file:scripts/iacode/scenarios/desktop_e2e.py`, `file:docs/checkpoints/GATE-5-CP-0001/COMMANDS.jsonl`
 
 ### LSN-0081 — Canonical requirement evidence must name a test the repository actually discovers
 
@@ -1201,14 +1217,15 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 
 ### LSN-0084 — A historical Gate documentation test must derive the current entry-point state
 
-- Status: `GUARDED`, severity MEDIUM, category testing, recurrences 0.
+- Status: `GUARDED`, severity HIGH, category testing, recurrences 1.
 - Source: GATE-4, GATE-4-CP-0001, finding cmd-0120.
 - Symptom: The Gate 3 documentation suite required the current START-HERE.md to contain READY_FOR_MILESTONE_AUDIT even after Gate 4 correctly changed the implementing-run destination to READY_FOR_REVIEW.
 - Root cause: A predecessor's regression test mixed preserved historical references with a current-state assertion and hard-coded the predecessor's next lifecycle state.
-- Resolution: Keep assertions that the Gate 3 checklist and sandbox runbook remain linked, derive the active Gate from the current checkpoint, and assert the repository-wide implementing-run destination READY_FOR_REVIEW.
+- Resolution: Keep assertions that the Gate 3 checklist and sandbox runbook remain linked, derive the active Gate from the current checkpoint, and assert the repository-wide implementing-run destination READY_FOR_REVIEW. Gate 5 binds the historical specification controls to the specification's owner and uses CURRENT_GATE only for live-tree scope. A future-Gate behavioral control and an intentionally wrong-selector mutation exercise the unchanged assertions.
 - Prevention:
   - `test` test_the_entry_point_names_the_current_gate — The predecessor documentation control derives the active Gate while retaining its historical links and the current implementing-run handoff contract.
-- Evidence: `file:tests/test_gate3_sandbox.py`, `file:START-HERE.md`, `file:docs/checkpoints/GATE-4-CP-0001/COMMANDS.jsonl`
+  - `test` test_historical_gate4_controls_keep_their_owning_gate — Run the unchanged historical specification/functional assertions after a simulated future Gate, while retaining current-state scope checks and a rejecting selector mutation.
+- Evidence: `file:tests/test_gate3_sandbox.py`, `file:START-HERE.md`, `file:docs/checkpoints/GATE-4-CP-0001/COMMANDS.jsonl`, `file:docs/checkpoints/GATE-5-CP-0001/BASELINE.md`, `file:docs/checkpoints/GATE-5-CP-0001/FINDINGS.json`, `file:tests/test_gate5_clients.py`, `file:tests/test_gate4_quality_engine.py`, `file:docs/checkpoints/GATE-5-CP-0001/COMMANDS.jsonl`
 
 ### LSN-0085 — A source-based control must assert syntax semantics rather than formatter layout
 
@@ -1418,14 +1435,15 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 
 ### LSN-0102 — Assurance denominators must derive category counts from the current source set
 
-- Status: `GUARDED`, severity HIGH, category quality, recurrences 0.
+- Status: `GUARDED`, severity HIGH, category quality, recurrences 1.
 - Source: GATE-4, GATE-4-CP-0009, finding cmd-0112-requirement-completion.
 - Symptom: The requirement closer resolved all rows but returned failure because its expected partition still hard-coded eight corrective rows after the current corrective reference set had grown to nine.
 - Root cause: The harness maintained the corrective reference set and a duplicate numeric partition literal. Adding a required lesson changed the source set without changing the second representation, so the assurance step rejected its own truthful count.
-- Resolution: Derive corrected and inherited partition counts from CORRECTIVE_REFS and the fixed sealed twenty-attack denominator, then compare the observed partition with that single-source calculation.
+- Resolution: Derive corrected and inherited partition counts from CORRECTIVE_REFS and the fixed sealed twenty-attack denominator, then compare the observed partition with that single-source calculation. Gate 5 derives the live counted/raw/input suite partition from the independently enumerated current source sets. Cmd-0073 passed all inherited collection controls plus added-case growth and a deliberate input-leak mutation.
 - Prevention:
   - `test` test_corrective_partition_is_derived_from_the_current_reference_set — Adding a corrective reference changes the expected partition automatically without editing a second count.
-- Evidence: `file:docs/checkpoints/GATE-4-CP-0009/COMMANDS.jsonl`, `file:docs/checkpoints/GATE-4-CP-0009/audit-harness/complete_requirements.py`, `file:tests/test_checkpoint_audit_harnesses.py`
+  - `test` test_current_collection_partition_survives_added_regression_cases — Execute the actual live partition property in an owned collection fixture, add another regression source and re-execute unchanged; deliberately admit an excluded input to prove rejection.
+- Evidence: `file:docs/checkpoints/GATE-4-CP-0009/COMMANDS.jsonl`, `file:docs/checkpoints/GATE-4-CP-0009/audit-harness/complete_requirements.py`, `file:tests/test_checkpoint_audit_harnesses.py`, `file:tests/test_test_suite_input_repositories.py`, `file:docs/checkpoints/GATE-5-CP-0001/FINDINGS.json`, `file:docs/checkpoints/GATE-5-CP-0001/COMMANDS.jsonl`
 
 ### LSN-0103 — Adversarial fixtures must hash the complete validated contract
 
@@ -1582,3 +1600,174 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 - Prevention:
   - `test` test_real_cli_roundtrip_is_clean_and_supports_internal_closure — Actual subprocesses and Git prove clean live generation, supported internal status, staleness/identity refusal, unsafe-target refusal and unchanged legacy semantics.
 - Evidence: `file:docs/checkpoints/GATE-4-CP-0010/FINDINGS.json`, `file:docs/checkpoints/GATE-4-CP-0010/COMMANDS.jsonl`, `file:scripts/development-ledger/program_state.py`, `file:tests/test_program_state_live.py`, `file:.iacode/policies/program-state.json`, `file:docs/adr/ADR-0045-live-program-state-is-generated-after-git-boundaries.md`
+
+### LSN-0117 — An architecture rollup must not contradict the delivered capability described below it
+
+- Status: `GUARDED`, severity MEDIUM, category documentation, recurrences 0.
+- Source: GATE-5, GATE-5-CP-0001, finding G5-INT-002.
+- Symptom: The current-state overview denied the Quality Engine that a later section of the same architecture document described.
+- Root cause: An overview enumerating delivered capabilities was not updated when the detailed quality-runtime architecture was added.
+- Resolution: The overview records the delivered Quality Engine and distinguishes Gate 5 work in progress, later runtime memory and existing engineering memory.
+- Prevention:
+  - `test` test_architecture_rollup_does_not_deny_its_delivered_quality_engine — Compare the actual delivered evaluator and architecture detail with the current-state rollup, retaining the original causal red assertion.
+- Evidence: `file:docs/checkpoints/GATE-5-CP-0001/FINDINGS.json`, `file:docs/checkpoints/GATE-5-CP-0001/COMMANDS.jsonl`, `file:tests/test_gate5_clients.py`, `file:docs/ARCHITECTURE.md`
+
+### LSN-0118 — Post-response validation failures must preserve an accepted mutation's uncertain outcome
+
+- Status: `GUARDED`, severity HIGH, category implementation, recurrences 0.
+- Source: GATE-5, GATE-5-CP-0001, finding G5-INT-004.
+- Symptom: A signed malformed result was correctly refused but the client error lost the fact that the remote mutation may already have happened and omitted its stable retry identity.
+- Root cause: Transport failures carried mutation context, while semantic response validation happened after the exchange resolved and constructed a new context-free error.
+- Resolution: The shared client retains exchange/mutation context through semantic refusal. Cmd-0066 passed all 26 current Node cases, including both clients' decision controls; cmd-0062 and cmd-0067 executed the canonically resolvable Python guard and its actual causal Node case. Whole-delivery and live cross-client assurance remain separate pending requirements.
+- Prevention:
+  - `test` test_signed_malformed_mutation_keeps_uncertainty_identity_and_one_effect — Execute the real signed-malformed-mutation Node socket case through the counted Python suite; assert exactly one case ran, its uncertainty and original identity survive, and no retry occurred.
+- Evidence: `file:docs/checkpoints/GATE-5-CP-0001/FINDINGS.json`, `file:docs/checkpoints/GATE-5-CP-0001/COMMANDS.jsonl`, `file:docs/checkpoints/GATE-5-CP-0001/attempts/CLIENT-CORE-RED-0001.json`, `file:apps/cli/src/client.cjs`, `file:apps/cli/tests/core.test.cjs`
+
+### LSN-0119 — A clean publication scan does not replace the stricter checkpoint secret scan
+
+- Status: `GUARDED`, severity CRITICAL, category quality, recurrences 2.
+- Source: GATE-5, GATE-5-CP-0001, finding G5-INT-003.
+- Symptom: The publication tree scan was clean after exact code-reference review, but actual checkpoint validation still refused the same five source files.
+- Root cause: Publication review allowances were incorrectly assumed to apply to the checkpoint's deliberately strict raw canonical detection boundary.
+- Resolution: Remove the eight unnecessary new approvals and keep both scanners unchanged. Refactor only source identifiers/type aliases, preserve actual SecretStr/redaction behavior and execute the strict source and real API/client controls.
+- Prevention:
+  - `test` test_strict_checkpoint_sources_do_not_rely_on_publication_allowances — Run the unchanged strict canonical detector over the five changed authentication sources, retain a generated adverse-value control and never consult publication allowances.
+  - `test` test_desktop_credential_remains_a_secret_type_and_safe_dump_redacts_it — Construct the actual Settings and prove the credential is still a real Pydantic SecretStr and safe_dump never emits its value.
+  - `test` test_every_current_changed_path_uses_the_strict_detector_including_checkpoint_harnesses — Scan the actual Git delta against its checkpoint base, including every new checkpoint harness and undeclared untracked text path, with unchanged strict detection and no publication allowances.
+- Evidence: `file:docs/checkpoints/GATE-5-CP-0001/FINDINGS.json`, `file:docs/checkpoints/GATE-5-CP-0001/COMMANDS.jsonl`, `file:docs/checkpoints/GATE-5-CP-0001/attempts/SOURCE-SCAN-REVIEW-PRE-REFACTOR.json`, `file:tests/test_gate5_clients.py`, `file:apps/api/tests/unit/test_desktop_api.py`
+
+### LSN-0120 — Native installation proofs must resolve the installed CLI entrypoint
+
+- Status: `GUARDED`, severity MEDIUM, category quality, recurrences 0.
+- Source: GATE-5, GATE-5-CP-0001, finding G5-INT-005.
+- Symptom: The native VSIX installation attempt opened the graphical process and timed out with zero editor tests.
+- Root cause: The harness assumed Code.exe directly executed CLI installation and guessed an extracted metadata filename instead of observing the installed code.cmd and package layout.
+- Resolution: Resolve the actual installed CLI adapter, verify its contained cli.js path, use Electron node mode for installation only and inspect the actual extracted package identity. Cmd-0065 passed two fresh isolated native profiles and cmd-0067 passed versioned-layout/escape/unsupported-layout controls.
+- Prevention:
+  - `test` test_installed_cli_adapter_resolves_versioned_layout_and_refuses_escape — Prove the real adapter resolver accepts a versioned installation and refuses an escaping or unsupported script path; actual native installation remains a separate mandatory proof.
+- Evidence: `file:docs/checkpoints/GATE-5-CP-0001/FINDINGS.json`, `file:docs/checkpoints/GATE-5-CP-0001/COMMANDS.jsonl`, `file:scripts/iacode/native_editor.py`, `file:tests/test_gate5_clients.py`
+
+### LSN-0121 — Standard-library host probes must not initialize application dependency graphs
+
+- Status: `GUARDED`, severity MEDIUM, category quality, recurrences 0.
+- Source: GATE-5, GATE-5-CP-0001, finding G5-INT-007.
+- Symptom: The desktop live-proof harness failed during import, before creating any owned stack, because reading a protocol constant initialized the application's Pydantic-dependent package.
+- Root cause: A dependency-free JSON contract module was imported through a package initializer that also eagerly imports third-party application contracts.
+- Resolution: The host probe reads the exact canonical JSON file directly and keeps only pure cryptographic helpers. Cmd-0078 passed actual -I -S host cold startup and the adverse application-import premise without installing host dependencies.
+- Prevention:
+  - `test` test_live_desktop_harness_cold_start_needs_only_the_standard_library — Execute the real harness --help under isolated Python -I -S, then prove the prior package-import path requires the unavailable application dependency.
+- Evidence: `file:docs/checkpoints/GATE-5-CP-0001/FINDINGS.json`, `file:docs/checkpoints/GATE-5-CP-0001/COMMANDS.jsonl`, `file:scripts/iacode/desktop_test_support.py`, `file:tests/test_gate5_clients.py`
+
+### LSN-0122 — Engine-allocated host ports must be rediscovered after container restart
+
+- Status: `GUARDED`, severity MEDIUM, category environment, recurrences 0.
+- Source: GATE-5, GATE-5-CP-0001, finding G5-INT-008.
+- Symptom: A healthy restarted API refused the test actor's former host endpoint after the real initial client/security controls passed.
+- Root cause: The harness froze a daemon-allocated zero host port across restart. The actual engine assigned a different port to the same restarted container; this was endpoint identity change, not broken forwarding.
+- Resolution: Cmd-0084 proves actual published port change with working HTTP at both identities and owned cleanup. The test actor now rediscovers the published endpoint after restart, explicitly updates its configuration before mutation and verifies authenticated host reachability. Cmd-0086 passes transport-only transient readiness and immediate typed-authentication-refusal controls.
+- Prevention:
+  - `test` test_restarted_api_rediscovers_its_port_and_checks_actual_authenticated_forwarding — Derive the current published endpoint, prove a transient socket refusal can recover, and prove an actual authentication refusal is not retried or reclassified as readiness.
+- Evidence: `file:docs/checkpoints/GATE-5-CP-0001/COMMANDS.jsonl`, `file:docs/checkpoints/GATE-5-CP-0001/attempts/DESKTOP-LIVE-RED-0001.json`, `file:scripts/iacode/desktop_test_support.py`, `file:tests/test_gate5_clients.py`
+
+### LSN-0123 — Consent binds workspace identity, not an uncanonicalized path spelling
+
+- Status: `GUARDED`, severity HIGH, category implementation, recurrences 0.
+- Source: GATE-5, GATE-5-CP-0001, finding G5-INT-010.
+- Symptom: The native snapshot command refused before approval even after a valid preview. A canonical filesystem root spelling differed from the selected editor fsPath spelling while both named the same workspace.
+- Root cause: The preview cached a canonical root and the editor compared it directly with an uncanonicalized fsPath rather than binding the preview to the actual selected workspace identity.
+- Resolution: Bind the preview to the selected URI and generation, then require the re-read canonical root and exact manifest digest to remain unchanged. Cmd-0094 passes all 27 client cases; cmd-0095 executes the actual canonical-root Node case through a resolvable Python guard. Actual native/live acceptance remains separately pending.
+- Prevention:
+  - `test` test_editor_preview_binding_uses_workspace_identity_not_path_spelling — Execute the actual canonical-root alias case through the counted Python suite, assert one Node case really ran, and retain stale folder/trust and exact canonical-root/digest controls.
+- Evidence: `file:docs/checkpoints/GATE-5-CP-0001/COMMANDS.jsonl`, `file:docs/checkpoints/GATE-5-CP-0001/attempts/DESKTOP-LIVE-RED-0002.json`, `file:apps/vscode-extension/src/extension.cjs`, `file:apps/vscode-extension/tests/extension.test.cjs`, `file:tests/test_gate5_clients.py`
+
+### LSN-0124 — Durable editor recovery must not use an in-memory test host
+
+- Status: `GUARDED`, severity HIGH, category testing, recurrences 0.
+- Source: GATE-5, GATE-5-CP-0001, finding G5-INT-011.
+- Symptom: The second real editor host could not recover the pending identity after an accepted interrupted create in the first host.
+- Root cause: The harness supplied extensionTestsPath; the installed Code source explicitly uses in-memory storage for that test context.
+- Resolution: Use an ordinary isolated development host with a separate acceptance driver and the unchanged production VSIX. Keep real SecretStorage/workspaceState and the original recovery assertions. Cmd-0101 confirms the actual installed switch; cmd-0102 exercises the launch guard. Full provider recovery remains pending.
+- Prevention:
+  - `test` test_native_recovery_proof_uses_persistent_storage_context — Require a persistent native launch context, refuse extensionTestsPath and refuse an absent native report rather than manufacturing PASS.
+- Evidence: `file:docs/checkpoints/GATE-5-CP-0001/FINDINGS.json`, `file:docs/checkpoints/GATE-5-CP-0001/COMMANDS.jsonl`, `file:scripts/iacode/native_editor.py`, `file:tests/test_gate5_clients.py`
+
+### LSN-0125 — Native parent exit is not proof of process and profile cleanup
+
+- Status: `GUARDED`, severity HIGH, category environment, recurrences 1.
+- Source: GATE-5, GATE-5-CP-0001, finding G5-INT-012.
+- Symptom: Both native cases passed but deleting their owned profiles raised a Windows dictionary sharing violation.
+- Root cause: The original cleanup watched only the parent process. Even after exact owned child accounting reached zero, mapped file release was not instantaneous.
+- Resolution: Create suspended processes in an owned kill-on-close job, drain the exact tree and validate the created temporary child path before deletion. Retry only observed sharing/access locks for ten seconds, record attempts and require actual removal. Cmd-0109 passes causal child/target/error controls; cmd-0110 passes actual native execution and removal after 62 lock retries.
+- Prevention:
+  - `test` test_native_process_tree_is_drained_even_after_parent_exits — Launch an actual surviving child and observe exact owned job cleanup after its parent exits.
+  - `test` test_owned_profile_cleanup_refuses_broad_targets_and_retries_only_sharing_locks — Refuse broad targets, execute a sharing-lock retry and propagate other removal errors without retry.
+  - `test` test_native_installer_and_host_both_pin_their_owned_shared_storage — Require explicit owned shared-data-dir on installation and host launch; absent actual storage observations never establish a native PASS.
+- Evidence: `file:docs/checkpoints/GATE-5-CP-0001/FINDINGS.json`, `file:docs/checkpoints/GATE-5-CP-0001/COMMANDS.jsonl`, `file:scripts/iacode/native_process.py`, `file:tests/test_gate5_clients.py`
+
+### LSN-0126 — Known authentication material is not domain or presentation data
+
+- Status: `GUARDED`, severity HIGH, category security, recurrences 0.
+- Source: GATE-5, GATE-5-CP-0001, finding G5-INT-015.
+- Symptom: The API guard missed encoded capability forms; the full suite retained one failing boundary case.
+- Root cause: Canonical JSON views decode JSON transport, not arbitrary base64, percent or literal Unicode-escape encodings. Shape detection alone cannot recognize a bare known capability.
+- Resolution: Keep canonical taxonomy unchanged and separately refuse the configured capability and closed encoded forms before replay/domain IO and client approval/presentation. Cmd-0131 passes all 165 API cases; cmd-0133 passes all 34 client cases, including signed post-effect refusal preserving uncertainty and an offline preview guard.
+- Prevention:
+  - `test` test_authentication_material_is_refused_before_replay_and_domain_io — Exercise raw/case/base64/percent/literal-Unicode forms through actual authenticated ASGI, assert zero replay/domain IO and no returned value, then authenticate a clean request.
+- Evidence: `file:docs/checkpoints/GATE-5-CP-0001/FINDINGS.json`, `file:docs/checkpoints/GATE-5-CP-0001/COMMANDS.jsonl`, `file:apps/api/tests/unit/test_desktop_api.py`, `file:apps/api/src/iacode_api/middleware/desktop_auth.py`
+
+### LSN-0127 — Fresh runtime health does not initialize an operator-managed model catalog
+
+- Status: `GUARDED`, severity HIGH, category environment, recurrences 0.
+- Source: GATE-5, GATE-5-CP-0001, finding G5-INT-016.
+- Symptom: Real native recovery passed, but the first provider task failed NO_CANDIDATE against a healthy fresh runtime with zero catalog models.
+- Root cause: The isolated proof created empty persistence and omitted the existing explicit operator catalog synchronization prerequisite. Process health and authenticated catalog access do not imply model availability.
+- Resolution: Synchronize the requested provider explicitly, then require the exact already-authorized active model. Do not change model, provider, client IPC or production routing. Cmd-0154 proves actual hardened worker synchronization, 135 discovered models, the authorized model present and successful provider inference; cmd-0156/0158 prove executable failure/no-substitution controls.
+- Prevention:
+  - `test` test_fresh_catalog_requires_sync_and_the_exact_authorized_model_without_substitution — Require explicit sync before listing; accept only the exact authorized active model and refuse synchronization failure or a missing model without fallback.
+- Evidence: `file:docs/checkpoints/GATE-5-CP-0001/FINDINGS.json`, `file:docs/checkpoints/GATE-5-CP-0001/COMMANDS.jsonl`, `file:docs/checkpoints/GATE-5-CP-0001/HARDENED-GATEWAY.json`, `file:scripts/iacode/desktop_test_support.py`, `file:tests/test_gate5_clients.py`
+
+### LSN-0128 — Adversarial premises must use the actual public contract
+
+- Status: `GUARDED`, severity HIGH, category testing, recurrences 1.
+- Source: GATE-5, GATE-5-CP-0001, finding G5-INT-017.
+- Symptom: After complete native provider/sandbox/quality success, the forgery test failed before reaching the API because it indexed a non-public executor field.
+- Root cause: The harness assumed infrastructure ownership metadata was exposed in ToolRequestView instead of using the public request identifier and actual ToolExecutionView evidence.
+- Resolution: Join public toolRequestId values with successful executions carrying a sandboxSession; fail if no actual executed premise exists. Keep the external result-forgery assertion and public contract unchanged. Cmd-0169 passes the canonical-field, actual-ID join, old-expression adverse and absent-premise controls.
+- Prevention:
+  - `test` test_forgery_premise_joins_public_request_ids_to_actual_successful_sandbox_executions — Derive public fields from the actual contract, reproduce the old missing-field expression, select only an executed public identity and refuse an absent successful sandbox premise.
+  - `test` test_cleanup_membership_derives_every_canonical_active_state_including_running — Read all canonical active states without application initialization; require RUNNING and STOPPING membership, reject the old guessed set and prove membership grows with a new canonical active state.
+- Evidence: `file:docs/checkpoints/GATE-5-CP-0001/FINDINGS.json`, `file:docs/checkpoints/GATE-5-CP-0001/COMMANDS.jsonl`, `file:docs/checkpoints/GATE-5-CP-0001/attempts/DESKTOP-LIVE-RED-0006.json`, `file:scripts/iacode/scenarios/desktop_e2e.py`, `file:tests/test_gate5_clients.py`
+
+### LSN-0129 — Repeated cancellation must preserve an already cancelled terminal result
+
+- Status: `GUARDED`, severity HIGH, category implementation, recurrences 0.
+- Source: GATE-5, GATE-5-CP-0001, finding G5-INT-019.
+- Symptom: The real desktop proof reached task cancellation and received INVALID_STATE_TRANSITION; a causal store test separately reproduced refusal when repeating cancellation of CANCELLED.
+- Root cause: The store rejected every terminal state uniformly, although observing an already CANCELLED result is an idempotent no-op rather than a transition.
+- Resolution: Return unchanged CANCELLED truth without writing fields; continue refusing SUCCEEDED/FAILED and mark only the request flag for RUNNING. Cmd-0184 retains one causal failure with 199 other cases passing; cmd-0185 passes all 200 unchanged/added cases after the minimal correction.
+- Prevention:
+  - `test` test_repeated_cancel_of_cancelled_run_returns_unchanged_terminal_truth — Execute the actual store method with explicit transaction/row doubles, require an unchanged CANCELLED record and retain success/failure refusal plus requested-not-completed controls.
+- Evidence: `file:docs/checkpoints/GATE-5-CP-0001/FINDINGS.json`, `file:docs/checkpoints/GATE-5-CP-0001/COMMANDS.jsonl`, `file:docs/checkpoints/GATE-5-CP-0001/attempts/DESKTOP-LIVE-RED-0007.json`, `file:services/agent-runtime/tests/test_cancellation_store.py`, `file:services/agent-runtime/src/iacode_agent_runtime/persistence.py`
+
+### LSN-0130 — Executable export line endings belong to the source and packaging contract
+
+- Status: `GUARDED`, severity HIGH, category quality, recurrences 0.
+- Source: GATE-5, GATE-5-CP-0001, finding G5-INT-021.
+- Symptom: Current Git attributes left CommonJS EOL unspecified and the deterministic builder accepted a CRLF executable shebang.
+- Root cause: New executable suffixes were not included in the repository LF policy; two builds in one checkout cannot reveal platform-dependent checkout conversion.
+- Resolution: Declare LF for CommonJS/ESM and reject CR bytes in executable inputs without silently rewriting packaged source. Cmd-0192 retains both causal failures; cmd-0193 passes all 29 root controls and cmd-0194 all 35 complete client cases plus deterministic packages.
+- Prevention:
+  - `test` test_commonjs_and_esm_exports_have_explicit_lf_attributes — Ask actual Git attributes for CommonJS/ESM EOL, rather than assuming checkout behavior.
+  - `test` test_builder_refuses_a_crlf_executable_instead_of_shipping_a_broken_linux_shebang — Present an actual owned CRLF executable to the production closed-map reader and require refusal.
+- Evidence: `file:docs/checkpoints/GATE-5-CP-0001/FINDINGS.json`, `file:docs/checkpoints/GATE-5-CP-0001/COMMANDS.jsonl`, `file:.gitattributes`, `file:scripts/iacode/build_clients.py`, `file:tests/test_gate5_clients.py`
+
+### LSN-0131 — Raw evidence digests require byte-preserving Git export, not text normalization
+
+- Status: `GUARDED`, severity HIGH, category quality, recurrences 0.
+- Source: GATE-5, GATE-5-CP-0001, finding G5-INT-022.
+- Symptom: Before publication, the staged actual desktop report lost CR bytes and no longer matched the archived observation's raw SHA-256.
+- Root cause: Dedicated byte-exact copied observations inherited the generic JSON text/LF policy; local copy equality did not prove Git export equality.
+- Resolution: Preserve original copied bytes, mark dedicated observation/archive paths non-text and exercise actual Git staging with positive, real normalization-negative and restored positive controls. The causal red is cmd-0216.
+- Prevention:
+  - `test` test_exact_byte_evidence_survives_git_transport_and_detects_normalization — A real isolated Git repository must retain exact CRLF observation bytes; generic text normalization must demonstrably change them, and restoration must recover equality.
+- Evidence: `file:.gitattributes`, `file:tests/test_gate5_clients.py`, `file:docs/checkpoints/GATE-5-CP-0001/FINDINGS.json`, `file:docs/checkpoints/GATE-5-CP-0001/COMMANDS.jsonl`
