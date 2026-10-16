@@ -42,6 +42,26 @@ functional/requirement completion or ordered final assurance. No original assert
 
 ## Frozen v3 publication boundary
 
+V3 completed PASS in cmd-0299: all 42 stages, 6500.5 seconds, unchanged shared project, owned
+resources removed, clean transported checkout and removed clone. Cmd-0300 archived all five
+reports unchanged while preserving their actual PASS. They cannot approve later source. Publish
+the completed program-state correction as immutable v4, prove current published live state, and
+execute one new complete non-fast verifier with all source and memory frozen. Then execute every
+ordered internal assurance step. No partial green-stage reuse or denominator change is allowed.
+
+### Substantive resumability finding after publication
+
+Cmd-0266 confirms canonical G4-18.1/18.2 resumability is unavailable at CP0010: no current steps,
+a historical tracked observation and no internal-pass schema status. Return to implementation for
+that mandatory requirement; do not narrow its meaning or treat file existence as functionality.
+Keep the active v3 clone, driver and all its launch inputs untouched. Its full result will remain
+evidence only for v3, not final acceptance of this later correction. No competing Docker tests run.
+
+Add truthful current STEPS, a versioned generated live pointer in ignored var/, explicit refresh,
+strict observed SHA/staleness checks and positive/negative real CLI/Git controls. Preserve legacy
+snapshot bytes and version semantics. Record ADR-0045; derive the new lesson requirement before
+implementation. The new source must receive a new immutable full verifier and every later control.
+
 The mutable broad regression remains FAIL (cmd-0229). Selected fresh diagnostics corrected every
 identified cause, including source-epoch mismatch, stale derived memory and post-execution input
 hashing. Publish the corrected checkpoint as IN_PROGRESS, not as an approved Gate. Freeze source,

@@ -7,11 +7,11 @@
     "evaluator",
     "sandbox"
   ],
-  "generatedAt": "2026-10-16T05:53:38Z",
+  "generatedAt": "2026-10-16T07:51:23Z",
   "policyVersion": "2.0.0",
-  "inputsFingerprint": "4055d5caa2c8c1bdac2baa59601bd02f5a9a436fab2a2038c9068ed5715130f4",
-  "lessonsConsidered": 115,
-  "lessonsApplicable": 114,
+  "inputsFingerprint": "9d7d3b89a509fc2c833a8f51e4bdb420edec46bac5f9ba36bb0a5deb65992d8b",
+  "lessonsConsidered": 116,
+  "lessonsApplicable": 115,
   "applicable": [
     {
       "lessonId": "LSN-0001",
@@ -1152,6 +1152,16 @@
       "requiredCheck": "Run actual-process long-tail, parameter-exclusion, bounded-count and successful-child controls; retain original stage denominator and exit-code semantics.",
       "requiredEvidence": "A causal red diagnostic regression followed by green controls and the full verifier.",
       "derivedRequirementId": "LESSON-REQ-0114"
+    },
+    {
+      "lessonId": "LSN-0116",
+      "title": "A live resumability pointer is generated after Git boundaries, not committed into its own subject",
+      "status": "GUARDED",
+      "severity": "CRITICAL",
+      "reasonApplicable": "applies to every Gate; category tooling; severity CRITICAL; already guarded, so the control must keep holding",
+      "requiredCheck": "Generate current state from the latest checkpoint, truthful steps and real local/remote Git; validate exact observations, reject stale or contradictory state and prove the live output cannot dirty or overwrite tracked source.",
+      "requiredEvidence": "Real CLI/Git negative and positive controls, current checkpoint steps and a successful current live-state observation after publication.",
+      "derivedRequirementId": "LESSON-REQ-0115"
     }
   ],
   "derivedRequirements": [
@@ -1952,6 +1962,13 @@
       "description": "Verify a failing full verifier retains every bounded case identifier beyond its output tail",
       "mandatory": true,
       "requiredEvidence": "A causal red diagnostic regression followed by green controls and the full verifier."
+    },
+    {
+      "id": "LESSON-REQ-0115",
+      "lessonId": "LSN-0116",
+      "description": "Verify a live resumability pointer is generated after Git boundaries, not committed into its own subject",
+      "mandatory": true,
+      "requiredEvidence": "Real CLI/Git negative and positive controls, current checkpoint steps and a successful current live-state observation after publication."
     }
   ]
 }

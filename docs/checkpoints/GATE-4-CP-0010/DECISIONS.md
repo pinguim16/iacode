@@ -2,6 +2,31 @@
 
 ## Post-v2 internal corrective decisions
 
+Adopt ADR-0045 for the actual current program-state refusal (cmd-0266). The new pointer is generated
+under ignored var/, observes exact local/remote SHAs, requires truthful current steps and refuses
+staleness without rewriting. Legacy storage/status semantics and the original historical file
+remain unchanged. Cmd-0270/0271 failed the new fixture's LATEST header/path preconditions; neither
+is causal product proof. Cmd-0272 obtained real storage/status refusals with correct preconditions;
+cmd-0273 passed all nine unchanged behavioral controls after correction. Current source/memory
+changes are confined to the main corrective checkout, never the active v3 clone or its driver.
+V3 is evidence only about its exact old subject and cannot approve later changes; v4 is required.
+
+The first nine live-state controls missed source projection. Cmd-0277 independently of the fixture
+NameError in cmd-0276 reproduced four coerced/ignored checkpoint contradictions. Reopen/escalate
+LSN-0116 recurrence 1, validate types and actual branch/currentCommit, then preserve the ten-case
+green runs cmd-0281/0282, including real declared HEAD and legacy MILESTONE_PASS acceptance. Final
+published proof must compare source fingerprint with a transported subject. Functional/requirement
+writers refuse mixed subject identities or a source change after that proof.
+
+The old canonical 18.3 evidence label GateStepTests names no repository class. Replace that phantom
+label with the executed LiveProgramStateTests, keeping the requirement unchanged and every real
+regression in the derived denominator. The current 1804-case and 220-obligation set is derived,
+not reconstructed from the earlier 1794-case/219-obligation observations.
+
+Current STEPS describe implementing and pre-seal evidence assembly only. Their closure slice must
+not prospectively claim sealing, publication, detached validation or a future Gate. Those remain
+explicit next actions and mandatory advancement conditions; no Gate requirement or check is removed.
+
 Cmd-0255 is a further LSN-0011 guardrail recurrence: inventory cmd-0254 was still running when
 validation began, and overlapping writers produced six strict hash refusals. Reopen the lesson,
 retain the red result, and await actual process completion for each dependent producer. A returned

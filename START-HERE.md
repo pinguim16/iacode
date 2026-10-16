@@ -46,6 +46,10 @@ below for anyone about to change the repository.
 6. Compare the observed Git state with `STATE.json`; if an unexpected divergence exists, stop and create `DIVERGENCE.md` as specified by the [checkpoint protocol](docs/CHECKPOINT-PROTOCOL.md).
 7. Execute the validation commands in `HANDOFF.md`.
 8. Continue only from `NEXT.md` and do not advance a Gate without explicit authorization and a passing prior Gate.
+9. For current resumability, explicitly generate with `python scripts/development-ledger/program_state.py --write`
+   and validate with `python scripts/development-ledger/program_state.py` after Git/checkpoint changes.
+   The live observation is ignored `var/program-state.json`; the tracked legacy observation is historical.
+   Neither observation grants a Gate verdict. See [docs/program/README.md](docs/program/README.md).
 
 ## Mandatory delivery order
 

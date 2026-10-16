@@ -197,9 +197,9 @@ at `INTERNAL_GATE_PASS`. Independent validation remains due at M2 closure, never
 
 | Key | Requirement | Artifact | Evidence |
 |---|---|---|---|
-| 18.1 | A schema-bound program state records current milestone, Gate, checkpoint, step, last completed step, local and remote commits, status, blockers, next action, and update time. | `docs/program/PROGRAM-STATE.json`, `.iacode/schemas/program-state.schema.json` | `ProgramStateTests`. |
-| 18.2 | Program state is derived and validated against the checkpoint, Git, remote state, and master plan; contradictory or stale state is refused rather than reconciled silently. | `scripts/development-ledger/program_state.py` | `ProgramStateTests`. |
-| 18.3 | Each Gate slice records step identity, requirements, expected behavior, implementation, tests, functional proof, evidence, and truthful status. | `docs/checkpoints/GATE-4-CP-0001/STEPS.json` | `GateStepTests`. |
+| 18.1 | A schema-bound program state records current milestone, Gate, checkpoint, step, last completed step, local and remote commits, status, blockers, next action, and update time. | `var/program-state.json` (generated), `.iacode/policies/program-state.json`, `.iacode/schemas/program-state.schema.json` | `ProgramStateTests`; `LiveProgramStateTests`. |
+| 18.2 | Program state is derived and validated against the checkpoint, Git, remote state, and master plan; contradictory or stale state is refused rather than reconciled silently. | `scripts/development-ledger/program_state.py` | `ProgramStateTests`; `LiveProgramStateTests`. |
+| 18.3 | Each Gate slice records step identity, requirements, expected behavior, implementation, tests, functional proof, evidence, and truthful status. | `docs/checkpoints/GATE-4-CP-0001/STEPS.json`, `docs/checkpoints/GATE-4-CP-0010/STEPS.json` | `LiveProgramStateTests`. |
 
 ## 19. Security and provenance
 

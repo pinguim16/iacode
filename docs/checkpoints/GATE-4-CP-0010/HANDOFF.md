@@ -21,6 +21,18 @@ serialization and live cancellation/cleanup proof passed. Commands and reports c
 
 ## What was NOT completed
 
+V3 is now completed PASS: cmd-0299, 42/42 stages, 6500.5 seconds, all isolation checks green and
+temporary clone removed. Cmd-0300 archived its five reports unchanged under attempts/published-v3.
+The active-v3 descriptions below are historical. This passing older subject cannot approve the
+later program-state changes; complete published v4 verification and all final assurance remain due.
+
+Published immutable v3 (0b1fa85) is executing in its untouched remote clone, but cannot approve the
+later resumability correction. Cmd-0266 exposed missing current steps; ADR-0045 corrects live-state
+storage/status/identity, and nine real CLI/Git controls pass (cmd-0273). Preserve v3's actual result
+after it completes and publish a new subject for full current-source verification. No product or
+driver inputs in the active clone are edited; no concurrent Docker proof runs. Current obligations
+derive to 220; Gate 5 remains unstarted until the complete corrected internal closure is sealed.
+
 The full published verifier, fresh ordered Green Keeper, completeness, internal A-T Red Team,
 clean-clone mirror, terminal internal closure, sealing and publication remain pending. Gate 5 has
 not started. Independent M2 review, independent Red Team and second-tool validation remain pending.

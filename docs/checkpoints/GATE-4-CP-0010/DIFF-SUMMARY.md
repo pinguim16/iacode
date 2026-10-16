@@ -20,11 +20,22 @@
   retain their own policy semantics. No historical checkpoint or approval is rewritten.
 - Two historical synthetic alphabet-sequence redaction markers were reviewed by exact component
   digest and sanitized AST provenance; no path, commit or finding kind was broadly excluded.
-- ADR-0037 through ADR-0043, escalated Engineering Memory, the predecessor integrity anchor,
+- ADR-0037 through ADR-0045, escalated Engineering Memory, the predecessor integrity anchor,
   preserved red attempts and this checkpoint record the implementation and its actual evidence.
 - No CLI, extension, future-Gate implementation or sealed CP0009 file is changed.
 
 ## Published verification subject
+
+V3 has completed PASS (cmd-0299): 42/42 stages and all cleanup/isolation checks. Its actual result
+is preserved unchanged under attempts/published-v3 (cmd-0300). Older active-v3 notes below are
+historical, not the current process state. The next subject must include the later resumability
+correction and receive its own complete execution before current-source approval.
+
+Immutable v3 at 0b1fa85c46cf3ce0bcb13fd4792f389d97d71ea4 is executing unchanged. A later mandatory
+resumability correction requires a new subject before approval: generated live state in ignored
+var/, real SHA/staleness checks, truthful latest steps, strict checkpoint projection and preserved
+legacy meanings. Ten actual CLI/Git controls pass. The complete latest denominator derives to
+1804 cases and 220 obligations. V3 does not approve these later changes.
 
 The complete corrected implementation is published at
 `4c53e4f788adc24e1b9cd9f581a7dc0d0f3c1340`, tagged

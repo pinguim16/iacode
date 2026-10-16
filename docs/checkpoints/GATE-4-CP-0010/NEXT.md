@@ -10,6 +10,29 @@ checkpoint and commit sequence. Independent M2 audit remains pending; do not cla
 
 ## Current continuation barrier
 
+V3 has COMPLETED PASS, not an active process: cmd-0299 passed all 42 stages in 6500.5 seconds with
+all isolation/cleanup/transport checks green. Cmd-0300 preserved all five exact reports under
+attempts/published-v3, retaining the actual result and non-promotion qualification. Earlier active
+v3 descriptions below are historical continuation notes. There is no competing Docker assurance
+process. Finish serial prepublication bookkeeping, publish v4, execute its published program-state
+proof and one complete frozen-source verifier, then the full ordered internal closure sequence.
+
+The published v3 full verifier is active for immutable 0b1fa85c46cf3ce0bcb13fd4792f389d97d71ea4.
+Its clone and driver/launch inputs remain untouched. A later substantive canonical resumability
+failure (cmd-0266, G4-INT-025) makes v3 non-final for the current corrected source. Preserve its
+actual complete result and all five reports; do not reuse green stages for the next subject.
+Nine real CLI/Git controls pass after correction (cmd-0273). Current STEPS and ignored generated
+state are implemented under ADR-0045. A new immutable v4 full execution is required after v3 exits.
+No competing Docker gate or clone mutation is allowed while v3 runs. Current derivation contains
+220 obligations (105 canonical and 115 lessons); re-derive test counts rather than copying 1794.
+
+Current derivation is 1804 cases and 220 obligations (cmd-0289), with 116 active lessons and 118
+effective guardrails. All ten current live-state controls passed (cmd-0281/0282); actual strict
+current generation/validation passed (cmd-0285/0286). New canonical/program controls 6, Foundation
+29 and memory/binding/provenance 27 passed (cmd-0290/0291/0292). Compilation passed (cmd-0283).
+No Docker gate was run in competition with v3. After v3 finishes, archive its unchanged five
+reports with archive_v3_verification.py before a new immutable subject/full invocation.
+
 The v2 verifier completed FAIL (41/42 stages; root 801 cases, ten failures). Its five reports are
 preserved byte-for-byte in attempts/published-v2, alongside the unchanged v1 archive. Neither
 subject may be promoted. No partial green result authorizes closure or Gate 5.

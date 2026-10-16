@@ -195,3 +195,10 @@ non-local Git transport, checks out the content commit detached, rebuilds the re
 with the producer carried by that commit, and seals only if both valid archives are byte-identical.
 The evidence commit records the immutable subject tree and the exact archive digest, size and entry
 count in `REVIEW-BUNDLE-VALIDATION.json`; validation reconstructs the declaration independently.
+
+`program_state.py --write` explicitly generates the current live observation in ignored
+`var/program-state.json`; `program_state.py` validates it without rewriting. Exact local/remote
+SHAs cannot be committed into their own subject. Current policy requires truthful latest-checkpoint
+STEPS and supports the canonical internal/milestone status vocabulary without granting a verdict.
+Legacy schema/storage meanings and the old tracked observation are preserved; see
+`docs/program/README.md` and ADR-0045. Regenerate after Git or checkpoint state changes.

@@ -32,12 +32,14 @@ def reason(path: str) -> str:
         return "Record the internal audit findings, cancellation recurrence and executed guardrails."
     if path == ".iacode/schemas/memory-policy.schema.json":
         return "Version strict internal-verdict semantics without retroactively invalidating sealed subject policies."
+    if path in {".iacode/policies/program-state.json", ".iacode/schemas/program-state.schema.json", "docs/program/README.md"}:
+        return "Version a generated current resumability pointer without self-referential commits or rewriting historical observations."
     if path == ".iacode/policies/secret-scan-allowlist.json":
         return "Review only two exact decoded alphabet-sequence redaction-fixture component digests from immutable public test history."
     if path in {".iacode/policies/test-suites.json", ".iacode/schemas/test-suites.schema.json"}:
         return "Bind test counts and evidence to canonical runner collection; live input scenarios remain mandatory."
     if path in {".iacode/policies/canonical-requirements.json", "docs/GATE-4-CHECKLIST.md"}:
-        return "Reconcile Gate 4 closure cadence under explicit owner authorization without dropping requirement rows."
+        return "Reconcile authorized Gate 4 closure and truthful resumability evidence without dropping any requirement row."
     if path.startswith("services/evaluator/"):
         return "Close durable cancellation races and prove early output containment with causal fixtures and evidence regressions."
     if path.startswith("services/sandbox/"):

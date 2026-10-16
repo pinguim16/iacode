@@ -223,3 +223,4 @@ Expected set derived by: `policies.expected_requirement_refs over docs/GATE-4-CH
 | `LESSON-REQ-0112` | `lesson:LSN-0113` | yes | `NOT_STARTED` | Verify stronger delivery controls must follow the immutable subject policy version | LESSON-PREFLIGHT.json LESSON-REQ-0112 |
 | `LESSON-REQ-0113` | `lesson:LSN-0114` | yes | `NOT_STARTED` | Verify transport line metadata must not repeatedly scan the source prefix | LESSON-PREFLIGHT.json LESSON-REQ-0113 |
 | `LESSON-REQ-0114` | `lesson:LSN-0115` | yes | `NOT_STARTED` | Verify a failing full verifier retains every bounded case identifier beyond its output tail | LESSON-PREFLIGHT.json LESSON-REQ-0114 |
+| `LESSON-REQ-0115` | `lesson:LSN-0116` | yes | `NOT_STARTED` | Verify a live resumability pointer is generated after Git boundaries, not committed into its own subject | LESSON-PREFLIGHT.json LESSON-REQ-0115 |

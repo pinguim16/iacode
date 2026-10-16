@@ -233,6 +233,7 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 | `LESSON-REQ-0112` | LESSON | `lesson:LSN-0113` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify stronger delivery controls must follow the immutable subject policy version |
 | `LESSON-REQ-0113` | LESSON | `lesson:LSN-0114` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify transport line metadata must not repeatedly scan the source prefix |
 | `LESSON-REQ-0114` | LESSON | `lesson:LSN-0115` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify a failing full verifier retains every bounded case identifier beyond its output tail |
+| `LESSON-REQ-0115` | LESSON | `lesson:LSN-0116` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify a live resumability pointer is generated after Git boundaries, not committed into its own subject |
 
 ## Evidence
 
@@ -2638,6 +2639,17 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 
 - Source reference: LESSON-PREFLIGHT.json LESSON-REQ-0114
 - Description: Verify a failing full verifier retains every bounded case identifier beyond its output tail
+- Implementation: _none_
+- Test: _none_
+- Negative test: _none_
+- Documentation: _none_
+- Validation: _none_
+- Guardrail: _none_
+
+### LESSON-REQ-0115 - lesson:LSN-0116
+
+- Source reference: LESSON-PREFLIGHT.json LESSON-REQ-0115
+- Description: Verify a live resumability pointer is generated after Git boundaries, not committed into its own subject
 - Implementation: _none_
 - Test: _none_
 - Negative test: _none_

@@ -16,7 +16,7 @@ sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
 
 from delivery_assurance import collect_test_ids, load_command_results, resolve_evidence
 from derive_requirements import EVIDENCE_FIELDS, render_closure, render_matrix
-from ledger_common import LedgerError, load_json, write_json
+from ledger_common import LedgerError, load_json, scope_fingerprint, write_json
 
 
 def historical(reference: str) -> str:
@@ -38,6 +38,9 @@ def corrective(reference: str) -> dict[str, list[str]] | None:
     }
     bookkeeping = reference == "lesson:LSN-0011"
     input_identity = reference == "lesson:LSN-0020"
+    resumability = reference == "lesson:LSN-0116" or reference in {
+        "canonical:GATE-4#18.1", "canonical:GATE-4#18.2", "canonical:GATE-4#18.3",
+    }
     compatibility = reference in {"lesson:LSN-0012", "lesson:LSN-0113"}
     fixture = reference in {"lesson:LSN-0103", "lesson:LSN-0105"}
     output_security = reference in {
@@ -51,7 +54,7 @@ def corrective(reference: str) -> dict[str, list[str]] | None:
     streams = reference in {"lesson:LSN-0035", "lesson:LSN-0083"}
     if not (cancellation or cadence or bookkeeping or fixture or output_security
             or timestamp or collection or compatibility or performance or diagnostics or streams
-            or input_identity):
+            or input_identity or resumability):
         return None
     evidence = {field: [] for field in EVIDENCE_FIELDS}
     evidence["validationEvidence"] = ["checkpoint:VERIFY.json", "checkpoint:FUNCTIONAL-SCENARIOS.json"]
@@ -105,6 +108,19 @@ def corrective(reference: str) -> dict[str, list[str]] | None:
         ]
         evidence["validationEvidence"] += ["checkpoint:POLICY-COMPATIBILITY.json",
                                             "checkpoint:COLLECTION-COMPATIBILITY.json"]
+    elif resumability:
+        evidence["implementationEvidence"] = [
+            "file:scripts/development-ledger/program_state.py",
+            "file:.iacode/policies/program-state.json",
+            "file:.iacode/schemas/program-state.schema.json",
+            "checkpoint:STEPS.json",
+        ]
+        evidence["testEvidence"] = ["test:LiveProgramStateTests", "test:ProgramStateTests"]
+        evidence["documentationEvidence"] = [
+            "file:docs/program/README.md",
+            "file:docs/adr/ADR-0045-live-program-state-is-generated-after-git-boundaries.md",
+        ]
+        evidence["validationEvidence"] += ["checkpoint:PROGRAM-STATE-LIVE-VALIDATION.json"]
     elif input_identity:
         evidence["implementationEvidence"] = [
             "file:scripts/development-ledger/record_command.py",
@@ -187,6 +203,11 @@ def corrective(reference: str) -> dict[str, list[str]] | None:
 def main() -> int:
     verification = load_json(CHECKPOINT / "VERIFY.json")
     publication = load_json(CHECKPOINT / "PUBLISHED-CLEAN-CLONE-REPORT.json")
+    live_state = load_json(CHECKPOINT / "PROGRAM-STATE-LIVE-VALIDATION.json")
+    if (live_state.get("result") != "PASS"
+            or live_state.get("subjectCommit") != publication.get("publishedCommit")
+            or live_state.get("sourceFingerprint") != scope_fingerprint(ROOT)):
+        raise LedgerError("program-state and full verification must bind the same current published source")
     if (verification.get("result") != "PASS" or verification.get("fast") is not False
             or publication.get("result") != "PASS"
             or not all(item.get("result") == "PASS" for item in verification["stages"])):

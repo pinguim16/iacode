@@ -1719,6 +1719,26 @@
         "LSN-0115"
       ],
       "removingItWouldAllow": "A long failure summary to erase earlier failed cases or diagnostics to retain arbitrary parameters/message bodies instead of bounded identities."
+    },
+    {
+      "guardrailId": "GRD-0118",
+      "title": "Live program state remains current without changing its own Git subject",
+      "kind": "test",
+      "reference": "test_real_cli_roundtrip_is_clean_and_supports_internal_closure",
+      "verifiedBy": [
+        "test_live_policy_requires_generated_program_state",
+        "test_real_cli_roundtrip_is_clean_and_supports_internal_closure",
+        "test_local_git_movement_refuses_stale_observation_without_rewriting",
+        "test_remote_git_movement_refuses_stale_observation_without_rewriting",
+        "test_contradictory_steps_cannot_replace_a_valid_observation",
+        "test_unsafe_or_unknown_policy_cannot_overwrite_source",
+        "test_redirected_runtime_directory_cannot_write_outside_the_checkout",
+        "test_legacy_storage_and_status_semantics_are_not_reinterpreted",
+        "test_wrong_checkpoint_or_tampered_observation_is_refused",
+        "test_checkpoint_contradictions_are_not_silently_coerced"
+      ],
+      "lessons": ["LSN-0116"],
+      "removingItWouldAllow": "A stale committed program pointer, unsupported internal closure, contradictory steps or redirected output to prevent truthful resumption or overwrite repository content."
     }
   ]
 }

@@ -14,7 +14,7 @@ sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
 sys.path.insert(0, str(ROOT / "scripts/iacode"))
 
 from check_functional_acceptance import functional_requirement_ids
-from ledger_common import LedgerError, load_json, utc_now, write_json
+from ledger_common import LedgerError, load_json, scope_fingerprint, utc_now, write_json
 from verify import build_stages
 
 STAGES = {
@@ -33,6 +33,10 @@ def main() -> int:
     publication = load_json(CHECKPOINT / "PUBLISHED-CLEAN-CLONE-REPORT.json")
     functional = load_json(CHECKPOINT / "FUNCTIONAL-SCENARIOS.json")
     subject = publication["publishedCommit"]
+    live_state = load_json(CHECKPOINT / "PROGRAM-STATE-LIVE-VALIDATION.json")
+    if (live_state.get("result") != "PASS" or live_state.get("subjectCommit") != subject
+            or live_state.get("sourceFingerprint") != scope_fingerprint(ROOT)):
+        raise LedgerError("functional closure cannot mix published subjects or later unverified source")
     expected_stages = [stage.name for stage in build_stages(False)]
     observed_stages = [stage["name"] for stage in verification["stages"]]
     if (publication.get("result") != "PASS" or verification.get("result") != "PASS"

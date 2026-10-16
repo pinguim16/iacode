@@ -8,7 +8,7 @@
   "currentCommit": "HEAD",
   "dirty": false,
   "startedAt": "2026-10-15T20:15:55Z",
-  "updatedAt": "2026-10-16T05:55:14Z",
+  "updatedAt": "2026-10-16T07:59:25Z",
   "nextAllowedAction": "Finish Gate 4 internal corrective assurance, seal INTERNAL_GATE_PASS, then begin explicitly authorized Gate 5 in a separate checkpoint. M2 independent audit remains pending.",
   "blockedBy": [],
   "secondToolValidation": {
@@ -66,14 +66,16 @@
     "path": "LESSON-PREFLIGHT.json",
     "gate": "GATE-4",
     "scope": "internal audit and milestone cadence alignment",
-    "lessonsConsidered": 115,
-    "lessonsApplicable": 114,
-    "derivedRequirements": 114,
+    "lessonsConsidered": 116,
+    "lessonsApplicable": 115,
+    "derivedRequirements": 115,
     "evidence": [
       "command:cmd-0002",
       "command:cmd-0247",
       "command:cmd-0257",
-      "command:cmd-0261"
+      "command:cmd-0261",
+      "command:cmd-0287",
+      "command:cmd-0301"
     ]
   },
   "milestone": {

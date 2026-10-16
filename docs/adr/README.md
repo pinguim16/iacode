@@ -54,3 +54,4 @@ exist, or a title or status that disagrees with its record fails the suite.
 | [ADR-0042](ADR-0042-internal-verdict-semantics-follow-subject-policy.md) | Internal verdict semantics follow subject policy | Accepted |
 | [ADR-0043](ADR-0043-collection-semantics-follow-subject-policy.md) | Collection semantics follow subject policy | Accepted |
 | [ADR-0044](ADR-0044-process-recorders-bind-launch-inputs.md) | Process recorders bind launch inputs | Accepted |
+| [ADR-0045](ADR-0045-live-program-state-is-generated-after-git-boundaries.md) | Live program state is generated after Git boundaries | Accepted |

@@ -4,9 +4,9 @@
 - Scope: `internal audit and milestone cadence alignment`
 - Technologies: _none declared_
 - Modules: `evaluator`, `sandbox`
-- Generated: `2026-10-16T05:53:38Z`
-- Lessons considered: 115
-- Lessons applicable: 114
+- Generated: `2026-10-16T07:51:23Z`
+- Lessons considered: 116
+- Lessons applicable: 115
 
 Every applicable lesson below is a requirement of this Gate. The derived identifiers must
 appear in `REQUIREMENTS-MATRIX.json`, and the Delivery Completeness Validator fails the
@@ -128,6 +128,7 @@ delivery when one is absent.
 | `LSN-0113` Stronger delivery controls must follow the immutable subject policy version | `GUARDED` | CRITICAL | `LESSON-REQ-0112` | Version every changed invariant by the subject's canonical policy, retain mandatory current downgrade controls, and validate all sealed tags with current tooling without altering subjects or narrowing membership. |
 | `LSN-0114` Transport line metadata must not repeatedly scan the source prefix | `GUARDED` | MEDIUM | `LESSON-REQ-0113` | Run the measured source-range regression and all existing transport, secret-boundary and immutable-bundle controls without weakening their rules. |
 | `LSN-0115` A failing full verifier retains every bounded case identifier beyond its output tail | `GUARDED` | MEDIUM | `LESSON-REQ-0114` | Run actual-process long-tail, parameter-exclusion, bounded-count and successful-child controls; retain original stage denominator and exit-code semantics. |
+| `LSN-0116` A live resumability pointer is generated after Git boundaries, not committed into its own subject | `GUARDED` | CRITICAL | `LESSON-REQ-0115` | Generate current state from the latest checkpoint, truthful steps and real local/remote Git; validate exact observations, reject stale or contradictory state and prove the live output cannot dirty or overwrite tracked source. |
 
 ## Why each lesson applies
 
@@ -928,3 +929,10 @@ delivery when one is absent.
 - Required check: Run actual-process long-tail, parameter-exclusion, bounded-count and successful-child controls; retain original stage denominator and exit-code semantics.
 - Required evidence: A causal red diagnostic regression followed by green controls and the full verifier.
 - Derived requirement: `LESSON-REQ-0114`
+
+### LSN-0116 — A live resumability pointer is generated after Git boundaries, not committed into its own subject
+
+- Reason: applies to every Gate; category tooling; severity CRITICAL; already guarded, so the control must keep holding
+- Required check: Generate current state from the latest checkpoint, truthful steps and real local/remote Git; validate exact observations, reject stale or contradictory state and prove the live output cannot dirty or overwrite tracked source.
+- Required evidence: Real CLI/Git negative and positive controls, current checkpoint steps and a successful current live-state observation after publication.
+- Derived requirement: `LESSON-REQ-0115`

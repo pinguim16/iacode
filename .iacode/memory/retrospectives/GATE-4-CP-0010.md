@@ -2,6 +2,12 @@
 
 ## What went well
 
+Immutable v3 completed all 42 stages PASS in 6500.5 seconds (cmd-0299), including real provider,
+quality/self-evaluation, reconstruction regressions, adverse lifecycle and first-durable-output
+proof. Isolation/cleanup and transported Git state passed. Cmd-0300 preserved its five reports
+unchanged. This is a genuine result for v3, not approval of the later program-state correction;
+that correction still needs a complete new immutable subject and ordered final assurance.
+
 A behavioral workflow test reproduced a cancellation defect before production correction. The
 null/positive path, unrelated failure and both persistence arrival orders were tested; actual
 PostgreSQL concurrency and live sandbox cleanup passed. Evidence: CP0010 commands and cancellation
@@ -81,6 +87,19 @@ regressions in GRD-0099. Canonical fixture positive paths, honest internal verdi
 mandatory lint are registered in GRD-0104 through GRD-0106. None substitutes for independent audit.
 
 ## New lessons
+
+LSN-0116 records unavailable current resumability, self-referential committed HEAD observations
+and missing internal-status integration. Correct fixture headers precede causal controls: the two
+initial new fixture refusals are not product diagnoses. Cmd-0272 reproduces the actual boundaries;
+cmd-0273 passes all nine real CLI/Git controls. The untouched active v3 clone cannot approve later
+source; a new complete immutable subject remains mandatory. No old sealed snapshot is rewritten.
+
+The initial program guard was too narrow: projection could coerce bad checkpoint fields or ignore
+declared branch/commit contradictions. Cmd-0277 proves all four real escapes separately from the
+new fixture's misplaced-assertion error in cmd-0276. LSN-0116 recurrence 1 is escalated; cmd-0281 and
+0282 pass all ten unchanged causal controls after strict projection, including declared HEAD and
+the old legacy milestone-status positive path. Subject/fingerprint binding prevents mixed-version
+acceptance; published proof and the entire new-subject assurance still remain due.
 
 LSN-0103 records canonical fixture digests; LSN-0104 records cadence consistency and truthful
 independence; LSN-0105 records source-quality coverage for new tests. Their machine records own

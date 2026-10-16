@@ -123,6 +123,7 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 | `LSN-0113` | `GUARDED` | CRITICAL | checkpoint | Stronger delivery controls must follow the immutable subject policy version | `test_live_policy_requires_strict_internal_verdict_semantics` |
 | `LSN-0114` | `GUARDED` | MEDIUM | performance | Transport line metadata must not repeatedly scan the source prefix | `test_fragment_carrier_lines_count_each_source_range_at_most_once`, `test_json_error_line_index_matches_builtin_string_coordinates` |
 | `LSN-0115` | `GUARDED` | MEDIUM | tooling | A failing full verifier retains every bounded case identifier beyond its output tail | `test_failed_case_identifiers_survive_a_tail_longer_than_the_report_limit` |
+| `LSN-0116` | `GUARDED` | CRITICAL | tooling | A live resumability pointer is generated after Git boundaries, not committed into its own subject | `test_real_cli_roundtrip_is_clean_and_supports_internal_closure` |
 
 ## Detail
 
@@ -1570,3 +1571,14 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 - Prevention:
   - `test` test_failed_case_identifiers_survive_a_tail_longer_than_the_report_limit — Execute real failing child processes with an early failure and more than 25 later lines; preserve identifiers and test payload exclusion and successful-child refusal.
 - Evidence: `file:docs/checkpoints/GATE-4-CP-0010/attempts/published-v2/VERIFY.json`, `file:docs/checkpoints/GATE-4-CP-0010/COMMANDS.jsonl`
+
+### LSN-0116 — A live resumability pointer is generated after Git boundaries, not committed into its own subject
+
+- Status: `GUARDED`, severity CRITICAL, category tooling, recurrences 1.
+- Source: GATE-4, GATE-4-CP-0010, finding G4-INT-025.
+- Symptom: The current program-state command refuses missing current steps and the committed observation points to an old checkpoint and SHA.
+- Root cause: The live pointer was versioned as ordinary repository content, making its exact HEAD self-referential; newer checkpoints and internal closure statuses were not integrated into its producer.
+- Resolution: Canonical policy generates schema 1.1 exact-Git observations in ignored var/program-state.json, with explicit regeneration, strict latest-step identity and staleness refusal. Legacy storage/status semantics and the tracked historical snapshot are preserved.
+- Prevention:
+  - `test` test_real_cli_roundtrip_is_clean_and_supports_internal_closure — Actual subprocesses and Git prove clean live generation, supported internal status, staleness/identity refusal, unsafe-target refusal and unchanged legacy semantics.
+- Evidence: `file:docs/checkpoints/GATE-4-CP-0010/FINDINGS.json`, `file:docs/checkpoints/GATE-4-CP-0010/COMMANDS.jsonl`, `file:scripts/development-ledger/program_state.py`, `file:tests/test_program_state_live.py`, `file:.iacode/policies/program-state.json`, `file:docs/adr/ADR-0045-live-program-state-is-generated-after-git-boundaries.md`

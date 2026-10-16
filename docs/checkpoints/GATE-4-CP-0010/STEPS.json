@@ -1,0 +1,47 @@
+{
+  "schemaVersion": "1.0.0",
+  "gate": "GATE-4",
+  "checkpoint": "GATE-4-CP-0010",
+  "steps": [
+    {
+      "stepId": "G4-S00",
+      "requirements": ["GATE-4-1.1", "GATE-4-18.3", "LESSON-REQ-*"],
+      "expectedBehavior": "Validate the immutable predecessor, record owner authorization and derive current obligations.",
+      "implementation": ["BASELINE.md", "AUTHORIZATION.md", "PLAN.md", "LESSON-PREFLIGHT.json", "REQUIREMENTS-MATRIX.json"],
+      "tests": ["checkpoint validation", "lesson validation", "canonical requirement derivation"],
+      "functionalProof": "Entry validation and derivation passed; immutable CP0009 and its original status remain unchanged.",
+      "evidence": ["cmd-0001", "cmd-0002", "cmd-0268", "cmd-0269"],
+      "status": "COMPLETE"
+    },
+    {
+      "stepId": "G4-S01",
+      "requirements": ["GATE-4-12.1", "GATE-4-18.1", "GATE-4-18.2", "GATE-4-19.2", "GATE-4-20.7"],
+      "expectedBehavior": "Correct the reproduced lifecycle, output, historical-policy and resumability defects without weakening controls.",
+      "implementation": ["FINDINGS.json", "docs/adr/ADR-0037-intermediate-gates-use-internal-closure.md", "docs/adr/ADR-0045-live-program-state-is-generated-after-git-boundaries.md", "scripts/development-ledger/program_state.py"],
+      "tests": ["current targeted regression modules", "real SQL/lifecycle proof", "real CLI/Git live-state controls"],
+      "functionalProof": "Causal red attempts and corrected targeted controls are preserved. All ten actual CLI/Git controls and the strict current pointer pass; this is implementation evidence, not complete verification or Gate approval.",
+      "evidence": ["cmd-0119", "cmd-0202", "cmd-0243", "cmd-0244", "cmd-0246", "cmd-0272", "cmd-0273", "cmd-0277", "cmd-0281", "cmd-0282", "cmd-0285", "cmd-0286"],
+      "status": "COMPLETE"
+    },
+    {
+      "stepId": "G4-S02",
+      "requirements": ["GATE-4-15.1", "GATE-4-16.1", "GATE-4-20.1", "all current derived requirements"],
+      "expectedBehavior": "Execute one complete corrected immutable subject, then all mandatory internal assurance in order.",
+      "implementation": ["VERIFY.json", "FUNCTIONAL-ACCEPTANCE.json", "REQUIREMENTS-MATRIX.json", "QUALITY.json"],
+      "tests": ["full non-fast verifier", "all mandatory Green Keeper gates", "completeness", "internal A-T Red Team", "full clean-clone mirror"],
+      "functionalProof": "PENDING. Active v3 tests an untouched older immutable subject and cannot approve the later resumability correction. A new complete subject and every ordered internal control remain required.",
+      "evidence": [],
+      "status": "IN_PROGRESS"
+    },
+    {
+      "stepId": "G4-S03",
+      "requirements": ["GATE-4-20.5", "GATE-4-20.6", "GATE-4-20.7", "GATE-4-20.8"],
+      "expectedBehavior": "Assemble truthful final internal evidence, derived counts and explicit file declarations for finalization. Post-commit seal, publication, detached validation and Gate 5 remain separately gated next actions, never prospectively completed steps.",
+      "implementation": ["STATE.json", "HANDOFF.md", "FILES.json", "COUNTS.json", "FINAL-REPORT.md"],
+      "tests": ["pre-finalization checkpoint validation", "canonical count derivation", "evidence resolution"],
+      "functionalProof": "NOT EXECUTED. Final internal handoff assembly awaits complete current-source assurance. No seal, publication, independent verdict or Gate 5 action is claimed by this pre-seal readiness slice.",
+      "evidence": [],
+      "status": "NOT_STARTED"
+    }
+  ]
+}

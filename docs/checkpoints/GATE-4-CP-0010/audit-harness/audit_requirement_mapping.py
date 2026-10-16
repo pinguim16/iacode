@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import argparse
 import json
 import subprocess
 import sys
@@ -17,12 +18,16 @@ from delivery_assurance import collect_test_ids, load_command_results, resolve_e
 from derive_requirements import EVIDENCE_FIELDS
 from ledger_common import LedgerError, load_json, utc_now, use_utf8_stdout, write_json
 
-PENDING_FINAL_REPORTS = {"checkpoint:VERIFY.json", "checkpoint:FUNCTIONAL-SCENARIOS.json"}
+PENDING_FINAL_REPORTS = {"checkpoint:VERIFY.json", "checkpoint:FUNCTIONAL-SCENARIOS.json",
+                         "checkpoint:PROGRAM-STATE-LIVE-VALIDATION.json"}
 
 
 def main() -> int:
-    destination = CHECKPOINT / "REQUIREMENT-MAPPING-PREVIEW.json"
-    if destination.exists():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--report", default="REQUIREMENT-MAPPING-PREVIEW.json")
+    args = parser.parse_args()
+    destination = (CHECKPOINT / args.report).resolve()
+    if destination.parent != CHECKPOINT or destination.exists():
         raise LedgerError("preserve the prior mapping observation")
     baseline = subprocess.run(
         ["git", "show", f"iacode-checkpoints/{mapping.SUBJECT}:"

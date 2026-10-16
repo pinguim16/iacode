@@ -20,7 +20,7 @@
     "updatedAt"
   ],
   "properties": {
-    "schemaVersion": {"const": "1.0.0"},
+    "schemaVersion": {"enum": ["1.0.0", "1.1.0"]},
     "milestone": {"type": "string", "pattern": "^M[0-9]+$"},
     "gate": {"type": "string", "pattern": "^GATE-[0-9]+$"},
     "checkpoint": {"type": "string", "pattern": "^GATE-[0-9]+-CP-[0-9]{4}$"},
@@ -30,7 +30,10 @@
     "remoteCommit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
     "branch": {"type": "string", "minLength": 1, "maxLength": 255},
     "status": {
-      "enum": ["IN_PROGRESS", "READY_FOR_REVIEW", "BLOCKED", "GATE_PASS", "MILESTONE_PASS"]
+      "enum": ["NOT_STARTED", "BASELINING", "IN_PROGRESS", "BLOCKED", "READY_FOR_REVIEW",
+        "REWORK_REQUIRED", "READY_FOR_RED_TEAM", "INTERNAL_GATE_PASS",
+        "MILESTONE_INDEPENDENT_AUDIT_PASS", "MILESTONE_EXTERNAL_PASS", "GATE_PASS", "GATE_FAIL",
+        "MILESTONE_PASS"]
     },
     "blockers": {
       "type": "array",
@@ -39,5 +42,11 @@
     },
     "nextAction": {"type": "string", "minLength": 1, "maxLength": 2048},
     "updatedAt": {"type": "string", "format": "date-time"}
-  }
+  },
+  "allOf": [
+    {"if": {"properties": {"schemaVersion": {"const": "1.0.0"}}},
+     "then": {"properties": {"status": {"enum": ["IN_PROGRESS", "READY_FOR_REVIEW", "BLOCKED", "GATE_PASS", "MILESTONE_PASS"]}}}},
+    {"if": {"properties": {"schemaVersion": {"const": "1.1.0"}}},
+     "then": {"properties": {"status": {"enum": ["NOT_STARTED", "BASELINING", "IN_PROGRESS", "BLOCKED", "READY_FOR_REVIEW", "REWORK_REQUIRED", "READY_FOR_RED_TEAM", "INTERNAL_GATE_PASS", "MILESTONE_INDEPENDENT_AUDIT_PASS", "MILESTONE_EXTERNAL_PASS", "GATE_PASS", "GATE_FAIL"]}}}}
+  ]
 }

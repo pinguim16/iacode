@@ -3,6 +3,18 @@
 ## Status
 
 IN_PROGRESS. Internal corrective review only. Independent milestone validation remains pending.
+Latest completed whole invocation: v3 PASS, all 42 stages in 6500.5 seconds (cmd-0299), isolated
+resources removed, shared project unchanged, transported checkout clean and clone removed.
+Cmd-0300 preserved all five reports byte-for-byte in attempts/published-v3. Historical active-v3
+notes below do not describe the current process state. Later program-state source still requires
+a new immutable v4 full invocation and every ordered final internal assurance step.
+Published immutable v3 is active but non-final: a later current-program-state failure (cmd-0266)
+requires ADR-0045, truthful checkpoint steps and versioned ignored live observations. Nine actual
+CLI/Git controls pass (cmd-0273); all current obligations now derive to 220. A new complete subject
+must validate that later source. No v3 passing fragment authorizes closure or Gate 5.
+The latest derived set is 1804 cases and 220 obligations (cmd-0289). Ten live-state controls,
+six canonical/program controls, 29 Foundation controls and 27 memory/binding/provenance controls
+pass. Strict current pointer generation/validation passes, without claiming clean published source.
 The immutable v2 verifier completed FAIL (41/42 stages; root 801 cases, ten failures). Five reports
 are archived byte-for-byte under attempts/published-v2. Nine collection-policy incompatibilities
 were independently reproduced by a same-session all-32-anchor component probe and corrected through

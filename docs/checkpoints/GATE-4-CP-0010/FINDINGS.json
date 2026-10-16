@@ -35,7 +35,7 @@
       "id": "G4-INT-006",
       "severity": "CRITICAL",
       "title": "Sandbox output reaches durable transport and full-output artifacts before evaluator secret containment",
-      "status": "OPEN",
+      "status": "FIXED_PENDING_FINAL_ASSURANCE",
       "classification": "GUARDRAIL_FAILURE: LSN-0091 / GRD-0092",
       "evidence": [
         "command:cmd-0043",
@@ -50,21 +50,25 @@
         "command:cmd-0085",
         "command:cmd-0104",
         "command:cmd-0107",
-        "command:cmd-0108"
+        "command:cmd-0108",
+        "command:cmd-0299",
+        "checkpoint:attempts/published-v3/VERIFY.json"
       ],
-      "observed": "The real sandbox service decision path returns SUCCEEDED with canonical synthetic credential-shaped output. Its full-output branch writes artifacts before returning the execution to the Temporal activity. Evaluator-only scanning therefore does not cover the first durable boundary. Cmd-0107 exposed nested JSON embedded in ordinary pytest output: whole-document decoding alone still permitted the inline marker into history. Mixed-stream fragment parsing and bounded parser-work refusal are now covered by regression; the failed proof is preserved.",
+      "observed": "The real sandbox service decision path returns SUCCEEDED with canonical synthetic credential-shaped output. Its full-output branch writes artifacts before returning the execution to the Temporal activity. Evaluator-only scanning therefore does not cover the first durable boundary. Cmd-0107 exposed nested JSON embedded in ordinary pytest output: whole-document decoding alone still permitted the inline marker into history. Mixed-stream fragment parsing and bounded parser-work refusal are now covered by regression; the failed proof is preserved. The unchanged immutable v3 subject completed all 42 stages PASS in cmd-0299 with owned cleanup, unchanged shared project and removed clean clone. This corrects the known runtime causes but does not approve later program-state source; v4 and final ordered assurance remain required. Lost attempt-2 history is not reconstructed.",
       "requiredCorrection": "Scan exact structured output and decoded full streams before any sandbox artifact write or activity response; fail closed on scanner failure; retain a clean positive control and reject without retaining prohibited bytes. Re-run complete verification for the corrected subject."
     },
     {
       "id": "G4-INT-001",
       "severity": "HIGH",
       "title": "Durable cancellation can race result and verdict finalization",
-      "status": "OPEN",
+      "status": "FIXED_PENDING_FINAL_ASSURANCE",
       "evidence": [
         "command:cmd-0005",
-        "file:services/evaluator/tests/test_workflow.py"
+        "file:services/evaluator/tests/test_workflow.py",
+        "command:cmd-0299",
+        "checkpoint:attempts/published-v3/VERIFY.json"
       ],
-      "observed": "The behavioral workflow regression ended with ActivityError/LATE_RESULT rather than terminal CANCELLED after the store accepted CANCELLING at activity completion. The existing watcher and flag-only success normalization do not close this persistence boundary.",
+      "observed": "The behavioral workflow regression ended with ActivityError/LATE_RESULT rather than terminal CANCELLED after the store accepted CANCELLING at activity completion. The existing watcher and flag-only success normalization do not close this persistence boundary. The unchanged immutable v3 subject completed all 42 stages PASS in cmd-0299 with owned cleanup, unchanged shared project and removed clean clone. This corrects the known runtime causes but does not approve later program-state source; v4 and final ordered assurance remain required. Lost attempt-2 history is not reconstructed.",
       "classification": "GUARDRAIL_FAILURE: LSN-0098 / GRD-0099",
       "requiredCorrection": "Recover from cancellation races using authoritative state, fail closed at verdict persistence, and serialize cancellation against immutable verdict commitment. Prove both arrival orders and preserve unrelated failures."
     },
@@ -72,13 +76,15 @@
       "id": "G4-INT-002",
       "severity": "MEDIUM",
       "title": "Per-Gate handoff prose contradicts the canonical milestone cadence",
-      "status": "OPEN",
+      "status": "FIXED_PENDING_FINAL_ASSURANCE",
       "evidence": [
         "file:START-HERE.md",
         "file:docs/DEVELOPMENT-CONTRACT.md",
-        "file:docs/MILESTONE-VALIDATION.md"
+        "file:docs/MILESTONE-VALIDATION.md",
+        "command:cmd-0299",
+        "checkpoint:attempts/published-v3/VERIFY.json"
       ],
-      "observed": "The same contracts unconditionally require per-Gate independence and also permit INTERNAL_GATE_PASS for intermediate Gates. The owner explicitly authorized internal correction and Gate 5 advancement with independent audit deferred.",
+      "observed": "The same contracts unconditionally require per-Gate independence and also permit INTERNAL_GATE_PASS for intermediate Gates. The owner explicitly authorized internal correction and Gate 5 advancement with independent audit deferred. The unchanged immutable v3 subject completed all 42 stages PASS in cmd-0299 with owned cleanup, unchanged shared project and removed clean clone. This corrects the known runtime causes but does not approve later program-state source; v4 and final ordered assurance remain required. Lost attempt-2 history is not reconstructed.",
       "requiredCorrection": "Record the authorization and structural decision, reconcile adapters and live canonical rows without editing sealed subjects, preserve the mandatory gate set, and leave M2 independent validation pending."
     },
     {
@@ -169,7 +175,7 @@
       "id": "G4-INT-012",
       "severity": "HIGH",
       "title": "The second live proof timed out in its clean positive control",
-      "status": "OPEN",
+      "status": "FIXED_PENDING_FINAL_ASSURANCE",
       "evidence": [
         "command:cmd-0066",
         "command:cmd-0073",
@@ -179,9 +185,11 @@
         "command:cmd-0087",
         "command:cmd-0091",
         "command:cmd-0112",
-        "file:docs/checkpoints/GATE-4-CP-0010/V1-POLLING-FAILURE.json"
+        "file:docs/checkpoints/GATE-4-CP-0010/V1-POLLING-FAILURE.json",
+        "command:cmd-0299",
+        "checkpoint:attempts/published-v3/VERIFY.json"
       ],
-      "observed": "The clean quality run remained RUNNING after its first build result; no adverse fixture was exercised. The unchanged 300-second wait failed. Cleanup passed and the shared project was unchanged, but failure diagnostics were not written before cleanup. A later deterministic workflow regression reproduced a matching owned-poller cancellation failure and pinned-SDK evidence confirmed its typed cause; the lost original history is not reconstructed. The real published v1 self-evaluation subsequently reproduced FAILED Temporal workflow / RUNNING API state with a cancelled iacode_quality_read_run cause and no pending activities. This preserves the actual mechanism without claiming recovery of attempt 2's original history.",
+      "observed": "The clean quality run remained RUNNING after its first build result; no adverse fixture was exercised. The unchanged 300-second wait failed. Cleanup passed and the shared project was unchanged, but failure diagnostics were not written before cleanup. A later deterministic workflow regression reproduced a matching owned-poller cancellation failure and pinned-SDK evidence confirmed its typed cause; the lost original history is not reconstructed. The real published v1 self-evaluation subsequently reproduced FAILED Temporal workflow / RUNNING API state with a cancelled iacode_quality_read_run cause and no pending activities. This preserves the actual mechanism without claiming recovery of attempt 2's original history. The unchanged immutable v3 subject completed all 42 stages PASS in cmd-0299 with owned cleanup, unchanged shared project and removed clean clone. This corrects the known runtime causes but does not approve later program-state source; v4 and final ordered assurance remain required. Lost attempt-2 history is not reconstructed.",
       "requiredCorrection": "Obtain bounded real history diagnostics before cleanup, determine and correct the cause without increasing deadlines or weakening the control, then repeat the complete proof. Unit success does not replace that live requirement."
     },
     {
@@ -387,6 +395,29 @@
       ],
       "observed": "The 812-case local run began before the late metadata test was defined. Updating the live guard registry during that run made five memory controls correctly report its missing method in the already loaded unittest module. The run finished FAIL in 4869.474 seconds; no passing partial result is approval. A fresh provenance process passed all four cases (cmd-0237). Subsequent selected controls correctly refused the not-yet-regenerated LESSONS.md index (cmd-0238/0239); their four failures are retained. Render derived memory before the next fresh run. No selected result promotes cmd-0229.",
       "requiredCorrection": "The regenerated-index fresh process passed all 27 memory-policy, input-binding and provenance controls (cmd-0246), including the five formerly affected controls. Still execute the complete latest suite and all 42 stages from one immutable published subject, without suite or memory edits. Preserve the red run and do not reinterpret isolated greens as its success."
+    },
+    {
+      "id": "G4-INT-025",
+      "severity": "CRITICAL",
+      "classification": "GUARDRAIL_FAILURE: LSN-0116 / GRD-0118; source-checkpoint projection was not covered by the initial controls",
+      "title": "The current program-state entry point cannot resume this checkpoint",
+      "status": "FIXED_PENDING_FINAL_ASSURANCE",
+      "evidence": [
+        "command:cmd-0266",
+        "file:scripts/development-ledger/program_state.py",
+        "file:docs/program/PROGRAM-STATE.json",
+        "command:cmd-0272",
+        "command:cmd-0273",
+        "command:cmd-0276",
+        "command:cmd-0277",
+        "command:cmd-0281",
+        "command:cmd-0282",
+        "file:tests/test_program_state_live.py",
+        "checkpoint:STEPS.json",
+        "file:docs/adr/ADR-0045-live-program-state-is-generated-after-git-boundaries.md"
+      ],
+      "observed": "The canonical CLI fails because current CP0010 has no STEPS.json. Its tracked pointer still names CP0001 and a historical SHA, while its schema omits INTERNAL_GATE_PASS. Persisting a live HEAD observation in tracked content also makes the observation stale after its own commit. Nine initial controls passed, but a further causal probe exposed four source projection escapes (cmd-0277); cmd-0276 also retains a separate misplaced-assertion fixture error. Strict field/branch/commit validation then passed all ten controls (cmd-0281/0282), including actual local/remote Git movement, declared HEAD, legacy milestone status and unchanged historical bytes. The recurrence is escalated and preserved; published proof and new-subject full assurance remain pending.",
+      "requiredCorrection": "Record truthful current steps, keep exact observed SHAs in ignored generated live state rather than a self-referential tracked pointer, version new status/storage semantics while preserving legacy observations, reject stale/contradictory/unsafe state, and prove real write/validate plus Git advancement refusals. The active immutable v3 clone remains untouched but cannot approve later corrections."
     }
   ]
 }
