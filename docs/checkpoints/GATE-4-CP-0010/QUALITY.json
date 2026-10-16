@@ -2,64 +2,144 @@
   "schemaVersion": "3.4.0",
   "checks": {
     "build": {
-      "status": "NOT_EXECUTED",
-      "evidence": [],
+      "status": "PASS",
+      "evidence": [
+        "file:VERIFY.json",
+        "file:PUBLISHED-CLEAN-CLONE-REPORT.json",
+        "command:cmd-0308",
+        "command:cmd-0331"
+      ],
       "justification": null
     },
     "unitTests": {
-      "status": "NOT_EXECUTED",
-      "evidence": [],
+      "status": "PASS",
+      "evidence": [
+        "file:TESTS.json",
+        "command:cmd-0321",
+        "file:M2-INTERNAL-MIRROR.json",
+        "command:cmd-0342"
+      ],
       "justification": null
     },
     "integrationTests": {
-      "status": "NOT_EXECUTED",
-      "evidence": [],
+      "status": "PASS",
+      "evidence": [
+        "file:VERIFY.json",
+        "file:TESTS.json",
+        "command:cmd-0308",
+        "command:cmd-0326",
+        "command:cmd-0327",
+        "command:cmd-0328",
+        "command:cmd-0329",
+        "command:cmd-0330"
+      ],
       "justification": null
     },
     "e2e": {
-      "status": "NOT_EXECUTED",
-      "evidence": [],
+      "status": "PASS",
+      "evidence": [
+        "file:VERIFY.json",
+        "file:PUBLISHED-CLEAN-CLONE-REPORT.json",
+        "command:cmd-0308",
+        "file:FUNCTIONAL-ACCEPTANCE-VALIDATION.json",
+        "command:cmd-0310"
+      ],
       "justification": null
     },
     "lint": {
-      "status": "NOT_EXECUTED",
-      "evidence": [],
+      "status": "PASS",
+      "evidence": [
+        "command:cmd-0332"
+      ],
       "justification": null
     },
     "staticAnalysis": {
-      "status": "NOT_EXECUTED",
-      "evidence": [],
+      "status": "PASS",
+      "evidence": [
+        "command:cmd-0322",
+        "command:cmd-0332",
+        "command:cmd-0333"
+      ],
       "justification": null
     },
     "security": {
-      "status": "NOT_EXECUTED",
-      "evidence": [],
+      "status": "PASS",
+      "evidence": [
+        "file:VERIFY.json",
+        "file:PUBLISHED-CLEAN-CLONE-REPORT.json",
+        "command:cmd-0308",
+        "file:COMPOSE-ISOLATION-AUDIT.json",
+        "file:PROGRAM-STATE-LIVE-VALIDATION.json",
+        "command:cmd-0307",
+        "command:cmd-0315",
+        "command:cmd-0323",
+        "command:cmd-0324",
+        "command:cmd-0325",
+        "command:cmd-0333",
+        "file:M2-INTERNAL-RED-TEAM.json",
+        "command:cmd-0336",
+        "file:M2-INTERNAL-MIRROR.json",
+        "command:cmd-0342"
+      ],
       "justification": null
     },
     "documentation": {
-      "status": "NOT_EXECUTED",
-      "evidence": [],
-      "justification": null
+      "status": "PASS",
+      "evidence": [
+        "file:M2-INTERNAL-MIRROR.json",
+        "file:DIFF-SUMMARY.md",
+        "file:REQUIREMENTS-MATRIX.md",
+        "file:DECISIONS.md",
+        "command:cmd-0342"
+      ],
+      "justification": "The complete internal mirror resolved all 224 relative documentation links and checked current Gate requirements, evidence and self-contained handoff. Final checkpoint validation still binds final metadata."
     },
     "checkpointValidation": {
-      "status": "NOT_EXECUTED",
-      "evidence": [],
-      "justification": null
+      "status": "PASS",
+      "evidence": [
+        "command:cmd-0320",
+        "command:cmd-0325",
+        "command:cmd-0341"
+      ],
+      "justification": "Actual quiescent main-tree validation and the formal mandatory checkpoint gate both passed; final closure validation remains required."
     },
     "redTeam": {
-      "status": "NOT_EXECUTED",
-      "evidence": [],
-      "justification": null
+      "status": "PASS",
+      "evidence": [
+        "file:M2-INTERNAL-RED-TEAM.json",
+        "file:RED-TEAM-REPORT.md",
+        "command:cmd-0336"
+      ],
+      "justification": "Fresh same-session A-T internal assurance with default rebuild and baseline/null controls; not independent Red Team or milestone approval."
     },
     "greenKeeper": {
-      "status": "NOT_EXECUTED",
-      "evidence": [],
-      "justification": null
+      "status": "PASS",
+      "evidence": [
+        "file:REWORK-LOG.jsonl",
+        "command:cmd-0321",
+        "command:cmd-0322",
+        "command:cmd-0323",
+        "command:cmd-0324",
+        "command:cmd-0325",
+        "command:cmd-0326",
+        "command:cmd-0327",
+        "command:cmd-0328",
+        "command:cmd-0329",
+        "command:cmd-0330",
+        "command:cmd-0331",
+        "command:cmd-0332",
+        "command:cmd-0333",
+        "command:cmd-0334"
+      ],
+      "justification": "Fresh complete same-session cycle 1 over the canonical thirteen mandatory gates; frozen source fingerprint matches the published v4."
     },
     "deliveryCompleteness": {
-      "status": "NOT_EXECUTED",
-      "evidence": [],
-      "justification": null
+      "status": "PASS",
+      "evidence": [
+        "file:COMPLETENESS-REPORT.json",
+        "command:cmd-0335"
+      ],
+      "justification": "Same-session audit-only completeness validation; not independent milestone approval."
     }
   }
 }

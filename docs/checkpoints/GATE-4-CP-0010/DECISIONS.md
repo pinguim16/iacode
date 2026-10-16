@@ -1,5 +1,20 @@
 # Decisions
 
+## Final internal assurance boundary
+
+All required current-source assurance passed on frozen v4 f367eaaa8fb7d0571c8b25bb7d6a5c936d98edef:
+full verification cmd-0308, formal Green Keeper cmd-0334, completeness cmd-0335, full A-T Red Team
+cmd-0336 and the entire historical/clean-clone mirror cmd-0342. All 25 internal findings are closed
+against this evidence, while old failed/superseded results remain unchanged. Mirror empty-set
+dimensions keep canonical NOT_APPLICABLE rather than becoming invented passes.
+
+Proceed only with truthful pre-seal assembly, canonical INTERNAL_GATE_PASS finalization, commit,
+seal, publication and fresh transport/archive validation. Do not change source or frozen memory.
+Independent fields are NOT_REQUIRED at this intermediate boundary with M2 deferral justification;
+second-tool validation and milestone approval stay pending. Gate 5 starts separately only after
+actual validated sealing/publication. Earlier decisions below describe their historical observation
+boundaries; their old active/pending process notes are not current continuation instructions.
+
 ## Post-v2 internal corrective decisions
 
 Adopt ADR-0045 for the actual current program-state refusal (cmd-0266). The new pointer is generated

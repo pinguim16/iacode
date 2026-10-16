@@ -1,0 +1,250 @@
+{
+  "schemaVersion": "1.0.0",
+  "gate": "GATE-4",
+  "checkpoint": "GATE-4-CP-0010",
+  "status": "PASS",
+  "generatedAt": "2026-10-16T09:56:30Z",
+  "scenarios": [
+    {
+      "scenarioId": "G4-FA-CP0010-SANDBOX",
+      "requirementIds": [
+        "GATE-4-7.1",
+        "GATE-4-7.5"
+      ],
+      "feature": "Sandbox-only quality and coding execution",
+      "scenario": "Execute real coding and quality work through the sandbox while leaving the host unchanged.",
+      "environment": "Fresh-clone, checkout-owned isolated Compose stack, sandbox service and container engine.",
+      "preconditions": [
+        "One complete non-fast execution of published subject f367eaaa8fb7d0571c8b25bb7d6a5c936d98edef."
+      ],
+      "execution": [
+        "Execute canonical stage sandbox-integration.",
+        "Execute canonical stage sandbox-coding.",
+        "Execute canonical stage sandbox-timeout.",
+        "Execute canonical stage sandbox-cancellation.",
+        "Execute canonical stage sandbox-recovery.",
+        "Execute canonical stage sandbox-tool-result-origin."
+      ],
+      "expected": [
+        "Commands stay inside disposable sandboxes, adverse termination remains fail-closed and cleanup completes."
+      ],
+      "observed": [
+        "sandbox-integration: PASS in 7.7 seconds.",
+        "sandbox-coding: PASS in 55.3 seconds.",
+        "sandbox-timeout: PASS in 30.8 seconds.",
+        "sandbox-cancellation: PASS in 32.2 seconds.",
+        "sandbox-recovery: PASS in 42.7 seconds.",
+        "sandbox-tool-result-origin: PASS in 42.5 seconds."
+      ],
+      "result": "PASS",
+      "evidence": [
+        "checkpoint:VERIFY.json",
+        "checkpoint:FUNCTIONAL-SCENARIOS.json",
+        "checkpoint:PUBLISHED-CLEAN-CLONE-REPORT.json",
+        "cmd-0308"
+      ],
+      "timestamp": "2026-10-16T09:56:30Z",
+      "artifactReferences": [
+        "checkpoint:VERIFY.json",
+        "checkpoint:FUNCTIONAL-SCENARIOS.json",
+        "checkpoint:PUBLISHED-CLEAN-CLONE-REPORT.json"
+      ]
+    },
+    {
+      "scenarioId": "G4-FA-CP0010-REPRODUCTION",
+      "requirementIds": [
+        "GATE-4-9.5",
+        "GATE-4-16.4"
+      ],
+      "feature": "Immutable quality reproduction",
+      "scenario": "Reproduce a stored quality run under its frozen plan and snapshot identity.",
+      "environment": "Fresh-clone isolated stack with Temporal, PostgreSQL, MinIO, evaluator and sandbox services.",
+      "preconditions": [
+        "One complete non-fast execution of published subject f367eaaa8fb7d0571c8b25bb7d6a5c936d98edef."
+      ],
+      "execution": [
+        "Execute canonical stage quality-reproduction."
+      ],
+      "expected": [
+        "The reproduced run has distinct identity and equivalent results without rewriting the original."
+      ],
+      "observed": [
+        "quality-reproduction: PASS in 60.9 seconds."
+      ],
+      "result": "PASS",
+      "evidence": [
+        "checkpoint:VERIFY.json",
+        "checkpoint:FUNCTIONAL-SCENARIOS.json",
+        "checkpoint:PUBLISHED-CLEAN-CLONE-REPORT.json",
+        "cmd-0308"
+      ],
+      "timestamp": "2026-10-16T09:56:30Z",
+      "artifactReferences": [
+        "checkpoint:VERIFY.json",
+        "checkpoint:FUNCTIONAL-SCENARIOS.json",
+        "checkpoint:PUBLISHED-CLEAN-CLONE-REPORT.json"
+      ]
+    },
+    {
+      "scenarioId": "G4-FA-CP0010-DURABILITY",
+      "requirementIds": [
+        "GATE-4-12.1",
+        "GATE-4-12.2",
+        "GATE-4-12.3",
+        "GATE-4-12.4"
+      ],
+      "feature": "Durable recovery, cancellation and timeout",
+      "scenario": "Restart the evaluator during active work, cancel another run and allow a third to exceed its policy deadline.",
+      "environment": "Fresh-clone isolated evaluator, Temporal, persistence and sandbox services.",
+      "preconditions": [
+        "One complete non-fast execution of published subject f367eaaa8fb7d0571c8b25bb7d6a5c936d98edef."
+      ],
+      "execution": [
+        "Execute canonical stage quality-recovery.",
+        "Execute canonical stage quality-cancellation.",
+        "Execute canonical stage quality-timeout."
+      ],
+      "expected": [
+        "Recovery resumes the same run without duplicates; cancellation and timeout finish cleanup and derive FAIL."
+      ],
+      "observed": [
+        "quality-recovery: PASS in 54.3 seconds.",
+        "quality-cancellation: PASS in 33.4 seconds.",
+        "quality-timeout: PASS in 38.2 seconds."
+      ],
+      "result": "PASS",
+      "evidence": [
+        "checkpoint:VERIFY.json",
+        "checkpoint:FUNCTIONAL-SCENARIOS.json",
+        "checkpoint:PUBLISHED-CLEAN-CLONE-REPORT.json",
+        "cmd-0308"
+      ],
+      "timestamp": "2026-10-16T09:56:30Z",
+      "artifactReferences": [
+        "checkpoint:VERIFY.json",
+        "checkpoint:FUNCTIONAL-SCENARIOS.json",
+        "checkpoint:PUBLISHED-CLEAN-CLONE-REPORT.json"
+      ]
+    },
+    {
+      "scenarioId": "G4-FA-CP0010-VERDICTS",
+      "requirementIds": [
+        "GATE-4-16.1",
+        "GATE-4-16.2",
+        "GATE-4-16.3"
+      ],
+      "feature": "Truthful PASS, FAIL and canonical IACode evaluation",
+      "scenario": "Run passing, deliberately failing and repository-wide IACode fixtures through the complete Quality Engine.",
+      "environment": "Fresh-clone isolated evaluator stack with immutable evidence stores and canonical project profile.",
+      "preconditions": [
+        "One complete non-fast execution of published subject f367eaaa8fb7d0571c8b25bb7d6a5c936d98edef."
+      ],
+      "execution": [
+        "Execute canonical stage quality-pass.",
+        "Execute canonical stage quality-fail.",
+        "Execute canonical stage quality-iacode."
+      ],
+      "expected": [
+        "Only complete successful evidence derives PASS; the deliberate defect remains FAIL; IACode uses its canonical profile."
+      ],
+      "observed": [
+        "quality-pass: PASS in 40.3 seconds.",
+        "quality-fail: PASS in 39.0 seconds.",
+        "quality-iacode: PASS in 444.7 seconds."
+      ],
+      "result": "PASS",
+      "evidence": [
+        "checkpoint:VERIFY.json",
+        "checkpoint:FUNCTIONAL-SCENARIOS.json",
+        "checkpoint:PUBLISHED-CLEAN-CLONE-REPORT.json",
+        "cmd-0308"
+      ],
+      "timestamp": "2026-10-16T09:56:30Z",
+      "artifactReferences": [
+        "checkpoint:VERIFY.json",
+        "checkpoint:FUNCTIONAL-SCENARIOS.json",
+        "checkpoint:PUBLISHED-CLEAN-CLONE-REPORT.json"
+      ]
+    },
+    {
+      "scenarioId": "G4-FA-CP0010-FALSE-PASS",
+      "requirementIds": [
+        "GATE-4-16.5"
+      ],
+      "feature": "False-PASS and credential-containment resistance",
+      "scenario": "Execute the fixed twenty-attack A-T battery, including immutable review reconstruction and pre-persistence secret containment.",
+      "environment": "Rebuilt evaluator image plus review-bundle boundary and current adverse-scenario reports.",
+      "preconditions": [
+        "One complete non-fast execution of published subject f367eaaa8fb7d0571c8b25bb7d6a5c936d98edef."
+      ],
+      "execution": [
+        "Execute canonical stage quality-false-pass."
+      ],
+      "expected": [
+        "Every mandatory mutation is defended and no credential-shaped evidence becomes durable."
+      ],
+      "observed": [
+        "quality-false-pass: PASS in 207.1 seconds."
+      ],
+      "result": "PASS",
+      "evidence": [
+        "checkpoint:VERIFY.json",
+        "checkpoint:FUNCTIONAL-SCENARIOS.json",
+        "checkpoint:PUBLISHED-CLEAN-CLONE-REPORT.json",
+        "cmd-0308"
+      ],
+      "timestamp": "2026-10-16T09:56:30Z",
+      "artifactReferences": [
+        "checkpoint:VERIFY.json",
+        "checkpoint:FUNCTIONAL-SCENARIOS.json",
+        "checkpoint:PUBLISHED-CLEAN-CLONE-REPORT.json"
+      ]
+    },
+    {
+      "scenarioId": "G4-FA-CP0010-OUTPUT",
+      "requirementIds": [
+        "GATE-4-19.2"
+      ],
+      "feature": "Output containment before durable delivery",
+      "scenario": "Reject nested JSON in mixed logs and full streams before history or object writes.",
+      "environment": "Rebuilt evaluator image plus review-bundle boundary and current adverse-scenario reports.",
+      "preconditions": [
+        "One complete non-fast execution of published subject f367eaaa8fb7d0571c8b25bb7d6a5c936d98edef."
+      ],
+      "execution": [
+        "Execute canonical stage gate:apiTests.",
+        "Execute canonical stage gate:sandboxTests.",
+        "Execute canonical stage quality-false-pass."
+      ],
+      "expected": [
+        "Both adverse runs derive FAIL with explicit containment refusals, no prohibited history bytes or sandbox objects, and clean runs before and after derive PASS."
+      ],
+      "observed": [
+        "gate:apiTests: PASS in 72.1 seconds.",
+        "gate:sandboxTests: PASS in 202.6 seconds.",
+        "quality-false-pass: PASS in 207.1 seconds.",
+        "control.accepted: \"SUCCEEDED\"",
+        "control.after_refusal_pass: \"PASS\"",
+        "python-secret-output-full.causal_containment_refusal: 2",
+        "python-secret-output-full.history_clean: {\"containmentRefusals\": 2, \"failures\": [], \"payloadsScanned\": 120, \"pendingActivityTypes\": [], \"prohibitedBytesAbsent\": true, \"sandboxObjects\": 0, \"workflowStatus\": \"COMPLETED\"}",
+        "python-secret-output-full.no_sandbox_artifact: 0",
+        "python-secret-output.causal_containment_refusal: 2",
+        "python-secret-output.history_clean: {\"containmentRefusals\": 2, \"failures\": [], \"payloadsScanned\": 120, \"pendingActivityTypes\": [], \"prohibitedBytesAbsent\": true, \"sandboxObjects\": 0, \"workflowStatus\": \"COMPLETED\"}",
+        "python-secret-output.no_sandbox_artifact: 0"
+      ],
+      "result": "PASS",
+      "evidence": [
+        "checkpoint:VERIFY.json",
+        "checkpoint:FUNCTIONAL-SCENARIOS.json",
+        "checkpoint:PUBLISHED-CLEAN-CLONE-REPORT.json",
+        "cmd-0308"
+      ],
+      "timestamp": "2026-10-16T09:56:30Z",
+      "artifactReferences": [
+        "checkpoint:VERIFY.json",
+        "checkpoint:FUNCTIONAL-SCENARIOS.json",
+        "checkpoint:PUBLISHED-CLEAN-CLONE-REPORT.json"
+      ]
+    }
+  ]
+}

@@ -1,24 +1,19 @@
 # Risks
 
-- Same-session review is not independent review. M2 and secondToolValidation remain pending.
-- The cancellation window closes at immutable verdict commitment; an operator arriving later gets
-  an explicit conflict rather than a false accepted cancellation. The committed verdict is immutable.
-- Durable reads alone cannot prevent races; the store's serialization and refusal paths must remain
-  covered by real PostgreSQL and workflow behavior, not only source-text assertions.
-- Targeted green results are not a substitute for integral verification, fresh Green Keeper,
-  total completeness, internal Red Team or clean-clone mirror assurance. Those are still pending.
-- A failed verifier must be preserved before any replacement execution. Never reuse only its green
-  stages, remove a correct test, increase a product timeout or edit historical sealed evidence.
-- Gate 5 is authorized by the owner but cannot begin until this Gate 4 checkpoint actually seals
-  a valid internal closure. No authorization for Gate 6 is inferred.
-- A clean-control live run once stalled after its first result. The complete repeat passed without
-  increasing the deadline, but the original ephemeral history was not retained. Bounded pre-cleanup
-  diagnostics now guard recurrence. A matching polling-cleanup race was reproduced and corrected,
-  but that is not reconstruction of the lost history. Fresh full verification must not hide or
-  reuse that attempt.
-- Plain, escaped, nested JSON and beyond-inline output must remain rejected at the first durable
-  boundary. Matching digests do not exempt legacy objects from rescanning.
-- Two temporary directories from the superseded broad v2 diagnostic were retained after native
-  cleanup was refused. PUBLISHED-V2-BROAD-DIAGNOSTIC-ABORT.json records their exact paths and
-  non-promotion status. They are outside the checkout, contain no user edits and must not be
-  published; optional manual cleanup is outstanding. No global cleanup success is claimed.
+- Same-session review, Red Team and mirror are internal. M2 and secondToolValidation remain pending.
+- Full frozen v4 verification, formal Green Keeper, total completeness, twenty defended attacks and
+  the complete historical/clean-clone mirror passed. Canonical finalization, seal and published
+  validation are distinct later actions; inspect their actual evidence before advancement.
+- Cancellation closes at immutable verdict commitment. Later requests receive an explicit conflict;
+  SQL serialization, durable reconciliation and unrelated-error propagation must retain coverage.
+- Output containment remains before artifacts/history/activity delivery, including nested JSON and
+  decoded full streams. Reviewed publication digests do not exempt runtime objects from rescanning.
+- Original failed/superseded attempts remain unchanged. Current success never retroactively promotes
+  v1/v2, the local mixed-epoch run or the older v3 subject.
+- Original attempt-2 history was lost. Later reproductions/current proofs do not reconstruct it.
+  Bounded pre-cleanup diagnostics guard recurrence without retaining prohibited payloads.
+- Cmd-0200 remains non-successful and cannot prove launch pre-images; its qualification is retained.
+- Two superseded diagnostic directories remain after native cleanup refusal. Their exact scope is
+  in PUBLISHED-V2-BROAD-DIAGNOSTIC-ABORT.json. Never bypass refusal or claim global cleanup.
+- Gate 5 requires actual sealed/published/validated internal Gate 4 closure. Gate 6 is not authorized.
+  No independent Gate or milestone verdict is granted by this session.

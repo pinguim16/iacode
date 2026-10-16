@@ -2,109 +2,108 @@
 
 ## Status
 
-IN_PROGRESS. Internal corrective review only. Independent milestone validation remains pending.
-Latest completed whole invocation: v3 PASS, all 42 stages in 6500.5 seconds (cmd-0299), isolated
-resources removed, shared project unchanged, transported checkout clean and clone removed.
-Cmd-0300 preserved all five reports byte-for-byte in attempts/published-v3. Historical active-v3
-notes below do not describe the current process state. Later program-state source still requires
-a new immutable v4 full invocation and every ordered final internal assurance step.
-Published immutable v3 is active but non-final: a later current-program-state failure (cmd-0266)
-requires ADR-0045, truthful checkpoint steps and versioned ignored live observations. Nine actual
-CLI/Git controls pass (cmd-0273); all current obligations now derive to 220. A new complete subject
-must validate that later source. No v3 passing fragment authorizes closure or Gate 5.
-The latest derived set is 1804 cases and 220 obligations (cmd-0289). Ten live-state controls,
-six canonical/program controls, 29 Foundation controls and 27 memory/binding/provenance controls
-pass. Strict current pointer generation/validation passes, without claiming clean published source.
-The immutable v2 verifier completed FAIL (41/42 stages; root 801 cases, ten failures). Five reports
-are archived byte-for-byte under attempts/published-v2. Nine collection-policy incompatibilities
-were independently reproduced by a same-session all-32-anchor component probe and corrected through
-version dispatch. The unchanged published-v2 UTF-8 control reproduced the remaining failure class,
-and all 29 current Foundation controls passed after stream setup. The local broad run completed
-FAIL (812 loaded cases, five mixed-epoch memory refusals); actual whole-history validation passed all 32 canonical published tags
-(cmd-0202). No internal closure
-or Gate 5 advancement is authorized by this failed subject.
+All internal assurance passed. This is the pre-seal closure record: successful canonical
+finalization records INTERNAL_GATE_PASS in STATE.json. Sealing and publication validation are
+subsequent actions, never prospectively certified here. STATE at the canonical sealed tag is
+authoritative. This is not an independent Gate or milestone verdict.
 
 ## Environment
 
-Windows, PowerShell, Python and Docker Desktop. Live lifecycle proof uses an isolated checkout-owned
-Compose project with PostgreSQL, Temporal, MinIO and disposable sandbox containers.
+Windows, PowerShell, Python 3.13.15 and Docker Desktop. Real runtime proofs used owned disposable
+Compose projects with PostgreSQL, Temporal, MinIO and sandbox containers.
 
 ## Tool / Model / Effort
 
-Codex desktop application, OpenAI. Exact model, application version and effort are not exposed.
-This session carries the implementing history and makes no independence claim.
+Codex, OpenAI, with implementing history in this session. Exact runtime model/effort are not
+attested here. No cross-tool or fresh-session independent approval is claimed.
 
 ## Deliverables
 
-Durable cancellation/result/verdict race correction; explicit late-cancellation conflict; behavioral
-and real database regressions; owner-authorized milestone cadence reconciliation; indexed
-ADR-0037 through ADR-0044; first-durable-boundary output containment; mixed/nested JSON scanning;
-polling-cleanup race correction; policy-bound test discovery; Engineering Memory and reconstructible
-internal review evidence.
-
-Post-v2 corrections add versioned historical collection semantics, bounded scanner metadata work
-and durable sanitized failed-case identifiers. Targeted controls pass; none substitutes for a new
-complete immutable-subject verifier and ordered final assurance.
-
-Input-hash timing is corrected for both command recorder and Green Keeper, proven with real
-self-rewriting and stable children (cmd-0236). Failed local broad and stale-index diagnostics remain
-visible; their passing fragments are not reused for promotion. Cmd-0200 cannot prove launch bytes.
+Durable cancellation/verdict serialization and late-cancellation conflict; typed polling cleanup;
+output containment before artifacts/activity delivery; shared bounded transport scanning and
+metadata work; versioned historical verdict/collection semantics; bounded failure identifiers;
+UTF-8 capture; synchronized metadata; launch-time input hashes; strict generated live program
+state; owner-authorized internal cadence. ADR-0037 through ADR-0045 and executable regressions
+record these changes. All 25 internal findings are closed against actual corrective evidence.
 
 ## Files Created
 
-FILES.json declares this checkpoint, its executable evidence harnesses and the new ADRs.
+FILES.json declares new corrective sources, regressions, ADRs and checkpoint evidence, including
+all formal assurance reports. Final declarations/hashes are bound before content commit.
 
 ## Files Modified
 
-FILES.json declares evaluator, API, regression, live contract, adapter, memory and anchor changes.
-No sealed subject or future-Gate capability is modified.
+FILES.json owns the complete Gate 4 delta against sealed CP0009. No predecessor is rewritten,
+no canonical tag moved and no Gate 5 capability mixed into this delivery.
 
 ## Validation
 
-The targeted Gate 4 contract and memory-policy controls, rebuilt evaluator suite, lint, real
-PostgreSQL concurrency and live cancellation/cleanup scenario passed. Integral verification and
-the ordered final assurance sequence remain pending; historical results are not new executions.
-The real output proof passed 34 steps with decoded history, MinIO absence, before/after
-clean controls, SQL integration and cleanup (cmd-0119). Subsequent shared-view extraction also has
-145 passing API cases and five publication transport controls. The old published v1 execution is red
-and archived byte-for-byte; required future full verification of the corrected subject supersedes
-it, never isolated greens. Current policy compatibility and the strengthened complete public-history
-scan passed without modifying historical checkpoints or broadly excluding any scan scope.
+Immutable published v4: f367eaaa8fb7d0571c8b25bb7d6a5c936d98edef.
+Tag: iacode-subjects/GATE-4-CP-0010-internal-corrective-v4.
+Frozen source fingerprint:
+b88f8504815f569c7c1156ba6018cf384742d39cf80ef9e12c46b162a34af27f.
+
+Nine-check published live-state proof PASS (cmd-0307).
+Full non-fast verifier PASS: all 42 stages, 6657.8 seconds, one invocation, zero retries
+(cmd-0308). Shared resources stayed unchanged; owned resources and clone were removed; the
+transported checkout stayed clean. Functional acceptance passed thirteen mandatory requirements.
+Formal Green Keeper cycle 1 passed every mandatory gate (cmd-0321 through cmd-0334).
+Completeness passed all 220 obligations, 219 mandatory, with total coverage/evidence and no
+partial/missing item (cmd-0335). Complete published-history scanning is clean (cmd-0315).
+
+The full mirror passed sixteen applicable dimensions and two canonically empty-set dimensions
+remained NOT_APPLICABLE, with zero failures (cmd-0342). All 32 historical checkpoints and 224
+documentation links validated; the actual clean-clone suite, compilation, memory, integrity and
+completeness passed. All assurance fingerprints match frozen v4.
+
+Final pre-seal source/completeness equality passed (cmd-0343), final counts and explicit inventory
+were produced serially (cmd-0344/0345), and actual quiescent assembly validation passed (cmd-0348).
+Completing that readiness slice does not claim later sealing or publication.
 
 ## Tests
 
-COMMANDS.jsonl records the actual commands, results and preserved failures. Final canonical counts
-will be derived only after the complete current suite executes.
+Canonical discovery: 825 root and 1804 counted cases (cmd-0312). The fresh formal root passed in
+4922.773 seconds (cmd-0321); the separate mirror root passed in a clean clone (cmd-0342).
+TESTS.json avoids counting e2e/runtime categories twice. COUNTS.json owns current derived totals.
+Memory validates: 116 active lessons, 113 GUARDED, 118 effective guardrails, no unresolved failure.
 
-The current unexecuted full denominator derives to 1794 cases and 219 obligations (cmd-0249).
-Selected fresh diagnostics pass: 27 memory/binding/provenance, 29 Foundation and all corrective
-modules. Complete lint and compileall pass. Cmd-0251 matched no module and validates nothing.
-No complete verification, closure verdict or independent approval is inferred from these results.
+The fresh 34-step output proof records clean controls before/after both adverse runs, explicit
+refusals, no sandbox objects and prohibited bytes absent from 120 durable payloads in each run.
+V1/v2 and the local broad execution remain failed; v3's genuine PASS is superseded for promotion.
+Their exact reports, failed probes and qualifications remain preserved.
 
 ## Red Team
 
-Final internal A-T execution remains pending. Independent Red Team is deferred to M2 closure.
+Fresh full internal A-T battery PASS: twenty defended, zero escapes, VALID baseline (cmd-0336).
+Controls include first-persistence refusal, scanner failure, legacy-object rescanning and immutable
+bundle determinism, portability and declaration binding. This is internal, not independent Red Team.
 
 ## Known Risks
 
-See RISKS.md. Internal closure does not satisfy the independent milestone boundary.
+Original attempt-2 history was lost and is not reconstructed. Cmd-0200 cannot prove launch
+pre-images. Two superseded diagnostic directories remain after native cleanup refusal; no global
+cleanup is claimed. RISKS.md retains these limits. Internal closure does not satisfy M2 independence.
 
 ## Remaining Work
 
-Complete published verification, Green Keeper, completeness, internal Red Team, clean-clone mirror,
-internal closure, seal and remote validation. Then begin Gate 5 separately under owner authorization.
+At this content boundary: finish pre-seal readiness/finalization, commit, seal, publish, validate
+fresh transport and regenerate/verify the final canonical archive. Inspect actual seal evidence
+before repeating any action. A sealed subject is not rewritten to record later observations.
 
 ## Handoff Readiness
 
-Not yet ready. No terminal verdict is asserted while required assurance remains unexecuted.
+Internal assurance is complete and ready for canonical finalization, subject to truthful final
+metadata/declaration validation. Independent M2 review, Red Team, second-tool validation and
+milestone approval remain pending. No independent approval is inferred.
 
 ## Next Gate
 
-Gate 5 — VS Code + CLI is explicitly authorized after sealed valid Gate 4 internal closure.
-Gate 6 is not authorized by this request. M2's independent audit remains due at its boundary.
+Gate 5 — VS Code + CLI is explicitly authorized only after valid sealed/published internal Gate 4
+closure and final transport validation. It has its own checkpoint/commits. Gate 6 is not authorized.
 
 ## Evidence
 
-BASELINE.md, AUTHORIZATION.md, PLAN.md, FINDINGS.json, COMMANDS.jsonl,
-QUALITY-CANCELLATION-GUARDRAIL.json, QUALITY-CANCELLATION-ISOLATION.json and the canonical
-requirement/memory artifacts carry current evidence. Later reports must reflect actual executions.
+STATE.json, TESTS.json, QUALITY.json, COUNTS.json, COMMANDS.jsonl, FINDINGS.json, VERIFY.json,
+publication/isolation and functional reports, REWORK-LOG.jsonl, completeness, Red Team and full
+mirror reports. The frozen retrospective describes its earlier publication boundary; final
+assurance lives in actual reports, not a retroactively rewritten source snapshot.

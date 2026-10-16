@@ -1,0 +1,47 @@
+{
+  "schemaVersion": "1.0.0",
+  "generatedAt": "2026-10-16T08:03:33Z",
+  "kind": "INTERNAL_PUBLISHED_LIVE_STATE_PROOF_NOT_INDEPENDENT",
+  "subjectCommit": "f367eaaa8fb7d0571c8b25bb7d6a5c936d98edef",
+  "subjectTag": "iacode-subjects/GATE-4-CP-0010-internal-corrective-v4",
+  "sourceFingerprint": "b88f8504815f569c7c1156ba6018cf384742d39cf80ef9e12c46b162a34af27f",
+  "commands": [
+    {
+      "command": "python scripts/development-ledger/program_state.py --write",
+      "exitCode": 0,
+      "stdout": "PROGRAM_STATE=PASS written=var\\program-state.json"
+    },
+    {
+      "command": "python scripts/development-ledger/program_state.py",
+      "exitCode": 0,
+      "stdout": "PROGRAM_STATE=PASS gate=GATE-4 checkpoint=GATE-4-CP-0010 step=G4-S02 status=IN_PROGRESS"
+    }
+  ],
+  "observed": {
+    "schemaVersion": "1.1.0",
+    "milestone": "M2",
+    "gate": "GATE-4",
+    "checkpoint": "GATE-4-CP-0010",
+    "step": "G4-S02",
+    "lastCompletedStep": "G4-S01",
+    "localCommit": "f367eaaa8fb7d0571c8b25bb7d6a5c936d98edef",
+    "remoteCommit": "f367eaaa8fb7d0571c8b25bb7d6a5c936d98edef",
+    "branch": "main",
+    "status": "IN_PROGRESS",
+    "blockers": [],
+    "nextAction": "Finish Gate 4 internal corrective assurance, seal INTERNAL_GATE_PASS, then begin explicitly authorized Gate 5 in a separate checkpoint. M2 independent audit remains pending.",
+    "updatedAt": "2026-10-16T08:03:30Z"
+  },
+  "checks": {
+    "actualCommandsPassed": true,
+    "latestCheckpoint": true,
+    "exactLocalAndRemote": true,
+    "declaredStatus": true,
+    "trackedStateUnchanged": true,
+    "historicalObservationUnchanged": true,
+    "sourceUnchangedDuringProof": true,
+    "transportedSubjectUnchanged": true,
+    "temporaryCloneRemoved": true
+  },
+  "result": "PASS"
+}

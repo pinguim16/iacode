@@ -1,0 +1,1120 @@
+{
+  "subjectCommit": "f367eaaa8fb7d0571c8b25bb7d6a5c936d98edef",
+  "source": "single full verifier invocation",
+  "scenarios": {
+    "quality-cancellation.json": {
+      "schemaVersion": "1.0.0",
+      "result": "PASS",
+      "scenarios": [
+        {
+          "schemaVersion": "1.0.0",
+          "scenario": "cancel",
+          "result": "PASS",
+          "environment": "real-compose-temporal-postgresql-minio-sandbox-container-engine",
+          "steps": [
+            {
+              "step": "snapshot.stored",
+              "result": "PASS",
+              "expected": [
+                "artifactId",
+                "key",
+                "sha256",
+                "sizeBytes"
+              ],
+              "observed": [
+                "artifactId",
+                "key",
+                "sha256",
+                "sizeBytes"
+              ]
+            },
+            {
+              "step": "run.cancelled",
+              "result": "PASS",
+              "expected": "CANCELLED",
+              "observed": "CANCELLED"
+            },
+            {
+              "step": "verdict.fail_closed",
+              "result": "PASS",
+              "expected": "FAIL",
+              "observed": "FAIL"
+            },
+            {
+              "step": "check.cancellation_recorded",
+              "result": "PASS",
+              "expected": "contains CANCELLED",
+              "observed": [
+                "PASSED",
+                "CANCELLED"
+              ]
+            },
+            {
+              "step": "run.terminal",
+              "result": "PASS",
+              "expected": "CANCELLED",
+              "observed": "CANCELLED"
+            },
+            {
+              "step": "evidence.one_or_more_per_result",
+              "result": "PASS",
+              "expected": ">=2",
+              "observed": 2
+            },
+            {
+              "step": "findings.evidence_resolved",
+              "result": "PASS",
+              "expected": [],
+              "observed": []
+            },
+            {
+              "step": "evidence.rights_closed",
+              "result": "PASS",
+              "expected": "every evidence item trainingAllowed=false and ragAllowed=false",
+              "observed": 2
+            },
+            {
+              "step": "sandbox.no_active_session",
+              "result": "PASS",
+              "expected": "0",
+              "observed": "0"
+            },
+            {
+              "step": "cancel.idempotent",
+              "result": "PASS",
+              "expected": "CANCELLED",
+              "observed": "CANCELLED"
+            }
+          ],
+          "artifacts": [
+            {
+              "kind": "snapshot",
+              "artifactId": "01a1441a-c5ce-7000-97a2-cac494daee69",
+              "digest": "c88ddf1b6b6e92fa2674a3f6754f854385fe0a1c197c024bf8c110abd8579e26",
+              "sizeBytes": 504
+            },
+            {
+              "kind": "quality-run",
+              "runId": "01a1441a-cb0d-7000-9dbe-dde86c410a50",
+              "planId": "9520a68d42e849378f70831324751a4bf2d4b13dd97a8b32219a072e1cfc1215"
+            }
+          ],
+          "recordedAt": "2026-10-16T09:46:20Z"
+        }
+      ],
+      "recordedAt": "2026-10-16T09:46:20Z"
+    },
+    "quality-fail.json": {
+      "schemaVersion": "1.0.0",
+      "result": "PASS",
+      "scenarios": [
+        {
+          "schemaVersion": "1.0.0",
+          "scenario": "fail",
+          "result": "PASS",
+          "environment": "real-compose-temporal-postgresql-minio-sandbox-container-engine",
+          "steps": [
+            {
+              "step": "snapshot.stored",
+              "result": "PASS",
+              "expected": [
+                "artifactId",
+                "key",
+                "sha256",
+                "sizeBytes"
+              ],
+              "observed": [
+                "artifactId",
+                "key",
+                "sha256",
+                "sizeBytes"
+              ]
+            },
+            {
+              "step": "run.terminal",
+              "result": "PASS",
+              "expected": "FAILED",
+              "observed": "FAILED"
+            },
+            {
+              "step": "results.complete",
+              "result": "PASS",
+              "expected": 7,
+              "observed": 7
+            },
+            {
+              "step": "evidence.one_or_more_per_result",
+              "result": "PASS",
+              "expected": ">=7",
+              "observed": 7
+            },
+            {
+              "step": "findings.evidence_resolved",
+              "result": "PASS",
+              "expected": [],
+              "observed": []
+            },
+            {
+              "step": "evidence.rights_closed",
+              "result": "PASS",
+              "expected": "every evidence item trainingAllowed=false and ragAllowed=false",
+              "observed": 7
+            },
+            {
+              "step": "sandbox.no_active_session",
+              "result": "PASS",
+              "expected": "0",
+              "observed": "0"
+            },
+            {
+              "step": "verdict.fail",
+              "result": "PASS",
+              "expected": "FAIL",
+              "observed": "FAIL"
+            },
+            {
+              "step": "failed_check.preserved",
+              "result": "PASS",
+              "expected": [
+                "q002-unit"
+              ],
+              "observed": [
+                "q002-unit"
+              ]
+            },
+            {
+              "step": "finding.preserved",
+              "result": "PASS",
+              "expected": 1,
+              "observed": 1
+            }
+          ],
+          "artifacts": [
+            {
+              "kind": "snapshot",
+              "artifactId": "01a14411-9d8e-7000-99da-eddae9ac77e8",
+              "digest": "ae91f7ace1e8f0c1bb59722a607d2892364ba7ea516b9234268c4eac0e11da47",
+              "sizeBytes": 475
+            },
+            {
+              "kind": "quality-run",
+              "runId": "01a14411-a2d6-7000-8d1e-270330f416a4",
+              "planId": "40609249305bd47a3de2e7bf030180f1409830fb79d4487446ef605355d95ba3"
+            }
+          ],
+          "recordedAt": "2026-10-16T09:36:27Z"
+        }
+      ],
+      "recordedAt": "2026-10-16T09:36:27Z"
+    },
+    "quality-iacode.json": {
+      "schemaVersion": "1.0.0",
+      "result": "PASS",
+      "scenarios": [
+        {
+          "schemaVersion": "1.0.0",
+          "scenario": "iacode",
+          "result": "PASS",
+          "environment": "real-compose-temporal-postgresql-minio-sandbox-container-engine",
+          "steps": [
+            {
+              "step": "snapshot.stored",
+              "result": "PASS",
+              "expected": [
+                "artifactId",
+                "key",
+                "sha256",
+                "sizeBytes"
+              ],
+              "observed": [
+                "artifactId",
+                "key",
+                "sha256",
+                "sizeBytes"
+              ]
+            },
+            {
+              "step": "canonical_profile.detected",
+              "result": "PASS",
+              "expected": "python+node+typescript+angular",
+              "observed": "python+node+typescript+angular"
+            },
+            {
+              "step": "quality.matches_mandatory_gates",
+              "result": "PASS",
+              "expected": "PASS",
+              "observed": "PASS"
+            },
+            {
+              "step": "run.succeeded",
+              "result": "PASS",
+              "expected": "SUCCEEDED",
+              "observed": "SUCCEEDED"
+            }
+          ],
+          "artifacts": [
+            {
+              "kind": "snapshot",
+              "artifactId": "01a14413-afdb-7000-be04-e943430f3fb5",
+              "digest": "7931a0896f3cfd20b12fb2a57e5058ce6cdd06c6e7de10a7d2fa2fffc5507a5b",
+              "sizeBytes": 6040529
+            },
+            {
+              "kind": "quality-run",
+              "runId": "01a14413-b5ed-7000-b8b6-ce61bfc65cd4",
+              "planId": "c93a179baf8fdbbc836d96808eba217fb5584482b503fe02910fec7b5f2f83dd"
+            }
+          ],
+          "recordedAt": "2026-10-16T09:43:52Z"
+        }
+      ],
+      "recordedAt": "2026-10-16T09:43:52Z"
+    },
+    "quality-pass.json": {
+      "schemaVersion": "1.0.0",
+      "result": "PASS",
+      "scenarios": [
+        {
+          "schemaVersion": "1.0.0",
+          "scenario": "pass",
+          "result": "PASS",
+          "environment": "real-compose-temporal-postgresql-minio-sandbox-container-engine",
+          "steps": [
+            {
+              "step": "snapshot.stored",
+              "result": "PASS",
+              "expected": [
+                "artifactId",
+                "key",
+                "sha256",
+                "sizeBytes"
+              ],
+              "observed": [
+                "artifactId",
+                "key",
+                "sha256",
+                "sizeBytes"
+              ]
+            },
+            {
+              "step": "run.terminal",
+              "result": "PASS",
+              "expected": "SUCCEEDED",
+              "observed": "SUCCEEDED"
+            },
+            {
+              "step": "results.complete",
+              "result": "PASS",
+              "expected": 7,
+              "observed": 7
+            },
+            {
+              "step": "evidence.one_or_more_per_result",
+              "result": "PASS",
+              "expected": ">=7",
+              "observed": 7
+            },
+            {
+              "step": "findings.evidence_resolved",
+              "result": "PASS",
+              "expected": [],
+              "observed": []
+            },
+            {
+              "step": "evidence.rights_closed",
+              "result": "PASS",
+              "expected": "every evidence item trainingAllowed=false and ragAllowed=false",
+              "observed": 7
+            },
+            {
+              "step": "sandbox.no_active_session",
+              "result": "PASS",
+              "expected": "0",
+              "observed": "0"
+            },
+            {
+              "step": "verdict.pass",
+              "result": "PASS",
+              "expected": "PASS",
+              "observed": "PASS"
+            },
+            {
+              "step": "checks.all_passed",
+              "result": "PASS",
+              "expected": [
+                "PASSED"
+              ],
+              "observed": [
+                "PASSED",
+                "PASSED",
+                "PASSED",
+                "PASSED",
+                "PASSED",
+                "PASSED",
+                "PASSED"
+              ]
+            },
+            {
+              "step": "host.sentinel_unchanged",
+              "result": "PASS",
+              "expected": "4f5f44225f0be62bf18319019ee04c0ddcaf795cecba010e8e7e94de2728a7a2",
+              "observed": "4f5f44225f0be62bf18319019ee04c0ddcaf795cecba010e8e7e94de2728a7a2"
+            }
+          ],
+          "artifacts": [
+            {
+              "kind": "snapshot",
+              "artifactId": "01a14411-0090-7000-9c12-f4590f4ce444",
+              "digest": "bba7700965a7b5f3cc56585d4a25475b3d3d5c1217ad32568ff6f44344617eee",
+              "sizeBytes": 607
+            },
+            {
+              "kind": "quality-run",
+              "runId": "01a14411-054b-7000-b534-88eb69546b8e",
+              "planId": "e68b57423f299fe1b88f30e4ceccce1e8028586faa4c8945ba2f5112b67ae96c"
+            }
+          ],
+          "recordedAt": "2026-10-16T09:35:48Z"
+        }
+      ],
+      "recordedAt": "2026-10-16T09:35:48Z"
+    },
+    "quality-recovery.json": {
+      "schemaVersion": "1.0.0",
+      "result": "PASS",
+      "scenarios": [
+        {
+          "schemaVersion": "1.0.0",
+          "scenario": "recovery",
+          "result": "PASS",
+          "environment": "real-compose-temporal-postgresql-minio-sandbox-container-engine",
+          "steps": [
+            {
+              "step": "snapshot.stored",
+              "result": "PASS",
+              "expected": [
+                "artifactId",
+                "key",
+                "sha256",
+                "sizeBytes"
+              ],
+              "observed": [
+                "artifactId",
+                "key",
+                "sha256",
+                "sizeBytes"
+              ]
+            },
+            {
+              "step": "worker.restart_requested",
+              "result": "PASS",
+              "expected": 0,
+              "observed": 0
+            },
+            {
+              "step": "run.terminal",
+              "result": "PASS",
+              "expected": "SUCCEEDED",
+              "observed": "SUCCEEDED"
+            },
+            {
+              "step": "results.complete",
+              "result": "PASS",
+              "expected": 7,
+              "observed": 7
+            },
+            {
+              "step": "evidence.one_or_more_per_result",
+              "result": "PASS",
+              "expected": ">=7",
+              "observed": 7
+            },
+            {
+              "step": "findings.evidence_resolved",
+              "result": "PASS",
+              "expected": [],
+              "observed": []
+            },
+            {
+              "step": "evidence.rights_closed",
+              "result": "PASS",
+              "expected": "every evidence item trainingAllowed=false and ragAllowed=false",
+              "observed": 7
+            },
+            {
+              "step": "sandbox.no_active_session",
+              "result": "PASS",
+              "expected": "0",
+              "observed": "0"
+            },
+            {
+              "step": "results.exactly_once",
+              "result": "PASS",
+              "expected": 7,
+              "observed": 7
+            },
+            {
+              "step": "identity.preserved",
+              "result": "PASS",
+              "expected": "01a14419-f4ba-7000-953b-7c131bbfa0e2",
+              "observed": "01a14419-f4ba-7000-953b-7c131bbfa0e2"
+            }
+          ],
+          "artifacts": [
+            {
+              "kind": "snapshot",
+              "artifactId": "01a14419-eec6-7000-a3dc-23df601cd7f2",
+              "digest": "a68af9c2cd943e39aff0c81cbde8c60908004f7e894989d7f7a8107edbb73a13",
+              "sizeBytes": 504
+            },
+            {
+              "kind": "quality-run",
+              "runId": "01a14419-f4ba-7000-953b-7c131bbfa0e2",
+              "planId": "e19ed3d2f228c768c07e6387b229583c06c0b5ce6aa4ec40bd1ef90b9fc0c2d1"
+            }
+          ],
+          "recordedAt": "2026-10-16T09:45:47Z"
+        }
+      ],
+      "recordedAt": "2026-10-16T09:45:47Z"
+    },
+    "quality-reproduction.json": {
+      "schemaVersion": "1.0.0",
+      "result": "PASS",
+      "scenarios": [
+        {
+          "schemaVersion": "1.0.0",
+          "scenario": "reproduce",
+          "result": "PASS",
+          "environment": "real-compose-temporal-postgresql-minio-sandbox-container-engine",
+          "steps": [
+            {
+              "step": "snapshot.stored",
+              "result": "PASS",
+              "expected": [
+                "artifactId",
+                "key",
+                "sha256",
+                "sizeBytes"
+              ],
+              "observed": [
+                "artifactId",
+                "key",
+                "sha256",
+                "sizeBytes"
+              ]
+            },
+            {
+              "step": "identity.distinct_run",
+              "result": "PASS",
+              "expected": "not 01a14419-05a3-7000-a030-ad8ca11ecd8c",
+              "observed": "01a14419-512e-7000-8b7f-c3aa194217d4"
+            },
+            {
+              "step": "identity.equal_plan",
+              "result": "PASS",
+              "expected": "f47078432a0722e51828b50a0b49a289a43d2258bb28170ff0b29097555d29de",
+              "observed": "f47078432a0722e51828b50a0b49a289a43d2258bb28170ff0b29097555d29de"
+            },
+            {
+              "step": "lineage.recorded",
+              "result": "PASS",
+              "expected": "01a14419-05a3-7000-a030-ad8ca11ecd8c",
+              "observed": "01a14419-05a3-7000-a030-ad8ca11ecd8c"
+            },
+            {
+              "step": "results.equivalent",
+              "result": "PASS",
+              "expected": [
+                [
+                  "q001-build",
+                  "PASSED"
+                ],
+                [
+                  "q002-unit",
+                  "PASSED"
+                ],
+                [
+                  "q003-lint",
+                  "PASSED"
+                ],
+                [
+                  "q004-static",
+                  "PASSED"
+                ],
+                [
+                  "q005-dependency-security",
+                  "PASSED"
+                ],
+                [
+                  "q006-secret",
+                  "PASSED"
+                ],
+                [
+                  "q007-diff-integrity",
+                  "PASSED"
+                ]
+              ],
+              "observed": [
+                [
+                  "q001-build",
+                  "PASSED"
+                ],
+                [
+                  "q002-unit",
+                  "PASSED"
+                ],
+                [
+                  "q003-lint",
+                  "PASSED"
+                ],
+                [
+                  "q004-static",
+                  "PASSED"
+                ],
+                [
+                  "q005-dependency-security",
+                  "PASSED"
+                ],
+                [
+                  "q006-secret",
+                  "PASSED"
+                ],
+                [
+                  "q007-diff-integrity",
+                  "PASSED"
+                ]
+              ]
+            },
+            {
+              "step": "verdict.equivalent",
+              "result": "PASS",
+              "expected": "PASS",
+              "observed": "PASS"
+            }
+          ],
+          "artifacts": [
+            {
+              "kind": "snapshot",
+              "artifactId": "01a14418-feed-7000-bf0c-6d25692898e9",
+              "digest": "6cff18209887fd62ed28100924eaf39d2ade4daad48e8b96bffde35abfb3f7a9",
+              "sizeBytes": 476
+            },
+            {
+              "kind": "quality-run",
+              "runId": "01a14419-05a3-7000-a030-ad8ca11ecd8c",
+              "planId": "f47078432a0722e51828b50a0b49a289a43d2258bb28170ff0b29097555d29de"
+            },
+            {
+              "kind": "quality-reproduction",
+              "runId": "01a14419-512e-7000-8b7f-c3aa194217d4",
+              "planId": "f47078432a0722e51828b50a0b49a289a43d2258bb28170ff0b29097555d29de"
+            }
+          ],
+          "recordedAt": "2026-10-16T09:44:52Z"
+        }
+      ],
+      "recordedAt": "2026-10-16T09:44:52Z"
+    },
+    "quality-secret-output.json": {
+      "schemaVersion": "1.0.0",
+      "result": "PASS",
+      "scenarios": [
+        {
+          "schemaVersion": "1.0.0",
+          "scenario": "secret-output",
+          "result": "PASS",
+          "environment": "real-compose-temporal-postgresql-minio-sandbox-container-engine",
+          "steps": [
+            {
+              "step": "snapshot.stored",
+              "result": "PASS",
+              "expected": [
+                "artifactId",
+                "key",
+                "sha256",
+                "sizeBytes"
+              ],
+              "observed": [
+                "artifactId",
+                "key",
+                "sha256",
+                "sizeBytes"
+              ]
+            },
+            {
+              "step": "control.accepted",
+              "result": "PASS",
+              "expected": "SUCCEEDED with PASS",
+              "observed": "SUCCEEDED"
+            },
+            {
+              "step": "snapshot.stored",
+              "result": "PASS",
+              "expected": [
+                "artifactId",
+                "key",
+                "sha256",
+                "sizeBytes"
+              ],
+              "observed": [
+                "artifactId",
+                "key",
+                "sha256",
+                "sizeBytes"
+              ]
+            },
+            {
+              "step": "run.terminal",
+              "result": "PASS",
+              "expected": "FAILED",
+              "observed": "FAILED"
+            },
+            {
+              "step": "results.complete",
+              "result": "PASS",
+              "expected": 7,
+              "observed": 7
+            },
+            {
+              "step": "evidence.one_or_more_per_result",
+              "result": "PASS",
+              "expected": ">=7",
+              "observed": 7
+            },
+            {
+              "step": "findings.evidence_resolved",
+              "result": "PASS",
+              "expected": [],
+              "observed": []
+            },
+            {
+              "step": "evidence.rights_closed",
+              "result": "PASS",
+              "expected": "every evidence item trainingAllowed=false and ragAllowed=false",
+              "observed": 7
+            },
+            {
+              "step": "sandbox.no_active_session",
+              "result": "PASS",
+              "expected": "0",
+              "observed": "0"
+            },
+            {
+              "step": "python-secret-output.verdict_fail",
+              "result": "PASS",
+              "expected": "FAIL",
+              "observed": "FAIL"
+            },
+            {
+              "step": "python-secret-output.api_output_clean",
+              "result": "PASS",
+              "expected": true,
+              "observed": true
+            },
+            {
+              "step": "python-secret-output.history_clean",
+              "result": "PASS",
+              "expected": "decoded durable payloads contain no prohibited bytes",
+              "observed": {
+                "prohibitedBytesAbsent": true,
+                "payloadsScanned": 120,
+                "workflowStatus": "COMPLETED",
+                "sandboxObjects": 0,
+                "failures": [],
+                "pendingActivityTypes": [],
+                "containmentRefusals": 2
+              }
+            },
+            {
+              "step": "python-secret-output.no_sandbox_artifact",
+              "result": "PASS",
+              "expected": 0,
+              "observed": 0
+            },
+            {
+              "step": "python-secret-output.causal_containment_refusal",
+              "result": "PASS",
+              "expected": "one or more explicit output-containment refusals",
+              "observed": 2
+            },
+            {
+              "step": "snapshot.stored",
+              "result": "PASS",
+              "expected": [
+                "artifactId",
+                "key",
+                "sha256",
+                "sizeBytes"
+              ],
+              "observed": [
+                "artifactId",
+                "key",
+                "sha256",
+                "sizeBytes"
+              ]
+            },
+            {
+              "step": "run.terminal",
+              "result": "PASS",
+              "expected": "FAILED",
+              "observed": "FAILED"
+            },
+            {
+              "step": "results.complete",
+              "result": "PASS",
+              "expected": 7,
+              "observed": 7
+            },
+            {
+              "step": "evidence.one_or_more_per_result",
+              "result": "PASS",
+              "expected": ">=7",
+              "observed": 7
+            },
+            {
+              "step": "findings.evidence_resolved",
+              "result": "PASS",
+              "expected": [],
+              "observed": []
+            },
+            {
+              "step": "evidence.rights_closed",
+              "result": "PASS",
+              "expected": "every evidence item trainingAllowed=false and ragAllowed=false",
+              "observed": 7
+            },
+            {
+              "step": "sandbox.no_active_session",
+              "result": "PASS",
+              "expected": "0",
+              "observed": "0"
+            },
+            {
+              "step": "python-secret-output-full.verdict_fail",
+              "result": "PASS",
+              "expected": "FAIL",
+              "observed": "FAIL"
+            },
+            {
+              "step": "python-secret-output-full.api_output_clean",
+              "result": "PASS",
+              "expected": true,
+              "observed": true
+            },
+            {
+              "step": "python-secret-output-full.history_clean",
+              "result": "PASS",
+              "expected": "decoded durable payloads contain no prohibited bytes",
+              "observed": {
+                "prohibitedBytesAbsent": true,
+                "payloadsScanned": 120,
+                "workflowStatus": "COMPLETED",
+                "sandboxObjects": 0,
+                "failures": [],
+                "pendingActivityTypes": [],
+                "containmentRefusals": 2
+              }
+            },
+            {
+              "step": "python-secret-output-full.no_sandbox_artifact",
+              "result": "PASS",
+              "expected": 0,
+              "observed": 0
+            },
+            {
+              "step": "python-secret-output-full.causal_containment_refusal",
+              "result": "PASS",
+              "expected": "one or more explicit output-containment refusals",
+              "observed": 2
+            },
+            {
+              "step": "snapshot.stored",
+              "result": "PASS",
+              "expected": [
+                "artifactId",
+                "key",
+                "sha256",
+                "sizeBytes"
+              ],
+              "observed": [
+                "artifactId",
+                "key",
+                "sha256",
+                "sizeBytes"
+              ]
+            },
+            {
+              "step": "run.terminal",
+              "result": "PASS",
+              "expected": "SUCCEEDED",
+              "observed": "SUCCEEDED"
+            },
+            {
+              "step": "results.complete",
+              "result": "PASS",
+              "expected": 7,
+              "observed": 7
+            },
+            {
+              "step": "evidence.one_or_more_per_result",
+              "result": "PASS",
+              "expected": ">=7",
+              "observed": 7
+            },
+            {
+              "step": "findings.evidence_resolved",
+              "result": "PASS",
+              "expected": [],
+              "observed": []
+            },
+            {
+              "step": "evidence.rights_closed",
+              "result": "PASS",
+              "expected": "every evidence item trainingAllowed=false and ragAllowed=false",
+              "observed": 7
+            },
+            {
+              "step": "sandbox.no_active_session",
+              "result": "PASS",
+              "expected": "0",
+              "observed": "0"
+            },
+            {
+              "step": "control.after_refusal_pass",
+              "result": "PASS",
+              "expected": "PASS",
+              "observed": "PASS"
+            }
+          ],
+          "artifacts": [
+            {
+              "kind": "snapshot",
+              "artifactId": "01a1441e-f5bd-7000-b48c-733a74e65350",
+              "digest": "ed080a68a172fe9a592d15d7098d8d3b90fb92574755e0702d6fc66983aaced8",
+              "sizeBytes": 476
+            },
+            {
+              "kind": "snapshot",
+              "artifactId": "01a1441f-4c78-7000-a906-0e9b58c20571",
+              "digest": "72e23ed279cd8e4f2dd9c9fbf468628d4c15f4189faf297b9b3f94ce38dadab3",
+              "sizeBytes": 549
+            },
+            {
+              "kind": "quality-run",
+              "runId": "01a1441f-5101-7000-8dcf-bd267bbf3359",
+              "planId": "0406f4b918feabb9c1c7b7036e7a461eba9a69e7c4b6c99bc7a3264f262a01c4"
+            },
+            {
+              "kind": "snapshot",
+              "artifactId": "01a1441f-a59f-7000-b5ab-d539690e8ff6",
+              "digest": "4917fac6eaaf83bdc8c8586a73ca664ce1e41611d563915f47ff312486474f20",
+              "sizeBytes": 530
+            },
+            {
+              "kind": "quality-run",
+              "runId": "01a1441f-aa10-7000-8354-b5a312faaa2c",
+              "planId": "5b5659a7f03163558b69e3dbb9d66ae2949ce89ac42f166aa16e9571a407362d"
+            },
+            {
+              "kind": "snapshot",
+              "artifactId": "01a14420-03ac-7000-ab76-ca60d319fde1",
+              "digest": "8fc28a1e62c6b940729081a25320d65c8a61c5f1e6d058a968d51406fe883c5b",
+              "sizeBytes": 476
+            }
+          ],
+          "recordedAt": "2026-10-16T09:52:12Z"
+        }
+      ],
+      "recordedAt": "2026-10-16T09:52:12Z"
+    },
+    "quality-timeout.json": {
+      "schemaVersion": "1.0.0",
+      "result": "PASS",
+      "scenarios": [
+        {
+          "schemaVersion": "1.0.0",
+          "scenario": "timeout",
+          "result": "PASS",
+          "environment": "real-compose-temporal-postgresql-minio-sandbox-container-engine",
+          "steps": [
+            {
+              "step": "snapshot.stored",
+              "result": "PASS",
+              "expected": [
+                "artifactId",
+                "key",
+                "sha256",
+                "sizeBytes"
+              ],
+              "observed": [
+                "artifactId",
+                "key",
+                "sha256",
+                "sizeBytes"
+              ]
+            },
+            {
+              "step": "run.timed_out",
+              "result": "PASS",
+              "expected": "TIMED_OUT",
+              "observed": "TIMED_OUT"
+            },
+            {
+              "step": "check.timeout_recorded",
+              "result": "PASS",
+              "expected": "contains TIMED_OUT",
+              "observed": [
+                "PASSED",
+                "TIMED_OUT",
+                "PASSED",
+                "PASSED",
+                "PASSED",
+                "PASSED",
+                "PASSED"
+              ]
+            },
+            {
+              "step": "verdict.fail_closed",
+              "result": "PASS",
+              "expected": "FAIL",
+              "observed": "FAIL"
+            },
+            {
+              "step": "run.terminal",
+              "result": "PASS",
+              "expected": "TIMED_OUT",
+              "observed": "TIMED_OUT"
+            },
+            {
+              "step": "results.complete",
+              "result": "PASS",
+              "expected": 7,
+              "observed": 7
+            },
+            {
+              "step": "evidence.one_or_more_per_result",
+              "result": "PASS",
+              "expected": ">=7",
+              "observed": 7
+            },
+            {
+              "step": "findings.evidence_resolved",
+              "result": "PASS",
+              "expected": [],
+              "observed": []
+            },
+            {
+              "step": "evidence.rights_closed",
+              "result": "PASS",
+              "expected": "every evidence item trainingAllowed=false and ragAllowed=false",
+              "observed": 7
+            },
+            {
+              "step": "sandbox.no_active_session",
+              "result": "PASS",
+              "expected": "0",
+              "observed": "0"
+            }
+          ],
+          "artifacts": [
+            {
+              "kind": "snapshot",
+              "artifactId": "01a1441b-4465-7000-a286-5d31f6be359f",
+              "digest": "7f8283cec0e87174e5fc5dd72cc00a67296f8b990eb4044ff042712e32db6f85",
+              "sizeBytes": 504
+            },
+            {
+              "kind": "quality-run",
+              "runId": "01a1441b-4a4d-7000-aa9e-b7d4c64b7bef",
+              "planId": "14e316877211b184e2051d1fb8714c3ecb35d5e52c1b0966f3314b55dd5f6410"
+            }
+          ],
+          "recordedAt": "2026-10-16T09:46:58Z"
+        }
+      ],
+      "recordedAt": "2026-10-16T09:46:58Z"
+    },
+    "sandbox-tool-result-origin.json": {
+      "scenario": "forged-result",
+      "result": "PASS",
+      "steps": [
+        {
+          "step": "images.rebuilt_and_service_current",
+          "result": "PASS",
+          "detail": "worker, sandbox service and sandbox image built from the current source"
+        },
+        {
+          "step": "rehearsal.worker_polling",
+          "result": "PASS",
+          "detail": "iacode-coding-rehearsal and the sandbox service"
+        },
+        {
+          "step": "snapshot.stored",
+          "result": "PASS",
+          "detail": "artifact 01a1441e-374c-7000-bd8b-940aa600c2cb"
+        },
+        {
+          "step": "control.agent_saw_the_sandbox_timeout",
+          "result": "PASS",
+          "detail": "developer said TIMEOUT-SEEN, stored TIMED_OUT"
+        },
+        {
+          "step": "forgery.refused_while_the_sandbox_executes",
+          "result": "PASS",
+          "detail": "HTTP 403 TOOL_RESULT_ORIGIN_REFUSED {'toolRequestId': 'dd5a7281-adaa-4323-bb22-9a4a0b88046c', 'executor': 'SANDBOX'}"
+        },
+        {
+          "step": "run.terminal_state",
+          "result": "PASS",
+          "detail": "state SUCCEEDED (None: None)"
+        },
+        {
+          "step": "sandbox.one_session_for_the_run",
+          "result": "PASS",
+          "detail": "1 session(s)"
+        },
+        {
+          "step": "sandbox.every_execution_in_that_session",
+          "result": "PASS",
+          "detail": "sessions used: ['01a1441e-7a03-7000-bda2-f76cdb509828']"
+        },
+        {
+          "step": "sandbox.no_network",
+          "result": "PASS",
+          "detail": "network profile none"
+        },
+        {
+          "step": "sandbox.released_with_the_run",
+          "result": "PASS",
+          "detail": "session STOPPED, container gone"
+        },
+        {
+          "step": "history.tool_requests_answered",
+          "result": "PASS",
+          "detail": "2 requested, 2 executed"
+        },
+        {
+          "step": "forgery.stored_result_is_the_sandbox_result",
+          "result": "PASS",
+          "detail": "stored TIMED_OUT, executed TIMED_OUT"
+        },
+        {
+          "step": "forgery.agent_saw_the_sandbox_timeout",
+          "result": "PASS",
+          "detail": "developer said TIMEOUT-SEEN"
+        },
+        {
+          "step": "forgery.refused_after_the_run_ended",
+          "result": "PASS",
+          "detail": "HTTP 403 TOOL_RESULT_ORIGIN_REFUSED"
+        },
+        {
+          "step": "forgery.nothing_changed_after_the_refusals",
+          "result": "PASS",
+          "detail": "the stored result is still the sandbox's"
+        }
+      ]
+    }
+  }
+}

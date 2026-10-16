@@ -1,24 +1,27 @@
 {
   "schemaVersion": "3.4.0",
   "unit": {
-    "executed": false,
-    "passed": 0,
+    "executed": true,
+    "passed": 825,
     "failed": 0,
-    "command": null,
-    "evidence": null
+    "command": "python -m unittest discover -s tests",
+    "evidence": "command:cmd-0321",
+    "runId": "green-keeper-cycle-1-ledger-suite"
   },
   "integration": {
-    "executed": false,
-    "passed": 0,
+    "executed": true,
+    "passed": 979,
     "failed": 0,
-    "command": null,
-    "evidence": null
+    "command": "python docs/checkpoints/GATE-4-CP-0010/audit-harness/run_full_verification.py --commit f367eaaa8fb7d0571c8b25bb7d6a5c936d98edef --tag iacode-subjects/GATE-4-CP-0010-internal-corrective-v4",
+    "evidence": "command:cmd-0308",
+    "runId": "complete-published-v4-runtime-suites"
   },
   "e2e": {
-    "executed": false,
-    "passed": 0,
+    "executed": true,
+    "passed": 42,
     "failed": 0,
-    "command": null,
-    "evidence": null
+    "command": "python docs/checkpoints/GATE-4-CP-0010/audit-harness/run_full_verification.py --commit f367eaaa8fb7d0571c8b25bb7d6a5c936d98edef --tag iacode-subjects/GATE-4-CP-0010-internal-corrective-v4",
+    "evidence": "command:cmd-0308",
+    "runId": "complete-published-v4-runtime-suites"
   }
 }
