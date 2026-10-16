@@ -52,3 +52,5 @@ exist, or a title or status that disagrees with its record fails the suite.
 | [ADR-0040](ADR-0040-test-counts-follow-policy-bound-collection.md) | Test counts follow policy-bound collection | Accepted |
 | [ADR-0041](ADR-0041-polling-cleanup-preserves-completed-checks.md) | Polling cleanup preserves completed checks | Accepted |
 | [ADR-0042](ADR-0042-internal-verdict-semantics-follow-subject-policy.md) | Internal verdict semantics follow subject policy | Accepted |
+| [ADR-0043](ADR-0043-collection-semantics-follow-subject-policy.md) | Collection semantics follow subject policy | Accepted |
+| [ADR-0044](ADR-0044-process-recorders-bind-launch-inputs.md) | Process recorders bind launch inputs | Accepted |

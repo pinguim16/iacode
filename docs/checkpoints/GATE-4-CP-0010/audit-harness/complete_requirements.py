@@ -37,6 +37,7 @@ def corrective(reference: str) -> dict[str, list[str]] | None:
         "lesson:LSN-0104",
     }
     bookkeeping = reference == "lesson:LSN-0011"
+    input_identity = reference == "lesson:LSN-0020"
     compatibility = reference in {"lesson:LSN-0012", "lesson:LSN-0113"}
     fixture = reference in {"lesson:LSN-0103", "lesson:LSN-0105"}
     output_security = reference in {
@@ -45,8 +46,12 @@ def corrective(reference: str) -> dict[str, list[str]] | None:
     }
     timestamp = reference == "lesson:LSN-0108"
     collection = reference == "lesson:LSN-0109"
+    performance = reference == "lesson:LSN-0114"
+    diagnostics = reference == "lesson:LSN-0115"
+    streams = reference in {"lesson:LSN-0035", "lesson:LSN-0083"}
     if not (cancellation or cadence or bookkeeping or fixture or output_security
-            or timestamp or collection or compatibility):
+            or timestamp or collection or compatibility or performance or diagnostics or streams
+            or input_identity):
         return None
     evidence = {field: [] for field in EVIDENCE_FIELDS}
     evidence["validationEvidence"] = ["checkpoint:VERIFY.json", "checkpoint:FUNCTIONAL-SCENARIOS.json"]
@@ -83,16 +88,62 @@ def corrective(reference: str) -> dict[str, list[str]] | None:
         evidence["implementationEvidence"] = ["file:scripts/development-ledger/sync_in_progress_metadata.py", "checkpoint:audit-harness/run_checkpoint_validation.py"]
         evidence["testEvidence"] = ["test:InProgressMetadataTests"]
         evidence["documentationEvidence"] = ["file:scripts/development-ledger/README.md", "checkpoint:DECISIONS.md"]
+        evidence["validationEvidence"] += ["checkpoint:METADATA-WRAPPER-REAL-VALIDATION.json"]
+        evidence["negativeTestEvidence"] += ["checkpoint:METADATA-WRAPPER-REAL-VALIDATION.json"]
     elif compatibility:
         evidence["implementationEvidence"] = ["file:.iacode/memory/POLICY.json",
-                                               "file:scripts/development-ledger/validate_checkpoint.py"]
+                                               "file:scripts/development-ledger/validate_checkpoint.py",
+                                               "file:scripts/development-ledger/policies.py",
+                                               "file:.iacode/policies/test-suites.json"]
         evidence["testEvidence"] = ["test:test_live_policy_requires_strict_internal_verdict_semantics",
                                     "test:test_legacy_internal_red_team_fields_keep_their_subject_policy_semantics",
-                                    "test:test_every_sealed_checkpoint_validates_from_its_own_tag"]
+                                    "test:test_every_sealed_checkpoint_validates_from_its_own_tag",
+                                    "test:TestSuiteInputRepositoriesTests"]
         evidence["documentationEvidence"] = [
             "file:docs/adr/ADR-0042-internal-verdict-semantics-follow-subject-policy.md",
+            "file:docs/adr/ADR-0043-collection-semantics-follow-subject-policy.md",
         ]
-        evidence["validationEvidence"] += ["checkpoint:POLICY-COMPATIBILITY.json"]
+        evidence["validationEvidence"] += ["checkpoint:POLICY-COMPATIBILITY.json",
+                                            "checkpoint:COLLECTION-COMPATIBILITY.json"]
+    elif input_identity:
+        evidence["implementationEvidence"] = [
+            "file:scripts/development-ledger/record_command.py",
+            "file:scripts/development-ledger/green_keeper.py",
+        ]
+        evidence["testEvidence"] = ["test:CommandInputSnapshotTests"]
+        evidence["negativeTestEvidence"] += ["checkpoint:COMMAND-INPUT-BINDING-QUALIFICATION.json"]
+        evidence["documentationEvidence"] = [
+            "file:docs/adr/ADR-0044-process-recorders-bind-launch-inputs.md",
+        ]
+    elif performance:
+        evidence["implementationEvidence"] = ["file:packages/common/src/iacode_common/secret_scanning.py"]
+        evidence["testEvidence"] = [
+            "test:test_fragment_carrier_lines_count_each_source_range_at_most_once",
+            "test:test_json_error_line_index_matches_builtin_string_coordinates",
+            "test:test_indexed_decoder_errors_keep_original_messages_and_coordinates",
+            "test:test_interleaved_fragments_keep_their_distinct_carrier_lines",
+        ]
+        evidence["documentationEvidence"] = [
+            "file:docs/adr/ADR-0039-sandbox-output-is-scanned-before-durable-delivery.md",
+        ]
+        evidence["validationEvidence"] += ["checkpoint:VALIDATION-PERFORMANCE.json"]
+    elif diagnostics:
+        evidence["implementationEvidence"] = ["file:scripts/iacode/verify.py"]
+        evidence["testEvidence"] = ["test:VerifierFailureDiagnosticsTests"]
+        evidence["documentationEvidence"] = ["checkpoint:DECISIONS.md"]
+    elif streams:
+        evidence["implementationEvidence"] = [
+            "file:scripts/development-ledger/ledger_common.py",
+            "checkpoint:audit-harness/run_full_verification.py",
+            "checkpoint:audit-harness/audit_subject_bundle.py",
+        ]
+        evidence["testEvidence"] = [
+            "test:test_every_tool_that_re_emits_captured_output_configures_its_own_stream",
+            "test:test_no_capture_relies_on_the_platform_codepage",
+            "test:test_the_rule_detects_a_capture_that_would_fail",
+        ]
+        evidence["negativeTestEvidence"] += ["checkpoint:PUBLISHED-V2-STREAM-FAILURE.json"]
+        evidence["documentationEvidence"] = ["checkpoint:DECISIONS.md", "checkpoint:FINDINGS.json"]
     elif output_security:
         evidence["implementationEvidence"] = [
             "file:services/sandbox/src/iacode_sandbox/output_security.py",
@@ -186,4 +237,8 @@ def main() -> int:
 
 
 if __name__ == "__main__":
+    sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+    from ledger_common import use_utf8_stdout
+
+    use_utf8_stdout()
     raise SystemExit(main())

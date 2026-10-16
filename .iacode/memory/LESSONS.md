@@ -18,7 +18,7 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 | `LSN-0008` | `GUARDED` | CRITICAL | process | Requirement completeness must be total and evidence-backed before handoff | `DeliveryCompletenessMatrixTests.test_one_requirement_short_of_total_fails`, `DeliveryAssuranceGateTests.test_completeness_validator_not_executed_blocks_review`, `scripts/development-ledger/check_completeness.py`, `ExpectedRequirementSetTests.test_deleting_a_requirement_and_recomputing_the_counts_still_fails` |
 | `LSN-0009` | `GUARDED` | CRITICAL | testing | A red gate requires rework, never a waiver, and never a weakened check | `GreenKeeperToolTests.test_red_gate_is_reported_as_still_red`, `DeliveryAssuranceGateTests.test_green_keeper_pass_with_a_real_failure_is_rejected`, `DeliveryAssuranceGateTests.test_red_tests_block_review`, `.iacode/policies/quality-gates.json`, `MandatoryGatePolicyTests.test_a_cycle_measured_against_no_gate_is_rejected` |
 | `LSN-0010` | `GUARDED` | HIGH | tooling | A recorded command must carry runtime, working directory, commit and purpose to be replayable | `CommandReproducibilityTests.test_bare_script_name_is_rejected`, `CommandReproducibilityTests.test_unresolvable_script_path_is_rejected`, `.iacode/schemas/command.schema.json`, `validate_checkpoint._validate_command_reproducibility`, `CommandInputBindingTests.test_a_record_without_a_digest_is_rejected` |
-| `LSN-0011` | `GUARDED` | CRITICAL | tooling | A control over a checkpoint's own evidence must be scoped to the moment it matters | `DeliveryAssuranceGateTests.test_gate_consistency_is_provisional_while_work_is_in_progress`, `green_keeper._refresh_declared_hashes`, `test_every_runner_of_the_mandatory_gates_refreshes_the_declared_hashes`, `test_green_keeper_declares_its_in_progress_evidence_dirty_before_validation`, `test_preflight_aggregates_and_commit_semantics_are_derived_without_promotion`, `test_a_sealed_or_terminal_checkpoint_is_never_rewritten` |
+| `LSN-0011` | `GUARDED` | CRITICAL | tooling | A control over a checkpoint's own evidence must be scoped to the moment it matters | `DeliveryAssuranceGateTests.test_gate_consistency_is_provisional_while_work_is_in_progress`, `green_keeper._refresh_declared_hashes`, `test_every_runner_of_the_mandatory_gates_refreshes_the_declared_hashes`, `test_green_keeper_declares_its_in_progress_evidence_dirty_before_validation`, `test_preflight_aggregates_and_commit_semantics_are_derived_without_promotion`, `test_a_sealed_or_terminal_checkpoint_is_never_rewritten`, `test_validation_runner_keeps_the_synchronizers_derived_state` |
 | `LSN-0012` | `GUARDED` | CRITICAL | git | Sealed checkpoints and their tags are immutable, and tooling must keep validating them | `HistoricalCheckpointCompatibilityTests.test_first_sealed_checkpoint_still_validates`, `HistoricalCheckpointCompatibilityTests.test_fourth_sealed_checkpoint_still_validates`, `docs/CHECKPOINT-PROTOCOL.md`, `scripts/development-ledger/anchors.py`, `IntegrityAnchorTests.test_a_moved_historical_tag_is_detected` |
 | `LSN-0013` | `CONFIRMED` | HIGH | environment | An installed capability must be detected by resolved path, not by a bare command lookup | _not yet guarded_ |
 | `LSN-0014` | `GUARDED` | MEDIUM | process | Evidence must be recorded as it happens, not reconstructed at the end of a run | `scripts/development-ledger/record_command.py`, `validate_checkpoint._validate_seal_chronology`, `SealChronologyTests.test_a_record_after_the_end_of_the_run_is_rejected` |
@@ -27,7 +27,7 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 | `LSN-0017` | `GUARDED` | CRITICAL | process | A completeness denominator must come from a source the delivery does not own | `policies.expected_requirement_refs`, `ExpectedRequirementSetTests.test_an_unexpected_anchored_requirement_is_rejected` |
 | `LSN-0018` | `GUARDED` | CRITICAL | tooling | A structured reference must be resolved, not merely well typed | `lessons.resolve_control`, `LessonResolutionTests.test_a_test_control_must_exist_in_the_suite` |
 | `LSN-0019` | `GUARDED` | HIGH | tooling | A derived artifact must carry a fingerprint of the inputs that produced it | `lessons.preflight_staleness`, `PreflightFreshnessTests.test_a_dropped_lesson_makes_the_preflight_stale` |
-| `LSN-0020` | `GUARDED` | HIGH | tooling | Evidence produced from a dirty tree needs immutable input identity | `ledger_common.build_command_record`, `CommandInputBindingTests.test_the_recorder_binds_inputs_automatically` |
+| `LSN-0020` | `GUARDED` | CRITICAL | tooling | Evidence produced from a dirty tree needs immutable input identity | `ledger_common.build_command_record`, `CommandInputBindingTests.test_the_recorder_binds_inputs_automatically`, `test_input_digests_are_frozen_before_a_real_child_rewrites_its_inputs` |
 | `LSN-0021` | `GUARDED` | CRITICAL | git | Sealed history needs an anchor outside the content it describes | `anchors.verify_chain`, `IntegrityAnchorTests.test_a_broken_link_between_anchors_is_detected` |
 | `LSN-0022` | `GUARDED` | CRITICAL | documentation | An authoritative count must be derived once, never maintained by hand twice | `validate_checkpoint._validate_derived_counts`, `DerivedCountTests.test_a_markdown_claim_that_contradicts_the_derivation_is_rejected`, `SourceCardinalityPolicyTests.test_no_comment_or_docstring_states_a_derived_count_claim`, `docs/QUALITY-GATES.md` |
 | `LSN-0023` | `GUARDED` | MEDIUM | documentation | A lesson must cite a source that actually records the finding it claims | `lessons._resolve_source_locator`, `LessonProvenanceTests.test_a_finding_absent_from_the_cited_checkpoint_is_rejected` |
@@ -42,7 +42,7 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 | `LSN-0032` | `GUARDED` | HIGH | quality | A control written while one Gate was the only Gate stops being a control when the next one starts | `test_expected_set_names_the_gate_specification`, `test_assurance_scope_covers_the_runtime_source`, `test_declared_suites_are_discovered`, `.iacode/policies/gate-scope.json`, `scripts/development-ledger/gate_transition_simulation.py` |
 | `LSN-0033` | `GUARDED` | MEDIUM | implementation | A value bound in middleware is absent in the handlers that run outside it | `test_internal_error_still_carries_a_correlation_identifier`, `test_a_missing_route_uses_the_error_contract` |
 | `LSN-0034` | `GUARDED` | MEDIUM | implementation | Re-deriving what the framework already computed diverges from the framework | `test_metrics_endpoint_exposes_request_metrics`, `test_metrics_label_routes_by_template_not_by_url`, `test_the_api_instruments_reach_prometheus` |
-| `LSN-0035` | `GUARDED` | HIGH | tooling | Captured subprocess output decoded or re-emitted with the platform codepage crashes the tool, not the work | `test_no_capture_relies_on_the_platform_codepage`, `test_every_tool_that_re_emits_captured_output_configures_its_own_stream`, `test_the_rule_detects_a_capture_that_would_fail` |
+| `LSN-0035` | `GUARDED` | CRITICAL | tooling | Captured subprocess output decoded or re-emitted with the platform codepage crashes the tool, not the work | `test_no_capture_relies_on_the_platform_codepage`, `test_every_tool_that_re_emits_captured_output_configures_its_own_stream`, `test_the_rule_detects_a_capture_that_would_fail` |
 | `LSN-0036` | `GUARDED` | HIGH | tooling | A gate that runs inside an image measures the image, not the source | `test_every_image_gate_builds_before_it_measures`, `test_the_image_gate_rule_detects_a_gate_that_would_skip_the_build`, `test_durability_scenario_rebuilds_its_rehearsal_worker` |
 | `LSN-0037` | `GUARDED` | MEDIUM | tooling | A shared control that names an identifier the repository derives stops being a control when that identifier moves | `test_no_shared_control_is_bound_to_a_gate_literal`, `test_the_gate_literal_rule_detects_a_bound_control`, `test_no_control_names_a_migration_revision_literally`, `test_the_revision_rule_detects_a_named_head`, `test_the_head_revision_has_one_derivation` |
 | `LSN-0038` | `GUARDED` | MEDIUM | implementation | Two representations of one concept in one module disagree, and the safer one loses | `test_a_documented_placeholder_is_not_redacted`, `test_both_redactors_agree_on_every_value_the_example_file_carries`, `test_no_module_writes_its_own_credential_name_rule`, `test_the_two_questions_stay_different` |
@@ -90,7 +90,7 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 | `LSN-0080` | `GUARDED` | HIGH | quality | A failed verification stage must not leave an older PASS report addressable | `test_verification_removes_a_stale_stage_report_before_execution` |
 | `LSN-0081` | `GUARDED` | HIGH | testing | Canonical requirement evidence must name a test the repository actually discovers | `test_every_test_the_specifications_name_exists` |
 | `LSN-0082` | `GUARDED` | CRITICAL | quality | Engineering memory cannot depend on an ephemeral generated report | `test_engineering_memory_never_depends_on_ephemeral_var_evidence`, `scripts/development-ledger/validate_lessons.py` |
-| `LSN-0083` | `GUARDED` | HIGH | tooling | A command that decodes captured UTF-8 must also configure the stream that re-emits it | `test_every_tool_that_re_emits_captured_output_configures_its_own_stream` |
+| `LSN-0083` | `GUARDED` | CRITICAL | tooling | A command that decodes captured UTF-8 must also configure the stream that re-emits it | `test_every_tool_that_re_emits_captured_output_configures_its_own_stream` |
 | `LSN-0084` | `GUARDED` | MEDIUM | testing | A historical Gate documentation test must derive the current entry-point state | `test_the_entry_point_names_the_current_gate` |
 | `LSN-0085` | `GUARDED` | MEDIUM | testing | A source-based control must assert syntax semantics rather than formatter layout | `test_the_verification_adds_the_stages_this_gate_introduces` |
 | `LSN-0086` | `GUARDED` | MEDIUM | testing | A subprocess assertion must preserve the exit code when both streams are empty | `test_an_empty_validator_failure_keeps_its_process_exit_code` |
@@ -120,7 +120,9 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 | `LSN-0110` | `GUARDED` | MEDIUM | testing | A timed-out live proof retains bounded diagnostics before owned cleanup | `test_live_output_control_timeout_retains_bounded_diagnostics_and_stays_red` |
 | `LSN-0111` | `GUARDED` | HIGH | implementation | Polling watcher cleanup must preserve completed checks and accepted cancellation | `test_completed_check_joins_cancelled_durable_read_without_cancelling_run`, `test_unrelated_watcher_failure_is_not_hidden_by_join_cleanup` |
 | `LSN-0112` | `GUARDED` | HIGH | security | Canonical scanner consumers must share transport decoding, not only patterns | `PublicationTransportScanningTests` |
-| `LSN-0113` | `GUARDED` | HIGH | checkpoint | Stronger delivery controls must follow the immutable subject policy version | `test_live_policy_requires_strict_internal_verdict_semantics` |
+| `LSN-0113` | `GUARDED` | CRITICAL | checkpoint | Stronger delivery controls must follow the immutable subject policy version | `test_live_policy_requires_strict_internal_verdict_semantics` |
+| `LSN-0114` | `GUARDED` | MEDIUM | performance | Transport line metadata must not repeatedly scan the source prefix | `test_fragment_carrier_lines_count_each_source_range_at_most_once`, `test_json_error_line_index_matches_builtin_string_coordinates` |
+| `LSN-0115` | `GUARDED` | MEDIUM | tooling | A failing full verifier retains every bounded case identifier beyond its output tail | `test_failed_case_identifiers_survive_a_tail_longer_than_the_report_limit` |
 
 ## Detail
 
@@ -264,11 +266,11 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 
 ### LSN-0011 — A control over a checkpoint's own evidence must be scoped to the moment it matters
 
-- Status: `GUARDED`, severity CRITICAL, category tooling, recurrences 10.
+- Status: `GUARDED`, severity CRITICAL, category tooling, recurrences 13.
 - Source: SETUP-00, SETUP-00-CP-0005, finding REWORK-LOG cycles 1 to 3 and 6.
 - Symptom: The gate that validates the checkpoint kept failing because running it appends to the very ledger and inventory the validation binds.
 - Root cause: Consistency rules written for a finished delivery were applied while the delivery was still writing its own evidence, which no ordering of steps can satisfy.
-- Resolution: Gate consistency is strict at handoff and provisional while work is in progress; every in-progress validation procedure uses the checkpoint-owned harness to declare append-only evidence dirty and re-derive hashes through finalize_checkpoint.refresh_declared_hashes immediately before validation. Self-observing process checks exclude their complete observer ancestry before classifying a matching process. Pre-finalization RUN-METADATA retains a valid RFC 3339 observation timestamp and HEAD; the finalizer alone replaces that timestamp with the true terminal boundary and writes final status and final commit immediately before the content commit. Direct validate_checkpoint.py is the post-finalization clean-boundary command, not the append-only in-progress runner. CP0010 adds guarded, unsealed-only derived metadata synchronization; evidence producers must finish before inventory declaration and validation.
+- Resolution: Gate consistency is strict at handoff and provisional while work is in progress; every in-progress validation procedure uses the checkpoint-owned harness to declare append-only evidence dirty and re-derive hashes through finalize_checkpoint.refresh_declared_hashes immediately before validation. Self-observing process checks exclude their complete observer ancestry before classifying a matching process. Pre-finalization RUN-METADATA retains a valid RFC 3339 observation timestamp and HEAD; the finalizer alone replaces that timestamp with the true terminal boundary and writes final status and final commit immediately before the content commit. Direct validate_checkpoint.py is the post-finalization clean-boundary command, not the append-only in-progress runner. CP0010 adds guarded, unsealed-only derived metadata synchronization; evidence producers must finish before inventory declaration and validation. The checkpoint wrapper must not write a cached pre-synchronization STATE after the canonical producer has replaced it.
 - Prevention:
   - `test` DeliveryAssuranceGateTests.test_gate_consistency_is_provisional_while_work_is_in_progress — Provisional in progress, strict at handoff.
   - `invariant` green_keeper._refresh_declared_hashes — Declared hashes are re-derived before the validation gate runs, never invented.
@@ -276,15 +278,16 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
   - `test` test_green_keeper_declares_its_in_progress_evidence_dirty_before_validation — An in-progress cycle expects its own command and rework evidence to make the tree dirty before checkpoint validation.
   - `test` test_preflight_aggregates_and_commit_semantics_are_derived_without_promotion — The in-progress preflight aggregates and finalCommit semantics are derived together without altering status, verdicts or evidence.
   - `test` test_a_sealed_or_terminal_checkpoint_is_never_rewritten — Synchronization cannot rewrite immutable or terminal evidence.
+  - `test` test_validation_runner_keeps_the_synchronizers_derived_state — The actual wrapper preserves real synchronizer output at its hash boundary instead of restoring a stale snapshot.
 - Evidence: `file:docs/checkpoints/SETUP-00-CP-0005/DECISIONS.md`, `file:docs/checkpoints/SETUP-00-CP-0005/REWORK-LOG.jsonl`, `file:docs/checkpoints/GATE-4-CP-0005/REWORK-LOG.jsonl`, `file:docs/checkpoints/GATE-4-CP-0009/COMMANDS.jsonl`, `file:docs/checkpoints/GATE-4-CP-0009/REWORK-LOG.jsonl`, `file:docs/checkpoints/GATE-4-CP-0009/audit-harness/run_checkpoint_validation.py`, `file:scripts/development-ledger/finalize_checkpoint.py`, `file:scripts/development-ledger/green_keeper.py`, `file:scripts/iacode/verify.py`, `file:tests/test_development_ledger.py`, `file:tests/test_gate1_model_gateway.py`, `file:docs/checkpoints/GATE-4-CP-0010/COMMANDS.jsonl`, `file:docs/checkpoints/GATE-4-CP-0010/FINDINGS.json`, `file:scripts/development-ledger/sync_in_progress_metadata.py`, `file:tests/test_in_progress_metadata.py`
 
 ### LSN-0012 — Sealed checkpoints and their tags are immutable, and tooling must keep validating them
 
-- Status: `GUARDED`, severity CRITICAL, category git, recurrences 2.
+- Status: `GUARDED`, severity CRITICAL, category git, recurrences 3.
 - Source: SETUP-00, SETUP-00-CP-0002, finding checkpoint protocol.
 - Symptom: Every correction cycle created pressure to edit or retag an earlier checkpoint so the new rules would fit it.
 - Root cause: Control-plane rules evolve while history does not, so without version dispatch a new rule silently invalidates sealed evidence.
-- Resolution: Checkpoints declare a schema version, validation applies the rules of the declared version, and a regression validates clean clones detached at every sealed tag.
+- Resolution: Bind every evolving invariant to the immutable subject's declared policy version: strict internal verdicts under memory policy 2.4.0, collection boundaries under test-suite policy 1.1.0. Keep legacy semantics, refuse current downgrades/new fields under old versions, and execute current validation over every canonical sealed anchor.
 - Prevention:
   - `test` HistoricalCheckpointCompatibilityTests.test_first_sealed_checkpoint_still_validates — The first sealed checkpoint still validates.
   - `test` HistoricalCheckpointCompatibilityTests.test_fourth_sealed_checkpoint_still_validates — The most recent sealed review checkpoint still validates.
@@ -379,14 +382,15 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 
 ### LSN-0020 — Evidence produced from a dirty tree needs immutable input identity
 
-- Status: `GUARDED`, severity HIGH, category tooling, recurrences 0.
+- Status: `GUARDED`, severity CRITICAL, category tooling, recurrences 1.
 - Source: SETUP-00, SETUP-00-CP-0007, finding M0-F-009 / M0-F-010.
 - Symptom: Sampled commands replayed at the sealed tag but failed at their own declared commits, and a run claimed to finish three seconds before the finalizer that sealed it ran.
 - Root cause: A record named a commit while its real inputs lived only in an uncommitted working tree, and the sealing order let the recorded chronology contradict itself.
-- Resolution: Every record binds its declared inputs by content hash, and sealing is a monotonic post-commit workflow whose final validation is recorded against a clean tree at the sealed content commit.
+- Resolution: Every record binds its declared inputs by content hash, and sealing is a monotonic post-commit workflow whose final validation is recorded against a clean tree at the sealed content commit. A process-owning recorder freezes declared input digests before launching the child and passes that snapshot explicitly to the metadata builder; hashing after completion cannot identify what was launched.
 - Prevention:
   - `invariant` ledger_common.build_command_record — Every declared input is bound by content hash at execution time.
   - `test` CommandInputBindingTests.test_the_recorder_binds_inputs_automatically — The recorder binds inputs without being asked.
+  - `test` test_input_digests_are_frozen_before_a_real_child_rewrites_its_inputs — Execute a real self-rewriting child and compare both recorded digests with observed pre-execution identities, retaining a stable-input control.
 - Evidence: `file:docs/checkpoints/SETUP-00-CP-0007/REVIEW-REPORT.md`, `file:docs/checkpoints/SETUP-00-CP-0007/AUDIT-EXECUTIONS.md`
 
 ### LSN-0021 — Sealed history needs an anchor outside the content it describes
@@ -572,7 +576,7 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 
 ### LSN-0035 — Captured subprocess output decoded or re-emitted with the platform codepage crashes the tool, not the work
 
-- Status: `GUARDED`, severity HIGH, category tooling, recurrences 0.
+- Status: `GUARDED`, severity CRITICAL, category tooling, recurrences 1.
 - Source: GATE-0, GATE-0-CP-0001, finding G0-F-004.
 - Symptom: The Green Keeper aborted with UnicodeDecodeError: 'charmap' codec can't decode byte 0x9d while reading the output of a gate that was green. After the read was repaired, the command recorder aborted with UnicodeEncodeError: 'charmap' codec can't encode character '�' while printing what it had just captured -- after an eighteen-minute verification had already passed.
 - Root cause: Both ends inherit the machine's codepage. subprocess.run(..., text=True) with no encoding decodes with locale.getencoding(), and sys.stdout encodes with it as well; on Windows that is cp1252, while every tool here writes UTF-8. The failure is intermittent because it depends on which character the measured process happened to print, and it lands after the work succeeded, so it destroys a result rather than reporting one.
@@ -1185,7 +1189,7 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 
 ### LSN-0083 — A command that decodes captured UTF-8 must also configure the stream that re-emits it
 
-- Status: `GUARDED`, severity HIGH, category tooling, recurrences 1.
+- Status: `GUARDED`, severity CRITICAL, category tooling, recurrences 2.
 - Source: GATE-4, GATE-4-CP-0001, finding cmd-0112.
 - Symptom: The canonical suite found program_state.py and review_bundle.py capturing subprocess output safely but re-emitting it through the Windows platform codepage without configuring stdout.
 - Root cause: The entry points decoded child output explicitly but their own stdout still used the Windows platform codepage; the original guardrail scanned scripts but not executable checkpoint evidence harnesses.
@@ -1535,11 +1539,34 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 
 ### LSN-0113 — Stronger delivery controls must follow the immutable subject policy version
 
-- Status: `GUARDED`, severity HIGH, category checkpoint, recurrences 0.
+- Status: `GUARDED`, severity CRITICAL, category checkpoint, recurrences 1.
 - Source: GATE-4, GATE-4-CP-0010, finding G4-INT-015.
 - Symptom: A current internal-verdict guard invalidated sealed historical checkpoints whose Red Team field had a different declared meaning.
 - Root cause: The new invariant was applied unconditionally rather than being bound to the subject's governance policy.
-- Resolution: Version the strict invariant in canonical memory policy 2.4.0, require that live policy through a mandatory regression, preserve older subject semantics and validate every affected canonical sealed anchor.
+- Resolution: Bind every evolving invariant to the immutable subject's declared policy version: strict internal verdicts under memory policy 2.4.0, collection boundaries under test-suite policy 1.1.0. Keep legacy semantics, refuse current downgrades/new fields under old versions, and execute current validation over every canonical sealed anchor.
 - Prevention:
   - `test` test_live_policy_requires_strict_internal_verdict_semantics — Execute the causal positive and negative controls without reducing canonical membership or approval rules.
 - Evidence: `file:docs/checkpoints/GATE-4-CP-0010/FINDINGS.json`, `file:docs/checkpoints/GATE-4-CP-0010/COMMANDS.jsonl`
+
+### LSN-0114 — Transport line metadata must not repeatedly scan the source prefix
+
+- Status: `GUARDED`, severity MEDIUM, category performance, recurrences 0.
+- Source: GATE-4, GATE-4-CP-0010, finding G4-INT-018.
+- Symptom: A JSONL carrier-line regression examined 100368 source characters for a 1002-character input while preserving the expected credential finding and its line.
+- Root cause: Both fragment carrier accounting and JSONDecodeError coordinate construction rescanned prefixes, outside the decoder-work bound. Fixing carrier accounting alone left 20664 characters of decoder metadata work for the same 1002-character input.
+- Resolution: Count carrier newlines incrementally and index newline positions lazily only for JSON parser metadata. Preserve original yielded text, decoder messages/positions/line coordinates, traversal and fail-closed budgets.
+- Prevention:
+  - `test` test_fragment_carrier_lines_count_each_source_range_at_most_once — Measure actual source ranges examined, retain the encoded refusal and exact carrier line, and require aggregate line-count work no larger than the input.
+  - `test` test_json_error_line_index_matches_builtin_string_coordinates — Prove indexed count/rfind and JSON error coordinates equal builtin strings, including Unicode and slice boundaries.
+- Evidence: `file:docs/checkpoints/GATE-4-CP-0010/FINDINGS.json`, `file:docs/checkpoints/GATE-4-CP-0010/COMMANDS.jsonl`
+
+### LSN-0115 — A failing full verifier retains every bounded case identifier beyond its output tail
+
+- Status: `GUARDED`, severity MEDIUM, category tooling, recurrences 0.
+- Source: GATE-4, GATE-4-CP-0010, finding G4-INT-020.
+- Symptom: The full v2 root stage reported ten failures, but the retained 25-line output tail omitted earlier failed-case identifiers, preventing immediate cause attribution.
+- Root cause: Human-oriented tail capture was the only durable failed-stage diagnostic; no separate bounded identifier set survived long summaries.
+- Resolution: Retain bounded unittest/pytest failure identifiers separately from raw output tails, excluding parameter values and message bodies, while keeping the actual child exit code authoritative.
+- Prevention:
+  - `test` test_failed_case_identifiers_survive_a_tail_longer_than_the_report_limit — Execute real failing child processes with an early failure and more than 25 later lines; preserve identifiers and test payload exclusion and successful-child refusal.
+- Evidence: `file:docs/checkpoints/GATE-4-CP-0010/attempts/published-v2/VERIFY.json`, `file:docs/checkpoints/GATE-4-CP-0010/COMMANDS.jsonl`

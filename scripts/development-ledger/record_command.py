@@ -19,6 +19,7 @@ from ledger_common import (
     LedgerError,
     append_command_record,
     build_command_record,
+    canonical_hash_path,
     command_input_transport_error,
     command_replay_errors,
     find_root,
@@ -175,6 +176,13 @@ def main() -> int:
         runtime = runtime_label(executable[0])
 
     inputs = list(dict.fromkeys(_detect_inputs(root, argv) + [item for item in args.input if item]))
+    # The process can rewrite an input, including its own script. Bind the launch pre-image,
+    # never a later file that happens to occupy the same path when the process finishes.
+    inputs_digest = [
+        {"path": reference, "hash": canonical_hash_path(root / reference)
+         if (root / reference).is_file() else "ABSENT"}
+        for reference in inputs
+    ]
     started = time.monotonic()
     completed = subprocess.run(
         executable, cwd=root, text=True, encoding="utf-8", errors="replace",
@@ -190,6 +198,7 @@ def main() -> int:
         working_directory=str(root),
         runtime=runtime,
         inputs=inputs,
+        inputs_digest=inputs_digest,
         result="COMPLETED",
         result_code="OK",
         exit_code=completed.returncode,

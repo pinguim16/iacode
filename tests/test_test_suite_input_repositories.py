@@ -16,6 +16,47 @@ from policies import counted_test_suites, test_suite_source_files
 
 
 class TestSuiteInputRepositoriesTests(unittest.TestCase):
+    def _write_versioned_fixture(self, root: Path, version: str) -> dict:
+        directory = root / "suite"
+        (directory / "fixtures").mkdir(parents=True)
+        (directory / "test_real.py").write_text("def test_real(): pass\n")
+        (directory / "fixtures/test_input.py").write_text("def test_input(): pass\n")
+        (directory / "conftest.py").write_text('collect_ignore_glob = ["fixtures/**"]\n')
+        suite = {"id": "proof", "title": "Versioned fixture", "root": "suite",
+                 "framework": "python-pytest", "counted": True, "purpose": "policy proof"}
+        policy = root / ".iacode/policies"
+        policy.mkdir(parents=True)
+        (policy / "test-suites.json").write_text(json.dumps({
+            "schemaVersion": version, "suites": [suite],
+        }))
+        return suite
+
+    def test_live_policy_requires_the_collection_boundary_version(self) -> None:
+        document = json.loads((ROOT / ".iacode/policies/test-suites.json").read_text())
+        self.assertEqual(document["schemaVersion"], "1.1.0")
+
+    def test_legacy_source_counts_keep_their_declared_policy_semantics(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            suite = self._write_versioned_fixture(root, "1.0.0")
+            self.assertEqual(count_pytest_cases(root, "suite", suite=suite), 2)
+            self.assertIn("test_input", collect_test_ids(root))
+
+    def test_legacy_version_cannot_authorize_new_exclusion_fields(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            suite = self._write_versioned_fixture(root, "1.0.0")
+            suite["inputRepositories"] = [{"root": "fixtures",
+                "collectionIgnoreGlob": "fixtures/**", "notCountedReason": "live input"}]
+            with self.assertRaisesRegex(LedgerError, "version"):
+                test_suite_source_files(root, suite)
+            # The canonical loader must refuse independently of schema-combinator support.
+            (root / ".iacode/policies/test-suites.json").write_text(json.dumps({
+                "schemaVersion": "1.0.0", "suites": [suite],
+            }))
+            with self.assertRaisesRegex(LedgerError, "version"):
+                counted_test_suites(root)
+
     def test_policy_count_matches_collected_suite_not_live_input_projects(self) -> None:
         suite = next(s for s in counted_test_suites(ROOT) if s["id"] == "evaluator")
         self.assertEqual(count_pytest_cases(ROOT, suite["root"], suite=suite), 89)

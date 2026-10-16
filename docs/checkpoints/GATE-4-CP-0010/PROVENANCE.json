@@ -32,6 +32,22 @@
       },
       "evidence": "Owner-authorized repository work recorded in AUTHORIZATION.md, FILES.json, COMMANDS.jsonl and the relevant ADRs; synthetic fixtures are assembled locally and the historical review records only exact digests and sanitized provenance.",
       "notes": "No external source content or independent-model approval is claimed. Storage authorization does not imply RAG, training or distillation permission."
+    },
+    {
+      "artifact": "VALIDATION-PERFORMANCE.json, ROOT-PROBE-PERFORMANCE.json, both WORKING-TREE-ROOT-PERFORMANCE observations and audit-harness/diagnose_full_verifier.py",
+      "sourceType": "repository-generated-read-only-diagnostic",
+      "provider": "project-authored harness with temporary py-spy 0.4.2",
+      "model": "not-applicable",
+      "ownership": "project evidence; external tool ownership is unchanged",
+      "license": "project-policy for evidence; temporary unmodified profiler is MIT",
+      "rights": {
+        "storageAllowed": true,
+        "ragAllowed": false,
+        "trainingAllowed": false,
+        "distillationAllowed": false
+      },
+      "evidence": "Commands cmd-0162, cmd-0193, cmd-0208 and cmd-0221; pinned Windows wheel SHA-256 and official https://pypi.org/project/py-spy/0.4.2/ source are recorded in the diagnostic reports. Working-tree observations explicitly distinguish dirty ancestry from an immutable subject.",
+      "notes": "Only stack-frame names and locations were retained, never locals or source payloads. The external binary was content-verified, used without modifying the tested process, removed after diagnosis and not vendored. This is not independent audit evidence or a performance PASS."
     }
   ]
 }

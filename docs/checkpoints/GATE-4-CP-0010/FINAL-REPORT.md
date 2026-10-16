@@ -3,6 +3,14 @@
 ## Status
 
 IN_PROGRESS. Internal corrective review only. Independent milestone validation remains pending.
+The immutable v2 verifier completed FAIL (41/42 stages; root 801 cases, ten failures). Five reports
+are archived byte-for-byte under attempts/published-v2. Nine collection-policy incompatibilities
+were independently reproduced by a same-session all-32-anchor component probe and corrected through
+version dispatch. The unchanged published-v2 UTF-8 control reproduced the remaining failure class,
+and all 29 current Foundation controls passed after stream setup. The local broad run completed
+FAIL (812 loaded cases, five mixed-epoch memory refusals); actual whole-history validation passed all 32 canonical published tags
+(cmd-0202). No internal closure
+or Gate 5 advancement is authorized by this failed subject.
 
 ## Environment
 
@@ -18,9 +26,17 @@ This session carries the implementing history and makes no independence claim.
 
 Durable cancellation/result/verdict race correction; explicit late-cancellation conflict; behavioral
 and real database regressions; owner-authorized milestone cadence reconciliation; indexed
-ADR-0037 through ADR-0042; first-durable-boundary output containment; mixed/nested JSON scanning;
+ADR-0037 through ADR-0044; first-durable-boundary output containment; mixed/nested JSON scanning;
 polling-cleanup race correction; policy-bound test discovery; Engineering Memory and reconstructible
 internal review evidence.
+
+Post-v2 corrections add versioned historical collection semantics, bounded scanner metadata work
+and durable sanitized failed-case identifiers. Targeted controls pass; none substitutes for a new
+complete immutable-subject verifier and ordered final assurance.
+
+Input-hash timing is corrected for both command recorder and Green Keeper, proven with real
+self-rewriting and stable children (cmd-0236). Failed local broad and stale-index diagnostics remain
+visible; their passing fragments are not reused for promotion. Cmd-0200 cannot prove launch bytes.
 
 ## Files Created
 
@@ -47,6 +63,11 @@ scan passed without modifying historical checkpoints or broadly excluding any sc
 
 COMMANDS.jsonl records the actual commands, results and preserved failures. Final canonical counts
 will be derived only after the complete current suite executes.
+
+The current unexecuted full denominator derives to 1794 cases and 219 obligations (cmd-0249).
+Selected fresh diagnostics pass: 27 memory/binding/provenance, 29 Foundation and all corrective
+modules. Complete lint and compileall pass. Cmd-0251 matched no module and validates nothing.
+No complete verification, closure verdict or independent approval is inferred from these results.
 
 ## Red Team
 

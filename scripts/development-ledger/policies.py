@@ -149,6 +149,17 @@ def mandatory_gates(root: Path) -> tuple[str, ...]:
 # --------------------------------------------------------------------------------------------
 
 
+def _test_suite_policy_version(root: Path) -> str | None:
+    path = root / TEST_SUITE_REGISTRY
+    if not path.is_file():
+        return None
+    registry = load_json(path)
+    version = registry.get("schemaVersion") if isinstance(registry, dict) else None
+    if version is not None and version not in {"1.0.0", "1.1.0"}:
+        raise LedgerError("unsupported test-suite policy version")
+    return version
+
+
 def load_test_suites(root: Path) -> list[dict[str, Any]]:
     """Every declared test suite, or the historical single suite when no registry exists.
 
@@ -171,12 +182,15 @@ def load_test_suites(root: Path) -> list[dict[str, Any]]:
             "purpose": "The only suite this repository revision declares.",
         }]
     registry = load_json(path)
+    version = _test_suite_policy_version(root)
     suites = registry.get("suites") if isinstance(registry, dict) else None
     if not isinstance(suites, list) or not suites:
         raise LedgerError("test-suites.json must declare a non-empty suites array")
     for suite in suites:
         if not isinstance(suite, dict) or not suite.get("id") or not suite.get("root"):
             raise LedgerError("every declared test suite needs an id and a root")
+        if version == "1.0.0" and "inputRepositories" in suite:
+            raise LedgerError("input repositories require test-suite policy version 1.1.0")
         if not suite.get("counted") and not str(suite.get("notCountedReason") or "").strip():
             raise LedgerError(
                 f"test suite {suite['id']!r} is not counted and records no reason; an omission "
@@ -196,11 +210,18 @@ def test_suite_source_files(
 
     This is not a caller-selectable denominator. Only the canonical registry declares input
     repositories, and their exclusions must equal pytest's existing collection configuration.
-    Both the count derivation and evidence resolver use this boundary.
+    Both the count derivation and evidence resolver use this boundary. Sealed 1.0.0 policies
+    retain their original source enumeration, not today's collection-bound counting semantics.
+    Missing fixture versions do not select the historical compatibility path.
     """
     directory = (root / str(suite["root"])).resolve()
+    version = _test_suite_policy_version(root)
+    if version == "1.0.0" and "inputRepositories" in suite:
+        raise LedgerError("input repositories require test-suite policy version 1.1.0")
     if not directory.is_dir():
         return []
+    if version == "1.0.0":
+        return sorted(path for path in directory.rglob(pattern) if "__pycache__" not in path.parts)
     declared = suite.get("inputRepositories", [])
     excluded: list[Path] = []
     globs: set[str] = set()

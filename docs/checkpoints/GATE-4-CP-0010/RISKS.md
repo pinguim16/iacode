@@ -18,3 +18,7 @@
   reuse that attempt.
 - Plain, escaped, nested JSON and beyond-inline output must remain rejected at the first durable
   boundary. Matching digests do not exempt legacy objects from rescanning.
+- Two temporary directories from the superseded broad v2 diagnostic were retained after native
+  cleanup was refused. PUBLISHED-V2-BROAD-DIAGNOSTIC-ABORT.json records their exact paths and
+  non-promotion status. They are outside the checkout, contain no user edits and must not be
+  published; optional manual cleanup is outstanding. No global cleanup success is claimed.

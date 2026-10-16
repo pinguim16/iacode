@@ -1,0 +1,14 @@
+{
+  "schemaVersion": "1.0.0",
+  "kind": "INTERNAL_EVIDENCE_QUALIFICATION_NOT_PROMOTION",
+  "affectedObservedRecord": "cmd-0200",
+  "recordPreserved": true,
+  "qualification": "The long diagnostic loaded its helper before subsequent edits. The old recorder calculated inputsDigest when building the completed record, after those edits. Its digest is a completion-time observation, not proven launch input identity.",
+  "originalInputDigestReconstructed": false,
+  "eligibleForPositiveValidation": false,
+  "existingRefusal": "Its nonzero exit already prevents command:cmd-0200 from resolving as successful evidence.",
+  "reproduction": "cmd-0230 executes a real child that rewrites its own script and a declared data input. The old recorder binds both post-images instead of the observed pre-images; the stable-input control passes.",
+  "correction": "Freeze declared input hashes immediately before process execution and pass that snapshot explicitly to the record builder. Input identity does not assert that a command validated the final working tree; final quality still requires a frozen subject.",
+  "correctiveEvidence": ["cmd-0235: real Green Keeper reproduction", "cmd-0236: both process owners pass real rewriting/stable controls", "cmd-0244: final-source repetition passes", "ADR-0044: launch boundary and historical-row preservation"],
+  "promotionEvidence": false
+}

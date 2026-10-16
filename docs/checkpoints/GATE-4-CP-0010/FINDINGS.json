@@ -249,6 +249,144 @@
       ],
       "observed": "Exact AST literal equality binds both components to test_redactor_replaces_known_shapes in the introducing historical blob. Both are alphabet-sequence test markers, not runtime credentials. Only their two exact kind/component digests were reviewed; the earlier listed removal commit is not the content snapshot. The full strengthened history scan then passed with zero blocking findings (cmd-0149).",
       "requiredCorrection": "Keep the complete history scan and same-kind negative control green with no path/kind exclusions or history rewriting. Retain no matched value."
+    },
+    {
+      "id": "G4-INT-017",
+      "severity": "HIGH",
+      "title": "The corrected published v2 root suite remains red",
+      "status": "FIXED_PENDING_FINAL_ASSURANCE",
+      "classification": "REPRODUCED_COLLECTION_AND_UTF8_GUARDRAIL_FAILURES",
+      "evidence": [
+        "command:cmd-0171",
+        "checkpoint:attempts/published-v2/VERIFY.json",
+        "checkpoint:COLLECTION-COMPATIBILITY-BASELINE.json",
+        "command:cmd-0175",
+        "command:cmd-0197",
+        "command:cmd-0198",
+        "checkpoint:PUBLISHED-V2-STREAM-FAILURE.json",
+        "command:cmd-0202"
+      ],
+      "observed": "The single full non-fast verifier of subject 4c53e4f788adc24e1b9cd9f581a7dc0d0f3c1340 completed FAIL with 41/42 stages green. Root tests ran 801 cases and reported ten failures; its last-25-line tail retained only the final historical cases. An all-32-anchor component probe independently identified nine collection-policy incompatibilities. The remaining failed case is not yet identified; no stage from this failed invocation authorizes closure. A targeted execution of the unchanged published-v2 Foundation control reproduced its UTF-8 failure, listing the six original capture entry points. The current complete Foundation module passed all 29 cases after canonical stream configuration. Nine historical collection failures plus this stream failure account for the ten reported root failures; the broader diagnostic was subsequently stopped as superseded (cmd-0200) and is not approval.",
+      "requiredCorrection": "Preserve this full attempt, obtain its actual failing-case diagnostics, classify the failure against Engineering Memory, correct its cause without weakening tests, and execute a complete verifier on the next corrected immutable subject. No green stages from this failed invocation may authorize closure or Gate 5."
+    },
+    {
+      "id": "G4-INT-018",
+      "severity": "MEDIUM",
+      "title": "JSON fragment carrier-line accounting repeatedly scans the entire source prefix",
+      "status": "FIXED_PENDING_FINAL_ASSURANCE",
+      "evidence": [
+        "command:cmd-0165",
+        "checkpoint:VALIDATION-PERFORMANCE.json",
+        "file:tests/test_secret_scan_transports.py",
+        "command:cmd-0169",
+        "command:cmd-0172",
+        "command:cmd-0173",
+        "command:cmd-0174"
+      ],
+      "observed": "An instrumented text measured 100368 source characters examined for carrier-line counting on a 1002-character JSONL input. The same regression first confirmed that the encoded credential was refused and its exact carrier line was retained, then failed only its linear-range-work assertion. The earlier nonblocking profile observed fragment interpretation inside real bundle validation. This does not identify G4-INT-017's unknown failed case or attribute its whole duration to this accounting. The unchanged bound remained red after incremental carrier accounting: decoder error coordinate construction contributed 20664 of 21637 examined characters. Metadata-only newline indexing then passed all nine transport/coordinate/cost regressions and the canonical escaped probe. No traversal, finding, line or budget rule was removed.",
+      "requiredCorrection": "Retain the unchanged measured cost bound, builtin-equivalent JSON error metadata, original yielded views and every prior refusal/allowlist/budget control; execute all mandatory assurance on the next corrected immutable subject."
+    },
+    {
+      "id": "G4-INT-019",
+      "severity": "CRITICAL",
+      "title": "Unversioned collection exclusions invalidate nine sealed subjects",
+      "status": "FIXED_PENDING_FINAL_ASSURANCE",
+      "classification": "GUARDRAIL_FAILURE: LSN-0012 / GRD-0012 and LSN-0113 / GRD-0114",
+      "evidence": [
+        "command:cmd-0171",
+        "command:cmd-0175",
+        "command:cmd-0176",
+        "checkpoint:COLLECTION-COMPATIBILITY-BASELINE.json",
+        "command:cmd-0180",
+        "command:cmd-0181",
+        "command:cmd-0202",
+        "checkpoint:COLLECTION-COMPATIBILITY.json"
+      ],
+      "observed": "The full v2 failure was followed by a probe derived from all 32 canonical anchors. Every Gate 4 predecessor (CP0001 through CP0009) rejects current collection comparison because their declared test-suite policy 1.0.0 predates inputRepositories. Applying the new rule without a version silently reinterprets their original counts. Three new version/legacy controls are red; no historical record or tag was changed. Six current/legacy/version controls passed unchanged; the complete collection component probe passed all 32 anchors, and cmd-0202 then passed actual current whole-checkpoint validation on all 32 canonical published tags. No historical subject or tag was modified. Full v3 assurance remains pending.",
+      "requiredCorrection": "Version collection-boundary semantics in canonical test-suite policy 1.1.0, reject current downgrade/new fields under legacy policy, preserve original historical derivation, execute all current positive/negative controls and validate every canonical sealed subject with current tooling. Escalate both guarded lesson recurrences rather than claiming the earlier two-subject probe covered them."
+    },
+    {
+      "id": "G4-INT-020",
+      "severity": "MEDIUM",
+      "title": "Full-verifier tails lose earlier failed-case identifiers",
+      "status": "FIXED_PENDING_FINAL_ASSURANCE",
+      "evidence": [
+        "command:cmd-0171",
+        "command:cmd-0183",
+        "checkpoint:attempts/published-v2/VERIFY.json",
+        "command:cmd-0188"
+      ],
+      "observed": "A completed root stage reported ten failures but retained only the final 25 lines. An actual subprocess regression confirms earlier failing-case identifiers are lost; payload exclusion and success-code behavior are required controls. Four unchanged actual-process controls pass after syntax-restricted bounded identifier retention; complete corrected-subject assurance remains due.",
+      "requiredCorrection": "Retain separately bounded, syntax-restricted unittest/pytest identifiers with total and truncation metadata, excluding parameter/message content. Preserve the actual exit code, all mandatory stages and existing tail diagnostics."
+    },
+    {
+      "id": "G4-INT-021",
+      "severity": "CRITICAL",
+      "title": "Current capture harnesses omit mandatory UTF-8 output configuration",
+      "status": "FIXED_PENDING_FINAL_ASSURANCE",
+      "classification": "GUARDRAIL_FAILURE: LSN-0035 / GRD-0037 and LSN-0083 / GRD-0084",
+      "evidence": [
+        "command:cmd-0192",
+        "file:tests/test_gate0_foundation.py",
+        "command:cmd-0197",
+        "command:cmd-0198",
+        "checkpoint:PUBLISHED-V2-STREAM-FAILURE.json"
+      ],
+      "observed": "The unchanged repository-wide entry-point AST guard refuses nine current checkpoint harnesses that capture child output but omit canonical output-stream configuration. This is a confirmed guarded recurrence, independently of whether it is the missing v2 case. No guard, scope or assertion is weakened. Cmd-0197 reproduced the exact failure on unchanged published v2, with six original offending harnesses. All 29 current Foundation controls passed in cmd-0198 after configuring current capturing entry points. No test or scope was edited.",
+      "requiredCorrection": "Confirm the exact failed case on unchanged published v2, configure every current capturing entry point through use_utf8_stdout, rerun the complete Foundation controls and the next full verifier, and retain all recurrence counts and failed evidence."
+    },
+    {
+      "id": "G4-INT-022",
+      "severity": "CRITICAL",
+      "title": "Validation wrapper restores stale STATE after canonical synchronization",
+      "status": "FIXED_PENDING_FINAL_ASSURANCE",
+      "classification": "GUARDRAIL_FAILURE: LSN-0011 / GRD-0006",
+      "evidence": [
+        "command:cmd-0210",
+        "file:tests/test_in_progress_metadata.py",
+        "command:cmd-0214",
+        "command:cmd-0223",
+        "command:cmd-0225",
+        "checkpoint:METADATA-WRAPPER-REAL-VALIDATION.json"
+      ],
+      "observed": "A new boundary regression executes the actual wrapper and real synchronizer on initially clean-state metadata, then stops before hashing/child validation. The wrapper overwrites derived lessonsConsidered=7 with its cached old value=1. No validator success is simulated. Removing only the redundant pre-sync snapshot write passed all five metadata controls (cmd-0214). Actual quiescent validation remains required; no validator verdict is inferred from the boundary sentinel. The guard now derives the current checkpoint rather than naming one Gate. Cmd-0225 ran real validation in a complete owned copy: legacy aggregates remained 1/0 and validation refused; current aggregates became 115/114 and validation passed. Source fingerprint was unchanged and the temporary clone was removed. This is not a Gate approval; final main-tree validation remains pending.",
+      "requiredCorrection": "Remove the redundant cached-state write: the canonical synchronizer already declares dirty and derives metadata together. Preserve terminal/sealed/wrong-Gate refusals, all existing assertions and strict hash/metadata validation. Re-execute the wrapper boundary regression and actual quiescent checkpoint validation before publication."
+    },
+    {
+      "id": "G4-INT-023",
+      "severity": "CRITICAL",
+      "title": "Input hashes are captured after execution, not at process launch",
+      "status": "FIXED_PENDING_FINAL_ASSURANCE",
+      "classification": "GUARDRAIL_FAILURE: LSN-0020 / GRD-0019",
+      "evidence": [
+        "command:cmd-0230",
+        "checkpoint:COMMAND-INPUT-BINDING-QUALIFICATION.json",
+        "command:cmd-0234",
+        "command:cmd-0235",
+        "command:cmd-0236",
+        "file:docs/adr/ADR-0044-process-recorders-bind-launch-inputs.md"
+      ],
+      "observed": "A real child reads then rewrites its own script and declared data. The current recorder records both post-image digests instead of the observed pre-images; a real stable-input control passes. The already non-successful cmd-0200 is qualified rather than rewritten or claimed to prove launch bytes. The identical class was reproduced in Green Keeper (cmd-0235). Both real process owners now bind pre-images; both rewriting and stable controls pass without changing assertions (cmd-0236). Final frozen-subject assurance remains required.",
+      "requiredCorrection": "Freeze declared input hashes before the process starts, pass that immutable snapshot to the builder, preserve every actual result and the original record, and execute real rewriting/stable controls plus the complete frozen-subject verification."
+    },
+    {
+      "id": "G4-INT-024",
+      "severity": "CRITICAL",
+      "title": "Concurrent suite and registry edits invalidated the local broad regression epoch",
+      "status": "FIXED_PENDING_FINAL_ASSURANCE",
+      "classification": "GUARDRAIL_FAILURE: LSN-0011 / GRD-0006",
+      "evidence": [
+        "command:cmd-0229",
+        "checkpoint:LOCAL-ROOT-REGRESSION.json",
+        "command:cmd-0237",
+        "command:cmd-0238",
+        "command:cmd-0239",
+        "command:cmd-0246",
+        "command:cmd-0255",
+        "command:cmd-0259"
+      ],
+      "observed": "The 812-case local run began before the late metadata test was defined. Updating the live guard registry during that run made five memory controls correctly report its missing method in the already loaded unittest module. The run finished FAIL in 4869.474 seconds; no passing partial result is approval. A fresh provenance process passed all four cases (cmd-0237). Subsequent selected controls correctly refused the not-yet-regenerated LESSONS.md index (cmd-0238/0239); their four failures are retained. Render derived memory before the next fresh run. No selected result promotes cmd-0229.",
+      "requiredCorrection": "The regenerated-index fresh process passed all 27 memory-policy, input-binding and provenance controls (cmd-0246), including the five formerly affected controls. Still execute the complete latest suite and all 42 stages from one immutable published subject, without suite or memory edits. Preserve the red run and do not reinterpret isolated greens as its success."
     }
   ]
 }

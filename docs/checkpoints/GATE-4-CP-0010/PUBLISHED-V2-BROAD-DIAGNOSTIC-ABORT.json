@@ -1,0 +1,27 @@
+{
+  "schemaVersion": "1.0.0",
+  "observedAt": "2026-10-16T04:08:56Z",
+  "subjectCommit": "4c53e4f788adc24e1b9cd9f581a7dc0d0f3c1340",
+  "command": "cmd-0200",
+  "result": "ABORTED_SUPERSEDED_DIAGNOSTIC_ONLY",
+  "exitCode": 4294967295,
+  "reason": "The exact published UTF-8 failed case was reproduced separately by cmd-0197. The broader fail-fast diagnostic was stopped rather than used as acceptance. The full current root suite and all-anchor validation were not stopped.",
+  "failureAttribution": "No test failure is inferred from this controlled termination.",
+  "gitStateBeforeStopClean": true,
+  "identityVerifiedBy": "Exact parent/child process lineage, script name and clean remote-clone HEAD before stop",
+  "cleanup": {
+    "diagnosticCloneRemoved": false,
+    "disposableFixtureRemoved": false,
+    "result": "RETAINED_AFTER_POLICY_REFUSAL",
+    "reason": "Native deletion of the two exact resolved owned temporary directories was refused by the execution policy. No alternative deletion mechanism was attempted.",
+    "retainedPaths": [
+      "C:/Users/cesar/AppData/Local/Temp/iacode-cp0010-root-diagnostic-uqtqioxs",
+      "C:/Users/cesar/AppData/Local/Temp/tmp319ia9b5"
+    ],
+    "scope": "Diagnostic-only directories outside the checkout; no runtime Compose resources or user source were removed. A subsequent existence check found neither repository/.env nor repository/infra/compose/.env in the retained clone; no workstation environment is asserted to have been copied.",
+    "recovery": "Published source remains at the immutable v2 tag; the fixture is generated. Optional manual temporary-directory cleanup is outstanding."
+  },
+  "independentValidation": false,
+  "promotionEvidence": false,
+  "inputDigestQualification": "The helper source changed after this broad diagnostic began. The old recorder hashed it at completion, so cmd-0200 cannot attest its pre-execution source bytes. The original record is preserved and is never positive validation evidence."
+}

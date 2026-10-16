@@ -13,6 +13,7 @@ from __future__ import annotations
 
 import json
 import re
+from bisect import bisect_left
 from collections.abc import Iterator
 
 __all__ = [
@@ -71,6 +72,39 @@ SECRET_PATTERNS: tuple[tuple[str, re.Pattern[str], str], ...] = (
 )
 
 
+class _IndexedJsonText(str):
+    """String-compatible newline lookup for JSON decoder error coordinates."""
+
+    __slots__ = ("_newlines",)
+
+    def __new__(cls, value: str) -> _IndexedJsonText:
+        if isinstance(value, cls):
+            return value
+        instance = super().__new__(cls, value)
+        instance._newlines = None
+        return instance
+
+    def _positions(self) -> tuple[int, ...]:
+        if self._newlines is None:
+            self._newlines = tuple(match.start() for match in re.finditer("\n", self))
+        return self._newlines
+
+    def count(self, sub: str, start: int = 0, end: int | None = None) -> int:
+        if sub != "\n":
+            return super().count(sub, start, end)
+        first, stop, _step = slice(start, end).indices(len(self))
+        positions = self._positions()
+        return max(0, bisect_left(positions, stop) - bisect_left(positions, first))
+
+    def rfind(self, sub: str, start: int = 0, end: int | None = None) -> int:
+        if sub != "\n":
+            return super().rfind(sub, start, end)
+        first, stop, _step = slice(start, end).indices(len(self))
+        positions = self._positions()
+        index = bisect_left(positions, stop) - 1
+        return positions[index] if index >= 0 and positions[index] >= first else -1
+
+
 def find_secret_kinds(text: str) -> list[str]:
     """Return the canonical finding kinds without returning matched values."""
     found = {name for view, _line in iter_secret_scan_views(text)
@@ -98,13 +132,20 @@ def iter_secret_scan_views(text: str) -> Iterator[tuple[str, int | None]]:
             # Keep exact lexical detection and avoid reparsing ordinary source/history blobs.
             if "\\" not in value:
                 continue
+            indexed = _IndexedJsonText(value)
             try:
-                document = json.loads(value)
+                document = json.loads(indexed)
             except json.JSONDecodeError:
                 # A stream may interleave ordinary tool logs with JSON records or strings.
                 # Parse every potential value, not only a whole-document or line envelope.
-                for document, start in _json_fragments(value):
-                    origin = carrier_line or value.count("\n", 0, start) + 1
+                carrier_offset = 0
+                carrier_origin = 1
+                for document, start in _json_fragments(indexed):
+                    if not carrier_line:
+                        # Fragment starts are ordered; never rescan an earlier source range.
+                        carrier_origin += value.count("\n", carrier_offset, start)
+                        carrier_offset = start
+                    origin = carrier_line or carrier_origin
                     if isinstance(document, (dict, list)):
                         yield json.dumps(document, ensure_ascii=False), origin
                     pending.append((document, origin))
@@ -122,6 +163,7 @@ def iter_secret_scan_views(text: str) -> Iterator[tuple[str, int | None]]:
 
 def _json_fragments(text: str):
     """Decode stream fragments with a content-derived work ceiling; exhaustion fails closed."""
+    text = _IndexedJsonText(text)
     decoder = json.JSONDecoder()
     work = 0
     budget = max(1_000_000, len(text) * 20)

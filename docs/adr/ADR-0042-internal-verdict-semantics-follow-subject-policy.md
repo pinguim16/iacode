@@ -6,8 +6,9 @@ Owners: GATE 4 — Delivery assurance
 
 ## Context
 
-The complete v1 verifier rejected three sealed historical checkpoints under the new internal-verdict
-guard. Their declared memory policies used the Red Team field for an internal battery; applying
+The complete v1 verifier reported three root-suite failures, including two sealed historical
+checkpoints rejected by the new internal-verdict guard. Their declared memory policies used the
+Red Team field for an internal battery; applying
 today's meaning retroactively invalidated immutable history. The history test correctly remained red.
 
 ## Decision

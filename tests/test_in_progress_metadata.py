@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import importlib.util
 import json
 import sys
 import tempfile
@@ -10,11 +11,48 @@ from unittest import mock
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
 
-from ledger_common import LedgerError, validate_schema, write_json
+from ledger_common import LedgerError, resolve_latest, validate_schema, write_json
 from sync_in_progress_metadata import synchronize
 
 
 class InProgressMetadataTests(unittest.TestCase):
+    def test_validation_runner_keeps_the_synchronizers_derived_state(self) -> None:
+        path = resolve_latest(ROOT) / "audit-harness/run_checkpoint_validation.py"
+        spec = importlib.util.spec_from_file_location("metadata_validation_runner", path)
+        assert spec is not None and spec.loader is not None
+        runner = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(runner)
+
+        class ReachedHashBoundary(Exception):
+            pass
+
+        with tempfile.TemporaryDirectory() as directory:
+            checkpoint = Path(directory)
+            write_json(checkpoint / "STATE.json", {
+                "status": "IN_PROGRESS", "gate": "GATE-4", "currentCommit": "HEAD",
+                "dirty": False, "lessonPreflight": {"lessonsConsidered": 1},
+            })
+            write_json(checkpoint / "RUN-METADATA.json", {"finalCommit": "old"})
+            write_json(checkpoint / "LESSON-PREFLIGHT.json", {
+                "gate": "GATE-4", "scope": "runner boundary", "lessonsConsidered": 7,
+                "lessonsApplicable": 3, "derivedRequirements": [{}, {}, {}],
+            })
+            # Stop before hash binding/validator execution; this measures metadata, not a fake PASS.
+            with (
+                mock.patch.object(runner, "ROOT", checkpoint),
+                mock.patch.object(runner, "CHECKPOINT", checkpoint),
+                mock.patch("sync_in_progress_metadata.run_git", return_value=(1, "")),
+                mock.patch.object(runner, "refresh_declared_hashes",
+                                  side_effect=ReachedHashBoundary),
+                self.assertRaises(ReachedHashBoundary),
+            ):
+                runner.main()
+            state = json.loads((checkpoint / "STATE.json").read_text())
+            self.assertTrue(state["dirty"])
+            self.assertEqual(state["lessonPreflight"]["lessonsConsidered"], 7)
+            self.assertEqual(state["lessonPreflight"]["derivedRequirements"], 3)
+            self.assertEqual(state["status"], "IN_PROGRESS")
+
     def test_lesson_timestamp_transport_rejects_locale_rendering(self) -> None:
         lesson = next(
             json.loads(line) for line in (ROOT / ".iacode/memory/lessons.jsonl").read_text(

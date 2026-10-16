@@ -1,5 +1,61 @@
 # Decisions
 
+## Post-v2 internal corrective decisions
+
+Cmd-0255 is a further LSN-0011 guardrail recurrence: inventory cmd-0254 was still running when
+validation began, and overlapping writers produced six strict hash refusals. Reopen the lesson,
+retain the red result, and await actual process completion for each dependent producer. A returned
+session ID means running, not finished. No validation input may be changed concurrently.
+
+Cmd-0259 then passed actual serial main-tree checkpoint validation with strict hash checks intact.
+Retain recurrence 13 and the failed cmd-0255 unchanged; restore the guarded lesson only with this
+executed resolution evidence. Finalize the IN_PROGRESS publication with current derived metadata.
+
+Adopt ADR-0044: capture declared process inputs before launching both recorder and Green Keeper
+children. Real rewriting and stable controls pass for both (cmd-0236). Preserve cmd-0200 unchanged
+and disqualify it as proof of launch bytes. Never manufacture its missing pre-image.
+
+The local broad run completed FAIL (812 loaded cases, five missing-method refusals) because suite
+and memory edits crossed its discovery epoch. Preserve LOCAL-ROOT-REGRESSION.json and escalate the
+LSN-0011 recurrence. Fresh provenance passed (cmd-0237); selected memory runs then correctly refused
+the stale generated index (cmd-0238/0239). Regenerate derived artifacts before fresh diagnostics.
+Freeze all source and memory during the new immutable v3 full verification. Selected greens never
+promote a red complete invocation, and no future Gate work starts before Gate 4 internal closure.
+
+The completed v2 verifier remains FAIL (41/42; root 801 cases, ten failures). Preserve its five
+artifacts byte-for-byte under attempts/published-v2. The collection component baseline reproduced
+nine incompatible historical subjects; ADR-0043 versions those semantics instead of rewriting any
+seal. Escalate LSN-0012 and LSN-0113 as repeated guardrail failures until whole-history proof passes.
+Cmd-0197 reproduced the remaining UTF-8 entry-point failure on unchanged published v2; cmd-0198
+passed the complete current Foundation controls after canonical stream setup. The broader old
+diagnostic was stopped as superseded (cmd-0200), never used as gate acceptance. Its two exact
+temporary directories remain after a native cleanup policy refusal; no alternate deletion path
+was attempted. The current full root suite and all-tag validation were not interrupted. Actual
+current whole-checkpoint validation then passed all 32 canonical published tags (cmd-0202).
+
+Keep scanner semantics fixed while eliminating measured prefix work in carrier and decoder-error
+metadata. Nine targeted controls pass the original cost bound and exact builtin coordinates.
+Keep failed-stage tails, but separately retain bounded failure identifiers without parameters or
+message bodies; real child-process controls prove long-tail retention, payload exclusion, truthful
+truncation and authoritative exit codes. Neither reporting enhancement nor profiling is an audit
+approval, independent review or second-tool validation. Full corrected-subject assurance remains due.
+
+The wrapper itself must retain synchronization output: cmd-0210 reproduced a stale cached STATE
+overwriting newly derived aggregates when dirty initially was false. Remove that redundant write;
+the canonical synchronizer already owns dirty state and derived metadata. Cmd-0214 passed five
+controls at the real wrapper boundary, stopping before hashes/child validation rather than faking a
+validator PASS. The LSN-0011 recurrence is retained and escalated; actual quiescent validation and
+the new immutable-subject full run remain required. The local broad root run began before this
+new boundary test existed and cannot prove its execution; the targeted test and future complete
+published suite must carry that evidence explicitly.
+
+Cmd-0225 separately exercised both wrappers against the real checkpoint validator in a complete
+owned working copy. The old wrapper retained stale aggregates and was refused; the current wrapper
+derived 115 considered / 114 applicable lessons and passed validation while remaining IN_PROGRESS.
+The source fingerprint was unchanged and the temporary clone was removed. This is a corrective
+bookkeeping regression, not a Red Team verdict, independent audit or promotion approval. Main-tree
+quiescent validation and all final assurance remain due.
+
 - Adopt ADR-0037 under the explicit owner authorization in AUTHORIZATION.md: intermediate closure
   is internal, not GATE_PASS, and independent M2 validation remains pending until its closure.
 - Preserve CP0009 at its original sealed tag. Its status, evidence and original handoff are historical.

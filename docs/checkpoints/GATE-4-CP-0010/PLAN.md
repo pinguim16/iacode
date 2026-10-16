@@ -29,3 +29,22 @@ corrections. Extend LSN-0091/GRD-0092 to the earlier sandbox output and artifact
 inline, full-stream, error, scanner-failure and clean-control paths, and record the structural
 decision. Run a replacement complete verifier on one new immutable published subject after the
 correction. No partial stage reuse can close this finding.
+
+## Post-v2 correction amendment
+
+Preserve both complete failed invocations. Version collection semantics by the immutable subject
+policy and execute actual current-tool validation over all canonical anchors. Reproduce the missing
+root case on exact published v2, configure every current capturing entry point with canonical UTF-8,
+and keep both guarded recurrence records. Preserve scanner views and budget rules while bounding
+carrier/decoder metadata work. Retain sanitized bounded failure identifiers beyond the verifier tail.
+Run the whole current root suite, lint and a new 42-stage published-subject verifier before any
+functional/requirement completion or ordered final assurance. No original assertion is weakened.
+
+## Frozen v3 publication boundary
+
+The mutable broad regression remains FAIL (cmd-0229). Selected fresh diagnostics corrected every
+identified cause, including source-epoch mismatch, stale derived memory and post-execution input
+hashing. Publish the corrected checkpoint as IN_PROGRESS, not as an approved Gate. Freeze source,
+tests, memory and policy throughout one complete non-fast 42-stage remote-clone v3 invocation.
+Its exact immutable subject, complete latest denominator and owned isolation are mandatory.
+Finish all evidence producers before metadata synchronization, declaration, hashing and validation.

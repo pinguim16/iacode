@@ -72,7 +72,8 @@
   "properties": {
     "schemaVersion": {
       "enum": [
-        "1.0.0"
+        "1.0.0",
+        "1.1.0"
       ]
     },
     "policy": {
@@ -87,5 +88,13 @@
       }
     }
   },
+  "allOf": [
+    {
+      "if": {"properties": {"schemaVersion": {"const": "1.0.0"}}},
+      "then": {"properties": {"suites": {"items": {
+        "properties": {"inputRepositories": false}
+      }}}}
+    }
+  ],
   "additionalProperties": false
 }

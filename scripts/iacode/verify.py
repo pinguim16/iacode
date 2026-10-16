@@ -44,6 +44,7 @@ import argparse
 import hashlib
 import json
 import os
+import re
 import subprocess
 import sys
 import time
@@ -472,6 +473,30 @@ def clear_stage_report(stage: Stage) -> None:
         resolved.unlink()
 
 
+def failure_diagnostics(output: str) -> dict[str, object]:
+    """Retain bounded case identities, never arbitrary subtest parameters or failure bodies."""
+    unittest_header = re.compile(
+        r"^(?:FAIL|ERROR): test_[A-Za-z0-9_]+ \([A-Za-z0-9_.]+\)"
+        r"(?: \(checkpoint='(?:GATE-[0-9]+|SETUP-[0-9]+)-CP-[0-9]+'\))?"
+    )
+    pytest_header = re.compile(r"^(?:FAILED|ERROR) [A-Za-z0-9_./\\:-]+")
+    headers: list[str] = []
+    total = 0
+    truncated = False
+    for line in output.splitlines():
+        match = unittest_header.match(line) or pytest_header.match(line)
+        if match is None:
+            continue
+        total += 1
+        header = match.group(0)
+        if len(headers) < 256 and len(header) <= 1024:
+            headers.append(header)
+        else:
+            truncated = True
+    return {"failureHeaders": headers, "failureHeaderCount": total,
+            "failureHeadersTruncated": truncated}
+
+
 def run(stage: Stage, quiet: bool, environment: Mapping[str, str] | None = None) -> Stage:
     log(f"--- {stage.name}: {stage.description}")
     clear_stage_report(stage)
@@ -489,6 +514,8 @@ def run(stage: Stage, quiet: bool, environment: Mapping[str, str] | None = None)
     )
     stage.duration_seconds = round(time.monotonic() - started, 1)
     stage.exit_code = completed.returncode
+    if not stage.ok:
+        stage.extra.update(failure_diagnostics(completed.stdout or ""))
     if completed.stdout:
         stage.output_tail = "\n".join(completed.stdout.strip().splitlines()[-25:])
         if not quiet:
@@ -596,6 +623,7 @@ def main() -> int:
                             "durationSeconds": stage.duration_seconds,
                             "result": "PASS" if stage.ok else "FAIL",
                             **({"outputTail": stage.output_tail} if not stage.ok else {}),
+                            **stage.extra,
                         }
                         for stage in executed
                     ],

@@ -82,4 +82,8 @@ def main() -> int:
 
 
 if __name__ == "__main__":
+    sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+    from ledger_common import use_utf8_stdout
+
+    use_utf8_stdout()
     raise SystemExit(main())

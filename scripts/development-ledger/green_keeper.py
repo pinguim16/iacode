@@ -87,13 +87,18 @@ def _run_gate(root: Path, checkpoint: Path, name: str, definition: dict[str, Any
     executable = list(argv)
     if executable[0] == "python":
         executable[0] = sys.executable
+    inputs = [item for item in argv[1:] if (root / item).is_file() or (root / item).is_dir()]
+    inputs_digest = [
+        {"path": item,
+         "hash": canonical_hash_path(root / item) if (root / item).is_file() else "ABSENT"}
+        for item in inputs
+    ]
     started = time.monotonic()
     completed = subprocess.run(
         executable, cwd=root, text=True, encoding="utf-8", errors="replace",
         stdout=subprocess.PIPE, stderr=subprocess.STDOUT, check=False)
     duration = int((time.monotonic() - started) * 1000)
     snapshot = git_snapshot(root)
-    inputs = [item for item in argv[1:] if (root / item).is_file() or (root / item).is_dir()]
     record = build_command_record(
         root,
         command=" ".join(argv),
@@ -102,11 +107,7 @@ def _run_gate(root: Path, checkpoint: Path, name: str, definition: dict[str, Any
         working_directory=str(root),
         runtime=runtime_label("python"),
         inputs=inputs,
-        inputs_digest=[
-            {"path": item,
-             "hash": canonical_hash_path(root / item) if (root / item).is_file() else "ABSENT"}
-            for item in inputs
-        ],
+        inputs_digest=inputs_digest,
         result="COMPLETED",
         result_code="OK",
         exit_code=completed.returncode,

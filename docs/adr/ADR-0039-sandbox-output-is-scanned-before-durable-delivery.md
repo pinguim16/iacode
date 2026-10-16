@@ -47,6 +47,11 @@ post-read controls stay in place as defense in depth.
 
 ## Consequences
 
+Transport metadata uses incremental carrier offsets and a lazy newline index for JSON parser
+error coordinates. This avoids repeated prefix scans without changing yielded text, parser
+messages/positions, finding locations, traversal, approvals or fail-closed work ceilings. Measured
+source-range and builtin-coordinate equivalence regressions remain mandatory (LSN-0114).
+
 The earlier durable transport and artifact paths cannot retain canonical credential-shaped output
 merely because evaluator storage later refuses it. Legitimate data matching the prohibited taxonomy
 also fails closed; this is a visible security failure, not a silent redaction that permits PASS.

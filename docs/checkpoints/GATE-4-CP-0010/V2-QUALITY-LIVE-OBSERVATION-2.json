@@ -1,0 +1,45 @@
+{
+  "runId": "01a142ae-59f9-7000-a94a-7779326be25a",
+  "state": "SUCCEEDED",
+  "subjectCommit": "4c53e4f788adc24e1b9cd9f581a7dc0d0f3c1340",
+  "observedAt": "2026-10-16T03:14:31.791383Z",
+  "completedChecks": [
+    {
+      "checkId": "q001-build",
+      "status": "PASSED"
+    },
+    {
+      "checkId": "q002-unit",
+      "status": "PASSED"
+    },
+    {
+      "checkId": "q003-lint",
+      "status": "PASSED"
+    },
+    {
+      "checkId": "q004-static",
+      "status": "PASSED"
+    },
+    {
+      "checkId": "q005-dependency-security",
+      "status": "PASSED"
+    },
+    {
+      "checkId": "q006-secret",
+      "status": "PASSED"
+    },
+    {
+      "checkId": "q007-diff-integrity",
+      "status": "PASSED"
+    }
+  ],
+  "observation": {
+    "prohibitedBytesAbsent": true,
+    "payloadsScanned": 122,
+    "workflowStatus": "COMPLETED",
+    "sandboxObjects": 0,
+    "failures": [],
+    "pendingActivityTypes": [],
+    "containmentRefusals": 0
+  }
+}

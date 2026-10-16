@@ -221,3 +221,5 @@ Expected set derived by: `policies.expected_requirement_refs over docs/GATE-4-CH
 | `LESSON-REQ-0110` | `lesson:LSN-0111` | yes | `NOT_STARTED` | Verify polling watcher cleanup must preserve completed checks and accepted cancellation | LESSON-PREFLIGHT.json LESSON-REQ-0110 |
 | `LESSON-REQ-0111` | `lesson:LSN-0112` | yes | `NOT_STARTED` | Verify canonical scanner consumers must share transport decoding, not only patterns | LESSON-PREFLIGHT.json LESSON-REQ-0111 |
 | `LESSON-REQ-0112` | `lesson:LSN-0113` | yes | `NOT_STARTED` | Verify stronger delivery controls must follow the immutable subject policy version | LESSON-PREFLIGHT.json LESSON-REQ-0112 |
+| `LESSON-REQ-0113` | `lesson:LSN-0114` | yes | `NOT_STARTED` | Verify transport line metadata must not repeatedly scan the source prefix | LESSON-PREFLIGHT.json LESSON-REQ-0113 |
+| `LESSON-REQ-0114` | `lesson:LSN-0115` | yes | `NOT_STARTED` | Verify a failing full verifier retains every bounded case identifier beyond its output tail | LESSON-PREFLIGHT.json LESSON-REQ-0114 |

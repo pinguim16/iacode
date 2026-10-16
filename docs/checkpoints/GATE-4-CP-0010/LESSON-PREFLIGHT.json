@@ -7,11 +7,11 @@
     "evaluator",
     "sandbox"
   ],
-  "generatedAt": "2026-10-15T23:21:26Z",
+  "generatedAt": "2026-10-16T05:53:38Z",
   "policyVersion": "2.0.0",
-  "inputsFingerprint": "6e2226f0ea2f87c84b5b788ca69bcd97180164969048f8b985d748f7c39b995d",
-  "lessonsConsidered": 113,
-  "lessonsApplicable": 112,
+  "inputsFingerprint": "4055d5caa2c8c1bdac2baa59601bd02f5a9a436fab2a2038c9068ed5715130f4",
+  "lessonsConsidered": 115,
+  "lessonsApplicable": 114,
   "applicable": [
     {
       "lessonId": "LSN-0001",
@@ -129,8 +129,8 @@
       "status": "GUARDED",
       "severity": "CRITICAL",
       "reasonApplicable": "applies to every Gate; category git; severity CRITICAL; already guarded, so the control must keep holding",
-      "requiredCheck": "Confirm that every sealed checkpoint still validates under the tooling this Gate changes.",
-      "requiredEvidence": "A passing historical compatibility run over every sealed tag.",
+      "requiredCheck": "Version every changed invariant by the subject's canonical policy, retain mandatory current downgrade controls, and validate all sealed tags with current tooling without altering subjects or narrowing membership.",
+      "requiredEvidence": "Passing current positive/negative and legacy policy controls plus actual current-tool validation over every canonical sealed anchor.",
       "derivedRequirementId": "LESSON-REQ-0012"
     },
     {
@@ -207,8 +207,8 @@
       "lessonId": "LSN-0020",
       "title": "Evidence produced from a dirty tree needs immutable input identity",
       "status": "GUARDED",
-      "severity": "HIGH",
-      "reasonApplicable": "applies to every Gate; category tooling; severity HIGH; already guarded, so the control must keep holding",
+      "severity": "CRITICAL",
+      "reasonApplicable": "applies to every Gate; category tooling; severity CRITICAL; already guarded, so the control must keep holding",
       "requiredCheck": "Confirm that every recorded command binds its inputs by content and that no timestamp in the ledger is later than the recorded end of the run.",
       "requiredEvidence": "A validation run over a ledger whose records all carry an input digest, with a post-commit validation record at the sealed commit.",
       "derivedRequirementId": "LESSON-REQ-0020"
@@ -347,8 +347,8 @@
       "lessonId": "LSN-0035",
       "title": "Captured subprocess output decoded or re-emitted with the platform codepage crashes the tool, not the work",
       "status": "GUARDED",
-      "severity": "HIGH",
-      "reasonApplicable": "applies to every Gate; category tooling; severity HIGH; already guarded, so the control must keep holding",
+      "severity": "CRITICAL",
+      "reasonApplicable": "applies to every Gate; category tooling; severity CRITICAL; already guarded, so the control must keep holding",
       "requiredCheck": "Confirm every subprocess capture this Gate adds states its decoder explicitly, that every entry point re-emitting captured output configures its own stream, and that the repository-wide control still passes.",
       "requiredEvidence": "The control-plane test that parses the tree, green, with the rule exercised against a rejecting case.",
       "derivedRequirementId": "LESSON-REQ-0034"
@@ -827,8 +827,8 @@
       "lessonId": "LSN-0083",
       "title": "A command that decodes captured UTF-8 must also configure the stream that re-emits it",
       "status": "GUARDED",
-      "severity": "HIGH",
-      "reasonApplicable": "applies to every Gate; category tooling; severity HIGH; already guarded, so the control must keep holding",
+      "severity": "CRITICAL",
+      "reasonApplicable": "applies to every Gate; category tooling; severity CRITICAL; already guarded, so the control must keep holding",
       "requiredCheck": "For every executable command that captures text from a child process and prints it, configure both the child decoder and the parent output stream explicitly.",
       "requiredEvidence": "A repository-wide entry-point scan plus a rejecting fixture for an unconfigured captured-output command.",
       "derivedRequirementId": "LESSON-REQ-0082"
@@ -1127,11 +1127,31 @@
       "lessonId": "LSN-0113",
       "title": "Stronger delivery controls must follow the immutable subject policy version",
       "status": "GUARDED",
-      "severity": "HIGH",
-      "reasonApplicable": "applies to every Gate; category checkpoint; severity HIGH; already guarded, so the control must keep holding",
-      "requiredCheck": "Version the strict invariant in canonical memory policy 2.4.0, require that live policy through a mandatory regression, preserve older subject semantics and validate every affected canonical sealed anchor.",
-      "requiredEvidence": "A valid positive control, a premise check and behavioral proof at the actual target; the complete current mandatory suite.",
+      "severity": "CRITICAL",
+      "reasonApplicable": "applies to every Gate; category checkpoint; severity CRITICAL; already guarded, so the control must keep holding",
+      "requiredCheck": "Version every changed invariant by the subject's canonical policy, retain mandatory current downgrade controls, and validate all sealed tags with current tooling without altering subjects or narrowing membership.",
+      "requiredEvidence": "Passing current positive/negative and legacy policy controls plus actual current-tool validation over every canonical sealed anchor.",
       "derivedRequirementId": "LESSON-REQ-0112"
+    },
+    {
+      "lessonId": "LSN-0114",
+      "title": "Transport line metadata must not repeatedly scan the source prefix",
+      "status": "GUARDED",
+      "severity": "MEDIUM",
+      "reasonApplicable": "applies to every Gate; category performance; severity MEDIUM; already guarded, so the control must keep holding",
+      "requiredCheck": "Run the measured source-range regression and all existing transport, secret-boundary and immutable-bundle controls without weakening their rules.",
+      "requiredEvidence": "A causal red range-work measurement, unchanged encoded finding and line controls, a green measured regression and the complete mandatory suite.",
+      "derivedRequirementId": "LESSON-REQ-0113"
+    },
+    {
+      "lessonId": "LSN-0115",
+      "title": "A failing full verifier retains every bounded case identifier beyond its output tail",
+      "status": "GUARDED",
+      "severity": "MEDIUM",
+      "reasonApplicable": "applies to every Gate; category tooling; severity MEDIUM; already guarded, so the control must keep holding",
+      "requiredCheck": "Run actual-process long-tail, parameter-exclusion, bounded-count and successful-child controls; retain original stage denominator and exit-code semantics.",
+      "requiredEvidence": "A causal red diagnostic regression followed by green controls and the full verifier.",
+      "derivedRequirementId": "LESSON-REQ-0114"
     }
   ],
   "derivedRequirements": [
@@ -1217,7 +1237,7 @@
       "lessonId": "LSN-0012",
       "description": "Verify sealed checkpoints and their tags are immutable, and tooling must keep validating them",
       "mandatory": true,
-      "requiredEvidence": "A passing historical compatibility run over every sealed tag."
+      "requiredEvidence": "Passing current positive/negative and legacy policy controls plus actual current-tool validation over every canonical sealed anchor."
     },
     {
       "id": "LESSON-REQ-0013",
@@ -1917,7 +1937,21 @@
       "lessonId": "LSN-0113",
       "description": "Verify stronger delivery controls must follow the immutable subject policy version",
       "mandatory": true,
-      "requiredEvidence": "A valid positive control, a premise check and behavioral proof at the actual target; the complete current mandatory suite."
+      "requiredEvidence": "Passing current positive/negative and legacy policy controls plus actual current-tool validation over every canonical sealed anchor."
+    },
+    {
+      "id": "LESSON-REQ-0113",
+      "lessonId": "LSN-0114",
+      "description": "Verify transport line metadata must not repeatedly scan the source prefix",
+      "mandatory": true,
+      "requiredEvidence": "A causal red range-work measurement, unchanged encoded finding and line controls, a green measured regression and the complete mandatory suite."
+    },
+    {
+      "id": "LESSON-REQ-0114",
+      "lessonId": "LSN-0115",
+      "description": "Verify a failing full verifier retains every bounded case identifier beyond its output tail",
+      "mandatory": true,
+      "requiredEvidence": "A causal red diagnostic regression followed by green controls and the full verifier."
     }
   ]
 }

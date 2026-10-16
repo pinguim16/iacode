@@ -4,9 +4,9 @@
 - Scope: `internal audit and milestone cadence alignment`
 - Technologies: _none declared_
 - Modules: `evaluator`, `sandbox`
-- Generated: `2026-10-15T23:21:26Z`
-- Lessons considered: 113
-- Lessons applicable: 112
+- Generated: `2026-10-16T05:53:38Z`
+- Lessons considered: 115
+- Lessons applicable: 114
 
 Every applicable lesson below is a requirement of this Gate. The derived identifiers must
 appear in `REQUIREMENTS-MATRIX.json`, and the Delivery Completeness Validator fails the
@@ -25,7 +25,7 @@ delivery when one is absent.
 | `LSN-0009` A red gate requires rework, never a waiver, and never a weakened check | `GUARDED` | CRITICAL | `LESSON-REQ-0009` | Run the Green Keeper until every mandatory gate is green, repairing causes rather than checks. |
 | `LSN-0010` A recorded command must carry runtime, working directory, commit and purpose to be replayable | `GUARDED` | HIGH | `LESSON-REQ-0010` | Record commands with the tooling so each one is executable from its declared working directory. |
 | `LSN-0011` A control over a checkpoint's own evidence must be scoped to the moment it matters | `GUARDED` | CRITICAL | `LESSON-REQ-0011` | Check whether any new control would be invalidated by the evidence its own run produces. |
-| `LSN-0012` Sealed checkpoints and their tags are immutable, and tooling must keep validating them | `GUARDED` | CRITICAL | `LESSON-REQ-0012` | Confirm that every sealed checkpoint still validates under the tooling this Gate changes. |
+| `LSN-0012` Sealed checkpoints and their tags are immutable, and tooling must keep validating them | `GUARDED` | CRITICAL | `LESSON-REQ-0012` | Version every changed invariant by the subject's canonical policy, retain mandatory current downgrade controls, and validate all sealed tags with current tooling without altering subjects or narrowing membership. |
 | `LSN-0013` An installed capability must be detected by resolved path, not by a bare command lookup | `CONFIRMED` | HIGH | `LESSON-REQ-0013` | When this Gate records a capability, resolve the executable path before concluding anything about availability. |
 | `LSN-0014` Evidence must be recorded as it happens, not reconstructed at the end of a run | `GUARDED` | MEDIUM | `LESSON-REQ-0014` | Record each command through the tooling while the work happens. |
 | `LSN-0015` Every positive terminal status needs one shared promotion invariant | `GUARDED` | CRITICAL | `LESSON-REQ-0015` | Confirm that every positive terminal status this Gate can produce is covered by the shared promotion invariant, not only the status this delivery ends at. |
@@ -33,7 +33,7 @@ delivery when one is absent.
 | `LSN-0017` A completeness denominator must come from a source the delivery does not own | `GUARDED` | CRITICAL | `LESSON-REQ-0017` | Confirm that the expected requirement set is derived independently and compared as a set, not only as a count. |
 | `LSN-0018` A structured reference must be resolved, not merely well typed | `GUARDED` | CRITICAL | `LESSON-REQ-0018` | Confirm that every reference this Gate records is resolved by a tool, not accepted as a string. |
 | `LSN-0019` A derived artifact must carry a fingerprint of the inputs that produced it | `GUARDED` | HIGH | `LESSON-REQ-0019` | Confirm that every derived artifact this Gate stores can be recomputed and is recomputed during validation. |
-| `LSN-0020` Evidence produced from a dirty tree needs immutable input identity | `GUARDED` | HIGH | `LESSON-REQ-0020` | Confirm that every recorded command binds its inputs by content and that no timestamp in the ledger is later than the recorded end of the run. |
+| `LSN-0020` Evidence produced from a dirty tree needs immutable input identity | `GUARDED` | CRITICAL | `LESSON-REQ-0020` | Confirm that every recorded command binds its inputs by content and that no timestamp in the ledger is later than the recorded end of the run. |
 | `LSN-0021` Sealed history needs an anchor outside the content it describes | `GUARDED` | CRITICAL | `LESSON-REQ-0021` | Confirm that the integrity chain still resolves for every sealed checkpoint and that this Gate anchors every sealed predecessor. |
 | `LSN-0022` An authoritative count must be derived once, never maintained by hand twice | `GUARDED` | CRITICAL | `LESSON-REQ-0022` | Confirm that every count used as evidence in this Gate is derived from one source and verified where it is quoted. |
 | `LSN-0023` A lesson must cite a source that actually records the finding it claims | `GUARDED` | MEDIUM | `LESSON-REQ-0023` | Confirm that every lesson this Gate writes or updates cites a checkpoint that records the finding identifier it names. |
@@ -47,7 +47,7 @@ delivery when one is absent.
 | `LSN-0032` A control written while one Gate was the only Gate stops being a control when the next one starts | `GUARDED` | HIGH | `LESSON-REQ-0031` | For every control this Gate adds or changes, confirm that what it judges is derived from a canonical source rather than written into the control, and that it would still be correct for the Gate after this one. |
 | `LSN-0033` A value bound in middleware is absent in the handlers that run outside it | `GUARDED` | MEDIUM | `LESSON-REQ-0032` | For every cross-cutting value this Gate binds in middleware, confirm it is present in the responses produced above that middleware, including error responses. |
 | `LSN-0034` Re-deriving what the framework already computed diverges from the framework | `GUARDED` | MEDIUM | `LESSON-REQ-0033` | Where this Gate derives a value the framework already computes, confirm it reads the framework's result rather than recomputing it, and that a test asserts the value rather than only its presence. |
-| `LSN-0035` Captured subprocess output decoded or re-emitted with the platform codepage crashes the tool, not the work | `GUARDED` | HIGH | `LESSON-REQ-0034` | Confirm every subprocess capture this Gate adds states its decoder explicitly, that every entry point re-emitting captured output configures its own stream, and that the repository-wide control still passes. |
+| `LSN-0035` Captured subprocess output decoded or re-emitted with the platform codepage crashes the tool, not the work | `GUARDED` | CRITICAL | `LESSON-REQ-0034` | Confirm every subprocess capture this Gate adds states its decoder explicitly, that every entry point re-emitting captured output configures its own stream, and that the repository-wide control still passes. |
 | `LSN-0036` A gate that runs inside an image measures the image, not the source | `GUARDED` | HIGH | `LESSON-REQ-0035` | For every mandatory gate this Gate adds or changes, confirm that a gate executing inside a built artefact rebuilds that artefact before measuring, and that the repository-wide control still passes. |
 | `LSN-0037` A shared control that names an identifier the repository derives stops being a control when that identifier moves | `GUARDED` | MEDIUM | `LESSON-REQ-0036` | Confirm that every control this Gate adds which reasons about an identifier the repository derives -- the current Gate, the newest checkpoint, the head migration -- derives it rather than naming it, and that the repository-wide control still passes. |
 | `LSN-0038` Two representations of one concept in one module disagree, and the safer one loses | `GUARDED` | MEDIUM | `LESSON-REQ-0037` | Where this Gate defines a classification twice — once anchored and once embedded — confirm one definition is authoritative and the other derives from it or is removed. |
@@ -95,7 +95,7 @@ delivery when one is absent.
 | `LSN-0080` A failed verification stage must not leave an older PASS report addressable | `GUARDED` | HIGH | `LESSON-REQ-0079` | Whenever a verification stage writes to a reusable report path, prove the old artifact is removed before execution and cannot survive a failed rerun as current evidence. |
 | `LSN-0081` Canonical requirement evidence must name a test the repository actually discovers | `GUARDED` | HIGH | `LESSON-REQ-0080` | Before a canonical checklist is accepted, resolve every named test identity against the suite registry rather than treating prose-like test labels as evidence. |
 | `LSN-0082` Engineering memory cannot depend on an ephemeral generated report | `GUARDED` | CRITICAL | `LESSON-REQ-0081` | Keep organizational memory evidence in committed source or checkpoint-owned file artifacts; reject unsupported evidence kinds and references to regenerable runtime output. |
-| `LSN-0083` A command that decodes captured UTF-8 must also configure the stream that re-emits it | `GUARDED` | HIGH | `LESSON-REQ-0082` | For every executable command that captures text from a child process and prints it, configure both the child decoder and the parent output stream explicitly. |
+| `LSN-0083` A command that decodes captured UTF-8 must also configure the stream that re-emits it | `GUARDED` | CRITICAL | `LESSON-REQ-0082` | For every executable command that captures text from a child process and prints it, configure both the child decoder and the parent output stream explicitly. |
 | `LSN-0084` A historical Gate documentation test must derive the current entry-point state | `GUARDED` | MEDIUM | `LESSON-REQ-0083` | When a predecessor regression test inspects a current entry point, derive current lifecycle identifiers and keep only genuinely historical references fixed. |
 | `LSN-0085` A source-based control must assert syntax semantics rather than formatter layout | `GUARDED` | MEDIUM | `LESSON-REQ-0084` | When a control judges source structure, parse the language representation and compare semantic nodes instead of binding the rule to formatter whitespace or quote style. |
 | `LSN-0086` A subprocess assertion must preserve the exit code when both streams are empty | `GUARDED` | MEDIUM | `LESSON-REQ-0085` | For every subprocess-backed assertion, preserve return code and a non-empty diagnostic even when the child emits nothing; never add a retry that could conceal the outcome. |
@@ -125,7 +125,9 @@ delivery when one is absent.
 | `LSN-0110` A timed-out live proof retains bounded diagnostics before owned cleanup | `GUARDED` | MEDIUM | `LESSON-REQ-0109` | Keep the deadline unchanged, write a red report with sanitized history failure metadata and pending activity types before cleanup, and never continue adverse cases after a failed clean control. |
 | `LSN-0111` Polling watcher cleanup must preserve completed checks and accepted cancellation | `GUARDED` | HIGH | `LESSON-REQ-0110` | Accept typed activity cancellation only when this cleanup requested it, propagate unrelated and precompleted failures, and recheck active handle lifetime after durable reads without losing the accepted cancellation flag. |
 | `LSN-0112` Canonical scanner consumers must share transport decoding, not only patterns | `GUARDED` | HIGH | `LESSON-REQ-0111` | Use the identical bounded in-memory transport views for runtime and publication, retain exact component-digest review, never expose values, and keep raw/encoded clean and negative controls. |
-| `LSN-0113` Stronger delivery controls must follow the immutable subject policy version | `GUARDED` | HIGH | `LESSON-REQ-0112` | Version the strict invariant in canonical memory policy 2.4.0, require that live policy through a mandatory regression, preserve older subject semantics and validate every affected canonical sealed anchor. |
+| `LSN-0113` Stronger delivery controls must follow the immutable subject policy version | `GUARDED` | CRITICAL | `LESSON-REQ-0112` | Version every changed invariant by the subject's canonical policy, retain mandatory current downgrade controls, and validate all sealed tags with current tooling without altering subjects or narrowing membership. |
+| `LSN-0114` Transport line metadata must not repeatedly scan the source prefix | `GUARDED` | MEDIUM | `LESSON-REQ-0113` | Run the measured source-range regression and all existing transport, secret-boundary and immutable-bundle controls without weakening their rules. |
+| `LSN-0115` A failing full verifier retains every bounded case identifier beyond its output tail | `GUARDED` | MEDIUM | `LESSON-REQ-0114` | Run actual-process long-tail, parameter-exclusion, bounded-count and successful-child controls; retain original stage denominator and exit-code semantics. |
 
 ## Why each lesson applies
 
@@ -209,8 +211,8 @@ delivery when one is absent.
 ### LSN-0012 — Sealed checkpoints and their tags are immutable, and tooling must keep validating them
 
 - Reason: applies to every Gate; category git; severity CRITICAL; already guarded, so the control must keep holding
-- Required check: Confirm that every sealed checkpoint still validates under the tooling this Gate changes.
-- Required evidence: A passing historical compatibility run over every sealed tag.
+- Required check: Version every changed invariant by the subject's canonical policy, retain mandatory current downgrade controls, and validate all sealed tags with current tooling without altering subjects or narrowing membership.
+- Required evidence: Passing current positive/negative and legacy policy controls plus actual current-tool validation over every canonical sealed anchor.
 - Derived requirement: `LESSON-REQ-0012`
 
 ### LSN-0013 — An installed capability must be detected by resolved path, not by a bare command lookup
@@ -264,7 +266,7 @@ delivery when one is absent.
 
 ### LSN-0020 — Evidence produced from a dirty tree needs immutable input identity
 
-- Reason: applies to every Gate; category tooling; severity HIGH; already guarded, so the control must keep holding
+- Reason: applies to every Gate; category tooling; severity CRITICAL; already guarded, so the control must keep holding
 - Required check: Confirm that every recorded command binds its inputs by content and that no timestamp in the ledger is later than the recorded end of the run.
 - Required evidence: A validation run over a ledger whose records all carry an input digest, with a post-commit validation record at the sealed commit.
 - Derived requirement: `LESSON-REQ-0020`
@@ -362,7 +364,7 @@ delivery when one is absent.
 
 ### LSN-0035 — Captured subprocess output decoded or re-emitted with the platform codepage crashes the tool, not the work
 
-- Reason: applies to every Gate; category tooling; severity HIGH; already guarded, so the control must keep holding
+- Reason: applies to every Gate; category tooling; severity CRITICAL; already guarded, so the control must keep holding
 - Required check: Confirm every subprocess capture this Gate adds states its decoder explicitly, that every entry point re-emitting captured output configures its own stream, and that the repository-wide control still passes.
 - Required evidence: The control-plane test that parses the tree, green, with the rule exercised against a rejecting case.
 - Derived requirement: `LESSON-REQ-0034`
@@ -698,7 +700,7 @@ delivery when one is absent.
 
 ### LSN-0083 — A command that decodes captured UTF-8 must also configure the stream that re-emits it
 
-- Reason: applies to every Gate; category tooling; severity HIGH; already guarded, so the control must keep holding
+- Reason: applies to every Gate; category tooling; severity CRITICAL; already guarded, so the control must keep holding
 - Required check: For every executable command that captures text from a child process and prints it, configure both the child decoder and the parent output stream explicitly.
 - Required evidence: A repository-wide entry-point scan plus a rejecting fixture for an unconfigured captured-output command.
 - Derived requirement: `LESSON-REQ-0082`
@@ -908,7 +910,21 @@ delivery when one is absent.
 
 ### LSN-0113 — Stronger delivery controls must follow the immutable subject policy version
 
-- Reason: applies to every Gate; category checkpoint; severity HIGH; already guarded, so the control must keep holding
-- Required check: Version the strict invariant in canonical memory policy 2.4.0, require that live policy through a mandatory regression, preserve older subject semantics and validate every affected canonical sealed anchor.
-- Required evidence: A valid positive control, a premise check and behavioral proof at the actual target; the complete current mandatory suite.
+- Reason: applies to every Gate; category checkpoint; severity CRITICAL; already guarded, so the control must keep holding
+- Required check: Version every changed invariant by the subject's canonical policy, retain mandatory current downgrade controls, and validate all sealed tags with current tooling without altering subjects or narrowing membership.
+- Required evidence: Passing current positive/negative and legacy policy controls plus actual current-tool validation over every canonical sealed anchor.
 - Derived requirement: `LESSON-REQ-0112`
+
+### LSN-0114 — Transport line metadata must not repeatedly scan the source prefix
+
+- Reason: applies to every Gate; category performance; severity MEDIUM; already guarded, so the control must keep holding
+- Required check: Run the measured source-range regression and all existing transport, secret-boundary and immutable-bundle controls without weakening their rules.
+- Required evidence: A causal red range-work measurement, unchanged encoded finding and line controls, a green measured regression and the complete mandatory suite.
+- Derived requirement: `LESSON-REQ-0113`
+
+### LSN-0115 — A failing full verifier retains every bounded case identifier beyond its output tail
+
+- Reason: applies to every Gate; category tooling; severity MEDIUM; already guarded, so the control must keep holding
+- Required check: Run actual-process long-tail, parameter-exclusion, bounded-count and successful-child controls; retain original stage denominator and exit-code semantics.
+- Required evidence: A causal red diagnostic regression followed by green controls and the full verifier.
+- Derived requirement: `LESSON-REQ-0114`

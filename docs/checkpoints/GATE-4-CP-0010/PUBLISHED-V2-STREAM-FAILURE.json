@@ -1,0 +1,27 @@
+{
+  "schemaVersion": "1.0.0",
+  "generatedAt": "2026-10-16T04:01:32Z",
+  "subjectCommit": "4c53e4f788adc24e1b9cd9f581a7dc0d0f3c1340",
+  "tag": "iacode-subjects/GATE-4-CP-0010-internal-corrective-v2",
+  "scope": "diagnostic only; fail-fast is not gate acceptance",
+  "command": [
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-p",
+    "test_gate0_foundation*",
+    "-k",
+    "test_every_tool_that_re_emits_captured_output_configures_its_own_stream",
+    "-v"
+  ],
+  "exitCode": 1,
+  "failureHeaders": [
+    "FAIL: test_every_tool_that_re_emits_captured_output_configures_its_own_stream (test_gate0_foundation.SubprocessDecodingTests.test_every_tool_that_re_emits_captured_output_configures_its_own_stream)"
+  ],
+  "diagnostic": "FAIL: test_every_tool_that_re_emits_captured_output_configures_its_own_stream (test_gate0_foundation.SubprocessDecodingTests.test_every_tool_that_re_emits_captured_output_configures_its_own_stream)\nReading a child's UTF-8 is half of it: writing it back out encodes again.\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-cp0010-root-diagnostic-3jllod_k\\repository\\tests\\test_gate0_foundation.py\", line 473, in test_every_tool_that_re_emits_captured_output_configures_its_own_stream\n    self.assertEqual(offenders, [], \"entry points that re-emit captured output unconfigured\")\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: Lists differ: ['docs/checkpoints/GATE-4-CP-0010/audit-ha[408 chars].py'] != []\n\nFirst list contains 6 additional elements.\nFirst extra element 0:\n'docs/checkpoints/GATE-4-CP-0010/audit-harness/audit_policy_compatibility.py'\n\n+ []\n- ['docs/checkpoints/GATE-4-CP-0010/audit-harness/audit_policy_compatibility.py',\n-  'docs/checkpoints/GATE-4-CP-0010/audit-harness/audit_subject_bundle.py',\n-  'docs/checkpoints/GATE-4-CP-0010/audit-harness/complete_requirements.py',\n-  'docs/checkpoints/GATE-4-CP-0010/audit-harness/inspect_historical_scan_views.py',\n-  'docs/checkpoints/GATE-4-CP-0010/audit-harness/inspect_owned_output.py',\n-  'docs/checkpoints/GATE-4-CP-0010/audit-harness/run_full_verification.py'] : entry points that re-emit captured output unconfigured\n\n----------------------------------------------------------------------\nRan 1 test in 1.557s\n\nFAILED (failures=1)\n",
+  "gitStateUnchanged": true,
+  "temporaryCloneRemoved": true,
+  "result": "FAILURE_REPRODUCED"
+}

@@ -24,6 +24,29 @@ serialization and live cancellation/cleanup proof passed. Commands and reports c
 The full published verifier, fresh ordered Green Keeper, completeness, internal A-T Red Team,
 clean-clone mirror, terminal internal closure, sealing and publication remain pending. Gate 5 has
 not started. Independent M2 review, independent Red Team and second-tool validation remain pending.
+The v2 verifier completed FAIL with 41/42 stages green and ten root failures across 801 cases.
+All five reports are archived unchanged in attempts/published-v2. A same-session all-32-anchor
+component probe reproduced nine collection incompatibilities; policy 1.1.0 now retains historical
+semantics while keeping current exclusions strict. Cmd-0197 reproduced the exact published-v2
+UTF-8 failure and cmd-0198 passed all 29 current Foundation controls after correction.
+Actual current-tool validation passed all 32 canonical published tags (cmd-0202). G4-INT-017,
+G4-INT-019 and G4-INT-021 are fixed pending final assurance; v2 remains failed and cannot be promoted.
+
+G4-INT-022's stale wrapper write is corrected. Five current-checkpoint boundary controls passed,
+and actual validation in a complete owned copy refused the legacy wrapper but accepted the current
+one (cmd-0225). The copy was removed. The local broad run completed FAIL: 812 loaded cases and five
+mixed-epoch refusals after a late source/registry edit (LOCAL-ROOT-REGRESSION.json). The new published full verifier and fresh
+Green Keeper must execute the complete latest suite before final closure.
+
+ADR-0044 binds both process owners to pre-execution input digests. Both real rewriting/stable
+controls pass (cmd-0236); cmd-0200 remains qualified and non-successful, without invented launch
+bytes. The selected cmd-0238/0239 memory runs refused a stale generated LESSONS.md; regenerate it
+before fresh diagnostics. No partial or selected green result may promote any failed broad run.
+
+The regenerated index is valid (cmd-0240); the complete selected set of 27 memory-policy, command
+binding and provenance controls passed in one fresh process (cmd-0246). Final-source transport,
+collection, metadata, input-snapshot and failure-diagnostic modules passed (cmd-0241 through 0245).
+Their causal greens do not replace full v3 verification or the ordered closure sequence.
 
 ## Current repository state
 
@@ -83,7 +106,7 @@ See RISKS.md.
   subjects passed current-tool remote-clone validation with unchanged Git state (cmd-0140).
 - Cmd-0156 passed all 35 selected promotion and memory-policy controls, including the honest sealed
   subject/audit sequence and refusal to substitute a fresh-session audit for external validation.
-- The latest derived set contains 105 canonical and 112 applicable lesson obligations. Requirements
+- The latest derived set contains 105 canonical and 114 applicable lesson obligations. Requirements
   are not marked complete until the corrected immutable-subject verifier passes.
 - Functional acceptance now derives the original twelve requirements plus mandatory output
   containment. The guarded writer complete_functional_acceptance.py may run only after a new
@@ -104,8 +127,16 @@ INTERNAL_GATE_PASS before starting the explicitly authorized Gate 5 separately.
 
 ## Exact continuation sequence
 
-Finish subject reconstruction, publish one complete implementation subject, run the whole verifier
-once from its remote detached tag, bind requirements to evidence, execute fresh Green Keeper,
+The corrected immutable v2 subject is published at 4c53e4f788adc24e1b9cd9f581a7dc0d0f3c1340 with
+tag iacode-subjects/GATE-4-CP-0010-internal-corrective-v2. Its single full remote-clone verifier is
+completed FAIL and archived. All ten failure causes have causal reproductions; retain every red result, complete
+versioned collection and scanner metadata proofs, then publish a new immutable subject and execute
+all 42 stages in one non-fast invocation. A publication or targeted control is not approval.
+Cmd-0162/VALIDATION-PERFORMANCE.json captured nonblocking stack frames in credential scanning during
+bundle reconstruction and digest/size verification. The profiler was temporary and content-verified;
+no locals or tested-code changes were made. This does not assert a passing or independent verdict.
+
+After the complete passing execution, bind requirements to evidence, execute fresh Green Keeper,
 completeness, internal Red Team and the full clean-clone mirror in that order. Finalize internal
 closure, commit, seal, push and validate from a fresh published checkout. Then create Gate 5's own
 checkpoint, specification and requirement set before its implementation.

@@ -1,5 +1,5 @@
 {
-  "schemaVersion": "1.0.0",
+  "schemaVersion": "1.1.0",
   "policy": "The suites a delivery is measured by are declared here, not discovered by guesswork and not chosen by the caller. A suite that counts contributes its discovered cases to the TESTS denominator and its case identifiers to evidence resolution, so a test reference cannot resolve against a suite nobody declared and a suite cannot be dropped from the denominator by an invocation. A suite that does not count says why, because a silent omission and a justified one are different states.",
   "suites": [
     {

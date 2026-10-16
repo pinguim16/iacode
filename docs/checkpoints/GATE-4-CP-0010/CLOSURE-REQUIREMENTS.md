@@ -231,6 +231,8 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 | `LESSON-REQ-0110` | LESSON | `lesson:LSN-0111` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify polling watcher cleanup must preserve completed checks and accepted cancellation |
 | `LESSON-REQ-0111` | LESSON | `lesson:LSN-0112` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify canonical scanner consumers must share transport decoding, not only patterns |
 | `LESSON-REQ-0112` | LESSON | `lesson:LSN-0113` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify stronger delivery controls must follow the immutable subject policy version |
+| `LESSON-REQ-0113` | LESSON | `lesson:LSN-0114` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify transport line metadata must not repeatedly scan the source prefix |
+| `LESSON-REQ-0114` | LESSON | `lesson:LSN-0115` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify a failing full verifier retains every bounded case identifier beyond its output tail |
 
 ## Evidence
 
@@ -2614,6 +2616,28 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 
 - Source reference: LESSON-PREFLIGHT.json LESSON-REQ-0112
 - Description: Verify stronger delivery controls must follow the immutable subject policy version
+- Implementation: _none_
+- Test: _none_
+- Negative test: _none_
+- Documentation: _none_
+- Validation: _none_
+- Guardrail: _none_
+
+### LESSON-REQ-0113 - lesson:LSN-0114
+
+- Source reference: LESSON-PREFLIGHT.json LESSON-REQ-0113
+- Description: Verify transport line metadata must not repeatedly scan the source prefix
+- Implementation: _none_
+- Test: _none_
+- Negative test: _none_
+- Documentation: _none_
+- Validation: _none_
+- Guardrail: _none_
+
+### LESSON-REQ-0114 - lesson:LSN-0115
+
+- Source reference: LESSON-PREFLIGHT.json LESSON-REQ-0114
+- Description: Verify a failing full verifier retains every bounded case identifier beyond its output tail
 - Implementation: _none_
 - Test: _none_
 - Negative test: _none_
