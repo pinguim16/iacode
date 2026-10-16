@@ -2861,6 +2861,44 @@
       "sourceRef": "lesson:LSN-0131",
       "description": "Verify raw evidence digests require byte-preserving Git export, not text normalization",
       "mandatory": true,
+      "status": "PARTIAL",
+      "implementationEvidence": [
+        "checkpoint:PROGRESS.md"
+      ],
+      "testEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:PLAN.md",
+        "checkpoint:BASELINE.md"
+      ],
+      "validationEvidence": [],
+      "justification": null,
+      "notes": "Partial implementation/entry evidence only. The complete client, fresh install, functional proof and full assurance remain pending. No delivery PASS is inferred."
+    },
+    {
+      "id": "LESSON-REQ-0131",
+      "source": "LESSON-PREFLIGHT.json LESSON-REQ-0131",
+      "sourceRef": "lesson:LSN-0132",
+      "description": "Verify owned Git clones need read-only-aware cleanup, not native-profile lock retry",
+      "mandatory": true,
+      "status": "PARTIAL",
+      "implementationEvidence": [
+        "checkpoint:PROGRESS.md"
+      ],
+      "testEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:PLAN.md",
+        "checkpoint:BASELINE.md"
+      ],
+      "validationEvidence": [],
+      "justification": null,
+      "notes": "Partial implementation/entry evidence only. The complete client, fresh install, functional proof and full assurance remain pending. No delivery PASS is inferred."
+    },
+    {
+      "id": "LESSON-REQ-0132",
+      "source": "LESSON-PREFLIGHT.json LESSON-REQ-0132",
+      "sourceRef": "lesson:LSN-0133",
+      "description": "Verify shared field names do not imply shared schema types",
+      "mandatory": true,
       "status": "NOT_STARTED",
       "implementationEvidence": [],
       "testEvidence": [],

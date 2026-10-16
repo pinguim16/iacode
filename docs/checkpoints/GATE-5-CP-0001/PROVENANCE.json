@@ -33,5 +33,21 @@
       "evidence": "PLAN.md, docs/adr/ADR-0046-desktop-clients-are-authenticated-runtime-adapters.md, FILES.json, COMMANDS.jsonl",
       "notes": "Only the declared modifications are covered. No provider credential enters a sandbox or ledger. Official VS Code documentation informed API choices and is linked by ADR-0046; no third-party source was copied into a runtime client."
     }
+    ,{
+      "artifact": "artifacts/clients/iacode-cli-0.1.0.tgz, artifacts/clients/iacode-0.1.0.vsix and artifacts/clients/BUILD.json",
+      "sourceType": "deterministic closed-map build from repository-owned client source",
+      "provider": "local build execution; source is AI-assisted as classified above",
+      "model": "not-applicable (deterministic local build)",
+      "ownership": "project-authored client source; no third-party ownership transfer inferred",
+      "license": "UNLICENSED as declared by both client manifests; no new license grant inferred",
+      "rights": {
+        "storageAllowed": true,
+        "ragAllowed": false,
+        "trainingAllowed": false,
+        "distillationAllowed": false
+      },
+      "evidence": "command:cmd-0232; artifacts/clients/BUILD.json; runtime commit 76e659e5cfb0db1bf7dd50c6d3a04ec101e9fce0",
+      "notes": "The build manifest binds every packaged source hash and raw artifact digest. No external dependency, Node/VS Code binary, acceptance driver, workspace source or credential is bundled. Build success alone is not functional acceptance or a Gate verdict."
+    }
   ]
 }

@@ -3582,6 +3582,52 @@
       "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0130",
       "description": "Verify raw evidence digests require byte-preserving Git export, not text normalization",
       "mandatory": true,
+      "implementationStatus": "IN_PROGRESS",
+      "finalStatus": "PARTIAL",
+      "justification": null,
+      "notes": "Partial implementation/entry evidence only. The complete client, fresh install, functional proof and full assurance remain pending. No delivery PASS is inferred.",
+      "implementationEvidence": [
+        "checkpoint:PROGRESS.md"
+      ],
+      "testEvidence": [],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:PLAN.md",
+        "checkpoint:BASELINE.md"
+      ],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "LESSON-REQ-0131",
+      "source": "LESSON",
+      "sourceRef": "lesson:LSN-0132",
+      "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0131",
+      "description": "Verify owned Git clones need read-only-aware cleanup, not native-profile lock retry",
+      "mandatory": true,
+      "implementationStatus": "IN_PROGRESS",
+      "finalStatus": "PARTIAL",
+      "justification": null,
+      "notes": "Partial implementation/entry evidence only. The complete client, fresh install, functional proof and full assurance remain pending. No delivery PASS is inferred.",
+      "implementationEvidence": [
+        "checkpoint:PROGRESS.md"
+      ],
+      "testEvidence": [],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:PLAN.md",
+        "checkpoint:BASELINE.md"
+      ],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "LESSON-REQ-0132",
+      "source": "LESSON",
+      "sourceRef": "lesson:LSN-0133",
+      "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0132",
+      "description": "Verify shared field names do not imply shared schema types",
+      "mandatory": true,
       "implementationStatus": "NOT_STARTED",
       "finalStatus": "NOT_STARTED",
       "justification": null,

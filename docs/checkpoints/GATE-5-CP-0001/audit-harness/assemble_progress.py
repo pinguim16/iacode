@@ -31,7 +31,7 @@ def main() -> int:
     for row in closure["requirements"]:
         key = row["sourceRef"].split("#")[-1]
         if ((row["sourceRef"].startswith("canonical:") and key in CANONICAL)
-                or row["id"] in LESSONS or row["sourceRef"] == "lesson:LSN-0131"):
+                or row["id"] in LESSONS or row["sourceRef"] in {"lesson:LSN-0131", "lesson:LSN-0132", "lesson:LSN-0133"}):
             if row["finalStatus"] == "NOT_STARTED":
                 row["implementationStatus"] = "IN_PROGRESS"
                 row["finalStatus"] = "PARTIAL"

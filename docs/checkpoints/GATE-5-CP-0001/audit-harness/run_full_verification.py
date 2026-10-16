@@ -9,12 +9,30 @@ import json
 import shutil
 import subprocess
 import sys
+import tempfile
+from contextlib import contextmanager
 from datetime import UTC, datetime
 from pathlib import Path
 
 CHECKPOINT = Path(__file__).resolve().parent.parent
 ROOT = CHECKPOINT.parents[2]
 REMOTE = "https://github.com/pinguim16/iacode.git"
+
+
+@contextmanager
+def verification_directory():
+    # Git pack files can be read-only on Windows. TemporaryDirectory's standard cleanup
+    # handles that attribute; native profile sharing-lock retries are a different boundary.
+    facts = {"path": None, "removed": False, "cleanupRetries": None}
+    with tempfile.TemporaryDirectory(prefix="iacode-gate5-full-verification-") as raw:
+        directory = Path(raw)
+        if (directory.resolve().parent != Path(tempfile.gettempdir()).resolve()
+                or not directory.name.startswith("iacode-gate5-full-verification-")
+                or directory.is_symlink() or directory.is_junction()):
+            raise ValueError("unexpected freshly created Git clone directory")
+        facts["path"] = directory
+        yield facts
+    facts["removed"] = not directory.exists()
 
 
 def write_json(path: Path, value: object) -> None:
@@ -49,7 +67,7 @@ def main() -> int:
     spec.loader.exec_module(probe)
     before = probe.snapshot_project("iacode")
     progress: list[str] = []
-    with owned_directory("iacode-gate5-full-verification-") as owner:
+    with verification_directory() as owner:
         directory = owner["path"]
         clone = Path(directory) / "repository"
         command(["git", "clone", "--no-local", REMOTE, str(clone)], Path(directory))
@@ -133,7 +151,6 @@ def main() -> int:
 if __name__ == "__main__":
     sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
     sys.path.insert(0, str(ROOT / "scripts/iacode"))
-    from native_process import owned_directory
     from ledger_common import use_utf8_stdout
 
     use_utf8_stdout()

@@ -1,0 +1,32 @@
+{
+  "kind": "INTENTIONALLY_INTERRUPTED_INCOMPLETE_VERIFICATION_NOT_PASS",
+  "generatedAt": "2026-10-16T20:23:25Z",
+  "subjectCommit": "76e659e5cfb0db1bf7dd50c6d3a04ec101e9fce0",
+  "sourceFingerprint": "22fa32a378ae64ea96adf9b06fe5eee865a11a96ef3b3f0ec5b80311bdc1ec3d",
+  "progress": {
+    "subjectCommit": "76e659e5cfb0db1bf7dd50c6d3a04ec101e9fce0",
+    "clone": "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-gate5-full-verification-cprc_a8t\\repository",
+    "transitions": [
+      "[iacode] --- gate:tests: mandatory gate tests"
+    ],
+    "updatedAt": "2026-10-16T19:41:41.565758+00:00"
+  },
+  "ownedProcessObservation": [
+    {
+      "processId": 3048,
+      "parentProcessId": 22124,
+      "createdUtc": "2026-10-16T19:41:27Z",
+      "commandLine": "\"C:\\Program Files\\Python313\\python.exe\" docs/checkpoints/GATE-5-CP-0001/audit-harness/run_full_verification.py --commit 76e659e5cfb0db1bf7dd50c6d3a04ec101e9fce0 --tag iacode-subjects/GATE-5-CP-0001-runtime-v1 --node C:\\Users\\cesar\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\node\\bin\\node.exe"
+    },
+    {
+      "processId": 6304,
+      "parentProcessId": 3048,
+      "createdUtc": "2026-10-16T19:41:35Z",
+      "commandLine": "\"C:\\Program Files\\Python313\\python.exe\" scripts/iacode/verify.py --keep-going --quiet --node C:\\Users\\cesar\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\node\\bin\\node.exe --report artifacts/review/INTERNAL-FULL-VERIFY.json"
+    }
+  ],
+  "terminationExitCode": 0,
+  "reason": "Remove static WIP documentation labels before closure so final acceptance does not require a later unverified assurance-source edit.",
+  "verificationResult": "NOT_COMPLETED",
+  "gateVerdictIssued": false
+}

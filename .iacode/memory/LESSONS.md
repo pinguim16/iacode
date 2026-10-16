@@ -124,7 +124,7 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 | `LSN-0114` | `GUARDED` | MEDIUM | performance | Transport line metadata must not repeatedly scan the source prefix | `test_fragment_carrier_lines_count_each_source_range_at_most_once`, `test_json_error_line_index_matches_builtin_string_coordinates` |
 | `LSN-0115` | `GUARDED` | MEDIUM | tooling | A failing full verifier retains every bounded case identifier beyond its output tail | `test_failed_case_identifiers_survive_a_tail_longer_than_the_report_limit` |
 | `LSN-0116` | `GUARDED` | CRITICAL | tooling | A live resumability pointer is generated after Git boundaries, not committed into its own subject | `test_real_cli_roundtrip_is_clean_and_supports_internal_closure` |
-| `LSN-0117` | `GUARDED` | MEDIUM | documentation | An architecture rollup must not contradict the delivered capability described below it | `test_architecture_rollup_does_not_deny_its_delivered_quality_engine` |
+| `LSN-0117` | `GUARDED` | MEDIUM | documentation | An architecture rollup must not contradict the delivered capability described below it | `test_architecture_rollup_does_not_deny_its_delivered_quality_engine`, `test_live_delivery_status_is_delegated_instead_of_hardcoded_in_rollups` |
 | `LSN-0118` | `GUARDED` | HIGH | implementation | Post-response validation failures must preserve an accepted mutation's uncertain outcome | `test_signed_malformed_mutation_keeps_uncertainty_identity_and_one_effect` |
 | `LSN-0119` | `GUARDED` | CRITICAL | quality | A clean publication scan does not replace the stricter checkpoint secret scan | `test_strict_checkpoint_sources_do_not_rely_on_publication_allowances`, `test_desktop_credential_remains_a_secret_type_and_safe_dump_redacts_it`, `test_every_current_changed_path_uses_the_strict_detector_including_checkpoint_harnesses` |
 | `LSN-0120` | `GUARDED` | MEDIUM | quality | Native installation proofs must resolve the installed CLI entrypoint | `test_installed_cli_adapter_resolves_versioned_layout_and_refuses_escape` |
@@ -139,6 +139,8 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 | `LSN-0129` | `GUARDED` | HIGH | implementation | Repeated cancellation must preserve an already cancelled terminal result | `test_repeated_cancel_of_cancelled_run_returns_unchanged_terminal_truth` |
 | `LSN-0130` | `GUARDED` | HIGH | quality | Executable export line endings belong to the source and packaging contract | `test_commonjs_and_esm_exports_have_explicit_lf_attributes`, `test_builder_refuses_a_crlf_executable_instead_of_shipping_a_broken_linux_shebang` |
 | `LSN-0131` | `GUARDED` | HIGH | quality | Raw evidence digests require byte-preserving Git export, not text normalization | `test_exact_byte_evidence_survives_git_transport_and_detects_normalization` |
+| `LSN-0132` | `GUARDED` | HIGH | quality | Owned Git clones need read-only-aware cleanup, not native-profile lock retry | `test_verification_clone_cleanup_handles_real_readonly_git_objects` |
+| `LSN-0133` | `GUARDED` | MEDIUM | tooling | Shared field names do not imply shared schema types | `test_current_provenance_is_validated_by_its_own_artifact_schema` |
 
 ## Detail
 
@@ -1607,10 +1609,11 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 - Source: GATE-5, GATE-5-CP-0001, finding G5-INT-002.
 - Symptom: The current-state overview denied the Quality Engine that a later section of the same architecture document described.
 - Root cause: An overview enumerating delivered capabilities was not updated when the detailed quality-runtime architecture was added.
-- Resolution: The overview records the delivered Quality Engine and distinguishes Gate 5 work in progress, later runtime memory and existing engineering memory.
+- Resolution: The overview records the delivered Quality Engine and existing desktop adapters while separating capability from live acceptance. Static rollups delegate lifecycle status to LATEST, so legitimate closure does not require a later unverified source edit.
 - Prevention:
   - `test` test_architecture_rollup_does_not_deny_its_delivered_quality_engine — Compare the actual delivered evaluator and architecture detail with the current-state rollup, retaining the original causal red assertion.
-- Evidence: `file:docs/checkpoints/GATE-5-CP-0001/FINDINGS.json`, `file:docs/checkpoints/GATE-5-CP-0001/COMMANDS.jsonl`, `file:tests/test_gate5_clients.py`, `file:docs/ARCHITECTURE.md`
+  - `test` test_live_delivery_status_is_delegated_instead_of_hardcoded_in_rollups — Require live lifecycle status to be delegated to the canonical checkpoint and prove that an injected stale WIP label is detected without loosening the existing delivered-capability assertion.
+- Evidence: `file:docs/checkpoints/GATE-5-CP-0001/FINDINGS.json`, `file:docs/checkpoints/GATE-5-CP-0001/COMMANDS.jsonl`, `file:tests/test_gate5_clients.py`, `file:docs/ARCHITECTURE.md`, `file:START-HERE.md`
 
 ### LSN-0118 — Post-response validation failures must preserve an accepted mutation's uncertain outcome
 
@@ -1771,3 +1774,25 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 - Prevention:
   - `test` test_exact_byte_evidence_survives_git_transport_and_detects_normalization — A real isolated Git repository must retain exact CRLF observation bytes; generic text normalization must demonstrably change them, and restoration must recover equality.
 - Evidence: `file:.gitattributes`, `file:tests/test_gate5_clients.py`, `file:docs/checkpoints/GATE-5-CP-0001/FINDINGS.json`, `file:docs/checkpoints/GATE-5-CP-0001/COMMANDS.jsonl`
+
+### LSN-0132 — Owned Git clones need read-only-aware cleanup, not native-profile lock retry
+
+- Status: `GUARDED`, severity HIGH, category quality, recurrences 0.
+- Source: GATE-5, GATE-5-CP-0001, finding G5-INT-024.
+- Symptom: An intentionally interrupted full verifier leaves a fresh owned Git clone because Windows read-only pack objects cause persistent WinError5.
+- Root cause: The clone wrapper reused the native-profile sharing-lock retry helper. A read-only attribute is not a transient process sharing lock, so retrying cannot make the object deletable.
+- Resolution: Use standard-library TemporaryDirectory ownership and read-only-aware cleanup only for freshly created verification clones, keep explicit parent/prefix/reparse validation and require observed removal. Preserve the native process/profile helper and all its checks. Cmd-0240 is actual causal red; cmd-0241 passes the unchanged regression and all 32 controls.
+- Prevention:
+  - `test` test_verification_clone_cleanup_handles_real_readonly_git_objects — Set a real read-only file attribute in an owned Git-object-shaped fixture and require the actual clone lifetime manager to remove only its fresh directory; an outer standard owner contains causal-red residue.
+- Evidence: `file:docs/checkpoints/GATE-5-CP-0001/FINDINGS.json`, `file:docs/checkpoints/GATE-5-CP-0001/COMMANDS.jsonl`, `file:docs/checkpoints/GATE-5-CP-0001/audit-harness/run_full_verification.py`, `file:tests/test_gate5_clients.py`
+
+### LSN-0133 — Shared field names do not imply shared schema types
+
+- Status: `GUARDED`, severity MEDIUM, category tooling, recurrences 0.
+- Source: GATE-5, GATE-5-CP-0001, finding G5-INT-025.
+- Symptom: Preparatory finalization refuses a generated-package provenance entry with model=null even though engineering-memory provenance permits that value.
+- Root cause: A field name shared by two independent artifact contracts was treated as sharing its nullable type; the target provenance schema was not used when the new entry was authored.
+- Resolution: Use explicit non-applicable text for deterministic local build provenance, preserve the target schema and denied training rights, and validate the complete actual artifact through its own schema with an unsupported-type adverse control. Cmd-0253/0254 preserve the refusal before publication.
+- Prevention:
+  - `test` test_current_provenance_is_validated_by_its_own_artifact_schema — Validate actual current checkpoint provenance using the canonical target schema and require an unsupported-type mutation to be refused, without assuming the schema of another similarly named record.
+- Evidence: `file:.iacode/schemas/provenance.schema.json`, `file:tests/test_gate5_clients.py`, `file:docs/checkpoints/GATE-5-CP-0001/PROVENANCE.json`, `file:docs/checkpoints/GATE-5-CP-0001/FINDINGS.json`, `file:docs/checkpoints/GATE-5-CP-0001/COMMANDS.jsonl`

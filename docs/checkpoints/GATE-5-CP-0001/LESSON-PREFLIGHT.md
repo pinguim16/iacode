@@ -4,9 +4,9 @@
 - Scope: `VS Code extension and CLI with secure runtime communication, approvals, task lifecycle and fresh installation`
 - Technologies: `TypeScript`, `Node`, `VSCode`, `Python`, `Docker`
 - Modules: `apps/cli`, `apps/vscode-extension`, `apps/api`, `packages/contracts`, `packages/common`, `services/orchestrator`, `services/agent-runtime`, `services/sandbox`, `services/evaluator`, `scripts/iacode`, `scripts/development-ledger`
-- Generated: `2026-10-16T19:36:06Z`
-- Lessons considered: 131
-- Lessons applicable: 130
+- Generated: `2026-10-16T20:46:23Z`
+- Lessons considered: 133
+- Lessons applicable: 132
 
 Every applicable lesson below is a requirement of this Gate. The derived identifiers must
 appear in `REQUIREMENTS-MATRIX.json`, and the Delivery Completeness Validator fails the
@@ -144,6 +144,8 @@ delivery when one is absent.
 | `LSN-0129` Repeated cancellation must preserve an already cancelled terminal result | `GUARDED` | HIGH | `LESSON-REQ-0128` | Treat repeated cancellation of an already CANCELLED run as immutable observation, not a new transition; preserve refusal for successful/failed terminal work and distinguish request from actual completion/cleanup. |
 | `LSN-0130` Executable export line endings belong to the source and packaging contract | `GUARDED` | HIGH | `LESSON-REQ-0129` | Bind executable line endings in Git and packaging, retain exact source/protocol bytes and refuse incompatible CRLF inputs. Same-checkout deterministic agreement alone is not cross-platform byte evidence. |
 | `LSN-0131` Raw evidence digests require byte-preserving Git export, not text normalization | `GUARDED` | HIGH | `LESSON-REQ-0130` | Preserve claimed raw observation digests across actual Git export rather than checking only a local copy. Declare dedicated copied-evidence boundaries explicitly without changing historical observation bytes. |
+| `LSN-0132` Owned Git clones need read-only-aware cleanup, not native-profile lock retry | `GUARDED` | HIGH | `LESSON-REQ-0131` | Use a lifecycle manager that handles actual Windows read-only Git objects for fresh verification clones; do not confuse this with profile sharing locks or retry a policy-refused existing cleanup target. |
+| `LSN-0133` Shared field names do not imply shared schema types | `GUARDED` | MEDIUM | `LESSON-REQ-0132` | Read and validate the owning artifact schema when projecting metadata; equal field names do not grant equal types, nullability or rights. |
 
 ## Why each lesson applies
 
@@ -1056,3 +1058,17 @@ delivery when one is absent.
 - Required check: Preserve claimed raw observation digests across actual Git export rather than checking only a local copy. Declare dedicated copied-evidence boundaries explicitly without changing historical observation bytes.
 - Required evidence: Actual Git positive/adverse/restored transport controls plus equality between every staged archived observation and its original bytes before publication.
 - Derived requirement: `LESSON-REQ-0130`
+
+### LSN-0132 — Owned Git clones need read-only-aware cleanup, not native-profile lock retry
+
+- Reason: applies to every Gate; category quality; severity HIGH; already guarded, so the control must keep holding
+- Required check: Use a lifecycle manager that handles actual Windows read-only Git objects for fresh verification clones; do not confuse this with profile sharing locks or retry a policy-refused existing cleanup target.
+- Required evidence: Actual readonly-object causal red/green, exact owned directory validation and observed fresh-clone removal. Refused historical cleanup targets stay named and are never claimed removed.
+- Derived requirement: `LESSON-REQ-0131`
+
+### LSN-0133 — Shared field names do not imply shared schema types
+
+- Reason: applies to every Gate; category tooling; severity MEDIUM; already guarded, so the control must keep holding
+- Required check: Read and validate the owning artifact schema when projecting metadata; equal field names do not grant equal types, nullability or rights.
+- Required evidence: Actual target-artifact schema rejection and unchanged positive/adverse execution after correcting the value, with the schema and denied rights preserved.
+- Derived requirement: `LESSON-REQ-0132`

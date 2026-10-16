@@ -60,6 +60,35 @@ class Gate5TransitionTests(unittest.TestCase):
 
 
 class Gate5DocumentationTests(unittest.TestCase):
+    def test_current_provenance_is_validated_by_its_own_artifact_schema(self) -> None:
+        from copy import deepcopy
+
+        checkpoint = ledger_common.resolve_latest(ROOT)
+        document = json.loads((checkpoint / "PROVENANCE.json").read_text(encoding="utf-8"))
+        schema = json.loads((ROOT / ".iacode/schemas/provenance.schema.json").read_text(encoding="utf-8"))
+        self.assertEqual(ledger_common.validate_schema(document, schema), [])
+        for invalid in (None, {}, [], False, 17):
+            adverse = deepcopy(document)
+            adverse["artifacts"][-1]["model"] = invalid
+            errors = ledger_common.validate_schema(adverse, schema)
+            if errors:
+                break
+        self.assertTrue(errors, "the artifact schema must reject an unsupported model field type")
+        self.assertTrue(any(".model" in error for error in errors))
+
+    def test_live_delivery_status_is_delegated_instead_of_hardcoded_in_rollups(self) -> None:
+        import re
+
+        def stale_lifecycle(text: str) -> bool:
+            return bool(re.search(r"\b(?:in progress|partial adapters|not yet an accepted)\b", text, re.I))
+
+        for relative in ("START-HERE.md", "docs/ARCHITECTURE.md"):
+            with self.subTest(document=relative):
+                header = "\n".join((ROOT / relative).read_text(encoding="utf-8").splitlines()[:15])
+                self.assertFalse(stale_lifecycle(header), "live closure status belongs to LATEST, not a frozen overview")
+                self.assertIn("checkpoints/LATEST.md", header)
+                self.assertTrue(stale_lifecycle(header + "\nCurrent delivery is in progress; partial adapters."))
+
     def test_architecture_rollup_does_not_deny_its_delivered_quality_engine(self) -> None:
         text = (ROOT / "docs/ARCHITECTURE.md").read_text(encoding="utf-8")
         rollup = text.split("## Current state", 1)[1].split("## Control plane", 1)[0]
@@ -267,6 +296,28 @@ class Gate5ClientRecoveryGuardTests(unittest.TestCase):
 
 
 class Gate5NativeInstallationTests(unittest.TestCase):
+    def test_verification_clone_cleanup_handles_real_readonly_git_objects(self) -> None:
+        import importlib.util
+        import stat
+
+        script = ROOT / "docs/checkpoints/GATE-5-CP-0001/audit-harness/run_full_verification.py"
+        specification = importlib.util.spec_from_file_location("gate5_owned_clone_probe", script)
+        module = importlib.util.module_from_spec(specification)
+        specification.loader.exec_module(module)
+        # An outer standard-library temporary owner removes any causal-red residue.
+        with tempfile.TemporaryDirectory(prefix="iacode-readonly-regression-") as temporary:
+            with mock.patch("tempfile.gettempdir", return_value=temporary):
+                with module.verification_directory() as owner:
+                    directory = owner["path"]
+                    pack = directory / "repository/.git/objects/pack/observed.idx"
+                    pack.parent.mkdir(parents=True)
+                    pack.write_bytes(b"owned read-only Git object fixture")
+                    pack.chmod(stat.S_IREAD)
+                self.assertTrue(owner["removed"])
+                self.assertFalse(directory.exists())
+                with self.assertRaises(TypeError):
+                    module.verification_directory(Path(temporary))
+
     def test_cleanup_membership_derives_every_canonical_active_state_including_running(self) -> None:
         import desktop_test_support as probe
 

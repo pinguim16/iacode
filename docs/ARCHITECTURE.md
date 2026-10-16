@@ -6,8 +6,9 @@ Delivered foundations include the **SETUP-00 development control plane**, **Gate
 runtime**, **Gate 1 Model Gateway**, **Gate 2 Agent Runtime**, **Gate 3 Sandbox** and **Gate 4
 Quality Engine**. Their detailed boundaries are recorded below.
 
-**Gate 5 — VS Code + CLI** is in progress; its partial adapters are not yet an accepted editor or
-CLI delivery. The latest checkpoint, not this architecture overview, records executed acceptance.
+**Gate 5 — VS Code + CLI** exposes authenticated runtime adapters through a standalone CLI and
+native editor extension. The [latest checkpoint](checkpoints/LATEST.md), not this overview, records
+their live delivery status and executed acceptance; source presence is not an approval.
 Experience, knowledge, runtime project memory, learning and training remain later-Gate work.
 `.iacode/policies/gate-scope.json` preserves those reservations. Engineering memory in `.iacode/`
 is a delivered control-plane capability, not the future runtime experience or project-memory API.

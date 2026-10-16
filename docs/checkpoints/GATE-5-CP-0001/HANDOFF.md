@@ -36,10 +36,15 @@ one line length are corrected without exclusions; rerun full lint before runtime
 
 ## Current repository state
 
-Main still has intentional Gate 5 work based on the Gate 4 seal. STATE currentCommit=HEAD,
-dirty=true and status IN_PROGRESS are truthful. No Gate 5 commit/tag or terminal verdict yet.
-Cmd-0221 derives all 180 requirements: 50 canonical and 130 applicable lessons, zero COMPLETE.
-Cmd-0219 validates 131 active / 128 GUARDED lessons. All 22 recorded causal findings are CLOSED,
+Runtime v1 remains published at 76e659e5cfb0db1bf7dd50c6d3a04ec101e9fce0 / tag
+iacode-subjects/GATE-5-CP-0001-runtime-v1. Its clean post-commit checkpoint validated before push.
+Its 45-stage invocation was intentionally interrupted during the full root suite, never passed;
+cmd-0238 also records actual readonly Git cleanup failure. No full verifier is currently active.
+Main now contains the source corrections/guards and checkpoint evidence preparing runtime v2.
+STATE currentCommit=HEAD, dirty=true and IN_PROGRESS are truthful; no terminal Gate 5 seal exists.
+Cmd-0244 derived 181 requirements before the additional target-schema projection lesson LSN-0133.
+The current preflight/matrix/COUNTS, not older literal counts, are authoritative. No row is COMPLETE.
+All 25 causal/preventive findings are CLOSED; cmd-0255 passes all 33 current Gate 5 controls.
 with every observed red archived and recurrence severity/history preserved. Cmd-0201 explicitly
 resolves the canonical-state vocabulary recurrence only after actual complete proof.
 
@@ -89,6 +94,10 @@ after dedicated copied-evidence paths become non-text. Original report bytes/has
 Cmd-0218 verifies all fifteen actual archived observations equal their staged blobs, preserving
 every original raw SHA-256. Cmd-0208 correctly rejects missing
 canonical headings; the required structure is restored without weakening its validator.
+Cmd-0253 correctly refuses a nullable lesson-provenance value copied into the different checkpoint
+provenance contract. Cmd-0254 reproduces that target-schema refusal; cmd-0255 passes actual artifact
+conformance plus an unsupported-type adverse control after explicit deterministic-build model text.
+No schema or denied rights changed. LSN-0133/GRD-0135 preserve the causal failure and prevention.
 Cmd-0212 correctly rejects a concurrent ledger append during validation. The finalizer at cmd-0215
 then validates the quiescent planned IN_PROGRESS snapshot; later transport changes require a fresh
 finalization. No failed check was relabelled PASS.
@@ -98,6 +107,9 @@ finalization. No failed check was relabelled PASS.
 RISKS.md applies. Dirty-source proof does not establish immutable delivery assurance. HMAC assumes
 a trusted local OS and does not encrypt. Unknown secrets cannot be proven absent by a detector.
 No Gate 5 terminal verdict exists until every mandatory assurance control has actually passed.
+The interrupted v1 clone cprc_a8t remains policy-refused for manual cleanup, including its ignored
+local configuration copy; no value was read. Do not retry it through another API or touch the two
+older refused Gate 4 directories. The corrected clone manager creates fresh targets only.
 
 ## Required next action
 

@@ -22,11 +22,11 @@
     "scripts/iacode",
     "scripts/development-ledger"
   ],
-  "generatedAt": "2026-10-16T19:36:06Z",
+  "generatedAt": "2026-10-16T20:46:23Z",
   "policyVersion": "2.0.0",
-  "inputsFingerprint": "d02f77864f018b82770f726703ca5d9fa393eb1a0604cd818f73b9f5321570e1",
-  "lessonsConsidered": 131,
-  "lessonsApplicable": 130,
+  "inputsFingerprint": "68395131f70c11f113094383292ba5a9e4317464ea7582e029efd5987ec2f06d",
+  "lessonsConsidered": 133,
+  "lessonsApplicable": 132,
   "applicable": [
     {
       "lessonId": "LSN-0001",
@@ -1327,6 +1327,26 @@
       "requiredCheck": "Preserve claimed raw observation digests across actual Git export rather than checking only a local copy. Declare dedicated copied-evidence boundaries explicitly without changing historical observation bytes.",
       "requiredEvidence": "Actual Git positive/adverse/restored transport controls plus equality between every staged archived observation and its original bytes before publication.",
       "derivedRequirementId": "LESSON-REQ-0130"
+    },
+    {
+      "lessonId": "LSN-0132",
+      "title": "Owned Git clones need read-only-aware cleanup, not native-profile lock retry",
+      "status": "GUARDED",
+      "severity": "HIGH",
+      "reasonApplicable": "applies to every Gate; category quality; severity HIGH; already guarded, so the control must keep holding",
+      "requiredCheck": "Use a lifecycle manager that handles actual Windows read-only Git objects for fresh verification clones; do not confuse this with profile sharing locks or retry a policy-refused existing cleanup target.",
+      "requiredEvidence": "Actual readonly-object causal red/green, exact owned directory validation and observed fresh-clone removal. Refused historical cleanup targets stay named and are never claimed removed.",
+      "derivedRequirementId": "LESSON-REQ-0131"
+    },
+    {
+      "lessonId": "LSN-0133",
+      "title": "Shared field names do not imply shared schema types",
+      "status": "GUARDED",
+      "severity": "MEDIUM",
+      "reasonApplicable": "applies to every Gate; category tooling; severity MEDIUM; already guarded, so the control must keep holding",
+      "requiredCheck": "Read and validate the owning artifact schema when projecting metadata; equal field names do not grant equal types, nullability or rights.",
+      "requiredEvidence": "Actual target-artifact schema rejection and unchanged positive/adverse execution after correcting the value, with the schema and denied rights preserved.",
+      "derivedRequirementId": "LESSON-REQ-0132"
     }
   ],
   "derivedRequirements": [
@@ -2239,6 +2259,20 @@
       "description": "Verify raw evidence digests require byte-preserving Git export, not text normalization",
       "mandatory": true,
       "requiredEvidence": "Actual Git positive/adverse/restored transport controls plus equality between every staged archived observation and its original bytes before publication."
+    },
+    {
+      "id": "LESSON-REQ-0131",
+      "lessonId": "LSN-0132",
+      "description": "Verify owned Git clones need read-only-aware cleanup, not native-profile lock retry",
+      "mandatory": true,
+      "requiredEvidence": "Actual readonly-object causal red/green, exact owned directory validation and observed fresh-clone removal. Refused historical cleanup targets stay named and are never claimed removed."
+    },
+    {
+      "id": "LESSON-REQ-0132",
+      "lessonId": "LSN-0133",
+      "description": "Verify shared field names do not imply shared schema types",
+      "mandatory": true,
+      "requiredEvidence": "Actual target-artifact schema rejection and unchanged positive/adverse execution after correcting the value, with the schema and denied rights preserved."
     }
   ]
 }

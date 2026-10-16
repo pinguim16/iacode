@@ -1751,7 +1751,7 @@
       "title": "Architecture overview retains the delivered Quality Engine",
       "kind": "test",
       "reference": "test_architecture_rollup_does_not_deny_its_delivered_quality_engine",
-      "verifiedBy": ["test_architecture_rollup_does_not_deny_its_delivered_quality_engine"],
+      "verifiedBy": ["test_architecture_rollup_does_not_deny_its_delivered_quality_engine", "test_live_delivery_status_is_delegated_instead_of_hardcoded_in_rollups"],
       "lessons": ["LSN-0117"],
       "removingItWouldAllow": "The architecture overview to deny the delivered quality runtime described in the same document."
     },
@@ -1820,5 +1820,13 @@
      "kind": "test", "reference": "test_exact_byte_evidence_survives_git_transport_and_detects_normalization",
      "verifiedBy": ["test_exact_byte_evidence_survives_git_transport_and_detects_normalization"],
      "lessons": ["LSN-0131"], "removingItWouldAllow": "Git newline normalization to change the published bytes of an archived actual observation while its recorded raw SHA-256 still names the workstation bytes."}
+    ,{"guardrailId": "GRD-0134", "title": "Fresh Git clone cleanup handles actual read-only objects",
+     "kind": "test", "reference": "test_verification_clone_cleanup_handles_real_readonly_git_objects",
+     "verifiedBy": ["test_verification_clone_cleanup_handles_real_readonly_git_objects"],
+     "lessons": ["LSN-0132"], "removingItWouldAllow": "A profile sharing-lock cleanup helper to be reused for a Git clone and repeatedly fail on Windows read-only pack objects after the verifier has otherwise ended."}
+    ,{"guardrailId": "GRD-0135", "title": "Checkpoint provenance obeys its own schema, not a similarly named record",
+     "kind": "test", "reference": "test_current_provenance_is_validated_by_its_own_artifact_schema",
+     "verifiedBy": ["test_current_provenance_is_validated_by_its_own_artifact_schema"],
+     "lessons": ["LSN-0133"], "removingItWouldAllow": "A nullable model value valid for engineering-memory provenance to be projected into a checkpoint provenance artifact whose own schema requires text."}
   ]
 }

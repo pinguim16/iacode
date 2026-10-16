@@ -193,7 +193,9 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 | `LESSON-REQ-0127` | LESSON | `lesson:LSN-0128` | yes | `IN_PROGRESS` | `PARTIAL` | Verify adversarial premises must use the actual public contract |
 | `LESSON-REQ-0128` | LESSON | `lesson:LSN-0129` | yes | `IN_PROGRESS` | `PARTIAL` | Verify repeated cancellation must preserve an already cancelled terminal result |
 | `LESSON-REQ-0129` | LESSON | `lesson:LSN-0130` | yes | `IN_PROGRESS` | `PARTIAL` | Verify executable export line endings belong to the source and packaging contract |
-| `LESSON-REQ-0130` | LESSON | `lesson:LSN-0131` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify raw evidence digests require byte-preserving Git export, not text normalization |
+| `LESSON-REQ-0130` | LESSON | `lesson:LSN-0131` | yes | `IN_PROGRESS` | `PARTIAL` | Verify raw evidence digests require byte-preserving Git export, not text normalization |
+| `LESSON-REQ-0131` | LESSON | `lesson:LSN-0132` | yes | `IN_PROGRESS` | `PARTIAL` | Verify owned Git clones need read-only-aware cleanup, not native-profile lock retry |
+| `LESSON-REQ-0132` | LESSON | `lesson:LSN-0133` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify shared field names do not imply shared schema types |
 
 ## Evidence
 
@@ -2170,6 +2172,28 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 
 - Source reference: LESSON-PREFLIGHT.json LESSON-REQ-0130
 - Description: Verify raw evidence digests require byte-preserving Git export, not text normalization
+- Implementation: `checkpoint:PROGRESS.md`
+- Test: _none_
+- Negative test: _none_
+- Documentation: `checkpoint:PLAN.md`, `checkpoint:BASELINE.md`
+- Validation: _none_
+- Guardrail: _none_
+
+### LESSON-REQ-0131 - lesson:LSN-0132
+
+- Source reference: LESSON-PREFLIGHT.json LESSON-REQ-0131
+- Description: Verify owned Git clones need read-only-aware cleanup, not native-profile lock retry
+- Implementation: `checkpoint:PROGRESS.md`
+- Test: _none_
+- Negative test: _none_
+- Documentation: `checkpoint:PLAN.md`, `checkpoint:BASELINE.md`
+- Validation: _none_
+- Guardrail: _none_
+
+### LESSON-REQ-0132 - lesson:LSN-0133
+
+- Source reference: LESSON-PREFLIGHT.json LESSON-REQ-0132
+- Description: Verify shared field names do not imply shared schema types
 - Implementation: _none_
 - Test: _none_
 - Negative test: _none_

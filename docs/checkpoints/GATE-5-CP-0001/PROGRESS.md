@@ -1,5 +1,50 @@
 # Gate 5 progress — no delivery verdict
 
+## Additional preparatory schema guard
+
+Cmd-0253 refuses finalization before publication because a new deterministic-package provenance
+entry copied model=null from the separate lesson contract. The target checkpoint schema requires
+text. Cmd-0254 independently reproduces the refusal; cmd-0255 passes all thirty-three current Gate 5
+controls after explicit not-applicable builder text, including actual target-schema validation and
+unsupported-type mutation. No schema or denied rights is relaxed. LSN-0133/GRD-0135 records the
+cause and executable prevention. Refresh preflight, complete derivation and physical counts before
+the next frozen subject; older literal counts below describe their actual historical inputs only.
+
+## Current status after interrupted v1 (supersedes older active-run statements)
+
+Cmd-0237 stops only the exactly re-observed verifier PID/parent/creation identity. The interrupted
+attempt is preserved as attempts/FULL-VERIFY-INTERRUPTED-0001.json, not PASS. Cmd-0238 exits one,
+after 2,527,733 ms, with no complete verifier report; its clone cleanup fails on an actual read-only
+Git pack index. Direct removal was refused by environment policy and is NOT retried. RISKS names
+the exact retained owner, its ignored local configuration copy and the older excluded targets.
+
+Cmd-0239 reproduces two fixed lifecycle labels; live entry/architecture now delegate status to
+LATEST without asserting acceptance. Cmd-0240 reproduces real readonly-object cleanup failure;
+fresh clone cleanup now uses standard-library readonly-aware ownership, with exact parent/prefix/
+reparse validation and no existing-target parameter. Native profile process/lock logic is unchanged.
+Cmd-0241 passes all thirty-two current Gate 5 controls, preserving every earlier assertion.
+The independent cleanup/capability guards are strengthened without inventing an escaped lifecycle
+recurrence. Cmd-0242 validates 132 active /129 GUARDED lessons, cmd-0244 derives 181 requirements,
+and cmd-0245 discovers 1,861 counted cases. No whole root/verifier PASS is inferred.
+Runtime v1 remains public and immutable. A new source freeze/publication and every full stage are
+required before any subsequent ordered assurance or terminal verdict.
+
+## Active immutable verification and authored evidence checks
+
+Runtime v1 is published at 76e659e5cfb0db1bf7dd50c6d3a04ec101e9fce0, tagged
+iacode-subjects/GATE-5-CP-0001-runtime-v1; its clean post-commit checkpoint validated before push.
+The 45-stage non-fast invocation is active in the exact fresh detached HTTPS clone identified by
+FULL-VERIFY-PROGRESS.json. Its full root suite must finish; no focused replacement is allowed.
+Cmd-0229 observes current source/clone equality at fingerprint
+22fa32a378ae64ea96adf9b06fe5eee865a11a96ef3b3f0ec5b80311bdc1ec3d, with only excluded checkpoint
+bookkeeping evolving. Cmd-0227/0228 generate/validate the actual G5-S02 IN_PROGRESS observation.
+Cmd-0226 checks the explicit canonical/functional mappings and real file/test references, promotes
+zero requirements and issues no acceptance. Cmd-0231 checks 230 relative documentation links with
+no missing target. Cmd-0232 emits the same deterministic CLI/VSIX hashes recorded at cmd-0194.
+Conditional acceptance/metadata/Red Team tools are authored for the next ordered steps; they have
+NOT executed their verdicts. No full verifier, Green Keeper, completeness, Red Team or mirror PASS
+is inferred from a tool's existence. NEXT names the exact sequence and quiescence requirements.
+
 ## Publication preflight through cmd-0222
 
 Cmd-0206 passes full Python/frontend/client lint. Cmd-0216 then reproduces raw archived evidence

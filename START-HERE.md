@@ -3,7 +3,8 @@
 IACode is a planned private, autonomous, general-purpose software engineering platform. The repository is self-contained context and is the only source of truth.
 
 - Phase: `M2 — IACode V0 completion and experience`.
-- Current Gate: `GATE 5 — VS Code + CLI`, in progress after the sealed Gate 4 internal closure.
+- Current Gate: `GATE 5 — VS Code + CLI`, after the sealed Gate 4 internal closure.
+  The latest checkpoint below is the authority for its live status and executed acceptance.
   An intermediate closure requires `INTERNAL_GATE_PASS`; independent validation remains due at
   M2 closure. `GATE_PASS` is never granted by the implementing run. No client feature is claimed
   complete merely by opening this Gate.
