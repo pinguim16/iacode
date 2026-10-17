@@ -22,11 +22,11 @@
     "scripts/iacode",
     "scripts/development-ledger"
   ],
-  "generatedAt": "2026-10-16T20:46:23Z",
+  "generatedAt": "2026-10-17T00:41:27Z",
   "policyVersion": "2.0.0",
-  "inputsFingerprint": "68395131f70c11f113094383292ba5a9e4317464ea7582e029efd5987ec2f06d",
-  "lessonsConsidered": 133,
-  "lessonsApplicable": 132,
+  "inputsFingerprint": "56f69b0e566463de3b65d346d7f32a85c7873465cd7ab224042c6fb4e648e349",
+  "lessonsConsidered": 135,
+  "lessonsApplicable": 134,
   "applicable": [
     {
       "lessonId": "LSN-0001",
@@ -382,8 +382,8 @@
       "lessonId": "LSN-0037",
       "title": "A shared control that names an identifier the repository derives stops being a control when that identifier moves",
       "status": "GUARDED",
-      "severity": "MEDIUM",
-      "reasonApplicable": "applies to every Gate; category tooling; severity MEDIUM; already guarded, so the control must keep holding",
+      "severity": "HIGH",
+      "reasonApplicable": "applies to every Gate; category tooling; severity HIGH; already guarded, so the control must keep holding",
       "requiredCheck": "Confirm that every control this Gate adds which reasons about an identifier the repository derives -- the current Gate, the newest checkpoint, the head migration -- derives it rather than naming it, and that the repository-wide control still passes.",
       "requiredEvidence": "The control-plane test that parses every caller, green, with a rejecting case.",
       "derivedRequirementId": "LESSON-REQ-0036"
@@ -752,8 +752,8 @@
       "lessonId": "LSN-0074",
       "title": "An importable source tree is not an installed or repository-configured test environment",
       "status": "GUARDED",
-      "severity": "HIGH",
-      "reasonApplicable": "applies to every Gate; category implementation; severity HIGH; already guarded, so the control must keep holding",
+      "severity": "CRITICAL",
+      "reasonApplicable": "applies to every Gate; category implementation; severity CRITICAL; already guarded, so the control must keep holding",
       "requiredCheck": "For Python tests executed from a nested project root, prove the sandbox provides installed distribution metadata and repository-root policy/configuration without reading or writing the host.",
       "requiredEvidence": "A real snapshot test for metadata and monorepo configuration plus a successful evaluation of a committed multi-package repository.",
       "derivedRequirementId": "LESSON-REQ-0073"
@@ -1032,8 +1032,8 @@
       "lessonId": "LSN-0102",
       "title": "Assurance denominators must derive category counts from the current source set",
       "status": "GUARDED",
-      "severity": "HIGH",
-      "reasonApplicable": "applies to every Gate; category quality; severity HIGH; already guarded, so the control must keep holding",
+      "severity": "CRITICAL",
+      "reasonApplicable": "applies to every Gate; category quality; severity CRITICAL; already guarded, so the control must keep holding",
       "requiredCheck": "Any assurance partition must derive category counts from its canonical identifier sets instead of maintaining a duplicate literal that can drift.",
       "requiredEvidence": "A regression mutating the corrective source set and proving the expected partition changes automatically.",
       "derivedRequirementId": "LESSON-REQ-0101"
@@ -1347,6 +1347,26 @@
       "requiredCheck": "Read and validate the owning artifact schema when projecting metadata; equal field names do not grant equal types, nullability or rights.",
       "requiredEvidence": "Actual target-artifact schema rejection and unchanged positive/adverse execution after correcting the value, with the schema and denied rights preserved.",
       "derivedRequirementId": "LESSON-REQ-0132"
+    },
+    {
+      "lessonId": "LSN-0134",
+      "title": "Configuration classifiers consume decoded values, not dotenv quote syntax",
+      "status": "GUARDED",
+      "severity": "MEDIUM",
+      "reasonApplicable": "applies to every Gate; category implementation; severity MEDIUM; already guarded, so the control must keep holding",
+      "requiredCheck": "For committed environment consumers, decode the supported literal syntax before classification and prove actual Compose agreement for quoted empty, quoted placeholder and nonempty adverse values.",
+      "requiredEvidence": "Causal red observations, actual Compose positive/adverse comparisons, host-reader and all affected consumer regressions plus complete infrastructure reexecution.",
+      "derivedRequirementId": "LESSON-REQ-0133"
+    },
+    {
+      "lessonId": "LSN-0135",
+      "title": "Capture producer evidence before fallible interpretation or owned cleanup",
+      "status": "GUARDED",
+      "severity": "HIGH",
+      "reasonApplicable": "applies to every Gate; category quality; severity HIGH; already guarded, so the control must keep holding",
+      "requiredCheck": "Every temporary verification producer must preserve its available safe reports before interpretation can raise; actual owner cleanup must leave those reports and digests recoverable without manufacturing PASS.",
+      "requiredEvidence": "A real exception and actual temporary-owner cleanup regression with recoverable original bytes, plus a fresh complete publication capture and exact transport verification.",
+      "derivedRequirementId": "LESSON-REQ-0134"
     }
   ],
   "derivedRequirements": [
@@ -2273,6 +2293,20 @@
       "description": "Verify shared field names do not imply shared schema types",
       "mandatory": true,
       "requiredEvidence": "Actual target-artifact schema rejection and unchanged positive/adverse execution after correcting the value, with the schema and denied rights preserved."
+    },
+    {
+      "id": "LESSON-REQ-0133",
+      "lessonId": "LSN-0134",
+      "description": "Verify configuration classifiers consume decoded values, not dotenv quote syntax",
+      "mandatory": true,
+      "requiredEvidence": "Causal red observations, actual Compose positive/adverse comparisons, host-reader and all affected consumer regressions plus complete infrastructure reexecution."
+    },
+    {
+      "id": "LESSON-REQ-0134",
+      "lessonId": "LSN-0135",
+      "description": "Verify capture producer evidence before fallible interpretation or owned cleanup",
+      "mandatory": true,
+      "requiredEvidence": "A real exception and actual temporary-owner cleanup regression with recoverable original bytes, plus a fresh complete publication capture and exact transport verification."
     }
   ]
 }

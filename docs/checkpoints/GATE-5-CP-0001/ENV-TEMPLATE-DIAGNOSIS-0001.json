@@ -1,0 +1,42 @@
+{
+  "kind": "READ_ONLY_DOTENV_OBSERVATION_NOT_GATE_VERDICT",
+  "templateComposeExitCode": 0,
+  "templateFields": {
+    "IACODE_DESKTOP_TOKEN": {
+      "composeValueIsEmpty": true,
+      "hostParserValueIsEmpty": false,
+      "hostParserValueIsPlaceholder": false
+    },
+    "IACODE_DESKTOP_TOKEN_EXPIRES_AT": {
+      "composeValueIsEmpty": true,
+      "hostParserValueIsEmpty": false,
+      "hostParserValueIsPlaceholder": false
+    }
+  },
+  "literalCases": [
+    {
+      "quoteStyle": "double",
+      "inputIsEmpty": true,
+      "composeMatchesExpected": true,
+      "decodedValueIsPlaceholder": true
+    },
+    {
+      "quoteStyle": "single",
+      "inputIsEmpty": true,
+      "composeMatchesExpected": true,
+      "decodedValueIsPlaceholder": true
+    },
+    {
+      "quoteStyle": "double",
+      "inputIsEmpty": false,
+      "composeMatchesExpected": true,
+      "decodedValueIsPlaceholder": false
+    },
+    {
+      "quoteStyle": "single",
+      "inputIsEmpty": false,
+      "composeMatchesExpected": true,
+      "decodedValueIsPlaceholder": false
+    }
+  ]
+}

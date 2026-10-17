@@ -1,5 +1,58 @@
 # Gate 5 progress — no delivery verdict
 
+## Current pre-publication source epoch
+
+Cmd-0338 passes all42 Gate5 controls; cmd-0339 passes all3 unchanged encoding controls and
+cmd-0340 passes complete mandatory lint. Counts cmd-0335 derive1873 physical cases,184 requirements
+(zero COMPLETE),135 active/132 GUARDED lessons and137 effective registered controls. Cmd-0336
+resolves85 mapped files without promotion; cmd-0337 checks231 links across702 Markdown documents,
+none missing. Source fingerprint is3aa8e502b860c2b97803b39a21f1c82757980d18f5918c7f53bfa83e07e9c8f6.
+Final serialized metadata validation, staging/scan, canonical IN_PROGRESS finalization and a new
+runtime-v3 publication remain before the complete fresh immutable45-stage run.
+
+## Current bookkeeping correction
+
+Cmd-0316's recorder was still active when cmd-0317 validation began; six strict hashes were refused.
+The exact LSN-0011 recurrence is escalated, never described as valid approval. Cmd-0322 executes the
+synchronous sequencer with real child processes, correct canonical phase order and first-phase
+failure stopping the second phase. Actual sequence cmd-0330 waits for inventory recorder cmd-0328,
+then canonical main-tree validation cmd-0329 returns CHECKPOINT_VALID. This supplies causal guard
+restoration evidence. Use one awaited sequence after all producers finish; never launch phases separately.
+
+## Current causal rework after completed failed runtime v2
+
+Cmd-0277 completes 41/45 stages, FAIL. Root headers identify both stream controls, two encoded-empty
+redactor comparisons and a stale pre-owner CLI expectation. Infrastructure repeats the literal
+consumer defect. The committed-tree quality fails two nested API registry cases; cmd-0276 preserves
+their exact sandbox evidence. Native installation, full desktop, false-PASS, dependency, backup,
+restart and fresh installation actually pass, but their detailed collector export is unavailable:
+the publisher subsequently calls a historical 42-stage helper before export. Cmd-0280 archives the
+available exact reports and explicitly absent outputs. The v2 clone is removed; no full/root run
+remains active. Earlier active-run statements below are historical, not current job state.
+
+Recurrences and LSN-0134/0135 are recorded before corrective implementation. Cmd-0304 derives all
+184 obligations, zero COMPLETE. Actual causal results: UTF-8 class3 PASS cmd-0287; literal/Compose
+class3 PASS cmd-0290; scope class5 PASS cmd-0291; complete API166 PASS cmd-0293; original redactor
+assertion PASS cmd-0296; collector class4 PASS cmd-0295; actual failed-report reinterpretation keeps
+41/45 and FAIL cmd-0297; whole Gate5 class40 PASS cmd-0298; whole owned infrastructure49 PASS,
+zero skips and cleanup/operational/source identity preservation cmd-0299. Missing-stack cmd-0292
+and import-order lint cmd-0300 remain recorded; full lint passes cmd-0305. Cmd-0312 strengthens
+and passes all40 controls through the actual publisher boundary. Cmd-0308 validates135 active/
+132 GUARDED lessons; cmd-0313 discovers1871 physical cases and137 registered controls.
+All184 obligations remain incomplete. A new immutable complete cycle is still required.
+
+## Historical publication of runtime v2
+
+The canonical matrix writer succeeds at cmd-0265 after the retained Windows EINVAL cmd-0258;
+its OS cause is not established, no permission/schema workaround is applied. Current derivation is
+182 requirements, 71 PARTIAL and zero COMPLETE; cmd-0266 discovers 1,862 counted cases. Staged
+scan cmd-0268 passes and preparatory IN_PROGRESS finalization cmd-0269 passes. Runtime v2 is
+committed at b5baca2ad94fc787539fa11b26f8676889044567, clean post-commit validated and published
+with tag iacode-subjects/GATE-5-CP-0001-runtime-v2. Its full 45-stage non-fast invocation is the
+completed cmd-0277 above. Its measured source was frozen at
+c7fb0c188ba9e86478afd0d523ce3e5b15fc77c97f14537830a058d6218ed317; only checkpoint evidence may
+evolve. No complete root/verifier/ordered-assurance or terminal verdict has yet passed.
+
 ## Additional preparatory schema guard
 
 Cmd-0253 refuses finalization before publication because a new deterministic-package provenance

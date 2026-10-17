@@ -8,6 +8,7 @@ import os
 import re
 import shutil
 import subprocess
+import sys
 from contextlib import suppress
 from pathlib import Path
 
@@ -318,4 +319,8 @@ def main() -> int:
 
 
 if __name__ == "__main__":
+    sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+    from ledger_common import use_utf8_stdout
+
+    use_utf8_stdout()
     raise SystemExit(main())

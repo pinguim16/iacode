@@ -135,6 +135,8 @@ def run_node(*, guard: bool | str = False, node: Path | None = None) -> subproce
                 ["docker", "rm", "-f", name],
                 cwd=ROOT,
                 text=True,
+                encoding="utf-8",
+                errors="replace",
                 capture_output=True,
                 check=False,
                 timeout=30,

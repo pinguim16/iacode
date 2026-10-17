@@ -23,10 +23,12 @@ REPOSITORY_ROOT = Path(__file__).resolve().parents[2]
 
 # The redaction package is stdlib-only and is the single definition of what a credential-carrying
 # name and a placeholder are. Importing it here rather than restating either is the point.
-for _extra in (REPOSITORY_ROOT / "packages" / "common" / "src",):
+for _extra in (REPOSITORY_ROOT / "packages" / "common" / "src",
+               REPOSITORY_ROOT / "scripts" / "iacode"):
     if str(_extra) not in sys.path:
         sys.path.insert(0, str(_extra))
 
+from compose import read_env_file  # noqa: E402
 from iacode_common.redaction import carries_a_secret_value, is_placeholder  # noqa: E402
 
 COMPOSE_DIRECTORY = REPOSITORY_ROOT / "infra" / "compose"
@@ -292,10 +294,7 @@ class CommittedConfigurationTests(unittest.TestCase):
             missing, set(), f"the compose file reads keys the example does not document: {missing}"
         )
 
-        for line in example.splitlines():
-            if not line.strip() or line.strip().startswith("#") or "=" not in line:
-                continue
-            key, _, value = line.partition("=")
+        for key, value in read_env_file(ENV_EXAMPLE, {}).items():
             # Which names carry a credential, and which values are placeholders, are asked of
             # `iacode_common.redaction`. This file used to answer the first question itself, and
             # a third module answered it differently: one of the three read
@@ -304,7 +303,7 @@ class CommittedConfigurationTests(unittest.TestCase):
             if carries_a_secret_value(key.strip()):
                 with self.subTest(key=key):
                     self.assertTrue(
-                        is_placeholder(value.strip()),
+                        is_placeholder(value),
                         f"{key} carries something that is not a placeholder",
                     )
 

@@ -4,12 +4,14 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import importlib.util
 import json
 import shutil
 import subprocess
 import sys
 import tempfile
+import uuid
 from contextlib import contextmanager
 from datetime import UTC, datetime
 from pathlib import Path
@@ -17,6 +19,10 @@ from pathlib import Path
 CHECKPOINT = Path(__file__).resolve().parent.parent
 ROOT = CHECKPOINT.parents[2]
 REMOTE = "https://github.com/pinguim16/iacode.git"
+sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+sys.path.insert(0, str(ROOT / "scripts/iacode"))
+from ledger_common import find_secrets
+from verify import build_stages
 
 
 @contextmanager
@@ -40,12 +46,86 @@ def write_json(path: Path, value: object) -> None:
     path.write_text(json.dumps(value, indent=2) + "\n", encoding="utf-8", newline="\n")
 
 
+def summarize_stages(verification: dict) -> tuple[int, int, int]:
+    """Consume the current producer vocabulary and result field, never a sealed denominator."""
+    expected = [stage.name for stage in build_stages(False)]
+    stages = verification.get("stages", [])
+    if [row.get("name") for row in stages] != expected:
+        raise RuntimeError("verification stage vocabulary is incomplete, duplicated or out of order")
+    if any(row.get("result") not in {"PASS", "FAIL"} for row in stages):
+        raise RuntimeError("verification stage result is missing or unknown")
+    passed = sum(row["result"] == "PASS" for row in stages)
+    failed = len(stages) - passed
+    if verification.get("result") not in {"PASS", "FAIL"} or (
+            verification["result"] == "PASS" and failed):
+        raise RuntimeError("verification top-level result contradicts its stage results")
+    return len(expected), passed, failed
+
+
+def capture_producer_reports(
+    clone: Path, verifier_report: Path, archive: Path, subject: str,
+) -> Path:
+    """Retain safe original bytes before fallible interpretation and temporary-owner cleanup."""
+    archive.mkdir(parents=True, exist_ok=True)
+    if archive.is_symlink() or archive.is_junction():
+        raise RuntimeError("refusing redirected producer archive")
+    prefix = "FULL-PRODUCER-" + uuid.uuid4().hex[:12]
+    candidates = [verifier_report] + [
+        path for path in sorted((clone / "var").glob("*.json"))
+        if path.name.startswith("quality-") or path.name in {
+            "sandbox-tool-result-origin.json", "desktop-e2e.json", "native-editor-package.json"}
+    ]
+    reports, refused = [], []
+    for path in candidates:
+        if not path.is_file():
+            continue
+        if path.is_symlink() or not path.resolve().is_relative_to(clone.resolve()):
+            raise RuntimeError("refusing redirected producer report")
+        content = path.read_bytes()
+        identity = {"producerName": path.name, "bytes": len(content),
+                    "sha256": hashlib.sha256(content).hexdigest()}
+        try:
+            unsafe = bool(find_secrets(content.decode("utf-8")))
+        except (UnicodeError, ValueError):
+            refused.append({**identity, "reason": "UNSCANNABLE"})
+            continue
+        if unsafe:
+            refused.append({**identity, "reason": "SECRET_MATERIAL"})
+            continue
+        destination = archive / (prefix + "-" + path.name)
+        with destination.open("xb") as output:
+            output.write(content)
+        if destination.read_bytes() != content:
+            raise RuntimeError("producer archive byte equality failed")
+        reports.append({**identity, "archive": destination.name})
+    manifest = archive / (prefix + "-MANIFEST.json")
+    write_json(manifest, {
+        "kind": "RAW_PRODUCER_CAPTURE_NOT_ACCEPTANCE", "subjectCommit": subject,
+        "gateVerdictIssued": False, "reports": reports, "refusedReports": refused,
+    })
+    if refused:
+        raise RuntimeError("producer capture refused unsafe artifact(s); neutral inventory retained")
+    return manifest
+
+
 def command(arguments: list[str], cwd: Path) -> str:
     result = subprocess.run(arguments, cwd=cwd, capture_output=True, text=True,
                             encoding="utf-8", errors="replace", check=False)
     if result.returncode:
         raise RuntimeError(f"verification setup failed: {arguments[0]} exit={result.returncode}")
     return result.stdout.strip()
+
+
+def collect_producer_observations(
+    clone: Path, verifier_report: Path, archive: Path, subject: str,
+) -> tuple[dict, tuple[int, int, int], Path]:
+    """The actual publisher boundary preserves originals before any interpretation can fail."""
+    manifest = capture_producer_reports(clone, verifier_report, archive, subject)
+    if not verifier_report.is_file():
+        raise RuntimeError("the complete verifier produced no report; available originals retained")
+    verification = json.loads(verifier_report.read_text(encoding="utf-8"))
+    summary = summarize_stages(verification)
+    return verification, summary, manifest
 
 
 def main() -> int:
@@ -88,21 +168,25 @@ def main() -> int:
             cwd=clone, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
             text=True, encoding="utf-8", errors="replace", bufsize=1,
         )
-        assert process.stdout is not None
-        for line in process.stdout:
-            print(line, end="", flush=True)
-            if line.startswith("[iacode] ---"):
-                progress.append(line.strip())
-                write_json(CHECKPOINT / "FULL-VERIFY-PROGRESS.json", {
-                    "subjectCommit": observed, "clone": str(clone), "transitions": progress,
-                    "updatedAt": datetime.now(UTC).isoformat(),
-                })
-        exit_code = process.wait()
-        if not report_path.is_file():
-            raise RuntimeError(f"the complete verifier produced no report (exit={exit_code})")
-        verification = json.loads(report_path.read_text(encoding="utf-8"))
+        try:
+            assert process.stdout is not None
+            for line in process.stdout:
+                print(line, end="", flush=True)
+                if line.startswith("[iacode] ---"):
+                    progress.append(line.strip())
+                    write_json(CHECKPOINT / "FULL-VERIFY-PROGRESS.json", {
+                        "subjectCommit": observed, "clone": str(clone), "transitions": progress,
+                        "updatedAt": datetime.now(UTC).isoformat(),
+                    })
+            exit_code = process.wait()
+        finally:
+            verification, summary, manifest = collect_producer_observations(
+                clone, report_path, CHECKPOINT / "attempts", observed)
+            write_json(CHECKPOINT / "PRODUCER-REPORTS.json", {
+                "subjectCommit": observed, "manifest": manifest.relative_to(CHECKPOINT).as_posix(),
+                "gateVerdictIssued": False,
+            })
         write_json(destination, verification)
-        stage_count, passed, failed = probe.summarize_stages(verification)
         scenarios = {}
         for path in sorted((clone / "var").glob("*.json")):
             if (path.name.startswith("quality-") or path.name in {
@@ -114,6 +198,7 @@ def main() -> int:
             "subjectCommit": observed, "source": "single full verifier invocation",
             "scenarios": scenarios,
         })
+        stage_count, passed, failed = summary
         isolation = verification.get("isolation") or {}
         after = probe.snapshot_project("iacode")
         project = isolation.get("composeProject")

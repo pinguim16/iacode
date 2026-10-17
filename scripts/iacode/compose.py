@@ -13,6 +13,7 @@ a bash-only operational path would make the primary environment the unsupported 
 from __future__ import annotations
 
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -72,15 +73,45 @@ def require_docker() -> None:
             "dependency-free: install Docker Desktop or the Docker engine and try again.")
 
 
+def decode_env_literal(raw: str) -> str:
+    """Decode repository dotenv literals without evaluating interpolation or host expressions."""
+    value = raw.strip()
+    if not value or value[0] not in ("'", '"'):
+        return re.split(r"\s+#", value, maxsplit=1)[0].rstrip()
+    quote = value[0]
+    decoded: list[str] = []
+    index = 1
+    escapes = {"n": "\n", "r": "\r", "t": "\t", "\\": "\\", '"': '"'}
+    while index < len(value):
+        character = value[index]
+        if character == quote:
+            remainder = value[index + 1:].strip()
+            if remainder and not remainder.startswith("#"):
+                raise StackError("unsupported or malformed quoted environment literal")
+            return "".join(decoded)
+        if character == "\\" and index + 1 < len(value):
+            following = value[index + 1]
+            if following == quote:
+                decoded.append(quote)
+            elif quote == '"' and following in escapes:
+                decoded.append(escapes[following])
+            else:
+                decoded.extend(("\\", following))
+            index += 2
+            continue
+        decoded.append(character)
+        index += 1
+    raise StackError("unsupported or malformed quoted environment literal")
+
+
 def read_env_file(
     path: Path = ENV_FILE,
     environment: Mapping[str, str] | None = None,
 ) -> dict[str, str]:
-    """Parse the Compose environment file.
+    """Read the repository's literal KEY=value environment format.
 
-    Deliberately small: Compose's own ``.env`` format is ``KEY=value`` with ``#`` comments and no
-    interpolation, and implementing more would mean this parser and Compose disagreeing about what
-    a file means.
+    Quoting, supported escapes and inline comments are decoded before consumers classify values.
+    This does not evaluate arbitrary dotenv interpolation, multiline values or host expressions.
     """
     if not path.is_file():
         raise StackError(
@@ -92,7 +123,7 @@ def read_env_file(
         if not stripped or stripped.startswith("#") or "=" not in stripped:
             continue
         key, _, value = stripped.partition("=")
-        values[key.strip()] = value.strip()
+        values[key.strip()] = decode_env_literal(value)
     # Docker Compose gives the process environment precedence over its env file.  Host-side
     # helpers must observe the same effective values or an isolated verification can start one
     # project and inspect or delete another.  Only declared keys are overlaid, so this function

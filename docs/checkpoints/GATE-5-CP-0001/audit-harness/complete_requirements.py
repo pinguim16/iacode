@@ -83,6 +83,13 @@ bind("9.6", ["scripts/development-ledger/seal_checkpoint.py", "scripts/developme
 bind("9.7", ["scripts/development-ledger/validate_checkpoint.py", "docs/checkpoints/GATE-5-CP-0001/STATE.json"], ["tests/test_gate4_quality_engine.py"], ["docs/MILESTONE-VALIDATION.md", "docs/adr/ADR-0037-intermediate-gates-use-internal-closure.md"])
 
 NEW_LESSONS = {
+    "LSN-0011": (["docs/checkpoints/GATE-5-CP-0001/audit-harness/validate_serial_bookkeeping.py", "docs/checkpoints/GATE-5-CP-0001/audit-harness/run_checkpoint_validation.py", "scripts/development-ledger/sync_in_progress_metadata.py", "scripts/development-ledger/finalize_checkpoint.py"], [ROOT_TESTS, "tests/test_in_progress_metadata.py", "tests/test_gate0_foundation.py"]),
+    "LSN-0035": (["scripts/iacode/client_checks.py", "scripts/iacode/desktop_test_support.py", NATIVE, LIVE], ["tests/test_gate0_foundation.py", ROOT_TESTS]),
+    "LSN-0037": (["scripts/development-ledger/policies.py", "tests/test_gate3_sandbox.py"], ["tests/test_gate3_sandbox.py", ROOT_TESTS]),
+    "LSN-0074": ([API_TESTS], [API_TESTS, "services/sandbox/tests/test_quality_images.py"]),
+    "LSN-0083": ([NATIVE, LIVE, "docs/checkpoints/GATE-5-CP-0001/audit-harness/run_internal_red_team.py"], ["tests/test_gate0_foundation.py", ROOT_TESTS]),
+    "LSN-0102": (["docs/checkpoints/GATE-5-CP-0001/audit-harness/run_full_verification.py"], [ROOT_TESTS]),
+    "LSN-0105": (["infra/tests/test_compose_definition.py", "scripts/iacode/gates/lint.py"], ["tests/test_gate4_quality_engine.py"]),
     "LSN-0117": (["docs/ARCHITECTURE.md"], [ROOT_TESTS]),
     "LSN-0118": ([CORE, EDITOR], [CORE_TESTS, ROOT_TESTS]),
     "LSN-0119": ([AUTH, "infra/compose/.env.example"], [ROOT_TESTS]),
@@ -100,6 +107,8 @@ NEW_LESSONS = {
     "LSN-0131": ([".gitattributes"], [ROOT_TESTS]),
     "LSN-0132": (["docs/checkpoints/GATE-5-CP-0001/audit-harness/run_full_verification.py"], [ROOT_TESTS]),
     "LSN-0133": ([".iacode/schemas/provenance.schema.json", "docs/checkpoints/GATE-5-CP-0001/PROVENANCE.json"], [ROOT_TESTS]),
+    "LSN-0134": (["scripts/iacode/compose.py"], [ROOT_TESTS, "tests/test_gate1_model_gateway.py", "infra/tests/test_compose_definition.py", "infra/tests/test_backup_tooling.py"]),
+    "LSN-0135": (["docs/checkpoints/GATE-5-CP-0001/audit-harness/run_full_verification.py"], [ROOT_TESTS]),
 }
 
 
@@ -143,7 +152,7 @@ def main() -> int:
             row["notes"] = "Authored Gate 5 artifact/test mapping and complete immutable current-source execution. Same-session only; formal ordered closure remains separately enforced by STATE and its assurance reports."
         elif reference.startswith("lesson:") and reference[7:] in NEW_LESSONS:
             artifacts, cases = NEW_LESSONS[reference[7:]]
-            evidence = mapped(artifacts, cases)
+            evidence = mapped(artifacts, cases, ["docs/ENGINEERING-MEMORY.md", "docs/checkpoints/GATE-5-CP-0001/PLAN.md"])
             evidence["validationEvidence"].append("checkpoint:FUNCTIONAL-SCENARIOS.json")
             row["notes"] = "Direct current lesson artifacts, real positive/adverse controls, retained causal failures and complete immutable re-execution; not independent validation."
         else:

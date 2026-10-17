@@ -12,6 +12,7 @@ import time
 import uuid
 from contextlib import contextmanager
 from datetime import UTC, datetime, timedelta
+from pathlib import Path
 from types import SimpleNamespace
 from unittest import mock
 
@@ -40,10 +41,25 @@ def encoded(value: dict) -> bytes:
     return json.dumps(value, ensure_ascii=False, separators=(",", ":")).encode("utf-8")
 
 
+def registry_settings(**overrides):
+    """Bind actual repository fixtures independently of package cwd or ambient settings."""
+    root = next(
+        parent
+        for parent in Path(__file__).resolve().parents
+        if (parent / "agents").is_dir() and (parent / ".iacode/policies").is_dir()
+    )
+    values = {
+        "repository_root": str(root),
+        "gateway_policy_dir": str(root / ".iacode/policies"),
+        **overrides,
+    }
+    return settings_for_tests(**values)
+
+
 @contextmanager
 def authenticated_client(*, expired: bool = False):
     expiry = datetime.now(UTC) + timedelta(seconds=-60 if expired else 3600)
-    app = create_app(settings_for_tests(desktop_token=KEY, desktop_token_expires_at=expiry))
+    app = create_app(registry_settings(desktop_token=KEY, desktop_token_expires_at=expiry))
     with TestClient(app) as client:
         resources = app.state.resources
         original = resources.redis
@@ -209,7 +225,7 @@ class DesktopAuthenticationTests:
             redis.set.assert_not_awaited()
 
     def test_legacy_mode_is_explicitly_unavailable_to_desktop_clients(self):
-        with TestClient(create_app(settings_for_tests())) as client:
+        with TestClient(create_app(registry_settings())) as client:
             result = client.post(PROTOCOL["path"], json=envelope())
             assert result.status_code == 503
             assert result.json()["code"] == "DESKTOP_MODE_NOT_CONFIGURED"
@@ -221,6 +237,17 @@ class DesktopAuthenticationTests:
             assert response.status_code == 200
             teams = response.json()["data"]
             assert teams and any(item["team"] == "coding" for item in teams)
+
+    def test_real_registry_is_bound_explicitly_when_working_directory_is_nested(
+        self, tmp_path, monkeypatch
+    ):
+        monkeypatch.chdir(tmp_path)
+        with authenticated_client() as (client, _):
+            response = send(client, envelope("teams"))
+            assert response.status_code == 200
+            assert any(item["team"] == "coding" for item in response.json()["data"])
+        # The general test helper must keep ignoring every ambient setting.
+        assert settings_for_tests().repository_root == "."
 
     def test_body_identity_must_match_authenticated_identity(self):
         with authenticated_client() as (client, _):

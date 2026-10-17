@@ -13,7 +13,7 @@ ROOT = CHECKPOINT.parents[2]
 sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
 
 from delivery_assurance import completeness_scope
-from ledger_common import LedgerError, load_json, scope_fingerprint, utc_now, validate_schema, write_json
+from ledger_common import LedgerError, load_json, scope_fingerprint, utc_now, validate_schema, write_json, use_utf8_stdout
 from validate_checkpoint import _validate_green_keeper_cycle
 
 DESKTOP_ATTACKS = [
@@ -131,4 +131,5 @@ def main() -> int:
 
 
 if __name__ == "__main__":
+    use_utf8_stdout()
     raise SystemExit(main())

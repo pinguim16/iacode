@@ -1,0 +1,35 @@
+{
+  "kind": "COMPLETED_FAILED_VERIFICATION_ARCHIVE",
+  "subjectCommit": "b5baca2ad94fc787539fa11b26f8676889044567",
+  "archivedAt": "2026-10-16T23:58:50.946132+00:00",
+  "result": "FAIL",
+  "verifierCompleted": true,
+  "collectorCompleted": false,
+  "collectorFailureCommand": "cmd-0277",
+  "unavailableCollectorArtifacts": [
+    "FUNCTIONAL-SCENARIOS.json",
+    "PUBLISHED-CLEAN-CLONE-REPORT.json",
+    "COMPOSE-ISOLATION-AUDIT.json"
+  ],
+  "stagesPassed": 41,
+  "stageDenominator": 45,
+  "cleanup": {
+    "compose": "PASS",
+    "temporaryDirectoryAbsentObserved": true
+  },
+  "observations": [
+    {
+      "original": "VERIFY.json",
+      "archive": "attempts/FULL-VERIFY-RED-0002-VERIFY.json",
+      "bytes": 18458,
+      "sha256": "59571a35a6274e4c536076733f366c7bec69f8a641eaa27bb0eae0ab352ea415"
+    },
+    {
+      "original": "FULL-VERIFY-PROGRESS.json",
+      "archive": "attempts/FULL-VERIFY-RED-0002-FULL-VERIFY-PROGRESS.json",
+      "bytes": 6595,
+      "sha256": "f1376362f09d2f522c8e95198b458df9b55e80294100f098b50e868330637e32"
+    }
+  ],
+  "sameSessionInternalEvidence": true
+}

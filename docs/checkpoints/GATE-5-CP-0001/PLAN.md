@@ -1,5 +1,26 @@
 # Gate 5 execution plan
 
+## Full runtime v2 causal rework — frozen criteria, before corrective implementation
+
+G5-INT-034 additionally requires one synchronous inventory-recorder/validation-recorder sequencer:
+the first recorder must actually exit, any first-phase failure prevents the second command, and
+other producers must already be quiescent. Existing mandatory hashes and gate sets remain intact.
+The reopened LSN-0011 requires actual serial main-tree validation before its status is restored.
+
+Cmd-0277 completes all 45 stages with 41 PASS and four FAIL; cmd-0280 preserves the exact
+failed verifier and explicitly unavailable collector outputs. Cmd-0279/0281/0282 and the
+digest-verified sandbox evidence cmd-0276 establish the specific causes. Cmd-0283 observes only
+expected checkpoint inventory/hash drift after these new reports; Git remains main at runtime v2.
+
+Before repair, escalate G5-INT-028/029/030/031 through the canonical recurrence transition,
+confirm LSN-0134/0135, refresh lesson preflight and derive the expanded requirement set.
+Correct UTF-8 consumers, decoded literal consumers, the owning-Gate scope expectation, explicit
+real-registry test roots and the current producer collector. Preserve all correct assertions,
+environment-independent test settings, original scanner taxonomy, historical subjects and every
+mandatory stage. Add causal positive/adverse regressions including producer-capture survival after
+an actual exception/cleanup. Then repeat affected whole suites, publish a new immutable v3 subject
+and execute the full non-fast 45-stage cycle before any prepared acceptance or closure action.
+
 ## Additional observed transport obligation — lesson:LSN-0131
 
 Preserve exact archived observation bytes through real Git export, not only through local copies.
@@ -13,8 +34,9 @@ work is completion evidence. The initial set was 50 canonical rows plus 115 less
 Cmd-0022 extended it to 50 plus 116 after the causal documentation lesson; cmd-0036 extends it
 again to 50 plus 117 after the actual mutation-recovery failure. Cmd-0052 extends it to 50 plus
 118 after the observed publication/checkpoint scan distinction. Cmd-0070 adds the native installer
-lesson; cmd-0081 adds the observed cold-import lesson. The current set is 50 canonical rows plus
-126 lesson requirements, 176 total at cmd-0161 including explicit fresh-catalog setup. Implementation cannot reduce
+lesson; cmd-0081 adds the observed cold-import lesson. At cmd-0161 the set was50 canonical rows plus
+126 lesson requirements,176 total including fresh-catalog setup. Current derivation cmd-0310 is184.
+Implementation cannot reduce
 either set. M2 independent validation stays pending.
 
 ## G5-S00 — Entry and baseline

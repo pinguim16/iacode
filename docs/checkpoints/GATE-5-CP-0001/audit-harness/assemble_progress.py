@@ -31,7 +31,7 @@ def main() -> int:
     for row in closure["requirements"]:
         key = row["sourceRef"].split("#")[-1]
         if ((row["sourceRef"].startswith("canonical:") and key in CANONICAL)
-                or row["id"] in LESSONS or row["sourceRef"] in {"lesson:LSN-0131", "lesson:LSN-0132", "lesson:LSN-0133"}):
+                or row["id"] in LESSONS or row["sourceRef"] in {"lesson:LSN-0131", "lesson:LSN-0132", "lesson:LSN-0133", "lesson:LSN-0134", "lesson:LSN-0135"}):
             if row["finalStatus"] == "NOT_STARTED":
                 row["implementationStatus"] = "IN_PROGRESS"
                 row["finalStatus"] = "PARTIAL"
@@ -63,7 +63,7 @@ def main() -> int:
                                     "derivedRequirements": len(preflight["derivedRequirements"])})
     state["lessonPreflight"]["evidence"] = ["command:" + record["id"] for record in records
         if record.get("exitCode") == 0 and "scripts/development-ledger/lesson_preflight.py" in record.get("command", "")]
-    state["nextAllowedAction"] = "Freeze and publish the Gate 5 runtime subject after actual full desktop acceptance, then execute complete immutable non-fast verification and ordered mandatory internal assurance. No Gate 6 authorization."
+    state["nextAllowedAction"] = "Complete causal full-v2 rework and current metadata, freeze/publish a new immutable runtime v3 subject, then repeat every non-fast stage and ordered internal assurance. No Gate 6 authorization."
     state["updatedAt"] = utc_now()
     write_json(CHECKPOINT / "STATE.json", state)
     print(f"PROGRESS_RECORDED total={len(rows)} partial={state['requirementsMatrix']['partial']} complete=0 status=IN_PROGRESS")

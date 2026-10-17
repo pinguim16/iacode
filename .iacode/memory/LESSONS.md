@@ -18,7 +18,7 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 | `LSN-0008` | `GUARDED` | CRITICAL | process | Requirement completeness must be total and evidence-backed before handoff | `DeliveryCompletenessMatrixTests.test_one_requirement_short_of_total_fails`, `DeliveryAssuranceGateTests.test_completeness_validator_not_executed_blocks_review`, `scripts/development-ledger/check_completeness.py`, `ExpectedRequirementSetTests.test_deleting_a_requirement_and_recomputing_the_counts_still_fails` |
 | `LSN-0009` | `GUARDED` | CRITICAL | testing | A red gate requires rework, never a waiver, and never a weakened check | `GreenKeeperToolTests.test_red_gate_is_reported_as_still_red`, `DeliveryAssuranceGateTests.test_green_keeper_pass_with_a_real_failure_is_rejected`, `DeliveryAssuranceGateTests.test_red_tests_block_review`, `.iacode/policies/quality-gates.json`, `MandatoryGatePolicyTests.test_a_cycle_measured_against_no_gate_is_rejected` |
 | `LSN-0010` | `GUARDED` | HIGH | tooling | A recorded command must carry runtime, working directory, commit and purpose to be replayable | `CommandReproducibilityTests.test_bare_script_name_is_rejected`, `CommandReproducibilityTests.test_unresolvable_script_path_is_rejected`, `.iacode/schemas/command.schema.json`, `validate_checkpoint._validate_command_reproducibility`, `CommandInputBindingTests.test_a_record_without_a_digest_is_rejected` |
-| `LSN-0011` | `GUARDED` | CRITICAL | tooling | A control over a checkpoint's own evidence must be scoped to the moment it matters | `DeliveryAssuranceGateTests.test_gate_consistency_is_provisional_while_work_is_in_progress`, `green_keeper._refresh_declared_hashes`, `test_every_runner_of_the_mandatory_gates_refreshes_the_declared_hashes`, `test_green_keeper_declares_its_in_progress_evidence_dirty_before_validation`, `test_preflight_aggregates_and_commit_semantics_are_derived_without_promotion`, `test_a_sealed_or_terminal_checkpoint_is_never_rewritten`, `test_validation_runner_keeps_the_synchronizers_derived_state` |
+| `LSN-0011` | `GUARDED` | CRITICAL | tooling | A control over a checkpoint's own evidence must be scoped to the moment it matters | `DeliveryAssuranceGateTests.test_gate_consistency_is_provisional_while_work_is_in_progress`, `green_keeper._refresh_declared_hashes`, `test_every_runner_of_the_mandatory_gates_refreshes_the_declared_hashes`, `test_green_keeper_declares_its_in_progress_evidence_dirty_before_validation`, `test_preflight_aggregates_and_commit_semantics_are_derived_without_promotion`, `test_a_sealed_or_terminal_checkpoint_is_never_rewritten`, `test_validation_runner_keeps_the_synchronizers_derived_state`, `test_bookkeeping_sequence_awaits_each_recorder_and_keeps_canonical_order`, `test_bookkeeping_sequence_never_validates_after_inventory_recorder_failure` |
 | `LSN-0012` | `GUARDED` | CRITICAL | git | Sealed checkpoints and their tags are immutable, and tooling must keep validating them | `HistoricalCheckpointCompatibilityTests.test_first_sealed_checkpoint_still_validates`, `HistoricalCheckpointCompatibilityTests.test_fourth_sealed_checkpoint_still_validates`, `docs/CHECKPOINT-PROTOCOL.md`, `scripts/development-ledger/anchors.py`, `IntegrityAnchorTests.test_a_moved_historical_tag_is_detected` |
 | `LSN-0013` | `CONFIRMED` | HIGH | environment | An installed capability must be detected by resolved path, not by a bare command lookup | _not yet guarded_ |
 | `LSN-0014` | `GUARDED` | MEDIUM | process | Evidence must be recorded as it happens, not reconstructed at the end of a run | `scripts/development-ledger/record_command.py`, `validate_checkpoint._validate_seal_chronology`, `SealChronologyTests.test_a_record_after_the_end_of_the_run_is_rejected` |
@@ -44,7 +44,7 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 | `LSN-0034` | `GUARDED` | MEDIUM | implementation | Re-deriving what the framework already computed diverges from the framework | `test_metrics_endpoint_exposes_request_metrics`, `test_metrics_label_routes_by_template_not_by_url`, `test_the_api_instruments_reach_prometheus` |
 | `LSN-0035` | `GUARDED` | CRITICAL | tooling | Captured subprocess output decoded or re-emitted with the platform codepage crashes the tool, not the work | `test_no_capture_relies_on_the_platform_codepage`, `test_every_tool_that_re_emits_captured_output_configures_its_own_stream`, `test_the_rule_detects_a_capture_that_would_fail` |
 | `LSN-0036` | `GUARDED` | HIGH | tooling | A gate that runs inside an image measures the image, not the source | `test_every_image_gate_builds_before_it_measures`, `test_the_image_gate_rule_detects_a_gate_that_would_skip_the_build`, `test_durability_scenario_rebuilds_its_rehearsal_worker` |
-| `LSN-0037` | `GUARDED` | MEDIUM | tooling | A shared control that names an identifier the repository derives stops being a control when that identifier moves | `test_no_shared_control_is_bound_to_a_gate_literal`, `test_the_gate_literal_rule_detects_a_bound_control`, `test_no_control_names_a_migration_revision_literally`, `test_the_revision_rule_detects_a_named_head`, `test_the_head_revision_has_one_derivation` |
+| `LSN-0037` | `GUARDED` | HIGH | tooling | A shared control that names an identifier the repository derives stops being a control when that identifier moves | `test_no_shared_control_is_bound_to_a_gate_literal`, `test_the_gate_literal_rule_detects_a_bound_control`, `test_no_control_names_a_migration_revision_literally`, `test_the_revision_rule_detects_a_named_head`, `test_the_head_revision_has_one_derivation`, `test_cli_reservation_membership_follows_every_policy_lifecycle_position` |
 | `LSN-0038` | `GUARDED` | MEDIUM | implementation | Two representations of one concept in one module disagree, and the safer one loses | `test_a_documented_placeholder_is_not_redacted`, `test_both_redactors_agree_on_every_value_the_example_file_carries`, `test_no_module_writes_its_own_credential_name_rule`, `test_the_two_questions_stay_different` |
 | `LSN-0039` | `GUARDED` | HIGH | testing | A test that writes to the operational database leaves production data behind | `test_the_operational_catalog_holds_only_providers_the_policy_declares` |
 | `LSN-0040` | `GUARDED` | CRITICAL | checkpoint | A control that judges sealed history only runs once a successor anchors it | `test_every_sealed_checkpoint_validates_from_its_own_tag`, `test_the_recorder_never_declares_an_ignored_path_as_an_input`, `test_an_input_the_repository_carries_is_still_required_to_exist`, `scripts/development-ledger/validate_checkpoint.py`, `test_the_validator_refuses_a_record_naming_an_unpublished_commit`, `test_every_preserved_reference_is_what_makes_its_checkpoint_valid`, `test_a_published_clone_carries_only_what_a_published_reference_reaches`, `test_every_clone_in_the_tooling_and_the_suite_is_a_published_clone`, `test_a_preserved_reference_missing_from_the_remote_fails_unnamed`, `test_a_preserved_commit_maps_to_the_checkpoint_whose_evidence_names_it`, `test_git_metadata_is_local_even_though_git_check_ignore_does_not_classify_it`, `test_schema_3_3_refuses_a_digest_bound_git_metadata_input`, `test_schema_3_3_refuses_an_ignored_input_even_when_it_exists`, `test_the_recorder_excludes_git_metadata_and_refuses_it_when_explicit`, `test_a_nontransport_input_refusal_is_recomputed_from_its_precondition`, `test_a_fabricated_nontransport_input_refusal_is_rejected`, `scripts/development-ledger/ledger_common.py` |
@@ -81,7 +81,7 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 | `LSN-0071` | `GUARDED` | HIGH | implementation | Every quality image must provision snapshots on its oldest runtime and prepare each isolated check | `test_every_quality_helper_provisions_a_real_snapshot`, `test_isolated_language_checks_prepare_their_policy_owned_toolchain` |
 | `LSN-0072` | `GUARDED` | HIGH | security | Secret findings and reviewed false positives must share one policy-owned taxonomy | `test_quality_images_bind_the_policy_owned_secret_scanner`, `test_a_non_allowlisted_credential_shape_fails_the_secret_check` |
 | `LSN-0073` | `GUARDED` | HIGH | quality | The canonical lint denominator must cover every detected project root | `test_mandatory_lint_covers_every_python_project_root` |
-| `LSN-0074` | `GUARDED` | HIGH | implementation | An importable source tree is not an installed or repository-configured test environment | `test_python_unit_runner_installs_metadata_and_exposes_monorepo_policy`, `test_python_functional_fixtures_reach_their_intended_test_outcome` |
+| `LSN-0074` | `GUARDED` | CRITICAL | implementation | An importable source tree is not an installed or repository-configured test environment | `test_python_unit_runner_installs_metadata_and_exposes_monorepo_policy`, `test_python_functional_fixtures_reach_their_intended_test_outcome`, `test_real_registry_is_bound_explicitly_when_working_directory_is_nested` |
 | `LSN-0075` | `GUARDED` | HIGH | implementation | Offline package installation requires its build backend inside the quality image | `test_python_unit_runner_installs_metadata_and_exposes_monorepo_policy` |
 | `LSN-0076` | `GUARDED` | HIGH | architecture | Projected nested configuration requires an explicit monorepo root | `test_python_unit_runner_installs_metadata_and_exposes_monorepo_policy`, `test_no_evaluator_module_can_start_a_process` |
 | `LSN-0077` | `GUARDED` | HIGH | quality | Harness wait bounds must reflect workload size without changing product deadlines | `test_real_repository_scenario_has_a_separate_bounded_wait` |
@@ -109,7 +109,7 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 | `LSN-0099` | `GUARDED` | HIGH | checkpoint | A refused subject is an attempted input, not executed commit evidence | `test_inputs_are_canonicalized_and_an_unknown_subject_is_refused` |
 | `LSN-0100` | `GUARDED` | HIGH | checkpoint | Pre-seal detached validation must bind the explicit subject namespace | `test_in_progress_symbolic_head_validates_from_its_matching_subject_tag`, `test_subject_tag_never_substitutes_for_a_sealed_checkpoint_tag` |
 | `LSN-0101` | `GUARDED` | HIGH | checkpoint | A structural record and its canonical index are one atomic change | `test_the_index_lists_every_record_with_its_title_and_status`, `test_a_record_missing_from_the_index_is_detected` |
-| `LSN-0102` | `GUARDED` | HIGH | quality | Assurance denominators must derive category counts from the current source set | `test_corrective_partition_is_derived_from_the_current_reference_set`, `test_current_collection_partition_survives_added_regression_cases` |
+| `LSN-0102` | `GUARDED` | CRITICAL | quality | Assurance denominators must derive category counts from the current source set | `test_corrective_partition_is_derived_from_the_current_reference_set`, `test_current_collection_partition_survives_added_regression_cases`, `test_current_summary_derives_exact_vocabulary_and_ignores_noncanonical_alias`, `test_current_summary_refuses_missing_duplicate_reordered_or_unknown_results` |
 | `LSN-0103` | `GUARDED` | HIGH | testing | Adversarial fixtures must hash the complete validated contract | `test_verdict_before_cancellation_refuses_late_acceptance` |
 | `LSN-0104` | `GUARDED` | HIGH | process | Intermediate closure and independent validation must have unambiguous contracts | `test_internal_closure_cannot_claim_independent_review_or_red_team` |
 | `LSN-0105` | `GUARDED` | CRITICAL | testing | New behavioral tests must satisfy the unchanged source-quality contract | `test_mandatory_lint_covers_every_python_project_root` |
@@ -141,6 +141,8 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 | `LSN-0131` | `GUARDED` | HIGH | quality | Raw evidence digests require byte-preserving Git export, not text normalization | `test_exact_byte_evidence_survives_git_transport_and_detects_normalization` |
 | `LSN-0132` | `GUARDED` | HIGH | quality | Owned Git clones need read-only-aware cleanup, not native-profile lock retry | `test_verification_clone_cleanup_handles_real_readonly_git_objects` |
 | `LSN-0133` | `GUARDED` | MEDIUM | tooling | Shared field names do not imply shared schema types | `test_current_provenance_is_validated_by_its_own_artifact_schema` |
+| `LSN-0134` | `GUARDED` | MEDIUM | implementation | Configuration classifiers consume decoded values, not dotenv quote syntax | `test_host_literal_reader_matches_actual_compose_and_placeholder_semantics`, `test_malformed_quoted_env_literals_fail_closed_without_exposing_content`, `test_process_environment_overlays_are_values_not_dotenv_tokens` |
+| `LSN-0135` | `GUARDED` | HIGH | quality | Capture producer evidence before fallible interpretation or owned cleanup | `test_raw_reports_survive_real_postprocessing_exception_and_owned_cleanup`, `test_raw_capture_refuses_secret_material_but_retains_neutral_failure_inventory` |
 
 ## Detail
 
@@ -284,7 +286,7 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 
 ### LSN-0011 — A control over a checkpoint's own evidence must be scoped to the moment it matters
 
-- Status: `GUARDED`, severity CRITICAL, category tooling, recurrences 13.
+- Status: `GUARDED`, severity CRITICAL, category tooling, recurrences 14.
 - Source: SETUP-00, SETUP-00-CP-0005, finding REWORK-LOG cycles 1 to 3 and 6.
 - Symptom: The gate that validates the checkpoint kept failing because running it appends to the very ledger and inventory the validation binds.
 - Root cause: Consistency rules written for a finished delivery were applied while the delivery was still writing its own evidence, which no ordering of steps can satisfy.
@@ -297,7 +299,9 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
   - `test` test_preflight_aggregates_and_commit_semantics_are_derived_without_promotion — The in-progress preflight aggregates and finalCommit semantics are derived together without altering status, verdicts or evidence.
   - `test` test_a_sealed_or_terminal_checkpoint_is_never_rewritten — Synchronization cannot rewrite immutable or terminal evidence.
   - `test` test_validation_runner_keeps_the_synchronizers_derived_state — The actual wrapper preserves real synchronizer output at its hash boundary instead of restoring a stale snapshot.
-- Evidence: `file:docs/checkpoints/SETUP-00-CP-0005/DECISIONS.md`, `file:docs/checkpoints/SETUP-00-CP-0005/REWORK-LOG.jsonl`, `file:docs/checkpoints/GATE-4-CP-0005/REWORK-LOG.jsonl`, `file:docs/checkpoints/GATE-4-CP-0009/COMMANDS.jsonl`, `file:docs/checkpoints/GATE-4-CP-0009/REWORK-LOG.jsonl`, `file:docs/checkpoints/GATE-4-CP-0009/audit-harness/run_checkpoint_validation.py`, `file:scripts/development-ledger/finalize_checkpoint.py`, `file:scripts/development-ledger/green_keeper.py`, `file:scripts/iacode/verify.py`, `file:tests/test_development_ledger.py`, `file:tests/test_gate1_model_gateway.py`, `file:docs/checkpoints/GATE-4-CP-0010/COMMANDS.jsonl`, `file:docs/checkpoints/GATE-4-CP-0010/FINDINGS.json`, `file:scripts/development-ledger/sync_in_progress_metadata.py`, `file:tests/test_in_progress_metadata.py`
+  - `test` test_bookkeeping_sequence_awaits_each_recorder_and_keeps_canonical_order — The actual synchronous sequencer waits for complete recorder exit and never starts validation after a failed inventory recorder.
+  - `test` test_bookkeeping_sequence_never_validates_after_inventory_recorder_failure — The actual synchronous sequencer waits for complete recorder exit and never starts validation after a failed inventory recorder.
+- Evidence: `file:docs/checkpoints/SETUP-00-CP-0005/DECISIONS.md`, `file:docs/checkpoints/SETUP-00-CP-0005/REWORK-LOG.jsonl`, `file:docs/checkpoints/GATE-4-CP-0005/REWORK-LOG.jsonl`, `file:docs/checkpoints/GATE-4-CP-0009/COMMANDS.jsonl`, `file:docs/checkpoints/GATE-4-CP-0009/REWORK-LOG.jsonl`, `file:docs/checkpoints/GATE-4-CP-0009/audit-harness/run_checkpoint_validation.py`, `file:scripts/development-ledger/finalize_checkpoint.py`, `file:scripts/development-ledger/green_keeper.py`, `file:scripts/iacode/verify.py`, `file:tests/test_development_ledger.py`, `file:tests/test_gate1_model_gateway.py`, `file:docs/checkpoints/GATE-4-CP-0010/COMMANDS.jsonl`, `file:docs/checkpoints/GATE-4-CP-0010/FINDINGS.json`, `file:scripts/development-ledger/sync_in_progress_metadata.py`, `file:tests/test_in_progress_metadata.py`, `file:docs/checkpoints/GATE-5-CP-0001/COMMANDS.jsonl`, `file:docs/checkpoints/GATE-5-CP-0001/FINDINGS.json`, `file:docs/checkpoints/GATE-5-CP-0001/audit-harness/validate_serial_bookkeeping.py`, `file:tests/test_gate5_clients.py`
 
 ### LSN-0012 — Sealed checkpoints and their tags are immutable, and tooling must keep validating them
 
@@ -594,7 +598,7 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 
 ### LSN-0035 — Captured subprocess output decoded or re-emitted with the platform codepage crashes the tool, not the work
 
-- Status: `GUARDED`, severity CRITICAL, category tooling, recurrences 1.
+- Status: `GUARDED`, severity CRITICAL, category tooling, recurrences 2.
 - Source: GATE-0, GATE-0-CP-0001, finding G0-F-004.
 - Symptom: The Green Keeper aborted with UnicodeDecodeError: 'charmap' codec can't decode byte 0x9d while reading the output of a gate that was green. After the read was repaired, the command recorder aborted with UnicodeEncodeError: 'charmap' codec can't encode character '�' while printing what it had just captured -- after an eighteen-minute verification had already passed.
 - Root cause: Both ends inherit the machine's codepage. subprocess.run(..., text=True) with no encoding decodes with locale.getencoding(), and sys.stdout encodes with it as well; on Windows that is cp1252, while every tool here writes UTF-8. The failure is intermittent because it depends on which character the measured process happened to print, and it lands after the work succeeded, so it destroys a result rather than reporting one.
@@ -603,7 +607,7 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
   - `test` test_no_capture_relies_on_the_platform_codepage — Every subprocess capture in the tree is parsed and must state its encoding.
   - `test` test_every_tool_that_re_emits_captured_output_configures_its_own_stream — Every entry point that captures also configures the stream it writes to.
   - `test` test_the_rule_detects_a_capture_that_would_fail — The rule is exercised against a call it must reject.
-- Evidence: `file:tests/test_gate0_foundation.py`, `file:scripts/development-ledger/ledger_common.py`, `file:scripts/iacode/compose.py`
+- Evidence: `file:tests/test_gate0_foundation.py`, `file:scripts/development-ledger/ledger_common.py`, `file:scripts/iacode/compose.py`, `file:tests/test_gate5_clients.py`, `file:docs/checkpoints/GATE-5-CP-0001/FINDINGS.json`, `file:docs/checkpoints/GATE-5-CP-0001/COMMANDS.jsonl`
 
 ### LSN-0036 — A gate that runs inside an image measures the image, not the source
 
@@ -620,7 +624,7 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 
 ### LSN-0037 — A shared control that names an identifier the repository derives stops being a control when that identifier moves
 
-- Status: `GUARDED`, severity MEDIUM, category tooling, recurrences 3.
+- Status: `GUARDED`, severity HIGH, category tooling, recurrences 4.
 - Source: GATE-1, GATE-1-CP-0001, finding G1-F-002.
 - Symptom: Twice in one Gate. First: test_no_future_gate_capability_is_implemented failed at the start of GATE 1 with 'services/model-gateway is reserved for GATE 1 but carries ...', because the control called scope_violations(root, 'GATE-0'). Then: the fresh-installation scenario failed with alembic_version='0002_model_gateway', because it compared the recorded revision with the literal '0001_foundation'.
 - Root cause: A control that names today's state is a control with an expiry date nobody recorded. The identifier's kind does not matter -- a Gate, a checkpoint, a migration revision -- and the first formulation of this lesson said 'a Gate', so the scan it produced looked for Gate literals and saw nothing else.
@@ -631,7 +635,8 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
   - `test` test_no_control_names_a_migration_revision_literally — No control compares an observed value against a hard-coded migration revision.
   - `test` test_the_revision_rule_detects_a_named_head — The rule is exercised against an equality it must reject and an upgrade-path argument it must accept.
   - `test` test_the_head_revision_has_one_derivation — The head is derived once, in the migration directory, and neither consumer walks the graph itself.
-- Evidence: `file:scripts/development-ledger/policies.py`, `file:scripts/development-ledger/ledger_common.py`, `file:scripts/development-ledger/gate0_red_team.py`, `file:tests/test_gate0_foundation.py`, `file:apps/api/migrations/head.py`, `file:scripts/iacode/scenarios/fresh_install.py`
+  - `test` test_cli_reservation_membership_follows_every_policy_lifecycle_position — Execute the strengthened current causal boundary without weakening inherited controls.
+- Evidence: `file:scripts/development-ledger/policies.py`, `file:scripts/development-ledger/ledger_common.py`, `file:scripts/development-ledger/gate0_red_team.py`, `file:tests/test_gate0_foundation.py`, `file:apps/api/migrations/head.py`, `file:scripts/iacode/scenarios/fresh_install.py`, `file:tests/test_gate5_clients.py`, `file:docs/checkpoints/GATE-5-CP-0001/FINDINGS.json`, `file:docs/checkpoints/GATE-5-CP-0001/COMMANDS.jsonl`
 
 ### LSN-0038 — Two representations of one concept in one module disagree, and the safer one loses
 
@@ -1104,7 +1109,7 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 
 ### LSN-0074 — An importable source tree is not an installed or repository-configured test environment
 
-- Status: `GUARDED`, severity HIGH, category implementation, recurrences 1.
+- Status: `GUARDED`, severity CRITICAL, category implementation, recurrences 2.
 - Source: GATE-4, GATE-4-CP-0001, finding cmd-0070.
 - Symptom: The real repository evaluation imported local Python sources successfully but failed package tests that queried distribution metadata and API tests that resolved repository policy relative to their nested package root.
 - Root cause: The quality wrapper treated PYTHONPATH as equivalent to package installation and assumed a package-root working directory exposed repository-root configuration. Neither property is true in an isolated monorepo sandbox.
@@ -1112,7 +1117,8 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 - Prevention:
   - `test` test_python_unit_runner_installs_metadata_and_exposes_monorepo_policy — A real nested-package snapshot proves distribution metadata and repository policy are both visible through the quality-python wrapper.
   - `test` test_python_functional_fixtures_reach_their_intended_test_outcome — Every Python functional fixture is installed and executed in the real no-network quality image, and none may fail during metadata generation.
-- Evidence: `file:docs/checkpoints/GATE-4-CP-0001/COMMANDS.jsonl`, `file:services/sandbox/images/quality-python/python_runner.py`, `file:services/sandbox/tests/test_quality_images.py`, `file:docs/checkpoints/GATE-4-CP-0001/QUALITY-IACODE-FAIL-CMD-0070.json`, `file:services/evaluator/tests/fixtures/python-pass/pyproject.toml`, `file:services/evaluator/tests/fixtures/python-fail/pyproject.toml`, `file:services/evaluator/tests/fixtures/python-slow/pyproject.toml`, `file:docs/checkpoints/GATE-4-CP-0001/QUALITY-RECOVERY-PACKAGING-FAIL-CMD-0173.json`
+  - `test` test_real_registry_is_bound_explicitly_when_working_directory_is_nested — Execute the strengthened current causal boundary without weakening inherited controls.
+- Evidence: `file:docs/checkpoints/GATE-4-CP-0001/COMMANDS.jsonl`, `file:services/sandbox/images/quality-python/python_runner.py`, `file:services/sandbox/tests/test_quality_images.py`, `file:docs/checkpoints/GATE-4-CP-0001/QUALITY-IACODE-FAIL-CMD-0070.json`, `file:services/evaluator/tests/fixtures/python-pass/pyproject.toml`, `file:services/evaluator/tests/fixtures/python-fail/pyproject.toml`, `file:services/evaluator/tests/fixtures/python-slow/pyproject.toml`, `file:docs/checkpoints/GATE-4-CP-0001/QUALITY-RECOVERY-PACKAGING-FAIL-CMD-0173.json`, `file:tests/test_gate5_clients.py`, `file:docs/checkpoints/GATE-5-CP-0001/FINDINGS.json`, `file:docs/checkpoints/GATE-5-CP-0001/COMMANDS.jsonl`
 
 ### LSN-0075 — Offline package installation requires its build backend inside the quality image
 
@@ -1208,14 +1214,14 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 
 ### LSN-0083 — A command that decodes captured UTF-8 must also configure the stream that re-emits it
 
-- Status: `GUARDED`, severity CRITICAL, category tooling, recurrences 2.
+- Status: `GUARDED`, severity CRITICAL, category tooling, recurrences 3.
 - Source: GATE-4, GATE-4-CP-0001, finding cmd-0112.
 - Symptom: The canonical suite found program_state.py and review_bundle.py capturing subprocess output safely but re-emitting it through the Windows platform codepage without configuring stdout.
 - Root cause: The entry points decoded child output explicitly but their own stdout still used the Windows platform codepage; the original guardrail scanned scripts but not executable checkpoint evidence harnesses.
 - Resolution: Every capturing entry point calls use_utf8_stdout or the shared main guard before re-emitting child output, and the repository control scans both scripts and the current checkpoint's executable evidence harnesses.
 - Prevention:
   - `test` test_every_tool_that_re_emits_captured_output_configures_its_own_stream — Every executable script and current-checkpoint evidence harness that captures child output configures UTF-8 output directly or through the shared main guard.
-- Evidence: `file:scripts/development-ledger/program_state.py`, `file:scripts/development-ledger/review_bundle.py`, `file:tests/test_gate0_foundation.py`, `file:docs/checkpoints/GATE-4-CP-0005/RUN-PUBLISHED-FULL-VERIFICATION.py`, `file:docs/checkpoints/GATE-4-CP-0005/PUBLISHED-FULL-VERIFY-FAIL-CMD-0040.json`
+- Evidence: `file:scripts/development-ledger/program_state.py`, `file:scripts/development-ledger/review_bundle.py`, `file:tests/test_gate0_foundation.py`, `file:docs/checkpoints/GATE-4-CP-0005/RUN-PUBLISHED-FULL-VERIFICATION.py`, `file:docs/checkpoints/GATE-4-CP-0005/PUBLISHED-FULL-VERIFY-FAIL-CMD-0040.json`, `file:tests/test_gate5_clients.py`, `file:docs/checkpoints/GATE-5-CP-0001/FINDINGS.json`, `file:docs/checkpoints/GATE-5-CP-0001/COMMANDS.jsonl`
 
 ### LSN-0084 — A historical Gate documentation test must derive the current entry-point state
 
@@ -1437,7 +1443,7 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 
 ### LSN-0102 — Assurance denominators must derive category counts from the current source set
 
-- Status: `GUARDED`, severity HIGH, category quality, recurrences 1.
+- Status: `GUARDED`, severity CRITICAL, category quality, recurrences 2.
 - Source: GATE-4, GATE-4-CP-0009, finding cmd-0112-requirement-completion.
 - Symptom: The requirement closer resolved all rows but returned failure because its expected partition still hard-coded eight corrective rows after the current corrective reference set had grown to nine.
 - Root cause: The harness maintained the corrective reference set and a duplicate numeric partition literal. Adding a required lesson changed the source set without changing the second representation, so the assurance step rejected its own truthful count.
@@ -1445,7 +1451,9 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 - Prevention:
   - `test` test_corrective_partition_is_derived_from_the_current_reference_set — Adding a corrective reference changes the expected partition automatically without editing a second count.
   - `test` test_current_collection_partition_survives_added_regression_cases — Execute the actual live partition property in an owned collection fixture, add another regression source and re-execute unchanged; deliberately admit an excluded input to prove rejection.
-- Evidence: `file:docs/checkpoints/GATE-4-CP-0009/COMMANDS.jsonl`, `file:docs/checkpoints/GATE-4-CP-0009/audit-harness/complete_requirements.py`, `file:tests/test_checkpoint_audit_harnesses.py`, `file:tests/test_test_suite_input_repositories.py`, `file:docs/checkpoints/GATE-5-CP-0001/FINDINGS.json`, `file:docs/checkpoints/GATE-5-CP-0001/COMMANDS.jsonl`
+  - `test` test_current_summary_derives_exact_vocabulary_and_ignores_noncanonical_alias — Execute the strengthened current causal boundary without weakening inherited controls.
+  - `test` test_current_summary_refuses_missing_duplicate_reordered_or_unknown_results — Execute the strengthened current causal boundary without weakening inherited controls.
+- Evidence: `file:docs/checkpoints/GATE-4-CP-0009/COMMANDS.jsonl`, `file:docs/checkpoints/GATE-4-CP-0009/audit-harness/complete_requirements.py`, `file:tests/test_checkpoint_audit_harnesses.py`, `file:tests/test_test_suite_input_repositories.py`, `file:docs/checkpoints/GATE-5-CP-0001/FINDINGS.json`, `file:docs/checkpoints/GATE-5-CP-0001/COMMANDS.jsonl`, `file:tests/test_gate5_clients.py`
 
 ### LSN-0103 — Adversarial fixtures must hash the complete validated contract
 
@@ -1471,14 +1479,14 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 
 ### LSN-0105 — New behavioral tests must satisfy the unchanged source-quality contract
 
-- Status: `GUARDED`, severity CRITICAL, category testing, recurrences 4.
+- Status: `GUARDED`, severity CRITICAL, category testing, recurrences 5.
 - Source: GATE-4, GATE-4-CP-0010, finding G4-INT-004.
 - Symptom: The lint gate refused overlong declarations and expressions in new regression tests.
 - Root cause: Behavioral proof was expanded without checking the source formatting budget first.
 - Resolution: Run the existing mandatory lint over every changed source and test path before publishing; repair formatting without weakening lint or assertions.
 - Prevention:
   - `test` test_mandatory_lint_covers_every_python_project_root — The positive and negative regression must execute the intended boundary with canonical inputs.
-- Evidence: `file:docs/checkpoints/GATE-4-CP-0010/FINDINGS.json`, `file:docs/checkpoints/GATE-4-CP-0010/COMMANDS.jsonl`
+- Evidence: `file:docs/checkpoints/GATE-4-CP-0010/FINDINGS.json`, `file:docs/checkpoints/GATE-4-CP-0010/COMMANDS.jsonl`, `file:tests/test_gate5_clients.py`, `file:docs/checkpoints/GATE-5-CP-0001/FINDINGS.json`, `file:docs/checkpoints/GATE-5-CP-0001/COMMANDS.jsonl`
 
 ### LSN-0106 — A security repair must execute at the causal output boundary, not a similarly shaped branch
 
@@ -1796,3 +1804,28 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 - Prevention:
   - `test` test_current_provenance_is_validated_by_its_own_artifact_schema — Validate actual current checkpoint provenance using the canonical target schema and require an unsupported-type mutation to be refused, without assuming the schema of another similarly named record.
 - Evidence: `file:.iacode/schemas/provenance.schema.json`, `file:tests/test_gate5_clients.py`, `file:docs/checkpoints/GATE-5-CP-0001/PROVENANCE.json`, `file:docs/checkpoints/GATE-5-CP-0001/FINDINGS.json`, `file:docs/checkpoints/GATE-5-CP-0001/COMMANDS.jsonl`
+
+### LSN-0134 — Configuration classifiers consume decoded values, not dotenv quote syntax
+
+- Status: `GUARDED`, severity MEDIUM, category implementation, recurrences 0.
+- Source: GATE-5, GATE-5-CP-0001, finding G5-INT-027.
+- Symptom: Raw-line consumers and the host reader retain the quote delimiters of the committed empty desktop values; actual Compose decodes them to empty. Infrastructure, backup secrecy and the two-redactor corpus then disagree about serialization rather than credential classification.
+- Root cause: The consumers passed a serialized dotenv token into an API whose input is a value, and the host literal parser omitted enclosing-quote decoding.
+- Resolution: Align literal reading with observed Compose semantics and share that decoded input across consumers without changing canonical credential-name or placeholder definitions.
+- Prevention:
+  - `test` test_host_literal_reader_matches_actual_compose_and_placeholder_semantics — Actual positive/adverse causal regression, not a prose-only claim.
+  - `test` test_malformed_quoted_env_literals_fail_closed_without_exposing_content — Actual positive/adverse causal regression, not a prose-only claim.
+  - `test` test_process_environment_overlays_are_values_not_dotenv_tokens — Actual positive/adverse causal regression, not a prose-only claim.
+- Evidence: `file:docs/checkpoints/GATE-5-CP-0001/COMMANDS.jsonl`, `file:docs/checkpoints/GATE-5-CP-0001/ENV-TEMPLATE-DIAGNOSIS-0001.json`, `file:tests/test_gate5_clients.py`, `file:docs/checkpoints/GATE-5-CP-0001/FINDINGS.json`
+
+### LSN-0135 — Capture producer evidence before fallible interpretation or owned cleanup
+
+- Status: `GUARDED`, severity HIGH, category quality, recurrences 0.
+- Source: GATE-5, GATE-5-CP-0001, finding G5-INT-032.
+- Symptom: The current publisher retains the top-level completed verifier report but loses unexported detailed scenario reports when a stale stage denominator raises and the temporary clone owner correctly cleans its directory.
+- Root cause: Producer capture was sequenced after interpretation, so a consumer exception destroyed the only available detailed observations with the owned temporary workspace.
+- Resolution: Archive every available safe producer report byte-exactly before interpretation; keep a neutral inventory and retain failures without synthesizing missing artifacts or passing verdicts.
+- Prevention:
+  - `test` test_raw_reports_survive_real_postprocessing_exception_and_owned_cleanup — Actual positive/adverse causal regression, not a prose-only claim.
+  - `test` test_raw_capture_refuses_secret_material_but_retains_neutral_failure_inventory — Actual positive/adverse causal regression, not a prose-only claim.
+- Evidence: `file:docs/checkpoints/GATE-5-CP-0001/COMMANDS.jsonl`, `file:docs/checkpoints/GATE-5-CP-0001/attempts/FULL-VERIFY-RED-0002-MANIFEST.json`, `file:tests/test_gate5_clients.py`, `file:docs/checkpoints/GATE-5-CP-0001/FINDINGS.json`

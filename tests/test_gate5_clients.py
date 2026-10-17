@@ -23,6 +23,66 @@ import policies  # noqa: E402
 import secret_scan  # noqa: E402
 
 
+class Gate5EnvironmentLiteralTests(unittest.TestCase):
+    def test_host_literal_reader_matches_actual_compose_and_placeholder_semantics(self) -> None:
+        from compose import read_env_file
+        from iacode_common.redaction import is_placeholder
+
+        cases = (
+            "", '""', "''", '"example"', "'example'",
+            '"not-placeholder"', "'not-placeholder'",
+            r'"line\nnext"', r"'line\nnext'", r'"a\"b"', r"'a\'b'",
+            "plain # comment", '"literal # content" # comment',
+        )
+        with tempfile.TemporaryDirectory(prefix="iacode-literal-control-") as temporary:
+            directory = Path(temporary)
+            env_file = directory / ".env"
+            environment = dict(os.environ)
+            environment.pop("IACODE_LITERAL_PROBE", None)
+            for literal in cases:
+                with self.subTest(literal=literal):
+                    env_file.write_text("IACODE_LITERAL_PROBE=" + literal + "\n", encoding="utf-8")
+                    rendered = subprocess.run(
+                        ["docker", "compose", "--project-name", "iacode-literal-control",
+                         "--project-directory", str(directory), "--env-file", str(env_file),
+                         "--file", "-", "config", "--format", "json"],
+                        input="services:\n  probe:\n    image: busybox:1.37.0\n"
+                              "    environment:\n      IACODE_LITERAL_PROBE: $"
+                              "{IACODE_LITERAL_PROBE}\n",
+                        env=environment, capture_output=True, text=True, encoding="utf-8",
+                        errors="strict", check=True,
+                    )
+                    actual = json.loads(rendered.stdout)["services"]["probe"]["environment"][
+                        "IACODE_LITERAL_PROBE"]
+                    host = read_env_file(env_file, {})["IACODE_LITERAL_PROBE"]
+                    self.assertEqual(host, actual)
+                    self.assertEqual(is_placeholder(host), actual in ("", "example"))
+
+    def test_malformed_quoted_env_literals_fail_closed_without_exposing_content(self) -> None:
+        from compose import StackError, read_env_file
+
+        with tempfile.TemporaryDirectory() as temporary:
+            path = Path(temporary) / ".env"
+            for literal in ('"unclosed-literal', "'unclosed-literal", '"literal" trailing'):
+                with self.subTest(literal=literal):
+                    path.write_text("IACODE_LITERAL_PROBE=" + literal + "\n", encoding="utf-8")
+                    with self.assertRaises(StackError) as refused:
+                        read_env_file(path, {})
+                    self.assertNotIn(literal, str(refused.exception))
+
+    def test_process_environment_overlays_are_values_not_dotenv_tokens(self) -> None:
+        from compose import read_env_file
+
+        with tempfile.TemporaryDirectory() as temporary:
+            path = Path(temporary) / ".env"
+            path.write_text("IACODE_LITERAL_PROBE='example'\n", encoding="utf-8")
+            value = '"not-placeholder"'
+            observed = read_env_file(path, {
+                "IACODE_LITERAL_PROBE": value, "IACODE_UNDECLARED_PROBE": "not-inherited",
+            })
+            self.assertEqual(observed, {"IACODE_LITERAL_PROBE": value})
+
+
 class Gate5TransitionTests(unittest.TestCase):
     def test_historical_gate4_controls_keep_their_owning_gate(self) -> None:
         with mock.patch.object(ledger_common, "delivered_gate", return_value="GATE-6"):
@@ -200,7 +260,8 @@ class Gate5QualityIntegrationTests(unittest.TestCase):
     def test_commonjs_and_esm_exports_have_explicit_lf_attributes(self) -> None:
         for name in ("apps/cli/bin/iacode.cjs", "future-entry.mjs"):
             result = subprocess.run(["git", "check-attr", "eol", "--", name], cwd=ROOT,
-                                    text=True, capture_output=True, check=True)
+                                    text=True, encoding="utf-8", errors="replace",
+                                    capture_output=True, check=True)
             self.assertEqual(result.stdout.strip(), name + ": eol: lf")
 
     def test_builder_refuses_a_crlf_executable_instead_of_shipping_a_broken_linux_shebang(self) -> None:
@@ -293,6 +354,147 @@ class Gate5ClientRecoveryGuardTests(unittest.TestCase):
         self.assertIn("# pass 1", result.stdout)
         self.assertIn("ok 1 - DesktopRecoveryTests: a signed malformed mutation result", result.stdout)
         self.assertNotIn("# pass 0", result.stdout)
+
+
+class Gate5VerificationCollectorTests(unittest.TestCase):
+    def test_bookkeeping_sequence_awaits_each_recorder_and_keeps_canonical_order(self) -> None:
+        module = runpy.run_path(str(
+            ROOT / "docs/checkpoints/GATE-5-CP-0001/audit-harness/validate_serial_bookkeeping.py"))
+        commands = module["bookkeeping_commands"]()
+        self.assertEqual(len(commands), 2)
+        self.assertTrue(commands[0][-1].endswith("/audit-harness/declare_inventory.py"))
+        self.assertTrue(commands[1][-1].endswith("/audit-harness/run_checkpoint_validation.py"))
+        with tempfile.TemporaryDirectory() as temporary:
+            directory = Path(temporary)
+            first = ("from pathlib import Path; import time; time.sleep(0.2); "
+                     "Path('receipt').write_text('complete')")
+            second = ("from pathlib import Path; assert Path('receipt').read_text() == 'complete'; "
+                      "Path('validated').touch()")
+            self.assertEqual(module["run_sequence"]([
+                [sys.executable, "-c", first], [sys.executable, "-c", second],
+            ], directory), 0)
+            self.assertTrue((directory / "validated").is_file())
+
+    def test_bookkeeping_sequence_never_validates_after_inventory_recorder_failure(self) -> None:
+        module = runpy.run_path(str(
+            ROOT / "docs/checkpoints/GATE-5-CP-0001/audit-harness/validate_serial_bookkeeping.py"))
+        with tempfile.TemporaryDirectory() as temporary:
+            directory = Path(temporary)
+            self.assertEqual(module["run_sequence"]([
+                [sys.executable, "-c", "raise SystemExit(7)"],
+                [sys.executable, "-c", "from pathlib import Path; Path('must-not-run').touch()"],
+            ], directory), 7)
+            self.assertFalse((directory / "must-not-run").exists())
+
+    @staticmethod
+    def publisher():
+        return runpy.run_path(str(
+            ROOT / "docs/checkpoints/GATE-5-CP-0001/audit-harness/run_full_verification.py"))
+
+    @staticmethod
+    def producer():
+        from verify import build_stages
+
+        return {"result": "PASS", "stages": [
+            {"name": stage.name, "result": "PASS", "status": "FAIL"}
+            for stage in build_stages(False)
+        ]}
+
+    def test_current_summary_derives_exact_vocabulary_and_ignores_noncanonical_alias(self) -> None:
+        from types import SimpleNamespace
+
+        module = self.publisher()
+        summarize = module["summarize_stages"]
+        producer = self.producer()
+        count = len(producer["stages"])
+        self.assertEqual(summarize(producer), (count, count, 0))
+        producer["stages"].append({"name": "future-fixture", "result": "PASS", "status": "FAIL"})
+        stages = [SimpleNamespace(name=row["name"]) for row in producer["stages"]]
+        with mock.patch.dict(summarize.__globals__, {"build_stages": lambda fast: stages}):
+            self.assertEqual(summarize(producer), (count + 1, count + 1, 0))
+
+    def test_current_summary_refuses_missing_duplicate_reordered_or_unknown_results(self) -> None:
+        from copy import deepcopy
+
+        summarize = self.publisher()["summarize_stages"]
+        original = self.producer()
+        mutations = []
+        missing = deepcopy(original)
+        missing["stages"].pop()
+        mutations.append(missing)
+        duplicate = deepcopy(original)
+        duplicate["stages"].append(deepcopy(duplicate["stages"][0]))
+        mutations.append(duplicate)
+        reordered = deepcopy(original)
+        reordered["stages"][0], reordered["stages"][1] = reordered["stages"][1], reordered["stages"][0]
+        mutations.append(reordered)
+        for field, value in (("name", "unknown-fixture"), ("result", "UNKNOWN"), ("result", None)):
+            adverse = deepcopy(original)
+            adverse["stages"][0][field] = value
+            mutations.append(adverse)
+        contradiction = deepcopy(original)
+        contradiction["stages"][0]["result"] = "FAIL"
+        mutations.append(contradiction)
+        for index, adverse in enumerate(mutations):
+            with self.subTest(mutation=index), self.assertRaises(RuntimeError):
+                summarize(adverse)
+        valid_failure = deepcopy(original)
+        valid_failure["result"] = "FAIL"
+        valid_failure["stages"][0]["result"] = "FAIL"
+        self.assertEqual(summarize(valid_failure),
+                         (len(original["stages"]), len(original["stages"]) - 1, 1))
+
+    def test_raw_reports_survive_real_postprocessing_exception_and_owned_cleanup(self) -> None:
+        import hashlib
+
+        module = self.publisher()
+        collect = module["collect_producer_observations"]
+        with tempfile.TemporaryDirectory() as outer:
+            archive = Path(outer) / "archives"
+            producer = self.producer()
+            producer["stages"].pop()
+            raw = (json.dumps(producer, indent=2) + "\n").replace("\n", "\r\n").encode()
+            component = b'{\r\n  "observation": "example"\r\n}\r\n'
+            with self.assertRaisesRegex(RuntimeError, "stage"):
+                with module["verification_directory"]() as owner:
+                    owned = owner["path"]
+                    clone = owned / "repository"
+                    (clone / "var").mkdir(parents=True)
+                    report = clone / "full.json"
+                    report.write_bytes(raw)
+                    (clone / "var/desktop-e2e.json").write_bytes(component)
+                    collect(clone, report, archive, "fixture-subject")
+            self.assertFalse(owned.exists())
+            manifests = list(archive.glob("*-MANIFEST.json"))
+            self.assertEqual(len(manifests), 1)
+            manifest = manifests[0]
+            document = json.loads(manifest.read_text(encoding="utf-8"))
+            self.assertFalse(document["gateVerdictIssued"])
+            self.assertEqual(len(document["reports"]), 2)
+            expected = {"full.json": raw, "desktop-e2e.json": component}
+            for row in document["reports"]:
+                preserved = (archive / row["archive"]).read_bytes()
+                self.assertEqual(preserved, expected[row["producerName"]])
+                self.assertEqual(hashlib.sha256(preserved).hexdigest(), row["sha256"])
+                self.assertEqual(len(preserved), row["bytes"])
+
+    def test_raw_capture_refuses_secret_material_but_retains_neutral_failure_inventory(self) -> None:
+        capture = self.publisher()["capture_producer_reports"]
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            clone, archive = root / "repository", root / "archives"
+            clone.mkdir()
+            report = clone / "full.json"
+            report.write_text('{"observation":"API_' + 'KEY=' + "a" * 64 + '"}', encoding="utf-8")
+            with self.assertRaisesRegex(RuntimeError, "unsafe"):
+                capture(clone, report, archive, "fixture-subject")
+            manifests = list(archive.glob("*-MANIFEST.json"))
+            self.assertEqual(len(manifests), 1)
+            document = json.loads(manifests[0].read_text(encoding="utf-8"))
+            self.assertFalse(document["gateVerdictIssued"])
+            self.assertEqual(document["reports"], [])
+            self.assertEqual(document["refusedReports"][0]["reason"], "SECRET_MATERIAL")
+            self.assertEqual(list(archive.iterdir()), manifests)
 
 
 class Gate5NativeInstallationTests(unittest.TestCase):

@@ -1,0 +1,359 @@
+{
+  "gate": "GATE-5",
+  "result": "FAIL",
+  "fast": false,
+  "durationSeconds": 10719.6,
+  "stages": [
+    {
+      "name": "gate:tests",
+      "description": "mandatory gate tests",
+      "exitCode": 1,
+      "durationSeconds": 6244.2,
+      "result": "FAIL",
+      "outputTail": "LSN-0038: the two paths disagreed, and the committed example was the casualty.\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-gate5-full-verification-mnj0a0jk\\repository\\tests\\test_gate1_model_gateway.py\", line 1311, in test_both_redactors_agree_on_every_value_the_example_file_carries\n    self.assertEqual(\n    ~~~~~~~~~~~~~~~~^\n        in_text, as_value,\n        ^^^^^^^^^^^^^^^^^^\n        f\"{key} survives redact_text={in_text} but redact_value={as_value}\")\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: True != False : IACODE_DESKTOP_TOKEN_EXPIRES_AT survives redact_text=True but redact_value=False\n\n======================================================================\nFAIL: test_the_command_line_stays_reserved_for_its_own_gate (test_gate3_sandbox.Gate3ScopeTests.test_the_command_line_stays_reserved_for_its_own_gate)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-gate5-full-verification-mnj0a0jk\\repository\\tests\\test_gate3_sandbox.py\", line 723, in test_the_command_line_stays_reserved_for_its_own_gate\n    self.assertIn(\"apps/cli\", in_force)\n    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 'apps/cli' not found in {'services/experience': {'path': 'services/experience', 'gate': 'GATE 6', 'capability': 'The experience store API and its retention and rights controls.'}, 'services/knowledge': {'path': 'services/knowledge', 'gate': 'GATE 7', 'capability': 'Knowledge ingestion, indexing, retrieval and citation.'}, 'services/training': {'path': 'services/training', 'gate': 'GATE 18', 'capability': 'Supervised adaptation and the training pipeline.'}, 'training': {'path': 'training', 'gate': 'GATE 18', 'capability': 'Training configurations, checkpoints and run artifacts.'}, 'evaluation': {'path': 'evaluation', 'gate': 'GATE 20', 'capability': 'Held-out evaluation suites, the harness and the scoring assets.'}, 'datasets': {'path': 'datasets', 'gate': 'GATE 16', 'capability': 'Versioned, filtered and auditable training datasets.'}}\n\n----------------------------------------------------------------------\nRan 859 tests in 6243.198s\n\nFAILED (failures=5)",
+      "failureHeaders": [
+        "FAIL: test_every_tool_that_re_emits_captured_output_configures_its_own_stream (test_gate0_foundation.SubprocessDecodingTests.test_every_tool_that_re_emits_captured_output_configures_its_own_stream)",
+        "FAIL: test_no_capture_relies_on_the_platform_codepage (test_gate0_foundation.SubprocessDecodingTests.test_no_capture_relies_on_the_platform_codepage)",
+        "FAIL: test_both_redactors_agree_on_every_value_the_example_file_carries (test_gate1_model_gateway.Gate1GuardrailTests.test_both_redactors_agree_on_every_value_the_example_file_carries)",
+        "FAIL: test_both_redactors_agree_on_every_value_the_example_file_carries (test_gate1_model_gateway.Gate1GuardrailTests.test_both_redactors_agree_on_every_value_the_example_file_carries)",
+        "FAIL: test_the_command_line_stays_reserved_for_its_own_gate (test_gate3_sandbox.Gate3ScopeTests.test_the_command_line_stays_reserved_for_its_own_gate)"
+      ],
+      "failureHeaderCount": 5,
+      "failureHeadersTruncated": false
+    },
+    {
+      "name": "gate:staticAnalysis",
+      "description": "mandatory gate staticAnalysis",
+      "exitCode": 0,
+      "durationSeconds": 0.6,
+      "result": "PASS"
+    },
+    {
+      "name": "gate:lessons",
+      "description": "mandatory gate lessons",
+      "exitCode": 0,
+      "durationSeconds": 4.2,
+      "result": "PASS"
+    },
+    {
+      "name": "gate:integrity",
+      "description": "mandatory gate integrity",
+      "exitCode": 0,
+      "durationSeconds": 25.1,
+      "result": "PASS"
+    },
+    {
+      "name": "gate:checkpointValidation",
+      "description": "mandatory gate checkpointValidation",
+      "exitCode": 0,
+      "durationSeconds": 67.1,
+      "result": "PASS"
+    },
+    {
+      "name": "gate:apiTests",
+      "description": "mandatory gate apiTests",
+      "exitCode": 0,
+      "durationSeconds": 110.5,
+      "result": "PASS"
+    },
+    {
+      "name": "gate:gatewayTests",
+      "description": "mandatory gate gatewayTests",
+      "exitCode": 0,
+      "durationSeconds": 10.1,
+      "result": "PASS"
+    },
+    {
+      "name": "gate:agentRuntimeTests",
+      "description": "mandatory gate agentRuntimeTests",
+      "exitCode": 0,
+      "durationSeconds": 12.5,
+      "result": "PASS"
+    },
+    {
+      "name": "gate:sandboxTests",
+      "description": "mandatory gate sandboxTests",
+      "exitCode": 0,
+      "durationSeconds": 420.9,
+      "result": "PASS"
+    },
+    {
+      "name": "gate:evaluatorTests",
+      "description": "mandatory gate evaluatorTests",
+      "exitCode": 0,
+      "durationSeconds": 101.2,
+      "result": "PASS"
+    },
+    {
+      "name": "gate:webTests",
+      "description": "mandatory gate webTests",
+      "exitCode": 0,
+      "durationSeconds": 28.2,
+      "result": "PASS"
+    },
+    {
+      "name": "gate:lint",
+      "description": "mandatory gate lint",
+      "exitCode": 0,
+      "durationSeconds": 37.2,
+      "result": "PASS"
+    },
+    {
+      "name": "gate:clientTests",
+      "description": "mandatory gate clientTests",
+      "exitCode": 0,
+      "durationSeconds": 36.9,
+      "result": "PASS"
+    },
+    {
+      "name": "gate:infraDefinition",
+      "description": "mandatory gate infraDefinition",
+      "exitCode": 1,
+      "durationSeconds": 0.9,
+      "result": "FAIL",
+      "outputTail": "        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\nAssertionError: False is not true : IACODE_DESKTOP_TOKEN carries something that is not a placeholder\n\n======================================================================\nFAIL: test_env_example_documents_every_key_without_secrets (test_compose_definition.CommittedConfigurationTests.test_env_example_documents_every_key_without_secrets) (key='IACODE_DESKTOP_TOKEN_EXPIRES_AT')\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-gate5-full-verification-mnj0a0jk\\repository\\infra\\tests\\test_compose_definition.py\", line 306, in test_env_example_documents_every_key_without_secrets\n    self.assertTrue(\n    ~~~~~~~~~~~~~~~^\n        is_placeholder(value.strip()),\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n        f\"{key} carries something that is not a placeholder\",\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\nAssertionError: False is not true : IACODE_DESKTOP_TOKEN_EXPIRES_AT carries something that is not a placeholder\n\n----------------------------------------------------------------------\nRan 19 tests in 0.555s\n\nFAILED (failures=2)\n[iacode] INFRA_DEFINITION=FAIL",
+      "failureHeaders": [
+        "FAIL: test_env_example_documents_every_key_without_secrets (test_compose_definition.CommittedConfigurationTests.test_env_example_documents_every_key_without_secrets)",
+        "FAIL: test_env_example_documents_every_key_without_secrets (test_compose_definition.CommittedConfigurationTests.test_env_example_documents_every_key_without_secrets)"
+      ],
+      "failureHeaderCount": 2,
+      "failureHeadersTruncated": false
+    },
+    {
+      "name": "stack",
+      "description": "build and start an isolated stack, then wait for real health",
+      "exitCode": 0,
+      "durationSeconds": 121.9,
+      "result": "PASS"
+    },
+    {
+      "name": "integration",
+      "description": "the backend suite against the real services",
+      "exitCode": 0,
+      "durationSeconds": 148.5,
+      "result": "PASS"
+    },
+    {
+      "name": "infra",
+      "description": "our configuration of each service, exercised live",
+      "exitCode": 1,
+      "durationSeconds": 30.8,
+      "result": "FAIL",
+      "outputTail": "        f\"{key} carries something that is not a placeholder\",\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\nAssertionError: False is not true : IACODE_DESKTOP_TOKEN carries something that is not a placeholder\n\n======================================================================\nFAIL: test_env_example_documents_every_key_without_secrets (test_compose_definition.CommittedConfigurationTests.test_env_example_documents_every_key_without_secrets) (key='IACODE_DESKTOP_TOKEN_EXPIRES_AT')\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-gate5-full-verification-mnj0a0jk\\repository\\infra\\tests\\test_compose_definition.py\", line 306, in test_env_example_documents_every_key_without_secrets\n    self.assertTrue(\n    ~~~~~~~~~~~~~~~^\n        is_placeholder(value.strip()),\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n        f\"{key} carries something that is not a placeholder\",\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\nAssertionError: False is not true : IACODE_DESKTOP_TOKEN_EXPIRES_AT carries something that is not a placeholder\n\n----------------------------------------------------------------------\nRan 49 tests in 30.156s\n\nFAILED (failures=4)",
+      "failureHeaders": [
+        "FAIL: test_the_committed_example_environment_has_no_real_credential (test_backup_tooling.BackupSecrecyTests.test_the_committed_example_environment_has_no_real_credential)",
+        "FAIL: test_the_committed_example_environment_has_no_real_credential (test_backup_tooling.BackupSecrecyTests.test_the_committed_example_environment_has_no_real_credential)",
+        "FAIL: test_env_example_documents_every_key_without_secrets (test_compose_definition.CommittedConfigurationTests.test_env_example_documents_every_key_without_secrets)",
+        "FAIL: test_env_example_documents_every_key_without_secrets (test_compose_definition.CommittedConfigurationTests.test_env_example_documents_every_key_without_secrets)"
+      ],
+      "failureHeaderCount": 4,
+      "failureHeadersTruncated": false
+    },
+    {
+      "name": "smoke",
+      "description": "the API, the web shell, the observability stack and a workflow",
+      "exitCode": 0,
+      "durationSeconds": 9.0,
+      "result": "PASS"
+    },
+    {
+      "name": "gateway-smoke",
+      "description": "the Model Gateway against the real configured provider",
+      "exitCode": 0,
+      "durationSeconds": 23.1,
+      "result": "PASS"
+    },
+    {
+      "name": "agent-runtime-smoke",
+      "description": "the Agent Runtime against the real provider, through the gateway",
+      "exitCode": 0,
+      "durationSeconds": 13.6,
+      "result": "PASS"
+    },
+    {
+      "name": "agent-durability",
+      "description": "a run waiting for a tool survives a real worker restart",
+      "exitCode": 0,
+      "durationSeconds": 73.0,
+      "result": "PASS"
+    },
+    {
+      "name": "agent-cancellation",
+      "description": "a paused run is cancelled, stays cancelled and refuses a late result",
+      "exitCode": 0,
+      "durationSeconds": 44.3,
+      "result": "PASS"
+    },
+    {
+      "name": "agent-deadline",
+      "description": "a run that is alive and going nowhere is ended by its own deadline",
+      "exitCode": 0,
+      "durationSeconds": 39.6,
+      "result": "PASS"
+    },
+    {
+      "name": "sandbox-integration",
+      "description": "the sandbox's store and artifact sink against the real services",
+      "exitCode": 0,
+      "durationSeconds": 18.5,
+      "result": "PASS"
+    },
+    {
+      "name": "quality-integration",
+      "description": "quality lifecycle and immutable evidence against the real services",
+      "exitCode": 0,
+      "durationSeconds": 203.3,
+      "result": "PASS"
+    },
+    {
+      "name": "quality-pass",
+      "description": "a passing fixture derives PASS through the complete Quality Engine",
+      "exitCode": 0,
+      "durationSeconds": 83.4,
+      "result": "PASS"
+    },
+    {
+      "name": "quality-fail",
+      "description": "a failing fixture preserves its failed check, finding and evidence",
+      "exitCode": 0,
+      "durationSeconds": 70.5,
+      "result": "PASS"
+    },
+    {
+      "name": "quality-iacode",
+      "description": "the committed IACode tree is evaluated by its canonical profile",
+      "exitCode": 1,
+      "durationSeconds": 889.3,
+      "result": "FAIL",
+      "outputTail": "[stack] waiting for evaluator=starting\n[iacode] [PASS] iacode.snapshot.stored: ['artifactId', 'key', 'sha256', 'sizeBytes']\n[iacode] [PASS] iacode.canonical_profile.detected: python+node+typescript+angular\n[iacode] [FAIL] iacode.quality.matches_mandatory_gates: FAIL\n[iacode] [FAIL] iacode.run.succeeded: FAILED\n[iacode] wrote C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-gate5-full-verification-mnj0a0jk\\repository\\var\\quality-iacode.json\n{\"schemaVersion\":\"1.0.0\",\"result\":\"FAIL\",\"scenarios\":[{\"schemaVersion\":\"1.0.0\",\"scenario\":\"iacode\",\"result\":\"FAIL\",\"environment\":\"real-compose-temporal-postgresql-minio-sandbox-container-engine\",\"steps\":[{\"step\":\"snapshot.stored\",\"result\":\"PASS\",\"expected\":[\"artifactId\",\"key\",\"sha256\",\"sizeBytes\"],\"observed\":[\"artifactId\",\"key\",\"sha256\",\"sizeBytes\"]},{\"step\":\"canonical_profile.detected\",\"result\":\"PASS\",\"expected\":\"python+node+typescript+angular\",\"observed\":\"python+node+typescript+angular\"},{\"step\":\"quality.matches_mandatory_gates\",\"result\":\"FAIL\",\"expected\":\"PASS\",\"observed\":\"FAIL\"},{\"step\":\"run.succeeded\",\"result\":\"FAIL\",\"expected\":\"SUCCEEDED\",\"observed\":\"FAILED\"}],\"artifacts\":[{\"kind\":\"snapshot\",\"artifactId\":\"01a146fd-4b23-7000-89ce-97d38bdc57bb\",\"digest\":\"54eb2a4d660f785da398bf557e790456912178193a6e67ebfc9b7e5a202d0afb\",\"sizeBytes\":6475623},{\"kind\":\"quality-run\",\"runId\":\"01a146fd-5ef1-7000-872c-8795cf8d9178\",\"planId\":\"b307694b0641b6eff6f632d0261f7d73c4ad1d010806c5ce1cb017d0157dd490\"}],\"recordedAt\":\"2026-10-16T23:25:03Z\"}],\"recordedAt\":\"2026-10-16T23:25:03Z\"}\n[iacode] QUALITY_ENGINE_E2E=FAIL scenarios=iacode",
+      "failureHeaders": [],
+      "failureHeaderCount": 0,
+      "failureHeadersTruncated": false
+    },
+    {
+      "name": "quality-reproduction",
+      "description": "stored inputs reproduce an equivalent result under the same plan identity",
+      "exitCode": 0,
+      "durationSeconds": 108.8,
+      "result": "PASS"
+    },
+    {
+      "name": "quality-recovery",
+      "description": "a quality run survives evaluator restart without duplicate results",
+      "exitCode": 0,
+      "durationSeconds": 84.3,
+      "result": "PASS"
+    },
+    {
+      "name": "quality-cancellation",
+      "description": "cancellation waits for sandbox cleanup and remains fail-closed",
+      "exitCode": 0,
+      "durationSeconds": 48.9,
+      "result": "PASS"
+    },
+    {
+      "name": "quality-timeout",
+      "description": "policy-owned deadlines record timeout evidence and a FAIL verdict",
+      "exitCode": 0,
+      "durationSeconds": 64.7,
+      "result": "PASS"
+    },
+    {
+      "name": "sandbox-coding",
+      "description": "a coding team fixes a synthetic repository in a real sandbox; the host is untouched",
+      "exitCode": 0,
+      "durationSeconds": 95.5,
+      "result": "PASS"
+    },
+    {
+      "name": "sandbox-timeout",
+      "description": "a command past its timeout is stopped and the run carries on",
+      "exitCode": 0,
+      "durationSeconds": 52.0,
+      "result": "PASS"
+    },
+    {
+      "name": "sandbox-cancellation",
+      "description": "a run cancelled during a long command stops it and leaves no sandbox",
+      "exitCode": 0,
+      "durationSeconds": 103.6,
+      "result": "PASS"
+    },
+    {
+      "name": "sandbox-recovery",
+      "description": "a restarted sandbox service keeps the run's session and its workspace",
+      "exitCode": 0,
+      "durationSeconds": 74.4,
+      "result": "PASS"
+    },
+    {
+      "name": "sandbox-tool-result-origin",
+      "description": "a result posted to the API for a sandboxed request is refused, and the agent receives the sandbox's own",
+      "exitCode": 0,
+      "durationSeconds": 71.8,
+      "result": "PASS"
+    },
+    {
+      "name": "quality-false-pass",
+      "description": "the Gate 4 false-PASS battery rejects every mandatory mutation",
+      "exitCode": 0,
+      "durationSeconds": 396.1,
+      "result": "PASS"
+    },
+    {
+      "name": "backup",
+      "description": "backup, restore into a disposable target, verified read-back",
+      "exitCode": 0,
+      "durationSeconds": 36.2,
+      "result": "PASS"
+    },
+    {
+      "name": "dependency-scan",
+      "description": "known vulnerabilities in the pinned dependencies",
+      "exitCode": 0,
+      "durationSeconds": 53.3,
+      "result": "PASS"
+    },
+    {
+      "name": "native-client-installation",
+      "description": "fresh actual VSIX installation, workspace trust and owned storage/process cleanup",
+      "exitCode": 0,
+      "durationSeconds": 53.8,
+      "result": "PASS"
+    },
+    {
+      "name": "desktop-client-e2e",
+      "description": "fresh CLI/native recovery through real hardened provider/sandbox/quality workflows",
+      "exitCode": 0,
+      "durationSeconds": 449.1,
+      "result": "PASS"
+    },
+    {
+      "name": "restart",
+      "description": "restart with data intact",
+      "exitCode": 0,
+      "durationSeconds": 90.5,
+      "result": "PASS"
+    },
+    {
+      "name": "dependency-failure",
+      "description": "liveness holds, readiness refuses, both recover",
+      "exitCode": 0,
+      "durationSeconds": 8.7,
+      "result": "PASS"
+    },
+    {
+      "name": "fresh-install",
+      "description": "a complete installation from no volumes at all",
+      "exitCode": 0,
+      "durationSeconds": 52.7,
+      "result": "PASS"
+    }
+  ],
+  "isolation": {
+    "composeProject": "iacode-verify-de4d3ce29d17",
+    "publishedPorts": "docker-allocated",
+    "preRunCleanup": "PASS",
+    "postRunCleanup": "PASS"
+  }
+}

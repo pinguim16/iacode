@@ -222,7 +222,8 @@ def node_executable(configured: Path | None) -> Path:
         )
     executable = Path(value).resolve()
     version = subprocess.run(
-        [str(executable), "--version"], text=True, capture_output=True, check=True
+        [str(executable), "--version"], text=True, encoding="utf-8", errors="replace",
+        capture_output=True, check=True
     ).stdout.strip()
     numbers = tuple(map(int, version.removeprefix("v").split(".")))
     if not (

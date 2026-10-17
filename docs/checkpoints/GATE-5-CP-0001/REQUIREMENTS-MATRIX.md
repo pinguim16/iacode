@@ -185,4 +185,6 @@ Expected set derived by: `policies.expected_requirement_refs over docs/GATE-5-CH
 | `LESSON-REQ-0129` | `lesson:LSN-0130` | yes | `PARTIAL` | Verify executable export line endings belong to the source and packaging contract | LESSON-PREFLIGHT.json LESSON-REQ-0129 |
 | `LESSON-REQ-0130` | `lesson:LSN-0131` | yes | `PARTIAL` | Verify raw evidence digests require byte-preserving Git export, not text normalization | LESSON-PREFLIGHT.json LESSON-REQ-0130 |
 | `LESSON-REQ-0131` | `lesson:LSN-0132` | yes | `PARTIAL` | Verify owned Git clones need read-only-aware cleanup, not native-profile lock retry | LESSON-PREFLIGHT.json LESSON-REQ-0131 |
-| `LESSON-REQ-0132` | `lesson:LSN-0133` | yes | `NOT_STARTED` | Verify shared field names do not imply shared schema types | LESSON-PREFLIGHT.json LESSON-REQ-0132 |
+| `LESSON-REQ-0132` | `lesson:LSN-0133` | yes | `PARTIAL` | Verify shared field names do not imply shared schema types | LESSON-PREFLIGHT.json LESSON-REQ-0132 |
+| `LESSON-REQ-0133` | `lesson:LSN-0134` | yes | `PARTIAL` | Verify configuration classifiers consume decoded values, not dotenv quote syntax | LESSON-PREFLIGHT.json LESSON-REQ-0133 |
+| `LESSON-REQ-0134` | `lesson:LSN-0135` | yes | `PARTIAL` | Verify capture producer evidence before fallible interpretation or owned cleanup | LESSON-PREFLIGHT.json LESSON-REQ-0134 |

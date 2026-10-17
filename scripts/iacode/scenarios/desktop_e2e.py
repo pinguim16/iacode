@@ -70,7 +70,7 @@ from desktop_test_support import (
     wait,
 )
 from iacode_common.secret_scanning import find_secret_kinds
-from ledger_common import git_snapshot, scope_fingerprint
+from ledger_common import git_snapshot, scope_fingerprint, use_utf8_stdout
 from native_editor import NativeEditor
 from native_process import owned_directory
 from verify import VERIFICATION_PORT_VARIABLES
@@ -317,7 +317,8 @@ def exercise(directory: Path, node: Path, key: str, model: str, report: dict) ->
     cli = Cli(directory / "cli", directory / "packages/iacode-cli-0.1.0.tgz", node, base, key)
     report["cliCommands"] = cli.calls  # Retain observed commands even when a later premise fails.
     report["cliRuntime"] = subprocess.run(
-        [str(node), "--version"], capture_output=True, text=True, check=True
+        [str(node), "--version"], capture_output=True, text=True, encoding="utf-8",
+        errors="replace", check=True
     ).stdout.strip()
     doctor = cli.call("doctor")
     record(
@@ -784,4 +785,5 @@ def main() -> int:
 
 
 if __name__ == "__main__":
+    use_utf8_stdout()
     raise SystemExit(main())

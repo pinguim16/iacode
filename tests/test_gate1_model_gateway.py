@@ -1294,16 +1294,13 @@ class Gate1GuardrailTests(unittest.TestCase):
         the repository commits. A value must either survive both redactors or survive neither.
         """
         sys.path.insert(0, str(PROJECT_ROOT / "packages" / "common" / "src"))
+        sys.path.insert(0, str(PROJECT_ROOT / "scripts" / "iacode"))
+        from compose import read_env_file
         from iacode_common.redaction import redact_text, redact_value
 
-        example = (PROJECT_ROOT / "infra" / "compose" / ".env.example").read_text(encoding="utf-8")
+        example = PROJECT_ROOT / "infra" / "compose" / ".env.example"
         checked = 0
-        for line in example.splitlines():
-            stripped = line.strip()
-            if not stripped or stripped.startswith("#") or "=" not in stripped:
-                continue
-            key, _, value = stripped.partition("=")
-            key, value = key.strip(), value.strip()
+        for key, value in read_env_file(example, {}).items():
             in_text = value in redact_text(f"{key}={value}")
             as_value = redact_value(key, value) == value
             checked += 1

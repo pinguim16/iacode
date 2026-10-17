@@ -41,6 +41,10 @@ def reason(path: str) -> str:
         return "Align current entry and architecture with sealed Gate 4 and truthful Gate 5 work in progress, without claiming client acceptance."
     if path.startswith("apps/api/"):
         return "Implement and test authenticated desktop ingress, closed governed adapters and consent-bound scanned snapshots without host tool execution."
+    if path.startswith("infra/tests/"):
+        return "Classify decoded committed environment literals through the unchanged canonical taxonomy; retain full infrastructure and backup secrecy assertions after actual Compose disagreement."
+    if path in {"tests/test_gate1_model_gateway.py", "tests/test_gate3_sandbox.py"}:
+        return "Repair demonstrated serialized-value and historical pre-owner test premises using canonical literal decoding and policy-derived scope lifecycle; retain every correct boundary assertion."
     if path.startswith("packages/common/") or path.startswith("packages/contracts/"):
         return "Define one byte-exact authenticated desktop protocol, shared contracts and strict request validation."
     if path.startswith("services/orchestrator/") or path in {"infra/compose/docker-compose.yml", "infra/compose/.env.example"}:

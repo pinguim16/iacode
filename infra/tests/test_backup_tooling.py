@@ -24,7 +24,7 @@ for extra in (REPOSITORY_ROOT / "scripts" / "iacode",
 
 import backup as backup_tool  # noqa: E402
 import restore as restore_tool  # noqa: E402
-from compose import StackError  # noqa: E402
+from compose import StackError, read_env_file  # noqa: E402
 from iacode_common.redaction import (  # noqa: E402
     REDACTED,
     carries_a_secret_value,
@@ -150,12 +150,8 @@ class BackupSecrecyTests(unittest.TestCase):
         self.assertNotIn("--password", source)
 
     def test_the_committed_example_environment_has_no_real_credential(self) -> None:
-        example = (REPOSITORY_ROOT / "infra" / "compose" / ".env.example").read_text("utf-8")
-
-        for line in example.splitlines():
-            if "=" not in line or line.strip().startswith("#"):
-                continue
-            key, _, value = line.partition("=")
+        example = REPOSITORY_ROOT / "infra" / "compose" / ".env.example"
+        for key, value in read_env_file(example, {}).items():
             # What counts as a credential-carrying name, and what counts as a placeholder, are
             # asked of `iacode_common.redaction` rather than restated here. Three formulations of
             # the first question already existed in this repository and they disagreed: one of
@@ -163,7 +159,7 @@ class BackupSecrecyTests(unittest.TestCase):
             if carries_a_secret_value(key.strip()):
                 with self.subTest(key=key.strip()):
                     self.assertTrue(
-                        is_placeholder(value.strip()),
+                        is_placeholder(value),
                         f"{key.strip()} carries something that is not a placeholder")
 
 

@@ -3628,14 +3628,65 @@
       "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0132",
       "description": "Verify shared field names do not imply shared schema types",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
+      "implementationStatus": "IN_PROGRESS",
+      "finalStatus": "PARTIAL",
       "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
+      "notes": "Partial implementation/entry evidence only. The complete client, fresh install, functional proof and full assurance remain pending. No delivery PASS is inferred.",
+      "implementationEvidence": [
+        "checkpoint:PROGRESS.md"
+      ],
       "testEvidence": [],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:PLAN.md",
+        "checkpoint:BASELINE.md"
+      ],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "LESSON-REQ-0133",
+      "source": "LESSON",
+      "sourceRef": "lesson:LSN-0134",
+      "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0133",
+      "description": "Verify configuration classifiers consume decoded values, not dotenv quote syntax",
+      "mandatory": true,
+      "implementationStatus": "IN_PROGRESS",
+      "finalStatus": "PARTIAL",
+      "justification": null,
+      "notes": "Partial implementation/entry evidence only. The complete client, fresh install, functional proof and full assurance remain pending. No delivery PASS is inferred.",
+      "implementationEvidence": [
+        "checkpoint:PROGRESS.md"
+      ],
+      "testEvidence": [],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:PLAN.md",
+        "checkpoint:BASELINE.md"
+      ],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "LESSON-REQ-0134",
+      "source": "LESSON",
+      "sourceRef": "lesson:LSN-0135",
+      "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0134",
+      "description": "Verify capture producer evidence before fallible interpretation or owned cleanup",
+      "mandatory": true,
+      "implementationStatus": "IN_PROGRESS",
+      "finalStatus": "PARTIAL",
+      "justification": null,
+      "notes": "Partial implementation/entry evidence only. The complete client, fresh install, functional proof and full assurance remain pending. No delivery PASS is inferred.",
+      "implementationEvidence": [
+        "checkpoint:PROGRESS.md"
+      ],
+      "testEvidence": [],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:PLAN.md",
+        "checkpoint:BASELINE.md"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     }

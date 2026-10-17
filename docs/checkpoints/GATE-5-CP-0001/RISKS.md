@@ -1,5 +1,29 @@
 # Risks
 
+## Current v2 outcome and remaining acceptance
+
+G5-INT-034 adds the confirmed unfinished-producer recurrence: cmd-0317 refuses six strict hashes
+after inventory recorder cmd-0316 was launched but not finished. The executable synchronous
+sequencer passes positive/adverse process controls; actual serial main-tree validation cmd-0329
+then passes after the inventory recorder exits. Refresh memory and metadata, then repeat before
+publication. It serializes its own two phases, not unrelated writers; every other producer must finish.
+
+Cmd-0277 completes all45 non-fast stages with41 PASS and four FAIL. The collector then rejects
+the current report through a sealed historical42-stage consumer and fails before detailed scenario
+export. Cmd-0280 preserves exact available verifier/progress and explicitly unavailable three
+collector artifacts. Missing details cannot be recovered or replaced with earlier reports.
+The v2 temporary clone is actually removed; refused v1 residue remains separate below.
+
+The causal repairs have actual positive/adverse controls: API166, Gate5 root40 before the added
+two bookkeeping cases, unchanged UTF-8
+rules, infrastructure49 in a fresh owned stack with zero skips and exact cleanup, client35 with
+unchanged package bytes and full lint. Cmd-0308 validated135 active/132 GUARDED lessons and137
+registered controls; all six recurrence histories remain. Current requirements derive to184 and
+physical cases to1873 after the two sequencing cases. No requirement is COMPLETE;
+G5-INT-026/028 still need the full new immutable
+root/profile proof. All14 Green Keeper gates, completeness, fresh internal Red Team and closure
+mirror remain mandatory. Independent M2 validation is pending. Gate6 is not authorized.
+
 ## Current incomplete-attempt residue — never silently cleaned
 
 The v1 full invocation was intentionally stopped before its mandatory root suite completed; it is
@@ -20,15 +44,15 @@ The source/status coupling and cleanup-manager defect are corrected with actual 
 the new immutable runtime subject and complete non-fast assurance are still required. No new full
 verifier is active until its subsequent publication/invocation is recorded.
 
-## Current status (supersedes historical pending statements below)
+## Historical pre-v2 observations — not current job state
 
 Cmd-0199 supplies the complete real desktop proof, including actual two-host recovery, successful
 unittest in sandbox, identical client truth, quality evidence/reproduction, loss reconciliation,
 RUNNING task/quality cancellation and repeat, local-only SIGINT, tamper refusal and complete cleanup.
 Cmd-0200 preserves it exactly. All 21 recorded findings are causally closed, and cmd-0206 passes
 complete lint. Current live proof is still dirty-source evidence, not the immutable full verifier.
-The runtime subject is now published as 76e659e5cfb0db1bf7dd50c6d3a04ec101e9fce0 and its full
-non-fast verifier is active in an isolated exact detached clone. Source remains frozen at
+The runtime v1 subject was published as 76e659e5cfb0db1bf7dd50c6d3a04ec101e9fce0 and its full
+non-fast verifier was active in an isolated exact detached clone. Its measured source was frozen at
 22fa32a378ae64ea96adf9b06fe5eee865a11a96ef3b3f0ec5b80311bdc1ec3d (cmd-0229).
 All 22 actual findings are causally closed; the last one preserves raw evidence across Git transport.
 The completed verifier, all fourteen mandatory Green Keeper gates, completeness, internal Red Team/null

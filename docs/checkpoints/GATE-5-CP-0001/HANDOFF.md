@@ -3,6 +3,16 @@
 Current Gate: GATE-5
 Current Status: IN_PROGRESS
 
+## Current bookkeeping recurrence boundary
+
+Cmd-0317 refuses six hashes because inventory recorder cmd-0316 was still active. LSN-0011 is
+escalated to recurrence14. Cmd-0330 actually completes inventory recorder cmd-0328 before canonical
+main-tree validation cmd-0329 returns CHECKPOINT_VALID; the causal guard may now be restored.
+Cmd-0331 restores it with the full recurrence history; cmd-0332 validates135 active/132 GUARDED.
+Cmd-0322 passes real child ordering and fail-stop tests. Use the single synchronous sequence below,
+await its actual completion and run no other metadata writer concurrently; no global writer lock
+is claimed. Older causal metrics below describe their explicitly named completed runs.
+
 ## Objective and authority
 
 Finish the owner-authorized Gate 5 — VS Code + CLI, then every mandatory internal assurance
@@ -39,14 +49,25 @@ one line length are corrected without exclusions; rerun full lint before runtime
 Runtime v1 remains published at 76e659e5cfb0db1bf7dd50c6d3a04ec101e9fce0 / tag
 iacode-subjects/GATE-5-CP-0001-runtime-v1. Its clean post-commit checkpoint validated before push.
 Its 45-stage invocation was intentionally interrupted during the full root suite, never passed;
-cmd-0238 also records actual readonly Git cleanup failure. No full verifier is currently active.
-Main now contains the source corrections/guards and checkpoint evidence preparing runtime v2.
-STATE currentCommit=HEAD, dirty=true and IN_PROGRESS are truthful; no terminal Gate 5 seal exists.
-Cmd-0244 derived 181 requirements before the additional target-schema projection lesson LSN-0133.
-The current preflight/matrix/COUNTS, not older literal counts, are authoritative. No row is COMPLETE.
-All 25 causal/preventive findings are CLOSED; cmd-0255 passes all 33 current Gate 5 controls.
-with every observed red archived and recurrence severity/history preserved. Cmd-0201 explicitly
-resolves the canonical-state vocabulary recurrence only after actual complete proof.
+cmd-0238 also records actual readonly Git cleanup failure. Runtime v2 is now cleanly post-commit
+validated and published at b5baca2ad94fc787539fa11b26f8676889044567 / tag
+iacode-subjects/GATE-5-CP-0001-runtime-v2. Its complete non-fast invocation cmd-0277 ends FAIL,
+41/45, including actual native/client PASS. The publisher then fails its stale historical 42-stage
+consumer before exporting three detailed collector artifacts. Cmd-0280 preserves exact available
+reports and records unavailable data honestly. The fresh v2 clone is actually removed; no full/root
+job remains active. Never substitute an earlier detailed PASS for those unavailable reports.
+
+Rework is IN_PROGRESS, not yet a new immutable subject. Preflight cmd-0303 and derivation cmd-0304
+retain all 184 requirements (50 canonical +134 lessons), zero COMPLETE. Cmd-0293 passes all 166 API
+unit cases with the nested-registry fixture; cmd-0298 passes all 40 current Gate 5 root controls;
+cmd-0299 passes all 49 infrastructure cases with no skips in an owned stack, with source/operational
+identity preservation and complete cleanup. Cmd-0292's missing-stack failure remains recorded.
+The full root suite, committed-tree quality and every ordered assurance step must rerun on v3.
+Recurrence histories and all causal reds remain intact. No terminal Gate 5 seal exists.
+Cmd-0312 passes all40 controls through the actual publisher boundary; cmd-0305 passes full lint,
+cmd-0308 validates135 active/132 GUARDED lessons and cmd-0313 discovers1871 physical cases with
+137 registered controls. Cmd-0314 resolves all80 mapped files without promoting requirements;
+cmd-0315 finds no missing link among231 relative documentation links.
 
 ## What was NOT completed
 
@@ -88,6 +109,10 @@ Full immutable source verification remains required. Earlier failures are not re
 
 ## Known failures
 
+The current runtime v2 full invocation reports the mandatory root suite FAIL (6244.2 seconds).
+Consume its complete report and preserve the actual failing attempt before diagnosis/rework. Do
+not run conditional acceptance/closure assemblers and do not edit frozen source during the run.
+
 All earlier 21 causal findings are closed. G5-INT-022 records actual pre-publication Git newline
 conversion of copied raw evidence; cmd-0216 reproduces it and cmd-0217 passes 30 current root controls
 after dedicated copied-evidence paths become non-text. Original report bytes/hashes are unchanged.
@@ -114,7 +139,8 @@ older refused Gate 4 directories. The corrected clone manager creates fresh targ
 ## Required next action
 
 1. Read canonical entry/contracts, current preflight, requirements, FINDINGS, PROGRESS and NEXT.
-2. Finish all producers, update explicit FILES inventory and serialize actual checkpoint validation.
+2. Finish all producers, then use audit-harness/validate_serial_bookkeeping.py and await its actual
+   completion. It records/waits for inventory before recording/starting canonical validation.
    Intentional derived metadata staleness is not unexpected Git divergence; unexpected divergence
    still requires DIVERGENCE.md/BLOCKED. Never run inventory validation alongside a ledger writer.
 3. Freeze/publish an immutable IN_PROGRESS Gate 5 runtime commit/tag after full lint and staged
@@ -131,8 +157,7 @@ older refused Gate 4 directories. The corrected clone manager creates fresh targ
 
 ## Validation commands
 
-- python docs/checkpoints/GATE-5-CP-0001/audit-harness/declare_inventory.py
-- python docs/checkpoints/GATE-5-CP-0001/audit-harness/run_checkpoint_validation.py
+- python docs/checkpoints/GATE-5-CP-0001/audit-harness/validate_serial_bookkeeping.py
 - python scripts/development-ledger/validate_lessons.py
 - python scripts/development-ledger/verify_integrity.py
 - python scripts/development-ledger/program_state.py --write

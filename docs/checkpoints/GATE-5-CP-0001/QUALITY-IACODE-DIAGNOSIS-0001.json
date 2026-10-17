@@ -1,0 +1,34 @@
+{
+  "kind": "OBSERVED_FAILED_SELF_EVALUATION_NOT_GATE_VERDICT",
+  "subjectCommit": "b5baca2ad94fc787539fa11b26f8676889044567",
+  "composeProject": "iacode-verify-de4d3ce29d17",
+  "runId": "01a146fd-5ef1-7000-872c-8795cf8d9178",
+  "state": "FAILED",
+  "verdict": "FAIL",
+  "totalChecks": 65,
+  "totalResults": 60,
+  "failedResults": [
+    {
+      "checkId": "q011-unit",
+      "status": "FAILED",
+      "exitCode": 1,
+      "durationMs": 50524,
+      "timedOut": false,
+      "truncated": false,
+      "sandboxId": "01a146fe-81c5-7000-83ba-d070e3aa76a6",
+      "evidence": [
+        {
+          "path": "QUALITY-IACODE-UNIT-RED-0001-1-1.json",
+          "sha256": "0d292f1279d0f47e24ef2edba9181cf3bafed0158372825fdba5ca133e79c229",
+          "bytes": 5575,
+          "failureHeaders": [
+            "FAILED tests/unit/test_desktop_api.py::DesktopAuthenticationTests::test_legacy_mode_is_explicitly_unavailable_to_desktop_clients",
+            "FAILED tests/unit/test_desktop_api.py::DesktopAuthenticationTests::test_domain_read_uses_real_registry_after_authentication"
+          ],
+          "failureHeaderCount": 2,
+          "failureHeadersTruncated": false
+        }
+      ]
+    }
+  ]
+}

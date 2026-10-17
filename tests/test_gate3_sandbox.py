@@ -718,12 +718,33 @@ class Gate3ScopeTests(unittest.TestCase):
         self.assertNotIn(policies.RESERVATION_MARKER, readme)
 
     def test_the_command_line_stays_reserved_for_its_own_gate(self) -> None:
+        reservation = next(item for item in policies.load_gate_scope(PROJECT_ROOT)
+                           if item["path"] == "apps/cli")
+        order = policies.gate_order()
+        owner = order.index(ledger_common.normalize_gate(str(reservation["gate"])))
+        current = order.index(ledger_common.normalize_gate(self.current()))
         in_force = {item["path"]: item
                     for item in policies.reservations_in_force(PROJECT_ROOT, self.current())}
-        self.assertIn("apps/cli", in_force)
-        self.assertEqual(sorted(path.name for path in (PROJECT_ROOT / "apps" / "cli").iterdir()),
-                         ["README.md"])
+        if current < owner:
+            self.assertIn("apps/cli", in_force)
+            self.assertEqual(sorted(path.name for path in (PROJECT_ROOT / "apps" / "cli").iterdir()),
+                             ["README.md"])
+        else:
+            self.assertNotIn("apps/cli", in_force)
         self.assertEqual(policies.scope_violations(PROJECT_ROOT, self.current()), [])
+
+    def test_cli_reservation_membership_follows_every_policy_lifecycle_position(self) -> None:
+        reservation = next(item for item in policies.load_gate_scope(PROJECT_ROOT)
+                           if item["path"] == "apps/cli")
+        order = policies.gate_order()
+        owner = order.index(ledger_common.normalize_gate(str(reservation["gate"])))
+        self.assertGreater(owner, 0, "the pre-owner obligation must be exercised")
+        self.assertLess(owner, len(order) - 1, "post-owner consumption must be exercised")
+        for position, gate in enumerate(order):
+            with self.subTest(gate=gate):
+                in_force = {item["path"] for item in policies.reservations_in_force(
+                    PROJECT_ROOT, gate)}
+                self.assertEqual("apps/cli" in in_force, position < owner)
 
     def test_the_gate_after_this_one_has_not_started(self) -> None:
         """No directory the next Gate owns carries anything but its reservation notice."""

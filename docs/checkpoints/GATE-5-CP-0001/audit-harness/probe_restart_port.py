@@ -6,8 +6,13 @@ from __future__ import annotations
 import http.client
 import json
 import subprocess
+import sys
 import time
 import uuid
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[4] / "scripts/development-ledger"))
+from ledger_common import use_utf8_stdout
 
 
 def docker(*args):
@@ -56,4 +61,5 @@ def main() -> int:
 
 
 if __name__ == "__main__":
+    use_utf8_stdout()
     raise SystemExit(main())

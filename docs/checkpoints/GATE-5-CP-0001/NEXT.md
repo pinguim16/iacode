@@ -2,6 +2,36 @@
 
 ## Current boundary
 
+Final causal epoch: all42 Gate5 controls cmd-0338, all3 unchanged UTF-8 controls cmd-0339 and
+whole lint cmd-0340 pass. Current source fingerprint is
+3aa8e502b860c2b97803b39a21f1c82757980d18f5918c7f53bfa83e07e9c8f6.
+Cmd-0335 derives1873 physical cases and184 requirements, zero COMPLETE. Runtime-v3 is not yet
+committed or published. Run the one serial bookkeeping sequence, await it, then stage/scan and
+invoke the canonical finalizer directly (it records itself), commit/tag and clean post-commit
+validation before push. Never wrap the finalizer in a second recorder after its sealed hash bind.
+
+Bookkeeping recurrence G5-INT-034 is causally CLOSED: cmd-0317 rejects six hashes after an unfinished
+inventory recorder. Cmd-0322 passes the new synchronous sequencer's actual ordering/fail-stop
+controls; actual serial main-tree validation cmd-0329 passes after inventory recorder cmd-0328.
+Guard restoration cmd-0331 and canonical memory/index validation cmd-0332 are complete.
+Refresh all derived metadata, then finish every producer,
+run only audit-harness/validate_serial_bookkeeping.py and await its actual termination before any
+other checkpoint write. This changes no mandatory quality-gate set or strict hash rule.
+
+Runtime v2 is complete and FAIL: cmd-0277 observes 41/45 stages, with five failing root subtests,
+quoted-literal infrastructure refusals and two nested API registry cases in committed-tree quality.
+The native/client, false-PASS, dependency, backup, restart and fresh-install stages actually pass.
+Its collector subsequently fails a borrowed historical 42-stage denominator; three detailed
+collector artifacts are unavailable. Cmd-0280 preserves exact available reports and missing-data
+facts. The v2 clone is removed, and no root/full invocation remains active.
+
+Runtime v2 is now published and its clean post-commit checkpoint validated:
+b5baca2ad94fc787539fa11b26f8676889044567 / iacode-subjects/GATE-5-CP-0001-runtime-v2.
+That subject's fingerprint was c7fb0c188ba9e86478afd0d523ce3e5b15fc77c97f14537830a058d6218ed317.
+Current causal source rework is not frozen or published as v3. Cmd-0304 derives 184 requirements,
+50 canonical plus134 lesson obligations; no row is COMPLETE. Re-derive physical counts before the
+new freeze. Do not execute the PASS-only evidence/assurance sequence until a complete v3 PASS.
+
 Runtime v1 remains immutable/published at 76e659e5cfb0db1bf7dd50c6d3a04ec101e9fce0 and
 iacode-subjects/GATE-5-CP-0001-runtime-v1. Its complete verifier was intentionally interrupted
 during the root suite; cmd-0238 exits one with no complete report and actual readonly Git cleanup
@@ -20,13 +50,14 @@ the new manager. Do not touch the two older refused Gate 4 directories. See RISK
 
 ## Required next action
 
-1. Finish producers, refresh current documentation links and explicit mapping checks, then declared
-   inventory and quiescent canonical IN_PROGRESS finalization. Preserve every observed failure.
-2. Commit/publish a separate runtime v2 subject/tag, with no history rewrite and a staged secret scan.
-   Validate its actual clean post-commit checkpoint before pushing. Keep v1/tag unchanged.
-3. Run audit-harness/run_full_verification.py against that exact published commit/tag and explicit
-   supported Node. Require all 45 non-fast stages and actual final clone/profile/namespace cleanup.
-   Freeze all assurance-source inputs throughout. Do not replace the root suite with a selector.
+1. Finish causal full-v2 rework: current UTF-8, literal, policy-lifecycle and collector controls
+   actually pass, as do the full 166-case API suite and full 49-case owned infrastructure suite.
+   Restore each escalated guard only against actual causal evidence; retain all red records.
+2. Preserve v1/tag and its incomplete attempt; retain its refused owner for responsible manual
+   cleanup only. Preserve complete v2 failure/archive and unavailable collector artifacts.
+3. Validate memory/index, refresh full preflight/requirements/counts/documentation/inventory and
+   serialize checkpoint validation. Only then publish a new immutable runtime-v3 tag and run all
+   45 non-fast stages with actual cleanup and raw producer retention. Freeze every source input.
 4. Only after full actual PASS execute the prepared conditional tools below. No row is COMPLETE now.
    Every current derived obligation must retain requirement-specific evidence before readiness.
 5. Finish Gate 5 alone, internally seal/publish and validate public transport/exact archive only after

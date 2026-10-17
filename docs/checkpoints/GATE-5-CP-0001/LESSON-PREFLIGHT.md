@@ -4,9 +4,9 @@
 - Scope: `VS Code extension and CLI with secure runtime communication, approvals, task lifecycle and fresh installation`
 - Technologies: `TypeScript`, `Node`, `VSCode`, `Python`, `Docker`
 - Modules: `apps/cli`, `apps/vscode-extension`, `apps/api`, `packages/contracts`, `packages/common`, `services/orchestrator`, `services/agent-runtime`, `services/sandbox`, `services/evaluator`, `scripts/iacode`, `scripts/development-ledger`
-- Generated: `2026-10-16T20:46:23Z`
-- Lessons considered: 133
-- Lessons applicable: 132
+- Generated: `2026-10-17T00:41:27Z`
+- Lessons considered: 135
+- Lessons applicable: 134
 
 Every applicable lesson below is a requirement of this Gate. The derived identifiers must
 appear in `REQUIREMENTS-MATRIX.json`, and the Delivery Completeness Validator fails the
@@ -49,7 +49,7 @@ delivery when one is absent.
 | `LSN-0034` Re-deriving what the framework already computed diverges from the framework | `GUARDED` | MEDIUM | `LESSON-REQ-0033` | Where this Gate derives a value the framework already computes, confirm it reads the framework's result rather than recomputing it, and that a test asserts the value rather than only its presence. |
 | `LSN-0035` Captured subprocess output decoded or re-emitted with the platform codepage crashes the tool, not the work | `GUARDED` | CRITICAL | `LESSON-REQ-0034` | Confirm every subprocess capture this Gate adds states its decoder explicitly, that every entry point re-emitting captured output configures its own stream, and that the repository-wide control still passes. |
 | `LSN-0036` A gate that runs inside an image measures the image, not the source | `GUARDED` | HIGH | `LESSON-REQ-0035` | For every mandatory gate this Gate adds or changes, confirm that a gate executing inside a built artefact rebuilds that artefact before measuring, and that the repository-wide control still passes. |
-| `LSN-0037` A shared control that names an identifier the repository derives stops being a control when that identifier moves | `GUARDED` | MEDIUM | `LESSON-REQ-0036` | Confirm that every control this Gate adds which reasons about an identifier the repository derives -- the current Gate, the newest checkpoint, the head migration -- derives it rather than naming it, and that the repository-wide control still passes. |
+| `LSN-0037` A shared control that names an identifier the repository derives stops being a control when that identifier moves | `GUARDED` | HIGH | `LESSON-REQ-0036` | Confirm that every control this Gate adds which reasons about an identifier the repository derives -- the current Gate, the newest checkpoint, the head migration -- derives it rather than naming it, and that the repository-wide control still passes. |
 | `LSN-0038` Two representations of one concept in one module disagree, and the safer one loses | `GUARDED` | MEDIUM | `LESSON-REQ-0037` | Where this Gate defines a classification twice — once anchored and once embedded — confirm one definition is authoritative and the other derives from it or is removed. |
 | `LSN-0039` A test that writes to the operational database leaves production data behind | `GUARDED` | HIGH | `LESSON-REQ-0038` | For every test this Gate adds that writes to a shared service rather than to a disposable one, confirm it removes what it created and that an invariant detects residue. |
 | `LSN-0040` A control that judges sealed history only runs once a successor anchors it | `GUARDED` | CRITICAL | `LESSON-REQ-0039` | Confirm that every sealed predecessor this Gate anchors validates from a detached checkout of its own tag in a published clone (Git's transport, never a copy of the local object store), that every commit sealed evidence names is reachable from a published reference, and that no command this Gate records declares an input the repository does not carry. |
@@ -86,7 +86,7 @@ delivery when one is absent.
 | `LSN-0071` Every quality image must provision snapshots on its oldest runtime and prepare each isolated check | `GUARDED` | HIGH | `LESSON-REQ-0070` | For every shared helper and isolated quality runner, test the oldest pinned runtime actually used by an image and prove each check prepares all dependencies it needs without relying on a previous sandbox session. |
 | `LSN-0072` Secret findings and reviewed false positives must share one policy-owned taxonomy | `GUARDED` | HIGH | `LESSON-REQ-0071` | Whenever more than one gate scans secrets, prove all scanners share the policy-owned finding taxonomy and digest-bound allowance source, and that an unallowlisted match remains blocking. |
 | `LSN-0073` The canonical lint denominator must cover every detected project root | `GUARDED` | HIGH | `LESSON-REQ-0072` | For every manually scoped repository-wide quality command, derive or test its denominator against the current project inventory so a newly detected root cannot remain outside a green gate. |
-| `LSN-0074` An importable source tree is not an installed or repository-configured test environment | `GUARDED` | HIGH | `LESSON-REQ-0073` | For Python tests executed from a nested project root, prove the sandbox provides installed distribution metadata and repository-root policy/configuration without reading or writing the host. |
+| `LSN-0074` An importable source tree is not an installed or repository-configured test environment | `GUARDED` | CRITICAL | `LESSON-REQ-0073` | For Python tests executed from a nested project root, prove the sandbox provides installed distribution metadata and repository-root policy/configuration without reading or writing the host. |
 | `LSN-0075` Offline package installation requires its build backend inside the quality image | `GUARDED` | HIGH | `LESSON-REQ-0074` | Whenever a sandbox performs an offline package installation, prove every declared build backend is pinned in the content-addressed execution image and usable by the non-root runtime. |
 | `LSN-0076` Projected nested configuration requires an explicit monorepo root | `GUARDED` | HIGH | `LESSON-REQ-0075` | When repository configuration is projected into a nested project, provide an explicit trusted repository root and prove source-boundary scans do not reinterpret the projection as ownership. |
 | `LSN-0077` Harness wait bounds must reflect workload size without changing product deadlines | `GUARDED` | HIGH | `LESSON-REQ-0076` | For a functional harness whose workload cardinality differs materially by scenario, prove its bounded wait covers the largest legitimate execution without weakening the product's own timeout or deadline. |
@@ -114,7 +114,7 @@ delivery when one is absent.
 | `LSN-0099` A refused subject is an attempted input, not executed commit evidence | `GUARDED` | HIGH | `LESSON-REQ-0098` | A command refused before execution must retain a recomputable refusal without making its deliberately invalid subject part of the published-history evidence denominator. |
 | `LSN-0100` Pre-seal detached validation must bind the explicit subject namespace | `GUARDED` | HIGH | `LESSON-REQ-0099` | An exact detached pre-seal verifier must bind an IN_PROGRESS checkpoint to its checkpoint-named iacode-subjects ref without allowing that ref to substitute for the canonical seal tag. |
 | `LSN-0101` A structural record and its canonical index are one atomic change | `GUARDED` | HIGH | `LESSON-REQ-0100` | Whenever a structural record is created or changed, its canonical index must enumerate the same record, title and status before publication. |
-| `LSN-0102` Assurance denominators must derive category counts from the current source set | `GUARDED` | HIGH | `LESSON-REQ-0101` | Any assurance partition must derive category counts from its canonical identifier sets instead of maintaining a duplicate literal that can drift. |
+| `LSN-0102` Assurance denominators must derive category counts from the current source set | `GUARDED` | CRITICAL | `LESSON-REQ-0101` | Any assurance partition must derive category counts from its canonical identifier sets instead of maintaining a duplicate literal that can drift. |
 | `LSN-0103` Adversarial fixtures must hash the complete validated contract | `GUARDED` | HIGH | `LESSON-REQ-0102` | Construct the complete canonical verdict before hashing and execute a valid commitment before attributing a refusal to cancellation. |
 | `LSN-0104` Intermediate closure and independent validation must have unambiguous contracts | `GUARDED` | HIGH | `LESSON-REQ-0103` | Keep adapters and live Gate rows aligned with the milestone cadence, preserve internal controls and reject independent verdicts on INTERNAL_GATE_PASS. |
 | `LSN-0105` New behavioral tests must satisfy the unchanged source-quality contract | `GUARDED` | CRITICAL | `LESSON-REQ-0104` | Run the existing mandatory lint over every changed source and test path before publishing; repair formatting without weakening lint or assertions. |
@@ -146,6 +146,8 @@ delivery when one is absent.
 | `LSN-0131` Raw evidence digests require byte-preserving Git export, not text normalization | `GUARDED` | HIGH | `LESSON-REQ-0130` | Preserve claimed raw observation digests across actual Git export rather than checking only a local copy. Declare dedicated copied-evidence boundaries explicitly without changing historical observation bytes. |
 | `LSN-0132` Owned Git clones need read-only-aware cleanup, not native-profile lock retry | `GUARDED` | HIGH | `LESSON-REQ-0131` | Use a lifecycle manager that handles actual Windows read-only Git objects for fresh verification clones; do not confuse this with profile sharing locks or retry a policy-refused existing cleanup target. |
 | `LSN-0133` Shared field names do not imply shared schema types | `GUARDED` | MEDIUM | `LESSON-REQ-0132` | Read and validate the owning artifact schema when projecting metadata; equal field names do not grant equal types, nullability or rights. |
+| `LSN-0134` Configuration classifiers consume decoded values, not dotenv quote syntax | `GUARDED` | MEDIUM | `LESSON-REQ-0133` | For committed environment consumers, decode the supported literal syntax before classification and prove actual Compose agreement for quoted empty, quoted placeholder and nonempty adverse values. |
+| `LSN-0135` Capture producer evidence before fallible interpretation or owned cleanup | `GUARDED` | HIGH | `LESSON-REQ-0134` | Every temporary verification producer must preserve its available safe reports before interpretation can raise; actual owner cleanup must leave those reports and digests recoverable without manufacturing PASS. |
 
 ## Why each lesson applies
 
@@ -396,7 +398,7 @@ delivery when one is absent.
 
 ### LSN-0037 — A shared control that names an identifier the repository derives stops being a control when that identifier moves
 
-- Reason: applies to every Gate; category tooling; severity MEDIUM; already guarded, so the control must keep holding
+- Reason: applies to every Gate; category tooling; severity HIGH; already guarded, so the control must keep holding
 - Required check: Confirm that every control this Gate adds which reasons about an identifier the repository derives -- the current Gate, the newest checkpoint, the head migration -- derives it rather than naming it, and that the repository-wide control still passes.
 - Required evidence: The control-plane test that parses every caller, green, with a rejecting case.
 - Derived requirement: `LESSON-REQ-0036`
@@ -655,7 +657,7 @@ delivery when one is absent.
 
 ### LSN-0074 — An importable source tree is not an installed or repository-configured test environment
 
-- Reason: applies to every Gate; category implementation; severity HIGH; already guarded, so the control must keep holding
+- Reason: applies to every Gate; category implementation; severity CRITICAL; already guarded, so the control must keep holding
 - Required check: For Python tests executed from a nested project root, prove the sandbox provides installed distribution metadata and repository-root policy/configuration without reading or writing the host.
 - Required evidence: A real snapshot test for metadata and monorepo configuration plus a successful evaluation of a committed multi-package repository.
 - Derived requirement: `LESSON-REQ-0073`
@@ -851,7 +853,7 @@ delivery when one is absent.
 
 ### LSN-0102 — Assurance denominators must derive category counts from the current source set
 
-- Reason: applies to every Gate; category quality; severity HIGH; already guarded, so the control must keep holding
+- Reason: applies to every Gate; category quality; severity CRITICAL; already guarded, so the control must keep holding
 - Required check: Any assurance partition must derive category counts from its canonical identifier sets instead of maintaining a duplicate literal that can drift.
 - Required evidence: A regression mutating the corrective source set and proving the expected partition changes automatically.
 - Derived requirement: `LESSON-REQ-0101`
@@ -1072,3 +1074,17 @@ delivery when one is absent.
 - Required check: Read and validate the owning artifact schema when projecting metadata; equal field names do not grant equal types, nullability or rights.
 - Required evidence: Actual target-artifact schema rejection and unchanged positive/adverse execution after correcting the value, with the schema and denied rights preserved.
 - Derived requirement: `LESSON-REQ-0132`
+
+### LSN-0134 — Configuration classifiers consume decoded values, not dotenv quote syntax
+
+- Reason: applies to every Gate; category implementation; severity MEDIUM; already guarded, so the control must keep holding
+- Required check: For committed environment consumers, decode the supported literal syntax before classification and prove actual Compose agreement for quoted empty, quoted placeholder and nonempty adverse values.
+- Required evidence: Causal red observations, actual Compose positive/adverse comparisons, host-reader and all affected consumer regressions plus complete infrastructure reexecution.
+- Derived requirement: `LESSON-REQ-0133`
+
+### LSN-0135 — Capture producer evidence before fallible interpretation or owned cleanup
+
+- Reason: applies to every Gate; category quality; severity HIGH; already guarded, so the control must keep holding
+- Required check: Every temporary verification producer must preserve its available safe reports before interpretation can raise; actual owner cleanup must leave those reports and digests recoverable without manufacturing PASS.
+- Required evidence: A real exception and actual temporary-owner cleanup regression with recoverable original bytes, plus a fresh complete publication capture and exact transport verification.
+- Derived requirement: `LESSON-REQ-0134`
