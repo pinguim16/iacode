@@ -1,6 +1,63 @@
-# Gate 5 progress — no delivery verdict
+# Gate 5 progress — internal assurance, pre-seal assembly
 
-## Current pre-publication source epoch
+## Current completed assurance boundary
+
+Cmd-0397 actually terminates with full mirror PASS:16 applicable dimensions,2 canonically
+NOT_APPLICABLE,0 failures,6110690ms. The complete fresh-clone root suite, compilation, memory,
+integrity and completeness pass;33 historical checkpoints and231 documentation links validate.
+The source fingerprint remains3aa8e502b860c2b97803b39a21f1c82757980d18f5918c7f53bfa83e07e9c8f6.
+Cmd-0398 binds the already completed full45/45, Green Keeper14/14, completeness184/184, fresh
+Red Team33/33 and full mirror. S02 is COMPLETE and S03 is IN_PROGRESS. No assurance job remains
+active; do not relaunch them. Finish only final assembly, canonical sealing/publication and fresh
+remote archive validation. Independent M2 validation remains pending. Gate6 is not authorized.
+All source epochs and pending-work statements below are historical, superseded by this boundary.
+
+Final pre-seal assembly actually passes:source/completeness equality cmd-0399; derived counts
+cmd-0400; documentation cmd-0401 (706 files,231 links); serial declaration cmd-0404 then
+CHECKPOINT_VALID cmd-0405, parent cmd-0406 exit0. S03 completes only this readiness slice.
+Canonical finalization, content commit, seal/publication and final public archive proof remain
+separate later actions. Do not append to a checkpoint after its canonical seal.
+
+## Preserved pre-seal transition refusal
+
+Finalizer cmd-0411 refuses INTERNAL_GATE_PASS because both independent verdict fields still use
+the IN_PROGRESS value PENDING. The attempt exits1 and remains in the ledger; no invalid readiness
+is published. Canonical ADR-0037 already requires NOT_REQUIRED for this intermediate checkpoint,
+with explicit pending-M2 justification, never APPROVED/RED_TEAM_PASS. Only those metadata fields
+are mapped to that existing contract; secondToolValidation stays PENDING_MANUAL, M2 stays PENDING
+and externalAttestation stays NONE. The original validator and every executable gate are unchanged.
+This applies existing LSN-0003/0007/0104 controls: the refusal was recorded and no self-approved
+independent verdict escaped. It is not a new source defect, policy contradiction or failed guard.
+No new lesson class, source epoch or reduction of mandatory assurance is inferred from the refusal.
+Cmd-0412 is a replay-precondition refusal of a discovery pattern argument, not a test execution.
+Cmd-0415 then actually executes all3 matching unchanged positive/adverse internal-closure controls
+through repository-root discovery and passes. No test, validator, memory record or source is edited.
+
+## Published runtime v3 boundary
+
+Commit a8d9cda35c43f183778582b87ba6e2ac476de976 and immutable subject tag
+iacode-subjects/GATE-5-CP-0001-runtime-v3 are published; remote main/tag both match. The clean
+post-commit canonical validator actually returned CHECKPOINT_VALID before atomic push. Source
+fingerprint is 3aa8e502b860c2b97803b39a21f1c82757980d18f5918c7f53bfa83e07e9c8f6.
+The single fresh remote full invocation cmd-0349 is COMPLETE and PASS45/45. Root passes6825s,
+committed-tree quality535.7s, native installation14.4s and full desktop acceptance206.8s. The
+published detached subject stays clean, operational identities unchanged and every owned resource
+and the temporary clone are removed. Safe original reports are archived before interpretation.
+Cmd-0350/0351 pass8 scenarios and22/22 functional requirements; cmd-0352 binds184 requirements and
+cmd-0354 derives1873/1873 cases and184/184 rows. All34 findings are CLOSED. Packages/manifest remain
+byte-identical at cmd-0357. Formal Green Keeper cmd-0375 now passes14/14 in cycle1, zero remaining
+failures, including actual root cmd-0361. Canonical completeness cmd-0377 passes184/184 with100%
+coverage/evidence and zero PARTIAL/MISSING. Cmd-0378/0379 bind these real results and re-derive the
+same1873/1873 cases. Fresh internal Red Team cmd-0387 now passes33/33, zero escapes, VALID null
+control, unchanged source and actual cleanup. Cmd-0388/0389 bind the result/counts and cmd-0390
+revalidates functional acceptance22/22. Full mirror and final assembly/seal/publication remain;
+never relaunch completed full/GK/Red Team sessions or infer a terminal Gate verdict.
+Cmd-0338/0339/0340 pass all42 current Gate5 controls, all3 unchanged UTF-8 controls and full lint.
+Cmd-0335 derives1873 physical cases and184 requirements, zero COMPLETE. All previous failed
+attempts remain evidence. Complete fresh remote verification and ordered internal assurance are
+still required; IN_PROGRESS is not readiness or a Gate verdict. No Gate6 authority exists.
+
+## Historical pre-publication source epoch
 
 Cmd-0338 passes all42 Gate5 controls; cmd-0339 passes all3 unchanged encoding controls and
 cmd-0340 passes complete mandatory lint. Counts cmd-0335 derive1873 physical cases,184 requirements
@@ -10,7 +67,7 @@ none missing. Source fingerprint is3aa8e502b860c2b97803b39a21f1c82757980d18f5918
 Final serialized metadata validation, staging/scan, canonical IN_PROGRESS finalization and a new
 runtime-v3 publication remain before the complete fresh immutable45-stage run.
 
-## Current bookkeeping correction
+## Historical bookkeeping correction
 
 Cmd-0316's recorder was still active when cmd-0317 validation began; six strict hashes were refused.
 The exact LSN-0011 recurrence is escalated, never described as valid approval. Cmd-0322 executes the
@@ -19,7 +76,7 @@ failure stopping the second phase. Actual sequence cmd-0330 waits for inventory 
 then canonical main-tree validation cmd-0329 returns CHECKPOINT_VALID. This supplies causal guard
 restoration evidence. Use one awaited sequence after all producers finish; never launch phases separately.
 
-## Current causal rework after completed failed runtime v2
+## Historical causal rework after completed failed runtime v2
 
 Cmd-0277 completes 41/45 stages, FAIL. Root headers identify both stream controls, two encoded-empty
 redactor comparisons and a stale pre-owner CLI expectation. Infrastructure repeats the literal

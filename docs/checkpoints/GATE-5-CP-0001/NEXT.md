@@ -1,14 +1,78 @@
 # Next
 
-## Current boundary
+## Current final assembly boundary
+
+The full mirror actually terminated PASS at cmd-0397:16 applicable dimensions PASS,2 canonical
+NOT_APPLICABLE,0 failures; full fresh-clone suite and all33 historical checkpoints validate.
+Cmd-0398 completes S02 from the actual unchanged full/GK/completeness/Red Team/mirror reports and
+starts S03. All assurance jobs are finished. Do not resume old sessions or rerun those controls
+without a genuine content change or demonstrated stale proof. Source remains immutable runtime-v3.
+
+Pre-seal assembly now passes:source/completeness equality cmd-0399, counts cmd-0400, documentation
+cmd-0401, explicit inventory cmd-0404 then actual CHECKPOINT_VALID cmd-0405. S03 completes only that
+readiness slice. Next canonically finalize INTERNAL_GATE_PASS against refs/tags/iacode-checkpoints/GATE-5-CP-0001,
+commit the exact Gate5 content after staged scanning/raw-byte verification, seal, publish, validate
+fresh HTTPS detached transport and regenerate/verify the final review ZIP from the declaration's
+content commit. Inspect actual seal/tag/remote evidence before repeating a step. Finalizer and
+sealer record themselves; do not wrap them or append to sealed evidence. Independent M2 remains
+pending and Gate6 is not authorized. Earlier phase instructions below are historical, not live work.
+
+## Historical ordered-assurance boundary
+
+The single immutable runtime-v3 full invocation cmd-0349 is COMPLETE and PASS45/45, non-fast,
+one invocation and zero retries. Session60961 has terminated; never resume or relaunch it.
+The exact fresh HTTPS detached subject is a8d9cda35c43f183778582b87ba6e2ac476de976, source
+fingerprint3aa8e502b860c2b97803b39a21f1c82757980d18f5918c7f53bfa83e07e9c8f6. Root PASS6825s,
+committed-tree quality PASS535.7s, native installation PASS and full desktop acceptance PASS.
+Publication/isolation reports prove unchanged operational identities, clean measured Git state,
+complete owned-resource removal and actual temporary-clone removal. Safe original producer bytes
+are retained in attempts/FULL-PRODUCER-8d6cbe9bc1a8-MANIFEST.json; v1/v2 outcomes are unchanged.
+
+Cmd-0350 binds8 real scenarios; canonical functional validation cmd-0351 passes22/22. Cmd-0352
+binds all184 requirements, cmd-0353 records truthful nonterminal progress, and cmd-0354 derives
+1873/1873 physical cases and184/184 requirements. Mapping cmd-0355 and documentation cmd-0356 pass.
+Current local package regeneration cmd-0357 preserves exact CLI/VSIX/manifest bytes. All34 internal
+findings are CLOSED, including the two whole-delivery findings, with actual cmd-0349 evidence.
+
+The formal Green Keeper cmd-0375 is COMPLETE and PASS14/14, cycle1, zero remaining failures;
+its actual gate records are cmd-0361 through0374. The separate root cmd-0361 passes5512752ms.
+Session28643 has terminated; never resume or relaunch it. Canonical completeness cmd-0377 passes
+184/184, coverage/evidence100%, zero PARTIAL/MISSING. Cmd-0378 binds these actual results and
+cmd-0379 re-derives the same1873/1873 cases and184/184 requirements. Fresh internal Red Team
+cmd-0387 is now COMPLETE and RED_TEAM_PASS33/33, zero escapes, VALID null control, unchanged
+source fingerprint and actual owned cleanup. Session13520 has terminated; never resume or
+relaunch it. Cmd-0388 binds that result, cmd-0389 re-derives all counts including33/33 attacks,
+and cmd-0390 revalidates the unchanged functional artifact22/22. No complete mirror verdict exists
+yet; S02 and the Gate remain IN_PROGRESS. All assurance here is same-session internal only.
+
+Finish every metadata producer, run only audit-harness/validate_serial_bookkeeping.py and await
+its complete termination. Then execute the canonical full mirror:
+python scripts/development-ledger/m0_mirror_audit.py --clean-clone --write
+Inspect actual processes before dispatch; if the mirror is already active, await it rather than
+launching a duplicate. Freeze every checkpoint/ledger writer while it runs, including inventory,
+counts and status assemblers. This is the complete internal closure audit, not an independent M2
+attestation. Only after actual mirror PASS may S02 complete and
+internal closure/seal/publication/final ZIP proceed. No source change is authorized by this
+bookkeeping; a genuine new source repair requires a new immutable subject/full cycle. Gate6 is
+not authorized; independent M2 validation remains pending. No terminal Gate5 verdict exists.
+
+## Historical publication boundary — superseded by completed invocation above
 
 Final causal epoch: all42 Gate5 controls cmd-0338, all3 unchanged UTF-8 controls cmd-0339 and
 whole lint cmd-0340 pass. Current source fingerprint is
 3aa8e502b860c2b97803b39a21f1c82757980d18f5918c7f53bfa83e07e9c8f6.
-Cmd-0335 derives1873 physical cases and184 requirements, zero COMPLETE. Runtime-v3 is not yet
-committed or published. Run the one serial bookkeeping sequence, await it, then stage/scan and
-invoke the canonical finalizer directly (it records itself), commit/tag and clean post-commit
-validation before push. Never wrap the finalizer in a second recorder after its sealed hash bind.
+Cmd-0335 derives1873 physical cases and184 requirements, zero COMPLETE. Runtime-v3 is published at
+a8d9cda35c43f183778582b87ba6e2ac476de976 / iacode-subjects/GATE-5-CP-0001-runtime-v3.
+The serial inventory/validation completed, the canonical finalizer returned
+CHECKPOINT_FINALIZED_PRE_COMMIT, and every staged observation retained exact bytes. The clean
+post-commit canonical validator returned CHECKPOINT_VALID. Atomic push succeeded; remote main and
+the immutable subject tag both resolve to that exact commit. The complete fresh remote verifier
+was then ACTIVE (execution session60961, now completed above; inspect actual processes before any
+continuation). Do not launch a duplicate invocation. Root suite PASS in6825seconds, static analysis,
+lessons, integrity and checkpoint validation PASS are actual component observations in
+FULL-VERIFY-PROGRESS.json. Await every remaining stage and the recorder's actual termination;
+only its complete result can permit conditional acceptance. Preserve source and all earlier red
+attempts. There is no terminal Gate verdict.
 
 Bookkeeping recurrence G5-INT-034 is causally CLOSED: cmd-0317 rejects six hashes after an unfinished
 inventory recorder. Cmd-0322 passes the new synchronous sequencer's actual ordering/fail-stop
@@ -28,7 +92,7 @@ facts. The v2 clone is removed, and no root/full invocation remains active.
 Runtime v2 is now published and its clean post-commit checkpoint validated:
 b5baca2ad94fc787539fa11b26f8676889044567 / iacode-subjects/GATE-5-CP-0001-runtime-v2.
 That subject's fingerprint was c7fb0c188ba9e86478afd0d523ce3e5b15fc77c97f14537830a058d6218ed317.
-Current causal source rework is not frozen or published as v3. Cmd-0304 derives 184 requirements,
+The causal rework is now frozen in published v3. Cmd-0304 derives 184 requirements,
 50 canonical plus134 lesson obligations; no row is COMPLETE. Re-derive physical counts before the
 new freeze. Do not execute the PASS-only evidence/assurance sequence until a complete v3 PASS.
 
@@ -50,21 +114,11 @@ the new manager. Do not touch the two older refused Gate 4 directories. See RISK
 
 ## Required next action
 
-1. Finish causal full-v2 rework: current UTF-8, literal, policy-lifecycle and collector controls
-   actually pass, as do the full 166-case API suite and full 49-case owned infrastructure suite.
-   Restore each escalated guard only against actual causal evidence; retain all red records.
-2. Preserve v1/tag and its incomplete attempt; retain its refused owner for responsible manual
-   cleanup only. Preserve complete v2 failure/archive and unavailable collector artifacts.
-3. Validate memory/index, refresh full preflight/requirements/counts/documentation/inventory and
-   serialize checkpoint validation. Only then publish a new immutable runtime-v3 tag and run all
-   45 non-fast stages with actual cleanup and raw producer retention. Freeze every source input.
-4. Only after full actual PASS execute the prepared conditional tools below. No row is COMPLETE now.
-   Every current derived obligation must retain requirement-specific evidence before readiness.
-5. Finish Gate 5 alone, internally seal/publish and validate public transport/exact archive only after
-   every actual internal control passes. Independent M2 validation remains pending. Gate 6 is not
-   authorized and must not be started.
+Follow only the current final assembly boundary above. Preserve v1/v2 failures and refused cleanup
+targets. All184 requirements, full45-stage proof, Green Keeper14, completeness, Red Team33 and full
+mirror already pass on the exact v3 source. Never repeat them because of historical text below.
 
-## Prepared evidence sequence — none of these verdicts is inferred
+## Historical prepared evidence sequence — completed with actual receipts above
 
 Record actual commands and execute in order after the complete immutable PASS:
 

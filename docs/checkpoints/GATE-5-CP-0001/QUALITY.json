@@ -2,63 +2,117 @@
   "schemaVersion": "3.4.0",
   "checks": {
     "build": {
-      "status": "NOT_EXECUTED",
-      "evidence": [],
+      "status": "PASS",
+      "evidence": [
+        "file:VERIFY.json",
+        "file:PUBLISHED-CLEAN-CLONE-REPORT.json",
+        "command:cmd-0349"
+      ],
       "justification": null
     },
     "unitTests": {
-      "status": "NOT_EXECUTED",
-      "evidence": [],
+      "status": "PASS",
+      "evidence": [
+        "file:VERIFY.json",
+        "file:PUBLISHED-CLEAN-CLONE-REPORT.json",
+        "command:cmd-0349"
+      ],
       "justification": null
     },
     "integrationTests": {
-      "status": "NOT_EXECUTED",
-      "evidence": [],
+      "status": "PASS",
+      "evidence": [
+        "file:VERIFY.json",
+        "file:PUBLISHED-CLEAN-CLONE-REPORT.json",
+        "command:cmd-0349"
+      ],
       "justification": null
     },
     "e2e": {
-      "status": "NOT_EXECUTED",
-      "evidence": [],
+      "status": "PASS",
+      "evidence": [
+        "file:VERIFY.json",
+        "file:PUBLISHED-CLEAN-CLONE-REPORT.json",
+        "command:cmd-0349"
+      ],
       "justification": null
     },
     "lint": {
-      "status": "NOT_EXECUTED",
-      "evidence": [],
+      "status": "PASS",
+      "evidence": [
+        "file:VERIFY.json",
+        "file:PUBLISHED-CLEAN-CLONE-REPORT.json",
+        "command:cmd-0349"
+      ],
       "justification": null
     },
     "staticAnalysis": {
-      "status": "NOT_EXECUTED",
-      "evidence": [],
+      "status": "PASS",
+      "evidence": [
+        "file:VERIFY.json",
+        "file:PUBLISHED-CLEAN-CLONE-REPORT.json",
+        "command:cmd-0349"
+      ],
       "justification": null
     },
     "security": {
-      "status": "NOT_EXECUTED",
-      "evidence": [],
+      "status": "PASS",
+      "evidence": [
+        "file:VERIFY.json",
+        "file:PUBLISHED-CLEAN-CLONE-REPORT.json",
+        "command:cmd-0349"
+      ],
       "justification": null
     },
     "documentation": {
-      "status": "NOT_EXECUTED",
-      "evidence": [],
+      "status": "PASS",
+      "evidence": [
+        "file:DOCUMENTATION-LINKS.json",
+        "command:cmd-0349"
+      ],
       "justification": null
     },
     "checkpointValidation": {
-      "status": "NOT_EXECUTED",
-      "evidence": [],
+      "status": "PASS",
+      "evidence": [
+        "command:cmd-0365"
+      ],
       "justification": null
     },
     "redTeam": {
-      "status": "NOT_EXECUTED",
-      "evidence": [],
+      "status": "PASS",
+      "evidence": [
+        "file:M2-INTERNAL-RED-TEAM.json",
+        "file:RED-TEAM-EXECUTIONS.json"
+      ],
       "justification": null
     },
     "greenKeeper": {
-      "status": "NOT_EXECUTED",
-      "evidence": [],
+      "status": "PASS",
+      "evidence": [
+        "file:REWORK-LOG.jsonl",
+        "command:cmd-0361",
+        "command:cmd-0362",
+        "command:cmd-0363",
+        "command:cmd-0364",
+        "command:cmd-0365",
+        "command:cmd-0366",
+        "command:cmd-0367",
+        "command:cmd-0368",
+        "command:cmd-0369",
+        "command:cmd-0370",
+        "command:cmd-0371",
+        "command:cmd-0372",
+        "command:cmd-0373",
+        "command:cmd-0374"
+      ],
       "justification": null
     },
     "deliveryCompleteness": {
-      "status": "NOT_EXECUTED",
-      "evidence": [],
+      "status": "PASS",
+      "evidence": [
+        "file:COMPLETENESS-REPORT.json"
+      ],
       "justification": null
     }
   }

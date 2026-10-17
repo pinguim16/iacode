@@ -1,0 +1,138 @@
+{
+  "schemaVersion": "1.0.0",
+  "result": "PASS",
+  "scenarios": [
+    {
+      "schemaVersion": "1.0.0",
+      "scenario": "reproduce",
+      "result": "PASS",
+      "environment": "real-compose-temporal-postgresql-minio-sandbox-container-engine",
+      "steps": [
+        {
+          "step": "snapshot.stored",
+          "result": "PASS",
+          "expected": [
+            "artifactId",
+            "key",
+            "sha256",
+            "sizeBytes"
+          ],
+          "observed": [
+            "artifactId",
+            "key",
+            "sha256",
+            "sizeBytes"
+          ]
+        },
+        {
+          "step": "identity.distinct_run",
+          "result": "PASS",
+          "expected": "not 01a147e7-15b6-7000-9be2-10393405232f",
+          "observed": "01a147e7-7abe-7000-b754-af551476f2ce"
+        },
+        {
+          "step": "identity.equal_plan",
+          "result": "PASS",
+          "expected": "e1b84b1af34fac51af0aac54048e0291e7f5a66b49f0cde7b49de14fab84b335",
+          "observed": "e1b84b1af34fac51af0aac54048e0291e7f5a66b49f0cde7b49de14fab84b335"
+        },
+        {
+          "step": "lineage.recorded",
+          "result": "PASS",
+          "expected": "01a147e7-15b6-7000-9be2-10393405232f",
+          "observed": "01a147e7-15b6-7000-9be2-10393405232f"
+        },
+        {
+          "step": "results.equivalent",
+          "result": "PASS",
+          "expected": [
+            [
+              "q001-build",
+              "PASSED"
+            ],
+            [
+              "q002-unit",
+              "PASSED"
+            ],
+            [
+              "q003-lint",
+              "PASSED"
+            ],
+            [
+              "q004-static",
+              "PASSED"
+            ],
+            [
+              "q005-dependency-security",
+              "PASSED"
+            ],
+            [
+              "q006-secret",
+              "PASSED"
+            ],
+            [
+              "q007-diff-integrity",
+              "PASSED"
+            ]
+          ],
+          "observed": [
+            [
+              "q001-build",
+              "PASSED"
+            ],
+            [
+              "q002-unit",
+              "PASSED"
+            ],
+            [
+              "q003-lint",
+              "PASSED"
+            ],
+            [
+              "q004-static",
+              "PASSED"
+            ],
+            [
+              "q005-dependency-security",
+              "PASSED"
+            ],
+            [
+              "q006-secret",
+              "PASSED"
+            ],
+            [
+              "q007-diff-integrity",
+              "PASSED"
+            ]
+          ]
+        },
+        {
+          "step": "verdict.equivalent",
+          "result": "PASS",
+          "expected": "PASS",
+          "observed": "PASS"
+        }
+      ],
+      "artifacts": [
+        {
+          "kind": "snapshot",
+          "artifactId": "01a147e7-0d16-7000-99c9-d8c2ed5c14f8",
+          "digest": "e2ad5b9b41fc3a762092ef83f731144ab0e837dbd49305969d633c74527856bc",
+          "sizeBytes": 476
+        },
+        {
+          "kind": "quality-run",
+          "runId": "01a147e7-15b6-7000-9be2-10393405232f",
+          "planId": "e1b84b1af34fac51af0aac54048e0291e7f5a66b49f0cde7b49de14fab84b335"
+        },
+        {
+          "kind": "quality-reproduction",
+          "runId": "01a147e7-7abe-7000-b754-af551476f2ce",
+          "planId": "e1b84b1af34fac51af0aac54048e0291e7f5a66b49f0cde7b49de14fab84b335"
+        }
+      ],
+      "recordedAt": "2026-10-17T03:28:56Z"
+    }
+  ],
+  "recordedAt": "2026-10-17T03:28:56Z"
+}

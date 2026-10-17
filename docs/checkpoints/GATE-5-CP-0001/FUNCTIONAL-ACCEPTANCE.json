@@ -1,0 +1,321 @@
+{
+  "schemaVersion": "1.0.0",
+  "gate": "GATE-5",
+  "checkpoint": "GATE-5-CP-0001",
+  "status": "PASS",
+  "generatedAt": "2026-10-17T03:46:52Z",
+  "scenarios": [
+    {
+      "scenarioId": "G5-FA-SECURITY",
+      "requirementIds": [
+        "GATE-5-1.5",
+        "GATE-5-2.1",
+        "GATE-5-3.3",
+        "GATE-5-8.2"
+      ],
+      "feature": "Authenticated closed desktop boundary",
+      "scenario": "Unauthorized, secret-bearing, forged tool-result and verdict/host-command IPC are refused before effects, alongside the real clean task.",
+      "environment": "fresh-installed-cli-and-native-vscode-real-authenticated-compose-provider-postgresql-redis-minio-temporal-sandbox-quality",
+      "preconditions": [
+        "Exact published detached subject a8d9cda35c43f183778582b87ba6e2ac476de976",
+        "Fresh isolated real runtime/clients; configured authorized model unchanged."
+      ],
+      "execution": [
+        "python docs/checkpoints/GATE-5-CP-0001/audit-harness/run_full_verification.py --commit a8d9cda35c43f183778582b87ba6e2ac476de976 --tag iacode-subjects/GATE-5-CP-0001-runtime-v3 --node C:\\Users\\cesar\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\node\\bin\\node.exe",
+        "Actual observations: unauthenticated-domain-refused-before-effects, closed-ipc-refuses-tool-result, closed-ipc-refuses-quality-verdict, closed-ipc-refuses-shell.exec, secret-upload-refused-before-sql-or-object-persistence, redis-replay-refusal-survives-api-restart, authenticated-external-sandbox-result-forgery-refused"
+      ],
+      "expected": [
+        "Unauthorized, secret-bearing, forged tool-result and verdict/host-command IPC are refused before effects, alongside the real clean task."
+      ],
+      "observed": [
+        "unauthenticated-domain-refused-before-effects: PASS",
+        "closed-ipc-refuses-tool-result: PASS",
+        "closed-ipc-refuses-quality-verdict: PASS",
+        "closed-ipc-refuses-shell.exec: PASS",
+        "secret-upload-refused-before-sql-or-object-persistence: PASS",
+        "redis-replay-refusal-survives-api-restart: PASS",
+        "authenticated-external-sandbox-result-forgery-refused: PASS"
+      ],
+      "result": "PASS",
+      "evidence": [
+        "cmd-0349",
+        "checkpoint:VERIFY.json",
+        "checkpoint:FUNCTIONAL-SCENARIOS.json",
+        "checkpoint:PUBLISHED-CLEAN-CLONE-REPORT.json"
+      ],
+      "timestamp": "2026-10-17T03:46:52Z",
+      "artifactReferences": [
+        "quality-run:01a147f4-e106-7000-9051-f81923acd116"
+      ]
+    },
+    {
+      "scenarioId": "G5-FA-SNAPSHOT",
+      "requirementIds": [
+        "GATE-5-3.1",
+        "GATE-5-3.4",
+        "GATE-5-4.2"
+      ],
+      "feature": "Exact informed input consent and immutable persistence",
+      "scenario": "Default cancellation and wrong consent send no upload; exact native approval stores stable rights-bound bytes; actual object tampering cannot create a task.",
+      "environment": "fresh-installed-cli-and-native-vscode-real-authenticated-compose-provider-postgresql-redis-minio-temporal-sandbox-quality",
+      "preconditions": [
+        "Exact published detached subject a8d9cda35c43f183778582b87ba6e2ac476de976",
+        "Fresh isolated real runtime/clients; configured authorized model unchanged."
+      ],
+      "execution": [
+        "python docs/checkpoints/GATE-5-CP-0001/audit-harness/run_full_verification.py --commit a8d9cda35c43f183778582b87ba6e2ac476de976 --tag iacode-subjects/GATE-5-CP-0001-runtime-v3 --node C:\\Users\\cesar\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\node\\bin\\node.exe",
+        "Actual observations: cli-preview-is-bounded-and-excludes-private-path, cli-changed-or-wrong-consent-refused-locally, real-snapshot-persistence-stable-retry-and-rights, read-only-snapshot-reconciliation, actual-native-snapshot-and-uncertain-accepted-create, actual-object-tamper-refused-before-task-persistence"
+      ],
+      "expected": [
+        "Default cancellation and wrong consent send no upload; exact native approval stores stable rights-bound bytes; actual object tampering cannot create a task."
+      ],
+      "observed": [
+        "cli-preview-is-bounded-and-excludes-private-path: PASS",
+        "cli-changed-or-wrong-consent-refused-locally: PASS",
+        "real-snapshot-persistence-stable-retry-and-rights: PASS",
+        "read-only-snapshot-reconciliation: PASS",
+        "actual-native-snapshot-and-uncertain-accepted-create: PASS",
+        "actual-object-tamper-refused-before-task-persistence: PASS"
+      ],
+      "result": "PASS",
+      "evidence": [
+        "cmd-0349",
+        "checkpoint:VERIFY.json",
+        "checkpoint:FUNCTIONAL-SCENARIOS.json",
+        "checkpoint:PUBLISHED-CLEAN-CLONE-REPORT.json"
+      ],
+      "timestamp": "2026-10-17T03:46:52Z",
+      "artifactReferences": [
+        "quality-run:01a147f4-e106-7000-9051-f81923acd116"
+      ]
+    },
+    {
+      "scenarioId": "G5-FA-TASK",
+      "requirementIds": [
+        "GATE-5-4.1",
+        "GATE-5-4.4",
+        "GATE-5-4.7",
+        "GATE-5-5.2",
+        "GATE-5-8.1"
+      ],
+      "feature": "Real provider task, sandbox unittest and ordered shared truth",
+      "scenario": "Fresh installed clients expose the same real task; the provider successfully executes unittest only in the owned sandbox, ordered events and derived quality evidence are observable without host-source changes.",
+      "environment": "fresh-installed-cli-and-native-vscode-real-authenticated-compose-provider-postgresql-redis-minio-temporal-sandbox-quality",
+      "preconditions": [
+        "Exact published detached subject a8d9cda35c43f183778582b87ba6e2ac476de976",
+        "Fresh isolated real runtime/clients; configured authorized model unchanged."
+      ],
+      "execution": [
+        "python docs/checkpoints/GATE-5-CP-0001/audit-harness/run_full_verification.py --commit a8d9cda35c43f183778582b87ba6e2ac476de976 --tag iacode-subjects/GATE-5-CP-0001-runtime-v3 --node C:\\Users\\cesar\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\node\\bin\\node.exe",
+        "Actual observations: fresh-offline-cli-install-and-authenticated-contract, actual-new-host-secretstorage-recovery-provider-sandbox-quality, both-clients-observe-identical-server-task-truth, host-source-and-sentinel-unchanged"
+      ],
+      "expected": [
+        "Fresh installed clients expose the same real task; the provider successfully executes unittest only in the owned sandbox, ordered events and derived quality evidence are observable without host-source changes."
+      ],
+      "observed": [
+        "fresh-offline-cli-install-and-authenticated-contract: PASS",
+        "actual-new-host-secretstorage-recovery-provider-sandbox-quality: PASS",
+        "both-clients-observe-identical-server-task-truth: PASS",
+        "host-source-and-sentinel-unchanged: PASS"
+      ],
+      "result": "PASS",
+      "evidence": [
+        "cmd-0349",
+        "checkpoint:VERIFY.json",
+        "checkpoint:FUNCTIONAL-SCENARIOS.json",
+        "checkpoint:PUBLISHED-CLEAN-CLONE-REPORT.json"
+      ],
+      "timestamp": "2026-10-17T03:46:52Z",
+      "artifactReferences": [
+        "quality-run:01a147f4-e106-7000-9051-f81923acd116"
+      ]
+    },
+    {
+      "scenarioId": "G5-FA-RECOVERY",
+      "requirementIds": [
+        "GATE-5-2.6",
+        "GATE-5-6.4",
+        "GATE-5-8.3"
+      ],
+      "feature": "Uncertain outcome reconciliation across actual host restart",
+      "scenario": "Loss of an already accepted response retains the stable identity, produces one persisted task/quality run and recovers server truth read-only in a second native process without replay.",
+      "environment": "fresh-installed-cli-and-native-vscode-real-authenticated-compose-provider-postgresql-redis-minio-temporal-sandbox-quality",
+      "preconditions": [
+        "Exact published detached subject a8d9cda35c43f183778582b87ba6e2ac476de976",
+        "Fresh isolated real runtime/clients; configured authorized model unchanged."
+      ],
+      "execution": [
+        "python docs/checkpoints/GATE-5-CP-0001/audit-harness/run_full_verification.py --commit a8d9cda35c43f183778582b87ba6e2ac476de976 --tag iacode-subjects/GATE-5-CP-0001-runtime-v3 --node C:\\Users\\cesar\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\node\\bin\\node.exe",
+        "Actual observations: actual-native-snapshot-and-uncertain-accepted-create, lost-response-has-one-real-persisted-run, actual-new-host-secretstorage-recovery-provider-sandbox-quality, actual-quality-response-loss-reconciles-once-without-replay"
+      ],
+      "expected": [
+        "Loss of an already accepted response retains the stable identity, produces one persisted task/quality run and recovers server truth read-only in a second native process without replay."
+      ],
+      "observed": [
+        "actual-native-snapshot-and-uncertain-accepted-create: PASS",
+        "lost-response-has-one-real-persisted-run: PASS",
+        "actual-new-host-secretstorage-recovery-provider-sandbox-quality: PASS",
+        "actual-quality-response-loss-reconciles-once-without-replay: PASS"
+      ],
+      "result": "PASS",
+      "evidence": [
+        "cmd-0349",
+        "checkpoint:VERIFY.json",
+        "checkpoint:FUNCTIONAL-SCENARIOS.json",
+        "checkpoint:PUBLISHED-CLEAN-CLONE-REPORT.json"
+      ],
+      "timestamp": "2026-10-17T03:46:52Z",
+      "artifactReferences": [
+        "quality-run:01a147f4-e106-7000-9051-f81923acd116"
+      ]
+    },
+    {
+      "scenarioId": "G5-FA-QUALITY",
+      "requirementIds": [
+        "GATE-5-4.6"
+      ],
+      "feature": "Derived immutable quality and actual reproduction",
+      "scenario": "Both clients expose the same server-derived verdict/checks/evidence; installed CLI reproduces real inputs and reconciled quality reaches PASS with real evidence, never a client-selected denominator.",
+      "environment": "fresh-installed-cli-and-native-vscode-real-authenticated-compose-provider-postgresql-redis-minio-temporal-sandbox-quality",
+      "preconditions": [
+        "Exact published detached subject a8d9cda35c43f183778582b87ba6e2ac476de976",
+        "Fresh isolated real runtime/clients; configured authorized model unchanged."
+      ],
+      "execution": [
+        "python docs/checkpoints/GATE-5-CP-0001/audit-harness/run_full_verification.py --commit a8d9cda35c43f183778582b87ba6e2ac476de976 --tag iacode-subjects/GATE-5-CP-0001-runtime-v3 --node C:\\Users\\cesar\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\node\\bin\\node.exe",
+        "Actual observations: both-clients-observe-identical-derived-verdict-and-evidence, installed-cli-reproduces-real-quality-inputs, reconciled-quality-completes-with-real-pass-evidence"
+      ],
+      "expected": [
+        "Both clients expose the same server-derived verdict/checks/evidence; installed CLI reproduces real inputs and reconciled quality reaches PASS with real evidence, never a client-selected denominator."
+      ],
+      "observed": [
+        "both-clients-observe-identical-derived-verdict-and-evidence: PASS",
+        "installed-cli-reproduces-real-quality-inputs: PASS",
+        "reconciled-quality-completes-with-real-pass-evidence: PASS"
+      ],
+      "result": "PASS",
+      "evidence": [
+        "cmd-0349",
+        "checkpoint:VERIFY.json",
+        "checkpoint:FUNCTIONAL-SCENARIOS.json",
+        "checkpoint:PUBLISHED-CLEAN-CLONE-REPORT.json"
+      ],
+      "timestamp": "2026-10-17T03:46:52Z",
+      "artifactReferences": [
+        "quality-run:01a147f4-e106-7000-9051-f81923acd116"
+      ]
+    },
+    {
+      "scenarioId": "G5-FA-CANCELLATION",
+      "requirementIds": [
+        "GATE-5-4.5"
+      ],
+      "feature": "Requested versus completed cancellation and local-only SIGINT",
+      "scenario": "RUNNING task/quality cancellation waits for terminal truth and every canonical active sandbox state to clear; repeat remains safe. Local SIGINT returns 130/cursor without remotely cancelling quality.",
+      "environment": "fresh-installed-cli-and-native-vscode-real-authenticated-compose-provider-postgresql-redis-minio-temporal-sandbox-quality",
+      "preconditions": [
+        "Exact published detached subject a8d9cda35c43f183778582b87ba6e2ac476de976",
+        "Fresh isolated real runtime/clients; configured authorized model unchanged."
+      ],
+      "execution": [
+        "python docs/checkpoints/GATE-5-CP-0001/audit-harness/run_full_verification.py --commit a8d9cda35c43f183778582b87ba6e2ac476de976 --tag iacode-subjects/GATE-5-CP-0001-runtime-v3 --node C:\\Users\\cesar\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\node\\bin\\node.exe",
+        "Actual observations: installed-cli-running-task-cancel-request-terminal-and-repeat, actual-cli-sigint-stops-only-local-observation, installed-cli-running-quality-cancel-waits-for-cleanup"
+      ],
+      "expected": [
+        "RUNNING task/quality cancellation waits for terminal truth and every canonical active sandbox state to clear; repeat remains safe. Local SIGINT returns 130/cursor without remotely cancelling quality."
+      ],
+      "observed": [
+        "installed-cli-running-task-cancel-request-terminal-and-repeat: PASS",
+        "actual-cli-sigint-stops-only-local-observation: PASS",
+        "installed-cli-running-quality-cancel-waits-for-cleanup: PASS"
+      ],
+      "result": "PASS",
+      "evidence": [
+        "cmd-0349",
+        "checkpoint:VERIFY.json",
+        "checkpoint:FUNCTIONAL-SCENARIOS.json",
+        "checkpoint:PUBLISHED-CLEAN-CLONE-REPORT.json"
+      ],
+      "timestamp": "2026-10-17T03:46:52Z",
+      "artifactReferences": [
+        "quality-run:01a147f4-e106-7000-9051-f81923acd116"
+      ]
+    },
+    {
+      "scenarioId": "G5-FA-INSTALLATION",
+      "requirementIds": [
+        "GATE-5-3.5",
+        "GATE-5-6.1",
+        "GATE-5-6.2"
+      ],
+      "feature": "Actual fresh native installation and workspace trust",
+      "scenario": "The production VSIX activates all nineteen commands in actual fresh persistent owned Code hosts; untrusted workspaces refuse every mutation before connecting, and native consent/status/quality operate through real editor APIs.",
+      "environment": "fresh-installed-cli-and-native-vscode-real-authenticated-compose-provider-postgresql-redis-minio-temporal-sandbox-quality",
+      "preconditions": [
+        "Exact published detached subject a8d9cda35c43f183778582b87ba6e2ac476de976",
+        "Fresh isolated real runtime/clients; configured authorized model unchanged."
+      ],
+      "execution": [
+        "python docs/checkpoints/GATE-5-CP-0001/audit-harness/run_full_verification.py --commit a8d9cda35c43f183778582b87ba6e2ac476de976 --tag iacode-subjects/GATE-5-CP-0001-runtime-v3 --node C:\\Users\\cesar\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\node\\bin\\node.exe",
+        "Actual observations: actual-native-snapshot-and-uncertain-accepted-create, actual-new-host-secretstorage-recovery-provider-sandbox-quality"
+      ],
+      "expected": [
+        "The production VSIX activates all nineteen commands in actual fresh persistent owned Code hosts; untrusted workspaces refuse every mutation before connecting, and native consent/status/quality operate through real editor APIs."
+      ],
+      "observed": [
+        "actual-native-snapshot-and-uncertain-accepted-create: PASS",
+        "actual-new-host-secretstorage-recovery-provider-sandbox-quality: PASS"
+      ],
+      "result": "PASS",
+      "evidence": [
+        "cmd-0349",
+        "checkpoint:VERIFY.json",
+        "checkpoint:FUNCTIONAL-SCENARIOS.json",
+        "checkpoint:PUBLISHED-CLEAN-CLONE-REPORT.json"
+      ],
+      "timestamp": "2026-10-17T03:46:52Z",
+      "artifactReferences": [
+        "quality-run:01a147f4-e106-7000-9051-f81923acd116"
+      ]
+    },
+    {
+      "scenarioId": "G5-FA-ISOLATION",
+      "requirementIds": [
+        "GATE-5-8.4",
+        "GATE-5-8.5"
+      ],
+      "feature": "Immutable measured subject and exact owned cleanup",
+      "scenario": "The full non-fast execution measures the published unchanged subject. Operational identities and host source/sentinel remain unchanged; every owned profile, container, volume and sandbox network is actually removed.",
+      "environment": "fresh-installed-cli-and-native-vscode-real-authenticated-compose-provider-postgresql-redis-minio-temporal-sandbox-quality",
+      "preconditions": [
+        "Exact published detached subject a8d9cda35c43f183778582b87ba6e2ac476de976",
+        "Fresh isolated real runtime/clients; configured authorized model unchanged."
+      ],
+      "execution": [
+        "python docs/checkpoints/GATE-5-CP-0001/audit-harness/run_full_verification.py --commit a8d9cda35c43f183778582b87ba6e2ac476de976 --tag iacode-subjects/GATE-5-CP-0001-runtime-v3 --node C:\\Users\\cesar\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\node\\bin\\node.exe",
+        "Actual observations: host-source-and-sentinel-unchanged, operational-container-identities-preserved, owned-services-volumes-profiles-removed, owned-sandbox-children-and-networks-removed, measured-source-inputs-unchanged"
+      ],
+      "expected": [
+        "The full non-fast execution measures the published unchanged subject. Operational identities and host source/sentinel remain unchanged; every owned profile, container, volume and sandbox network is actually removed."
+      ],
+      "observed": [
+        "host-source-and-sentinel-unchanged: PASS",
+        "operational-container-identities-preserved: PASS",
+        "owned-services-volumes-profiles-removed: PASS",
+        "owned-sandbox-children-and-networks-removed: PASS",
+        "measured-source-inputs-unchanged: PASS"
+      ],
+      "result": "PASS",
+      "evidence": [
+        "cmd-0349",
+        "checkpoint:VERIFY.json",
+        "checkpoint:FUNCTIONAL-SCENARIOS.json",
+        "checkpoint:PUBLISHED-CLEAN-CLONE-REPORT.json"
+      ],
+      "timestamp": "2026-10-17T03:46:52Z",
+      "artifactReferences": [
+        "quality-run:01a147f4-e106-7000-9051-f81923acd116"
+      ]
+    }
+  ]
+}

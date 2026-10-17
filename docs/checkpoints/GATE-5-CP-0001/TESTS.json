@@ -2,25 +2,26 @@
   "schemaVersion": "3.4.0",
   "unit": {
     "executed": true,
-    "passed": 165,
+    "passed": 869,
     "failed": 0,
-    "command": "python scripts/iacode/gates/api_tests.py",
-    "evidence": "command:cmd-0131",
-    "runId": "gate5-api-unit-165-input-at-cmd0131-not-whole-delivery"
+    "command": "python -m unittest discover -s tests",
+    "evidence": "command:cmd-0361",
+    "runId": "green-keeper-cycle-1-root-suite"
   },
   "integration": {
-    "executed": false,
-    "passed": 0,
+    "executed": true,
+    "passed": 1004,
     "failed": 0,
-    "command": null,
-    "evidence": null
+    "command": "python docs/checkpoints/GATE-5-CP-0001/audit-harness/run_full_verification.py --commit a8d9cda35c43f183778582b87ba6e2ac476de976 --tag iacode-subjects/GATE-5-CP-0001-runtime-v3 --node C:\\Users\\cesar\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\node\\bin\\node.exe",
+    "evidence": "command:cmd-0349",
+    "runId": "published-a8d9cda35c43-counted-runtime-suites"
   },
   "e2e": {
     "executed": true,
-    "passed": 1,
+    "passed": 45,
     "failed": 0,
-    "command": "python scripts/iacode/scenarios/desktop_e2e.py --node C:\\Users\\cesar\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\node\\bin\\node.exe",
-    "evidence": "command:cmd-0199",
-    "runId": "desktop-live-complete-33-controls-dirty-source-not-immutable-verifier"
+    "command": "python docs/checkpoints/GATE-5-CP-0001/audit-harness/run_full_verification.py --commit a8d9cda35c43f183778582b87ba6e2ac476de976 --tag iacode-subjects/GATE-5-CP-0001-runtime-v3 --node C:\\Users\\cesar\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\node\\bin\\node.exe",
+    "evidence": "command:cmd-0349",
+    "runId": "published-a8d9cda35c43-counted-runtime-suites"
   }
 }

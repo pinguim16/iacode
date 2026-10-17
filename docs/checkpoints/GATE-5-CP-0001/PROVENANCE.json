@@ -46,8 +46,8 @@
         "trainingAllowed": false,
         "distillationAllowed": false
       },
-      "evidence": "command:cmd-0232; artifacts/clients/BUILD.json; runtime commit 76e659e5cfb0db1bf7dd50c6d3a04ec101e9fce0",
-      "notes": "The build manifest binds every packaged source hash and raw artifact digest. No external dependency, Node/VS Code binary, acceptance driver, workspace source or credential is bundled. Build success alone is not functional acceptance or a Gate verdict."
+      "evidence": "command:cmd-0232 (original production); command:cmd-0357 (current unchanged-source regeneration); artifacts/clients/BUILD.json; verified runtime commit a8d9cda35c43f183778582b87ba6e2ac476de976",
+      "notes": "The current regeneration preserves the exact CLI, VSIX and manifest bytes, source hashes and digests from the original deterministic build. Cmd-0349 separately executes actual immutable native/CLI/provider acceptance. No external dependency, Node/VS Code binary, acceptance driver, workspace source or credential is bundled. Build success alone is not functional acceptance or a Gate verdict."
     }
   ]
 }

@@ -1,0 +1,103 @@
+{
+  "schemaVersion": "1.0.0",
+  "result": "PASS",
+  "scenarios": [
+    {
+      "schemaVersion": "1.0.0",
+      "scenario": "fail",
+      "result": "PASS",
+      "environment": "real-compose-temporal-postgresql-minio-sandbox-container-engine",
+      "steps": [
+        {
+          "step": "snapshot.stored",
+          "result": "PASS",
+          "expected": [
+            "artifactId",
+            "key",
+            "sha256",
+            "sizeBytes"
+          ],
+          "observed": [
+            "artifactId",
+            "key",
+            "sha256",
+            "sizeBytes"
+          ]
+        },
+        {
+          "step": "run.terminal",
+          "result": "PASS",
+          "expected": "FAILED",
+          "observed": "FAILED"
+        },
+        {
+          "step": "results.complete",
+          "result": "PASS",
+          "expected": 7,
+          "observed": 7
+        },
+        {
+          "step": "evidence.one_or_more_per_result",
+          "result": "PASS",
+          "expected": ">=7",
+          "observed": 7
+        },
+        {
+          "step": "findings.evidence_resolved",
+          "result": "PASS",
+          "expected": [],
+          "observed": []
+        },
+        {
+          "step": "evidence.rights_closed",
+          "result": "PASS",
+          "expected": "every evidence item trainingAllowed=false and ragAllowed=false",
+          "observed": 7
+        },
+        {
+          "step": "sandbox.no_active_session",
+          "result": "PASS",
+          "expected": "0",
+          "observed": "0"
+        },
+        {
+          "step": "verdict.fail",
+          "result": "PASS",
+          "expected": "FAIL",
+          "observed": "FAIL"
+        },
+        {
+          "step": "failed_check.preserved",
+          "result": "PASS",
+          "expected": [
+            "q002-unit"
+          ],
+          "observed": [
+            "q002-unit"
+          ]
+        },
+        {
+          "step": "finding.preserved",
+          "result": "PASS",
+          "expected": 1,
+          "observed": 1
+        }
+      ],
+      "artifacts": [
+        {
+          "kind": "snapshot",
+          "artifactId": "01a147de-415a-7000-95e6-6bb32ba8cfd0",
+          "digest": "9e5d1cff580d11cfc5bcbc2d15e92035d81e3e32a5950f22de91b52ae2f4f8f9",
+          "sizeBytes": 475
+        },
+        {
+          "kind": "quality-run",
+          "runId": "01a147de-46fd-7000-8fdf-d401cf67da37",
+          "planId": "6d8bd19f5355ced29e25fe9bc0ae1158f4b580e8451fdb79bd4bfbb489145ac2"
+        }
+      ],
+      "recordedAt": "2026-10-17T03:18:50Z"
+    }
+  ],
+  "recordedAt": "2026-10-17T03:18:50Z"
+}

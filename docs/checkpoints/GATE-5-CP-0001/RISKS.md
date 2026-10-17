@@ -1,6 +1,28 @@
 # Risks
 
-## Current v2 outcome and remaining acceptance
+## Completed unchanged v3 assurance; final assembly boundary
+
+Runtime-v3 is published at a8d9cda35c43f183778582b87ba6e2ac476de976 with immutable tag
+iacode-subjects/GATE-5-CP-0001-runtime-v3. Clean post-commit canonical validation passed before
+atomic push; remote main/tag match. The complete non-fast verifier cmd-0349 now passes45/45 from
+its fresh HTTPS detached subject. The measured tree is clean, operational identities unchanged,
+owned resources and temporary clone actually removed. Original safe producer bytes are archived.
+Cmd-0347/0348 confirm the unchanged source fingerprint
+3aa8e502b860c2b97803b39a21f1c82757980d18f5918c7f53bfa83e07e9c8f6 against both checkouts.
+Root and committed-tree quality now pass, so G5-INT-026/028 are CLOSED using the complete current
+receipt; original failed outcomes stay unchanged. Functional acceptance passes22/22 and all184
+requirements are bound to executed evidence. Actual formal Green Keeper cmd-0375 now passes14/14
+and canonical completeness cmd-0377 passes184/184 with100% coverage/evidence. Fresh internal Red
+Team cmd-0387 now defends33/33 with zero escapes and VALID null control, unchanged source and actual
+cleanup. The complete closure mirror cmd-0397 now passes16 dimensions with2 canonical
+NOT_APPLICABLE and0 failures; actual full clean-clone suite and all33 historical checkpoints pass.
+Cmd-0398 binds those completed controls. Final pre-seal assembly validates at cmd-0405 after
+explicit declaration cmd-0404. Canonical finalization/seal/publication and final public archive
+validation remain at this content boundary. Independent M2 validation is still pending.
+No source repair, requirement promotion, independent verdict or Gate6 authorization is implied.
+Earlier pending-work statements below are explicitly historical and do not reopen completed proof.
+
+## Historical v2 outcome and causal rework boundary
 
 G5-INT-034 adds the confirmed unfinished-producer recurrence: cmd-0317 refuses six strict hashes
 after inventory recorder cmd-0316 was launched but not finished. The executable synchronous
