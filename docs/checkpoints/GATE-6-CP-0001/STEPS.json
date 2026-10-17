@@ -86,9 +86,9 @@
         "internal Red Team and null control",
         "full mirror"
       ],
-      "functionalProof": "Runtime-v3 observes26 completed stages (25 PASS, root FAIL), then Docker management nonresponse stalls quality-pass. Original incomplete attempt retained. Both root failures have causal local corrections and complete affected-class acceptance; all47-stage re-execution and ordered assurance remain pending. Owned cleanup is UNVERIFIED.",
-      "evidence": ["cmd-0136", "cmd-0140", "cmd-0141", "cmd-0142", "cmd-0143", "attempts/FULL-VERIFY-INTERRUPTED-0003.json"],
-      "status": "BLOCKED"
+      "functionalProof": "Runtime-v3 remains incomplete with root FAIL. Causal root corrections pass; cmd-0165 adds root27 transport/ownership controls and cmd-0166 observes exact v3 cleanup with all37 other identities/states preserved. That cleanup is partial recovery only: cmd-0171 full lint fails on Windows bind rejection/stalled frontend build, and later bounded management queries time out. G6-INT-012/015 block fresh immutable verification and ordered assurance; no restart or unrelated application stop is performed.",
+      "evidence": ["cmd-0136", "cmd-0140", "cmd-0141", "cmd-0142", "cmd-0143", "cmd-0165", "cmd-0166", "cmd-0171", "attempts/FULL-VERIFY-INTERRUPTED-0003.json", "attempts/DOCKER-RECOVERY-0001-AFTER.json", "attempts/DOCKER-RETRY-0002.json"],
+      "status": "IN_PROGRESS"
     },
     {
       "stepId": "G6-S03",

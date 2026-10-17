@@ -205,6 +205,8 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 | `LESSON-REQ-0138` | LESSON | `lesson:LSN-0139` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify privacy projection begins in the source query |
 | `LESSON-REQ-0139` | LESSON | `lesson:LSN-0140` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify summaries preserve canonical continuation structure |
 | `LESSON-REQ-0140` | LESSON | `lesson:LSN-0141` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify preflight checks honor every declared applicability dimension |
+| `LESSON-REQ-0141` | LESSON | `lesson:LSN-0142` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify local Engine recovery keeps transport and cleanup scoped |
+| `LESSON-REQ-0142` | LESSON | `lesson:LSN-0143` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify management recovery is not complete runtime capability |
 
 ## Evidence
 
@@ -2302,6 +2304,28 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 
 - Source reference: LESSON-PREFLIGHT.json LESSON-REQ-0140
 - Description: Verify preflight checks honor every declared applicability dimension
+- Implementation: _none_
+- Test: _none_
+- Negative test: _none_
+- Documentation: _none_
+- Validation: _none_
+- Guardrail: _none_
+
+### LESSON-REQ-0141 - lesson:LSN-0142
+
+- Source reference: LESSON-PREFLIGHT.json LESSON-REQ-0141
+- Description: Verify local Engine recovery keeps transport and cleanup scoped
+- Implementation: _none_
+- Test: _none_
+- Negative test: _none_
+- Documentation: _none_
+- Validation: _none_
+- Guardrail: _none_
+
+### LESSON-REQ-0142 - lesson:LSN-0143
+
+- Source reference: LESSON-PREFLIGHT.json LESSON-REQ-0142
+- Description: Verify management recovery is not complete runtime capability
 - Implementation: _none_
 - Test: _none_
 - Negative test: _none_

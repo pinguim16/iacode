@@ -113,6 +113,9 @@ bind("8.7", ["scripts/development-ledger/validate_checkpoint.py", CP + "STATE.js
 CANONICAL["8.5"]["implementationEvidence"].append("file:.iacode/memory/retrospectives/GATE-6-CP-0001.md")
 
 NEW_LESSONS = {
+    "LSN-0018": (["scripts/development-ledger/lessons.py",
+                   "scripts/development-ledger/validate_checkpoint.py"],
+                  ["tests/test_development_ledger.py", ROOT_TESTS]),
     "LSN-0011": ([CP + "audit-harness/validate_serial_bookkeeping.py",
                   CP + "audit-harness/run_checkpoint_validation.py"],
                  [ROOT_TESTS, "tests/test_in_progress_metadata.py"]),
@@ -131,6 +134,11 @@ NEW_LESSONS = {
     "LSN-0138": ([RUNTIME, DOMAIN, SOURCES], [API_TESTS, DOMAIN_TESTS]),
     "LSN-0139": ([SOURCES], [SQL_TESTS]),
     "LSN-0140": ([CP + "audit-harness/assemble_source_ready.py", CP + "audit-harness/render_local_handoff.py"], [ROOT_TESTS]),
+    "LSN-0141": (["tests/test_development_ledger.py"], [ROOT_TESTS]),
+    "LSN-0142": ([CP + "audit-harness/with_local_engine.py",
+                   CP + "audit-harness/recover_owned_verification.py"], [ROOT_TESTS]),
+    "LSN-0143": ([CP + "audit-harness/run_full_verification.py",
+                   "scripts/iacode/gates/lint.py"], [ROOT_TESTS]),
 }
 
 

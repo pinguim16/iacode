@@ -1,10 +1,17 @@
 # Gate 6 progress
 
-Current continuation is BLOCKED at G6-INT-012, not the earlier reboot pause. Runtime-v3 completed26
+Current update: BLOCKED at G6-INT-012/015. Scoped recovery cmd-0166 genuinely removes exact v3 test
+resources and observes all37 other identities/states preserved at20:11:57 UTC. Root27 transport/
+ownership controls pass cmd-0165, but the raw Linux endpoint is not general Windows capability:
+cmd-0171 complete lint exits1 after bind rejection and stalled frontend build; later Engine queries
+time out again. No runtime-v4 starts. No global Docker/WSL/context action or unrelated app stop.
+See attempts/DOCKER-RETRY-0002.json. Full verification and the Gate6 seal remain pending.
+
+Historical interruption before the separate recovery: Runtime-v3 completed26
 stages (25 PASS, root FAIL) before quality-pass stalled on Docker management. Its actual incomplete
 receipt, two causal local repairs, full affected-class acceptance and unverified owned cleanup are
 recorded in DOCKER-RECOVERY.md. No Docker/WSL/service/container restart or stop was performed.
-Current derivation includes all51 canonical criteria and140 selected lessons, total191.
+That historical derivation included all51 canonical criteria and140 selected lessons, total191.
 Every claim below about local acceptance remains separate from fresh immutable/full assurance.
 
 Historical save: the owner requested persistence for a machine reboot. The runtime-v2 full verifier was
@@ -28,8 +35,9 @@ Exact original failures and available producer bytes remain in this checkpoint.
 The current derived set contains all 51 canonical criteria plus every selected lesson; functional
 acceptance must cover all 37 runtime criteria. Causal guard restoration is not a Gate verdict.
 
-Next: restore responsive Docker management and verify exact owned cleanup without disrupting other
-applications; then complete fresh immutable published non-fast verification, whole Green Keeper, completeness,
+Next: restore stable supported Windows-compatible management/build/bind capability without disrupting
+other applications; exact old cleanup is already observed and must not be repeated. Then complete
+unchanged lint, fresh immutable published non-fast verification, whole Green Keeper, completeness,
 fresh same-session internal Red Team/null control, full clean-clone mirror, final assembly and
 canonical seal/publication/archive reconstruction. No future test or seal is claimed complete.
 Independent M2 and second-tool validation remain pending. Gate7 is not authorized.

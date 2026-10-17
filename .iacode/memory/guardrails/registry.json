@@ -2084,7 +2084,8 @@
       "reference": "test_local_handoff_renderer_preserves_the_complete_canonical_contract",
       "verifiedBy": [
         "test_local_handoff_renderer_preserves_the_complete_canonical_contract",
-        "test_local_handoff_renderer_refuses_omitted_or_empty_sections_and_next_action"
+        "test_local_handoff_renderer_refuses_omitted_or_empty_sections_and_next_action",
+        "test_retrospective_preserves_template_and_every_current_gate_lesson"
       ],
       "lessons": [
         "LSN-0140"
@@ -2102,6 +2103,18 @@
       ],
       "lessons": ["LSN-0141"],
       "removingItWouldAllow": "A legitimate technology-filtered lesson exclusion to be rejected, or an unfiltered active lesson to disappear without a declared selector mismatch."
+    },
+    {
+      "guardrailId": "GRD-0144",
+      "title": "Engine fallback and recovery are child-local and owner-bound",
+      "kind": "test",
+      "reference": "test_local_engine_selection_is_child_only_and_preserves_project_and_failure",
+      "verifiedBy": [
+        "test_local_engine_selection_is_child_only_and_preserves_project_and_failure",
+        "test_owned_recovery_refuses_operational_or_mislabelled_resources_before_removal"
+      ],
+      "lessons": ["LSN-0142"],
+      "removingItWouldAllow": "An operational fallback to mutate parent/global Docker selection, hide child failure or remove resources outside the exact disposable test owner."
     }
   ]
 }

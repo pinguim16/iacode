@@ -156,6 +156,45 @@ class Gate6BoundaryTests(unittest.TestCase):
 
 
 class Gate6BookkeepingCausalTests(unittest.TestCase):
+    def test_local_engine_selection_is_child_only_and_preserves_project_and_failure(self):
+        transport = load_harness("with_local_engine")
+        original = {"DOCKER_CONTEXT": "unresponsive-context", "DOCKER_HOST": "old-endpoint",
+                    "COMPOSE_PROJECT_NAME": "iacode-verify-0123456789ab"}
+        actual = transport.engine_environment(original)
+        self.assertEqual(original["DOCKER_CONTEXT"], "unresponsive-context")
+        self.assertEqual(original["DOCKER_HOST"], "old-endpoint")
+        self.assertNotIn("DOCKER_CONTEXT", actual)
+        self.assertEqual(actual["DOCKER_HOST"], transport.ENGINE_ENDPOINT)
+        self.assertEqual(actual["COMPOSE_PROJECT_NAME"], original["COMPOSE_PROJECT_NAME"])
+        with mock.patch.object(transport.subprocess, "run", return_value=
+                subprocess.CompletedProcess([], 7)) as child:
+            self.assertEqual(transport.run_child(["python", "example.py"]), 7)
+        self.assertEqual(child.call_args.args[0], [sys.executable, "example.py"])
+        self.assertEqual(child.call_args.kwargs["env"]["DOCKER_HOST"], transport.ENGINE_ENDPOINT)
+        with self.assertRaises(ValueError):
+            transport.run_child([])
+
+    def test_owned_recovery_refuses_operational_or_mislabelled_resources_before_removal(self):
+        recovery = load_harness("recover_owned_verification")
+        project = "iacode-verify-0123456789ab"
+        valid = {"containers": [{"id": "a", "name": project + "-api"}],
+                 "volumes": [project + "_postgres-data"],
+                 "networks": [{"id": "b", "name": project + "-network"}]}
+        recovery.validate_ownership(valid, project)
+        with self.assertRaises(ValueError):
+            recovery.validate_ownership(valid, "iacode")
+        for kind in valid:
+            mutation = json.loads(json.dumps(valid))
+            if kind == "volumes":
+                mutation[kind][0] = "iacode_postgres-data"
+            else:
+                mutation[kind][0]["name"] = "iacode-api"
+            with self.subTest(kind=kind), self.assertRaises(ValueError):
+                recovery.validate_ownership(mutation, project)
+        duplicate = {**valid, "containers": valid["containers"] * 2}
+        with self.assertRaises(ValueError):
+            recovery.validate_ownership(duplicate, project)
+
     def test_inherited_gate_assertion_accepts_growth_but_refuses_removal_or_optional_controls(self):
         from test_gate5_clients import Gate5QualityIntegrationTests
 

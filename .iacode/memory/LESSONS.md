@@ -147,8 +147,10 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 | `LSN-0137` | `GUARDED` | MEDIUM | testing | SQL text interprets inline JSON colons as bindings | `test_legacy_migration_preserves_identity_body_and_rights_without_promotion`, `test_database_immutability_and_direct_corruption_fail_closed` |
 | `LSN-0138` | `GUARDED` | HIGH | security | Secret projection distinguishes public identities from authorization secrets | `test_public_minio_identity_is_not_a_bearer_secret_but_storage_password_stays_protected`, `test_known_opaque_capability_refused_in_declared_forms` |
 | `LSN-0139` | `GUARDED` | HIGH | security | Privacy projection begins in the source query | `test_actual_sql_projection_does_not_fetch_unneeded_private_source_columns`, `test_oversized_required_source_json_is_refused_before_materialization_and_writes` |
-| `LSN-0140` | `GUARDED` | MEDIUM | quality | Summaries preserve canonical continuation structure | `test_local_handoff_renderer_preserves_the_complete_canonical_contract`, `test_local_handoff_renderer_refuses_omitted_or_empty_sections_and_next_action` |
+| `LSN-0140` | `GUARDED` | HIGH | quality | Summaries preserve canonical continuation structure | `test_local_handoff_renderer_preserves_the_complete_canonical_contract`, `test_local_handoff_renderer_refuses_omitted_or_empty_sections_and_next_action`, `test_retrospective_preserves_template_and_every_current_gate_lesson` |
 | `LSN-0141` | `GUARDED` | HIGH | testing | Preflight checks honor every declared applicability dimension | `test_repository_preflight_accepts_all_declared_filters_but_refuses_unexplained_omission` |
+| `LSN-0142` | `GUARDED` | HIGH | environment | Local Engine recovery keeps transport and cleanup scoped | `test_local_engine_selection_is_child_only_and_preserves_project_and_failure`, `test_owned_recovery_refuses_operational_or_mislabelled_resources_before_removal` |
+| `LSN-0143` | `OBSERVED` | HIGH | environment | Management recovery is not complete runtime capability | _not yet guarded_ |
 
 ## Detail
 
@@ -1894,15 +1896,16 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 
 ### LSN-0140 — Summaries preserve canonical continuation structure
 
-- Status: `GUARDED`, severity MEDIUM, category quality, recurrences 0.
-- Source: GATE-6, GATE-6-CP-0001, finding G6-INT-009.
-- Symptom: A local assembler emits readable prose but removes mandatory handoff/next-action sections.
-- Root cause: The local assembler replaced the structured handoff with a prose summary and emitted NEXT without its mandatory subsection. Semantically related prose does not satisfy the canonical artifact structure. Render every owning-validator heading in order with substantive content; reject missing/empty sections and retain the next-action heading before writing. Never relax the validator.
-- Resolution: Render from the owning canonical headings, require meaningful content for every section and prove real output plus omission/empty-section refusals before current checkpoint acceptance.
+- Status: `GUARDED`, severity HIGH, category quality, recurrences 1.
+- Source: GATE-6, GATE-6-CP-0001, finding G6-INT-009; G6-INT-016.
+- Symptom: A local assembler emits readable prose but removes mandatory handoff/next-action sections. Later manual editing adds an unsupported retrospective heading.
+- Root cause: The local assembler replaced structured continuation artifacts with summaries. A later manual update likewise failed to preserve the owning retrospective template exactly. Semantically related prose does not satisfy a canonical structural contract; changing the test would hide the authoring defect.
+- Resolution: Render from owning canonical headings, require substantive content and preserve the retrospective template. For the later recurrence move the observation into the existing failure section; change neither the template nor its assertion. Actual cmd-0178 passes all27 Gate6 root controls after cmd-0177's retained failure.
 - Prevention:
   - `test` test_local_handoff_renderer_preserves_the_complete_canonical_contract — Actual canonical renderer output and every omitted/empty-section refusal.
   - `test` test_local_handoff_renderer_refuses_omitted_or_empty_sections_and_next_action — Actual canonical renderer output and every omitted/empty-section refusal.
-- Evidence: `file:docs/checkpoints/GATE-6-CP-0001/COMMANDS.jsonl`, `file:docs/checkpoints/GATE-6-CP-0001/FINDINGS.json`
+  - `test` test_retrospective_preserves_template_and_every_current_gate_lesson — The actual retrospective keeps the exact canonical heading sequence and every current lesson and guard identity.
+- Evidence: `file:docs/checkpoints/GATE-6-CP-0001/COMMANDS.jsonl`, `file:docs/checkpoints/GATE-6-CP-0001/FINDINGS.json`, `file:tests/test_gate6_experience.py`
 
 ### LSN-0141 — Preflight checks honor every declared applicability dimension
 
@@ -1914,3 +1917,26 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 - Prevention:
   - `test` test_repository_preflight_accepts_all_declared_filters_but_refuses_unexplained_omission — Execute the actual inherited assertion against each legitimate selector and prove that unexplained omission remains refused.
 - Evidence: `file:docs/checkpoints/GATE-6-CP-0001/COMMANDS.jsonl`, `file:docs/checkpoints/GATE-6-CP-0001/FINDINGS.json`, `file:tests/test_development_ledger.py`, `file:tests/test_gate6_experience.py`
+
+### LSN-0142 — Local Engine recovery keeps transport and cleanup scoped
+
+- Status: `GUARDED`, severity HIGH, category environment, recurrences 0.
+- Source: GATE-6, GATE-6-CP-0001, finding G6-INT-012.
+- Symptom: The active Docker context and default pipe do not answer management requests while unrelated applications remain running. Treating those paths as general Engine availability would suggest a disruptive restart.
+- Root cause: Two existing management access paths stalled, but a bounded query through the already exposed docker_engine_linux pipe reached the same local Docker Desktop Linux Engine and the exact interrupted test project. The underlying proxy/alias fault remains undetermined; no daemon-wide outage is inferred.
+- Resolution: Pin the already available local pipe only in child process environments, remove inherited context precedence only there, and preserve the parent/global context. Re-derive the interrupted project's identity, validate project-labelled resource names, retain before/after observations and remove only those disposable resources. Actual recovery removed14 test containers,4 volumes and1 network while all37 other container identities/states remained.
+- Prevention:
+  - `test` test_local_engine_selection_is_child_only_and_preserves_project_and_failure — Parent transport/context and Compose ownership remain unchanged; only the child selects the local endpoint and its nonzero exit propagates.
+  - `test` test_owned_recovery_refuses_operational_or_mislabelled_resources_before_removal — Operational project names, inconsistent resource ownership and duplicate identities are refused before removal.
+- Evidence: `file:docs/checkpoints/GATE-6-CP-0001/COMMANDS.jsonl`, `file:docs/checkpoints/GATE-6-CP-0001/attempts/DOCKER-RECOVERY-0001-BEFORE.json`, `file:docs/checkpoints/GATE-6-CP-0001/attempts/DOCKER-RECOVERY-0001-AFTER.json`, `file:tests/test_gate6_experience.py`
+
+### LSN-0143 — Management recovery is not complete runtime capability
+
+- Status: `OBSERVED`, severity HIGH, category environment, recurrences 0.
+- Source: GATE-6, GATE-6-CP-0001, finding G6-INT-015.
+- Symptom: Successful Engine version, inventory and owned cleanup were generalized into readiness for all Docker-dependent controls. The next canonical lint rejected the Windows repository bind and stalled during frontend image construction; later management queries timed out again.
+- Root cause: The direct Linux management endpoint does not provide the Windows bind translation used by this lint invocation. The separate builder and renewed management nonresponse have no established backend cause. Management response alone is insufficient capability evidence.
+- Resolution: UNRESOLVED: retain the genuine scoped cleanup separately, reopen the external prerequisite and keep the Gate BLOCKED. Require a stable supported Windows-compatible build and bind path plus unchanged complete lint before a fresh immutable full run. Do not restart shared infrastructure, stop other applications, weaken checks or infer missing stage results.
+- Prevention:
+  - `documentation` docs/checkpoints/GATE-6-CP-0001/DOCKER-RECOVERY.md — Continuation distinguishes exact cleanup from stable management, Windows bind translation and real build/lint capability; no automated capability guard is claimed yet.
+- Evidence: `file:docs/checkpoints/GATE-6-CP-0001/attempts/DOCKER-RETRY-0002.json`, `file:docs/checkpoints/GATE-6-CP-0001/COMMANDS.jsonl`, `file:docs/checkpoints/GATE-6-CP-0001/FINDINGS.json`

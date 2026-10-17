@@ -4,9 +4,9 @@
 - Scope: `Experience Store with observable source-bound engineering facts, privacy, provenance, storage and reuse rights, retention, authenticated API and recovery`
 - Technologies: `Python`, `PostgreSQL`
 - Modules: `services/experience`, `apps/api`, `packages/contracts`, `packages/persistence`
-- Generated: `2026-10-17T20:00:02Z`
-- Lessons considered: 141
-- Lessons applicable: 140
+- Generated: `2026-10-17T20:34:36Z`
+- Lessons considered: 143
+- Lessons applicable: 142
 
 Every applicable lesson below is a requirement of this Gate. The derived identifiers must
 appear in `REQUIREMENTS-MATRIX.json`, and the Delivery Completeness Validator fails the
@@ -152,8 +152,10 @@ delivery when one is absent.
 | `LSN-0137` SQL text interprets inline JSON colons as bindings | `GUARDED` | MEDIUM | `LESSON-REQ-0136` | SQL fixtures must transport structured JSON through bindings rather than let a SQL text parser reinterpret JSON property/value colons. |
 | `LSN-0138` Secret projection distinguishes public identities from authorization secrets | `GUARDED` | HIGH | `LESSON-REQ-0137` | Known-secret projection must distinguish public identities from actual passwords/bearer values; use the real configured field semantics, preserve unknown-secret detection and exact raw/encoded refusal of actual secrets. |
 | `LSN-0139` Privacy projection begins in the source query | `GUARDED` | HIGH | `LESSON-REQ-0138` | A bounded privacy-safe output must not justify fetching unneeded private source columns; the actual query must project only consumed fields and bound required source JSON before transfer. |
-| `LSN-0140` Summaries preserve canonical continuation structure | `GUARDED` | MEDIUM | `LESSON-REQ-0139` | Any helper that replaces a checkpoint artifact must preserve the owning canonical structural contract, not substitute an unstructured summary; required sections stay substantive and complete. |
+| `LSN-0140` Summaries preserve canonical continuation structure | `GUARDED` | HIGH | `LESSON-REQ-0139` | Any helper that replaces a checkpoint artifact must preserve the owning canonical structural contract, not substitute an unstructured summary; required sections stay substantive and complete. |
 | `LSN-0141` Preflight checks honor every declared applicability dimension | `GUARDED` | HIGH | `LESSON-REQ-0140` | Applicability audits honor all canonical selector dimensions without inventing a scope-only exclusion rule or allowing an active unfiltered lesson to disappear. |
+| `LSN-0142` Local Engine recovery keeps transport and cleanup scoped | `GUARDED` | HIGH | `LESSON-REQ-0141` | Operational access recovery must pin transport only in the owning child, preserve the parent/global configuration and verify exact disposable resource ownership and other application identities before and after cleanup. |
+| `LSN-0143` Management recovery is not complete runtime capability | `OBSERVED` | HIGH | `LESSON-REQ-0142` | Do not promote a management-only recovery into full runtime readiness. Verify the actual canonical build, host-bind and lint capabilities through the supported transport before immutable assurance. |
 
 ## Why each lesson applies
 
@@ -1125,7 +1127,7 @@ delivery when one is absent.
 
 ### LSN-0140 — Summaries preserve canonical continuation structure
 
-- Reason: applies to every Gate; category quality; severity MEDIUM; already guarded, so the control must keep holding
+- Reason: applies to every Gate; category quality; severity HIGH; already guarded, so the control must keep holding
 - Required check: Any helper that replaces a checkpoint artifact must preserve the owning canonical structural contract, not substitute an unstructured summary; required sections stay substantive and complete.
 - Required evidence: Actual renderer output against canonical headings, omission/empty-section adverse controls and current canonical checkpoint acceptance without any validator weakening.
 - Derived requirement: `LESSON-REQ-0139`
@@ -1136,3 +1138,17 @@ delivery when one is absent.
 - Required check: Applicability audits honor all canonical selector dimensions without inventing a scope-only exclusion rule or allowing an active unfiltered lesson to disappear.
 - Required evidence: Actual legitimate-selector positive controls and unexplained-omission refusal, with the complete inherited preflight class green.
 - Derived requirement: `LESSON-REQ-0140`
+
+### LSN-0142 — Local Engine recovery keeps transport and cleanup scoped
+
+- Reason: applies to every Gate; category environment; severity HIGH; already guarded, so the control must keep holding
+- Required check: Operational access recovery must pin transport only in the owning child, preserve the parent/global configuration and verify exact disposable resource ownership and other application identities before and after cleanup.
+- Required evidence: Actual bounded Engine access and scoped recovery receipt with observed unrelated identities preserved, plus child-environment/failure propagation and unsafe-ownership adverse controls.
+- Derived requirement: `LESSON-REQ-0141`
+
+### LSN-0143 — Management recovery is not complete runtime capability
+
+- Reason: applies to every Gate; category environment; severity HIGH; status OBSERVED, so it is not yet prevented automatically
+- Required check: Do not promote a management-only recovery into full runtime readiness. Verify the actual canonical build, host-bind and lint capabilities through the supported transport before immutable assurance.
+- Required evidence: Real unchanged complete lint/build/bind execution and subsequent full canonical run; otherwise named external blockers and retained failed observations, never inferred readiness.
+- Derived requirement: `LESSON-REQ-0142`

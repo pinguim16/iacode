@@ -30,6 +30,16 @@ rejected the additional mandatory experience gate, and a preflight assertion ass
 must use a scope selector. Both were causally reproduced and corrected without changing policy.
 Docker management queries then stopped responding during quality-pass; the incomplete attempt and
 unverified owned cleanup remain explicit, with no global restart or Gate verdict.
+The next bounded channel probe found the existing local Linux Engine pipe responsive. Cmd-0166
+removed only the interrupted14-container/4-volume/1-network test owner; all37 unrelated container
+identities and states remained unchanged. Child-only transport and ownership refusals are automated.
+
+Cmd-0166 cleanup is genuine but does not certify a general Windows runtime path. Cmd-0171 rejects
+the Windows bind and stalls on frontend construction; subsequent bounded management queries time
+out again. G6-INT-012 is reopened and G6-INT-015 remains open. LSN-0143 is OBSERVED, not guarded
+or resolved. No Docker/WSL restart, unrelated application stop, complete immutable acceptance or
+Gate6 seal is claimed. Cmd-0177 also catches an extra heading added to this retrospective; move
+the observation into this existing section without changing the canonical template or test.
 
 ## What repeated
 
@@ -39,6 +49,9 @@ INTEGRATION-0003 also retains a false original-identity flag without an invented
 actual execution records every before/after identity and no missing original container.
 LSN-0102/GRD-0103 recurred in the inherited live mandatory-set assertion. Its third recurrence and
 CRITICAL severity remain; added growth/removal/optional mutations now exercise the actual assertion.
+LSN-0140/GRD-0142 recurrence1 is escalated to HIGH for the extra retrospective heading caught by
+cmd-0177. Only the document placement changes; the unchanged template assertion and all27 Gate6
+root controls pass cmd-0178. This is local guard restoration, not whole immutable acceptance.
 
 ## What was learned
 
@@ -67,6 +80,8 @@ ordered assurance remain independently enforced by their canonical tools, not by
 | LSN-0139 | GUARDED | GRD-0141 — actual minimal SQL and oversized-source refusal |
 | LSN-0140 | GUARDED | GRD-0142 — canonical continuation output and omitted/empty refusals |
 | LSN-0141 | GUARDED | GRD-0143 — all selector dimensions and unexplained-omission refusal |
+| LSN-0142 | GUARDED | GRD-0144 — child-only Engine selection and exact owned cleanup |
+| LSN-0143 | OBSERVED | Unresolved build/bind/availability capability; no automated restoration claimed |
 
 ## Updated lessons
 
@@ -79,6 +94,7 @@ ordered assurance remain independently enforced by their canonical tools, not by
 | LSN-0135 | Strengthened current-publisher causal controls | Exact safe producer bytes survive actual consumer failure and owned cleanup |
 | LSN-0102 | Third escalated recurrence, then local causal guard restoration | Inherited mandatory minimum is not a maximum on legitimate future additions |
 | LSN-0018 | Two escalated recurrences; unchanged lesson/quality locator controls | Each artifact owns its reference semantics; keep failures explicit in durable observation files rather than unsupported or nonzero structured command references |
+| LSN-0140 | Recurrence1 escalated to HIGH; existing retrospective guard explicitly registered | Extra manual heading rejected; documentation-only placement correction and root27 cmd-0178 pass |
 
 ## Retired lessons
 

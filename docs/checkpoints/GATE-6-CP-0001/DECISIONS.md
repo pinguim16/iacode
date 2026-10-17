@@ -1,5 +1,33 @@
 # Decisions
 
+- The latest direct owner reply authorizes restarting Docker. Preserve the blocked pre-operation
+  snapshot, use the supported Desktop restart command and then verify real Server/build/bind
+  capability. This narrow authorization overrides earlier no-restart instructions for Desktop
+  only; it does not authorize WSL reset, volume deletion, pruning or unrelated service cleanup.
+
+- Cmd-0176 is a precondition refusal before any test execution: the recorder's lexical script-path
+  check treats the literal .py discovery pattern as a script path. Keep that refusal with null exit
+  code; use the already accepted test_gate6_* discovery pattern, selecting the same sole current
+  module and all27 cases. Do not weaken the recorder or count the refused attempt as a test run.
+- Cmd-0177 then detects a real authoring defect: one extra retrospective heading. Retain the failure,
+  escalate LSN-0140/GRD-0142 recurrence1/HIGH and correct documentation placement only. Actual
+  cmd-0178 root27 passes under the unchanged template assertion. This is not full Gate acceptance.
+
+- Do not generalize partial management recovery into full readiness. Cmd-0166 exact cleanup is
+  retained as real evidence; cmd-0171 Windows bind rejection/stalled build and later management
+  timeouts reopen G6-INT-012 and create G6-INT-015. Keep BLOCKED, no Gate6 seal and no runtime-v4
+  until unchanged complete lint and actual supported build/runtime capability succeed. Do not
+  implement a transport proxy or disable checks to manufacture acceptance. M2 audit stays deferred.
+- The private diagnostic configuration directory was policy-refused at deletion, before execution.
+  Preserve the refusal and retained target in the retry receipt; never retry via another API/shell.
+
+- The owner renewed Gate6 continuation without restarting/stopping other applications. A bounded
+  probe finds the already exposed docker_engine_linux pipe responsive while the prior context path
+  remains stalled. Pin this existing local endpoint only in child environments; never mutate the
+  global Docker context or restart Docker/WSL. Cmd-0165 proves scoped environment/failure handling
+  and unsafe-owner refusals; cmd-0166 observes exact interrupted test cleanup and all37 unrelated
+  container identities/states preserved. Backend alias cause remains unknown, not a daemon outage.
+
 - After runtime-v3 root FAIL, correct only two demonstrably stale test assumptions, proved by
   cmd-0138/0139 before alteration and causal growth/removal/optional/selector/omission controls
   cmd-0141/0142/0143 after it. No mandatory control, production selector or policy is narrowed.

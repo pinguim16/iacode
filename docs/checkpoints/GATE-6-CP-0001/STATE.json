@@ -8,10 +8,11 @@
   "currentCommit": "HEAD",
   "dirty": false,
   "startedAt": "2026-10-17T11:34:14Z",
-  "updatedAt": "2026-10-17T20:00:53Z",
-  "nextAllowedAction": "Read DOCKER-RECOVERY.md. Restore responsive Docker management without disrupting other applications; no global restart is authorized. Observe and clean only iacode-verify-acf6759435d1 owned resources, then publish a new immutable runtime-v4 subject and rerun all canonical stages before ordered internal assurance and seal. V3 is incomplete with root FAIL; local corrections pass but are not full acceptance. Independent M2 remains pending; Gate7 is not authorized.",
+  "updatedAt": "2026-10-17T20:36:48Z",
+  "nextAllowedAction": "The owner now explicitly authorizes restarting Docker. Save the current blocked checkpoint, run the supported Docker Desktop restart only, then observe actual Server, Windows bind and build recovery before rerunning complete unchanged lint. Do not reset/restart WSL, delete data/volumes, prune or stop unrelated services individually. Exact old test cleanup already passed cmd-0166; do not repeat it. If recovery succeeds, publish fresh runtime-v4 and execute every canonical non-fast stage and ordered internal control before sealing Gate6. Independent M2 remains pending; Gate7 is not authorized.",
   "blockedBy": [
-    "G6-INT-012: Docker management queries time out, preventing complete runtime verification and observation/cleanup of owned Compose resources. Other applications are reported running; Docker/WSL restart and shared service/container disruption are not authorized."
+    "G6-INT-012: Docker management queries again time out; no stable supported Engine access is established.",
+    "G6-INT-015: Direct Linux pipe rejected the canonical Windows bind mount and frontend image build stalled; complete lint and fresh immutable verification cannot finish."
   ],
   "secondToolValidation": {
     "status": "PENDING_MANUAL",
@@ -24,8 +25,8 @@
   },
   "requirementsMatrix": {
     "path": "REQUIREMENTS-MATRIX.json",
-    "total": 191,
-    "mandatory": 190,
+    "total": 193,
+    "mandatory": 192,
     "complete": 0,
     "partial": 37,
     "missing": 0,
@@ -34,19 +35,23 @@
   },
   "greenKeeper": {
     "status": "FAIL",
-    "cycles": 1,
-    "remainingFailures": 1,
-    "unresolvedReworkItems": 1,
+    "cycles": 2,
+    "remainingFailures": 2,
+    "unresolvedReworkItems": 2,
     "log": "REWORK-LOG.jsonl",
     "externalBlockers": [
-      "G6-INT-012: Docker management nonresponse; no global restart authority."
+      "G6-INT-012: management queries time out again after partial owned recovery.",
+      "G6-INT-015: supported Windows bind/build capability is unavailable; no restart or shared application stop authorized."
     ],
     "evidence": [
       "command:cmd-0136",
       "command:cmd-0140",
       "command:cmd-0141",
       "command:cmd-0142",
-      "command:cmd-0143"
+      "command:cmd-0143",
+      "command:cmd-0165",
+      "command:cmd-0166",
+      "checkpoint:attempts/DOCKER-RETRY-0002.json"
     ]
   },
   "deliveryCompleteness": {
@@ -57,7 +62,7 @@
     "auditor": null,
     "evidence": []
   },
-  "reworkCycles": 1,
+  "reworkCycles": 2,
   "independentReview": {
     "status": "PENDING",
     "tool": null,
@@ -76,9 +81,9 @@
     "path": "LESSON-PREFLIGHT.json",
     "gate": "GATE-6",
     "scope": "Experience Store with observable source-bound engineering facts, privacy, provenance, storage and reuse rights, retention, authenticated API and recovery",
-    "lessonsConsidered": 141,
-    "lessonsApplicable": 140,
-    "derivedRequirements": 140,
+    "lessonsConsidered": 143,
+    "lessonsApplicable": 142,
+    "derivedRequirements": 142,
     "evidence": [
       "checkpoint:LESSON-PREFLIGHT.json",
       "checkpoint:REQUIREMENTS-MATRIX.json"
@@ -101,17 +106,20 @@
   "externalAuditRequired": false,
   "externalAuditReason": null,
   "guardrailEffectiveness": {
-    "guardrailsTotal": 143,
-    "guardrailsResolved": 143,
-    "guardrailsTested": 143,
-    "guardrailsEffective": 143,
+    "guardrailsTotal": 144,
+    "guardrailsResolved": 144,
+    "guardrailsTested": 144,
+    "guardrailsEffective": 144,
     "guardrailFailures": 0,
     "evidence": [
       "command:cmd-0054",
       "command:cmd-0050",
       "command:cmd-0141",
       "command:cmd-0145",
-      "command:cmd-0146"
+      "command:cmd-0146",
+      "command:cmd-0165",
+      "command:cmd-0166",
+      "command:cmd-0178"
     ]
   },
   "integrity": {

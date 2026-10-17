@@ -22,9 +22,9 @@
       "justification": null
     },
     "lint": {
-      "status": "NOT_EXECUTED",
-      "evidence": [],
-      "justification": null
+      "status": "FAIL",
+      "evidence": ["file:attempts/DOCKER-RETRY-0002.json"],
+      "justification": "Cmd-0171 exits1: the direct Linux pipe rejects the Windows repository bind and frontend image construction stalls. Only the exact revalidated owned build-client tree is cancelled; original recorder completes. No complete source lint or formatter PASS is inferred."
     },
     "staticAnalysis": {
       "status": "NOT_EXECUTED",

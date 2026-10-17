@@ -1,0 +1,80 @@
+{
+  "schemaVersion": "1.0.0",
+  "checkpoint": "GATE-6-CP-0001",
+  "kind": "DIRECT_OBSERVATION_SUMMARY_NOT_RAW_PRODUCER",
+  "recordedAt": "2026-10-17T20:28:41Z",
+  "result": "BLOCKED",
+  "limitations": "Concise observations from actual tool output. This is not a raw stdout artifact, an independent audit, a complete lint report or a Gate acceptance report. No missing producer bytes or hashes are invented.",
+  "partialRecovery": {
+    "command": "cmd-0166",
+    "receipt": "DOCKER-RECOVERY-0001-AFTER.json",
+    "observedAt": "2026-10-17T20:11:57Z",
+    "ownedContainersRemoved": 14,
+    "ownedVolumesRemoved": 4,
+    "ownedNetworksRemoved": 1,
+    "otherContainerIdentitiesAndStatesPreserved": 37,
+    "scope": "Exact interrupted v3 test owner only; availability and preservation were observed at this time, not guaranteed indefinitely."
+  },
+  "canonicalLint": {
+    "command": "cmd-0171",
+    "exitCode": 1,
+    "durationMs": 358217,
+    "safeObservedExcerpt": [
+      "docker: Error response from daemon: invalid volume specification: 'E:\\iacode:/repo:ro'",
+      "[iacode] FAILED: the frontend toolchain image could not be built:"
+    ],
+    "interpretation": "The direct Linux endpoint rejected the required Windows bind specification. The subsequent frontend image build stalled; no complete source lint result or formatter acceptance was produced.",
+    "ownedClientCancellation": {
+      "observedAt": "2026-10-17T20:21:10.8945542Z",
+      "dockerClientPidAtObservation": 38900,
+      "buildxChildPidAtObservation": 45912,
+      "parentLintPidAtObservation": 40800,
+      "parentWrapperPidAtObservation": 4840,
+      "parentRecorderPidAtObservation": 12548,
+      "creationAndLineageRevalidatedBeforeCancellation": true,
+      "onlyOwnedClientTreeCancelled": true,
+      "originalRecorderCompleted": true,
+      "historicalPidsMustNotBeReused": true
+    }
+  },
+  "boundedDiagnostics": {
+    "clientVersion": "29.8.1 (build 4a63305)",
+    "buildxVersion": "v0.37.1 (0b265a9f62db554fa9aba6dd19e1bd5704bc7d8a)",
+    "globalContextObserved": "desktop-linux",
+    "knownEndpoints": [
+      "npipe:////./pipe/dockerDesktopLinuxEngine",
+      "npipe:////./pipe/docker_engine",
+      "npipe:////./pipe/docker_engine_linux",
+      "npipe:////./pipe/dockerDesktopEngine"
+    ],
+    "laterQueries": "After owned lint-client cancellation, fresh seven-second Engine info, container inventory and API-version queries through docker_engine_linux, and version through dockerDesktopEngine, timed out. Docker Desktop status also timed out within ten seconds. Private-context info/buildx inspect queries timed out. These do not establish daemon-wide application failure or an underlying root cause.",
+    "lastObservedRetry": {
+      "observedAt": "2026-10-17T20:25:15.2226168Z",
+      "query": "docker version through the existing docker_engine_linux endpoint",
+      "completedWithinTenSeconds": false,
+      "serverVersionObserved": null,
+      "terminatedOnlyOwnedDiagnosticClient": true
+    },
+    "userReply": "The user supplied output from docker without a subcommand: client usage/help only. A Server result from docker version has not been supplied; no server availability is inferred from help."
+  },
+  "retainedPrivateDiagnosticDirectory": {
+    "path": "C:/Users/cesar/AppData/Local/Temp/iacode-gate6-docker-config-b778f0c3d21a4b548172c6d6d1d786f8",
+    "contentsScope": "Private generated Docker context/buildx metadata only; no authentication configuration or credentials copied.",
+    "cleanupAttempt": "POLICY_REFUSED_NOT_RETRIED",
+    "executed": false,
+    "exitCode": null,
+    "removed": false,
+    "nextAction": "Responsible-owner manual cleanup only; do not retry deletion through another API, shell or filesystem mechanism."
+  },
+  "safety": {
+    "dockerRestarted": false,
+    "wslRestarted": false,
+    "globalContextChanged": false,
+    "unrelatedApplicationsStopped": false,
+    "globalPrunePerformed": false,
+    "runtimeV4PublishedOrRun": false,
+    "gateVerdictIssued": false,
+    "independentM2VerdictIssued": false
+  },
+  "requiredNextAction": "Obtain a stable supported Windows-compatible Docker management/build/bind-mount path without restarting or stopping other applications. Then rerun full unchanged lint before publishing a fresh immutable runtime-v4 and executing every canonical non-fast stage and ordered internal control. Do not use the partial cleanup as whole-transport acceptance."
+}

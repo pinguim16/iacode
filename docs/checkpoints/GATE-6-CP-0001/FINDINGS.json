@@ -3,6 +3,20 @@
   "checkpoint": "GATE-6-CP-0001",
   "findings": [
     {
+      "findingId": "G6-INT-016",
+      "severity": "HIGH",
+      "classification": "GUARDRAIL_FAILURE",
+      "lessonId": "LSN-0140",
+      "guardrailId": "GRD-0142",
+      "title": "Manual retrospective update adds a noncanonical heading",
+      "status": "CLOSED",
+      "observed": "Cmd-0177 executes all27 Gate6 root controls and fails the unchanged retrospective assertion because of one extra level-two heading. All26 other cases pass. Prior cmd-0176 is a separate precondition refusal, not a test run.",
+      "rootCause": "The author manually appended a new section without preserving the exact canonical retrospective template. Keep the assertion and template unchanged; move the same observations into the existing failure section.",
+      "evidence": ["command:cmd-0177"],
+      "resolution": "Documentation placement only changes. Actual cmd-0178 executes all27 root controls and passes, including retrospective conformance. LSN-0140 recurrence1 is escalated to HIGH and the existing retrospective test is explicitly registered under GRD-0142. No whole-suite, Docker capability or independent acceptance is inferred.",
+      "resolutionEvidence": ["command:cmd-0178"]
+    },
+    {
       "findingId": "G6-INT-001",
       "severity": "MEDIUM",
       "title": "Strict JSON validation loses transport context",
@@ -216,13 +230,16 @@
     {
       "findingId": "G6-INT-012",
       "severity": "HIGH",
-      "title": "Docker management requests do not return; owned cleanup unverified",
+      "title": "Docker management availability is unstable after exact owned cleanup",
       "status": "OPEN",
       "observed": "The owned quality-pass compose port process stalled from 19:29:39 UTC until the exact verifier tree was stopped at 19:45:37 UTC. Fresh bounded server-version and owned-resource queries time out. Both desktop-linux/default direct pipe connections open but their read-only ping requests time out. The client version responds. The owner reports other applications still running and asks for retry, not restart.",
       "rootCause": "UNDETERMINED: observed management-surface nonresponse does not prove other applications stopped or identify the daemon/proxy cause.",
-      "requiredCorrection": "Restore a responsive Docker management surface without disrupting other applications; then inspect and remove only exact owned verification resources, observe operational identities, publish a fresh immutable subject and rerun every canonical stage. Do not restart Docker/WSL or stop shared applications without new explicit owner authorization.",
+      "requiredCorrection": "Establish a stable supported Windows-compatible Docker management/build path without disrupting other applications. Exact old test cleanup is already observed at cmd-0166 and must not be repeated. Rerun complete lint, then publish a fresh immutable subject and execute every canonical stage. Do not restart Docker/WSL or stop shared applications.",
       "evidence": ["command:cmd-0136", "command:cmd-0140", "checkpoint:FULL-VERIFY-PROGRESS.json", "checkpoint:attempts/FULL-VERIFY-INTERRUPTED-0003.json"],
-      "limits": "26 completed stage observations (25 PASS, root FAIL), quality-pass interrupted, later stages not executed; no final verifier report. Original owner removed only its temporary clone. Owned Compose cleanup and the before/after shared identity comparison remain unknown, not PASS."
+      "limits": "The original v3 receipt remains immutable: 26 completed stage observations, root FAIL, no final report, cleanup unverified at interruption. Later recovery is separate evidence and never rewrites that historical observation or infers missing stages.",
+      "resolution": "PARTIAL ONLY: the existing docker_engine_linux pipe temporarily responds, and cmd-0166 removes exactly14 test containers,4 volumes and1 network with all37 other identities/states preserved. However later fresh queries again time out through that endpoint, including the final ten-second retry at20:25:15 UTC. This finding is reopened; management cleanup success did not establish stable build/runtime capability. No Docker/WSL/shared service restart or stop is performed; root cause remains undetermined.",
+      "resolutionEvidence": ["command:cmd-0165", "command:cmd-0166", "checkpoint:attempts/DOCKER-RECOVERY-0001-BEFORE.json", "checkpoint:attempts/DOCKER-RECOVERY-0001-AFTER.json"],
+      "reopenedEvidence": ["checkpoint:attempts/DOCKER-RETRY-0002.json"]
     },
     {
       "findingId": "G6-INT-013",
@@ -251,6 +268,17 @@
       "evidence": ["command:cmd-0158"],
       "resolution": "Keep unitTests FAIL and all original command exits. Replace only the quality locators with the actual interrupted-attempt receipt and progress files, retaining command identities in findings/narrative. All9 unchanged QualityEvidenceTests pass, including failed-command rejection and existing-file resolution. No complete checkpoint or Gate acceptance is inferred by this causal correction.",
       "resolutionEvidence": ["command:cmd-0159"]
+    },
+    {
+      "findingId": "G6-INT-015",
+      "severity": "HIGH",
+      "title": "Partial Engine access does not establish Windows bind and build capability",
+      "status": "OPEN",
+      "observed": "Cmd-0171 exits1 after358217ms: the required E:\\iacode:/repo:ro bind is rejected as invalid by the direct Linux endpoint; the subsequent frontend image build stalls. Fresh bounded management and builder queries then fail to return. Only the exact owned build-client tree is cancelled after fresh lineage/creation checks; its original recorder completes.",
+      "rootCause": "The direct Linux management endpoint lacks the Windows bind translation required by this invocation. The separate builder/management nonresponse has an undetermined backend cause. A successful version/inventory/owned cleanup was insufficient evidence for general build/runtime readiness.",
+      "requiredCorrection": "Restore a stable supported Docker Desktop Windows-compatible path and require real unchanged complete lint/build/bind capability before fresh immutable verification. Do not disable lint, bypass BuildKit or introduce a custom proxy merely to manufacture PASS. Keep all47 stages and ordered assurance mandatory.",
+      "evidence": ["command:cmd-0171", "checkpoint:attempts/DOCKER-RETRY-0002.json"],
+      "limits": "Actual direct console observation, not a raw lint output artifact. Source lint findings were not produced; no formatter, frontend/client toolchain or Gate acceptance is inferred. Independent M2 remains pending."
     }
   ]
 }

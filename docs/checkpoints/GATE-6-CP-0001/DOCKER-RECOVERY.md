@@ -1,9 +1,47 @@
 # Blocked continuation — Docker management
 
+Latest owner reply: “restart o docker o mesmo travou pelo jeito”. A supported Docker Desktop
+restart is now explicitly authorized, with temporary container interruption but no data/volume
+deletion, WSL reset, global prune or individual unrelated-service stop. Save this checkpoint before
+the operation and observe actual recovery afterwards. The earlier no-restart limit below is
+historical for the completed attempts, not the current permission. No restart has yet run.
+
+## Current outcome — partial recovery, still blocked
+
+The owner renewed continuation without restarting or stopping other applications. A new bounded
+query through the existing docker_engine_linux named pipe reached Engine29.8.1; default/context
+paths remained unresponsive. Cmd-0166 observed exact ownership, then removed only the interrupted
+v3 test project's14 containers,4 volumes and1 network. All37 other container identities and states
+were preserved. The global context is still desktop-linux. No daemon, WSL or unrelated app restart.
+
+The cleanup is real but does not clear the whole prerequisite. Cmd-0171 subsequently exits1:
+the raw Linux endpoint rejects the required Windows repository bind, then frontend image
+construction stalls. At20:21:10 UTC only the fresh-identity-checked owned build-client tree is
+cancelled, and the original recorder completes. Subsequent bounded Engine and Desktop status
+queries time out again; the final raw-pipe version retry times out at20:25:15 UTC. G6-INT-012 is
+reopened and G6-INT-015 records the unsupported bind/build capability. No backend cause or failure
+of unrelated applications is established. See attempts/DOCKER-RETRY-0002.json.
+
+The explicit child-only wrapper preserves configuration scope, not Windows bind translation or
+stable availability. It was sufficient for the observed exact cleanup, not full lint/runtime proof:
+
+python docs/checkpoints/GATE-6-CP-0001/audit-harness/with_local_engine.py -- python SCRIPT
+
+The wrapper pins only its child environment, preserves Compose ownership and propagates the real
+exit code. Cmd-0165 passes all27 Gate6 root controls, including operational/mislabelled/duplicate
+cleanup refusal. LSN-0142/GRD-0144 guards only that transport/ownership scope. It does not guard
+Engine availability or prove build capability. Complete immutable proof is pending.
+
+A private diagnostic Docker configuration was generated without copying credentials or the main
+configuration. Its cleanup was refused by tool policy before execution. It remains at
+C:/Users/cesar/AppData/Local/Temp/iacode-gate6-docker-config-b778f0c3d21a4b548172c6d6d1d786f8.
+Do not retry through another shell, API or filesystem mechanism; responsible-owner manual cleanup
+remains separate. No global context was changed.
+
 The owner requested another attempt because other applications are running. This is not authority
 to restart Docker Desktop, the engine, WSL, services or shared containers. No such action was taken.
 
-## Observable state
+## Historical v3 interruption observations
 
 Published immutable runtime-v3: 127926d4922e8e63e51fd64681fbe1cd04f21800, tag
 iacode-subjects/GATE-6-CP-0001-runtime-v3. Cmd-0136 executed from a fresh published clone.
@@ -19,8 +57,9 @@ version and owned container/volume/network inventories with five-second bounds; 
 These observations concern management availability, not whether unrelated applications are running.
 No exact daemon/proxy root cause is established.
 
-Owned project: iacode-verify-acf6759435d1. Its resources may remain. Cleanup and the current
-operational before/after identity comparison are UNVERIFIED, never zero or PASS. The old stuck
+Owned project: iacode-verify-acf6759435d1. At that interruption its cleanup and operational
+identity comparison were UNVERIFIED. Later cmd-0166 proves exact cleanup and preserves all37 other
+container identities/states; it does not rewrite the original receipt. The old stuck
 read-only diagnostic alone was also revalidated and stopped; no application container was stopped.
 
 ## Local causal repairs
@@ -43,13 +82,12 @@ recurrence remains CRITICAL, and cmd-0159 passes all9 unchanged quality-evidence
 ## Exact next action
 
 1. Follow canonical startup and compare Git/checkpoint state. Read this complete checkpoint.
-2. Use bounded read-only management probes. Do not restart shared infrastructure without new
-   explicit authority. If management is still unavailable, keep BLOCKED with G6-INT-012 named.
-3. Once responsive, inventory exact project-labelled resources and their actual ownership first.
-   Preserve operational identities and remove only verified test-owned containers/volumes/networks.
-   The temporary clone no longer exists; do not reconstruct ignored configuration from evidence.
-   A new safe cleanup command may use the main Compose definition with the exact owned project
-   explicitly bound; never run a broad down/prune, global cleanup or the prior forbidden targets.
+2. Obtain a stable supported Windows-compatible Engine path. Read-only client help/version alone
+   is insufficient; actual Server and unchanged build/bind/lint execution are required. Do not
+   restart Docker/WSL, change the global context or stop other applications. Keep BLOCKED with
+   G6-INT-012/015 while those prerequisites remain unavailable.
+3. Exact old v3 test cleanup is already complete at cmd-0166. Never rerun its immutable removal
+   helper or overwrite its receipts. Preserve unrelated namespaces and all policy-refused targets.
 4. Revalidate current code/memory, declare every path, scan actual publication content and publish
    a new immutable runtime-v4 subject at remote main. Never move v1/v2/v3 tags or reuse old PIDs.
 5. Run the entire non-fast verifier and capture its safe original output/reports. Do not resume
@@ -58,4 +96,5 @@ recurrence remains CRITICAL, and cmd-0159 passes all9 unchanged quality-evidence
    Keeper, completeness, internal Red Team/null control, full clean-clone mirror, final assembly,
    canonical seal, publication and exact archive reconstruction. Independent M2 remains pending.
 
-This save is BLOCKED, not a Gate seal, INTERNAL_GATE_PASS, independent approval or Gate7 authority.
+The current save is BLOCKED, not a Gate seal,
+INTERNAL_GATE_PASS, independent approval or Gate7 authority.

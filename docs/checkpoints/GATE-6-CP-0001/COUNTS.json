@@ -1,26 +1,26 @@
 {
   "schemaVersion": "1.0.0",
   "checkpoint": "GATE-6-CP-0001",
-  "generatedAt": "2026-10-17T19:54:16Z",
+  "generatedAt": "2026-10-17T20:32:25Z",
   "counts": {
     "TESTS": {
       "numerator": 210,
-      "denominator": 1949,
+      "denominator": 1951,
       "source": "discovery over every counted suite of .iacode/policies/test-suites.json, cross-checked with TESTS.json and deduplicated by physical execution"
     },
     "REQUIREMENTS": {
       "numerator": 0,
-      "denominator": 191,
+      "denominator": 193,
       "source": "REQUIREMENTS-MATRIX.json evaluated against the derived expected set"
     },
     "LESSONS": {
-      "numerator": 138,
-      "denominator": 141,
+      "numerator": 139,
+      "denominator": 143,
       "source": ".iacode/memory/lessons.jsonl"
     },
     "GUARDRAILS": {
-      "numerator": 143,
-      "denominator": 143,
+      "numerator": 144,
+      "denominator": 144,
       "source": ".iacode/memory/guardrails/registry.json measured for effectiveness"
     }
   }

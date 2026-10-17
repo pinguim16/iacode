@@ -805,3 +805,13 @@ required check/evidence. It is not a replacement denominator and cannot omit a s
 
 - Required check: Applicability audits honor all canonical selector dimensions without inventing a scope-only exclusion rule or allowing an active unfiltered lesson to disappear.
 - Required evidence: Actual legitimate-selector positive controls and unexplained-omission refusal, with the complete inherited preflight class green.
+
+### LESSON-REQ-0141 — LSN-0142
+
+- Required check: Operational access recovery must pin transport only in the owning child, preserve the parent/global configuration and verify exact disposable resource ownership and other application identities before and after cleanup.
+- Required evidence: Actual bounded Engine access and scoped recovery receipt with observed unrelated identities preserved, plus child-environment/failure propagation and unsafe-ownership adverse controls.
+
+### LESSON-REQ-0142 — LSN-0143
+
+- Required check: Do not promote a management-only recovery into full runtime readiness. Verify the actual canonical build, host-bind and lint capabilities through the supported transport before immutable assurance.
+- Required evidence: Real unchanged complete lint/build/bind execution and subsequent full canonical run; otherwise named external blockers and retained failed observations, never inferred readiness. This remains unresolved; no automated guard or completion is claimed.

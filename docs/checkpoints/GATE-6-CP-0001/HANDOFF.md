@@ -3,6 +3,12 @@
 Current Gate: GATE-6
 Current Status: BLOCKED
 
+Latest authority: the owner now explicitly authorizes restarting Docker after the repeated Server
+query failures. Save this blocked state, use only the supported Docker Desktop restart and verify
+actual recovery. Earlier no-restart instructions below describe the prior scope; the latest narrow
+authorization in AUTHORIZATION.md overrides them only for Docker Desktop restart, not WSL reset,
+data deletion, global prune or unrelated service cleanup. No restart result is claimed yet.
+
 ## Objective
 
 Finish only authorized Gate6 Experience Store and every internal control through canonical seal. Independent M2 remains pending; Gate7 is not authorized.
@@ -15,7 +21,16 @@ Owner-requested reboot stopping point saved: exact runtime-v2 verifier tree stop
 
 Reboot continuation published exact runtime-v3 at 127926d4922e8e63e51fd64681fbe1cd04f21800. Cmd-0136 observed 26 completed stages (25 PASS, root FAIL) before quality-pass stalled. Only the revalidated owned verifier tree was stopped; its original recorder exited1 and the original owner removed its temporary clone. No Docker daemon, service or container was stopped.
 
-Both root failures were causally reproduced and corrected without changing production policy. All25 Gate6 root controls, inherited preflight7, inherited quality-integration7 and lesson-resolution6 pass. Memory141 and the complete refreshed191-row derivation remain current. These are local proofs, not complete immutable acceptance.
+Both root failures were causally reproduced and corrected without changing production policy. At that saved point all25 Gate6 root controls, inherited preflight7, inherited quality-integration7 and lesson-resolution6 pass, with memory141 and191 requirements. These are historical local proofs, not complete immutable acceptance. Current memory142 and the whole192 requirements are derived at cmd-0167/0168/0169 before fresh runtime-v4 assurance.
+
+Current blocked-save derivation supersedes those counts: cmd-0172 validates memory143 with139
+guarded; cmd-0173 selects142 lessons, cmd-0174 derives all193 requirements (51 canonical plus142
+lessons), and cmd-0175 derives retained tests210/1951 and requirements0/193. LSN-0143 is unresolved
+OBSERVED; no requirement is promoted to complete. Earlier counts remain historical only.
+
+The renewed bounded channel probe reaches the existing local Linux Engine pipe. Cmd-0165 passes root27 with child-only transport and ownership refusals; cmd-0166 removes only the exact interrupted test owner (14 containers,4 volumes,1 network) and observes all37 unrelated container identities/states preserved. Global desktop-linux context stays unchanged; no daemon, WSL or unrelated app is restarted/stopped. LSN-0142/GRD-0144 enters the complete new preflight/derivation before runtime-v4 assurance.
+
+That recovery is partial: cmd-0171 full lint exits1 after a Windows bind rejection and stalled frontend build. Only the exact revalidated owned build-client tree is cancelled; its original recorder completes. Later bounded management/build queries time out again. The summary receipt attempts/DOCKER-RETRY-0002.json preserves observations and limits; it is not raw producer output. No runtime-v4 is published or executed.
 
 ## What was NOT completed
 
@@ -39,7 +54,7 @@ Actual completed local invocations cmd-0050 and cmd-0054 cover the suites/runtim
 
 ## Known failures
 
-G6-INT-012 remains OPEN: management queries time out, including fresh retries through both Docker contexts and direct read-only named-pipe pings. The client responds; other applications are reported running. Do not infer their failure or an exact daemon root cause. Owned iacode-verify-acf6759435d1 cleanup and current shared identity comparison are UNVERIFIED. All original failures and escalated counters remain; G6-INT-010/011 have causal local corrections, not whole immutable acceptance. INTEGRATION-0003's old false identity flag has unproven cause; its later INTEGRATION-0004 observes original identities preserved.
+G6-INT-012 is reopened: management queries time out again after exact cleanup succeeded. G6-INT-015 records raw Linux Windows-bind rejection and stalled frontend construction at cmd-0171. The process-local wrapper preserves scope but is not a supported Windows runtime capability proof. Backend nonresponse cause is undetermined; no unrelated application failure is inferred. All original failures and escalated counters remain. V3's historical cleanup-unknown receipt is not rewritten; separate cmd-0166 recovery proves that old cleanup. G6-INT-010/011 have causal local corrections, not whole immutable acceptance. INTEGRATION-0003's old false identity flag has unproven cause; its later INTEGRATION-0004 observes original identities preserved.
 
 Runtime-v2 full command cmd-0123 exited1 after the owner's intentional reboot interruption. No verifier report or completed stage verdict was available; this is NOT a full test PASS or an independent verdict.
 
@@ -51,19 +66,19 @@ RISKS.md records security/rights/backup/retention, external provider and same-se
 
 ## Do not repeat
 
-Never overlap ledger/inventory/validation writers or treat a process session ID as completion. Preserve original failures and all denominators. Never retry the three predecessor policy-refused temporary cleanup targets, global profiles or operational storage. Do not restart Docker/WSL or stop other applications without new explicit authority. No historical PID may be reused to terminate anything. Attempt0003 exists and its capture helper must not be rerun to overwrite it.
+Never overlap ledger/inventory/validation writers or treat a process session ID as completion. Preserve original failures and all denominators. Never retry the three predecessor policy-refused temporary cleanup targets, global profiles or operational storage. A fourth target is now policy-refused and retained: C:/Users/cesar/AppData/Local/Temp/iacode-gate6-docker-config-b778f0c3d21a4b548172c6d6d1d786f8. Its deletion was not executed and no alternative retry is allowed; manual owner cleanup remains. Do not restart Docker/WSL or stop other applications. No historical PID may be reused to terminate anything. Attempt0003 and recovery0001 receipts exist and their capture/removal helpers must not be rerun to overwrite them.
 
 ## Required next action
 
-Read DOCKER-RECOVERY.md. Restore responsive Docker management without disrupting other applications; no global restart is authorized. Observe and clean only iacode-verify-acf6759435d1 owned resources, then publish a new immutable runtime-v4 subject and rerun all canonical stages before ordered internal assurance and seal. V3 is incomplete with root FAIL; local corrections pass but are not full acceptance. Independent M2 remains pending; Gate7 is not authorized.
+Obtain a stable supported Windows-compatible management/build/bind path without restarting or stopping other applications. Do not generalize cmd-0166 cleanup success into full capability: cmd-0171 lint fails and later queries time out. Once restored, require complete unchanged lint before publishing fresh runtime-v4 and executing all47 non-fast stages and ordered internal controls. Independent M2 remains pending; Gate7 is not authorized.
 
 ## Exact continuation sequence
 
-Read START-HERE.md, DEVELOPMENT-CONTRACT, MASTER-PLAN and this complete checkpoint, especially DOCKER-RECOVERY.md; validate and compare Git against STATE before alteration. Use bounded read-only Docker checks first; preserve owner applications and all runtime-v1/v2/v3 tags. Once management responds, inventory and remove only exactly verified owned resources and record actual cleanup. The current code/memory corrections require a fresh published runtime-v4 subject at remote main; execute the entire policy-derived non-fast verifier, not a resumed subset. Then complete functional proof, all191 derived requirements (or the newly rederived total), whole Green Keeper, completeness, internal Red Team/null control, full clean-clone closure audit, final assembly and actual canonical seal/publication/archive. No Gate7 or independent M2 verdict is authorized.
+Read canonical contracts and this complete checkpoint; validate Git before alteration. Exact old cleanup is already observed at cmd-0166, so do not repeat its immutable removal helper. Restore actual stable Windows-compatible management/build/bind capability; keep BLOCKED while unavailable. After complete unchanged lint and current source/memory acceptance, declare/validate and publish runtime-v4 at remote main, preserving v1/v2/v3. Do not presume the raw Linux wrapper supplies Desktop path translation. Run the entire policy-derived non-fast verifier, functional proof, whole rederived requirement set, Green Keeper, completeness, internal Red Team/null control, full clean-clone closure audit, final assembly and actual canonical seal/publication/archive. No Gate7 or independent M2 verdict is authorized.
 
 ## Validation commands
 
-python scripts/development-ledger/validate_checkpoint.py; python scripts/development-ledger/validate_lessons.py; python scripts/development-ledger/verify_integrity.py; python scripts/development-ledger/program_state.py. Serialize all writers and await actual exit. The old IN_PROGRESS-only synchronization wrapper must not be run against BLOCKED; explicitly declare inventory and use the canonical finalizer for the blocked save.
+python scripts/development-ledger/validate_checkpoint.py; python scripts/development-ledger/validate_lessons.py; python scripts/development-ledger/verify_integrity.py; python scripts/development-ledger/program_state.py. Serialize all writers and await actual exit. Current status is BLOCKED: the IN_PROGRESS-only synchronization wrapper must not be used. No global context mutation, shared restart or application stop is authorized.
 
 ## Stop conditions
 

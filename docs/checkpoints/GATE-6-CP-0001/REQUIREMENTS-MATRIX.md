@@ -195,3 +195,5 @@ Expected set derived by: `policies.expected_requirement_refs over docs/GATE-6-CH
 | `LESSON-REQ-0138` | `lesson:LSN-0139` | yes | `NOT_STARTED` | Verify privacy projection begins in the source query | LESSON-PREFLIGHT.json LESSON-REQ-0138 |
 | `LESSON-REQ-0139` | `lesson:LSN-0140` | yes | `NOT_STARTED` | Verify summaries preserve canonical continuation structure | LESSON-PREFLIGHT.json LESSON-REQ-0139 |
 | `LESSON-REQ-0140` | `lesson:LSN-0141` | yes | `NOT_STARTED` | Verify preflight checks honor every declared applicability dimension | LESSON-PREFLIGHT.json LESSON-REQ-0140 |
+| `LESSON-REQ-0141` | `lesson:LSN-0142` | yes | `NOT_STARTED` | Verify local Engine recovery keeps transport and cleanup scoped | LESSON-PREFLIGHT.json LESSON-REQ-0141 |
+| `LESSON-REQ-0142` | `lesson:LSN-0143` | yes | `NOT_STARTED` | Verify management recovery is not complete runtime capability | LESSON-PREFLIGHT.json LESSON-REQ-0142 |

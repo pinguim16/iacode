@@ -12,11 +12,11 @@
     "packages/contracts",
     "packages/persistence"
   ],
-  "generatedAt": "2026-10-17T20:00:02Z",
+  "generatedAt": "2026-10-17T20:34:36Z",
   "policyVersion": "2.0.0",
-  "inputsFingerprint": "f692052744a66a07856bc404f3f95b788bbf506d9a73436e64938bf23a702050",
-  "lessonsConsidered": 141,
-  "lessonsApplicable": 140,
+  "inputsFingerprint": "9807ff67e4dda71c99b2783e94ff4150db1155f53cf30c6749b328e72612c52d",
+  "lessonsConsidered": 143,
+  "lessonsApplicable": 142,
   "applicable": [
     {
       "lessonId": "LSN-0001",
@@ -1402,8 +1402,8 @@
       "lessonId": "LSN-0140",
       "title": "Summaries preserve canonical continuation structure",
       "status": "GUARDED",
-      "severity": "MEDIUM",
-      "reasonApplicable": "applies to every Gate; category quality; severity MEDIUM; already guarded, so the control must keep holding",
+      "severity": "HIGH",
+      "reasonApplicable": "applies to every Gate; category quality; severity HIGH; already guarded, so the control must keep holding",
       "requiredCheck": "Any helper that replaces a checkpoint artifact must preserve the owning canonical structural contract, not substitute an unstructured summary; required sections stay substantive and complete.",
       "requiredEvidence": "Actual renderer output against canonical headings, omission/empty-section adverse controls and current canonical checkpoint acceptance without any validator weakening.",
       "derivedRequirementId": "LESSON-REQ-0139"
@@ -1417,6 +1417,26 @@
       "requiredCheck": "Applicability audits honor all canonical selector dimensions without inventing a scope-only exclusion rule or allowing an active unfiltered lesson to disappear.",
       "requiredEvidence": "Actual legitimate-selector positive controls and unexplained-omission refusal, with the complete inherited preflight class green.",
       "derivedRequirementId": "LESSON-REQ-0140"
+    },
+    {
+      "lessonId": "LSN-0142",
+      "title": "Local Engine recovery keeps transport and cleanup scoped",
+      "status": "GUARDED",
+      "severity": "HIGH",
+      "reasonApplicable": "applies to every Gate; category environment; severity HIGH; already guarded, so the control must keep holding",
+      "requiredCheck": "Operational access recovery must pin transport only in the owning child, preserve the parent/global configuration and verify exact disposable resource ownership and other application identities before and after cleanup.",
+      "requiredEvidence": "Actual bounded Engine access and scoped recovery receipt with observed unrelated identities preserved, plus child-environment/failure propagation and unsafe-ownership adverse controls.",
+      "derivedRequirementId": "LESSON-REQ-0141"
+    },
+    {
+      "lessonId": "LSN-0143",
+      "title": "Management recovery is not complete runtime capability",
+      "status": "OBSERVED",
+      "severity": "HIGH",
+      "reasonApplicable": "applies to every Gate; category environment; severity HIGH; status OBSERVED, so it is not yet prevented automatically",
+      "requiredCheck": "Do not promote a management-only recovery into full runtime readiness. Verify the actual canonical build, host-bind and lint capabilities through the supported transport before immutable assurance.",
+      "requiredEvidence": "Real unchanged complete lint/build/bind execution and subsequent full canonical run; otherwise named external blockers and retained failed observations, never inferred readiness.",
+      "derivedRequirementId": "LESSON-REQ-0142"
     }
   ],
   "derivedRequirements": [
@@ -2399,6 +2419,20 @@
       "description": "Verify preflight checks honor every declared applicability dimension",
       "mandatory": true,
       "requiredEvidence": "Actual legitimate-selector positive controls and unexplained-omission refusal, with the complete inherited preflight class green."
+    },
+    {
+      "id": "LESSON-REQ-0141",
+      "lessonId": "LSN-0142",
+      "description": "Verify local Engine recovery keeps transport and cleanup scoped",
+      "mandatory": true,
+      "requiredEvidence": "Actual bounded Engine access and scoped recovery receipt with observed unrelated identities preserved, plus child-environment/failure propagation and unsafe-ownership adverse controls."
+    },
+    {
+      "id": "LESSON-REQ-0142",
+      "lessonId": "LSN-0143",
+      "description": "Verify management recovery is not complete runtime capability",
+      "mandatory": true,
+      "requiredEvidence": "Real unchanged complete lint/build/bind execution and subsequent full canonical run; otherwise named external blockers and retained failed observations, never inferred readiness."
     }
   ]
 }

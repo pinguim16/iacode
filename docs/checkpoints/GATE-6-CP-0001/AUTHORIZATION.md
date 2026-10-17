@@ -1,5 +1,18 @@
 # Owner authorization
 
+## Latest operational authorization
+
+After repeated bounded Docker Server queries and the canonical lint capability failure, the owner
+explicitly replied: “restart o docker o mesmo travou pelo jeito”. This authorizes a Docker Desktop
+restart and its unavoidable temporary container interruption, superseding the earlier no-restart
+constraint for this action only. Use the supported Docker Desktop restart command; no data/volume
+deletion, WSL reset/restart, global prune, unrelated service termination or individual application
+cleanup is authorized. Recheck actual Server, Windows bind and build capability after completion;
+the authorization itself is not recovery evidence. Gate6/internal closure scope is unchanged and
+independent M2 validation remains mandatory. Policy-refused cleanup targets remain excluded.
+
+## Original Gate authorization
+
 The owner explicitly requested: “Autorizo iniciar o Gate 6. Siga até concluir todos os controles
 internos e selar o checkpoint, mantendo a auditoria independente para o fechamento do M2.”
 
