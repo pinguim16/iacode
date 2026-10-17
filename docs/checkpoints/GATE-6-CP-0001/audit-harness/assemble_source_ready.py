@@ -26,7 +26,7 @@ def local_handoff_sections() -> dict[str, str]:
         "## Current repository state": "Attached branch " + state["branch"] + "; current binding and dirty state are owned by STATE.json. The predecessor base is " + state["baseCommit"] + ". No unexpected divergence was observed.",
         "## Files changed": "FILES.json declares the actual Gate6 delta. Every later path must be explicitly declared before finalization; hash refresh may not invent a declaration or rewrite a sealed predecessor.",
         "## Important decisions": "ADR-0050 defines source-bound explicit-consent facts and pure ports; ADR-0051 defines finite retention/tombstones. All canonical criteria and selected lessons remain mandatory according to policy; all37 runtime criteria require functional evidence.",
-        "## Tests executed": "Actual completed local invocations cmd-0050 and cmd-0054 cover the suites/runtime above; suite-attempts and attempts retain exact safe output. These are local causal proofs, not a complete immutable Gate verdict. TESTS.json names distinct physical runs.",
+        "## Tests executed": "Actual completed local invocations cmd-0050 and cmd-0054 cover the suites/runtime above; cmd-0109 proves root23 including canonical retrospective conformance. Suite-attempts and attempts retain exact safe output. These are local causal proofs, not a complete immutable Gate verdict. TESTS.json names distinct physical runs.",
         "## Known failures": "All original failures and escalated counters remain in FINDINGS/engineering memory. Currently open findings: " + (", ".join(open_ids) or "none") + ". INTEGRATION-0003's false identity flag has unproven cause; INTEGRATION-0004 observes every original identity preserved.",
         "## Known risks": "RISKS.md records security/rights/backup/retention, external provider and same-session assurance limits. Unknown reuse permission is denial; no independent M2 approval is implied.",
         "## Do not repeat": "Never overlap ledger/inventory/validation writers or treat a process session ID as completion. Preserve original failures and all denominators. Never retry the three predecessor policy-refused temporary cleanup targets, global profiles or operational storage.",
@@ -114,8 +114,8 @@ def main() -> int:
     write_json(CHECKPOINT / "STATE.json", state)
     steps = load_json(CHECKPOINT / "STEPS.json")
     steps["steps"][1].update({"status": "COMPLETE",
-        "functionalProof": "Complete unchanged lint, domain29/API173/client35, actual SQL/HTTP/migrations36, Gate6 root controls and fresh real experience lifecycle pass. All retained runtime and metadata findings close only after actual causal controls and canonical acceptance; later root22 includes complete positive/adverse continuation rendering. This completes implementation, not whole-Gate acceptance.",
-        "evidence": [sequence["id"], "cmd-0050", "FINDINGS.json", receipt_path.relative_to(CHECKPOINT).as_posix()]})
+        "functionalProof": "Complete unchanged lint, domain29/API173/client35, actual SQL/HTTP/migrations36, Gate6 root controls and fresh real experience lifecycle pass. All retained runtime and metadata findings close only after actual causal controls and canonical acceptance; later root23 includes complete positive/adverse continuation rendering and canonical retrospective conformance. This completes implementation, not whole-Gate acceptance.",
+        "evidence": [sequence["id"], "cmd-0050", "cmd-0109", "FINDINGS.json", receipt_path.relative_to(CHECKPOINT).as_posix()]})
     steps["steps"][2]["status"] = "IN_PROGRESS"
     write_json(CHECKPOINT / "STEPS.json", steps)
     preflight = load_json(CHECKPOINT / "LESSON-PREFLIGHT.json")

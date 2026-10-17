@@ -1,6 +1,8 @@
 # Risks
 
-- Current feature and all new acceptance/assurance remain unimplemented/unexecuted. Baseline91 is not a delivery verdict.
+- Feature implementation and local causal/live acceptance are complete. Complete immutable
+  verification and the ordered internal closure still remain pending; neither baseline nor local
+  execution is a whole-Gate verdict. Runtime-v1's intentional incomplete verification is retained.
 - Guard source projection against private/raw data, forged quality and rights, inconsistent ownership and TOCTOU.
 - Expiry, retries, deletion and backup restoration must not resurrect withdrawn content. Primary deletion is not global backup erasure.
 - Legacy experiences require quarantine without silently losing their historical rights/identity or promoting arbitrary bodies.

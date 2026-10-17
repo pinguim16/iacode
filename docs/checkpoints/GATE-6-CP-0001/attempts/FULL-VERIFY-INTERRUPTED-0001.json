@@ -1,0 +1,38 @@
+{
+  "kind": "INTENTIONALLY_INTERRUPTED_INCOMPLETE_VERIFICATION_NOT_PASS",
+  "generatedAt": "2026-10-17T14:16:13Z",
+  "subjectCommit": "4c8cddd22afec82695015f61ddd0c72238f8d16f",
+  "sourceFingerprint": "2f6c58b170b6d38800ed0dbd7ecf859f3de4451d3828a795c03d9d1c507120ea",
+  "progress": {
+    "subjectCommit": "4c8cddd22afec82695015f61ddd0c72238f8d16f",
+    "clone": "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-gate6-full-verification-hdmh1au6\\repository",
+    "transitions": [
+      "[iacode] --- gate:tests: mandatory gate tests"
+    ],
+    "updatedAt": "2026-10-17T14:00:09.374429+00:00"
+  },
+  "ownedProcessObservation": [
+    {
+      "processId": 50636,
+      "parentProcessId": 46216,
+      "createdUtc": "2026-10-17T13:59:58Z",
+      "commandLine": "\"C:\\Program Files\\Python313\\python.exe\" scripts/development-ledger/record_command.py --subject-commit 4c8cddd22afec82695015f61ddd0c72238f8d16f --purpose \"Execute the complete policy-derived non-fast current verifier once from the exact published clean detached Gate6 runtime subject, retaining all inherited stages, actual safe producer bytes and owned cleanup; same-session internal only\" -- python docs/checkpoints/GATE-6-CP-0001/audit-harness/run_full_verification.py --commit 4c8cddd22afec82695015f61ddd0c72238f8d16f --tag iacode-subjects/GATE-6-CP-0001-runtime-v1 --node C:\\Users\\cesar\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\node\\bin\\node.exe"
+    },
+    {
+      "processId": 48200,
+      "parentProcessId": 50636,
+      "createdUtc": "2026-10-17T13:59:59Z",
+      "commandLine": "\"C:\\Program Files\\Python313\\python.exe\" docs/checkpoints/GATE-6-CP-0001/audit-harness/run_full_verification.py --commit 4c8cddd22afec82695015f61ddd0c72238f8d16f --tag iacode-subjects/GATE-6-CP-0001-runtime-v1 --node C:\\Users\\cesar\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\node\\bin\\node.exe"
+    },
+    {
+      "processId": 43148,
+      "parentProcessId": 48200,
+      "createdUtc": "2026-10-17T14:00:05Z",
+      "commandLine": "\"C:\\Program Files\\Python313\\python.exe\" scripts/iacode/verify.py --keep-going --quiet --node C:\\Users\\cesar\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\node\\bin\\node.exe --report artifacts/review/INTERNAL-FULL-VERIFY.json"
+    }
+  ],
+  "terminationExitCode": 0,
+  "reason": "Add the mandatory Gate6 in-scope retrospective before final immutable assurance so the later closure needs no unverified assurance-source edit. No completed stage or PASS is inferred.",
+  "verificationResult": "NOT_COMPLETED",
+  "gateVerdictIssued": false
+}

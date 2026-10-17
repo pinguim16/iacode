@@ -4,7 +4,7 @@
 - Scope: `Experience Store with observable source-bound engineering facts, privacy, provenance, storage and reuse rights, retention, authenticated API and recovery`
 - Technologies: `Python`, `PostgreSQL`
 - Modules: `services/experience`, `apps/api`, `packages/contracts`, `packages/persistence`
-- Generated: `2026-10-17T13:55:40Z`
+- Generated: `2026-10-17T14:21:15Z`
 - Lessons considered: 140
 - Lessons applicable: 139
 

@@ -41,6 +41,24 @@ def load_actor():
 
 
 class Gate6SpecificationTests(unittest.TestCase):
+    def test_retrospective_preserves_template_and_every_current_gate_lesson(self):
+        import re
+
+        template = (ROOT / ".iacode/templates/retrospective/TEMPLATE.md").read_text(encoding="utf-8")
+        document = (ROOT / ".iacode/memory/retrospectives" / (CHECKPOINT.name + ".md")).read_text(encoding="utf-8")
+        required = re.findall(r"^## .+$", template, flags=re.MULTILINE)
+        self.assertTrue(required)
+        self.assertEqual(re.findall(r"^## .+$", document, flags=re.MULTILINE), required)
+        lessons = [json.loads(line) for line in (ROOT / ".iacode/memory/lessons.jsonl").read_text(encoding="utf-8").splitlines() if line.strip()]
+        current = [row for row in lessons if row["source"]["checkpoint"] == CHECKPOINT.name]
+        self.assertTrue(current)
+        for lesson in current:
+            self.assertIn(lesson["lessonId"], document)
+            for guard in lesson["guardrails"]:
+                self.assertIn(guard, document)
+        self.assertIn("does not predict a Gate verdict", document)
+        self.assertIn("independent M2", document)
+
     def test_functional_denominator_covers_every_mandatory_runtime_criterion(self):
         rows = policies.canonical_requirements(ROOT, "GATE-6")
         expected = {"GATE-6-" + row["key"] for row in rows

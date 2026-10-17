@@ -110,6 +110,7 @@ bind("8.6", ["scripts/development-ledger/seal_checkpoint.py", "scripts/developme
 bind("8.7", ["scripts/development-ledger/validate_checkpoint.py", CP + "STATE.json"],
      ["tests/test_gate4_quality_engine.py", "tests/test_development_ledger.py"],
      ["docs/MILESTONE-VALIDATION.md", "docs/adr/ADR-0037-intermediate-gates-use-internal-closure.md"])
+CANONICAL["8.5"]["implementationEvidence"].append("file:.iacode/memory/retrospectives/GATE-6-CP-0001.md")
 
 NEW_LESSONS = {
     "LSN-0011": ([CP + "audit-harness/validate_serial_bookkeeping.py",

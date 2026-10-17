@@ -29,7 +29,7 @@ ADR-0050 defines source-bound explicit-consent facts and pure ports; ADR-0051 de
 
 ## Tests executed
 
-Actual completed local invocations cmd-0050 and cmd-0054 cover the suites/runtime above; suite-attempts and attempts retain exact safe output. These are local causal proofs, not a complete immutable Gate verdict. TESTS.json names distinct physical runs.
+Actual completed local invocations cmd-0050 and cmd-0054 cover the suites/runtime above; cmd-0109 proves root23 including canonical retrospective conformance. Suite-attempts and attempts retain exact safe output. These are local causal proofs, not a complete immutable Gate verdict. TESTS.json names distinct physical runs.
 
 ## Known failures
 
