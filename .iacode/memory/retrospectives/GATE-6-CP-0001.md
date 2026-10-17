@@ -43,6 +43,14 @@ the observation into this existing section without changing the canonical templa
 
 ## What repeated
 
+Later explicit restart authorization permits supported Desktop recovery. Actual cmd-0192 complete
+unchanged lint and cmd-0194 normal-context Server/identity observations clear the external
+prerequisite; all37 other identities/states remain and old owned cleanup stays complete. The new
+guard fixture initially guesses a bare stage name (cmd-0195); correcting it to derive every real
+canonical name strengthens missing/failed-stage mutations, and all28 root controls pass cmd-0196.
+LSN-0143/GRD-0145 is now guarded for evidence completeness, not Engine uptime. Earlier observations
+remain historical; complete immutable verification, ordered assurance and seal remain due.
+
 The LSN-0042, LSN-0105, LSN-0119 and LSN-0126 guarded classes were explicitly escalated and only
 restored after actual causal acceptance. Counters, severity and original failures are retained.
 INTEGRATION-0003 also retains a false original-identity flag without an invented cause; the next
@@ -81,7 +89,7 @@ ordered assurance remain independently enforced by their canonical tools, not by
 | LSN-0140 | GUARDED | GRD-0142 — canonical continuation output and omitted/empty refusals |
 | LSN-0141 | GUARDED | GRD-0143 — all selector dimensions and unexplained-omission refusal |
 | LSN-0142 | GUARDED | GRD-0144 — child-only Engine selection and exact owned cleanup |
-| LSN-0143 | OBSERVED | Unresolved build/bind/availability capability; no automated restoration claimed |
+| LSN-0143 | GUARDED | GRD-0145 — actual publisher refuses management-only input and each missing/failed canonical stage; root28 cmd-0196 passes |
 
 ## Updated lessons
 

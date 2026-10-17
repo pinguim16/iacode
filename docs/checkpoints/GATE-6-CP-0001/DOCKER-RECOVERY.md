@@ -1,5 +1,18 @@
 # Blocked continuation — Docker management
 
+Current outcome: IN_PROGRESS after owner-authorized Desktop recovery. Cmd-0189 graceful restart
+returns deadline failure; supported force-stop cmd-0190 returns0 and cmd-0191 reports already
+running with new Desktop/backend identities. After owner-confirmed return, Server29.8.1 responds
+through desktop-linux. Complete unchanged canonical lint cmd-0192 passes, including actual Windows
+bind/build and frontend/client checks. Cmd-0194 observes all37 prior other identities/states and
+old test cleanup preserved. Root28 cmd-0196 passes including management-only and every missing/
+failed canonical-stage refusal. See attempts/DOCKER-RESTART-0001.json and its AFTER receipt.
+
+G6-INT-012/015 are now closed on real capability evidence, not authorization or a management-only
+probe. The root cause of the earlier nonresponse is still undetermined. Fresh runtime-v4 and all47
+stages/ordered assurance remain due. Use normal Desktop context, never assume the raw Linux pipe
+translates Windows mounts. All earlier blocked/no-restart statements below are historical.
+
 Latest owner reply: “restart o docker o mesmo travou pelo jeito”. A supported Docker Desktop
 restart is now explicitly authorized, with temporary container interruption but no data/volume
 deletion, WSL reset, global prune or individual unrelated-service stop. Save this checkpoint before

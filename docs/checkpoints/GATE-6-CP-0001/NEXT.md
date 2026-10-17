@@ -2,9 +2,14 @@
 
 ## Required next action
 
-Latest owner reply explicitly authorizes restarting Docker. First save the current blocked
-checkpoint, then run the supported Docker Desktop restart and verify actual Server, Windows-bind
-and build recovery. This supersedes only the earlier Docker no-restart restriction; do not reset
-WSL, delete data/volumes, prune or stop unrelated services individually. See AUTHORIZATION.md.
+Freeze the current source and engineering memory, declare and validate all paths, then publish a
+fresh immutable runtime-v4 at remote main while preserving v1/v2/v3. Execute every canonical
+non-fast stage through the normal supported Docker Desktop context. Cmd-0192 proves complete
+unchanged lint and real Windows bind/build; cmd-0194 observes all37 prior other identities/states
+preserved with old owned test resources absent; root28 cmd-0196 passes.
 
-Establish a stable supported Windows-compatible Docker management/build/bind-mount path without restarting or stopping other applications. Cmd-0166 already completed exact old test cleanup; do not repeat it. Cmd-0171 rejected the Windows bind and stalled on frontend image construction; later bounded Engine queries again timed out. The child-only wrapper is not general Windows runtime acceptance. Once restored, rerun complete unchanged lint, publish fresh runtime-v4 and execute all47 non-fast stages, whole Green Keeper, completeness, fresh internal Red Team/null control, full clean-clone mirror and actual canonical seal/publication/archive. Do not retry policy-refused cleanup targets. Independent M2 remains pending; Gate7 is not authorized.
+Then complete functional proof, all193 derived requirements, the whole mandatory Green Keeper,
+completeness, fresh internal Red Team/null control, full clean-clone closure mirror, final assembly
+and actual canonical seal/publication/archive reconstruction. Do not combine partial old attempts,
+rerun old removal helpers, use the raw Linux pipe as Windows runtime transport or retry any of the
+four policy-refused temporary cleanup targets. Independent M2 remains pending; Gate7 is not authorized.

@@ -86,7 +86,7 @@
         "internal Red Team and null control",
         "full mirror"
       ],
-      "functionalProof": "Runtime-v3 remains incomplete with root FAIL. Causal root corrections pass; cmd-0165 adds root27 transport/ownership controls and cmd-0166 observes exact v3 cleanup with all37 other identities/states preserved. That cleanup is partial recovery only: cmd-0171 full lint fails on Windows bind rejection/stalled frontend build, and later bounded management queries time out. G6-INT-012/015 block fresh immutable verification and ordered assurance; no restart or unrelated application stop is performed.",
+      "functionalProof": "Runtime-v3 remains incomplete with root FAIL. Causal root corrections pass and old exact cleanup is preserved. After explicit owner restart authorization, cmd-0192 complete canonical lint and supported Windows bind/build pass, cmd-0194 observes normal Server and all37 prior other identities/states with old test resources absent, and cmd-0196 root28 passes management-only/every missing-or-failed-stage refusal. G6-INT-012/015 are closed. Fresh immutable47-stage verification and all ordered assurance remain pending; no full Gate verdict is inferred.",
       "evidence": ["cmd-0136", "cmd-0140", "cmd-0141", "cmd-0142", "cmd-0143", "cmd-0165", "cmd-0166", "cmd-0171", "attempts/FULL-VERIFY-INTERRUPTED-0003.json", "attempts/DOCKER-RECOVERY-0001-AFTER.json", "attempts/DOCKER-RETRY-0002.json"],
       "status": "IN_PROGRESS"
     },

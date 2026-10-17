@@ -4,7 +4,7 @@
 - Scope: `Experience Store with observable source-bound engineering facts, privacy, provenance, storage and reuse rights, retention, authenticated API and recovery`
 - Technologies: `Python`, `PostgreSQL`
 - Modules: `services/experience`, `apps/api`, `packages/contracts`, `packages/persistence`
-- Generated: `2026-10-17T20:34:36Z`
+- Generated: `2026-10-17T20:49:33Z`
 - Lessons considered: 143
 - Lessons applicable: 142
 
@@ -155,7 +155,7 @@ delivery when one is absent.
 | `LSN-0140` Summaries preserve canonical continuation structure | `GUARDED` | HIGH | `LESSON-REQ-0139` | Any helper that replaces a checkpoint artifact must preserve the owning canonical structural contract, not substitute an unstructured summary; required sections stay substantive and complete. |
 | `LSN-0141` Preflight checks honor every declared applicability dimension | `GUARDED` | HIGH | `LESSON-REQ-0140` | Applicability audits honor all canonical selector dimensions without inventing a scope-only exclusion rule or allowing an active unfiltered lesson to disappear. |
 | `LSN-0142` Local Engine recovery keeps transport and cleanup scoped | `GUARDED` | HIGH | `LESSON-REQ-0141` | Operational access recovery must pin transport only in the owning child, preserve the parent/global configuration and verify exact disposable resource ownership and other application identities before and after cleanup. |
-| `LSN-0143` Management recovery is not complete runtime capability | `OBSERVED` | HIGH | `LESSON-REQ-0142` | Do not promote a management-only recovery into full runtime readiness. Verify the actual canonical build, host-bind and lint capabilities through the supported transport before immutable assurance. |
+| `LSN-0143` Management recovery is not complete runtime capability | `GUARDED` | HIGH | `LESSON-REQ-0142` | Do not promote a management-only recovery into full runtime readiness. Verify the actual canonical build, host-bind and lint capabilities through the supported transport before immutable assurance. |
 
 ## Why each lesson applies
 
@@ -1148,7 +1148,7 @@ delivery when one is absent.
 
 ### LSN-0143 — Management recovery is not complete runtime capability
 
-- Reason: applies to every Gate; category environment; severity HIGH; status OBSERVED, so it is not yet prevented automatically
+- Reason: applies to every Gate; category environment; severity HIGH; already guarded, so the control must keep holding
 - Required check: Do not promote a management-only recovery into full runtime readiness. Verify the actual canonical build, host-bind and lint capabilities through the supported transport before immutable assurance.
 - Required evidence: Real unchanged complete lint/build/bind execution and subsequent full canonical run; otherwise named external blockers and retained failed observations, never inferred readiness.
 - Derived requirement: `LESSON-REQ-0142`

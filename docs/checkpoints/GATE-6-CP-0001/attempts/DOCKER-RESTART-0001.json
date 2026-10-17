@@ -1,0 +1,31 @@
+{
+  "kind": "DIRECT_OPERATION_OBSERVATIONS_NOT_RAW_PRODUCER",
+  "checkpoint": "GATE-6-CP-0001",
+  "ownerAuthorizedRestart": true,
+  "preOperationPublishedCheckpoint": "c836de60a5ee2610defe6df46ce5b4fc4a47df6f",
+  "operations": [
+    {"command": "cmd-0188", "result": "PRECONDITION_REJECTED", "exitCode": null, "executed": false, "reason": "Recorder requires an explicit command runtime; no Docker operation ran."},
+    {"command": "cmd-0189", "operation": "docker desktop restart --timeout 120", "exitCode": 1, "durationMs": 120516, "observed": "Supported graceful restart reports processes still running and context deadline exceeded; no manual client cancellation was performed."},
+    {"command": "cmd-0190", "operation": "docker desktop stop --force --timeout 120", "exitCode": 0, "durationMs": 1858, "observed": "Supported command reports Forcing Docker Desktop to stop."},
+    {"command": "cmd-0191", "operation": "docker desktop start --timeout 120", "exitCode": 0, "durationMs": 360, "observed": "Docker Desktop is already running. New Desktop/backend process identities were observed at20:40:38 UTC; no exact causal attribution of the new launch is inferred."}
+  ],
+  "afterReturn": {
+    "userConfirmedReturn": true,
+    "server": "29.8.1|linux|amd64 via desktop-linux",
+    "completeUnchangedCanonicalLint": "command:cmd-0192",
+    "readOnlyManagementAndIdentityReceipt": "DOCKER-RESTART-0001-AFTER.json",
+    "all37PreviousOtherContainerIdentitiesAndStatesPreserved": true,
+    "oldTestResourcesRemainAbsent": true,
+    "newGuardAndAll28RootControls": "command:cmd-0196"
+  },
+  "limits": "Concise actual operation/tool observations, not raw stdout bytes or an independent audit. Earlier daemon/backend root cause remains undetermined. Management and local lint do not replace complete immutable verification or ordered internal controls.",
+  "safety": {
+    "dataOrVolumesDeletedByRestartWorkflow": false,
+    "globalWslShutdownOrResetIssued": false,
+    "globalPrunePerformed": false,
+    "unrelatedServiceCleanupPerformed": false,
+    "policyRefusedCleanupRetried": false,
+    "gateVerdictIssued": false,
+    "independentM2VerdictIssued": false
+  }
+}

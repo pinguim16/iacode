@@ -12,9 +12,13 @@
       "status": "CLOSED",
       "observed": "Cmd-0177 executes all27 Gate6 root controls and fails the unchanged retrospective assertion because of one extra level-two heading. All26 other cases pass. Prior cmd-0176 is a separate precondition refusal, not a test run.",
       "rootCause": "The author manually appended a new section without preserving the exact canonical retrospective template. Keep the assertion and template unchanged; move the same observations into the existing failure section.",
-      "evidence": ["command:cmd-0177"],
+      "evidence": [
+        "command:cmd-0177"
+      ],
       "resolution": "Documentation placement only changes. Actual cmd-0178 executes all27 root controls and passes, including retrospective conformance. LSN-0140 recurrence1 is escalated to HIGH and the existing retrospective test is explicitly registered under GRD-0142. No whole-suite, Docker capability or independent acceptance is inferred.",
-      "resolutionEvidence": ["command:cmd-0178"]
+      "resolutionEvidence": [
+        "command:cmd-0178"
+      ]
     },
     {
       "findingId": "G6-INT-001",
@@ -200,8 +204,7 @@
         "command:cmd-0092"
       ],
       "resolution": "Canonical headings are consumed from their owning validator and every section requires substantive content. Actual output, omission/empty mutations and current checkpoint acceptance pass; no required heading or check was removed."
-    }
-    ,
+    },
     {
       "findingId": "G6-INT-010",
       "severity": "CRITICAL",
@@ -212,9 +215,16 @@
       "status": "CLOSED",
       "observed": "Cmd-0136 completes 892 root cases with two failures; cmd-0139 separately reproduces that the actual required experienceTests addition is rejected by the inherited Gate5 exact-set assertion.",
       "rootCause": "A historical minimum-set contract was encoded as an exact maximum over the current live policy. The production policy is correctly additive; removing experienceTests would violate Gate6. This repeats the guarded stale-source-set class and is explicitly escalated to recurrence3/CRITICAL.",
-      "evidence": ["command:cmd-0136", "command:cmd-0139", "checkpoint:attempts/FULL-VERIFY-INTERRUPTED-0003.json"],
+      "evidence": [
+        "command:cmd-0136",
+        "command:cmd-0139",
+        "checkpoint:attempts/FULL-VERIFY-INTERRUPTED-0003.json"
+      ],
       "resolution": "Correct only the demonstrably obsolete ceiling: every inherited identifier remains required and every live control remains mandatory. The separate Gate6 policy test still requires experienceTests. Actual growth/removal/optional mutations pass; no control is removed and no runtime policy is weakened. Full immutable re-execution remains pending.",
-      "resolutionEvidence": ["command:cmd-0141", "command:cmd-0143"]
+      "resolutionEvidence": [
+        "command:cmd-0141",
+        "command:cmd-0143"
+      ]
     },
     {
       "findingId": "G6-INT-011",
@@ -223,23 +233,47 @@
       "status": "CLOSED",
       "observed": "Cmd-0136 rejects LSN-0136 for absent scopes although its explicit Python selector legitimately excludes a scope with no technologies. Cmd-0138 reproduces the assertion failure.",
       "rootCause": "The test's scope-only assumption contradicts canonical Gate/scope/technology/module applicability and its own existing technology-exclusion test. No production selector defect is observed.",
-      "evidence": ["command:cmd-0136", "command:cmd-0138"],
+      "evidence": [
+        "command:cmd-0136",
+        "command:cmd-0138"
+      ],
       "resolution": "Keep production applicability and all lesson selectors unchanged. Independently require a real mismatch in a declared selector for exclusions and preserve exact selected identity equality. Prove all four filter dimensions, an unfiltered positive control and false-omission rejection; record LSN-0141/GRD-0143. Full immutable re-execution remains pending.",
-      "resolutionEvidence": ["command:cmd-0141", "command:cmd-0142"]
+      "resolutionEvidence": [
+        "command:cmd-0141",
+        "command:cmd-0142"
+      ]
     },
     {
       "findingId": "G6-INT-012",
       "severity": "HIGH",
       "title": "Docker management availability is unstable after exact owned cleanup",
-      "status": "OPEN",
+      "status": "CLOSED",
       "observed": "The owned quality-pass compose port process stalled from 19:29:39 UTC until the exact verifier tree was stopped at 19:45:37 UTC. Fresh bounded server-version and owned-resource queries time out. Both desktop-linux/default direct pipe connections open but their read-only ping requests time out. The client version responds. The owner reports other applications still running and asks for retry, not restart.",
       "rootCause": "UNDETERMINED: observed management-surface nonresponse does not prove other applications stopped or identify the daemon/proxy cause.",
       "requiredCorrection": "Establish a stable supported Windows-compatible Docker management/build path without disrupting other applications. Exact old test cleanup is already observed at cmd-0166 and must not be repeated. Rerun complete lint, then publish a fresh immutable subject and execute every canonical stage. Do not restart Docker/WSL or stop shared applications.",
-      "evidence": ["command:cmd-0136", "command:cmd-0140", "checkpoint:FULL-VERIFY-PROGRESS.json", "checkpoint:attempts/FULL-VERIFY-INTERRUPTED-0003.json"],
+      "evidence": [
+        "command:cmd-0136",
+        "command:cmd-0140",
+        "checkpoint:FULL-VERIFY-PROGRESS.json",
+        "checkpoint:attempts/FULL-VERIFY-INTERRUPTED-0003.json"
+      ],
       "limits": "The original v3 receipt remains immutable: 26 completed stage observations, root FAIL, no final report, cleanup unverified at interruption. Later recovery is separate evidence and never rewrites that historical observation or infers missing stages.",
-      "resolution": "PARTIAL ONLY: the existing docker_engine_linux pipe temporarily responds, and cmd-0166 removes exactly14 test containers,4 volumes and1 network with all37 other identities/states preserved. However later fresh queries again time out through that endpoint, including the final ten-second retry at20:25:15 UTC. This finding is reopened; management cleanup success did not establish stable build/runtime capability. No Docker/WSL/shared service restart or stop is performed; root cause remains undetermined.",
-      "resolutionEvidence": ["command:cmd-0165", "command:cmd-0166", "checkpoint:attempts/DOCKER-RECOVERY-0001-BEFORE.json", "checkpoint:attempts/DOCKER-RECOVERY-0001-AFTER.json"],
-      "reopenedEvidence": ["checkpoint:attempts/DOCKER-RETRY-0002.json"]
+      "resolution": "The owner explicitly authorizes Docker restart after the non-disruptive retries. Cmd-0189 graceful restart exits1 at its120-second deadline; supported force-stop cmd-0190 exits0, and cmd-0191 observes Desktop already running. After the owner confirms return, actual Server responds via desktop-linux. Cmd-0192 complete unchanged canonical lint validates real Windows bind/build and Python/frontend/client checks; cmd-0194 observes all37 prior other identities/states and old cleanup preserved. Cmd-0196 root28 proves management-only/missing/failed-stage refusal. Original backend cause remains undetermined. Complete immutable verification and ordered internal closure are still required.",
+      "resolutionEvidence": [
+        "command:cmd-0165",
+        "command:cmd-0166",
+        "checkpoint:attempts/DOCKER-RECOVERY-0001-BEFORE.json",
+        "checkpoint:attempts/DOCKER-RECOVERY-0001-AFTER.json",
+        "command:cmd-0190",
+        "command:cmd-0191",
+        "command:cmd-0192",
+        "command:cmd-0194",
+        "command:cmd-0196",
+        "checkpoint:attempts/DOCKER-RESTART-0001-AFTER.json"
+      ],
+      "reopenedEvidence": [
+        "checkpoint:attempts/DOCKER-RETRY-0002.json"
+      ]
     },
     {
       "findingId": "G6-INT-013",
@@ -251,9 +285,14 @@
       "status": "CLOSED",
       "observed": "Cmd-0144 actually rejects four command-kind locators in LSN-0141 and the then-unrendered index. The memory boundary caught invalid authoring before handoff; no invalid reference was accepted.",
       "rootCause": "The author copied checkpoint command-reference vocabulary into engineering memory, whose canonical resolver permits repository file evidence. Keep command identities in concise narrative and cite their durable ledger/findings files. Escalate LSN-0018 recurrence1/CRITICAL rather than silently correcting it.",
-      "evidence": ["command:cmd-0144"],
+      "evidence": [
+        "command:cmd-0144"
+      ],
       "resolution": "Only the four unsupported locators change to repository files. The resolver, schema and index policy remain unchanged. All6 inherited resolution controls pass, including command-kind refusal; canonical render-and-validate accepts memory141. The guard is restored locally, not an independent or whole-Gate verdict.",
-      "resolutionEvidence": ["command:cmd-0145", "command:cmd-0146"]
+      "resolutionEvidence": [
+        "command:cmd-0145",
+        "command:cmd-0146"
+      ]
     },
     {
       "findingId": "G6-INT-014",
@@ -265,20 +304,51 @@
       "status": "CLOSED",
       "observed": "Cmd-0158 rejects the blocked finalization because QUALITY unitTests uses three exit1 structured command references, even though its declared quality status is FAIL. Original finalization refusal remains in the append-only ledger.",
       "rootCause": "The author assumed a negative verdict changed the owning resolver's command-reference semantics. The canonical resolver requires successful structured command references for every quality entry; failed observations must instead be cited as actual checkpoint-local evidence files. Escalate LSN-0018 recurrence2/CRITICAL; do not alter the resolver.",
-      "evidence": ["command:cmd-0158"],
+      "evidence": [
+        "command:cmd-0158"
+      ],
       "resolution": "Keep unitTests FAIL and all original command exits. Replace only the quality locators with the actual interrupted-attempt receipt and progress files, retaining command identities in findings/narrative. All9 unchanged QualityEvidenceTests pass, including failed-command rejection and existing-file resolution. No complete checkpoint or Gate acceptance is inferred by this causal correction.",
-      "resolutionEvidence": ["command:cmd-0159"]
+      "resolutionEvidence": [
+        "command:cmd-0159"
+      ]
     },
     {
       "findingId": "G6-INT-015",
       "severity": "HIGH",
       "title": "Partial Engine access does not establish Windows bind and build capability",
-      "status": "OPEN",
+      "status": "CLOSED",
       "observed": "Cmd-0171 exits1 after358217ms: the required E:\\iacode:/repo:ro bind is rejected as invalid by the direct Linux endpoint; the subsequent frontend image build stalls. Fresh bounded management and builder queries then fail to return. Only the exact owned build-client tree is cancelled after fresh lineage/creation checks; its original recorder completes.",
       "rootCause": "The direct Linux management endpoint lacks the Windows bind translation required by this invocation. The separate builder/management nonresponse has an undetermined backend cause. A successful version/inventory/owned cleanup was insufficient evidence for general build/runtime readiness.",
       "requiredCorrection": "Restore a stable supported Docker Desktop Windows-compatible path and require real unchanged complete lint/build/bind capability before fresh immutable verification. Do not disable lint, bypass BuildKit or introduce a custom proxy merely to manufacture PASS. Keep all47 stages and ordered assurance mandatory.",
-      "evidence": ["command:cmd-0171", "checkpoint:attempts/DOCKER-RETRY-0002.json"],
-      "limits": "Actual direct console observation, not a raw lint output artifact. Source lint findings were not produced; no formatter, frontend/client toolchain or Gate acceptance is inferred. Independent M2 remains pending."
+      "evidence": [
+        "command:cmd-0171",
+        "checkpoint:attempts/DOCKER-RETRY-0002.json"
+      ],
+      "limits": "Actual direct console observation, not a raw lint output artifact. Source lint findings were not produced; no formatter, frontend/client toolchain or Gate acceptance is inferred. Independent M2 remains pending.",
+      "resolution": "The owner explicitly authorizes Docker restart after the non-disruptive retries. Cmd-0189 graceful restart exits1 at its120-second deadline; supported force-stop cmd-0190 exits0, and cmd-0191 observes Desktop already running. After the owner confirms return, actual Server responds via desktop-linux. Cmd-0192 complete unchanged canonical lint validates real Windows bind/build and Python/frontend/client checks; cmd-0194 observes all37 prior other identities/states and old cleanup preserved. Cmd-0196 root28 proves management-only/missing/failed-stage refusal. Original backend cause remains undetermined. Complete immutable verification and ordered internal closure are still required.",
+      "resolutionEvidence": [
+        "command:cmd-0190",
+        "command:cmd-0191",
+        "command:cmd-0192",
+        "command:cmd-0194",
+        "command:cmd-0196",
+        "checkpoint:attempts/DOCKER-RESTART-0001-AFTER.json"
+      ]
+    },
+    {
+      "findingId": "G6-INT-017",
+      "severity": "MEDIUM",
+      "title": "New adverse fixture assumes a bare canonical stage name",
+      "status": "CLOSED",
+      "observed": "Cmd-0195 executes28 root cases and the new adverse fixture fails its own assertion: the canonical stage is gate:lint, not lint. The publisher is unchanged and correctly refuses incomplete reports.",
+      "rootCause": "New test authoring used a guessed stage identifier instead of the actual build_stages(False) vocabulary. Derive both missing and failed mutations from every real canonical name, preserving all controls.",
+      "evidence": [
+        "command:cmd-0195"
+      ],
+      "resolution": "Only the new fixture changes to iterate every canonical failing stage, in addition to every missing stage and a management-only report. Actual cmd-0196 passes all28 root controls. LSN-0143/GRD-0145 records the complete capability boundary; this fixture is not a production implementation or functional PASS.",
+      "resolutionEvidence": [
+        "command:cmd-0196"
+      ]
     }
   ]
 }

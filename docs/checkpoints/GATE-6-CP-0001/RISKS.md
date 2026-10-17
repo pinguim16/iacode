@@ -1,11 +1,16 @@
 # Risks
 
+- Current recovery is observed: cmd-0192 complete lint and supported Windows binds/builds pass;
+  cmd-0194 preserves all37 prior other identities/states and old owned cleanup. G6-INT-012/015
+  are closed, but availability remains a dependency and whole immutable assurance is still due.
+  Earlier retry/blocker descriptions below are historical, not current unresolved findings.
+
 - The latest owner reply explicitly authorizes Docker Desktop restart; temporary interruption of
   containers is now within that narrow scope. Record and verify its actual outcome. Earlier
   no-restart instructions describe the preceding attempts; data/volume deletion, WSL reset,
   global pruning and unrelated service cleanup remain forbidden.
 
-- Current blockers G6-INT-012/015 remain: cmd-0166 genuinely completes old exact test cleanup and
+- Historical retries before authorized recovery: cmd-0166 genuinely completes old exact test cleanup and
   preserves all37 other identities/states at20:11:57 UTC, but this is not build/runtime capability.
   Cmd-0171 rejects the Windows bind and stalls during frontend image construction; later bounded
   management queries time out again. Do not infer daemon-wide failure or an unrelated application

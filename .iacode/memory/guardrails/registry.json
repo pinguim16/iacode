@@ -2115,6 +2115,15 @@
       ],
       "lessons": ["LSN-0142"],
       "removingItWouldAllow": "An operational fallback to mutate parent/global Docker selection, hide child failure or remove resources outside the exact disposable test owner."
+    },
+    {
+      "guardrailId": "GRD-0145",
+      "title": "Management recovery cannot replace complete runtime verification",
+      "kind": "test",
+      "reference": "test_management_only_report_cannot_replace_complete_non_fast_verification",
+      "verifiedBy": ["test_management_only_report_cannot_replace_complete_non_fast_verification"],
+      "lessons": ["LSN-0143"],
+      "removingItWouldAllow": "Management success or a missing/failed canonical stage to be promoted into complete immutable runtime acceptance."
     }
   ]
 }

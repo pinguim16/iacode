@@ -1,5 +1,16 @@
 # Decisions
 
+- Actual post-restart capability clears the prerequisite: cmd-0192 complete unchanged lint and
+  cmd-0194 normal-context Server/identities pass. Preserve all37 other identities/states, old scoped
+  cleanup and every prior failure. Use the supported Desktop path, not the raw Linux wrapper, for
+  fresh immutable assurance. Add the missing adverse evidence guard before freezing source.
+- Cmd-0195's new test fixture guessed a bare stage name. Correct only that premise by deriving and
+  mutating every actual canonical name; unchanged publisher behavior and all28 root controls pass
+  cmd-0196. This is fixture authoring repair, not a production fix, weakened assertion or real run.
+- Startup after interruption finds only the expected four appended restart command records beyond
+  published c836de6. Validator reports that known ledger hash/dirty mismatch; branch and HEAD still
+  match the saved symbolic binding. This is owned unfinished bookkeeping, not unexpected divergence.
+
 - The latest direct owner reply authorizes restarting Docker. Preserve the blocked pre-operation
   snapshot, use the supported Desktop restart command and then verify real Server/build/bind
   capability. This narrow authorization overrides earlier no-restart instructions for Desktop

@@ -156,6 +156,24 @@ class Gate6BoundaryTests(unittest.TestCase):
 
 
 class Gate6BookkeepingCausalTests(unittest.TestCase):
+    def test_management_only_report_cannot_replace_complete_non_fast_verification(self):
+        publisher = load_harness("run_full_verification")
+        names = [stage.name for stage in publisher.build_stages(False)]
+        self.assertTrue(names)
+        with self.assertRaises(RuntimeError):
+            publisher.summarize_stages({"result": "PASS", "managementResponded": True})
+        fixture = {"result": "PASS", "stages": [{"name": name, "result": "PASS"} for name in names]}
+        self.assertEqual(publisher.summarize_stages(fixture), (len(names), len(names), 0))
+        for missing in names:
+            incomplete = {**fixture, "stages": [row for row in fixture["stages"] if row["name"] != missing]}
+            with self.subTest(missing=missing), self.assertRaises(RuntimeError):
+                publisher.summarize_stages(incomplete)
+        for failing in names:
+            failed = {**fixture, "stages": [{**row, "result": "FAIL"} if row["name"] == failing else row
+                                           for row in fixture["stages"]]}
+            with self.subTest(failing=failing), self.assertRaises(RuntimeError):
+                publisher.summarize_stages(failed)
+
     def test_local_engine_selection_is_child_only_and_preserves_project_and_failure(self):
         transport = load_harness("with_local_engine")
         original = {"DOCKER_CONTEXT": "unresponsive-context", "DOCKER_HOST": "old-endpoint",

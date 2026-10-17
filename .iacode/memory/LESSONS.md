@@ -150,7 +150,7 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 | `LSN-0140` | `GUARDED` | HIGH | quality | Summaries preserve canonical continuation structure | `test_local_handoff_renderer_preserves_the_complete_canonical_contract`, `test_local_handoff_renderer_refuses_omitted_or_empty_sections_and_next_action`, `test_retrospective_preserves_template_and_every_current_gate_lesson` |
 | `LSN-0141` | `GUARDED` | HIGH | testing | Preflight checks honor every declared applicability dimension | `test_repository_preflight_accepts_all_declared_filters_but_refuses_unexplained_omission` |
 | `LSN-0142` | `GUARDED` | HIGH | environment | Local Engine recovery keeps transport and cleanup scoped | `test_local_engine_selection_is_child_only_and_preserves_project_and_failure`, `test_owned_recovery_refuses_operational_or_mislabelled_resources_before_removal` |
-| `LSN-0143` | `OBSERVED` | HIGH | environment | Management recovery is not complete runtime capability | _not yet guarded_ |
+| `LSN-0143` | `GUARDED` | HIGH | environment | Management recovery is not complete runtime capability | `test_management_only_report_cannot_replace_complete_non_fast_verification` |
 
 ## Detail
 
@@ -1932,11 +1932,11 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 
 ### LSN-0143 — Management recovery is not complete runtime capability
 
-- Status: `OBSERVED`, severity HIGH, category environment, recurrences 0.
+- Status: `GUARDED`, severity HIGH, category environment, recurrences 0.
 - Source: GATE-6, GATE-6-CP-0001, finding G6-INT-015.
 - Symptom: Successful Engine version, inventory and owned cleanup were generalized into readiness for all Docker-dependent controls. The next canonical lint rejected the Windows repository bind and stalled during frontend image construction; later management queries timed out again.
 - Root cause: The direct Linux management endpoint does not provide the Windows bind translation used by this lint invocation. The separate builder and renewed management nonresponse have no established backend cause. Management response alone is insufficient capability evidence.
-- Resolution: UNRESOLVED: retain the genuine scoped cleanup separately, reopen the external prerequisite and keep the Gate BLOCKED. Require a stable supported Windows-compatible build and bind path plus unchanged complete lint before a fresh immutable full run. Do not restart shared infrastructure, stop other applications, weaken checks or infer missing stage results.
+- Resolution: After explicit owner authorization, use supported Desktop restart/force-stop/start only, without data deletion or global WSL shutdown. The normal desktop-linux Server responds; actual cmd-0192 complete canonical lint proves the Windows bind/build path and cmd-0194 observes all37 prior other identities/states preserved. Keep whole immutable verification mandatory; management response alone never grants runtime acceptance.
 - Prevention:
-  - `documentation` docs/checkpoints/GATE-6-CP-0001/DOCKER-RECOVERY.md — Continuation distinguishes exact cleanup from stable management, Windows bind translation and real build/lint capability; no automated capability guard is claimed yet.
-- Evidence: `file:docs/checkpoints/GATE-6-CP-0001/attempts/DOCKER-RETRY-0002.json`, `file:docs/checkpoints/GATE-6-CP-0001/COMMANDS.jsonl`, `file:docs/checkpoints/GATE-6-CP-0001/FINDINGS.json`
+  - `test` test_management_only_report_cannot_replace_complete_non_fast_verification — Exercise the actual publisher: reject management-only input, every missing canonical stage and a falsely passing report for each failed canonical stage; derive all stage identifiers from current build_stages(False).
+- Evidence: `file:docs/checkpoints/GATE-6-CP-0001/attempts/DOCKER-RETRY-0002.json`, `file:docs/checkpoints/GATE-6-CP-0001/COMMANDS.jsonl`, `file:docs/checkpoints/GATE-6-CP-0001/FINDINGS.json`, `file:docs/checkpoints/GATE-6-CP-0001/attempts/DOCKER-RESTART-0001-AFTER.json`, `file:tests/test_gate6_experience.py`

@@ -1,5 +1,10 @@
 # Gate 6 progress
 
+Latest: IN_PROGRESS after actual supported Desktop recovery. Full canonical lint cmd-0192, normal
+Server and all37 prior other identities/states/old cleanup cmd-0194, and root28 cmd-0196 pass.
+Freeze current source/memory and publish runtime-v4; execute all47 stages and ordered internal
+assurance before any Gate6 seal. Historical failures below remain, never rewritten into PASS.
+
 Current update: BLOCKED at G6-INT-012/015. Scoped recovery cmd-0166 genuinely removes exact v3 test
 resources and observes all37 other identities/states preserved at20:11:57 UTC. Root27 transport/
 ownership controls pass cmd-0165, but the raw Linux endpoint is not general Windows capability:

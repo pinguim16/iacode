@@ -12,9 +12,9 @@
     "packages/contracts",
     "packages/persistence"
   ],
-  "generatedAt": "2026-10-17T20:34:36Z",
+  "generatedAt": "2026-10-17T20:49:33Z",
   "policyVersion": "2.0.0",
-  "inputsFingerprint": "9807ff67e4dda71c99b2783e94ff4150db1155f53cf30c6749b328e72612c52d",
+  "inputsFingerprint": "895eb75d0ab8e48d191a223a60ba32ecf25f070b6a8e1e8ecec065a9b3b37d98",
   "lessonsConsidered": 143,
   "lessonsApplicable": 142,
   "applicable": [
@@ -1431,9 +1431,9 @@
     {
       "lessonId": "LSN-0143",
       "title": "Management recovery is not complete runtime capability",
-      "status": "OBSERVED",
+      "status": "GUARDED",
       "severity": "HIGH",
-      "reasonApplicable": "applies to every Gate; category environment; severity HIGH; status OBSERVED, so it is not yet prevented automatically",
+      "reasonApplicable": "applies to every Gate; category environment; severity HIGH; already guarded, so the control must keep holding",
       "requiredCheck": "Do not promote a management-only recovery into full runtime readiness. Verify the actual canonical build, host-bind and lint capabilities through the supported transport before immutable assurance.",
       "requiredEvidence": "Real unchanged complete lint/build/bind execution and subsequent full canonical run; otherwise named external blockers and retained failed observations, never inferred readiness.",
       "derivedRequirementId": "LESSON-REQ-0142"
