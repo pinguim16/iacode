@@ -247,7 +247,9 @@
       "verifiedBy": [
         "LessonResolutionTests.test_a_test_control_must_exist_in_the_suite",
         "LessonResolutionTests.test_an_invariant_control_must_be_defined_in_the_tooling",
-        "LessonResolutionTests.test_lesson_evidence_must_resolve"
+        "LessonResolutionTests.test_lesson_evidence_must_resolve",
+        "QualityEvidenceTests.test_pass_referencing_a_failed_command_fails",
+        "QualityEvidenceTests.test_pass_referencing_an_existing_checkpoint_file_passes"
       ],
       "lessons": [
         "LSN-0018"
@@ -1516,7 +1518,8 @@
         "test_policy_count_matches_collected_suite_not_live_input_projects",
         "test_current_collection_partition_survives_added_regression_cases",
         "test_current_summary_derives_exact_vocabulary_and_ignores_noncanonical_alias",
-        "test_current_summary_refuses_missing_duplicate_reordered_or_unknown_results"
+        "test_current_summary_refuses_missing_duplicate_reordered_or_unknown_results",
+        "test_inherited_gate_assertion_accepts_growth_but_refuses_removal_or_optional_controls"
       ],
       "lessons": [
         "LSN-0102"
@@ -2087,6 +2090,18 @@
         "LSN-0140"
       ],
       "removingItWouldAllow": "A readable summary to replace mandatory structured handoff/next-action content without an executable authoring guard."
+    },
+    {
+      "guardrailId": "GRD-0143",
+      "title": "Preflight assertions respect all declared selector dimensions",
+      "kind": "test",
+      "reference": "test_repository_preflight_accepts_all_declared_filters_but_refuses_unexplained_omission",
+      "verifiedBy": [
+        "test_repository_preflight_accepts_all_declared_filters_but_refuses_unexplained_omission",
+        "LessonPreflightTests.test_the_repository_preflight_covers_every_applicable_lesson"
+      ],
+      "lessons": ["LSN-0141"],
+      "removingItWouldAllow": "A legitimate technology-filtered lesson exclusion to be rejected, or an unfiltered active lesson to disappear without a declared selector mismatch."
     }
   ]
 }

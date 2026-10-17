@@ -2540,9 +2540,9 @@ class LessonPreflightTests(unittest.TestCase):
     def test_the_repository_preflight_covers_every_applicable_lesson(self) -> None:
         """Every active lesson that applies to the declared scope is selected, and only those.
 
-        A lesson may declare the scopes it constrains -- an audit run's lessons do not constrain an
-        implementing Gate -- so the expectation is computed with the same applicability rule the
-        preflight uses, and every exclusion must name a scope the lesson itself declares.
+        The policy permits Gate, scope, technology and module selectors. Every exclusion must have
+        an independently observable mismatch in one of those declared selectors, not necessarily
+        a scope mismatch. No unfiltered active lesson may disappear from the preflight.
         """
         gate, scope = "SETUP-00", "control-plane"
         preflight = build_preflight(PROJECT_ROOT, gate, scope, [], [])
@@ -2557,8 +2557,15 @@ class LessonPreflightTests(unittest.TestCase):
         for lesson in active:
             if lesson in applicable:
                 continue
-            self.assertTrue(lesson["applicability"]["scopes"],
-                            f"{lesson['lessonId']} is excluded without declaring a scope")
+            requested = {"gates": {gate.lower()}, "scopes": {scope.lower()},
+                         "technologies": set(), "modules": set()}
+            mismatches = []
+            for dimension, values in requested.items():
+                selectors = {value.lower() for value in lesson["applicability"].get(dimension, [])}
+                if selectors and "*" not in selectors and not selectors.intersection(values):
+                    mismatches.append(dimension)
+            self.assertTrue(mismatches,
+                            f"{lesson['lessonId']} is excluded without a declared selector mismatch")
 
 
 class DerivedRequirementCompletenessTests(unittest.TestCase):

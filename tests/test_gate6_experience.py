@@ -156,6 +156,53 @@ class Gate6BoundaryTests(unittest.TestCase):
 
 
 class Gate6BookkeepingCausalTests(unittest.TestCase):
+    def test_inherited_gate_assertion_accepts_growth_but_refuses_removal_or_optional_controls(self):
+        from test_gate5_clients import Gate5QualityIntegrationTests
+
+        case = Gate5QualityIntegrationTests(
+            "test_every_inherited_gate_remains_and_clients_are_mandatory")
+        assertion = case.test_every_inherited_gate_remains_and_clients_are_mandatory
+        actual = policies.gate_definitions(ROOT)
+        with mock.patch.object(policies, "gate_definitions", return_value={
+                **actual, "futureRequired": {"mandatory": True}}):
+            assertion()
+        for name in actual:
+            with self.subTest(optional=name), mock.patch.object(policies, "gate_definitions",
+                    return_value={**actual, name: {**actual[name], "mandatory": False}}):
+                with self.assertRaises(AssertionError):
+                    assertion()
+            if name == "experienceTests":
+                continue  # The Gate6-specific inherited-policy test owns this additional control.
+            with self.subTest(removed=name), mock.patch.object(policies, "gate_definitions",
+                    return_value={key: value for key, value in actual.items() if key != name}):
+                with self.assertRaises(AssertionError):
+                    assertion()
+
+    def test_repository_preflight_accepts_all_declared_filters_but_refuses_unexplained_omission(self):
+        import test_development_ledger as inherited
+
+        case = inherited.LessonPreflightTests(
+            "test_the_repository_preflight_covers_every_applicable_lesson")
+        assertion = case.test_the_repository_preflight_covers_every_applicable_lesson
+        selectors = {"gates": ["GATE-6"], "scopes": ["independent-audit"],
+                     "technologies": ["Python"], "modules": ["services/experience"]}
+        with tempfile.TemporaryDirectory(prefix="iacode-gate6-preflight-selectors-") as raw:
+            root = Path(raw)
+            for dimension, values in selectors.items():
+                applicability = {"gates": ["*"], "scopes": [], "technologies": [], "modules": []}
+                applicability[dimension] = values
+                inherited.save_lessons(root, [inherited.make_lesson(applicability=applicability)])
+                with self.subTest(dimension=dimension), mock.patch.object(inherited, "PROJECT_ROOT", root):
+                    assertion()
+            inherited.save_lessons(root, [inherited.make_lesson()])
+            with mock.patch.object(inherited, "PROJECT_ROOT", root):
+                assertion()
+                # A producer cannot hide an unfiltered active lesson even if it lies about count.
+                with mock.patch.object(inherited, "build_preflight", return_value={
+                        "lessonsApplicable": 0, "applicable": []}):
+                    with self.assertRaises(AssertionError):
+                        assertion()
+
     def test_local_handoff_renderer_preserves_the_complete_canonical_contract(self):
         from validate_checkpoint import HANDOFF_HEADINGS
 

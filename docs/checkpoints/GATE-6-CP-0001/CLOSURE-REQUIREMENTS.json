@@ -123,14 +123,22 @@
       "sourceReference": "docs/GATE-6-CHECKLIST.md row 2.1",
       "description": "A versioned, closed experience schema defines task, environment, provider/model/effort observations, repository/base identity, trajectory summary, actions, tools, commands, files, attempts, failures, corrections, tests, quality, reviews, final result, provenance and eligibility.",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
       "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "notes": "Complete causal local source implementation and actual live lifecycle pass; acceptance against the final immutable subject and ordered assurance remain pending.",
+      "implementationEvidence": [
+        "file:apps/api/src/iacode_api/experience/sources.py",
+        "file:services/experience/src/iacode_experience/domain.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0054",
+        "command:cmd-0050"
+      ],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "file:docs/runbooks/experience-store.md"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     },
@@ -141,14 +149,22 @@
       "sourceReference": "docs/GATE-6-CHECKLIST.md row 2.2",
       "description": "Experience content consists only of bounded observable facts and source references; prompts, raw provider responses, credentials, hidden reasoning and arbitrary transcript fields are excluded.",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
       "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "notes": "Complete causal local source implementation and actual live lifecycle pass; acceptance against the final immutable subject and ordered assurance remain pending.",
+      "implementationEvidence": [
+        "file:apps/api/src/iacode_api/experience/sources.py",
+        "file:services/experience/src/iacode_experience/domain.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0054",
+        "command:cmd-0050"
+      ],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "file:docs/runbooks/experience-store.md"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     },
@@ -159,14 +175,22 @@
       "sourceReference": "docs/GATE-6-CHECKLIST.md row 2.3",
       "description": "Unobserved provider/model/effort/review information remains explicitly unknown or absent, never fabricated from configuration, a plan or an implementer assertion.",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
       "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "notes": "Complete causal local source implementation and actual live lifecycle pass; acceptance against the final immutable subject and ordered assurance remain pending.",
+      "implementationEvidence": [
+        "file:apps/api/src/iacode_api/experience/sources.py",
+        "file:services/experience/src/iacode_experience/domain.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0054",
+        "command:cmd-0050"
+      ],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "file:docs/runbooks/experience-store.md"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     },
@@ -177,14 +201,22 @@
       "sourceReference": "docs/GATE-6-CHECKLIST.md row 2.4",
       "description": "Identities, timestamps, enums, numeric types, UTF-8, nesting, collection lengths and total encoded bytes are strictly bounded; unknown fields and ambiguous JSON fail closed.",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
       "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "notes": "Complete causal local source implementation and actual live lifecycle pass; acceptance against the final immutable subject and ordered assurance remain pending.",
+      "implementationEvidence": [
+        "file:apps/api/src/iacode_api/experience/sources.py",
+        "file:services/experience/src/iacode_experience/domain.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0054",
+        "command:cmd-0050"
+      ],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "file:docs/runbooks/experience-store.md"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     },
@@ -195,14 +227,22 @@
       "sourceReference": "docs/GATE-6-CHECKLIST.md row 2.5",
       "description": "Only authorized completed source runs and their matching immutable quality/snapshot evidence may support capture; running, missing, cross-project or mismatched inputs are refused.",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
       "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "notes": "Complete causal local source implementation and actual live lifecycle pass; acceptance against the final immutable subject and ordered assurance remain pending.",
+      "implementationEvidence": [
+        "file:apps/api/src/iacode_api/experience/sources.py",
+        "file:services/experience/src/iacode_experience/domain.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0054",
+        "command:cmd-0050"
+      ],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "file:docs/runbooks/experience-store.md"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     },
@@ -213,14 +253,22 @@
       "sourceReference": "docs/GATE-6-CHECKLIST.md row 2.6",
       "description": "Source facts, hashes, parent identities and failure outcomes remain traceable; no caller may submit a quality verdict or replace trusted source facts.",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
       "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "notes": "Complete causal local source implementation and actual live lifecycle pass; acceptance against the final immutable subject and ordered assurance remain pending.",
+      "implementationEvidence": [
+        "file:apps/api/src/iacode_api/experience/sources.py",
+        "file:services/experience/src/iacode_experience/domain.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0054",
+        "command:cmd-0050"
+      ],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "file:docs/runbooks/experience-store.md"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     },
@@ -231,14 +279,22 @@
       "sourceReference": "docs/GATE-6-CHECKLIST.md row 3.1",
       "description": "Every stored experience requires explicit informed storage consent for the exact project and source; omission, rejection or a conflicting retry causes no capture.",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
       "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "notes": "Complete causal local source implementation and actual live lifecycle pass; acceptance against the final immutable subject and ordered assurance remain pending.",
+      "implementationEvidence": [
+        "file:apps/api/src/iacode_api/experience/sources.py",
+        "file:services/experience/src/iacode_experience/domain.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0054",
+        "command:cmd-0050"
+      ],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "file:docs/runbooks/experience-store.md"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     },
@@ -249,14 +305,22 @@
       "sourceReference": "docs/GATE-6-CHECKLIST.md row 3.2",
       "description": "Provenance records source type, provider/model when observed, ownership, license, all four storage/reuse permissions, evidence and limits.",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
       "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "notes": "Complete causal local source implementation and actual live lifecycle pass; acceptance against the final immutable subject and ordered assurance remain pending.",
+      "implementationEvidence": [
+        "file:apps/api/src/iacode_api/experience/sources.py",
+        "file:services/experience/src/iacode_experience/domain.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0054",
+        "command:cmd-0050"
+      ],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "file:docs/runbooks/experience-store.md"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     },
@@ -267,14 +331,22 @@
       "sourceReference": "docs/GATE-6-CHECKLIST.md row 3.3",
       "description": "Unknown ownership/license or unproven permissions cannot yield a positive RAG, training or distillation grant; raw external output never becomes trainable by storage.",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
       "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "notes": "Complete causal local source implementation and actual live lifecycle pass; acceptance against the final immutable subject and ordered assurance remain pending.",
+      "implementationEvidence": [
+        "file:apps/api/src/iacode_api/experience/sources.py",
+        "file:services/experience/src/iacode_experience/domain.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0054",
+        "command:cmd-0050"
+      ],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "file:docs/runbooks/experience-store.md"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     },
@@ -285,14 +357,22 @@
       "sourceReference": "docs/GATE-6-CHECKLIST.md row 3.4",
       "description": "Effective permissions cannot exceed any contributing source permission, and provenance/rights remain bound to the exact stored content and export.",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
       "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "notes": "Complete causal local source implementation and actual live lifecycle pass; acceptance against the final immutable subject and ordered assurance remain pending.",
+      "implementationEvidence": [
+        "file:apps/api/src/iacode_api/experience/sources.py",
+        "file:services/experience/src/iacode_experience/domain.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0054",
+        "command:cmd-0050"
+      ],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "file:docs/runbooks/experience-store.md"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     },
@@ -303,14 +383,22 @@
       "sourceReference": "docs/GATE-6-CHECKLIST.md row 3.5",
       "description": "Canonical credential detection scans complete exact normalized content before durable effects and again before delivery; matches and scanner failure produce sanitized refusal.",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
       "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "notes": "Complete causal local source implementation and actual live lifecycle pass; acceptance against the final immutable subject and ordered assurance remain pending.",
+      "implementationEvidence": [
+        "file:apps/api/src/iacode_api/experience/sources.py",
+        "file:services/experience/src/iacode_experience/domain.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0054",
+        "command:cmd-0050"
+      ],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "file:docs/runbooks/experience-store.md"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     },
@@ -321,14 +409,22 @@
       "sourceReference": "docs/GATE-6-CHECKLIST.md row 3.6",
       "description": "Known runtime authorization material and forbidden private/transcript fields cannot enter content, metadata, summaries, diagnostics, audit payloads, errors or exports.",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
       "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "notes": "Complete causal local source implementation and actual live lifecycle pass; acceptance against the final immutable subject and ordered assurance remain pending.",
+      "implementationEvidence": [
+        "file:apps/api/src/iacode_api/experience/sources.py",
+        "file:services/experience/src/iacode_experience/domain.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0054",
+        "command:cmd-0050"
+      ],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "file:docs/runbooks/experience-store.md"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     },
@@ -339,14 +435,22 @@
       "sourceReference": "docs/GATE-6-CHECKLIST.md row 3.7",
       "description": "Denied and unknown reuse requests fail closed without data disclosure; no endpoint performs knowledge retrieval, training or distillation.",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
       "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "notes": "Complete causal local source implementation and actual live lifecycle pass; acceptance against the final immutable subject and ordered assurance remain pending.",
+      "implementationEvidence": [
+        "file:apps/api/src/iacode_api/experience/sources.py",
+        "file:services/experience/src/iacode_experience/domain.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0054",
+        "command:cmd-0050"
+      ],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "file:docs/runbooks/experience-store.md"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     },
@@ -357,14 +461,22 @@
       "sourceReference": "docs/GATE-6-CHECKLIST.md row 4.1",
       "description": "Alembic evolves the existing experiences persistence contract rather than introducing an unrelated shadow store; ORM and actual PostgreSQL schema agree.",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
       "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "notes": "Complete causal local source implementation and actual live lifecycle pass; acceptance against the final immutable subject and ordered assurance remain pending.",
+      "implementationEvidence": [
+        "file:apps/api/src/iacode_api/experience/sources.py",
+        "file:services/experience/src/iacode_experience/domain.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0054",
+        "command:cmd-0050"
+      ],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "file:docs/runbooks/experience-store.md"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     },
@@ -375,14 +487,22 @@
       "sourceReference": "docs/GATE-6-CHECKLIST.md row 4.2",
       "description": "Schema migration preserves identity, rights and lineage of legacy rows without silently treating unvalidated payloads as current valid experiences.",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
       "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "notes": "Complete causal local source implementation and actual live lifecycle pass; acceptance against the final immutable subject and ordered assurance remain pending.",
+      "implementationEvidence": [
+        "file:apps/api/src/iacode_api/experience/sources.py",
+        "file:services/experience/src/iacode_experience/domain.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0054",
+        "command:cmd-0050"
+      ],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "file:docs/runbooks/experience-store.md"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     },
@@ -393,14 +513,22 @@
       "sourceReference": "docs/GATE-6-CHECKLIST.md row 4.3",
       "description": "Content, schema version, provenance and digest form one immutable captured fact; unauthorized updates and direct persistence corruption cannot produce a valid delivered record.",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
       "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "notes": "Complete causal local source implementation and actual live lifecycle pass; acceptance against the final immutable subject and ordered assurance remain pending.",
+      "implementationEvidence": [
+        "file:apps/api/src/iacode_api/experience/sources.py",
+        "file:services/experience/src/iacode_experience/domain.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0054",
+        "command:cmd-0050"
+      ],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "file:docs/runbooks/experience-store.md"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     },
@@ -411,14 +539,22 @@
       "sourceReference": "docs/GATE-6-CHECKLIST.md row 4.4",
       "description": "Capture and its bounded audit fact commit atomically; failed validation, unavailable dependencies and rolled-back writes leave no partial experience.",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
       "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "notes": "Complete causal local source implementation and actual live lifecycle pass; acceptance against the final immutable subject and ordered assurance remain pending.",
+      "implementationEvidence": [
+        "file:apps/api/src/iacode_api/experience/sources.py",
+        "file:services/experience/src/iacode_experience/domain.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0054",
+        "command:cmd-0050"
+      ],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "file:docs/runbooks/experience-store.md"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     },
@@ -429,14 +565,22 @@
       "sourceReference": "docs/GATE-6-CHECKLIST.md row 4.5",
       "description": "Stable request identity makes accepted-response-loss and concurrent retries idempotent; conflicting content is refused rather than silently overwritten.",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
       "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "notes": "Complete causal local source implementation and actual live lifecycle pass; acceptance against the final immutable subject and ordered assurance remain pending.",
+      "implementationEvidence": [
+        "file:apps/api/src/iacode_api/experience/sources.py",
+        "file:services/experience/src/iacode_experience/domain.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0054",
+        "command:cmd-0050"
+      ],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "file:docs/runbooks/experience-store.md"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     },
@@ -447,14 +591,22 @@
       "sourceReference": "docs/GATE-6-CHECKLIST.md row 4.6",
       "description": "New request identifiers cannot silently resurrect revoked/deleted/expired content or reset its retention clock; repeated mutations preserve truthful terminal state.",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
       "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "notes": "Complete causal local source implementation and actual live lifecycle pass; acceptance against the final immutable subject and ordered assurance remain pending.",
+      "implementationEvidence": [
+        "file:apps/api/src/iacode_api/experience/sources.py",
+        "file:services/experience/src/iacode_experience/domain.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0054",
+        "command:cmd-0050"
+      ],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "file:docs/runbooks/experience-store.md"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     },
@@ -465,14 +617,22 @@
       "sourceReference": "docs/GATE-6-CHECKLIST.md row 5.1",
       "description": "All experience operations require actual configured runtime authentication; no unauthenticated legacy alternate path reaches experience data or effects.",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
       "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "notes": "Complete causal local source implementation and actual live lifecycle pass; acceptance against the final immutable subject and ordered assurance remain pending.",
+      "implementationEvidence": [
+        "file:apps/api/src/iacode_api/experience/sources.py",
+        "file:services/experience/src/iacode_experience/domain.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0054",
+        "command:cmd-0050"
+      ],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "file:docs/runbooks/experience-store.md"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     },
@@ -483,14 +643,22 @@
       "sourceReference": "docs/GATE-6-CHECKLIST.md row 5.2",
       "description": "Project/source identity scopes every read, list, export, withdrawal and deletion; a mismatched project cannot disclose or modify an experience.",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
       "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "notes": "Complete causal local source implementation and actual live lifecycle pass; acceptance against the final immutable subject and ordered assurance remain pending.",
+      "implementationEvidence": [
+        "file:apps/api/src/iacode_api/experience/sources.py",
+        "file:services/experience/src/iacode_experience/domain.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0054",
+        "command:cmd-0050"
+      ],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "file:docs/runbooks/experience-store.md"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     },
@@ -501,14 +669,22 @@
       "sourceReference": "docs/GATE-6-CHECKLIST.md row 5.3",
       "description": "Capture, inspect, list and machine-readable export round-trip actual persisted content and hashes, without deriving success from an in-memory fake.",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
       "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "notes": "Complete causal local source implementation and actual live lifecycle pass; acceptance against the final immutable subject and ordered assurance remain pending.",
+      "implementationEvidence": [
+        "file:apps/api/src/iacode_api/experience/sources.py",
+        "file:services/experience/src/iacode_experience/domain.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0054",
+        "command:cmd-0050"
+      ],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "file:docs/runbooks/experience-store.md"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     },
@@ -519,14 +695,22 @@
       "sourceReference": "docs/GATE-6-CHECKLIST.md row 5.4",
       "description": "Listing is deterministically ordered, bounded and resumable with a validated project-bound cursor; invalid cursors and enumeration cannot bypass access/retention.",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
       "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "notes": "Complete causal local source implementation and actual live lifecycle pass; acceptance against the final immutable subject and ordered assurance remain pending.",
+      "implementationEvidence": [
+        "file:apps/api/src/iacode_api/experience/sources.py",
+        "file:services/experience/src/iacode_experience/domain.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0054",
+        "command:cmd-0050"
+      ],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "file:docs/runbooks/experience-store.md"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     },
@@ -537,14 +721,22 @@
       "sourceReference": "docs/GATE-6-CHECKLIST.md row 5.5",
       "description": "Errors use stable bounded reason codes and observable correlation without echoing rejected content, credentials, database details or exception strings.",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
       "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "notes": "Complete causal local source implementation and actual live lifecycle pass; acceptance against the final immutable subject and ordered assurance remain pending.",
+      "implementationEvidence": [
+        "file:apps/api/src/iacode_api/experience/sources.py",
+        "file:services/experience/src/iacode_experience/domain.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0054",
+        "command:cmd-0050"
+      ],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "file:docs/runbooks/experience-store.md"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     },
@@ -555,14 +747,22 @@
       "sourceReference": "docs/GATE-6-CHECKLIST.md row 5.6",
       "description": "Requests and responses preserve the existing authenticated transport and source boundaries; clients and agents cannot gain host execution or verdict authority.",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
       "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "notes": "Complete causal local source implementation and actual live lifecycle pass; acceptance against the final immutable subject and ordered assurance remain pending.",
+      "implementationEvidence": [
+        "file:apps/api/src/iacode_api/experience/sources.py",
+        "file:services/experience/src/iacode_experience/domain.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0054",
+        "command:cmd-0050"
+      ],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "file:docs/runbooks/experience-store.md"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     },
@@ -573,14 +773,22 @@
       "sourceReference": "docs/GATE-6-CHECKLIST.md row 6.1",
       "description": "A versioned consumed policy sets finite retention defaults/maxima, bounded processing and explicit operational limits; a caller cannot widen canonical ceilings.",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
       "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "notes": "Complete causal local source implementation and actual live lifecycle pass; acceptance against the final immutable subject and ordered assurance remain pending.",
+      "implementationEvidence": [
+        "file:apps/api/src/iacode_api/experience/sources.py",
+        "file:services/experience/src/iacode_experience/domain.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0054",
+        "command:cmd-0050"
+      ],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "file:docs/runbooks/experience-store.md"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     },
@@ -591,14 +799,22 @@
       "sourceReference": "docs/GATE-6-CHECKLIST.md row 6.2",
       "description": "Expired or storage-withdrawn content is immediately unavailable to reads, listings, exports and reuse, independently of the next physical sweep.",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
       "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "notes": "Complete causal local source implementation and actual live lifecycle pass; acceptance against the final immutable subject and ordered assurance remain pending.",
+      "implementationEvidence": [
+        "file:apps/api/src/iacode_api/experience/sources.py",
+        "file:services/experience/src/iacode_experience/domain.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0054",
+        "command:cmd-0050"
+      ],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "file:docs/runbooks/experience-store.md"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     },
@@ -609,14 +825,22 @@
       "sourceReference": "docs/GATE-6-CHECKLIST.md row 6.3",
       "description": "Owned automatic retention processing physically removes expired primary payloads in bounded atomic batches and records only minimal non-sensitive deletion evidence.",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
       "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "notes": "Complete causal local source implementation and actual live lifecycle pass; acceptance against the final immutable subject and ordered assurance remain pending.",
+      "implementationEvidence": [
+        "file:apps/api/src/iacode_api/experience/sources.py",
+        "file:services/experience/src/iacode_experience/domain.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0054",
+        "command:cmd-0050"
+      ],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "file:docs/runbooks/experience-store.md"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     },
@@ -627,14 +851,22 @@
       "sourceReference": "docs/GATE-6-CHECKLIST.md row 6.4",
       "description": "Explicit withdrawal/deletion is authenticated, project-bound and idempotent; it cannot delete source runs, quality evidence or unrelated project data.",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
       "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "notes": "Complete causal local source implementation and actual live lifecycle pass; acceptance against the final immutable subject and ordered assurance remain pending.",
+      "implementationEvidence": [
+        "file:apps/api/src/iacode_api/experience/sources.py",
+        "file:services/experience/src/iacode_experience/domain.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0054",
+        "command:cmd-0050"
+      ],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "file:docs/runbooks/experience-store.md"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     },
@@ -645,14 +877,22 @@
       "sourceReference": "docs/GATE-6-CHECKLIST.md row 6.5",
       "description": "Runtime restart preserves records, idempotency and rights; corrupt schema/content/provenance or unavailable source evidence fails closed after recovery.",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
       "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "notes": "Complete causal local source implementation and actual live lifecycle pass; acceptance against the final immutable subject and ordered assurance remain pending.",
+      "implementationEvidence": [
+        "file:apps/api/src/iacode_api/experience/sources.py",
+        "file:services/experience/src/iacode_experience/domain.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0054",
+        "command:cmd-0050"
+      ],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "file:docs/runbooks/experience-store.md"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     },
@@ -663,14 +903,22 @@
       "sourceReference": "docs/GATE-6-CHECKLIST.md row 6.6",
       "description": "Background tasks and dependency failures have explicit bounded lifecycle, observable errors and owned shutdown; storage/backup deletion limits and safe restore procedure are documented.",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
       "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "notes": "Complete causal local source implementation and actual live lifecycle pass; acceptance against the final immutable subject and ordered assurance remain pending.",
+      "implementationEvidence": [
+        "file:apps/api/src/iacode_api/experience/sources.py",
+        "file:services/experience/src/iacode_experience/domain.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0054",
+        "command:cmd-0050"
+      ],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "file:docs/runbooks/experience-store.md"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     },
@@ -681,14 +929,22 @@
       "sourceReference": "docs/GATE-6-CHECKLIST.md row 7.1",
       "description": "Actual fresh-stack acceptance captures a real completed governed task and quality result with observed provider/tool lineage and persisted rights, then reads/lists/exports matching bytes.",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
       "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "notes": "Complete causal local source implementation and actual live lifecycle pass; acceptance against the final immutable subject and ordered assurance remain pending.",
+      "implementationEvidence": [
+        "file:apps/api/src/iacode_api/experience/sources.py",
+        "file:services/experience/src/iacode_experience/domain.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0054",
+        "command:cmd-0050"
+      ],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "file:docs/runbooks/experience-store.md"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     },
@@ -699,14 +955,22 @@
       "sourceReference": "docs/GATE-6-CHECKLIST.md row 7.2",
       "description": "Live acceptance proves restart, stable retry, retention expiry, deletion and unchanged source resources through the actual API and database.",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
       "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "notes": "Complete causal local source implementation and actual live lifecycle pass; acceptance against the final immutable subject and ordered assurance remain pending.",
+      "implementationEvidence": [
+        "file:apps/api/src/iacode_api/experience/sources.py",
+        "file:services/experience/src/iacode_experience/domain.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0054",
+        "command:cmd-0050"
+      ],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "file:docs/runbooks/experience-store.md"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     },
@@ -717,14 +981,22 @@
       "sourceReference": "docs/GATE-6-CHECKLIST.md row 7.3",
       "description": "Live adverse controls attack authentication, project mismatch, denied reuse, secret/private ingress, forged facts, corruption and resurrection beside a valid clean control.",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
       "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "notes": "Complete causal local source implementation and actual live lifecycle pass; acceptance against the final immutable subject and ordered assurance remain pending.",
+      "implementationEvidence": [
+        "file:apps/api/src/iacode_api/experience/sources.py",
+        "file:services/experience/src/iacode_experience/domain.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0054",
+        "command:cmd-0050"
+      ],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "file:docs/runbooks/experience-store.md"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     },
@@ -735,14 +1007,22 @@
       "sourceReference": "docs/GATE-6-CHECKLIST.md row 7.4",
       "description": "New integration tests own their runtime namespace, fixtures and temporary resources; operational identities/source bytes stay unchanged and cleanup is observed.",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
       "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "notes": "Complete causal local source implementation and actual live lifecycle pass; acceptance against the final immutable subject and ordered assurance remain pending.",
+      "implementationEvidence": [
+        "file:apps/api/src/iacode_api/experience/sources.py",
+        "file:services/experience/src/iacode_experience/domain.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0054",
+        "command:cmd-0050"
+      ],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "file:docs/runbooks/experience-store.md"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     },
@@ -753,14 +1033,22 @@
       "sourceReference": "docs/GATE-6-CHECKLIST.md row 7.5",
       "description": "Every mandatory new experience scenario joins the full non-fast verifier without dropping inherited stages; failed reruns cannot reuse stale PASS artifacts.",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
       "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "notes": "Complete causal local source implementation and actual live lifecycle pass; acceptance against the final immutable subject and ordered assurance remain pending.",
+      "implementationEvidence": [
+        "file:apps/api/src/iacode_api/experience/sources.py",
+        "file:services/experience/src/iacode_experience/domain.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0054",
+        "command:cmd-0050"
+      ],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "file:docs/runbooks/experience-store.md"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     },
@@ -771,14 +1059,22 @@
       "sourceReference": "docs/GATE-6-CHECKLIST.md row 7.6",
       "description": "Functional reports bind the actual immutable subject, exact source fingerprint and process outcomes; available safe producer bytes survive fallible postprocessing/cleanup.",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
       "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "notes": "Complete causal local source implementation and actual live lifecycle pass; acceptance against the final immutable subject and ordered assurance remain pending.",
+      "implementationEvidence": [
+        "file:apps/api/src/iacode_api/experience/sources.py",
+        "file:services/experience/src/iacode_experience/domain.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0054",
+        "command:cmd-0050"
+      ],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "file:docs/runbooks/experience-store.md"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     },
@@ -3416,6 +3712,24 @@
       "sourceRef": "lesson:LSN-0140",
       "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0139",
       "description": "Verify summaries preserve canonical continuation structure",
+      "mandatory": true,
+      "implementationStatus": "NOT_STARTED",
+      "finalStatus": "NOT_STARTED",
+      "justification": null,
+      "notes": "",
+      "implementationEvidence": [],
+      "testEvidence": [],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "LESSON-REQ-0140",
+      "source": "LESSON",
+      "sourceRef": "lesson:LSN-0141",
+      "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0140",
+      "description": "Verify preflight checks honor every declared applicability dimension",
       "mandatory": true,
       "implementationStatus": "NOT_STARTED",
       "finalStatus": "NOT_STARTED",

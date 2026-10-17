@@ -2,15 +2,17 @@
   "schemaVersion": "3.4.0",
   "phase": "GATE-6",
   "gate": "GATE-6",
-  "status": "IN_PROGRESS",
+  "status": "BLOCKED",
   "branch": "main",
   "baseCommit": "bcfe297278d25ee5a1db70a32b8c4ba0731941ea",
   "currentCommit": "HEAD",
   "dirty": false,
   "startedAt": "2026-10-17T11:34:14Z",
-  "updatedAt": "2026-10-17T14:36:35Z",
-  "nextAllowedAction": "Owner-requested reboot pause saved. After restart read REBOOT-RESUME.md and canonical entry contracts, validate Git/checkpoint state, publish a new immutable Gate6 runtime subject and rerun all 47 full verification stages before ordered internal assurance and seal. Runtime-v2 was interrupted, not passed. Independent M2 remains pending; Gate7 is not authorized.",
-  "blockedBy": [],
+  "updatedAt": "2026-10-17T20:00:53Z",
+  "nextAllowedAction": "Read DOCKER-RECOVERY.md. Restore responsive Docker management without disrupting other applications; no global restart is authorized. Observe and clean only iacode-verify-acf6759435d1 owned resources, then publish a new immutable runtime-v4 subject and rerun all canonical stages before ordered internal assurance and seal. V3 is incomplete with root FAIL; local corrections pass but are not full acceptance. Independent M2 remains pending; Gate7 is not authorized.",
+  "blockedBy": [
+    "G6-INT-012: Docker management queries time out, preventing complete runtime verification and observation/cleanup of owned Compose resources. Other applications are reported running; Docker/WSL restart and shared service/container disruption are not authorized."
+  ],
   "secondToolValidation": {
     "status": "PENDING_MANUAL",
     "tool": null,
@@ -22,8 +24,8 @@
   },
   "requirementsMatrix": {
     "path": "REQUIREMENTS-MATRIX.json",
-    "total": 190,
-    "mandatory": 189,
+    "total": 191,
+    "mandatory": 190,
     "complete": 0,
     "partial": 37,
     "missing": 0,
@@ -31,13 +33,21 @@
     "coveragePercent": 0.0
   },
   "greenKeeper": {
-    "status": "NOT_EXECUTED",
-    "cycles": 0,
-    "remainingFailures": 0,
-    "unresolvedReworkItems": 0,
+    "status": "FAIL",
+    "cycles": 1,
+    "remainingFailures": 1,
+    "unresolvedReworkItems": 1,
     "log": "REWORK-LOG.jsonl",
-    "externalBlockers": [],
-    "evidence": []
+    "externalBlockers": [
+      "G6-INT-012: Docker management nonresponse; no global restart authority."
+    ],
+    "evidence": [
+      "command:cmd-0136",
+      "command:cmd-0140",
+      "command:cmd-0141",
+      "command:cmd-0142",
+      "command:cmd-0143"
+    ]
   },
   "deliveryCompleteness": {
     "status": "NOT_EXECUTED",
@@ -47,7 +57,7 @@
     "auditor": null,
     "evidence": []
   },
-  "reworkCycles": 0,
+  "reworkCycles": 1,
   "independentReview": {
     "status": "PENDING",
     "tool": null,
@@ -66,9 +76,9 @@
     "path": "LESSON-PREFLIGHT.json",
     "gate": "GATE-6",
     "scope": "Experience Store with observable source-bound engineering facts, privacy, provenance, storage and reuse rights, retention, authenticated API and recovery",
-    "lessonsConsidered": 140,
-    "lessonsApplicable": 139,
-    "derivedRequirements": 139,
+    "lessonsConsidered": 141,
+    "lessonsApplicable": 140,
+    "derivedRequirements": 140,
     "evidence": [
       "checkpoint:LESSON-PREFLIGHT.json",
       "checkpoint:REQUIREMENTS-MATRIX.json"
@@ -91,14 +101,17 @@
   "externalAuditRequired": false,
   "externalAuditReason": null,
   "guardrailEffectiveness": {
-    "guardrailsTotal": 142,
-    "guardrailsResolved": 142,
-    "guardrailsTested": 142,
-    "guardrailsEffective": 142,
+    "guardrailsTotal": 143,
+    "guardrailsResolved": 143,
+    "guardrailsTested": 143,
+    "guardrailsEffective": 143,
     "guardrailFailures": 0,
     "evidence": [
       "command:cmd-0054",
-      "command:cmd-0050"
+      "command:cmd-0050",
+      "command:cmd-0141",
+      "command:cmd-0145",
+      "command:cmd-0146"
     ]
   },
   "integrity": {

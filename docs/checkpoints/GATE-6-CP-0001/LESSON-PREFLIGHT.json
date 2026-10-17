@@ -12,11 +12,11 @@
     "packages/contracts",
     "packages/persistence"
   ],
-  "generatedAt": "2026-10-17T14:21:15Z",
+  "generatedAt": "2026-10-17T20:00:02Z",
   "policyVersion": "2.0.0",
-  "inputsFingerprint": "58bff6b4ae6c8bd1670efa3a366a676e12d7c7734e94dfd65353bb86cae1ee7a",
-  "lessonsConsidered": 140,
-  "lessonsApplicable": 139,
+  "inputsFingerprint": "f692052744a66a07856bc404f3f95b788bbf506d9a73436e64938bf23a702050",
+  "lessonsConsidered": 141,
+  "lessonsApplicable": 140,
   "applicable": [
     {
       "lessonId": "LSN-0001",
@@ -1407,6 +1407,16 @@
       "requiredCheck": "Any helper that replaces a checkpoint artifact must preserve the owning canonical structural contract, not substitute an unstructured summary; required sections stay substantive and complete.",
       "requiredEvidence": "Actual renderer output against canonical headings, omission/empty-section adverse controls and current canonical checkpoint acceptance without any validator weakening.",
       "derivedRequirementId": "LESSON-REQ-0139"
+    },
+    {
+      "lessonId": "LSN-0141",
+      "title": "Preflight checks honor every declared applicability dimension",
+      "status": "GUARDED",
+      "severity": "HIGH",
+      "reasonApplicable": "applies to every Gate; category testing; severity HIGH; already guarded, so the control must keep holding",
+      "requiredCheck": "Applicability audits honor all canonical selector dimensions without inventing a scope-only exclusion rule or allowing an active unfiltered lesson to disappear.",
+      "requiredEvidence": "Actual legitimate-selector positive controls and unexplained-omission refusal, with the complete inherited preflight class green.",
+      "derivedRequirementId": "LESSON-REQ-0140"
     }
   ],
   "derivedRequirements": [
@@ -2382,6 +2392,13 @@
       "description": "Verify summaries preserve canonical continuation structure",
       "mandatory": true,
       "requiredEvidence": "Actual renderer output against canonical headings, omission/empty-section adverse controls and current canonical checkpoint acceptance without any validator weakening."
+    },
+    {
+      "id": "LESSON-REQ-0140",
+      "lessonId": "LSN-0141",
+      "description": "Verify preflight checks honor every declared applicability dimension",
+      "mandatory": true,
+      "requiredEvidence": "Actual legitimate-selector positive controls and unexplained-omission refusal, with the complete inherited preflight class green."
     }
   ]
 }

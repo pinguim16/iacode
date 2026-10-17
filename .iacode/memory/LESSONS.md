@@ -25,7 +25,7 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 | `LSN-0015` | `GUARDED` | CRITICAL | quality | Every positive terminal status needs one shared promotion invariant | `validate_checkpoint._validate_delivery_assurance`, `PromotionInvariantTests.test_every_positive_status_rejects_a_red_green_keeper` |
 | `LSN-0016` | `GUARDED` | CRITICAL | testing | A mandatory set must be closed by policy, never chosen by the caller | `validate_checkpoint._validate_green_keeper_cycle`, `.iacode/policies/quality-gates.json` |
 | `LSN-0017` | `GUARDED` | CRITICAL | process | A completeness denominator must come from a source the delivery does not own | `policies.expected_requirement_refs`, `ExpectedRequirementSetTests.test_an_unexpected_anchored_requirement_is_rejected` |
-| `LSN-0018` | `GUARDED` | CRITICAL | tooling | A structured reference must be resolved, not merely well typed | `lessons.resolve_control`, `LessonResolutionTests.test_a_test_control_must_exist_in_the_suite` |
+| `LSN-0018` | `GUARDED` | CRITICAL | tooling | A structured reference must be resolved, not merely well typed | `lessons.resolve_control`, `LessonResolutionTests.test_a_test_control_must_exist_in_the_suite`, `QualityEvidenceTests.test_pass_referencing_a_failed_command_fails`, `QualityEvidenceTests.test_pass_referencing_an_existing_checkpoint_file_passes` |
 | `LSN-0019` | `GUARDED` | HIGH | tooling | A derived artifact must carry a fingerprint of the inputs that produced it | `lessons.preflight_staleness`, `PreflightFreshnessTests.test_a_dropped_lesson_makes_the_preflight_stale` |
 | `LSN-0020` | `GUARDED` | CRITICAL | tooling | Evidence produced from a dirty tree needs immutable input identity | `ledger_common.build_command_record`, `CommandInputBindingTests.test_the_recorder_binds_inputs_automatically`, `test_input_digests_are_frozen_before_a_real_child_rewrites_its_inputs` |
 | `LSN-0021` | `GUARDED` | CRITICAL | git | Sealed history needs an anchor outside the content it describes | `anchors.verify_chain`, `IntegrityAnchorTests.test_a_broken_link_between_anchors_is_detected` |
@@ -109,7 +109,7 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 | `LSN-0099` | `GUARDED` | HIGH | checkpoint | A refused subject is an attempted input, not executed commit evidence | `test_inputs_are_canonicalized_and_an_unknown_subject_is_refused` |
 | `LSN-0100` | `GUARDED` | HIGH | checkpoint | Pre-seal detached validation must bind the explicit subject namespace | `test_in_progress_symbolic_head_validates_from_its_matching_subject_tag`, `test_subject_tag_never_substitutes_for_a_sealed_checkpoint_tag` |
 | `LSN-0101` | `GUARDED` | HIGH | checkpoint | A structural record and its canonical index are one atomic change | `test_the_index_lists_every_record_with_its_title_and_status`, `test_a_record_missing_from_the_index_is_detected` |
-| `LSN-0102` | `GUARDED` | CRITICAL | quality | Assurance denominators must derive category counts from the current source set | `test_corrective_partition_is_derived_from_the_current_reference_set`, `test_current_collection_partition_survives_added_regression_cases`, `test_current_summary_derives_exact_vocabulary_and_ignores_noncanonical_alias`, `test_current_summary_refuses_missing_duplicate_reordered_or_unknown_results` |
+| `LSN-0102` | `GUARDED` | CRITICAL | quality | Assurance denominators must derive category counts from the current source set | `test_corrective_partition_is_derived_from_the_current_reference_set`, `test_current_collection_partition_survives_added_regression_cases`, `test_current_summary_derives_exact_vocabulary_and_ignores_noncanonical_alias`, `test_current_summary_refuses_missing_duplicate_reordered_or_unknown_results`, `test_inherited_gate_assertion_accepts_growth_but_refuses_removal_or_optional_controls` |
 | `LSN-0103` | `GUARDED` | HIGH | testing | Adversarial fixtures must hash the complete validated contract | `test_verdict_before_cancellation_refuses_late_acceptance` |
 | `LSN-0104` | `GUARDED` | HIGH | process | Intermediate closure and independent validation must have unambiguous contracts | `test_internal_closure_cannot_claim_independent_review_or_red_team` |
 | `LSN-0105` | `GUARDED` | CRITICAL | testing | New behavioral tests must satisfy the unchanged source-quality contract | `test_mandatory_lint_covers_every_python_project_root` |
@@ -148,6 +148,7 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 | `LSN-0138` | `GUARDED` | HIGH | security | Secret projection distinguishes public identities from authorization secrets | `test_public_minio_identity_is_not_a_bearer_secret_but_storage_password_stays_protected`, `test_known_opaque_capability_refused_in_declared_forms` |
 | `LSN-0139` | `GUARDED` | HIGH | security | Privacy projection begins in the source query | `test_actual_sql_projection_does_not_fetch_unneeded_private_source_columns`, `test_oversized_required_source_json_is_refused_before_materialization_and_writes` |
 | `LSN-0140` | `GUARDED` | MEDIUM | quality | Summaries preserve canonical continuation structure | `test_local_handoff_renderer_preserves_the_complete_canonical_contract`, `test_local_handoff_renderer_refuses_omitted_or_empty_sections_and_next_action` |
+| `LSN-0141` | `GUARDED` | HIGH | testing | Preflight checks honor every declared applicability dimension | `test_repository_preflight_accepts_all_declared_filters_but_refuses_unexplained_omission` |
 
 ## Detail
 
@@ -385,7 +386,7 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 
 ### LSN-0018 — A structured reference must be resolved, not merely well typed
 
-- Status: `GUARDED`, severity CRITICAL, category tooling, recurrences 0.
+- Status: `GUARDED`, severity CRITICAL, category tooling, recurrences 2.
 - Source: SETUP-00, SETUP-00-CP-0007, finding M0-F-004 / M0-F-003.
 - Symptom: A GUARDED lesson naming a nonexistent test, a lesson citing a nonexistent evidence file, and a secret-shaped value nested in prevention.description all validated.
 - Root cause: Validation checked that a field had the right shape and never asked the repository whether the thing it named exists.
@@ -393,7 +394,9 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 - Prevention:
   - `invariant` lessons.resolve_control — Every control reference is resolved against the suite or the repository.
   - `test` LessonResolutionTests.test_a_test_control_must_exist_in_the_suite — A control naming a nonexistent test is refused.
-- Evidence: `file:docs/checkpoints/SETUP-00-CP-0007/REVIEW-REPORT.md`, `file:docs/checkpoints/SETUP-00-CP-0007/AUDIT-EXECUTIONS.md`
+  - `test` QualityEvidenceTests.test_pass_referencing_a_failed_command_fails — The owning quality evidence resolver refuses a failed command as structured successful execution evidence.
+  - `test` QualityEvidenceTests.test_pass_referencing_an_existing_checkpoint_file_passes — A durable actual checkpoint-local file resolves through the owning quality evidence boundary.
+- Evidence: `file:docs/checkpoints/SETUP-00-CP-0007/REVIEW-REPORT.md`, `file:docs/checkpoints/SETUP-00-CP-0007/AUDIT-EXECUTIONS.md`, `file:docs/checkpoints/GATE-6-CP-0001/FINDINGS.json`, `file:docs/checkpoints/GATE-6-CP-0001/COMMANDS.jsonl`
 
 ### LSN-0019 — A derived artifact must carry a fingerprint of the inputs that produced it
 
@@ -1449,17 +1452,18 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 
 ### LSN-0102 — Assurance denominators must derive category counts from the current source set
 
-- Status: `GUARDED`, severity CRITICAL, category quality, recurrences 2.
+- Status: `GUARDED`, severity CRITICAL, category quality, recurrences 3.
 - Source: GATE-4, GATE-4-CP-0009, finding cmd-0112-requirement-completion.
 - Symptom: The requirement closer resolved all rows but returned failure because its expected partition still hard-coded eight corrective rows after the current corrective reference set had grown to nine.
 - Root cause: The harness maintained the corrective reference set and a duplicate numeric partition literal. Adding a required lesson changed the source set without changing the second representation, so the assurance step rejected its own truthful count.
-- Resolution: Derive corrected and inherited partition counts from CORRECTIVE_REFS and the fixed sealed twenty-attack denominator, then compare the observed partition with that single-source calculation. Gate 5 derives the live counted/raw/input suite partition from the independently enumerated current source sets. Cmd-0073 passed all inherited collection controls plus added-case growth and a deliberate input-leak mutation.
+- Resolution: Derive corrected and inherited partition counts from CORRECTIVE_REFS and the fixed sealed twenty-attack denominator, then compare the observed partition with that single-source calculation. Gate 5 derives the live counted/raw/input suite partition from the independently enumerated current source sets. Cmd-0073 passed all inherited collection controls plus added-case growth and a deliberate input-leak mutation. Gate6 corrects only the causally defective inherited maximum-set assertion: all inherited identifiers remain a required minimum, every current control stays mandatory, and Gate6 separately requires experienceTests.
 - Prevention:
   - `test` test_corrective_partition_is_derived_from_the_current_reference_set — Adding a corrective reference changes the expected partition automatically without editing a second count.
   - `test` test_current_collection_partition_survives_added_regression_cases — Execute the actual live partition property in an owned collection fixture, add another regression source and re-execute unchanged; deliberately admit an excluded input to prove rejection.
   - `test` test_current_summary_derives_exact_vocabulary_and_ignores_noncanonical_alias — Execute the strengthened current causal boundary without weakening inherited controls.
   - `test` test_current_summary_refuses_missing_duplicate_reordered_or_unknown_results — Execute the strengthened current causal boundary without weakening inherited controls.
-- Evidence: `file:docs/checkpoints/GATE-4-CP-0009/COMMANDS.jsonl`, `file:docs/checkpoints/GATE-4-CP-0009/audit-harness/complete_requirements.py`, `file:tests/test_checkpoint_audit_harnesses.py`, `file:tests/test_test_suite_input_repositories.py`, `file:docs/checkpoints/GATE-5-CP-0001/FINDINGS.json`, `file:docs/checkpoints/GATE-5-CP-0001/COMMANDS.jsonl`, `file:tests/test_gate5_clients.py`
+  - `test` test_inherited_gate_assertion_accepts_growth_but_refuses_removal_or_optional_controls — Execute the inherited assertion with legitimate mandatory growth, every inherited removal and every mandatory-flag downgrade.
+- Evidence: `file:docs/checkpoints/GATE-4-CP-0009/COMMANDS.jsonl`, `file:docs/checkpoints/GATE-4-CP-0009/audit-harness/complete_requirements.py`, `file:tests/test_checkpoint_audit_harnesses.py`, `file:tests/test_test_suite_input_repositories.py`, `file:docs/checkpoints/GATE-5-CP-0001/FINDINGS.json`, `file:docs/checkpoints/GATE-5-CP-0001/COMMANDS.jsonl`, `file:tests/test_gate5_clients.py`, `file:docs/checkpoints/GATE-6-CP-0001/FINDINGS.json`, `file:docs/checkpoints/GATE-6-CP-0001/COMMANDS.jsonl`, `file:tests/test_gate6_experience.py`
 
 ### LSN-0103 — Adversarial fixtures must hash the complete validated contract
 
@@ -1899,3 +1903,14 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
   - `test` test_local_handoff_renderer_preserves_the_complete_canonical_contract — Actual canonical renderer output and every omitted/empty-section refusal.
   - `test` test_local_handoff_renderer_refuses_omitted_or_empty_sections_and_next_action — Actual canonical renderer output and every omitted/empty-section refusal.
 - Evidence: `file:docs/checkpoints/GATE-6-CP-0001/COMMANDS.jsonl`, `file:docs/checkpoints/GATE-6-CP-0001/FINDINGS.json`
+
+### LSN-0141 — Preflight checks honor every declared applicability dimension
+
+- Status: `GUARDED`, severity HIGH, category testing, recurrences 0.
+- Source: GATE-6, GATE-6-CP-0001, finding G6-INT-011.
+- Symptom: The immutable root suite rejects LSN-0136 because a technology-filtered exclusion has no scope filter; cmd-0138 reproduces the failure in isolation.
+- Root cause: The repository-wide preflight regression assumed scopes were the only legitimate selector even though the policy and its existing tests support Gate, scope, technology and module filters. Production applicability was correct; the new Python lesson exposed the stale assertion.
+- Resolution: Keep production policy and lesson selectors unchanged. Require an independent mismatch in a declared selector for every excluded active lesson, preserving exact applicable identifier equality. Exercise all four filters, an unfiltered positive control and a producer that falsely omits it.
+- Prevention:
+  - `test` test_repository_preflight_accepts_all_declared_filters_but_refuses_unexplained_omission — Execute the actual inherited assertion against each legitimate selector and prove that unexplained omission remains refused.
+- Evidence: `file:docs/checkpoints/GATE-6-CP-0001/COMMANDS.jsonl`, `file:docs/checkpoints/GATE-6-CP-0001/FINDINGS.json`, `file:tests/test_development_ledger.py`, `file:tests/test_gate6_experience.py`

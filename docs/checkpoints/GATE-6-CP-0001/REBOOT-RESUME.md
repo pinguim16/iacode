@@ -1,5 +1,9 @@
 # Saved for machine reboot
 
+Historical runtime-v2 reboot record. The subsequent runtime-v3 attempt and current BLOCKED
+continuation are recorded in DOCKER-RECOVERY.md, HANDOFF.md, STATE.json and attempt0003.
+Do not repeat the runtime-v3 publication or treat the old reboot pause as the current blocker.
+
 Owner requested immediate persistence on 2026-10-17. Gate6 remains IN_PROGRESS;
 this is a continuation save, not Gate completion, READY_FOR_REVIEW or a Gate seal.
 No machine restart was initiated by the agent.

@@ -1,0 +1,289 @@
+{
+  "kind": "ENVIRONMENT_BLOCKED_INTERRUPTED_VERIFICATION_NOT_PASS",
+  "generatedAt": "2026-10-17T19:48:48Z",
+  "subjectCommit": "127926d4922e8e63e51fd64681fbe1cd04f21800",
+  "sourceFingerprintAtInterruption": "9c4d40cb7d04f512d29c8383a5f6c158f024062a23ede2447ab05fd6ddc6e43b",
+  "originalCommand": "command:cmd-0136",
+  "progress": {
+    "subjectCommit": "127926d4922e8e63e51fd64681fbe1cd04f21800",
+    "clone": "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-gate6-full-verification-t8coai0i\\repository",
+    "transitions": [
+      "[iacode] --- gate:tests: mandatory gate tests",
+      "[iacode] --- gate:tests: FAIL in 4682.6s",
+      "[iacode] --- gate:staticAnalysis: mandatory gate staticAnalysis",
+      "[iacode] --- gate:staticAnalysis: PASS in 0.3s",
+      "[iacode] --- gate:lessons: mandatory gate lessons",
+      "[iacode] --- gate:lessons: PASS in 2.1s",
+      "[iacode] --- gate:integrity: mandatory gate integrity",
+      "[iacode] --- gate:integrity: PASS in 10.2s",
+      "[iacode] --- gate:checkpointValidation: mandatory gate checkpointValidation",
+      "[iacode] --- gate:checkpointValidation: PASS in 40.5s",
+      "[iacode] --- gate:apiTests: mandatory gate apiTests",
+      "[iacode] --- gate:apiTests: PASS in 100.9s",
+      "[iacode] --- gate:gatewayTests: mandatory gate gatewayTests",
+      "[iacode] --- gate:gatewayTests: PASS in 5.9s",
+      "[iacode] --- gate:agentRuntimeTests: mandatory gate agentRuntimeTests",
+      "[iacode] --- gate:agentRuntimeTests: PASS in 6.9s",
+      "[iacode] --- gate:sandboxTests: mandatory gate sandboxTests",
+      "[iacode] --- gate:sandboxTests: PASS in 236.2s",
+      "[iacode] --- gate:evaluatorTests: mandatory gate evaluatorTests",
+      "[iacode] --- gate:evaluatorTests: PASS in 58.2s",
+      "[iacode] --- gate:webTests: mandatory gate webTests",
+      "[iacode] --- gate:webTests: PASS in 31.7s",
+      "[iacode] --- gate:lint: mandatory gate lint",
+      "[iacode] --- gate:lint: PASS in 22.4s",
+      "[iacode] --- gate:clientTests: mandatory gate clientTests",
+      "[iacode] --- gate:clientTests: PASS in 36.6s",
+      "[iacode] --- gate:experienceTests: mandatory gate experienceTests",
+      "[iacode] --- gate:experienceTests: PASS in 13.4s",
+      "[iacode] --- gate:infraDefinition: mandatory gate infraDefinition",
+      "[iacode] --- gate:infraDefinition: PASS in 1.4s",
+      "[iacode] --- stack: build and start an isolated stack, then wait for real health",
+      "[iacode] --- stack: PASS in 89.6s",
+      "[iacode] --- integration: the backend suite against the real services",
+      "[iacode] --- integration: PASS in 174.3s",
+      "[iacode] --- infra: our configuration of each service, exercised live",
+      "[iacode] --- infra: PASS in 17.7s",
+      "[iacode] --- smoke: the API, the web shell, the observability stack and a workflow",
+      "[iacode] --- smoke: PASS in 5.2s",
+      "[iacode] --- gateway-smoke: the Model Gateway against the real configured provider",
+      "[iacode] --- gateway-smoke: PASS in 18.2s",
+      "[iacode] --- agent-runtime-smoke: the Agent Runtime against the real provider, through the gateway",
+      "[iacode] --- agent-runtime-smoke: PASS in 8.4s",
+      "[iacode] --- agent-durability: a run waiting for a tool survives a real worker restart",
+      "[iacode] --- agent-durability: PASS in 54.5s",
+      "[iacode] --- agent-cancellation: a paused run is cancelled, stays cancelled and refuses a late result",
+      "[iacode] --- agent-cancellation: PASS in 22.3s",
+      "[iacode] --- agent-deadline: a run that is alive and going nowhere is ended by its own deadline",
+      "[iacode] --- agent-deadline: PASS in 30.8s",
+      "[iacode] --- sandbox-integration: the sandbox's store and artifact sink against the real services",
+      "[iacode] --- sandbox-integration: PASS in 10.5s",
+      "[iacode] --- quality-integration: quality lifecycle and immutable evidence against the real services",
+      "[iacode] --- quality-integration: PASS in 86.1s",
+      "[iacode] --- quality-pass: a passing fixture derives PASS through the complete Quality Engine"
+    ],
+    "updatedAt": "2026-10-17T19:28:54.274439+00:00"
+  },
+  "completedStageObservations": [
+    {
+      "stage": "gate:tests",
+      "result": "FAIL",
+      "durationSeconds": 4682.6
+    },
+    {
+      "stage": "gate:staticAnalysis",
+      "result": "PASS",
+      "durationSeconds": 0.3
+    },
+    {
+      "stage": "gate:lessons",
+      "result": "PASS",
+      "durationSeconds": 2.1
+    },
+    {
+      "stage": "gate:integrity",
+      "result": "PASS",
+      "durationSeconds": 10.2
+    },
+    {
+      "stage": "gate:checkpointValidation",
+      "result": "PASS",
+      "durationSeconds": 40.5
+    },
+    {
+      "stage": "gate:apiTests",
+      "result": "PASS",
+      "durationSeconds": 100.9
+    },
+    {
+      "stage": "gate:gatewayTests",
+      "result": "PASS",
+      "durationSeconds": 5.9
+    },
+    {
+      "stage": "gate:agentRuntimeTests",
+      "result": "PASS",
+      "durationSeconds": 6.9
+    },
+    {
+      "stage": "gate:sandboxTests",
+      "result": "PASS",
+      "durationSeconds": 236.2
+    },
+    {
+      "stage": "gate:evaluatorTests",
+      "result": "PASS",
+      "durationSeconds": 58.2
+    },
+    {
+      "stage": "gate:webTests",
+      "result": "PASS",
+      "durationSeconds": 31.7
+    },
+    {
+      "stage": "gate:lint",
+      "result": "PASS",
+      "durationSeconds": 22.4
+    },
+    {
+      "stage": "gate:clientTests",
+      "result": "PASS",
+      "durationSeconds": 36.6
+    },
+    {
+      "stage": "gate:experienceTests",
+      "result": "PASS",
+      "durationSeconds": 13.4
+    },
+    {
+      "stage": "gate:infraDefinition",
+      "result": "PASS",
+      "durationSeconds": 1.4
+    },
+    {
+      "stage": "stack",
+      "result": "PASS",
+      "durationSeconds": 89.6
+    },
+    {
+      "stage": "integration",
+      "result": "PASS",
+      "durationSeconds": 174.3
+    },
+    {
+      "stage": "infra",
+      "result": "PASS",
+      "durationSeconds": 17.7
+    },
+    {
+      "stage": "smoke",
+      "result": "PASS",
+      "durationSeconds": 5.2
+    },
+    {
+      "stage": "gateway-smoke",
+      "result": "PASS",
+      "durationSeconds": 18.2
+    },
+    {
+      "stage": "agent-runtime-smoke",
+      "result": "PASS",
+      "durationSeconds": 8.4
+    },
+    {
+      "stage": "agent-durability",
+      "result": "PASS",
+      "durationSeconds": 54.5
+    },
+    {
+      "stage": "agent-cancellation",
+      "result": "PASS",
+      "durationSeconds": 22.3
+    },
+    {
+      "stage": "agent-deadline",
+      "result": "PASS",
+      "durationSeconds": 30.8
+    },
+    {
+      "stage": "sandbox-integration",
+      "result": "PASS",
+      "durationSeconds": 10.5
+    },
+    {
+      "stage": "quality-integration",
+      "result": "PASS",
+      "durationSeconds": 86.1
+    }
+  ],
+  "canonicalStageDenominator": 47,
+  "verificationResult": "NOT_COMPLETED",
+  "gateVerdictIssued": false,
+  "completedStageVerdictAvailable": true,
+  "completeVerifierReportAvailable": false,
+  "termination": {
+    "observedAt": "2026-10-17T19:45:37.5093892Z",
+    "targetPid": 12240,
+    "parentPid": 39612,
+    "recorderPid": 42424,
+    "targetCreatedUtc": "2026-10-17T17:52:43Z",
+    "identityRevalidatedBeforeStop": true,
+    "onlyVerifierProcessTreeStopped": true,
+    "exitCode": 0,
+    "originalRecorderFinished": true
+  },
+  "temporaryCloneRemovedByOriginalOwner": true,
+  "composeProject": "iacode-verify-acf6759435d1",
+  "dockerObservations": [
+    {
+      "arguments": [
+        "version",
+        "--format",
+        "{{.Server.Version}}"
+      ],
+      "result": "TIMEOUT",
+      "timeoutSeconds": 5,
+      "ownedResources": null
+    },
+    {
+      "arguments": [
+        "container",
+        "ls",
+        "--filter",
+        "label=com.docker.compose.project=iacode-verify-acf6759435d1",
+        "--format",
+        "{{.ID}}",
+        "--all"
+      ],
+      "result": "TIMEOUT",
+      "timeoutSeconds": 5,
+      "ownedResources": null
+    },
+    {
+      "arguments": [
+        "volume",
+        "ls",
+        "--filter",
+        "label=com.docker.compose.project=iacode-verify-acf6759435d1",
+        "--format",
+        "{{.Name}}"
+      ],
+      "result": "TIMEOUT",
+      "timeoutSeconds": 5,
+      "ownedResources": null
+    },
+    {
+      "arguments": [
+        "network",
+        "ls",
+        "--filter",
+        "label=com.docker.compose.project=iacode-verify-acf6759435d1",
+        "--format",
+        "{{.ID}}"
+      ],
+      "result": "TIMEOUT",
+      "timeoutSeconds": 5,
+      "ownedResources": null
+    }
+  ],
+  "ownedCleanup": "UNVERIFIED",
+  "sharedProjectIdentityComparison": "UNAVAILABLE",
+  "dockerRestarted": false,
+  "serviceOrContainerStopPerformed": false,
+  "reason": "The owned quality-pass port query stalled from 19:29:39 UTC; fresh version, owned list and both direct named-pipe pings also did not respond within bounds. The owner asked to retry without disrupting other applications. No exact daemon root cause is asserted.",
+  "rootSuite": {
+    "result": "FAIL",
+    "testsRun": 892,
+    "failures": 2,
+    "evidenceKind": "direct original captured console observation, not a complete producer report",
+    "cases": [
+      "LessonPreflightTests.test_the_repository_preflight_covers_every_applicable_lesson",
+      "Gate5QualityIntegrationTests.test_every_inherited_gate_remains_and_clients_are_mandatory"
+    ],
+    "causalReproductions": [
+      "command:cmd-0138",
+      "command:cmd-0139"
+    ]
+  },
+  "limits": "Original full output had no configured raw artifact. The safe direct observations and actual command outcome are retained; no missing raw report, cleanup result, stage or test is inferred."
+}

@@ -1,5 +1,14 @@
 # Decisions
 
+- After runtime-v3 root FAIL, correct only two demonstrably stale test assumptions, proved by
+  cmd-0138/0139 before alteration and causal growth/removal/optional/selector/omission controls
+  cmd-0141/0142/0143 after it. No mandatory control, production selector or policy is narrowed.
+  LSN-0102/GRD-0103 recurrence3 is explicitly escalated; LSN-0141/GRD-0143 records the selector class.
+- The owner asked to retry Docker because other applications remain operational. Bounded retries
+  through both contexts and direct read-only pings do not respond. No global restart, WSL action,
+  service/container stop or operational cleanup is authorized/performed. Stop only the revalidated
+  owned verifier tree and its old read-only diagnostic; preserve incomplete v3 and unverified cleanup.
+
 - Gate6 alone is explicitly authorized after sealed/validated/published Gate5; no predecessor is rewritten.
 - ADR-0050 chooses source-bound explicit-consent capture and a pure domain library with API-owned SQL/source adapters.
 - ADR-0051 bounds primary retention, automatic purge and minimal anti-resurrection tombstones.

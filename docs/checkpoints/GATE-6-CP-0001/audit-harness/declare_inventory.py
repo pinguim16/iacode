@@ -48,6 +48,8 @@ def reason(path: str) -> str:
         return "Execute real experience image tests and owned live acceptance within the full canonical verifier while preserving inherited stages and producer evidence."
     if path == "scripts/development-ledger/README.md":
         return "Align the tool documentation with Gate6 ownership of the generated experience schema, without changing control logic or any sealed subject."
+    if path in {"tests/test_development_ledger.py", "tests/test_gate5_clients.py"}:
+        return "Correct causally reproduced stale test assumptions about additive mandatory gates and declared applicability selectors; preserve policy and prove growth/removal/omission controls."
     if path.startswith("tests/test_gate6_"):
         return "Prove Gate 6 specification, scope, boundaries, actual integration-harness behavior, collection and causal adverse controls."
     if path.startswith(".iacode/memory/"):

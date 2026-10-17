@@ -1,3 +1,3 @@
 # Status
 
-IN_PROGRESS — saved at owner's request for machine reboot. Implementation/local causal proofs are retained; runtime-v2 full verification was intentionally interrupted, not passed. Ordered internal assurance and Gate6 seal remain pending. See REBOOT-RESUME.md.
+BLOCKED — Docker management queries do not return, so full runtime proof and owned cleanup cannot be completed. Runtime-v3 genuinely failed two root cases and was later interrupted at quality-pass; local causal corrections pass, not whole-Gate assurance. No Docker/WSL restart or shared application stop was performed. Internal seal and independent M2 audit remain pending. See DOCKER-RECOVERY.md.

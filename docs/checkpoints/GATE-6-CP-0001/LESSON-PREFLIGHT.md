@@ -4,9 +4,9 @@
 - Scope: `Experience Store with observable source-bound engineering facts, privacy, provenance, storage and reuse rights, retention, authenticated API and recovery`
 - Technologies: `Python`, `PostgreSQL`
 - Modules: `services/experience`, `apps/api`, `packages/contracts`, `packages/persistence`
-- Generated: `2026-10-17T14:21:15Z`
-- Lessons considered: 140
-- Lessons applicable: 139
+- Generated: `2026-10-17T20:00:02Z`
+- Lessons considered: 141
+- Lessons applicable: 140
 
 Every applicable lesson below is a requirement of this Gate. The derived identifiers must
 appear in `REQUIREMENTS-MATRIX.json`, and the Delivery Completeness Validator fails the
@@ -153,6 +153,7 @@ delivery when one is absent.
 | `LSN-0138` Secret projection distinguishes public identities from authorization secrets | `GUARDED` | HIGH | `LESSON-REQ-0137` | Known-secret projection must distinguish public identities from actual passwords/bearer values; use the real configured field semantics, preserve unknown-secret detection and exact raw/encoded refusal of actual secrets. |
 | `LSN-0139` Privacy projection begins in the source query | `GUARDED` | HIGH | `LESSON-REQ-0138` | A bounded privacy-safe output must not justify fetching unneeded private source columns; the actual query must project only consumed fields and bound required source JSON before transfer. |
 | `LSN-0140` Summaries preserve canonical continuation structure | `GUARDED` | MEDIUM | `LESSON-REQ-0139` | Any helper that replaces a checkpoint artifact must preserve the owning canonical structural contract, not substitute an unstructured summary; required sections stay substantive and complete. |
+| `LSN-0141` Preflight checks honor every declared applicability dimension | `GUARDED` | HIGH | `LESSON-REQ-0140` | Applicability audits honor all canonical selector dimensions without inventing a scope-only exclusion rule or allowing an active unfiltered lesson to disappear. |
 
 ## Why each lesson applies
 
@@ -1128,3 +1129,10 @@ delivery when one is absent.
 - Required check: Any helper that replaces a checkpoint artifact must preserve the owning canonical structural contract, not substitute an unstructured summary; required sections stay substantive and complete.
 - Required evidence: Actual renderer output against canonical headings, omission/empty-section adverse controls and current canonical checkpoint acceptance without any validator weakening.
 - Derived requirement: `LESSON-REQ-0139`
+
+### LSN-0141 — Preflight checks honor every declared applicability dimension
+
+- Reason: applies to every Gate; category testing; severity HIGH; already guarded, so the control must keep holding
+- Required check: Applicability audits honor all canonical selector dimensions without inventing a scope-only exclusion rule or allowing an active unfiltered lesson to disappear.
+- Required evidence: Actual legitimate-selector positive controls and unexplained-omission refusal, with the complete inherited preflight class green.
+- Derived requirement: `LESSON-REQ-0140`

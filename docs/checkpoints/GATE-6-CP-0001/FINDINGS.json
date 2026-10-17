@@ -187,5 +187,70 @@
       ],
       "resolution": "Canonical headings are consumed from their owning validator and every section requires substantive content. Actual output, omission/empty mutations and current checkpoint acceptance pass; no required heading or check was removed."
     }
+    ,
+    {
+      "findingId": "G6-INT-010",
+      "severity": "CRITICAL",
+      "classification": "GUARDRAIL_FAILURE",
+      "lessonId": "LSN-0102",
+      "guardrailId": "GRD-0103",
+      "title": "Inherited mandatory minimum incorrectly treated as live maximum",
+      "status": "CLOSED",
+      "observed": "Cmd-0136 completes 892 root cases with two failures; cmd-0139 separately reproduces that the actual required experienceTests addition is rejected by the inherited Gate5 exact-set assertion.",
+      "rootCause": "A historical minimum-set contract was encoded as an exact maximum over the current live policy. The production policy is correctly additive; removing experienceTests would violate Gate6. This repeats the guarded stale-source-set class and is explicitly escalated to recurrence3/CRITICAL.",
+      "evidence": ["command:cmd-0136", "command:cmd-0139", "checkpoint:attempts/FULL-VERIFY-INTERRUPTED-0003.json"],
+      "resolution": "Correct only the demonstrably obsolete ceiling: every inherited identifier remains required and every live control remains mandatory. The separate Gate6 policy test still requires experienceTests. Actual growth/removal/optional mutations pass; no control is removed and no runtime policy is weakened. Full immutable re-execution remains pending.",
+      "resolutionEvidence": ["command:cmd-0141", "command:cmd-0143"]
+    },
+    {
+      "findingId": "G6-INT-011",
+      "severity": "HIGH",
+      "title": "Preflight regression assumes scope-only exclusions",
+      "status": "CLOSED",
+      "observed": "Cmd-0136 rejects LSN-0136 for absent scopes although its explicit Python selector legitimately excludes a scope with no technologies. Cmd-0138 reproduces the assertion failure.",
+      "rootCause": "The test's scope-only assumption contradicts canonical Gate/scope/technology/module applicability and its own existing technology-exclusion test. No production selector defect is observed.",
+      "evidence": ["command:cmd-0136", "command:cmd-0138"],
+      "resolution": "Keep production applicability and all lesson selectors unchanged. Independently require a real mismatch in a declared selector for exclusions and preserve exact selected identity equality. Prove all four filter dimensions, an unfiltered positive control and false-omission rejection; record LSN-0141/GRD-0143. Full immutable re-execution remains pending.",
+      "resolutionEvidence": ["command:cmd-0141", "command:cmd-0142"]
+    },
+    {
+      "findingId": "G6-INT-012",
+      "severity": "HIGH",
+      "title": "Docker management requests do not return; owned cleanup unverified",
+      "status": "OPEN",
+      "observed": "The owned quality-pass compose port process stalled from 19:29:39 UTC until the exact verifier tree was stopped at 19:45:37 UTC. Fresh bounded server-version and owned-resource queries time out. Both desktop-linux/default direct pipe connections open but their read-only ping requests time out. The client version responds. The owner reports other applications still running and asks for retry, not restart.",
+      "rootCause": "UNDETERMINED: observed management-surface nonresponse does not prove other applications stopped or identify the daemon/proxy cause.",
+      "requiredCorrection": "Restore a responsive Docker management surface without disrupting other applications; then inspect and remove only exact owned verification resources, observe operational identities, publish a fresh immutable subject and rerun every canonical stage. Do not restart Docker/WSL or stop shared applications without new explicit owner authorization.",
+      "evidence": ["command:cmd-0136", "command:cmd-0140", "checkpoint:FULL-VERIFY-PROGRESS.json", "checkpoint:attempts/FULL-VERIFY-INTERRUPTED-0003.json"],
+      "limits": "26 completed stage observations (25 PASS, root FAIL), quality-pass interrupted, later stages not executed; no final verifier report. Original owner removed only its temporary clone. Owned Compose cleanup and the before/after shared identity comparison remain unknown, not PASS."
+    },
+    {
+      "findingId": "G6-INT-013",
+      "severity": "CRITICAL",
+      "classification": "GUARDRAIL_FAILURE",
+      "lessonId": "LSN-0018",
+      "guardrailId": "GRD-0017",
+      "title": "Lesson evidence uses unsupported locator kind",
+      "status": "CLOSED",
+      "observed": "Cmd-0144 actually rejects four command-kind locators in LSN-0141 and the then-unrendered index. The memory boundary caught invalid authoring before handoff; no invalid reference was accepted.",
+      "rootCause": "The author copied checkpoint command-reference vocabulary into engineering memory, whose canonical resolver permits repository file evidence. Keep command identities in concise narrative and cite their durable ledger/findings files. Escalate LSN-0018 recurrence1/CRITICAL rather than silently correcting it.",
+      "evidence": ["command:cmd-0144"],
+      "resolution": "Only the four unsupported locators change to repository files. The resolver, schema and index policy remain unchanged. All6 inherited resolution controls pass, including command-kind refusal; canonical render-and-validate accepts memory141. The guard is restored locally, not an independent or whole-Gate verdict.",
+      "resolutionEvidence": ["command:cmd-0145", "command:cmd-0146"]
+    },
+    {
+      "findingId": "G6-INT-014",
+      "severity": "CRITICAL",
+      "classification": "GUARDRAIL_FAILURE",
+      "lessonId": "LSN-0018",
+      "guardrailId": "GRD-0017",
+      "title": "Quality evidence command references require successful executions",
+      "status": "CLOSED",
+      "observed": "Cmd-0158 rejects the blocked finalization because QUALITY unitTests uses three exit1 structured command references, even though its declared quality status is FAIL. Original finalization refusal remains in the append-only ledger.",
+      "rootCause": "The author assumed a negative verdict changed the owning resolver's command-reference semantics. The canonical resolver requires successful structured command references for every quality entry; failed observations must instead be cited as actual checkpoint-local evidence files. Escalate LSN-0018 recurrence2/CRITICAL; do not alter the resolver.",
+      "evidence": ["command:cmd-0158"],
+      "resolution": "Keep unitTests FAIL and all original command exits. Replace only the quality locators with the actual interrupted-attempt receipt and progress files, retaining command identities in findings/narrative. All9 unchanged QualityEvidenceTests pass, including failed-command rejection and existing-file resolution. No complete checkpoint or Gate acceptance is inferred by this causal correction.",
+      "resolutionEvidence": ["command:cmd-0159"]
+    }
   ]
 }

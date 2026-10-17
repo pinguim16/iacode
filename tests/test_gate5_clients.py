@@ -311,9 +311,11 @@ class Gate5QualityIntegrationTests(unittest.TestCase):
 
     def test_every_inherited_gate_remains_and_clients_are_mandatory(self) -> None:
         gates = policies.gate_definitions(ROOT)
-        self.assertEqual({"tests", "staticAnalysis", "lessons", "integrity", "checkpointValidation",
+        inherited = {"tests", "staticAnalysis", "lessons", "integrity", "checkpointValidation",
                           "apiTests", "gatewayTests", "agentRuntimeTests", "sandboxTests", "evaluatorTests",
-                          "webTests", "lint", "infraDefinition", "clientTests"}, set(gates))
+                          "webTests", "lint", "infraDefinition", "clientTests"}
+        # These are the inherited minimum, not a ceiling on later mandatory gates.
+        self.assertTrue(inherited <= set(gates), inherited - set(gates))
         self.assertTrue(all(gate["mandatory"] for gate in gates.values()))
 
     def test_native_suites_are_declared_and_never_invent_a_python_denominator(self) -> None:

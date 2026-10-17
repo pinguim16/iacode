@@ -800,3 +800,8 @@ required check/evidence. It is not a replacement denominator and cannot omit a s
 
 - Required check: Any helper that replaces a checkpoint artifact must preserve the owning canonical structural contract, not substitute an unstructured summary; required sections stay substantive and complete.
 - Required evidence: Actual renderer output against canonical headings, omission/empty-section adverse controls and current canonical checkpoint acceptance without any validator weakening.
+
+### LESSON-REQ-0140 — LSN-0141
+
+- Required check: Applicability audits honor all canonical selector dimensions without inventing a scope-only exclusion rule or allowing an active unfiltered lesson to disappear.
+- Required evidence: Actual legitimate-selector positive controls and unexplained-omission refusal, with the complete inherited preflight class green.

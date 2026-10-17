@@ -20,43 +20,43 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 | `REQ-0004` | GATE_SPECIFICATION | `canonical:GATE-6#1.4` | yes | `NOT_STARTED` | `NOT_STARTED` | Experience logic depends on shared contracts and declared ports, not provider adapters, host execution, a container engine or a later knowledge/training service. |
 | `REQ-0005` | GATE_SPECIFICATION | `canonical:GATE-6#1.5` | yes | `NOT_STARTED` | `NOT_STARTED` | Every inherited mandatory quality gate and counted suite remains; experience-specific build/tests are mandatory and canonically registered. |
 | `REQ-0006` | GATE_SPECIFICATION | `canonical:GATE-6#1.6` | yes | `NOT_STARTED` | `NOT_STARTED` | Gate 7 and later reservations remain unimplemented; experience persistence neither grants RAG/training authority nor changes independent milestone verdicts. |
-| `REQ-0007` | GATE_SPECIFICATION | `canonical:GATE-6#2.1` | yes | `NOT_STARTED` | `NOT_STARTED` | A versioned, closed experience schema defines task, environment, provider/model/effort observations, repository/base identity, trajectory summary, actions, tools, commands, files, attempts, failures, corrections, tests, quality, reviews, final result, provenance and eligibility. |
-| `REQ-0008` | GATE_SPECIFICATION | `canonical:GATE-6#2.2` | yes | `NOT_STARTED` | `NOT_STARTED` | Experience content consists only of bounded observable facts and source references; prompts, raw provider responses, credentials, hidden reasoning and arbitrary transcript fields are excluded. |
-| `REQ-0009` | GATE_SPECIFICATION | `canonical:GATE-6#2.3` | yes | `NOT_STARTED` | `NOT_STARTED` | Unobserved provider/model/effort/review information remains explicitly unknown or absent, never fabricated from configuration, a plan or an implementer assertion. |
-| `REQ-0010` | GATE_SPECIFICATION | `canonical:GATE-6#2.4` | yes | `NOT_STARTED` | `NOT_STARTED` | Identities, timestamps, enums, numeric types, UTF-8, nesting, collection lengths and total encoded bytes are strictly bounded; unknown fields and ambiguous JSON fail closed. |
-| `REQ-0011` | GATE_SPECIFICATION | `canonical:GATE-6#2.5` | yes | `NOT_STARTED` | `NOT_STARTED` | Only authorized completed source runs and their matching immutable quality/snapshot evidence may support capture; running, missing, cross-project or mismatched inputs are refused. |
-| `REQ-0012` | GATE_SPECIFICATION | `canonical:GATE-6#2.6` | yes | `NOT_STARTED` | `NOT_STARTED` | Source facts, hashes, parent identities and failure outcomes remain traceable; no caller may submit a quality verdict or replace trusted source facts. |
-| `REQ-0013` | GATE_SPECIFICATION | `canonical:GATE-6#3.1` | yes | `NOT_STARTED` | `NOT_STARTED` | Every stored experience requires explicit informed storage consent for the exact project and source; omission, rejection or a conflicting retry causes no capture. |
-| `REQ-0014` | GATE_SPECIFICATION | `canonical:GATE-6#3.2` | yes | `NOT_STARTED` | `NOT_STARTED` | Provenance records source type, provider/model when observed, ownership, license, all four storage/reuse permissions, evidence and limits. |
-| `REQ-0015` | GATE_SPECIFICATION | `canonical:GATE-6#3.3` | yes | `NOT_STARTED` | `NOT_STARTED` | Unknown ownership/license or unproven permissions cannot yield a positive RAG, training or distillation grant; raw external output never becomes trainable by storage. |
-| `REQ-0016` | GATE_SPECIFICATION | `canonical:GATE-6#3.4` | yes | `NOT_STARTED` | `NOT_STARTED` | Effective permissions cannot exceed any contributing source permission, and provenance/rights remain bound to the exact stored content and export. |
-| `REQ-0017` | GATE_SPECIFICATION | `canonical:GATE-6#3.5` | yes | `NOT_STARTED` | `NOT_STARTED` | Canonical credential detection scans complete exact normalized content before durable effects and again before delivery; matches and scanner failure produce sanitized refusal. |
-| `REQ-0018` | GATE_SPECIFICATION | `canonical:GATE-6#3.6` | yes | `NOT_STARTED` | `NOT_STARTED` | Known runtime authorization material and forbidden private/transcript fields cannot enter content, metadata, summaries, diagnostics, audit payloads, errors or exports. |
-| `REQ-0019` | GATE_SPECIFICATION | `canonical:GATE-6#3.7` | yes | `NOT_STARTED` | `NOT_STARTED` | Denied and unknown reuse requests fail closed without data disclosure; no endpoint performs knowledge retrieval, training or distillation. |
-| `REQ-0020` | GATE_SPECIFICATION | `canonical:GATE-6#4.1` | yes | `NOT_STARTED` | `NOT_STARTED` | Alembic evolves the existing experiences persistence contract rather than introducing an unrelated shadow store; ORM and actual PostgreSQL schema agree. |
-| `REQ-0021` | GATE_SPECIFICATION | `canonical:GATE-6#4.2` | yes | `NOT_STARTED` | `NOT_STARTED` | Schema migration preserves identity, rights and lineage of legacy rows without silently treating unvalidated payloads as current valid experiences. |
-| `REQ-0022` | GATE_SPECIFICATION | `canonical:GATE-6#4.3` | yes | `NOT_STARTED` | `NOT_STARTED` | Content, schema version, provenance and digest form one immutable captured fact; unauthorized updates and direct persistence corruption cannot produce a valid delivered record. |
-| `REQ-0023` | GATE_SPECIFICATION | `canonical:GATE-6#4.4` | yes | `NOT_STARTED` | `NOT_STARTED` | Capture and its bounded audit fact commit atomically; failed validation, unavailable dependencies and rolled-back writes leave no partial experience. |
-| `REQ-0024` | GATE_SPECIFICATION | `canonical:GATE-6#4.5` | yes | `NOT_STARTED` | `NOT_STARTED` | Stable request identity makes accepted-response-loss and concurrent retries idempotent; conflicting content is refused rather than silently overwritten. |
-| `REQ-0025` | GATE_SPECIFICATION | `canonical:GATE-6#4.6` | yes | `NOT_STARTED` | `NOT_STARTED` | New request identifiers cannot silently resurrect revoked/deleted/expired content or reset its retention clock; repeated mutations preserve truthful terminal state. |
-| `REQ-0026` | GATE_SPECIFICATION | `canonical:GATE-6#5.1` | yes | `NOT_STARTED` | `NOT_STARTED` | All experience operations require actual configured runtime authentication; no unauthenticated legacy alternate path reaches experience data or effects. |
-| `REQ-0027` | GATE_SPECIFICATION | `canonical:GATE-6#5.2` | yes | `NOT_STARTED` | `NOT_STARTED` | Project/source identity scopes every read, list, export, withdrawal and deletion; a mismatched project cannot disclose or modify an experience. |
-| `REQ-0028` | GATE_SPECIFICATION | `canonical:GATE-6#5.3` | yes | `NOT_STARTED` | `NOT_STARTED` | Capture, inspect, list and machine-readable export round-trip actual persisted content and hashes, without deriving success from an in-memory fake. |
-| `REQ-0029` | GATE_SPECIFICATION | `canonical:GATE-6#5.4` | yes | `NOT_STARTED` | `NOT_STARTED` | Listing is deterministically ordered, bounded and resumable with a validated project-bound cursor; invalid cursors and enumeration cannot bypass access/retention. |
-| `REQ-0030` | GATE_SPECIFICATION | `canonical:GATE-6#5.5` | yes | `NOT_STARTED` | `NOT_STARTED` | Errors use stable bounded reason codes and observable correlation without echoing rejected content, credentials, database details or exception strings. |
-| `REQ-0031` | GATE_SPECIFICATION | `canonical:GATE-6#5.6` | yes | `NOT_STARTED` | `NOT_STARTED` | Requests and responses preserve the existing authenticated transport and source boundaries; clients and agents cannot gain host execution or verdict authority. |
-| `REQ-0032` | GATE_SPECIFICATION | `canonical:GATE-6#6.1` | yes | `NOT_STARTED` | `NOT_STARTED` | A versioned consumed policy sets finite retention defaults/maxima, bounded processing and explicit operational limits; a caller cannot widen canonical ceilings. |
-| `REQ-0033` | GATE_SPECIFICATION | `canonical:GATE-6#6.2` | yes | `NOT_STARTED` | `NOT_STARTED` | Expired or storage-withdrawn content is immediately unavailable to reads, listings, exports and reuse, independently of the next physical sweep. |
-| `REQ-0034` | GATE_SPECIFICATION | `canonical:GATE-6#6.3` | yes | `NOT_STARTED` | `NOT_STARTED` | Owned automatic retention processing physically removes expired primary payloads in bounded atomic batches and records only minimal non-sensitive deletion evidence. |
-| `REQ-0035` | GATE_SPECIFICATION | `canonical:GATE-6#6.4` | yes | `NOT_STARTED` | `NOT_STARTED` | Explicit withdrawal/deletion is authenticated, project-bound and idempotent; it cannot delete source runs, quality evidence or unrelated project data. |
-| `REQ-0036` | GATE_SPECIFICATION | `canonical:GATE-6#6.5` | yes | `NOT_STARTED` | `NOT_STARTED` | Runtime restart preserves records, idempotency and rights; corrupt schema/content/provenance or unavailable source evidence fails closed after recovery. |
-| `REQ-0037` | GATE_SPECIFICATION | `canonical:GATE-6#6.6` | yes | `NOT_STARTED` | `NOT_STARTED` | Background tasks and dependency failures have explicit bounded lifecycle, observable errors and owned shutdown; storage/backup deletion limits and safe restore procedure are documented. |
-| `REQ-0038` | GATE_SPECIFICATION | `canonical:GATE-6#7.1` | yes | `NOT_STARTED` | `NOT_STARTED` | Actual fresh-stack acceptance captures a real completed governed task and quality result with observed provider/tool lineage and persisted rights, then reads/lists/exports matching bytes. |
-| `REQ-0039` | GATE_SPECIFICATION | `canonical:GATE-6#7.2` | yes | `NOT_STARTED` | `NOT_STARTED` | Live acceptance proves restart, stable retry, retention expiry, deletion and unchanged source resources through the actual API and database. |
-| `REQ-0040` | GATE_SPECIFICATION | `canonical:GATE-6#7.3` | yes | `NOT_STARTED` | `NOT_STARTED` | Live adverse controls attack authentication, project mismatch, denied reuse, secret/private ingress, forged facts, corruption and resurrection beside a valid clean control. |
-| `REQ-0041` | GATE_SPECIFICATION | `canonical:GATE-6#7.4` | yes | `NOT_STARTED` | `NOT_STARTED` | New integration tests own their runtime namespace, fixtures and temporary resources; operational identities/source bytes stay unchanged and cleanup is observed. |
-| `REQ-0042` | GATE_SPECIFICATION | `canonical:GATE-6#7.5` | yes | `NOT_STARTED` | `NOT_STARTED` | Every mandatory new experience scenario joins the full non-fast verifier without dropping inherited stages; failed reruns cannot reuse stale PASS artifacts. |
-| `REQ-0043` | GATE_SPECIFICATION | `canonical:GATE-6#7.6` | yes | `NOT_STARTED` | `NOT_STARTED` | Functional reports bind the actual immutable subject, exact source fingerprint and process outcomes; available safe producer bytes survive fallible postprocessing/cleanup. |
+| `REQ-0007` | GATE_SPECIFICATION | `canonical:GATE-6#2.1` | yes | `PARTIAL` | `PARTIAL` | A versioned, closed experience schema defines task, environment, provider/model/effort observations, repository/base identity, trajectory summary, actions, tools, commands, files, attempts, failures, corrections, tests, quality, reviews, final result, provenance and eligibility. |
+| `REQ-0008` | GATE_SPECIFICATION | `canonical:GATE-6#2.2` | yes | `PARTIAL` | `PARTIAL` | Experience content consists only of bounded observable facts and source references; prompts, raw provider responses, credentials, hidden reasoning and arbitrary transcript fields are excluded. |
+| `REQ-0009` | GATE_SPECIFICATION | `canonical:GATE-6#2.3` | yes | `PARTIAL` | `PARTIAL` | Unobserved provider/model/effort/review information remains explicitly unknown or absent, never fabricated from configuration, a plan or an implementer assertion. |
+| `REQ-0010` | GATE_SPECIFICATION | `canonical:GATE-6#2.4` | yes | `PARTIAL` | `PARTIAL` | Identities, timestamps, enums, numeric types, UTF-8, nesting, collection lengths and total encoded bytes are strictly bounded; unknown fields and ambiguous JSON fail closed. |
+| `REQ-0011` | GATE_SPECIFICATION | `canonical:GATE-6#2.5` | yes | `PARTIAL` | `PARTIAL` | Only authorized completed source runs and their matching immutable quality/snapshot evidence may support capture; running, missing, cross-project or mismatched inputs are refused. |
+| `REQ-0012` | GATE_SPECIFICATION | `canonical:GATE-6#2.6` | yes | `PARTIAL` | `PARTIAL` | Source facts, hashes, parent identities and failure outcomes remain traceable; no caller may submit a quality verdict or replace trusted source facts. |
+| `REQ-0013` | GATE_SPECIFICATION | `canonical:GATE-6#3.1` | yes | `PARTIAL` | `PARTIAL` | Every stored experience requires explicit informed storage consent for the exact project and source; omission, rejection or a conflicting retry causes no capture. |
+| `REQ-0014` | GATE_SPECIFICATION | `canonical:GATE-6#3.2` | yes | `PARTIAL` | `PARTIAL` | Provenance records source type, provider/model when observed, ownership, license, all four storage/reuse permissions, evidence and limits. |
+| `REQ-0015` | GATE_SPECIFICATION | `canonical:GATE-6#3.3` | yes | `PARTIAL` | `PARTIAL` | Unknown ownership/license or unproven permissions cannot yield a positive RAG, training or distillation grant; raw external output never becomes trainable by storage. |
+| `REQ-0016` | GATE_SPECIFICATION | `canonical:GATE-6#3.4` | yes | `PARTIAL` | `PARTIAL` | Effective permissions cannot exceed any contributing source permission, and provenance/rights remain bound to the exact stored content and export. |
+| `REQ-0017` | GATE_SPECIFICATION | `canonical:GATE-6#3.5` | yes | `PARTIAL` | `PARTIAL` | Canonical credential detection scans complete exact normalized content before durable effects and again before delivery; matches and scanner failure produce sanitized refusal. |
+| `REQ-0018` | GATE_SPECIFICATION | `canonical:GATE-6#3.6` | yes | `PARTIAL` | `PARTIAL` | Known runtime authorization material and forbidden private/transcript fields cannot enter content, metadata, summaries, diagnostics, audit payloads, errors or exports. |
+| `REQ-0019` | GATE_SPECIFICATION | `canonical:GATE-6#3.7` | yes | `PARTIAL` | `PARTIAL` | Denied and unknown reuse requests fail closed without data disclosure; no endpoint performs knowledge retrieval, training or distillation. |
+| `REQ-0020` | GATE_SPECIFICATION | `canonical:GATE-6#4.1` | yes | `PARTIAL` | `PARTIAL` | Alembic evolves the existing experiences persistence contract rather than introducing an unrelated shadow store; ORM and actual PostgreSQL schema agree. |
+| `REQ-0021` | GATE_SPECIFICATION | `canonical:GATE-6#4.2` | yes | `PARTIAL` | `PARTIAL` | Schema migration preserves identity, rights and lineage of legacy rows without silently treating unvalidated payloads as current valid experiences. |
+| `REQ-0022` | GATE_SPECIFICATION | `canonical:GATE-6#4.3` | yes | `PARTIAL` | `PARTIAL` | Content, schema version, provenance and digest form one immutable captured fact; unauthorized updates and direct persistence corruption cannot produce a valid delivered record. |
+| `REQ-0023` | GATE_SPECIFICATION | `canonical:GATE-6#4.4` | yes | `PARTIAL` | `PARTIAL` | Capture and its bounded audit fact commit atomically; failed validation, unavailable dependencies and rolled-back writes leave no partial experience. |
+| `REQ-0024` | GATE_SPECIFICATION | `canonical:GATE-6#4.5` | yes | `PARTIAL` | `PARTIAL` | Stable request identity makes accepted-response-loss and concurrent retries idempotent; conflicting content is refused rather than silently overwritten. |
+| `REQ-0025` | GATE_SPECIFICATION | `canonical:GATE-6#4.6` | yes | `PARTIAL` | `PARTIAL` | New request identifiers cannot silently resurrect revoked/deleted/expired content or reset its retention clock; repeated mutations preserve truthful terminal state. |
+| `REQ-0026` | GATE_SPECIFICATION | `canonical:GATE-6#5.1` | yes | `PARTIAL` | `PARTIAL` | All experience operations require actual configured runtime authentication; no unauthenticated legacy alternate path reaches experience data or effects. |
+| `REQ-0027` | GATE_SPECIFICATION | `canonical:GATE-6#5.2` | yes | `PARTIAL` | `PARTIAL` | Project/source identity scopes every read, list, export, withdrawal and deletion; a mismatched project cannot disclose or modify an experience. |
+| `REQ-0028` | GATE_SPECIFICATION | `canonical:GATE-6#5.3` | yes | `PARTIAL` | `PARTIAL` | Capture, inspect, list and machine-readable export round-trip actual persisted content and hashes, without deriving success from an in-memory fake. |
+| `REQ-0029` | GATE_SPECIFICATION | `canonical:GATE-6#5.4` | yes | `PARTIAL` | `PARTIAL` | Listing is deterministically ordered, bounded and resumable with a validated project-bound cursor; invalid cursors and enumeration cannot bypass access/retention. |
+| `REQ-0030` | GATE_SPECIFICATION | `canonical:GATE-6#5.5` | yes | `PARTIAL` | `PARTIAL` | Errors use stable bounded reason codes and observable correlation without echoing rejected content, credentials, database details or exception strings. |
+| `REQ-0031` | GATE_SPECIFICATION | `canonical:GATE-6#5.6` | yes | `PARTIAL` | `PARTIAL` | Requests and responses preserve the existing authenticated transport and source boundaries; clients and agents cannot gain host execution or verdict authority. |
+| `REQ-0032` | GATE_SPECIFICATION | `canonical:GATE-6#6.1` | yes | `PARTIAL` | `PARTIAL` | A versioned consumed policy sets finite retention defaults/maxima, bounded processing and explicit operational limits; a caller cannot widen canonical ceilings. |
+| `REQ-0033` | GATE_SPECIFICATION | `canonical:GATE-6#6.2` | yes | `PARTIAL` | `PARTIAL` | Expired or storage-withdrawn content is immediately unavailable to reads, listings, exports and reuse, independently of the next physical sweep. |
+| `REQ-0034` | GATE_SPECIFICATION | `canonical:GATE-6#6.3` | yes | `PARTIAL` | `PARTIAL` | Owned automatic retention processing physically removes expired primary payloads in bounded atomic batches and records only minimal non-sensitive deletion evidence. |
+| `REQ-0035` | GATE_SPECIFICATION | `canonical:GATE-6#6.4` | yes | `PARTIAL` | `PARTIAL` | Explicit withdrawal/deletion is authenticated, project-bound and idempotent; it cannot delete source runs, quality evidence or unrelated project data. |
+| `REQ-0036` | GATE_SPECIFICATION | `canonical:GATE-6#6.5` | yes | `PARTIAL` | `PARTIAL` | Runtime restart preserves records, idempotency and rights; corrupt schema/content/provenance or unavailable source evidence fails closed after recovery. |
+| `REQ-0037` | GATE_SPECIFICATION | `canonical:GATE-6#6.6` | yes | `PARTIAL` | `PARTIAL` | Background tasks and dependency failures have explicit bounded lifecycle, observable errors and owned shutdown; storage/backup deletion limits and safe restore procedure are documented. |
+| `REQ-0038` | GATE_SPECIFICATION | `canonical:GATE-6#7.1` | yes | `PARTIAL` | `PARTIAL` | Actual fresh-stack acceptance captures a real completed governed task and quality result with observed provider/tool lineage and persisted rights, then reads/lists/exports matching bytes. |
+| `REQ-0039` | GATE_SPECIFICATION | `canonical:GATE-6#7.2` | yes | `PARTIAL` | `PARTIAL` | Live acceptance proves restart, stable retry, retention expiry, deletion and unchanged source resources through the actual API and database. |
+| `REQ-0040` | GATE_SPECIFICATION | `canonical:GATE-6#7.3` | yes | `PARTIAL` | `PARTIAL` | Live adverse controls attack authentication, project mismatch, denied reuse, secret/private ingress, forged facts, corruption and resurrection beside a valid clean control. |
+| `REQ-0041` | GATE_SPECIFICATION | `canonical:GATE-6#7.4` | yes | `PARTIAL` | `PARTIAL` | New integration tests own their runtime namespace, fixtures and temporary resources; operational identities/source bytes stay unchanged and cleanup is observed. |
+| `REQ-0042` | GATE_SPECIFICATION | `canonical:GATE-6#7.5` | yes | `PARTIAL` | `PARTIAL` | Every mandatory new experience scenario joins the full non-fast verifier without dropping inherited stages; failed reruns cannot reuse stale PASS artifacts. |
+| `REQ-0043` | GATE_SPECIFICATION | `canonical:GATE-6#7.6` | yes | `PARTIAL` | `PARTIAL` | Functional reports bind the actual immutable subject, exact source fingerprint and process outcomes; available safe producer bytes survive fallible postprocessing/cleanup. |
 | `REQ-0044` | GATE_SPECIFICATION | `canonical:GATE-6#8.1` | yes | `NOT_STARTED` | `NOT_STARTED` | Runbooks document capture/consent, authentication, all endpoints, schema/lineage/rights, retention, withdrawal, recovery, limits and troubleshooting without exposing configuration values. |
 | `REQ-0045` | GATE_SPECIFICATION | `canonical:GATE-6#8.2` | yes | `NOT_STARTED` | `NOT_STARTED` | All selected lessons and requirements have truthful requirement-specific implementation, executed positive/adverse tests and resolvable evidence. |
 | `REQ-0046` | GATE_SPECIFICATION | `canonical:GATE-6#8.3` | yes | `NOT_STARTED` | `NOT_STARTED` | Full current test/quality verification, every mandatory Green Keeper gate, total completeness, fresh internal Red Team/null control and complete clean-clone mirror pass in order against unchanged source. |
@@ -204,6 +204,7 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 | `LESSON-REQ-0137` | LESSON | `lesson:LSN-0138` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify secret projection distinguishes public identities from authorization secrets |
 | `LESSON-REQ-0138` | LESSON | `lesson:LSN-0139` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify privacy projection begins in the source query |
 | `LESSON-REQ-0139` | LESSON | `lesson:LSN-0140` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify summaries preserve canonical continuation structure |
+| `LESSON-REQ-0140` | LESSON | `lesson:LSN-0141` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify preflight checks honor every declared applicability dimension |
 
 ## Evidence
 
@@ -277,10 +278,10 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 
 - Source reference: docs/GATE-6-CHECKLIST.md row 2.1
 - Description: A versioned, closed experience schema defines task, environment, provider/model/effort observations, repository/base identity, trajectory summary, actions, tools, commands, files, attempts, failures, corrections, tests, quality, reviews, final result, provenance and eligibility.
-- Implementation: _none_
-- Test: _none_
+- Implementation: `file:apps/api/src/iacode_api/experience/sources.py`, `file:services/experience/src/iacode_experience/domain.py`
+- Test: `command:cmd-0054`, `command:cmd-0050`
 - Negative test: _none_
-- Documentation: _none_
+- Documentation: `file:docs/runbooks/experience-store.md`
 - Validation: _none_
 - Guardrail: _none_
 
@@ -288,10 +289,10 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 
 - Source reference: docs/GATE-6-CHECKLIST.md row 2.2
 - Description: Experience content consists only of bounded observable facts and source references; prompts, raw provider responses, credentials, hidden reasoning and arbitrary transcript fields are excluded.
-- Implementation: _none_
-- Test: _none_
+- Implementation: `file:apps/api/src/iacode_api/experience/sources.py`, `file:services/experience/src/iacode_experience/domain.py`
+- Test: `command:cmd-0054`, `command:cmd-0050`
 - Negative test: _none_
-- Documentation: _none_
+- Documentation: `file:docs/runbooks/experience-store.md`
 - Validation: _none_
 - Guardrail: _none_
 
@@ -299,10 +300,10 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 
 - Source reference: docs/GATE-6-CHECKLIST.md row 2.3
 - Description: Unobserved provider/model/effort/review information remains explicitly unknown or absent, never fabricated from configuration, a plan or an implementer assertion.
-- Implementation: _none_
-- Test: _none_
+- Implementation: `file:apps/api/src/iacode_api/experience/sources.py`, `file:services/experience/src/iacode_experience/domain.py`
+- Test: `command:cmd-0054`, `command:cmd-0050`
 - Negative test: _none_
-- Documentation: _none_
+- Documentation: `file:docs/runbooks/experience-store.md`
 - Validation: _none_
 - Guardrail: _none_
 
@@ -310,10 +311,10 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 
 - Source reference: docs/GATE-6-CHECKLIST.md row 2.4
 - Description: Identities, timestamps, enums, numeric types, UTF-8, nesting, collection lengths and total encoded bytes are strictly bounded; unknown fields and ambiguous JSON fail closed.
-- Implementation: _none_
-- Test: _none_
+- Implementation: `file:apps/api/src/iacode_api/experience/sources.py`, `file:services/experience/src/iacode_experience/domain.py`
+- Test: `command:cmd-0054`, `command:cmd-0050`
 - Negative test: _none_
-- Documentation: _none_
+- Documentation: `file:docs/runbooks/experience-store.md`
 - Validation: _none_
 - Guardrail: _none_
 
@@ -321,10 +322,10 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 
 - Source reference: docs/GATE-6-CHECKLIST.md row 2.5
 - Description: Only authorized completed source runs and their matching immutable quality/snapshot evidence may support capture; running, missing, cross-project or mismatched inputs are refused.
-- Implementation: _none_
-- Test: _none_
+- Implementation: `file:apps/api/src/iacode_api/experience/sources.py`, `file:services/experience/src/iacode_experience/domain.py`
+- Test: `command:cmd-0054`, `command:cmd-0050`
 - Negative test: _none_
-- Documentation: _none_
+- Documentation: `file:docs/runbooks/experience-store.md`
 - Validation: _none_
 - Guardrail: _none_
 
@@ -332,10 +333,10 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 
 - Source reference: docs/GATE-6-CHECKLIST.md row 2.6
 - Description: Source facts, hashes, parent identities and failure outcomes remain traceable; no caller may submit a quality verdict or replace trusted source facts.
-- Implementation: _none_
-- Test: _none_
+- Implementation: `file:apps/api/src/iacode_api/experience/sources.py`, `file:services/experience/src/iacode_experience/domain.py`
+- Test: `command:cmd-0054`, `command:cmd-0050`
 - Negative test: _none_
-- Documentation: _none_
+- Documentation: `file:docs/runbooks/experience-store.md`
 - Validation: _none_
 - Guardrail: _none_
 
@@ -343,10 +344,10 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 
 - Source reference: docs/GATE-6-CHECKLIST.md row 3.1
 - Description: Every stored experience requires explicit informed storage consent for the exact project and source; omission, rejection or a conflicting retry causes no capture.
-- Implementation: _none_
-- Test: _none_
+- Implementation: `file:apps/api/src/iacode_api/experience/sources.py`, `file:services/experience/src/iacode_experience/domain.py`
+- Test: `command:cmd-0054`, `command:cmd-0050`
 - Negative test: _none_
-- Documentation: _none_
+- Documentation: `file:docs/runbooks/experience-store.md`
 - Validation: _none_
 - Guardrail: _none_
 
@@ -354,10 +355,10 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 
 - Source reference: docs/GATE-6-CHECKLIST.md row 3.2
 - Description: Provenance records source type, provider/model when observed, ownership, license, all four storage/reuse permissions, evidence and limits.
-- Implementation: _none_
-- Test: _none_
+- Implementation: `file:apps/api/src/iacode_api/experience/sources.py`, `file:services/experience/src/iacode_experience/domain.py`
+- Test: `command:cmd-0054`, `command:cmd-0050`
 - Negative test: _none_
-- Documentation: _none_
+- Documentation: `file:docs/runbooks/experience-store.md`
 - Validation: _none_
 - Guardrail: _none_
 
@@ -365,10 +366,10 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 
 - Source reference: docs/GATE-6-CHECKLIST.md row 3.3
 - Description: Unknown ownership/license or unproven permissions cannot yield a positive RAG, training or distillation grant; raw external output never becomes trainable by storage.
-- Implementation: _none_
-- Test: _none_
+- Implementation: `file:apps/api/src/iacode_api/experience/sources.py`, `file:services/experience/src/iacode_experience/domain.py`
+- Test: `command:cmd-0054`, `command:cmd-0050`
 - Negative test: _none_
-- Documentation: _none_
+- Documentation: `file:docs/runbooks/experience-store.md`
 - Validation: _none_
 - Guardrail: _none_
 
@@ -376,10 +377,10 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 
 - Source reference: docs/GATE-6-CHECKLIST.md row 3.4
 - Description: Effective permissions cannot exceed any contributing source permission, and provenance/rights remain bound to the exact stored content and export.
-- Implementation: _none_
-- Test: _none_
+- Implementation: `file:apps/api/src/iacode_api/experience/sources.py`, `file:services/experience/src/iacode_experience/domain.py`
+- Test: `command:cmd-0054`, `command:cmd-0050`
 - Negative test: _none_
-- Documentation: _none_
+- Documentation: `file:docs/runbooks/experience-store.md`
 - Validation: _none_
 - Guardrail: _none_
 
@@ -387,10 +388,10 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 
 - Source reference: docs/GATE-6-CHECKLIST.md row 3.5
 - Description: Canonical credential detection scans complete exact normalized content before durable effects and again before delivery; matches and scanner failure produce sanitized refusal.
-- Implementation: _none_
-- Test: _none_
+- Implementation: `file:apps/api/src/iacode_api/experience/sources.py`, `file:services/experience/src/iacode_experience/domain.py`
+- Test: `command:cmd-0054`, `command:cmd-0050`
 - Negative test: _none_
-- Documentation: _none_
+- Documentation: `file:docs/runbooks/experience-store.md`
 - Validation: _none_
 - Guardrail: _none_
 
@@ -398,10 +399,10 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 
 - Source reference: docs/GATE-6-CHECKLIST.md row 3.6
 - Description: Known runtime authorization material and forbidden private/transcript fields cannot enter content, metadata, summaries, diagnostics, audit payloads, errors or exports.
-- Implementation: _none_
-- Test: _none_
+- Implementation: `file:apps/api/src/iacode_api/experience/sources.py`, `file:services/experience/src/iacode_experience/domain.py`
+- Test: `command:cmd-0054`, `command:cmd-0050`
 - Negative test: _none_
-- Documentation: _none_
+- Documentation: `file:docs/runbooks/experience-store.md`
 - Validation: _none_
 - Guardrail: _none_
 
@@ -409,10 +410,10 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 
 - Source reference: docs/GATE-6-CHECKLIST.md row 3.7
 - Description: Denied and unknown reuse requests fail closed without data disclosure; no endpoint performs knowledge retrieval, training or distillation.
-- Implementation: _none_
-- Test: _none_
+- Implementation: `file:apps/api/src/iacode_api/experience/sources.py`, `file:services/experience/src/iacode_experience/domain.py`
+- Test: `command:cmd-0054`, `command:cmd-0050`
 - Negative test: _none_
-- Documentation: _none_
+- Documentation: `file:docs/runbooks/experience-store.md`
 - Validation: _none_
 - Guardrail: _none_
 
@@ -420,10 +421,10 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 
 - Source reference: docs/GATE-6-CHECKLIST.md row 4.1
 - Description: Alembic evolves the existing experiences persistence contract rather than introducing an unrelated shadow store; ORM and actual PostgreSQL schema agree.
-- Implementation: _none_
-- Test: _none_
+- Implementation: `file:apps/api/src/iacode_api/experience/sources.py`, `file:services/experience/src/iacode_experience/domain.py`
+- Test: `command:cmd-0054`, `command:cmd-0050`
 - Negative test: _none_
-- Documentation: _none_
+- Documentation: `file:docs/runbooks/experience-store.md`
 - Validation: _none_
 - Guardrail: _none_
 
@@ -431,10 +432,10 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 
 - Source reference: docs/GATE-6-CHECKLIST.md row 4.2
 - Description: Schema migration preserves identity, rights and lineage of legacy rows without silently treating unvalidated payloads as current valid experiences.
-- Implementation: _none_
-- Test: _none_
+- Implementation: `file:apps/api/src/iacode_api/experience/sources.py`, `file:services/experience/src/iacode_experience/domain.py`
+- Test: `command:cmd-0054`, `command:cmd-0050`
 - Negative test: _none_
-- Documentation: _none_
+- Documentation: `file:docs/runbooks/experience-store.md`
 - Validation: _none_
 - Guardrail: _none_
 
@@ -442,10 +443,10 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 
 - Source reference: docs/GATE-6-CHECKLIST.md row 4.3
 - Description: Content, schema version, provenance and digest form one immutable captured fact; unauthorized updates and direct persistence corruption cannot produce a valid delivered record.
-- Implementation: _none_
-- Test: _none_
+- Implementation: `file:apps/api/src/iacode_api/experience/sources.py`, `file:services/experience/src/iacode_experience/domain.py`
+- Test: `command:cmd-0054`, `command:cmd-0050`
 - Negative test: _none_
-- Documentation: _none_
+- Documentation: `file:docs/runbooks/experience-store.md`
 - Validation: _none_
 - Guardrail: _none_
 
@@ -453,10 +454,10 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 
 - Source reference: docs/GATE-6-CHECKLIST.md row 4.4
 - Description: Capture and its bounded audit fact commit atomically; failed validation, unavailable dependencies and rolled-back writes leave no partial experience.
-- Implementation: _none_
-- Test: _none_
+- Implementation: `file:apps/api/src/iacode_api/experience/sources.py`, `file:services/experience/src/iacode_experience/domain.py`
+- Test: `command:cmd-0054`, `command:cmd-0050`
 - Negative test: _none_
-- Documentation: _none_
+- Documentation: `file:docs/runbooks/experience-store.md`
 - Validation: _none_
 - Guardrail: _none_
 
@@ -464,10 +465,10 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 
 - Source reference: docs/GATE-6-CHECKLIST.md row 4.5
 - Description: Stable request identity makes accepted-response-loss and concurrent retries idempotent; conflicting content is refused rather than silently overwritten.
-- Implementation: _none_
-- Test: _none_
+- Implementation: `file:apps/api/src/iacode_api/experience/sources.py`, `file:services/experience/src/iacode_experience/domain.py`
+- Test: `command:cmd-0054`, `command:cmd-0050`
 - Negative test: _none_
-- Documentation: _none_
+- Documentation: `file:docs/runbooks/experience-store.md`
 - Validation: _none_
 - Guardrail: _none_
 
@@ -475,10 +476,10 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 
 - Source reference: docs/GATE-6-CHECKLIST.md row 4.6
 - Description: New request identifiers cannot silently resurrect revoked/deleted/expired content or reset its retention clock; repeated mutations preserve truthful terminal state.
-- Implementation: _none_
-- Test: _none_
+- Implementation: `file:apps/api/src/iacode_api/experience/sources.py`, `file:services/experience/src/iacode_experience/domain.py`
+- Test: `command:cmd-0054`, `command:cmd-0050`
 - Negative test: _none_
-- Documentation: _none_
+- Documentation: `file:docs/runbooks/experience-store.md`
 - Validation: _none_
 - Guardrail: _none_
 
@@ -486,10 +487,10 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 
 - Source reference: docs/GATE-6-CHECKLIST.md row 5.1
 - Description: All experience operations require actual configured runtime authentication; no unauthenticated legacy alternate path reaches experience data or effects.
-- Implementation: _none_
-- Test: _none_
+- Implementation: `file:apps/api/src/iacode_api/experience/sources.py`, `file:services/experience/src/iacode_experience/domain.py`
+- Test: `command:cmd-0054`, `command:cmd-0050`
 - Negative test: _none_
-- Documentation: _none_
+- Documentation: `file:docs/runbooks/experience-store.md`
 - Validation: _none_
 - Guardrail: _none_
 
@@ -497,10 +498,10 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 
 - Source reference: docs/GATE-6-CHECKLIST.md row 5.2
 - Description: Project/source identity scopes every read, list, export, withdrawal and deletion; a mismatched project cannot disclose or modify an experience.
-- Implementation: _none_
-- Test: _none_
+- Implementation: `file:apps/api/src/iacode_api/experience/sources.py`, `file:services/experience/src/iacode_experience/domain.py`
+- Test: `command:cmd-0054`, `command:cmd-0050`
 - Negative test: _none_
-- Documentation: _none_
+- Documentation: `file:docs/runbooks/experience-store.md`
 - Validation: _none_
 - Guardrail: _none_
 
@@ -508,10 +509,10 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 
 - Source reference: docs/GATE-6-CHECKLIST.md row 5.3
 - Description: Capture, inspect, list and machine-readable export round-trip actual persisted content and hashes, without deriving success from an in-memory fake.
-- Implementation: _none_
-- Test: _none_
+- Implementation: `file:apps/api/src/iacode_api/experience/sources.py`, `file:services/experience/src/iacode_experience/domain.py`
+- Test: `command:cmd-0054`, `command:cmd-0050`
 - Negative test: _none_
-- Documentation: _none_
+- Documentation: `file:docs/runbooks/experience-store.md`
 - Validation: _none_
 - Guardrail: _none_
 
@@ -519,10 +520,10 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 
 - Source reference: docs/GATE-6-CHECKLIST.md row 5.4
 - Description: Listing is deterministically ordered, bounded and resumable with a validated project-bound cursor; invalid cursors and enumeration cannot bypass access/retention.
-- Implementation: _none_
-- Test: _none_
+- Implementation: `file:apps/api/src/iacode_api/experience/sources.py`, `file:services/experience/src/iacode_experience/domain.py`
+- Test: `command:cmd-0054`, `command:cmd-0050`
 - Negative test: _none_
-- Documentation: _none_
+- Documentation: `file:docs/runbooks/experience-store.md`
 - Validation: _none_
 - Guardrail: _none_
 
@@ -530,10 +531,10 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 
 - Source reference: docs/GATE-6-CHECKLIST.md row 5.5
 - Description: Errors use stable bounded reason codes and observable correlation without echoing rejected content, credentials, database details or exception strings.
-- Implementation: _none_
-- Test: _none_
+- Implementation: `file:apps/api/src/iacode_api/experience/sources.py`, `file:services/experience/src/iacode_experience/domain.py`
+- Test: `command:cmd-0054`, `command:cmd-0050`
 - Negative test: _none_
-- Documentation: _none_
+- Documentation: `file:docs/runbooks/experience-store.md`
 - Validation: _none_
 - Guardrail: _none_
 
@@ -541,10 +542,10 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 
 - Source reference: docs/GATE-6-CHECKLIST.md row 5.6
 - Description: Requests and responses preserve the existing authenticated transport and source boundaries; clients and agents cannot gain host execution or verdict authority.
-- Implementation: _none_
-- Test: _none_
+- Implementation: `file:apps/api/src/iacode_api/experience/sources.py`, `file:services/experience/src/iacode_experience/domain.py`
+- Test: `command:cmd-0054`, `command:cmd-0050`
 - Negative test: _none_
-- Documentation: _none_
+- Documentation: `file:docs/runbooks/experience-store.md`
 - Validation: _none_
 - Guardrail: _none_
 
@@ -552,10 +553,10 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 
 - Source reference: docs/GATE-6-CHECKLIST.md row 6.1
 - Description: A versioned consumed policy sets finite retention defaults/maxima, bounded processing and explicit operational limits; a caller cannot widen canonical ceilings.
-- Implementation: _none_
-- Test: _none_
+- Implementation: `file:apps/api/src/iacode_api/experience/sources.py`, `file:services/experience/src/iacode_experience/domain.py`
+- Test: `command:cmd-0054`, `command:cmd-0050`
 - Negative test: _none_
-- Documentation: _none_
+- Documentation: `file:docs/runbooks/experience-store.md`
 - Validation: _none_
 - Guardrail: _none_
 
@@ -563,10 +564,10 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 
 - Source reference: docs/GATE-6-CHECKLIST.md row 6.2
 - Description: Expired or storage-withdrawn content is immediately unavailable to reads, listings, exports and reuse, independently of the next physical sweep.
-- Implementation: _none_
-- Test: _none_
+- Implementation: `file:apps/api/src/iacode_api/experience/sources.py`, `file:services/experience/src/iacode_experience/domain.py`
+- Test: `command:cmd-0054`, `command:cmd-0050`
 - Negative test: _none_
-- Documentation: _none_
+- Documentation: `file:docs/runbooks/experience-store.md`
 - Validation: _none_
 - Guardrail: _none_
 
@@ -574,10 +575,10 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 
 - Source reference: docs/GATE-6-CHECKLIST.md row 6.3
 - Description: Owned automatic retention processing physically removes expired primary payloads in bounded atomic batches and records only minimal non-sensitive deletion evidence.
-- Implementation: _none_
-- Test: _none_
+- Implementation: `file:apps/api/src/iacode_api/experience/sources.py`, `file:services/experience/src/iacode_experience/domain.py`
+- Test: `command:cmd-0054`, `command:cmd-0050`
 - Negative test: _none_
-- Documentation: _none_
+- Documentation: `file:docs/runbooks/experience-store.md`
 - Validation: _none_
 - Guardrail: _none_
 
@@ -585,10 +586,10 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 
 - Source reference: docs/GATE-6-CHECKLIST.md row 6.4
 - Description: Explicit withdrawal/deletion is authenticated, project-bound and idempotent; it cannot delete source runs, quality evidence or unrelated project data.
-- Implementation: _none_
-- Test: _none_
+- Implementation: `file:apps/api/src/iacode_api/experience/sources.py`, `file:services/experience/src/iacode_experience/domain.py`
+- Test: `command:cmd-0054`, `command:cmd-0050`
 - Negative test: _none_
-- Documentation: _none_
+- Documentation: `file:docs/runbooks/experience-store.md`
 - Validation: _none_
 - Guardrail: _none_
 
@@ -596,10 +597,10 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 
 - Source reference: docs/GATE-6-CHECKLIST.md row 6.5
 - Description: Runtime restart preserves records, idempotency and rights; corrupt schema/content/provenance or unavailable source evidence fails closed after recovery.
-- Implementation: _none_
-- Test: _none_
+- Implementation: `file:apps/api/src/iacode_api/experience/sources.py`, `file:services/experience/src/iacode_experience/domain.py`
+- Test: `command:cmd-0054`, `command:cmd-0050`
 - Negative test: _none_
-- Documentation: _none_
+- Documentation: `file:docs/runbooks/experience-store.md`
 - Validation: _none_
 - Guardrail: _none_
 
@@ -607,10 +608,10 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 
 - Source reference: docs/GATE-6-CHECKLIST.md row 6.6
 - Description: Background tasks and dependency failures have explicit bounded lifecycle, observable errors and owned shutdown; storage/backup deletion limits and safe restore procedure are documented.
-- Implementation: _none_
-- Test: _none_
+- Implementation: `file:apps/api/src/iacode_api/experience/sources.py`, `file:services/experience/src/iacode_experience/domain.py`
+- Test: `command:cmd-0054`, `command:cmd-0050`
 - Negative test: _none_
-- Documentation: _none_
+- Documentation: `file:docs/runbooks/experience-store.md`
 - Validation: _none_
 - Guardrail: _none_
 
@@ -618,10 +619,10 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 
 - Source reference: docs/GATE-6-CHECKLIST.md row 7.1
 - Description: Actual fresh-stack acceptance captures a real completed governed task and quality result with observed provider/tool lineage and persisted rights, then reads/lists/exports matching bytes.
-- Implementation: _none_
-- Test: _none_
+- Implementation: `file:apps/api/src/iacode_api/experience/sources.py`, `file:services/experience/src/iacode_experience/domain.py`
+- Test: `command:cmd-0054`, `command:cmd-0050`
 - Negative test: _none_
-- Documentation: _none_
+- Documentation: `file:docs/runbooks/experience-store.md`
 - Validation: _none_
 - Guardrail: _none_
 
@@ -629,10 +630,10 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 
 - Source reference: docs/GATE-6-CHECKLIST.md row 7.2
 - Description: Live acceptance proves restart, stable retry, retention expiry, deletion and unchanged source resources through the actual API and database.
-- Implementation: _none_
-- Test: _none_
+- Implementation: `file:apps/api/src/iacode_api/experience/sources.py`, `file:services/experience/src/iacode_experience/domain.py`
+- Test: `command:cmd-0054`, `command:cmd-0050`
 - Negative test: _none_
-- Documentation: _none_
+- Documentation: `file:docs/runbooks/experience-store.md`
 - Validation: _none_
 - Guardrail: _none_
 
@@ -640,10 +641,10 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 
 - Source reference: docs/GATE-6-CHECKLIST.md row 7.3
 - Description: Live adverse controls attack authentication, project mismatch, denied reuse, secret/private ingress, forged facts, corruption and resurrection beside a valid clean control.
-- Implementation: _none_
-- Test: _none_
+- Implementation: `file:apps/api/src/iacode_api/experience/sources.py`, `file:services/experience/src/iacode_experience/domain.py`
+- Test: `command:cmd-0054`, `command:cmd-0050`
 - Negative test: _none_
-- Documentation: _none_
+- Documentation: `file:docs/runbooks/experience-store.md`
 - Validation: _none_
 - Guardrail: _none_
 
@@ -651,10 +652,10 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 
 - Source reference: docs/GATE-6-CHECKLIST.md row 7.4
 - Description: New integration tests own their runtime namespace, fixtures and temporary resources; operational identities/source bytes stay unchanged and cleanup is observed.
-- Implementation: _none_
-- Test: _none_
+- Implementation: `file:apps/api/src/iacode_api/experience/sources.py`, `file:services/experience/src/iacode_experience/domain.py`
+- Test: `command:cmd-0054`, `command:cmd-0050`
 - Negative test: _none_
-- Documentation: _none_
+- Documentation: `file:docs/runbooks/experience-store.md`
 - Validation: _none_
 - Guardrail: _none_
 
@@ -662,10 +663,10 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 
 - Source reference: docs/GATE-6-CHECKLIST.md row 7.5
 - Description: Every mandatory new experience scenario joins the full non-fast verifier without dropping inherited stages; failed reruns cannot reuse stale PASS artifacts.
-- Implementation: _none_
-- Test: _none_
+- Implementation: `file:apps/api/src/iacode_api/experience/sources.py`, `file:services/experience/src/iacode_experience/domain.py`
+- Test: `command:cmd-0054`, `command:cmd-0050`
 - Negative test: _none_
-- Documentation: _none_
+- Documentation: `file:docs/runbooks/experience-store.md`
 - Validation: _none_
 - Guardrail: _none_
 
@@ -673,10 +674,10 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 
 - Source reference: docs/GATE-6-CHECKLIST.md row 7.6
 - Description: Functional reports bind the actual immutable subject, exact source fingerprint and process outcomes; available safe producer bytes survive fallible postprocessing/cleanup.
-- Implementation: _none_
-- Test: _none_
+- Implementation: `file:apps/api/src/iacode_api/experience/sources.py`, `file:services/experience/src/iacode_experience/domain.py`
+- Test: `command:cmd-0054`, `command:cmd-0050`
 - Negative test: _none_
-- Documentation: _none_
+- Documentation: `file:docs/runbooks/experience-store.md`
 - Validation: _none_
 - Guardrail: _none_
 
@@ -2290,6 +2291,17 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 
 - Source reference: LESSON-PREFLIGHT.json LESSON-REQ-0139
 - Description: Verify summaries preserve canonical continuation structure
+- Implementation: _none_
+- Test: _none_
+- Negative test: _none_
+- Documentation: _none_
+- Validation: _none_
+- Guardrail: _none_
+
+### LESSON-REQ-0140 - lesson:LSN-0141
+
+- Source reference: LESSON-PREFLIGHT.json LESSON-REQ-0140
+- Description: Verify preflight checks honor every declared applicability dimension
 - Implementation: _none_
 - Test: _none_
 - Negative test: _none_

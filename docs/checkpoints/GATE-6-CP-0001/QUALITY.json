@@ -7,9 +7,9 @@
       "justification": null
     },
     "unitTests": {
-      "status": "NOT_EXECUTED",
-      "evidence": [],
-      "justification": null
+      "status": "FAIL",
+      "evidence": ["file:attempts/FULL-VERIFY-INTERRUPTED-0003.json", "file:FULL-VERIFY-PROGRESS.json"],
+      "justification": "Immutable v3 root892 genuinely failed twice. Local causal corrections and affected classes pass cmd-0141/0142/0143, but full current-subject root and 47-stage re-execution remain pending; no whole-suite PASS is inferred."
     },
     "integrationTests": {
       "status": "NOT_EXECUTED",
@@ -54,7 +54,7 @@
     "greenKeeper": {
       "status": "NOT_EXECUTED",
       "evidence": [],
-      "justification": null
+      "justification": "Whole formal mandatory execution remains pending. Causal rework is recorded as BLOCKED_EXTERNAL because Docker management does not respond; this is not GREEN_KEEPER_GATE=PASS."
     },
     "deliveryCompleteness": {
       "status": "NOT_EXECUTED",
