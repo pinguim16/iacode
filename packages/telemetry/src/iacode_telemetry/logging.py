@@ -21,6 +21,7 @@ import logging
 import sys
 import time
 from typing import Any
+from urllib.parse import unquote
 
 from iacode_common.redaction import redact_mapping, redact_text
 
@@ -30,12 +31,34 @@ __all__ = ["JsonLogFormatter", "configure_logging", "get_logger"]
 
 # Attributes ``logging`` puts on every record. Anything else a caller passed through ``extra`` is
 # treated as structured payload and is emitted alongside the contract fields.
-_STANDARD_ATTRIBUTES = frozenset({
-    "args", "asctime", "created", "exc_info", "exc_text", "filename", "funcName", "levelname",
-    "levelno", "lineno", "module", "msecs", "message", "msg", "name", "pathname", "process",
-    "processName", "relativeCreated", "stack_info", "stacklevel", "thread", "threadName",
-    "taskName",
-})
+_STANDARD_ATTRIBUTES = frozenset(
+    {
+        "args",
+        "asctime",
+        "created",
+        "exc_info",
+        "exc_text",
+        "filename",
+        "funcName",
+        "levelname",
+        "levelno",
+        "lineno",
+        "module",
+        "msecs",
+        "message",
+        "msg",
+        "name",
+        "pathname",
+        "process",
+        "processName",
+        "relativeCreated",
+        "stack_info",
+        "stacklevel",
+        "thread",
+        "threadName",
+        "taskName",
+    }
+)
 
 
 class JsonLogFormatter(logging.Formatter):
@@ -51,7 +74,7 @@ class JsonLogFormatter(logging.Formatter):
             "timestamp": self._timestamp(record),
             "level": record.levelname,
             "service": self.service,
-            "message": redact_text(record.getMessage()),
+            "message": redact_text(self._message(record)),
         }
         if self.version:
             payload["version"] = self.version
@@ -63,8 +86,10 @@ class JsonLogFormatter(logging.Formatter):
                 payload[field] = str(value)
 
         extra = {
-            key: value for key, value in record.__dict__.items()
-            if key not in _STANDARD_ATTRIBUTES and key not in CONTEXT_FIELDS
+            key: value
+            for key, value in record.__dict__.items()
+            if key not in _STANDARD_ATTRIBUTES
+            and key not in CONTEXT_FIELDS
             and not key.startswith("_")
         }
         if extra:
@@ -80,6 +105,25 @@ class JsonLogFormatter(logging.Formatter):
                 "traceback": redact_text(self.formatException(record.exc_info)),
             }
         return json.dumps(payload, ensure_ascii=False, default=str)
+
+    @staticmethod
+    def _message(record: logging.LogRecord) -> str:
+        # Uvicorn's access target includes untrusted path/query values. New experience routes
+        # carry project IDs and adversarial queries; retain an observable bounded route event,
+        # never that target. This pure formatter does not hold a process-global credential.
+        if (
+            record.name == "uvicorn.access"
+            and isinstance(record.args, tuple)
+            and len(record.args) == 5
+        ):
+            _, method, target, _, status = record.args
+            if isinstance(target, str) and unquote(target).casefold().startswith(
+                "/api/v1/experiences"
+            ):
+                verb = method if method in {"GET", "POST", "DELETE", "OPTIONS", "HEAD"} else "OTHER"
+                code = status if type(status) is int and 100 <= status <= 599 else 500
+                return f"{verb} /api/v1/experiences/<scoped> {code}"
+        return record.getMessage()
 
     @staticmethod
     def _timestamp(record: logging.LogRecord) -> str:

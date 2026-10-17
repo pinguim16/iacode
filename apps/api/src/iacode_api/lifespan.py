@@ -31,6 +31,7 @@ from iacode_api.agent_runtime.runtime import AgentRuntimeRuntime, build_agent_ru
 from iacode_api.cache import client as cache_client
 from iacode_api.config import Settings
 from iacode_api.db import engine as db_engine
+from iacode_api.experience.runtime import ExperienceRuntime, build_experience_runtime
 from iacode_api.gateway.runtime import GatewayRuntime, build_runtime
 from iacode_api.observability.metrics import Metrics
 from iacode_api.quality.runtime import QualityApiRuntime, build_quality_runtime
@@ -54,6 +55,7 @@ class Resources:
     gateway: GatewayRuntime
     agent_runtime: AgentRuntimeRuntime
     quality: QualityApiRuntime
+    experience: ExperienceRuntime
 
 
 def build_resources(settings: Settings, metrics: Metrics) -> Resources:
@@ -61,6 +63,7 @@ def build_resources(settings: Settings, metrics: Metrics) -> Resources:
     engine = db_engine.create_engine(settings)
     session_factory = db_engine.create_session_factory(engine)
     minio = storage_client.create_client(settings)
+    quality = build_quality_runtime(settings, session_factory, minio)
     return Resources(
         settings=settings,
         metrics=metrics,
@@ -77,7 +80,8 @@ def build_resources(settings: Settings, metrics: Metrics) -> Resources:
         # policy is: a malformed definition stops the process at start-up, where it is one
         # clear failure, instead of turning every run creation into a confusing refusal.
         agent_runtime=build_agent_runtime(settings, session_factory),
-        quality=build_quality_runtime(settings, session_factory, minio),
+        quality=quality,
+        experience=build_experience_runtime(settings, session_factory, minio, quality.store),
     )
 
 
@@ -92,6 +96,7 @@ async def release_resources(resources: Resources) -> list[str]:
             failures.append(name)
             logger.error("failed to release %s during shutdown", name, exc_info=error)
 
+    await attempt("experience-retention", resources.experience.close())
     await attempt("temporal", resources.temporal.close())
     await attempt("redis", cache_client.close(resources.redis))
     await attempt("database", resources.engine.dispose())
@@ -106,6 +111,7 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     settings: Settings = app.state.settings
     resources = build_resources(settings, app.state.metrics)
     app.state.resources = resources
+    resources.experience.start()
     logger.info(
         "api started",
         extra={"environment": settings.environment, "version": settings.version},

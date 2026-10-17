@@ -44,6 +44,7 @@ QUALITY_TABLES = {
     "quality_verdicts",
     "quality_run_events",
 }
+EXPERIENCE_TABLES = {"experience_events"}
 
 # Append-only facts: something that already happened, and cannot change afterwards.
 APPEND_ONLY = {
@@ -58,12 +59,14 @@ APPEND_ONLY = {
     "quality_findings",
     "quality_verdicts",
     "quality_run_events",
+    "experience_events",
 }
 
 
 def test_structural_tables_exist() -> None:
     assert set(Base.metadata.tables) == (
-        STRUCTURAL_TABLES | AGENT_RUNTIME_TABLES | SANDBOX_TABLES | QUALITY_TABLES
+        STRUCTURAL_TABLES | AGENT_RUNTIME_TABLES | SANDBOX_TABLES
+        | QUALITY_TABLES | EXPERIENCE_TABLES
     )
 
 
@@ -183,6 +186,8 @@ def test_relationships_cascade_deliberately() -> None:
         ("quality_findings", "quality_result_id"): "CASCADE",
         ("quality_verdicts", "quality_run_id"): "CASCADE",
         ("quality_run_events", "quality_run_id"): "CASCADE",
+        # Gate 6 evolves experiences, adding only finite minimal audit facts owned by that row.
+        ("experience_events", "experience_id"): "CASCADE",
     }
     observed = {
         (table_name, next(iter(key.columns)).name): key.ondelete

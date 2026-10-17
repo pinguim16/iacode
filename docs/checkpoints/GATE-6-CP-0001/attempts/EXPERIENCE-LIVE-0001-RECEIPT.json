@@ -1,0 +1,29 @@
+{
+  "kind": "LOCAL_REAL_RUNTIME_PROOF_NOT_GATE_OR_INDEPENDENT_ACCEPTANCE",
+  "observedAt": "2026-10-17T13:02:47Z",
+  "exitCode": 1,
+  "producerPresent": true,
+  "result": "FAIL",
+  "sourceDirtyAllowedOnlyForLocalRework": true,
+  "producerBytes": 4170,
+  "producerSha256": "d7baedfc20c35e99aaa5a8551ccd0ffa64683a261835ba070203acb01f176527",
+  "unsafeOccurrences": 0,
+  "producerArchive": "docs/checkpoints/GATE-6-CP-0001/attempts/EXPERIENCE-LIVE-0001.json",
+  "subjectCommit": "bcfe297278d25ee5a1db70a32b8c4ba0731941ea",
+  "sourceFingerprint": "03d9cb176fe61404ce42f907091d115c17db1622ae4818706beb9de3ab0d1320",
+  "producerResult": "FAIL",
+  "controls": 32,
+  "failedControls": [
+    "actual-accepted-experience-response-loss-one-durable-effect"
+  ],
+  "cleanup": {
+    "composeExitCode": 0,
+    "remainingContainers": 0,
+    "remainingVolumes": 0,
+    "remainingNetworks": 0
+  },
+  "failure": {
+    "type": "StackError",
+    "code": "EXPERIENCE_LIVE_PROOF_FAILED"
+  }
+}

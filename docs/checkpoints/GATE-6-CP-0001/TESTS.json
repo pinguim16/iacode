@@ -1,0 +1,27 @@
+{
+  "schemaVersion": "3.4.0",
+  "unit": {
+    "executed": true,
+    "passed": 173,
+    "failed": 0,
+    "command": "python docs/checkpoints/GATE-6-CP-0001/audit-harness/run_pre_live_sequence.py",
+    "evidence": "file:docs/checkpoints/GATE-6-CP-0001/suite-attempts/API-UNIT-0006.json",
+    "runId": "GATE-6-CP-0001-local-api-unit-0006"
+  },
+  "integration": {
+    "executed": true,
+    "passed": 36,
+    "failed": 0,
+    "command": "python docs/checkpoints/GATE-6-CP-0001/audit-harness/run_owned_experience_integration.py",
+    "evidence": "file:docs/checkpoints/GATE-6-CP-0001/suite-attempts/INTEGRATION-0004.json",
+    "runId": "GATE-6-CP-0001-local-integration-0004"
+  },
+  "e2e": {
+    "executed": true,
+    "passed": 1,
+    "failed": 0,
+    "command": "python docs/checkpoints/GATE-6-CP-0001/audit-harness/run_pre_live_sequence.py",
+    "evidence": "file:docs/checkpoints/GATE-6-CP-0001/attempts/EXPERIENCE-LIVE-0003.json",
+    "runId": "GATE-6-CP-0001-local-experience-live-0003-receipt"
+  }
+}

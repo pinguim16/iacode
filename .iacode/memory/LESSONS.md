@@ -49,7 +49,7 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 | `LSN-0039` | `GUARDED` | HIGH | testing | A test that writes to the operational database leaves production data behind | `test_the_operational_catalog_holds_only_providers_the_policy_declares` |
 | `LSN-0040` | `GUARDED` | CRITICAL | checkpoint | A control that judges sealed history only runs once a successor anchors it | `test_every_sealed_checkpoint_validates_from_its_own_tag`, `test_the_recorder_never_declares_an_ignored_path_as_an_input`, `test_an_input_the_repository_carries_is_still_required_to_exist`, `scripts/development-ledger/validate_checkpoint.py`, `test_the_validator_refuses_a_record_naming_an_unpublished_commit`, `test_every_preserved_reference_is_what_makes_its_checkpoint_valid`, `test_a_published_clone_carries_only_what_a_published_reference_reaches`, `test_every_clone_in_the_tooling_and_the_suite_is_a_published_clone`, `test_a_preserved_reference_missing_from_the_remote_fails_unnamed`, `test_a_preserved_commit_maps_to_the_checkpoint_whose_evidence_names_it`, `test_git_metadata_is_local_even_though_git_check_ignore_does_not_classify_it`, `test_schema_3_3_refuses_a_digest_bound_git_metadata_input`, `test_schema_3_3_refuses_an_ignored_input_even_when_it_exists`, `test_the_recorder_excludes_git_metadata_and_refuses_it_when_explicit`, `test_a_nontransport_input_refusal_is_recomputed_from_its_precondition`, `test_a_fabricated_nontransport_input_refusal_is_rejected`, `scripts/development-ledger/ledger_common.py` |
 | `LSN-0041` | `GUARDED` | HIGH | testing | An editing path that consumes a backslash escape leaves a control character, and the control it belonged to silently matches nothing | `test_no_source_file_carries_a_stray_control_character`, `test_the_scan_detects_one`, `test_the_page_offers_nothing_that_would_execute_a_tool`, `test_the_boundary_has_something_to_scan` |
-| `LSN-0042` | `GUARDED` | HIGH | implementation | A naming convention rewrites a CHECK constraint's name and leaves a UNIQUE constraint's alone | `test_the_agent_runtime_migration_is_reversible`, `test_the_declared_model_matches_the_migrated_schema`, `test_a_check_constraint_is_created_and_dropped_by_its_bare_name`, `test_a_unique_constraint_keeps_exactly_the_name_it_was_given` |
+| `LSN-0042` | `GUARDED` | CRITICAL | implementation | A naming convention rewrites a CHECK constraint's name and leaves a UNIQUE constraint's alone | `test_the_agent_runtime_migration_is_reversible`, `test_the_declared_model_matches_the_migrated_schema`, `test_a_check_constraint_is_created_and_dropped_by_its_bare_name`, `test_a_unique_constraint_keeps_exactly_the_name_it_was_given`, `test_experience_constraint_names_respect_their_actual_kind` |
 | `LSN-0043` | `GUARDED` | MEDIUM | testing | A log line is not evidence that another process is ready | `test_readiness_is_asked_of_temporal`, `test_readiness_is_not_read_from_a_log_line`, `test_the_harness_asks_the_server_for_the_answer` |
 | `LSN-0044` | `GUARDED` | HIGH | quality | A boundary scan must read the code rather than the prose, and must be shown to fire on a mutated module | `test_the_null_control_detects_a_mutation`, `test_the_provider_scan_would_catch_one`, `test_the_credential_scan_would_catch_one`, `test_the_scan_detects_a_module_that_does_it`, `test_the_determinism_scan_detects_a_module_that_breaks_it` |
 | `LSN-0045` | `GUARDED` | MEDIUM | testing | A counted test suite must declare its cases statically, because the denominator is read from the source | `test_no_counted_pytest_case_expands_at_run_time`, `test_the_scan_detects_an_expansion` |
@@ -133,7 +133,7 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 | `LSN-0123` | `GUARDED` | HIGH | implementation | Consent binds workspace identity, not an uncanonicalized path spelling | `test_editor_preview_binding_uses_workspace_identity_not_path_spelling` |
 | `LSN-0124` | `GUARDED` | HIGH | testing | Durable editor recovery must not use an in-memory test host | `test_native_recovery_proof_uses_persistent_storage_context` |
 | `LSN-0125` | `GUARDED` | HIGH | environment | Native parent exit is not proof of process and profile cleanup | `test_native_process_tree_is_drained_even_after_parent_exits`, `test_owned_profile_cleanup_refuses_broad_targets_and_retries_only_sharing_locks`, `test_native_installer_and_host_both_pin_their_owned_shared_storage` |
-| `LSN-0126` | `GUARDED` | HIGH | security | Known authentication material is not domain or presentation data | `test_authentication_material_is_refused_before_replay_and_domain_io` |
+| `LSN-0126` | `GUARDED` | CRITICAL | security | Known authentication material is not domain or presentation data | `test_authentication_material_is_refused_before_replay_and_domain_io`, `test_known_opaque_capability_refused_in_declared_forms` |
 | `LSN-0127` | `GUARDED` | HIGH | environment | Fresh runtime health does not initialize an operator-managed model catalog | `test_fresh_catalog_requires_sync_and_the_exact_authorized_model_without_substitution` |
 | `LSN-0128` | `GUARDED` | HIGH | testing | Adversarial premises must use the actual public contract | `test_forgery_premise_joins_public_request_ids_to_actual_successful_sandbox_executions`, `test_cleanup_membership_derives_every_canonical_active_state_including_running` |
 | `LSN-0129` | `GUARDED` | HIGH | implementation | Repeated cancellation must preserve an already cancelled terminal result | `test_repeated_cancel_of_cancelled_run_returns_unchanged_terminal_truth` |
@@ -142,7 +142,12 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 | `LSN-0132` | `GUARDED` | HIGH | quality | Owned Git clones need read-only-aware cleanup, not native-profile lock retry | `test_verification_clone_cleanup_handles_real_readonly_git_objects` |
 | `LSN-0133` | `GUARDED` | MEDIUM | tooling | Shared field names do not imply shared schema types | `test_current_provenance_is_validated_by_its_own_artifact_schema` |
 | `LSN-0134` | `GUARDED` | MEDIUM | implementation | Configuration classifiers consume decoded values, not dotenv quote syntax | `test_host_literal_reader_matches_actual_compose_and_placeholder_semantics`, `test_malformed_quoted_env_literals_fail_closed_without_exposing_content`, `test_process_environment_overlays_are_values_not_dotenv_tokens` |
-| `LSN-0135` | `GUARDED` | HIGH | quality | Capture producer evidence before fallible interpretation or owned cleanup | `test_raw_reports_survive_real_postprocessing_exception_and_owned_cleanup`, `test_raw_capture_refuses_secret_material_but_retains_neutral_failure_inventory` |
+| `LSN-0135` | `GUARDED` | HIGH | quality | Capture producer evidence before fallible interpretation or owned cleanup | `test_raw_reports_survive_real_postprocessing_exception_and_owned_cleanup`, `test_raw_capture_refuses_secret_material_but_retains_neutral_failure_inventory`, `test_current_producer_bytes_survive_actual_consumer_failure_and_owned_cleanup`, `test_current_producer_capture_refuses_unsafe_bytes_without_losing_neutral_inventory` |
+| `LSN-0136` | `GUARDED` | MEDIUM | implementation | Strict JSON validation loses transport context | `test_exact_closed_roundtrip`, `test_permissions_require_exact_boolean`, `test_numeric_observations_are_not_coerced` |
+| `LSN-0137` | `GUARDED` | MEDIUM | testing | SQL text interprets inline JSON colons as bindings | `test_legacy_migration_preserves_identity_body_and_rights_without_promotion`, `test_database_immutability_and_direct_corruption_fail_closed` |
+| `LSN-0138` | `GUARDED` | HIGH | security | Secret projection distinguishes public identities from authorization secrets | `test_public_minio_identity_is_not_a_bearer_secret_but_storage_password_stays_protected`, `test_known_opaque_capability_refused_in_declared_forms` |
+| `LSN-0139` | `GUARDED` | HIGH | security | Privacy projection begins in the source query | `test_actual_sql_projection_does_not_fetch_unneeded_private_source_columns`, `test_oversized_required_source_json_is_refused_before_materialization_and_writes` |
+| `LSN-0140` | `GUARDED` | MEDIUM | quality | Summaries preserve canonical continuation structure | `test_local_handoff_renderer_preserves_the_complete_canonical_contract`, `test_local_handoff_renderer_refuses_omitted_or_empty_sections_and_next_action` |
 
 ## Detail
 
@@ -706,7 +711,7 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 
 ### LSN-0042 — A naming convention rewrites a CHECK constraint's name and leaves a UNIQUE constraint's alone
 
-- Status: `GUARDED`, severity HIGH, category implementation, recurrences 0.
+- Status: `GUARDED`, severity CRITICAL, category implementation, recurrences 1.
 - Source: GATE-2, GATE-2-CP-0001, finding G2-F-002.
 - Symptom: Dropping a check constraint by its full name produced ALTER TABLE task_runs DROP CONSTRAINT ck_task_runs_ck_task_runs_status_is_known, and creating a unique constraint by its full name produced one the downgrade could not find, which failed three migration suites at once.
 - Root cause: The declarative naming convention is applied only when the template for that constraint kind contains the constraint-name token. The CHECK template does; the UNIQUE template does not. So a check constraint is named by its bare name and a unique constraint keeps exactly what it is given, and using one rule for both is wrong in one direction or the other.
@@ -716,7 +721,8 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
   - `test` test_the_declared_model_matches_the_migrated_schema — Autogenerate against a freshly migrated database finds nothing left to do, which a name mismatch would report.
   - `test` test_a_check_constraint_is_created_and_dropped_by_its_bare_name — The migration uses the bare name for a check constraint.
   - `test` test_a_unique_constraint_keeps_exactly_the_name_it_was_given — The migration uses the declared name for a unique constraint, on both sides.
-- Evidence: `file:apps/api/migrations/versions/0003_agent_runtime.py`, `file:apps/api/tests/integration/test_migrations.py`, `file:packages/persistence/src/iacode_persistence/base.py`
+  - `test` test_experience_constraint_names_respect_their_actual_kind — Current strengthened causal boundary; every original control remains.
+- Evidence: `file:apps/api/migrations/versions/0003_agent_runtime.py`, `file:apps/api/tests/integration/test_migrations.py`, `file:packages/persistence/src/iacode_persistence/base.py`, `file:docs/checkpoints/GATE-6-CP-0001/COMMANDS.jsonl`, `file:docs/checkpoints/GATE-6-CP-0001/PRE-LIVE-PROGRESS.json`, `file:docs/checkpoints/GATE-6-CP-0001/suite-attempts/INTEGRATION-0004.json`
 
 ### LSN-0043 — A log line is not evidence that another process is ready
 
@@ -1479,14 +1485,14 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 
 ### LSN-0105 — New behavioral tests must satisfy the unchanged source-quality contract
 
-- Status: `GUARDED`, severity CRITICAL, category testing, recurrences 5.
+- Status: `GUARDED`, severity CRITICAL, category testing, recurrences 6.
 - Source: GATE-4, GATE-4-CP-0010, finding G4-INT-004.
 - Symptom: The lint gate refused overlong declarations and expressions in new regression tests.
 - Root cause: Behavioral proof was expanded without checking the source formatting budget first.
 - Resolution: Run the existing mandatory lint over every changed source and test path before publishing; repair formatting without weakening lint or assertions.
 - Prevention:
   - `test` test_mandatory_lint_covers_every_python_project_root — The positive and negative regression must execute the intended boundary with canonical inputs.
-- Evidence: `file:docs/checkpoints/GATE-4-CP-0010/FINDINGS.json`, `file:docs/checkpoints/GATE-4-CP-0010/COMMANDS.jsonl`, `file:tests/test_gate5_clients.py`, `file:docs/checkpoints/GATE-5-CP-0001/FINDINGS.json`, `file:docs/checkpoints/GATE-5-CP-0001/COMMANDS.jsonl`
+- Evidence: `file:docs/checkpoints/GATE-4-CP-0010/FINDINGS.json`, `file:docs/checkpoints/GATE-4-CP-0010/COMMANDS.jsonl`, `file:tests/test_gate5_clients.py`, `file:docs/checkpoints/GATE-5-CP-0001/FINDINGS.json`, `file:docs/checkpoints/GATE-5-CP-0001/COMMANDS.jsonl`, `file:docs/checkpoints/GATE-6-CP-0001/COMMANDS.jsonl`, `file:docs/checkpoints/GATE-6-CP-0001/PRE-LIVE-PROGRESS.json`, `file:docs/checkpoints/GATE-6-CP-0001/suite-attempts/INTEGRATION-0004.json`
 
 ### LSN-0106 — A security repair must execute at the causal output boundary, not a similarly shaped branch
 
@@ -1636,7 +1642,7 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 
 ### LSN-0119 — A clean publication scan does not replace the stricter checkpoint secret scan
 
-- Status: `GUARDED`, severity CRITICAL, category quality, recurrences 2.
+- Status: `GUARDED`, severity CRITICAL, category quality, recurrences 3.
 - Source: GATE-5, GATE-5-CP-0001, finding G5-INT-003.
 - Symptom: The publication tree scan was clean after exact code-reference review, but actual checkpoint validation still refused the same five source files.
 - Root cause: Publication review allowances were incorrectly assumed to apply to the checkpoint's deliberately strict raw canonical detection boundary.
@@ -1645,7 +1651,7 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
   - `test` test_strict_checkpoint_sources_do_not_rely_on_publication_allowances — Run the unchanged strict canonical detector over the five changed authentication sources, retain a generated adverse-value control and never consult publication allowances.
   - `test` test_desktop_credential_remains_a_secret_type_and_safe_dump_redacts_it — Construct the actual Settings and prove the credential is still a real Pydantic SecretStr and safe_dump never emits its value.
   - `test` test_every_current_changed_path_uses_the_strict_detector_including_checkpoint_harnesses — Scan the actual Git delta against its checkpoint base, including every new checkpoint harness and undeclared untracked text path, with unchanged strict detection and no publication allowances.
-- Evidence: `file:docs/checkpoints/GATE-5-CP-0001/FINDINGS.json`, `file:docs/checkpoints/GATE-5-CP-0001/COMMANDS.jsonl`, `file:docs/checkpoints/GATE-5-CP-0001/attempts/SOURCE-SCAN-REVIEW-PRE-REFACTOR.json`, `file:tests/test_gate5_clients.py`, `file:apps/api/tests/unit/test_desktop_api.py`
+- Evidence: `file:docs/checkpoints/GATE-5-CP-0001/FINDINGS.json`, `file:docs/checkpoints/GATE-5-CP-0001/COMMANDS.jsonl`, `file:docs/checkpoints/GATE-5-CP-0001/attempts/SOURCE-SCAN-REVIEW-PRE-REFACTOR.json`, `file:tests/test_gate5_clients.py`, `file:apps/api/tests/unit/test_desktop_api.py`, `file:docs/checkpoints/GATE-6-CP-0001/STRICT-MEMORY-FINDING.json`, `file:docs/checkpoints/GATE-6-CP-0001/FINDINGS.json`, `file:docs/checkpoints/GATE-6-CP-0001/COMMANDS.jsonl`
 
 ### LSN-0120 — Native installation proofs must resolve the installed CLI entrypoint
 
@@ -1717,14 +1723,15 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 
 ### LSN-0126 — Known authentication material is not domain or presentation data
 
-- Status: `GUARDED`, severity HIGH, category security, recurrences 0.
+- Status: `GUARDED`, severity CRITICAL, category security, recurrences 1.
 - Source: GATE-5, GATE-5-CP-0001, finding G5-INT-015.
 - Symptom: The API guard missed encoded capability forms; the full suite retained one failing boundary case.
 - Root cause: Canonical JSON views decode JSON transport, not arbitrary base64, percent or literal Unicode-escape encodings. Shape detection alone cannot recognize a bare known capability.
 - Resolution: Keep canonical taxonomy unchanged and separately refuse the configured capability and closed encoded forms before replay/domain IO and client approval/presentation. Cmd-0131 passes all 165 API cases; cmd-0133 passes all 34 client cases, including signed post-effect refusal preserving uncertainty and an offline preview guard.
 - Prevention:
   - `test` test_authentication_material_is_refused_before_replay_and_domain_io — Exercise raw/case/base64/percent/literal-Unicode forms through actual authenticated ASGI, assert zero replay/domain IO and no returned value, then authenticate a clean request.
-- Evidence: `file:docs/checkpoints/GATE-5-CP-0001/FINDINGS.json`, `file:docs/checkpoints/GATE-5-CP-0001/COMMANDS.jsonl`, `file:apps/api/tests/unit/test_desktop_api.py`, `file:apps/api/src/iacode_api/middleware/desktop_auth.py`
+  - `test` test_known_opaque_capability_refused_in_declared_forms — Current strengthened causal boundary; every original control remains.
+- Evidence: `file:docs/checkpoints/GATE-5-CP-0001/FINDINGS.json`, `file:docs/checkpoints/GATE-5-CP-0001/COMMANDS.jsonl`, `file:apps/api/tests/unit/test_desktop_api.py`, `file:apps/api/src/iacode_api/middleware/desktop_auth.py`, `file:docs/checkpoints/GATE-6-CP-0001/COMMANDS.jsonl`, `file:docs/checkpoints/GATE-6-CP-0001/PRE-LIVE-PROGRESS.json`, `file:docs/checkpoints/GATE-6-CP-0001/suite-attempts/INTEGRATION-0004.json`
 
 ### LSN-0127 — Fresh runtime health does not initialize an operator-managed model catalog
 
@@ -1828,4 +1835,67 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 - Prevention:
   - `test` test_raw_reports_survive_real_postprocessing_exception_and_owned_cleanup — Actual positive/adverse causal regression, not a prose-only claim.
   - `test` test_raw_capture_refuses_secret_material_but_retains_neutral_failure_inventory — Actual positive/adverse causal regression, not a prose-only claim.
-- Evidence: `file:docs/checkpoints/GATE-5-CP-0001/COMMANDS.jsonl`, `file:docs/checkpoints/GATE-5-CP-0001/attempts/FULL-VERIFY-RED-0002-MANIFEST.json`, `file:tests/test_gate5_clients.py`, `file:docs/checkpoints/GATE-5-CP-0001/FINDINGS.json`
+  - `test` test_current_producer_bytes_survive_actual_consumer_failure_and_owned_cleanup — Current strengthened causal boundary; every original control remains.
+  - `test` test_current_producer_capture_refuses_unsafe_bytes_without_losing_neutral_inventory — Current strengthened causal boundary; every original control remains.
+- Evidence: `file:docs/checkpoints/GATE-5-CP-0001/COMMANDS.jsonl`, `file:docs/checkpoints/GATE-5-CP-0001/attempts/FULL-VERIFY-RED-0002-MANIFEST.json`, `file:tests/test_gate5_clients.py`, `file:docs/checkpoints/GATE-5-CP-0001/FINDINGS.json`, `file:docs/checkpoints/GATE-6-CP-0001/COMMANDS.jsonl`, `file:docs/checkpoints/GATE-6-CP-0001/PRE-LIVE-PROGRESS.json`, `file:docs/checkpoints/GATE-6-CP-0001/suite-attempts/INTEGRATION-0004.json`
+
+### LSN-0136 — Strict JSON validation loses transport context
+
+- Status: `GUARDED`, severity MEDIUM, category implementation, recurrences 0.
+- Source: GATE-6, GATE-6-CP-0001, finding G6-INT-001.
+- Symptom: Cmd-0014 actually reports 18 setup errors rejecting valid arrays/dates, one distinct failed security case and seven passed cases; its process exits 1.
+- Root cause: An inherited model-before validator materializes the entire JSON model as a Python dictionary before strict tuple/datetime handling. Restrict boolean prevalidation to the permission fields.
+- Resolution: Preserve strict JSON-mode collection/date handling; apply exact-boolean checks at their owning fields and retain positive/adverse round-trip controls.
+- Prevention:
+  - `test` test_exact_closed_roundtrip — Executed causal positive/adverse regression in the actual owning runtime.
+  - `test` test_permissions_require_exact_boolean — Executed causal positive/adverse regression in the actual owning runtime.
+  - `test` test_numeric_observations_are_not_coerced — Executed causal positive/adverse regression in the actual owning runtime.
+- Evidence: `file:docs/checkpoints/GATE-6-CP-0001/COMMANDS.jsonl`, `file:docs/checkpoints/GATE-6-CP-0001/FINDINGS.json`, `file:docs/checkpoints/GATE-6-CP-0001/PRE-LIVE-PROGRESS.json`, `file:docs/checkpoints/GATE-6-CP-0001/suite-attempts/INTEGRATION-0004.json`
+
+### LSN-0137 — SQL text interprets inline JSON colons as bindings
+
+- Status: `GUARDED`, severity MEDIUM, category testing, recurrences 0.
+- Source: GATE-6, GATE-6-CP-0001, finding G6-INT-004.
+- Symptom: Cmd-0023 preserves two StatementError failures demanding bind parameter true before those fixtures execute; 27 other cases pass and owned cleanup is complete.
+- Root cause: Inline JSON literals inside SQLAlchemy text contain colon-prefixed tokens that its lexical binder treats as parameters. Bind the JSON data through CAST(:body AS JSONB), without changing either substantive corruption/legacy assertion.
+- Resolution: Bind JSON as data instead of embedding colon-bearing JSON literals in SQLAlchemy text; retain actual database assertions and complete migration execution.
+- Prevention:
+  - `test` test_legacy_migration_preserves_identity_body_and_rights_without_promotion — Executed causal positive/adverse regression in the actual owning runtime.
+  - `test` test_database_immutability_and_direct_corruption_fail_closed — Executed causal positive/adverse regression in the actual owning runtime.
+- Evidence: `file:docs/checkpoints/GATE-6-CP-0001/suite-attempts/INTEGRATION-0001.log`, `file:docs/checkpoints/GATE-6-CP-0001/COMMANDS.jsonl`, `file:docs/checkpoints/GATE-6-CP-0001/PRE-LIVE-PROGRESS.json`, `file:docs/checkpoints/GATE-6-CP-0001/suite-attempts/INTEGRATION-0004.json`
+
+### LSN-0138 — Secret projection distinguishes public identities from authorization secrets
+
+- Status: `GUARDED`, severity HIGH, category security, recurrences 0.
+- Source: GATE-6, GATE-6-CP-0001, finding G6-INT-006.
+- Symptom: A configured public MinIO identity collides with legitimate quality package/report text and a real runtime classifier returns AUTHORIZATION_MATERIAL_REFUSED.
+- Root cause: The runtime put the MinIO public account/access identity in the same exact-value set as bearer keys and passwords. The committed public identity occurs in legitimate quality package/report names, so the actual owning-image classifier refuses those bytes with AUTHORIZATION_MATERIAL_REFUSED. Field masking/type alone is not a definition of a secret. No value is globally allowlisted and actual secret scanning or password protection may not be weakened.
+- Resolution: Project actual secret components by their contract: retain HMAC/provider/storage/database/Redis passwords and all declared encoded-form detection; do not add a public account identity as a bearer secret or globally exempt a word.
+- Prevention:
+  - `test` test_public_minio_identity_is_not_a_bearer_secret_but_storage_password_stays_protected — Executed causal positive/adverse regression in the actual owning runtime.
+  - `test` test_known_opaque_capability_refused_in_declared_forms — Executed causal positive/adverse regression in the actual owning runtime.
+- Evidence: `file:docs/checkpoints/GATE-6-CP-0001/suite-attempts/API-UNIT-0004.log`, `file:docs/checkpoints/GATE-6-CP-0001/COMMANDS.jsonl`, `file:docs/checkpoints/GATE-6-CP-0001/PRE-LIVE-PROGRESS.json`, `file:docs/checkpoints/GATE-6-CP-0001/suite-attempts/INTEGRATION-0004.json`, `file:docs/checkpoints/GATE-6-CP-0001/STRICT-MEMORY-FINDING.json`
+
+### LSN-0139 — Privacy projection begins in the source query
+
+- Status: `GUARDED`, severity HIGH, category security, recurrences 0.
+- Source: GATE-6, GATE-6-CP-0001, finding G6-INT-007.
+- Symptom: Actual SQL retrieves unneeded private source fields although the serialized fact omits them.
+- Root cause: Selecting ORM entities loaded whole source records before projecting the closed document. Final serialization excluded private text, but the SQL read still fetched unneeded task results, agent output and event payloads. Cardinality alone did not bound source JSON/text. Select only consumed columns with raiseload, extract exact workspace/permission scalars and bound required command arguments in SQL before loading.
+- Resolution: Use explicit raiseload column projections, exact JSON scalar extraction and SQL-side byte bounds before required structured data enters application memory.
+- Prevention:
+  - `test` test_actual_sql_projection_does_not_fetch_unneeded_private_source_columns — Executed causal positive/adverse regression in the actual owning runtime.
+  - `test` test_oversized_required_source_json_is_refused_before_materialization_and_writes — Executed causal positive/adverse regression in the actual owning runtime.
+- Evidence: `file:docs/checkpoints/GATE-6-CP-0001/suite-attempts/INTEGRATION-0003.json`, `file:docs/checkpoints/GATE-6-CP-0001/suite-attempts/INTEGRATION-0003.log`, `file:docs/checkpoints/GATE-6-CP-0001/COMMANDS.jsonl`, `file:docs/checkpoints/GATE-6-CP-0001/PRE-LIVE-PROGRESS.json`, `file:docs/checkpoints/GATE-6-CP-0001/suite-attempts/INTEGRATION-0004.json`
+
+### LSN-0140 — Summaries preserve canonical continuation structure
+
+- Status: `GUARDED`, severity MEDIUM, category quality, recurrences 0.
+- Source: GATE-6, GATE-6-CP-0001, finding G6-INT-009.
+- Symptom: A local assembler emits readable prose but removes mandatory handoff/next-action sections.
+- Root cause: The local assembler replaced the structured handoff with a prose summary and emitted NEXT without its mandatory subsection. Semantically related prose does not satisfy the canonical artifact structure. Render every owning-validator heading in order with substantive content; reject missing/empty sections and retain the next-action heading before writing. Never relax the validator.
+- Resolution: Render from the owning canonical headings, require meaningful content for every section and prove real output plus omission/empty-section refusals before current checkpoint acceptance.
+- Prevention:
+  - `test` test_local_handoff_renderer_preserves_the_complete_canonical_contract — Actual canonical renderer output and every omitted/empty-section refusal.
+  - `test` test_local_handoff_renderer_refuses_omitted_or_empty_sections_and_next_action — Actual canonical renderer output and every omitted/empty-section refusal.
+- Evidence: `file:docs/checkpoints/GATE-6-CP-0001/COMMANDS.jsonl`, `file:docs/checkpoints/GATE-6-CP-0001/FINDINGS.json`

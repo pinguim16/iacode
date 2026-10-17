@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "3.4.0",
+  "artifacts": [
+    {
+      "artifact": "docs/checkpoints/GATE-6-CP-0001",
+      "sourceType": "repository-generated and AI-assisted engineering evidence",
+      "provider": "OpenAI / local execution",
+      "model": "not-exposed",
+      "ownership": "project-generated evidence",
+      "license": "project-policy",
+      "rights": {
+        "storageAllowed": true,
+        "ragAllowed": false,
+        "trainingAllowed": false,
+        "distillationAllowed": false
+      },
+      "evidence": "AUTHORIZATION.md, BASELINE.md, PLAN.md, COMMANDS.jsonl and FILES.json",
+      "notes": "Internal implementing session only. No private reasoning, credential value, inferred rights or independent approval."
+    },
+    {
+      "artifact": "services/experience; packages/contracts; apps/api; scripts/iacode; tests and Gate6 documentation",
+      "sourceType": "AI-assisted repository implementation and locally generated test/proof artifacts",
+      "provider": "OpenAI / actual local owning toolchains",
+      "model": "not-exposed",
+      "ownership": "project-generated engineering work",
+      "license": "project-policy",
+      "rights": {
+        "storageAllowed": true,
+        "ragAllowed": false,
+        "trainingAllowed": false,
+        "distillationAllowed": false
+      },
+      "evidence": "FILES.json, COMMANDS.jsonl, suite-attempts and exact attempts producer receipts",
+      "notes": "No raw provider exchange or private reasoning retained. Actual run/provider metadata is operational evidence, not proof of source ownership or a reuse license."
+    }
+  ]
+}

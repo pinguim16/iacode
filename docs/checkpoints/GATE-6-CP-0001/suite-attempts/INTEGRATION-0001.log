@@ -1,0 +1,588 @@
+ Container iacode-experience-tests-6d868eb036b7-api-run-c12642c7a760 Creating 
+ Container iacode-experience-tests-6d868eb036b7-api-run-c12642c7a760 Created 
+.....F..F...F.................                                           [100%]
+=================================== FAILURES ===================================
+_________ test_database_immutability_and_direct_corruption_fail_closed _________
+
+self = <sqlalchemy.engine.base.Connection object at 0x7bbab07c8ad0>
+dialect = <sqlalchemy.dialects.postgresql.psycopg.PGDialect_psycopg object at 0x7bbab0b57610>
+constructor = <bound method DefaultExecutionContext._init_compiled of <class 'sqlalchemy.dialects.postgresql.psycopg.PGExecutionContext_psycopg'>>
+statement = <sqlalchemy.dialects.postgresql.psycopg.PGCompiler_psycopg object at 0x7bbab0b56ad0>
+parameters = [{'id': '01a149d0-43b1-7000-a725-0241e2cfe157'}]
+execution_options = immutabledict({})
+args = (<sqlalchemy.dialects.postgresql.psycopg.PGCompiler_psycopg object at 0x7bbab0b56ad0>, [{'id': '01a149d0-43b1-7000-a72...bject at 0x7bbab07669e0>, [BindParameter('id', None, type_=NullType()), BindParameter('true', None, type_=NullType())])
+kw = {'cache_hit': <CacheStats.CACHE_MISS: 1>}
+
+    def _execute_context(
+        self,
+        dialect: Dialect,
+        constructor: Callable[..., ExecutionContext],
+        statement: Union[str, Compiled],
+        parameters: Optional[_AnyMultiExecuteParams],
+        execution_options: _ExecuteOptions,
+        *args: Any,
+        **kw: Any,
+    ) -> CursorResult[Any]:
+        """Create an :class:`.ExecutionContext` and execute, returning
+        a :class:`_engine.CursorResult`."""
+    
+        if execution_options:
+            yp = execution_options.get("yield_per", None)
+            if yp:
+                execution_options = execution_options.union(
+                    {"stream_results": True, "max_row_buffer": yp}
+                )
+        try:
+            conn = self._dbapi_connection
+            if conn is None:
+                conn = self._revalidate_connection()
+    
+>           context = constructor(
+                dialect, self, conn, execution_options, *args, **kw
+            )
+
+/opt/venv/lib/python3.13/site-packages/sqlalchemy/engine/base.py:1817: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/venv/lib/python3.13/site-packages/sqlalchemy/engine/default.py:1417: in _init_compiled
+    compiled.construct_params(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <sqlalchemy.dialects.postgresql.psycopg.PGCompiler_psycopg object at 0x7bbab0b56ad0>
+params = {'id': '01a149d0-43b1-7000-a725-0241e2cfe157'}
+extracted_parameters = [BindParameter('id', None, type_=NullType()), BindParameter('true', None, type_=NullType())]
+escape_names = False, _group_number = 0, _check = True, _no_postcompile = False
+
+    def construct_params(
+        self,
+        params: Optional[_CoreSingleExecuteParams] = None,
+        extracted_parameters: Optional[Sequence[BindParameter[Any]]] = None,
+        escape_names: bool = True,
+        _group_number: Optional[int] = None,
+        _check: bool = True,
+        _no_postcompile: bool = False,
+    ) -> _MutableCoreSingleExecuteParams:
+        """return a dictionary of bind parameter keys and values"""
+    
+        if self._render_postcompile and not _no_postcompile:
+            assert self._post_compile_expanded_state is not None
+            if not params:
+                return dict(self._post_compile_expanded_state.parameters)
+            else:
+                raise exc.InvalidRequestError(
+                    "can't construct new parameters when render_postcompile "
+                    "is used; the statement is hard-linked to the original "
+                    "parameters.  Use construct_expanded_state to generate a "
+                    "new statement and parameters."
+                )
+    
+        has_escaped_names = escape_names and bool(self.escaped_bind_names)
+    
+        if extracted_parameters:
+            # related the bound parameters collected in the original cache key
+            # to those collected in the incoming cache key.  They will not have
+            # matching names but they will line up positionally in the same
+            # way.   The parameters present in self.bind_names may be clones of
+            # these original cache key params in the case of DML but the .key
+            # will be guaranteed to match.
+            if self.cache_key is None:
+                raise exc.CompileError(
+                    "This compiled object has no original cache key; "
+                    "can't pass extracted_parameters to construct_params"
+                )
+            else:
+                orig_extracted = self.cache_key[1]
+    
+            ckbm_tuple = self._cache_key_bind_match
+            assert ckbm_tuple is not None
+            ckbm, _ = ckbm_tuple
+            resolved_extracted = {
+                bind: extracted
+                for b, extracted in zip(orig_extracted, extracted_parameters)
+                for bind in ckbm[b]
+            }
+        else:
+            resolved_extracted = None
+    
+        if params:
+            pd = {}
+            for bindparam, name in self.bind_names.items():
+                escaped_name = (
+                    self.escaped_bind_names.get(name, name)
+                    if has_escaped_names
+                    else name
+                )
+    
+                if bindparam.key in params:
+                    pd[escaped_name] = params[bindparam.key]
+                elif name in params:
+                    pd[escaped_name] = params[name]
+    
+                elif _check and bindparam.required:
+                    if _group_number:
+                        raise exc.InvalidRequestError(
+                            "A value is required for bind parameter %r, "
+                            "in parameter group %d"
+                            % (bindparam.key, _group_number),
+                            code="cd3x",
+                        )
+                    else:
+>                       raise exc.InvalidRequestError(
+                            "A value is required for bind parameter %r"
+                            % bindparam.key,
+                            code="cd3x",
+                        )
+E                       sqlalchemy.exc.InvalidRequestError: A value is required for bind parameter 'true' (Background on this error at: https://sqlalche.me/e/20/cd3x)
+
+/opt/venv/lib/python3.13/site-packages/sqlalchemy/sql/compiler.py:1934: InvalidRequestError
+
+The above exception was the direct cause of the following exception:
+
+rig = (ExperienceRuntime(service=ExperienceService(policy=ExperiencePolicy(schemaVersion='1.0.0', defaultRetentionSeconds=25...55832, tzinfo=datetime.timezone.utc), <tests.integration.test_migrations._DisposableDatabase object at 0x7bbab0b78950>)
+
+    async def test_database_immutability_and_direct_corruption_fail_closed(rig):
+        runtime, sessions, project, request, now, database = rig
+        row = await runtime.service.capture(project, request, now)
+        with pytest.raises(DBAPIError):
+            async with sessions() as session, session.begin():
+                await session.execute(
+                    text("UPDATE experiences SET summary='forged' WHERE id=:id"),
+                    {"id": uuid.UUID(row.experience_id)},
+                )
+        # The adversary here is explicitly the owner of an isolated disposable database, not a
+        # runtime capability. Corrupt bytes below normal guards to exercise recovery validation.
+        engine = sync_engine(_sync_url(database.url))
+        try:
+            with engine.begin() as connection:
+                connection.execute(
+                    text("ALTER TABLE experiences DISABLE TRIGGER experience_fact_immutable")
+                )
+>               connection.execute(
+                    text(
+                        "UPDATE experiences SET body=body || '{\"privateTranscript\":true}'::jsonb "
+                        "WHERE id=:id"
+                    ),
+                    {"id": row.experience_id},
+                )
+
+tests/integration/test_experience_store.py:212: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/venv/lib/python3.13/site-packages/sqlalchemy/engine/base.py:1421: in execute
+    return meth(
+/opt/venv/lib/python3.13/site-packages/sqlalchemy/sql/elements.py:526: in _execute_on_connection
+    return connection._execute_clauseelement(
+/opt/venv/lib/python3.13/site-packages/sqlalchemy/engine/base.py:1643: in _execute_clauseelement
+    ret = self._execute_context(
+/opt/venv/lib/python3.13/site-packages/sqlalchemy/engine/base.py:1823: in _execute_context
+    self._handle_dbapi_exception(
+/opt/venv/lib/python3.13/site-packages/sqlalchemy/engine/base.py:2365: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+/opt/venv/lib/python3.13/site-packages/sqlalchemy/engine/base.py:1817: in _execute_context
+    context = constructor(
+/opt/venv/lib/python3.13/site-packages/sqlalchemy/engine/default.py:1417: in _init_compiled
+    compiled.construct_params(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <sqlalchemy.dialects.postgresql.psycopg.PGCompiler_psycopg object at 0x7bbab0b56ad0>
+params = {'id': '01a149d0-43b1-7000-a725-0241e2cfe157'}
+extracted_parameters = [BindParameter('id', None, type_=NullType()), BindParameter('true', None, type_=NullType())]
+escape_names = False, _group_number = 0, _check = True, _no_postcompile = False
+
+    def construct_params(
+        self,
+        params: Optional[_CoreSingleExecuteParams] = None,
+        extracted_parameters: Optional[Sequence[BindParameter[Any]]] = None,
+        escape_names: bool = True,
+        _group_number: Optional[int] = None,
+        _check: bool = True,
+        _no_postcompile: bool = False,
+    ) -> _MutableCoreSingleExecuteParams:
+        """return a dictionary of bind parameter keys and values"""
+    
+        if self._render_postcompile and not _no_postcompile:
+            assert self._post_compile_expanded_state is not None
+            if not params:
+                return dict(self._post_compile_expanded_state.parameters)
+            else:
+                raise exc.InvalidRequestError(
+                    "can't construct new parameters when render_postcompile "
+                    "is used; the statement is hard-linked to the original "
+                    "parameters.  Use construct_expanded_state to generate a "
+                    "new statement and parameters."
+                )
+    
+        has_escaped_names = escape_names and bool(self.escaped_bind_names)
+    
+        if extracted_parameters:
+            # related the bound parameters collected in the original cache key
+            # to those collected in the incoming cache key.  They will not have
+            # matching names but they will line up positionally in the same
+            # way.   The parameters present in self.bind_names may be clones of
+            # these original cache key params in the case of DML but the .key
+            # will be guaranteed to match.
+            if self.cache_key is None:
+                raise exc.CompileError(
+                    "This compiled object has no original cache key; "
+                    "can't pass extracted_parameters to construct_params"
+                )
+            else:
+                orig_extracted = self.cache_key[1]
+    
+            ckbm_tuple = self._cache_key_bind_match
+            assert ckbm_tuple is not None
+            ckbm, _ = ckbm_tuple
+            resolved_extracted = {
+                bind: extracted
+                for b, extracted in zip(orig_extracted, extracted_parameters)
+                for bind in ckbm[b]
+            }
+        else:
+            resolved_extracted = None
+    
+        if params:
+            pd = {}
+            for bindparam, name in self.bind_names.items():
+                escaped_name = (
+                    self.escaped_bind_names.get(name, name)
+                    if has_escaped_names
+                    else name
+                )
+    
+                if bindparam.key in params:
+                    pd[escaped_name] = params[bindparam.key]
+                elif name in params:
+                    pd[escaped_name] = params[name]
+    
+                elif _check and bindparam.required:
+                    if _group_number:
+                        raise exc.InvalidRequestError(
+                            "A value is required for bind parameter %r, "
+                            "in parameter group %d"
+                            % (bindparam.key, _group_number),
+                            code="cd3x",
+                        )
+                    else:
+>                       raise exc.InvalidRequestError(
+                            "A value is required for bind parameter %r"
+                            % bindparam.key,
+                            code="cd3x",
+                        )
+E                       sqlalchemy.exc.StatementError: (sqlalchemy.exc.InvalidRequestError) A value is required for bind parameter 'true'
+E                       [SQL: UPDATE experiences SET body=body || '{"privateTranscript"%(true)s}'::jsonb WHERE id=%(id)s]
+E                       [parameters: [{'id': '01a149d0-43b1-7000-a725-0241e2cfe157'}]]
+E                       (Background on this error at: https://sqlalche.me/e/20/cd3x)
+
+/opt/venv/lib/python3.13/site-packages/sqlalchemy/sql/compiler.py:1934: StatementError
+__ test_legacy_migration_preserves_identity_body_and_rights_without_promotion __
+
+self = <sqlalchemy.engine.base.Connection object at 0x7bbab655aa50>
+dialect = <sqlalchemy.dialects.postgresql.psycopg.PGDialect_psycopg object at 0x7bbab0b55a90>
+constructor = <bound method DefaultExecutionContext._init_compiled of <class 'sqlalchemy.dialects.postgresql.psycopg.PGExecutionContext_psycopg'>>
+statement = <sqlalchemy.dialects.postgresql.psycopg.PGCompiler_psycopg object at 0x7bbab0fe9090>
+parameters = [{'id': 'd3648ca7-0e55-4aee-9d72-d47d238a9b4e'}]
+execution_options = immutabledict({})
+args = (<sqlalchemy.dialects.postgresql.psycopg.PGCompiler_psycopg object at 0x7bbab0fe9090>, [{'id': 'd3648ca7-0e55-4aee-9d7...bject at 0x7bbab0766e40>, [BindParameter('id', None, type_=NullType()), BindParameter('true', None, type_=NullType())])
+kw = {'cache_hit': <CacheStats.CACHE_MISS: 1>}
+
+    def _execute_context(
+        self,
+        dialect: Dialect,
+        constructor: Callable[..., ExecutionContext],
+        statement: Union[str, Compiled],
+        parameters: Optional[_AnyMultiExecuteParams],
+        execution_options: _ExecuteOptions,
+        *args: Any,
+        **kw: Any,
+    ) -> CursorResult[Any]:
+        """Create an :class:`.ExecutionContext` and execute, returning
+        a :class:`_engine.CursorResult`."""
+    
+        if execution_options:
+            yp = execution_options.get("yield_per", None)
+            if yp:
+                execution_options = execution_options.union(
+                    {"stream_results": True, "max_row_buffer": yp}
+                )
+        try:
+            conn = self._dbapi_connection
+            if conn is None:
+                conn = self._revalidate_connection()
+    
+>           context = constructor(
+                dialect, self, conn, execution_options, *args, **kw
+            )
+
+/opt/venv/lib/python3.13/site-packages/sqlalchemy/engine/base.py:1817: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/venv/lib/python3.13/site-packages/sqlalchemy/engine/default.py:1417: in _init_compiled
+    compiled.construct_params(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <sqlalchemy.dialects.postgresql.psycopg.PGCompiler_psycopg object at 0x7bbab0fe9090>
+params = {'id': 'd3648ca7-0e55-4aee-9d72-d47d238a9b4e'}
+extracted_parameters = [BindParameter('id', None, type_=NullType()), BindParameter('true', None, type_=NullType())]
+escape_names = False, _group_number = 0, _check = True, _no_postcompile = False
+
+    def construct_params(
+        self,
+        params: Optional[_CoreSingleExecuteParams] = None,
+        extracted_parameters: Optional[Sequence[BindParameter[Any]]] = None,
+        escape_names: bool = True,
+        _group_number: Optional[int] = None,
+        _check: bool = True,
+        _no_postcompile: bool = False,
+    ) -> _MutableCoreSingleExecuteParams:
+        """return a dictionary of bind parameter keys and values"""
+    
+        if self._render_postcompile and not _no_postcompile:
+            assert self._post_compile_expanded_state is not None
+            if not params:
+                return dict(self._post_compile_expanded_state.parameters)
+            else:
+                raise exc.InvalidRequestError(
+                    "can't construct new parameters when render_postcompile "
+                    "is used; the statement is hard-linked to the original "
+                    "parameters.  Use construct_expanded_state to generate a "
+                    "new statement and parameters."
+                )
+    
+        has_escaped_names = escape_names and bool(self.escaped_bind_names)
+    
+        if extracted_parameters:
+            # related the bound parameters collected in the original cache key
+            # to those collected in the incoming cache key.  They will not have
+            # matching names but they will line up positionally in the same
+            # way.   The parameters present in self.bind_names may be clones of
+            # these original cache key params in the case of DML but the .key
+            # will be guaranteed to match.
+            if self.cache_key is None:
+                raise exc.CompileError(
+                    "This compiled object has no original cache key; "
+                    "can't pass extracted_parameters to construct_params"
+                )
+            else:
+                orig_extracted = self.cache_key[1]
+    
+            ckbm_tuple = self._cache_key_bind_match
+            assert ckbm_tuple is not None
+            ckbm, _ = ckbm_tuple
+            resolved_extracted = {
+                bind: extracted
+                for b, extracted in zip(orig_extracted, extracted_parameters)
+                for bind in ckbm[b]
+            }
+        else:
+            resolved_extracted = None
+    
+        if params:
+            pd = {}
+            for bindparam, name in self.bind_names.items():
+                escaped_name = (
+                    self.escaped_bind_names.get(name, name)
+                    if has_escaped_names
+                    else name
+                )
+    
+                if bindparam.key in params:
+                    pd[escaped_name] = params[bindparam.key]
+                elif name in params:
+                    pd[escaped_name] = params[name]
+    
+                elif _check and bindparam.required:
+                    if _group_number:
+                        raise exc.InvalidRequestError(
+                            "A value is required for bind parameter %r, "
+                            "in parameter group %d"
+                            % (bindparam.key, _group_number),
+                            code="cd3x",
+                        )
+                    else:
+>                       raise exc.InvalidRequestError(
+                            "A value is required for bind parameter %r"
+                            % bindparam.key,
+                            code="cd3x",
+                        )
+E                       sqlalchemy.exc.InvalidRequestError: A value is required for bind parameter 'true' (Background on this error at: https://sqlalche.me/e/20/cd3x)
+
+/opt/venv/lib/python3.13/site-packages/sqlalchemy/sql/compiler.py:1934: InvalidRequestError
+
+The above exception was the direct cause of the following exception:
+
+    def test_legacy_migration_preserves_identity_body_and_rights_without_promotion():
+        with _DisposableDatabase() as database:
+            before = _alembic(database.url, "upgrade", "0006_quality_engine")
+            assert before.returncode == 0, before.stdout
+            identity = str(uuid.uuid4())
+            engine = sync_engine(_sync_url(database.url))
+            try:
+                with engine.begin() as connection:
+>                   connection.execute(
+                        text(
+                            "INSERT INTO experiences(id,kind,summary,body,source_type,ownership,license,"
+                            "storage_allowed,rag_allowed,training_allowed,distillation_allowed) "
+                            "VALUES(:id,'legacy','preserve','{\"historical\":true}','external',"
+                            "'unknown','unknown',true,true,true,true)"
+                        ),
+                        {"id": identity},
+                    )
+
+tests/integration/test_experience_store.py:341: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/venv/lib/python3.13/site-packages/sqlalchemy/engine/base.py:1421: in execute
+    return meth(
+/opt/venv/lib/python3.13/site-packages/sqlalchemy/sql/elements.py:526: in _execute_on_connection
+    return connection._execute_clauseelement(
+/opt/venv/lib/python3.13/site-packages/sqlalchemy/engine/base.py:1643: in _execute_clauseelement
+    ret = self._execute_context(
+/opt/venv/lib/python3.13/site-packages/sqlalchemy/engine/base.py:1823: in _execute_context
+    self._handle_dbapi_exception(
+/opt/venv/lib/python3.13/site-packages/sqlalchemy/engine/base.py:2365: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+/opt/venv/lib/python3.13/site-packages/sqlalchemy/engine/base.py:1817: in _execute_context
+    context = constructor(
+/opt/venv/lib/python3.13/site-packages/sqlalchemy/engine/default.py:1417: in _init_compiled
+    compiled.construct_params(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <sqlalchemy.dialects.postgresql.psycopg.PGCompiler_psycopg object at 0x7bbab0fe9090>
+params = {'id': 'd3648ca7-0e55-4aee-9d72-d47d238a9b4e'}
+extracted_parameters = [BindParameter('id', None, type_=NullType()), BindParameter('true', None, type_=NullType())]
+escape_names = False, _group_number = 0, _check = True, _no_postcompile = False
+
+    def construct_params(
+        self,
+        params: Optional[_CoreSingleExecuteParams] = None,
+        extracted_parameters: Optional[Sequence[BindParameter[Any]]] = None,
+        escape_names: bool = True,
+        _group_number: Optional[int] = None,
+        _check: bool = True,
+        _no_postcompile: bool = False,
+    ) -> _MutableCoreSingleExecuteParams:
+        """return a dictionary of bind parameter keys and values"""
+    
+        if self._render_postcompile and not _no_postcompile:
+            assert self._post_compile_expanded_state is not None
+            if not params:
+                return dict(self._post_compile_expanded_state.parameters)
+            else:
+                raise exc.InvalidRequestError(
+                    "can't construct new parameters when render_postcompile "
+                    "is used; the statement is hard-linked to the original "
+                    "parameters.  Use construct_expanded_state to generate a "
+                    "new statement and parameters."
+                )
+    
+        has_escaped_names = escape_names and bool(self.escaped_bind_names)
+    
+        if extracted_parameters:
+            # related the bound parameters collected in the original cache key
+            # to those collected in the incoming cache key.  They will not have
+            # matching names but they will line up positionally in the same
+            # way.   The parameters present in self.bind_names may be clones of
+            # these original cache key params in the case of DML but the .key
+            # will be guaranteed to match.
+            if self.cache_key is None:
+                raise exc.CompileError(
+                    "This compiled object has no original cache key; "
+                    "can't pass extracted_parameters to construct_params"
+                )
+            else:
+                orig_extracted = self.cache_key[1]
+    
+            ckbm_tuple = self._cache_key_bind_match
+            assert ckbm_tuple is not None
+            ckbm, _ = ckbm_tuple
+            resolved_extracted = {
+                bind: extracted
+                for b, extracted in zip(orig_extracted, extracted_parameters)
+                for bind in ckbm[b]
+            }
+        else:
+            resolved_extracted = None
+    
+        if params:
+            pd = {}
+            for bindparam, name in self.bind_names.items():
+                escaped_name = (
+                    self.escaped_bind_names.get(name, name)
+                    if has_escaped_names
+                    else name
+                )
+    
+                if bindparam.key in params:
+                    pd[escaped_name] = params[bindparam.key]
+                elif name in params:
+                    pd[escaped_name] = params[name]
+    
+                elif _check and bindparam.required:
+                    if _group_number:
+                        raise exc.InvalidRequestError(
+                            "A value is required for bind parameter %r, "
+                            "in parameter group %d"
+                            % (bindparam.key, _group_number),
+                            code="cd3x",
+                        )
+                    else:
+>                       raise exc.InvalidRequestError(
+                            "A value is required for bind parameter %r"
+                            % bindparam.key,
+                            code="cd3x",
+                        )
+E                       sqlalchemy.exc.StatementError: (sqlalchemy.exc.InvalidRequestError) A value is required for bind parameter 'true'
+E                       [SQL: INSERT INTO experiences(id,kind,summary,body,source_type,ownership,license,storage_allowed,rag_allowed,training_allowed,distillation_allowed) VALUES(%(id)s,'legacy','preserve','{"historical"%(true)s}','external','unknown','unknown',true,true,true,true)]
+E                       [parameters: [{'id': 'd3648ca7-0e55-4aee-9d72-d47d238a9b4e'}]]
+E                       (Background on this error at: https://sqlalche.me/e/20/cd3x)
+
+/opt/venv/lib/python3.13/site-packages/sqlalchemy/sql/compiler.py:1934: StatementError
+_____________ test_the_declared_model_matches_the_migrated_schema ______________
+
+    def test_the_declared_model_matches_the_migrated_schema() -> None:
+        """Autogenerate against a freshly migrated database must find nothing left to do.
+    
+        This is the control that catches a model changed without a migration: the code would work in
+        development against an old database and fail on the first fresh installation.
+        """
+        with _DisposableDatabase() as database:
+            assert _alembic(database.url, "upgrade", "head").returncode == 0
+    
+            result = _alembic(database.url, "check")
+    
+>           assert result.returncode == 0, (
+                "the declared model and the migrated schema disagree; a migration is missing:\n"
+                + result.stdout
+            )
+E           AssertionError: the declared model and the migrated schema disagree; a migration is missing:
+E             INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+E             INFO  [alembic.runtime.migration] Will assume transactional DDL.
+E             INFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.schemas
+E             INFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.tables
+E             INFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.types
+E             INFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.constraints
+E             INFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.defaults
+E             INFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.comments
+E             INFO  [alembic.autogenerate.compare.constraints] Detected removed unique constraint 'uq_experiences_project_request' on 'experiences'
+E             INFO  [alembic.autogenerate.compare.constraints] Detected removed unique constraint 'uq_experiences_project_source' on 'experiences'
+E             INFO  [alembic.autogenerate.compare.constraints] Detected added unique constraint 'project_request' on '('project_id', 'request_key')'
+E             INFO  [alembic.autogenerate.compare.constraints] Detected added unique constraint 'project_source' on '('project_id', 'source_run_id')'
+E             ERROR [alembic.util.messaging] New upgrade operations detected: [('remove_constraint', UniqueConstraint(Column('project_id', NullType(), table=<experiences>), Column('request_key', NullType(), table=<experiences>))), ('remove_constraint', UniqueConstraint(Column('project_id', NullType(), table=<experiences>), Column('source_run_id', NullType(), table=<experiences>))), ('add_constraint', UniqueConstraint(Column('project_id', NullType(), table=<experiences>), Column('request_key', NullType(), table=<experiences>))), ('add_constraint', UniqueConstraint(Column('project_id', NullType(), table=<experiences>), Column('source_run_id', NullType(), table=<experiences>)))]
+E             FAILED: New upgrade operations detected: [('remove_constraint', UniqueConstraint(Column('project_id', NullType(), table=<experiences>), Column('request_key', NullType(), table=<experiences>))), ('remove_constraint', UniqueConstraint(Column('project_id', NullType(), table=<experiences>), Column('source_run_id', NullType(), table=<experiences>))), ('add_constraint', UniqueConstraint(Column('project_id', NullType(), table=<experiences>), Column('request_key', NullType(), table=<experiences>))), ('add_constraint', UniqueConstraint(Column('project_id', NullType(), table=<experiences>), Column('source_run_id', NullType(), table=<experiences>)))]
+E             
+E           assert 255 == 0
+E            +  where 255 = CompletedProcess(args=['/opt/venv/bin/python', '-m', 'alembic', 'check'], returncode=255, stdout="INFO  [alembic.runti...(Column('project_id', NullType(), table=<experiences>), Column('source_run_id', NullType(), table=<experiences>)))]\n").returncode
+
+tests/integration/test_migrations.py:230: AssertionError
+=============================== warnings summary ===============================
+../opt/venv/lib/python3.13/site-packages/fastapi/testclient.py:1
+  /opt/venv/lib/python3.13/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+../opt/venv/lib/python3.13/site-packages/starlette/testclient.py:53
+  /opt/venv/lib/python3.13/site-packages/starlette/testclient.py:53: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.
+    _PortalFactoryType = Callable[[], AbstractContextManager[anyio.abc.BlockingPortal]]
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/integration/test_experience_store.py::test_database_immutability_and_direct_corruption_fail_closed
+FAILED tests/integration/test_experience_store.py::test_legacy_migration_preserves_identity_body_and_rights_without_promotion
+FAILED tests/integration/test_migrations.py::test_the_declared_model_matches_the_migrated_schema
+3 failed, 27 passed, 2 warnings in 75.43s (0:01:15)
+

@@ -1,0 +1,93 @@
+ Container iacode-api-run-2b7b81c5c25d Creating 
+ Container iacode-api-run-2b7b81c5c25d Created 
+........................................................................ [ 41%]
+.......................................................F................ [ 83%]
+.............................                                            [100%]
+=================================== FAILURES ===================================
+_ test_public_minio_identity_is_not_a_bearer_secret_but_storage_password_stays_protected _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7480679de950>
+
+    def test_public_minio_identity_is_not_a_bearer_secret_but_storage_password_stays_protected(
+        monkeypatch,
+    ):
+        root = next(
+            parent
+            for parent in Path(__file__).resolve().parents
+            if (parent / "agents").is_dir() and (parent / ".iacode/policies").is_dir()
+        )
+        # This tests the actual runtime credential projection, not an operational credential. Every
+        # provider environment name is explicitly empty so a failed assertion cannot print a real key.
+        providers = json.loads((root / ".iacode/policies/providers.json").read_bytes())["providers"]
+        for provider in providers:
+            monkeypatch.setenv(provider["credential_env"], "")
+        settings = settings_for_tests(
+            repository_root=str(root),
+            gateway_policy_dir=str(root / ".iacode/policies"),
+            minio_access_key="iacode",
+        )
+        runtime = build_experience_runtime(settings, None, None, None)
+        # The committed public account identity also occurs in legitimate package/report names.
+>       require_safe(b"iacode-quality-python-pass", runtime.service.known_credentials)
+
+tests/unit/test_experience_api.py:139: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+raw = b'iacode-quality-python-pass', known_credentials = ('iacode', 'test-key')
+
+    def require_safe(raw: bytes, known_credentials: tuple[str, ...] = ()) -> None:
+        try:
+            text = raw.decode("utf-8", errors="strict")
+            if find_secret_kinds(text):
+                raise ExperienceError("SECRET_MATERIAL_REFUSED")
+            # One declared base64 text layer is additionally inspected using the SAME taxonomy.
+            # Arbitrary encryption/encoding is not claimed to be detectable. Decode work is linear
+            # in the bounded body; binary/non-UTF8 blocks are not invented text observations.
+            for candidate in re.finditer(r"[A-Za-z0-9+/_-]{24,}={0,2}", text):
+                encoded_text = candidate.group(0)
+                try:
+                    decoded = base64.b64decode(
+                        encoded_text + "=" * (-len(encoded_text) % 4), altchars=b"-_", validate=True
+                    ).decode("utf-8", "strict")
+                except (binascii.Error, UnicodeError):
+                    continue
+                if find_secret_kinds(decoded):
+                    raise ExperienceError("SECRET_MATERIAL_REFUSED")
+            forms: set[str] = set()
+            for credential in known_credentials:
+                if not credential:
+                    continue
+                for spelling in (credential, credential.upper()):
+                    encoded = spelling.encode("utf-8")
+                    forms.update(
+                        (
+                            spelling.casefold(),
+                            encoded.hex(),
+                            base64.b64encode(encoded).decode().casefold(),
+                            base64.urlsafe_b64encode(encoded).decode().rstrip("=").casefold(),
+                            "".join(f"%{value:02x}" for value in encoded),
+                            "".join(f"\\u{value:04x}" for value in encoded),
+                        )
+                    )
+            if any(
+                any(form in view.casefold() for form in forms)
+                for view, _ in iter_secret_scan_views(text)
+            ):
+>               raise ExperienceError("AUTHORIZATION_MATERIAL_REFUSED")
+E               iacode_experience.domain.ExperienceError: experience operation refused
+
+/opt/venv/lib/python3.13/site-packages/iacode_experience/domain.py:146: ExperienceError
+=============================== warnings summary ===============================
+../opt/venv/lib/python3.13/site-packages/fastapi/testclient.py:1
+  /opt/venv/lib/python3.13/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+../opt/venv/lib/python3.13/site-packages/starlette/testclient.py:53
+  /opt/venv/lib/python3.13/site-packages/starlette/testclient.py:53: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.
+    _PortalFactoryType = Callable[[], AbstractContextManager[anyio.abc.BlockingPortal]]
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/unit/test_experience_api.py::test_public_minio_identity_is_not_a_bearer_secret_but_storage_password_stays_protected
+1 failed, 172 passed, 2 warnings in 30.19s
+

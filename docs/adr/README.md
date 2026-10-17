@@ -59,3 +59,5 @@ exist, or a title or status that disagrees with its record fails the suite.
 | [ADR-0047](ADR-0047-native-client-suites-and-packages-are-explicit.md) | Native client suites and packages are explicit | Accepted |
 | [ADR-0048](ADR-0048-native-recovery-proofs-use-persistent-owned-hosts.md) | Native recovery proofs use persistent owned hosts | Accepted |
 | [ADR-0049](ADR-0049-root-assurance-inputs-follow-subject-policy.md) | Root assurance inputs follow subject policy | Accepted |
+| [ADR-0050](ADR-0050-experiences-are-source-bound-consented-facts.md) | Experiences are source-bound consented facts | Accepted |
+| [ADR-0051](ADR-0051-retention-tombstones-prevent-experience-resurrection.md) | Retention tombstones prevent experience resurrection | Accepted |

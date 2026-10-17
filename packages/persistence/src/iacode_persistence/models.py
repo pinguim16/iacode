@@ -1113,7 +1113,43 @@ class Experience(TimestampedEntity, Base):
     """
 
     __tablename__ = "experiences"
-    __table_args__ = (Index("ix_experiences_kind_created_at", "kind", "created_at"),)
+    __table_args__ = (
+        Index("ix_experiences_kind_created_at", "kind", "created_at"),
+        Index("ix_experiences_project_id_id", "project_id", "id"),
+        Index("ix_experiences_state_expires_at", "state", "expires_at"),
+        UniqueConstraint("project_id", "request_key", name="uq_experiences_project_request"),
+        UniqueConstraint("project_id", "source_run_id", name="uq_experiences_project_source"),
+        CheckConstraint("schema_version IN (0, 1)", name="schema_version_known"),
+        CheckConstraint(
+            "(schema_version = 0 AND state = 'LEGACY') OR (schema_version = 1 AND "
+            "state IN ('ACTIVE', 'EXPIRED', 'DELETED') AND project_id IS NOT NULL AND "
+            "source_run_id IS NOT NULL AND source_finished_at IS NOT NULL AND "
+            "request_key IS NOT NULL AND request_digest IS NOT NULL AND "
+            "content_digest IS NOT NULL AND expires_at IS NOT NULL AND "
+            "request_digest ~ '^[0-9a-f]{64}$' AND content_digest ~ '^[0-9a-f]{64}$' AND "
+            "expires_at > created_at AND "
+            "NOT rag_allowed AND NOT training_allowed AND NOT distillation_allowed AND "
+            "metadata = '{}'::jsonb AND ownership = 'UNVERIFIED' AND license = 'UNKNOWN' AND "
+            "((state = 'ACTIVE' AND storage_allowed AND purged_at IS NULL AND "
+            "body ? 'schemaVersion' AND body->>'schemaVersion' = '1.0.0') OR "
+            "(state <> 'ACTIVE' AND NOT storage_allowed "
+            "AND purged_at IS NOT NULL AND body = '{}'::jsonb AND summary = '')))",
+            name="current_shape",
+        ),
+    )
+
+    # Original identities deliberately survive nullable source FKs and payload deletion. They are
+    # minimal anti-resurrection tombstones, not an alternate source store.
+    project_id: Mapped[uuid.UUID | None] = mapped_column()
+    source_run_id: Mapped[uuid.UUID | None] = mapped_column()
+    schema_version: Mapped[int] = mapped_column(Integer, nullable=False, server_default="0")
+    state: Mapped[str] = mapped_column(String(16), nullable=False, server_default="LEGACY")
+    request_key: Mapped[uuid.UUID | None] = mapped_column()
+    request_digest: Mapped[str | None] = mapped_column(String(64))
+    content_digest: Mapped[str | None] = mapped_column(String(64))
+    source_finished_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    expires_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    purged_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
 
     task_run_id: Mapped[uuid.UUID | None] = mapped_column(
         ForeignKey("task_runs.id", ondelete="SET NULL"), index=True
@@ -1142,3 +1178,17 @@ class Experience(TimestampedEntity, Base):
     distillation_allowed: Mapped[bool] = mapped_column(
         Boolean, nullable=False, default=False, server_default="false"
     )
+
+
+class ExperienceEvent(ImmutableRecord, Base):
+    """Minimal finite audit facts; no payload, transcript, credential or arbitrary metadata."""
+
+    __tablename__ = "experience_events"
+    __table_args__ = (
+        UniqueConstraint("experience_id", "kind", name="experience_kind"),
+        CheckConstraint("kind IN ('CAPTURED', 'EXPIRED', 'DELETED')", name="kind_known"),
+    )
+    experience_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("experiences.id", ondelete="CASCADE"), nullable=False
+    )
+    kind: Mapped[str] = mapped_column(String(16), nullable=False)

@@ -39,10 +39,11 @@ COPY packages/telemetry /build/packages/telemetry
 COPY services/model-gateway /build/services/model-gateway
 COPY services/agent-runtime /build/services/agent-runtime
 COPY services/evaluator /build/services/evaluator
+COPY services/experience /build/services/experience
 RUN pip install --no-cache-dir --no-deps \
       /build/packages/common /build/packages/contracts /build/packages/persistence \
       /build/packages/telemetry /build/services/model-gateway \
-      /build/services/agent-runtime /build/services/evaluator
+      /build/services/agent-runtime /build/services/evaluator /build/services/experience
 
 # ---------------------------------------------------------------------------------------------
 # Runtime
@@ -88,6 +89,7 @@ COPY --chown=iacode:iacode services/model-gateway/tests /app/gateway_tests
 # the worker executes, from the same place.
 COPY --chown=iacode:iacode agents /app/agents
 COPY --chown=iacode:iacode services/agent-runtime/tests /app/agent_runtime_tests
+COPY --chown=iacode:iacode services/experience/tests /app/experience_tests
 
 USER iacode
 EXPOSE 8000

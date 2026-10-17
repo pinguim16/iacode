@@ -39,6 +39,8 @@ PYTHON_ROOTS = (
     "services/sandbox/images",
     "services/evaluator/src",
     "services/evaluator/tests",
+    "services/experience/src",
+    "services/experience/tests",
     "packages",
     "scripts/iacode",
     "infra/tests",

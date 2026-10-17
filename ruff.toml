@@ -59,6 +59,11 @@ ignore = [
 # contract, not local Python implementation names; keep the exception isolated to that contract.
 "packages/contracts/src/iacode_contracts/quality.py" = ["N815"]
 
+# Gate 6 exchanges this closed camelCase schema with HTTP/export consumers.
+"packages/contracts/src/iacode_contracts/experience.py" = ["N815"]
+# The consumed policy is a versioned JSON contract, not Python-local naming.
+"services/experience/src/iacode_experience/domain.py" = ["N815"]
+
 # `/tmp` inside a sandbox is a size-limited, noexec tmpfs private to that container: the backend
 # creates it and the helper points a command's HOME at it. It is the sandbox's own scratch space,
 # never the controller's or the host's, which is the distinction S108 cannot see.

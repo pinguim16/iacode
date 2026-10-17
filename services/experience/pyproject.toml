@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=80.9.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "iacode-experience"
+version = "0.1.0"
+description = "Source-bound, consented engineering facts with finite primary retention."
+requires-python = ">=3.12"
+dependencies = ["iacode-common==0.1.0", "iacode-contracts==0.1.0", "pydantic==2.13.5"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+python_classes = ["Test*", "*Tests"]
+addopts = "-q --strict-markers --strict-config"

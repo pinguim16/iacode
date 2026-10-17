@@ -4,6 +4,8 @@
 *.jsonl text eol=lf
 # Immutable copied observations retain their original byte digest across Git transport.
 docs/checkpoints/**/attempts/*.json -text
+# Captured UTF-8 process output retains the exact bytes named by its observed digest.
+docs/checkpoints/GATE-6-CP-0001/suite-attempts/*.log -text
 docs/checkpoints/**/DESKTOP-LIVE.json -text
 docs/checkpoints/**/HARDENED-GATEWAY.json -text
 *.py text eol=lf

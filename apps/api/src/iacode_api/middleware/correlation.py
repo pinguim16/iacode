@@ -45,7 +45,14 @@ class CorrelationMiddleware(BaseHTTPMiddleware):
 
     async def dispatch(self, request: Request, call_next: RequestResponseEndpoint) -> Response:
         supplied = request.headers.get(self.header_name, "")
-        correlation_id = supplied if VALID_CORRELATION_ID.match(supplied) else str(uuid7())
+        # Experience ingress never reflects caller material through correlation/log headers.
+        # The generated ID remains observable on every response, including a refusal.
+        experience_route = request.url.path.casefold().startswith("/api/v1/experiences")
+        correlation_id = (
+            supplied
+            if not experience_route and VALID_CORRELATION_ID.match(supplied)
+            else str(uuid7())
+        )
         request_id = str(uuid7())
 
         # Bound for the whole request, including the exception handlers: the error contract reads

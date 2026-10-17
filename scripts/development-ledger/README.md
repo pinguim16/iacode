@@ -104,7 +104,12 @@ Standard output is the safest default. In-place mode writes a redacted temporary
 
 ## Schema scope
 
-`checkpoint.schema.json` validates `STATE.json`; run metadata, command lines, tests, quality, and provenance each have a bound schema. `decision.schema.json` defines future structured decision exports while ADRs remain the canonical Markdown records. `experience.schema.json` is reserved for Gate 6 and later and implements no runtime.
+`checkpoint.schema.json` validates `STATE.json`; run metadata, command lines, tests, quality, and
+provenance each have a bound schema. `decision.schema.json` defines future structured decision
+exports while ADRs remain the canonical Markdown records. Gate 6 owns the closed
+`experience.schema.json`, generated from its actual shared wire contract. The Experience Store
+runtime is separate from this ledger and engineering memory; its executed acceptance belongs to
+the latest Gate checkpoint, not the presence of a schema file.
 
 ## Engineering memory
 

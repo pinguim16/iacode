@@ -451,6 +451,13 @@ def build_stages(fast: bool) -> list[Stage]:
             "--report",
             str(REPOSITORY_ROOT / "var/desktop-e2e.json"),
         ),
+        python_stage(
+            "experience-store-e2e",
+            "real authenticated source-bound capture, rights, restart, corruption and retention",
+            "scripts/iacode/scenarios/experience_store_e2e.py",
+            "--report",
+            str(REPOSITORY_ROOT / "var/experience-store-e2e.json"),
+        ),
     ]
 
     if not fast:

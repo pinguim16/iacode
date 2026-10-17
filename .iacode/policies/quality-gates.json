@@ -184,6 +184,14 @@
       "qualityDimensions": ["build", "unitTests", "security", "staticAnalysis"]
     },
     {
+      "id": "experienceTests",
+      "title": "Experience Store image and complete domain suite",
+      "command": ["python", "scripts/iacode/gates/experience_tests.py"],
+      "purpose": "Build the current provider-neutral library in its actual API image and execute its entire domain suite; real SQL/HTTP and migration proofs remain in full integration and live acceptance.",
+      "mandatory": true,
+      "qualityDimensions": ["build", "unitTests", "security"]
+    },
+    {
       "id": "infraDefinition",
       "title": "Infrastructure declaration",
       "command": [

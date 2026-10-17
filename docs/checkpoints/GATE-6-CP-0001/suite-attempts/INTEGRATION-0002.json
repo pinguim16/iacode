@@ -1,0 +1,50 @@
+{
+  "schemaVersion": "1.0.0",
+  "kind": "ACTUAL_OWNED_POSTGRESQL_HTTP_MIGRATIONS",
+  "observedAt": "2026-10-17T12:31:31Z",
+  "composeProject": "iacode-experience-tests-26354ac63efc",
+  "sourceFingerprint": "204d1af3e1251f5733884f2a4880673631002779034a40490d5bafd9bf275e85",
+  "result": "PASS",
+  "commands": [
+    {
+      "phase": "dependencies",
+      "exitCode": 0
+    },
+    {
+      "phase": "complete-selected-suites",
+      "arguments": [
+        "run",
+        "--rm",
+        "--no-deps",
+        "--entrypoint",
+        "",
+        "api",
+        "python",
+        "-m",
+        "pytest",
+        "tests/integration/test_experience_store.py",
+        "tests/integration/test_migrations.py",
+        "-p",
+        "no:cacheprovider",
+        "--no-header"
+      ],
+      "exitCode": 0,
+      "outputSha256": "9df11248b9f9cbb2ea72a036ba33df8d55a128b6a6636ae47b280c1580e17deb",
+      "outputBytes": 1088,
+      "unsafeOutputOccurrences": 0,
+      "summaryFragments": [
+        "33 passed",
+        "2 warnings"
+      ]
+    }
+  ],
+  "safeOutputArtifact": "docs/checkpoints/GATE-6-CP-0001/suite-attempts/INTEGRATION-0002.log",
+  "cleanup": {
+    "exitCode": 0,
+    "remainingContainers": 0,
+    "remainingVolumes": 0,
+    "remainingNetworks": 0
+  },
+  "operationalContainerIdentitiesPreserved": true,
+  "sourceUnchanged": true
+}

@@ -222,8 +222,12 @@ def node_executable(configured: Path | None) -> Path:
         )
     executable = Path(value).resolve()
     version = subprocess.run(
-        [str(executable), "--version"], text=True, encoding="utf-8", errors="replace",
-        capture_output=True, check=True
+        [str(executable), "--version"],
+        text=True,
+        encoding="utf-8",
+        errors="replace",
+        capture_output=True,
+        check=True,
     ).stdout.strip()
     numbers = tuple(map(int, version.removeprefix("v").split(".")))
     if not (
@@ -351,12 +355,37 @@ class Cli:
 class InterruptedResponseProxy:
     """Drop exactly one accepted create response, without inventing domain data."""
 
-    def __init__(self, base: str, *, drop_operation: str = "start") -> None:
-        if drop_operation not in {"start", "quality-start"}:
+    def __init__(
+        self, base: str, *, drop_operation: str = "start", experience_project: str | None = None
+    ) -> None:
+        if drop_operation not in {"start", "quality-start", "experience-capture"}:
             raise ValueError("unsupported closed interruption operation")
+        experience = drop_operation == "experience-capture"
+        if experience:
+            if (
+                not isinstance(experience_project, str)
+                or str(uuid.UUID(experience_project)) != experience_project
+            ):
+                raise ValueError("an exact canonical experience project is required")
+            path = "/api/v1/experiences/projects/" + experience_project
+            maximum = json.loads(
+                (REPOSITORY_ROOT / ".iacode/policies/experience-policy.json").read_bytes()
+            )["maxRequestBytes"]
+            if type(maximum) is not int or not 1 <= maximum <= 4096:
+                raise ValueError("the canonical experience request limit is invalid")
+        else:
+            if experience_project is not None:
+                raise ValueError("a desktop interruption does not select an experience project")
+            path, maximum = PROTOCOL["path"], PROTOCOL["maxRequestBytes"]
         target = urlsplit(base)
         self.counts: Counter = Counter()
         self.accepted_run: str | None = None
+        self.accepted_experience: str | None = None
+        self.accepted_status: int | None = None
+        self.accepted_expires_at: str | None = None
+        self.accepted_content_digest: str | None = None
+        self.upstream_statuses: list[int] = []
+        self.upstream_code: str | None = None
         self.dropped = False
         owner = self
 
@@ -367,11 +396,13 @@ class InterruptedResponseProxy:
 
             def do_POST(self):
                 length = int(self.headers.get("Content-Length", "-1"))
-                if not 0 <= length <= PROTOCOL["maxRequestBytes"] or self.path != PROTOCOL["path"]:
+                if not 0 <= length <= maximum or self.path != path:
                     self.send_error(400)
                     return
                 body = self.rfile.read(length)
-                name = json.loads(body).get("operation", "unknown")
+                name = (
+                    drop_operation if experience else json.loads(body).get("operation", "unknown")
+                )
                 owner.counts[name] += 1
                 upstream = http.client.HTTPConnection(target.hostname, target.port, timeout=35)
                 try:
@@ -383,12 +414,35 @@ class InterruptedResponseProxy:
                     upstream.request("POST", self.path, body=body, headers=headers)
                     response = upstream.getresponse()
                     result = response.read(PROTOCOL["maxResponseBytes"] + 1)
+                    owner.upstream_statuses.append(response.status)
+                    if experience and response.status >= 400:
+                        code = json.loads(result).get("code")
+                        safe_codes = {
+                            "AUTHORIZATION_MATERIAL_REFUSED",
+                            "SECRET_MATERIAL_REFUSED",
+                            "STORED_CONTRACT_INVALID",
+                            "QUALITY_PLAN_CORRUPT",
+                            "QUALITY_VERDICT_CORRUPT",
+                            "SOURCE_OBJECT_UNAVAILABLE",
+                            "SOURCE_PERMISSION_REFUSED",
+                            "SOURCE_OBJECT_CORRUPT",
+                            "EXPERIENCE_DEPENDENCY_UNAVAILABLE",
+                            "PROVENANCE_DIGEST_INVALID",
+                        }
+                        owner.upstream_code = code if code in safe_codes else "OTHER_REFUSAL"
                     if (
                         name == drop_operation
                         and not owner.dropped
                         and 200 <= response.status < 300
                     ):
-                        owner.accepted_run = json.loads(result)["data"]["runId"]
+                        accepted = json.loads(result)
+                        if experience:
+                            owner.accepted_experience = accepted["experienceId"]
+                            owner.accepted_expires_at = accepted["expiresAt"]
+                            owner.accepted_content_digest = accepted["contentDigest"]
+                        else:
+                            owner.accepted_run = accepted["data"]["runId"]
+                        owner.accepted_status = response.status
                         owner.dropped = True
                         self.close_connection = True
                         self.connection.shutdown(socket.SHUT_RDWR)

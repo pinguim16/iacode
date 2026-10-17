@@ -9,9 +9,11 @@ Quality Engine**. Their detailed boundaries are recorded below.
 **Gate 5 — VS Code + CLI** exposes authenticated runtime adapters through a standalone CLI and
 native editor extension. The [latest checkpoint](checkpoints/LATEST.md), not this overview, records
 their live delivery status and executed acceptance; source presence is not an approval.
-Experience, knowledge, runtime project memory, learning and training remain later-Gate work.
+**Gate 6 — Experience Store** is separately authorized after sealed Gate 5. Its source and
+executed acceptance are governed by the latest checkpoint, not inferred from this overview.
+Knowledge, runtime project memory, learning and training remain later-Gate work.
 `.iacode/policies/gate-scope.json` preserves those reservations. Engineering memory in `.iacode/`
-is a delivered control-plane capability, not the future runtime experience or project-memory API.
+is a delivered control-plane capability, distinct from runtime experience and project-memory APIs.
 
 ## Control plane
 
@@ -352,9 +354,34 @@ checkout owns one derived Compose project, Docker-allocated host ports and dispo
 the complete verification battery; pre/post cleanup cannot target the shared `iacode` project —
 [ADR-0033](adr/ADR-0033-verification-runtime-is-owned-by-one-checkout.md).
 
+## The Experience Store
+
+Gate 6 implements an in-process provider-neutral library under `services/experience`; shared closed
+contracts live in `packages/contracts`. The API supplies real source/store adapters and the
+authenticated `/api/v1/experiences` boundary. ADR-0050/0051 precede the implementation. The
+[latest checkpoint](checkpoints/LATEST.md) owns executed acceptance; independent M2 remains pending.
+
+Capture selects completed project/run identities and explicit storage consent, never an arbitrary
+document or caller verdict. Only allowlisted observable runtime/quality facts, IDs, digests and
+bounded counts are projected. Prompts, private reasoning, provider responses, task answers, source
+content and tool output are not copied. Unknown effort, Git identity and reviews stay unknown.
+Quality source evidence is actually bounded, scanned, rehashed and its frozen verdict reconstructed.
+
+The existing `experiences` JSONB envelope is evolved by migration 0007; no parallel experience store
+is created. Legacy bodies/rights survive quarantined. Current immutable body/schema/provenance and
+request/source identity commit with one minimal audit fact. Uniqueness prevents retry renewal and
+source resurrection. Every delivery revalidates exact canonical bytes, lineage, source evidence,
+rights and expiry. Unknown RAG/training/distillation permission is denied.
+
+One API-owned task purges expired primary bodies in bounded locked batches and is awaited at
+shutdown. Immediate access denial does not wait for it. Withdrawal is project-bound and idempotent;
+minimal finite tombstones outlive the capture-age window. Source records and separate backups have
+their own retention; this is not global erasure. The [runbook](runbooks/experience-store.md) defines
+authentication, policy ceilings, legacy handling and isolated restore/withdrawal reconciliation.
+
 ## Planned runtime boundaries
 
-The next Gate establishes VS Code integration. Later releases add experience, knowledge, code graph, project memory, gap
+Later releases add knowledge, code graph, project memory, gap
 detection, research, skills, dataset production, model training, evaluation, shadow mode, promotion
 and autonomous learning.
 

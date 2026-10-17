@@ -1,41 +1,928 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://iacode.local/schemas/experience.schema.json",
-  "title": "Future observable engineering experience",
-  "description": "Stores observable summaries and evidence; never private chain-of-thought.",
-  "type": "object",
-  "required": ["task", "environment", "provider", "model", "effort", "repository", "baseCommit", "trajectorySummary", "actions", "toolCalls", "commands", "files", "attempts", "failures", "corrections", "tests", "quality", "humanReview", "agentReview", "finalResult", "provenance", "trainingEligibility"],
-  "properties": {
-    "task": {"type": "object"},
-    "environment": {"type": "object"},
-    "provider": {"type": "string", "minLength": 1},
-    "model": {"type": "string", "minLength": 1},
-    "effort": {"type": "string", "minLength": 1},
-    "repository": {"type": "string", "minLength": 1},
-    "baseCommit": {"type": "string", "minLength": 1},
-    "trajectorySummary": {"type": "string", "minLength": 1},
-    "actions": {"type": "array", "items": {"type": "object"}},
-    "toolCalls": {"type": "array", "items": {"type": "object"}},
-    "commands": {"type": "array", "items": {"type": "object"}},
-    "files": {"type": "object"},
-    "attempts": {"type": "array", "items": {"type": "object"}},
-    "failures": {"type": "array", "items": {"type": "object"}},
-    "corrections": {"type": "array", "items": {"type": "object"}},
-    "tests": {"type": "object"},
-    "quality": {"type": "object"},
-    "humanReview": {"type": ["object", "null"]},
-    "agentReview": {"type": ["object", "null"]},
-    "finalResult": {"type": "object"},
-    "provenance": {"type": "array", "items": {"type": "object"}},
-    "trainingEligibility": {
-      "type": "object",
-      "required": ["eligible", "evidence"],
+  "$defs": {
+    "ExperienceAction": {
+      "additionalProperties": false,
       "properties": {
-        "eligible": {"type": "boolean", "default": false},
-        "evidence": {"type": "string", "minLength": 1}
+        "sequence": {
+          "minimum": 1,
+          "title": "Sequence",
+          "type": "integer"
+        },
+        "event": {
+          "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._:+-]{0,127}$",
+          "title": "Event",
+          "type": "string"
+        },
+        "createdAt": {
+          "format": "date-time",
+          "title": "Createdat",
+          "type": "string"
+        }
       },
-      "additionalProperties": false
+      "required": [
+        "sequence",
+        "event",
+        "createdAt"
+      ],
+      "title": "ExperienceAction",
+      "type": "object"
+    },
+    "ExperienceAttempt": {
+      "additionalProperties": false,
+      "properties": {
+        "agentRunId": {
+          "pattern": "^[0-9a-f]{8}-(?:[0-9a-f]{4}-){3}[0-9a-f]{12}$",
+          "title": "Agentrunid",
+          "type": "string"
+        },
+        "stageIndex": {
+          "minimum": 0,
+          "title": "Stageindex",
+          "type": "integer"
+        },
+        "status": {
+          "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._:+-]{0,127}$",
+          "title": "Status",
+          "type": "string"
+        },
+        "startedAt": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Startedat"
+        },
+        "finishedAt": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Finishedat"
+        }
+      },
+      "required": [
+        "agentRunId",
+        "stageIndex",
+        "status",
+        "startedAt",
+        "finishedAt"
+      ],
+      "title": "ExperienceAttempt",
+      "type": "object"
+    },
+    "ExperienceCommand": {
+      "additionalProperties": false,
+      "properties": {
+        "requestId": {
+          "pattern": "^[0-9a-f]{8}-(?:[0-9a-f]{4}-){3}[0-9a-f]{12}$",
+          "title": "Requestid",
+          "type": "string"
+        },
+        "tool": {
+          "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._:+-]{0,127}$",
+          "title": "Tool",
+          "type": "string"
+        },
+        "argumentsDigest": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Argumentsdigest",
+          "type": "string"
+        },
+        "representation": {
+          "const": "digest-only; no command or arguments copied",
+          "default": "digest-only; no command or arguments copied",
+          "title": "Representation",
+          "type": "string"
+        }
+      },
+      "required": [
+        "requestId",
+        "tool",
+        "argumentsDigest",
+        "representation"
+      ],
+      "title": "ExperienceCommand",
+      "type": "object"
+    },
+    "ExperienceCorrection": {
+      "additionalProperties": false,
+      "properties": {
+        "sourceId": {
+          "pattern": "^[0-9a-f]{8}-(?:[0-9a-f]{4}-){3}[0-9a-f]{12}$",
+          "title": "Sourceid",
+          "type": "string"
+        },
+        "evidenceDigest": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Evidencedigest",
+          "type": "string"
+        }
+      },
+      "required": [
+        "sourceId",
+        "evidenceDigest"
+      ],
+      "title": "ExperienceCorrection",
+      "type": "object"
+    },
+    "ExperienceEligibility": {
+      "additionalProperties": false,
+      "properties": {
+        "eligible": {
+          "const": false,
+          "default": false,
+          "title": "Eligible",
+          "type": "boolean"
+        },
+        "evidence": {
+          "const": "No verified ownership/license or positive reuse grant.",
+          "default": "No verified ownership/license or positive reuse grant.",
+          "title": "Evidence",
+          "type": "string"
+        }
+      },
+      "required": [
+        "eligible",
+        "evidence"
+      ],
+      "title": "ExperienceEligibility",
+      "type": "object"
+    },
+    "ExperienceEnvironment": {
+      "additionalProperties": false,
+      "properties": {
+        "source": {
+          "const": "persisted-runtime-facts",
+          "default": "persisted-runtime-facts",
+          "title": "Source",
+          "type": "string"
+        },
+        "hostDetails": {
+          "default": null,
+          "title": "Hostdetails",
+          "type": "null"
+        },
+        "limit": {
+          "const": "No host configuration, source content or environment values copied.",
+          "default": "No host configuration, source content or environment values copied.",
+          "title": "Limit",
+          "type": "string"
+        }
+      },
+      "required": [
+        "source",
+        "hostDetails",
+        "limit"
+      ],
+      "title": "ExperienceEnvironment",
+      "type": "object"
+    },
+    "ExperienceFailure": {
+      "additionalProperties": false,
+      "properties": {
+        "sourceId": {
+          "pattern": "^[0-9a-f]{8}-(?:[0-9a-f]{4}-){3}[0-9a-f]{12}$",
+          "title": "Sourceid",
+          "type": "string"
+        },
+        "outcome": {
+          "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._:+-]{0,127}$",
+          "title": "Outcome",
+          "type": "string"
+        },
+        "detail": {
+          "default": null,
+          "title": "Detail",
+          "type": "null"
+        }
+      },
+      "required": [
+        "sourceId",
+        "outcome",
+        "detail"
+      ],
+      "title": "ExperienceFailure",
+      "type": "object"
+    },
+    "ExperienceFiles": {
+      "additionalProperties": false,
+      "properties": {
+        "snapshotId": {
+          "anyOf": [
+            {
+              "pattern": "^[0-9a-f]{8}-(?:[0-9a-f]{4}-){3}[0-9a-f]{12}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Snapshotid"
+        },
+        "digest": {
+          "anyOf": [
+            {
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Digest"
+        },
+        "sizeBytes": {
+          "anyOf": [
+            {
+              "maximum": 67108864,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Sizebytes"
+        },
+        "fileCount": {
+          "anyOf": [
+            {
+              "maximum": 10000,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Filecount"
+        }
+      },
+      "required": [
+        "snapshotId",
+        "digest",
+        "sizeBytes",
+        "fileCount"
+      ],
+      "title": "ExperienceFiles",
+      "type": "object"
+    },
+    "ExperienceProvenance": {
+      "additionalProperties": false,
+      "properties": {
+        "sourceType": {
+          "enum": [
+            "task-run",
+            "workspace-snapshot",
+            "quality-evidence"
+          ],
+          "title": "Sourcetype",
+          "type": "string"
+        },
+        "sourceId": {
+          "pattern": "^[0-9a-f]{8}-(?:[0-9a-f]{4}-){3}[0-9a-f]{12}$",
+          "title": "Sourceid",
+          "type": "string"
+        },
+        "digest": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Digest",
+          "type": "string"
+        },
+        "ownership": {
+          "const": "UNVERIFIED",
+          "default": "UNVERIFIED",
+          "title": "Ownership",
+          "type": "string"
+        },
+        "license": {
+          "const": "UNKNOWN",
+          "default": "UNKNOWN",
+          "title": "License",
+          "type": "string"
+        },
+        "storageAllowed": {
+          "const": true,
+          "title": "Storageallowed",
+          "type": "boolean"
+        },
+        "ragAllowed": {
+          "const": false,
+          "default": false,
+          "title": "Ragallowed",
+          "type": "boolean"
+        },
+        "trainingAllowed": {
+          "const": false,
+          "default": false,
+          "title": "Trainingallowed",
+          "type": "boolean"
+        },
+        "distillationAllowed": {
+          "const": false,
+          "default": false,
+          "title": "Distillationallowed",
+          "type": "boolean"
+        },
+        "notes": {
+          "const": "Observable facts/references only; unknown rights deny reuse.",
+          "default": "Observable facts/references only; unknown rights deny reuse.",
+          "title": "Notes",
+          "type": "string"
+        },
+        "evidence": {
+          "const": "Explicit storage consent; operational observation is not a reuse license.",
+          "default": "Explicit storage consent; operational observation is not a reuse license.",
+          "title": "Evidence",
+          "type": "string"
+        }
+      },
+      "required": [
+        "sourceType",
+        "sourceId",
+        "digest",
+        "ownership",
+        "license",
+        "storageAllowed",
+        "ragAllowed",
+        "trainingAllowed",
+        "distillationAllowed",
+        "notes",
+        "evidence"
+      ],
+      "title": "ExperienceProvenance",
+      "type": "object"
+    },
+    "ExperienceQuality": {
+      "additionalProperties": false,
+      "properties": {
+        "runId": {
+          "pattern": "^[0-9a-f]{8}-(?:[0-9a-f]{4}-){3}[0-9a-f]{12}$",
+          "title": "Runid",
+          "type": "string"
+        },
+        "planDigest": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Plandigest",
+          "type": "string"
+        },
+        "verdict": {
+          "enum": [
+            "PASS",
+            "FAIL"
+          ],
+          "title": "Verdict",
+          "type": "string"
+        },
+        "verdictDigest": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Verdictdigest",
+          "type": "string"
+        },
+        "resultDigests": {
+          "items": {
+            "pattern": "^[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "maxItems": 1000,
+          "title": "Resultdigests",
+          "type": "array"
+        },
+        "evidenceDigests": {
+          "items": {
+            "pattern": "^[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "maxItems": 1000,
+          "title": "Evidencedigests",
+          "type": "array"
+        }
+      },
+      "required": [
+        "runId",
+        "planDigest",
+        "verdict",
+        "verdictDigest",
+        "resultDigests",
+        "evidenceDigests"
+      ],
+      "title": "ExperienceQuality",
+      "type": "object"
+    },
+    "ExperienceResult": {
+      "additionalProperties": false,
+      "properties": {
+        "taskStatus": {
+          "enum": [
+            "SUCCEEDED",
+            "FAILED",
+            "CANCELLED"
+          ],
+          "title": "Taskstatus",
+          "type": "string"
+        },
+        "qualityVerdict": {
+          "anyOf": [
+            {
+              "enum": [
+                "PASS",
+                "FAIL"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Qualityverdict"
+        }
+      },
+      "required": [
+        "taskStatus",
+        "qualityVerdict"
+      ],
+      "title": "ExperienceResult",
+      "type": "object"
+    },
+    "ExperienceTask": {
+      "additionalProperties": false,
+      "properties": {
+        "projectId": {
+          "pattern": "^[0-9a-f]{8}-(?:[0-9a-f]{4}-){3}[0-9a-f]{12}$",
+          "title": "Projectid",
+          "type": "string"
+        },
+        "taskId": {
+          "pattern": "^[0-9a-f]{8}-(?:[0-9a-f]{4}-){3}[0-9a-f]{12}$",
+          "title": "Taskid",
+          "type": "string"
+        },
+        "runId": {
+          "pattern": "^[0-9a-f]{8}-(?:[0-9a-f]{4}-){3}[0-9a-f]{12}$",
+          "title": "Runid",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "SUCCEEDED",
+            "FAILED",
+            "CANCELLED"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "attempt": {
+          "maximum": 1000000,
+          "minimum": 1,
+          "title": "Attempt",
+          "type": "integer"
+        },
+        "startedAt": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Startedat"
+        },
+        "finishedAt": {
+          "format": "date-time",
+          "title": "Finishedat",
+          "type": "string"
+        }
+      },
+      "required": [
+        "projectId",
+        "taskId",
+        "runId",
+        "status",
+        "attempt",
+        "startedAt",
+        "finishedAt"
+      ],
+      "title": "ExperienceTask",
+      "type": "object"
+    },
+    "ExperienceTestCheck": {
+      "additionalProperties": false,
+      "properties": {
+        "checkId": {
+          "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._:+-]{0,127}$",
+          "title": "Checkid",
+          "type": "string"
+        },
+        "kind": {
+          "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._:+-]{0,127}$",
+          "title": "Kind",
+          "type": "string"
+        },
+        "runner": {
+          "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._:+-]{0,127}$",
+          "title": "Runner",
+          "type": "string"
+        },
+        "status": {
+          "anyOf": [
+            {
+              "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._:+-]{0,127}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Status"
+        },
+        "resultDigest": {
+          "anyOf": [
+            {
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Resultdigest"
+        },
+        "caseCount": {
+          "default": null,
+          "title": "Casecount",
+          "type": "null"
+        }
+      },
+      "required": [
+        "checkId",
+        "kind",
+        "runner",
+        "status",
+        "resultDigest",
+        "caseCount"
+      ],
+      "title": "ExperienceTestCheck",
+      "type": "object"
+    },
+    "ExperienceTests": {
+      "additionalProperties": false,
+      "properties": {
+        "checks": {
+          "items": {
+            "$ref": "#/$defs/ExperienceTestCheck"
+          },
+          "maxItems": 1000,
+          "title": "Checks",
+          "type": "array"
+        },
+        "caseCount": {
+          "default": null,
+          "title": "Casecount",
+          "type": "null"
+        }
+      },
+      "required": [
+        "checks",
+        "caseCount"
+      ],
+      "title": "ExperienceTests",
+      "type": "object"
+    },
+    "ExperienceTool": {
+      "additionalProperties": false,
+      "properties": {
+        "callId": {
+          "pattern": "^[0-9a-f]{8}-(?:[0-9a-f]{4}-){3}[0-9a-f]{12}$",
+          "title": "Callid",
+          "type": "string"
+        },
+        "requestId": {
+          "anyOf": [
+            {
+              "pattern": "^[0-9a-f]{8}-(?:[0-9a-f]{4}-){3}[0-9a-f]{12}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Requestid"
+        },
+        "sessionId": {
+          "anyOf": [
+            {
+              "pattern": "^[0-9a-f]{8}-(?:[0-9a-f]{4}-){3}[0-9a-f]{12}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Sessionid"
+        },
+        "tool": {
+          "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._:+-]{0,127}$",
+          "title": "Tool",
+          "type": "string"
+        },
+        "status": {
+          "anyOf": [
+            {
+              "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._:+-]{0,127}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Status"
+        },
+        "succeeded": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Succeeded"
+        },
+        "exitCode": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Exitcode"
+        },
+        "durationMs": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Durationms"
+        }
+      },
+      "required": [
+        "callId",
+        "requestId",
+        "sessionId",
+        "tool",
+        "status",
+        "succeeded",
+        "exitCode",
+        "durationMs"
+      ],
+      "title": "ExperienceTool",
+      "type": "object"
+    },
+    "ObservedModel": {
+      "additionalProperties": false,
+      "properties": {
+        "callId": {
+          "pattern": "^[0-9a-f]{8}-(?:[0-9a-f]{4}-){3}[0-9a-f]{12}$",
+          "title": "Callid",
+          "type": "string"
+        },
+        "model": {
+          "anyOf": [
+            {
+              "maxLength": 256,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Model"
+        }
+      },
+      "required": [
+        "callId",
+        "model"
+      ],
+      "title": "ObservedModel",
+      "type": "object"
+    },
+    "ObservedProvider": {
+      "additionalProperties": false,
+      "properties": {
+        "callId": {
+          "pattern": "^[0-9a-f]{8}-(?:[0-9a-f]{4}-){3}[0-9a-f]{12}$",
+          "title": "Callid",
+          "type": "string"
+        },
+        "provider": {
+          "anyOf": [
+            {
+              "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._:+-]{0,127}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Provider"
+        }
+      },
+      "required": [
+        "callId",
+        "provider"
+      ],
+      "title": "ObservedProvider",
+      "type": "object"
     }
   },
-  "additionalProperties": false
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schemaversion",
+      "type": "string"
+    },
+    "task": {
+      "$ref": "#/$defs/ExperienceTask"
+    },
+    "environment": {
+      "$ref": "#/$defs/ExperienceEnvironment"
+    },
+    "provider": {
+      "items": {
+        "$ref": "#/$defs/ObservedProvider"
+      },
+      "maxItems": 1000,
+      "title": "Provider",
+      "type": "array"
+    },
+    "model": {
+      "items": {
+        "$ref": "#/$defs/ObservedModel"
+      },
+      "maxItems": 1000,
+      "title": "Model",
+      "type": "array"
+    },
+    "effort": {
+      "default": null,
+      "title": "Effort",
+      "type": "null"
+    },
+    "repository": {
+      "default": null,
+      "title": "Repository",
+      "type": "null"
+    },
+    "baseCommit": {
+      "default": null,
+      "title": "Basecommit",
+      "type": "null"
+    },
+    "trajectorySummary": {
+      "maxLength": 256,
+      "minLength": 1,
+      "title": "Trajectorysummary",
+      "type": "string"
+    },
+    "actions": {
+      "items": {
+        "$ref": "#/$defs/ExperienceAction"
+      },
+      "maxItems": 1000,
+      "title": "Actions",
+      "type": "array"
+    },
+    "toolCalls": {
+      "items": {
+        "$ref": "#/$defs/ExperienceTool"
+      },
+      "maxItems": 1000,
+      "title": "Toolcalls",
+      "type": "array"
+    },
+    "commands": {
+      "items": {
+        "$ref": "#/$defs/ExperienceCommand"
+      },
+      "maxItems": 1000,
+      "title": "Commands",
+      "type": "array"
+    },
+    "files": {
+      "$ref": "#/$defs/ExperienceFiles"
+    },
+    "attempts": {
+      "items": {
+        "$ref": "#/$defs/ExperienceAttempt"
+      },
+      "maxItems": 1000,
+      "title": "Attempts",
+      "type": "array"
+    },
+    "failures": {
+      "items": {
+        "$ref": "#/$defs/ExperienceFailure"
+      },
+      "maxItems": 1000,
+      "title": "Failures",
+      "type": "array"
+    },
+    "corrections": {
+      "items": {
+        "$ref": "#/$defs/ExperienceCorrection"
+      },
+      "maxItems": 0,
+      "title": "Corrections",
+      "type": "array"
+    },
+    "tests": {
+      "$ref": "#/$defs/ExperienceTests"
+    },
+    "quality": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ExperienceQuality"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "humanReview": {
+      "default": null,
+      "title": "Humanreview",
+      "type": "null"
+    },
+    "agentReview": {
+      "default": null,
+      "title": "Agentreview",
+      "type": "null"
+    },
+    "finalResult": {
+      "$ref": "#/$defs/ExperienceResult"
+    },
+    "provenance": {
+      "items": {
+        "$ref": "#/$defs/ExperienceProvenance"
+      },
+      "maxItems": 1002,
+      "minItems": 1,
+      "title": "Provenance",
+      "type": "array"
+    },
+    "trainingEligibility": {
+      "$ref": "#/$defs/ExperienceEligibility"
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "task",
+    "environment",
+    "provider",
+    "model",
+    "effort",
+    "repository",
+    "baseCommit",
+    "trajectorySummary",
+    "actions",
+    "toolCalls",
+    "commands",
+    "files",
+    "attempts",
+    "failures",
+    "corrections",
+    "tests",
+    "quality",
+    "humanReview",
+    "agentReview",
+    "finalResult",
+    "provenance",
+    "trainingEligibility"
+  ],
+  "title": "ExperienceDocument",
+  "type": "object"
 }

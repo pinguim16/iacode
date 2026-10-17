@@ -1,0 +1,191 @@
+{
+  "schemaVersion": "1.0.0",
+  "checkpoint": "GATE-6-CP-0001",
+  "findings": [
+    {
+      "findingId": "G6-INT-001",
+      "severity": "MEDIUM",
+      "title": "Strict JSON validation loses transport context",
+      "status": "CLOSED",
+      "expected": "Valid JSON arrays and aware RFC3339 timestamps must round-trip under the strict contract.",
+      "observed": "Cmd-0014 actually reports 18 setup errors rejecting valid arrays/dates, one distinct failed security case and seven passed cases; its process exits 1.",
+      "rootCause": "An inherited model-before validator materializes the entire JSON model as a Python dictionary before strict tuple/datetime handling. Restrict boolean prevalidation to the permission fields.",
+      "evidence": [
+        "command:cmd-0014"
+      ],
+      "limits": "Concise direct tool-output observation; no raw-output artifact was configured for the first run. No independent result or correction acceptance is claimed.",
+      "resolutionEvidence": [
+        "command:cmd-0054",
+        "command:cmd-0050",
+        "file:docs/checkpoints/GATE-6-CP-0001/PRE-LIVE-PROGRESS.json",
+        "file:docs/checkpoints/GATE-6-CP-0001/attempts/EXPERIENCE-LIVE-0003.json"
+      ],
+      "resolution": "Actual complete causal local suites, clean/adverse controls and fresh real source capture pass; original failures remain. No whole-Gate or independent verdict is inferred."
+    },
+    {
+      "findingId": "G6-INT-002",
+      "severity": "CRITICAL",
+      "title": "GUARDRAIL_FAILURE: encoded known capability gap",
+      "status": "CLOSED",
+      "expected": "Every declared known-capability form is refused by the new domain scanner before effects.",
+      "observed": "Cmd-0014 test_known_opaque_capability_refused_in_declared_forms actually fails DID NOT RAISE; no real capture was attempted or accepted in that pure test.",
+      "rootCause": "The new scanner copied only raw/case/base64/hex known forms, omitting percent and literal Unicode forms. LSN-0126/GRD-0128 had already required the complete set; this is an escalated recurrence, not a silent fix.",
+      "evidence": [
+        "command:cmd-0014"
+      ],
+      "limits": "Concise direct tool-output observation; no raw-output artifact was configured for the first run. No independent result or correction acceptance is claimed.",
+      "resolutionEvidence": [
+        "command:cmd-0054",
+        "command:cmd-0050",
+        "file:docs/checkpoints/GATE-6-CP-0001/PRE-LIVE-PROGRESS.json",
+        "file:docs/checkpoints/GATE-6-CP-0001/attempts/EXPERIENCE-LIVE-0003.json"
+      ],
+      "resolution": "Actual complete causal local suites, clean/adverse controls and fresh real source capture pass; original failures remain. No whole-Gate or independent verdict is inferred."
+    },
+    {
+      "findingId": "G6-INT-003",
+      "severity": "CRITICAL",
+      "title": "GUARDRAIL_FAILURE: UNIQUE naming diverges from migration",
+      "status": "CLOSED",
+      "expected": "Actual Alembic check must find no ORM/schema drift, including new UNIQUE constraints.",
+      "observed": "Cmd-0023 preserves actual autogenerate refusal: ORM project_request/project_source differ from migrated uq_experiences_project_request/uq_experiences_project_source.",
+      "rootCause": "The new ORM UNIQUE names assumed the convention prefixes explicit names as CHECK does. LSN-0042 already distinguishes these naming rules; escalate the guarded recurrence and align actual explicit UNIQUE names, preserving the unchanged real migration assertion.",
+      "evidence": [
+        "command:cmd-0023",
+        "file:docs/checkpoints/GATE-6-CP-0001/suite-attempts/INTEGRATION-0001.json",
+        "file:docs/checkpoints/GATE-6-CP-0001/suite-attempts/INTEGRATION-0001.log"
+      ],
+      "resolutionEvidence": [
+        "command:cmd-0054",
+        "command:cmd-0050",
+        "file:docs/checkpoints/GATE-6-CP-0001/PRE-LIVE-PROGRESS.json",
+        "file:docs/checkpoints/GATE-6-CP-0001/attempts/EXPERIENCE-LIVE-0003.json"
+      ],
+      "resolution": "Actual complete causal local suites, clean/adverse controls and fresh real source capture pass; original failures remain. No whole-Gate or independent verdict is inferred."
+    },
+    {
+      "findingId": "G6-INT-004",
+      "severity": "MEDIUM",
+      "title": "SQL text interprets inline JSON colons as bindings",
+      "status": "CLOSED",
+      "expected": "The actual corruption and legacy fixtures must reach PostgreSQL with the intended JSON bytes.",
+      "observed": "Cmd-0023 preserves two StatementError failures demanding bind parameter true before those fixtures execute; 27 other cases pass and owned cleanup is complete.",
+      "rootCause": "Inline JSON literals inside SQLAlchemy text contain colon-prefixed tokens that its lexical binder treats as parameters. Bind the JSON data through CAST(:body AS JSONB), without changing either substantive corruption/legacy assertion.",
+      "evidence": [
+        "command:cmd-0023",
+        "file:docs/checkpoints/GATE-6-CP-0001/suite-attempts/INTEGRATION-0001.json",
+        "file:docs/checkpoints/GATE-6-CP-0001/suite-attempts/INTEGRATION-0001.log"
+      ],
+      "resolutionEvidence": [
+        "command:cmd-0054",
+        "command:cmd-0050",
+        "file:docs/checkpoints/GATE-6-CP-0001/PRE-LIVE-PROGRESS.json",
+        "file:docs/checkpoints/GATE-6-CP-0001/attempts/EXPERIENCE-LIVE-0003.json"
+      ],
+      "resolution": "Actual complete causal local suites, clean/adverse controls and fresh real source capture pass; original failures remain. No whole-Gate or independent verdict is inferred."
+    },
+    {
+      "findingId": "G6-INT-005",
+      "severity": "CRITICAL",
+      "title": "GUARDRAIL_FAILURE: source formatting budget",
+      "status": "CLOSED",
+      "expected": "The complete unchanged mandatory lint is green.",
+      "observed": "Cmd-0031: seven E501 findings; both frontend/client formatting checks pass; overall exit 1.",
+      "rootCause": "G6-INT-005: Cmd-0031 reports seven E501 declarations after mechanical formatting; the formatter does not split every long literal. Preserve all unchanged lint rules, split only source expressions/strings and require the entire mandatory lint green.",
+      "evidence": [
+        "command:cmd-0031"
+      ],
+      "resolutionEvidence": [
+        "command:cmd-0054",
+        "command:cmd-0050",
+        "file:docs/checkpoints/GATE-6-CP-0001/PRE-LIVE-PROGRESS.json",
+        "file:docs/checkpoints/GATE-6-CP-0001/attempts/EXPERIENCE-LIVE-0003.json"
+      ],
+      "resolution": "Actual complete causal local suites, clean/adverse controls and fresh real source capture pass; original failures remain. No whole-Gate or independent verdict is inferred."
+    },
+    {
+      "findingId": "G6-INT-006",
+      "severity": "HIGH",
+      "title": "Public storage identity misclassified as bearer secret",
+      "status": "CLOSED",
+      "expected": "Public source package names remain valid while actual HMAC/provider/storage/database secrets and their declared forms remain refused.",
+      "observed": "Cmd-0040: new explicit credential-free runtime classifier case fails AUTHORIZATION_MATERIAL_REFUSED; 172 other API cases pass. Cmd-0038 also retains the first live clean-capture control failure after real provider/sandbox task and quality PASS; its original upstream code was not recorded, so that live causal link requires retest.",
+      "rootCause": "The runtime put the MinIO public account/access identity in the same exact-value set as bearer keys and passwords. The committed public identity occurs in legitimate quality package/report names, so the actual owning-image classifier refuses those bytes with AUTHORIZATION_MATERIAL_REFUSED. Field masking/type alone is not a definition of a secret. No value is globally allowlisted and actual secret scanning or password protection may not be weakened.",
+      "evidence": [
+        "command:cmd-0038",
+        "command:cmd-0040",
+        "file:docs/checkpoints/GATE-6-CP-0001/suite-attempts/API-UNIT-0004.log",
+        "file:docs/checkpoints/GATE-6-CP-0001/attempts/EXPERIENCE-LIVE-0001.json"
+      ],
+      "resolutionEvidence": [
+        "command:cmd-0054",
+        "command:cmd-0050",
+        "file:docs/checkpoints/GATE-6-CP-0001/PRE-LIVE-PROGRESS.json",
+        "file:docs/checkpoints/GATE-6-CP-0001/attempts/EXPERIENCE-LIVE-0003.json"
+      ],
+      "resolution": "Actual complete causal local suites, clean/adverse controls and fresh real source capture pass; original failures remain. No whole-Gate or independent verdict is inferred."
+    },
+    {
+      "findingId": "G6-INT-007",
+      "severity": "HIGH",
+      "title": "Source query fetches unneeded private columns before safe projection",
+      "status": "CLOSED",
+      "expected": "The real SQL projection reads only consumed bounded observable source facts.",
+      "observed": "The actual owning PostgreSQL regression detects an unneeded private task_runs column in the executed SELECT. This is over-fetch into memory, not evidence of private content persisted/exported.",
+      "rootCause": "Selecting ORM entities loaded whole source records before projecting the closed document. Final serialization excluded private text, but the SQL read still fetched unneeded task results, agent output and event payloads. Cardinality alone did not bound source JSON/text. Select only consumed columns with raiseload, extract exact workspace/permission scalars and bound required command arguments in SQL before loading.",
+      "evidence": [
+        "file:docs/checkpoints/GATE-6-CP-0001/suite-attempts/INTEGRATION-0003.json",
+        "file:docs/checkpoints/GATE-6-CP-0001/suite-attempts/INTEGRATION-0003.log",
+        "file:docs/checkpoints/GATE-6-CP-0001/COMMANDS.jsonl"
+      ],
+      "resolutionEvidence": [
+        "command:cmd-0054",
+        "command:cmd-0050",
+        "file:docs/checkpoints/GATE-6-CP-0001/PRE-LIVE-PROGRESS.json",
+        "file:docs/checkpoints/GATE-6-CP-0001/attempts/EXPERIENCE-LIVE-0003.json"
+      ],
+      "resolution": "Actual complete causal local suites, clean/adverse controls and fresh real source capture pass; original failures remain. No whole-Gate or independent verdict is inferred."
+    },
+    {
+      "findingId": "G6-INT-008",
+      "severity": "CRITICAL",
+      "title": "GUARDRAIL_FAILURE: strict engineering-memory text scan",
+      "status": "CLOSED",
+      "classification": "GUARDRAIL_FAILURE",
+      "lessonId": "LSN-0119",
+      "guardrailId": "GRD-0120",
+      "observed": "Cmd-0056 actually returns LESSONS_INVALID on the new LSN-0138 title. Cmd-0059 then refuses nine actual changed paths containing stale derived copies or adjacent descriptive labels. The neutral receipt preserves the original title identity, bytes/digest and actual classifier refusal without exporting rejected text. Correct only those labels and regenerate canonical derived artifacts; no scanner or exemption changes.",
+      "requiredCorrection": "G6-INT-008: Cmd-0056 rejects a new memory title under unchanged strict detection. The guarded actual-delta principle also applies to memory text, not only source. Retain the failure and neutral original digest, reword only the label, keep both scanners unchanged and require actual memory/delta/checkpoint acceptance.",
+      "evidence": [
+        "command:cmd-0056",
+        "command:cmd-0059",
+        "checkpoint:STRICT-MEMORY-FINDING.json"
+      ],
+      "resolutionEvidence": [
+        "command:cmd-0058",
+        "command:cmd-0062",
+        "command:cmd-0066",
+        "command:cmd-0067"
+      ],
+      "resolution": "Only descriptive labels and their canonical derived copies changed. Both unchanged strict boundaries and actual serialized checkpoint acceptance pass; original red observations and recurrence severity/counter remain."
+    },
+    {
+      "findingId": "G6-INT-009",
+      "severity": "MEDIUM",
+      "title": "Local summary overwrites required continuation structure",
+      "status": "CLOSED",
+      "observed": "Cmd-0081 actually rejects preparatory finalization with all14 missing HANDOFF headings and an unpopulated NEXT structure; no runtime commit or final seal was issued.",
+      "rootCause": "The local assembler replaced the structured handoff with a prose summary and emitted NEXT without its mandatory subsection. Semantically related prose does not satisfy the canonical artifact structure. Render every owning-validator heading in order with substantive content; reject missing/empty sections and retain the next-action heading before writing. Never relax the validator.",
+      "evidence": [
+        "command:cmd-0081"
+      ],
+      "resolutionEvidence": [
+        "command:cmd-0085",
+        "command:cmd-0086",
+        "command:cmd-0091",
+        "command:cmd-0092"
+      ],
+      "resolution": "Canonical headings are consumed from their owning validator and every section requires substantive content. Actual output, omission/empty mutations and current checkpoint acceptance pass; no required heading or check was removed."
+    }
+  ]
+}

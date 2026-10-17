@@ -1,0 +1,809 @@
+{
+  "filesRead": [
+    {
+      "path": "START-HERE.md",
+      "reason": "Mandatory current entry contract."
+    },
+    {
+      "path": "docs/DEVELOPMENT-CONTRACT.md",
+      "reason": "Canonical mandatory delivery order and safety rules."
+    },
+    {
+      "path": "docs/MASTER-PLAN.md",
+      "reason": "Authorized Gate 6 objective and milestone boundary."
+    },
+    {
+      "path": "docs/GATE-6-CHECKLIST.md",
+      "reason": "Complete current canonical specification."
+    },
+    {
+      "path": "docs/checkpoints/GATE-5-CP-0001/STATE.json",
+      "reason": "Sealed predecessor observed before alterations."
+    },
+    {
+      "path": "docs/checkpoints/GATE-5-CP-0001/HANDOFF.md",
+      "reason": "Immutable predecessor continuation and exclusions."
+    }
+  ],
+  "filesCreated": [
+    {
+      "path": ".iacode/policies/experience-policy.json",
+      "reason": "Version the complete consumed closed experience schema and finite rights/retention policy.",
+      "hashAfter": "bbabf49ee7e014e1d341aacc4c3f3a3956da578b159daa99104b0d89f9c5540a"
+    },
+    {
+      "path": "apps/api/migrations/versions/0007_experience_store.py",
+      "reason": "Evolve and test actual experience persistence, migrations, source/evidence adapters, authenticated project-scoped API and owned automatic retention lifecycle.",
+      "hashAfter": "0f515be1a243818596429f16c70c624bf8841a90505f690bf327d0d910720f3c"
+    },
+    {
+      "path": "apps/api/src/iacode_api/experience/__init__.py",
+      "reason": "Evolve and test actual experience persistence, migrations, source/evidence adapters, authenticated project-scoped API and owned automatic retention lifecycle.",
+      "hashAfter": "43ec3ad013d20ae548b31ad9412940169c8a3bfcc3d5fe0f2ce950761936646e"
+    },
+    {
+      "path": "apps/api/src/iacode_api/experience/runtime.py",
+      "reason": "Evolve and test actual experience persistence, migrations, source/evidence adapters, authenticated project-scoped API and owned automatic retention lifecycle.",
+      "hashAfter": "99fbffcbdc5fdccf78cbe69d3b38b886cb5d6f0923069223f230ea10f576033c"
+    },
+    {
+      "path": "apps/api/src/iacode_api/experience/sources.py",
+      "reason": "Evolve and test actual experience persistence, migrations, source/evidence adapters, authenticated project-scoped API and owned automatic retention lifecycle.",
+      "hashAfter": "c06842ea7fe9e3a51c7efc66ca796f37aa2708bd131f091555ab6aa300b09d74"
+    },
+    {
+      "path": "apps/api/src/iacode_api/experience/store.py",
+      "reason": "Evolve and test actual experience persistence, migrations, source/evidence adapters, authenticated project-scoped API and owned automatic retention lifecycle.",
+      "hashAfter": "95da9046e14ce6616398fa5a5be22a746713cd9460684b2f6f8cd6c8aa413649"
+    },
+    {
+      "path": "apps/api/src/iacode_api/routes/experiences.py",
+      "reason": "Evolve and test actual experience persistence, migrations, source/evidence adapters, authenticated project-scoped API and owned automatic retention lifecycle.",
+      "hashAfter": "44f9ab62d66223edf02d9a0472436c2e41e851945a6a172830096ea7c9859721"
+    },
+    {
+      "path": "apps/api/tests/integration/test_experience_store.py",
+      "reason": "Evolve and test actual experience persistence, migrations, source/evidence adapters, authenticated project-scoped API and owned automatic retention lifecycle.",
+      "hashAfter": "dff3693d6fd9d3341cdc05b0b9c42680650c98980fccb6eeef6a4b79dcfb8dcf"
+    },
+    {
+      "path": "apps/api/tests/unit/test_experience_api.py",
+      "reason": "Evolve and test actual experience persistence, migrations, source/evidence adapters, authenticated project-scoped API and owned automatic retention lifecycle.",
+      "hashAfter": "00de731d422278171b4d3874b3239aafdf1da26f67d28ead03a4d7f1a7add8ae"
+    },
+    {
+      "path": "docs/GATE-6-CHECKLIST.md",
+      "reason": "Define and derive the complete mandatory Gate 6 specification before implementation, preserving all predecessor requirements.",
+      "hashAfter": "a4ec45717724c56d1b0b704d898d4933602fe979f20dcab011ee79cab1850535"
+    },
+    {
+      "path": "docs/adr/ADR-0050-experiences-are-source-bound-consented-facts.md",
+      "reason": "Record and atomically index the source-bound experience and finite retention architecture.",
+      "hashAfter": "b3fb655c9ed3dc5bcdda120e6e5f41f5198f69e8a2e65f76bc11fe8e3d701bad"
+    },
+    {
+      "path": "docs/adr/ADR-0051-retention-tombstones-prevent-experience-resurrection.md",
+      "reason": "Record and atomically index the source-bound experience and finite retention architecture.",
+      "hashAfter": "1949676b07b970f141232eca6aec9d9210396dab403885267aaaea7b7a10c03f"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/AUTHORIZATION.md",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "f4182340a3062e7290b45e3c76319ea0f47e7bbfbcf435d21f241619ef82558e"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/BASELINE.md",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "ca286780326e41519eca3b260c3e466b0be6149d61640eb2980e33f967b86b23"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/CLOSURE-REQUIREMENTS.json",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "2084fa78b6ce245b1e682d0a20542e833548a45c180c650ade2e634bc6ceb469"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/CLOSURE-REQUIREMENTS.md",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "6f2c8239ad240a1999107b53040e89c76e583ca1c5af47e639c641b93f8d9f0e"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/COMMANDS.jsonl",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "7a743a931e34ff200d611fa526a658ead592083a1a4aee5ab3b64085b9310086"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/COUNTS.json",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "77817bbc69df09c76629a0802ffb262cea35cda2ff1fb560e73954004ba6bd6c"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/DECISIONS.md",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "daca9eff1fb8a32e8a5c0f14de9b0bfa023a7c68fefb077e892fabedd5729d5f"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/DIFF-SUMMARY.md",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "a2b819cfe2210a5b78f6d839971fe377cbe1efc60ce45928e3a01d9502c8b36b"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/EVIDENCE-TRANSPORT.json",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "a7c6d5c9a12cce80d4dd20e1ccadf410f2ec5920b564a1a7de9d05905eb207c4"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/FILES.json",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff."
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/FINDINGS.json",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "bd205124324e41511cdf048eedbd2207858dbde35703e4a16434a9d8c9d1fa52"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/HANDOFF.md",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "d7e218e457d8889b934ee8f5879dbf4a6335c8ae3caa2271a8cde4785c96d818"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/LESSON-PREFLIGHT.json",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "97a5637e5779a0ef622e7ba7dcd970a4ed280a2803eab4c48200383722cb214f"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/LESSON-PREFLIGHT.md",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "10e4a5889217bf1181e9037c1c4fb747b9534d14948b2d62b8e8d9d768401f10"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/NEXT.md",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "6e749185bb0fdaee33811dd7fe9e9109c62314124e215f1ae486ba7be8a7d426"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/PLAN.md",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "4d4c39a6a3a5a4092d61b94884e616951ba7b79b0a7f657048337fdb41aec64c"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/PRE-LIVE-PROGRESS.json",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "ec919cc4f3044ed44bc0eb8c8826752aadd4efc8e81b625b97f49b790ba85ab2"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/PROGRESS.md",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "fae471ae5aa6919dd94796f4fa851a18d219c7442be9eb0df98a23a62fbf94df"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/PROVENANCE.json",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "e419be7434eaa98013335ec26b69587fb33d8155d00a112b3a3fda5d3de70e93"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/QUALITY.json",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "10ae4b5a2907e42f509882c730d56e98c58238e50b72c7fc5db4f4a91d21cdd2"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/REQUIREMENTS-MATRIX.json",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "7087fa9e914c306281b9f54433c4beae489b4065544d18bffdedcdd715e68b15"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/REQUIREMENTS-MATRIX.md",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "80efe3bae32cdd2a7d92f13d45484150eb189a2ced53dcf79fd3ffd861b6a19e"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/REVIEW-BUNDLE-VALIDATION.json",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "16ef967577c59cda4ac2b5e776bec890acfb4d85517cf67957a09feb31615bdf"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/REWORK-LOG.jsonl",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/RISKS.md",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "3313fba0eeb75a052e2299bb1bb9096c161a4539f6eae5e6a0d3a3cd0f5e71af"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/RUN-METADATA.json",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "50c052d738da63a7a5656f083aae93cbb524e60132d556fbe90ba5edc4661da4"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/STATE.json",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "b8957fbe3c7d46268b7250bab25ef9a9e1dc8dab3f5cb14dc5d219c7fa343fe0"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/STATUS.md",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "b94d494e9bdc8adb116de030cf0d34d848154c4d929ce48468e9f29ee574fbf8"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/STEPS.json",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "498cce10e987a0da7ed3bbfa1357044435e7230bb4f77bb62fa13ff36e117923"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/STRICT-MEMORY-FINDING.json",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "92d1856a51c1d44fbc7770f8c60be4ebdca14ed75fabf50d84e81b771877d631"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/TESTS.json",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "b013f6bec8e7148fdbda5f01a98380dc2afa3905aefe0e9ff087ae7dad870f40"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/attempts/EXPERIENCE-LIVE-0001-RECEIPT.json",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "f7397807f733e1f0c87e61170e890e67d5feeabd99edb0d95589e8f4bcaa940d"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/attempts/EXPERIENCE-LIVE-0001.json",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "dc336a83c54458805861619008953619b195df3d9a9feefcd6fcf67dc33bd100"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/attempts/EXPERIENCE-LIVE-0002-RECEIPT.json",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "d7cbe5a4c588f9dcb803d3b48e2288f9588db217ee4e271bcad7204d362cbcc9"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/attempts/EXPERIENCE-LIVE-0002.json",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "17a7bd4258733995272207c77f6ec6c3c606ecb2ec1689f626823c075491d904"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/attempts/EXPERIENCE-LIVE-0003-RECEIPT.json",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "cbefd7f5aa32388d1285bffec5890332f80fb6631b08614c23c417d5f67b1a43"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/attempts/EXPERIENCE-LIVE-0003.json",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "bcd4b02ee52f30feb2ebf8c21691b0257c488fdd3e1a5e7d75900c70e2dd3e5e"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/attempts/PRE-LIVE-SEQUENCE-0001.json",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "7d2c037b5797a1a4ef7662cf083528cb1ae72a6970a02c7910aaa9e2ca9c827e"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/audit-harness/assemble_implementation_progress.py",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "587f30e09a7219f87cd23e770ad55b20dd593da49875dc6322ad156533b9b67b"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/audit-harness/assemble_source_ready.py",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "f9fea8c59d0aa6f8d2f9ee9798d1db908bf637cddcb1f7f4f8daca6acb3c93ef"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/audit-harness/assemble_verified_progress.py",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "de4078279c9b90dc9e6b1a44e7064576fe7c0a5775b68dd5f59767f73051a64b"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/audit-harness/audit_documentation.py",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "037e8f44f0ec3945266553fd8d1a1a77c7d1a8efd9bfbe0d559765b44adf8b57"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/audit-harness/audit_requirement_mapping.py",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "cb3da7e6c4b7e63af944a6c99b0cd452ad0bd1a0bb4a8cda69ad85cc20e902ca"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/audit-harness/complete_functional_acceptance.py",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "0f2af15b909838d472841f8589a5b32f09e0960a64c88cca59794136abc42a20"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/audit-harness/complete_requirements.py",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "ade7d7c8906ea629a9129cb9ce0b9223d10bd5c92aab7976c231dfb7d497f967"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/audit-harness/declare_inventory.py",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "d1628f6cc37c9d144445cbec1928db48527137c65c16c1e1cd4cc4fb5186f7bf"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/audit-harness/expand_functional_membership.py",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "6e2b1f36e66751b56a934dd22f521c93a741ebedeaca7eaae472f95e0b820f74"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/audit-harness/format_new_python.py",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "396bce30da247def27689585209aaca0cf385f3587cd7a0fa31739a07cf0eba0"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/audit-harness/observe_frozen_subject.py",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "615a6ad7185dd283a812c05d1c7ce855b5f08880868456d8abb5226d18f616ed"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/audit-harness/prepare_entry.py",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "030e25899f7d9b3d62fc4c144807771c60828c50360ffd1c0de7f3b086099485"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/audit-harness/record_handoff_finding.py",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "78cc7e0749b0441fcd47a13c3e458c9e3a23392a005ab5cd975d56a11222162a"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/audit-harness/record_initial_domain_findings.py",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "090d8960abcfc16a09b0b84805eb33c44217d7bffe96eb5f9570c1609f07b8c0"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/audit-harness/record_public_identity_finding.py",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "cde99d2f8f5b70703902dac3636632454e11466b80bbab5e637d2aaecf54fb8b"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/audit-harness/record_source_projection_finding.py",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "e83dec3b252e103cdb49a88d877decae456404e46bc2cda333e34499cb6d48c7"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/audit-harness/record_sql_findings.py",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "b6526cf9060f16024b0589c46e2d77ab642ef9924fc5bcc8b7b433ae5affd01d"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/audit-harness/record_strict_memory_finding.py",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "fe91b2815507707cc5a6fd704f36e98bb240a1b3f88e0c7df0b6527bbcb53845"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/audit-harness/record_style_finding.py",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "5948bd7a7d90c445e268cfd01efaa5cbe6af097427d59350ae13c0c658a582f0"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/audit-harness/register_specification.py",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "c025194a8a270ee8ca90d5399335791d9aec573ece3ca2dfc595fc98981f0796"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/audit-harness/render_local_handoff.py",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "22677086149d4359eede8b5dcb3812a809196d17dbb191ed086b77d3dabfdd1d"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/audit-harness/resolve_causal_findings.py",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "4a93ff664cfa7de34e6834379c67b1f673c686547808bc4be034e51bd26e3bef"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/audit-harness/resolve_handoff_finding.py",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "1999ad34857401289f732177cbf3577a292a19ae4809b449bd7c386d26bd766d"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/audit-harness/resolve_strict_memory_finding.py",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "e7e3fa880a8e7757506bdb6f8ec049c57d56c26243c0e15927c02da029d9466c"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/audit-harness/run_checkpoint_validation.py",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "aafa9315efab3108c8975ef59cf2d1e02c23a21d2e85e44b07b290389c6086d8"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/audit-harness/run_experience_checks.py",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "fbfab6e8a753873edfae8c43c561ac378a8f879ce96ff2c0cfd17ff4c816e663"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/audit-harness/run_full_verification.py",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "39728e51d1b4d8e472dfa33b0935298267fa7e0c1d111b29fc573d1b45d84b12"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/audit-harness/run_internal_red_team.py",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "c30c59897a36dbd3cb36418dd689cd5a4d1be5260c1b1f556ce06cee3bd58609"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/audit-harness/run_live_experience_proof.py",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "f15fe6e0b56678db1b1d0a131847921f847d7b931e2b7e1b9f166df6acb788d4"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/audit-harness/run_local_feature_sequence.py",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "e440283464643d6854a0a9d147f4daf6453832551eced78eb792c8880deb8714"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/audit-harness/run_owned_experience_integration.py",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "9b16ff806f52cbf5ce117c018c6a9bbd61d5dc6538dee9fa909e1e137246196f"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/audit-harness/run_pre_live_sequence.py",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "8e6c5e9cea5b7ca3836478fa5837df4c23cf321a8fbafe575dbf7dbebbd57bf9"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/audit-harness/synchronize_local_rework.py",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "815c6baed8e1a8f5619c9e9e3f3a49e8f2311107331e79bd56d61805ef4961bd"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/audit-harness/validate_serial_bookkeeping.py",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "1c907db42bc44cc67cb63d862bf53b3813386bd999e444a3ff775b7d2656e2c3"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/audit-harness/verify_evidence_transport.py",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "ab06bf01460c6f9e7bfe32574d7f0ac9a57643a38347a0a7b0719b2cea9ebfa3"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/suite-attempts/API-UNIT-0001.json",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "482fb9feb8163059c5391e0d4cfa43679bbbb3a5d37784fe64be55934fc22829"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/suite-attempts/API-UNIT-0001.log",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "a06450a5d25c6f975cbe09c5294ebcb8b55f89f3e959d0cf9d411f97a5a149f0"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/suite-attempts/API-UNIT-0002.json",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "38635dbcd7fac1744a475abf991e4ec192cda4620a5f4233fc3d75bfdd896022"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/suite-attempts/API-UNIT-0002.log",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "992b832d7dc839cb483139114736477079bbb805bbc75a526776ce05337b94f4"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/suite-attempts/API-UNIT-0003.json",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "b1f4096cf49205aeb890f16b28a45a6064fdf6d3dcd5d7eb2ae80fad4118c272"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/suite-attempts/API-UNIT-0003.log",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "4a72b17d1a8610c9c9e528f83deaa5c46c124fada34ba11fa328c68f9fe42427"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/suite-attempts/API-UNIT-0004.json",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "3ef6f4e3e60fba772e2b04dc37bb0cfc1802db8ce85992fd4557e161bf9ef0bf"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/suite-attempts/API-UNIT-0004.log",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "e50ef427310bc663e984308a478dc510b8e80c3e0ba8af2b69a6004b4e9f36b7"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/suite-attempts/API-UNIT-0005.json",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "f733cf355654625c0e56b64ef29088825e08b8fcad051924f8c38f9ced69d9e1"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/suite-attempts/API-UNIT-0005.log",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "93a9f9aa8fd39c04e6d52475415b44b96cb6077988e2186c402309308e874df5"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/suite-attempts/API-UNIT-0006.json",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "823a50154989c861e29b8ac1d5292cba417df186a0f7175d157a30ed72f7d9aa"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/suite-attempts/API-UNIT-0006.log",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "4ff295d6ac2d6f6f770c3323f463f703e805516b9dc3fa0f004bbb1a347c8982"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/suite-attempts/DOMAIN-0001.json",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "04232525bc3e1c5200b3d1ff72f156f77dac5b148122e8ac85b5db15560090f5"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/suite-attempts/DOMAIN-0001.log",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "f8b95d7065e517591fac13aac5209d24e7bce75456092412880ec540367242b5"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/suite-attempts/DOMAIN-0002.json",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "4205dab43a1b7d57b0eadbbf523c31dbb37894db55c4f770627b504480496d7d"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/suite-attempts/DOMAIN-0002.log",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "3bcdaaa9b3b296df03a7af447ed463f8bac0c76bcaeb96e161f7957948567699"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/suite-attempts/DOMAIN-0003.json",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "f34c707f031349ae6f4971600a5a0a4d2844667697b57efd8c13c22dc81dceaa"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/suite-attempts/DOMAIN-0003.log",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "8424a95b08d3109a244b9fe3293a78e0e6ab63a549e65ff55a2137d0f9440441"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/suite-attempts/INTEGRATION-0001.json",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "9af01066db824f72d608d606ec4e1405c14443394dddc4d7f383c59f609b6713"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/suite-attempts/INTEGRATION-0001.log",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "c219117419df0e09cdb3d3072e62b4ea5d699e840b1ada139af6d1ba64b3a735"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/suite-attempts/INTEGRATION-0002.json",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "b9043137ab42548c7a72b777777b1ef8408eb363f82b7214b0e938d7fee36411"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/suite-attempts/INTEGRATION-0002.log",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "9df11248b9f9cbb2ea72a036ba33df8d55a128b6a6636ae47b280c1580e17deb"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/suite-attempts/INTEGRATION-0003.json",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "6b82e67ddf5d2a6276f5013bdd8f7f6a66d0d02e592a9e4c438bf2b730b84ea9"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/suite-attempts/INTEGRATION-0003.log",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "c3a9f9101a5bb90eb321bf4447b7317ba879214cd58d4daf42561e7f6a7ac389"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/suite-attempts/INTEGRATION-0004.json",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "7005443f67a82f5e9bb462f27a60554128d1d070ab9c648e548ed260e6c1834d"
+    },
+    {
+      "path": "docs/checkpoints/GATE-6-CP-0001/suite-attempts/INTEGRATION-0004.log",
+      "reason": "Record current Gate 6 authority, derived requirements, plan, observable implementation/assurance evidence and resumable handoff.",
+      "hashAfter": "c4690ad5723b0c28b6aca509686a2e57198df80339c0907a338ef8ef0cdb5e57"
+    },
+    {
+      "path": "docs/runbooks/experience-store.md",
+      "reason": "Document actual experience consent, API/access, lineage/rights, retention, withdrawal/recovery and operational limits.",
+      "hashAfter": "2a8b3c62e7793f0d446607df0b543c560117be33ea52867438ccfaad42431aca"
+    },
+    {
+      "path": "packages/contracts/src/iacode_contracts/experience.py",
+      "reason": "Define the shared versioned experience wire/persistence contract, schema evolution and database integrity constraints.",
+      "hashAfter": "c21162561c9572e96d54eccff06fa80b68568fcb6df7311264cc5799eb364404"
+    },
+    {
+      "path": "scripts/iacode/experience_schema.py",
+      "reason": "Execute real experience image tests and owned live acceptance within the full canonical verifier while preserving inherited stages and producer evidence.",
+      "hashAfter": "134266cb2da003bb095167fbee56532fc0d5a8dc1ade662e97504348f7a63a92"
+    },
+    {
+      "path": "scripts/iacode/gates/experience_tests.py",
+      "reason": "Execute real experience image tests and owned live acceptance within the full canonical verifier while preserving inherited stages and producer evidence.",
+      "hashAfter": "970f0838af2982b2239e468c06290c52f8f9bdbdbf93a308eac5f157c8255d78"
+    },
+    {
+      "path": "scripts/iacode/scenarios/experience_source_adversary.py",
+      "reason": "Execute real experience image tests and owned live acceptance within the full canonical verifier while preserving inherited stages and producer evidence.",
+      "hashAfter": "a1ae35930b05501ffecb1972c7b8bc71c7af13acdf9114b760df48354c7a7a65"
+    },
+    {
+      "path": "scripts/iacode/scenarios/experience_store_e2e.py",
+      "reason": "Execute real experience image tests and owned live acceptance within the full canonical verifier while preserving inherited stages and producer evidence.",
+      "hashAfter": "c48423c575452829b9d90266182b0b88542c79b1c2144485f920b5666d42dbea"
+    },
+    {
+      "path": "services/experience/pyproject.toml",
+      "reason": "Implement and prove the closed provider-neutral source/store-port experience boundary, consumed policy, privacy, rights and retention decisions.",
+      "hashAfter": "51acde0d2db15ab843bae968cd9ff58cf0ad527ed4309bc2758b441c85cee1b0"
+    },
+    {
+      "path": "services/experience/src/iacode_experience/__init__.py",
+      "reason": "Implement and prove the closed provider-neutral source/store-port experience boundary, consumed policy, privacy, rights and retention decisions.",
+      "hashAfter": "2a804106bd7d01b299f6e65232b8e6369e434a3184e981479a13f7c219a7b4c3"
+    },
+    {
+      "path": "services/experience/src/iacode_experience/domain.py",
+      "reason": "Implement and prove the closed provider-neutral source/store-port experience boundary, consumed policy, privacy, rights and retention decisions.",
+      "hashAfter": "bd37045c1a602df36938a721e3cc89d8abc06388181fd4b39fa9a973ac80a71d"
+    },
+    {
+      "path": "services/experience/tests/conftest.py",
+      "reason": "Implement and prove the closed provider-neutral source/store-port experience boundary, consumed policy, privacy, rights and retention decisions.",
+      "hashAfter": "aa32881610394ee21fed1826a43f7e23c40aa7a183d3c6863e7e92c64a933521"
+    },
+    {
+      "path": "services/experience/tests/test_contract.py",
+      "reason": "Implement and prove the closed provider-neutral source/store-port experience boundary, consumed policy, privacy, rights and retention decisions.",
+      "hashAfter": "70114d8f6ca042fc5cf36cd5aaf58b321ddd875db2166d0a30c3adb74f6beffc"
+    },
+    {
+      "path": "tests/test_gate6_experience.py",
+      "reason": "Prove Gate 6 specification, scope, boundaries, actual integration-harness behavior, collection and causal adverse controls.",
+      "hashAfter": "004d59f430ff3b1d22897900c7362d7bc7d7ab1545656db3329c10f0e43386e1"
+    }
+  ],
+  "filesModified": [
+    {
+      "path": ".gitattributes",
+      "reason": "Register complete experience quality/collection and exact evidence transport without dropping inherited gates, suites or scanner controls.",
+      "hashBefore": "66effbe2ff14c7b7631892ba2cfdc0148ed89f146d567ac222196dd52cebd8e0",
+      "hashAfter": "f715d936d82659f09fcca602439f6f0a25a2bbfd2dcb3c3a306bbfc6e2ce9671"
+    },
+    {
+      "path": ".iacode/anchors/checkpoint-chain.json",
+      "reason": "Canonically anchor sealed Gate 5 without changing any predecessor tag, commit or tree.",
+      "hashBefore": "ceba3893a14dda9429ff4bb8d6bfc8fe79a966450ad9392920aca0fafc64debe",
+      "hashAfter": "c48e441041dac7f7dac62e4d952d08f6bf800d41bbdf5056f6eb4efbf843d1a2"
+    },
+    {
+      "path": ".iacode/memory/LESSONS.md",
+      "reason": "Record observed causal lessons/guardrails or the Gate6 retrospective truthfully, without secrets or inferred training rights.",
+      "hashBefore": "97e075a82c721a61ebdb677d21df04a52c31453d60decc83c2e9a46acd1bc749",
+      "hashAfter": "185df895be0f631e4344f7333761d0ae9df0549fe09e6216faa37b83c7a62fdb"
+    },
+    {
+      "path": ".iacode/memory/guardrails/registry.json",
+      "reason": "Record observed causal lessons/guardrails or the Gate6 retrospective truthfully, without secrets or inferred training rights.",
+      "hashBefore": "75381511fa138d96fcd2d35246ff362c3a5fed400769813ce0b972731f1cbc60",
+      "hashAfter": "c72b28c6d8019ec1193350310610b8dff420debfc7582ac15f5dad1821851347"
+    },
+    {
+      "path": ".iacode/memory/lessons.jsonl",
+      "reason": "Record observed causal lessons/guardrails or the Gate6 retrospective truthfully, without secrets or inferred training rights.",
+      "hashBefore": "c3be24538319e44d2020326b825e893625cd35516cdfdd8814a8c6a6bc0cfe7f",
+      "hashAfter": "99c40fdee8f77d2731971b6abd2c3ab722df940ceaa64ea03af5ece385c71019"
+    },
+    {
+      "path": ".iacode/policies/canonical-requirements.json",
+      "reason": "Define and derive the complete mandatory Gate 6 specification before implementation, preserving all predecessor requirements.",
+      "hashBefore": "34cc8986ee0d83e2bbec45f850665b0ea8233f01694adbdc297a7dbb75a187f9",
+      "hashAfter": "3b734098561b658f8e81824bcfe146cef9af725f476076f3c35053be2a5fcdf2"
+    },
+    {
+      "path": ".iacode/policies/quality-gates.json",
+      "reason": "Register complete experience quality/collection and exact evidence transport without dropping inherited gates, suites or scanner controls.",
+      "hashBefore": "314534b56c84f2f8c084f5f9e0a3a5331c7c80beb6c8b1a310a34310853ef24e",
+      "hashAfter": "3f90dbe414ec28ae3e43da1d6d4c7de97eca00527462d86d0afdc29a60c36162"
+    },
+    {
+      "path": ".iacode/policies/test-suites.json",
+      "reason": "Register complete experience quality/collection and exact evidence transport without dropping inherited gates, suites or scanner controls.",
+      "hashBefore": "1987574cb69492fd956adf9d1486f89ae8b4cf9eed44f4e384055ec7bee08c09",
+      "hashAfter": "ae533db8137eefad9e76e73a330bcad49be605384bca0eb9704d2e9792e060e3"
+    },
+    {
+      "path": ".iacode/schemas/experience.schema.json",
+      "reason": "Version the complete consumed closed experience schema and finite rights/retention policy.",
+      "hashBefore": "c8a47306ce37e73971791bf60f4d7e0ab7a387904bda338a18202bfca2706e69",
+      "hashAfter": "0177e8129d2682b6070fe0e68c0586f78681a93613953114525cef05d0dfadaa"
+    },
+    {
+      "path": "START-HERE.md",
+      "reason": "Align live entry/architecture with authorized experience persistence and checkpoint-owned acceptance, without claiming a Gate verdict.",
+      "hashBefore": "4418a3b50770053d7c57189a01c57816f380c852290a7e6d28d6869851818c0f",
+      "hashAfter": "b3bf80f91ac95687b73ec7c47626bab6ec341547277ae3a5af50d730e9944c02"
+    },
+    {
+      "path": "apps/api/Dockerfile",
+      "reason": "Evolve and test actual experience persistence, migrations, source/evidence adapters, authenticated project-scoped API and owned automatic retention lifecycle.",
+      "hashBefore": "aab757c05e5add34720db2d55db36a0f7121e62ed3c151059c557254256e2495",
+      "hashAfter": "ea7fe0bab4e4c8dbc74e78e60f074b59ca38a26f1594bc20ae812fe68b13e973"
+    },
+    {
+      "path": "apps/api/pyproject.toml",
+      "reason": "Evolve and test actual experience persistence, migrations, source/evidence adapters, authenticated project-scoped API and owned automatic retention lifecycle.",
+      "hashBefore": "339de92f0d3f87fefeb429cd4b39d19121c3c5abd41a29eb740ce6785310496f",
+      "hashAfter": "8ab4e6a9d478a7598e313f9cf2a870043577f70c27fb09bf50ace0c434d32ed8"
+    },
+    {
+      "path": "apps/api/src/iacode_api/lifespan.py",
+      "reason": "Evolve and test actual experience persistence, migrations, source/evidence adapters, authenticated project-scoped API and owned automatic retention lifecycle.",
+      "hashBefore": "8709ec57adec370db89ad1c6aca8d1293320706da8171023ba018247aedf3f60",
+      "hashAfter": "32321334cd0e4e94b11568067dbde70ddbca7a7b6eca84f64bf80f185364651b"
+    },
+    {
+      "path": "apps/api/src/iacode_api/main.py",
+      "reason": "Evolve and test actual experience persistence, migrations, source/evidence adapters, authenticated project-scoped API and owned automatic retention lifecycle.",
+      "hashBefore": "0041a404a8794f18a1fe3fb88d3035b8ba20275d3388d1982bb881ef678d62d7",
+      "hashAfter": "1fa338827dd5a6da798407c783ae09d9bb315d7fb194be6c10e1462d61045eaf"
+    },
+    {
+      "path": "apps/api/src/iacode_api/middleware/correlation.py",
+      "reason": "Evolve and test actual experience persistence, migrations, source/evidence adapters, authenticated project-scoped API and owned automatic retention lifecycle.",
+      "hashBefore": "46dab16d56abbd295293ed12e85e7dff2682f0de7d36155466a38cca55146287",
+      "hashAfter": "e2c70e2210975f461f9117f293a7bd85cc8e426952a4be9b7cbc50211c55554f"
+    },
+    {
+      "path": "apps/api/tests/unit/test_domain_model.py",
+      "reason": "Evolve and test actual experience persistence, migrations, source/evidence adapters, authenticated project-scoped API and owned automatic retention lifecycle.",
+      "hashBefore": "333da53c22a1e12093a312b19c57286f6aacaccf9f681fcdd4ac8151ee3e2958",
+      "hashAfter": "b22589a31d55821d49fa31243ab27c0d7ae5d0e1463bb0bebf3d2ee302fefab3"
+    },
+    {
+      "path": "docs/ARCHITECTURE.md",
+      "reason": "Align live entry/architecture with authorized experience persistence and checkpoint-owned acceptance, without claiming a Gate verdict.",
+      "hashBefore": "632ae1a0efc2a48f2be1ed1e1694b9a30ac7634544c2af8b3a95db58123f2b7b",
+      "hashAfter": "c72ed13f10381a4300571648a504a1d3c8a23d9394efaea0c9e6376ceb007419"
+    },
+    {
+      "path": "docs/adr/README.md",
+      "reason": "Record and atomically index the source-bound experience and finite retention architecture.",
+      "hashBefore": "8f5804eb47147bf3f590dcd7c48ce995634e6f3acdb4a257de3dd76a1d7bf3fe",
+      "hashAfter": "125611f40178e4029cf55c4947c26c13699d58e3be101d885872fd5f5ac5e819"
+    },
+    {
+      "path": "docs/checkpoints/LATEST.md",
+      "reason": "Point to the separate explicitly authorized Gate 6 checkpoint.",
+      "hashBefore": "54f779ad5f9ad05e1fcbfec8f9c6003a1ebd5cb97e83d6e47a95cd8aa2409764",
+      "hashAfter": "f51c0c8ddad0f9302f35ea02aca1066596baba59813b87eea35a65bf0f6f367e"
+    },
+    {
+      "path": "packages/persistence/src/iacode_persistence/models.py",
+      "reason": "Define the shared versioned experience wire/persistence contract, schema evolution and database integrity constraints.",
+      "hashBefore": "00f01a7efb013694d50ce4640eed2a8d360cc2007260a9bdb40213e9d8e09b04",
+      "hashAfter": "81b1d523ef5e2ded92325064cd9248ffecd9e226eb5dbdf9a1b56346b345b23f"
+    },
+    {
+      "path": "packages/telemetry/src/iacode_telemetry/logging.py",
+      "reason": "Keep new experience request targets and rejected content out of logs while preserving bounded operational observability.",
+      "hashBefore": "2ac134607c7e6582b7818feb03cca15282f3f8ea9301f15d9d8c5c0638b8ac45",
+      "hashAfter": "b7d169d77923212afde8cb4af0c61a6c5314a81e6d0f0ac603ae8a08829cdc51"
+    },
+    {
+      "path": "ruff.toml",
+      "reason": "Register complete experience quality/collection and exact evidence transport without dropping inherited gates, suites or scanner controls.",
+      "hashBefore": "895e4733c204d42dc8480992690d6826f8a90aa0c8330c353e3acdcd2fcb1885",
+      "hashAfter": "9f42f5d31eb34f5f4c4ef582390cb41039e162846893b2f42209ed17192ce886"
+    },
+    {
+      "path": "scripts/development-ledger/README.md",
+      "reason": "Align the tool documentation with Gate6 ownership of the generated experience schema, without changing control logic or any sealed subject.",
+      "hashBefore": "6d5a3b7972adb9e0f8fcb74431493b146014b1d89dac6a38dd684664aee817b9",
+      "hashAfter": "50091e5ef8ed636f30499080bdda26974588337e7fa85352acdc6c59d5b7ae75"
+    },
+    {
+      "path": "scripts/iacode/desktop_test_support.py",
+      "reason": "Execute real experience image tests and owned live acceptance within the full canonical verifier while preserving inherited stages and producer evidence.",
+      "hashBefore": "05b6e587b95af210ff9b3583a13073bfe9cc824f0777e90e35ac4255a9104d3d",
+      "hashAfter": "74882f0fe27c7d7147aed829e3d2ebde2002683072a9cd637c7922aea94e550b"
+    },
+    {
+      "path": "scripts/iacode/gates/lint.py",
+      "reason": "Execute real experience image tests and owned live acceptance within the full canonical verifier while preserving inherited stages and producer evidence.",
+      "hashBefore": "32f3b3ba7442b24259bfd5ad844728b4292b024f3298e4bb9d710a00055bf8bc",
+      "hashAfter": "9e7eae47f572a51502932b7a8390181b75b806d68ac59ecc439b91e54ad6cf7b"
+    },
+    {
+      "path": "scripts/iacode/verify.py",
+      "reason": "Execute real experience image tests and owned live acceptance within the full canonical verifier while preserving inherited stages and producer evidence.",
+      "hashBefore": "16f5bcae3898d408d1a046d2a7d532e472d771c856b021ab6074afc92c84e3b1",
+      "hashAfter": "b7511ffc449cabcd70ac76de50ca84806ced1dff3fee015b95e0191076095ec0"
+    },
+    {
+      "path": "services/experience/README.md",
+      "reason": "Implement and prove the closed provider-neutral source/store-port experience boundary, consumed policy, privacy, rights and retention decisions.",
+      "hashBefore": "24db2a978ef71ed1fa90c099a25ae0e3caa7535db10f6a12fcd7b42063bcaad8",
+      "hashAfter": "ae5a31c5acee34754977d43426b7b90e3f8e62f80977a8f5da058ebc84842975"
+    }
+  ],
+  "filesDeleted": []
+}

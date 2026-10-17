@@ -660,7 +660,8 @@
         "test_the_agent_runtime_migration_is_reversible",
         "test_the_declared_model_matches_the_migrated_schema",
         "test_a_check_constraint_is_created_and_dropped_by_its_bare_name",
-        "test_a_unique_constraint_keeps_exactly_the_name_it_was_given"
+        "test_a_unique_constraint_keeps_exactly_the_name_it_was_given",
+        "test_experience_constraint_names_respect_their_actual_kind"
       ],
       "lessons": [
         "LSN-0042"
@@ -1882,7 +1883,8 @@
       "kind": "test",
       "reference": "test_authentication_material_is_refused_before_replay_and_domain_io",
       "verifiedBy": [
-        "test_authentication_material_is_refused_before_replay_and_domain_io"
+        "test_authentication_material_is_refused_before_replay_and_domain_io",
+        "test_known_opaque_capability_refused_in_declared_forms"
       ],
       "lessons": [
         "LSN-0126"
@@ -2006,12 +2008,85 @@
       "reference": "test_raw_reports_survive_real_postprocessing_exception_and_owned_cleanup",
       "verifiedBy": [
         "test_raw_reports_survive_real_postprocessing_exception_and_owned_cleanup",
-        "test_raw_capture_refuses_secret_material_but_retains_neutral_failure_inventory"
+        "test_raw_capture_refuses_secret_material_but_retains_neutral_failure_inventory",
+        "test_current_producer_bytes_survive_actual_consumer_failure_and_owned_cleanup",
+        "test_current_producer_capture_refuses_unsafe_bytes_without_losing_neutral_inventory"
       ],
       "lessons": [
         "LSN-0135"
       ],
       "removingItWouldAllow": "A fallible report consumer to destroy the only producer observations, or unsafe content to be exported before scanning."
+    },
+    {
+      "guardrailId": "GRD-0138",
+      "title": "Strict JSON context survives exact permission validation",
+      "kind": "test",
+      "reference": "test_exact_closed_roundtrip",
+      "verifiedBy": [
+        "test_exact_closed_roundtrip",
+        "test_permissions_require_exact_boolean",
+        "test_numeric_observations_are_not_coerced"
+      ],
+      "lessons": [
+        "LSN-0136"
+      ],
+      "removingItWouldAllow": "A model-level prevalidator to destroy valid JSON collection/date semantics while checking unrelated booleans."
+    },
+    {
+      "guardrailId": "GRD-0139",
+      "title": "Structured SQL fixtures bind JSON as data",
+      "kind": "test",
+      "reference": "test_legacy_migration_preserves_identity_body_and_rights_without_promotion",
+      "verifiedBy": [
+        "test_legacy_migration_preserves_identity_body_and_rights_without_promotion",
+        "test_database_immutability_and_direct_corruption_fail_closed"
+      ],
+      "lessons": [
+        "LSN-0137"
+      ],
+      "removingItWouldAllow": "A SQL text parser to reinterpret JSON colons before substantive legacy/corruption assertions execute."
+    },
+    {
+      "guardrailId": "GRD-0140",
+      "title": "Actual secret projection distinguishes public identities",
+      "kind": "test",
+      "reference": "test_public_minio_identity_is_not_a_bearer_secret_but_storage_password_stays_protected",
+      "verifiedBy": [
+        "test_public_minio_identity_is_not_a_bearer_secret_but_storage_password_stays_protected",
+        "test_known_opaque_capability_refused_in_declared_forms"
+      ],
+      "lessons": [
+        "LSN-0138"
+      ],
+      "removingItWouldAllow": "A public account identity to block valid source facts or a broad word exemption to bypass actual password/authorization refusal."
+    },
+    {
+      "guardrailId": "GRD-0141",
+      "title": "Actual source SQL is private-column minimal and byte bounded",
+      "kind": "test",
+      "reference": "test_actual_sql_projection_does_not_fetch_unneeded_private_source_columns",
+      "verifiedBy": [
+        "test_actual_sql_projection_does_not_fetch_unneeded_private_source_columns",
+        "test_oversized_required_source_json_is_refused_before_materialization_and_writes"
+      ],
+      "lessons": [
+        "LSN-0139"
+      ],
+      "removingItWouldAllow": "A safe output projection to conceal unbounded private source reads into adapter memory."
+    },
+    {
+      "guardrailId": "GRD-0142",
+      "title": "Continuation renderers preserve every canonical structural section",
+      "kind": "test",
+      "reference": "test_local_handoff_renderer_preserves_the_complete_canonical_contract",
+      "verifiedBy": [
+        "test_local_handoff_renderer_preserves_the_complete_canonical_contract",
+        "test_local_handoff_renderer_refuses_omitted_or_empty_sections_and_next_action"
+      ],
+      "lessons": [
+        "LSN-0140"
+      ],
+      "removingItWouldAllow": "A readable summary to replace mandatory structured handoff/next-action content without an executable authoring guard."
     }
   ]
 }
