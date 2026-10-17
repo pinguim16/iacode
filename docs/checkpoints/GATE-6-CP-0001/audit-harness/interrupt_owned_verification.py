@@ -18,9 +18,11 @@ parser.add_argument("--pid", type=int, required=True)
 parser.add_argument("--parent", type=int, required=True)
 parser.add_argument("--created", required=True)
 parser.add_argument("--recorder", type=int, required=True)
+parser.add_argument("--attempt-number", choices=("0001", "0002"), default="0001")
+parser.add_argument("--reason", default="Add the mandatory Gate6 in-scope retrospective before final immutable assurance so the later closure needs no unverified assurance-source edit. No completed stage or PASS is inferred.")
 args = parser.parse_args()
 progress = json.loads((CHECKPOINT / "FULL-VERIFY-PROGRESS.json").read_text(encoding="utf-8"))
-target = CHECKPOINT / "attempts/FULL-VERIFY-INTERRUPTED-0001.json"
+target = CHECKPOINT / f"attempts/FULL-VERIFY-INTERRUPTED-{args.attempt_number}.json"
 if target.exists() or args.pid <= 0 or args.parent <= 0:
     raise ValueError("existing interruption evidence or invalid exact process identity")
 query = (f"Get-CimInstance Win32_Process | Where-Object {{ $_.ProcessId -in @({args.pid},{args.parent},{args.recorder}) }} | "
@@ -45,7 +47,7 @@ write_json(target, {"kind": "INTENTIONALLY_INTERRUPTED_INCOMPLETE_VERIFICATION_N
     "generatedAt": utc_now(), "subjectCommit": progress["subjectCommit"],
     "sourceFingerprint": scope_fingerprint(ROOT), "progress": progress,
     "ownedProcessObservation": observed, "terminationExitCode": stopped.returncode,
-    "reason": "Add the mandatory Gate6 in-scope retrospective before final immutable assurance so the later closure needs no unverified assurance-source edit. No completed stage or PASS is inferred.",
+    "reason": args.reason,
     "verificationResult": "NOT_COMPLETED", "gateVerdictIssued": False})
 # The outer interrupted recorder must finish appending its own outcome before this recorder
 # may append. A process session ID is not completion; no inventory/validator is running.

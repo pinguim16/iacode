@@ -1,0 +1,38 @@
+{
+  "kind": "INTENTIONALLY_INTERRUPTED_INCOMPLETE_VERIFICATION_NOT_PASS",
+  "generatedAt": "2026-10-17T14:33:37Z",
+  "subjectCommit": "16769718a61f430d37b428422d0ad431b5b221f9",
+  "sourceFingerprint": "9c4d40cb7d04f512d29c8383a5f6c158f024062a23ede2447ab05fd6ddc6e43b",
+  "progress": {
+    "subjectCommit": "16769718a61f430d37b428422d0ad431b5b221f9",
+    "clone": "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-gate6-full-verification-stl1syk_\\repository",
+    "transitions": [
+      "[iacode] --- gate:tests: mandatory gate tests"
+    ],
+    "updatedAt": "2026-10-17T14:24:35.355655+00:00"
+  },
+  "ownedProcessObservation": [
+    {
+      "processId": 10632,
+      "parentProcessId": 44400,
+      "createdUtc": "2026-10-17T14:24:23Z",
+      "commandLine": "\"C:\\Program Files\\Python313\\python.exe\" scripts/development-ledger/record_command.py --subject-commit 16769718a61f430d37b428422d0ad431b5b221f9 --purpose \"Execute every policy-derived non-fast current stage once from the exact clean published Gate6 runtime-v2 after closure-stable retrospective preparation; retain v1 incomplete evidence, all inherited stages, safe raw producers and owned cleanup; internal only\" -- python docs/checkpoints/GATE-6-CP-0001/audit-harness/run_full_verification.py --commit 16769718a61f430d37b428422d0ad431b5b221f9 --tag iacode-subjects/GATE-6-CP-0001-runtime-v2 --node C:\\Users\\cesar\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\node\\bin\\node.exe"
+    },
+    {
+      "processId": 40452,
+      "parentProcessId": 10632,
+      "createdUtc": "2026-10-17T14:24:23Z",
+      "commandLine": "\"C:\\Program Files\\Python313\\python.exe\" docs/checkpoints/GATE-6-CP-0001/audit-harness/run_full_verification.py --commit 16769718a61f430d37b428422d0ad431b5b221f9 --tag iacode-subjects/GATE-6-CP-0001-runtime-v2 --node C:\\Users\\cesar\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\node\\bin\\node.exe"
+    },
+    {
+      "processId": 34596,
+      "parentProcessId": 40452,
+      "createdUtc": "2026-10-17T14:24:30Z",
+      "commandLine": "\"C:\\Program Files\\Python313\\python.exe\" scripts/iacode/verify.py --keep-going --quiet --node C:\\Users\\cesar\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\node\\bin\\node.exe --report artifacts/review/INTERNAL-FULL-VERIFY.json"
+    }
+  ],
+  "terminationExitCode": 0,
+  "reason": "Owner explicitly requested saving progress now for a machine reboot. Full runtime-v2 verification is intentionally interrupted, not passed; Gate6 remains IN_PROGRESS and independent M2 audit remains pending.",
+  "verificationResult": "NOT_COMPLETED",
+  "gateVerdictIssued": false
+}

@@ -11,6 +11,8 @@ Finish only authorized Gate6 Experience Store and every internal control through
 
 Entry/baseline/architecture and complete local causal implementation acceptance: lint, domain29, API173, client35, actual SQL/HTTP/migrations36 and fresh provider/sandbox/Quality lifecycle72 with owned cleanup. See cmd-0050/0054 and original producer receipts.
 
+Owner-requested reboot stopping point saved: exact runtime-v2 verifier tree stopped, original and interrupt recorders exited, original incomplete evidence preserved, clone removed and zero owned Compose resources observed (cmd-0123/0124/0125). See REBOOT-RESUME.md.
+
 ## What was NOT completed
 
 Immutable published non-fast verification, whole Green Keeper, completeness, fresh internal Red Team/null control, full clean-clone mirror, final assembly and actual Gate6 seal/publication/archive reconstruction remain pending.
@@ -35,6 +37,8 @@ Actual completed local invocations cmd-0050 and cmd-0054 cover the suites/runtim
 
 All original failures and escalated counters remain in FINDINGS/engineering memory. Currently open findings: none. INTEGRATION-0003's false identity flag has unproven cause; INTEGRATION-0004 observes every original identity preserved.
 
+Runtime-v2 full command cmd-0123 exited1 after the owner's intentional reboot interruption. No verifier report or completed stage verdict was available; this is NOT a full test PASS or an independent verdict.
+
 ## Known risks
 
 RISKS.md records security/rights/backup/retention, external provider and same-session assurance limits. Unknown reuse permission is denial; no independent M2 approval is implied.
@@ -45,11 +49,11 @@ Never overlap ledger/inventory/validation writers or treat a process session ID 
 
 ## Required next action
 
-Freeze and publish a tested Gate6-only runtime subject, execute complete immutable verification and every ordered internal control, then canonically seal. Independent M2 remains pending; Gate7 is not authorized.
+Owner-requested reboot pause saved. After restart read REBOOT-RESUME.md and canonical entry contracts, validate Git/checkpoint state, publish a new immutable Gate6 runtime subject and rerun all 47 full verification stages before ordered internal assurance and seal. Runtime-v2 was interrupted, not passed. Independent M2 remains pending; Gate7 is not authorized.
 
 ## Exact continuation sequence
 
-Inspect STATE/PLAN/STEPS/COMMANDS and active processes; finish any named causal rework, freeze/publish the tested Gate6-only runtime, complete full immutable verification and ordered internal assurance, assemble/finalize/content-commit/seal/publish and verify fresh exact transport/archive. Do not start Gate7.
+Read REBOOT-RESUME.md, START-HERE.md, DEVELOPMENT-CONTRACT, MASTER-PLAN and this complete checkpoint; run the canonical validator and compare Git against STATE before alteration. Do not reuse old PIDs or incomplete stages. Preserve both immutable runtime-v1/v2 tags. Since the saved continuation advances main, publish a fresh runtime-v3 subject before the wrapper requiring remote main equality; rerun every policy-derived stage. Then complete functional proof, requirements, whole Green Keeper, completeness, internal Red Team/null control, full clean-clone closure audit, final assembly, canonical seal/publication and fresh archive reconstruction. Do not start Gate7 or claim independent M2 approval.
 
 ## Validation commands
 

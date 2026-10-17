@@ -1,5 +1,12 @@
 # Gate 6 progress
 
+Owner requested saving immediately for a machine reboot. The runtime-v2 full verifier was
+intentionally stopped through its exact process/parent/creation identity; its original recorder
+finished (cmd-0123 exit1), the owned stop finished (cmd-0124 exit0), and scoped cleanup was
+observed (cmd-0125 exit0: clone removed, zero owned Compose resources). Original progress and
+neutral failure/cleanup receipts are retained as interrupted attempt0002. No completed stage
+verdict or full PASS was available. Read REBOOT-RESUME.md before continuing after restart.
+
 Implementation and causal local acceptance are complete. The runtime captures only consented
 source-bound observable facts, with closed contracts, immutable SQL/audit, bounded source queries,
 authenticated project-scoped API, denied unproven reuse, finite retention and anti-resurrection.

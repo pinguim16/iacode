@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import hashlib
+import argparse
 import json
 import subprocess
 import sys
@@ -18,7 +19,11 @@ from verify import verification_environment
 
 
 def main() -> int:
-    attempt = load_json(CHECKPOINT / "attempts/FULL-VERIFY-INTERRUPTED-0001.json")
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--attempt-number", choices=("0001", "0002"), default="0001")
+    args = parser.parse_args()
+    stem = f"FULL-VERIFY-INTERRUPTED-{args.attempt_number}"
+    attempt = load_json(CHECKPOINT / f"attempts/{stem}.json")
     clone = Path(attempt["progress"]["clone"]).resolve()
     owner = clone.parent
     if owner.parent != Path(tempfile.gettempdir()).resolve() or not owner.name.startswith("iacode-gate6-full-verification-"):
@@ -37,10 +42,10 @@ def main() -> int:
     raw = progress_path.read_bytes()
     if json.loads(raw)["subjectCommit"] != attempt["subjectCommit"]:
         raise ValueError("original incomplete progress is no longer current; do not synthesize it")
-    destination = CHECKPOINT / "attempts/FULL-VERIFY-INTERRUPTED-0001-PROGRESS.json"
+    destination = CHECKPOINT / f"attempts/{stem}-PROGRESS.json"
     with destination.open("xb") as output:
         output.write(raw)
-    write_json(CHECKPOINT / "attempts/FULL-VERIFY-INTERRUPTED-0001-CLEANUP.json", {
+    write_json(CHECKPOINT / f"attempts/{stem}-CLEANUP.json", {
         "kind": "OBSERVED_INCOMPLETE_ATTEMPT_NOT_ACCEPTANCE", "observedAt": utc_now(),
         "subjectCommit": attempt["subjectCommit"], "temporaryCloneOwnerRemoved": not owner.exists(),
         "ownedComposeProject": project, "remainingOwnedResources": remaining,
