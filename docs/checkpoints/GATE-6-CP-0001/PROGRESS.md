@@ -1,11 +1,14 @@
 # Gate 6 progress
 
-Latest: IN_PROGRESS after actual supported Desktop recovery. Full canonical lint cmd-0192, normal
-Server and all37 prior other identities/states/old cleanup cmd-0194, and root28 cmd-0196 pass.
-Freeze current source/memory and publish runtime-v4; execute all47 stages and ordered internal
-assurance before any Gate6 seal. Historical failures below remain, never rewritten into PASS.
+Latest: IN_PROGRESS after completed immutable-v4 cmd-0208:46/47 stages PASS, root897 fails one
+unchanged UTF-8 entry-point guard. All runtime stages pass, owned test resources and clone are
+removed and the operational project is unchanged. Cmd-0209 reproduces the three omissions;
+minimal bootstrap repairs pass cold positive/adverse cmd-0213 and unchanged inherited cmd-0214.
+Cmd-0215 archives all six failed-v4 projections byte-for-byte and preserves original safe producer
+bytes. Freeze the repaired source/memory as runtime-v5 and execute all47 stages anew, then every
+ordered internal control before any Gate6 seal. Historical failures below are never rewritten.
 
-Current update: BLOCKED at G6-INT-012/015. Scoped recovery cmd-0166 genuinely removes exact v3 test
+Historical blocked update: G6-INT-012/015. Scoped recovery cmd-0166 genuinely removes exact v3 test
 resources and observes all37 other identities/states preserved at20:11:57 UTC. Root27 transport/
 ownership controls pass cmd-0165, but the raw Linux endpoint is not general Windows capability:
 cmd-0171 complete lint exits1 after bind rejection and stalled frontend build; later Engine queries
@@ -40,9 +43,9 @@ Exact original failures and available producer bytes remain in this checkpoint.
 The current derived set contains all 51 canonical criteria plus every selected lesson; functional
 acceptance must cover all 37 runtime criteria. Causal guard restoration is not a Gate verdict.
 
-Next: restore stable supported Windows-compatible management/build/bind capability without disrupting
-other applications; exact old cleanup is already observed and must not be repeated. Then complete
-unchanged lint, fresh immutable published non-fast verification, whole Green Keeper, completeness,
+Next: preserve the actual recovered Desktop capability and every failed-v4 original. Exact old
+cleanup and one-time v4 archiving must not be repeated. Complete causal acceptance and fresh
+immutable published non-fast verification, whole Green Keeper, completeness,
 fresh same-session internal Red Team/null control, full clean-clone mirror, final assembly and
 canonical seal/publication/archive reconstruction. No future test or seal is claimed complete.
 Independent M2 and second-tool validation remain pending. Gate7 is not authorized.

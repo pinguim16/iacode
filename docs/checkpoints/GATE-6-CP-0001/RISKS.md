@@ -1,5 +1,10 @@
 # Risks
 
+- Completed v4 fails one inherited entry-point UTF-8 guard despite46 other passing stages.
+  Three minimal bootstrap repairs pass causal positive/adverse and unchanged inherited controls,
+  but a fresh complete immutable subject must pass; no mixture of old and new partial runs is
+  acceptance. LSN-0035 recurrence3 and LSN-0083 recurrence4 remain CRITICAL, with original bytes.
+
 - Current recovery is observed: cmd-0192 complete lint and supported Windows binds/builds pass;
   cmd-0194 preserves all37 prior other identities/states and old owned cleanup. G6-INT-012/015
   are closed, but availability remains a dependency and whole immutable assurance is still due.
@@ -19,7 +24,8 @@
 - Historical G6-INT-012 interruption: default/context management requests were unresponsive while other applications were
   reported running. No daemon root cause or operational failure is asserted. The exact owned
   iacode-verify-acf6759435d1 cleanup was then UNVERIFIED. Separate later cmd-0166 proves that exact
-  cleanup; do not rewrite its earlier receipt or repeat the cleanup. Shared restart remains forbidden.
+  cleanup; do not rewrite its earlier receipt or repeat the cleanup. The later supported Desktop
+  restart was separately authorized and executed; no additional global restart is planned.
 - Runtime-v3's root892 run genuinely failed twice; local causal corrections pass root25/preflight7/
   quality-integration7, but fresh whole-root and all47-stage proof remain mandatory. Original v3
   report is absent because the stalled verifier was interrupted; progress is not a substitute PASS.

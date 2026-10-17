@@ -1,4 +1,11 @@
-# Blocked continuation — Docker management
+# Docker recovery and subsequent verification
+
+Latest verification: completed v4 cmd-0208 passes46/47 stages; root897 fails one unchanged
+UTF-8 entry-point guard, not Docker readiness. All runtime stages pass and actual scoped cleanup
+and clone removal pass with the operational project unchanged. Three diagnostic bootstraps are
+causally repaired and pass cmd-0213/0214. Cmd-0215 retains failed-v4 projections and original safe
+producer bytes. Publish repaired runtime-v5 and execute all47 stages anew, then every ordered
+internal assurance control. Earlier blocked instructions below are historical, not live authority.
 
 Current outcome: IN_PROGRESS after owner-authorized Desktop recovery. Cmd-0189 graceful restart
 returns deadline failure; supported force-stop cmd-0190 returns0 and cmd-0191 reports already
@@ -9,17 +16,17 @@ old test cleanup preserved. Root28 cmd-0196 passes including management-only and
 failed canonical-stage refusal. See attempts/DOCKER-RESTART-0001.json and its AFTER receipt.
 
 G6-INT-012/015 are now closed on real capability evidence, not authorization or a management-only
-probe. The root cause of the earlier nonresponse is still undetermined. Fresh runtime-v4 and all47
-stages/ordered assurance remain due. Use normal Desktop context, never assume the raw Linux pipe
+probe. The root cause of the earlier nonresponse is still undetermined. Fresh runtime-v5 and all47
+stages/ordered assurance remain due after the completed red v4. Use normal Desktop context, never assume the raw Linux pipe
 translates Windows mounts. All earlier blocked/no-restart statements below are historical.
 
-Latest owner reply: “restart o docker o mesmo travou pelo jeito”. A supported Docker Desktop
+Historical pre-operation owner reply: “restart o docker o mesmo travou pelo jeito”. A supported Docker Desktop
 restart is now explicitly authorized, with temporary container interruption but no data/volume
 deletion, WSL reset, global prune or individual unrelated-service stop. Save this checkpoint before
 the operation and observe actual recovery afterwards. The earlier no-restart limit below is
 historical for the completed attempts, not the current permission. No restart has yet run.
 
-## Current outcome — partial recovery, still blocked
+## Historical partial recovery, still blocked at that time
 
 The owner renewed continuation without restarting or stopping other applications. A new bounded
 query through the existing docker_engine_linux named pipe reached Engine29.8.1; default/context
@@ -92,7 +99,7 @@ The initial blocked finalizer cmd-0158 also rejects nonzero structured QUALITY c
 UnitTests stays FAIL; only the locators change to actual failed-observation files. LSN-0018's second
 recurrence remains CRITICAL, and cmd-0159 passes all9 unchanged quality-evidence resolver controls.
 
-## Exact next action
+## Historical pre-restart continuation instructions
 
 1. Follow canonical startup and compare Git/checkpoint state. Read this complete checkpoint.
 2. Obtain a stable supported Windows-compatible Engine path. Read-only client help/version alone
@@ -109,5 +116,5 @@ recurrence remains CRITICAL, and cmd-0159 passes all9 unchanged quality-evidence
    Keeper, completeness, internal Red Team/null control, full clean-clone mirror, final assembly,
    canonical seal, publication and exact archive reconstruction. Independent M2 remains pending.
 
-The current save is BLOCKED, not a Gate seal,
+That historical save was BLOCKED, not a Gate seal,
 INTERNAL_GATE_PASS, independent approval or Gate7 authority.

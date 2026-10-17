@@ -13,7 +13,7 @@ ROOT = CHECKPOINT.parents[2]
 sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
 sys.path.insert(0, str(ROOT / "scripts/iacode"))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from ledger_common import load_json, utc_now, write_json
+from ledger_common import load_json, use_utf8_stdout, utc_now, write_json
 from verify import verification_environment
 from with_local_engine import ENGINE_ENDPOINT, engine_environment
 
@@ -119,4 +119,5 @@ def main() -> int:
 
 
 if __name__ == "__main__":
+    use_utf8_stdout()
     raise SystemExit(main())

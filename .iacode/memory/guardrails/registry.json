@@ -537,7 +537,8 @@
       "verifiedBy": [
         "test_no_capture_relies_on_the_platform_codepage",
         "test_every_tool_that_re_emits_captured_output_configures_its_own_stream",
-        "test_the_rule_detects_a_capture_that_would_fail"
+        "test_the_rule_detects_a_capture_that_would_fail",
+        "test_cold_diagnostic_entrypoints_use_utf8_before_any_work"
       ],
       "lessons": [
         "LSN-0035"
@@ -1233,7 +1234,8 @@
       "kind": "test",
       "reference": "test_every_tool_that_re_emits_captured_output_configures_its_own_stream",
       "verifiedBy": [
-        "test_every_tool_that_re_emits_captured_output_configures_its_own_stream"
+        "test_every_tool_that_re_emits_captured_output_configures_its_own_stream",
+        "test_cold_diagnostic_entrypoints_use_utf8_before_any_work"
       ],
       "lessons": [
         "LSN-0083"

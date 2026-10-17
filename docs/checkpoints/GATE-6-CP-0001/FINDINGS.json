@@ -3,6 +3,37 @@
   "checkpoint": "GATE-6-CP-0001",
   "findings": [
     {
+      "findingId": "G6-INT-018",
+      "severity": "CRITICAL",
+      "classification": "GUARDRAIL_FAILURE",
+      "lessonId": "LSN-0083",
+      "guardrailId": "GRD-0084",
+      "relatedLessons": [
+        "LSN-0035"
+      ],
+      "relatedGuardrails": [
+        "GRD-0037"
+      ],
+      "title": "Three capturing diagnostic entry points omit the parent UTF-8 bootstrap",
+      "status": "CLOSED",
+      "observed": "Immutable-v4 cmd-0208 completes all47 stages:46 PASS, Root897 FAIL with one failure. The unchanged inherited SubprocessDecodingTests guard lists capture_blocked_attempt.py, observe_restarted_engine.py and recover_owned_verification.py. Actual complete three-case class cmd-0209 reproduces the same failure. No runtime encoding crash or service failure is inferred: this is the observed executable-entrypoint guard failure.",
+      "rootCause": "The new helpers explicitly decode or retain child output but their own executable entry points omit ledger_common.use_utf8_stdout. ASCII observations did not exercise Windows output encoding. LSN-0035/GRD-0037 recurrence3 and LSN-0083/GRD-0084 recurrence4 remain CRITICAL and return to CONFIRMED pending repair.",
+      "requiredCorrection": "Configure each of the three actual entry points before main, preserve the unchanged whole-tree test, and prove actual bootstrap execution under forced cp1252 with a rejecting omission control. Do not rerun original cleanup/capture main bodies. Preserve the complete failed v4 producer and publish a fresh immutable full attempt after causal acceptance.",
+      "evidence": [
+        "command:cmd-0208",
+        "command:cmd-0209",
+        "checkpoint:attempts/FULL-PRODUCER-d2b2b71d1263-INTERNAL-FULL-VERIFY.json"
+      ],
+      "limits": "Original safe full producer bytes and full failure header/tail are retained. All runtime stages including real Experience Store pass; shared operational project is unchanged, owned test resources and clone removed. This is not whole-Gate acceptance or independent M2 validation.",
+      "resolution": "Import and call the existing use_utf8_stdout in all three actual entry points before main. The unchanged complete inherited class passes cmd-0214. The added actual cold entry-block test cmd-0213 proves UTF-8 stdout/stderr under forced cp1252 and rejecting bootstrap removal; harmless fixture work replaces only the main body, so no original capture/cleanup operation is replayed. LSN-0035 recurrence3 and LSN-0083 recurrence4 remain CRITICAL with local guard restoration. Cmd-0215 archives all six complete failed-v4 projections byte-for-byte, preserves original UUID producer bytes and removes only the redundant primary VERIFY projection after verified copy. Fresh immutable full execution remains mandatory.",
+      "resolutionEvidence": [
+        "command:cmd-0213",
+        "command:cmd-0214",
+        "command:cmd-0215",
+        "checkpoint:attempts/RUNTIME-V4-ARCHIVE.json"
+      ]
+    },
+    {
       "findingId": "G6-INT-016",
       "severity": "HIGH",
       "classification": "GUARDRAIL_FAILURE",

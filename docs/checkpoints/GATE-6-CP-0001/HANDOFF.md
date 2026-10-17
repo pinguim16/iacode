@@ -24,9 +24,16 @@ previous other container identities/states present and old test resources still 
 current Gate6 root controls pass cmd-0196, including the actual publisher's management-only and
 every missing/failed-stage refusal. See DOCKER-RECOVERY.md and the separate restart receipts.
 
+Immutable runtime-v4 at01ffb159a852a60731459f38353c846c8e7a0bc8 completes all47 stages:
+46 PASS, root897 FAIL at one unchanged inherited UTF-8 bootstrap guard. Cmd-0209 reproduces
+three diagnostic entry-point omissions. Only their bootstraps change; cold positive/adverse
+cmd-0213 and the complete unchanged inherited class cmd-0214 pass. Cmd-0215 archives all six
+failed-v4 projections byte-for-byte, retaining every original safe UUID producer report. Current
+Gate6 root discovery grows to29 and all29 pass cmd-0220 before freezing.
+
 ## What was NOT completed
 
-Current immutable published all47-stage verification, full functional acceptance, complete derived
+Passing current immutable published all47-stage verification, full functional acceptance, complete derived
 requirement evidence, whole Green Keeper, completeness, fresh internal Red Team/null control,
 full clean-clone mirror, final assembly and actual Gate6 seal/publication/archive remain pending.
 Local acceptance, restart success and an immutable subject tag are never a Gate verdict.
@@ -34,10 +41,11 @@ Local acceptance, restart success and an immutable subject tag are never a Gate 
 ## Current repository state
 
 Attached branch main, with current symbolic HEAD and owned continuation changes declared by
-STATE.json/FILES.json before validation. Published pre-restart save is
-c836de60a5ee2610defe6df46ce5b4fc4a47df6f; sealed Gate5 base remains
+STATE.json/FILES.json before validation. Published runtime-v4 subject is
+01ffb159a852a60731459f38353c846c8e7a0bc8; sealed Gate5 base remains
 bcfe297278d25ee5a1db70a32b8c4ba0731941ea. Startup after interruption observed only the expected
-appended restart command records, not unexpected Git divergence. Preserve v1/v2/v3 subject tags.
+appended restart command records, not unexpected Git divergence. Preserve v1/v2/v3/v4 subject tags. Current owned dirty changes
+are failed-v4 observations, the causal UTF-8 bootstrap repair and truthful checkpoint/memory work.
 
 ## Files changed
 
@@ -62,7 +70,12 @@ restores retrospective conformance without changing its template/assertion. Afte
 recovery, cmd-0192 full lint passes; cmd-0194 management and identity observations pass.
 Cmd-0195 catches a guessed bare stage name in the new test fixture; only the fixture changes to
 derive every canonical name, and cmd-0196 passes all28 current root controls. Fixtures exercise
-the guard only; they are not functional acceptance. TESTS.json retains distinct local physical
+the guard only; they are not functional acceptance. Completed v4 cmd-0208 runs all47 stages and
+root897 with one failure; its46 other stages pass, including real Experience Store lifecycle,
+restart, dependency failure and fresh install. Scoped resources and clone are removed; the
+operational project is unchanged. Causal cmd-0209 is red; cmd-0213/0214 pass the cold UTF-8
+positive/adverse test and unchanged inherited three-case class. No immutable cleanup/capture main
+body is replayed. TESTS.json retains distinct local physical
 executions, not a complete current-suite PASS. COUNTS.json is canonically rederived before freezing.
 
 ## Known failures
@@ -71,7 +84,9 @@ G6-INT-012/015 are closed only after cmd-0192/0194/0196, not by authorization or
 The underlying earlier backend nonresponse cause remains undetermined. Original v3 root FAIL and
 all incomplete commands remain; fresh full verification is mandatory. G6-INT-016 retrospective
 authoring failure and G6-INT-017 new fixture premise failure are causally closed with original
-failed commands retained. No complete current immutable result is inferred from these repairs.
+failed commands retained. G6-INT-018 records the actual v4 UTF-8 guard failure and is causally
+closed locally. LSN-0035 recurrence3 and LSN-0083 recurrence4 remain CRITICAL; original failure
+bytes remain. No complete current immutable PASS is inferred from these repairs.
 
 ## Known risks
 
@@ -95,7 +110,7 @@ Responsible-owner manual cleanup remains separate; no data deletion is inferred.
 
 ## Required next action
 
-Freeze current source/memory, declare and validate all paths, publish immutable runtime-v4 at remote
+Freeze current source/memory, declare and validate all paths, publish immutable runtime-v5 at remote
 main, then run every canonical non-fast stage using normal Desktop transport. Complete functional
 proof, all193 requirements, whole Green Keeper, completeness, internal Red Team/null control, full
 clean-clone mirror, final assembly and actual canonical seal/publication/archive. M2 independent
@@ -104,7 +119,7 @@ audit remains pending and Gate7 is not authorized.
 ## Exact continuation sequence
 
 Read contracts, LATEST and complete checkpoint; validate and compare Git before alteration. Do not
-repeat old test cleanup. Finish current causal/memory/derivation acceptance and freeze runtime-v4
+repeat old test cleanup or the one-time failed-v4 archive helper. Finish current causal/memory/derivation acceptance and freeze runtime-v5
 at published main/tag. Run the complete non-fast verifier from a fresh public clone, never resume
 after an old stage. Only actual full success permits acceptance assembly and the ordered internal
 assurance controls. Any red returns to causal rework and the whole cycle; source changes require

@@ -1,5 +1,17 @@
 # Decisions
 
+- Cmd-0226/0227 are command-quoting precondition refusals, with null exit code and no transport
+  comparison or secret scan executed. Preserve both records and repeat the intended checks
+  through the correctly quoted PowerShell invocation; never interpret refusal as a passing check.
+
+- Completed v4 is FAIL, never assembled from its46 passing runtime stages plus a later root
+  subset. Preserve original safe UUID producer bytes and all six observation projections at
+  attempts/RUNTIME-V4-* (cmd-0215); remove only the verified redundant primary VERIFY copy.
+  Repair the three real diagnostic UTF-8 entry points without changing the inherited test or
+  replaying original immutable main bodies. Cold positive/adverse cmd-0213 and complete inherited
+  cmd-0214 restore the guard locally. LSN-0035/0083 retain CRITICAL recurrence3/4. Freeze fresh
+  runtime-v5 only after local acceptance, and execute every canonical stage anew.
+
 - Actual post-restart capability clears the prerequisite: cmd-0192 complete unchanged lint and
   cmd-0194 normal-context Server/identities pass. Preserve all37 other identities/states, old scoped
   cleanup and every prior failure. Use the supported Desktop path, not the raw Linux wrapper, for

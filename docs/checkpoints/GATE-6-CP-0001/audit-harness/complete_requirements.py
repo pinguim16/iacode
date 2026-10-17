@@ -113,6 +113,16 @@ bind("8.7", ["scripts/development-ledger/validate_checkpoint.py", CP + "STATE.js
 CANONICAL["8.5"]["implementationEvidence"].append("file:.iacode/memory/retrospectives/GATE-6-CP-0001.md")
 
 NEW_LESSONS = {
+    "LSN-0035": ([CP + "audit-harness/capture_blocked_attempt.py",
+                   CP + "audit-harness/observe_restarted_engine.py",
+                   CP + "audit-harness/recover_owned_verification.py",
+                   "scripts/development-ledger/ledger_common.py"],
+                  [ROOT_TESTS, "tests/test_gate0_foundation.py"]),
+    "LSN-0083": ([CP + "audit-harness/capture_blocked_attempt.py",
+                   CP + "audit-harness/observe_restarted_engine.py",
+                   CP + "audit-harness/recover_owned_verification.py",
+                   "scripts/development-ledger/ledger_common.py"],
+                  [ROOT_TESTS, "tests/test_gate0_foundation.py"]),
     "LSN-0018": (["scripts/development-ledger/lessons.py",
                    "scripts/development-ledger/validate_checkpoint.py"],
                   ["tests/test_development_ledger.py", ROOT_TESTS]),

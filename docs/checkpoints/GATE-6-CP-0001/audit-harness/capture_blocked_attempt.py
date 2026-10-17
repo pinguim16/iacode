@@ -11,7 +11,7 @@ from pathlib import Path
 CHECKPOINT = Path(__file__).resolve().parent.parent
 ROOT = CHECKPOINT.parents[2]
 sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
-from ledger_common import utc_now, write_json
+from ledger_common import use_utf8_stdout, utc_now, write_json
 
 
 def probe(arguments: list[str]) -> dict:
@@ -80,4 +80,5 @@ def main() -> int:
 
 
 if __name__ == "__main__":
+    use_utf8_stdout()
     raise SystemExit(main())

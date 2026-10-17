@@ -1,0 +1,57 @@
+{
+  "kind": "FAILED_COMPLETE_ATTEMPT_ARCHIVE_NOT_ACCEPTANCE",
+  "archivedAt": "2026-10-17T22:48:34Z",
+  "subjectCommit": "01ffb159a852a60731459f38353c846c8e7a0bc8",
+  "command": "cmd-0208",
+  "stageDenominator": 47,
+  "stagesPassed": 46,
+  "stagesFailed": 1,
+  "originalProducerManifest": "attempts/FULL-PRODUCER-d2b2b71d1263-MANIFEST.json",
+  "copiedObservations": [
+    {
+      "source": "VERIFY.json",
+      "archive": "attempts/RUNTIME-V4-VERIFY.json",
+      "sizeBytes": 11600,
+      "sha256": "46ac79a615112203886a06ee2c54d8b1b9b8f98bbca6c1e8a0c1da049001defb",
+      "exactSourceBytesPreserved": true
+    },
+    {
+      "source": "PUBLISHED-CLEAN-CLONE-REPORT.json",
+      "archive": "attempts/RUNTIME-V4-PUBLISHED-CLEAN-CLONE-REPORT.json",
+      "sizeBytes": 724,
+      "sha256": "b1fc626a0a3d9425d873580a26f742aa9a2d937712b04847132b0293523ec365",
+      "exactSourceBytesPreserved": true
+    },
+    {
+      "source": "FUNCTIONAL-SCENARIOS.json",
+      "archive": "attempts/RUNTIME-V4-FUNCTIONAL-SCENARIOS.json",
+      "sizeBytes": 88984,
+      "sha256": "ad29e460682c9dc50326905b9f808af1e72b0d620df0b06c82ae999c6a9fd7f3",
+      "exactSourceBytesPreserved": true
+    },
+    {
+      "source": "COMPOSE-ISOLATION-AUDIT.json",
+      "archive": "attempts/RUNTIME-V4-COMPOSE-ISOLATION-AUDIT.json",
+      "sizeBytes": 20591,
+      "sha256": "592bda130237ab80cbcc81d0722a5ad91a6cc63713f85ea982ad56e5d20b252b",
+      "exactSourceBytesPreserved": true
+    },
+    {
+      "source": "PRODUCER-REPORTS.json",
+      "archive": "attempts/RUNTIME-V4-PRODUCER-REPORTS.json",
+      "sizeBytes": 163,
+      "sha256": "1f2e395ac9e6d42b0e37c58d842d833d42929ce7e75ff00a99c2341c7cc31c68",
+      "exactSourceBytesPreserved": true
+    },
+    {
+      "source": "FULL-VERIFY-PROGRESS.json",
+      "archive": "attempts/RUNTIME-V4-FULL-VERIFY-PROGRESS.json",
+      "sizeBytes": 6896,
+      "sha256": "d4829e32ccb40b898c72eb3926fe1c20e15898add2c2c3a0199f1cb146e61f40",
+      "exactSourceBytesPreserved": true
+    }
+  ],
+  "primaryVerifierProjectionRemovedAfterVerifiedCopy": true,
+  "originalProducerFilesChanged": false,
+  "gateVerdictIssued": false
+}

@@ -6,6 +6,7 @@ import ast
 import hashlib
 import importlib.util
 import json
+import os
 import subprocess
 import sys
 import tempfile
@@ -156,6 +157,59 @@ class Gate6BoundaryTests(unittest.TestCase):
 
 
 class Gate6BookkeepingCausalTests(unittest.TestCase):
+    def test_cold_diagnostic_entrypoints_use_utf8_before_any_work(self):
+        # Execute the actual entry block and shared bootstrap, with harmless fixture work only.
+        # Original immutable capture/cleanup bodies must never be replayed by this control.
+        child = r"""
+import ast
+import sys
+from pathlib import Path
+
+assert sys.stdout.encoding.lower() == "cp1252"
+sys.path.insert(0, sys.argv[1])
+from ledger_common import use_utf8_stdout
+
+source = Path(sys.argv[2])
+tree = ast.parse(source.read_text(encoding="utf-8"))
+entries = [node for node in tree.body if isinstance(node, ast.If)
+           and ast.unparse(node.test) == "__name__ == '__main__'"]
+assert len(entries) == 1
+entry = entries[0]
+calls = [node for node in entry.body if isinstance(node, ast.Expr)
+         and isinstance(node.value, ast.Call)
+         and isinstance(node.value.func, ast.Name)
+         and node.value.func.id == "use_utf8_stdout"]
+assert len(calls) == 1
+if sys.argv[3] == "omit-bootstrap":
+    entry.body.remove(calls[0])
+
+def harmless_work():
+    print(chr(0x276F))
+    print(chr(0x2713), file=sys.stderr)
+    return 0
+
+exec(compile(ast.Module(body=[entry], type_ignores=[]), str(source), "exec"),
+     {"__name__": "__main__", "main": harmless_work, "use_utf8_stdout": use_utf8_stdout})
+"""
+        environment = dict(os.environ)
+        environment.pop("PYTHONPATH", None)
+        environment["PYTHONIOENCODING"] = "cp1252:strict"
+        environment["PYTHONUTF8"] = "0"
+        for name in ("capture_blocked_attempt", "observe_restarted_engine", "recover_owned_verification"):
+            arguments = [sys.executable, "-S", "-P", "-c", child,
+                         str(ROOT / "scripts/development-ledger"),
+                         str(CHECKPOINT / "audit-harness" / (name + ".py"))]
+            with self.subTest(entrypoint=name):
+                accepted = subprocess.run([*arguments, "configured"], cwd=ROOT, env=environment,
+                    capture_output=True, timeout=10, check=False)
+                self.assertEqual(accepted.returncode, 0, accepted.stderr.decode("utf-8", errors="replace"))
+                self.assertEqual(accepted.stdout.strip(), chr(0x276F).encode("utf-8"))
+                self.assertEqual(accepted.stderr.strip(), chr(0x2713).encode("utf-8"))
+                refused = subprocess.run([*arguments, "omit-bootstrap"], cwd=ROOT, env=environment,
+                    capture_output=True, timeout=10, check=False)
+                self.assertNotEqual(refused.returncode, 0)
+                self.assertIn(b"UnicodeEncodeError", refused.stderr)
+
     def test_management_only_report_cannot_replace_complete_non_fast_verification(self):
         publisher = load_harness("run_full_verification")
         names = [stage.name for stage in publisher.build_stages(False)]

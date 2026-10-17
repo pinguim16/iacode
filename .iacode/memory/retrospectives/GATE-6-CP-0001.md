@@ -43,6 +43,15 @@ the observation into this existing section without changing the canonical templa
 
 ## What repeated
 
+Immutable-v4 completes all47 stages with46 PASS and one Root897 failure. The unchanged inherited
+entry-point guard identifies three new diagnostics with no parent UTF-8 bootstrap; cmd-0209
+reproduces the same three paths. LSN-0035/GRD-0037 recurrence3 and LSN-0083/GRD-0084 recurrence4
+remain CRITICAL and returned to CONFIRMED pending repair. The actual three entry points now call
+the shared UTF-8 bootstrap. Cold positive/omitted-bootstrap control cmd-0213 and complete unchanged
+inherited class cmd-0214 pass, so the guards are locally restored. Original safe producer bytes
+and all six v4 report projections are preserved byte-for-byte by cmd-0215. No runtime encoding
+crash is invented from the original static guard failure; full fresh immutable acceptance is due.
+
 Later explicit restart authorization permits supported Desktop recovery. Actual cmd-0192 complete
 unchanged lint and cmd-0194 normal-context Server/identity observations clear the external
 prerequisite; all37 other identities/states remain and old owned cleanup stays complete. The new
@@ -103,6 +112,7 @@ ordered assurance remain independently enforced by their canonical tools, not by
 | LSN-0102 | Third escalated recurrence, then local causal guard restoration | Inherited mandatory minimum is not a maximum on legitimate future additions |
 | LSN-0018 | Two escalated recurrences; unchanged lesson/quality locator controls | Each artifact owns its reference semantics; keep failures explicit in durable observation files rather than unsupported or nonzero structured command references |
 | LSN-0140 | Recurrence1 escalated to HIGH; existing retrospective guard explicitly registered | Extra manual heading rejected; documentation-only placement correction and root27 cmd-0178 pass |
+| LSN-0035 / LSN-0083 | Recurrence3 / recurrence4, CRITICAL; locally restored by actual cold and unchanged inherited controls | Three parent bootstraps corrected; original failure retained, no cleanup/capture replay, fresh full proof still due |
 
 ## Retired lessons
 

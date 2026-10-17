@@ -9,10 +9,10 @@
     "unitTests": {
       "status": "FAIL",
       "evidence": [
-        "file:attempts/FULL-VERIFY-INTERRUPTED-0003.json",
-        "file:FULL-VERIFY-PROGRESS.json"
+        "file:attempts/RUNTIME-V4-VERIFY.json",
+        "file:attempts/FULL-PRODUCER-d2b2b71d1263-INTERNAL-FULL-VERIFY.json"
       ],
-      "justification": "Immutable v3 root892 genuinely failed twice. Local causal corrections and affected classes pass cmd-0141/0142/0143, but full current-subject root and 47-stage re-execution remain pending; no whole-suite PASS is inferred."
+      "justification": "Completed immutable v4 actually runs897 root cases and fails1 entry-point UTF-8 guard. All46 other stages pass and scoped cleanup/clone removal are observed. Local cold/startup and unchanged inherited class pass cmd-0213/0214, but fresh complete current-subject acceptance remains pending; never combine partial attempts."
     },
     "integrationTests": {
       "status": "NOT_EXECUTED",

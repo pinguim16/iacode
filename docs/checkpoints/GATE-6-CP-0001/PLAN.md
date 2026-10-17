@@ -5,6 +5,11 @@ This plan follows the complete preflight cmd-0004, exact185-row derivation cmd-0
 Same-session roles have separate artifacts but are not independent auditors. Every selected lesson
 below retains its derived identifier/check/evidence; neither gates nor denominators are selectable.
 
+Current causal continuation: completed runtime-v4 passes46/47 stages but fails the inherited
+UTF-8 entry-point guard. Repair only the three actual diagnostic bootstraps, prove cold positive/
+adverse execution and the unchanged complete inherited class, then publish repaired runtime-v5
+and execute all47 stages anew. Preserve failed producer bytes; never combine attempts into PASS.
+
 ## G6-S00 — Entry and baseline
 
 - Objective: validate/anchor sealed Gate5, record explicit authority, define the complete canonical
@@ -814,4 +819,4 @@ required check/evidence. It is not a replacement denominator and cannot omit a s
 ### LESSON-REQ-0142 — LSN-0143
 
 - Required check: Do not promote a management-only recovery into full runtime readiness. Verify the actual canonical build, host-bind and lint capabilities through the supported transport before immutable assurance.
-- Required evidence: Real unchanged complete lint/build/bind execution and subsequent full canonical run; otherwise named external blockers and retained failed observations, never inferred readiness. This remains unresolved; no automated guard or completion is claimed.
+- Required evidence: Real unchanged complete lint/build/bind execution and subsequent full canonical run; otherwise named external blockers and retained failed observations, never inferred readiness.
