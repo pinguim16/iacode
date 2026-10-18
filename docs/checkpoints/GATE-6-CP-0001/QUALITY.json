@@ -3,68 +3,87 @@
   "checks": {
     "build": {
       "status": "NOT_EXECUTED",
-      "evidence": [],
-      "justification": "Historical runtime-v5, whole cycle5 and completeness success remain in their original reports. Current LSN-0125 guarded cleanup recurrence requires causal rework and fresh complete assurance; no current readiness is claimed."
+      "evidence": [
+        "file:attempts/RUNTIME-V6-FINALIZATION-ARCHIVE.json"
+      ],
+      "justification": "Historical v6 evidence is preserved; source-scope memory changed, so fresh complete acceptance is required."
     },
     "unitTests": {
       "status": "NOT_EXECUTED",
-      "evidence": [],
-      "justification": "Historical runtime-v5, whole cycle5 and completeness success remain in their original reports. Current LSN-0125 guarded cleanup recurrence requires causal rework and fresh complete assurance; no current readiness is claimed."
+      "evidence": [
+        "file:attempts/RUNTIME-V6-FINALIZATION-ARCHIVE.json"
+      ],
+      "justification": "Historical v6 evidence is preserved; source-scope memory changed, so fresh complete acceptance is required."
     },
     "integrationTests": {
       "status": "NOT_EXECUTED",
-      "evidence": [],
-      "justification": "Historical runtime-v5, whole cycle5 and completeness success remain in their original reports. Current LSN-0125 guarded cleanup recurrence requires causal rework and fresh complete assurance; no current readiness is claimed."
+      "evidence": [
+        "file:attempts/RUNTIME-V6-FINALIZATION-ARCHIVE.json"
+      ],
+      "justification": "Historical v6 evidence is preserved; source-scope memory changed, so fresh complete acceptance is required."
     },
     "e2e": {
       "status": "NOT_EXECUTED",
-      "evidence": [],
-      "justification": "Historical runtime-v5, whole cycle5 and completeness success remain in their original reports. Current LSN-0125 guarded cleanup recurrence requires causal rework and fresh complete assurance; no current readiness is claimed."
+      "evidence": [
+        "file:attempts/RUNTIME-V6-FINALIZATION-ARCHIVE.json"
+      ],
+      "justification": "Historical v6 evidence is preserved; source-scope memory changed, so fresh complete acceptance is required."
     },
     "lint": {
       "status": "NOT_EXECUTED",
-      "evidence": [],
-      "justification": "Historical runtime-v5, whole cycle5 and completeness success remain in their original reports. Current LSN-0125 guarded cleanup recurrence requires causal rework and fresh complete assurance; no current readiness is claimed."
+      "evidence": [
+        "file:attempts/RUNTIME-V6-FINALIZATION-ARCHIVE.json"
+      ],
+      "justification": "Historical v6 evidence is preserved; source-scope memory changed, so fresh complete acceptance is required."
     },
     "staticAnalysis": {
       "status": "NOT_EXECUTED",
-      "evidence": [],
-      "justification": "Historical runtime-v5, whole cycle5 and completeness success remain in their original reports. Current LSN-0125 guarded cleanup recurrence requires causal rework and fresh complete assurance; no current readiness is claimed."
+      "evidence": [
+        "file:attempts/RUNTIME-V6-FINALIZATION-ARCHIVE.json"
+      ],
+      "justification": "Historical v6 evidence is preserved; source-scope memory changed, so fresh complete acceptance is required."
     },
     "security": {
       "status": "NOT_EXECUTED",
-      "evidence": [],
-      "justification": "Historical runtime-v5, whole cycle5 and completeness success remain in their original reports. Current LSN-0125 guarded cleanup recurrence requires causal rework and fresh complete assurance; no current readiness is claimed."
+      "evidence": [
+        "file:attempts/RUNTIME-V6-FINALIZATION-ARCHIVE.json"
+      ],
+      "justification": "Historical v6 evidence is preserved; source-scope memory changed, so fresh complete acceptance is required."
     },
     "documentation": {
       "status": "NOT_EXECUTED",
-      "evidence": [],
-      "justification": "Historical runtime-v5, whole cycle5 and completeness success remain in their original reports. Current LSN-0125 guarded cleanup recurrence requires causal rework and fresh complete assurance; no current readiness is claimed."
+      "evidence": [
+        "file:attempts/RUNTIME-V6-FINALIZATION-ARCHIVE.json"
+      ],
+      "justification": "Historical v6 evidence is preserved; source-scope memory changed, so fresh complete acceptance is required."
     },
     "checkpointValidation": {
       "status": "NOT_EXECUTED",
-      "evidence": [],
-      "justification": "Historical runtime-v5, whole cycle5 and completeness success remain in their original reports. Current LSN-0125 guarded cleanup recurrence requires causal rework and fresh complete assurance; no current readiness is claimed."
+      "evidence": [
+        "file:attempts/RUNTIME-V6-FINALIZATION-ARCHIVE.json"
+      ],
+      "justification": "Historical v6 evidence is preserved; source-scope memory changed, so fresh complete acceptance is required."
     },
     "redTeam": {
-      "status": "FAIL",
+      "status": "NOT_EXECUTED",
       "evidence": [
-        "file:attempts/RUNTIME-V5-ASSURANCE-M2-INTERNAL-RED-TEAM.json",
-        "file:attempts/RUNTIME-V5-ASSURANCE-RED-TEAM-NATIVE.json"
+        "file:attempts/RUNTIME-V6-FINALIZATION-ARCHIVE.json"
       ],
-      "justification": "Historical cmd-0258 remains FAIL with INVALID baseline. Local causal correction passes; no current fresh Red Team or complete Gate verdict exists yet."
+      "justification": "Historical v6 evidence is preserved; source-scope memory changed, so fresh complete acceptance is required."
     },
     "greenKeeper": {
-      "status": "FAIL",
+      "status": "NOT_EXECUTED",
       "evidence": [
-        "file:REWORK-LOG.jsonl"
+        "file:attempts/RUNTIME-V6-FINALIZATION-ARCHIVE.json"
       ],
-      "justification": "Whole cycle5 originally passes; new unresolved guarded cleanup recurrence returns delivery to rework and requires fresh ordered controls."
+      "justification": "Historical v6 evidence is preserved; source-scope memory changed, so fresh complete acceptance is required."
     },
     "deliveryCompleteness": {
       "status": "NOT_EXECUTED",
-      "evidence": [],
-      "justification": "Historical runtime-v5, whole cycle5 and completeness success remain in their original reports. Current LSN-0125 guarded cleanup recurrence requires causal rework and fresh complete assurance; no current readiness is claimed."
+      "evidence": [
+        "file:attempts/RUNTIME-V6-FINALIZATION-ARCHIVE.json"
+      ],
+      "justification": "Historical v6 evidence is preserved; source-scope memory changed, so fresh complete acceptance is required."
     }
   }
 }

@@ -43,6 +43,10 @@ the observation into this existing section without changing the canonical templa
 
 ## What repeated
 
+Before publication, cmd-0356 detects Git index normalization of original archived Markdown. LSN-0131/GRD-0133 recurrence1 is escalated CRITICAL/CONFIRMED. Protect only the exact additional archive boundary and explicitly refresh its existing index; original bytes never change. Cmd-0358 proves all176 observations exact, cmd-0359 passes inherited real Git normalization-negative/restored-positive controls and cmd-0360 passes all37 Gate6 cases including every archive member. Local guard restoration is not fresh whole acceptance; no mismatched evidence was published.
+
+After all v6 internal controls pass, terminal finalization cmd-0340 refuses thirteen missing final-report headings. This repeats LSN-0008 recurrence3/CRITICAL, explicitly escalated to CONFIRMED before local repair. All30 original assurance/handoff artifacts are archived byte-for-byte. Cmd-0342 reproduces absent canonical rendering; cmd-0343 accepts the actual renderer and every omitted/empty/extra-section refusal. GRD-0146 locally restores protection by consuming the unchanged owning-validator section set. Mandatory fresh memory-bound immutable verification and ordered assurance remain due; historical successes are not stale current approval.
+
 Fresh internal Red Team cmd-0258 later fails at actual native profile cleanup: both installation/
 trust runs and job drainage pass, but agenthost.log remains sharing-locked at removal. Inherited20,
 client35, real desktop and Experience Store72 pass; combined71 baseline remains INVALID, never a
@@ -119,6 +123,8 @@ ordered assurance remain independently enforced by their canonical tools, not by
 
 | Lesson | Change | Reason |
 |---|---|---|
+| LSN-0131 | Recurrence1/CRITICAL escalated, then locally GUARDED | New Markdown/Python exact archive boundary and explicit index refresh; actual176-member index equality, inherited Git negative/restored-positive and root37 pass |
+| LSN-0008 | Recurrence3/CRITICAL escalated, then locally GUARDED via GRD-0146 | Final prose summary omitted canonical terminal structure; exact failed report retained, actual positive/every-section adverse controls pass, mandatory fresh assurance remains due |
 | LSN-0042 | Escalated recurrence, then causal guard restoration | Actual UNIQUE convention/migration drift |
 | LSN-0105 | Escalated recurrence, then unchanged complete lint acceptance | Seven retained source line-budget findings |
 | LSN-0119 | Escalated recurrence, neutral original digest, strict scans and actual checkpoint acceptance | Descriptive labels/derived copies matched strict detection |

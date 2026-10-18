@@ -113,6 +113,11 @@ bind("8.7", ["scripts/development-ledger/validate_checkpoint.py", CP + "STATE.js
 CANONICAL["8.5"]["implementationEvidence"].append("file:.iacode/memory/retrospectives/GATE-6-CP-0001.md")
 
 NEW_LESSONS = {
+    "LSN-0131": ([".gitattributes", CP + "audit-harness/verify_evidence_transport.py"],
+                  [ROOT_TESTS, "tests/test_gate5_clients.py"]),
+    "LSN-0008": ([CP + "audit-harness/assemble_final_handoff.py",
+                   "scripts/development-ledger/validate_checkpoint.py"],
+                  [ROOT_TESTS, "tests/test_development_ledger.py"]),
     "LSN-0125": (["scripts/iacode/native_process.py", "scripts/iacode/native_editor.py",
                    "docs/adr/ADR-0052-native-cleanup-failures-retain-observed-diagnostics.md"],
                   [ROOT_TESTS, "tests/test_gate5_clients.py"]),

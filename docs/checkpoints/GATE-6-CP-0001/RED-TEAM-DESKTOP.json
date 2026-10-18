@@ -3,9 +3,9 @@
   "scenario": "desktop-e2e",
   "result": "PASS",
   "environment": "fresh-installed-cli-and-native-vscode-real-authenticated-compose-provider-postgresql-redis-minio-temporal-sandbox-quality",
-  "subjectCommit": "950421fc5554a7e654ffd6096898b07a679d9923",
+  "subjectCommit": "1442b86d38be11aee5e2ff635e576be08e52997b",
   "sourceDirty": true,
-  "sourceFingerprint": "e0433204b7ea4666a38b7272f2bd57df65c7fd8811195022b873b5dca9f0ff9c",
+  "sourceFingerprint": "584eb6433e55f8a693315fa84c367c37de3c1c36747b08694888a01ca0c32f91",
   "steps": [
     {
       "name": "fresh-owned-authenticated-stack-healthy",
@@ -21,8 +21,8 @@
       "result": "PASS",
       "authorizedModel": "openai:gpt-4o-mini",
       "provider": "openai",
-      "catalogModels": 135,
-      "discovered": 135
+      "catalogModels": 138,
+      "discovered": 138
     },
     {
       "name": "unauthenticated-domain-refused-before-effects",
@@ -148,7 +148,7 @@
       "result": "PASS"
     }
   ],
-  "composeProject": "iacode-desktop-31560266e7a5",
+  "composeProject": "iacode-desktop-da07f8229054",
   "packages": {
     "kind": "CLIENT_BUILD_NOT_FUNCTIONAL_ACCEPTANCE",
     "result": "PASS",
@@ -569,14 +569,6 @@
       "exitCode": 0
     },
     {
-      "command": "quality-read",
-      "exitCode": 0
-    },
-    {
-      "command": "quality-read",
-      "exitCode": 0
-    },
-    {
       "command": "start",
       "exitCode": 0
     },
@@ -632,13 +624,13 @@
     "mode": "start",
     "editorVersion": "1.138.0",
     "nodeVersion": "v24.18.1",
-    "processId": 48060,
+    "processId": 45508,
     "steps": [
       {
         "name": "fresh-installed-extension-active",
         "result": "PASS",
         "commands": 19,
-        "extensionPath": "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-desktop-live-b58h2zw6\\editor\\extensions\\iacode.iacode-0.1.0"
+        "extensionPath": "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-desktop-live-d3rznh5a\\editor\\extensions\\iacode.iacode-0.1.0"
       },
       {
         "name": "native-default-cancel-sends-no-upload",
@@ -654,45 +646,47 @@
         "name": "actual-uncertain-create-retains-stable-identity-without-retry",
         "result": "PASS",
         "code": "TRANSPORT_UNAVAILABLE",
-        "idempotencyKey": "3c5993bd-ee0d-4aff-a75c-65db18ca2fe2"
+        "idempotencyKey": "080a62e9-61a7-4b85-9173-fe707df50705"
       }
     ],
     "pending": {
       "operation": "start",
-      "idempotencyKey": "3c5993bd-ee0d-4aff-a75c-65db18ca2fe2"
+      "idempotencyKey": "080a62e9-61a7-4b85-9173-fe707df50705"
     },
     "exitCode": 0,
     "processCleanup": {
       "jobOwned": true,
       "remainingBeforeCleanup": 0,
-      "remainingAfterCleanup": 0
+      "remainingAfterCleanup": 0,
+      "observedProcessCount": 0,
+      "signaledProcessCount": 0
     },
     "sharedStorageObservedOwned": true
   },
-  "acceptedRunId": "01a14cce-73be-7000-817e-5c739df25f12",
+  "acceptedRunId": "01a14d90-926c-7000-b597-403f70776ca8",
   "nativeResume": {
     "kind": "ACTUAL_ISOLATED_VSCODE_EXTENSION_HOST",
     "result": "PASS",
     "mode": "resume",
     "editorVersion": "1.138.0",
     "nodeVersion": "v24.18.1",
-    "processId": 32812,
+    "processId": 51420,
     "steps": [
       {
         "name": "fresh-installed-extension-active",
         "result": "PASS",
         "commands": 19,
-        "extensionPath": "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-desktop-live-b58h2zw6\\editor\\extensions\\iacode.iacode-0.1.0"
+        "extensionPath": "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-desktop-live-d3rznh5a\\editor\\extensions\\iacode.iacode-0.1.0"
       },
       {
         "name": "new-host-read-only-recovery",
         "result": "PASS",
-        "runId": "01a14cce-73be-7000-817e-5c739df25f12"
+        "runId": "01a14d90-926c-7000-b597-403f70776ca8"
       },
       {
         "name": "actual-provider-task-sandbox-result-and-ordered-events",
         "result": "PASS",
-        "runId": "01a14cce-73be-7000-817e-5c739df25f12",
+        "runId": "01a14d90-926c-7000-b597-403f70776ca8",
         "modelCalls": 5,
         "sandboxExecutions": 2,
         "successfulUnittestExecution": true,
@@ -701,7 +695,7 @@
       {
         "name": "native-derived-quality-results-and-evidence",
         "result": "PASS",
-        "qualityRunId": "01a14cce-e798-7000-a1fb-814761af0291",
+        "qualityRunId": "01a14d91-05fd-7000-a61e-e95d34e86bac",
         "verdict": "PASS",
         "checks": 7,
         "evidence": 7
@@ -712,19 +706,21 @@
       }
     ],
     "taskObservation": {
-      "runId": "01a14cce-73be-7000-817e-5c739df25f12",
+      "runId": "01a14d90-926c-7000-b597-403f70776ca8",
       "state": "SUCCEEDED",
       "errorType": null,
       "modelCalls": 5,
       "sandboxExecutions": 2
     },
-    "runId": "01a14cce-73be-7000-817e-5c739df25f12",
-    "qualityRunId": "01a14cce-e798-7000-a1fb-814761af0291",
+    "runId": "01a14d90-926c-7000-b597-403f70776ca8",
+    "qualityRunId": "01a14d91-05fd-7000-a61e-e95d34e86bac",
     "exitCode": 0,
     "processCleanup": {
       "jobOwned": true,
       "remainingBeforeCleanup": 0,
-      "remainingAfterCleanup": 0
+      "remainingAfterCleanup": 0,
+      "observedProcessCount": 0,
+      "signaledProcessCount": 0
     },
     "sharedStorageObservedOwned": true
   },
@@ -735,13 +731,13 @@
     "snapshot": 1,
     "start": 1,
     "lookup": 1,
-    "read": 47,
+    "read": 49,
     "events": 2,
     "quality-start": 1,
-    "quality-read": 33
+    "quality-read": 30
   },
   "taskCancellation": {
-    "runId": "01a14ccf-ae57-7000-b508-425181c0d1b6",
+    "runId": "01a14d91-c364-7000-92af-cb9a883bc92f",
     "phase": "COMPLETE",
     "requestedState": "RUNNING",
     "terminalState": "CANCELLED"

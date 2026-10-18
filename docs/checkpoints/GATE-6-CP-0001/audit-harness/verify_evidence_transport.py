@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import hashlib
+import json
 import subprocess
 import sys
 from pathlib import Path
@@ -17,6 +18,15 @@ def main() -> int:
     paths = sorted((CHECKPOINT / "attempts").glob("*.json"))
     paths += sorted((CHECKPOINT / "suite-attempts").glob("*.json"))
     paths += sorted((CHECKPOINT / "suite-attempts").glob("*.log"))
+    archive = CHECKPOINT / "attempts/RUNTIME-V6-FINALIZATION-ARCHIVE.json"
+    if archive.is_file():
+        for row in json.loads(archive.read_text(encoding="utf-8"))["records"]:
+            candidate = ROOT / row["archive"]
+            raw = candidate.read_bytes()
+            if len(raw) != row["bytes"] or hashlib.sha256(raw).hexdigest() != row["sha256"]:
+                raise ValueError("original archive changed: " + row["archive"])
+            paths.append(candidate)
+    paths = sorted(set(paths))
     if not paths:
         raise ValueError("actual observation files required")
     observations = []

@@ -101,3 +101,5 @@
   byte-preserving observations. Those originals are intentionally not reformatted; staged raw
   equality passed at cmd-0103, and the separate authored/non-observation diff check was clean.
   No complete Git whitespace PASS, detector relaxation or raw-observation normalization is claimed.
+
+- Final internal acceptance derives from actual current full47, whole15 Green Keeper, total193-requirement completeness, fresh71-attack Red Team/VALID control and all18 mirror dimensions, including real clean-clone/historical compatibility. Same-session is never independent. Preseal assembly does not predict its own commit, seal or publication; canonical tools must perform those actions.

@@ -157,6 +157,37 @@ class Gate6BoundaryTests(unittest.TestCase):
 
 
 class Gate6BookkeepingCausalTests(unittest.TestCase):
+    def test_final_report_renderer_consumes_every_canonical_section(self):
+        from validate_checkpoint import FINAL_REPORT_HEADINGS
+
+        actor = load_harness("assemble_final_handoff")
+        sections = {heading: "Substantive observed internal evidence for " + heading
+                    for heading in FINAL_REPORT_HEADINGS}
+        rendered = actor.render_final_report(sections)
+        self.assertEqual([line for line in rendered.splitlines() if line.startswith("## ")],
+                         list(FINAL_REPORT_HEADINGS))
+        for heading, content in sections.items():
+            self.assertIn(heading + "\n\n" + content, rendered)
+
+    def test_final_report_renderer_refuses_each_missing_empty_or_extra_section(self):
+        from validate_checkpoint import FINAL_REPORT_HEADINGS
+
+        actor = load_harness("assemble_final_handoff")
+        sections = {heading: "Substantive observed internal evidence for " + heading
+                    for heading in FINAL_REPORT_HEADINGS}
+        for heading in FINAL_REPORT_HEADINGS:
+            for mutation in ("missing", "empty"):
+                with self.subTest(heading=heading, mutation=mutation):
+                    altered = dict(sections)
+                    if mutation == "missing":
+                        del altered[heading]
+                    else:
+                        altered[heading] = " "
+                    with self.assertRaises(ValueError):
+                        actor.render_final_report(altered)
+        with self.assertRaises(ValueError):
+            actor.render_final_report({**sections, "## Invented section": "Unpermitted extra content"})
+
     def test_owned_job_snapshot_refuses_truncation_and_process_identity_reuse(self):
         import ctypes
         with mock.patch.object(sys, "path", [str(ROOT / "scripts/iacode"), *sys.path]):
@@ -564,6 +595,15 @@ exec(compile(ast.Module(body=[entry], type_ignores=[]), str(source), "exec"),
             self.assertFalse((directory / "forbidden").exists())
 
     def test_actual_captured_output_hashes_and_git_attributes_preserve_bytes(self):
+        manifest = CHECKPOINT / "attempts/RUNTIME-V6-FINALIZATION-ARCHIVE.json"
+        if manifest.is_file():
+            for item in json.loads(manifest.read_bytes())["records"]:
+                payload = (ROOT / item["archive"]).read_bytes()
+                self.assertEqual(hashlib.sha256(payload).hexdigest(), item["sha256"])
+                self.assertEqual(len(payload), item["bytes"])
+                attributes = subprocess.check_output(
+                    ["git", "check-attr", "text", "--", item["archive"]], cwd=ROOT).decode()
+                self.assertTrue(attributes.strip().endswith(": unset"), attributes)
         reports = list((CHECKPOINT / "suite-attempts").glob("*.json"))
         self.assertTrue(reports)
         for path in reports:

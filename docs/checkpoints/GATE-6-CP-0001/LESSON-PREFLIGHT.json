@@ -12,9 +12,9 @@
     "packages/contracts",
     "packages/persistence"
   ],
-  "generatedAt": "2026-10-18T03:20:38Z",
+  "generatedAt": "2026-10-18T07:13:39Z",
   "policyVersion": "2.0.0",
-  "inputsFingerprint": "11187f5b0a25ef38337a6c262e2f49eec4db64139cbd00bb98fbf4304903e706",
+  "inputsFingerprint": "a22c6646751194e4f180bdcd8bb709f8ad5db5045a8516c166d4a7802c6e683e",
   "lessonsConsidered": 143,
   "lessonsApplicable": 142,
   "applicable": [
@@ -1312,8 +1312,8 @@
       "lessonId": "LSN-0131",
       "title": "Raw evidence digests require byte-preserving Git export, not text normalization",
       "status": "GUARDED",
-      "severity": "HIGH",
-      "reasonApplicable": "applies to every Gate; category quality; severity HIGH; already guarded, so the control must keep holding",
+      "severity": "CRITICAL",
+      "reasonApplicable": "applies to every Gate; category quality; severity CRITICAL; already guarded, so the control must keep holding",
       "requiredCheck": "Preserve claimed raw observation digests across actual Git export rather than checking only a local copy. Declare dedicated copied-evidence boundaries explicitly without changing historical observation bytes.",
       "requiredEvidence": "Actual Git positive/adverse/restored transport controls plus equality between every staged archived observation and its original bytes before publication.",
       "derivedRequirementId": "LESSON-REQ-0130"

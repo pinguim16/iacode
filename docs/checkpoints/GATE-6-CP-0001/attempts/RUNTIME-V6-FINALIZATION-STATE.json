@@ -1,0 +1,158 @@
+{
+  "schemaVersion": "3.4.0",
+  "phase": "GATE-6",
+  "gate": "GATE-6",
+  "status": "IN_PROGRESS",
+  "branch": "main",
+  "baseCommit": "bcfe297278d25ee5a1db70a32b8c4ba0731941ea",
+  "currentCommit": "HEAD",
+  "dirty": true,
+  "startedAt": "2026-10-17T11:34:14Z",
+  "updatedAt": "2026-10-18T07:02:48Z",
+  "nextAllowedAction": "Complete any canonical Gate6 finalization, content-commit, sealing, publication and exact transport/archive verification not already evidenced by its canonical tag and tool records. Once sealed and verified, never rerun writing helpers in this checkpoint; await explicit owner authorization for Gate7. Independent M2 review, Red Team and second-tool validation remain pending for milestone closure.",
+  "blockedBy": [],
+  "secondToolValidation": {
+    "status": "PENDING_MANUAL",
+    "tool": null,
+    "provider": null,
+    "model": null,
+    "validatedAt": null,
+    "justification": null,
+    "evidence": []
+  },
+  "requirementsMatrix": {
+    "path": "REQUIREMENTS-MATRIX.json",
+    "total": 193,
+    "mandatory": 192,
+    "complete": 193,
+    "partial": 0,
+    "missing": 0,
+    "notApplicable": 0,
+    "coveragePercent": 100.0
+  },
+  "greenKeeper": {
+    "status": "PASS",
+    "cycles": 7,
+    "remainingFailures": 0,
+    "unresolvedReworkItems": 0,
+    "log": "REWORK-LOG.jsonl",
+    "externalBlockers": [],
+    "evidence": [
+      "command:cmd-0306",
+      "command:cmd-0307",
+      "command:cmd-0308",
+      "command:cmd-0309",
+      "command:cmd-0310",
+      "command:cmd-0311",
+      "command:cmd-0312",
+      "command:cmd-0313",
+      "command:cmd-0314",
+      "command:cmd-0315",
+      "command:cmd-0316",
+      "command:cmd-0317",
+      "command:cmd-0318",
+      "command:cmd-0319",
+      "command:cmd-0320"
+    ],
+    "requiredGates": [
+      "tests",
+      "staticAnalysis",
+      "lessons",
+      "integrity",
+      "checkpointValidation",
+      "apiTests",
+      "gatewayTests",
+      "agentRuntimeTests",
+      "sandboxTests",
+      "evaluatorTests",
+      "webTests",
+      "lint",
+      "clientTests",
+      "experienceTests",
+      "infraDefinition"
+    ],
+    "scopeFingerprint": "584eb6433e55f8a693315fa84c367c37de3c1c36747b08694888a01ca0c32f91"
+  },
+  "deliveryCompleteness": {
+    "status": "PASS",
+    "report": "COMPLETENESS-REPORT.json",
+    "coveragePercent": 100.0,
+    "evidenceCoveragePercent": 100.0,
+    "auditor": "same-session Delivery Completeness Validator; audit only; no independent M2 verdict",
+    "evidence": [
+      "checkpoint:COMPLETENESS-REPORT.json"
+    ]
+  },
+  "reworkCycles": 7,
+  "independentReview": {
+    "status": "NOT_REQUIRED",
+    "tool": null,
+    "reviewedAt": null,
+    "justification": "Intermediate Gate 6 internal closure under explicit owner authorization in AUTHORIZATION.md and ADR-0037. Independent milestone review and Red Team are deferred to M2 closure, not waived or claimed by this implementing session.",
+    "evidence": [
+      "checkpoint:AUTHORIZATION.md"
+    ]
+  },
+  "redTeam": {
+    "status": "NOT_REQUIRED",
+    "tool": null,
+    "executedAt": null,
+    "justification": "Intermediate Gate 6 internal closure under explicit owner authorization in AUTHORIZATION.md and ADR-0037. Independent milestone review and Red Team are deferred to M2 closure, not waived or claimed by this implementing session.",
+    "evidence": [
+      "checkpoint:AUTHORIZATION.md"
+    ]
+  },
+  "lessonPreflight": {
+    "path": "LESSON-PREFLIGHT.json",
+    "gate": "GATE-6",
+    "scope": "Experience Store with observable source-bound engineering facts, privacy, provenance, storage and reuse rights, retention, authenticated API and recovery",
+    "lessonsConsidered": 143,
+    "lessonsApplicable": 142,
+    "derivedRequirements": 142,
+    "evidence": [
+      "checkpoint:LESSON-PREFLIGHT.json",
+      "checkpoint:REQUIREMENTS-MATRIX.json"
+    ]
+  },
+  "milestone": {
+    "id": "M2",
+    "title": "IACode V0 completion and experience",
+    "gates": [
+      "GATE 4",
+      "GATE 5",
+      "GATE 6",
+      "GATE 7"
+    ],
+    "status": "PENDING",
+    "auditor": null,
+    "auditedAt": null,
+    "evidence": []
+  },
+  "externalAuditRequired": false,
+  "externalAuditReason": null,
+  "guardrailEffectiveness": {
+    "guardrailsTotal": 145,
+    "guardrailsResolved": 145,
+    "guardrailsTested": 145,
+    "guardrailsEffective": 145,
+    "guardrailFailures": 0,
+    "evidence": [
+      "command:cmd-0296",
+      "checkpoint:VERIFY.json"
+    ]
+  },
+  "integrity": {
+    "status": "PASS",
+    "anchors": 34,
+    "chainFile": ".iacode/anchors/checkpoint-chain.json",
+    "evidence": [
+      "command:cmd-0003"
+    ]
+  },
+  "externalAttestation": {
+    "status": "NONE",
+    "path": null,
+    "auditId": null,
+    "evidence": []
+  }
+}

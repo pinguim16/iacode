@@ -1,0 +1,134 @@
+{
+  "schemaVersion": "1.0.0",
+  "gate": "GATE-6",
+  "checkpoint": "GATE-6-CP-0001",
+  "steps": [
+    {
+      "stepId": "G6-S00",
+      "requirements": [
+        "canonical entry and all LESSON-REQ-*"
+      ],
+      "expectedBehavior": "Validate and anchor sealed Gate 5, run the complete lesson preflight, derive all canonical requirements, execute baseline and record the plan before implementation.",
+      "implementation": [
+        "AUTHORIZATION.md",
+        "LESSON-PREFLIGHT.json",
+        "REQUIREMENTS-MATRIX.json",
+        "BASELINE.md",
+        "PLAN.md"
+      ],
+      "tests": [
+        "predecessor validation",
+        "integrity",
+        "requirement derivation",
+        "baseline"
+      ],
+      "functionalProof": "Actual clean predecessor validation and authority, canonical 51-row specification, 134-lesson preflight, 185-row derivation, 91-case baseline and preimplementation plan/ADRs are recorded. Cmd-0010 returns CHECKPOINT_VALID only after declaration cmd-0009 actually finishes. This completes entry, not feature acceptance.",
+      "evidence": [
+        "cmd-0001",
+        "cmd-0002",
+        "cmd-0003",
+        "cmd-0004",
+        "cmd-0005",
+        "cmd-0006",
+        "cmd-0007",
+        "cmd-0009",
+        "cmd-0010"
+      ],
+      "status": "COMPLETE"
+    },
+    {
+      "stepId": "G6-S01",
+      "requirements": [
+        "complete derived Experience Store requirements"
+      ],
+      "expectedBehavior": "Implement and prove observable source-bound experience capture, strict schema, provenance/rights, authenticated project-scoped API, migration, retention, deletion and recovery.",
+      "implementation": [
+        "services/experience",
+        "packages/contracts",
+        "packages/persistence",
+        "apps/api",
+        "docs/adr",
+        "docs/runbooks"
+      ],
+      "tests": [
+        "positive and adverse contract tests",
+        "actual PostgreSQL migrations",
+        "real HTTP persistence",
+        "owned live workflow"
+      ],
+      "functionalProof": "Complete unchanged lint, domain29/API173/client35, actual SQL/HTTP/migrations36, Gate6 root controls and fresh real experience lifecycle pass. All retained runtime and metadata findings close only after actual causal controls and canonical acceptance; later root23 includes complete positive/adverse continuation rendering and canonical retrospective conformance. This completes implementation, not whole-Gate acceptance. Native completion rework is causally accepted locally by cmd-0274/0276/0279/0281 without extending deadlines or claiming whole-Gate acceptance.",
+      "evidence": [
+        "cmd-0054",
+        "cmd-0050",
+        "cmd-0109",
+        "FINDINGS.json",
+        "attempts/EXPERIENCE-LIVE-0003-RECEIPT.json",
+        "cmd-0274",
+        "cmd-0276",
+        "cmd-0279",
+        "cmd-0281"
+      ],
+      "status": "COMPLETE"
+    },
+    {
+      "stepId": "G6-S02",
+      "requirements": [
+        "all derived requirements and mandatory quality gates"
+      ],
+      "expectedBehavior": "Execute complete immutable verification, every mandatory Green Keeper gate, total completeness, fresh internal Red Team and complete clean-clone closure mirror in canonical order.",
+      "implementation": [
+        "TESTS.json",
+        "QUALITY.json",
+        "COMPLETENESS-REPORT.json",
+        "M2-INTERNAL-RED-TEAM.json",
+        "M2-INTERNAL-MIRROR.json"
+      ],
+      "tests": [
+        "complete non-fast verifier",
+        "whole mandatory gate set",
+        "completeness",
+        "internal Red Team and null control",
+        "full mirror"
+      ],
+      "functionalProof": "Complete published non-fast verifier, full mandatory Green Keeper, completeness, fresh internal Red Team/null control and full closure mirror actually pass against unchanged source. Same-session only.",
+      "evidence": [
+        "cmd-0296",
+        "M2-INTERNAL-MIRROR.json",
+        "M2-INTERNAL-RED-TEAM.json",
+        "COMPLETENESS-REPORT.json",
+        "REWORK-LOG.jsonl"
+      ],
+      "status": "COMPLETE"
+    },
+    {
+      "stepId": "G6-S03",
+      "requirements": [
+        "truthful pre-seal assembly and resumability"
+      ],
+      "expectedBehavior": "Assemble actual evidence, final counts, explicit files, provenance, risks and resumable handoff for canonical pre-seal validation; sealing and publication remain subsequent actual actions.",
+      "implementation": [
+        "STATE.json",
+        "FILES.json",
+        "COUNTS.json",
+        "HANDOFF.md",
+        "FINAL-REPORT.md"
+      ],
+      "tests": [
+        "evidence resolution",
+        "canonical counts",
+        "serialized checkpoint validation"
+      ],
+      "functionalProof": "Actual final internal report, counters, explicit inventory, provenance/risks and complete canonical handoff are assembled. Subsequent quiescent checkpoint validation cmd-0335 passes. This completes preseal assembly, not a claim that a future content commit, canonical seal or publication already happened.",
+      "evidence": [
+        "cmd-0335",
+        "FINAL-REPORT.md",
+        "COUNTS.json",
+        "FILES.json",
+        "HANDOFF.md",
+        "RISKS.md",
+        "PROVENANCE.json"
+      ],
+      "status": "COMPLETE"
+    }
+  ]
+}

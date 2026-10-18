@@ -9,7 +9,7 @@ Finish only authorized Gate6 Experience Store and every internal control through
 
 ## What was completed
 
-Entry/baseline/architecture and complete local causal implementation acceptance: lint, domain29, API173, client35, actual SQL/HTTP/migrations36 and fresh provider/sandbox/Quality lifecycle72 with owned cleanup. See cmd-0050/0054 and original producer receipts. Historical v5 full47/47, functional37/37, Green Keeper15 and completeness PASS are exact archives, not current approval. The later failed Red Team is retained. Current native causal repair passes formerly failing controls, complete77 Gate5/Gate6 root cases and two actual fresh native removal proofs.
+Historical runtime-v6 full47, functional37/37, Green Keeper15, completeness193, internal Red Team71 and mirror18 passed. All30 exact assurance/handoff originals are archived. Cmd-0340 terminal refusal and cmd-0342 causal failure remain; cmd-0343 proves canonical rendering and every-section adverse controls, with LSN-0008 recurrence3/CRITICAL and GRD-0146 local restoration. Fresh memory-bound whole assurance is due.
 
 ## What was NOT completed
 
@@ -25,15 +25,15 @@ FILES.json declares the actual Gate6 delta. Every later path must be explicitly 
 
 ## Important decisions
 
-ADR-0050 defines source-bound explicit-consent facts and pure ports; ADR-0051 defines finite retention/tombstones. All canonical criteria and selected lessons remain mandatory according to policy; all37 runtime criteria require functional evidence. ADR-0052 requires observed exact-owned-member synchronization and retained typed cleanup facts under unchanged deadlines; actual directory removal remains mandatory.
+ADR-0050 defines source-bound explicit-consent facts and pure ports; ADR-0051 defines finite retention/tombstones. All canonical criteria and selected lessons remain mandatory according to policy; all37 runtime criteria require functional evidence.
 
 ## Tests executed
 
-Actual completed local invocations cmd-0050 and cmd-0054 cover the suites/runtime above; cmd-0109 proves root23 including canonical retrospective conformance. Suite-attempts and attempts retain exact safe output. These are local causal proofs, not a complete immutable Gate verdict. TESTS.json names distinct physical runs. Cmd-0274 disproves the old job completion predicate with a real pinned handle; cmd-0276/0279/0281 accept local corrective controls and real native removal. Cmd-0277/0278 are retained wrong-invocation/precondition failures, not edited tests.
+Actual completed local invocations cmd-0050 and cmd-0054 cover the suites/runtime above; cmd-0109 proves root23 including canonical retrospective conformance. Suite-attempts and attempts retain exact safe output. These are local causal proofs, not a complete immutable Gate verdict. TESTS.json names distinct physical runs.
 
 ## Known failures
 
-Historical Red Team cmd-0258 remains FAIL/INVALID in attempts/RUNTIME-V5-ASSURANCE-ARCHIVE.json. Local G6-INT-019 causal repair is closed, but the fresh whole assurance cycle is pending. Non-reproducing diagnostics do not constitute repair; historical exact log-holder identity remains unknown.
+G6-INT-021 is causally corrected, not silently repaired. Historical v6 successful assurance does not accept the changed current memory. All previous failures/counters/raw producers remain. No Gate, seal, publication or independent verdict is inferred.
 
 ## Known risks
 
@@ -41,11 +41,11 @@ RISKS.md records security/rights/backup/retention, external provider and same-se
 
 ## Do not repeat
 
-Never overlap ledger/inventory/validation writers, narrow denominators or replace failures with later successes. Do not replay immutable diagnostic/capture/recovery helpers. Never retry the four policy-refused targets named in earlier recovery evidence. Never stop unrelated applications, alter global profiles or move published tags.
+Never replay any historical archive, cleanup/recovery or capture helper, or any of four policy-refused targets. Do not overlap checkpoint writers, narrow controls or stop unrelated applications. Never mutate a sealed predecessor or published immutable tag.
 
 ## Required next action
 
-Freeze and publish a new Gate6-only immutable runtime subject after local native completion repair, current lesson/preflight derivation, full lint and valid serialized bookkeeping. Execute all47 non-fast stages, whole15 Green Keeper, total completeness, fresh internal Red Team/null control, full18-dimension clean-clone mirror, then actual canonical seal/publication/archive checks. Historical v5 successes and failed Red Team remain archived. Independent M2 remains pending; Gate7 is not authorized.
+Publish a fresh Gate6-only immutable subject after full lint and valid serialized bookkeeping; execute complete non-fast verification, whole Green Keeper, total completeness, fresh internal Red Team and full clean-clone mirror, then canonical finalization/seal/publication. All original v6 evidence and terminal refusal remain archived. Independent M2 remains pending; Gate7 is unauthorized.
 
 ## Exact continuation sequence
 

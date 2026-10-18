@@ -15,7 +15,7 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 | `LSN-0005` | `GUARDED` | CRITICAL | quality | A PASS requires evidence that can be executed or resolved, not a statement | `QualityEvidenceTests.test_pass_without_evidence_fails`, `QualityEvidenceTests.test_pass_referencing_a_failed_command_fails`, `scripts/development-ledger/validate_checkpoint.py`, `validate_checkpoint._validate_quality_evidence`, `PromotionInvariantTests.test_every_positive_status_rejects_every_red_quality_dimension` |
 | `LSN-0006` | `GUARDED` | MEDIUM | documentation | The repository must be self-contained; a specification may not live outside it | `SetupChecklistTests.test_checklist_exists_and_is_referenced`, `SetupChecklistTests.test_documentation_links_resolve` |
 | `LSN-0007` | `GUARDED` | CRITICAL | process | Independent validation cannot be declared by the run that did the work | `SecondToolValidationTests.test_failed_cross_tool_validation_cannot_grant_gate_pass`, `DeliveryAssuranceGateTests.test_self_claimed_independent_review_blocks_review`, `.iacode/schemas/checkpoint.schema.json`, `scripts/development-ledger/attestation.py`, `ExternalAttestationTests.test_an_implementer_checkpoint_cannot_declare_an_external_pass` |
-| `LSN-0008` | `GUARDED` | CRITICAL | process | Requirement completeness must be total and evidence-backed before handoff | `DeliveryCompletenessMatrixTests.test_one_requirement_short_of_total_fails`, `DeliveryAssuranceGateTests.test_completeness_validator_not_executed_blocks_review`, `scripts/development-ledger/check_completeness.py`, `ExpectedRequirementSetTests.test_deleting_a_requirement_and_recomputing_the_counts_still_fails` |
+| `LSN-0008` | `GUARDED` | CRITICAL | process | Requirement completeness must be total and evidence-backed before handoff | `DeliveryCompletenessMatrixTests.test_one_requirement_short_of_total_fails`, `DeliveryAssuranceGateTests.test_completeness_validator_not_executed_blocks_review`, `scripts/development-ledger/check_completeness.py`, `ExpectedRequirementSetTests.test_deleting_a_requirement_and_recomputing_the_counts_still_fails`, `scripts/development-ledger/validate_checkpoint.py`, `Gate6BookkeepingCausalTests.test_final_report_renderer_consumes_every_canonical_section`, `Gate6BookkeepingCausalTests.test_final_report_renderer_refuses_each_missing_empty_or_extra_section` |
 | `LSN-0009` | `GUARDED` | CRITICAL | testing | A red gate requires rework, never a waiver, and never a weakened check | `GreenKeeperToolTests.test_red_gate_is_reported_as_still_red`, `DeliveryAssuranceGateTests.test_green_keeper_pass_with_a_real_failure_is_rejected`, `DeliveryAssuranceGateTests.test_red_tests_block_review`, `.iacode/policies/quality-gates.json`, `MandatoryGatePolicyTests.test_a_cycle_measured_against_no_gate_is_rejected` |
 | `LSN-0010` | `GUARDED` | HIGH | tooling | A recorded command must carry runtime, working directory, commit and purpose to be replayable | `CommandReproducibilityTests.test_bare_script_name_is_rejected`, `CommandReproducibilityTests.test_unresolvable_script_path_is_rejected`, `.iacode/schemas/command.schema.json`, `validate_checkpoint._validate_command_reproducibility`, `CommandInputBindingTests.test_a_record_without_a_digest_is_rejected` |
 | `LSN-0011` | `GUARDED` | CRITICAL | tooling | A control over a checkpoint's own evidence must be scoped to the moment it matters | `DeliveryAssuranceGateTests.test_gate_consistency_is_provisional_while_work_is_in_progress`, `green_keeper._refresh_declared_hashes`, `test_every_runner_of_the_mandatory_gates_refreshes_the_declared_hashes`, `test_green_keeper_declares_its_in_progress_evidence_dirty_before_validation`, `test_preflight_aggregates_and_commit_semantics_are_derived_without_promotion`, `test_a_sealed_or_terminal_checkpoint_is_never_rewritten`, `test_validation_runner_keeps_the_synchronizers_derived_state`, `test_bookkeeping_sequence_awaits_each_recorder_and_keeps_canonical_order`, `test_bookkeeping_sequence_never_validates_after_inventory_recorder_failure` |
@@ -138,7 +138,7 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 | `LSN-0128` | `GUARDED` | HIGH | testing | Adversarial premises must use the actual public contract | `test_forgery_premise_joins_public_request_ids_to_actual_successful_sandbox_executions`, `test_cleanup_membership_derives_every_canonical_active_state_including_running` |
 | `LSN-0129` | `GUARDED` | HIGH | implementation | Repeated cancellation must preserve an already cancelled terminal result | `test_repeated_cancel_of_cancelled_run_returns_unchanged_terminal_truth` |
 | `LSN-0130` | `GUARDED` | HIGH | quality | Executable export line endings belong to the source and packaging contract | `test_commonjs_and_esm_exports_have_explicit_lf_attributes`, `test_builder_refuses_a_crlf_executable_instead_of_shipping_a_broken_linux_shebang` |
-| `LSN-0131` | `GUARDED` | HIGH | quality | Raw evidence digests require byte-preserving Git export, not text normalization | `test_exact_byte_evidence_survives_git_transport_and_detects_normalization` |
+| `LSN-0131` | `GUARDED` | CRITICAL | quality | Raw evidence digests require byte-preserving Git export, not text normalization | `test_exact_byte_evidence_survives_git_transport_and_detects_normalization`, `Gate6BookkeepingCausalTests.test_actual_captured_output_hashes_and_git_attributes_preserve_bytes`, `docs/checkpoints/GATE-6-CP-0001/audit-harness/verify_evidence_transport.py` |
 | `LSN-0132` | `GUARDED` | HIGH | quality | Owned Git clones need read-only-aware cleanup, not native-profile lock retry | `test_verification_clone_cleanup_handles_real_readonly_git_objects` |
 | `LSN-0133` | `GUARDED` | MEDIUM | tooling | Shared field names do not imply shared schema types | `test_current_provenance_is_validated_by_its_own_artifact_schema` |
 | `LSN-0134` | `GUARDED` | MEDIUM | implementation | Configuration classifiers consume decoded values, not dotenv quote syntax | `test_host_literal_reader_matches_actual_compose_and_placeholder_semantics`, `test_malformed_quoted_env_literals_fail_closed_without_exposing_content`, `test_process_environment_overlays_are_values_not_dotenv_tokens` |
@@ -250,17 +250,20 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 
 ### LSN-0008 — Requirement completeness must be total and evidence-backed before handoff
 
-- Status: `GUARDED`, severity CRITICAL, category process, recurrences 2.
+- Status: `GUARDED`, severity CRITICAL, category process, recurrences 3.
 - Source: SETUP-00, SETUP-00-CP-0005, finding prompt sections 9 and 10.
 - Symptom: The independent tool was spending its effort discovering unimplemented requirements and missing evidence rather than auditing design.
 - Root cause: No artifact held the complete requirement set, so completeness was a judgement made from memory of the conversation.
-- Resolution: Requirements are extracted into REQUIREMENTS-MATRIX.json before implementation and audited by a validator that resolves every evidence reference and refuses anything short of total coverage; the terminal finalizer also refuses a handoff whose canonical final-report structure is incomplete.
+- Resolution: Requirements are extracted into REQUIREMENTS-MATRIX.json before implementation and audited by a validator that resolves every evidence reference and refuses anything short of total coverage; the terminal finalizer also refuses a handoff whose canonical final-report structure is incomplete. Gate6 recurrence3 adds a canonical final-report renderer which consumes the unchanged owning-validator heading set and rejects incomplete or empty input before writing. Actual cmd-0343 passes the formerly failing positive and every-section adverse controls; whole fresh immutable assurance remains mandatory.
 - Prevention:
   - `test` DeliveryCompletenessMatrixTests.test_one_requirement_short_of_total_fails — Coverage below total fails the audit.
   - `test` DeliveryAssuranceGateTests.test_completeness_validator_not_executed_blocks_review — An unexecuted completeness audit blocks readiness.
   - `validator` scripts/development-ledger/check_completeness.py — Completeness is recomputed over an independently derived expected set.
   - `test` ExpectedRequirementSetTests.test_deleting_a_requirement_and_recomputing_the_counts_still_fails — Deleting a requirement and recomputing every count still fails.
-- Evidence: `file:docs/adr/ADR-0008-delivery-assurance-gates.md`, `file:docs/checkpoints/SETUP-00-CP-0005/COMPLETENESS-REPORT.md`
+  - `validator` scripts/development-ledger/validate_checkpoint.py — The unchanged terminal validator refuses a final report lacking any canonical heading.
+  - `test` Gate6BookkeepingCausalTests.test_final_report_renderer_consumes_every_canonical_section — The actual assembler consumes the owning validator section set in order with substantive content.
+  - `test` Gate6BookkeepingCausalTests.test_final_report_renderer_refuses_each_missing_empty_or_extra_section — Every omitted or empty canonical section and an invented extra section is refused.
+- Evidence: `file:docs/adr/ADR-0008-delivery-assurance-gates.md`, `file:docs/checkpoints/SETUP-00-CP-0005/COMPLETENESS-REPORT.md`, `file:docs/checkpoints/GATE-6-CP-0001/FINDINGS.json`, `file:docs/checkpoints/GATE-6-CP-0001/attempts/RUNTIME-V6-FINALIZATION-ARCHIVE.json`
 
 ### LSN-0009 — A red gate requires rework, never a waiver, and never a weakened check
 
@@ -1795,14 +1798,16 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 
 ### LSN-0131 — Raw evidence digests require byte-preserving Git export, not text normalization
 
-- Status: `GUARDED`, severity HIGH, category quality, recurrences 0.
+- Status: `GUARDED`, severity CRITICAL, category quality, recurrences 1.
 - Source: GATE-5, GATE-5-CP-0001, finding G5-INT-022.
 - Symptom: Before publication, the staged actual desktop report lost CR bytes and no longer matched the archived observation's raw SHA-256.
 - Root cause: Dedicated byte-exact copied observations inherited the generic JSON text/LF policy; local copy equality did not prove Git export equality.
-- Resolution: Preserve original copied bytes, mark dedicated observation/archive paths non-text and exercise actual Git staging with positive, real normalization-negative and restored positive controls. The causal red is cmd-0216.
+- Resolution: Preserve original copied bytes, mark dedicated observation/archive paths non-text and exercise actual Git staging with positive, real normalization-negative and restored positive controls. The causal red is cmd-0216. Gate6 recurrence1 protects the exact additional v6 archive boundary and refreshes its existing index. Cmd-0358 proves all176 archived observations exact, cmd-0359 passes unchanged actual Git normalization-negative/restored-positive controls and cmd-0360 passes all37 Gate6 cases including every manifest member.
 - Prevention:
   - `test` test_exact_byte_evidence_survives_git_transport_and_detects_normalization — A real isolated Git repository must retain exact CRLF observation bytes; generic text normalization must demonstrably change them, and restoration must recover equality.
-- Evidence: `file:.gitattributes`, `file:tests/test_gate5_clients.py`, `file:docs/checkpoints/GATE-5-CP-0001/FINDINGS.json`, `file:docs/checkpoints/GATE-5-CP-0001/COMMANDS.jsonl`
+  - `test` Gate6BookkeepingCausalTests.test_actual_captured_output_hashes_and_git_attributes_preserve_bytes — Every archived manifest member, including Markdown/Python, retains its original digest and explicit non-text Git attribute.
+  - `validator` docs/checkpoints/GATE-6-CP-0001/audit-harness/verify_evidence_transport.py — Compare every manifest member and original producer to its actual index bytes before publication.
+- Evidence: `file:.gitattributes`, `file:tests/test_gate5_clients.py`, `file:docs/checkpoints/GATE-5-CP-0001/FINDINGS.json`, `file:docs/checkpoints/GATE-5-CP-0001/COMMANDS.jsonl`, `file:docs/checkpoints/GATE-6-CP-0001/FINDINGS.json`, `file:docs/checkpoints/GATE-6-CP-0001/attempts/RUNTIME-V6-FINALIZATION-ARCHIVE.json`
 
 ### LSN-0132 — Owned Git clones need read-only-aware cleanup, not native-profile lock retry
 

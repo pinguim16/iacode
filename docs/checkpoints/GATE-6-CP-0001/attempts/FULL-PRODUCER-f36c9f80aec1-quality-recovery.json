@@ -1,0 +1,99 @@
+{
+  "schemaVersion": "1.0.0",
+  "result": "PASS",
+  "scenarios": [
+    {
+      "schemaVersion": "1.0.0",
+      "scenario": "recovery",
+      "result": "PASS",
+      "environment": "real-compose-temporal-postgresql-minio-sandbox-container-engine",
+      "steps": [
+        {
+          "step": "snapshot.stored",
+          "result": "PASS",
+          "expected": [
+            "artifactId",
+            "key",
+            "sha256",
+            "sizeBytes"
+          ],
+          "observed": [
+            "artifactId",
+            "key",
+            "sha256",
+            "sizeBytes"
+          ]
+        },
+        {
+          "step": "worker.restart_requested",
+          "result": "PASS",
+          "expected": 0,
+          "observed": 0
+        },
+        {
+          "step": "run.terminal",
+          "result": "PASS",
+          "expected": "SUCCEEDED",
+          "observed": "SUCCEEDED"
+        },
+        {
+          "step": "results.complete",
+          "result": "PASS",
+          "expected": 7,
+          "observed": 7
+        },
+        {
+          "step": "evidence.one_or_more_per_result",
+          "result": "PASS",
+          "expected": ">=7",
+          "observed": 7
+        },
+        {
+          "step": "findings.evidence_resolved",
+          "result": "PASS",
+          "expected": [],
+          "observed": []
+        },
+        {
+          "step": "evidence.rights_closed",
+          "result": "PASS",
+          "expected": "every evidence item trainingAllowed=false and ragAllowed=false",
+          "observed": 7
+        },
+        {
+          "step": "sandbox.no_active_session",
+          "result": "PASS",
+          "expected": "0",
+          "observed": "0"
+        },
+        {
+          "step": "results.exactly_once",
+          "result": "PASS",
+          "expected": 7,
+          "observed": 7
+        },
+        {
+          "step": "identity.preserved",
+          "result": "PASS",
+          "expected": "01a14d4b-b52e-7000-bfe0-4281bb27a4f7",
+          "observed": "01a14d4b-b52e-7000-bfe0-4281bb27a4f7"
+        }
+      ],
+      "artifacts": [
+        {
+          "kind": "snapshot",
+          "artifactId": "01a14d4b-b06c-7000-ba77-053a31fbe0c0",
+          "digest": "9dbe7e5c9d13bbe32488c74361fca8d306a0879f047cf587b88809b5a68ed56c",
+          "sizeBytes": 504
+        },
+        {
+          "kind": "quality-run",
+          "runId": "01a14d4b-b52e-7000-bfe0-4281bb27a4f7",
+          "planId": "09e4bb7487542afa1c27ac363a2bf457a2807a75da10fdc2702b70c97f83d4aa"
+        }
+      ],
+      "recordedAt": "2026-10-18T04:36:42Z"
+    }
+  ],
+  "recordedAt": "2026-10-18T04:36:42Z"
+}

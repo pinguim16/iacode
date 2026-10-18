@@ -1,3 +1,3 @@
 # Status
 
-IN_PROGRESS — local native repair accepted; complete fresh immutable verification and ordered assurance/seal pending.
+IN_PROGRESS — local final-report repair accepted; fresh memory-bound immutable assurance and actual seal pending.

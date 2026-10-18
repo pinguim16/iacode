@@ -1,5 +1,16 @@
 # Risks
 
+## Current residuals and boundary
+
+- All internal controls in FINAL-REPORT.md actually pass against unchanged runtime source. Canonical sealing/publication is separately evidenced by its real tool records and tag. Independent M2 and second-tool approval are still pending; Gate7 is unauthorized.
+- Process completion and actual removal are separate requirements. Both ten-second bounds remain unchanged; external OS/file holders may still cause a real FAIL. The exact historical log holder is not retroactively identified.
+- Unknown reuse rights stay denied. Primary deletion is not proof of erasure from every backup. Preserve project scope, consent, source integrity and finite tombstones.
+- Four historically policy-refused targets below remain manual-owner cleanup only. No alternate deletion API or replay is authorized.
+
+## Historical observations retained without rewriting
+
+The following original observations preserve their then-current failures/prerequisites. References to fresh assurance being due describe those historical moments, not the completed current internal controls.
+
 - Native cleanup rework is locally accepted, not whole-Gate approval. Actual cmd-0274 disproves
   zero accounting as completion of an observed owned member. Exact-member synchronization and
   typed failure retention pass causal controls, all77 Gate5/Gate6 root cases and two real native

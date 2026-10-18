@@ -1,5 +1,5 @@
 {
-  "subjectCommit": "950421fc5554a7e654ffd6096898b07a679d9923",
+  "subjectCommit": "1442b86d38be11aee5e2ff635e576be08e52997b",
   "source": "single full verifier invocation",
   "scenarios": {
     "desktop-e2e.json": {
@@ -7,9 +7,9 @@
       "scenario": "desktop-e2e",
       "result": "PASS",
       "environment": "fresh-installed-cli-and-native-vscode-real-authenticated-compose-provider-postgresql-redis-minio-temporal-sandbox-quality",
-      "subjectCommit": "950421fc5554a7e654ffd6096898b07a679d9923",
+      "subjectCommit": "1442b86d38be11aee5e2ff635e576be08e52997b",
       "sourceDirty": false,
-      "sourceFingerprint": "e0433204b7ea4666a38b7272f2bd57df65c7fd8811195022b873b5dca9f0ff9c",
+      "sourceFingerprint": "584eb6433e55f8a693315fa84c367c37de3c1c36747b08694888a01ca0c32f91",
       "steps": [
         {
           "name": "fresh-owned-authenticated-stack-healthy",
@@ -25,8 +25,8 @@
           "result": "PASS",
           "authorizedModel": "openai:gpt-4o-mini",
           "provider": "openai",
-          "catalogModels": 135,
-          "discovered": 135
+          "catalogModels": 138,
+          "discovered": 138
         },
         {
           "name": "unauthenticated-domain-refused-before-effects",
@@ -152,7 +152,7 @@
           "result": "PASS"
         }
       ],
-      "composeProject": "iacode-desktop-d21f14d17d6b",
+      "composeProject": "iacode-desktop-55719b967c3d",
       "packages": {
         "kind": "CLIENT_BUILD_NOT_FUNCTIONAL_ACCEPTANCE",
         "result": "PASS",
@@ -218,46 +218,6 @@
         },
         {
           "command": "quality-reproduce",
-          "exitCode": 0
-        },
-        {
-          "command": "quality-read",
-          "exitCode": 0
-        },
-        {
-          "command": "quality-read",
-          "exitCode": 0
-        },
-        {
-          "command": "quality-read",
-          "exitCode": 0
-        },
-        {
-          "command": "quality-read",
-          "exitCode": 0
-        },
-        {
-          "command": "quality-read",
-          "exitCode": 0
-        },
-        {
-          "command": "quality-read",
-          "exitCode": 0
-        },
-        {
-          "command": "quality-read",
-          "exitCode": 0
-        },
-        {
-          "command": "quality-read",
-          "exitCode": 0
-        },
-        {
-          "command": "quality-read",
-          "exitCode": 0
-        },
-        {
-          "command": "quality-read",
           "exitCode": 0
         },
         {
@@ -641,110 +601,6 @@
           "exitCode": 0
         },
         {
-          "command": "quality-read",
-          "exitCode": 0
-        },
-        {
-          "command": "quality-read",
-          "exitCode": 0
-        },
-        {
-          "command": "quality-read",
-          "exitCode": 0
-        },
-        {
-          "command": "quality-read",
-          "exitCode": 0
-        },
-        {
-          "command": "quality-read",
-          "exitCode": 0
-        },
-        {
-          "command": "quality-read",
-          "exitCode": 0
-        },
-        {
-          "command": "quality-read",
-          "exitCode": 0
-        },
-        {
-          "command": "quality-read",
-          "exitCode": 0
-        },
-        {
-          "command": "quality-read",
-          "exitCode": 0
-        },
-        {
-          "command": "quality-read",
-          "exitCode": 0
-        },
-        {
-          "command": "quality-read",
-          "exitCode": 0
-        },
-        {
-          "command": "quality-read",
-          "exitCode": 0
-        },
-        {
-          "command": "quality-read",
-          "exitCode": 0
-        },
-        {
-          "command": "quality-read",
-          "exitCode": 0
-        },
-        {
-          "command": "quality-read",
-          "exitCode": 0
-        },
-        {
-          "command": "quality-read",
-          "exitCode": 0
-        },
-        {
-          "command": "quality-read",
-          "exitCode": 0
-        },
-        {
-          "command": "quality-read",
-          "exitCode": 0
-        },
-        {
-          "command": "quality-read",
-          "exitCode": 0
-        },
-        {
-          "command": "quality-read",
-          "exitCode": 0
-        },
-        {
-          "command": "quality-read",
-          "exitCode": 0
-        },
-        {
-          "command": "quality-read",
-          "exitCode": 0
-        },
-        {
-          "command": "quality-read",
-          "exitCode": 0
-        },
-        {
-          "command": "quality-read",
-          "exitCode": 0
-        },
-        {
-          "command": "quality-read",
-          "exitCode": 0
-        },
-        {
-          "command": "quality-read",
-          "exitCode": 0
-        },
-        {
           "command": "start",
           "exitCode": 0
         },
@@ -800,13 +656,13 @@
         "mode": "start",
         "editorVersion": "1.138.0",
         "nodeVersion": "v24.18.1",
-        "processId": 48496,
+        "processId": 41808,
         "steps": [
           {
             "name": "fresh-installed-extension-active",
             "result": "PASS",
             "commands": 19,
-            "extensionPath": "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-desktop-live-ad9nm8s9\\editor\\extensions\\iacode.iacode-0.1.0"
+            "extensionPath": "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-desktop-live-01wz8wo6\\editor\\extensions\\iacode.iacode-0.1.0"
           },
           {
             "name": "native-default-cancel-sends-no-upload",
@@ -822,54 +678,56 @@
             "name": "actual-uncertain-create-retains-stable-identity-without-retry",
             "result": "PASS",
             "code": "TRANSPORT_UNAVAILABLE",
-            "idempotencyKey": "4f406981-913e-4e3b-bf3b-3469bf05edda"
+            "idempotencyKey": "4d4e9dd1-e0a1-435e-a437-7848cc5d0c51"
           }
         ],
         "pending": {
           "operation": "start",
-          "idempotencyKey": "4f406981-913e-4e3b-bf3b-3469bf05edda"
+          "idempotencyKey": "4d4e9dd1-e0a1-435e-a437-7848cc5d0c51"
         },
         "exitCode": 0,
         "processCleanup": {
           "jobOwned": true,
-          "remainingBeforeCleanup": 1,
-          "remainingAfterCleanup": 0
+          "remainingBeforeCleanup": 0,
+          "remainingAfterCleanup": 0,
+          "observedProcessCount": 0,
+          "signaledProcessCount": 0
         },
         "sharedStorageObservedOwned": true
       },
-      "acceptedRunId": "01a14c8e-72f3-7000-b906-2a3dcdc5a4f8",
+      "acceptedRunId": "01a14d55-54c3-7000-9760-4fc805df98cb",
       "nativeResume": {
         "kind": "ACTUAL_ISOLATED_VSCODE_EXTENSION_HOST",
         "result": "PASS",
         "mode": "resume",
         "editorVersion": "1.138.0",
         "nodeVersion": "v24.18.1",
-        "processId": 47908,
+        "processId": 50484,
         "steps": [
           {
             "name": "fresh-installed-extension-active",
             "result": "PASS",
             "commands": 19,
-            "extensionPath": "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-desktop-live-ad9nm8s9\\editor\\extensions\\iacode.iacode-0.1.0"
+            "extensionPath": "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-desktop-live-01wz8wo6\\editor\\extensions\\iacode.iacode-0.1.0"
           },
           {
             "name": "new-host-read-only-recovery",
             "result": "PASS",
-            "runId": "01a14c8e-72f3-7000-b906-2a3dcdc5a4f8"
+            "runId": "01a14d55-54c3-7000-9760-4fc805df98cb"
           },
           {
             "name": "actual-provider-task-sandbox-result-and-ordered-events",
             "result": "PASS",
-            "runId": "01a14c8e-72f3-7000-b906-2a3dcdc5a4f8",
-            "modelCalls": 4,
-            "sandboxExecutions": 1,
+            "runId": "01a14d55-54c3-7000-9760-4fc805df98cb",
+            "modelCalls": 10,
+            "sandboxExecutions": 3,
             "successfulUnittestExecution": true,
-            "lastCursor": 20
+            "lastCursor": 38
           },
           {
             "name": "native-derived-quality-results-and-evidence",
             "result": "PASS",
-            "qualityRunId": "01a14c8f-3f50-7000-a186-8efc27679deb",
+            "qualityRunId": "01a14d55-ef1b-7000-9b97-878adb545c14",
             "verdict": "PASS",
             "checks": 7,
             "evidence": 7
@@ -880,19 +738,21 @@
           }
         ],
         "taskObservation": {
-          "runId": "01a14c8e-72f3-7000-b906-2a3dcdc5a4f8",
+          "runId": "01a14d55-54c3-7000-9760-4fc805df98cb",
           "state": "SUCCEEDED",
           "errorType": null,
-          "modelCalls": 4,
-          "sandboxExecutions": 1
+          "modelCalls": 10,
+          "sandboxExecutions": 3
         },
-        "runId": "01a14c8e-72f3-7000-b906-2a3dcdc5a4f8",
-        "qualityRunId": "01a14c8f-3f50-7000-a186-8efc27679deb",
+        "runId": "01a14d55-54c3-7000-9760-4fc805df98cb",
+        "qualityRunId": "01a14d55-ef1b-7000-9b97-878adb545c14",
         "exitCode": 0,
         "processCleanup": {
           "jobOwned": true,
           "remainingBeforeCleanup": 0,
-          "remainingAfterCleanup": 0
+          "remainingAfterCleanup": 0,
+          "observedProcessCount": 0,
+          "signaledProcessCount": 0
         },
         "sharedStorageObservedOwned": true
       },
@@ -903,13 +763,13 @@
         "snapshot": 1,
         "start": 1,
         "lookup": 1,
-        "read": 72,
+        "read": 59,
         "events": 2,
         "quality-start": 1,
-        "quality-read": 80
+        "quality-read": 35
       },
       "taskCancellation": {
-        "runId": "01a14c91-1d83-7000-9837-9f9ed495c840",
+        "runId": "01a14d56-ceba-7000-b987-556fca23f4c0",
         "phase": "COMPLETE",
         "requestedState": "RUNNING",
         "terminalState": "CANCELLED"
@@ -931,9 +791,9 @@
       "scenario": "experience-store-e2e",
       "result": "PASS",
       "environment": "owned-authenticated-real-postgresql-redis-minio-temporal-provider-sandbox-quality",
-      "subjectCommit": "950421fc5554a7e654ffd6096898b07a679d9923",
+      "subjectCommit": "1442b86d38be11aee5e2ff635e576be08e52997b",
       "sourceDirty": false,
-      "sourceFingerprint": "e0433204b7ea4666a38b7272f2bd57df65c7fd8811195022b873b5dca9f0ff9c",
+      "sourceFingerprint": "584eb6433e55f8a693315fa84c367c37de3c1c36747b08694888a01ca0c32f91",
       "steps": [
         {
           "name": "current-sandbox-and-quality-images-built",
@@ -952,8 +812,8 @@
           "result": "PASS",
           "authorizedModel": "openai:gpt-4o-mini",
           "provider": "openai",
-          "catalogModels": 135,
-          "discovered": 135
+          "catalogModels": 138,
+          "discovered": 138
         },
         {
           "name": "actual-authorized-snapshot-stored",
@@ -966,7 +826,7 @@
         {
           "name": "actual-provider-sandbox-task-completed",
           "result": "PASS",
-          "sourceRunId": "01a14c92-5bfe-7000-9ea7-1da4dcc0ae52"
+          "sourceRunId": "01a14d57-b1e4-7000-8c51-0aa475c36a80"
         },
         {
           "name": "actual-quality-workflow-created",
@@ -975,7 +835,7 @@
         {
           "name": "actual-derived-quality-pass-with-evidence",
           "result": "PASS",
-          "qualityRunId": "01a14c93-163f-7000-b222-4113f10d88b1"
+          "qualityRunId": "01a14d58-2a64-7000-9e3f-66a7ab7083c2"
         },
         {
           "name": "authenticated-project-source-discovery",
@@ -1155,8 +1015,8 @@
         {
           "name": "actual-source-object-corrupt-fails-closed",
           "result": "PASS",
-          "artifactId": "9a303206-3fc4-4bd8-845a-22c6fedfcaff",
-          "sourceDigest": "d08101ca8cd68ee6a1298672bae49dd583b3938964067e8e79a1be38d3e7b1c5"
+          "artifactId": "50e38979-3765-4ffb-a901-c813b3bcd036",
+          "sourceDigest": "8950e1c29e02652eeb5ff5596dbb915f5e33009977b1c024176cf5189fc1fe7f"
         },
         {
           "name": "restored-source-clean-control-after-corrupt",
@@ -1165,8 +1025,8 @@
         {
           "name": "actual-source-object-remove-fails-closed",
           "result": "PASS",
-          "artifactId": "9a303206-3fc4-4bd8-845a-22c6fedfcaff",
-          "sourceDigest": "d08101ca8cd68ee6a1298672bae49dd583b3938964067e8e79a1be38d3e7b1c5"
+          "artifactId": "50e38979-3765-4ffb-a901-c813b3bcd036",
+          "sourceDigest": "8950e1c29e02652eeb5ff5596dbb915f5e33009977b1c024176cf5189fc1fe7f"
         },
         {
           "name": "restored-source-clean-control-after-remove",
@@ -1242,25 +1102,25 @@
           "result": "PASS"
         }
       ],
-      "composeProject": "iacode-experience-12b4ce00a0c1",
+      "composeProject": "iacode-experience-cdb731a1024a",
       "capturedExperience": {
-        "experienceId": "01a14c93-a8d8-7000-9999-a87c09ec4cfd",
-        "projectId": "01a14c92-5bfa-7000-a0fa-42b5b22a3392",
-        "sourceRunId": "01a14c92-5bfe-7000-9ea7-1da4dcc0ae52",
-        "contentDigest": "8e5acac70d651058aa354dd5590cda3337460eb6f2b133e3e36e8370e23fb735",
-        "createdAt": "2026-10-18T01:15:07.728305+00:00",
-        "expiresAt": "2026-10-18T01:25:07.728305+00:00",
+        "experienceId": "01a14d58-87bd-7000-98f1-c2c5c3ab68ec",
+        "projectId": "01a14d57-b1e2-7000-9f74-478eb2ee9ae7",
+        "sourceRunId": "01a14d57-b1e4-7000-8c51-0aa475c36a80",
+        "contentDigest": "eb23d641dc60e42b5a18926440a68bf92bcc4f1ca72cbc997d10483cc4da482a",
+        "createdAt": "2026-10-18T04:50:09.823426+00:00",
+        "expiresAt": "2026-10-18T05:00:09.823426+00:00",
         "state": "ACTIVE",
         "idempotentReplay": true,
         "document": {
           "task": {
-            "runId": "01a14c92-5bfe-7000-9ea7-1da4dcc0ae52",
+            "runId": "01a14d57-b1e4-7000-8c51-0aa475c36a80",
             "status": "SUCCEEDED",
-            "taskId": "01a14c92-5bfe-7001-96ed-b8610950ba58",
+            "taskId": "01a14d57-b1e4-7001-af93-23deb6484937",
             "attempt": 1,
-            "projectId": "01a14c92-5bfa-7000-a0fa-42b5b22a3392",
-            "startedAt": "2026-10-18T01:13:42.931399Z",
-            "finishedAt": "2026-10-18T01:14:30.149123Z"
+            "projectId": "01a14d57-b1e2-7000-9f74-478eb2ee9ae7",
+            "startedAt": "2026-10-18T04:49:15.405594Z",
+            "finishedAt": "2026-10-18T04:49:45.958102Z"
           },
           "files": {
             "digest": "798aefda2f02161005f7c67b407a6eeca44e56ba85359b9f74eb21a3f7b75ebb",
@@ -1271,31 +1131,27 @@
           "model": [
             {
               "model": "gpt-4o-mini",
-              "callId": "01a14c92-66ba-7000-9024-300667d6da2d"
+              "callId": "01a14d57-bc6e-7000-9ba7-58e9413536bb"
             },
             {
               "model": "gpt-4o-mini",
-              "callId": "01a14c92-6e2b-7000-a18d-aa7f6413fd6f"
+              "callId": "01a14d57-c3e0-7000-b4f6-216a7c87825f"
             },
             {
               "model": "gpt-4o-mini",
-              "callId": "01a14c92-8111-7000-92a9-de8fbda84f9a"
+              "callId": "01a14d57-d026-7000-bffd-89550c5b352e"
             },
             {
               "model": "gpt-4o-mini",
-              "callId": "01a14c92-872d-7000-b5e9-e3ecd88b4ec6"
+              "callId": "01a14d57-d871-7000-83b5-3e69819187ec"
             },
             {
               "model": "gpt-4o-mini",
-              "callId": "01a14c92-919e-7000-a9dd-b1157f45b2f9"
+              "callId": "01a14d57-e174-7000-98cd-a41ea7ae0804"
             },
             {
               "model": "gpt-4o-mini",
-              "callId": "01a14c92-9f93-7000-99ed-541f0ad7edab"
-            },
-            {
-              "model": "gpt-4o-mini",
-              "callId": "01a14c92-a6f0-7000-9878-46b070418cc0"
+              "callId": "01a14d57-e6f5-7000-93d9-70270f9fa412"
             }
           ],
           "tests": {
@@ -1306,7 +1162,7 @@
                 "status": "PASSED",
                 "checkId": "q001-build",
                 "caseCount": null,
-                "resultDigest": "ace554b6eec9b5932de1842eb804dc11dc3c90abcabae669b4fc2e3ec4d4f26b"
+                "resultDigest": "9d1e0be1f056868872d3fa4ebba6eda99845a1e00496c42a227e39cc42bb155d"
               },
               {
                 "kind": "unit",
@@ -1314,7 +1170,7 @@
                 "status": "PASSED",
                 "checkId": "q002-unit",
                 "caseCount": null,
-                "resultDigest": "0eb0b463c75afd0adb51ec1b4baad05bc771e95bccbf8ee630700bb4e5c41615"
+                "resultDigest": "97e7a6a80c13f2e7334399efddbadf74ac7e4fca90cf2e3bfda1952828cf71f0"
               },
               {
                 "kind": "lint",
@@ -1322,7 +1178,7 @@
                 "status": "PASSED",
                 "checkId": "q003-lint",
                 "caseCount": null,
-                "resultDigest": "843091173add935c3979e9f65887009071972b93520e4aa3ccad07b9db735fc7"
+                "resultDigest": "0c9936f7dacb6ca17dfac5008333d78566a94a6e35520d40ecbc101e04173190"
               },
               {
                 "kind": "static",
@@ -1330,7 +1186,7 @@
                 "status": "PASSED",
                 "checkId": "q004-static",
                 "caseCount": null,
-                "resultDigest": "a5fa986878a61a51a1a70b64c41c0a693772f4917ede7c911fdcb19cf5816376"
+                "resultDigest": "f196f1449e645953dca74251a360dfb573bc3518ff018ae8600bddb7f26a250b"
               },
               {
                 "kind": "dependency-security",
@@ -1338,7 +1194,7 @@
                 "status": "PASSED",
                 "checkId": "q005-dependency-security",
                 "caseCount": null,
-                "resultDigest": "1542c2191934c4898ba7195bd4c6d591826b69dcc2f433fa145fbb4d08e59e65"
+                "resultDigest": "d31b563941f434fa3eda7fd7fc1fd1db3bbd5be8c0baa0ed26ff0bd1850d236e"
               },
               {
                 "kind": "secret",
@@ -1346,7 +1202,7 @@
                 "status": "PASSED",
                 "checkId": "q006-secret",
                 "caseCount": null,
-                "resultDigest": "2a4f042ebe9114e082f6b8b0984bc75314f34c7ba43f961b12025d44ad0704fd"
+                "resultDigest": "95059131e3ad03e98a84d2f7ccf560bfdcad72d5f0223916b862832ea78ec47e"
               },
               {
                 "kind": "diff-integrity",
@@ -1354,7 +1210,7 @@
                 "status": "PASSED",
                 "checkId": "q007-diff-integrity",
                 "caseCount": null,
-                "resultDigest": "d9c14843c94711f19fb873b11b02848ea145723b50a7aa3ec0f9035f710ba539"
+                "resultDigest": "288bebe56fd1bc9091ca79eb30468ebed05c96108a646bd4e350d351b18c5a7c"
               }
             ],
             "caseCount": null
@@ -1364,210 +1220,195 @@
             {
               "event": "RUN_CREATED",
               "sequence": 1,
-              "createdAt": "2026-10-18T01:13:42.679020Z"
+              "createdAt": "2026-10-18T04:49:15.251498Z"
             },
             {
               "event": "RUN_STARTED",
               "sequence": 2,
-              "createdAt": "2026-10-18T01:13:43.017947Z"
+              "createdAt": "2026-10-18T04:49:15.454053Z"
             },
             {
               "event": "AGENT_STARTED",
               "sequence": 3,
-              "createdAt": "2026-10-18T01:13:43.184346Z"
+              "createdAt": "2026-10-18T04:49:15.553240Z"
             },
             {
               "event": "MODEL_CALL_STARTED",
               "sequence": 4,
-              "createdAt": "2026-10-18T01:13:43.257993Z"
+              "createdAt": "2026-10-18T04:49:15.595854Z"
             },
             {
               "event": "MODEL_CALL_COMPLETED",
               "sequence": 5,
-              "createdAt": "2026-10-18T01:13:45.540746Z"
+              "createdAt": "2026-10-18T04:49:18.013207Z"
             },
             {
               "event": "AGENT_COMPLETED",
               "sequence": 6,
-              "createdAt": "2026-10-18T01:13:45.663451Z"
+              "createdAt": "2026-10-18T04:49:18.090434Z"
             },
             {
               "event": "AGENT_STARTED",
               "sequence": 7,
-              "createdAt": "2026-10-18T01:13:45.814683Z"
+              "createdAt": "2026-10-18T04:49:18.165919Z"
             },
             {
               "event": "MODEL_CALL_STARTED",
               "sequence": 8,
-              "createdAt": "2026-10-18T01:13:45.912638Z"
+              "createdAt": "2026-10-18T04:49:18.205044Z"
             },
             {
               "event": "MODEL_CALL_COMPLETED",
               "sequence": 9,
-              "createdAt": "2026-10-18T01:13:47.457547Z"
+              "createdAt": "2026-10-18T04:49:19.916041Z"
             },
             {
               "event": "TOOL_REQUESTED",
               "sequence": 10,
-              "createdAt": "2026-10-18T01:13:47.612506Z"
+              "createdAt": "2026-10-18T04:49:19.997859Z"
             },
             {
               "event": "TOOL_RESULT_RECEIVED",
               "sequence": 11,
-              "createdAt": "2026-10-18T01:13:50.650012Z"
+              "createdAt": "2026-10-18T04:49:21.776571Z"
             },
             {
               "event": "MODEL_CALL_STARTED",
               "sequence": 12,
-              "createdAt": "2026-10-18T01:13:50.710772Z"
+              "createdAt": "2026-10-18T04:49:21.822050Z"
             },
             {
               "event": "MODEL_CALL_COMPLETED",
               "sequence": 13,
-              "createdAt": "2026-10-18T01:13:52.315731Z"
+              "createdAt": "2026-10-18T04:49:23.068020Z"
             },
             {
-              "event": "RUN_NOTE",
+              "event": "TOOL_REQUESTED",
               "sequence": 14,
-              "createdAt": "2026-10-18T01:13:52.403402Z"
+              "createdAt": "2026-10-18T04:49:23.147511Z"
             },
             {
-              "event": "MODEL_CALL_STARTED",
+              "event": "TOOL_RESULT_RECEIVED",
               "sequence": 15,
-              "createdAt": "2026-10-18T01:13:52.487111Z"
+              "createdAt": "2026-10-18T04:49:23.663672Z"
             },
             {
-              "event": "MODEL_CALL_COMPLETED",
+              "event": "MODEL_CALL_STARTED",
               "sequence": 16,
-              "createdAt": "2026-10-18T01:13:53.827483Z"
+              "createdAt": "2026-10-18T04:49:23.707877Z"
             },
             {
-              "event": "TOOL_REQUESTED",
+              "event": "MODEL_CALL_COMPLETED",
               "sequence": 17,
-              "createdAt": "2026-10-18T01:13:53.967605Z"
-            },
-            {
-              "event": "TOOL_RESULT_RECEIVED",
-              "sequence": 18,
-              "createdAt": "2026-10-18T01:13:54.884668Z"
-            },
-            {
-              "event": "MODEL_CALL_STARTED",
-              "sequence": 19,
-              "createdAt": "2026-10-18T01:13:54.963552Z"
-            },
-            {
-              "event": "MODEL_CALL_COMPLETED",
-              "sequence": 20,
-              "createdAt": "2026-10-18T01:13:56.540671Z"
+              "createdAt": "2026-10-18T04:49:25.187817Z"
             },
             {
               "event": "TOOL_REQUESTED",
-              "sequence": 21,
-              "createdAt": "2026-10-18T01:13:56.682479Z"
+              "sequence": 18,
+              "createdAt": "2026-10-18T04:49:25.264482Z"
             },
             {
               "event": "TOOL_RESULT_RECEIVED",
-              "sequence": 22,
-              "createdAt": "2026-10-18T01:13:58.099911Z"
+              "sequence": 19,
+              "createdAt": "2026-10-18T04:49:26.069781Z"
             },
             {
               "event": "MODEL_CALL_STARTED",
-              "sequence": 23,
-              "createdAt": "2026-10-18T01:13:58.164349Z"
+              "sequence": 20,
+              "createdAt": "2026-10-18T04:49:26.112297Z"
             },
             {
               "event": "MODEL_CALL_COMPLETED",
-              "sequence": 24,
-              "createdAt": "2026-10-18T01:14:00.092698Z"
+              "sequence": 21,
+              "createdAt": "2026-10-18T04:49:27.492442Z"
             },
             {
               "event": "AGENT_COMPLETED",
-              "sequence": 25,
-              "createdAt": "2026-10-18T01:14:00.225561Z"
+              "sequence": 22,
+              "createdAt": "2026-10-18T04:49:27.568482Z"
             },
             {
               "event": "AGENT_STARTED",
-              "sequence": 26,
-              "createdAt": "2026-10-18T01:14:00.349906Z"
+              "sequence": 23,
+              "createdAt": "2026-10-18T04:49:27.644423Z"
             },
             {
               "event": "MODEL_CALL_STARTED",
-              "sequence": 27,
-              "createdAt": "2026-10-18T01:14:00.414790Z"
+              "sequence": 24,
+              "createdAt": "2026-10-18T04:49:27.683870Z"
             },
             {
               "event": "MODEL_CALL_COMPLETED",
-              "sequence": 28,
-              "createdAt": "2026-10-18T01:14:01.976723Z"
+              "sequence": 25,
+              "createdAt": "2026-10-18T04:49:28.896407Z"
             },
             {
               "event": "AGENT_COMPLETED",
-              "sequence": 29,
-              "createdAt": "2026-10-18T01:14:02.103997Z"
+              "sequence": 26,
+              "createdAt": "2026-10-18T04:49:28.967777Z"
             },
             {
               "event": "RUN_NOTE",
-              "sequence": 30,
-              "createdAt": "2026-10-18T01:14:30.023444Z"
+              "sequence": 27,
+              "createdAt": "2026-10-18T04:49:45.880899Z"
             },
             {
               "event": "RUN_COMPLETED",
-              "sequence": 31,
-              "createdAt": "2026-10-18T01:14:30.091939Z"
+              "sequence": 28,
+              "createdAt": "2026-10-18T04:49:45.918264Z"
             }
           ],
           "quality": {
-            "runId": "01a14c93-163f-7000-b222-4113f10d88b1",
+            "runId": "01a14d58-2a64-7000-9e3f-66a7ab7083c2",
             "verdict": "PASS",
             "planDigest": "491a7c93a3e30e131d7812ede215f068a7b28037504d079e5b2162371c6568b8",
             "resultDigests": [
-              "0ab185272b9e94d0ff792cfda771bfa56b4a7c9b95b47f13be9ab74ab495b4db",
-              "d3382d7b1ae3176cbdfc3ffeb7810404e40e4ea8400e7571d774df8eb3c463e5",
-              "95f31f513f298d28d08499e8ce9c25ab9aad31bb83af64148f20e3f7d4ee9a20",
-              "b9c65b4aabfbd4256c94de18eb1fd0f59c2a5e32b3178a2ecc3df837717722df",
-              "49928260abf86c786edc6713bfffdcbfbf10720fc4fb0d402223daafc91e8e01",
-              "74879a044f37acad8c98489706e1072d0d58820f2db2beefe6226d96d6c89735",
-              "01adb1fe2d2291abf397fa80e24a669c8989b4d0c18c2cdb517961373500ea03"
+              "01177b3263619abb072a6d9df95561d5881b3fc995da64e7771e0a4f880ba96f",
+              "cafe2016c9fb61bb11ead041ed64b3b9f8e5e113acf667b900cc9d74e60863a1",
+              "a7d94bb63297849d57d371f80f0d7993291a7f851e1437415b4bf212ea2dd0c8",
+              "0de7eedacaa047596aadd844408eece72c0a412f46141a7694afa0fb39983148",
+              "4e31a6639791e23b02e449928971bd88d41a1305d57352cbb4a4e00ffd577290",
+              "4f41322adb27c42c1813413beafc5889cf1772fea78cee647e4d7eba630f5fa9",
+              "fa4261db73e81c356c10644a826e7dc94dd2e3858800474220d6ead59d452a67"
             ],
-            "verdictDigest": "b0cd61bf2c0272e3ad023498c8892183bb91b9c2ec4104cb4c15b6951f1aa531",
+            "verdictDigest": "42faff93edd38f14d5bd128882fb51008114c954a566954042ce52116c51efba",
             "evidenceDigests": [
-              "06e7d8ede577f0f2b91fb758368b24a23bf307a5beaf6df6d6ea135ca984a5f5",
-              "4b8a3e65e851009417bc046261484c3ebee1ffa6e5c7c12792d1a97bed534064",
-              "71d86729ed1d8ba1c67ddb49fd632ca98a77247db79612afc305c29bb775c4d2",
-              "b553f5f3f1bc441ace6b2e8e8dee866430ea53403b4eeae2e3a5ee99d852f966",
-              "d08101ca8cd68ee6a1298672bae49dd583b3938964067e8e79a1be38d3e7b1c5",
-              "dd5867b3156cabe3126ef51dcd6f26a183323d808e77c3855b0a9fff397b34c6",
-              "ea777851cb9eeba80ca623041c98af4410865910102ea6c38c8a8f2375d2fe9a"
+              "0821361641d811691be0bed0a02e8be084df9ed4962f09e4a2f99dc49b6b5aa9",
+              "28dc08b2088d0034492c299e53c0d2417d1eb95d8a439a429d7d5e878bef8aa7",
+              "65ad8dcf596ca8a6e80c8e3306c554f0ef47dae4840da165dc2cbbae3dfd038e",
+              "8950e1c29e02652eeb5ff5596dbb915f5e33009977b1c024176cf5189fc1fe7f",
+              "9c9932695f78d69ade96bbae5728caa060211a807fa90833d00230d10044d954",
+              "c3d5c8d8e5050849df77473b119400485ae5f9e0b93c0102b8b96a49fc9568ed",
+              "ec5f42764873a0365962a1b2743afdfb3b9801cdfc0a3d575602f32b01e21840"
             ]
           },
           "attempts": [
             {
               "status": "SUCCEEDED",
-              "startedAt": "2026-10-18T01:13:43.117442Z",
-              "agentRunId": "01a14c92-5dcf-7000-a527-2c3b3fc1d687",
-              "finishedAt": "2026-10-18T01:13:45.605209Z",
+              "startedAt": "2026-10-18T04:49:15.515477Z",
+              "agentRunId": "01a14d57-b2fc-7000-b993-1a975dac15fd",
+              "finishedAt": "2026-10-18T04:49:18.053526Z",
               "stageIndex": 0
             },
             {
               "status": "SUCCEEDED",
-              "startedAt": "2026-10-18T01:13:45.731042Z",
-              "agentRunId": "01a14c92-6804-7000-b2d2-ce5a8fd6a056",
-              "finishedAt": "2026-10-18T01:14:00.161530Z",
+              "startedAt": "2026-10-18T04:49:18.128146Z",
+              "agentRunId": "01a14d57-bd30-7000-8d52-50b3466ffdee",
+              "finishedAt": "2026-10-18T04:49:27.532244Z",
               "stageIndex": 1
             },
             {
               "status": "SUCCEEDED",
-              "startedAt": "2026-10-18T01:14:00.288752Z",
-              "agentRunId": "01a14c92-a0e1-7000-a176-0a924c6826f1",
-              "finishedAt": "2026-10-18T01:14:02.042736Z",
+              "startedAt": "2026-10-18T04:49:27.607404Z",
+              "agentRunId": "01a14d57-e237-7000-9990-937233277086",
+              "finishedAt": "2026-10-18T04:49:28.933458Z",
               "stageIndex": 2
             }
           ],
           "commands": [
             {
               "tool": "shell.exec",
-              "requestId": "267b4bb4-a07f-4db3-b0fa-472eb483dc97",
+              "requestId": "c315c1ab-36bc-43ed-ba85-03fbfacdee69",
               "representation": "digest-only; no command or arguments copied",
               "argumentsDigest": "2456a41577a9ca26e7d4d44463f489c8384a335d2243985b7413b4c6923b6756"
             }
@@ -1575,74 +1416,70 @@
           "failures": [],
           "provider": [
             {
-              "callId": "01a14c92-66ba-7000-9024-300667d6da2d",
+              "callId": "01a14d57-bc6e-7000-9ba7-58e9413536bb",
               "provider": "openai"
             },
             {
-              "callId": "01a14c92-6e2b-7000-a18d-aa7f6413fd6f",
+              "callId": "01a14d57-c3e0-7000-b4f6-216a7c87825f",
               "provider": "openai"
             },
             {
-              "callId": "01a14c92-8111-7000-92a9-de8fbda84f9a",
+              "callId": "01a14d57-d026-7000-bffd-89550c5b352e",
               "provider": "openai"
             },
             {
-              "callId": "01a14c92-872d-7000-b5e9-e3ecd88b4ec6",
+              "callId": "01a14d57-d871-7000-83b5-3e69819187ec",
               "provider": "openai"
             },
             {
-              "callId": "01a14c92-919e-7000-a9dd-b1157f45b2f9",
+              "callId": "01a14d57-e174-7000-98cd-a41ea7ae0804",
               "provider": "openai"
             },
             {
-              "callId": "01a14c92-9f93-7000-99ed-541f0ad7edab",
-              "provider": "openai"
-            },
-            {
-              "callId": "01a14c92-a6f0-7000-9878-46b070418cc0",
+              "callId": "01a14d57-e6f5-7000-93d9-70270f9fa412",
               "provider": "openai"
             }
           ],
           "toolCalls": [
             {
               "tool": "filesystem.read",
-              "callId": "01a14c92-7a5c-7000-a202-e98c176ecc51",
+              "callId": "01a14d57-caf3-7000-93c2-c32bd9120e67",
               "status": "SUCCEEDED",
               "exitCode": null,
-              "requestId": "dbd707e3-f1d3-43d4-90d3-7b256030417d",
-              "sessionId": "01a14c92-703e-7000-874b-6bd52238c66e",
+              "requestId": "433c3be8-fb75-4a45-9317-f9ccb4f576ee",
+              "sessionId": "01a14d57-c504-7000-a8de-60ef7c4c0753",
               "succeeded": true,
-              "durationMs": 2686
+              "durationMs": 1582
             },
             {
               "tool": "filesystem.read",
-              "callId": "01a14c92-8b01-7000-bb36-2c545a5a4ec5",
+              "callId": "01a14d57-d25b-7000-8c4c-44fafc64c826",
               "status": "SUCCEEDED",
               "exitCode": null,
-              "requestId": "2b42c857-9cc5-4ecd-9130-52dec4ffd492",
-              "sessionId": "01a14c92-703e-7000-874b-6bd52238c66e",
+              "requestId": "7bc2aef4-1221-4550-b9b3-9f08d5dc78e3",
+              "sessionId": "01a14d57-c504-7000-a8de-60ef7c4c0753",
               "succeeded": true,
-              "durationMs": 595
+              "durationMs": 329
             },
             {
               "tool": "shell.exec",
-              "callId": "01a14c92-9794-7000-af3b-34ab1eee667b",
+              "callId": "01a14d57-dbc8-7000-963b-3519bebaeab1",
               "status": "SUCCEEDED",
               "exitCode": 0,
-              "requestId": "267b4bb4-a07f-4db3-b0fa-472eb483dc97",
-              "sessionId": "01a14c92-703e-7000-874b-6bd52238c66e",
+              "requestId": "c315c1ab-36bc-43ed-ba85-03fbfacdee69",
+              "sessionId": "01a14d57-c504-7000-a8de-60ef7c4c0753",
               "succeeded": true,
-              "durationMs": 417
+              "durationMs": 265
             }
           ],
           "baseCommit": null,
           "provenance": [
             {
               "notes": "Observable facts/references only; unknown rights deny reuse.",
-              "digest": "101bf842d985660cff9be7ec14c62862b1201bb7403646839b98c89b26b2169f",
+              "digest": "55bdaa48b352804a9d230056d12c8bf4cf335c69d20c42e0e196b263713a8c09",
               "license": "UNKNOWN",
               "evidence": "Explicit storage consent; operational observation is not a reuse license.",
-              "sourceId": "01a14c92-5bfe-7000-9ea7-1da4dcc0ae52",
+              "sourceId": "01a14d57-b1e4-7000-8c51-0aa475c36a80",
               "ownership": "UNVERIFIED",
               "ragAllowed": false,
               "sourceType": "task-run",
@@ -1665,10 +1502,10 @@
             },
             {
               "notes": "Observable facts/references only; unknown rights deny reuse.",
-              "digest": "d08101ca8cd68ee6a1298672bae49dd583b3938964067e8e79a1be38d3e7b1c5",
+              "digest": "8950e1c29e02652eeb5ff5596dbb915f5e33009977b1c024176cf5189fc1fe7f",
               "license": "UNKNOWN",
               "evidence": "Explicit storage consent; operational observation is not a reuse license.",
-              "sourceId": "9a303206-3fc4-4bd8-845a-22c6fedfcaff",
+              "sourceId": "50e38979-3765-4ffb-a901-c813b3bcd036",
               "ownership": "UNVERIFIED",
               "ragAllowed": false,
               "sourceType": "quality-evidence",
@@ -1678,10 +1515,10 @@
             },
             {
               "notes": "Observable facts/references only; unknown rights deny reuse.",
-              "digest": "dd5867b3156cabe3126ef51dcd6f26a183323d808e77c3855b0a9fff397b34c6",
+              "digest": "65ad8dcf596ca8a6e80c8e3306c554f0ef47dae4840da165dc2cbbae3dfd038e",
               "license": "UNKNOWN",
               "evidence": "Explicit storage consent; operational observation is not a reuse license.",
-              "sourceId": "6f05b5eb-856a-4ca1-af66-f89da8567d3f",
+              "sourceId": "bcc366a8-5ffc-4b58-9b89-ae9d5ea01f55",
               "ownership": "UNVERIFIED",
               "ragAllowed": false,
               "sourceType": "quality-evidence",
@@ -1691,10 +1528,10 @@
             },
             {
               "notes": "Observable facts/references only; unknown rights deny reuse.",
-              "digest": "b553f5f3f1bc441ace6b2e8e8dee866430ea53403b4eeae2e3a5ee99d852f966",
+              "digest": "0821361641d811691be0bed0a02e8be084df9ed4962f09e4a2f99dc49b6b5aa9",
               "license": "UNKNOWN",
               "evidence": "Explicit storage consent; operational observation is not a reuse license.",
-              "sourceId": "46e30789-dd2a-41e7-b230-87b9cf78d0a7",
+              "sourceId": "794861c5-24e3-4dae-bfa6-669a76c49600",
               "ownership": "UNVERIFIED",
               "ragAllowed": false,
               "sourceType": "quality-evidence",
@@ -1704,10 +1541,10 @@
             },
             {
               "notes": "Observable facts/references only; unknown rights deny reuse.",
-              "digest": "71d86729ed1d8ba1c67ddb49fd632ca98a77247db79612afc305c29bb775c4d2",
+              "digest": "28dc08b2088d0034492c299e53c0d2417d1eb95d8a439a429d7d5e878bef8aa7",
               "license": "UNKNOWN",
               "evidence": "Explicit storage consent; operational observation is not a reuse license.",
-              "sourceId": "e40efab4-749f-4f5e-a2c0-dcee68185a3e",
+              "sourceId": "db7e8b48-09fc-4fca-8021-05faf73720d2",
               "ownership": "UNVERIFIED",
               "ragAllowed": false,
               "sourceType": "quality-evidence",
@@ -1717,10 +1554,10 @@
             },
             {
               "notes": "Observable facts/references only; unknown rights deny reuse.",
-              "digest": "ea777851cb9eeba80ca623041c98af4410865910102ea6c38c8a8f2375d2fe9a",
+              "digest": "9c9932695f78d69ade96bbae5728caa060211a807fa90833d00230d10044d954",
               "license": "UNKNOWN",
               "evidence": "Explicit storage consent; operational observation is not a reuse license.",
-              "sourceId": "0a4209f1-1ac3-4494-bd8b-422239e059cf",
+              "sourceId": "aa4036e5-38ec-4e4f-90f6-f99feeef219c",
               "ownership": "UNVERIFIED",
               "ragAllowed": false,
               "sourceType": "quality-evidence",
@@ -1730,10 +1567,10 @@
             },
             {
               "notes": "Observable facts/references only; unknown rights deny reuse.",
-              "digest": "06e7d8ede577f0f2b91fb758368b24a23bf307a5beaf6df6d6ea135ca984a5f5",
+              "digest": "ec5f42764873a0365962a1b2743afdfb3b9801cdfc0a3d575602f32b01e21840",
               "license": "UNKNOWN",
               "evidence": "Explicit storage consent; operational observation is not a reuse license.",
-              "sourceId": "3e48099d-290c-4012-967f-a863db691774",
+              "sourceId": "f36b623f-c0fd-4150-837f-8c37eb4aa9a9",
               "ownership": "UNVERIFIED",
               "ragAllowed": false,
               "sourceType": "quality-evidence",
@@ -1743,10 +1580,10 @@
             },
             {
               "notes": "Observable facts/references only; unknown rights deny reuse.",
-              "digest": "4b8a3e65e851009417bc046261484c3ebee1ffa6e5c7c12792d1a97bed534064",
+              "digest": "c3d5c8d8e5050849df77473b119400485ae5f9e0b93c0102b8b96a49fc9568ed",
               "license": "UNKNOWN",
               "evidence": "Explicit storage consent; operational observation is not a reuse license.",
-              "sourceId": "b05de565-4b96-4f13-b854-85784995dac7",
+              "sourceId": "e8ca07e3-8304-4d8e-8f1a-f0c0ce9506b8",
               "ownership": "UNVERIFIED",
               "ragAllowed": false,
               "sourceType": "quality-evidence",
@@ -1769,7 +1606,7 @@
           },
           "humanReview": null,
           "schemaVersion": "1.0.0",
-          "trajectorySummary": "SUCCEEDED; agents=3; modelCalls=7; tools=3; quality=PASS",
+          "trajectorySummary": "SUCCEEDED; agents=3; modelCalls=6; tools=3; quality=PASS",
           "trainingEligibility": {
             "eligible": false,
             "evidence": "No verified ownership/license or positive reuse grant."
@@ -1800,7 +1637,9 @@
             "processCleanup": {
               "jobOwned": true,
               "remainingBeforeCleanup": 0,
-              "remainingAfterCleanup": 0
+              "remainingAfterCleanup": 0,
+              "observedProcessCount": 0,
+              "signaledProcessCount": 0
             }
           },
           "kind": "ACTUAL_ISOLATED_VSCODE_EXTENSION_HOST",
@@ -1808,13 +1647,13 @@
           "mode": "package",
           "editorVersion": "1.138.0",
           "nodeVersion": "v24.18.1",
-          "processId": 41520,
+          "processId": 50204,
           "steps": [
             {
               "name": "fresh-installed-extension-active",
               "result": "PASS",
               "commands": 19,
-              "extensionPath": "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-native-editor-xpfo74gx\\package\\extensions\\iacode.iacode-0.1.0"
+              "extensionPath": "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-native-editor-04rda03q\\package\\extensions\\iacode.iacode-0.1.0"
             },
             {
               "name": "configuration-not-inherited-from-workspace-or-environment",
@@ -1825,7 +1664,9 @@
           "processCleanup": {
             "jobOwned": true,
             "remainingBeforeCleanup": 0,
-            "remainingAfterCleanup": 0
+            "remainingAfterCleanup": 0,
+            "observedProcessCount": 0,
+            "signaledProcessCount": 0
           },
           "sharedStorageObservedOwned": true
         },
@@ -1838,7 +1679,9 @@
             "processCleanup": {
               "jobOwned": true,
               "remainingBeforeCleanup": 0,
-              "remainingAfterCleanup": 0
+              "remainingAfterCleanup": 0,
+              "observedProcessCount": 0,
+              "signaledProcessCount": 0
             }
           },
           "kind": "ACTUAL_ISOLATED_VSCODE_EXTENSION_HOST",
@@ -1846,13 +1689,13 @@
           "mode": "untrusted",
           "editorVersion": "1.138.0",
           "nodeVersion": "v24.18.1",
-          "processId": 11384,
+          "processId": 38232,
           "steps": [
             {
               "name": "fresh-installed-extension-active",
               "result": "PASS",
               "commands": 19,
-              "extensionPath": "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-native-editor-xpfo74gx\\untrusted\\extensions\\iacode.iacode-0.1.0"
+              "extensionPath": "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-native-editor-04rda03q\\untrusted\\extensions\\iacode.iacode-0.1.0"
             },
             {
               "name": "actual-untrusted-workspace-refuses-every-mutation-before-connection",
@@ -1862,14 +1705,24 @@
           "exitCode": 0,
           "processCleanup": {
             "jobOwned": true,
-            "remainingBeforeCleanup": 1,
-            "remainingAfterCleanup": 0
+            "remainingBeforeCleanup": 0,
+            "remainingAfterCleanup": 0,
+            "observedProcessCount": 0,
+            "signaledProcessCount": 0
           },
           "sharedStorageObservedOwned": true
         }
       ],
       "ownedTemporaryDirectoryRemoved": true,
-      "directoryCleanupRetries": 0
+      "directoryCleanupRetries": 0,
+      "directoryCleanup": {
+        "removed": true,
+        "cleanupRetries": 0,
+        "cleanupAttempts": 1,
+        "cleanupElapsedSeconds": 0.049685,
+        "firstSharingLockAfterSeconds": null,
+        "cleanupFailure": null
+      }
     },
     "quality-cancellation.json": {
       "schemaVersion": "1.0.0",
@@ -1958,20 +1811,20 @@
           "artifacts": [
             {
               "kind": "snapshot",
-              "artifactId": "01a14c81-6f4c-7000-892c-02ec2c450703",
-              "digest": "9e30fac8ff5a74e1f8c1ba49212f460720fbbfe3a3b9a303bcf561cd9057ddc2",
+              "artifactId": "01a14d4c-7c54-7000-98e6-751080a8850e",
+              "digest": "eb5a61b615edc90e7ffa80391f90175710d3f91628f307367bd526ae73806d0d",
               "sizeBytes": 504
             },
             {
               "kind": "quality-run",
-              "runId": "01a14c81-7465-7000-ba93-70354ace2123",
-              "planId": "b242f14c3cb4ff02faa6be7c526a87e06e91431ce8d0852e5829dabc32c7c65a"
+              "runId": "01a14d4c-80d7-7000-935f-49a94d1a045c",
+              "planId": "dad0118907c95a4578fc52306d312d92e04ec289e8c4cd82a7264c4f3309229b"
             }
           ],
-          "recordedAt": "2026-10-18T00:55:30Z"
+          "recordedAt": "2026-10-18T04:37:12Z"
         }
       ],
-      "recordedAt": "2026-10-18T00:55:30Z"
+      "recordedAt": "2026-10-18T04:37:12Z"
     },
     "quality-fail.json": {
       "schemaVersion": "1.0.0",
@@ -2061,20 +1914,20 @@
           "artifacts": [
             {
               "kind": "snapshot",
-              "artifactId": "01a14c71-7134-7000-95ab-e460cc6563e2",
-              "digest": "fcd6485fef593ed2267268a1bcf609175fdf746ce1ae3994c32214ac83997243",
+              "artifactId": "01a14d42-9ee4-7000-97be-0f3b1a05a213",
+              "digest": "79c04620ab8ae58d50f655f4f3931b88aa95cf3c411cdf3cfc1a390a9cd778b5",
               "sizeBytes": 475
             },
             {
               "kind": "quality-run",
-              "runId": "01a14c71-791d-7000-933f-ec61f0f23595",
-              "planId": "be485e44142883f53aba8e78f63926d568ddba28d38f9042a4e18c74fd49ab5c"
+              "runId": "01a14d42-a3c3-7000-87a6-a74fe4e3c496",
+              "planId": "7bc7d68491b99578522dd0b6187678200d78c9893e1e0a5d1ed0c860693b724a"
             }
           ],
-          "recordedAt": "2026-10-18T00:38:19Z"
+          "recordedAt": "2026-10-18T04:26:32Z"
         }
       ],
-      "recordedAt": "2026-10-18T00:38:19Z"
+      "recordedAt": "2026-10-18T04:26:32Z"
     },
     "quality-iacode.json": {
       "schemaVersion": "1.0.0",
@@ -2124,20 +1977,20 @@
           "artifacts": [
             {
               "kind": "snapshot",
-              "artifactId": "01a14c74-186a-7000-8e13-d023d667b0f5",
-              "digest": "c6024f8dbd2c8000f4f2a4846baf9801a8075a28e528ccff8142a9ae7099c76c",
-              "sizeBytes": 7054671
+              "artifactId": "01a14d44-8e69-7000-8d61-68d95ee60cb8",
+              "digest": "744c7ef820393a523a6a241ff6735c508af2613a9b43e03f033f8eeaf4e63bc4",
+              "sizeBytes": 7210646
             },
             {
               "kind": "quality-run",
-              "runId": "01a14c74-1ebb-7000-86cd-d66f119c4ff6",
-              "planId": "fb839f289fa669c76504abcf5dd43da970683668fe71fe5f104ccfffa31605e8"
+              "runId": "01a14d44-942d-7000-a14d-5358a78c09ab",
+              "planId": "90b0b00c7cb872fa334b8e9ecd086ec6e79eaa90728a20b46fb1454478160bff"
             }
           ],
-          "recordedAt": "2026-10-18T00:52:09Z"
+          "recordedAt": "2026-10-18T04:34:54Z"
         }
       ],
-      "recordedAt": "2026-10-18T00:52:09Z"
+      "recordedAt": "2026-10-18T04:34:54Z"
     },
     "quality-pass.json": {
       "schemaVersion": "1.0.0",
@@ -2226,27 +2079,27 @@
             {
               "step": "host.sentinel_unchanged",
               "result": "PASS",
-              "expected": "0dc434f56d72d5af06ed751e32057bae8b0209c1489d08dc6af7e38cd73b0375",
-              "observed": "0dc434f56d72d5af06ed751e32057bae8b0209c1489d08dc6af7e38cd73b0375"
+              "expected": "289d7200d59b4ddb813b271c02eb6401a9cc0f6b3acc72c570383802d7a98818",
+              "observed": "289d7200d59b4ddb813b271c02eb6401a9cc0f6b3acc72c570383802d7a98818"
             }
           ],
           "artifacts": [
             {
               "kind": "snapshot",
-              "artifactId": "01a14c70-8af4-7000-80d6-7546f7e8c765",
-              "digest": "645bad544d651ef748054b2dbbe021165c6bc021509a9505530aa239cb1c00f7",
+              "artifactId": "01a14d42-0221-7000-80c1-1f68bc0182b9",
+              "digest": "14d1bfac00c0ccaf1321afc99103e248c222eab87d23fbf8a4a6c773ba9ca19c",
               "sizeBytes": 607
             },
             {
               "kind": "quality-run",
-              "runId": "01a14c70-9182-7000-ba18-463ecc26918b",
-              "planId": "409f51c07efbdd79d1d40b3999a8bf6ac03b286b6fcb33d784e8e94bea3849d3"
+              "runId": "01a14d42-075a-7000-a791-bd816420b709",
+              "planId": "2207932e0197e39cd8d04b04f5a2ee6ccbceaae2edb85a60fdb4012c5a3e1dc4"
             }
           ],
-          "recordedAt": "2026-10-18T00:37:20Z"
+          "recordedAt": "2026-10-18T04:25:55Z"
         }
       ],
-      "recordedAt": "2026-10-18T00:37:20Z"
+      "recordedAt": "2026-10-18T04:25:55Z"
     },
     "quality-recovery.json": {
       "schemaVersion": "1.0.0",
@@ -2325,27 +2178,27 @@
             {
               "step": "identity.preserved",
               "result": "PASS",
-              "expected": "01a14c80-52c8-7000-aa88-c15df860594e",
-              "observed": "01a14c80-52c8-7000-aa88-c15df860594e"
+              "expected": "01a14d4b-b52e-7000-bfe0-4281bb27a4f7",
+              "observed": "01a14d4b-b52e-7000-bfe0-4281bb27a4f7"
             }
           ],
           "artifacts": [
             {
               "kind": "snapshot",
-              "artifactId": "01a14c80-4b8b-7000-ac97-74150c77958f",
-              "digest": "f78c80a66b0ac82405582cb040f57f0c050dd2eea17210b83c7647dafe745f8f",
+              "artifactId": "01a14d4b-b06c-7000-ba77-053a31fbe0c0",
+              "digest": "9dbe7e5c9d13bbe32488c74361fca8d306a0879f047cf587b88809b5a68ed56c",
               "sizeBytes": 504
             },
             {
               "kind": "quality-run",
-              "runId": "01a14c80-52c8-7000-aa88-c15df860594e",
-              "planId": "8b70b6d59e692346afc9a41bb28352b8447635889ce73cca6d00c2043838de1f"
+              "runId": "01a14d4b-b52e-7000-bfe0-4281bb27a4f7",
+              "planId": "09e4bb7487542afa1c27ac363a2bf457a2807a75da10fdc2702b70c97f83d4aa"
             }
           ],
-          "recordedAt": "2026-10-18T00:54:51Z"
+          "recordedAt": "2026-10-18T04:36:42Z"
         }
       ],
-      "recordedAt": "2026-10-18T00:54:51Z"
+      "recordedAt": "2026-10-18T04:36:42Z"
     },
     "quality-reproduction.json": {
       "schemaVersion": "1.0.0",
@@ -2376,20 +2229,20 @@
             {
               "step": "identity.distinct_run",
               "result": "PASS",
-              "expected": "not 01a14c7e-fca4-7000-b6e0-9d23dd7117b2",
-              "observed": "01a14c7f-88d1-7000-bf07-d80ca70162b0"
+              "expected": "not 01a14d4a-dc56-7000-9638-a0c50fe88a0b",
+              "observed": "01a14d4b-27e6-7000-972b-31694d8522d2"
             },
             {
               "step": "identity.equal_plan",
               "result": "PASS",
-              "expected": "60085c5bd6416df1ae63978c717562174f35d83122391241719c215c30fd0364",
-              "observed": "60085c5bd6416df1ae63978c717562174f35d83122391241719c215c30fd0364"
+              "expected": "a85f465e6948ac71f832c5ce3d296eb6b60849397faf10dea5fe8875e879840b",
+              "observed": "a85f465e6948ac71f832c5ce3d296eb6b60849397faf10dea5fe8875e879840b"
             },
             {
               "step": "lineage.recorded",
               "result": "PASS",
-              "expected": "01a14c7e-fca4-7000-b6e0-9d23dd7117b2",
-              "observed": "01a14c7e-fca4-7000-b6e0-9d23dd7117b2"
+              "expected": "01a14d4a-dc56-7000-9638-a0c50fe88a0b",
+              "observed": "01a14d4a-dc56-7000-9638-a0c50fe88a0b"
             },
             {
               "step": "results.equivalent",
@@ -2465,25 +2318,25 @@
           "artifacts": [
             {
               "kind": "snapshot",
-              "artifactId": "01a14c7e-f670-7000-8e26-2754a0221dd3",
-              "digest": "ef01211354078434d639edb9bff8260db30f57ea8eb65fd1ba935ff0cce336b7",
+              "artifactId": "01a14d4a-d76d-7000-8f1c-82167f1fb026",
+              "digest": "4605e1f583c11b4ee6777878223cf48bd46b1125702f9430aec9fbe297df04b3",
               "sizeBytes": 476
             },
             {
               "kind": "quality-run",
-              "runId": "01a14c7e-fca4-7000-b6e0-9d23dd7117b2",
-              "planId": "60085c5bd6416df1ae63978c717562174f35d83122391241719c215c30fd0364"
+              "runId": "01a14d4a-dc56-7000-9638-a0c50fe88a0b",
+              "planId": "a85f465e6948ac71f832c5ce3d296eb6b60849397faf10dea5fe8875e879840b"
             },
             {
               "kind": "quality-reproduction",
-              "runId": "01a14c7f-88d1-7000-bf07-d80ca70162b0",
-              "planId": "60085c5bd6416df1ae63978c717562174f35d83122391241719c215c30fd0364"
+              "runId": "01a14d4b-27e6-7000-972b-31694d8522d2",
+              "planId": "a85f465e6948ac71f832c5ce3d296eb6b60849397faf10dea5fe8875e879840b"
             }
           ],
-          "recordedAt": "2026-10-18T00:53:36Z"
+          "recordedAt": "2026-10-18T04:35:50Z"
         }
       ],
-      "recordedAt": "2026-10-18T00:53:36Z"
+      "recordedAt": "2026-10-18T04:35:50Z"
     },
     "quality-secret-output.json": {
       "schemaVersion": "1.0.0",
@@ -2587,7 +2440,7 @@
               "expected": "decoded durable payloads contain no prohibited bytes",
               "observed": {
                 "prohibitedBytesAbsent": true,
-                "payloadsScanned": 122,
+                "payloadsScanned": 120,
                 "workflowStatus": "COMPLETED",
                 "sandboxObjects": 0,
                 "failures": [],
@@ -2677,7 +2530,7 @@
               "expected": "decoded durable payloads contain no prohibited bytes",
               "observed": {
                 "prohibitedBytesAbsent": true,
-                "payloadsScanned": 122,
+                "payloadsScanned": 120,
                 "workflowStatus": "COMPLETED",
                 "sandboxObjects": 0,
                 "failures": [],
@@ -2759,43 +2612,43 @@
           "artifacts": [
             {
               "kind": "snapshot",
-              "artifactId": "01a14c88-2b26-7000-be6f-c286c58791ba",
-              "digest": "2e70b117fb82312abb9f8bfe42dbb00000013d4911be54574e28a7d218ac728d",
+              "artifactId": "01a14d50-a313-7000-a37e-39174ec7a1b1",
+              "digest": "7554c6563088901746c3751980b4f26544e65862ff9a8cfbac352c91c1eb8119",
               "sizeBytes": 476
             },
             {
               "kind": "snapshot",
-              "artifactId": "01a14c88-9e0b-7000-a0b6-a1cf43840079",
-              "digest": "82726c846854a358f04e781d2f9b25111add94333e7bb4263035c0a3228febb0",
+              "artifactId": "01a14d50-f968-7000-b799-460a71946ae8",
+              "digest": "b9af642c8bb6a80cb6e997495d617693d2a831019e23c1e244af24dffa4e8759",
               "sizeBytes": 549
             },
             {
               "kind": "quality-run",
-              "runId": "01a14c88-a388-7000-a774-a0217bdf8339",
-              "planId": "b1ed94c954b48ca23faef72bb38a7b66e725982efae3910b83fe6518ed797631"
+              "runId": "01a14d50-fdbe-7000-973d-5119c843c565",
+              "planId": "7893e9f2dc0d09bbf52fd8cd70826686de1032c77c424d1d8f8fecc9d12ba8cf"
             },
             {
               "kind": "snapshot",
-              "artifactId": "01a14c89-21da-7000-9e51-9fb65a9d64e9",
-              "digest": "9d318c1c9b8854e770b994cf82a2ac1e1bce2b457ced914711009afe5f458ff8",
+              "artifactId": "01a14d51-534d-7000-95e7-634c40b91a56",
+              "digest": "0ffb94d414dd22c4b720a1d190d12743c859d98f77f2f575b840358d752c6c4d",
               "sizeBytes": 530
             },
             {
               "kind": "quality-run",
-              "runId": "01a14c89-2864-7000-9da0-eecd0b637601",
-              "planId": "f875ecd29d6c93501d5f28e3bb87059431ddeb411f258d6883742f01925d09a2"
+              "runId": "01a14d51-580d-7000-9566-0124853bf1aa",
+              "planId": "fa17cfb8db6f5525bf36f4a6259ab28e806d266be176fb3758f84806f4967329"
             },
             {
               "kind": "snapshot",
-              "artifactId": "01a14c89-aad5-7000-979d-b8ce06c38e67",
-              "digest": "5dd0630f8ec4c0055906e672cb30fc1d578cc7ee099f74084f65287d2026aefc",
+              "artifactId": "01a14d51-aecb-7000-bb11-82982740070a",
+              "digest": "5feb40b47593c9c2f43d449dc32066af86b05c4b85ff88e3cf61c5f8cc6daac5",
               "sizeBytes": 476
             }
           ],
-          "recordedAt": "2026-10-18T01:04:47Z"
+          "recordedAt": "2026-10-18T04:42:59Z"
         }
       ],
-      "recordedAt": "2026-10-18T01:04:47Z"
+      "recordedAt": "2026-10-18T04:42:59Z"
     },
     "quality-timeout.json": {
       "schemaVersion": "1.0.0",
@@ -2838,7 +2691,7 @@
                 "TIMED_OUT",
                 "PASSED",
                 "PASSED",
-                "TIMED_OUT",
+                "PASSED",
                 "PASSED",
                 "PASSED"
               ]
@@ -2889,20 +2742,20 @@
           "artifacts": [
             {
               "kind": "snapshot",
-              "artifactId": "01a14c82-125e-7000-b937-c22b40d5a604",
-              "digest": "c3099763050832fde3b5088837374a05cee7855e3635649f7f9b89aafac5cec9",
+              "artifactId": "01a14d4c-f650-7000-8385-5cf91350dc07",
+              "digest": "303f3e995427294aa2cc572237959a3145bee8960933ffc58bfd810b4ce633c8",
               "sizeBytes": 504
             },
             {
               "kind": "quality-run",
-              "runId": "01a14c82-1945-7000-9122-777a5b36764c",
-              "planId": "8773c0557f26d15e3f4062d88cf535e8fc9bd5f6842a23e2f9d3ef3b5fc66bd0"
+              "runId": "01a14d4c-fade-7000-b228-9e9ae7d1bb13",
+              "planId": "9843c6013b577de23d5fd6d22ef91f5a5ad6d3ea6760451ded7d528318bdde8c"
             }
           ],
-          "recordedAt": "2026-10-18T00:56:27Z"
+          "recordedAt": "2026-10-18T04:37:47Z"
         }
       ],
-      "recordedAt": "2026-10-18T00:56:27Z"
+      "recordedAt": "2026-10-18T04:37:47Z"
     },
     "sandbox-tool-result-origin.json": {
       "scenario": "forged-result",
@@ -2921,7 +2774,7 @@
         {
           "step": "snapshot.stored",
           "result": "PASS",
-          "detail": "artifact 01a14c87-4e32-7000-adc9-80adbe75d870"
+          "detail": "artifact 01a14d4f-e0b6-7000-bd7b-29ed10ec30e6"
         },
         {
           "step": "control.agent_saw_the_sandbox_timeout",
@@ -2931,7 +2784,7 @@
         {
           "step": "forgery.refused_while_the_sandbox_executes",
           "result": "PASS",
-          "detail": "HTTP 403 TOOL_RESULT_ORIGIN_REFUSED {'toolRequestId': '7265cb4a-87e3-426b-82e4-0299c97fdb85', 'executor': 'SANDBOX'}"
+          "detail": "HTTP 403 TOOL_RESULT_ORIGIN_REFUSED {'toolRequestId': 'a1ceb99c-41e4-4e94-b37c-124c31e38d25', 'executor': 'SANDBOX'}"
         },
         {
           "step": "run.terminal_state",
@@ -2946,7 +2799,7 @@
         {
           "step": "sandbox.every_execution_in_that_session",
           "result": "PASS",
-          "detail": "sessions used: ['01a14c87-a172-7000-8f49-dcc37f0d29a9']"
+          "detail": "sessions used: ['01a14d50-22e5-7000-8e7f-22aad7b406a9']"
         },
         {
           "step": "sandbox.no_network",

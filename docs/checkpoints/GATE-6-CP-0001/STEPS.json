@@ -90,13 +90,13 @@
         "internal Red Team and null control",
         "full mirror"
       ],
-      "functionalProof": "Historical v5 full47, functional37/37, whole Green Keeper cycle5 and completeness pass, then fresh Red Team fails native cleanup. All19 original assurance/producer reports are archived byte-for-byte by cmd-0282. Local corrective proofs pass; complete fresh immutable verification, every ordered internal control and actual seal remain pending.",
+      "functionalProof": "Historical v6 complete assurance passed but finalization refused missing report headings. Original bytes remain archived; actual local corrective rendering passes. Fresh memory-bound whole assurance and canonical seal are required, not claimed complete.",
       "evidence": [
-        "cmd-0232",
-        "cmd-0256",
-        "cmd-0258",
-        "cmd-0282",
-        "attempts/RUNTIME-V5-ASSURANCE-ARCHIVE.json"
+        "cmd-0340",
+        "cmd-0341",
+        "cmd-0342",
+        "cmd-0343",
+        "attempts/RUNTIME-V6-FINALIZATION-ARCHIVE.json"
       ],
       "status": "IN_PROGRESS"
     },
@@ -118,9 +118,15 @@
         "canonical counts",
         "serialized checkpoint validation"
       ],
-      "functionalProof": "Not executed. Gate 7 is not authorized.",
-      "evidence": [],
-      "status": "NOT_STARTED"
+      "functionalProof": "Historical v6 complete assurance passed but finalization refused missing report headings. Original bytes remain archived; actual local corrective rendering passes. Fresh memory-bound whole assurance and canonical seal are required, not claimed complete.",
+      "evidence": [
+        "cmd-0340",
+        "cmd-0341",
+        "cmd-0342",
+        "cmd-0343",
+        "attempts/RUNTIME-V6-FINALIZATION-ARCHIVE.json"
+      ],
+      "status": "IN_PROGRESS"
     }
   ]
 }

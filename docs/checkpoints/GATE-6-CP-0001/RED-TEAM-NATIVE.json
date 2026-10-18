@@ -1,6 +1,6 @@
 {
   "kind": "NATIVE_INSTALLATION_AND_TRUST_NOT_LIVE_PROVIDER_ACCEPTANCE",
-  "result": "FAIL",
+  "result": "PASS",
   "runs": [
     {
       "installation": {
@@ -11,7 +11,9 @@
         "processCleanup": {
           "jobOwned": true,
           "remainingBeforeCleanup": 0,
-          "remainingAfterCleanup": 0
+          "remainingAfterCleanup": 0,
+          "observedProcessCount": 0,
+          "signaledProcessCount": 0
         }
       },
       "kind": "ACTUAL_ISOLATED_VSCODE_EXTENSION_HOST",
@@ -19,13 +21,13 @@
       "mode": "package",
       "editorVersion": "1.138.0",
       "nodeVersion": "v24.18.1",
-      "processId": 34400,
+      "processId": 43976,
       "steps": [
         {
           "name": "fresh-installed-extension-active",
           "result": "PASS",
           "commands": 19,
-          "extensionPath": "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-native-editor-s0gh5exk\\package\\extensions\\iacode.iacode-0.1.0"
+          "extensionPath": "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-native-editor-uzpvca8x\\package\\extensions\\iacode.iacode-0.1.0"
         },
         {
           "name": "configuration-not-inherited-from-workspace-or-environment",
@@ -35,8 +37,10 @@
       "exitCode": 0,
       "processCleanup": {
         "jobOwned": true,
-        "remainingBeforeCleanup": 2,
-        "remainingAfterCleanup": 0
+        "remainingBeforeCleanup": 0,
+        "remainingAfterCleanup": 0,
+        "observedProcessCount": 0,
+        "signaledProcessCount": 0
       },
       "sharedStorageObservedOwned": true
     },
@@ -49,7 +53,9 @@
         "processCleanup": {
           "jobOwned": true,
           "remainingBeforeCleanup": 0,
-          "remainingAfterCleanup": 0
+          "remainingAfterCleanup": 0,
+          "observedProcessCount": 0,
+          "signaledProcessCount": 0
         }
       },
       "kind": "ACTUAL_ISOLATED_VSCODE_EXTENSION_HOST",
@@ -57,13 +63,13 @@
       "mode": "untrusted",
       "editorVersion": "1.138.0",
       "nodeVersion": "v24.18.1",
-      "processId": 5420,
+      "processId": 51332,
       "steps": [
         {
           "name": "fresh-installed-extension-active",
           "result": "PASS",
           "commands": 19,
-          "extensionPath": "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-native-editor-s0gh5exk\\untrusted\\extensions\\iacode.iacode-0.1.0"
+          "extensionPath": "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-native-editor-uzpvca8x\\untrusted\\extensions\\iacode.iacode-0.1.0"
         },
         {
           "name": "actual-untrusted-workspace-refuses-every-mutation-before-connection",
@@ -73,11 +79,22 @@
       "exitCode": 0,
       "processCleanup": {
         "jobOwned": true,
-        "remainingBeforeCleanup": 2,
-        "remainingAfterCleanup": 0
+        "remainingBeforeCleanup": 0,
+        "remainingAfterCleanup": 0,
+        "observedProcessCount": 0,
+        "signaledProcessCount": 0
       },
       "sharedStorageObservedOwned": true
     }
   ],
-  "failure": "[WinError 32] O arquivo já está sendo usado por outro processo: 'C:\\\\Users\\\\cesar\\\\AppData\\\\Local\\\\Temp\\\\iacode-native-editor-s0gh5exk\\\\package\\\\profile\\\\logs\\\\20261017T231814\\\\agenthost.log'"
+  "ownedTemporaryDirectoryRemoved": true,
+  "directoryCleanupRetries": 3,
+  "directoryCleanup": {
+    "removed": true,
+    "cleanupRetries": 3,
+    "cleanupAttempts": 4,
+    "cleanupElapsedSeconds": 0.363339,
+    "firstSharingLockAfterSeconds": 0.05,
+    "cleanupFailure": null
+  }
 }

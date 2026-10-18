@@ -1,0 +1,121 @@
+{
+  "schemaVersion": "3.4.0",
+  "checks": {
+    "build": {
+      "status": "PASS",
+      "evidence": [
+        "file:VERIFY.json",
+        "file:PUBLISHED-CLEAN-CLONE-REPORT.json",
+        "command:cmd-0296"
+      ],
+      "justification": null
+    },
+    "unitTests": {
+      "status": "PASS",
+      "evidence": [
+        "file:VERIFY.json",
+        "file:PUBLISHED-CLEAN-CLONE-REPORT.json",
+        "command:cmd-0296"
+      ],
+      "justification": null
+    },
+    "integrationTests": {
+      "status": "PASS",
+      "evidence": [
+        "file:VERIFY.json",
+        "file:PUBLISHED-CLEAN-CLONE-REPORT.json",
+        "command:cmd-0296"
+      ],
+      "justification": null
+    },
+    "e2e": {
+      "status": "PASS",
+      "evidence": [
+        "file:VERIFY.json",
+        "file:PUBLISHED-CLEAN-CLONE-REPORT.json",
+        "command:cmd-0296"
+      ],
+      "justification": null
+    },
+    "lint": {
+      "status": "PASS",
+      "evidence": [
+        "file:VERIFY.json",
+        "file:PUBLISHED-CLEAN-CLONE-REPORT.json",
+        "command:cmd-0296"
+      ],
+      "justification": null
+    },
+    "staticAnalysis": {
+      "status": "PASS",
+      "evidence": [
+        "file:VERIFY.json",
+        "file:PUBLISHED-CLEAN-CLONE-REPORT.json",
+        "command:cmd-0296"
+      ],
+      "justification": null
+    },
+    "security": {
+      "status": "PASS",
+      "evidence": [
+        "file:VERIFY.json",
+        "file:PUBLISHED-CLEAN-CLONE-REPORT.json",
+        "command:cmd-0296"
+      ],
+      "justification": null
+    },
+    "documentation": {
+      "status": "PASS",
+      "evidence": [
+        "file:DOCUMENTATION-LINKS.json",
+        "command:cmd-0296"
+      ],
+      "justification": null
+    },
+    "checkpointValidation": {
+      "status": "PASS",
+      "evidence": [
+        "command:cmd-0310"
+      ],
+      "justification": null
+    },
+    "redTeam": {
+      "status": "PASS",
+      "evidence": [
+        "file:M2-INTERNAL-RED-TEAM.json",
+        "file:RED-TEAM-EXECUTIONS.json",
+        "file:RED-TEAM-EXPERIENCE.json"
+      ],
+      "justification": null
+    },
+    "greenKeeper": {
+      "status": "PASS",
+      "evidence": [
+        "file:REWORK-LOG.jsonl",
+        "command:cmd-0306",
+        "command:cmd-0307",
+        "command:cmd-0308",
+        "command:cmd-0309",
+        "command:cmd-0310",
+        "command:cmd-0311",
+        "command:cmd-0312",
+        "command:cmd-0313",
+        "command:cmd-0314",
+        "command:cmd-0315",
+        "command:cmd-0316",
+        "command:cmd-0317",
+        "command:cmd-0318",
+        "command:cmd-0319",
+        "command:cmd-0320"
+      ],
+      "justification": null
+    },
+    "deliveryCompleteness": {
+      "status": "PASS",
+      "evidence": [
+        "file:COMPLETENESS-REPORT.json"
+      ],
+      "justification": null
+    }
+  }
+}

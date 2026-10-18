@@ -1,0 +1,838 @@
+{
+  "schemaVersion": "1.0.0",
+  "scenario": "experience-store-e2e",
+  "result": "PASS",
+  "environment": "owned-authenticated-real-postgresql-redis-minio-temporal-provider-sandbox-quality",
+  "subjectCommit": "1442b86d38be11aee5e2ff635e576be08e52997b",
+  "sourceDirty": false,
+  "sourceFingerprint": "584eb6433e55f8a693315fa84c367c37de3c1c36747b08694888a01ca0c32f91",
+  "steps": [
+    {
+      "name": "current-sandbox-and-quality-images-built",
+      "result": "PASS"
+    },
+    {
+      "name": "fresh-owned-authenticated-stack-started",
+      "result": "PASS"
+    },
+    {
+      "name": "fresh-owned-authenticated-stack-healthy",
+      "result": "PASS"
+    },
+    {
+      "name": "exact-authorized-provider-model-discovered",
+      "result": "PASS",
+      "authorizedModel": "openai:gpt-4o-mini",
+      "provider": "openai",
+      "catalogModels": 138,
+      "discovered": 138
+    },
+    {
+      "name": "actual-authorized-snapshot-stored",
+      "result": "PASS"
+    },
+    {
+      "name": "actual-governed-task-created",
+      "result": "PASS"
+    },
+    {
+      "name": "actual-provider-sandbox-task-completed",
+      "result": "PASS",
+      "sourceRunId": "01a14d57-b1e4-7000-8c51-0aa475c36a80"
+    },
+    {
+      "name": "actual-quality-workflow-created",
+      "result": "PASS"
+    },
+    {
+      "name": "actual-derived-quality-pass-with-evidence",
+      "result": "PASS",
+      "qualityRunId": "01a14d58-2a64-7000-9e3f-66a7ab7083c2"
+    },
+    {
+      "name": "authenticated-project-source-discovery",
+      "result": "PASS"
+    },
+    {
+      "name": "fresh-experience-store-empty-premise",
+      "result": "PASS"
+    },
+    {
+      "name": "unauthenticated-capture-refused-before-effects",
+      "result": "PASS"
+    },
+    {
+      "name": "invalid-signature-refused",
+      "result": "PASS"
+    },
+    {
+      "name": "stale-authentication-refused",
+      "result": "PASS"
+    },
+    {
+      "name": "canonical-secret-adverse-premise",
+      "result": "PASS"
+    },
+    {
+      "name": "consent-missing-refused-before-persistence",
+      "result": "PASS"
+    },
+    {
+      "name": "consent-denied-refused-before-persistence",
+      "result": "PASS"
+    },
+    {
+      "name": "consent-type-refused-before-persistence",
+      "result": "PASS"
+    },
+    {
+      "name": "private-transcript-refused-before-persistence",
+      "result": "PASS"
+    },
+    {
+      "name": "forged-verdict-refused-before-persistence",
+      "result": "PASS"
+    },
+    {
+      "name": "forged-rights-refused-before-persistence",
+      "result": "PASS"
+    },
+    {
+      "name": "secret-ingress-refused-before-persistence",
+      "result": "PASS"
+    },
+    {
+      "name": "known-capability-form-0-refused-before-persistence",
+      "result": "PASS"
+    },
+    {
+      "name": "known-capability-form-1-refused-before-persistence",
+      "result": "PASS"
+    },
+    {
+      "name": "known-capability-form-2-refused-before-persistence",
+      "result": "PASS"
+    },
+    {
+      "name": "known-capability-form-3-refused-before-persistence",
+      "result": "PASS"
+    },
+    {
+      "name": "known-capability-form-4-refused-before-persistence",
+      "result": "PASS"
+    },
+    {
+      "name": "known-capability-form-5-refused-before-persistence",
+      "result": "PASS"
+    },
+    {
+      "name": "cross-project-source-capture-refused",
+      "result": "PASS"
+    },
+    {
+      "name": "authentication-null-control",
+      "result": "PASS"
+    },
+    {
+      "name": "actual-redis-authentication-replay-refused",
+      "result": "PASS"
+    },
+    {
+      "name": "actual-accepted-experience-response-loss-one-durable-effect",
+      "result": "PASS",
+      "responseLost": true,
+      "upstreamStatuses": [
+        201
+      ],
+      "upstreamCode": null,
+      "actualExperienceRows": 1,
+      "actualCaptureAuditRows": 1
+    },
+    {
+      "name": "actual-source-bound-experience-captured",
+      "result": "PASS"
+    },
+    {
+      "name": "consumer-recomputed-returned-document-digest",
+      "result": "PASS"
+    },
+    {
+      "name": "observed-provider-tool-quality-and-denied-reuse-lineage",
+      "result": "PASS"
+    },
+    {
+      "name": "actual-concurrent-retry-one-row-one-capture-audit",
+      "result": "PASS"
+    },
+    {
+      "name": "actual-verified-read",
+      "result": "PASS"
+    },
+    {
+      "name": "actual-verified-export",
+      "result": "PASS"
+    },
+    {
+      "name": "actual-bounded-summary-pagination",
+      "result": "PASS"
+    },
+    {
+      "name": "actual-project-cursor-resumption",
+      "result": "PASS"
+    },
+    {
+      "name": "cross-project-cursor-refused",
+      "result": "PASS"
+    },
+    {
+      "name": "cross-project-get-refused",
+      "result": "PASS"
+    },
+    {
+      "name": "cross-project-delete-refused",
+      "result": "PASS"
+    },
+    {
+      "name": "denied-rag-use-no-data",
+      "result": "PASS"
+    },
+    {
+      "name": "denied-training-use-no-data",
+      "result": "PASS"
+    },
+    {
+      "name": "denied-distillation-use-no-data",
+      "result": "PASS"
+    },
+    {
+      "name": "denied-unknown-use-no-data",
+      "result": "PASS"
+    },
+    {
+      "name": "conflicting-stable-request-refused",
+      "result": "PASS"
+    },
+    {
+      "name": "actual-api-restarted",
+      "result": "PASS"
+    },
+    {
+      "name": "restart-preserves-content-rights-original-expiry-and-retry",
+      "result": "PASS"
+    },
+    {
+      "name": "authentication-replay-survives-real-restart",
+      "result": "PASS"
+    },
+    {
+      "name": "actual-source-object-corrupt-fails-closed",
+      "result": "PASS",
+      "artifactId": "50e38979-3765-4ffb-a901-c813b3bcd036",
+      "sourceDigest": "8950e1c29e02652eeb5ff5596dbb915f5e33009977b1c024176cf5189fc1fe7f"
+    },
+    {
+      "name": "restored-source-clean-control-after-corrupt",
+      "result": "PASS"
+    },
+    {
+      "name": "actual-source-object-remove-fails-closed",
+      "result": "PASS",
+      "artifactId": "50e38979-3765-4ffb-a901-c813b3bcd036",
+      "sourceDigest": "8950e1c29e02652eeb5ff5596dbb915f5e33009977b1c024176cf5189fc1fe7f"
+    },
+    {
+      "name": "restored-source-clean-control-after-remove",
+      "result": "PASS"
+    },
+    {
+      "name": "actual-project-bound-withdrawal",
+      "result": "PASS"
+    },
+    {
+      "name": "repeated-withdrawal-is-terminal-observation",
+      "result": "PASS"
+    },
+    {
+      "name": "withdrawn-read-denied-immediately",
+      "result": "PASS"
+    },
+    {
+      "name": "new-key-cannot-resurrect-withdrawn-source",
+      "result": "PASS"
+    },
+    {
+      "name": "withdrawal-physically-purges-primary-and-preserves-sources",
+      "result": "PASS"
+    },
+    {
+      "name": "second-real-governed-source-created",
+      "result": "PASS"
+    },
+    {
+      "name": "actual-short-retention-capture-honest-observed-outcome",
+      "result": "PASS",
+      "observedSourceState": "CANCELLED"
+    },
+    {
+      "name": "expired-read-denied-without-manual-sweep",
+      "result": "PASS"
+    },
+    {
+      "name": "actual-owned-background-sweeper-physically-purged",
+      "result": "PASS"
+    },
+    {
+      "name": "expired-request-retry-cannot-renew",
+      "result": "PASS"
+    },
+    {
+      "name": "expired-source-new-key-cannot-resurrect",
+      "result": "PASS"
+    },
+    {
+      "name": "actual-production-logs-retain-observability-not-ingress",
+      "result": "PASS"
+    },
+    {
+      "name": "owned-capability-expiry-reconfiguration",
+      "result": "PASS"
+    },
+    {
+      "name": "actual-expired-capability-refuses-experience-access",
+      "result": "PASS"
+    },
+    {
+      "name": "owned-resources-removed",
+      "result": "PASS"
+    },
+    {
+      "name": "operational-container-identities-preserved",
+      "result": "PASS"
+    },
+    {
+      "name": "measured-source-inputs-unchanged",
+      "result": "PASS"
+    }
+  ],
+  "composeProject": "iacode-experience-cdb731a1024a",
+  "capturedExperience": {
+    "experienceId": "01a14d58-87bd-7000-98f1-c2c5c3ab68ec",
+    "projectId": "01a14d57-b1e2-7000-9f74-478eb2ee9ae7",
+    "sourceRunId": "01a14d57-b1e4-7000-8c51-0aa475c36a80",
+    "contentDigest": "eb23d641dc60e42b5a18926440a68bf92bcc4f1ca72cbc997d10483cc4da482a",
+    "createdAt": "2026-10-18T04:50:09.823426+00:00",
+    "expiresAt": "2026-10-18T05:00:09.823426+00:00",
+    "state": "ACTIVE",
+    "idempotentReplay": true,
+    "document": {
+      "task": {
+        "runId": "01a14d57-b1e4-7000-8c51-0aa475c36a80",
+        "status": "SUCCEEDED",
+        "taskId": "01a14d57-b1e4-7001-af93-23deb6484937",
+        "attempt": 1,
+        "projectId": "01a14d57-b1e2-7000-9f74-478eb2ee9ae7",
+        "startedAt": "2026-10-18T04:49:15.405594Z",
+        "finishedAt": "2026-10-18T04:49:45.958102Z"
+      },
+      "files": {
+        "digest": "798aefda2f02161005f7c67b407a6eeca44e56ba85359b9f74eb21a3f7b75ebb",
+        "fileCount": null,
+        "sizeBytes": 476,
+        "snapshotId": "cb371c14-354d-5b32-85e6-9e610f62fea5"
+      },
+      "model": [
+        {
+          "model": "gpt-4o-mini",
+          "callId": "01a14d57-bc6e-7000-9ba7-58e9413536bb"
+        },
+        {
+          "model": "gpt-4o-mini",
+          "callId": "01a14d57-c3e0-7000-b4f6-216a7c87825f"
+        },
+        {
+          "model": "gpt-4o-mini",
+          "callId": "01a14d57-d026-7000-bffd-89550c5b352e"
+        },
+        {
+          "model": "gpt-4o-mini",
+          "callId": "01a14d57-d871-7000-83b5-3e69819187ec"
+        },
+        {
+          "model": "gpt-4o-mini",
+          "callId": "01a14d57-e174-7000-98cd-a41ea7ae0804"
+        },
+        {
+          "model": "gpt-4o-mini",
+          "callId": "01a14d57-e6f5-7000-93d9-70270f9fa412"
+        }
+      ],
+      "tests": {
+        "checks": [
+          {
+            "kind": "build",
+            "runner": "python.build",
+            "status": "PASSED",
+            "checkId": "q001-build",
+            "caseCount": null,
+            "resultDigest": "9d1e0be1f056868872d3fa4ebba6eda99845a1e00496c42a227e39cc42bb155d"
+          },
+          {
+            "kind": "unit",
+            "runner": "python.unit",
+            "status": "PASSED",
+            "checkId": "q002-unit",
+            "caseCount": null,
+            "resultDigest": "97e7a6a80c13f2e7334399efddbadf74ac7e4fca90cf2e3bfda1952828cf71f0"
+          },
+          {
+            "kind": "lint",
+            "runner": "python.lint",
+            "status": "PASSED",
+            "checkId": "q003-lint",
+            "caseCount": null,
+            "resultDigest": "0c9936f7dacb6ca17dfac5008333d78566a94a6e35520d40ecbc101e04173190"
+          },
+          {
+            "kind": "static",
+            "runner": "python.static",
+            "status": "PASSED",
+            "checkId": "q004-static",
+            "caseCount": null,
+            "resultDigest": "f196f1449e645953dca74251a360dfb573bc3518ff018ae8600bddb7f26a250b"
+          },
+          {
+            "kind": "dependency-security",
+            "runner": "python.dependency",
+            "status": "PASSED",
+            "checkId": "q005-dependency-security",
+            "caseCount": null,
+            "resultDigest": "d31b563941f434fa3eda7fd7fc1fd1db3bbd5be8c0baa0ed26ff0bd1850d236e"
+          },
+          {
+            "kind": "secret",
+            "runner": "common.secret",
+            "status": "PASSED",
+            "checkId": "q006-secret",
+            "caseCount": null,
+            "resultDigest": "95059131e3ad03e98a84d2f7ccf560bfdcad72d5f0223916b862832ea78ec47e"
+          },
+          {
+            "kind": "diff-integrity",
+            "runner": "common.diff",
+            "status": "PASSED",
+            "checkId": "q007-diff-integrity",
+            "caseCount": null,
+            "resultDigest": "288bebe56fd1bc9091ca79eb30468ebed05c96108a646bd4e350d351b18c5a7c"
+          }
+        ],
+        "caseCount": null
+      },
+      "effort": null,
+      "actions": [
+        {
+          "event": "RUN_CREATED",
+          "sequence": 1,
+          "createdAt": "2026-10-18T04:49:15.251498Z"
+        },
+        {
+          "event": "RUN_STARTED",
+          "sequence": 2,
+          "createdAt": "2026-10-18T04:49:15.454053Z"
+        },
+        {
+          "event": "AGENT_STARTED",
+          "sequence": 3,
+          "createdAt": "2026-10-18T04:49:15.553240Z"
+        },
+        {
+          "event": "MODEL_CALL_STARTED",
+          "sequence": 4,
+          "createdAt": "2026-10-18T04:49:15.595854Z"
+        },
+        {
+          "event": "MODEL_CALL_COMPLETED",
+          "sequence": 5,
+          "createdAt": "2026-10-18T04:49:18.013207Z"
+        },
+        {
+          "event": "AGENT_COMPLETED",
+          "sequence": 6,
+          "createdAt": "2026-10-18T04:49:18.090434Z"
+        },
+        {
+          "event": "AGENT_STARTED",
+          "sequence": 7,
+          "createdAt": "2026-10-18T04:49:18.165919Z"
+        },
+        {
+          "event": "MODEL_CALL_STARTED",
+          "sequence": 8,
+          "createdAt": "2026-10-18T04:49:18.205044Z"
+        },
+        {
+          "event": "MODEL_CALL_COMPLETED",
+          "sequence": 9,
+          "createdAt": "2026-10-18T04:49:19.916041Z"
+        },
+        {
+          "event": "TOOL_REQUESTED",
+          "sequence": 10,
+          "createdAt": "2026-10-18T04:49:19.997859Z"
+        },
+        {
+          "event": "TOOL_RESULT_RECEIVED",
+          "sequence": 11,
+          "createdAt": "2026-10-18T04:49:21.776571Z"
+        },
+        {
+          "event": "MODEL_CALL_STARTED",
+          "sequence": 12,
+          "createdAt": "2026-10-18T04:49:21.822050Z"
+        },
+        {
+          "event": "MODEL_CALL_COMPLETED",
+          "sequence": 13,
+          "createdAt": "2026-10-18T04:49:23.068020Z"
+        },
+        {
+          "event": "TOOL_REQUESTED",
+          "sequence": 14,
+          "createdAt": "2026-10-18T04:49:23.147511Z"
+        },
+        {
+          "event": "TOOL_RESULT_RECEIVED",
+          "sequence": 15,
+          "createdAt": "2026-10-18T04:49:23.663672Z"
+        },
+        {
+          "event": "MODEL_CALL_STARTED",
+          "sequence": 16,
+          "createdAt": "2026-10-18T04:49:23.707877Z"
+        },
+        {
+          "event": "MODEL_CALL_COMPLETED",
+          "sequence": 17,
+          "createdAt": "2026-10-18T04:49:25.187817Z"
+        },
+        {
+          "event": "TOOL_REQUESTED",
+          "sequence": 18,
+          "createdAt": "2026-10-18T04:49:25.264482Z"
+        },
+        {
+          "event": "TOOL_RESULT_RECEIVED",
+          "sequence": 19,
+          "createdAt": "2026-10-18T04:49:26.069781Z"
+        },
+        {
+          "event": "MODEL_CALL_STARTED",
+          "sequence": 20,
+          "createdAt": "2026-10-18T04:49:26.112297Z"
+        },
+        {
+          "event": "MODEL_CALL_COMPLETED",
+          "sequence": 21,
+          "createdAt": "2026-10-18T04:49:27.492442Z"
+        },
+        {
+          "event": "AGENT_COMPLETED",
+          "sequence": 22,
+          "createdAt": "2026-10-18T04:49:27.568482Z"
+        },
+        {
+          "event": "AGENT_STARTED",
+          "sequence": 23,
+          "createdAt": "2026-10-18T04:49:27.644423Z"
+        },
+        {
+          "event": "MODEL_CALL_STARTED",
+          "sequence": 24,
+          "createdAt": "2026-10-18T04:49:27.683870Z"
+        },
+        {
+          "event": "MODEL_CALL_COMPLETED",
+          "sequence": 25,
+          "createdAt": "2026-10-18T04:49:28.896407Z"
+        },
+        {
+          "event": "AGENT_COMPLETED",
+          "sequence": 26,
+          "createdAt": "2026-10-18T04:49:28.967777Z"
+        },
+        {
+          "event": "RUN_NOTE",
+          "sequence": 27,
+          "createdAt": "2026-10-18T04:49:45.880899Z"
+        },
+        {
+          "event": "RUN_COMPLETED",
+          "sequence": 28,
+          "createdAt": "2026-10-18T04:49:45.918264Z"
+        }
+      ],
+      "quality": {
+        "runId": "01a14d58-2a64-7000-9e3f-66a7ab7083c2",
+        "verdict": "PASS",
+        "planDigest": "491a7c93a3e30e131d7812ede215f068a7b28037504d079e5b2162371c6568b8",
+        "resultDigests": [
+          "01177b3263619abb072a6d9df95561d5881b3fc995da64e7771e0a4f880ba96f",
+          "cafe2016c9fb61bb11ead041ed64b3b9f8e5e113acf667b900cc9d74e60863a1",
+          "a7d94bb63297849d57d371f80f0d7993291a7f851e1437415b4bf212ea2dd0c8",
+          "0de7eedacaa047596aadd844408eece72c0a412f46141a7694afa0fb39983148",
+          "4e31a6639791e23b02e449928971bd88d41a1305d57352cbb4a4e00ffd577290",
+          "4f41322adb27c42c1813413beafc5889cf1772fea78cee647e4d7eba630f5fa9",
+          "fa4261db73e81c356c10644a826e7dc94dd2e3858800474220d6ead59d452a67"
+        ],
+        "verdictDigest": "42faff93edd38f14d5bd128882fb51008114c954a566954042ce52116c51efba",
+        "evidenceDigests": [
+          "0821361641d811691be0bed0a02e8be084df9ed4962f09e4a2f99dc49b6b5aa9",
+          "28dc08b2088d0034492c299e53c0d2417d1eb95d8a439a429d7d5e878bef8aa7",
+          "65ad8dcf596ca8a6e80c8e3306c554f0ef47dae4840da165dc2cbbae3dfd038e",
+          "8950e1c29e02652eeb5ff5596dbb915f5e33009977b1c024176cf5189fc1fe7f",
+          "9c9932695f78d69ade96bbae5728caa060211a807fa90833d00230d10044d954",
+          "c3d5c8d8e5050849df77473b119400485ae5f9e0b93c0102b8b96a49fc9568ed",
+          "ec5f42764873a0365962a1b2743afdfb3b9801cdfc0a3d575602f32b01e21840"
+        ]
+      },
+      "attempts": [
+        {
+          "status": "SUCCEEDED",
+          "startedAt": "2026-10-18T04:49:15.515477Z",
+          "agentRunId": "01a14d57-b2fc-7000-b993-1a975dac15fd",
+          "finishedAt": "2026-10-18T04:49:18.053526Z",
+          "stageIndex": 0
+        },
+        {
+          "status": "SUCCEEDED",
+          "startedAt": "2026-10-18T04:49:18.128146Z",
+          "agentRunId": "01a14d57-bd30-7000-8d52-50b3466ffdee",
+          "finishedAt": "2026-10-18T04:49:27.532244Z",
+          "stageIndex": 1
+        },
+        {
+          "status": "SUCCEEDED",
+          "startedAt": "2026-10-18T04:49:27.607404Z",
+          "agentRunId": "01a14d57-e237-7000-9990-937233277086",
+          "finishedAt": "2026-10-18T04:49:28.933458Z",
+          "stageIndex": 2
+        }
+      ],
+      "commands": [
+        {
+          "tool": "shell.exec",
+          "requestId": "c315c1ab-36bc-43ed-ba85-03fbfacdee69",
+          "representation": "digest-only; no command or arguments copied",
+          "argumentsDigest": "2456a41577a9ca26e7d4d44463f489c8384a335d2243985b7413b4c6923b6756"
+        }
+      ],
+      "failures": [],
+      "provider": [
+        {
+          "callId": "01a14d57-bc6e-7000-9ba7-58e9413536bb",
+          "provider": "openai"
+        },
+        {
+          "callId": "01a14d57-c3e0-7000-b4f6-216a7c87825f",
+          "provider": "openai"
+        },
+        {
+          "callId": "01a14d57-d026-7000-bffd-89550c5b352e",
+          "provider": "openai"
+        },
+        {
+          "callId": "01a14d57-d871-7000-83b5-3e69819187ec",
+          "provider": "openai"
+        },
+        {
+          "callId": "01a14d57-e174-7000-98cd-a41ea7ae0804",
+          "provider": "openai"
+        },
+        {
+          "callId": "01a14d57-e6f5-7000-93d9-70270f9fa412",
+          "provider": "openai"
+        }
+      ],
+      "toolCalls": [
+        {
+          "tool": "filesystem.read",
+          "callId": "01a14d57-caf3-7000-93c2-c32bd9120e67",
+          "status": "SUCCEEDED",
+          "exitCode": null,
+          "requestId": "433c3be8-fb75-4a45-9317-f9ccb4f576ee",
+          "sessionId": "01a14d57-c504-7000-a8de-60ef7c4c0753",
+          "succeeded": true,
+          "durationMs": 1582
+        },
+        {
+          "tool": "filesystem.read",
+          "callId": "01a14d57-d25b-7000-8c4c-44fafc64c826",
+          "status": "SUCCEEDED",
+          "exitCode": null,
+          "requestId": "7bc2aef4-1221-4550-b9b3-9f08d5dc78e3",
+          "sessionId": "01a14d57-c504-7000-a8de-60ef7c4c0753",
+          "succeeded": true,
+          "durationMs": 329
+        },
+        {
+          "tool": "shell.exec",
+          "callId": "01a14d57-dbc8-7000-963b-3519bebaeab1",
+          "status": "SUCCEEDED",
+          "exitCode": 0,
+          "requestId": "c315c1ab-36bc-43ed-ba85-03fbfacdee69",
+          "sessionId": "01a14d57-c504-7000-a8de-60ef7c4c0753",
+          "succeeded": true,
+          "durationMs": 265
+        }
+      ],
+      "baseCommit": null,
+      "provenance": [
+        {
+          "notes": "Observable facts/references only; unknown rights deny reuse.",
+          "digest": "55bdaa48b352804a9d230056d12c8bf4cf335c69d20c42e0e196b263713a8c09",
+          "license": "UNKNOWN",
+          "evidence": "Explicit storage consent; operational observation is not a reuse license.",
+          "sourceId": "01a14d57-b1e4-7000-8c51-0aa475c36a80",
+          "ownership": "UNVERIFIED",
+          "ragAllowed": false,
+          "sourceType": "task-run",
+          "storageAllowed": true,
+          "trainingAllowed": false,
+          "distillationAllowed": false
+        },
+        {
+          "notes": "Observable facts/references only; unknown rights deny reuse.",
+          "digest": "798aefda2f02161005f7c67b407a6eeca44e56ba85359b9f74eb21a3f7b75ebb",
+          "license": "UNKNOWN",
+          "evidence": "Explicit storage consent; operational observation is not a reuse license.",
+          "sourceId": "cb371c14-354d-5b32-85e6-9e610f62fea5",
+          "ownership": "UNVERIFIED",
+          "ragAllowed": false,
+          "sourceType": "workspace-snapshot",
+          "storageAllowed": true,
+          "trainingAllowed": false,
+          "distillationAllowed": false
+        },
+        {
+          "notes": "Observable facts/references only; unknown rights deny reuse.",
+          "digest": "8950e1c29e02652eeb5ff5596dbb915f5e33009977b1c024176cf5189fc1fe7f",
+          "license": "UNKNOWN",
+          "evidence": "Explicit storage consent; operational observation is not a reuse license.",
+          "sourceId": "50e38979-3765-4ffb-a901-c813b3bcd036",
+          "ownership": "UNVERIFIED",
+          "ragAllowed": false,
+          "sourceType": "quality-evidence",
+          "storageAllowed": true,
+          "trainingAllowed": false,
+          "distillationAllowed": false
+        },
+        {
+          "notes": "Observable facts/references only; unknown rights deny reuse.",
+          "digest": "65ad8dcf596ca8a6e80c8e3306c554f0ef47dae4840da165dc2cbbae3dfd038e",
+          "license": "UNKNOWN",
+          "evidence": "Explicit storage consent; operational observation is not a reuse license.",
+          "sourceId": "bcc366a8-5ffc-4b58-9b89-ae9d5ea01f55",
+          "ownership": "UNVERIFIED",
+          "ragAllowed": false,
+          "sourceType": "quality-evidence",
+          "storageAllowed": true,
+          "trainingAllowed": false,
+          "distillationAllowed": false
+        },
+        {
+          "notes": "Observable facts/references only; unknown rights deny reuse.",
+          "digest": "0821361641d811691be0bed0a02e8be084df9ed4962f09e4a2f99dc49b6b5aa9",
+          "license": "UNKNOWN",
+          "evidence": "Explicit storage consent; operational observation is not a reuse license.",
+          "sourceId": "794861c5-24e3-4dae-bfa6-669a76c49600",
+          "ownership": "UNVERIFIED",
+          "ragAllowed": false,
+          "sourceType": "quality-evidence",
+          "storageAllowed": true,
+          "trainingAllowed": false,
+          "distillationAllowed": false
+        },
+        {
+          "notes": "Observable facts/references only; unknown rights deny reuse.",
+          "digest": "28dc08b2088d0034492c299e53c0d2417d1eb95d8a439a429d7d5e878bef8aa7",
+          "license": "UNKNOWN",
+          "evidence": "Explicit storage consent; operational observation is not a reuse license.",
+          "sourceId": "db7e8b48-09fc-4fca-8021-05faf73720d2",
+          "ownership": "UNVERIFIED",
+          "ragAllowed": false,
+          "sourceType": "quality-evidence",
+          "storageAllowed": true,
+          "trainingAllowed": false,
+          "distillationAllowed": false
+        },
+        {
+          "notes": "Observable facts/references only; unknown rights deny reuse.",
+          "digest": "9c9932695f78d69ade96bbae5728caa060211a807fa90833d00230d10044d954",
+          "license": "UNKNOWN",
+          "evidence": "Explicit storage consent; operational observation is not a reuse license.",
+          "sourceId": "aa4036e5-38ec-4e4f-90f6-f99feeef219c",
+          "ownership": "UNVERIFIED",
+          "ragAllowed": false,
+          "sourceType": "quality-evidence",
+          "storageAllowed": true,
+          "trainingAllowed": false,
+          "distillationAllowed": false
+        },
+        {
+          "notes": "Observable facts/references only; unknown rights deny reuse.",
+          "digest": "ec5f42764873a0365962a1b2743afdfb3b9801cdfc0a3d575602f32b01e21840",
+          "license": "UNKNOWN",
+          "evidence": "Explicit storage consent; operational observation is not a reuse license.",
+          "sourceId": "f36b623f-c0fd-4150-837f-8c37eb4aa9a9",
+          "ownership": "UNVERIFIED",
+          "ragAllowed": false,
+          "sourceType": "quality-evidence",
+          "storageAllowed": true,
+          "trainingAllowed": false,
+          "distillationAllowed": false
+        },
+        {
+          "notes": "Observable facts/references only; unknown rights deny reuse.",
+          "digest": "c3d5c8d8e5050849df77473b119400485ae5f9e0b93c0102b8b96a49fc9568ed",
+          "license": "UNKNOWN",
+          "evidence": "Explicit storage consent; operational observation is not a reuse license.",
+          "sourceId": "e8ca07e3-8304-4d8e-8f1a-f0c0ce9506b8",
+          "ownership": "UNVERIFIED",
+          "ragAllowed": false,
+          "sourceType": "quality-evidence",
+          "storageAllowed": true,
+          "trainingAllowed": false,
+          "distillationAllowed": false
+        }
+      ],
+      "repository": null,
+      "agentReview": null,
+      "corrections": [],
+      "environment": {
+        "limit": "No host configuration, source content or environment values copied.",
+        "source": "persisted-runtime-facts",
+        "hostDetails": null
+      },
+      "finalResult": {
+        "taskStatus": "SUCCEEDED",
+        "qualityVerdict": "PASS"
+      },
+      "humanReview": null,
+      "schemaVersion": "1.0.0",
+      "trajectorySummary": "SUCCEEDED; agents=3; modelCalls=6; tools=3; quality=PASS",
+      "trainingEligibility": {
+        "eligible": false,
+        "evidence": "No verified ownership/license or positive reuse grant."
+      }
+    }
+  },
+  "sandboxCleanup": {
+    "remainingContainers": 0,
+    "remainingNetworks": 0
+  },
+  "cleanup": {
+    "composeExitCode": 0,
+    "remainingContainers": 0,
+    "remainingVolumes": 0,
+    "remainingNetworks": 0
+  }
+}

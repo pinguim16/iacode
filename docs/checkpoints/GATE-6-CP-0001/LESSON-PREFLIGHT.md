@@ -4,7 +4,7 @@
 - Scope: `Experience Store with observable source-bound engineering facts, privacy, provenance, storage and reuse rights, retention, authenticated API and recovery`
 - Technologies: `Python`, `PostgreSQL`
 - Modules: `services/experience`, `apps/api`, `packages/contracts`, `packages/persistence`
-- Generated: `2026-10-18T03:20:38Z`
+- Generated: `2026-10-18T07:13:39Z`
 - Lessons considered: 143
 - Lessons applicable: 142
 
@@ -143,7 +143,7 @@ delivery when one is absent.
 | `LSN-0128` Adversarial premises must use the actual public contract | `GUARDED` | HIGH | `LESSON-REQ-0127` | Build adversarial premises from actual public contracts and observed execution identities. Do not invent fields, widen public metadata for test convenience or drop the real boundary assertion when a harness premise fails. |
 | `LSN-0129` Repeated cancellation must preserve an already cancelled terminal result | `GUARDED` | HIGH | `LESSON-REQ-0128` | Treat repeated cancellation of an already CANCELLED run as immutable observation, not a new transition; preserve refusal for successful/failed terminal work and distinguish request from actual completion/cleanup. |
 | `LSN-0130` Executable export line endings belong to the source and packaging contract | `GUARDED` | HIGH | `LESSON-REQ-0129` | Bind executable line endings in Git and packaging, retain exact source/protocol bytes and refuse incompatible CRLF inputs. Same-checkout deterministic agreement alone is not cross-platform byte evidence. |
-| `LSN-0131` Raw evidence digests require byte-preserving Git export, not text normalization | `GUARDED` | HIGH | `LESSON-REQ-0130` | Preserve claimed raw observation digests across actual Git export rather than checking only a local copy. Declare dedicated copied-evidence boundaries explicitly without changing historical observation bytes. |
+| `LSN-0131` Raw evidence digests require byte-preserving Git export, not text normalization | `GUARDED` | CRITICAL | `LESSON-REQ-0130` | Preserve claimed raw observation digests across actual Git export rather than checking only a local copy. Declare dedicated copied-evidence boundaries explicitly without changing historical observation bytes. |
 | `LSN-0132` Owned Git clones need read-only-aware cleanup, not native-profile lock retry | `GUARDED` | HIGH | `LESSON-REQ-0131` | Use a lifecycle manager that handles actual Windows read-only Git objects for fresh verification clones; do not confuse this with profile sharing locks or retry a policy-refused existing cleanup target. |
 | `LSN-0133` Shared field names do not imply shared schema types | `GUARDED` | MEDIUM | `LESSON-REQ-0132` | Read and validate the owning artifact schema when projecting metadata; equal field names do not grant equal types, nullability or rights. |
 | `LSN-0134` Configuration classifiers consume decoded values, not dotenv quote syntax | `GUARDED` | MEDIUM | `LESSON-REQ-0133` | For committed environment consumers, decode the supported literal syntax before classification and prove actual Compose agreement for quoted empty, quoted placeholder and nonempty adverse values. |
@@ -1064,7 +1064,7 @@ delivery when one is absent.
 
 ### LSN-0131 — Raw evidence digests require byte-preserving Git export, not text normalization
 
-- Reason: applies to every Gate; category quality; severity HIGH; already guarded, so the control must keep holding
+- Reason: applies to every Gate; category quality; severity CRITICAL; already guarded, so the control must keep holding
 - Required check: Preserve claimed raw observation digests across actual Git export rather than checking only a local copy. Declare dedicated copied-evidence boundaries explicitly without changing historical observation bytes.
 - Required evidence: Actual Git positive/adverse/restored transport controls plus equality between every staged archived observation and its original bytes before publication.
 - Derived requirement: `LESSON-REQ-0130`

@@ -3,6 +3,36 @@
   "checkpoint": "GATE-6-CP-0001",
   "findings": [
     {
+      "findingId": "G6-INT-022",
+      "severity": "CRITICAL",
+      "classification": "GUARDRAIL_FAILURE",
+      "lessonId": "LSN-0131",
+      "guardrailId": "GRD-0133",
+      "title": "New exact Markdown archive requires non-text transport and explicit index refresh",
+      "status": "CLOSED",
+      "observed": "Cmd-0356 finds original archived HANDOFF Markdown differs from Git index due to CR normalization. Original file/digest remains unchanged and no mismatched archive was published.",
+      "rootCause": "Copied JSON/log protections did not cover newly archived Markdown and Python. Adding non-text attributes does not itself refresh an already staged unchanged file. LSN-0131 recurrence1 is escalated CRITICAL/CONFIRMED.",
+      "requiredCorrection": "Preserve every original byte, declare only the exact new archive boundary non-text, explicitly refresh its index and validate every manifest member regardless of extension. Retain inherited actual transport normalization-negative and restored-positive controls.",
+      "evidence": ["command:cmd-0356", "checkpoint:attempts/RUNTIME-V6-FINALIZATION-ARCHIVE.json"],
+      "resolution": "Only the exact new v6 archive boundary is non-text and explicitly renormalized into the index without changing original observations. Cmd-0358 verifies all176 observation bytes/digests; cmd-0359 passes inherited actual Git normalization-negative/restored-positive controls; cmd-0360 passes all37 Gate6 cases including every manifest member's digest and attribute. LSN-0131 recurrence1/CRITICAL is locally restored; no mismatched evidence was published.",
+      "resolutionEvidence": ["command:cmd-0357", "command:cmd-0358", "command:cmd-0359", "command:cmd-0360"]
+    },
+    {
+      "findingId": "G6-INT-021",
+      "severity": "CRITICAL",
+      "classification": "GUARDRAIL_FAILURE",
+      "lessonId": "LSN-0008",
+      "guardrailId": "GRD-0009",
+      "title": "Final report summary omits canonical terminal handoff structure",
+      "status": "CLOSED",
+      "observed": "Cmd-0340 refuses INTERNAL_GATE_PASS for thirteen missing final-report headings after nonterminal validation/completeness passed. Cmd-0342 executes two causal controls and fails because there is no canonical final-report renderer. No content seal was granted.",
+      "rootCause": "The final assembler authored a prose summary instead of consuming FINAL_REPORT_HEADINGS from the owning validator. Nonterminal validation does not promise terminal structure. This repeats LSN-0008 recurrence3/CRITICAL; the terminal guard correctly refused promotion.",
+      "requiredCorrection": "Preserve original successful v6 assurance and failed report byte-for-byte, consume the unchanged canonical section set with substantive content, reject each omission/empty and extra section, prove actual output and re-execute fresh memory-bound immutable assurance. Never weaken finalization or call this independent M2 validation.",
+      "evidence": ["command:cmd-0340", "command:cmd-0342", "checkpoint:attempts/RUNTIME-V6-FINALIZATION-ARCHIVE.json"],
+      "resolution": "Actual canonical renderer consumes FINAL_REPORT_HEADINGS and refuses every missing, empty or invented section without changing the owning validator. Both formerly failing controls pass cmd-0343. LSN-0008 recurrence3/CRITICAL and all30 exact archived v6 originals remain. This closes only local causal rework; fresh memory-bound full immutable and ordered internal assurance remain mandatory.",
+      "resolutionEvidence": ["command:cmd-0343"]
+    },
+    {
       "findingId": "G6-INT-019",
       "severity": "CRITICAL",
       "classification": "GUARDRAIL_FAILURE",

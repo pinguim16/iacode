@@ -59,7 +59,7 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 | `REQ-0043` | GATE_SPECIFICATION | `canonical:GATE-6#7.6` | yes | `COMPLETE` | `PARTIAL` | Functional reports bind the actual immutable subject, exact source fingerprint and process outcomes; available safe producer bytes survive fallible postprocessing/cleanup. |
 | `REQ-0044` | GATE_SPECIFICATION | `canonical:GATE-6#8.1` | yes | `COMPLETE` | `PARTIAL` | Runbooks document capture/consent, authentication, all endpoints, schema/lineage/rights, retention, withdrawal, recovery, limits and troubleshooting without exposing configuration values. |
 | `REQ-0045` | GATE_SPECIFICATION | `canonical:GATE-6#8.2` | yes | `COMPLETE` | `PARTIAL` | All selected lessons and requirements have truthful requirement-specific implementation, executed positive/adverse tests and resolvable evidence. |
-| `REQ-0046` | GATE_SPECIFICATION | `canonical:GATE-6#8.3` | yes | `PARTIAL` | `PARTIAL` | Full current test/quality verification, every mandatory Green Keeper gate, total completeness, fresh internal Red Team/null control and complete clean-clone mirror pass in order against unchanged source. |
+| `REQ-0046` | GATE_SPECIFICATION | `canonical:GATE-6#8.3` | yes | `COMPLETE` | `PARTIAL` | Full current test/quality verification, every mandatory Green Keeper gate, total completeness, fresh internal Red Team/null control and complete clean-clone mirror pass in order against unchanged source. |
 | `REQ-0047` | GATE_SPECIFICATION | `canonical:GATE-6#8.4` | yes | `COMPLETE` | `PARTIAL` | Current tooling validates every sealed predecessor; dynamic/current scope and fixed historical fixtures retain distinct owners and successor transitions remain valid. |
 | `REQ-0048` | GATE_SPECIFICATION | `canonical:GATE-6#8.5` | yes | `COMPLETE` | `PARTIAL` | Every changed path is declared before finalization; counts, command inputs, provenance, risks, retrospective and resumable handoff remain truthful. |
 | `REQ-0049` | GATE_SPECIFICATION | `canonical:GATE-6#8.6` | yes | `COMPLETE` | `PARTIAL` | Canonical finalization, a Gate 6-only commit, post-commit seal and immutable archive reconstruction actually succeed; sealed history is never rewritten. |
@@ -188,7 +188,7 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 | `LESSON-REQ-0121` | LESSON | `lesson:LSN-0122` | yes | `COMPLETE` | `PARTIAL` | Verify engine-allocated host ports must be rediscovered after container restart |
 | `LESSON-REQ-0122` | LESSON | `lesson:LSN-0123` | yes | `COMPLETE` | `PARTIAL` | Verify consent binds workspace identity, not an uncanonicalized path spelling |
 | `LESSON-REQ-0123` | LESSON | `lesson:LSN-0124` | yes | `COMPLETE` | `PARTIAL` | Verify durable editor recovery must not use an in-memory test host |
-| `LESSON-REQ-0124` | LESSON | `lesson:LSN-0125` | yes | `PARTIAL` | `PARTIAL` | Verify native parent exit is not proof of process and profile cleanup |
+| `LESSON-REQ-0124` | LESSON | `lesson:LSN-0125` | yes | `COMPLETE` | `PARTIAL` | Verify native parent exit is not proof of process and profile cleanup |
 | `LESSON-REQ-0125` | LESSON | `lesson:LSN-0126` | yes | `COMPLETE` | `PARTIAL` | Verify known authentication material is not domain or presentation data |
 | `LESSON-REQ-0126` | LESSON | `lesson:LSN-0127` | yes | `COMPLETE` | `PARTIAL` | Verify fresh runtime health does not initialize an operator-managed model catalog |
 | `LESSON-REQ-0127` | LESSON | `lesson:LSN-0128` | yes | `COMPLETE` | `PARTIAL` | Verify adversarial premises must use the actual public contract |
@@ -2128,10 +2128,10 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 
 - Source reference: LESSON-PREFLIGHT.json LESSON-REQ-0124
 - Description: Verify native parent exit is not proof of process and profile cleanup
-- Implementation: `file:scripts/iacode/native_editor.py`, `file:scripts/iacode/native_process.py`
-- Test: `file:tests/test_gate5_clients.py`
-- Negative test: `file:tests/test_gate5_clients.py`, `file:docs/checkpoints/GATE-5-CP-0001/FINDINGS.json`
-- Documentation: `file:docs/ENGINEERING-MEMORY.md`, `file:docs/checkpoints/GATE-5-CP-0001/PLAN.md`
+- Implementation: `file:scripts/iacode/native_process.py`, `file:scripts/iacode/native_editor.py`, `file:docs/adr/ADR-0052-native-cleanup-failures-retain-observed-diagnostics.md`
+- Test: `file:tests/test_gate6_experience.py`, `file:tests/test_gate5_clients.py`
+- Negative test: `file:tests/test_gate6_experience.py`, `file:tests/test_gate5_clients.py`, `checkpoint:FINDINGS.json`
+- Documentation: `file:docs/ENGINEERING-MEMORY.md`, `file:docs/checkpoints/GATE-6-CP-0001/PLAN.md`
 - Validation: _none_
 - Guardrail: `file:.iacode/memory/guardrails/registry.json`
 

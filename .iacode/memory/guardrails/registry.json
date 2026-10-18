@@ -1964,7 +1964,8 @@
       "kind": "test",
       "reference": "test_exact_byte_evidence_survives_git_transport_and_detects_normalization",
       "verifiedBy": [
-        "test_exact_byte_evidence_survives_git_transport_and_detects_normalization"
+        "test_exact_byte_evidence_survives_git_transport_and_detects_normalization",
+        "Gate6BookkeepingCausalTests.test_actual_captured_output_hashes_and_git_attributes_preserve_bytes"
       ],
       "lessons": [
         "LSN-0131"
@@ -2132,6 +2133,18 @@
       "verifiedBy": ["test_management_only_report_cannot_replace_complete_non_fast_verification"],
       "lessons": ["LSN-0143"],
       "removingItWouldAllow": "Management success or a missing/failed canonical stage to be promoted into complete immutable runtime acceptance."
+    },
+    {
+      "guardrailId": "GRD-0146",
+      "title": "Final report authoring consumes canonical terminal sections",
+      "kind": "validator",
+      "reference": "docs/checkpoints/GATE-6-CP-0001/audit-harness/assemble_final_handoff.py",
+      "verifiedBy": [
+        "Gate6BookkeepingCausalTests.test_final_report_renderer_consumes_every_canonical_section",
+        "Gate6BookkeepingCausalTests.test_final_report_renderer_refuses_each_missing_empty_or_extra_section"
+      ],
+      "lessons": ["LSN-0008"],
+      "removingItWouldAllow": "A prose summary to omit mandatory terminal sections and defer discovery until the finalizer refuses promotion. The terminal validator remains unchanged."
     }
   ]
 }
