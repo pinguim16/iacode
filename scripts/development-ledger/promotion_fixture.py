@@ -166,11 +166,27 @@ def copy_ledger_runtime(root: Path) -> None:
     )
 
 
+FIXTURE_CONTROL_DIRECTORIES = ("agents", "policies", "schemas", "templates")
+
+
+def copy_control_contracts(root: Path) -> None:
+    """Inherit control assets, never real history, curator payloads or unrelated approvals."""
+    source = PROJECT_ROOT / ".iacode"
+    target = root / ".iacode"
+    target.mkdir(parents=True)
+    for name in FIXTURE_CONTROL_DIRECTORIES:
+        shutil.copytree(source / name, target / name,
+                        ignore=shutil.ignore_patterns("__pycache__"))
+    shutil.copy2(source / "VERSION", target / "VERSION")
+    attestations = target / "attestations"
+    attestations.mkdir()
+    shutil.copy2(source / "attestations" / "README.md", attestations / "README.md")
+
+
 def build_fixture_repository(root: Path) -> None:
     """A minimal IACode repository: the policies, the tooling, a suite, and its own memory."""
     root.mkdir(parents=True, exist_ok=True)
-    shutil.copytree(PROJECT_ROOT / ".iacode", root / ".iacode",
-                    ignore=shutil.ignore_patterns("__pycache__"))
+    copy_control_contracts(root)
     (root / "docs" / "checkpoints").mkdir(parents=True)
     shutil.copy2(PROJECT_ROOT / "docs" / "SETUP-00-CHECKLIST.md",
                  root / "docs" / "SETUP-00-CHECKLIST.md")
@@ -665,11 +681,16 @@ def write_attestation(
 # --------------------------------------------------------------------------------------------
 
 
+def promotion_repository(workdir: Path) -> Path:
+    """The producer owns its repository locator; diagnostics do not duplicate this rule."""
+    return workdir / "promotion"
+
+
 def run_positive_promotion(workdir: Path, *,
                            mechanism: str = "FRESH_SESSION_INDEPENDENT_AUDIT",
                            status: str = "MILESTONE_INDEPENDENT_AUDIT_PASS") -> dict[str, Any]:
     """Subject -> seal -> audit checkpoint -> attestation -> seal -> derived milestone PASS."""
-    root = workdir / "promotion"
+    root = promotion_repository(workdir)
     build_fixture_repository(root)
 
     subject = deliver_checkpoint(root, scope="control-plane", status="READY_FOR_REVIEW")

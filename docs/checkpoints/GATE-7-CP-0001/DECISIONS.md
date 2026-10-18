@@ -1,5 +1,19 @@
 # Decisions
 
+- Runtime-v1 remains failed and its immutable tag/original producer archives are retained. Local
+  current35-case, actual32-case promotion/succession, unchanged57-case inherited and complete lint
+  cmd-0123/0126/0127/0128 pass. Cmd-0129 preserves both actual clean promotion mirrors before
+  cleanup. Local guard restoration and all21 finding closures do not substitute for a new whole
+  immutable invocation or independent M2 approval.
+- Cmd-0122 sent a mutating formatter through an immutable-evidence wrapper. The wrapper correctly
+  returns FAIL on source change although the child exits0; its label is not a verdict. Cmd-0124
+  formats directly and cmd-0125 supplies actual read-only acceptance. Cmd-0121 remains a recorded
+  source-quality refusal at LSN-0105 recurrence12/CRITICAL; no exact lost stdout bytes are invented.
+- Two registry editor attempts were refused for exact line-context mismatch, including omitted
+  object-separator commas. No partial registry write occurred. The correction consumes the actual
+  completed preimage and includes each complete line boundary. Memory/registry validation starts
+  only after the full intended update is applied; no transient unresolved reference is accepted.
+
 - G7-INT-007 records a second serial-order violation, distinct from the earlier cmd-0027/0028
   overlap: successful cmd-0067 is appended before the finalizer's entire process exits. Session45921
   still reports running and process22984 remains live while commit session23625 is launched.

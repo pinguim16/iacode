@@ -316,6 +316,12 @@ class Gate5QualityIntegrationTests(unittest.TestCase):
                           "webTests", "lint", "infraDefinition", "clientTests"}
         # These are the inherited minimum, not a ceiling on later mandatory gates.
         self.assertTrue(inherited <= set(gates), inherited - set(gates))
+        # The immutable minimum and the live canonical registry are separate premises. A
+        # policy adapter must not drop a newly registered mandatory gate; unregistered
+        # legitimate growth is still accepted and every observed gate stays mandatory.
+        registry = json.loads((ROOT / ".iacode/policies/quality-gates.json").read_bytes())
+        current_mandatory = {row["id"] for row in registry["gates"] if row["mandatory"]}
+        self.assertTrue(current_mandatory <= set(gates), current_mandatory - set(gates))
         self.assertTrue(all(gate["mandatory"] for gate in gates.values()))
 
     def test_native_suites_are_declared_and_never_invent_a_python_denominator(self) -> None:

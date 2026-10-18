@@ -514,12 +514,18 @@ def failure_diagnostics(output: str) -> dict[str, object]:
         r"^(?:FAIL|ERROR): test_[A-Za-z0-9_]+ \([A-Za-z0-9_.]+\)"
         r"(?: \(checkpoint='(?:GATE-[0-9]+|SETUP-[0-9]+)-CP-[0-9]+'\))?"
     )
+    lifecycle_header = re.compile(
+        r"^(?:FAIL|ERROR): (?:setUpClass|tearDownClass|setUpModule|tearDownModule) "
+        r"\([A-Za-z0-9_.]+\)"
+    )
     pytest_header = re.compile(r"^(?:FAILED|ERROR) [A-Za-z0-9_./\\:-]+")
     headers: list[str] = []
     total = 0
     truncated = False
     for line in output.splitlines():
-        match = unittest_header.match(line) or pytest_header.match(line)
+        match = (
+            unittest_header.match(line) or lifecycle_header.match(line) or pytest_header.match(line)
+        )
         if match is None:
             continue
         total += 1

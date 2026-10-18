@@ -71,6 +71,46 @@ and altered cascade mutations. The complete API gate and real migration parity m
 - Stop: genuine unavailable prerequisite or material missing owner choice. Never weaken correct
   checks, substitute fake production responses, extend deadlines or stop unrelated apps.
 
+## G7-S01R — Preserved full-runtime rework before a fresh immutable subject
+
+The actual complete cmd-0099 ends FAIL:48 of49 stages pass, while the root suite reports five
+failures and six errors. Original safe producer bytes, cleanup and isolation remain archived.
+Cmd-0102 reproduces five refusals and the missing current metadata adapter; cmd-0103/0104
+reproduce the five real protocol setup errors. Cmd-0105's zero-capture failure remains;
+cmd-0110 retains the actual MIR-015 bytes before cleanup. There is no independent approval.
+
+Cmd-0107/0108 derive194 obligations after confirmed LSN-0147; cmd-0112/0113 derive the entire
+current195-row set, including LSN-0148, before corrective implementation. All48 canonical rows
+and all147 applicable lessons remain. Earlier counts in this plan describe their original epochs.
+
+Cmd-0118/0119 derive196 obligations from all48 canonical rows and all148 applicable lessons
+after confirmed LSN-0149. The source-preimage correction requires actual completed successful
+nonempty reads before constructing replacements. Cmd-0120 verifies both retained originals by
+actual bytes, nonempty typed size and SHA256; cmd-0115's exit0 with missing digest output is not
+proof. The invalid helper is repaired only after its completed8683-byte preimage is observed.
+Actual child-process running/failed/clean controls and empty/null/mismatched byte proofs are
+mandatory. Cmd-0123 passes all35 current Gate7 cases; this is targeted, not whole verification.
+
+- Keep the existing adverse membership assertion; strengthen its owner using current canonical
+  mandatory IDs as well as the immutable minimum, with registered-growth/removal/downgrade tests.
+- Materialize the actual current synchronizer/hash/validator adapter; expose its canonical
+  boundaries to the unchanged metadata regression and never restore a stale STATE snapshot.
+- Configure every capturing entry point with the existing UTF-8 bootstrap before work.
+- Restore explicit current mandatory IDs in DEVELOPMENT.md and execute omission/growth controls.
+- Under ADR-0055, reserve only the future Code Graph notice; implement no Gate8 capability.
+- Under ADR-0056, copy only canonical control contracts into minimal protocol fixtures, preserve
+  common runtime dependencies, and execute real positive transitions and retained-link refusal.
+- Use the producer-owned promotion locator and preserve exact originals before consumers/cleanup.
+- Extend bounded diagnostic identities to actual unittest lifecycle errors; retain privacy and
+  all existing truncation bounds. Execute positive, malformed/private-body and overflow controls.
+- LESSON-REQ-0146 / LSN-0147: actual bounded framework lifecycle diagnostics and complete suite.
+- LESSON-REQ-0147 / LSN-0148: actual fixture ownership/dependency and positive/adverse protocol proof.
+
+After all local causal controls and unchanged source quality pass, restore only actually proven
+guards, refresh memory/preflight/derivation, declare paths and publish a new runtime-v2 tag.
+Never move runtime-v1. Freeze source/memory, repeat one whole non-fast verifier, then all ordered
+Green Keeper/completeness/fresh internal Red Team/full clean-clone mirror and real sealing.
+
 ## G7-S02 — Complete verification and ordered internal assurance
 
 - Objective: publish a tested immutable subject, execute the entire non-fast verifier from exact
@@ -843,3 +883,18 @@ This mechanically rendered list is not a substitute denominator and may omit no 
 
 - Required check: Wait for actual producer process exit before starting a dependent writer or publication step; a successful intermediate ledger record, metadata file or output line is not a process-completion signal.
 - Required evidence: Executed process-order positive and failure controls using actual child processes, including successful-looking intermediate output followed by nonzero exit; the dependent mutation must remain unexecuted on refusal.
+
+### LESSON-REQ-0146 — LSN-0147
+
+- Required check: Retain safe bounded test-method and class/module lifecycle failure identities without disclosing arbitrary traceback bodies or silently omitting a supported family.
+- Required evidence: Executed current parser positive/adverse/overflow controls, actual original diagnostics and the complete current mandatory suite.
+
+### LESSON-REQ-0147 — LSN-0148
+
+- Required check: Construct minimal protocol repositories from explicit canonical control assets and declared runtime dependencies, not deployment-owned curator sources, unrelated histories or attestation verdicts.
+- Required evidence: Actual positive protocol execution, real retained-link negative, copied dependency proof and isolated synthetic source/history noninheritance controls.
+
+### LESSON-REQ-0148 — LSN-0149
+
+- Required check: Execution exit0 does not replace a typed completed nonempty observation or actual matching file bytes; reject absent digests and incomplete reads before mutation or evidence acceptance.
+- Required evidence: Actual nonempty original-byte proof and executed running/failed/empty/null/mismatched-observation controls; original semantic failures remain visible.

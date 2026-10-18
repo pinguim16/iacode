@@ -30,6 +30,16 @@ def reason(path: str) -> str:
         "START-HERE.md": "Align live entry with authorized Gate7 and pending M2 independent audit.",
         ".gitattributes": "Preserve new checkpoint producer bytes across actual Git transport.",
         "docs/adr/README.md": "Keep the canonical ADR index aligned with structural decisions.",
+        ".iacode/policies/gate-scope.json": (
+            "Reserve only the next canonical Code Graph boundary; no Gate8 implementation."),
+        "services/code-graph/README.md": (
+            "Keep the future Gate8 boundary explicitly RESERVED and unimplemented."),
+        "tests/test_gate5_clients.py": (
+            "Strengthen current mandatory membership without dropping inherited assertions."),
+        "docs/checkpoints/M2-CONSOLIDATION.md": (
+            "Consolidate Gates4-7 and preserve the independent M2 audit boundary."),
+        "scripts/development-ledger/promotion_fixture.py": (
+            "Constrain protocol fixtures to control contracts and expose their owned locator."),
     }
     if path in exact:
         return exact[path]
@@ -38,6 +48,8 @@ def reason(path: str) -> str:
     if path in {
         "docs/adr/ADR-0053-knowledge-requires-content-bound-source-permission.md",
         "docs/adr/ADR-0054-knowledge-indexes-are-rebuildable-cited-projections.md",
+        "docs/adr/ADR-0055-code-graph-remains-an-explicit-future-reservation.md",
+        "docs/adr/ADR-0056-minimal-protocol-fixtures-inherit-only-control-contracts.md",
     }:
         return "Define the governed source, rights, index, citation and invalidation architecture."
     if path.startswith("services/knowledge/"):

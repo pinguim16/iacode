@@ -1,0 +1,25 @@
+{
+  "kind": "ACTUAL_MINIMAL_PROTOCOL_CAUSAL_DIAGNOSTIC_NOT_GATE_ACCEPTANCE",
+  "failureType": "FixtureError",
+  "originals": [
+    {
+      "kind": "UNINTERPRETED_REAL_FIXTURE_PRODUCER_NOT_M2_ACCEPTANCE",
+      "source": "docs/checkpoints/SETUP-00-CP-0001/M0-INTERNAL-MIRROR.json",
+      "archive": "attempts/PROMOTION-DIAGNOSTIC-985d6abe15294033a4c5ef1b2a895a54-M0-INTERNAL-MIRROR.json",
+      "sizeBytes": 8096,
+      "sha256": "183fe343134d53b6c4abd3a2478fef605bc757d34cf2006e91088f472b7ca82a",
+      "acceptanceGranted": false
+    }
+  ],
+  "failedDimensions": [
+    {
+      "id": "MIR-015",
+      "name": null,
+      "result": "FAIL",
+      "observed": "0/1 relative documentation links resolve; missing .iacode\\knowledge-sources\\README.md -> ../../docs/adr/ADR-0053-knowledge-requires-content-bound-source-permission.md"
+    }
+  ],
+  "temporaryOwnerRemoved": true,
+  "sourceUnchanged": true,
+  "acceptanceGranted": false
+}

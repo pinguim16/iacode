@@ -4,9 +4,9 @@
 - Scope: `Knowledge Engine governed source ingestion lexical indexing retrieval citations rights invalidation persistence privacy recovery and M2 internal audit handoff`
 - Technologies: `Python`, `PostgreSQL`, `Docker`, `Windows`
 - Modules: `services/knowledge`, `apps/api`, `packages/contracts`, `packages/persistence`, `scripts/iacode`
-- Generated: `2026-10-18T18:06:54Z`
-- Lessons considered: 146
-- Lessons applicable: 145
+- Generated: `2026-10-18T21:29:41Z`
+- Lessons considered: 149
+- Lessons applicable: 148
 
 Every applicable lesson below is a requirement of this Gate. The derived identifiers must
 appear in `REQUIREMENTS-MATRIX.json`, and the Delivery Completeness Validator fails the
@@ -129,7 +129,7 @@ delivery when one is absent.
 | `LSN-0114` Transport line metadata must not repeatedly scan the source prefix | `GUARDED` | MEDIUM | `LESSON-REQ-0113` | Run the measured source-range regression and all existing transport, secret-boundary and immutable-bundle controls without weakening their rules. |
 | `LSN-0115` A failing full verifier retains every bounded case identifier beyond its output tail | `GUARDED` | MEDIUM | `LESSON-REQ-0114` | Run actual-process long-tail, parameter-exclusion, bounded-count and successful-child controls; retain original stage denominator and exit-code semantics. |
 | `LSN-0116` A live resumability pointer is generated after Git boundaries, not committed into its own subject | `GUARDED` | CRITICAL | `LESSON-REQ-0115` | Generate current state from the latest checkpoint, truthful steps and real local/remote Git; validate exact observations, reject stale or contradictory state and prove the live output cannot dirty or overwrite tracked source. |
-| `LSN-0117` An architecture rollup must not contradict the delivered capability described below it | `GUARDED` | HIGH | `LESSON-REQ-0116` | Check every public current-state rollup against canonical owned capability titles and delegate live lifecycle status to LATEST, retaining earlier architecture controls and testing actual omissions, future-denials and frozen status. |
+| `LSN-0117` An architecture rollup must not contradict the delivered capability described below it | `GUARDED` | CRITICAL | `LESSON-REQ-0116` | Check every public current-state rollup against canonical owned capability titles and delegate live lifecycle status to LATEST, retaining earlier architecture controls and testing actual omissions, future-denials and frozen status. |
 | `LSN-0118` Post-response validation failures must preserve an accepted mutation's uncertain outcome | `GUARDED` | HIGH | `LESSON-REQ-0117` | For every refusal after a remote mutation may have been accepted, including response authentication, envelope and semantic validation, preserve uncertainty and stable reconciliation identity without automatically repeating the mutation. |
 | `LSN-0119` A clean publication scan does not replace the stricter checkpoint secret scan | `GUARDED` | CRITICAL | `LESSON-REQ-0118` | Treat publication review and strict checkpoint detection as distinct controls; execute both unchanged, preserve actual secret types when correcting source false positives, and never infer checkpoint validity from the publication scan. |
 | `LSN-0120` Native installation proofs must resolve the installed CLI entrypoint | `GUARDED` | MEDIUM | `LESSON-REQ-0119` | Resolve native tool installation/CLI entrypoints and verify actual extracted package identities before claiming installability; graphical process launch or a guessed metadata path is not installation evidence. |
@@ -147,7 +147,7 @@ delivery when one is absent.
 | `LSN-0132` Owned Git clones need read-only-aware cleanup, not native-profile lock retry | `GUARDED` | HIGH | `LESSON-REQ-0131` | Use a lifecycle manager that handles actual Windows read-only Git objects for fresh verification clones; do not confuse this with profile sharing locks or retry a policy-refused existing cleanup target. |
 | `LSN-0133` Shared field names do not imply shared schema types | `GUARDED` | MEDIUM | `LESSON-REQ-0132` | Read and validate the owning artifact schema when projecting metadata; equal field names do not grant equal types, nullability or rights. |
 | `LSN-0134` Configuration classifiers consume decoded values, not dotenv quote syntax | `GUARDED` | MEDIUM | `LESSON-REQ-0133` | For committed environment consumers, decode the supported literal syntax before classification and prove actual Compose agreement for quoted empty, quoted placeholder and nonempty adverse values. |
-| `LSN-0135` Capture producer evidence before fallible interpretation or owned cleanup | `GUARDED` | HIGH | `LESSON-REQ-0134` | Every temporary verification producer must preserve its available safe reports before interpretation can raise; actual owner cleanup must leave those reports and digests recoverable without manufacturing PASS. |
+| `LSN-0135` Capture producer evidence before fallible interpretation or owned cleanup | `GUARDED` | CRITICAL | `LESSON-REQ-0134` | Every temporary verification producer must preserve its available safe reports before interpretation can raise; actual owner cleanup must leave those reports and digests recoverable without manufacturing PASS. |
 | `LSN-0136` Strict JSON validation loses transport context | `GUARDED` | MEDIUM | `LESSON-REQ-0135` | Strict contract prevalidators must preserve the transport semantics of valid JSON arrays/dates while refusing coerced boolean/numeric values. |
 | `LSN-0137` SQL text interprets inline JSON colons as bindings | `GUARDED` | MEDIUM | `LESSON-REQ-0136` | SQL fixtures must transport structured JSON through bindings rather than let a SQL text parser reinterpret JSON property/value colons. |
 | `LSN-0138` Secret projection distinguishes public identities from authorization secrets | `GUARDED` | HIGH | `LESSON-REQ-0137` | Known-secret projection must distinguish public identities from actual passwords/bearer values; use the real configured field semantics, preserve unknown-secret detection and exact raw/encoded refusal of actual secrets. |
@@ -158,7 +158,10 @@ delivery when one is absent.
 | `LSN-0143` Management recovery is not complete runtime capability | `GUARDED` | HIGH | `LESSON-REQ-0142` | Do not promote a management-only recovery into full runtime readiness. Verify the actual canonical build, host-bind and lint capabilities through the supported transport before immutable assurance. |
 | `LSN-0144` Raw archived observations retain original context rather than becoming active relocated documents | `GUARDED` | HIGH | `LESSON-REQ-0143` | Preserve raw observation bytes and original interpretation context; never publish a relocated byte-exact archive as active source/documentation with broken context. |
 | `LSN-0145` A new persistent capability must extend the explicit structural contract, not bypass its exact inventory | `GUARDED` | MEDIUM | `LESSON-REQ-0144` | For every authorized persistence addition, extend the owning exact table inventory, immutable/lifecycle classification and foreign-key ownership contract while preserving all inherited assertions; prove each boundary rejects a deliberate mismatch. |
-| `LSN-0146` A completed command record is not proof that its producing process has exited | `GUARDED` | HIGH | `LESSON-REQ-0145` | Wait for actual producer process exit before starting a dependent writer or publication step; a successful intermediate ledger record, metadata file or output line is not a process-completion signal. |
+| `LSN-0146` A completed command record is not proof that its producing process has exited | `GUARDED` | CRITICAL | `LESSON-REQ-0145` | Wait for actual producer process exit before starting a dependent writer or publication step; a successful intermediate ledger record, metadata file or output line is not a process-completion signal. |
+| `LSN-0147` Framework lifecycle errors need bounded identities as well as test methods | `GUARDED` | HIGH | `LESSON-REQ-0146` | Retain safe bounded test-method and class/module lifecycle failure identities without disclosing arbitrary traceback bodies or silently omitting a supported family. |
+| `LSN-0148` Minimal protocol fixtures inherit control contracts, never deployment-owned source data | `GUARDED` | HIGH | `LESSON-REQ-0147` | Construct minimal protocol repositories from explicit canonical control assets and declared runtime dependencies, not deployment-owned curator sources, unrelated histories or attestation verdicts. |
+| `LSN-0149` A shell exit zero is not a produced digest or verified original evidence | `GUARDED` | HIGH | `LESSON-REQ-0148` | Execution exit0 does not replace a typed completed nonempty observation or actual matching file bytes; reject absent digests and incomplete reads before mutation or evidence acceptance. |
 
 ## Why each lesson applies
 
@@ -969,7 +972,7 @@ delivery when one is absent.
 
 ### LSN-0117 — An architecture rollup must not contradict the delivered capability described below it
 
-- Reason: applies to every Gate; category documentation; severity HIGH; already guarded, so the control must keep holding
+- Reason: applies to every Gate; category documentation; severity CRITICAL; already guarded, so the control must keep holding
 - Required check: Check every public current-state rollup against canonical owned capability titles and delegate live lifecycle status to LATEST, retaining earlier architecture controls and testing actual omissions, future-denials and frozen status.
 - Required evidence: A causal red overview-consistency control followed by its unchanged green execution and a full current documentation validation.
 - Derived requirement: `LESSON-REQ-0116`
@@ -1095,7 +1098,7 @@ delivery when one is absent.
 
 ### LSN-0135 — Capture producer evidence before fallible interpretation or owned cleanup
 
-- Reason: applies to every Gate; category quality; severity HIGH; already guarded, so the control must keep holding
+- Reason: applies to every Gate; category quality; severity CRITICAL; already guarded, so the control must keep holding
 - Required check: Every temporary verification producer must preserve its available safe reports before interpretation can raise; actual owner cleanup must leave those reports and digests recoverable without manufacturing PASS.
 - Required evidence: A real exception and actual temporary-owner cleanup regression with recoverable original bytes, plus a fresh complete publication capture and exact transport verification.
 - Derived requirement: `LESSON-REQ-0134`
@@ -1172,7 +1175,28 @@ delivery when one is absent.
 
 ### LSN-0146 — A completed command record is not proof that its producing process has exited
 
-- Reason: applies to every Gate; category process; severity HIGH; already guarded, so the control must keep holding
+- Reason: applies to every Gate; category process; severity CRITICAL; already guarded, so the control must keep holding
 - Required check: Wait for actual producer process exit before starting a dependent writer or publication step; a successful intermediate ledger record, metadata file or output line is not a process-completion signal.
 - Required evidence: Executed process-order positive and failure controls using actual child processes, including successful-looking intermediate output followed by nonzero exit; the dependent mutation must remain unexecuted on refusal.
 - Derived requirement: `LESSON-REQ-0145`
+
+### LSN-0147 — Framework lifecycle errors need bounded identities as well as test methods
+
+- Reason: applies to every Gate; category tooling; severity HIGH; already guarded, so the control must keep holding
+- Required check: Retain safe bounded test-method and class/module lifecycle failure identities without disclosing arbitrary traceback bodies or silently omitting a supported family.
+- Required evidence: Executed current parser positive/adverse/overflow controls, actual original diagnostics and the complete current mandatory suite.
+- Derived requirement: `LESSON-REQ-0146`
+
+### LSN-0148 — Minimal protocol fixtures inherit control contracts, never deployment-owned source data
+
+- Reason: applies to every Gate; category security; severity HIGH; already guarded, so the control must keep holding
+- Required check: Construct minimal protocol repositories from explicit canonical control assets and declared runtime dependencies, not deployment-owned curator sources, unrelated histories or attestation verdicts.
+- Required evidence: Actual positive protocol execution, real retained-link negative, copied dependency proof and isolated synthetic source/history noninheritance controls.
+- Derived requirement: `LESSON-REQ-0147`
+
+### LSN-0149 — A shell exit zero is not a produced digest or verified original evidence
+
+- Reason: applies to every Gate; category tooling; severity HIGH; already guarded, so the control must keep holding
+- Required check: Execution exit0 does not replace a typed completed nonempty observation or actual matching file bytes; reject absent digests and incomplete reads before mutation or evidence acceptance.
+- Required evidence: Actual nonempty original-byte proof and executed running/failed/empty/null/mismatched-observation controls; original semantic failures remain visible.
+- Derived requirement: `LESSON-REQ-0148`

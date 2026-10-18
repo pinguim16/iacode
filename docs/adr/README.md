@@ -64,3 +64,5 @@ exist, or a title or status that disagrees with its record fails the suite.
 | [ADR-0052](ADR-0052-native-cleanup-failures-retain-observed-diagnostics.md) | Native cleanup failures retain observed diagnostics | Accepted |
 | [ADR-0053](ADR-0053-knowledge-requires-content-bound-source-permission.md) | Knowledge requires content-bound source permission | Accepted |
 | [ADR-0054](ADR-0054-knowledge-indexes-are-rebuildable-cited-projections.md) | Knowledge indexes are rebuildable cited projections | Accepted |
+| [ADR-0055](ADR-0055-code-graph-remains-an-explicit-future-reservation.md) | Code Graph remains an explicit future reservation | Accepted |
+| [ADR-0056](ADR-0056-minimal-protocol-fixtures-inherit-only-control-contracts.md) | Minimal protocol fixtures inherit only control contracts | Accepted |

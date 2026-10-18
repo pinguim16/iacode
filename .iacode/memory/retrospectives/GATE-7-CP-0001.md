@@ -140,3 +140,48 @@ One new confirmed structural-integration class is recorded; the two older failur
 |---|---|---|
 
 None observed.
+
+## Post-runtime-v1 corrective epoch and source freeze
+
+The complete immutable cmd-0099 is FAIL:48 of49 stages pass; the root producer reports896
+tests, five failures and six errors. All exact safe original producer bytes, actual own cleanup
+and unrelated-container preservation remain archived, not promoted into acceptance. The original
+method-only diagnostics miss five lifecycle identities. Causal cmd-0102/0103/0104 retain the
+unchanged root/setup refusals. The failed zero-original capture cmd-0105 remains; cmd-0110
+retains the actual MIR-015 original before cleanup and establishes the curator-fixture cause.
+
+Current registry membership must grow from canonical policy, not an old minimum. Metadata
+wrappers must consume the canonical synchronizer's output. Capturing entrypoints configure UTF-8
+before work. Documentation names every mandatory registered gate. ADR-0055 adds only a RESERVED
+future Code Graph notice; no Gate8 implementation or authority. ADR-0056 limits minimal fixtures
+to explicit control contracts and dependencies, excluding curator data, real history and unrelated
+verdicts while retaining actual broken-link refusal. A producer-owned locator supplies the real
+capture root; exact safe originals are durable before fallible consumers and owned cleanup.
+
+The source-read response preceding a duplicated helper body was not retained. Failure to check
+actual completion/nonempty preimage is observed; its particular asynchronous timing is an
+inference. The exact invalid8683-byte helper original is retained. Cmd-0115's shell reports errors
+despite exit0 and absent digest equality; it is not hash proof. Cmd-0120 verifies both retained
+originals using actual bytes, typed nonempty size and SHA256. Original cmd-0116 is a precondition
+rejection, not execution. Cmd-0121 repeats source-quality failure at LSN-0105 recurrence12/CRITICAL;
+only equivalent syntax/representation/layout changes, never rules or assertions. Cmd-0122's
+immutable wrapper correctly refuses the formatter's mutation despite the child exiting0;
+cmd-0124 formats directly and cmd-0125 supplies actual read-only quality proof.
+
+Executed current proof: cmd-0123 passes35 Gate7 cases; cmd-0126 passes32 unchanged real
+promotion/succession cases; cmd-0127 passes57 inherited causal cases; cmd-0128 passes whole
+unchanged mandatory lint. Those counts describe their own overlapping scopes, not an additive
+delivery total. Cmd-0129 completes real promotion, preserves both original clean mirrors with
+nonempty bytes/hash before cleanup, observes no failed dimensions, removes its temporary owner
+and preserves measured source. GRD-0150 guards bounded lifecycle diagnostics, GRD-0151 guards
+minimal-fixture ownership/retained-link refusal, and GRD-0152 guards typed completed observations
+and actual byte proof. GRD-0149 additionally consumes the actual running/failed/clean child
+boundary; all inherited guards and recurrence histories remain.
+
+The reopened guards are restored only as locally executed prevention, not whole-delivery
+acceptance. LSN-0105 recurrence12, LSN-0146 recurrence1 and every earlier counter remain. No
+future complete-runtime, ordered assurance, seal or independent verdict is predicted by this
+source-epoch record. Subsequent actual outcomes belong to Gate7's canonical command ledger,
+full producer, Green Keeper, completeness, fresh internal Red Team, mirror and final checkpoint
+artifacts. Source/memory must freeze before the new immutable runtime subject; any measured
+source change requires fresh whole proof. Independent M2 review remains a later separate run.

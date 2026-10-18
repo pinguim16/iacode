@@ -1,0 +1,121 @@
+EEEE
+======================================================================
+ERROR: setUpClass (test_development_ledger.GateTransitionSimulationTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\iacode\tests\test_development_ledger.py", line 5301, in setUpClass
+    cls.result = run_gate_transition(Path(cls.temporary.name))
+                 ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\iacode\scripts\development-ledger\promotion_fixture.py", line 816, in run_gate_transition
+    promotion = run_positive_promotion(workdir)
+  File "E:\iacode\scripts\development-ledger\promotion_fixture.py", line 675, in run_positive_promotion
+    subject = deliver_checkpoint(root, scope="control-plane", status="READY_FOR_REVIEW")
+  File "E:\iacode\scripts\development-ledger\promotion_fixture.py", line 583, in deliver_checkpoint
+    _require(finalized, "finalize_checkpoint.py")
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\iacode\scripts\development-ledger\promotion_fixture.py", line 106, in _require
+    raise FixtureError(f"{what} failed with exit {completed.returncode}: {completed.stdout}")
+promotion_fixture.FixtureError: finalize_checkpoint.py failed with exit 1: CHECKPOINT_NOT_FINALIZED
+- READY_FOR_REVIEW requires the internal mirror audit to pass, found 'FAIL'
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "E:\iacode\tests\test_development_ledger.py", line 5305, in setUpClass
+    raise AssertionError(
+        f"the Gate transition could not be executed: {exc}") from exc
+AssertionError: the Gate transition could not be executed: finalize_checkpoint.py failed with exit 1: CHECKPOINT_NOT_FINALIZED
+- READY_FOR_REVIEW requires the internal mirror audit to pass, found 'FAIL'
+
+
+======================================================================
+ERROR: setUpClass (test_development_ledger.MirrorApplicabilitySemanticsTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\iacode\tests\test_development_ledger.py", line 5222, in setUpClass
+    cls.report = run_mirror_semantics(Path(cls.temporary.name))
+                 ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\iacode\scripts\development-ledger\mirror_semantics_validation.py", line 163, in run
+    result = run_mirror_scenario(workdir, name=scenario["name"], **scenario["arguments"])
+  File "E:\iacode\scripts\development-ledger\promotion_fixture.py", line 1010, in run_mirror_scenario
+    delivery = deliver_checkpoint(
+        root, scope="control-plane", status="READY_FOR_REVIEW",
+        red_team_attacks=red_team_attacks, before_gates=before_gates, seal=expect_pass)
+  File "E:\iacode\scripts\development-ledger\promotion_fixture.py", line 583, in deliver_checkpoint
+    _require(finalized, "finalize_checkpoint.py")
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\iacode\scripts\development-ledger\promotion_fixture.py", line 106, in _require
+    raise FixtureError(f"{what} failed with exit {completed.returncode}: {completed.stdout}")
+promotion_fixture.FixtureError: finalize_checkpoint.py failed with exit 1: CHECKPOINT_NOT_FINALIZED
+- READY_FOR_REVIEW requires the internal mirror audit to pass, found 'FAIL'
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "E:\iacode\tests\test_development_ledger.py", line 5225, in setUpClass
+    raise AssertionError(
+        f"the mirror semantics validation could not be executed: {exc}") from exc
+AssertionError: the mirror semantics validation could not be executed: finalize_checkpoint.py failed with exit 1: CHECKPOINT_NOT_FINALIZED
+- READY_FOR_REVIEW requires the internal mirror audit to pass, found 'FAIL'
+
+
+======================================================================
+ERROR: setUpClass (test_development_ledger.SimulationExecutesProductionControlsTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\iacode\tests\test_development_ledger.py", line 5356, in setUpClass
+    cls.result = run_positive_promotion(Path(cls.temporary.name))
+                 ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\iacode\scripts\development-ledger\promotion_fixture.py", line 675, in run_positive_promotion
+    subject = deliver_checkpoint(root, scope="control-plane", status="READY_FOR_REVIEW")
+  File "E:\iacode\scripts\development-ledger\promotion_fixture.py", line 583, in deliver_checkpoint
+    _require(finalized, "finalize_checkpoint.py")
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\iacode\scripts\development-ledger\promotion_fixture.py", line 106, in _require
+    raise FixtureError(f"{what} failed with exit {completed.returncode}: {completed.stdout}")
+promotion_fixture.FixtureError: finalize_checkpoint.py failed with exit 1: CHECKPOINT_NOT_FINALIZED
+- READY_FOR_REVIEW requires the internal mirror audit to pass, found 'FAIL'
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "E:\iacode\tests\test_development_ledger.py", line 5359, in setUpClass
+    raise AssertionError(f"the positive promotion could not be executed: {exc}") from exc
+AssertionError: the positive promotion could not be executed: finalize_checkpoint.py failed with exit 1: CHECKPOINT_NOT_FINALIZED
+- READY_FOR_REVIEW requires the internal mirror audit to pass, found 'FAIL'
+
+
+======================================================================
+ERROR: setUpClass (test_development_ledger.SuccessorDurabilityTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\iacode\tests\test_development_ledger.py", line 4548, in setUpClass
+    cls.result = run_successor_durability(Path(cls.temporary.name), successors=2)
+                 ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\iacode\scripts\development-ledger\promotion_fixture.py", line 1058, in run_successor_durability
+    first = deliver_checkpoint(root, scope="control-plane", status="READY_FOR_REVIEW")
+  File "E:\iacode\scripts\development-ledger\promotion_fixture.py", line 583, in deliver_checkpoint
+    _require(finalized, "finalize_checkpoint.py")
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\iacode\scripts\development-ledger\promotion_fixture.py", line 106, in _require
+    raise FixtureError(f"{what} failed with exit {completed.returncode}: {completed.stdout}")
+promotion_fixture.FixtureError: finalize_checkpoint.py failed with exit 1: CHECKPOINT_NOT_FINALIZED
+- READY_FOR_REVIEW requires the internal mirror audit to pass, found 'FAIL'
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "E:\iacode\tests\test_development_ledger.py", line 4551, in setUpClass
+    raise AssertionError(f"the succession could not be executed: {exc}") from exc
+AssertionError: the succession could not be executed: finalize_checkpoint.py failed with exit 1: CHECKPOINT_NOT_FINALIZED
+- READY_FOR_REVIEW requires the internal mirror audit to pass, found 'FAIL'
+
+
+----------------------------------------------------------------------
+Ran 0 tests in 53.049s
+
+FAILED (errors=4)

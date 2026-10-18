@@ -1,0 +1,102 @@
+{
+  "schemaVersion": "1.0.0",
+  "result": "PASS",
+  "scenarios": [
+    {
+      "schemaVersion": "1.0.0",
+      "scenario": "cancel",
+      "result": "PASS",
+      "environment": "real-compose-temporal-postgresql-minio-sandbox-container-engine",
+      "steps": [
+        {
+          "step": "snapshot.stored",
+          "result": "PASS",
+          "expected": [
+            "artifactId",
+            "key",
+            "sha256",
+            "sizeBytes"
+          ],
+          "observed": [
+            "artifactId",
+            "key",
+            "sha256",
+            "sizeBytes"
+          ]
+        },
+        {
+          "step": "run.cancelled",
+          "result": "PASS",
+          "expected": "CANCELLED",
+          "observed": "CANCELLED"
+        },
+        {
+          "step": "verdict.fail_closed",
+          "result": "PASS",
+          "expected": "FAIL",
+          "observed": "FAIL"
+        },
+        {
+          "step": "check.cancellation_recorded",
+          "result": "PASS",
+          "expected": "contains CANCELLED",
+          "observed": [
+            "PASSED",
+            "CANCELLED"
+          ]
+        },
+        {
+          "step": "run.terminal",
+          "result": "PASS",
+          "expected": "CANCELLED",
+          "observed": "CANCELLED"
+        },
+        {
+          "step": "evidence.one_or_more_per_result",
+          "result": "PASS",
+          "expected": ">=2",
+          "observed": 2
+        },
+        {
+          "step": "findings.evidence_resolved",
+          "result": "PASS",
+          "expected": [],
+          "observed": []
+        },
+        {
+          "step": "evidence.rights_closed",
+          "result": "PASS",
+          "expected": "every evidence item trainingAllowed=false and ragAllowed=false",
+          "observed": 2
+        },
+        {
+          "step": "sandbox.no_active_session",
+          "result": "PASS",
+          "expected": "0",
+          "observed": "0"
+        },
+        {
+          "step": "cancel.idempotent",
+          "result": "PASS",
+          "expected": "CANCELLED",
+          "observed": "CANCELLED"
+        }
+      ],
+      "artifacts": [
+        {
+          "kind": "snapshot",
+          "artifactId": "01a15092-0967-7000-93ba-ebcd26698e28",
+          "digest": "0b267d828168861e9bf34db7fb5d2c880646495ad6a81979b3b580ce63aaffcd",
+          "sizeBytes": 504
+        },
+        {
+          "kind": "quality-run",
+          "runId": "01a15092-0e53-7000-9134-ec6ca0d81e7e",
+          "planId": "31f5be77d920d4f24ebe0aa83faa4d99c3adfa395a9950f6d2ce8c06e51adf5b"
+        }
+      ],
+      "recordedAt": "2026-10-18T19:52:03Z"
+    }
+  ],
+  "recordedAt": "2026-10-18T19:52:03Z"
+}

@@ -1,0 +1,29 @@
+{
+  "schemaVersion": "1.0.0",
+  "kind": "TARGETED_CAUSAL_NOT_WHOLE_GATE",
+  "gate": "GATE7-REWORK-ROOT",
+  "command": [
+    "python",
+    "-X",
+    "utf8",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-p",
+    "test_gate7_*.py"
+  ],
+  "observedAt": "2026-10-18T21:08:43Z",
+  "subjectCommit": "a4b17e96c85efec5c1cd51305c5d1816ec82c77f",
+  "sourceDirty": true,
+  "sourceFingerprint": "8c2961a9bfb2fc5bda76c44e2e3e222f8513c7d9365a213a9349a114e110c8f0",
+  "sourceUnchanged": true,
+  "exitCode": 0,
+  "outputEncodingValid": true,
+  "unsafeOutputOccurrences": 0,
+  "outputBytes": 178,
+  "outputSha256": "521ba6890bfc30f5c8a79569a2ba3fb45077df44830c3af4f61b2e5c150c2e9e",
+  "safeOutputArtifact": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/GATE7-REWORK-ROOT-0001.log",
+  "result": "PASS"
+}

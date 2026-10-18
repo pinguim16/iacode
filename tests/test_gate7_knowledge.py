@@ -141,6 +141,96 @@ class Gate7LintDenominatorTests(unittest.TestCase):
                 control.test_mandatory_lint_covers_every_python_project_root()
 
 
+class Gate7MandatoryMembershipTests(unittest.TestCase):
+    def inherited_assertion(self):
+        import test_gate5_clients as inherited
+
+        case = inherited.Gate5QualityIntegrationTests(
+            "test_every_inherited_gate_remains_and_clients_are_mandatory"
+        )
+        return inherited, case.test_every_inherited_gate_remains_and_clients_are_mandatory
+
+    def test_current_quality_guard_refuses_every_canonical_removal_and_optional_downgrade(self):
+        _, assertion = self.inherited_assertion()
+        actual = policies.gate_definitions(ROOT)
+        assertion()
+        with patch.object(
+            policies,
+            "gate_definitions",
+            return_value={**actual, "unregisteredMandatoryGrowth": {"mandatory": True}},
+        ):
+            assertion()
+        for name in actual:
+            with (
+                self.subTest(removed=name),
+                patch.object(
+                    policies,
+                    "gate_definitions",
+                    return_value={key: value for key, value in actual.items() if key != name},
+                ),
+            ):
+                with self.assertRaises(AssertionError):
+                    assertion()
+            with (
+                self.subTest(optional=name),
+                patch.object(
+                    policies,
+                    "gate_definitions",
+                    return_value={**actual, name: {**actual[name], "mandatory": False}},
+                ),
+            ):
+                with self.assertRaises(AssertionError):
+                    assertion()
+
+    def test_quality_guard_consumes_an_added_registered_gate_without_a_second_literal(self):
+        inherited, assertion = self.inherited_assertion()
+        actual = policies.gate_definitions(ROOT)
+        registry = json.loads((ROOT / ".iacode/policies/quality-gates.json").read_bytes())
+        future_name = "registeredFutureMandatory"
+        future_row = {**registry["gates"][0], "id": future_name}
+        fixture = {**registry, "gates": [*registry["gates"], future_row]}
+        with tempfile.TemporaryDirectory(prefix="iacode-g7-membership-") as directory:
+            root = Path(directory)
+            policy_path = root / ".iacode/policies/quality-gates.json"
+            policy_path.parent.mkdir(parents=True)
+            policy_path.write_text(json.dumps(fixture), encoding="utf-8")
+            with patch.object(inherited, "ROOT", root):
+                with patch.object(
+                    policies, "gate_definitions", return_value={**actual, future_name: future_row}
+                ):
+                    assertion()
+                with patch.object(policies, "gate_definitions", return_value=actual):
+                    with self.assertRaises(AssertionError):
+                        assertion()
+
+
+class Gate7HandoffShapeTests(unittest.TestCase):
+    def test_current_handoff_and_final_report_require_every_canonical_substantive_section(self):
+        from validate_checkpoint import FINAL_REPORT_HEADINGS, HANDOFF_HEADINGS
+
+        path = ROOT / "docs/checkpoints/GATE-7-CP-0001/audit-harness/assemble_final_handoff.py"
+        spec = importlib.util.spec_from_file_location("gate7_current_report_shape_control", path)
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        for renderer, headings in (
+            (module.render_final_report, FINAL_REPORT_HEADINGS),
+            (module.render_handoff, HANDOFF_HEADINGS),
+        ):
+            valid = {
+                heading: "Actual observed substantive evidence; this is a unit shape control."
+                for heading in headings
+            }
+            rendered = renderer(valid)
+            for heading in headings:
+                self.assertIn(heading + "\n", rendered)
+                with self.subTest(renderer=renderer.__name__, omitted=heading):
+                    with self.assertRaises(ValueError):
+                        renderer({key: value for key, value in valid.items() if key != heading})
+                with self.subTest(renderer=renderer.__name__, blank=heading):
+                    with self.assertRaises(ValueError):
+                        renderer({**valid, heading: " "})
+
+
 class Gate7ProcessCompletionTests(unittest.TestCase):
     def driver(self):
         path = ROOT / "docs/checkpoints/GATE-7-CP-0001/audit-harness/publish_progress.py"

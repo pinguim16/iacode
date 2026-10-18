@@ -1,0 +1,31 @@
+{
+  "schemaVersion": "1.0.0",
+  "kind": "TARGETED_CAUSAL_NOT_WHOLE_GATE",
+  "gate": "GUARDS-V2-PREFREEZE",
+  "command": [
+    "python",
+    "-X",
+    "utf8",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-k",
+    "Gate7",
+    "-k",
+    "LessonResolutionTests"
+  ],
+  "observedAt": "2026-10-18T21:29:40Z",
+  "subjectCommit": "a4b17e96c85efec5c1cd51305c5d1816ec82c77f",
+  "sourceDirty": true,
+  "sourceFingerprint": "035c4f155f9d7d2981b49e05f52e0b57805ba1c8e300e2ca7e692503a7ecefd1",
+  "sourceUnchanged": true,
+  "exitCode": 0,
+  "outputEncodingValid": true,
+  "unsafeOutputOccurrences": 0,
+  "outputBytes": 184,
+  "outputSha256": "7aab78add8c2eb7a6d8e82ca65a5d4b251b28b9cceb43bb850d794c831a71370",
+  "safeOutputArtifact": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/GUARDS-V2-PREFREEZE-0001.log",
+  "result": "PASS"
+}

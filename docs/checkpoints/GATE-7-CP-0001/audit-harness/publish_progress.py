@@ -36,6 +36,10 @@ def run_sequence(stages: list[tuple[str, list[str]]], cwd: Path) -> list[dict]:
 
 
 def main() -> int:
+    sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+    from ledger_common import find_secrets, use_utf8_stdout
+
+    use_utf8_stdout()
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--execute", action="store_true", required=True)
     parser.add_argument("--message", required=True)
@@ -46,9 +50,6 @@ def main() -> int:
     message = options.message
     if not message.strip() or len(message) > 120 or any(ord(char) < 32 for char in message):
         raise ValueError("one bounded nonempty commit subject is required")
-    sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
-    from ledger_common import find_secrets
-
     if find_secrets(message):
         raise ValueError("protected commit subject refused")
     branch = subprocess.run(

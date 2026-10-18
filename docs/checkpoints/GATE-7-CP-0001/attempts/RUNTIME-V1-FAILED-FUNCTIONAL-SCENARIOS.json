@@ -1,0 +1,3357 @@
+{
+  "subjectCommit": "a4b17e96c85efec5c1cd51305c5d1816ec82c77f",
+  "source": "single full verifier invocation",
+  "scenarios": {
+    "desktop-e2e.json": {
+      "schemaVersion": "1.0.0",
+      "scenario": "desktop-e2e",
+      "result": "PASS",
+      "environment": "fresh-installed-cli-and-native-vscode-real-authenticated-compose-provider-postgresql-redis-minio-temporal-sandbox-quality",
+      "subjectCommit": "a4b17e96c85efec5c1cd51305c5d1816ec82c77f",
+      "sourceDirty": false,
+      "sourceFingerprint": "6d04b157618d2c796c9d223a8346e0e0e67ab0091f394078cee0b69311197f59",
+      "steps": [
+        {
+          "name": "fresh-owned-authenticated-stack-healthy",
+          "result": "PASS",
+          "authorizedModel": "openai:gpt-4o-mini"
+        },
+        {
+          "name": "fresh-offline-cli-install-and-authenticated-contract",
+          "result": "PASS"
+        },
+        {
+          "name": "fresh-provider-catalog-synced-and-exact-authorized-model-present",
+          "result": "PASS",
+          "authorizedModel": "openai:gpt-4o-mini",
+          "provider": "openai",
+          "catalogModels": 135,
+          "discovered": 135
+        },
+        {
+          "name": "unauthenticated-domain-refused-before-effects",
+          "result": "PASS"
+        },
+        {
+          "name": "closed-ipc-refuses-tool-result",
+          "result": "PASS"
+        },
+        {
+          "name": "closed-ipc-refuses-quality-verdict",
+          "result": "PASS"
+        },
+        {
+          "name": "closed-ipc-refuses-shell.exec",
+          "result": "PASS"
+        },
+        {
+          "name": "secret-adverse-premise",
+          "result": "PASS"
+        },
+        {
+          "name": "secret-upload-refused-before-sql-or-object-persistence",
+          "result": "PASS"
+        },
+        {
+          "name": "replay-clean-control",
+          "result": "PASS"
+        },
+        {
+          "name": "redis-replay-refusal-survives-api-restart",
+          "result": "PASS"
+        },
+        {
+          "name": "cli-preview-is-bounded-and-excludes-private-path",
+          "result": "PASS"
+        },
+        {
+          "name": "cli-changed-or-wrong-consent-refused-locally",
+          "result": "PASS"
+        },
+        {
+          "name": "real-snapshot-persistence-stable-retry-and-rights",
+          "result": "PASS"
+        },
+        {
+          "name": "read-only-snapshot-reconciliation",
+          "result": "PASS"
+        },
+        {
+          "name": "actual-native-snapshot-and-uncertain-accepted-create",
+          "result": "PASS"
+        },
+        {
+          "name": "lost-response-has-one-real-persisted-run",
+          "result": "PASS"
+        },
+        {
+          "name": "actual-new-host-secretstorage-recovery-provider-sandbox-quality",
+          "result": "PASS"
+        },
+        {
+          "name": "both-clients-observe-identical-server-task-truth",
+          "result": "PASS"
+        },
+        {
+          "name": "authenticated-external-sandbox-result-forgery-refused",
+          "result": "PASS"
+        },
+        {
+          "name": "both-clients-observe-identical-derived-verdict-and-evidence",
+          "result": "PASS"
+        },
+        {
+          "name": "installed-cli-reproduces-real-quality-inputs",
+          "result": "PASS"
+        },
+        {
+          "name": "actual-quality-response-loss-reconciles-once-without-replay",
+          "result": "PASS"
+        },
+        {
+          "name": "reconciled-quality-completes-with-real-pass-evidence",
+          "result": "PASS"
+        },
+        {
+          "name": "installed-cli-running-task-cancel-request-terminal-and-repeat",
+          "result": "PASS"
+        },
+        {
+          "name": "actual-cli-sigint-stops-only-local-observation",
+          "result": "PASS",
+          "exitCode": "130",
+          "lastCursor": 8,
+          "remoteState": "RUNNING"
+        },
+        {
+          "name": "installed-cli-running-quality-cancel-waits-for-cleanup",
+          "result": "PASS"
+        },
+        {
+          "name": "host-source-and-sentinel-unchanged",
+          "result": "PASS"
+        },
+        {
+          "name": "actual-object-tamper-refused-before-task-persistence",
+          "result": "PASS"
+        },
+        {
+          "name": "operational-container-identities-preserved",
+          "result": "PASS"
+        },
+        {
+          "name": "owned-services-volumes-profiles-removed",
+          "result": "PASS"
+        },
+        {
+          "name": "owned-sandbox-children-and-networks-removed",
+          "result": "PASS"
+        },
+        {
+          "name": "measured-source-inputs-unchanged",
+          "result": "PASS"
+        }
+      ],
+      "composeProject": "iacode-desktop-f668ec76df1b",
+      "packages": {
+        "kind": "CLIENT_BUILD_NOT_FUNCTIONAL_ACCEPTANCE",
+        "result": "PASS",
+        "protocolDigest": "07afdf6772f9d54cf5ee2d84d2fb3222220c1b454a0ae08e5d8c30eeea1ceab9",
+        "sourceHashes": {
+          "apps/cli/README.md": "d3a4cb495abe5cea7beb01fe4b01ab07a58f825a1f4747f11ea00cb2392d1647",
+          "apps/cli/bin/iacode.cjs": "9105ef8f928015eaa5803f4358e3cf553d4d55fbd670dc08ec0d77c5a4b5c5f5",
+          "apps/cli/package.json": "9b3291b1ac527c4f90d3a14174ee30108f186de34e2dcf5b9c1fe6158317e1dd",
+          "apps/cli/src/client.cjs": "50782a810b2df89641a4eb51b56c1b05f5c5fd5050ac2087009f7b2a45bc670e",
+          "apps/cli/src/snapshot.cjs": "aa853912c12ee1069b2eb59c91f9a688e46946cffc7091db9540886670152be5",
+          "apps/vscode-extension/README.md": "d161ae51e43a323897668724e23e79eddc41872e22d72dbfb49ef9cbb23a8ebd",
+          "apps/vscode-extension/package.json": "a891592b6e0165feb0d47f4763eb38c4e8005da19b7150640083ab90e2a3e27a",
+          "apps/vscode-extension/src/extension.cjs": "f1351d4d736c3dd50bc8733e6711463c80d0b0d161a09053ef6aa40dcfda596e",
+          "packages/contracts/src/iacode_contracts/desktop_protocol.json": "07afdf6772f9d54cf5ee2d84d2fb3222220c1b454a0ae08e5d8c30eeea1ceab9"
+        },
+        "artifacts": {
+          "iacode-cli-0.1.0.tgz": {
+            "sha256": "9ef4c965d84116e78bc268c2f2405db27ac956078490f00fb938175c1557e0e4",
+            "sizeBytes": 14706
+          },
+          "iacode-0.1.0.vsix": {
+            "sha256": "65678fe36c93971044fb7a6a8e469f4a02664f8ca5e4c60843c5863219b8b30a",
+            "sizeBytes": 21112
+          }
+        }
+      },
+      "cliCommands": [
+        {
+          "command": "doctor",
+          "exitCode": 0
+        },
+        {
+          "command": "preview",
+          "exitCode": 0
+        },
+        {
+          "command": "snapshot",
+          "exitCode": 2
+        },
+        {
+          "command": "snapshot",
+          "exitCode": 0
+        },
+        {
+          "command": "snapshot",
+          "exitCode": 0
+        },
+        {
+          "command": "snapshot-lookup",
+          "exitCode": 0
+        },
+        {
+          "command": "lookup",
+          "exitCode": 0
+        },
+        {
+          "command": "read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-reproduce",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-start",
+          "exitCode": 4
+        },
+        {
+          "command": "quality-lookup",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "start",
+          "exitCode": 0
+        },
+        {
+          "command": "read",
+          "exitCode": 0
+        },
+        {
+          "command": "cancel",
+          "exitCode": 0
+        },
+        {
+          "command": "follow",
+          "exitCode": 3
+        },
+        {
+          "command": "cancel",
+          "exitCode": 0
+        },
+        {
+          "command": "preview",
+          "exitCode": 0
+        },
+        {
+          "command": "snapshot",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-start",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-read",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-cancel",
+          "exitCode": 0
+        },
+        {
+          "command": "quality-follow",
+          "exitCode": 3
+        },
+        {
+          "command": "quality-cancel",
+          "exitCode": 0
+        }
+      ],
+      "cliRuntime": "v24.19.0",
+      "nativeStart": {
+        "kind": "ACTUAL_ISOLATED_VSCODE_EXTENSION_HOST",
+        "result": "PASS",
+        "mode": "start",
+        "editorVersion": "1.138.0",
+        "nodeVersion": "v24.18.1",
+        "processId": 38648,
+        "steps": [
+          {
+            "name": "fresh-installed-extension-active",
+            "result": "PASS",
+            "commands": 19,
+            "extensionPath": "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-desktop-live-5_6pah4j\\editor\\extensions\\iacode.iacode-0.1.0"
+          },
+          {
+            "name": "native-default-cancel-sends-no-upload",
+            "result": "PASS"
+          },
+          {
+            "name": "native-exact-snapshot-approved",
+            "result": "PASS",
+            "snapshotId": "cb371c14-354d-5b32-85e6-9e610f62fea5",
+            "snapshotDigest": "798aefda2f02161005f7c67b407a6eeca44e56ba85359b9f74eb21a3f7b75ebb"
+          },
+          {
+            "name": "actual-uncertain-create-retains-stable-identity-without-retry",
+            "result": "PASS",
+            "code": "TRANSPORT_UNAVAILABLE",
+            "idempotencyKey": "c53eaf09-7406-4b82-b4a5-2127f497f6fd"
+          }
+        ],
+        "pending": {
+          "operation": "start",
+          "idempotencyKey": "c53eaf09-7406-4b82-b4a5-2127f497f6fd"
+        },
+        "exitCode": 0,
+        "processCleanup": {
+          "jobOwned": true,
+          "remainingBeforeCleanup": 0,
+          "remainingAfterCleanup": 0,
+          "observedProcessCount": 0,
+          "signaledProcessCount": 0
+        },
+        "sharedStorageObservedOwned": true
+      },
+      "acceptedRunId": "01a1509b-a6e1-7000-b58d-5155fff3d6d4",
+      "nativeResume": {
+        "kind": "ACTUAL_ISOLATED_VSCODE_EXTENSION_HOST",
+        "result": "PASS",
+        "mode": "resume",
+        "editorVersion": "1.138.0",
+        "nodeVersion": "v24.18.1",
+        "processId": 50392,
+        "steps": [
+          {
+            "name": "fresh-installed-extension-active",
+            "result": "PASS",
+            "commands": 19,
+            "extensionPath": "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-desktop-live-5_6pah4j\\editor\\extensions\\iacode.iacode-0.1.0"
+          },
+          {
+            "name": "new-host-read-only-recovery",
+            "result": "PASS",
+            "runId": "01a1509b-a6e1-7000-b58d-5155fff3d6d4"
+          },
+          {
+            "name": "actual-provider-task-sandbox-result-and-ordered-events",
+            "result": "PASS",
+            "runId": "01a1509b-a6e1-7000-b58d-5155fff3d6d4",
+            "modelCalls": 5,
+            "sandboxExecutions": 2,
+            "successfulUnittestExecution": true,
+            "lastCursor": 24
+          },
+          {
+            "name": "native-derived-quality-results-and-evidence",
+            "result": "PASS",
+            "qualityRunId": "01a1509c-6f51-7000-8afe-59bcabfd5d32",
+            "verdict": "PASS",
+            "checks": 7,
+            "evidence": 7
+          },
+          {
+            "name": "native-disconnect-stale-without-remote-cancel",
+            "result": "PASS"
+          }
+        ],
+        "taskObservation": {
+          "runId": "01a1509b-a6e1-7000-b58d-5155fff3d6d4",
+          "state": "SUCCEEDED",
+          "errorType": null,
+          "modelCalls": 5,
+          "sandboxExecutions": 2
+        },
+        "runId": "01a1509b-a6e1-7000-b58d-5155fff3d6d4",
+        "qualityRunId": "01a1509c-6f51-7000-8afe-59bcabfd5d32",
+        "exitCode": 0,
+        "processCleanup": {
+          "jobOwned": true,
+          "remainingBeforeCleanup": 0,
+          "remainingAfterCleanup": 0,
+          "observedProcessCount": 0,
+          "signaledProcessCount": 0
+        },
+        "sharedStorageObservedOwned": true
+      },
+      "proxyOperationCounts": {
+        "hello": 2,
+        "teams": 2,
+        "agents": 1,
+        "snapshot": 1,
+        "start": 1,
+        "lookup": 1,
+        "read": 53,
+        "events": 2,
+        "quality-start": 1,
+        "quality-read": 54
+      },
+      "taskCancellation": {
+        "runId": "01a1509d-e5af-7000-9c07-af6800d0b2a7",
+        "phase": "COMPLETE",
+        "requestedState": "RUNNING",
+        "terminalState": "CANCELLED"
+      },
+      "sandboxCleanup": {
+        "remainingContainers": 0,
+        "remainingNetworks": 0
+      },
+      "cleanup": {
+        "composeExitCode": 0,
+        "remainingContainers": 0,
+        "remainingVolumes": 0
+      },
+      "ownedTemporaryDirectoryRemoved": true,
+      "directoryCleanupRetries": 0
+    },
+    "experience-store-e2e.json": {
+      "schemaVersion": "1.0.0",
+      "scenario": "experience-store-e2e",
+      "result": "PASS",
+      "environment": "owned-authenticated-real-postgresql-redis-minio-temporal-provider-sandbox-quality",
+      "subjectCommit": "a4b17e96c85efec5c1cd51305c5d1816ec82c77f",
+      "sourceDirty": false,
+      "sourceFingerprint": "6d04b157618d2c796c9d223a8346e0e0e67ab0091f394078cee0b69311197f59",
+      "steps": [
+        {
+          "name": "current-sandbox-and-quality-images-built",
+          "result": "PASS"
+        },
+        {
+          "name": "fresh-owned-authenticated-stack-started",
+          "result": "PASS"
+        },
+        {
+          "name": "fresh-owned-authenticated-stack-healthy",
+          "result": "PASS"
+        },
+        {
+          "name": "exact-authorized-provider-model-discovered",
+          "result": "PASS",
+          "authorizedModel": "openai:gpt-4o-mini",
+          "provider": "openai",
+          "catalogModels": 135,
+          "discovered": 135
+        },
+        {
+          "name": "actual-authorized-snapshot-stored",
+          "result": "PASS"
+        },
+        {
+          "name": "actual-governed-task-created",
+          "result": "PASS"
+        },
+        {
+          "name": "actual-provider-sandbox-task-completed",
+          "result": "PASS",
+          "sourceRunId": "01a1509f-216c-7000-a4cd-1593d054848b"
+        },
+        {
+          "name": "actual-quality-workflow-created",
+          "result": "PASS"
+        },
+        {
+          "name": "actual-derived-quality-pass-with-evidence",
+          "result": "PASS",
+          "qualityRunId": "01a1509f-e683-7000-b151-cc22da4480fa"
+        },
+        {
+          "name": "authenticated-project-source-discovery",
+          "result": "PASS"
+        },
+        {
+          "name": "fresh-experience-store-empty-premise",
+          "result": "PASS"
+        },
+        {
+          "name": "unauthenticated-capture-refused-before-effects",
+          "result": "PASS"
+        },
+        {
+          "name": "invalid-signature-refused",
+          "result": "PASS"
+        },
+        {
+          "name": "stale-authentication-refused",
+          "result": "PASS"
+        },
+        {
+          "name": "canonical-secret-adverse-premise",
+          "result": "PASS"
+        },
+        {
+          "name": "consent-missing-refused-before-persistence",
+          "result": "PASS"
+        },
+        {
+          "name": "consent-denied-refused-before-persistence",
+          "result": "PASS"
+        },
+        {
+          "name": "consent-type-refused-before-persistence",
+          "result": "PASS"
+        },
+        {
+          "name": "private-transcript-refused-before-persistence",
+          "result": "PASS"
+        },
+        {
+          "name": "forged-verdict-refused-before-persistence",
+          "result": "PASS"
+        },
+        {
+          "name": "forged-rights-refused-before-persistence",
+          "result": "PASS"
+        },
+        {
+          "name": "secret-ingress-refused-before-persistence",
+          "result": "PASS"
+        },
+        {
+          "name": "known-capability-form-0-refused-before-persistence",
+          "result": "PASS"
+        },
+        {
+          "name": "known-capability-form-1-refused-before-persistence",
+          "result": "PASS"
+        },
+        {
+          "name": "known-capability-form-2-refused-before-persistence",
+          "result": "PASS"
+        },
+        {
+          "name": "known-capability-form-3-refused-before-persistence",
+          "result": "PASS"
+        },
+        {
+          "name": "known-capability-form-4-refused-before-persistence",
+          "result": "PASS"
+        },
+        {
+          "name": "known-capability-form-5-refused-before-persistence",
+          "result": "PASS"
+        },
+        {
+          "name": "cross-project-source-capture-refused",
+          "result": "PASS"
+        },
+        {
+          "name": "authentication-null-control",
+          "result": "PASS"
+        },
+        {
+          "name": "actual-redis-authentication-replay-refused",
+          "result": "PASS"
+        },
+        {
+          "name": "actual-accepted-experience-response-loss-one-durable-effect",
+          "result": "PASS",
+          "responseLost": true,
+          "upstreamStatuses": [
+            201
+          ],
+          "upstreamCode": null,
+          "actualExperienceRows": 1,
+          "actualCaptureAuditRows": 1
+        },
+        {
+          "name": "actual-source-bound-experience-captured",
+          "result": "PASS"
+        },
+        {
+          "name": "consumer-recomputed-returned-document-digest",
+          "result": "PASS"
+        },
+        {
+          "name": "observed-provider-tool-quality-and-denied-reuse-lineage",
+          "result": "PASS"
+        },
+        {
+          "name": "actual-concurrent-retry-one-row-one-capture-audit",
+          "result": "PASS"
+        },
+        {
+          "name": "actual-verified-read",
+          "result": "PASS"
+        },
+        {
+          "name": "actual-verified-export",
+          "result": "PASS"
+        },
+        {
+          "name": "actual-bounded-summary-pagination",
+          "result": "PASS"
+        },
+        {
+          "name": "actual-project-cursor-resumption",
+          "result": "PASS"
+        },
+        {
+          "name": "cross-project-cursor-refused",
+          "result": "PASS"
+        },
+        {
+          "name": "cross-project-get-refused",
+          "result": "PASS"
+        },
+        {
+          "name": "cross-project-delete-refused",
+          "result": "PASS"
+        },
+        {
+          "name": "denied-rag-use-no-data",
+          "result": "PASS"
+        },
+        {
+          "name": "denied-training-use-no-data",
+          "result": "PASS"
+        },
+        {
+          "name": "denied-distillation-use-no-data",
+          "result": "PASS"
+        },
+        {
+          "name": "denied-unknown-use-no-data",
+          "result": "PASS"
+        },
+        {
+          "name": "conflicting-stable-request-refused",
+          "result": "PASS"
+        },
+        {
+          "name": "actual-api-restarted",
+          "result": "PASS"
+        },
+        {
+          "name": "restart-preserves-content-rights-original-expiry-and-retry",
+          "result": "PASS"
+        },
+        {
+          "name": "authentication-replay-survives-real-restart",
+          "result": "PASS"
+        },
+        {
+          "name": "actual-source-object-corrupt-fails-closed",
+          "result": "PASS",
+          "artifactId": "45a6f68a-0a3d-4b7f-9929-3d617b9b3225",
+          "sourceDigest": "555fac06ede4ecdb015bddad08c63d7da7d20ad96abc1dbb29e3046a1fa5dd7e"
+        },
+        {
+          "name": "restored-source-clean-control-after-corrupt",
+          "result": "PASS"
+        },
+        {
+          "name": "actual-source-object-remove-fails-closed",
+          "result": "PASS",
+          "artifactId": "45a6f68a-0a3d-4b7f-9929-3d617b9b3225",
+          "sourceDigest": "555fac06ede4ecdb015bddad08c63d7da7d20ad96abc1dbb29e3046a1fa5dd7e"
+        },
+        {
+          "name": "restored-source-clean-control-after-remove",
+          "result": "PASS"
+        },
+        {
+          "name": "actual-project-bound-withdrawal",
+          "result": "PASS"
+        },
+        {
+          "name": "repeated-withdrawal-is-terminal-observation",
+          "result": "PASS"
+        },
+        {
+          "name": "withdrawn-read-denied-immediately",
+          "result": "PASS"
+        },
+        {
+          "name": "new-key-cannot-resurrect-withdrawn-source",
+          "result": "PASS"
+        },
+        {
+          "name": "withdrawal-physically-purges-primary-and-preserves-sources",
+          "result": "PASS"
+        },
+        {
+          "name": "second-real-governed-source-created",
+          "result": "PASS"
+        },
+        {
+          "name": "actual-short-retention-capture-honest-observed-outcome",
+          "result": "PASS",
+          "observedSourceState": "CANCELLED"
+        },
+        {
+          "name": "expired-read-denied-without-manual-sweep",
+          "result": "PASS"
+        },
+        {
+          "name": "actual-owned-background-sweeper-physically-purged",
+          "result": "PASS"
+        },
+        {
+          "name": "expired-request-retry-cannot-renew",
+          "result": "PASS"
+        },
+        {
+          "name": "expired-source-new-key-cannot-resurrect",
+          "result": "PASS"
+        },
+        {
+          "name": "actual-production-logs-retain-observability-not-ingress",
+          "result": "PASS"
+        },
+        {
+          "name": "owned-capability-expiry-reconfiguration",
+          "result": "PASS"
+        },
+        {
+          "name": "actual-expired-capability-refuses-experience-access",
+          "result": "PASS"
+        },
+        {
+          "name": "owned-resources-removed",
+          "result": "PASS"
+        },
+        {
+          "name": "operational-container-identities-preserved",
+          "result": "PASS"
+        },
+        {
+          "name": "measured-source-inputs-unchanged",
+          "result": "PASS"
+        }
+      ],
+      "composeProject": "iacode-experience-5b22012fb82a",
+      "capturedExperience": {
+        "experienceId": "01a150a0-cbfc-7000-b0d8-a360cc50aca4",
+        "projectId": "01a1509f-2168-7000-be79-089b850cbd51",
+        "sourceRunId": "01a1509f-216c-7000-a4cd-1593d054848b",
+        "contentDigest": "a80da03e10b8f3dbc6dfee770e2e42594bfc1321cd36e56ada535b1e8ca5372f",
+        "createdAt": "2026-10-18T20:07:57.367526+00:00",
+        "expiresAt": "2026-10-18T20:17:57.367526+00:00",
+        "state": "ACTIVE",
+        "idempotentReplay": true,
+        "document": {
+          "task": {
+            "runId": "01a1509f-216c-7000-a4cd-1593d054848b",
+            "status": "SUCCEEDED",
+            "taskId": "01a1509f-216c-7001-8534-aa6aec560cb1",
+            "attempt": 1,
+            "projectId": "01a1509f-2168-7000-be79-089b850cbd51",
+            "startedAt": "2026-10-18T20:06:08.702357Z",
+            "finishedAt": "2026-10-18T20:06:58.678644Z"
+          },
+          "files": {
+            "digest": "798aefda2f02161005f7c67b407a6eeca44e56ba85359b9f74eb21a3f7b75ebb",
+            "fileCount": null,
+            "sizeBytes": 476,
+            "snapshotId": "cb371c14-354d-5b32-85e6-9e610f62fea5"
+          },
+          "model": [
+            {
+              "model": "gpt-4o-mini",
+              "callId": "01a1509f-2d96-7000-b9e2-7d9861a5c2c2"
+            },
+            {
+              "model": "gpt-4o-mini",
+              "callId": "01a1509f-353b-7000-b0bd-bc56b8a3ef0e"
+            },
+            {
+              "model": "gpt-4o-mini",
+              "callId": "01a1509f-431c-7000-b84f-4cb55b4632ac"
+            },
+            {
+              "model": "gpt-4o-mini",
+              "callId": "01a1509f-557c-7000-86a4-a160feac01b0"
+            },
+            {
+              "model": "gpt-4o-mini",
+              "callId": "01a1509f-5fb6-7000-96ca-1a55fb4cafdb"
+            }
+          ],
+          "tests": {
+            "checks": [
+              {
+                "kind": "build",
+                "runner": "python.build",
+                "status": "PASSED",
+                "checkId": "q001-build",
+                "caseCount": null,
+                "resultDigest": "d7bc96cbba8a81c639efb826089dc60c1705c857723103433048a840a23ea09e"
+              },
+              {
+                "kind": "unit",
+                "runner": "python.unit",
+                "status": "PASSED",
+                "checkId": "q002-unit",
+                "caseCount": null,
+                "resultDigest": "fa58b52fd86dab20b4693e076939bfb01b50a95b76cbfc97d4ab760770c59a3f"
+              },
+              {
+                "kind": "lint",
+                "runner": "python.lint",
+                "status": "PASSED",
+                "checkId": "q003-lint",
+                "caseCount": null,
+                "resultDigest": "8f399ddc330b4535b8993dfa3548ee196b8b0d2680090148b1d9332d98dccd8f"
+              },
+              {
+                "kind": "static",
+                "runner": "python.static",
+                "status": "PASSED",
+                "checkId": "q004-static",
+                "caseCount": null,
+                "resultDigest": "2a53d91b7adfd73538c1a6cedea89c5542d4b44d7bfc71f5ff12d00bbc6832ad"
+              },
+              {
+                "kind": "dependency-security",
+                "runner": "python.dependency",
+                "status": "PASSED",
+                "checkId": "q005-dependency-security",
+                "caseCount": null,
+                "resultDigest": "539b8993c1bc30a94ceab7de897c24a50312aeb8efcce417f73735f19d638071"
+              },
+              {
+                "kind": "secret",
+                "runner": "common.secret",
+                "status": "PASSED",
+                "checkId": "q006-secret",
+                "caseCount": null,
+                "resultDigest": "8f141c659f04655fa62312a2eb337ff965dcb95b5a661d5619de5f682a543666"
+              },
+              {
+                "kind": "diff-integrity",
+                "runner": "common.diff",
+                "status": "PASSED",
+                "checkId": "q007-diff-integrity",
+                "caseCount": null,
+                "resultDigest": "1e3bdf52a47c23823880daec57e8f801dd67a5e8b8256599d5f24b933660d0dd"
+              }
+            ],
+            "caseCount": null
+          },
+          "effort": null,
+          "actions": [
+            {
+              "event": "RUN_CREATED",
+              "sequence": 1,
+              "createdAt": "2026-10-18T20:06:08.509425Z"
+            },
+            {
+              "event": "RUN_STARTED",
+              "sequence": 2,
+              "createdAt": "2026-10-18T20:06:08.762113Z"
+            },
+            {
+              "event": "AGENT_STARTED",
+              "sequence": 3,
+              "createdAt": "2026-10-18T20:06:08.893685Z"
+            },
+            {
+              "event": "MODEL_CALL_STARTED",
+              "sequence": 4,
+              "createdAt": "2026-10-18T20:06:08.951869Z"
+            },
+            {
+              "event": "MODEL_CALL_COMPLETED",
+              "sequence": 5,
+              "createdAt": "2026-10-18T20:06:11.737192Z"
+            },
+            {
+              "event": "AGENT_COMPLETED",
+              "sequence": 6,
+              "createdAt": "2026-10-18T20:06:11.863935Z"
+            },
+            {
+              "event": "AGENT_STARTED",
+              "sequence": 7,
+              "createdAt": "2026-10-18T20:06:11.978113Z"
+            },
+            {
+              "event": "MODEL_CALL_STARTED",
+              "sequence": 8,
+              "createdAt": "2026-10-18T20:06:12.048177Z"
+            },
+            {
+              "event": "MODEL_CALL_COMPLETED",
+              "sequence": 9,
+              "createdAt": "2026-10-18T20:06:13.692378Z"
+            },
+            {
+              "event": "TOOL_REQUESTED",
+              "sequence": 10,
+              "createdAt": "2026-10-18T20:06:13.803587Z"
+            },
+            {
+              "event": "TOOL_RESULT_RECEIVED",
+              "sequence": 11,
+              "createdAt": "2026-10-18T20:06:15.711292Z"
+            },
+            {
+              "event": "MODEL_CALL_STARTED",
+              "sequence": 12,
+              "createdAt": "2026-10-18T20:06:15.763027Z"
+            },
+            {
+              "event": "MODEL_CALL_COMPLETED",
+              "sequence": 13,
+              "createdAt": "2026-10-18T20:06:17.407613Z"
+            },
+            {
+              "event": "TOOL_REQUESTED",
+              "sequence": 14,
+              "createdAt": "2026-10-18T20:06:17.647397Z"
+            },
+            {
+              "event": "TOOL_RESULT_RECEIVED",
+              "sequence": 15,
+              "createdAt": "2026-10-18T20:06:19.735942Z"
+            },
+            {
+              "event": "MODEL_CALL_STARTED",
+              "sequence": 16,
+              "createdAt": "2026-10-18T20:06:19.810486Z"
+            },
+            {
+              "event": "MODEL_CALL_COMPLETED",
+              "sequence": 17,
+              "createdAt": "2026-10-18T20:06:22.089488Z"
+            },
+            {
+              "event": "AGENT_COMPLETED",
+              "sequence": 18,
+              "createdAt": "2026-10-18T20:06:22.292547Z"
+            },
+            {
+              "event": "AGENT_STARTED",
+              "sequence": 19,
+              "createdAt": "2026-10-18T20:06:22.532981Z"
+            },
+            {
+              "event": "MODEL_CALL_STARTED",
+              "sequence": 20,
+              "createdAt": "2026-10-18T20:06:22.676147Z"
+            },
+            {
+              "event": "MODEL_CALL_COMPLETED",
+              "sequence": 21,
+              "createdAt": "2026-10-18T20:06:24.596684Z"
+            },
+            {
+              "event": "AGENT_COMPLETED",
+              "sequence": 22,
+              "createdAt": "2026-10-18T20:06:24.731662Z"
+            },
+            {
+              "event": "RUN_NOTE",
+              "sequence": 23,
+              "createdAt": "2026-10-18T20:06:58.496143Z"
+            },
+            {
+              "event": "RUN_COMPLETED",
+              "sequence": 24,
+              "createdAt": "2026-10-18T20:06:58.585367Z"
+            }
+          ],
+          "quality": {
+            "runId": "01a1509f-e683-7000-b151-cc22da4480fa",
+            "verdict": "PASS",
+            "planDigest": "491a7c93a3e30e131d7812ede215f068a7b28037504d079e5b2162371c6568b8",
+            "resultDigests": [
+              "6438d6260d48ceefc96a5f8648e5e23dc45f47b503f58692a9e1d6cc8e1df54c",
+              "7e29c0e10669399b18b11e3b3b7419e99337a91639fd3737c240b21fd90d4c2e",
+              "a4a188bbaab51a1b029d7bed5a4fad3a42a7d62692409319292833c059845691",
+              "b875ee94ea7d46c8653dfa37b0e75634e26b84596d9b3d349298fd8d1603ddad",
+              "63904f5721dfc895aef71058d1894e11522a96072b632e36936db18cbe408caf",
+              "05de737fa79669054a19ea1ad4e5c6cf333d6d2f1f14738698d3e2c1f8565603",
+              "ff3d9012122937c69203cfb25bd1e7fd5392a6d35d24cb72f50a7f8ffb60a6e8"
+            ],
+            "verdictDigest": "b3fe5ddfe63ddc90fa8223fa8ccf563236f95dff39dc56471f44ef96231a5d8a",
+            "evidenceDigests": [
+              "2e87a20f7490cde9f8c14d32f1b972a42a53e0669cc922ae4944b765f2b7977b",
+              "555fac06ede4ecdb015bddad08c63d7da7d20ad96abc1dbb29e3046a1fa5dd7e",
+              "b1913f66f64976af179ad063a949de15f5c424d9fe9bf4b0a5f86e5f47d65974",
+              "bb0d8fbf8a5e93fa4a90672106328d4daadaf38bc7d924d64ba1275f5fb10cfe",
+              "bc10ebf8f19d6d9423411bc01ff260d1e54c2663e81cef8f7af5dacfb5f521f4",
+              "df7674d12084c2c573e16fd516995432432087e7e31595336f169ac52586aa5b",
+              "dffe08a018fe3a6e3062cdbe45091b568ba578c88811e0c7a1a04a2b32822f78"
+            ]
+          },
+          "attempts": [
+            {
+              "status": "SUCCEEDED",
+              "startedAt": "2026-10-18T20:06:08.839039Z",
+              "agentRunId": "01a1509f-22c8-7000-bb7c-ebf09ffce8aa",
+              "finishedAt": "2026-10-18T20:06:11.808513Z",
+              "stageIndex": 0
+            },
+            {
+              "status": "SUCCEEDED",
+              "startedAt": "2026-10-18T20:06:11.929520Z",
+              "agentRunId": "01a1509f-2ed9-7000-9356-e14e2ada171c",
+              "finishedAt": "2026-10-18T20:06:22.195366Z",
+              "stageIndex": 1
+            },
+            {
+              "status": "SUCCEEDED",
+              "startedAt": "2026-10-18T20:06:22.431488Z",
+              "agentRunId": "01a1509f-57e2-7000-ac1e-87e8931c5604",
+              "finishedAt": "2026-10-18T20:06:24.664748Z",
+              "stageIndex": 2
+            }
+          ],
+          "commands": [
+            {
+              "tool": "shell.exec",
+              "requestId": "734941a3-f317-4133-94af-341747229e5b",
+              "representation": "digest-only; no command or arguments copied",
+              "argumentsDigest": "2456a41577a9ca26e7d4d44463f489c8384a335d2243985b7413b4c6923b6756"
+            }
+          ],
+          "failures": [],
+          "provider": [
+            {
+              "callId": "01a1509f-2d96-7000-b9e2-7d9861a5c2c2",
+              "provider": "openai"
+            },
+            {
+              "callId": "01a1509f-353b-7000-b0bd-bc56b8a3ef0e",
+              "provider": "openai"
+            },
+            {
+              "callId": "01a1509f-431c-7000-b84f-4cb55b4632ac",
+              "provider": "openai"
+            },
+            {
+              "callId": "01a1509f-557c-7000-86a4-a160feac01b0",
+              "provider": "openai"
+            },
+            {
+              "callId": "01a1509f-5fb6-7000-96ca-1a55fb4cafdb",
+              "provider": "openai"
+            }
+          ],
+          "toolCalls": [
+            {
+              "tool": "filesystem.list",
+              "callId": "01a1509f-3d02-7000-b386-58fd34110442",
+              "status": "SUCCEEDED",
+              "exitCode": null,
+              "requestId": "8a2cf764-144a-4834-8d71-1459f4cdabd5",
+              "sessionId": "01a1509f-36e1-7000-bb9d-a98bdf780931",
+              "succeeded": true,
+              "durationMs": 1644
+            },
+            {
+              "tool": "shell.exec",
+              "callId": "01a1509f-4c77-7000-8939-93f86413b489",
+              "status": "SUCCEEDED",
+              "exitCode": 0,
+              "requestId": "734941a3-f317-4133-94af-341747229e5b",
+              "sessionId": "01a1509f-36e1-7000-bb9d-a98bdf780931",
+              "succeeded": true,
+              "durationMs": 416
+            }
+          ],
+          "baseCommit": null,
+          "provenance": [
+            {
+              "notes": "Observable facts/references only; unknown rights deny reuse.",
+              "digest": "2742068427e6a048c568d44aedca592d060090d3d7e49e3903fbd3216e4f3f55",
+              "license": "UNKNOWN",
+              "evidence": "Explicit storage consent; operational observation is not a reuse license.",
+              "sourceId": "01a1509f-216c-7000-a4cd-1593d054848b",
+              "ownership": "UNVERIFIED",
+              "ragAllowed": false,
+              "sourceType": "task-run",
+              "storageAllowed": true,
+              "trainingAllowed": false,
+              "distillationAllowed": false
+            },
+            {
+              "notes": "Observable facts/references only; unknown rights deny reuse.",
+              "digest": "798aefda2f02161005f7c67b407a6eeca44e56ba85359b9f74eb21a3f7b75ebb",
+              "license": "UNKNOWN",
+              "evidence": "Explicit storage consent; operational observation is not a reuse license.",
+              "sourceId": "cb371c14-354d-5b32-85e6-9e610f62fea5",
+              "ownership": "UNVERIFIED",
+              "ragAllowed": false,
+              "sourceType": "workspace-snapshot",
+              "storageAllowed": true,
+              "trainingAllowed": false,
+              "distillationAllowed": false
+            },
+            {
+              "notes": "Observable facts/references only; unknown rights deny reuse.",
+              "digest": "555fac06ede4ecdb015bddad08c63d7da7d20ad96abc1dbb29e3046a1fa5dd7e",
+              "license": "UNKNOWN",
+              "evidence": "Explicit storage consent; operational observation is not a reuse license.",
+              "sourceId": "45a6f68a-0a3d-4b7f-9929-3d617b9b3225",
+              "ownership": "UNVERIFIED",
+              "ragAllowed": false,
+              "sourceType": "quality-evidence",
+              "storageAllowed": true,
+              "trainingAllowed": false,
+              "distillationAllowed": false
+            },
+            {
+              "notes": "Observable facts/references only; unknown rights deny reuse.",
+              "digest": "2e87a20f7490cde9f8c14d32f1b972a42a53e0669cc922ae4944b765f2b7977b",
+              "license": "UNKNOWN",
+              "evidence": "Explicit storage consent; operational observation is not a reuse license.",
+              "sourceId": "de3a296f-7f7f-4565-8395-4d693d9ce7b5",
+              "ownership": "UNVERIFIED",
+              "ragAllowed": false,
+              "sourceType": "quality-evidence",
+              "storageAllowed": true,
+              "trainingAllowed": false,
+              "distillationAllowed": false
+            },
+            {
+              "notes": "Observable facts/references only; unknown rights deny reuse.",
+              "digest": "b1913f66f64976af179ad063a949de15f5c424d9fe9bf4b0a5f86e5f47d65974",
+              "license": "UNKNOWN",
+              "evidence": "Explicit storage consent; operational observation is not a reuse license.",
+              "sourceId": "7a55dd2b-dfc6-463e-9c4d-df16174897fe",
+              "ownership": "UNVERIFIED",
+              "ragAllowed": false,
+              "sourceType": "quality-evidence",
+              "storageAllowed": true,
+              "trainingAllowed": false,
+              "distillationAllowed": false
+            },
+            {
+              "notes": "Observable facts/references only; unknown rights deny reuse.",
+              "digest": "bb0d8fbf8a5e93fa4a90672106328d4daadaf38bc7d924d64ba1275f5fb10cfe",
+              "license": "UNKNOWN",
+              "evidence": "Explicit storage consent; operational observation is not a reuse license.",
+              "sourceId": "fcc255a3-2a97-4004-b63e-e183ce6dc9f5",
+              "ownership": "UNVERIFIED",
+              "ragAllowed": false,
+              "sourceType": "quality-evidence",
+              "storageAllowed": true,
+              "trainingAllowed": false,
+              "distillationAllowed": false
+            },
+            {
+              "notes": "Observable facts/references only; unknown rights deny reuse.",
+              "digest": "bc10ebf8f19d6d9423411bc01ff260d1e54c2663e81cef8f7af5dacfb5f521f4",
+              "license": "UNKNOWN",
+              "evidence": "Explicit storage consent; operational observation is not a reuse license.",
+              "sourceId": "1ac6ebd3-8116-479e-a29e-d6383066e213",
+              "ownership": "UNVERIFIED",
+              "ragAllowed": false,
+              "sourceType": "quality-evidence",
+              "storageAllowed": true,
+              "trainingAllowed": false,
+              "distillationAllowed": false
+            },
+            {
+              "notes": "Observable facts/references only; unknown rights deny reuse.",
+              "digest": "df7674d12084c2c573e16fd516995432432087e7e31595336f169ac52586aa5b",
+              "license": "UNKNOWN",
+              "evidence": "Explicit storage consent; operational observation is not a reuse license.",
+              "sourceId": "342bee60-136b-43cb-b239-b72847b51d9c",
+              "ownership": "UNVERIFIED",
+              "ragAllowed": false,
+              "sourceType": "quality-evidence",
+              "storageAllowed": true,
+              "trainingAllowed": false,
+              "distillationAllowed": false
+            },
+            {
+              "notes": "Observable facts/references only; unknown rights deny reuse.",
+              "digest": "dffe08a018fe3a6e3062cdbe45091b568ba578c88811e0c7a1a04a2b32822f78",
+              "license": "UNKNOWN",
+              "evidence": "Explicit storage consent; operational observation is not a reuse license.",
+              "sourceId": "31dde3a5-2958-4c04-b7d4-dad19fe453fa",
+              "ownership": "UNVERIFIED",
+              "ragAllowed": false,
+              "sourceType": "quality-evidence",
+              "storageAllowed": true,
+              "trainingAllowed": false,
+              "distillationAllowed": false
+            }
+          ],
+          "repository": null,
+          "agentReview": null,
+          "corrections": [],
+          "environment": {
+            "limit": "No host configuration, source content or environment values copied.",
+            "source": "persisted-runtime-facts",
+            "hostDetails": null
+          },
+          "finalResult": {
+            "taskStatus": "SUCCEEDED",
+            "qualityVerdict": "PASS"
+          },
+          "humanReview": null,
+          "schemaVersion": "1.0.0",
+          "trajectorySummary": "SUCCEEDED; agents=3; modelCalls=5; tools=2; quality=PASS",
+          "trainingEligibility": {
+            "eligible": false,
+            "evidence": "No verified ownership/license or positive reuse grant."
+          }
+        }
+      },
+      "sandboxCleanup": {
+        "remainingContainers": 0,
+        "remainingNetworks": 0
+      },
+      "cleanup": {
+        "composeExitCode": 0,
+        "remainingContainers": 0,
+        "remainingVolumes": 0,
+        "remainingNetworks": 0
+      }
+    },
+    "knowledge-engine-e2e.json": {
+      "schemaVersion": "1.0.0",
+      "scenario": "knowledge-engine-e2e",
+      "result": "PASS",
+      "reportFile": "var/knowledge-engine-e2e.json",
+      "subjectCommit": "a4b17e96c85efec5c1cd51305c5d1816ec82c77f",
+      "sourceDirty": false,
+      "sourceFingerprint": "6d04b157618d2c796c9d223a8346e0e0e67ab0091f394078cee0b69311197f59",
+      "composeProject": "iacode-knowledge-8b0469c0bdbe",
+      "steps": [
+        {
+          "name": "actual-current-sandbox-quality-images-built",
+          "result": "PASS"
+        },
+        {
+          "name": "fresh-owned-authenticated-stack-started",
+          "result": "PASS"
+        },
+        {
+          "name": "actual-owned-stack-healthy",
+          "result": "PASS"
+        },
+        {
+          "name": "exact-authorized-provider-model-discovered",
+          "result": "PASS",
+          "authorizedModel": "openai:gpt-4o-mini",
+          "provider": "openai",
+          "catalogModels": 135,
+          "discovered": 135
+        },
+        {
+          "name": "actual-snapshot-created",
+          "result": "PASS"
+        },
+        {
+          "name": "actual-governed-task-created",
+          "result": "PASS"
+        },
+        {
+          "name": "real-provider-and-sandbox-completed",
+          "result": "PASS",
+          "sourceRunId": "01a150a2-8837-7000-9741-d33121db2966",
+          "modelCallsUsed": 5,
+          "toolExecutions": 2
+        },
+        {
+          "name": "actual-quality-created",
+          "result": "PASS"
+        },
+        {
+          "name": "actual-derived-quality-pass-with-evidence",
+          "result": "PASS",
+          "qualityRunId": "01a150a3-7bf6-7000-991e-b4b003dd5db0"
+        },
+        {
+          "name": "actual-source-project-discovered",
+          "result": "PASS"
+        },
+        {
+          "name": "actual-source-bound-experience-captured",
+          "result": "PASS",
+          "experienceId": "01a150a3-fbee-7000-8c64-3fd92b54147f",
+          "sourceDigest": "4e440a112d1b2229772d980d0ca79cbb0a16f59123e10653d6be40cf90e2d494"
+        },
+        {
+          "name": "owning-validated-storage-only-experience-cannot-be-laundered",
+          "result": "PASS"
+        },
+        {
+          "name": "actual-content-bound-synthetic-source-grants-deployed",
+          "result": "PASS",
+          "corpusVersion": "knowledge-lexical-acceptance-v1",
+          "corpusSha256": "b36748c24a4ef41ed9e07be19dea3bbcd2edb5ff77f74164d28919580402c32e"
+        },
+        {
+          "name": "unauthenticated-ingestions-refused",
+          "result": "PASS"
+        },
+        {
+          "name": "unauthenticated-search-refused",
+          "result": "PASS"
+        },
+        {
+          "name": "unauthenticated-documents-refused",
+          "result": "PASS"
+        },
+        {
+          "name": "invalid-authentication-refused",
+          "result": "PASS"
+        },
+        {
+          "name": "stale-authentication-refused",
+          "result": "PASS"
+        },
+        {
+          "name": "canonical-secret-adverse-premise",
+          "result": "PASS"
+        },
+        {
+          "name": "consent-missing-refused-before-effects",
+          "result": "PASS"
+        },
+        {
+          "name": "consent-denied-refused-before-effects",
+          "result": "PASS"
+        },
+        {
+          "name": "consent-coerced-refused-before-effects",
+          "result": "PASS"
+        },
+        {
+          "name": "caller-text-refused-before-effects",
+          "result": "PASS"
+        },
+        {
+          "name": "caller-path-refused-before-effects",
+          "result": "PASS"
+        },
+        {
+          "name": "caller-rights-refused-before-effects",
+          "result": "PASS"
+        },
+        {
+          "name": "caller-verdict-refused-before-effects",
+          "result": "PASS"
+        },
+        {
+          "name": "secret-refused-before-effects",
+          "result": "PASS"
+        },
+        {
+          "name": "actual-capability-refused-before-effects",
+          "result": "PASS"
+        },
+        {
+          "name": "cross-project-ingestion-refused",
+          "result": "PASS"
+        },
+        {
+          "name": "authentication-replay-clean-control",
+          "result": "PASS"
+        },
+        {
+          "name": "actual-redis-authentication-replay-refused",
+          "result": "PASS"
+        },
+        {
+          "name": "actual-accepted-response-loss-one-publication",
+          "result": "PASS"
+        },
+        {
+          "name": "stable-exact-request-recovers-original-publication",
+          "result": "PASS"
+        },
+        {
+          "name": "actual-corpus-publication-long",
+          "result": "PASS"
+        },
+        {
+          "name": "actual-corpus-publication-partial",
+          "result": "PASS"
+        },
+        {
+          "name": "actual-corpus-publication-tides",
+          "result": "PASS"
+        },
+        {
+          "name": "actual-corpus-publication-unicode",
+          "result": "PASS"
+        },
+        {
+          "name": "actual-corpus-publication-rights",
+          "result": "PASS"
+        },
+        {
+          "name": "actual-corpus-publication-instruction",
+          "result": "PASS"
+        },
+        {
+          "name": "measured-exact-retrieval-and-citations-0",
+          "result": "PASS"
+        },
+        {
+          "name": "measured-exact-retrieval-and-citations-1",
+          "result": "PASS"
+        },
+        {
+          "name": "measured-exact-retrieval-and-citations-2",
+          "result": "PASS"
+        },
+        {
+          "name": "measured-exact-retrieval-and-citations-3",
+          "result": "PASS"
+        },
+        {
+          "name": "measured-exact-retrieval-and-citations-4",
+          "result": "PASS"
+        },
+        {
+          "name": "measured-exact-retrieval-and-citations-5",
+          "result": "PASS"
+        },
+        {
+          "name": "measured-exact-retrieval-and-citations-6",
+          "result": "PASS"
+        },
+        {
+          "name": "measured-exact-retrieval-and-citations-7",
+          "result": "PASS"
+        },
+        {
+          "name": "measured-exact-retrieval-and-citations-8",
+          "result": "PASS"
+        },
+        {
+          "name": "measured-exact-retrieval-and-citations-9",
+          "result": "PASS"
+        },
+        {
+          "name": "actual-export-inspect-roundtrip",
+          "result": "PASS"
+        },
+        {
+          "name": "actual-bounded-project-pagination",
+          "result": "PASS"
+        },
+        {
+          "name": "cross-project-cursor-refused",
+          "result": "PASS"
+        },
+        {
+          "name": "cross-project-document-get-refused",
+          "result": "PASS"
+        },
+        {
+          "name": "cross-project-document-delete-refused",
+          "result": "PASS"
+        },
+        {
+          "name": "owned-api-restart",
+          "result": "PASS"
+        },
+        {
+          "name": "actual-persistent-source-index-after-restart",
+          "result": "PASS"
+        },
+        {
+          "name": "actual-corrupt-body-is-not-empty-success",
+          "result": "PASS"
+        },
+        {
+          "name": "actual-body-restoration-null-control",
+          "result": "PASS"
+        },
+        {
+          "name": "actual-missing-index-is-not-empty-success",
+          "result": "PASS"
+        },
+        {
+          "name": "withdraw-owned-corrupt-projection",
+          "result": "PASS"
+        },
+        {
+          "name": "revoked-grant-immediately-denies-delivery",
+          "result": "PASS"
+        },
+        {
+          "name": "superseded-source-immediately-denies-old-citation",
+          "result": "PASS"
+        },
+        {
+          "name": "actual-rebuild-publishes-current-revision",
+          "result": "PASS"
+        },
+        {
+          "name": "rebuilt-retrieval-selects-new-citation",
+          "result": "PASS"
+        },
+        {
+          "name": "actual-withdrawal",
+          "result": "PASS"
+        },
+        {
+          "name": "same-key-cannot-resurrect-withdrawn-revision",
+          "result": "PASS"
+        },
+        {
+          "name": "new-key-cannot-resurrect-withdrawn-revision",
+          "result": "PASS"
+        },
+        {
+          "name": "actual-finite-retention-created",
+          "result": "PASS"
+        },
+        {
+          "name": "expiry-denial-does-not-require-manual-sweep",
+          "result": "PASS"
+        },
+        {
+          "name": "owned-background-retention-physically-purges-primary-index",
+          "result": "PASS"
+        },
+        {
+          "name": "changed-raw-source-immediately-denies-delivery",
+          "result": "PASS"
+        },
+        {
+          "name": "missing-current-source-is-unavailable-not-empty-success",
+          "result": "PASS"
+        },
+        {
+          "name": "actual-logs-retain-observability-not-private-ingress",
+          "result": "PASS"
+        },
+        {
+          "name": "knowledge-never-executes-or-mutates-upstream-evidence",
+          "result": "PASS"
+        },
+        {
+          "name": "upstream-experience-and-rights-remain-unchanged",
+          "result": "PASS"
+        },
+        {
+          "name": "owned-resources-actually-removed",
+          "result": "PASS"
+        },
+        {
+          "name": "unrelated-container-identities-and-running-states-preserved",
+          "result": "PASS"
+        },
+        {
+          "name": "measured-source-inputs-unchanged",
+          "result": "PASS"
+        }
+      ],
+      "cleanup": {
+        "composeExitCode": 0,
+        "container": 0,
+        "volume": 0,
+        "network": 0
+      },
+      "retrievalMeasurements": [
+        {
+          "queryOrdinal": 0,
+          "result": "PASS",
+          "expectedSources": [
+            "full",
+            "long",
+            "partial"
+          ],
+          "observedHits": 3
+        },
+        {
+          "queryOrdinal": 1,
+          "result": "PASS",
+          "expectedSources": [
+            "full",
+            "long"
+          ],
+          "observedHits": 2
+        },
+        {
+          "queryOrdinal": 2,
+          "result": "PASS",
+          "expectedSources": [
+            "partial"
+          ],
+          "observedHits": 1
+        },
+        {
+          "queryOrdinal": 3,
+          "result": "PASS",
+          "expectedSources": [
+            "tides"
+          ],
+          "observedHits": 1
+        },
+        {
+          "queryOrdinal": 4,
+          "result": "PASS",
+          "expectedSources": [
+            "unicode"
+          ],
+          "observedHits": 1
+        },
+        {
+          "queryOrdinal": 5,
+          "result": "PASS",
+          "expectedSources": [
+            "rights"
+          ],
+          "observedHits": 1
+        },
+        {
+          "queryOrdinal": 6,
+          "result": "PASS",
+          "expectedSources": [
+            "instruction"
+          ],
+          "observedHits": 1
+        },
+        {
+          "queryOrdinal": 7,
+          "result": "PASS",
+          "expectedSources": [],
+          "observedHits": 0
+        },
+        {
+          "queryOrdinal": 8,
+          "result": "PASS",
+          "expectedSources": [],
+          "observedHits": 0
+        },
+        {
+          "queryOrdinal": 9,
+          "result": "PASS",
+          "expectedSources": [],
+          "observedHits": 0
+        }
+      ],
+      "sandboxCleanup": {
+        "container": 0,
+        "network": 0
+      }
+    },
+    "native-editor-package.json": {
+      "kind": "NATIVE_INSTALLATION_AND_TRUST_NOT_LIVE_PROVIDER_ACCEPTANCE",
+      "result": "PASS",
+      "runs": [
+        {
+          "installation": {
+            "exitCode": 0,
+            "result": "PASS",
+            "freshProfile": true,
+            "sharedDataDirectoryOwned": true,
+            "processCleanup": {
+              "jobOwned": true,
+              "remainingBeforeCleanup": 0,
+              "remainingAfterCleanup": 0,
+              "observedProcessCount": 0,
+              "signaledProcessCount": 0
+            }
+          },
+          "kind": "ACTUAL_ISOLATED_VSCODE_EXTENSION_HOST",
+          "result": "PASS",
+          "mode": "package",
+          "editorVersion": "1.138.0",
+          "nodeVersion": "v24.18.1",
+          "processId": 41136,
+          "steps": [
+            {
+              "name": "fresh-installed-extension-active",
+              "result": "PASS",
+              "commands": 19,
+              "extensionPath": "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-native-editor-wdqmqzwr\\package\\extensions\\iacode.iacode-0.1.0"
+            },
+            {
+              "name": "configuration-not-inherited-from-workspace-or-environment",
+              "result": "PASS"
+            }
+          ],
+          "exitCode": 0,
+          "processCleanup": {
+            "jobOwned": true,
+            "remainingBeforeCleanup": 0,
+            "remainingAfterCleanup": 0,
+            "observedProcessCount": 0,
+            "signaledProcessCount": 0
+          },
+          "sharedStorageObservedOwned": true
+        },
+        {
+          "installation": {
+            "exitCode": 0,
+            "result": "PASS",
+            "freshProfile": true,
+            "sharedDataDirectoryOwned": true,
+            "processCleanup": {
+              "jobOwned": true,
+              "remainingBeforeCleanup": 0,
+              "remainingAfterCleanup": 0,
+              "observedProcessCount": 0,
+              "signaledProcessCount": 0
+            }
+          },
+          "kind": "ACTUAL_ISOLATED_VSCODE_EXTENSION_HOST",
+          "result": "PASS",
+          "mode": "untrusted",
+          "editorVersion": "1.138.0",
+          "nodeVersion": "v24.18.1",
+          "processId": 40656,
+          "steps": [
+            {
+              "name": "fresh-installed-extension-active",
+              "result": "PASS",
+              "commands": 19,
+              "extensionPath": "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-native-editor-wdqmqzwr\\untrusted\\extensions\\iacode.iacode-0.1.0"
+            },
+            {
+              "name": "actual-untrusted-workspace-refuses-every-mutation-before-connection",
+              "result": "PASS"
+            }
+          ],
+          "exitCode": 0,
+          "processCleanup": {
+            "jobOwned": true,
+            "remainingBeforeCleanup": 0,
+            "remainingAfterCleanup": 0,
+            "observedProcessCount": 0,
+            "signaledProcessCount": 0
+          },
+          "sharedStorageObservedOwned": true
+        }
+      ],
+      "ownedTemporaryDirectoryRemoved": true,
+      "directoryCleanupRetries": 0,
+      "directoryCleanup": {
+        "removed": true,
+        "cleanupRetries": 0,
+        "cleanupAttempts": 1,
+        "cleanupElapsedSeconds": 0.112761,
+        "firstSharingLockAfterSeconds": null,
+        "cleanupFailure": null
+      }
+    },
+    "quality-cancellation.json": {
+      "schemaVersion": "1.0.0",
+      "result": "PASS",
+      "scenarios": [
+        {
+          "schemaVersion": "1.0.0",
+          "scenario": "cancel",
+          "result": "PASS",
+          "environment": "real-compose-temporal-postgresql-minio-sandbox-container-engine",
+          "steps": [
+            {
+              "step": "snapshot.stored",
+              "result": "PASS",
+              "expected": [
+                "artifactId",
+                "key",
+                "sha256",
+                "sizeBytes"
+              ],
+              "observed": [
+                "artifactId",
+                "key",
+                "sha256",
+                "sizeBytes"
+              ]
+            },
+            {
+              "step": "run.cancelled",
+              "result": "PASS",
+              "expected": "CANCELLED",
+              "observed": "CANCELLED"
+            },
+            {
+              "step": "verdict.fail_closed",
+              "result": "PASS",
+              "expected": "FAIL",
+              "observed": "FAIL"
+            },
+            {
+              "step": "check.cancellation_recorded",
+              "result": "PASS",
+              "expected": "contains CANCELLED",
+              "observed": [
+                "PASSED",
+                "CANCELLED"
+              ]
+            },
+            {
+              "step": "run.terminal",
+              "result": "PASS",
+              "expected": "CANCELLED",
+              "observed": "CANCELLED"
+            },
+            {
+              "step": "evidence.one_or_more_per_result",
+              "result": "PASS",
+              "expected": ">=2",
+              "observed": 2
+            },
+            {
+              "step": "findings.evidence_resolved",
+              "result": "PASS",
+              "expected": [],
+              "observed": []
+            },
+            {
+              "step": "evidence.rights_closed",
+              "result": "PASS",
+              "expected": "every evidence item trainingAllowed=false and ragAllowed=false",
+              "observed": 2
+            },
+            {
+              "step": "sandbox.no_active_session",
+              "result": "PASS",
+              "expected": "0",
+              "observed": "0"
+            },
+            {
+              "step": "cancel.idempotent",
+              "result": "PASS",
+              "expected": "CANCELLED",
+              "observed": "CANCELLED"
+            }
+          ],
+          "artifacts": [
+            {
+              "kind": "snapshot",
+              "artifactId": "01a15092-0967-7000-93ba-ebcd26698e28",
+              "digest": "0b267d828168861e9bf34db7fb5d2c880646495ad6a81979b3b580ce63aaffcd",
+              "sizeBytes": 504
+            },
+            {
+              "kind": "quality-run",
+              "runId": "01a15092-0e53-7000-9134-ec6ca0d81e7e",
+              "planId": "31f5be77d920d4f24ebe0aa83faa4d99c3adfa395a9950f6d2ce8c06e51adf5b"
+            }
+          ],
+          "recordedAt": "2026-10-18T19:52:03Z"
+        }
+      ],
+      "recordedAt": "2026-10-18T19:52:03Z"
+    },
+    "quality-fail.json": {
+      "schemaVersion": "1.0.0",
+      "result": "PASS",
+      "scenarios": [
+        {
+          "schemaVersion": "1.0.0",
+          "scenario": "fail",
+          "result": "PASS",
+          "environment": "real-compose-temporal-postgresql-minio-sandbox-container-engine",
+          "steps": [
+            {
+              "step": "snapshot.stored",
+              "result": "PASS",
+              "expected": [
+                "artifactId",
+                "key",
+                "sha256",
+                "sizeBytes"
+              ],
+              "observed": [
+                "artifactId",
+                "key",
+                "sha256",
+                "sizeBytes"
+              ]
+            },
+            {
+              "step": "run.terminal",
+              "result": "PASS",
+              "expected": "FAILED",
+              "observed": "FAILED"
+            },
+            {
+              "step": "results.complete",
+              "result": "PASS",
+              "expected": 7,
+              "observed": 7
+            },
+            {
+              "step": "evidence.one_or_more_per_result",
+              "result": "PASS",
+              "expected": ">=7",
+              "observed": 7
+            },
+            {
+              "step": "findings.evidence_resolved",
+              "result": "PASS",
+              "expected": [],
+              "observed": []
+            },
+            {
+              "step": "evidence.rights_closed",
+              "result": "PASS",
+              "expected": "every evidence item trainingAllowed=false and ragAllowed=false",
+              "observed": 7
+            },
+            {
+              "step": "sandbox.no_active_session",
+              "result": "PASS",
+              "expected": "0",
+              "observed": "0"
+            },
+            {
+              "step": "verdict.fail",
+              "result": "PASS",
+              "expected": "FAIL",
+              "observed": "FAIL"
+            },
+            {
+              "step": "failed_check.preserved",
+              "result": "PASS",
+              "expected": [
+                "q002-unit"
+              ],
+              "observed": [
+                "q002-unit"
+              ]
+            },
+            {
+              "step": "finding.preserved",
+              "result": "PASS",
+              "expected": 1,
+              "observed": 1
+            }
+          ],
+          "artifacts": [
+            {
+              "kind": "snapshot",
+              "artifactId": "01a15087-b964-7000-9e6a-6b62cede1d66",
+              "digest": "8982883542b1062cec87c98d2d597bd530344213ad535da407f5d6c24afef09b",
+              "sizeBytes": 475
+            },
+            {
+              "kind": "quality-run",
+              "runId": "01a15087-be74-7000-9a3e-b23577611983",
+              "planId": "967a306bc75322e3e16257ee93d34adb37927eb81d956a26c2eeecc1afc8436d"
+            }
+          ],
+          "recordedAt": "2026-10-18T19:40:56Z"
+        }
+      ],
+      "recordedAt": "2026-10-18T19:40:56Z"
+    },
+    "quality-iacode.json": {
+      "schemaVersion": "1.0.0",
+      "result": "PASS",
+      "scenarios": [
+        {
+          "schemaVersion": "1.0.0",
+          "scenario": "iacode",
+          "result": "PASS",
+          "environment": "real-compose-temporal-postgresql-minio-sandbox-container-engine",
+          "steps": [
+            {
+              "step": "snapshot.stored",
+              "result": "PASS",
+              "expected": [
+                "artifactId",
+                "key",
+                "sha256",
+                "sizeBytes"
+              ],
+              "observed": [
+                "artifactId",
+                "key",
+                "sha256",
+                "sizeBytes"
+              ]
+            },
+            {
+              "step": "canonical_profile.detected",
+              "result": "PASS",
+              "expected": "python+node+typescript+angular",
+              "observed": "python+node+typescript+angular"
+            },
+            {
+              "step": "quality.matches_mandatory_gates",
+              "result": "PASS",
+              "expected": "PASS",
+              "observed": "PASS"
+            },
+            {
+              "step": "run.succeeded",
+              "result": "PASS",
+              "expected": "SUCCEEDED",
+              "observed": "SUCCEEDED"
+            }
+          ],
+          "artifacts": [
+            {
+              "kind": "snapshot",
+              "artifactId": "01a15089-5b5d-7000-a9ac-77fca549312d",
+              "digest": "8aee7c9b074c8d1d4481cc5500e5210637a7dc495dabe4d7a3f0e6d30e3cfa5b",
+              "sizeBytes": 7765111
+            },
+            {
+              "kind": "quality-run",
+              "runId": "01a15089-64c0-7000-9d5d-c6f9756f3b0e",
+              "planId": "6b75eb9828d51595fdbfbd7166a5caf017f1562203420d20de849dddb87662bb"
+            }
+          ],
+          "recordedAt": "2026-10-18T19:49:40Z"
+        }
+      ],
+      "recordedAt": "2026-10-18T19:49:40Z"
+    },
+    "quality-pass.json": {
+      "schemaVersion": "1.0.0",
+      "result": "PASS",
+      "scenarios": [
+        {
+          "schemaVersion": "1.0.0",
+          "scenario": "pass",
+          "result": "PASS",
+          "environment": "real-compose-temporal-postgresql-minio-sandbox-container-engine",
+          "steps": [
+            {
+              "step": "snapshot.stored",
+              "result": "PASS",
+              "expected": [
+                "artifactId",
+                "key",
+                "sha256",
+                "sizeBytes"
+              ],
+              "observed": [
+                "artifactId",
+                "key",
+                "sha256",
+                "sizeBytes"
+              ]
+            },
+            {
+              "step": "run.terminal",
+              "result": "PASS",
+              "expected": "SUCCEEDED",
+              "observed": "SUCCEEDED"
+            },
+            {
+              "step": "results.complete",
+              "result": "PASS",
+              "expected": 7,
+              "observed": 7
+            },
+            {
+              "step": "evidence.one_or_more_per_result",
+              "result": "PASS",
+              "expected": ">=7",
+              "observed": 7
+            },
+            {
+              "step": "findings.evidence_resolved",
+              "result": "PASS",
+              "expected": [],
+              "observed": []
+            },
+            {
+              "step": "evidence.rights_closed",
+              "result": "PASS",
+              "expected": "every evidence item trainingAllowed=false and ragAllowed=false",
+              "observed": 7
+            },
+            {
+              "step": "sandbox.no_active_session",
+              "result": "PASS",
+              "expected": "0",
+              "observed": "0"
+            },
+            {
+              "step": "verdict.pass",
+              "result": "PASS",
+              "expected": "PASS",
+              "observed": "PASS"
+            },
+            {
+              "step": "checks.all_passed",
+              "result": "PASS",
+              "expected": [
+                "PASSED"
+              ],
+              "observed": [
+                "PASSED",
+                "PASSED",
+                "PASSED",
+                "PASSED",
+                "PASSED",
+                "PASSED",
+                "PASSED"
+              ]
+            },
+            {
+              "step": "host.sentinel_unchanged",
+              "result": "PASS",
+              "expected": "93f127ea3c125dc419faf5c1a85315309dc674c36b8b3ee09988521ab6d06d38",
+              "observed": "93f127ea3c125dc419faf5c1a85315309dc674c36b8b3ee09988521ab6d06d38"
+            }
+          ],
+          "artifacts": [
+            {
+              "kind": "snapshot",
+              "artifactId": "01a15087-1a4b-7000-bc7c-39eba1def17f",
+              "digest": "6fb9f8d0467f63522d34166c2730f86d669ceaa738fd64811be9231ccafcfe1b",
+              "sizeBytes": 606
+            },
+            {
+              "kind": "quality-run",
+              "runId": "01a15087-1fe1-7000-bf35-fbc86646b928",
+              "planId": "5762631d9ec508b3cd858ed23824befff3f32b8c47387e2130bc0cb60d350388"
+            }
+          ],
+          "recordedAt": "2026-10-18T19:40:15Z"
+        }
+      ],
+      "recordedAt": "2026-10-18T19:40:15Z"
+    },
+    "quality-recovery.json": {
+      "schemaVersion": "1.0.0",
+      "result": "PASS",
+      "scenarios": [
+        {
+          "schemaVersion": "1.0.0",
+          "scenario": "recovery",
+          "result": "PASS",
+          "environment": "real-compose-temporal-postgresql-minio-sandbox-container-engine",
+          "steps": [
+            {
+              "step": "snapshot.stored",
+              "result": "PASS",
+              "expected": [
+                "artifactId",
+                "key",
+                "sha256",
+                "sizeBytes"
+              ],
+              "observed": [
+                "artifactId",
+                "key",
+                "sha256",
+                "sizeBytes"
+              ]
+            },
+            {
+              "step": "worker.restart_requested",
+              "result": "PASS",
+              "expected": 0,
+              "observed": 0
+            },
+            {
+              "step": "run.terminal",
+              "result": "PASS",
+              "expected": "SUCCEEDED",
+              "observed": "SUCCEEDED"
+            },
+            {
+              "step": "results.complete",
+              "result": "PASS",
+              "expected": 7,
+              "observed": 7
+            },
+            {
+              "step": "evidence.one_or_more_per_result",
+              "result": "PASS",
+              "expected": ">=7",
+              "observed": 7
+            },
+            {
+              "step": "findings.evidence_resolved",
+              "result": "PASS",
+              "expected": [],
+              "observed": []
+            },
+            {
+              "step": "evidence.rights_closed",
+              "result": "PASS",
+              "expected": "every evidence item trainingAllowed=false and ragAllowed=false",
+              "observed": 7
+            },
+            {
+              "step": "sandbox.no_active_session",
+              "result": "PASS",
+              "expected": "0",
+              "observed": "0"
+            },
+            {
+              "step": "results.exactly_once",
+              "result": "PASS",
+              "expected": 7,
+              "observed": 7
+            },
+            {
+              "step": "identity.preserved",
+              "result": "PASS",
+              "expected": "01a15091-3e99-7000-8dd7-b66c648b95d9",
+              "observed": "01a15091-3e99-7000-8dd7-b66c648b95d9"
+            }
+          ],
+          "artifacts": [
+            {
+              "kind": "snapshot",
+              "artifactId": "01a15091-3a11-7000-8d11-03e20c72137b",
+              "digest": "6f3916728a258913a85dec9b89977024f37f1ec49bdd4e4949f8324ec754429c",
+              "sizeBytes": 504
+            },
+            {
+              "kind": "quality-run",
+              "runId": "01a15091-3e99-7000-8dd7-b66c648b95d9",
+              "planId": "30d276ec846024e1fe44950b06032013708fde3626ebdce3e372adca5ff5076c"
+            }
+          ],
+          "recordedAt": "2026-10-18T19:51:31Z"
+        }
+      ],
+      "recordedAt": "2026-10-18T19:51:31Z"
+    },
+    "quality-reproduction.json": {
+      "schemaVersion": "1.0.0",
+      "result": "PASS",
+      "scenarios": [
+        {
+          "schemaVersion": "1.0.0",
+          "scenario": "reproduce",
+          "result": "PASS",
+          "environment": "real-compose-temporal-postgresql-minio-sandbox-container-engine",
+          "steps": [
+            {
+              "step": "snapshot.stored",
+              "result": "PASS",
+              "expected": [
+                "artifactId",
+                "key",
+                "sha256",
+                "sizeBytes"
+              ],
+              "observed": [
+                "artifactId",
+                "key",
+                "sha256",
+                "sizeBytes"
+              ]
+            },
+            {
+              "step": "identity.distinct_run",
+              "result": "PASS",
+              "expected": "not 01a15090-5f31-7000-b3c1-4e715dd79b7d",
+              "observed": "01a15090-ab3b-7000-9186-2e5d14dbeb09"
+            },
+            {
+              "step": "identity.equal_plan",
+              "result": "PASS",
+              "expected": "e2a8c203f1ad3d73fed240266b569a2ff4099696417a77ee3e2b41564dcce9b4",
+              "observed": "e2a8c203f1ad3d73fed240266b569a2ff4099696417a77ee3e2b41564dcce9b4"
+            },
+            {
+              "step": "lineage.recorded",
+              "result": "PASS",
+              "expected": "01a15090-5f31-7000-b3c1-4e715dd79b7d",
+              "observed": "01a15090-5f31-7000-b3c1-4e715dd79b7d"
+            },
+            {
+              "step": "results.equivalent",
+              "result": "PASS",
+              "expected": [
+                [
+                  "q001-build",
+                  "PASSED"
+                ],
+                [
+                  "q002-unit",
+                  "PASSED"
+                ],
+                [
+                  "q003-lint",
+                  "PASSED"
+                ],
+                [
+                  "q004-static",
+                  "PASSED"
+                ],
+                [
+                  "q005-dependency-security",
+                  "PASSED"
+                ],
+                [
+                  "q006-secret",
+                  "PASSED"
+                ],
+                [
+                  "q007-diff-integrity",
+                  "PASSED"
+                ]
+              ],
+              "observed": [
+                [
+                  "q001-build",
+                  "PASSED"
+                ],
+                [
+                  "q002-unit",
+                  "PASSED"
+                ],
+                [
+                  "q003-lint",
+                  "PASSED"
+                ],
+                [
+                  "q004-static",
+                  "PASSED"
+                ],
+                [
+                  "q005-dependency-security",
+                  "PASSED"
+                ],
+                [
+                  "q006-secret",
+                  "PASSED"
+                ],
+                [
+                  "q007-diff-integrity",
+                  "PASSED"
+                ]
+              ]
+            },
+            {
+              "step": "verdict.equivalent",
+              "result": "PASS",
+              "expected": "PASS",
+              "observed": "PASS"
+            }
+          ],
+          "artifacts": [
+            {
+              "kind": "snapshot",
+              "artifactId": "01a15090-59a5-7000-bc48-c2f8b93a1939",
+              "digest": "ae076a74e5b000c67f10b739c83288a280a107d44ee91cb987cde80b47a0e2e4",
+              "sizeBytes": 476
+            },
+            {
+              "kind": "quality-run",
+              "runId": "01a15090-5f31-7000-b3c1-4e715dd79b7d",
+              "planId": "e2a8c203f1ad3d73fed240266b569a2ff4099696417a77ee3e2b41564dcce9b4"
+            },
+            {
+              "kind": "quality-reproduction",
+              "runId": "01a15090-ab3b-7000-9186-2e5d14dbeb09",
+              "planId": "e2a8c203f1ad3d73fed240266b569a2ff4099696417a77ee3e2b41564dcce9b4"
+            }
+          ],
+          "recordedAt": "2026-10-18T19:50:38Z"
+        }
+      ],
+      "recordedAt": "2026-10-18T19:50:38Z"
+    },
+    "quality-secret-output.json": {
+      "schemaVersion": "1.0.0",
+      "result": "PASS",
+      "scenarios": [
+        {
+          "schemaVersion": "1.0.0",
+          "scenario": "secret-output",
+          "result": "PASS",
+          "environment": "real-compose-temporal-postgresql-minio-sandbox-container-engine",
+          "steps": [
+            {
+              "step": "snapshot.stored",
+              "result": "PASS",
+              "expected": [
+                "artifactId",
+                "key",
+                "sha256",
+                "sizeBytes"
+              ],
+              "observed": [
+                "artifactId",
+                "key",
+                "sha256",
+                "sizeBytes"
+              ]
+            },
+            {
+              "step": "control.accepted",
+              "result": "PASS",
+              "expected": "SUCCEEDED with PASS",
+              "observed": "SUCCEEDED"
+            },
+            {
+              "step": "snapshot.stored",
+              "result": "PASS",
+              "expected": [
+                "artifactId",
+                "key",
+                "sha256",
+                "sizeBytes"
+              ],
+              "observed": [
+                "artifactId",
+                "key",
+                "sha256",
+                "sizeBytes"
+              ]
+            },
+            {
+              "step": "run.terminal",
+              "result": "PASS",
+              "expected": "FAILED",
+              "observed": "FAILED"
+            },
+            {
+              "step": "results.complete",
+              "result": "PASS",
+              "expected": 7,
+              "observed": 7
+            },
+            {
+              "step": "evidence.one_or_more_per_result",
+              "result": "PASS",
+              "expected": ">=7",
+              "observed": 7
+            },
+            {
+              "step": "findings.evidence_resolved",
+              "result": "PASS",
+              "expected": [],
+              "observed": []
+            },
+            {
+              "step": "evidence.rights_closed",
+              "result": "PASS",
+              "expected": "every evidence item trainingAllowed=false and ragAllowed=false",
+              "observed": 7
+            },
+            {
+              "step": "sandbox.no_active_session",
+              "result": "PASS",
+              "expected": "0",
+              "observed": "0"
+            },
+            {
+              "step": "python-secret-output.verdict_fail",
+              "result": "PASS",
+              "expected": "FAIL",
+              "observed": "FAIL"
+            },
+            {
+              "step": "python-secret-output.api_output_clean",
+              "result": "PASS",
+              "expected": true,
+              "observed": true
+            },
+            {
+              "step": "python-secret-output.history_clean",
+              "result": "PASS",
+              "expected": "decoded durable payloads contain no prohibited bytes",
+              "observed": {
+                "prohibitedBytesAbsent": true,
+                "payloadsScanned": 120,
+                "workflowStatus": "COMPLETED",
+                "sandboxObjects": 0,
+                "failures": [],
+                "pendingActivityTypes": [],
+                "containmentRefusals": 2
+              }
+            },
+            {
+              "step": "python-secret-output.no_sandbox_artifact",
+              "result": "PASS",
+              "expected": 0,
+              "observed": 0
+            },
+            {
+              "step": "python-secret-output.causal_containment_refusal",
+              "result": "PASS",
+              "expected": "one or more explicit output-containment refusals",
+              "observed": 2
+            },
+            {
+              "step": "snapshot.stored",
+              "result": "PASS",
+              "expected": [
+                "artifactId",
+                "key",
+                "sha256",
+                "sizeBytes"
+              ],
+              "observed": [
+                "artifactId",
+                "key",
+                "sha256",
+                "sizeBytes"
+              ]
+            },
+            {
+              "step": "run.terminal",
+              "result": "PASS",
+              "expected": "FAILED",
+              "observed": "FAILED"
+            },
+            {
+              "step": "results.complete",
+              "result": "PASS",
+              "expected": 7,
+              "observed": 7
+            },
+            {
+              "step": "evidence.one_or_more_per_result",
+              "result": "PASS",
+              "expected": ">=7",
+              "observed": 7
+            },
+            {
+              "step": "findings.evidence_resolved",
+              "result": "PASS",
+              "expected": [],
+              "observed": []
+            },
+            {
+              "step": "evidence.rights_closed",
+              "result": "PASS",
+              "expected": "every evidence item trainingAllowed=false and ragAllowed=false",
+              "observed": 7
+            },
+            {
+              "step": "sandbox.no_active_session",
+              "result": "PASS",
+              "expected": "0",
+              "observed": "0"
+            },
+            {
+              "step": "python-secret-output-full.verdict_fail",
+              "result": "PASS",
+              "expected": "FAIL",
+              "observed": "FAIL"
+            },
+            {
+              "step": "python-secret-output-full.api_output_clean",
+              "result": "PASS",
+              "expected": true,
+              "observed": true
+            },
+            {
+              "step": "python-secret-output-full.history_clean",
+              "result": "PASS",
+              "expected": "decoded durable payloads contain no prohibited bytes",
+              "observed": {
+                "prohibitedBytesAbsent": true,
+                "payloadsScanned": 120,
+                "workflowStatus": "COMPLETED",
+                "sandboxObjects": 0,
+                "failures": [],
+                "pendingActivityTypes": [],
+                "containmentRefusals": 2
+              }
+            },
+            {
+              "step": "python-secret-output-full.no_sandbox_artifact",
+              "result": "PASS",
+              "expected": 0,
+              "observed": 0
+            },
+            {
+              "step": "python-secret-output-full.causal_containment_refusal",
+              "result": "PASS",
+              "expected": "one or more explicit output-containment refusals",
+              "observed": 2
+            },
+            {
+              "step": "snapshot.stored",
+              "result": "PASS",
+              "expected": [
+                "artifactId",
+                "key",
+                "sha256",
+                "sizeBytes"
+              ],
+              "observed": [
+                "artifactId",
+                "key",
+                "sha256",
+                "sizeBytes"
+              ]
+            },
+            {
+              "step": "run.terminal",
+              "result": "PASS",
+              "expected": "SUCCEEDED",
+              "observed": "SUCCEEDED"
+            },
+            {
+              "step": "results.complete",
+              "result": "PASS",
+              "expected": 7,
+              "observed": 7
+            },
+            {
+              "step": "evidence.one_or_more_per_result",
+              "result": "PASS",
+              "expected": ">=7",
+              "observed": 7
+            },
+            {
+              "step": "findings.evidence_resolved",
+              "result": "PASS",
+              "expected": [],
+              "observed": []
+            },
+            {
+              "step": "evidence.rights_closed",
+              "result": "PASS",
+              "expected": "every evidence item trainingAllowed=false and ragAllowed=false",
+              "observed": 7
+            },
+            {
+              "step": "sandbox.no_active_session",
+              "result": "PASS",
+              "expected": "0",
+              "observed": "0"
+            },
+            {
+              "step": "control.after_refusal_pass",
+              "result": "PASS",
+              "expected": "PASS",
+              "observed": "PASS"
+            }
+          ],
+          "artifacts": [
+            {
+              "kind": "snapshot",
+              "artifactId": "01a15096-6640-7000-8dd2-1e979f350c09",
+              "digest": "022414c522574dee5b89c610482a5c60a5b4e6ed6ae65c1993f8d3f060e70ef6",
+              "sizeBytes": 476
+            },
+            {
+              "kind": "snapshot",
+              "artifactId": "01a15096-b839-7000-b864-c0af88b5d521",
+              "digest": "21e0f506c7fbe52fd248e541be17906d40da95777fc622d12e027e7fa2a4bff5",
+              "sizeBytes": 549
+            },
+            {
+              "kind": "quality-run",
+              "runId": "01a15096-bce3-7000-bfec-1f1b378fbb21",
+              "planId": "4b92219519c45debf7359804c2658ca5192974680a0ce1aecb63650f2205fad3"
+            },
+            {
+              "kind": "snapshot",
+              "artifactId": "01a15097-13b6-7000-b41c-01808420d833",
+              "digest": "c0291b321be7b116c5c31befee337491392da541537fc7fade4edcf532b6a5fd",
+              "sizeBytes": 530
+            },
+            {
+              "kind": "quality-run",
+              "runId": "01a15097-18a0-7000-9f02-7ad741e9f111",
+              "planId": "7af04cbda325f3e169d58dd65c8478a3934f3b9e6a9289324b0635119b2e391e"
+            },
+            {
+              "kind": "snapshot",
+              "artifactId": "01a15097-7292-7000-9be7-6b9969cf3981",
+              "digest": "f8818d2a3c3aed794d3ed3bc5b0c38dad7319fcfa0c548ec62e16773e787f283",
+              "sizeBytes": 476
+            }
+          ],
+          "recordedAt": "2026-10-18T19:58:03Z"
+        }
+      ],
+      "recordedAt": "2026-10-18T19:58:03Z"
+    },
+    "quality-timeout.json": {
+      "schemaVersion": "1.0.0",
+      "result": "PASS",
+      "scenarios": [
+        {
+          "schemaVersion": "1.0.0",
+          "scenario": "timeout",
+          "result": "PASS",
+          "environment": "real-compose-temporal-postgresql-minio-sandbox-container-engine",
+          "steps": [
+            {
+              "step": "snapshot.stored",
+              "result": "PASS",
+              "expected": [
+                "artifactId",
+                "key",
+                "sha256",
+                "sizeBytes"
+              ],
+              "observed": [
+                "artifactId",
+                "key",
+                "sha256",
+                "sizeBytes"
+              ]
+            },
+            {
+              "step": "run.timed_out",
+              "result": "PASS",
+              "expected": "TIMED_OUT",
+              "observed": "TIMED_OUT"
+            },
+            {
+              "step": "check.timeout_recorded",
+              "result": "PASS",
+              "expected": "contains TIMED_OUT",
+              "observed": [
+                "PASSED",
+                "TIMED_OUT",
+                "PASSED",
+                "PASSED",
+                "TIMED_OUT",
+                "PASSED",
+                "PASSED"
+              ]
+            },
+            {
+              "step": "verdict.fail_closed",
+              "result": "PASS",
+              "expected": "FAIL",
+              "observed": "FAIL"
+            },
+            {
+              "step": "run.terminal",
+              "result": "PASS",
+              "expected": "TIMED_OUT",
+              "observed": "TIMED_OUT"
+            },
+            {
+              "step": "results.complete",
+              "result": "PASS",
+              "expected": 7,
+              "observed": 7
+            },
+            {
+              "step": "evidence.one_or_more_per_result",
+              "result": "PASS",
+              "expected": ">=7",
+              "observed": 7
+            },
+            {
+              "step": "findings.evidence_resolved",
+              "result": "PASS",
+              "expected": [],
+              "observed": []
+            },
+            {
+              "step": "evidence.rights_closed",
+              "result": "PASS",
+              "expected": "every evidence item trainingAllowed=false and ragAllowed=false",
+              "observed": 7
+            },
+            {
+              "step": "sandbox.no_active_session",
+              "result": "PASS",
+              "expected": "0",
+              "observed": "0"
+            }
+          ],
+          "artifacts": [
+            {
+              "kind": "snapshot",
+              "artifactId": "01a15092-84ac-7000-b6fb-a18ee03c5891",
+              "digest": "cdb554d91323af0db21271c8f241f5a404cbf2363101b5d7acb6be49da35e6fd",
+              "sizeBytes": 504
+            },
+            {
+              "kind": "quality-run",
+              "runId": "01a15092-8a02-7000-8789-aecc3ef0bed0",
+              "planId": "7918c7dcda2d31f88a1ae4cc8f09105f22e5222341a143c6e4af4650652fd40d"
+            }
+          ],
+          "recordedAt": "2026-10-18T19:52:40Z"
+        }
+      ],
+      "recordedAt": "2026-10-18T19:52:40Z"
+    },
+    "sandbox-tool-result-origin.json": {
+      "scenario": "forged-result",
+      "result": "PASS",
+      "steps": [
+        {
+          "step": "images.rebuilt_and_service_current",
+          "result": "PASS",
+          "detail": "worker, sandbox service and sandbox image built from the current source"
+        },
+        {
+          "step": "rehearsal.worker_polling",
+          "result": "PASS",
+          "detail": "iacode-coding-rehearsal and the sandbox service"
+        },
+        {
+          "step": "snapshot.stored",
+          "result": "PASS",
+          "detail": "artifact 01a15095-9fbd-7000-9be8-5fcd3c8a719d"
+        },
+        {
+          "step": "control.agent_saw_the_sandbox_timeout",
+          "result": "PASS",
+          "detail": "developer said TIMEOUT-SEEN, stored TIMED_OUT"
+        },
+        {
+          "step": "forgery.refused_while_the_sandbox_executes",
+          "result": "PASS",
+          "detail": "HTTP 403 TOOL_RESULT_ORIGIN_REFUSED {'toolRequestId': 'fc153928-02a5-4316-96ae-9079bb3ab304', 'executor': 'SANDBOX'}"
+        },
+        {
+          "step": "run.terminal_state",
+          "result": "PASS",
+          "detail": "state SUCCEEDED (None: None)"
+        },
+        {
+          "step": "sandbox.one_session_for_the_run",
+          "result": "PASS",
+          "detail": "1 session(s)"
+        },
+        {
+          "step": "sandbox.every_execution_in_that_session",
+          "result": "PASS",
+          "detail": "sessions used: ['01a15095-e742-7000-ac9e-9275a3d5c105']"
+        },
+        {
+          "step": "sandbox.no_network",
+          "result": "PASS",
+          "detail": "network profile none"
+        },
+        {
+          "step": "sandbox.released_with_the_run",
+          "result": "PASS",
+          "detail": "session STOPPED, container gone"
+        },
+        {
+          "step": "history.tool_requests_answered",
+          "result": "PASS",
+          "detail": "2 requested, 2 executed"
+        },
+        {
+          "step": "forgery.stored_result_is_the_sandbox_result",
+          "result": "PASS",
+          "detail": "stored TIMED_OUT, executed TIMED_OUT"
+        },
+        {
+          "step": "forgery.agent_saw_the_sandbox_timeout",
+          "result": "PASS",
+          "detail": "developer said TIMEOUT-SEEN"
+        },
+        {
+          "step": "forgery.refused_after_the_run_ended",
+          "result": "PASS",
+          "detail": "HTTP 403 TOOL_RESULT_ORIGIN_REFUSED"
+        },
+        {
+          "step": "forgery.nothing_changed_after_the_refusals",
+          "result": "PASS",
+          "detail": "the stored result is still the sandbox's"
+        }
+      ]
+    }
+  }
+}

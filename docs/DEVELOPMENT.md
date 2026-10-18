@@ -173,8 +173,13 @@ shapes change and a live PostgreSQL/MinIO test. Operational behavior is in
 python scripts/iacode/verify.py --fast
 ```
 
-Every mandatory gate derived from `.iacode/policies/quality-gates.json` — including desktop,
-experience and knowledge builds/suites without removing any inherited gate — plus the stack,
+The mandatory gates come from `.iacode/policies/quality-gates.json`. Their current IDs are
+`tests`, `staticAnalysis`, `lessons`, `integrity`,
+`checkpointValidation`, `apiTests`, `gatewayTests`, `agentRuntimeTests`, `sandboxTests`,
+`evaluatorTests`, `webTests`, `lint`, `clientTests`, `experienceTests`, `knowledgeTests` and
+`infraDefinition`. The registry remains authoritative; executable documentation controls require
+every current mandatory ID and reject omissions. Complete verification runs every inherited/new
+build and suite, including desktop, experience and knowledge. It also runs the isolated stack,
 the integration suite, the live
 infrastructure suite, the smoke check, the two live provider smokes, the agent runtime's
 durability, cancellation and deadline scenarios, the sandbox's integration cases and its four

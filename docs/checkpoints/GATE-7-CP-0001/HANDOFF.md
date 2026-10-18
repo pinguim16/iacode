@@ -4,6 +4,8 @@ Current Gate: GATE-7
 Current Status: IN_PROGRESS
 
 Last validated published Gate7 implementation: 801be785ab076b380f163d4c09784fd016974bd6
+Published runtime candidate: a4b17e96c85efec5c1cd51305c5d1816ec82c77f
+Immutable candidate tag: iacode-subjects/GATE-7-CP-0001-runtime-v1
 Current branch: main
 
 ## Objective
@@ -87,6 +89,13 @@ cleanup targets through another API, stop unrelated apps, infer RAG rights, weak
 describe this implementing session as an independent auditor. Serialize metadata writers.
 
 ## Required next action
+
+The process-owned driver actually completed all seven stages with exit0, including finalizer,
+commit, separate committed CHECKPOINT_VALID and normal push. Main/origin and the new unused
+runtime-v1 tag resolve to a4b17e96c85efec5c1cd51305c5d1816ec82c77f. Execute exactly this current
+49-stage subject via the new Gate7 full runner. RUNTIME-SUBJECT.json is an unverified candidate,
+not a complete-verification, Gate or independent audit verdict. Do not rerun publication or move
+the tag. Keep source/memory unchanged until the actual verifier process finishes.
 
 Freeze/publish the exact runtime candidate using the process-owned publication driver and await
 its actual exit. Create a fresh immutable Gate7 runtime subject tag, then execute the complete

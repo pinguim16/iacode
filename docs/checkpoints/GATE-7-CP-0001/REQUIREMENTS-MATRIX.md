@@ -197,3 +197,6 @@ Expected set derived by: `policies.expected_requirement_refs over docs/GATE-7-CH
 | `LESSON-REQ-0143` | `lesson:LSN-0144` | yes | `NOT_STARTED` | Verify raw archived observations retain original context rather than becoming active relocated documents | LESSON-PREFLIGHT.json LESSON-REQ-0143 |
 | `LESSON-REQ-0144` | `lesson:LSN-0145` | yes | `PARTIAL` | Verify a new persistent capability must extend the explicit structural contract, not bypass its exact inventory | LESSON-PREFLIGHT.json LESSON-REQ-0144 |
 | `LESSON-REQ-0145` | `lesson:LSN-0146` | yes | `PARTIAL` | Verify a completed command record is not proof that its producing process has exited | LESSON-PREFLIGHT.json LESSON-REQ-0145 |
+| `LESSON-REQ-0146` | `lesson:LSN-0147` | yes | `NOT_STARTED` | Verify framework lifecycle errors need bounded identities as well as test methods | LESSON-PREFLIGHT.json LESSON-REQ-0146 |
+| `LESSON-REQ-0147` | `lesson:LSN-0148` | yes | `NOT_STARTED` | Verify minimal protocol fixtures inherit control contracts, never deployment-owned source data | LESSON-PREFLIGHT.json LESSON-REQ-0147 |
+| `LESSON-REQ-0148` | `lesson:LSN-0149` | yes | `NOT_STARTED` | Verify a shell exit zero is not a produced digest or verified original evidence | LESSON-PREFLIGHT.json LESSON-REQ-0148 |

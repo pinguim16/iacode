@@ -207,6 +207,9 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 | `LESSON-REQ-0143` | LESSON | `lesson:LSN-0144` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify raw archived observations retain original context rather than becoming active relocated documents |
 | `LESSON-REQ-0144` | LESSON | `lesson:LSN-0145` | yes | `PARTIAL` | `PARTIAL` | Verify a new persistent capability must extend the explicit structural contract, not bypass its exact inventory |
 | `LESSON-REQ-0145` | LESSON | `lesson:LSN-0146` | yes | `PARTIAL` | `PARTIAL` | Verify a completed command record is not proof that its producing process has exited |
+| `LESSON-REQ-0146` | LESSON | `lesson:LSN-0147` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify framework lifecycle errors need bounded identities as well as test methods |
+| `LESSON-REQ-0147` | LESSON | `lesson:LSN-0148` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify minimal protocol fixtures inherit control contracts, never deployment-owned source data |
+| `LESSON-REQ-0148` | LESSON | `lesson:LSN-0149` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify a shell exit zero is not a produced digest or verified original evidence |
 
 ## Evidence
 
@@ -2330,5 +2333,38 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 - Test: _none_
 - Negative test: _none_
 - Documentation: `checkpoint:PLAN.md`, `checkpoint:CURRENT-PROGRESS.json`
+- Validation: _none_
+- Guardrail: _none_
+
+### LESSON-REQ-0146 - lesson:LSN-0147
+
+- Source reference: LESSON-PREFLIGHT.json LESSON-REQ-0146
+- Description: Verify framework lifecycle errors need bounded identities as well as test methods
+- Implementation: _none_
+- Test: _none_
+- Negative test: _none_
+- Documentation: _none_
+- Validation: _none_
+- Guardrail: _none_
+
+### LESSON-REQ-0147 - lesson:LSN-0148
+
+- Source reference: LESSON-PREFLIGHT.json LESSON-REQ-0147
+- Description: Verify minimal protocol fixtures inherit control contracts, never deployment-owned source data
+- Implementation: _none_
+- Test: _none_
+- Negative test: _none_
+- Documentation: _none_
+- Validation: _none_
+- Guardrail: _none_
+
+### LESSON-REQ-0148 - lesson:LSN-0149
+
+- Source reference: LESSON-PREFLIGHT.json LESSON-REQ-0148
+- Description: Verify a shell exit zero is not a produced digest or verified original evidence
+- Implementation: _none_
+- Test: _none_
+- Negative test: _none_
+- Documentation: _none_
 - Validation: _none_
 - Guardrail: _none_

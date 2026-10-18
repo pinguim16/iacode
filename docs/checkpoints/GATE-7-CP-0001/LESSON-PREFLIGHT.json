@@ -15,11 +15,11 @@
     "packages/persistence",
     "scripts/iacode"
   ],
-  "generatedAt": "2026-10-18T18:06:54Z",
+  "generatedAt": "2026-10-18T21:29:41Z",
   "policyVersion": "2.0.0",
-  "inputsFingerprint": "16f629e315a75a8361483c91f37aeab92a3c997e7ad3555a9ba630dfd92525df",
-  "lessonsConsidered": 146,
-  "lessonsApplicable": 145,
+  "inputsFingerprint": "76fca6e054cc5c41d3b56a697ab895cef8f877ad066da16aca935eacfb922159",
+  "lessonsConsidered": 149,
+  "lessonsApplicable": 148,
   "applicable": [
     {
       "lessonId": "LSN-0001",
@@ -1175,8 +1175,8 @@
       "lessonId": "LSN-0117",
       "title": "An architecture rollup must not contradict the delivered capability described below it",
       "status": "GUARDED",
-      "severity": "HIGH",
-      "reasonApplicable": "applies to every Gate; category documentation; severity HIGH; already guarded, so the control must keep holding",
+      "severity": "CRITICAL",
+      "reasonApplicable": "applies to every Gate; category documentation; severity CRITICAL; already guarded, so the control must keep holding",
       "requiredCheck": "Check every public current-state rollup against canonical owned capability titles and delegate live lifecycle status to LATEST, retaining earlier architecture controls and testing actual omissions, future-denials and frozen status.",
       "requiredEvidence": "A causal red overview-consistency control followed by its unchanged green execution and a full current documentation validation.",
       "derivedRequirementId": "LESSON-REQ-0116"
@@ -1355,8 +1355,8 @@
       "lessonId": "LSN-0135",
       "title": "Capture producer evidence before fallible interpretation or owned cleanup",
       "status": "GUARDED",
-      "severity": "HIGH",
-      "reasonApplicable": "applies to every Gate; category quality; severity HIGH; already guarded, so the control must keep holding",
+      "severity": "CRITICAL",
+      "reasonApplicable": "applies to every Gate; category quality; severity CRITICAL; already guarded, so the control must keep holding",
       "requiredCheck": "Every temporary verification producer must preserve its available safe reports before interpretation can raise; actual owner cleanup must leave those reports and digests recoverable without manufacturing PASS.",
       "requiredEvidence": "A real exception and actual temporary-owner cleanup regression with recoverable original bytes, plus a fresh complete publication capture and exact transport verification.",
       "derivedRequirementId": "LESSON-REQ-0134"
@@ -1465,11 +1465,41 @@
       "lessonId": "LSN-0146",
       "title": "A completed command record is not proof that its producing process has exited",
       "status": "GUARDED",
-      "severity": "HIGH",
-      "reasonApplicable": "applies to every Gate; category process; severity HIGH; already guarded, so the control must keep holding",
+      "severity": "CRITICAL",
+      "reasonApplicable": "applies to every Gate; category process; severity CRITICAL; already guarded, so the control must keep holding",
       "requiredCheck": "Wait for actual producer process exit before starting a dependent writer or publication step; a successful intermediate ledger record, metadata file or output line is not a process-completion signal.",
       "requiredEvidence": "Executed process-order positive and failure controls using actual child processes, including successful-looking intermediate output followed by nonzero exit; the dependent mutation must remain unexecuted on refusal.",
       "derivedRequirementId": "LESSON-REQ-0145"
+    },
+    {
+      "lessonId": "LSN-0147",
+      "title": "Framework lifecycle errors need bounded identities as well as test methods",
+      "status": "GUARDED",
+      "severity": "HIGH",
+      "reasonApplicable": "applies to every Gate; category tooling; severity HIGH; already guarded, so the control must keep holding",
+      "requiredCheck": "Retain safe bounded test-method and class/module lifecycle failure identities without disclosing arbitrary traceback bodies or silently omitting a supported family.",
+      "requiredEvidence": "Executed current parser positive/adverse/overflow controls, actual original diagnostics and the complete current mandatory suite.",
+      "derivedRequirementId": "LESSON-REQ-0146"
+    },
+    {
+      "lessonId": "LSN-0148",
+      "title": "Minimal protocol fixtures inherit control contracts, never deployment-owned source data",
+      "status": "GUARDED",
+      "severity": "HIGH",
+      "reasonApplicable": "applies to every Gate; category security; severity HIGH; already guarded, so the control must keep holding",
+      "requiredCheck": "Construct minimal protocol repositories from explicit canonical control assets and declared runtime dependencies, not deployment-owned curator sources, unrelated histories or attestation verdicts.",
+      "requiredEvidence": "Actual positive protocol execution, real retained-link negative, copied dependency proof and isolated synthetic source/history noninheritance controls.",
+      "derivedRequirementId": "LESSON-REQ-0147"
+    },
+    {
+      "lessonId": "LSN-0149",
+      "title": "A shell exit zero is not a produced digest or verified original evidence",
+      "status": "GUARDED",
+      "severity": "HIGH",
+      "reasonApplicable": "applies to every Gate; category tooling; severity HIGH; already guarded, so the control must keep holding",
+      "requiredCheck": "Execution exit0 does not replace a typed completed nonempty observation or actual matching file bytes; reject absent digests and incomplete reads before mutation or evidence acceptance.",
+      "requiredEvidence": "Actual nonempty original-byte proof and executed running/failed/empty/null/mismatched-observation controls; original semantic failures remain visible.",
+      "derivedRequirementId": "LESSON-REQ-0148"
     }
   ],
   "derivedRequirements": [
@@ -2487,6 +2517,27 @@
       "description": "Verify a completed command record is not proof that its producing process has exited",
       "mandatory": true,
       "requiredEvidence": "Executed process-order positive and failure controls using actual child processes, including successful-looking intermediate output followed by nonzero exit; the dependent mutation must remain unexecuted on refusal."
+    },
+    {
+      "id": "LESSON-REQ-0146",
+      "lessonId": "LSN-0147",
+      "description": "Verify framework lifecycle errors need bounded identities as well as test methods",
+      "mandatory": true,
+      "requiredEvidence": "Executed current parser positive/adverse/overflow controls, actual original diagnostics and the complete current mandatory suite."
+    },
+    {
+      "id": "LESSON-REQ-0147",
+      "lessonId": "LSN-0148",
+      "description": "Verify minimal protocol fixtures inherit control contracts, never deployment-owned source data",
+      "mandatory": true,
+      "requiredEvidence": "Actual positive protocol execution, real retained-link negative, copied dependency proof and isolated synthetic source/history noninheritance controls."
+    },
+    {
+      "id": "LESSON-REQ-0148",
+      "lessonId": "LSN-0149",
+      "description": "Verify a shell exit zero is not a produced digest or verified original evidence",
+      "mandatory": true,
+      "requiredEvidence": "Actual nonempty original-byte proof and executed running/failed/empty/null/mismatched-observation controls; original semantic failures remain visible."
     }
   ]
 }

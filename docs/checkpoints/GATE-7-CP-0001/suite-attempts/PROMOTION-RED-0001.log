@@ -1,0 +1,32 @@
+E
+======================================================================
+ERROR: setUpClass (test_development_ledger.PositivePromotionTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\iacode\tests\test_development_ledger.py", line 4499, in setUpClass
+    cls.result = run_positive_promotion(Path(cls.temporary.name))
+                 ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\iacode\scripts\development-ledger\promotion_fixture.py", line 675, in run_positive_promotion
+    subject = deliver_checkpoint(root, scope="control-plane", status="READY_FOR_REVIEW")
+  File "E:\iacode\scripts\development-ledger\promotion_fixture.py", line 583, in deliver_checkpoint
+    _require(finalized, "finalize_checkpoint.py")
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\iacode\scripts\development-ledger\promotion_fixture.py", line 106, in _require
+    raise FixtureError(f"{what} failed with exit {completed.returncode}: {completed.stdout}")
+promotion_fixture.FixtureError: finalize_checkpoint.py failed with exit 1: CHECKPOINT_NOT_FINALIZED
+- READY_FOR_REVIEW requires the internal mirror audit to pass, found 'FAIL'
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "E:\iacode\tests\test_development_ledger.py", line 4502, in setUpClass
+    raise AssertionError(f"the positive promotion could not be executed: {exc}") from exc
+AssertionError: the positive promotion could not be executed: finalize_checkpoint.py failed with exit 1: CHECKPOINT_NOT_FINALIZED
+- READY_FOR_REVIEW requires the internal mirror audit to pass, found 'FAIL'
+
+
+----------------------------------------------------------------------
+Ran 0 tests in 20.543s
+
+FAILED (errors=1)
