@@ -1,24 +1,27 @@
 {
   "schemaVersion": "3.4.0",
   "unit": {
-    "executed": false,
-    "passed": 0,
+    "executed": true,
+    "passed": 907,
     "failed": 0,
-    "command": null,
-    "evidence": null
+    "command": "python -m unittest discover -s tests",
+    "evidence": "command:cmd-0408",
+    "runId": "green-keeper-cycle-8-root-suite"
   },
   "integration": {
-    "executed": false,
-    "passed": 0,
+    "executed": true,
+    "passed": 1055,
     "failed": 0,
-    "command": null,
-    "evidence": null
+    "command": "python docs/checkpoints/GATE-6-CP-0001/audit-harness/run_full_verification.py --commit 5c853011f6a7f4a85c6401d1d5fb63b60b9b4fc8 --tag iacode-subjects/GATE-6-CP-0001-runtime-v8 --node C:/Users/cesar/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node.exe",
+    "evidence": "command:cmd-0400",
+    "runId": "published-5c853011f6a7-counted-runtime-suites"
   },
   "e2e": {
-    "executed": false,
-    "passed": 0,
+    "executed": true,
+    "passed": 47,
     "failed": 0,
-    "command": null,
-    "evidence": null
+    "command": "python docs/checkpoints/GATE-6-CP-0001/audit-harness/run_full_verification.py --commit 5c853011f6a7f4a85c6401d1d5fb63b60b9b4fc8 --tag iacode-subjects/GATE-6-CP-0001-runtime-v8 --node C:/Users/cesar/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node.exe",
+    "evidence": "command:cmd-0400",
+    "runId": "published-5c853011f6a7-counted-runtime-suites"
   }
 }

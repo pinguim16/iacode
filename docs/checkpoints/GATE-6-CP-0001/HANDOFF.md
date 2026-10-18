@@ -1,60 +1,60 @@
 # Handoff
 
 Current Gate: GATE-6
-Current Status: IN_PROGRESS
+Current Status: INTERNAL_GATE_PASS
 
 ## Objective
 
-Finish only authorized Gate6 Experience Store and every internal control through canonical seal. Independent M2 remains pending; Gate7 is not authorized.
+Finish only explicitly authorized Gate6 Experience Store, all internal controls and actual canonical checkpoint sealing; independent milestone validation remains due at M2 closure.
 
 ## What was completed
 
-Historical runtime-v6 full47, functional37/37, Green Keeper15, completeness193, internal Red Team71 and mirror18 passed. All30 exact assurance/handoff originals are archived. Cmd-0340 terminal refusal and cmd-0342 causal failure remain; cmd-0343 proves canonical rendering and every-section adverse controls, with LSN-0008 recurrence3/CRITICAL and GRD-0146 local restoration. Fresh memory-bound whole assurance is due.
+Published immutable subject iacode-subjects/GATE-6-CP-0001-runtime-v8 at 5c853011f6a7f4a85c6401d1d5fb63b60b9b4fc8 completes all 47 non-fast stages in one invocation, with clean detached transport, unchanged shared project and actual removal of its isolated Compose resources and temporary clone. Functional acceptance covers every 37 runtime criterion across eight scenarios. Whole Green Keeper cycle 8 passes every 15 mandatory gate; completeness and evidence coverage are 100 percent over all 194 derived requirements. Fresh internal Red Team defends 71/71 with VALID positive control. Full closure mirror evaluates all 18 dimensions: 16 PASS, 2 policy-derived NOT_APPLICABLE, 0 FAIL. These are separate same-session internal artifacts, never independent M2 approval.
 
 ## What was NOT completed
 
-Immutable published non-fast verification, whole Green Keeper, completeness, fresh internal Red Team/null control, full clean-clone mirror, final assembly and actual Gate6 seal/publication/archive reconstruction remain pending.
+Independent M2 review, independent Red Team and second-tool validation have not occurred. Gate7 is not authorized. This preseal assembly does not self-certify a future seal/publication: consult the real canonical tag, postcommit records and review declaration.
 
 ## Current repository state
 
-Attached branch main; current binding and dirty state are owned by STATE.json. The predecessor base is bcfe297278d25ee5a1db70a32b8c4ba0731941ea. No unexpected divergence was observed.
+Branch main; immutable runtime subject 5c853011f6a7f4a85c6401d1d5fb63b60b9b4fc8. STATE.json binds the current content; the canonical Gate6 tag and postcommit evidence bind the eventual seal. The sealed Gate5 base bcfe297278d25ee5a1db70a32b8c4ba0731941ea remains unchanged.
 
 ## Files changed
 
-FILES.json declares the actual Gate6 delta. Every later path must be explicitly declared before finalization; hash refresh may not invent a declaration or rewrite a sealed predecessor.
+FILES.json explicitly declares the actual Gate6 delta before hash binding. Native process synchronization/failure observations and ADR-0052 are in-scope causal repairs, not another Gate. Original producer bytes remain exact in attempts; no sealed predecessor is rewritten.
 
 ## Important decisions
 
-ADR-0050 defines source-bound explicit-consent facts and pure ports; ADR-0051 defines finite retention/tombstones. All canonical criteria and selected lessons remain mandatory according to policy; all37 runtime criteria require functional evidence.
+ADR-0050: source-bound consented facts, not raw answers or authority. ADR-0051: finite retention and tombstones. ADR-0052: exact observed member synchronization and retained cleanup failures under unchanged bounds. ADR-0037 defers independence to M2, never waives it.
 
 ## Tests executed
 
-Actual completed local invocations cmd-0050 and cmd-0054 cover the suites/runtime above; cmd-0109 proves root23 including canonical retrospective conformance. Suite-attempts and attempts retain exact safe output. These are local causal proofs, not a complete immutable Gate verdict. TESTS.json names distinct physical runs.
+Current complete non-fast full47, functional37/37, whole15 Green Keeper, total completeness, fresh71-attack Red Team and full18-dimension clean-clone mirror actually pass. The current reports and canonical ledger bind their real invocation identities. ATTACKS=71/71; GUARDRAILS=147/147; LESSONS=141/144; REQUIREMENTS=194/194; TESTS=1962/1962. Counts are canonical distinct cases/criteria, not a sum of repeated runs.
 
 ## Known failures
 
-G6-INT-021 is causally corrected, not silently repaired. Historical v6 successful assurance does not accept the changed current memory. All previous failures/counters/raw producers remain. No Gate, seal, publication or independent verdict is inferred.
+FINDINGS.json closes local causal rework with observable evidence. Historical failed commands, v4 root failure, interrupted Docker attempts and v5 failed native/Red Team remain preserved. No historical result is overwritten or combined with partial reruns to create a current PASS.
 
 ## Known risks
 
-RISKS.md records security/rights/backup/retention, external provider and same-session assurance limits. Unknown reuse permission is denial; no independent M2 approval is implied.
+External provider/Engine availability and external Windows sharing locks can still fail closed. A member snapshot is not proof about future spawns/external holders; actual removal stays mandatory. Four historical policy-refused temporary targets remain responsible-owner manual cleanup, never retried. See RISKS.md; no unproven reuse or independent M2 approval is implied.
 
 ## Do not repeat
 
-Never replay any historical archive, cleanup/recovery or capture helper, or any of four policy-refused targets. Do not overlap checkpoint writers, narrow controls or stop unrelated applications. Never mutate a sealed predecessor or published immutable tag.
+Never rerun checkpoint writing helpers after canonical sealing. Never move tags, amend history, force push, narrow gates/denominators, bypass checks or stop unrelated apps. Do not replay immutable archival/diagnostic/recovery helpers or any of the four policy-refused cleanup targets. Preserve all failures and raw bytes.
 
 ## Required next action
 
-Publish a fresh Gate6-only immutable subject after full lint and valid serialized bookkeeping; execute complete non-fast verification, whole Green Keeper, total completeness, fresh internal Red Team and full clean-clone mirror, then canonical finalization/seal/publication. All original v6 evidence and terminal refusal remain archived. Independent M2 remains pending; Gate7 is unauthorized.
+Complete any canonical Gate6 finalization, content-commit, sealing, publication and exact transport/archive verification not already evidenced by its canonical tag and tool records. Once sealed and verified, never rerun writing helpers in this checkpoint; await explicit owner authorization for Gate7. Independent M2 review, Red Team and second-tool validation remain pending for milestone closure.
 
 ## Exact continuation sequence
 
-Inspect STATE/PLAN/STEPS/COMMANDS and active processes; finish any named causal rework, freeze/publish the tested Gate6-only runtime, complete full immutable verification and ordered internal assurance, assemble/finalize/content-commit/seal/publish and verify fresh exact transport/archive. Do not start Gate7.
+If canonical Gate6 tag is absent, validate current assembly, finalize INTERNAL_GATE_PASS against refs/tags/iacode-checkpoints/GATE-6-CP-0001, commit and publish clean content, run the canonical sealer, publish its evidence commit/tag, then verify fresh exact Git/archive transport. If already sealed, perform only read-only verification and do not rerun writers. Await owner Gate7 authorization; M2 independence remains mandatory.
 
 ## Validation commands
 
-python scripts/development-ledger/validate_checkpoint.py; python scripts/development-ledger/validate_lessons.py; python scripts/development-ledger/verify_integrity.py; python scripts/development-ledger/program_state.py. Use the current serial bookkeeping harness before unsealed validation and await its actual exit.
+python scripts/development-ledger/validate_checkpoint.py; python scripts/development-ledger/validate_lessons.py; python scripts/development-ledger/verify_integrity.py; python scripts/development-ledger/review_bundle.py --verify-declaration. Canonical writers: finalize_checkpoint.py and seal_checkpoint.py self-record; do not wrap them in an outer recorder.
 
 ## Stop conditions
 
-Stop for unexpected Git divergence or a genuine missing external prerequisite/authority. Ordinary failures require retained causal rework, never false PASS. No force, reset, amend, tag movement or independent self-approval is authorized.
+Stop for unexpected Git divergence or a genuine missing external prerequisite/authority. Preserve real failures and use causal rework, not false PASS. No Gate7 or milestone boundary may be crossed without the required separate authority and independent validation.

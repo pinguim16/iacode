@@ -1,0 +1,36 @@
+{
+  "kind": "AVAILABLE_RAW_PRODUCER_CAPTURE_NOT_GATE_ACCEPTANCE",
+  "capturedAt": "2026-10-18T10:16:40Z",
+  "label": "v8",
+  "semanticObservationCommand": "cmd-0433",
+  "semanticObservationSubject": "5c853011f6a7f4a85c6401d1d5fb63b60b9b4fc8",
+  "semanticTargetFingerprint": "a5798815af129b01b8ea7742b5902a5f28dbd417bb5d6bccc53541c7f5a71cc0",
+  "historicalBytesAtOriginalCommandNotAttested": false,
+  "limit": "This capture attests the available bytes at capturedAt. Semantic equality with an earlier projection never retroactively attests historical byte spelling.",
+  "records": [
+    {
+      "source": "var/gate5-red-team-native.json",
+      "semanticProjection": "docs/checkpoints/GATE-6-CP-0001/RED-TEAM-NATIVE.json",
+      "archive": "docs/checkpoints/GATE-6-CP-0001/attempts/RUNTIME-V8-RED-TEAM-RAW-NATIVE.json",
+      "bytes": 3046,
+      "sha256": "7658fc58d7450e10dade9f97a5923c3b2f4278ec74f10ae58fd4ed6f9ea6503b",
+      "semanticIdentityMatches": true,
+      "byteEqualAtCapture": true
+    },
+    {
+      "source": "var/gate5-red-team-desktop.json",
+      "semanticProjection": "docs/checkpoints/GATE-6-CP-0001/RED-TEAM-DESKTOP.json",
+      "archive": "docs/checkpoints/GATE-6-CP-0001/attempts/RUNTIME-V8-RED-TEAM-RAW-DESKTOP.json",
+      "bytes": 17469,
+      "sha256": "d9e7ee738d676d2a80147ad5aab1fa19ffb30fc66967df238e88add4f531e915",
+      "semanticIdentityMatches": true,
+      "byteEqualAtCapture": true
+    }
+  ],
+  "originalBytesRewritten": false,
+  "gateVerdictIssued": false,
+  "trainingAllowed": false,
+  "ragAllowed": false,
+  "distillationAllowed": false,
+  "result": "PASS"
+}

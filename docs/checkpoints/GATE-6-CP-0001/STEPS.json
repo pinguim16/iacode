@@ -90,15 +90,15 @@
         "internal Red Team and null control",
         "full mirror"
       ],
-      "functionalProof": "Historical v6 complete assurance passed but finalization refused missing report headings. Original bytes remain archived; actual local corrective rendering passes. Fresh memory-bound whole assurance and canonical seal are required, not claimed complete.",
+      "functionalProof": "Complete published non-fast verifier, full mandatory Green Keeper, completeness, fresh internal Red Team/null control and full closure mirror actually pass against unchanged source. Same-session only.",
       "evidence": [
-        "cmd-0340",
-        "cmd-0341",
-        "cmd-0342",
-        "cmd-0343",
-        "attempts/RUNTIME-V6-FINALIZATION-ARCHIVE.json"
+        "cmd-0400",
+        "M2-INTERNAL-MIRROR.json",
+        "M2-INTERNAL-RED-TEAM.json",
+        "COMPLETENESS-REPORT.json",
+        "REWORK-LOG.jsonl"
       ],
-      "status": "IN_PROGRESS"
+      "status": "COMPLETE"
     },
     {
       "stepId": "G6-S03",
@@ -118,15 +118,17 @@
         "canonical counts",
         "serialized checkpoint validation"
       ],
-      "functionalProof": "Historical v6 complete assurance passed but finalization refused missing report headings. Original bytes remain archived; actual local corrective rendering passes. Fresh memory-bound whole assurance and canonical seal are required, not claimed complete.",
+      "functionalProof": "Actual final internal report, counters, explicit inventory, provenance/risks and complete canonical handoff are assembled. Subsequent quiescent checkpoint validation cmd-0446 passes. This completes preseal assembly, not a claim that a future content commit, canonical seal or publication already happened.",
       "evidence": [
-        "cmd-0340",
-        "cmd-0341",
-        "cmd-0342",
-        "cmd-0343",
-        "attempts/RUNTIME-V6-FINALIZATION-ARCHIVE.json"
+        "cmd-0446",
+        "FINAL-REPORT.md",
+        "COUNTS.json",
+        "FILES.json",
+        "HANDOFF.md",
+        "RISKS.md",
+        "PROVENANCE.json"
       ],
-      "status": "IN_PROGRESS"
+      "status": "COMPLETE"
     }
   ]
 }

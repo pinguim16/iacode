@@ -1,0 +1,756 @@
+{
+  "schemaVersion": "1.0.0",
+  "scenario": "desktop-e2e",
+  "result": "PASS",
+  "environment": "fresh-installed-cli-and-native-vscode-real-authenticated-compose-provider-postgresql-redis-minio-temporal-sandbox-quality",
+  "subjectCommit": "1442b86d38be11aee5e2ff635e576be08e52997b",
+  "sourceDirty": true,
+  "sourceFingerprint": "584eb6433e55f8a693315fa84c367c37de3c1c36747b08694888a01ca0c32f91",
+  "steps": [
+    {
+      "name": "fresh-owned-authenticated-stack-healthy",
+      "result": "PASS",
+      "authorizedModel": "openai:gpt-4o-mini"
+    },
+    {
+      "name": "fresh-offline-cli-install-and-authenticated-contract",
+      "result": "PASS"
+    },
+    {
+      "name": "fresh-provider-catalog-synced-and-exact-authorized-model-present",
+      "result": "PASS",
+      "authorizedModel": "openai:gpt-4o-mini",
+      "provider": "openai",
+      "catalogModels": 138,
+      "discovered": 138
+    },
+    {
+      "name": "unauthenticated-domain-refused-before-effects",
+      "result": "PASS"
+    },
+    {
+      "name": "closed-ipc-refuses-tool-result",
+      "result": "PASS"
+    },
+    {
+      "name": "closed-ipc-refuses-quality-verdict",
+      "result": "PASS"
+    },
+    {
+      "name": "closed-ipc-refuses-shell.exec",
+      "result": "PASS"
+    },
+    {
+      "name": "secret-adverse-premise",
+      "result": "PASS"
+    },
+    {
+      "name": "secret-upload-refused-before-sql-or-object-persistence",
+      "result": "PASS"
+    },
+    {
+      "name": "replay-clean-control",
+      "result": "PASS"
+    },
+    {
+      "name": "redis-replay-refusal-survives-api-restart",
+      "result": "PASS"
+    },
+    {
+      "name": "cli-preview-is-bounded-and-excludes-private-path",
+      "result": "PASS"
+    },
+    {
+      "name": "cli-changed-or-wrong-consent-refused-locally",
+      "result": "PASS"
+    },
+    {
+      "name": "real-snapshot-persistence-stable-retry-and-rights",
+      "result": "PASS"
+    },
+    {
+      "name": "read-only-snapshot-reconciliation",
+      "result": "PASS"
+    },
+    {
+      "name": "actual-native-snapshot-and-uncertain-accepted-create",
+      "result": "PASS"
+    },
+    {
+      "name": "lost-response-has-one-real-persisted-run",
+      "result": "PASS"
+    },
+    {
+      "name": "actual-new-host-secretstorage-recovery-provider-sandbox-quality",
+      "result": "PASS"
+    },
+    {
+      "name": "both-clients-observe-identical-server-task-truth",
+      "result": "PASS"
+    },
+    {
+      "name": "authenticated-external-sandbox-result-forgery-refused",
+      "result": "PASS"
+    },
+    {
+      "name": "both-clients-observe-identical-derived-verdict-and-evidence",
+      "result": "PASS"
+    },
+    {
+      "name": "installed-cli-reproduces-real-quality-inputs",
+      "result": "PASS"
+    },
+    {
+      "name": "actual-quality-response-loss-reconciles-once-without-replay",
+      "result": "PASS"
+    },
+    {
+      "name": "reconciled-quality-completes-with-real-pass-evidence",
+      "result": "PASS"
+    },
+    {
+      "name": "installed-cli-running-task-cancel-request-terminal-and-repeat",
+      "result": "PASS"
+    },
+    {
+      "name": "actual-cli-sigint-stops-only-local-observation",
+      "result": "PASS",
+      "exitCode": "130",
+      "lastCursor": 8,
+      "remoteState": "RUNNING"
+    },
+    {
+      "name": "installed-cli-running-quality-cancel-waits-for-cleanup",
+      "result": "PASS"
+    },
+    {
+      "name": "host-source-and-sentinel-unchanged",
+      "result": "PASS"
+    },
+    {
+      "name": "actual-object-tamper-refused-before-task-persistence",
+      "result": "PASS"
+    },
+    {
+      "name": "operational-container-identities-preserved",
+      "result": "PASS"
+    },
+    {
+      "name": "owned-services-volumes-profiles-removed",
+      "result": "PASS"
+    },
+    {
+      "name": "owned-sandbox-children-and-networks-removed",
+      "result": "PASS"
+    },
+    {
+      "name": "measured-source-inputs-unchanged",
+      "result": "PASS"
+    }
+  ],
+  "composeProject": "iacode-desktop-da07f8229054",
+  "packages": {
+    "kind": "CLIENT_BUILD_NOT_FUNCTIONAL_ACCEPTANCE",
+    "result": "PASS",
+    "protocolDigest": "07afdf6772f9d54cf5ee2d84d2fb3222220c1b454a0ae08e5d8c30eeea1ceab9",
+    "sourceHashes": {
+      "apps/cli/README.md": "d3a4cb495abe5cea7beb01fe4b01ab07a58f825a1f4747f11ea00cb2392d1647",
+      "apps/cli/bin/iacode.cjs": "9105ef8f928015eaa5803f4358e3cf553d4d55fbd670dc08ec0d77c5a4b5c5f5",
+      "apps/cli/package.json": "9b3291b1ac527c4f90d3a14174ee30108f186de34e2dcf5b9c1fe6158317e1dd",
+      "apps/cli/src/client.cjs": "50782a810b2df89641a4eb51b56c1b05f5c5fd5050ac2087009f7b2a45bc670e",
+      "apps/cli/src/snapshot.cjs": "aa853912c12ee1069b2eb59c91f9a688e46946cffc7091db9540886670152be5",
+      "apps/vscode-extension/README.md": "d161ae51e43a323897668724e23e79eddc41872e22d72dbfb49ef9cbb23a8ebd",
+      "apps/vscode-extension/package.json": "a891592b6e0165feb0d47f4763eb38c4e8005da19b7150640083ab90e2a3e27a",
+      "apps/vscode-extension/src/extension.cjs": "f1351d4d736c3dd50bc8733e6711463c80d0b0d161a09053ef6aa40dcfda596e",
+      "packages/contracts/src/iacode_contracts/desktop_protocol.json": "07afdf6772f9d54cf5ee2d84d2fb3222220c1b454a0ae08e5d8c30eeea1ceab9"
+    },
+    "artifacts": {
+      "iacode-cli-0.1.0.tgz": {
+        "sha256": "9ef4c965d84116e78bc268c2f2405db27ac956078490f00fb938175c1557e0e4",
+        "sizeBytes": 14706
+      },
+      "iacode-0.1.0.vsix": {
+        "sha256": "65678fe36c93971044fb7a6a8e469f4a02664f8ca5e4c60843c5863219b8b30a",
+        "sizeBytes": 21112
+      }
+    }
+  },
+  "cliCommands": [
+    {
+      "command": "doctor",
+      "exitCode": 0
+    },
+    {
+      "command": "preview",
+      "exitCode": 0
+    },
+    {
+      "command": "snapshot",
+      "exitCode": 2
+    },
+    {
+      "command": "snapshot",
+      "exitCode": 0
+    },
+    {
+      "command": "snapshot",
+      "exitCode": 0
+    },
+    {
+      "command": "snapshot-lookup",
+      "exitCode": 0
+    },
+    {
+      "command": "lookup",
+      "exitCode": 0
+    },
+    {
+      "command": "read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-reproduce",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-start",
+      "exitCode": 4
+    },
+    {
+      "command": "quality-lookup",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "start",
+      "exitCode": 0
+    },
+    {
+      "command": "read",
+      "exitCode": 0
+    },
+    {
+      "command": "cancel",
+      "exitCode": 0
+    },
+    {
+      "command": "follow",
+      "exitCode": 3
+    },
+    {
+      "command": "cancel",
+      "exitCode": 0
+    },
+    {
+      "command": "preview",
+      "exitCode": 0
+    },
+    {
+      "command": "snapshot",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-start",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-read",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-cancel",
+      "exitCode": 0
+    },
+    {
+      "command": "quality-follow",
+      "exitCode": 3
+    },
+    {
+      "command": "quality-cancel",
+      "exitCode": 0
+    }
+  ],
+  "cliRuntime": "v24.19.0",
+  "nativeStart": {
+    "kind": "ACTUAL_ISOLATED_VSCODE_EXTENSION_HOST",
+    "result": "PASS",
+    "mode": "start",
+    "editorVersion": "1.138.0",
+    "nodeVersion": "v24.18.1",
+    "processId": 45508,
+    "steps": [
+      {
+        "name": "fresh-installed-extension-active",
+        "result": "PASS",
+        "commands": 19,
+        "extensionPath": "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-desktop-live-d3rznh5a\\editor\\extensions\\iacode.iacode-0.1.0"
+      },
+      {
+        "name": "native-default-cancel-sends-no-upload",
+        "result": "PASS"
+      },
+      {
+        "name": "native-exact-snapshot-approved",
+        "result": "PASS",
+        "snapshotId": "cb371c14-354d-5b32-85e6-9e610f62fea5",
+        "snapshotDigest": "798aefda2f02161005f7c67b407a6eeca44e56ba85359b9f74eb21a3f7b75ebb"
+      },
+      {
+        "name": "actual-uncertain-create-retains-stable-identity-without-retry",
+        "result": "PASS",
+        "code": "TRANSPORT_UNAVAILABLE",
+        "idempotencyKey": "080a62e9-61a7-4b85-9173-fe707df50705"
+      }
+    ],
+    "pending": {
+      "operation": "start",
+      "idempotencyKey": "080a62e9-61a7-4b85-9173-fe707df50705"
+    },
+    "exitCode": 0,
+    "processCleanup": {
+      "jobOwned": true,
+      "remainingBeforeCleanup": 0,
+      "remainingAfterCleanup": 0,
+      "observedProcessCount": 0,
+      "signaledProcessCount": 0
+    },
+    "sharedStorageObservedOwned": true
+  },
+  "acceptedRunId": "01a14d90-926c-7000-b597-403f70776ca8",
+  "nativeResume": {
+    "kind": "ACTUAL_ISOLATED_VSCODE_EXTENSION_HOST",
+    "result": "PASS",
+    "mode": "resume",
+    "editorVersion": "1.138.0",
+    "nodeVersion": "v24.18.1",
+    "processId": 51420,
+    "steps": [
+      {
+        "name": "fresh-installed-extension-active",
+        "result": "PASS",
+        "commands": 19,
+        "extensionPath": "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-desktop-live-d3rznh5a\\editor\\extensions\\iacode.iacode-0.1.0"
+      },
+      {
+        "name": "new-host-read-only-recovery",
+        "result": "PASS",
+        "runId": "01a14d90-926c-7000-b597-403f70776ca8"
+      },
+      {
+        "name": "actual-provider-task-sandbox-result-and-ordered-events",
+        "result": "PASS",
+        "runId": "01a14d90-926c-7000-b597-403f70776ca8",
+        "modelCalls": 5,
+        "sandboxExecutions": 2,
+        "successfulUnittestExecution": true,
+        "lastCursor": 24
+      },
+      {
+        "name": "native-derived-quality-results-and-evidence",
+        "result": "PASS",
+        "qualityRunId": "01a14d91-05fd-7000-a61e-e95d34e86bac",
+        "verdict": "PASS",
+        "checks": 7,
+        "evidence": 7
+      },
+      {
+        "name": "native-disconnect-stale-without-remote-cancel",
+        "result": "PASS"
+      }
+    ],
+    "taskObservation": {
+      "runId": "01a14d90-926c-7000-b597-403f70776ca8",
+      "state": "SUCCEEDED",
+      "errorType": null,
+      "modelCalls": 5,
+      "sandboxExecutions": 2
+    },
+    "runId": "01a14d90-926c-7000-b597-403f70776ca8",
+    "qualityRunId": "01a14d91-05fd-7000-a61e-e95d34e86bac",
+    "exitCode": 0,
+    "processCleanup": {
+      "jobOwned": true,
+      "remainingBeforeCleanup": 0,
+      "remainingAfterCleanup": 0,
+      "observedProcessCount": 0,
+      "signaledProcessCount": 0
+    },
+    "sharedStorageObservedOwned": true
+  },
+  "proxyOperationCounts": {
+    "hello": 2,
+    "teams": 2,
+    "agents": 1,
+    "snapshot": 1,
+    "start": 1,
+    "lookup": 1,
+    "read": 49,
+    "events": 2,
+    "quality-start": 1,
+    "quality-read": 30
+  },
+  "taskCancellation": {
+    "runId": "01a14d91-c364-7000-92af-cb9a883bc92f",
+    "phase": "COMPLETE",
+    "requestedState": "RUNNING",
+    "terminalState": "CANCELLED"
+  },
+  "sandboxCleanup": {
+    "remainingContainers": 0,
+    "remainingNetworks": 0
+  },
+  "cleanup": {
+    "composeExitCode": 0,
+    "remainingContainers": 0,
+    "remainingVolumes": 0
+  },
+  "ownedTemporaryDirectoryRemoved": true,
+  "directoryCleanupRetries": 0
+}

@@ -1,5 +1,7 @@
 # Gate 6 progress
 
-Historical runtime-v6 full47, functional37/37, Green Keeper15, completeness193, internal Red Team71 and mirror18 passed. All30 exact assurance/handoff originals are archived. Cmd-0340 terminal refusal and cmd-0342 causal failure remain; cmd-0343 proves canonical rendering and every-section adverse controls, with LSN-0008 recurrence3/CRITICAL and GRD-0146 local restoration. Fresh memory-bound whole assurance is due.
+Published immutable subject iacode-subjects/GATE-6-CP-0001-runtime-v8 at 5c853011f6a7f4a85c6401d1d5fb63b60b9b4fc8 completes all 47 non-fast stages in one invocation, with clean detached transport, unchanged shared project and actual removal of its isolated Compose resources and temporary clone. Functional acceptance covers every 37 runtime criterion across eight scenarios. Whole Green Keeper cycle 8 passes every 15 mandatory gate; completeness and evidence coverage are 100 percent over all 194 derived requirements. Fresh internal Red Team defends 71/71 with VALID positive control. Full closure mirror evaluates all 18 dimensions: 16 PASS, 2 policy-derived NOT_APPLICABLE, 0 FAIL. These are separate same-session internal artifacts, never independent M2 approval.
 
-Publish a fresh Gate6-only immutable subject after full lint and valid serialized bookkeeping; execute complete non-fast verification, whole Green Keeper, total completeness, fresh internal Red Team and full clean-clone mirror, then canonical finalization/seal/publication. All original v6 evidence and terminal refusal remain archived. Independent M2 remains pending; Gate7 is unauthorized.
+Canonical counters: ATTACKS=71/71; GUARDRAILS=147/147; LESSONS=141/144; REQUIREMENTS=194/194; TESTS=1962/1962.
+
+Actual sealing/publication is derived from the canonical tag and postcommit/transport records, never predicted by this report. Independent M2 validation and explicit Gate7 authority remain pending.
