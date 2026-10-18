@@ -1,0 +1,73 @@
+{
+  "kind": "ACTUAL_JOB_COMPLETION_OBSERVATION_NOT_ACCEPTANCE",
+  "observedAt": "2026-10-18T03:11:58Z",
+  "nativeExitCode": 0,
+  "nativeResult": "PASS",
+  "directoryCleanup": {
+    "removed": true,
+    "cleanupRetries": 1,
+    "cleanupAttempts": 2,
+    "cleanupElapsedSeconds": 0.153358,
+    "firstSharingLockAfterSeconds": 0.038667,
+    "cleanupFailure": null
+  },
+  "jobObservations": [
+    {
+      "observedAt": "2026-10-18T03:11:37Z",
+      "assignedBefore": 0,
+      "listedBefore": 0,
+      "members": [],
+      "originalCloseResult": {
+        "jobOwned": true,
+        "remainingBeforeCleanup": 0,
+        "remainingAfterCleanup": 0
+      }
+    },
+    {
+      "observedAt": "2026-10-18T03:11:50Z",
+      "assignedBefore": 1,
+      "listedBefore": 1,
+      "members": [
+        {
+          "pid": 50904,
+          "ownedMembershipObserved": true,
+          "waitBefore": 258,
+          "waitImmediatelyAfterOriginalClose": 258,
+          "waitAfterNativeReport": 0
+        }
+      ],
+      "originalCloseResult": {
+        "jobOwned": true,
+        "remainingBeforeCleanup": 1,
+        "remainingAfterCleanup": 0
+      }
+    },
+    {
+      "observedAt": "2026-10-18T03:11:52Z",
+      "assignedBefore": 0,
+      "listedBefore": 0,
+      "members": [],
+      "originalCloseResult": {
+        "jobOwned": true,
+        "remainingBeforeCleanup": 0,
+        "remainingAfterCleanup": 0
+      }
+    },
+    {
+      "observedAt": "2026-10-18T03:11:58Z",
+      "assignedBefore": 0,
+      "listedBefore": 0,
+      "members": [],
+      "originalCloseResult": {
+        "jobOwned": true,
+        "remainingBeforeCleanup": 0,
+        "remainingAfterCleanup": 0
+      }
+    }
+  ],
+  "zeroAccountingWithUnsignaledOwnedMemberObserved": true,
+  "externalProcessesStopped": 0,
+  "gateVerdictIssued": false,
+  "producerArchive": "docs/checkpoints/GATE-6-CP-0001/attempts/NATIVE-JOB-COMPLETION-0001-PRODUCER.json",
+  "producerSha256": "0a1505fad93c729c6dd5eeee679423f40757c1209e6e37eaefa6fe7bc1a8dcb1"
+}

@@ -8,8 +8,8 @@
   "currentCommit": "HEAD",
   "dirty": false,
   "startedAt": "2026-10-17T11:34:14Z",
-  "updatedAt": "2026-10-17T23:04:20Z",
-  "nextAllowedAction": "Completed immutable runtime-v4 passed46/47 stages but Root897 failed the unchanged UTF-8 entry-point guard. Original safe reports are archived, and the three helper bootstraps plus cold positive/adverse and unchanged inherited class pass locally. Freeze repaired source/memory and publish fresh runtime-v5 at remote main; execute every non-fast stage anew, never combine v4 runtime successes with a later root subset. Then complete functional proof, all193 requirements, whole mandatory Green Keeper, completeness, fresh internal Red Team/null control, full clean-clone mirror and canonical seal/publication/archive. Do not replay immutable cleanup/capture helpers or policy-refused removals. Independent M2 remains pending; Gate7 is not authorized.",
+  "updatedAt": "2026-10-18T03:24:08Z",
+  "nextAllowedAction": "Freeze and publish a new Gate6-only immutable runtime subject after local native completion repair, current lesson/preflight derivation, full lint and valid serialized bookkeeping. Execute all47 non-fast stages, whole15 Green Keeper, total completeness, fresh internal Red Team/null control, full18-dimension clean-clone mirror, then actual canonical seal/publication/archive checks. Historical v5 successes and failed Red Team remain archived. Independent M2 remains pending; Gate7 is not authorized.",
   "blockedBy": [],
   "secondToolValidation": {
     "status": "PENDING_MANUAL",
@@ -25,46 +25,50 @@
     "total": 193,
     "mandatory": 192,
     "complete": 0,
-    "partial": 37,
+    "partial": 193,
     "missing": 0,
     "notApplicable": 0,
     "coveragePercent": 0
   },
   "greenKeeper": {
     "status": "FAIL",
-    "cycles": 4,
+    "cycles": 6,
     "remainingFailures": 1,
     "unresolvedReworkItems": 1,
     "log": "REWORK-LOG.jsonl",
     "externalBlockers": [],
     "evidence": [
-      "command:cmd-0136",
-      "command:cmd-0140",
-      "command:cmd-0141",
-      "command:cmd-0142",
-      "command:cmd-0143",
-      "command:cmd-0165",
-      "command:cmd-0166",
-      "checkpoint:attempts/DOCKER-RETRY-0002.json",
-      "command:cmd-0192",
-      "command:cmd-0194",
-      "command:cmd-0196",
-      "command:cmd-0208",
-      "command:cmd-0209",
-      "command:cmd-0213",
-      "command:cmd-0214",
-      "command:cmd-0215"
-    ]
+      "checkpoint:REWORK-LOG.jsonl",
+      "checkpoint:attempts/RUNTIME-V5-ASSURANCE-M2-INTERNAL-RED-TEAM.json"
+    ],
+    "requiredGates": [
+      "tests",
+      "staticAnalysis",
+      "lessons",
+      "integrity",
+      "checkpointValidation",
+      "apiTests",
+      "gatewayTests",
+      "agentRuntimeTests",
+      "sandboxTests",
+      "evaluatorTests",
+      "webTests",
+      "lint",
+      "clientTests",
+      "experienceTests",
+      "infraDefinition"
+    ],
+    "scopeFingerprint": "e0433204b7ea4666a38b7272f2bd57df65c7fd8811195022b873b5dca9f0ff9c"
   },
   "deliveryCompleteness": {
     "status": "NOT_EXECUTED",
     "report": "COMPLETENESS-REPORT.json",
     "coveragePercent": 0,
     "evidenceCoveragePercent": 0,
-    "auditor": null,
+    "auditor": "same-session Delivery Completeness Validator; audit only; no independent M2 verdict",
     "evidence": []
   },
-  "reworkCycles": 4,
+  "reworkCycles": 6,
   "independentReview": {
     "status": "PENDING",
     "tool": null,
@@ -111,20 +115,11 @@
     "guardrailsTotal": 145,
     "guardrailsResolved": 145,
     "guardrailsTested": 145,
-    "guardrailsEffective": 145,
-    "guardrailFailures": 0,
+    "guardrailsEffective": 144,
+    "guardrailFailures": 1,
     "evidence": [
-      "command:cmd-0054",
-      "command:cmd-0050",
-      "command:cmd-0141",
-      "command:cmd-0145",
-      "command:cmd-0146",
-      "command:cmd-0165",
-      "command:cmd-0166",
-      "command:cmd-0178",
-      "command:cmd-0196",
-      "command:cmd-0213",
-      "command:cmd-0214"
+      "checkpoint:FINDINGS.json",
+      "command:cmd-0056"
     ]
   },
   "integrity": {

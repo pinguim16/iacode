@@ -2,26 +2,26 @@
   "schemaVersion": "3.4.0",
   "unit": {
     "executed": true,
-    "passed": 173,
+    "passed": 898,
     "failed": 0,
-    "command": "python docs/checkpoints/GATE-6-CP-0001/audit-harness/run_pre_live_sequence.py",
-    "evidence": "file:docs/checkpoints/GATE-6-CP-0001/suite-attempts/API-UNIT-0006.json",
-    "runId": "GATE-6-CP-0001-local-api-unit-0006"
+    "command": "python -m unittest discover -s tests",
+    "evidence": "command:cmd-0240",
+    "runId": "green-keeper-cycle-5-root-suite"
   },
   "integration": {
     "executed": true,
-    "passed": 36,
+    "passed": 1055,
     "failed": 0,
-    "command": "python docs/checkpoints/GATE-6-CP-0001/audit-harness/run_owned_experience_integration.py",
-    "evidence": "file:docs/checkpoints/GATE-6-CP-0001/suite-attempts/INTEGRATION-0004.json",
-    "runId": "GATE-6-CP-0001-local-integration-0004"
+    "command": "python docs/checkpoints/GATE-6-CP-0001/audit-harness/run_full_verification.py --commit 950421fc5554a7e654ffd6096898b07a679d9923 --tag iacode-subjects/GATE-6-CP-0001-runtime-v5 --node C:/Users/cesar/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node.exe",
+    "evidence": "command:cmd-0232",
+    "runId": "published-950421fc5554-counted-runtime-suites"
   },
   "e2e": {
     "executed": true,
-    "passed": 1,
+    "passed": 47,
     "failed": 0,
-    "command": "python docs/checkpoints/GATE-6-CP-0001/audit-harness/run_pre_live_sequence.py",
-    "evidence": "file:docs/checkpoints/GATE-6-CP-0001/attempts/EXPERIENCE-LIVE-0003.json",
-    "runId": "GATE-6-CP-0001-local-experience-live-0003-receipt"
+    "command": "python docs/checkpoints/GATE-6-CP-0001/audit-harness/run_full_verification.py --commit 950421fc5554a7e654ffd6096898b07a679d9923 --tag iacode-subjects/GATE-6-CP-0001-runtime-v5 --node C:/Users/cesar/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node.exe",
+    "evidence": "command:cmd-0232",
+    "runId": "published-950421fc5554-counted-runtime-suites"
   }
 }

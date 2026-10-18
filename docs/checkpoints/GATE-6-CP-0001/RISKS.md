@@ -1,6 +1,17 @@
 # Risks
 
-- Completed v4 fails one inherited entry-point UTF-8 guard despite46 other passing stages.
+- Native cleanup rework is locally accepted, not whole-Gate approval. Actual cmd-0274 disproves
+  zero accounting as completion of an observed owned member. Exact-member synchronization and
+  typed failure retention pass causal controls, all77 Gate5/Gate6 root cases and two real native
+  installation/trust/removal proofs. Both ten-second bounds remain unchanged. Member snapshots
+  cannot identify every future spawn or external holder; actual directory removal remains required.
+  The historical exact log holder remains unknown. Current fresh full and ordered assurance are due.
+- Cmd-0282 preserves all19 historical v5 full/functional/completeness success and failed Red Team
+  artifacts byte-for-byte. No subsequent report may rewrite those observations. Cmd-0291 removes
+  only the second failed generated native fixture after fresh owner/access checks; original failure
+  evidence is unchanged. Generated fixture contents are discarded, not a recoverable user-data archive.
+
+- Historical completed v4 fails one inherited entry-point UTF-8 guard despite46 other passing stages.
   Three minimal bootstrap repairs pass causal positive/adverse and unchanged inherited controls,
   but a fresh complete immutable subject must pass; no mixture of old and new partial runs is
   acceptance. LSN-0035 recurrence3 and LSN-0083 recurrence4 remain CRITICAL, with original bytes.

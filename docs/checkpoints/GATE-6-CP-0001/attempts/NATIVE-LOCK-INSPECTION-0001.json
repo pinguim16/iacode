@@ -1,0 +1,41 @@
+{
+  "kind": "READ_ONLY_HANDLE_INSPECTION_NOT_GATE_ACCEPTANCE",
+  "observedAt": "2026-10-18T02:37:27Z",
+  "originalFailureCommand": "cmd-0258",
+  "controlValid": true,
+  "controlOwnedDirectoryRemoved": true,
+  "controlCleanupRetries": 0,
+  "heldControl": [
+    {
+      "pid": 49952,
+      "creationFileTime": 134367646470292086,
+      "application": "Python",
+      "service": "",
+      "applicationType": 1000
+    }
+  ],
+  "heldDeleteAccess": {
+    "available": false,
+    "winerror": 32,
+    "deleted": false
+  },
+  "releasedControl": [],
+  "releasedDeleteAccess": {
+    "available": true,
+    "winerror": null,
+    "deleted": false
+  },
+  "retainedFailureFile": {
+    "path": "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-native-editor-s0gh5exk\\package\\profile\\logs\\20261017T231814\\agenthost.log",
+    "exists": true,
+    "owners": [],
+    "deleteAccess": {
+      "available": true,
+      "winerror": null,
+      "deleted": false
+    }
+  },
+  "applicationsStopped": 0,
+  "originalDirectoryDeleted": false,
+  "result": "PASS"
+}

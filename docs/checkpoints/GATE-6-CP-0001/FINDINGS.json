@@ -3,6 +3,40 @@
   "checkpoint": "GATE-6-CP-0001",
   "findings": [
     {
+      "findingId": "G6-INT-019",
+      "severity": "CRITICAL",
+      "classification": "GUARDRAIL_FAILURE",
+      "lessonId": "LSN-0125",
+      "guardrailId": "GRD-0127",
+      "title": "Owned native agenthost log prevents actual profile cleanup despite zero reported job members",
+      "status": "CLOSED",
+      "observed": "Fresh internal Red Team cmd-0258 reports RED_TEAM_FAIL defended20/71 with INVALID baseline. Inherited battery20, client35, real desktop and Experience Store72 pass. Both native installation/trust runs and exact job cleanup report PASS/zero remaining; final removal raises WinError32 at the actual owned package/profile/logs/20261017T231814/agenthost.log. The temporary directory remains. Original reports are retained.",
+      "rootCause": "Actual cmd-0274 pins a current owned job member and observes WAIT_TIMEOUT258 after the old close routine reports zero active members. Accounting was incorrectly treated as completed asynchronous termination. A separate pre-fix control cmd-0265 proves lost failure observations. Cmd-0269 proves the lock persisted through the entire existing removal budget, not budget consumed by traversal. The exact historical log owner is not retroactively known.",
+      "requiredCorrection": "Preserve original reports, identify actual timing/owner with read-only scoped diagnostics, repair the proven cause without increasing deadlines, suppressing cleanup or touching unrelated applications. Prove causal positive/adverse controls, actual native removal and the complete fresh ordered assurance cycle. No closure mirror runs while this Red Team remains red.",
+      "evidence": [
+        "command:cmd-0258",
+        "command:cmd-0265",
+        "command:cmd-0269",
+        "command:cmd-0274",
+        "checkpoint:attempts/RUNTIME-V5-ASSURANCE-RED-TEAM-NATIVE.json",
+        "checkpoint:attempts/RUNTIME-V5-ASSURANCE-RED-TEAM-EXECUTIONS.json",
+        "checkpoint:attempts/RUNTIME-V5-ASSURANCE-M2-INTERNAL-RED-TEAM.json"
+      ],
+      "limits": "Combined51 non-inherited attacks are conservatively ESCAPED because the shared clean predicate is invalid; this is not proof of51 actual security escapes. Whole M2 independent validation remains pending. Four historical policy-refused directories are not retried.",
+      "resolution": "Pin a complete bounded job-member snapshot, verify exact handle membership, require zero accounting plus signaled observed members, and close acquired handles on all paths. Keep both ten-second bounds and mandatory physical directory removal. Preserve/rethrow typed cleanup failure observations. Formerly failing controls pass cmd-0276; all77 Gate5/Gate6 root cases pass canonical discovery cmd-0279, including snapshot/identity refusal. Two actual fresh uninstrumented native proofs pass cmd-0281. LSN-0125 recurrence2 remains CRITICAL, locally GUARDED. This closes causal rework only: a new immutable full subject and every ordered assurance step remain due.",
+      "resolutionEvidence": [
+        "command:cmd-0267",
+        "command:cmd-0276",
+        "command:cmd-0279",
+        "command:cmd-0281",
+        "command:cmd-0282",
+        "checkpoint:attempts/NATIVE-JOB-COMPLETION-0001.json",
+        "checkpoint:attempts/NATIVE-COMPLETION-PROOF-0001-RECEIPT.json",
+        "checkpoint:attempts/NATIVE-COMPLETION-PROOF-0002-RECEIPT.json",
+        "checkpoint:attempts/RUNTIME-V5-ASSURANCE-ARCHIVE.json"
+      ]
+    },
+    {
       "findingId": "G6-INT-018",
       "severity": "CRITICAL",
       "classification": "GUARDRAIL_FAILURE",
@@ -379,6 +413,22 @@
       "resolution": "Only the new fixture changes to iterate every canonical failing stage, in addition to every missing stage and a management-only report. Actual cmd-0196 passes all28 root controls. LSN-0143/GRD-0145 records the complete capability boundary; this fixture is not a production implementation or functional PASS.",
       "resolutionEvidence": [
         "command:cmd-0196"
+      ]
+    },
+    {
+      "findingId": "G6-INT-020",
+      "severity": "LOW",
+      "status": "CLOSED",
+      "title": "Ad hoc qualified unittest invocation omits canonical discovery import context",
+      "observed": "Cmd-0277 runs77 cases but two inherited adapter imports fail because tests is not the discovery root. Cmd-0278 is a recorder precondition refusal for a glob ending in .py, not a test result.",
+      "rootCause": "Incorrect ad hoc invocation; no production or inherited test defect is established.",
+      "resolution": "Use the existing canonical discover -s tests context and supported non-script glob. Cmd-0279 executes the same complete77 cases PASS; assertions and source imports are unchanged.",
+      "evidence": [
+        "command:cmd-0277",
+        "command:cmd-0278"
+      ],
+      "resolutionEvidence": [
+        "command:cmd-0279"
       ]
     }
   ]

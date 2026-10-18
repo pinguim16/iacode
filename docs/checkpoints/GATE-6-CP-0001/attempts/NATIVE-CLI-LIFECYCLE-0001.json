@@ -1,0 +1,53 @@
+{
+  "kind": "PLAIN_NATIVE_CLI_LIFECYCLE_DIAGNOSIS_NOT_ACCEPTANCE",
+  "observedAt": "2026-10-18T03:10:05Z",
+  "nativeExitCode": 0,
+  "nativeResult": "PASS",
+  "directoryCleanup": {
+    "removed": true,
+    "cleanupRetries": 0,
+    "cleanupAttempts": 1,
+    "cleanupElapsedSeconds": 0.061148,
+    "firstSharingLockAfterSeconds": null,
+    "cleanupFailure": null
+  },
+  "observations": [
+    {
+      "observedAt": "2026-10-18T03:09:32Z",
+      "log": "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-native-editor-xgsrg1nn\\package\\profile\\logs\\20261018T000928\\agenthost.log",
+      "owners": [
+        {
+          "pid": 44648,
+          "creationFileTime": 134367665718914719,
+          "application": "PowerShell 7",
+          "service": "",
+          "applicationType": 5
+        }
+      ],
+      "processes": []
+    },
+    {
+      "observedAt": "2026-10-18T03:10:00Z",
+      "log": "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-native-editor-xgsrg1nn\\untrusted\\profile\\logs\\20261018T000957\\agenthost.log",
+      "owners": [
+        {
+          "pid": 35816,
+          "creationFileTime": 134367665999311922,
+          "application": "PowerShell 7",
+          "service": "",
+          "applicationType": 5
+        }
+      ],
+      "processes": []
+    }
+  ],
+  "queryOwnedCleanup": {
+    "jobOwned": true,
+    "remainingBeforeCleanup": 0,
+    "remainingAfterCleanup": 0
+  },
+  "externalProcessesStopped": 0,
+  "gateVerdictIssued": false,
+  "producerArchive": "docs/checkpoints/GATE-6-CP-0001/attempts/NATIVE-CLI-LIFECYCLE-0001-PRODUCER.json",
+  "producerSha256": "674a089120d92e273410b290e0dbfc84343857001b914f26cc252ab4b82bc041"
+}

@@ -1,3 +1,3 @@
 # Status
 
-IN_PROGRESS — immutable runtime-v4 completes all47 stages:46 PASS, root897 FAIL at one unchanged UTF-8 entry-point guard. All runtime stages pass, the operational project is unchanged and owned resources/clone are removed. Cmd-0209 reproduces the three offending diagnostic entry points. Minimal bootstrap fixes pass actual cold positive/adverse controls cmd-0213 and the unchanged inherited class cmd-0214. Cmd-0215 preserves all six failed-v4 projections byte-for-byte and every original safe producer report. Fresh immutable runtime-v5 must execute all47 stages anew before the ordered internal controls and canonical seal; local repairs do not complete acceptance. Independent M2 remains pending; Gate7 is not authorized.
+IN_PROGRESS — local native repair accepted; complete fresh immutable verification and ordered assurance/seal pending.

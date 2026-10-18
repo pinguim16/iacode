@@ -287,6 +287,7 @@ def main() -> int:
         "result": "FAIL",
         "runs": [],
     }
+    owned = None
     try:
         with owned_directory("iacode-native-editor-") as owned:
             directory = owned["path"]
@@ -307,12 +308,29 @@ def main() -> int:
                 result["runs"].append({"installation": native.installation, **run})
                 if run["result"] != "PASS":
                     break
-        result["ownedTemporaryDirectoryRemoved"] = owned["removed"]
-        result["directoryCleanupRetries"] = owned["cleanupRetries"]
-        if len(result["runs"]) == 2 and all(run["result"] == "PASS" for run in result["runs"]):
+        if (
+            len(result["runs"]) == 2
+            and owned["removed"]
+            and all(run["result"] == "PASS" for run in result["runs"])
+        ):
             result["result"] = "PASS"
     except Exception as error:
         result["failure"] = str(error)[:1200]
+    finally:
+        if owned is not None:
+            result["ownedTemporaryDirectoryRemoved"] = owned["removed"]
+            result["directoryCleanupRetries"] = owned["cleanupRetries"]
+            result["directoryCleanup"] = {
+                key: owned[key]
+                for key in (
+                    "removed",
+                    "cleanupRetries",
+                    "cleanupAttempts",
+                    "cleanupElapsedSeconds",
+                    "firstSharingLockAfterSeconds",
+                    "cleanupFailure",
+                )
+            }
     args.report.write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
     print(json.dumps(result, indent=2))
     return 0 if result["result"] == "PASS" else 1

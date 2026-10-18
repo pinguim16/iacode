@@ -728,8 +728,8 @@ required check/evidence. It is not a replacement denominator and cannot omit a s
 
 ### LESSON-REQ-0124 — LSN-0125
 
-- Required check: Own native process descendants before launch and verify their cleanup independently of parent exit. Validate exact temporary targets, bound sharing-lock retries and require observed removal; never kill global user processes or suppress cleanup failures.
-- Required evidence: Retained cleanup failures, actual surviving-child control, target and error negatives, and actual native profile removal with recorded retries and zero owned job members.
+- Required check: Own native descendants before launch; pin a complete bounded member snapshot and validate each handle against the exact job. Require zero accounting plus signaled observed handles within the existing drain deadline. Preserve typed failure facts, validate exact temporary targets, bound sharing retries and require observed removal. Never kill global user processes or suppress cleanup failures.
+- Required evidence: Retained actual failures, pinned owned-handle mismatch, formerly failing positive/deadline controls, snapshot/identity refusal, actual surviving-child control, target/error negatives and fresh actual native profile removal with observed synchronized members and retained retries.
 
 ### LESSON-REQ-0125 — LSN-0126
 

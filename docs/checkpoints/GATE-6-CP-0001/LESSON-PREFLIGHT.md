@@ -4,7 +4,7 @@
 - Scope: `Experience Store with observable source-bound engineering facts, privacy, provenance, storage and reuse rights, retention, authenticated API and recovery`
 - Technologies: `Python`, `PostgreSQL`
 - Modules: `services/experience`, `apps/api`, `packages/contracts`, `packages/persistence`
-- Generated: `2026-10-17T22:56:35Z`
+- Generated: `2026-10-18T03:20:38Z`
 - Lessons considered: 143
 - Lessons applicable: 142
 
@@ -137,7 +137,7 @@ delivery when one is absent.
 | `LSN-0122` Engine-allocated host ports must be rediscovered after container restart | `GUARDED` | MEDIUM | `LESSON-REQ-0121` | After restarting a service with engine-allocated ports, rediscover the actual published endpoint and explicitly reconfigure owned test actors before mutation. Verify real host authentication; do not infer reachability from health or silently substitute a workspace-provided production endpoint. |
 | `LSN-0123` Consent binds workspace identity, not an uncanonicalized path spelling | `GUARDED` | HIGH | `LESSON-REQ-0122` | When authorizing selected workspace content, bind the selection identity independently of filesystem spelling and revalidate canonical root plus exact content. Case/canonicalization differences must not break valid consent or weaken stale-root/trust refusal. |
 | `LSN-0124` Durable editor recovery must not use an in-memory test host | `GUARDED` | HIGH | `LESSON-REQ-0123` | Prove durable native recovery in the actual persistent storage context. Inspect tool test-mode semantics, retain recovery assertions and never seed missing state or replace production persistence with a fake. |
-| `LSN-0125` Native parent exit is not proof of process and profile cleanup | `GUARDED` | HIGH | `LESSON-REQ-0124` | Own native process descendants before launch and verify their cleanup independently of parent exit. Validate exact temporary targets, bound sharing-lock retries and require observed removal; never kill global user processes or suppress cleanup failures. |
+| `LSN-0125` Native parent exit is not proof of process and profile cleanup | `GUARDED` | CRITICAL | `LESSON-REQ-0124` | Own native descendants before launch; pin a complete bounded member snapshot and validate each handle against the exact job. Require zero accounting plus signaled observed handles within the existing drain deadline. Preserve typed failure facts, validate exact temporary targets, bound sharing retries and require observed removal. Never kill global user processes or suppress cleanup failures. |
 | `LSN-0126` Known authentication material is not domain or presentation data | `GUARDED` | CRITICAL | `LESSON-REQ-0125` | Keep known authentication material separate from domain input and presentation. Reject declared raw and encoded forms before effects, retain unknown-secret scanning unchanged, and preserve uncertainty for response refusals after acceptance. |
 | `LSN-0127` Fresh runtime health does not initialize an operator-managed model catalog | `GUARDED` | HIGH | `LESSON-REQ-0126` | For a fresh isolated runtime, establish explicit operator-managed catalog prerequisites and verify exact authorized model availability separately from health. Never silently substitute a model or misclassify empty discovery as a credential failure. |
 | `LSN-0128` Adversarial premises must use the actual public contract | `GUARDED` | HIGH | `LESSON-REQ-0127` | Build adversarial premises from actual public contracts and observed execution identities. Do not invent fields, widen public metadata for test convenience or drop the real boundary assertion when a harness premise fails. |
@@ -1022,9 +1022,9 @@ delivery when one is absent.
 
 ### LSN-0125 — Native parent exit is not proof of process and profile cleanup
 
-- Reason: applies to every Gate; category environment; severity HIGH; already guarded, so the control must keep holding
-- Required check: Own native process descendants before launch and verify their cleanup independently of parent exit. Validate exact temporary targets, bound sharing-lock retries and require observed removal; never kill global user processes or suppress cleanup failures.
-- Required evidence: Retained cleanup failures, actual surviving-child control, target and error negatives, and actual native profile removal with recorded retries and zero owned job members.
+- Reason: applies to every Gate; category environment; severity CRITICAL; already guarded, so the control must keep holding
+- Required check: Own native descendants before launch; pin a complete bounded member snapshot and validate each handle against the exact job. Require zero accounting plus signaled observed handles within the existing drain deadline. Preserve typed failure facts, validate exact temporary targets, bound sharing retries and require observed removal. Never kill global user processes or suppress cleanup failures.
+- Required evidence: Retained actual failures, pinned owned-handle mismatch, formerly failing positive/deadline controls, snapshot/identity refusal, actual surviving-child control, target/error negatives and fresh actual native profile removal with observed synchronized members and retained retries.
 - Derived requirement: `LESSON-REQ-0124`
 
 ### LSN-0126 — Known authentication material is not domain or presentation data

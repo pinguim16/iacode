@@ -11,7 +11,9 @@ from ctypes import wintypes
 from pathlib import Path
 
 
-def remove_owned_directory(directory: Path, temporary_root: Path) -> int:
+def remove_owned_directory(
+    directory: Path, temporary_root: Path, *, observation: dict | None = None
+) -> int:
     """Bounded sharing-lock retry, never a skipped cleanup or an unvalidated broad target."""
     expected = temporary_root.resolve() / directory.name
     if (
@@ -22,16 +24,46 @@ def remove_owned_directory(directory: Path, temporary_root: Path) -> int:
         or expected.parent != temporary_root.resolve()
     ):
         raise ValueError("refusing an unowned or redirected temporary directory")
-    deadline = time.monotonic() + 10
+    started = time.monotonic()
+    deadline = started + 10
     retries = 0
-    while directory.exists():
-        try:
-            shutil.rmtree(directory)
-        except PermissionError as error:
-            if getattr(error, "winerror", None) not in (5, 32) or time.monotonic() >= deadline:
-                raise
-            retries += 1
-            time.sleep(0.1)
+    attempts = 0
+    first_lock = None
+    failure = None
+    try:
+        while directory.exists():
+            attempts += 1
+            try:
+                shutil.rmtree(directory)
+            except PermissionError as error:
+                now = time.monotonic()
+                retryable = getattr(error, "winerror", None) in (5, 32)
+                if retryable and first_lock is None:
+                    first_lock = round(now - started, 6)
+                if not retryable or now >= deadline:
+                    raise
+                retries += 1
+                time.sleep(0.1)
+    except Exception as error:
+        failure = {
+            "type": type(error).__name__,
+            "errno": getattr(error, "errno", None),
+            "winerror": getattr(error, "winerror", None),
+            "filename": str(error.filename) if getattr(error, "filename", None) else None,
+        }
+        raise
+    finally:
+        if observation is not None:
+            observation.update(
+                {
+                    "cleanupRetries": retries,
+                    "cleanupAttempts": attempts,
+                    "cleanupElapsedSeconds": round(time.monotonic() - started, 6),
+                    "firstSharingLockAfterSeconds": first_lock,
+                    "cleanupFailure": failure,
+                    "removed": not directory.exists(),
+                }
+            )
     return retries
 
 
@@ -41,12 +73,30 @@ def owned_directory(prefix: str):
         raise ValueError("owned temporary prefix required")
     temporary_root = Path(tempfile.gettempdir()).resolve()
     directory = Path(tempfile.mkdtemp(prefix=prefix, dir=temporary_root))
-    facts = {"path": directory, "cleanupRetries": None, "removed": False}
+    facts = {
+        "path": directory,
+        "cleanupRetries": 0,
+        "cleanupAttempts": 0,
+        "cleanupElapsedSeconds": None,
+        "firstSharingLockAfterSeconds": None,
+        "cleanupFailure": None,
+        "removed": False,
+    }
     try:
         yield facts
     finally:
-        facts["cleanupRetries"] = remove_owned_directory(directory, temporary_root)
-        facts["removed"] = not directory.exists()
+        try:
+            facts["cleanupRetries"] = remove_owned_directory(
+                directory, temporary_root, observation=facts
+            )
+        except Exception as error:
+            if facts["cleanupFailure"] is None:
+                facts["cleanupFailure"] = {
+                    "type": type(error).__name__,
+                    "errno": getattr(error, "errno", None),
+                    "winerror": getattr(error, "winerror", None),
+                }
+            raise
 
 
 class BasicLimits(ctypes.Structure):
@@ -94,6 +144,14 @@ class Accounting(ctypes.Structure):
     ] + [(name, wintypes.DWORD) for name in ("faults", "total", "active", "terminated")]
 
 
+class ProcessIdList(ctypes.Structure):
+    _fields_ = [
+        ("assigned", wintypes.DWORD),
+        ("listed", wintypes.DWORD),
+        ("identifiers", ctypes.c_size_t * 4096),
+    ]
+
+
 class ThreadEntry(ctypes.Structure):
     _fields_ = [
         ("size", wintypes.DWORD),
@@ -121,6 +179,12 @@ class WindowsJob:
             ),
             "AssignProcessToJobObject": ([wintypes.HANDLE, wintypes.HANDLE], wintypes.BOOL),
             "TerminateJobObject": ([wintypes.HANDLE, wintypes.UINT], wintypes.BOOL),
+            "OpenProcess": ([wintypes.DWORD, wintypes.BOOL, wintypes.DWORD], wintypes.HANDLE),
+            "IsProcessInJob": (
+                [wintypes.HANDLE, wintypes.HANDLE, ctypes.POINTER(wintypes.BOOL)],
+                wintypes.BOOL,
+            ),
+            "WaitForSingleObject": ([wintypes.HANDLE, wintypes.DWORD], wintypes.DWORD),
             "CreateToolhelp32Snapshot": ([wintypes.DWORD, wintypes.DWORD], wintypes.HANDLE),
             "Thread32First": ([wintypes.HANDLE, ctypes.POINTER(ThreadEntry)], wintypes.BOOL),
             "Thread32Next": ([wintypes.HANDLE, ctypes.POINTER(ThreadEntry)], wintypes.BOOL),
@@ -180,16 +244,65 @@ class WindowsJob:
             raise ctypes.WinError(ctypes.get_last_error())
         return result.active
 
-    def close(self) -> dict:
+    def owned_member_handles(self) -> list[tuple[int, int]]:
+        """Pin read/synchronization handles only after exact membership validation."""
+        members = ProcessIdList()
+        if not self.api.QueryInformationJobObject(
+            self.handle, 3, ctypes.byref(members), ctypes.sizeof(members), None
+        ):
+            raise ctypes.WinError(ctypes.get_last_error())
+        if members.assigned != members.listed or members.listed > 4096:
+            raise RuntimeError("owned native job member snapshot is incomplete")
+        handles = []
         try:
+            for identifier in members.identifiers[: members.listed]:
+                handle = self.api.OpenProcess(0x101000, False, identifier)
+                if not handle:
+                    raise ctypes.WinError(ctypes.get_last_error())
+                handles.append((identifier, handle))
+                contained = wintypes.BOOL()
+                if not self.api.IsProcessInJob(handle, self.handle, ctypes.byref(contained)):
+                    raise ctypes.WinError(ctypes.get_last_error())
+                if not contained.value:
+                    raise RuntimeError("native process identity is no longer an owned job member")
+        except Exception:
+            for _, handle in handles:
+                self.api.CloseHandle(handle)
+            raise
+        return handles
+
+    def close(self) -> dict:
+        handles = []
+        try:
+            deadline = time.monotonic() + 10
             before = self.active()
+            handles = self.owned_member_handles()
             if not self.api.TerminateJobObject(self.handle, 1):
                 raise ctypes.WinError(ctypes.get_last_error())
-            deadline = time.monotonic() + 10
-            while self.active():
+            pending = dict(handles)
+            while True:
+                active = self.active()
+                for identifier, handle in list(pending.items()):
+                    status = self.api.WaitForSingleObject(handle, 0)
+                    if status == 0:
+                        del pending[identifier]
+                    elif status == 0xFFFFFFFF:
+                        raise ctypes.WinError(ctypes.get_last_error())
+                    elif status != 258:
+                        raise RuntimeError("unexpected owned process synchronization state")
+                if not active and not pending:
+                    break
                 if time.monotonic() >= deadline:
                     raise RuntimeError("owned native process job did not drain")
                 time.sleep(0.05)
-            return {"jobOwned": True, "remainingBeforeCleanup": before, "remainingAfterCleanup": 0}
+            return {
+                "jobOwned": True,
+                "remainingBeforeCleanup": before,
+                "remainingAfterCleanup": 0,
+                "observedProcessCount": len(handles),
+                "signaledProcessCount": len(handles),
+            }
         finally:
+            for _, handle in handles:
+                self.api.CloseHandle(handle)
             self.api.CloseHandle(self.handle)

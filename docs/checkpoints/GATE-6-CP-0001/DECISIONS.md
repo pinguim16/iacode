@@ -1,5 +1,21 @@
 # Decisions
 
+- Preserve historical v5 all47-stage/functional/Green Keeper/completeness success and its later
+  failed Red Team byte-for-byte (cmd-0282,19 artifacts); reset all193 current requirement verdicts
+  to PARTIAL until fresh whole acceptance. Never assemble partial runs into a current PASS.
+- Actual pinned owned handle cmd-0274 disproves zero accounting as completed termination. Repair
+  exact-member synchronization under the existing ten-second drain deadline, retain original
+  removal errors/observations and require actual profile deletion. Causal controls cmd-0276,
+  all77 canonical-discovery root cases cmd-0279 and two uninstrumented native proofs cmd-0281
+  locally restore LSN-0125/GRD-0127; recurrence2 remains CRITICAL. ADR-0052 records the decision.
+- Cmd-0277 is a wrong ad hoc unittest import context and cmd-0278/0280 are recorder precondition
+  refusals, not successful tests. The unchanged canonical discovery invocation passes cmd-0279.
+  Normal Ruff formatting of only the two native sources precedes complete unchanged lint PASS
+  cmd-0283. No rule, assertion, denominator, timeout or external application is weakened/stopped.
+- Cmd-0291 removes only the exact second failed generated fixture after fresh read-only lock
+  checks. Its failed producer and prior receipts remain unchanged; never replay fixed-name
+  archival, diagnostic or cleanup helpers. The four policy-refused targets remain untouched.
+
 - Cmd-0226/0227 are command-quoting precondition refusals, with null exit code and no transport
   comparison or secret scan executed. Preserve both records and repeat the intended checks
   through the correctly quoted PowerShell invocation; never interpret refusal as a passing check.

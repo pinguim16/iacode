@@ -1,0 +1,22 @@
+{
+  "kind": "ACTUAL_WIN32_DEADLINE_CONTROL_NOT_NATIVE_ACCEPTANCE",
+  "observedAt": "2026-10-18T02:47:01Z",
+  "expectedFailureRetained": true,
+  "originalErrorType": "PermissionError",
+  "observed": {
+    "cleanupRetries": 100,
+    "cleanupAttempts": 101,
+    "cleanupElapsedSeconds": 10.063227,
+    "firstSharingLockAfterSeconds": 0.000205,
+    "cleanupFailure": {
+      "type": "PermissionError",
+      "errno": 13,
+      "winerror": 32,
+      "filename": "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-gate6-native-deadline-il46nf9h\\held.log"
+    },
+    "removed": false
+  },
+  "ownedFixtureRemovedAfterOwnHandleClosed": true,
+  "applicationsStopped": 0,
+  "result": "PASS"
+}

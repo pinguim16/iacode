@@ -157,6 +157,157 @@ class Gate6BoundaryTests(unittest.TestCase):
 
 
 class Gate6BookkeepingCausalTests(unittest.TestCase):
+    def test_owned_job_snapshot_refuses_truncation_and_process_identity_reuse(self):
+        import ctypes
+        with mock.patch.object(sys, "path", [str(ROOT / "scripts/iacode"), *sys.path]):
+            import native_process
+        actor = native_process.WindowsJob.__new__(native_process.WindowsJob)
+        actor.handle, actor.api = 41, mock.Mock()
+
+        def snapshot(_job, _kind, output, _size, _returned):
+            row = ctypes.cast(output, ctypes.POINTER(native_process.ProcessIdList)).contents
+            row.assigned, row.listed, row.identifiers[0] = 2, 1, 7
+            return True
+
+        actor.api.QueryInformationJobObject.side_effect = snapshot
+        with self.assertRaisesRegex(RuntimeError, "incomplete"):
+            actor.owned_member_handles()
+        actor.api.OpenProcess.assert_not_called()
+
+        def complete(*arguments):
+            snapshot(*arguments)
+            ctypes.cast(arguments[2], ctypes.POINTER(native_process.ProcessIdList)).contents.assigned = 1
+            return True
+
+        actor.api.QueryInformationJobObject.side_effect = complete
+        actor.api.OpenProcess.return_value = 101
+        actor.api.IsProcessInJob.return_value = True  # Output BOOL remains false: foreign/reused PID.
+        with self.assertRaisesRegex(RuntimeError, "no longer an owned"):
+            actor.owned_member_handles()
+        actor.api.CloseHandle.assert_called_once_with(101)
+        actor.api.TerminateJobObject.assert_not_called()
+
+    def test_zero_job_accounting_does_not_replace_observed_member_completion(self):
+        # UNIT_FIXTURE_NOT_NATIVE_PROOF: accounting is zero while an owned handle is unsignaled.
+        with mock.patch.object(sys, "path", [str(ROOT / "scripts/iacode"), *sys.path]):
+            import native_process
+        actor = native_process.WindowsJob.__new__(native_process.WindowsJob)
+        actor.handle, actor.api = 41, mock.Mock()
+        actor.active = mock.Mock(return_value=0)
+        actor.owned_member_handles = mock.Mock(return_value=[(7, 101)])
+        actor.api.WaitForSingleObject.side_effect = [258, 0]
+        with mock.patch.object(native_process.time, "sleep") as wait:
+            result = actor.close()
+        self.assertEqual(result["observedProcessCount"], 1)
+        self.assertEqual(result["signaledProcessCount"], 1)
+        self.assertEqual(actor.api.WaitForSingleObject.call_count, 2)
+        wait.assert_called_once_with(0.05)
+        actor.api.CloseHandle.assert_has_calls([mock.call(101), mock.call(41)])
+
+    def test_unsignaled_owned_member_cannot_be_reported_as_drained_at_deadline(self):
+        with mock.patch.object(sys, "path", [str(ROOT / "scripts/iacode"), *sys.path]):
+            import native_process
+        actor = native_process.WindowsJob.__new__(native_process.WindowsJob)
+        actor.handle, actor.api = 41, mock.Mock()
+        actor.active = mock.Mock(return_value=0)
+        actor.owned_member_handles = mock.Mock(return_value=[(7, 101)])
+        actor.api.WaitForSingleObject.return_value = 258
+        with (mock.patch.object(native_process.time, "monotonic", side_effect=[0, 11]),
+              self.assertRaisesRegex(RuntimeError, "did not drain")):
+            actor.close()
+        actor.api.CloseHandle.assert_has_calls([mock.call(101), mock.call(41)])
+
+    def test_owned_cleanup_success_records_real_removal_and_retry(self):
+        with mock.patch.object(sys, "path", [str(ROOT / "scripts/iacode"), *sys.path]):
+            import native_process
+
+        failure = PermissionError("deliberate one-lock positive control")
+        failure.winerror = 32
+        actual_remove = native_process.shutil.rmtree
+        attempts = []
+
+        def remove(target):
+            attempts.append(target)
+            if len(attempts) == 1:
+                raise failure
+            actual_remove(target)
+
+        with tempfile.TemporaryDirectory(prefix="iacode-g6-cleanup-success-") as raw:
+            with (mock.patch.object(native_process.tempfile, "gettempdir", return_value=raw),
+                  mock.patch.object(native_process.shutil, "rmtree", side_effect=remove)):
+                with native_process.owned_directory("iacode-g6-owned-success-") as facts:
+                    (facts["path"] / "control.log").write_text("owned control", encoding="utf-8")
+            self.assertFalse(facts["path"].exists())
+            self.assertTrue(facts["removed"])
+            self.assertEqual(facts["cleanupRetries"], 1)
+            self.assertEqual(facts["cleanupAttempts"], 2)
+            self.assertIsNone(facts["cleanupFailure"])
+            self.assertIsNotNone(facts["firstSharingLockAfterSeconds"])
+            self.assertGreaterEqual(facts["cleanupElapsedSeconds"], 0)
+
+    def test_native_cleanup_failure_report_never_promotes_functional_fixture_pass(self):
+        # Unit fixtures exercise reporting only; actual native acceptance is a separate real run.
+        from contextlib import contextmanager
+
+        with mock.patch.object(sys, "path", [str(ROOT / "scripts/iacode"), *sys.path]):
+            import native_editor
+
+        failure = PermissionError("deliberate native report cleanup failure")
+        failure.winerror = 32
+        with tempfile.TemporaryDirectory(prefix="iacode-g6-native-report-") as raw:
+            root = Path(raw)
+            facts = {"path": root / "owned", "removed": False, "cleanupRetries": 3,
+                     "cleanupAttempts": 4, "cleanupElapsedSeconds": 10.01,
+                     "firstSharingLockAfterSeconds": 9.7,
+                     "cleanupFailure": {"type": "PermissionError", "winerror": 32}}
+            facts["path"].mkdir()
+
+            @contextmanager
+            def failed_cleanup(_prefix):
+                yield facts
+                raise failure
+
+            fixture = mock.Mock()
+            fixture.installation = {"result": "PASS", "kind": "UNIT_FIXTURE_NOT_NATIVE_PROOF"}
+            fixture.run.return_value = {"result": "PASS", "kind": "UNIT_FIXTURE_NOT_NATIVE_PROOF"}
+            report = root / "var/native.json"
+            with (mock.patch.object(native_editor, "ROOT", root),
+                  mock.patch.object(native_editor, "owned_directory", failed_cleanup),
+                  mock.patch.object(native_editor, "build", return_value={"protocolDigest": "fixture"}),
+                  mock.patch.object(native_editor, "NativeEditor", return_value=fixture),
+                  mock.patch.object(sys, "argv", ["native_editor.py", "--report", str(report)])):
+                self.assertEqual(native_editor.main(), 1)
+            observed = json.loads(report.read_bytes())
+            self.assertEqual(len(observed["runs"]), 2)
+            self.assertEqual(observed["result"], "FAIL")
+            self.assertFalse(observed["ownedTemporaryDirectoryRemoved"])
+            self.assertEqual(observed["directoryCleanupRetries"], 3)
+            self.assertEqual(observed["directoryCleanup"]["cleanupAttempts"], 4)
+            self.assertEqual(observed["directoryCleanup"]["cleanupFailure"]["winerror"], 32)
+
+    def test_owned_cleanup_failure_retains_observed_facts_and_original_error(self):
+        with mock.patch.object(sys, "path", [str(ROOT / "scripts/iacode"), *sys.path]):
+            import native_process
+
+        failure = PermissionError("deliberate sharing-lock deadline control")
+        failure.winerror = 32
+        ticks = iter([0.0])
+        with tempfile.TemporaryDirectory(prefix="iacode-g6-cleanup-facts-") as raw:
+            with (mock.patch.object(native_process.tempfile, "gettempdir", return_value=raw),
+                  mock.patch.object(native_process.shutil, "rmtree", side_effect=failure),
+                  mock.patch.object(native_process.time, "monotonic", side_effect=lambda: next(ticks, 11.0))):
+                with self.assertRaises(PermissionError) as raised:
+                    with native_process.owned_directory("iacode-g6-owned-lock-") as facts:
+                        (facts["path"] / "control.log").write_text("owned control", encoding="utf-8")
+            self.assertIs(raised.exception, failure)
+            self.assertFalse(facts["removed"])
+            self.assertEqual(facts["cleanupRetries"], 0)
+            self.assertEqual(facts["cleanupAttempts"], 1)
+            self.assertEqual(facts["cleanupElapsedSeconds"], 11.0)
+            self.assertEqual(facts["firstSharingLockAfterSeconds"], 11.0)
+            self.assertEqual(facts["cleanupFailure"]["winerror"], 32)
+            self.assertEqual(facts["cleanupFailure"]["type"], "PermissionError")
+
     def test_cold_diagnostic_entrypoints_use_utf8_before_any_work(self):
         # Execute the actual entry block and shared bootstrap, with harmless fixture work only.
         # Original immutable capture/cleanup bodies must never be replayed by this control.

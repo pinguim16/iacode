@@ -30,6 +30,8 @@ def reason(path: str) -> str:
         return "Define and derive the complete mandatory Gate 6 specification before implementation, preserving all predecessor requirements."
     if path in {"START-HERE.md", "docs/ARCHITECTURE.md", "docs/DEVELOPMENT.md"}:
         return "Align live entry/architecture with authorized experience persistence and checkpoint-owned acceptance, without claiming a Gate verdict."
+    if path == "docs/adr/ADR-0052-native-cleanup-failures-retain-observed-diagnostics.md":
+        return "Record observed asynchronous native termination, exact owned-member synchronization, retained cleanup failures and unchanged bounded deadlines."
     if path.startswith("docs/adr/"):
         return "Record and atomically index the source-bound experience and finite retention architecture."
     if path.startswith("services/experience/"):
@@ -44,6 +46,8 @@ def reason(path: str) -> str:
         return "Version the complete consumed closed experience schema and finite rights/retention policy."
     if path in {".iacode/policies/quality-gates.json", ".iacode/policies/test-suites.json", "ruff.toml", ".gitattributes"}:
         return "Register complete experience quality/collection and exact evidence transport without dropping inherited gates, suites or scanner controls."
+    if path in {"scripts/iacode/native_process.py", "scripts/iacode/native_editor.py"}:
+        return "Repair causally observed false job drainage by synchronizing exact validated owned process handles, and retain cleanup failure facts without extending deadlines or stopping other applications."
     if path.startswith("scripts/iacode/"):
         return "Execute real experience image tests and owned live acceptance within the full canonical verifier while preserving inherited stages and producer evidence."
     if path == "scripts/development-ledger/README.md":

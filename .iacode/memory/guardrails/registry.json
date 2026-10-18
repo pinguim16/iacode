@@ -1875,12 +1875,18 @@
       "verifiedBy": [
         "test_native_process_tree_is_drained_even_after_parent_exits",
         "test_owned_profile_cleanup_refuses_broad_targets_and_retries_only_sharing_locks",
-        "test_native_installer_and_host_both_pin_their_owned_shared_storage"
+        "test_native_installer_and_host_both_pin_their_owned_shared_storage",
+        "test_zero_job_accounting_does_not_replace_observed_member_completion",
+        "test_unsignaled_owned_member_cannot_be_reported_as_drained_at_deadline",
+        "test_owned_job_snapshot_refuses_truncation_and_process_identity_reuse",
+        "test_owned_cleanup_failure_retains_observed_facts_and_original_error",
+        "test_owned_cleanup_success_records_real_removal_and_retry",
+        "test_native_cleanup_failure_report_never_promotes_functional_fixture_pass"
       ],
       "lessons": [
         "LSN-0125"
       ],
-      "removingItWouldAllow": "Parent exit to be mistaken for full child cleanup, or profile removal failures to be skipped or retried without safe target validation and a deadline."
+      "removingItWouldAllow": "Parent exit or zero active accounting to be mistaken for completed resource release by observed owned children, or profile removal failures/facts to be lost or retried without exact target validation and unchanged bounded deadlines."
     },
     {
       "guardrailId": "GRD-0128",

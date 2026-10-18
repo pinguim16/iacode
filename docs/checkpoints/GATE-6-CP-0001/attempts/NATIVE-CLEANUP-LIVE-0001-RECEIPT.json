@@ -1,0 +1,28 @@
+{
+  "kind": "LOCAL_ACTUAL_NATIVE_PROOF_NOT_GATE_ACCEPTANCE",
+  "observedAt": "2026-10-18T02:47:30Z",
+  "sourceFingerprint": "ffdf54937c956eeb41e9f231dcff1b3d2d196bbeaebfad165954130c0a5395f1",
+  "exitCode": 1,
+  "result": "FAIL",
+  "producerBytes": 3225,
+  "producerSha256": "057f1f6e64548865704f0669a0cf7e76f739b63b992eba524d7916d66ed385e8",
+  "unsafeOccurrences": 0,
+  "producerArchive": "docs/checkpoints/GATE-6-CP-0001/attempts/NATIVE-CLEANUP-LIVE-0001.json",
+  "nativeResult": "FAIL",
+  "runs": 2,
+  "ownedTemporaryDirectoryRemoved": false,
+  "directoryCleanup": {
+    "removed": false,
+    "cleanupRetries": 99,
+    "cleanupAttempts": 100,
+    "cleanupElapsedSeconds": 10.05312,
+    "firstSharingLockAfterSeconds": 0.014787,
+    "cleanupFailure": {
+      "type": "PermissionError",
+      "errno": 13,
+      "winerror": 32,
+      "filename": "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-native-editor-vu7u7fpg\\package\\profile\\logs\\20261017T234708\\agenthost.log"
+    }
+  },
+  "failure": "[WinError 32] O arquivo já está sendo usado por outro processo: 'C:\\\\Users\\\\cesar\\\\AppData\\\\Local\\\\Temp\\\\iacode-native-editor-vu7u7fpg\\\\package\\\\profile\\\\logs\\\\20261017T234708\\\\agenthost.log'"
+}

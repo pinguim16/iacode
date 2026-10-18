@@ -61,3 +61,4 @@ exist, or a title or status that disagrees with its record fails the suite.
 | [ADR-0049](ADR-0049-root-assurance-inputs-follow-subject-policy.md) | Root assurance inputs follow subject policy | Accepted |
 | [ADR-0050](ADR-0050-experiences-are-source-bound-consented-facts.md) | Experiences are source-bound consented facts | Accepted |
 | [ADR-0051](ADR-0051-retention-tombstones-prevent-experience-resurrection.md) | Retention tombstones prevent experience resurrection | Accepted |
+| [ADR-0052](ADR-0052-native-cleanup-failures-retain-observed-diagnostics.md) | Native cleanup failures retain observed diagnostics | Accepted |

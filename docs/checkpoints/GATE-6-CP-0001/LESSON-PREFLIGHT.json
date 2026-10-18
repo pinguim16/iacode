@@ -12,9 +12,9 @@
     "packages/contracts",
     "packages/persistence"
   ],
-  "generatedAt": "2026-10-17T22:56:35Z",
+  "generatedAt": "2026-10-18T03:20:38Z",
   "policyVersion": "2.0.0",
-  "inputsFingerprint": "1f49e33834c8c42859a50ab3c2e0c189a2e73151f458342f989f7778ae848a9b",
+  "inputsFingerprint": "11187f5b0a25ef38337a6c262e2f49eec4db64139cbd00bb98fbf4304903e706",
   "lessonsConsidered": 143,
   "lessonsApplicable": 142,
   "applicable": [
@@ -1252,10 +1252,10 @@
       "lessonId": "LSN-0125",
       "title": "Native parent exit is not proof of process and profile cleanup",
       "status": "GUARDED",
-      "severity": "HIGH",
-      "reasonApplicable": "applies to every Gate; category environment; severity HIGH; already guarded, so the control must keep holding",
-      "requiredCheck": "Own native process descendants before launch and verify their cleanup independently of parent exit. Validate exact temporary targets, bound sharing-lock retries and require observed removal; never kill global user processes or suppress cleanup failures.",
-      "requiredEvidence": "Retained cleanup failures, actual surviving-child control, target and error negatives, and actual native profile removal with recorded retries and zero owned job members.",
+      "severity": "CRITICAL",
+      "reasonApplicable": "applies to every Gate; category environment; severity CRITICAL; already guarded, so the control must keep holding",
+      "requiredCheck": "Own native descendants before launch; pin a complete bounded member snapshot and validate each handle against the exact job. Require zero accounting plus signaled observed handles within the existing drain deadline. Preserve typed failure facts, validate exact temporary targets, bound sharing retries and require observed removal. Never kill global user processes or suppress cleanup failures.",
+      "requiredEvidence": "Retained actual failures, pinned owned-handle mismatch, formerly failing positive/deadline controls, snapshot/identity refusal, actual surviving-child control, target/error negatives and fresh actual native profile removal with observed synchronized members and retained retries.",
       "derivedRequirementId": "LESSON-REQ-0124"
     },
     {
@@ -2306,7 +2306,7 @@
       "lessonId": "LSN-0125",
       "description": "Verify native parent exit is not proof of process and profile cleanup",
       "mandatory": true,
-      "requiredEvidence": "Retained cleanup failures, actual surviving-child control, target and error negatives, and actual native profile removal with recorded retries and zero owned job members."
+      "requiredEvidence": "Retained actual failures, pinned owned-handle mismatch, formerly failing positive/deadline controls, snapshot/identity refusal, actual surviving-child control, target/error negatives and fresh actual native profile removal with observed synchronized members and retained retries."
     },
     {
       "id": "LESSON-REQ-0125",

@@ -1,0 +1,390 @@
+{
+  "schemaVersion": "1.0.0",
+  "gate": "GATE-6",
+  "checkpoint": "GATE-6-CP-0001",
+  "status": "PASS",
+  "generatedAt": "2026-10-18T01:19:27Z",
+  "scenarios": [
+    {
+      "scenarioId": "G6-FA-CONTRACT",
+      "requirementIds": [
+        "GATE-6-2.1",
+        "GATE-6-2.2",
+        "GATE-6-2.3",
+        "GATE-6-2.4",
+        "GATE-6-3.5",
+        "GATE-6-3.6"
+      ],
+      "feature": "Closed bounded observations and pre-effect privacy",
+      "scenario": "Strict contracts and actual signed HTTP refuse ambiguous JSON, forged/private facts and complete declared credential forms before durable effects; actual public source identities remain usable.",
+      "environment": "owned-authenticated-real-postgresql-redis-minio-temporal-provider-sandbox-quality",
+      "preconditions": [
+        "Exact published detached subject 950421fc5554a7e654ffd6096898b07a679d9923",
+        "Complete mandatory suites/stages and fresh separately owned real stack."
+      ],
+      "execution": [
+        "python docs/checkpoints/GATE-6-CP-0001/audit-harness/run_full_verification.py --commit 950421fc5554a7e654ffd6096898b07a679d9923 --tag iacode-subjects/GATE-6-CP-0001-runtime-v5 --node C:/Users/cesar/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node.exe",
+        "Actual domain, API unit and complete PostgreSQL/migration suites in this invocation."
+      ],
+      "expected": [
+        "Strict contracts and actual signed HTTP refuse ambiguous JSON, forged/private facts and complete declared credential forms before durable effects; actual public source identities remain usable."
+      ],
+      "observed": [
+        "actual-source-bound-experience-captured: PASS",
+        "consumer-recomputed-returned-document-digest: PASS",
+        "observed-provider-tool-quality-and-denied-reuse-lineage: PASS",
+        "private-transcript-refused-before-persistence: PASS",
+        "secret-ingress-refused-before-persistence: PASS",
+        "known-capability-form-0-refused-before-persistence: PASS",
+        "known-capability-form-1-refused-before-persistence: PASS",
+        "known-capability-form-2-refused-before-persistence: PASS",
+        "known-capability-form-3-refused-before-persistence: PASS",
+        "known-capability-form-4-refused-before-persistence: PASS",
+        "known-capability-form-5-refused-before-persistence: PASS"
+      ],
+      "result": "PASS",
+      "evidence": [
+        "cmd-0232",
+        "checkpoint:VERIFY.json",
+        "checkpoint:FUNCTIONAL-SCENARIOS.json",
+        "checkpoint:PUBLISHED-CLEAN-CLONE-REPORT.json",
+        "checkpoint:PRODUCER-REPORTS.json"
+      ],
+      "timestamp": "2026-10-18T01:19:27Z",
+      "artifactReferences": [
+        "file:apps/api/tests/integration/test_experience_store.py",
+        "file:services/experience/tests/test_contract.py"
+      ]
+    },
+    {
+      "scenarioId": "G6-FA-SOURCES",
+      "requirementIds": [
+        "GATE-6-2.5",
+        "GATE-6-2.6"
+      ],
+      "feature": "Actual governed task and verified immutable quality lineage",
+      "scenario": "A real completed task and derived quality evidence supply facts; source mismatch, caller verdicts and corrupt/unavailable objects cannot become valid experiences.",
+      "environment": "owned-authenticated-real-postgresql-redis-minio-temporal-provider-sandbox-quality",
+      "preconditions": [
+        "Exact published detached subject 950421fc5554a7e654ffd6096898b07a679d9923",
+        "Complete mandatory suites/stages and fresh separately owned real stack."
+      ],
+      "execution": [
+        "python docs/checkpoints/GATE-6-CP-0001/audit-harness/run_full_verification.py --commit 950421fc5554a7e654ffd6096898b07a679d9923 --tag iacode-subjects/GATE-6-CP-0001-runtime-v5 --node C:/Users/cesar/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node.exe",
+        "Actual domain, API unit and complete PostgreSQL/migration suites in this invocation."
+      ],
+      "expected": [
+        "A real completed task and derived quality evidence supply facts; source mismatch, caller verdicts and corrupt/unavailable objects cannot become valid experiences."
+      ],
+      "observed": [
+        "actual-provider-sandbox-task-completed: PASS",
+        "actual-derived-quality-pass-with-evidence: PASS",
+        "cross-project-source-capture-refused: PASS",
+        "forged-verdict-refused-before-persistence: PASS",
+        "actual-source-object-corrupt-fails-closed: PASS",
+        "actual-source-object-remove-fails-closed: PASS"
+      ],
+      "result": "PASS",
+      "evidence": [
+        "cmd-0232",
+        "checkpoint:VERIFY.json",
+        "checkpoint:FUNCTIONAL-SCENARIOS.json",
+        "checkpoint:PUBLISHED-CLEAN-CLONE-REPORT.json",
+        "checkpoint:PRODUCER-REPORTS.json"
+      ],
+      "timestamp": "2026-10-18T01:19:27Z",
+      "artifactReferences": [
+        "file:apps/api/tests/integration/test_experience_store.py",
+        "file:services/experience/tests/test_contract.py"
+      ]
+    },
+    {
+      "scenarioId": "G6-FA-RIGHTS",
+      "requirementIds": [
+        "GATE-6-3.1",
+        "GATE-6-3.2",
+        "GATE-6-3.3",
+        "GATE-6-3.4",
+        "GATE-6-3.7"
+      ],
+      "feature": "Exact storage consent and restrictive source-bound rights",
+      "scenario": "Missing/false/nonboolean consent and forged rights cause no capture. Persisted/exported provenance is content-bound and all unproven reuse requests disclose no document.",
+      "environment": "owned-authenticated-real-postgresql-redis-minio-temporal-provider-sandbox-quality",
+      "preconditions": [
+        "Exact published detached subject 950421fc5554a7e654ffd6096898b07a679d9923",
+        "Complete mandatory suites/stages and fresh separately owned real stack."
+      ],
+      "execution": [
+        "python docs/checkpoints/GATE-6-CP-0001/audit-harness/run_full_verification.py --commit 950421fc5554a7e654ffd6096898b07a679d9923 --tag iacode-subjects/GATE-6-CP-0001-runtime-v5 --node C:/Users/cesar/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node.exe",
+        "Actual domain, API unit and complete PostgreSQL/migration suites in this invocation."
+      ],
+      "expected": [
+        "Missing/false/nonboolean consent and forged rights cause no capture. Persisted/exported provenance is content-bound and all unproven reuse requests disclose no document."
+      ],
+      "observed": [
+        "consent-missing-refused-before-persistence: PASS",
+        "consent-denied-refused-before-persistence: PASS",
+        "consent-type-refused-before-persistence: PASS",
+        "forged-rights-refused-before-persistence: PASS",
+        "observed-provider-tool-quality-and-denied-reuse-lineage: PASS",
+        "actual-verified-export: PASS",
+        "denied-rag-use-no-data: PASS",
+        "denied-training-use-no-data: PASS",
+        "denied-distillation-use-no-data: PASS",
+        "denied-unknown-use-no-data: PASS"
+      ],
+      "result": "PASS",
+      "evidence": [
+        "cmd-0232",
+        "checkpoint:VERIFY.json",
+        "checkpoint:FUNCTIONAL-SCENARIOS.json",
+        "checkpoint:PUBLISHED-CLEAN-CLONE-REPORT.json",
+        "checkpoint:PRODUCER-REPORTS.json"
+      ],
+      "timestamp": "2026-10-18T01:19:27Z",
+      "artifactReferences": [
+        "file:apps/api/tests/integration/test_experience_store.py",
+        "file:services/experience/tests/test_contract.py"
+      ]
+    },
+    {
+      "scenarioId": "G6-FA-PERSISTENCE",
+      "requirementIds": [
+        "GATE-6-4.1",
+        "GATE-6-4.2",
+        "GATE-6-4.3",
+        "GATE-6-4.4",
+        "GATE-6-5.3"
+      ],
+      "feature": "Real existing-table migration, immutable atomic persisted capture",
+      "scenario": "The complete actual migration/autogenerate and integration suites preserve legacy identity/rights, enforce immutable facts and atomic audit rollback. Live API read/list/export returns exact durable content/digests.",
+      "environment": "owned-authenticated-real-postgresql-redis-minio-temporal-provider-sandbox-quality",
+      "preconditions": [
+        "Exact published detached subject 950421fc5554a7e654ffd6096898b07a679d9923",
+        "Complete mandatory suites/stages and fresh separately owned real stack."
+      ],
+      "execution": [
+        "python docs/checkpoints/GATE-6-CP-0001/audit-harness/run_full_verification.py --commit 950421fc5554a7e654ffd6096898b07a679d9923 --tag iacode-subjects/GATE-6-CP-0001-runtime-v5 --node C:/Users/cesar/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node.exe",
+        "Actual domain, API unit and complete PostgreSQL/migration suites in this invocation."
+      ],
+      "expected": [
+        "The complete actual migration/autogenerate and integration suites preserve legacy identity/rights, enforce immutable facts and atomic audit rollback. Live API read/list/export returns exact durable content/digests."
+      ],
+      "observed": [
+        "actual-source-bound-experience-captured: PASS",
+        "actual-verified-read: PASS",
+        "actual-verified-export: PASS",
+        "consumer-recomputed-returned-document-digest: PASS",
+        "actual-concurrent-retry-one-row-one-capture-audit: PASS"
+      ],
+      "result": "PASS",
+      "evidence": [
+        "cmd-0232",
+        "checkpoint:VERIFY.json",
+        "checkpoint:FUNCTIONAL-SCENARIOS.json",
+        "checkpoint:PUBLISHED-CLEAN-CLONE-REPORT.json",
+        "checkpoint:PRODUCER-REPORTS.json"
+      ],
+      "timestamp": "2026-10-18T01:19:27Z",
+      "artifactReferences": [
+        "file:apps/api/tests/integration/test_experience_store.py",
+        "file:services/experience/tests/test_contract.py"
+      ]
+    },
+    {
+      "scenarioId": "G6-FA-RETRY-RECOVERY",
+      "requirementIds": [
+        "GATE-6-4.5",
+        "GATE-6-4.6",
+        "GATE-6-6.5"
+      ],
+      "feature": "Accepted-response loss, concurrent retry, restart and source recovery",
+      "scenario": "A real accepted but lost response and concurrent retries create exactly one fact/audit, preserve original expiry across restart and refuse conflicts/resurrection. Corrupt/missing actual objects fail closed and restored originals recover.",
+      "environment": "owned-authenticated-real-postgresql-redis-minio-temporal-provider-sandbox-quality",
+      "preconditions": [
+        "Exact published detached subject 950421fc5554a7e654ffd6096898b07a679d9923",
+        "Complete mandatory suites/stages and fresh separately owned real stack."
+      ],
+      "execution": [
+        "python docs/checkpoints/GATE-6-CP-0001/audit-harness/run_full_verification.py --commit 950421fc5554a7e654ffd6096898b07a679d9923 --tag iacode-subjects/GATE-6-CP-0001-runtime-v5 --node C:/Users/cesar/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node.exe",
+        "Actual domain, API unit and complete PostgreSQL/migration suites in this invocation."
+      ],
+      "expected": [
+        "A real accepted but lost response and concurrent retries create exactly one fact/audit, preserve original expiry across restart and refuse conflicts/resurrection. Corrupt/missing actual objects fail closed and restored originals recover."
+      ],
+      "observed": [
+        "actual-accepted-experience-response-loss-one-durable-effect: PASS",
+        "actual-concurrent-retry-one-row-one-capture-audit: PASS",
+        "conflicting-stable-request-refused: PASS",
+        "restart-preserves-content-rights-original-expiry-and-retry: PASS",
+        "actual-source-object-corrupt-fails-closed: PASS",
+        "actual-source-object-remove-fails-closed: PASS",
+        "restored-source-clean-control-after-corrupt: PASS",
+        "restored-source-clean-control-after-remove: PASS",
+        "new-key-cannot-resurrect-withdrawn-source: PASS",
+        "expired-source-new-key-cannot-resurrect: PASS"
+      ],
+      "result": "PASS",
+      "evidence": [
+        "cmd-0232",
+        "checkpoint:VERIFY.json",
+        "checkpoint:FUNCTIONAL-SCENARIOS.json",
+        "checkpoint:PUBLISHED-CLEAN-CLONE-REPORT.json",
+        "checkpoint:PRODUCER-REPORTS.json"
+      ],
+      "timestamp": "2026-10-18T01:19:27Z",
+      "artifactReferences": [
+        "file:apps/api/tests/integration/test_experience_store.py",
+        "file:services/experience/tests/test_contract.py"
+      ]
+    },
+    {
+      "scenarioId": "G6-FA-ACCESS",
+      "requirementIds": [
+        "GATE-6-5.1",
+        "GATE-6-5.2",
+        "GATE-6-5.4",
+        "GATE-6-5.5",
+        "GATE-6-5.6"
+      ],
+      "feature": "Actual finite authenticated scoped transport and bounded diagnostics",
+      "scenario": "Actual absent/invalid/stale/expired/replayed authorization and project/cursor mismatch fail closed. Bounded pagination and production logging preserve observability without rejected content. Every inherited client/native/runtime regression remains mandatory.",
+      "environment": "owned-authenticated-real-postgresql-redis-minio-temporal-provider-sandbox-quality",
+      "preconditions": [
+        "Exact published detached subject 950421fc5554a7e654ffd6096898b07a679d9923",
+        "Complete mandatory suites/stages and fresh separately owned real stack."
+      ],
+      "execution": [
+        "python docs/checkpoints/GATE-6-CP-0001/audit-harness/run_full_verification.py --commit 950421fc5554a7e654ffd6096898b07a679d9923 --tag iacode-subjects/GATE-6-CP-0001-runtime-v5 --node C:/Users/cesar/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node.exe",
+        "Actual domain, API unit and complete PostgreSQL/migration suites in this invocation."
+      ],
+      "expected": [
+        "Actual absent/invalid/stale/expired/replayed authorization and project/cursor mismatch fail closed. Bounded pagination and production logging preserve observability without rejected content. Every inherited client/native/runtime regression remains mandatory."
+      ],
+      "observed": [
+        "unauthenticated-capture-refused-before-effects: PASS",
+        "invalid-signature-refused: PASS",
+        "stale-authentication-refused: PASS",
+        "authentication-null-control: PASS",
+        "actual-redis-authentication-replay-refused: PASS",
+        "authentication-replay-survives-real-restart: PASS",
+        "actual-expired-capability-refuses-experience-access: PASS",
+        "cross-project-get-refused: PASS",
+        "cross-project-delete-refused: PASS",
+        "cross-project-cursor-refused: PASS",
+        "actual-bounded-summary-pagination: PASS",
+        "actual-project-cursor-resumption: PASS",
+        "actual-production-logs-retain-observability-not-ingress: PASS"
+      ],
+      "result": "PASS",
+      "evidence": [
+        "cmd-0232",
+        "checkpoint:VERIFY.json",
+        "checkpoint:FUNCTIONAL-SCENARIOS.json",
+        "checkpoint:PUBLISHED-CLEAN-CLONE-REPORT.json",
+        "checkpoint:PRODUCER-REPORTS.json"
+      ],
+      "timestamp": "2026-10-18T01:19:27Z",
+      "artifactReferences": [
+        "file:apps/api/tests/integration/test_experience_store.py",
+        "file:services/experience/tests/test_contract.py"
+      ]
+    },
+    {
+      "scenarioId": "G6-FA-RETENTION",
+      "requirementIds": [
+        "GATE-6-6.1",
+        "GATE-6-6.2",
+        "GATE-6-6.3",
+        "GATE-6-6.4",
+        "GATE-6-6.6"
+      ],
+      "feature": "Finite consumed policy, immediate denial and owned automatic physical purge",
+      "scenario": "Actual domain/SQL/lifecycle tests prove limits, batches, finite tombstones and owned shutdown. Live withdrawal/expiry deny immediately; the automatic sweeper physically clears primary content, stable retries cannot renew and original sources remain unchanged.",
+      "environment": "owned-authenticated-real-postgresql-redis-minio-temporal-provider-sandbox-quality",
+      "preconditions": [
+        "Exact published detached subject 950421fc5554a7e654ffd6096898b07a679d9923",
+        "Complete mandatory suites/stages and fresh separately owned real stack."
+      ],
+      "execution": [
+        "python docs/checkpoints/GATE-6-CP-0001/audit-harness/run_full_verification.py --commit 950421fc5554a7e654ffd6096898b07a679d9923 --tag iacode-subjects/GATE-6-CP-0001-runtime-v5 --node C:/Users/cesar/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node.exe",
+        "Actual domain, API unit and complete PostgreSQL/migration suites in this invocation."
+      ],
+      "expected": [
+        "Actual domain/SQL/lifecycle tests prove limits, batches, finite tombstones and owned shutdown. Live withdrawal/expiry deny immediately; the automatic sweeper physically clears primary content, stable retries cannot renew and original sources remain unchanged."
+      ],
+      "observed": [
+        "actual-project-bound-withdrawal: PASS",
+        "repeated-withdrawal-is-terminal-observation: PASS",
+        "withdrawn-read-denied-immediately: PASS",
+        "withdrawal-physically-purges-primary-and-preserves-sources: PASS",
+        "actual-short-retention-capture-honest-observed-outcome: PASS",
+        "expired-read-denied-without-manual-sweep: PASS",
+        "actual-owned-background-sweeper-physically-purged: PASS",
+        "expired-request-retry-cannot-renew: PASS"
+      ],
+      "result": "PASS",
+      "evidence": [
+        "cmd-0232",
+        "checkpoint:VERIFY.json",
+        "checkpoint:FUNCTIONAL-SCENARIOS.json",
+        "checkpoint:PUBLISHED-CLEAN-CLONE-REPORT.json",
+        "checkpoint:PRODUCER-REPORTS.json"
+      ],
+      "timestamp": "2026-10-18T01:19:27Z",
+      "artifactReferences": [
+        "file:apps/api/tests/integration/test_experience_store.py",
+        "file:services/experience/tests/test_contract.py"
+      ]
+    },
+    {
+      "scenarioId": "G6-FA-LIVE-ISOLATION",
+      "requirementIds": [
+        "GATE-6-7.1",
+        "GATE-6-7.2",
+        "GATE-6-7.3",
+        "GATE-6-7.4",
+        "GATE-6-7.5",
+        "GATE-6-7.6"
+      ],
+      "feature": "Full immutable functional/adverse proof with safe producer retention",
+      "scenario": "One complete non-fast exact published detached-subject execution retains every inherited stage and safe original producer bytes. Real provider/task/quality, lifecycle/adverse controls and causal stale-report/consumer-failure tests pass, with owned cleanup and unchanged operational/source identities.",
+      "environment": "owned-authenticated-real-postgresql-redis-minio-temporal-provider-sandbox-quality",
+      "preconditions": [
+        "Exact published detached subject 950421fc5554a7e654ffd6096898b07a679d9923",
+        "Complete mandatory suites/stages and fresh separately owned real stack."
+      ],
+      "execution": [
+        "python docs/checkpoints/GATE-6-CP-0001/audit-harness/run_full_verification.py --commit 950421fc5554a7e654ffd6096898b07a679d9923 --tag iacode-subjects/GATE-6-CP-0001-runtime-v5 --node C:/Users/cesar/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node.exe",
+        "Actual domain, API unit and complete PostgreSQL/migration suites in this invocation."
+      ],
+      "expected": [
+        "One complete non-fast exact published detached-subject execution retains every inherited stage and safe original producer bytes. Real provider/task/quality, lifecycle/adverse controls and causal stale-report/consumer-failure tests pass, with owned cleanup and unchanged operational/source identities."
+      ],
+      "observed": [
+        "actual-provider-sandbox-task-completed: PASS",
+        "actual-derived-quality-pass-with-evidence: PASS",
+        "actual-source-bound-experience-captured: PASS",
+        "actual-verified-export: PASS",
+        "actual-accepted-experience-response-loss-one-durable-effect: PASS",
+        "actual-owned-background-sweeper-physically-purged: PASS",
+        "owned-resources-removed: PASS",
+        "operational-container-identities-preserved: PASS",
+        "measured-source-inputs-unchanged: PASS"
+      ],
+      "result": "PASS",
+      "evidence": [
+        "cmd-0232",
+        "checkpoint:VERIFY.json",
+        "checkpoint:FUNCTIONAL-SCENARIOS.json",
+        "checkpoint:PUBLISHED-CLEAN-CLONE-REPORT.json",
+        "checkpoint:PRODUCER-REPORTS.json"
+      ],
+      "timestamp": "2026-10-18T01:19:27Z",
+      "artifactReferences": [
+        "file:apps/api/tests/integration/test_experience_store.py",
+        "file:services/experience/tests/test_contract.py"
+      ]
+    }
+  ]
+}

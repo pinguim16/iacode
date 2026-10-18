@@ -43,6 +43,21 @@ the observation into this existing section without changing the canonical templa
 
 ## What repeated
 
+Fresh internal Red Team cmd-0258 later fails at actual native profile cleanup: both installation/
+trust runs and job drainage pass, but agenthost.log remains sharing-locked at removal. Inherited20,
+client35, real desktop and Experience Store72 pass; combined71 baseline remains INVALID, never a
+Red Team PASS. LSN-0125/GRD-0127 recurrence2 is escalated CRITICAL and returned to CONFIRMED.
+The exact historical holder is not retroactively identified. Actual cmd-0274 later pins a current
+owned member still nonsignaled after old close reports zero active members; cmd-0275 also reproduces
+false drainage. The correction validates exact member handles and waits for signaled completion
+under the same ten-second job bound, retaining the unchanged removal bound and typed failure facts.
+Cmd-0276 accepts formerly failing controls; canonical discovery cmd-0279 passes all77 Gate5/Gate6
+root cases including snapshot/identity refusal. Two fresh uninstrumented native proofs cmd-0281 pass
+installation/trust, observed member synchronization and physical profile removal. GRD-0127 is locally
+restored; recurrence2 remains CRITICAL and original failures remain. Cmd-0282 archives19 original v5
+success/failure artifacts byte-for-byte. Fresh full immutable verification and ordered assurance
+are still mandatory. Non-reproducing diagnostics are not the causal repair, and no global apps stop.
+
 Immutable-v4 completes all47 stages with46 PASS and one Root897 failure. The unchanged inherited
 entry-point guard identifies three new diagnostics with no parent UTF-8 bootstrap; cmd-0209
 reproduces the same three paths. LSN-0035/GRD-0037 recurrence3 and LSN-0083/GRD-0084 recurrence4
@@ -113,6 +128,7 @@ ordered assurance remain independently enforced by their canonical tools, not by
 | LSN-0018 | Two escalated recurrences; unchanged lesson/quality locator controls | Each artifact owns its reference semantics; keep failures explicit in durable observation files rather than unsupported or nonzero structured command references |
 | LSN-0140 | Recurrence1 escalated to HIGH; existing retrospective guard explicitly registered | Extra manual heading rejected; documentation-only placement correction and root27 cmd-0178 pass |
 | LSN-0035 / LSN-0083 | Recurrence3 / recurrence4, CRITICAL; locally restored by actual cold and unchanged inherited controls | Three parent bootstraps corrected; original failure retained, no cleanup/capture replay, fresh full proof still due |
+| LSN-0125 | Recurrence2, CRITICAL; locally GUARDED after actual pinned-handle mismatch and causal positive/deadline controls | Zero job accounting is not signaled resource completion; retain original failures and all19 archived v5 artifacts, require fresh whole assurance, and never identify a historical owner retroactively |
 
 ## Retired lessons
 
