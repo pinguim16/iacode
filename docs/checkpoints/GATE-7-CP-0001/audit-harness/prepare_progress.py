@@ -41,7 +41,7 @@ def main() -> int:
         raise ValueError("progress authoring is restricted to the unsealed implementing Gate")
     records = {row["id"]: row for row in (json.loads(line) for line in
         (CHECKPOINT / "COMMANDS.jsonl").read_text(encoding="utf-8").splitlines() if line.strip())}
-    for name in ("cmd-0033", "cmd-0055", "cmd-0040", "cmd-0041", "cmd-0042", "cmd-0044", "cmd-0045"):
+    for name in ("cmd-0033", "cmd-0055", "cmd-0042", "cmd-0081", "cmd-0089", "cmd-0090", "cmd-0092"):
         if records[name]["exitCode"] != 0:
             raise ValueError("the bound actual command did not succeed")
     suites = {}
@@ -56,6 +56,40 @@ def main() -> int:
                          "receipt": "suite-attempts/" + name + ".json",
                          "sourceFingerprint": receipt["sourceFingerprint"],
                          "scope": "LOCAL_TARGETED_NOT_WHOLE_VERIFICATION"}
+    root_receipt, root_output = observation("GATE7-ROOT-0005")
+    root_counts = re.findall(r"Ran (\d+) tests in", root_output)
+    if len(root_counts) != 1 or not root_output.rstrip().endswith("OK"):
+        raise ValueError("one completed actual successful root execution is required")
+    suites["gate7Root"] = {"passed": int(root_counts[0]), "failed": 0,
+        "receipt": "suite-attempts/GATE7-ROOT-0005.json",
+        "sourceFingerprint": root_receipt["sourceFingerprint"],
+        "scope": "LOCAL_TARGETED_NOT_WHOLE_VERIFICATION"}
+    live_receipt, _ = observation("KNOWLEDGE-LIVE-0001")
+    live_manifest = load_json(CHECKPOINT / "attempts/KNOWLEDGE-LIVE-RAW-RECEIPT-0001.json")
+    live_path = (CHECKPOINT / live_manifest["artifact"]).resolve(strict=True)
+    if not live_path.is_relative_to((CHECKPOINT / "attempts").resolve()):
+        raise ValueError("original live producer escaped the current checkpoint")
+    live_raw = live_path.read_bytes()
+    if (len(live_raw) != live_manifest["sizeBytes"]
+            or hashlib.sha256(live_raw).hexdigest() != live_manifest["sha256"]):
+        raise ValueError("original live producer differs from its original exact receipt")
+    live = json.loads(live_raw)
+    corpus = load_json(ROOT / "services/knowledge/tests/fixtures/retrieval-corpus.json")
+    controls = live["steps"]
+    measured = live["retrievalMeasurements"]
+    if (live["result"] != "PASS" or not controls
+            or len({row["name"] for row in controls}) != len(controls)
+            or any(row["result"] != "PASS" for row in controls)
+            or [row["queryOrdinal"] for row in measured] != list(range(len(corpus["queries"])))
+            or any(row["result"] != "PASS" for row in measured)
+            or live["cleanup"] != {"composeExitCode": 0, "container": 0, "volume": 0, "network": 0}
+            or live["sandboxCleanup"] != {"container": 0, "network": 0}):
+        raise ValueError("complete measured owned live proof and actual cleanup are required")
+    suites["knowledgeOwnedLive"] = {"passed": 1, "failed": 0, "controlsPassed": len(controls),
+        "queriesPassed": len(measured), "receipt": "suite-attempts/KNOWLEDGE-LIVE-0001.json",
+        "originalProducer": live_manifest["artifact"],
+        "sourceFingerprint": live_receipt["sourceFingerprint"],
+        "scope": "ONE_TARGETED_OWNED_SCENARIO_NOT_WHOLE_VERIFICATION"}
     cleanup = load_json(CHECKPOINT / "suite-attempts/KNOWLEDGE-SQL-RECEIPT-0002.json")
     if cleanup["result"] != "PASS" or not cleanup["unrelatedContainersPreserved"]:
         raise ValueError("actual owned-resource cleanup and unrelated state must be observed")
@@ -77,13 +111,13 @@ def main() -> int:
     path.write_text(original + marker + "\n".join(lines) + "\n", encoding="utf-8", newline="\n")
     closure = load_json(CHECKPOINT / "CLOSURE-REQUIREMENTS.json")
     selected = {"lesson:" + row["lessonId"] for row in preflight["applicable"]
-                if row["lessonId"] in {"LSN-0018", "LSN-0105", "LSN-0117", "LSN-0119", "LSN-0145"}}
+                if row["lessonId"] in {"LSN-0018", "LSN-0105", "LSN-0117", "LSN-0119", "LSN-0145", "LSN-0146"}}
     for row in closure["requirements"]:
         anchor = row["sourceRef"]
         key = anchor.partition("#")[2] if anchor.startswith("canonical:") else ""
         section = key.partition(".")[0]
-        if (section in {"1", "2", "3", "4", "5", "6"}
-                or key in {"7.3", "7.5", "8.1", "8.2", "8.4", "8.6", "8.8"}
+        if (section in {"1", "2", "3", "4", "5", "6", "7"}
+                or key in {"8.1", "8.2", "8.4", "8.6", "8.8"}
                 or anchor in selected):
             row["implementationStatus"] = row["finalStatus"] = "PARTIAL"
             row["implementationEvidence"] = ["file:services/knowledge/src/iacode_knowledge/domain.py",
@@ -93,7 +127,7 @@ def main() -> int:
                             "fingerprints are in CURRENT-PROGRESS.json. This is not complete "
                             "whole-verifier/ordered-assurance/independent acceptance.")
             if section in {"2", "3", "4", "5", "6"}:
-                row["testEvidence"] = ["command:cmd-0055", "command:cmd-0042"]
+                row["testEvidence"] = ["command:cmd-0055", "command:cmd-0042", "command:cmd-0081"]
     write_json(CHECKPOINT / "CLOSURE-REQUIREMENTS.json", closure)
     closure, matrix = build(ROOT, CHECKPOINT, "GATE-7")
     for stem, document, renderer in (("CLOSURE-REQUIREMENTS", closure, render_closure),
@@ -109,7 +143,8 @@ def main() -> int:
     write_json(CHECKPOINT / "STATE.json", state)
     tests = load_json(CHECKPOINT / "TESTS.json")
     for category, command, label in (("unit", "cmd-0033", "apiUnit"),
-                                      ("integration", "cmd-0042", "knowledgeSqlHttpMigration")):
+                                      ("integration", "cmd-0042", "knowledgeSqlHttpMigration"),
+                                      ("e2e", "cmd-0081", "knowledgeOwnedLive")):
         tests[category].update({"executed": True, "passed": suites[label]["passed"], "failed": 0,
             "command": records[command]["command"], "evidence": "command:" + command,
             "runId": "gate7-local-targeted-not-whole-acceptance"})

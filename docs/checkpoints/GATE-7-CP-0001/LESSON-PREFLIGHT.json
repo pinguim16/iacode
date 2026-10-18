@@ -15,11 +15,11 @@
     "packages/persistence",
     "scripts/iacode"
   ],
-  "generatedAt": "2026-10-18T17:24:33Z",
+  "generatedAt": "2026-10-18T18:06:54Z",
   "policyVersion": "2.0.0",
-  "inputsFingerprint": "1e3a032023d040144f107ae87bfe7d3720eff04303e93f3eadf0537cddf41fbc",
-  "lessonsConsidered": 145,
-  "lessonsApplicable": 144,
+  "inputsFingerprint": "16f629e315a75a8361483c91f37aeab92a3c997e7ad3555a9ba630dfd92525df",
+  "lessonsConsidered": 146,
+  "lessonsApplicable": 145,
   "applicable": [
     {
       "lessonId": "LSN-0001",
@@ -1460,6 +1460,16 @@
       "requiredCheck": "For every authorized persistence addition, extend the owning exact table inventory, immutable/lifecycle classification and foreign-key ownership contract while preserving all inherited assertions; prove each boundary rejects a deliberate mismatch.",
       "requiredEvidence": "Actual complete API gate with the expanded exact structural expectations plus executed missing/extra table, wrong fact/lifecycle and changed-cascade adverse controls; real migration parity remains separate.",
       "derivedRequirementId": "LESSON-REQ-0144"
+    },
+    {
+      "lessonId": "LSN-0146",
+      "title": "A completed command record is not proof that its producing process has exited",
+      "status": "GUARDED",
+      "severity": "HIGH",
+      "reasonApplicable": "applies to every Gate; category process; severity HIGH; already guarded, so the control must keep holding",
+      "requiredCheck": "Wait for actual producer process exit before starting a dependent writer or publication step; a successful intermediate ledger record, metadata file or output line is not a process-completion signal.",
+      "requiredEvidence": "Executed process-order positive and failure controls using actual child processes, including successful-looking intermediate output followed by nonzero exit; the dependent mutation must remain unexecuted on refusal.",
+      "derivedRequirementId": "LESSON-REQ-0145"
     }
   ],
   "derivedRequirements": [
@@ -2470,6 +2480,13 @@
       "description": "Verify a new persistent capability must extend the explicit structural contract, not bypass its exact inventory",
       "mandatory": true,
       "requiredEvidence": "Actual complete API gate with the expanded exact structural expectations plus executed missing/extra table, wrong fact/lifecycle and changed-cascade adverse controls; real migration parity remains separate."
+    },
+    {
+      "id": "LESSON-REQ-0145",
+      "lessonId": "LSN-0146",
+      "description": "Verify a completed command record is not proof that its producing process has exited",
+      "mandatory": true,
+      "requiredEvidence": "Executed process-order positive and failure controls using actual child processes, including successful-looking intermediate output followed by nonzero exit; the dependent mutation must remain unexecuted on refusal."
     }
   ]
 }

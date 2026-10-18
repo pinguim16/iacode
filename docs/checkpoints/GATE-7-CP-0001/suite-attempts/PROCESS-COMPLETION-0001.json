@@ -1,0 +1,29 @@
+{
+  "schemaVersion": "1.0.0",
+  "kind": "TARGETED_CAUSAL_NOT_WHOLE_GATE",
+  "gate": "PROCESS-COMPLETION",
+  "command": [
+    "python",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-p",
+    "test_gate7_*",
+    "-k",
+    "Gate7ProcessCompletionTests"
+  ],
+  "observedAt": "2026-10-18T17:32:22Z",
+  "subjectCommit": "801be785ab076b380f163d4c09784fd016974bd6",
+  "sourceDirty": true,
+  "sourceFingerprint": "f2b890961cf80a616093d3a454db7818f5d6bf98ce1c08f95de0189c443ab68b",
+  "sourceUnchanged": true,
+  "exitCode": 0,
+  "outputEncodingValid": true,
+  "unsafeOutputOccurrences": 0,
+  "outputBytes": 143,
+  "outputSha256": "bcf9c0327917e097a06d747232fef15e25f5a44ab0b31f0bb5954dc58f80ecaf",
+  "safeOutputArtifact": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/PROCESS-COMPLETION-0001.log",
+  "result": "PASS"
+}

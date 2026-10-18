@@ -356,12 +356,25 @@ class InterruptedResponseProxy:
     """Drop exactly one accepted create response, without inventing domain data."""
 
     def __init__(
-        self, base: str, *, drop_operation: str = "start", experience_project: str | None = None
+        self,
+        base: str,
+        *,
+        drop_operation: str = "start",
+        experience_project: str | None = None,
+        knowledge_project: str | None = None,
     ) -> None:
-        if drop_operation not in {"start", "quality-start", "experience-capture"}:
+        if drop_operation not in {
+            "start",
+            "quality-start",
+            "experience-capture",
+            "knowledge-ingest",
+        }:
             raise ValueError("unsupported closed interruption operation")
         experience = drop_operation == "experience-capture"
+        knowledge = drop_operation == "knowledge-ingest"
         if experience:
+            if knowledge_project is not None:
+                raise ValueError("an experience interruption cannot select a knowledge project")
             if (
                 not isinstance(experience_project, str)
                 or str(uuid.UUID(experience_project)) != experience_project
@@ -373,14 +386,28 @@ class InterruptedResponseProxy:
             )["maxRequestBytes"]
             if type(maximum) is not int or not 1 <= maximum <= 4096:
                 raise ValueError("the canonical experience request limit is invalid")
+        elif knowledge:
+            if (
+                experience_project is not None
+                or not isinstance(knowledge_project, str)
+                or str(uuid.UUID(knowledge_project)) != knowledge_project
+            ):
+                raise ValueError("an exact canonical knowledge project alone is required")
+            path = "/api/v1/knowledge/projects/" + knowledge_project + "/ingestions"
+            maximum = json.loads(
+                (REPOSITORY_ROOT / ".iacode/policies/knowledge-policy.json").read_bytes()
+            )["maxRequestBytes"]
+            if type(maximum) is not int or not 1 <= maximum <= 16384:
+                raise ValueError("the canonical knowledge request limit is invalid")
         else:
-            if experience_project is not None:
+            if experience_project is not None or knowledge_project is not None:
                 raise ValueError("a desktop interruption does not select an experience project")
             path, maximum = PROTOCOL["path"], PROTOCOL["maxRequestBytes"]
         target = urlsplit(base)
         self.counts: Counter = Counter()
         self.accepted_run: str | None = None
         self.accepted_experience: str | None = None
+        self.accepted_document: str | None = None
         self.accepted_status: int | None = None
         self.accepted_expires_at: str | None = None
         self.accepted_content_digest: str | None = None
@@ -401,7 +428,9 @@ class InterruptedResponseProxy:
                     return
                 body = self.rfile.read(length)
                 name = (
-                    drop_operation if experience else json.loads(body).get("operation", "unknown")
+                    drop_operation
+                    if experience or knowledge
+                    else json.loads(body).get("operation", "unknown")
                 )
                 owner.counts[name] += 1
                 upstream = http.client.HTTPConnection(target.hostname, target.port, timeout=35)
@@ -415,7 +444,7 @@ class InterruptedResponseProxy:
                     response = upstream.getresponse()
                     result = response.read(PROTOCOL["maxResponseBytes"] + 1)
                     owner.upstream_statuses.append(response.status)
-                    if experience and response.status >= 400:
+                    if (experience or knowledge) and response.status >= 400:
                         code = json.loads(result).get("code")
                         safe_codes = {
                             "AUTHORIZATION_MATERIAL_REFUSED",
@@ -428,6 +457,9 @@ class InterruptedResponseProxy:
                             "SOURCE_OBJECT_CORRUPT",
                             "EXPERIENCE_DEPENDENCY_UNAVAILABLE",
                             "PROVENANCE_DIGEST_INVALID",
+                            "KNOWLEDGE_DEPENDENCY_UNAVAILABLE",
+                            "SOURCE_CHANGED",
+                            "REUSE_PERMISSION_DENIED",
                         }
                         owner.upstream_code = code if code in safe_codes else "OTHER_REFUSAL"
                     if (
@@ -436,8 +468,11 @@ class InterruptedResponseProxy:
                         and 200 <= response.status < 300
                     ):
                         accepted = json.loads(result)
-                        if experience:
-                            owner.accepted_experience = accepted["experienceId"]
+                        if experience or knowledge:
+                            if knowledge:
+                                owner.accepted_document = accepted["documentId"]
+                            else:
+                                owner.accepted_experience = accepted["experienceId"]
                             owner.accepted_expires_at = accepted["expiresAt"]
                             owner.accepted_content_digest = accepted["contentDigest"]
                         else:

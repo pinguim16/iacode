@@ -1,0 +1,40 @@
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0001/audit-harness/execute_live_knowledge.py:13:1
+   |
+11 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+12 |
+13 | from execute_gate import preserve_execution
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+14 | from ledger_common import find_secrets, utc_now, write_json
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0001/audit-harness/execute_live_knowledge.py:14:1
+   |
+13 | from execute_gate import preserve_execution
+14 | from ledger_common import find_secrets, utc_now, write_json
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0001/audit-harness/run_full_verification.py:25:1
+   |
+23 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+24 | sys.path.insert(0, str(ROOT / "scripts/iacode"))
+25 | from ledger_common import find_secrets
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+26 | from verify import build_stages
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0001/audit-harness/run_full_verification.py:26:1
+   |
+24 | sys.path.insert(0, str(ROOT / "scripts/iacode"))
+25 | from ledger_common import find_secrets
+26 | from verify import build_stages
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+help: Move module level imports to top of file
+
+Found 4 errors.

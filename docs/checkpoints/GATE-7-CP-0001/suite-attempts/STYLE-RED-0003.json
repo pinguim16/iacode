@@ -1,0 +1,22 @@
+{
+  "schemaVersion": "1.0.0",
+  "kind": "TARGETED_CAUSAL_NOT_WHOLE_GATE",
+  "gate": "STYLE-RED",
+  "command": [
+    "python",
+    "docs/checkpoints/GATE-7-CP-0001/audit-harness/format_current_python.py",
+    "--check-only"
+  ],
+  "observedAt": "2026-10-18T17:36:23Z",
+  "subjectCommit": "801be785ab076b380f163d4c09784fd016974bd6",
+  "sourceDirty": true,
+  "sourceFingerprint": "9c982e48a20eb472da6f7846a442b8710de09bf8181f37ab83a383ad8e8ec8a7",
+  "sourceUnchanged": true,
+  "exitCode": 1,
+  "outputEncodingValid": true,
+  "unsafeOutputOccurrences": 0,
+  "outputBytes": 365,
+  "outputSha256": "c368f477de127fe513a9948db0361b24d0daa2d3a0aa0ea469df58237f350347",
+  "safeOutputArtifact": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/STYLE-RED-0003.log",
+  "result": "FAIL"
+}

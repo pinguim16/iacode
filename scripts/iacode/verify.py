@@ -458,6 +458,13 @@ def build_stages(fast: bool) -> list[Stage]:
             "--report",
             str(REPOSITORY_ROOT / "var/experience-store-e2e.json"),
         ),
+        python_stage(
+            "knowledge-engine-e2e",
+            "real governed source ingestion, measured retrieval, citations and invalidation",
+            "scripts/iacode/scenarios/knowledge_engine_e2e.py",
+            "--report",
+            str(REPOSITORY_ROOT / "var/knowledge-engine-e2e.json"),
+        ),
     ]
 
     if not fast:

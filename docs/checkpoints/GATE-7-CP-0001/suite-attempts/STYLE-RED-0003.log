@@ -1,0 +1,10 @@
+N818 Exception name `StageFailed` should be named with an Error suffix
+  --> docs/checkpoints/GATE-7-CP-0001/audit-harness/publish_progress.py:20:7
+   |
+20 | class StageFailed(RuntimeError):
+   |       ^^^^^^^^^^^
+21 |     def __init__(self, stage: str, code: int) -> None:
+22 |         super().__init__("serialized publication stage refused")
+   |
+
+Found 1 error.

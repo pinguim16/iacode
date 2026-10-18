@@ -4,9 +4,9 @@
 - Scope: `Knowledge Engine governed source ingestion lexical indexing retrieval citations rights invalidation persistence privacy recovery and M2 internal audit handoff`
 - Technologies: `Python`, `PostgreSQL`, `Docker`, `Windows`
 - Modules: `services/knowledge`, `apps/api`, `packages/contracts`, `packages/persistence`, `scripts/iacode`
-- Generated: `2026-10-18T17:24:33Z`
-- Lessons considered: 145
-- Lessons applicable: 144
+- Generated: `2026-10-18T18:06:54Z`
+- Lessons considered: 146
+- Lessons applicable: 145
 
 Every applicable lesson below is a requirement of this Gate. The derived identifiers must
 appear in `REQUIREMENTS-MATRIX.json`, and the Delivery Completeness Validator fails the
@@ -158,6 +158,7 @@ delivery when one is absent.
 | `LSN-0143` Management recovery is not complete runtime capability | `GUARDED` | HIGH | `LESSON-REQ-0142` | Do not promote a management-only recovery into full runtime readiness. Verify the actual canonical build, host-bind and lint capabilities through the supported transport before immutable assurance. |
 | `LSN-0144` Raw archived observations retain original context rather than becoming active relocated documents | `GUARDED` | HIGH | `LESSON-REQ-0143` | Preserve raw observation bytes and original interpretation context; never publish a relocated byte-exact archive as active source/documentation with broken context. |
 | `LSN-0145` A new persistent capability must extend the explicit structural contract, not bypass its exact inventory | `GUARDED` | MEDIUM | `LESSON-REQ-0144` | For every authorized persistence addition, extend the owning exact table inventory, immutable/lifecycle classification and foreign-key ownership contract while preserving all inherited assertions; prove each boundary rejects a deliberate mismatch. |
+| `LSN-0146` A completed command record is not proof that its producing process has exited | `GUARDED` | HIGH | `LESSON-REQ-0145` | Wait for actual producer process exit before starting a dependent writer or publication step; a successful intermediate ledger record, metadata file or output line is not a process-completion signal. |
 
 ## Why each lesson applies
 
@@ -1168,3 +1169,10 @@ delivery when one is absent.
 - Required check: For every authorized persistence addition, extend the owning exact table inventory, immutable/lifecycle classification and foreign-key ownership contract while preserving all inherited assertions; prove each boundary rejects a deliberate mismatch.
 - Required evidence: Actual complete API gate with the expanded exact structural expectations plus executed missing/extra table, wrong fact/lifecycle and changed-cascade adverse controls; real migration parity remains separate.
 - Derived requirement: `LESSON-REQ-0144`
+
+### LSN-0146 — A completed command record is not proof that its producing process has exited
+
+- Reason: applies to every Gate; category process; severity HIGH; already guarded, so the control must keep holding
+- Required check: Wait for actual producer process exit before starting a dependent writer or publication step; a successful intermediate ledger record, metadata file or output line is not a process-completion signal.
+- Required evidence: Executed process-order positive and failure controls using actual child processes, including successful-looking intermediate output followed by nonzero exit; the dependent mutation must remain unexecuted on refusal.
+- Derived requirement: `LESSON-REQ-0145`

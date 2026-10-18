@@ -1,0 +1,27 @@
+{
+  "schemaVersion": "1.0.0",
+  "kind": "TARGETED_CAUSAL_NOT_WHOLE_GATE",
+  "gate": "GATE7-ROOT",
+  "command": [
+    "python",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-p",
+    "test_gate7_*"
+  ],
+  "observedAt": "2026-10-18T17:54:58Z",
+  "subjectCommit": "801be785ab076b380f163d4c09784fd016974bd6",
+  "sourceDirty": true,
+  "sourceFingerprint": "b52841f632e5710b49aacd691a0b1e849e2968f744f1f7a5ec9682ac1663f608",
+  "sourceUnchanged": true,
+  "exitCode": 0,
+  "outputEncodingValid": true,
+  "unsafeOutputOccurrences": 0,
+  "outputBytes": 159,
+  "outputSha256": "11edc4cebdcbbb763bc4b42480b37c65805258f43a5b41547875b8ccc03af38b",
+  "safeOutputArtifact": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/GATE7-ROOT-0003.log",
+  "result": "PASS"
+}

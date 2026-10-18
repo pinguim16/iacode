@@ -5,5 +5,7 @@ neutral deterministic projection, real confined file and PostgreSQL adapters, mi
 authenticated API and bounded owned retention. Default curated registry stays empty and experience
 rights stay unchanged. Packaging, complete knowledge gate/collection, docs and causal memory grow
 without removing inherited controls. Actual local API192/domain33/SQL21 results are separately
-bound in CURRENT-PROGRESS.json; original red observations remain. No full-verifier, ordered internal
+bound in CURRENT-PROGRESS.json, alongside actual root21 and owned live78-control/10-query proof.
+New canonical full-verifier stage, exact producer archive and actual-process-owned publication
+driver are implemented/tested. Original red observations remain. No full-verifier, ordered internal
 assurance, Gate7 seal or independent M2 approval exists yet. All sealed predecessors stay immutable.

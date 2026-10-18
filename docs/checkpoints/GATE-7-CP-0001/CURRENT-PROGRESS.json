@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
   "kind": "IMPLEMENTATION_PROGRESS_NOT_ACCEPTANCE",
-  "observedAt": "2026-10-18T17:24:34Z",
+  "observedAt": "2026-10-18T18:08:41Z",
   "suites": {
     "apiUnit": {
       "passed": 192,
@@ -23,6 +23,23 @@
       "receipt": "suite-attempts/KNOWLEDGE-SQL-0003.json",
       "sourceFingerprint": "537d12c971a402b3285728e7dc44368c897036cca685a9e6e6f149314dcb76a3",
       "scope": "LOCAL_TARGETED_NOT_WHOLE_VERIFICATION"
+    },
+    "gate7Root": {
+      "passed": 21,
+      "failed": 0,
+      "receipt": "suite-attempts/GATE7-ROOT-0005.json",
+      "sourceFingerprint": "71aa3858d29e42af869ecdd1e5cef8ede9100801a863419408f2512032626bea",
+      "scope": "LOCAL_TARGETED_NOT_WHOLE_VERIFICATION"
+    },
+    "knowledgeOwnedLive": {
+      "passed": 1,
+      "failed": 0,
+      "controlsPassed": 78,
+      "queriesPassed": 10,
+      "receipt": "suite-attempts/KNOWLEDGE-LIVE-0001.json",
+      "originalProducer": "attempts/KNOWLEDGE-LIVE-PRODUCER-0001.json",
+      "sourceFingerprint": "bfa062a86d2e648e12ab496571ae39e9b6bcd9b897fcddfc6fb24ff379684f3f",
+      "scope": "ONE_TARGETED_OWNED_SCENARIO_NOT_WHOLE_VERIFICATION"
     }
   },
   "cleanup": {

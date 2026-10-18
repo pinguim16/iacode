@@ -127,6 +127,15 @@ withdrawal and recovery. The full non-fast verifier must additionally run isolat
 and every inherited provider/sandbox/quality/client/experience control. Unit doubles are not proof
 of SQL or actual runtime operation. Follow checkpoint evidence for what has really executed.
 
+`python scripts/iacode/scenarios/knowledge_engine_e2e.py` runs the separately owned live scenario.
+It creates a fresh authenticated Compose namespace, uses the explicitly configured actual smoke
+model and real sandbox/quality/experience workflow, deploys only synthetic content-bound grants,
+measures every predefined corpus query/citation and exercises response loss, restart, corruption,
+revocation, rebuild, withdrawal, expiry and automatic purge. It observes actual owned cleanup and
+other container identities/states. The versioned fixture is
+`services/knowledge/tests/fixtures/retrieval-corpus.json`; its permissions never extend to user or
+provider data. The full verifier includes this scenario without dropping an inherited stage.
+
 For missing matches, inspect current permission/source revision and actual document expiry/index
 policy first. A missing/unavailable source is not permission to serve a cached quote. Correct an
 actual source/rights/dependency problem, reindex when required, and rerun the full affected proof.

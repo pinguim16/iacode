@@ -1,0 +1,23 @@
+{
+  "schemaVersion": "1.0.0",
+  "kind": "TARGETED_OWNED_LIVE_NOT_WHOLE_VERIFIER",
+  "gate": "knowledge-engine-e2e",
+  "command": [
+    "python",
+    "scripts/iacode/scenarios/knowledge_engine_e2e.py",
+    "--report",
+    "var/knowledge-engine-e2e.json"
+  ],
+  "observedAt": "2026-10-18T17:51:15Z",
+  "subjectCommit": "801be785ab076b380f163d4c09784fd016974bd6",
+  "sourceDirty": true,
+  "sourceFingerprint": "bfa062a86d2e648e12ab496571ae39e9b6bcd9b897fcddfc6fb24ff379684f3f",
+  "sourceUnchanged": true,
+  "exitCode": 0,
+  "outputEncodingValid": true,
+  "unsafeOutputOccurrences": 0,
+  "outputBytes": 14415,
+  "outputSha256": "f9b1d03264336caeec9b7c665ae05fc33a89e319fe52c2241cea895786c349bd",
+  "safeOutputArtifact": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/KNOWLEDGE-LIVE-0001.log",
+  "result": "PASS"
+}

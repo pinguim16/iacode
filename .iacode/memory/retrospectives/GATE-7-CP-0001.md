@@ -5,6 +5,13 @@ independent M2 approval. Observable evidence belongs to the current checkpoint a
 
 ## What went well
 
+Cmd-0081's fresh owned real provider/sandbox/quality/experience/knowledge run passes78 controls and
+all10 predefined corpus queries/citations. Every own container/volume/network is actually removed,
+unrelated IDs/states and source fingerprint remain unchanged. Exact9717-byte original report is
+retained before interpretation. Cmd-0090 passes all21 current root controls, including current
+producer/consumer-refusal/actual-clone-cleanup and prior-PASS retirement. Neither is full immutable
+verification or independent M2 approval; those remain separately required.
+
 Canonical predecessor entry, derivation and inherited baseline pass before behavior changes.
 Cmd-0033 passes192 actual API cases; cmd-0034 passes the current32-case knowledge domain suite
 and full closed schema comparison. Cmd-0042 passes21 actual PostgreSQL/HTTP/migration cases with
@@ -12,6 +19,15 @@ zero leftover owned containers/volumes/networks and all unrelated container iden
 preserved. Exact safe producer bytes remain. Fresh live acceptance and whole assurance are due.
 
 ## What failed
+
+G7-INT-007: a successful finalizer command record is observed before the whole process exits,
+and the caller starts its dependent commit too early. Actual later waits return0 for both and a
+separate post-commit validation proves clean committed content, so no divergence/loss is observed.
+The serial-exit contract is nevertheless violated. LSN-0146 is CONFIRMED pending a process-owned
+sequential driver and actual child-process positive/adverse execution; no canonical check changes.
+Cmd-0070 subsequently passes two actual child-process cases: real successful order and misleading
+successful-looking output followed by exit7 without executing the consumer. The checkpoint-local
+driver consumes that boundary for all publication stages; GRD-0149 locally guards LSN-0146.
 
 G7-INT-001 records the original published README freezing Gate4 and denying the delivered
 Experience Store. It was unchanged through sealed Gate6. The original published bytes and their
@@ -27,6 +43,20 @@ Cmd-0024 passes the whole mandatory lint; cmd-0025/0026 pass the inherited denom
 actual knowledge-project omission refusal. This restores the local guard, not full assurance.
 
 ## What repeated
+
+G7-INT-009: explicit checking of the new archive/full-verifier helpers refuses four E402 import
+placements at cmd-0086/0087. Recurrence10/CRITICAL reopens LSN-0105. Only import placement is
+refactored into the actual consuming functions; no rules, exemptions, stage vocabulary or raw
+capture semantics change. Complete current quality and root proof remain due before restoration.
+Actual current explicit check cmd-0088, whole mandatory lint cmd-0089 and all21 current root cases
+cmd-0090 pass after import-only correction. Recurrence10/CRITICAL and every earlier failure remain.
+
+G7-INT-008: cmd-0072/0073 refuse the publication driver's exception name under unchanged N818.
+LSN-0105 recurrence9/CRITICAL reopens. Rename only the exception/references and repeat explicit
+source quality, whole mandatory lint and actual process/inherited denominator controls before
+restoration. All preceding failures, recurrence counts, behavior and correct assertions remain.
+Actual explicit check cmd-0074, complete unchanged lint cmd-0075 and all six current root cases
+cmd-0076 pass after the name-only correction. Local restoration retains recurrence9/CRITICAL.
 
 G7-INT-006: the actual finalizer cmd-0050 and unchanged full-delta control cmd-0051 refuse a new
 noncredential lexical type-alias spelling under strict named-assignment detection. LSN-0119
@@ -87,6 +117,7 @@ the original guard tests and original published bytes remain. Full current assur
 | Lesson | Status | Guarded by |
 |---|---|---|
 | LSN-0145 | GUARDED | GRD-0148; actual cmd-0033/0042 structural mutations and complete API/SQL proof. |
+| LSN-0146 | GUARDED | GRD-0149; actual child-process clean/failure order cmd-0070 and consumed sequential publication driver. |
 
 One new confirmed structural-integration class is recorded; the two older failures remain recurrences.
 
@@ -94,6 +125,9 @@ One new confirmed structural-integration class is recorded; the two older failur
 
 | Lesson | Change | Reason |
 |---|---|---|
+| LSN-0135 | Proactively extend GRD-0137 with current Gate7 producer and stale-location controls | Actual cmd-0090 passes current producer refusal/cleanup and prior-byte retirement; original controls remain. |
+| LSN-0105 | Retain recurrence10/CRITICAL with local import-only restoration | Original cmd-0086/0087 red retained; explicit/whole lint and all21 current root cases cmd-0088/0089/0090 pass. |
+| LSN-0105 | Retain recurrence9/CRITICAL with name-only local restoration | Actual cmd-0072/0073 red retained; explicit/whole lint and actual process/denominator root proof cmd-0074/0075/0076 pass. |
 | LSN-0119 | Recurrence4/CRITICAL retained and locally restored, scanners unchanged | Original strict/corrective failures retained; actual unchanged class cmd-0052, domain/schema33 cmd-0055 and canonical finalizer cmd-0061 pass. |
 | LSN-0018 | Retain recurrence3/CRITICAL with locator-only local repair | Actual cmd-0043 refusal retained; unchanged complete resolver cmd-0044 and memory cmd-0045 pass. |
 | LSN-0117 | Recurrence1/HIGH retained; GRD-0119 extended and locally restored | Published original, causal cmd-0017 refusal and actual positive/adverse/inherited cmd-0018/0019 proof. |

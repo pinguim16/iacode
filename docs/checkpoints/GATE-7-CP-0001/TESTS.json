@@ -17,10 +17,11 @@
     "runId": "gate7-local-targeted-not-whole-acceptance"
   },
   "e2e": {
-    "executed": false,
-    "passed": 0,
+    "executed": true,
+    "passed": 1,
     "failed": 0,
-    "command": null,
-    "evidence": null
+    "command": "python docs/checkpoints/GATE-7-CP-0001/audit-harness/execute_live_knowledge.py",
+    "evidence": "command:cmd-0081",
+    "runId": "gate7-local-targeted-not-whole-acceptance"
   }
 }

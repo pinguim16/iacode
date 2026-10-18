@@ -3,7 +3,7 @@
 Current Gate: GATE-7
 Current Status: IN_PROGRESS
 
-Last validated published Gate7 entry: ad240dac4bea356ad283fff961fb629a611dd7a8
+Last validated published Gate7 implementation: 801be785ab076b380f163d4c09784fd016974bd6
 Current branch: main
 
 ## Objective
@@ -13,20 +13,19 @@ READY_FOR_REVIEW for the separate independent M2 audit. No Gate8 or self-attesta
 
 ## What was completed
 
-Entry validation,35 anchors, canonical48-row specification, current192 derived requirements,
-144 selected lessons/145 considered, inherited129-case baseline, plan and ADR-0053/0054. Gate7
-entry ad240da is published. Core contracts/domain, actual source/SQL adapters, migration0008,
-authenticated API, owned retention, packaging and docs are implemented but only locally proved.
-Cmd-0033 API192, cmd-0055 domain33/schema and cmd-0042 SQL/HTTP/migrations21 pass; current complete
-lint cmd-0040 and causal controls pass. Six findings are locally closed. G7-INT-006 retains the
-strict alias refusal and incomplete first correction; actual source-only correction now passes
-strict controls cmd-0052, domain/schema cmd-0055 and actual canonical finalizer cmd-0061.
+Entry validation,35 anchors, canonical48-row specification, current193 derived requirements,
+145 selected lessons/146 considered, inherited129-case baseline, plan and ADR-0053/0054. Published
+implementation801be78 is clean and separately post-commit CHECKPOINT_VALID before normal push.
+Core contracts/domain, actual source/SQL adapters, migration0008, authenticated API, owned retention,
+packaging and docs are implemented. Local actual proofs: API192 cmd-0033, domain33/schema cmd-0055,
+SQL/HTTP/migrations21 cmd-0042, owned live78 controls/10 measured queries cmd-0081, current root21
+cmd-0090 and complete lint cmd-0089. New full-verifier stage/harness and exact producer retention
+are written/tested. All nine local findings are closed with original failures/recurrences retained.
 
 ## What was NOT completed
 
-Fresh owned provider/sandbox/quality/knowledge live scenario, current full verifier stage, broader
-root specification/boundary/packaging guards, formal functional proof and complete immutable non-fast
-verification. Whole Green Keeper, total completeness, fresh internal Red Team/VALID control, full
+One complete immutable non-fast verification and formal total functional binding. Whole Green
+Keeper, total completeness, fresh internal Red Team/VALID control, full
 clean-clone mirror, M2 consolidation/final report and canonical seal remain due. Independent M2
 review/Red Team/second-tool validation stay pending. No Gate8 authority.
 
@@ -34,7 +33,7 @@ review/Red Team/second-tool validation stay pending. No Gate8 authority.
 
 Main began at sealed Gate6 d6deb90564011f9ee518da20acbb56a39b985f74, matching remote main and clean
 Git before changes. Current unsealed STATE uses HEAD for subsequent atomic Gate7 commits. There
-is no Gate7 canonical seal tag yet. Current owned implementation changes after ad240da are expected,
+is no Gate7 canonical seal tag yet. Current owned implementation changes after801be78 are expected,
 not an unexplained divergence. Compare the actual current Git/STATE before continuing; do not
 modify a predecessor or assume a future commit/seal.
 
@@ -54,18 +53,24 @@ retention. Internal-role separation is not independence. M2 audit must judge the
 
 Original baseline cmd-0006 passes129 inherited cases. Actual complete API cmd-0033 passes192,
 knowledge cmd-0055 passes33/current union schema, SQL/HTTP/migration cmd-0042 passes21 with actual
-resource cleanup and unrelated container state preservation. Whole lint cmd-0040, inherited
-positive/adverse lint denominator cmd-0041, unchanged resolver class cmd-0044 and memory cmd-0045
-pass. Scope, original bytes/hashes and distinct fingerprints remain in suite-attempts; these are
-local proofs, not one complete immutable verifier or ordered internal assurance.
+resource cleanup and unrelated container state preservation. Owned actual live cmd-0081 passes78
+controls and all10 predefined queries; every own container/volume/network is removed, unrelated
+states and source fingerprint stay unchanged, original9717-byte producer JSON is archived exactly.
+Current root21 cmd-0090 includes process completion, strict scope/specification, corpus, policy,
+schema, packaging, stage growth and actual raw producer/refusal/cleanup/stale-PASS controls.
+Complete lint cmd-0089 passes. Scope and distinct original fingerprints remain explicit; these
+local proofs do not combine into one immutable verifier or ordered internal assurance.
 
 ## Known failures
 
-FINDINGS.json retains original published rollup defect, two style refusals, structural integration
+FINDINGS.json retains original published rollup defect, source-quality refusals, structural integration
 omissions and wrong-kind guard locator. Causal correction/control evidence closes each locally;
-LSN-0117 recurrence1/HIGH, LSN-0105 recurrence8/CRITICAL and LSN-0018 recurrence3/CRITICAL remain.
+LSN-0117 recurrence1/HIGH, LSN-0105 recurrence10/CRITICAL and LSN-0018 recurrence3/CRITICAL remain.
 LSN-0119 recurrence4/CRITICAL also remains; its alias-only local repair passes strict/domain/
-canonical controls without scanner allowances. New LSN-0145 is guarded by GRD-0148.
+canonical controls without scanner allowances. New LSN-0145/GRD-0148 and LSN-0146/GRD-0149 retain
+the structural and actual-process-exit failures. Use the process-owned publication driver instead
+of launching Git from a completed intermediate ledger record. Both original overlapping processes
+actually exited0 and later committed validation passed, but that does not excuse the violation.
 Cmd-0046 encountered one unexplained Windows file-open
 OSError22; original preflight remained intact and the identical canonical cmd-0047 passed. No
 permission/global setting was changed. Baseline is decoded/LF-normalized, not original raw bytes.
@@ -83,16 +88,22 @@ describe this implementing session as an independent auditor. Serialize metadata
 
 ## Required next action
 
-Finish PLAN G7-S01: fresh owned knowledge live scenario/stage plus broader root and packaging
-controls. Then publish an exact subject, execute the complete non-fast verifier and every ordered
+Freeze/publish the exact runtime candidate using the process-owned publication driver and await
+its actual exit. Create a fresh immutable Gate7 runtime subject tag, then execute the complete
+non-fast verifier from public Git transport and every ordered
 internal control, consolidate M2 and canonically seal READY_FOR_REVIEW. Do not start Gate8.
 
 ## Exact continuation sequence
 
 Perform canonical startup/Git comparison and check current STEPS/ledger. Entry publication exists;
-never rerun prepare_entry.py or original archival helpers. Continue S01 under ADR-0053/0054 and
-read CURRENT-PROGRESS.json, FINDINGS and exact local receipts. Finish the owned live/causal proofs,
-freeze/publish exact source and execute one whole non-fast verifier. Whole Green Keeper precedes
+never rerun prepare_entry.py or original archival helpers. Read CURRENT-PROGRESS.json, FINDINGS and
+exact local receipts. Run audit-harness/publish_progress.py directly with --execute and a Gate7
+commit subject; it sequences the staged scan, canonical finalizer, commit, committed validation and
+normal push using actual child exits. Never outer-wrap it (or finalizer/sealer) in record_command.
+After its actual exit, pin an unused iacode-subjects/GATE-7-CP-0001-runtime-vN tag to the exact
+published commit and run the new Gate7 run_full_verification.py with exact --commit/--tag and
+supported explicit --node. Never move a tag or run the Gate6 fixed-subject helper.
+Whole Green Keeper precedes
 completeness, fresh Red Team/null control and complete mirror. Consolidate M2 and prepare canonical
 final report/handoff; finalize, commit/publish, seal, publish evidence/tag and verify public transport.
 Actual outcomes, not this plan, establish completion. After sealing, write no more to this subject.

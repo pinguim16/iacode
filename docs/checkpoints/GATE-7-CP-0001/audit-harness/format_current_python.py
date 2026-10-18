@@ -29,6 +29,12 @@ PATHS = (
     "services/knowledge/src", "services/knowledge/tests",
     "scripts/iacode/knowledge_schema.py", "scripts/iacode/gates/knowledge_tests.py",
     "scripts/iacode/gates/lint.py",
+    "scripts/iacode/desktop_test_support.py",
+    "scripts/iacode/scenarios/knowledge_corpus_actor.py",
+    "scripts/iacode/scenarios/knowledge_engine_e2e.py",
+    "docs/checkpoints/GATE-7-CP-0001/audit-harness/publish_progress.py",
+    "docs/checkpoints/GATE-7-CP-0001/audit-harness/run_full_verification.py",
+    "docs/checkpoints/GATE-7-CP-0001/audit-harness/execute_live_knowledge.py",
 )
 
 

@@ -2,7 +2,9 @@
 
 This plan follows actual entry validation, complete preflight cmd-0004, full191-row derivation
 cmd-0005 and successful inherited129-case baseline cmd-0006. Cmd-0030/0031 refresh all192
-requirements after confirmed LSN-0145, before its structural correction. A plan and baseline are not feature
+requirements after confirmed LSN-0145, before its structural correction. Cmd-0068/0069 extract
+LSN-0146 before its process-driver correction, bringing the current canonical set to193 rows.
+A plan and baseline are not feature
 acceptance. Only Gate 7 is authorized. Separate internal-role artifacts are same-session, never
 independent. The canonical checklist and every selected LESSON-REQ remain the denominator.
 
@@ -19,6 +21,13 @@ independent. The canonical checklist and every selected LESSON-REQ remain the de
 - Stop: unexpected divergence/missing authority; ordinary failures require causal rework.
 
 ## G7-S01 — Governed Knowledge Engine
+
+G7-INT-007 corrective plan: a checkpoint-local process-owned publication driver sequences the
+unchanged canonical staged scan, finalizer, exact declared-file staging, commit, committed
+validation and normal push. Every child must actually exit0 before its consumer runs. Actual
+temporary child-process tests prove normal order and that a misleading successful-looking output
+line followed by nonzero exit cannot trigger the consumer. This is orchestration of existing
+policy, not a new Gate/promotion rule or alternative canonical finalizer/sealer.
 
 G7-INT-003 corrective plan: preserve each inherited structural equality/assertion and append
 only the authorized knowledge table/fact/cascade entries. Add actual controls invoking those
@@ -829,3 +838,8 @@ This mechanically rendered list is not a substitute denominator and may omit no 
 
 - Required check: For every authorized persistence addition, extend the owning exact table inventory, immutable/lifecycle classification and foreign-key ownership contract while preserving all inherited assertions; prove each boundary rejects a deliberate mismatch.
 - Required evidence: Actual complete API gate with the expanded exact structural expectations plus executed missing/extra table, wrong fact/lifecycle and changed-cascade adverse controls; real migration parity remains separate.
+
+### LESSON-REQ-0145 — LSN-0146
+
+- Required check: Wait for actual producer process exit before starting a dependent writer or publication step; a successful intermediate ledger record, metadata file or output line is not a process-completion signal.
+- Required evidence: Executed process-order positive and failure controls using actual child processes, including successful-looking intermediate output followed by nonzero exit; the dependent mutation must remain unexecuted on refusal.

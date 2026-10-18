@@ -49,10 +49,10 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 | `REQ-0033` | GATE_SPECIFICATION | `canonical:GATE-7#6.3` | yes | `PARTIAL` | `PARTIAL` | Finite consumed retention and an owned bounded automatic sweeper physically purge primary knowledge/chunk payloads and retain only finite minimal safe tombstones/audit facts. |
 | `REQ-0034` | GATE_SPECIFICATION | `canonical:GATE-7#6.4` | yes | `PARTIAL` | `PARTIAL` | Authenticated project-bound invalidation/withdrawal is idempotent and does not delete sources, experiences, quality evidence or another project's records. |
 | `REQ-0035` | GATE_SPECIFICATION | `canonical:GATE-7#6.5` | yes | `PARTIAL` | `PARTIAL` | Dependency/sweeper failures and shutdown are observable and bounded; restore must reconcile current grants, withdrawals, source versions and time before exposure. |
-| `REQ-0036` | GATE_SPECIFICATION | `canonical:GATE-7#7.1` | yes | `NOT_STARTED` | `NOT_STARTED` | Fresh actual-stack acceptance admits a rights-qualified validation corpus, indexes real persisted content, measures retrieval and resolves exact citations through authenticated HTTP. |
-| `REQ-0037` | GATE_SPECIFICATION | `canonical:GATE-7#7.2` | yes | `NOT_STARTED` | `NOT_STARTED` | Live proof exercises restart, replay, denied Gate 6 reuse, cross-project/auth attacks, current-source invalidation, retention/withdrawal, corrupt recovery and unchanged inherited resources. |
+| `REQ-0036` | GATE_SPECIFICATION | `canonical:GATE-7#7.1` | yes | `PARTIAL` | `PARTIAL` | Fresh actual-stack acceptance admits a rights-qualified validation corpus, indexes real persisted content, measures retrieval and resolves exact citations through authenticated HTTP. |
+| `REQ-0037` | GATE_SPECIFICATION | `canonical:GATE-7#7.2` | yes | `PARTIAL` | `PARTIAL` | Live proof exercises restart, replay, denied Gate 6 reuse, cross-project/auth attacks, current-source invalidation, retention/withdrawal, corrupt recovery and unchanged inherited resources. |
 | `REQ-0038` | GATE_SPECIFICATION | `canonical:GATE-7#7.3` | yes | `PARTIAL` | `PARTIAL` | Every test owns its namespace/resources and observes cleanup; no global Docker/editor state or other applications are changed. |
-| `REQ-0039` | GATE_SPECIFICATION | `canonical:GATE-7#7.4` | yes | `NOT_STARTED` | `NOT_STARTED` | One complete non-fast verifier invocation at an exact published immutable subject includes every inherited/new mandatory stage; partial reruns or stale producers cannot produce PASS. |
+| `REQ-0039` | GATE_SPECIFICATION | `canonical:GATE-7#7.4` | yes | `PARTIAL` | `PARTIAL` | One complete non-fast verifier invocation at an exact published immutable subject includes every inherited/new mandatory stage; partial reruns or stale producers cannot produce PASS. |
 | `REQ-0040` | GATE_SPECIFICATION | `canonical:GATE-7#7.5` | yes | `PARTIAL` | `PARTIAL` | Safe exact producer bytes, subject/fingerprint/process identities and actual cleanup outcomes survive fallible postprocessing; original failures remain immutable and transported byte-exactly. |
 | `REQ-0041` | GATE_SPECIFICATION | `canonical:GATE-7#8.1` | yes | `PARTIAL` | `PARTIAL` | Runbooks document sources/grants, default denial, index/search/citations, all endpoints/auth, invalidation/rebuild, retention/restore, privacy, ranking and operational limits. |
 | `REQ-0042` | GATE_SPECIFICATION | `canonical:GATE-7#8.2` | yes | `PARTIAL` | `PARTIAL` | All selected lessons and requirements have specific implementation, executed positive/adverse tests, documentation and resolvable evidence without false PASS or waived controls. |
@@ -206,6 +206,7 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 | `LESSON-REQ-0142` | LESSON | `lesson:LSN-0143` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify management recovery is not complete runtime capability |
 | `LESSON-REQ-0143` | LESSON | `lesson:LSN-0144` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify raw archived observations retain original context rather than becoming active relocated documents |
 | `LESSON-REQ-0144` | LESSON | `lesson:LSN-0145` | yes | `PARTIAL` | `PARTIAL` | Verify a new persistent capability must extend the explicit structural contract, not bypass its exact inventory |
+| `LESSON-REQ-0145` | LESSON | `lesson:LSN-0146` | yes | `PARTIAL` | `PARTIAL` | Verify a completed command record is not proof that its producing process has exited |
 
 ## Evidence
 
@@ -269,7 +270,7 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 - Source reference: docs/GATE-7-CHECKLIST.md row 2.1
 - Description: Ingestion selects an exact project/source/revision and stable request identity; callers cannot submit replacement source text, arbitrary paths/URLs, rights or quality verdicts.
 - Implementation: `file:services/knowledge/src/iacode_knowledge/domain.py`, `file:apps/api/src/iacode_api/knowledge/store.py`
-- Test: `command:cmd-0055`, `command:cmd-0042`
+- Test: `command:cmd-0055`, `command:cmd-0042`, `command:cmd-0081`
 - Negative test: _none_
 - Documentation: `checkpoint:PLAN.md`, `checkpoint:CURRENT-PROGRESS.json`
 - Validation: _none_
@@ -280,7 +281,7 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 - Source reference: docs/GATE-7-CHECKLIST.md row 2.2
 - Description: Curated source admission consumes a closed operator-controlled registry with project, source identity, exact content digest, ownership, license, explicit storage/RAG grants, evidence and finite validity.
 - Implementation: `file:services/knowledge/src/iacode_knowledge/domain.py`, `file:apps/api/src/iacode_api/knowledge/store.py`
-- Test: `command:cmd-0055`, `command:cmd-0042`
+- Test: `command:cmd-0055`, `command:cmd-0042`, `command:cmd-0081`
 - Negative test: _none_
 - Documentation: `checkpoint:PLAN.md`, `checkpoint:CURRENT-PROGRESS.json`
 - Validation: _none_
@@ -291,7 +292,7 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 - Source reference: docs/GATE-7-CHECKLIST.md row 2.3
 - Description: Unknown, denied, missing, expired, revoked, conflicting or mismatched source permission fails closed before any index effect or disclosure; training/distillation remain denied.
 - Implementation: `file:services/knowledge/src/iacode_knowledge/domain.py`, `file:apps/api/src/iacode_api/knowledge/store.py`
-- Test: `command:cmd-0055`, `command:cmd-0042`
+- Test: `command:cmd-0055`, `command:cmd-0042`, `command:cmd-0081`
 - Negative test: _none_
 - Documentation: `checkpoint:PLAN.md`, `checkpoint:CURRENT-PROGRESS.json`
 - Validation: _none_
@@ -302,7 +303,7 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 - Source reference: docs/GATE-7-CHECKLIST.md row 2.4
 - Description: Existing experiences are admitted only through their owning validation and effective permissions; storage-only, withdrawn, expired, corrupt or cross-project experiences cannot support knowledge.
 - Implementation: `file:services/knowledge/src/iacode_knowledge/domain.py`, `file:apps/api/src/iacode_api/knowledge/store.py`
-- Test: `command:cmd-0055`, `command:cmd-0042`
+- Test: `command:cmd-0055`, `command:cmd-0042`, `command:cmd-0081`
 - Negative test: _none_
 - Documentation: `checkpoint:PLAN.md`, `checkpoint:CURRENT-PROGRESS.json`
 - Validation: _none_
@@ -313,7 +314,7 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 - Source reference: docs/GATE-7-CHECKLIST.md row 2.5
 - Description: Every contributor's permissions and provenance constrain the derived document, all chunks and exports; no derived permission exceeds a source grant.
 - Implementation: `file:services/knowledge/src/iacode_knowledge/domain.py`, `file:apps/api/src/iacode_api/knowledge/store.py`
-- Test: `command:cmd-0055`, `command:cmd-0042`
+- Test: `command:cmd-0055`, `command:cmd-0042`, `command:cmd-0081`
 - Negative test: _none_
 - Documentation: `checkpoint:PLAN.md`, `checkpoint:CURRENT-PROGRESS.json`
 - Validation: _none_
@@ -324,7 +325,7 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 - Source reference: docs/GATE-7-CHECKLIST.md row 2.6
 - Description: Source resolution is bounded and confined to the configured curated root; traversal, symlinks/reparse escape, nonregular files, missing/changed bytes and invalid UTF-8 are refused without network fetch or execution.
 - Implementation: `file:services/knowledge/src/iacode_knowledge/domain.py`, `file:apps/api/src/iacode_api/knowledge/store.py`
-- Test: `command:cmd-0055`, `command:cmd-0042`
+- Test: `command:cmd-0055`, `command:cmd-0042`, `command:cmd-0081`
 - Negative test: _none_
 - Documentation: `checkpoint:PLAN.md`, `checkpoint:CURRENT-PROGRESS.json`
 - Validation: _none_
@@ -335,7 +336,7 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 - Source reference: docs/GATE-7-CHECKLIST.md row 2.7
 - Description: Full exact normalized source, derived records and delivered payloads are scanned with canonical credential detection and known authorization forms; scanner failure refuses safely.
 - Implementation: `file:services/knowledge/src/iacode_knowledge/domain.py`, `file:apps/api/src/iacode_api/knowledge/store.py`
-- Test: `command:cmd-0055`, `command:cmd-0042`
+- Test: `command:cmd-0055`, `command:cmd-0042`, `command:cmd-0081`
 - Negative test: _none_
 - Documentation: `checkpoint:PLAN.md`, `checkpoint:CURRENT-PROGRESS.json`
 - Validation: _none_
@@ -346,7 +347,7 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 - Source reference: docs/GATE-7-CHECKLIST.md row 2.8
 - Description: Private/transcript fields, prompts, provider answers and runtime secrets are not admitted or echoed in knowledge, diagnostics, audit facts or errors. Source content is untrusted data, never instructions or authority.
 - Implementation: `file:services/knowledge/src/iacode_knowledge/domain.py`, `file:apps/api/src/iacode_api/knowledge/store.py`
-- Test: `command:cmd-0055`, `command:cmd-0042`
+- Test: `command:cmd-0055`, `command:cmd-0042`, `command:cmd-0081`
 - Negative test: _none_
 - Documentation: `checkpoint:PLAN.md`, `checkpoint:CURRENT-PROGRESS.json`
 - Validation: _none_
@@ -357,7 +358,7 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 - Source reference: docs/GATE-7-CHECKLIST.md row 3.1
 - Description: Versioned closed schemas define source identity, provenance, document/chunk/index version, exact digests, citations, query and results; unknown fields and ambiguous JSON are refused.
 - Implementation: `file:services/knowledge/src/iacode_knowledge/domain.py`, `file:apps/api/src/iacode_api/knowledge/store.py`
-- Test: `command:cmd-0055`, `command:cmd-0042`
+- Test: `command:cmd-0055`, `command:cmd-0042`, `command:cmd-0081`
 - Negative test: _none_
 - Documentation: `checkpoint:PLAN.md`, `checkpoint:CURRENT-PROGRESS.json`
 - Validation: _none_
@@ -368,7 +369,7 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 - Source reference: docs/GATE-7-CHECKLIST.md row 3.2
 - Description: Consumed policy bounds request/source/result bytes, types, nesting, text/chunks/tokens, query size, result count, candidate work and retention; callers cannot widen ceilings.
 - Implementation: `file:services/knowledge/src/iacode_knowledge/domain.py`, `file:apps/api/src/iacode_api/knowledge/store.py`
-- Test: `command:cmd-0055`, `command:cmd-0042`
+- Test: `command:cmd-0055`, `command:cmd-0042`, `command:cmd-0081`
 - Negative test: _none_
 - Documentation: `checkpoint:PLAN.md`, `checkpoint:CURRENT-PROGRESS.json`
 - Validation: _none_
@@ -379,7 +380,7 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 - Source reference: docs/GATE-7-CHECKLIST.md row 3.3
 - Description: Deterministic derivation preserves exact source spans and hashes, handles Unicode/line endings explicitly and records the transformation version without inventing summaries or facts.
 - Implementation: `file:services/knowledge/src/iacode_knowledge/domain.py`, `file:apps/api/src/iacode_api/knowledge/store.py`
-- Test: `command:cmd-0055`, `command:cmd-0042`
+- Test: `command:cmd-0055`, `command:cmd-0042`, `command:cmd-0081`
 - Negative test: _none_
 - Documentation: `checkpoint:PLAN.md`, `checkpoint:CURRENT-PROGRESS.json`
 - Validation: _none_
@@ -390,7 +391,7 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 - Source reference: docs/GATE-7-CHECKLIST.md row 3.4
 - Description: Index identity binds source revision/digest, grant/provenance and derivation policy; restart/retry cannot silently change identity, duplicate chunks or rewrite immutable content.
 - Implementation: `file:services/knowledge/src/iacode_knowledge/domain.py`, `file:apps/api/src/iacode_api/knowledge/store.py`
-- Test: `command:cmd-0055`, `command:cmd-0042`
+- Test: `command:cmd-0055`, `command:cmd-0042`, `command:cmd-0081`
 - Negative test: _none_
 - Documentation: `checkpoint:PLAN.md`, `checkpoint:CURRENT-PROGRESS.json`
 - Validation: _none_
@@ -401,7 +402,7 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 - Source reference: docs/GATE-7-CHECKLIST.md row 3.5
 - Description: Actual persistent inverted indexing supports bounded parameterized lexical matching, deterministic relevance ordering and stable ties; no fixed response or production in-memory fallback is used.
 - Implementation: `file:services/knowledge/src/iacode_knowledge/domain.py`, `file:apps/api/src/iacode_api/knowledge/store.py`
-- Test: `command:cmd-0055`, `command:cmd-0042`
+- Test: `command:cmd-0055`, `command:cmd-0042`, `command:cmd-0081`
 - Negative test: _none_
 - Documentation: `checkpoint:PLAN.md`, `checkpoint:CURRENT-PROGRESS.json`
 - Validation: _none_
@@ -412,7 +413,7 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 - Source reference: docs/GATE-7-CHECKLIST.md row 3.6
 - Description: Empty/no-match queries and invalid/oversized inputs have explicit semantics; capacity or dependency failures cannot masquerade as a successful empty result or silently partial search.
 - Implementation: `file:services/knowledge/src/iacode_knowledge/domain.py`, `file:apps/api/src/iacode_api/knowledge/store.py`
-- Test: `command:cmd-0055`, `command:cmd-0042`
+- Test: `command:cmd-0055`, `command:cmd-0042`, `command:cmd-0081`
 - Negative test: _none_
 - Documentation: `checkpoint:PLAN.md`, `checkpoint:CURRENT-PROGRESS.json`
 - Validation: _none_
@@ -423,7 +424,7 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 - Source reference: docs/GATE-7-CHECKLIST.md row 4.1
 - Description: Alembic and ORM agree on the real PostgreSQL knowledge schema, ownership, constraints and indexes; up/down/from-zero/autogenerate preserve inherited data.
 - Implementation: `file:services/knowledge/src/iacode_knowledge/domain.py`, `file:apps/api/src/iacode_api/knowledge/store.py`
-- Test: `command:cmd-0055`, `command:cmd-0042`
+- Test: `command:cmd-0055`, `command:cmd-0042`, `command:cmd-0081`
 - Negative test: _none_
 - Documentation: `checkpoint:PLAN.md`, `checkpoint:CURRENT-PROGRESS.json`
 - Validation: _none_
@@ -434,7 +435,7 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 - Source reference: docs/GATE-7-CHECKLIST.md row 4.2
 - Description: Source admission, immutable document/chunks/index and minimal audit fact commit atomically; failed validation or dependency/write failure leaves no partial publication.
 - Implementation: `file:services/knowledge/src/iacode_knowledge/domain.py`, `file:apps/api/src/iacode_api/knowledge/store.py`
-- Test: `command:cmd-0055`, `command:cmd-0042`
+- Test: `command:cmd-0055`, `command:cmd-0042`, `command:cmd-0081`
 - Negative test: _none_
 - Documentation: `checkpoint:PLAN.md`, `checkpoint:CURRENT-PROGRESS.json`
 - Validation: _none_
@@ -445,7 +446,7 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 - Source reference: docs/GATE-7-CHECKLIST.md row 4.3
 - Description: Stable request/source identity makes accepted-response-loss and concurrent retries idempotent; conflicting retries are refused and cannot reset retention or resurrect withdrawn revisions.
 - Implementation: `file:services/knowledge/src/iacode_knowledge/domain.py`, `file:apps/api/src/iacode_api/knowledge/store.py`
-- Test: `command:cmd-0055`, `command:cmd-0042`
+- Test: `command:cmd-0055`, `command:cmd-0042`, `command:cmd-0081`
 - Negative test: _none_
 - Documentation: `checkpoint:PLAN.md`, `checkpoint:CURRENT-PROGRESS.json`
 - Validation: _none_
@@ -456,7 +457,7 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 - Source reference: docs/GATE-7-CHECKLIST.md row 4.4
 - Description: Persisted body, digest, chunk spans/tokens, source/grant and envelope are revalidated before delivery; direct database corruption cannot yield valid retrieval or citation.
 - Implementation: `file:services/knowledge/src/iacode_knowledge/domain.py`, `file:apps/api/src/iacode_api/knowledge/store.py`
-- Test: `command:cmd-0055`, `command:cmd-0042`
+- Test: `command:cmd-0055`, `command:cmd-0042`, `command:cmd-0081`
 - Negative test: _none_
 - Documentation: `checkpoint:PLAN.md`, `checkpoint:CURRENT-PROGRESS.json`
 - Validation: _none_
@@ -467,7 +468,7 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 - Source reference: docs/GATE-7-CHECKLIST.md row 4.5
 - Description: Restart/rebuild preserves truthful current revisions, rights and index version; stale or incompatible index is unavailable until an actual valid rebuild, never silently served.
 - Implementation: `file:services/knowledge/src/iacode_knowledge/domain.py`, `file:apps/api/src/iacode_api/knowledge/store.py`
-- Test: `command:cmd-0055`, `command:cmd-0042`
+- Test: `command:cmd-0055`, `command:cmd-0042`, `command:cmd-0081`
 - Negative test: _none_
 - Documentation: `checkpoint:PLAN.md`, `checkpoint:CURRENT-PROGRESS.json`
 - Validation: _none_
@@ -478,7 +479,7 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 - Source reference: docs/GATE-7-CHECKLIST.md row 5.1
 - Description: Every ingestion, inspect/list, search, citation/export and invalidation requires configured authenticated runtime transport; alternate unauthenticated paths cannot reach effects/data.
 - Implementation: `file:services/knowledge/src/iacode_knowledge/domain.py`, `file:apps/api/src/iacode_api/knowledge/store.py`
-- Test: `command:cmd-0055`, `command:cmd-0042`
+- Test: `command:cmd-0055`, `command:cmd-0042`, `command:cmd-0081`
 - Negative test: _none_
 - Documentation: `checkpoint:PLAN.md`, `checkpoint:CURRENT-PROGRESS.json`
 - Validation: _none_
@@ -489,7 +490,7 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 - Source reference: docs/GATE-7-CHECKLIST.md row 5.2
 - Description: Every lookup/index/query/citation is project-bound before data access; cross-project identifiers and enumeration cannot disclose content, digests or modify state.
 - Implementation: `file:services/knowledge/src/iacode_knowledge/domain.py`, `file:apps/api/src/iacode_api/knowledge/store.py`
-- Test: `command:cmd-0055`, `command:cmd-0042`
+- Test: `command:cmd-0055`, `command:cmd-0042`, `command:cmd-0081`
 - Negative test: _none_
 - Documentation: `checkpoint:PLAN.md`, `checkpoint:CURRENT-PROGRESS.json`
 - Validation: _none_
@@ -500,7 +501,7 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 - Source reference: docs/GATE-7-CHECKLIST.md row 5.3
 - Description: Every returned knowledge excerpt has a resolvable exact source/revision/content digest, chunk digest and source span; no output can omit/fabricate a citation or outrun its source rights.
 - Implementation: `file:services/knowledge/src/iacode_knowledge/domain.py`, `file:apps/api/src/iacode_api/knowledge/store.py`
-- Test: `command:cmd-0055`, `command:cmd-0042`
+- Test: `command:cmd-0055`, `command:cmd-0042`, `command:cmd-0081`
 - Negative test: _none_
 - Documentation: `checkpoint:PLAN.md`, `checkpoint:CURRENT-PROGRESS.json`
 - Validation: _none_
@@ -511,7 +512,7 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 - Source reference: docs/GATE-7-CHECKLIST.md row 5.4
 - Description: Retrieval is measured against a versioned varied corpus and predefined relevant/irrelevant expectations; bounded relevance and deterministic ranking are demonstrated, not asserted.
 - Implementation: `file:services/knowledge/src/iacode_knowledge/domain.py`, `file:apps/api/src/iacode_api/knowledge/store.py`
-- Test: `command:cmd-0055`, `command:cmd-0042`
+- Test: `command:cmd-0055`, `command:cmd-0042`, `command:cmd-0081`
 - Negative test: _none_
 - Documentation: `checkpoint:PLAN.md`, `checkpoint:CURRENT-PROGRESS.json`
 - Validation: _none_
@@ -522,7 +523,7 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 - Source reference: docs/GATE-7-CHECKLIST.md row 5.5
 - Description: Queries do not become durable content or sensitive logs; stable bounded errors/correlation never expose input, paths, credentials, exception text or SQL.
 - Implementation: `file:services/knowledge/src/iacode_knowledge/domain.py`, `file:apps/api/src/iacode_api/knowledge/store.py`
-- Test: `command:cmd-0055`, `command:cmd-0042`
+- Test: `command:cmd-0055`, `command:cmd-0042`, `command:cmd-0081`
 - Negative test: _none_
 - Documentation: `checkpoint:PLAN.md`, `checkpoint:CURRENT-PROGRESS.json`
 - Validation: _none_
@@ -533,7 +534,7 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 - Source reference: docs/GATE-7-CHECKLIST.md row 5.6
 - Description: Knowledge is cited untrusted evidence only; it cannot submit a tool result, change a quality verdict, widen an approval or execute host/source instructions.
 - Implementation: `file:services/knowledge/src/iacode_knowledge/domain.py`, `file:apps/api/src/iacode_api/knowledge/store.py`
-- Test: `command:cmd-0055`, `command:cmd-0042`
+- Test: `command:cmd-0055`, `command:cmd-0042`, `command:cmd-0081`
 - Negative test: _none_
 - Documentation: `checkpoint:PLAN.md`, `checkpoint:CURRENT-PROGRESS.json`
 - Validation: _none_
@@ -544,7 +545,7 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 - Source reference: docs/GATE-7-CHECKLIST.md row 6.1
 - Description: Revocation, source change/removal, expiry and explicit withdrawal immediately deny stale index/citation use independently of background sweeping.
 - Implementation: `file:services/knowledge/src/iacode_knowledge/domain.py`, `file:apps/api/src/iacode_api/knowledge/store.py`
-- Test: `command:cmd-0055`, `command:cmd-0042`
+- Test: `command:cmd-0055`, `command:cmd-0042`, `command:cmd-0081`
 - Negative test: _none_
 - Documentation: `checkpoint:PLAN.md`, `checkpoint:CURRENT-PROGRESS.json`
 - Validation: _none_
@@ -555,7 +556,7 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 - Source reference: docs/GATE-7-CHECKLIST.md row 6.2
 - Description: Replacing a source revision atomically invalidates the prior publication; superseded excerpts never mix with the new revision and stable retries preserve terminal facts.
 - Implementation: `file:services/knowledge/src/iacode_knowledge/domain.py`, `file:apps/api/src/iacode_api/knowledge/store.py`
-- Test: `command:cmd-0055`, `command:cmd-0042`
+- Test: `command:cmd-0055`, `command:cmd-0042`, `command:cmd-0081`
 - Negative test: _none_
 - Documentation: `checkpoint:PLAN.md`, `checkpoint:CURRENT-PROGRESS.json`
 - Validation: _none_
@@ -566,7 +567,7 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 - Source reference: docs/GATE-7-CHECKLIST.md row 6.3
 - Description: Finite consumed retention and an owned bounded automatic sweeper physically purge primary knowledge/chunk payloads and retain only finite minimal safe tombstones/audit facts.
 - Implementation: `file:services/knowledge/src/iacode_knowledge/domain.py`, `file:apps/api/src/iacode_api/knowledge/store.py`
-- Test: `command:cmd-0055`, `command:cmd-0042`
+- Test: `command:cmd-0055`, `command:cmd-0042`, `command:cmd-0081`
 - Negative test: _none_
 - Documentation: `checkpoint:PLAN.md`, `checkpoint:CURRENT-PROGRESS.json`
 - Validation: _none_
@@ -577,7 +578,7 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 - Source reference: docs/GATE-7-CHECKLIST.md row 6.4
 - Description: Authenticated project-bound invalidation/withdrawal is idempotent and does not delete sources, experiences, quality evidence or another project's records.
 - Implementation: `file:services/knowledge/src/iacode_knowledge/domain.py`, `file:apps/api/src/iacode_api/knowledge/store.py`
-- Test: `command:cmd-0055`, `command:cmd-0042`
+- Test: `command:cmd-0055`, `command:cmd-0042`, `command:cmd-0081`
 - Negative test: _none_
 - Documentation: `checkpoint:PLAN.md`, `checkpoint:CURRENT-PROGRESS.json`
 - Validation: _none_
@@ -588,7 +589,7 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 - Source reference: docs/GATE-7-CHECKLIST.md row 6.5
 - Description: Dependency/sweeper failures and shutdown are observable and bounded; restore must reconcile current grants, withdrawals, source versions and time before exposure.
 - Implementation: `file:services/knowledge/src/iacode_knowledge/domain.py`, `file:apps/api/src/iacode_api/knowledge/store.py`
-- Test: `command:cmd-0055`, `command:cmd-0042`
+- Test: `command:cmd-0055`, `command:cmd-0042`, `command:cmd-0081`
 - Negative test: _none_
 - Documentation: `checkpoint:PLAN.md`, `checkpoint:CURRENT-PROGRESS.json`
 - Validation: _none_
@@ -598,10 +599,10 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 
 - Source reference: docs/GATE-7-CHECKLIST.md row 7.1
 - Description: Fresh actual-stack acceptance admits a rights-qualified validation corpus, indexes real persisted content, measures retrieval and resolves exact citations through authenticated HTTP.
-- Implementation: _none_
+- Implementation: `file:services/knowledge/src/iacode_knowledge/domain.py`, `file:apps/api/src/iacode_api/knowledge/store.py`
 - Test: _none_
 - Negative test: _none_
-- Documentation: _none_
+- Documentation: `checkpoint:PLAN.md`, `checkpoint:CURRENT-PROGRESS.json`
 - Validation: _none_
 - Guardrail: _none_
 
@@ -609,10 +610,10 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 
 - Source reference: docs/GATE-7-CHECKLIST.md row 7.2
 - Description: Live proof exercises restart, replay, denied Gate 6 reuse, cross-project/auth attacks, current-source invalidation, retention/withdrawal, corrupt recovery and unchanged inherited resources.
-- Implementation: _none_
+- Implementation: `file:services/knowledge/src/iacode_knowledge/domain.py`, `file:apps/api/src/iacode_api/knowledge/store.py`
 - Test: _none_
 - Negative test: _none_
-- Documentation: _none_
+- Documentation: `checkpoint:PLAN.md`, `checkpoint:CURRENT-PROGRESS.json`
 - Validation: _none_
 - Guardrail: _none_
 
@@ -631,10 +632,10 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 
 - Source reference: docs/GATE-7-CHECKLIST.md row 7.4
 - Description: One complete non-fast verifier invocation at an exact published immutable subject includes every inherited/new mandatory stage; partial reruns or stale producers cannot produce PASS.
-- Implementation: _none_
+- Implementation: `file:services/knowledge/src/iacode_knowledge/domain.py`, `file:apps/api/src/iacode_api/knowledge/store.py`
 - Test: _none_
 - Negative test: _none_
-- Documentation: _none_
+- Documentation: `checkpoint:PLAN.md`, `checkpoint:CURRENT-PROGRESS.json`
 - Validation: _none_
 - Guardrail: _none_
 
@@ -2314,6 +2315,17 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 
 - Source reference: LESSON-PREFLIGHT.json LESSON-REQ-0144
 - Description: Verify a new persistent capability must extend the explicit structural contract, not bypass its exact inventory
+- Implementation: `file:services/knowledge/src/iacode_knowledge/domain.py`, `file:apps/api/src/iacode_api/knowledge/store.py`
+- Test: _none_
+- Negative test: _none_
+- Documentation: `checkpoint:PLAN.md`, `checkpoint:CURRENT-PROGRESS.json`
+- Validation: _none_
+- Guardrail: _none_
+
+### LESSON-REQ-0145 - lesson:LSN-0146
+
+- Source reference: LESSON-PREFLIGHT.json LESSON-REQ-0145
+- Description: Verify a completed command record is not proof that its producing process has exited
 - Implementation: `file:services/knowledge/src/iacode_knowledge/domain.py`, `file:apps/api/src/iacode_api/knowledge/store.py`
 - Test: _none_
 - Negative test: _none_

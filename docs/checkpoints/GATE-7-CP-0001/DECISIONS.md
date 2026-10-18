@@ -1,5 +1,14 @@
 # Decisions
 
+- G7-INT-007 records a second serial-order violation, distinct from the earlier cmd-0027/0028
+  overlap: successful cmd-0067 is appended before the finalizer's entire process exits. Session45921
+  still reports running and process22984 remains live while commit session23625 is launched.
+  Both are subsequently actually awaited and exit0; committed801be785ab076b380f163d4c09784fd016974bd6
+  is clean and passes an additional standalone CHECKPOINT_VALID before normal publication.
+  No metadata loss/divergence is observed. Nonetheless intermediate durable success is not process
+  completion. LSN-0146 requires a process-owned sequential driver and actual positive/adverse child
+  tests before local restoration. No historical PID/session may be replayed or killed.
+
 - Cmd-0046 has one Windows OSError22 opening the existing preflight output; read-only inspection
   finds the original intact, no competing writer or changed path. The identical canonical
   cmd-0047 succeeds without any permission/global setting change. Root cause is not established;

@@ -19,9 +19,9 @@
       "expectedBehavior": "Implement governed sources, immutable persistent indexing, measured retrieval/citations and rights/invalidation/retention/recovery.",
       "implementation": ["services/knowledge", "packages/contracts", "packages/persistence", "apps/api", "docs/runbooks"],
       "tests": ["domain and boundary cases", "actual SQL/HTTP/migrations", "owned live retrieval and adverse controls"],
-      "functionalProof": "Core contracts, source/store adapters, migration and authenticated API/lifecycle are implemented, not fully accepted. Actual cmd-0033 passes192 API cases, cmd-0055 passes33 current domain/schema cases and cmd-0042 passes21 real PostgreSQL/HTTP/migration cases with lifecycle counters and observed cleanup/unrelated-state preservation. Whole lint cmd-0040, inherited positive/adverse denominator cmd-0041 and resolver/memory cmd-0044/0045 pass. Strict alias refusal cmd-0050/0051 and missed forward annotation cmd-0053 remain; corrected strict class cmd-0052 and complete domain/schema cmd-0055 pass, while actual canonical checkpoint validation is due. Fresh owned live acceptance, broader root/packaging and full ordered assurance are not executed.",
-      "evidence": ["cmd-0033", "cmd-0055", "cmd-0040", "cmd-0041", "cmd-0042", "cmd-0044", "cmd-0045", "cmd-0050", "cmd-0051", "cmd-0052", "cmd-0053", "CURRENT-PROGRESS.json", "FINDINGS.json"],
-      "status": "IN_PROGRESS"
+      "functionalProof": "Local implementation and targeted proof complete: actual API192 cmd-0033, domain33/closed schema cmd-0055, real PostgreSQL/HTTP/migration21 cmd-0042, current root21 cmd-0090 and whole unchanged lint cmd-0089 pass. Fresh owned actual provider/sandbox/quality/experience/knowledge cmd-0081 passes78 controls and all10 predefined retrieval/citation queries, with actual own cleanup, other-container preservation and exact original report retained. All nine local findings close with original failures and recurrence history preserved. This completes local implementation only, not the one immutable whole verifier, formal total functional binding, ordered internal assurance, seal or independent M2 approval.",
+      "evidence": ["cmd-0033", "cmd-0055", "cmd-0042", "cmd-0081", "cmd-0089", "cmd-0090", "CURRENT-PROGRESS.json", "FINDINGS.json"],
+      "status": "COMPLETE"
     },
     {
       "stepId": "G7-S02",
@@ -29,9 +29,9 @@
       "expectedBehavior": "Execute one complete immutable non-fast verifier, whole Green Keeper, completeness, fresh Red Team/VALID control and full clean-clone mirror.",
       "implementation": ["TESTS.json", "QUALITY.json", "COMPLETENESS-REPORT.json", "M2-INTERNAL-RED-TEAM.json", "M2-INTERNAL-MIRROR.json"],
       "tests": ["complete canonical verifier", "all mandatory gates", "completeness", "internal Red Team", "closure mirror"],
-      "functionalProof": "Not executed for Gate7. No inherited PASS or partial execution substitutes for current complete proof.",
-      "evidence": [],
-      "status": "NOT_STARTED"
+      "functionalProof": "The current full-verifier stage and public clean-clone runner are prepared; raw producer capture, exact stage vocabulary and actual process-owned publication controls pass. The one immutable non-fast invocation and every ordered internal assurance control remain unexecuted for Gate7. No inherited PASS or combination of local proofs substitutes for them.",
+      "evidence": ["cmd-0081", "cmd-0090", "audit-harness/run_full_verification.py", "audit-harness/publish_progress.py"],
+      "status": "IN_PROGRESS"
     },
     {
       "stepId": "G7-S03",

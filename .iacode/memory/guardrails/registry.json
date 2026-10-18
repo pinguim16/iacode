@@ -2026,7 +2026,9 @@
         "test_raw_reports_survive_real_postprocessing_exception_and_owned_cleanup",
         "test_raw_capture_refuses_secret_material_but_retains_neutral_failure_inventory",
         "test_current_producer_bytes_survive_actual_consumer_failure_and_owned_cleanup",
-        "test_current_producer_capture_refuses_unsafe_bytes_without_losing_neutral_inventory"
+          "test_current_producer_capture_refuses_unsafe_bytes_without_losing_neutral_inventory",
+          "Gate7ProducerBoundaryTests.test_knowledge_raw_producer_survives_actual_consumer_refusal_before_clone_cleanup",
+          "Gate7ProducerBoundaryTests.test_prior_live_pass_is_preserved_and_retired_before_any_new_producer"
       ],
       "lessons": [
         "LSN-0135"
@@ -2175,6 +2177,18 @@
       ],
       "lessons": ["LSN-0145"],
       "removingItWouldAllow": "An authorized persistent capability to bypass exact table/fact/ownership contracts, or mutate lifecycle rows without the existing write convention."
+    },
+    {
+      "guardrailId": "GRD-0149",
+      "title": "Dependent publication stages await actual producer exit rather than ledger output",
+      "kind": "test",
+      "reference": "Gate7ProcessCompletionTests.test_process_owned_sequence_waits_for_real_success_before_consumer",
+      "verifiedBy": [
+        "Gate7ProcessCompletionTests.test_process_owned_sequence_waits_for_real_success_before_consumer",
+        "Gate7ProcessCompletionTests.test_success_looking_output_then_actual_failure_never_starts_consumer"
+      ],
+      "lessons": ["LSN-0146"],
+      "removingItWouldAllow": "A success-looking intermediate record to release a dependent writer before producer exit, including when that producer later fails."
     }
   ]
 }
