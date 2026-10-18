@@ -207,6 +207,7 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 | `LESSON-REQ-0140` | LESSON | `lesson:LSN-0141` | yes | `COMPLETE` | `PARTIAL` | Verify preflight checks honor every declared applicability dimension |
 | `LESSON-REQ-0141` | LESSON | `lesson:LSN-0142` | yes | `COMPLETE` | `PARTIAL` | Verify local Engine recovery keeps transport and cleanup scoped |
 | `LESSON-REQ-0142` | LESSON | `lesson:LSN-0143` | yes | `COMPLETE` | `PARTIAL` | Verify management recovery is not complete runtime capability |
+| `LESSON-REQ-0143` | LESSON | `lesson:LSN-0144` | yes | `NOT_STARTED` | `PARTIAL` | Verify raw archived observations retain original context rather than becoming active relocated documents |
 
 ## Evidence
 
@@ -2332,3 +2333,14 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 - Documentation: `file:docs/ENGINEERING-MEMORY.md`, `file:docs/checkpoints/GATE-6-CP-0001/PLAN.md`
 - Validation: _none_
 - Guardrail: `file:.iacode/memory/guardrails/registry.json`
+
+### LESSON-REQ-0143 - lesson:LSN-0144
+
+- Source reference: LESSON-PREFLIGHT.json LESSON-REQ-0143
+- Description: Verify raw archived observations retain original context rather than becoming active relocated documents
+- Implementation: _none_
+- Test: _none_
+- Negative test: _none_
+- Documentation: _none_
+- Validation: _none_
+- Guardrail: _none_

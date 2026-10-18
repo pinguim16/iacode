@@ -18,7 +18,7 @@ def main() -> int:
     paths = sorted((CHECKPOINT / "attempts").glob("*.json"))
     paths += sorted((CHECKPOINT / "suite-attempts").glob("*.json"))
     paths += sorted((CHECKPOINT / "suite-attempts").glob("*.log"))
-    archive = CHECKPOINT / "attempts/RUNTIME-V6-FINALIZATION-ARCHIVE.json"
+    archive = CHECKPOINT / "attempts/RUNTIME-V6-RAW-CATALOG.json"
     if archive.is_file():
         for row in json.loads(archive.read_text(encoding="utf-8"))["records"]:
             candidate = ROOT / row["archive"]

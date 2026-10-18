@@ -3,6 +3,51 @@
   "checkpoint": "GATE-6-CP-0001",
   "findings": [
     {
+      "findingId": "G6-INT-026",
+      "severity": "LOW",
+      "title": "Serialized metadata write receives a transient OS EINVAL",
+      "status": "CLOSED",
+      "observed": "Cmd-0386 raises OSError22 while opening the regular existing CLOSURE-REQUIREMENTS.json. The read-only file observation finds no link; the underlying OS cause remains unknown.",
+      "resolution": "The identical unmodified helper succeeds at cmd-0387. A later exposed EINVAL at the finalizer's final FILES write is preserved in FINALIZER-OS-FAILURE.json: cmd-0396 internally recorded0 after its first validation, but the real process exits1 and is not accepted as completed. Subsequent actual quiescent cmd-0397 passes CHECKPOINT_VALID. Require a later canonical finalizer to actually exit0 before committing; no silent retries, OS settings changes, causal filesystem diagnosis or future-write guarantee is claimed.",
+      "evidence": ["command:cmd-0386", "command:cmd-0387", "command:cmd-0397", "checkpoint:FINALIZER-OS-FAILURE.json", "file:.iacode/memory/retrospectives/GATE-6-CP-0001.md"]
+    },
+    {
+      "findingId": "G6-INT-025",
+      "severity": "CRITICAL",
+      "classification": "GUARDRAIL_FAILURE",
+      "lessonId": "LSN-0140",
+      "guardrailId": "GRD-0142",
+      "title": "New confirmed lesson was not yet included in the current retrospective",
+      "status": "CLOSED",
+      "observed": "Cmd-0379 executes38 Gate6 cases; only unchanged retrospective completeness fails because LSN-0144 has no retrospective entry yet. Raw published-object equality and the canonical documentation control pass.",
+      "rootCause": "The local author ran the complete suite before synchronizing the new confirmed lesson into its mandatory retrospective. Escalate LSN-0140 recurrence2/CRITICAL; do not weaken the test or record partial acceptance as PASS.",
+      "evidence": ["command:cmd-0379"],
+      "resolution": "Populate the current retrospective's existing sections/table with LSN-0144/GRD-0147 without changing its template or assertion. All38 unchanged Gate6 cases pass cmd-0380. Recurrence2 remains CRITICAL with local guard restoration; fresh whole assurance remains due.",
+      "resolutionEvidence": ["command:cmd-0380"]
+    },
+    {
+      "findingId": "G6-INT-023",
+      "severity": "HIGH",
+      "lessonId": "LSN-0144",
+      "title": "Byte-exact relocated observations are not active documentation in the new path",
+      "status": "CLOSED",
+      "observed": "The unchanged whole-tree documentation test cmd-0376 fails on nine relative links in the exact archived original final report. A separate diagnostic in the v7 clone also confirms this before the incomplete invocation ends. No complete v7 stage or PASS is claimed.",
+      "rootCause": "Retaining original bytes and suffixes caused the original Markdown links to be interpreted relative to their archive location. Raw evidence must keep its original interpretation context and be explicitly typed as raw data, not a live relocated document.",
+      "requiredCorrection": "Preserve original published objects and original manifest unchanged. Relocate only exact raw Markdown/Python archive observations to raw suffixes with a new catalog binding prior locators and hashes. Keep all active documentation checks unchanged, verify current bytes against every original published object and re-execute fresh complete assurance.",
+      "evidence": ["command:cmd-0374", "command:cmd-0376", "checkpoint:attempts/FULL-VERIFY-INTERRUPTED-0004.json", "checkpoint:attempts/RUNTIME-V6-RAW-CATALOG.json"],
+      "resolution": "Actual cmd-0377 relocates only raw Markdown/Python observations, retains all original bytes and original manifest unchanged, and records their original published locators in a separate catalog. Cmd-0378 passes unchanged whole-tree documentation. All38 Gate6 controls pass cmd-0380 including every current catalog member versus its actual original published Git object. LSN-0144/GRD-0147 is locally guarded; no whole acceptance or independent verdict is inferred.",
+      "resolutionEvidence": ["command:cmd-0377", "command:cmd-0378", "command:cmd-0380"]
+    },
+    {
+      "findingId": "G6-INT-024",
+      "severity": "LOW",
+      "title": "Exact owned interruption returns nonzero before writing its receipt",
+      "status": "CLOSED",
+      "observed": "Cmd-0373 validates exact fresh parent/creation identities then taskkill returns nonzero. The helper fails without its expected receipt. Original full cmd-0374 also exits1 with no complete producer report. Later actual exact PID queries find none, clone removal and empty owned resources are observed.",
+      "resolution": "Do not replay old PIDs or infer a successful termination exit. Cmd-0377 writes an observation-only incomplete receipt with explicit limits, actual clone absence and all three empty owned Docker inventories. No shared-project before/after assertion or completed stage is invented. Cmd-0375 is a separate recorder precondition refusal, not a test run; cmd-0376 uses supported discovery and reproduces the real documentation failure.",
+      "evidence": ["command:cmd-0373", "command:cmd-0374", "command:cmd-0375", "command:cmd-0377", "checkpoint:attempts/FULL-VERIFY-INTERRUPTED-0004.json"]
+    },
+    {
       "findingId": "G6-INT-022",
       "severity": "CRITICAL",
       "classification": "GUARDRAIL_FAILURE",

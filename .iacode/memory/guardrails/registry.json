@@ -2145,6 +2145,18 @@
       ],
       "lessons": ["LSN-0008"],
       "removingItWouldAllow": "A prose summary to omit mandatory terminal sections and defer discovery until the finalizer refuses promotion. The terminal validator remains unchanged."
+    },
+    {
+      "guardrailId": "GRD-0147",
+      "title": "Raw archives preserve context and original published observation bytes",
+      "kind": "validator",
+      "reference": "docs/checkpoints/GATE-6-CP-0001/audit-harness/catalog_v6_raw_archives.py",
+      "verifiedBy": [
+        "Gate6BookkeepingCausalTests.test_raw_archive_catalog_retains_manifest_and_published_original_bytes",
+        "SetupChecklistTests.test_documentation_links_resolve"
+      ],
+      "lessons": ["LSN-0144"],
+      "removingItWouldAllow": "Relocated raw observations to be misinterpreted as live documentation, or rewritten archive bytes/manifest to be accepted instead of the immutable original objects."
     }
   ]
 }

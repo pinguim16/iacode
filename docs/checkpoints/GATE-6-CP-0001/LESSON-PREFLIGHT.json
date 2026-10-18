@@ -12,11 +12,11 @@
     "packages/contracts",
     "packages/persistence"
   ],
-  "generatedAt": "2026-10-18T07:13:39Z",
+  "generatedAt": "2026-10-18T07:25:35Z",
   "policyVersion": "2.0.0",
-  "inputsFingerprint": "a22c6646751194e4f180bdcd8bb709f8ad5db5045a8516c166d4a7802c6e683e",
-  "lessonsConsidered": 143,
-  "lessonsApplicable": 142,
+  "inputsFingerprint": "e0605c25a8dc5ec22729b874140f99707c3e56794d3dffc7bbf36817ed61ee01",
+  "lessonsConsidered": 144,
+  "lessonsApplicable": 143,
   "applicable": [
     {
       "lessonId": "LSN-0001",
@@ -1402,8 +1402,8 @@
       "lessonId": "LSN-0140",
       "title": "Summaries preserve canonical continuation structure",
       "status": "GUARDED",
-      "severity": "HIGH",
-      "reasonApplicable": "applies to every Gate; category quality; severity HIGH; already guarded, so the control must keep holding",
+      "severity": "CRITICAL",
+      "reasonApplicable": "applies to every Gate; category quality; severity CRITICAL; already guarded, so the control must keep holding",
       "requiredCheck": "Any helper that replaces a checkpoint artifact must preserve the owning canonical structural contract, not substitute an unstructured summary; required sections stay substantive and complete.",
       "requiredEvidence": "Actual renderer output against canonical headings, omission/empty-section adverse controls and current canonical checkpoint acceptance without any validator weakening.",
       "derivedRequirementId": "LESSON-REQ-0139"
@@ -1437,6 +1437,16 @@
       "requiredCheck": "Do not promote a management-only recovery into full runtime readiness. Verify the actual canonical build, host-bind and lint capabilities through the supported transport before immutable assurance.",
       "requiredEvidence": "Real unchanged complete lint/build/bind execution and subsequent full canonical run; otherwise named external blockers and retained failed observations, never inferred readiness.",
       "derivedRequirementId": "LESSON-REQ-0142"
+    },
+    {
+      "lessonId": "LSN-0144",
+      "title": "Raw archived observations retain original context rather than becoming active relocated documents",
+      "status": "GUARDED",
+      "severity": "HIGH",
+      "reasonApplicable": "applies to every Gate; category documentation; severity HIGH; already guarded, so the control must keep holding",
+      "requiredCheck": "Preserve raw observation bytes and original interpretation context; never publish a relocated byte-exact archive as active source/documentation with broken context.",
+      "requiredEvidence": "Actual published-object equality for every raw archive member, immutable original manifest and unchanged whole-tree active-document validation.",
+      "derivedRequirementId": "LESSON-REQ-0143"
     }
   ],
   "derivedRequirements": [
@@ -2433,6 +2443,13 @@
       "description": "Verify management recovery is not complete runtime capability",
       "mandatory": true,
       "requiredEvidence": "Real unchanged complete lint/build/bind execution and subsequent full canonical run; otherwise named external blockers and retained failed observations, never inferred readiness."
+    },
+    {
+      "id": "LESSON-REQ-0143",
+      "lessonId": "LSN-0144",
+      "description": "Verify raw archived observations retain original context rather than becoming active relocated documents",
+      "mandatory": true,
+      "requiredEvidence": "Actual published-object equality for every raw archive member, immutable original manifest and unchanged whole-tree active-document validation."
     }
   ]
 }

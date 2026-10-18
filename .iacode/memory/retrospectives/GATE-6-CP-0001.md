@@ -18,6 +18,8 @@ continuation-rendering positive/adverse controls. These are local causal proofs,
 
 ## What failed
 
+At cmd-0386 an ordinary serialized metadata write raises EINVAL on CLOSURE-REQUIREMENTS.json. Read-only inspection observes a regular existing file, not a link; the underlying OS cause is not established. The identical unmodified preparation succeeds at cmd-0387, with the original failure retained. This observation teaches that a retry is not diagnosis or proof against future external filesystem interference; do not suppress the error, add silent retries or claim an automated guard for the unknown OS cause. Subsequent complete checkpoint validation remains mandatory.
+
 [FINDINGS.json](../../../docs/checkpoints/GATE-6-CP-0001/FINDINGS.json) preserves strict JSON context
 loss, missing encoded authorization forms, UNIQUE naming drift, JSON/SQL binding fixtures, source
 line budgets, public-identity misclassification, unneeded private SQL columns, strict descriptive
@@ -91,6 +93,8 @@ root controls pass cmd-0178. This is local guard restoration, not whole immutabl
 
 ## What was learned
 
+LSN-0144 records that a byte-exact archive must preserve original interpretation context, not become active relocated Markdown/Python. Cmd-0376 confirms nine broken links; the new raw catalog preserves the original manifest and every original published object. Cmd-0378 accepts unchanged whole-tree documentation. GRD-0147 binds actual raw/published byte equality and the unchanged link guard; whole current acceptance is still pending. Cmd-0379 catches this then-missing retrospective lesson entry, not a runtime defect; LSN-0140/GRD-0142 recurrence2 is explicitly escalated before correction.
+
 Strict JSON prevalidation must preserve transport context. SQL fixtures bind structured data rather
 than embed ambiguous colons. Public identities and actual authorization secrets have different
 contracts. Privacy and boundedness begin at the SQL projection, not merely at serialization.
@@ -118,11 +122,13 @@ ordered assurance remain independently enforced by their canonical tools, not by
 | LSN-0141 | GUARDED | GRD-0143 — all selector dimensions and unexplained-omission refusal |
 | LSN-0142 | GUARDED | GRD-0144 — child-only Engine selection and exact owned cleanup |
 | LSN-0143 | GUARDED | GRD-0145 — actual publisher refuses management-only input and each missing/failed canonical stage; root28 cmd-0196 passes |
+| LSN-0144 | GUARDED after actual cmd-0378/0380 local acceptance | GRD-0147 — immutable original manifest, published-byte raw catalog and unchanged active-document links |
 
 ## Updated lessons
 
 | Lesson | Change | Reason |
 |---|---|---|
+| LSN-0140 | Recurrence2/CRITICAL escalated, then locally GUARDED | Cmd-0379 retains missing new retrospective lesson; complete lesson/guard entries and all38 unchanged Gate6 cases pass cmd-0380 |
 | LSN-0131 | Recurrence1/CRITICAL escalated, then locally GUARDED | New Markdown/Python exact archive boundary and explicit index refresh; actual176-member index equality, inherited Git negative/restored-positive and root37 pass |
 | LSN-0008 | Recurrence3/CRITICAL escalated, then locally GUARDED via GRD-0146 | Final prose summary omitted canonical terminal structure; exact failed report retained, actual positive/every-section adverse controls pass, mandatory fresh assurance remains due |
 | LSN-0042 | Escalated recurrence, then causal guard restoration | Actual UNIQUE convention/migration drift |

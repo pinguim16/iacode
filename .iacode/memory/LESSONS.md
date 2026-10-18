@@ -147,10 +147,11 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 | `LSN-0137` | `GUARDED` | MEDIUM | testing | SQL text interprets inline JSON colons as bindings | `test_legacy_migration_preserves_identity_body_and_rights_without_promotion`, `test_database_immutability_and_direct_corruption_fail_closed` |
 | `LSN-0138` | `GUARDED` | HIGH | security | Secret projection distinguishes public identities from authorization secrets | `test_public_minio_identity_is_not_a_bearer_secret_but_storage_password_stays_protected`, `test_known_opaque_capability_refused_in_declared_forms` |
 | `LSN-0139` | `GUARDED` | HIGH | security | Privacy projection begins in the source query | `test_actual_sql_projection_does_not_fetch_unneeded_private_source_columns`, `test_oversized_required_source_json_is_refused_before_materialization_and_writes` |
-| `LSN-0140` | `GUARDED` | HIGH | quality | Summaries preserve canonical continuation structure | `test_local_handoff_renderer_preserves_the_complete_canonical_contract`, `test_local_handoff_renderer_refuses_omitted_or_empty_sections_and_next_action`, `test_retrospective_preserves_template_and_every_current_gate_lesson` |
+| `LSN-0140` | `GUARDED` | CRITICAL | quality | Summaries preserve canonical continuation structure | `test_local_handoff_renderer_preserves_the_complete_canonical_contract`, `test_local_handoff_renderer_refuses_omitted_or_empty_sections_and_next_action`, `test_retrospective_preserves_template_and_every_current_gate_lesson` |
 | `LSN-0141` | `GUARDED` | HIGH | testing | Preflight checks honor every declared applicability dimension | `test_repository_preflight_accepts_all_declared_filters_but_refuses_unexplained_omission` |
 | `LSN-0142` | `GUARDED` | HIGH | environment | Local Engine recovery keeps transport and cleanup scoped | `test_local_engine_selection_is_child_only_and_preserves_project_and_failure`, `test_owned_recovery_refuses_operational_or_mislabelled_resources_before_removal` |
 | `LSN-0143` | `GUARDED` | HIGH | environment | Management recovery is not complete runtime capability | `test_management_only_report_cannot_replace_complete_non_fast_verification` |
+| `LSN-0144` | `GUARDED` | HIGH | documentation | Raw archived observations retain original context rather than becoming active relocated documents | `Gate6BookkeepingCausalTests.test_raw_archive_catalog_retains_manifest_and_published_original_bytes`, `SetupChecklistTests.test_documentation_links_resolve` |
 
 ## Detail
 
@@ -1909,7 +1910,7 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 
 ### LSN-0140 — Summaries preserve canonical continuation structure
 
-- Status: `GUARDED`, severity HIGH, category quality, recurrences 1.
+- Status: `GUARDED`, severity CRITICAL, category quality, recurrences 2.
 - Source: GATE-6, GATE-6-CP-0001, finding G6-INT-009; G6-INT-016.
 - Symptom: A local assembler emits readable prose but removes mandatory handoff/next-action sections. Later manual editing adds an unsupported retrospective heading.
 - Root cause: The local assembler replaced structured continuation artifacts with summaries. A later manual update likewise failed to preserve the owning retrospective template exactly. Semantically related prose does not satisfy a canonical structural contract; changing the test would hide the authoring defect.
@@ -1918,7 +1919,7 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
   - `test` test_local_handoff_renderer_preserves_the_complete_canonical_contract — Actual canonical renderer output and every omitted/empty-section refusal.
   - `test` test_local_handoff_renderer_refuses_omitted_or_empty_sections_and_next_action — Actual canonical renderer output and every omitted/empty-section refusal.
   - `test` test_retrospective_preserves_template_and_every_current_gate_lesson — The actual retrospective keeps the exact canonical heading sequence and every current lesson and guard identity.
-- Evidence: `file:docs/checkpoints/GATE-6-CP-0001/COMMANDS.jsonl`, `file:docs/checkpoints/GATE-6-CP-0001/FINDINGS.json`, `file:tests/test_gate6_experience.py`
+- Evidence: `file:docs/checkpoints/GATE-6-CP-0001/COMMANDS.jsonl`, `file:docs/checkpoints/GATE-6-CP-0001/FINDINGS.json`, `file:tests/test_gate6_experience.py`, `file:docs/checkpoints/GATE-6-CP-0001/FINDINGS.json`
 
 ### LSN-0141 — Preflight checks honor every declared applicability dimension
 
@@ -1953,3 +1954,15 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 - Prevention:
   - `test` test_management_only_report_cannot_replace_complete_non_fast_verification — Exercise the actual publisher: reject management-only input, every missing canonical stage and a falsely passing report for each failed canonical stage; derive all stage identifiers from current build_stages(False).
 - Evidence: `file:docs/checkpoints/GATE-6-CP-0001/attempts/DOCKER-RETRY-0002.json`, `file:docs/checkpoints/GATE-6-CP-0001/COMMANDS.jsonl`, `file:docs/checkpoints/GATE-6-CP-0001/FINDINGS.json`, `file:docs/checkpoints/GATE-6-CP-0001/attempts/DOCKER-RESTART-0001-AFTER.json`, `file:tests/test_gate6_experience.py`
+
+### LSN-0144 — Raw archived observations retain original context rather than becoming active relocated documents
+
+- Status: `GUARDED`, severity HIGH, category documentation, recurrences 0.
+- Source: GATE-6, GATE-6-CP-0001, finding G6-INT-023.
+- Symptom: The unchanged whole-tree relative-link check rejects nine links in a byte-exact archived final report interpreted at the new archive path.
+- Root cause: Copied observation suffixes were treated as active document semantics even though relative links belonged to the original location.
+- Resolution: Preserve the immutable original manifest and published objects; use explicitly raw data suffixes and a separate catalog binding original locators and unchanged digests, without weakening active-document checks. Actual cmd-0377 preserves raw observations and original manifest, cmd-0378 passes unchanged active-document links and cmd-0380 passes all38 Gate6 cases, including every raw member's actual immutable published-object equality.
+- Prevention:
+  - `test` Gate6BookkeepingCausalTests.test_raw_archive_catalog_retains_manifest_and_published_original_bytes — Every raw catalog member must match the original manifest and actual immutable published Git object, with original Markdown/Python marked raw.
+  - `test` SetupChecklistTests.test_documentation_links_resolve — Every active repository Markdown link still resolves under the unchanged whole-tree check.
+- Evidence: `file:docs/checkpoints/GATE-6-CP-0001/FINDINGS.json`, `file:docs/checkpoints/GATE-6-CP-0001/attempts/RUNTIME-V6-RAW-CATALOG.json`, `file:docs/checkpoints/GATE-6-CP-0001/COMMANDS.jsonl`

@@ -820,3 +820,8 @@ required check/evidence. It is not a replacement denominator and cannot omit a s
 
 - Required check: Do not promote a management-only recovery into full runtime readiness. Verify the actual canonical build, host-bind and lint capabilities through the supported transport before immutable assurance.
 - Required evidence: Real unchanged complete lint/build/bind execution and subsequent full canonical run; otherwise named external blockers and retained failed observations, never inferred readiness.
+
+### LESSON-REQ-0143 — LSN-0144
+
+- Required check: Preserve raw observation bytes and original interpretation context; never publish a relocated byte-exact archive as active source/documentation with broken context.
+- Required evidence: Actual published-object equality for every raw archive member, immutable original manifest and unchanged whole-tree active-document validation.

@@ -1,0 +1,27 @@
+{
+  "kind": "ACTUAL_PROCESS_FAILURE_AFTER_CANONICAL_INTERNAL_SUCCESS_RECORD",
+  "commandId": "cmd-0396",
+  "command": "python scripts/development-ledger/finalize_checkpoint.py --status IN_PROGRESS --commit-ref HEAD",
+  "observedProcessExitCode": 1,
+  "internalRecordedExitCode": 0,
+  "acceptedAsCompletedFinalization": false,
+  "failure": {
+    "type": "OSError",
+    "errno": 22,
+    "message": "Invalid argument",
+    "path": "docs/checkpoints/GATE-6-CP-0001/FILES.json",
+    "site": "finalize_checkpoint.py:361 final inventory write after the first validation and internal ledger record"
+  },
+  "readOnlyObservation": {
+    "volume": "E",
+    "fileSystem": "NTFS",
+    "driveType": "Fixed",
+    "healthStatus": "Healthy",
+    "operationalStatus": "OK",
+    "sizeRemainingBytes": 342598311936,
+    "fileLinkType": null
+  },
+  "cause": "UNDETERMINED; the exposed OS error does not identify a locking process or imply healthy future writes",
+  "subsequentActualValidation": "cmd-0397 CHECKPOINT_VALID exit0",
+  "requiredNextAction": "Require a later canonical finalizer to actually exit0 before any content commit; never infer completion solely from cmd-0396's early internal record. Preserve this actual process-failure observation and do not change OS settings or add silent retries."
+}

@@ -113,6 +113,8 @@ bind("8.7", ["scripts/development-ledger/validate_checkpoint.py", CP + "STATE.js
 CANONICAL["8.5"]["implementationEvidence"].append("file:.iacode/memory/retrospectives/GATE-6-CP-0001.md")
 
 NEW_LESSONS = {
+    "LSN-0144": ([CP + "audit-harness/catalog_v6_raw_archives.py", CP + "attempts/RUNTIME-V6-RAW-CATALOG.json"],
+                  [ROOT_TESTS, "tests/test_development_ledger.py"]),
     "LSN-0131": ([".gitattributes", CP + "audit-harness/verify_evidence_transport.py"],
                   [ROOT_TESTS, "tests/test_gate5_clients.py"]),
     "LSN-0008": ([CP + "audit-harness/assemble_final_handoff.py",

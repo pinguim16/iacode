@@ -7014,6 +7014,24 @@
       "guardrailEvidence": [
         "file:.iacode/memory/guardrails/registry.json"
       ]
+    },
+    {
+      "id": "LESSON-REQ-0143",
+      "source": "LESSON",
+      "sourceRef": "lesson:LSN-0144",
+      "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0143",
+      "description": "Verify raw archived observations retain original context rather than becoming active relocated documents",
+      "mandatory": true,
+      "implementationStatus": "NOT_STARTED",
+      "finalStatus": "PARTIAL",
+      "justification": null,
+      "notes": "Original complete v6 assurance and refused final report are exact archives. Canonical rendering passes local causal controls; fresh immutable verification and every ordered internal control remain mandatory after engineering memory changes.",
+      "implementationEvidence": [],
+      "testEvidence": [],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
     }
   ]
 }

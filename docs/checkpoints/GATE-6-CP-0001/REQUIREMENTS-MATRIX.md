@@ -197,3 +197,4 @@ Expected set derived by: `policies.expected_requirement_refs over docs/GATE-6-CH
 | `LESSON-REQ-0140` | `lesson:LSN-0141` | yes | `PARTIAL` | Verify preflight checks honor every declared applicability dimension | LESSON-PREFLIGHT.json LESSON-REQ-0140 |
 | `LESSON-REQ-0141` | `lesson:LSN-0142` | yes | `PARTIAL` | Verify local Engine recovery keeps transport and cleanup scoped | LESSON-PREFLIGHT.json LESSON-REQ-0141 |
 | `LESSON-REQ-0142` | `lesson:LSN-0143` | yes | `PARTIAL` | Verify management recovery is not complete runtime capability | LESSON-PREFLIGHT.json LESSON-REQ-0142 |
+| `LESSON-REQ-0143` | `lesson:LSN-0144` | yes | `PARTIAL` | Verify raw archived observations retain original context rather than becoming active relocated documents | LESSON-PREFLIGHT.json LESSON-REQ-0143 |

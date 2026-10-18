@@ -157,6 +157,25 @@ class Gate6BoundaryTests(unittest.TestCase):
 
 
 class Gate6BookkeepingCausalTests(unittest.TestCase):
+    def test_raw_archive_catalog_retains_manifest_and_published_original_bytes(self):
+        catalog = ledger_common.load_json(CHECKPOINT / "attempts/RUNTIME-V6-RAW-CATALOG.json")
+        original = (ROOT / catalog["originalManifest"]).read_bytes()
+        self.assertEqual(hashlib.sha256(original).hexdigest(), catalog["originalManifestSha256"])
+        historical = json.loads(original)
+        self.assertEqual(len(catalog["records"]), len(historical["records"]))
+        self.assertFalse(catalog["originalManifestRewritten"])
+        self.assertFalse(catalog["originalObservationBytesChanged"])
+        for item, prior in zip(catalog["records"], historical["records"], strict=True):
+            self.assertEqual(item["originalArchive"], prior["archive"])
+            raw = (ROOT / item["archive"]).read_bytes()
+            published = subprocess.check_output(["git", "show",
+                catalog["originalPublishedCommit"] + ":" + item["originalArchive"]], cwd=ROOT)
+            self.assertEqual(raw, published)
+            self.assertEqual(hashlib.sha256(raw).hexdigest(), prior["sha256"])
+            if Path(item["originalArchive"]).suffix in {".md", ".py"}:
+                self.assertTrue(item["archive"].endswith(".raw"))
+                self.assertFalse((ROOT / item["originalArchive"]).exists())
+
     def test_final_report_renderer_consumes_every_canonical_section(self):
         from validate_checkpoint import FINAL_REPORT_HEADINGS
 
@@ -595,7 +614,7 @@ exec(compile(ast.Module(body=[entry], type_ignores=[]), str(source), "exec"),
             self.assertFalse((directory / "forbidden").exists())
 
     def test_actual_captured_output_hashes_and_git_attributes_preserve_bytes(self):
-        manifest = CHECKPOINT / "attempts/RUNTIME-V6-FINALIZATION-ARCHIVE.json"
+        manifest = CHECKPOINT / "attempts/RUNTIME-V6-RAW-CATALOG.json"
         if manifest.is_file():
             for item in json.loads(manifest.read_bytes())["records"]:
                 payload = (ROOT / item["archive"]).read_bytes()
