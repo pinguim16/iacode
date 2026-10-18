@@ -1,0 +1,77 @@
+....................[iacode] --- fixture: environment boundary
+[iacode] --- fixture: PASS in 0s
+..[iacode] --- fixture: diagnostic evidence
+line-15
+line-16
+line-17
+line-18
+line-19
+line-20
+line-21
+line-22
+line-23
+line-24
+line-25
+line-26
+line-27
+line-28
+line-29
+line-30
+line-31
+line-32
+line-33
+line-34
+line-35
+line-36
+line-37
+line-38
+line-39
+[iacode] --- fixture: FAIL in 0s
+...............................................................BOOKKEEPING_PHASE_COMPLETED index=1 exit=0
+BOOKKEEPING_PHASE_COMPLETED index=2 exit=0
+.BOOKKEEPING_PHASE_COMPLETED index=1 exit=7
+......BOOKKEEPING_PHASE_COMPLETED index=1 exit=0
+BOOKKEEPING_PHASE_COMPLETED index=2 exit=0
+.BOOKKEEPING_PHASE_COMPLETED index=1 exit=7
+...........................{
+  "kind": "NATIVE_INSTALLATION_AND_TRUST_NOT_LIVE_PROVIDER_ACCEPTANCE",
+  "result": "FAIL",
+  "runs": [
+    {
+      "installation": {
+        "result": "PASS",
+        "kind": "UNIT_FIXTURE_NOT_NATIVE_PROOF"
+      },
+      "result": "PASS",
+      "kind": "UNIT_FIXTURE_NOT_NATIVE_PROOF"
+    },
+    {
+      "installation": {
+        "result": "PASS",
+        "kind": "UNIT_FIXTURE_NOT_NATIVE_PROOF"
+      },
+      "result": "PASS",
+      "kind": "UNIT_FIXTURE_NOT_NATIVE_PROOF"
+    }
+  ],
+  "failure": "deliberate native report cleanup failure",
+  "ownedTemporaryDirectoryRemoved": false,
+  "directoryCleanupRetries": 3,
+  "directoryCleanup": {
+    "removed": false,
+    "cleanupRetries": 3,
+    "cleanupAttempts": 4,
+    "cleanupElapsedSeconds": 10.01,
+    "firstSharingLockAfterSeconds": 9.7,
+    "cleanupFailure": {
+      "type": "PermissionError",
+      "winerror": 32
+    }
+  }
+}
+[iacode] EXPERIENCE PASS valid-null-control
+.........
+----------------------------------------------------------------------
+Ran 129 tests in 541.348s
+
+OK

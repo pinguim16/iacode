@@ -31,3 +31,6 @@ gitconfig text eol=lf
 *.ps1 text eol=crlf
 # Exact archived v6 handoff observations include Markdown and Python as original bytes.
 docs/checkpoints/GATE-6-CP-0001/attempts/RUNTIME-V6-FINALIZATION-* -text
+# New producer observations retain their captured bytes across Git transport.
+docs/checkpoints/GATE-7-CP-0001/attempts/* -text
+docs/checkpoints/GATE-7-CP-0001/suite-attempts/*.log -text

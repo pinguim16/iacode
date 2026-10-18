@@ -1,0 +1,47 @@
+{
+  "schemaVersion": "1.0.0",
+  "gate": "GATE-7",
+  "checkpoint": "GATE-7-CP-0001",
+  "steps": [
+    {
+      "stepId": "G7-S00",
+      "requirements": ["canonical entry and all LESSON-REQ obligations"],
+      "expectedBehavior": "Validate/anchor Gate6, record authority/specification/preflight/requirements, execute baseline and define plan/ADRs before implementation.",
+      "implementation": ["AUTHORIZATION.md", "BASELINE.md", "PLAN.md", "LESSON-PREFLIGHT.json", "REQUIREMENTS-MATRIX.json"],
+      "tests": ["predecessor validation", "integrity", "derivation", "inherited baseline", "initial checkpoint validation"],
+      "functionalProof": "Predecessor checks,35-anchor integrity, full derivation, actual129-case baseline and canonical preparatory finalization cmd-0009 pass. Whole unchanged lint cmd-0010 passes. This completes entry, not feature or whole-Gate acceptance; real Git publication must separately be observed.",
+      "evidence": ["cmd-0002", "cmd-0003", "cmd-0004", "cmd-0005", "cmd-0006", "cmd-0009", "cmd-0010"],
+      "status": "COMPLETE"
+    },
+    {
+      "stepId": "G7-S01",
+      "requirements": ["complete derived Knowledge Engine behavior"],
+      "expectedBehavior": "Implement governed sources, immutable persistent indexing, measured retrieval/citations and rights/invalidation/retention/recovery.",
+      "implementation": ["services/knowledge", "packages/contracts", "packages/persistence", "apps/api", "docs/runbooks"],
+      "tests": ["domain and boundary cases", "actual SQL/HTTP/migrations", "owned live retrieval and adverse controls"],
+      "functionalProof": "Ready for implementation after completed entry; reserved README remains. Plans and ADRs are not executed feature evidence.",
+      "evidence": [],
+      "status": "NOT_STARTED"
+    },
+    {
+      "stepId": "G7-S02",
+      "requirements": ["all derived requirements and mandatory internal assurance"],
+      "expectedBehavior": "Execute one complete immutable non-fast verifier, whole Green Keeper, completeness, fresh Red Team/VALID control and full clean-clone mirror.",
+      "implementation": ["TESTS.json", "QUALITY.json", "COMPLETENESS-REPORT.json", "M2-INTERNAL-RED-TEAM.json", "M2-INTERNAL-MIRROR.json"],
+      "tests": ["complete canonical verifier", "all mandatory gates", "completeness", "internal Red Team", "closure mirror"],
+      "functionalProof": "Not executed for Gate7. No inherited PASS or partial execution substitutes for current complete proof.",
+      "evidence": [],
+      "status": "NOT_STARTED"
+    },
+    {
+      "stepId": "G7-S03",
+      "requirements": ["M2 consolidated independent handoff and actual canonical sealing"],
+      "expectedBehavior": "Consolidate Gates4-7, assemble actual evidence/files/risks/rights and seal READY_FOR_REVIEW, leaving independent verdicts pending.",
+      "implementation": ["M2-CONSOLIDATION.md", "FINAL-REPORT.md", "HANDOFF.md", "STATE.json", "FILES.json"],
+      "tests": ["final report structures", "current counts and evidence", "canonical validation", "seal", "fresh public transport"],
+      "functionalProof": "Not started. Gate8 remains unauthorized and this implementing run cannot attest to its own independent M2 approval.",
+      "evidence": [],
+      "status": "NOT_STARTED"
+    }
+  ]
+}
