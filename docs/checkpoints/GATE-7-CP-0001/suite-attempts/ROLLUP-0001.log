@@ -1,0 +1,42 @@
+FF
+======================================================================
+FAIL: test_current_rollups_do_not_deny_the_owned_capabilities (test_gate7_knowledge.Gate7RollupTests.test_current_rollups_do_not_deny_the_owned_capabilities) (document='README.md')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\iacode\tests\test_gate7_knowledge.py", line 59, in test_current_rollups_do_not_deny_the_owned_capabilities
+    self.assertEqual(rollup_issues(ROOT, text), [])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: ['live current Gate is frozen in a capabil[187 chars]ine'] != []
+
+First list contains 5 additional elements.
+First extra element 0:
+'live current Gate is frozen in a capability rollup'
+
++ []
+- ['live current Gate is frozen in a capability rollup',
+-  'owned capability omitted: Foundation',
+-  'owned capability omitted: VS Code Integration',
+-  'owned capability denied: Experience Store',
+-  'owned capability omitted: Knowledge Engine']
+
+======================================================================
+FAIL: test_current_rollups_do_not_deny_the_owned_capabilities (test_gate7_knowledge.Gate7RollupTests.test_current_rollups_do_not_deny_the_owned_capabilities) (document='docs/ARCHITECTURE.md')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\iacode\tests\test_gate7_knowledge.py", line 59, in test_current_rollups_do_not_deny_the_owned_capabilities
+    self.assertEqual(rollup_issues(ROOT, text), [])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: ['owned capability omitted: VS Code Integr[48 chars]ine'] != []
+
+First list contains 2 additional elements.
+First extra element 0:
+'owned capability omitted: VS Code Integration'
+
++ []
+- ['owned capability omitted: VS Code Integration',
+-  'owned capability omitted: Knowledge Engine']
+
+----------------------------------------------------------------------
+Ran 1 test in 0.007s
+
+FAILED (failures=2)

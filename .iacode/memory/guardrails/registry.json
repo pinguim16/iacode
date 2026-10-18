@@ -1762,17 +1762,20 @@
     },
     {
       "guardrailId": "GRD-0119",
-      "title": "Architecture overview retains the delivered Quality Engine",
+      "title": "Public capability rollups follow canonical scope and live acceptance ownership",
       "kind": "test",
       "reference": "test_architecture_rollup_does_not_deny_its_delivered_quality_engine",
       "verifiedBy": [
         "test_architecture_rollup_does_not_deny_its_delivered_quality_engine",
-        "test_live_delivery_status_is_delegated_instead_of_hardcoded_in_rollups"
+        "test_live_delivery_status_is_delegated_instead_of_hardcoded_in_rollups",
+        "Gate7RollupTests.test_current_rollups_do_not_deny_the_owned_capabilities",
+        "Gate7RollupTests.test_rollup_guard_has_positive_and_each_missing_denied_stale_mutation",
+        "Gate7RollupTests.test_original_published_readme_is_a_real_causal_negative_not_a_rewritten_fixture"
       ],
       "lessons": [
         "LSN-0117"
       ],
-      "removingItWouldAllow": "The architecture overview to deny the delivered quality runtime described in the same document."
+      "removingItWouldAllow": "README or architecture rollups to deny owned capabilities, freeze an obsolete current Gate or omit the canonical live status owner while earlier narrow controls remain green."
     },
     {
       "guardrailId": "GRD-0120",
@@ -1782,7 +1785,8 @@
       "verifiedBy": [
         "test_strict_checkpoint_sources_do_not_rely_on_publication_allowances",
         "test_every_current_changed_path_uses_the_strict_detector_including_checkpoint_harnesses",
-        "test_desktop_credential_remains_a_secret_type_and_safe_dump_redacts_it"
+          "test_desktop_credential_remains_a_secret_type_and_safe_dump_redacts_it",
+          "test_every_owned_wire_model_resolves_annotations_and_unresolved_control_is_refused"
       ],
       "lessons": [
         "LSN-0119"
@@ -2157,6 +2161,20 @@
       ],
       "lessons": ["LSN-0144"],
       "removingItWouldAllow": "Relocated raw observations to be misinterpreted as live documentation, or rewritten archive bytes/manifest to be accepted instead of the immutable original objects."
+    },
+    {
+      "guardrailId": "GRD-0148",
+      "title": "Exact persistence integration contracts include authorized additions and reject mismatches",
+      "kind": "test",
+      "reference": "test_exact_table_inventory_refuses_each_missing_and_extra_table",
+      "verifiedBy": [
+        "test_exact_table_inventory_refuses_each_missing_and_extra_table",
+        "test_fact_lifecycle_classification_refuses_each_wrong_knowledge_role",
+        "test_actual_foreign_key_contract_refuses_each_changed_knowledge_cascade",
+        "test_actual_retention_check_tracks_lifecycle_version_without_payload_rewrite"
+      ],
+      "lessons": ["LSN-0145"],
+      "removingItWouldAllow": "An authorized persistent capability to bypass exact table/fact/ownership contracts, or mutate lifecycle rows without the existing write convention."
     }
   ]
 }

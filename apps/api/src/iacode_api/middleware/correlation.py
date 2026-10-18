@@ -22,6 +22,7 @@ a log line, or smuggle a payload into a header a downstream service parses.
 from __future__ import annotations
 
 import re
+from urllib.parse import unquote
 
 from iacode_common.identifiers import uuid7
 from iacode_telemetry.context import set_context
@@ -47,11 +48,13 @@ class CorrelationMiddleware(BaseHTTPMiddleware):
         supplied = request.headers.get(self.header_name, "")
         # Experience ingress never reflects caller material through correlation/log headers.
         # The generated ID remains observable on every response, including a refusal.
-        experience_route = request.url.path.casefold().startswith("/api/v1/experiences")
+        private_route = (
+            unquote(request.url.path)
+            .casefold()
+            .startswith(("/api/v1/experiences", "/api/v1/knowledge"))
+        )
         correlation_id = (
-            supplied
-            if not experience_route and VALID_CORRELATION_ID.match(supplied)
-            else str(uuid7())
+            supplied if not private_route and VALID_CORRELATION_ID.match(supplied) else str(uuid7())
         )
         request_id = str(uuid7())
 

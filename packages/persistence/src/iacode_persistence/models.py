@@ -35,6 +35,7 @@ from iacode_contracts.agent_runtime import (
     TOOL_REQUEST_STATUSES,
     TOOL_RESULT_STATUSES,
 )
+from iacode_contracts.knowledge import KNOWLEDGE_EVENTS, KNOWLEDGE_STATES
 from iacode_contracts.quality import (
     QUALITY_CHECK_KINDS,
     QUALITY_EVIDENCE_KINDS,
@@ -661,8 +662,7 @@ class SandboxSession(TimestampedEntity, Base):
             "task_run_id",
             unique=True,
             postgresql_where=text(
-                "task_run_id IS NOT NULL AND state IN "
-                + _vocabulary(SANDBOX_ACTIVE_SESSION_STATES)
+                "task_run_id IS NOT NULL AND state IN " + _vocabulary(SANDBOX_ACTIVE_SESSION_STATES)
             ),
         ),
         Index(
@@ -1190,5 +1190,97 @@ class ExperienceEvent(ImmutableRecord, Base):
     )
     experience_id: Mapped[uuid.UUID] = mapped_column(
         ForeignKey("experiences.id", ondelete="CASCADE"), nullable=False
+    )
+    kind: Mapped[str] = mapped_column(String(16), nullable=False)
+
+
+class KnowledgeDocument(TimestampedEntity, Base):
+    """Immutable cited material with finite monotonic retention, never source authority."""
+
+    __tablename__ = "knowledge_documents"
+    __table_args__ = (
+        UniqueConstraint("project_id", "request_key", name="uq_knowledge_documents_request"),
+        UniqueConstraint("project_id", "material_digest", name="uq_knowledge_documents_material"),
+        Index("ix_knowledge_documents_project_id_id", "project_id", "id"),
+        Index("ix_knowledge_documents_project_source", "project_id", "source_kind", "source_id"),
+        Index("ix_knowledge_documents_state_expires_at", "state", "expires_at"),
+        CheckConstraint("source_kind = 'curated'", name="source_kind_known"),
+        CheckConstraint("state IN " + _vocabulary(KNOWLEDGE_STATES), name="state_known"),
+        CheckConstraint(
+            "request_digest ~ '^[0-9a-f]{64}$' AND material_digest ~ '^[0-9a-f]{64}$' AND "
+            "content_digest ~ '^[0-9a-f]{64}$' AND source_digest ~ '^[0-9a-f]{64}$' AND "
+            "grant_digest ~ '^[0-9a-f]{64}$' AND policy_digest ~ '^[0-9a-f]{64}$'",
+            name="digests_valid",
+        ),
+        CheckConstraint(
+            "expires_at > created_at AND expires_at <= retention_ceiling AND "
+            "source_created_at <= created_at AND metadata = '{}'::jsonb AND "
+            "octet_length(body::text) <= 1048576 AND "
+            "((state = 'ACTIVE' AND purged_at IS NULL AND body ? 'schemaVersion' AND "
+            "body->>'schemaVersion' = '1.0.0') "
+            "OR (state <> 'ACTIVE' AND purged_at IS NOT NULL AND body = '{}'::jsonb))",
+            name="lifecycle_shape",
+        ),
+    )
+
+    project_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("projects.id", ondelete="CASCADE"), nullable=False
+    )
+    source_kind: Mapped[str] = mapped_column(String(16), nullable=False)
+    source_id: Mapped[uuid.UUID] = mapped_column(nullable=False)
+    revision: Mapped[str] = mapped_column(String(128), nullable=False)
+    source_digest: Mapped[str] = mapped_column(String(64), nullable=False)
+    grant_digest: Mapped[str] = mapped_column(String(64), nullable=False)
+    policy_digest: Mapped[str] = mapped_column(String(64), nullable=False)
+    material_digest: Mapped[str] = mapped_column(String(64), nullable=False)
+    request_key: Mapped[uuid.UUID] = mapped_column(nullable=False)
+    request_digest: Mapped[str] = mapped_column(String(64), nullable=False)
+    content_digest: Mapped[str] = mapped_column(String(64), nullable=False)
+    state: Mapped[str] = mapped_column(String(16), nullable=False, server_default="ACTIVE")
+    body: Mapped[dict[str, Any]] = mapped_column(JSONB, nullable=False)
+    source_created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
+    expires_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
+    retention_ceiling: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
+    purged_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    checked_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), nullable=False, server_default=text("now()")
+    )
+
+
+class KnowledgeIndexEntry(ImmutableRecord, Base):
+    """A real inverted index over immutable document chunk material, without another text copy."""
+
+    __tablename__ = "knowledge_index_entries"
+    __table_args__ = (
+        UniqueConstraint("document_id", "ordinal", name="uq_knowledge_index_entries_ordinal"),
+        Index("ix_knowledge_index_entries_tokens", "tokens", postgresql_using="gin"),
+        CheckConstraint("ordinal >= 0 AND ordinal < 128", name="ordinal_valid"),
+        CheckConstraint("digest ~ '^[0-9a-f]{64}$'", name="digest_valid"),
+        CheckConstraint(
+            "jsonb_typeof(tokens) = 'array' AND jsonb_array_length(tokens) <= 512 AND "
+            "octet_length(tokens::text) <= 300000",
+            name="tokens_bounded",
+        ),
+    )
+
+    document_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("knowledge_documents.id", ondelete="CASCADE"), nullable=False
+    )
+    ordinal: Mapped[int] = mapped_column(Integer, nullable=False)
+    digest: Mapped[str] = mapped_column(String(64), nullable=False)
+    tokens: Mapped[list[str]] = mapped_column(JSONB, nullable=False)
+
+
+class KnowledgeEvent(ImmutableRecord, Base):
+    """Finite minimal audit fact; no source body, query, path or arbitrary annotation."""
+
+    __tablename__ = "knowledge_events"
+    __table_args__ = (
+        UniqueConstraint("document_id", "kind", name="uq_knowledge_events_kind"),
+        CheckConstraint("kind IN " + _vocabulary(KNOWLEDGE_EVENTS), name="kind_known"),
+    )
+
+    document_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("knowledge_documents.id", ondelete="CASCADE"), nullable=False
     )
     kind: Mapped[str] = mapped_column(String(16), nullable=False)

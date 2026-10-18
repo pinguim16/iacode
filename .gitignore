@@ -24,4 +24,8 @@ backups/
 
 # Owner-facing review bundles are generated, validated artifacts; never repository inputs.
 artifacts/review/
+# Operational curated knowledge is deployed read-only outside the public checkout. These narrow
+# defaults also prevent accidentally adding payloads/grants beneath the shipped empty registry.
+.iacode/knowledge-sources/artifacts/
+.iacode/knowledge-sources/grants/
 artifacts/clients/

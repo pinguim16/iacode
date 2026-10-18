@@ -65,6 +65,8 @@ services/sandbox/          the sandbox: policy, tool registry, path resolver, th
 services/evaluator/        the Quality Engine: profiles, policy, plans, runners, evidence, verdict,
   src/                     durable workflow activities, persistence, telemetry and health
   tests/                   contracts and behavior; integration/ uses PostgreSQL and MinIO
+services/experience/       the Experience Store: consented source facts, rights and retention
+services/knowledge/        the Knowledge Engine: governed exact projections, index and citations
 infra/compose/             the stack
 infra/tests/               what the infrastructure declares, and the live configuration
 scripts/iacode/            operational tooling: stack, migrate, backup, restore, verify, scenarios
@@ -96,7 +98,7 @@ reproduce.
 
 ### Changing the schema
 
-1. Edit `apps/api/src/iacode_api/db/models.py`.
+1. Edit `packages/persistence/src/iacode_persistence/models.py`.
 2. Generate the migration — see `docs/runbooks/FOUNDATION.md` for the exact command.
 3. **Read what it generated.** Autogenerate is a first draft.
 4. `python scripts/iacode/migrate.py check` — it fails when the model and the schema disagree.
@@ -171,15 +173,18 @@ shapes change and a live PostgreSQL/MinIO test. Operational behavior is in
 python scripts/iacode/verify.py --fast
 ```
 
-Thirteen mandatory gates — `tests`, `staticAnalysis`, `lessons`, `integrity`,
-`checkpointValidation`, `apiTests`, `gatewayTests`, `agentRuntimeTests`, `sandboxTests`,
-`evaluatorTests`, `webTests`, `lint` and `infraDefinition` — the stack, the integration suite, the live
+Every mandatory gate derived from `.iacode/policies/quality-gates.json` — including desktop,
+experience and knowledge builds/suites without removing any inherited gate — plus the stack,
+the integration suite, the live
 infrastructure suite, the smoke check, the two live provider smokes, the agent runtime's
 durability, cancellation and deadline scenarios, the sandbox's integration cases and its four
 scenarios (`scripts/iacode/scenarios/sandbox_coding_e2e.py`: coding, timeout, cancellation,
 recovery), the quality persistence test and the Quality Engine's PASS, FAIL, IACode, reproduction,
 recovery, cancellation, timeout and false-PASS scenarios, a verified backup-and-restore cycle and
-a dependency scan. `--fast` stops before the
+a dependency scan. Native desktop installation and real workflow acceptance, the Experience Store
+lifecycle and the Knowledge Engine's governed retrieval/citations also remain required live
+stages. Current capability acceptance belongs to `docs/checkpoints/LATEST.md`, not this source map.
+`--fast` stops before the
 stages that restart the stack and delete volumes.
 
 The full run — `python scripts/iacode/verify.py`, or `.\verify.ps1` on Windows — adds the restart

@@ -33,6 +33,7 @@ from iacode_api.config import Settings
 from iacode_api.db import engine as db_engine
 from iacode_api.experience.runtime import ExperienceRuntime, build_experience_runtime
 from iacode_api.gateway.runtime import GatewayRuntime, build_runtime
+from iacode_api.knowledge.runtime import KnowledgeRuntime, build_knowledge_runtime
 from iacode_api.observability.metrics import Metrics
 from iacode_api.quality.runtime import QualityApiRuntime, build_quality_runtime
 from iacode_api.storage import client as storage_client
@@ -56,6 +57,7 @@ class Resources:
     agent_runtime: AgentRuntimeRuntime
     quality: QualityApiRuntime
     experience: ExperienceRuntime
+    knowledge: KnowledgeRuntime
 
 
 def build_resources(settings: Settings, metrics: Metrics) -> Resources:
@@ -64,6 +66,7 @@ def build_resources(settings: Settings, metrics: Metrics) -> Resources:
     session_factory = db_engine.create_session_factory(engine)
     minio = storage_client.create_client(settings)
     quality = build_quality_runtime(settings, session_factory, minio)
+    experience = build_experience_runtime(settings, session_factory, minio, quality.store)
     return Resources(
         settings=settings,
         metrics=metrics,
@@ -81,7 +84,8 @@ def build_resources(settings: Settings, metrics: Metrics) -> Resources:
         # clear failure, instead of turning every run creation into a confusing refusal.
         agent_runtime=build_agent_runtime(settings, session_factory),
         quality=quality,
-        experience=build_experience_runtime(settings, session_factory, minio, quality.store),
+        experience=experience,
+        knowledge=build_knowledge_runtime(settings, session_factory, experience),
     )
 
 
@@ -96,6 +100,7 @@ async def release_resources(resources: Resources) -> list[str]:
             failures.append(name)
             logger.error("failed to release %s during shutdown", name, exc_info=error)
 
+    await attempt("knowledge-retention", resources.knowledge.close())
     await attempt("experience-retention", resources.experience.close())
     await attempt("temporal", resources.temporal.close())
     await attempt("redis", cache_client.close(resources.redis))
@@ -112,6 +117,7 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     resources = build_resources(settings, app.state.metrics)
     app.state.resources = resources
     resources.experience.start()
+    resources.knowledge.start()
     logger.info(
         "api started",
         extra={"environment": settings.environment, "version": settings.version},

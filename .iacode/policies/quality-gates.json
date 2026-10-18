@@ -192,6 +192,14 @@
       "qualityDimensions": ["build", "unitTests", "security"]
     },
     {
+      "id": "knowledgeTests",
+      "title": "Governed Knowledge Engine image and complete domain suite",
+      "command": ["python", "scripts/iacode/gates/knowledge_tests.py"],
+      "purpose": "Rebuild the actual knowledge/API package image, run every domain case and compare the generated closed wire schema. Real PostgreSQL/HTTP/migration and measured retrieval acceptance remain mandatory full-verifier evidence.",
+      "mandatory": true,
+      "qualityDimensions": ["build", "unitTests", "security"]
+    },
+    {
       "id": "infraDefinition",
       "title": "Infrastructure declaration",
       "command": [

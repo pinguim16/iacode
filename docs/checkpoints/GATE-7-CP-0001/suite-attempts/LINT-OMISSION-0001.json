@@ -1,0 +1,29 @@
+{
+  "schemaVersion": "1.0.0",
+  "kind": "TARGETED_CAUSAL_NOT_WHOLE_GATE",
+  "gate": "LINT-OMISSION",
+  "command": [
+    "python",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-p",
+    "test_gate7_*",
+    "-k",
+    "Gate7LintDenominatorTests"
+  ],
+  "observedAt": "2026-10-18T16:44:54Z",
+  "subjectCommit": "ad240dac4bea356ad283fff961fb629a611dd7a8",
+  "sourceDirty": true,
+  "sourceFingerprint": "6547a2ead7b49e432c5fa36151803bac82482fdc069f4c1a60cf8b303f49f1bf",
+  "sourceUnchanged": true,
+  "exitCode": 0,
+  "outputEncodingValid": true,
+  "unsafeOutputOccurrences": 0,
+  "outputBytes": 103,
+  "outputSha256": "d56e05952e2885388cd0a17b68af0d2f57d6b52b7729abc02c875ecee365b0f0",
+  "safeOutputArtifact": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/LINT-OMISSION-0001.log",
+  "result": "PASS"
+}

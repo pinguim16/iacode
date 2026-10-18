@@ -16,6 +16,22 @@
       },
       "evidence": "AUTHORIZATION.md, BASELINE.md, PLAN.md, COMMANDS.jsonl and FILES.json",
       "notes": "No private reasoning, secrets, inferred reuse rights or independent approval."
+    },
+    {
+      "artifact": "services/knowledge; packages/contracts; packages/persistence; apps/api; scripts/iacode; tests and Gate7 documentation",
+      "sourceType": "AI-assisted repository implementation and locally generated synthetic test/proof artifacts",
+      "provider": "OpenAI / actual local owning toolchains",
+      "model": "not-exposed",
+      "ownership": "project-generated engineering work",
+      "license": "project-policy",
+      "rights": {
+        "storageAllowed": true,
+        "ragAllowed": false,
+        "trainingAllowed": false,
+        "distillationAllowed": false
+      },
+      "evidence": "FILES.json, COMMANDS.jsonl, CURRENT-PROGRESS.json and exact suite-attempts producer receipts",
+      "notes": "Synthetic grants apply only to isolated validation fixtures. No raw provider exchange, private reasoning or inferred production reuse license. Default curated registry is empty; actual source permissions remain owning-source decisions."
     }
   ]
 }

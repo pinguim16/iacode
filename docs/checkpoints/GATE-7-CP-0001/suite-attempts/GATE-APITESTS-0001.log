@@ -1,0 +1,134 @@
+ Container iacode-api-run-03a7029a0388 Creating 
+ Container iacode-api-run-03a7029a0388 Created 
+........................................................................ [ 38%]
+.................F.F...F................................................ [ 76%]
+.............................................                            [100%]
+=================================== FAILURES ===================================
+_________________________ test_structural_tables_exist _________________________
+
+    def test_structural_tables_exist() -> None:
+>       assert set(Base.metadata.tables) == (
+            STRUCTURAL_TABLES | AGENT_RUNTIME_TABLES | SANDBOX_TABLES
+            | QUALITY_TABLES | EXPERIENCE_TABLES
+        )
+E       AssertionError: assert {'agent_runs'...riences', ...} == {'agent_runs'...riences', ...}
+E         
+E         Extra items in the left set:
+E         'knowledge_index_entries'
+E         'knowledge_documents'
+E         'knowledge_events'
+E         Use -v to get more diff
+
+tests/unit/test_domain_model.py:67: AssertionError
+__________________ test_common_columns_follow_the_convention ___________________
+
+    def test_common_columns_follow_the_convention() -> None:
+        """The convention is defined once and applied where it makes sense, not everywhere."""
+        for name, table in Base.metadata.tables.items():
+            columns = set(table.columns.keys())
+            assert "id" in columns, f"{name} has no identifier"
+            assert "created_at" in columns, f"{name} does not record when it was created"
+    
+            if name in APPEND_ONLY:
+                # An `updated_at` on a fact that cannot change invites code to update it, and an
+                # optimistic-locking counter on a row nobody locks is noise.
+                assert "updated_at" not in columns, f"{name} is append-only but tracks updates"
+                assert "version" not in columns, f"{name} is append-only but carries a lock counter"
+                assert "metadata" not in columns, f"{name} is append-only but carries open metadata"
+            else:
+>               assert "updated_at" in columns, f"{name} has a lifecycle but no update time"
+E               AssertionError: knowledge_index_entries has a lifecycle but no update time
+E               assert 'updated_at' in {'created_at', 'digest', 'document_id', 'id', 'ordinal', 'tokens'}
+
+tests/unit/test_domain_model.py:99: AssertionError
+___________________ test_relationships_cascade_deliberately ____________________
+
+    def test_relationships_cascade_deliberately() -> None:
+        """A delete either cascades, is refused, or clears the reference. Never silently orphans."""
+        expected = {
+            ("repositories", "project_id"): "CASCADE",
+            ("tasks", "project_id"): "CASCADE",
+            ("task_runs", "task_id"): "CASCADE",
+            ("agent_runs", "task_run_id"): "CASCADE",
+            # An agent that has run cannot be deleted: its runs are the record that it did.
+            ("agent_runs", "agent_id"): "RESTRICT",
+            ("models", "provider_id"): "CASCADE",
+            # A recorded call keeps its provider and its model from being deleted underneath it. The
+            # columns are nullable from Gate 1 — a call can outlive the catalog row it names — but a
+            # row that *is* named may not vanish while the record points at it.
+            ("model_calls", "model_id"): "RESTRICT",
+            ("model_calls", "provider_id"): "RESTRICT",
+            ("model_calls", "agent_run_id"): "SET NULL",
+            ("tool_calls", "agent_run_id"): "CASCADE",
+            ("artifacts", "task_run_id"): "SET NULL",
+            ("experiences", "task_run_id"): "SET NULL",
+            # Gate 2. A run's history and its tool interactions belong to the run: deleting the run
+            # deletes them. The agent run reference is cleared rather than cascaded, because an event
+            # about a stage stays true after the stage's row is gone.
+            ("run_events", "task_run_id"): "CASCADE",
+            ("run_events", "agent_run_id"): "SET NULL",
+            ("tool_requests", "task_run_id"): "CASCADE",
+            ("tool_requests", "agent_run_id"): "SET NULL",
+            ("tool_results", "tool_request_id"): "CASCADE",
+            # Gate 3. A session belongs to its run; an execution record outlives the request and the
+            # session it names, because it is the record that the tool ran.
+            ("sandbox_sessions", "task_run_id"): "CASCADE",
+            ("sandbox_sessions", "quality_run_id"): "CASCADE",
+            ("sandbox_sessions", "active_tool_request_id"): "SET NULL",
+            ("tool_calls", "tool_request_id"): "SET NULL",
+            ("tool_calls", "sandbox_session_id"): "SET NULL",
+            # Gate 4. Plans and their checks are frozen. Runs own their results, evidence, findings,
+            # verdict and event history; durable pre-existing inputs are restricted or cleared.
+            ("quality_plans", "owner_task_run_id"): "SET NULL",
+            ("quality_plans", "snapshot_artifact_id"): "RESTRICT",
+            ("quality_checks", "quality_plan_id"): "CASCADE",
+            ("quality_runs", "quality_plan_id"): "RESTRICT",
+            ("quality_runs", "owner_task_run_id"): "SET NULL",
+            ("quality_runs", "reproduction_of_run_id"): "SET NULL",
+            ("quality_results", "quality_run_id"): "CASCADE",
+            ("quality_results", "quality_check_id"): "RESTRICT",
+            ("quality_results", "sandbox_session_id"): "SET NULL",
+            ("quality_evidence", "quality_run_id"): "CASCADE",
+            ("quality_evidence", "quality_result_id"): "CASCADE",
+            ("quality_evidence", "artifact_id"): "RESTRICT",
+            ("quality_findings", "quality_run_id"): "CASCADE",
+            ("quality_findings", "quality_result_id"): "CASCADE",
+            ("quality_verdicts", "quality_run_id"): "CASCADE",
+            ("quality_run_events", "quality_run_id"): "CASCADE",
+            # Gate 6 evolves experiences, adding only finite minimal audit facts owned by that row.
+            ("experience_events", "experience_id"): "CASCADE",
+        }
+        observed = {
+            (table_name, next(iter(key.columns)).name): key.ondelete
+            for table_name, table in Base.metadata.tables.items()
+            for key in table.foreign_key_constraints
+        }
+    
+>       assert observed == expected
+E       AssertionError: assert {('repositori...ESTRICT', ...} == {('repositori...CASCADE', ...}
+E         
+E         Omitting 39 identical items, use -vv to show
+E         Left contains 3 more items:
+E         {('knowledge_documents', 'project_id'): 'CASCADE',
+E          ('knowledge_events', 'document_id'): 'CASCADE',
+E          ('knowledge_index_entries', 'document_id'): 'CASCADE'}
+E         Use -v to get more diff
+
+tests/unit/test_domain_model.py:198: AssertionError
+=============================== warnings summary ===============================
+../opt/venv/lib/python3.13/site-packages/fastapi/testclient.py:1
+  /opt/venv/lib/python3.13/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+../opt/venv/lib/python3.13/site-packages/starlette/testclient.py:53
+  /opt/venv/lib/python3.13/site-packages/starlette/testclient.py:53: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.
+    _PortalFactoryType = Callable[[], AbstractContextManager[anyio.abc.BlockingPortal]]
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/unit/test_domain_model.py::test_structural_tables_exist - Assert...
+FAILED tests/unit/test_domain_model.py::test_common_columns_follow_the_convention
+FAILED tests/unit/test_domain_model.py::test_relationships_cascade_deliberately
+3 failed, 186 passed, 2 warnings in 36.14s
+
+[iacode] API_UNIT_TESTS=FAIL

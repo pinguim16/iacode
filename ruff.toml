@@ -61,6 +61,8 @@ ignore = [
 
 # Gate 6 exchanges this closed camelCase schema with HTTP/export consumers.
 "packages/contracts/src/iacode_contracts/experience.py" = ["N815"]
+# Gate 7's closed persisted/HTTP source, policy and citation contracts use the same wire spelling.
+"packages/contracts/src/iacode_contracts/knowledge.py" = ["N815"]
 # The consumed policy is a versioned JSON contract, not Python-local naming.
 "services/experience/src/iacode_experience/domain.py" = ["N815"]
 

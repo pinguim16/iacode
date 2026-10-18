@@ -2,18 +2,19 @@
   "schemaVersion": "3.4.0",
   "unit": {
     "executed": true,
-    "passed": 129,
+    "passed": 192,
     "failed": 0,
-    "command": "python -m unittest discover -s tests -p test_gate[456]_*",
-    "evidence": "command:cmd-0006",
-    "runId": "gate7-inherited-preimplementation-baseline"
+    "command": "python docs/checkpoints/GATE-7-CP-0001/audit-harness/execute_gate.py --gate apiTests",
+    "evidence": "command:cmd-0033",
+    "runId": "gate7-local-targeted-not-whole-acceptance"
   },
   "integration": {
-    "executed": false,
-    "passed": 0,
+    "executed": true,
+    "passed": 21,
     "failed": 0,
-    "command": null,
-    "evidence": null
+    "command": "python docs/checkpoints/GATE-7-CP-0001/audit-harness/execute_targeted.py --label KNOWLEDGE-SQL -- python docs/checkpoints/GATE-7-CP-0001/audit-harness/run_knowledge_integration.py",
+    "evidence": "command:cmd-0042",
+    "runId": "gate7-local-targeted-not-whole-acceptance"
   },
   "e2e": {
     "executed": false,

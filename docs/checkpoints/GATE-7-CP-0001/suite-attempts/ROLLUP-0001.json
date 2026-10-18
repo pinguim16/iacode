@@ -1,0 +1,29 @@
+{
+  "schemaVersion": "1.0.0",
+  "kind": "TARGETED_CAUSAL_NOT_WHOLE_GATE",
+  "gate": "rollup-control",
+  "command": [
+    "python",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-p",
+    "test_gate7_*",
+    "-k",
+    "test_current_rollups"
+  ],
+  "observedAt": "2026-10-18T16:11:24Z",
+  "subjectCommit": "ad240dac4bea356ad283fff961fb629a611dd7a8",
+  "sourceDirty": true,
+  "sourceFingerprint": "83074518e70bfdb24d638aab9b4ac6740999998bcefb4e8d2b91ec686c644878",
+  "sourceUnchanged": true,
+  "exitCode": 1,
+  "outputEncodingValid": true,
+  "unsafeOutputOccurrences": 0,
+  "outputBytes": 2117,
+  "outputSha256": "0c92327708c541ba7811023c0a982ffadd172f573efc6474e77796a05e83dff0",
+  "safeOutputArtifact": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/ROLLUP-0001.log",
+  "result": "FAIL"
+}

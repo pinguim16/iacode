@@ -12,6 +12,11 @@ prompts/
 # rest of the control plane — the agents, the schemas, the memory, the anchors — has no business
 # inside a runtime image.
 !.iacode/policies/
+# Ship only the empty default admission declaration, never operator-curated payloads/grants.
+!.iacode/knowledge-sources/
+.iacode/knowledge-sources/**
+!.iacode/knowledge-sources/README.md
+!.iacode/knowledge-sources/registry.json
 tests/
 scripts/development-ledger/
 

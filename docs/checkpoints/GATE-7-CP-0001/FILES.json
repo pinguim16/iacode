@@ -35,6 +35,81 @@
   ],
   "filesCreated": [
     {
+      "path": ".iacode/knowledge-sources/README.md",
+      "reason": "Ship an empty default curated registry; no implicit user/provider reuse permission.",
+      "hashAfter": "0ae10b36bb66c74ff9b63e64be31d855bea727689a041b2be8dc7458b8824fd7"
+    },
+    {
+      "path": ".iacode/knowledge-sources/registry.json",
+      "reason": "Ship an empty default curated registry; no implicit user/provider reuse permission.",
+      "hashAfter": "5773d52e69d400b1e91edc4d6314b928d43520a123089f31ded8a73f88efa1a4"
+    },
+    {
+      "path": ".iacode/memory/retrospectives/GATE-7-CP-0001.md",
+      "reason": "Record observed failures, escalated recurrence, actual guard restoration and the canonical retrospective.",
+      "hashAfter": "1d904f44d888dd97486c190d71345adb4a916854cd3e630d8e7c83b2231e5e84"
+    },
+    {
+      "path": ".iacode/policies/knowledge-policy.json",
+      "reason": "Consume finite knowledge policy and derive the actual closed owning-image schema.",
+      "hashAfter": "e84c0f9944e526f0ef0f6771dc2d96a16c63e4a724851a85e16b6d6c802348ab"
+    },
+    {
+      "path": ".iacode/schemas/knowledge.schema.json",
+      "reason": "Consume finite knowledge policy and derive the actual closed owning-image schema.",
+      "hashAfter": "2c29dcf24d22e787a874e4dc2d92bf223b7d53474a8fd2191224f2c49fefe8ac"
+    },
+    {
+      "path": "apps/api/migrations/versions/0008_knowledge_engine.py",
+      "reason": "Implement actual source/SQL adapters, migration, authenticated API and owned lifecycle.",
+      "hashAfter": "752e74a81191a190d22f5cf69c5c35e5848c05f44cbdf8dffc973c062ea00643"
+    },
+    {
+      "path": "apps/api/src/iacode_api/knowledge/__init__.py",
+      "reason": "Implement actual source/SQL adapters, migration, authenticated API and owned lifecycle.",
+      "hashAfter": "89374af5ea0221a952d5dcdc78b2aef24b18a797600665d9ad062044958804b7"
+    },
+    {
+      "path": "apps/api/src/iacode_api/knowledge/runtime.py",
+      "reason": "Implement actual source/SQL adapters, migration, authenticated API and owned lifecycle.",
+      "hashAfter": "1de96f0e837579ba630dac216d5a0c6d0a5c0a10c55c4feefd63bcaf41468223"
+    },
+    {
+      "path": "apps/api/src/iacode_api/knowledge/sources.py",
+      "reason": "Implement actual source/SQL adapters, migration, authenticated API and owned lifecycle.",
+      "hashAfter": "4ef252811ed4a0d2d4118c194dcca7bc13567d7fc2ae9ac4f809fd38bd654da3"
+    },
+    {
+      "path": "apps/api/src/iacode_api/knowledge/store.py",
+      "reason": "Implement actual source/SQL adapters, migration, authenticated API and owned lifecycle.",
+      "hashAfter": "bd630a373b500c242648d459629547c224df2626c0ee6ba0364ac311f11d59f5"
+    },
+    {
+      "path": "apps/api/src/iacode_api/routes/knowledge.py",
+      "reason": "Implement actual source/SQL adapters, migration, authenticated API and owned lifecycle.",
+      "hashAfter": "f9b80b84bfdb09eb9c64114536741d07bc0353aef73a01a189324c55a87cfa7a"
+    },
+    {
+      "path": "apps/api/tests/integration/test_knowledge_engine.py",
+      "reason": "Implement actual source/SQL adapters, migration, authenticated API and owned lifecycle.",
+      "hashAfter": "d5f79ff3b28e2cfc90da6e91240550ef7c3c969e3b5d790fe635f38cce5d8ee9"
+    },
+    {
+      "path": "apps/api/tests/knowledge_fixture.py",
+      "reason": "Implement actual source/SQL adapters, migration, authenticated API and owned lifecycle.",
+      "hashAfter": "85125176f13770e7991ec8d20290c92d7a18792d8af64d1c6e674d6c6ab87cf7"
+    },
+    {
+      "path": "apps/api/tests/unit/test_knowledge_api.py",
+      "reason": "Implement actual source/SQL adapters, migration, authenticated API and owned lifecycle.",
+      "hashAfter": "0f8ea8bce986dcf40bc8970606a72f0f1fea5dea44148090cb6bb430b081fada"
+    },
+    {
+      "path": "apps/api/tests/unit/test_knowledge_structure.py",
+      "reason": "Implement actual source/SQL adapters, migration, authenticated API and owned lifecycle.",
+      "hashAfter": "c3ed1456e9e1e662229ff0b7ab1e54dd883c6f767ee6b7edea243bcd07d22551"
+    },
+    {
       "path": "docs/GATE-7-CHECKLIST.md",
       "reason": "Define the complete canonical Knowledge Engine specification.",
       "hashAfter": "ad3538dc00c92976f968a4bbab9447e75aa7e867451a8b5858861120067cf11e"
@@ -47,7 +122,7 @@
     {
       "path": "docs/adr/ADR-0054-knowledge-indexes-are-rebuildable-cited-projections.md",
       "reason": "Define the governed source, rights, index, citation and invalidation architecture.",
-      "hashAfter": "115b73676362e4134ce6f93d4aff732b26e91aecb55de181c2dbf65998e29f1d"
+      "hashAfter": "9511b8fc0ece11ab08942ff831b4635b0341fdc409349d8853f15152d6eaf2e5"
     },
     {
       "path": "docs/checkpoints/GATE-7-CP-0001/AUTHORIZATION.md",
@@ -62,46 +137,56 @@
     {
       "path": "docs/checkpoints/GATE-7-CP-0001/CLOSURE-REQUIREMENTS.json",
       "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
-      "hashAfter": "85a8e8e1f1be120c62232733df8714fd52f05a4b4e4237e6480848f89a543d56"
+      "hashAfter": "1c61d88e79420d718a6d531a74c9b13c3a4f59db6977f61471beaa876782684b"
     },
     {
       "path": "docs/checkpoints/GATE-7-CP-0001/CLOSURE-REQUIREMENTS.md",
       "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
-      "hashAfter": "89d6b78794528f59e009621d582ac3c226fe1732571b65248188be9664dbcc79"
+      "hashAfter": "b41f5f326b22abe4f687c3815c89f796cf72e3875cb5e6e2fec46d8d848ac939"
     },
     {
       "path": "docs/checkpoints/GATE-7-CP-0001/COMMANDS.jsonl",
       "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
-      "hashAfter": "542d403f52ca82746d92e4270e273f1bc0a52536a899ef97c990782401b0267d"
+      "hashAfter": "5a098e615c865a99d8284eb145db1defa8d822e752dcb2332df24872e76ef93e"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/CURRENT-PROGRESS.json",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "a5ef064b6a21bd9f3c2d9066bd9d316c3b3eecfbb6f9636bea8a60ad01147fbe"
     },
     {
       "path": "docs/checkpoints/GATE-7-CP-0001/DECISIONS.md",
       "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
-      "hashAfter": "1f8b56fab421d58de7f249afdae9b45e1beb9212b3262bea38bc898681183f6e"
+      "hashAfter": "fa91384e4bbf9a38706098c592422cd9f8a06e56136d088a9eac416db6b60a6c"
     },
     {
       "path": "docs/checkpoints/GATE-7-CP-0001/DIFF-SUMMARY.md",
       "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
-      "hashAfter": "3a11c95983f5ff836f4ab51c87839f1ca3afa52262f03100d47c2e4090ba1b83"
+      "hashAfter": "04f1075d90da6291cc136b651f95470f9ccb296d7b94acf4d6453e8b0592750a"
     },
     {
       "path": "docs/checkpoints/GATE-7-CP-0001/FILES.json",
       "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff."
     },
     {
+      "path": "docs/checkpoints/GATE-7-CP-0001/FINDINGS.json",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "0bfdaef88df646ab3e5ac190e1eb1d02f141ec9c9f1678fa5cb300880f0d33ed"
+    },
+    {
       "path": "docs/checkpoints/GATE-7-CP-0001/HANDOFF.md",
       "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
-      "hashAfter": "ee408044f4bb0f19dab3f9a5abf48394df6d752e3cbc246d0c2f28801b80f337"
+      "hashAfter": "e86143c81c53f8c0c1457cb85b9039f88adfc0ff198c5e8e527e066ad91ae7d4"
     },
     {
       "path": "docs/checkpoints/GATE-7-CP-0001/LESSON-PREFLIGHT.json",
       "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
-      "hashAfter": "e721add0d7acfca871d03857f4dacbba82bc50841ef5faef4669f40e3f6aa922"
+      "hashAfter": "dbabe43e86fdf82ece6154d100e1a94b3320c18cd9cddff2d9fd10803acdd4e1"
     },
     {
       "path": "docs/checkpoints/GATE-7-CP-0001/LESSON-PREFLIGHT.md",
       "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
-      "hashAfter": "287f4a3726c7ebb5ae6a1facd7885f643239883748f504fb451578a8682c65fa"
+      "hashAfter": "2cad6f7ea295ed7f7507d8c94a158facea341801045b55a6cba04ae6074e53e8"
     },
     {
       "path": "docs/checkpoints/GATE-7-CP-0001/NEXT.md",
@@ -111,12 +196,12 @@
     {
       "path": "docs/checkpoints/GATE-7-CP-0001/PLAN.md",
       "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
-      "hashAfter": "2f610f6c6f0845dc7445de82c410fb07aa4bff3d6f5604da4af849888d4dddd0"
+      "hashAfter": "27f0344e9a1d957c1e95560871ab4bf0bd0a60bf77d1044d71bcf8c13d0e8515"
     },
     {
       "path": "docs/checkpoints/GATE-7-CP-0001/PROVENANCE.json",
       "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
-      "hashAfter": "4ff8a54dc42518d3158f931d411c848c8a53974a0c6575bc383e3053f46c582d"
+      "hashAfter": "4a858977b2cffafce08f313996d453a5fdbe98f80bce8c3868a4524ffdd5d9bb"
     },
     {
       "path": "docs/checkpoints/GATE-7-CP-0001/QUALITY.json",
@@ -126,12 +211,12 @@
     {
       "path": "docs/checkpoints/GATE-7-CP-0001/REQUIREMENTS-MATRIX.json",
       "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
-      "hashAfter": "eebb8e5c04ae110a0fae6f377894f4e35e32acc328a75cd750afd9373a0f91f0"
+      "hashAfter": "051d70d025818aa1ebb067c3acfc78372153faa221f4b5857e7e46e0321a9027"
     },
     {
       "path": "docs/checkpoints/GATE-7-CP-0001/REQUIREMENTS-MATRIX.md",
       "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
-      "hashAfter": "bc7ef8ebb6155525c990c4736aa4a39116e5ac514e1d613ca1d022c6206b94ea"
+      "hashAfter": "c7a1914d68ca461248c9d3219fa13e3f94dc2fb67e0db20f413d3dc3d75c7006"
     },
     {
       "path": "docs/checkpoints/GATE-7-CP-0001/REVIEW-BUNDLE-VALIDATION.json",
@@ -146,17 +231,17 @@
     {
       "path": "docs/checkpoints/GATE-7-CP-0001/RISKS.md",
       "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
-      "hashAfter": "620439c9a6dae3a7ce3998e0ef271c5f4ed6a4ceb4c4f3a929d0b30a12c1f477"
+      "hashAfter": "7c9651670d5dcfea5c4c9cc74faf59502c5b6f568aac0715b434a69c91e09740"
     },
     {
       "path": "docs/checkpoints/GATE-7-CP-0001/RUN-METADATA.json",
       "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
-      "hashAfter": "d454e12939b97382685918ccbc2197a8a38d98f605915f332a5a4cf3cec1cf33"
+      "hashAfter": "3b0be3d2ad8588b388f6dbb3815987d59a959c5e57b8363334898d0d8b1f55a7"
     },
     {
       "path": "docs/checkpoints/GATE-7-CP-0001/STATE.json",
       "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
-      "hashAfter": "8a9f771ab0e8b907e83c8c66dbb148a9c1f403a2c4aaccbe3b740ec6590dabca"
+      "hashAfter": "ea85c7044da72a3414ffd359649024b5593d314888a15324f594fc32ecbee0f2"
     },
     {
       "path": "docs/checkpoints/GATE-7-CP-0001/STATUS.md",
@@ -166,17 +251,47 @@
     {
       "path": "docs/checkpoints/GATE-7-CP-0001/STEPS.json",
       "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
-      "hashAfter": "525151bef4ac7dbc0030579251ff203c1609a74d92a03251c325638af5031522"
+      "hashAfter": "de902b8b4061ebe940212be40f1eae32c7b60f79d6c4370ba96caf6da5e98429"
     },
     {
       "path": "docs/checkpoints/GATE-7-CP-0001/TESTS.json",
       "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
-      "hashAfter": "5cd511f2f7cd51ef5ac2a7768a84a5191878c4ba97a40eff9e51541a8a0ea592"
+      "hashAfter": "1b460d84f24b9a82ef5987885f13971f5c88c1d32da9d0536acef612219ed44c"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/README-ROLLUP-0001.json",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "ef0d6cf630fe0ff4c61797b345c7b8ba543629fd52d9afc670101305296e8279"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/README-ROLLUP-0001.md.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "8f539b8186ecfbd11cf6bbe40e85887740990f88a8472883559c5fbe2ff351f1"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/audit-harness/archive_original_readme.py",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "1062ddb7c327fa22d73284edb273fa71e724fc6659de466f1ccbe24e7e527335"
     },
     {
       "path": "docs/checkpoints/GATE-7-CP-0001/audit-harness/declare_inventory.py",
       "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
-      "hashAfter": "e715020d71b8575d24f976b66736fd52f6a6d968dcc38f8f12776f2ae11aa0e0"
+      "hashAfter": "6bd271262b610fe528338c716259ceb89a44fdfff3ec8681ed40c318c99ec8ad"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/audit-harness/execute_gate.py",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "77ab2463f0c93865a80bc62cbf2b57147858d2163a2eaea27a92cb5861eee39d"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/audit-harness/execute_targeted.py",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "d57de79c71fab3e22180c40dea9f1cfa1ca4903aa45e370b6589f44385be877d"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/audit-harness/format_current_python.py",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "165873c3196c3e5554cbbba2483b971f7cfba03f233cefa813328ae4b046cda0"
     },
     {
       "path": "docs/checkpoints/GATE-7-CP-0001/audit-harness/prepare_entry.py",
@@ -184,22 +299,319 @@
       "hashAfter": "f02ccbd35f395454cb67437c6e48a2202ee1e48598c0c37a4b42193a7135b947"
     },
     {
+      "path": "docs/checkpoints/GATE-7-CP-0001/audit-harness/prepare_progress.py",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "4325433c7330cc1059bfd38ccba99df86067f8674a109a59b11b3bedc071d481"
+    },
+    {
       "path": "docs/checkpoints/GATE-7-CP-0001/audit-harness/register_specification.py",
       "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
       "hashAfter": "9ed4dcb09ee2b5d2269263db717ca3c47858d724ec9a96b33e08c46447b72b48"
     },
     {
+      "path": "docs/checkpoints/GATE-7-CP-0001/audit-harness/run_knowledge_integration.py",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "bc2c559b0426156d49ea88da53a977e45d528f8fb425e359eab6fd9c419c96ed"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/audit-harness/run_rollup_control.py",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "ad862e8e1f4d50c623a6e61f6f0ffa40105e51620a4e6133c97e4678bb607178"
+    },
+    {
       "path": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/BASELINE-0001.log",
       "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
       "hashAfter": "7867d179cd8e62a51ab6fb7de42dd74a31f5851ea2865cf2b113f5c3cbb482ec"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/GATE-APITESTS-0001.json",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "394554d40383e4a3a02b2f8f2973243c35e6fe4fcc81430967b0a7075dc281ac"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/GATE-APITESTS-0001.log",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "0484191cb6aafdff8b91d7131a9b4e1d04256fbf89bc81adaa215543b440e103"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/GATE-APITESTS-0002.json",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "86147078e3fddf228452ed231823ffcc83ce654c4c96fcae1c343f913c2ece47"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/GATE-APITESTS-0002.log",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "9fd5a0fe11efb6a261fd4363c81aab2891d1eb76ce296c162453edf5a30d9da6"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/GATE-KNOWLEDGETESTS-0001.json",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "19ed99596a4ad545a463d8f39d2dd4cff8a766ca0493ab96c956147dbaf6e531"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/GATE-KNOWLEDGETESTS-0001.log",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "0078dfa831c5cfddfd3d597c3bc6428026ee1e1dd4db4725e3dd0ee2dd8689e4"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/GATE-KNOWLEDGETESTS-0002.json",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "54dee6e30793ebdec6f4d403149df9ea26b4ae9716d906d21dec785c5be897aa"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/GATE-KNOWLEDGETESTS-0002.log",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "a4f3552402cc6846c52f23ce06dac66be93c912d5c64f371c002ca463f10ad8a"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/GATE-KNOWLEDGETESTS-0003.json",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "5b1ff23c66f9c784ea45a13739728f6274e46337d5da1b90bbc08b7cd98f5d28"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/GATE-KNOWLEDGETESTS-0003.log",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "6f4ee905ed10d529bfcf6e9e467c59eae203ba2a136ef4655c98a01fb1111f54"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/GATE-KNOWLEDGETESTS-0004.json",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "e7c7fd9dd18c015377e071eb85a26f6370e11b5efa71c725a74a8b463ec39b0c"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/GATE-KNOWLEDGETESTS-0004.log",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "b2a5107be51156fee36d2f83cc15f9a8725472e2866aa09c98ff25fc309f7ec9"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/GATE-LINT-0001.json",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "00cabc76122e3148da873d4abf8d3523b45f5f7d67fdac0843d649ed8d2bd5dd"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/GATE-LINT-0001.log",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "8f89e6a5d9f7c7d424b081658ea2e259e49fa37a24c249e703904da9b9588f0b"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/GATE-LINT-0002.json",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "ebac38e7df1e3d27f6380d1581454a12da24f44b9aefa3af32f527d12102e4d0"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/GATE-LINT-0002.log",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "8f89e6a5d9f7c7d424b081658ea2e259e49fa37a24c249e703904da9b9588f0b"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/KNOWLEDGE-SQL-0001.json",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "3429e2a513e4dc8f399686aebf28ac75358d78eed955e8a4f63695f03d373f24"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/KNOWLEDGE-SQL-0001.log",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "9137ed124ec77130fa3ae28fb99994e0be225b12d2f64e24f8f8a58f27fda91a"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/KNOWLEDGE-SQL-0003.json",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "5bb69a118e598ba18bc9ca5d36ce2d2db6be78d067b5b4963cc969484f51f864"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/KNOWLEDGE-SQL-0003.log",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "796dd8a8e9326ea4ebef1d5208827ad8a4dd513e7208bd3cebd36f7281ddf919"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/KNOWLEDGE-SQL-RECEIPT-0001.json",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "8badb1fbbeb16b95571823ee3c568f2a39393fdc9a58b4a1d6aaaedfbe65017b"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/KNOWLEDGE-SQL-RECEIPT-0002.json",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "4fa5eb8331264aa70df7b328a69c60b128bf67398f9ac812ac9957bbce6e9041"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/LESSON-RESOLUTION-0001.json",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "481969eb39eca416083be7e240502c707c4a8928804bf8a151769b48316a2601"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/LESSON-RESOLUTION-0001.log",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "1da6aea846092394dc6d7514994116c812ac497a119437e2729398b0e7fc0863"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/LINT-DENOMINATOR-0001.json",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "e5677090dba5dd97c182f487f29af2b912fdedcaabaca516057cd4f1abf4414f"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/LINT-DENOMINATOR-0001.log",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "012565f143157fbdf204da8481bb60f815f3013838bcb9c6c0415d01709759cb"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/LINT-OMISSION-0001.json",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "ae5a6e54ee18f6e69ce6efbbff73eb7bf74bb31a076a7af6143cbd2c8323a1b7"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/LINT-OMISSION-0001.log",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "b8a14051af29ac99de4e34829caab724f96466313db1e342ae43ac53597dc0a0"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/LINT-OMISSION-0002.json",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "4c84fbe8b861135a0bf61da2106a7e084501257ac4ad852c857d895a9d8a57ec"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/LINT-OMISSION-0002.log",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "972cdcf97f4179aba6b1cb6545ac6d361362788a408d2b2c944dd07464aeda21"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/ROLLUP-0001.json",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "7f977b70f63cbe55aaab5dcda503af5162b2d75f3f575bf528c28fef1d1712b3"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/ROLLUP-0001.log",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "825c858581d59916817184394f08e382bee79ea197abb9f87aa16cc2873aa89c"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/ROLLUP-0002.json",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "57e81bac3f8ee0e3b375a42c3cda3b9b0a0c36670663bfac012f91361fad7c05"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/ROLLUP-0002.log",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "bf36f30bf9a6dec90e1026e0d53d3119f8340fbe4f405df3647dbf5d076e22f9"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/ROLLUP-0003.json",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "680ad25678657f51e6245dc3f11f3d24dfb94c098b52e880ea92fcb27d58a171"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/ROLLUP-0003.log",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "78f7619e49ad7f592104f7ef7b10cc5ca59a379bec305ea9d0ba36dbbd84bc4d"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/STRICT-CONTROLS-0001.json",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "b02917dde1f830f3c57c281574b57cdc48d8be1d06d8fce0e6d08f93b898ce53"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/STRICT-CONTROLS-0001.log",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "9863465f4b6d798cc905fcafc97618f98bc63362fd7a20678c058c0a0dbeaa44"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/STRICT-RED-0001.json",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "4b13a219b89be243bfa87a6aed61877a5d00e5a7324bc7f700aab5a206ebd889"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/STRICT-RED-0001.log",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "6339ed7fa11c2ba17e7ce4f13965b30e956b79bf73465feb6936a1cdf4ca3f3b"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/STYLE-RED-0001.json",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "57041ac792c99f32fd9525dd4503b17cb7b419658307d2cd807473530cf05994"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/STYLE-RED-0001.log",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "37d73b739a76d65974dd73f16a21049d2e47a4525104ab90da28fe40bb428abe"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/STYLE-RED-0002.json",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "62fd10b10d07e8196ca27f9acb5ae2a6482515ba623a7e987df378bc10852591"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/STYLE-RED-0002.log",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "5d33a282666693d22ac78c9e4d2664edcd2a70f3b8bf60b5f365e7c8e6e4426e"
+    },
+    {
+      "path": "docs/runbooks/KNOWLEDGE-ENGINE.md",
+      "reason": "Document actual knowledge admission, permissions, APIs, indexing, citations and recovery limits.",
+      "hashAfter": "0733edc3884c99f2e1d4c4654ae6ebdcfbba54cce028606fd89ade7dee97300b"
+    },
+    {
+      "path": "packages/contracts/src/iacode_contracts/knowledge.py",
+      "reason": "Version the closed knowledge wire/persistence contract and real database constraints.",
+      "hashAfter": "661472608b501ea1169c879af85c8847a659e5b0091bf3cdf1dbafd0372cea69"
+    },
+    {
+      "path": "scripts/iacode/gates/knowledge_tests.py",
+      "reason": "Execute actual knowledge image tests and full owned functional/transport verification.",
+      "hashAfter": "51244d09f7bd8d9a06283aef2c1a75bae6d7af0848ae4aa6983f075d42310038"
+    },
+    {
+      "path": "scripts/iacode/knowledge_schema.py",
+      "reason": "Execute actual knowledge image tests and full owned functional/transport verification.",
+      "hashAfter": "5089a17be843b4d15c5a43ab7b819a00ec10028b1051b294b96bcec094e93c58"
+    },
+    {
+      "path": "services/knowledge/pyproject.toml",
+      "reason": "Implement and prove the provider-neutral governed knowledge projection domain.",
+      "hashAfter": "2248628deb53ab2837dcf8d7e48cc29a22feaf0e76dab49851ce9ac77c8e1109"
+    },
+    {
+      "path": "services/knowledge/src/iacode_knowledge/__init__.py",
+      "reason": "Implement and prove the provider-neutral governed knowledge projection domain.",
+      "hashAfter": "d748e8a5dda49e6773d623e22cbb954b6c4f6b96c9a75fa72d93786df17bd03c"
+    },
+    {
+      "path": "services/knowledge/src/iacode_knowledge/domain.py",
+      "reason": "Implement and prove the provider-neutral governed knowledge projection domain.",
+      "hashAfter": "0129b30f961701206271dd25a3c6510082430cef28f8a40235b09cc2708a351b"
+    },
+    {
+      "path": "services/knowledge/tests/conftest.py",
+      "reason": "Implement and prove the provider-neutral governed knowledge projection domain.",
+      "hashAfter": "f9625fb70bb8ba6d780b9fed2ec297175f0bd5857c90c7a17f14f4cc5b5e21c6"
+    },
+    {
+      "path": "services/knowledge/tests/test_domain.py",
+      "reason": "Implement and prove the provider-neutral governed knowledge projection domain.",
+      "hashAfter": "e720b11d9a87dba944ae60da41994157070cd0babc1267f8e00917cbb5be1bd7"
+    },
+    {
+      "path": "tests/test_gate7_knowledge.py",
+      "reason": "Execute current knowledge specification/boundary controls and real causal regression guards.",
+      "hashAfter": "9a9039b7fccedc8e8802e893907a2995ba5e3d399be72d1e65d0487cc95faf82"
     }
   ],
   "filesModified": [
+    {
+      "path": ".dockerignore",
+      "reason": "Exclude operational curated payloads/grants from public Git and runtime build context.",
+      "hashBefore": "0f09e1c4ad47d18f4977ed709e5f50b9e99a6f623c52f5369389ff1e71528dc6",
+      "hashAfter": "19e4425b6aad60c3acc7dc93f1d9871991424bd55882afe8a2d47c18d0792076"
+    },
     {
       "path": ".gitattributes",
       "reason": "Preserve new checkpoint producer bytes across actual Git transport.",
       "hashBefore": "f7e807256bafad8111ca99abd1214cc444e4bb1ff088207408d4cd8695cc492a",
       "hashAfter": "c78427bacd06e6331184f0c71d02cc2ece79244317ac2824f96addb86dcc24e1"
+    },
+    {
+      "path": ".gitignore",
+      "reason": "Exclude operational curated payloads/grants from public Git and runtime build context.",
+      "hashBefore": "6af262fa11b8bcaca0557941751310b50305cb854d2a91c9e2a4bf6056bf7436",
+      "hashAfter": "ce4b0ef6f94deaa99955279d6835373ab04681b5887aed68daead5d7cb49efc9"
     },
     {
       "path": ".iacode/anchors/checkpoint-chain.json",
@@ -208,16 +620,106 @@
       "hashAfter": "c092763ecd085b14b979f0f5bfea57eda19f0cb51a62e2dff50bff4781be616c"
     },
     {
+      "path": ".iacode/memory/LESSONS.md",
+      "reason": "Record observed failures, escalated recurrence, actual guard restoration and the canonical retrospective.",
+      "hashBefore": "a9e1199109f4fb50bdcca580da46ce20342e45d6d95088d1db3ae876a1822bd5",
+      "hashAfter": "c6077ab30659fb4d99731e527e8b77be76378dd8950dfe4a105aa2572aae60b0"
+    },
+    {
+      "path": ".iacode/memory/guardrails/registry.json",
+      "reason": "Record observed failures, escalated recurrence, actual guard restoration and the canonical retrospective.",
+      "hashBefore": "a4d13a5efca8d4d33d49cd792142906c8579ee2ce7b6937ed0a5ce3be4c7a928",
+      "hashAfter": "99b117213bb0b8c6ea6337d249d026b9287983ce1997dabd640c496e4c17f24b"
+    },
+    {
+      "path": ".iacode/memory/lessons.jsonl",
+      "reason": "Record observed failures, escalated recurrence, actual guard restoration and the canonical retrospective.",
+      "hashBefore": "5c169fd19bda19a28122900e04caad568ca69d8db3de074a700f6b0c34143529",
+      "hashAfter": "c574608ce92b41e0f1dac9d89e95f88389ffbd8917e72cd0b630adc24be90031"
+    },
+    {
       "path": ".iacode/policies/canonical-requirements.json",
       "reason": "Register Gate7 without altering prior rows.",
       "hashBefore": "3b734098561b658f8e81824bcfe146cef9af725f476076f3c35053be2a5fcdf2",
       "hashAfter": "871a0be2163d76550f8f2470575e023787f00d86a04d93a55473ca5770e912b6"
     },
     {
+      "path": ".iacode/policies/quality-gates.json",
+      "reason": "Add complete knowledge quality/collection without dropping inherited requirements.",
+      "hashBefore": "3f90dbe414ec28ae3e43da1d6d4c7de97eca00527462d86d0afdc29a60c36162",
+      "hashAfter": "6109123e705a7522b2a925ae6804f30c01ae0d28e2d92bab64e361d1f3231f42"
+    },
+    {
+      "path": ".iacode/policies/test-suites.json",
+      "reason": "Add complete knowledge quality/collection without dropping inherited requirements.",
+      "hashBefore": "ae533db8137eefad9e76e73a330bcad49be605384bca0eb9704d2e9792e060e3",
+      "hashAfter": "c940060a06c2954fa5a853acaa7ec4fab47f6706b9fdbfaf7c8daa88106f71f5"
+    },
+    {
+      "path": "README.md",
+      "reason": "Align public capability maps and cross-Gate boundaries with actual source and checkpoint-owned acceptance.",
+      "hashBefore": "8f539b8186ecfbd11cf6bbe40e85887740990f88a8472883559c5fbe2ff351f1",
+      "hashAfter": "c7d485c12600f56965c2effca0a32fb56becb498f5b64da849df1b1112792e3c"
+    },
+    {
       "path": "START-HERE.md",
       "reason": "Align live entry with authorized Gate7 and pending M2 independent audit.",
       "hashBefore": "b3bf80f91ac95687b73ec7c47626bab6ec341547277ae3a5af50d730e9944c02",
       "hashAfter": "0a91ab96f9cf42eed965266c4f3e00102c48b583eb262261c16d50fb35552dae"
+    },
+    {
+      "path": "apps/api/Dockerfile",
+      "reason": "Implement actual source/SQL adapters, migration, authenticated API and owned lifecycle.",
+      "hashBefore": "ea7fe0bab4e4c8dbc74e78e60f074b59ca38a26f1594bc20ae812fe68b13e973",
+      "hashAfter": "761362b1604fddc539e2ef8acf2c9361ba8323bc83ec433311119b8a74d5ca3a"
+    },
+    {
+      "path": "apps/api/pyproject.toml",
+      "reason": "Implement actual source/SQL adapters, migration, authenticated API and owned lifecycle.",
+      "hashBefore": "8ab4e6a9d478a7598e313f9cf2a870043577f70c27fb09bf50ace0c434d32ed8",
+      "hashAfter": "294e43405f1aa9fe9ec76a2e96bf8035d843fc5c1a89aaf982c6ea17bef3e44e"
+    },
+    {
+      "path": "apps/api/src/iacode_api/config.py",
+      "reason": "Implement actual source/SQL adapters, migration, authenticated API and owned lifecycle.",
+      "hashBefore": "7427e96b69a6a36890ca18d7ced260609755aded0d0b79e993cf69063a2ed1cf",
+      "hashAfter": "d9e63ff99fc5b508a672dff00972e99d03abf1d8f51e65ad0ed7c1cc0e5f735f"
+    },
+    {
+      "path": "apps/api/src/iacode_api/lifespan.py",
+      "reason": "Implement actual source/SQL adapters, migration, authenticated API and owned lifecycle.",
+      "hashBefore": "32321334cd0e4e94b11568067dbde70ddbca7a7b6eca84f64bf80f185364651b",
+      "hashAfter": "db4af3fecf668cd9793318862fbe80fdc064496f031153fbf12cc5ba88473b91"
+    },
+    {
+      "path": "apps/api/src/iacode_api/main.py",
+      "reason": "Implement actual source/SQL adapters, migration, authenticated API and owned lifecycle.",
+      "hashBefore": "1fa338827dd5a6da798407c783ae09d9bb315d7fb194be6c10e1462d61045eaf",
+      "hashAfter": "c8c416fd7795fff004090a7cbcbb956ca597434e799b6aa2276df639212e4ce2"
+    },
+    {
+      "path": "apps/api/src/iacode_api/middleware/correlation.py",
+      "reason": "Implement actual source/SQL adapters, migration, authenticated API and owned lifecycle.",
+      "hashBefore": "e2c70e2210975f461f9117f293a7bd85cc8e426952a4be9b7cbc50211c55554f",
+      "hashAfter": "ecdb473dca8143ca6b8f0aaab8e9c116e97af8051c54059d97c7ca862bb91916"
+    },
+    {
+      "path": "apps/api/tests/unit/test_domain_model.py",
+      "reason": "Implement actual source/SQL adapters, migration, authenticated API and owned lifecycle.",
+      "hashBefore": "b22589a31d55821d49fa31243ab27c0d7ae5d0e1463bb0bebf3d2ee302fefab3",
+      "hashAfter": "7ad04c602ad8ba449bbecca73e0839bacbdb48f8de7ad0f70ee7dd4e43495e63"
+    },
+    {
+      "path": "docs/ARCHITECTURE.md",
+      "reason": "Align public capability maps and cross-Gate boundaries with actual source and checkpoint-owned acceptance.",
+      "hashBefore": "c72ed13f10381a4300571648a504a1d3c8a23d9394efaea0c9e6376ceb007419",
+      "hashAfter": "4915fee095077ee35572f1293ade687996d0b2af3dbf25a8705dd368de3cdd4e"
+    },
+    {
+      "path": "docs/DEVELOPMENT.md",
+      "reason": "Align public capability maps and cross-Gate boundaries with actual source and checkpoint-owned acceptance.",
+      "hashBefore": "306e46e534eb25b6f9493b22dabf89f5986420d03e5aba854d3f455bae9f62f9",
+      "hashAfter": "7acd7c871c3d076634a90084a10210ec8cb4c7741af9d35921e744e50f218afc"
     },
     {
       "path": "docs/adr/README.md",
@@ -230,6 +732,54 @@
       "reason": "Point to the separately authorized Gate7 checkpoint.",
       "hashBefore": "f51c0c8ddad0f9302f35ea02aca1066596baba59813b87eea35a65bf0f6f367e",
       "hashAfter": "70eb38ffc3132eccd7fd8bd1ae0a9400cf6873b42ff71cc80032dc74cd1383a9"
+    },
+    {
+      "path": "infra/compose/.env.example",
+      "reason": "Declare and consume operator-controlled source-root configuration, not HTTP authority.",
+      "hashBefore": "ee529eba3e1ff7a85b2818a0af60de6020e703a49dbcf6f20e928ee9f8234200",
+      "hashAfter": "e221f9bfef7201904670d8acf9db02d5e9fdfdb01a3fd61413d4a95a26d56aaa"
+    },
+    {
+      "path": "infra/compose/docker-compose.yml",
+      "reason": "Declare and consume operator-controlled source-root configuration, not HTTP authority.",
+      "hashBefore": "fd9cd290f7343e99ee1ab3663987841bf365c15425c8c21c223a695f78285f10",
+      "hashAfter": "1293ea3b773e655501e3ae2565fb35eb3e67e56cc8357ec2133d958001a010b8"
+    },
+    {
+      "path": "packages/persistence/src/iacode_persistence/models.py",
+      "reason": "Version the closed knowledge wire/persistence contract and real database constraints.",
+      "hashBefore": "81b1d523ef5e2ded92325064cd9248ffecd9e226eb5dbdf9a1b56346b345b23f",
+      "hashAfter": "5e033661ec66db5d27c7ca4f6fb445b900773fc89b00df692c6328838f8a97aa"
+    },
+    {
+      "path": "packages/telemetry/src/iacode_telemetry/logging.py",
+      "reason": "Keep knowledge request/query content out of logs while retaining bounded observability.",
+      "hashBefore": "b7d169d77923212afde8cb4af0c61a6c5314a81e6d0f0ac603ae8a08829cdc51",
+      "hashAfter": "961431a3ef52085776d5ef78d6a195b35a7dd6d91301ebe57c4306382be8af9d"
+    },
+    {
+      "path": "ruff.toml",
+      "reason": "Add complete knowledge quality/collection without dropping inherited requirements.",
+      "hashBefore": "9f42f5d31eb34f5f4c4ef582390cb41039e162846893b2f42209ed17192ce886",
+      "hashAfter": "3858ca9bd4a454248515ccd5db0fe21f82dd314796f956ec34b3835d35f98d2f"
+    },
+    {
+      "path": "scripts/iacode/gates/lint.py",
+      "reason": "Execute actual knowledge image tests and full owned functional/transport verification.",
+      "hashBefore": "9e7eae47f572a51502932b7a8390181b75b806d68ac59ecc439b91e54ad6cf7b",
+      "hashAfter": "92f1e185a33baf2d65ce84ab36690c71db2ecd89abdd3f989a34938101c9dc24"
+    },
+    {
+      "path": "services/experience/README.md",
+      "reason": "Align public capability maps and cross-Gate boundaries with actual source and checkpoint-owned acceptance.",
+      "hashBefore": "ae5a31c5acee34754977d43426b7b90e3f8e62f80977a8f5da058ebc84842975",
+      "hashAfter": "5bc82b0294316a25e766f4169b89ee4819fb52639367776341312f5040dc9f4d"
+    },
+    {
+      "path": "services/knowledge/README.md",
+      "reason": "Implement and prove the provider-neutral governed knowledge projection domain.",
+      "hashBefore": "69c2e3e805120790dd4a7e815aa0873279a5715e20dcebf279491ee628368e76",
+      "hashAfter": "a73fe90dbfad7e1f5c687428d4ef8f9522d5440412e5ce8b7ad1870d32abb943"
     }
   ],
   "filesDeleted": []

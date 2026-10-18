@@ -1,0 +1,21 @@
+{
+  "schemaVersion": "1.0.0",
+  "kind": "COMPLETE_POLICY_GATE",
+  "gate": "apiTests",
+  "command": [
+    "python",
+    "scripts/iacode/gates/api_tests.py"
+  ],
+  "observedAt": "2026-10-18T16:47:19Z",
+  "subjectCommit": "ad240dac4bea356ad283fff961fb629a611dd7a8",
+  "sourceDirty": true,
+  "sourceFingerprint": "e8649dda0ca4099452e6be19a0683bf3ea5484d48dab85509171bd82f9982733",
+  "sourceUnchanged": true,
+  "exitCode": 1,
+  "outputEncodingValid": true,
+  "unsafeOutputOccurrences": 0,
+  "outputBytes": 8089,
+  "outputSha256": "75d0b9aa850efe5d269752e60f8d4b5c4b2b5c0b265c45c49dd9057a5a2f1176",
+  "safeOutputArtifact": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/GATE-APITESTS-0001.log",
+  "result": "FAIL"
+}

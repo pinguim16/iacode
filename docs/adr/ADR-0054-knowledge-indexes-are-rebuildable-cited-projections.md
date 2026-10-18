@@ -17,7 +17,8 @@ bounded retention lifecycle. No new deployment, graph, project memory, tool, pro
 uncited synthesis, training or execution/verdict authority is introduced.
 
 Derive bounded exact text spans and deterministic Unicode lexical tokens. Material identity binds
-project/source/revision/content/grant digests and index policy/version, separately from time and
+project/source/revision/content/grant digests, index policy/version and actual Unicode database
+version, separately from time and
 first observer. PostgreSQL stores immutable metadata/chunks and an actual parameterized inverted
 index. One transaction publishes chunks plus minimal audit facts; per-source serialization keeps
 concurrent versions and retries coherent. No production memory fallback or fixed answers.

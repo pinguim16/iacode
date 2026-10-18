@@ -40,6 +40,34 @@ def reason(path: str) -> str:
         "docs/adr/ADR-0054-knowledge-indexes-are-rebuildable-cited-projections.md",
     }:
         return "Define the governed source, rights, index, citation and invalidation architecture."
+    if path.startswith("services/knowledge/"):
+        return "Implement and prove the provider-neutral governed knowledge projection domain."
+    if path.startswith("apps/api/"):
+        return "Implement actual source/SQL adapters, migration, authenticated API and owned lifecycle."
+    if path.startswith("packages/contracts/") or path.startswith("packages/persistence/"):
+        return "Version the closed knowledge wire/persistence contract and real database constraints."
+    if path.startswith("packages/telemetry/"):
+        return "Keep knowledge request/query content out of logs while retaining bounded observability."
+    if path.startswith(".iacode/knowledge-sources/"):
+        return "Ship an empty default curated registry; no implicit user/provider reuse permission."
+    if path in {".iacode/policies/knowledge-policy.json", ".iacode/schemas/knowledge.schema.json"}:
+        return "Consume finite knowledge policy and derive the actual closed owning-image schema."
+    if path in {".iacode/policies/quality-gates.json", ".iacode/policies/test-suites.json", "ruff.toml"}:
+        return "Add complete knowledge quality/collection without dropping inherited requirements."
+    if path in {".gitignore", ".dockerignore"}:
+        return "Exclude operational curated payloads/grants from public Git and runtime build context."
+    if path in {"infra/compose/docker-compose.yml", "infra/compose/.env.example"}:
+        return "Declare and consume operator-controlled source-root configuration, not HTTP authority."
+    if path.startswith("scripts/iacode/"):
+        return "Execute actual knowledge image tests and full owned functional/transport verification."
+    if path in {"README.md", "docs/ARCHITECTURE.md", "docs/DEVELOPMENT.md", "services/experience/README.md"}:
+        return "Align public capability maps and cross-Gate boundaries with actual source and checkpoint-owned acceptance."
+    if path.startswith("docs/runbooks/"):
+        return "Document actual knowledge admission, permissions, APIs, indexing, citations and recovery limits."
+    if path.startswith("tests/test_gate7_"):
+        return "Execute current knowledge specification/boundary controls and real causal regression guards."
+    if path.startswith(".iacode/memory/"):
+        return "Record observed failures, escalated recurrence, actual guard restoration and the canonical retrospective."
     raise ValueError("a changed path has no authored Gate7 declaration: " + path)
 
 

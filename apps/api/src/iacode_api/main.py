@@ -19,8 +19,9 @@ Gate 0 exposed health, readiness, version and metrics. Gate 1 added the Model Ga
 ``/api/v1/gateway``. Gate 2 adds the agent runtime under ``/api/v1/agent-runs``: creating a run,
 reading it, streaming its events, cancelling it and answering a tool request, plus the declared
 agents and teams. Gate 4 adds quality lifecycle/evidence, Gate 5 the authenticated desktop adapter,
-and Gate 6 source-bound experience capture, inspection, export and withdrawal. Knowledge, training
-and the other reserved domain capabilities remain later-Gate work.
+and Gate 6 source-bound experience capture, inspection, export and withdrawal. Gate 7 adds governed
+knowledge indexing, lexical retrieval and exact current citations. Training and the other reserved
+domain capabilities remain later-Gate work; the checkpoint owns acceptance, not source presence.
 """
 
 from __future__ import annotations
@@ -35,7 +36,16 @@ from iacode_api.lifespan import lifespan
 from iacode_api.middleware.correlation import REQUEST_ID_HEADER, CorrelationMiddleware
 from iacode_api.middleware.desktop_auth import DesktopAuthMiddleware
 from iacode_api.observability.metrics import Metrics, MetricsMiddleware
-from iacode_api.routes import agent_runs, desktop, experiences, gateway, health, quality, version
+from iacode_api.routes import (
+    agent_runs,
+    desktop,
+    experiences,
+    gateway,
+    health,
+    knowledge,
+    quality,
+    version,
+)
 
 logger = get_logger(__name__)
 
@@ -52,6 +62,8 @@ tool-request lifecycle that pauses a run and waits. **Nothing here executes a to
 sandbox execution belongs to Gate 3, outside this API process. Gate 4 adds evidence-derived quality
 workflows; Gate 5 exposes authenticated desktop adapters. Gate 6 stores only bounded consented
 observable facts, with project scope, provenance, denied reuse and finite primary retention.
+Gate 7 indexes only permission-qualified sources and returns current cited untrusted excerpts;
+it does not grant reuse rights to storage-only experiences or execute retrieved instructions.
 """.strip()
 
 
@@ -99,6 +111,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     agent_runs.register_agent_runtime_errors(app)
     quality.register_quality_errors(app)
     experiences.register_experience_errors(app)
+    knowledge.register_knowledge_errors(app)
     app.include_router(health.router)
     app.include_router(version.router)
     app.include_router(gateway.router)
@@ -106,6 +119,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     app.include_router(quality.router)
     app.include_router(desktop.router)
     app.include_router(experiences.router)
+    app.include_router(knowledge.router)
     return app
 
 

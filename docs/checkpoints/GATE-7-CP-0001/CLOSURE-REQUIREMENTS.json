@@ -15,14 +15,20 @@
       "sourceReference": "docs/GATE-7-CHECKLIST.md row 1.1",
       "description": "A separately authorized checkpoint starts after valid sealed Gate 6 internal closure and anchors every sealed predecessor without rewriting history.",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
       "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
+      "notes": "Local implementation/proof exists; the exact scope and original fingerprints are in CURRENT-PROGRESS.json. This is not complete whole-verifier/ordered-assurance/independent acceptance.",
+      "implementationEvidence": [
+        "file:services/knowledge/src/iacode_knowledge/domain.py",
+        "file:apps/api/src/iacode_api/knowledge/store.py"
+      ],
       "testEvidence": [],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:PLAN.md",
+        "checkpoint:CURRENT-PROGRESS.json"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     },
@@ -33,14 +39,20 @@
       "sourceReference": "docs/GATE-7-CHECKLIST.md row 1.2",
       "description": "The checklist and registry agree exactly; all canonical, lesson and audit requirements are extracted before baseline and implementation.",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
       "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
+      "notes": "Local implementation/proof exists; the exact scope and original fingerprints are in CURRENT-PROGRESS.json. This is not complete whole-verifier/ordered-assurance/independent acceptance.",
+      "implementationEvidence": [
+        "file:services/knowledge/src/iacode_knowledge/domain.py",
+        "file:apps/api/src/iacode_api/knowledge/store.py"
+      ],
       "testEvidence": [],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:PLAN.md",
+        "checkpoint:CURRENT-PROGRESS.json"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     },
@@ -51,14 +63,20 @@
       "sourceReference": "docs/GATE-7-CHECKLIST.md row 1.3",
       "description": "Structural ADRs define source authority, rights, derivation/index identity, persistence, citations, invalidation and recovery before behavior changes.",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
       "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
+      "notes": "Local implementation/proof exists; the exact scope and original fingerprints are in CURRENT-PROGRESS.json. This is not complete whole-verifier/ordered-assurance/independent acceptance.",
+      "implementationEvidence": [
+        "file:services/knowledge/src/iacode_knowledge/domain.py",
+        "file:apps/api/src/iacode_api/knowledge/store.py"
+      ],
       "testEvidence": [],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:PLAN.md",
+        "checkpoint:CURRENT-PROGRESS.json"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     },
@@ -69,14 +87,20 @@
       "sourceReference": "docs/GATE-7-CHECKLIST.md row 1.4",
       "description": "The provider-neutral knowledge library uses shared closed contracts and declared source/store ports; it has no provider, host/tool execution, graph, memory or training authority.",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
       "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
+      "notes": "Local implementation/proof exists; the exact scope and original fingerprints are in CURRENT-PROGRESS.json. This is not complete whole-verifier/ordered-assurance/independent acceptance.",
+      "implementationEvidence": [
+        "file:services/knowledge/src/iacode_knowledge/domain.py",
+        "file:apps/api/src/iacode_api/knowledge/store.py"
+      ],
       "testEvidence": [],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:PLAN.md",
+        "checkpoint:CURRENT-PROGRESS.json"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     },
@@ -87,14 +111,20 @@
       "sourceReference": "docs/GATE-7-CHECKLIST.md row 1.5",
       "description": "All inherited gates, suites and full-verifier stages remain; complete knowledge build/tests and live acceptance are added to their canonical registries.",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
       "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
+      "notes": "Local implementation/proof exists; the exact scope and original fingerprints are in CURRENT-PROGRESS.json. This is not complete whole-verifier/ordered-assurance/independent acceptance.",
+      "implementationEvidence": [
+        "file:services/knowledge/src/iacode_knowledge/domain.py",
+        "file:apps/api/src/iacode_api/knowledge/store.py"
+      ],
       "testEvidence": [],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:PLAN.md",
+        "checkpoint:CURRENT-PROGRESS.json"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     },
@@ -105,14 +135,23 @@
       "sourceReference": "docs/GATE-7-CHECKLIST.md row 2.1",
       "description": "Ingestion selects an exact project/source/revision and stable request identity; callers cannot submit replacement source text, arbitrary paths/URLs, rights or quality verdicts.",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
       "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "notes": "Local implementation/proof exists; the exact scope and original fingerprints are in CURRENT-PROGRESS.json. This is not complete whole-verifier/ordered-assurance/independent acceptance.",
+      "implementationEvidence": [
+        "file:services/knowledge/src/iacode_knowledge/domain.py",
+        "file:apps/api/src/iacode_api/knowledge/store.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0055",
+        "command:cmd-0042"
+      ],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:PLAN.md",
+        "checkpoint:CURRENT-PROGRESS.json"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     },
@@ -123,14 +162,23 @@
       "sourceReference": "docs/GATE-7-CHECKLIST.md row 2.2",
       "description": "Curated source admission consumes a closed operator-controlled registry with project, source identity, exact content digest, ownership, license, explicit storage/RAG grants, evidence and finite validity.",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
       "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "notes": "Local implementation/proof exists; the exact scope and original fingerprints are in CURRENT-PROGRESS.json. This is not complete whole-verifier/ordered-assurance/independent acceptance.",
+      "implementationEvidence": [
+        "file:services/knowledge/src/iacode_knowledge/domain.py",
+        "file:apps/api/src/iacode_api/knowledge/store.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0055",
+        "command:cmd-0042"
+      ],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:PLAN.md",
+        "checkpoint:CURRENT-PROGRESS.json"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     },
@@ -141,14 +189,23 @@
       "sourceReference": "docs/GATE-7-CHECKLIST.md row 2.3",
       "description": "Unknown, denied, missing, expired, revoked, conflicting or mismatched source permission fails closed before any index effect or disclosure; training/distillation remain denied.",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
       "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "notes": "Local implementation/proof exists; the exact scope and original fingerprints are in CURRENT-PROGRESS.json. This is not complete whole-verifier/ordered-assurance/independent acceptance.",
+      "implementationEvidence": [
+        "file:services/knowledge/src/iacode_knowledge/domain.py",
+        "file:apps/api/src/iacode_api/knowledge/store.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0055",
+        "command:cmd-0042"
+      ],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:PLAN.md",
+        "checkpoint:CURRENT-PROGRESS.json"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     },
@@ -159,14 +216,23 @@
       "sourceReference": "docs/GATE-7-CHECKLIST.md row 2.4",
       "description": "Existing experiences are admitted only through their owning validation and effective permissions; storage-only, withdrawn, expired, corrupt or cross-project experiences cannot support knowledge.",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
       "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "notes": "Local implementation/proof exists; the exact scope and original fingerprints are in CURRENT-PROGRESS.json. This is not complete whole-verifier/ordered-assurance/independent acceptance.",
+      "implementationEvidence": [
+        "file:services/knowledge/src/iacode_knowledge/domain.py",
+        "file:apps/api/src/iacode_api/knowledge/store.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0055",
+        "command:cmd-0042"
+      ],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:PLAN.md",
+        "checkpoint:CURRENT-PROGRESS.json"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     },
@@ -177,14 +243,23 @@
       "sourceReference": "docs/GATE-7-CHECKLIST.md row 2.5",
       "description": "Every contributor's permissions and provenance constrain the derived document, all chunks and exports; no derived permission exceeds a source grant.",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
       "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "notes": "Local implementation/proof exists; the exact scope and original fingerprints are in CURRENT-PROGRESS.json. This is not complete whole-verifier/ordered-assurance/independent acceptance.",
+      "implementationEvidence": [
+        "file:services/knowledge/src/iacode_knowledge/domain.py",
+        "file:apps/api/src/iacode_api/knowledge/store.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0055",
+        "command:cmd-0042"
+      ],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:PLAN.md",
+        "checkpoint:CURRENT-PROGRESS.json"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     },
@@ -195,14 +270,23 @@
       "sourceReference": "docs/GATE-7-CHECKLIST.md row 2.6",
       "description": "Source resolution is bounded and confined to the configured curated root; traversal, symlinks/reparse escape, nonregular files, missing/changed bytes and invalid UTF-8 are refused without network fetch or execution.",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
       "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "notes": "Local implementation/proof exists; the exact scope and original fingerprints are in CURRENT-PROGRESS.json. This is not complete whole-verifier/ordered-assurance/independent acceptance.",
+      "implementationEvidence": [
+        "file:services/knowledge/src/iacode_knowledge/domain.py",
+        "file:apps/api/src/iacode_api/knowledge/store.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0055",
+        "command:cmd-0042"
+      ],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:PLAN.md",
+        "checkpoint:CURRENT-PROGRESS.json"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     },
@@ -213,14 +297,23 @@
       "sourceReference": "docs/GATE-7-CHECKLIST.md row 2.7",
       "description": "Full exact normalized source, derived records and delivered payloads are scanned with canonical credential detection and known authorization forms; scanner failure refuses safely.",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
       "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "notes": "Local implementation/proof exists; the exact scope and original fingerprints are in CURRENT-PROGRESS.json. This is not complete whole-verifier/ordered-assurance/independent acceptance.",
+      "implementationEvidence": [
+        "file:services/knowledge/src/iacode_knowledge/domain.py",
+        "file:apps/api/src/iacode_api/knowledge/store.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0055",
+        "command:cmd-0042"
+      ],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:PLAN.md",
+        "checkpoint:CURRENT-PROGRESS.json"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     },
@@ -231,14 +324,23 @@
       "sourceReference": "docs/GATE-7-CHECKLIST.md row 2.8",
       "description": "Private/transcript fields, prompts, provider answers and runtime secrets are not admitted or echoed in knowledge, diagnostics, audit facts or errors. Source content is untrusted data, never instructions or authority.",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
       "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "notes": "Local implementation/proof exists; the exact scope and original fingerprints are in CURRENT-PROGRESS.json. This is not complete whole-verifier/ordered-assurance/independent acceptance.",
+      "implementationEvidence": [
+        "file:services/knowledge/src/iacode_knowledge/domain.py",
+        "file:apps/api/src/iacode_api/knowledge/store.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0055",
+        "command:cmd-0042"
+      ],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:PLAN.md",
+        "checkpoint:CURRENT-PROGRESS.json"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     },
@@ -249,14 +351,23 @@
       "sourceReference": "docs/GATE-7-CHECKLIST.md row 3.1",
       "description": "Versioned closed schemas define source identity, provenance, document/chunk/index version, exact digests, citations, query and results; unknown fields and ambiguous JSON are refused.",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
       "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "notes": "Local implementation/proof exists; the exact scope and original fingerprints are in CURRENT-PROGRESS.json. This is not complete whole-verifier/ordered-assurance/independent acceptance.",
+      "implementationEvidence": [
+        "file:services/knowledge/src/iacode_knowledge/domain.py",
+        "file:apps/api/src/iacode_api/knowledge/store.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0055",
+        "command:cmd-0042"
+      ],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:PLAN.md",
+        "checkpoint:CURRENT-PROGRESS.json"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     },
@@ -267,14 +378,23 @@
       "sourceReference": "docs/GATE-7-CHECKLIST.md row 3.2",
       "description": "Consumed policy bounds request/source/result bytes, types, nesting, text/chunks/tokens, query size, result count, candidate work and retention; callers cannot widen ceilings.",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
       "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "notes": "Local implementation/proof exists; the exact scope and original fingerprints are in CURRENT-PROGRESS.json. This is not complete whole-verifier/ordered-assurance/independent acceptance.",
+      "implementationEvidence": [
+        "file:services/knowledge/src/iacode_knowledge/domain.py",
+        "file:apps/api/src/iacode_api/knowledge/store.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0055",
+        "command:cmd-0042"
+      ],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:PLAN.md",
+        "checkpoint:CURRENT-PROGRESS.json"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     },
@@ -285,14 +405,23 @@
       "sourceReference": "docs/GATE-7-CHECKLIST.md row 3.3",
       "description": "Deterministic derivation preserves exact source spans and hashes, handles Unicode/line endings explicitly and records the transformation version without inventing summaries or facts.",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
       "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "notes": "Local implementation/proof exists; the exact scope and original fingerprints are in CURRENT-PROGRESS.json. This is not complete whole-verifier/ordered-assurance/independent acceptance.",
+      "implementationEvidence": [
+        "file:services/knowledge/src/iacode_knowledge/domain.py",
+        "file:apps/api/src/iacode_api/knowledge/store.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0055",
+        "command:cmd-0042"
+      ],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:PLAN.md",
+        "checkpoint:CURRENT-PROGRESS.json"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     },
@@ -303,14 +432,23 @@
       "sourceReference": "docs/GATE-7-CHECKLIST.md row 3.4",
       "description": "Index identity binds source revision/digest, grant/provenance and derivation policy; restart/retry cannot silently change identity, duplicate chunks or rewrite immutable content.",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
       "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "notes": "Local implementation/proof exists; the exact scope and original fingerprints are in CURRENT-PROGRESS.json. This is not complete whole-verifier/ordered-assurance/independent acceptance.",
+      "implementationEvidence": [
+        "file:services/knowledge/src/iacode_knowledge/domain.py",
+        "file:apps/api/src/iacode_api/knowledge/store.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0055",
+        "command:cmd-0042"
+      ],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:PLAN.md",
+        "checkpoint:CURRENT-PROGRESS.json"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     },
@@ -321,14 +459,23 @@
       "sourceReference": "docs/GATE-7-CHECKLIST.md row 3.5",
       "description": "Actual persistent inverted indexing supports bounded parameterized lexical matching, deterministic relevance ordering and stable ties; no fixed response or production in-memory fallback is used.",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
       "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "notes": "Local implementation/proof exists; the exact scope and original fingerprints are in CURRENT-PROGRESS.json. This is not complete whole-verifier/ordered-assurance/independent acceptance.",
+      "implementationEvidence": [
+        "file:services/knowledge/src/iacode_knowledge/domain.py",
+        "file:apps/api/src/iacode_api/knowledge/store.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0055",
+        "command:cmd-0042"
+      ],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:PLAN.md",
+        "checkpoint:CURRENT-PROGRESS.json"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     },
@@ -339,14 +486,23 @@
       "sourceReference": "docs/GATE-7-CHECKLIST.md row 3.6",
       "description": "Empty/no-match queries and invalid/oversized inputs have explicit semantics; capacity or dependency failures cannot masquerade as a successful empty result or silently partial search.",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
       "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "notes": "Local implementation/proof exists; the exact scope and original fingerprints are in CURRENT-PROGRESS.json. This is not complete whole-verifier/ordered-assurance/independent acceptance.",
+      "implementationEvidence": [
+        "file:services/knowledge/src/iacode_knowledge/domain.py",
+        "file:apps/api/src/iacode_api/knowledge/store.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0055",
+        "command:cmd-0042"
+      ],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:PLAN.md",
+        "checkpoint:CURRENT-PROGRESS.json"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     },
@@ -357,14 +513,23 @@
       "sourceReference": "docs/GATE-7-CHECKLIST.md row 4.1",
       "description": "Alembic and ORM agree on the real PostgreSQL knowledge schema, ownership, constraints and indexes; up/down/from-zero/autogenerate preserve inherited data.",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
       "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "notes": "Local implementation/proof exists; the exact scope and original fingerprints are in CURRENT-PROGRESS.json. This is not complete whole-verifier/ordered-assurance/independent acceptance.",
+      "implementationEvidence": [
+        "file:services/knowledge/src/iacode_knowledge/domain.py",
+        "file:apps/api/src/iacode_api/knowledge/store.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0055",
+        "command:cmd-0042"
+      ],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:PLAN.md",
+        "checkpoint:CURRENT-PROGRESS.json"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     },
@@ -375,14 +540,23 @@
       "sourceReference": "docs/GATE-7-CHECKLIST.md row 4.2",
       "description": "Source admission, immutable document/chunks/index and minimal audit fact commit atomically; failed validation or dependency/write failure leaves no partial publication.",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
       "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "notes": "Local implementation/proof exists; the exact scope and original fingerprints are in CURRENT-PROGRESS.json. This is not complete whole-verifier/ordered-assurance/independent acceptance.",
+      "implementationEvidence": [
+        "file:services/knowledge/src/iacode_knowledge/domain.py",
+        "file:apps/api/src/iacode_api/knowledge/store.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0055",
+        "command:cmd-0042"
+      ],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:PLAN.md",
+        "checkpoint:CURRENT-PROGRESS.json"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     },
@@ -393,14 +567,23 @@
       "sourceReference": "docs/GATE-7-CHECKLIST.md row 4.3",
       "description": "Stable request/source identity makes accepted-response-loss and concurrent retries idempotent; conflicting retries are refused and cannot reset retention or resurrect withdrawn revisions.",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
       "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "notes": "Local implementation/proof exists; the exact scope and original fingerprints are in CURRENT-PROGRESS.json. This is not complete whole-verifier/ordered-assurance/independent acceptance.",
+      "implementationEvidence": [
+        "file:services/knowledge/src/iacode_knowledge/domain.py",
+        "file:apps/api/src/iacode_api/knowledge/store.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0055",
+        "command:cmd-0042"
+      ],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:PLAN.md",
+        "checkpoint:CURRENT-PROGRESS.json"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     },
@@ -411,14 +594,23 @@
       "sourceReference": "docs/GATE-7-CHECKLIST.md row 4.4",
       "description": "Persisted body, digest, chunk spans/tokens, source/grant and envelope are revalidated before delivery; direct database corruption cannot yield valid retrieval or citation.",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
       "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "notes": "Local implementation/proof exists; the exact scope and original fingerprints are in CURRENT-PROGRESS.json. This is not complete whole-verifier/ordered-assurance/independent acceptance.",
+      "implementationEvidence": [
+        "file:services/knowledge/src/iacode_knowledge/domain.py",
+        "file:apps/api/src/iacode_api/knowledge/store.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0055",
+        "command:cmd-0042"
+      ],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:PLAN.md",
+        "checkpoint:CURRENT-PROGRESS.json"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     },
@@ -429,14 +621,23 @@
       "sourceReference": "docs/GATE-7-CHECKLIST.md row 4.5",
       "description": "Restart/rebuild preserves truthful current revisions, rights and index version; stale or incompatible index is unavailable until an actual valid rebuild, never silently served.",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
       "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "notes": "Local implementation/proof exists; the exact scope and original fingerprints are in CURRENT-PROGRESS.json. This is not complete whole-verifier/ordered-assurance/independent acceptance.",
+      "implementationEvidence": [
+        "file:services/knowledge/src/iacode_knowledge/domain.py",
+        "file:apps/api/src/iacode_api/knowledge/store.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0055",
+        "command:cmd-0042"
+      ],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:PLAN.md",
+        "checkpoint:CURRENT-PROGRESS.json"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     },
@@ -447,14 +648,23 @@
       "sourceReference": "docs/GATE-7-CHECKLIST.md row 5.1",
       "description": "Every ingestion, inspect/list, search, citation/export and invalidation requires configured authenticated runtime transport; alternate unauthenticated paths cannot reach effects/data.",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
       "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "notes": "Local implementation/proof exists; the exact scope and original fingerprints are in CURRENT-PROGRESS.json. This is not complete whole-verifier/ordered-assurance/independent acceptance.",
+      "implementationEvidence": [
+        "file:services/knowledge/src/iacode_knowledge/domain.py",
+        "file:apps/api/src/iacode_api/knowledge/store.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0055",
+        "command:cmd-0042"
+      ],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:PLAN.md",
+        "checkpoint:CURRENT-PROGRESS.json"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     },
@@ -465,14 +675,23 @@
       "sourceReference": "docs/GATE-7-CHECKLIST.md row 5.2",
       "description": "Every lookup/index/query/citation is project-bound before data access; cross-project identifiers and enumeration cannot disclose content, digests or modify state.",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
       "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "notes": "Local implementation/proof exists; the exact scope and original fingerprints are in CURRENT-PROGRESS.json. This is not complete whole-verifier/ordered-assurance/independent acceptance.",
+      "implementationEvidence": [
+        "file:services/knowledge/src/iacode_knowledge/domain.py",
+        "file:apps/api/src/iacode_api/knowledge/store.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0055",
+        "command:cmd-0042"
+      ],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:PLAN.md",
+        "checkpoint:CURRENT-PROGRESS.json"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     },
@@ -483,14 +702,23 @@
       "sourceReference": "docs/GATE-7-CHECKLIST.md row 5.3",
       "description": "Every returned knowledge excerpt has a resolvable exact source/revision/content digest, chunk digest and source span; no output can omit/fabricate a citation or outrun its source rights.",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
       "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "notes": "Local implementation/proof exists; the exact scope and original fingerprints are in CURRENT-PROGRESS.json. This is not complete whole-verifier/ordered-assurance/independent acceptance.",
+      "implementationEvidence": [
+        "file:services/knowledge/src/iacode_knowledge/domain.py",
+        "file:apps/api/src/iacode_api/knowledge/store.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0055",
+        "command:cmd-0042"
+      ],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:PLAN.md",
+        "checkpoint:CURRENT-PROGRESS.json"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     },
@@ -501,14 +729,23 @@
       "sourceReference": "docs/GATE-7-CHECKLIST.md row 5.4",
       "description": "Retrieval is measured against a versioned varied corpus and predefined relevant/irrelevant expectations; bounded relevance and deterministic ranking are demonstrated, not asserted.",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
       "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "notes": "Local implementation/proof exists; the exact scope and original fingerprints are in CURRENT-PROGRESS.json. This is not complete whole-verifier/ordered-assurance/independent acceptance.",
+      "implementationEvidence": [
+        "file:services/knowledge/src/iacode_knowledge/domain.py",
+        "file:apps/api/src/iacode_api/knowledge/store.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0055",
+        "command:cmd-0042"
+      ],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:PLAN.md",
+        "checkpoint:CURRENT-PROGRESS.json"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     },
@@ -519,14 +756,23 @@
       "sourceReference": "docs/GATE-7-CHECKLIST.md row 5.5",
       "description": "Queries do not become durable content or sensitive logs; stable bounded errors/correlation never expose input, paths, credentials, exception text or SQL.",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
       "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "notes": "Local implementation/proof exists; the exact scope and original fingerprints are in CURRENT-PROGRESS.json. This is not complete whole-verifier/ordered-assurance/independent acceptance.",
+      "implementationEvidence": [
+        "file:services/knowledge/src/iacode_knowledge/domain.py",
+        "file:apps/api/src/iacode_api/knowledge/store.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0055",
+        "command:cmd-0042"
+      ],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:PLAN.md",
+        "checkpoint:CURRENT-PROGRESS.json"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     },
@@ -537,14 +783,23 @@
       "sourceReference": "docs/GATE-7-CHECKLIST.md row 5.6",
       "description": "Knowledge is cited untrusted evidence only; it cannot submit a tool result, change a quality verdict, widen an approval or execute host/source instructions.",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
       "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "notes": "Local implementation/proof exists; the exact scope and original fingerprints are in CURRENT-PROGRESS.json. This is not complete whole-verifier/ordered-assurance/independent acceptance.",
+      "implementationEvidence": [
+        "file:services/knowledge/src/iacode_knowledge/domain.py",
+        "file:apps/api/src/iacode_api/knowledge/store.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0055",
+        "command:cmd-0042"
+      ],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:PLAN.md",
+        "checkpoint:CURRENT-PROGRESS.json"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     },
@@ -555,14 +810,23 @@
       "sourceReference": "docs/GATE-7-CHECKLIST.md row 6.1",
       "description": "Revocation, source change/removal, expiry and explicit withdrawal immediately deny stale index/citation use independently of background sweeping.",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
       "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "notes": "Local implementation/proof exists; the exact scope and original fingerprints are in CURRENT-PROGRESS.json. This is not complete whole-verifier/ordered-assurance/independent acceptance.",
+      "implementationEvidence": [
+        "file:services/knowledge/src/iacode_knowledge/domain.py",
+        "file:apps/api/src/iacode_api/knowledge/store.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0055",
+        "command:cmd-0042"
+      ],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:PLAN.md",
+        "checkpoint:CURRENT-PROGRESS.json"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     },
@@ -573,14 +837,23 @@
       "sourceReference": "docs/GATE-7-CHECKLIST.md row 6.2",
       "description": "Replacing a source revision atomically invalidates the prior publication; superseded excerpts never mix with the new revision and stable retries preserve terminal facts.",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
       "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "notes": "Local implementation/proof exists; the exact scope and original fingerprints are in CURRENT-PROGRESS.json. This is not complete whole-verifier/ordered-assurance/independent acceptance.",
+      "implementationEvidence": [
+        "file:services/knowledge/src/iacode_knowledge/domain.py",
+        "file:apps/api/src/iacode_api/knowledge/store.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0055",
+        "command:cmd-0042"
+      ],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:PLAN.md",
+        "checkpoint:CURRENT-PROGRESS.json"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     },
@@ -591,14 +864,23 @@
       "sourceReference": "docs/GATE-7-CHECKLIST.md row 6.3",
       "description": "Finite consumed retention and an owned bounded automatic sweeper physically purge primary knowledge/chunk payloads and retain only finite minimal safe tombstones/audit facts.",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
       "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "notes": "Local implementation/proof exists; the exact scope and original fingerprints are in CURRENT-PROGRESS.json. This is not complete whole-verifier/ordered-assurance/independent acceptance.",
+      "implementationEvidence": [
+        "file:services/knowledge/src/iacode_knowledge/domain.py",
+        "file:apps/api/src/iacode_api/knowledge/store.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0055",
+        "command:cmd-0042"
+      ],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:PLAN.md",
+        "checkpoint:CURRENT-PROGRESS.json"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     },
@@ -609,14 +891,23 @@
       "sourceReference": "docs/GATE-7-CHECKLIST.md row 6.4",
       "description": "Authenticated project-bound invalidation/withdrawal is idempotent and does not delete sources, experiences, quality evidence or another project's records.",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
       "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "notes": "Local implementation/proof exists; the exact scope and original fingerprints are in CURRENT-PROGRESS.json. This is not complete whole-verifier/ordered-assurance/independent acceptance.",
+      "implementationEvidence": [
+        "file:services/knowledge/src/iacode_knowledge/domain.py",
+        "file:apps/api/src/iacode_api/knowledge/store.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0055",
+        "command:cmd-0042"
+      ],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:PLAN.md",
+        "checkpoint:CURRENT-PROGRESS.json"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     },
@@ -627,14 +918,23 @@
       "sourceReference": "docs/GATE-7-CHECKLIST.md row 6.5",
       "description": "Dependency/sweeper failures and shutdown are observable and bounded; restore must reconcile current grants, withdrawals, source versions and time before exposure.",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
       "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
-      "testEvidence": [],
+      "notes": "Local implementation/proof exists; the exact scope and original fingerprints are in CURRENT-PROGRESS.json. This is not complete whole-verifier/ordered-assurance/independent acceptance.",
+      "implementationEvidence": [
+        "file:services/knowledge/src/iacode_knowledge/domain.py",
+        "file:apps/api/src/iacode_api/knowledge/store.py"
+      ],
+      "testEvidence": [
+        "command:cmd-0055",
+        "command:cmd-0042"
+      ],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:PLAN.md",
+        "checkpoint:CURRENT-PROGRESS.json"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     },
@@ -681,14 +981,20 @@
       "sourceReference": "docs/GATE-7-CHECKLIST.md row 7.3",
       "description": "Every test owns its namespace/resources and observes cleanup; no global Docker/editor state or other applications are changed.",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
       "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
+      "notes": "Local implementation/proof exists; the exact scope and original fingerprints are in CURRENT-PROGRESS.json. This is not complete whole-verifier/ordered-assurance/independent acceptance.",
+      "implementationEvidence": [
+        "file:services/knowledge/src/iacode_knowledge/domain.py",
+        "file:apps/api/src/iacode_api/knowledge/store.py"
+      ],
       "testEvidence": [],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:PLAN.md",
+        "checkpoint:CURRENT-PROGRESS.json"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     },
@@ -717,14 +1023,20 @@
       "sourceReference": "docs/GATE-7-CHECKLIST.md row 7.5",
       "description": "Safe exact producer bytes, subject/fingerprint/process identities and actual cleanup outcomes survive fallible postprocessing; original failures remain immutable and transported byte-exactly.",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
       "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
+      "notes": "Local implementation/proof exists; the exact scope and original fingerprints are in CURRENT-PROGRESS.json. This is not complete whole-verifier/ordered-assurance/independent acceptance.",
+      "implementationEvidence": [
+        "file:services/knowledge/src/iacode_knowledge/domain.py",
+        "file:apps/api/src/iacode_api/knowledge/store.py"
+      ],
       "testEvidence": [],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:PLAN.md",
+        "checkpoint:CURRENT-PROGRESS.json"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     },
@@ -735,14 +1047,20 @@
       "sourceReference": "docs/GATE-7-CHECKLIST.md row 8.1",
       "description": "Runbooks document sources/grants, default denial, index/search/citations, all endpoints/auth, invalidation/rebuild, retention/restore, privacy, ranking and operational limits.",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
       "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
+      "notes": "Local implementation/proof exists; the exact scope and original fingerprints are in CURRENT-PROGRESS.json. This is not complete whole-verifier/ordered-assurance/independent acceptance.",
+      "implementationEvidence": [
+        "file:services/knowledge/src/iacode_knowledge/domain.py",
+        "file:apps/api/src/iacode_api/knowledge/store.py"
+      ],
       "testEvidence": [],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:PLAN.md",
+        "checkpoint:CURRENT-PROGRESS.json"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     },
@@ -753,14 +1071,20 @@
       "sourceReference": "docs/GATE-7-CHECKLIST.md row 8.2",
       "description": "All selected lessons and requirements have specific implementation, executed positive/adverse tests, documentation and resolvable evidence without false PASS or waived controls.",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
       "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
+      "notes": "Local implementation/proof exists; the exact scope and original fingerprints are in CURRENT-PROGRESS.json. This is not complete whole-verifier/ordered-assurance/independent acceptance.",
+      "implementationEvidence": [
+        "file:services/knowledge/src/iacode_knowledge/domain.py",
+        "file:apps/api/src/iacode_api/knowledge/store.py"
+      ],
       "testEvidence": [],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:PLAN.md",
+        "checkpoint:CURRENT-PROGRESS.json"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     },
@@ -789,14 +1113,20 @@
       "sourceReference": "docs/GATE-7-CHECKLIST.md row 8.4",
       "description": "Current tooling validates all sealed predecessors and successor/promotion positive paths; no historical subject, tag, denominator or promotion rule is rewritten.",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
       "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
+      "notes": "Local implementation/proof exists; the exact scope and original fingerprints are in CURRENT-PROGRESS.json. This is not complete whole-verifier/ordered-assurance/independent acceptance.",
+      "implementationEvidence": [
+        "file:services/knowledge/src/iacode_knowledge/domain.py",
+        "file:apps/api/src/iacode_api/knowledge/store.py"
+      ],
       "testEvidence": [],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:PLAN.md",
+        "checkpoint:CURRENT-PROGRESS.json"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     },
@@ -825,14 +1155,20 @@
       "sourceReference": "docs/GATE-7-CHECKLIST.md row 8.6",
       "description": "All changed paths are declared before finalization; commands, counts, provenance, retrospective, risks and exact continuation are truthful and reproducible.",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
       "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
+      "notes": "Local implementation/proof exists; the exact scope and original fingerprints are in CURRENT-PROGRESS.json. This is not complete whole-verifier/ordered-assurance/independent acceptance.",
+      "implementationEvidence": [
+        "file:services/knowledge/src/iacode_knowledge/domain.py",
+        "file:apps/api/src/iacode_api/knowledge/store.py"
+      ],
       "testEvidence": [],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:PLAN.md",
+        "checkpoint:CURRENT-PROGRESS.json"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     },
@@ -861,14 +1197,20 @@
       "sourceReference": "docs/GATE-7-CHECKLIST.md row 8.8",
       "description": "The milestone delivery is sealed READY_FOR_REVIEW with no blockers; independent review/Red Team stay PENDING, second-tool PENDING_MANUAL and M2 PENDING. No self-attestation or Gate 8 advance occurs.",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
       "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
+      "notes": "Local implementation/proof exists; the exact scope and original fingerprints are in CURRENT-PROGRESS.json. This is not complete whole-verifier/ordered-assurance/independent acceptance.",
+      "implementationEvidence": [
+        "file:services/knowledge/src/iacode_knowledge/domain.py",
+        "file:apps/api/src/iacode_api/knowledge/store.py"
+      ],
       "testEvidence": [],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:PLAN.md",
+        "checkpoint:CURRENT-PROGRESS.json"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     },
@@ -1185,14 +1527,20 @@
       "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0018",
       "description": "Verify a structured reference must be resolved, not merely well typed",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
       "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
+      "notes": "Local implementation/proof exists; the exact scope and original fingerprints are in CURRENT-PROGRESS.json. This is not complete whole-verifier/ordered-assurance/independent acceptance.",
+      "implementationEvidence": [
+        "file:services/knowledge/src/iacode_knowledge/domain.py",
+        "file:apps/api/src/iacode_api/knowledge/store.py"
+      ],
       "testEvidence": [],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:PLAN.md",
+        "checkpoint:CURRENT-PROGRESS.json"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     },
@@ -2733,14 +3081,20 @@
       "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0104",
       "description": "Verify new behavioral tests must satisfy the unchanged source-quality contract",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
       "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
+      "notes": "Local implementation/proof exists; the exact scope and original fingerprints are in CURRENT-PROGRESS.json. This is not complete whole-verifier/ordered-assurance/independent acceptance.",
+      "implementationEvidence": [
+        "file:services/knowledge/src/iacode_knowledge/domain.py",
+        "file:apps/api/src/iacode_api/knowledge/store.py"
+      ],
       "testEvidence": [],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:PLAN.md",
+        "checkpoint:CURRENT-PROGRESS.json"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     },
@@ -2949,14 +3303,20 @@
       "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0116",
       "description": "Verify an architecture rollup must not contradict the delivered capability described below it",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
       "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
+      "notes": "Local implementation/proof exists; the exact scope and original fingerprints are in CURRENT-PROGRESS.json. This is not complete whole-verifier/ordered-assurance/independent acceptance.",
+      "implementationEvidence": [
+        "file:services/knowledge/src/iacode_knowledge/domain.py",
+        "file:apps/api/src/iacode_api/knowledge/store.py"
+      ],
       "testEvidence": [],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:PLAN.md",
+        "checkpoint:CURRENT-PROGRESS.json"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     },
@@ -2985,14 +3345,20 @@
       "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0118",
       "description": "Verify a clean publication scan does not replace the stricter checkpoint secret scan",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
       "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
+      "notes": "Local implementation/proof exists; the exact scope and original fingerprints are in CURRENT-PROGRESS.json. This is not complete whole-verifier/ordered-assurance/independent acceptance.",
+      "implementationEvidence": [
+        "file:services/knowledge/src/iacode_knowledge/domain.py",
+        "file:apps/api/src/iacode_api/knowledge/store.py"
+      ],
       "testEvidence": [],
       "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:PLAN.md",
+        "checkpoint:CURRENT-PROGRESS.json"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     },
@@ -3443,6 +3809,30 @@
       "testEvidence": [],
       "negativeTestEvidence": [],
       "documentationEvidence": [],
+      "validationEvidence": [],
+      "guardrailEvidence": []
+    },
+    {
+      "id": "LESSON-REQ-0144",
+      "source": "LESSON",
+      "sourceRef": "lesson:LSN-0145",
+      "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0144",
+      "description": "Verify a new persistent capability must extend the explicit structural contract, not bypass its exact inventory",
+      "mandatory": true,
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
+      "justification": null,
+      "notes": "Local implementation/proof exists; the exact scope and original fingerprints are in CURRENT-PROGRESS.json. This is not complete whole-verifier/ordered-assurance/independent acceptance.",
+      "implementationEvidence": [
+        "file:services/knowledge/src/iacode_knowledge/domain.py",
+        "file:apps/api/src/iacode_api/knowledge/store.py"
+      ],
+      "testEvidence": [],
+      "negativeTestEvidence": [],
+      "documentationEvidence": [
+        "checkpoint:PLAN.md",
+        "checkpoint:CURRENT-PROGRESS.json"
+      ],
       "validationEvidence": [],
       "guardrailEvidence": []
     }

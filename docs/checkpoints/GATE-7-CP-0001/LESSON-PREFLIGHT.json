@@ -15,11 +15,11 @@
     "packages/persistence",
     "scripts/iacode"
   ],
-  "generatedAt": "2026-10-18T15:10:48Z",
+  "generatedAt": "2026-10-18T17:24:33Z",
   "policyVersion": "2.0.0",
-  "inputsFingerprint": "e297837724d630d0d042881de28105a1c9c15e68a77ca933f4d8163d66459f1b",
-  "lessonsConsidered": 144,
-  "lessonsApplicable": 143,
+  "inputsFingerprint": "1e3a032023d040144f107ae87bfe7d3720eff04303e93f3eadf0537cddf41fbc",
+  "lessonsConsidered": 145,
+  "lessonsApplicable": 144,
   "applicable": [
     {
       "lessonId": "LSN-0001",
@@ -1175,9 +1175,9 @@
       "lessonId": "LSN-0117",
       "title": "An architecture rollup must not contradict the delivered capability described below it",
       "status": "GUARDED",
-      "severity": "MEDIUM",
-      "reasonApplicable": "applies to every Gate; category documentation; severity MEDIUM; already guarded, so the control must keep holding",
-      "requiredCheck": "Whenever a delivered capability is added to detailed architecture, confirm that the live overview does not still deny that capability and distinguishes pending future work.",
+      "severity": "HIGH",
+      "reasonApplicable": "applies to every Gate; category documentation; severity HIGH; already guarded, so the control must keep holding",
+      "requiredCheck": "Check every public current-state rollup against canonical owned capability titles and delegate live lifecycle status to LATEST, retaining earlier architecture controls and testing actual omissions, future-denials and frozen status.",
       "requiredEvidence": "A causal red overview-consistency control followed by its unchanged green execution and a full current documentation validation.",
       "derivedRequirementId": "LESSON-REQ-0116"
     },
@@ -1450,6 +1450,16 @@
       "requiredCheck": "Preserve raw observation bytes and original interpretation context; never publish a relocated byte-exact archive as active source/documentation with broken context.",
       "requiredEvidence": "Actual published-object equality for every raw archive member, immutable original manifest and unchanged whole-tree active-document validation.",
       "derivedRequirementId": "LESSON-REQ-0143"
+    },
+    {
+      "lessonId": "LSN-0145",
+      "title": "A new persistent capability must extend the explicit structural contract, not bypass its exact inventory",
+      "status": "GUARDED",
+      "severity": "MEDIUM",
+      "reasonApplicable": "applies to every Gate; category testing; severity MEDIUM; already guarded, so the control must keep holding",
+      "requiredCheck": "For every authorized persistence addition, extend the owning exact table inventory, immutable/lifecycle classification and foreign-key ownership contract while preserving all inherited assertions; prove each boundary rejects a deliberate mismatch.",
+      "requiredEvidence": "Actual complete API gate with the expanded exact structural expectations plus executed missing/extra table, wrong fact/lifecycle and changed-cascade adverse controls; real migration parity remains separate.",
+      "derivedRequirementId": "LESSON-REQ-0144"
     }
   ],
   "derivedRequirements": [
@@ -2453,6 +2463,13 @@
       "description": "Verify raw archived observations retain original context rather than becoming active relocated documents",
       "mandatory": true,
       "requiredEvidence": "Actual published-object equality for every raw archive member, immutable original manifest and unchanged whole-tree active-document validation."
+    },
+    {
+      "id": "LESSON-REQ-0144",
+      "lessonId": "LSN-0145",
+      "description": "Verify a new persistent capability must extend the explicit structural contract, not bypass its exact inventory",
+      "mandatory": true,
+      "requiredEvidence": "Actual complete API gate with the expanded exact structural expectations plus executed missing/extra table, wrong fact/lifecycle and changed-cascade adverse controls; real migration parity remains separate."
     }
   ]
 }

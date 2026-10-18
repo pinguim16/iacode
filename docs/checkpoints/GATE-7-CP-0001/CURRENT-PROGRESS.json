@@ -1,0 +1,46 @@
+{
+  "schemaVersion": "1.0.0",
+  "kind": "IMPLEMENTATION_PROGRESS_NOT_ACCEPTANCE",
+  "observedAt": "2026-10-18T17:24:34Z",
+  "suites": {
+    "apiUnit": {
+      "passed": 192,
+      "failed": 0,
+      "receipt": "suite-attempts/GATE-APITESTS-0002.json",
+      "sourceFingerprint": "c017849ba080f3ea6301e27cbcca1c89640d16ed6e00ffa24c391db9583d5cbe",
+      "scope": "LOCAL_TARGETED_NOT_WHOLE_VERIFICATION"
+    },
+    "knowledgeDomain": {
+      "passed": 33,
+      "failed": 0,
+      "receipt": "suite-attempts/GATE-KNOWLEDGETESTS-0004.json",
+      "sourceFingerprint": "321fae6a41b45d418afa88552c69be8156c08e1c187de3453a1125ca4c4c1ac5",
+      "scope": "LOCAL_TARGETED_NOT_WHOLE_VERIFICATION"
+    },
+    "knowledgeSqlHttpMigration": {
+      "passed": 21,
+      "failed": 0,
+      "receipt": "suite-attempts/KNOWLEDGE-SQL-0003.json",
+      "sourceFingerprint": "537d12c971a402b3285728e7dc44368c897036cca685a9e6e6f149314dcb76a3",
+      "scope": "LOCAL_TARGETED_NOT_WHOLE_VERIFICATION"
+    }
+  },
+  "cleanup": {
+    "schemaVersion": "1.0.0",
+    "kind": "TARGETED_REAL_SQL_HTTP",
+    "owner": "iacode-knowledge-sql-f0b032f8eb48",
+    "result": "PASS",
+    "pytestExitCode": 0,
+    "cleanup": {
+      "exitCode": 0,
+      "container": 0,
+      "volume": 0,
+      "network": 0
+    },
+    "unrelatedContainersPreserved": true
+  },
+  "wholeVerification": "NOT_EXECUTED",
+  "orderedInternalAssurance": "NOT_EXECUTED",
+  "independentM2": "PENDING",
+  "gate8Authorized": false
+}

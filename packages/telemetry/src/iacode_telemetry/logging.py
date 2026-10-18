@@ -117,12 +117,18 @@ class JsonLogFormatter(logging.Formatter):
             and len(record.args) == 5
         ):
             _, method, target, _, status = record.args
-            if isinstance(target, str) and unquote(target).casefold().startswith(
-                "/api/v1/experiences"
-            ):
+            private_prefix = next(
+                (
+                    prefix
+                    for prefix in ("/api/v1/experiences", "/api/v1/knowledge")
+                    if isinstance(target, str) and unquote(target).casefold().startswith(prefix)
+                ),
+                None,
+            )
+            if private_prefix is not None:
                 verb = method if method in {"GET", "POST", "DELETE", "OPTIONS", "HEAD"} else "OTHER"
                 code = status if type(status) is int and 100 <= status <= 599 else 500
-                return f"{verb} /api/v1/experiences/<scoped> {code}"
+                return f"{verb} {private_prefix}/<scoped> {code}"
         return record.getMessage()
 
     @staticmethod

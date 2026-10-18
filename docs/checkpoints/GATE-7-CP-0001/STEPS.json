@@ -19,9 +19,9 @@
       "expectedBehavior": "Implement governed sources, immutable persistent indexing, measured retrieval/citations and rights/invalidation/retention/recovery.",
       "implementation": ["services/knowledge", "packages/contracts", "packages/persistence", "apps/api", "docs/runbooks"],
       "tests": ["domain and boundary cases", "actual SQL/HTTP/migrations", "owned live retrieval and adverse controls"],
-      "functionalProof": "Ready for implementation after completed entry; reserved README remains. Plans and ADRs are not executed feature evidence.",
-      "evidence": [],
-      "status": "NOT_STARTED"
+      "functionalProof": "Core contracts, source/store adapters, migration and authenticated API/lifecycle are implemented, not fully accepted. Actual cmd-0033 passes192 API cases, cmd-0055 passes33 current domain/schema cases and cmd-0042 passes21 real PostgreSQL/HTTP/migration cases with lifecycle counters and observed cleanup/unrelated-state preservation. Whole lint cmd-0040, inherited positive/adverse denominator cmd-0041 and resolver/memory cmd-0044/0045 pass. Strict alias refusal cmd-0050/0051 and missed forward annotation cmd-0053 remain; corrected strict class cmd-0052 and complete domain/schema cmd-0055 pass, while actual canonical checkpoint validation is due. Fresh owned live acceptance, broader root/packaging and full ordered assurance are not executed.",
+      "evidence": ["cmd-0033", "cmd-0055", "cmd-0040", "cmd-0041", "cmd-0042", "cmd-0044", "cmd-0045", "cmd-0050", "cmd-0051", "cmd-0052", "cmd-0053", "CURRENT-PROGRESS.json", "FINDINGS.json"],
+      "status": "IN_PROGRESS"
     },
     {
       "stepId": "G7-S02",

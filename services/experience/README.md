@@ -2,7 +2,8 @@
 
 Gate 6 implements source-bound, consented observable engineering facts (ADR-0050/0051).
 Its acceptance status is owned by [the current checkpoint](../../docs/checkpoints/LATEST.md), not
-by this module's presence. Independent M2 audit remains pending; Gate 7 is not implemented here.
+by this module's presence. Independent M2 audit remains pending. The separate
+[Knowledge Engine](../knowledge/README.md) never promotes these storage-only facts into RAG rights.
 
 `iacode_experience` is an in-process provider-neutral domain library. It depends only on shared
 contracts/common scanning and Pydantic. Source/store ports are supplied by the API's actual SQL,

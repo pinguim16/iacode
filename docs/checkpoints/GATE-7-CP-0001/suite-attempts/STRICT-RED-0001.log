@@ -1,0 +1,21 @@
+F
+======================================================================
+FAIL: test_every_current_changed_path_uses_the_strict_detector_including_checkpoint_harnesses (test_gate5_clients.Gate5SecretReviewTests.test_every_current_changed_path_uses_the_strict_detector_including_checkpoint_harnesses) (path='packages/contracts/src/iacode_contracts/knowledge.py')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\iacode\tests\test_gate5_clients.py", line 180, in test_every_current_changed_path_uses_the_strict_detector_including_checkpoint_harnesses
+    self.assertEqual(ledger_common.find_secrets(text), [], relative)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: ['named secret assignment'] != []
+
+First list contains 1 additional elements.
+First extra element 0:
+'named secret assignment'
+
+- ['named secret assignment']
++ [] : packages/contracts/src/iacode_contracts/knowledge.py
+
+----------------------------------------------------------------------
+Ran 1 test in 0.868s
+
+FAILED (failures=1)

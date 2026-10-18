@@ -1,0 +1,34 @@
+E501 Line too long (101 > 100)
+   --> apps/api/tests/integration/test_knowledge_engine.py:621:101
+    |
+619 |                 connection.execute(
+620 |                     text(
+621 |                         "INSERT INTO experiences(id,kind,summary,body,source_type,ownership,license,"
+    |                                                                                                     ^
+622 |                         "storage_allowed,rag_allowed,training_allowed,distillation_allowed) "
+623 |                         "VALUES(:id,'legacy','preserve',CAST(:body AS JSONB),'external',"
+    |
+
+E501 Line too long (103 > 100)
+   --> apps/api/tests/integration/test_knowledge_engine.py:630:101
+    |
+628 |                 original = connection.execute(
+629 |                     text(
+630 |                         "SELECT body,rag_allowed,training_allowed,distillation_allowed,schema_version,"
+    |                                                                                                     ^^^
+631 |                         "state FROM experiences WHERE id=:id"
+632 |                     ),
+    |
+
+E501 Line too long (107 > 100)
+   --> apps/api/tests/integration/test_knowledge_engine.py:651:101
+    |
+649 |                     connection.execute(
+650 |                         text(
+651 |                             "SELECT body,rag_allowed,training_allowed,distillation_allowed,schema_version,"
+    |                                                                                                     ^^^^^^^
+652 |                             "state FROM experiences WHERE id=:id"
+653 |                         ),
+    |
+
+Found 3 errors.

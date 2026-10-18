@@ -1,0 +1,58 @@
+ Network iacode-knowledge-sql-e87e6fd56d21-network Creating 
+ Volume iacode-knowledge-sql-e87e6fd56d21_minio-data Creating 
+ Volume iacode-knowledge-sql-e87e6fd56d21_postgres-data Creating 
+ Network iacode-knowledge-sql-e87e6fd56d21-network Creating 
+ Volume iacode-knowledge-sql-e87e6fd56d21_postgres-data Creating 
+ Volume iacode-knowledge-sql-e87e6fd56d21_minio-data Creating 
+ Volume iacode-knowledge-sql-e87e6fd56d21_minio-data Created 
+ Volume iacode-knowledge-sql-e87e6fd56d21_minio-data Created 
+ Volume iacode-knowledge-sql-e87e6fd56d21_postgres-data Created 
+ Volume iacode-knowledge-sql-e87e6fd56d21_postgres-data Created 
+ Network iacode-knowledge-sql-e87e6fd56d21-network Created 
+ Network iacode-knowledge-sql-e87e6fd56d21-network Created 
+ Container iacode-knowledge-sql-e87e6fd56d21-redis Creating 
+ Container iacode-knowledge-sql-e87e6fd56d21-minio Creating 
+ Container iacode-knowledge-sql-e87e6fd56d21-postgres Creating 
+ Container iacode-knowledge-sql-e87e6fd56d21-minio Created 
+ Container iacode-knowledge-sql-e87e6fd56d21-redis Created 
+ Container iacode-knowledge-sql-e87e6fd56d21-postgres Created 
+ Container iacode-knowledge-sql-e87e6fd56d21-postgres Starting 
+ Container iacode-knowledge-sql-e87e6fd56d21-redis Starting 
+ Container iacode-knowledge-sql-e87e6fd56d21-minio Starting 
+ Container iacode-knowledge-sql-e87e6fd56d21-postgres Started 
+ Container iacode-knowledge-sql-e87e6fd56d21-redis Started 
+ Container iacode-knowledge-sql-e87e6fd56d21-minio Started 
+[stack] waiting for minio=starting, postgres=starting, redis=starting
+ Container iacode-knowledge-sql-e87e6fd56d21-api-run-ffefa6926f7c Creating 
+ Container iacode-knowledge-sql-e87e6fd56d21-api-run-ffefa6926f7c Created 
+....................                                                     [100%]
+=============================== warnings summary ===============================
+../opt/venv/lib/python3.13/site-packages/fastapi/testclient.py:1
+  /opt/venv/lib/python3.13/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+../opt/venv/lib/python3.13/site-packages/starlette/testclient.py:53
+  /opt/venv/lib/python3.13/site-packages/starlette/testclient.py:53: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.
+    _PortalFactoryType = Callable[[], AbstractContextManager[anyio.abc.BlockingPortal]]
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+20 passed, 2 warnings in 72.45s (0:01:12)
+ Container iacode-knowledge-sql-e87e6fd56d21-redis Stopping 
+ Container iacode-knowledge-sql-e87e6fd56d21-postgres Stopping 
+ Container iacode-knowledge-sql-e87e6fd56d21-minio Stopping 
+ Container iacode-knowledge-sql-e87e6fd56d21-postgres Stopped 
+ Container iacode-knowledge-sql-e87e6fd56d21-postgres Removing 
+ Container iacode-knowledge-sql-e87e6fd56d21-redis Stopped 
+ Container iacode-knowledge-sql-e87e6fd56d21-redis Removing 
+ Container iacode-knowledge-sql-e87e6fd56d21-minio Stopped 
+ Container iacode-knowledge-sql-e87e6fd56d21-minio Removing 
+ Container iacode-knowledge-sql-e87e6fd56d21-redis Removed 
+ Container iacode-knowledge-sql-e87e6fd56d21-minio Removed 
+ Container iacode-knowledge-sql-e87e6fd56d21-postgres Removed 
+ Network iacode-knowledge-sql-e87e6fd56d21-network Removing 
+ Volume iacode-knowledge-sql-e87e6fd56d21_minio-data Removing 
+ Volume iacode-knowledge-sql-e87e6fd56d21_postgres-data Removing 
+ Volume iacode-knowledge-sql-e87e6fd56d21_minio-data Removed 
+ Volume iacode-knowledge-sql-e87e6fd56d21_postgres-data Removed 
+ Network iacode-knowledge-sql-e87e6fd56d21-network Removed 
+{"schemaVersion": "1.0.0", "kind": "TARGETED_REAL_SQL_HTTP", "owner": "iacode-knowledge-sql-e87e6fd56d21", "result": "PASS", "pytestExitCode": 0, "cleanup": {"exitCode": 0, "container": 0, "volume": 0, "network": 0}, "unrelatedContainersPreserved": true}

@@ -215,6 +215,10 @@ class Settings(BaseSettings):
     )
     quality_event_stream_poll_seconds: Annotated[float, Field(gt=0, le=10)] = 0.5
 
+    # Curated source/grant deployment root, never selected by an HTTP caller. The default corpus
+    # is empty; isolated validation explicitly supplies its own root and no operational grants.
+    knowledge_source_root: str = Field(default=".iacode/knowledge-sources", min_length=1)
+
     @field_validator("cors_allow_origins", mode="before")
     @classmethod
     def _split_origins(cls, value: object) -> object:
@@ -366,6 +370,7 @@ def settings_for_tests(**overrides: object) -> Settings:
         "agent_runtime_event_stream_poll_seconds": 0.05,
         "quality_task_queue": "iacode-quality",
         "quality_event_stream_poll_seconds": 0.05,
+        "knowledge_source_root": ".iacode/knowledge-sources",
     }
     values.update(overrides)
     missing = set(Settings.model_fields) - set(values)

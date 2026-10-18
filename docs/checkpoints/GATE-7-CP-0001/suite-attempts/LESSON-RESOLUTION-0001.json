@@ -1,0 +1,27 @@
+{
+  "schemaVersion": "1.0.0",
+  "kind": "TARGETED_CAUSAL_NOT_WHOLE_GATE",
+  "gate": "LESSON-RESOLUTION",
+  "command": [
+    "python",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-k",
+    "LessonResolutionTests"
+  ],
+  "observedAt": "2026-10-18T17:04:51Z",
+  "subjectCommit": "ad240dac4bea356ad283fff961fb629a611dd7a8",
+  "sourceDirty": true,
+  "sourceFingerprint": "eb32c7ab68b58a9a128981f0cfeed01609c1930a17f1c4acdf4ed33ea6f9f6da",
+  "sourceUnchanged": true,
+  "exitCode": 0,
+  "outputEncodingValid": true,
+  "unsafeOutputOccurrences": 0,
+  "outputBytes": 109,
+  "outputSha256": "58ca84db116569119c1fda9cc4a52d80f4eebe1d1853e08217508f7cd30abcc8",
+  "safeOutputArtifact": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/LESSON-RESOLUTION-0001.log",
+  "result": "PASS"
+}

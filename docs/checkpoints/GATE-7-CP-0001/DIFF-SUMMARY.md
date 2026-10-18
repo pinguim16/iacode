@@ -1,6 +1,9 @@
 # Diff Summary
 
-Entry only: separately authorized Gate7 checkpoint, complete canonical specification/registry,
-Gate6 integrity anchor, preflight/derived requirements, actual inherited baseline, explicit plan,
-source-permission/index ADRs and live entry pointer. No Knowledge Engine behavior is implemented.
-The original Gate6 seal and every earlier subject remain unchanged. Independent M2 stays pending.
+Gate7 entry plus partial implementation: closed source grants/documents/citations/schema, provider-
+neutral deterministic projection, real confined file and PostgreSQL adapters, migration0008,
+authenticated API and bounded owned retention. Default curated registry stays empty and experience
+rights stay unchanged. Packaging, complete knowledge gate/collection, docs and causal memory grow
+without removing inherited controls. Actual local API192/domain33/SQL21 results are separately
+bound in CURRENT-PROGRESS.json; original red observations remain. No full-verifier, ordered internal
+assurance, Gate7 seal or independent M2 approval exists yet. All sealed predecessors stay immutable.

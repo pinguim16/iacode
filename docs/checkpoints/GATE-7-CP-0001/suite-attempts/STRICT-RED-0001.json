@@ -1,0 +1,29 @@
+{
+  "schemaVersion": "1.0.0",
+  "kind": "TARGETED_CAUSAL_NOT_WHOLE_GATE",
+  "gate": "STRICT-RED",
+  "command": [
+    "python",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-p",
+    "test_gate5_*",
+    "-k",
+    "test_every_current_changed_path_uses_the_strict_detector_including_checkpoint_harnesses"
+  ],
+  "observedAt": "2026-10-18T17:11:50Z",
+  "subjectCommit": "ad240dac4bea356ad283fff961fb629a611dd7a8",
+  "sourceDirty": true,
+  "sourceFingerprint": "5432f302e17bdcd119dffade2bede1331cb9b460845fd2c067e8fdc1228d50e9",
+  "sourceUnchanged": true,
+  "exitCode": 1,
+  "outputEncodingValid": true,
+  "unsafeOutputOccurrences": 0,
+  "outputBytes": 1137,
+  "outputSha256": "50c4e6caee3131f29dbe0b62ef5c8890004bc8e958c8df821efeff9e5dfd6107",
+  "safeOutputArtifact": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/STRICT-RED-0001.log",
+  "result": "FAIL"
+}

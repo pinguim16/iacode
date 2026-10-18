@@ -13,7 +13,9 @@ not.
 
 ## Current boundary
 
-- Current Gate: `GATE 4 — QUALITY ENGINE`, the first Gate of milestone `M2`.
+- Current Gate and executed acceptance: [the canonical checkpoint](docs/checkpoints/LATEST.md).
+  This capability map does not grant a delivery verdict or independent M2 approval.
+- The Foundation supplies the runtime stack and shared contracts below.
 - What runs: an API, a Temporal worker, a web shell, PostgreSQL, Redis, MinIO, Temporal, Prometheus
   and Grafana, locally on Docker Compose — and the Model Gateway, which discovers a provider's
   models and invokes them behind one provider-neutral contract.
@@ -27,8 +29,15 @@ not.
   applicable check through stack-specific sandbox images, stores immutable evidence and derives the
   only verdict exposed by the API. PASS, FAIL, cancellation, timeout and reproduction are durable
   workflow facts rather than caller assertions.
-- What does not: held-out model evaluation, retrieval, the experience store and training belong to
-  later Gates; the directories reserved for them say so and contain nothing else.
+- VS Code Integration includes the standalone CLI and native editor's authenticated, consent-bound
+  adapters. They do not acquire host execution or quality-verdict authority.
+- The Experience Store captures only explicitly consented source-bound observable facts, with
+  immutable provenance, denied unproven reuse and finite primary retention.
+- The Knowledge Engine indexes explicitly permission-qualified curated project artifacts and
+  returns deterministic lexical matches with exact current citations. Storage-only experiences
+  remain RAG-ineligible; source presence is not current whole-Gate acceptance.
+- What does not: code graph, runtime project memory, gap detection, research, learning pipelines,
+  held-out model evaluation, training and promotion remain outside the current delivered scope.
 - Canonical agent definitions: `.iacode/agents/`.
 - Latest reconstructible state: [docs/checkpoints/LATEST.md](docs/checkpoints/LATEST.md).
 

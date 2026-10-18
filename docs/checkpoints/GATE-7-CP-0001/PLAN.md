@@ -1,7 +1,8 @@
 # Gate 7 execution plan
 
 This plan follows actual entry validation, complete preflight cmd-0004, full191-row derivation
-cmd-0005 and successful inherited129-case baseline cmd-0006. A plan and baseline are not feature
+cmd-0005 and successful inherited129-case baseline cmd-0006. Cmd-0030/0031 refresh all192
+requirements after confirmed LSN-0145, before its structural correction. A plan and baseline are not feature
 acceptance. Only Gate 7 is authorized. Separate internal-role artifacts are same-session, never
 independent. The canonical checklist and every selected LESSON-REQ remain the denominator.
 
@@ -18,6 +19,11 @@ independent. The canonical checklist and every selected LESSON-REQ remain the de
 - Stop: unexpected divergence/missing authority; ordinary failures require causal rework.
 
 ## G7-S01 — Governed Knowledge Engine
+
+G7-INT-003 corrective plan: preserve each inherited structural equality/assertion and append
+only the authorized knowledge table/fact/cascade entries. Add actual controls invoking those
+owning assertions against clean metadata and missing/extra table, wrong lifecycle/fact class,
+and altered cascade mutations. The complete API gate and real migration parity must then pass.
 
 - Objective: complete governed admission, exact deterministic derivation, persistent indexing,
   measured lexical retrieval, exact citations and fail-closed invalidation/recovery.
@@ -681,7 +687,7 @@ This mechanically rendered list is not a substitute denominator and may omit no 
 
 ### LESSON-REQ-0116 — LSN-0117
 
-- Required check: Whenever a delivered capability is added to detailed architecture, confirm that the live overview does not still deny that capability and distinguishes pending future work.
+- Required check: Check every public current-state rollup against canonical owned capability titles and delegate live lifecycle status to LATEST, retaining earlier architecture controls and testing actual omissions, future-denials and frozen status.
 - Required evidence: A causal red overview-consistency control followed by its unchanged green execution and a full current documentation validation.
 
 ### LESSON-REQ-0117 — LSN-0118
@@ -818,3 +824,8 @@ This mechanically rendered list is not a substitute denominator and may omit no 
 
 - Required check: Preserve raw observation bytes and original interpretation context; never publish a relocated byte-exact archive as active source/documentation with broken context.
 - Required evidence: Actual published-object equality for every raw archive member, immutable original manifest and unchanged whole-tree active-document validation.
+
+### LESSON-REQ-0144 — LSN-0145
+
+- Required check: For every authorized persistence addition, extend the owning exact table inventory, immutable/lifecycle classification and foreign-key ownership contract while preserving all inherited assertions; prove each boundary rejects a deliberate mismatch.
+- Required evidence: Actual complete API gate with the expanded exact structural expectations plus executed missing/extra table, wrong fact/lifecycle and changed-cascade adverse controls; real migration parity remains separate.

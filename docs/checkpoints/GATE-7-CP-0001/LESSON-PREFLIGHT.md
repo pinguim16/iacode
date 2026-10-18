@@ -4,9 +4,9 @@
 - Scope: `Knowledge Engine governed source ingestion lexical indexing retrieval citations rights invalidation persistence privacy recovery and M2 internal audit handoff`
 - Technologies: `Python`, `PostgreSQL`, `Docker`, `Windows`
 - Modules: `services/knowledge`, `apps/api`, `packages/contracts`, `packages/persistence`, `scripts/iacode`
-- Generated: `2026-10-18T15:10:48Z`
-- Lessons considered: 144
-- Lessons applicable: 143
+- Generated: `2026-10-18T17:24:33Z`
+- Lessons considered: 145
+- Lessons applicable: 144
 
 Every applicable lesson below is a requirement of this Gate. The derived identifiers must
 appear in `REQUIREMENTS-MATRIX.json`, and the Delivery Completeness Validator fails the
@@ -129,7 +129,7 @@ delivery when one is absent.
 | `LSN-0114` Transport line metadata must not repeatedly scan the source prefix | `GUARDED` | MEDIUM | `LESSON-REQ-0113` | Run the measured source-range regression and all existing transport, secret-boundary and immutable-bundle controls without weakening their rules. |
 | `LSN-0115` A failing full verifier retains every bounded case identifier beyond its output tail | `GUARDED` | MEDIUM | `LESSON-REQ-0114` | Run actual-process long-tail, parameter-exclusion, bounded-count and successful-child controls; retain original stage denominator and exit-code semantics. |
 | `LSN-0116` A live resumability pointer is generated after Git boundaries, not committed into its own subject | `GUARDED` | CRITICAL | `LESSON-REQ-0115` | Generate current state from the latest checkpoint, truthful steps and real local/remote Git; validate exact observations, reject stale or contradictory state and prove the live output cannot dirty or overwrite tracked source. |
-| `LSN-0117` An architecture rollup must not contradict the delivered capability described below it | `GUARDED` | MEDIUM | `LESSON-REQ-0116` | Whenever a delivered capability is added to detailed architecture, confirm that the live overview does not still deny that capability and distinguishes pending future work. |
+| `LSN-0117` An architecture rollup must not contradict the delivered capability described below it | `GUARDED` | HIGH | `LESSON-REQ-0116` | Check every public current-state rollup against canonical owned capability titles and delegate live lifecycle status to LATEST, retaining earlier architecture controls and testing actual omissions, future-denials and frozen status. |
 | `LSN-0118` Post-response validation failures must preserve an accepted mutation's uncertain outcome | `GUARDED` | HIGH | `LESSON-REQ-0117` | For every refusal after a remote mutation may have been accepted, including response authentication, envelope and semantic validation, preserve uncertainty and stable reconciliation identity without automatically repeating the mutation. |
 | `LSN-0119` A clean publication scan does not replace the stricter checkpoint secret scan | `GUARDED` | CRITICAL | `LESSON-REQ-0118` | Treat publication review and strict checkpoint detection as distinct controls; execute both unchanged, preserve actual secret types when correcting source false positives, and never infer checkpoint validity from the publication scan. |
 | `LSN-0120` Native installation proofs must resolve the installed CLI entrypoint | `GUARDED` | MEDIUM | `LESSON-REQ-0119` | Resolve native tool installation/CLI entrypoints and verify actual extracted package identities before claiming installability; graphical process launch or a guessed metadata path is not installation evidence. |
@@ -157,6 +157,7 @@ delivery when one is absent.
 | `LSN-0142` Local Engine recovery keeps transport and cleanup scoped | `GUARDED` | HIGH | `LESSON-REQ-0141` | Operational access recovery must pin transport only in the owning child, preserve the parent/global configuration and verify exact disposable resource ownership and other application identities before and after cleanup. |
 | `LSN-0143` Management recovery is not complete runtime capability | `GUARDED` | HIGH | `LESSON-REQ-0142` | Do not promote a management-only recovery into full runtime readiness. Verify the actual canonical build, host-bind and lint capabilities through the supported transport before immutable assurance. |
 | `LSN-0144` Raw archived observations retain original context rather than becoming active relocated documents | `GUARDED` | HIGH | `LESSON-REQ-0143` | Preserve raw observation bytes and original interpretation context; never publish a relocated byte-exact archive as active source/documentation with broken context. |
+| `LSN-0145` A new persistent capability must extend the explicit structural contract, not bypass its exact inventory | `GUARDED` | MEDIUM | `LESSON-REQ-0144` | For every authorized persistence addition, extend the owning exact table inventory, immutable/lifecycle classification and foreign-key ownership contract while preserving all inherited assertions; prove each boundary rejects a deliberate mismatch. |
 
 ## Why each lesson applies
 
@@ -967,8 +968,8 @@ delivery when one is absent.
 
 ### LSN-0117 — An architecture rollup must not contradict the delivered capability described below it
 
-- Reason: applies to every Gate; category documentation; severity MEDIUM; already guarded, so the control must keep holding
-- Required check: Whenever a delivered capability is added to detailed architecture, confirm that the live overview does not still deny that capability and distinguishes pending future work.
+- Reason: applies to every Gate; category documentation; severity HIGH; already guarded, so the control must keep holding
+- Required check: Check every public current-state rollup against canonical owned capability titles and delegate live lifecycle status to LATEST, retaining earlier architecture controls and testing actual omissions, future-denials and frozen status.
 - Required evidence: A causal red overview-consistency control followed by its unchanged green execution and a full current documentation validation.
 - Derived requirement: `LESSON-REQ-0116`
 
@@ -1160,3 +1161,10 @@ delivery when one is absent.
 - Required check: Preserve raw observation bytes and original interpretation context; never publish a relocated byte-exact archive as active source/documentation with broken context.
 - Required evidence: Actual published-object equality for every raw archive member, immutable original manifest and unchanged whole-tree active-document validation.
 - Derived requirement: `LESSON-REQ-0143`
+
+### LSN-0145 — A new persistent capability must extend the explicit structural contract, not bypass its exact inventory
+
+- Reason: applies to every Gate; category testing; severity MEDIUM; already guarded, so the control must keep holding
+- Required check: For every authorized persistence addition, extend the owning exact table inventory, immutable/lifecycle classification and foreign-key ownership contract while preserving all inherited assertions; prove each boundary rejects a deliberate mismatch.
+- Required evidence: Actual complete API gate with the expanded exact structural expectations plus executed missing/extra table, wrong fact/lifecycle and changed-cascade adverse controls; real migration parity remains separate.
+- Derived requirement: `LESSON-REQ-0144`

@@ -6,12 +6,15 @@ Delivered foundations include the **SETUP-00 development control plane**, **Gate
 runtime**, **Gate 1 Model Gateway**, **Gate 2 Agent Runtime**, **Gate 3 Sandbox** and **Gate 4
 Quality Engine**. Their detailed boundaries are recorded below.
 
-**Gate 5 — VS Code + CLI** exposes authenticated runtime adapters through a standalone CLI and
+**Gate 5 — VS Code Integration (VS Code + CLI)** exposes authenticated runtime adapters through a standalone CLI and
 native editor extension. The [latest checkpoint](checkpoints/LATEST.md), not this overview, records
 their live delivery status and executed acceptance; source presence is not an approval.
 **Gate 6 — Experience Store** is separately authorized after sealed Gate 5. Its source and
 executed acceptance are governed by the latest checkpoint, not inferred from this overview.
-Knowledge, runtime project memory, learning and training remain later-Gate work.
+**Gate 7 — Knowledge Engine** adds governed persistent lexical projections and exact current
+citations under separate owner authorization. The checkpoint owns executed acceptance and the
+pending independent M2 handoff; source presence is not an independent verdict.
+Code graph, runtime project memory, learning and training remain later-Gate work.
 `.iacode/policies/gate-scope.json` preserves those reservations. Engineering memory in `.iacode/`
 is a delivered control-plane capability, distinct from runtime experience and project-memory APIs.
 
@@ -379,9 +382,39 @@ minimal finite tombstones outlive the capture-age window. Source records and sep
 their own retention; this is not global erasure. The [runbook](runbooks/experience-store.md) defines
 authentication, policy ceilings, legacy handling and isolated restore/withdrawal reconciliation.
 
+## The Knowledge Engine
+
+Gate 7's provider-neutral library depends on shared closed contracts and the existing canonical
+content scanner, not provider adapters or execution services. The API supplies real source and
+PostgreSQL adapters plus authenticated `/api/v1/knowledge` operations. ADR-0053/0054 precede behavior
+changes. The [checkpoint](checkpoints/LATEST.md) owns actual acceptance; independent M2 remains due.
+
+The shipped curated registry is empty. Configured read-only sources require exact project/source/
+revision/raw digests and separate reviewed storage/RAG grants with finite validity. Unknown or
+revoked permission refuses before content/index effects. Existing experiences pass their owning
+integrity/rights checks; Gate6 storage consent is never upgraded into RAG. Operational curated
+payloads/grants are excluded from public Git/build context and deployed separately by their owner.
+
+Deterministic Unicode lexical tokens index exact source-text spans. PostgreSQL owns immutable
+document material, an actual GIN inverted index and minimal atomic audit facts. Project serialization
+prevents retry/revision races. Index/grant/policy identities are material, not creation metadata;
+rebuilds cannot renew the original revision's retention ceiling or revive withdrawn versions.
+
+Bounded search validates the current publication set before matching, so corrupt missing indexes
+cannot hide behind successful no-match. Ranking is distinct-token overlap with deterministic ties,
+not probabilistic semantic confidence. Every result is an explicitly untrusted exact excerpt with
+source/revision/raw digest, text pointer/Unicode coordinates, chunk digest and grant digest. It
+cannot run an instruction, post a tool result or grant a quality verdict.
+
+Current source/grant/clock/index checks deny stale citations before any sweep. Bounded owned
+retention physically purges primary bodies/index rows and retains finite minimal tombstones;
+sources and cross-Gate evidence are preserved. Restore must reconcile current permissions,
+withdrawals and time first. Structural hashes do not prove legal title or global backup erasure.
+The [runbook](runbooks/KNOWLEDGE-ENGINE.md) documents deployment, endpoints, rebuilding and limits.
+
 ## Planned runtime boundaries
 
-Later releases add knowledge, code graph, project memory, gap
+Later releases add code graph, project memory, gap
 detection, research, skills, dataset production, model training, evaluation, shadow mode, promotion
 and autonomous learning.
 

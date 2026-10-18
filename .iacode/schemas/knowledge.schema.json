@@ -1,0 +1,863 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://iacode.local/schemas/knowledge.schema.json",
+  "$defs": {
+    "CuratedArtifact": {
+      "additionalProperties": false,
+      "properties": {
+        "schemaVersion": {
+          "const": "1.0.0",
+          "title": "Schemaversion",
+          "type": "string"
+        },
+        "classification": {
+          "const": "curated-project-knowledge",
+          "title": "Classification",
+          "type": "string"
+        },
+        "createdAt": {
+          "format": "date-time",
+          "title": "Createdat",
+          "type": "string"
+        },
+        "title": {
+          "maxLength": 256,
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        },
+        "text": {
+          "maxLength": 65536,
+          "minLength": 1,
+          "title": "Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "classification",
+        "createdAt",
+        "title",
+        "text"
+      ],
+      "title": "CuratedArtifact",
+      "type": "object"
+    },
+    "IngestKnowledge": {
+      "additionalProperties": false,
+      "properties": {
+        "sourceKind": {
+          "enum": [
+            "curated",
+            "experience"
+          ],
+          "title": "Sourcekind",
+          "type": "string"
+        },
+        "sourceId": {
+          "pattern": "^[0-9a-f]{8}-(?:[0-9a-f]{4}-){3}[0-9a-f]{12}$",
+          "title": "Sourceid",
+          "type": "string"
+        },
+        "revision": {
+          "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._:+-]{0,127}$",
+          "title": "Revision",
+          "type": "string"
+        },
+        "storageConsent": {
+          "const": true,
+          "title": "Storageconsent",
+          "type": "boolean"
+        },
+        "idempotencyKey": {
+          "pattern": "^[0-9a-f]{8}-(?:[0-9a-f]{4}-){3}[0-9a-f]{12}$",
+          "title": "Idempotencykey",
+          "type": "string"
+        },
+        "retentionSeconds": {
+          "anyOf": [
+            {
+              "maximum": 7776000,
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Retentionseconds"
+        }
+      },
+      "required": [
+        "sourceKind",
+        "sourceId",
+        "revision",
+        "storageConsent",
+        "idempotencyKey",
+        "retentionSeconds"
+      ],
+      "title": "IngestKnowledge",
+      "type": "object"
+    },
+    "KnowledgeChunk": {
+      "additionalProperties": false,
+      "properties": {
+        "chunkId": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Chunkid",
+          "type": "string"
+        },
+        "ordinal": {
+          "maximum": 127,
+          "minimum": 0,
+          "title": "Ordinal",
+          "type": "integer"
+        },
+        "start": {
+          "maximum": 65535,
+          "minimum": 0,
+          "title": "Start",
+          "type": "integer"
+        },
+        "end": {
+          "maximum": 65536,
+          "minimum": 1,
+          "title": "End",
+          "type": "integer"
+        },
+        "text": {
+          "maxLength": 2048,
+          "minLength": 1,
+          "title": "Text",
+          "type": "string"
+        },
+        "digest": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Digest",
+          "type": "string"
+        },
+        "tokens": {
+          "items": {
+            "maxLength": 128,
+            "minLength": 1,
+            "type": "string"
+          },
+          "maxItems": 512,
+          "title": "Tokens",
+          "type": "array"
+        }
+      },
+      "required": [
+        "chunkId",
+        "ordinal",
+        "start",
+        "end",
+        "text",
+        "digest",
+        "tokens"
+      ],
+      "title": "KnowledgeChunk",
+      "type": "object"
+    },
+    "KnowledgeCitation": {
+      "additionalProperties": false,
+      "properties": {
+        "documentId": {
+          "pattern": "^[0-9a-f]{8}-(?:[0-9a-f]{4}-){3}[0-9a-f]{12}$",
+          "title": "Documentid",
+          "type": "string"
+        },
+        "sourceKind": {
+          "const": "curated",
+          "title": "Sourcekind",
+          "type": "string"
+        },
+        "sourceId": {
+          "pattern": "^[0-9a-f]{8}-(?:[0-9a-f]{4}-){3}[0-9a-f]{12}$",
+          "title": "Sourceid",
+          "type": "string"
+        },
+        "revision": {
+          "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._:+-]{0,127}$",
+          "title": "Revision",
+          "type": "string"
+        },
+        "sourceDigest": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sourcedigest",
+          "type": "string"
+        },
+        "grantDigest": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Grantdigest",
+          "type": "string"
+        },
+        "chunkId": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Chunkid",
+          "type": "string"
+        },
+        "chunkDigest": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Chunkdigest",
+          "type": "string"
+        },
+        "pointer": {
+          "const": "/text",
+          "default": "/text",
+          "title": "Pointer",
+          "type": "string"
+        },
+        "coordinateSystem": {
+          "const": "unicode-codepoints-start-inclusive-end-exclusive",
+          "default": "unicode-codepoints-start-inclusive-end-exclusive",
+          "title": "Coordinatesystem",
+          "type": "string"
+        },
+        "start": {
+          "maximum": 65535,
+          "minimum": 0,
+          "title": "Start",
+          "type": "integer"
+        },
+        "end": {
+          "maximum": 65536,
+          "minimum": 1,
+          "title": "End",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "documentId",
+        "sourceKind",
+        "sourceId",
+        "revision",
+        "sourceDigest",
+        "grantDigest",
+        "chunkId",
+        "chunkDigest",
+        "pointer",
+        "coordinateSystem",
+        "start",
+        "end"
+      ],
+      "title": "KnowledgeCitation",
+      "type": "object"
+    },
+    "KnowledgeDocument": {
+      "additionalProperties": false,
+      "properties": {
+        "untrustedContent": {
+          "const": true,
+          "default": true,
+          "title": "Untrustedcontent",
+          "type": "boolean"
+        },
+        "schemaVersion": {
+          "const": "1.0.0",
+          "title": "Schemaversion",
+          "type": "string"
+        },
+        "projectId": {
+          "pattern": "^[0-9a-f]{8}-(?:[0-9a-f]{4}-){3}[0-9a-f]{12}$",
+          "title": "Projectid",
+          "type": "string"
+        },
+        "title": {
+          "maxLength": 256,
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        },
+        "indexVersion": {
+          "const": "unicode-lexical-v1",
+          "title": "Indexversion",
+          "type": "string"
+        },
+        "policyDigest": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Policydigest",
+          "type": "string"
+        },
+        "unicodeDataVersion": {
+          "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._:+-]{0,127}$",
+          "title": "Unicodedataversion",
+          "type": "string"
+        },
+        "retentionSeconds": {
+          "maximum": 7776000,
+          "minimum": 1,
+          "title": "Retentionseconds",
+          "type": "integer"
+        },
+        "provenance": {
+          "$ref": "#/$defs/KnowledgeProvenance"
+        },
+        "chunks": {
+          "items": {
+            "$ref": "#/$defs/KnowledgeChunk"
+          },
+          "maxItems": 128,
+          "minItems": 1,
+          "title": "Chunks",
+          "type": "array"
+        }
+      },
+      "required": [
+        "untrustedContent",
+        "schemaVersion",
+        "projectId",
+        "title",
+        "indexVersion",
+        "policyDigest",
+        "unicodeDataVersion",
+        "retentionSeconds",
+        "provenance",
+        "chunks"
+      ],
+      "title": "KnowledgeDocument",
+      "type": "object"
+    },
+    "KnowledgeHit": {
+      "additionalProperties": false,
+      "properties": {
+        "untrustedContent": {
+          "const": true,
+          "default": true,
+          "title": "Untrustedcontent",
+          "type": "boolean"
+        },
+        "citation": {
+          "$ref": "#/$defs/KnowledgeCitation"
+        },
+        "excerpt": {
+          "maxLength": 2048,
+          "minLength": 1,
+          "title": "Excerpt",
+          "type": "string"
+        },
+        "score": {
+          "minimum": 1,
+          "title": "Score",
+          "type": "integer"
+        },
+        "matchedTokens": {
+          "items": {
+            "maxLength": 128,
+            "minLength": 1,
+            "type": "string"
+          },
+          "maxItems": 32,
+          "minItems": 1,
+          "title": "Matchedtokens",
+          "type": "array"
+        }
+      },
+      "required": [
+        "untrustedContent",
+        "citation",
+        "excerpt",
+        "score",
+        "matchedTokens"
+      ],
+      "title": "KnowledgeHit",
+      "type": "object"
+    },
+    "KnowledgePolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "schemaVersion": {
+          "const": "1.0.0",
+          "title": "Schemaversion",
+          "type": "string"
+        },
+        "indexVersion": {
+          "const": "unicode-lexical-v1",
+          "title": "Indexversion",
+          "type": "string"
+        },
+        "maxRequestBytes": {
+          "maximum": 16384,
+          "minimum": 256,
+          "title": "Maxrequestbytes",
+          "type": "integer"
+        },
+        "maxRegistryBytes": {
+          "maximum": 1048576,
+          "minimum": 1024,
+          "title": "Maxregistrybytes",
+          "type": "integer"
+        },
+        "maxSourceBytes": {
+          "maximum": 262144,
+          "minimum": 256,
+          "title": "Maxsourcebytes",
+          "type": "integer"
+        },
+        "maxSourceChars": {
+          "maximum": 65536,
+          "minimum": 1,
+          "title": "Maxsourcechars",
+          "type": "integer"
+        },
+        "maxBodyBytes": {
+          "maximum": 524288,
+          "minimum": 1024,
+          "title": "Maxbodybytes",
+          "type": "integer"
+        },
+        "maxSources": {
+          "maximum": 256,
+          "minimum": 1,
+          "title": "Maxsources",
+          "type": "integer"
+        },
+        "maxChunks": {
+          "maximum": 128,
+          "minimum": 1,
+          "title": "Maxchunks",
+          "type": "integer"
+        },
+        "maxChunkChars": {
+          "maximum": 2048,
+          "minimum": 1,
+          "title": "Maxchunkchars",
+          "type": "integer"
+        },
+        "maxChunkTokens": {
+          "maximum": 512,
+          "minimum": 1,
+          "title": "Maxchunktokens",
+          "type": "integer"
+        },
+        "maxTokenChars": {
+          "maximum": 128,
+          "minimum": 1,
+          "title": "Maxtokenchars",
+          "type": "integer"
+        },
+        "maxQueryChars": {
+          "maximum": 512,
+          "minimum": 1,
+          "title": "Maxquerychars",
+          "type": "integer"
+        },
+        "maxQueryTokens": {
+          "maximum": 32,
+          "minimum": 1,
+          "title": "Maxquerytokens",
+          "type": "integer"
+        },
+        "maxCandidates": {
+          "maximum": 512,
+          "minimum": 1,
+          "title": "Maxcandidates",
+          "type": "integer"
+        },
+        "maxResults": {
+          "maximum": 20,
+          "minimum": 1,
+          "title": "Maxresults",
+          "type": "integer"
+        },
+        "maxResponseBytes": {
+          "maximum": 1048576,
+          "minimum": 2048,
+          "title": "Maxresponsebytes",
+          "type": "integer"
+        },
+        "maxPageSize": {
+          "maximum": 50,
+          "minimum": 1,
+          "title": "Maxpagesize",
+          "type": "integer"
+        },
+        "defaultRetentionSeconds": {
+          "maximum": 7776000,
+          "minimum": 1,
+          "title": "Defaultretentionseconds",
+          "type": "integer"
+        },
+        "maxRetentionSeconds": {
+          "maximum": 7776000,
+          "minimum": 1,
+          "title": "Maxretentionseconds",
+          "type": "integer"
+        },
+        "sourceCaptureMaxAgeSeconds": {
+          "maximum": 7776000,
+          "minimum": 1,
+          "title": "Sourcecapturemaxageseconds",
+          "type": "integer"
+        },
+        "maxGrantValiditySeconds": {
+          "maximum": 7776000,
+          "minimum": 1,
+          "title": "Maxgrantvalidityseconds",
+          "type": "integer"
+        },
+        "tombstoneRetentionSeconds": {
+          "maximum": 31536000,
+          "minimum": 1,
+          "title": "Tombstoneretentionseconds",
+          "type": "integer"
+        },
+        "sweepIntervalSeconds": {
+          "maximum": 3600,
+          "minimum": 1,
+          "title": "Sweepintervalseconds",
+          "type": "integer"
+        },
+        "batchSize": {
+          "maximum": 1000,
+          "minimum": 1,
+          "title": "Batchsize",
+          "type": "integer"
+        },
+        "operationTimeoutSeconds": {
+          "maximum": 60,
+          "minimum": 1,
+          "title": "Operationtimeoutseconds",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "indexVersion",
+        "maxRequestBytes",
+        "maxRegistryBytes",
+        "maxSourceBytes",
+        "maxSourceChars",
+        "maxBodyBytes",
+        "maxSources",
+        "maxChunks",
+        "maxChunkChars",
+        "maxChunkTokens",
+        "maxTokenChars",
+        "maxQueryChars",
+        "maxQueryTokens",
+        "maxCandidates",
+        "maxResults",
+        "maxResponseBytes",
+        "maxPageSize",
+        "defaultRetentionSeconds",
+        "maxRetentionSeconds",
+        "sourceCaptureMaxAgeSeconds",
+        "maxGrantValiditySeconds",
+        "tombstoneRetentionSeconds",
+        "sweepIntervalSeconds",
+        "batchSize",
+        "operationTimeoutSeconds"
+      ],
+      "title": "KnowledgePolicy",
+      "type": "object"
+    },
+    "KnowledgeProvenance": {
+      "additionalProperties": false,
+      "properties": {
+        "sourceKind": {
+          "const": "curated",
+          "title": "Sourcekind",
+          "type": "string"
+        },
+        "sourceId": {
+          "pattern": "^[0-9a-f]{8}-(?:[0-9a-f]{4}-){3}[0-9a-f]{12}$",
+          "title": "Sourceid",
+          "type": "string"
+        },
+        "revision": {
+          "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._:+-]{0,127}$",
+          "title": "Revision",
+          "type": "string"
+        },
+        "sourceDigest": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sourcedigest",
+          "type": "string"
+        },
+        "artifactCreatedAt": {
+          "format": "date-time",
+          "title": "Artifactcreatedat",
+          "type": "string"
+        },
+        "grantDigest": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Grantdigest",
+          "type": "string"
+        },
+        "grant": {
+          "$ref": "#/$defs/SourceGrant"
+        }
+      },
+      "required": [
+        "sourceKind",
+        "sourceId",
+        "revision",
+        "sourceDigest",
+        "artifactCreatedAt",
+        "grantDigest",
+        "grant"
+      ],
+      "title": "KnowledgeProvenance",
+      "type": "object"
+    },
+    "SearchKnowledge": {
+      "additionalProperties": false,
+      "properties": {
+        "query": {
+          "maxLength": 512,
+          "minLength": 1,
+          "title": "Query",
+          "type": "string"
+        },
+        "limit": {
+          "default": 10,
+          "maximum": 20,
+          "minimum": 1,
+          "title": "Limit",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "query",
+        "limit"
+      ],
+      "title": "SearchKnowledge",
+      "type": "object"
+    },
+    "SourceEntry": {
+      "additionalProperties": false,
+      "properties": {
+        "projectId": {
+          "pattern": "^[0-9a-f]{8}-(?:[0-9a-f]{4}-){3}[0-9a-f]{12}$",
+          "title": "Projectid",
+          "type": "string"
+        },
+        "sourceId": {
+          "pattern": "^[0-9a-f]{8}-(?:[0-9a-f]{4}-){3}[0-9a-f]{12}$",
+          "title": "Sourceid",
+          "type": "string"
+        },
+        "revision": {
+          "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._:+-]{0,127}$",
+          "title": "Revision",
+          "type": "string"
+        },
+        "artifactPath": {
+          "maxLength": 256,
+          "minLength": 1,
+          "title": "Artifactpath",
+          "type": "string"
+        },
+        "sourceDigest": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sourcedigest",
+          "type": "string"
+        },
+        "grantPath": {
+          "maxLength": 256,
+          "minLength": 1,
+          "title": "Grantpath",
+          "type": "string"
+        },
+        "grantDigest": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Grantdigest",
+          "type": "string"
+        }
+      },
+      "required": [
+        "projectId",
+        "sourceId",
+        "revision",
+        "artifactPath",
+        "sourceDigest",
+        "grantPath",
+        "grantDigest"
+      ],
+      "title": "SourceEntry",
+      "type": "object"
+    },
+    "SourceGrant": {
+      "additionalProperties": false,
+      "properties": {
+        "schemaVersion": {
+          "const": "1.0.0",
+          "title": "Schemaversion",
+          "type": "string"
+        },
+        "kind": {
+          "const": "operator-reviewed-source-grant",
+          "title": "Kind",
+          "type": "string"
+        },
+        "grantId": {
+          "pattern": "^[0-9a-f]{8}-(?:[0-9a-f]{4}-){3}[0-9a-f]{12}$",
+          "title": "Grantid",
+          "type": "string"
+        },
+        "projectId": {
+          "pattern": "^[0-9a-f]{8}-(?:[0-9a-f]{4}-){3}[0-9a-f]{12}$",
+          "title": "Projectid",
+          "type": "string"
+        },
+        "sourceId": {
+          "pattern": "^[0-9a-f]{8}-(?:[0-9a-f]{4}-){3}[0-9a-f]{12}$",
+          "title": "Sourceid",
+          "type": "string"
+        },
+        "revision": {
+          "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._:+-]{0,127}$",
+          "title": "Revision",
+          "type": "string"
+        },
+        "sourceDigest": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sourcedigest",
+          "type": "string"
+        },
+        "ownership": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Ownership",
+          "type": "string"
+        },
+        "license": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "License",
+          "type": "string"
+        },
+        "authority": {
+          "maxLength": 256,
+          "minLength": 1,
+          "title": "Authority",
+          "type": "string"
+        },
+        "evidence": {
+          "maxLength": 1024,
+          "minLength": 1,
+          "title": "Evidence",
+          "type": "string"
+        },
+        "reviewed": {
+          "title": "Reviewed",
+          "type": "boolean"
+        },
+        "status": {
+          "enum": [
+            "ACTIVE",
+            "REVOKED"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "storageAllowed": {
+          "title": "Storageallowed",
+          "type": "boolean"
+        },
+        "ragAllowed": {
+          "title": "Ragallowed",
+          "type": "boolean"
+        },
+        "trainingAllowed": {
+          "const": false,
+          "title": "Trainingallowed",
+          "type": "boolean"
+        },
+        "distillationAllowed": {
+          "const": false,
+          "title": "Distillationallowed",
+          "type": "boolean"
+        },
+        "validFrom": {
+          "format": "date-time",
+          "title": "Validfrom",
+          "type": "string"
+        },
+        "validUntil": {
+          "format": "date-time",
+          "title": "Validuntil",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "kind",
+        "grantId",
+        "projectId",
+        "sourceId",
+        "revision",
+        "sourceDigest",
+        "ownership",
+        "license",
+        "authority",
+        "evidence",
+        "reviewed",
+        "status",
+        "storageAllowed",
+        "ragAllowed",
+        "trainingAllowed",
+        "distillationAllowed",
+        "validFrom",
+        "validUntil"
+      ],
+      "title": "SourceGrant",
+      "type": "object"
+    },
+    "SourceRegistry": {
+      "additionalProperties": false,
+      "properties": {
+        "schemaVersion": {
+          "const": "1.0.0",
+          "title": "Schemaversion",
+          "type": "string"
+        },
+        "sources": {
+          "items": {
+            "$ref": "#/$defs/SourceEntry"
+          },
+          "maxItems": 256,
+          "title": "Sources",
+          "type": "array"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "sources"
+      ],
+      "title": "SourceRegistry",
+      "type": "object"
+    }
+  },
+  "anyOf": [
+    {
+      "$ref": "#/$defs/KnowledgeDocument"
+    },
+    {
+      "$ref": "#/$defs/KnowledgePolicy"
+    },
+    {
+      "$ref": "#/$defs/CuratedArtifact"
+    },
+    {
+      "$ref": "#/$defs/SourceRegistry"
+    },
+    {
+      "$ref": "#/$defs/SourceGrant"
+    },
+    {
+      "$ref": "#/$defs/IngestKnowledge"
+    },
+    {
+      "$ref": "#/$defs/SearchKnowledge"
+    },
+    {
+      "$ref": "#/$defs/KnowledgeCitation"
+    },
+    {
+      "$ref": "#/$defs/KnowledgeHit"
+    }
+  ]
+}

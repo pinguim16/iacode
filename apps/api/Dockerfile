@@ -40,10 +40,12 @@ COPY services/model-gateway /build/services/model-gateway
 COPY services/agent-runtime /build/services/agent-runtime
 COPY services/evaluator /build/services/evaluator
 COPY services/experience /build/services/experience
+COPY services/knowledge /build/services/knowledge
 RUN pip install --no-cache-dir --no-deps \
       /build/packages/common /build/packages/contracts /build/packages/persistence \
       /build/packages/telemetry /build/services/model-gateway \
-      /build/services/agent-runtime /build/services/evaluator /build/services/experience
+      /build/services/agent-runtime /build/services/evaluator /build/services/experience \
+      /build/services/knowledge
 
 # ---------------------------------------------------------------------------------------------
 # Runtime
@@ -81,6 +83,7 @@ COPY --chown=iacode:iacode apps/api/tests /app/tests
 # different set of providers from the repository it was built from, and the default
 # ``IACODE_GATEWAY_POLICY_DIR`` resolves identically here and in a repository checkout.
 COPY --chown=iacode:iacode .iacode/policies /app/.iacode/policies
+COPY --chown=iacode:iacode .iacode/knowledge-sources /app/.iacode/knowledge-sources
 # The gateway's own suite, executed in this image by the gatewayTests gate. It ships with the image
 # for the same reason the API suite does: the code it exercises only runs here.
 COPY --chown=iacode:iacode services/model-gateway/tests /app/gateway_tests
@@ -90,6 +93,7 @@ COPY --chown=iacode:iacode services/model-gateway/tests /app/gateway_tests
 COPY --chown=iacode:iacode agents /app/agents
 COPY --chown=iacode:iacode services/agent-runtime/tests /app/agent_runtime_tests
 COPY --chown=iacode:iacode services/experience/tests /app/experience_tests
+COPY --chown=iacode:iacode services/knowledge/tests /app/knowledge_tests
 
 USER iacode
 EXPOSE 8000

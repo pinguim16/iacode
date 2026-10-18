@@ -124,9 +124,9 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 | `LSN-0114` | `GUARDED` | MEDIUM | performance | Transport line metadata must not repeatedly scan the source prefix | `test_fragment_carrier_lines_count_each_source_range_at_most_once`, `test_json_error_line_index_matches_builtin_string_coordinates` |
 | `LSN-0115` | `GUARDED` | MEDIUM | tooling | A failing full verifier retains every bounded case identifier beyond its output tail | `test_failed_case_identifiers_survive_a_tail_longer_than_the_report_limit` |
 | `LSN-0116` | `GUARDED` | CRITICAL | tooling | A live resumability pointer is generated after Git boundaries, not committed into its own subject | `test_real_cli_roundtrip_is_clean_and_supports_internal_closure` |
-| `LSN-0117` | `GUARDED` | MEDIUM | documentation | An architecture rollup must not contradict the delivered capability described below it | `test_architecture_rollup_does_not_deny_its_delivered_quality_engine`, `test_live_delivery_status_is_delegated_instead_of_hardcoded_in_rollups` |
+| `LSN-0117` | `GUARDED` | HIGH | documentation | An architecture rollup must not contradict the delivered capability described below it | `test_architecture_rollup_does_not_deny_its_delivered_quality_engine`, `test_live_delivery_status_is_delegated_instead_of_hardcoded_in_rollups`, `Gate7RollupTests.test_current_rollups_do_not_deny_the_owned_capabilities`, `Gate7RollupTests.test_rollup_guard_has_positive_and_each_missing_denied_stale_mutation`, `Gate7RollupTests.test_original_published_readme_is_a_real_causal_negative_not_a_rewritten_fixture` |
 | `LSN-0118` | `GUARDED` | HIGH | implementation | Post-response validation failures must preserve an accepted mutation's uncertain outcome | `test_signed_malformed_mutation_keeps_uncertainty_identity_and_one_effect` |
-| `LSN-0119` | `GUARDED` | CRITICAL | quality | A clean publication scan does not replace the stricter checkpoint secret scan | `test_strict_checkpoint_sources_do_not_rely_on_publication_allowances`, `test_desktop_credential_remains_a_secret_type_and_safe_dump_redacts_it`, `test_every_current_changed_path_uses_the_strict_detector_including_checkpoint_harnesses` |
+| `LSN-0119` | `GUARDED` | CRITICAL | quality | A clean publication scan does not replace the stricter checkpoint secret scan | `test_strict_checkpoint_sources_do_not_rely_on_publication_allowances`, `test_desktop_credential_remains_a_secret_type_and_safe_dump_redacts_it`, `test_every_current_changed_path_uses_the_strict_detector_including_checkpoint_harnesses`, `test_every_owned_wire_model_resolves_annotations_and_unresolved_control_is_refused` |
 | `LSN-0120` | `GUARDED` | MEDIUM | quality | Native installation proofs must resolve the installed CLI entrypoint | `test_installed_cli_adapter_resolves_versioned_layout_and_refuses_escape` |
 | `LSN-0121` | `GUARDED` | MEDIUM | quality | Standard-library host probes must not initialize application dependency graphs | `test_live_desktop_harness_cold_start_needs_only_the_standard_library` |
 | `LSN-0122` | `GUARDED` | MEDIUM | environment | Engine-allocated host ports must be rediscovered after container restart | `test_restarted_api_rediscovers_its_port_and_checks_actual_authenticated_forwarding` |
@@ -152,6 +152,7 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 | `LSN-0142` | `GUARDED` | HIGH | environment | Local Engine recovery keeps transport and cleanup scoped | `test_local_engine_selection_is_child_only_and_preserves_project_and_failure`, `test_owned_recovery_refuses_operational_or_mislabelled_resources_before_removal` |
 | `LSN-0143` | `GUARDED` | HIGH | environment | Management recovery is not complete runtime capability | `test_management_only_report_cannot_replace_complete_non_fast_verification` |
 | `LSN-0144` | `GUARDED` | HIGH | documentation | Raw archived observations retain original context rather than becoming active relocated documents | `Gate6BookkeepingCausalTests.test_raw_archive_catalog_retains_manifest_and_published_original_bytes`, `SetupChecklistTests.test_documentation_links_resolve` |
+| `LSN-0145` | `GUARDED` | MEDIUM | testing | A new persistent capability must extend the explicit structural contract, not bypass its exact inventory | `test_exact_table_inventory_refuses_each_missing_and_extra_table`, `test_fact_lifecycle_classification_refuses_each_wrong_knowledge_role`, `test_actual_foreign_key_contract_refuses_each_changed_knowledge_cascade`, `test_actual_retention_check_tracks_lifecycle_version_without_payload_rewrite` |
 
 ## Detail
 
@@ -392,17 +393,17 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 
 ### LSN-0018 — A structured reference must be resolved, not merely well typed
 
-- Status: `GUARDED`, severity CRITICAL, category tooling, recurrences 2.
+- Status: `GUARDED`, severity CRITICAL, category tooling, recurrences 3.
 - Source: SETUP-00, SETUP-00-CP-0007, finding M0-F-004 / M0-F-003.
 - Symptom: A GUARDED lesson naming a nonexistent test, a lesson citing a nonexistent evidence file, and a secret-shaped value nested in prevention.description all validated.
 - Root cause: Validation checked that a field had the right shape and never asked the repository whether the thing it named exists.
-- Resolution: Every control reference, evidence path and derived artifact is resolved against the repository and the discovered test suite, and the whole object is scanned for secrets at any depth.
+- Resolution: G7-INT-005: correct only the guard's test-kind locator to the actual discovered test identity. Cmd-0044 passes every unchanged LessonResolutionTests case (missing test/file, wrong kind and path escape included). Every earlier recurrence and original cmd-0043 refusal remains; canonical full memory validation follows before handoff.
 - Prevention:
   - `invariant` lessons.resolve_control — Every control reference is resolved against the suite or the repository.
   - `test` LessonResolutionTests.test_a_test_control_must_exist_in_the_suite — A control naming a nonexistent test is refused.
   - `test` QualityEvidenceTests.test_pass_referencing_a_failed_command_fails — The owning quality evidence resolver refuses a failed command as structured successful execution evidence.
   - `test` QualityEvidenceTests.test_pass_referencing_an_existing_checkpoint_file_passes — A durable actual checkpoint-local file resolves through the owning quality evidence boundary.
-- Evidence: `file:docs/checkpoints/SETUP-00-CP-0007/REVIEW-REPORT.md`, `file:docs/checkpoints/SETUP-00-CP-0007/AUDIT-EXECUTIONS.md`, `file:docs/checkpoints/GATE-6-CP-0001/FINDINGS.json`, `file:docs/checkpoints/GATE-6-CP-0001/COMMANDS.jsonl`
+- Evidence: `file:docs/checkpoints/SETUP-00-CP-0007/REVIEW-REPORT.md`, `file:docs/checkpoints/SETUP-00-CP-0007/AUDIT-EXECUTIONS.md`, `file:docs/checkpoints/GATE-6-CP-0001/FINDINGS.json`, `file:docs/checkpoints/GATE-6-CP-0001/COMMANDS.jsonl`, `file:docs/checkpoints/GATE-7-CP-0001/FINDINGS.json`, `file:docs/checkpoints/GATE-7-CP-0001/COMMANDS.jsonl`
 
 ### LSN-0019 — A derived artifact must carry a fingerprint of the inputs that produced it
 
@@ -1497,14 +1498,14 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 
 ### LSN-0105 — New behavioral tests must satisfy the unchanged source-quality contract
 
-- Status: `GUARDED`, severity CRITICAL, category testing, recurrences 6.
+- Status: `GUARDED`, severity CRITICAL, category testing, recurrences 8.
 - Source: GATE-4, GATE-4-CP-0010, finding G4-INT-004.
 - Symptom: The lint gate refused overlong declarations and expressions in new regression tests.
 - Root cause: Behavioral proof was expanded without checking the source formatting budget first.
-- Resolution: Run the existing mandatory lint over every changed source and test path before publishing; repair formatting without weakening lint or assertions.
+- Resolution: G7-INT-004 source-only splitting preserves identical SQL and assertions. Actual whole unchanged mandatory lint cmd-0040 passes, and cmd-0041 executes the inherited clean and actual missing-knowledge-project denominator refusal. All recurrence8/CRITICAL and original red evidence remains; whole delivery assurance is separately required.
 - Prevention:
   - `test` test_mandatory_lint_covers_every_python_project_root — The positive and negative regression must execute the intended boundary with canonical inputs.
-- Evidence: `file:docs/checkpoints/GATE-4-CP-0010/FINDINGS.json`, `file:docs/checkpoints/GATE-4-CP-0010/COMMANDS.jsonl`, `file:tests/test_gate5_clients.py`, `file:docs/checkpoints/GATE-5-CP-0001/FINDINGS.json`, `file:docs/checkpoints/GATE-5-CP-0001/COMMANDS.jsonl`, `file:docs/checkpoints/GATE-6-CP-0001/COMMANDS.jsonl`, `file:docs/checkpoints/GATE-6-CP-0001/PRE-LIVE-PROGRESS.json`, `file:docs/checkpoints/GATE-6-CP-0001/suite-attempts/INTEGRATION-0004.json`
+- Evidence: `file:docs/checkpoints/GATE-4-CP-0010/FINDINGS.json`, `file:docs/checkpoints/GATE-4-CP-0010/COMMANDS.jsonl`, `file:tests/test_gate5_clients.py`, `file:docs/checkpoints/GATE-5-CP-0001/FINDINGS.json`, `file:docs/checkpoints/GATE-5-CP-0001/COMMANDS.jsonl`, `file:docs/checkpoints/GATE-6-CP-0001/COMMANDS.jsonl`, `file:docs/checkpoints/GATE-6-CP-0001/PRE-LIVE-PROGRESS.json`, `file:docs/checkpoints/GATE-6-CP-0001/suite-attempts/INTEGRATION-0004.json`, `file:docs/checkpoints/GATE-7-CP-0001/FINDINGS.json`, `file:docs/checkpoints/GATE-7-CP-0001/COMMANDS.jsonl`, `file:docs/checkpoints/GATE-7-CP-0001/suite-attempts/STYLE-RED-0001.json`, `file:docs/checkpoints/GATE-7-CP-0001/suite-attempts/STYLE-RED-0001.log`, `file:docs/checkpoints/GATE-7-CP-0001/suite-attempts/STYLE-RED-0002.json`, `file:docs/checkpoints/GATE-7-CP-0001/suite-attempts/STYLE-RED-0002.log`
 
 ### LSN-0106 — A security repair must execute at the causal output boundary, not a similarly shaped branch
 
@@ -1631,15 +1632,18 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 
 ### LSN-0117 — An architecture rollup must not contradict the delivered capability described below it
 
-- Status: `GUARDED`, severity MEDIUM, category documentation, recurrences 0.
+- Status: `GUARDED`, severity HIGH, category documentation, recurrences 1.
 - Source: GATE-5, GATE-5-CP-0001, finding G5-INT-002.
 - Symptom: The current-state overview denied the Quality Engine that a later section of the same architecture document described.
 - Root cause: An overview enumerating delivered capabilities was not updated when the detailed quality-runtime architecture was added.
-- Resolution: The overview records the delivered Quality Engine and existing desktop adapters while separating capability from live acceptance. Static rollups delegate lifecycle status to LATEST, so legitimate closure does not require a later unverified source edit.
+- Resolution: Cmd-0016 preserves the original published README byte-for-byte. Cmd-0017 reproduces actual README/architecture rollup refusal before correction. Cmd-0018 passes the current canonical-title, omission/denial/stale-status and immutable-original controls; cmd-0019 also passes the complete unchanged inherited documentation class. Extend GRD-0119 without removing its original tests. Recurrence1/HIGH remains visible; full current assurance is separately required.
 - Prevention:
   - `test` test_architecture_rollup_does_not_deny_its_delivered_quality_engine — Compare the actual delivered evaluator and architecture detail with the current-state rollup, retaining the original causal red assertion.
   - `test` test_live_delivery_status_is_delegated_instead_of_hardcoded_in_rollups — Require live lifecycle status to be delegated to the canonical checkpoint and prove that an injected stale WIP label is detected without loosening the existing delivered-capability assertion.
-- Evidence: `file:docs/checkpoints/GATE-5-CP-0001/FINDINGS.json`, `file:docs/checkpoints/GATE-5-CP-0001/COMMANDS.jsonl`, `file:tests/test_gate5_clients.py`, `file:docs/ARCHITECTURE.md`, `file:START-HERE.md`
+  - `test` Gate7RollupTests.test_current_rollups_do_not_deny_the_owned_capabilities — Derive the current Gate and owned capability titles from canonical repository state and inspect actual README/architecture rollups.
+  - `test` Gate7RollupTests.test_rollup_guard_has_positive_and_each_missing_denied_stale_mutation — Execute clean, omitted-capability, future-denial, frozen-status and missing-live-owner controls.
+  - `test` Gate7RollupTests.test_original_published_readme_is_a_real_causal_negative_not_a_rewritten_fixture — Bind the original README observation to the actual published Git object and retain its causal denial as raw data.
+- Evidence: `file:docs/checkpoints/GATE-5-CP-0001/FINDINGS.json`, `file:docs/checkpoints/GATE-5-CP-0001/COMMANDS.jsonl`, `file:tests/test_gate5_clients.py`, `file:docs/ARCHITECTURE.md`, `file:START-HERE.md`, `file:docs/checkpoints/GATE-7-CP-0001/FINDINGS.json`, `file:docs/checkpoints/GATE-7-CP-0001/COMMANDS.jsonl`, `file:docs/checkpoints/GATE-7-CP-0001/attempts/README-ROLLUP-0001.json`, `file:tests/test_gate7_knowledge.py`
 
 ### LSN-0118 — Post-response validation failures must preserve an accepted mutation's uncertain outcome
 
@@ -1654,16 +1658,17 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
 
 ### LSN-0119 — A clean publication scan does not replace the stricter checkpoint secret scan
 
-- Status: `GUARDED`, severity CRITICAL, category quality, recurrences 3.
+- Status: `GUARDED`, severity CRITICAL, category quality, recurrences 4.
 - Source: GATE-5, GATE-5-CP-0001, finding G5-INT-003.
 - Symptom: The publication tree scan was clean after exact code-reference review, but actual checkpoint validation still refused the same five source files.
 - Root cause: Publication review allowances were incorrectly assumed to apply to the checkpoint's deliberately strict raw canonical detection boundary.
-- Resolution: Remove the eight unnecessary new approvals and keep both scanners unchanged. Refactor only source identifiers/type aliases, preserve actual SecretStr/redaction behavior and execute the strict source and real API/client controls.
+- Resolution: G7-INT-006: complete the source-only Lexeme alias rename, preserving type bounds and wire schema. Preserve incomplete first correction cmd-0053 (30 pass/two fail/schema refused). Cmd-0052 passes all four unchanged strict/publication causal cases; cmd-0055 passes33 complete owning domain/schema cases including all-owned-model rebuild and unresolved-reference adverse proof. Actual canonical IN_PROGRESS finalizer cmd-0061 exits0 with unchanged strict detection. No scanner, allowance or secret type is relaxed. Whole delivery assurance remains due.
 - Prevention:
   - `test` test_strict_checkpoint_sources_do_not_rely_on_publication_allowances — Run the unchanged strict canonical detector over the five changed authentication sources, retain a generated adverse-value control and never consult publication allowances.
   - `test` test_desktop_credential_remains_a_secret_type_and_safe_dump_redacts_it — Construct the actual Settings and prove the credential is still a real Pydantic SecretStr and safe_dump never emits its value.
   - `test` test_every_current_changed_path_uses_the_strict_detector_including_checkpoint_harnesses — Scan the actual Git delta against its checkpoint base, including every new checkpoint harness and undeclared untracked text path, with unchanged strict detection and no publication allowances.
-- Evidence: `file:docs/checkpoints/GATE-5-CP-0001/FINDINGS.json`, `file:docs/checkpoints/GATE-5-CP-0001/COMMANDS.jsonl`, `file:docs/checkpoints/GATE-5-CP-0001/attempts/SOURCE-SCAN-REVIEW-PRE-REFACTOR.json`, `file:tests/test_gate5_clients.py`, `file:apps/api/tests/unit/test_desktop_api.py`, `file:docs/checkpoints/GATE-6-CP-0001/STRICT-MEMORY-FINDING.json`, `file:docs/checkpoints/GATE-6-CP-0001/FINDINGS.json`, `file:docs/checkpoints/GATE-6-CP-0001/COMMANDS.jsonl`
+  - `test` test_every_owned_wire_model_resolves_annotations_and_unresolved_control_is_refused — Rebuild every owned actual wire model and schema after a naming correction; an unresolved annotation must refuse, so a source-only rename cannot leave lazy broken contracts.
+- Evidence: `file:docs/checkpoints/GATE-5-CP-0001/FINDINGS.json`, `file:docs/checkpoints/GATE-5-CP-0001/COMMANDS.jsonl`, `file:docs/checkpoints/GATE-5-CP-0001/attempts/SOURCE-SCAN-REVIEW-PRE-REFACTOR.json`, `file:tests/test_gate5_clients.py`, `file:apps/api/tests/unit/test_desktop_api.py`, `file:docs/checkpoints/GATE-6-CP-0001/STRICT-MEMORY-FINDING.json`, `file:docs/checkpoints/GATE-6-CP-0001/FINDINGS.json`, `file:docs/checkpoints/GATE-6-CP-0001/COMMANDS.jsonl`, `file:docs/checkpoints/GATE-7-CP-0001/FINDINGS.json`, `file:docs/checkpoints/GATE-7-CP-0001/COMMANDS.jsonl`, `file:docs/checkpoints/GATE-7-CP-0001/suite-attempts/STRICT-RED-0001.json`, `file:docs/checkpoints/GATE-7-CP-0001/suite-attempts/STRICT-RED-0001.log`
 
 ### LSN-0120 — Native installation proofs must resolve the installed CLI entrypoint
 
@@ -1966,3 +1971,17 @@ file is never the control. See [docs/ENGINEERING-MEMORY.md](../../docs/ENGINEERI
   - `test` Gate6BookkeepingCausalTests.test_raw_archive_catalog_retains_manifest_and_published_original_bytes — Every raw catalog member must match the original manifest and actual immutable published Git object, with original Markdown/Python marked raw.
   - `test` SetupChecklistTests.test_documentation_links_resolve — Every active repository Markdown link still resolves under the unchanged whole-tree check.
 - Evidence: `file:docs/checkpoints/GATE-6-CP-0001/FINDINGS.json`, `file:docs/checkpoints/GATE-6-CP-0001/attempts/RUNTIME-V6-RAW-CATALOG.json`, `file:docs/checkpoints/GATE-6-CP-0001/COMMANDS.jsonl`
+
+### LSN-0145 — A new persistent capability must extend the explicit structural contract, not bypass its exact inventory
+
+- Status: `GUARDED`, severity MEDIUM, category testing, recurrences 0.
+- Source: GATE-7, GATE-7-CP-0001, finding G7-INT-003.
+- Symptom: The actual complete API unit gate refuses three exact structural assertions after KnowledgeDocument, KnowledgeIndexEntry and KnowledgeEvent are added: table inventory, immutable fact classification and foreign-key ownership.
+- Root cause: The behavior implementation added three declared ORM entities but did not yet extend the owning structural expectations. Correct exact assertions expose incomplete integration; replacing equality by inclusion or classifying mutable rows as facts would conceal it.
+- Resolution: Append only authorized knowledge table/fact/cascade entries to the owning exact structural contract. Cmd-0033 passes all192 API cases, including executed clean/missing/extra table, wrong fact/lifecycle classification and each changed knowledge cascade. Cmd-0042 passes all21 real PostgreSQL/HTTP/migration cases, including unchanged legacy experience identity/rights and explicit lifecycle write counters. No inherited exact assertion is dropped or relaxed.
+- Prevention:
+  - `test` test_exact_table_inventory_refuses_each_missing_and_extra_table — Invoke the actual exact inventory assertion with clean ORM metadata and each missing/extra table.
+  - `test` test_fact_lifecycle_classification_refuses_each_wrong_knowledge_role — Invoke existing convention/base-class controls with each wrong knowledge fact/lifecycle role.
+  - `test` test_actual_foreign_key_contract_refuses_each_changed_knowledge_cascade — Mutate each actual SQLAlchemy knowledge foreign-key cascade and require the owning exact assertion to refuse.
+  - `test` test_actual_retention_check_tracks_lifecycle_version_without_payload_rewrite — Actual PostgreSQL checks and purge track the existing version/update convention while material stays immutable.
+- Evidence: `file:docs/checkpoints/GATE-7-CP-0001/FINDINGS.json`, `file:docs/checkpoints/GATE-7-CP-0001/COMMANDS.jsonl`, `file:docs/checkpoints/GATE-7-CP-0001/suite-attempts/GATE-APITESTS-0001.json`, `file:docs/checkpoints/GATE-7-CP-0001/suite-attempts/GATE-APITESTS-0001.log`, `file:apps/api/tests/unit/test_knowledge_structure.py`, `file:apps/api/tests/integration/test_knowledge_engine.py`, `file:docs/checkpoints/GATE-7-CP-0001/suite-attempts/GATE-APITESTS-0002.json`, `file:docs/checkpoints/GATE-7-CP-0001/suite-attempts/KNOWLEDGE-SQL-0003.json`

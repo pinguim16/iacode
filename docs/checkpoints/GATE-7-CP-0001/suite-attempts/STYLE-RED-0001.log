@@ -1,0 +1,114 @@
+E501 Line too long (109 > 100)
+  --> apps/api/tests/knowledge_fixture.py:53:101
+   |
+51 |         "license": "validation-only",
+52 |         "authority": "explicit fixture author for isolated automated validation",
+53 |         "evidence": "Permits storage/RAG of this synthetic fixture only, not any actual user/provider data.",
+   |                                                                                                     ^^^^^^^^^
+54 |         "reviewed": True,
+55 |         "status": "ACTIVE",
+   |
+
+RUF059 Unpacked variable `fixture` is never used
+   --> apps/api/tests/unit/test_knowledge_api.py:200:23
+    |
+199 | async def test_actual_secret_and_private_source_fields_refused(tmp_path):
+200 |     sources, project, fixture, now = rig(tmp_path)
+    |                       ^^^^^^^
+201 |     marker = "gh" + "p_" + "q" * 24
+202 |     assert find_secret_kinds(marker)
+    |
+help: Prefix it with an underscore or any other dummy variable pattern
+
+E501 Line too long (101 > 100)
+    --> packages/persistence/src/iacode_persistence/models.py:1198:101
+     |
+1197 | class KnowledgeDocument(TimestampedEntity, Base):
+1198 |     """Immutable cited projection plus monotonic finite-retention lifecycle, not source authority."""
+     |                                                                                                     ^
+1199 |
+1200 |     __tablename__ = "knowledge_documents"
+     |
+
+E501 Line too long (103 > 100)
+  --> scripts/iacode/knowledge_schema.py:25:101
+   |
+23 |         "print(json.dumps(TypeAdapter(k.KnowledgeDocument | k.KnowledgePolicy | "
+24 |         "k.CuratedArtifact | k.SourceRegistry | k.SourceGrant | k.IngestKnowledge | "
+25 |         "k.SearchKnowledge | k.KnowledgeCitation | k.KnowledgeHit).json_schema(mode='serialization')))"
+   |                                                                                                     ^^^
+26 |     )
+27 |     result = subprocess.run(
+   |
+
+E501 Line too long (101 > 100)
+ --> services/knowledge/src/iacode_knowledge/__init__.py:1:101
+  |
+1 | """Provider-neutral knowledge projection domain; actual source and SQL adapters belong to the API."""
+  |                                                                                                     ^
+
+E501 Line too long (102 > 100)
+ --> services/knowledge/src/iacode_knowledge/domain.py:1:101
+  |
+1 | """Current permitted sources, deterministic exact spans and declared persistent source/store ports."""
+  |                                                                                                     ^^
+2 |
+3 | from __future__ import annotations
+  |
+
+UP047 Generic function `decode` should use type parameters
+  --> services/knowledge/src/iacode_knowledge/domain.py:68:5
+   |
+68 |   def decode(
+   |  _____^
+69 | |     raw: bytes, model: type[Model], maximum: int, known_credentials: tuple[str, ...] = ()
+70 | | ) -> Model:
+   | |_^
+71 |       try:
+72 |           value = content.parse_json(raw, maximum)
+   |
+help: Use type parameters
+
+E501 Line too long (102 > 100)
+  --> services/knowledge/tests/conftest.py:53:101
+   |
+51 |         license="validation-only",
+52 |         authority="explicit fixture author for isolated automated validation",
+53 |         evidence="Permits storage and retrieval of this synthetic fixture only; no actual user data.",
+   |                                                                                                     ^^
+54 |         reviewed=True,
+55 |         status="ACTIVE",
+   |
+
+RUF001 String contains ambiguous `Ａ` (FULLWIDTH LATIN CAPITAL LETTER A). Did you mean `A` (LATIN CAPITAL LETTER A)?
+   --> services/knowledge/tests/test_domain.py:280:42
+    |
+279 | def test_unicode_tokenization_is_deterministic_and_not_source_rewriting():
+280 |     assert tokens("PostgreSQL ﬁle Straße ＡＰＩ", 32, 128) == (
+    |                                          ^^
+281 |         "api",
+282 |         "file",
+    |
+
+RUF001 String contains ambiguous `Ｐ` (FULLWIDTH LATIN CAPITAL LETTER P). Did you mean `P` (LATIN CAPITAL LETTER P)?
+   --> services/knowledge/tests/test_domain.py:280:43
+    |
+279 | def test_unicode_tokenization_is_deterministic_and_not_source_rewriting():
+280 |     assert tokens("PostgreSQL ﬁle Straße ＡＰＩ", 32, 128) == (
+    |                                            ^^
+281 |         "api",
+282 |         "file",
+    |
+
+RUF001 String contains ambiguous `Ｉ` (FULLWIDTH LATIN CAPITAL LETTER I). Did you mean `I` (LATIN CAPITAL LETTER I)?
+   --> services/knowledge/tests/test_domain.py:280:44
+    |
+279 | def test_unicode_tokenization_is_deterministic_and_not_source_rewriting():
+280 |     assert tokens("PostgreSQL ﬁle Straße ＡＰＩ", 32, 128) == (
+    |                                              ^^
+281 |         "api",
+282 |         "file",
+    |
+
+Found 11 errors.
+No fixes available (2 hidden fixes can be enabled with the `--unsafe-fixes` option).
