@@ -1,0 +1,22 @@
+{
+  "schemaVersion": "1.0.0",
+  "kind": "TARGETED_CAUSAL_NOT_WHOLE_GATE",
+  "gate": "NATIVE-REWORK-HELPER-QUALITY",
+  "command": [
+    "python",
+    "docs/checkpoints/GATE-7-CP-0001/audit-harness/format_assurance_helpers.py",
+    "--check-only"
+  ],
+  "observedAt": "2026-10-19T07:40:08Z",
+  "subjectCommit": "31ee804ecffb14add59f89b1b5cbd2f4de9216a8",
+  "sourceDirty": true,
+  "sourceFingerprint": "38ff3b3072378a7dc9cf1729380c835d6ad2e4d5d1d56e342dfdd064b9587569",
+  "sourceUnchanged": true,
+  "exitCode": 1,
+  "outputEncodingValid": true,
+  "unsafeOutputOccurrences": 0,
+  "outputBytes": 1381,
+  "outputSha256": "b2a8dffb502eb44491a333e7ddf38a72dd63421027a61f20488357ee72d2e0df",
+  "safeOutputArtifact": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/NATIVE-REWORK-HELPER-QUALITY-0001.log",
+  "result": "FAIL"
+}

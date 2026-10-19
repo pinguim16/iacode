@@ -1,0 +1,88 @@
+"""Measure a split within the original total bound; no production deadline is changed."""
+
+from __future__ import annotations
+
+import contextlib
+import hashlib
+import importlib.util
+import inspect
+import io
+import json
+import sys
+import textwrap
+import time
+from pathlib import Path
+
+OWNER = Path(__file__).resolve().parent
+spec = importlib.util.spec_from_file_location(
+    "native_release_observation", OWNER / "EXPERIMENT-NATIVE-JOB-RELEASE-02.py")
+base = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(base)
+import native_process
+
+source = textwrap.dedent(inspect.getsource(native_process.WindowsJob.close))
+if source.count("grace_until = started + 1") != 1:
+    raise ValueError("expected current lifecycle source must be observed before experimental allocation")
+prototype = source.replace("grace_until = started + 1", "grace_until = started + 5")
+namespace = dict(vars(native_process))
+exec(compile(prototype, "<owned-grace-allocation-experiment>", "exec"), namespace)
+target_close = namespace["close"]
+
+
+class ObservedJob(base.ObservedJob):
+    def owned_member_handles(self):
+        handles = super().owned_member_handles()
+        self.trace.setdefault("snapshotFacts", []).append({
+            "seconds": round(time.monotonic() - self.started, 6),
+            "members": [{"id": int(pid), "handle": int(handle)} for pid, handle in handles]})
+        return handles
+
+    def close(self):
+        self.started = time.monotonic()
+        try:
+            result = target_close(self)
+            self.trace["closeResult"] = result
+            return result
+        except Exception as error:
+            self.trace["closeError"] = {
+                "type": type(error).__name__, "text": str(error),
+                "observation": getattr(error, "observation", None)}
+            raise
+        finally:
+            self.trace["closeElapsedSeconds"] = round(time.monotonic() - self.started, 6)
+
+
+def main():
+    destination = OWNER / "NATIVE-GRACE-EXPERIMENT-04-TRACE.json"
+    report = base.ROOT / "var/native-grace-experiment-04-v3-32f15cca.json"
+    if destination.exists() or report.exists():
+        raise ValueError("never replay a partial or completed experiment")
+    base.native_editor.WindowsJob = ObservedJob
+    saved = sys.argv
+    try:
+        sys.argv = ["native_editor.py", "--report", str(report)]
+        with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
+            code = base.native_editor.main()
+    finally:
+        sys.argv = saved
+    producer = base.safe_original(
+        OWNER / "NATIVE-GRACE-EXPERIMENT-04-PRODUCER.json", report.read_bytes())
+    trace = {
+        "kind": "CONTROLLED_REAL_NATIVE_ALLOCATION_EXPERIMENT_NOT_ACCEPTANCE",
+        "unchangedRealCleanupDeadlineSeconds": 10, "naturalAllocationSeconds": 5,
+        "realKernelCalls": True, "jobVerdictOrCountsSimulated": False,
+        "actualExitCode": code, "jobs": base.TRACES,
+        "baselineSourceSha256": hashlib.sha256(source.encode()).hexdigest(),
+        "exactPrototype": prototype,
+        "producer": producer, "gateVerdictIssued": False, "independentValidation": False,
+    }
+    original = base.safe_original(
+        destination, json.dumps(trace, indent=2, ensure_ascii=True).encode() + b"\n")
+    print(json.dumps({"actualExitCode": code, "trace": original,
+                      "jobs": [{key: value for key, value in row.items() if key != "samples"}
+                               for row in base.TRACES]}))
+    return code
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

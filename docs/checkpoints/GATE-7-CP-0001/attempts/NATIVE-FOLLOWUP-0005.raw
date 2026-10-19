@@ -1,0 +1,1573 @@
+{
+  "kind": "REAL_NATIVE_CLI_WAIT_EXPERIMENT_NOT_ACCEPTANCE",
+  "actualExitCode": 1,
+  "sourceSha256": "7741ac89ffc6139dfa1a8a61def5ebd2172b6bef6ccff0fa7ab27b6043cc1d53",
+  "calls": [
+    {
+      "kind": "REAL_INSTALLED_CLI_WAIT_HOST",
+      "timeoutSeconds": 180,
+      "ownedProfileAndSharedDataUnchanged": true
+    },
+    {
+      "kind": "REAL_INSTALLED_CLI_WAIT_HOST",
+      "timeoutSeconds": 180,
+      "ownedProfileAndSharedDataUnchanged": true
+    }
+  ],
+  "jobs": [
+    {
+      "ordinal": 1,
+      "members": [],
+      "samples": [
+        {
+          "seconds": 0.000108,
+          "active": 0
+        },
+        {
+          "seconds": 0.000221,
+          "active": 0
+        }
+      ],
+      "lastSample": {
+        "seconds": 0.000221,
+        "active": 0
+      },
+      "waits": {},
+      "handleCloses": [
+        {
+          "jobHandle": true,
+          "success": true
+        }
+      ],
+      "closeResult": {
+        "jobOwned": true,
+        "remainingBeforeCleanup": 0,
+        "remainingAfterCleanup": 0,
+        "observedProcessCount": 0,
+        "signaledProcessCount": 0,
+        "forcedTermination": false,
+        "naturalExitBudgetWithinOriginalDeadlineSeconds": 1
+      },
+      "closeError": null,
+      "memberFinals": [],
+      "snapshots": [
+        {
+          "seconds": 0.000183,
+          "members": []
+        }
+      ],
+      "bindingMismatches": [],
+      "afterOriginalJobAndHandlesClosed": [],
+      "closeElapsedSeconds": 0.000252
+    },
+    {
+      "ordinal": 2,
+      "members": [
+        {
+          "id": 47612,
+          "handle": 660
+        },
+        {
+          "id": 12404,
+          "handle": 608
+        }
+      ],
+      "samples": [
+        {
+          "seconds": 0.000107,
+          "active": 6
+        },
+        {
+          "seconds": 0.001005,
+          "active": 5
+        },
+        {
+          "seconds": 0.051452,
+          "active": 5
+        },
+        {
+          "seconds": 0.101854,
+          "active": 5
+        },
+        {
+          "seconds": 0.152251,
+          "active": 4
+        },
+        {
+          "seconds": 0.202598,
+          "active": 3
+        },
+        {
+          "seconds": 0.253283,
+          "active": 2
+        },
+        {
+          "seconds": 0.303961,
+          "active": 2
+        },
+        {
+          "seconds": 0.357162,
+          "active": 2
+        },
+        {
+          "seconds": 0.407809,
+          "active": 2
+        },
+        {
+          "seconds": 0.458102,
+          "active": 2
+        },
+        {
+          "seconds": 0.50851,
+          "active": 2
+        },
+        {
+          "seconds": 0.560417,
+          "active": 2
+        },
+        {
+          "seconds": 0.611438,
+          "active": 2
+        },
+        {
+          "seconds": 0.66337,
+          "active": 2
+        },
+        {
+          "seconds": 0.713975,
+          "active": 2
+        },
+        {
+          "seconds": 0.766586,
+          "active": 2
+        },
+        {
+          "seconds": 0.817197,
+          "active": 2
+        },
+        {
+          "seconds": 0.867609,
+          "active": 2
+        },
+        {
+          "seconds": 0.91951,
+          "active": 2
+        },
+        {
+          "seconds": 0.969699,
+          "active": 2
+        },
+        {
+          "seconds": 1.020997,
+          "active": 2
+        },
+        {
+          "seconds": 1.071888,
+          "active": 0
+        },
+        {
+          "seconds": 1.122091,
+          "active": 0
+        },
+        {
+          "seconds": 1.172419,
+          "active": 0
+        },
+        {
+          "seconds": 1.222931,
+          "active": 0
+        },
+        {
+          "seconds": 1.273424,
+          "active": 0
+        },
+        {
+          "seconds": 1.325291,
+          "active": 0
+        },
+        {
+          "seconds": 1.376016,
+          "active": 0
+        },
+        {
+          "seconds": 1.428113,
+          "active": 0
+        },
+        {
+          "seconds": 1.480096,
+          "active": 0
+        },
+        {
+          "seconds": 1.531482,
+          "active": 0
+        },
+        {
+          "seconds": 1.583783,
+          "active": 0
+        },
+        {
+          "seconds": 1.634041,
+          "active": 0
+        },
+        {
+          "seconds": 1.684714,
+          "active": 0
+        },
+        {
+          "seconds": 1.736759,
+          "active": 0
+        },
+        {
+          "seconds": 1.788358,
+          "active": 0
+        },
+        {
+          "seconds": 1.839127,
+          "active": 0
+        },
+        {
+          "seconds": 1.891509,
+          "active": 0
+        },
+        {
+          "seconds": 1.944401,
+          "active": 0
+        },
+        {
+          "seconds": 1.996902,
+          "active": 0
+        },
+        {
+          "seconds": 2.049828,
+          "active": 0
+        },
+        {
+          "seconds": 2.102691,
+          "active": 0
+        },
+        {
+          "seconds": 2.152954,
+          "active": 0
+        },
+        {
+          "seconds": 2.203928,
+          "active": 0
+        },
+        {
+          "seconds": 2.254633,
+          "active": 0
+        },
+        {
+          "seconds": 2.305108,
+          "active": 0
+        },
+        {
+          "seconds": 2.355582,
+          "active": 0
+        },
+        {
+          "seconds": 2.405934,
+          "active": 0
+        },
+        {
+          "seconds": 2.458688,
+          "active": 0
+        },
+        {
+          "seconds": 2.509053,
+          "active": 0
+        },
+        {
+          "seconds": 2.574481,
+          "active": 0
+        },
+        {
+          "seconds": 2.628915,
+          "active": 0
+        },
+        {
+          "seconds": 2.681037,
+          "active": 0
+        },
+        {
+          "seconds": 2.732229,
+          "active": 0
+        },
+        {
+          "seconds": 2.782914,
+          "active": 0
+        },
+        {
+          "seconds": 2.833332,
+          "active": 0
+        },
+        {
+          "seconds": 2.883796,
+          "active": 0
+        },
+        {
+          "seconds": 2.934227,
+          "active": 0
+        },
+        {
+          "seconds": 2.984837,
+          "active": 0
+        },
+        {
+          "seconds": 3.035328,
+          "active": 0
+        },
+        {
+          "seconds": 3.086418,
+          "active": 0
+        },
+        {
+          "seconds": 3.138972,
+          "active": 0
+        },
+        {
+          "seconds": 3.189423,
+          "active": 0
+        },
+        {
+          "seconds": 3.240241,
+          "active": 0
+        },
+        {
+          "seconds": 3.290665,
+          "active": 0
+        }
+      ],
+      "lastSample": {
+        "seconds": 3.290665,
+        "active": 0
+      },
+      "waits": {
+        "604": {
+          "calls": 1,
+          "signaled": true,
+          "lastStatus": 0
+        },
+        "612": {
+          "calls": 4,
+          "signaled": true,
+          "lastStatus": 0
+        },
+        "616": {
+          "calls": 65,
+          "signaled": true,
+          "lastStatus": 0
+        },
+        "620": {
+          "calls": 33,
+          "signaled": true,
+          "lastStatus": 0
+        },
+        "624": {
+          "calls": 57,
+          "signaled": true,
+          "lastStatus": 0
+        },
+        "628": {
+          "calls": 49,
+          "signaled": true,
+          "lastStatus": 0
+        }
+      },
+      "handleCloses": [
+        {
+          "jobHandle": false,
+          "success": true
+        },
+        {
+          "jobHandle": false,
+          "success": true
+        },
+        {
+          "jobHandle": false,
+          "success": true
+        },
+        {
+          "jobHandle": false,
+          "success": true
+        },
+        {
+          "jobHandle": false,
+          "success": true
+        },
+        {
+          "jobHandle": false,
+          "success": true
+        },
+        {
+          "jobHandle": false,
+          "success": true
+        },
+        {
+          "jobHandle": false,
+          "success": true
+        },
+        {
+          "jobHandle": true,
+          "success": true
+        }
+      ],
+      "closeResult": {
+        "jobOwned": true,
+        "remainingBeforeCleanup": 6,
+        "remainingAfterCleanup": 0,
+        "observedProcessCount": 6,
+        "signaledProcessCount": 6,
+        "forcedTermination": true,
+        "naturalExitBudgetWithinOriginalDeadlineSeconds": 1
+      },
+      "closeError": null,
+      "memberFinals": [
+        {
+          "processId": 47612,
+          "exitQuerySucceeded": true,
+          "exitCode": 0,
+          "imageBase": null,
+          "imageQuerySucceeded": false,
+          "waitBeforeHandleRelease": 258
+        },
+        {
+          "processId": 12404,
+          "exitQuerySucceeded": true,
+          "exitCode": 1,
+          "imageBase": null,
+          "imageQuerySucceeded": false,
+          "waitBeforeHandleRelease": 258
+        },
+        {
+          "processId": 50540,
+          "exitQuerySucceeded": true,
+          "exitCode": 0,
+          "imageBase": null,
+          "imageQuerySucceeded": false,
+          "waitBeforeHandleRelease": 0
+        },
+        {
+          "processId": 9048,
+          "exitQuerySucceeded": true,
+          "exitCode": 0,
+          "imageBase": null,
+          "imageQuerySucceeded": false,
+          "waitBeforeHandleRelease": 0
+        },
+        {
+          "processId": 47612,
+          "exitQuerySucceeded": true,
+          "exitCode": 0,
+          "imageBase": null,
+          "imageQuerySucceeded": false,
+          "waitBeforeHandleRelease": 0
+        },
+        {
+          "processId": 12404,
+          "exitQuerySucceeded": true,
+          "exitCode": 1,
+          "imageBase": null,
+          "imageQuerySucceeded": false,
+          "waitBeforeHandleRelease": 0
+        },
+        {
+          "processId": 47844,
+          "exitQuerySucceeded": true,
+          "exitCode": 0,
+          "imageBase": null,
+          "imageQuerySucceeded": false,
+          "waitBeforeHandleRelease": 0
+        },
+        {
+          "processId": 32760,
+          "exitQuerySucceeded": true,
+          "exitCode": 0,
+          "imageBase": null,
+          "imageQuerySucceeded": false,
+          "waitBeforeHandleRelease": 0
+        }
+      ],
+      "snapshots": [
+        {
+          "seconds": 0.000944,
+          "members": [
+            {
+              "id": 50540,
+              "initialExitCode": 0,
+              "initialWait": 0,
+              "imageBase": null
+            },
+            {
+              "id": 9048,
+              "initialExitCode": 0,
+              "initialWait": 258,
+              "imageBase": null
+            },
+            {
+              "id": 47612,
+              "initialExitCode": 0,
+              "initialWait": 258,
+              "imageBase": "Code.exe"
+            },
+            {
+              "id": 12404,
+              "initialExitCode": 1,
+              "initialWait": 258,
+              "imageBase": null
+            },
+            {
+              "id": 47844,
+              "initialExitCode": 0,
+              "initialWait": 258,
+              "imageBase": "Code.exe"
+            },
+            {
+              "id": 32760,
+              "initialExitCode": 0,
+              "initialWait": 258,
+              "imageBase": "Code.exe"
+            }
+          ]
+        },
+        {
+          "seconds": 1.02129,
+          "members": [
+            {
+              "id": 47612,
+              "initialExitCode": 0,
+              "initialWait": 258,
+              "imageBase": null
+            },
+            {
+              "id": 12404,
+              "initialExitCode": 1,
+              "initialWait": 258,
+              "imageBase": null
+            }
+          ]
+        }
+      ],
+      "bindingMismatches": [],
+      "afterOriginalJobAndHandlesClosed": [
+        {
+          "id": 50540,
+          "exitCode": 0,
+          "wait": 0
+        },
+        {
+          "id": 9048,
+          "exitCode": 0,
+          "wait": 0
+        },
+        {
+          "id": 47612,
+          "exitCode": 0,
+          "wait": 0
+        },
+        {
+          "id": 12404,
+          "exitCode": 1,
+          "wait": 0
+        },
+        {
+          "id": 47844,
+          "exitCode": 0,
+          "wait": 0
+        },
+        {
+          "id": 32760,
+          "exitCode": 0,
+          "wait": 0
+        },
+        {
+          "id": 47612,
+          "exitCode": 0,
+          "wait": 0
+        },
+        {
+          "id": 12404,
+          "exitCode": 1,
+          "wait": 0
+        }
+      ],
+      "closeElapsedSeconds": 3.291933
+    },
+    {
+      "ordinal": 3,
+      "members": [],
+      "samples": [
+        {
+          "seconds": 5.8e-05,
+          "active": 0
+        },
+        {
+          "seconds": 0.000122,
+          "active": 0
+        }
+      ],
+      "lastSample": {
+        "seconds": 0.000122,
+        "active": 0
+      },
+      "waits": {},
+      "handleCloses": [
+        {
+          "jobHandle": true,
+          "success": true
+        }
+      ],
+      "closeResult": {
+        "jobOwned": true,
+        "remainingBeforeCleanup": 0,
+        "remainingAfterCleanup": 0,
+        "observedProcessCount": 0,
+        "signaledProcessCount": 0,
+        "forcedTermination": false,
+        "naturalExitBudgetWithinOriginalDeadlineSeconds": 1
+      },
+      "closeError": null,
+      "memberFinals": [],
+      "snapshots": [
+        {
+          "seconds": 0.000105,
+          "members": []
+        }
+      ],
+      "bindingMismatches": [],
+      "afterOriginalJobAndHandlesClosed": [],
+      "closeElapsedSeconds": 0.000145
+    },
+    {
+      "ordinal": 4,
+      "members": [
+        {
+          "id": 44052,
+          "handle": 716
+        }
+      ],
+      "samples": [
+        {
+          "seconds": 8.2e-05,
+          "active": 2
+        },
+        {
+          "seconds": 0.000463,
+          "active": 2
+        },
+        {
+          "seconds": 0.052429,
+          "active": 2
+        },
+        {
+          "seconds": 0.103979,
+          "active": 2
+        },
+        {
+          "seconds": 0.155049,
+          "active": 2
+        },
+        {
+          "seconds": 0.206054,
+          "active": 2
+        },
+        {
+          "seconds": 0.256332,
+          "active": 2
+        },
+        {
+          "seconds": 0.308468,
+          "active": 1
+        },
+        {
+          "seconds": 0.359218,
+          "active": 1
+        },
+        {
+          "seconds": 0.41642,
+          "active": 1
+        },
+        {
+          "seconds": 0.474,
+          "active": 1
+        },
+        {
+          "seconds": 0.526616,
+          "active": 1
+        },
+        {
+          "seconds": 0.578716,
+          "active": 1
+        },
+        {
+          "seconds": 0.630172,
+          "active": 1
+        },
+        {
+          "seconds": 0.681455,
+          "active": 1
+        },
+        {
+          "seconds": 0.731846,
+          "active": 1
+        },
+        {
+          "seconds": 0.782593,
+          "active": 1
+        },
+        {
+          "seconds": 0.834023,
+          "active": 1
+        },
+        {
+          "seconds": 0.884257,
+          "active": 1
+        },
+        {
+          "seconds": 0.93509,
+          "active": 1
+        },
+        {
+          "seconds": 0.987823,
+          "active": 1
+        },
+        {
+          "seconds": 1.040288,
+          "active": 1
+        },
+        {
+          "seconds": 1.091246,
+          "active": 0
+        },
+        {
+          "seconds": 1.142117,
+          "active": 0
+        },
+        {
+          "seconds": 1.193028,
+          "active": 0
+        },
+        {
+          "seconds": 1.245684,
+          "active": 0
+        },
+        {
+          "seconds": 1.300324,
+          "active": 0
+        },
+        {
+          "seconds": 1.351444,
+          "active": 0
+        },
+        {
+          "seconds": 1.407162,
+          "active": 0
+        },
+        {
+          "seconds": 1.460696,
+          "active": 0
+        },
+        {
+          "seconds": 1.514883,
+          "active": 0
+        },
+        {
+          "seconds": 1.567231,
+          "active": 0
+        },
+        {
+          "seconds": 1.622088,
+          "active": 0
+        },
+        {
+          "seconds": 1.673162,
+          "active": 0
+        },
+        {
+          "seconds": 1.730331,
+          "active": 0
+        },
+        {
+          "seconds": 1.782363,
+          "active": 0
+        },
+        {
+          "seconds": 1.833942,
+          "active": 0
+        },
+        {
+          "seconds": 1.885533,
+          "active": 0
+        },
+        {
+          "seconds": 1.93684,
+          "active": 0
+        },
+        {
+          "seconds": 1.987726,
+          "active": 0
+        },
+        {
+          "seconds": 2.038328,
+          "active": 0
+        },
+        {
+          "seconds": 2.091309,
+          "active": 0
+        },
+        {
+          "seconds": 2.143956,
+          "active": 0
+        },
+        {
+          "seconds": 2.195392,
+          "active": 0
+        },
+        {
+          "seconds": 2.248362,
+          "active": 0
+        },
+        {
+          "seconds": 2.304707,
+          "active": 0
+        },
+        {
+          "seconds": 2.355598,
+          "active": 0
+        },
+        {
+          "seconds": 2.408242,
+          "active": 0
+        },
+        {
+          "seconds": 2.462867,
+          "active": 0
+        },
+        {
+          "seconds": 2.513408,
+          "active": 0
+        },
+        {
+          "seconds": 2.563881,
+          "active": 0
+        },
+        {
+          "seconds": 2.614782,
+          "active": 0
+        },
+        {
+          "seconds": 2.665246,
+          "active": 0
+        },
+        {
+          "seconds": 2.716668,
+          "active": 0
+        },
+        {
+          "seconds": 2.769143,
+          "active": 0
+        },
+        {
+          "seconds": 2.819399,
+          "active": 0
+        },
+        {
+          "seconds": 2.870721,
+          "active": 0
+        },
+        {
+          "seconds": 2.921374,
+          "active": 0
+        },
+        {
+          "seconds": 2.975172,
+          "active": 0
+        },
+        {
+          "seconds": 3.027632,
+          "active": 0
+        },
+        {
+          "seconds": 3.082339,
+          "active": 0
+        },
+        {
+          "seconds": 3.135358,
+          "active": 0
+        },
+        {
+          "seconds": 3.186761,
+          "active": 0
+        },
+        {
+          "seconds": 3.23739,
+          "active": 0
+        },
+        {
+          "seconds": 3.287612,
+          "active": 0
+        },
+        {
+          "seconds": 3.338278,
+          "active": 0
+        },
+        {
+          "seconds": 3.389625,
+          "active": 0
+        },
+        {
+          "seconds": 3.439883,
+          "active": 0
+        },
+        {
+          "seconds": 3.491131,
+          "active": 0
+        },
+        {
+          "seconds": 3.544144,
+          "active": 0
+        },
+        {
+          "seconds": 3.596201,
+          "active": 0
+        },
+        {
+          "seconds": 3.647935,
+          "active": 0
+        },
+        {
+          "seconds": 3.699931,
+          "active": 0
+        },
+        {
+          "seconds": 3.751273,
+          "active": 0
+        },
+        {
+          "seconds": 3.801818,
+          "active": 0
+        },
+        {
+          "seconds": 3.854455,
+          "active": 0
+        },
+        {
+          "seconds": 3.90809,
+          "active": 0
+        },
+        {
+          "seconds": 3.95909,
+          "active": 0
+        },
+        {
+          "seconds": 4.011249,
+          "active": 0
+        },
+        {
+          "seconds": 4.062241,
+          "active": 0
+        },
+        {
+          "seconds": 4.115227,
+          "active": 0
+        },
+        {
+          "seconds": 4.167378,
+          "active": 0
+        },
+        {
+          "seconds": 4.219434,
+          "active": 0
+        },
+        {
+          "seconds": 4.271239,
+          "active": 0
+        },
+        {
+          "seconds": 4.321686,
+          "active": 0
+        },
+        {
+          "seconds": 4.374916,
+          "active": 0
+        },
+        {
+          "seconds": 4.428886,
+          "active": 0
+        },
+        {
+          "seconds": 4.48259,
+          "active": 0
+        },
+        {
+          "seconds": 4.534277,
+          "active": 0
+        },
+        {
+          "seconds": 4.587602,
+          "active": 0
+        },
+        {
+          "seconds": 4.639755,
+          "active": 0
+        },
+        {
+          "seconds": 4.691635,
+          "active": 0
+        },
+        {
+          "seconds": 4.74444,
+          "active": 0
+        },
+        {
+          "seconds": 4.798298,
+          "active": 0
+        },
+        {
+          "seconds": 4.849928,
+          "active": 0
+        },
+        {
+          "seconds": 4.902539,
+          "active": 0
+        },
+        {
+          "seconds": 4.954029,
+          "active": 0
+        },
+        {
+          "seconds": 5.004278,
+          "active": 0
+        },
+        {
+          "seconds": 5.055223,
+          "active": 0
+        },
+        {
+          "seconds": 5.107095,
+          "active": 0
+        },
+        {
+          "seconds": 5.158173,
+          "active": 0
+        },
+        {
+          "seconds": 5.210855,
+          "active": 0
+        },
+        {
+          "seconds": 5.263248,
+          "active": 0
+        },
+        {
+          "seconds": 5.313735,
+          "active": 0
+        },
+        {
+          "seconds": 5.36431,
+          "active": 0
+        },
+        {
+          "seconds": 5.418144,
+          "active": 0
+        },
+        {
+          "seconds": 5.471062,
+          "active": 0
+        },
+        {
+          "seconds": 5.522026,
+          "active": 0
+        },
+        {
+          "seconds": 5.573006,
+          "active": 0
+        },
+        {
+          "seconds": 5.623237,
+          "active": 0
+        },
+        {
+          "seconds": 5.673392,
+          "active": 0
+        },
+        {
+          "seconds": 5.724022,
+          "active": 0
+        },
+        {
+          "seconds": 5.774535,
+          "active": 0
+        },
+        {
+          "seconds": 5.825839,
+          "active": 0
+        },
+        {
+          "seconds": 5.87716,
+          "active": 0
+        },
+        {
+          "seconds": 5.929538,
+          "active": 0
+        },
+        {
+          "seconds": 5.981625,
+          "active": 0
+        },
+        {
+          "seconds": 6.032629,
+          "active": 0
+        },
+        {
+          "seconds": 6.084101,
+          "active": 0
+        },
+        {
+          "seconds": 6.134841,
+          "active": 0
+        },
+        {
+          "seconds": 6.187599,
+          "active": 0
+        },
+        {
+          "seconds": 6.238085,
+          "active": 0
+        },
+        {
+          "seconds": 6.289591,
+          "active": 0
+        },
+        {
+          "seconds": 6.339948,
+          "active": 0
+        },
+        {
+          "seconds": 6.390293,
+          "active": 0
+        },
+        {
+          "seconds": 6.441575,
+          "active": 0
+        },
+        {
+          "seconds": 6.496685,
+          "active": 0
+        },
+        {
+          "seconds": 6.548578,
+          "active": 0
+        },
+        {
+          "seconds": 6.59919,
+          "active": 0
+        },
+        {
+          "seconds": 6.649829,
+          "active": 0
+        },
+        {
+          "seconds": 6.702537,
+          "active": 0
+        },
+        {
+          "seconds": 6.754501,
+          "active": 0
+        },
+        {
+          "seconds": 6.806436,
+          "active": 0
+        },
+        {
+          "seconds": 6.857119,
+          "active": 0
+        },
+        {
+          "seconds": 6.907747,
+          "active": 0
+        },
+        {
+          "seconds": 6.962591,
+          "active": 0
+        },
+        {
+          "seconds": 7.013541,
+          "active": 0
+        },
+        {
+          "seconds": 7.064111,
+          "active": 0
+        },
+        {
+          "seconds": 7.116484,
+          "active": 0
+        },
+        {
+          "seconds": 7.166974,
+          "active": 0
+        },
+        {
+          "seconds": 7.217414,
+          "active": 0
+        },
+        {
+          "seconds": 7.270878,
+          "active": 0
+        },
+        {
+          "seconds": 7.322694,
+          "active": 0
+        },
+        {
+          "seconds": 7.375393,
+          "active": 0
+        },
+        {
+          "seconds": 7.42705,
+          "active": 0
+        },
+        {
+          "seconds": 7.478028,
+          "active": 0
+        },
+        {
+          "seconds": 7.530372,
+          "active": 0
+        },
+        {
+          "seconds": 7.584726,
+          "active": 0
+        },
+        {
+          "seconds": 7.635539,
+          "active": 0
+        },
+        {
+          "seconds": 7.687744,
+          "active": 0
+        },
+        {
+          "seconds": 7.738502,
+          "active": 0
+        },
+        {
+          "seconds": 7.789191,
+          "active": 0
+        },
+        {
+          "seconds": 7.839533,
+          "active": 0
+        },
+        {
+          "seconds": 7.890983,
+          "active": 0
+        },
+        {
+          "seconds": 7.94125,
+          "active": 0
+        },
+        {
+          "seconds": 7.994253,
+          "active": 0
+        },
+        {
+          "seconds": 8.047834,
+          "active": 0
+        },
+        {
+          "seconds": 8.098937,
+          "active": 0
+        },
+        {
+          "seconds": 8.149728,
+          "active": 0
+        },
+        {
+          "seconds": 8.20142,
+          "active": 0
+        },
+        {
+          "seconds": 8.252218,
+          "active": 0
+        },
+        {
+          "seconds": 8.302547,
+          "active": 0
+        },
+        {
+          "seconds": 8.355385,
+          "active": 0
+        },
+        {
+          "seconds": 8.406043,
+          "active": 0
+        },
+        {
+          "seconds": 8.4568,
+          "active": 0
+        },
+        {
+          "seconds": 8.509138,
+          "active": 0
+        },
+        {
+          "seconds": 8.560439,
+          "active": 0
+        },
+        {
+          "seconds": 8.612193,
+          "active": 0
+        },
+        {
+          "seconds": 8.66412,
+          "active": 0
+        },
+        {
+          "seconds": 8.714338,
+          "active": 0
+        },
+        {
+          "seconds": 8.765357,
+          "active": 0
+        },
+        {
+          "seconds": 8.816037,
+          "active": 0
+        },
+        {
+          "seconds": 8.866462,
+          "active": 0
+        },
+        {
+          "seconds": 8.917036,
+          "active": 0
+        },
+        {
+          "seconds": 8.968223,
+          "active": 0
+        },
+        {
+          "seconds": 9.019407,
+          "active": 0
+        },
+        {
+          "seconds": 9.069867,
+          "active": 0
+        },
+        {
+          "seconds": 9.120651,
+          "active": 0
+        },
+        {
+          "seconds": 9.170971,
+          "active": 0
+        },
+        {
+          "seconds": 9.221385,
+          "active": 0
+        },
+        {
+          "seconds": 9.272077,
+          "active": 0
+        },
+        {
+          "seconds": 9.322348,
+          "active": 0
+        },
+        {
+          "seconds": 9.372501,
+          "active": 0
+        },
+        {
+          "seconds": 9.423178,
+          "active": 0
+        },
+        {
+          "seconds": 9.473842,
+          "active": 0
+        },
+        {
+          "seconds": 9.524499,
+          "active": 0
+        },
+        {
+          "seconds": 9.579503,
+          "active": 0
+        },
+        {
+          "seconds": 9.629841,
+          "active": 0
+        },
+        {
+          "seconds": 9.681722,
+          "active": 0
+        },
+        {
+          "seconds": 9.732294,
+          "active": 0
+        },
+        {
+          "seconds": 9.78329,
+          "active": 0
+        },
+        {
+          "seconds": 9.834871,
+          "active": 0
+        },
+        {
+          "seconds": 9.885578,
+          "active": 0
+        },
+        {
+          "seconds": 9.936052,
+          "active": 0
+        },
+        {
+          "seconds": 9.988805,
+          "active": 0
+        },
+        {
+          "seconds": 10.039039,
+          "active": 0
+        }
+      ],
+      "lastSample": {
+        "seconds": 10.039039,
+        "active": 0
+      },
+      "waits": {
+        "468": {
+          "calls": 195,
+          "signaled": false,
+          "lastStatus": 258
+        },
+        "644": {
+          "calls": 195,
+          "signaled": false,
+          "lastStatus": 258
+        }
+      },
+      "handleCloses": [
+        {
+          "jobHandle": false,
+          "success": true
+        },
+        {
+          "jobHandle": false,
+          "success": true
+        },
+        {
+          "jobHandle": false,
+          "success": true
+        },
+        {
+          "jobHandle": true,
+          "success": true
+        }
+      ],
+      "closeResult": null,
+      "closeError": {
+        "type": "NativeJobCleanupError",
+        "text": "owned native process job did not drain",
+        "observation": {
+          "result": "FAIL",
+          "phase": "FORCED_DRAIN",
+          "totalDeadlineSeconds": 10,
+          "naturalExitBudgetSeconds": 1,
+          "forcedTermination": true,
+          "remainingBeforeCleanup": 2,
+          "remainingJobActive": 0,
+          "observedProcessCount": 2,
+          "signaledProcessCount": 0,
+          "pendingProcessCount": 2,
+          "lastObservedElapsedSeconds": 10.039081
+        }
+      },
+      "memberFinals": [
+        {
+          "processId": 44052,
+          "exitQuerySucceeded": true,
+          "exitCode": 0,
+          "imageBase": null,
+          "imageQuerySucceeded": false,
+          "waitBeforeHandleRelease": 258
+        },
+        {
+          "processId": 44052,
+          "exitQuerySucceeded": true,
+          "exitCode": 0,
+          "imageBase": null,
+          "imageQuerySucceeded": false,
+          "waitBeforeHandleRelease": 258
+        },
+        {
+          "processId": 47996,
+          "exitQuerySucceeded": true,
+          "exitCode": 0,
+          "imageBase": null,
+          "imageQuerySucceeded": false,
+          "waitBeforeHandleRelease": 258
+        }
+      ],
+      "snapshots": [
+        {
+          "seconds": 0.000412,
+          "members": [
+            {
+              "id": 44052,
+              "initialExitCode": 0,
+              "initialWait": 258,
+              "imageBase": null
+            },
+            {
+              "id": 47996,
+              "initialExitCode": 0,
+              "initialWait": 258,
+              "imageBase": null
+            }
+          ]
+        },
+        {
+          "seconds": 1.040452,
+          "members": [
+            {
+              "id": 44052,
+              "initialExitCode": 0,
+              "initialWait": 258,
+              "imageBase": null
+            }
+          ]
+        }
+      ],
+      "bindingMismatches": [],
+      "afterOriginalJobAndHandlesClosed": [
+        {
+          "id": 44052,
+          "exitCode": 0,
+          "wait": 258
+        },
+        {
+          "id": 47996,
+          "exitCode": 0,
+          "wait": 258
+        },
+        {
+          "id": 44052,
+          "exitCode": 0,
+          "wait": 258
+        }
+      ],
+      "closeElapsedSeconds": 10.039243
+    }
+  ],
+  "producer": {
+    "name": "NATIVE-CLI-WAIT-06-PRODUCER.json",
+    "bytes": 2994,
+    "sha256": "7585321fb0e69a5a467ec22894cc7ed497e77a808c3fa76c6c1507020618580d"
+  },
+  "physicalSignalAndRemovalRequired": true,
+  "totalCleanupDeadlineSeconds": 10,
+  "gateVerdictIssued": false,
+  "independentValidation": false
+}

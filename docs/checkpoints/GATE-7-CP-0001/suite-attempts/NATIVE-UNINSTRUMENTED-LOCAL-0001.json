@@ -1,0 +1,23 @@
+{
+  "schemaVersion": "1.0.0",
+  "kind": "TARGETED_CAUSAL_NOT_WHOLE_GATE",
+  "gate": "NATIVE-UNINSTRUMENTED-LOCAL",
+  "command": [
+    "python",
+    "scripts/iacode/native_editor.py",
+    "--report",
+    "var/native-current-local-01.json"
+  ],
+  "observedAt": "2026-10-19T07:41:05Z",
+  "subjectCommit": "31ee804ecffb14add59f89b1b5cbd2f4de9216a8",
+  "sourceDirty": true,
+  "sourceFingerprint": "38ff3b3072378a7dc9cf1729380c835d6ad2e4d5d1d56e342dfdd064b9587569",
+  "sourceUnchanged": true,
+  "exitCode": 1,
+  "outputEncodingValid": true,
+  "unsafeOutputOccurrences": 0,
+  "outputBytes": 1482,
+  "outputSha256": "a88cf853263e1ca616ce8ca79bcc8797f6ff1dc439ccc8264202511278d370ea",
+  "safeOutputArtifact": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/NATIVE-UNINSTRUMENTED-LOCAL-0001.log",
+  "result": "FAIL"
+}

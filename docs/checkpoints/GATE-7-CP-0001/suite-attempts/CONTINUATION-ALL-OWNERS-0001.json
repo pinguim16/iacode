@@ -1,0 +1,28 @@
+{
+  "schemaVersion": "1.0.0",
+  "kind": "TARGETED_CAUSAL_NOT_WHOLE_GATE",
+  "gate": "CONTINUATION-ALL-OWNERS",
+  "command": [
+    "python",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-p",
+    "test_gate[567]*.py",
+    "-v"
+  ],
+  "observedAt": "2026-10-19T08:30:57Z",
+  "subjectCommit": "31ee804ecffb14add59f89b1b5cbd2f4de9216a8",
+  "sourceDirty": true,
+  "sourceFingerprint": "0240a21669f5a830a6bb876efb939842b2639da9ee3be2fef72af16f21c7f924",
+  "sourceUnchanged": true,
+  "exitCode": 0,
+  "outputEncodingValid": true,
+  "unsafeOutputOccurrences": 0,
+  "outputBytes": 32778,
+  "outputSha256": "f2fd7f497b7064b4f2bf58fdecd4bcc57976e8b0295a47b656fa37e33a2bfdc1",
+  "safeOutputArtifact": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/CONTINUATION-ALL-OWNERS-0001.log",
+  "result": "PASS"
+}

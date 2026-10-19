@@ -5,40 +5,146 @@
   "steps": [
     {
       "stepId": "G7-S00",
-      "requirements": ["canonical entry and all LESSON-REQ obligations"],
+      "requirements": [
+        "canonical entry and all LESSON-REQ obligations"
+      ],
       "expectedBehavior": "Validate/anchor Gate6, record authority/specification/preflight/requirements, execute baseline and define plan/ADRs before implementation.",
-      "implementation": ["AUTHORIZATION.md", "BASELINE.md", "PLAN.md", "LESSON-PREFLIGHT.json", "REQUIREMENTS-MATRIX.json"],
-      "tests": ["predecessor validation", "integrity", "derivation", "inherited baseline", "initial checkpoint validation"],
+      "implementation": [
+        "AUTHORIZATION.md",
+        "BASELINE.md",
+        "PLAN.md",
+        "LESSON-PREFLIGHT.json",
+        "REQUIREMENTS-MATRIX.json"
+      ],
+      "tests": [
+        "predecessor validation",
+        "integrity",
+        "derivation",
+        "inherited baseline",
+        "initial checkpoint validation"
+      ],
       "functionalProof": "Predecessor checks,35-anchor integrity, full derivation, actual129-case baseline and canonical preparatory finalization cmd-0009 pass. Whole unchanged lint cmd-0010 passes. This completes entry, not feature or whole-Gate acceptance; real Git publication must separately be observed.",
-      "evidence": ["cmd-0002", "cmd-0003", "cmd-0004", "cmd-0005", "cmd-0006", "cmd-0009", "cmd-0010"],
+      "evidence": [
+        "cmd-0002",
+        "cmd-0003",
+        "cmd-0004",
+        "cmd-0005",
+        "cmd-0006",
+        "cmd-0009",
+        "cmd-0010"
+      ],
       "status": "COMPLETE"
     },
     {
       "stepId": "G7-S01",
-      "requirements": ["complete derived Knowledge Engine behavior"],
+      "requirements": [
+        "complete derived Knowledge Engine behavior"
+      ],
       "expectedBehavior": "Implement governed sources, immutable persistent indexing, measured retrieval/citations and rights/invalidation/retention/recovery.",
-      "implementation": ["services/knowledge", "packages/contracts", "packages/persistence", "apps/api", "docs/runbooks"],
-      "tests": ["domain and boundary cases", "actual SQL/HTTP/migrations", "owned live retrieval and adverse controls"],
-      "functionalProof": "Local Knowledge implementation and causal runtime-v1 repairs complete. Earlier actual API192, domain33/schema, PostgreSQL/HTTP/migration21 and owned live78 controls/10 retrieval queries remain scoped historical proof. Current cmd-0123 passes35 Gate7 cases, cmd-0126 passes32 unchanged real promotion/succession cases, cmd-0127 passes57 inherited causal cases, cmd-0128 passes whole unchanged lint and cmd-0129 preserves both actual clean promotion mirrors before cleanup. All21 local findings close with original failures and recurrence retained. This is local restoration only: failed immutable runtime-v1 remains FAIL; a fresh whole invocation, total functional binding, ordered assurance and actual seal are still required. No independent M2 approval.",
-      "evidence": ["cmd-0033", "cmd-0055", "cmd-0042", "cmd-0081", "cmd-0120", "cmd-0123", "cmd-0125", "cmd-0126", "cmd-0127", "cmd-0128", "cmd-0129", "CURRENT-PROGRESS.json", "FINDINGS.json"],
+      "implementation": [
+        "services/knowledge",
+        "packages/contracts",
+        "packages/persistence",
+        "apps/api",
+        "docs/runbooks"
+      ],
+      "tests": [
+        "domain and boundary cases",
+        "actual SQL/HTTP/migrations",
+        "owned live retrieval and adverse controls"
+      ],
+      "functionalProof": "Core Knowledge Engine implementation and current causal rework complete locally. Historical API192/domain33/SQL21/live78-and10-query proofs remain scoped. Current0211 passes10 native controls,0213 all152 owning Gate5/6/7 cases,0214 explicit helper quality,0215 whole lint and0217 two final-strict uninstrumented native installation/trust/removal runs.0218 validates151 lessons/148 locally guarded;0219/0220 retain all198 requirements from full150 lessons. All native/style/premise/reporting findings close locally with every failure/recurrence retained. Portability finding028 awaits fresh detailed attackT. Failed v1/v2/v3 stay FAIL; one new whole immutable run and every ordered control remain mandatory. No independent M2 approval.",
+      "evidence": [
+        "cmd-0033",
+        "cmd-0055",
+        "cmd-0042",
+        "cmd-0081",
+        "cmd-0120",
+        "cmd-0123",
+        "cmd-0125",
+        "cmd-0126",
+        "cmd-0127",
+        "cmd-0128",
+        "cmd-0129",
+        "CURRENT-PROGRESS.json",
+        "FINDINGS.json",
+        "cmd-0211",
+        "cmd-0213",
+        "cmd-0214",
+        "cmd-0215",
+        "cmd-0217",
+        "cmd-0218",
+        "cmd-0219",
+        "cmd-0220"
+      ],
       "status": "COMPLETE"
     },
     {
       "stepId": "G7-S02",
-      "requirements": ["all derived requirements and mandatory internal assurance"],
+      "requirements": [
+        "all derived requirements and mandatory internal assurance"
+      ],
       "expectedBehavior": "Execute one complete immutable non-fast verifier, whole Green Keeper, completeness, fresh Red Team/VALID control and full clean-clone mirror.",
-      "implementation": ["TESTS.json", "QUALITY.json", "COMPLETENESS-REPORT.json", "M2-INTERNAL-RED-TEAM.json", "M2-INTERNAL-MIRROR.json"],
-      "tests": ["complete canonical verifier", "all mandatory gates", "completeness", "internal Red Team", "closure mirror"],
-      "functionalProof": "Actual complete published runtime-v1 cmd-0099 fails:48 of49 stages pass, but the root suite has five failures and six errors. Exact originals, actual own cleanup and unrelated-container preservation remain. Local causal repair now passes35 current cases cmd-0123,32 unchanged real protocol/succession cases cmd-0126,57 inherited cases cmd-0127, whole lint cmd-0128 and actual original-producer capture/cleanup cmd-0129. Memory cmd-0130 validates149 active lessons with146 locally guarded. No whole verifier or internal assurance PASS is claimed. Fresh immutable runtime-v2 and every ordered control remain required.",
-      "evidence": ["cmd-0099", "cmd-0123", "cmd-0125", "attempts/RUNTIME-V1-FAILED-FULL-MANIFEST.json", "audit-harness/run_full_verification.py", "audit-harness/publish_progress.py"],
+      "implementation": [
+        "TESTS.json",
+        "QUALITY.json",
+        "COMPLETENESS-REPORT.json",
+        "M2-INTERNAL-RED-TEAM.json",
+        "M2-INTERNAL-MIRROR.json"
+      ],
+      "tests": [
+        "complete canonical verifier",
+        "all mandatory gates",
+        "completeness",
+        "internal Red Team",
+        "closure mirror"
+      ],
+      "functionalProof": "Completed public v3 cmd0180 is FAIL48/49, only native red; exact originals0183 and51 inert native contexts0184/0202 remain. Local repair/strict deadline/control/actual-native proofs0211/0213/0214/0215/0217 and full memory/preflight/derivation0218/0219/0220 pass. New unused public runtime-v4 and one entire49-stage invocation, canonical functional binding, whole Green Keeper, completeness, fresh detailed Red Team with VALID control and full clean-clone mirror remain due. No whole or independent acceptance is inferred.",
+      "evidence": [
+        "cmd-0099",
+        "cmd-0123",
+        "cmd-0125",
+        "attempts/RUNTIME-V1-FAILED-FULL-MANIFEST.json",
+        "audit-harness/run_full_verification.py",
+        "audit-harness/publish_progress.py",
+        "cmd-0180",
+        "cmd-0183",
+        "cmd-0184",
+        "cmd-0202",
+        "cmd-0211",
+        "cmd-0213",
+        "cmd-0214",
+        "cmd-0215",
+        "cmd-0217",
+        "cmd-0218",
+        "cmd-0219",
+        "cmd-0220",
+        "attempts/RUNTIME-V3-FAILED-FULL-MANIFEST.json",
+        "NATIVE-REWORK-CONTEXT.json",
+        "NATIVE-REWORK-CONTEXT-02.json"
+      ],
       "status": "IN_PROGRESS"
     },
     {
       "stepId": "G7-S03",
-      "requirements": ["M2 consolidated independent handoff and actual canonical sealing"],
+      "requirements": [
+        "M2 consolidated independent handoff and actual canonical sealing"
+      ],
       "expectedBehavior": "Consolidate Gates4-7, assemble actual evidence/files/risks/rights and seal READY_FOR_REVIEW, leaving independent verdicts pending.",
-      "implementation": ["M2-CONSOLIDATION.md", "FINAL-REPORT.md", "HANDOFF.md", "STATE.json", "FILES.json"],
-      "tests": ["final report structures", "current counts and evidence", "canonical validation", "seal", "fresh public transport"],
+      "implementation": [
+        "M2-CONSOLIDATION.md",
+        "FINAL-REPORT.md",
+        "HANDOFF.md",
+        "STATE.json",
+        "FILES.json"
+      ],
+      "tests": [
+        "final report structures",
+        "current counts and evidence",
+        "canonical validation",
+        "seal",
+        "fresh public transport"
+      ],
       "functionalProof": "Not started. Gate8 remains unauthorized and this implementing run cannot attest to its own independent M2 approval.",
       "evidence": [],
       "status": "NOT_STARTED"

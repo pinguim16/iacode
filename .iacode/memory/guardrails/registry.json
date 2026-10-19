@@ -1645,7 +1645,10 @@
         "Gate7QualityObservationTests.test_timeout_projection_refuses_malformed_private_and_excessive_metadata",
         "Gate7QualityObservationTests.test_timeout_projection_follows_all_canonical_closed_states_and_result_statuses",
         "Gate7QualityObservationTests.test_iacode_timeout_remains_red_if_its_diagnostic_dependency_is_unavailable",
-        "Gate7QualityObservationTests.test_actual_iacode_entrypoint_writes_a_red_timeout_report_before_owned_cleanup"
+        "Gate7QualityObservationTests.test_actual_iacode_entrypoint_writes_a_red_timeout_report_before_owned_cleanup",
+        "Gate7NativeCleanupTests.test_deadline_retains_red_bounded_physical_facts",
+        "Gate7NativeCleanupTests.test_native_run_keeps_drain_failure_red_even_with_a_child_pass_report",
+        "Gate7NativeCleanupTests.test_failed_physical_wait_never_becomes_success_or_exposes_exception_body"
       ],
       "lessons": [
         "LSN-0110"
@@ -1899,7 +1902,13 @@
         "test_owned_job_snapshot_refuses_truncation_and_process_identity_reuse",
         "test_owned_cleanup_failure_retains_observed_facts_and_original_error",
         "test_owned_cleanup_success_records_real_removal_and_retry",
-        "test_native_cleanup_failure_report_never_promotes_functional_fixture_pass"
+        "test_native_cleanup_failure_report_never_promotes_functional_fixture_pass",
+        "Gate7NativeCleanupTests.test_natural_physical_completion_precedes_force_inside_original_deadline",
+        "Gate7NativeCleanupTests.test_forced_fallback_pins_late_members_without_extending_deadline",
+        "Gate7NativeCleanupTests.test_physical_signal_observed_after_total_deadline_remains_fail",
+        "Gate7NativeCleanupTests.test_failed_force_snapshot_stays_red_and_releases_original_handles",
+        "Gate7NativeCleanupTests.test_real_owned_member_premise_and_natural_exit_preserve_outside_sentinel",
+        "Gate7NativeCleanupTests.test_owned_bootstrap_disables_external_reporting_not_native_or_trust_controls"
       ],
       "lessons": [
         "LSN-0125"
@@ -1941,7 +1950,8 @@
       "verifiedBy": [
         "test_forgery_premise_joins_public_request_ids_to_actual_successful_sandbox_executions",
         "test_cleanup_membership_derives_every_canonical_active_state_including_running",
-        "Gate7QualityObservationTests.test_owned_archive_premise_is_populated_before_observer_target"
+        "Gate7QualityObservationTests.test_owned_archive_premise_is_populated_before_observer_target",
+        "Gate7NativeCleanupTests.test_real_owned_member_premise_and_natural_exit_preserve_outside_sentinel"
       ],
       "lessons": [
         "LSN-0128"
@@ -2125,7 +2135,12 @@
       "verifiedBy": [
         "test_local_handoff_renderer_preserves_the_complete_canonical_contract",
         "test_local_handoff_renderer_refuses_omitted_or_empty_sections_and_next_action",
-        "test_retrospective_preserves_template_and_every_current_gate_lesson"
+        "test_retrospective_preserves_template_and_every_current_gate_lesson",
+        "Gate7ContinuationContractTests.test_actual_current_handoff_and_next_preserve_canonical_structure",
+        "Gate7ContinuationContractTests.test_actual_retrospective_uses_exact_template_and_every_current_lesson_guard",
+        "Gate7ContinuationContractTests.test_actual_renderer_and_each_missing_empty_extra_or_reordered_section_refusal",
+        "Gate7ContinuationContractTests.test_retrospective_positive_omission_extra_and_registered_lesson_growth",
+        "Gate7ContinuationContractTests.test_original_failed_documents_remain_exact_inert_and_rejected"
       ],
       "lessons": [
         "LSN-0140"

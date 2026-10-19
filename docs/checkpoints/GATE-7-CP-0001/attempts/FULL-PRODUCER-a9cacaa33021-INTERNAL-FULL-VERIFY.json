@@ -1,0 +1,361 @@
+{
+  "gate": "GATE-7",
+  "result": "FAIL",
+  "fast": false,
+  "durationSeconds": 12015.0,
+  "stages": [
+    {
+      "name": "gate:tests",
+      "description": "mandatory gate tests",
+      "exitCode": 0,
+      "durationSeconds": 7024.7,
+      "result": "PASS"
+    },
+    {
+      "name": "gate:staticAnalysis",
+      "description": "mandatory gate staticAnalysis",
+      "exitCode": 0,
+      "durationSeconds": 0.4,
+      "result": "PASS"
+    },
+    {
+      "name": "gate:lessons",
+      "description": "mandatory gate lessons",
+      "exitCode": 0,
+      "durationSeconds": 2.6,
+      "result": "PASS"
+    },
+    {
+      "name": "gate:integrity",
+      "description": "mandatory gate integrity",
+      "exitCode": 0,
+      "durationSeconds": 17.3,
+      "result": "PASS"
+    },
+    {
+      "name": "gate:checkpointValidation",
+      "description": "mandatory gate checkpointValidation",
+      "exitCode": 0,
+      "durationSeconds": 79.7,
+      "result": "PASS"
+    },
+    {
+      "name": "gate:apiTests",
+      "description": "mandatory gate apiTests",
+      "exitCode": 0,
+      "durationSeconds": 109.1,
+      "result": "PASS"
+    },
+    {
+      "name": "gate:gatewayTests",
+      "description": "mandatory gate gatewayTests",
+      "exitCode": 0,
+      "durationSeconds": 8.2,
+      "result": "PASS"
+    },
+    {
+      "name": "gate:agentRuntimeTests",
+      "description": "mandatory gate agentRuntimeTests",
+      "exitCode": 0,
+      "durationSeconds": 10.5,
+      "result": "PASS"
+    },
+    {
+      "name": "gate:sandboxTests",
+      "description": "mandatory gate sandboxTests",
+      "exitCode": 0,
+      "durationSeconds": 454.7,
+      "result": "PASS"
+    },
+    {
+      "name": "gate:evaluatorTests",
+      "description": "mandatory gate evaluatorTests",
+      "exitCode": 0,
+      "durationSeconds": 53.7,
+      "result": "PASS"
+    },
+    {
+      "name": "gate:webTests",
+      "description": "mandatory gate webTests",
+      "exitCode": 0,
+      "durationSeconds": 22.9,
+      "result": "PASS"
+    },
+    {
+      "name": "gate:lint",
+      "description": "mandatory gate lint",
+      "exitCode": 0,
+      "durationSeconds": 26.5,
+      "result": "PASS"
+    },
+    {
+      "name": "gate:clientTests",
+      "description": "mandatory gate clientTests",
+      "exitCode": 0,
+      "durationSeconds": 38.1,
+      "result": "PASS"
+    },
+    {
+      "name": "gate:experienceTests",
+      "description": "mandatory gate experienceTests",
+      "exitCode": 0,
+      "durationSeconds": 11.4,
+      "result": "PASS"
+    },
+    {
+      "name": "gate:knowledgeTests",
+      "description": "mandatory gate knowledgeTests",
+      "exitCode": 0,
+      "durationSeconds": 11.5,
+      "result": "PASS"
+    },
+    {
+      "name": "gate:infraDefinition",
+      "description": "mandatory gate infraDefinition",
+      "exitCode": 0,
+      "durationSeconds": 0.8,
+      "result": "PASS"
+    },
+    {
+      "name": "stack",
+      "description": "build and start an isolated stack, then wait for real health",
+      "exitCode": 0,
+      "durationSeconds": 109.3,
+      "result": "PASS"
+    },
+    {
+      "name": "integration",
+      "description": "the backend suite against the real services",
+      "exitCode": 0,
+      "durationSeconds": 201.3,
+      "result": "PASS"
+    },
+    {
+      "name": "infra",
+      "description": "our configuration of each service, exercised live",
+      "exitCode": 0,
+      "durationSeconds": 17.2,
+      "result": "PASS"
+    },
+    {
+      "name": "smoke",
+      "description": "the API, the web shell, the observability stack and a workflow",
+      "exitCode": 0,
+      "durationSeconds": 7.3,
+      "result": "PASS"
+    },
+    {
+      "name": "gateway-smoke",
+      "description": "the Model Gateway against the real configured provider",
+      "exitCode": 0,
+      "durationSeconds": 10.8,
+      "result": "PASS"
+    },
+    {
+      "name": "agent-runtime-smoke",
+      "description": "the Agent Runtime against the real provider, through the gateway",
+      "exitCode": 0,
+      "durationSeconds": 13.3,
+      "result": "PASS"
+    },
+    {
+      "name": "agent-durability",
+      "description": "a run waiting for a tool survives a real worker restart",
+      "exitCode": 0,
+      "durationSeconds": 59.7,
+      "result": "PASS"
+    },
+    {
+      "name": "agent-cancellation",
+      "description": "a paused run is cancelled, stays cancelled and refuses a late result",
+      "exitCode": 0,
+      "durationSeconds": 35.0,
+      "result": "PASS"
+    },
+    {
+      "name": "agent-deadline",
+      "description": "a run that is alive and going nowhere is ended by its own deadline",
+      "exitCode": 0,
+      "durationSeconds": 30.2,
+      "result": "PASS"
+    },
+    {
+      "name": "sandbox-integration",
+      "description": "the sandbox's store and artifact sink against the real services",
+      "exitCode": 0,
+      "durationSeconds": 14.6,
+      "result": "PASS"
+    },
+    {
+      "name": "quality-integration",
+      "description": "quality lifecycle and immutable evidence against the real services",
+      "exitCode": 0,
+      "durationSeconds": 99.1,
+      "result": "PASS"
+    },
+    {
+      "name": "quality-pass",
+      "description": "a passing fixture derives PASS through the complete Quality Engine",
+      "exitCode": 0,
+      "durationSeconds": 103.5,
+      "result": "PASS"
+    },
+    {
+      "name": "quality-fail",
+      "description": "a failing fixture preserves its failed check, finding and evidence",
+      "exitCode": 0,
+      "durationSeconds": 87.8,
+      "result": "PASS"
+    },
+    {
+      "name": "quality-iacode",
+      "description": "the committed IACode tree is evaluated by its canonical profile",
+      "exitCode": 0,
+      "durationSeconds": 1185.5,
+      "result": "PASS"
+    },
+    {
+      "name": "quality-reproduction",
+      "description": "stored inputs reproduce an equivalent result under the same plan identity",
+      "exitCode": 0,
+      "durationSeconds": 98.4,
+      "result": "PASS"
+    },
+    {
+      "name": "quality-recovery",
+      "description": "a quality run survives evaluator restart without duplicate results",
+      "exitCode": 0,
+      "durationSeconds": 93.3,
+      "result": "PASS"
+    },
+    {
+      "name": "quality-cancellation",
+      "description": "cancellation waits for sandbox cleanup and remains fail-closed",
+      "exitCode": 0,
+      "durationSeconds": 47.6,
+      "result": "PASS"
+    },
+    {
+      "name": "quality-timeout",
+      "description": "policy-owned deadlines record timeout evidence and a FAIL verdict",
+      "exitCode": 0,
+      "durationSeconds": 83.8,
+      "result": "PASS"
+    },
+    {
+      "name": "sandbox-coding",
+      "description": "a coding team fixes a synthetic repository in a real sandbox; the host is untouched",
+      "exitCode": 0,
+      "durationSeconds": 90.0,
+      "result": "PASS"
+    },
+    {
+      "name": "sandbox-timeout",
+      "description": "a command past its timeout is stopped and the run carries on",
+      "exitCode": 0,
+      "durationSeconds": 54.2,
+      "result": "PASS"
+    },
+    {
+      "name": "sandbox-cancellation",
+      "description": "a run cancelled during a long command stops it and leaves no sandbox",
+      "exitCode": 0,
+      "durationSeconds": 109.4,
+      "result": "PASS"
+    },
+    {
+      "name": "sandbox-recovery",
+      "description": "a restarted sandbox service keeps the run's session and its workspace",
+      "exitCode": 0,
+      "durationSeconds": 62.7,
+      "result": "PASS"
+    },
+    {
+      "name": "sandbox-tool-result-origin",
+      "description": "a result posted to the API for a sandboxed request is refused, and the agent receives the sandbox's own",
+      "exitCode": 0,
+      "durationSeconds": 62.0,
+      "result": "PASS"
+    },
+    {
+      "name": "quality-false-pass",
+      "description": "the Gate 4 false-PASS battery rejects every mandatory mutation",
+      "exitCode": 0,
+      "durationSeconds": 438.7,
+      "result": "PASS"
+    },
+    {
+      "name": "backup",
+      "description": "backup, restore into a disposable target, verified read-back",
+      "exitCode": 0,
+      "durationSeconds": 44.3,
+      "result": "PASS"
+    },
+    {
+      "name": "dependency-scan",
+      "description": "known vulnerabilities in the pinned dependencies",
+      "exitCode": 0,
+      "durationSeconds": 40.7,
+      "result": "PASS"
+    },
+    {
+      "name": "native-client-installation",
+      "description": "fresh actual VSIX installation, workspace trust and owned storage/process cleanup",
+      "exitCode": 1,
+      "durationSeconds": 75.1,
+      "result": "FAIL",
+      "outputTail": "        }\n      ],\n      \"exitCode\": 0,\n      \"processCleanup\": {\n        \"jobOwned\": true,\n        \"remainingBeforeCleanup\": 0,\n        \"remainingAfterCleanup\": 0,\n        \"observedProcessCount\": 0,\n        \"signaledProcessCount\": 0\n      },\n      \"sharedStorageObservedOwned\": true\n    }\n  ],\n  \"failure\": \"owned native process job did not drain\",\n  \"ownedTemporaryDirectoryRemoved\": true,\n  \"directoryCleanupRetries\": 0,\n  \"directoryCleanup\": {\n    \"removed\": true,\n    \"cleanupRetries\": 0,\n    \"cleanupAttempts\": 1,\n    \"cleanupElapsedSeconds\": 0.18399,\n    \"firstSharingLockAfterSeconds\": null,\n    \"cleanupFailure\": null\n  }\n}",
+      "failureHeaders": [],
+      "failureHeaderCount": 0,
+      "failureHeadersTruncated": false
+    },
+    {
+      "name": "desktop-client-e2e",
+      "description": "fresh CLI/native recovery through real hardened provider/sandbox/quality workflows",
+      "exitCode": 0,
+      "durationSeconds": 369.6,
+      "result": "PASS"
+    },
+    {
+      "name": "experience-store-e2e",
+      "description": "real authenticated source-bound capture, rights, restart, corruption and retention",
+      "exitCode": 0,
+      "durationSeconds": 195.9,
+      "result": "PASS"
+    },
+    {
+      "name": "knowledge-engine-e2e",
+      "description": "real governed source ingestion, measured retrieval, citations and invalidation",
+      "exitCode": 0,
+      "durationSeconds": 202.5,
+      "result": "PASS"
+    },
+    {
+      "name": "restart",
+      "description": "restart with data intact",
+      "exitCode": 0,
+      "durationSeconds": 33.9,
+      "result": "PASS"
+    },
+    {
+      "name": "dependency-failure",
+      "description": "liveness holds, readiness refuses, both recover",
+      "exitCode": 0,
+      "durationSeconds": 11.8,
+      "result": "PASS"
+    },
+    {
+      "name": "fresh-install",
+      "description": "a complete installation from no volumes at all",
+      "exitCode": 0,
+      "durationSeconds": 46.9,
+      "result": "PASS"
+    }
+  ],
+  "isolation": {
+    "composeProject": "iacode-verify-d7d32013cf8b",
+    "publishedPorts": "docker-allocated",
+    "preRunCleanup": "PASS",
+    "postRunCleanup": "PASS"
+  }
+}

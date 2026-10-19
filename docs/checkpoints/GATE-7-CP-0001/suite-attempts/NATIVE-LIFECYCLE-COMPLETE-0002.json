@@ -1,0 +1,28 @@
+{
+  "schemaVersion": "1.0.0",
+  "kind": "TARGETED_CAUSAL_NOT_WHOLE_GATE",
+  "gate": "NATIVE-LIFECYCLE-COMPLETE",
+  "command": [
+    "python",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-p",
+    "test_gate7_native_cleanup.py",
+    "-v"
+  ],
+  "observedAt": "2026-10-19T07:55:33Z",
+  "subjectCommit": "31ee804ecffb14add59f89b1b5cbd2f4de9216a8",
+  "sourceDirty": true,
+  "sourceFingerprint": "a245e2cb46195e2adbd530417347b13e563a472efae8a2027e9216d1a50bacf5",
+  "sourceUnchanged": true,
+  "exitCode": 0,
+  "outputEncodingValid": true,
+  "unsafeOutputOccurrences": 0,
+  "outputBytes": 1883,
+  "outputSha256": "a8f5b62c715be922cef622fe7ff3ad49eaaf1eace49aca53e289b0eb30c164ae",
+  "safeOutputArtifact": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/NATIVE-LIFECYCLE-COMPLETE-0002.log",
+  "result": "PASS"
+}

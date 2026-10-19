@@ -1,0 +1,60 @@
+"""Actual isolated native CLI wait path; no flags, checks or cleanup budgets are disabled."""
+
+from __future__ import annotations
+
+import contextlib
+import hashlib
+import importlib.util
+import io
+import json
+import sys
+from pathlib import Path
+
+OWNER = Path(__file__).resolve().parent
+spec = importlib.util.spec_from_file_location("native_kernel_observer", OWNER / "OBSERVE-NATIVE-KERNEL-05.py")
+observer = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(observer)
+base = observer.base
+original_run = base.native_editor.run_owned
+CALLS = []
+
+
+def cli_wait_run(arguments, *, environment, timeout, as_node=False):
+    if not as_node:
+        arguments = [*base.native_editor.cli_command(Path(arguments[0])), "--wait", *arguments[1:]]
+        as_node = True
+        CALLS.append({"kind": "REAL_INSTALLED_CLI_WAIT_HOST", "timeoutSeconds": timeout,
+                      "ownedProfileAndSharedDataUnchanged": True})
+    return original_run(arguments, environment=environment, timeout=timeout, as_node=as_node)
+
+
+def main():
+    report = base.ROOT / "var/native-cli-wait-experiment-06-v3-32f15cca.json"
+    destination = OWNER / "NATIVE-CLI-WAIT-06-TRACE.json"
+    if report.exists() or destination.exists():
+        raise ValueError("never replay a partial or completed experiment")
+    base.native_editor.run_owned = cli_wait_run
+    base.native_editor.WindowsJob = observer.ObservedJob
+    saved = sys.argv
+    try:
+        sys.argv = ["native_editor.py", "--report", str(report)]
+        with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
+            code = base.native_editor.main()
+    finally:
+        sys.argv = saved
+    producer = base.safe_original(OWNER / "NATIVE-CLI-WAIT-06-PRODUCER.json", report.read_bytes())
+    trace = {"kind": "REAL_NATIVE_CLI_WAIT_EXPERIMENT_NOT_ACCEPTANCE", "actualExitCode": code,
+             "sourceSha256": hashlib.sha256(
+                 (base.ROOT / "scripts/iacode/native_process.py").read_bytes()).hexdigest(),
+             "calls": CALLS, "jobs": base.TRACES, "producer": producer,
+             "physicalSignalAndRemovalRequired": True, "totalCleanupDeadlineSeconds": 10,
+             "gateVerdictIssued": False, "independentValidation": False}
+    original = base.safe_original(destination, json.dumps(trace, indent=2).encode() + b"\n")
+    print(json.dumps({"actualExitCode": code, "trace": original, "calls": CALLS,
+                      "jobs": [{key: value for key, value in row.items() if key != "samples"}
+                               for row in base.TRACES]}))
+    return code
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

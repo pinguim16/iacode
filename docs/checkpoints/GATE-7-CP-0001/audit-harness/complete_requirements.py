@@ -83,6 +83,7 @@ bind(
         "docs/adr/ADR-0057-build-and-verification-root-inputs-follow-subject-versioned-assurance.md",
         "docs/adr/ADR-0058-immutable-review-git-reads-use-child-scoped-long-path-handling.md",
         "docs/adr/ADR-0059-full-verifier-consumers-use-complete-canonical-archived-producers.md",
+        "docs/adr/ADR-0060-native-drain-allows-natural-exit-within-the-existing-deadline.md",
     ],
     [ROOT_TESTS],
     ["docs/ARCHITECTURE.md"],
@@ -238,12 +239,44 @@ NEW_LESSONS = {
         ["tests/test_gate7_quality_observation.py", "tests/test_gate4_quality_engine.py"],
     ),
     "LSN-0110": (
-        ["scripts/iacode/scenarios/quality_engine_e2e.py"],
-        ["tests/test_gate7_quality_observation.py", "tests/test_gate4_quality_engine.py"],
+        [
+            "scripts/iacode/scenarios/quality_engine_e2e.py",
+            "scripts/iacode/native_process.py",
+            "scripts/iacode/native_editor.py",
+            CP + "NATIVE-REWORK-CONTEXT-02.json",
+        ],
+        [
+            "tests/test_gate7_quality_observation.py",
+            "tests/test_gate4_quality_engine.py",
+            "tests/test_gate7_native_cleanup.py",
+        ],
     ),
     "LSN-0128": (
-        ["scripts/iacode/scenarios/desktop_e2e.py", "tests/test_gate7_quality_observation.py"],
-        ["tests/test_gate5_clients.py", "tests/test_gate7_quality_observation.py"],
+        [
+            "scripts/iacode/scenarios/desktop_e2e.py",
+            "tests/test_gate7_quality_observation.py",
+            CP + "NATIVE-REWORK-CONTEXT.json",
+            "tests/test_gate7_native_cleanup.py",
+        ],
+        [
+            "tests/test_gate5_clients.py",
+            "tests/test_gate7_quality_observation.py",
+            "tests/test_gate7_native_cleanup.py",
+        ],
+    ),
+    "LSN-0125": (
+        [
+            "scripts/iacode/native_process.py",
+            "scripts/iacode/native_editor.py",
+            "docs/adr/ADR-0060-native-drain-allows-natural-exit-within-the-existing-deadline.md",
+            CP + "NATIVE-REWORK-CONTEXT.json",
+            CP + "NATIVE-REWORK-CONTEXT-02.json",
+        ],
+        [
+            "tests/test_gate7_native_cleanup.py",
+            "tests/test_gate6_experience.py",
+            "tests/test_gate5_clients.py",
+        ],
     ),
     "LSN-0150": (
         [
@@ -259,7 +292,7 @@ NEW_LESSONS = {
     ),
     "LSN-0146": (
         [CP + "audit-harness/publish_progress.py", CP + "audit-harness/verify_original_bytes.py"],
-        [ROOT_TESTS, ASSURANCE_TESTS],
+        [ROOT_TESTS, ASSURANCE_TESTS, "tests/test_gate7_publication_paths.py"],
     ),
     "LSN-0147": (["scripts/iacode/verify.py"], [ASSURANCE_TESTS]),
     "LSN-0148": (
@@ -328,6 +361,7 @@ NEW_LESSONS = {
     "LSN-0140": (
         [
             CP + "audit-harness/assemble_final_handoff.py",
+            CP + "audit-harness/write_progress_handoff.py",
             "scripts/development-ledger/validate_checkpoint.py",
         ],
         [
@@ -335,6 +369,7 @@ NEW_LESSONS = {
             ASSURANCE_TESTS,
             "tests/test_gate5_clients.py",
             "tests/test_gate6_experience.py",
+            "tests/test_gate7_continuation.py",
         ],
     ),
     "LSN-0008": (

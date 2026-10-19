@@ -1,0 +1,74 @@
+"""Preserve current runtime-v3 originals outside its active clone before interpretation."""
+
+from __future__ import annotations
+
+import hashlib
+import importlib.util
+import json
+import sys
+from pathlib import Path
+
+ROOT = Path("E:/iacode")
+OWNER = Path("C:/Users/cesar/AppData/Local/Temp/iacode-gate7-native-observation-32f15cca4802450ca926e687a9bc814a")
+CLONE = Path(
+    "C:/Users/cesar/AppData/Local/Temp/"
+    "iacode-gate7-full-verification-v2g6k7t2/repository"
+)
+sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+sys.path.insert(0, str(ROOT / "scripts/iacode"))
+
+from ledger_common import use_utf8_stdout
+
+use_utf8_stdout()
+
+
+def main() -> int:
+    source = ROOT / (
+        "docs/checkpoints/GATE-7-CP-0001/audit-harness/run_full_verification.py"
+    )
+    spec = importlib.util.spec_from_file_location("actual_publisher", source)
+    if spec is None or spec.loader is None:
+        raise ValueError("publisher cannot be loaded")
+    publisher = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(publisher)
+    manifest = publisher.capture_producer_reports(
+        CLONE,
+        CLONE / "artifacts/review/INTERNAL-FULL-VERIFY.json",
+        OWNER / "originals",
+        "31ee804ecffb14add59f89b1b5cbd2f4de9216a8",
+    )
+    document = publisher.captured_manifest(manifest)
+    validated = []
+    native = None
+    for row in document["reports"]:
+        raw = publisher.captured_original_bytes(manifest.parent, row)
+        validated.append({
+            "name": row["producerName"],
+            "bytes": len(raw),
+            "sha256": hashlib.sha256(raw).hexdigest(),
+        })
+        if row["producerName"] == "native-editor-package.json":
+            native = json.loads(raw)
+    proof = {
+        "kind": "PARTIAL_CONTEXT_ORIGINAL_BYTES_NOT_ACCEPTANCE",
+        "manifest": manifest.name,
+        "originals": validated,
+        "gateVerdictIssued": False,
+        "independentValidation": False,
+        "result": "PASS" if native is not None else "FAIL",
+    }
+    publisher.write_json(OWNER / "ORIGINAL-BYTE-VALIDATION.json", proof)
+    if native is None:
+        raise ValueError("the actual failed native producer is missing")
+    print(json.dumps({
+        "owner": str(OWNER),
+        "preservedOriginals": len(validated),
+        "native": native,
+        "diagnosticOnly": True,
+        "gateVerdictIssued": False,
+    }, ensure_ascii=True))
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

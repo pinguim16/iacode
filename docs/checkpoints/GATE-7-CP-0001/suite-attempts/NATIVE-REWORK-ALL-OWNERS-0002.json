@@ -1,0 +1,28 @@
+{
+  "schemaVersion": "1.0.0",
+  "kind": "TARGETED_CAUSAL_NOT_WHOLE_GATE",
+  "gate": "NATIVE-REWORK-ALL-OWNERS",
+  "command": [
+    "python",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-p",
+    "test_gate[567]*.py",
+    "-v"
+  ],
+  "observedAt": "2026-10-19T08:04:07Z",
+  "subjectCommit": "31ee804ecffb14add59f89b1b5cbd2f4de9216a8",
+  "sourceDirty": true,
+  "sourceFingerprint": "8caf51639377adc304412d7adf78c29195f4c19d7fee5302589a89ec939f0996",
+  "sourceUnchanged": true,
+  "exitCode": 0,
+  "outputEncodingValid": true,
+  "unsafeOutputOccurrences": 0,
+  "outputBytes": 31739,
+  "outputSha256": "3de2f9e6c08deba4cbebf6d22cf4eab0e0891bdb1ff3931c34b38887e348e176",
+  "safeOutputArtifact": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/NATIVE-REWORK-ALL-OWNERS-0002.log",
+  "result": "PASS"
+}

@@ -4,7 +4,7 @@
 - Scope: `Knowledge Engine governed source ingestion lexical indexing retrieval citations rights invalidation persistence privacy recovery and M2 internal audit handoff`
 - Technologies: `Python`, `PostgreSQL`, `Docker`, `Windows`
 - Modules: `services/knowledge`, `apps/api`, `packages/contracts`, `packages/persistence`, `scripts/iacode`
-- Generated: `2026-10-19T03:27:51Z`
+- Generated: `2026-10-19T08:37:34Z`
 - Lessons considered: 151
 - Lessons applicable: 150
 
@@ -122,7 +122,7 @@ delivery when one is absent.
 | `LSN-0107` An adversarial marker must satisfy the canonical detector before it can judge containment | `GUARDED` | HIGH | `LESSON-REQ-0106` | Prove the generated adverse bytes are recognized by the canonical detector before judging rejection, and retain a clean positive path through the identical execution. |
 | `LSN-0108` Evidence timestamp transport must preserve RFC3339 rather than a shell locale rendering | `GUARDED` | LOW | `LESSON-REQ-0107` | Read the raw command record as JSON and preserve its exact timestamp; validate lesson datetime fields and reject locale renderings before evidence publication. |
 | `LSN-0109` Regression counts and evidence must exclude only policy-bound live input repositories | `GUARDED` | HIGH | `LESSON-REQ-0108` | Declare input repositories in canonical policy with reasons and require exact agreement with literal pytest collection; use one boundary for counts and evidence while retaining every mandatory live scenario. |
-| `LSN-0110` A timed-out live proof retains bounded diagnostics before owned cleanup | `GUARDED` | HIGH | `LESSON-REQ-0109` | Keep the deadline unchanged, write a red report with sanitized history failure metadata and pending activity types before cleanup, and never continue adverse cases after a failed clean control. |
+| `LSN-0110` A timed-out live proof retains bounded diagnostics before owned cleanup | `GUARDED` | CRITICAL | `LESSON-REQ-0109` | Keep the deadline unchanged, write a red report with sanitized history failure metadata and pending activity types before cleanup, and never continue adverse cases after a failed clean control. |
 | `LSN-0111` Polling watcher cleanup must preserve completed checks and accepted cancellation | `GUARDED` | HIGH | `LESSON-REQ-0110` | Accept typed activity cancellation only when this cleanup requested it, propagate unrelated and precompleted failures, and recheck active handle lifetime after durable reads without losing the accepted cancellation flag. |
 | `LSN-0112` Canonical scanner consumers must share transport decoding, not only patterns | `GUARDED` | HIGH | `LESSON-REQ-0111` | Use the identical bounded in-memory transport views for runtime and publication, retain exact component-digest review, never expose values, and keep raw/encoded clean and negative controls. |
 | `LSN-0113` Stronger delivery controls must follow the immutable subject policy version | `GUARDED` | CRITICAL | `LESSON-REQ-0112` | Version every changed invariant by the subject's canonical policy, retain mandatory current downgrade controls, and validate all sealed tags with current tooling without altering subjects or narrowing membership. |
@@ -925,7 +925,7 @@ delivery when one is absent.
 
 ### LSN-0110 — A timed-out live proof retains bounded diagnostics before owned cleanup
 
-- Reason: applies to every Gate; category testing; severity HIGH; already guarded, so the control must keep holding
+- Reason: applies to every Gate; category testing; severity CRITICAL; already guarded, so the control must keep holding
 - Required check: Keep the deadline unchanged, write a red report with sanitized history failure metadata and pending activity types before cleanup, and never continue adverse cases after a failed clean control.
 - Required evidence: A valid positive control, a premise check and behavioral proof at the actual target; the complete current mandatory suite.
 - Derived requirement: `LESSON-REQ-0109`

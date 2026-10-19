@@ -13,7 +13,7 @@ from contextlib import suppress
 from pathlib import Path
 
 from build_clients import ROOT, build
-from native_process import WindowsJob, owned_directory
+from native_process import NativeJobCleanupError, WindowsJob, owned_directory
 
 
 def executable() -> Path:
@@ -220,6 +220,8 @@ class NativeEditor:
             "--skip-welcome",
             "--skip-release-notes",
             "--disable-gpu",
+            "--disable-crash-reporter",
+            "--disable-telemetry",
             "--extensionDevelopmentPath=" + str(self.driver),
             str(self.workspace),
         ]
@@ -232,6 +234,14 @@ class NativeEditor:
             result = run_owned(
                 args, environment=environment, timeout=1800 if mode == "resume" else 180
             )
+        except NativeJobCleanupError as error:
+            return {
+                "result": "FAIL",
+                "mode": mode,
+                "failure": "native owned process cleanup failed",
+                "exitCode": None,
+                "processCleanup": error.observation,
+            }
         except subprocess.TimeoutExpired:
             return {
                 "result": "FAIL",
@@ -288,6 +298,7 @@ def main() -> int:
         "runs": [],
     }
     owned = None
+    mode = None
     try:
         with owned_directory("iacode-native-editor-") as owned:
             directory = owned["path"]
@@ -316,6 +327,9 @@ def main() -> int:
             result["result"] = "PASS"
     except Exception as error:
         result["failure"] = str(error)[:1200]
+        if isinstance(error, NativeJobCleanupError):
+            result["failedNativeMode"] = mode
+            result["processCleanupFailure"] = error.observation
     finally:
         if owned is not None:
             result["ownedTemporaryDirectoryRemoved"] = owned["removed"]

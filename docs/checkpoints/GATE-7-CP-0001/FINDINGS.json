@@ -3,6 +3,59 @@
   "checkpoint": "GATE-7-CP-0001",
   "findings": [
     {
+      "findingId": "G7-INT-034", "severity": "CRITICAL", "classification": "GUARDRAIL_FAILURE",
+      "lessonId": "LSN-0140", "guardrailId": "GRD-0142", "status": "CLOSED",
+      "title": "Manual progress summaries drop canonical continuation structure",
+      "observed": "Actual cmd0223 refuses missing mandatory HANDOFF headings and NEXT action heading. Source inspection also finds three extra retrospective epoch headings; inherited retrospective control binds only Gate6.",
+      "requiredCorrection": "Preserve original failed documents. Consume actual canonical handoff renderer, keep substantive NEXT action, place epoch history within canonical retrospective sections and derive every current lesson/guard ID. Execute actual current positive/adverse controls and quiescent unchanged canonical validator before restoring recurrence3/CRITICAL.",
+      "evidence": ["command:cmd-0223", "file:.iacode/templates/handoff/TEMPLATE.md", "file:.iacode/templates/retrospective/TEMPLATE.md", "file:tests/test_gate6_experience.py"],
+      "resolution": "Exact refused documents224 remain. Current causal227 fails;228 uses existing canonical renderer and229 passes5 current structural/omission/empty/extra/order/growth/original controls. Retrospective keeps canonical headings and all7 current lesson/guard identities.231 helper quality,232 whole lint,233 all157 owners and actual canonical239 CHECKPOINT_VALID pass. Extend GRD0142 to actual Gate7 without changing any template, validator or inherited assertion. Recurrence3/CRITICAL remains; this is local restoration only.",
+      "resolutionEvidence": ["command:cmd-0224", "command:cmd-0227", "command:cmd-0228", "command:cmd-0229", "command:cmd-0231", "command:cmd-0232", "command:cmd-0233", "command:cmd-0239", "checkpoint:attempts/CONTINUATION-REFUSAL-0001-MANIFEST.json"]
+    },
+    {
+      "findingId": "G7-INT-033", "severity": "CRITICAL", "classification": "GUARDRAIL_FAILURE",
+      "lessonId": "LSN-0105", "guardrailId": "GRD-0106", "status": "CLOSED",
+      "title": "New native and pathspec tests violate unchanged import/iterable style rules",
+      "observed": "Cmd-0194 refuses two E402 module imports and one RUF005 list construction. No behavior/assertion or rule is defective.",
+      "requiredCorrection": "Move dynamic imports into the unittest setup context and use identical starred iterable syntax. Pass whole unchanged lint, helper quality, exact denominator controls and current tests before restoring recurrence14/CRITICAL.",
+      "evidence": ["command:cmd-0194", "checkpoint:suite-attempts/NATIVE-REWORK-HELPER-QUALITY-0001.log"],
+      "resolution": "Source-only import/iterable correction retains every assertion and rule. Follow-up N802 refusal cmd0198 is retained. Cmd0213 passes152 owners including actual lint denominator controls; cmd0214 helper quality and cmd0215 entire unchanged lint pass. Recurrence14/CRITICAL remains.",
+      "resolutionEvidence": ["command:cmd-0198", "command:cmd-0213", "command:cmd-0214", "command:cmd-0215"]
+    },
+    {
+      "findingId": "G7-INT-032", "severity": "CRITICAL",
+      "classification": "GUARDRAIL_FAILURE", "lessonId": "LSN-0110",
+      "guardrailId": "GRD-0111", "status": "CLOSED",
+      "title": "Native timeout loses bounded phase and physical-completion facts",
+      "observed": "Actual native producer retains generic failure and cleanup, not mode/count/phase facts; real observation recovers missing information.",
+      "requiredCorrection": "Retain bounded closed failure facts and actual mode before cleanup. Failed drain remains FAIL even if inner child reports PASS.",
+      "evidence": ["command:cmd-0180", "command:cmd-0184", "checkpoint:NATIVE-REWORK-CONTEXT.json"],
+      "resolution": "Actual cmd0195 retains failed package mode and bounded phase/count/deadline facts while staying FAIL. Cmd0211/0213 prove deadline/error/privacy and inner-child-PASS refusal; complete helper quality0214 and whole lint0215 pass. Physical native reliability is separately tracked by G7-INT-030.",
+      "resolutionEvidence": ["command:cmd-0195", "command:cmd-0211", "command:cmd-0213", "command:cmd-0214", "command:cmd-0215"]
+    },
+    {
+      "findingId": "G7-INT-031", "severity": "CRITICAL",
+      "classification": "GUARDRAIL_FAILURE", "lessonId": "LSN-0128",
+      "guardrailId": "GRD-0130", "status": "CLOSED",
+      "title": "First native diagnostic uses unsupported exact-count premise",
+      "observed": "Combined premise fails before close; source assumes exactly1 active member. Corrected real ready/membership premise observes2. First failing subcondition was not logged and is not retroactively asserted.",
+      "requiredCorrection": "Use actual ready bytes, exact owned membership and outside sentinel. Require observed nonempty membership, never guessed exact count, before causal proof.",
+      "evidence": ["command:cmd-0184", "checkpoint:NATIVE-REWORK-CONTEXT.json"],
+      "resolution": "Use actual ready bytes and nonempty verified membership, never guessed count1. Real owned child/external-sentinel control passes0211 and full152-owner0213. The first failed subcondition remains unknown; all earlier premises/assertions are retained.",
+      "resolutionEvidence": ["command:cmd-0211", "command:cmd-0213", "command:cmd-0214", "command:cmd-0215"]
+    },
+    {
+      "findingId": "G7-INT-030", "severity": "CRITICAL",
+      "classification": "GUARDRAIL_FAILURE", "lessonId": "LSN-0125",
+      "guardrailId": "GRD-0127", "status": "CLOSED",
+      "title": "Native teardown fails physical completion and admits a late-success branch",
+      "observed": "Cmd-0180 ends48/49 with native failure. Real reproduction has zero accounting and two nonsignaled members at10s; early Job release also fails. Natural-exit variant observes two members signal in52ms. No kernel-internal cause is established.",
+      "requiredCorrection": "ADR-0060 natural exit inside same10s, exact current-member pinning before owned force, unchanged physical predicate, red diagnostics and actual removal. Require causal controls and new whole immutable invocation.",
+      "evidence": ["command:cmd-0180", "command:cmd-0183", "command:cmd-0184", "checkpoint:attempts/RUNTIME-V3-FAILED-FULL-MANIFEST.json", "checkpoint:NATIVE-REWORK-CONTEXT.json"],
+      "resolution": "ADR0060 keeps exact ownership,1s natural exit inside10s, current member pinning before owned force and physical signals; actual clock now precedes success. Original cmd0188/0210 causal refusals remain. Cmd0211 passes10 controls,0213 all152 owners,0214 helper quality and0215 whole lint. Final strict source passes two fresh uninstrumented installation/trust/removal runs0217 with exact originals. Crash/telemetry optout affects only owned test bootstrap, not checks, activation or trust. Historical OS internals remain unknown; residual kernel/cleanup failure stays red. This is local restoration, not acceptance of failed v3 or independent approval.",
+      "resolutionEvidence": ["command:cmd-0195", "command:cmd-0202", "command:cmd-0210", "command:cmd-0211", "command:cmd-0213", "command:cmd-0214", "command:cmd-0215", "command:cmd-0217", "checkpoint:NATIVE-REWORK-CONTEXT-02.json", "checkpoint:suite-attempts/NATIVE-UNINSTRUMENTED-REPETITION-0002.json"]
+    },
+    {
       "findingId": "G7-INT-029",
       "severity": "CRITICAL",
       "classification": "GUARDRAIL_FAILURE",

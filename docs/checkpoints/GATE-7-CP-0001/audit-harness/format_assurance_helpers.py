@@ -1,4 +1,4 @@
-"""Format and check every new checkpoint assurance helper with the pinned owning toolchain."""
+"""Check the explicit current assurance-helper/regression scope with the pinned toolchain."""
 
 from __future__ import annotations
 
@@ -23,7 +23,13 @@ PATHS = (
             "assemble_final_handoff",
             "archive_failed_runtime_v1",
             "archive_failed_runtime_v2",
+            "archive_failed_runtime_v3",
             "import_rework_contexts",
+            "import_native_contexts",
+            "import_native_followup",
+            "run_native_repetitions",
+            "write_progress_handoff",
+            "archive_continuation_refusal",
             "run_full_verification",
             "format_assurance_helpers",
             "diagnose_promotion_producer",
@@ -35,6 +41,11 @@ PATHS = (
     "tests/test_gate7_assurance.py",
     "tests/test_gate7_quality_observation.py",
     "tests/test_gate7_git_transport.py",
+    "tests/test_gate7_native_cleanup.py",
+    "tests/test_gate7_publication_paths.py",
+    "tests/test_gate7_continuation.py",
+    "scripts/iacode/native_process.py",
+    "scripts/iacode/native_editor.py",
     "scripts/iacode/scenarios/quality_engine_e2e.py",
 )
 

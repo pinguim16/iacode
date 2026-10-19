@@ -1,0 +1,13 @@
+N802 Function name `setUpClass` should be lowercase
+  --> tests/test_gate7_native_cleanup.py:22:9
+   |
+20 | class Gate7NativeCleanupTests(unittest.TestCase):
+21 |     @classmethod
+22 |     def setUpClass(cls):
+   |         ^^^^^^^^^^
+23 |         global native_editor, native_process
+24 |         import native_editor
+   |
+help: Consider adding `@typing.override` if this method overrides a method from a superclass
+
+Found 1 error.

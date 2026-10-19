@@ -1,5 +1,19 @@
 # Decisions
 
+- Completed cmd0180 is FAIL48/49, not partial approval; exact v3 originals are retained by0183.
+  Cmd0184/0202 import51 native contexts as inert bytes, never scratch canonical commands. Rejected
+  and empty-snapshot experiments stay rejected/inconclusive; historical Windows internals are
+  unknown. ADR0060 improves owned lifecycle/privacy and strict physical deadline; all prior
+  failures remain red. Local proofs0211/0213/0214/0215/0217 and memory0218 do not grant a Gate verdict.
+- Incomplete-context preflight0185 selected147 because the invocation omitted existing technology/
+  module arguments. It was never consumed by derivation or implementation.0186/0187 restore the
+  full150/198 set. The canonical selector is not blamed or weakened; preserve full context in every
+  later invocation. Repeated style refusals0194/0198 keep recurrence14/CRITICAL and all assertions.
+- Literal NUL Git stdin transports complete actual changed declared paths, with undeclared
+  changes refused before staging. Real0191 covers more than32767 aggregate argv characters,
+  deletion, spaces/Unicode/literal brackets. Existing process-exit sequencing and full FILES
+  declaration remain mandatory. No tag/history or denominator is rewritten.
+
 - Runtime-v1 remains failed and its immutable tag/original producer archives are retained. Local
   current35-case, actual32-case promotion/succession, unchanged57-case inherited and complete lint
   cmd-0123/0126/0127/0128 pass. Cmd-0129 preserves both actual clean promotion mirrors before

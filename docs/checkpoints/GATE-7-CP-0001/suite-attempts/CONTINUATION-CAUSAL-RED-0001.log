@@ -1,0 +1,95 @@
+test_actual_current_handoff_and_next_preserve_canonical_structure (test_gate7_continuation.Gate7ContinuationContractTests.test_actual_current_handoff_and_next_preserve_canonical_structure) ... FAIL
+test_actual_renderer_and_each_missing_empty_extra_or_reordered_section_refusal (test_gate7_continuation.Gate7ContinuationContractTests.test_actual_renderer_and_each_missing_empty_extra_or_reordered_section_refusal) ... ok
+test_actual_retrospective_uses_exact_template_and_every_current_lesson_guard (test_gate7_continuation.Gate7ContinuationContractTests.test_actual_retrospective_uses_exact_template_and_every_current_lesson_guard) ... FAIL
+test_original_failed_documents_remain_exact_inert_and_rejected (test_gate7_continuation.Gate7ContinuationContractTests.test_original_failed_documents_remain_exact_inert_and_rejected) ... ok
+test_retrospective_positive_omission_extra_and_registered_lesson_growth (test_gate7_continuation.Gate7ContinuationContractTests.test_retrospective_positive_omission_extra_and_registered_lesson_growth) ... ok
+
+======================================================================
+FAIL: test_actual_current_handoff_and_next_preserve_canonical_structure (test_gate7_continuation.Gate7ContinuationContractTests.test_actual_current_handoff_and_next_preserve_canonical_structure)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\iacode\tests\test_gate7_continuation.py", line 57, in test_actual_current_handoff_and_next_preserve_canonical_structure
+    self.check_sections((CHECKPOINT / "HANDOFF.md").read_text(encoding="utf-8"),
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                        validator.HANDOFF_HEADINGS)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\iacode\tests\test_gate7_continuation.py", line 37, in check_sections
+    self.assertEqual([row.group() for row in headings], list(expected))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: ['## Objective and boundary', '## Latest actual observa[62 chars]ity'] != ['## Objective', '## What was completed', '## What was [276 chars]ons']
+
+First differing element 0:
+'## Objective and boundary'
+'## Objective'
+
+Second list contains 10 additional elements.
+First extra element 4:
+'## Files changed'
+
+- ['## Objective and boundary',
+-  '## Latest actual observations',
++ ['## Objective',
++  '## What was completed',
++  '## What was NOT completed',
++  '## Current repository state',
++  '## Files changed',
++  '## Important decisions',
++  '## Tests executed',
++  '## Known failures',
++  '## Known risks',
++  '## Do not repeat',
+   '## Required next action',
+-  '## Safety and reproducibility']
++  '## Exact continuation sequence',
++  '## Validation commands',
++  '## Stop conditions']
+
+======================================================================
+FAIL: test_actual_retrospective_uses_exact_template_and_every_current_lesson_guard (test_gate7_continuation.Gate7ContinuationContractTests.test_actual_retrospective_uses_exact_template_and_every_current_lesson_guard)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\iacode\tests\test_gate7_continuation.py", line 63, in test_actual_retrospective_uses_exact_template_and_every_current_lesson_guard
+    self.check_retrospective(document.read_text(encoding="utf-8"), self.current_lessons())
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\iacode\tests\test_gate7_continuation.py", line 50, in check_retrospective
+    self.check_sections(text, self.retrospective_headings())
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\iacode\tests\test_gate7_continuation.py", line 37, in check_sections
+    self.assertEqual([row.group() for row in headings], list(expected))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: ['## Post-runtime-v3 rework, before the next s[315 chars]oof'] != ['## What went well', '## What failed', '## Wh[130 chars]ons']
+
+First differing element 0:
+'## Post-runtime-v3 rework, before the next source freeze'
+'## What went well'
+
+First list contains 3 additional elements.
+First extra element 8:
+'## Retired lessons'
+
+- ['## Post-runtime-v3 rework, before the next source freeze',
+-  '## What went well',
+? ^
+
++ ['## What went well',
+? ^
+
+   '## What failed',
+   '## What repeated',
+   '## What was learned',
+   '## What should become a guardrail',
+   '## New lessons',
+   '## Updated lessons',
+-  '## Retired lessons',
+?                      ^
+
++  '## Retired lessons']
+?                      ^
+
+-  '## Post-runtime-v1 corrective epoch and source freeze',
+-  '## Post-runtime-v2 corrective epoch before a new immutable proof']
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.030s
+
+FAILED (failures=2)

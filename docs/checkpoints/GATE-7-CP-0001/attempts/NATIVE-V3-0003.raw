@@ -1,0 +1,154 @@
+"""Observe real owned Windows job accounting, handles and cleanup without changing source."""
+
+from __future__ import annotations
+
+import ctypes
+import hashlib
+import json
+import os
+import subprocess
+import sys
+import time
+from pathlib import Path
+
+ROOT = Path("E:/iacode")
+OWNER = Path("C:/Users/cesar/AppData/Local/Temp/iacode-gate7-native-observation-32f15cca4802450ca926e687a9bc814a")
+sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+from ledger_common import find_secrets, use_utf8_stdout
+
+use_utf8_stdout()
+sys.path.insert(0, str(ROOT / "scripts/iacode"))
+from native_process import Accounting, WindowsJob
+
+
+def main() -> int:
+    if os.name != "nt":
+        raise ValueError("a real Windows kernel is required")
+    output = OWNER / "ACTUAL-JOB-DRAIN-OBSERVATION.json"
+    ready = OWNER / "controlled-child-ready.txt"
+    if output.exists() or ready.exists():
+        raise ValueError("never replay or overwrite an actual observation")
+    job = WindowsJob()
+    raw_query = job.api.QueryInformationJobObject
+    raw_wait = job.api.WaitForSingleObject
+    raw_close = job.api.CloseHandle
+    observations = []
+    wait_statuses = {}
+    handle_closes = []
+    outside = None
+    child = None
+    close_started = False
+    close_error = None
+    cleanup = None
+
+    def query(*arguments):
+        result = raw_query(*arguments)
+        if result and arguments[1] == 1:
+            active = ctypes.cast(arguments[2], ctypes.POINTER(Accounting)).contents.active
+            observations.append({"seconds": round(time.monotonic() - started, 6),
+                                 "active": int(active)})
+        return result
+
+    def wait(handle, milliseconds):
+        result = raw_wait(handle, milliseconds)
+        key = str(int(result))
+        wait_statuses[key] = wait_statuses.get(key, 0) + 1
+        return result
+
+    def close(handle):
+        result = raw_close(handle)
+        if handle != job.handle:
+            sample = Accounting()
+            queried = raw_query(job.handle, 1, ctypes.byref(sample),
+                                ctypes.sizeof(sample), None)
+            handle_closes.append({"closed": bool(result), "querySucceeded": bool(queried),
+                                  "activeAfterClose": int(sample.active) if queried else None})
+        return result
+
+    started = time.monotonic()
+    try:
+        outside = subprocess.Popen(
+            [sys.executable, "-c", "import time; time.sleep(60)"],
+            stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+            creationflags=subprocess.CREATE_NO_WINDOW,
+        )
+        contained = ctypes.wintypes.BOOL()
+        if not job.api.IsProcessInJob(outside._handle, job.handle, ctypes.byref(contained)):
+            raise ctypes.WinError(ctypes.get_last_error())
+        if contained.value or outside.poll() is not None:
+            raise ValueError("the independent owned sentinel premise is invalid")
+        child_code = ("from pathlib import Path; import time; "
+                      + "Path(" + repr(str(ready)) + ").write_text('ready'); time.sleep(60)")
+        child = subprocess.Popen(
+            [sys.executable, "-c", child_code],
+            stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+            creationflags=(subprocess.CREATE_NEW_PROCESS_GROUP
+                           | subprocess.CREATE_NO_WINDOW | 4),
+        )
+        job.attach_and_resume(child)
+        deadline = time.monotonic() + 5
+        while not ready.is_file() and time.monotonic() < deadline:
+            time.sleep(0.01)
+        if (not ready.is_file() or ready.read_text() != "ready"
+                or child.poll() is not None or job.active() != 1):
+            raise ValueError("the actual resumed child premise failed before cleanup")
+        job.api.QueryInformationJobObject = query
+        job.api.WaitForSingleObject = wait
+        job.api.CloseHandle = close
+        close_started = True
+        try:
+            cleanup = job.close()
+        except RuntimeError as error:
+            close_error = str(error)
+        child_exit = child.wait(timeout=5)
+        outside_preserved = outside.poll() is None
+        document = {
+            "kind": "ACTUAL_WINDOWS_JOB_CONTEXT_NOT_ACCEPTANCE",
+            "subjectCommit": "31ee804ecffb14add59f89b1b5cbd2f4de9216a8",
+            "sourceSha256": hashlib.sha256(
+                (ROOT / "scripts/iacode/native_process.py").read_bytes()).hexdigest(),
+            "realKernelCalls": True,
+            "countsOrClockSimulated": False,
+            "childPremiseReached": True,
+            "ownedChildExitCode": child_exit,
+            "independentlyOwnedOutsideSentinelPreserved": outside_preserved,
+            "closeError": close_error,
+            "closeResult": cleanup,
+            "accountingObservations": observations,
+            "waitStatuses": wait_statuses,
+            "memberHandleCloses": handle_closes,
+            "elapsedSeconds": round(time.monotonic() - started, 6),
+            "gateVerdictIssued": False,
+            "independentValidation": False,
+        }
+        encoded = json.dumps(document, indent=2, ensure_ascii=True).encode() + b"\n"
+        if find_secrets(encoded.decode("utf-8")):
+            raise ValueError("unsafe diagnostic is refused before persistence")
+        with output.open("xb") as stream:
+            stream.write(encoded)
+        if output.read_bytes() != encoded:
+            raise ValueError("diagnostic byte equality failed")
+        print(json.dumps({
+            **{key: value for key, value in document.items()
+               if key not in {"accountingObservations"}},
+            "samples": len(observations),
+            "firstSamples": observations[:3],
+            "lastSamples": observations[-3:],
+            "originalBytes": len(encoded),
+            "originalSha256": hashlib.sha256(encoded).hexdigest(),
+        }))
+        if not outside_preserved:
+            raise ValueError("the independently owned sentinel was not preserved")
+        return 1 if close_error else 0
+    finally:
+        if not close_started:
+            job.api.CloseHandle(job.handle)
+        for process in (child, outside):
+            if process is not None:
+                if process.poll() is None:
+                    process.kill()
+                process.wait(timeout=5)
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

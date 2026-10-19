@@ -1,10 +1,10 @@
 {
   "schemaVersion": "1.0.0",
   "kind": "PUBLISHED_RUNTIME_CANDIDATE_NOT_ACCEPTANCE",
-  "subjectCommit": "13749adfa616c7f52aa7407cb9a9d7aef3d19c76",
-  "subjectTag": "iacode-subjects/GATE-7-CP-0001-runtime-v2",
-  "sourceFingerprint": "035c4f155f9d7d2981b49e05f52e0b57805ba1c8e300e2ca7e692503a7ecefd1",
-  "observedAt": "2026-10-18T21:34:36Z",
+  "subjectCommit": "31ee804ecffb14add59f89b1b5cbd2f4de9216a8",
+  "subjectTag": "iacode-subjects/GATE-7-CP-0001-runtime-v3",
+  "sourceFingerprint": "5c970d4d32187e0ac9bd4762adb1bfd1bc50f118a8254e0968cb60ac191fa044",
+  "observedAt": "2026-10-19T03:37:03Z",
   "publicationDriverActualExitCode": 0,
   "committedCheckpointValidation": "PASS",
   "mainAndOriginMatched": true,
@@ -17,12 +17,23 @@
   "checkpointSealed": false,
   "gate8Authorized": false,
   "completeVerificationActualExitCode": 1,
-  "completeVerificationCommand": "command:cmd-0143",
-  "failedVerificationManifest": "attempts/RUNTIME-V2-FAILED-FULL-MANIFEST.json",
+  "completeVerificationCommand": "cmd-0180",
+  "failedAttemptManifest": "attempts/RUNTIME-V3-FAILED-FULL-MANIFEST.json",
+  "completeStages": 49,
+  "passedStages": 48,
+  "failedStages": ["native-client-installation"],
   "previousFailedImmutableAttempt": {
-    "subjectCommit": "a4b17e96c85efec5c1cd51305c5d1816ec82c77f",
-    "subjectTag": "iacode-subjects/GATE-7-CP-0001-runtime-v1",
+    "subjectCommit": "13749adfa616c7f52aa7407cb9a9d7aef3d19c76",
+    "subjectTag": "iacode-subjects/GATE-7-CP-0001-runtime-v2",
     "result": "FAIL",
-    "manifest": "attempts/RUNTIME-V1-FAILED-FULL-MANIFEST.json"
-  }
+    "manifest": "attempts/RUNTIME-V2-FAILED-FULL-MANIFEST.json"
+  },
+  "earlierFailedImmutableAttempts": [
+    {
+      "subjectCommit": "a4b17e96c85efec5c1cd51305c5d1816ec82c77f",
+      "subjectTag": "iacode-subjects/GATE-7-CP-0001-runtime-v1",
+      "result": "FAIL",
+      "manifest": "attempts/RUNTIME-V1-FAILED-FULL-MANIFEST.json"
+    }
+  ]
 }

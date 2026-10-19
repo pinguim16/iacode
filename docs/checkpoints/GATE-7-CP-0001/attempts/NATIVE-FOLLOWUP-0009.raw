@@ -1,0 +1,191 @@
+{
+  "kind": "CONTROLLED_REAL_NATIVE_ALLOCATION_EXPERIMENT_NOT_ACCEPTANCE",
+  "unchangedRealCleanupDeadlineSeconds": 10,
+  "naturalAllocationSeconds": 5,
+  "realKernelCalls": true,
+  "jobVerdictOrCountsSimulated": false,
+  "actualExitCode": 0,
+  "jobs": [
+    {
+      "ordinal": 1,
+      "members": [],
+      "samples": [
+        {
+          "seconds": 0.000128,
+          "active": 0
+        },
+        {
+          "seconds": 0.000231,
+          "active": 0
+        }
+      ],
+      "lastSample": {
+        "seconds": 0.000231,
+        "active": 0
+      },
+      "waits": {},
+      "handleCloses": [
+        {
+          "jobHandle": true,
+          "success": true
+        }
+      ],
+      "closeResult": {
+        "jobOwned": true,
+        "remainingBeforeCleanup": 0,
+        "remainingAfterCleanup": 0,
+        "observedProcessCount": 0,
+        "signaledProcessCount": 0,
+        "forcedTermination": false,
+        "naturalExitBudgetWithinOriginalDeadlineSeconds": 1
+      },
+      "closeError": null,
+      "memberFinals": [],
+      "snapshotFacts": [
+        {
+          "seconds": 0.000205,
+          "members": []
+        }
+      ],
+      "closeElapsedSeconds": 0.000267
+    },
+    {
+      "ordinal": 2,
+      "members": [],
+      "samples": [
+        {
+          "seconds": 7.5e-05,
+          "active": 0
+        },
+        {
+          "seconds": 0.000161,
+          "active": 0
+        }
+      ],
+      "lastSample": {
+        "seconds": 0.000161,
+        "active": 0
+      },
+      "waits": {},
+      "handleCloses": [
+        {
+          "jobHandle": true,
+          "success": true
+        }
+      ],
+      "closeResult": {
+        "jobOwned": true,
+        "remainingBeforeCleanup": 0,
+        "remainingAfterCleanup": 0,
+        "observedProcessCount": 0,
+        "signaledProcessCount": 0,
+        "forcedTermination": false,
+        "naturalExitBudgetWithinOriginalDeadlineSeconds": 1
+      },
+      "closeError": null,
+      "memberFinals": [],
+      "snapshotFacts": [
+        {
+          "seconds": 0.000139,
+          "members": []
+        }
+      ],
+      "closeElapsedSeconds": 0.000202
+    },
+    {
+      "ordinal": 3,
+      "members": [],
+      "samples": [
+        {
+          "seconds": 7.1e-05,
+          "active": 0
+        },
+        {
+          "seconds": 0.000145,
+          "active": 0
+        }
+      ],
+      "lastSample": {
+        "seconds": 0.000145,
+        "active": 0
+      },
+      "waits": {},
+      "handleCloses": [
+        {
+          "jobHandle": true,
+          "success": true
+        }
+      ],
+      "closeResult": {
+        "jobOwned": true,
+        "remainingBeforeCleanup": 0,
+        "remainingAfterCleanup": 0,
+        "observedProcessCount": 0,
+        "signaledProcessCount": 0,
+        "forcedTermination": false,
+        "naturalExitBudgetWithinOriginalDeadlineSeconds": 1
+      },
+      "closeError": null,
+      "memberFinals": [],
+      "snapshotFacts": [
+        {
+          "seconds": 0.000126,
+          "members": []
+        }
+      ],
+      "closeElapsedSeconds": 0.000174
+    },
+    {
+      "ordinal": 4,
+      "members": [],
+      "samples": [
+        {
+          "seconds": 6.2e-05,
+          "active": 0
+        },
+        {
+          "seconds": 0.000122,
+          "active": 0
+        }
+      ],
+      "lastSample": {
+        "seconds": 0.000122,
+        "active": 0
+      },
+      "waits": {},
+      "handleCloses": [
+        {
+          "jobHandle": true,
+          "success": true
+        }
+      ],
+      "closeResult": {
+        "jobOwned": true,
+        "remainingBeforeCleanup": 0,
+        "remainingAfterCleanup": 0,
+        "observedProcessCount": 0,
+        "signaledProcessCount": 0,
+        "forcedTermination": false,
+        "naturalExitBudgetWithinOriginalDeadlineSeconds": 1
+      },
+      "closeError": null,
+      "memberFinals": [],
+      "snapshotFacts": [
+        {
+          "seconds": 0.000106,
+          "members": []
+        }
+      ],
+      "closeElapsedSeconds": 0.000149
+    }
+  ],
+  "baselineSourceSha256": "b6326908823085b95d3a7dc0720e1450445fff68f8493477f2bb4d64cc16a647",
+  "exactPrototype": "def close(self) -> dict:\n    handles = []\n    pending = {}\n    started = time.monotonic()\n    deadline = started + 10\n    grace_until = started + 5\n    now = started\n    before = active = None\n    forced = False\n    phase = \"MEMBER_SNAPSHOT\"\n    try:\n        before = self.active()\n        handles = self.owned_member_handles()\n        pending = dict(handles)\n        phase = \"NATURAL_DRAIN\"\n        while True:\n            active = self.active()\n            for identifier, handle in list(pending.items()):\n                status = self.api.WaitForSingleObject(handle, 0)\n                if status == 0:\n                    del pending[identifier]\n                elif status == 0xFFFFFFFF:\n                    raise ctypes.WinError(ctypes.get_last_error())\n                elif status != 258:\n                    raise RuntimeError(\"unexpected owned process synchronization state\")\n            if not active and not pending:\n                break\n            now = time.monotonic()\n            if now >= deadline:\n                raise RuntimeError(\"owned native process job did not drain\")\n            if not forced and now >= grace_until:\n                phase = \"FORCE_SNAPSHOT\"\n                known = set(dict(handles))\n                for identifier, handle in self.owned_member_handles():\n                    if identifier in known:\n                        self.api.CloseHandle(handle)\n                    else:\n                        handles.append((identifier, handle))\n                        pending[identifier] = handle\n                phase = \"FORCED_DRAIN\"\n                if not self.api.TerminateJobObject(self.handle, 1):\n                    raise ctypes.WinError(ctypes.get_last_error())\n                forced = True\n            time.sleep(0.05)\n        return {\n            \"jobOwned\": True,\n            \"remainingBeforeCleanup\": before,\n            \"remainingAfterCleanup\": 0,\n            \"observedProcessCount\": len(handles),\n            \"signaledProcessCount\": len(handles),\n            \"forcedTermination\": forced,\n            \"naturalExitBudgetWithinOriginalDeadlineSeconds\": 1,\n        }\n    except Exception as error:\n        observation = {\n            \"result\": \"FAIL\",\n            \"phase\": phase,\n            \"totalDeadlineSeconds\": 10,\n            \"naturalExitBudgetSeconds\": 1,\n            \"forcedTermination\": forced,\n            \"remainingBeforeCleanup\": before,\n            \"remainingJobActive\": active,\n            \"observedProcessCount\": len(handles),\n            \"signaledProcessCount\": len(handles) - len(pending),\n            \"pendingProcessCount\": len(pending),\n            \"lastObservedElapsedSeconds\": round(max(0, now - started), 6),\n        }\n        message = (\n            \"owned native process job did not drain\"\n            if now >= deadline\n            else \"owned native job cleanup failed\"\n        )\n        raise NativeJobCleanupError(message, observation) from error\n    finally:\n        for _, handle in handles:\n            self.api.CloseHandle(handle)\n        self.api.CloseHandle(self.handle)\n",
+  "producer": {
+    "name": "NATIVE-GRACE-EXPERIMENT-04-PRODUCER.json",
+    "bytes": 3446,
+    "sha256": "4d7e308b9d9729d8f1696f282eddbb01ada35546b4399787d7d3e26f096e8f14"
+  },
+  "gateVerdictIssued": false,
+  "independentValidation": false
+}

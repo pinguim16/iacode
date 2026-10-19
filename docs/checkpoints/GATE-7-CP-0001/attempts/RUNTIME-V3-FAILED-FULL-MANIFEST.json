@@ -1,0 +1,55 @@
+{
+  "kind": "EXACT_FAILED_IMMUTABLE_FULL_ATTEMPT_NOT_CURRENT_ACCEPTANCE",
+  "observedAt": "2026-10-19T07:32:37Z",
+  "subjectCommit": "31ee804ecffb14add59f89b1b5cbd2f4de9216a8",
+  "subjectTag": "iacode-subjects/GATE-7-CP-0001-runtime-v3",
+  "commandId": "cmd-0180",
+  "result": "FAIL",
+  "originalProducerManifest": "attempts/FULL-PRODUCER-a9cacaa33021-MANIFEST.json",
+  "files": [
+    {
+      "original": "VERIFY.json",
+      "archive": "RUNTIME-V3-FAILED-VERIFY.json",
+      "sizeBytes": 10826,
+      "sha256": "5a461b2079504a35f20ec15470829dfaedfd566ff053dd7f861a998a0fe6c92e"
+    },
+    {
+      "original": "PUBLISHED-CLEAN-CLONE-REPORT.json",
+      "archive": "RUNTIME-V3-FAILED-PUBLISHED-CLEAN-CLONE-REPORT.json",
+      "sizeBytes": 782,
+      "sha256": "f2ed723a2bce62651c9b4e0f3b0784b3c2603806e9debebfebd8c19c17263ca1"
+    },
+    {
+      "original": "FUNCTIONAL-SCENARIOS.json",
+      "archive": "RUNTIME-V3-FAILED-FUNCTIONAL-SCENARIOS.json",
+      "sizeBytes": 124340,
+      "sha256": "e178d844848b8639f2ff6ca4df6d02531c59f367332843d9a5c991c76da30e3f"
+    },
+    {
+      "original": "COMPOSE-ISOLATION-AUDIT.json",
+      "archive": "RUNTIME-V3-FAILED-COMPOSE-ISOLATION-AUDIT.json",
+      "sizeBytes": 26504,
+      "sha256": "154632fe6ad87356847376e98a07defd8eb892ff5dc2263c606d9245c1161924"
+    },
+    {
+      "original": "PRODUCER-REPORTS.json",
+      "archive": "RUNTIME-V3-FAILED-PRODUCER-REPORTS.json",
+      "sizeBytes": 163,
+      "sha256": "17b8bbe4b3c3277db38568f36013870c08af1a6091a99ed625e1da8adafb9b18"
+    },
+    {
+      "original": "FULL-VERIFY-PROGRESS.json",
+      "archive": "RUNTIME-V3-FAILED-FULL-VERIFY-PROGRESS.json",
+      "sizeBytes": 7209,
+      "sha256": "a68b0571ce6b0c7a1ae4923a1c6bea79ee3d0e6f9f6b7e2bfcff250f75257d86"
+    },
+    {
+      "original": "RUNTIME-SUBJECT.json",
+      "archive": "RUNTIME-V3-FAILED-RUNTIME-SUBJECT.json",
+      "sizeBytes": 1319,
+      "sha256": "fe448d984eb833e0aef42d924f471cf6cb3cadeb185ad74974702f5ec1208bca"
+    }
+  ],
+  "acceptanceGranted": false,
+  "immutableTagMoved": false
+}

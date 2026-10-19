@@ -1,0 +1,144 @@
+"""Observe the actual native package/trust path using real unchanged Windows job calls."""
+
+from __future__ import annotations
+
+import contextlib
+import ctypes
+import hashlib
+import io
+import json
+import sys
+import time
+from pathlib import Path
+
+ROOT = Path("E:/iacode")
+OWNER = Path("C:/Users/cesar/AppData/Local/Temp/iacode-gate7-native-observation-32f15cca4802450ca926e687a9bc814a")
+sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+from ledger_common import find_secrets, use_utf8_stdout
+
+use_utf8_stdout()
+sys.path.insert(0, str(ROOT / "scripts/iacode"))
+import native_editor
+from native_process import Accounting, WindowsJob
+
+TRACES = []
+
+
+class ObservedJob(WindowsJob):
+    def __init__(self):
+        super().__init__()
+        self.trace = {"ordinal": len(TRACES) + 1, "members": [], "samples": [],
+                      "lastSample": None, "waits": {}, "handleCloses": [],
+                      "closeResult": None, "closeError": None}
+        TRACES.append(self.trace)
+        self.started = None
+        original_query = self.api.QueryInformationJobObject
+        original_wait = self.api.WaitForSingleObject
+        original_close = self.api.CloseHandle
+
+        def query(*arguments):
+            value = original_query(*arguments)
+            if value and self.started is not None and arguments[1] == 1:
+                count = ctypes.cast(arguments[2], ctypes.POINTER(Accounting)).contents.active
+                sample = {"seconds": round(time.monotonic() - self.started, 6),
+                          "active": int(count)}
+                self.trace["lastSample"] = sample
+                if len(self.trace["samples"]) < 256:
+                    self.trace["samples"].append(sample)
+            return value
+
+        def wait(handle, milliseconds):
+            value = original_wait(handle, milliseconds)
+            key = str(int(handle))
+            row = self.trace["waits"].setdefault(key, {"calls": 0, "signaled": False})
+            row["calls"] += 1
+            row["lastStatus"] = int(value)
+            row["signaled"] = row["signaled"] or value == 0
+            return value
+
+        def close(handle):
+            value = original_close(handle)
+            if self.started is not None:
+                self.trace["handleCloses"].append(
+                    {"jobHandle": handle == self.handle, "success": bool(value)})
+            return value
+
+        self.api.QueryInformationJobObject = query
+        self.api.WaitForSingleObject = wait
+        self.api.CloseHandle = close
+
+    def owned_member_handles(self):
+        handles = super().owned_member_handles()
+        self.trace["members"] = [{"id": int(pid), "handle": int(handle)}
+                                 for pid, handle in handles]
+        return handles
+
+    def close(self):
+        self.started = time.monotonic()
+        try:
+            result = super().close()
+            self.trace["closeResult"] = result
+            return result
+        except Exception as error:
+            self.trace["closeError"] = {"type": type(error).__name__, "text": str(error)}
+            raise
+        finally:
+            self.trace["closeElapsedSeconds"] = round(time.monotonic() - self.started, 6)
+
+
+def safe_original(path, data):
+    if path.exists():
+        raise ValueError("never overwrite an original observation")
+    if find_secrets(data.decode("utf-8", errors="strict")):
+        raise ValueError("unsafe observation refused before export")
+    with path.open("xb") as stream:
+        stream.write(data)
+    if path.read_bytes() != data:
+        raise ValueError("original observation byte equality failed")
+    return {"name": path.name, "bytes": len(data),
+            "sha256": hashlib.sha256(data).hexdigest()}
+
+
+def main():
+    destination = OWNER / "NATIVE-OBSERVED-TRACE.json"
+    report = ROOT / "var/native-observed-v3-32f15cca.json"
+    if destination.exists() or report.exists():
+        raise ValueError("never replay this completed or partial diagnostic")
+    native_editor.WindowsJob = ObservedJob
+    saved = sys.argv
+    captured = io.StringIO()
+    try:
+        sys.argv = ["native_editor.py", "--report", str(report)]
+        with contextlib.redirect_stdout(captured), contextlib.redirect_stderr(captured):
+            exit_code = native_editor.main()
+    finally:
+        sys.argv = saved
+    original = report.read_bytes()
+    original_meta = safe_original(OWNER / "NATIVE-OBSERVED-PRODUCER.json", original)
+    trace = {
+        "kind": "INSTRUMENTED_REAL_NATIVE_CONTEXT_NOT_ACCEPTANCE",
+        "unchangedRealCleanupDeadlineSeconds": 10,
+        "realKernelCalls": True,
+        "jobVerdictOrCountsSimulated": False,
+        "sourceCommit": "31ee804ecffb14add59f89b1b5cbd2f4de9216a8",
+        "sourceSha256": hashlib.sha256(
+            (ROOT / "scripts/iacode/native_process.py").read_bytes()).hexdigest(),
+        "actualExitCode": exit_code,
+        "jobs": TRACES,
+        "producer": original_meta,
+        "gateVerdictIssued": False,
+        "independentValidation": False,
+    }
+    trace_raw = json.dumps(trace, indent=2, ensure_ascii=True).encode() + b"\n"
+    trace_meta = safe_original(destination, trace_raw)
+    document = json.loads(original)
+    print(json.dumps({"actualExitCode": exit_code, "producer": document,
+                      "originals": [original_meta, trace_meta],
+                      "jobSummary": [{key: value for key, value in row.items()
+                                      if key != "samples"} for row in TRACES],
+                      "diagnosticOnly": True}))
+    return exit_code
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

@@ -1,0 +1,101 @@
+{
+  "kind": "RAW_NATIVE_FOLLOWUP_NOT_CANONICAL_EXECUTION_OR_ACCEPTANCE",
+  "observedAt": "2026-10-19T07:55:28Z",
+  "originalCount": 13,
+  "files": [
+    {
+      "originalName": "EXPERIMENT-NATIVE-CLI-WAIT-06.py",
+      "archive": "attempts/NATIVE-FOLLOWUP-0001.raw",
+      "bytes": 2641,
+      "sha256": "52b8c367559e67308fa3b5996bca52aa3725ca166028b8c425022772e1e8d255"
+    },
+    {
+      "originalName": "EXPERIMENT-NATIVE-CRASH-OPT-OUT-07.py",
+      "archive": "attempts/NATIVE-FOLLOWUP-0002.raw",
+      "bytes": 2443,
+      "sha256": "09f4702117473b5ebd3ee68e922d56adbd6dbd82ac51b484fef146a616b6bcbb"
+    },
+    {
+      "originalName": "EXPERIMENT-NATIVE-GRACE-04.py",
+      "archive": "attempts/NATIVE-FOLLOWUP-0003.raw",
+      "bytes": 3555,
+      "sha256": "2d8049c1ce688a2886863be9a16044b71878c4db5270d9ea4c07bbb2f0b410e9"
+    },
+    {
+      "originalName": "NATIVE-CLI-WAIT-06-PRODUCER.json",
+      "archive": "attempts/NATIVE-FOLLOWUP-0004.raw",
+      "bytes": 2994,
+      "sha256": "7585321fb0e69a5a467ec22894cc7ed497e77a808c3fa76c6c1507020618580d"
+    },
+    {
+      "originalName": "NATIVE-CLI-WAIT-06-TRACE.json",
+      "archive": "attempts/NATIVE-FOLLOWUP-0005.raw",
+      "bytes": 31487,
+      "sha256": "d9b1cb53a525fd99b27d7d59bdf2a1074015fc070629c78593b1d0375e41fef8"
+    },
+    {
+      "originalName": "NATIVE-CRASH-OPT-OUT-07-PRODUCER.json",
+      "archive": "attempts/NATIVE-FOLLOWUP-0006.raw",
+      "bytes": 3446,
+      "sha256": "7588d9a7e33db1e6e28fd59db3782d848f67ff69cc55c5e11ff927178d409bea"
+    },
+    {
+      "originalName": "NATIVE-CRASH-OPT-OUT-07-TRACE.json",
+      "archive": "attempts/NATIVE-FOLLOWUP-0007.raw",
+      "bytes": 6778,
+      "sha256": "f96ba6f1d3c5c1a465d1a4a9b53cde35995550683bcf774cd09e6c582dcd77a7"
+    },
+    {
+      "originalName": "NATIVE-GRACE-EXPERIMENT-04-PRODUCER.json",
+      "archive": "attempts/NATIVE-FOLLOWUP-0008.raw",
+      "bytes": 3446,
+      "sha256": "4d7e308b9d9729d8f1696f282eddbb01ada35546b4399787d7d3e26f096e8f14"
+    },
+    {
+      "originalName": "NATIVE-GRACE-EXPERIMENT-04-TRACE.json",
+      "archive": "attempts/NATIVE-FOLLOWUP-0009.raw",
+      "bytes": 7530,
+      "sha256": "1f729fedde0530b62b1003c23eeb5b19c67204fd19f48e47e500fb06b49525e6"
+    },
+    {
+      "originalName": "NATIVE-KERNEL-05-PRODUCER.json",
+      "archive": "attempts/NATIVE-FOLLOWUP-0010.raw",
+      "bytes": 3444,
+      "sha256": "e43bf067c9a588bd5cedece79e0dcc7f2ee894f19839c3ef264683b9472cd627"
+    },
+    {
+      "originalName": "NATIVE-KERNEL-05-TRACE.json",
+      "archive": "attempts/NATIVE-FOLLOWUP-0011.raw",
+      "bytes": 4450,
+      "sha256": "166fc285753b081a982f0cf45f6bd773049eb02f05bf19dcc141c71eb88c0305"
+    },
+    {
+      "originalName": "OBSERVE-NATIVE-KERNEL-05.py",
+      "archive": "attempts/NATIVE-FOLLOWUP-0012.raw",
+      "bytes": 4499,
+      "sha256": "621252c66bf2613cacdd2e68ee49a2d0cb2c9afd491640e006cbdb7dbac9d359"
+    },
+    {
+      "originalName": "native-current-local-01.json",
+      "archive": "attempts/NATIVE-FOLLOWUP-0013.raw",
+      "bytes": 1482,
+      "sha256": "a88cf853263e1ca616ce8ca79bcc8797f6ff1dc439ccc8264202511278d370ea"
+    }
+  ],
+  "contexts": [
+    "Cmd0195 is the actual canonical native failure with bounded phase/count facts.",
+    "Experiment04 changes only natural allocation to5 inside10, but all snapshots empty.",
+    "Experiment04 inherited summary budget1 is stale; exact prototype shows5. Inconclusive.",
+    "Observer05 passes only empty snapshots: no causal physical-boundary conclusion.",
+    "CLI-wait06 fails with two pinned unsignaled members after job and original handles close.",
+    "CLI-wait06 real ctypes and Python Win32 bindings agree: no binding mismatch observed.",
+    "Crash optout07 observes one real member signal in868ms without force; not historical cause.",
+    "No external context command is adopted into the canonical ledger or grants acceptance."
+  ],
+  "trainingAllowed": false,
+  "ragAllowed": false,
+  "distillationAllowed": false,
+  "gateVerdictIssued": false,
+  "independentValidation": false,
+  "canonicalCommandIdsAdopted": false
+}

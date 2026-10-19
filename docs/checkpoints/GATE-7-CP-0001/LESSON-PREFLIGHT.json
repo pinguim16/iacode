@@ -15,9 +15,9 @@
     "packages/persistence",
     "scripts/iacode"
   ],
-  "generatedAt": "2026-10-19T03:27:51Z",
+  "generatedAt": "2026-10-19T08:37:34Z",
   "policyVersion": "2.0.0",
-  "inputsFingerprint": "e7aebe00b8ec0d863ceba2ac8b13869279218679bad059bb990017cac65ad594",
+  "inputsFingerprint": "b226c02439144a1d86512ef24964104f87d2ae7963dac995ab1ca4ebf298ab9c",
   "lessonsConsidered": 151,
   "lessonsApplicable": 150,
   "applicable": [
@@ -1105,8 +1105,8 @@
       "lessonId": "LSN-0110",
       "title": "A timed-out live proof retains bounded diagnostics before owned cleanup",
       "status": "GUARDED",
-      "severity": "HIGH",
-      "reasonApplicable": "applies to every Gate; category testing; severity HIGH; already guarded, so the control must keep holding",
+      "severity": "CRITICAL",
+      "reasonApplicable": "applies to every Gate; category testing; severity CRITICAL; already guarded, so the control must keep holding",
       "requiredCheck": "Keep the deadline unchanged, write a red report with sanitized history failure metadata and pending activity types before cleanup, and never continue adverse cases after a failed clean control.",
       "requiredEvidence": "A valid positive control, a premise check and behavioral proof at the actual target; the complete current mandatory suite.",
       "derivedRequirementId": "LESSON-REQ-0109"

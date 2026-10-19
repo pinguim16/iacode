@@ -1,0 +1,28 @@
+test_deadline_retains_red_bounded_physical_facts (test_gate7_native_cleanup.Gate7NativeCleanupTests.test_deadline_retains_red_bounded_physical_facts) ... ERROR
+test_natural_physical_completion_precedes_force_inside_original_deadline (test_gate7_native_cleanup.Gate7NativeCleanupTests.test_natural_physical_completion_precedes_force_inside_original_deadline) ... FAIL
+
+======================================================================
+ERROR: test_deadline_retains_red_bounded_physical_facts (test_gate7_native_cleanup.Gate7NativeCleanupTests.test_deadline_retains_red_bounded_physical_facts)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\iacode\tests\test_gate7_native_cleanup.py", line 47, in test_deadline_retains_red_bounded_physical_facts
+    observed = failure.exception.observation
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'RuntimeError' object has no attribute 'observation'
+
+======================================================================
+FAIL: test_natural_physical_completion_precedes_force_inside_original_deadline (test_gate7_native_cleanup.Gate7NativeCleanupTests.test_natural_physical_completion_precedes_force_inside_original_deadline)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\iacode\tests\test_gate7_native_cleanup.py", line 35, in test_natural_physical_completion_precedes_force_inside_original_deadline
+    actor.api.TerminateJobObject.assert_not_called()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Program Files\Python313\Lib\unittest\mock.py", line 940, in assert_not_called
+    raise AssertionError(msg)
+AssertionError: Expected 'TerminateJobObject' to not have been called. Called 1 times.
+Calls: [call(41, 1)].
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.018s
+
+FAILED (failures=1, errors=1)

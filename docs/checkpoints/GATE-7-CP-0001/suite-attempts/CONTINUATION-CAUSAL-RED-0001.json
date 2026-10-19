@@ -1,0 +1,28 @@
+{
+  "schemaVersion": "1.0.0",
+  "kind": "TARGETED_CAUSAL_NOT_WHOLE_GATE",
+  "gate": "CONTINUATION-CAUSAL-RED",
+  "command": [
+    "python",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-p",
+    "test_gate7_continuation.py",
+    "-v"
+  ],
+  "observedAt": "2026-10-19T08:24:52Z",
+  "subjectCommit": "31ee804ecffb14add59f89b1b5cbd2f4de9216a8",
+  "sourceDirty": true,
+  "sourceFingerprint": "b563e399f5a4ae53151562b25adce4bdbee508216c9d1246164ee0d9f4ea48a7",
+  "sourceUnchanged": true,
+  "exitCode": 1,
+  "outputEncodingValid": true,
+  "unsafeOutputOccurrences": 0,
+  "outputBytes": 5075,
+  "outputSha256": "76c5de2c50798a7697080bb05f363ef088068b1e3db0a5d3547a53f9b8e1b552",
+  "safeOutputArtifact": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/CONTINUATION-CAUSAL-RED-0001.log",
+  "result": "FAIL"
+}

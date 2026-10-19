@@ -20,6 +20,136 @@ preserved. Exact safe producer bytes remain. Fresh live acceptance and whole ass
 
 ## What failed
 
+### Continuation contract recurrence
+
+Actual cmd0223 refuses the manual handoff/next rewrite. Its exact document originals and the
+retrospective preimage remain inert at cmd0224; no original console-byte claim is made. Current
+causal0227 reproduces both current structural failures. LSN-0140/GRD-0142 recurrence3/CRITICAL
+was reopened: inherited controls bind Gate6. Current229 passes5 actual Gate7 file/renderer/
+template and lesson-growth controls;231 explicit quality,232 whole lint,233 all157 owning cases
+and unchanged canonical239 CHECKPOINT_VALID pass. GRD-0142 gains these actual current controls
+without losing inherited assertions. Recurrence3/CRITICAL and exact originals remain; this is
+local restoration, not complete immutable or independent approval.
+
+### Post-runtime-v3 rework, before the next source freeze
+
+Actual cmd-0180 completes49 stages,48 PASS/1 native FAIL. All prior attempts remain failed.
+Cmd-0183 preserves exact v3 originals;0184/0202 preserve51 inert native context files, including
+rejected early-Job-release/CLI-wait hypotheses and inconclusive empty snapshots. Cmd-0195 still
+fails after initial natural-drain repair but retains bounded mode/phase/count/deadline facts.
+No historical kernel holder or Crashpad cause is invented.
+
+Escalate LSN-0125 recurrence3,0110 recurrence2,0128 recurrence3 and0105 recurrence14, all CRITICAL.
+Full context retains150 lessons and198 requirements. Incomplete-context preflight0185 was never
+consumed;0186/0187 restore/extract the complete set before correction. No denominator is narrowed.
+
+ADR-0060 keeps exact ownership/physical signals and total10s, permits1s natural exit within it,
+pins current members before owned force and samples the clock before success. Causal0188/0210
+failures stay;0211 passes10 native controls,0213 all152 owning cases,0214 helper quality and0215
+entire unchanged lint. External crash/telemetry optout affects only generated test hosts, not
+extension activation, trust, sandboxing or user settings. Final strict source passes two fresh
+uninstrumented installation/trust/removal runs0217. Residual kernel/cleanup failure stays red;
+no universal OS guarantee is claimed. These locally measured guards retain all prior history.
+
+Literal NUL Git pathspec stdin avoids unbounded Windows argv. Actual0191 stages every path beyond
+32767 aggregate characters, literal brackets/Unicode/spaces, and proves undeclared zero-effect
+refusal. Existing actual process-exit sequencing remains. The new whole immutable49-stage run
+and all ordered internal controls remain mandatory. This is not independent M2 approval.
+
+### Post-runtime-v2 corrective epoch before a new immutable proof
+
+Completed cmd-0143 is FAIL, never partial acceptance: all49 stages execute,46 PASS/3 FAIL;
+the root producer reports942 tests with two reconstruction errors. The IACode observer expires
+at900 seconds while its75-check run is legally RUNNING under unchanged maxRunSeconds3600.
+No structured quality-iacode producer survives that path. Red Team defends19/20 with VALID
+control; actual portability attackT escapes. Exact originals and owned cleanup/isolation remain
+archived by cmd-0147, not rewritten. Canonical reports omit nine available lifecycle producers;
+actual rescued originals and the unmodified legacy capture are preserved as inert context.
+
+LSN-0150 records the real root-input fingerprint omission. ADR-0057 binds exactly four current
+build/verification roots, preserves absent/v1 identity and refuses policy narrowing. LSN-0151
+records the actual Windows240-character source/281-character object-probe failure. ADR-0058
+sets core.longpaths=true only on the owning Git child: no global/local configuration mutation,
+member renaming or changed failure semantics. ADR-0059 derives all canonical producer names,
+captures exact safe bytes before consumers/cleanup and forwards the same verified archived
+originals, with no private-extra capture, temporary reread or stale prior-PASS fallback.
+
+Reopened LSN-0077 recurrence2, LSN-0105 recurrence13, LSN-0110 recurrence1, LSN-0128
+recurrence2 and LSN-0135 recurrence2 retain severity and every previous failure. The observer
+alone receives the unchanged canonical maximum plus60 finite final-observation grace; product,
+check, workflow, ordinary300 and durable900 deadlines remain unchanged. Failed waiting stays
+red even with unavailable/malformed diagnostics or a later successful terminal observation.
+Only closed bounded enum/count facts are retained. A populated byte-bound actual Git archive
+precedes the test target; both original failed scratch premises remain. Canonical cmd-0158/0159
+retain a helper docstring E501 refusal; only its representation changes, with all rules intact.
+
+Cmd-0149/0150 derive all198 requirements,197 mandatory, from48 canonical rows and150 applicable
+lessons before correction. Cmd-0151 imports132 exact inert raw originals, including the original
+transfer manifest; no scratch STATE/COMMANDS becomes canonical acceptance or independent proof.
+Cmd-0152 retains the causal Git failure; cmd-0153 proves all three real long-path/configuration/
+error controls. Cmd-0154/0155 retain canonical capture/completeness refusals; cmd-0156/0157
+prove the implemented archive/forwarding boundary before the current complete local execution.
+
+Executed local restoration: cmd-0160 passes60 current Gate7 tests; cmd-0161 passes unchanged
+whole mandatory lint; cmd-0162 passes explicit read-only helper quality. Cmd-0163 passes49
+unchanged Gate4 tests including both owning immutable reconstruction/declaration cases. Cmd-0164
+passes97 current/inherited metadata, producer, denominator, premise, resolver and preflight cases.
+Counts overlap and are not additive. GRD-0153/0154 guard the two new classes; existing0078,
+0111,0130,0137 gain current executed cases without losing inherited defenses. Cmd-0165 validates
+all151 active lessons,148 locally guarded. None of this is complete immutable Gate acceptance.
+
+G7-INT-028 stays OPEN until the fresh complete portability battery actually defendsT. Freeze
+this corrected source/memory before publishing a new unused runtime-v3, never move v1/v2,
+and execute one whole non-fast proof followed by every ordered internal assurance control.
+Subsequent actual results belong to the canonical ledger, current producers and final artifacts,
+not a predicted retrospective verdict. Independent M2 review/Red Team/second-tool and attestation
+remain separate pending obligations. No Gate8 implementation or boundary crossing is authorized.
+
+### Post-runtime-v1 corrective epoch and source freeze
+
+The complete immutable cmd-0099 is FAIL:48 of49 stages pass; the root producer reports896
+tests, five failures and six errors. All exact safe original producer bytes, actual own cleanup
+and unrelated-container preservation remain archived, not promoted into acceptance. The original
+method-only diagnostics miss five lifecycle identities. Causal cmd-0102/0103/0104 retain the
+unchanged root/setup refusals. The failed zero-original capture cmd-0105 remains; cmd-0110
+retains the actual MIR-015 original before cleanup and establishes the curator-fixture cause.
+
+Current registry membership must grow from canonical policy, not an old minimum. Metadata
+wrappers must consume the canonical synchronizer's output. Capturing entrypoints configure UTF-8
+before work. Documentation names every mandatory registered gate. ADR-0055 adds only a RESERVED
+future Code Graph notice; no Gate8 implementation or authority. ADR-0056 limits minimal fixtures
+to explicit control contracts and dependencies, excluding curator data, real history and unrelated
+verdicts while retaining actual broken-link refusal. A producer-owned locator supplies the real
+capture root; exact safe originals are durable before fallible consumers and owned cleanup.
+
+The source-read response preceding a duplicated helper body was not retained. Failure to check
+actual completion/nonempty preimage is observed; its particular asynchronous timing is an
+inference. The exact invalid8683-byte helper original is retained. Cmd-0115's shell reports errors
+despite exit0 and absent digest equality; it is not hash proof. Cmd-0120 verifies both retained
+originals using actual bytes, typed nonempty size and SHA256. Original cmd-0116 is a precondition
+rejection, not execution. Cmd-0121 repeats source-quality failure at LSN-0105 recurrence12/CRITICAL;
+only equivalent syntax/representation/layout changes, never rules or assertions. Cmd-0122's
+immutable wrapper correctly refuses the formatter's mutation despite the child exiting0;
+cmd-0124 formats directly and cmd-0125 supplies actual read-only quality proof.
+
+Executed current proof: cmd-0123 passes35 Gate7 cases; cmd-0126 passes32 unchanged real
+promotion/succession cases; cmd-0127 passes57 inherited causal cases; cmd-0128 passes whole
+unchanged mandatory lint. Those counts describe their own overlapping scopes, not an additive
+delivery total. Cmd-0129 completes real promotion, preserves both original clean mirrors with
+nonempty bytes/hash before cleanup, observes no failed dimensions, removes its temporary owner
+and preserves measured source. GRD-0150 guards bounded lifecycle diagnostics, GRD-0151 guards
+minimal-fixture ownership/retained-link refusal, and GRD-0152 guards typed completed observations
+and actual byte proof. GRD-0149 additionally consumes the actual running/failed/clean child
+boundary; all inherited guards and recurrence histories remain.
+
+The reopened guards are restored only as locally executed prevention, not whole-delivery
+acceptance. LSN-0105 recurrence12, LSN-0146 recurrence1 and every earlier counter remain. No
+future complete-runtime, ordered assurance, seal or independent verdict is predicted by this
+source-epoch record. Subsequent actual outcomes belong to Gate7's canonical command ledger,
+full producer, Green Keeper, completeness, fresh internal Red Team, mirror and final checkpoint
+artifacts. Source/memory must freeze before the new immutable runtime subject; any measured
+source change requires fresh whole proof. Independent M2 review remains a later separate run.
+
 G7-INT-007: a successful finalizer command record is observed before the whole process exits,
 and the caller starts its dependent commit too early. Actual later waits return0 for both and a
 separate post-commit validation proves clean committed content, so no divergence/loss is observed.
@@ -116,15 +246,26 @@ the original guard tests and original published bytes remain. Full current assur
 
 | Lesson | Status | Guarded by |
 |---|---|---|
-| LSN-0145 | GUARDED | GRD-0148; actual cmd-0033/0042 structural mutations and complete API/SQL proof. |
-| LSN-0146 | GUARDED | GRD-0149; actual child-process clean/failure order cmd-0070 and consumed sequential publication driver. |
+| LSN-0145 | GUARDED | GRD-0148 |
+| LSN-0146 | GUARDED | GRD-0149 |
+| LSN-0147 | GUARDED | GRD-0150 |
+| LSN-0148 | GUARDED | GRD-0151 |
+| LSN-0149 | GUARDED | GRD-0152 |
+| LSN-0150 | GUARDED | GRD-0153 |
+| LSN-0151 | GUARDED | GRD-0154 |
 
-One new confirmed structural-integration class is recorded; the two older failures remain recurrences.
+Seven new project failure classes are retained. Older classes keep every escalated recurrence;
+current structural restoration and complete immutable assurance remain separate obligations.
 
 ## Updated lessons
 
 | Lesson | Change | Reason |
 |---|---|---|
+| LSN-0140 | Retain recurrence3/CRITICAL and locally restore GRD-0142 | Original0223/0227 failures remain;229 current controls,231/232 quality,157 owning233 cases and canonical239 pass. |
+| LSN-0125 | Native recurrence3/CRITICAL retained, GRD-0127 | Original0180/0195 and late210 failures; local211/213/214/215/217 proof, unchanged physical/deadline contract. |
+| LSN-0110 | Diagnostic recurrence2/CRITICAL retained, GRD-0111 | Actual0195 keeps bounded red mode/count facts; current native and prior observer controls remain. |
+| LSN-0128 | Premise recurrence3/CRITICAL retained, GRD-0130 | Actual ready/member/outside-sentinel proof replaces guessed exact count; first failing subcondition remains unknown. |
+| LSN-0105 | Style recurrence14/CRITICAL retained, GRD-0106 | Original0194/0198 refusals; source-only repair, full215 lint and152 owning213 cases. |
 | LSN-0135 | Proactively extend GRD-0137 with current Gate7 producer and stale-location controls | Actual cmd-0090 passes current producer refusal/cleanup and prior-byte retirement; original controls remain. |
 | LSN-0105 | Retain recurrence10/CRITICAL with local import-only restoration | Original cmd-0086/0087 red retained; explicit/whole lint and all21 current root cases cmd-0088/0089/0090 pass. |
 | LSN-0105 | Retain recurrence9/CRITICAL with name-only local restoration | Actual cmd-0072/0073 red retained; explicit/whole lint and actual process/denominator root proof cmd-0074/0075/0076 pass. |
@@ -140,97 +281,3 @@ One new confirmed structural-integration class is recorded; the two older failur
 |---|---|---|
 
 None observed.
-
-## Post-runtime-v1 corrective epoch and source freeze
-
-The complete immutable cmd-0099 is FAIL:48 of49 stages pass; the root producer reports896
-tests, five failures and six errors. All exact safe original producer bytes, actual own cleanup
-and unrelated-container preservation remain archived, not promoted into acceptance. The original
-method-only diagnostics miss five lifecycle identities. Causal cmd-0102/0103/0104 retain the
-unchanged root/setup refusals. The failed zero-original capture cmd-0105 remains; cmd-0110
-retains the actual MIR-015 original before cleanup and establishes the curator-fixture cause.
-
-Current registry membership must grow from canonical policy, not an old minimum. Metadata
-wrappers must consume the canonical synchronizer's output. Capturing entrypoints configure UTF-8
-before work. Documentation names every mandatory registered gate. ADR-0055 adds only a RESERVED
-future Code Graph notice; no Gate8 implementation or authority. ADR-0056 limits minimal fixtures
-to explicit control contracts and dependencies, excluding curator data, real history and unrelated
-verdicts while retaining actual broken-link refusal. A producer-owned locator supplies the real
-capture root; exact safe originals are durable before fallible consumers and owned cleanup.
-
-The source-read response preceding a duplicated helper body was not retained. Failure to check
-actual completion/nonempty preimage is observed; its particular asynchronous timing is an
-inference. The exact invalid8683-byte helper original is retained. Cmd-0115's shell reports errors
-despite exit0 and absent digest equality; it is not hash proof. Cmd-0120 verifies both retained
-originals using actual bytes, typed nonempty size and SHA256. Original cmd-0116 is a precondition
-rejection, not execution. Cmd-0121 repeats source-quality failure at LSN-0105 recurrence12/CRITICAL;
-only equivalent syntax/representation/layout changes, never rules or assertions. Cmd-0122's
-immutable wrapper correctly refuses the formatter's mutation despite the child exiting0;
-cmd-0124 formats directly and cmd-0125 supplies actual read-only quality proof.
-
-Executed current proof: cmd-0123 passes35 Gate7 cases; cmd-0126 passes32 unchanged real
-promotion/succession cases; cmd-0127 passes57 inherited causal cases; cmd-0128 passes whole
-unchanged mandatory lint. Those counts describe their own overlapping scopes, not an additive
-delivery total. Cmd-0129 completes real promotion, preserves both original clean mirrors with
-nonempty bytes/hash before cleanup, observes no failed dimensions, removes its temporary owner
-and preserves measured source. GRD-0150 guards bounded lifecycle diagnostics, GRD-0151 guards
-minimal-fixture ownership/retained-link refusal, and GRD-0152 guards typed completed observations
-and actual byte proof. GRD-0149 additionally consumes the actual running/failed/clean child
-boundary; all inherited guards and recurrence histories remain.
-
-The reopened guards are restored only as locally executed prevention, not whole-delivery
-acceptance. LSN-0105 recurrence12, LSN-0146 recurrence1 and every earlier counter remain. No
-future complete-runtime, ordered assurance, seal or independent verdict is predicted by this
-source-epoch record. Subsequent actual outcomes belong to Gate7's canonical command ledger,
-full producer, Green Keeper, completeness, fresh internal Red Team, mirror and final checkpoint
-artifacts. Source/memory must freeze before the new immutable runtime subject; any measured
-source change requires fresh whole proof. Independent M2 review remains a later separate run.
-
-## Post-runtime-v2 corrective epoch before a new immutable proof
-
-Completed cmd-0143 is FAIL, never partial acceptance: all49 stages execute,46 PASS/3 FAIL;
-the root producer reports942 tests with two reconstruction errors. The IACode observer expires
-at900 seconds while its75-check run is legally RUNNING under unchanged maxRunSeconds3600.
-No structured quality-iacode producer survives that path. Red Team defends19/20 with VALID
-control; actual portability attackT escapes. Exact originals and owned cleanup/isolation remain
-archived by cmd-0147, not rewritten. Canonical reports omit nine available lifecycle producers;
-actual rescued originals and the unmodified legacy capture are preserved as inert context.
-
-LSN-0150 records the real root-input fingerprint omission. ADR-0057 binds exactly four current
-build/verification roots, preserves absent/v1 identity and refuses policy narrowing. LSN-0151
-records the actual Windows240-character source/281-character object-probe failure. ADR-0058
-sets core.longpaths=true only on the owning Git child: no global/local configuration mutation,
-member renaming or changed failure semantics. ADR-0059 derives all canonical producer names,
-captures exact safe bytes before consumers/cleanup and forwards the same verified archived
-originals, with no private-extra capture, temporary reread or stale prior-PASS fallback.
-
-Reopened LSN-0077 recurrence2, LSN-0105 recurrence13, LSN-0110 recurrence1, LSN-0128
-recurrence2 and LSN-0135 recurrence2 retain severity and every previous failure. The observer
-alone receives the unchanged canonical maximum plus60 finite final-observation grace; product,
-check, workflow, ordinary300 and durable900 deadlines remain unchanged. Failed waiting stays
-red even with unavailable/malformed diagnostics or a later successful terminal observation.
-Only closed bounded enum/count facts are retained. A populated byte-bound actual Git archive
-precedes the test target; both original failed scratch premises remain. Canonical cmd-0158/0159
-retain a helper docstring E501 refusal; only its representation changes, with all rules intact.
-
-Cmd-0149/0150 derive all198 requirements,197 mandatory, from48 canonical rows and150 applicable
-lessons before correction. Cmd-0151 imports132 exact inert raw originals, including the original
-transfer manifest; no scratch STATE/COMMANDS becomes canonical acceptance or independent proof.
-Cmd-0152 retains the causal Git failure; cmd-0153 proves all three real long-path/configuration/
-error controls. Cmd-0154/0155 retain canonical capture/completeness refusals; cmd-0156/0157
-prove the implemented archive/forwarding boundary before the current complete local execution.
-
-Executed local restoration: cmd-0160 passes60 current Gate7 tests; cmd-0161 passes unchanged
-whole mandatory lint; cmd-0162 passes explicit read-only helper quality. Cmd-0163 passes49
-unchanged Gate4 tests including both owning immutable reconstruction/declaration cases. Cmd-0164
-passes97 current/inherited metadata, producer, denominator, premise, resolver and preflight cases.
-Counts overlap and are not additive. GRD-0153/0154 guard the two new classes; existing0078,
-0111,0130,0137 gain current executed cases without losing inherited defenses. Cmd-0165 validates
-all151 active lessons,148 locally guarded. None of this is complete immutable Gate acceptance.
-
-G7-INT-028 stays OPEN until the fresh complete portability battery actually defendsT. Freeze
-this corrected source/memory before publishing a new unused runtime-v3, never move v1/v2,
-and execute one whole non-fast proof followed by every ordered internal assurance control.
-Subsequent actual results belong to the canonical ledger, current producers and final artifacts,
-not a predicted retrospective verdict. Independent M2 review/Red Team/second-tool and attestation
-remain separate pending obligations. No Gate8 implementation or boundary crossing is authorized.

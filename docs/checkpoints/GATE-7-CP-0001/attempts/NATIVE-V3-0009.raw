@@ -1,0 +1,217 @@
+{
+  "kind": "CONTROLLED_REAL_NATIVE_GRACE_EXPERIMENT_NOT_ACCEPTANCE",
+  "unchangedRealCleanupDeadlineSeconds": 10,
+  "realKernelCalls": true,
+  "jobVerdictOrCountsSimulated": false,
+  "baselineSourceCommit": "31ee804ecffb14add59f89b1b5cbd2f4de9216a8",
+  "baselineNativeSourceSha256": "273e1c2086bdc927d79841f251233fa37eb7a0b8146e9b830f950e9dd7cafbcf",
+  "prototypeSourceSha256": "5166a65fcba4cf1f49a11b2cf023124938397c73dbe9fb9f691c88215e4a8b54",
+  "actualExitCode": 0,
+  "jobs": [
+    {
+      "ordinal": 1,
+      "members": [],
+      "samples": [
+        {
+          "seconds": 0.000115,
+          "active": 0
+        },
+        {
+          "seconds": 0.000196,
+          "active": 0
+        }
+      ],
+      "lastSample": {
+        "seconds": 0.000196,
+        "active": 0
+      },
+      "waits": {},
+      "handleCloses": [
+        {
+          "jobHandle": true,
+          "success": true
+        }
+      ],
+      "closeResult": {
+        "jobOwned": true,
+        "remainingBeforeCleanup": 0,
+        "remainingAfterCleanup": 0,
+        "observedProcessCount": 0,
+        "signaledProcessCount": 0,
+        "forcedTermination": false,
+        "naturalExitBudgetWithinOriginalDeadlineSeconds": 1
+      },
+      "closeError": null,
+      "memberFinals": [],
+      "closeElapsedSeconds": 0.000252
+    },
+    {
+      "ordinal": 2,
+      "members": [],
+      "samples": [
+        {
+          "seconds": 6.1e-05,
+          "active": 0
+        },
+        {
+          "seconds": 0.000125,
+          "active": 0
+        }
+      ],
+      "lastSample": {
+        "seconds": 0.000125,
+        "active": 0
+      },
+      "waits": {},
+      "handleCloses": [
+        {
+          "jobHandle": true,
+          "success": true
+        }
+      ],
+      "closeResult": {
+        "jobOwned": true,
+        "remainingBeforeCleanup": 0,
+        "remainingAfterCleanup": 0,
+        "observedProcessCount": 0,
+        "signaledProcessCount": 0,
+        "forcedTermination": false,
+        "naturalExitBudgetWithinOriginalDeadlineSeconds": 1
+      },
+      "closeError": null,
+      "memberFinals": [],
+      "closeElapsedSeconds": 0.000157
+    },
+    {
+      "ordinal": 3,
+      "members": [],
+      "samples": [
+        {
+          "seconds": 5.6e-05,
+          "active": 0
+        },
+        {
+          "seconds": 0.000106,
+          "active": 0
+        }
+      ],
+      "lastSample": {
+        "seconds": 0.000106,
+        "active": 0
+      },
+      "waits": {},
+      "handleCloses": [
+        {
+          "jobHandle": true,
+          "success": true
+        }
+      ],
+      "closeResult": {
+        "jobOwned": true,
+        "remainingBeforeCleanup": 0,
+        "remainingAfterCleanup": 0,
+        "observedProcessCount": 0,
+        "signaledProcessCount": 0,
+        "forcedTermination": false,
+        "naturalExitBudgetWithinOriginalDeadlineSeconds": 1
+      },
+      "closeError": null,
+      "memberFinals": [],
+      "closeElapsedSeconds": 0.000129
+    },
+    {
+      "ordinal": 4,
+      "members": [
+        {
+          "id": 4276,
+          "handle": 632
+        },
+        {
+          "id": 22196,
+          "handle": 636
+        }
+      ],
+      "samples": [
+        {
+          "seconds": 5.7e-05,
+          "active": 2
+        },
+        {
+          "seconds": 0.000198,
+          "active": 2
+        },
+        {
+          "seconds": 0.051246,
+          "active": 0
+        }
+      ],
+      "lastSample": {
+        "seconds": 0.051246,
+        "active": 0
+      },
+      "waits": {
+        "632": {
+          "calls": 2,
+          "signaled": true,
+          "lastStatus": 0
+        },
+        "636": {
+          "calls": 2,
+          "signaled": true,
+          "lastStatus": 0
+        }
+      },
+      "handleCloses": [
+        {
+          "jobHandle": false,
+          "success": true
+        },
+        {
+          "jobHandle": false,
+          "success": true
+        },
+        {
+          "jobHandle": true,
+          "success": true
+        }
+      ],
+      "closeResult": {
+        "jobOwned": true,
+        "remainingBeforeCleanup": 2,
+        "remainingAfterCleanup": 0,
+        "observedProcessCount": 2,
+        "signaledProcessCount": 2,
+        "forcedTermination": false,
+        "naturalExitBudgetWithinOriginalDeadlineSeconds": 1
+      },
+      "closeError": null,
+      "memberFinals": [
+        {
+          "processId": 4276,
+          "exitQuerySucceeded": true,
+          "exitCode": 0,
+          "imageBase": null,
+          "imageQuerySucceeded": false,
+          "waitBeforeHandleRelease": 0
+        },
+        {
+          "processId": 22196,
+          "exitQuerySucceeded": true,
+          "exitCode": 0,
+          "imageBase": null,
+          "imageQuerySucceeded": false,
+          "waitBeforeHandleRelease": 0
+        }
+      ],
+      "closeElapsedSeconds": 0.052799
+    }
+  ],
+  "observedMemberBoundaryExercised": true,
+  "producer": {
+    "name": "NATIVE-GRACE-EXPERIMENT-03-PRODUCER.json",
+    "bytes": 3444,
+    "sha256": "b6f5a5263694c65b2bca2a35dbf2f7abd64c43afbc0962ed2045fb8d47ec79f7"
+  },
+  "gateVerdictIssued": false,
+  "independentValidation": false
+}

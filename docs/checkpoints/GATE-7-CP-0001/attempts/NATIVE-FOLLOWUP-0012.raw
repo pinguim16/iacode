@@ -1,0 +1,105 @@
+"""Compare two real Win32 wait bindings on pinned owned members; never change the verdict."""
+
+from __future__ import annotations
+
+import _winapi
+import contextlib
+import ctypes
+import hashlib
+import importlib.util
+import io
+import json
+import sys
+import time
+from pathlib import Path
+
+OWNER = Path(__file__).resolve().parent
+spec = importlib.util.spec_from_file_location(
+    "native_observer_base", OWNER / "EXPERIMENT-NATIVE-JOB-RELEASE-02.py")
+base = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(base)
+import native_process
+
+
+class ObservedJob(base.ObservedJob):
+    def __init__(self):
+        super().__init__()
+        self.duplicates = []
+        self.trace["snapshots"] = []
+        self.trace["bindingMismatches"] = []
+        previous = self.api.WaitForSingleObject
+
+        def wait(handle, millis):
+            actual = previous(handle, millis)
+            alternative = _winapi.WaitForSingleObject(int(handle), 0)
+            if actual != alternative and len(self.trace["bindingMismatches"]) < 16:
+                self.trace["bindingMismatches"].append({"ctypes": actual, "winapi": alternative})
+            return actual
+
+        self.api.WaitForSingleObject = wait
+
+    def owned_member_handles(self):
+        handles = super().owned_member_handles()
+        facts = []
+        for pid, handle in handles:
+            image = ctypes.create_unicode_buffer(1024)
+            length = ctypes.wintypes.DWORD(1024)
+            available = self.api.QueryFullProcessImageNameW(handle, 0, image, ctypes.byref(length))
+            duplicate = _winapi.DuplicateHandle(
+                _winapi.GetCurrentProcess(), int(handle), _winapi.GetCurrentProcess(), 0, False, 2)
+            self.duplicates.append((pid, duplicate))
+            facts.append({"id": pid, "initialExitCode": _winapi.GetExitCodeProcess(int(handle)),
+                          "initialWait": _winapi.WaitForSingleObject(int(handle), 0),
+                          "imageBase": Path(image.value).name if available else None})
+        self.trace["snapshots"].append({
+            "seconds": round(time.monotonic() - self.started, 6), "members": facts})
+        return handles
+
+    def close(self):
+        self.started = time.monotonic()
+        try:
+            result = native_process.WindowsJob.close(self)
+            self.trace["closeResult"] = result
+            return result
+        except Exception as error:
+            self.trace["closeError"] = {"type": type(error).__name__, "text": str(error),
+                                        "observation": getattr(error, "observation", None)}
+            raise
+        finally:
+            self.trace["afterOriginalJobAndHandlesClosed"] = [
+                {"id": pid, "exitCode": _winapi.GetExitCodeProcess(handle),
+                 "wait": _winapi.WaitForSingleObject(handle, 0)}
+                for pid, handle in self.duplicates]
+            for _, handle in self.duplicates:
+                _winapi.CloseHandle(handle)
+            self.trace["closeElapsedSeconds"] = round(time.monotonic() - self.started, 6)
+
+
+def main():
+    report = base.ROOT / "var/native-kernel-observation-05-v3-32f15cca.json"
+    target = OWNER / "NATIVE-KERNEL-05-TRACE.json"
+    if report.exists() or target.exists():
+        raise ValueError("never replay a completed or partial observation")
+    base.native_editor.WindowsJob = ObservedJob
+    saved = sys.argv
+    try:
+        sys.argv = ["native_editor.py", "--report", str(report)]
+        with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
+            code = base.native_editor.main()
+    finally:
+        sys.argv = saved
+    producer = base.safe_original(OWNER / "NATIVE-KERNEL-05-PRODUCER.json", report.read_bytes())
+    trace = {"kind": "REAL_NATIVE_KERNEL_OBSERVATION_NOT_ACCEPTANCE", "actualExitCode": code,
+             "sourceSha256": hashlib.sha256(
+                 (base.ROOT / "scripts/iacode/native_process.py").read_bytes()).hexdigest(),
+             "realCallsOnly": True, "verdictModified": False, "jobs": base.TRACES,
+             "producer": producer, "gateVerdictIssued": False}
+    original = base.safe_original(target, json.dumps(trace, indent=2).encode() + b"\n")
+    print(json.dumps({"actualExitCode": code, "trace": original,
+                      "jobs": [{key: value for key, value in row.items() if key != "samples"}
+                               for row in base.TRACES]}))
+    return code
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

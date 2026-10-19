@@ -1,0 +1,61 @@
+{
+  "kind": "ACTUAL_WINDOWS_JOB_CONTEXT_NOT_ACCEPTANCE",
+  "subjectCommit": "31ee804ecffb14add59f89b1b5cbd2f4de9216a8",
+  "sourceSha256": "273e1c2086bdc927d79841f251233fa37eb7a0b8146e9b830f950e9dd7cafbcf",
+  "realKernelCalls": true,
+  "countsOrClockSimulated": false,
+  "childPremiseReached": true,
+  "actualPremise": {
+    "readyExact": true,
+    "readyReadLengths": [
+      5
+    ],
+    "childExitBeforeTarget": null,
+    "childInExactOwnedJob": true,
+    "outsideInExactOwnedJob": false,
+    "accountingActiveBeforeTarget": 2
+  },
+  "ownedChildExitCode": 1,
+  "independentlyOwnedOutsideSentinelPreserved": true,
+  "closeError": null,
+  "closeResult": {
+    "jobOwned": true,
+    "remainingBeforeCleanup": 2,
+    "remainingAfterCleanup": 0,
+    "observedProcessCount": 2,
+    "signaledProcessCount": 2
+  },
+  "accountingObservations": [
+    {
+      "seconds": 0.377077,
+      "active": 2
+    },
+    {
+      "seconds": 0.377203,
+      "active": 0
+    },
+    {
+      "seconds": 0.427734,
+      "active": 0
+    }
+  ],
+  "waitStatuses": {
+    "258": 2,
+    "0": 2
+  },
+  "memberHandleCloses": [
+    {
+      "closed": true,
+      "querySucceeded": true,
+      "activeAfterClose": 0
+    },
+    {
+      "closed": true,
+      "querySucceeded": true,
+      "activeAfterClose": 0
+    }
+  ],
+  "elapsedSeconds": 0.428195,
+  "gateVerdictIssued": false,
+  "independentValidation": false
+}

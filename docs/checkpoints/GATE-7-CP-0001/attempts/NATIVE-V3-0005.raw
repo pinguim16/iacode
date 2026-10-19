@@ -1,0 +1,207 @@
+"""Observe the actual native package/trust path using real unchanged Windows job calls."""
+
+from __future__ import annotations
+
+import contextlib
+import ctypes
+import hashlib
+import io
+import json
+import sys
+import time
+from pathlib import Path
+
+ROOT = Path("E:/iacode")
+OWNER = Path("C:/Users/cesar/AppData/Local/Temp/iacode-gate7-native-observation-32f15cca4802450ca926e687a9bc814a")
+sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+from ledger_common import find_secrets, use_utf8_stdout
+
+use_utf8_stdout()
+sys.path.insert(0, str(ROOT / "scripts/iacode"))
+import native_editor
+from native_process import Accounting, WindowsJob
+
+TRACES = []
+
+
+class ObservedJob(WindowsJob):
+    def __init__(self):
+        super().__init__()
+        self.trace = {"ordinal": len(TRACES) + 1, "members": [], "samples": [],
+                      "lastSample": None, "waits": {}, "handleCloses": [],
+                      "closeResult": None, "closeError": None}
+        TRACES.append(self.trace)
+        self.started = None
+        original_query = self.api.QueryInformationJobObject
+        original_wait = self.api.WaitForSingleObject
+        original_close = self.api.CloseHandle
+        self.api.GetProcessId.argtypes = [ctypes.wintypes.HANDLE]
+        self.api.GetProcessId.restype = ctypes.wintypes.DWORD
+        self.api.GetExitCodeProcess.argtypes = [
+            ctypes.wintypes.HANDLE, ctypes.POINTER(ctypes.wintypes.DWORD)]
+        self.api.GetExitCodeProcess.restype = ctypes.wintypes.BOOL
+        self.api.QueryFullProcessImageNameW.argtypes = [
+            ctypes.wintypes.HANDLE, ctypes.wintypes.DWORD, ctypes.wintypes.LPWSTR,
+            ctypes.POINTER(ctypes.wintypes.DWORD)]
+        self.api.QueryFullProcessImageNameW.restype = ctypes.wintypes.BOOL
+        self.trace["memberFinals"] = []
+
+        def query(*arguments):
+            value = original_query(*arguments)
+            if value and self.started is not None and arguments[1] == 1:
+                count = ctypes.cast(arguments[2], ctypes.POINTER(Accounting)).contents.active
+                sample = {"seconds": round(time.monotonic() - self.started, 6),
+                          "active": int(count)}
+                self.trace["lastSample"] = sample
+                if len(self.trace["samples"]) < 256:
+                    self.trace["samples"].append(sample)
+            return value
+
+        def wait(handle, milliseconds):
+            value = original_wait(handle, milliseconds)
+            key = str(int(handle))
+            row = self.trace["waits"].setdefault(key, {"calls": 0, "signaled": False})
+            row["calls"] += 1
+            row["lastStatus"] = int(value)
+            row["signaled"] = row["signaled"] or value == 0
+            return value
+
+        def close(handle):
+            if self.started is not None and handle != self.handle:
+                code = ctypes.wintypes.DWORD()
+                status_ok = self.api.GetExitCodeProcess(handle, ctypes.byref(code))
+                image = ctypes.create_unicode_buffer(1024)
+                image_size = ctypes.wintypes.DWORD(1024)
+                image_ok = self.api.QueryFullProcessImageNameW(
+                    handle, 0, image, ctypes.byref(image_size))
+                self.trace["memberFinals"].append({
+                    "processId": int(self.api.GetProcessId(handle)),
+                    "exitQuerySucceeded": bool(status_ok),
+                    "exitCode": int(code.value) if status_ok else None,
+                    "imageBase": Path(image.value).name if image_ok else None,
+                    "imageQuerySucceeded": bool(image_ok),
+                    "waitBeforeHandleRelease": int(original_wait(handle, 0)),
+                })
+            value = original_close(handle)
+            if self.started is not None:
+                self.trace["handleCloses"].append(
+                    {"jobHandle": handle == self.handle, "success": bool(value)})
+            return value
+
+        self.api.QueryInformationJobObject = query
+        self.api.WaitForSingleObject = wait
+        self.api.CloseHandle = close
+
+    def owned_member_handles(self):
+        handles = super().owned_member_handles()
+        self.trace["members"] = [{"id": int(pid), "handle": int(handle)}
+                                 for pid, handle in handles]
+        return handles
+
+    def close(self):
+        self.started = time.monotonic()
+        deadline = self.started + 10
+        handles = []
+        job_closed = False
+        try:
+            before = self.active()
+            handles = self.owned_member_handles()
+            if not self.api.TerminateJobObject(self.handle, 1):
+                raise ctypes.WinError(ctypes.get_last_error())
+            while self.active():
+                if time.monotonic() >= deadline:
+                    raise RuntimeError("owned job accounting did not drain")
+                time.sleep(0.05)
+            if not self.api.CloseHandle(self.handle):
+                raise ctypes.WinError(ctypes.get_last_error())
+            job_closed = True
+            pending = dict(handles)
+            while pending:
+                for identifier, handle in list(pending.items()):
+                    status = self.api.WaitForSingleObject(handle, 0)
+                    if status == 0:
+                        del pending[identifier]
+                    elif status == 0xFFFFFFFF:
+                        raise ctypes.WinError(ctypes.get_last_error())
+                    elif status != 258:
+                        raise RuntimeError("unexpected owned synchronization state")
+                if not pending:
+                    break
+                if time.monotonic() >= deadline:
+                    raise RuntimeError("owned process handles did not signal")
+                time.sleep(0.05)
+            result = {"jobOwned": True, "remainingBeforeCleanup": before,
+                      "remainingAfterCleanup": 0, "observedProcessCount": len(handles),
+                      "signaledProcessCount": len(handles),
+                      "jobReleasedBeforePhysicalWait": job_closed}
+            self.trace["closeResult"] = result
+            return result
+        except Exception as error:
+            self.trace["closeError"] = {"type": type(error).__name__, "text": str(error)}
+            raise
+        finally:
+            for _, handle in handles:
+                self.api.CloseHandle(handle)
+            if not job_closed:
+                self.api.CloseHandle(self.handle)
+            self.trace["closeElapsedSeconds"] = round(time.monotonic() - self.started, 6)
+
+
+def safe_original(path, data):
+    if path.exists():
+        raise ValueError("never overwrite an original observation")
+    if find_secrets(data.decode("utf-8", errors="strict")):
+        raise ValueError("unsafe observation refused before export")
+    with path.open("xb") as stream:
+        stream.write(data)
+    if path.read_bytes() != data:
+        raise ValueError("original observation byte equality failed")
+    return {"name": path.name, "bytes": len(data),
+            "sha256": hashlib.sha256(data).hexdigest()}
+
+
+def main():
+    destination = OWNER / "NATIVE-RELEASE-EXPERIMENT-02-TRACE.json"
+    report = ROOT / "var/native-release-experiment-02-v3-32f15cca.json"
+    if destination.exists() or report.exists():
+        raise ValueError("never replay this completed or partial diagnostic")
+    native_editor.WindowsJob = ObservedJob
+    saved = sys.argv
+    captured = io.StringIO()
+    try:
+        sys.argv = ["native_editor.py", "--report", str(report)]
+        with contextlib.redirect_stdout(captured), contextlib.redirect_stderr(captured):
+            exit_code = native_editor.main()
+    finally:
+        sys.argv = saved
+    original = report.read_bytes()
+    original_meta = safe_original(OWNER / "NATIVE-RELEASE-EXPERIMENT-02-PRODUCER.json", original)
+    trace = {
+        "kind": "CONTROLLED_REAL_NATIVE_JOB_RELEASE_EXPERIMENT_NOT_ACCEPTANCE",
+        "unchangedRealCleanupDeadlineSeconds": 10,
+        "realKernelCalls": True,
+        "jobVerdictOrCountsSimulated": False,
+        "baselineSourceCommit": "31ee804ecffb14add59f89b1b5cbd2f4de9216a8",
+        "baselineNativeSourceSha256": hashlib.sha256(
+            (ROOT / "scripts/iacode/native_process.py").read_bytes()).hexdigest(),
+        "prototypeSourceSha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+        "actualExitCode": exit_code,
+        "jobs": TRACES,
+        "observedMemberBoundaryExercised": any(row["members"] for row in TRACES),
+        "producer": original_meta,
+        "gateVerdictIssued": False,
+        "independentValidation": False,
+    }
+    trace_raw = json.dumps(trace, indent=2, ensure_ascii=True).encode() + b"\n"
+    trace_meta = safe_original(destination, trace_raw)
+    document = json.loads(original)
+    print(json.dumps({"actualExitCode": exit_code, "producer": document,
+                      "originals": [original_meta, trace_meta],
+                      "jobSummary": [{key: value for key, value in row.items()
+                                      if key != "samples"} for row in TRACES],
+                      "diagnosticOnly": True}))
+    return exit_code
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

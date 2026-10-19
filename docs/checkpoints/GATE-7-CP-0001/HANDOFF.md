@@ -3,130 +3,58 @@
 Current Gate: GATE-7
 Current Status: IN_PROGRESS
 
-Last validated published Gate7 implementation: 801be785ab076b380f163d4c09784fd016974bd6
-Published runtime candidate: a4b17e96c85efec5c1cd51305c5d1816ec82c77f
-Immutable candidate tag: iacode-subjects/GATE-7-CP-0001-runtime-v1
-Current branch: main
-
 ## Objective
 
-Complete explicitly authorized Gate7, every internal control and canonical sealing as
-READY_FOR_REVIEW for the separate independent M2 audit. No Gate8 or self-attestation authority.
+Finish only authorized Gate7, every internal control and canonical READY_FOR_REVIEW sealing. Preserve the later independent M2 audit boundary.
 
 ## What was completed
 
-Entry validation,35 anchors, canonical48-row specification, current193 derived requirements,
-145 selected lessons/146 considered, inherited129-case baseline, plan and ADR-0053/0054. Published
-implementation801be78 is clean and separately post-commit CHECKPOINT_VALID before normal push.
-Core contracts/domain, actual source/SQL adapters, migration0008, authenticated API, owned retention,
-packaging and docs are implemented. Local actual proofs: API192 cmd-0033, domain33/schema cmd-0055,
-SQL/HTTP/migrations21 cmd-0042, owned live78 controls/10 measured queries cmd-0081, current root21
-cmd-0090 and complete lint cmd-0089. New full-verifier stage/harness and exact producer retention
-are written/tested. All nine local findings are closed with original failures/recurrences retained.
+Core Knowledge Engine and local causal rework. Actual0211 passes10 native controls,0213 all152 owning cases,0214 explicit helper quality,0215 whole lint and0217 two final-strict uninstrumented native installation/trust/removal runs. These scopes overlap and never substitute for whole current acceptance.
 
 ## What was NOT completed
 
-One complete immutable non-fast verification and formal total functional binding. Whole Green
-Keeper, total completeness, fresh internal Red Team/VALID control, full
-clean-clone mirror, M2 consolidation/final report and canonical seal remain due. Independent M2
-review/Red Team/second-tool validation stay pending. No Gate8 authority.
+A new complete immutable runtime-v4 execution, whole ordered assurance and actual canonical seal remain due. Independent review/Red Team PENDING, second-tool PENDING_MANUAL, M2 PENDING, attestation NONE; Gate8 unauthorized.
 
 ## Current repository state
 
-Main began at sealed Gate6 d6deb90564011f9ee518da20acbb56a39b985f74, matching remote main and clean
-Git before changes. Current unsealed STATE uses HEAD for subsequent atomic Gate7 commits. There
-is no Gate7 canonical seal tag yet. Current owned implementation changes after801be78 are expected,
-not an unexplained divergence. Compare the actual current Git/STATE before continuing; do not
-modify a predecessor or assume a future commit/seal.
+Branch main; observed HEAD 31ee804ecffb14add59f89b1b5cbd2f4de9216a8; checkpoint remains unsealed IN_PROGRESS. STATE and canonical Git observations are authoritative, never a predicted future commit or tag.
 
 ## Files changed
 
-FILES.json is explicitly refreshed from the complete authorized Gate7 delta before finalization.
-Knowledge is no longer reserved-only: its source/contracts/API/tests/docs are owned Gate7 changes.
-Every partial requirement remains truthful; CURRENT-PROGRESS.json is not whole acceptance.
+FILES.json must explicitly declare every current Gate7 delta before canonical finalization binds its hashes. Original failed attempts and inert native/continuation contexts are retained before consumers or cleanup.
 
 ## Important decisions
 
-ADR-0053 preserves original permissions and requires exact project/content-bound reviewed source
-grants. ADR-0054 chooses actual persistent deterministic cited projections, invalidation and finite
-retention. Internal-role separation is not independence. M2 audit must judge the sealed whole group.
+ADR0053/0054 govern exact rights-qualified cited projections; 0055 reserves but does not implement Gate8;0056-0059 govern fixtures and exact transport. ADR0060 keeps physical ownership/deadlines and bounded red native facts. Use canonical renderers, not unstructured replacement summaries.
 
 ## Tests executed
 
-Original baseline cmd-0006 passes129 inherited cases. Actual complete API cmd-0033 passes192,
-knowledge cmd-0055 passes33/current union schema, SQL/HTTP/migration cmd-0042 passes21 with actual
-resource cleanup and unrelated container state preservation. Owned actual live cmd-0081 passes78
-controls and all10 predefined queries; every own container/volume/network is removed, unrelated
-states and source fingerprint stay unchanged, original9717-byte producer JSON is archived exactly.
-Current root21 cmd-0090 includes process completion, strict scope/specification, corpus, policy,
-schema, packaging, stage growth and actual raw producer/refusal/cleanup/stale-PASS controls.
-Complete lint cmd-0089 passes. Scope and distinct original fingerprints remain explicit; these
-local proofs do not combine into one immutable verifier or ordered internal assurance.
+See COMMANDS.jsonl and exact suite receipts for0211/0213/0214/0215/0217. Full preflight225/derivation226 keep all150 applicable lessons/all198 requirements, 197 mandatory. Actual native source does not widen any deadline or terminate outsiders.
 
 ## Known failures
 
-FINDINGS.json retains original published rollup defect, source-quality refusals, structural integration
-omissions and wrong-kind guard locator. Causal correction/control evidence closes each locally;
-LSN-0117 recurrence1/HIGH, LSN-0105 recurrence10/CRITICAL and LSN-0018 recurrence3/CRITICAL remain.
-LSN-0119 recurrence4/CRITICAL also remains; its alias-only local repair passes strict/domain/
-canonical controls without scanner allowances. New LSN-0145/GRD-0148 and LSN-0146/GRD-0149 retain
-the structural and actual-process-exit failures. Use the process-owned publication driver instead
-of launching Git from a completed intermediate ledger record. Both original overlapping processes
-actually exited0 and later committed validation passed, but that does not excuse the violation.
-Cmd-0046 encountered one unexplained Windows file-open
-OSError22; original preflight remained intact and the identical canonical cmd-0047 passed. No
-permission/global setting was changed. Baseline is decoded/LF-normalized, not original raw bytes.
+Runtime-v1/v2/v3 remain FAIL with immutable tags and exact originals. V3 cmd0180 is48/49, only native red. G7-INT-028 awaits fresh detailed attackT. Actual continuation refusal0223 and causal0227 remain;034 is repaired only through current structural controls and unchanged canonical validation.
 
 ## Known risks
 
-RISKS.md retains rights/source trust, lexical limits, stale/corrupt indexes, retention/backup,
-external Docker/provider/Windows availability and four historical policy-refused cleanup targets.
+Historical Windows teardown internals remain unknown and residual kernel/cleanup failure stays red. Curator/DB/clock, lexical relevance and backup limits remain in RISKS. Four excluded historical temporary targets remain manual-owner only.
 
 ## Do not repeat
 
-Never rewrite sealed checkpoints/tags, replay old archival/recovery helpers/PIDs, retry refused
-cleanup targets through another API, stop unrelated apps, infer RAG rights, weaken controls or
-describe this implementing session as an independent auditor. Serialize metadata writers.
+No one-time archival/import replay, historical PID/session reuse, tag movement, history rewrite, source changes during immutable proof, overlapping ledger writers, global Docker/WSL restart or stopping unrelated applications.
 
 ## Required next action
 
-The process-owned driver actually completed all seven stages with exit0, including finalizer,
-commit, separate committed CHECKPOINT_VALID and normal push. Main/origin and the new unused
-runtime-v1 tag resolve to a4b17e96c85efec5c1cd51305c5d1816ec82c77f. Execute exactly this current
-49-stage subject via the new Gate7 full runner. RUNTIME-SUBJECT.json is an unverified candidate,
-not a complete-verification, Gate or independent audit verdict. Do not rerun publication or move
-the tag. Keep source/memory unchanged until the actual verifier process finishes.
-
-Freeze/publish the exact runtime candidate using the process-owned publication driver and await
-its actual exit. Create a fresh immutable Gate7 runtime subject tag, then execute the complete
-non-fast verifier from public Git transport and every ordered
-internal control, consolidate M2 and canonically seal READY_FOR_REVIEW. Do not start Gate8.
+Native strict local proofs0211/0213/0214/0215/0217 pass. Continuation originals0224 and causal0227 remain; canonical renderer/current controls0229, helper quality0231, whole lint0232, all157 owners0233 and canonical239 validation pass. Refresh complete memory/full150-lesson preflight/all198 requirements, current docs links, explicit inventory and final quiescent validation, then publish a new immutable runtime-v4 via process-owned literal-NUL staging. Execute one entire49-stage nonfast public-clone invocation with source/memory frozen and retain every original. Only whole PASS permits functional/all-requirement binding, full Green Keeper, audit-only completeness, fresh detailed internal Red Team/VALID control and full clean-clone mirror, then canonical READY_FOR_REVIEW seal/publication/exact transport. Failed v1/v2/v3 stay FAIL. Independent M2 remains pending; Gate8 unauthorized.
 
 ## Exact continuation sequence
 
-Perform canonical startup/Git comparison and check current STEPS/ledger. Entry publication exists;
-never rerun prepare_entry.py or original archival helpers. Read CURRENT-PROGRESS.json, FINDINGS and
-exact local receipts. Run audit-harness/publish_progress.py directly with --execute and a Gate7
-commit subject; it sequences the staged scan, canonical finalizer, commit, committed validation and
-normal push using actual child exits. Never outer-wrap it (or finalizer/sealer) in record_command.
-After its actual exit, pin an unused iacode-subjects/GATE-7-CP-0001-runtime-vN tag to the exact
-published commit and run the new Gate7 run_full_verification.py with exact --commit/--tag and
-supported explicit --node. Never move a tag or run the Gate6 fixed-subject helper.
-Whole Green Keeper precedes
-completeness, fresh Red Team/null control and complete mirror. Consolidate M2 and prepare canonical
-final report/handoff; finalize, commit/publish, seal, publish evidence/tag and verify public transport.
-Actual outcomes, not this plan, establish completion. After sealing, write no more to this subject.
+Complete current local structural rework; regenerate full memory/preflight/requirements, documentation links, FILES and quiescent validation. Publish/tag a new unused runtime-v4, run one whole49-stage public proof, then all ordered internal controls and canonical READY_FOR_REVIEW sealing/exact transport.
 
 ## Validation commands
 
-`python scripts/development-ledger/validate_checkpoint.py`;
-`python scripts/development-ledger/validate_lessons.py`;
-`python scripts/development-ledger/verify_integrity.py`.
-After sealing also `python scripts/development-ledger/review_bundle.py --verify-declaration`.
-The canonical finalizer/sealer self-record; never outer-wrap either in record_command.
+python scripts/development-ledger/validate_checkpoint.py; python scripts/development-ledger/validate_lessons.py; python scripts/development-ledger/verify_integrity.py. Finalizer/sealer self-record; never outer-wrap them. Program state is generated explicitly after actual Git boundaries.
 
 ## Stop conditions
 
-Unexpected divergence or missing authority requires a stop. Genuine unavailable prerequisite is
-named BLOCKED; ordinary red controls require causal rework and fresh assurance. No false readiness,
-independent M2 verdict or milestone/Gate8 advancement.
+Stop for unexpected Git divergence, genuine unavailable external prerequisites or missing authority. Internal red requires retained causal correction and fresh complete assurance; never waivers or independent self-attestation.

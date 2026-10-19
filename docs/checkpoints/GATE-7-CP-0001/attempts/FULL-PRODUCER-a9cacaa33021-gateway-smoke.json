@@ -1,0 +1,158 @@
+{
+  "result": "PASS",
+  "provider": "openai",
+  "adapter": "openai-compatible",
+  "smokeModel": "openai:gpt-4o-mini",
+  "prompt": "Reply with exactly: IACODE_GATEWAY_OK",
+  "maxOutputTokens": 32,
+  "requestId": "01a152bb-adb2-7000-b98d-14cb7b9fc4bb",
+  "checks": [
+    {
+      "name": "catalog.sync",
+      "result": "PASS",
+      "detail": "135 model(s) from the provider's own API",
+      "data": {
+        "added": 135,
+        "updated": 0,
+        "deactivated": 0,
+        "unchanged": 0
+      }
+    },
+    {
+      "name": "catalog.idempotent",
+      "result": "PASS",
+      "detail": "a second synchronisation added 0 and deactivated 0",
+      "data": {
+        "unchanged": 135,
+        "updated": 0
+      }
+    },
+    {
+      "name": "catalog.persisted",
+      "result": "PASS",
+      "detail": "135 active model(s) in the catalog",
+      "data": {
+        "total": 135
+      }
+    },
+    {
+      "name": "catalog.smoke_model_present",
+      "result": "PASS",
+      "detail": "openai:gpt-4o-mini is in the discovered catalog; it is never substituted, because spending on a different model is how a surprise bill happens"
+    },
+    {
+      "name": "catalog.normalised",
+      "result": "PASS",
+      "detail": "the provider's record was normalised into the catalog's shape",
+      "data": {
+        "contextWindow": null,
+        "streaming": "SUPPORTED",
+        "provenance": "MANUAL_CONFIGURATION"
+      }
+    },
+    {
+      "name": "inference.answered",
+      "result": "PASS",
+      "detail": "the model answered with 'IACODE_GATEWAY_OK'"
+    },
+    {
+      "name": "inference.attributed",
+      "result": "PASS",
+      "detail": "answered by openai:gpt-4o-mini over openai-chat-completions",
+      "data": {
+        "route": "EXPLICIT_MODEL",
+        "endpoint": "openai-chat-completions"
+      }
+    },
+    {
+      "name": "inference.latency",
+      "result": "PASS",
+      "detail": "1406 ms"
+    },
+    {
+      "name": "inference.usage",
+      "result": "PASS",
+      "detail": "usage as the provider reported it; absent fields stay absent",
+      "data": {
+        "inputTokens": 17,
+        "outputTokens": 6,
+        "totalTokens": 23,
+        "cachedInputTokens": 0,
+        "reasoningTokens": 0
+      }
+    },
+    {
+      "name": "inference.cost_is_not_invented",
+      "result": "PASS",
+      "detail": "no pricing is configured, so the cost is absent rather than zero"
+    },
+    {
+      "name": "stream.started",
+      "result": "PASS",
+      "detail": "the first event was start"
+    },
+    {
+      "name": "stream.delivered",
+      "result": "PASS",
+      "detail": "6 content event(s) carrying 17 character(s)"
+    },
+    {
+      "name": "stream.ended",
+      "result": "PASS",
+      "detail": "the last event was end"
+    },
+    {
+      "name": "stream.answered",
+      "result": "PASS",
+      "detail": "the streamed answer contained 'IACODE_GATEWAY_OK'"
+    },
+    {
+      "name": "stream.not_duplicated",
+      "result": "PASS",
+      "detail": "every sequence number is distinct and ascending, and the answer appears once",
+      "data": {
+        "events": 9
+      }
+    },
+    {
+      "name": "persistence.recorded",
+      "result": "PASS",
+      "detail": "the call is recorded as SUCCEEDED",
+      "data": {
+        "latencyMs": "1393",
+        "inputTokens": "17",
+        "outputTokens": "6",
+        "endpoint": "openai-chat-completions",
+        "route": null,
+        "retries": "0",
+        "fallbacks": "0"
+      }
+    },
+    {
+      "name": "persistence.attributed",
+      "result": "PASS",
+      "detail": "recorded against openai:gpt-4o-mini"
+    },
+    {
+      "name": "persistence.fingerprinted",
+      "result": "PASS",
+      "detail": "a request fingerprint was stored for correlation"
+    },
+    {
+      "name": "persistence.no_prompt",
+      "result": "PASS",
+      "detail": "the table has no column that could hold a prompt or a completion",
+      "data": {
+        "columns": 24
+      }
+    },
+    {
+      "name": "observability.scraped",
+      "result": "PASS",
+      "detail": "1 gateway request series, 1 observation(s), read after 0s",
+      "data": {
+        "series": 1
+      }
+    }
+  ]
+}

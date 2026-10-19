@@ -23,6 +23,14 @@ def git(*arguments: str, binary: bool = False) -> bytes | str:
 
 def reason(path: str) -> str:
     exact = {
+        "scripts/iacode/native_process.py": (
+            "Keep exact owned members, bounded natural/forced drainage and strict physical deadline."),
+        "scripts/iacode/native_editor.py": (
+            "Retain red native cleanup facts and opt out of external reporting in owned test hosts."),
+        "tests/test_gate7_native_cleanup.py": (
+            "Prove native scope, physical/deadline refusal, reporting and exact inert observations."),
+        "tests/test_gate7_publication_paths.py": (
+            "Prove complete literal NUL Git staging and undeclared zero-effect refusal."),
         ".iacode/anchors/checkpoint-chain.json": "Anchor sealed Gate6; preserve every predecessor.",
         "docs/checkpoints/LATEST.md": "Point to the separately authorized Gate7 checkpoint.",
         "docs/GATE-7-CHECKLIST.md": "Define the complete canonical Knowledge Engine specification.",
@@ -56,6 +64,8 @@ def reason(path: str) -> str:
             "Bind immutable review Git long-path handling to the owning child only."),
         "docs/adr/ADR-0059-full-verifier-consumers-use-complete-canonical-archived-producers.md": (
             "Preserve every canonical producer and consume the same verified archived bytes."),
+        "docs/adr/ADR-0060-native-drain-allows-natural-exit-within-the-existing-deadline.md": (
+            "Keep exact ownership/physical completion while avoiding force-first shutdown races."),
     }
     if path in exact:
         return exact[path]

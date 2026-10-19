@@ -1,0 +1,28 @@
+{
+  "schemaVersion": "1.0.0",
+  "kind": "TARGETED_CAUSAL_NOT_WHOLE_GATE",
+  "gate": "NATIVE-LIFECYCLE-CAUSAL-GREEN",
+  "command": [
+    "python",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-p",
+    "test_gate7_native_cleanup.py",
+    "-v"
+  ],
+  "observedAt": "2026-10-19T07:37:11Z",
+  "subjectCommit": "31ee804ecffb14add59f89b1b5cbd2f4de9216a8",
+  "sourceDirty": true,
+  "sourceFingerprint": "880da533d03c3ff1e65d212db04d90a3fffd412c990a733bd14a53c0d3c31188",
+  "sourceUnchanged": true,
+  "exitCode": 0,
+  "outputEncodingValid": true,
+  "unsafeOutputOccurrences": 0,
+  "outputBytes": 467,
+  "outputSha256": "0a53c78e255ca46eca09b841f272ffdfdbdb423e23a482c45fa4dc68fd9d5b05",
+  "safeOutputArtifact": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/NATIVE-LIFECYCLE-CAUSAL-GREEN-0001.log",
+  "result": "PASS"
+}

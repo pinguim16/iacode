@@ -1,0 +1,159 @@
+{
+  "kind": "CONTROLLED_REAL_NATIVE_JOB_RELEASE_EXPERIMENT_NOT_ACCEPTANCE",
+  "unchangedRealCleanupDeadlineSeconds": 10,
+  "realKernelCalls": true,
+  "jobVerdictOrCountsSimulated": false,
+  "baselineSourceCommit": "31ee804ecffb14add59f89b1b5cbd2f4de9216a8",
+  "baselineNativeSourceSha256": "273e1c2086bdc927d79841f251233fa37eb7a0b8146e9b830f950e9dd7cafbcf",
+  "prototypeSourceSha256": "72335dcfe095b128752ced94542258318ab3c8ea1a2572cf4e822d4b16667988",
+  "actualExitCode": 0,
+  "jobs": [
+    {
+      "ordinal": 1,
+      "members": [],
+      "samples": [
+        {
+          "seconds": 0.000123,
+          "active": 0
+        },
+        {
+          "seconds": 0.000234,
+          "active": 0
+        }
+      ],
+      "lastSample": {
+        "seconds": 0.000234,
+        "active": 0
+      },
+      "waits": {},
+      "handleCloses": [
+        {
+          "jobHandle": true,
+          "success": true
+        }
+      ],
+      "closeResult": {
+        "jobOwned": true,
+        "remainingBeforeCleanup": 0,
+        "remainingAfterCleanup": 0,
+        "observedProcessCount": 0,
+        "signaledProcessCount": 0,
+        "jobReleasedBeforePhysicalWait": true
+      },
+      "closeError": null,
+      "closeElapsedSeconds": 0.000264
+    },
+    {
+      "ordinal": 2,
+      "members": [],
+      "samples": [
+        {
+          "seconds": 5.4e-05,
+          "active": 0
+        },
+        {
+          "seconds": 0.000124,
+          "active": 0
+        }
+      ],
+      "lastSample": {
+        "seconds": 0.000124,
+        "active": 0
+      },
+      "waits": {},
+      "handleCloses": [
+        {
+          "jobHandle": true,
+          "success": true
+        }
+      ],
+      "closeResult": {
+        "jobOwned": true,
+        "remainingBeforeCleanup": 0,
+        "remainingAfterCleanup": 0,
+        "observedProcessCount": 0,
+        "signaledProcessCount": 0,
+        "jobReleasedBeforePhysicalWait": true
+      },
+      "closeError": null,
+      "closeElapsedSeconds": 0.000149
+    },
+    {
+      "ordinal": 3,
+      "members": [],
+      "samples": [
+        {
+          "seconds": 4.9e-05,
+          "active": 0
+        },
+        {
+          "seconds": 0.000126,
+          "active": 0
+        }
+      ],
+      "lastSample": {
+        "seconds": 0.000126,
+        "active": 0
+      },
+      "waits": {},
+      "handleCloses": [
+        {
+          "jobHandle": true,
+          "success": true
+        }
+      ],
+      "closeResult": {
+        "jobOwned": true,
+        "remainingBeforeCleanup": 0,
+        "remainingAfterCleanup": 0,
+        "observedProcessCount": 0,
+        "signaledProcessCount": 0,
+        "jobReleasedBeforePhysicalWait": true
+      },
+      "closeError": null,
+      "closeElapsedSeconds": 0.000154
+    },
+    {
+      "ordinal": 4,
+      "members": [],
+      "samples": [
+        {
+          "seconds": 4.7e-05,
+          "active": 0
+        },
+        {
+          "seconds": 0.000111,
+          "active": 0
+        }
+      ],
+      "lastSample": {
+        "seconds": 0.000111,
+        "active": 0
+      },
+      "waits": {},
+      "handleCloses": [
+        {
+          "jobHandle": true,
+          "success": true
+        }
+      ],
+      "closeResult": {
+        "jobOwned": true,
+        "remainingBeforeCleanup": 0,
+        "remainingAfterCleanup": 0,
+        "observedProcessCount": 0,
+        "signaledProcessCount": 0,
+        "jobReleasedBeforePhysicalWait": true
+      },
+      "closeError": null,
+      "closeElapsedSeconds": 0.000134
+    }
+  ],
+  "producer": {
+    "name": "NATIVE-RELEASE-EXPERIMENT-PRODUCER.json",
+    "bytes": 3238,
+    "sha256": "5d0295e2632f3e5feca8076f18b2fe347946aca9452a69a331393e60e8404b7f"
+  },
+  "gateVerdictIssued": false,
+  "independentValidation": false
+}

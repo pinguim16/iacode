@@ -1,0 +1,96 @@
+{
+  "kind": "NATIVE_INSTALLATION_AND_TRUST_NOT_LIVE_PROVIDER_ACCEPTANCE",
+  "result": "FAIL",
+  "runs": [
+    {
+      "installation": {
+        "exitCode": 0,
+        "result": "PASS",
+        "freshProfile": true,
+        "sharedDataDirectoryOwned": true,
+        "processCleanup": {
+          "jobOwned": true,
+          "remainingBeforeCleanup": 0,
+          "remainingAfterCleanup": 0,
+          "observedProcessCount": 0,
+          "signaledProcessCount": 0,
+          "forcedTermination": false,
+          "naturalExitBudgetWithinOriginalDeadlineSeconds": 1
+        }
+      },
+      "kind": "ACTUAL_ISOLATED_VSCODE_EXTENSION_HOST",
+      "result": "PASS",
+      "mode": "package",
+      "editorVersion": "1.138.0",
+      "nodeVersion": "v24.18.1",
+      "processId": 32140,
+      "steps": [
+        {
+          "name": "fresh-installed-extension-active",
+          "result": "PASS",
+          "commands": 19,
+          "extensionPath": "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-native-editor-xuqu57e6\\package\\extensions\\iacode.iacode-0.1.0"
+        },
+        {
+          "name": "configuration-not-inherited-from-workspace-or-environment",
+          "result": "PASS"
+        }
+      ],
+      "exitCode": 0,
+      "processCleanup": {
+        "jobOwned": true,
+        "remainingBeforeCleanup": 6,
+        "remainingAfterCleanup": 0,
+        "observedProcessCount": 6,
+        "signaledProcessCount": 6,
+        "forcedTermination": true,
+        "naturalExitBudgetWithinOriginalDeadlineSeconds": 1
+      },
+      "sharedStorageObservedOwned": true
+    },
+    {
+      "installation": {
+        "exitCode": 0,
+        "result": "PASS",
+        "freshProfile": true,
+        "sharedDataDirectoryOwned": true,
+        "processCleanup": {
+          "jobOwned": true,
+          "remainingBeforeCleanup": 0,
+          "remainingAfterCleanup": 0,
+          "observedProcessCount": 0,
+          "signaledProcessCount": 0,
+          "forcedTermination": false,
+          "naturalExitBudgetWithinOriginalDeadlineSeconds": 1
+        }
+      },
+      "result": "FAIL",
+      "mode": "untrusted",
+      "failure": "native owned process cleanup failed",
+      "exitCode": null,
+      "processCleanup": {
+        "result": "FAIL",
+        "phase": "FORCED_DRAIN",
+        "totalDeadlineSeconds": 10,
+        "naturalExitBudgetSeconds": 1,
+        "forcedTermination": true,
+        "remainingBeforeCleanup": 2,
+        "remainingJobActive": 0,
+        "observedProcessCount": 2,
+        "signaledProcessCount": 0,
+        "pendingProcessCount": 2,
+        "lastObservedElapsedSeconds": 10.039081
+      }
+    }
+  ],
+  "ownedTemporaryDirectoryRemoved": true,
+  "directoryCleanupRetries": 0,
+  "directoryCleanup": {
+    "removed": true,
+    "cleanupRetries": 0,
+    "cleanupAttempts": 1,
+    "cleanupElapsedSeconds": 0.273117,
+    "firstSharingLockAfterSeconds": null,
+    "cleanupFailure": null
+  }
+}

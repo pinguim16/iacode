@@ -1,5 +1,32 @@
 # Gate 7 execution plan
 
+## G7-S01R4 — Native physical completion after failed runtime-v3
+
+Before the next freeze, exercise the terminal deadline predicate: a pinned handle that signals
+only after the original ten seconds must stay FAIL, not bypass the deadline through the success
+branch. Full preflight203/derivation204 already carries this LSN-0125 obligation; preserve all
+correct inherited assertions and strengthen only the new causal fixture.
+
+Cmd-0180 actually ends FAIL48/49, only native installation/trust red. Cmd-0183 preserves the
+exact complete failed attempt before retiring current destinations. ADR-0060 records the
+nonempty-boundary observation: unchanged force-first cleanup and early Job release both fail;
+a one-second natural-exit budget inside the original ten seconds permits two pinned actual
+members to signal in52ms. No internal kernel cause or historical holder is asserted.
+
+Reopen/escalate LSN-0125, LSN-0110 and the diagnostic-premise recurrence LSN-0128, retain every
+failure, rerun full lesson preflight and derive all requirements before main-source correction.
+Implement only the owned lifecycle order and bounded red diagnostic projection. Preserve every
+inherited deadline/physical-signal/ownership assertion. Add positive/adverse local controls and
+real independently owned sentinel proof, then repeated actual native installation/trust/removal.
+The published-runtime staging helper must transport only actually changed declared paths or
+use bounded exact pathspec input; it must not exceed Windows command-line limits or truncate
+the inventory. All declared files and the full canonical denominator remain unchanged.
+
+Only after local source quality and full memory validation, refresh preflight/derivation and
+freeze a new unused public runtime-v4. Execute a new whole49-stage invocation; never promote
+v3's48 green fragments. All ordered internal controls and canonical READY_FOR_REVIEW sealing
+remain required. Independent review/Red Team/M2 remain pending, and Gate8 is unauthorized.
+
 This plan follows actual entry validation, complete preflight cmd-0004, full191-row derivation
 cmd-0005 and successful inherited129-case baseline cmd-0006. Cmd-0030/0031 refresh all192
 requirements after confirmed LSN-0145, before its structural correction. Cmd-0068/0069 extract

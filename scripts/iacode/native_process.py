@@ -164,6 +164,14 @@ class ThreadEntry(ctypes.Structure):
     ]
 
 
+class NativeJobCleanupError(RuntimeError):
+    """Closed cleanup facts survive propagation; arbitrary exception text does not."""
+
+    def __init__(self, message: str, observation: dict) -> None:
+        super().__init__(message)
+        self.observation = dict(observation)
+
+
 class WindowsJob:
     def __init__(self) -> None:
         self.api = ctypes.WinDLL("kernel32", use_last_error=True)
@@ -273,13 +281,19 @@ class WindowsJob:
 
     def close(self) -> dict:
         handles = []
+        pending = {}
+        started = time.monotonic()
+        deadline = started + 10
+        grace_until = started + 1
+        now = started
+        before = active = None
+        forced = False
+        phase = "MEMBER_SNAPSHOT"
         try:
-            deadline = time.monotonic() + 10
             before = self.active()
             handles = self.owned_member_handles()
-            if not self.api.TerminateJobObject(self.handle, 1):
-                raise ctypes.WinError(ctypes.get_last_error())
             pending = dict(handles)
+            phase = "NATURAL_DRAIN"
             while True:
                 active = self.active()
                 for identifier, handle in list(pending.items()):
@@ -290,10 +304,24 @@ class WindowsJob:
                         raise ctypes.WinError(ctypes.get_last_error())
                     elif status != 258:
                         raise RuntimeError("unexpected owned process synchronization state")
+                now = time.monotonic()
+                if now >= deadline:
+                    raise RuntimeError("owned native process job did not drain")
                 if not active and not pending:
                     break
-                if time.monotonic() >= deadline:
-                    raise RuntimeError("owned native process job did not drain")
+                if not forced and now >= grace_until:
+                    phase = "FORCE_SNAPSHOT"
+                    known = set(dict(handles))
+                    for identifier, handle in self.owned_member_handles():
+                        if identifier in known:
+                            self.api.CloseHandle(handle)
+                        else:
+                            handles.append((identifier, handle))
+                            pending[identifier] = handle
+                    phase = "FORCED_DRAIN"
+                    if not self.api.TerminateJobObject(self.handle, 1):
+                        raise ctypes.WinError(ctypes.get_last_error())
+                    forced = True
                 time.sleep(0.05)
             return {
                 "jobOwned": True,
@@ -301,7 +329,29 @@ class WindowsJob:
                 "remainingAfterCleanup": 0,
                 "observedProcessCount": len(handles),
                 "signaledProcessCount": len(handles),
+                "forcedTermination": forced,
+                "naturalExitBudgetWithinOriginalDeadlineSeconds": 1,
             }
+        except Exception as error:
+            observation = {
+                "result": "FAIL",
+                "phase": phase,
+                "totalDeadlineSeconds": 10,
+                "naturalExitBudgetSeconds": 1,
+                "forcedTermination": forced,
+                "remainingBeforeCleanup": before,
+                "remainingJobActive": active,
+                "observedProcessCount": len(handles),
+                "signaledProcessCount": len(handles) - len(pending),
+                "pendingProcessCount": len(pending),
+                "lastObservedElapsedSeconds": round(max(0, now - started), 6),
+            }
+            message = (
+                "owned native process job did not drain"
+                if now >= deadline
+                else "owned native job cleanup failed"
+            )
+            raise NativeJobCleanupError(message, observation) from error
         finally:
             for _, handle in handles:
                 self.api.CloseHandle(handle)

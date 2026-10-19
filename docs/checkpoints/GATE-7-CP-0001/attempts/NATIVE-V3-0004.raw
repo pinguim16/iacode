@@ -1,0 +1,119 @@
+"""Real native lifecycle experiment, not a production change or acceptance verdict."""
+
+from __future__ import annotations
+
+import contextlib
+import ctypes
+import hashlib
+import importlib.util
+import io
+import json
+import sys
+import time
+from pathlib import Path
+
+OWNER = Path(__file__).resolve().parent
+spec = importlib.util.spec_from_file_location(
+    "native_release_observation", OWNER / "EXPERIMENT-NATIVE-JOB-RELEASE-02.py")
+baseline = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(baseline)
+
+
+class GraceObservedJob(baseline.ObservedJob):
+    def close(self):
+        self.started = time.monotonic()
+        deadline = self.started + 10
+        grace_until = self.started + 1
+        handles = []
+        forced = False
+        try:
+            before = self.active()
+            handles = self.owned_member_handles()
+            pending = dict(handles)
+            while True:
+                active = self.active()
+                for identifier, handle in list(pending.items()):
+                    status = self.api.WaitForSingleObject(handle, 0)
+                    if status == 0:
+                        del pending[identifier]
+                    elif status == 0xFFFFFFFF:
+                        raise ctypes.WinError(ctypes.get_last_error())
+                    elif status != 258:
+                        raise RuntimeError("unexpected owned synchronization state")
+                if not active and not pending:
+                    break
+                now = time.monotonic()
+                if now >= deadline:
+                    raise RuntimeError("owned native process job did not drain")
+                if not forced and now >= grace_until:
+                    # Snapshot newly present members before the same owned-job kill.
+                    known = set(dict(handles))
+                    fresh = super().owned_member_handles()
+                    for identifier, handle in fresh:
+                        if identifier in known:
+                            self.api.CloseHandle(handle)
+                        else:
+                            handles.append((identifier, handle))
+                            pending[identifier] = handle
+                    self.trace["members"] = [
+                        {"id": int(pid), "handle": int(handle)} for pid, handle in handles]
+                    if not self.api.TerminateJobObject(self.handle, 1):
+                        raise ctypes.WinError(ctypes.get_last_error())
+                    forced = True
+                    self.trace["forceAtSeconds"] = round(time.monotonic() - self.started, 6)
+                time.sleep(0.05)
+            result = {
+                "jobOwned": True, "remainingBeforeCleanup": before,
+                "remainingAfterCleanup": 0, "observedProcessCount": len(handles),
+                "signaledProcessCount": len(handles), "forcedTermination": forced,
+                "naturalExitBudgetWithinOriginalDeadlineSeconds": 1,
+            }
+            self.trace["closeResult"] = result
+            return result
+        except Exception as error:
+            self.trace["closeError"] = {"type": type(error).__name__, "text": str(error)}
+            raise
+        finally:
+            for _, handle in handles:
+                self.api.CloseHandle(handle)
+            self.api.CloseHandle(self.handle)
+            self.trace["closeElapsedSeconds"] = round(time.monotonic() - self.started, 6)
+
+
+def main():
+    report = baseline.ROOT / "var/native-grace-experiment-03-v3-32f15cca.json"
+    destination = OWNER / "NATIVE-GRACE-EXPERIMENT-03-TRACE.json"
+    if report.exists() or destination.exists():
+        raise ValueError("never replay a completed or partial diagnostic")
+    baseline.native_editor.WindowsJob = GraceObservedJob
+    saved = sys.argv
+    try:
+        sys.argv = ["native_editor.py", "--report", str(report)]
+        with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
+            code = baseline.native_editor.main()
+    finally:
+        sys.argv = saved
+    producer = baseline.safe_original(
+        OWNER / "NATIVE-GRACE-EXPERIMENT-03-PRODUCER.json", report.read_bytes())
+    trace = {
+        "kind": "CONTROLLED_REAL_NATIVE_GRACE_EXPERIMENT_NOT_ACCEPTANCE",
+        "unchangedRealCleanupDeadlineSeconds": 10,
+        "realKernelCalls": True, "jobVerdictOrCountsSimulated": False,
+        "baselineSourceCommit": "31ee804ecffb14add59f89b1b5cbd2f4de9216a8",
+        "baselineNativeSourceSha256": hashlib.sha256(
+            (baseline.ROOT / "scripts/iacode/native_process.py").read_bytes()).hexdigest(),
+        "prototypeSourceSha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+        "actualExitCode": code, "jobs": baseline.TRACES,
+        "observedMemberBoundaryExercised": any(row["members"] for row in baseline.TRACES),
+        "producer": producer, "gateVerdictIssued": False, "independentValidation": False,
+    }
+    original = baseline.safe_original(
+        destination, json.dumps(trace, indent=2, ensure_ascii=True).encode() + b"\n")
+    print(json.dumps({"actualExitCode": code, "trace": original,
+                      "jobs": [{key: value for key, value in row.items() if key != "samples"}
+                               for row in baseline.TRACES]}))
+    return code
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

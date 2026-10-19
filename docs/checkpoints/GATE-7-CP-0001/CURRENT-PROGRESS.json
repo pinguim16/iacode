@@ -1,8 +1,26 @@
 {
   "schemaVersion": "1.0.0",
   "kind": "IMPLEMENTATION_PROGRESS_NOT_ACCEPTANCE",
-  "observedAt": "2026-10-18T18:08:41Z",
-  "suites": {
+  "observedAt": "2026-10-19T08:38:30Z",
+  "cleanup": {
+    "schemaVersion": "1.0.0",
+    "kind": "TARGETED_REAL_SQL_HTTP",
+    "owner": "iacode-knowledge-sql-f0b032f8eb48",
+    "result": "PASS",
+    "pytestExitCode": 0,
+    "cleanup": {
+      "exitCode": 0,
+      "container": 0,
+      "volume": 0,
+      "network": 0
+    },
+    "unrelatedContainersPreserved": true
+  },
+  "wholeVerification": "FAIL",
+  "orderedInternalAssurance": "NOT_EXECUTED",
+  "independentM2": "PENDING",
+  "gate8Authorized": false,
+  "historicalLocalSuites": {
     "apiUnit": {
       "passed": 192,
       "failed": 0,
@@ -42,22 +60,50 @@
       "scope": "ONE_TARGETED_OWNED_SCENARIO_NOT_WHOLE_VERIFICATION"
     }
   },
-  "cleanup": {
-    "schemaVersion": "1.0.0",
-    "kind": "TARGETED_REAL_SQL_HTTP",
-    "owner": "iacode-knowledge-sql-f0b032f8eb48",
-    "result": "PASS",
-    "pytestExitCode": 0,
-    "cleanup": {
-      "exitCode": 0,
-      "container": 0,
-      "volume": 0,
-      "network": 0
-    },
-    "unrelatedContainersPreserved": true
+  "localRework": {
+    "scope": "LOCAL_PROOFS_NOT_WHOLE_OR_INDEPENDENT_ACCEPTANCE",
+    "currentOwningRootCases": 157,
+    "nativeBoundaryCases": 10,
+    "nativeUninstrumentedRuns": 2,
+    "countsOverlap": true,
+    "evidence": [
+      "command:cmd-0211",
+      "command:cmd-0213",
+      "command:cmd-0214",
+      "command:cmd-0215",
+      "command:cmd-0217",
+      "command:cmd-0218",
+      "command:cmd-0219",
+      "command:cmd-0220",
+      "command:cmd-0229",
+      "command:cmd-0231",
+      "command:cmd-0232",
+      "command:cmd-0233",
+      "command:cmd-0239",
+      "command:cmd-0240",
+      "command:cmd-0241",
+      "command:cmd-0242"
+    ],
+    "lessonCount": 151,
+    "locallyGuardedLessons": 148,
+    "applicableLessons": 150,
+    "requirements": 198,
+    "mandatoryRequirements": 197,
+    "currentContinuationControls": 5
   },
-  "wholeVerification": "NOT_EXECUTED",
-  "orderedInternalAssurance": "NOT_EXECUTED",
-  "independentM2": "PENDING",
-  "gate8Authorized": false
+  "lastCompletedFull": {
+    "subjectCommit": "31ee804ecffb14add59f89b1b5cbd2f4de9216a8",
+    "commandId": "cmd-0180",
+    "stages": 49,
+    "passed": 48,
+    "failed": [
+      "native-client-installation"
+    ],
+    "originalManifest": "attempts/RUNTIME-V3-FAILED-FULL-MANIFEST.json"
+  },
+  "nextWholeVerification": {
+    "subject": "runtime-v4",
+    "publication": "NOT_EXECUTED",
+    "verification": "NOT_EXECUTED"
+  }
 }
