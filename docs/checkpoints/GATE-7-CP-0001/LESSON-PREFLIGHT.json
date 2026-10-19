@@ -15,11 +15,11 @@
     "packages/persistence",
     "scripts/iacode"
   ],
-  "generatedAt": "2026-10-18T21:29:41Z",
+  "generatedAt": "2026-10-19T03:27:51Z",
   "policyVersion": "2.0.0",
-  "inputsFingerprint": "76fca6e054cc5c41d3b56a697ab895cef8f877ad066da16aca935eacfb922159",
-  "lessonsConsidered": 149,
-  "lessonsApplicable": 148,
+  "inputsFingerprint": "e7aebe00b8ec0d863ceba2ac8b13869279218679bad059bb990017cac65ad594",
+  "lessonsConsidered": 151,
+  "lessonsApplicable": 150,
   "applicable": [
     {
       "lessonId": "LSN-0001",
@@ -775,8 +775,8 @@
       "lessonId": "LSN-0077",
       "title": "Harness wait bounds must reflect workload size without changing product deadlines",
       "status": "GUARDED",
-      "severity": "HIGH",
-      "reasonApplicable": "applies to every Gate; category quality; severity HIGH; already guarded, so the control must keep holding",
+      "severity": "CRITICAL",
+      "reasonApplicable": "applies to every Gate; category quality; severity CRITICAL; already guarded, so the control must keep holding",
       "requiredCheck": "For a functional harness whose workload cardinality differs materially by scenario, prove its bounded wait covers the largest legitimate execution without weakening the product's own timeout or deadline.",
       "requiredEvidence": "A control that binds every large-workload terminal wait to a distinct finite bound plus successful real executions within that bound.",
       "derivedRequirementId": "LESSON-REQ-0076"
@@ -1105,8 +1105,8 @@
       "lessonId": "LSN-0110",
       "title": "A timed-out live proof retains bounded diagnostics before owned cleanup",
       "status": "GUARDED",
-      "severity": "MEDIUM",
-      "reasonApplicable": "applies to every Gate; category testing; severity MEDIUM; already guarded, so the control must keep holding",
+      "severity": "HIGH",
+      "reasonApplicable": "applies to every Gate; category testing; severity HIGH; already guarded, so the control must keep holding",
       "requiredCheck": "Keep the deadline unchanged, write a red report with sanitized history failure metadata and pending activity types before cleanup, and never continue adverse cases after a failed clean control.",
       "requiredEvidence": "A valid positive control, a premise check and behavioral proof at the actual target; the complete current mandatory suite.",
       "derivedRequirementId": "LESSON-REQ-0109"
@@ -1285,8 +1285,8 @@
       "lessonId": "LSN-0128",
       "title": "Adversarial premises must use the actual public contract",
       "status": "GUARDED",
-      "severity": "HIGH",
-      "reasonApplicable": "applies to every Gate; category testing; severity HIGH; already guarded, so the control must keep holding",
+      "severity": "CRITICAL",
+      "reasonApplicable": "applies to every Gate; category testing; severity CRITICAL; already guarded, so the control must keep holding",
       "requiredCheck": "Build adversarial premises from actual public contracts and observed execution identities. Do not invent fields, widen public metadata for test convenience or drop the real boundary assertion when a harness premise fails.",
       "requiredEvidence": "Retained actual pre-attack harness failure, canonical public-field/ID positive and adverse controls, then the actual API-origin refusal with a real executed sandbox tool.",
       "derivedRequirementId": "LESSON-REQ-0127"
@@ -1500,6 +1500,26 @@
       "requiredCheck": "Execution exit0 does not replace a typed completed nonempty observation or actual matching file bytes; reject absent digests and incomplete reads before mutation or evidence acceptance.",
       "requiredEvidence": "Actual nonempty original-byte proof and executed running/failed/empty/null/mismatched-observation controls; original semantic failures remain visible.",
       "derivedRequirementId": "LESSON-REQ-0148"
+    },
+    {
+      "lessonId": "LSN-0150",
+      "title": "Build and verification root inputs need subject-versioned assurance binding",
+      "status": "GUARDED",
+      "severity": "HIGH",
+      "reasonApplicable": "applies to every Gate; category security; severity HIGH; already guarded, so the control must keep holding",
+      "requiredCheck": "Bind every current required root build/verification input by exact subject-versioned policy; real material changes, ignored files and deletion must invalidate current evidence while legacy subject fingerprints retain their original semantics.",
+      "requiredEvidence": "Actual causal fingerprint red, current mutation/ignored/deletion and narrowing/version/type positive/adverse controls, preserved legacy identity, and complete current immutable verification; no caller-selected denominator or historical rewrite.",
+      "derivedRequirementId": "LESSON-REQ-0149"
+    },
+    {
+      "lessonId": "LSN-0151",
+      "title": "Immutable Git object reads must handle Windows long paths only in the owning child",
+      "status": "GUARDED",
+      "severity": "HIGH",
+      "reasonApplicable": "applies to every Gate; category quality; severity HIGH; already guarded, so the control must keep holding",
+      "requiredCheck": "Read legitimate long immutable Git object paths with exact bytes on Windows using only child-scoped configuration; preserve local/global configuration, all archive membership and nonzero refusal semantics.",
+      "requiredEvidence": "Actual bare-reader long-path failure beside a real scoped-child binary-byte success with unchanged configuration and observed owner cleanup; current owning reconstruction/declaration controls and complete immutable verification.",
+      "derivedRequirementId": "LESSON-REQ-0150"
     }
   ],
   "derivedRequirements": [
@@ -2538,6 +2558,20 @@
       "description": "Verify a shell exit zero is not a produced digest or verified original evidence",
       "mandatory": true,
       "requiredEvidence": "Actual nonempty original-byte proof and executed running/failed/empty/null/mismatched-observation controls; original semantic failures remain visible."
+    },
+    {
+      "id": "LESSON-REQ-0149",
+      "lessonId": "LSN-0150",
+      "description": "Verify build and verification root inputs need subject-versioned assurance binding",
+      "mandatory": true,
+      "requiredEvidence": "Actual causal fingerprint red, current mutation/ignored/deletion and narrowing/version/type positive/adverse controls, preserved legacy identity, and complete current immutable verification; no caller-selected denominator or historical rewrite."
+    },
+    {
+      "id": "LESSON-REQ-0150",
+      "lessonId": "LSN-0151",
+      "description": "Verify immutable Git object reads must handle Windows long paths only in the owning child",
+      "mandatory": true,
+      "requiredEvidence": "Actual bare-reader long-path failure beside a real scoped-child binary-byte success with unchanged configuration and observed owner cleanup; current owning reconstruction/declaration controls and complete immutable verification."
     }
   ]
 }

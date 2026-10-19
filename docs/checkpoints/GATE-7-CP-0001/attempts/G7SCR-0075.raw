@@ -1,0 +1,32 @@
+EF.
+======================================================================
+ERROR: test_iacode_wait_timeout_is_red_and_captures_only_closed_runtime_facts (test_gate7_quality_observation.Gate7QualityObservationTests.test_iacode_wait_timeout_is_red_and_captures_only_closed_runtime_facts)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\cesar\AppData\Local\Temp\iacode-gate7-scope-rework-817a4ca5e0af445babf55b6f010efeab\repository\tests\test_gate7_quality_observation.py", line 80, in test_iacode_wait_timeout_is_red_and_captures_only_closed_runtime_facts
+    report = scenario()
+  File "C:\Users\cesar\AppData\Local\Temp\iacode-gate7-scope-rework-817a4ca5e0af445babf55b6f010efeab\repository\scripts\iacode\scenarios\quality_engine_e2e.py", line 630, in scenario_iacode
+    detail = wait_terminal(created["runId"], seconds=IACODE_WAIT_SECONDS)
+  File "C:\Program Files\Python313\Lib\unittest\mock.py", line 1169, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\unittest\mock.py", line 1173, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\unittest\mock.py", line 1234, in _execute_mock_call
+    raise effect
+compose.StackError: private-unit-marker
+
+======================================================================
+FAIL: test_large_repository_observer_covers_unchanged_canonical_run_deadline (test_gate7_quality_observation.Gate7QualityObservationTests.test_large_repository_observer_covers_unchanged_canonical_run_deadline)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\cesar\AppData\Local\Temp\iacode-gate7-scope-rework-817a4ca5e0af445babf55b6f010efeab\repository\tests\test_gate7_quality_observation.py", line 73, in test_large_repository_observer_covers_unchanged_canonical_run_deadline
+    self.assertEqual(budget, policy["defaults"]["maxRunSeconds"] + 60.0)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 900.0 != 3660.0
+
+----------------------------------------------------------------------
+Ran 3 tests in 1.952s
+
+FAILED (failures=1, errors=1)

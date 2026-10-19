@@ -1,0 +1,23 @@
+FF
+======================================================================
+FAIL: test_build_and_verification_edits_invalidate_actual_assurance_fingerprint (test_gate7_assurance.Gate7RootInputFingerprintTests.test_build_and_verification_edits_invalidate_actual_assurance_fingerprint) (rootInput='.dockerignore')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\cesar\AppData\Local\Temp\iacode-gate7-scope-rework-817a4ca5e0af445babf55b6f010efeab\repository\tests\test_gate7_assurance.py", line 467, in test_build_and_verification_edits_invalidate_actual_assurance_fingerprint
+    self.assertNotEqual(before, after)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+AssertionError: '7acd896b1be7b9c811bf0c12297db4ff445c878ba0e87a157887e138dc6984c8' == '7acd896b1be7b9c811bf0c12297db4ff445c878ba0e87a157887e138dc6984c8'
+
+======================================================================
+FAIL: test_build_and_verification_edits_invalidate_actual_assurance_fingerprint (test_gate7_assurance.Gate7RootInputFingerprintTests.test_build_and_verification_edits_invalidate_actual_assurance_fingerprint) (rootInput='verify.ps1')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\cesar\AppData\Local\Temp\iacode-gate7-scope-rework-817a4ca5e0af445babf55b6f010efeab\repository\tests\test_gate7_assurance.py", line 467, in test_build_and_verification_edits_invalidate_actual_assurance_fingerprint
+    self.assertNotEqual(before, after)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+AssertionError: '7acd896b1be7b9c811bf0c12297db4ff445c878ba0e87a157887e138dc6984c8' == '7acd896b1be7b9c811bf0c12297db4ff445c878ba0e87a157887e138dc6984c8'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.696s
+
+FAILED (failures=2)

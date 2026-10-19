@@ -47,13 +47,15 @@ from sandbox_snapshot import create as create_snapshot
 FIXTURES = REPOSITORY_ROOT / "services" / "evaluator" / "tests" / "fixtures"
 TERMINAL = {"SUCCEEDED", "FAILED", "CANCELLED", "TIMED_OUT", "INVALID"}
 WAIT_SECONDS = 300.0
-IACODE_WAIT_SECONDS = 900.0
+# Cover the unchanged canonical3600s run deadline plus60s to observe its terminal facts.
+# The current-policy regression refuses drift; product/check deadlines are never changed here.
+IACODE_WAIT_SECONDS = 3660.0
 DURABLE_WAIT_SECONDS = 900.0
 POLL_SECONDS = 0.5
 
 # This observer runs inside the API image. It returns only counts and booleans, never history
 # payloads, object contents, environment values or the synthetic marker.
-HISTORY_OUTPUT_OBSERVER = r'''
+HISTORY_OUTPUT_OBSERVER = r"""
 import asyncio
 import base64
 import json
@@ -134,7 +136,7 @@ async def main():
                                                  for p in payloads)}))
 
 asyncio.run(main())
-'''
+"""
 
 
 class Steps:
@@ -232,9 +234,7 @@ def events(run_id: str) -> list[dict[str, Any]]:
     return request("GET", f"/{run_id}/events?after=0&limit=500")["events"]
 
 
-def wait_check(
-    run_id: str, check_id: str, seconds: float = WAIT_SECONDS
-) -> dict[str, Any]:
+def wait_check(run_id: str, check_id: str, seconds: float = WAIT_SECONDS) -> dict[str, Any]:
     def probe() -> dict[str, Any] | None:
         for event in events(run_id):
             if (
@@ -402,6 +402,7 @@ def scenario_fail() -> dict[str, Any]:
 
 def scenario_secret_output() -> dict[str, Any]:
     steps = Steps("secret-output")
+
     def terminal(identifier: str, label: str) -> dict[str, Any] | None:
         try:
             return wait_terminal(identifier)
@@ -410,17 +411,28 @@ def scenario_secret_output() -> dict[str, Any]:
                 state = request("GET", f"/{identifier}")["run"]["state"]
             except StackError:
                 state = "UNAVAILABLE"
-            steps.record(f"{label}.terminal", False, state,
-                         "terminal within the unchanged deadline")
+            steps.record(
+                f"{label}.terminal", False, state, "terminal within the unchanged deadline"
+            )
             observed = compose(
-                "exec", "-T", "api", "python", "-c", HISTORY_OUTPUT_OBSERVER,
-                identifier, merge_stderr=False,
+                "exec",
+                "-T",
+                "api",
+                "python",
+                "-c",
+                HISTORY_OUTPUT_OBSERVER,
+                identifier,
+                merge_stderr=False,
             )
             steps.record(f"{label}.diagnostics_available", observed.ok, observed.ok, True)
             if observed.ok:
-                steps.artifacts.append({"kind": "control-history-diagnostics",
-                                        "runId": identifier,
-                                        "observation": json.loads(observed.stdout)})
+                steps.artifacts.append(
+                    {
+                        "kind": "control-history-diagnostics",
+                        "runId": identifier,
+                        "observation": json.loads(observed.stdout),
+                    }
+                )
             return None
 
     control = start(snapshot(FIXTURES / "python-pass", "output-control", steps), "output-control")
@@ -431,7 +443,8 @@ def scenario_secret_output() -> dict[str, Any]:
         "control.accepted",
         control_detail["run"]["state"] == "SUCCEEDED"
         and control_detail["verdict"]["verdict"] == "PASS",
-        control_detail["run"]["state"], "SUCCEEDED with PASS",
+        control_detail["run"]["state"],
+        "SUCCEEDED with PASS",
     )
     marker = "gh" + "p_" + "q" * 20
     for fixture in ("python-secret-output", "python-secret-output-full"):
@@ -441,42 +454,64 @@ def scenario_secret_output() -> dict[str, Any]:
             return steps.report()
         assert_complete_evidence(steps, detail, "FAILED")
         steps.record(
-            f"{fixture}.verdict_fail", detail["verdict"]["verdict"] == "FAIL",
-            detail["verdict"]["verdict"], "FAIL",
+            f"{fixture}.verdict_fail",
+            detail["verdict"]["verdict"] == "FAIL",
+            detail["verdict"]["verdict"],
+            "FAIL",
         )
         steps.record(
-            f"{fixture}.api_output_clean", marker not in json.dumps(detail),
-            marker not in json.dumps(detail), True,
+            f"{fixture}.api_output_clean",
+            marker not in json.dumps(detail),
+            marker not in json.dumps(detail),
+            True,
         )
         observed = compose(
-            "exec", "-T", "api", "python", "-c", HISTORY_OUTPUT_OBSERVER,
-            created["runId"], merge_stderr=False,
+            "exec",
+            "-T",
+            "api",
+            "python",
+            "-c",
+            HISTORY_OUTPUT_OBSERVER,
+            created["runId"],
+            merge_stderr=False,
         )
         if not observed.ok:
             raise StackError("the bounded history/object observer failed; no payload is recorded")
         proof = json.loads(observed.stdout)
         steps.record(
-            f"{fixture}.history_clean", proof.get("prohibitedBytesAbsent") is True,
-            proof, "decoded durable payloads contain no prohibited bytes",
+            f"{fixture}.history_clean",
+            proof.get("prohibitedBytesAbsent") is True,
+            proof,
+            "decoded durable payloads contain no prohibited bytes",
         )
         steps.record(
-            f"{fixture}.no_sandbox_artifact", proof.get("sandboxObjects") == 0,
-            proof.get("sandboxObjects"), 0,
+            f"{fixture}.no_sandbox_artifact",
+            proof.get("sandboxObjects") == 0,
+            proof.get("sandboxObjects"),
+            0,
         )
         steps.record(
-            f"{fixture}.causal_containment_refusal", proof.get("containmentRefusals", 0) > 0,
-            proof.get("containmentRefusals"), "one or more explicit output-containment refusals",
+            f"{fixture}.causal_containment_refusal",
+            proof.get("containmentRefusals", 0) > 0,
+            proof.get("containmentRefusals"),
+            "one or more explicit output-containment refusals",
         )
-        steps.artifacts.append({"kind": "quality-run", "runId": created["runId"],
-                                "planId": created["planId"]})
-    after = start(snapshot(FIXTURES / "python-pass", "after-output-refusal", steps),
-                  "after-output-refusal")
+        steps.artifacts.append(
+            {"kind": "quality-run", "runId": created["runId"], "planId": created["planId"]}
+        )
+    after = start(
+        snapshot(FIXTURES / "python-pass", "after-output-refusal", steps), "after-output-refusal"
+    )
     after_detail = terminal(after["runId"], "control.after_refusal")
     if after_detail is None:
         return steps.report()
     assert_complete_evidence(steps, after_detail, "SUCCEEDED")
-    steps.record("control.after_refusal_pass", after_detail["verdict"]["verdict"] == "PASS",
-                 after_detail["verdict"]["verdict"], "PASS")
+    steps.record(
+        "control.after_refusal_pass",
+        after_detail["verdict"]["verdict"] == "PASS",
+        after_detail["verdict"]["verdict"],
+        "PASS",
+    )
     return steps.report()
 
 
@@ -610,6 +645,48 @@ def scenario_timeout() -> dict[str, Any]:
     return steps.report()
 
 
+def quality_timeout_observation(run_id: str) -> dict[str, Any]:
+    """Project only bounded closed states/counts, never source, output or exception bodies."""
+    try:
+        detail = request("GET", f"/{run_id}")
+    except (StackError, OSError, ValueError):
+        return {"observationStatus": "UNAVAILABLE", "state": "UNKNOWN"}
+    malformed = {"observationStatus": "MALFORMED", "state": "UNKNOWN"}
+    if type(detail) is not dict or type(detail.get("run")) is not dict:
+        return malformed
+    state = detail["run"].get("state")
+    states = TERMINAL | {"CREATED", "PLANNED", "QUEUED", "RUNNING", "CANCELLING"}
+    checks, results = detail.get("checks"), detail.get("results")
+    if (
+        type(state) is not str
+        or state not in states
+        or type(checks) is not list
+        or type(results) is not list
+        or len(checks) > 256
+        or len(results) > 256
+        or len(results) > len(checks)
+        or any(type(row) is not dict or type(row.get("applicable")) is not bool for row in checks)
+    ):
+        return malformed
+    statuses = {"PASSED", "FAILED", "DENIED", "TIMED_OUT", "CANCELLED", "ERROR", "NOT_APPLICABLE"}
+    counts: dict[str, int] = {}
+    for row in results:
+        if type(row) is not dict:
+            return malformed
+        status = row.get("status")
+        if type(status) is not str or status not in statuses:
+            return malformed
+        counts[status] = counts.get(status, 0) + 1
+    return {
+        "observationStatus": "AVAILABLE",
+        "state": state,
+        "declaredChecks": len(checks),
+        "applicableChecks": sum(row["applicable"] for row in checks),
+        "completedResults": len(results),
+        "resultCounts": counts,
+    }
+
+
 def scenario_iacode() -> dict[str, Any]:
     steps = Steps("iacode")
     archived = subprocess.run(
@@ -627,7 +704,25 @@ def scenario_iacode() -> dict[str, Any]:
             archive.extractall(source, filter="data")
         stored = snapshot(source, "iacode", steps)
         created = start(stored, "iacode")
-        detail = wait_terminal(created["runId"], seconds=IACODE_WAIT_SECONDS)
+        try:
+            detail = wait_terminal(created["runId"], seconds=IACODE_WAIT_SECONDS)
+        except StackError:
+            observation = quality_timeout_observation(created["runId"])
+            steps.record(
+                "quality.terminal_observation_completed",
+                False,
+                observation["state"],
+                "terminal facts within the bounded observation window",
+            )
+            steps.artifacts.append(
+                {
+                    "kind": "quality-run-observation-failure",
+                    "runId": created["runId"],
+                    "planId": created["planId"],
+                    "observation": observation,
+                }
+            )
+            return steps.report()
     expected = "PASS"
     observed = detail["run"]["verdict"]
     steps.record(

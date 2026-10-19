@@ -185,3 +185,52 @@ source-epoch record. Subsequent actual outcomes belong to Gate7's canonical comm
 full producer, Green Keeper, completeness, fresh internal Red Team, mirror and final checkpoint
 artifacts. Source/memory must freeze before the new immutable runtime subject; any measured
 source change requires fresh whole proof. Independent M2 review remains a later separate run.
+
+## Post-runtime-v2 corrective epoch before a new immutable proof
+
+Completed cmd-0143 is FAIL, never partial acceptance: all49 stages execute,46 PASS/3 FAIL;
+the root producer reports942 tests with two reconstruction errors. The IACode observer expires
+at900 seconds while its75-check run is legally RUNNING under unchanged maxRunSeconds3600.
+No structured quality-iacode producer survives that path. Red Team defends19/20 with VALID
+control; actual portability attackT escapes. Exact originals and owned cleanup/isolation remain
+archived by cmd-0147, not rewritten. Canonical reports omit nine available lifecycle producers;
+actual rescued originals and the unmodified legacy capture are preserved as inert context.
+
+LSN-0150 records the real root-input fingerprint omission. ADR-0057 binds exactly four current
+build/verification roots, preserves absent/v1 identity and refuses policy narrowing. LSN-0151
+records the actual Windows240-character source/281-character object-probe failure. ADR-0058
+sets core.longpaths=true only on the owning Git child: no global/local configuration mutation,
+member renaming or changed failure semantics. ADR-0059 derives all canonical producer names,
+captures exact safe bytes before consumers/cleanup and forwards the same verified archived
+originals, with no private-extra capture, temporary reread or stale prior-PASS fallback.
+
+Reopened LSN-0077 recurrence2, LSN-0105 recurrence13, LSN-0110 recurrence1, LSN-0128
+recurrence2 and LSN-0135 recurrence2 retain severity and every previous failure. The observer
+alone receives the unchanged canonical maximum plus60 finite final-observation grace; product,
+check, workflow, ordinary300 and durable900 deadlines remain unchanged. Failed waiting stays
+red even with unavailable/malformed diagnostics or a later successful terminal observation.
+Only closed bounded enum/count facts are retained. A populated byte-bound actual Git archive
+precedes the test target; both original failed scratch premises remain. Canonical cmd-0158/0159
+retain a helper docstring E501 refusal; only its representation changes, with all rules intact.
+
+Cmd-0149/0150 derive all198 requirements,197 mandatory, from48 canonical rows and150 applicable
+lessons before correction. Cmd-0151 imports132 exact inert raw originals, including the original
+transfer manifest; no scratch STATE/COMMANDS becomes canonical acceptance or independent proof.
+Cmd-0152 retains the causal Git failure; cmd-0153 proves all three real long-path/configuration/
+error controls. Cmd-0154/0155 retain canonical capture/completeness refusals; cmd-0156/0157
+prove the implemented archive/forwarding boundary before the current complete local execution.
+
+Executed local restoration: cmd-0160 passes60 current Gate7 tests; cmd-0161 passes unchanged
+whole mandatory lint; cmd-0162 passes explicit read-only helper quality. Cmd-0163 passes49
+unchanged Gate4 tests including both owning immutable reconstruction/declaration cases. Cmd-0164
+passes97 current/inherited metadata, producer, denominator, premise, resolver and preflight cases.
+Counts overlap and are not additive. GRD-0153/0154 guard the two new classes; existing0078,
+0111,0130,0137 gain current executed cases without losing inherited defenses. Cmd-0165 validates
+all151 active lessons,148 locally guarded. None of this is complete immutable Gate acceptance.
+
+G7-INT-028 stays OPEN until the fresh complete portability battery actually defendsT. Freeze
+this corrected source/memory before publishing a new unused runtime-v3, never move v1/v2,
+and execute one whole non-fast proof followed by every ordered internal assurance control.
+Subsequent actual results belong to the canonical ledger, current producers and final artifacts,
+not a predicted retrospective verdict. Independent M2 review/Red Team/second-tool and attestation
+remain separate pending obligations. No Gate8 implementation or boundary crossing is authorized.

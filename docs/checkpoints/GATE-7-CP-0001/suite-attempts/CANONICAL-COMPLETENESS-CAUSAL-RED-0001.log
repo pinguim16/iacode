@@ -1,0 +1,14 @@
+F
+======================================================================
+FAIL: test_claimed_success_cannot_omit_a_canonically_required_producer (test_gate7_assurance.Gate7CanonicalCompletenessTests.test_claimed_success_cannot_omit_a_canonically_required_producer)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\iacode\tests\test_gate7_assurance.py", line 666, in test_claimed_success_cannot_omit_a_canonically_required_producer
+    with self.assertRaisesRegex(RuntimeError, "canonical"):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: RuntimeError not raised
+
+----------------------------------------------------------------------
+Ran 1 test in 0.142s
+
+FAILED (failures=1)

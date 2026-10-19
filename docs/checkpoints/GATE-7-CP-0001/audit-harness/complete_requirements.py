@@ -78,6 +78,11 @@ bind(
     [
         "docs/adr/ADR-0053-knowledge-requires-content-bound-source-permission.md",
         "docs/adr/ADR-0054-knowledge-indexes-are-rebuildable-cited-projections.md",
+        "docs/adr/ADR-0055-code-graph-remains-an-explicit-future-reservation.md",
+        "docs/adr/ADR-0056-minimal-protocol-fixtures-inherit-only-control-contracts.md",
+        "docs/adr/ADR-0057-build-and-verification-root-inputs-follow-subject-versioned-assurance.md",
+        "docs/adr/ADR-0058-immutable-review-git-reads-use-child-scoped-long-path-handling.md",
+        "docs/adr/ADR-0059-full-verifier-consumers-use-complete-canonical-archived-producers.md",
     ],
     [ROOT_TESTS],
     ["docs/ARCHITECTURE.md"],
@@ -221,6 +226,33 @@ bind(
 )
 
 NEW_LESSONS = {
+    "LSN-0151": (
+        [
+            "scripts/development-ledger/review_bundle.py",
+            "docs/adr/ADR-0058-immutable-review-git-reads-use-child-scoped-long-path-handling.md",
+        ],
+        ["tests/test_gate7_git_transport.py", "tests/test_gate4_quality_engine.py"],
+    ),
+    "LSN-0077": (
+        ["scripts/iacode/scenarios/quality_engine_e2e.py", ".iacode/policies/quality-policy.json"],
+        ["tests/test_gate7_quality_observation.py", "tests/test_gate4_quality_engine.py"],
+    ),
+    "LSN-0110": (
+        ["scripts/iacode/scenarios/quality_engine_e2e.py"],
+        ["tests/test_gate7_quality_observation.py", "tests/test_gate4_quality_engine.py"],
+    ),
+    "LSN-0128": (
+        ["scripts/iacode/scenarios/desktop_e2e.py", "tests/test_gate7_quality_observation.py"],
+        ["tests/test_gate5_clients.py", "tests/test_gate7_quality_observation.py"],
+    ),
+    "LSN-0150": (
+        [
+            ".iacode/policies/assurance-scope.json",
+            "scripts/development-ledger/ledger_common.py",
+            "docs/adr/ADR-0057-build-and-verification-root-inputs-follow-subject-versioned-assurance.md",
+        ],
+        [ASSURANCE_TESTS, "tests/test_gate5_clients.py", "tests/test_development_ledger.py"],
+    ),
     "LSN-0145": (
         [MODELS, MIGRATION, STRUCTURE_TESTS],
         [STRUCTURE_TESTS, SQL_TESTS, "apps/api/tests/unit/test_domain_model.py"],
@@ -284,6 +316,8 @@ NEW_LESSONS = {
             PUBLISHER,
             CP + "audit-harness/execute_live_knowledge.py",
             CP + "audit-harness/diagnose_promotion_producer.py",
+            CP + "audit-harness/import_rework_contexts.py",
+            CP + "REWORK-CONTEXT-ARCHIVE.json",
         ],
         [ROOT_TESTS, ASSURANCE_TESTS, "tests/test_gate5_clients.py"],
     ),

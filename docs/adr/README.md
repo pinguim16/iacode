@@ -66,3 +66,6 @@ exist, or a title or status that disagrees with its record fails the suite.
 | [ADR-0054](ADR-0054-knowledge-indexes-are-rebuildable-cited-projections.md) | Knowledge indexes are rebuildable cited projections | Accepted |
 | [ADR-0055](ADR-0055-code-graph-remains-an-explicit-future-reservation.md) | Code Graph remains an explicit future reservation | Accepted |
 | [ADR-0056](ADR-0056-minimal-protocol-fixtures-inherit-only-control-contracts.md) | Minimal protocol fixtures inherit only control contracts | Accepted |
+| [ADR-0057](ADR-0057-build-and-verification-root-inputs-follow-subject-versioned-assurance.md) | Build and verification root inputs follow subject-versioned assurance | Accepted |
+| [ADR-0058](ADR-0058-immutable-review-git-reads-use-child-scoped-long-path-handling.md) | Immutable review Git reads use child-scoped long-path handling | Accepted |
+| [ADR-0059](ADR-0059-full-verifier-consumers-use-complete-canonical-archived-producers.md) | Full verifier consumers use complete canonical archived producers | Accepted |

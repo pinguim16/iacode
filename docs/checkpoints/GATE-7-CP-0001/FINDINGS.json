@@ -3,6 +3,220 @@
   "checkpoint": "GATE-7-CP-0001",
   "findings": [
     {
+      "findingId": "G7-INT-029",
+      "severity": "CRITICAL",
+      "classification": "GUARDRAIL_FAILURE",
+      "lessonId": "LSN-0135",
+      "guardrailId": "GRD-0137",
+      "status": "CLOSED",
+      "title": "Canonical lifecycle producers are omitted from durable capture and fresh forwarding",
+      "observed": "G7-INT-029: the actual unmodified publisher omits9 available canonical agent/gateway/sandbox lifecycle reports from capture and forwarding. Before diagnosis,18 current canonical originals are rescued outside the active clone; all28 rescued/actual-legacy copies have verified nonempty bytes/digests and no refused secret material. Derive canonical producer membership, preserve all old defenses and forward the same fresh originals.",
+      "requiredCorrection": "Derive all current producer reports from the canonical verifier plus legacy supported outputs; preserve and forward the same complete fresh originals, with real membership/growth/privacy/consumer-error/cleanup controls.",
+      "evidence": [
+        "command:cmd-0143",
+        "checkpoint:attempts/RUNTIME-V2-FAILED-FULL-MANIFEST.json",
+        "checkpoint:attempts/RUNTIME-V2-FAILED-VERIFY.json"
+      ],
+      "resolution": "Derive capture membership from every canonical non-fast producer plus all inherited supported outputs. Parse and forward those same verified durable originals, never temporary rereads or stale fallback. Current cmd-0160 executes canonical growth, privacy, missing-producer, corruption, real owner cleanup, hardlink/nonregular zero-effect refusal and exact raw-context controls. All inherited producer controls cmd-0164, whole lint cmd-0161 and explicit helper quality cmd-0162 pass. This closes the locally proven cause only, not the failed full invocation. New whole immutable proof and every ordered internal control remain mandatory; G7-INT-028 stays OPEN until fresh attackT is actually defended.",
+      "resolutionEvidence": [
+        "command:cmd-0160",
+        "command:cmd-0161",
+        "command:cmd-0162",
+        "command:cmd-0163",
+        "command:cmd-0164",
+        "command:cmd-0165",
+        "checkpoint:suite-attempts/CURRENT-REWORK-GATE7-0001.json",
+        "checkpoint:suite-attempts/REWORK-INHERITED-GATE4-0001.json",
+        "checkpoint:suite-attempts/REWORK-INHERITED-CONTROLS-0001.json"
+      ]
+    },
+    {
+      "findingId": "G7-INT-028",
+      "severity": "HIGH",
+      "classification": "PORTABILITY_DEFECT",
+      "lessonId": "LSN-0151",
+      "status": "OPEN",
+      "title": "The real Red Team portability attackT fails despite a valid baseline",
+      "observed": "Cmd-0143 defends19 of20 attacks with VALID control;T reports deterministic/portable/categories/declaration/stale-refusal false. Both root review-reconstruction owners also fail on the Windows long-path reader.",
+      "requiredCorrection": "Correct the actual long-path reader, execute unchanged immutable reconstruction/declaration owners and require the next full current battery to defendT. Never skip the attack, change a digest or relabel its failure.",
+      "evidence": [
+        "command:cmd-0143",
+        "checkpoint:attempts/RUNTIME-V2-FAILED-FULL-MANIFEST.json",
+        "checkpoint:attempts/RUNTIME-V2-FAILED-VERIFY.json"
+      ],
+      "resolution": null,
+      "resolutionEvidence": []
+    },
+    {
+      "findingId": "G7-INT-027",
+      "severity": "CRITICAL",
+      "classification": "GUARDRAIL_FAILURE",
+      "lessonId": "LSN-0128",
+      "guardrailId": "GRD-0130",
+      "status": "CLOSED",
+      "title": "A new observer test has an invalid pre-target Git archive premise",
+      "observed": "G7-INT-027: scratch cmd-0164's intended timeout test first fails in an empty Git archive before the target. Cmd-0167 then correctly refuses LF/CRLF archive mismatch. Cmd-0168 reaches the intended causal boundary only after a populated actual byte-bound archive premise passes; retain every refusal and original assertion.",
+      "requiredCorrection": "Preserve the two original pre-target refusals; use a populated real Git archive with exact member bytes before calling the observer and retain every original target assertion.",
+      "evidence": [
+        "command:cmd-0143",
+        "checkpoint:attempts/RUNTIME-V2-FAILED-FULL-MANIFEST.json",
+        "checkpoint:attempts/RUNTIME-V2-FAILED-VERIFY.json"
+      ],
+      "resolution": "Use a populated actual Git archive and exact original bytes before entering the observer target. Retain both original scratch pre-target refusals and every target assertion. Current cmd-0160 proves the premise and timeout behavior; unchanged public identity/cleanup owners and lesson controls cmd-0164 pass. This closes the locally proven cause only, not the failed full invocation. New whole immutable proof and every ordered internal control remain mandatory; G7-INT-028 stays OPEN until fresh attackT is actually defended.",
+      "resolutionEvidence": [
+        "command:cmd-0160",
+        "command:cmd-0161",
+        "command:cmd-0162",
+        "command:cmd-0163",
+        "command:cmd-0164",
+        "command:cmd-0165",
+        "checkpoint:suite-attempts/CURRENT-REWORK-GATE7-0001.json",
+        "checkpoint:suite-attempts/REWORK-INHERITED-GATE4-0001.json",
+        "checkpoint:suite-attempts/REWORK-INHERITED-CONTROLS-0001.json"
+      ]
+    },
+    {
+      "findingId": "G7-INT-026",
+      "severity": "HIGH",
+      "classification": "GUARDRAIL_FAILURE",
+      "lessonId": "LSN-0110",
+      "guardrailId": "GRD-0111",
+      "status": "CLOSED",
+      "title": "The IACode wait failure bypasses its structured red diagnostic producer",
+      "observed": "G7-INT-026: runtime-v2 quality-iacode terminal-wait failure bypasses its structured report; no quality-iacode.json exists before owned cleanup. Preserve a red enum/count-only failure producer and explicit unavailable/malformed outcomes, without exposing exception/input bodies.",
+      "requiredCorrection": "Exercise the actual scenario and report-writing entrypoint, including unavailable/malformed/private observations and late success. The expired/failed wait must stay red.",
+      "evidence": [
+        "command:cmd-0143",
+        "checkpoint:attempts/RUNTIME-V2-FAILED-FULL-MANIFEST.json",
+        "checkpoint:attempts/RUNTIME-V2-FAILED-VERIFY.json"
+      ],
+      "resolution": "The actual IACode scenario reports a failed terminal observation as FAIL before cleanup, with only bounded closed enum/count facts. Current cmd-0160 executes actual main/report writing, private/malformed/unavailable and late-success refusals; unchanged Gate4 diagnostics cmd-0163 and inherited controls cmd-0164 pass. This closes the locally proven cause only, not the failed full invocation. New whole immutable proof and every ordered internal control remain mandatory; G7-INT-028 stays OPEN until fresh attackT is actually defended.",
+      "resolutionEvidence": [
+        "command:cmd-0160",
+        "command:cmd-0161",
+        "command:cmd-0162",
+        "command:cmd-0163",
+        "command:cmd-0164",
+        "command:cmd-0165",
+        "checkpoint:suite-attempts/CURRENT-REWORK-GATE7-0001.json",
+        "checkpoint:suite-attempts/REWORK-INHERITED-GATE4-0001.json",
+        "checkpoint:suite-attempts/REWORK-INHERITED-CONTROLS-0001.json"
+      ]
+    },
+    {
+      "findingId": "G7-INT-025",
+      "severity": "CRITICAL",
+      "classification": "GUARDRAIL_FAILURE",
+      "lessonId": "LSN-0077",
+      "guardrailId": "GRD-0078",
+      "status": "CLOSED",
+      "title": "The full repository observer expires before the policy-legal quality run",
+      "observed": "G7-INT-025: completed runtime-v2 cmd-0143 stops the900-second IACode observer while its75-check workflow is still RUNNING under the unchanged3600-second product policy. Original complete failure and bounded read-only projections are preserved; no product deadline may be changed.",
+      "requiredCorrection": "Bind only the large-workload observation window to the unchanged canonical maximum plus finite final-observation grace; preserve all product/check/workflow deadlines and execute existing wait controls.",
+      "evidence": [
+        "command:cmd-0143",
+        "checkpoint:attempts/RUNTIME-V2-FAILED-FULL-MANIFEST.json",
+        "checkpoint:attempts/RUNTIME-V2-FAILED-VERIFY.json"
+      ],
+      "resolution": "Bind only IACode's observer to unchanged canonical maxRunSeconds3600 plus60 finite grace. Ordinary300/durable900 waits and every product/check/workflow deadline remain unchanged. Current60-case Gate7 cmd-0160 and unchanged49-case Gate4 cmd-0163 pass, including timeout/late-success refusal; inherited controls cmd-0164 and whole lint cmd-0161 pass. This closes the locally proven cause only, not the failed full invocation. New whole immutable proof and every ordered internal control remain mandatory; G7-INT-028 stays OPEN until fresh attackT is actually defended.",
+      "resolutionEvidence": [
+        "command:cmd-0160",
+        "command:cmd-0161",
+        "command:cmd-0162",
+        "command:cmd-0163",
+        "command:cmd-0164",
+        "command:cmd-0165",
+        "checkpoint:suite-attempts/CURRENT-REWORK-GATE7-0001.json",
+        "checkpoint:suite-attempts/REWORK-INHERITED-GATE4-0001.json",
+        "checkpoint:suite-attempts/REWORK-INHERITED-CONTROLS-0001.json"
+      ]
+    },
+    {
+      "findingId": "G7-INT-024",
+      "severity": "HIGH",
+      "classification": "PORTABILITY_DEFECT",
+      "lessonId": "LSN-0151",
+      "status": "CLOSED",
+      "title": "Windows long-path Git object probing breaks honest immutable reconstruction",
+      "observed": "Cmd-0143 runs942 root cases with2 errors in unchanged ReviewBundleTests owners. A real owned240-character binary fixture reproduces the current-reader failure and bare Git exit128; child-scoped core.longpaths=true returns exact bytes with unchanged local/global settings and actual cleanup.",
+      "requiredCorrection": "Use only an explicit Git-child override; preserve every filename, original byte, archive member, inherited assertion and bad-reference refusal. Record the structural decision before changing the reader.",
+      "evidence": [
+        "command:cmd-0143",
+        "checkpoint:attempts/RUNTIME-V2-FAILED-FULL-MANIFEST.json",
+        "checkpoint:attempts/RUNTIME-V2-FAILED-VERIFY.json"
+      ],
+      "resolution": "ADR-0058 adds only reader-child core.longpaths=true. Actual causal cmd-0152 fails before repair; cmd-0153 and current cmd-0160 pass all three real long-path binary/configuration/genuine-error controls. Unchanged owning reconstruction/declaration tests pass inside cmd-0163's49 cases. GRD-0154 is local prevention; fresh portability attackT and complete immutable verification remain required. This closes the locally proven cause only, not the failed full invocation. New whole immutable proof and every ordered internal control remain mandatory; G7-INT-028 stays OPEN until fresh attackT is actually defended.",
+      "resolutionEvidence": [
+        "command:cmd-0160",
+        "command:cmd-0161",
+        "command:cmd-0162",
+        "command:cmd-0163",
+        "command:cmd-0164",
+        "command:cmd-0165",
+        "checkpoint:suite-attempts/CURRENT-REWORK-GATE7-0001.json",
+        "checkpoint:suite-attempts/REWORK-INHERITED-GATE4-0001.json",
+        "checkpoint:suite-attempts/REWORK-INHERITED-CONTROLS-0001.json"
+      ]
+    },
+    {
+      "findingId": "G7-INT-023",
+      "severity": "CRITICAL",
+      "classification": "GUARDRAIL_FAILURE",
+      "lessonId": "LSN-0105",
+      "guardrailId": "GRD-0106",
+      "status": "CLOSED",
+      "title": "New disposable root-input controls violate unchanged source-quality rules",
+      "observed": "G7-INT-023: disposable same-session scratch cmd-0145/0146 refuse the newly authored root-input tests under unchanged RUF005/SIM117 rules. Recurrence13 and exact original source-quality streams remain distinct from the canonical ledger. Adopt only reviewed correction and execute main controls before restoration. Canonical cmd-0158/0159 also retain the one-line helper docstring E501 refusal before representation-only correction and actual read-only/whole quality proof.",
+      "requiredCorrection": "Adopt representation-only fixes, preserve all prior failures/rules/assertions and pass current controls plus whole unchanged mandatory quality in the canonical repository.",
+      "evidence": [
+        "command:cmd-0143",
+        "checkpoint:attempts/RUNTIME-V2-FAILED-FULL-MANIFEST.json",
+        "checkpoint:attempts/RUNTIME-V2-FAILED-VERIFY.json",
+        "command:cmd-0158",
+        "command:cmd-0159",
+        "checkpoint:suite-attempts/REWORK-FORMAT-DIAGNOSTIC-0001.log"
+      ],
+      "resolution": "Adopt only representation/import/layout correction under unchanged rules. Preserve scratch recurrence13 and canonical cmd-0158/0159's later one-line E501 refusal. Split only that helper docstring; current60 cases cmd-0160, unchanged whole lint cmd-0161, explicit read-only helper quality cmd-0162, all49 Gate4 cases cmd-0163 and inherited cmd-0164 pass. No suppression or assertion removal. This closes the locally proven cause only, not the failed full invocation. New whole immutable proof and every ordered internal control remain mandatory; G7-INT-028 stays OPEN until fresh attackT is actually defended.",
+      "resolutionEvidence": [
+        "command:cmd-0160",
+        "command:cmd-0161",
+        "command:cmd-0162",
+        "command:cmd-0163",
+        "command:cmd-0164",
+        "command:cmd-0165",
+        "checkpoint:suite-attempts/CURRENT-REWORK-GATE7-0001.json",
+        "checkpoint:suite-attempts/REWORK-INHERITED-GATE4-0001.json",
+        "checkpoint:suite-attempts/REWORK-INHERITED-CONTROLS-0001.json"
+      ]
+    },
+    {
+      "findingId": "G7-INT-022",
+      "severity": "HIGH",
+      "classification": "ASSURANCE_SCOPE_INPUT_OMISSION",
+      "lessonId": "LSN-0150",
+      "status": "CLOSED",
+      "title": "Required build-context and Windows verifier roots are outside current assurance binding",
+      "observed": "A real isolated Git mutation changes .dockerignore bytes without changing the v1 assurance fingerprint. verify.ps1 is also an unbound consumed root input; the parent source stays frozen during diagnosis.",
+      "requiredCorrection": "Record ADR0057, version the canonical closed root set and consumer without reinterpreting absent/v1 subjects. Execute real current/ignored/deletion/narrowing and legacy-identity controls, then a new whole immutable proof.",
+      "evidence": [
+        "command:cmd-0143",
+        "checkpoint:attempts/RUNTIME-V2-FAILED-FULL-MANIFEST.json",
+        "checkpoint:attempts/RUNTIME-V2-FAILED-VERIFY.json"
+      ],
+      "resolution": "ADR-0057 versions the exact four current root inputs. Actual cmd-0160 passes all four real Git mutation/ignored/deletion/narrowing controls and preserves absent/v1 identity; unchanged inherited policy controls cmd-0164 and whole lint cmd-0161 pass. GRD-0153 is locally executed prevention, not full immutable delivery acceptance. This closes the locally proven cause only, not the failed full invocation. New whole immutable proof and every ordered internal control remain mandatory; G7-INT-028 stays OPEN until fresh attackT is actually defended.",
+      "resolutionEvidence": [
+        "command:cmd-0160",
+        "command:cmd-0161",
+        "command:cmd-0162",
+        "command:cmd-0163",
+        "command:cmd-0164",
+        "command:cmd-0165",
+        "checkpoint:suite-attempts/CURRENT-REWORK-GATE7-0001.json",
+        "checkpoint:suite-attempts/REWORK-INHERITED-GATE4-0001.json",
+        "checkpoint:suite-attempts/REWORK-INHERITED-CONTROLS-0001.json"
+      ]
+    },
+    {
       "findingId": "G7-INT-021",
       "severity": "CRITICAL",
       "classification": "GUARDRAIL_FAILURE",

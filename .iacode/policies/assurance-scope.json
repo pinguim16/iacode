@@ -1,5 +1,5 @@
 {
-  "schemaVersion": "1.0.0",
-  "additionalRootFiles": [".gitignore", "ruff.toml"],
-  "policy": "Gate 5 and later bind root ignore/lint settings as assurance inputs, even if an ignore rule hides an untracked root file. Subjects without this versioned policy retain their historical fingerprint semantics."
+  "schemaVersion": "2.0.0",
+  "additionalRootFiles": [".dockerignore", ".gitignore", "ruff.toml", "verify.ps1"],
+  "policy": "Current subjects bind root build-context privacy, ignore/lint settings and the Windows verification launcher even when ignored. Absent/v1 subject policies retain their exact historical semantics. Future root inputs require an explicit policy/version decision; callers cannot narrow the mandatory set."
 }

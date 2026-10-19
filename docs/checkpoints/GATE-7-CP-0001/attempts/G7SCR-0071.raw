@@ -1,0 +1,34 @@
+EF
+======================================================================
+ERROR: test_iacode_wait_timeout_is_red_and_captures_only_closed_runtime_facts (test_gate7_quality_observation.Gate7QualityObservationTests.test_iacode_wait_timeout_is_red_and_captures_only_closed_runtime_facts)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\cesar\AppData\Local\Temp\iacode-gate7-scope-rework-817a4ca5e0af445babf55b6f010efeab\repository\tests\test_gate7_quality_observation.py", line 69, in test_iacode_wait_timeout_is_red_and_captures_only_closed_runtime_facts
+    report = scenario()
+  File "C:\Users\cesar\AppData\Local\Temp\iacode-gate7-scope-rework-817a4ca5e0af445babf55b6f010efeab\repository\scripts\iacode\scenarios\quality_engine_e2e.py", line 626, in scenario_iacode
+    with tarfile.open(fileobj=io.BytesIO(archived.stdout), mode="r:") as archive:
+         ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\tarfile.py", line 1957, in open
+    return func(name, filemode, fileobj, **kwargs)
+  File "C:\Program Files\Python313\Lib\tarfile.py", line 1989, in taropen
+    return cls(name, mode, fileobj, **kwargs)
+  File "C:\Program Files\Python313\Lib\tarfile.py", line 1847, in __init__
+    self.firstmember = self.next()
+                       ~~~~~~~~~^^
+  File "C:\Program Files\Python313\Lib\tarfile.py", line 2863, in next
+    raise ReadError(str(e)) from None
+tarfile.ReadError: end of file header
+
+======================================================================
+FAIL: test_large_repository_observer_covers_unchanged_canonical_run_deadline (test_gate7_quality_observation.Gate7QualityObservationTests.test_large_repository_observer_covers_unchanged_canonical_run_deadline)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\cesar\AppData\Local\Temp\iacode-gate7-scope-rework-817a4ca5e0af445babf55b6f010efeab\repository\tests\test_gate7_quality_observation.py", line 62, in test_large_repository_observer_covers_unchanged_canonical_run_deadline
+    self.assertEqual(budget, policy["defaults"]["maxRunSeconds"] + 60.0)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 900.0 != 3660.0
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.763s
+
+FAILED (failures=1, errors=1)

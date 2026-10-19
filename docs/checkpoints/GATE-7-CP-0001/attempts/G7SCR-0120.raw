@@ -1,0 +1,31 @@
+{
+  "schemaVersion": "1.0.0",
+  "kind": "TARGETED_CAUSAL_NOT_WHOLE_GATE",
+  "gate": "ROOT-INPUT-CAUSAL-RED",
+  "command": [
+    "python",
+    "-X",
+    "utf8",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-p",
+    "test_gate7_assurance.py",
+    "-k",
+    "test_build_and_verification_edits_invalidate_actual_assurance_fingerprint"
+  ],
+  "observedAt": "2026-10-18T22:12:35Z",
+  "subjectCommit": "13749adfa616c7f52aa7407cb9a9d7aef3d19c76",
+  "sourceDirty": true,
+  "sourceFingerprint": "8245b9614350fa7aedce86a86e903278e806883a7f377f3ce3dd5648a9b77bdc",
+  "sourceUnchanged": true,
+  "exitCode": 1,
+  "outputEncodingValid": true,
+  "unsafeOutputOccurrences": 0,
+  "outputBytes": 1888,
+  "outputSha256": "867f30cc13c73d3644cac690f1e64ca91511b00c8c1a70a0f7cbe32eeadef1aa",
+  "safeOutputArtifact": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/ROOT-INPUT-CAUSAL-RED-0001.log",
+  "result": "FAIL"
+}

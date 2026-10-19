@@ -22,6 +22,9 @@ PATHS = (
             "run_checkpoint_validation",
             "assemble_final_handoff",
             "archive_failed_runtime_v1",
+            "archive_failed_runtime_v2",
+            "import_rework_contexts",
+            "run_full_verification",
             "format_assurance_helpers",
             "diagnose_promotion_producer",
             "publish_progress",
@@ -30,6 +33,9 @@ PATHS = (
         )
     ),
     "tests/test_gate7_assurance.py",
+    "tests/test_gate7_quality_observation.py",
+    "tests/test_gate7_git_transport.py",
+    "scripts/iacode/scenarios/quality_engine_e2e.py",
 )
 
 

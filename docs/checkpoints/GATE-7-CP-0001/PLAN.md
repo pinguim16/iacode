@@ -111,6 +111,42 @@ guards, refresh memory/preflight/derivation, declare paths and publish a new run
 Never move runtime-v1. Freeze source/memory, repeat one whole non-fast verifier, then all ordered
 Green Keeper/completeness/fresh internal Red Team/full clean-clone mirror and real sealing.
 
+## G7-S01R3 — Completed runtime-v2 and fully derived corrective source epoch
+
+Actual cmd-0143 completes all49 stages,46 PASS/3 FAIL, and exits1. All original outputs are
+retained by cmd-0147; current report destinations are retired only after exact durable copies.
+The owned stack/clone are removed, the transported tree is clean and unrelated container
+identities/states are preserved. Cmd-0144 correctly refuses undeclared new producer outputs;
+explicit inventory cmd-0145 and quiescent canonical adapter cmd-0146 restore CHECKPOINT_VALID.
+None of these observations is acceptance or independent M2 validation.
+
+Record new LSN-0150/0151 and reopen/escalate LSN-0077/0105/0110/0128/0135 before correction.
+Refresh the whole lesson preflight and derive every canonical obligation; do not select a smaller
+set. Import the immutable scratch/actual diagnostic contexts as short inert raw names with
+verified bytes, source manifests and separate command namespaces. Never merge scratch STATE or
+COMMANDS as canonical evidence. Preserve original failed versions and every guarded recurrence.
+
+- G7-INT-022/023: under ADR0057 bind current build/verification roots by versioned policy,
+  retain exact absent/v1 identity and original scope assertions, and adopt only the executed
+  representation correction without suppressing source-quality rules.
+- G7-INT-024/028: record the structural Git-child decision, then repair only the actual immutable
+  reader's long-path handling. Real240-character source/281-character object-probe controls,
+  exact binary bytes, unchanged local/global settings, genuine bad-reference refusal and the
+  unchanged reconstruction/declaration owners must pass; never rename/omit published evidence.
+- G7-INT-025/026: cover the unchanged policy-owned run deadline with a finite observation
+  window, preserving every product deadline. Actual timeout/unavailable/malformed/private and
+  late-success controls plus the real red-report entrypoint must remain red on failed waiting.
+- G7-INT-027: establish actual populated byte-bound Git premises before any target conclusion.
+- G7-INT-029: derive and preserve all canonical producer reports plus inherited supported
+  outputs before consumers/cleanup, and forward those same current lifecycle originals. Keep
+  existing secret/refusal/original-byte controls and execute canonical-growth and cleanup cases.
+
+After current owning positive/adverse controls and unchanged whole quality pass, restore only
+executed local prevention; refresh memory, preflight, requirements, retrospective and explicit
+inventory. Publish a new unused runtime-v3, never move v1/v2, and freeze source/memory for one
+complete non-fast current proof followed by every ordered internal control and actual seal.
+Independent M2 review/Red Team/second-tool/attestation remain pending; no Gate8 authority.
+
 ## G7-S02 — Complete verification and ordered internal assurance
 
 - Objective: publish a tested immutable subject, execute the entire non-fast verifier from exact
@@ -898,3 +934,15 @@ This mechanically rendered list is not a substitute denominator and may omit no 
 
 - Required check: Execution exit0 does not replace a typed completed nonempty observation or actual matching file bytes; reject absent digests and incomplete reads before mutation or evidence acceptance.
 - Required evidence: Actual nonempty original-byte proof and executed running/failed/empty/null/mismatched-observation controls; original semantic failures remain visible.
+
+### LESSON-REQ-0149 — LSN-0150
+
+- Required check: Bind every current required root build/verification input by exact subject-versioned policy; real material changes, ignored files and deletion must invalidate current evidence while legacy subject fingerprints retain their original semantics.
+- Required evidence: Actual causal fingerprint red, current mutation/ignored/deletion and narrowing/version/type positive/adverse controls, preserved legacy identity, and complete current immutable verification; no caller-selected denominator or historical rewrite.
+
+### LESSON-REQ-0150 — LSN-0151
+
+- Required check: Read legitimate long immutable Git object paths with exact bytes on Windows using only child-scoped configuration; preserve local/global configuration, all archive membership and nonzero refusal semantics.
+- Required evidence: Actual bare-reader long-path failure beside a real scoped-child binary-byte success with unchanged configuration and observed owner cleanup; current owning reconstruction/declaration controls and complete immutable verification.
+
+<!-- END DERIVED LESSON COMMITMENTS -->

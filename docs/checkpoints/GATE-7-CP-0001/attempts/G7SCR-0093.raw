@@ -1,0 +1,29 @@
+RUF005 Consider `[*names, "undeclared-root.txt"]` instead of concatenation
+   --> tests/test_gate7_assurance.py:540:46
+    |
+538 |             {**valid, "additionalRootFiles": []},
+539 |             {**valid, "additionalRootFiles": list(reversed(names))},
+540 |             {**valid, "additionalRootFiles": names + ["undeclared-root.txt"]},
+    |                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+541 |             {**valid, "additionalRootFiles": names + names[:1]},
+542 |             *[
+    |
+help: Replace with `[*names, "undeclared-root.txt"]`
+
+SIM117 Use a single `with` statement with multiple contexts instead of nested `with` statements
+   --> tests/test_gate7_assurance.py:548:13
+    |
+546 |           ]
+547 |           for document in documents:
+548 | /             with self.subTest(policy=document), self.repository(document) as root:
+549 | |                 with self.assertRaisesRegex(
+550 | |                     ledger_common.LedgerError, "requires|unsupported|narrowed"
+551 | |                 ):
+    | |__________________^
+552 |                       ledger_common.assurance_root_files(root, required=True)
+553 |               self.assertFalse(root.exists())
+    |
+help: Combine `with` statements
+
+Found 2 errors.
+No fixes available (1 hidden fix can be enabled with the `--unsafe-fixes` option).

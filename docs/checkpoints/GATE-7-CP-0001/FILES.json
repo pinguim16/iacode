@@ -47,7 +47,7 @@
     {
       "path": ".iacode/memory/retrospectives/GATE-7-CP-0001.md",
       "reason": "Record observed failures, escalated recurrence, actual guard restoration and the canonical retrospective.",
-      "hashAfter": "033da2ff63382c3659f7fdce03bd1aad30216625af88a1e1a479c7704b4b8cd5"
+      "hashAfter": "6236afc00e83d3fe7106aba7f0a6f798925ef2ed8c91a78e0495651d7a556fa6"
     },
     {
       "path": ".iacode/policies/knowledge-policy.json",
@@ -126,13 +126,28 @@
     },
     {
       "path": "docs/adr/ADR-0055-code-graph-remains-an-explicit-future-reservation.md",
-      "reason": "Define the governed source, rights, index, citation and invalidation architecture.",
+      "reason": "Keep Code Graph an explicit next-Gate reservation without implementing it.",
       "hashAfter": "a24ab3a540372b5bbda5ef7f6e07a7b8d37210adf93cd16f9e1333f25232b4f2"
     },
     {
       "path": "docs/adr/ADR-0056-minimal-protocol-fixtures-inherit-only-control-contracts.md",
-      "reason": "Define the governed source, rights, index, citation and invalidation architecture.",
+      "reason": "Limit real protocol fixtures to their canonical control and runtime contracts.",
       "hashAfter": "3dbe6466919b53fe5ff6329a2afb328fc3df955db9a83aa66357f875d70c0b8b"
+    },
+    {
+      "path": "docs/adr/ADR-0057-build-and-verification-root-inputs-follow-subject-versioned-assurance.md",
+      "reason": "Version current build and verification root inputs without reinterpreting history.",
+      "hashAfter": "b0521be2d6d7c16c1e2d2a4148d1207b84b343a006aa31dd032d9d0881704d0d"
+    },
+    {
+      "path": "docs/adr/ADR-0058-immutable-review-git-reads-use-child-scoped-long-path-handling.md",
+      "reason": "Bind immutable review Git long-path handling to the owning child only.",
+      "hashAfter": "5add89c44e94e708d7a9f65082c26f46c9b86740f1b5ee0ae03e2150a8697b33"
+    },
+    {
+      "path": "docs/adr/ADR-0059-full-verifier-consumers-use-complete-canonical-archived-producers.md",
+      "reason": "Preserve every canonical producer and consume the same verified archived bytes.",
+      "hashAfter": "82eb0a229ffcca0b9f3cfb83a1d5f5a1a7713607da49b9dce47b2b22da9599b4"
     },
     {
       "path": "docs/checkpoints/GATE-7-CP-0001/AUTHORIZATION.md",
@@ -147,17 +162,17 @@
     {
       "path": "docs/checkpoints/GATE-7-CP-0001/CLOSURE-REQUIREMENTS.json",
       "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
-      "hashAfter": "30e9469ea2b4d045a1b100716cb8626a018152be929a933310c86870cf7a38a0"
+      "hashAfter": "378019bc69e456a1c74e4713baa42217b7569c0e6a7d5739f54df8cdd26c7852"
     },
     {
       "path": "docs/checkpoints/GATE-7-CP-0001/CLOSURE-REQUIREMENTS.md",
       "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
-      "hashAfter": "297f233025ed7cdeb6a4a2a1e1221ce7157a90b0d210ea9c3acd688f1faa6067"
+      "hashAfter": "3d000f179ff4f5b5297f46a8162eba5dcea708cd805489d751c50a2b03825280"
     },
     {
       "path": "docs/checkpoints/GATE-7-CP-0001/COMMANDS.jsonl",
       "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
-      "hashAfter": "73481c3eaf8f2807bf96b4bf42c34ea4609227aa47aaf1dc6e8f3fff3dceb1cf"
+      "hashAfter": "daa38543d5edd92176a9edc2c30df1faea9c951956ad45aacfaac78cecf2d88c"
     },
     {
       "path": "docs/checkpoints/GATE-7-CP-0001/CURRENT-PROGRESS.json",
@@ -177,7 +192,7 @@
     {
       "path": "docs/checkpoints/GATE-7-CP-0001/DOCUMENTATION-LINKS.json",
       "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
-      "hashAfter": "b322b248bb106e996f7a49aaac6f935300e9130ca1c0146ec10bbf8ea69a25e3"
+      "hashAfter": "2ed76a5ed70f911e8e0a389f3e787b6099ce48525b6413750b3d6c9758ad8f6c"
     },
     {
       "path": "docs/checkpoints/GATE-7-CP-0001/FILES.json",
@@ -186,12 +201,12 @@
     {
       "path": "docs/checkpoints/GATE-7-CP-0001/FINDINGS.json",
       "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
-      "hashAfter": "029ea962165a3ff5b7e7f757a5c58ac3658df1b4a833765d1721a8eb1f7b5266"
+      "hashAfter": "5b6d30ffad5aa274f71ced5c46a82f47b52ce8e224d0df9f6328bae02e3c6f28"
     },
     {
       "path": "docs/checkpoints/GATE-7-CP-0001/FULL-VERIFY-PROGRESS.json",
       "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
-      "hashAfter": "2337b53855d09a4fd71a06d8a5a22bb1e41aaeaba8f8e5b21722bf73e3331a2c"
+      "hashAfter": "332b64506aeb974d01905f4be2e72eef887cda1a2dc8ea59b9c494d822a12207"
     },
     {
       "path": "docs/checkpoints/GATE-7-CP-0001/HANDOFF.md",
@@ -201,22 +216,22 @@
     {
       "path": "docs/checkpoints/GATE-7-CP-0001/LESSON-PREFLIGHT.json",
       "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
-      "hashAfter": "340527b9088190454a4a69a5b4d0524ba5546bf2493427a3d4d900736b8d9254"
+      "hashAfter": "c9a412381f263ccb34dd75afd29d1c3449dcdc48e677660577ecc2ac6aa37c24"
     },
     {
       "path": "docs/checkpoints/GATE-7-CP-0001/LESSON-PREFLIGHT.md",
       "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
-      "hashAfter": "1f6c1a98f8222f41d27265dc9f698442175ab7570cee1f7c7d97ec95bd89884d"
+      "hashAfter": "af64dacbdb0c3e234ca11c13d54107575851b97b29f1b6ac7d0d5880f4aee624"
     },
     {
       "path": "docs/checkpoints/GATE-7-CP-0001/NEXT.md",
       "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
-      "hashAfter": "d09a30cb52f4c42f33ca3f22b29a5726e2e24b9df20d184107c9b6d0ffaaa420"
+      "hashAfter": "227cc2f3f528bead34f55698df22a10ff9e9d05ce5201f85af76c4a156b2dd98"
     },
     {
       "path": "docs/checkpoints/GATE-7-CP-0001/PLAN.md",
       "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
-      "hashAfter": "93ce261ce82d8db0f2a9d590941c31b3f488f5bed43277ecd12dc84240d15011"
+      "hashAfter": "4a71841578754be2e1246f11824a1dc87cac0d88949514c6d762ef71cd375e1e"
     },
     {
       "path": "docs/checkpoints/GATE-7-CP-0001/PROVENANCE.json",
@@ -236,17 +251,22 @@
     {
       "path": "docs/checkpoints/GATE-7-CP-0001/REQUIREMENTS-MATRIX.json",
       "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
-      "hashAfter": "aab6fef24e0497b4d622b4344833390cc40217f71da6989eb3862c1eb7ca5a5c"
+      "hashAfter": "6c8ffd9cb17a6cf8c415467cc4e97212e615f435049656a811e60e59b71dae04"
     },
     {
       "path": "docs/checkpoints/GATE-7-CP-0001/REQUIREMENTS-MATRIX.md",
       "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
-      "hashAfter": "c026f1265a12bf95510f3d7b66aa4a5ce98d76dd76b715418b21dace24eb08d1"
+      "hashAfter": "4b736ee5246da1fa827601415aacdf5c6c778dde92e758d23c2f6adfe95c87da"
     },
     {
       "path": "docs/checkpoints/GATE-7-CP-0001/REVIEW-BUNDLE-VALIDATION.json",
       "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
       "hashAfter": "28c96872c5321c017f80abd127c24dea6f5a4caa4f621c06107c1bceeed5bdae"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/REWORK-CONTEXT-ARCHIVE.json",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "57a423983c1aabd1110db47692b8f7e3028756093a16af89f3fa57dd239dabcf"
     },
     {
       "path": "docs/checkpoints/GATE-7-CP-0001/REWORK-LOG.jsonl",
@@ -261,17 +281,17 @@
     {
       "path": "docs/checkpoints/GATE-7-CP-0001/RUN-METADATA.json",
       "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
-      "hashAfter": "cbf993bb9b64f07dfb4681125334cf1dbc99635aedfa1fe6c9f489d076c25286"
+      "hashAfter": "af1d3069921a556059f66d82da81b963fdd987d28227e60262dfc7cadfbf8b4c"
     },
     {
       "path": "docs/checkpoints/GATE-7-CP-0001/RUNTIME-SUBJECT.json",
       "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
-      "hashAfter": "d502b7d10eb1d3a37bbbef903161270f6f9a098a01bed692f234742a181eba86"
+      "hashAfter": "3ac5084d93bc8cab507b362e6468aa7ab59b741db25e46e79511f128a5744431"
     },
     {
       "path": "docs/checkpoints/GATE-7-CP-0001/STATE.json",
       "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
-      "hashAfter": "10648557016bdec6cb9cee7d4985528b363b5ac0f129b8ff917fee7e728e88eb"
+      "hashAfter": "d7ffef018f5a2b91e20816002432a4b9f37e52379b4d44500bf25d64f2116f35"
     },
     {
       "path": "docs/checkpoints/GATE-7-CP-0001/STATUS.md",
@@ -297,6 +317,76 @@
       "path": "docs/checkpoints/GATE-7-CP-0001/attempts/ARCHIVE-V1-HELPER-PRE-UTF8.py.raw",
       "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
       "hashAfter": "6b972772f7fd863c7d166e098f4f8614e9dd49924bcb2f3fd5b13a440b4da89c"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/FULL-PRODUCER-875dbad08841-INTERNAL-FULL-VERIFY.json",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "c1eab6f5f04fcf14564c2426f2d5526e1816c7df7005e5c3144972822c91a1e6"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/FULL-PRODUCER-875dbad08841-MANIFEST.json",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "fe80a097b2662ec422a85b1478653af71a3aa0b066df5281dc4d9efc85d0c4c6"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/FULL-PRODUCER-875dbad08841-desktop-e2e.json",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "6e42c35ab9ce0b756bbae3f308b80c8818a170bb73f5122eea0b3cf89a502780"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/FULL-PRODUCER-875dbad08841-experience-store-e2e.json",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "9f9d72ae44416b2c91b9ae7d252dfd13f1faea5c107c041173fe8f7c9c34fbaf"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/FULL-PRODUCER-875dbad08841-knowledge-engine-e2e.json",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "618b6bdc4e124d114807f3e77e99e04228445085d7fc94b28033474892cd140c"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/FULL-PRODUCER-875dbad08841-native-editor-package.json",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "f23a38ed74fd24060eddb7284b11a223bd1a2170fb4377ec1e0e1d88042071c8"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/FULL-PRODUCER-875dbad08841-quality-cancellation.json",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "3b69b00488829ea0cc3c44a12cc173234b457d20b0e32706562674600e8ecc29"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/FULL-PRODUCER-875dbad08841-quality-fail.json",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "23193a29ae7df2ac8cfbb266b46f864ad5665a3b8032b80af8699d83b7d6bff5"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/FULL-PRODUCER-875dbad08841-quality-pass.json",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "4828a2d1c0d67e5762b768697d13a542d547a7e9bc6f7f2e54c6f377607c9fa2"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/FULL-PRODUCER-875dbad08841-quality-recovery.json",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "6402fc93862b21fb746eb590163311641f6720fc8a421d25a2d496efa5ea1f01"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/FULL-PRODUCER-875dbad08841-quality-reproduction.json",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "c7d26b2ea91442ddcb63c5a7981e8c54a0fec253a241ae355c19aa102e05f835"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/FULL-PRODUCER-875dbad08841-quality-secret-output.json",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "3dfd156088db59df3e9cdfb8bf7b579f7a5fe574c4aeae18fd6d47895f92d51c"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/FULL-PRODUCER-875dbad08841-quality-timeout.json",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "af87816a21402593b739f202611b83319ca57ee6d56217450f3c871b0766fe73"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/FULL-PRODUCER-875dbad08841-sandbox-tool-result-origin.json",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "88c9f4c515cfea149e9b62b069831b6c3057efb814fb8cccdc80c52c75299279"
     },
     {
       "path": "docs/checkpoints/GATE-7-CP-0001/attempts/FULL-PRODUCER-e34357ca2331-INTERNAL-FULL-VERIFY.json",
@@ -372,6 +462,666 @@
       "path": "docs/checkpoints/GATE-7-CP-0001/attempts/FULL-PRODUCER-e34357ca2331-sandbox-tool-result-origin.json",
       "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
       "hashAfter": "d9fe94bd4cb341075521888a98ac47adbc4dae38db433b03ecb1bb01a934aa74"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0001.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "e4409bc3d7a1b7e3cc45fc8dc37cff298f07a288a54988693801bbe4dccbae6b"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0002.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "c4cd1ee47f495fd15fa8f0d37d6d001a2dd8ae8928ee026728b8d06c82e860d8"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0003.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "31bbe3a72a34931e132029cb029d2b15537c8b6c822b1c932d1bc94bf9b9fb08"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0004.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "6e42c35ab9ce0b756bbae3f308b80c8818a170bb73f5122eea0b3cf89a502780"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0005.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "f150b39bb07f662c4ed469cec39179afffc065803b47875b337b3569c15df5c4"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0006.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "f23a38ed74fd24060eddb7284b11a223bd1a2170fb4377ec1e0e1d88042071c8"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0007.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "3b69b00488829ea0cc3c44a12cc173234b457d20b0e32706562674600e8ecc29"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0008.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "23193a29ae7df2ac8cfbb266b46f864ad5665a3b8032b80af8699d83b7d6bff5"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0009.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "4828a2d1c0d67e5762b768697d13a542d547a7e9bc6f7f2e54c6f377607c9fa2"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0010.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "6402fc93862b21fb746eb590163311641f6720fc8a421d25a2d496efa5ea1f01"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0011.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "c7d26b2ea91442ddcb63c5a7981e8c54a0fec253a241ae355c19aa102e05f835"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0012.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "3dfd156088db59df3e9cdfb8bf7b579f7a5fe574c4aeae18fd6d47895f92d51c"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0013.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "af87816a21402593b739f202611b83319ca57ee6d56217450f3c871b0766fe73"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0014.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "88c9f4c515cfea149e9b62b069831b6c3057efb814fb8cccdc80c52c75299279"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0015.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "02c5c59e0429470ab3fe996472b5a0369a4b6fee7beeb2f38be55c9f42a2910a"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0016.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "95a56078dedb11ddc723a43cc142c102176219ec2ea8dbebee9aae4ddeb79ee9"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0017.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "76e664c606e0cc454b76540636bb55489b2905a2a89860371f2ccaafda0fcc61"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0018.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "751c77338b91c4ae8da6f46e70345ed81daf276fa6a95252c546b4ce4059ebbc"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0019.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "e5ef1d4281a094eddd0ec3973ada6e2f2f88bd75f73fb426bbfe405787dc25e9"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0020.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "293e5187f066102450b26589ffbb43d9aeaa144ea0c7c070444289036e79e386"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0021.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "6e42c35ab9ce0b756bbae3f308b80c8818a170bb73f5122eea0b3cf89a502780"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0022.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "50cf6c01416cdff35e1867d0383c4476f8010f227213b737f41774a8e09e2646"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0023.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "f23a38ed74fd24060eddb7284b11a223bd1a2170fb4377ec1e0e1d88042071c8"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0024.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "3b69b00488829ea0cc3c44a12cc173234b457d20b0e32706562674600e8ecc29"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0025.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "23193a29ae7df2ac8cfbb266b46f864ad5665a3b8032b80af8699d83b7d6bff5"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0026.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "4828a2d1c0d67e5762b768697d13a542d547a7e9bc6f7f2e54c6f377607c9fa2"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0027.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "6402fc93862b21fb746eb590163311641f6720fc8a421d25a2d496efa5ea1f01"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0028.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "c7d26b2ea91442ddcb63c5a7981e8c54a0fec253a241ae355c19aa102e05f835"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0029.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "af87816a21402593b739f202611b83319ca57ee6d56217450f3c871b0766fe73"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0030.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "f6106414b612ab8b35ba88f293ce228b82949467626e608955f163154d264dd3"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0031.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "12565e3a636f917e25789e2cdee449a2ad93880a5d241824022e6d1d6f459a67"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0032.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "a6a79aa5a8cd33eefb5e626cfa7cd8b8673ca3579f236096fa278225f614853f"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0033.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "4e4b4b070c7f8c7b0205d6eda9d6b1c6ad2f7ba4e3a4f61c8be25701dcb3a8b2"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0034.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "88c9f4c515cfea149e9b62b069831b6c3057efb814fb8cccdc80c52c75299279"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0035.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "3104fc2010b77919953911a5faf4087c6ca845eeb58ab952e0ed0511a1cc307c"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0036.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "0e9f261e775c0366d570d96758348c1be0468c3154f783a7cb4120317cefeefb"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0037.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "489f12d52082e8cc0bbce2a573bb4c40d0cea6563adda1786c468698edbdc937"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0038.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "ce299dc831bdc1442415cf6ce95c013edcb957f59a81d9124c3b04bda7a618e7"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0039.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "954df395a701a3df7346067d08624dbd5887a3dce83a748142d607bb48a3c5c1"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0040.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "75176ea23405f39f6dfe59480363f9353a36540df74d2e4dbf847fa0a7c7bde9"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0041.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "bef008b6e8632e80327f901f55fee539b6ba97c2e0fcccc3b8c8c0c363aaa50d"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0042.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "2644103e1ded551ad65c01b0cf955bf01ab7ef7db5eaebac4f7e8adee230e2dc"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0043.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "828e654de483d6fe3c6e82a41fbc97044d4facddde8102b6020a1ffc6caa3b50"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0044.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "b0521be2d6d7c16c1e2d2a4148d1207b84b343a006aa31dd032d9d0881704d0d"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0045.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "fe84935776507e8714f4f48e94d83f206c4fcd1e12e228863b32c7dbcabaf2ed"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0046.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "ce299dc831bdc1442415cf6ce95c013edcb957f59a81d9124c3b04bda7a618e7"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0047.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "6c646ab7054030bee64be72a1b775a5ba1a6b1d8eddc1d7d2a89b28c43eb4e30"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0048.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "56b7e661029384b95b1bcb32187aeef38e4c82677c0372fa05f04ef5e5154c33"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0049.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "c7ffc241fe35fb2a96f7095a0ecf584643528275d1b72977a88bebb8b85d7e45"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0050.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "089479e2fe440d360b78c12f61cc7e74b6543deba6e5ed0ecfefc967653e1b41"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0051.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "30df0dabae892c3009a3f9b36834f65d73be700ec5a9e20554ea3581235f0ed0"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0052.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "2dd6dc902ba4656b69e7d3bea8d1aabfd51f321e16aa98cd9a8201f853576819"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0053.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "e9a2978432ef8e2a1ecd5219caebaeaf22572f6036c6ee45871f3bfdec670b4f"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0054.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "7c6336cf733131530f622116e1224d44a7dc1d5e2236f30d81b9afe26b45b04b"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0055.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "f6f90c666ed375262270884f055f563f9162ab17b224b0b85d3fc18844cfd5bb"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0056.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "b54564737c8d77bb272a396dc7af2b2a05a8d79b284c782d71afd8c9afce10da"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0057.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "85db76c3cb687077510adbcc68b9ff5e92a6ad7d1f4af1079295f427d467af4c"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0058.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "ff7c3d14e836930ce1a743eb67ba065868313758823d8e06adbe0144046962ba"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0059.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "5a924a98993a5c260b10d23ebd0a64109f784b52f849baf80be8b8c09da642cf"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0060.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "2667015c78098ac34aa261ab93d37b0893852acaec9c8c8413ab4495ae419d24"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0061.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "d5ef90a303d498ce1c7a23d1edebac726d93293b9b553cd209996574b3209ed1"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0062.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "e34d8c584f4d799468a979cb55cf1d60473ffbae682bbdb059d1968a4180ef64"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0063.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "6469424c44503799d3ecdec53f10e7eafec859c555ac154ee442ae9693c7835b"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0064.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "b01d8f940d05d1c338e839d43ef80f34058c2640601b993e9a025e4dbafc9ee4"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0065.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "8f89e6a5d9f7c7d424b081658ea2e259e49fa37a24c249e703904da9b9588f0b"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0066.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "4069a2bd53e5a27d0f90e491da61c795a86873608a539dd8919c29a29ddc4da6"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0067.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "8f89e6a5d9f7c7d424b081658ea2e259e49fa37a24c249e703904da9b9588f0b"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0068.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "1888512baef35fc7791c5c130ed1be6ac264ed75a26a04308d661ca30ccbfe38"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0069.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "8f89e6a5d9f7c7d424b081658ea2e259e49fa37a24c249e703904da9b9588f0b"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0070.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "784541010dcff974115221432c231f1e205ff1c6e52edb686fb4343c9ebc9307"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0071.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "2dbc88aa9e6b2dc5eebd181c576b562aca48946700f50000d64dec10167becc9"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0072.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "edff4a4fc72f245f63a27c8cf0ae6a36c9442dbcf5420fe93fb0c9378d101de5"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0073.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "961086ed68c4237ed38f709fc4c1d00c832127311baa56e7e6b8973908ddb602"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0074.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "3158751d295597a9806a32f941446403ea0e89341167b645937ddf5c838c12b4"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0075.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "dd5c8c64d5ad0a5226557371bef752c9a30e19827d59afac06df9c8414013d8a"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0076.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "ca33ddb612b7f7b73485d1be811cef4aedc30afdc9a7dcebc478f51930e91b6a"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0077.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "fd9852f05b3b55f0b9f4faa3cc629ebff2cdd16eada2f7cc076179d174a97827"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0078.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "c0c607609e60919e975e78ff1ad079ce76879622e5d47febefeb6cdf3623838f"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0079.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "01afe31df6be2df830985d5fdd4dad0c342a61e7a046fd014fc534ed5f5b3f57"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0080.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "e7b224edbc59260637a9a6fd761c7297df404dc6047dd97ee422844ed8c7a7fb"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0081.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "ec06cd3885d9ab25863d3477656118c3ee25a57d29a0f9986db7b1db6b234b96"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0082.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "0f42835a741bb7ca80aabb069896ef87823f6e3d2458ca46cf0436e3d2b2c17b"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0083.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "6df8584757e23a5b80a6d6ea029b49d64bdd2228156d6b56491b6d57194dd6e4"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0084.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "8a7223c46abd7b4833b452300103b1868136d3821d5610f8fe9493ac3a8751dc"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0085.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "ad5eff02d93838f713b961018243c0aed47b1e60db6eb4826b168268fce1afdb"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0086.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "20ac16ab1d9992fdb8b5b154d8886947409997058ed717988aff44af01640860"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0087.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "4885898cc14b098a21b9279f4174cdf0e8ffd44dffb2cb0d2ee7207fd4c3cf58"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0088.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "0da30e43f06a4208eb2fda7cde8a81dc62ea5a249a7fb341b5bae041bf1918a7"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0089.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "6f59eb0ab8cf132d07dc94e9ccde094274f23239047a115ac372a5254cccdc4b"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0090.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "9d3a06e38e4bf18a9c61d55765a8fcd725e5cdf35b93851235733f423a995a75"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0091.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "3c90c6ec4166bc92dd7c3370db0872a823d64fdcf39617bf2def1fa2b2283d99"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0092.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "1ef5853127eacef95b18146db081c63b392b6c1a3e6706974be4cf0302e524df"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0093.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "04b2c5e02f36cfbb94e73c1a6c8d7fbaead8a8dfa2bd0247f481f212e1859dac"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0094.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "466edfe6cb1e6dd2f993d4682404d3e8dee62937e5dbc93fd4eaf7361f078300"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0095.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "c32c5a1b923f35aa0fa8a4d2e31ff7826cf8cac6060ba34e479623254df963e9"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0096.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "ab3dd0c4afdb42f018a9f79691158d38eae4645cf2d9b0b4a263effa813252f1"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0097.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "e916974e3f52f3fb5cfb9c0cad489409994c4b3d913b56ea4a4c51084bdb2e34"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0098.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "ec75d00f58c73b7ba69838c2f1866cf1114519f35e5cb017e5964841ca69a0eb"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0099.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "6af0dbdc0bf3aba68eaae2c9c41928e3aec79028c3e9ec91940a725e8e3dd77c"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0100.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "e0d940f31732d91fed3add077fad533e39693d67f053284633d73fc815ef2502"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0101.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "09b08bffca36522a13e6f1ae934c940a3807b7d9072f36f5c8723cac6e934c86"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0102.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "1613583eeba05c11092f5a163d247ba93c4cbb6e86df3afee4db8473f808b396"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0103.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "828e654de483d6fe3c6e82a41fbc97044d4facddde8102b6020a1ffc6caa3b50"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0104.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "b0521be2d6d7c16c1e2d2a4148d1207b84b343a006aa31dd032d9d0881704d0d"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0105.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "fe84935776507e8714f4f48e94d83f206c4fcd1e12e228863b32c7dbcabaf2ed"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0106.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "6c646ab7054030bee64be72a1b775a5ba1a6b1d8eddc1d7d2a89b28c43eb4e30"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0107.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "6c6acf9f2b10d2900bd7a7c9d8a590f6baff71dead63221505618b976c933642"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0108.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "c7ffc241fe35fb2a96f7095a0ecf584643528275d1b72977a88bebb8b85d7e45"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0109.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "5245691b73f92bc1009c6296e27bb72fbe04525342ca1f59f0c13e43c43f73f9"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0110.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "f66d42ca47bf402e0541f3b1c84572fccdcb677df0f3a5d6e2d2f51334a2edf3"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0111.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "572151a30c54a514aa1c3411fe48c3b86c52253ac64d8acf03991726f7c61050"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0112.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "44d1c2d2b349f803db5d07649e869c68c12f27be4fb43d442abdf438be35f7b5"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0113.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "5a924a98993a5c260b10d23ebd0a64109f784b52f849baf80be8b8c09da642cf"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0114.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "8f6b89e3099c1d024495c8f9ccf243e7d387a6100314b8cd853f04fe6574283c"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0115.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "710d4e43952969ad54f03f27bb0bc028f742c32e3c22408f431106b7a5a25b88"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0116.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "b01d8f940d05d1c338e839d43ef80f34058c2640601b993e9a025e4dbafc9ee4"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0117.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "8f89e6a5d9f7c7d424b081658ea2e259e49fa37a24c249e703904da9b9588f0b"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0118.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "8a7223c46abd7b4833b452300103b1868136d3821d5610f8fe9493ac3a8751dc"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0119.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "ad5eff02d93838f713b961018243c0aed47b1e60db6eb4826b168268fce1afdb"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0120.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "20ac16ab1d9992fdb8b5b154d8886947409997058ed717988aff44af01640860"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0121.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "4885898cc14b098a21b9279f4174cdf0e8ffd44dffb2cb0d2ee7207fd4c3cf58"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0122.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "0da30e43f06a4208eb2fda7cde8a81dc62ea5a249a7fb341b5bae041bf1918a7"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0123.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "6f59eb0ab8cf132d07dc94e9ccde094274f23239047a115ac372a5254cccdc4b"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0124.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "9d3a06e38e4bf18a9c61d55765a8fcd725e5cdf35b93851235733f423a995a75"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0125.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "3c90c6ec4166bc92dd7c3370db0872a823d64fdcf39617bf2def1fa2b2283d99"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0126.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "1ef5853127eacef95b18146db081c63b392b6c1a3e6706974be4cf0302e524df"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0127.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "04b2c5e02f36cfbb94e73c1a6c8d7fbaead8a8dfa2bd0247f481f212e1859dac"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0128.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "e1d080f8de0f4f4c29bdb0e979cbac0fa474759cda2a761c61d7dae87b4239d9"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0129.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "c32c5a1b923f35aa0fa8a4d2e31ff7826cf8cac6060ba34e479623254df963e9"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0130.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "e916974e3f52f3fb5cfb9c0cad489409994c4b3d913b56ea4a4c51084bdb2e34"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-0131.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "ec75d00f58c73b7ba69838c2f1866cf1114519f35e5cb017e5964841ca69a0eb"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/G7SCR-TRANSFER.raw",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "eb289d0a73159cc7e33c299ef0cccc0c22c4de5a3411bf0b2f515b0e3df6099a"
     },
     {
       "path": "docs/checkpoints/GATE-7-CP-0001/attempts/HELPER-ORIGINALS.json",
@@ -484,9 +1234,54 @@
       "hashAfter": "0eaef3825b95b9f6002dc5f4d7a9b82a5f89b3606717274ee65d5df38fd17a5b"
     },
     {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/RUNTIME-V2-FAILED-COMPOSE-ISOLATION-AUDIT.json",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "d37888be7c8e8d066691d96faf704d6e4ec029b1eea51fcd64caf3259b6282e8"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/RUNTIME-V2-FAILED-FULL-MANIFEST.json",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "72327d3dbe86cae8d65f98db026759009406388f5bb9d90a2a1a3c0cbd702718"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/RUNTIME-V2-FAILED-FULL-VERIFY-PROGRESS.json",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "332b64506aeb974d01905f4be2e72eef887cda1a2dc8ea59b9c494d822a12207"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/RUNTIME-V2-FAILED-FUNCTIONAL-SCENARIOS.json",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "a6ac9a9d3dc467815f41a0825a90d8aff3e7c876877ab4b2eee305bd6ef2cdc8"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/RUNTIME-V2-FAILED-PRODUCER-REPORTS.json",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "e251daaa4605179f481331ab0517397e15db121f71067daea9e166c4fe9d41cc"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/RUNTIME-V2-FAILED-PUBLISHED-CLEAN-CLONE-REPORT.json",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "37d7ed9c2756a89afcf02720b2c225a21bc95e0549da6b30c6a9bd54dea29cdc"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/RUNTIME-V2-FAILED-RUNTIME-SUBJECT.json",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "dc283eacd438ae0578867f047fbbf210d19a31faa12579e5a7077c35a71e41d3"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/attempts/RUNTIME-V2-FAILED-VERIFY.json",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "c1eab6f5f04fcf14564c2426f2d5526e1816c7df7005e5c3144972822c91a1e6"
+    },
+    {
       "path": "docs/checkpoints/GATE-7-CP-0001/audit-harness/archive_failed_runtime_v1.py",
       "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
       "hashAfter": "1b1bfdd2a0d48b8c464edb1bf7c8dad9faff601af1df56e3b15f73da3a375795"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/audit-harness/archive_failed_runtime_v2.py",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "1c859598e96cb9eaced197b31113ab53c9972bd33eab6fb43376ba89318b331d"
     },
     {
       "path": "docs/checkpoints/GATE-7-CP-0001/audit-harness/archive_original_readme.py",
@@ -516,12 +1311,12 @@
     {
       "path": "docs/checkpoints/GATE-7-CP-0001/audit-harness/complete_requirements.py",
       "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
-      "hashAfter": "f8e3d1c7d9f204640037e7425f68df438188f930cdd4f032a9d5bdd481a3aa7e"
+      "hashAfter": "886ac3082aa181d52f7326fd840609485ba8e59af5800c8c33d9c7e1ff9a7889"
     },
     {
       "path": "docs/checkpoints/GATE-7-CP-0001/audit-harness/declare_inventory.py",
       "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
-      "hashAfter": "e7c98bfdd7ae3614aec23616b36b1594f93fd3bd92910b8fa2c955d072d9bd6f"
+      "hashAfter": "ddbf5f554172af524d553b911c52f43baf644c5a384bc1d5abc064f7eee32875"
     },
     {
       "path": "docs/checkpoints/GATE-7-CP-0001/audit-harness/diagnose_promotion_producer.py",
@@ -546,12 +1341,17 @@
     {
       "path": "docs/checkpoints/GATE-7-CP-0001/audit-harness/format_assurance_helpers.py",
       "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
-      "hashAfter": "286043e88eb933f860abe776cb50fe5dd742f2c6719991878ec1d8aadf1dee4c"
+      "hashAfter": "4c5cd997a165d16f48c739201fae1cda122acca1b7085dcbd4540f6211ceb05a"
     },
     {
       "path": "docs/checkpoints/GATE-7-CP-0001/audit-harness/format_current_python.py",
       "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
       "hashAfter": "8d3dc4eec0c35972c6bd5dc9684437c7b6a1134d1db72461bfe62206bc223a77"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/audit-harness/import_rework_contexts.py",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "e6893551e53970500161a361ea7917ad2b2e49e8613758019bedec6352c1e9bc"
     },
     {
       "path": "docs/checkpoints/GATE-7-CP-0001/audit-harness/prepare_entry.py",
@@ -581,7 +1381,7 @@
     {
       "path": "docs/checkpoints/GATE-7-CP-0001/audit-harness/run_full_verification.py",
       "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
-      "hashAfter": "d561838411477f5982bc87158d7470060b51b9a16502b4aa1af93f281449b36b"
+      "hashAfter": "7e55eaede2f276897739bee215e6601f9abb2ce61af0b9a169508baa68819d14"
     },
     {
       "path": "docs/checkpoints/GATE-7-CP-0001/audit-harness/run_internal_red_team.py",
@@ -627,6 +1427,56 @@
       "path": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/BASELINE-0001.log",
       "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
       "hashAfter": "7867d179cd8e62a51ab6fb7de42dd74a31f5851ea2865cf2b113f5c3cbb482ec"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/CANONICAL-COMPLETENESS-CAUSAL-RED-0001.json",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "2092b33bf77b3f270f9ecbcdaab5438dcf60606fc2808537dfd9f984fafd9223"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/CANONICAL-COMPLETENESS-CAUSAL-RED-0001.log",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "8f762123e78751c8aad31743685a9697027dcebcb79fe8855650fce5ac97fa51"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/CANONICAL-FORWARDING-GREEN-0001.json",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "5d4e6bb3720c3143028e68dbcb810846c81f1e9c83b583df0b01af0d5315f72a"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/CANONICAL-FORWARDING-GREEN-0001.log",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "baeaef8b92a068be8a1e2c377d6c99c1266d610ecb3125e546c8017e94d18837"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/CANONICAL-PRODUCERS-CAUSAL-RED-0001.json",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "7c1004d656a63eecbed9d1a0c78dffc55ca5d3afc04572d5c24bbbf95e0d8dc4"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/CANONICAL-PRODUCERS-CAUSAL-RED-0001.log",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "8b88373cb7d08492a21396dd866fd2310e4f4a6c3643e8c60138e6edd52f341f"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/CANONICAL-PRODUCERS-GREEN-0001.json",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "f6928d5dc7d84679a031f9e9049459fc1eaa96ddb60dbb30484422c11177fb67"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/CANONICAL-PRODUCERS-GREEN-0001.log",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "4cb53a3310cb89b4d6a79e723f57cbdfcf5dabe800ca12031781692c706d873d"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/CURRENT-REWORK-GATE7-0001.json",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "4ce3ab15f07420835e7c49dcc28ddbe908ed276117bc1508d8ab2d2cf4999075"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/CURRENT-REWORK-GATE7-0001.log",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "7d1a92a434008432acf8c4c0aa8f9ebd02b1a5570c4cfaa9ae7c6110ce07e755"
     },
     {
       "path": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/GATE-APITESTS-0001.json",
@@ -739,6 +1589,16 @@
       "hashAfter": "8f89e6a5d9f7c7d424b081658ea2e259e49fa37a24c249e703904da9b9588f0b"
     },
     {
+      "path": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/GATE-LINT-0006.json",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "a52f1ba85ffb4a476767c606755b469d1b38657a44542a693d2ad8bbb34dd025"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/GATE-LINT-0006.log",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "8f89e6a5d9f7c7d424b081658ea2e259e49fa37a24c249e703904da9b9588f0b"
+    },
+    {
       "path": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/GATE7-REWORK-ROOT-0001.json",
       "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
       "hashAfter": "dd1610ef650a90241511813f743a09eac0e0123feaf2e45e25215ce0963ba26a"
@@ -797,6 +1657,26 @@
       "path": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/GATE7-ROOT-0005.log",
       "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
       "hashAfter": "6ba2ca89577233fec6381ca17f77106490caf97a527a5023d36b28d31bde60e1"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/GIT-LONG-PATH-CAUSAL-RED-0001.json",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "f1d626bf176762b00ade337a61fb0e74e6c77abbde8fd59087b196bbc2054d67"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/GIT-LONG-PATH-CAUSAL-RED-0001.log",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "7ab686dea2b98e013744e2a9d75cc745a682f9b6df4088604ccda739ef3c9150"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/GIT-LONG-PATH-GREEN-0001.json",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "6cfa4647619b1695283abc12f8d993de9e33063688d65cf4b0d0578be9417f67"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/GIT-LONG-PATH-GREEN-0001.log",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "f038feed4dd5b98b822ede803ea703fb55676b9db0c66d627330852410a6840c"
     },
     {
       "path": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/GUARDS-V2-PREFREEZE-0001.json",
@@ -954,6 +1834,46 @@
       "hashAfter": "9b454a6753e7e4e5456c48ead0c98abc577fa9f66d8bafdf90044014b098c71b"
     },
     {
+      "path": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/REWORK-FORMAT-DIAGNOSTIC-0001.json",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "c207dda05a4e3ac3871d63393893e387deb188e9e3765f87c009a9546612fab5"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/REWORK-FORMAT-DIAGNOSTIC-0001.log",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "072362cd656fadc929ff2e125532fb38cc0c38ad94cc535bca9993b93deadb98"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/REWORK-HELPER-QUALITY-0001.json",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "ed924d7ba66cfe608598b1a23fb82ae7a8095659d71074fff86eed96bffda2fe"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/REWORK-HELPER-QUALITY-0001.log",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/REWORK-INHERITED-CONTROLS-0001.json",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "b32f1f8042b2ad4192a7f22b9642111710fe8da9e2cd0400ad9a35fa803310f6"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/REWORK-INHERITED-CONTROLS-0001.log",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "7094459e81033ab71f14d015aa33d7ab21ae1266fc124cb91cf384e7d77e2a45"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/REWORK-INHERITED-GATE4-0001.json",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "614d6ccedef8d46ca9d922735658d35a933b6d568aefa9c6f3bec18fc2d0ba3b"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/REWORK-INHERITED-GATE4-0001.log",
+      "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
+      "hashAfter": "f381fd08ab3bdd7f12dede2c77437e9c0a47c6a069aea905d695ccc8b21704cc"
+    },
+    {
       "path": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/ROLLUP-0001.json",
       "reason": "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff.",
       "hashAfter": "7f977b70f63cbe55aaab5dcda503af5162b2d75f3f575bf528c28fef1d1712b3"
@@ -1046,7 +1966,7 @@
     {
       "path": "docs/checkpoints/M2-CONSOLIDATION.md",
       "reason": "Consolidate Gates4-7 and preserve the independent M2 audit boundary.",
-      "hashAfter": "ea2da962e4a738d729850cf2261c6ad45f664c75edf86bd2ff5c6da185925cf5"
+      "hashAfter": "1d84c269b8655bba8fb884c14f13f0a5fb3090a6a73f452ae23a736b6801db57"
     },
     {
       "path": "docs/runbooks/KNOWLEDGE-ENGINE.md",
@@ -1116,12 +2036,22 @@
     {
       "path": "tests/test_gate7_assurance.py",
       "reason": "Execute current knowledge specification/boundary controls and real causal regression guards.",
-      "hashAfter": "4f3f8a2bf05b05b3cbfafe2ecf1203f29b55e8f2e52f724c038a801d89eb184c"
+      "hashAfter": "a84cfad02eea2ea86c2eebb456d5b4d6e0183585662bfc9269a78a32421198c6"
+    },
+    {
+      "path": "tests/test_gate7_git_transport.py",
+      "reason": "Execute current knowledge specification/boundary controls and real causal regression guards.",
+      "hashAfter": "c34b9e502b7fd207ae3f19c73c1a123a7014ca9f2e00318394c297e5a0051e39"
     },
     {
       "path": "tests/test_gate7_knowledge.py",
       "reason": "Execute current knowledge specification/boundary controls and real causal regression guards.",
       "hashAfter": "1fb3454859ef3826ed28a455f878134e151772830e2bdf07174d47b8caa9a029"
+    },
+    {
+      "path": "tests/test_gate7_quality_observation.py",
+      "reason": "Execute current knowledge specification/boundary controls and real causal regression guards.",
+      "hashAfter": "6af0dbdc0bf3aba68eaae2c9c41928e3aec79028c3e9ec91940a725e8e3dd77c"
     }
   ],
   "filesModified": [
@@ -1153,19 +2083,25 @@
       "path": ".iacode/memory/LESSONS.md",
       "reason": "Record observed failures, escalated recurrence, actual guard restoration and the canonical retrospective.",
       "hashBefore": "a9e1199109f4fb50bdcca580da46ce20342e45d6d95088d1db3ae876a1822bd5",
-      "hashAfter": "e13d6f0ff9c3dd9cc2de7efe45c0aab7c9c32c0d439c5785cdf150354040167e"
+      "hashAfter": "e303f2179b5a941a83c6b819c2b5a215abc2de6e17283256a0ef1fbe1958b0f8"
     },
     {
       "path": ".iacode/memory/guardrails/registry.json",
       "reason": "Record observed failures, escalated recurrence, actual guard restoration and the canonical retrospective.",
       "hashBefore": "a4d13a5efca8d4d33d49cd792142906c8579ee2ce7b6937ed0a5ce3be4c7a928",
-      "hashAfter": "b0b3c2ee861b543818b4317b3f13571ace2247aa2ca63eff6092e619f2389416"
+      "hashAfter": "0dc90eb67cd2987609812f8256bd406c94e897a4f800e54d7be43ce7e76ffbf3"
     },
     {
       "path": ".iacode/memory/lessons.jsonl",
       "reason": "Record observed failures, escalated recurrence, actual guard restoration and the canonical retrospective.",
       "hashBefore": "5c169fd19bda19a28122900e04caad568ca69d8db3de074a700f6b0c34143529",
-      "hashAfter": "f3716fa31db8d7c227d97a74d988a6420a68d0b19fc7ffef37e5b31731b692fa"
+      "hashAfter": "7b27bf14958c1d5d551e3950514a338d3881526fde58b71e1be3456e949e890d"
+    },
+    {
+      "path": ".iacode/policies/assurance-scope.json",
+      "reason": "Version current root build-context and verification inputs as a mandatory closed set.",
+      "hashBefore": "6e930693a7512329c5fbc123d18d1d48bf4fe6a8ac3cdff3b2f7863880d0d493",
+      "hashAfter": "828e654de483d6fe3c6e82a41fbc97044d4facddde8102b6020a1ffc6caa3b50"
     },
     {
       "path": ".iacode/policies/canonical-requirements.json",
@@ -1261,7 +2197,7 @@
       "path": "docs/adr/README.md",
       "reason": "Keep the canonical ADR index aligned with structural decisions.",
       "hashBefore": "aae86d329d00d9f3b2a0e606ef9cb18f9b41bc9ce549d1be50ecd79734e33d3e",
-      "hashAfter": "b7d4227c0510b6a9e4d1491803e3de3a7730a3d540b7d59357ae70afc863be91"
+      "hashAfter": "d0c80dca5f5a90c487872274864c1541d060cc40654dae1852186d04e3a9ddb4"
     },
     {
       "path": "docs/checkpoints/LATEST.md",
@@ -1300,10 +2236,22 @@
       "hashAfter": "3858ca9bd4a454248515ccd5db0fe21f82dd314796f956ec34b3835d35f98d2f"
     },
     {
+      "path": "scripts/development-ledger/ledger_common.py",
+      "reason": "Bind current root build/verification inputs without reinterpreting legacy subjects.",
+      "hashBefore": "dd9e05724d60e023267c3a8e2f2f57ed1d20d5b7906b8908c463f3337507d9fb",
+      "hashAfter": "c32c5a1b923f35aa0fa8a4d2e31ff7826cf8cac6060ba34e479623254df963e9"
+    },
+    {
       "path": "scripts/development-ledger/promotion_fixture.py",
       "reason": "Constrain protocol fixtures to control contracts and expose their owned locator.",
       "hashBefore": "41874848a32a4c71f8c93b7ba43f1d7f1372e48dc882067ce59199550789d13b",
       "hashAfter": "398a9f7495c679c3c17e4bb785bab2d68b56f32b579b6d4fbb1748fbe7b67aa7"
+    },
+    {
+      "path": "scripts/development-ledger/review_bundle.py",
+      "reason": "Read long immutable Git paths with child-only configuration and unchanged bytes.",
+      "hashBefore": "6a8d78f8e1c113445f411e26f1492b339348489d9c52ab04be2fdf7c2bff0561",
+      "hashAfter": "e64de03b3e861722fccc0ec89aaa8c220053d960ba95769341061dd91f8645f4"
     },
     {
       "path": "scripts/iacode/desktop_test_support.py",
@@ -1316,6 +2264,12 @@
       "reason": "Execute actual knowledge image tests and full owned functional/transport verification.",
       "hashBefore": "9e7eae47f572a51502932b7a8390181b75b806d68ac59ecc439b91e54ad6cf7b",
       "hashAfter": "92f1e185a33baf2d65ce84ab36690c71db2ecd89abdd3f989a34938101c9dc24"
+    },
+    {
+      "path": "scripts/iacode/scenarios/quality_engine_e2e.py",
+      "reason": "Execute actual knowledge image tests and full owned functional/transport verification.",
+      "hashBefore": "a3faf7d93f620494e507aec599ae4ef3334667d71c3b2f53d743ac5a03df3936",
+      "hashAfter": "ab3dd0c4afdb42f018a9f79691158d38eae4645cf2d9b0b4a263effa813252f1"
     },
     {
       "path": "scripts/iacode/verify.py",
@@ -1339,7 +2293,7 @@
       "path": "tests/test_gate5_clients.py",
       "reason": "Strengthen current mandatory membership without dropping inherited assertions.",
       "hashBefore": "98049b2fc926b4b239499d5bed456f4c98f911243aefe20fdf07a1aabfbc36f2",
-      "hashAfter": "1fcb60d57eae5be785cea98e98ba478a005c81bcaac686088dd270d79dbb3cef"
+      "hashAfter": "e916974e3f52f3fb5cfb9c0cad489409994c4b3d913b56ea4a4c51084bdb2e34"
     }
   ],
   "filesDeleted": []

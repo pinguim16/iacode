@@ -1,0 +1,29 @@
+{
+  "schemaVersion": "1.0.0",
+  "kind": "TARGETED_CAUSAL_NOT_WHOLE_GATE",
+  "gate": "GIT-LONG-PATH-GREEN",
+  "command": [
+    "python",
+    "-X",
+    "utf8",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-p",
+    "test_gate7_git_transport.py"
+  ],
+  "observedAt": "2026-10-19T02:49:50Z",
+  "subjectCommit": "13749adfa616c7f52aa7407cb9a9d7aef3d19c76",
+  "sourceDirty": true,
+  "sourceFingerprint": "110c2ce9180194e12dfcf18850fb7d742cdc1bf3cb3148c6edcbd6152a3181f3",
+  "sourceUnchanged": true,
+  "exitCode": 0,
+  "outputEncodingValid": true,
+  "unsafeOutputOccurrences": 0,
+  "outputBytes": 106,
+  "outputSha256": "92666c0dd331bd728fa893ab7b50b265355c745e2e6ce700d59ad26da18b7229",
+  "safeOutputArtifact": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/GIT-LONG-PATH-GREEN-0001.log",
+  "result": "PASS"
+}

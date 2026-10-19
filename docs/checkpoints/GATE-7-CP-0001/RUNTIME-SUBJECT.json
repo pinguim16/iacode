@@ -1,10 +1,10 @@
 {
   "schemaVersion": "1.0.0",
-  "kind": "PUBLISHED_FAILED_RUNTIME_CANDIDATE",
-  "subjectCommit": "a4b17e96c85efec5c1cd51305c5d1816ec82c77f",
-  "subjectTag": "iacode-subjects/GATE-7-CP-0001-runtime-v1",
-  "sourceFingerprint": "6d04b157618d2c796c9d223a8346e0e0e67ab0091f394078cee0b69311197f59",
-  "observedAt": "2026-10-18T18:13:24Z",
+  "kind": "PUBLISHED_RUNTIME_CANDIDATE_NOT_ACCEPTANCE",
+  "subjectCommit": "13749adfa616c7f52aa7407cb9a9d7aef3d19c76",
+  "subjectTag": "iacode-subjects/GATE-7-CP-0001-runtime-v2",
+  "sourceFingerprint": "035c4f155f9d7d2981b49e05f52e0b57805ba1c8e300e2ca7e692503a7ecefd1",
+  "observedAt": "2026-10-18T21:34:36Z",
   "publicationDriverActualExitCode": 0,
   "committedCheckpointValidation": "PASS",
   "mainAndOriginMatched": true,
@@ -17,5 +17,12 @@
   "checkpointSealed": false,
   "gate8Authorized": false,
   "completeVerificationActualExitCode": 1,
-  "failedAttemptManifest": "attempts/RUNTIME-V1-FAILED-FULL-MANIFEST.json"
+  "completeVerificationCommand": "command:cmd-0143",
+  "failedVerificationManifest": "attempts/RUNTIME-V2-FAILED-FULL-MANIFEST.json",
+  "previousFailedImmutableAttempt": {
+    "subjectCommit": "a4b17e96c85efec5c1cd51305c5d1816ec82c77f",
+    "subjectTag": "iacode-subjects/GATE-7-CP-0001-runtime-v1",
+    "result": "FAIL",
+    "manifest": "attempts/RUNTIME-V1-FAILED-FULL-MANIFEST.json"
+  }
 }

@@ -22,7 +22,7 @@ Gate8 is neither implemented nor authorized by this document.
 
 The canonical tags are `iacode-checkpoints/` followed by each checkpoint ID. Historical verdicts
 remain unchanged. The checkpoint chain anchors all sealed predecessors; it does not rewrite a
-subject into an independent approval. The failed Gate7 runtime-v1 tag also remains immutable.
+subject into an independent approval. Failed Gate7 runtime-v1 and runtime-v2 tags remain immutable.
 
 ## Cross-Gate integration and architecture
 
@@ -49,8 +49,8 @@ restart/retry/reindex cannot renew the original ceiling or resurrect withdrawal.
 ## Requirements and completeness
 
 The current [canonical Gate7 checklist](../GATE-7-CHECKLIST.md) has48 rows. The latest actual
-preflight/derivation cmd-0118/0119 yields148 applicable lessons and196 total requirements,
-including195 mandatory rows. These are obligations, not196 completed requirements. Current
+preflight/derivation cmd-0149/0150 yields150 applicable lessons and198 total requirements,
+including197 mandatory rows. These are obligations, not198 completed requirements. Current
 implementation/evidence status belongs to the [matrix](GATE-7-CP-0001/REQUIREMENTS-MATRIX.json)
 and [closure requirements](GATE-7-CP-0001/CLOSURE-REQUIREMENTS.json). No smaller set may be
 selected by a delivery argument. The audit-only Delivery Completeness Validator must verify total
@@ -73,7 +73,20 @@ cases. Final counts must be derived from the canonical physical collections and 
 complete processes, with shared run IDs deduplicated. The current [TESTS](GATE-7-CP-0001/TESTS.json),
 [QUALITY](GATE-7-CP-0001/QUALITY.json) and command ledger retain those distinctions.
 
-The fresh complete immutable runtime-v2 invocation, canonical functional binding, whole mandatory
+The completed runtime-v2 cmd-0143 is also FAIL: all49 stages execute,46 PASS and3 FAIL.
+Its root producer reports942 tests with two immutable-review reconstruction errors; quality-iacode
+outlives the900-second observer while still legally RUNNING, and the portability attackT escapes.
+Exact originals and isolation/cleanup observations are retained in
+[the v2 failed-attempt manifest](GATE-7-CP-0001/attempts/RUNTIME-V2-FAILED-FULL-MANIFEST.json).
+Neither passing fragments nor retained cleanup observations turn that run into acceptance.
+
+Current rework binds four versioned root build/verification inputs without changing legacy
+subjects, uses child-only Git long-path handling, observes the unchanged canonical quality deadline,
+and consumes every canonical producer from its verified durable original. Cmd-0160 passes all60
+current Gate7 cases, cmd-0161 passes unchanged whole mandatory lint, and cmd-0162 passes explicit
+read-only helper quality. Owning inherited regressions and the new whole run remain due.
+
+The next fresh complete immutable runtime-v3 invocation, canonical functional binding, whole mandatory
 Green Keeper, total completeness, fresh internal Red Team/VALID control and full clean-clone
 closure mirror remain mandatory. Historical PASS or green fragments from failed invocations
 cannot fill a missing current premise. Their eventual actual outcomes must be recorded by their
@@ -102,9 +115,15 @@ The [ADR index](../adr/README.md) preserves earlier M2 decisions. Gate7 adds
 [ADR-0053](../adr/ADR-0053-knowledge-requires-content-bound-source-permission.md) for source-bound
 rights, [ADR-0054](../adr/ADR-0054-knowledge-indexes-are-rebuildable-cited-projections.md) for
 rebuildable cited lexical projections, [ADR-0055](../adr/ADR-0055-code-graph-remains-an-explicit-future-reservation.md)
-for a RESERVED-only next boundary, and
+for a RESERVED-only next boundary,
 [ADR-0056](../adr/ADR-0056-minimal-protocol-fixtures-inherit-only-control-contracts.md) for
-minimal protocol fixture control ownership. No production control, promotion denominator or
+minimal protocol fixture control ownership,
+[ADR-0057](../adr/ADR-0057-build-and-verification-root-inputs-follow-subject-versioned-assurance.md)
+for subject-versioned build/verification root inputs,
+[ADR-0058](../adr/ADR-0058-immutable-review-git-reads-use-child-scoped-long-path-handling.md)
+for exact immutable reads with child-scoped Git handling, and
+[ADR-0059](../adr/ADR-0059-full-verifier-consumers-use-complete-canonical-archived-producers.md)
+for complete canonical raw-producer consumption. No production control, promotion denominator or
 historical tag is weakened to obtain a green result.
 
 ## Red Team and closure audit

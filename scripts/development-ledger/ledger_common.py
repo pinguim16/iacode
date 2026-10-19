@@ -502,9 +502,14 @@ def assurance_root_files(root: Path, *, required: bool = False) -> tuple[str, ..
             raise LedgerError("Gate 5+ requires the versioned root assurance-scope policy")
         return ()
     document = load_json(policy)
-    expected = [".gitignore", "ruff.toml"]
-    if (not isinstance(document, dict) or document.get("schemaVersion") != "1.0.0"
-            or document.get("additionalRootFiles") != expected):
+    if not isinstance(document, dict) or not isinstance(document.get("schemaVersion"), str):
+        raise LedgerError("unsupported or narrowed root assurance-scope policy")
+    versions = {
+        "1.0.0": [".gitignore", "ruff.toml"],
+        "2.0.0": [".dockerignore", ".gitignore", "ruff.toml", "verify.ps1"],
+    }
+    expected = versions.get(document["schemaVersion"])
+    if expected is None or document.get("additionalRootFiles") != expected:
         raise LedgerError("unsupported or narrowed root assurance-scope policy")
     return tuple(expected)
 

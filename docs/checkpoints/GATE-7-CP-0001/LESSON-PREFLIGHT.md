@@ -4,9 +4,9 @@
 - Scope: `Knowledge Engine governed source ingestion lexical indexing retrieval citations rights invalidation persistence privacy recovery and M2 internal audit handoff`
 - Technologies: `Python`, `PostgreSQL`, `Docker`, `Windows`
 - Modules: `services/knowledge`, `apps/api`, `packages/contracts`, `packages/persistence`, `scripts/iacode`
-- Generated: `2026-10-18T21:29:41Z`
-- Lessons considered: 149
-- Lessons applicable: 148
+- Generated: `2026-10-19T03:27:51Z`
+- Lessons considered: 151
+- Lessons applicable: 150
 
 Every applicable lesson below is a requirement of this Gate. The derived identifiers must
 appear in `REQUIREMENTS-MATRIX.json`, and the Delivery Completeness Validator fails the
@@ -89,7 +89,7 @@ delivery when one is absent.
 | `LSN-0074` An importable source tree is not an installed or repository-configured test environment | `GUARDED` | CRITICAL | `LESSON-REQ-0073` | For Python tests executed from a nested project root, prove the sandbox provides installed distribution metadata and repository-root policy/configuration without reading or writing the host. |
 | `LSN-0075` Offline package installation requires its build backend inside the quality image | `GUARDED` | HIGH | `LESSON-REQ-0074` | Whenever a sandbox performs an offline package installation, prove every declared build backend is pinned in the content-addressed execution image and usable by the non-root runtime. |
 | `LSN-0076` Projected nested configuration requires an explicit monorepo root | `GUARDED` | HIGH | `LESSON-REQ-0075` | When repository configuration is projected into a nested project, provide an explicit trusted repository root and prove source-boundary scans do not reinterpret the projection as ownership. |
-| `LSN-0077` Harness wait bounds must reflect workload size without changing product deadlines | `GUARDED` | HIGH | `LESSON-REQ-0076` | For a functional harness whose workload cardinality differs materially by scenario, prove its bounded wait covers the largest legitimate execution without weakening the product's own timeout or deadline. |
+| `LSN-0077` Harness wait bounds must reflect workload size without changing product deadlines | `GUARDED` | CRITICAL | `LESSON-REQ-0076` | For a functional harness whose workload cardinality differs materially by scenario, prove its bounded wait covers the largest legitimate execution without weakening the product's own timeout or deadline. |
 | `LSN-0078` Evidence recorders must resolve caller-supplied commit references before execution | `GUARDED` | HIGH | `LESSON-REQ-0077` | Before an evidence recorder executes a command, resolve every caller-supplied commit reference to a real canonical commit and normalize repeated provenance inputs. |
 | `LSN-0079` Test discovery and the unit runner must cover the same project scope | `GUARDED` | HIGH | `LESSON-REQ-0078` | For every test applicability rule, prove the corresponding closed runner collects the same project scope and that a failing source at each recognized location is observed. |
 | `LSN-0080` A failed verification stage must not leave an older PASS report addressable | `GUARDED` | HIGH | `LESSON-REQ-0079` | Whenever a verification stage writes to a reusable report path, prove the old artifact is removed before execution and cannot survive a failed rerun as current evidence. |
@@ -122,7 +122,7 @@ delivery when one is absent.
 | `LSN-0107` An adversarial marker must satisfy the canonical detector before it can judge containment | `GUARDED` | HIGH | `LESSON-REQ-0106` | Prove the generated adverse bytes are recognized by the canonical detector before judging rejection, and retain a clean positive path through the identical execution. |
 | `LSN-0108` Evidence timestamp transport must preserve RFC3339 rather than a shell locale rendering | `GUARDED` | LOW | `LESSON-REQ-0107` | Read the raw command record as JSON and preserve its exact timestamp; validate lesson datetime fields and reject locale renderings before evidence publication. |
 | `LSN-0109` Regression counts and evidence must exclude only policy-bound live input repositories | `GUARDED` | HIGH | `LESSON-REQ-0108` | Declare input repositories in canonical policy with reasons and require exact agreement with literal pytest collection; use one boundary for counts and evidence while retaining every mandatory live scenario. |
-| `LSN-0110` A timed-out live proof retains bounded diagnostics before owned cleanup | `GUARDED` | MEDIUM | `LESSON-REQ-0109` | Keep the deadline unchanged, write a red report with sanitized history failure metadata and pending activity types before cleanup, and never continue adverse cases after a failed clean control. |
+| `LSN-0110` A timed-out live proof retains bounded diagnostics before owned cleanup | `GUARDED` | HIGH | `LESSON-REQ-0109` | Keep the deadline unchanged, write a red report with sanitized history failure metadata and pending activity types before cleanup, and never continue adverse cases after a failed clean control. |
 | `LSN-0111` Polling watcher cleanup must preserve completed checks and accepted cancellation | `GUARDED` | HIGH | `LESSON-REQ-0110` | Accept typed activity cancellation only when this cleanup requested it, propagate unrelated and precompleted failures, and recheck active handle lifetime after durable reads without losing the accepted cancellation flag. |
 | `LSN-0112` Canonical scanner consumers must share transport decoding, not only patterns | `GUARDED` | HIGH | `LESSON-REQ-0111` | Use the identical bounded in-memory transport views for runtime and publication, retain exact component-digest review, never expose values, and keep raw/encoded clean and negative controls. |
 | `LSN-0113` Stronger delivery controls must follow the immutable subject policy version | `GUARDED` | CRITICAL | `LESSON-REQ-0112` | Version every changed invariant by the subject's canonical policy, retain mandatory current downgrade controls, and validate all sealed tags with current tooling without altering subjects or narrowing membership. |
@@ -140,7 +140,7 @@ delivery when one is absent.
 | `LSN-0125` Native parent exit is not proof of process and profile cleanup | `GUARDED` | CRITICAL | `LESSON-REQ-0124` | Own native descendants before launch; pin a complete bounded member snapshot and validate each handle against the exact job. Require zero accounting plus signaled observed handles within the existing drain deadline. Preserve typed failure facts, validate exact temporary targets, bound sharing retries and require observed removal. Never kill global user processes or suppress cleanup failures. |
 | `LSN-0126` Known authentication material is not domain or presentation data | `GUARDED` | CRITICAL | `LESSON-REQ-0125` | Keep known authentication material separate from domain input and presentation. Reject declared raw and encoded forms before effects, retain unknown-secret scanning unchanged, and preserve uncertainty for response refusals after acceptance. |
 | `LSN-0127` Fresh runtime health does not initialize an operator-managed model catalog | `GUARDED` | HIGH | `LESSON-REQ-0126` | For a fresh isolated runtime, establish explicit operator-managed catalog prerequisites and verify exact authorized model availability separately from health. Never silently substitute a model or misclassify empty discovery as a credential failure. |
-| `LSN-0128` Adversarial premises must use the actual public contract | `GUARDED` | HIGH | `LESSON-REQ-0127` | Build adversarial premises from actual public contracts and observed execution identities. Do not invent fields, widen public metadata for test convenience or drop the real boundary assertion when a harness premise fails. |
+| `LSN-0128` Adversarial premises must use the actual public contract | `GUARDED` | CRITICAL | `LESSON-REQ-0127` | Build adversarial premises from actual public contracts and observed execution identities. Do not invent fields, widen public metadata for test convenience or drop the real boundary assertion when a harness premise fails. |
 | `LSN-0129` Repeated cancellation must preserve an already cancelled terminal result | `GUARDED` | HIGH | `LESSON-REQ-0128` | Treat repeated cancellation of an already CANCELLED run as immutable observation, not a new transition; preserve refusal for successful/failed terminal work and distinguish request from actual completion/cleanup. |
 | `LSN-0130` Executable export line endings belong to the source and packaging contract | `GUARDED` | HIGH | `LESSON-REQ-0129` | Bind executable line endings in Git and packaging, retain exact source/protocol bytes and refuse incompatible CRLF inputs. Same-checkout deterministic agreement alone is not cross-platform byte evidence. |
 | `LSN-0131` Raw evidence digests require byte-preserving Git export, not text normalization | `GUARDED` | CRITICAL | `LESSON-REQ-0130` | Preserve claimed raw observation digests across actual Git export rather than checking only a local copy. Declare dedicated copied-evidence boundaries explicitly without changing historical observation bytes. |
@@ -162,6 +162,8 @@ delivery when one is absent.
 | `LSN-0147` Framework lifecycle errors need bounded identities as well as test methods | `GUARDED` | HIGH | `LESSON-REQ-0146` | Retain safe bounded test-method and class/module lifecycle failure identities without disclosing arbitrary traceback bodies or silently omitting a supported family. |
 | `LSN-0148` Minimal protocol fixtures inherit control contracts, never deployment-owned source data | `GUARDED` | HIGH | `LESSON-REQ-0147` | Construct minimal protocol repositories from explicit canonical control assets and declared runtime dependencies, not deployment-owned curator sources, unrelated histories or attestation verdicts. |
 | `LSN-0149` A shell exit zero is not a produced digest or verified original evidence | `GUARDED` | HIGH | `LESSON-REQ-0148` | Execution exit0 does not replace a typed completed nonempty observation or actual matching file bytes; reject absent digests and incomplete reads before mutation or evidence acceptance. |
+| `LSN-0150` Build and verification root inputs need subject-versioned assurance binding | `GUARDED` | HIGH | `LESSON-REQ-0149` | Bind every current required root build/verification input by exact subject-versioned policy; real material changes, ignored files and deletion must invalidate current evidence while legacy subject fingerprints retain their original semantics. |
+| `LSN-0151` Immutable Git object reads must handle Windows long paths only in the owning child | `GUARDED` | HIGH | `LESSON-REQ-0150` | Read legitimate long immutable Git object paths with exact bytes on Windows using only child-scoped configuration; preserve local/global configuration, all archive membership and nonzero refusal semantics. |
 
 ## Why each lesson applies
 
@@ -692,7 +694,7 @@ delivery when one is absent.
 
 ### LSN-0077 — Harness wait bounds must reflect workload size without changing product deadlines
 
-- Reason: applies to every Gate; category quality; severity HIGH; already guarded, so the control must keep holding
+- Reason: applies to every Gate; category quality; severity CRITICAL; already guarded, so the control must keep holding
 - Required check: For a functional harness whose workload cardinality differs materially by scenario, prove its bounded wait covers the largest legitimate execution without weakening the product's own timeout or deadline.
 - Required evidence: A control that binds every large-workload terminal wait to a distinct finite bound plus successful real executions within that bound.
 - Derived requirement: `LESSON-REQ-0076`
@@ -923,7 +925,7 @@ delivery when one is absent.
 
 ### LSN-0110 — A timed-out live proof retains bounded diagnostics before owned cleanup
 
-- Reason: applies to every Gate; category testing; severity MEDIUM; already guarded, so the control must keep holding
+- Reason: applies to every Gate; category testing; severity HIGH; already guarded, so the control must keep holding
 - Required check: Keep the deadline unchanged, write a red report with sanitized history failure metadata and pending activity types before cleanup, and never continue adverse cases after a failed clean control.
 - Required evidence: A valid positive control, a premise check and behavioral proof at the actual target; the complete current mandatory suite.
 - Derived requirement: `LESSON-REQ-0109`
@@ -1049,7 +1051,7 @@ delivery when one is absent.
 
 ### LSN-0128 — Adversarial premises must use the actual public contract
 
-- Reason: applies to every Gate; category testing; severity HIGH; already guarded, so the control must keep holding
+- Reason: applies to every Gate; category testing; severity CRITICAL; already guarded, so the control must keep holding
 - Required check: Build adversarial premises from actual public contracts and observed execution identities. Do not invent fields, widen public metadata for test convenience or drop the real boundary assertion when a harness premise fails.
 - Required evidence: Retained actual pre-attack harness failure, canonical public-field/ID positive and adverse controls, then the actual API-origin refusal with a real executed sandbox tool.
 - Derived requirement: `LESSON-REQ-0127`
@@ -1200,3 +1202,17 @@ delivery when one is absent.
 - Required check: Execution exit0 does not replace a typed completed nonempty observation or actual matching file bytes; reject absent digests and incomplete reads before mutation or evidence acceptance.
 - Required evidence: Actual nonempty original-byte proof and executed running/failed/empty/null/mismatched-observation controls; original semantic failures remain visible.
 - Derived requirement: `LESSON-REQ-0148`
+
+### LSN-0150 — Build and verification root inputs need subject-versioned assurance binding
+
+- Reason: applies to every Gate; category security; severity HIGH; already guarded, so the control must keep holding
+- Required check: Bind every current required root build/verification input by exact subject-versioned policy; real material changes, ignored files and deletion must invalidate current evidence while legacy subject fingerprints retain their original semantics.
+- Required evidence: Actual causal fingerprint red, current mutation/ignored/deletion and narrowing/version/type positive/adverse controls, preserved legacy identity, and complete current immutable verification; no caller-selected denominator or historical rewrite.
+- Derived requirement: `LESSON-REQ-0149`
+
+### LSN-0151 — Immutable Git object reads must handle Windows long paths only in the owning child
+
+- Reason: applies to every Gate; category quality; severity HIGH; already guarded, so the control must keep holding
+- Required check: Read legitimate long immutable Git object paths with exact bytes on Windows using only child-scoped configuration; preserve local/global configuration, all archive membership and nonzero refusal semantics.
+- Required evidence: Actual bare-reader long-path failure beside a real scoped-child binary-byte success with unchanged configuration and observed owner cleanup; current owning reconstruction/declaration controls and complete immutable verification.
+- Derived requirement: `LESSON-REQ-0150`

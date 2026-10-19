@@ -1,0 +1,649 @@
+{
+  "schemaVersion": "1.0.0",
+  "checkpoint": "GATE-7-CP-0001",
+  "findings": [
+    {
+      "findingId": "G7-INT-027",
+      "severity": "CRITICAL",
+      "classification": "GUARDRAIL_FAILURE",
+      "lessonId": "LSN-0128",
+      "guardrailId": "GRD-0130",
+      "status": "CLOSED",
+      "title": "Empty owned Git archive prevents a causal observer test from reaching its target",
+      "observed": "Scratch cmd-0164 retains one real budget assertion failure and a tarfile.ReadError before wait_terminal. The latter is not evidence of the intended timeout branch.",
+      "requiredCorrection": "Use a populated actual owned Git repository, verify the actual archive member bytes before the scenario call, keep every original timeout/privacy assertion, then repeat the causal red and positive/adverse controls. Preserve the original failed premise.",
+      "evidence": [
+        "checkpoint:suite-attempts/QUALITY-OBSERVER-CAUSAL-RED-0001.json",
+        "checkpoint:suite-attempts/QUALITY-OBSERVER-CAUSAL-RED-0001.log"
+      ],
+      "resolution": "Populate an actual owned Git repository and bind its archive bytes with fixture-local attributes; verify the real archive member before the observer target. The unchanged boundary reaches its intended causal red after the original empty/archive-conversion refusals. Current owning controls and original public-request/active-state guards pass; no public API or global Git setting changes. Scratch cmd-0177 passes66 current/inherited controls; cmd-0176 passes whole unchanged lint. All prior red streams and same-session scratch provenance remain. This is not canonical parent closure or independent M2 validation.",
+      "resolutionEvidence": [
+        "checkpoint:suite-attempts/QUALITY-OBSERVER-FINAL-GREEN-0001.json",
+        "checkpoint:suite-attempts/QUALITY-OBSERVER-PRODUCER-GREEN-0001.json",
+        "checkpoint:suite-attempts/GATE-LINT-0008.json"
+      ]
+    },
+    {
+      "findingId": "G7-INT-025",
+      "severity": "CRITICAL",
+      "classification": "GUARDRAIL_FAILURE",
+      "lessonId": "LSN-0077",
+      "guardrailId": "GRD-0078",
+      "status": "CLOSED",
+      "title": "Whole-repository quality observation expires before the policy-owned legitimate run deadline",
+      "observed": "Runtime-v2 quality-iacode reports FAIL in1327.7s. Its observer waits900 seconds; the actual75-check/70-applicable frozen workflow remains RUNNING under the unchanged3600-second product maximum. The full parent is still running.",
+      "requiredCorrection": "Keep all product deadlines/checks and actual failed history. Bind the large-workload observer to the canonical maximum run policy plus finite observation grace, execute causal and policy-drift controls, then complete one new immutable whole proof. No timeout may become PASS.",
+      "evidence": [
+        "checkpoint:attempts/QUALITY-IACODE-RUNTIME-V2-LIVE-DIAGNOSTICS.json",
+        "file:scripts/iacode/scenarios/quality_engine_e2e.py",
+        "file:.iacode/policies/quality-policy.json"
+      ],
+      "resolution": "Actual local policy-relative bound, original finite-wait guards and clean observer controls pass. The3660-second observation covers the unchanged canonical3600-second maximum plus60-second final-observation grace; product/check/workflow policy is unchanged (scratch cmd-0172). A new canonical immutable full run is still required; runtime-v2 remains failed history. Scratch cmd-0177 passes66 current/inherited controls; cmd-0176 passes whole unchanged lint. All prior red streams and same-session scratch provenance remain. This is not canonical parent closure or independent M2 validation.",
+      "resolutionEvidence": [
+        "checkpoint:suite-attempts/QUALITY-OBSERVER-FINAL-GREEN-0001.json",
+        "checkpoint:suite-attempts/QUALITY-OBSERVER-PRODUCER-GREEN-0001.json",
+        "checkpoint:suite-attempts/GATE-LINT-0008.json"
+      ]
+    },
+    {
+      "findingId": "G7-INT-026",
+      "severity": "HIGH",
+      "classification": "GUARDRAIL_FAILURE",
+      "lessonId": "LSN-0110",
+      "guardrailId": "GRD-0111",
+      "status": "CLOSED",
+      "title": "IACode scenario timeout bypasses its structured failure producer",
+      "observed": "The actual failed quality-iacode stage leaves no var/quality-iacode.json. The following owned scenario recreates its API/evaluator/sandbox; bounded read-only status projections are preserved separately, not as original producer bytes or acceptance.",
+      "requiredCorrection": "At the actual IACode terminal-wait branch preserve a red report with bounded enum/count-only diagnostics before cleanup. Cover unavailable/malformed observations and private fields, keep every product deadline and original assertion; successful diagnostics cannot turn the failed wait green.",
+      "evidence": [
+        "checkpoint:attempts/QUALITY-IACODE-RUNTIME-V2-LIVE-DIAGNOSTICS.json",
+        "file:scripts/iacode/scenarios/quality_engine_e2e.py"
+      ],
+      "resolution": "Actual IACode scenario and script entrypoint preserve a red structured failure producer, closed enum/count projections, explicit unavailable/malformed outcomes and privacy, while a late successful diagnostic cannot promote an expired wait. Original secret-output timeout guards remain and pass. This is executed local unit prevention, not current whole runtime acceptance. Scratch cmd-0177 passes66 current/inherited controls; cmd-0176 passes whole unchanged lint. All prior red streams and same-session scratch provenance remain. This is not canonical parent closure or independent M2 validation.",
+      "resolutionEvidence": [
+        "checkpoint:suite-attempts/QUALITY-OBSERVER-FINAL-GREEN-0001.json",
+        "checkpoint:suite-attempts/QUALITY-OBSERVER-PRODUCER-GREEN-0001.json",
+        "checkpoint:suite-attempts/GATE-LINT-0008.json"
+      ]
+    },
+    {
+      "findingId": "G7-INT-023",
+      "severity": "CRITICAL",
+      "classification": "GUARDRAIL_FAILURE",
+      "lessonId": "LSN-0105",
+      "guardrailId": "GRD-0106",
+      "status": "CLOSED",
+      "title": "New isolated root-input tests violate unchanged iterable and context-layout rules",
+      "observed": "Scratch cmd-0145 refuses RUF005/SIM117; scratch cmd-0146 preserves exact safe readonly diagnostics. This is recurrence13, not current canonical parent command evidence.",
+      "requiredCorrection": "Retain every original failure/rule/assertion; change only equivalent iterable/context representation and execute new/current/inherited controls and whole unchanged quality before local restoration.",
+      "evidence": [
+        "checkpoint:suite-attempts/ROOT-INPUT-STYLE-RED-0001.json",
+        "checkpoint:suite-attempts/ROOT-INPUT-STYLE-RED-0001.log"
+      ],
+      "resolution": "Recurrence13/CRITICAL and exact original scratch source-quality refusals remain. Change only equivalent iterable/context representation; scratch cmd-0149 formatter/check, cmd-0150 all54 current/inherited/preflight/resolver cases, cmd-0151 whole unchanged mandatory lint and cmd-0152 ADR index cases pass. This is local same-session experimental restoration only; the canonical parent must re-execute current complete assurance and never use scratch IDs as its own commands.",
+      "resolutionEvidence": [
+        "checkpoint:suite-attempts/ROOT-INPUT-CAUSAL-RED-0001.json",
+        "checkpoint:suite-attempts/ROOT-INPUT-STYLE-RED-0001.json",
+        "checkpoint:suite-attempts/ROOT-INPUT-GREEN-0001.json",
+        "checkpoint:suite-attempts/GATE-LINT-0006.json",
+        "checkpoint:suite-attempts/ROOT-INPUT-ADR-GREEN-0001.json"
+      ]
+    },
+    {
+      "findingId": "G7-INT-022",
+      "severity": "HIGH",
+      "classification": "ASSURANCE_SCOPE_INPUT_OMISSION",
+      "lessonId": "LSN-0150",
+      "status": "CLOSED",
+      "title": "Required build-context and verification root inputs are not bound by the current assurance scope",
+      "observed": "The actual isolated Git fixture changes .dockerignore bytes but scope_fingerprint remains equal. The owner is removed and the parent source remains unchanged. Current v1 binds only .gitignore and ruff.toml; the real Windows verify.ps1 launcher is also outside it.",
+      "rootCause": "Root assurance input membership was not extended when the build-context privacy boundary was added; future inputs require an explicit subject policy/version decision under ADR-0049.",
+      "requiredCorrection": "Version the canonical root policy and consumer, bind current build/verification roots, preserve absent/v1 legacy semantics and all original assertions. Execute real causal/current/legacy/narrowing controls and fresh complete immutable proof before readiness.",
+      "evidence": [
+        "checkpoint:attempts/SCOPE-INPUT-DIAGNOSTIC.json",
+        "file:.iacode/policies/assurance-scope.json",
+        "file:scripts/development-ledger/ledger_common.py",
+        "file:tests/test_gate7_knowledge.py",
+        "file:verify.ps1"
+      ],
+      "resolution": "ADR-0057 and exact v2 root policy bind build-context privacy and the real Windows verification launcher while preserving absent/v1 semantics. The exact original causal red observes two unbound edits. Scratch cmd-0150 passes54 current/inherited/preflight/resolver cases, cmd-0151 passes whole unchanged mandatory lint and cmd-0152 passes all4 ADR index cases. GRD-0153 is locally executed prevention, not canonical parent delivery, complete immutable proof or independent M2 approval.",
+      "resolutionEvidence": [
+        "checkpoint:suite-attempts/ROOT-INPUT-CAUSAL-RED-0001.json",
+        "checkpoint:suite-attempts/ROOT-INPUT-STYLE-RED-0001.json",
+        "checkpoint:suite-attempts/ROOT-INPUT-GREEN-0001.json",
+        "checkpoint:suite-attempts/GATE-LINT-0006.json",
+        "checkpoint:suite-attempts/ROOT-INPUT-ADR-GREEN-0001.json"
+      ]
+    },
+    {
+      "findingId": "G7-INT-021",
+      "severity": "CRITICAL",
+      "classification": "GUARDRAIL_FAILURE",
+      "lessonId": "LSN-0105",
+      "guardrailId": "GRD-0106",
+      "status": "CLOSED",
+      "title": "Authored assurance helpers still violate unchanged style after mechanical formatting",
+      "observed": "Cmd-0121 exits1 on new helper/test literal length, confusable dash, iterable/context layout. Its failed command remains; no exact stdout archive is invented. Cmd-0122 child formatter exits0 but its immutable wrapper correctly returns FAIL on source mutation, so that receipt is not readonly acceptance.",
+      "requiredCorrection": "Repair only equivalent representation/layout, retain all rules/assertions and execute read-only explicit quality, whole mandatory lint and causal controls.",
+      "resolution": "Recurrence12/CRITICAL remains. Repair only syntax, equivalent string/import/iterable/context layout; no assertion/rule change. Actual explicit read-only quality cmd-0125, whole unchanged mandatory lint cmd-0128, all35 current cases cmd-0123 and all57 inherited causal cases cmd-0127 pass. Cmd-0122 remains FAIL because a mutating formatter was sent through an immutable evidence wrapper; it is not read-only acceptance. Local executable guard restoration only; the failed immutable runtime-v1 remains FAIL. A new complete immutable invocation and every ordered internal assurance control are still required before readiness; independent M2 validation remains pending.",
+      "resolutionEvidence": [
+        "command:cmd-0121",
+        "command:cmd-0122",
+        "command:cmd-0124",
+        "command:cmd-0125",
+        "command:cmd-0123",
+        "command:cmd-0127",
+        "command:cmd-0128"
+      ]
+    },
+    {
+      "findingId": "G7-INT-018",
+      "severity": "CRITICAL",
+      "classification": "GUARDRAIL_FAILURE",
+      "lessonId": "LSN-0105",
+      "guardrailId": "GRD-0106",
+      "status": "CLOSED",
+      "title": "Cmd-0114 formatting refuses a duplicated opening docstring in archive_failed_runtime_v1.py after an unsafe whole-file edit",
+      "observed": "Cmd-0114 formatting refuses a duplicated opening docstring in archive_failed_runtime_v1.py after an unsafe whole-file edit. Its exact8683-byte invalid preimage is retained with SHA39ce38a22ea9957f9280bc7a3f980c4dbba01c53d933049471a321cb6055f582. Repair source only and repeat complete unchanged quality.",
+      "requiredCorrection": "Require actual completed source reads and source-only repair; preserve the preimage and every assertion; execute actual positive/adverse and unchanged whole source quality before restoration.",
+      "evidence": [
+        "command:cmd-0114",
+        "checkpoint:attempts/ARCHIVE-V1-HELPER-PARSE-RED.py.raw"
+      ],
+      "resolution": "Recurrence12/CRITICAL remains. Repair only syntax, equivalent string/import/iterable/context layout; no assertion/rule change. Actual explicit read-only quality cmd-0125, whole unchanged mandatory lint cmd-0128, all35 current cases cmd-0123 and all57 inherited causal cases cmd-0127 pass. Cmd-0122 remains FAIL because a mutating formatter was sent through an immutable evidence wrapper; it is not read-only acceptance. Local executable guard restoration only; the failed immutable runtime-v1 remains FAIL. A new complete immutable invocation and every ordered internal assurance control are still required before readiness; independent M2 validation remains pending.",
+      "resolutionEvidence": [
+        "command:cmd-0120",
+        "command:cmd-0123",
+        "command:cmd-0125",
+        "command:cmd-0126",
+        "command:cmd-0127",
+        "command:cmd-0128",
+        "command:cmd-0129"
+      ]
+    },
+    {
+      "findingId": "G7-INT-020",
+      "severity": "CRITICAL",
+      "classification": "GUARDRAIL_FAILURE",
+      "lessonId": "LSN-0146",
+      "guardrailId": "GRD-0149",
+      "status": "CLOSED",
+      "title": "The whole-file edit consumed a source-read response without checking actual completion or nonempty content",
+      "observed": "The whole-file edit consumed a source-read response without checking actual completion or nonempty content. The resulting helper contains old and new bodies. The exact read response was not retained, so a particular asynchronous timing is an inference, not an observed fact. Require a completed/nonempty source observation before constructing a replacement, and actual parse/quality proof afterwards.",
+      "requiredCorrection": "Require actual completed source reads and source-only repair; preserve the preimage and every assertion; execute actual positive/adverse and unchanged whole source quality before restoration.",
+      "evidence": [
+        "command:cmd-0114",
+        "checkpoint:attempts/ARCHIVE-V1-HELPER-PARSE-RED.py.raw"
+      ],
+      "resolution": "Use synchronous actual child exits for dependent publication and typed completed/nonempty source observations before building replacements. Cmd-0123 executes real running/failed/successful children, the serial publication controls and readonly original-byte/envelope controls. Cmd-0120 verifies actual retained preimage bytes. The old source-read response was not retained, so its particular asynchronous timing remains an inference, not an observed fact. Local executable guard restoration only; the failed immutable runtime-v1 remains FAIL. A new complete immutable invocation and every ordered internal assurance control are still required before readiness; independent M2 validation remains pending.",
+      "resolutionEvidence": [
+        "command:cmd-0120",
+        "command:cmd-0123",
+        "command:cmd-0125",
+        "command:cmd-0126",
+        "command:cmd-0127",
+        "command:cmd-0128",
+        "command:cmd-0129"
+      ]
+    },
+    {
+      "findingId": "G7-INT-019",
+      "severity": "HIGH",
+      "classification": "SEMANTIC_EVIDENCE_VERIFICATION_FAILURE",
+      "lessonId": "LSN-0149",
+      "status": "CLOSED",
+      "title": "A shell exit zero is not a produced digest or verified original evidence",
+      "observed": "Cmd-0115 copies the file but its legacy child shell cannot resolve Get-FileHash; nonterminating errors leave both digest variables empty and the process exits0.",
+      "rootCause": "The ad-hoc verifier treats execution status and equality of absent results as produced evidence instead of requiring typed nonempty data and actual file verification.",
+      "requiredCorrection": "Retain the original zero-exit error record. Never use it as hash acceptance. Require fail-fast shell semantics when shells are needed, and typed actual byte/size/digest verification for evidence; reject running, failed, empty, missing, null or mismatched observations.",
+      "evidence": [
+        "command:cmd-0115",
+        "command:cmd-0116",
+        "checkpoint:attempts/ARCHIVE-V1-HELPER-PARSE-RED.py.raw"
+      ],
+      "observedConsequence": "Copy bytes exist and were separately compared using real nonempty source/archive SHA256 in the active shell. The failed child verification and rejected command are not promoted into evidence.",
+      "resolution": "Typed actual nonempty bytes, positive integer size and lowercase SHA256 must agree; a shell exit or absent equality cannot substitute. Cmd-0120 verifies both retained originals. Cmd-0123 executes real running/failed/clean children, null/empty/wrong-type/digest/size mutations and actual atomic readonly source-envelope proof. Original cmd-0115 semantic failure and cmd-0116 precondition rejection remain. Local executable guard restoration only; the failed immutable runtime-v1 remains FAIL. A new complete immutable invocation and every ordered internal assurance control are still required before readiness; independent M2 validation remains pending.",
+      "resolutionEvidence": [
+        "command:cmd-0120",
+        "command:cmd-0123",
+        "command:cmd-0125",
+        "command:cmd-0126",
+        "command:cmd-0127",
+        "command:cmd-0128",
+        "command:cmd-0129"
+      ]
+    },
+    {
+      "findingId": "G7-INT-011",
+      "severity": "CRITICAL",
+      "classification": "GUARDRAIL_FAILURE",
+      "lessonId": "LSN-0011",
+      "guardrailId": "GRD-0006",
+      "status": "CLOSED",
+      "title": "The unchanged current metadata regression cannot load the missing Gate7 run_checkpoint_validation.py",
+      "observed": "The unchanged current metadata regression cannot load the missing Gate7 run_checkpoint_validation.py. Restore a canonical synchronizer/hash/validator adapter and keep its original boundary test.",
+      "requiredCorrection": "Repair the causal owner without weakening existing assertions; retain original failures and execute current positive/adverse and complete assurance before restoration.",
+      "evidence": [
+        "command:cmd-0099",
+        "command:cmd-0102",
+        "checkpoint:attempts/RUNTIME-V1-FAILED-FULL-MANIFEST.json"
+      ],
+      "resolution": "Restore the canonical synchronizer/hash/validator adapter without a stale STATE snapshot. The original complete metadata class passes cmd-0127, including terminal/other-gate refusal. Inventory and current whole-delivery validation remain separately mandatory. Local executable guard restoration only; the failed immutable runtime-v1 remains FAIL. A new complete immutable invocation and every ordered internal assurance control are still required before readiness; independent M2 validation remains pending.",
+      "resolutionEvidence": [
+        "command:cmd-0120",
+        "command:cmd-0123",
+        "command:cmd-0125",
+        "command:cmd-0126",
+        "command:cmd-0127",
+        "command:cmd-0128",
+        "command:cmd-0129"
+      ]
+    },
+    {
+      "findingId": "G7-INT-014",
+      "severity": "CRITICAL",
+      "classification": "GUARDRAIL_FAILURE",
+      "lessonId": "LSN-0029",
+      "guardrailId": "GRD-0029",
+      "status": "CLOSED",
+      "title": "After Gate7 consumes the knowledge reservation, the next canonical Gate8 Code Graph has no explicit reserved path",
+      "observed": "After Gate7 consumes the knowledge reservation, the next canonical Gate8 Code Graph has no explicit reserved path. Preserve the existing scope assertion and declare only a future reservation/ADR, with no Gate8 implementation or authorization.",
+      "requiredCorrection": "Repair the causal owner without weakening existing assertions; retain original failures and execute current positive/adverse and complete assurance before restoration.",
+      "evidence": [
+        "command:cmd-0099",
+        "command:cmd-0102",
+        "checkpoint:attempts/RUNTIME-V1-FAILED-FULL-MANIFEST.json"
+      ],
+      "resolution": "ADR-0055 declares only a RESERVED Code Graph notice, with no Gate8 implementation or authority. Current real scope/additional-file refusal passes cmd-0123, original scope assertions pass cmd-0127, and all32 actual protocol/succession cases pass cmd-0126. Local executable guard restoration only; the failed immutable runtime-v1 remains FAIL. A new complete immutable invocation and every ordered internal assurance control are still required before readiness; independent M2 validation remains pending.",
+      "resolutionEvidence": [
+        "command:cmd-0120",
+        "command:cmd-0123",
+        "command:cmd-0125",
+        "command:cmd-0126",
+        "command:cmd-0127",
+        "command:cmd-0128",
+        "command:cmd-0129"
+      ]
+    },
+    {
+      "findingId": "G7-INT-012",
+      "severity": "CRITICAL",
+      "classification": "GUARDRAIL_FAILURE",
+      "lessonId": "LSN-0083",
+      "guardrailId": "GRD-0084",
+      "status": "CLOSED",
+      "title": "Original publish_progress.py and run_knowledge_integration.py omit the shared UTF-8 bootstrap",
+      "observed": "Original publish_progress.py and run_knowledge_integration.py omit the shared UTF-8 bootstrap. The new archive helper repeats that omission in cmd-0102. Configure the real entry points, retaining the unchanged stream scan and the original cmd-0101 unscannable-byte refusal.",
+      "requiredCorrection": "Repair the causal owner without weakening existing assertions; retain original failures and execute current positive/adverse and complete assurance before restoration.",
+      "evidence": [
+        "command:cmd-0099",
+        "command:cmd-0102",
+        "checkpoint:attempts/RUNTIME-V1-FAILED-FULL-MANIFEST.json"
+      ],
+      "resolution": "Configure actual entrypoints with the shared UTF-8 stream before work. Current cold boundary controls pass cmd-0123 and the unchanged complete subprocess class passes cmd-0127. The original unscannable-byte receipt remains unpromoted. Local executable guard restoration only; the failed immutable runtime-v1 remains FAIL. A new complete immutable invocation and every ordered internal assurance control are still required before readiness; independent M2 validation remains pending.",
+      "resolutionEvidence": [
+        "command:cmd-0120",
+        "command:cmd-0123",
+        "command:cmd-0125",
+        "command:cmd-0126",
+        "command:cmd-0127",
+        "command:cmd-0128",
+        "command:cmd-0129"
+      ]
+    },
+    {
+      "findingId": "G7-INT-010",
+      "severity": "CRITICAL",
+      "classification": "GUARDRAIL_FAILURE",
+      "lessonId": "LSN-0102",
+      "guardrailId": "GRD-0103",
+      "status": "CLOSED",
+      "title": "The inherited minimum/all-mandatory assertion accepts removal of newly registered knowledgeTests",
+      "observed": "The inherited minimum/all-mandatory assertion accepts removal of newly registered knowledgeTests. Actual cmd-0099 and unchanged causal cmd-0102 fail the original adverse test. Derive current canonical membership while retaining the immutable minimum and every mandatory assertion.",
+      "requiredCorrection": "Repair the causal owner without weakening existing assertions; retain original failures and execute current positive/adverse and complete assurance before restoration.",
+      "evidence": [
+        "command:cmd-0099",
+        "command:cmd-0102",
+        "checkpoint:attempts/RUNTIME-V1-FAILED-FULL-MANIFEST.json"
+      ],
+      "resolution": "Strengthen the assertion owner with current canonical mandatory IDs while retaining the immutable minimum/all-mandatory checks. Actual removal, optional downgrade and newly registered growth controls pass cmd-0123; original inherited bookkeeping/quality classes pass cmd-0127. Local executable guard restoration only; the failed immutable runtime-v1 remains FAIL. A new complete immutable invocation and every ordered internal assurance control are still required before readiness; independent M2 validation remains pending.",
+      "resolutionEvidence": [
+        "command:cmd-0120",
+        "command:cmd-0123",
+        "command:cmd-0125",
+        "command:cmd-0126",
+        "command:cmd-0127",
+        "command:cmd-0128",
+        "command:cmd-0129"
+      ]
+    },
+    {
+      "findingId": "G7-INT-013",
+      "severity": "CRITICAL",
+      "classification": "GUARDRAIL_FAILURE",
+      "lessonId": "LSN-0117",
+      "guardrailId": "GRD-0119",
+      "status": "CLOSED",
+      "title": "Gate7 DEVELOPMENT.md removes explicit agentRuntimeTests and sandboxTests names required by unchanged inherited documentation controls",
+      "observed": "Gate7 DEVELOPMENT.md removes explicit agentRuntimeTests and sandboxTests names required by unchanged inherited documentation controls. Restore all current canonical mandatory identifiers and execute omission/growth controls.",
+      "requiredCorrection": "Repair the causal owner without weakening existing assertions; retain original failures and execute current positive/adverse and complete assurance before restoration.",
+      "evidence": [
+        "command:cmd-0099",
+        "command:cmd-0102",
+        "checkpoint:attempts/RUNTIME-V1-FAILED-FULL-MANIFEST.json"
+      ],
+      "resolution": "Restore every registered mandatory gate ID in DEVELOPMENT.md without freezing lifecycle status. Current omission/growth controls pass cmd-0123 and unchanged inherited Gate2/Gate3 documentation classes pass cmd-0127; older README rollup controls remain. Local executable guard restoration only; the failed immutable runtime-v1 remains FAIL. A new complete immutable invocation and every ordered internal assurance control are still required before readiness; independent M2 validation remains pending.",
+      "resolutionEvidence": [
+        "command:cmd-0120",
+        "command:cmd-0123",
+        "command:cmd-0125",
+        "command:cmd-0126",
+        "command:cmd-0127",
+        "command:cmd-0128",
+        "command:cmd-0129"
+      ]
+    },
+    {
+      "findingId": "G7-INT-017",
+      "severity": "CRITICAL",
+      "classification": "GUARDRAIL_FAILURE",
+      "lessonId": "LSN-0135",
+      "guardrailId": "GRD-0137",
+      "status": "CLOSED",
+      "title": "Cmd-0105 captures zero originals because the new diagnostic searches its work directory instead of the actual promotion child",
+      "observed": "Cmd-0105 captures zero originals because the new diagnostic searches its work directory instead of the actual promotion child. Owned cleanup removes the real mirror. Preserve the zero-capture failure, fix the exact producer path and prove capture before interpretation/cleanup with a fresh actual producer.",
+      "requiredCorrection": "Repair the causal owner without weakening existing assertions; retain original failures and execute current positive/adverse and complete assurance before restoration.",
+      "evidence": [
+        "command:cmd-0099",
+        "command:cmd-0102",
+        "checkpoint:attempts/RUNTIME-V1-FAILED-FULL-MANIFEST.json"
+      ],
+      "resolution": "Use the actual producer-owned promotion locator and retain all exact mirror originals before interpretation/cleanup. Current real consumer-error/cleanup control passes cmd-0123; cmd-0129 completes the real positive protocol, captures both original mirrors with actual nonempty bytes/hash, finds no failed dimensions, removes its owner and preserves source. The prior zero-capture failure remains. Local executable guard restoration only; the failed immutable runtime-v1 remains FAIL. A new complete immutable invocation and every ordered internal assurance control are still required before readiness; independent M2 validation remains pending.",
+      "resolutionEvidence": [
+        "command:cmd-0120",
+        "command:cmd-0123",
+        "command:cmd-0125",
+        "command:cmd-0126",
+        "command:cmd-0127",
+        "command:cmd-0128",
+        "command:cmd-0129"
+      ]
+    },
+    {
+      "findingId": "G7-INT-015",
+      "lessonId": "LSN-0148",
+      "severity": "HIGH",
+      "classification": "INTERNAL_PROTOCOL_FAILURE",
+      "status": "CLOSED",
+      "title": "All five real protocol setups are refused by the actual mirror",
+      "observed": "Cmd-0103/0104 retain five actual setUpClass failures: the finalizer refuses READY_FOR_REVIEW because the actual mirror fails. Its failed dimension is not yet established. Cmd-0105 retains a zero-original diagnostic, not a fabricated dimension.",
+      "requiredCorrection": "Capture the real mirror from the actual promotion child before cleanup; repair its proven causal owner without synthetic reports or narrowed controls.",
+      "evidence": [
+        "command:cmd-0103",
+        "command:cmd-0104",
+        "command:cmd-0105"
+      ],
+      "resolution": "ADR-0056 restricts minimal protocol fixtures to explicit control contracts and declared dependencies, not curator data, real history or unrelated attestations. Actual synthetic owner-isolation/dependency and retained-contract MIR-015 refusal pass cmd-0123; all32 unchanged real promotion/succession tests pass cmd-0126, and cmd-0129 retains two actual clean mirror originals before cleanup. Local executable guard restoration only; the failed immutable runtime-v1 remains FAIL. A new complete immutable invocation and every ordered internal assurance control are still required before readiness; independent M2 validation remains pending.",
+      "resolutionEvidence": [
+        "command:cmd-0120",
+        "command:cmd-0123",
+        "command:cmd-0125",
+        "command:cmd-0126",
+        "command:cmd-0127",
+        "command:cmd-0128",
+        "command:cmd-0129"
+      ],
+      "rootCause": "Actual cmd-0110 establishes MIR-015: copying all .iacode imports the deployment curator README without its owning ADR into a minimal control fixture."
+    },
+    {
+      "findingId": "G7-INT-016",
+      "severity": "HIGH",
+      "classification": "DIAGNOSTIC_COMPLETENESS_FAILURE",
+      "lessonId": "LSN-0147",
+      "status": "CLOSED",
+      "title": "Framework lifecycle errors need bounded identities as well as test methods",
+      "observed": "The full root producer reports five failures and six errors, but its header list retains only six method identities and omits five real setUpClass errors.",
+      "rootCause": "The diagnostic parser admits only test-method names while unittest lifecycle error holders use a different framework vocabulary.",
+      "requiredCorrection": "Keep the incomplete original. Extend safe bounded lifecycle identities without traceback-body leakage or waived limits; require executed positive/adverse/overflow controls.",
+      "evidence": [
+        "command:cmd-0099",
+        "command:cmd-0104",
+        "checkpoint:attempts/RUNTIME-V1-FAILED-VERIFY.json"
+      ],
+      "resolution": "Extend only bounded ASCII framework identities to class/module lifecycle errors. Actual method/lifecycle/privacy/malformed/256-count/1024-length controls pass cmd-0123, preserving the incomplete original full producer and all original privacy/truncation bounds. Local executable guard restoration only; the failed immutable runtime-v1 remains FAIL. A new complete immutable invocation and every ordered internal assurance control are still required before readiness; independent M2 validation remains pending.",
+      "resolutionEvidence": [
+        "command:cmd-0120",
+        "command:cmd-0123",
+        "command:cmd-0125",
+        "command:cmd-0126",
+        "command:cmd-0127",
+        "command:cmd-0128",
+        "command:cmd-0129"
+      ]
+    },
+    {
+      "findingId": "G7-INT-009",
+      "severity": "CRITICAL",
+      "classification": "GUARDRAIL_FAILURE",
+      "lessonId": "LSN-0105",
+      "guardrailId": "GRD-0106",
+      "status": "CLOSED",
+      "title": "New archive/full-verifier helper bootstrap placement violates unchanged import order",
+      "observed": "Cmd-0086 refuses four E402 checks when the new archive/full-verifier helpers enter explicit source checking. Cmd-0087 preserves exact fresh read-only diagnostics.",
+      "rootCause": "The adapted checkpoint-helper bootstrap pattern was outside mandatory runtime lint; expanded explicit checking now exposes its module-level import placement. This remains the authored-source quality class at recurrence10/CRITICAL.",
+      "requiredCorrection": "Move only affected imports into their actual consumers; preserve canonical delegation, raw capture and all stage semantics. Require explicit current check, full unchanged mandatory lint and every current root control before restoration.",
+      "evidence": [
+        "command:cmd-0086",
+        "command:cmd-0087",
+        "checkpoint:suite-attempts/STYLE-RED-0004.json",
+        "checkpoint:suite-attempts/STYLE-RED-0004.log"
+      ],
+      "resolution": "Move only affected imports to their actual consumers, preserving canonical stage delegation and byte-retention semantics. Explicit current source cmd-0088, whole unchanged mandatory lint cmd-0089 and all21 current root cases cmd-0090 pass. Recurrence10/CRITICAL and all original failures remain. This is local source-quality restoration, not complete immutable verification or independent approval.",
+      "resolutionEvidence": [
+        "command:cmd-0088",
+        "command:cmd-0089",
+        "command:cmd-0090",
+        "checkpoint:suite-attempts/GATE-LINT-0004.json",
+        "checkpoint:suite-attempts/GATE7-ROOT-0005.json"
+      ]
+    },
+    {
+      "findingId": "G7-INT-008",
+      "severity": "CRITICAL",
+      "classification": "GUARDRAIL_FAILURE",
+      "lessonId": "LSN-0105",
+      "guardrailId": "GRD-0106",
+      "status": "CLOSED",
+      "title": "The new publication exception lacks the unchanged required Error suffix",
+      "observed": "Actual cmd-0072 refuses N818 in the publication driver; cmd-0073 preserves the exact fresh read-only refusal.",
+      "rootCause": "The new auxiliary exception name is authored before its unchanged complete quality check. This repeats the source-quality class at recurrence9/CRITICAL.",
+      "requiredCorrection": "Rename only the exception and all references. Execute explicit current source checks, complete unchanged mandatory lint and actual process-order/inherited denominator controls. No behavior, assertion or rule changes.",
+      "evidence": [
+        "command:cmd-0072",
+        "command:cmd-0073",
+        "checkpoint:suite-attempts/STYLE-RED-0003.json",
+        "checkpoint:suite-attempts/STYLE-RED-0003.log"
+      ],
+      "resolution": "Rename only the exception and all references to StageFailedError. Explicit current source check cmd-0074, whole unchanged mandatory lint cmd-0075 and all six current root cases cmd-0076 pass, including actual process-order positive/adverse and inherited lint-root omission controls. Recurrence9/CRITICAL and every original failure remain. No behavior, rule or assertion is weakened; this is local proof, not whole delivery or independent approval.",
+      "resolutionEvidence": [
+        "command:cmd-0074",
+        "command:cmd-0075",
+        "command:cmd-0076",
+        "checkpoint:suite-attempts/GATE-LINT-0003.json",
+        "checkpoint:suite-attempts/GATE7-ROOT-0001.json"
+      ]
+    },
+    {
+      "findingId": "G7-INT-007",
+      "severity": "HIGH",
+      "classification": "PROCESS_ORDER_VIOLATION",
+      "lessonId": "LSN-0146",
+      "status": "CLOSED",
+      "title": "A completed finalizer ledger record was mistaken for actual process exit",
+      "observed": "After successful cmd-0067 is durable, tool session45921 still reports running; process22984 remains live while the caller starts progress commit session23625. The actual process completions are subsequently awaited and both exit0.",
+      "rootCause": "The caller uses the intermediate ledger success instead of the whole producer's actual completion, although the canonical finalizer still performs post-record validation.",
+      "requiredCorrection": "Serialize existing canonical finalization, dependent Git mutations and post-commit validation through one process-owned driver; wait for each actual child exit and refuse subsequent stages on failure. Execute actual child-process positive and misleading-success-then-failure adverse controls. No canonical validator or publication rule changes.",
+      "evidence": [
+        "command:cmd-0067",
+        "checkpoint:DECISIONS.md"
+      ],
+      "observedConsequence": "No content divergence is observed: both original processes exit0, the clean committed801be785ab076b380f163d4c09784fd016974bd6 passes a separate actual CHECKPOINT_VALID and main/origin match after publication. This does not excuse the serial-exit violation.",
+      "resolution": "One checkpoint-local publication driver consumes a synchronous child-process sequence for the unchanged canonical scan/finalizer, dependent stage/commit, committed validation and push. Cmd-0070 executes actual child-process clean ordering and success-looking-output then actual exit7: the latter never executes its consumer. GRD-0149 backs LSN-0146; future progress publication must use the driver and await its actual exit. No canonical rule or independent approval changes.",
+      "resolutionEvidence": [
+        "command:cmd-0070",
+        "checkpoint:suite-attempts/PROCESS-COMPLETION-0001.json",
+        "checkpoint:audit-harness/publish_progress.py"
+      ]
+    },
+    {
+      "findingId": "G7-INT-006",
+      "severity": "CRITICAL",
+      "classification": "GUARDRAIL_FAILURE",
+      "lessonId": "LSN-0119",
+      "guardrailId": "GRD-0120",
+      "status": "CLOSED",
+      "title": "The strict checkpoint scan refuses a noncredential lexical type-alias spelling",
+      "observed": "Actual canonical finalizer cmd-0050 refuses named-assignment detection in the new knowledge contract. Cmd-0051 preserves the unchanged full-current-delta causal refusal.",
+      "rootCause": "A noncredential type-alias spelling collides with the deliberately strict raw detector. Earlier local unit/lint success cannot substitute for actual strict checkpoint cleanliness.",
+      "correctiveAttempt": "Cmd-0053 preserves an incomplete alias rename: the result contract still has one old forward annotation, causing two domain cases and schema derivation to refuse. Complete every alias use and add actual all-owned-model rebuild/schema validation with an unresolved-reference adverse control; no type bound or assertion is relaxed.",
+      "requiredCorrection": "Rename only the type alias to Lexeme, preserving constraints, wire semantics and both scanners unchanged. Execute the entire unchanged strict/publication causal class, the actual knowledge schema/domain gate and canonical checkpoint validation. No new scanner allowance.",
+      "evidence": [
+        "command:cmd-0050",
+        "command:cmd-0051",
+        "checkpoint:suite-attempts/STRICT-RED-0001.json",
+        "checkpoint:suite-attempts/STRICT-RED-0001.log"
+      ],
+      "resolution": "Complete the source-only Lexeme rename with identical constraints/wire schema. Preserve first corrective failure cmd-0053. All four unchanged strict/publication causal cases cmd-0052 pass; complete owning domain/schema cmd-0055 passes33 including all-model resolution and unresolved-reference adverse proof. Actual canonical IN_PROGRESS finalizer cmd-0061 exits0. LSN-0119 recurrence4/CRITICAL and unchanged scanners/allowances remain. This is local restoration, not whole Gate or independent approval.",
+      "resolutionEvidence": [
+        "command:cmd-0052",
+        "command:cmd-0055",
+        "command:cmd-0061",
+        "checkpoint:suite-attempts/STRICT-CONTROLS-0001.json",
+        "checkpoint:suite-attempts/GATE-KNOWLEDGETESTS-0004.json"
+      ]
+    },
+    {
+      "findingId": "G7-INT-005",
+      "severity": "CRITICAL",
+      "classification": "GUARDRAIL_FAILURE",
+      "lessonId": "LSN-0018",
+      "guardrailId": "GRD-0017",
+      "status": "CLOSED",
+      "title": "A test-kind guard locator names a source file rather than the discovered test",
+      "observed": "Cmd-0043 refuses GRD-0148 and does not render the invalid lesson index.",
+      "rootCause": "The authored control reference uses a valid file path with the wrong test-kind semantics. The existing resolver correctly rejects it before handoff.",
+      "requiredCorrection": "Correct only the locator to its actual discovered test identity; retain the existing resolver and execute every unchanged LessonResolutionTests case plus actual memory validation.",
+      "evidence": [
+        "command:cmd-0043",
+        "file:.iacode/memory/guardrails/registry.json"
+      ],
+      "resolution": "Correct only the test-kind locator to the actual discovered test identity. Cmd-0044 passes all unchanged LessonResolutionTests, and cmd-0045 validates/render the entire memory:145 active,142 guarded. LSN-0018 recurrence3/CRITICAL and the actual prior refusal remain. No resolver, rule or independent status is changed.",
+      "resolutionEvidence": [
+        "command:cmd-0044",
+        "command:cmd-0045",
+        "checkpoint:suite-attempts/LESSON-RESOLUTION-0001.json"
+      ]
+    },
+    {
+      "findingId": "G7-INT-004",
+      "severity": "CRITICAL",
+      "classification": "GUARDRAIL_FAILURE",
+      "lessonId": "LSN-0105",
+      "guardrailId": "GRD-0106",
+      "status": "CLOSED",
+      "title": "Three newly authored integration SQL literals exceed the unchanged source budget",
+      "observed": "Cmd-0035 formatting refuses three E501 SQL literals; cmd-0036 preserves the fresh exact read-only diagnostic stream.",
+      "rootCause": "Mechanical formatting does not split long literals. This repeats the same authored-source quality class at recurrence8/CRITICAL.",
+      "requiredCorrection": "Split only literal representation, keep identical SQL and assertions, then pass complete unchanged lint and actual inherited positive/adverse denominator controls. Preserve every prior recurrence.",
+      "evidence": [
+        "command:cmd-0035",
+        "command:cmd-0036",
+        "checkpoint:suite-attempts/STYLE-RED-0002.json",
+        "checkpoint:suite-attempts/STYLE-RED-0002.log"
+      ],
+      "resolution": "Split only literal representation. Actual cmd-0040 passes whole unchanged mandatory lint, and cmd-0041 executes the inherited positive and actual missing-knowledge-project denominator refusal. Recurrence8/CRITICAL and all earlier failures remain. Whole delivery assurance and independent M2 approval are not inferred.",
+      "resolutionEvidence": [
+        "command:cmd-0040",
+        "command:cmd-0041",
+        "checkpoint:suite-attempts/GATE-LINT-0002.json",
+        "checkpoint:suite-attempts/LINT-OMISSION-0002.json"
+      ]
+    },
+    {
+      "findingId": "G7-INT-003",
+      "severity": "MEDIUM",
+      "classification": "INCOMPLETE_INTEGRATION",
+      "lessonId": "LSN-0145",
+      "title": "Authorized knowledge tables are not yet in the owning exact structural contract",
+      "status": "CLOSED",
+      "observed": "Cmd-0029 executes the complete rebuilt API unit suite: 186 pass and three exact structural assertions fail for the new knowledge tables, immutable facts and foreign-key cascade owners.",
+      "rootCause": "New ORM behavior has not yet been integrated into the explicit inherited domain-model expectations. The unchanged guard correctly refuses it.",
+      "requiredCorrection": "Extend the authorized structural sets and exact foreign-key map without dropping any inherited assertion. Execute clean and missing/extra table, wrong fact/lifecycle and changed-cascade adverse cases, the complete API gate and actual migration parity.",
+      "evidence": [
+        "command:cmd-0029",
+        "checkpoint:suite-attempts/GATE-APITESTS-0001.json",
+        "checkpoint:suite-attempts/GATE-APITESTS-0001.log"
+      ],
+      "resolution": "Keep all inherited exact assertions and append only the authorized knowledge tables, immutable facts and owned cascade map. Cmd-0033 passes all192 API unit cases including actual assertion mutations. Source inspection additionally completes the inherited lifecycle version/update convention; cmd-0042 passes all21 real PostgreSQL/HTTP/migration cases including lifecycle counters and unchanged inherited experience identity/rights. LSN-0145 is guarded by GRD-0148; this is local proof, not whole delivery or independent approval.",
+      "resolutionEvidence": [
+        "command:cmd-0033",
+        "command:cmd-0042",
+        "checkpoint:suite-attempts/GATE-APITESTS-0002.json",
+        "checkpoint:suite-attempts/KNOWLEDGE-SQL-0003.json",
+        "checkpoint:suite-attempts/KNOWLEDGE-SQL-RECEIPT-0002.json"
+      ]
+    },
+    {
+      "findingId": "G7-INT-002",
+      "severity": "CRITICAL",
+      "classification": "GUARDRAIL_FAILURE",
+      "lessonId": "LSN-0105",
+      "guardrailId": "GRD-0106",
+      "title": "Current authored Python still violates the unchanged source-quality contract after formatting",
+      "status": "CLOSED",
+      "observed": "Cmd-0021 reformats the explicit source scope and applies safe fixes, but exits1 with remaining line-length, unused-binding, modern-generic and confusable-fixture spelling findings. Cmd-0022 separately preserves the exact safe output of a fresh read-only refusal on that remaining source.",
+      "rootCause": "Mechanical formatting does not split every literal/docstring or complete every source/type cleanup. The new authored code had not yet finished its unchanged quality budget; preserve every assertion and rule.",
+      "requiredCorrection": "Escalate LSN-0105 recurrence7 at CRITICAL, correct only declarations/representation and typing, preserve actual Unicode fixture values, then execute the unchanged complete mandatory lint and the existing lint-denominator positive/adverse control before local restoration. No suppression or unsafe fix is authorized.",
+      "evidence": [
+        "command:cmd-0021",
+        "checkpoint:suite-attempts/STYLE-RED-0001.json",
+        "checkpoint:suite-attempts/STYLE-RED-0001.log"
+      ],
+      "resolution": "Source-only literal/docstring splitting, unused-binding rename, modern generic syntax and identical Unicode escape spelling retain every assertion and rule. Cmd-0024 passes the complete unchanged mandatory lint. Cmd-0025 passes the inherited lint project denominator; cmd-0026 passes its clean and actual omitted-knowledge-project adverse control. Local restoration retains recurrence7/CRITICAL and all red evidence, not full delivery or independent approval.",
+      "resolutionEvidence": [
+        "command:cmd-0024",
+        "command:cmd-0025",
+        "command:cmd-0026",
+        "checkpoint:suite-attempts/GATE-LINT-0001.json",
+        "checkpoint:suite-attempts/LINT-DENOMINATOR-0001.json",
+        "checkpoint:suite-attempts/LINT-OMISSION-0001.json"
+      ]
+    },
+    {
+      "findingId": "G7-INT-001",
+      "severity": "HIGH",
+      "classification": "GUARDRAIL_FAILURE",
+      "lessonId": "LSN-0117",
+      "guardrailId": "GRD-0119",
+      "title": "Published top-level README still freezes Gate4 and denies the delivered Experience Store",
+      "status": "CLOSED",
+      "observed": "The actual README inherited unchanged from sealed Gate6 calls Gate4 current and places Experience Store among future unimplemented capabilities. Existing overview controls cover the architecture Quality Engine only; the green inherited baseline does not detect this contradiction.",
+      "rootCause": "The overview-consistency guard's scope was limited to an earlier architecture rollup and did not consume the public README or derive current capability titles from the master plan.",
+      "requiredCorrection": "Preserve original published bytes, reproduce the causal refusal, reopen/escalate LSN-0117, extend actual current-rollup and positive/adverse controls, correct only live documentation and re-execute them before resolving the recurrence. Preserve all old controls and independent M2 separation.",
+      "evidence": [
+        "checkpoint:attempts/README-ROLLUP-0001.json",
+        "checkpoint:attempts/README-ROLLUP-0001.md.raw",
+        "checkpoint:suite-attempts/ROLLUP-0001.log",
+        "file:tests/test_gate5_clients.py",
+        "file:tests/test_gate7_knowledge.py"
+      ],
+      "resolution": "Preserve published original bytes at cmd-0016; causal cmd-0017 fails the actual current-rollup assertion before correction. Correct live README/architecture only and extend GRD-0119 from canonical titles/current Gate with clean and each missing/denied/stale-owner mutation. Cmd-0018 passes all new controls; cmd-0019 passes the complete new and unchanged inherited documentation classes. LSN-0117 recurrence1/HIGH is locally restored with its failure history retained. This is not full current assurance or independent M2 approval.",
+      "resolutionEvidence": [
+        "command:cmd-0018",
+        "command:cmd-0019",
+        "checkpoint:suite-attempts/ROLLUP-0002.json",
+        "checkpoint:suite-attempts/ROLLUP-0003.json"
+      ]
+    }
+  ]
+}

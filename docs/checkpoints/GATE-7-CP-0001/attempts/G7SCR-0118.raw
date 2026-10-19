@@ -1,0 +1,29 @@
+{
+  "schemaVersion": "1.0.0",
+  "kind": "TARGETED_CAUSAL_NOT_WHOLE_GATE",
+  "gate": "ROOT-INPUT-ADR-GREEN",
+  "command": [
+    "python",
+    "-X",
+    "utf8",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-k",
+    "AdrIndexTests"
+  ],
+  "observedAt": "2026-10-18T22:21:59Z",
+  "subjectCommit": "13749adfa616c7f52aa7407cb9a9d7aef3d19c76",
+  "sourceDirty": true,
+  "sourceFingerprint": "8f8f5d49c84ab5a792490a47be2a0bce93512ab5ca3b417e0eb68ae145e610da",
+  "sourceUnchanged": true,
+  "exitCode": 0,
+  "outputEncodingValid": true,
+  "unsafeOutputOccurrences": 0,
+  "outputBytes": 107,
+  "outputSha256": "89e0c56116d1c8a4155536a12f005581f80a4f330a8c9c2af796c8d7240affc4",
+  "safeOutputArtifact": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/ROOT-INPUT-ADR-GREEN-0001.log",
+  "result": "PASS"
+}

@@ -1,0 +1,29 @@
+{
+  "schemaVersion": "1.0.0",
+  "kind": "TARGETED_CAUSAL_NOT_WHOLE_GATE",
+  "gate": "REWORK-INHERITED-GATE4",
+  "command": [
+    "python",
+    "-X",
+    "utf8",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-p",
+    "test_gate4_quality_engine.py"
+  ],
+  "observedAt": "2026-10-19T03:24:03Z",
+  "subjectCommit": "13749adfa616c7f52aa7407cb9a9d7aef3d19c76",
+  "sourceDirty": true,
+  "sourceFingerprint": "716f8a9cacffb4fa8cd8e9b2d88b637f849128e2f6c357785dd56c6e151627b1",
+  "sourceUnchanged": true,
+  "exitCode": 0,
+  "outputEncodingValid": true,
+  "unsafeOutputOccurrences": 0,
+  "outputBytes": 535,
+  "outputSha256": "bca5f15b68621e9fe0d960c68247281c8768c85a49c0d753d211521f5c52b524",
+  "safeOutputArtifact": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/REWORK-INHERITED-GATE4-0001.log",
+  "result": "PASS"
+}

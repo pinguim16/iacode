@@ -1,0 +1,24 @@
+{
+  "suggestedFindingId": "G7-INT-029",
+  "lessonId": "LSN-0135",
+  "nextRecurrence": 2,
+  "severity": "CRITICAL",
+  "diagnosticDirectory": "evidence-runtime-v2-additional-producers",
+  "diagnosticCommand": "python -X utf8 C:/Users/cesar/AppData/Local/Temp/iacode-gate7-scope-rework-817a4ca5e0af445babf55b6f010efeab/PRESERVE-V2-CANONICAL-PRODUCERS.py",
+  "actualExit": 1,
+  "result": "OMISSION_OBSERVED",
+  "omittedAvailableCanonicalProducers": [
+    "agent-cancellation.json",
+    "agent-deadline.json",
+    "agent-durability.json",
+    "agent-runtime-smoke.json",
+    "gateway-smoke.json",
+    "sandbox-cancellation.json",
+    "sandbox-coding.json",
+    "sandbox-recovery.json",
+    "sandbox-timeout.json"
+  ],
+  "proof": "Before the real publisher was called or interpreted,18 available canonical producers were preserved as exact safe originals with digests outside the active clone. The actual unmodified publisher then omitted9 of them. Additional actual legacy capture originals/manifest are retained in its own subdirectory.",
+  "requiredCorrection": "Preserve and forward the complete canonical producer set derived from verify.build_stages(False) plus all legacy supported producers; retain existing privacy/original-byte/consumer-error/cleanup defenses. Add actual membership/forwarding/cleanup and canonical-growth controls. The parent functional forwarding currently also omits lifecycle reports, risking stale ROOT/var inputs to the later internal Red Team. Fix both paths before new immutable proof.",
+  "integrationWarning": "The59-file scratch snapshot predates this diagnosis. Do not blindly copy its GUARDED LSN0135 row over the new unresolved recurrence. Preserve all histories and rederive in main before implementation."
+}

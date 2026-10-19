@@ -30,6 +30,124 @@ def build_stages(fast: bool):
     return canonical_stages(fast)
 
 
+def canonical_producer_names() -> set[str]:
+    names = {
+        "sandbox-tool-result-origin.json",
+        "desktop-e2e.json",
+        "native-editor-package.json",
+        "experience-store-e2e.json",
+        "knowledge-engine-e2e.json",
+    }
+    for stage in build_stages(False):
+        for index, argument in enumerate(stage.argv[:-1]):
+            if argument == "--report":
+                path = Path(stage.argv[index + 1])
+                if path.parent.name == "var" and path.suffix == ".json":
+                    names.add(path.name)
+    return names
+
+
+def functional_producer_name(name: str, canonical: set[str]) -> bool:
+    return name.startswith("quality-") or name in canonical
+
+
+def available_producer_paths(clone: Path) -> list[Path]:
+    names = canonical_producer_names()
+    return [
+        path
+        for path in sorted((clone / "var").glob("*.json"))
+        if functional_producer_name(path.name, names)
+    ]
+
+
+def captured_manifest(path: Path) -> dict:
+    if path.is_symlink() or path.is_junction() or not path.is_file():
+        raise RuntimeError("a regular original capture manifest is required")
+    document = json.loads(path.read_bytes())
+    if (
+        type(document) is not dict
+        or document.get("kind") != "RAW_PRODUCER_CAPTURE_NOT_ACCEPTANCE"
+        or document.get("gateVerdictIssued") is not False
+        or document.get("refusedReports") != []
+        or type(document.get("reports")) is not list
+        or any(type(row) is not dict for row in document["reports"])
+    ):
+        raise RuntimeError("safe neutral original capture is required")
+    return document
+
+
+def captured_original_bytes(directory: Path, row: dict) -> bytes:
+    from ledger_common import find_secrets
+
+    name = row.get("archive")
+    if (
+        type(name) is not str
+        or not name
+        or Path(name).name != name
+        or any(character in name for character in ("/", "\\", ":"))
+        or any(ord(character) < 32 for character in name)
+    ):
+        raise RuntimeError("unsafe archived producer path")
+    path = directory / name
+    if (
+        path.is_symlink()
+        or path.is_junction()
+        or not path.is_file()
+        or not path.resolve().is_relative_to(directory.resolve())
+    ):
+        raise RuntimeError("redirected or missing original producer")
+    raw = path.read_bytes()
+    if (
+        type(row.get("bytes")) is not int
+        or row["bytes"] <= 0
+        or type(row.get("sha256")) is not str
+        or re.fullmatch(r"[0-9a-f]{64}", row["sha256"]) is None
+        or len(raw) != row["bytes"]
+        or hashlib.sha256(raw).hexdigest() != row["sha256"]
+        or find_secrets(raw.decode("utf-8", errors="strict"))
+    ):
+        raise RuntimeError("archived producer bytes or privacy do not match")
+    return raw
+
+
+def forward_functional_producers(manifest: Path, target: Path) -> dict:
+    names = canonical_producer_names()
+    document = captured_manifest(manifest)
+    pending = {}
+    for row in document["reports"]:
+        name = row.get("producerName")
+        if type(name) is not str or not functional_producer_name(name, names):
+            continue
+        if (
+            Path(name).name != name
+            or any(value in name for value in ("/", "\\", ":"))
+            or any(ord(character) < 32 for character in name)
+            or name in pending
+        ):
+            raise RuntimeError("unsafe or duplicated functional producer identity")
+        raw = captured_original_bytes(manifest.parent, row)
+        value = json.loads(raw)
+        if type(value) is not dict:
+            raise RuntimeError("a functional producer must be a JSON object")
+        pending[name] = (raw, value)
+    if target.is_symlink() or target.is_junction():
+        raise RuntimeError("redirected forwarding destination")
+    target.mkdir(parents=True, exist_ok=True)
+    for name in pending:
+        path = target / name
+        if path.is_symlink() or path.is_junction():
+            raise RuntimeError("redirected functional output")
+        if path.exists() and (not path.is_file() or path.stat().st_nlink != 1):
+            raise RuntimeError("functional output must be an owned regular unlinked file")
+    # Validate every source before the first effect; never consult a previous target report.
+    for name, (raw, _value) in pending.items():
+        path = target / name
+        path.write_bytes(raw)
+        if path.read_bytes() != raw:
+            raise RuntimeError("forwarded original byte equality failed")
+    return {name: value for name, (_raw, value) in pending.items()}
+
+
 def container_states() -> dict[str, bool]:
     identities = command(["docker", "ps", "-aq", "--no-trunc"], ROOT).splitlines()
     if not identities:
@@ -103,19 +221,7 @@ def capture_producer_reports(
     if archive.is_symlink() or archive.is_junction():
         raise RuntimeError("refusing redirected producer archive")
     prefix = "FULL-PRODUCER-" + uuid.uuid4().hex[:12]
-    candidates = [verifier_report] + [
-        path
-        for path in sorted((clone / "var").glob("*.json"))
-        if path.name.startswith("quality-")
-        or path.name
-        in {
-            "sandbox-tool-result-origin.json",
-            "desktop-e2e.json",
-            "native-editor-package.json",
-            "experience-store-e2e.json",
-            "knowledge-engine-e2e.json",
-        }
-    ]
+    candidates = [verifier_report, *available_producer_paths(clone)]
     reports, refused = [], []
     for path in candidates:
         if not path.is_file():
@@ -183,10 +289,20 @@ def collect_producer_observations(
 ) -> tuple[dict, tuple[int, int, int], Path]:
     """The actual publisher boundary preserves originals before any interpretation can fail."""
     manifest = capture_producer_reports(clone, verifier_report, archive, subject)
-    if not verifier_report.is_file():
+    document = captured_manifest(manifest)
+    originals = [
+        row for row in document["reports"] if row.get("producerName") == verifier_report.name
+    ]
+    if len(originals) != 1:
         raise RuntimeError("the complete verifier produced no report; available originals retained")
-    verification = json.loads(verifier_report.read_text(encoding="utf-8"))
+    verification = json.loads(captured_original_bytes(manifest.parent, originals[0]))
     summary = summarize_stages(verification)
+    if verification["result"] == "PASS":
+        captured = {row.get("producerName") for row in document["reports"]}
+        if canonical_producer_names() - captured:
+            raise RuntimeError(
+                "successful verification lacks a canonical producer; originals retained"
+            )
     return verification, summary, manifest
 
 
@@ -279,18 +395,7 @@ def main() -> int:
                 },
             )
         write_json(destination, verification)
-        scenarios = {}
-        for path in sorted((clone / "var").glob("*.json")):
-            if path.name.startswith("quality-") or path.name in {
-                "sandbox-tool-result-origin.json",
-                "desktop-e2e.json",
-                "native-editor-package.json",
-                "experience-store-e2e.json",
-                "knowledge-engine-e2e.json",
-            }:
-                document = json.loads(path.read_text(encoding="utf-8"))
-                scenarios[path.name] = document
-                write_json(ROOT / "var" / path.name, document)
+        scenarios = forward_functional_producers(manifest, ROOT / "var")
         write_json(
             CHECKPOINT / "FUNCTIONAL-SCENARIOS.json",
             {

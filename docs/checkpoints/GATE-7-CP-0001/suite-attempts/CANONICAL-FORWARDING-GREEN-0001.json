@@ -1,0 +1,33 @@
+{
+  "schemaVersion": "1.0.0",
+  "kind": "TARGETED_CAUSAL_NOT_WHOLE_GATE",
+  "gate": "CANONICAL-FORWARDING-GREEN",
+  "command": [
+    "python",
+    "-X",
+    "utf8",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-p",
+    "test_gate7_assurance.py",
+    "-k",
+    "Gate7CanonicalProducerTests",
+    "-k",
+    "Gate7RawReworkContextTests"
+  ],
+  "observedAt": "2026-10-19T03:01:15Z",
+  "subjectCommit": "13749adfa616c7f52aa7407cb9a9d7aef3d19c76",
+  "sourceDirty": true,
+  "sourceFingerprint": "7bcba951405736ceef10870a809980c642bc0d4b7bcb45264ddae6fe696d91a0",
+  "sourceUnchanged": true,
+  "exitCode": 0,
+  "outputEncodingValid": true,
+  "unsafeOutputOccurrences": 0,
+  "outputBytes": 111,
+  "outputSha256": "8e9a9bc62b1d48f4a016faeccd0465ace004b0e2e00d4a65eb5a0b1ec237aa8f",
+  "safeOutputArtifact": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/CANONICAL-FORWARDING-GREEN-0001.log",
+  "result": "PASS"
+}

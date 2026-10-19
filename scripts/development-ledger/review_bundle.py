@@ -48,7 +48,10 @@ REVIEW_CONTEXT_PATTERNS = (
 
 
 def git(root: Path, *arguments: str, binary: bool = False) -> str | bytes:
-    completed = subprocess.run(["git", *arguments], cwd=root, capture_output=True, check=False)
+    completed = subprocess.run(
+        ["git", "-c", "core.longpaths=true", *arguments],
+        cwd=root, capture_output=True, check=False,
+    )
     if completed.returncode != 0:
         raise LedgerError(
             f"git {' '.join(arguments)} failed: "

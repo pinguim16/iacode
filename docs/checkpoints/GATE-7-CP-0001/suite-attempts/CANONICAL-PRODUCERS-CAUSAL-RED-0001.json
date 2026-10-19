@@ -1,0 +1,31 @@
+{
+  "schemaVersion": "1.0.0",
+  "kind": "TARGETED_CAUSAL_NOT_WHOLE_GATE",
+  "gate": "CANONICAL-PRODUCERS-CAUSAL-RED",
+  "command": [
+    "python",
+    "-X",
+    "utf8",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-p",
+    "test_gate7_assurance.py",
+    "-k",
+    "Gate7CanonicalProducerTests"
+  ],
+  "observedAt": "2026-10-19T02:52:39Z",
+  "subjectCommit": "13749adfa616c7f52aa7407cb9a9d7aef3d19c76",
+  "sourceDirty": true,
+  "sourceFingerprint": "eb7e7d54b5a335f079d0f54bcde5d139e437bdf3b0020d5eec0a0c2dfbfe5d28",
+  "sourceUnchanged": true,
+  "exitCode": 1,
+  "outputEncodingValid": true,
+  "unsafeOutputOccurrences": 0,
+  "outputBytes": 2908,
+  "outputSha256": "6f6d7e9556ef28aad13d682aa156c1ea6788682f80e5227fc4f06d58f07e600e",
+  "safeOutputArtifact": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/CANONICAL-PRODUCERS-CAUSAL-RED-0001.log",
+  "result": "FAIL"
+}

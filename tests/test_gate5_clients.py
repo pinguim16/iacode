@@ -307,7 +307,10 @@ class Gate5QualityIntegrationTests(unittest.TestCase):
             policy.write_text(json.dumps(document), encoding="utf-8")
             with self.assertRaisesRegex(ledger_common.LedgerError, "narrowed"):
                 ledger_common.assurance_root_files(root)
-        self.assertEqual(ledger_common.assurance_root_files(ROOT, required=True), (".gitignore", "ruff.toml"))
+        canonical = json.loads((ROOT / ".iacode/policies/assurance-scope.json").read_bytes())
+        current = ledger_common.assurance_root_files(ROOT, required=True)
+        self.assertEqual(current, tuple(canonical["additionalRootFiles"]))
+        self.assertTrue({".gitignore", "ruff.toml"}.issubset(current))
 
     def test_every_inherited_gate_remains_and_clients_are_mandatory(self) -> None:
         gates = policies.gate_definitions(ROOT)

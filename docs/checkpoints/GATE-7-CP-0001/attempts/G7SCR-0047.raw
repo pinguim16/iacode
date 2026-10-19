@@ -1,0 +1,25 @@
+{
+  "kind": "DECODED_ISOLATED_DIAGNOSTIC_NOT_ORIGINAL_BYTES_OR_CURRENT_GATE_ACCEPTANCE",
+  "observedAt": "2026-10-18T21:43:28Z",
+  "originalBytesClaimed": false,
+  "canonicalParentSourceUnchanged": true,
+  "observation": {
+    "kind": "ISOLATED_ROOT_INPUT_DIAGNOSTIC_NOT_GATE_ACCEPTANCE",
+    "observation": {
+      "declaredRootInputs": [
+        ".gitignore",
+        "ruff.toml"
+      ],
+      "actualDockerignoreBytesChanged": true,
+      "fingerprintChanged": false
+    },
+    "temporaryOwnerRemoved": true,
+    "parentSourceUnchanged": true
+  },
+  "experiment": {
+    "owner": "same-session disposable public clone",
+    "baseCommit": "13749adfa616c7f52aa7407cb9a9d7aef3d19c76",
+    "mainRuntimeSubject": "iacode-subjects/GATE-7-CP-0001-runtime-v2",
+    "independentValidation": false
+  }
+}

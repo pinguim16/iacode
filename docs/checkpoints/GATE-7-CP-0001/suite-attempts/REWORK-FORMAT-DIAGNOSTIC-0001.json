@@ -1,0 +1,24 @@
+{
+  "schemaVersion": "1.0.0",
+  "kind": "TARGETED_CAUSAL_NOT_WHOLE_GATE",
+  "gate": "REWORK-FORMAT-DIAGNOSTIC",
+  "command": [
+    "python",
+    "-X",
+    "utf8",
+    "docs/checkpoints/GATE-7-CP-0001/audit-harness/format_assurance_helpers.py",
+    "--check-only"
+  ],
+  "observedAt": "2026-10-19T03:09:07Z",
+  "subjectCommit": "13749adfa616c7f52aa7407cb9a9d7aef3d19c76",
+  "sourceDirty": true,
+  "sourceFingerprint": "716f8a9cacffb4fa8cd8e9b2d88b637f849128e2f6c357785dd56c6e151627b1",
+  "sourceUnchanged": true,
+  "exitCode": 1,
+  "outputEncodingValid": true,
+  "unsafeOutputOccurrences": 0,
+  "outputBytes": 393,
+  "outputSha256": "072362cd656fadc929ff2e125532fb38cc0c38ad94cc535bca9993b93deadb98",
+  "safeOutputArtifact": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/REWORK-FORMAT-DIAGNOSTIC-0001.log",
+  "result": "FAIL"
+}

@@ -1,0 +1,41 @@
+FFF
+======================================================================
+FAIL: test_all_canonical_producers_and_legacy_outputs_are_captured_without_private_extras (test_gate7_assurance.Gate7CanonicalProducerTests.test_all_canonical_producers_and_legacy_outputs_are_captured_without_private_extras)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\iacode\tests\test_gate7_assurance.py", line 604, in test_all_canonical_producers_and_legacy_outputs_are_captured_without_private_extras
+    self.assertEqual(set(rows), set(expected) | {verifier.name})
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Items in the second set but not the first:
+'sandbox-coding.json'
+'gateway-smoke.json'
+'sandbox-timeout.json'
+'agent-cancellation.json'
+'agent-durability.json'
+'agent-deadline.json'
+'sandbox-recovery.json'
+'sandbox-cancellation.json'
+'agent-runtime-smoke.json'
+
+======================================================================
+FAIL: test_all_current_originals_survive_real_consumer_refusal_and_actual_owner_cleanup (test_gate7_assurance.Gate7CanonicalProducerTests.test_all_current_originals_survive_real_consumer_refusal_and_actual_owner_cleanup)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\iacode\tests\test_gate7_assurance.py", line 643, in test_all_current_originals_survive_real_consumer_refusal_and_actual_owner_cleanup
+    self.assertTrue(set(expected).issubset(rows))
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_canonical_registry_growth_is_bound_without_a_caller_selected_report_set (test_gate7_assurance.Gate7CanonicalProducerTests.test_canonical_registry_growth_is_bound_without_a_caller_selected_report_set)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\iacode\tests\test_gate7_assurance.py", line 628, in test_canonical_registry_growth_is_bound_without_a_caller_selected_report_set
+    self.assertIn(name, {row["producerName"] for row in rows})
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'registered-canonical-report.json' not found in {'quality-cancellation.json', 'quality-timeout.json', 'INTERNAL-FULL-VERIFY.json', 'quality-recovery.json', 'quality-iacode.json', 'quality-fail.json', 'sandbox-tool-result-origin.json', 'native-editor-package.json', 'quality-unit.json', 'quality-reproduction.json', 'experience-store-e2e.json', 'quality-secret-output.json', 'desktop-e2e.json', 'knowledge-engine-e2e.json', 'quality-pass.json'}
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.680s
+
+FAILED (failures=3)

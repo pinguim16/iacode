@@ -1,0 +1,29 @@
+.EE
+======================================================================
+ERROR: test_git_override_is_child_scoped_and_leaves_local_and_global_settings_unchanged (test_gate7_git_transport.Gate7GitTransportTests.test_git_override_is_child_scoped_and_leaves_local_and_global_settings_unchanged)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\iacode\tests\test_gate7_git_transport.py", line 96, in test_git_override_is_child_scoped_and_leaves_local_and_global_settings_unchanged
+    actual = reader.git(root, "show", expression, binary=True)
+  File "E:\iacode\scripts\development-ledger\review_bundle.py", line 53, in git
+    raise LedgerError(
+    ...<2 lines>...
+    )
+ledger_common.LedgerError: git show 22622344e0013dd574de70a5b08ccbe8ca68a6ee:nested/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.bin failed: fatal: failed to stat '22622344e0013dd574de70a5b08ccbe8ca68a6ee:nested/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.bin': Filename too long
+
+======================================================================
+ERROR: test_real_long_object_expression_returns_every_original_binary_byte (test_gate7_git_transport.Gate7GitTransportTests.test_real_long_object_expression_returns_every_original_binary_byte)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\iacode\tests\test_gate7_git_transport.py", line 85, in test_real_long_object_expression_returns_every_original_binary_byte
+    actual = reader.git(root, "show", expression, binary=True)
+  File "E:\iacode\scripts\development-ledger\review_bundle.py", line 53, in git
+    raise LedgerError(
+    ...<2 lines>...
+    )
+ledger_common.LedgerError: git show 1c9c7a09528975f91fa3f7c52f2ae8fceca64c92:nested/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.bin failed: fatal: failed to stat '1c9c7a09528975f91fa3f7c52f2ae8fceca64c92:nested/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.bin': Filename too long
+
+----------------------------------------------------------------------
+Ran 3 tests in 2.590s
+
+FAILED (errors=2)

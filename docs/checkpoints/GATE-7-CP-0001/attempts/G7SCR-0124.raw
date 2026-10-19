@@ -1,0 +1,31 @@
+{
+  "schemaVersion": "1.0.0",
+  "kind": "TARGETED_CAUSAL_NOT_WHOLE_GATE",
+  "gate": "ROOT-INPUT-REGISTERED-GREEN",
+  "command": [
+    "python",
+    "-X",
+    "utf8",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-k",
+    "Gate7RootInputFingerprintTests",
+    "-k",
+    "LessonResolutionTests"
+  ],
+  "observedAt": "2026-10-18T22:27:16Z",
+  "subjectCommit": "13749adfa616c7f52aa7407cb9a9d7aef3d19c76",
+  "sourceDirty": true,
+  "sourceFingerprint": "a10a3f95c02b1bba81601d9275fceb05afb7e15f0d758ba56969291b06ee52c3",
+  "sourceUnchanged": true,
+  "exitCode": 0,
+  "outputEncodingValid": true,
+  "unsafeOutputOccurrences": 0,
+  "outputBytes": 114,
+  "outputSha256": "dea0b38fdeab52a4df28b43f0c5497a5d55336c23337be354e12d26051c5204c",
+  "safeOutputArtifact": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/ROOT-INPUT-REGISTERED-GREEN-0001.log",
+  "result": "PASS"
+}

@@ -40,6 +40,22 @@ def reason(path: str) -> str:
             "Consolidate Gates4-7 and preserve the independent M2 audit boundary."),
         "scripts/development-ledger/promotion_fixture.py": (
             "Constrain protocol fixtures to control contracts and expose their owned locator."),
+        "scripts/development-ledger/ledger_common.py": (
+            "Bind current root build/verification inputs without reinterpreting legacy subjects."),
+        ".iacode/policies/assurance-scope.json": (
+            "Version current root build-context and verification inputs as a mandatory closed set."),
+        "scripts/development-ledger/review_bundle.py": (
+            "Read long immutable Git paths with child-only configuration and unchanged bytes."),
+        "docs/adr/ADR-0055-code-graph-remains-an-explicit-future-reservation.md": (
+            "Keep Code Graph an explicit next-Gate reservation without implementing it."),
+        "docs/adr/ADR-0056-minimal-protocol-fixtures-inherit-only-control-contracts.md": (
+            "Limit real protocol fixtures to their canonical control and runtime contracts."),
+        "docs/adr/ADR-0057-build-and-verification-root-inputs-follow-subject-versioned-assurance.md": (
+            "Version current build and verification root inputs without reinterpreting history."),
+        "docs/adr/ADR-0058-immutable-review-git-reads-use-child-scoped-long-path-handling.md": (
+            "Bind immutable review Git long-path handling to the owning child only."),
+        "docs/adr/ADR-0059-full-verifier-consumers-use-complete-canonical-archived-producers.md": (
+            "Preserve every canonical producer and consume the same verified archived bytes."),
     }
     if path in exact:
         return exact[path]
@@ -50,6 +66,7 @@ def reason(path: str) -> str:
         "docs/adr/ADR-0054-knowledge-indexes-are-rebuildable-cited-projections.md",
         "docs/adr/ADR-0055-code-graph-remains-an-explicit-future-reservation.md",
         "docs/adr/ADR-0056-minimal-protocol-fixtures-inherit-only-control-contracts.md",
+        "docs/adr/ADR-0057-build-and-verification-root-inputs-follow-subject-versioned-assurance.md",
     }:
         return "Define the governed source, rights, index, citation and invalidation architecture."
     if path.startswith("services/knowledge/"):

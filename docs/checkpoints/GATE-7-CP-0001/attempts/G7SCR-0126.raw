@@ -1,0 +1,24 @@
+{
+  "schemaVersion": "1.0.0",
+  "kind": "TARGETED_CAUSAL_NOT_WHOLE_GATE",
+  "gate": "ROOT-INPUT-STYLE-RED",
+  "command": [
+    "python",
+    "-X",
+    "utf8",
+    "docs/checkpoints/GATE-7-CP-0001/audit-harness/format_assurance_helpers.py",
+    "--check-only"
+  ],
+  "observedAt": "2026-10-18T22:14:14Z",
+  "subjectCommit": "13749adfa616c7f52aa7407cb9a9d7aef3d19c76",
+  "sourceDirty": true,
+  "sourceFingerprint": "4dbb7ea0acb6986e405c458ff8db5c45d6473c53ce3f34574f1317fdf3433f74",
+  "sourceUnchanged": true,
+  "exitCode": 1,
+  "outputEncodingValid": true,
+  "unsafeOutputOccurrences": 0,
+  "outputBytes": 1342,
+  "outputSha256": "04b2c5e02f36cfbb94e73c1a6c8d7fbaead8a8dfa2bd0247f481f212e1859dac",
+  "safeOutputArtifact": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/ROOT-INPUT-STYLE-RED-0001.log",
+  "result": "FAIL"
+}

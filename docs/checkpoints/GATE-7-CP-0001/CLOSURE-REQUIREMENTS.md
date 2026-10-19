@@ -210,6 +210,8 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 | `LESSON-REQ-0146` | LESSON | `lesson:LSN-0147` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify framework lifecycle errors need bounded identities as well as test methods |
 | `LESSON-REQ-0147` | LESSON | `lesson:LSN-0148` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify minimal protocol fixtures inherit control contracts, never deployment-owned source data |
 | `LESSON-REQ-0148` | LESSON | `lesson:LSN-0149` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify a shell exit zero is not a produced digest or verified original evidence |
+| `LESSON-REQ-0149` | LESSON | `lesson:LSN-0150` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify build and verification root inputs need subject-versioned assurance binding |
+| `LESSON-REQ-0150` | LESSON | `lesson:LSN-0151` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify immutable Git object reads must handle Windows long paths only in the owning child |
 
 ## Evidence
 
@@ -2362,6 +2364,28 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 
 - Source reference: LESSON-PREFLIGHT.json LESSON-REQ-0148
 - Description: Verify a shell exit zero is not a produced digest or verified original evidence
+- Implementation: _none_
+- Test: _none_
+- Negative test: _none_
+- Documentation: _none_
+- Validation: _none_
+- Guardrail: _none_
+
+### LESSON-REQ-0149 - lesson:LSN-0150
+
+- Source reference: LESSON-PREFLIGHT.json LESSON-REQ-0149
+- Description: Verify build and verification root inputs need subject-versioned assurance binding
+- Implementation: _none_
+- Test: _none_
+- Negative test: _none_
+- Documentation: _none_
+- Validation: _none_
+- Guardrail: _none_
+
+### LESSON-REQ-0150 - lesson:LSN-0151
+
+- Source reference: LESSON-PREFLIGHT.json LESSON-REQ-0150
+- Description: Verify immutable Git object reads must handle Windows long paths only in the owning child
 - Implementation: _none_
 - Test: _none_
 - Negative test: _none_

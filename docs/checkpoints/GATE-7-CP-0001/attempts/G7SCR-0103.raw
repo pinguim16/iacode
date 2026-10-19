@@ -1,0 +1,5 @@
+{
+  "schemaVersion": "2.0.0",
+  "additionalRootFiles": [".dockerignore", ".gitignore", "ruff.toml", "verify.ps1"],
+  "policy": "Current subjects bind root build-context privacy, ignore/lint settings and the Windows verification launcher even when ignored. Absent/v1 subject policies retain their exact historical semantics. Future root inputs require an explicit policy/version decision; callers cannot narrow the mandatory set."
+}

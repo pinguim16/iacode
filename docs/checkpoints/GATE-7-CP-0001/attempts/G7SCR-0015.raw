@@ -1,0 +1,33 @@
+{
+  "kind": "ACTUAL_PUBLISHER_MEMBERSHIP_DIAGNOSTIC_NOT_GATE_ACCEPTANCE",
+  "subjectCommit": "13749adfa616c7f52aa7407cb9a9d7aef3d19c76",
+  "observedAt": "2026-10-19T02:10:42Z",
+  "preservedOriginalManifest": "ORIGINALS-MANIFEST.json",
+  "canonicalAvailableCount": 18,
+  "actuallyCapturedNames": [
+    "desktop-e2e.json",
+    "native-editor-package.json",
+    "quality-cancellation.json",
+    "quality-fail.json",
+    "quality-pass.json",
+    "quality-recovery.json",
+    "quality-reproduction.json",
+    "quality-secret-output.json",
+    "quality-timeout.json",
+    "sandbox-tool-result-origin.json"
+  ],
+  "omittedAvailableCanonicalProducers": [
+    "agent-cancellation.json",
+    "agent-deadline.json",
+    "agent-durability.json",
+    "agent-runtime-smoke.json",
+    "gateway-smoke.json",
+    "sandbox-cancellation.json",
+    "sandbox-coding.json",
+    "sandbox-recovery.json",
+    "sandbox-timeout.json"
+  ],
+  "result": "OMISSION_OBSERVED",
+  "gateVerdictGranted": false,
+  "independentValidation": false
+}

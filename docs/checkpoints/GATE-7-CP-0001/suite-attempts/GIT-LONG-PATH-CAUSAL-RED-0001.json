@@ -1,0 +1,29 @@
+{
+  "schemaVersion": "1.0.0",
+  "kind": "TARGETED_CAUSAL_NOT_WHOLE_GATE",
+  "gate": "GIT-LONG-PATH-CAUSAL-RED",
+  "command": [
+    "python",
+    "-X",
+    "utf8",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-p",
+    "test_gate7_git_transport.py"
+  ],
+  "observedAt": "2026-10-19T02:46:10Z",
+  "subjectCommit": "13749adfa616c7f52aa7407cb9a9d7aef3d19c76",
+  "sourceDirty": true,
+  "sourceFingerprint": "13ce8301648623ef670576807605162da568097d485cfecf43a219178cf2a13e",
+  "sourceUnchanged": true,
+  "exitCode": 1,
+  "outputEncodingValid": true,
+  "unsafeOutputOccurrences": 0,
+  "outputBytes": 2568,
+  "outputSha256": "55a0a39ee7dee351d44be6efbb08d893b59f03971d92eb979bc0ad5e883f89ac",
+  "safeOutputArtifact": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/GIT-LONG-PATH-CAUSAL-RED-0001.log",
+  "result": "FAIL"
+}

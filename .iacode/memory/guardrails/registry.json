@@ -1156,7 +1156,8 @@
       "kind": "test",
       "reference": "test_real_repository_scenario_has_a_separate_bounded_wait",
       "verifiedBy": [
-        "test_real_repository_scenario_has_a_separate_bounded_wait"
+        "test_real_repository_scenario_has_a_separate_bounded_wait",
+        "Gate7QualityObservationTests.test_large_repository_observer_covers_unchanged_canonical_run_deadline"
       ],
       "lessons": [
         "LSN-0077"
@@ -1638,7 +1639,13 @@
       "reference": "test_live_output_control_timeout_retains_bounded_diagnostics_and_stays_red",
       "verifiedBy": [
         "test_live_output_control_timeout_retains_bounded_diagnostics_and_stays_red",
-        "test_live_output_adverse_timeout_retains_diagnostics_and_stays_red"
+        "test_live_output_adverse_timeout_retains_diagnostics_and_stays_red",
+        "Gate7QualityObservationTests.test_iacode_wait_timeout_is_red_and_captures_only_closed_runtime_facts",
+        "Gate7QualityObservationTests.test_late_successful_diagnostic_never_promotes_the_expired_wait",
+        "Gate7QualityObservationTests.test_timeout_projection_refuses_malformed_private_and_excessive_metadata",
+        "Gate7QualityObservationTests.test_timeout_projection_follows_all_canonical_closed_states_and_result_statuses",
+        "Gate7QualityObservationTests.test_iacode_timeout_remains_red_if_its_diagnostic_dependency_is_unavailable",
+        "Gate7QualityObservationTests.test_actual_iacode_entrypoint_writes_a_red_timeout_report_before_owned_cleanup"
       ],
       "lessons": [
         "LSN-0110"
@@ -1933,7 +1940,8 @@
       "reference": "test_forgery_premise_joins_public_request_ids_to_actual_successful_sandbox_executions",
       "verifiedBy": [
         "test_forgery_premise_joins_public_request_ids_to_actual_successful_sandbox_executions",
-        "test_cleanup_membership_derives_every_canonical_active_state_including_running"
+        "test_cleanup_membership_derives_every_canonical_active_state_including_running",
+        "Gate7QualityObservationTests.test_owned_archive_premise_is_populated_before_observer_target"
       ],
       "lessons": [
         "LSN-0128"
@@ -2036,7 +2044,16 @@
         "test_current_producer_capture_refuses_unsafe_bytes_without_losing_neutral_inventory",
         "Gate7ProducerBoundaryTests.test_knowledge_raw_producer_survives_actual_consumer_refusal_before_clone_cleanup",
         "Gate7ProducerBoundaryTests.test_prior_live_pass_is_preserved_and_retired_before_any_new_producer",
-        "Gate7PromotionProducerCaptureTests.test_owner_locator_and_all_originals_survive_real_consumer_error_and_cleanup"
+        "Gate7PromotionProducerCaptureTests.test_owner_locator_and_all_originals_survive_real_consumer_error_and_cleanup",
+        "Gate7CanonicalProducerTests.test_all_canonical_producers_and_legacy_outputs_are_captured_without_private_extras",
+        "Gate7CanonicalProducerTests.test_canonical_registry_growth_is_bound_without_a_caller_selected_report_set",
+        "Gate7CanonicalProducerTests.test_all_current_originals_survive_real_consumer_refusal_and_actual_owner_cleanup",
+        "Gate7CanonicalProducerTests.test_claimed_success_cannot_omit_a_canonically_required_producer",
+        "Gate7CanonicalProducerTests.test_forwarding_uses_every_archived_original_after_actual_producer_cleanup",
+        "Gate7CanonicalProducerTests.test_bad_archived_input_never_partially_overwrites_any_prior_functional_target",
+        "Gate7CanonicalProducerTests.test_directory_or_hardlinked_output_is_refused_before_any_forwarding_effect",
+        "Gate7CanonicalProducerTests.test_verifier_consumer_uses_durable_original_not_a_second_temporary_read",
+        "Gate7RawReworkContextTests.test_every_original_context_is_inert_byte_bound_and_protected_by_real_git_attributes"
       ],
       "lessons": [
         "LSN-0135"
@@ -2244,6 +2261,39 @@
         "LSN-0149"
       ],
       "removingItWouldAllow": "Running/failed reads, absent digest equality or zero-exit shell errors to authorize a replacement or false byte acceptance."
+    },
+    {
+      "guardrailId": "GRD-0153",
+      "title": "Subject-versioned root assurance binds every current build and verification input",
+      "kind": "test",
+      "reference": "Gate7RootInputFingerprintTests.test_build_and_verification_edits_invalidate_actual_assurance_fingerprint",
+      "verifiedBy": [
+        "Gate7RootInputFingerprintTests.test_build_and_verification_edits_invalidate_actual_assurance_fingerprint",
+        "Gate7RootInputFingerprintTests.test_every_current_root_is_bound_even_if_ignored_and_deletion_invalidates",
+        "Gate7RootInputFingerprintTests.test_absent_and_v1_subjects_keep_their_original_root_fingerprint_identity",
+        "Gate7RootInputFingerprintTests.test_current_policy_refuses_missing_narrowed_reordered_extra_and_malformed_inputs"
+      ],
+      "lessons": [
+        "LSN-0150"
+      ],
+      "removingItWouldAllow": "Build-context privacy or public verification inputs to change without invalidating current evidence, or current policy to reinterpret immutable legacy fingerprints."
+    },
+    {
+      "guardrailId": "GRD-0154",
+      "title": "Immutable Git reads preserve long Windows paths and binary bytes without persistent configuration",
+      "kind": "test",
+      "reference": "Gate7GitTransportTests.test_real_long_object_expression_returns_every_original_binary_byte",
+      "verifiedBy": [
+        "Gate7GitTransportTests.test_real_long_object_expression_returns_every_original_binary_byte",
+        "Gate7GitTransportTests.test_git_override_is_child_scoped_and_leaves_local_and_global_settings_unchanged",
+        "Gate7GitTransportTests.test_genuine_git_failure_stays_failed_without_rewriting_configuration_or_input",
+        "ReviewBundleTests.test_immutable_subject_rebuilds_are_byte_identical_and_exclude_only_the_sidecar",
+        "ReviewBundleTests.test_declared_digest_and_size_are_rebuilt_not_trusted"
+      ],
+      "lessons": [
+        "LSN-0151"
+      ],
+      "removingItWouldAllow": "Legitimate immutable review evidence to fail due to a Windows object-expression path probe, or a workaround to mutate persistent Git settings, omit members or conceal real Git failures."
     }
   ]
 }

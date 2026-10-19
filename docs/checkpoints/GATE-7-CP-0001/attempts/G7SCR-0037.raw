@@ -1,0 +1,115 @@
+"""Real Windows long-path Git object diagnosis; no repository/global configuration mutation."""
+from __future__ import annotations
+import hashlib
+import importlib.util
+import json
+import subprocess
+import sys
+import tempfile
+from pathlib import Path
+
+ROOT = Path("E:/iacode")
+DESTINATION = Path("C:/Users/cesar/AppData/Local/Temp/iacode-gate7-scope-rework-817a4ca5e0af445babf55b6f010efeab") / "evidence-git-long-path"
+sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+from ledger_common import LedgerError, find_secrets, utc_now, write_json
+
+def main() -> int:
+    if DESTINATION.exists():
+        raise ValueError("fresh diagnostic archive required")
+    DESTINATION.mkdir()
+    script = ROOT / "scripts/development-ledger/review_bundle.py"
+    spec = importlib.util.spec_from_file_location("actual_review_bundle_reader", script)
+    if spec is None or spec.loader is None:
+        raise ValueError("actual immutable reader cannot be loaded")
+    reader = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(reader)
+    def global_setting():
+        result = subprocess.run(["git", "config", "--global", "--get", "core.longpaths"],
+                                cwd=ROOT, capture_output=True, check=False)
+        return result.returncode, result.stdout
+    global_before = global_setting()
+    with tempfile.TemporaryDirectory(prefix="iacode-g7-longpath-diagnostic-") as raw:
+        directory = Path(raw)
+        if directory.resolve().parent != Path(tempfile.gettempdir()).resolve():
+            raise ValueError("unexpected exact disposable owner")
+        repository = directory / "repository"
+        repository.mkdir()
+        def fixture_git(*arguments):
+            result = subprocess.run(["git", "-c", "core.longpaths=true", *arguments],
+                                    cwd=repository, capture_output=True, check=False)
+            if result.returncode:
+                raise ValueError("real Git fixture premise failed")
+            return result.stdout
+        fixture_git("init", "--quiet", "--initial-branch=main")
+        fixture_git("config", "--local", "core.longpaths", "false")
+        leaf_length = 240 - len(str(repository)) - 1 - len("nested/") - len(".bin")
+        if not 30 <= leaf_length <= 200:
+            raise ValueError("a real bounded Windows long-path premise cannot be formed")
+        relative = Path("nested") / ("x" * leaf_length + ".bin")
+        path = repository / relative
+        path.parent.mkdir()
+        content = b"actual scoped Git object\x00\xff\r\n"
+        path.write_bytes(content)
+        (repository / ".gitattributes").write_bytes(b"* -text\n")
+        fixture_git("add", "--all")
+        fixture_git("-c", "user.name=IACode fixture", "-c", "user.email=fixture@example.invalid",
+                    "-c", "commit.gpgsign=false", "commit", "-qm", "real long-path premise")
+        commit = fixture_git("rev-parse", "HEAD").decode("ascii").strip()
+        expression = commit + ":" + relative.as_posix()
+        if len(str(path)) != 240 or len(str(repository / expression)) <= 260:
+            raise ValueError("the actual pre-attack path-length premise is absent")
+        config_before = (repository / ".git/config").read_bytes()
+        original_error = None
+        try:
+            old_bytes = reader.git(repository, "show", expression, binary=True)
+            original = {"result": "RETURNED", "matchesExpected": old_bytes == content}
+        except LedgerError as error:
+            original_error = str(error)
+            original = {"result": "LedgerError",
+                        "filenameTooLong": "Filename too long" in original_error}
+        bare = subprocess.run(["git", "show", expression], cwd=repository,
+                              capture_output=True, check=False)
+        scoped = subprocess.run(["git", "-c", "core.longpaths=true", "show", expression],
+                                cwd=repository, capture_output=True, check=False)
+        config_after = (repository / ".git/config").read_bytes()
+        for label, data in (("ACTUAL-READER-ERROR", (original_error or "").encode("utf-8")),
+                            ("BARE-GIT-STDERR", bare.stderr), ("SCOPED-GIT-STDERR", scoped.stderr)):
+            if data:
+                if find_secrets(data.decode("utf-8", errors="strict")):
+                    raise ValueError("unsafe diagnostic cannot be archived")
+                with (DESTINATION / (label + ".log")).open("xb") as stream:
+                    stream.write(data)
+        observation = {
+            "actualPathCharacters": len(str(path)),
+            "objectFilesystemProbeCharacters": len(str(repository / expression)),
+            "actualUnmodifiedReader": original,
+            "bareGitExit": bare.returncode,
+            "bareGitFilenameTooLong": b"Filename too long" in bare.stderr,
+            "scopedGitExit": scoped.returncode,
+            "scopedBytesMatchExpected": scoped.stdout == content,
+            "expectedBytes": len(content), "expectedSha256": hashlib.sha256(content).hexdigest(),
+            "ownedLocalConfigurationUnchanged": config_before == config_after,
+            "globalSpecificSettingUnchanged": global_before == global_setting(),
+        }
+    observation["temporaryOwnerRemoved"] = not directory.exists()
+    proven = (
+        observation["actualUnmodifiedReader"].get("filenameTooLong") is True
+        and observation["bareGitExit"] != 0 and observation["scopedGitExit"] == 0
+        and observation["scopedBytesMatchExpected"]
+        and observation["ownedLocalConfigurationUnchanged"]
+        and observation["globalSpecificSettingUnchanged"]
+        and observation["temporaryOwnerRemoved"]
+    )
+    report = {
+        "kind": "ACTUAL_SCOPED_GIT_LONG_PATH_DIAGNOSTIC_NOT_GATE_ACCEPTANCE",
+        "subjectCommit": "13749adfa616c7f52aa7407cb9a9d7aef3d19c76",
+        "observedAt": utc_now(), "observations": observation,
+        "result": "SCOPED_OVERRIDE_PROVEN" if proven else "NEEDS_OTHER_CORRECTION",
+        "gateVerdictGranted": False, "independentValidation": False,
+    }
+    write_json(DESTINATION / "DIAGNOSTIC.json", report)
+    print(json.dumps(report))
+    return 0 if proven else 1
+
+if __name__ == "__main__":
+    raise SystemExit(main())

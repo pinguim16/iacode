@@ -1,0 +1,41 @@
+{
+  "result": "PASS",
+  "deadlineSeconds": 10,
+  "steps": [
+    {
+      "step": "rehearsal.worker_started",
+      "result": "PASS",
+      "detail": "iacode-durability-rehearsal is polling"
+    },
+    {
+      "step": "run.created",
+      "result": "PASS",
+      "detail": "run 01a1519c-8e35-7000-95f2-bb3ca4bdad68 with a 10s deadline and an agent that never finishes"
+    },
+    {
+      "step": "run.ended",
+      "result": "PASS",
+      "detail": "state FAILED"
+    },
+    {
+      "step": "run.ended_for_the_right_reason",
+      "result": "PASS",
+      "detail": "errorType RUN_DEADLINE_EXCEEDED"
+    },
+    {
+      "step": "run.did_not_run_for_ever",
+      "result": "PASS",
+      "detail": "it ended after 19.4s against a 10s deadline"
+    },
+    {
+      "step": "history.records_the_failure",
+      "result": "PASS",
+      "detail": "MODEL_CALL_STARTED, MODEL_CALL_COMPLETED, MODEL_CALL_STARTED, RUN_FAILED"
+    },
+    {
+      "step": "history.records_the_work_it_did",
+      "result": "PASS",
+      "detail": "26 completed model call(s) before the deadline"
+    }
+  ]
+}

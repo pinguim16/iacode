@@ -1,0 +1,130 @@
+"""Declare the current delta using authored Gate-specific scope reasons; never grant a verdict."""
+
+from __future__ import annotations
+
+import subprocess
+import sys
+from pathlib import Path
+
+CHECKPOINT = Path(__file__).resolve().parents[1]
+ROOT = CHECKPOINT.parents[2]
+sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+
+from ledger_common import (
+    canonical_hash_bytes, canonical_hash_path, load_json, use_utf8_stdout, write_json,
+)
+
+
+def git(*arguments: str, binary: bool = False) -> bytes | str:
+    result = subprocess.run(["git", *arguments], cwd=ROOT, check=True, capture_output=True,
+                            text=not binary, encoding=None if binary else "utf-8")
+    return result.stdout
+
+
+def reason(path: str) -> str:
+    exact = {
+        ".iacode/anchors/checkpoint-chain.json": "Anchor sealed Gate6; preserve every predecessor.",
+        "docs/checkpoints/LATEST.md": "Point to the separately authorized Gate7 checkpoint.",
+        "docs/GATE-7-CHECKLIST.md": "Define the complete canonical Knowledge Engine specification.",
+        ".iacode/policies/canonical-requirements.json": "Register Gate7 without altering prior rows.",
+        "START-HERE.md": "Align live entry with authorized Gate7 and pending M2 independent audit.",
+        ".gitattributes": "Preserve new checkpoint producer bytes across actual Git transport.",
+        "docs/adr/README.md": "Keep the canonical ADR index aligned with structural decisions.",
+        ".iacode/policies/gate-scope.json": (
+            "Reserve only the next canonical Code Graph boundary; no Gate8 implementation."),
+        "services/code-graph/README.md": (
+            "Keep the future Gate8 boundary explicitly RESERVED and unimplemented."),
+        "tests/test_gate5_clients.py": (
+            "Strengthen current mandatory membership without dropping inherited assertions."),
+        "docs/checkpoints/M2-CONSOLIDATION.md": (
+            "Consolidate Gates4-7 and preserve the independent M2 audit boundary."),
+        "scripts/development-ledger/promotion_fixture.py": (
+            "Constrain protocol fixtures to control contracts and expose their owned locator."),
+        "scripts/development-ledger/ledger_common.py": (
+            "Bind current root build/verification inputs without reinterpreting legacy subjects."),
+        ".iacode/policies/assurance-scope.json": (
+            "Version current root build-context and verification inputs as a mandatory closed set."),
+    }
+    if path in exact:
+        return exact[path]
+    if path.startswith(CHECKPOINT.relative_to(ROOT).as_posix() + "/"):
+        return "Record Gate7 authority, requirements, work and actual evidence with resumable M2 handoff."
+    if path in {
+        "docs/adr/ADR-0053-knowledge-requires-content-bound-source-permission.md",
+        "docs/adr/ADR-0054-knowledge-indexes-are-rebuildable-cited-projections.md",
+        "docs/adr/ADR-0055-code-graph-remains-an-explicit-future-reservation.md",
+        "docs/adr/ADR-0056-minimal-protocol-fixtures-inherit-only-control-contracts.md",
+        "docs/adr/ADR-0057-build-and-verification-root-inputs-follow-subject-versioned-assurance.md",
+    }:
+        return "Define the governed source, rights, index, citation and invalidation architecture."
+    if path.startswith("services/knowledge/"):
+        return "Implement and prove the provider-neutral governed knowledge projection domain."
+    if path.startswith("apps/api/"):
+        return "Implement actual source/SQL adapters, migration, authenticated API and owned lifecycle."
+    if path.startswith("packages/contracts/") or path.startswith("packages/persistence/"):
+        return "Version the closed knowledge wire/persistence contract and real database constraints."
+    if path.startswith("packages/telemetry/"):
+        return "Keep knowledge request/query content out of logs while retaining bounded observability."
+    if path.startswith(".iacode/knowledge-sources/"):
+        return "Ship an empty default curated registry; no implicit user/provider reuse permission."
+    if path in {".iacode/policies/knowledge-policy.json", ".iacode/schemas/knowledge.schema.json"}:
+        return "Consume finite knowledge policy and derive the actual closed owning-image schema."
+    if path in {".iacode/policies/quality-gates.json", ".iacode/policies/test-suites.json", "ruff.toml"}:
+        return "Add complete knowledge quality/collection without dropping inherited requirements."
+    if path in {".gitignore", ".dockerignore"}:
+        return "Exclude operational curated payloads/grants from public Git and runtime build context."
+    if path in {"infra/compose/docker-compose.yml", "infra/compose/.env.example"}:
+        return "Declare and consume operator-controlled source-root configuration, not HTTP authority."
+    if path.startswith("scripts/iacode/"):
+        return "Execute actual knowledge image tests and full owned functional/transport verification."
+    if path in {"README.md", "docs/ARCHITECTURE.md", "docs/DEVELOPMENT.md", "services/experience/README.md"}:
+        return "Align public capability maps and cross-Gate boundaries with actual source and checkpoint-owned acceptance."
+    if path.startswith("docs/runbooks/"):
+        return "Document actual knowledge admission, permissions, APIs, indexing, citations and recovery limits."
+    if path.startswith("tests/test_gate7_"):
+        return "Execute current knowledge specification/boundary controls and real causal regression guards."
+    if path.startswith(".iacode/memory/"):
+        return "Record observed failures, escalated recurrence, actual guard restoration and the canonical retrospective."
+    raise ValueError("a changed path has no authored Gate7 declaration: " + path)
+
+
+def main() -> int:
+    use_utf8_stdout()
+    state = load_json(CHECKPOINT / "STATE.json")
+    if subprocess.run(["git", "rev-parse", "--verify",
+        f"refs/tags/iacode-checkpoints/{CHECKPOINT.name}"], cwd=ROOT,
+        stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=False).returncode == 0:
+        raise ValueError("never rewrite a sealed checkpoint")
+    base = state["baseCommit"]
+    changed = set(str(git("diff", "--name-only", base)).splitlines())
+    changed.update(str(git("ls-files", "--others", "--exclude-standard")).splitlines())
+    document = {"filesRead": [{"path": path, "reason": why} for path, why in (
+        ("AGENTS.md", "Project adapter and mandatory repository contract."),
+        ("START-HERE.md", "Canonical entry protocol."),
+        ("docs/DEVELOPMENT-CONTRACT.md", "Scope and ordered delivery obligations."),
+        ("docs/MASTER-PLAN.md", "Gate7 purpose and M2 boundary."),
+        ("docs/MILESTONE-VALIDATION.md", "Separate independent milestone handoff/verdict."),
+        ("docs/checkpoints/GATE-6-CP-0001/STATE.json", "Immutable predecessor Git/status binding."),
+        ("docs/checkpoints/GATE-6-CP-0001/HANDOFF.md", "Predecessor evidence and safe continuation."),
+        ("docs/checkpoints/GATE-6-CP-0001/RISKS.md", "Historical exclusions and residual limits."),
+    )], "filesCreated": [], "filesModified": [], "filesDeleted": []}
+    for path in sorted(changed):
+        existed = subprocess.run(["git", "cat-file", "-e", f"{base}:{path}"], cwd=ROOT,
+            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=False).returncode == 0
+        exists = (ROOT / path).is_file()
+        category = "filesModified" if existed and exists else "filesDeleted" if existed else "filesCreated"
+        row = {"path": path, "reason": reason(path)}
+        if path != CHECKPOINT.relative_to(ROOT).as_posix() + "/FILES.json":
+            if existed:
+                row["hashBefore"] = canonical_hash_bytes(git("show", f"{base}:{path}", binary=True))
+            if exists:
+                row["hashAfter"] = canonical_hash_path(ROOT / path)
+        document[category].append(row)
+    write_json(CHECKPOINT / "FILES.json", document)
+    print("INVENTORY_DECLARED " + " ".join(f"{key}={len(document[key])}" for key in
+          ("filesCreated", "filesModified", "filesDeleted")))
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

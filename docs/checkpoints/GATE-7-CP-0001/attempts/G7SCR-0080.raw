@@ -1,0 +1,29 @@
+{
+  "schemaVersion": "1.0.0",
+  "kind": "TARGETED_CAUSAL_NOT_WHOLE_GATE",
+  "gate": "QUALITY-OBSERVER-PRODUCER-GREEN",
+  "command": [
+    "python",
+    "-X",
+    "utf8",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-p",
+    "test_gate7_quality_observation.py"
+  ],
+  "observedAt": "2026-10-19T01:33:39Z",
+  "subjectCommit": "13749adfa616c7f52aa7407cb9a9d7aef3d19c76",
+  "sourceDirty": true,
+  "sourceFingerprint": "71cd5038e46f93d37c17ede214fdb5df20b35b3128ce52bab41a7d163e1465a3",
+  "sourceUnchanged": true,
+  "exitCode": 0,
+  "outputEncodingValid": true,
+  "unsafeOutputOccurrences": 0,
+  "outputBytes": 112,
+  "outputSha256": "35ec629943552cfecaeacc9c67e2e41d4eca638d9a66776bdd500ed1c9c11a6f",
+  "safeOutputArtifact": "docs/checkpoints/GATE-7-CP-0001/suite-attempts/QUALITY-OBSERVER-PRODUCER-GREEN-0001.log",
+  "result": "PASS"
+}

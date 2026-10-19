@@ -1,0 +1,372 @@
+{
+  "gate": "GATE-7",
+  "result": "FAIL",
+  "fast": false,
+  "durationSeconds": 17175.2,
+  "stages": [
+    {
+      "name": "gate:tests",
+      "description": "mandatory gate tests",
+      "exitCode": 1,
+      "durationSeconds": 8898.9,
+      "result": "FAIL",
+      "outputTail": "======================================================================\nERROR: test_immutable_subject_rebuilds_are_byte_identical_and_exclude_only_the_sidecar (test_gate4_quality_engine.ReviewBundleTests.test_immutable_subject_rebuilds_are_byte_identical_and_exclude_only_the_sidecar)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-gate7-full-verification-u_j080gk\\repository\\tests\\test_gate4_quality_engine.py\", line 873, in test_immutable_subject_rebuilds_are_byte_identical_and_exclude_only_the_sidecar\n    first_digest = review_bundle.create(PROJECT_ROOT, checkpoint, first, \"HEAD\")\n  File \"C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-gate7-full-verification-u_j080gk\\repository\\scripts\\development-ledger\\review_bundle.py\", line 295, in create\n    payload = collect_subject(root, checkpoint, subject) if subject else collect(root, checkpoint)\n              ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-gate7-full-verification-u_j080gk\\repository\\scripts\\development-ledger\\review_bundle.py\", line 209, in collect_subject\n    f\"repository/{path.as_posix()}\": _subject_bytes(root, commit, path)\n                                     ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-gate7-full-verification-u_j080gk\\repository\\scripts\\development-ledger\\review_bundle.py\", line 102, in _subject_bytes\n    return bytes(git(root, \"show\", f\"{subject}:{path.as_posix()}\", binary=True))\n                 ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-gate7-full-verification-u_j080gk\\repository\\scripts\\development-ledger\\review_bundle.py\", line 53, in git\n    raise LedgerError(\n    ...<2 lines>...\n    )\nledger_common.LedgerError: git show 13749adfa616c7f52aa7407cb9a9d7aef3d19c76:docs/checkpoints/GATE-7-CP-0001/attempts/PROMOTION-DIAGNOSTIC-7ab3f7df824c4a869fdb98d73e67cddd-SETUP-00-CP-0001-M0-INTERNAL-MIRROR-RECEIPT.json failed: fatal: failed to stat '13749adfa616c7f52aa7407cb9a9d7aef3d19c76:docs/checkpoints/GATE-7-CP-0001/attempts/PROMOTION-DIAGNOSTIC-7ab3f7df824c4a869fdb98d73e67cddd-SETUP-00-CP-0001-M0-INTERNAL-MIRROR-RECEIPT.json': Filename too long\n\n----------------------------------------------------------------------\nRan 942 tests in 8897.747s\n\nFAILED (errors=2)",
+      "failureHeaders": [
+        "ERROR: test_declared_digest_and_size_are_rebuilt_not_trusted (test_gate4_quality_engine.ReviewBundleTests.test_declared_digest_and_size_are_rebuilt_not_trusted)",
+        "ERROR: test_immutable_subject_rebuilds_are_byte_identical_and_exclude_only_the_sidecar (test_gate4_quality_engine.ReviewBundleTests.test_immutable_subject_rebuilds_are_byte_identical_and_exclude_only_the_sidecar)"
+      ],
+      "failureHeaderCount": 2,
+      "failureHeadersTruncated": false
+    },
+    {
+      "name": "gate:staticAnalysis",
+      "description": "mandatory gate staticAnalysis",
+      "exitCode": 0,
+      "durationSeconds": 0.7,
+      "result": "PASS"
+    },
+    {
+      "name": "gate:lessons",
+      "description": "mandatory gate lessons",
+      "exitCode": 0,
+      "durationSeconds": 6.0,
+      "result": "PASS"
+    },
+    {
+      "name": "gate:integrity",
+      "description": "mandatory gate integrity",
+      "exitCode": 0,
+      "durationSeconds": 32.0,
+      "result": "PASS"
+    },
+    {
+      "name": "gate:checkpointValidation",
+      "description": "mandatory gate checkpointValidation",
+      "exitCode": 0,
+      "durationSeconds": 95.7,
+      "result": "PASS"
+    },
+    {
+      "name": "gate:apiTests",
+      "description": "mandatory gate apiTests",
+      "exitCode": 0,
+      "durationSeconds": 188.1,
+      "result": "PASS"
+    },
+    {
+      "name": "gate:gatewayTests",
+      "description": "mandatory gate gatewayTests",
+      "exitCode": 0,
+      "durationSeconds": 19.8,
+      "result": "PASS"
+    },
+    {
+      "name": "gate:agentRuntimeTests",
+      "description": "mandatory gate agentRuntimeTests",
+      "exitCode": 0,
+      "durationSeconds": 32.0,
+      "result": "PASS"
+    },
+    {
+      "name": "gate:sandboxTests",
+      "description": "mandatory gate sandboxTests",
+      "exitCode": 0,
+      "durationSeconds": 519.0,
+      "result": "PASS"
+    },
+    {
+      "name": "gate:evaluatorTests",
+      "description": "mandatory gate evaluatorTests",
+      "exitCode": 0,
+      "durationSeconds": 127.9,
+      "result": "PASS"
+    },
+    {
+      "name": "gate:webTests",
+      "description": "mandatory gate webTests",
+      "exitCode": 0,
+      "durationSeconds": 47.4,
+      "result": "PASS"
+    },
+    {
+      "name": "gate:lint",
+      "description": "mandatory gate lint",
+      "exitCode": 0,
+      "durationSeconds": 30.2,
+      "result": "PASS"
+    },
+    {
+      "name": "gate:clientTests",
+      "description": "mandatory gate clientTests",
+      "exitCode": 0,
+      "durationSeconds": 59.7,
+      "result": "PASS"
+    },
+    {
+      "name": "gate:experienceTests",
+      "description": "mandatory gate experienceTests",
+      "exitCode": 0,
+      "durationSeconds": 57.6,
+      "result": "PASS"
+    },
+    {
+      "name": "gate:knowledgeTests",
+      "description": "mandatory gate knowledgeTests",
+      "exitCode": 0,
+      "durationSeconds": 37.6,
+      "result": "PASS"
+    },
+    {
+      "name": "gate:infraDefinition",
+      "description": "mandatory gate infraDefinition",
+      "exitCode": 0,
+      "durationSeconds": 1.3,
+      "result": "PASS"
+    },
+    {
+      "name": "stack",
+      "description": "build and start an isolated stack, then wait for real health",
+      "exitCode": 0,
+      "durationSeconds": 212.7,
+      "result": "PASS"
+    },
+    {
+      "name": "integration",
+      "description": "the backend suite against the real services",
+      "exitCode": 0,
+      "durationSeconds": 492.0,
+      "result": "PASS"
+    },
+    {
+      "name": "infra",
+      "description": "our configuration of each service, exercised live",
+      "exitCode": 0,
+      "durationSeconds": 25.7,
+      "result": "PASS"
+    },
+    {
+      "name": "smoke",
+      "description": "the API, the web shell, the observability stack and a workflow",
+      "exitCode": 0,
+      "durationSeconds": 12.0,
+      "result": "PASS"
+    },
+    {
+      "name": "gateway-smoke",
+      "description": "the Model Gateway against the real configured provider",
+      "exitCode": 0,
+      "durationSeconds": 24.0,
+      "result": "PASS"
+    },
+    {
+      "name": "agent-runtime-smoke",
+      "description": "the Agent Runtime against the real provider, through the gateway",
+      "exitCode": 0,
+      "durationSeconds": 23.9,
+      "result": "PASS"
+    },
+    {
+      "name": "agent-durability",
+      "description": "a run waiting for a tool survives a real worker restart",
+      "exitCode": 0,
+      "durationSeconds": 115.5,
+      "result": "PASS"
+    },
+    {
+      "name": "agent-cancellation",
+      "description": "a paused run is cancelled, stays cancelled and refuses a late result",
+      "exitCode": 0,
+      "durationSeconds": 99.4,
+      "result": "PASS"
+    },
+    {
+      "name": "agent-deadline",
+      "description": "a run that is alive and going nowhere is ended by its own deadline",
+      "exitCode": 0,
+      "durationSeconds": 75.8,
+      "result": "PASS"
+    },
+    {
+      "name": "sandbox-integration",
+      "description": "the sandbox's store and artifact sink against the real services",
+      "exitCode": 0,
+      "durationSeconds": 16.0,
+      "result": "PASS"
+    },
+    {
+      "name": "quality-integration",
+      "description": "quality lifecycle and immutable evidence against the real services",
+      "exitCode": 0,
+      "durationSeconds": 163.8,
+      "result": "PASS"
+    },
+    {
+      "name": "quality-pass",
+      "description": "a passing fixture derives PASS through the complete Quality Engine",
+      "exitCode": 0,
+      "durationSeconds": 136.3,
+      "result": "PASS"
+    },
+    {
+      "name": "quality-fail",
+      "description": "a failing fixture preserves its failed check, finding and evidence",
+      "exitCode": 0,
+      "durationSeconds": 93.4,
+      "result": "PASS"
+    },
+    {
+      "name": "quality-iacode",
+      "description": "the committed IACode tree is evaluated by its canonical profile",
+      "exitCode": 1,
+      "durationSeconds": 1327.7,
+      "result": "FAIL",
+      "outputTail": "[stack] waiting for evaluator=starting\n[iacode] [PASS] iacode.snapshot.stored: ['artifactId', 'key', 'sha256', 'sizeBytes']\n[iacode] FAILED: quality run 01a151a9-8f30-7000-9bc0-bb809f3cf791 to become terminal did not happen within 900s; last=None",
+      "failureHeaders": [],
+      "failureHeaderCount": 0,
+      "failureHeadersTruncated": false
+    },
+    {
+      "name": "quality-reproduction",
+      "description": "stored inputs reproduce an equivalent result under the same plan identity",
+      "exitCode": 0,
+      "durationSeconds": 175.9,
+      "result": "PASS"
+    },
+    {
+      "name": "quality-recovery",
+      "description": "a quality run survives evaluator restart without duplicate results",
+      "exitCode": 0,
+      "durationSeconds": 153.5,
+      "result": "PASS"
+    },
+    {
+      "name": "quality-cancellation",
+      "description": "cancellation waits for sandbox cleanup and remains fail-closed",
+      "exitCode": 0,
+      "durationSeconds": 64.6,
+      "result": "PASS"
+    },
+    {
+      "name": "quality-timeout",
+      "description": "policy-owned deadlines record timeout evidence and a FAIL verdict",
+      "exitCode": 0,
+      "durationSeconds": 104.0,
+      "result": "PASS"
+    },
+    {
+      "name": "sandbox-coding",
+      "description": "a coding team fixes a synthetic repository in a real sandbox; the host is untouched",
+      "exitCode": 0,
+      "durationSeconds": 185.5,
+      "result": "PASS"
+    },
+    {
+      "name": "sandbox-timeout",
+      "description": "a command past its timeout is stopped and the run carries on",
+      "exitCode": 0,
+      "durationSeconds": 125.8,
+      "result": "PASS"
+    },
+    {
+      "name": "sandbox-cancellation",
+      "description": "a run cancelled during a long command stops it and leaves no sandbox",
+      "exitCode": 0,
+      "durationSeconds": 225.3,
+      "result": "PASS"
+    },
+    {
+      "name": "sandbox-recovery",
+      "description": "a restarted sandbox service keeps the run's session and its workspace",
+      "exitCode": 0,
+      "durationSeconds": 151.0,
+      "result": "PASS"
+    },
+    {
+      "name": "sandbox-tool-result-origin",
+      "description": "a result posted to the API for a sandboxed request is refused, and the agent receives the sandbox's own",
+      "exitCode": 0,
+      "durationSeconds": 225.0,
+      "result": "PASS"
+    },
+    {
+      "name": "quality-false-pass",
+      "description": "the Gate 4 false-PASS battery rejects every mandatory mutation",
+      "exitCode": 1,
+      "durationSeconds": 764.9,
+      "result": "FAIL",
+      "outputTail": "[iacode] [PASS] secret-output.control.after_refusal_pass: PASS\n[iacode] wrote var\\quality-secret-output.json\n{\"schemaVersion\":\"1.0.0\",\"result\":\"PASS\",\"scenarios\":[{\"schemaVersion\":\"1.0.0\",\"scenario\":\"secret-output\",\"result\":\"PASS\",\"environment\":\"real-compose-temporal-postgresql-minio-sandbox-container-engine\",\"steps\":[{\"step\":\"snapshot.stored\",\"result\":\"PASS\",\"expected\":[\"artifactId\",\"key\",\"sha256\",\"sizeBytes\"],\"observed\":[\"artifactId\",\"key\",\"sha256\",\"sizeBytes\"]},{\"step\":\"control.accepted\",\"result\":\"PASS\",\"expected\":\"SUCCEEDED with PASS\",\"observed\":\"SUCCEEDED\"},{\"step\":\"snapshot.stored\",\"result\":\"PASS\",\"expected\":[\"artifactId\",\"key\",\"sha256\",\"sizeBytes\"],\"observed\":[\"artifactId\",\"key\",\"sha256\",\"sizeBytes\"]},{\"step\":\"run.terminal\",\"result\":\"PASS\",\"expected\":\"FAILED\",\"observed\":\"FAILED\"},{\"step\":\"results.complete\",\"result\":\"PASS\",\"expected\":7,\"observed\":7},{\"step\":\"evidence.one_or_more_per_result\",\"result\":\"PASS\",\"expected\":\">=7\",\"observed\":7},{\"step\":\"findings.evidence_resolved\",\"result\":\"PASS\",\"expected\":[],\"observed\":[]},{\"step\":\"evidence.rights_closed\",\"result\":\"PASS\",\"expected\":\"every evidence item trainingAllowed=false and ragAllowed=false\",\"observed\":7},{\"step\":\"sandbox.no_active_session\",\"result\":\"PASS\",\"expected\":\"0\",\"observed\":\"0\"},{\"step\":\"python-secret-output.verdict_fail\",\"result\":\"PASS\",\"expected\":\"FAIL\",\"observed\":\"FAIL\"},{\"step\":\"python-secret-output.api_output_clean\",\"result\":\"PASS\",\"expected\":true,\"observed\":true},{\"step\":\"python-secret-output.history_clean\",\"result\":\"PASS\",\"expected\":\"decoded durable payloads contain no prohibited bytes\",\"observed\":{\"prohibitedBytesAbsent\":true,\"payloadsScanned\":156,\"workflowStatus\":\"COMPLETED\",\"sandboxObjects\":0,\"failures\":[],\"pendingActivityTypes\":[],\"containmentRefusals\":2}},{\"step\":\"python-secret-output.no_sandbox_artifact\",\"result\":\"PASS\",\"expected\":0,\"observed\":0},{\"step\":\"python-secret-output.causal_containment_refusal\",\"result\":\"PASS\",\"expected\":\"one or more explicit output-containment refusals\",\"observed\":2},{\"step\":\"snapshot.stored\",\"result\":\"PASS\",\"expected\":[\"artifactId\",\"key\",\"sha256\",\"sizeBytes\"],\"observed\":[\"artifactId\",\"key\",\"sha256\",\"sizeBytes\"]},{\"step\":\"run.terminal\",\"result\":\"PASS\",\"expected\":\"FAILED\",\"observed\":\"FAILED\"},{\"step\":\"results.complete\",\"result\":\"PASS\",\"expected\":7,\"observed\":7},{\"step\":\"evidence.one_or_more_per_result\",\"result\":\"PASS\",\"expected\":\">=7\",\"observed\":7},{\"step\":\"findings.evidence_resolved\",\"result\":\"PASS\",\"expected\":[],\"observed\":[]},{\"step\":\"evidence.rights_closed\",\"result\":\"PASS\",\"expected\":\"every evidence item trainingAllowed=false and ragAllowed=false\",\"observed\":7},{\"step\":\"sandbox.no_active_session\",\"result\":\"PASS\",\"expected\":\"0\",\"observed\":\"0\"},{\"step\":\"python-secret-output-full.verdict_fail\",\"result\":\"PASS\",\"expected\":\"FAIL\",\"observed\":\"FAIL\"},{\"step\":\"python-secret-output-full.api_output_clean\",\"result\":\"PASS\",\"expected\":true,\"observed\":true},{\"step\":\"python-secret-output-full.history_clean\",\"result\":\"PASS\",\"expected\":\"decoded durable payloads contain no prohibited bytes\",\"observed\":{\"prohibitedBytesAbsent\":true,\"payloadsScanned\":142,\"workflowStatus\":\"COMPLETED\",\"sandboxObjects\":0,\"failures\":[],\"pendingActivityTypes\":[],\"containmentRefusals\":2}},{\"step\":\"python-secret-output-full.no_sandbox_artifact\",\"result\":\"PASS\",\"expected\":0,\"observed\":0},{\"step\":\"python-secret-output-full.causal_containment_refusal\",\"result\":\"PASS\",\"expected\":\"one or more explicit output-containment refusals\",\"observed\":2},{\"step\":\"snapshot.stored\",\"result\":\"PASS\",\"expected\":[\"artifactId\",\"key\",\"sha256\",\"sizeBytes\"],\"observed\":[\"artifactId\",\"key\",\"sha256\",\"sizeBytes\"]},{\"step\":\"run.terminal\",\"result\":\"PASS\",\"expected\":\"SUCCEEDED\",\"observed\":\"SUCCEEDED\"},{\"step\":\"results.complete\",\"result\":\"PASS\",\"expected\":7,\"observed\":7},{\"step\":\"evidence.one_or_more_per_result\",\"result\":\"PASS\",\"expected\":\">=7\",\"observed\":7},{\"step\":\"findings.evidence_resolved\",\"result\":\"PASS\",\"expected\":[],\"observed\":[]},{\"step\":\"evidence.rights_closed\",\"result\":\"PASS\",\"expected\":\"every evidence item trainingAllowed=false and ragAllowed=false\",\"observed\":7},{\"step\":\"sandbox.no_active_session\",\"result\":\"PASS\",\"expected\":\"0\",\"observed\":\"0\"},{\"step\":\"control.after_refusal_pass\",\"result\":\"PASS\",\"expected\":\"PASS\",\"observed\":\"PASS\"}],\"artifacts\":[{\"kind\":\"snapshot\",\"artifactId\":\"01a151ce-28b8-7000-b58a-83cdcb7aac51\",\"digest\":\"9c205304bc3465fadac554935c31d531317072088de95a9c3a19bd99b807c8de\",\"sizeBytes\":476},{\"kind\":\"snapshot\",\"artifactId\":\"01a151d0-65d0-7000-90cd-15264f7ce580\",\"digest\":\"5dcc0d123f07e60e8320282d59557a07fad27b0114801e00be43265b7511c6ed\",\"sizeBytes\":549},{\"kind\":\"quality-run\",\"runId\":\"01a151d0-7c2f-7000-a7f1-3a12be762625\",\"planId\":\"954178d41555f167026135d2833e4a887cd06d0d60c7009fe7e5283d3dc12403\"},{\"kind\":\"snapshot\",\"artifactId\":\"01a151d2-a37a-7000-8b7b-dbce934b3251\",\"digest\":\"f05cde6a9717245e911c31d1bf0ebd39828890e3250e96055dbaa12f100009cb\",\"sizeBytes\":530},{\"kind\":\"quality-run\",\"runId\":\"01a151d2-b24b-7000-b94e-7dba5dab2ae1\",\"planId\":\"1bb61ee0ea6236c2a064f76d6f22205da70016ec086e0e66c0a39547d5911f82\"},{\"kind\":\"snapshot\",\"artifactId\":\"01a151d4-8084-7000-8e5e-0d76292f618e\",\"digest\":\"aca607095f151876e08036295a3777382963b859755637687727551a1a9cde7f\",\"sizeBytes\":476}],\"recordedAt\":\"2026-10-19T01:45:34Z\"}],\"recordedAt\":\"2026-10-19T01:45:34Z\"}\n[iacode] QUALITY_ENGINE_E2E=PASS scenarios=secret-output\n[DEFENDED] A missing result: verdict=FAIL; reasons=('missing result for q001-unit',)\n[DEFENDED] B exit-code forgery: contract refused non-zero PASS\n[DEFENDED] C forged evidence: verdict=FAIL; reasons=('q001-unit has unresolved evidence evidence-red-team',)\n[DEFENDED] D policy mutation: store refused PLAN_ID_CONFLICT\n[DEFENDED] E snapshot mutation: store refused PLAN_ID_CONFLICT\n[DEFENDED] F wrong origin: contract refused origin\n[DEFENDED] G timed_out result: verdict=FAIL; reasons=('q001-unit ended TIMED_OUT',)\n[DEFENDED] H denied result: verdict=FAIL; reasons=('q001-unit ended DENIED',)\n[DEFENDED] I cancelled result: verdict=FAIL; reasons=('q001-unit ended CANCELLED',)\n[DEFENDED] J unknown status: contract refused status\n[DEFENDED] K bundle integrity: result=FAIL; expected-finding=True\n[DEFENDED] L mandatory bundle evidence: result=FAIL; expected-finding=True\n[DEFENDED] M archive path safety: result=FAIL; expected-finding=True\n[DEFENDED] N bundle secret scan: result=FAIL; expected-finding=True\n[DEFENDED] O archive uniqueness: result=FAIL; expected-finding=True\n[DEFENDED] P live adverse lifecycle: recovery=PASS; cancellation=PASS; timeout=PASS; forged-origin=PASS; secret-output=PASS\n[DEFENDED] Q pre-persistence secret containment: status=ERROR; verdict=FAIL; objects=0; records=0; prohibited-bytes-absent=True\n[DEFENDED] R scanner availability: scan-before-store=True; status=ERROR; verdict=FAIL; objects=0; records=0\n[DEFENDED] S legacy persisted object: resolved=False; rescanned-after-read=True; verdict=FAIL\n[ESCAPED] T review bundle portability, determinism and declaration binding: deterministic=False; portable=False; categories=False; declaration=False; stale-refused=False\nRED_TEAM=RED_TEAM_FAIL 19/20 control=VALID",
+      "failureHeaders": [],
+      "failureHeaderCount": 0,
+      "failureHeadersTruncated": false
+    },
+    {
+      "name": "backup",
+      "description": "backup, restore into a disposable target, verified read-back",
+      "exitCode": 0,
+      "durationSeconds": 71.5,
+      "result": "PASS"
+    },
+    {
+      "name": "dependency-scan",
+      "description": "known vulnerabilities in the pinned dependencies",
+      "exitCode": 0,
+      "durationSeconds": 112.2,
+      "result": "PASS"
+    },
+    {
+      "name": "native-client-installation",
+      "description": "fresh actual VSIX installation, workspace trust and owned storage/process cleanup",
+      "exitCode": 0,
+      "durationSeconds": 152.3,
+      "result": "PASS"
+    },
+    {
+      "name": "desktop-client-e2e",
+      "description": "fresh CLI/native recovery through real hardened provider/sandbox/quality workflows",
+      "exitCode": 0,
+      "durationSeconds": 687.0,
+      "result": "PASS"
+    },
+    {
+      "name": "experience-store-e2e",
+      "description": "real authenticated source-bound capture, rights, restart, corruption and retention",
+      "exitCode": 0,
+      "durationSeconds": 432.3,
+      "result": "PASS"
+    },
+    {
+      "name": "knowledge-engine-e2e",
+      "description": "real governed source ingestion, measured retrieval, citations and invalidation",
+      "exitCode": 0,
+      "durationSeconds": 412.7,
+      "result": "PASS"
+    },
+    {
+      "name": "restart",
+      "description": "restart with data intact",
+      "exitCode": 0,
+      "durationSeconds": 59.9,
+      "result": "PASS"
+    },
+    {
+      "name": "dependency-failure",
+      "description": "liveness holds, readiness refuses, both recover",
+      "exitCode": 0,
+      "durationSeconds": 12.5,
+      "result": "PASS"
+    },
+    {
+      "name": "fresh-install",
+      "description": "a complete installation from no volumes at all",
+      "exitCode": 0,
+      "durationSeconds": 77.6,
+      "result": "PASS"
+    }
+  ],
+  "isolation": {
+    "composeProject": "iacode-verify-986d5eb5674b",
+    "publishedPorts": "docker-allocated",
+    "preRunCleanup": "PASS",
+    "postRunCleanup": "PASS"
+  }
+}

@@ -1,0 +1,99 @@
+"""Preserve actual available canonical runtime-v2 producers before diagnosing capture membership."""
+from __future__ import annotations
+
+import hashlib
+import importlib.util
+import json
+import re
+import sys
+import tempfile
+from pathlib import Path
+
+ROOT = Path("E:/iacode")
+CLONE = Path("C:/Users/cesar/AppData/Local/Temp/iacode-gate7-full-verification-u_j080gk/repository")
+OWNER = Path("C:/Users/cesar/AppData/Local/Temp/iacode-gate7-scope-rework-817a4ca5e0af445babf55b6f010efeab")
+ARCHIVE = OWNER / "evidence-runtime-v2-additional-producers"
+SUBJECT = "13749adfa616c7f52aa7407cb9a9d7aef3d19c76"
+sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+sys.path.insert(0, str(ROOT / "scripts/iacode"))
+from ledger_common import find_secrets, utc_now, write_json
+from verify import build_stages
+
+def main() -> int:
+    if (
+        OWNER.resolve(strict=True).parent != Path(tempfile.gettempdir()).resolve()
+        or not OWNER.name.startswith("iacode-gate7-scope-rework-")
+        or OWNER.is_symlink() or OWNER.is_junction() or ARCHIVE.exists()
+        or not CLONE.is_dir()
+    ):
+        raise ValueError("fresh exact diagnostic owner and active producer clone required")
+    names = set()
+    for stage in build_stages(False):
+        for index, argument in enumerate(stage.argv[:-1]):
+            if argument == "--report":
+                candidate = Path(stage.argv[index + 1])
+                if candidate.parent.name == "var" and candidate.suffix == ".json":
+                    if re.fullmatch(r"[a-z0-9-]+\.json", candidate.name) is None:
+                        raise ValueError("unexpected canonical report name")
+                    names.add(candidate.name)
+    if not {"sandbox-coding.json", "gateway-smoke.json"}.issubset(names):
+        raise ValueError("actual canonical producer membership was not derived")
+    ARCHIVE.mkdir()
+    preserved, unavailable, refused = [], [], []
+    for name in sorted(names):
+        path = CLONE / "var" / name
+        if not path.is_file():
+            unavailable.append(name)
+            continue
+        if path.is_symlink() or path.is_junction() or not path.resolve().is_relative_to(CLONE.resolve()):
+            raise ValueError("redirected original producer refused")
+        raw = path.read_bytes()
+        if not raw:
+            raise ValueError("nonempty actual original required")
+        record = {"producerName": name, "bytes": len(raw), "sha256": hashlib.sha256(raw).hexdigest()}
+        if find_secrets(raw.decode("utf-8", errors="strict")):
+            refused.append(record)
+            continue
+        destination = ARCHIVE / ("ORIGINAL-" + name)
+        with destination.open("xb") as stream:
+            stream.write(raw)
+        if destination.read_bytes() != raw:
+            raise ValueError("actual original byte equality failed")
+        preserved.append({**record, "archive": destination.name})
+    initial = {
+        "kind": "ACTUAL_CANONICAL_AVAILABLE_PRODUCERS_PRESERVED_NOT_ACCEPTANCE",
+        "subjectCommit": SUBJECT, "observedAt": utc_now(), "parentStillRunning": True,
+        "canonicalNames": sorted(names), "preserved": preserved,
+        "notYetAvailable": unavailable, "refused": refused,
+        "gateVerdictGranted": False, "independentValidation": False,
+    }
+    write_json(ARCHIVE / "ORIGINALS-MANIFEST.json", initial)
+    # Available safe originals are durable before invoking or interpreting the real publisher.
+    script = ROOT / "docs/checkpoints/GATE-7-CP-0001/audit-harness/run_full_verification.py"
+    spec = importlib.util.spec_from_file_location("actual_gate7_capture_boundary", script)
+    if spec is None or spec.loader is None:
+        raise ValueError("actual publisher cannot be loaded")
+    publisher = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(publisher)
+    manifest = publisher.capture_producer_reports(
+        CLONE, CLONE / "artifacts/review/INTERNAL-FULL-VERIFY.json",
+        ARCHIVE / "actual-legacy-capture", SUBJECT,
+    )
+    captured = json.loads(manifest.read_bytes())
+    captured_names = {row["producerName"] for row in captured["reports"]}
+    omitted = sorted({row["producerName"] for row in preserved} - captured_names)
+    report = {
+        "kind": "ACTUAL_PUBLISHER_MEMBERSHIP_DIAGNOSTIC_NOT_GATE_ACCEPTANCE",
+        "subjectCommit": SUBJECT, "observedAt": utc_now(),
+        "preservedOriginalManifest": "ORIGINALS-MANIFEST.json",
+        "canonicalAvailableCount": len(preserved), "actuallyCapturedNames": sorted(captured_names),
+        "omittedAvailableCanonicalProducers": omitted,
+        "result": "OMISSION_OBSERVED" if omitted else "NO_OMISSION_OBSERVED",
+        "gateVerdictGranted": False, "independentValidation": False,
+    }
+    write_json(ARCHIVE / "CAPTURE-MEMBERSHIP-DIAGNOSTIC.json", report)
+    print(json.dumps(report))
+    return 1 if omitted or refused else 0
+
+if __name__ == "__main__":
+    raise SystemExit(main())

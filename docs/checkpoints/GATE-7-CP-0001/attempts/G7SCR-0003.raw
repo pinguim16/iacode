@@ -1,0 +1,25 @@
+{
+  "kind": "ACTUAL_SCOPED_GIT_LONG_PATH_DIAGNOSTIC_NOT_GATE_ACCEPTANCE",
+  "subjectCommit": "13749adfa616c7f52aa7407cb9a9d7aef3d19c76",
+  "observedAt": "2026-10-19T02:29:07Z",
+  "observations": {
+    "actualPathCharacters": 240,
+    "objectFilesystemProbeCharacters": 281,
+    "actualUnmodifiedReader": {
+      "result": "LedgerError",
+      "filenameTooLong": true
+    },
+    "bareGitExit": 128,
+    "bareGitFilenameTooLong": true,
+    "scopedGitExit": 0,
+    "scopedBytesMatchExpected": true,
+    "expectedBytes": 28,
+    "expectedSha256": "97dd6c4c73fef6009097296b84e966e78cff9a90c051c0eed05176357e4fe243",
+    "ownedLocalConfigurationUnchanged": true,
+    "globalSpecificSettingUnchanged": true,
+    "temporaryOwnerRemoved": true
+  },
+  "result": "SCOPED_OVERRIDE_PROVEN",
+  "gateVerdictGranted": false,
+  "independentValidation": false
+}
