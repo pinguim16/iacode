@@ -88,7 +88,7 @@
       "severity": "HIGH",
       "classification": "PORTABILITY_DEFECT",
       "lessonId": "LSN-0151",
-      "status": "OPEN",
+      "status": "CLOSED",
       "title": "The real Red Team portability attackT fails despite a valid baseline",
       "observed": "Cmd-0143 defends19 of20 attacks with VALID control;T reports deterministic/portable/categories/declaration/stale-refusal false. Both root review-reconstruction owners also fail on the Windows long-path reader.",
       "requiredCorrection": "Correct the actual long-path reader, execute unchanged immutable reconstruction/declaration owners and require the next full current battery to defendT. Never skip the attack, change a digest or relabel its failure.",
@@ -97,8 +97,19 @@
         "checkpoint:attempts/RUNTIME-V2-FAILED-FULL-MANIFEST.json",
         "checkpoint:attempts/RUNTIME-V2-FAILED-VERIFY.json"
       ],
-      "resolution": null,
-      "resolutionEvidence": []
+      "resolution": "Fresh same-session formal cmd-0281, strictly after whole Green Keeper262-277 and audit-only completeness279, actually exits0:145/145 defended, zero escapes, VALID control and unchanged runtime-v4 fingerprint. Its inherited original defends20/20, with attackT reporting deterministic=True; portable=True; categories=True; declaration=True; stale-refused=True. Actual complete runtime0255 and current Green Keeper262 pass the unchanged reconstruction/declaration owners after the child-only long-path repair. Earlier0143/v2 failure remains immutable failed history; this closure grants no independent M2 verdict.",
+      "resolutionEvidence": [
+        "command:cmd-0255",
+        "command:cmd-0262",
+        "command:cmd-0279",
+        "command:cmd-0281",
+        "checkpoint:M2-INHERITED-RED-TEAM.json",
+        "checkpoint:M2-INTERNAL-RED-TEAM.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json",
+        "checkpoint:suite-attempts/RT-INHERITED-0001.json",
+        "checkpoint:suite-attempts/RT-INHERITED-0001.log",
+        "checkpoint:attempts/RT-INHERITED-3a5035c7a72c4c44acd9566868f69310.json"
+      ]
     },
     {
       "findingId": "G7-INT-027",

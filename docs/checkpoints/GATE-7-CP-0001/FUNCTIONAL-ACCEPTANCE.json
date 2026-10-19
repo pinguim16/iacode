@@ -1,0 +1,402 @@
+{
+  "schemaVersion": "1.0.0",
+  "gate": "GATE-7",
+  "checkpoint": "GATE-7-CP-0001",
+  "status": "PASS",
+  "generatedAt": "2026-10-19T11:49:39Z",
+  "scenarios": [
+    {
+      "scenarioId": "G7-FA-ADMISSION",
+      "requirementIds": [
+        "GATE-7-2.1",
+        "GATE-7-2.2",
+        "GATE-7-2.3",
+        "GATE-7-2.4",
+        "GATE-7-2.5",
+        "GATE-7-2.6",
+        "GATE-7-2.7",
+        "GATE-7-2.8"
+      ],
+      "feature": "Closed content-bound source admission, rights and privacy",
+      "scenario": "Actual operator-curated grants admit only exact project/source/revision bytes. Closed ingress, canonical scanning and real filesystem/SQL adversaries refuse unsafe effects; the owning validated storage-only experience remains ineligible for RAG.",
+      "environment": "Fresh owned real Docker Compose PostgreSQL/Redis/object/API/provider/sandbox/quality stack iacode-knowledge-305f88ecb75d; authenticated HTTP, public detached Git subject under the Windows full verifier.",
+      "preconditions": [
+        "Exact published detached subject 3bffae5ea19653f752f171fbc1b7f7cc5973e17d",
+        "Complete unchanged domain, API, PostgreSQL/migration, native/client and runtime stages.",
+        "Isolated synthetic test grants do not license actual user/provider content."
+      ],
+      "execution": [
+        "python -X utf8 docs/checkpoints/GATE-7-CP-0001/audit-harness/run_full_verification.py --commit 3bffae5ea19653f752f171fbc1b7f7cc5973e17d --tag iacode-subjects/GATE-7-CP-0001-runtime-v4 --node C:/Users/cesar/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node.exe",
+        "Owning complete domain/schema, API unit and actual PostgreSQL/migration suites in this invocation; live observations supplement rather than replace them."
+      ],
+      "expected": [
+        "Actual operator-curated grants admit only exact project/source/revision bytes. Closed ingress, canonical scanning and real filesystem/SQL adversaries refuse unsafe effects; the owning validated storage-only experience remains ineligible for RAG."
+      ],
+      "observed": [
+        "actual-content-bound-synthetic-source-grants-deployed: PASS",
+        "owning-validated-storage-only-experience-cannot-be-laundered: PASS",
+        "consent-missing-refused-before-effects: PASS",
+        "consent-denied-refused-before-effects: PASS",
+        "consent-coerced-refused-before-effects: PASS",
+        "caller-text-refused-before-effects: PASS",
+        "caller-path-refused-before-effects: PASS",
+        "caller-rights-refused-before-effects: PASS",
+        "caller-verdict-refused-before-effects: PASS",
+        "secret-refused-before-effects: PASS",
+        "actual-capability-refused-before-effects: PASS",
+        "cross-project-ingestion-refused: PASS",
+        "upstream-experience-and-rights-remain-unchanged: PASS"
+      ],
+      "result": "PASS",
+      "evidence": [
+        "cmd-0255",
+        "checkpoint:VERIFY.json",
+        "checkpoint:FUNCTIONAL-SCENARIOS.json",
+        "checkpoint:PUBLISHED-CLEAN-CLONE-REPORT.json",
+        "checkpoint:PRODUCER-REPORTS.json",
+        "file:apps/api/tests/integration/test_knowledge_engine.py",
+        "file:apps/api/tests/unit/test_knowledge_api.py",
+        "file:services/knowledge/tests/test_domain.py"
+      ],
+      "timestamp": "2026-10-19T11:49:39Z",
+      "artifactReferences": [
+        "file:services/knowledge/tests/fixtures/retrieval-corpus.json",
+        "file:scripts/iacode/scenarios/knowledge_engine_e2e.py",
+        "file:docs/runbooks/KNOWLEDGE-ENGINE.md"
+      ]
+    },
+    {
+      "scenarioId": "G7-FA-DERIVATION",
+      "requirementIds": [
+        "GATE-7-3.1",
+        "GATE-7-3.2",
+        "GATE-7-3.3"
+      ],
+      "feature": "Closed finite contracts and deterministic exact-span derivation",
+      "scenario": "The complete owning domain/schema and API suites execute strict JSON, Unicode/CRLF, all consumed policy bounds, exact source spans and fingerprints. Real publications and export/citation round-trips preserve source bytes without synthesis.",
+      "environment": "Fresh owned real Docker Compose PostgreSQL/Redis/object/API/provider/sandbox/quality stack iacode-knowledge-305f88ecb75d; authenticated HTTP, public detached Git subject under the Windows full verifier.",
+      "preconditions": [
+        "Exact published detached subject 3bffae5ea19653f752f171fbc1b7f7cc5973e17d",
+        "Complete unchanged domain, API, PostgreSQL/migration, native/client and runtime stages.",
+        "Isolated synthetic test grants do not license actual user/provider content."
+      ],
+      "execution": [
+        "python -X utf8 docs/checkpoints/GATE-7-CP-0001/audit-harness/run_full_verification.py --commit 3bffae5ea19653f752f171fbc1b7f7cc5973e17d --tag iacode-subjects/GATE-7-CP-0001-runtime-v4 --node C:/Users/cesar/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node.exe",
+        "Owning complete domain/schema, API unit and actual PostgreSQL/migration suites in this invocation; live observations supplement rather than replace them."
+      ],
+      "expected": [
+        "The complete owning domain/schema and API suites execute strict JSON, Unicode/CRLF, all consumed policy bounds, exact source spans and fingerprints. Real publications and export/citation round-trips preserve source bytes without synthesis."
+      ],
+      "observed": [
+        "actual-corpus-publication-unicode: PASS",
+        "actual-export-inspect-roundtrip: PASS",
+        "measured-exact-retrieval-and-citations-4: PASS"
+      ],
+      "result": "PASS",
+      "evidence": [
+        "cmd-0255",
+        "checkpoint:VERIFY.json",
+        "checkpoint:FUNCTIONAL-SCENARIOS.json",
+        "checkpoint:PUBLISHED-CLEAN-CLONE-REPORT.json",
+        "checkpoint:PRODUCER-REPORTS.json",
+        "file:apps/api/tests/integration/test_knowledge_engine.py",
+        "file:apps/api/tests/unit/test_knowledge_api.py",
+        "file:services/knowledge/tests/test_domain.py"
+      ],
+      "timestamp": "2026-10-19T11:49:39Z",
+      "artifactReferences": [
+        "file:services/knowledge/tests/fixtures/retrieval-corpus.json",
+        "file:scripts/iacode/scenarios/knowledge_engine_e2e.py",
+        "file:docs/runbooks/KNOWLEDGE-ENGINE.md"
+      ]
+    },
+    {
+      "scenarioId": "G7-FA-INDEX",
+      "requirementIds": [
+        "GATE-7-3.4",
+        "GATE-7-3.5",
+        "GATE-7-3.6"
+      ],
+      "feature": "Persistent bounded inverted matching and deterministic relevance",
+      "scenario": "Actual PostgreSQL GIN/parameterized lexical matching ranks a varied predefined corpus with exact citations, including genuine no-match results. Complete domain/SQL tests refuse capacity and policy/index drift; corrupt projections never become empty success.",
+      "environment": "Fresh owned real Docker Compose PostgreSQL/Redis/object/API/provider/sandbox/quality stack iacode-knowledge-305f88ecb75d; authenticated HTTP, public detached Git subject under the Windows full verifier.",
+      "preconditions": [
+        "Exact published detached subject 3bffae5ea19653f752f171fbc1b7f7cc5973e17d",
+        "Complete unchanged domain, API, PostgreSQL/migration, native/client and runtime stages.",
+        "Isolated synthetic test grants do not license actual user/provider content."
+      ],
+      "execution": [
+        "python -X utf8 docs/checkpoints/GATE-7-CP-0001/audit-harness/run_full_verification.py --commit 3bffae5ea19653f752f171fbc1b7f7cc5973e17d --tag iacode-subjects/GATE-7-CP-0001-runtime-v4 --node C:/Users/cesar/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node.exe",
+        "Owning complete domain/schema, API unit and actual PostgreSQL/migration suites in this invocation; live observations supplement rather than replace them."
+      ],
+      "expected": [
+        "Actual PostgreSQL GIN/parameterized lexical matching ranks a varied predefined corpus with exact citations, including genuine no-match results. Complete domain/SQL tests refuse capacity and policy/index drift; corrupt projections never become empty success."
+      ],
+      "observed": [
+        "measured-exact-retrieval-and-citations-0: PASS",
+        "measured-exact-retrieval-and-citations-1: PASS",
+        "measured-exact-retrieval-and-citations-2: PASS",
+        "measured-exact-retrieval-and-citations-3: PASS",
+        "measured-exact-retrieval-and-citations-4: PASS",
+        "measured-exact-retrieval-and-citations-5: PASS",
+        "measured-exact-retrieval-and-citations-6: PASS",
+        "measured-exact-retrieval-and-citations-7: PASS",
+        "measured-exact-retrieval-and-citations-8: PASS",
+        "measured-exact-retrieval-and-citations-9: PASS",
+        "actual-persistent-source-index-after-restart: PASS",
+        "actual-corrupt-body-is-not-empty-success: PASS",
+        "actual-missing-index-is-not-empty-success: PASS",
+        "missing-current-source-is-unavailable-not-empty-success: PASS"
+      ],
+      "result": "PASS",
+      "evidence": [
+        "cmd-0255",
+        "checkpoint:VERIFY.json",
+        "checkpoint:FUNCTIONAL-SCENARIOS.json",
+        "checkpoint:PUBLISHED-CLEAN-CLONE-REPORT.json",
+        "checkpoint:PRODUCER-REPORTS.json",
+        "file:apps/api/tests/integration/test_knowledge_engine.py",
+        "file:apps/api/tests/unit/test_knowledge_api.py",
+        "file:services/knowledge/tests/test_domain.py"
+      ],
+      "timestamp": "2026-10-19T11:49:39Z",
+      "artifactReferences": [
+        "file:services/knowledge/tests/fixtures/retrieval-corpus.json",
+        "file:scripts/iacode/scenarios/knowledge_engine_e2e.py",
+        "file:docs/runbooks/KNOWLEDGE-ENGINE.md"
+      ]
+    },
+    {
+      "scenarioId": "G7-FA-PERSISTENCE",
+      "requirementIds": [
+        "GATE-7-4.1",
+        "GATE-7-4.2",
+        "GATE-7-4.3",
+        "GATE-7-4.4",
+        "GATE-7-4.5"
+      ],
+      "feature": "Real migration, atomic publication, retries and recovery",
+      "scenario": "Complete actual PostgreSQL/migration tests prove reversible parity, inherited-data preservation, atomic audit rollback, concurrency, immutable facts and retention ceilings. Real lost-response retry, restart, corruption/refusal and valid rebuild recover truthfully.",
+      "environment": "Fresh owned real Docker Compose PostgreSQL/Redis/object/API/provider/sandbox/quality stack iacode-knowledge-305f88ecb75d; authenticated HTTP, public detached Git subject under the Windows full verifier.",
+      "preconditions": [
+        "Exact published detached subject 3bffae5ea19653f752f171fbc1b7f7cc5973e17d",
+        "Complete unchanged domain, API, PostgreSQL/migration, native/client and runtime stages.",
+        "Isolated synthetic test grants do not license actual user/provider content."
+      ],
+      "execution": [
+        "python -X utf8 docs/checkpoints/GATE-7-CP-0001/audit-harness/run_full_verification.py --commit 3bffae5ea19653f752f171fbc1b7f7cc5973e17d --tag iacode-subjects/GATE-7-CP-0001-runtime-v4 --node C:/Users/cesar/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node.exe",
+        "Owning complete domain/schema, API unit and actual PostgreSQL/migration suites in this invocation; live observations supplement rather than replace them."
+      ],
+      "expected": [
+        "Complete actual PostgreSQL/migration tests prove reversible parity, inherited-data preservation, atomic audit rollback, concurrency, immutable facts and retention ceilings. Real lost-response retry, restart, corruption/refusal and valid rebuild recover truthfully."
+      ],
+      "observed": [
+        "actual-accepted-response-loss-one-publication: PASS",
+        "stable-exact-request-recovers-original-publication: PASS",
+        "owned-api-restart: PASS",
+        "actual-persistent-source-index-after-restart: PASS",
+        "actual-corrupt-body-is-not-empty-success: PASS",
+        "actual-body-restoration-null-control: PASS",
+        "actual-missing-index-is-not-empty-success: PASS",
+        "actual-rebuild-publishes-current-revision: PASS",
+        "rebuilt-retrieval-selects-new-citation: PASS"
+      ],
+      "result": "PASS",
+      "evidence": [
+        "cmd-0255",
+        "checkpoint:VERIFY.json",
+        "checkpoint:FUNCTIONAL-SCENARIOS.json",
+        "checkpoint:PUBLISHED-CLEAN-CLONE-REPORT.json",
+        "checkpoint:PRODUCER-REPORTS.json",
+        "file:apps/api/tests/integration/test_knowledge_engine.py",
+        "file:apps/api/tests/unit/test_knowledge_api.py",
+        "file:services/knowledge/tests/test_domain.py"
+      ],
+      "timestamp": "2026-10-19T11:49:39Z",
+      "artifactReferences": [
+        "file:services/knowledge/tests/fixtures/retrieval-corpus.json",
+        "file:scripts/iacode/scenarios/knowledge_engine_e2e.py",
+        "file:docs/runbooks/KNOWLEDGE-ENGINE.md"
+      ]
+    },
+    {
+      "scenarioId": "G7-FA-ACCESS",
+      "requirementIds": [
+        "GATE-7-5.1",
+        "GATE-7-5.2",
+        "GATE-7-5.3",
+        "GATE-7-5.4",
+        "GATE-7-5.5",
+        "GATE-7-5.6"
+      ],
+      "feature": "Authenticated project-bound cited untrusted evidence",
+      "scenario": "Actual finite signed HTTP refuses missing/invalid/stale/replayed auth and cross-project access/cursors. All predefined relevant/irrelevant queries resolve exact ranked source citations. Logs remain useful without ingress; knowledge cannot execute or modify upstream task, tool, quality, experience or reuse authority.",
+      "environment": "Fresh owned real Docker Compose PostgreSQL/Redis/object/API/provider/sandbox/quality stack iacode-knowledge-305f88ecb75d; authenticated HTTP, public detached Git subject under the Windows full verifier.",
+      "preconditions": [
+        "Exact published detached subject 3bffae5ea19653f752f171fbc1b7f7cc5973e17d",
+        "Complete unchanged domain, API, PostgreSQL/migration, native/client and runtime stages.",
+        "Isolated synthetic test grants do not license actual user/provider content."
+      ],
+      "execution": [
+        "python -X utf8 docs/checkpoints/GATE-7-CP-0001/audit-harness/run_full_verification.py --commit 3bffae5ea19653f752f171fbc1b7f7cc5973e17d --tag iacode-subjects/GATE-7-CP-0001-runtime-v4 --node C:/Users/cesar/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node.exe",
+        "Owning complete domain/schema, API unit and actual PostgreSQL/migration suites in this invocation; live observations supplement rather than replace them."
+      ],
+      "expected": [
+        "Actual finite signed HTTP refuses missing/invalid/stale/replayed auth and cross-project access/cursors. All predefined relevant/irrelevant queries resolve exact ranked source citations. Logs remain useful without ingress; knowledge cannot execute or modify upstream task, tool, quality, experience or reuse authority."
+      ],
+      "observed": [
+        "unauthenticated-ingestions-refused: PASS",
+        "unauthenticated-search-refused: PASS",
+        "unauthenticated-documents-refused: PASS",
+        "invalid-authentication-refused: PASS",
+        "stale-authentication-refused: PASS",
+        "authentication-replay-clean-control: PASS",
+        "actual-redis-authentication-replay-refused: PASS",
+        "cross-project-cursor-refused: PASS",
+        "cross-project-document-get-refused: PASS",
+        "cross-project-document-delete-refused: PASS",
+        "actual-bounded-project-pagination: PASS",
+        "actual-export-inspect-roundtrip: PASS",
+        "actual-logs-retain-observability-not-private-ingress: PASS",
+        "knowledge-never-executes-or-mutates-upstream-evidence: PASS",
+        "measured-exact-retrieval-and-citations-0: PASS",
+        "measured-exact-retrieval-and-citations-1: PASS",
+        "measured-exact-retrieval-and-citations-2: PASS",
+        "measured-exact-retrieval-and-citations-3: PASS",
+        "measured-exact-retrieval-and-citations-4: PASS",
+        "measured-exact-retrieval-and-citations-5: PASS",
+        "measured-exact-retrieval-and-citations-6: PASS",
+        "measured-exact-retrieval-and-citations-7: PASS",
+        "measured-exact-retrieval-and-citations-8: PASS",
+        "measured-exact-retrieval-and-citations-9: PASS"
+      ],
+      "result": "PASS",
+      "evidence": [
+        "cmd-0255",
+        "checkpoint:VERIFY.json",
+        "checkpoint:FUNCTIONAL-SCENARIOS.json",
+        "checkpoint:PUBLISHED-CLEAN-CLONE-REPORT.json",
+        "checkpoint:PRODUCER-REPORTS.json",
+        "file:apps/api/tests/integration/test_knowledge_engine.py",
+        "file:apps/api/tests/unit/test_knowledge_api.py",
+        "file:services/knowledge/tests/test_domain.py"
+      ],
+      "timestamp": "2026-10-19T11:49:39Z",
+      "artifactReferences": [
+        "file:services/knowledge/tests/fixtures/retrieval-corpus.json",
+        "file:scripts/iacode/scenarios/knowledge_engine_e2e.py",
+        "file:docs/runbooks/KNOWLEDGE-ENGINE.md"
+      ]
+    },
+    {
+      "scenarioId": "G7-FA-INVALIDATION",
+      "requirementIds": [
+        "GATE-7-6.1",
+        "GATE-7-6.2",
+        "GATE-7-6.3",
+        "GATE-7-6.4",
+        "GATE-7-6.5"
+      ],
+      "feature": "Immediate invalidation, nonrenewing retention and bounded physical purge",
+      "scenario": "Real grant/source/revision changes, expiry and scoped withdrawal deny old citations immediately. Actual rebuild supplies only current citations; same/new request keys cannot resurrect withdrawal. The owned automatic sweeper physically purges primary content/index. Complete SQL/lifecycle tests cover finite GC, failures and shutdown; the runbook explicitly limits backup/restore claims.",
+      "environment": "Fresh owned real Docker Compose PostgreSQL/Redis/object/API/provider/sandbox/quality stack iacode-knowledge-305f88ecb75d; authenticated HTTP, public detached Git subject under the Windows full verifier.",
+      "preconditions": [
+        "Exact published detached subject 3bffae5ea19653f752f171fbc1b7f7cc5973e17d",
+        "Complete unchanged domain, API, PostgreSQL/migration, native/client and runtime stages.",
+        "Isolated synthetic test grants do not license actual user/provider content."
+      ],
+      "execution": [
+        "python -X utf8 docs/checkpoints/GATE-7-CP-0001/audit-harness/run_full_verification.py --commit 3bffae5ea19653f752f171fbc1b7f7cc5973e17d --tag iacode-subjects/GATE-7-CP-0001-runtime-v4 --node C:/Users/cesar/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node.exe",
+        "Owning complete domain/schema, API unit and actual PostgreSQL/migration suites in this invocation; live observations supplement rather than replace them."
+      ],
+      "expected": [
+        "Real grant/source/revision changes, expiry and scoped withdrawal deny old citations immediately. Actual rebuild supplies only current citations; same/new request keys cannot resurrect withdrawal. The owned automatic sweeper physically purges primary content/index. Complete SQL/lifecycle tests cover finite GC, failures and shutdown; the runbook explicitly limits backup/restore claims."
+      ],
+      "observed": [
+        "revoked-grant-immediately-denies-delivery: PASS",
+        "superseded-source-immediately-denies-old-citation: PASS",
+        "actual-rebuild-publishes-current-revision: PASS",
+        "rebuilt-retrieval-selects-new-citation: PASS",
+        "actual-withdrawal: PASS",
+        "same-key-cannot-resurrect-withdrawn-revision: PASS",
+        "new-key-cannot-resurrect-withdrawn-revision: PASS",
+        "actual-finite-retention-created: PASS",
+        "expiry-denial-does-not-require-manual-sweep: PASS",
+        "owned-background-retention-physically-purges-primary-index: PASS",
+        "changed-raw-source-immediately-denies-delivery: PASS",
+        "missing-current-source-is-unavailable-not-empty-success: PASS",
+        "upstream-experience-and-rights-remain-unchanged: PASS"
+      ],
+      "result": "PASS",
+      "evidence": [
+        "cmd-0255",
+        "checkpoint:VERIFY.json",
+        "checkpoint:FUNCTIONAL-SCENARIOS.json",
+        "checkpoint:PUBLISHED-CLEAN-CLONE-REPORT.json",
+        "checkpoint:PRODUCER-REPORTS.json",
+        "file:apps/api/tests/integration/test_knowledge_engine.py",
+        "file:apps/api/tests/unit/test_knowledge_api.py",
+        "file:services/knowledge/tests/test_domain.py"
+      ],
+      "timestamp": "2026-10-19T11:49:39Z",
+      "artifactReferences": [
+        "file:services/knowledge/tests/fixtures/retrieval-corpus.json",
+        "file:scripts/iacode/scenarios/knowledge_engine_e2e.py",
+        "file:docs/runbooks/KNOWLEDGE-ENGINE.md"
+      ]
+    },
+    {
+      "scenarioId": "G7-FA-FULL-LIVE",
+      "requirementIds": [
+        "GATE-7-7.1",
+        "GATE-7-7.2",
+        "GATE-7-7.3",
+        "GATE-7-7.4",
+        "GATE-7-7.5"
+      ],
+      "feature": "One full immutable execution, actual integration and preserved producer bytes",
+      "scenario": "One non-fast public detached-subject invocation runs every inherited/new mandatory stage. Fresh real provider/sandbox/quality/experience/knowledge integration and all functional/adverse observations pass, exact safe original producers survive consumer and cleanup boundaries, owned resources/clone are removed and unrelated identities and measured source inputs remain unchanged.",
+      "environment": "Fresh owned real Docker Compose PostgreSQL/Redis/object/API/provider/sandbox/quality stack iacode-knowledge-305f88ecb75d; authenticated HTTP, public detached Git subject under the Windows full verifier.",
+      "preconditions": [
+        "Exact published detached subject 3bffae5ea19653f752f171fbc1b7f7cc5973e17d",
+        "Complete unchanged domain, API, PostgreSQL/migration, native/client and runtime stages.",
+        "Isolated synthetic test grants do not license actual user/provider content."
+      ],
+      "execution": [
+        "python -X utf8 docs/checkpoints/GATE-7-CP-0001/audit-harness/run_full_verification.py --commit 3bffae5ea19653f752f171fbc1b7f7cc5973e17d --tag iacode-subjects/GATE-7-CP-0001-runtime-v4 --node C:/Users/cesar/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node.exe",
+        "Owning complete domain/schema, API unit and actual PostgreSQL/migration suites in this invocation; live observations supplement rather than replace them."
+      ],
+      "expected": [
+        "One non-fast public detached-subject invocation runs every inherited/new mandatory stage. Fresh real provider/sandbox/quality/experience/knowledge integration and all functional/adverse observations pass, exact safe original producers survive consumer and cleanup boundaries, owned resources/clone are removed and unrelated identities and measured source inputs remain unchanged."
+      ],
+      "observed": [
+        "real-provider-and-sandbox-completed: PASS",
+        "actual-derived-quality-pass-with-evidence: PASS",
+        "actual-source-bound-experience-captured: PASS",
+        "owning-validated-storage-only-experience-cannot-be-laundered: PASS",
+        "actual-export-inspect-roundtrip: PASS",
+        "owned-background-retention-physically-purges-primary-index: PASS",
+        "owned-resources-actually-removed: PASS",
+        "unrelated-container-identities-and-running-states-preserved: PASS",
+        "measured-source-inputs-unchanged: PASS"
+      ],
+      "result": "PASS",
+      "evidence": [
+        "cmd-0255",
+        "checkpoint:VERIFY.json",
+        "checkpoint:FUNCTIONAL-SCENARIOS.json",
+        "checkpoint:PUBLISHED-CLEAN-CLONE-REPORT.json",
+        "checkpoint:PRODUCER-REPORTS.json",
+        "file:apps/api/tests/integration/test_knowledge_engine.py",
+        "file:apps/api/tests/unit/test_knowledge_api.py",
+        "file:services/knowledge/tests/test_domain.py"
+      ],
+      "timestamp": "2026-10-19T11:49:39Z",
+      "artifactReferences": [
+        "file:services/knowledge/tests/fixtures/retrieval-corpus.json",
+        "file:scripts/iacode/scenarios/knowledge_engine_e2e.py",
+        "file:docs/runbooks/KNOWLEDGE-ENGINE.md"
+      ]
+    }
+  ]
+}

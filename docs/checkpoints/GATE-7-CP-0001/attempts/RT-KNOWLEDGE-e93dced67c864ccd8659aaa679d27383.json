@@ -1,0 +1,425 @@
+{
+  "schemaVersion": "1.0.0",
+  "scenario": "knowledge-engine-e2e",
+  "result": "PASS",
+  "reportFile": "var/gate7-red-team-77a6fe12b51c44e9ad8c3f5f942230d0-knowledge.json",
+  "subjectCommit": "3bffae5ea19653f752f171fbc1b7f7cc5973e17d",
+  "sourceDirty": true,
+  "sourceFingerprint": "1a949f03f8cec67ce47aa37ddbb9b9447208d31c43ad6124795cb3d23c354117",
+  "composeProject": "iacode-knowledge-a049e794c28a",
+  "steps": [
+    {
+      "name": "actual-current-sandbox-quality-images-built",
+      "result": "PASS"
+    },
+    {
+      "name": "fresh-owned-authenticated-stack-started",
+      "result": "PASS"
+    },
+    {
+      "name": "actual-owned-stack-healthy",
+      "result": "PASS"
+    },
+    {
+      "name": "exact-authorized-provider-model-discovered",
+      "result": "PASS",
+      "authorizedModel": "openai:gpt-4o-mini",
+      "provider": "openai",
+      "catalogModels": 135,
+      "discovered": 135
+    },
+    {
+      "name": "actual-snapshot-created",
+      "result": "PASS"
+    },
+    {
+      "name": "actual-governed-task-created",
+      "result": "PASS"
+    },
+    {
+      "name": "real-provider-and-sandbox-completed",
+      "result": "PASS",
+      "sourceRunId": "01a15488-43b2-7000-8362-6a01b0de704e",
+      "modelCallsUsed": 7,
+      "toolExecutions": 3
+    },
+    {
+      "name": "actual-quality-created",
+      "result": "PASS"
+    },
+    {
+      "name": "actual-derived-quality-pass-with-evidence",
+      "result": "PASS",
+      "qualityRunId": "01a15489-02dc-7000-87c8-0476dc750207"
+    },
+    {
+      "name": "actual-source-project-discovered",
+      "result": "PASS"
+    },
+    {
+      "name": "actual-source-bound-experience-captured",
+      "result": "PASS",
+      "experienceId": "01a15489-7b3f-7000-ba55-f5202e26ea0d",
+      "sourceDigest": "5af27f129478c228fb7d32092e7587579ab82036b72737ef2a1d2674bed9775c"
+    },
+    {
+      "name": "owning-validated-storage-only-experience-cannot-be-laundered",
+      "result": "PASS"
+    },
+    {
+      "name": "actual-content-bound-synthetic-source-grants-deployed",
+      "result": "PASS",
+      "corpusVersion": "knowledge-lexical-acceptance-v1",
+      "corpusSha256": "b36748c24a4ef41ed9e07be19dea3bbcd2edb5ff77f74164d28919580402c32e"
+    },
+    {
+      "name": "unauthenticated-ingestions-refused",
+      "result": "PASS"
+    },
+    {
+      "name": "unauthenticated-search-refused",
+      "result": "PASS"
+    },
+    {
+      "name": "unauthenticated-documents-refused",
+      "result": "PASS"
+    },
+    {
+      "name": "invalid-authentication-refused",
+      "result": "PASS"
+    },
+    {
+      "name": "stale-authentication-refused",
+      "result": "PASS"
+    },
+    {
+      "name": "canonical-secret-adverse-premise",
+      "result": "PASS"
+    },
+    {
+      "name": "consent-missing-refused-before-effects",
+      "result": "PASS"
+    },
+    {
+      "name": "consent-denied-refused-before-effects",
+      "result": "PASS"
+    },
+    {
+      "name": "consent-coerced-refused-before-effects",
+      "result": "PASS"
+    },
+    {
+      "name": "caller-text-refused-before-effects",
+      "result": "PASS"
+    },
+    {
+      "name": "caller-path-refused-before-effects",
+      "result": "PASS"
+    },
+    {
+      "name": "caller-rights-refused-before-effects",
+      "result": "PASS"
+    },
+    {
+      "name": "caller-verdict-refused-before-effects",
+      "result": "PASS"
+    },
+    {
+      "name": "secret-refused-before-effects",
+      "result": "PASS"
+    },
+    {
+      "name": "actual-capability-refused-before-effects",
+      "result": "PASS"
+    },
+    {
+      "name": "cross-project-ingestion-refused",
+      "result": "PASS"
+    },
+    {
+      "name": "authentication-replay-clean-control",
+      "result": "PASS"
+    },
+    {
+      "name": "actual-redis-authentication-replay-refused",
+      "result": "PASS"
+    },
+    {
+      "name": "actual-accepted-response-loss-one-publication",
+      "result": "PASS"
+    },
+    {
+      "name": "stable-exact-request-recovers-original-publication",
+      "result": "PASS"
+    },
+    {
+      "name": "actual-corpus-publication-long",
+      "result": "PASS"
+    },
+    {
+      "name": "actual-corpus-publication-partial",
+      "result": "PASS"
+    },
+    {
+      "name": "actual-corpus-publication-tides",
+      "result": "PASS"
+    },
+    {
+      "name": "actual-corpus-publication-unicode",
+      "result": "PASS"
+    },
+    {
+      "name": "actual-corpus-publication-rights",
+      "result": "PASS"
+    },
+    {
+      "name": "actual-corpus-publication-instruction",
+      "result": "PASS"
+    },
+    {
+      "name": "measured-exact-retrieval-and-citations-0",
+      "result": "PASS"
+    },
+    {
+      "name": "measured-exact-retrieval-and-citations-1",
+      "result": "PASS"
+    },
+    {
+      "name": "measured-exact-retrieval-and-citations-2",
+      "result": "PASS"
+    },
+    {
+      "name": "measured-exact-retrieval-and-citations-3",
+      "result": "PASS"
+    },
+    {
+      "name": "measured-exact-retrieval-and-citations-4",
+      "result": "PASS"
+    },
+    {
+      "name": "measured-exact-retrieval-and-citations-5",
+      "result": "PASS"
+    },
+    {
+      "name": "measured-exact-retrieval-and-citations-6",
+      "result": "PASS"
+    },
+    {
+      "name": "measured-exact-retrieval-and-citations-7",
+      "result": "PASS"
+    },
+    {
+      "name": "measured-exact-retrieval-and-citations-8",
+      "result": "PASS"
+    },
+    {
+      "name": "measured-exact-retrieval-and-citations-9",
+      "result": "PASS"
+    },
+    {
+      "name": "actual-export-inspect-roundtrip",
+      "result": "PASS"
+    },
+    {
+      "name": "actual-bounded-project-pagination",
+      "result": "PASS"
+    },
+    {
+      "name": "cross-project-cursor-refused",
+      "result": "PASS"
+    },
+    {
+      "name": "cross-project-document-get-refused",
+      "result": "PASS"
+    },
+    {
+      "name": "cross-project-document-delete-refused",
+      "result": "PASS"
+    },
+    {
+      "name": "owned-api-restart",
+      "result": "PASS"
+    },
+    {
+      "name": "actual-persistent-source-index-after-restart",
+      "result": "PASS"
+    },
+    {
+      "name": "actual-corrupt-body-is-not-empty-success",
+      "result": "PASS"
+    },
+    {
+      "name": "actual-body-restoration-null-control",
+      "result": "PASS"
+    },
+    {
+      "name": "actual-missing-index-is-not-empty-success",
+      "result": "PASS"
+    },
+    {
+      "name": "withdraw-owned-corrupt-projection",
+      "result": "PASS"
+    },
+    {
+      "name": "revoked-grant-immediately-denies-delivery",
+      "result": "PASS"
+    },
+    {
+      "name": "superseded-source-immediately-denies-old-citation",
+      "result": "PASS"
+    },
+    {
+      "name": "actual-rebuild-publishes-current-revision",
+      "result": "PASS"
+    },
+    {
+      "name": "rebuilt-retrieval-selects-new-citation",
+      "result": "PASS"
+    },
+    {
+      "name": "actual-withdrawal",
+      "result": "PASS"
+    },
+    {
+      "name": "same-key-cannot-resurrect-withdrawn-revision",
+      "result": "PASS"
+    },
+    {
+      "name": "new-key-cannot-resurrect-withdrawn-revision",
+      "result": "PASS"
+    },
+    {
+      "name": "actual-finite-retention-created",
+      "result": "PASS"
+    },
+    {
+      "name": "expiry-denial-does-not-require-manual-sweep",
+      "result": "PASS"
+    },
+    {
+      "name": "owned-background-retention-physically-purges-primary-index",
+      "result": "PASS"
+    },
+    {
+      "name": "changed-raw-source-immediately-denies-delivery",
+      "result": "PASS"
+    },
+    {
+      "name": "missing-current-source-is-unavailable-not-empty-success",
+      "result": "PASS"
+    },
+    {
+      "name": "actual-logs-retain-observability-not-private-ingress",
+      "result": "PASS"
+    },
+    {
+      "name": "knowledge-never-executes-or-mutates-upstream-evidence",
+      "result": "PASS"
+    },
+    {
+      "name": "upstream-experience-and-rights-remain-unchanged",
+      "result": "PASS"
+    },
+    {
+      "name": "owned-resources-actually-removed",
+      "result": "PASS"
+    },
+    {
+      "name": "unrelated-container-identities-and-running-states-preserved",
+      "result": "PASS"
+    },
+    {
+      "name": "measured-source-inputs-unchanged",
+      "result": "PASS"
+    }
+  ],
+  "cleanup": {
+    "composeExitCode": 0,
+    "container": 0,
+    "volume": 0,
+    "network": 0
+  },
+  "retrievalMeasurements": [
+    {
+      "queryOrdinal": 0,
+      "result": "PASS",
+      "expectedSources": [
+        "full",
+        "long",
+        "partial"
+      ],
+      "observedHits": 3
+    },
+    {
+      "queryOrdinal": 1,
+      "result": "PASS",
+      "expectedSources": [
+        "full",
+        "long"
+      ],
+      "observedHits": 2
+    },
+    {
+      "queryOrdinal": 2,
+      "result": "PASS",
+      "expectedSources": [
+        "partial"
+      ],
+      "observedHits": 1
+    },
+    {
+      "queryOrdinal": 3,
+      "result": "PASS",
+      "expectedSources": [
+        "tides"
+      ],
+      "observedHits": 1
+    },
+    {
+      "queryOrdinal": 4,
+      "result": "PASS",
+      "expectedSources": [
+        "unicode"
+      ],
+      "observedHits": 1
+    },
+    {
+      "queryOrdinal": 5,
+      "result": "PASS",
+      "expectedSources": [
+        "rights"
+      ],
+      "observedHits": 1
+    },
+    {
+      "queryOrdinal": 6,
+      "result": "PASS",
+      "expectedSources": [
+        "instruction"
+      ],
+      "observedHits": 1
+    },
+    {
+      "queryOrdinal": 7,
+      "result": "PASS",
+      "expectedSources": [],
+      "observedHits": 0
+    },
+    {
+      "queryOrdinal": 8,
+      "result": "PASS",
+      "expectedSources": [],
+      "observedHits": 0
+    },
+    {
+      "queryOrdinal": 9,
+      "result": "PASS",
+      "expectedSources": [],
+      "observedHits": 0
+    }
+  ],
+  "sandboxCleanup": {
+    "container": 0,
+    "network": 0
+  }
+}

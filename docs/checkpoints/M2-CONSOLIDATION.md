@@ -5,8 +5,9 @@
 This is the implementing session's consolidation, not an independent milestone attestation.
 The current delivery state and executed evidence belong to
 [Gate7 STATE](GATE-7-CP-0001/STATE.json), [steps](GATE-7-CP-0001/STEPS.json) and
-[command ledger](GATE-7-CP-0001/COMMANDS.jsonl). Gate7 remains IN_PROGRESS while corrective and
-ordered assurance work is underway. A successful implementing handoff must be sealed
+[command ledger](GATE-7-CP-0001/COMMANDS.jsonl). Actual terminal state and sealing are established
+only by canonical tool records and the checkpoint tag, not predicted by this preseal document.
+A successful implementing handoff must be sealed
 READY_FOR_REVIEW, with independent review and Red Team PENDING, second-tool PENDING_MANUAL,
 M2 PENDING and external attestation NONE. None of those independent verdicts is supplied here.
 Gate8 is neither implemented nor authorized by this document.
@@ -50,11 +51,13 @@ restart/retry/reindex cannot renew the original ceiling or resurrect withdrawal.
 
 The current [canonical Gate7 checklist](../GATE-7-CHECKLIST.md) has48 rows. The latest actual
 complete preflight/derivation yields150 applicable lessons and198 total requirements,
-including197 mandatory rows. These are obligations, not198 completed requirements. Current
-implementation/evidence status belongs to the [matrix](GATE-7-CP-0001/REQUIREMENTS-MATRIX.json)
-and [closure requirements](GATE-7-CP-0001/CLOSURE-REQUIREMENTS.json). No smaller set may be
-selected by a delivery argument. The audit-only Delivery Completeness Validator must verify total
-coverage and evidence after the whole Green Keeper, without silently implementing corrections.
+including197 mandatory rows. Actual cmd-0258 binds all198 requirements after the complete current
+runtime and functional proof. Audit-only cmd-0279 then verifies198/198 complete,100 percent
+implementation/evidence coverage, zero partial and zero missing, strictly after whole Green Keeper.
+The [matrix](GATE-7-CP-0001/REQUIREMENTS-MATRIX.json),
+[completeness report](GATE-7-CP-0001/COMPLETENESS-REPORT.json) and
+[closure requirements](GATE-7-CP-0001/CLOSURE-REQUIREMENTS.json) own these observations. No smaller
+set is selected by a delivery argument; the completeness role did not implement corrections.
 
 ## Execution, regressions and non-additive counts
 
@@ -103,11 +106,27 @@ Windows/Crashpad cause or universal OS guarantee is claimed. Cmd-0218 validates1
 lessons/148 locally guarded. Literal NUL publication staging preserves every declared path
 beyond the Windows aggregate command-line bound; actual positive/adverse0191 passes.
 
-A new unused immutable runtime-v4, its whole49-stage execution, canonical functional binding, whole mandatory
-Green Keeper, total completeness, fresh internal Red Team/VALID control and full clean-clone
-closure mirror remain mandatory. Historical PASS or green fragments from failed invocations
-cannot fill a missing current premise. Their eventual actual outcomes must be recorded by their
-own tools before handoff; this document does not predict them.
+Public immutable runtime-v4 is3bffae5ea19653f752f171fbc1b7f7cc5973e17d at
+`iacode-subjects/GATE-7-CP-0001-runtime-v4`. Actual cmd-0255 completes one non-fast public-clone
+invocation:49/49 PASS, no retries or merged fragments. Its clone and owned Compose resources are
+removed, shared resources and unrelated identities/running states are preserved, and the clone's
+Git state stays clean. All23 safe original producers are retained by
+[the exact capture manifest](GATE-7-CP-0001/attempts/FULL-PRODUCER-d869942c643b-MANIFEST.json).
+The measured source fingerprint remains
+`1a949f03f8cec67ce47aa37ddbb9b9447208d31c43ad6124795cb3d23c354117`.
+
+Actual functional0257 covers35/35 canonical criteria in7 groups; whole Green Keeper262-277
+passes16/16 with zero remaining failures; audit-only completeness279 verifies198/198. Fresh
+post-control internal Red Team281 defends145/145 with VALID control and zero escapes, including
+the detailed portabilityT flags that earlier aggregate stdout could not establish. Historical
+failed candidates remain failed; no fragment fills a missing premise. Actual full clean-clone
+closure mirror287 evaluates all18 dimensions:16 PASS,2 canonically derived NOT_APPLICABLE,0 FAIL.
+All35 anchored tags resolve and all35 sealed predecessors validate under current tooling from
+published history. The whole root suite, compileall, lessons, integrity and completeness actually
+pass in a fresh clone. See [the exact mirror report](GATE-7-CP-0001/M2-INTERNAL-MIRROR.json) and
+[its dimension-by-dimension record](GATE-7-CP-0001/M2-INTERNAL-MIRROR.md).
+Final handoff and actual canonical seal/publication remain subsequent operations at this
+observation. Their actual records and canonical tag, never this prose, establish their outcome.
 
 ## Findings, lessons and executable guardrails
 
@@ -147,12 +166,22 @@ historical tag is weakened to obtain a green result.
 
 ## Red Team and closure audit
 
-Internal Red Team must run freshly after whole Green Keeper and audit-only completeness. It must
-retain inherited attack membership, add real knowledge domain/API/SQL/live attacks and demonstrate
-a successful clean/null control beside refusal behavior. Same-session role separation is not
-independence. The full closure mirror must include every canonically applicable dimension,
-history compatibility, actual protocol transitions, clean-clone execution and exact transport.
-No reduced scope or synthetic PASS can substitute for those controls.
+Fresh internal Red Team cmd-0281 runs after whole Green Keeper and audit-only completeness. Its
+nine actual process receipts pass with unchanged source; all inherited attacks remain, alongside
+real knowledge domain/API/SQL/live controls. The145/145 defended attacks include a VALID clean/null
+control and detailedT: deterministic, portable, categories, declaration and stale-digest refusal
+all true. Safe exact original producers and process logs are retained before interpretation.
+See [the report](GATE-7-CP-0001/M2-INTERNAL-RED-TEAM.json),
+[the inherited original projection](GATE-7-CP-0001/M2-INHERITED-RED-TEAM.json) and
+[process/original references](GATE-7-CP-0001/RED-TEAM-EXECUTIONS.json).
+Same-session role separation is not independence. The full closure mirror287 covers every
+canonically applicable dimension, history compatibility and actual clean-clone execution.
+Its MIR-002/MIR-003 sets are empty only because the audit registry names no corrective audit
+delivery/mandatory corrective attack for this checkpoint; the exact derivation is retained.
+Those two NOT_APPLICABLE results are not counted as passing checks and do not waive the fresh
+internal145-attack battery or the later independent M2 audit. Exact terminal transport remains
+the canonical sealer's subsequent operation. No reduced scope or synthetic PASS substitutes
+for these controls.
 
 ## Risks, operational debt and recovery
 

@@ -1,60 +1,60 @@
 # Handoff
 
 Current Gate: GATE-7
-Current Status: IN_PROGRESS
+Current Status: READY_FOR_REVIEW
 
 ## Objective
 
-Finish only authorized Gate7, every internal control and canonical READY_FOR_REVIEW sealing. Preserve the later independent M2 audit boundary.
+Finish only authorized Gate7 Knowledge Engine, every internal control and actual canonical seal. Deliver M2 for later independent audit, without Gate8 advancement.
 
 ## What was completed
 
-Core Knowledge Engine and local causal rework. Actual0211 passes10 native controls,0213 all152 owning cases,0214 explicit helper quality,0215 whole lint and0217 two final-strict uninstrumented native installation/trust/removal runs. These scopes overlap and never substitute for whole current acceptance.
+One complete immutable non-fast invocation passes all 49 mandatory stages at iacode-subjects/GATE-7-CP-0001-runtime-v4 / 3bffae5ea19653f752f171fbc1b7f7cc5973e17d. Functional acceptance covers 35 canonical criteria. Whole Green Keeper passes all 16 gates; completeness resolves 198 requirements at 100 percent implementation/evidence coverage. Fresh same-session internal Red Team defends 145/145 with VALID control. The full clean-clone mirror evaluates 18 dimensions: 16 PASS, 2 derived NOT_APPLICABLE, 0 FAIL. No independent M2 approval is implied.
 
 ## What was NOT completed
 
-A new complete immutable runtime-v4 execution, whole ordered assurance and actual canonical seal remain due. Independent review/Red Team PENDING, second-tool PENDING_MANUAL, M2 PENDING, attestation NONE; Gate8 unauthorized.
+Independent M2 review, independent Red Team, G4-F-004 reconstruction/functional proof and second-tool validation have not occurred. This preseal report does not certify future terminal tool operations; consult the actual canonical tag and transport proof.
 
 ## Current repository state
 
-Branch main; observed HEAD 31ee804ecffb14add59f89b1b5cbd2f4de9216a8; checkpoint remains unsealed IN_PROGRESS. STATE and canonical Git observations are authoritative, never a predicted future commit or tag.
+Branch main; runtime subject 3bffae5ea19653f752f171fbc1b7f7cc5973e17d; predecessor d6deb90564011f9ee518da20acbb56a39b985f74. STATE and the canonical checkpoint tag bind actual terminal Git state.
 
 ## Files changed
 
-FILES.json must explicitly declare every current Gate7 delta before canonical finalization binds its hashes. Original failed attempts and inert native/continuation contexts are retained before consumers or cleanup.
+FILES.json explicitly declares the complete Gate7 delta before hashes are bound. Exact original producer bytes and failed attempts remain. No sealed predecessor, immutable tag, denominator or promotion rule is rewritten.
 
 ## Important decisions
 
-ADR0053/0054 govern exact rights-qualified cited projections; 0055 reserves but does not implement Gate8;0056-0059 govern fixtures and exact transport. ADR0060 keeps physical ownership/deadlines and bounded red native facts. Use canonical renderers, not unstructured replacement summaries.
+ADR-0053 requires explicit exact content-bound source grants; storage is not RAG. ADR-0054 defines rebuildable exact cited projections and nonrenewing lifecycle facts. ADR-0055 through0060 cover the future-only Gate8 reservation, minimal protocol fixtures, subject-versioned root inputs, child-scoped long-path reads, exact archived-producer consumption and bounded owned native drainage. ADR-0037 separates internal assurance from later independent milestone validation. No inherited assertion, denominator or promotion rule is weakened.
 
 ## Tests executed
 
-See COMMANDS.jsonl and exact suite receipts for0211/0213/0214/0215/0217. Full preflight225/derivation226 keep all150 applicable lessons/all198 requirements, 197 mandatory. Actual native source does not widen any deadline or terminate outsiders.
+One complete immutable non-fast invocation passes all 49 mandatory stages at iacode-subjects/GATE-7-CP-0001-runtime-v4 / 3bffae5ea19653f752f171fbc1b7f7cc5973e17d. Functional acceptance covers 35 canonical criteria. Whole Green Keeper passes all 16 gates; completeness resolves 198 requirements at 100 percent implementation/evidence coverage. Fresh same-session internal Red Team defends 145/145 with VALID control. The full clean-clone mirror evaluates 18 dimensions: 16 PASS, 2 derived NOT_APPLICABLE, 0 FAIL. No independent M2 approval is implied. Canonical distinct counters: ATTACKS=145/145; GUARDRAILS=154/154; LESSONS=148/151; REQUIREMENTS=198/198; TESTS=2112/2112.
 
 ## Known failures
 
-Runtime-v1/v2/v3 remain FAIL with immutable tags and exact originals. V3 cmd0180 is48/49, only native red. G7-INT-028 awaits fresh detailed attackT. Actual continuation refusal0223 and causal0227 remain;034 is repaired only through current structural controls and unchanged canonical validation.
+FINDINGS.json retains every observed failure, recurrence and causal repair with actual evidence. Earlier full and local failures remain failed history, never combined with partial reruns to manufacture the current complete verification.
 
 ## Known risks
 
-Historical Windows teardown internals remain unknown and residual kernel/cleanup failure stays red. Curator/DB/clock, lexical relevance and backup limits remain in RISKS. Four excluded historical temporary targets remain manual-owner only.
+RISKS.md records external availability and Windows file holders, trusted curator/DB/clock, rights/privacy/ranking/backup limits and four historical policy-refused temporary targets. Those four targets remain manual-owner cleanup; no retry is authorized. Two newer diagnostic scratch owners are retained explicitly with durable safe archive maps; they are not acceptance dependencies, and removal must never be inferred from archived copies.
 
 ## Do not repeat
 
-No one-time archival/import replay, historical PID/session reuse, tag movement, history rewrite, source changes during immutable proof, overlapping ledger writers, global Docker/WSL restart or stopping unrelated applications.
+Never run checkpoint writers after sealing or overlap writers. Await actual process exits, not ledger success markers. No tag movement, history rewrite, force push, narrowed checks, global Docker restart/prune or stopping unrelated applications.
 
 ## Required next action
 
-Native strict local proofs0211/0213/0214/0215/0217 pass. Continuation originals0224 and causal0227 remain; canonical renderer/current controls0229, helper quality0231, whole lint0232, all157 owners0233 and canonical239 validation pass. Refresh complete memory/full150-lesson preflight/all198 requirements, current docs links, explicit inventory and final quiescent validation, then publish a new immutable runtime-v4 via process-owned literal-NUL staging. Execute one entire49-stage nonfast public-clone invocation with source/memory frozen and retain every original. Only whole PASS permits functional/all-requirement binding, full Green Keeper, audit-only completeness, fresh detailed internal Red Team/VALID control and full clean-clone mirror, then canonical READY_FOR_REVIEW seal/publication/exact transport. Failed v1/v2/v3 stay FAIL. Independent M2 remains pending; Gate8 unauthorized.
+Complete any canonical Gate7 READY_FOR_REVIEW finalization, content commit, real seal, publication and exact immutable review/archive transport not already evidenced by the canonical tag and tool records. Once sealed, never rewrite this subject. A later separate independent M2 checkpoint must audit sealed Gates4-7, including independent Red Team, G4-F-004 reconstruction and functional proof; second-tool validation remains manual. Findings return to a new implementing checkpoint. Gate8 is not authorized.
 
 ## Exact continuation sequence
 
-Complete current local structural rework; regenerate full memory/preflight/requirements, documentation links, FILES and quiescent validation. Publish/tag a new unused runtime-v4, run one whole49-stage public proof, then all ordered internal controls and canonical READY_FOR_REVIEW sealing/exact transport.
+If the canonical Gate7 tag is absent, validate the quiescent assembly, finalize READY_FOR_REVIEW with its future canonical tag reference, commit/publish Gate7-only content, run the self-recording canonical sealer, publish its evidence commit/tag and verify fresh exact public Git/archive transport. If sealed, perform read-only verification only. A later separate independent M2 audit must precede advancement.
 
 ## Validation commands
 
-python scripts/development-ledger/validate_checkpoint.py; python scripts/development-ledger/validate_lessons.py; python scripts/development-ledger/verify_integrity.py. Finalizer/sealer self-record; never outer-wrap them. Program state is generated explicitly after actual Git boundaries.
+python scripts/development-ledger/validate_checkpoint.py; python scripts/development-ledger/validate_lessons.py; python scripts/development-ledger/verify_integrity.py; python scripts/development-ledger/review_bundle.py --verify-declaration. Canonical finalizer/sealer self-record; do not outer-wrap either.
 
 ## Stop conditions
 
-Stop for unexpected Git divergence, genuine unavailable external prerequisites or missing authority. Internal red requires retained causal correction and fresh complete assurance; never waivers or independent self-attestation.
+Stop for unexpected Git divergence or genuine missing external prerequisites/authority. Internal red results require retained causal rework and fresh complete assurance, not waivers. No independent self-attestation, milestone-boundary crossing or Gate8 authority.

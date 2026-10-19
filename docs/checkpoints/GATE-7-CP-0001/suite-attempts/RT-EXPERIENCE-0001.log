@@ -1,0 +1,836 @@
+[iacode] EXPERIENCE PASS current-sandbox-and-quality-images-built
+[iacode] EXPERIENCE PASS fresh-owned-authenticated-stack-started
+[iacode] EXPERIENCE PASS fresh-owned-authenticated-stack-healthy
+[iacode] EXPERIENCE PASS exact-authorized-provider-model-discovered
+[iacode] EXPERIENCE PASS actual-authorized-snapshot-stored
+[iacode] EXPERIENCE PASS actual-governed-task-created
+[iacode] EXPERIENCE PASS actual-provider-sandbox-task-completed
+[iacode] EXPERIENCE PASS actual-quality-workflow-created
+[iacode] EXPERIENCE PASS actual-derived-quality-pass-with-evidence
+[iacode] EXPERIENCE PASS authenticated-project-source-discovery
+[iacode] EXPERIENCE PASS fresh-experience-store-empty-premise
+[iacode] EXPERIENCE PASS unauthenticated-capture-refused-before-effects
+[iacode] EXPERIENCE PASS invalid-signature-refused
+[iacode] EXPERIENCE PASS stale-authentication-refused
+[iacode] EXPERIENCE PASS canonical-secret-adverse-premise
+[iacode] EXPERIENCE PASS consent-missing-refused-before-persistence
+[iacode] EXPERIENCE PASS consent-denied-refused-before-persistence
+[iacode] EXPERIENCE PASS consent-type-refused-before-persistence
+[iacode] EXPERIENCE PASS private-transcript-refused-before-persistence
+[iacode] EXPERIENCE PASS forged-verdict-refused-before-persistence
+[iacode] EXPERIENCE PASS forged-rights-refused-before-persistence
+[iacode] EXPERIENCE PASS secret-ingress-refused-before-persistence
+[iacode] EXPERIENCE PASS known-capability-form-0-refused-before-persistence
+[iacode] EXPERIENCE PASS known-capability-form-1-refused-before-persistence
+[iacode] EXPERIENCE PASS known-capability-form-2-refused-before-persistence
+[iacode] EXPERIENCE PASS known-capability-form-3-refused-before-persistence
+[iacode] EXPERIENCE PASS known-capability-form-4-refused-before-persistence
+[iacode] EXPERIENCE PASS known-capability-form-5-refused-before-persistence
+[iacode] EXPERIENCE PASS cross-project-source-capture-refused
+[iacode] EXPERIENCE PASS authentication-null-control
+[iacode] EXPERIENCE PASS actual-redis-authentication-replay-refused
+[iacode] EXPERIENCE PASS actual-accepted-experience-response-loss-one-durable-effect
+[iacode] EXPERIENCE PASS actual-source-bound-experience-captured
+[iacode] EXPERIENCE PASS consumer-recomputed-returned-document-digest
+[iacode] EXPERIENCE PASS observed-provider-tool-quality-and-denied-reuse-lineage
+[iacode] EXPERIENCE PASS actual-concurrent-retry-one-row-one-capture-audit
+[iacode] EXPERIENCE PASS actual-verified-read
+[iacode] EXPERIENCE PASS actual-verified-export
+[iacode] EXPERIENCE PASS actual-bounded-summary-pagination
+[iacode] EXPERIENCE PASS actual-project-cursor-resumption
+[iacode] EXPERIENCE PASS cross-project-cursor-refused
+[iacode] EXPERIENCE PASS cross-project-get-refused
+[iacode] EXPERIENCE PASS cross-project-delete-refused
+[iacode] EXPERIENCE PASS denied-rag-use-no-data
+[iacode] EXPERIENCE PASS denied-training-use-no-data
+[iacode] EXPERIENCE PASS denied-distillation-use-no-data
+[iacode] EXPERIENCE PASS denied-unknown-use-no-data
+[iacode] EXPERIENCE PASS conflicting-stable-request-refused
+[iacode] EXPERIENCE PASS actual-api-restarted
+[stack] waiting for api=starting
+[iacode] EXPERIENCE PASS restart-preserves-content-rights-original-expiry-and-retry
+[iacode] EXPERIENCE PASS authentication-replay-survives-real-restart
+[iacode] EXPERIENCE PASS actual-source-object-corrupt-fails-closed
+[iacode] EXPERIENCE PASS restored-source-clean-control-after-corrupt
+[iacode] EXPERIENCE PASS actual-source-object-remove-fails-closed
+[iacode] EXPERIENCE PASS restored-source-clean-control-after-remove
+[iacode] EXPERIENCE PASS actual-project-bound-withdrawal
+[iacode] EXPERIENCE PASS repeated-withdrawal-is-terminal-observation
+[iacode] EXPERIENCE PASS withdrawn-read-denied-immediately
+[iacode] EXPERIENCE PASS new-key-cannot-resurrect-withdrawn-source
+[iacode] EXPERIENCE PASS withdrawal-physically-purges-primary-and-preserves-sources
+[iacode] EXPERIENCE PASS second-real-governed-source-created
+[iacode] EXPERIENCE PASS actual-short-retention-capture-honest-observed-outcome
+[iacode] EXPERIENCE PASS expired-read-denied-without-manual-sweep
+[iacode] EXPERIENCE PASS actual-owned-background-sweeper-physically-purged
+[iacode] EXPERIENCE PASS expired-request-retry-cannot-renew
+[iacode] EXPERIENCE PASS expired-source-new-key-cannot-resurrect
+[iacode] EXPERIENCE PASS actual-production-logs-retain-observability-not-ingress
+[iacode] EXPERIENCE PASS owned-capability-expiry-reconfiguration
+[stack] waiting for api=starting
+[iacode] EXPERIENCE PASS actual-expired-capability-refuses-experience-access
+[iacode] EXPERIENCE PASS owned-resources-removed
+[iacode] EXPERIENCE PASS operational-container-identities-preserved
+[iacode] EXPERIENCE PASS measured-source-inputs-unchanged
+{
+  "schemaVersion": "1.0.0",
+  "scenario": "experience-store-e2e",
+  "result": "PASS",
+  "environment": "owned-authenticated-real-postgresql-redis-minio-temporal-provider-sandbox-quality",
+  "subjectCommit": "3bffae5ea19653f752f171fbc1b7f7cc5973e17d",
+  "sourceDirty": true,
+  "sourceFingerprint": "1a949f03f8cec67ce47aa37ddbb9b9447208d31c43ad6124795cb3d23c354117",
+  "steps": [
+    {
+      "name": "current-sandbox-and-quality-images-built",
+      "result": "PASS"
+    },
+    {
+      "name": "fresh-owned-authenticated-stack-started",
+      "result": "PASS"
+    },
+    {
+      "name": "fresh-owned-authenticated-stack-healthy",
+      "result": "PASS"
+    },
+    {
+      "name": "exact-authorized-provider-model-discovered",
+      "result": "PASS",
+      "authorizedModel": "openai:gpt-4o-mini",
+      "provider": "openai",
+      "catalogModels": 135,
+      "discovered": 135
+    },
+    {
+      "name": "actual-authorized-snapshot-stored",
+      "result": "PASS"
+    },
+    {
+      "name": "actual-governed-task-created",
+      "result": "PASS"
+    },
+    {
+      "name": "actual-provider-sandbox-task-completed",
+      "result": "PASS",
+      "sourceRunId": "01a15485-63e5-7000-b16e-0317da13135e"
+    },
+    {
+      "name": "actual-quality-workflow-created",
+      "result": "PASS"
+    },
+    {
+      "name": "actual-derived-quality-pass-with-evidence",
+      "result": "PASS",
+      "qualityRunId": "01a15486-0321-7000-b26c-9c7b89474471"
+    },
+    {
+      "name": "authenticated-project-source-discovery",
+      "result": "PASS"
+    },
+    {
+      "name": "fresh-experience-store-empty-premise",
+      "result": "PASS"
+    },
+    {
+      "name": "unauthenticated-capture-refused-before-effects",
+      "result": "PASS"
+    },
+    {
+      "name": "invalid-signature-refused",
+      "result": "PASS"
+    },
+    {
+      "name": "stale-authentication-refused",
+      "result": "PASS"
+    },
+    {
+      "name": "canonical-secret-adverse-premise",
+      "result": "PASS"
+    },
+    {
+      "name": "consent-missing-refused-before-persistence",
+      "result": "PASS"
+    },
+    {
+      "name": "consent-denied-refused-before-persistence",
+      "result": "PASS"
+    },
+    {
+      "name": "consent-type-refused-before-persistence",
+      "result": "PASS"
+    },
+    {
+      "name": "private-transcript-refused-before-persistence",
+      "result": "PASS"
+    },
+    {
+      "name": "forged-verdict-refused-before-persistence",
+      "result": "PASS"
+    },
+    {
+      "name": "forged-rights-refused-before-persistence",
+      "result": "PASS"
+    },
+    {
+      "name": "secret-ingress-refused-before-persistence",
+      "result": "PASS"
+    },
+    {
+      "name": "known-capability-form-0-refused-before-persistence",
+      "result": "PASS"
+    },
+    {
+      "name": "known-capability-form-1-refused-before-persistence",
+      "result": "PASS"
+    },
+    {
+      "name": "known-capability-form-2-refused-before-persistence",
+      "result": "PASS"
+    },
+    {
+      "name": "known-capability-form-3-refused-before-persistence",
+      "result": "PASS"
+    },
+    {
+      "name": "known-capability-form-4-refused-before-persistence",
+      "result": "PASS"
+    },
+    {
+      "name": "known-capability-form-5-refused-before-persistence",
+      "result": "PASS"
+    },
+    {
+      "name": "cross-project-source-capture-refused",
+      "result": "PASS"
+    },
+    {
+      "name": "authentication-null-control",
+      "result": "PASS"
+    },
+    {
+      "name": "actual-redis-authentication-replay-refused",
+      "result": "PASS"
+    },
+    {
+      "name": "actual-accepted-experience-response-loss-one-durable-effect",
+      "result": "PASS",
+      "responseLost": true,
+      "upstreamStatuses": [
+        201
+      ],
+      "upstreamCode": null,
+      "actualExperienceRows": 1,
+      "actualCaptureAuditRows": 1
+    },
+    {
+      "name": "actual-source-bound-experience-captured",
+      "result": "PASS"
+    },
+    {
+      "name": "consumer-recomputed-returned-document-digest",
+      "result": "PASS"
+    },
+    {
+      "name": "observed-provider-tool-quality-and-denied-reuse-lineage",
+      "result": "PASS"
+    },
+    {
+      "name": "actual-concurrent-retry-one-row-one-capture-audit",
+      "result": "PASS"
+    },
+    {
+      "name": "actual-verified-read",
+      "result": "PASS"
+    },
+    {
+      "name": "actual-verified-export",
+      "result": "PASS"
+    },
+    {
+      "name": "actual-bounded-summary-pagination",
+      "result": "PASS"
+    },
+    {
+      "name": "actual-project-cursor-resumption",
+      "result": "PASS"
+    },
+    {
+      "name": "cross-project-cursor-refused",
+      "result": "PASS"
+    },
+    {
+      "name": "cross-project-get-refused",
+      "result": "PASS"
+    },
+    {
+      "name": "cross-project-delete-refused",
+      "result": "PASS"
+    },
+    {
+      "name": "denied-rag-use-no-data",
+      "result": "PASS"
+    },
+    {
+      "name": "denied-training-use-no-data",
+      "result": "PASS"
+    },
+    {
+      "name": "denied-distillation-use-no-data",
+      "result": "PASS"
+    },
+    {
+      "name": "denied-unknown-use-no-data",
+      "result": "PASS"
+    },
+    {
+      "name": "conflicting-stable-request-refused",
+      "result": "PASS"
+    },
+    {
+      "name": "actual-api-restarted",
+      "result": "PASS"
+    },
+    {
+      "name": "restart-preserves-content-rights-original-expiry-and-retry",
+      "result": "PASS"
+    },
+    {
+      "name": "authentication-replay-survives-real-restart",
+      "result": "PASS"
+    },
+    {
+      "name": "actual-source-object-corrupt-fails-closed",
+      "result": "PASS",
+      "artifactId": "acf1a6a8-174f-4435-83c3-9bba95b6d06a",
+      "sourceDigest": "cb8bcc8df9e32b86a8f5ce8e0c4f4ea2b5e093447c6260ac09ab7bb7ba1499a3"
+    },
+    {
+      "name": "restored-source-clean-control-after-corrupt",
+      "result": "PASS"
+    },
+    {
+      "name": "actual-source-object-remove-fails-closed",
+      "result": "PASS",
+      "artifactId": "acf1a6a8-174f-4435-83c3-9bba95b6d06a",
+      "sourceDigest": "cb8bcc8df9e32b86a8f5ce8e0c4f4ea2b5e093447c6260ac09ab7bb7ba1499a3"
+    },
+    {
+      "name": "restored-source-clean-control-after-remove",
+      "result": "PASS"
+    },
+    {
+      "name": "actual-project-bound-withdrawal",
+      "result": "PASS"
+    },
+    {
+      "name": "repeated-withdrawal-is-terminal-observation",
+      "result": "PASS"
+    },
+    {
+      "name": "withdrawn-read-denied-immediately",
+      "result": "PASS"
+    },
+    {
+      "name": "new-key-cannot-resurrect-withdrawn-source",
+      "result": "PASS"
+    },
+    {
+      "name": "withdrawal-physically-purges-primary-and-preserves-sources",
+      "result": "PASS"
+    },
+    {
+      "name": "second-real-governed-source-created",
+      "result": "PASS"
+    },
+    {
+      "name": "actual-short-retention-capture-honest-observed-outcome",
+      "result": "PASS",
+      "observedSourceState": "CANCELLED"
+    },
+    {
+      "name": "expired-read-denied-without-manual-sweep",
+      "result": "PASS"
+    },
+    {
+      "name": "actual-owned-background-sweeper-physically-purged",
+      "result": "PASS"
+    },
+    {
+      "name": "expired-request-retry-cannot-renew",
+      "result": "PASS"
+    },
+    {
+      "name": "expired-source-new-key-cannot-resurrect",
+      "result": "PASS"
+    },
+    {
+      "name": "actual-production-logs-retain-observability-not-ingress",
+      "result": "PASS"
+    },
+    {
+      "name": "owned-capability-expiry-reconfiguration",
+      "result": "PASS"
+    },
+    {
+      "name": "actual-expired-capability-refuses-experience-access",
+      "result": "PASS"
+    },
+    {
+      "name": "owned-resources-removed",
+      "result": "PASS"
+    },
+    {
+      "name": "operational-container-identities-preserved",
+      "result": "PASS"
+    },
+    {
+      "name": "measured-source-inputs-unchanged",
+      "result": "PASS"
+    }
+  ],
+  "composeProject": "iacode-experience-045ab5ad96e3",
+  "capturedExperience": {
+    "experienceId": "01a15486-872a-7000-bc79-1696a5094749",
+    "projectId": "01a15485-63e2-7000-bbac-3021d41a9be6",
+    "sourceRunId": "01a15485-63e5-7000-b16e-0317da13135e",
+    "contentDigest": "ae1d9d7615bc62ed6058a96fc0d38233dcb7a2eafc889e4bf5ece277d3ee846e",
+    "createdAt": "2026-10-19T14:17:44.880244+00:00",
+    "expiresAt": "2026-10-19T14:27:44.880244+00:00",
+    "state": "ACTIVE",
+    "idempotentReplay": true,
+    "document": {
+      "task": {
+        "runId": "01a15485-63e5-7000-b16e-0317da13135e",
+        "status": "SUCCEEDED",
+        "taskId": "01a15485-63e5-7001-a386-ec3a5ba00234",
+        "attempt": 1,
+        "projectId": "01a15485-63e2-7000-bbac-3021d41a9be6",
+        "startedAt": "2026-10-19T14:16:30.648707Z",
+        "finishedAt": "2026-10-19T14:17:11.074898Z"
+      },
+      "files": {
+        "digest": "798aefda2f02161005f7c67b407a6eeca44e56ba85359b9f74eb21a3f7b75ebb",
+        "fileCount": null,
+        "sizeBytes": 476,
+        "snapshotId": "cb371c14-354d-5b32-85e6-9e610f62fea5"
+      },
+      "model": [
+        {
+          "model": "gpt-4o-mini",
+          "callId": "01a15485-6f6d-7000-adff-d96c61990c23"
+        },
+        {
+          "model": "gpt-4o-mini",
+          "callId": "01a15485-76e6-7000-8f03-497da66a571c"
+        },
+        {
+          "model": "gpt-4o-mini",
+          "callId": "01a15485-8d2e-7000-8bf8-b4a5d4794f3a"
+        },
+        {
+          "model": "gpt-4o-mini",
+          "callId": "01a15485-942b-7000-8082-b1960960a2a7"
+        }
+      ],
+      "tests": {
+        "checks": [
+          {
+            "kind": "build",
+            "runner": "python.build",
+            "status": "PASSED",
+            "checkId": "q001-build",
+            "caseCount": null,
+            "resultDigest": "cc698032d1af71f6f493717058fc0d1dd15e9e6df98ba5f9bb8d3b1203f15a4b"
+          },
+          {
+            "kind": "unit",
+            "runner": "python.unit",
+            "status": "PASSED",
+            "checkId": "q002-unit",
+            "caseCount": null,
+            "resultDigest": "b9669b8e07229efa90ac69e02c3faf577f6ca76775fd7cca6b36059a2d75591a"
+          },
+          {
+            "kind": "lint",
+            "runner": "python.lint",
+            "status": "PASSED",
+            "checkId": "q003-lint",
+            "caseCount": null,
+            "resultDigest": "e89502e52938817421b08da2a72c0a692d33bfc965d7ff4bf88a129ad145d5a4"
+          },
+          {
+            "kind": "static",
+            "runner": "python.static",
+            "status": "PASSED",
+            "checkId": "q004-static",
+            "caseCount": null,
+            "resultDigest": "e0e6416342e289525ae3be8da9ddcce08730aa6a10cfc3d6b946265f72431a8a"
+          },
+          {
+            "kind": "dependency-security",
+            "runner": "python.dependency",
+            "status": "PASSED",
+            "checkId": "q005-dependency-security",
+            "caseCount": null,
+            "resultDigest": "7952e7a43d2ee0ceff55b0c71be86bacb2889bc7fefada15de08eb824b161480"
+          },
+          {
+            "kind": "secret",
+            "runner": "common.secret",
+            "status": "PASSED",
+            "checkId": "q006-secret",
+            "caseCount": null,
+            "resultDigest": "990cbd539f67572f012e6a2466bd94b71c5ee2a724418f0520c90b5ae4c84afa"
+          },
+          {
+            "kind": "diff-integrity",
+            "runner": "common.diff",
+            "status": "PASSED",
+            "checkId": "q007-diff-integrity",
+            "caseCount": null,
+            "resultDigest": "4285b29bda3c8d2754d2e3a2c1cb21dd093e78e27d6466c332c2a33fce3ca474"
+          }
+        ],
+        "caseCount": null
+      },
+      "effort": null,
+      "actions": [
+        {
+          "event": "RUN_CREATED",
+          "sequence": 1,
+          "createdAt": "2026-10-19T14:16:30.450780Z"
+        },
+        {
+          "event": "RUN_STARTED",
+          "sequence": 2,
+          "createdAt": "2026-10-19T14:16:30.705810Z"
+        },
+        {
+          "event": "AGENT_STARTED",
+          "sequence": 3,
+          "createdAt": "2026-10-19T14:16:30.798131Z"
+        },
+        {
+          "event": "MODEL_CALL_STARTED",
+          "sequence": 4,
+          "createdAt": "2026-10-19T14:16:30.837741Z"
+        },
+        {
+          "event": "MODEL_CALL_COMPLETED",
+          "sequence": 5,
+          "createdAt": "2026-10-19T14:16:33.483240Z"
+        },
+        {
+          "event": "AGENT_COMPLETED",
+          "sequence": 6,
+          "createdAt": "2026-10-19T14:16:33.569578Z"
+        },
+        {
+          "event": "AGENT_STARTED",
+          "sequence": 7,
+          "createdAt": "2026-10-19T14:16:33.647736Z"
+        },
+        {
+          "event": "MODEL_CALL_STARTED",
+          "sequence": 8,
+          "createdAt": "2026-10-19T14:16:33.687408Z"
+        },
+        {
+          "event": "MODEL_CALL_COMPLETED",
+          "sequence": 9,
+          "createdAt": "2026-10-19T14:16:35.375564Z"
+        },
+        {
+          "event": "TOOL_REQUESTED",
+          "sequence": 10,
+          "createdAt": "2026-10-19T14:16:35.455393Z"
+        },
+        {
+          "event": "TOOL_RESULT_RECEIVED",
+          "sequence": 11,
+          "createdAt": "2026-10-19T14:16:39.428519Z"
+        },
+        {
+          "event": "MODEL_CALL_STARTED",
+          "sequence": 12,
+          "createdAt": "2026-10-19T14:16:39.479231Z"
+        },
+        {
+          "event": "MODEL_CALL_COMPLETED",
+          "sequence": 13,
+          "createdAt": "2026-10-19T14:16:41.090131Z"
+        },
+        {
+          "event": "AGENT_COMPLETED",
+          "sequence": 14,
+          "createdAt": "2026-10-19T14:16:41.170470Z"
+        },
+        {
+          "event": "AGENT_STARTED",
+          "sequence": 15,
+          "createdAt": "2026-10-19T14:16:41.249977Z"
+        },
+        {
+          "event": "MODEL_CALL_STARTED",
+          "sequence": 16,
+          "createdAt": "2026-10-19T14:16:41.296611Z"
+        },
+        {
+          "event": "MODEL_CALL_COMPLETED",
+          "sequence": 17,
+          "createdAt": "2026-10-19T14:16:42.876637Z"
+        },
+        {
+          "event": "AGENT_COMPLETED",
+          "sequence": 18,
+          "createdAt": "2026-10-19T14:16:42.954431Z"
+        },
+        {
+          "event": "RUN_NOTE",
+          "sequence": 19,
+          "createdAt": "2026-10-19T14:17:10.981174Z"
+        },
+        {
+          "event": "RUN_COMPLETED",
+          "sequence": 20,
+          "createdAt": "2026-10-19T14:17:11.030063Z"
+        }
+      ],
+      "quality": {
+        "runId": "01a15486-0321-7000-b26c-9c7b89474471",
+        "verdict": "PASS",
+        "planDigest": "491a7c93a3e30e131d7812ede215f068a7b28037504d079e5b2162371c6568b8",
+        "resultDigests": [
+          "67a118c4581e7af150dd22227d89ba9b18384c2810a3186aae185b7b7021496c",
+          "e9ad99a1a8d235d5652d0b44e413a623526e1ac51bc06e3683c8d10abeaf3d50",
+          "53b4ca15ec39e3c1e294f903dc55874b222abbe5297562e43818a96ee0a281c5",
+          "326eef563e4743be6b0a18d1dc78a08b556049af9cc531e0e0114c8b05513ee7",
+          "0ad2ccb5dc487d83af0bd67871069d798b362daff239efada6d91176635ce3c2",
+          "2efb96b3653eda6bf8ad6cc29886ea97c30c36510f2a6922dfccaa5f8cdbf667",
+          "9065d0aee6028108d435ce740686318bb117d312c348f8ce553cdc6107c92d8c"
+        ],
+        "verdictDigest": "635570be628683e36e8c2ff758964e095655ba42ace817b313a2cc45c88c6e3b",
+        "evidenceDigests": [
+          "0dcfa63c2e896628cfbe43a80cb18d77e3186fce59bf9a22033fb3f8744ea693",
+          "16bd3edab845932fa06916630346b59d9b2a7f15aa869667c231e16af02ea2ee",
+          "72d01aaebd2d3dca5bc77ee7c8911a9854a532917dece4897dc6dd32056bd2a5",
+          "877b83552a08684d0350dd52ede48efb6c74d98f41e2b897fc34af259d8d8f6d",
+          "bd87f24e056f8e4d2aba9f3b440346d30d4fcb2e7ba2bcc1eb309382f22d8d8f",
+          "cb8bcc8df9e32b86a8f5ce8e0c4f4ea2b5e093447c6260ac09ab7bb7ba1499a3",
+          "f03155fe00a25c49ca3cecd6d8334830f0417272793d2a678dd166a914b0a1a2"
+        ]
+      },
+      "attempts": [
+        {
+          "status": "SUCCEEDED",
+          "startedAt": "2026-10-19T14:16:30.756238Z",
+          "agentRunId": "01a15485-6525-7000-a42b-4e62e9c1c88b",
+          "finishedAt": "2026-10-19T14:16:33.529141Z",
+          "stageIndex": 0
+        },
+        {
+          "status": "SUCCEEDED",
+          "startedAt": "2026-10-19T14:16:33.611342Z",
+          "agentRunId": "01a15485-704b-7000-be4c-d5aaec012178",
+          "finishedAt": "2026-10-19T14:16:41.130488Z",
+          "stageIndex": 1
+        },
+        {
+          "status": "SUCCEEDED",
+          "startedAt": "2026-10-19T14:16:41.209436Z",
+          "agentRunId": "01a15485-8df9-7000-87c7-ccdc967bc0a8",
+          "finishedAt": "2026-10-19T14:16:42.916129Z",
+          "stageIndex": 2
+        }
+      ],
+      "commands": [
+        {
+          "tool": "shell.exec",
+          "requestId": "ce9fd0f7-1605-4366-8dc4-9fe91d58428d",
+          "representation": "digest-only; no command or arguments copied",
+          "argumentsDigest": "2456a41577a9ca26e7d4d44463f489c8384a335d2243985b7413b4c6923b6756"
+        }
+      ],
+      "failures": [],
+      "provider": [
+        {
+          "callId": "01a15485-6f6d-7000-adff-d96c61990c23",
+          "provider": "openai"
+        },
+        {
+          "callId": "01a15485-76e6-7000-8f03-497da66a571c",
+          "provider": "openai"
+        },
+        {
+          "callId": "01a15485-8d2e-7000-8bf8-b4a5d4794f3a",
+          "provider": "openai"
+        },
+        {
+          "callId": "01a15485-942b-7000-8082-b1960960a2a7",
+          "provider": "openai"
+        }
+      ],
+      "toolCalls": [
+        {
+          "tool": "shell.exec",
+          "callId": "01a15485-8679-7000-87fe-b472956ca0a4",
+          "status": "SUCCEEDED",
+          "exitCode": 0,
+          "requestId": "ce9fd0f7-1605-4366-8dc4-9fe91d58428d",
+          "sessionId": "01a15485-780d-7000-874c-787b97730bbe",
+          "succeeded": true,
+          "durationMs": 265
+        }
+      ],
+      "baseCommit": null,
+      "provenance": [
+        {
+          "notes": "Observable facts/references only; unknown rights deny reuse.",
+          "digest": "f507d8f3464285d65199bb2a6ed9df640b15efdc04b9fa3fc20be571800cd47b",
+          "license": "UNKNOWN",
+          "evidence": "Explicit storage consent; operational observation is not a reuse license.",
+          "sourceId": "01a15485-63e5-7000-b16e-0317da13135e",
+          "ownership": "UNVERIFIED",
+          "ragAllowed": false,
+          "sourceType": "task-run",
+          "storageAllowed": true,
+          "trainingAllowed": false,
+          "distillationAllowed": false
+        },
+        {
+          "notes": "Observable facts/references only; unknown rights deny reuse.",
+          "digest": "798aefda2f02161005f7c67b407a6eeca44e56ba85359b9f74eb21a3f7b75ebb",
+          "license": "UNKNOWN",
+          "evidence": "Explicit storage consent; operational observation is not a reuse license.",
+          "sourceId": "cb371c14-354d-5b32-85e6-9e610f62fea5",
+          "ownership": "UNVERIFIED",
+          "ragAllowed": false,
+          "sourceType": "workspace-snapshot",
+          "storageAllowed": true,
+          "trainingAllowed": false,
+          "distillationAllowed": false
+        },
+        {
+          "notes": "Observable facts/references only; unknown rights deny reuse.",
+          "digest": "cb8bcc8df9e32b86a8f5ce8e0c4f4ea2b5e093447c6260ac09ab7bb7ba1499a3",
+          "license": "UNKNOWN",
+          "evidence": "Explicit storage consent; operational observation is not a reuse license.",
+          "sourceId": "acf1a6a8-174f-4435-83c3-9bba95b6d06a",
+          "ownership": "UNVERIFIED",
+          "ragAllowed": false,
+          "sourceType": "quality-evidence",
+          "storageAllowed": true,
+          "trainingAllowed": false,
+          "distillationAllowed": false
+        },
+        {
+          "notes": "Observable facts/references only; unknown rights deny reuse.",
+          "digest": "0dcfa63c2e896628cfbe43a80cb18d77e3186fce59bf9a22033fb3f8744ea693",
+          "license": "UNKNOWN",
+          "evidence": "Explicit storage consent; operational observation is not a reuse license.",
+          "sourceId": "d8269a7e-bb64-4763-926e-9419761152c9",
+          "ownership": "UNVERIFIED",
+          "ragAllowed": false,
+          "sourceType": "quality-evidence",
+          "storageAllowed": true,
+          "trainingAllowed": false,
+          "distillationAllowed": false
+        },
+        {
+          "notes": "Observable facts/references only; unknown rights deny reuse.",
+          "digest": "16bd3edab845932fa06916630346b59d9b2a7f15aa869667c231e16af02ea2ee",
+          "license": "UNKNOWN",
+          "evidence": "Explicit storage consent; operational observation is not a reuse license.",
+          "sourceId": "2f126a45-4b1a-4138-894d-159e724889ca",
+          "ownership": "UNVERIFIED",
+          "ragAllowed": false,
+          "sourceType": "quality-evidence",
+          "storageAllowed": true,
+          "trainingAllowed": false,
+          "distillationAllowed": false
+        },
+        {
+          "notes": "Observable facts/references only; unknown rights deny reuse.",
+          "digest": "72d01aaebd2d3dca5bc77ee7c8911a9854a532917dece4897dc6dd32056bd2a5",
+          "license": "UNKNOWN",
+          "evidence": "Explicit storage consent; operational observation is not a reuse license.",
+          "sourceId": "a5b96798-fffb-4d3b-b9e0-8273966bc9e5",
+          "ownership": "UNVERIFIED",
+          "ragAllowed": false,
+          "sourceType": "quality-evidence",
+          "storageAllowed": true,
+          "trainingAllowed": false,
+          "distillationAllowed": false
+        },
+        {
+          "notes": "Observable facts/references only; unknown rights deny reuse.",
+          "digest": "f03155fe00a25c49ca3cecd6d8334830f0417272793d2a678dd166a914b0a1a2",
+          "license": "UNKNOWN",
+          "evidence": "Explicit storage consent; operational observation is not a reuse license.",
+          "sourceId": "9dab4331-94cb-4f0d-adc6-5af61a4987ce",
+          "ownership": "UNVERIFIED",
+          "ragAllowed": false,
+          "sourceType": "quality-evidence",
+          "storageAllowed": true,
+          "trainingAllowed": false,
+          "distillationAllowed": false
+        },
+        {
+          "notes": "Observable facts/references only; unknown rights deny reuse.",
+          "digest": "bd87f24e056f8e4d2aba9f3b440346d30d4fcb2e7ba2bcc1eb309382f22d8d8f",
+          "license": "UNKNOWN",
+          "evidence": "Explicit storage consent; operational observation is not a reuse license.",
+          "sourceId": "a737e288-3327-4258-b1c3-6eed08b224db",
+          "ownership": "UNVERIFIED",
+          "ragAllowed": false,
+          "sourceType": "quality-evidence",
+          "storageAllowed": true,
+          "trainingAllowed": false,
+          "distillationAllowed": false
+        },
+        {
+          "notes": "Observable facts/references only; unknown rights deny reuse.",
+          "digest": "877b83552a08684d0350dd52ede48efb6c74d98f41e2b897fc34af259d8d8f6d",
+          "license": "UNKNOWN",
+          "evidence": "Explicit storage consent; operational observation is not a reuse license.",
+          "sourceId": "2370d1f6-9aec-4950-8891-34de663d80b6",
+          "ownership": "UNVERIFIED",
+          "ragAllowed": false,
+          "sourceType": "quality-evidence",
+          "storageAllowed": true,
+          "trainingAllowed": false,
+          "distillationAllowed": false
+        }
+      ],
+      "repository": null,
+      "agentReview": null,
+      "corrections": [],
+      "environment": {
+        "limit": "No host configuration, source content or environment values copied.",
+        "source": "persisted-runtime-facts",
+        "hostDetails": null
+      },
+      "finalResult": {
+        "taskStatus": "SUCCEEDED",
+        "qualityVerdict": "PASS"
+      },
+      "humanReview": null,
+      "schemaVersion": "1.0.0",
+      "trajectorySummary": "SUCCEEDED; agents=3; modelCalls=4; tools=1; quality=PASS",
+      "trainingEligibility": {
+        "eligible": false,
+        "evidence": "No verified ownership/license or positive reuse grant."
+      }
+    }
+  },
+  "sandboxCleanup": {
+    "remainingContainers": 0,
+    "remainingNetworks": 0
+  },
+  "cleanup": {
+    "composeExitCode": 0,
+    "remainingContainers": 0,
+    "remainingVolumes": 0,
+    "remainingNetworks": 0
+  }
+}

@@ -1,34 +1,62 @@
 {
   "schemaVersion": "1.0.0",
   "kind": "PUBLISHED_RUNTIME_CANDIDATE_NOT_ACCEPTANCE",
-  "subjectCommit": "31ee804ecffb14add59f89b1b5cbd2f4de9216a8",
-  "subjectTag": "iacode-subjects/GATE-7-CP-0001-runtime-v3",
-  "sourceFingerprint": "5c970d4d32187e0ac9bd4762adb1bfd1bc50f118a8254e0968cb60ac191fa044",
-  "observedAt": "2026-10-19T03:37:03Z",
+  "subjectCommit": "3bffae5ea19653f752f171fbc1b7f7cc5973e17d",
+  "subjectTag": "iacode-subjects/GATE-7-CP-0001-runtime-v4",
+  "sourceFingerprint": "1a949f03f8cec67ce47aa37ddbb9b9447208d31c43ad6124795cb3d23c354117",
+  "observedAt": "2026-10-19T08:48:21Z",
   "publicationDriverActualExitCode": 0,
   "committedCheckpointValidation": "PASS",
   "mainAndOriginMatched": true,
   "tagCommitMatched": true,
+  "publicPeeledTagMatched": true,
+  "publicationEvidence": [
+    "command:cmd-0249",
+    "command:cmd-0250"
+  ],
+  "publicationProcessObservation": "Actual process-owned driver exited0 after all seven stages; this is an observation, not original console bytes or independent acceptance.",
   "nonFastStageDenominatorAtCut": 49,
   "explicitHostNodeVersion": "v24.19.0",
-  "completeVerification": "FAIL",
-  "orderedInternalAssurance": "NOT_EXECUTED",
+  "completeVerification": "PASS",
+  "completeVerificationActualExitCode": 0,
+  "completeVerificationObservedAt": "2026-10-19T11:48:55Z",
+  "completeVerificationEvidence": [
+    "command:cmd-0255",
+    "checkpoint:VERIFY.json",
+    "checkpoint:PUBLISHED-CLEAN-CLONE-REPORT.json",
+    "checkpoint:PRODUCER-REPORTS.json",
+    "checkpoint:COMPOSE-ISOLATION-AUDIT.json"
+  ],
+  "orderedInternalAssurance": "PASS",
+  "orderedInternalAssuranceObservedAt": "2026-10-19T17:42:48Z",
+  "orderedInternalAssuranceEvidence": [
+    "command:cmd-0257",
+    "checkpoint:REWORK-LOG.jsonl",
+    "command:cmd-0279",
+    "command:cmd-0281",
+    "command:cmd-0287",
+    "checkpoint:M2-INTERNAL-MIRROR.json"
+  ],
   "independentM2": "PENDING",
-  "checkpointSealed": false,
+  "checkpointSealObservation": {
+    "observedAt": "2026-10-19T17:42:48Z",
+    "status": "NOT_YET_SEALED",
+    "authority": "This is a preseal observation, not a prediction of later operations. Only the canonical sealer records, READY_FOR_REVIEW STATE and canonical checkpoint tag establish actual subsequent sealing. Never rewrite this file after sealing."
+  },
   "gate8Authorized": false,
-  "completeVerificationActualExitCode": 1,
-  "completeVerificationCommand": "cmd-0180",
-  "failedAttemptManifest": "attempts/RUNTIME-V3-FAILED-FULL-MANIFEST.json",
-  "completeStages": 49,
-  "passedStages": 48,
-  "failedStages": ["native-client-installation"],
   "previousFailedImmutableAttempt": {
-    "subjectCommit": "13749adfa616c7f52aa7407cb9a9d7aef3d19c76",
-    "subjectTag": "iacode-subjects/GATE-7-CP-0001-runtime-v2",
+    "subjectCommit": "31ee804ecffb14add59f89b1b5cbd2f4de9216a8",
+    "subjectTag": "iacode-subjects/GATE-7-CP-0001-runtime-v3",
     "result": "FAIL",
-    "manifest": "attempts/RUNTIME-V2-FAILED-FULL-MANIFEST.json"
+    "manifest": "attempts/RUNTIME-V3-FAILED-FULL-MANIFEST.json"
   },
   "earlierFailedImmutableAttempts": [
+    {
+      "subjectCommit": "13749adfa616c7f52aa7407cb9a9d7aef3d19c76",
+      "subjectTag": "iacode-subjects/GATE-7-CP-0001-runtime-v2",
+      "result": "FAIL",
+      "manifest": "attempts/RUNTIME-V2-FAILED-FULL-MANIFEST.json"
+    },
     {
       "subjectCommit": "a4b17e96c85efec5c1cd51305c5d1816ec82c77f",
       "subjectTag": "iacode-subjects/GATE-7-CP-0001-runtime-v1",

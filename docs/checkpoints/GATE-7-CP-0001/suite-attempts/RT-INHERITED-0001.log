@@ -1,0 +1,21 @@
+[DEFENDED] A missing result: verdict=FAIL; reasons=('missing result for q001-unit',)
+[DEFENDED] B exit-code forgery: contract refused non-zero PASS
+[DEFENDED] C forged evidence: verdict=FAIL; reasons=('q001-unit has unresolved evidence evidence-red-team',)
+[DEFENDED] D policy mutation: store refused PLAN_ID_CONFLICT
+[DEFENDED] E snapshot mutation: store refused PLAN_ID_CONFLICT
+[DEFENDED] F wrong origin: contract refused origin
+[DEFENDED] G timed_out result: verdict=FAIL; reasons=('q001-unit ended TIMED_OUT',)
+[DEFENDED] H denied result: verdict=FAIL; reasons=('q001-unit ended DENIED',)
+[DEFENDED] I cancelled result: verdict=FAIL; reasons=('q001-unit ended CANCELLED',)
+[DEFENDED] J unknown status: contract refused status
+[DEFENDED] K bundle integrity: result=FAIL; expected-finding=True
+[DEFENDED] L mandatory bundle evidence: result=FAIL; expected-finding=True
+[DEFENDED] M archive path safety: result=FAIL; expected-finding=True
+[DEFENDED] N bundle secret scan: result=FAIL; expected-finding=True
+[DEFENDED] O archive uniqueness: result=FAIL; expected-finding=True
+[DEFENDED] P live adverse lifecycle: recovery=PASS; cancellation=PASS; timeout=PASS; forged-origin=PASS; secret-output=PASS
+[DEFENDED] Q pre-persistence secret containment: status=ERROR; verdict=FAIL; objects=0; records=0; prohibited-bytes-absent=True
+[DEFENDED] R scanner availability: scan-before-store=True; status=ERROR; verdict=FAIL; objects=0; records=0
+[DEFENDED] S legacy persisted object: resolved=False; rescanned-after-read=True; verdict=FAIL
+[DEFENDED] T review bundle portability, determinism and declaration binding: deterministic=True; portable=True; categories=True; declaration=True; stale-refused=True
+RED_TEAM=RED_TEAM_PASS 20/20 control=VALID

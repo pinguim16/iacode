@@ -2,26 +2,26 @@
   "schemaVersion": "3.4.0",
   "unit": {
     "executed": true,
-    "passed": 192,
+    "passed": 984,
     "failed": 0,
-    "command": "python docs/checkpoints/GATE-7-CP-0001/audit-harness/execute_gate.py --gate apiTests",
-    "evidence": "command:cmd-0033",
-    "runId": "gate7-local-targeted-not-whole-acceptance"
+    "command": "python -m unittest discover -s tests",
+    "evidence": "command:cmd-0262",
+    "runId": "green-keeper-cycle-1-root-suite"
   },
   "integration": {
     "executed": true,
-    "passed": 21,
+    "passed": 1128,
     "failed": 0,
-    "command": "python docs/checkpoints/GATE-7-CP-0001/audit-harness/execute_targeted.py --label KNOWLEDGE-SQL -- python docs/checkpoints/GATE-7-CP-0001/audit-harness/run_knowledge_integration.py",
-    "evidence": "command:cmd-0042",
-    "runId": "gate7-local-targeted-not-whole-acceptance"
+    "command": "python -X utf8 docs/checkpoints/GATE-7-CP-0001/audit-harness/run_full_verification.py --commit 3bffae5ea19653f752f171fbc1b7f7cc5973e17d --tag iacode-subjects/GATE-7-CP-0001-runtime-v4 --node C:/Users/cesar/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node.exe",
+    "evidence": "command:cmd-0255",
+    "runId": "published-3bffae5ea196-counted-runtime-suites"
   },
   "e2e": {
     "executed": true,
     "passed": 1,
     "failed": 0,
-    "command": "python docs/checkpoints/GATE-7-CP-0001/audit-harness/execute_live_knowledge.py",
-    "evidence": "command:cmd-0081",
-    "runId": "gate7-local-targeted-not-whole-acceptance"
+    "command": "python -X utf8 docs/checkpoints/GATE-7-CP-0001/audit-harness/run_full_verification.py --commit 3bffae5ea19653f752f171fbc1b7f7cc5973e17d --tag iacode-subjects/GATE-7-CP-0001-runtime-v4 --node C:/Users/cesar/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node.exe",
+    "evidence": "command:cmd-0255",
+    "runId": "published-3bffae5ea196-counted-runtime-suites"
   }
 }

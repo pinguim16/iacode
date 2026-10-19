@@ -1,0 +1,2195 @@
+{
+  "schemaVersion": "1.1.0",
+  "checkpoint": "GATE-7-CP-0001",
+  "generatedAt": "2026-10-19T14:22:51Z",
+  "targetFingerprint": "1a949f03f8cec67ce47aa37ddbb9b9447208d31c43ad6124795cb3d23c354117",
+  "source": "Fresh inherited false-PASS battery, whole client/domain/API and real knowledge SQL suites, actual installed native/desktop, Experience Store and measured Knowledge Engine adversaries. Same-session internal only; not independent M2 attestation.",
+  "baselineControl": {
+    "result": "VALID",
+    "detail": "Fresh inherited null mutation, trusted native/provider/sandbox/quality, owning Experience capture, positive rights-qualified corpus with all exact predefined queries/citations, actual body restoration and unchanged measured source.",
+    "evidence": [
+      "checkpoint:M2-INHERITED-RED-TEAM.json",
+      "checkpoint:RED-TEAM-DESKTOP.json",
+      "checkpoint:RED-TEAM-EXPERIENCE.json",
+      "checkpoint:RED-TEAM-KNOWLEDGE.json"
+    ]
+  },
+  "attacks": [
+    {
+      "attackId": "A",
+      "description": "missing result",
+      "target": "missing result",
+      "mutation": "remove the only mandatory result",
+      "expectedDefense": "derived verdict FAIL names the missing check",
+      "observed": "verdict=FAIL; reasons=('missing result for q001-unit',)",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/evaluator/src/iacode_evaluator/verdict.py",
+        "file:packages/contracts/src/iacode_contracts/quality.py"
+      ],
+      "mandatory": true,
+      "origin": "Gate 4 internal Red Team in the rebuilt evaluator image"
+    },
+    {
+      "attackId": "B",
+      "description": "exit-code forgery",
+      "target": "exit-code forgery",
+      "mutation": "keep PASSED and flip exitCode to 1",
+      "expectedDefense": "the result contract refuses the contradictory shape",
+      "observed": "contract refused non-zero PASS",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/evaluator/src/iacode_evaluator/verdict.py",
+        "file:packages/contracts/src/iacode_contracts/quality.py"
+      ],
+      "mandatory": true,
+      "origin": "Gate 4 internal Red Team in the rebuilt evaluator image"
+    },
+    {
+      "attackId": "C",
+      "description": "forged evidence",
+      "target": "forged evidence",
+      "mutation": "replace the resolved digest set",
+      "expectedDefense": "the evidence reference is unresolved and verdict is FAIL",
+      "observed": "verdict=FAIL; reasons=('q001-unit has unresolved evidence evidence-red-team',)",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/evaluator/src/iacode_evaluator/verdict.py",
+        "file:packages/contracts/src/iacode_contracts/quality.py"
+      ],
+      "mandatory": true,
+      "origin": "Gate 4 internal Red Team in the rebuilt evaluator image"
+    },
+    {
+      "attackId": "D",
+      "description": "policy mutation",
+      "target": "policy mutation",
+      "mutation": "change maxCheckSeconds under the same planId",
+      "expectedDefense": "the immutable store refuses PLAN_ID_CONFLICT",
+      "observed": "store refused PLAN_ID_CONFLICT",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/evaluator/src/iacode_evaluator/verdict.py",
+        "file:packages/contracts/src/iacode_contracts/quality.py"
+      ],
+      "mandatory": true,
+      "origin": "Gate 4 internal Red Team in the rebuilt evaluator image"
+    },
+    {
+      "attackId": "E",
+      "description": "snapshot mutation",
+      "target": "snapshot mutation",
+      "mutation": "change snapshotDigest under the same planId",
+      "expectedDefense": "the immutable store refuses PLAN_ID_CONFLICT",
+      "observed": "store refused PLAN_ID_CONFLICT",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/evaluator/src/iacode_evaluator/verdict.py",
+        "file:packages/contracts/src/iacode_contracts/quality.py"
+      ],
+      "mandatory": true,
+      "origin": "Gate 4 internal Red Team in the rebuilt evaluator image"
+    },
+    {
+      "attackId": "F",
+      "description": "wrong origin",
+      "target": "wrong origin",
+      "mutation": "post a result with origin CALLER",
+      "expectedDefense": "the closed origin contract refuses it",
+      "observed": "contract refused origin",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/evaluator/src/iacode_evaluator/verdict.py",
+        "file:packages/contracts/src/iacode_contracts/quality.py"
+      ],
+      "mandatory": true,
+      "origin": "Gate 4 internal Red Team in the rebuilt evaluator image"
+    },
+    {
+      "attackId": "G",
+      "description": "timed_out result",
+      "target": "timed_out result",
+      "mutation": "replace PASSED with TIMED_OUT",
+      "expectedDefense": "the derived verdict is FAIL",
+      "observed": "verdict=FAIL; reasons=('q001-unit ended TIMED_OUT',)",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/evaluator/src/iacode_evaluator/verdict.py",
+        "file:packages/contracts/src/iacode_contracts/quality.py"
+      ],
+      "mandatory": true,
+      "origin": "Gate 4 internal Red Team in the rebuilt evaluator image"
+    },
+    {
+      "attackId": "H",
+      "description": "denied result",
+      "target": "denied result",
+      "mutation": "replace PASSED with DENIED",
+      "expectedDefense": "the derived verdict is FAIL",
+      "observed": "verdict=FAIL; reasons=('q001-unit ended DENIED',)",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/evaluator/src/iacode_evaluator/verdict.py",
+        "file:packages/contracts/src/iacode_contracts/quality.py"
+      ],
+      "mandatory": true,
+      "origin": "Gate 4 internal Red Team in the rebuilt evaluator image"
+    },
+    {
+      "attackId": "I",
+      "description": "cancelled result",
+      "target": "cancelled result",
+      "mutation": "replace PASSED with CANCELLED",
+      "expectedDefense": "the derived verdict is FAIL",
+      "observed": "verdict=FAIL; reasons=('q001-unit ended CANCELLED',)",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/evaluator/src/iacode_evaluator/verdict.py",
+        "file:packages/contracts/src/iacode_contracts/quality.py"
+      ],
+      "mandatory": true,
+      "origin": "Gate 4 internal Red Team in the rebuilt evaluator image"
+    },
+    {
+      "attackId": "J",
+      "description": "unknown status",
+      "target": "unknown status",
+      "mutation": "submit status ASSERTED_GOOD",
+      "expectedDefense": "the closed result-status contract refuses it",
+      "observed": "contract refused status",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/evaluator/src/iacode_evaluator/verdict.py",
+        "file:packages/contracts/src/iacode_contracts/quality.py"
+      ],
+      "mandatory": true,
+      "origin": "Gate 4 internal Red Team in the rebuilt evaluator image"
+    },
+    {
+      "attackId": "K",
+      "description": "bundle integrity",
+      "target": "bundle integrity",
+      "mutation": "alter one payload byte",
+      "expectedDefense": "validator refuses with digest mismatch",
+      "observed": "result=FAIL; expected-finding=True",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:scripts/development-ledger/review_bundle.py"
+      ],
+      "mandatory": true,
+      "origin": "Gate 4 internal Red Team on the host review boundary"
+    },
+    {
+      "attackId": "L",
+      "description": "mandatory bundle evidence",
+      "target": "mandatory bundle evidence",
+      "mutation": "remove subject STATE.json",
+      "expectedDefense": "validator refuses with missing required checkpoint artifact: STATE.json",
+      "observed": "result=FAIL; expected-finding=True",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:scripts/development-ledger/review_bundle.py"
+      ],
+      "mandatory": true,
+      "origin": "Gate 4 internal Red Team on the host review boundary"
+    },
+    {
+      "attackId": "M",
+      "description": "archive path safety",
+      "target": "archive path safety",
+      "mutation": "add a traversal member",
+      "expectedDefense": "validator refuses with unsafe archive member",
+      "observed": "result=FAIL; expected-finding=True",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:scripts/development-ledger/review_bundle.py"
+      ],
+      "mandatory": true,
+      "origin": "Gate 4 internal Red Team on the host review boundary"
+    },
+    {
+      "attackId": "N",
+      "description": "bundle secret scan",
+      "target": "bundle secret scan",
+      "mutation": "add canonical credential-shaped bytes",
+      "expectedDefense": "validator refuses with secret scan found",
+      "observed": "result=FAIL; expected-finding=True",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:scripts/development-ledger/review_bundle.py"
+      ],
+      "mandatory": true,
+      "origin": "Gate 4 internal Red Team on the host review boundary"
+    },
+    {
+      "attackId": "O",
+      "description": "archive uniqueness",
+      "target": "archive uniqueness",
+      "mutation": "duplicate a member name",
+      "expectedDefense": "validator refuses with duplicate member names",
+      "observed": "result=FAIL; expected-finding=True",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:scripts/development-ledger/review_bundle.py"
+      ],
+      "mandatory": true,
+      "origin": "Gate 4 internal Red Team on the host review boundary"
+    },
+    {
+      "attackId": "P",
+      "description": "live adverse lifecycle",
+      "target": "live adverse lifecycle",
+      "mutation": "execute restart, cancellation, timeout and forged-origin scenarios",
+      "expectedDefense": "every fail-closed invariant survives in the current verifier run",
+      "observed": "recovery=PASS; cancellation=PASS; timeout=PASS; forged-origin=PASS; secret-output=PASS",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:scripts/iacode/scenarios/quality_engine_e2e.py",
+        "file:scripts/iacode/scenarios/sandbox_coding_e2e.py",
+        "file:scripts/iacode/verify.py"
+      ],
+      "mandatory": true,
+      "origin": "Gate 4 internal Red Team on the host review boundary"
+    },
+    {
+      "attackId": "Q",
+      "description": "pre-persistence secret containment",
+      "target": "pre-persistence secret containment",
+      "mutation": "send a canonical scanner-detected marker under an ordinary structured output key",
+      "expectedDefense": "reject before object or metadata persistence and derive FAIL from a sanitized result",
+      "observed": "status=ERROR; verdict=FAIL; objects=0; records=0; prohibited-bytes-absent=True",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/evaluator/src/iacode_evaluator/verdict.py",
+        "file:packages/contracts/src/iacode_contracts/quality.py"
+      ],
+      "mandatory": true,
+      "origin": "Gate 4 internal Red Team in the rebuilt evaluator image"
+    },
+    {
+      "attackId": "R",
+      "description": "scanner availability",
+      "target": "scanner availability",
+      "mutation": "make the canonical evidence scanner throw before it can classify clean bytes",
+      "expectedDefense": "fail closed before any lookup or write and derive FAIL",
+      "observed": "scan-before-store=True; status=ERROR; verdict=FAIL; objects=0; records=0",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/evaluator/src/iacode_evaluator/verdict.py",
+        "file:packages/contracts/src/iacode_contracts/quality.py"
+      ],
+      "mandatory": true,
+      "origin": "Gate 4 internal Red Team in the rebuilt evaluator image"
+    },
+    {
+      "attackId": "S",
+      "description": "legacy persisted object",
+      "target": "legacy persisted object",
+      "mutation": "replace already persisted clean bytes with a canonical credential shape",
+      "expectedDefense": "rescan after read, refuse resolution and derive FAIL",
+      "observed": "resolved=False; rescanned-after-read=True; verdict=FAIL",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:services/evaluator/src/iacode_evaluator/verdict.py",
+        "file:packages/contracts/src/iacode_contracts/quality.py"
+      ],
+      "mandatory": true,
+      "origin": "Gate 4 internal Red Team in the rebuilt evaluator image"
+    },
+    {
+      "attackId": "T",
+      "description": "review bundle portability, determinism and declaration binding",
+      "target": "review bundle portability, determinism and declaration binding",
+      "mutation": "rebuild twice from a detached transport clone, validate there and mutate the declaration",
+      "expectedDefense": "byte-identical secret-clean rebuilds match the declaration and a stale digest is refused",
+      "observed": "deterministic=True; portable=True; categories=True; declaration=True; stale-refused=True",
+      "result": "DEFENDED",
+      "evidence": [
+        "file:scripts/development-ledger/review_bundle.py"
+      ],
+      "mandatory": true,
+      "origin": "Gate 4 internal Red Team on the host review boundary"
+    },
+    {
+      "attackId": "G5-AUTH",
+      "description": "unauthenticated-domain-refused-before-effects",
+      "target": "Actual authenticated desktop runtime; no client execution/verdict authority",
+      "mutation": "unauthenticated-domain-refused-before-effects",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "unauthenticated-domain-refused-before-effects: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-DESKTOP.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G5-TOOL-IPC",
+      "description": "closed-ipc-refuses-tool-result",
+      "target": "Actual authenticated desktop runtime; no client execution/verdict authority",
+      "mutation": "closed-ipc-refuses-tool-result",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "closed-ipc-refuses-tool-result: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-DESKTOP.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G5-VERDICT-IPC",
+      "description": "closed-ipc-refuses-quality-verdict",
+      "target": "Actual authenticated desktop runtime; no client execution/verdict authority",
+      "mutation": "closed-ipc-refuses-quality-verdict",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "closed-ipc-refuses-quality-verdict: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-DESKTOP.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G5-HOST-IPC",
+      "description": "closed-ipc-refuses-shell.exec",
+      "target": "Actual authenticated desktop runtime; no client execution/verdict authority",
+      "mutation": "closed-ipc-refuses-shell.exec",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "closed-ipc-refuses-shell.exec: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-DESKTOP.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G5-SECRET",
+      "description": "secret-upload-refused-before-sql-or-object-persistence",
+      "target": "Actual authenticated desktop runtime; no client execution/verdict authority",
+      "mutation": "secret-upload-refused-before-sql-or-object-persistence",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "secret-upload-refused-before-sql-or-object-persistence: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-DESKTOP.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G5-REPLAY",
+      "description": "redis-replay-refusal-survives-api-restart",
+      "target": "Actual authenticated desktop runtime; no client execution/verdict authority",
+      "mutation": "redis-replay-refusal-survives-api-restart",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "redis-replay-refusal-survives-api-restart: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-DESKTOP.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G5-CONSENT",
+      "description": "cli-changed-or-wrong-consent-refused-locally",
+      "target": "Actual authenticated desktop runtime; no client execution/verdict authority",
+      "mutation": "cli-changed-or-wrong-consent-refused-locally",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "cli-changed-or-wrong-consent-refused-locally: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-DESKTOP.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G5-TASK-LOSS",
+      "description": "lost-response-has-one-real-persisted-run",
+      "target": "Actual authenticated desktop runtime; no client execution/verdict authority",
+      "mutation": "lost-response-has-one-real-persisted-run",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "lost-response-has-one-real-persisted-run: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-DESKTOP.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G5-TOOL-FORGERY",
+      "description": "authenticated-external-sandbox-result-forgery-refused",
+      "target": "Actual authenticated desktop runtime; no client execution/verdict authority",
+      "mutation": "authenticated-external-sandbox-result-forgery-refused",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "authenticated-external-sandbox-result-forgery-refused: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-DESKTOP.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G5-QUALITY-LOSS",
+      "description": "actual-quality-response-loss-reconciles-once-without-replay",
+      "target": "Actual authenticated desktop runtime; no client execution/verdict authority",
+      "mutation": "actual-quality-response-loss-reconciles-once-without-replay",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "actual-quality-response-loss-reconciles-once-without-replay: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-DESKTOP.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G5-SIGINT",
+      "description": "actual-cli-sigint-stops-only-local-observation",
+      "target": "Actual authenticated desktop runtime; no client execution/verdict authority",
+      "mutation": "actual-cli-sigint-stops-only-local-observation",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "actual-cli-sigint-stops-only-local-observation: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-DESKTOP.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G5-TAMPER",
+      "description": "actual-object-tamper-refused-before-task-persistence",
+      "target": "Actual authenticated desktop runtime; no client execution/verdict authority",
+      "mutation": "actual-object-tamper-refused-before-task-persistence",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "actual-object-tamper-refused-before-task-persistence: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-DESKTOP.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G5-NATIVE-TRUST",
+      "description": "Actual untrusted native workspace refuses every mutation",
+      "target": "Real isolated installed VS Code Extension Host, not an editor API double",
+      "mutation": "Actual untrusted native workspace refuses every mutation",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "Actual untrusted native workspace refuses every mutation: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-NATIVE.json",
+        "checkpoint:RED-TEAM-DESKTOP.json"
+      ]
+    },
+    {
+      "attackId": "G6-EXPERIENCE-01",
+      "description": "unauthenticated-capture-refused-before-effects",
+      "target": "Actual authenticated Experience Store/source objects/finite retention",
+      "mutation": "unauthenticated-capture-refused-before-effects",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "unauthenticated-capture-refused-before-effects: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-EXPERIENCE.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G6-EXPERIENCE-02",
+      "description": "invalid-signature-refused",
+      "target": "Actual authenticated Experience Store/source objects/finite retention",
+      "mutation": "invalid-signature-refused",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "invalid-signature-refused: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-EXPERIENCE.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G6-EXPERIENCE-03",
+      "description": "stale-authentication-refused",
+      "target": "Actual authenticated Experience Store/source objects/finite retention",
+      "mutation": "stale-authentication-refused",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "stale-authentication-refused: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-EXPERIENCE.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G6-EXPERIENCE-04",
+      "description": "consent-missing-refused-before-persistence",
+      "target": "Actual authenticated Experience Store/source objects/finite retention",
+      "mutation": "consent-missing-refused-before-persistence",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "consent-missing-refused-before-persistence: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-EXPERIENCE.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G6-EXPERIENCE-05",
+      "description": "consent-denied-refused-before-persistence",
+      "target": "Actual authenticated Experience Store/source objects/finite retention",
+      "mutation": "consent-denied-refused-before-persistence",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "consent-denied-refused-before-persistence: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-EXPERIENCE.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G6-EXPERIENCE-06",
+      "description": "consent-type-refused-before-persistence",
+      "target": "Actual authenticated Experience Store/source objects/finite retention",
+      "mutation": "consent-type-refused-before-persistence",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "consent-type-refused-before-persistence: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-EXPERIENCE.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G6-EXPERIENCE-07",
+      "description": "private-transcript-refused-before-persistence",
+      "target": "Actual authenticated Experience Store/source objects/finite retention",
+      "mutation": "private-transcript-refused-before-persistence",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "private-transcript-refused-before-persistence: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-EXPERIENCE.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G6-EXPERIENCE-08",
+      "description": "forged-verdict-refused-before-persistence",
+      "target": "Actual authenticated Experience Store/source objects/finite retention",
+      "mutation": "forged-verdict-refused-before-persistence",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "forged-verdict-refused-before-persistence: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-EXPERIENCE.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G6-EXPERIENCE-09",
+      "description": "forged-rights-refused-before-persistence",
+      "target": "Actual authenticated Experience Store/source objects/finite retention",
+      "mutation": "forged-rights-refused-before-persistence",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "forged-rights-refused-before-persistence: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-EXPERIENCE.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G6-EXPERIENCE-10",
+      "description": "secret-ingress-refused-before-persistence",
+      "target": "Actual authenticated Experience Store/source objects/finite retention",
+      "mutation": "secret-ingress-refused-before-persistence",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "secret-ingress-refused-before-persistence: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-EXPERIENCE.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G6-EXPERIENCE-11",
+      "description": "known-capability-form-0-refused-before-persistence",
+      "target": "Actual authenticated Experience Store/source objects/finite retention",
+      "mutation": "known-capability-form-0-refused-before-persistence",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "known-capability-form-0-refused-before-persistence: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-EXPERIENCE.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G6-EXPERIENCE-12",
+      "description": "known-capability-form-1-refused-before-persistence",
+      "target": "Actual authenticated Experience Store/source objects/finite retention",
+      "mutation": "known-capability-form-1-refused-before-persistence",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "known-capability-form-1-refused-before-persistence: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-EXPERIENCE.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G6-EXPERIENCE-13",
+      "description": "known-capability-form-2-refused-before-persistence",
+      "target": "Actual authenticated Experience Store/source objects/finite retention",
+      "mutation": "known-capability-form-2-refused-before-persistence",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "known-capability-form-2-refused-before-persistence: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-EXPERIENCE.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G6-EXPERIENCE-14",
+      "description": "known-capability-form-3-refused-before-persistence",
+      "target": "Actual authenticated Experience Store/source objects/finite retention",
+      "mutation": "known-capability-form-3-refused-before-persistence",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "known-capability-form-3-refused-before-persistence: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-EXPERIENCE.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G6-EXPERIENCE-15",
+      "description": "known-capability-form-4-refused-before-persistence",
+      "target": "Actual authenticated Experience Store/source objects/finite retention",
+      "mutation": "known-capability-form-4-refused-before-persistence",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "known-capability-form-4-refused-before-persistence: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-EXPERIENCE.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G6-EXPERIENCE-16",
+      "description": "known-capability-form-5-refused-before-persistence",
+      "target": "Actual authenticated Experience Store/source objects/finite retention",
+      "mutation": "known-capability-form-5-refused-before-persistence",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "known-capability-form-5-refused-before-persistence: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-EXPERIENCE.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G6-EXPERIENCE-17",
+      "description": "cross-project-source-capture-refused",
+      "target": "Actual authenticated Experience Store/source objects/finite retention",
+      "mutation": "cross-project-source-capture-refused",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "cross-project-source-capture-refused: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-EXPERIENCE.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G6-EXPERIENCE-18",
+      "description": "actual-redis-authentication-replay-refused",
+      "target": "Actual authenticated Experience Store/source objects/finite retention",
+      "mutation": "actual-redis-authentication-replay-refused",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "actual-redis-authentication-replay-refused: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-EXPERIENCE.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G6-EXPERIENCE-19",
+      "description": "actual-accepted-experience-response-loss-one-durable-effect",
+      "target": "Actual authenticated Experience Store/source objects/finite retention",
+      "mutation": "actual-accepted-experience-response-loss-one-durable-effect",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "actual-accepted-experience-response-loss-one-durable-effect: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-EXPERIENCE.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G6-EXPERIENCE-20",
+      "description": "actual-concurrent-retry-one-row-one-capture-audit",
+      "target": "Actual authenticated Experience Store/source objects/finite retention",
+      "mutation": "actual-concurrent-retry-one-row-one-capture-audit",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "actual-concurrent-retry-one-row-one-capture-audit: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-EXPERIENCE.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G6-EXPERIENCE-21",
+      "description": "cross-project-cursor-refused",
+      "target": "Actual authenticated Experience Store/source objects/finite retention",
+      "mutation": "cross-project-cursor-refused",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "cross-project-cursor-refused: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-EXPERIENCE.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G6-EXPERIENCE-22",
+      "description": "cross-project-get-refused",
+      "target": "Actual authenticated Experience Store/source objects/finite retention",
+      "mutation": "cross-project-get-refused",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "cross-project-get-refused: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-EXPERIENCE.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G6-EXPERIENCE-23",
+      "description": "cross-project-delete-refused",
+      "target": "Actual authenticated Experience Store/source objects/finite retention",
+      "mutation": "cross-project-delete-refused",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "cross-project-delete-refused: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-EXPERIENCE.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G6-EXPERIENCE-24",
+      "description": "denied-rag-use-no-data",
+      "target": "Actual authenticated Experience Store/source objects/finite retention",
+      "mutation": "denied-rag-use-no-data",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "denied-rag-use-no-data: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-EXPERIENCE.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G6-EXPERIENCE-25",
+      "description": "denied-training-use-no-data",
+      "target": "Actual authenticated Experience Store/source objects/finite retention",
+      "mutation": "denied-training-use-no-data",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "denied-training-use-no-data: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-EXPERIENCE.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G6-EXPERIENCE-26",
+      "description": "denied-distillation-use-no-data",
+      "target": "Actual authenticated Experience Store/source objects/finite retention",
+      "mutation": "denied-distillation-use-no-data",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "denied-distillation-use-no-data: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-EXPERIENCE.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G6-EXPERIENCE-27",
+      "description": "denied-unknown-use-no-data",
+      "target": "Actual authenticated Experience Store/source objects/finite retention",
+      "mutation": "denied-unknown-use-no-data",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "denied-unknown-use-no-data: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-EXPERIENCE.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G6-EXPERIENCE-28",
+      "description": "conflicting-stable-request-refused",
+      "target": "Actual authenticated Experience Store/source objects/finite retention",
+      "mutation": "conflicting-stable-request-refused",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "conflicting-stable-request-refused: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-EXPERIENCE.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G6-EXPERIENCE-29",
+      "description": "authentication-replay-survives-real-restart",
+      "target": "Actual authenticated Experience Store/source objects/finite retention",
+      "mutation": "authentication-replay-survives-real-restart",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "authentication-replay-survives-real-restart: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-EXPERIENCE.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G6-EXPERIENCE-30",
+      "description": "actual-source-object-corrupt-fails-closed",
+      "target": "Actual authenticated Experience Store/source objects/finite retention",
+      "mutation": "actual-source-object-corrupt-fails-closed",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "actual-source-object-corrupt-fails-closed: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-EXPERIENCE.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G6-EXPERIENCE-31",
+      "description": "actual-source-object-remove-fails-closed",
+      "target": "Actual authenticated Experience Store/source objects/finite retention",
+      "mutation": "actual-source-object-remove-fails-closed",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "actual-source-object-remove-fails-closed: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-EXPERIENCE.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G6-EXPERIENCE-32",
+      "description": "new-key-cannot-resurrect-withdrawn-source",
+      "target": "Actual authenticated Experience Store/source objects/finite retention",
+      "mutation": "new-key-cannot-resurrect-withdrawn-source",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "new-key-cannot-resurrect-withdrawn-source: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-EXPERIENCE.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G6-EXPERIENCE-33",
+      "description": "expired-read-denied-without-manual-sweep",
+      "target": "Actual authenticated Experience Store/source objects/finite retention",
+      "mutation": "expired-read-denied-without-manual-sweep",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "expired-read-denied-without-manual-sweep: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-EXPERIENCE.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G6-EXPERIENCE-34",
+      "description": "actual-owned-background-sweeper-physically-purged",
+      "target": "Actual authenticated Experience Store/source objects/finite retention",
+      "mutation": "actual-owned-background-sweeper-physically-purged",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "actual-owned-background-sweeper-physically-purged: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-EXPERIENCE.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G6-EXPERIENCE-35",
+      "description": "expired-request-retry-cannot-renew",
+      "target": "Actual authenticated Experience Store/source objects/finite retention",
+      "mutation": "expired-request-retry-cannot-renew",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "expired-request-retry-cannot-renew: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-EXPERIENCE.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G6-EXPERIENCE-36",
+      "description": "expired-source-new-key-cannot-resurrect",
+      "target": "Actual authenticated Experience Store/source objects/finite retention",
+      "mutation": "expired-source-new-key-cannot-resurrect",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "expired-source-new-key-cannot-resurrect: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-EXPERIENCE.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G6-EXPERIENCE-37",
+      "description": "actual-production-logs-retain-observability-not-ingress",
+      "target": "Actual authenticated Experience Store/source objects/finite retention",
+      "mutation": "actual-production-logs-retain-observability-not-ingress",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "actual-production-logs-retain-observability-not-ingress: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-EXPERIENCE.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G6-EXPERIENCE-38",
+      "description": "actual-expired-capability-refuses-experience-access",
+      "target": "Actual authenticated Experience Store/source objects/finite retention",
+      "mutation": "actual-expired-capability-refuses-experience-access",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "actual-expired-capability-refuses-experience-access: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-EXPERIENCE.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G7-KNOWLEDGE-01",
+      "description": "owning-validated-storage-only-experience-cannot-be-laundered",
+      "target": "Actual authenticated knowledge, real source/grant/SQL/retrieval/citation/lifecycle",
+      "mutation": "owning-validated-storage-only-experience-cannot-be-laundered",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "owning-validated-storage-only-experience-cannot-be-laundered: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-KNOWLEDGE.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G7-KNOWLEDGE-02",
+      "description": "unauthenticated-ingestions-refused",
+      "target": "Actual authenticated knowledge, real source/grant/SQL/retrieval/citation/lifecycle",
+      "mutation": "unauthenticated-ingestions-refused",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "unauthenticated-ingestions-refused: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-KNOWLEDGE.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G7-KNOWLEDGE-03",
+      "description": "unauthenticated-search-refused",
+      "target": "Actual authenticated knowledge, real source/grant/SQL/retrieval/citation/lifecycle",
+      "mutation": "unauthenticated-search-refused",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "unauthenticated-search-refused: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-KNOWLEDGE.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G7-KNOWLEDGE-04",
+      "description": "unauthenticated-documents-refused",
+      "target": "Actual authenticated knowledge, real source/grant/SQL/retrieval/citation/lifecycle",
+      "mutation": "unauthenticated-documents-refused",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "unauthenticated-documents-refused: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-KNOWLEDGE.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G7-KNOWLEDGE-05",
+      "description": "invalid-authentication-refused",
+      "target": "Actual authenticated knowledge, real source/grant/SQL/retrieval/citation/lifecycle",
+      "mutation": "invalid-authentication-refused",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "invalid-authentication-refused: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-KNOWLEDGE.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G7-KNOWLEDGE-06",
+      "description": "stale-authentication-refused",
+      "target": "Actual authenticated knowledge, real source/grant/SQL/retrieval/citation/lifecycle",
+      "mutation": "stale-authentication-refused",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "stale-authentication-refused: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-KNOWLEDGE.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G7-KNOWLEDGE-07",
+      "description": "consent-missing-refused-before-effects",
+      "target": "Actual authenticated knowledge, real source/grant/SQL/retrieval/citation/lifecycle",
+      "mutation": "consent-missing-refused-before-effects",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "consent-missing-refused-before-effects: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-KNOWLEDGE.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G7-KNOWLEDGE-08",
+      "description": "consent-denied-refused-before-effects",
+      "target": "Actual authenticated knowledge, real source/grant/SQL/retrieval/citation/lifecycle",
+      "mutation": "consent-denied-refused-before-effects",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "consent-denied-refused-before-effects: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-KNOWLEDGE.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G7-KNOWLEDGE-09",
+      "description": "consent-coerced-refused-before-effects",
+      "target": "Actual authenticated knowledge, real source/grant/SQL/retrieval/citation/lifecycle",
+      "mutation": "consent-coerced-refused-before-effects",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "consent-coerced-refused-before-effects: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-KNOWLEDGE.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G7-KNOWLEDGE-10",
+      "description": "caller-text-refused-before-effects",
+      "target": "Actual authenticated knowledge, real source/grant/SQL/retrieval/citation/lifecycle",
+      "mutation": "caller-text-refused-before-effects",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "caller-text-refused-before-effects: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-KNOWLEDGE.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G7-KNOWLEDGE-11",
+      "description": "caller-path-refused-before-effects",
+      "target": "Actual authenticated knowledge, real source/grant/SQL/retrieval/citation/lifecycle",
+      "mutation": "caller-path-refused-before-effects",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "caller-path-refused-before-effects: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-KNOWLEDGE.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G7-KNOWLEDGE-12",
+      "description": "caller-rights-refused-before-effects",
+      "target": "Actual authenticated knowledge, real source/grant/SQL/retrieval/citation/lifecycle",
+      "mutation": "caller-rights-refused-before-effects",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "caller-rights-refused-before-effects: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-KNOWLEDGE.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G7-KNOWLEDGE-13",
+      "description": "caller-verdict-refused-before-effects",
+      "target": "Actual authenticated knowledge, real source/grant/SQL/retrieval/citation/lifecycle",
+      "mutation": "caller-verdict-refused-before-effects",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "caller-verdict-refused-before-effects: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-KNOWLEDGE.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G7-KNOWLEDGE-14",
+      "description": "secret-refused-before-effects",
+      "target": "Actual authenticated knowledge, real source/grant/SQL/retrieval/citation/lifecycle",
+      "mutation": "secret-refused-before-effects",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "secret-refused-before-effects: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-KNOWLEDGE.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G7-KNOWLEDGE-15",
+      "description": "actual-capability-refused-before-effects",
+      "target": "Actual authenticated knowledge, real source/grant/SQL/retrieval/citation/lifecycle",
+      "mutation": "actual-capability-refused-before-effects",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "actual-capability-refused-before-effects: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-KNOWLEDGE.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G7-KNOWLEDGE-16",
+      "description": "cross-project-ingestion-refused",
+      "target": "Actual authenticated knowledge, real source/grant/SQL/retrieval/citation/lifecycle",
+      "mutation": "cross-project-ingestion-refused",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "cross-project-ingestion-refused: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-KNOWLEDGE.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G7-KNOWLEDGE-17",
+      "description": "actual-redis-authentication-replay-refused",
+      "target": "Actual authenticated knowledge, real source/grant/SQL/retrieval/citation/lifecycle",
+      "mutation": "actual-redis-authentication-replay-refused",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "actual-redis-authentication-replay-refused: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-KNOWLEDGE.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G7-KNOWLEDGE-18",
+      "description": "actual-accepted-response-loss-one-publication",
+      "target": "Actual authenticated knowledge, real source/grant/SQL/retrieval/citation/lifecycle",
+      "mutation": "actual-accepted-response-loss-one-publication",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "actual-accepted-response-loss-one-publication: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-KNOWLEDGE.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G7-KNOWLEDGE-19",
+      "description": "stable-exact-request-recovers-original-publication",
+      "target": "Actual authenticated knowledge, real source/grant/SQL/retrieval/citation/lifecycle",
+      "mutation": "stable-exact-request-recovers-original-publication",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "stable-exact-request-recovers-original-publication: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-KNOWLEDGE.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G7-KNOWLEDGE-20",
+      "description": "cross-project-cursor-refused",
+      "target": "Actual authenticated knowledge, real source/grant/SQL/retrieval/citation/lifecycle",
+      "mutation": "cross-project-cursor-refused",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "cross-project-cursor-refused: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-KNOWLEDGE.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G7-KNOWLEDGE-21",
+      "description": "cross-project-document-get-refused",
+      "target": "Actual authenticated knowledge, real source/grant/SQL/retrieval/citation/lifecycle",
+      "mutation": "cross-project-document-get-refused",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "cross-project-document-get-refused: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-KNOWLEDGE.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G7-KNOWLEDGE-22",
+      "description": "cross-project-document-delete-refused",
+      "target": "Actual authenticated knowledge, real source/grant/SQL/retrieval/citation/lifecycle",
+      "mutation": "cross-project-document-delete-refused",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "cross-project-document-delete-refused: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-KNOWLEDGE.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G7-KNOWLEDGE-23",
+      "description": "actual-persistent-source-index-after-restart",
+      "target": "Actual authenticated knowledge, real source/grant/SQL/retrieval/citation/lifecycle",
+      "mutation": "actual-persistent-source-index-after-restart",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "actual-persistent-source-index-after-restart: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-KNOWLEDGE.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G7-KNOWLEDGE-24",
+      "description": "actual-corrupt-body-is-not-empty-success",
+      "target": "Actual authenticated knowledge, real source/grant/SQL/retrieval/citation/lifecycle",
+      "mutation": "actual-corrupt-body-is-not-empty-success",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "actual-corrupt-body-is-not-empty-success: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-KNOWLEDGE.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G7-KNOWLEDGE-25",
+      "description": "actual-missing-index-is-not-empty-success",
+      "target": "Actual authenticated knowledge, real source/grant/SQL/retrieval/citation/lifecycle",
+      "mutation": "actual-missing-index-is-not-empty-success",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "actual-missing-index-is-not-empty-success: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-KNOWLEDGE.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G7-KNOWLEDGE-26",
+      "description": "revoked-grant-immediately-denies-delivery",
+      "target": "Actual authenticated knowledge, real source/grant/SQL/retrieval/citation/lifecycle",
+      "mutation": "revoked-grant-immediately-denies-delivery",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "revoked-grant-immediately-denies-delivery: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-KNOWLEDGE.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G7-KNOWLEDGE-27",
+      "description": "superseded-source-immediately-denies-old-citation",
+      "target": "Actual authenticated knowledge, real source/grant/SQL/retrieval/citation/lifecycle",
+      "mutation": "superseded-source-immediately-denies-old-citation",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "superseded-source-immediately-denies-old-citation: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-KNOWLEDGE.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G7-KNOWLEDGE-28",
+      "description": "actual-rebuild-publishes-current-revision",
+      "target": "Actual authenticated knowledge, real source/grant/SQL/retrieval/citation/lifecycle",
+      "mutation": "actual-rebuild-publishes-current-revision",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "actual-rebuild-publishes-current-revision: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-KNOWLEDGE.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G7-KNOWLEDGE-29",
+      "description": "rebuilt-retrieval-selects-new-citation",
+      "target": "Actual authenticated knowledge, real source/grant/SQL/retrieval/citation/lifecycle",
+      "mutation": "rebuilt-retrieval-selects-new-citation",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "rebuilt-retrieval-selects-new-citation: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-KNOWLEDGE.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G7-KNOWLEDGE-30",
+      "description": "actual-withdrawal",
+      "target": "Actual authenticated knowledge, real source/grant/SQL/retrieval/citation/lifecycle",
+      "mutation": "actual-withdrawal",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "actual-withdrawal: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-KNOWLEDGE.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G7-KNOWLEDGE-31",
+      "description": "same-key-cannot-resurrect-withdrawn-revision",
+      "target": "Actual authenticated knowledge, real source/grant/SQL/retrieval/citation/lifecycle",
+      "mutation": "same-key-cannot-resurrect-withdrawn-revision",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "same-key-cannot-resurrect-withdrawn-revision: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-KNOWLEDGE.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G7-KNOWLEDGE-32",
+      "description": "new-key-cannot-resurrect-withdrawn-revision",
+      "target": "Actual authenticated knowledge, real source/grant/SQL/retrieval/citation/lifecycle",
+      "mutation": "new-key-cannot-resurrect-withdrawn-revision",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "new-key-cannot-resurrect-withdrawn-revision: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-KNOWLEDGE.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G7-KNOWLEDGE-33",
+      "description": "expiry-denial-does-not-require-manual-sweep",
+      "target": "Actual authenticated knowledge, real source/grant/SQL/retrieval/citation/lifecycle",
+      "mutation": "expiry-denial-does-not-require-manual-sweep",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "expiry-denial-does-not-require-manual-sweep: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-KNOWLEDGE.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G7-KNOWLEDGE-34",
+      "description": "owned-background-retention-physically-purges-primary-index",
+      "target": "Actual authenticated knowledge, real source/grant/SQL/retrieval/citation/lifecycle",
+      "mutation": "owned-background-retention-physically-purges-primary-index",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "owned-background-retention-physically-purges-primary-index: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-KNOWLEDGE.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G7-KNOWLEDGE-35",
+      "description": "changed-raw-source-immediately-denies-delivery",
+      "target": "Actual authenticated knowledge, real source/grant/SQL/retrieval/citation/lifecycle",
+      "mutation": "changed-raw-source-immediately-denies-delivery",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "changed-raw-source-immediately-denies-delivery: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-KNOWLEDGE.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G7-KNOWLEDGE-36",
+      "description": "missing-current-source-is-unavailable-not-empty-success",
+      "target": "Actual authenticated knowledge, real source/grant/SQL/retrieval/citation/lifecycle",
+      "mutation": "missing-current-source-is-unavailable-not-empty-success",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "missing-current-source-is-unavailable-not-empty-success: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-KNOWLEDGE.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G7-KNOWLEDGE-37",
+      "description": "actual-logs-retain-observability-not-private-ingress",
+      "target": "Actual authenticated knowledge, real source/grant/SQL/retrieval/citation/lifecycle",
+      "mutation": "actual-logs-retain-observability-not-private-ingress",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "actual-logs-retain-observability-not-private-ingress: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-KNOWLEDGE.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G7-KNOWLEDGE-38",
+      "description": "knowledge-never-executes-or-mutates-upstream-evidence",
+      "target": "Actual authenticated knowledge, real source/grant/SQL/retrieval/citation/lifecycle",
+      "mutation": "knowledge-never-executes-or-mutates-upstream-evidence",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "knowledge-never-executes-or-mutates-upstream-evidence: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-KNOWLEDGE.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G7-KNOWLEDGE-39",
+      "description": "upstream-experience-and-rights-remain-unchanged",
+      "target": "Actual authenticated knowledge, real source/grant/SQL/retrieval/citation/lifecycle",
+      "mutation": "upstream-experience-and-rights-remain-unchanged",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "upstream-experience-and-rights-remain-unchanged: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-KNOWLEDGE.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G7-KNOWLEDGE-40",
+      "description": "owned-resources-actually-removed",
+      "target": "Actual authenticated knowledge, real source/grant/SQL/retrieval/citation/lifecycle",
+      "mutation": "owned-resources-actually-removed",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "owned-resources-actually-removed: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-KNOWLEDGE.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G7-KNOWLEDGE-41",
+      "description": "unrelated-container-identities-and-running-states-preserved",
+      "target": "Actual authenticated knowledge, real source/grant/SQL/retrieval/citation/lifecycle",
+      "mutation": "unrelated-container-identities-and-running-states-preserved",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "unrelated-container-identities-and-running-states-preserved: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-KNOWLEDGE.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G7-KNOWLEDGE-42",
+      "description": "measured-source-inputs-unchanged",
+      "target": "Actual authenticated knowledge, real source/grant/SQL/retrieval/citation/lifecycle",
+      "mutation": "measured-source-inputs-unchanged",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "measured-source-inputs-unchanged: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "checkpoint:RED-TEAM-KNOWLEDGE.json",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G7-DOMAIN-01",
+      "description": "test_ingestion_cannot_submit_text_paths_rights_or_verdicts",
+      "target": "Complete fresh owning DOMAIN suite. Domain/unit doubles prove only their declared decisions/filesystem boundary; SQL is actual PostgreSQL.",
+      "mutation": "test_ingestion_cannot_submit_text_paths_rights_or_verdicts",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "test_ingestion_cannot_submit_text_paths_rights_or_verdicts: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "file:services/knowledge/tests/test_domain.py",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G7-DOMAIN-02",
+      "description": "test_missing_denied_and_wrong_type_consent_are_distinct",
+      "target": "Complete fresh owning DOMAIN suite. Domain/unit doubles prove only their declared decisions/filesystem boundary; SQL is actual PostgreSQL.",
+      "mutation": "test_missing_denied_and_wrong_type_consent_are_distinct",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "test_missing_denied_and_wrong_type_consent_are_distinct: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "file:services/knowledge/tests/test_domain.py",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G7-DOMAIN-03",
+      "description": "test_permission_booleans_never_coerce",
+      "target": "Complete fresh owning DOMAIN suite. Domain/unit doubles prove only their declared decisions/filesystem boundary; SQL is actual PostgreSQL.",
+      "mutation": "test_permission_booleans_never_coerce",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "test_permission_booleans_never_coerce: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "file:services/knowledge/tests/test_domain.py",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G7-DOMAIN-04",
+      "description": "test_ambiguous_nonfinite_nested_and_invalid_unicode_json_refused",
+      "target": "Complete fresh owning DOMAIN suite. Domain/unit doubles prove only their declared decisions/filesystem boundary; SQL is actual PostgreSQL.",
+      "mutation": "test_ambiguous_nonfinite_nested_and_invalid_unicode_json_refused",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "test_ambiguous_nonfinite_nested_and_invalid_unicode_json_refused: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "file:services/knowledge/tests/test_domain.py",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G7-DOMAIN-05",
+      "description": "test_source_grants_deny_unknown_ownership_license_authority",
+      "target": "Complete fresh owning DOMAIN suite. Domain/unit doubles prove only their declared decisions/filesystem boundary; SQL is actual PostgreSQL.",
+      "mutation": "test_source_grants_deny_unknown_ownership_license_authority",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "test_source_grants_deny_unknown_ownership_license_authority: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "file:services/knowledge/tests/test_domain.py",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G7-DOMAIN-06",
+      "description": "test_source_denial_revocation_and_expiry_fail_closed",
+      "target": "Complete fresh owning DOMAIN suite. Domain/unit doubles prove only their declared decisions/filesystem boundary; SQL is actual PostgreSQL.",
+      "mutation": "test_source_denial_revocation_and_expiry_fail_closed",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "test_source_denial_revocation_and_expiry_fail_closed: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "file:services/knowledge/tests/test_domain.py",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G7-DOMAIN-07",
+      "description": "test_project_source_revision_and_digest_must_match_grant",
+      "target": "Complete fresh owning DOMAIN suite. Domain/unit doubles prove only their declared decisions/filesystem boundary; SQL is actual PostgreSQL.",
+      "mutation": "test_project_source_revision_and_digest_must_match_grant",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "test_project_source_revision_and_digest_must_match_grant: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "file:services/knowledge/tests/test_domain.py",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G7-DOMAIN-08",
+      "description": "test_source_age_and_future_time_cannot_reset_capture_window",
+      "target": "Complete fresh owning DOMAIN suite. Domain/unit doubles prove only their declared decisions/filesystem boundary; SQL is actual PostgreSQL.",
+      "mutation": "test_source_age_and_future_time_cannot_reset_capture_window",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "test_source_age_and_future_time_cannot_reset_capture_window: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "file:services/knowledge/tests/test_domain.py",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G7-DOMAIN-09",
+      "description": "test_chunk_token_and_body_bounds_do_not_silently_truncate",
+      "target": "Complete fresh owning DOMAIN suite. Domain/unit doubles prove only their declared decisions/filesystem boundary; SQL is actual PostgreSQL.",
+      "mutation": "test_chunk_token_and_body_bounds_do_not_silently_truncate",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "test_chunk_token_and_body_bounds_do_not_silently_truncate: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "file:services/knowledge/tests/test_domain.py",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G7-DOMAIN-10",
+      "description": "test_query_defects_are_distinct_and_input_is_closed",
+      "target": "Complete fresh owning DOMAIN suite. Domain/unit doubles prove only their declared decisions/filesystem boundary; SQL is actual PostgreSQL.",
+      "mutation": "test_query_defects_are_distinct_and_input_is_closed",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "test_query_defects_are_distinct_and_input_is_closed: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "file:services/knowledge/tests/test_domain.py",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G7-DOMAIN-11",
+      "description": "test_scanner_failure_is_sanitized_and_fails_closed",
+      "target": "Complete fresh owning DOMAIN suite. Domain/unit doubles prove only their declared decisions/filesystem boundary; SQL is actual PostgreSQL.",
+      "mutation": "test_scanner_failure_is_sanitized_and_fails_closed",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "test_scanner_failure_is_sanitized_and_fails_closed: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "file:services/knowledge/tests/test_domain.py",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G7-API-01",
+      "description": "test_denied_grant_is_checked_before_actual_source_body_read",
+      "target": "Complete fresh owning API suite. Domain/unit doubles prove only their declared decisions/filesystem boundary; SQL is actual PostgreSQL.",
+      "mutation": "test_denied_grant_is_checked_before_actual_source_body_read",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "test_denied_grant_is_checked_before_actual_source_body_read: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "file:apps/api/tests/unit/test_knowledge_api.py",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G7-API-02",
+      "description": "test_wrong_project_never_opens_another_projects_grant_or_artifact",
+      "target": "Complete fresh owning API suite. Domain/unit doubles prove only their declared decisions/filesystem boundary; SQL is actual PostgreSQL.",
+      "mutation": "test_wrong_project_never_opens_another_projects_grant_or_artifact",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "test_wrong_project_never_opens_another_projects_grant_or_artifact: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "file:apps/api/tests/unit/test_knowledge_api.py",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G7-API-03",
+      "description": "test_actual_path_confinement_refuses_traversal_absolute_alias_and_symlink",
+      "target": "Complete fresh owning API suite. Domain/unit doubles prove only their declared decisions/filesystem boundary; SQL is actual PostgreSQL.",
+      "mutation": "test_actual_path_confinement_refuses_traversal_absolute_alias_and_symlink",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "test_actual_path_confinement_refuses_traversal_absolute_alias_and_symlink: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "file:apps/api/tests/unit/test_knowledge_api.py",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G7-API-04",
+      "description": "test_actual_nonregular_hardlinked_and_oversized_files_refused",
+      "target": "Complete fresh owning API suite. Domain/unit doubles prove only their declared decisions/filesystem boundary; SQL is actual PostgreSQL.",
+      "mutation": "test_actual_nonregular_hardlinked_and_oversized_files_refused",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "test_actual_nonregular_hardlinked_and_oversized_files_refused: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "file:apps/api/tests/unit/test_knowledge_api.py",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G7-API-05",
+      "description": "test_actual_secret_and_private_source_fields_refused",
+      "target": "Complete fresh owning API suite. Domain/unit doubles prove only their declared decisions/filesystem boundary; SQL is actual PostgreSQL.",
+      "mutation": "test_actual_secret_and_private_source_fields_refused",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "test_actual_secret_and_private_source_fields_refused: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "file:apps/api/tests/unit/test_knowledge_api.py",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G7-API-06",
+      "description": "test_source_grant_mismatch_expiry_unknown_fields_and_invalid_utf8_refused",
+      "target": "Complete fresh owning API suite. Domain/unit doubles prove only their declared decisions/filesystem boundary; SQL is actual PostgreSQL.",
+      "mutation": "test_source_grant_mismatch_expiry_unknown_fields_and_invalid_utf8_refused",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "test_source_grant_mismatch_expiry_unknown_fields_and_invalid_utf8_refused: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "file:apps/api/tests/unit/test_knowledge_api.py",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G7-API-07",
+      "description": "test_runtime_unexpected_task_failure_is_not_hidden",
+      "target": "Complete fresh owning API suite. Domain/unit doubles prove only their declared decisions/filesystem boundary; SQL is actual PostgreSQL.",
+      "mutation": "test_runtime_unexpected_task_failure_is_not_hidden",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "test_runtime_unexpected_task_failure_is_not_hidden: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "file:apps/api/tests/unit/test_knowledge_api.py",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G7-API-08",
+      "description": "test_dependency_failure_has_sanitized_observable_code_not_empty_success",
+      "target": "Complete fresh owning API suite. Domain/unit doubles prove only their declared decisions/filesystem boundary; SQL is actual PostgreSQL.",
+      "mutation": "test_dependency_failure_has_sanitized_observable_code_not_empty_success",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "test_dependency_failure_has_sanitized_observable_code_not_empty_success: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "file:apps/api/tests/unit/test_knowledge_api.py",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G7-API-09",
+      "description": "test_operation_timeout_is_a_real_bound_not_empty_success",
+      "target": "Complete fresh owning API suite. Domain/unit doubles prove only their declared decisions/filesystem boundary; SQL is actual PostgreSQL.",
+      "mutation": "test_operation_timeout_is_a_real_bound_not_empty_success",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "test_operation_timeout_is_a_real_bound_not_empty_success: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "file:apps/api/tests/unit/test_knowledge_api.py",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G7-SQL-01",
+      "description": "test_concurrent_stable_retry_and_accepted_response_loss_keep_one_fact",
+      "target": "Complete fresh owning SQL suite. Domain/unit doubles prove only their declared decisions/filesystem boundary; SQL is actual PostgreSQL.",
+      "mutation": "test_concurrent_stable_retry_and_accepted_response_loss_keep_one_fact",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "test_concurrent_stable_retry_and_accepted_response_loss_keep_one_fact: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "file:apps/api/tests/integration/test_knowledge_engine.py",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G7-SQL-02",
+      "description": "test_conflicting_key_and_new_key_cannot_renew_same_material",
+      "target": "Complete fresh owning SQL suite. Domain/unit doubles prove only their declared decisions/filesystem boundary; SQL is actual PostgreSQL.",
+      "mutation": "test_conflicting_key_and_new_key_cannot_renew_same_material",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "test_conflicting_key_and_new_key_cannot_renew_same_material: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "file:apps/api/tests/integration/test_knowledge_engine.py",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G7-SQL-03",
+      "description": "test_expiry_denies_before_sweep_and_bounded_purge_then_finite_gc",
+      "target": "Complete fresh owning SQL suite. Domain/unit doubles prove only their declared decisions/filesystem boundary; SQL is actual PostgreSQL.",
+      "mutation": "test_expiry_denies_before_sweep_and_bounded_purge_then_finite_gc",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "test_expiry_denies_before_sweep_and_bounded_purge_then_finite_gc: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "file:apps/api/tests/integration/test_knowledge_engine.py",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G7-SQL-04",
+      "description": "test_policy_drift_requires_real_reindex_and_cannot_extend_original_ceiling",
+      "target": "Complete fresh owning SQL suite. Domain/unit doubles prove only their declared decisions/filesystem boundary; SQL is actual PostgreSQL.",
+      "mutation": "test_policy_drift_requires_real_reindex_and_cannot_extend_original_ceiling",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "test_policy_drift_requires_real_reindex_and_cannot_extend_original_ceiling: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "file:apps/api/tests/integration/test_knowledge_engine.py",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G7-SQL-05",
+      "description": "test_grant_reindex_cannot_reset_original_retention_or_accept_changed_same_revision",
+      "target": "Complete fresh owning SQL suite. Domain/unit doubles prove only their declared decisions/filesystem boundary; SQL is actual PostgreSQL.",
+      "mutation": "test_grant_reindex_cannot_reset_original_retention_or_accept_changed_same_revision",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "test_grant_reindex_cannot_reset_original_retention_or_accept_changed_same_revision: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "file:apps/api/tests/integration/test_knowledge_engine.py",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G7-SQL-06",
+      "description": "test_missing_indexed_audit_fails_even_with_valid_index_and_digest",
+      "target": "Complete fresh owning SQL suite. Domain/unit doubles prove only their declared decisions/filesystem boundary; SQL is actual PostgreSQL.",
+      "mutation": "test_missing_indexed_audit_fails_even_with_valid_index_and_digest",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "test_missing_indexed_audit_fails_even_with_valid_index_and_digest: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "file:apps/api/tests/integration/test_knowledge_engine.py",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G7-SQL-07",
+      "description": "test_capacity_is_explicit_failure_not_silently_truncated_success",
+      "target": "Complete fresh owning SQL suite. Domain/unit doubles prove only their declared decisions/filesystem boundary; SQL is actual PostgreSQL.",
+      "mutation": "test_capacity_is_explicit_failure_not_silently_truncated_success",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "test_capacity_is_explicit_failure_not_silently_truncated_success: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "file:apps/api/tests/integration/test_knowledge_engine.py",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G7-SQL-08",
+      "description": "test_audit_failure_rolls_back_document_and_all_index_rows",
+      "target": "Complete fresh owning SQL suite. Domain/unit doubles prove only their declared decisions/filesystem boundary; SQL is actual PostgreSQL.",
+      "mutation": "test_audit_failure_rolls_back_document_and_all_index_rows",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "test_audit_failure_rolls_back_document_and_all_index_rows: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "file:apps/api/tests/integration/test_knowledge_engine.py",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G7-SQL-09",
+      "description": "test_real_immutable_guards_and_admin_corruption_are_refused",
+      "target": "Complete fresh owning SQL suite. Domain/unit doubles prove only their declared decisions/filesystem boundary; SQL is actual PostgreSQL.",
+      "mutation": "test_real_immutable_guards_and_admin_corruption_are_refused",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "test_real_immutable_guards_and_admin_corruption_are_refused: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "file:apps/api/tests/integration/test_knowledge_engine.py",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G7-SQL-10",
+      "description": "test_real_source_permission_denial_and_cross_project_have_zero_sql_effects",
+      "target": "Complete fresh owning SQL suite. Domain/unit doubles prove only their declared decisions/filesystem boundary; SQL is actual PostgreSQL.",
+      "mutation": "test_real_source_permission_denial_and_cross_project_have_zero_sql_effects",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "test_real_source_permission_denial_and_cross_project_have_zero_sql_effects: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "file:apps/api/tests/integration/test_knowledge_engine.py",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G7-SQL-11",
+      "description": "test_actual_query_projection_excludes_open_metadata_and_private_runtime_columns",
+      "target": "Complete fresh owning SQL suite. Domain/unit doubles prove only their declared decisions/filesystem boundary; SQL is actual PostgreSQL.",
+      "mutation": "test_actual_query_projection_excludes_open_metadata_and_private_runtime_columns",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "test_actual_query_projection_excludes_open_metadata_and_private_runtime_columns: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "file:apps/api/tests/integration/test_knowledge_engine.py",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    },
+    {
+      "attackId": "G7-SQL-12",
+      "description": "test_migration_zero_parity_reversible_preserves_existing_experience_identity",
+      "target": "Complete fresh owning SQL suite. Domain/unit doubles prove only their declared decisions/filesystem boundary; SQL is actual PostgreSQL.",
+      "mutation": "test_migration_zero_parity_reversible_preserves_existing_experience_identity",
+      "expectedDefense": "Refuse unsafe effects or disclosure beside an actual successful clean control; preserve bounded scoped facts and truthful failures.",
+      "observed": "test_migration_zero_parity_reversible_preserves_existing_experience_identity: PASS",
+      "result": "DEFENDED",
+      "mandatory": true,
+      "origin": "Fresh same-session Gate7 internal Red Team after whole Green Keeper/DCV",
+      "evidence": [
+        "file:apps/api/tests/integration/test_knowledge_engine.py",
+        "checkpoint:RED-TEAM-EXECUTIONS.json"
+      ]
+    }
+  ],
+  "total": 145,
+  "defended": 145,
+  "escaped": 0,
+  "mandatoryTotal": 145,
+  "mandatoryDefended": 145,
+  "result": "RED_TEAM_PASS"
+}

@@ -1,0 +1,108 @@
+{
+  "kind": "NATIVE_INSTALLATION_AND_TRUST_NOT_LIVE_PROVIDER_ACCEPTANCE",
+  "result": "PASS",
+  "runs": [
+    {
+      "installation": {
+        "exitCode": 0,
+        "result": "PASS",
+        "freshProfile": true,
+        "sharedDataDirectoryOwned": true,
+        "processCleanup": {
+          "jobOwned": true,
+          "remainingBeforeCleanup": 0,
+          "remainingAfterCleanup": 0,
+          "observedProcessCount": 0,
+          "signaledProcessCount": 0,
+          "forcedTermination": false,
+          "naturalExitBudgetWithinOriginalDeadlineSeconds": 1
+        }
+      },
+      "kind": "ACTUAL_ISOLATED_VSCODE_EXTENSION_HOST",
+      "result": "PASS",
+      "mode": "package",
+      "editorVersion": "1.138.0",
+      "nodeVersion": "v24.18.1",
+      "processId": 51156,
+      "steps": [
+        {
+          "name": "fresh-installed-extension-active",
+          "result": "PASS",
+          "commands": 19,
+          "extensionPath": "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-native-editor-e3e0bumm\\package\\extensions\\iacode.iacode-0.1.0"
+        },
+        {
+          "name": "configuration-not-inherited-from-workspace-or-environment",
+          "result": "PASS"
+        }
+      ],
+      "exitCode": 0,
+      "processCleanup": {
+        "jobOwned": true,
+        "remainingBeforeCleanup": 0,
+        "remainingAfterCleanup": 0,
+        "observedProcessCount": 0,
+        "signaledProcessCount": 0,
+        "forcedTermination": false,
+        "naturalExitBudgetWithinOriginalDeadlineSeconds": 1
+      },
+      "sharedStorageObservedOwned": true
+    },
+    {
+      "installation": {
+        "exitCode": 0,
+        "result": "PASS",
+        "freshProfile": true,
+        "sharedDataDirectoryOwned": true,
+        "processCleanup": {
+          "jobOwned": true,
+          "remainingBeforeCleanup": 0,
+          "remainingAfterCleanup": 0,
+          "observedProcessCount": 0,
+          "signaledProcessCount": 0,
+          "forcedTermination": false,
+          "naturalExitBudgetWithinOriginalDeadlineSeconds": 1
+        }
+      },
+      "kind": "ACTUAL_ISOLATED_VSCODE_EXTENSION_HOST",
+      "result": "PASS",
+      "mode": "untrusted",
+      "editorVersion": "1.138.0",
+      "nodeVersion": "v24.18.1",
+      "processId": 48608,
+      "steps": [
+        {
+          "name": "fresh-installed-extension-active",
+          "result": "PASS",
+          "commands": 19,
+          "extensionPath": "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-native-editor-e3e0bumm\\untrusted\\extensions\\iacode.iacode-0.1.0"
+        },
+        {
+          "name": "actual-untrusted-workspace-refuses-every-mutation-before-connection",
+          "result": "PASS"
+        }
+      ],
+      "exitCode": 0,
+      "processCleanup": {
+        "jobOwned": true,
+        "remainingBeforeCleanup": 0,
+        "remainingAfterCleanup": 0,
+        "observedProcessCount": 0,
+        "signaledProcessCount": 0,
+        "forcedTermination": false,
+        "naturalExitBudgetWithinOriginalDeadlineSeconds": 1
+      },
+      "sharedStorageObservedOwned": true
+    }
+  ],
+  "ownedTemporaryDirectoryRemoved": true,
+  "directoryCleanupRetries": 0,
+  "directoryCleanup": {
+    "removed": true,
+    "cleanupRetries": 0,
+    "cleanupAttempts": 1,
+    "cleanupElapsedSeconds": 0.221396,
+    "firstSharingLockAfterSeconds": null,
+    "cleanupFailure": null
+  }
+}

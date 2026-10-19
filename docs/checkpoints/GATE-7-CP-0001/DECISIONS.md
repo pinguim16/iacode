@@ -75,3 +75,5 @@
   derive every current capability title from MASTER-PLAN and retain old assertions. New clean/
   omission/denial/frozen-status/original-object controls plus the complete unchanged inherited
   documentation class pass cmd-0018/0019. This restores local protection, never independent approval.
+
+- Final preseal assembly derives from actual complete current internal evidence. It predicts neither its own content commit, seal nor publication. All independent M2 statuses remain pending and Gate8 remains unauthorized.
