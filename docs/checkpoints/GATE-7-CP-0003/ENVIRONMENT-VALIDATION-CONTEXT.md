@@ -1,5 +1,13 @@
 # Exact validation context
 
+Current authoritative stage: the complete runtime-v4 cycle remains FAIL with original import and
+cleanup preserved. IMPORT-ISOLATION-001 identified the separate inspected-test import-binding leak.
+All three affected unchanged historical tags now pass current unpreloaded canonical validation.
+Local prevention and final-source M2, authored quality, canonical lint and byte transport are
+measured, not whole acceptance. STATE.json, ACTIVE-VALIDATION.json and NEXT.md carry the current
+stage and source identity. Every earlier epoch observation below is retained historical context,
+not a claim that its old source digest is current. Runtime-v5 and complete assurance remain due.
+
 Current epoch update: runtime-v1 was normally published at8312bb2 but its incomplete public quality
 attempt was canceled after a real next-auditor byte-boundary escape. Its original native exit20,
 exact Job cleanup PASS, zero remaining owned processes and exact public clone removal are retained.

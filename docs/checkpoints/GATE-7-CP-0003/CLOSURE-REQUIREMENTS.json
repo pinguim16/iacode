@@ -4055,6 +4055,49 @@
       ],
       "validationEvidence": [],
       "guardrailEvidence": []
+    },
+    {
+      "id": "LESSON-REQ-0152",
+      "source": "LESSON",
+      "sourceRef": "lesson:LSN-0153",
+      "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0152",
+      "description": "Verify test discovery must not replace the auditing consumer's import environment",
+      "mandatory": true,
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
+      "justification": "Measured local import-state prevention; whole current immutable assurance pending.",
+      "notes": "",
+      "implementationEvidence": [
+        "file:scripts/development-ledger/derive_counts.py"
+      ],
+      "testEvidence": [
+        "file:tests/test_m2_discovery_isolation.py"
+      ],
+      "negativeTestEvidence": [
+        "checkpoint:causal-attempts/discovery-isolation/run-0001.json"
+      ],
+      "documentationEvidence": [
+        "file:docs/adr/ADR-0064-unittest-discovery-restores-caller-import-bindings.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:causal-attempts/discovery-isolation/run-0003.json",
+        "checkpoint:declaration-diagnostics/run-0003/RECEIPT.json",
+        "checkpoint:declaration-diagnostics/run-0003/stdout.log",
+        "checkpoint:declaration-diagnostics/run-0004/RECEIPT.json",
+        "checkpoint:declaration-diagnostics/run-0004/stdout.log",
+        "checkpoint:declaration-diagnostics/run-0005/RECEIPT.json",
+        "checkpoint:declaration-diagnostics/run-0005/stdout.log"
+      ],
+      "guardrailEvidence": [
+        "test:M2DiscoveryIsolationTests.test_actual_valid_null_counts_inherited_and_skipped_cases_without_running_them",
+        "test:M2DiscoveryIsolationTests.test_actual_inspected_import_cannot_replace_the_late_current_consumer",
+        "test:M2DiscoveryIsolationTests.test_same_named_preloaded_test_is_restored_but_never_counted_for_another_root",
+        "test:M2DiscoveryIsolationTests.test_repeated_real_roots_keep_their_own_exact_discovery_counts",
+        "test:M2DiscoveryIsolationTests.test_a_real_load_tests_error_is_refused_instead_of_counted_as_one_case",
+        "test:M2DiscoveryIsolationTests.test_an_actual_uncaught_import_failure_also_restores_caller_state",
+        "test:M2DiscoveryIsolationTests.test_the_shared_default_loader_is_not_mutated_by_counting",
+        "test:M2DiscoveryIsolationTests.test_missing_suite_remains_zero_without_changing_import_state"
+      ]
     }
   ]
 }

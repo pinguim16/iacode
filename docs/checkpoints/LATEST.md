@@ -2,6 +2,47 @@
 
 Checkpoint: `docs/checkpoints/GATE-7-CP-0003`
 
+Publication transport update: no new commit was created. Only two exact stalled task shell sessions
+were interrupted; native follow-up confirms their four shell/console entries absent. Original
+failures remain in PUBLICATION-LAUNCHER-RECOVERY-0001.json. Current authored quality now passes104
+paths with the read-only diagnostic included. Re-declare/revalidate and use the direct CMD publisher
+with a single-token message. No global changes or application restart; no Gate8.
+
+Authoritative stage at13:44:30Z: all three unchanged unpreloaded historical validators pass.
+Measured local prevention is registered. Final source813a2857 passes96 M2 controls,103-path
+authored quality, canonical lint/static analysis and exact observation transport. All local
+producers ended. Current declaration/synchronization and quiescent validation precede immutable
+runtime-v5 and the complete16-gate/full49-stage/ordered internal closure/disposal/seal sequence.
+Independent M2 remains later; no Gate8. The observations below are historical; see NEXT.md.
+
+Current work: the actual cold-import failure is diagnosed and repaired under ADR-0064/LSN-0153,
+with the complete requirement set re-derived before implementation. Eight identical real controls
+and whole103-path authored quality pass locally. Unpreloaded canonical Gate5 validation passes its
+unchanged declaration; Gate6 also passed and Gate7 runs in session23995. Whole immutable quality, functional/internal
+closure, exact phase0002 cleanup, seal and fresh independent M2 audit remain pending. No Gate8.
+See NEXT.md. The observations below retain prior chronology, not current live-process authority.
+
+Current observation at13:13:03Z: complete runtime-v4 cycle2 is FAIL, with15 passing gates and
+Root failure on three historical sealed-checkpoint subtests. Originals are imported, native cleanup
+and private-clone removal passed; session86925 is closed. Diagnosis compares a preloaded positive
+control with actual native consumer import resolution (run0002). No source correction, whole PASS,
+seal or independent verdict follows from a preliminary diagnostic. See ACTIVE-VALIDATION.json and
+NEXT.md. The live-cycle statements below are preserved historical chronology.
+
+Live negative observation: current runtime-v4 Root cmd-0455 ended exit1 at12:30:28Z. The complete
+public cycle remains active in session86925, with the remaining mandatory gates pending. Preserve
+source and parent ledgers until actual original output/cleanup/import completes, then diagnose
+and rework the real cause. No new current acceptance or seal exists.
+
+Live update: immutable runtime-v4 is published at0adee9d7cfb82126c999466f7f9dcf8b99fc011a;
+local/public main and tag agree and the committed IN_PROGRESS draft validates. The complete
+unchanged public16-gate cycle is ACTIVE in session86925, expected run0004. Do not append parent
+COMMANDS/REWORK until its exact canonical import; do not alter assurance sources or remote main.
+Then run the complete immutable49-stage verifier, current acceptance/completeness, fresh internal
+Red Team/mirror and exact phase0002 disposal before sealing and commissioning the fresh independent
+M2 auditor. No whole current PASS, seal, independent verdict or Gate8 authorization exists.
+See ACTIVE-VALIDATION.json and NEXT.md. The older pre-publication chronology below is historical.
+
 IN_PROGRESS corrective work, explicitly resumed after restart; see RESUME-0001.json. The original
 scoped disposal and failed external comparison remain preserved. The separately receipted
 task-owned resource phase0002 is active; do not reuse the disposed receipt. Docker concerns only this

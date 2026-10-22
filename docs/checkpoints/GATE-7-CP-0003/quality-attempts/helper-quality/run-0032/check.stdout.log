@@ -1,0 +1,227 @@
+I001 [*] Import block is un-sorted or un-formatted
+ --> docs/checkpoints/GATE-7-CP-0003/audit-harness/audit_documentation.py:3:1
+  |
+1 | """Run the unchanged sealed relative-link checker against the current corrective delivery."""
+2 |
+3 | from acceptance_evidence import sealed_module
+  | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+help: Organize imports
+  |
+4 |
+  -
+5 | if __name__ == "__main__":
+  |
+
+E501 Line too long (113 > 100)
+   --> docs/checkpoints/GATE-7-CP-0003/audit-harness/complete_requirements.py:219:101
+    |
+217 |     matrix = deepcopy(load_json(CHECKPOINT / "REQUIREMENTS-MATRIX.json"))
+218 |     references = [row["sourceRef"] for row in closure["requirements"]]
+219 |     additions = {"lesson:LSN-0152", "lesson:LSN-0153", "finding:M2-F-001", "finding:M2-F-002", "attack:M2-RT-01"}
+    |                                                                                                     ^^^^^^^^^^^^^
+220 |     if (
+221 |         len(references) != len(set(references))
+    |
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/record_import_isolation.py:14:1
+   |
+12 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+13 |
+14 | from ledger_common import load_json, scope_fingerprint, utc_now, write_json
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+15 | from lessons import load_lessons, recurrence_key, render_index, save_lessons
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/record_import_isolation.py:15:1
+   |
+14 | from ledger_common import load_json, scope_fingerprint, utc_now, write_json
+15 | from lessons import load_lessons, recurrence_key, render_index, save_lessons
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+help: Move module level imports to top of file
+
+E501 Line too long (109 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/record_import_isolation.py:35:101
+   |
+33 |         raw = (directory / (name + ".log")).read_bytes()
+34 |         fact = producer[name]
+35 |         if fact["refusal"] or len(raw) != fact["bytes"] or hashlib.sha256(raw).hexdigest() != fact["sha256"]:
+   |                                                                                                     ^^^^^^^^^
+36 |             raise ValueError("Original safe diagnostic bytes required")
+37 |     text = (directory / "stdout.log").read_text(encoding="utf-8")
+   |
+
+E501 Line too long (102 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/record_import_isolation.py:58:101
+   |
+56 |         or failure["declarationVerificationReports"][0]["result"] != "FAIL"
+57 |     ):
+58 |         raise ValueError("Actual unpreloaded foreign-consumer failure and preloaded control required")
+   |                                                                                                     ^^
+59 |     lessons = load_lessons(ROOT)
+60 |     rework = load_json(CHECKPOINT / "INTERNAL-ENVIRONMENT-REWORK.json")
+   |
+
+E501 Line too long (172 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/record_import_isolation.py:80:101
+   |
+78 | …
+79 | …
+80 | …istorical review_bundle after test counting and loses the current child-scoped transport correction.",
+   |                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+81 | …spected test-module imports without restoring sys.path or module-cache bindings. Late current consumer imports then resolve inspected…
+82 | … beside a preloaded current-consumer control. Repair and real causal regressions are pending; no prevention or whole acceptance is cl…
+   |
+
+E501 Line too long (225 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/record_import_isolation.py:81:101
+   |
+79 | …
+80 | …fter test counting and loses the current child-scoped transport correction.",
+81 | …ts without restoring sys.path or module-cache bindings. Late current consumer imports then resolve inspected historical helpers.",
+   |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+82 | …nt-consumer control. Repair and real causal regressions are pending; no prevention or whole acceptance is claimed.",
+83 | …
+   |
+
+E501 Line too long (211 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/record_import_isolation.py:82:101
+   |
+80 | …ndle after test counting and loses the current child-scoped transport correction.",
+81 | … imports without restoring sys.path or module-cache bindings. Late current consumer imports then resolve inspected historical helpers…
+82 | … current-consumer control. Repair and real causal regressions are pending; no prevention or whole acceptance is claimed.",
+   |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+83 | …
+84 | …,
+   |
+
+E501 Line too long (214 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/record_import_isolation.py:85:101
+   |
+83 | …
+84 | …
+85 | …hile restoring caller import state on success and failure, including colliding test modules and repeated inspected roots.",
+   |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+86 | …ls, unchanged cold-tag canonical validation and complete current quality."},
+87 | …
+   |
+
+E501 Line too long (167 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/record_import_isolation.py:86:101
+   |
+84 | …es": [], "modules": [],
+85 | …ttest discovery counts while restoring caller import state on success and failure, including colliding test modules and repeated insp…
+86 | …id null discovery controls, unchanged cold-tag canonical validation and complete current quality."},
+   |                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+87 | …
+88 | …ery leaks inspected import environment into auditing consumer"),
+   |
+
+E501 Line too long (131 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/record_import_isolation.py:88:101
+   |
+86 | …                       "requiredEvidence": "Real adverse and valid null discovery controls, unchanged cold-tag canonical validation a…
+87 | …     "status": "CONFIRMED",
+88 | …     "recurrenceKey": recurrence_key("tooling", "unittest discovery leaks inspected import environment into auditing consumer"),
+   |                                                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+89 | …     "recurrenceCount": 0, "guardrailFailures": [], "createdAt": now, "updatedAt": now,
+90 | …     "provenance": {"sourceType": "repository-generated", "provider": "local-execution",
+   |
+
+E501 Line too long (152 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/record_import_isolation.py:92:101
+   |
+90 | … "provider": "local-execution",
+91 | …generated engineering evidence",
+92 | … "Actual published immutable tag and original diagnostic streams; no independent verdict."},
+   |                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+93 | …agAllowed": False,
+94 | …, "justification": "No explicit rights evidence."},
+   |
+
+E501 Line too long (111 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/record_import_isolation.py:94:101
+   |
+92 |                        "license": "not-applicable", "notes": "Actual published immutable tag and original diagnostic streams; no indep…
+93 |         "trainingEligibility": {"trainingAllowed": False, "ragAllowed": False,
+94 |                                 "distillationAllowed": False, "justification": "No explicit rights evidence."},
+   |                                                                                                     ^^^^^^^^^^^
+95 |         "guardrails": [],
+96 |     }
+   |
+
+E501 Line too long (239 > 100)
+   --> docs/checkpoints/GATE-7-CP-0003/audit-harness/record_import_isolation.py:104:101
+    |
+102 | …
+103 | …
+104 | … this separate import-state failure selects the unchanged legacy implementation. No existing recurrence counter is reset or silently restored.",
+    |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+105 | …
+106 | …
+    |
+
+E501 Line too long (112 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/test_acceptance_assembly.py:91:101
+   |
+89 |             set(references),
+90 |             inherited
+91 |             | {"lesson:LSN-0152", "lesson:LSN-0153", "finding:M2-F-001", "finding:M2-F-002", "attack:M2-RT-01"},
+   |                                                                                                     ^^^^^^^^^^^^
+92 |         )
+   |
+
+E402 Module level import not at top of file
+  --> tests/test_m2_discovery_isolation.py:15:1
+   |
+13 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+14 |
+15 | from derive_counts import count_unittest_cases
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+16 | from ledger_common import LedgerError
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> tests/test_m2_discovery_isolation.py:16:1
+   |
+15 | from derive_counts import count_unittest_cases
+16 | from ledger_common import LedgerError
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+help: Move module level imports to top of file
+
+N802 Function name `setUp` should be lowercase
+  --> tests/test_m2_discovery_isolation.py:20:9
+   |
+19 | class M2DiscoveryIsolationTests(unittest.TestCase):
+20 |     def setUp(self):
+   |         ^^^^^
+21 |         self.owner = tempfile.TemporaryDirectory(prefix="iacode-discovery-control-")
+22 |         self.addCleanup(self.owner.cleanup)
+   |
+help: Consider adding `@typing.override` if this method overrides a method from a superclass
+
+E501 Line too long (101 > 100)
+  --> tests/test_m2_discovery_isolation.py:81:101
+   |
+80 |     def test_same_named_preloaded_test_is_restored_but_never_counted_for_another_root(self):
+81 |         first = self.suite("first", "class Case(unittest.TestCase):\n    def test_one(self): pass\n")
+   |                                                                                                     ^
+82 |         second = self.suite("second", """
+83 | class Case(unittest.TestCase):
+   |
+
+E501 Line too long (101 > 100)
+   --> tests/test_m2_discovery_isolation.py:128:101
+    |
+127 |     def test_the_shared_default_loader_is_not_mutated_by_counting(self):
+128 |         root = self.suite("loader", "class Case(unittest.TestCase):\n    def test_one(self): pass\n")
+    |                                                                                                     ^
+129 |         loader = unittest.defaultTestLoader
+130 |         before = loader.testNamePatterns
+    |
+
+Found 21 errors.
+[*] 1 fixable with the `--fix` option.

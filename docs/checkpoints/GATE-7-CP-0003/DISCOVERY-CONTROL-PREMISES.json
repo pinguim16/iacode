@@ -1,0 +1,13 @@
+{
+  "kind": "PRELIMINARY_CONTROL_PREMISE_CORRECTION_NOT_ACCEPTANCE",
+  "originalCommands": ["cmd-0477", "cmd-0478"],
+  "observations": [
+    "Cmd0477 was refused before execution because a unittest -p basename was interpreted as an unresolved script input. No test execution is attributed to it; direct existing script invocation was used instead.",
+    "Cmd0478 actually executed8 cases with3 failures and2 errors; the real valid null and missing-suite controls passed. This was a direct recorded execution without a raw-stream artifact; no missing raw log is manufactured.",
+    "The proposed KeyboardInterrupt premise was invalid because unittest catches it during module discovery. It was replaced by an actual module-origin mismatch that the loader raises as ImportError, to exercise the finally path without a synthetic successful outcome.",
+    "The shallow default-loader snapshot was insufficient to observe shared mutable errors. The control now assigns a nonmatching test-name filter to the shared loader, requires an independent complete real count, and requires the original filter to remain unchanged."
+  ],
+  "testsWeakened": false,
+  "productionFixImplementedAtRecording": false,
+  "gateVerdictGranted": false
+}

@@ -8,8 +8,8 @@
   "currentCommit": "HEAD",
   "dirty": false,
   "startedAt": "2026-10-21T18:56:47Z",
-  "updatedAt": "2026-10-22T10:40:51Z",
-  "nextAllowedAction": "Local prevention restoration cmd0431 and new source8db34905 proofs actually pass: M2 run0008, full lint run0014, authored run0031 and publication run0007. Finish truthful current declaration/synchronization and quiescent validation run0010, bind the actually valid draft, then publish new immutable runtime-v4 and execute all16 gates, full49 verifier, DCV, fresh internal Red Team/mirror and exact phase0002 disposal before sealing READY_FOR_REVIEW and fresh independent M2 audit. Never rerun the one-shot restoration. No Gate8, restarts or global/other-chat changes.",
+  "updatedAt": "2026-10-22T14:10:55Z",
+  "nextAllowedAction": "IMPORT-ISOLATION-001 has measured local prevention after all3 unchanged unpreloaded historical validators pass. Final source813a2857 passes96 M2 controls,103-path read-only authored quality, full canonical lint and original-byte transport. Synchronize and validate the declared IN_PROGRESS draft, publish new immutable runtime-v5, then run all16 gates, full49 verifier, DCV, fresh internal Red Team/mirror and exact phase0002 disposal before READY_FOR_REVIEW and a fresh isolated independent M2 audit. Retain failed cycles; no Gate8, restarts or global/other-chat changes.",
   "blockedBy": [],
   "secondToolValidation": {
     "status": "PENDING_MANUAL",
@@ -22,23 +22,24 @@
   },
   "requirementsMatrix": {
     "path": "REQUIREMENTS-MATRIX.json",
-    "total": 202,
-    "mandatory": 201,
+    "total": 203,
+    "mandatory": 202,
     "complete": 0,
-    "partial": 18,
+    "partial": 20,
     "missing": 0,
     "notApplicable": 0,
     "coveragePercent": 0.0
   },
   "greenKeeper": {
     "status": "FAIL",
-    "cycles": 1,
+    "cycles": 2,
     "remainingFailures": 1,
-    "unresolvedReworkItems": 11,
+    "unresolvedReworkItems": 12,
     "log": "REWORK-LOG.jsonl",
     "externalBlockers": [],
     "evidence": [
-      "file:docs/checkpoints/GATE-7-CP-0003/published-green-keeper/run-0003/RECEIPT.json"
+      "file:docs/checkpoints/GATE-7-CP-0003/published-green-keeper/run-0003/RECEIPT.json",
+      "file:docs/checkpoints/GATE-7-CP-0003/published-green-keeper/run-0004/RECEIPT.json"
     ]
   },
   "deliveryCompleteness": {
@@ -51,7 +52,7 @@
       "file:docs/checkpoints/GATE-7-CP-0003/COMPLETENESS-REPORT.json"
     ]
   },
-  "reworkCycles": 1,
+  "reworkCycles": 2,
   "independentReview": {
     "status": "PENDING",
     "tool": null,
@@ -70,9 +71,9 @@
     "path": "LESSON-PREFLIGHT.json",
     "gate": "GATE-7",
     "scope": "Knowledge-Engine-M2-corrective-checkpoint-command-replay-client-producer-evidence-Docker-isolated-validation",
-    "lessonsConsidered": 152,
-    "lessonsApplicable": 151,
-    "derivedRequirements": 151,
+    "lessonsConsidered": 153,
+    "lessonsApplicable": 152,
+    "derivedRequirements": 152,
     "evidence": []
   },
   "milestone": {

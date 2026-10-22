@@ -1,0 +1,39 @@
+{
+  "kind": "POST_PUBLICATION_OBSERVATION_NOT_CANONICAL_SEAL",
+  "observedAt": "2026-10-22T10:54:09Z",
+  "commit": "0adee9d7cfb82126c999466f7f9dcf8b99fc011a",
+  "tag": "iacode-subjects/GATE-7-CP-0003-runtime-v4",
+  "sourceFingerprint": "8db349056ee964dca80133038b075b9204c6fbc224e4371bf7e6b7704acb02bd",
+  "branch": "main",
+  "localTagEqualsHead": true,
+  "remoteMainEqualsHead": true,
+  "remoteTagEqualsHead": true,
+  "workingTreeWasCleanBeforeThisObservation": true,
+  "publisherActualExitCode": 0,
+  "stagedSecretScan": {
+    "command": "cmd-0453",
+    "exitCode": 0,
+    "findings": 0,
+    "allowlisted": 0
+  },
+  "actualStages": [
+    "current-lint-precondition",
+    "current-authored-quality-precondition",
+    "stage-declared-inputs",
+    "staged-scan",
+    "canonical-finalizer",
+    "stage-finalized-content",
+    "commit",
+    "committed-validation",
+    "immutable-runtime-tag",
+    "atomic-normal-push"
+  ],
+  "allObservedStageExits": 0,
+  "originalConsoleBytesRetainedHere": false,
+  "observationBasis": "Actual publisher tool completion and read-only local/public Git queries; derived observation, not reconstructed raw output",
+  "resumptionCheckpointValidation": "CHECKPOINT_VALID; actual direct validator exit0 before these known live metadata edits",
+  "checkpointStatus": "IN_PROGRESS",
+  "checkpointSealed": false,
+  "independentM2": "PENDING",
+  "gate8Authorized": false
+}

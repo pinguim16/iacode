@@ -219,6 +219,28 @@
         "history-diagnostics/run-0007/RECEIPT.json",
         "history-diagnostics/run-0007/stdout.log"
       ]
+    },
+    {
+      "id": "IMPORT-ISOLATION-001",
+      "status": "LOCAL_CORRECTION_DEMONSTRATED_WHOLE_ASSURANCE_PENDING",
+      "classification": "NEW_CONFIRMED_FAILURE_CLASS LSN-0153",
+      "evidence": "declaration-diagnostics/run-0002/RECEIPT.json",
+      "commands": [
+        "cmd-0472",
+        "cmd-0473"
+      ],
+      "observed": "A current cold-tag validator loads the inspected historical review_bundle after test counting and loses the current child-scoped transport correction.",
+      "requiredCorrection": "Preserve exact real unittest discovery counts while restoring caller import state on success and failure, including colliding test modules and repeated inspected roots.",
+      "distinction": "LSN-0151 transport correction passes when current consumer is selected; this separate import-state failure selects the unchanged legacy implementation. No existing recurrence counter is reset or silently restored.",
+      "currentProof": [
+        "causal-attempts/discovery-isolation/run-0003.json",
+        "declaration-diagnostics/run-0003/RECEIPT.json",
+        "declaration-diagnostics/run-0003/stdout.log",
+        "declaration-diagnostics/run-0004/RECEIPT.json",
+        "declaration-diagnostics/run-0004/stdout.log",
+        "declaration-diagnostics/run-0005/RECEIPT.json",
+        "declaration-diagnostics/run-0005/stdout.log"
+      ]
     }
   ]
 }

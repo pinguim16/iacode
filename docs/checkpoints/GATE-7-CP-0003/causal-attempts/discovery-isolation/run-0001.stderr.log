@@ -1,0 +1,124 @@
+test_a_real_load_tests_error_is_refused_instead_of_counted_as_one_case (__main__.M2DiscoveryIsolationTests.test_a_real_load_tests_error_is_refused_instead_of_counted_as_one_case) ... FAIL
+test_actual_inspected_import_cannot_replace_the_late_current_consumer (__main__.M2DiscoveryIsolationTests.test_actual_inspected_import_cannot_replace_the_late_current_consumer) ... FAIL
+test_actual_valid_null_counts_inherited_and_skipped_cases_without_running_them (__main__.M2DiscoveryIsolationTests.test_actual_valid_null_counts_inherited_and_skipped_cases_without_running_them) ... ok
+test_an_actual_uncaught_import_failure_also_restores_caller_state (__main__.M2DiscoveryIsolationTests.test_an_actual_uncaught_import_failure_also_restores_caller_state) ... FAIL
+test_missing_suite_remains_zero_without_changing_import_state (__main__.M2DiscoveryIsolationTests.test_missing_suite_remains_zero_without_changing_import_state) ... ok
+test_repeated_real_roots_keep_their_own_exact_discovery_counts (__main__.M2DiscoveryIsolationTests.test_repeated_real_roots_keep_their_own_exact_discovery_counts) ... ERROR
+test_same_named_preloaded_test_is_restored_but_never_counted_for_another_root (__main__.M2DiscoveryIsolationTests.test_same_named_preloaded_test_is_restored_but_never_counted_for_another_root) ... ERROR
+test_the_shared_default_loader_is_not_mutated_by_counting (__main__.M2DiscoveryIsolationTests.test_the_shared_default_loader_is_not_mutated_by_counting) ... FAIL
+
+======================================================================
+ERROR: test_repeated_real_roots_keep_their_own_exact_discovery_counts (__main__.M2DiscoveryIsolationTests.test_repeated_real_roots_keep_their_own_exact_discovery_counts)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\iacode\tests\test_m2_discovery_isolation.py", line 100, in test_repeated_real_roots_keep_their_own_exact_discovery_counts
+    self.assertEqual(count_unittest_cases(second, "tests"), 2)
+                     ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "E:\iacode\scripts\development-ledger\derive_counts.py", line 59, in count_unittest_cases
+    walk(unittest.defaultTestLoader.discover(str(directory), top_level_dir=str(directory)))
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\unittest\loader.py", line 317, in discover
+    tests = list(self._find_tests(start_dir, pattern))
+  File "C:\Program Files\Python313\Lib\unittest\loader.py", line 373, in _find_tests
+    tests, should_recurse = self._find_test_path(full_path, pattern)
+                            ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\unittest\loader.py", line 425, in _find_test_path
+    raise ImportError(
+        msg % (mod_name, module_dir, expected_dir))
+ImportError: 'test_iacode_discovery_977362a5d21848c7a77779723347e351' module incorrectly imported from 'C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-discovery-control-e99jd9hh\\one\\tests'. Expected 'C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-discovery-control-e99jd9hh\\two\\tests'. Is this module globally installed?
+
+======================================================================
+ERROR: test_same_named_preloaded_test_is_restored_but_never_counted_for_another_root (__main__.M2DiscoveryIsolationTests.test_same_named_preloaded_test_is_restored_but_never_counted_for_another_root)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\iacode\tests\test_m2_discovery_isolation.py", line 89, in test_same_named_preloaded_test_is_restored_but_never_counted_for_another_root
+    self.assertEqual(count_unittest_cases(second, "tests"), 2)
+                     ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "E:\iacode\scripts\development-ledger\derive_counts.py", line 59, in count_unittest_cases
+    walk(unittest.defaultTestLoader.discover(str(directory), top_level_dir=str(directory)))
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\unittest\loader.py", line 317, in discover
+    tests = list(self._find_tests(start_dir, pattern))
+  File "C:\Program Files\Python313\Lib\unittest\loader.py", line 373, in _find_tests
+    tests, should_recurse = self._find_test_path(full_path, pattern)
+                            ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\unittest\loader.py", line 425, in _find_test_path
+    raise ImportError(
+        msg % (mod_name, module_dir, expected_dir))
+ImportError: 'test_iacode_discovery_24a98c169fd740f68700aff8e37561d2' module incorrectly imported from 'C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-discovery-control-2ne4uo9z\\first\\tests'. Expected 'C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-discovery-control-2ne4uo9z\\second\\tests'. Is this module globally installed?
+
+======================================================================
+FAIL: test_a_real_load_tests_error_is_refused_instead_of_counted_as_one_case (__main__.M2DiscoveryIsolationTests.test_a_real_load_tests_error_is_refused_instead_of_counted_as_one_case)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\iacode\tests\test_m2_discovery_isolation.py", line 111, in test_a_real_load_tests_error_is_refused_instead_of_counted_as_one_case
+    with self.assertRaises(LedgerError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+AssertionError: LedgerError not raised
+
+======================================================================
+FAIL: test_actual_inspected_import_cannot_replace_the_late_current_consumer (__main__.M2DiscoveryIsolationTests.test_actual_inspected_import_cannot_replace_the_late_current_consumer)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\iacode\tests\test_m2_discovery_isolation.py", line 76, in test_actual_inspected_import_cannot_replace_the_late_current_consumer
+    self.assertEqual(sys.path, before)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: ['C:\[67 chars]b1z\\foreign', 'C:\\Users\\cesar\\AppData\\Loc[521 chars]ges'] != ['C:\[67 chars]b1z\\current', 'E:\\iacode\\packages\\common\\[342 chars]ges']
+
+First differing element 0:
+'C:\\[16 chars]pData\\Local\\Temp\\iacode-discovery-control-dso7mb1z\\foreign'
+'C:\\[16 chars]pData\\Local\\Temp\\iacode-discovery-control-dso7mb1z\\current'
+
+First list contains 2 additional elements.
+First extra element 10:
+'C:\\Users\\cesar\\AppData\\Roaming\\Python\\Python313\\site-packages'
+
+Diff is 779 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_an_actual_uncaught_import_failure_also_restores_caller_state (__main__.M2DiscoveryIsolationTests.test_an_actual_uncaught_import_failure_also_restores_caller_state)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\iacode\tests\test_m2_discovery_isolation.py", line 125, in test_an_actual_uncaught_import_failure_also_restores_caller_state
+    self.assertEqual(sys.path, before)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: ['iacode-owned-discovery-interrupt-marker',[469 chars]ges'] != ['E:\\iacode\\packages\\common\\src', 'E:\\[331 chars]ges']
+
+First differing element 0:
+'iacode-owned-discovery-interrupt-marker'
+'E:\\iacode\\packages\\common\\src'
+
+First list contains 2 additional elements.
+First extra element 9:
+'C:\\Users\\cesar\\AppData\\Roaming\\Python\\Python313\\site-packages'
+
+- ['iacode-owned-discovery-interrupt-marker',
+-  'C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-discovery-control-ceis0w7d\\interrupt\\tests',
+-  'E:\\iacode\\packages\\common\\src',
+? ^
+
++ ['E:\\iacode\\packages\\common\\src',
+? ^
+
+   'E:\\iacode\\scripts\\development-ledger',
+   'E:\\iacode\\tests',
+   'C:\\Program Files\\Python313\\python313.zip',
+   'C:\\Program Files\\Python313\\DLLs',
+   'C:\\Program Files\\Python313\\Lib',
+   'C:\\Program Files\\Python313',
+   'C:\\Users\\cesar\\AppData\\Roaming\\Python\\Python313\\site-packages',
+   'C:\\Program Files\\Python313\\Lib\\site-packages']
+
+======================================================================
+FAIL: test_the_shared_default_loader_is_not_mutated_by_counting (__main__.M2DiscoveryIsolationTests.test_the_shared_default_loader_is_not_mutated_by_counting)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\iacode\tests\test_m2_discovery_isolation.py", line 133, in test_the_shared_default_loader_is_not_mutated_by_counting
+    self.assertEqual(count_unittest_cases(root, "tests"), 1)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 1
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.066s
+
+FAILED (failures=4, errors=2)

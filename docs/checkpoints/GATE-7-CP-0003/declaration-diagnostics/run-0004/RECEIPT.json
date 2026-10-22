@@ -1,0 +1,48 @@
+{
+  "kind": "CANONICAL_VALIDATOR_DIAGNOSTIC_NOT_ACCEPTANCE",
+  "checkpoint": "GATE-6-CP-0001",
+  "importMode": "native",
+  "startedAt": "2026-10-22T13:28:40Z",
+  "sourceFingerprint": "826c6570bdf771efe05fec72b2872a42ba4c0bdd7e628aa2481ded6231b85093",
+  "acceptanceGranted": false,
+  "execution": {
+    "producer": {
+      "status": "COMPLETED",
+      "exitCode": 0,
+      "arguments": [
+        "C:\\Program Files\\Python313\\python.exe",
+        "E:\\iacode\\docs\\checkpoints\\GATE-7-CP-0003\\audit-harness\\diagnose_declaration_path.py",
+        "--checkpoint",
+        "GATE-6-CP-0001",
+        "--import-mode",
+        "native",
+        "--child"
+      ],
+      "stdout": {
+        "bytes": 4762,
+        "sha256": "a29ac36bd6445a7c1ad89ea84154f114cffa542618bc323199a99050c53457f0",
+        "refusal": null
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "refusal": null
+      }
+    },
+    "cleanup": {
+      "result": "PASS",
+      "observation": {
+        "jobOwned": true,
+        "remainingBeforeCleanup": 0,
+        "remainingAfterCleanup": 0,
+        "observedProcessCount": 0,
+        "signaledProcessCount": 0,
+        "forcedTermination": false,
+        "naturalExitBudgetWithinOriginalDeadlineSeconds": 1
+      }
+    }
+  },
+  "finishedAt": "2026-10-22T13:32:15Z",
+  "temporaryOwnerRemoved": true,
+  "sourceUnchanged": true
+}

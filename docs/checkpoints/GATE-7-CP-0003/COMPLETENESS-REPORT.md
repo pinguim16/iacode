@@ -4,7 +4,7 @@ Result: `FAIL`
 
 - Checkpoint: `GATE-7-CP-0003`
 - Matrix: `REQUIREMENTS-MATRIX.json`
-- Generated: `2026-10-22T10:29:46Z`
+- Generated: `2026-10-22T13:45:44Z`
 - Auditor: Delivery Completeness Validator
 - Expected set: derived by policies.expected_requirement_refs from the canonical Gate specification, the lesson preflight and the open independent audit findings and attacks
 
@@ -12,11 +12,11 @@ Result: `FAIL`
 
 | Metric | Value |
 |---|---|
-| expectedRequirements | 202 |
-| totalRequirements | 202 |
-| mandatoryRequirements | 201 |
+| expectedRequirements | 203 |
+| totalRequirements | 203 |
+| mandatoryRequirements | 202 |
 | complete | 0 |
-| partial | 19 |
+| partial | 20 |
 | missing | 0 |
 | notApplicable | 0 |
 | inProgress | 0 |
@@ -230,6 +230,7 @@ Result: `FAIL`
 | `LESSON-REQ-0149` | BLOCKING | requirement is NOT_STARTED and cannot ship |
 | `LESSON-REQ-0150` | BLOCKING | requirement is PARTIAL and cannot ship |
 | `LESSON-REQ-0151` | BLOCKING | requirement is PARTIAL and cannot ship |
+| `LESSON-REQ-0152` | BLOCKING | requirement is PARTIAL and cannot ship |
 
 ## Per-requirement audit
 
@@ -437,3 +438,4 @@ Result: `FAIL`
 | `LESSON-REQ-0149` | yes | `NOT_STARTED` | _none_ |
 | `LESSON-REQ-0150` | yes | `PARTIAL` | `file:docs/checkpoints/GATE-7-CP-0003/quality-attempts/lint/run-0013.json`, `file:docs/checkpoints/GATE-7-CP-0003/quality-attempts/helper-quality/run-0029/RECEIPT.json`, `file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/all-m2/run-0007.json`, `file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/inherited-streams/run-0003.json`, `file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/history-transport/run-0006.json`, `file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/inherited-git/run-0001.json`, `file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/review-reconstruction/run-0001.json`, `file:docs/checkpoints/GATE-7-CP-0003/quality-attempts/checkpointValidation/run-0009.json`, `file:docs/checkpoints/GATE-7-CP-0003/history-diagnostics/run-0008/RECEIPT.json`, `file:docs/checkpoints/GATE-7-CP-0003/history-diagnostics/run-0008/stdout.log`, `file:docs/checkpoints/GATE-7-CP-0003/history-diagnostics/run-0006/RECEIPT.json`, `file:docs/checkpoints/GATE-7-CP-0003/history-diagnostics/run-0006/stdout.log`, `file:docs/checkpoints/GATE-7-CP-0003/history-diagnostics/run-0007/RECEIPT.json`, `file:docs/checkpoints/GATE-7-CP-0003/history-diagnostics/run-0007/stdout.log`, `file:.iacode/memory/retrospectives/GATE-7-CP-0003.md`, `file:docs/checkpoints/GATE-7-CP-0003/quality-attempts/lint/run-0013.json`, `file:docs/checkpoints/GATE-7-CP-0003/quality-attempts/helper-quality/run-0029/RECEIPT.json`, `file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/all-m2/run-0007.json`, `file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/inherited-streams/run-0003.json`, `file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/history-transport/run-0006.json`, `file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/inherited-git/run-0001.json`, `file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/review-reconstruction/run-0001.json`, `file:docs/checkpoints/GATE-7-CP-0003/quality-attempts/checkpointValidation/run-0009.json`, `file:docs/checkpoints/GATE-7-CP-0003/history-diagnostics/run-0008/RECEIPT.json`, `file:docs/checkpoints/GATE-7-CP-0003/history-diagnostics/run-0008/stdout.log`, `file:docs/checkpoints/GATE-7-CP-0003/history-diagnostics/run-0006/RECEIPT.json`, `file:docs/checkpoints/GATE-7-CP-0003/history-diagnostics/run-0006/stdout.log`, `file:docs/checkpoints/GATE-7-CP-0003/history-diagnostics/run-0007/RECEIPT.json`, `file:docs/checkpoints/GATE-7-CP-0003/history-diagnostics/run-0007/stdout.log`, `test:M2HistoryTransportTests.test_real_short_null_and_long_materialization_preserve_config_and_refusal`, `test:M2HistoryTransportTests.test_genuine_bad_subject_remains_refused_without_configuration_effects`, `test:M2HistoryTransportTests.test_legacy_git_read_gets_exact_bytes_only_with_child_runtime_override`, `test:M2HistoryTransportTests.test_child_runtime_configuration_preserves_existing_pairs_and_refuses_malformed_input` |
 | `LESSON-REQ-0151` | yes | `PARTIAL` | `file:scripts/development-ledger/new_checkpoint.py`, `file:scripts/development-ledger/m0_red_team.py`, `file:scripts/iacode/client_checks.py`, `file:scripts/iacode/native_execution.py`, `file:scripts/development-ledger/audit_runner_bridge.py`, `file:.gitattributes`, `file:tests/test_m2_observation_transport.py`, `file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/run-0011.json`, `file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/native-observation/run-0004.json`, `file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/bridge-physical-bounds/run-0002.json`, `file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/current-streams/run-0001.json`, `file:docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/controls/run-0004.json`, `file:docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/index-0006.json`, `file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/run-0005.json`, `file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/native-cleanup-evidence/run-0001.json`, `file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/bridge-physical-bounds/run-0001.json`, `file:docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/controls/run-0001.json`, `file:docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/controls/run-0003.json`, `file:docs/adr/ADR-0061-client-verification-preserves-producer-and-cleanup-outcomes.md`, `file:docs/adr/ADR-0062-isolated-audit-uses-closed-host-validation-jobs.md`, `checkpoint:ENVIRONMENT-VALIDATION-CONTEXT.md` |
+| `LESSON-REQ-0152` | yes | `PARTIAL` | `file:scripts/development-ledger/derive_counts.py`, `file:tests/test_m2_discovery_isolation.py`, `checkpoint:causal-attempts/discovery-isolation/run-0001.json`, `file:docs/adr/ADR-0064-unittest-discovery-restores-caller-import-bindings.md`, `checkpoint:causal-attempts/discovery-isolation/run-0003.json`, `checkpoint:declaration-diagnostics/run-0003/RECEIPT.json`, `checkpoint:declaration-diagnostics/run-0003/stdout.log`, `checkpoint:declaration-diagnostics/run-0004/RECEIPT.json`, `checkpoint:declaration-diagnostics/run-0004/stdout.log`, `checkpoint:declaration-diagnostics/run-0005/RECEIPT.json`, `checkpoint:declaration-diagnostics/run-0005/stdout.log`, `test:M2DiscoveryIsolationTests.test_actual_valid_null_counts_inherited_and_skipped_cases_without_running_them`, `test:M2DiscoveryIsolationTests.test_actual_inspected_import_cannot_replace_the_late_current_consumer`, `test:M2DiscoveryIsolationTests.test_same_named_preloaded_test_is_restored_but_never_counted_for_another_root`, `test:M2DiscoveryIsolationTests.test_repeated_real_roots_keep_their_own_exact_discovery_counts`, `test:M2DiscoveryIsolationTests.test_a_real_load_tests_error_is_refused_instead_of_counted_as_one_case`, `test:M2DiscoveryIsolationTests.test_an_actual_uncaught_import_failure_also_restores_caller_state`, `test:M2DiscoveryIsolationTests.test_the_shared_default_loader_is_not_mutated_by_counting`, `test:M2DiscoveryIsolationTests.test_missing_suite_remains_zero_without_changing_import_state` |

@@ -43,7 +43,12 @@ COUNT_LABELS = ("TESTS", "REQUIREMENTS", "FINDINGS", "ATTACKS", "LESSONS", "GUAR
 
 
 def count_unittest_cases(root: Path, relative: str) -> int:
-    """Distinct cases a ``unittest`` suite discovers under ``relative``."""
+    """Discover distinct real cases without replacing the caller's import bindings.
+
+    Inspected tests can prepend their own ledger helpers to sys.path. Counting a historical
+    checkout must not make a later current-validator import select that historical implementation.
+    This single-threaded binding transaction is not a sandbox for arbitrary Python (ADR-0064).
+    """
     directory = root / relative
     if not directory.is_dir():
         return 0
@@ -56,7 +61,31 @@ def count_unittest_cases(root: Path, relative: str) -> int:
             elif isinstance(item, unittest.TestCase):
                 identifiers.add(item.id())
 
-    walk(unittest.defaultTestLoader.discover(str(directory), top_level_dir=str(directory)))
+    original_path, original_modules = sys.path, sys.modules
+    saved_path, saved_modules = list(original_path), dict(original_modules)
+    prefixes = {
+        path.stem if path.is_file() else path.name
+        for path in directory.iterdir()
+        if (path.is_file() and path.suffix == ".py")
+        or (path.is_dir() and (path / "__init__.py").is_file())
+    }
+    try:
+        for name in list(original_modules):
+            if name.split(".", 1)[0] in prefixes:
+                del original_modules[name]
+        loader = unittest.TestLoader()
+        walk(loader.discover(str(directory), top_level_dir=str(directory)))
+        if loader.errors:
+            raise LedgerError(
+                f"unittest discovery failed for {relative}: {len(loader.errors)} collection errors"
+            )
+    finally:
+        original_path[:] = saved_path
+        sys.path = original_path
+        for name in set(original_modules) - saved_modules.keys():
+            del original_modules[name]
+        original_modules.update(saved_modules)
+        sys.modules = original_modules
     return len(identifiers)
 
 

@@ -61,6 +61,16 @@ their originals. The first fixture mistakenly left source HEAD long in its inten
 run0001 is not accepted as causal. Run0002 fixes that premise and fails only the long materialization.
 Actual historical declarations and complete current assurance remain required before closure.
 
+The completed runtime-v4 cycle preserves15 passing gates and one failing Root gate, with1072
+reported cases and three historical-checkpoint subtest failures in one physical case. Its native
+cleanup, exact canonical import and public-clone removal pass; the original cycle remains FAIL.
+IMPORT-ISOLATION-001 is a distinct confirmed consumer-state defect: real unittest counting leaves
+the inspected helper path/module cache active, and the current validator selects the old reader.
+The native cold-import diagnostic fails beside a preloaded current-consumer control. LSN-0153
+records this new class without resetting LSN-0151 or misclassifying the control as acceptance.
+ADR-0064 restores caller import bindings around real discovery; identical eight-case causal controls
+have an original red and a local green. Unpreloaded historical and whole current proofs remain due.
+
 ## What repeated
 
 LSN-0010 and LSN-0135 recurred despite GUARDED status. Their recurrence counters increased,
@@ -100,6 +110,10 @@ corrective acceptance or independent validation; whole current assurance remains
 LSN-0152 is the confirmed physical-containment class guarded by GRD-0155 and actual private-root,
 hardlink/reparse and positive/null controls in tests/test_m2_bridge_physical_bounds.py. Other failures
 refine existing classes; no personal data, private reasoning or reuse permission is inferred.
+
+LSN-0153 has measured local prevention under GRD-0156: real discovery controls and all three
+unchanged unpreloaded historical validators pass, including original byte-identical declarations.
+This local guard does not grant whole immutable assurance or independent milestone approval.
 
 ## Updated lessons
 

@@ -14,6 +14,18 @@ CHECKPOINT = Path(__file__).resolve().parents[1]
 ROOT = CHECKPOINT.parents[2]
 
 ASSETS = (
+    "docs/checkpoints/GATE-7-CP-0003/audit-harness/inspect_publication_launchers.py",
+    "scripts/development-ledger/derive_counts.py",
+    "tests/test_m2_discovery_isolation.py",
+    "docs/adr/ADR-0064-unittest-discovery-restores-caller-import-bindings.md",
+    "docs/checkpoints/GATE-7-CP-0003/audit-harness/record_import_isolation.py",
+    "docs/checkpoints/GATE-7-CP-0003/audit-harness/diagnose_declaration_path.py",
+    "docs/checkpoints/GATE-7-CP-0003/audit-harness/acceptance_evidence.py",
+    "docs/checkpoints/GATE-7-CP-0003/audit-harness/complete_functional_acceptance.py",
+    "docs/checkpoints/GATE-7-CP-0003/audit-harness/complete_requirements.py",
+    "docs/checkpoints/GATE-7-CP-0003/audit-harness/assemble_verified_progress.py",
+    "docs/checkpoints/GATE-7-CP-0003/audit-harness/audit_documentation.py",
+    "docs/checkpoints/GATE-7-CP-0003/audit-harness/test_acceptance_assembly.py",
     "scripts/development-ledger/review_bundle.py",
     "tests/test_m2_history_transport.py",
     (

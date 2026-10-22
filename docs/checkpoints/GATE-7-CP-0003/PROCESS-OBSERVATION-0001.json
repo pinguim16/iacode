@@ -1,0 +1,21 @@
+{
+  "kind": "READ_ONLY_OWN_VALIDATION_PROCESS_SNAPSHOT_NOT_ACCEPTANCE",
+  "receivedAt": "2026-10-22T11:28:27Z",
+  "queryActualExitCode": 0,
+  "queryNativeSession": 45153,
+  "subjectCommitSelector": "0adee9d7cfb82126c999466f7f9dcf8b99fc011a",
+  "selection": "Python processes whose command names this exact public Green Keeper subject, plus their observed descendant process IDs",
+  "observations": [
+    {"id": 49844, "parent": 49988, "name": "python.exe", "started": "2026-10-22T10:45:32.9302940Z", "cpuSeconds": 0.125, "stage": "scripts/development-ledger/record_command.py"},
+    {"id": 47592, "parent": 49844, "name": "python.exe", "started": "2026-10-22T10:45:33.1522190Z", "cpuSeconds": 1.171875, "stage": ""},
+    {"id": 37124, "parent": 47592, "name": "python.exe", "started": "2026-10-22T10:45:53.0780440Z", "cpuSeconds": 0.109375, "stage": "scripts/development-ledger/green_keeper.py"},
+    {"id": 46864, "parent": 37124, "name": "conhost.exe", "started": "2026-10-22T10:45:53.3366850Z", "cpuSeconds": 14.765625, "stage": ""},
+    {"id": 42808, "parent": 37124, "name": "python.exe", "started": "2026-10-22T10:45:53.4939950Z", "cpuSeconds": 642.65625, "stage": "unittest"}
+  ],
+  "limit": "A single process snapshot proves neither current CPU progress nor successful completion. Await actual producer exit and the canonical receipt.",
+  "processesSignaled": false,
+  "otherApplicationCommandLinesPublished": false,
+  "originalConsoleBytesRetainedHere": false,
+  "observationBasis": "Derived transcription of the actual read-only CIM query; not a reconstructed raw stream",
+  "warning": "Historical identity observations only. Never reuse these PIDs for a stop, cleanup or signal operation without fresh exact ownership and creation-time proof."
+}

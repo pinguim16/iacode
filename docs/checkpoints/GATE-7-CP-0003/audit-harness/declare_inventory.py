@@ -14,6 +14,16 @@ CHECKPOINT = Path(__file__).resolve().parents[1]
 ROOT = CHECKPOINT.parents[2]
 
 AUTHORED = {
+    "scripts/development-ledger/derive_counts.py": (
+        "IMPORT-ISOLATION-001 restores caller import bindings around real complete unittest "
+        "discovery; no approximate count, historical rewrite or consumer-specific preload."
+    ),
+    "tests/test_m2_discovery_isolation.py": (
+        "Real valid null, import leakage, collision, repeated-root, loader and refusal controls."
+    ),
+    "docs/adr/ADR-0064-unittest-discovery-restores-caller-import-bindings.md": (
+        "Record the bounded single-threaded import-binding transaction and its residual limits."
+    ),
     "scripts/development-ledger/review_bundle.py": (
         "HISTORY-TRANSPORT-001 extends ADR-0058 per-command long-path handling to actual "
         "transport clone/checkout and ADR-0063 legacy child runtime configuration; "

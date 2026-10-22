@@ -3,6 +3,17 @@
 Current Gate: GATE-7
 Current Status: IN_PROGRESS
 
+Current continuation: runtime-v4 complete cycle2 ended FAIL with15 passing gates and three
+historical-checkpoint subtest failures in one Root case. Original streams, exact canonical import,
+native cleanup and public-clone removal are preserved. IMPORT-ISOLATION-001 / LSN-0153 records the
+distinct inspected-test import-state leak before repair. Real discovery retains its denominator
+and now restores caller import bindings. Eight identical causal controls pass after a retained red;
+read-only authored quality passes103 derived paths. Unpreloaded current Gate5 validation also
+passes its unchanged tag and both original archives. Gate6 recheck is active; Gate7 remains due.
+No complete current green cycle or independent audit has started. Runtime-v5, full49-stage proof,
+ordered internal closure, exact phase0002 disposal and canonical sealing remain mandatory.
+The live statements below are retained historical chronology, not current process instructions.
+
 Live continuation update: immutable runtime-v3 completed every mandatory quality gate and remains
 FAIL. Its Root suite reports1066 cases and four failure events: one missing capture decoder and
 three historical declaration reconstructions. Exact native cleanup and public-clone removal pass;

@@ -18,7 +18,14 @@ sys.path.insert(
 sys.path.insert(0, str(Path(__file__).resolve().parents[1].parents[2] / "scripts/iacode"))
 from audit_runner_bridge import ClosedBridge, FrozenInputs, Job, regular
 from current_resources import child_environment, current_scope_path
-from ledger_common import find_secrets, load_json, utc_now, write_json
+from ledger_common import (
+    find_secrets,
+    git_snapshot,
+    load_json,
+    scope_fingerprint,
+    utc_now,
+    write_json,
+)
 from native_process import WindowsJob
 from owned_docker_scope import snapshot
 from policies import gate_definitions
@@ -66,6 +73,8 @@ def main():
         "kind": "INTERNAL_CAPABILITY_NOT_INDEPENDENT_AUDIT",
         "result": "FAIL",
         "before": snapshot(),
+        "sourceFingerprint": scope_fingerprint(ROOT),
+        "repositoryState": git_snapshot(ROOT),
     }
     with tempfile.TemporaryDirectory(prefix="iacode-m2cp3-frozen-probe-") as temporary:
         private = Path(temporary).absolute()
@@ -90,6 +99,14 @@ def main():
         # Build/unit capability does not require the workstation's real provider credentials.
         shutil.copyfile(private / "infra/compose/.env.example", private / "infra/compose/.env")
         frozen = FrozenInputs(private, paths)
+        frozen_manifest = dict(frozen.hashes)
+        write_json(output / "FROZEN-INPUTS.json", frozen_manifest)
+        receipt["frozenInputsManifest"] = (
+            (output / "FROZEN-INPUTS.json").relative_to(CHECKPOINT).as_posix()
+        )
+        receipt["frozenInputsManifestSha256"] = hashlib.sha256(
+            (output / "FROZEN-INPUTS.json").read_bytes()
+        ).hexdigest()
         definitions = gate_definitions(private)
         jobs = {
             key: Job((sys.executable, *definitions[key]["command"][1:]), 1100)
@@ -114,7 +131,7 @@ def main():
         thread = threading.Thread(target=server.serve_forever, daemon=True)
         thread.start()
         command = [
-            "C:/Users/cesar/AppData/Local/OpenAI/Codex/bin/896a0166b774037a/codex.exe",
+            "C:/Users/cesar/AppData/Local/OpenAI/Codex/bin/6257d9e8f63c0f2b/codex.exe",
             "-c",
             'windows.sandbox="elevated"',
             "-c",
@@ -175,12 +192,14 @@ def main():
             receipt["unexpectedPrivateWrite"] = (private / "private-write-probe.bin").exists()
             receipt["after"] = snapshot()
     receipt["privateSourceRemoved"] = not private.exists()
+    receipt["sourceUnchanged"] = scope_fingerprint(ROOT) == receipt["sourceFingerprint"]
     passed = (
         receipt.get("restrictedClientExitCode") == 0
         and len(receipt["jobs"]) == 2
         and all(value.get("result") == "PASS" for value in receipt["jobs"].values())
         and not receipt["unexpectedPrivateWrite"]
         and receipt["privateSourceRemoved"]
+        and receipt["sourceUnchanged"]
         and not any(receipt.get(name, {}).get("refused", True) for name in ("stdout", "stderr"))
     )
     receipt.update(finishedAt=utc_now(), result="PASS" if passed else "FAIL")

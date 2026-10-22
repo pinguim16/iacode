@@ -1,0 +1,36 @@
+{
+  "kind": "READ_ONLY_CLI_CAPABILITY_OBSERVATION_NOT_AUDIT_EXECUTION",
+  "recordedAt": "2026-10-22T11:28:27Z",
+  "executable": "C:/Users/cesar/AppData/Local/OpenAI/Codex/bin/6257d9e8f63c0f2b/codex.exe",
+  "observedVersion": "codex-cli 0.163.0-alpha.11",
+  "versionAndExecHelpExitCode": 0,
+  "syntaxOnlyExecHelpExitCode": 0,
+  "syntaxOnlyFlags": [
+    "--ignore-user-config",
+    "--ephemeral",
+    "--disable memories",
+    "--disable external_agent_memory_import",
+    "--disable prefer_mxc",
+    "-c windows.sandbox=elevated",
+    "-s workspace-write",
+    "-C E:/iacode",
+    "--help"
+  ],
+  "limits": [
+    "Help is parser/capability observation only, not a live restricted-token or Docker test.",
+    "Ephemeral means no persisted rollout; it is not sufficient proof of independence by itself.",
+    "A fresh private child CODEX_HOME, no inherited rollout/memory, invocation-local settings and the approved closed Docker runner bridge still require actual setup and verification after subject sealing."
+  ],
+  "officialDocumentationFetched": [
+    "https://learn.chatgpt.com/docs/cli/reference",
+    "https://learn.chatgpt.com/docs/windows/windows-sandbox",
+    "https://learn.chatgpt.com/docs/non-interactive-mode"
+  ],
+  "auditPromptSent": false,
+  "auditorStarted": false,
+  "sandboxProvisioningPerformed": false,
+  "configurationWritesPerformed": false,
+  "installationPerformed": false,
+  "independentVerdictGranted": false,
+  "gate8Started": false
+}

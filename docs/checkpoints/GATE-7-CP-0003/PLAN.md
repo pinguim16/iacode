@@ -18,3 +18,15 @@ Correct M2-F-001 and M2-F-002 in Gate 7, then offer a sealed correction to a lat
 ## Acceptance
 
 Each finding needs causal red/green evidence, executable negative controls and its original audit evidence preserved. The implementer may grant only internal readiness, never independent milestone approval. Cross-tool validation remains distinct from fresh-session independence.
+
+## Measured runtime-v4 rework
+
+The second complete public cycle remains FAIL: preserve all16 actual gate results, original streams,
+canonical import and private-owner cleanup. IMPORT-ISOLATION-001 is recorded before correction as
+LSN-0153. The requirement set is re-derived before repair, including the added lesson obligation.
+Keep actual unittest discovery; restore caller import bindings instead of preloading one consumer,
+approximating counts, changing old tags or using persistent Git settings. Preserve the real causal
+red beside valid nulls, then require the identical corrected controls, unpreloaded current canonical
+validation of all three affected historical tags, unchanged authored quality and complete canonical
+lint. A new immutable runtime-v5 must carry the new ledgers/source before the next complete16-gate
+cycle and full49-stage verifier. No earlier local or preloaded success replaces those executions.

@@ -141,6 +141,7 @@ class M2ObservationTransportTests(unittest.TestCase):
             "raw-preimages",
             "resource-observations/build-history",
             "history-diagnostics",
+            "declaration-diagnostics",
             "published-green-keeper",
             "full-verifier-executions",
             "suite-attempts",

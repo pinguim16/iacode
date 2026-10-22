@@ -206,3 +206,4 @@ Expected set derived by: `policies.expected_requirement_refs over docs/GATE-7-CH
 | `LESSON-REQ-0149` | `lesson:LSN-0150` | yes | `NOT_STARTED` | Verify build and verification root inputs need subject-versioned assurance binding | LESSON-PREFLIGHT.json LESSON-REQ-0149 |
 | `LESSON-REQ-0150` | `lesson:LSN-0151` | yes | `PARTIAL` | Verify immutable Git object reads must handle Windows long paths only in the owning child | LESSON-PREFLIGHT.json LESSON-REQ-0150 |
 | `LESSON-REQ-0151` | `lesson:LSN-0152` | yes | `PARTIAL` | Verify private runner inputs require physical containment, not lexical ancestry | LESSON-PREFLIGHT.json LESSON-REQ-0151 |
+| `LESSON-REQ-0152` | `lesson:LSN-0153` | yes | `PARTIAL` | Verify test discovery must not replace the auditing consumer's import environment | LESSON-PREFLIGHT.json LESSON-REQ-0152 |

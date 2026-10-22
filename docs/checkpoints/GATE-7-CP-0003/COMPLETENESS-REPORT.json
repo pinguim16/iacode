@@ -1,17 +1,17 @@
 {
   "schemaVersion": "2.0.0",
   "checkpoint": "GATE-7-CP-0003",
-  "generatedAt": "2026-10-22T10:29:46Z",
+  "generatedAt": "2026-10-22T13:45:44Z",
   "matrix": "REQUIREMENTS-MATRIX.json",
   "auditor": "Delivery Completeness Validator",
-  "scopeFingerprint": "29b75ba5344178a5699c7a09673a4ae3c7384ed6c84912d61c3d95b94040a09c",
-  "totalRequirements": 202,
-  "anchoredRequirements": 202,
-  "expectedRequirements": 202,
+  "scopeFingerprint": "dad0c8e39c49ffdbbede2466fbaf15fca153a70efd746e026d82c5117ada3656",
+  "totalRequirements": 203,
+  "anchoredRequirements": 203,
+  "expectedRequirements": 203,
   "expectedSetSource": "derived by policies.expected_requirement_refs from the canonical Gate specification, the lesson preflight and the open independent audit findings and attacks",
-  "mandatoryRequirements": 201,
+  "mandatoryRequirements": 202,
   "complete": 0,
-  "partial": 19,
+  "partial": 20,
   "missing": 0,
   "notApplicable": 0,
   "inProgress": 0,
@@ -1027,6 +1027,11 @@
     },
     {
       "requirement": "LESSON-REQ-0151",
+      "severity": "BLOCKING",
+      "detail": "requirement is PARTIAL and cannot ship"
+    },
+    {
+      "requirement": "LESSON-REQ-0152",
       "severity": "BLOCKING",
       "detail": "requirement is PARTIAL and cannot ship"
     }

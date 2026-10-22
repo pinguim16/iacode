@@ -16,11 +16,11 @@
     "scripts/iacode",
     "scripts/development-ledger"
   ],
-  "generatedAt": "2026-10-22T10:20:06Z",
+  "generatedAt": "2026-10-22T13:38:37Z",
   "policyVersion": "2.0.0",
-  "inputsFingerprint": "04faaf28b69403b540b4fc40a4644be347bc7dbf7d84821a336105a03d5a420c",
-  "lessonsConsidered": 152,
-  "lessonsApplicable": 151,
+  "inputsFingerprint": "fbd7261481e65fd372df837df47c9f00e8e5fd4da58b4bc83f0e92a0fb7b1307",
+  "lessonsConsidered": 153,
+  "lessonsApplicable": 152,
   "applicable": [
     {
       "lessonId": "LSN-0001",
@@ -1531,6 +1531,16 @@
       "requiredCheck": "Reject physical escapes, parent aliases, redirected ancestors and hardlinks before reading a frozen input or publishing a report; retain an actual valid inside-file control.",
       "requiredEvidence": "Actual pre-fix red beside a valid null; executed current inside/absolute/parent/reparse/hardlink controls and full unchanged current assurance.",
       "derivedRequirementId": "LESSON-REQ-0151"
+    },
+    {
+      "lessonId": "LSN-0153",
+      "title": "Test discovery must not replace the auditing consumer's import environment",
+      "status": "GUARDED",
+      "severity": "HIGH",
+      "reasonApplicable": "applies to every Gate; category tooling; severity HIGH; already guarded, so the control must keep holding",
+      "requiredCheck": "Preserve exact real unittest discovery counts while restoring caller import state on success and failure, including colliding test modules and repeated inspected roots.",
+      "requiredEvidence": "Real adverse and valid null discovery controls, unchanged cold-tag canonical validation and complete current quality.",
+      "derivedRequirementId": "LESSON-REQ-0152"
     }
   ],
   "derivedRequirements": [
@@ -2590,6 +2600,13 @@
       "description": "Verify private runner inputs require physical containment, not lexical ancestry",
       "mandatory": true,
       "requiredEvidence": "Actual pre-fix red beside a valid null; executed current inside/absolute/parent/reparse/hardlink controls and full unchanged current assurance."
+    },
+    {
+      "id": "LESSON-REQ-0152",
+      "lessonId": "LSN-0153",
+      "description": "Verify test discovery must not replace the auditing consumer's import environment",
+      "mandatory": true,
+      "requiredEvidence": "Real adverse and valid null discovery controls, unchanged cold-tag canonical validation and complete current quality."
     }
   ]
 }

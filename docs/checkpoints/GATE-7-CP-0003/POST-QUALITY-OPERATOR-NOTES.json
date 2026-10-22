@@ -3,6 +3,34 @@
   "originalsRewritten": false,
   "items": [
     {
+      "observedAt": "2026-10-22T11:18:52Z",
+      "kind": "PRELIMINARY_ASSEMBLY_TEST_INVALID_BASELINE_PREMISE",
+      "command": "python docs/checkpoints/GATE-7-CP-0003/audit-harness/test_acceptance_assembly.py",
+      "actualExitCode": 1,
+      "testsRun": 6,
+      "failureEvents": 1,
+      "observedAssertion": "test_inherited_bindings_resolve_without_borrowing_a_command_verdict: self.assertTrue(bindings) rejected the actual empty direct-command reference set",
+      "demonstratedTestDefect": "The actual sealed CP0001 closure references command observations through file identities. No command: reference occurs in its closure document. Every inherited reference already resolved; assuming the derived direct-command set must be nonempty was an invalid test premise, not a production refusal or a runtime failure.",
+      "correction": "Derive and assert exact membership from the real sealed baseline, including its legitimate empty set. Separately exercise command-reference translation using an actual successful sealed command record; retain nonempty binding and exact-record assertions on that real positive path. No implementation condition, security rule or mandatory suite was weakened.",
+      "observationBasis": "Actual native tool completion in session65408 and read-only inspection of the real sealed baseline; this is a derived observation, not manufactured raw console bytes",
+      "canonicalLedgerAppendedWhileProtected": false,
+      "independentVerdictGranted": false,
+      "completedFollowup": {
+        "actualExitCode": 0,
+        "testsRun": 6,
+        "reportedUnittestDurationSeconds": 2.317,
+        "result": "READ_ONLY_PRELIMINARY_CONTROL_PASS_NOT_RUNTIME_ACCEPTANCE",
+        "canonicalRecordedRerunRequiredAfterProtectedImport": true
+      }
+    },
+    {
+      "observedAt": "2026-10-22T11:13:46Z",
+      "kind": "UNRECORDED_READ_ONLY_OPERATOR_QUERY_DURING_PROTECTED_LEDGER",
+      "observation": "The tool/CMD inline Python query received malformed quoting and the interpreter reported an unterminated string before executing the requested source-fingerprint calculation. The following chained CLI-help query therefore did not execute in that attempt. No source-fingerprint result is attributed to it.",
+      "followup": "CLI syntax help was separately executed with a literal argument-only invocation and exited0; see CLI-PREFLIGHT-CAPABILITIES.json. No audit prompt, turn, installation or configuration change was made. Parent canonical command/rework ledgers were not appended while the public Green Keeper owned them.",
+      "rawConsoleReconstructed": false
+    },
+    {
       "commands": ["cmd-0384", "cmd-0385", "cmd-0386"],
       "observation": "The first direct focused invocation was rejected before execution because the recorder interpreted a discover pattern ending in .py as a repository script path. A literal wildcard pattern was then actually executed and returned the expected codepage failure. record_command.py does not materialize stdout/stderr files named by its optional artifact fields; cmd-0385's planned stream paths were not produced.",
       "evidenceLimit": "Do not invent missing streams or use those declared paths as original-byte proof. The accepted actual causal capture is cmd-0386, causal-attempts/inherited-streams/run-0002.json and its separately hashed original streams. The complete earlier failure also remains in published-green-keeper/run-0003/stdout.log."

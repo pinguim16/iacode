@@ -43,6 +43,7 @@ def main() -> int:
     mode.add_argument("--bootstrap-ownership-controls", action="store_true")
     mode.add_argument("--publication-controls", action="store_true")
     mode.add_argument("--history-transport-controls", action="store_true")
+    mode.add_argument("--discovery-isolation-controls", action="store_true")
     mode.add_argument("--all-m2-controls", action="store_true")
     mode.add_argument("--lint-denominator-controls", action="store_true")
     mode.add_argument("--native-controls", action="store_true")
@@ -61,7 +62,10 @@ def main() -> int:
         environment = child_environment()
         owned = read_env_file(current_owner_file(), {})
         environment.update(owned)
-    if options.history_transport_controls:
+    if options.discovery_isolation_controls:
+        command = ["python", "tests/test_m2_discovery_isolation.py", "-v"]
+        folder = "causal-attempts/discovery-isolation"
+    elif options.history_transport_controls:
         command = [
             "python",
             "-m",

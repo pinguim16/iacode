@@ -22,18 +22,18 @@
       "justification": null
     },
     "lint": {
-      "status": "NOT_EXECUTED",
+      "status": "PASS",
       "evidence": [
-        "file:quality-attempts/lint/run-0012.json"
+        "file:quality-attempts/lint/run-0015.json"
       ],
-      "justification": "This referenced older source proof is historical. Current actual lint run0013 passed; bind the new proof through the current publication verifier before accepting a new source epoch."
+      "justification": "Actual complete current canonical lint on source813a2857, cmd0494; not whole quality or readiness. Publication must independently verify the current binding before effects."
     },
     "staticAnalysis": {
-      "status": "NOT_EXECUTED",
+      "status": "PASS",
       "evidence": [
-        "file:quality-attempts/staticAnalysis/run-0010.json"
+        "file:quality-attempts/staticAnalysis/run-0011.json"
       ],
-      "justification": "Historical source epoch only; current complete assurance remains due."
+      "justification": "Actual complete current canonical static analysis, cmd0499; complete immutable quality and functional assurance remain due."
     },
     "security": {
       "status": "NOT_EXECUTED",
@@ -48,7 +48,7 @@
     "checkpointValidation": {
       "status": "PASS",
       "evidence": [
-        "file:quality-attempts/checkpointValidation/run-0010.json"
+        "file:quality-attempts/checkpointValidation/run-0012.json"
       ],
       "justification": "Actual quiescent valid IN_PROGRESS draft; not terminal readiness or independent validation."
     },
@@ -60,9 +60,10 @@
     "greenKeeper": {
       "status": "FAIL",
       "evidence": [
-        "file:published-green-keeper/run-0003/RECEIPT.json"
+        "file:published-green-keeper/run-0003/RECEIPT.json",
+        "file:published-green-keeper/run-0004/RECEIPT.json"
       ],
-      "justification": "Actual complete runtime-v3 cycle is red. Later local proofs do not replace a fresh complete green cycle."
+      "justification": "Actual complete runtime-v3 and runtime-v4 cycles remain red. Native import-origin diagnosis confirms a distinct consumer-state failure; local controls do not replace a fresh complete green cycle."
     },
     "deliveryCompleteness": {
       "status": "FAIL",

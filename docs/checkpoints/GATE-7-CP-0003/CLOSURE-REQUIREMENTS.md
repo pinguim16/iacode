@@ -218,6 +218,7 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 | `LESSON-REQ-0149` | LESSON | `lesson:LSN-0150` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify build and verification root inputs need subject-versioned assurance binding |
 | `LESSON-REQ-0150` | LESSON | `lesson:LSN-0151` | yes | `PARTIAL` | `PARTIAL` | Verify immutable Git object reads must handle Windows long paths only in the owning child |
 | `LESSON-REQ-0151` | LESSON | `lesson:LSN-0152` | yes | `COMPLETE` | `PARTIAL` | Verify private runner inputs require physical containment, not lexical ancestry |
+| `LESSON-REQ-0152` | LESSON | `lesson:LSN-0153` | yes | `PARTIAL` | `PARTIAL` | Verify test discovery must not replace the auditing consumer's import environment |
 
 ## Evidence
 
@@ -2461,3 +2462,15 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 - Validation: _none_
 - Guardrail: _none_
 - Justification: Actual local correction and automated prevention observed; current complete immutable and ordered assurance remain pending.
+
+### LESSON-REQ-0152 - lesson:LSN-0153
+
+- Source reference: LESSON-PREFLIGHT.json LESSON-REQ-0152
+- Description: Verify test discovery must not replace the auditing consumer's import environment
+- Implementation: `file:scripts/development-ledger/derive_counts.py`
+- Test: `file:tests/test_m2_discovery_isolation.py`
+- Negative test: `checkpoint:causal-attempts/discovery-isolation/run-0001.json`
+- Documentation: `file:docs/adr/ADR-0064-unittest-discovery-restores-caller-import-bindings.md`
+- Validation: `checkpoint:causal-attempts/discovery-isolation/run-0003.json`, `checkpoint:declaration-diagnostics/run-0003/RECEIPT.json`, `checkpoint:declaration-diagnostics/run-0003/stdout.log`, `checkpoint:declaration-diagnostics/run-0004/RECEIPT.json`, `checkpoint:declaration-diagnostics/run-0004/stdout.log`, `checkpoint:declaration-diagnostics/run-0005/RECEIPT.json`, `checkpoint:declaration-diagnostics/run-0005/stdout.log`
+- Guardrail: `test:M2DiscoveryIsolationTests.test_actual_valid_null_counts_inherited_and_skipped_cases_without_running_them`, `test:M2DiscoveryIsolationTests.test_actual_inspected_import_cannot_replace_the_late_current_consumer`, `test:M2DiscoveryIsolationTests.test_same_named_preloaded_test_is_restored_but_never_counted_for_another_root`, `test:M2DiscoveryIsolationTests.test_repeated_real_roots_keep_their_own_exact_discovery_counts`, `test:M2DiscoveryIsolationTests.test_a_real_load_tests_error_is_refused_instead_of_counted_as_one_case`, `test:M2DiscoveryIsolationTests.test_an_actual_uncaught_import_failure_also_restores_caller_state`, `test:M2DiscoveryIsolationTests.test_the_shared_default_loader_is_not_mutated_by_counting`, `test:M2DiscoveryIsolationTests.test_missing_suite_remains_zero_without_changing_import_state`
+- Justification: Measured local import-state prevention; whole current immutable assurance pending.

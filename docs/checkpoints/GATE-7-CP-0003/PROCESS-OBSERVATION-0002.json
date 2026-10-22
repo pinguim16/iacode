@@ -1,0 +1,30 @@
+{
+  "kind": "READ_ONLY_ACTIVITY_DIAGNOSTIC_NOT_ACCEPTANCE_OR_PROCESS_CONTROL_AUTHORITY",
+  "observedAt": "2026-10-22T11:49:05.4449873Z",
+  "queryActualExitCode": 0,
+  "queryNativeSession": 79831,
+  "candidate": {
+    "id": 42808,
+    "started": "2026-10-22T10:45:53.4939953Z",
+    "cpuSeconds": 716.90625,
+    "mutationPerformed": false
+  },
+  "comparison": {
+    "priorObservation": "PROCESS-OBSERVATION-0001.json",
+    "priorCpuSeconds": 642.65625,
+    "priorCimStarted": "2026-10-22T10:45:53.4939950Z",
+    "cpuDifferenceSeconds": 74.25,
+    "interpretation": "Compatible with activity by the same root-suite process. The start-time strings from the two query APIs differ in their final fractional digit; this is not an assertion of exact identity for a destructive operation."
+  },
+  "earlierConservativeQuery": {
+    "nativeSession": 73643,
+    "actualExitCode": 1,
+    "observedRefusal": "VALIDATION_PROCESS_IDENTITY_CHANGED_NO_ACTION_TAKEN",
+    "limit": "The exact-string identity guard refused before publishing a CPU observation. That refusal is not evidence that a process restarted or that the Root suite failed. No ownership check is relaxed for cleanup or signaling."
+  },
+  "processesSignaled": false,
+  "applicationRestartsPerformed": false,
+  "originalConsoleBytesRetainedHere": false,
+  "observationBasis": "Derived transcription of actual read-only tool outputs, not reconstructed original streams",
+  "warning": "Never reuse these historical IDs for any stop, cleanup or signal. A diagnostic snapshot or CPU increment is not successful test execution."
+}

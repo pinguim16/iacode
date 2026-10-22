@@ -2,6 +2,63 @@
 
 ## Required next action
 
+Latest publication transport note: the multiword CMD message was refused by argparse before any
+publication effect. Two stalled shell sessions never started Python; after exact read-only native
+identity/tree checks, only those owning sessions were interrupted. Both session exits and absence
+of all four observed shell/console entries are recorded in PUBLICATION-LAUNCHER-RECOVERY-0001.json.
+HEAD is unchanged. The new read-only diagnostic extends authored scope to104 paths; whole current
+read-only run0038 passes. Revalidate the re-declared draft, then invoke CMD directly with a bounded
+single-token message. No PowerShell retry, global repair, application restart or PID action.
+
+Authoritative current stage at13:44:30Z: all three unchanged unpreloaded historical validators
+passed; LSN-0153 / GRD-0156 records measured local prevention. Final source813a2857 freshly passes96
+M2 controls,103-path read-only authored quality, full canonical lint, static analysis and original
+byte transport including the new declaration-diagnostics family. All local producers ended.
+Finish metadata/declared-path synchronization and quiescent validation, then publish immutable
+runtime-v5. Its all16 canonical gates, full49-stage verifier, DCV, fresh internal Red Team/mirror,
+exact phase0002 disposal and READY_FOR_REVIEW seal remain due before a fresh independent M2 auditor.
+Never rerun the one-shot prevention registration. No Gate8, restarts or global/other-chat changes.
+All observations below are preserved historical chronology, not current process instructions.
+
+Latest corrective observation: IMPORT-ISOLATION-001 is registered as a distinct LSN-0153 class;
+the full canonical set was derived before implementation (203 requirements,202 mandatory).
+Real discovery restores caller bindings without preloading a particular consumer or approximating
+counts. Eight identical controls pass after an original red; read-only authored quality passes103
+paths. Native unpreloaded Gate5 validation now passes both original archive reconstructions.
+Gate6 also passed; Gate7 is active in session23995. Preserve source826c6570 while these actual
+diagnostics run. Only after all three pass may local prevention be registered; then recheck the
+new source epoch, publish runtime-v5 and repeat all mandatory complete assurance before sealing.
+
+Earlier observations below are historical chronology, not current process instructions.
+
+Current authoritative observation at13:13:03Z: runtime-v4 cycle2 finished FAIL at12:40:45Z.
+All16 gates executed:15 passed; Root reports1072 cases and three failing historical checkpoint
+subtests of one physical case. Original output and canonical ledgers are imported; native cleanup
+and removal of the private clone passed. Session86925 is closed, and serial ledger recording may
+resume. Run0001 diagnostic passed only with current review_bundle preloaded: it is a control,
+not a faithful failed-path reproduction or acceptance. Run0002 observes actual native import
+resolution without preloading, in session66266. Diagnose its actual result before classification
+or correction. Any correction requires a new source epoch and unchanged complete assurance.
+
+The following live observations are retained historical chronology, not current process state.
+
+Live negative observation at12:31:37Z: the public clone recorded cmd-0455/tests with actual exit1
+at12:30:28Z after6274883ms. The remaining mandatory gates still run in session86925. Await the
+whole original producer, native cleanup and exact canonical import before diagnosing or changing
+source. Do not promote a local pass or assume a root cause from the absent failure stream.
+
+Runtime-v4 is now published at0adee9d7cfb82126c999466f7f9dcf8b99fc011a under immutable tag
+iacode-subjects/GATE-7-CP-0003-runtime-v4. Local/public main and tag were actually checked equal;
+the committed draft validates. RUNTIME-V4-PUBLICATION.json is a derived observation, not a seal.
+The complete unchanged public16-gate cycle is ACTIVE in native session86925. Its exact fresh owner
+and expected run0004 receipt are in ACTIVE-VALIDATION.json. Wait for actual completion/import;
+never append the parent command/rework ledgers during this cycle. Preserve source8db34905 and
+remote main until the subsequent complete immutable49-stage verifier ends. No full current
+acceptance, final disposal, seal or independent M2 verdict has been granted.
+
+The detailed pre-publication chronology below is historical; its completed publication steps
+must not be replayed. Canonical current ledger synchronization follows the protected import.
+
 Continue the explicitly resumed authorized Gate7 correction. No Gate8, application restart,
 global-setting change or other-chat mutation is authorized. CP0001 is still the last immutable seal.
 

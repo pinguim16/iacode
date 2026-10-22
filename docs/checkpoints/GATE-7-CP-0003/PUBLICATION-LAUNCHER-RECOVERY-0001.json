@@ -1,0 +1,55 @@
+{
+  "kind": "DERIVED_OPERATOR_LAUNCH_OBSERVATION_NOT_PUBLICATION_OR_ACCEPTANCE",
+  "observedAt": "2026-10-22T14:03:10Z",
+  "unchangedHead": "0adee9d7cfb82126c999466f7f9dcf8b99fc011a",
+  "firstAttempt": {
+    "shell": "cmd.exe",
+    "publisherParserExitCode": 2,
+    "reason": "The multiword commit message arrived with broken quoting; argparse refused extra arguments before publication stages.",
+    "publicationEffectsObserved": false
+  },
+  "ownedStalledLaunchers": [
+    {
+      "toolSession": 7607,
+      "role": "PUBLICATION_LAUNCHER",
+      "pid": 46028,
+      "parentPid": 25676,
+      "creationFileTime": 134371507222695848,
+      "creationUtc": "2026-10-22T13:52:02.269584+00:00",
+      "executable": "C:/Users/cesar/.cache/codex-runtimes/codex-primary-runtime/dependencies/native/powershell/pwsh.exe",
+      "commandSha256": "acf5c87e8cf27a107317bbfb656ad2763dcd1ebd769f4a6d39f2592a7fc1d93a",
+      "onlyObservedDescendant": {"pid": 34724, "parentPid": 46028, "name": "conhost.exe"},
+      "ownedSessionInterruptRequested": true,
+      "actualToolExitCode": 1
+    },
+    {
+      "toolSession": 32355,
+      "role": "READ_ONLY_QUERY",
+      "pid": 50960,
+      "parentPid": 25676,
+      "creationFileTime": 134371509974264900,
+      "creationUtc": "2026-10-22T13:56:37.426490+00:00",
+      "executable": "C:/Users/cesar/.cache/codex-runtimes/codex-primary-runtime/dependencies/native/powershell/pwsh.exe",
+      "commandSha256": "40bde8f7a9ab43c23b80f88a1abeeffc13d6ecd80b5825d85c3a4d9517604bc4",
+      "onlyObservedDescendant": {"pid": 46808, "parentPid": 50960, "name": "conhost.exe"},
+      "ownedSessionInterruptRequested": true,
+      "actualToolExitCode": 1
+    }
+  ],
+  "recovery": {
+    "method": "Ctrl+C through the two exact owning tool sessions, not a PID-based controller",
+    "nativeTerminationMechanismReportedByTool": false,
+    "postRecoveryReadOnlyNativeMatches": [],
+    "postRecoveryHistoricalFourProcessEntries": [],
+    "pythonPublicationChildObservedInStalledSessions": false,
+    "canonicalCommandLedgerAdvancedBeyondCmd0512": false,
+    "originalRawConsoleArtifactAvailable": false,
+    "rawConsoleArtifactManufactured": false,
+    "globalShellProblemRootCause": "NOT_ESTABLISHED",
+    "hostInstallationsPerformed": false,
+    "dockerOrApplicationRestartsPerformed": false,
+    "globalOrOtherChatSettingsChanged": false
+  },
+  "nextAction": "The old sessions ended and all four observed entries are absent. Refresh whole104-path authored quality for the new read-only diagnostic helper, re-declare the draft, then invoke the existing publisher directly with a single-token commit message in CMD. Preserve these failures; do not re-run any historical PID action.",
+  "gateVerdictGranted": false
+}
