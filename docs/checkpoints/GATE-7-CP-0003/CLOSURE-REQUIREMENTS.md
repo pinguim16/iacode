@@ -190,7 +190,7 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 | `LESSON-REQ-0121` | LESSON | `lesson:LSN-0122` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify engine-allocated host ports must be rediscovered after container restart |
 | `LESSON-REQ-0122` | LESSON | `lesson:LSN-0123` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify consent binds workspace identity, not an uncanonicalized path spelling |
 | `LESSON-REQ-0123` | LESSON | `lesson:LSN-0124` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify durable editor recovery must not use an in-memory test host |
-| `LESSON-REQ-0124` | LESSON | `lesson:LSN-0125` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify native parent exit is not proof of process and profile cleanup |
+| `LESSON-REQ-0124` | LESSON | `lesson:LSN-0125` | yes | `PARTIAL` | `PARTIAL` | Verify native parent exit is not proof of process and profile cleanup |
 | `LESSON-REQ-0125` | LESSON | `lesson:LSN-0126` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify known authentication material is not domain or presentation data |
 | `LESSON-REQ-0126` | LESSON | `lesson:LSN-0127` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify fresh runtime health does not initialize an operator-managed model catalog |
 | `LESSON-REQ-0127` | LESSON | `lesson:LSN-0128` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify adversarial premises must use the actual public contract |
@@ -2148,12 +2148,13 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 
 - Source reference: LESSON-PREFLIGHT.json LESSON-REQ-0124
 - Description: Verify native parent exit is not proof of process and profile cleanup
-- Implementation: _none_
-- Test: _none_
-- Negative test: _none_
-- Documentation: _none_
+- Implementation: `file:docs/checkpoints/GATE-7-CP-0003/audit-harness/current_resources.py`, `file:scripts/development-ledger/audit_runner_bridge.py`
+- Test: `file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/bootstrap-ownership/run-0004.json`, `file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/resource-phase/run-0005.json`
+- Negative test: `file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/bootstrap-ownership/run-0001.json`, `file:docs/checkpoints/GATE-7-CP-0003/resource-phases/phase-0002/BUILDER-BOOTSTRAP.json`
+- Documentation: `checkpoint:DECISIONS.md`, `checkpoint:INTERNAL-ENVIRONMENT-REWORK.json`
 - Validation: _none_
-- Guardrail: _none_
+- Guardrail: `test:BootstrapOwnershipTests.test_actual_bootstrap_caller_requires_owned_native_process_boundary`, `test:BootstrapOwnershipTests.test_real_parent_exit_with_inherited_output_writer_is_observed_then_exactly_drained`
+- Justification: Bootstrap recurrence is locally repaired and guarded; complete current native/full immutable assurance remains pending.
 
 ### LESSON-REQ-0125 - lesson:LSN-0126
 

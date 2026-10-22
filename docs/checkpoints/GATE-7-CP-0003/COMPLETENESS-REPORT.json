@@ -1,21 +1,21 @@
 {
   "schemaVersion": "2.0.0",
   "checkpoint": "GATE-7-CP-0003",
-  "generatedAt": "2026-10-21T19:26:55Z",
+  "generatedAt": "2026-10-22T03:22:22Z",
   "matrix": "REQUIREMENTS-MATRIX.json",
   "auditor": "Delivery Completeness Validator",
-  "scopeFingerprint": "1c9d4d8b8ef6c54763bc42c9d9f5dc9a654c8ceeac843d7a867e77bc814bda33",
-  "totalRequirements": 201,
-  "anchoredRequirements": 201,
-  "expectedRequirements": 201,
+  "scopeFingerprint": "8df14765e3f70e261174863742f9323e7d273fe07159cf7f9f18fcd3317f2fce",
+  "totalRequirements": 202,
+  "anchoredRequirements": 202,
+  "expectedRequirements": 202,
   "expectedSetSource": "derived by policies.expected_requirement_refs from the canonical Gate specification, the lesson preflight and the open independent audit findings and attacks",
-  "mandatoryRequirements": 200,
+  "mandatoryRequirements": 201,
   "complete": 0,
-  "partial": 5,
+  "partial": 15,
   "missing": 0,
   "notApplicable": 0,
   "inProgress": 0,
-  "notStarted": 196,
+  "notStarted": 187,
   "coveragePercent": 0.0,
   "evidenceCoveragePercent": 100.0,
   "result": "FAIL",
@@ -208,7 +208,7 @@
     {
       "requirement": "REQ-0038",
       "severity": "BLOCKING",
-      "detail": "requirement is NOT_STARTED and cannot ship"
+      "detail": "requirement is PARTIAL and cannot ship"
     },
     {
       "requirement": "REQ-0039",
@@ -218,7 +218,7 @@
     {
       "requirement": "REQ-0040",
       "severity": "BLOCKING",
-      "detail": "requirement is NOT_STARTED and cannot ship"
+      "detail": "requirement is PARTIAL and cannot ship"
     },
     {
       "requirement": "REQ-0041",
@@ -248,7 +248,7 @@
     {
       "requirement": "REQ-0046",
       "severity": "BLOCKING",
-      "detail": "requirement is NOT_STARTED and cannot ship"
+      "detail": "requirement is PARTIAL and cannot ship"
     },
     {
       "requirement": "REQ-0047",
@@ -443,7 +443,7 @@
     {
       "requirement": "LESSON-REQ-0034",
       "severity": "BLOCKING",
-      "detail": "requirement is NOT_STARTED and cannot ship"
+      "detail": "requirement is PARTIAL and cannot ship"
     },
     {
       "requirement": "LESSON-REQ-0035",
@@ -683,7 +683,7 @@
     {
       "requirement": "LESSON-REQ-0082",
       "severity": "BLOCKING",
-      "detail": "requirement is NOT_STARTED and cannot ship"
+      "detail": "requirement is PARTIAL and cannot ship"
     },
     {
       "requirement": "LESSON-REQ-0083",
@@ -893,7 +893,7 @@
     {
       "requirement": "LESSON-REQ-0124",
       "severity": "BLOCKING",
-      "detail": "requirement is NOT_STARTED and cannot ship"
+      "detail": "requirement is PARTIAL and cannot ship"
     },
     {
       "requirement": "LESSON-REQ-0125",
@@ -923,7 +923,7 @@
     {
       "requirement": "LESSON-REQ-0130",
       "severity": "BLOCKING",
-      "detail": "requirement is NOT_STARTED and cannot ship"
+      "detail": "requirement is PARTIAL and cannot ship"
     },
     {
       "requirement": "LESSON-REQ-0131",
@@ -978,12 +978,12 @@
     {
       "requirement": "LESSON-REQ-0141",
       "severity": "BLOCKING",
-      "detail": "requirement is NOT_STARTED and cannot ship"
+      "detail": "requirement is PARTIAL and cannot ship"
     },
     {
       "requirement": "LESSON-REQ-0142",
       "severity": "BLOCKING",
-      "detail": "requirement is NOT_STARTED and cannot ship"
+      "detail": "requirement is PARTIAL and cannot ship"
     },
     {
       "requirement": "LESSON-REQ-0143",
@@ -1024,6 +1024,11 @@
       "requirement": "LESSON-REQ-0150",
       "severity": "BLOCKING",
       "detail": "requirement is NOT_STARTED and cannot ship"
+    },
+    {
+      "requirement": "LESSON-REQ-0151",
+      "severity": "BLOCKING",
+      "detail": "requirement is PARTIAL and cannot ship"
     }
   ]
 }

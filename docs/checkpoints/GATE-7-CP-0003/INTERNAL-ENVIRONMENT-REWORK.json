@@ -99,6 +99,27 @@
         "byte-transport-attempts/index-0006.json"
       ],
       "originalFilesRewritten": false
+    },
+    {
+      "id": "BOOTSTRAP-DRAIN-001",
+      "status": "LOCAL_CORRECTION_DEMONSTRATED_WHOLE_ASSURANCE_PENDING",
+      "classification": "GUARDRAIL_FAILURE LSN-0125",
+      "observed": "A new task-owned buildx bootstrap used direct piped subprocess.run with a60-second timeout. The parent Docker CLI was killed, but its exact buildx plugin retained inherited output handles and prevented the timeout observation from returning until pinned helper-only recovery. Actual parent recorder duration was240210ms.",
+      "evidence": "resource-phases/phase-0002/BUILDER-BOOTSTRAP.json",
+      "commands": [
+        "cmd-0234",
+        "cmd-0235"
+      ],
+      "preimage": "raw-preimages/BOOTSTRAP-DRAIN-001-current-resources.py",
+      "requiredCorrection": "Use the existing exact owned Windows Job runner, retain safe producer and cleanup observations, preserve the unchanged60-second producer budget, add actual surviving-writer and actual caller-boundary controls. Never signal the Engine or other applications.",
+      "exposure": "Internal new checkpoint helper only; no product verdict or independent auditor. Image pull availability is a separate unresolved operational dependency, not a proved Engine outage.",
+      "currentProof": [
+        "causal-attempts/bootstrap-ownership/run-0001.json",
+        "causal-attempts/bootstrap-ownership/run-0002.json",
+        "causal-attempts/resource-phase/run-0004.json",
+        "resource-phases/phase-0002/BUILDER-BOOTSTRAP-RETRY-0001.json"
+      ],
+      "fixtureAdjustment": "Resource-phase run-0003 retained an AttributeError after the removed subprocess API was still named by its mock. The test now targets the actual run_owned entry with the same no-call/refusal assertions; run-0004 passes. No assertion or production guard was weakened."
     }
   ]
 }

@@ -15,3 +15,10 @@ other-application cleanup, raw Docker API proxy or general CLI bypass is authori
 
 Both recurrences remain CONFIRMED and closure remains IN_PROGRESS. Targeted green controls, the
 client gate and API unit gate do not substitute for integral assurance or independent M2 review.
+
+After the owner clarified project-only Docker scope and explicitly resumed, phase-0002 uses a
+fresh namespace, private Buildx selection and separate ownership/cleanup destinations. The old
+failed comparison and successful disposal component remain immutable history. Operators accept
+an explicit phase receipt; a bounded checkpoint-local pointer selects the current one. Existing
+operator regressions and actual filesystem/child controls execute before engine allocation.
+Global selection, canonical source fingerprint, gate membership and promotion rules are unchanged.

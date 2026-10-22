@@ -3329,16 +3329,31 @@
       "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0124",
       "description": "Verify native parent exit is not proof of process and profile cleanup",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
-      "justification": null,
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
+      "justification": "Bootstrap recurrence is locally repaired and guarded; complete current native/full immutable assurance remains pending.",
       "notes": "",
-      "implementationEvidence": [],
-      "testEvidence": [],
-      "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "implementationEvidence": [
+        "file:docs/checkpoints/GATE-7-CP-0003/audit-harness/current_resources.py",
+        "file:scripts/development-ledger/audit_runner_bridge.py"
+      ],
+      "testEvidence": [
+        "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/bootstrap-ownership/run-0004.json",
+        "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/resource-phase/run-0005.json"
+      ],
+      "negativeTestEvidence": [
+        "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/bootstrap-ownership/run-0001.json",
+        "file:docs/checkpoints/GATE-7-CP-0003/resource-phases/phase-0002/BUILDER-BOOTSTRAP.json"
+      ],
+      "documentationEvidence": [
+        "checkpoint:DECISIONS.md",
+        "checkpoint:INTERNAL-ENVIRONMENT-REWORK.json"
+      ],
       "validationEvidence": [],
-      "guardrailEvidence": []
+      "guardrailEvidence": [
+        "test:BootstrapOwnershipTests.test_actual_bootstrap_caller_requires_owned_native_process_boundary",
+        "test:BootstrapOwnershipTests.test_real_parent_exit_with_inherited_output_writer_is_observed_then_exactly_drained"
+      ]
     },
     {
       "id": "LESSON-REQ-0125",

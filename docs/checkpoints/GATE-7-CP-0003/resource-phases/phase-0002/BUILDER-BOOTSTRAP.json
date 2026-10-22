@@ -1,0 +1,28 @@
+{
+  "startedAt": "2026-10-22T03:04:58Z",
+  "arguments": [
+    "docker",
+    "buildx",
+    "inspect",
+    "iacode-m2cp3-61bb7b6040b746f89d25f24580762b3c",
+    "--bootstrap"
+  ],
+  "result": "FAIL",
+  "status": "TIMEOUT",
+  "exitCode": null,
+  "streams": {
+    "stdout": {
+      "text": "",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "refusal": null
+    },
+    "stderr": {
+      "text": "#1 [internal] booting buildkit\n#1 pulling image moby/buildkit:buildx-stable-1\n",
+      "sha256": "676be803ad7cdb15d19877067dcf80c8a38c7a16a2c2f41413fb78ac1d489aa3",
+      "bytes": 78,
+      "refusal": null
+    }
+  },
+  "finishedAt": "2026-10-22T03:08:58Z"
+}

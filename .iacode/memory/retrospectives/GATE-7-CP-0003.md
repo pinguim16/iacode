@@ -1,5 +1,29 @@
 # Retrospective — GATE 7 / GATE-7-CP-0003
 
+## Current correction epoch
+
+The initial observations below are chronological, not the current lesson statuses. Canonical
+memory now records local automated restoration of the replay, producer/native observation,
+physical confinement, UTF-8 entry and original-byte boundaries, with every escaped guard and
+failed attempt retained. None is complete current Gate7 acceptance or independent M2 validation.
+
+After the explicit post-restart resumption, a new separately receipted Docker phase preserved
+the already disposed predecessor. Its first new builder bootstrap used direct piped capture:
+parent timeout left an owned buildx descendant holding inherited output handles. BOOTSTRAP-DRAIN-001
+reopened LSN-0125 before repair. Pinned creation/executable/argv-only recovery signaled the exact
+CLI helper, never the Engine or applications. The actual producer exceeded its intended budget;
+that failure and the original helper bytes remain archived, not relabeled.
+
+The bootstrap now uses the existing owned Windows Job runner, preserving the original producer
+budget and independent cleanup facts. The same caller guard rejects the actual archived preimage;
+an actual surviving-writer child verifies exact native drain. The live unchanged-budget retry
+completed successfully, and the private builder/container/image/cache identities were observed.
+Local automated prevention is restored; whole immutable quality, functional verification, ordered
+completeness/Red Team/mirror, final owned disposal, seal and fresh independent audit remain due.
+
+Lesson status and requirement membership come from the canonical registry and fresh preflight,
+not this narrative. No severity, recurrence history, mandatory denominator or permission was reduced.
+
 ## What went well
 
 Actual producer/replay tests retained causal failures and null controls, then passed after repair.

@@ -715,19 +715,22 @@
         "file:scripts/development-ledger/m0_red_team.py",
         "file:scripts/iacode/client_checks.py",
         "file:scripts/iacode/native_execution.py",
-        "file:scripts/development-ledger/audit_runner_bridge.py"
+        "file:scripts/development-ledger/audit_runner_bridge.py",
+        "file:.gitattributes",
+        "file:tests/test_m2_observation_transport.py"
       ],
       "testEvidence": [
         "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/run-0011.json",
         "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/native-observation/run-0004.json",
         "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/bridge-physical-bounds/run-0002.json",
         "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/current-streams/run-0001.json",
-        "file:docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/controls/run-0002.json",
-        "file:docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/index-0005.json",
+        "file:docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/controls/run-0004.json",
+        "file:docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/index-0006.json",
         "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/run-0005.json",
         "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/native-cleanup-evidence/run-0001.json",
         "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/bridge-physical-bounds/run-0001.json",
-        "file:docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/controls/run-0001.json"
+        "file:docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/controls/run-0001.json",
+        "file:docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/controls/run-0003.json"
       ],
       "documentationEvidence": [
         "file:docs/adr/ADR-0061-client-verification-preserves-producer-and-cleanup-outcomes.md",
@@ -735,7 +738,7 @@
         "checkpoint:ENVIRONMENT-VALIDATION-CONTEXT.md"
       ],
       "validationEvidence": [],
-      "justification": "Local correction observed; whole current acceptance pending.",
+      "justification": "Actual local correction and automated prevention observed; current complete immutable and ordered assurance remain pending.",
       "notes": ""
     },
     {
@@ -750,19 +753,22 @@
         "file:scripts/development-ledger/m0_red_team.py",
         "file:scripts/iacode/client_checks.py",
         "file:scripts/iacode/native_execution.py",
-        "file:scripts/development-ledger/audit_runner_bridge.py"
+        "file:scripts/development-ledger/audit_runner_bridge.py",
+        "file:.gitattributes",
+        "file:tests/test_m2_observation_transport.py"
       ],
       "testEvidence": [
         "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/run-0011.json",
         "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/native-observation/run-0004.json",
         "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/bridge-physical-bounds/run-0002.json",
         "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/current-streams/run-0001.json",
-        "file:docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/controls/run-0002.json",
-        "file:docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/index-0005.json",
+        "file:docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/controls/run-0004.json",
+        "file:docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/index-0006.json",
         "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/run-0005.json",
         "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/native-cleanup-evidence/run-0001.json",
         "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/bridge-physical-bounds/run-0001.json",
-        "file:docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/controls/run-0001.json"
+        "file:docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/controls/run-0001.json",
+        "file:docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/controls/run-0003.json"
       ],
       "documentationEvidence": [
         "file:docs/adr/ADR-0061-client-verification-preserves-producer-and-cleanup-outcomes.md",
@@ -770,7 +776,7 @@
         "checkpoint:ENVIRONMENT-VALIDATION-CONTEXT.md"
       ],
       "validationEvidence": [],
-      "justification": "Local correction observed; whole current acceptance pending.",
+      "justification": "Actual local correction and automated prevention observed; current complete immutable and ordered assurance remain pending.",
       "notes": "Actual controlled callback fault after a real owned drain, not a real OS cleanup failure; no editor or Docker operation in the probe."
     },
     {
@@ -785,19 +791,22 @@
         "file:scripts/development-ledger/m0_red_team.py",
         "file:scripts/iacode/client_checks.py",
         "file:scripts/iacode/native_execution.py",
-        "file:scripts/development-ledger/audit_runner_bridge.py"
+        "file:scripts/development-ledger/audit_runner_bridge.py",
+        "file:.gitattributes",
+        "file:tests/test_m2_observation_transport.py"
       ],
       "testEvidence": [
         "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/run-0011.json",
         "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/native-observation/run-0004.json",
         "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/bridge-physical-bounds/run-0002.json",
         "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/current-streams/run-0001.json",
-        "file:docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/controls/run-0002.json",
-        "file:docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/index-0005.json",
+        "file:docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/controls/run-0004.json",
+        "file:docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/index-0006.json",
         "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/run-0005.json",
         "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/native-cleanup-evidence/run-0001.json",
         "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/bridge-physical-bounds/run-0001.json",
-        "file:docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/controls/run-0001.json"
+        "file:docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/controls/run-0001.json",
+        "file:docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/controls/run-0003.json"
       ],
       "documentationEvidence": [
         "file:docs/adr/ADR-0061-client-verification-preserves-producer-and-cleanup-outcomes.md",
@@ -805,7 +814,7 @@
         "checkpoint:ENVIRONMENT-VALIDATION-CONTEXT.md"
       ],
       "validationEvidence": [],
-      "justification": "Local correction observed; whole current acceptance pending.",
+      "justification": "Actual local correction and automated prevention observed; current complete immutable and ordered assurance remain pending.",
       "notes": ""
     },
     {
@@ -946,19 +955,22 @@
         "file:scripts/development-ledger/m0_red_team.py",
         "file:scripts/iacode/client_checks.py",
         "file:scripts/iacode/native_execution.py",
-        "file:scripts/development-ledger/audit_runner_bridge.py"
+        "file:scripts/development-ledger/audit_runner_bridge.py",
+        "file:.gitattributes",
+        "file:tests/test_m2_observation_transport.py"
       ],
       "testEvidence": [
         "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/run-0011.json",
         "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/native-observation/run-0004.json",
         "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/bridge-physical-bounds/run-0002.json",
         "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/current-streams/run-0001.json",
-        "file:docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/controls/run-0002.json",
-        "file:docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/index-0005.json",
+        "file:docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/controls/run-0004.json",
+        "file:docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/index-0006.json",
         "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/run-0005.json",
         "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/native-cleanup-evidence/run-0001.json",
         "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/bridge-physical-bounds/run-0001.json",
-        "file:docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/controls/run-0001.json"
+        "file:docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/controls/run-0001.json",
+        "file:docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/controls/run-0003.json"
       ],
       "documentationEvidence": [
         "file:docs/adr/ADR-0061-client-verification-preserves-producer-and-cleanup-outcomes.md",
@@ -966,7 +978,7 @@
         "checkpoint:ENVIRONMENT-VALIDATION-CONTEXT.md"
       ],
       "validationEvidence": [],
-      "justification": "Local correction observed; whole current acceptance pending.",
+      "justification": "Actual local correction and automated prevention observed; current complete immutable and ordered assurance remain pending.",
       "notes": ""
     },
     {
@@ -1303,19 +1315,22 @@
         "file:scripts/development-ledger/m0_red_team.py",
         "file:scripts/iacode/client_checks.py",
         "file:scripts/iacode/native_execution.py",
-        "file:scripts/development-ledger/audit_runner_bridge.py"
+        "file:scripts/development-ledger/audit_runner_bridge.py",
+        "file:.gitattributes",
+        "file:tests/test_m2_observation_transport.py"
       ],
       "testEvidence": [
         "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/run-0011.json",
         "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/native-observation/run-0004.json",
         "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/bridge-physical-bounds/run-0002.json",
         "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/current-streams/run-0001.json",
-        "file:docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/controls/run-0002.json",
-        "file:docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/index-0005.json",
+        "file:docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/controls/run-0004.json",
+        "file:docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/index-0006.json",
         "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/run-0005.json",
         "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/native-cleanup-evidence/run-0001.json",
         "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/bridge-physical-bounds/run-0001.json",
-        "file:docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/controls/run-0001.json"
+        "file:docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/controls/run-0001.json",
+        "file:docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/controls/run-0003.json"
       ],
       "documentationEvidence": [
         "file:docs/adr/ADR-0061-client-verification-preserves-producer-and-cleanup-outcomes.md",
@@ -1323,7 +1338,7 @@
         "checkpoint:ENVIRONMENT-VALIDATION-CONTEXT.md"
       ],
       "validationEvidence": [],
-      "justification": "Local correction observed; whole current acceptance pending.",
+      "justification": "Actual local correction and automated prevention observed; current complete immutable and ordered assurance remain pending.",
       "notes": ""
     },
     {
@@ -1996,19 +2011,22 @@
         "file:scripts/development-ledger/m0_red_team.py",
         "file:scripts/iacode/client_checks.py",
         "file:scripts/iacode/native_execution.py",
-        "file:scripts/development-ledger/audit_runner_bridge.py"
+        "file:scripts/development-ledger/audit_runner_bridge.py",
+        "file:.gitattributes",
+        "file:tests/test_m2_observation_transport.py"
       ],
       "testEvidence": [
         "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/run-0011.json",
         "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/native-observation/run-0004.json",
         "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/bridge-physical-bounds/run-0002.json",
         "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/current-streams/run-0001.json",
-        "file:docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/controls/run-0002.json",
-        "file:docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/index-0005.json",
+        "file:docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/controls/run-0004.json",
+        "file:docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/index-0006.json",
         "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/run-0005.json",
         "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/native-cleanup-evidence/run-0001.json",
         "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/bridge-physical-bounds/run-0001.json",
-        "file:docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/controls/run-0001.json"
+        "file:docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/controls/run-0001.json",
+        "file:docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/controls/run-0003.json"
       ],
       "documentationEvidence": [
         "file:docs/adr/ADR-0061-client-verification-preserves-producer-and-cleanup-outcomes.md",
@@ -2016,7 +2034,7 @@
         "checkpoint:ENVIRONMENT-VALIDATION-CONTEXT.md"
       ],
       "validationEvidence": [],
-      "justification": "Local correction observed; whole current acceptance pending.",
+      "justification": "Actual local correction and automated prevention observed; current complete immutable and ordered assurance remain pending.",
       "notes": ""
     },
     {
@@ -2599,12 +2617,26 @@
       "sourceRef": "lesson:LSN-0125",
       "description": "Verify native parent exit is not proof of process and profile cleanup",
       "mandatory": true,
-      "status": "NOT_STARTED",
-      "implementationEvidence": [],
-      "testEvidence": [],
-      "documentationEvidence": [],
-      "validationEvidence": [],
-      "justification": null,
+      "status": "PARTIAL",
+      "implementationEvidence": [
+        "file:docs/checkpoints/GATE-7-CP-0003/audit-harness/current_resources.py",
+        "file:scripts/development-ledger/audit_runner_bridge.py"
+      ],
+      "testEvidence": [
+        "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/bootstrap-ownership/run-0004.json",
+        "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/resource-phase/run-0005.json",
+        "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/bootstrap-ownership/run-0001.json",
+        "file:docs/checkpoints/GATE-7-CP-0003/resource-phases/phase-0002/BUILDER-BOOTSTRAP.json"
+      ],
+      "documentationEvidence": [
+        "checkpoint:DECISIONS.md",
+        "checkpoint:INTERNAL-ENVIRONMENT-REWORK.json"
+      ],
+      "validationEvidence": [
+        "test:BootstrapOwnershipTests.test_actual_bootstrap_caller_requires_owned_native_process_boundary",
+        "test:BootstrapOwnershipTests.test_real_parent_exit_with_inherited_output_writer_is_observed_then_exactly_drained"
+      ],
+      "justification": "Bootstrap recurrence is locally repaired and guarded; complete current native/full immutable assurance remains pending.",
       "notes": ""
     },
     {
@@ -2689,19 +2721,22 @@
         "file:scripts/development-ledger/m0_red_team.py",
         "file:scripts/iacode/client_checks.py",
         "file:scripts/iacode/native_execution.py",
-        "file:scripts/development-ledger/audit_runner_bridge.py"
+        "file:scripts/development-ledger/audit_runner_bridge.py",
+        "file:.gitattributes",
+        "file:tests/test_m2_observation_transport.py"
       ],
       "testEvidence": [
         "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/run-0011.json",
         "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/native-observation/run-0004.json",
         "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/bridge-physical-bounds/run-0002.json",
         "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/current-streams/run-0001.json",
-        "file:docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/controls/run-0002.json",
-        "file:docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/index-0005.json",
+        "file:docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/controls/run-0004.json",
+        "file:docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/index-0006.json",
         "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/run-0005.json",
         "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/native-cleanup-evidence/run-0001.json",
         "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/bridge-physical-bounds/run-0001.json",
-        "file:docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/controls/run-0001.json"
+        "file:docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/controls/run-0001.json",
+        "file:docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/controls/run-0003.json"
       ],
       "documentationEvidence": [
         "file:docs/adr/ADR-0061-client-verification-preserves-producer-and-cleanup-outcomes.md",
@@ -2709,7 +2744,7 @@
         "checkpoint:ENVIRONMENT-VALIDATION-CONTEXT.md"
       ],
       "validationEvidence": [],
-      "justification": "Local correction observed; whole current acceptance pending.",
+      "justification": "Actual local correction and automated prevention observed; current complete immutable and ordered assurance remain pending.",
       "notes": ""
     },
     {
@@ -2766,19 +2801,22 @@
         "file:scripts/development-ledger/m0_red_team.py",
         "file:scripts/iacode/client_checks.py",
         "file:scripts/iacode/native_execution.py",
-        "file:scripts/development-ledger/audit_runner_bridge.py"
+        "file:scripts/development-ledger/audit_runner_bridge.py",
+        "file:.gitattributes",
+        "file:tests/test_m2_observation_transport.py"
       ],
       "testEvidence": [
         "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/run-0011.json",
         "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/native-observation/run-0004.json",
         "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/bridge-physical-bounds/run-0002.json",
         "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/current-streams/run-0001.json",
-        "file:docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/controls/run-0002.json",
-        "file:docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/index-0005.json",
+        "file:docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/controls/run-0004.json",
+        "file:docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/index-0006.json",
         "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/run-0005.json",
         "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/native-cleanup-evidence/run-0001.json",
         "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/bridge-physical-bounds/run-0001.json",
-        "file:docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/controls/run-0001.json"
+        "file:docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/controls/run-0001.json",
+        "file:docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/controls/run-0003.json"
       ],
       "documentationEvidence": [
         "file:docs/adr/ADR-0061-client-verification-preserves-producer-and-cleanup-outcomes.md",
@@ -2786,7 +2824,7 @@
         "checkpoint:ENVIRONMENT-VALIDATION-CONTEXT.md"
       ],
       "validationEvidence": [],
-      "justification": "Local correction observed; whole current acceptance pending.",
+      "justification": "Actual local correction and automated prevention observed; current complete immutable and ordered assurance remain pending.",
       "notes": "Actual controlled callback fault after a real owned drain, not a real OS cleanup failure; no editor or Docker operation in the probe."
     },
     {
@@ -3043,19 +3081,22 @@
         "file:scripts/development-ledger/m0_red_team.py",
         "file:scripts/iacode/client_checks.py",
         "file:scripts/iacode/native_execution.py",
-        "file:scripts/development-ledger/audit_runner_bridge.py"
+        "file:scripts/development-ledger/audit_runner_bridge.py",
+        "file:.gitattributes",
+        "file:tests/test_m2_observation_transport.py"
       ],
       "testEvidence": [
         "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/run-0011.json",
         "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/native-observation/run-0004.json",
         "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/bridge-physical-bounds/run-0002.json",
         "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/current-streams/run-0001.json",
-        "file:docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/controls/run-0002.json",
-        "file:docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/index-0005.json",
+        "file:docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/controls/run-0004.json",
+        "file:docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/index-0006.json",
         "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/run-0005.json",
         "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/native-cleanup-evidence/run-0001.json",
         "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/bridge-physical-bounds/run-0001.json",
-        "file:docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/controls/run-0001.json"
+        "file:docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/controls/run-0001.json",
+        "file:docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/controls/run-0003.json"
       ],
       "documentationEvidence": [
         "file:docs/adr/ADR-0061-client-verification-preserves-producer-and-cleanup-outcomes.md",
@@ -3063,7 +3104,7 @@
         "checkpoint:ENVIRONMENT-VALIDATION-CONTEXT.md"
       ],
       "validationEvidence": [],
-      "justification": "Local correction observed; whole current acceptance pending.",
+      "justification": "Actual local correction and automated prevention observed; current complete immutable and ordered assurance remain pending.",
       "notes": ""
     }
   ]

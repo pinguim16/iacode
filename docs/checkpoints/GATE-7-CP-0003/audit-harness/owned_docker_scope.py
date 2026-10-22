@@ -6,6 +6,7 @@ import argparse
 import hashlib
 import json
 import os
+import re
 import subprocess
 import sys
 import tempfile
@@ -74,8 +75,8 @@ def snapshot():
     return result
 
 
-def child_environment():
-    scope = load_json(SCOPE)
+def child_environment(scope_path=None):
+    scope = load_json(scope_path if scope_path is not None else SCOPE)
     if scope["status"] != "ACTIVE":
         raise ValueError("OWNED_SCOPE_NOT_ACTIVE")
     directory = Path(scope["privateBuildxConfig"])
@@ -89,19 +90,26 @@ def child_environment():
             "DOCKER_BUILDKIT": "1", "PYTHONIOENCODING": "utf-8"}
 
 
-def prepare():
-    if SCOPE.exists():
+def prepare(scope_path=None, project=None):
+    scope_path = scope_path if scope_path is not None else SCOPE
+    project = project if project is not None else "iacode-m2cp3-aa560f386fe44e21876d0e3ccfdfef31"
+    if re.fullmatch(r"iacode-m2cp3-[a-z0-9-]{1,64}", project) is None:
+        raise ValueError("INVALID_TASK_PROJECT_IDENTITY")
+    if scope_path.exists():
         raise ValueError("DO_NOT_REPLACE_EXISTING_OWNERSHIP_RECEIPT")
     before = snapshot()
+    if any(row.get("project") == project for kind in ("containers", "networks", "volumes", "images")
+           for row in before[kind]):
+        raise ValueError("NEW_RESOURCE_PHASE_REQUIRES_UNUSED_PROJECT")
     directory = Path(tempfile.mkdtemp(prefix="iacode-m2cp3-buildx-")).resolve()
     builder = "iacode-m2cp3-" + uuid.uuid4().hex
     scope = {"schemaVersion": "1.0.0", "status": "CREATING", "createdAt": utc_now(),
              "builder": builder, "privateBuildxConfig": str(directory),
              "engineEndpoint": ENDPOINT, "before": before,
-             "inheritedOwnedProject": "iacode-m2cp3-aa560f386fe44e21876d0e3ccfdfef31",
-             "registeredProjects": ["iacode-m2cp3-aa560f386fe44e21876d0e3ccfdfef31"],
+             "inheritedOwnedProject": project,
+             "registeredProjects": [project],
              "claimedAuxiliaryImages": []}
-    write_json(SCOPE, scope)
+    write_json(scope_path, scope)
     environment = {**os.environ, "DOCKER_HOST": ENDPOINT, "DOCKER_CONTEXT": "",
                    "BUILDX_CONFIG": str(directory)}
     try:
@@ -117,7 +125,7 @@ def prepare():
         raise
     finally:
         scope["dockerConfigUnchanged"] = before["dockerConfigHash"] == configuration_hash()
-        write_json(SCOPE, scope)
+        write_json(scope_path, scope)
     if not scope["dockerConfigUnchanged"]:
         raise ValueError("UNEXPECTED_GLOBAL_DOCKER_CONFIG_CHANGE")
     print(json.dumps({"status": scope["status"], "builder": builder,
@@ -126,9 +134,10 @@ def prepare():
                       "dockerConfigUnchanged": scope["dockerConfigUnchanged"]}))
 
 
-def capture_builder_ownership():
-    scope = load_json(SCOPE)
-    environment = child_environment()
+def capture_builder_ownership(scope_path=None):
+    scope_path = scope_path if scope_path is not None else SCOPE
+    scope = load_json(scope_path)
+    environment = child_environment(scope_path)
     name = "buildx_buildkit_" + scope["builder"] + "0"
     names = docker(["container", "ls", "--all", "--filter", "name=^/" + name + "$", "--quiet"],
                    environment=environment).splitlines()
@@ -158,17 +167,18 @@ def capture_builder_ownership():
             claim = {"id": document["Image"], "evidence": "OWNED-DOCKER-SCOPE.json builderOwnership"}
             claims.append(claim)
         claim.update(allowedTags=[document["Config"]["Image"]], allowedDigestRepositories=["moby/buildkit"])
-    write_json(SCOPE, scope)
+    write_json(scope_path, scope)
     print(json.dumps(evidence))
 
 
-def cleanup():
-    output = CHECKPOINT / "OWNED-RESOURCE-CLEANUP.json"
+def cleanup(scope_path=None):
+    scope_path = scope_path if scope_path is not None else SCOPE
+    output = scope_path.parent / "OWNED-RESOURCE-CLEANUP.json"
     if output.exists():
         # Refuse before the first effect, not in finally after replaying removals.
         raise ValueError("Prior cleanup observation exists; explicit recorded recovery required")
-    scope = load_json(SCOPE)
-    environment = child_environment()
+    scope = load_json(scope_path)
+    environment = child_environment(scope_path)
     current = snapshot()
     plan = cleanup_plan(scope, current)
     directory = Path(scope["privateBuildxConfig"])
@@ -274,7 +284,7 @@ def cleanup():
         success = (own_clean and receipt["unrelatedApplicationsUnchanged"]
                    and receipt["unrelatedApplicationsUnchangedDuringCleanup"])
         # Revalidate the absolute private target immediately before recursive deletion.
-        child_environment()
+        child_environment(scope_path)
         if any(path.is_symlink() or path.is_junction() for path in directory.rglob("*")):
             raise ValueError("REDIRECTED_PRIVATE_CONFIG")
         if own_clean:
@@ -289,7 +299,7 @@ def cleanup():
     finally:
         receipt["finishedAt"] = utc_now()
         write_json(output, receipt)
-        write_json(SCOPE, scope)
+        write_json(scope_path, scope)
     final_plan = receipt.get("postDependencyImagePlan", plan)
     print(json.dumps({"result": receipt["result"], "removedImages": len(final_plan["images"]),
                       "sharedResourcesPreserved": len(final_plan["preservedShared"]),

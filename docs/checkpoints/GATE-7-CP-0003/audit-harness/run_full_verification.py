@@ -267,7 +267,7 @@ def capture_producer_reports(
 
 
 def command(arguments: list[str], cwd: Path) -> str:
-    from owned_docker_scope import child_environment
+    from current_resources import child_environment
 
     environment = child_environment()
     environment.update(GIT_TERMINAL_PROMPT="0", GCM_INTERACTIVE="Never", GIT_ASKPASS="", SSH_ASKPASS="")
@@ -317,7 +317,7 @@ def main() -> int:
     from audit_runner_bridge import Job, run_owned
     from ledger_common import find_secrets, load_json, scope_fingerprint
     from native_process import WindowsJob
-    from owned_docker_scope import SCOPE, child_environment
+    from current_resources import child_environment, current_scope_path
     from verify import verification_environment
 
     parser = argparse.ArgumentParser(description=__doc__)
@@ -360,14 +360,15 @@ def main() -> int:
             raise RuntimeError("the exact transported canonical sources differ from the current source")
         environment = child_environment()
         project = verification_environment(clone, environment)["COMPOSE_PROJECT_NAME"]
-        scope = load_json(SCOPE)
+        scope_path = current_scope_path()
+        scope = load_json(scope_path)
         if project in scope["registeredProjects"]:
             raise RuntimeError("fresh verifier namespace already registered")
         scope["registeredProjects"].append(project)
         scope.setdefault("projectOwners", []).append({"project": project, "checkout": str(clone),
                                                        "subjectCommit": observed,
                                                        "source": "canonical verification_environment before producer launch"})
-        write_json(SCOPE, scope)
+        write_json(scope_path, scope)
         shutil.copy2(ROOT / "infra/compose/.env", clone / "infra/compose/.env")
         if command(["git", "status", "--porcelain"], clone):
             raise RuntimeError("ignored workstation configuration changed the transported tree")

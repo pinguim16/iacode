@@ -1,0 +1,22 @@
+test_actual_bootstrap_caller_requires_owned_native_process_boundary (test_m2_bootstrap_ownership.BootstrapOwnershipTests.test_actual_bootstrap_caller_requires_owned_native_process_boundary) ... FAIL
+test_archived_actual_preimage_is_rejected_by_identical_caller_guard (test_m2_bootstrap_ownership.BootstrapOwnershipTests.test_archived_actual_preimage_is_rejected_by_identical_caller_guard) ... ok
+test_real_parent_exit_with_inherited_output_writer_is_observed_then_exactly_drained (test_m2_bootstrap_ownership.BootstrapOwnershipTests.test_real_parent_exit_with_inherited_output_writer_is_observed_then_exactly_drained) ... ok
+
+======================================================================
+FAIL: test_actual_bootstrap_caller_requires_owned_native_process_boundary (test_m2_bootstrap_ownership.BootstrapOwnershipTests.test_actual_bootstrap_caller_requires_owned_native_process_boundary)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\iacode\tests\test_m2_bootstrap_ownership.py", line 35, in test_actual_bootstrap_caller_requires_owned_native_process_boundary
+    self.assert_owned_caller(path.read_text(encoding="utf-8"))
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\iacode\tests\test_m2_bootstrap_ownership.py", line 26, in assert_owned_caller
+    self.assertTrue(any(isinstance(node.func, ast.Name) and node.func.id == "run_owned"
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                        for node in calls), "actual bootstrap must invoke the existing owned runner")
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : actual bootstrap must invoke the existing owned runner
+
+----------------------------------------------------------------------
+Ran 3 tests in 1.268s
+
+FAILED (failures=1)

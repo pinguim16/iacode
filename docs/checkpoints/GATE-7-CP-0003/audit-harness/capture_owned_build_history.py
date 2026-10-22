@@ -9,7 +9,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-from owned_docker_scope import child_environment
+from current_resources import child_environment, current_scope_path
 
 CHECKPOINT = Path(__file__).resolve().parents[1]
 ROOT = CHECKPOINT.parents[2]
@@ -19,7 +19,7 @@ from ledger_common import find_secrets, load_json, utc_now, write_json
 
 def main():
     environment = child_environment()
-    scope = load_json(CHECKPOINT / "OWNED-DOCKER-SCOPE.json")
+    scope = load_json(current_scope_path())
     folder = CHECKPOINT / "resource-observations/build-history"
     folder.mkdir(parents=True, exist_ok=True)
     index = len(list(folder.glob("run-*"))) + 1

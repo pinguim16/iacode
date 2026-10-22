@@ -1,0 +1,54 @@
+{
+  "startedAt": "2026-10-22T03:14:17Z",
+  "arguments": [
+    "docker",
+    "buildx",
+    "inspect",
+    "iacode-m2cp3-61bb7b6040b746f89d25f24580762b3c",
+    "--bootstrap"
+  ],
+  "result": "PASS",
+  "producerBudgetSeconds": 60,
+  "execution": {
+    "producer": {
+      "status": "COMPLETED",
+      "exitCode": 0,
+      "arguments": [
+        "docker",
+        "buildx",
+        "inspect",
+        "iacode-m2cp3-61bb7b6040b746f89d25f24580762b3c",
+        "--bootstrap"
+      ],
+      "stdout": {
+        "bytes": 1552,
+        "sha256": "afe97419447ed69031a4987b2755fb6dbe402ecd1db699d784dd0b472d5318b9",
+        "refusal": null
+      },
+      "stderr": {
+        "bytes": 328,
+        "sha256": "fd6da6cd7d949bb55dd93cb5944e399f6aaddd502933f6a1bdbc13c4daa6a9e8",
+        "refusal": null
+      }
+    },
+    "cleanup": {
+      "result": "PASS",
+      "observation": {
+        "jobOwned": true,
+        "remainingBeforeCleanup": 0,
+        "remainingAfterCleanup": 0,
+        "observedProcessCount": 0,
+        "signaledProcessCount": 0,
+        "forcedTermination": false,
+        "naturalExitBudgetWithinOriginalDeadlineSeconds": 1
+      }
+    }
+  },
+  "status": "COMPLETED",
+  "exitCode": 0,
+  "artifacts": {
+    "stdout.log": "resource-phases/phase-0002/controls/bootstrap-retry-0001/stdout.log",
+    "stderr.log": "resource-phases/phase-0002/controls/bootstrap-retry-0001/stderr.log"
+  },
+  "finishedAt": "2026-10-22T03:14:28Z"
+}

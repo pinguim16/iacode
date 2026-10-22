@@ -16,7 +16,7 @@ sys.path.insert(0, str(ROOT / "scripts/iacode"))
 from audit_runner_bridge import Job, run_owned
 from ledger_common import find_secrets, scope_fingerprint, utc_now, write_json
 from native_process import WindowsJob
-from owned_docker_scope import child_environment
+from current_resources import child_environment, current_scope_path
 from run_full_verification import REMOTE, command
 
 
@@ -64,7 +64,7 @@ def main():
         shutil.copyfile(clone / "infra/compose/.env.example", clone / "infra/compose/.env")
         environment = child_environment()
         from ledger_common import load_json
-        environment["COMPOSE_PROJECT_NAME"] = load_json(CHECKPOINT / "OWNED-DOCKER-SCOPE.json")["inheritedOwnedProject"]
+        environment["COMPOSE_PROJECT_NAME"] = load_json(current_scope_path())["inheritedOwnedProject"]
         environment["IACODE_VERSION"] = "0.1.0"
         arguments = [sys.executable, "scripts/development-ledger/green_keeper.py", "--trigger",
                      "Current complete corrective assurance from an exact public transported subject",

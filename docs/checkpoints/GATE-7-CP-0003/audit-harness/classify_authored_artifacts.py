@@ -27,8 +27,12 @@ ASSETS = (
     "tests/test_m2_cleanup_operator.py",
     "tests/test_m2_current_stream_bootstrap.py",
     "tests/test_m2_observation_transport.py",
+    "tests/test_m2_bootstrap_ownership.py",
     "docs/adr/ADR-0061-client-verification-preserves-producer-and-cleanup-outcomes.md",
     "docs/adr/ADR-0062-isolated-audit-uses-closed-host-validation-jobs.md",
+    "docs/checkpoints/GATE-7-CP-0003/audit-harness/owned_docker_scope.py",
+    "docs/checkpoints/GATE-7-CP-0003/audit-harness/current_resources.py",
+    "docs/checkpoints/GATE-7-CP-0003/audit-harness/test_resource_phase.py",
 )
 
 

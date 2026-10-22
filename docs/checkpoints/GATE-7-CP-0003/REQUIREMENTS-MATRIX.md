@@ -178,7 +178,7 @@ Expected set derived by: `policies.expected_requirement_refs over docs/GATE-7-CH
 | `LESSON-REQ-0121` | `lesson:LSN-0122` | yes | `NOT_STARTED` | Verify engine-allocated host ports must be rediscovered after container restart | LESSON-PREFLIGHT.json LESSON-REQ-0121 |
 | `LESSON-REQ-0122` | `lesson:LSN-0123` | yes | `NOT_STARTED` | Verify consent binds workspace identity, not an uncanonicalized path spelling | LESSON-PREFLIGHT.json LESSON-REQ-0122 |
 | `LESSON-REQ-0123` | `lesson:LSN-0124` | yes | `NOT_STARTED` | Verify durable editor recovery must not use an in-memory test host | LESSON-PREFLIGHT.json LESSON-REQ-0123 |
-| `LESSON-REQ-0124` | `lesson:LSN-0125` | yes | `NOT_STARTED` | Verify native parent exit is not proof of process and profile cleanup | LESSON-PREFLIGHT.json LESSON-REQ-0124 |
+| `LESSON-REQ-0124` | `lesson:LSN-0125` | yes | `PARTIAL` | Verify native parent exit is not proof of process and profile cleanup | LESSON-PREFLIGHT.json LESSON-REQ-0124 |
 | `LESSON-REQ-0125` | `lesson:LSN-0126` | yes | `NOT_STARTED` | Verify known authentication material is not domain or presentation data | LESSON-PREFLIGHT.json LESSON-REQ-0125 |
 | `LESSON-REQ-0126` | `lesson:LSN-0127` | yes | `NOT_STARTED` | Verify fresh runtime health does not initialize an operator-managed model catalog | LESSON-PREFLIGHT.json LESSON-REQ-0126 |
 | `LESSON-REQ-0127` | `lesson:LSN-0128` | yes | `NOT_STARTED` | Verify adversarial premises must use the actual public contract | LESSON-PREFLIGHT.json LESSON-REQ-0127 |

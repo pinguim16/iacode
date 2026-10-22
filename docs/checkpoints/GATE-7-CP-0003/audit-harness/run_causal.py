@@ -29,6 +29,8 @@ def main() -> int:
     mode.add_argument("--cleanup-controls", action="store_true")
     mode.add_argument("--operator-cleanup-controls", action="store_true")
     mode.add_argument("--dependency-cleanup-controls", action="store_true")
+    mode.add_argument("--resource-phase-controls", action="store_true")
+    mode.add_argument("--bootstrap-ownership-controls", action="store_true")
     mode.add_argument("--native-controls", action="store_true")
     mode.add_argument("--native-candidate", action="store_true")
     mode.add_argument("--physical-bounds-controls", action="store_true")
@@ -40,12 +42,19 @@ def main() -> int:
     if options.gate or options.changed_source_lint or options.format_current_native:
         sys.path.insert(0, str(ROOT / "scripts/iacode"))
         from compose import project_image, read_env_file
-        from owned_docker_scope import child_environment
+        from current_resources import child_environment, current_owner_file
 
         environment = child_environment()
-        owned = read_env_file(CHECKPOINT / "RUNTIME-OWNER.txt", {})
+        owned = read_env_file(current_owner_file(), {})
         environment.update(owned)
-    if options.byte_transport_controls:
+    if options.bootstrap_ownership_controls:
+        command = ["python", "-m", "unittest", "discover", "-s", "tests", "-p",
+                   "test_m2_bootstrap_ownership.py", "-v"]
+        folder = "causal-attempts/bootstrap-ownership"
+    elif options.resource_phase_controls:
+        command = ["python", "docs/checkpoints/GATE-7-CP-0003/audit-harness/test_resource_phase.py", "-v"]
+        folder = "causal-attempts/resource-phase"
+    elif options.byte_transport_controls:
         command = ["python", "-m", "unittest", "discover", "-s", "tests", "-p",
                    "test_m2_observation_transport.py", "-v"]
         folder = "byte-transport-attempts/controls"
@@ -95,7 +104,7 @@ def main() -> int:
                    "--network", "none", "--read-only", "--cap-drop", "ALL",
                    "--security-opt", "no-new-privileges:true", "--env", "RUFF_NO_CACHE=true",
                    "--volume", str(ROOT) + ":/repo", "--workdir", "/repo",
-                   project_image("api", CHECKPOINT / "RUNTIME-OWNER.txt"),
+                   project_image("api", current_owner_file()),
                    "ruff", "format", "scripts/iacode/native_editor.py", "scripts/iacode/native_execution.py"]
         folder = "quality-attempts/native-format"
     elif options.changed_source_lint:
@@ -106,7 +115,7 @@ def main() -> int:
                    "--network", "none", "--read-only", "--cap-drop", "ALL",
                    "--security-opt", "no-new-privileges:true", "--env", "RUFF_NO_CACHE=true",
                    "--volume", str(ROOT) + ":/repo:ro", "--workdir", "/repo",
-                   project_image("api", CHECKPOINT / "RUNTIME-OWNER.txt"),
+                   project_image("api", current_owner_file()),
                    "ruff", "check", "scripts/iacode/client_checks.py",
                    "scripts/iacode/gates/client_tests.py", "scripts/iacode/native_editor.py",
                    "scripts/iacode/native_execution.py"]

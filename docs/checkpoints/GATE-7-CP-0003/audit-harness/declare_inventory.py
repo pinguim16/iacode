@@ -27,6 +27,7 @@ AUTHORED = {
     "tests/test_m2_cleanup_operator.py": "Checkpoint-operator controls using real Python producers and isolated Docker boundaries; never live engine cleanup acceptance.",
     "tests/test_m2_current_stream_bootstrap.py": "Cold actual UTF-8 entry-block positive/adverse controls without replaying runtime/cleanup main bodies.",
     "tests/test_m2_observation_transport.py": "Real Git archive and both checkout modes for every canonically declared copied observation; actual boundary-removal adverse control with valid binary null.",
+    "tests/test_m2_bootstrap_ownership.py": "Guard the actual current bootstrap caller and archived adverse preimage; execute real Windows owned surviving-writer proof without Engine operations.",
     ".iacode/policies/audit-registry.json": "Bind both M2 findings and escaped attack to corrective requirement derivation.",
     ".iacode/memory/lessons.jsonl": "Escalate guarded recurrences and add actual causal prevention; preserve other lesson semantics.",
     ".iacode/memory/guardrails/registry.json": "Extend existing guards without removing historical controls; canonical JSON formatting only elsewhere.",

@@ -22,18 +22,16 @@
       "justification": null
     },
     "lint": {
-      "status": "PASS",
-      "evidence": [
-        "file:quality-attempts/lint/run-0008.json"
-      ],
-      "justification": "Complete actual canonical current gate; earlier failures/retries preserved."
+      "status": "NOT_EXECUTED",
+      "evidence": [],
+      "justification": "New guarded native-descendant recurrence changes assurance-scoped memory; prior actual source epochs remain preserved, not current acceptance."
     },
     "staticAnalysis": {
       "status": "PASS",
       "evidence": [
-        "file:quality-attempts/staticAnalysis/run-0006.json"
+        "file:quality-attempts/staticAnalysis/run-0007.json"
       ],
-      "justification": "Actual complete current script/test compile; not full test acceptance."
+      "justification": "Actual current canonical static-analysis component, not complete quality acceptance."
     },
     "security": {
       "status": "NOT_EXECUTED",
@@ -48,7 +46,7 @@
     "checkpointValidation": {
       "status": "NOT_EXECUTED",
       "evidence": [],
-      "justification": "The family-boundary guard recurrence requires new current-source evidence; earlier actual observations remain preserved."
+      "justification": "New guarded native-descendant recurrence changes assurance-scoped memory; prior actual source epochs remain preserved, not current acceptance."
     },
     "redTeam": {
       "status": "NOT_EXECUTED",

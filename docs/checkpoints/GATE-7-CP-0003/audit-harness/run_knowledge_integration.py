@@ -56,14 +56,15 @@ def main() -> int:
         raise ValueError("invalid integration namespace")
     before = containers()
     from ledger_common import load_json, write_json
-    from owned_docker_scope import SCOPE
+    from current_resources import current_scope_path
 
-    scope = load_json(SCOPE)
+    scope_path = current_scope_path()
+    scope = load_json(scope_path)
     if owner in scope["registeredProjects"]:
         raise ValueError("fresh SQL owner already registered")
     scope["registeredProjects"].append(owner)
     scope.setdefault("projectOwners", []).append({"project": owner, "source": "current authored SQL runner before launch"})
-    write_json(SCOPE, scope)
+    write_json(scope_path, scope)
     report = {
         "schemaVersion": "1.0.0",
         "kind": "TARGETED_REAL_SQL_HTTP",

@@ -18,7 +18,7 @@ from policies import gate_definitions
 
 
 def preserve_execution(command: list[str], stem: str, kind: str, identity: str) -> int:
-    from owned_docker_scope import child_environment
+    from current_resources import child_environment, current_owner_file
 
     argv = list(command)
     if argv[0] == "python":
@@ -35,7 +35,7 @@ def preserve_execution(command: list[str], stem: str, kind: str, identity: str) 
 
     environment = child_environment()
     # Build-only canonical gates must not fall back to a preexisting application's tag.
-    environment.update(read_env_file(CHECKPOINT / "RUNTIME-OWNER.txt", {}))
+    environment.update(read_env_file(current_owner_file(), {}))
     result = subprocess.run(argv, cwd=ROOT, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
                             check=False, env=environment)
     raw = result.stdout

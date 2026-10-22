@@ -17,7 +17,8 @@ ROOT = CHECKPOINT.parents[2]
 sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
 sys.path.insert(0, str(ROOT / "scripts/iacode"))
 from audit_runner_bridge import ClosedBridge, FrozenInputs, Job, regular
-from owned_docker_scope import child_environment, snapshot
+from owned_docker_scope import snapshot
+from current_resources import child_environment, current_scope_path
 from ledger_common import find_secrets, load_json, utc_now, write_json
 from native_process import WindowsJob
 from policies import gate_definitions
@@ -78,7 +79,7 @@ def main():
         jobs = {key: Job((sys.executable, *definitions[key]["command"][1:]), 1100)
                 for key in ("clientTests", "apiTests")}
         environment = child_environment()
-        environment["COMPOSE_PROJECT_NAME"] = load_json(CHECKPOINT / "OWNED-DOCKER-SCOPE.json")["inheritedOwnedProject"]
+        environment["COMPOSE_PROJECT_NAME"] = load_json(current_scope_path())["inheritedOwnedProject"]
         environment["IACODE_VERSION"] = "0.1.0"
         environment["PYTHONNOUSERSITE"] = "1"
         environment.pop("PYTHONPATH", None)

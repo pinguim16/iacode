@@ -3,11 +3,11 @@
 Current Gate: GATE-7
 Current Status: IN_PROGRESS
 
-The later OWNER-SCOPE-AND-PAUSE-0001.json supersedes the old confirmation request in this handoff.
-The owner limited Docker concerns to verified E:/iacode resources, without confirming who changed
-another project's applications. That question is no longer a blocker; the original comparison
-remains FAIL. No new test/auditor or Docker resource was started this turn. Resume only on a new
-explicit instruction. No canonical project control or independent boundary was waived.
+RESUME-0001.json records the owner's explicit continuation after restart. Docker concerns only
+verified E:/iacode resources, without attribution of another project's update. The original
+comparison remains FAIL and the historical disposal receipts are unchanged. The separately
+receipted phase-0002 is ACTIVE; its current pointer is ACTIVE-DOCKER-PHASE.json. No canonical
+project control or independent boundary was waived. No new independent auditor has started.
 
 ## Objective
 
@@ -23,7 +23,7 @@ Both finding closures, the complete current16-gate cycle, one complete immutable
 
 ## Current repository state
 
-Branch main; published IN_PROGRESS runtime-v1 is8312bb282844dc5d6b5e3e3f7a96f3c77cdbdca9. Current source67c1c0fa is later unsealed corrective work. Immutable CP0001 remains the last valid seal at823cf164c6931dab7f957c92721ded7a916655bd; failed/unsealed CP0002 bytes are preserved.
+Branch main; resume started clean at c874eca245afe81fb5e0d4ba63cef4bb70462677. Current source is7c78c7a2 after the explicitly escalated native-bootstrap recurrence, permanent caller/descendant guard and retrospective. Earlier67c1c0fa results and runtime-v1 are historical, not current whole acceptance. Immutable CP0001 remains the last valid seal at823cf164c6931dab7f957c92721ded7a916655bd; failed/unsealed CP0002 bytes are preserved.
 
 ## Files changed
 
@@ -33,17 +33,28 @@ FILES.json declares the operational replay/client/native/bridge changes, their r
 
 Remain within authorized Gate7 corrections. No source/test weakening, global configuration change, application restart, other-chat setting write, independent self-attestation or Gate8. Four global configuration files were rechecked byte-identical after disposal. Other-chat preservation records no writes, not a newly measured chat-database hash.
 
+The later post-restart historical comparison (cmd-0227) is FAIL: the Codex config hash differs,
+with a measured last-write timestamp before this resumption; all three Git configuration hashes
+match. ENVIRONMENT-POST-RESTART-0001.json retains this observation without reading contents,
+attributing the actor, modifying the configuration or converting the old comparison into PASS.
+
 ## Tests executed
 
-Current static-analysis run-0006 and complete lint run-0008 exit0 at unchanged67c1c0fa. Lint run-0007's private OCI-export timeout remains failed evidence. Three actual transport cases and206 staged comparisons pass. Nine distinct operator boundary controls pass in dependency-cleanup/run-0004; run-0002's two missing-ownership fixture failures remain beside corrected measured premises. The old Root1018 baseline has seven failures; the first public whole cycle was deliberately canceled with exit20 and exact Job/clone cleanup, never given a unit verdict.
+Current static-analysis run-0007, bootstrap-ownership run-0004 and resource-phase run-0005 exit0 at7c78c7a2. The real caller guard has its retained failing baseline beside valid adverse/null controls; the surviving-writer child is actually drained. Eight phase cases use actual filesystem/child operations and isolated engine doubles, not live engine acceptance. Live builder retry separately exits0 inside the unchanged60-second budget with native cleanup PASS; actual container/image/cache ownership is pinned. Earlier complete lint and transport attempts remain historical source epochs; fresh complete current assurance is due.
 
 ## Known failures
 
-The initial37-container comparison fails for two esteira-videos containers recreated with another image at2026-10-22T00:09:57Z and00:10:15Z. Their engine labels name E:/esteira_videos, outside this repository. Original IDs/snapshots and the failed comparison remain. Their replacements and every other unrelated application present before our disposal stayed unchanged during it. Attribution/authority confirmation was requested from the owner and is still pending.
+The initial37-container comparison fails for two independently observed replacements outside this repository. Original IDs/snapshots, denominator and failed comparison remain unchanged. The owner clarified project-only Docker scope; attribution of another project's update is not required for continuation. This clarification is not a passing test or approval of that external activity.
+
+BOOTSTRAP-DRAIN-001 retained a new helper's direct-pipe timeout and surviving CLI descendant.
+LSN-0125 was reopened before repair. Only the exact pinned CLI helper was signaled; Engine and
+applications were not. Original preimage, timeout and controller observations remain. The helper
+now uses the existing owned Job runner; local guard and live same-budget retry pass. This does not
+close the original M2 findings or establish complete current acceptance.
 
 ## Known risks
 
-The Docker engine responds, but OCI tar export experienced a retained session timeout before an unchanged complete retry passed. The old private resource scope is now disposed and refuses replay. Historical refused/ambiguous temporary targets remain outside deletion authority. No current complete or independent acceptance exists.
+The Docker engine responds after restart, but OCI tar export previously had a retained session timeout before a complete unchanged retry passed. The old resource scope is disposed and refuses replay. New phase-0002 has its own receipt and private builder configuration; exact final disposal remains mandatory after tests. Historical refused/ambiguous temporary targets remain outside deletion authority. No complete current or independent acceptance exists.
 
 ## Do not repeat
 
@@ -51,15 +62,15 @@ Never rerun the historical PID controller or the one-shot cleanup receipt. Do no
 
 ## Required next action
 
-Remain paused for computer restart until the owner explicitly resumes. Follow NEXT.md and OWNER-SCOPE-AND-PAUSE-0001.json, create a new separately receipted task-owned resource phase, then complete all16 canonical gates, full immutable non-fast verifier, DCV, fresh internal Red Team/mirror and seal READY_FOR_REVIEW before a fresh independent M2 auditor. No Gate8.
+Use phase-0002 through current_resources.py, not the disposed original operator receipt. Recheck declared observation transport, publish an exact immutable current runtime subject, complete all16 canonical gates, the full immutable non-fast verifier, DCV, fresh internal Red Team/mirror and observed owned disposal. Seal READY_FOR_REVIEW before a fresh independent M2 auditor. No Gate8.
 
 ## Exact continuation sequence
 
-After explicit resume, read canonical intake, LATEST and this complete checkpoint; validate and compare Git/STATE. Do not require attribution of another project's update or rewrite the failed original comparison. Create a new separately receipted task-owned phase instead of reusing the disposed receipt, then complete every ordered control and seal before commissioning a history-free auditor.
+Entry intake, actual checkpoint validation and clean Git comparison succeeded. The owner resumed and phase-0002 was separately created. Next run complete current transport and internal assurance from the exact published subject. Do not require another-project attribution, overwrite historical receipts or silently rewrite a failed comparison. Observe final exact owned disposal before handoff, then seal before commissioning a history-free auditor.
 
 ## Validation commands
 
-Use record_command.py with explicit current checkpoint. The ledger validator itself needs no Docker: run python scripts/development-ledger/validate_checkpoint.py. Do not use run_causal.py --gate for this after disposal, since its old child_environment correctly refuses the cleaned scope.
+Use record_command.py with explicit current checkpoint. run_causal.py --resource-phase-controls and --dependency-cleanup-controls are actual local controls. current_resources.py selects the explicit ACTIVE-DOCKER-PHASE.json receipt; run_causal.py --gate now uses that fresh phase. The unchanged checkpoint validator needs no Docker. Never run old one-shot cleanup or historical PID controllers.
 
 ## Stop conditions
 
