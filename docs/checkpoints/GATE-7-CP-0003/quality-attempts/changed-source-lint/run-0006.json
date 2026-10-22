@@ -1,0 +1,49 @@
+{
+  "startedAt": "2026-10-21T23:11:02Z",
+  "finishedAt": "2026-10-21T23:11:08Z",
+  "sourceFingerprint": "d103e397246cc7d8e67c76dbe0b6c56e5745a146e695fae934feab694352bf46",
+  "sourceUnchanged": true,
+  "durationMs": 7561,
+  "arguments": [
+    "docker",
+    "run",
+    "--rm",
+    "--name",
+    "iacode-m2cp3-ruff-c5932aeea8aa49c99773c10d4e4df6f0",
+    "--network",
+    "none",
+    "--read-only",
+    "--cap-drop",
+    "ALL",
+    "--security-opt",
+    "no-new-privileges:true",
+    "--env",
+    "RUFF_NO_CACHE=true",
+    "--volume",
+    "E:\\iacode:/repo:ro",
+    "--workdir",
+    "/repo",
+    "iacode-m2cp3-aa560f386fe44e21876d0e3ccfdfef31/api:0.1.0",
+    "ruff",
+    "check",
+    "scripts/iacode/client_checks.py",
+    "scripts/iacode/gates/client_tests.py",
+    "scripts/iacode/native_editor.py",
+    "scripts/iacode/native_execution.py"
+  ],
+  "exitCode": 1,
+  "streams": {
+    "stdout": {
+      "sha256": "db870a1339260dc2679f5804c99e7445a3e1d27f02864120902bd2c176ea1b67",
+      "bytes": 9748,
+      "refused": false,
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/changed-source-lint/run-0006.stdout.log"
+    },
+    "stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "refused": false,
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/changed-source-lint/run-0006.stderr.log"
+    }
+  }
+}

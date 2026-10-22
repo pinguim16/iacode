@@ -1,0 +1,26 @@
+{
+  "schemaVersion": "1.0.0",
+  "artifact": "OBSERVED_COMMAND",
+  "workingDirectory": "E:\\iacode",
+  "arguments": [
+    "python",
+    "scripts/development-ledger/validate_checkpoint.py"
+  ],
+  "startedUnixSeconds": 1792605940.7270508,
+  "durationMs": 183091,
+  "exitCode": 1,
+  "stdout": {
+    "bytes": 2031,
+    "sha256": "64cfdcc43e79dc1b11a843f8e4dc4b96dc2cc94e38decf0ab04a0b482d2be3f5",
+    "truncatedToTail": false,
+    "capturedBytes": 2031,
+    "text": "CHECKPOINT_INVALID\r\n- RUN-METADATA.json: $: unexpected property 'modelQualification'\r\n- RUN-METADATA.json: $: unexpected property 'freshSession'\r\n- RUN-METADATA.json: $: unexpected property 'crossToolValidation'\r\n- COMMANDS.jsonl:3: recorded input does not exist: docs/gates/GATE-7-CHECKLIST.md\r\n- secret pattern detected in docs\\audits\\M2-ENTRY-BLOCKED-2026-10-21\\environment-isolation-0001\\REPORT.md: authorization header\r\n- QUALITY.json unitTests references command 'cmd-0015', which exited 1\r\n- QUALITY.json integrationTests references command 'cmd-0015', which exited 1\r\n- QUALITY.json e2e references command 'cmd-0007', which exited 1\r\n- QUALITY.json lint references command 'cmd-0007', which exited 1\r\n- QUALITY.json security references command 'cmd-0013', which exited 1\r\n- QUALITY.json documentation references command 'cmd-0015', which exited 1\r\n- QUALITY.json redTeam references command 'cmd-0013', which exited 1\r\n- QUALITY.json greenKeeper references command 'cmd-0007', which exited 1\r\n- QUALITY.json deliveryCompleteness references command 'cmd-0018', which exited 1\r\n- externalAuditReason must name one of the recorded triggers: security-boundary, sandbox-boundary, rights-or-provenance-change, training-data-policy, training-execution, promotion-logic, secret-handling, destructive-persistence\r\n- HANDOFF.md is missing heading: ## Objective\r\n- HANDOFF.md is missing heading: ## What was completed\r\n- HANDOFF.md is missing heading: ## What was NOT completed\r\n- HANDOFF.md is missing heading: ## Current repository state\r\n- HANDOFF.md is missing heading: ## Files changed\r\n- HANDOFF.md is missing heading: ## Important decisions\r\n- HANDOFF.md is missing heading: ## Tests executed\r\n- HANDOFF.md is missing heading: ## Known failures\r\n- HANDOFF.md is missing heading: ## Known risks\r\n- HANDOFF.md is missing heading: ## Required next action\r\n- HANDOFF.md is missing heading: ## Exact continuation sequence\r\n- HANDOFF.md is missing heading: ## Validation commands\r\n- HANDOFF.md is missing heading: ## Stop conditions\r\n"
+  },
+  "stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "truncatedToTail": false,
+    "capturedBytes": 0,
+    "text": ""
+  }
+}

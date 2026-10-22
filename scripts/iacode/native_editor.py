@@ -9,10 +9,10 @@ import re
 import shutil
 import subprocess
 import sys
-from contextlib import suppress
 from pathlib import Path
 
 from build_clients import ROOT, build
+from native_execution import NativeExecutionError, execute_owned
 from native_process import NativeJobCleanupError, WindowsJob, owned_directory
 
 
@@ -56,62 +56,14 @@ def require_persistent_host(arguments: list[str]) -> None:
 def run_owned(
     arguments: list[str], *, environment: dict[str, str], timeout: int, as_node: bool = False
 ) -> subprocess.CompletedProcess:
-    environment = dict(environment)
-    environment.pop("ELECTRON_RUN_AS_NODE", None)
-    if as_node:
-        environment["ELECTRON_RUN_AS_NODE"] = "1"
-    options = {}
-    job = None
-    if os.name == "nt":
-        job = WindowsJob()
-        startup = subprocess.STARTUPINFO()
-        startup.dwFlags |= subprocess.STARTF_USESHOWWINDOW
-        startup.wShowWindow = subprocess.SW_HIDE
-        options = {
-            "startupinfo": startup,
-            # Assign before any child can escape the owned tree.
-            "creationflags": subprocess.CREATE_NEW_PROCESS_GROUP | subprocess.CREATE_NO_WINDOW | 4,
-        }
-    else:
-        options = {"start_new_session": True}
-    process = None
-    cleanup = None
-    try:
-        process = subprocess.Popen(
-            arguments,
-            cwd=ROOT,
-            env=environment,
-            stdin=subprocess.DEVNULL,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.STDOUT,
-            text=True,
-            encoding="utf-8",
-            errors="replace",
-            **options,
-        )
-        if job:
-            job.attach_and_resume(process)
-        output, _ = process.communicate(timeout=timeout)
-    finally:
-        if job:
-            try:
-                if process is not None and not job.attached and process.poll() is None:
-                    process.kill()  # Still suspended; it has never spawned a child.
-                cleanup = job.close()
-            finally:
-                if process is not None:
-                    process.communicate(timeout=30)
-        elif process is not None:
-            import signal
-
-            # The process group is owned even if its original parent already exited.
-            # An already-absent exact owned group has no processes left to terminate.
-            with suppress(ProcessLookupError):
-                os.killpg(process.pid, signal.SIGKILL)
-            process.communicate(timeout=30)
-    result = subprocess.CompletedProcess(arguments, process.returncode, output, "")
-    result.owned_tree_cleanup = cleanup
-    return result
+    return execute_owned(
+        arguments,
+        environment=environment,
+        timeout=timeout,
+        as_node=as_node,
+        root=ROOT,
+        job_factory=WindowsJob,
+    )
 
 
 class NativeEditor:
@@ -235,19 +187,31 @@ class NativeEditor:
                 args, environment=environment, timeout=1800 if mode == "resume" else 180
             )
         except NativeJobCleanupError as error:
+            execution = getattr(error, "report", None)
             return {
                 "result": "FAIL",
                 "mode": mode,
                 "failure": "native owned process cleanup failed",
-                "exitCode": None,
+                "exitCode": execution["producer"]["exitCode"] if execution else None,
                 "processCleanup": error.observation,
+                **({"execution": execution} if execution else {}),
             }
-        except subprocess.TimeoutExpired:
+        except (subprocess.TimeoutExpired, NativeExecutionError) as error:
+            execution = getattr(error, "report", None)
             return {
                 "result": "FAIL",
                 "mode": mode,
-                "failure": "native host deadline elapsed",
-                "exitCode": None,
+                "failure": (
+                    "native host deadline elapsed"
+                    if isinstance(error, subprocess.TimeoutExpired)
+                    else "native owned execution failed"
+                ),
+                "exitCode": execution["producer"]["exitCode"] if execution else None,
+                **(
+                    {"execution": execution, "processCleanup": execution["cleanup"]["observation"]}
+                    if execution
+                    else {}
+                ),
             }
         document = (
             json.loads(report.read_text(encoding="utf-8"))
@@ -330,6 +294,8 @@ def main() -> int:
         if isinstance(error, NativeJobCleanupError):
             result["failedNativeMode"] = mode
             result["processCleanupFailure"] = error.observation
+        if getattr(error, "report", None) is not None:
+            result["executionFailure"] = error.report
     finally:
         if owned is not None:
             result["ownedTemporaryDirectoryRemoved"] = owned["removed"]

@@ -1,0 +1,47 @@
+{
+  "recordedAt": "2026-10-21T20:47:37Z",
+  "observedAt": "2026-10-21T20:45:41Z",
+  "kind": "PROGRESS_NOT_CLEANUP_OR_ACCEPTANCE",
+  "inventorySource": "resource-observations/run-0001.json",
+  "baselineContainers": 37,
+  "changedBaselineContainerIds": [],
+  "baselineContainersUnchanged": true,
+  "newContainers": [
+    {
+      "id": "143812391ec1dfd8bc402f57fafa54a1a5b9a5eb70fe126f569ac40322fce5d5",
+      "name": "buildx_buildkit_iacode-m2cp3-e2531ca8afd9403e828958f4c7dd8c660",
+      "image": "sha256:cec9f139f45e93c5c69c60f8b07cfad9f43f4ef6b6a6cd917527fea5ff2e3dea",
+      "running": true,
+      "startedAt": "2026-10-21T20:28:41.889570113Z",
+      "restartCount": 0,
+      "project": null
+    }
+  ],
+  "newImages": [
+    {
+      "id": "sha256:2d96b622016653f9c432c71df48d6d1864629bebb3165915cdf1eb75c5797100",
+      "tags": [
+        "iacode-m2cp3-aa560f386fe44e21876d0e3ccfdfef31/api:0.1.0"
+      ],
+      "digests": [
+        "iacode-m2cp3-aa560f386fe44e21876d0e3ccfdfef31/api@sha256:2d96b622016653f9c432c71df48d6d1864629bebb3165915cdf1eb75c5797100"
+      ],
+      "size": 508599395,
+      "project": "iacode-m2cp3-aa560f386fe44e21876d0e3ccfdfef31"
+    },
+    {
+      "id": "sha256:cec9f139f45e93c5c69c60f8b07cfad9f43f4ef6b6a6cd917527fea5ff2e3dea",
+      "tags": [
+        "moby/buildkit:buildx-stable-1"
+      ],
+      "digests": [
+        "moby/buildkit@sha256:cec9f139f45e93c5c69c60f8b07cfad9f43f4ef6b6a6cd917527fea5ff2e3dea"
+      ],
+      "size": 363385194,
+      "project": null
+    }
+  ],
+  "dockerConfigUnchanged": true,
+  "finalCleanup": "PENDING_WHILE_CANONICAL_TESTS_ACTIVE",
+  "deletionsPerformed": false
+}

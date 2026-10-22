@@ -1,0 +1,73 @@
+{
+  "schemaVersion": "3.4.0",
+  "checks": {
+    "build": {
+      "status": "NOT_EXECUTED",
+      "evidence": [],
+      "justification": null
+    },
+    "unitTests": {
+      "status": "NOT_EXECUTED",
+      "evidence": [],
+      "justification": null
+    },
+    "integrationTests": {
+      "status": "NOT_EXECUTED",
+      "evidence": [],
+      "justification": null
+    },
+    "e2e": {
+      "status": "NOT_EXECUTED",
+      "evidence": [],
+      "justification": null
+    },
+    "lint": {
+      "status": "PASS",
+      "evidence": [
+        "file:quality-attempts/lint/run-0006.json"
+      ],
+      "justification": "Complete actual canonical current gate; earlier failures/retries preserved."
+    },
+    "staticAnalysis": {
+      "status": "PASS",
+      "evidence": [
+        "file:quality-attempts/staticAnalysis/run-0005.json"
+      ],
+      "justification": "Actual complete current script/test compile; not full test acceptance."
+    },
+    "security": {
+      "status": "NOT_EXECUTED",
+      "evidence": [],
+      "justification": null
+    },
+    "documentation": {
+      "status": "NOT_EXECUTED",
+      "evidence": [],
+      "justification": null
+    },
+    "checkpointValidation": {
+      "status": "PASS",
+      "evidence": [
+        "file:quality-attempts/checkpointValidation/run-0004.json"
+      ],
+      "justification": "Actual quiescent valid IN_PROGRESS draft; not terminal readiness or independent validation."
+    },
+    "redTeam": {
+      "status": "NOT_EXECUTED",
+      "evidence": [],
+      "justification": null
+    },
+    "greenKeeper": {
+      "status": "NOT_EXECUTED",
+      "evidence": [],
+      "justification": null
+    },
+    "deliveryCompleteness": {
+      "status": "FAIL",
+      "evidence": [
+        "file:COMPLETENESS-REPORT.json"
+      ],
+      "justification": "Actual red progress validation; no readiness claim."
+    }
+  }
+}

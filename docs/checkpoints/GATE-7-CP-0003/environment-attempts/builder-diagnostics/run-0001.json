@@ -1,0 +1,28 @@
+{
+  "observedAt": "2026-10-21T20:59:25Z",
+  "kind": "OWNED_BUILDER_DIAGNOSTIC_NOT_ACCEPTANCE",
+  "arguments": [
+    "docker",
+    "logs",
+    "--since",
+    "2026-10-21T20:39:00Z",
+    "--tail",
+    "80",
+    "143812391ec1dfd8bc402f57fafa54a1a5b9a5eb70fe126f569ac40322fce5d5"
+  ],
+  "exitCode": 0,
+  "streams": {
+    "stdout": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "refused": false,
+      "path": "docs/checkpoints/GATE-7-CP-0003/environment-attempts/builder-diagnostics/run-0001.stdout.log"
+    },
+    "stderr": {
+      "sha256": "e167e476513b00db0f9b0838b6dcff7edc13cf83b91da1aba0c83f13a1dfe58d",
+      "bytes": 1096,
+      "refused": false,
+      "path": "docs/checkpoints/GATE-7-CP-0003/environment-attempts/builder-diagnostics/run-0001.stderr.log"
+    }
+  }
+}

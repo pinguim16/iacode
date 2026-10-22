@@ -1,0 +1,2242 @@
+{
+  "filesRead": [
+    {
+      "path": "AGENTS.md",
+      "reason": "Canonical intake or original finding source."
+    },
+    {
+      "path": "START-HERE.md",
+      "reason": "Canonical intake or original finding source."
+    },
+    {
+      "path": "docs/DEVELOPMENT-CONTRACT.md",
+      "reason": "Canonical intake or original finding source."
+    },
+    {
+      "path": "docs/MASTER-PLAN.md",
+      "reason": "Canonical intake or original finding source."
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/STATE.json",
+      "reason": "Canonical intake or original finding source."
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/HANDOFF.md",
+      "reason": "Canonical intake or original finding source."
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0002/FINDINGS.json",
+      "reason": "Canonical intake or original finding source."
+    },
+    {
+      "path": "docs/MILESTONE-VALIDATION.md",
+      "reason": "Canonical intake or original finding source."
+    },
+    {
+      "path": "docs/GATE-7-CHECKLIST.md",
+      "reason": "Canonical intake or original finding source."
+    }
+  ],
+  "filesCreated": [
+    {
+      "path": ".iacode/memory/retrospectives/GATE-7-CP-0003.md",
+      "reason": "Record observed failures and current corrective limits without independent claims.",
+      "hashAfter": "2b0133ec8f6f05f603b8c291f69d2e46693460443da5134154740a2d2d659bca"
+    },
+    {
+      "path": "docs/adr/ADR-0061-client-verification-preserves-producer-and-cleanup-outcomes.md",
+      "reason": "Structural producer/cleanup and literal invocation contract.",
+      "hashAfter": "ce36a44938f082e462a72f5901d1cbb60ea9687d01cc294545459191569e34b5"
+    },
+    {
+      "path": "docs/adr/ADR-0062-isolated-audit-uses-closed-host-validation-jobs.md",
+      "reason": "Authorized closed canonical runner bridge and exact owned-resource cleanup boundary.",
+      "hashAfter": "01bc581d4effd4833fa46ffb1e797ae974630bcf560cd095feb186c871537a7b"
+    },
+    {
+      "path": "docs/audits/M2-ENTRY-BLOCKED-2026-10-21/DIVERGENCE.md",
+      "reason": "Preserve inherited failed/unsealed audit or entry evidence, not acceptance or implementation.",
+      "hashAfter": "8ecba03056b0cdfa9bcd52bb260fe3a527e9cc9a446646851a29edcec4308951"
+    },
+    {
+      "path": "docs/audits/M2-ENTRY-BLOCKED-2026-10-21/ENTRY-VALIDATION.txt",
+      "reason": "Preserve inherited failed/unsealed audit or entry evidence, not acceptance or implementation.",
+      "hashAfter": "bed2e1ace6594a25cf785cbb21c1de0a2d43f135c89b693d79f4a1d8ed3df598"
+    },
+    {
+      "path": "docs/audits/M2-ENTRY-BLOCKED-2026-10-21/FILES.json",
+      "reason": "Preserve inherited failed/unsealed audit or entry evidence, not acceptance or implementation.",
+      "hashAfter": "0d3943687f246be105aa1c31359a04f755273b9e2a4ca533e18b8790ff2645e6"
+    },
+    {
+      "path": "docs/audits/M2-ENTRY-BLOCKED-2026-10-21/environment-isolation-0001/COMMANDS.json",
+      "reason": "Preserve inherited failed/unsealed audit or entry evidence, not acceptance or implementation.",
+      "hashAfter": "1f3afb0d9f2aed7ea92630cd6183f52b1c4fb951b57e8271fd93633a70035a62"
+    },
+    {
+      "path": "docs/audits/M2-ENTRY-BLOCKED-2026-10-21/environment-isolation-0001/FILES.json",
+      "reason": "Preserve inherited failed/unsealed audit or entry evidence, not acceptance or implementation.",
+      "hashAfter": "df94fc5bb782b05658e4d7de3c604b98233b81a87f7bf7f8cdccd4426709772c"
+    },
+    {
+      "path": "docs/audits/M2-ENTRY-BLOCKED-2026-10-21/environment-isolation-0001/REPORT.md",
+      "reason": "Preserve inherited unsealed entry report with only owner-approved prose repair, bound by AUTHORIZED-PROSE-DIFF.json.",
+      "hashAfter": "0d0bc227865ab0b91126f6c487c0a14ae2a680a7b1b093bff1c59265c9f2dd0e"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0002/ARCHITECTURE-REVIEW.json",
+      "reason": "Preserve inherited failed/unsealed audit or entry evidence, not acceptance or implementation.",
+      "hashAfter": "7c80edd0ce3ffe33871f07ba5fe82e727f5d195aea75c997259410648bbf0c3b"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0002/AUDITOR-INDEPENDENCE.json",
+      "reason": "Preserve inherited failed/unsealed audit or entry evidence, not acceptance or implementation.",
+      "hashAfter": "aa753e4a619cd31d3e080ef5361e969e505a41a759d1982352f9b1f5223d24a6"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0002/AUTHORIZATION.md",
+      "reason": "Preserve inherited failed/unsealed audit or entry evidence, not acceptance or implementation.",
+      "hashAfter": "f6ae52f4175264fe202568f23275dd04f644880ab0bedeb67586da2bb822db90"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0002/BASELINE.md",
+      "reason": "Preserve inherited failed/unsealed audit or entry evidence, not acceptance or implementation.",
+      "hashAfter": "c9712220102d3494430bdb48806273ac8badecc37598e2911a9f4edc2d02faad"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0002/CLOSURE-REQUIREMENTS.json",
+      "reason": "Preserve inherited failed/unsealed audit or entry evidence, not acceptance or implementation.",
+      "hashAfter": "a7c440ce393f24861e3b9785d35b0cb5f9b8a542721e682ecb3ade04593cd761"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0002/CLOSURE-REQUIREMENTS.md",
+      "reason": "Preserve inherited failed/unsealed audit or entry evidence, not acceptance or implementation.",
+      "hashAfter": "30e33d0a29dafd71513bdfdbd7169c82077102fdc62993056176853f9b59f3d2"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0002/COMMANDS.jsonl",
+      "reason": "Preserve inherited failed/unsealed audit or entry evidence, not acceptance or implementation.",
+      "hashAfter": "a5c14de2f66e879008537656f32ef0bafe33fd560d09cc93910a2fe1ed9fbca2"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0002/COMPLETENESS-REPORT.json",
+      "reason": "Preserve inherited failed/unsealed audit or entry evidence, not acceptance or implementation.",
+      "hashAfter": "8d10b042cc5906b96cc0f597847f7eeff97fc5141c37b6722e2c73a98c3b7a6e"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0002/COMPLETENESS-REPORT.md",
+      "reason": "Preserve inherited failed/unsealed audit or entry evidence, not acceptance or implementation.",
+      "hashAfter": "c598f0b3cd60c8fd1ef5149b489418fb66489bc2eb16276a07c24fe73fe7cda4"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0002/DECISIONS.md",
+      "reason": "Preserve inherited failed/unsealed audit or entry evidence, not acceptance or implementation.",
+      "hashAfter": "fc6f5ff4babb53f42bab75dca5e00858cfac59860daf5db4bb6d029e9edf5155"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0002/DIFF-SUMMARY.md",
+      "reason": "Preserve inherited failed/unsealed audit or entry evidence, not acceptance or implementation.",
+      "hashAfter": "fdb33a4a0cf18feb51b0d24acc66d1aa901c58552cd8f3e038bc3334461e4d9f"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0002/ENTRY-REPORT.md",
+      "reason": "Preserve inherited failed/unsealed audit or entry evidence, not acceptance or implementation.",
+      "hashAfter": "0c820a05febac5861f91f6d8ebc5f6c8287a90e297d0a3a7d1fa5f5d0758e3ca"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0002/EXECUTION-NOTES.md",
+      "reason": "Preserve inherited failed/unsealed audit or entry evidence, not acceptance or implementation.",
+      "hashAfter": "d7541c0308a52c0daef05793f9cd2b8324920adeec0d12e7fd588b7601a986be"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0002/FILES.json",
+      "reason": "Preserve inherited failed/unsealed audit or entry evidence, not acceptance or implementation.",
+      "hashAfter": "bb34a70b4ca2ea06b8dca25359f16ada9acd297012e16d99631e2d6365ef6576"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0002/FINAL-GIT-STATE.json",
+      "reason": "Preserve inherited failed/unsealed audit or entry evidence, not acceptance or implementation.",
+      "hashAfter": "618c301645909f33bd57cb7aa96b8714355e887a8328acafebc25b55d18ead28"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0002/FINAL-M2-AUDIT-MATRIX.json",
+      "reason": "Preserve inherited failed/unsealed audit or entry evidence, not acceptance or implementation.",
+      "hashAfter": "1d1bafedc196657a93d36fce35bc97c29f537e66e23c374b19a61f275a8a7bf9"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0002/FINAL-M2-AUDIT-MATRIX.md",
+      "reason": "Preserve inherited failed/unsealed audit or entry evidence, not acceptance or implementation.",
+      "hashAfter": "f3b47032fba3789e763d8e729eefcfeae8c2f341129d8bee955edd433d12e57a"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0002/FINAL-REPORT.md",
+      "reason": "Preserve inherited failed/unsealed audit or entry evidence, not acceptance or implementation.",
+      "hashAfter": "860335a399fca1e92473c31fe639e3806d75616b97387d590e327af0f09d7f99"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0002/FINDINGS.json",
+      "reason": "Preserve inherited failed/unsealed audit or entry evidence, not acceptance or implementation.",
+      "hashAfter": "2d325a0963b0fdc2dfc263018cef0b2dbb9b748b4b3d0d43b4d10a2836736406"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0002/FROZEN-M2-AUDIT-CRITERIA.json",
+      "reason": "Preserve inherited failed/unsealed audit or entry evidence, not acceptance or implementation.",
+      "hashAfter": "8e7de5b7f8bbf8b883b907f773d950ba34d55749c5a6603b1b93bf982c94bd57"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0002/HANDOFF.md",
+      "reason": "Preserve inherited failed/unsealed audit or entry evidence, not acceptance or implementation.",
+      "hashAfter": "dd54b7e7fc0a764af9e204569f7f939c67ee81beb730c6672aee8f783c281057"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0002/INDEPENDENT-RED-TEAM-LEDGER-RETRY-0002.json",
+      "reason": "Preserve inherited failed/unsealed audit or entry evidence, not acceptance or implementation.",
+      "hashAfter": "ddac95a8583c81931ea1604c50e485d86fef6ee45b052efd23f63db8c6a4bb2f"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0002/INDEPENDENT-RED-TEAM-LEDGER.json",
+      "reason": "Preserve inherited failed/unsealed audit or entry evidence, not acceptance or implementation.",
+      "hashAfter": "597a5dbf1291f0b10a5bdee0a179b281388e7a24ff052d827bd5e617db7fed93"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0002/LESSON-PREFLIGHT.json",
+      "reason": "Preserve inherited failed/unsealed audit or entry evidence, not acceptance or implementation.",
+      "hashAfter": "f4ea015349c14ebaefdde7d80084dc184a4f9cb97800e2ca747fd1cee7cc75b4"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0002/LESSON-PREFLIGHT.md",
+      "reason": "Preserve inherited failed/unsealed audit or entry evidence, not acceptance or implementation.",
+      "hashAfter": "87dabf192e09fdd4f93c037afe5364ab62eb0923543801da52aef1d11a9da933"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0002/M2-AUDIT-REQUIREMENTS.json",
+      "reason": "Preserve inherited failed/unsealed audit or entry evidence, not acceptance or implementation.",
+      "hashAfter": "b7901a1fd5440c3362e8b1a17e0b0544beca7795e9bc89392f362bf5f0012a78"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0002/MILESTONE-REPORT.md",
+      "reason": "Preserve inherited failed/unsealed audit or entry evidence, not acceptance or implementation.",
+      "hashAfter": "f4593c486f89d105150e5eb35c44dd5535b829137e2b4cbca6f3a9a41fafc387"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0002/NEXT.md",
+      "reason": "Preserve inherited failed/unsealed audit or entry evidence, not acceptance or implementation.",
+      "hashAfter": "1936f36343b7ec7a61cb83ed5e0d495de4d37e1f9eda0d63866011faebe79a1b"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0002/PLAN.md",
+      "reason": "Preserve inherited failed/unsealed audit or entry evidence, not acceptance or implementation.",
+      "hashAfter": "de4422f9363a485b30f3649cd3dc6197afe9a7279f5c5d087d5ed399cd4df131"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0002/PROVENANCE.json",
+      "reason": "Preserve inherited failed/unsealed audit or entry evidence, not acceptance or implementation.",
+      "hashAfter": "ded9fd296c9169a22e4604c0d541ed0450181838195837e130d7ab15738be07e"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0002/QUALITY.json",
+      "reason": "Preserve inherited failed/unsealed audit or entry evidence, not acceptance or implementation.",
+      "hashAfter": "8a1b1c6b954e57c279d53e13bf207ac3fe6191ae2ad9cf103f57579c8f869ded"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0002/RED-TEAM-REPORT.md",
+      "reason": "Preserve inherited failed/unsealed audit or entry evidence, not acceptance or implementation.",
+      "hashAfter": "3105944db7af7f3994cfa03e3f7cddc66ee02a950cec934b8b9ad6af126fd3d6"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0002/REQUIREMENTS-MATRIX.json",
+      "reason": "Preserve inherited failed/unsealed audit or entry evidence, not acceptance or implementation.",
+      "hashAfter": "00b29449540b0cff75b99ee6c5c809e35d4c5e92844a19eff80c927510447fc6"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0002/REQUIREMENTS-MATRIX.md",
+      "reason": "Preserve inherited failed/unsealed audit or entry evidence, not acceptance or implementation.",
+      "hashAfter": "cc2945bb56f314d4a591e942658b2948be716f20f59e688034dff0a313a14a0d"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0002/REVIEW-BUNDLE-VALIDATION.json",
+      "reason": "Preserve inherited failed/unsealed audit or entry evidence, not acceptance or implementation.",
+      "hashAfter": "494419d8c70c7085d0b8218612d85e81275b601376d1e0789cdc1801dd2258c0"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0002/REVIEW-REPORT.md",
+      "reason": "Preserve inherited failed/unsealed audit or entry evidence, not acceptance or implementation.",
+      "hashAfter": "cfd3f206964fc97b9e70bb7e6b33b2ee55bdd14288188afacdbd26e0b5fbd6cc"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0002/REVIEW-TRANSPORT-RECONSTRUCTION-RETRY-0002.json",
+      "reason": "Preserve inherited failed/unsealed audit or entry evidence, not acceptance or implementation.",
+      "hashAfter": "c2b335072b19d285e1b020e20bd4f618844382a3f671dab9713b1b96c39ff8e9"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0002/REVIEW-TRANSPORT-RECONSTRUCTION-RETRY-0003.json",
+      "reason": "Preserve inherited failed/unsealed audit or entry evidence, not acceptance or implementation.",
+      "hashAfter": "c48dabd069974de7ee68a9a3cedc07bdc9e173d69304b696f0b985b61b611d6e"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0002/REVIEW-TRANSPORT-RECONSTRUCTION.json",
+      "reason": "Preserve inherited failed/unsealed audit or entry evidence, not acceptance or implementation.",
+      "hashAfter": "277b62cbf77c58095b99938a53a860c744f6e2cd90fee1d62934a7a710dc3cd2"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0002/REWORK-LOG.jsonl",
+      "reason": "Preserve inherited failed/unsealed audit or entry evidence, not acceptance or implementation.",
+      "hashAfter": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0002/RISKS.md",
+      "reason": "Preserve inherited failed/unsealed audit or entry evidence, not acceptance or implementation.",
+      "hashAfter": "f96be03d99f7da81eaeb0d3a31e1abb789b1c2a06768c3d8c023356d46778c70"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0002/RUN-METADATA.json",
+      "reason": "Preserve inherited failed/unsealed audit or entry evidence, not acceptance or implementation.",
+      "hashAfter": "723ab88c56aa00ab90feab7cc75cacea3e435e44130cbf5f93fa791e65bdcbf6"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0002/STATE.json",
+      "reason": "Preserve inherited failed/unsealed audit or entry evidence, not acceptance or implementation.",
+      "hashAfter": "7788dc0ee497f9e23547c80e38a0cd782b768ffdb6bea9028f054fbad02e143c"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0002/STATUS.md",
+      "reason": "Preserve inherited failed/unsealed audit or entry evidence, not acceptance or implementation.",
+      "hashAfter": "05cd3ad7f33985141ffdbe447e2de0121219eb32ce931d1b29ffe9aa8b092815"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0002/TESTS.json",
+      "reason": "Preserve inherited failed/unsealed audit or entry evidence, not acceptance or implementation.",
+      "hashAfter": "5fa5994db30c74c203c93fbcee1f931d0cfaecafd6d7ee2b30c019c32f1f2aaa"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0002/audit-harness/capture_git_state.py",
+      "reason": "Preserve inherited failed/unsealed audit or entry evidence, not acceptance or implementation.",
+      "hashAfter": "def22c5aa382d22927e427367acd1d0cda0a978813ce71b4cc46f70588757ee4"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0002/audit-harness/derive_m2_requirements.py",
+      "reason": "Preserve inherited failed/unsealed audit or entry evidence, not acceptance or implementation.",
+      "hashAfter": "e6314bee97231db98a60c4c2c0235076261f85dc1bafead74dd66ccf87ad290f"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0002/audit-harness/generate_inventory.py",
+      "reason": "Preserve inherited failed/unsealed audit or entry evidence, not acceptance or implementation.",
+      "hashAfter": "83f2c463598f86e4c59e9daa83b4c48efe271e4947ee03c7d070250938c36846"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0002/audit-harness/reconstruct_review_transports.py",
+      "reason": "Preserve inherited failed/unsealed audit or entry evidence, not acceptance or implementation.",
+      "hashAfter": "d4eafc372c049b21d2a74457bf0a62353b2f4f534bdc0a96eeb828ce492d9f5c"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0002/audit-harness/red_team_command_ledger.py",
+      "reason": "Preserve inherited failed/unsealed audit or entry evidence, not acceptance or implementation.",
+      "hashAfter": "da36673da684348dc6fcefca8ff0cefb1ec3460fadf325f40986203c558ed150"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0002/audit-harness/render_final_matrix.py",
+      "reason": "Preserve inherited failed/unsealed audit or entry evidence, not acceptance or implementation.",
+      "hashAfter": "d792e8f6f45f46c5b1f5670c3c40ba0ec163e81251948a71238aaf03cbc31cb8"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0002/audit-harness/run_observed.py",
+      "reason": "Preserve inherited failed/unsealed audit or entry evidence, not acceptance or implementation.",
+      "hashAfter": "e3d2a44053671cd68f3ea55c0614636d8b08865180e87b21d2aaf7e9c48a52a9"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0002/controls/command-reproducibility-tests.json",
+      "reason": "Preserve inherited failed/unsealed audit or entry evidence, not acceptance or implementation.",
+      "hashAfter": "05664969b3720d889acbbfc4aec08a5f2fa19f5e7a781a4c42878794c1cac3c7"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0002/controls/control-plane-full-suite.json",
+      "reason": "Preserve inherited failed/unsealed audit or entry evidence, not acceptance or implementation.",
+      "hashAfter": "e9b6d967d43904877b2f63c7cf5e2f3f8d0c9e98d876f4d4d17e5bf8fc90d427"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0002/controls/final-checkpoint-validation.json",
+      "reason": "Preserve inherited failed/unsealed audit or entry evidence, not acceptance or implementation.",
+      "hashAfter": "be91252596321aab6ef57a78e886e4907b82d64b04713e97f44494314cbd7021"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0002/controls/static-analysis.json",
+      "reason": "Preserve inherited failed/unsealed audit or entry evidence, not acceptance or implementation.",
+      "hashAfter": "540ae2c90b7ab6881e6d6ad0f6085ddacdb4af3cfc51fc8a2261d11f920b53b2"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0002/environment/docker-version.json",
+      "reason": "Preserve inherited failed/unsealed audit or entry evidence, not acceptance or implementation.",
+      "hashAfter": "05e844d012f5e945b63d7939218ae03219992f81858b98081ebc5c33395fb703"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/ACTIVE-VALIDATION.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "9df1dbd061c8a7ebd4e97432b8d3bd1cd58b3312ce907d58b48fe8c478c87b91"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/AUTHORIZATION.md",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "27f988000307fde211f5b3665e9a63b47c8db55123cc5dd2180c07e49b5f71c4"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/AUTHORIZED-PROSE-DIFF.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "08998af04f87eed24f09865ecf59d2ed3f1f9bc087075eee44c552f53211ea92"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/BASELINE.md",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "d28bbf11f48dde4b292fb2a40f77c587088a2e74fce31ffab10f9184b20cb179"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/CLOSURE-REQUIREMENTS.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "1327436d3b59e294360201e7ada14ec61b7092d3f56f1555c8259721bb48bb70"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/CLOSURE-REQUIREMENTS.md",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "e9a5c50a3dca1448123fb41be1adf118f463f61d8b1868acd2602bb438adeaee"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/COMMANDS.jsonl",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "aff77edd57a721c820f80c5d117316997d69c9b268ce94c8db4991ca37e8bc97"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/COMPLETENESS-REPORT.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "5420d590794ac5744ae6645eb71419bb358884a0f16e7500d0376c94ba24cb48"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/COMPLETENESS-REPORT.md",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "8732f45cb17f45823cf61a05c078764b7bc7e3eb6a4a66e068dca5514d484284"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/DECISIONS.md",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "794c082c49ce423fa45dcdcc14050f6d0579c8235f8897602b5d5d3392684696"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/DIFF-SUMMARY.md",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "5d1cfd79d94d81f3396fb6e762552782e671f0ced6617ceb34eecfe6fabc3383"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/ENTRY-REPORT.md",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "5546eb131d4a18106c87d33360d01921bd3f97434b2ebb4945a62c031ca7ea46"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/ENVIRONMENT-SCOPE.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "95295e7cd44d560480d0603167acd227729a2caa55fbb9854f8b83be3063ce87"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/ENVIRONMENT-VALIDATION-CONTEXT.md",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "3ecbf5746f79236de8c2ab2c25b855f3bb1c2ab7c0da7bdba2d08f66610bd48d"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/FILES.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval."
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/FINAL-REPORT.md",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "6e120897a4b0969561ae6223766c6c8b1963d2f974cb27540becc33ecad4f381"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/HANDOFF.md",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "b192320536f64df4341352c3a43a07674ff1f51d664d3986dc7dab4700041a05"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/INTERNAL-ENVIRONMENT-REWORK.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "b55b683410df300690917a87ec3e2b95b0ef41a54a1183af35bf2e60e3373795"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/LESSON-PREFLIGHT.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "7faaec0b007253e1c646ac342dba7fa765ba06957d3b34ae6401ede58c988e7c"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/LESSON-PREFLIGHT.md",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "07e9212c801239c5bf5ceff6813fb9c7d76fb8ade0f50124a5357658ff5f900e"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/M2-CP-0002-FINDINGS-CLOSURE.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "0eff4dbf4646ccdb225a6ff04d02bd5baf4705c0c22e39a3741bc7560d09ab66"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/M2-SOURCE-ATTACKS.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "b58fd8df48aaf115c6b1b8f4dbe49e851abcf78499e1081f9691445e17f88fd9"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/NATIVE-EDITOR-CAPABILITY.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "586a889050b04d69e8ef9ef6a924e6efadfc88bc5d3f5b7bdc35ace89e79928d"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/NEXT.md",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "08cdf46be67b02079392729760ecfa0abb9d2c3d804ac42171803045809daccd"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/OWNED-DOCKER-SCOPE.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "413aff1f27bfaf84caf25596223535934c3111f128abd345adab7ce955a53995"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/OWNED-WEB-IMAGE-CLAIM.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "96b9cfdf74a3c4c061b4b3085c9515c9b5037fd20dbf189fda1f06f34e128af5"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/OWNER-DECISIONS.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "c7ac17a1ad5844e8c993a0e23d88f084fc7cde604e9597b76c48256002d4f4dd"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/OWNER-REQUIREMENTS.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "c19677a6f09994493f9acab09fd3be96b6300da897b5b3603f2c931bc739a0c4"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/PLAN.md",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "a935072e42516e964468de7ed031be5374c6373d0e8bd98aa100b698149be162"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/PROVENANCE.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "6ec0beb689c8f6d86f9e98886fb99a15be4ec198e8d49bebe98b866a03aabb22"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/PUBLICATION-INTERRUPTION-0001.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "0b47430209c41d25e309bbab0a3aca55a9cbaed54dda82c47bf64a6b4b723ecd"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/QUALITY.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "aeae2d472fb3f339f2e8d90d4847cf4f6f78b53ee8676532ef1a80738e6351af"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/REQUIREMENTS-MATRIX.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "8fb005c2e9f000fc09957ecd1c32f5a6a586aac1adc1abc3945ca79163d48cb5"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/REQUIREMENTS-MATRIX.md",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "75ee68529de4b35a26c0a668df535cf212321ea29e8054d9a721bcbd23f74788"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/RETIRED-PUBLIC-CLONE-CLEANUP.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "d5eca7b2cab3fc93d88304178cc97b089fc9420d9d5d73367e6439bfcae8c5c5"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/REVIEW-BUNDLE-VALIDATION.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "0e1b76cd595863ffb1cd5029709acc6afc3fa739cdc1cf9ffaf508e79e7a8d83"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/REWORK-LOG.jsonl",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/RISKS.md",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "045000698dcdc496ee51c881c39ccdeba6a3188814aec3d072d35f75310e7f9c"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/RUN-METADATA.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "d52dfee049e26c83eb9a1d2ae192c0716b5ee46321c006a3598c2678767186d7"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/RUNTIME-OWNER.txt",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "8257d2c491f7a73e24194c19892548edc4a49a8de4f359f5adc9392c0685dd0a"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/STATE.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "69da9a508e58f68875e37179c9a0b130ee1ed09eadb758f8924fb2233bd04d47"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/STATUS.md",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "9c78f467b4c249b2c5799078d77a0affceee4aec4cd7cb4d250f7d51f309cbdd"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/STEPS.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "600348c3522c8982bf46875bcfd193de589794837dfc13baf65b1c81484bae8f"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/TESTS.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "f2f796e101e924cfdd2e0f51ce44a21ed4f26358d69ba47c56d35e7491648c3f"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/audit-harness/BRIDGE-PATH-001.patch.txt",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "ba5b06a0317cc45ad17bbf1ac76945b722e2d3fc48e46e828e67db0c9381d6e6"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/audit-harness/M2-F-002-NATIVE.patch.txt",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "0cc96d8c3d437c83ad13867d0c9c51910f6cc226f0eb9bf120362f66011abd44"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/audit-harness/capture_bridge_preimage.py",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "a2938f124af16a7443cd22aefebf35f8996abdb07e87a47879da49cd59d90c1d"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/audit-harness/capture_native_preimage.py",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "c3a89164523c13ee1cc15bd11c2f29c6f83c00066c3218bede1a66862e90bd14"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/audit-harness/capture_owned_build_history.py",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "126651e6918e62ee701d715b34f9d88207ba6da4bcad1e20daf86b657a62fd52"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/audit-harness/check_resource_preservation.py",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "743cbe2032709b1c795baaa3941d37f0bb21c45309c4cccd129d30f40380342d"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/audit-harness/claim_owned_web_image.py",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "b5b39e3ab5ddccdf092d0ca2b381bb929b6a3f6823805ac2df373301346c8150"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/audit-harness/clarify_memory_chronology.py",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "740df6c4f35670a600858e5883870448b52ff415505dcc091285c89cfd9412c9"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/audit-harness/classify_authored_artifacts.py",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "17474e455b77582bc2b9e8f99a24dd28abe778a5600efed0fa4bd9f7dce5cd4e"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/audit-harness/cleanup_retired_public_clone.py",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "ee9209d5bfa4c338b27f48454add8172019ebb4560dd3f36a19e9ec513ab3b59"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/audit-harness/consolidate_draft_progress.py",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "ca495c9e17e5b03a36d86ef7a153fe437a4f8bca57afd7ae1ff0f2c1097716fe"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/audit-harness/declare_inventory.py",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "54b8339fa7ff9345397cab48e1311cbfc07f8f762663b1ac6bee7f1c00eaad4f"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/audit-harness/diagnose_owned_builder.py",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "a3f2b82877cefae49a353fc0cb637f5876b0dd6df425a9de08bd919dc6235348"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/audit-harness/execute_gate.py",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "246bf381ecedaa4720eda0829d8f604c9716dbfa30f4ddb082c4f385fe668724"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/audit-harness/extend_guardrails.py",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "1228247cc1f395fed8e0208aceb3a96785c510ac27da3bd027270d5b82766cf9"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/audit-harness/inspect_environment.py",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "b64351f5f4f4dd6131265ce0ec0d30a11d8ccdaf1fe991220a0e128a5da7d533"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/audit-harness/inspect_native_editor.py",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "99269798de81fcebf66fe7e48299a20dc29c38226c6ab6db9c8db7603ecd1795"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/audit-harness/inspect_retired_public_clone.py",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "b66367bb659c8c2a3fa6430cb3a51e078d03fdd7fe83ce66571a7cb69da1949a"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/audit-harness/native_execution_candidate.py",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "33d66a5f9020c8d2278370c3917c84dc073fe83a13ba4ba57960dacd08450727"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/audit-harness/owned_docker_scope.py",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "f8416744edd8bc9a552aa4c6b5899064fd1f76c29f1d7d8cfaad33826c1e2df1"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/audit-harness/prepare_runtime_subject.py",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "7ea0fd3acb5da0091b239553f6b7b0a2987352645a835b42d00cc1a23d19072f"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/audit-harness/probe_bridge_boundary.py",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "56dcdc857bd6be66ced8f651e99e0b9fc8d5188a0bb34eeeed5021658599dc1b"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/audit-harness/probe_bridge_path_bounds.py",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "5d7e275e677cb0bd6b25b1d9c26152236766ebe312f33c164f29edf35c8fff03"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/audit-harness/probe_index_byte_preservation.py",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "a5c99f82071faa3b7f8bf59ae9c9b9d7bec588936e39b59df782e9ad03a478b8"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/audit-harness/probe_native_cleanup_evidence.py",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "3b979991e6277e4e6776ff703d67b96140b91d6ee893f3d31f0c0d61c273aa31"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/audit-harness/probe_restricted_client.py",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "8fbc9fc397392f553080f271bdd2baa18964988a799f19986dfca285c6bb28f1"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/audit-harness/prove_canonical_bridge.py",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "3a3a5e3ef58065fbbcb9579b2bfe86a46381b2705f752ae491be7341db7f7205"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/audit-harness/publish_progress.py",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "fa68a41ed91d7035cb19653bf69a6f5f9b1474270e84ef411791d5de77ec2f20"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/audit-harness/record_completed_lint.py",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "07e79213fbaa8d16e0f598997811f9a920341779115285ba6269ce50a1711e8c"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/audit-harness/record_prose_edit.py",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "4cbc112d8c0372c0a25684c0bdf52403f8b11cccee5cfb9d8204d4802f441747"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/audit-harness/refresh_blocked_metadata.py",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "e5d937ca3ab4b379c20d1a130752abb80b63b97f7e9aad37d5b234a6f38c4a13"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/audit-harness/register_bridge_path_lesson.py",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "b403655bc09a93a408f9b98f0035178d7f50ed36d1879b8fe4cdb1cf5326185d"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/audit-harness/register_byte_transport_recurrence.py",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "b5b7bbdc8f00d35e612708eedf1c8d7976b0e974071d77aff1dacfc24a23cf94"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/audit-harness/register_recurrences.py",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "bb9222bac4d2268ea34df2be668809b693edf823c6165a736d04640bb66297fd"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/audit-harness/register_utf8_recurrence.py",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "71b6a4f2ccf17de7254d937a9186038560519dbb9e5e28682b1079afd29db5f6"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/audit-harness/remove_retired_public_clone.ps1",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "569fa60d48ca299fda42bd3209a0631f338e77391f374098a07141de2cf010ca"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/audit-harness/restage_original_observation_bytes.py",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "0122d8ebece14ddaf1de7bb39165b6f7aa92bde8277b3db1e9973be4f44ee4ff"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/audit-harness/restore_byte_transport_guard.py",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "3c3030dfef638bf8c2ebc8f79f108abe665f8267a0e26c9a27140ae6a282e730"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/audit-harness/restore_local_guardrails.py",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "c85f287b4dbbf5b478083de17942e81aa80ed38c2ebfa2666b22a2b5d6b93c34"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/audit-harness/resume_authorized_work.py",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "c0e87c616122e9bd066421b056fcf42f53e324572ddfb3c5700b3e2c1ddfe2d6"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/audit-harness/run_causal.py",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "21ba5e55b1cd049145dff660ec43d76b7b0c451b7caf34ade65bffb22be37afd"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/audit-harness/run_checkpoint_validation.py",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "155991261838c8af256ad6ef4d3f6ce4f8d70a24a002106d1d3dbd002e2dd4cf"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/audit-harness/run_full_verification.py",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "79d691e90955589731a21aea2f48c002457f4b4213f91adc6a8590ab81416438"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/audit-harness/run_internal_red_team.py",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "a8fb8a0f81ee2d1a25e4d0b4b7d46532d8c41ee08ddc3de4a320b13b7baa9a15"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/audit-harness/run_knowledge_integration.py",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "10dd20f7fba13da0da1981091d0f1392ae7ea2f7595741b247041f7937d30fbf"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/audit-harness/run_native_candidate.py",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "9a6c01c0a0ebf817ef30ea96fd9b383980dfe63d001c7803a712820095c25ce2"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/audit-harness/run_published_green_keeper.py",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "697dc2531cfda731005fa4d1a22faf125f12a8c2ce5d9c73a23eb0b0f90b997e"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/audit-harness/save_active_validation.py",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "d5264d394f5d9cb72731b7058505ab08c83f861ea087e2a67160713fea9a747f"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/audit-harness/save_blocked_handoff.py",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "55832badf28e86d8da9a89127d693eed4ab4859752718d17ffd8c883b24711d9"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/audit-harness/test_bridge_physical_bounds.py",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "8af8327f8863f33a21087631cea1b2f79811397f37afb9a3bb93ed6fc2af3185"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/audit-harness/test_current_stream_bootstrap.py",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "5810b697943af7d4a07b57d25f2dc25af791a62e6391f48c2a233b1206a25c45"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/audit-harness/test_native_producer_observation.py",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "99b74c8c1f73e60f5282f0edda5d77d0a2a9258f9e7efb8738ff7d5437591819"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/audit-harness/test_owned_cleanup_operator.py",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "ebc9e7048868dbcb87580a285a1909133a1be0d54f98c6d493c5245393cd2f60"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/audit-harness/update_bridge_progress.py",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "f2faea87992926c21cd2ab6599dea54396c989793f82e8b3af711ca0c0b2608b"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/audit-harness/update_current_evidence.py",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "40f9643039c4ceb1cd8b98302982d89b6e7f89feb7dc18ba016fc4517298e1a5"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/audit-harness/update_progress.py",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "62af42f97902377dbe1a3c6f64ef0ba19cd97d321a51202ffc35350a137c216c"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/controls/run-0001.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "15d59f206e7d73b4bcf763879340ca8747ef9095c7665480cfbcf483146e296f"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/controls/run-0001.stderr.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "a47cf511ad3a7b5df419a82d5d571323b384f5aa86a378eb4bbb6d06bca0bac9"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/controls/run-0001.stdout.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/controls/run-0002.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "db9a6e88ac5fbd3c43b963eaf83ce530213f03dd13e6ab048a0eb2a74dd5fa86"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/controls/run-0002.stderr.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "ae1f6c4461b55bfb67fcfb3b81d29b8dca2c6c2713b5e312e88a7dd10548d751"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/controls/run-0002.stdout.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/index-0001.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "0a17411ec8eb44784f3390be4c85f9f07713f61d405bfb04378bd69730eae32c"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/index-0002.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "abc0fdb1e24004416520181702fb03f1a76df139cd541f617861e42ddd3f9bb6"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/index-0003.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "58007789105f9fead57137415011fa3b6e5e6041796f636963c3606e584f67ff"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/index-0005.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "40b0e5e1fb0527c42790690e71c5ad3d3bf474b36dab96ce29631fdbdf8acd66"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/index-refresh-0001.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "2c9d902062b4266ce9807825711c12cb53fa7e0a85ed450064dcde95f918d895"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/bridge-path-bounds/run-0001.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "e30c7cde311f377c401be3f0a026fda45eef5beeb838cca9a7f34f36d3fe7e65"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/bridge-physical-bounds/run-0001.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "9482be2c8cdd130b74568ea8cc10ec5ddf7cc4f9bf0f1f5ee004ef8097630ef8"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/bridge-physical-bounds/run-0001.stderr.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "16c4d5d908bfcdc7f822ff9da8f49cdd699ad02d16cdda206c30b757c7943ba9"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/bridge-physical-bounds/run-0001.stdout.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/bridge-physical-bounds/run-0002.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "3481699048e6d1fc740623e1480b08bb1b5931e4744219eaee550b26b62f7235"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/bridge-physical-bounds/run-0002.stderr.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "b6cad6ba31bca1911d87b694ecbee723114049dd94a8bdd3a74bbfcbf12480b9"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/bridge-physical-bounds/run-0002.stdout.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/bridge/run-0001.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "e13ceafffce9e83065df1543a2d68345f22615acd25548f6b72708fc1079b832"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/bridge/run-0001.stderr.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "f8b31bd70988ff9b1fb9442af59d9befe28bc1db2f29869550bce2fe2692cbf6"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/bridge/run-0001.stdout.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/bridge/run-0002.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "5002609ef9f287cfdc2f4c7aa6edf921396163055ed9f093df30571d2b517dc8"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/bridge/run-0002.stderr.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "f20a3369ffe4ab87449cfcc9708286c82a0f0fd87b2931098b066081ca285a19"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/bridge/run-0002.stdout.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/bridge/run-0003.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "3fb4a319fc07337e0271b57e16b04386c3486b10aa35914e9213ea65d98f9016"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/bridge/run-0003.stderr.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "69bfcf6a596b7c9c0e7a831a533c890cedd8cd4dc9266c4aefe4047cc2858e4c"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/bridge/run-0003.stdout.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/bridge/run-0004.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "bdd992b2d291107f7d2d277acf58e50113f83f7a04e3b85c848020ad7758aeee"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/bridge/run-0004.stderr.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "21baa9af6f33ed1396790b21fc4b5a246a94022a00dc1aa56e93e7db7604bff3"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/bridge/run-0004.stdout.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/bridge/run-0005.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "e824520106d5a5bcc637b858ad66d629707f9980d518f032035614ba40b7a2d1"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/bridge/run-0005.stderr.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "9f583937dd7aebd71aaea2deb30b63b34ed04d6573fb290ef96c06f3e4f55afa"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/bridge/run-0005.stdout.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/current-streams/run-0001.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "6c6081a5b60ceac2af9586fb0231826163f77fdbb4fe4c91d679af1f82d071ef"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/current-streams/run-0001.stderr.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "5e4ded65652d16e29ca658867eb9d814fba02c7d1abba8b3ecb559c6ea21d45c"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/current-streams/run-0001.stdout.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/inherited-streams/run-0001.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "68ba036a11adba8bb1bb13f16d99ab830345a75c4f407c55fa649e39fbecef5b"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/inherited-streams/run-0001.stderr.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "3ba6241aec9af345c85da1be45e357a3c64d446c23505c0317327f468452621a"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/inherited-streams/run-0001.stdout.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/native-candidate/run-0001.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "b83d3cd817952f1e37c681f6337d42bfff3bdfebb027118645869427345149c4"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/native-candidate/run-0001.stderr.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "84ef02e69fa3f451b3acb3f42edd044eadcc7e65d9532772cc9ee5ce882cc09f"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/native-candidate/run-0001.stdout.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/native-cleanup-evidence/run-0001.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "291cb20084b9c8700a0d522b27168500afd617609a0798cc62ba554d6314cff2"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/native-observation/run-0001.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "8241d503fa87d0e83c5877e9b5548c9a5a7c3b0e2dab8e8df2988bfc5f23789e"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/native-observation/run-0001.stderr.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "d9974f39ff0e2316f39ccf6605133faebfce87c1d1c7e261e09b586f53704671"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/native-observation/run-0001.stdout.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/native-observation/run-0002.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "2d88cf0d3fbf7efcb56bdf92eb5a29b09af8903e7dd06a941886cbdfe612de86"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/native-observation/run-0002.stderr.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "146d30621c24693e7b2903efcb910e4edcf478352ff204716d8d7dcd102255eb"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/native-observation/run-0002.stdout.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/native-observation/run-0003.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "b31ef6af3389732ac8913980ee653cd99db707e2853a07c6c16e54d5a0e5585f"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/native-observation/run-0003.stderr.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "d0c7e8599c63a13110ec8fceda67b91be28a3a5874c040fb26f25f781ff3ab84"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/native-observation/run-0003.stdout.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/native-observation/run-0004.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "efc5866640d9bc8a30939b5aa05bcdff3a350e6dcbb8ab32dab1d1fed97805bc"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/native-observation/run-0004.stderr.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "293cb47bc83e25f47837b6df470b4ddf5cebe8aaa5254545a0f5ce5fedcc677b"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/native-observation/run-0004.stdout.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/operator-cleanup/run-0001.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "8b6ea8b16c4e7274b407c8925ea31c4d7a2a55aad35326e7f961f96c11b5f865"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/operator-cleanup/run-0001.stderr.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "decde3e3a96094ba58d4fc4964e73bc9f4622d6e915264dda2fb4c6d535dd8e3"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/operator-cleanup/run-0001.stdout.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "69118c83ea1aa406772c587e9157017d00976984eb75ffb649487c7f05f87eb7"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/operator-cleanup/run-0002.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "d6e043f57e23e59adf966c1f9777488bcbd037f147b737d5cd333c8bc6fe4887"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/operator-cleanup/run-0002.stderr.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "e690da665524f2dc817910f9851f9f36f4ba1e55472cdcfaf4e61f0736bdd15b"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/operator-cleanup/run-0002.stdout.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "69118c83ea1aa406772c587e9157017d00976984eb75ffb649487c7f05f87eb7"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/owned-cleanup/run-0001.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "23d80c0371a73ff218f648050890e46ca960d15d85cf45fe2a6864ed9de1337c"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/owned-cleanup/run-0001.stderr.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "8a8c438a5dbd3df35fa133c82d559af26a7475493ec47554bba3bf351ff47bd2"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/owned-cleanup/run-0001.stdout.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/owned-cleanup/run-0002.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "81e7867fff39cd2a52fb88b0ad79b3fb05d3efe6740e5f8f15967cc1469f6fa9"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/owned-cleanup/run-0002.stderr.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "91468616dd7934418c2643b168f84d166480eb2d8aa5176b4a328dedb1901f2c"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/owned-cleanup/run-0002.stdout.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/owned-cleanup/run-0003.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "915656abc3becd57f7c02c38c16baa29ef1f2a837ac1ce3b29b6c49cf4e3b8e5"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/owned-cleanup/run-0003.stderr.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "2b68c67fed99fec6d3e81f6235d175601d8b917f854e38606b3c08eaa74e23ab"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/owned-cleanup/run-0003.stdout.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/owned-cleanup/run-0004.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "7a2ebd4e64ac5fe7a30f3100c6e99f20c5de25c14c7c2bda44c6d2378ee7fa17"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/owned-cleanup/run-0004.stderr.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "2b68c67fed99fec6d3e81f6235d175601d8b917f854e38606b3c08eaa74e23ab"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/owned-cleanup/run-0004.stdout.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/run-0001.capture-failure.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "2274a4cb5214dc77eef5f6a25a4fa0e1f341cb928667eae4ab349e2627d72ec0"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/run-0001.stdout.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/run-0002.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "7a5b0d787dedea18bc0e8a0291e0330d3ecf7d0d0c09e46a5f8cceb1395a809b"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/run-0002.stderr.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "937c6e82b8f5793bb426dd681e3efdf9d441984b622fc1a1d04f2b2ba3373900"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/run-0002.stdout.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/run-0003.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "6c1a73b5c2c2cbf21a826d057b89995ec30add97c90237a518fcbd6a46491fae"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/run-0003.stderr.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "c818e13121558d33833b50e41a424f7cf571c9374f710264cb30894a5df84315"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/run-0003.stdout.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/run-0004.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "8d954a87682cec9871cf36a827ec6bec943b5bbeb6abba71666ac8fc9714b64e"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/run-0004.stderr.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "cc712e83de10a2a0de9f6b8312ac5e611f86b0dce42267ef836dbeddb4bd7be9"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/run-0004.stdout.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/run-0005.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "466da5f52fa4f763ed02594202fa1c694456b5d3e42a9628c6e37bfe389cfd65"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/run-0005.stderr.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "61919bfd60d969a493bbd27a789ac8871001ea610d5c1c223754fa02653104af"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/run-0005.stdout.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/run-0006.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "9d91aae486be35c5c263b50e2b0c81e7a4a9d6a30795f6daf48068b0b355ed74"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/run-0006.stderr.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "c80349827f81a6769baa1baaccd1d9cc8b4b2defaa8a790a631ef9f8704ae211"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/run-0006.stdout.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/run-0007.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "000f654031576ecdfc1a9d1c028fc2b4879d579aea9431a79de613cf283bdc64"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/run-0007.stderr.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "287ccd73b6f32c45d2728d396d946b5b76f27075635fac81866dc3d3c9ceb4f1"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/run-0007.stdout.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/run-0008.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "04ad7cb33a6cdb9a110f728cdb50d6ca827ba48487048e281b644692490fa783"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/run-0008.stderr.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "019eea6d4d0fb78a425ff75824da311fb47f89e0af908f64321661fdc04f3b5b"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/run-0008.stdout.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/run-0009.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "dd7b7b35c36b6a9512b80131ca7fb49e6e7ca1f7909787784ccdfc73dccd408f"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/run-0009.stderr.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "56d3572e0ca58647ca9e796e4a326fdd0cc8789f5a9b54beee0e38aeaf690ebb"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/run-0009.stdout.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/run-0010.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "8f95fdc334f20012a1bd4d4626b851d22daf425e84b03fd5d049eaadd368a43f"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/run-0010.stderr.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "b96bddb9163dab6c66f8f8d50032aa209f2aa59bdb38a9287d9e58eb16e725d1"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/run-0010.stdout.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/run-0011.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "33b2a3c6c0ff5ebff51a42b28a35b0dc8f47730579cf33117667c1446ab25b29"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/run-0011.stderr.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "84ba02c571f80f0c376dada76f02a3f8e1b9353dfb89a689ef8f73b9c1ecb2c9"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/run-0011.stdout.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/environment-attempts/bridge-boundary/run-0001.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "7602441fffa27640aa0b89456aa73c9a44f9ee43d9a49110b2c242977b6cc61f"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/environment-attempts/builder-diagnostics/run-0001.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "64d35ec77988c28646c2ec5c904a373a02f12f6ddb46345a9cc1686e5881bdb4"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/environment-attempts/builder-diagnostics/run-0001.stderr.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "e167e476513b00db0f9b0838b6dcff7edc13cf83b91da1aba0c83f13a1dfe58d"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/environment-attempts/builder-diagnostics/run-0001.stdout.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/environment-attempts/canonical-bridge/run-0001/RECEIPT.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "8ad73af1f262c6885618769701baef106f2ed7631ee23e0f1347b9890a8e18d0"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/environment-attempts/canonical-bridge/run-0001/apiTests-stderr.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "a9511e959a49e35ece7ce1d29285e47a0dd0dd627fe39294adf7b6fdcc411a98"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/environment-attempts/canonical-bridge/run-0001/apiTests-stdout.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "07ed88cd6c8d233354e1a01e208328e7a1a3a0242a6ffddc0e81491d1cc9596c"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/environment-attempts/canonical-bridge/run-0001/apiTests.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "978b1aafeddacf9dd32758d7f1d4e84dcf2ea9e4474e32d4448cfb2442d101a0"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/environment-attempts/canonical-bridge/run-0001/clientTests-stderr.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/environment-attempts/canonical-bridge/run-0001/clientTests-stdout.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "c91436b343527bf7f4872ac572eb66329994c6cb681c170297e3cb0cc61dc272"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/environment-attempts/canonical-bridge/run-0001/clientTests.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "67cc1abf4d102327065bfd064aaf8540eeed61b6cfe4911b8efaecd995043230"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/environment-attempts/canonical-bridge/run-0001/stderr.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/environment-attempts/canonical-bridge/run-0001/stdout.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "ccf307bfe806c94f8bcc62ac06d2bdca5e6b3a9c88784a655548048f39b6b47d"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/environment-observations/run-0001.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "81b36de58680bf5248fb5010ff937b2576fd71801360280b6b12baf1bc94bfbe"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/environment-observations/run-0002.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "4373f676c753cff2f1c5011d948f1d482cd2acef5489425778fbb60ea05624a1"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/apiTests/run-0001.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "187a66f092d6f523d8421af933a2cfa5865ac52dd91b557d539bc2a4fc202bc6"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/apiTests/run-0001.stderr.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "9de829decca84aac7e3bd5782f46bf468ba1975a3704657f2d1e912150d079be"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/apiTests/run-0001.stdout.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "09e24b4765bded4f0dbaa492d87d6f43b73fc3cea88d9efa4ddd677f18f88201"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/changed-source-lint/run-0001.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "721a9076f788e229175add38bf2c4eaaa2071bea1d3b1fed4aa5ac3bb359d424"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/changed-source-lint/run-0001.stderr.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "ddeb63c7f66a39516fcde3dcfad5fe0d13c151de5f2ed2b998b200a736b5b89e"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/changed-source-lint/run-0001.stdout.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/changed-source-lint/run-0002.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "a567a1baaf1d5c415d6ff09a148cf1053058b69c310b312c84c5ead588e98031"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/changed-source-lint/run-0002.stderr.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "fce5c687de26f03fb6bd4d606526993f23185f2c18eb59eb580ff50e0c26a2fe"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/changed-source-lint/run-0002.stdout.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/changed-source-lint/run-0003.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "1d06c34de8538c5a3a33abb0233338ed911e1b226169908040e48c086b1dbcc0"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/changed-source-lint/run-0003.stderr.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "245af95ac1d9725e24f69dfc77ebea2867b8585da0f21a84328f36cd25f8144c"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/changed-source-lint/run-0003.stdout.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/changed-source-lint/run-0004.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "2fb30399179db126c3f52ca73f681364e6cf574a642214ea61be192a10f8c811"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/changed-source-lint/run-0004.stderr.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/changed-source-lint/run-0004.stdout.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "7d3aa902c2fdc8a73f4b952bceb6c08459b703d83f6e5cf127bf411374b74cb5"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/changed-source-lint/run-0005.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "747a0c7ba6a4057dc14b9bed584b59fe77d237b95f1c99cce04d54d788777b85"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/changed-source-lint/run-0005.stderr.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/changed-source-lint/run-0005.stdout.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/changed-source-lint/run-0006.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "5ac1a583c64b2166a954c8c74ca7e092137d90f72701667d54982aaf4864bf3c"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/changed-source-lint/run-0006.stderr.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/changed-source-lint/run-0006.stdout.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "db870a1339260dc2679f5804c99e7445a3e1d27f02864120902bd2c176ea1b67"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/changed-source-lint/run-0007.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "58186c0252c7f5b51842e59fd1fbcf44c0d2efb54ca7033e3c3ada8be19e9fc7"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/changed-source-lint/run-0007.stderr.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/changed-source-lint/run-0007.stdout.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/checkpointValidation/run-0001.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "dcbec5eb9ea3e6abd3f31776cf04c0cba69a3e0c13f922a7419d1f25f1270de1"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/checkpointValidation/run-0001.stderr.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/checkpointValidation/run-0001.stdout.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "62374c2c0e37978994007738ca36adc6350b37f2df7d109670033f55923dc81e"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/checkpointValidation/run-0002.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "ea4e5cebdbeaba77081fd3026c660b7c92e6b7b9a7d2f4b43ac0a2285876b70f"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/checkpointValidation/run-0002.stderr.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/checkpointValidation/run-0002.stdout.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "7bfd5e2ad2f349e20289575a6704a8ec1966b46e24ec005539e40ca4b1c928d2"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/checkpointValidation/run-0003.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "c75fde454bc998ada893ac77a4eb56861093668dbc3e3ba8cdf5339858aba8d7"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/checkpointValidation/run-0003.stderr.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/checkpointValidation/run-0003.stdout.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "1bc8964e1c5dd57d3bfcfea0041259ff75b27f52fb70f843da8c625a654393eb"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/checkpointValidation/run-0004.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "8eeb4c3705ec31af54b5836b94f241e30e3b6323a44e8b754b18ac2237d154be"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/checkpointValidation/run-0004.stderr.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/checkpointValidation/run-0004.stdout.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "1bc8964e1c5dd57d3bfcfea0041259ff75b27f52fb70f843da8c625a654393eb"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/clientTests/run-0001.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "437209fb2a5233383f07baaac31375d6df7c885ec9259a49ec9a3cb790fa8853"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/clientTests/run-0001.stderr.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/clientTests/run-0001.stdout.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "cb063b6f421a34a52e2fb31bdff74dabf412d0e79d0616d318395ea688c360cf"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/clientTests/run-0002.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "7400303f49e4c9a47ea8ee482e9b8d864d87e47cfbc4f132c80b205117da4611"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/clientTests/run-0002.stderr.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/clientTests/run-0002.stdout.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "3a18ee86a213558fe88c3a90a85b643e9d333fa80e8f9aa244f1cc11e66fd7c6"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/lint/run-0001.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "08858460e69c5b754ea28b88703eca2146e875d1da8bf6d512230a7522877c86"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/lint/run-0001.stderr.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "50416116b130053948e2aebe96537a9539033077d3d4fd4628e2944b616f4163"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/lint/run-0001.stdout.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "7b723959fe9cc7626c60b5a0fd24a121169bd7ca35461ae29c3824f18b481b10"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/lint/run-0002.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "b0ed6dfdc73a7a1ebeb7a94897f4d511ca671ee69f0157152169acb29dcd92d1"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/lint/run-0002.stderr.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "561d3ab98f3bafc1037b63920c9ad12f465058bf362f267607fbfb6ee735513a"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/lint/run-0002.stdout.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/lint/run-0003.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "2a74b0a71893e38e778acbc7d40b0e5176b92d929c87b06afd16c3535d06fea2"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/lint/run-0003.stderr.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "50416116b130053948e2aebe96537a9539033077d3d4fd4628e2944b616f4163"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/lint/run-0003.stdout.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "7b723959fe9cc7626c60b5a0fd24a121169bd7ca35461ae29c3824f18b481b10"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/lint/run-0004.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "77c0a6fa94ffe79de8e3eac6ab5fe56aebbdd31de695cb801966ea40499a0ce3"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/lint/run-0004.stderr.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "50416116b130053948e2aebe96537a9539033077d3d4fd4628e2944b616f4163"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/lint/run-0004.stdout.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "7b723959fe9cc7626c60b5a0fd24a121169bd7ca35461ae29c3824f18b481b10"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/lint/run-0005.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "38508fa32f70e990f96fc8071a0d562490741c8ff9b1b01c59001d209b007323"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/lint/run-0005.stderr.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "50416116b130053948e2aebe96537a9539033077d3d4fd4628e2944b616f4163"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/lint/run-0005.stdout.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "7b723959fe9cc7626c60b5a0fd24a121169bd7ca35461ae29c3824f18b481b10"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/lint/run-0006.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "e3bd740916dd4876c2130feca9b9e8753af85733106e15e42f7be3c591c3ea09"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/lint/run-0006.stderr.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "50416116b130053948e2aebe96537a9539033077d3d4fd4628e2944b616f4163"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/lint/run-0006.stdout.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "7b723959fe9cc7626c60b5a0fd24a121169bd7ca35461ae29c3824f18b481b10"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/native-format/run-0001.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "85347065a3179f6484e0063da871bd0fad521303e652d4e923f3300420b459a6"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/native-format/run-0001.stderr.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/native-format/run-0001.stdout.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "96a977f329ec3c59092d40e041a019b49dcf03ca04055e177aa0ccb8c27234df"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/native-format/run-0002.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "b429da4d3e01e00a6f1c49a12c836ba981f0cae7479cff2d8a83bf19427346e4"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/native-format/run-0002.stderr.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/native-format/run-0002.stdout.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "10869b88a75066aa23546ef1f95fcd4678c3fb92a56ed46ef91688052b67976a"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/restricted-client-probe/run-0001.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "7c0fb7667ca44a2bab0e8a15b8e40650564e700a8d2681f13d4a9521651adf2e"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/restricted-client-probe/run-0001.stderr.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/restricted-client-probe/run-0001.stdout.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "482ab8df7a384c39827ab17f945c3894f64e06cf71c3e645f19fd37d6a11e3b5"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/staticAnalysis/run-0001.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "05bcb6238bcbd51f2a219bb456e5277a705d4330036e125d36fe44f47fb1ef7e"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/staticAnalysis/run-0001.stderr.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/staticAnalysis/run-0001.stdout.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/staticAnalysis/run-0002.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "e8a094a502d3c21fdde040dc502b5dfb375909c1636313f23c18399a0f139ebb"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/staticAnalysis/run-0002.stderr.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/staticAnalysis/run-0002.stdout.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/staticAnalysis/run-0003.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "994452cc7783ee7974ada8b4fd38876f5ca3218ab0495fab2575665c5cb73fe0"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/staticAnalysis/run-0003.stderr.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/staticAnalysis/run-0003.stdout.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/staticAnalysis/run-0004.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "bb4850760b89613f209a91f787645fec7ac1fb534b0851c07b481ff55afb8f27"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/staticAnalysis/run-0004.stderr.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/staticAnalysis/run-0004.stdout.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/staticAnalysis/run-0005.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "2d19245d1128d01cf1fbd0ec6c30b9699a988a319fa906c6ee9671a94e74a1c9"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/staticAnalysis/run-0005.stderr.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/staticAnalysis/run-0005.stdout.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/tests/run-0001.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "45cbd1ab93e8b145071b442a3460df5d00223734967a2a93eb531dd154d57b22"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/tests/run-0001.stderr.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "70cb650bad60f50198851c9ea03ade4912a54fe70d5cb6490f4d6358262fad23"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/tests/run-0001.stdout.log",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "4fedefa6ce1299f12449405058c980c4a3c23d348bc479f4353e3082a8acf231"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/raw-preimages/ATTRIBUTES-BEFORE-BYTE-BOUNDARY.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "3362a604f2a6577130ba92f2b5f013b0d273c14cf25d15726665c86f5e1d9105"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/raw-preimages/ATTRIBUTES-BEFORE-BYTE-BOUNDARY.raw",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "c78427bacd06e6331184f0c71d02cc2ece79244317ac2824f96addb86dcc24e1"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/raw-preimages/BRIDGE-PATH-001.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "4bc652d9d91670b3bc6bbe7d58960d5d07d9cd1d147814f4e01aa997c10fede8"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/raw-preimages/BRIDGE-PATH-001.py.raw",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "bb1bbbd920e46ac378e5443b887ba096a859380b3b033f34290cf0cd81ab3ac9"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/raw-preimages/M2-F-002-NATIVE.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "e09ed5059278d68af0ef1043f2ee8c19134daee050c922f505052e7ee3336fd0"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/raw-preimages/M2-F-002-NATIVE.py.raw",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "76ac3e48c84b2217db4db6bb95d5101e0010fca210f29796715498daab8f8926"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/resource-observations/build-history/run-0001/RECEIPT.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "4ce12a5e4bd23024f266f6ecd6f3ecc22618e0ba5b154ab96ec7df98f42985d0"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/resource-observations/build-history/run-0001/list.stderr.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/resource-observations/build-history/run-0001/list.stdout.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "8053b66ef81155c4cec01ed7d66aa06373c2aaaa8d476c0010da6849f856bad5"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/resource-observations/build-history/run-0002/RECEIPT.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "6cb622f506cb5f9773c699ad9e25ef72c9167c32ee19421e75388fe2d7d65775"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/resource-observations/build-history/run-0002/inspect-u1y9zh45oqq6pnzd7qtnqudhn.stderr.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "96d283052b276a9465c3bb84cb53aa85d8e5a0eb4c149813152f226409e07042"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/resource-observations/build-history/run-0002/inspect-u1y9zh45oqq6pnzd7qtnqudhn.stdout.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/resource-observations/build-history/run-0002/list.stderr.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/resource-observations/build-history/run-0002/list.stdout.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "8053b66ef81155c4cec01ed7d66aa06373c2aaaa8d476c0010da6849f856bad5"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/resource-observations/build-history/run-0003/RECEIPT.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "6db6cc3b71a3c83688947029ef15445bdeeb04a450643de90254f6b98ddb4a53"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/resource-observations/build-history/run-0003/inspect-u1y9zh45oqq6pnzd7qtnqudhn.stderr.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/resource-observations/build-history/run-0003/inspect-u1y9zh45oqq6pnzd7qtnqudhn.stdout.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "0636c5dc91aa5b93a15b36c291664b3a1115b472c7a26d4300f399db33892cf9"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/resource-observations/build-history/run-0003/inspect-wfic024jusk36x8ply7ywlg05.stderr.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/resource-observations/build-history/run-0003/inspect-wfic024jusk36x8ply7ywlg05.stdout.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "c4c9b05aa849f51f9a4a0ada095de93ccdd103a1c0dcae59aef4f197ede8ef77"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/resource-observations/build-history/run-0003/list.stderr.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/resource-observations/build-history/run-0003/list.stdout.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "8053b66ef81155c4cec01ed7d66aa06373c2aaaa8d476c0010da6849f856bad5"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/resource-observations/build-history/run-0004/RECEIPT.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "2fd4db7d2fe7a50548fc6db654ecb01996ac09186911918f41b318cfb95f973e"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/resource-observations/build-history/run-0004/inspect-p0yql7t5w9ada4wo6ni6gh3ha.stderr.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/resource-observations/build-history/run-0004/inspect-p0yql7t5w9ada4wo6ni6gh3ha.stdout.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "63cd3f8f614845597f1ee34670a665094df9154aa10ba735997002fc5b201cff"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/resource-observations/build-history/run-0004/inspect-u1y9zh45oqq6pnzd7qtnqudhn.stderr.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/resource-observations/build-history/run-0004/inspect-u1y9zh45oqq6pnzd7qtnqudhn.stdout.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "0636c5dc91aa5b93a15b36c291664b3a1115b472c7a26d4300f399db33892cf9"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/resource-observations/build-history/run-0004/inspect-uar1eqkvquwwj5f2xxw0jn4kt.stderr.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/resource-observations/build-history/run-0004/inspect-uar1eqkvquwwj5f2xxw0jn4kt.stdout.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "f871f69d938de24903d89067f7b86c46ddec0c9ab771c1fc4868618cf217c091"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/resource-observations/build-history/run-0004/inspect-w9m47rdur05d56mflpzfomazt.stderr.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/resource-observations/build-history/run-0004/inspect-w9m47rdur05d56mflpzfomazt.stdout.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "b83f9b8896e2f0b6d37201d164423292476500641fb02c8dfae99a8825d7705a"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/resource-observations/build-history/run-0004/inspect-wfic024jusk36x8ply7ywlg05.stderr.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/resource-observations/build-history/run-0004/inspect-wfic024jusk36x8ply7ywlg05.stdout.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "c4c9b05aa849f51f9a4a0ada095de93ccdd103a1c0dcae59aef4f197ede8ef77"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/resource-observations/build-history/run-0004/list.stderr.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/resource-observations/build-history/run-0004/list.stdout.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "8053b66ef81155c4cec01ed7d66aa06373c2aaaa8d476c0010da6849f856bad5"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/resource-observations/run-0001.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "4f3738cd18c827812a1f653baa16554a6bfcb351f80e1034bac0744c9b59aa64"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/resource-observations/run-0002.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "136d55913fabaab1f6a573574d418b96f65e33b5818831af8743788475664389"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/resource-observations/run-0003.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "c0971a5c484bd699ecbb54c036b059061030565f3627329b37b252aefac87765"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/resource-preservation/run-0001.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "b1439447a45f8e47cc6d3155903f19960c90270efedcde2c2325f135b9975f3a"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/resource-preservation/run-0002.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "df91c4d045b7ca011fc6ebc0588e948518a381c92c5407216f722b3553210695"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/resource-preservation/run-0003.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "03bbc33e6164e6b1804229ca808103dd5c7f4a8ac6ab99dc660f08f2ac753971"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/retired-clone-observations/run-0001.json",
+      "reason": "Current corrective checkpoint and owned command-produced reports; no independent approval.",
+      "hashAfter": "b4270163865770ae09696bf067e854ed5257db9d631c7b83f3313b0e2513224e"
+    },
+    {
+      "path": "scripts/development-ledger/audit_runner_bridge.py",
+      "reason": "Explicitly approved closed host-runner adapter and exact ownership cleanup planning, within canonical assurance source scope.",
+      "hashAfter": "878456bdc6ed04abc7e727ce7687cab21f9a30e302f128a22a1c00f4b7ee9010"
+    },
+    {
+      "path": "scripts/iacode/native_execution.py",
+      "reason": "Bounded original native producer identity and independent typed process/handle cleanup observations with unchanged successful interface.",
+      "hashAfter": "318b4adabb21d1ae49f694b1756cbb29ff8f78a74c4bebd0cde29e9655b72919"
+    },
+    {
+      "path": "tests/test_m2_audit_corrections.py",
+      "reason": "Causal real-child/replay regressions with null/adverse and exact-owner controls.",
+      "hashAfter": "370f22f4f683c4ca4fdd52d26908c7afa272325339c078119dc7daf47d801d09"
+    },
+    {
+      "path": "tests/test_m2_bridge_physical_bounds.py",
+      "reason": "Actual private-source/report confinement with valid nulls, reparse/hardlink controls and a labeled growing-prefix boundary.",
+      "hashAfter": "47207d794469fc22583ed2a82069049fcdda3103dc6c3d7e0a6ef4763c113efb"
+    },
+    {
+      "path": "tests/test_m2_cleanup_operator.py",
+      "reason": "Checkpoint-operator controls using real Python producers and isolated Docker boundaries; never live engine cleanup acceptance.",
+      "hashAfter": "fd96c60f64dcff76c9970b571828a113f5b5c29bc6c14a93403525f0c9ced687"
+    },
+    {
+      "path": "tests/test_m2_closed_runner_bridge.py",
+      "reason": "Real Windows child and adversarial controls for the explicitly authorized isolated validation bridge.",
+      "hashAfter": "3c30156d6fdf73a49044078e77196c5ce8de124d0c64d2b83af8ec93cc5407c9"
+    },
+    {
+      "path": "tests/test_m2_current_stream_bootstrap.py",
+      "reason": "Cold actual UTF-8 entry-block positive/adverse controls without replaying runtime/cleanup main bodies.",
+      "hashAfter": "47bbe04ff39dc48bc336d8a3874b95e95722c0ead3cc4cf8a73ac9a551b9d8d0"
+    },
+    {
+      "path": "tests/test_m2_native_observation.py",
+      "reason": "Actual owned native producer, privacy, callback, caller and output-handle failure controls; no editor or Docker launch.",
+      "hashAfter": "9d27b8423fb6c5bc883cd1e3d7f737a01d1e76f2784755e630edbc9c73399795"
+    },
+    {
+      "path": "tests/test_m2_observation_transport.py",
+      "reason": "Real Git archive and both checkout modes for every canonically declared copied observation; actual boundary-removal adverse control with valid binary null.",
+      "hashAfter": "87b0d9248c62ac3c230523ae87841614f9529e54c46ca235be9682ce3101c9c9"
+    },
+    {
+      "path": "tests/test_m2_owned_resource_cleanup.py",
+      "reason": "Adversarial ownership, shared-image and unrelated-application cleanup plan controls without engine writes.",
+      "hashAfter": "fe45089a355c391e2e1b96b8e22cf22799a7a8e73e90549ec5e55d78a45af15f"
+    }
+  ],
+  "filesModified": [
+    {
+      "path": ".gitattributes",
+      "reason": "LSN-0131 guarded recurrence: explicit byte-preserving boundaries for copied inherited audit originals and current observations; no original normalization or detector exemption.",
+      "hashAfter": "850b6547cc8b897ebfc056426b775242b20a7844934d32e5404b3e7b0f9e468b",
+      "hashBefore": "c78427bacd06e6331184f0c71d02cc2ece79244317ac2824f96addb86dcc24e1"
+    },
+    {
+      "path": ".iacode/anchors/checkpoint-chain.json",
+      "reason": "Preserve inherited canonical successor anchor for the sealed CP0001 subject.",
+      "hashAfter": "a2ae84c2699d13246e98ca834ff48d679a157a104d1ac76f7edb1d5c3aeba58f",
+      "hashBefore": "c092763ecd085b14b979f0f5bfea57eda19f0cb51a62e2dff50bff4781be616c"
+    },
+    {
+      "path": ".iacode/memory/LESSONS.md",
+      "reason": "Canonical rendered memory index after recurrence/guardrail updates.",
+      "hashAfter": "5181c8ca1d8959a38173ac5053568115f23cefde04427a001b658f8475ca49f1",
+      "hashBefore": "86bbad3638b87eb44406f42124774eeeb3f11bfd8676547f11dcf996d5f31ca3"
+    },
+    {
+      "path": ".iacode/memory/guardrails/registry.json",
+      "reason": "Extend existing guards without removing historical controls; canonical JSON formatting only elsewhere.",
+      "hashAfter": "d35de98d6ccffb5db7e0c5b8ebb29474d8ed68a43b120f58f98dcf6bf7355fca",
+      "hashBefore": "d8893bd6cd5a098ebe8ed26fd5ec79672c4fbf872dad8a402df6b8de352101bf"
+    },
+    {
+      "path": ".iacode/memory/lessons.jsonl",
+      "reason": "Escalate guarded recurrences and add actual causal prevention; preserve other lesson semantics.",
+      "hashAfter": "b6c4e3a12b03d943369109ccd8d7b10dd649ed57aa43a26f6747ef80c971e0e6",
+      "hashBefore": "8fa2f6613b06e957409dd087269adceb91647bebc6d3a09893c8f45297be6f28"
+    },
+    {
+      "path": ".iacode/policies/audit-registry.json",
+      "reason": "Bind both M2 findings and escaped attack to corrective requirement derivation.",
+      "hashAfter": "98b0aaeae0b2bef90f28477109a2edc93cd86e496acc10d2fcd36620900ef951",
+      "hashBefore": "606b444cd76ce037275c00b2dbd88f9dea979e3eeed3f7e1ae4142464f1f0a6b"
+    },
+    {
+      "path": "docs/adr/README.md",
+      "reason": "Index the current structural ADR atomically.",
+      "hashAfter": "fa4900add8bb0375d97dacf5c36b212c928840870f53986a2a1c7fce614be2b2",
+      "hashBefore": "87b4f13eee7adfe063473371bae5a4055995e1a91e695580990f17943a33ac43"
+    },
+    {
+      "path": "docs/checkpoints/LATEST.md",
+      "reason": "Identify the current unsealed corrective checkpoint and CP0001 as the last valid immutable seal.",
+      "hashAfter": "20f2ce31422313a65c9684e29ac3948c3705b8c19e9c5999cda7da486d6b8469",
+      "hashBefore": "70eb38ffc3132eccd7fd8bd1ae0a9400cf6873b42ff71cc80032dc74cd1383a9"
+    },
+    {
+      "path": "scripts/development-ledger/m0_red_team.py",
+      "reason": "Implement the canonically registered independently escaped M2-RT-01 using actual no-phase/quoted-phase producers and human replay, without narrowing inherited membership.",
+      "hashAfter": "7cc3491dd99fc19f34107a8cf5fd3a8886db6cb123a1981cb2f7e41b257ecfbb",
+      "hashBefore": "fad0c3cf0ebb5fe7d9c723bbc35c8692e2116b4e56b7c12e4b4bc09d8c335281"
+    },
+    {
+      "path": "scripts/development-ledger/new_checkpoint.py",
+      "reason": "M2-F-001 literal producer invocation and actual launch directory.",
+      "hashAfter": "1657c6abb896da62899b893a7cf9397977d8e46096bf1c9c046a3f1ca392f007",
+      "hashBefore": "96a55f40294cea7656757faec1a0a1a5552aa1fb67733b2f7feee018b7fa9919"
+    },
+    {
+      "path": "scripts/iacode/client_checks.py",
+      "reason": "M2-F-002 separate safe raw-byte producer and cleanup observations.",
+      "hashAfter": "cebbb042aa5cd0580e710ece10e57f6fecdc0d5c098e2031eb097b038aa8fbf5",
+      "hashBefore": "086c0f11d20adbc5aa5dbae87c6213024591ee46ffe46c4171b84dd26b3588c5"
+    },
+    {
+      "path": "scripts/iacode/gates/client_tests.py",
+      "reason": "Report structured fail-closed client execution without masking either observation.",
+      "hashAfter": "ad451356a2a5bf12bd003d5789b67f805c6e3dfbdd4517b29118c63fd564b2b5",
+      "hashBefore": "e86811804504f3a77f4151046cf26db9f91c974565050f970b8530a596381d5d"
+    },
+    {
+      "path": "scripts/iacode/native_editor.py",
+      "reason": "Extend M2-F-002 through the actual owned native wrapper and caller without changing process ownership or drain deadlines.",
+      "hashAfter": "eaa21f160c248873e49f04dfc6c6cf1712081132daebccefd7a83c7039dddee6",
+      "hashBefore": "76ac3e48c84b2217db4db6bb95d5101e0010fca210f29796715498daab8f8926"
+    }
+  ],
+  "filesDeleted": []
+}

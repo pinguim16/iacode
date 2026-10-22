@@ -159,7 +159,13 @@
       "reference": "validate_checkpoint._validate_command_reproducibility",
       "verifiedBy": [
         "CommandInputBindingTests.test_a_record_without_a_digest_is_rejected",
-        "CommandInputBindingTests.test_a_clean_tree_claim_is_checked_against_the_declared_commit"
+        "CommandInputBindingTests.test_a_clean_tree_claim_is_checked_against_the_declared_commit",
+        "CheckpointInvocationProducerTests.test_custom_phase_and_quoted_unicode_replay_are_literal",
+        "CheckpointInvocationProducerTests.test_omitted_default_status_is_not_invented",
+        "CheckpointInvocationProducerTests.test_nested_working_directory_and_explicit_root_replay",
+        "CheckpointInvocationProducerTests.test_default_null_control_preserves_supplied_invocation",
+        "CheckpointInvocationProducerTests.test_registered_m2_attack_runs_actual_null_and_phase_human_replay",
+        "CheckpointInvocationProducerTests.test_registered_m2_attack_reproduces_old_phase_escape_with_valid_null"
       ],
       "lessons": [
         "LSN-0010"
@@ -540,7 +546,8 @@
         "test_no_capture_relies_on_the_platform_codepage",
         "test_every_tool_that_re_emits_captured_output_configures_its_own_stream",
         "test_the_rule_detects_a_capture_that_would_fail",
-        "test_cold_diagnostic_entrypoints_use_utf8_before_any_work"
+        "test_cold_diagnostic_entrypoints_use_utf8_before_any_work",
+        "M2CurrentStreamBootstrapTests.test_actual_capture_entry_blocks_reject_cold_bootstrap_removal"
       ],
       "lessons": [
         "LSN-0035"
@@ -1239,7 +1246,8 @@
       "verifiedBy": [
         "test_every_tool_that_re_emits_captured_output_configures_its_own_stream",
         "test_cold_diagnostic_entrypoints_use_utf8_before_any_work",
-        "Gate7DocumentationAndStreamsTests.test_current_entrypoints_configure_the_shared_stream_before_work"
+        "Gate7DocumentationAndStreamsTests.test_current_entrypoints_configure_the_shared_stream_before_work",
+        "M2CurrentStreamBootstrapTests.test_actual_capture_entry_blocks_reject_cold_bootstrap_removal"
       ],
       "lessons": [
         "LSN-0083"
@@ -1802,8 +1810,8 @@
       "verifiedBy": [
         "test_strict_checkpoint_sources_do_not_rely_on_publication_allowances",
         "test_every_current_changed_path_uses_the_strict_detector_including_checkpoint_harnesses",
-          "test_desktop_credential_remains_a_secret_type_and_safe_dump_redacts_it",
-          "test_every_owned_wire_model_resolves_annotations_and_unresolved_control_is_refused"
+        "test_desktop_credential_remains_a_secret_type_and_safe_dump_redacts_it",
+        "test_every_owned_wire_model_resolves_annotations_and_unresolved_control_is_refused"
       ],
       "lessons": [
         "LSN-0119"
@@ -1994,7 +2002,9 @@
       "reference": "test_exact_byte_evidence_survives_git_transport_and_detects_normalization",
       "verifiedBy": [
         "test_exact_byte_evidence_survives_git_transport_and_detects_normalization",
-        "Gate6BookkeepingCausalTests.test_actual_captured_output_hashes_and_git_attributes_preserve_bytes"
+        "Gate6BookkeepingCausalTests.test_actual_captured_output_hashes_and_git_attributes_preserve_bytes",
+        "M2ObservationTransportTests.test_every_declared_copied_observation_survives_actual_archive_and_both_checkout_modes",
+        "M2ObservationTransportTests.test_removing_byte_boundaries_is_detected_beside_actual_binary_null"
       ],
       "lessons": [
         "LSN-0131"
@@ -2063,7 +2073,17 @@
         "Gate7CanonicalProducerTests.test_bad_archived_input_never_partially_overwrites_any_prior_functional_target",
         "Gate7CanonicalProducerTests.test_directory_or_hardlinked_output_is_refused_before_any_forwarding_effect",
         "Gate7CanonicalProducerTests.test_verifier_consumer_uses_durable_original_not_a_second_temporary_read",
-        "Gate7RawReworkContextTests.test_every_original_context_is_inert_byte_bound_and_protected_by_real_git_attributes"
+        "Gate7RawReworkContextTests.test_every_original_context_is_inert_byte_bound_and_protected_by_real_git_attributes",
+        "ClientProducerCleanupEvidenceTests.test_both_failures_retain_distinct_actual_exit_and_streams",
+        "ClientProducerCleanupEvidenceTests.test_timeout_and_failed_cleanup_preserve_partial_real_output",
+        "ClientProducerCleanupEvidenceTests.test_successful_producer_with_failed_cleanup_cannot_pass",
+        "ClientProducerCleanupEvidenceTests.test_secret_and_oversized_output_are_not_disclosed",
+        "ClientProducerCleanupEvidenceTests.test_clean_null_control_returns_actual_producer",
+        "NativeProducerObservationTests.test_failed_callback_cannot_replace_real_nonzero_producer",
+        "NativeProducerObservationTests.test_timeout_and_callback_failure_keep_both_observations",
+        "NativeProducerObservationTests.test_capture_handle_release_failure_cannot_replace_primary_observation",
+        "NativeProducerObservationTests.test_native_actor_forwards_producer_facts_without_approving_cleanup_failure",
+        "BridgePhysicalBoundsTests.test_output_prefix_is_fixed_before_a_controlled_actual_append"
       ],
       "lessons": [
         "LSN-0135"
@@ -2156,7 +2176,9 @@
         "test_repository_preflight_accepts_all_declared_filters_but_refuses_unexplained_omission",
         "LessonPreflightTests.test_the_repository_preflight_covers_every_applicable_lesson"
       ],
-      "lessons": ["LSN-0141"],
+      "lessons": [
+        "LSN-0141"
+      ],
       "removingItWouldAllow": "A legitimate technology-filtered lesson exclusion to be rejected, or an unfiltered active lesson to disappear without a declared selector mismatch."
     },
     {
@@ -2168,7 +2190,9 @@
         "test_local_engine_selection_is_child_only_and_preserves_project_and_failure",
         "test_owned_recovery_refuses_operational_or_mislabelled_resources_before_removal"
       ],
-      "lessons": ["LSN-0142"],
+      "lessons": [
+        "LSN-0142"
+      ],
       "removingItWouldAllow": "An operational fallback to mutate parent/global Docker selection, hide child failure or remove resources outside the exact disposable test owner."
     },
     {
@@ -2176,8 +2200,12 @@
       "title": "Management recovery cannot replace complete runtime verification",
       "kind": "test",
       "reference": "test_management_only_report_cannot_replace_complete_non_fast_verification",
-      "verifiedBy": ["test_management_only_report_cannot_replace_complete_non_fast_verification"],
-      "lessons": ["LSN-0143"],
+      "verifiedBy": [
+        "test_management_only_report_cannot_replace_complete_non_fast_verification"
+      ],
+      "lessons": [
+        "LSN-0143"
+      ],
       "removingItWouldAllow": "Management success or a missing/failed canonical stage to be promoted into complete immutable runtime acceptance."
     },
     {
@@ -2189,7 +2217,9 @@
         "Gate6BookkeepingCausalTests.test_final_report_renderer_consumes_every_canonical_section",
         "Gate6BookkeepingCausalTests.test_final_report_renderer_refuses_each_missing_empty_or_extra_section"
       ],
-      "lessons": ["LSN-0008"],
+      "lessons": [
+        "LSN-0008"
+      ],
       "removingItWouldAllow": "A prose summary to omit mandatory terminal sections and defer discovery until the finalizer refuses promotion. The terminal validator remains unchanged."
     },
     {
@@ -2201,7 +2231,9 @@
         "Gate6BookkeepingCausalTests.test_raw_archive_catalog_retains_manifest_and_published_original_bytes",
         "SetupChecklistTests.test_documentation_links_resolve"
       ],
-      "lessons": ["LSN-0144"],
+      "lessons": [
+        "LSN-0144"
+      ],
       "removingItWouldAllow": "Relocated raw observations to be misinterpreted as live documentation, or rewritten archive bytes/manifest to be accepted instead of the immutable original objects."
     },
     {
@@ -2215,7 +2247,9 @@
         "test_actual_foreign_key_contract_refuses_each_changed_knowledge_cascade",
         "test_actual_retention_check_tracks_lifecycle_version_without_payload_rewrite"
       ],
-      "lessons": ["LSN-0145"],
+      "lessons": [
+        "LSN-0145"
+      ],
       "removingItWouldAllow": "An authorized persistent capability to bypass exact table/fact/ownership contracts, or mutate lifecycle rows without the existing write convention."
     },
     {
@@ -2309,6 +2343,23 @@
         "LSN-0151"
       ],
       "removingItWouldAllow": "Legitimate immutable review evidence to fail due to a Windows object-expression path probe, or a workaround to mutate persistent Git settings, omit members or conceal real Git failures."
+    },
+    {
+      "guardrailId": "GRD-0155",
+      "title": "Private runner source/report physical containment",
+      "kind": "test",
+      "reference": "BridgePhysicalBoundsTests.test_parent_relative_existing_escape_is_refused",
+      "verifiedBy": [
+        "BridgePhysicalBoundsTests.test_actual_inside_null_and_absolute_escape_refusal",
+        "BridgePhysicalBoundsTests.test_parent_relative_existing_escape_is_refused",
+        "BridgePhysicalBoundsTests.test_parent_alias_in_the_source_root_is_refused",
+        "BridgePhysicalBoundsTests.test_redirected_owned_ancestor_and_hardlink_are_refused",
+        "BridgePhysicalBoundsTests.test_report_escape_keeps_producer_but_never_archives_outside_content"
+      ],
+      "lessons": [
+        "LSN-0152"
+      ],
+      "removingItWouldAllow": "A lexically owned parent-relative input or report to expose an outside physical file."
     }
   ]
 }

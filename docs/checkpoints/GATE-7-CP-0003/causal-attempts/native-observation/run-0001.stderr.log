@@ -1,0 +1,114 @@
+test_actual_missing_executable_has_typed_launch_fact (__main__.NativeProducerObservationTests.test_actual_missing_executable_has_typed_launch_fact) ... FAIL
+test_completed_nonzero_null_preserves_interface_and_safe_exact_bytes (__main__.NativeProducerObservationTests.test_completed_nonzero_null_preserves_interface_and_safe_exact_bytes) ... FAIL
+test_failed_callback_cannot_replace_real_nonzero_producer (__main__.NativeProducerObservationTests.test_failed_callback_cannot_replace_real_nonzero_producer) ... FAIL
+test_invalid_utf8_keeps_original_digest_without_replacement (__main__.NativeProducerObservationTests.test_invalid_utf8_keeps_original_digest_without_replacement) ... FAIL
+test_output_limit_refuses_text_but_keeps_exact_raw_identity (__main__.NativeProducerObservationTests.test_output_limit_refuses_text_but_keeps_exact_raw_identity) ... FAIL
+test_scanner_failure_refuses_without_publishing_exception_body (__main__.NativeProducerObservationTests.test_scanner_failure_refuses_without_publishing_exception_body) ... FAIL
+test_successful_producer_with_cleanup_fault_stays_red (__main__.NativeProducerObservationTests.test_successful_producer_with_cleanup_fault_stays_red) ... FAIL
+test_timeout_and_callback_failure_keep_both_observations (__main__.NativeProducerObservationTests.test_timeout_and_callback_failure_keep_both_observations) ... FAIL
+test_timeout_has_partial_prefix_and_independent_actual_cleanup (__main__.NativeProducerObservationTests.test_timeout_has_partial_prefix_and_independent_actual_cleanup) ... FAIL
+
+======================================================================
+FAIL: test_actual_missing_executable_has_typed_launch_fact (__main__.NativeProducerObservationTests.test_actual_missing_executable_has_typed_launch_fact)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\iacode\docs\checkpoints\GATE-7-CP-0003\audit-harness\test_native_producer_observation.py", line 97, in test_actual_missing_executable_has_typed_launch_fact
+    report = self.observation(result)
+  File "E:\iacode\docs\checkpoints\GATE-7-CP-0003\audit-harness\test_native_producer_observation.py", line 47, in observation
+    self.assertIsInstance(report, dict, "the original producer must survive cleanup/transport failure")
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: None is not an instance of <class 'dict'> : the original producer must survive cleanup/transport failure
+
+======================================================================
+FAIL: test_completed_nonzero_null_preserves_interface_and_safe_exact_bytes (__main__.NativeProducerObservationTests.test_completed_nonzero_null_preserves_interface_and_safe_exact_bytes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\iacode\docs\checkpoints\GATE-7-CP-0003\audit-harness\test_native_producer_observation.py", line 57, in test_completed_nonzero_null_preserves_interface_and_safe_exact_bytes
+    self.assertIsInstance(report, dict)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+AssertionError: None is not an instance of <class 'dict'>
+
+======================================================================
+FAIL: test_failed_callback_cannot_replace_real_nonzero_producer (__main__.NativeProducerObservationTests.test_failed_callback_cannot_replace_real_nonzero_producer)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\iacode\docs\checkpoints\GATE-7-CP-0003\audit-harness\test_native_producer_observation.py", line 67, in test_failed_callback_cannot_replace_real_nonzero_producer
+    report = self.observation(outcome)
+  File "E:\iacode\docs\checkpoints\GATE-7-CP-0003\audit-harness\test_native_producer_observation.py", line 47, in observation
+    self.assertIsInstance(report, dict, "the original producer must survive cleanup/transport failure")
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: None is not an instance of <class 'dict'> : the original producer must survive cleanup/transport failure
+
+======================================================================
+FAIL: test_invalid_utf8_keeps_original_digest_without_replacement (__main__.NativeProducerObservationTests.test_invalid_utf8_keeps_original_digest_without_replacement)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\iacode\docs\checkpoints\GATE-7-CP-0003\audit-harness\test_native_producer_observation.py", line 103, in test_invalid_utf8_keeps_original_digest_without_replacement
+    fact = self.observation(result)["producer"]
+           ~~~~~~~~~~~~~~~~^^^^^^^^
+  File "E:\iacode\docs\checkpoints\GATE-7-CP-0003\audit-harness\test_native_producer_observation.py", line 47, in observation
+    self.assertIsInstance(report, dict, "the original producer must survive cleanup/transport failure")
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: None is not an instance of <class 'dict'> : the original producer must survive cleanup/transport failure
+
+======================================================================
+FAIL: test_output_limit_refuses_text_but_keeps_exact_raw_identity (__main__.NativeProducerObservationTests.test_output_limit_refuses_text_but_keeps_exact_raw_identity)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\iacode\docs\checkpoints\GATE-7-CP-0003\audit-harness\test_native_producer_observation.py", line 111, in test_output_limit_refuses_text_but_keeps_exact_raw_identity
+    fact = self.observation(result)["producer"]
+           ~~~~~~~~~~~~~~~~^^^^^^^^
+  File "E:\iacode\docs\checkpoints\GATE-7-CP-0003\audit-harness\test_native_producer_observation.py", line 47, in observation
+    self.assertIsInstance(report, dict, "the original producer must survive cleanup/transport failure")
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: None is not an instance of <class 'dict'> : the original producer must survive cleanup/transport failure
+
+======================================================================
+FAIL: test_scanner_failure_refuses_without_publishing_exception_body (__main__.NativeProducerObservationTests.test_scanner_failure_refuses_without_publishing_exception_body)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\iacode\docs\checkpoints\GATE-7-CP-0003\audit-harness\test_native_producer_observation.py", line 120, in test_scanner_failure_refuses_without_publishing_exception_body
+    report = self.observation(result)
+  File "E:\iacode\docs\checkpoints\GATE-7-CP-0003\audit-harness\test_native_producer_observation.py", line 47, in observation
+    self.assertIsInstance(report, dict, "the original producer must survive cleanup/transport failure")
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: None is not an instance of <class 'dict'> : the original producer must survive cleanup/transport failure
+
+======================================================================
+FAIL: test_successful_producer_with_cleanup_fault_stays_red (__main__.NativeProducerObservationTests.test_successful_producer_with_cleanup_fault_stays_red)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\iacode\docs\checkpoints\GATE-7-CP-0003\audit-harness\test_native_producer_observation.py", line 74, in test_successful_producer_with_cleanup_fault_stays_red
+    report = self.observation(self.produce("print('NATIVE_OK')", cleanup_fault=True))
+  File "E:\iacode\docs\checkpoints\GATE-7-CP-0003\audit-harness\test_native_producer_observation.py", line 47, in observation
+    self.assertIsInstance(report, dict, "the original producer must survive cleanup/transport failure")
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: None is not an instance of <class 'dict'> : the original producer must survive cleanup/transport failure
+
+======================================================================
+FAIL: test_timeout_and_callback_failure_keep_both_observations (__main__.NativeProducerObservationTests.test_timeout_and_callback_failure_keep_both_observations)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\iacode\docs\checkpoints\GATE-7-CP-0003\audit-harness\test_native_producer_observation.py", line 88, in test_timeout_and_callback_failure_keep_both_observations
+    report = self.observation(self.produce(
+        "import time;print('NATIVE_PARTIAL',flush=True);time.sleep(30)", timeout=0.5, cleanup_fault=True))
+  File "E:\iacode\docs\checkpoints\GATE-7-CP-0003\audit-harness\test_native_producer_observation.py", line 47, in observation
+    self.assertIsInstance(report, dict, "the original producer must survive cleanup/transport failure")
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: None is not an instance of <class 'dict'> : the original producer must survive cleanup/transport failure
+
+======================================================================
+FAIL: test_timeout_has_partial_prefix_and_independent_actual_cleanup (__main__.NativeProducerObservationTests.test_timeout_has_partial_prefix_and_independent_actual_cleanup)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\iacode\docs\checkpoints\GATE-7-CP-0003\audit-harness\test_native_producer_observation.py", line 81, in test_timeout_has_partial_prefix_and_independent_actual_cleanup
+    report = self.observation(result)
+  File "E:\iacode\docs\checkpoints\GATE-7-CP-0003\audit-harness\test_native_producer_observation.py", line 47, in observation
+    self.assertIsInstance(report, dict, "the original producer must survive cleanup/transport failure")
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: None is not an instance of <class 'dict'> : the original producer must survive cleanup/transport failure
+
+----------------------------------------------------------------------
+Ran 9 tests in 5.583s
+
+FAILED (failures=9)

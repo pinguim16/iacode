@@ -1,0 +1,60 @@
+{
+  "observedAt": "2026-10-21T21:14:54Z",
+  "result": "FAIL",
+  "builder": "iacode-m2cp3-e2531ca8afd9403e828958f4c7dd8c66",
+  "observations": [
+    {
+      "arguments": [
+        "docker",
+        "buildx",
+        "history",
+        "ls",
+        "--no-trunc",
+        "--format",
+        "json"
+      ],
+      "exitCode": 0,
+      "streams": {
+        "stdout": {
+          "sha256": "8053b66ef81155c4cec01ed7d66aa06373c2aaaa8d476c0010da6849f856bad5",
+          "bytes": 1665,
+          "refused": false,
+          "path": "resource-observations/build-history/run-0002/list.stdout.json"
+        },
+        "stderr": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0,
+          "refused": false,
+          "path": "resource-observations/build-history/run-0002/list.stderr.json"
+        }
+      }
+    },
+    {
+      "arguments": [
+        "docker",
+        "buildx",
+        "history",
+        "inspect",
+        "--format",
+        "json",
+        "iacode-m2cp3-e2531ca8afd9403e828958f4c7dd8c66/iacode-m2cp3-e2531ca8afd9403e828958f4c7dd8c660/u1y9zh45oqq6pnzd7qtnqudhn"
+      ],
+      "exitCode": 1,
+      "streams": {
+        "stdout": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0,
+          "refused": false,
+          "path": "resource-observations/build-history/run-0002/inspect-u1y9zh45oqq6pnzd7qtnqudhn.stdout.json"
+        },
+        "stderr": {
+          "sha256": "96d283052b276a9465c3bb84cb53aa85d8e5a0eb4c149813152f226409e07042",
+          "bytes": 152,
+          "refused": false,
+          "path": "resource-observations/build-history/run-0002/inspect-u1y9zh45oqq6pnzd7qtnqudhn.stderr.json"
+        }
+      }
+    }
+  ],
+  "inspectSummary": []
+}

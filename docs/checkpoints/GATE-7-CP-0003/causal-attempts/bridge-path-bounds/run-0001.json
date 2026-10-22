@@ -1,0 +1,26 @@
+{
+  "observedAt": "2026-10-21T21:06:43Z",
+  "kind": "LOCAL_PATH_EDGE_PREFLIGHT_NOT_FINAL_RED_TEAM",
+  "controls": [
+    {
+      "name": "inside-null",
+      "expectedAccepted": true,
+      "actualAccepted": true,
+      "result": "PASS"
+    },
+    {
+      "name": "outside-absolute",
+      "expectedAccepted": false,
+      "actualAccepted": false,
+      "result": "PASS"
+    },
+    {
+      "name": "parent-relative",
+      "expectedAccepted": false,
+      "actualAccepted": true,
+      "result": "FAIL"
+    }
+  ],
+  "temporaryRootRemoved": true,
+  "result": "FAIL"
+}

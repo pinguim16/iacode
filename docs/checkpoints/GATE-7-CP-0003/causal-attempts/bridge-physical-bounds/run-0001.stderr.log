@@ -1,0 +1,50 @@
+test_actual_inside_null_and_absolute_escape_refusal (__main__.BridgePhysicalBoundsTests.test_actual_inside_null_and_absolute_escape_refusal) ... ok
+test_output_prefix_is_fixed_before_a_controlled_actual_append (__main__.BridgePhysicalBoundsTests.test_output_prefix_is_fixed_before_a_controlled_actual_append) ... FAIL
+test_parent_alias_in_the_source_root_is_refused (__main__.BridgePhysicalBoundsTests.test_parent_alias_in_the_source_root_is_refused) ... FAIL
+test_parent_relative_existing_escape_is_refused (__main__.BridgePhysicalBoundsTests.test_parent_relative_existing_escape_is_refused) ... FAIL
+test_redirected_owned_ancestor_and_hardlink_are_refused (__main__.BridgePhysicalBoundsTests.test_redirected_owned_ancestor_and_hardlink_are_refused) ... ok
+test_report_escape_keeps_producer_but_never_archives_outside_content (__main__.BridgePhysicalBoundsTests.test_report_escape_keeps_producer_but_never_archives_outside_content) ... FAIL
+
+======================================================================
+FAIL: test_output_prefix_is_fixed_before_a_controlled_actual_append (__main__.BridgePhysicalBoundsTests.test_output_prefix_is_fixed_before_a_controlled_actual_append)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\iacode\docs\checkpoints\GATE-7-CP-0003\audit-harness\test_bridge_physical_bounds.py", line 115, in test_output_prefix_is_fixed_before_a_controlled_actual_append
+    self.assertEqual(primary, raw)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+AssertionError: b'OBSERVED_PREFIX' != b'OBSERVED_PREFIXLATER_PRODUCER_SUFFIX'
+
+======================================================================
+FAIL: test_parent_alias_in_the_source_root_is_refused (__main__.BridgePhysicalBoundsTests.test_parent_alias_in_the_source_root_is_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\iacode\docs\checkpoints\GATE-7-CP-0003\audit-harness\test_bridge_physical_bounds.py", line 45, in test_parent_alias_in_the_source_root_is_refused
+    with self.assertRaises(ValueError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_parent_relative_existing_escape_is_refused (__main__.BridgePhysicalBoundsTests.test_parent_relative_existing_escape_is_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\iacode\docs\checkpoints\GATE-7-CP-0003\audit-harness\test_bridge_physical_bounds.py", line 40, in test_parent_relative_existing_escape_is_refused
+    with self.assertRaises(ValueError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_report_escape_keeps_producer_but_never_archives_outside_content (__main__.BridgePhysicalBoundsTests.test_report_escape_keeps_producer_but_never_archives_outside_content)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\iacode\docs\checkpoints\GATE-7-CP-0003\audit-harness\test_bridge_physical_bounds.py", line 89, in test_report_escape_keeps_producer_but_never_archives_outside_content
+    self.assertEqual("FAIL", observed["result"])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'FAIL' != 'PASS'
+- FAIL
++ PASS
+
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.643s
+
+FAILED (failures=4)

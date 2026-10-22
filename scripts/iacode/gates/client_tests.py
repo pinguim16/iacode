@@ -10,7 +10,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from client_checks import run_node, verify_packages
+from client_checks import ClientCheckError, run_node, verify_packages
 
 
 def main() -> int:
@@ -20,7 +20,12 @@ def main() -> int:
     )
     arguments = parser.parse_args()
     packages = verify_packages()
-    result = run_node(node=arguments.node)
+    try:
+        result = run_node(node=arguments.node)
+    except ClientCheckError as exc:
+        print(json.dumps({"gate": "clientTests", "result": "FAIL", "execution": exc.report,
+                          "liveAcceptance": False}))
+        return 1
     print(result.stdout)
     print(result.stderr)
     print(
@@ -37,4 +42,7 @@ def main() -> int:
 
 
 if __name__ == "__main__":
+    for stream in (sys.stdout, sys.stderr):
+        if hasattr(stream, "reconfigure"):
+            stream.reconfigure(encoding="utf-8", errors="replace")
     raise SystemExit(main())

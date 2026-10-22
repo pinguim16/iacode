@@ -1,0 +1,455 @@
+{
+  "observedAt": "2026-10-21T23:43:36Z",
+  "kind": "ACTUAL_INDEX_BYTE_COMPARISON_NOT_PUBLICATION",
+  "result": "FAIL",
+  "compared": 182,
+  "matching": 120,
+  "matchingNullSample": [
+    {
+      "path": "docs/audits/M2-ENTRY-BLOCKED-2026-10-21/DIVERGENCE.md",
+      "actualBytes": 8317,
+      "stagedBytes": 8317,
+      "actualSha256": "8ecba03056b0cdfa9bcd52bb260fe3a527e9cc9a446646851a29edcec4308951",
+      "stagedSha256": "8ecba03056b0cdfa9bcd52bb260fe3a527e9cc9a446646851a29edcec4308951"
+    }
+  ],
+  "mismatches": [
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0002/FILES.json",
+      "actualBytes": 18440,
+      "stagedBytes": 18075,
+      "actualSha256": "fed5db3fa101e2f2f00e9d9784f30c8a90bebe4807e6506595797265ff0f2fdf",
+      "stagedSha256": "bb34a70b4ca2ea06b8dca25359f16ada9acd297012e16d99631e2d6365ef6576"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0002/FINAL-GIT-STATE.json",
+      "actualBytes": 4990,
+      "stagedBytes": 4942,
+      "actualSha256": "7856256256ed725623b36228b1e666d685812bd47ebe0c12d731db185f392634",
+      "stagedSha256": "618c301645909f33bd57cb7aa96b8714355e887a8328acafebc25b55d18ead28"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0002/FINAL-M2-AUDIT-MATRIX.json",
+      "actualBytes": 24723,
+      "stagedBytes": 24205,
+      "actualSha256": "810ebcdbaaf488d4cf70039744626e5ffca25859b74507717b682a157a9d9cea",
+      "stagedSha256": "1d1bafedc196657a93d36fce35bc97c29f537e66e23c374b19a61f275a8a7bf9"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0002/FINAL-M2-AUDIT-MATRIX.md",
+      "actualBytes": 8416,
+      "stagedBytes": 8363,
+      "actualSha256": "ab83efa3359ee4b7d36c8639429b0fca1abb98ebcdef1fb3eb18c71daef5d9e4",
+      "stagedSha256": "f3b47032fba3789e763d8e729eefcfeae8c2f341129d8bee955edd433d12e57a"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0002/INDEPENDENT-RED-TEAM-LEDGER-RETRY-0002.json",
+      "actualBytes": 7542,
+      "stagedBytes": 7330,
+      "actualSha256": "cc06f7bd08f518862ea621777b8217f1336b867ba4783021a941631238b888f2",
+      "stagedSha256": "ddac95a8583c81931ea1604c50e485d86fef6ee45b052efd23f63db8c6a4bb2f"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0002/INDEPENDENT-RED-TEAM-LEDGER.json",
+      "actualBytes": 7530,
+      "stagedBytes": 7318,
+      "actualSha256": "baa2b79b10c562b79084d5e3a5baeee716e7639a5f9ca1d6752a000d886a115a",
+      "stagedSha256": "597a5dbf1291f0b10a5bdee0a179b281388e7a24ff052d827bd5e617db7fed93"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0002/M2-AUDIT-REQUIREMENTS.json",
+      "actualBytes": 240908,
+      "stagedBytes": 235651,
+      "actualSha256": "8d8aee1d118298350e5469289b4d68159ee237ed1a4ab27c89bbb83ade860bbf",
+      "stagedSha256": "b7901a1fd5440c3362e8b1a17e0b0544beca7795e9bc89392f362bf5f0012a78"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0002/REVIEW-TRANSPORT-RECONSTRUCTION-RETRY-0002.json",
+      "actualBytes": 29883,
+      "stagedBytes": 29185,
+      "actualSha256": "a3271a416a19b99e9b94c96c4b5a8e258f31b1befd071ef702674171f42183cc",
+      "stagedSha256": "c2b335072b19d285e1b020e20bd4f618844382a3f671dab9713b1b96c39ff8e9"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0002/REVIEW-TRANSPORT-RECONSTRUCTION-RETRY-0003.json",
+      "actualBytes": 9806,
+      "stagedBytes": 9574,
+      "actualSha256": "7a4e47745ffd1b05cb87aa4c981fad1743064b8a79176e74ef86dbf76e975c6f",
+      "stagedSha256": "c48dabd069974de7ee68a9a3cedc07bdc9e173d69304b696f0b985b61b611d6e"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0002/REVIEW-TRANSPORT-RECONSTRUCTION.json",
+      "actualBytes": 14006,
+      "stagedBytes": 13806,
+      "actualSha256": "48125184a9f80fe21b39f5d4a21c69cd7a863eab96cd589d1e71914717145859",
+      "stagedSha256": "277b62cbf77c58095b99938a53a860c744f6e2cd90fee1d62934a7a710dc3cd2"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0002/controls/command-reproducibility-tests.json",
+      "actualBytes": 2963,
+      "stagedBytes": 2934,
+      "actualSha256": "0bd8340594931ebf43952016a072105447f73e2b57694acd0c031f1ab5ecc2cf",
+      "stagedSha256": "05664969b3720d889acbbfc4aec08a5f2fa19f5e7a781a4c42878794c1cac3c7"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0002/controls/control-plane-full-suite.json",
+      "actualBytes": 6814,
+      "stagedBytes": 6784,
+      "actualSha256": "106894271c331159a8ab83fd4da2eb04c6800a485fa59bb95187db6b17ff2602",
+      "stagedSha256": "e9b6d967d43904877b2f63c7cf5e2f3f8d0c9e98d876f4d4d17e5bf8fc90d427"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0002/controls/final-checkpoint-validation.json",
+      "actualBytes": 2775,
+      "stagedBytes": 2749,
+      "actualSha256": "db62855bc48a08b87a81cd5d59f9c0e15601371891f2b9f058b098caf46b59b6",
+      "stagedSha256": "be91252596321aab6ef57a78e886e4907b82d64b04713e97f44494314cbd7021"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0002/controls/static-analysis.json",
+      "actualBytes": 777,
+      "stagedBytes": 747,
+      "actualSha256": "fd519bfd6e1d52c64ed5115a3c8024a576243d6431fe9db58e166e43d88ff4c3",
+      "stagedSha256": "540ae2c90b7ab6881e6d6ad0f6085ddacdb4af3cfc51fc8a2261d11f920b53b2"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0002/environment/docker-version.json",
+      "actualBytes": 1138,
+      "stagedBytes": 1110,
+      "actualSha256": "d2c6ce81926ab4d63ed1f2f540a6195760b411797197df8d8f01595df95f3c5e",
+      "stagedSha256": "05e844d012f5e945b63d7939218ae03219992f81858b98081ebc5c33395fb703"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/bridge-physical-bounds/run-0001.stderr.log",
+      "actualBytes": 3637,
+      "stagedBytes": 3587,
+      "actualSha256": "446c467ec3fa4d49aa3cdf6764e812c55b2f38009316ba757a4c67d2e5253cf4",
+      "stagedSha256": "16c4d5d908bfcdc7f822ff9da8f49cdd699ad02d16cdda206c30b757c7943ba9"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/bridge-physical-bounds/run-0002.stderr.log",
+      "actualBytes": 1175,
+      "stagedBytes": 1164,
+      "actualSha256": "9fef64864456bbf90933e7dd7c0ad3a681deadb27de325c54a1be82697a3b07e",
+      "stagedSha256": "b6cad6ba31bca1911d87b694ecbee723114049dd94a8bdd3a74bbfcbf12480b9"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/bridge/run-0001.stderr.log",
+      "actualBytes": 1739,
+      "stagedBytes": 1723,
+      "actualSha256": "2f8c5eca0063095d9070c32a72d6ab55a2f5118152df050d4f7a30b8ee0aadbb",
+      "stagedSha256": "f8b31bd70988ff9b1fb9442af59d9befe28bc1db2f29869550bce2fe2692cbf6"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/bridge/run-0002.stderr.log",
+      "actualBytes": 1896,
+      "stagedBytes": 1879,
+      "actualSha256": "3500bca685a5736bcb43c200654167ee087998d50c979137ba78ede955b2431f",
+      "stagedSha256": "f20a3369ffe4ab87449cfcc9708286c82a0f0fd87b2931098b066081ca285a19"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/bridge/run-0003.stderr.log",
+      "actualBytes": 4302,
+      "stagedBytes": 4249,
+      "actualSha256": "5e150bd25131e95bd9b468cc2ad3ecbcf1e493d8f4bbc5bf5fb026cceff79b5c",
+      "stagedSha256": "69bfcf6a596b7c9c0e7a831a533c890cedd8cd4dc9266c4aefe4047cc2858e4c"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/bridge/run-0004.stderr.log",
+      "actualBytes": 1896,
+      "stagedBytes": 1879,
+      "actualSha256": "4e09ed2d1e3dc8198b1ed52bf76f4a7b3b82d355c022f91ad0d8a7f36f49aa5f",
+      "stagedSha256": "21baa9af6f33ed1396790b21fc4b5a246a94022a00dc1aa56e93e7db7604bff3"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/bridge/run-0005.stderr.log",
+      "actualBytes": 1896,
+      "stagedBytes": 1879,
+      "actualSha256": "341b96b38d6e3eb737e6f2e81ab880df47ff18110f1732b11485a9da6b7befd2",
+      "stagedSha256": "9f583937dd7aebd71aaea2deb30b63b34ed04d6573fb290ef96c06f3e4f55afa"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/current-streams/run-0001.stderr.log",
+      "actualBytes": 301,
+      "stagedBytes": 295,
+      "actualSha256": "fbef572a8bc5c0bbc79e7fd62d4fb077535dbaff5bd19da8fdfe9d0bc071a000",
+      "stagedSha256": "5e4ded65652d16e29ca658867eb9d814fba02c7d1abba8b3ecb559c6ea21d45c"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/inherited-streams/run-0001.stderr.log",
+      "actualBytes": 768,
+      "stagedBytes": 758,
+      "actualSha256": "cbed7ebd8e08a3d17250e7a95fecce6cc00c414532422cb62d28cf9f729c5514",
+      "stagedSha256": "3ba6241aec9af345c85da1be45e357a3c64d446c23505c0317327f468452621a"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/native-candidate/run-0001.stderr.log",
+      "actualBytes": 1627,
+      "stagedBytes": 1613,
+      "actualSha256": "d8b14e4e00b3ea9a94ea380b87250d6fd16946b25efc29429ec91a7bfa0f31f6",
+      "stagedSha256": "84ef02e69fa3f451b3acb3f42edd044eadcc7e65d9532772cc9ee5ce882cc09f"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/native-observation/run-0001.stderr.log",
+      "actualBytes": 10772,
+      "stagedBytes": 10658,
+      "actualSha256": "5ab923b6dceb21bb854e478c264aa33b346cf8bd22fbed2d63531e191ae90b52",
+      "stagedSha256": "d9974f39ff0e2316f39ccf6605133faebfce87c1d1c7e261e09b586f53704671"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/native-observation/run-0002.stderr.log",
+      "actualBytes": 11677,
+      "stagedBytes": 11553,
+      "actualSha256": "76d3b8f390c32f19a350870a4e6a8988ff01de11c9425247b1156312af05a6c0",
+      "stagedSha256": "146d30621c24693e7b2903efcb910e4edcf478352ff204716d8d7dcd102255eb"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/native-observation/run-0003.stderr.log",
+      "actualBytes": 2220,
+      "stagedBytes": 2204,
+      "actualSha256": "a713618e5ea8cee8e1e3c97057d76b78768afaf97748eddceda47e618e8d4aca",
+      "stagedSha256": "d0c7e8599c63a13110ec8fceda67b91be28a3a5874c040fb26f25f781ff3ab84"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/native-observation/run-0004.stderr.log",
+      "actualBytes": 2220,
+      "stagedBytes": 2204,
+      "actualSha256": "adc0be56cc0bf87f25376c1765cf095b4344ac697d81c4274bb79a7381b813b4",
+      "stagedSha256": "293cb47bc83e25f47837b6df470b4ddf5cebe8aaa5254545a0f5ce5fedcc677b"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/operator-cleanup/run-0001.stderr.log",
+      "actualBytes": 912,
+      "stagedBytes": 902,
+      "actualSha256": "3abee09ba319ac487d8fb0561bd61df46fc9cd5655063929e87bae705d6856ff",
+      "stagedSha256": "decde3e3a96094ba58d4fc4964e73bc9f4622d6e915264dda2fb4c6d535dd8e3"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/operator-cleanup/run-0001.stdout.log",
+      "actualBytes": 444,
+      "stagedBytes": 440,
+      "actualSha256": "f97d9c899bf073c8c2eff40818671c71cd2989d9731c2d5c46dfb5b90a039faa",
+      "stagedSha256": "69118c83ea1aa406772c587e9157017d00976984eb75ffb649487c7f05f87eb7"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/operator-cleanup/run-0002.stderr.log",
+      "actualBytes": 992,
+      "stagedBytes": 982,
+      "actualSha256": "177b67d27c2499bcd2507517ed7457d8f6a43c208ca33cd76214f8ce7b338a81",
+      "stagedSha256": "e690da665524f2dc817910f9851f9f36f4ba1e55472cdcfaf4e61f0736bdd15b"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/operator-cleanup/run-0002.stdout.log",
+      "actualBytes": 444,
+      "stagedBytes": 440,
+      "actualSha256": "f97d9c899bf073c8c2eff40818671c71cd2989d9731c2d5c46dfb5b90a039faa",
+      "stagedSha256": "69118c83ea1aa406772c587e9157017d00976984eb75ffb649487c7f05f87eb7"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/owned-cleanup/run-0001.stderr.log",
+      "actualBytes": 927,
+      "stagedBytes": 917,
+      "actualSha256": "f5343de35427105ae7cc34af5b87de203449ee05707d17dca4b5c979a99c1240",
+      "stagedSha256": "8a8c438a5dbd3df35fa133c82d559af26a7475493ec47554bba3bf351ff47bd2"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/owned-cleanup/run-0002.stderr.log",
+      "actualBytes": 1087,
+      "stagedBytes": 1076,
+      "actualSha256": "cdf21f7601d7b51e038bdf7c9c1619dd8ecaeab2315665db0b6c9ca9bc7c7b2e",
+      "stagedSha256": "91468616dd7934418c2643b168f84d166480eb2d8aa5176b4a328dedb1901f2c"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/owned-cleanup/run-0003.stderr.log",
+      "actualBytes": 1087,
+      "stagedBytes": 1076,
+      "actualSha256": "128bcf179559ddc4943728811d8e1f02b8b60f049a68034f85518fe119a322a9",
+      "stagedSha256": "2b68c67fed99fec6d3e81f6235d175601d8b917f854e38606b3c08eaa74e23ab"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/owned-cleanup/run-0004.stderr.log",
+      "actualBytes": 1087,
+      "stagedBytes": 1076,
+      "actualSha256": "128bcf179559ddc4943728811d8e1f02b8b60f049a68034f85518fe119a322a9",
+      "stagedSha256": "2b68c67fed99fec6d3e81f6235d175601d8b917f854e38606b3c08eaa74e23ab"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/run-0002.stderr.log",
+      "actualBytes": 19793,
+      "stagedBytes": 19530,
+      "actualSha256": "f0d7c861dedd7887b9d828e3bef22b8f7171a48b4bbda6b29ce015f79a52e314",
+      "stagedSha256": "937c6e82b8f5793bb426dd681e3efdf9d441984b622fc1a1d04f2b2ba3373900"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/run-0003.stderr.log",
+      "actualBytes": 19793,
+      "stagedBytes": 19530,
+      "actualSha256": "ff6a423072aa3ce58a213d69b48c001af2327e270f24fa2fedbe05a9f16e7305",
+      "stagedSha256": "c818e13121558d33833b50e41a424f7cf571c9374f710264cb30894a5df84315"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/run-0004.stderr.log",
+      "actualBytes": 18130,
+      "stagedBytes": 17842,
+      "actualSha256": "d9bf622f3aec0a9d4a7247fb7ca1561194ff18c9234592290ad8cf2b33ef44f3",
+      "stagedSha256": "cc712e83de10a2a0de9f6b8312ac5e611f86b0dce42267ef836dbeddb4bd7be9"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/run-0005.stderr.log",
+      "actualBytes": 16326,
+      "stagedBytes": 16078,
+      "actualSha256": "6ca623ec4aabd538c5b7808dbc85cf10e875aa710763b4908f7325bbef009391",
+      "stagedSha256": "61919bfd60d969a493bbd27a789ac8871001ea610d5c1c223754fa02653104af"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/run-0006.stderr.log",
+      "actualBytes": 2222,
+      "stagedBytes": 2205,
+      "actualSha256": "1066f3d82a0d837a8983b82ec2460875fd9157587242c2bdfcf7475d25b6eb60",
+      "stagedSha256": "c80349827f81a6769baa1baaccd1d9cc8b4b2defaa8a790a631ef9f8704ae211"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/run-0007.stderr.log",
+      "actualBytes": 2601,
+      "stagedBytes": 2582,
+      "actualSha256": "185c523e30db9ce9c8fca948a816ac2c09b4f87527e979385c5bfd2dfdc05a57",
+      "stagedSha256": "287ccd73b6f32c45d2728d396d946b5b76f27075635fac81866dc3d3c9ceb4f1"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/run-0009.stderr.log",
+      "actualBytes": 2998,
+      "stagedBytes": 2977,
+      "actualSha256": "c529ebec7f0a37ce97abf563ddbcf6744d20a661568a5cfa04c7bd48545320df",
+      "stagedSha256": "56d3572e0ca58647ca9e796e4a326fdd0cc8789f5a9b54beee0e38aeaf690ebb"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/run-0010.stderr.log",
+      "actualBytes": 4830,
+      "stagedBytes": 4789,
+      "actualSha256": "fc3e4d81b34f61a9bcc0c63a87331b3bf21277a360bcc6be4fce70976790bac7",
+      "stagedSha256": "b96bddb9163dab6c66f8f8d50032aa209f2aa59bdb38a9287d9e58eb16e725d1"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/run-0011.stderr.log",
+      "actualBytes": 3411,
+      "stagedBytes": 3388,
+      "actualSha256": "04779056026b0d189c0ea142e7a88faf2b2d7982022291276184c1709b6a9a99",
+      "stagedSha256": "84ba02c571f80f0c376dada76f02a3f8e1b9353dfb89a689ef8f73b9c1ecb2c9"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/environment-attempts/canonical-bridge/run-0001/apiTests-stdout.log",
+      "actualBytes": 1112,
+      "stagedBytes": 1111,
+      "actualSha256": "ac6db2de0ef423c8bdbee8ff314eeb1675ed4223fabb716d90eea865639728a0",
+      "stagedSha256": "07ed88cd6c8d233354e1a01e208328e7a1a3a0242a6ffddc0e81491d1cc9596c"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/environment-attempts/canonical-bridge/run-0001/clientTests-stdout.log",
+      "actualBytes": 9409,
+      "stagedBytes": 9186,
+      "actualSha256": "7ff5fc77812c7e9ee7e654e57bbb6bbb3d6441a058f3dae3733a5764416a7919",
+      "stagedSha256": "c91436b343527bf7f4872ac572eb66329994c6cb681c170297e3cb0cc61dc272"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/environment-attempts/canonical-bridge/run-0001/stdout.log",
+      "actualBytes": 81,
+      "stagedBytes": 79,
+      "actualSha256": "842288f2d9b05de02ea351c25952712998e8a2c0e15e7984cbb61ae1fa819834",
+      "stagedSha256": "ccf307bfe806c94f8bcc62ac06d2bdca5e6b3a9c88784a655548048f39b6b47d"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/apiTests/run-0001.stdout.log",
+      "actualBytes": 1112,
+      "stagedBytes": 1111,
+      "actualSha256": "432a97c54c254be8356e711c161cb07892cc498e43e8a0ad32b9f6fa3dadbe8d",
+      "stagedSha256": "09e24b4765bded4f0dbaa492d87d6f43b73fc3cea88d9efa4ddd677f18f88201"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/checkpointValidation/run-0001.stdout.log",
+      "actualBytes": 606,
+      "stagedBytes": 600,
+      "actualSha256": "67e4ceefbb8ae4e42a7c6f858a844870938b4630a0afa49c33570a3cb38f2aba",
+      "stagedSha256": "62374c2c0e37978994007738ca36adc6350b37f2df7d109670033f55923dc81e"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/checkpointValidation/run-0002.stdout.log",
+      "actualBytes": 149,
+      "stagedBytes": 147,
+      "actualSha256": "3dcfe4cd7c955948206749531a37c83488406e412375fabe5a23e323a9440f8f",
+      "stagedSha256": "7bfd5e2ad2f349e20289575a6704a8ec1966b46e24ec005539e40ca4b1c928d2"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/checkpointValidation/run-0003.stdout.log",
+      "actualBytes": 18,
+      "stagedBytes": 17,
+      "actualSha256": "a08f9a99308d86ca7ddf1a2174e3c1593cbea641028c63a5cad68c4e34657c93",
+      "stagedSha256": "1bc8964e1c5dd57d3bfcfea0041259ff75b27f52fb70f843da8c625a654393eb"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/clientTests/run-0001.stdout.log",
+      "actualBytes": 9878,
+      "stagedBytes": 9651,
+      "actualSha256": "09b3e20d7ff79d2a8da497f763c52caaa1b9dc883e9a421fb754d1c7114d59b3",
+      "stagedSha256": "cb063b6f421a34a52e2fb31bdff74dabf412d0e79d0616d318395ea688c360cf"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/clientTests/run-0002.stdout.log",
+      "actualBytes": 9433,
+      "stagedBytes": 9210,
+      "actualSha256": "eee50e74939ed38c2b591def19b1350dc3e9df888d95cc725ccbbe6781164203",
+      "stagedSha256": "3a18ee86a213558fe88c3a90a85b643e9d333fa80e8f9aa244f1cc11e66fd7c6"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/lint/run-0001.stdout.log",
+      "actualBytes": 171,
+      "stagedBytes": 170,
+      "actualSha256": "e04d7d2189e389199fb053b97f5669c0ecbb0e35f951048a9512550867118255",
+      "stagedSha256": "7b723959fe9cc7626c60b5a0fd24a121169bd7ca35461ae29c3824f18b481b10"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/lint/run-0002.stderr.log",
+      "actualBytes": 1596,
+      "stagedBytes": 1567,
+      "actualSha256": "5281f8769b6f3610c98098758c0de3493ea57b8553cc86fc34b1abb356d90224",
+      "stagedSha256": "561d3ab98f3bafc1037b63920c9ad12f465058bf362f267607fbfb6ee735513a"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/lint/run-0003.stdout.log",
+      "actualBytes": 171,
+      "stagedBytes": 170,
+      "actualSha256": "e04d7d2189e389199fb053b97f5669c0ecbb0e35f951048a9512550867118255",
+      "stagedSha256": "7b723959fe9cc7626c60b5a0fd24a121169bd7ca35461ae29c3824f18b481b10"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/lint/run-0004.stdout.log",
+      "actualBytes": 171,
+      "stagedBytes": 170,
+      "actualSha256": "e04d7d2189e389199fb053b97f5669c0ecbb0e35f951048a9512550867118255",
+      "stagedSha256": "7b723959fe9cc7626c60b5a0fd24a121169bd7ca35461ae29c3824f18b481b10"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/restricted-client-probe/run-0001.stdout.log",
+      "actualBytes": 1948,
+      "stagedBytes": 1947,
+      "actualSha256": "489331483123585dbde12301ebaa02d5decdee2a3f570e994e3c31de68c520d9",
+      "stagedSha256": "482ab8df7a384c39827ab17f945c3894f64e06cf71c3e645f19fd37d6a11e3b5"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/tests/run-0001.stderr.log",
+      "actualBytes": 7890,
+      "stagedBytes": 7780,
+      "actualSha256": "e00c4451b853deb0352ecc9ab92dbf85e26cbccccdc5493a9a889738eddfa68d",
+      "stagedSha256": "70cb650bad60f50198851c9ea03ade4912a54fe70d5cb6490f4d6358262fad23"
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/tests/run-0001.stdout.log",
+      "actualBytes": 1879,
+      "stagedBytes": 1803,
+      "actualSha256": "5b9e60b0e384d40439e18adea47980538801b13a592fcc75c17e7955fa9d83aa",
+      "stagedSha256": "4fedefa6ce1299f12449405058c980c4a3c23d348bc479f4353e3082a8acf231"
+    }
+  ],
+  "indexChanged": false,
+  "detectorChanged": false,
+  "mainHeadUnchanged": true
+}

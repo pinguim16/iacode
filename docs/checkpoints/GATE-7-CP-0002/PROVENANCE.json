@@ -1,0 +1,27 @@
+{
+  "schemaVersion": "3.4.0",
+  "artifacts": [
+    {
+      "artifact": "docs/checkpoints/GATE-7-CP-0002",
+      "sourceType": "repository-generated audit evidence",
+      "provider": "OpenAI",
+      "model": "GPT-5",
+      "ownership": "project audit evidence",
+      "license": "project-policy",
+      "rights": {"storageAllowed":true,"ragAllowed":false,"trainingAllowed":false,"distillationAllowed":false},
+      "evidence": "AUDITOR-INDEPENDENCE.json; COMMANDS.jsonl",
+      "notes": "Fresh-session same-tool audit. No other chats, personal memory, private chain-of-thought or third-party private content used."
+    },
+    {
+      "artifact": "public Git clones and reconstructed review ZIPs",
+      "sourceType": "public repository transport and repository-generated derivatives",
+      "provider": "GitHub public HTTPS plus local subject-carried tooling",
+      "model": "not-applicable",
+      "ownership": "project/public repository content",
+      "license": "repository policy",
+      "rights": {"storageAllowed":true,"ragAllowed":false,"trainingAllowed":false,"distillationAllowed":false},
+      "evidence": "REVIEW-TRANSPORT-RECONSTRUCTION-RETRY-0002.json; REVIEW-TRANSPORT-RECONSTRUCTION-RETRY-0003.json",
+      "notes": "No credentials; retained only in auditor-owned temporary roots and checkpoint reports."
+    }
+  ]
+}

@@ -34,3 +34,16 @@ docs/checkpoints/GATE-6-CP-0001/attempts/RUNTIME-V6-FINALIZATION-* -text
 # New producer observations retain their captured bytes across Git transport.
 docs/checkpoints/GATE-7-CP-0001/attempts/* -text
 docs/checkpoints/GATE-7-CP-0001/suite-attempts/*.log -text
+# Copied original unsealed audit/entry evidence is not rewritten on first publication.
+docs/checkpoints/GATE-7-CP-0002/** -text
+docs/audits/M2-ENTRY-BLOCKED-2026-10-21/** -text
+# Current byte-identified observations and exact preimages retain their original bytes.
+docs/checkpoints/GATE-7-CP-0003/causal-attempts/** -text
+docs/checkpoints/GATE-7-CP-0003/environment-attempts/** -text
+docs/checkpoints/GATE-7-CP-0003/quality-attempts/** -text
+docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/** -text
+docs/checkpoints/GATE-7-CP-0003/raw-preimages/** -text
+docs/checkpoints/GATE-7-CP-0003/resource-observations/build-history/** -text
+docs/checkpoints/GATE-7-CP-0003/published-green-keeper/** -text
+docs/checkpoints/GATE-7-CP-0003/full-verifier-executions/** -text
+docs/checkpoints/GATE-7-CP-0003/suite-attempts/** -text

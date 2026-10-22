@@ -1,0 +1,32 @@
+{
+  "observedAt": "2026-10-21T22:23:28Z",
+  "kind": "CONTROLLED_NATIVE_CALLBACK_CAUSAL_PROBE_NOT_FUNCTIONAL_ACCEPTANCE",
+  "sourceFingerprint": "55abd94c325193a81fe5a60348a0765498457a80d81732d4ab4dad2efd04ae5e",
+  "producerArguments": [
+    "C:\\Program Files\\Python313\\python.exe",
+    "-c",
+    "print('NATIVE_PRODUCER_CANARY');raise SystemExit(7)"
+  ],
+  "nullControl": {
+    "result": "PASS",
+    "exitCode": 7,
+    "stdoutSha256": "6e06048712fb3da726e3c38884c5805fb46205c84da68cb58e40dea4d5b60386"
+  },
+  "controlledCallbackFailure": {
+    "exceptionType": "NativeJobCleanupError",
+    "producerObservationExposed": false,
+    "ownedDrain": {
+      "jobOwned": true,
+      "remainingBeforeCleanup": 1,
+      "remainingAfterCleanup": 0,
+      "observedProcessCount": 1,
+      "signaledProcessCount": 1,
+      "forcedTermination": false,
+      "naturalExitBudgetWithinOriginalDeadlineSeconds": 1
+    }
+  },
+  "editorStarted": false,
+  "dockerAccessed": false,
+  "result": "FAIL",
+  "note": "The callback error is deliberate fault injection after a real owned-tree drain, not an observed OS cleanup failure. The actual producer result must remain exposed even then."
+}

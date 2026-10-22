@@ -5,7 +5,10 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import re
+import shlex
+import subprocess
 import sys
 from pathlib import Path
 
@@ -31,6 +34,8 @@ def next_checkpoint_name(root: Path, gate: str) -> str:
 
 
 def main() -> int:
+    invocation = list(sys.argv)
+    working_directory = str(Path.cwd())
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--root", type=Path)
     parser.add_argument("--gate", required=True)
@@ -160,12 +165,12 @@ def main() -> int:
         "id": "cmd-0001",
         "timestamp": now,
         "runtime": runtime_label("python"),
-        "command": (
-            "python scripts/development-ledger/new_checkpoint.py "
-            f"--gate {args.gate} --status {args.status}"
-        ),
-        "arguments": ["scripts/development-ledger/new_checkpoint.py", "--gate", args.gate,
-                      "--status", args.status],
+        # Preserve supplied tokens, including order, = spelling, root and phase. Parsed defaults
+        # describe state, not an invocation. Windows replay uses CreateProcess quoting (no shell);
+        # POSIX replay uses shlex. Neither invokes a shell or expands caller data.
+        "command": (subprocess.list2cmdline(["python", *invocation]) if os.name == "nt"
+                    else shlex.join(["python", *invocation])),
+        "arguments": invocation,
         "inputs": ["scripts/development-ledger/new_checkpoint.py"],
         # The tool binds its own source by content when the repository ships it. A checkout that
         # does not vendor the tooling records ABSENT rather than inventing a digest.
@@ -174,7 +179,7 @@ def main() -> int:
             "hash": canonical_hash_path(root / "scripts/development-ledger/new_checkpoint.py")
             if (root / "scripts/development-ledger/new_checkpoint.py").is_file() else "ABSENT",
         }],
-        "workingDirectory": str(root),
+        "workingDirectory": working_directory,
         "commit": snapshot["head"],
         "purpose": "Create the checkpoint skeleton with truthful non-PASS defaults.",
         "result": "COMPLETED",

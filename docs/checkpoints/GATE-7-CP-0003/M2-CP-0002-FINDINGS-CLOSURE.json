@@ -1,0 +1,68 @@
+{
+  "schemaVersion": "1.0.0",
+  "checkpoint": "GATE-7-CP-0003",
+  "auditId": "M2-CP-0002",
+  "source": "docs/checkpoints/GATE-7-CP-0002/FINDINGS.json",
+  "total": 2,
+  "closed": 0,
+  "result": "OPEN",
+  "findings": [
+    {
+      "findingId": "M2-F-001",
+      "severity": "HIGH",
+      "title": "Checkpoint creator must record literal supplied invocation",
+      "originalExpected": "Every supplied optional argument is retained and replay reproduces semantic state.",
+      "originalObserved": "The creator consumed --phase but omitted it from command and arguments; canonical reproducibility validation accepted the omission.",
+      "rootCause": "The self-record was reconstructed from parsed Gate/status defaults instead of supplied argv and the actual working directory.",
+      "implementation": [
+        "file:scripts/development-ledger/new_checkpoint.py"
+      ],
+      "regressionTest": [
+        "test:CheckpointInvocationProducerTests.test_custom_phase_and_quoted_unicode_replay_are_literal",
+        "test:CheckpointInvocationProducerTests.test_nested_working_directory_and_explicit_root_replay"
+      ],
+      "negativeTest": [
+        "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/run-0005.stderr.log"
+      ],
+      "verificationCommand": "python docs/checkpoints/GATE-7-CP-0003/audit-harness/run_causal.py",
+      "evidence": [
+        "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/run-0009.json",
+        "file:docs/adr/ADR-0061-client-verification-preserves-producer-and-cleanup-outcomes.md"
+      ],
+      "lesson": "LSN-0010",
+      "guardrail": "GRD-0011",
+      "status": "IN_PROGRESS"
+    },
+    {
+      "findingId": "M2-F-002",
+      "severity": "CRITICAL",
+      "title": "Client producer observations survive cleanup failure",
+      "originalExpected": "Producer argv, exit and safe streams remain distinguishable from exact-owner cleanup failure.",
+      "originalObserved": "Two real Gate5 producers were replaced by a generic cleanup RuntimeError, losing the available primary observations.",
+      "rootCause": "A finally cleanup could raise before the producer CompletedProcess was returned or exposed.",
+      "implementation": [
+        "file:scripts/iacode/client_checks.py",
+        "file:scripts/iacode/gates/client_tests.py",
+        "file:scripts/iacode/native_editor.py",
+        "file:scripts/iacode/native_execution.py"
+      ],
+      "regressionTest": [
+        "test:ClientProducerCleanupEvidenceTests.test_both_failures_retain_distinct_actual_exit_and_streams",
+        "test:ClientProducerCleanupEvidenceTests.test_timeout_and_failed_cleanup_preserve_partial_real_output",
+        "test:ClientProducerCleanupEvidenceTests.test_invalid_utf8_retains_original_digest_without_replacement_text"
+      ],
+      "negativeTest": [
+        "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/run-0005.stderr.log"
+      ],
+      "verificationCommand": "python docs/checkpoints/GATE-7-CP-0003/audit-harness/run_causal.py",
+      "evidence": [
+        "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/run-0009.json",
+        "file:docs/checkpoints/GATE-7-CP-0003/quality-attempts/clientTests/run-0001.json",
+        "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/native-observation/run-0004.json"
+      ],
+      "lesson": "LSN-0135",
+      "guardrail": "GRD-0137",
+      "status": "IN_PROGRESS"
+    }
+  ]
+}

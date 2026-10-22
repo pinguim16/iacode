@@ -1,0 +1,17 @@
+{
+  "schemaVersion": "1.0.0",
+  "artifact": "LOSSLESS_AUDIT_OBLIGATION_PROJECTION",
+  "source": "docs/checkpoints/GATE-7-CP-0002/INDEPENDENT-RED-TEAM-LEDGER-RETRY-0002.json",
+  "sourceStatus": "Failed and unsealed audit; this projection grants no audit acceptance or independence verdict.",
+  "attacks": [
+    {
+      "attackId": "M2-RT-01",
+      "target": "new_checkpoint.py literal invocation evidence",
+      "mutation": "Supply a consumed optional --phase marker.",
+      "expectedDefense": "cmd-0001.command and arguments contain the supplied option and marker; replay preserves phase.",
+      "observed": "The state carries the marker, the record omits it, and the canonical reproducibility validator reports no error.",
+      "result": "ESCAPED",
+      "mandatory": true
+    }
+  ]
+}

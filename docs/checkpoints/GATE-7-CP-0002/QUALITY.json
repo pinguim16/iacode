@@ -1,0 +1,17 @@
+{
+  "schemaVersion": "3.4.0",
+  "checks": {
+    "build": {"status":"NOT_EXECUTED","evidence":[],"justification":"Docker/image builds blocked by command:cmd-0007."},
+    "unitTests": {"status":"FAIL","evidence":["command:cmd-0015","file:controls/control-plane-full-suite.json"],"justification":"984 total: 980 pass, 1 skip, 1 failure, 2 errors; exit 1."},
+    "integrationTests": {"status":"FAIL","evidence":["command:cmd-0015","file:controls/control-plane-full-suite.json"],"justification":"The canonical combined unit/integration suite ended red."},
+    "e2e": {"status":"NOT_EXECUTED","evidence":["command:cmd-0007"],"justification":"Docker Engine named-pipe access denied."},
+    "lint": {"status":"NOT_EXECUTED","evidence":["command:cmd-0007"],"justification":"The complete image/toolchain lint gate could not execute."},
+    "staticAnalysis": {"status":"PASS","evidence":["command:cmd-0016","file:controls/static-analysis.json"],"justification":null},
+    "security": {"status":"FAIL","evidence":["file:FINDINGS.json","command:cmd-0013"],"justification":"One Critical and one High GUARDRAIL_FAILURE are open."},
+    "documentation": {"status":"NOT_EXECUTED","evidence":["command:cmd-0015"],"justification":"Static documentation controls were not named among failures, but live behavior comparison is incomplete."},
+    "checkpointValidation": {"status":"FAIL","evidence":["command:cmd-0020","file:controls/final-checkpoint-validation.json"],"justification":"Canonical final validation exited 1 in 183091 ms. Formal defects in this auditor checkpoint were reduced where safe; red command evidence, the preserved prior-report scan finding and cmd-0003 input defect remain."},
+    "redTeam": {"status":"FAIL","evidence":["command:cmd-0013","file:INDEPENDENT-RED-TEAM-LEDGER-RETRY-0002.json"],"justification":"Valid baseline, one attack, one escape; full battery blocked."},
+    "greenKeeper": {"status":"NOT_EXECUTED","evidence":["command:cmd-0007"],"justification":"Mandatory Docker gates cannot execute."},
+    "deliveryCompleteness": {"status":"FAIL","evidence":["command:cmd-0018","file:COMPLETENESS-REPORT.json","file:FINAL-M2-AUDIT-MATRIX.json"],"justification":"Canonical completeness result: 0.00% coverage, 100.00% evidence coverage, 198 NOT_STARTED rows; exit 1."}
+  }
+}

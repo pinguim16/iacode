@@ -1,0 +1,32 @@
+{
+  "observedAt": "2026-10-21T23:09:20Z",
+  "arguments": [
+    "powershell",
+    "-NoProfile",
+    "-File",
+    "E:\\iacode\\docs\\checkpoints\\GATE-7-CP-0003\\audit-harness\\remove_retired_public_clone.ps1"
+  ],
+  "status": "COMPLETED",
+  "exitCode": 0,
+  "streams": {
+    "stdout": {
+      "text": "EXACT_RECONSTRUCTIBLE_RETIRED_CLONE_REMOVED\r\n",
+      "sha256": "82abe82a6dca5b3054c6e3c26192826fa02d837dd8ac62240e7c303f8eacd18b",
+      "bytes": 45,
+      "refusal": null
+    },
+    "stderr": {
+      "text": "",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "refusal": null
+    }
+  },
+  "target": "E:\\iacode\\var\\gate7-sealed-public-20261019-181247",
+  "ownershipEvidence": "retired-clone-observations/run-0001.json",
+  "reconstruction": "Fresh public clone detached at refs/tags/iacode-checkpoints/GATE-7-CP-0001 (823cf164c6931dab7f957c92721ded7a916655bd)",
+  "mainRepositoryHistoryChanged": false,
+  "dockerResourcesRemoved": false,
+  "result": "PASS",
+  "targetAbsent": true
+}

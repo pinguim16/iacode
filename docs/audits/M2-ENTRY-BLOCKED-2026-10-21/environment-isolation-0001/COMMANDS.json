@@ -1,0 +1,71 @@
+{
+  "kind": "blocked-auditor-environment-isolation-attempt",
+  "status": "BLOCKED",
+  "subjectCheckpoint": "GATE-7-CP-0001",
+  "subjectCommit": "823cf164c6931dab7f957c92721ded7a916655bd",
+  "configurationChanged": false,
+  "implementationChanged": false,
+  "trainingAllowed": false,
+  "commands": [
+    {
+      "id": "env-entry-0001",
+      "runtime": "PowerShell",
+      "workingDirectory": "E:/iacode",
+      "command": "git config --show-origin --show-scope --get-all safe.directory",
+      "exitCode": 0,
+      "durationSecondsReportedByTool": 0.9938574,
+      "output": "warning: safe.directory ''%(prefix)///192.168.68.59/f/script-amazon-novo'' not absolute\nwarning: safe.directory ''*'' not absolute\nglobal\tfile:C:/Users/cesar/.gitconfig\tE:/fliki_mvp_web\nglobal\tfile:C:/Users/cesar/.gitconfig\t'%(prefix)///192.168.68.59/f/script-amazon-novo'\nglobal\tfile:C:/Users/cesar/.gitconfig\t//192.168.68.59/f/script-amazon-novo\nglobal\tfile:C:/Users/cesar/.gitconfig\t'*'\nglobal\tfile:C:/Users/cesar/.gitconfig\tE:/fliki_mvp_web/fliki-studio\nglobal\tfile:C:/Users/cesar/.gitconfig\tE:/fliki_mvp_web/fliki-studio\nglobal\tfile:C:/Users/cesar/.gitconfig\t%(prefix)///192.168.68.62/c/script-amazon-v2\nglobal\tfile:C:/Users/cesar/.gitconfig\tC:/Users/cesar/AppData/Local/Temp/claude/Y--script-amazon-v2/f5cf1272-889f-4365-8a8e-fd92ea38d411/scratchpad/wt-A-watchdog\nglobal\tfile:C:/Users/cesar/.gitconfig\t%(prefix)///192.168.68.62/c/script-amazon-v2/.git\nglobal\tfile:C:/Users/cesar/.gitconfig\t*\nglobal\tfile:C:/Users/cesar/.gitconfig\t*\ncommand\tcommand line:\tE:\\iacode\ncommand\tcommand line:\tE:\\iacode/*\n",
+      "outputKind": "decoded execution-tool transcript; diagnostic streams not suppressed; not a byte-identity claim"
+    },
+    {
+      "id": "env-entry-0002",
+      "runtime": "PowerShell",
+      "workingDirectory": "E:/iacode",
+      "command": "git config --show-origin --show-scope --get-all core.excludesfile",
+      "exitCode": 1,
+      "durationSecondsReportedByTool": 0.9819696,
+      "output": "warning: safe.directory ''%(prefix)///192.168.68.59/f/script-amazon-novo'' not absolute\nwarning: safe.directory ''*'' not absolute\n",
+      "outputKind": "decoded execution-tool transcript; diagnostic streams not suppressed; not a byte-identity claim"
+    },
+    {
+      "id": "env-entry-0003",
+      "runtime": "PowerShell",
+      "workingDirectory": "E:/iacode",
+      "command": "git status --short --branch",
+      "exitCode": 0,
+      "durationSecondsReportedByTool": 0.9934034,
+      "output": "warning: safe.directory ''%(prefix)///192.168.68.59/f/script-amazon-novo'' not absolute\nwarning: safe.directory ''*'' not absolute\nwarning: unable to access 'C:\\Users\\cesar/.config/git/ignore': Permission denied\nwarning: unable to access 'C:\\Users\\cesar/.config/git/ignore': Permission denied\n## main...origin/main\n?? docs/audits/\n",
+      "outputKind": "decoded execution-tool transcript; diagnostic streams not suppressed; not a byte-identity claim"
+    },
+    {
+      "id": "env-entry-0004",
+      "runtime": "PowerShell",
+      "workingDirectory": "E:/iacode",
+      "command": "$auditIgnorePath = 'C:\\Users\\cesar\\.config\\git\\ignore'; try { $auditIgnoreBytes = [System.IO.File]::ReadAllBytes($auditIgnorePath); [pscustomobject]@{Path=$auditIgnorePath; Readable=$true; Length=$auditIgnoreBytes.Length; Sha256=[Convert]::ToHexString([Security.Cryptography.SHA256]::HashData($auditIgnoreBytes))} | ConvertTo-Json } catch { [pscustomobject]@{Path=$auditIgnorePath; Readable=$false; ErrorType=$_.Exception.GetType().FullName; Message=$_.Exception.Message} | ConvertTo-Json; exit 1 }",
+      "exitCode": 1,
+      "durationSecondsReportedByTool": 0.5283257,
+      "output": "{\r\n  \"Path\": \"C:\\\\Users\\\\cesar\\\\.config\\\\git\\\\ignore\",\r\n  \"Readable\": false,\r\n  \"ErrorType\": \"System.Management.Automation.MethodInvocationException\",\r\n  \"Message\": \"Exception calling \\\"ReadAllBytes\\\" with \\\"1\\\" argument(s): \\\"Access to the path 'C:\\\\Users\\\\cesar\\\\.config\\\\git\\\\ignore' is denied.\\\"\"\r\n}\r\n",
+      "outputKind": "decoded execution-tool transcript; diagnostic streams not suppressed; not a byte-identity claim"
+    },
+    {
+      "id": "env-entry-0005",
+      "runtime": "PowerShell",
+      "workingDirectory": "E:/iacode",
+      "command": "Get-Item -Force -LiteralPath 'C:\\Users\\cesar\\.config\\git\\ignore' -ErrorAction Stop | Select-Object FullName,PSIsContainer,Attributes,LinkType,Target,Length | ConvertTo-Json -Depth 3",
+      "exitCode": 1,
+      "durationSecondsReportedByTool": 1.2156736,
+      "output": "Get-Item: \r\nLine |\r\n   2 |  Get-Item -Force -LiteralPath 'C:\\Users\\cesar\\.config\\git\\ignore' -Err …\r\n     |  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\r\n     | Access to the path 'C:\\Users\\cesar\\.config\\git\\ignore' is denied.\r\n",
+      "outputKind": "decoded execution-tool transcript; diagnostic streams not suppressed; not a byte-identity claim"
+    },
+    {
+      "id": "env-entry-0006",
+      "runtime": "PowerShell",
+      "workingDirectory": "E:/iacode",
+      "command": "Get-Content -LiteralPath '.gitignore' -Raw\ngit check-ignore -v -- var/audit-environment/M2-private-ignore-copy",
+      "exitCode": 0,
+      "durationSecondsReportedByTool": 1.1397138,
+      "output": "__pycache__/\n*.py[cod]\n.pytest_cache/\n.coverage\nhtmlcov/\n.venv/\nvenv/\n\n# Real local configuration and every secret it carries. Only the example file is committed.\n.env\n*.env\n!*.env.example\n.env.*\n!.env.example\n\n# Frontend toolchain output and dependencies.\nnode_modules/\napps/web/dist/\napps/web/.angular/\n\n# Local runtime artifacts produced by the Foundation stack.\nvar/\nbackups/\n\n# Owner-facing review bundles are generated, validated artifacts; never repository inputs.\nartifacts/review/\n# Operational curated knowledge is deployed read-only outside the public checkout. These narrow\n# defaults also prevent accidentally adding payloads/grants beneath the shipped empty registry.\n.iacode/knowledge-sources/artifacts/\n.iacode/knowledge-sources/grants/\nartifacts/clients/\n\r\nwarning: safe.directory ''%(prefix)///192.168.68.59/f/script-amazon-novo'' not absolute\nwarning: safe.directory ''*'' not absolute\n.gitignore:22:var/\tvar/audit-environment/M2-private-ignore-copy\nwarning: unable to access 'C:\\Users\\cesar/.config/git/ignore': Permission denied\n",
+      "outputKind": "decoded execution-tool transcript; diagnostic streams not suppressed; not a byte-identity claim"
+    }
+  ]
+}

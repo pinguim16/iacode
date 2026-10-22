@@ -1,0 +1,226 @@
+M2 AUDIT ENTRY VALIDATION - DECODED TOOL TRANSCRIPT (BLOCKED)
+
+Command: python scripts/development-ledger/validate_checkpoint.py
+Working directory: E:/iacode
+Exit code: 1
+Tool output token count: 6020
+Capture: complete decoded text returned by the execution tool; CRLF normalized to LF.
+This is not a claim about original stdout byte spelling or an independent M2 verdict.
+The mandated DIVERGENCE.md was created while this read-only validation was still active.
+
+CHECKPOINT_INVALID
+- branch mismatch: expected 'main', observed "warning: safe.directory ''%(prefix)///192.168.68.59/f/script-amazon-novo'' not absolute\nwarning: safe.directory ''*'' not absolute\nmain"
+- dirty-state mismatch: expected False, observed True
+- checkpoint integrity: GATE-0-CP-0001: tag refs/tags/iacode-checkpoints/GATE-0-CP-0001 resolves to warning: safe.directory ''%(prefix)///192.168.68.59/f/script-amazon-novo'' not absolute
+warning: safe.directory ''*'' not absolute
+195739ffd5a588a55096ebd8a6a7f64057e1f66d, not the anchored commit 195739ffd5a588a55096ebd8a6a7f64057e1f66d
+- checkpoint integrity: GATE-0-CP-0001: commit 195739ffd5a588a55096ebd8a6a7f64057e1f66d has tree warning: safe.directory ''%(prefix)///192.168.68.59/f/script-amazon-novo'' not absolute
+warning: safe.directory ''*'' not absolute
+90d4a984c079c89ff9a43995b9957b76eda60fe1, not the anchored 90d4a984c079c89ff9a43995b9957b76eda60fe1
+- checkpoint integrity: GATE-1-CP-0001: tag refs/tags/iacode-checkpoints/GATE-1-CP-0001 resolves to warning: safe.directory ''%(prefix)///192.168.68.59/f/script-amazon-novo'' not absolute
+warning: safe.directory ''*'' not absolute
+4de6b2fb191ab3e7d7879fe81b5a72ce454829b2, not the anchored commit 4de6b2fb191ab3e7d7879fe81b5a72ce454829b2
+- checkpoint integrity: GATE-1-CP-0001: commit 4de6b2fb191ab3e7d7879fe81b5a72ce454829b2 has tree warning: safe.directory ''%(prefix)///192.168.68.59/f/script-amazon-novo'' not absolute
+warning: safe.directory ''*'' not absolute
+bae0dd18d046251a372e61c0167a2dc624290d84, not the anchored bae0dd18d046251a372e61c0167a2dc624290d84
+- checkpoint integrity: GATE-2-CP-0001: tag refs/tags/iacode-checkpoints/GATE-2-CP-0001 resolves to warning: safe.directory ''%(prefix)///192.168.68.59/f/script-amazon-novo'' not absolute
+warning: safe.directory ''*'' not absolute
+424650d58167422cda08ebd580cc70fe75433668, not the anchored commit 424650d58167422cda08ebd580cc70fe75433668
+- checkpoint integrity: GATE-2-CP-0001: commit 424650d58167422cda08ebd580cc70fe75433668 has tree warning: safe.directory ''%(prefix)///192.168.68.59/f/script-amazon-novo'' not absolute
+warning: safe.directory ''*'' not absolute
+eb562c3beca4c973f8bdbc4a71ccd9205996e26c, not the anchored eb562c3beca4c973f8bdbc4a71ccd9205996e26c
+- checkpoint integrity: GATE-2-CP-0002: tag refs/tags/iacode-checkpoints/GATE-2-CP-0002 resolves to warning: safe.directory ''%(prefix)///192.168.68.59/f/script-amazon-novo'' not absolute
+warning: safe.directory ''*'' not absolute
+d4a3998ce745dcbfcf6a8498f267ee302834543f, not the anchored commit d4a3998ce745dcbfcf6a8498f267ee302834543f
+- checkpoint integrity: GATE-2-CP-0002: commit d4a3998ce745dcbfcf6a8498f267ee302834543f has tree warning: safe.directory ''%(prefix)///192.168.68.59/f/script-amazon-novo'' not absolute
+warning: safe.directory ''*'' not absolute
+a7350612579d53b880605dfbfd68ec7bb3b5b0e0, not the anchored a7350612579d53b880605dfbfd68ec7bb3b5b0e0
+- checkpoint integrity: GATE-3-CP-0001: tag refs/tags/iacode-checkpoints/GATE-3-CP-0001 resolves to warning: safe.directory ''%(prefix)///192.168.68.59/f/script-amazon-novo'' not absolute
+warning: safe.directory ''*'' not absolute
+3bc8e9d8a94d44163d1af9325ad5b2272f71f8ed, not the anchored commit 3bc8e9d8a94d44163d1af9325ad5b2272f71f8ed
+- checkpoint integrity: GATE-3-CP-0001: commit 3bc8e9d8a94d44163d1af9325ad5b2272f71f8ed has tree warning: safe.directory ''%(prefix)///192.168.68.59/f/script-amazon-novo'' not absolute
+warning: safe.directory ''*'' not absolute
+39e3b75680605d0b49cc31a13bd8914e88052a31, not the anchored 39e3b75680605d0b49cc31a13bd8914e88052a31
+- checkpoint integrity: GATE-3-CP-0002: tag refs/tags/iacode-checkpoints/GATE-3-CP-0002 resolves to warning: safe.directory ''%(prefix)///192.168.68.59/f/script-amazon-novo'' not absolute
+warning: safe.directory ''*'' not absolute
+3a526925cf653ffaa9497cff628d08d50424271a, not the anchored commit 3a526925cf653ffaa9497cff628d08d50424271a
+- checkpoint integrity: GATE-3-CP-0002: commit 3a526925cf653ffaa9497cff628d08d50424271a has tree warning: safe.directory ''%(prefix)///192.168.68.59/f/script-amazon-novo'' not absolute
+warning: safe.directory ''*'' not absolute
+d71ef3957e84009c62abfe148c9c2fcf5ca4e004, not the anchored d71ef3957e84009c62abfe148c9c2fcf5ca4e004
+- checkpoint integrity: GATE-3-CP-0003: tag refs/tags/iacode-checkpoints/GATE-3-CP-0003 resolves to warning: safe.directory ''%(prefix)///192.168.68.59/f/script-amazon-novo'' not absolute
+warning: safe.directory ''*'' not absolute
+f61f84ca7e830002db1674f1df2aca8172f6e483, not the anchored commit f61f84ca7e830002db1674f1df2aca8172f6e483
+- checkpoint integrity: GATE-3-CP-0003: commit f61f84ca7e830002db1674f1df2aca8172f6e483 has tree warning: safe.directory ''%(prefix)///192.168.68.59/f/script-amazon-novo'' not absolute
+warning: safe.directory ''*'' not absolute
+a8bce5cb6505020903c29be2668a3ccac4e9925e, not the anchored a8bce5cb6505020903c29be2668a3ccac4e9925e
+- checkpoint integrity: GATE-3-CP-0004: tag refs/tags/iacode-checkpoints/GATE-3-CP-0004 resolves to warning: safe.directory ''%(prefix)///192.168.68.59/f/script-amazon-novo'' not absolute
+warning: safe.directory ''*'' not absolute
+1fad2bec08a797d9641ad2b9c3092f6078af2d61, not the anchored commit 1fad2bec08a797d9641ad2b9c3092f6078af2d61
+- checkpoint integrity: GATE-3-CP-0004: commit 1fad2bec08a797d9641ad2b9c3092f6078af2d61 has tree warning: safe.directory ''%(prefix)///192.168.68.59/f/script-amazon-novo'' not absolute
+warning: safe.directory ''*'' not absolute
+dfec58f1e994e954f1becd39c6796986153e949d, not the anchored dfec58f1e994e954f1becd39c6796986153e949d
+- checkpoint integrity: GATE-3-CP-0005: tag refs/tags/iacode-checkpoints/GATE-3-CP-0005 resolves to warning: safe.directory ''%(prefix)///192.168.68.59/f/script-amazon-novo'' not absolute
+warning: safe.directory ''*'' not absolute
+3ef2bf77ddbddd378d35f5c4d32f2d90d42fc97d, not the anchored commit 3ef2bf77ddbddd378d35f5c4d32f2d90d42fc97d
+- checkpoint integrity: GATE-3-CP-0005: commit 3ef2bf77ddbddd378d35f5c4d32f2d90d42fc97d has tree warning: safe.directory ''%(prefix)///192.168.68.59/f/script-amazon-novo'' not absolute
+warning: safe.directory ''*'' not absolute
+62da56277a332d7ab5f4280f508f773d59e0b56c, not the anchored 62da56277a332d7ab5f4280f508f773d59e0b56c
+- checkpoint integrity: GATE-3-CP-0006: tag refs/tags/iacode-checkpoints/GATE-3-CP-0006 resolves to warning: safe.directory ''%(prefix)///192.168.68.59/f/script-amazon-novo'' not absolute
+warning: safe.directory ''*'' not absolute
+92020769ffd19adeb78d432141da5b1fd492f969, not the anchored commit 92020769ffd19adeb78d432141da5b1fd492f969
+- checkpoint integrity: GATE-3-CP-0006: commit 92020769ffd19adeb78d432141da5b1fd492f969 has tree warning: safe.directory ''%(prefix)///192.168.68.59/f/script-amazon-novo'' not absolute
+warning: safe.directory ''*'' not absolute
+3eeb3e1e4d33a90371748dcf3122793385ac904f, not the anchored 3eeb3e1e4d33a90371748dcf3122793385ac904f
+- checkpoint integrity: GATE-4-CP-0001: tag refs/tags/iacode-checkpoints/GATE-4-CP-0001 resolves to warning: safe.directory ''%(prefix)///192.168.68.59/f/script-amazon-novo'' not absolute
+warning: safe.directory ''*'' not absolute
+70a22e824705f414e0c295bbdf89187db9b391f7, not the anchored commit 70a22e824705f414e0c295bbdf89187db9b391f7
+- checkpoint integrity: GATE-4-CP-0001: commit 70a22e824705f414e0c295bbdf89187db9b391f7 has tree warning: safe.directory ''%(prefix)///192.168.68.59/f/script-amazon-novo'' not absolute
+warning: safe.directory ''*'' not absolute
+b1f642ea69369f4388b2f82fc84613d9f0410f50, not the anchored b1f642ea69369f4388b2f82fc84613d9f0410f50
+- checkpoint integrity: GATE-4-CP-0002: tag refs/tags/iacode-checkpoints/GATE-4-CP-0002 resolves to warning: safe.directory ''%(prefix)///192.168.68.59/f/script-amazon-novo'' not absolute
+warning: safe.directory ''*'' not absolute
+a3a12a84480a84be61d3e445001c923379a70cdc, not the anchored commit a3a12a84480a84be61d3e445001c923379a70cdc
+- checkpoint integrity: GATE-4-CP-0002: commit a3a12a84480a84be61d3e445001c923379a70cdc has tree warning: safe.directory ''%(prefix)///192.168.68.59/f/script-amazon-novo'' not absolute
+warning: safe.directory ''*'' not absolute
+49b4b68eff5b97d78a0e0a3c8751aea1c2e190e9, not the anchored 49b4b68eff5b97d78a0e0a3c8751aea1c2e190e9
+- checkpoint integrity: GATE-4-CP-0003: tag refs/tags/iacode-checkpoints/GATE-4-CP-0003 resolves to warning: safe.directory ''%(prefix)///192.168.68.59/f/script-amazon-novo'' not absolute
+warning: safe.directory ''*'' not absolute
+5d47200fde08c47b7a6410be2204b4c1b9fbadc1, not the anchored commit 5d47200fde08c47b7a6410be2204b4c1b9fbadc1
+- checkpoint integrity: GATE-4-CP-0003: commit 5d47200fde08c47b7a6410be2204b4c1b9fbadc1 has tree warning: safe.directory ''%(prefix)///192.168.68.59/f/script-amazon-novo'' not absolute
+warning: safe.directory ''*'' not absolute
+12ce6967290b8c63f3fddcb3a3d883653c35c58a, not the anchored 12ce6967290b8c63f3fddcb3a3d883653c35c58a
+- checkpoint integrity: GATE-4-CP-0004: tag refs/tags/iacode-checkpoints/GATE-4-CP-0004 resolves to warning: safe.directory ''%(prefix)///192.168.68.59/f/script-amazon-novo'' not absolute
+warning: safe.directory ''*'' not absolute
+73cfa5eeb7fca2bf9312ec777d02f9ddfb2ad3d5, not the anchored commit 73cfa5eeb7fca2bf9312ec777d02f9ddfb2ad3d5
+- checkpoint integrity: GATE-4-CP-0004: commit 73cfa5eeb7fca2bf9312ec777d02f9ddfb2ad3d5 has tree warning: safe.directory ''%(prefix)///192.168.68.59/f/script-amazon-novo'' not absolute
+warning: safe.directory ''*'' not absolute
+134ed7e50564a2e1bb828f4622fe972ed99f6d10, not the anchored 134ed7e50564a2e1bb828f4622fe972ed99f6d10
+- checkpoint integrity: GATE-4-CP-0005: tag refs/tags/iacode-checkpoints/GATE-4-CP-0005 resolves to warning: safe.directory ''%(prefix)///192.168.68.59/f/script-amazon-novo'' not absolute
+warning: safe.directory ''*'' not absolute
+c631270e49c095a9777825c0bc18818694c07ffb, not the anchored commit c631270e49c095a9777825c0bc18818694c07ffb
+- checkpoint integrity: GATE-4-CP-0005: commit c631270e49c095a9777825c0bc18818694c07ffb has tree warning: safe.directory ''%(prefix)///192.168.68.59/f/script-amazon-novo'' not absolute
+warning: safe.directory ''*'' not absolute
+cc63f56a6d49caf8aa3f137d00dbf15f8c271719, not the anchored cc63f56a6d49caf8aa3f137d00dbf15f8c271719
+- checkpoint integrity: GATE-4-CP-0006: tag refs/tags/iacode-checkpoints/GATE-4-CP-0006 resolves to warning: safe.directory ''%(prefix)///192.168.68.59/f/script-amazon-novo'' not absolute
+warning: safe.directory ''*'' not absolute
+dfa2871c4fcecf9eedd7df9f135a5cfcdebce9d5, not the anchored commit dfa2871c4fcecf9eedd7df9f135a5cfcdebce9d5
+- checkpoint integrity: GATE-4-CP-0006: commit dfa2871c4fcecf9eedd7df9f135a5cfcdebce9d5 has tree warning: safe.directory ''%(prefix)///192.168.68.59/f/script-amazon-novo'' not absolute
+warning: safe.directory ''*'' not absolute
+089afa43f360497748510c5ba94f9418ba713c2c, not the anchored 089afa43f360497748510c5ba94f9418ba713c2c
+- checkpoint integrity: GATE-4-CP-0007: tag refs/tags/iacode-checkpoints/GATE-4-CP-0007 resolves to warning: safe.directory ''%(prefix)///192.168.68.59/f/script-amazon-novo'' not absolute
+warning: safe.directory ''*'' not absolute
+e21d30fde473f302d0f8f60b59acf008fa52e250, not the anchored commit e21d30fde473f302d0f8f60b59acf008fa52e250
+- checkpoint integrity: GATE-4-CP-0007: commit e21d30fde473f302d0f8f60b59acf008fa52e250 has tree warning: safe.directory ''%(prefix)///192.168.68.59/f/script-amazon-novo'' not absolute
+warning: safe.directory ''*'' not absolute
+a4cd6541ef5eb7cf28100df5a4c44ba1beb16b02, not the anchored a4cd6541ef5eb7cf28100df5a4c44ba1beb16b02
+- checkpoint integrity: GATE-4-CP-0008: tag refs/tags/iacode-checkpoints/GATE-4-CP-0008 resolves to warning: safe.directory ''%(prefix)///192.168.68.59/f/script-amazon-novo'' not absolute
+warning: safe.directory ''*'' not absolute
+e7879006d516898d441217f253e8282f69fa0b80, not the anchored commit e7879006d516898d441217f253e8282f69fa0b80
+- checkpoint integrity: GATE-4-CP-0008: commit e7879006d516898d441217f253e8282f69fa0b80 has tree warning: safe.directory ''%(prefix)///192.168.68.59/f/script-amazon-novo'' not absolute
+warning: safe.directory ''*'' not absolute
+c147249634590f4a107c27e7ca1786a57a23b736, not the anchored c147249634590f4a107c27e7ca1786a57a23b736
+- checkpoint integrity: GATE-4-CP-0009: tag refs/tags/iacode-checkpoints/GATE-4-CP-0009 resolves to warning: safe.directory ''%(prefix)///192.168.68.59/f/script-amazon-novo'' not absolute
+warning: safe.directory ''*'' not absolute
+ff2814f7d7bf06fa8a99858b958daf3f22197496, not the anchored commit ff2814f7d7bf06fa8a99858b958daf3f22197496
+- checkpoint integrity: GATE-4-CP-0009: commit ff2814f7d7bf06fa8a99858b958daf3f22197496 has tree warning: safe.directory ''%(prefix)///192.168.68.59/f/script-amazon-novo'' not absolute
+warning: safe.directory ''*'' not absolute
+59c1a00507a504b7c1c48636c9ddbb783e5ff4d1, not the anchored 59c1a00507a504b7c1c48636c9ddbb783e5ff4d1
+- checkpoint integrity: GATE-4-CP-0010: tag refs/tags/iacode-checkpoints/GATE-4-CP-0010 resolves to warning: safe.directory ''%(prefix)///192.168.68.59/f/script-amazon-novo'' not absolute
+warning: safe.directory ''*'' not absolute
+44f6da5b092b5f3243331253ca4fc2bf7c45d603, not the anchored commit 44f6da5b092b5f3243331253ca4fc2bf7c45d603
+- checkpoint integrity: GATE-4-CP-0010: commit 44f6da5b092b5f3243331253ca4fc2bf7c45d603 has tree warning: safe.directory ''%(prefix)///192.168.68.59/f/script-amazon-novo'' not absolute
+warning: safe.directory ''*'' not absolute
+4dcc9184d8d15dc75c0110815125243bc0391813, not the anchored 4dcc9184d8d15dc75c0110815125243bc0391813
+- checkpoint integrity: GATE-5-CP-0001: tag refs/tags/iacode-checkpoints/GATE-5-CP-0001 resolves to warning: safe.directory ''%(prefix)///192.168.68.59/f/script-amazon-novo'' not absolute
+warning: safe.directory ''*'' not absolute
+bcfe297278d25ee5a1db70a32b8c4ba0731941ea, not the anchored commit bcfe297278d25ee5a1db70a32b8c4ba0731941ea
+- checkpoint integrity: GATE-5-CP-0001: commit bcfe297278d25ee5a1db70a32b8c4ba0731941ea has tree warning: safe.directory ''%(prefix)///192.168.68.59/f/script-amazon-novo'' not absolute
+warning: safe.directory ''*'' not absolute
+b63a2957f2c25a7adae9ae2607d7a5f11a421430, not the anchored b63a2957f2c25a7adae9ae2607d7a5f11a421430
+- checkpoint integrity: GATE-6-CP-0001: tag refs/tags/iacode-checkpoints/GATE-6-CP-0001 resolves to warning: safe.directory ''%(prefix)///192.168.68.59/f/script-amazon-novo'' not absolute
+warning: safe.directory ''*'' not absolute
+d6deb90564011f9ee518da20acbb56a39b985f74, not the anchored commit d6deb90564011f9ee518da20acbb56a39b985f74
+- checkpoint integrity: GATE-6-CP-0001: commit d6deb90564011f9ee518da20acbb56a39b985f74 has tree warning: safe.directory ''%(prefix)///192.168.68.59/f/script-amazon-novo'' not absolute
+warning: safe.directory ''*'' not absolute
+3ed12dde65ca401f27d4a5e1be23817d073097b9, not the anchored 3ed12dde65ca401f27d4a5e1be23817d073097b9
+- checkpoint integrity: SETUP-00-CP-0001: tag refs/tags/iacode-checkpoints/SETUP-00-CP-0001 resolves to warning: safe.directory ''%(prefix)///192.168.68.59/f/script-amazon-novo'' not absolute
+warning: safe.directory ''*'' not absolute
+0cb4f246b555a6304ca6dbce1c8e97c80b527ef9, not the anchored commit 0cb4f246b555a6304ca6dbce1c8e97c80b527ef9
+- checkpoint integrity: SETUP-00-CP-0001: commit 0cb4f246b555a6304ca6dbce1c8e97c80b527ef9 has tree warning: safe.directory ''%(prefix)///192.168.68.59/f/script-amazon-novo'' not absolute
+warning: safe.directory ''*'' not absolute
+b6f32f4fccd54a9fdb24642173f8cedc8aac644b, not the anchored b6f32f4fccd54a9fdb24642173f8cedc8aac644b
+- checkpoint integrity: SETUP-00-CP-0002: tag refs/tags/iacode-checkpoints/SETUP-00-CP-0002 resolves to warning: safe.directory ''%(prefix)///192.168.68.59/f/script-amazon-novo'' not absolute
+warning: safe.directory ''*'' not absolute
+ae563f860856e3ce5ca9ec6e94b6202ed7e4a4e4, not the anchored commit ae563f860856e3ce5ca9ec6e94b6202ed7e4a4e4
+- checkpoint integrity: SETUP-00-CP-0002: commit ae563f860856e3ce5ca9ec6e94b6202ed7e4a4e4 has tree warning: safe.directory ''%(prefix)///192.168.68.59/f/script-amazon-novo'' not absolute
+warning: safe.directory ''*'' not absolute
+331054d5062501261e9987a8fade132b4b1f3cd4, not the anchored 331054d5062501261e9987a8fade132b4b1f3cd4
+- checkpoint integrity: SETUP-00-CP-0003: tag refs/tags/iacode-checkpoints/SETUP-00-CP-0003 resolves to warning: safe.directory ''%(prefix)///192.168.68.59/f/script-amazon-novo'' not absolute
+warning: safe.directory ''*'' not absolute
+5780b0f86dbf46ad84d69b88a637be6f076946f4, not the anchored commit 5780b0f86dbf46ad84d69b88a637be6f076946f4
+- checkpoint integrity: SETUP-00-CP-0003: commit 5780b0f86dbf46ad84d69b88a637be6f076946f4 has tree warning: safe.directory ''%(prefix)///192.168.68.59/f/script-amazon-novo'' not absolute
+warning: safe.directory ''*'' not absolute
+65dfc288c60dec518e5c488db6af8b4e9825fd8c, not the anchored 65dfc288c60dec518e5c488db6af8b4e9825fd8c
+- checkpoint integrity: SETUP-00-CP-0004: tag refs/tags/iacode-checkpoints/SETUP-00-CP-0004 resolves to warning: safe.directory ''%(prefix)///192.168.68.59/f/script-amazon-novo'' not absolute
+warning: safe.directory ''*'' not absolute
+c2eea150de9c97cfab5429d1e1eb3d5285e585f7, not the anchored commit c2eea150de9c97cfab5429d1e1eb3d5285e585f7
+- checkpoint integrity: SETUP-00-CP-0004: commit c2eea150de9c97cfab5429d1e1eb3d5285e585f7 has tree warning: safe.directory ''%(prefix)///192.168.68.59/f/script-amazon-novo'' not absolute
+warning: safe.directory ''*'' not absolute
+7f6299ce5420e08a841fca8499ce2e00d721410c, not the anchored 7f6299ce5420e08a841fca8499ce2e00d721410c
+- checkpoint integrity: SETUP-00-CP-0005: tag refs/tags/iacode-checkpoints/SETUP-00-CP-0005 resolves to warning: safe.directory ''%(prefix)///192.168.68.59/f/script-amazon-novo'' not absolute
+warning: safe.directory ''*'' not absolute
+276645b4498a0e58a1bf38979b5e078669dbb380, not the anchored commit 276645b4498a0e58a1bf38979b5e078669dbb380
+- checkpoint integrity: SETUP-00-CP-0005: commit 276645b4498a0e58a1bf38979b5e078669dbb380 has tree warning: safe.directory ''%(prefix)///192.168.68.59/f/script-amazon-novo'' not absolute
+warning: safe.directory ''*'' not absolute
+f023e2db91ab6ad590715a57447795304d713d4d, not the anchored f023e2db91ab6ad590715a57447795304d713d4d
+- checkpoint integrity: SETUP-00-CP-0006: tag refs/tags/iacode-checkpoints/SETUP-00-CP-0006 resolves to warning: safe.directory ''%(prefix)///192.168.68.59/f/script-amazon-novo'' not absolute
+warning: safe.directory ''*'' not absolute
+994bab402873bc4d221c02d8c94bdebeb2b0f3cb, not the anchored commit 994bab402873bc4d221c02d8c94bdebeb2b0f3cb
+- checkpoint integrity: SETUP-00-CP-0006: commit 994bab402873bc4d221c02d8c94bdebeb2b0f3cb has tree warning: safe.directory ''%(prefix)///192.168.68.59/f/script-amazon-novo'' not absolute
+warning: safe.directory ''*'' not absolute
+f91e5c3c02897bb36f39d62bef9c0a4b189f31fc, not the anchored f91e5c3c02897bb36f39d62bef9c0a4b189f31fc
+- checkpoint integrity: SETUP-00-CP-0007: tag refs/tags/iacode-checkpoints/SETUP-00-CP-0007 resolves to warning: safe.directory ''%(prefix)///192.168.68.59/f/script-amazon-novo'' not absolute
+warning: safe.directory ''*'' not absolute
+502c554575f717c1d57290e4f4aafa575e41170e, not the anchored commit 502c554575f717c1d57290e4f4aafa575e41170e
+- checkpoint integrity: SETUP-00-CP-0007: commit 502c554575f717c1d57290e4f4aafa575e41170e has tree warning: safe.directory ''%(prefix)///192.168.68.59/f/script-amazon-novo'' not absolute
+warning: safe.directory ''*'' not absolute
+b8344e174df193931d586e13c2f372a45794ca21, not the anchored b8344e174df193931d586e13c2f372a45794ca21
+- checkpoint integrity: SETUP-00-CP-0008: tag refs/tags/iacode-checkpoints/SETUP-00-CP-0008 resolves to warning: safe.directory ''%(prefix)///192.168.68.59/f/script-amazon-novo'' not absolute
+warning: safe.directory ''*'' not absolute
+c53f4c59a77870414324efa6b5f61b35d26c5090, not the anchored commit c53f4c59a77870414324efa6b5f61b35d26c5090
+- checkpoint integrity: SETUP-00-CP-0008: commit c53f4c59a77870414324efa6b5f61b35d26c5090 has tree warning: safe.directory ''%(prefix)///192.168.68.59/f/script-amazon-novo'' not absolute
+warning: safe.directory ''*'' not absolute
+67d5edc745c5ed807aba29ec86b7a22befd35e15, not the anchored 67d5edc745c5ed807aba29ec86b7a22befd35e15
+- checkpoint integrity: SETUP-00-CP-0009: tag refs/tags/iacode-checkpoints/SETUP-00-CP-0009 resolves to warning: safe.directory ''%(prefix)///192.168.68.59/f/script-amazon-novo'' not absolute
+warning: safe.directory ''*'' not absolute
+28c2b487baf216d3745bb6c5a25a5b8aa7274a9e, not the anchored commit 28c2b487baf216d3745bb6c5a25a5b8aa7274a9e
+- checkpoint integrity: SETUP-00-CP-0009: commit 28c2b487baf216d3745bb6c5a25a5b8aa7274a9e has tree warning: safe.directory ''%(prefix)///192.168.68.59/f/script-amazon-novo'' not absolute
+warning: safe.directory ''*'' not absolute
+df48b4221005c129de8ab97430e10fa5981bf649, not the anchored df48b4221005c129de8ab97430e10fa5981bf649
+- checkpoint integrity: SETUP-00-CP-0010: tag refs/tags/iacode-checkpoints/SETUP-00-CP-0010 resolves to warning: safe.directory ''%(prefix)///192.168.68.59/f/script-amazon-novo'' not absolute
+warning: safe.directory ''*'' not absolute
+90b67a7e0a11179465bc5c92dee22c78da36801f, not the anchored commit 90b67a7e0a11179465bc5c92dee22c78da36801f
+- checkpoint integrity: SETUP-00-CP-0010: commit 90b67a7e0a11179465bc5c92dee22c78da36801f has tree warning: safe.directory ''%(prefix)///192.168.68.59/f/script-amazon-novo'' not absolute
+warning: safe.directory ''*'' not absolute
+109eb0426b6e58e2be7fb290babc9eb489e375d3, not the anchored 109eb0426b6e58e2be7fb290babc9eb489e375d3
+- checkpoint integrity: SETUP-00-CP-0011: tag refs/tags/iacode-checkpoints/SETUP-00-CP-0011 resolves to warning: safe.directory ''%(prefix)///192.168.68.59/f/script-amazon-novo'' not absolute
+warning: safe.directory ''*'' not absolute
+98a9f4ca83d538e9610844086ca74b7ff32492e1, not the anchored commit 98a9f4ca83d538e9610844086ca74b7ff32492e1
+- checkpoint integrity: SETUP-00-CP-0011: commit 98a9f4ca83d538e9610844086ca74b7ff32492e1 has tree warning: safe.directory ''%(prefix)///192.168.68.59/f/script-amazon-novo'' not absolute
+warning: safe.directory ''*'' not absolute
+b854721792bbe23932d6bab58290a84d6c53ce7b, not the anchored b854721792bbe23932d6bab58290a84d6c53ce7b
+- checkpoint integrity: SETUP-00-CP-0012: tag refs/tags/iacode-checkpoints/SETUP-00-CP-0012 resolves to warning: safe.directory ''%(prefix)///192.168.68.59/f/script-amazon-novo'' not absolute
+warning: safe.directory ''*'' not absolute
+3f730dca1a12245ee8fdf8dfad7a523ed5c1c186, not the anchored commit 3f730dca1a12245ee8fdf8dfad7a523ed5c1c186
+- checkpoint integrity: SETUP-00-CP-0012: commit 3f730dca1a12245ee8fdf8dfad7a523ed5c1c186 has tree warning: safe.directory ''%(prefix)///192.168.68.59/f/script-amazon-novo'' not absolute
+warning: safe.directory ''*'' not absolute
+1838695a8a3d65728669aea734c468ac3eab5284, not the anchored 1838695a8a3d65728669aea734c468ac3eab5284
+- checkpoint integrity: SETUP-00-CP-0013: tag refs/tags/iacode-checkpoints/SETUP-00-CP-0013 resolves to warning: safe.directory ''%(prefix)///192.168.68.59/f/script-amazon-novo'' not absolute
+warning: safe.directory ''*'' not absolute
+b5b594660584092c74738bdda3d8bca9b210b406, not the anchored commit b5b594660584092c74738bdda3d8bca9b210b406
+- checkpoint integrity: SETUP-00-CP-0013: commit b5b594660584092c74738bdda3d8bca9b210b406 has tree warning: safe.directory ''%(prefix)///192.168.68.59/f/script-amazon-novo'' not absolute
+warning: safe.directory ''*'' not absolute
+a052183ca517d4b0aae0fed724183ac25dba7bd1, not the anchored a052183ca517d4b0aae0fed724183ac25dba7bd1
+- the recorded post-commit validation describes 8357bd664312, which is neither HEAD nor its parent; the sealed content is not the content that was validated
+- FILES.json omits a changed path: DIVERGENCE.md (modified)
+

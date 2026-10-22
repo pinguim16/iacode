@@ -1,0 +1,212 @@
+{
+  "schemaVersion": "1.0.0",
+  "artifact": "M2_INDEPENDENT_RED_TEAM_COMMAND_LEDGER",
+  "subjectCommit": "823cf164c6931dab7f957c92721ded7a916655bd",
+  "ownerRoot": "C:\\Users\\cesar\\AppData\\Local\\Temp\\m2rt-f65231",
+  "retained": true,
+  "baselineControl": {
+    "status": "INVALID",
+    "case": {
+      "name": "baseline",
+      "repository": "C:\\Users\\cesar\\AppData\\Local\\Temp\\m2rt-f65231\\baseline\\repository",
+      "head": "823cf164c6931dab7f957c92721ded7a916655bd",
+      "steps": [
+        {
+          "arguments": [
+            "git",
+            "-c",
+            "core.longpaths=true",
+            "-c",
+            "http.sslBackend=openssl",
+            "-c",
+            "credential.helper=",
+            "clone",
+            "--quiet",
+            "--no-local",
+            "https://github.com/pinguim16/iacode.git",
+            "C:\\Users\\cesar\\AppData\\Local\\Temp\\m2rt-f65231\\baseline\\repository"
+          ],
+          "workingDirectory": "C:\\Users\\cesar\\AppData\\Local\\Temp\\m2rt-f65231",
+          "durationMs": 8616,
+          "exitCode": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "arguments": [
+            "git",
+            "checkout",
+            "--quiet",
+            "--detach",
+            "refs/tags/iacode-checkpoints/GATE-7-CP-0001"
+          ],
+          "workingDirectory": "C:\\Users\\cesar\\AppData\\Local\\Temp\\m2rt-f65231\\baseline\\repository",
+          "durationMs": 145,
+          "exitCode": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "arguments": [
+            "git",
+            "rev-parse",
+            "HEAD"
+          ],
+          "workingDirectory": "C:\\Users\\cesar\\AppData\\Local\\Temp\\m2rt-f65231\\baseline\\repository",
+          "durationMs": 63,
+          "exitCode": 0,
+          "stdout": "823cf164c6931dab7f957c92721ded7a916655bd\n",
+          "stderr": ""
+        },
+        {
+          "arguments": [
+            "C:\\Program Files\\Python313\\python.exe",
+            "scripts/development-ledger/new_checkpoint.py",
+            "--gate",
+            "GATE-7",
+            "--status",
+            "IN_PROGRESS"
+          ],
+          "workingDirectory": "C:\\Users\\cesar\\AppData\\Local\\Temp\\m2rt-f65231\\baseline\\repository",
+          "durationMs": 505,
+          "exitCode": 0,
+          "stdout": "C:\\Users\\cesar\\AppData\\Local\\Temp\\m2rt-f65231\\baseline\\repository\\docs\\checkpoints\\GATE-7-CP-0002\r\n",
+          "stderr": ""
+        }
+      ],
+      "phaseSupplied": null,
+      "statePhase": "GATE-7",
+      "phaseRecognizedByProducer": false,
+      "invokedArguments": [
+        "scripts/development-ledger/new_checkpoint.py",
+        "--gate",
+        "GATE-7",
+        "--status",
+        "IN_PROGRESS"
+      ],
+      "recordedCommand": "python scripts/development-ledger/new_checkpoint.py --gate GATE-7 --status IN_PROGRESS",
+      "recordedArguments": [
+        "scripts/development-ledger/new_checkpoint.py",
+        "--gate",
+        "GATE-7",
+        "--status",
+        "IN_PROGRESS"
+      ],
+      "recordedArgumentsExact": true,
+      "canonicalReproducibilityValidatorErrors": [],
+      "canonicalReproducibilityValidatorAccepted": true,
+      "result": "OBSERVED"
+    }
+  },
+  "attacks": [
+    {
+      "id": "M2-RT-01",
+      "target": "new_checkpoint.py literal invocation evidence",
+      "mutation": "Supply a consumed optional --phase marker.",
+      "premise": "STATE.phase must equal the unique marker, proving the option was consumed.",
+      "expected": "cmd-0001.command and arguments contain the supplied option and marker; replay preserves phase.",
+      "observed": "The state carries the marker, the record omits it, and the canonical reproducibility validator reports no error.",
+      "premiseValid": true,
+      "case": {
+        "name": "phase-mutation",
+        "repository": "C:\\Users\\cesar\\AppData\\Local\\Temp\\m2rt-f65231\\phase-mutation\\repository",
+        "head": "823cf164c6931dab7f957c92721ded7a916655bd",
+        "steps": [
+          {
+            "arguments": [
+              "git",
+              "-c",
+              "core.longpaths=true",
+              "-c",
+              "http.sslBackend=openssl",
+              "-c",
+              "credential.helper=",
+              "clone",
+              "--quiet",
+              "--no-local",
+              "https://github.com/pinguim16/iacode.git",
+              "C:\\Users\\cesar\\AppData\\Local\\Temp\\m2rt-f65231\\phase-mutation\\repository"
+            ],
+            "workingDirectory": "C:\\Users\\cesar\\AppData\\Local\\Temp\\m2rt-f65231",
+            "durationMs": 5338,
+            "exitCode": 0,
+            "stdout": "",
+            "stderr": ""
+          },
+          {
+            "arguments": [
+              "git",
+              "checkout",
+              "--quiet",
+              "--detach",
+              "refs/tags/iacode-checkpoints/GATE-7-CP-0001"
+            ],
+            "workingDirectory": "C:\\Users\\cesar\\AppData\\Local\\Temp\\m2rt-f65231\\phase-mutation\\repository",
+            "durationMs": 86,
+            "exitCode": 0,
+            "stdout": "",
+            "stderr": ""
+          },
+          {
+            "arguments": [
+              "git",
+              "rev-parse",
+              "HEAD"
+            ],
+            "workingDirectory": "C:\\Users\\cesar\\AppData\\Local\\Temp\\m2rt-f65231\\phase-mutation\\repository",
+            "durationMs": 45,
+            "exitCode": 0,
+            "stdout": "823cf164c6931dab7f957c92721ded7a916655bd\n",
+            "stderr": ""
+          },
+          {
+            "arguments": [
+              "C:\\Program Files\\Python313\\python.exe",
+              "scripts/development-ledger/new_checkpoint.py",
+              "--gate",
+              "GATE-7",
+              "--status",
+              "IN_PROGRESS",
+              "--phase",
+              "M2-RED-TEAM-PHASE-7f7db23f"
+            ],
+            "workingDirectory": "C:\\Users\\cesar\\AppData\\Local\\Temp\\m2rt-f65231\\phase-mutation\\repository",
+            "durationMs": 454,
+            "exitCode": 0,
+            "stdout": "C:\\Users\\cesar\\AppData\\Local\\Temp\\m2rt-f65231\\phase-mutation\\repository\\docs\\checkpoints\\GATE-7-CP-0002\r\n",
+            "stderr": ""
+          }
+        ],
+        "phaseSupplied": "M2-RED-TEAM-PHASE-7f7db23f",
+        "statePhase": "M2-RED-TEAM-PHASE-7f7db23f",
+        "phaseRecognizedByProducer": true,
+        "invokedArguments": [
+          "scripts/development-ledger/new_checkpoint.py",
+          "--gate",
+          "GATE-7",
+          "--status",
+          "IN_PROGRESS",
+          "--phase",
+          "M2-RED-TEAM-PHASE-7f7db23f"
+        ],
+        "recordedCommand": "python scripts/development-ledger/new_checkpoint.py --gate GATE-7 --status IN_PROGRESS",
+        "recordedArguments": [
+          "scripts/development-ledger/new_checkpoint.py",
+          "--gate",
+          "GATE-7",
+          "--status",
+          "IN_PROGRESS"
+        ],
+        "recordedArgumentsExact": false,
+        "canonicalReproducibilityValidatorErrors": [],
+        "canonicalReproducibilityValidatorAccepted": true,
+        "result": "OBSERVED"
+      },
+      "result": "ESCAPED"
+    }
+  ],
+  "attacksExecuted": 1,
+  "attacksDefended": 0,
+  "escapes": 1,
+  "result": "RED_TEAM_FAIL"
+}

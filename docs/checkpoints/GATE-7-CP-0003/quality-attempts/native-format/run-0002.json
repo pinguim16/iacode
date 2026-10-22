@@ -1,0 +1,47 @@
+{
+  "startedAt": "2026-10-21T23:12:35Z",
+  "finishedAt": "2026-10-21T23:12:41Z",
+  "sourceFingerprint": "9bed2f1ec23e248697b1577f7084736ab7b45e06da67642d8fd5f7ab808b8133",
+  "sourceUnchanged": false,
+  "durationMs": 7251,
+  "arguments": [
+    "docker",
+    "run",
+    "--rm",
+    "--name",
+    "iacode-m2cp3-format-d8490cd2c6fc473f91573fc034e13aff",
+    "--network",
+    "none",
+    "--read-only",
+    "--cap-drop",
+    "ALL",
+    "--security-opt",
+    "no-new-privileges:true",
+    "--env",
+    "RUFF_NO_CACHE=true",
+    "--volume",
+    "E:\\iacode:/repo",
+    "--workdir",
+    "/repo",
+    "iacode-m2cp3-aa560f386fe44e21876d0e3ccfdfef31/api:0.1.0",
+    "ruff",
+    "format",
+    "scripts/iacode/native_editor.py",
+    "scripts/iacode/native_execution.py"
+  ],
+  "exitCode": 0,
+  "streams": {
+    "stdout": {
+      "sha256": "10869b88a75066aa23546ef1f95fcd4678c3fb92a56ed46ef91688052b67976a",
+      "bytes": 42,
+      "refused": false,
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/native-format/run-0002.stdout.log"
+    },
+    "stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "refused": false,
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/native-format/run-0002.stderr.log"
+    }
+  }
+}

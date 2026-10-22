@@ -1,0 +1,88 @@
+{
+  "schemaVersion": "1.0.0",
+  "artifact": "FINDINGS",
+  "checkpoint": "GATE-7-CP-0002",
+  "milestone": "M2",
+  "subjectCheckpoint": "GATE-7-CP-0001",
+  "subjectCommit": "823cf164c6931dab7f957c92721ded7a916655bd",
+  "findings": [
+    {
+      "id": "M2-F-001",
+      "severity": "HIGH",
+      "status": "OPEN",
+      "classification": "GUARDRAIL_FAILURE",
+      "disposition": "REWORK_REQUIRED",
+      "title": "new_checkpoint.py records a non-literal invocation when --phase is supplied",
+      "gates": ["GATE-7", "M2-AUDIT"],
+      "contractViolated": [
+        "docs/CHECKPOINT-PROTOCOL.md — command records must contain the literal replayable invocation and arguments",
+        "docs/DEVELOPMENT-CONTRACT.md — recorded commands must be executable from their declared working directory",
+        "LSN-0010 / LESSON-REQ-0010 — command evidence must be replayable",
+        "mandatory working contract — a repeated GUARDED failure class is a GUARDRAIL_FAILURE"
+      ],
+      "expected": "Creating a checkpoint with --phase and its value records the exact option/value in cmd-0001.command and cmd-0001.arguments, so replay creates the same semantic state.",
+      "observed": "This session invoked new_checkpoint.py with --gate GATE-7 --status IN_PROGRESS --phase 'M2 fresh-session independent audit of sealed GATE-7-CP-0001'. STATE.json.phase contains that value, but generated cmd-0001.command and cmd-0001.arguments omit --phase and its value. Source lines 163-168 construct the record from only Gate and status.",
+      "reproduction": [
+        "Invoke: python scripts/development-ledger/new_checkpoint.py --gate GATE-7 --status IN_PROGRESS --phase 'M2 fresh-session independent audit of sealed GATE-7-CP-0001'",
+        "Observe the new STATE.json phase.",
+        "Observe cmd-0001.command and cmd-0001.arguments omit --phase and its value.",
+        "Replay the recorded command: it cannot reproduce the recorded phase."
+      ],
+      "impact": "The first ledger record of every checkpoint created with a custom phase is not a literal or semantically equivalent replay of the producing command. The evidence trail can therefore claim reproducibility while omitting a state-changing argument. This audit checkpoint itself cannot satisfy M2A-32, and an M2 milestone PASS is prohibited.",
+      "guardrailAnalysis": "LSN-0010 is GUARDED, but its current controls validate the presence/shape/resolution of command metadata and did not detect omission of a consumed optional argument. The protected failure class has recurred in the current canonical tool, so this is escalated rather than repaired by the auditor.",
+      "recommendation": "In a later implementing checkpoint, make new_checkpoint.py derive cmd-0001.command and arguments from the literal parsed invocation including every supplied optional argument; add a causal red/green regression that supplies --phase and compares replay semantics plus an omitted-argument mutation. Preserve this audit record unchanged and submit the sealed correction to a later fresh independent M2 audit.",
+      "evidence": [
+        "file:docs/checkpoints/GATE-7-CP-0002/COMMANDS.jsonl#cmd-0001",
+        "file:docs/checkpoints/GATE-7-CP-0002/STATE.json",
+        "file:scripts/development-ledger/new_checkpoint.py",
+        "file:.iacode/memory/lessons.jsonl#LSN-0010",
+        "file:docs/checkpoints/GATE-7-CP-0002/LESSON-PREFLIGHT.json#LESSON-REQ-0010"
+      ]
+    },
+    {
+      "id": "M2-F-002",
+      "severity": "CRITICAL",
+      "status": "OPEN",
+      "classification": "GUARDRAIL_FAILURE",
+      "disposition": "REWORK_REQUIRED",
+      "title": "Client test cleanup replaces and loses the producing process evidence",
+      "gates": ["GATE-5", "M2-AUDIT"],
+      "contractViolated": [
+        "LSN-0135 / LESSON-REQ-0134 — producer evidence must be captured before fallible interpretation or owned cleanup",
+        "mandatory working contract — a repeated GUARDED failure class is a GUARDRAIL_FAILURE",
+        "audit execution contract — failed attempts retain sanitized stdout, stderr and effective exit code"
+      ],
+      "expected": "When the owned client container producer and its cleanup both fail, the result retains the producer argv, stdout, stderr and exit code plus the distinct cleanup failure. Cleanup may not replace the evidence that explains the primary outcome.",
+      "observed": "The exact-subject canonical tests triggered two real client producer paths. scripts/iacode/client_checks.py stores the subprocess result in completed, then runs docker rm in finally and raises only RuntimeError('owned client-test container cleanup failed') when cleanup is denied. The return is discarded and the suite reports neither producer exit code nor its captured stdout/stderr. Both tests therefore ended with the generic cleanup error and no recoverable primary observation.",
+      "reproduction": [
+        "Run the canonical exact-subject suite recorded as cmd-0015 while Docker Engine access is denied.",
+        "Observe test_editor_preview_binding_uses_workspace_identity_not_path_spelling and test_signed_malformed_mutation_keeps_uncertainty_identity_and_one_effect both fail at client_checks.py:145.",
+        "Inspect run_node: the docker run CompletedProcess is assigned inside try, but a non-No-such-container docker rm failure raises from finally before the value can be returned or recorded.",
+        "Observe the preserved suite receipt contains only the generic cleanup exception, not the producer's effective exit/stdout/stderr."
+      ],
+      "impact": "A client verification producer can fail for an authentication, workspace, signature, runtime or infrastructure reason and have that primary evidence erased by a later cleanup error. The auditor cannot distinguish those causes, and a mandatory guardrail specifically intended to preserve producer evidence has recurred. M2 cannot pass.",
+      "guardrailAnalysis": "LSN-0135 is CRITICAL and GUARDED by GRD-0137, applies to every temporary verification producer, and was selected by this audit preflight. The current controls did not prevent this independent real execution from losing both producer observations; this is its third observed recurrence class, not an environmental PASS waiver.",
+      "recommendation": "In a later implementing checkpoint, preserve the producer CompletedProcess and safe stdout/stderr/exit metadata before cleanup; report producer and cleanup outcomes as distinct bounded fields; add a causal test where the producer and exact-owner cleanup both fail and both observations survive. Do not suppress cleanup failure or weaken Docker ownership checks.",
+      "evidence": [
+        "command:cmd-0015",
+        "file:docs/checkpoints/GATE-7-CP-0002/controls/control-plane-full-suite.json",
+        "file:scripts/iacode/client_checks.py",
+        "file:tests/test_gate5_clients.py",
+        "file:.iacode/memory/lessons.jsonl#LSN-0135",
+        "file:docs/checkpoints/GATE-7-CP-0002/LESSON-PREFLIGHT.json#LESSON-REQ-0134"
+      ]
+    }
+  ],
+  "observations": [
+    {
+      "id": "M2-O-001",
+      "title": "The G4-F-004 transport correction holds through the final M2 subject",
+      "detail": "Independent public no-credential detached reconstructions reproduced the CP0007 historical mismatch exactly, then reproduced CP0009 and GATE-7-CP-0001 twice each with byte-identical archives matching their declarations."
+    },
+    {
+      "id": "M2-O-002",
+      "title": "The complete control-plane suite is red and cannot be reclassified by its passing majority",
+      "detail": "The exact-subject run executed 984 tests in 11,933.798 seconds: 980 passed, one skipped, one failed and two errored. The dependency null-control failure and both Gate 5 errors occurred while Docker access was denied. The Gate 5 errors additionally established M2-F-002 because their primary producer evidence was lost. No selective rerun replaced this integral result."
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "job": "apiTests",
+  "status": "DONE",
+  "result": "PASS",
+  "producer": {
+    "status": "COMPLETED",
+    "exitCode": 0,
+    "arguments": [
+      "C:\\Program Files\\Python313\\python.exe",
+      "scripts/iacode/gates/api_tests.py"
+    ],
+    "stdout": {
+      "bytes": 1112,
+      "sha256": "ac6db2de0ef423c8bdbee8ff314eeb1675ed4223fabb716d90eea865639728a0",
+      "refusal": null
+    },
+    "stderr": {
+      "bytes": 175,
+      "sha256": "a9511e959a49e35ece7ce1d29285e47a0dd0dd627fe39294adf7b6fdcc411a98",
+      "refusal": null
+    }
+  },
+  "cleanup": {
+    "result": "PASS",
+    "observation": {
+      "jobOwned": true,
+      "remainingBeforeCleanup": 1,
+      "remainingAfterCleanup": 0,
+      "observedProcessCount": 1,
+      "signaledProcessCount": 1,
+      "forcedTermination": false,
+      "naturalExitBudgetWithinOriginalDeadlineSeconds": 1
+    }
+  },
+  "durationMs": 283415,
+  "artifacts": {
+    "stdout.log": {
+      "bytes": 1112,
+      "sha256": "ac6db2de0ef423c8bdbee8ff314eeb1675ed4223fabb716d90eea865639728a0"
+    },
+    "stderr.log": {
+      "bytes": 175,
+      "sha256": "a9511e959a49e35ece7ce1d29285e47a0dd0dd627fe39294adf7b6fdcc411a98"
+    }
+  }
+}

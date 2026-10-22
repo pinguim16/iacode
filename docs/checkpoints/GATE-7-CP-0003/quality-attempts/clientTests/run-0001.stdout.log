@@ -1,0 +1,227 @@
+TAP version 13
+# Subtest: DesktopCliTests: discoverable help and stable identifiers need no configured runtime
+ok 1 - DesktopCliTests: discoverable help and stable identifiers need no configured runtime
+  ---
+  duration_ms: 3749.639029
+  type: 'test'
+  ...
+# Subtest: DesktopCliTests: usage, duplicate, missing, credential argv and insecure endpoint refuse locally
+ok 2 - DesktopCliTests: usage, duplicate, missing, credential argv and insecure endpoint refuse locally
+  ---
+  duration_ms: 5251.677078
+  type: 'test'
+  ...
+# Subtest: DesktopCliTests: no approval causes no attempted domain mutation
+ok 3 - DesktopCliTests: no approval causes no attempted domain mutation
+  ---
+  duration_ms: 1457.539038
+  type: 'test'
+  ...
+# Subtest: DesktopCliTests: connection failure is bounded, typed and never prints its credential
+ok 4 - DesktopCliTests: connection failure is bounded, typed and never prints its credential
+  ---
+  duration_ms: 1269.08592
+  type: 'test'
+  ...
+# Subtest: DesktopCliTests: offline previews refuse known capability data in inventory names
+ok 5 - DesktopCliTests: offline previews refuse known capability data in inventory names
+  ---
+  duration_ms: 1404.924105
+  type: 'test'
+  ...
+# Subtest: DesktopTransportTests: only explicit canonical loopback endpoints are accepted
+ok 6 - DesktopTransportTests: only explicit canonical loopback endpoints are accepted
+  ---
+  duration_ms: 3.343757
+  type: 'test'
+  ...
+# Subtest: DesktopContractTests: wrong type, missing value and invalid value stay distinct
+ok 7 - DesktopContractTests: wrong type, missing value and invalid value stay distinct
+  ---
+  duration_ms: 1.947502
+  type: 'test'
+  ...
+# Subtest: DesktopContractTests: callers cannot mutate the canonical limits or operation schemas
+ok 8 - DesktopContractTests: callers cannot mutate the canonical limits or operation schemas
+  ---
+  duration_ms: 0.360683
+  type: 'test'
+  ...
+# Subtest: DesktopTransportTests: real request and response authentication preserve exact bytes
+ok 9 - DesktopTransportTests: real request and response authentication preserve exact bytes
+  ---
+  duration_ms: 109.567161
+  type: 'test'
+  ...
+# Subtest: DesktopTransportTests: altered or unsigned responses cannot create a session
+ok 10 - DesktopTransportTests: altered or unsigned responses cannot create a session
+  ---
+  duration_ms: 26.183878
+  type: 'test'
+  ...
+# Subtest: DesktopTransportTests: redirects are never followed
+ok 11 - DesktopTransportTests: redirects are never followed
+  ---
+  duration_ms: 6.864069
+  type: 'test'
+  ...
+# Subtest: DesktopApprovalTests: approval binds exact target and current connection
+ok 12 - DesktopApprovalTests: approval binds exact target and current connection
+  ---
+  duration_ms: 25.758593
+  type: 'test'
+  ...
+# Subtest: DesktopPresentationTests: unknown success states invalidate the view
+ok 13 - DesktopPresentationTests: unknown success states invalidate the view
+  ---
+  duration_ms: 35.546933
+  type: 'test'
+  ...
+# Subtest: DesktopRecoveryTests: a signed malformed mutation result retains uncertain outcome and retry identity
+ok 14 - DesktopRecoveryTests: a signed malformed mutation result retains uncertain outcome and retry identity
+  ---
+  duration_ms: 14.339309
+  type: 'test'
+  ...
+# Subtest: DesktopRecoveryTests: only authenticated declared pre-effect refusals clear mutation uncertainty
+ok 15 - DesktopRecoveryTests: only authenticated declared pre-effect refusals clear mutation uncertainty
+  ---
+  duration_ms: 34.643409
+  type: 'test'
+  ...
+# Subtest: DesktopEventTests: cursor must equal the last ordered actual event
+ok 16 - DesktopEventTests: cursor must equal the last ordered actual event
+  ---
+  duration_ms: 48.004488
+  type: 'test'
+  ...
+# Subtest: DesktopRecoveryTests: a real deadline reports uncertainty without retry or remote cancellation
+ok 17 - DesktopRecoveryTests: a real deadline reports uncertainty without retry or remote cancellation
+  ---
+  duration_ms: 30019.694866
+  type: 'test'
+  ...
+# Subtest: DesktopSnapshotTests: preview preserves UTF-8/BOM bytes, excludes private files and uploads nothing
+ok 18 - DesktopSnapshotTests: preview preserves UTF-8/BOM bytes, excludes private files and uploads nothing
+  ---
+  duration_ms: 14.74397
+  type: 'test'
+  ...
+# Subtest: DesktopSnapshotTests: links and nonportable paths are refused
+ok 19 - DesktopSnapshotTests: links and nonportable paths are refused
+  ---
+  duration_ms: 9.166467
+  type: 'test'
+  ...
+# Subtest: DesktopSnapshotTests: decoded file bytes and even excluded traversal entries remain bounded
+ok 20 - DesktopSnapshotTests: decoded file bytes and even excluded traversal entries remain bounded
+  ---
+  duration_ms: 1973.700415
+  type: 'test'
+  ...
+# Subtest: DesktopRecoveryTests: signed deep JSON and protected-data refusals keep one effect and stable uncertainty
+ok 21 - DesktopRecoveryTests: signed deep JSON and protected-data refusals keep one effect and stable uncertainty
+  ---
+  duration_ms: 28.025717
+  type: 'test'
+  ...
+# Subtest: DesktopCredentialTests: capability values and bounded encoded forms never become operation data
+ok 22 - DesktopCredentialTests: capability values and bounded encoded forms never become operation data
+  ---
+  duration_ms: 203.25344
+  type: 'test'
+  ...
+# Subtest: DesktopSnapshotTests: canonical filesystem spelling is bound to the selected workspace identity
+ok 23 - DesktopSnapshotTests: canonical filesystem spelling is bound to the selected workspace identity
+  ---
+  duration_ms: 359.421682
+  type: 'test'
+  ...
+# Subtest: DesktopWorkspaceTrustTests: untrusted, multi-root and virtual mutations refuse before reads or network
+ok 24 - DesktopWorkspaceTrustTests: untrusted, multi-root and virtual mutations refuse before reads or network
+  ---
+  duration_ms: 189.248391
+  type: 'test'
+  ...
+# Subtest: DesktopApprovalTests: command arguments cannot approve; default Cancel has zero mutations
+ok 25 - DesktopApprovalTests: command arguments cannot approve; default Cancel has zero mutations
+  ---
+  duration_ms: 179.714665
+  type: 'test'
+  ...
+# Subtest: DesktopApprovalTests: folder/trust invalidation after review cannot send a stale approval
+ok 26 - DesktopApprovalTests: folder/trust invalidation after review cannot send a stale approval
+  ---
+  duration_ms: 91.555779
+  type: 'test'
+  ...
+# Subtest: DesktopSnapshotTests: changed bytes require a new preview, and confirmed upload records only metadata
+ok 27 - DesktopSnapshotTests: changed bytes require a new preview, and confirmed upload records only metadata
+  ---
+  duration_ms: 116.700902
+  type: 'test'
+  ...
+# Subtest: DesktopRecoveryTests: uncertain create retains stable identity before IO and reconciles without mutation replay
+ok 28 - DesktopRecoveryTests: uncertain create retains stable identity before IO and reconciles without mutation replay
+  ---
+  duration_ms: 205.664109
+  type: 'test'
+  ...
+# Subtest: DesktopPresentationTests: runtime content stays plaintext; event pages resume and disconnect is not remote cancellation
+ok 29 - DesktopPresentationTests: runtime content stays plaintext; event pages resume and disconnect is not remote cancellation
+  ---
+  duration_ms: 150.570109
+  type: 'test'
+  ...
+# Subtest: DesktopCredentialTests: only explicit operator configuration uses SecretStorage, never workspace state
+ok 30 - DesktopCredentialTests: only explicit operator configuration uses SecretStorage, never workspace state
+  ---
+  duration_ms: 111.193622
+  type: 'test'
+  ...
+# Subtest: DesktopLifecycleTests: disposal during connection cannot revive a candidate or render disposed UI
+ok 31 - DesktopLifecycleTests: disposal during connection cannot revive a candidate or render disposed UI
+  ---
+  duration_ms: 137.108193
+  type: 'test'
+  ...
+# Subtest: DesktopPresentationTests: a late read cannot relabel an invalidated connection as fresh
+ok 32 - DesktopPresentationTests: a late read cannot relabel an invalidated connection as fresh
+  ---
+  duration_ms: 177.020771
+  type: 'test'
+  ...
+# Subtest: DesktopRecoveryTests: changing endpoints cannot erase an uncertain identity
+ok 33 - DesktopRecoveryTests: changing endpoints cannot erase an uncertain identity
+  ---
+  duration_ms: 98.671659
+  type: 'test'
+  ...
+# Subtest: DesktopLifecycleTests: selecting and cancelling existing work needs no upload and preserves same-run cursors
+ok 34 - DesktopLifecycleTests: selecting and cancelling existing work needs no upload and preserves same-run cursors
+  ---
+  duration_ms: 102.911577
+  type: 'test'
+  ...
+# Subtest: DesktopRecoveryTests: a recovered different task resets the old cursor but same quality cancellation does not
+ok 35 - DesktopRecoveryTests: a recovered different task resets the old cursor but same quality cancellation does not
+  ---
+  duration_ms: 94.428343
+  type: 'test'
+  ...
+1..35
+# tests 35
+# suites 0
+# pass 35
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 50691.877571
+
+Unable to find image 'node:22.23.2-bookworm-slim@sha256:48e4b67d85f87bd551df43704e24d252f56cc5f8e9718841aace50f19948f0f9' locally
+docker.io/library/node@sha256:48e4b67d85f87bd551df43704e24d252f56cc5f8e9718841aace50f19948f0f9: Pulling from library/node
+Digest: sha256:48e4b67d85f87bd551df43704e24d252f56cc5f8e9718841aace50f19948f0f9
+Status: Downloaded newer image for node@sha256:48e4b67d85f87bd551df43704e24d252f56cc5f8e9718841aace50f19948f0f9
+
+{"gate": "clientTests", "result": "PASS", "packages": {"iacode-cli-0.1.0.tgz": {"sha256": "9ef4c965d84116e78bc268c2f2405db27ac956078490f00fb938175c1557e0e4", "sizeBytes": 14706}, "iacode-0.1.0.vsix": {"sha256": "65678fe36c93971044fb7a6a8e469f4a02664f8ca5e4c60843c5863219b8b30a", "sizeBytes": 21112}}, "liveAcceptance": false}

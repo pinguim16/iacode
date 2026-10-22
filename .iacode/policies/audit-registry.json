@@ -3,6 +3,22 @@
   "policy": "An independent audit becomes work through this registry. Its findings and attacks are re-parsed from the sealed audit reports at validation time, so a finding cannot be dropped by editing this file, and the expected requirement set of the corrective delivery cannot be shrunk.",
   "audits": [
     {
+      "auditId": "M2-CP-0002",
+      "milestone": "M2",
+      "gate": "GATE-7",
+      "auditor": "Codex CLI, OpenAI, fresh-session audit; blocked execution and REWORK_REQUIRED, not an accepted milestone attestation",
+      "auditCheckpoint": "GATE-7-CP-0002",
+      "subjectCheckpoint": "GATE-7-CP-0001",
+      "subjectCommit": "823cf164c6931dab7f957c92721ded7a916655bd",
+      "verdict": "REWORK_REQUIRED",
+      "reviewReport": "docs/checkpoints/GATE-7-CP-0002/REVIEW-REPORT.md",
+      "findingsReport": "docs/checkpoints/GATE-7-CP-0002/FINDINGS.json",
+      "redTeamReport": "docs/checkpoints/GATE-7-CP-0003/M2-SOURCE-ATTACKS.json",
+      "correctiveCheckpoint": "GATE-7-CP-0003",
+      "findingsClosureFile": "M2-CP-0002-FINDINGS-CLOSURE.json",
+      "notes": "Preserve CP0002 byte-exact. It failed validation and was never sealed: no auditCommit or PASS is asserted. Both findings remain mandatory. The typed attack projection preserves the sole executed escaped attack from its raw retry ledger; it neither replaces that raw evidence nor narrows the current mandatory internal attack battery."
+    },
+    {
       "auditId": "M0-CP-0007",
       "milestone": "M0",
       "gate": "SETUP-00",

@@ -1,0 +1,197 @@
+I001 [*] Import block is un-sorted or un-formatted
+  --> scripts/iacode/native_editor.py:3:1
+   |
+ 1 |   """Actual owned VSIX installation and native Extension Host execution; never a UI mock."""
+ 2 |
+ 3 | / from __future__ import annotations
+ 4 | |
+ 5 | | import argparse
+ 6 | | import json
+ 7 | | import os
+ 8 | | import re
+ 9 | | import shutil
+10 | | import subprocess
+11 | | import sys
+12 | | from pathlib import Path
+13 | |
+14 | | from build_clients import ROOT, build
+15 | | from native_process import NativeJobCleanupError, WindowsJob, owned_directory
+16 | | from native_execution import NativeExecutionError, execute_owned
+   | |________________________________________________________________^
+help: Organize imports
+   |
+14 | from build_clients import ROOT, build
+15 + from native_execution import NativeExecutionError, execute_owned
+16 | from native_process import NativeJobCleanupError, WindowsJob, owned_directory
+   - from native_execution import NativeExecutionError, execute_owned
+17 |
+   |
+
+E501 Line too long (106 > 100)
+   --> scripts/iacode/native_editor.py:197:101
+    |
+195 |                 "result": "FAIL",
+196 |                 "mode": mode,
+197 |                 "failure": ("native host deadline elapsed" if isinstance(error, subprocess.TimeoutExpired)
+    |                                                                                                     ^^^^^^
+198 |                             else "native owned execution failed"),
+199 |                 "exitCode": execution["producer"]["exitCode"] if execution else None,
+    |
+
+SIM115 Use a context manager for opening files
+  --> scripts/iacode/native_execution.py:28:14
+   |
+26 | @contextmanager
+27 | def owned_capture(release: dict):
+28 |     stream = tempfile.TemporaryFile()
+   |              ^^^^^^^^^^^^^^^^^^^^^^
+29 |     try:
+30 |         yield stream
+   |
+
+E501 Line too long (101 > 100)
+  --> scripts/iacode/native_execution.py:62:101
+   |
+60 |         return {"text": None, "sha256": None, "bytes": None, "refusal": "OUTPUT_READ_FAILED"}
+61 |     if size > MAX_OBSERVATION_BYTES:
+62 |         return {"text": None, "sha256": digest.hexdigest(), "bytes": size, "refusal": "OUTPUT_LIMIT"}
+   |                                                                                                     ^
+63 |     return _safe_stream(bytes(raw))
+   |
+
+E501 Line too long (101 > 100)
+  --> scripts/iacode/native_execution.py:67:101
+   |
+66 | def safe_cleanup_facts(value) -> dict:
+67 |     allowed = {"jobOwned", "remainingBeforeCleanup", "remainingAfterCleanup", "observedProcessCount",
+   |                                                                                                     ^
+68 |                "signaledProcessCount", "forcedTermination", "naturalExitBudgetWithinOriginalDeadlineSeconds",
+69 |                "result", "phase", "totalDeadlineSeconds", "naturalExitBudgetSeconds", "remainingJobActive",
+   |
+
+E501 Line too long (109 > 100)
+  --> scripts/iacode/native_execution.py:68:101
+   |
+66 | def safe_cleanup_facts(value) -> dict:
+67 |     allowed = {"jobOwned", "remainingBeforeCleanup", "remainingAfterCleanup", "observedProcessCount",
+68 |                "signaledProcessCount", "forcedTermination", "naturalExitBudgetWithinOriginalDeadlineSeconds",
+   |                                                                                                     ^^^^^^^^^
+69 |                "result", "phase", "totalDeadlineSeconds", "naturalExitBudgetSeconds", "remainingJobActive",
+70 |                "pendingProcessCount", "lastObservedElapsedSeconds"}
+   |
+
+E501 Line too long (107 > 100)
+  --> scripts/iacode/native_execution.py:69:101
+   |
+67 |     allowed = {"jobOwned", "remainingBeforeCleanup", "remainingAfterCleanup", "observedProcessCount",
+68 |                "signaledProcessCount", "forcedTermination", "naturalExitBudgetWithinOriginalDeadlineSeconds",
+69 |                "result", "phase", "totalDeadlineSeconds", "naturalExitBudgetSeconds", "remainingJobActive",
+   |                                                                                                     ^^^^^^^
+70 |                "pendingProcessCount", "lastObservedElapsedSeconds"}
+71 |     if type(value) is not dict or set(value) - allowed:
+   |
+
+RUF021 [*] Parenthesize `a and b` expressions when chaining `and` and `or` together, to make the precedence clear
+  --> scripts/iacode/native_execution.py:75:20
+   |
+73 |     for key, item in value.items():
+74 |         if (item is None or type(item) in (bool, int)
+75 |                 or type(item) is float and math.isfinite(item)
+   |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+76 |                 or key == "result" and item == "FAIL"
+77 |                 or key == "phase" and item in ("MEMBER_SNAPSHOT", "NATURAL_DRAIN", "FORCE_SNAPSHOT", "FORCED_DRAIN")):
+   |
+help: Parenthesize the `and` subexpression
+   |
+74 |         if (item is None or type(item) in (bool, int)
+   -                 or type(item) is float and math.isfinite(item)
+75 +                 or (type(item) is float and math.isfinite(item))
+76 |                 or key == "result" and item == "FAIL"
+   |
+
+RUF021 [*] Parenthesize `a and b` expressions when chaining `and` and `or` together, to make the precedence clear
+  --> scripts/iacode/native_execution.py:76:20
+   |
+74 |         if (item is None or type(item) in (bool, int)
+75 |                 or type(item) is float and math.isfinite(item)
+76 |                 or key == "result" and item == "FAIL"
+   |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+77 |                 or key == "phase" and item in ("MEMBER_SNAPSHOT", "NATURAL_DRAIN", "FORCE_SNAPSHOT", "FORCED_DRAIN")):
+78 |             continue
+   |
+help: Parenthesize the `and` subexpression
+   |
+75 |                 or type(item) is float and math.isfinite(item)
+   -                 or key == "result" and item == "FAIL"
+76 +                 or (key == "result" and item == "FAIL")
+77 |                 or key == "phase" and item in ("MEMBER_SNAPSHOT", "NATURAL_DRAIN", "FORCE_SNAPSHOT", "FORCED_DRAIN")):
+   |
+
+RUF021 [*] Parenthesize `a and b` expressions when chaining `and` and `or` together, to make the precedence clear
+  --> scripts/iacode/native_execution.py:77:20
+   |
+75 |                 or type(item) is float and math.isfinite(item)
+76 |                 or key == "result" and item == "FAIL"
+77 |                 or key == "phase" and item in ("MEMBER_SNAPSHOT", "NATURAL_DRAIN", "FORCE_SNAPSHOT", "FORCED_DRAIN")):
+   |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+78 |             continue
+79 |         return {"refusal": "UNSAFE_CLEANUP_FACTS"}
+   |
+help: Parenthesize the `and` subexpression
+   |
+76 |                 or key == "result" and item == "FAIL"
+   -                 or key == "phase" and item in ("MEMBER_SNAPSHOT", "NATURAL_DRAIN", "FORCE_SNAPSHOT", "FORCED_DRAIN")):
+77 +                 or (key == "phase" and item in ("MEMBER_SNAPSHOT", "NATURAL_DRAIN", "FORCE_SNAPSHOT", "FORCED_DRAIN"))):
+78 |             continue
+   |
+
+E501 Line too long (118 > 100)
+  --> scripts/iacode/native_execution.py:77:101
+   |
+75 |                 or type(item) is float and math.isfinite(item)
+76 |                 or key == "result" and item == "FAIL"
+77 |                 or key == "phase" and item in ("MEMBER_SNAPSHOT", "NATURAL_DRAIN", "FORCE_SNAPSHOT", "FORCED_DRAIN")):
+   |                                                                                                     ^^^^^^^^^^^^^^^^^^
+78 |             continue
+79 |         return {"refusal": "UNSAFE_CLEANUP_FACTS"}
+   |
+
+E501 Line too long (114 > 100)
+   --> scripts/iacode/native_execution.py:108:101
+    |
+106 |                 startup.wShowWindow = subprocess.SW_HIDE
+107 |                 options = {"startupinfo": startup,
+108 |                            "creationflags": subprocess.CREATE_NEW_PROCESS_GROUP | subprocess.CREATE_NO_WINDOW | 4}
+    |                                                                                                     ^^^^^^^^^^^^^^
+109 |             process = subprocess.Popen(arguments, cwd=root, env=environment, stdin=subprocess.DEVNULL,
+110 |                                        stdout=stream, stderr=subprocess.STDOUT, **options)
+    |
+
+E501 Line too long (102 > 100)
+   --> scripts/iacode/native_execution.py:109:101
+    |
+107 |                 options = {"startupinfo": startup,
+108 |                            "creationflags": subprocess.CREATE_NEW_PROCESS_GROUP | subprocess.CREATE_NO_WINDOW | 4}
+109 |             process = subprocess.Popen(arguments, cwd=root, env=environment, stdin=subprocess.DEVNULL,
+    |                                                                                                     ^^
+110 |                                        stdout=stream, stderr=subprocess.STDOUT, **options)
+111 |             if job:
+    |
+
+SIM105 Use `contextlib.suppress(ProcessLookupError)` instead of `try`-`except`-`pass`
+   --> scripts/iacode/native_execution.py:136:21
+    |
+134 |                                  "observation": observation}
+135 |                   elif process is not None:
+136 | /                     try:
+137 | |                         os.killpg(process.pid, signal.SIGKILL)
+138 | |                     except ProcessLookupError:
+139 | |                         pass  # Only the exact owned session group is absent.
+    | |____________________________^
+140 |                       cleanup = {"result": "PASS", "observation": None}
+141 |               except NativeJobCleanupError as error:
+    |
+help: Replace `try`-`except`-`pass` with `with contextlib.suppress(ProcessLookupError): ...`
+
+Found 14 errors.
+[*] 4 fixable with the `--fix` option.

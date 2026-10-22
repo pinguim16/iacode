@@ -1,0 +1,110 @@
+........................................F........................................................................................................................................F.....F...............................................................................................................................................................................................................................................................................F......................................................................................................................................................................................................................................................................................................F..........................................................................................................................................F......................................F.........................................................................................
+======================================================================
+FAIL: test_the_red_team_battery_implements_every_mandatory_attack (test_development_ledger.AuditSourceParsingTests.test_the_red_team_battery_implements_every_mandatory_attack)
+Every mandatory attack of every registered audit is implemented, not only one audit's.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\iacode\tests\test_development_ledger.py", line 4206, in test_the_red_team_battery_implements_every_mandatory_attack
+    self.assertEqual(implemented, expected)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Items in the second set but not the first:
+'M2-RT-01'
+
+======================================================================
+FAIL: test_the_measured_effectiveness_is_recorded_truthfully (test_development_ledger.GuardrailEffectivenessGateTests.test_the_measured_effectiveness_is_recorded_truthfully)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\iacode\tests\test_development_ledger.py", line 4145, in test_the_measured_effectiveness_is_recorded_truthfully
+    self.assertEqual(errors, [])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: Lists differ: ['READY_FOR_REVIEW is not available while [147 chars]one'] != []
+
+First list contains 3 additional elements.
+First extra element 0:
+'READY_FOR_REVIEW is not available while 2 guardrail failure(s) remain unresolved: LSN-0010, LSN-0135'
+
++ []
+- ['READY_FOR_REVIEW is not available while 2 guardrail failure(s) remain '
+-  'unresolved: LSN-0010, LSN-0135',
+-  'guardrail GRD-0011 is not effective: None',
+-  'guardrail GRD-0137 is not effective: None']
+
+======================================================================
+FAIL: test_guardrail_effectiveness_is_measured_not_asserted (test_development_ledger.GuardrailRegistryTests.test_guardrail_effectiveness_is_measured_not_asserted)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\iacode\tests\test_development_ledger.py", line 3730, in test_guardrail_effectiveness_is_measured_not_asserted
+    self.assertEqual(measured["guardrailsEffective"], measured["guardrailsTotal"])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 152 != 154
+
+======================================================================
+FAIL: test_every_tool_that_re_emits_captured_output_configures_its_own_stream (test_gate0_foundation.SubprocessDecodingTests.test_every_tool_that_re_emits_captured_output_configures_its_own_stream)
+Reading a child's UTF-8 is half of it: writing it back out encodes again.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\iacode\tests\test_gate0_foundation.py", line 473, in test_every_tool_that_re_emits_captured_output_configures_its_own_stream
+    self.assertEqual(offenders, [], "entry points that re-emit captured output unconfigured")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: ['docs/checkpoints/GATE-7-CP-0003/audit-ha[400 chars].py'] != []
+
+First list contains 6 additional elements.
+First extra element 0:
+'docs/checkpoints/GATE-7-CP-0003/audit-harness/capture_owned_build_history.py'
+
++ []
+- ['docs/checkpoints/GATE-7-CP-0003/audit-harness/capture_owned_build_history.py',
+-  'docs/checkpoints/GATE-7-CP-0003/audit-harness/diagnose_owned_builder.py',
+-  'docs/checkpoints/GATE-7-CP-0003/audit-harness/inspect_environment.py',
+-  'docs/checkpoints/GATE-7-CP-0003/audit-harness/owned_docker_scope.py',
+-  'docs/checkpoints/GATE-7-CP-0003/audit-harness/probe_bridge_boundary.py',
+-  'docs/checkpoints/GATE-7-CP-0003/audit-harness/prove_canonical_bridge.py'] : entry points that re-emit captured output unconfigured
+
+======================================================================
+FAIL: test_mandatory_lint_covers_every_python_project_root (test_gate4_quality_engine.Gate4QualityCoverageTests.test_mandatory_lint_covers_every_python_project_root)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\iacode\tests\test_gate4_quality_engine.py", line 529, in test_mandatory_lint_covers_every_python_project_root
+    self.assertEqual(uncovered, [])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+AssertionError: Lists differ: ['var/gate7-sealed-public-20261019-181247/[696 chars]api'] != []
+
+First list contains 12 additional elements.
+First extra element 0:
+'var/gate7-sealed-public-20261019-181247/services/agent-runtime'
+
+Diff is 784 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_inherited_lint_guard_refuses_each_new_python_root_omission (test_gate7_knowledge.Gate7LintDenominatorTests.test_inherited_lint_guard_refuses_each_new_python_root_omission)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\iacode\tests\test_gate7_knowledge.py", line 133, in test_inherited_lint_guard_refuses_each_new_python_root_omission
+    control.test_mandatory_lint_covers_every_python_project_root()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\iacode\tests\test_gate4_quality_engine.py", line 529, in test_mandatory_lint_covers_every_python_project_root
+    self.assertEqual(uncovered, [])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+AssertionError: Lists differ: ['var/gate7-sealed-public-20261019-181247/[696 chars]api'] != []
+
+First list contains 12 additional elements.
+First extra element 0:
+'var/gate7-sealed-public-20261019-181247/services/agent-runtime'
+
+Diff is 784 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_the_published_history_carries_no_credential (test_git_policy.PublishedHistoryTests.test_the_published_history_carries_no_credential)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\iacode\tests\test_git_policy.py", line 160, in test_the_published_history_carries_no_credential
+    self.assertEqual(code, 0, report[-2000:])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 1 != 0 : FINDING kind='authorization header' location=blob path=docs/audits/M2-ENTRY-BLOCKED-2026-10-21/environment-isolation-0001/REPORT.md line=36 commits=-
+SECRET_SCAN_FINDINGS mode=history findings=1 allowlisted=69
+
+
+----------------------------------------------------------------------
+Ran 1018 tests in 7749.935s
+
+FAILED (failures=7)

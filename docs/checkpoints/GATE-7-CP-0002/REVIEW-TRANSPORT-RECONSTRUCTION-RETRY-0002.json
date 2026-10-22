@@ -1,0 +1,698 @@
+{
+  "schemaVersion": "1.0.0",
+  "artifact": "M2_INDEPENDENT_REVIEW_TRANSPORT_RECONSTRUCTION",
+  "remote": "https://github.com/pinguim16/iacode.git",
+  "credentialsDisabled": true,
+  "ownerRoot": "C:\\Users\\cesar\\AppData\\Local\\Temp\\m2r-55be445c",
+  "retained": true,
+  "cases": [
+    {
+      "id": "g4-cp0007-historical-red",
+      "checkpoint": "GATE-4-CP-0007",
+      "tag": "refs/tags/iacode-checkpoints/GATE-4-CP-0007",
+      "tagCommit": "e21d30fde473f302d0f8f60b59acf008fa52e250",
+      "expectedDeclarationMatch": false,
+      "builds": [
+        {
+          "clone": "C:\\Users\\cesar\\AppData\\Local\\Temp\\m2r-55be445c\\g4-cp0007-historical-red\\a\\repository",
+          "tag": "refs/tags/iacode-checkpoints/GATE-4-CP-0007",
+          "head": "e21d30fde473f302d0f8f60b59acf008fa52e250",
+          "declaration": {
+            "schemaVersion": "1.0.0",
+            "sha256": "8856ce50acebfa02528ad318247c22e6e460c224eb62774c99a35cb5cd734578",
+            "sizeBytes": 562710,
+            "entries": 113,
+            "subject": null
+          },
+          "bundle": "C:\\Users\\cesar\\AppData\\Local\\Temp\\m2r-55be445c\\g4-cp0007-historical-red\\a\\repository\\artifacts\\review\\independent-rebuild.zip",
+          "sha256": null,
+          "sizeBytes": null,
+          "entries": null,
+          "crcFailure": "bundle absent",
+          "steps": [
+            {
+              "arguments": [
+                "git",
+                "-c",
+                "core.longpaths=true",
+                "-c",
+                "http.sslBackend=openssl",
+                "-c",
+                "credential.helper=",
+                "clone",
+                "--quiet",
+                "--no-local",
+                "https://github.com/pinguim16/iacode.git",
+                "C:\\Users\\cesar\\AppData\\Local\\Temp\\m2r-55be445c\\g4-cp0007-historical-red\\a\\repository"
+              ],
+              "workingDirectory": "C:\\Users\\cesar\\AppData\\Local\\Temp\\m2r-55be445c",
+              "durationMs": 11645,
+              "exitCode": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "arguments": [
+                "git",
+                "checkout",
+                "--quiet",
+                "--detach",
+                "refs/tags/iacode-checkpoints/GATE-4-CP-0007"
+              ],
+              "workingDirectory": "C:\\Users\\cesar\\AppData\\Local\\Temp\\m2r-55be445c\\g4-cp0007-historical-red\\a\\repository",
+              "durationMs": 501,
+              "exitCode": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "arguments": [
+                "git",
+                "rev-parse",
+                "HEAD"
+              ],
+              "workingDirectory": "C:\\Users\\cesar\\AppData\\Local\\Temp\\m2r-55be445c\\g4-cp0007-historical-red\\a\\repository",
+              "durationMs": 63,
+              "exitCode": 0,
+              "stdout": "e21d30fde473f302d0f8f60b59acf008fa52e250\n",
+              "stderr": ""
+            },
+            {
+              "arguments": [
+                "C:\\Program Files\\Python313\\python.exe",
+                "scripts/development-ledger/validate_checkpoint.py"
+              ],
+              "workingDirectory": "C:\\Users\\cesar\\AppData\\Local\\Temp\\m2r-55be445c\\g4-cp0007-historical-red\\a\\repository",
+              "durationMs": 115298,
+              "exitCode": 0,
+              "stdout": "CHECKPOINT_VALID\r\n",
+              "stderr": ""
+            },
+            {
+              "arguments": [
+                "C:\\Program Files\\Python313\\python.exe",
+                "scripts/development-ledger/verify_integrity.py"
+              ],
+              "workingDirectory": "C:\\Users\\cesar\\AppData\\Local\\Temp\\m2r-55be445c\\g4-cp0007-historical-red\\a\\repository",
+              "durationMs": 12542,
+              "exitCode": 0,
+              "stdout": "INTEGRITY_VALID anchors=29 latest=SETUP-00-CP-0013\r\n",
+              "stderr": ""
+            },
+            {
+              "arguments": [
+                "C:\\Program Files\\Python313\\python.exe",
+                "scripts/development-ledger/review_bundle.py",
+                "--checkpoint",
+                "docs/checkpoints/GATE-4-CP-0007",
+                "--bundle",
+                "artifacts/review/independent-rebuild.zip"
+              ],
+              "workingDirectory": "C:\\Users\\cesar\\AppData\\Local\\Temp\\m2r-55be445c\\g4-cp0007-historical-red\\a\\repository",
+              "durationMs": 754,
+              "exitCode": 1,
+              "stdout": "REVIEW_BUNDLE=FAIL git ls-remote --heads origin refs/heads/ failed: fatal: unable to access 'https://github.com/pinguim16/iacode.git/': schannel: AcquireCredentialsHandle failed: SEC_E_NO_CREDENTIALS (0x8009030e) - Credenciais n�o dispon�veis no pacote de seguran�a\r\n",
+              "stderr": ""
+            }
+          ],
+          "result": "FAIL"
+        },
+        {
+          "clone": "C:\\Users\\cesar\\AppData\\Local\\Temp\\m2r-55be445c\\g4-cp0007-historical-red\\b\\repository",
+          "tag": "refs/tags/iacode-checkpoints/GATE-4-CP-0007",
+          "head": "e21d30fde473f302d0f8f60b59acf008fa52e250",
+          "declaration": {
+            "schemaVersion": "1.0.0",
+            "sha256": "8856ce50acebfa02528ad318247c22e6e460c224eb62774c99a35cb5cd734578",
+            "sizeBytes": 562710,
+            "entries": 113,
+            "subject": null
+          },
+          "bundle": "C:\\Users\\cesar\\AppData\\Local\\Temp\\m2r-55be445c\\g4-cp0007-historical-red\\b\\repository\\artifacts\\review\\independent-rebuild.zip",
+          "sha256": null,
+          "sizeBytes": null,
+          "entries": null,
+          "crcFailure": "bundle absent",
+          "steps": [
+            {
+              "arguments": [
+                "git",
+                "-c",
+                "core.longpaths=true",
+                "-c",
+                "http.sslBackend=openssl",
+                "-c",
+                "credential.helper=",
+                "clone",
+                "--quiet",
+                "--no-local",
+                "https://github.com/pinguim16/iacode.git",
+                "C:\\Users\\cesar\\AppData\\Local\\Temp\\m2r-55be445c\\g4-cp0007-historical-red\\b\\repository"
+              ],
+              "workingDirectory": "C:\\Users\\cesar\\AppData\\Local\\Temp\\m2r-55be445c",
+              "durationMs": 5061,
+              "exitCode": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "arguments": [
+                "git",
+                "checkout",
+                "--quiet",
+                "--detach",
+                "refs/tags/iacode-checkpoints/GATE-4-CP-0007"
+              ],
+              "workingDirectory": "C:\\Users\\cesar\\AppData\\Local\\Temp\\m2r-55be445c\\g4-cp0007-historical-red\\b\\repository",
+              "durationMs": 409,
+              "exitCode": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "arguments": [
+                "git",
+                "rev-parse",
+                "HEAD"
+              ],
+              "workingDirectory": "C:\\Users\\cesar\\AppData\\Local\\Temp\\m2r-55be445c\\g4-cp0007-historical-red\\b\\repository",
+              "durationMs": 46,
+              "exitCode": 0,
+              "stdout": "e21d30fde473f302d0f8f60b59acf008fa52e250\n",
+              "stderr": ""
+            },
+            {
+              "arguments": [
+                "C:\\Program Files\\Python313\\python.exe",
+                "scripts/development-ledger/validate_checkpoint.py"
+              ],
+              "workingDirectory": "C:\\Users\\cesar\\AppData\\Local\\Temp\\m2r-55be445c\\g4-cp0007-historical-red\\b\\repository",
+              "durationMs": 106274,
+              "exitCode": 0,
+              "stdout": "CHECKPOINT_VALID\r\n",
+              "stderr": ""
+            },
+            {
+              "arguments": [
+                "C:\\Program Files\\Python313\\python.exe",
+                "scripts/development-ledger/verify_integrity.py"
+              ],
+              "workingDirectory": "C:\\Users\\cesar\\AppData\\Local\\Temp\\m2r-55be445c\\g4-cp0007-historical-red\\b\\repository",
+              "durationMs": 11884,
+              "exitCode": 0,
+              "stdout": "INTEGRITY_VALID anchors=29 latest=SETUP-00-CP-0013\r\n",
+              "stderr": ""
+            },
+            {
+              "arguments": [
+                "C:\\Program Files\\Python313\\python.exe",
+                "scripts/development-ledger/review_bundle.py",
+                "--checkpoint",
+                "docs/checkpoints/GATE-4-CP-0007",
+                "--bundle",
+                "artifacts/review/independent-rebuild.zip"
+              ],
+              "workingDirectory": "C:\\Users\\cesar\\AppData\\Local\\Temp\\m2r-55be445c\\g4-cp0007-historical-red\\b\\repository",
+              "durationMs": 635,
+              "exitCode": 1,
+              "stdout": "REVIEW_BUNDLE=FAIL git ls-remote --heads origin refs/heads/ failed: fatal: unable to access 'https://github.com/pinguim16/iacode.git/': schannel: AcquireCredentialsHandle failed: SEC_E_NO_CREDENTIALS (0x8009030e) - Credenciais n�o dispon�veis no pacote de seguran�a\r\n",
+              "stderr": ""
+            }
+          ],
+          "result": "FAIL"
+        }
+      ],
+      "byteIdentical": false,
+      "declarationMatchesRebuilds": false,
+      "expectationsSatisfied": false,
+      "result": "FAIL"
+    },
+    {
+      "id": "g4-cp0009-corrective-green",
+      "checkpoint": "GATE-4-CP-0009",
+      "tag": "refs/tags/iacode-checkpoints/GATE-4-CP-0009",
+      "tagCommit": "ff2814f7d7bf06fa8a99858b958daf3f22197496",
+      "expectedDeclarationMatch": true,
+      "builds": [
+        {
+          "clone": "C:\\Users\\cesar\\AppData\\Local\\Temp\\m2r-55be445c\\g4-cp0009-corrective-green\\a\\repository",
+          "tag": "refs/tags/iacode-checkpoints/GATE-4-CP-0009",
+          "head": "ff2814f7d7bf06fa8a99858b958daf3f22197496",
+          "declaration": {
+            "schemaVersion": "2.0.0",
+            "sha256": "54d1baf801f0b63f4784e0464e042e640038a07fd477a327dc353b2dde2f4b6c",
+            "sizeBytes": 1316206,
+            "entries": 230,
+            "subject": {
+              "kind": "git-commit",
+              "commit": "47f8b13ce944f99dca4254feafb38c3fef3f2f39",
+              "tree": "80b94b0f81494b65ba8acf107d84033fdf821063"
+            }
+          },
+          "bundle": "C:\\Users\\cesar\\AppData\\Local\\Temp\\m2r-55be445c\\g4-cp0009-corrective-green\\a\\repository\\artifacts\\review\\independent-rebuild.zip",
+          "sha256": "54d1baf801f0b63f4784e0464e042e640038a07fd477a327dc353b2dde2f4b6c",
+          "sizeBytes": 1316206,
+          "entries": 230,
+          "crcFailure": null,
+          "steps": [
+            {
+              "arguments": [
+                "git",
+                "-c",
+                "core.longpaths=true",
+                "-c",
+                "http.sslBackend=openssl",
+                "-c",
+                "credential.helper=",
+                "clone",
+                "--quiet",
+                "--no-local",
+                "https://github.com/pinguim16/iacode.git",
+                "C:\\Users\\cesar\\AppData\\Local\\Temp\\m2r-55be445c\\g4-cp0009-corrective-green\\a\\repository"
+              ],
+              "workingDirectory": "C:\\Users\\cesar\\AppData\\Local\\Temp\\m2r-55be445c",
+              "durationMs": 4583,
+              "exitCode": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "arguments": [
+                "git",
+                "checkout",
+                "--quiet",
+                "--detach",
+                "refs/tags/iacode-checkpoints/GATE-4-CP-0009"
+              ],
+              "workingDirectory": "C:\\Users\\cesar\\AppData\\Local\\Temp\\m2r-55be445c\\g4-cp0009-corrective-green\\a\\repository",
+              "durationMs": 395,
+              "exitCode": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "arguments": [
+                "git",
+                "rev-parse",
+                "HEAD"
+              ],
+              "workingDirectory": "C:\\Users\\cesar\\AppData\\Local\\Temp\\m2r-55be445c\\g4-cp0009-corrective-green\\a\\repository",
+              "durationMs": 55,
+              "exitCode": 0,
+              "stdout": "ff2814f7d7bf06fa8a99858b958daf3f22197496\n",
+              "stderr": ""
+            },
+            {
+              "arguments": [
+                "C:\\Program Files\\Python313\\python.exe",
+                "scripts/development-ledger/validate_checkpoint.py"
+              ],
+              "workingDirectory": "C:\\Users\\cesar\\AppData\\Local\\Temp\\m2r-55be445c\\g4-cp0009-corrective-green\\a\\repository",
+              "durationMs": 183853,
+              "exitCode": 0,
+              "stdout": "CHECKPOINT_VALID\r\n",
+              "stderr": ""
+            },
+            {
+              "arguments": [
+                "C:\\Program Files\\Python313\\python.exe",
+                "scripts/development-ledger/verify_integrity.py"
+              ],
+              "workingDirectory": "C:\\Users\\cesar\\AppData\\Local\\Temp\\m2r-55be445c\\g4-cp0009-corrective-green\\a\\repository",
+              "durationMs": 12771,
+              "exitCode": 0,
+              "stdout": "INTEGRITY_VALID anchors=31 latest=SETUP-00-CP-0013\r\n",
+              "stderr": ""
+            },
+            {
+              "arguments": [
+                "C:\\Program Files\\Python313\\python.exe",
+                "scripts/development-ledger/review_bundle.py",
+                "--checkpoint",
+                "docs/checkpoints/GATE-4-CP-0009",
+                "--bundle",
+                "artifacts/review/independent-rebuild.zip",
+                "--subject",
+                "47f8b13ce944f99dca4254feafb38c3fef3f2f39"
+              ],
+              "workingDirectory": "C:\\Users\\cesar\\AppData\\Local\\Temp\\m2r-55be445c\\g4-cp0009-corrective-green\\a\\repository",
+              "durationMs": 23778,
+              "exitCode": 0,
+              "stdout": "REVIEW_BUNDLE_CREATED path=artifacts\\review\\independent-rebuild.zip sha256=54d1baf801f0b63f4784e0464e042e640038a07fd477a327dc353b2dde2f4b6c\r\nREVIEW_BUNDLE=PASS entries=230 sha256=54d1baf801f0b63f4784e0464e042e640038a07fd477a327dc353b2dde2f4b6c\r\n",
+              "stderr": ""
+            }
+          ],
+          "result": "PASS"
+        },
+        {
+          "clone": "C:\\Users\\cesar\\AppData\\Local\\Temp\\m2r-55be445c\\g4-cp0009-corrective-green\\b\\repository",
+          "tag": "refs/tags/iacode-checkpoints/GATE-4-CP-0009",
+          "head": "ff2814f7d7bf06fa8a99858b958daf3f22197496",
+          "declaration": {
+            "schemaVersion": "2.0.0",
+            "sha256": "54d1baf801f0b63f4784e0464e042e640038a07fd477a327dc353b2dde2f4b6c",
+            "sizeBytes": 1316206,
+            "entries": 230,
+            "subject": {
+              "kind": "git-commit",
+              "commit": "47f8b13ce944f99dca4254feafb38c3fef3f2f39",
+              "tree": "80b94b0f81494b65ba8acf107d84033fdf821063"
+            }
+          },
+          "bundle": "C:\\Users\\cesar\\AppData\\Local\\Temp\\m2r-55be445c\\g4-cp0009-corrective-green\\b\\repository\\artifacts\\review\\independent-rebuild.zip",
+          "sha256": "54d1baf801f0b63f4784e0464e042e640038a07fd477a327dc353b2dde2f4b6c",
+          "sizeBytes": 1316206,
+          "entries": 230,
+          "crcFailure": null,
+          "steps": [
+            {
+              "arguments": [
+                "git",
+                "-c",
+                "core.longpaths=true",
+                "-c",
+                "http.sslBackend=openssl",
+                "-c",
+                "credential.helper=",
+                "clone",
+                "--quiet",
+                "--no-local",
+                "https://github.com/pinguim16/iacode.git",
+                "C:\\Users\\cesar\\AppData\\Local\\Temp\\m2r-55be445c\\g4-cp0009-corrective-green\\b\\repository"
+              ],
+              "workingDirectory": "C:\\Users\\cesar\\AppData\\Local\\Temp\\m2r-55be445c",
+              "durationMs": 14674,
+              "exitCode": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "arguments": [
+                "git",
+                "checkout",
+                "--quiet",
+                "--detach",
+                "refs/tags/iacode-checkpoints/GATE-4-CP-0009"
+              ],
+              "workingDirectory": "C:\\Users\\cesar\\AppData\\Local\\Temp\\m2r-55be445c\\g4-cp0009-corrective-green\\b\\repository",
+              "durationMs": 380,
+              "exitCode": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "arguments": [
+                "git",
+                "rev-parse",
+                "HEAD"
+              ],
+              "workingDirectory": "C:\\Users\\cesar\\AppData\\Local\\Temp\\m2r-55be445c\\g4-cp0009-corrective-green\\b\\repository",
+              "durationMs": 86,
+              "exitCode": 0,
+              "stdout": "ff2814f7d7bf06fa8a99858b958daf3f22197496\n",
+              "stderr": ""
+            },
+            {
+              "arguments": [
+                "C:\\Program Files\\Python313\\python.exe",
+                "scripts/development-ledger/validate_checkpoint.py"
+              ],
+              "workingDirectory": "C:\\Users\\cesar\\AppData\\Local\\Temp\\m2r-55be445c\\g4-cp0009-corrective-green\\b\\repository",
+              "durationMs": 207768,
+              "exitCode": 0,
+              "stdout": "CHECKPOINT_VALID\r\n",
+              "stderr": ""
+            },
+            {
+              "arguments": [
+                "C:\\Program Files\\Python313\\python.exe",
+                "scripts/development-ledger/verify_integrity.py"
+              ],
+              "workingDirectory": "C:\\Users\\cesar\\AppData\\Local\\Temp\\m2r-55be445c\\g4-cp0009-corrective-green\\b\\repository",
+              "durationMs": 12775,
+              "exitCode": 0,
+              "stdout": "INTEGRITY_VALID anchors=31 latest=SETUP-00-CP-0013\r\n",
+              "stderr": ""
+            },
+            {
+              "arguments": [
+                "C:\\Program Files\\Python313\\python.exe",
+                "scripts/development-ledger/review_bundle.py",
+                "--checkpoint",
+                "docs/checkpoints/GATE-4-CP-0009",
+                "--bundle",
+                "artifacts/review/independent-rebuild.zip",
+                "--subject",
+                "47f8b13ce944f99dca4254feafb38c3fef3f2f39"
+              ],
+              "workingDirectory": "C:\\Users\\cesar\\AppData\\Local\\Temp\\m2r-55be445c\\g4-cp0009-corrective-green\\b\\repository",
+              "durationMs": 23238,
+              "exitCode": 0,
+              "stdout": "REVIEW_BUNDLE_CREATED path=artifacts\\review\\independent-rebuild.zip sha256=54d1baf801f0b63f4784e0464e042e640038a07fd477a327dc353b2dde2f4b6c\r\nREVIEW_BUNDLE=PASS entries=230 sha256=54d1baf801f0b63f4784e0464e042e640038a07fd477a327dc353b2dde2f4b6c\r\n",
+              "stderr": ""
+            }
+          ],
+          "result": "PASS"
+        }
+      ],
+      "byteIdentical": true,
+      "declarationMatchesRebuilds": true,
+      "expectationsSatisfied": true,
+      "result": "PASS"
+    },
+    {
+      "id": "g7-cp0001-final-green",
+      "checkpoint": "GATE-7-CP-0001",
+      "tag": "refs/tags/iacode-checkpoints/GATE-7-CP-0001",
+      "tagCommit": "823cf164c6931dab7f957c92721ded7a916655bd",
+      "expectedDeclarationMatch": true,
+      "builds": [
+        {
+          "clone": "C:\\Users\\cesar\\AppData\\Local\\Temp\\m2r-55be445c\\g7-cp0001-final-green\\a\\repository",
+          "tag": "refs/tags/iacode-checkpoints/GATE-7-CP-0001",
+          "head": "823cf164c6931dab7f957c92721ded7a916655bd",
+          "declaration": {
+            "schemaVersion": "2.0.0",
+            "sha256": "f2c8c5291d887d23afc9d0f40525c8f90e3f4bbf65d78885244874bfbfcb338d",
+            "sizeBytes": 4780901,
+            "entries": 849,
+            "subject": {
+              "kind": "git-commit",
+              "commit": "8357bd66431253b27cdf518ccd47506403c00951",
+              "tree": "54c0a893929bf0cde1553374397ceead7f8020ec"
+            }
+          },
+          "bundle": "C:\\Users\\cesar\\AppData\\Local\\Temp\\m2r-55be445c\\g7-cp0001-final-green\\a\\repository\\artifacts\\review\\independent-rebuild.zip",
+          "sha256": "f2c8c5291d887d23afc9d0f40525c8f90e3f4bbf65d78885244874bfbfcb338d",
+          "sizeBytes": 4780901,
+          "entries": 849,
+          "crcFailure": null,
+          "steps": [
+            {
+              "arguments": [
+                "git",
+                "-c",
+                "core.longpaths=true",
+                "-c",
+                "http.sslBackend=openssl",
+                "-c",
+                "credential.helper=",
+                "clone",
+                "--quiet",
+                "--no-local",
+                "https://github.com/pinguim16/iacode.git",
+                "C:\\Users\\cesar\\AppData\\Local\\Temp\\m2r-55be445c\\g7-cp0001-final-green\\a\\repository"
+              ],
+              "workingDirectory": "C:\\Users\\cesar\\AppData\\Local\\Temp\\m2r-55be445c",
+              "durationMs": 7699,
+              "exitCode": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "arguments": [
+                "git",
+                "checkout",
+                "--quiet",
+                "--detach",
+                "refs/tags/iacode-checkpoints/GATE-7-CP-0001"
+              ],
+              "workingDirectory": "C:\\Users\\cesar\\AppData\\Local\\Temp\\m2r-55be445c\\g7-cp0001-final-green\\a\\repository",
+              "durationMs": 179,
+              "exitCode": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "arguments": [
+                "git",
+                "rev-parse",
+                "HEAD"
+              ],
+              "workingDirectory": "C:\\Users\\cesar\\AppData\\Local\\Temp\\m2r-55be445c\\g7-cp0001-final-green\\a\\repository",
+              "durationMs": 87,
+              "exitCode": 0,
+              "stdout": "823cf164c6931dab7f957c92721ded7a916655bd\n",
+              "stderr": ""
+            },
+            {
+              "arguments": [
+                "C:\\Program Files\\Python313\\python.exe",
+                "scripts/development-ledger/validate_checkpoint.py"
+              ],
+              "workingDirectory": "C:\\Users\\cesar\\AppData\\Local\\Temp\\m2r-55be445c\\g7-cp0001-final-green\\a\\repository",
+              "durationMs": 418505,
+              "exitCode": 0,
+              "stdout": "CHECKPOINT_VALID\r\n",
+              "stderr": ""
+            },
+            {
+              "arguments": [
+                "C:\\Program Files\\Python313\\python.exe",
+                "scripts/development-ledger/verify_integrity.py"
+              ],
+              "workingDirectory": "C:\\Users\\cesar\\AppData\\Local\\Temp\\m2r-55be445c\\g7-cp0001-final-green\\a\\repository",
+              "durationMs": 20802,
+              "exitCode": 0,
+              "stdout": "INTEGRITY_VALID anchors=35 latest=SETUP-00-CP-0013\r\n",
+              "stderr": ""
+            },
+            {
+              "arguments": [
+                "C:\\Program Files\\Python313\\python.exe",
+                "scripts/development-ledger/review_bundle.py",
+                "--checkpoint",
+                "docs/checkpoints/GATE-7-CP-0001",
+                "--bundle",
+                "artifacts/review/independent-rebuild.zip",
+                "--subject",
+                "8357bd66431253b27cdf518ccd47506403c00951"
+              ],
+              "workingDirectory": "C:\\Users\\cesar\\AppData\\Local\\Temp\\m2r-55be445c\\g7-cp0001-final-green\\a\\repository",
+              "durationMs": 114033,
+              "exitCode": 0,
+              "stdout": "REVIEW_BUNDLE_CREATED path=artifacts\\review\\independent-rebuild.zip sha256=f2c8c5291d887d23afc9d0f40525c8f90e3f4bbf65d78885244874bfbfcb338d\r\nREVIEW_BUNDLE=PASS entries=849 sha256=f2c8c5291d887d23afc9d0f40525c8f90e3f4bbf65d78885244874bfbfcb338d\r\n",
+              "stderr": ""
+            }
+          ],
+          "result": "PASS"
+        },
+        {
+          "clone": "C:\\Users\\cesar\\AppData\\Local\\Temp\\m2r-55be445c\\g7-cp0001-final-green\\b\\repository",
+          "tag": "refs/tags/iacode-checkpoints/GATE-7-CP-0001",
+          "head": "823cf164c6931dab7f957c92721ded7a916655bd",
+          "declaration": {
+            "schemaVersion": "2.0.0",
+            "sha256": "f2c8c5291d887d23afc9d0f40525c8f90e3f4bbf65d78885244874bfbfcb338d",
+            "sizeBytes": 4780901,
+            "entries": 849,
+            "subject": {
+              "kind": "git-commit",
+              "commit": "8357bd66431253b27cdf518ccd47506403c00951",
+              "tree": "54c0a893929bf0cde1553374397ceead7f8020ec"
+            }
+          },
+          "bundle": "C:\\Users\\cesar\\AppData\\Local\\Temp\\m2r-55be445c\\g7-cp0001-final-green\\b\\repository\\artifacts\\review\\independent-rebuild.zip",
+          "sha256": "f2c8c5291d887d23afc9d0f40525c8f90e3f4bbf65d78885244874bfbfcb338d",
+          "sizeBytes": 4780901,
+          "entries": 849,
+          "crcFailure": null,
+          "steps": [
+            {
+              "arguments": [
+                "git",
+                "-c",
+                "core.longpaths=true",
+                "-c",
+                "http.sslBackend=openssl",
+                "-c",
+                "credential.helper=",
+                "clone",
+                "--quiet",
+                "--no-local",
+                "https://github.com/pinguim16/iacode.git",
+                "C:\\Users\\cesar\\AppData\\Local\\Temp\\m2r-55be445c\\g7-cp0001-final-green\\b\\repository"
+              ],
+              "workingDirectory": "C:\\Users\\cesar\\AppData\\Local\\Temp\\m2r-55be445c",
+              "durationMs": 6250,
+              "exitCode": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "arguments": [
+                "git",
+                "checkout",
+                "--quiet",
+                "--detach",
+                "refs/tags/iacode-checkpoints/GATE-7-CP-0001"
+              ],
+              "workingDirectory": "C:\\Users\\cesar\\AppData\\Local\\Temp\\m2r-55be445c\\g7-cp0001-final-green\\b\\repository",
+              "durationMs": 144,
+              "exitCode": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "arguments": [
+                "git",
+                "rev-parse",
+                "HEAD"
+              ],
+              "workingDirectory": "C:\\Users\\cesar\\AppData\\Local\\Temp\\m2r-55be445c\\g7-cp0001-final-green\\b\\repository",
+              "durationMs": 61,
+              "exitCode": 0,
+              "stdout": "823cf164c6931dab7f957c92721ded7a916655bd\n",
+              "stderr": ""
+            },
+            {
+              "arguments": [
+                "C:\\Program Files\\Python313\\python.exe",
+                "scripts/development-ledger/validate_checkpoint.py"
+              ],
+              "workingDirectory": "C:\\Users\\cesar\\AppData\\Local\\Temp\\m2r-55be445c\\g7-cp0001-final-green\\b\\repository",
+              "durationMs": 403844,
+              "exitCode": 0,
+              "stdout": "CHECKPOINT_VALID\r\n",
+              "stderr": ""
+            },
+            {
+              "arguments": [
+                "C:\\Program Files\\Python313\\python.exe",
+                "scripts/development-ledger/verify_integrity.py"
+              ],
+              "workingDirectory": "C:\\Users\\cesar\\AppData\\Local\\Temp\\m2r-55be445c\\g7-cp0001-final-green\\b\\repository",
+              "durationMs": 19314,
+              "exitCode": 0,
+              "stdout": "INTEGRITY_VALID anchors=35 latest=SETUP-00-CP-0013\r\n",
+              "stderr": ""
+            },
+            {
+              "arguments": [
+                "C:\\Program Files\\Python313\\python.exe",
+                "scripts/development-ledger/review_bundle.py",
+                "--checkpoint",
+                "docs/checkpoints/GATE-7-CP-0001",
+                "--bundle",
+                "artifacts/review/independent-rebuild.zip",
+                "--subject",
+                "8357bd66431253b27cdf518ccd47506403c00951"
+              ],
+              "workingDirectory": "C:\\Users\\cesar\\AppData\\Local\\Temp\\m2r-55be445c\\g7-cp0001-final-green\\b\\repository",
+              "durationMs": 101531,
+              "exitCode": 0,
+              "stdout": "REVIEW_BUNDLE_CREATED path=artifacts\\review\\independent-rebuild.zip sha256=f2c8c5291d887d23afc9d0f40525c8f90e3f4bbf65d78885244874bfbfcb338d\r\nREVIEW_BUNDLE=PASS entries=849 sha256=f2c8c5291d887d23afc9d0f40525c8f90e3f4bbf65d78885244874bfbfcb338d\r\n",
+              "stderr": ""
+            }
+          ],
+          "result": "PASS"
+        }
+      ],
+      "byteIdentical": true,
+      "declarationMatchesRebuilds": true,
+      "expectationsSatisfied": true,
+      "result": "PASS"
+    }
+  ],
+  "result": "FAIL"
+}

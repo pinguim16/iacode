@@ -1,0 +1,47 @@
+{
+  "schemaVersion": "1.0.0",
+  "gate": "GATE-7",
+  "checkpoint": "GATE-7-CP-0003",
+  "steps": [
+    {
+      "stepId": "G7-S00",
+      "requirements": ["Corrective Gate 7 authority, sealed subject intake, complete canonical derivation and retained red baseline"],
+      "expectedBehavior": "Preserve CP0001 and failed CP0002, record both authorized findings and the full lesson/audit obligation set before implementation, and retain actual red baseline observations.",
+      "implementation": ["AUTHORIZATION.md", "OWNER-DECISIONS.json", "ENTRY-REPORT.md", "BASELINE.md", "PLAN.md", "LESSON-PREFLIGHT.json", "REQUIREMENTS-MATRIX.json"],
+      "tests": ["Git/head comparison", "entry checkpoint validation", "actual causal null and pre-fix controls", "canonical requirement derivation"],
+      "functionalProof": "Entry is recorded and the initial 201-item union was derived before implementation; the separately confirmed private-path lesson was derived before its correction, yielding202. The red baseline remains preserved, never represented as accepted delivery.",
+      "evidence": ["ENTRY-REPORT.md", "BASELINE.md", "causal-attempts/run-0005.json", "COMMANDS.jsonl"],
+      "status": "COMPLETE"
+    },
+    {
+      "stepId": "G7-S01",
+      "requirements": ["M2-F-001", "M2-F-002", "canonical:GATE-7#7.3", "canonical:GATE-7#7.5", "OWNER-REQUIREMENTS.json"],
+      "expectedBehavior": "Correct literal replay and producer/cleanup preservation; prove the approved frozen-runner boundary and exact ownership-aware cleanup without changing other applications or weakening controls.",
+      "implementation": ["scripts/development-ledger/new_checkpoint.py", "scripts/iacode/client_checks.py", "scripts/development-ledger/audit_runner_bridge.py", "OWNED-DOCKER-SCOPE.json", "INTERNAL-ENVIRONMENT-REWORK.json"],
+      "tests": ["18 causal producer/replay cases with actual registered M2 old/current mutation", "11 actual native/caller/handle cases", "actual restricted canonical bridge", "closed-request and process-tree controls", "shared-image cleanup controls", "six actual physical-path/output controls", "actual cold UTF-8 positive/adverse and unchanged inherited stream class"],
+      "functionalProof": "Local native/path/stream correction and guard restoration have actual red/green evidence. Complete current deployed bridge/functional assurance and final Docker cleanup are still pending; no readiness is asserted.",
+      "evidence": ["causal-attempts/run-0009.json", "environment-attempts/canonical-bridge/run-0001/RECEIPT.json", "causal-attempts/bridge-path-bounds/run-0001.json", "resource-preservation/run-0001.json"],
+      "status": "IN_PROGRESS"
+    },
+    {
+      "stepId": "G7-S02",
+      "requirements": ["Complete current mandatory test/quality set", "Canonical Green Keeper", "Total completeness", "Fresh internal Red Team", "Closure mirror", "Exact published non-fast verifier"],
+      "expectedBehavior": "After corrective implementation, execute every unchanged mandatory control and one complete immutable published verifier, retaining failures and refusing stale or partial proof.",
+      "implementation": ["TESTS.json", "QUALITY.json", "COMPLETENESS-REPORT.json", "REWORK-LOG.jsonl", "PLAN.md"],
+      "tests": ["All 16 mandatory gates", "All non-fast verifier stages", "Actual ordered completeness/Red Team/mirror"],
+      "functionalProof": "In progress. The pre-extension local Root1018 attempt failed seven cases and is preserved. Current complete lint passes, but the whole exact public-transport mandatory run and full non-fast functional proof remain pending.",
+      "evidence": ["quality-attempts/tests/run-0001.json", "quality-attempts/lint/run-0004.json", "ENVIRONMENT-VALIDATION-CONTEXT.md"],
+      "status": "IN_PROGRESS"
+    },
+    {
+      "stepId": "G7-S03",
+      "requirements": ["Complete declared handoff", "Observed owned cleanup", "Canonical finalize/seal/publication", "Separate independent M2 boundary"],
+      "expectedBehavior": "Consolidate exact evidence and clean task-owned waste, then seal READY_FOR_REVIEW without self-attestation. A later fresh auditor receives the immutable subject; no Gate 8 is started.",
+      "implementation": ["FILES.json", "PROVENANCE.json", "FINAL-REPORT.md", "HANDOFF.md", "STATE.json"],
+      "tests": ["Quiescent canonical validation", "Actual post-commit seal", "Public transport and exact reconstruction", "Observed absence of owned disposable resources"],
+      "functionalProof": "Pending. No commit, seal, publication, independent milestone acceptance or Gate 8 advancement is asserted.",
+      "evidence": [],
+      "status": "NOT_STARTED"
+    }
+  ]
+}

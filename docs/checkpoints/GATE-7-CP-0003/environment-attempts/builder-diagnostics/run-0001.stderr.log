@@ -1,0 +1,5 @@
+time="2026-10-21T20:52:39Z" level=warning msg="healthcheck failed" actualDuration=15.000501091s error="context deadline exceeded" spanID=1b5b40eb9555563d timeout=15s traceID=83927f22eb2f82a98ee3289c94eda364
+time="2026-10-21T20:53:18Z" level=warning msg="healthcheck failed" actualDuration=15.001182125s error="context deadline exceeded" spanID=1b5b40eb9555563d timeout=15s traceID=83927f22eb2f82a98ee3289c94eda364
+time="2026-10-21T20:53:40Z" level=error msg="healthcheck failed fatally" error="session healthcheck failed fatally: context deadline exceeded" spanID=1b5b40eb9555563d traceID=83927f22eb2f82a98ee3289c94eda364
+time="2026-10-21T20:53:40Z" level=error msg="/moby.buildkit.v1.Control/Solve returned error: rpc error: code = Canceled desc = failed to copy to tar: rpc error: code = Canceled desc = context canceled" spanID=e9d4296d229ed0ec traceID=83927f22eb2f82a98ee3289c94eda364
+time="2026-10-21T20:57:53Z" level=warning msg="healthcheck failed" actualDuration=15.000683436s error="context deadline exceeded" spanID=9059910bf64484f3 timeout=15s traceID=c9dab3a6820ddc6858b64f767104bc93

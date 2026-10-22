@@ -1,0 +1,31 @@
+test_every_declared_copied_observation_survives_actual_archive_and_both_checkout_modes (test_m2_observation_transport.M2ObservationTransportTests.test_every_declared_copied_observation_survives_actual_archive_and_both_checkout_modes) ... FAIL
+test_removing_byte_boundaries_is_detected_beside_actual_binary_null (test_m2_observation_transport.M2ObservationTransportTests.test_removing_byte_boundaries_is_detected_beside_actual_binary_null) ... FAIL
+
+======================================================================
+FAIL: test_every_declared_copied_observation_survives_actual_archive_and_both_checkout_modes (test_m2_observation_transport.M2ObservationTransportTests.test_every_declared_copied_observation_survives_actual_archive_and_both_checkout_modes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\iacode\tests\test_m2_observation_transport.py", line 83, in test_every_declared_copied_observation_survives_actual_archive_and_both_checkout_modes
+    self.assertEqual([], mismatches, "copied originals changed; never normalize them to match the transport")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [] != [('git-archive', 'docs/checkpoints/GATE-7-[11747 chars]aw')]
+
+Second list contains 114 additional elements.
+First extra element 0:
+('git-archive', 'docs/checkpoints/GATE-7-CP-0002/FILES.json')
+
+Diff is 12569 characters long. Set self.maxDiff to None to see it. : copied originals changed; never normalize them to match the transport
+
+======================================================================
+FAIL: test_removing_byte_boundaries_is_detected_beside_actual_binary_null (test_m2_observation_transport.M2ObservationTransportTests.test_removing_byte_boundaries_is_detected_beside_actual_binary_null)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\iacode\tests\test_m2_observation_transport.py", line 98, in test_removing_byte_boundaries_is_detected_beside_actual_binary_null
+    self.assertTrue(all(matched for _mode, _name, matched in protected))
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 2 tests in 15.856s
+
+FAILED (failures=2)

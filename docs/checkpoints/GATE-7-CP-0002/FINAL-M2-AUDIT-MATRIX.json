@@ -1,0 +1,518 @@
+{
+  "schemaVersion": "1.0.0",
+  "artifact": "FINAL_M2_AUDIT_MATRIX",
+  "checkpoint": "GATE-7-CP-0002",
+  "subjectCheckpoint": "GATE-7-CP-0001",
+  "subjectCommit": "823cf164c6931dab7f957c92721ded7a916655bd",
+  "criteriaTotal": 45,
+  "counts": {
+    "PASS": 14,
+    "FAIL": 8,
+    "PARTIAL": 7,
+    "BLOCKED": 16
+  },
+  "criticalFindings": 1,
+  "highFindings": 1,
+  "auditExecutionStatus": "BLOCKED",
+  "reviewVerdict": "REWORK_REQUIRED",
+  "milestoneVerdict": "NOT_GRANTED",
+  "independentAttestationWritten": false,
+  "crossToolValidation": "NOT_AVAILABLE",
+  "criteria": [
+    {
+      "id": "M2A-01",
+      "criterion": "Subject identity, state and immutability",
+      "acceptance": "Local and public tag, HEAD, subject STATE, sealed commit and tree agree; the sealed subject is unchanged.",
+      "status": "PASS",
+      "observation": "Local and unauthenticated public identity observations agree with the declared sealed subject.",
+      "evidence": [
+        "file:ENTRY-REPORT.md"
+      ]
+    },
+    {
+      "id": "M2A-02",
+      "criterion": "Public publication and exact refs",
+      "acceptance": "Unauthenticated public remote main and canonical tag resolve to the declared commit with no credentials or local object dependency.",
+      "status": "PASS",
+      "observation": "Local and unauthenticated public identity observations agree with the declared sealed subject.",
+      "evidence": [
+        "file:ENTRY-REPORT.md"
+      ]
+    },
+    {
+      "id": "M2A-03",
+      "criterion": "Integrity and successor anchor",
+      "acceptance": "The canonical chain validates and this later checkpoint anchors the sealed GATE-7 subject without rewriting it.",
+      "status": "PASS",
+      "observation": "The successor rebuild added the owed subject anchor and the chain validated with 36 anchors.",
+      "evidence": [
+        "command:cmd-0005"
+      ]
+    },
+    {
+      "id": "M2A-04",
+      "criterion": "Published historical compatibility",
+      "acceptance": "Current tooling validates every sealed Gate 4-7 predecessor detached at its exact public canonical tag.",
+      "status": "PARTIAL",
+      "observation": "Selected historical public tags and current compatibility tests passed, but an explicit detached run for every Gate 4-7 sealed predecessor was not completed.",
+      "evidence": [
+        "command:cmd-0010",
+        "command:cmd-0011",
+        "command:cmd-0015"
+      ]
+    },
+    {
+      "id": "M2A-05",
+      "criterion": "Declared subject review transport",
+      "acceptance": "The subject declaration reconstructs and validates exact size, digest, manifest, paths, checksums, mandatory content and secret cleanliness.",
+      "status": "PASS",
+      "observation": "Independent public detached reconstructions produced the expected historical red control and exact byte-identical corrective/final archives.",
+      "evidence": [
+        "command:cmd-0010",
+        "command:cmd-0011",
+        "file:REVIEW-TRANSPORT-RECONSTRUCTION-RETRY-0002.json",
+        "file:REVIEW-TRANSPORT-RECONSTRUCTION-RETRY-0003.json"
+      ]
+    },
+    {
+      "id": "M2A-06",
+      "criterion": "Final bundle determinism and portability",
+      "acceptance": "Two independent builds from public detached source are byte-identical and validate without workstation-only inputs.",
+      "status": "PASS",
+      "observation": "Independent public detached reconstructions produced the expected historical red control and exact byte-identical corrective/final archives.",
+      "evidence": [
+        "command:cmd-0010",
+        "command:cmd-0011",
+        "file:REVIEW-TRANSPORT-RECONSTRUCTION-RETRY-0002.json",
+        "file:REVIEW-TRANSPORT-RECONSTRUCTION-RETRY-0003.json"
+      ]
+    },
+    {
+      "id": "M2A-07",
+      "criterion": "Independent G4-F-004 reconstruction",
+      "acceptance": "The historical stale declaration is reproduced at its immutable tag, the corrective Gate 4 subject is proven, and final M2 transport has independently matching bytes/hashes.",
+      "status": "PASS",
+      "observation": "Independent public detached reconstructions produced the expected historical red control and exact byte-identical corrective/final archives.",
+      "evidence": [
+        "command:cmd-0010",
+        "command:cmd-0011",
+        "file:REVIEW-TRANSPORT-RECONSTRUCTION-RETRY-0002.json",
+        "file:REVIEW-TRANSPORT-RECONSTRUCTION-RETRY-0003.json"
+      ]
+    },
+    {
+      "id": "M2A-08",
+      "criterion": "Accumulated canonical Gate denominator",
+      "acceptance": "Checklist/registry agreement yields exactly 105+50+51+48=254 distinct Gate 4-7 rows; none is removed or waived.",
+      "status": "PASS",
+      "observation": "Canonical checklist/registry derivation produced 105+50+51+48=254 Gate rows.",
+      "evidence": [
+        "command:cmd-0004",
+        "file:M2-AUDIT-REQUIREMENTS.json"
+      ]
+    },
+    {
+      "id": "M2A-09",
+      "criterion": "Accumulated lesson denominator",
+      "acceptance": "All 150 applicable lesson requirements are retained, specific and evidence-backed; no guarded recurrence is hidden.",
+      "status": "FAIL",
+      "observation": "Two selected GUARDED lesson classes recurred as M2-F-001 and M2-F-002.",
+      "evidence": [
+        "file:FINDINGS.json",
+        "file:LESSON-PREFLIGHT.json"
+      ]
+    },
+    {
+      "id": "M2A-10",
+      "criterion": "Requirement evidence completeness",
+      "acceptance": "All 404 accumulated rows and all 198 audit-checkpoint rows are complete with resolvable requirement-specific evidence.",
+      "status": "BLOCKED",
+      "observation": "The Docker-dependent functional and full-verifier evidence needed to close all 404 rows could not execute; rows remain unverified rather than inferred.",
+      "evidence": [
+        "command:cmd-0007",
+        "file:M2-AUDIT-REQUIREMENTS.json"
+      ]
+    },
+    {
+      "id": "M2A-11",
+      "criterion": "Architecture and ADR consistency",
+      "acceptance": "Gate 4-7 architecture, ADRs, code boundaries and milestone consolidation agree; no structural decision is undocumented or contradicted.",
+      "status": "PARTIAL",
+      "observation": "ADRs and boundaries were reviewed and 980 control-plane tests passed, but live cross-Gate architecture behavior could not be observed.",
+      "evidence": [
+        "file:ARCHITECTURE-REVIEW.json",
+        "command:cmd-0015"
+      ]
+    },
+    {
+      "id": "M2A-12",
+      "criterion": "Gate scope and future reservations",
+      "acceptance": "Only Gate 4-7 capabilities are delivered; Gate 8 and later reservations remain enforced and no Gate 8 work starts.",
+      "status": "PASS",
+      "observation": "The audit created no Gate 8 content or transition and the frozen plan prohibits Gate 8.",
+      "evidence": [
+        "file:PLAN.md"
+      ]
+    },
+    {
+      "id": "M2A-13",
+      "criterion": "Complete non-fast verifier",
+      "acceptance": "One exact-subject invocation runs every mandatory stage in canonical order and exits 0; no partial rerun, stale artifact or PASS marker supersedes process termination.",
+      "status": "BLOCKED",
+      "observation": "The Docker engine named pipe was inaccessible, so scripts/iacode/verify.py was not launched and no partial result was promoted.",
+      "evidence": [
+        "command:cmd-0007"
+      ]
+    },
+    {
+      "id": "M2A-14",
+      "criterion": "Test and guardrail counts",
+      "acceptance": "Canonical counts are independently derived; every discovered mandatory test/guardrail executes and passes without double counting or caller-chosen exclusions.",
+      "status": "FAIL",
+      "observation": "The integral control-plane suite ended red: 984 total, 980 pass, 1 skip, 1 failure and 2 errors; guardrail recurrence is nonzero.",
+      "evidence": [
+        "command:cmd-0015",
+        "file:controls/control-plane-full-suite.json"
+      ]
+    },
+    {
+      "id": "M2A-15",
+      "criterion": "Live dependency and secret security gates",
+      "acceptance": "Every required advisory source is available and reports no blocking relevant Critical/High; current/historical secret scans pass without weakened rules.",
+      "status": "BLOCKED",
+      "observation": "The live dependency scanners and complete secret/security gates require Docker/network execution that could not be completed.",
+      "evidence": [
+        "command:cmd-0007",
+        "command:cmd-0015"
+      ]
+    },
+    {
+      "id": "M2A-16",
+      "criterion": "Gate 4 quality behavior",
+      "acceptance": "Project detection, frozen policy/plan, sandbox runners, immutable evidence and pure verdict derivation execute for positive and failing projects without false PASS.",
+      "status": "BLOCKED",
+      "observation": "The criterion requires a real Docker/stack/native functional or isolation proof; engine access was denied and no substitute was allowed.",
+      "evidence": [
+        "command:cmd-0007",
+        "file:RISKS.md"
+      ]
+    },
+    {
+      "id": "M2A-17",
+      "criterion": "Gate 4 containment and isolation",
+      "acceptance": "Project commands never run on host; scanner failure, marker ingress, legacy secret evidence, tampering and wrong-origin attacks fail closed before valid evidence/verdict.",
+      "status": "BLOCKED",
+      "observation": "The criterion requires a real Docker/stack/native functional or isolation proof; engine access was denied and no substitute was allowed.",
+      "evidence": [
+        "command:cmd-0007",
+        "file:RISKS.md"
+      ]
+    },
+    {
+      "id": "M2A-18",
+      "criterion": "Gate 5 real installed workflow",
+      "acceptance": "Fresh isolated native CLI/editor installation resolves the installed entrypoint and proves authenticated approval, canonical workspace trust, durable recovery and cleanup.",
+      "status": "BLOCKED",
+      "observation": "The criterion requires a real Docker/stack/native functional or isolation proof; engine access was denied and no substitute was allowed.",
+      "evidence": [
+        "command:cmd-0007",
+        "file:RISKS.md"
+      ]
+    },
+    {
+      "id": "M2A-19",
+      "criterion": "Gate 5 interaction boundaries",
+      "acceptance": "No editor/CLI path bypasses API authentication, approval, sandbox, project/workspace binding, response authenticity or existing Gate 4 authority.",
+      "status": "BLOCKED",
+      "observation": "The criterion requires a real Docker/stack/native functional or isolation proof; engine access was denied and no substitute was allowed.",
+      "evidence": [
+        "command:cmd-0007",
+        "file:RISKS.md"
+      ]
+    },
+    {
+      "id": "M2A-20",
+      "criterion": "Gate 6 real experience workflow",
+      "acceptance": "Fresh actual-stack capture persists governed lineage/rights and reads/lists/exports matching bytes through authenticated project-bound interfaces.",
+      "status": "BLOCKED",
+      "observation": "The criterion requires a real Docker/stack/native functional or isolation proof; engine access was denied and no substitute was allowed.",
+      "evidence": [
+        "command:cmd-0007",
+        "file:RISKS.md"
+      ]
+    },
+    {
+      "id": "M2A-21",
+      "criterion": "Gate 6 rights and lifecycle",
+      "acceptance": "Consent, denied use, secrets/private ingress, corruption, replay, restart, retention, withdrawal, deletion and resurrection controls execute with unchanged sources.",
+      "status": "BLOCKED",
+      "observation": "The criterion requires a real Docker/stack/native functional or isolation proof; engine access was denied and no substitute was allowed.",
+      "evidence": [
+        "command:cmd-0007",
+        "file:RISKS.md"
+      ]
+    },
+    {
+      "id": "M2A-22",
+      "criterion": "Gate 7 real knowledge workflow",
+      "acceptance": "Rights-qualified actual content is admitted, persistently indexed, retrieved with measured deterministic ranking and resolved exact citations through authenticated HTTP.",
+      "status": "BLOCKED",
+      "observation": "The criterion requires a real Docker/stack/native functional or isolation proof; engine access was denied and no substitute was allowed.",
+      "evidence": [
+        "command:cmd-0007",
+        "file:RISKS.md"
+      ]
+    },
+    {
+      "id": "M2A-23",
+      "criterion": "Gate 7 rights and lifecycle",
+      "acceptance": "Storage-only laundering, traversal, secret/instruction ingress, cross-project access, corruption, stale citation, invalidation, retention, withdrawal and resurrection fail safely.",
+      "status": "BLOCKED",
+      "observation": "The criterion requires a real Docker/stack/native functional or isolation proof; engine access was denied and no substitute was allowed.",
+      "evidence": [
+        "command:cmd-0007",
+        "file:RISKS.md"
+      ]
+    },
+    {
+      "id": "M2A-24",
+      "criterion": "Cross-Gate functional integration",
+      "acceptance": "Gates 4-7 operate together while preserving Model Gateway, Agent Runtime, Sandbox, quality authority, approvals, experience rights and citation boundaries.",
+      "status": "BLOCKED",
+      "observation": "The criterion requires a real Docker/stack/native functional or isolation proof; engine access was denied and no substitute was allowed.",
+      "evidence": [
+        "command:cmd-0007",
+        "file:RISKS.md"
+      ]
+    },
+    {
+      "id": "M2A-25",
+      "criterion": "Persistence and migration compatibility",
+      "acceptance": "Real PostgreSQL schemas, migrations, reversibility, autogenerate, restart and recovery preserve inherited Gate data and enforce current constraints.",
+      "status": "BLOCKED",
+      "observation": "The criterion requires a real Docker/stack/native functional or isolation proof; engine access was denied and no substitute was allowed.",
+      "evidence": [
+        "command:cmd-0007",
+        "file:RISKS.md"
+      ]
+    },
+    {
+      "id": "M2A-26",
+      "criterion": "Authentication and transport integrity",
+      "acceptance": "Absent/invalid/expired/replayed/forged authentication and post-response ambiguity are refused with bounded diagnostics and no unauthorized duplicate effect.",
+      "status": "BLOCKED",
+      "observation": "The criterion requires a real Docker/stack/native functional or isolation proof; engine access was denied and no substitute was allowed.",
+      "evidence": [
+        "command:cmd-0007",
+        "file:RISKS.md"
+      ]
+    },
+    {
+      "id": "M2A-27",
+      "criterion": "Owned test isolation and cleanup",
+      "acceptance": "Every live test proves unique ownership, snapshots pre-existing identities, removes only owned resources, and leaves unrelated Docker/editor/application resources unchanged.",
+      "status": "BLOCKED",
+      "observation": "The criterion requires a real Docker/stack/native functional or isolation proof; engine access was denied and no substitute was allowed.",
+      "evidence": [
+        "command:cmd-0007",
+        "file:RISKS.md"
+      ]
+    },
+    {
+      "id": "M2A-28",
+      "criterion": "Inherited regression coverage",
+      "acceptance": "All inherited Gates 0-3 and prior Gate 4-7 mandatory stages remain present and pass under the exact subject.",
+      "status": "PARTIAL",
+      "observation": "Most control-plane regressions passed, but the integral suite was red and inherited image/stack stages were not executable.",
+      "evidence": [
+        "command:cmd-0015",
+        "file:controls/control-plane-full-suite.json"
+      ]
+    },
+    {
+      "id": "M2A-29",
+      "criterion": "Documentation and runbooks",
+      "acceptance": "Architecture, APIs, auth, operations, recovery, retention, rights, citations, limits and troubleshooting docs match observed behavior and have valid links.",
+      "status": "PARTIAL",
+      "observation": "Documentation/link controls not among the three named failures passed in the integral suite, but behavior-dependent documentation could not be compared with live execution.",
+      "evidence": [
+        "command:cmd-0015"
+      ]
+    },
+    {
+      "id": "M2A-30",
+      "criterion": "Provenance, rights and training policy",
+      "acceptance": "Reusable artifacts carry truthful provenance/rights; production/user/provider data is not appropriated and trainingAllowed remains false absent explicit rights evidence.",
+      "status": "PARTIAL",
+      "observation": "The audit and subject retain trainingAllowed=false and declared provenance, but unexecuted live producers prevent complete provenance observation.",
+      "evidence": [
+        "file:PROVENANCE.json",
+        "file:AUDITOR-INDEPENDENCE.json"
+      ]
+    },
+    {
+      "id": "M2A-31",
+      "criterion": "Lessons and guardrail effectiveness",
+      "acceptance": "Memory validates; every applicable guardrail resolves, is exercised with a valid premise/positive control, and has zero recurrence failure.",
+      "status": "FAIL",
+      "observation": "M2-F-001 and M2-F-002 are confirmed guardrail recurrences; zero recurrence failure is false.",
+      "evidence": [
+        "file:FINDINGS.json",
+        "file:INDEPENDENT-RED-TEAM-LEDGER-RETRY-0002.json"
+      ]
+    },
+    {
+      "id": "M2A-32",
+      "criterion": "Reproducible command ledger",
+      "acceptance": "Every command record is the literal replayable invocation with exact arguments, runtime, directory, commit, inputs, terminal exit and sanitized outputs.",
+      "status": "FAIL",
+      "observation": "cmd-0001 omits the consumed --phase option/value, and the canonical validator accepts that non-literal record.",
+      "evidence": [
+        "command:cmd-0001",
+        "file:FINDINGS.json"
+      ]
+    },
+    {
+      "id": "M2A-33",
+      "criterion": "Internal versus independent evidence separation",
+      "acceptance": "Subject internal review/Red Team is evidence only; this later session independently executes review, Red Team and functional proofs without self-promotion.",
+      "status": "PASS",
+      "observation": "Internal subject claims were not adopted; this later session generated its own public, test and Red Team observations.",
+      "evidence": [
+        "file:AUDITOR-INDEPENDENCE.json",
+        "file:ENTRY-REPORT.md"
+      ]
+    },
+    {
+      "id": "M2A-34",
+      "criterion": "Independent code and architecture review",
+      "acceptance": "Fresh review of code, architecture, integration, security, maintainability, regressions and docs has zero unresolved Critical/High/blocker findings.",
+      "status": "FAIL",
+      "observation": "Independent review has one open Critical and one open High finding.",
+      "evidence": [
+        "file:FINDINGS.json",
+        "file:REVIEW-REPORT.md"
+      ]
+    },
+    {
+      "id": "M2A-35",
+      "criterion": "Independent Red Team",
+      "acceptance": "The full M2 attack battery executes against the exact subject over a VALID clean/null baseline with every mandatory attack defended and zero escape.",
+      "status": "FAIL",
+      "observation": "A valid-baseline independent mutation escaped; the remaining M2 attack battery was blocked by the inaccessible engine.",
+      "evidence": [
+        "command:cmd-0013",
+        "file:INDEPENDENT-RED-TEAM-LEDGER-RETRY-0002.json"
+      ]
+    },
+    {
+      "id": "M2A-36",
+      "criterion": "Adversarial premise validity",
+      "acceptance": "Every attack proves its marker/mutation is recognized by the actual public contract; a clean control passes through the same path.",
+      "status": "PARTIAL",
+      "observation": "M2-RT-01 proved its marker was consumed and its clean control was VALID, but the complete battery could not execute.",
+      "evidence": [
+        "file:INDEPENDENT-RED-TEAM-LEDGER-RETRY-0002.json"
+      ]
+    },
+    {
+      "id": "M2A-37",
+      "criterion": "Risks, debt and prior findings",
+      "acceptance": "All open audit findings and M2 risks are independently re-evaluated; every claimed correction holds and no blocking debt is mislabeled accepted.",
+      "status": "FAIL",
+      "observation": "M2-F-001 (High) and M2-F-002 (Critical) remain open and require an implementing checkpoint.",
+      "evidence": [
+        "file:FINDINGS.json"
+      ]
+    },
+    {
+      "id": "M2A-38",
+      "criterion": "Fresh public no-credential proof",
+      "acceptance": "A new unauthenticated public clone independently validates the subject and runs the complete verifier using only subject-versioned inputs plus explicitly documented private runtime configuration.",
+      "status": "BLOCKED",
+      "observation": "Fresh public no-credential validation passed, but complete verification could not start without Docker Engine access.",
+      "evidence": [
+        "file:ENTRY-REPORT.md",
+        "command:cmd-0007"
+      ]
+    },
+    {
+      "id": "M2A-39",
+      "criterion": "Exact final review transport",
+      "acceptance": "Final review package reconstructed independently from public source matches declaration byte-for-byte, twice, and every retained input/attempt is identified.",
+      "status": "PASS",
+      "observation": "Independent public detached reconstructions produced the expected historical red control and exact byte-identical corrective/final archives.",
+      "evidence": [
+        "command:cmd-0010",
+        "command:cmd-0011",
+        "file:REVIEW-TRANSPORT-RECONSTRUCTION-RETRY-0002.json",
+        "file:REVIEW-TRANSPORT-RECONSTRUCTION-RETRY-0003.json"
+      ]
+    },
+    {
+      "id": "M2A-40",
+      "criterion": "Audit checkpoint assurance",
+      "acceptance": "This later audit checkpoint passes its own Green Keeper, completeness, counts, inventory, secret, integrity and validation controls without altering the subject.",
+      "status": "FAIL",
+      "observation": "The audit checkpoint cannot pass its own assurance: command evidence is defective, Red Team failed, completeness is incomplete and Docker gates are blocked.",
+      "evidence": [
+        "file:FINDINGS.json",
+        "command:cmd-0013"
+      ]
+    },
+    {
+      "id": "M2A-41",
+      "criterion": "Audit delivery completeness",
+      "acceptance": "Commands, files, tests, quality, risks, findings, provenance, review, Red Team, limits and handoff are truthful, complete and resolvable.",
+      "status": "PARTIAL",
+      "observation": "The report preserves commands, findings, attempts and limitations, but mandatory live/full evidence is incomplete.",
+      "evidence": [
+        "file:FINAL-REPORT.md",
+        "file:EXECUTION-NOTES.md"
+      ]
+    },
+    {
+      "id": "M2A-42",
+      "criterion": "Second-tool availability truth",
+      "acceptance": "Tool/provider/model and limits are recorded; fresh-session independence is not called cross-tool and unavailable cross-tool evidence is never invented.",
+      "status": "PASS",
+      "observation": "Codex/OpenAI/GPT-5 fresh-session attribution is explicit and cross-tool validation is truthfully NOT_AVAILABLE.",
+      "evidence": [
+        "file:AUDITOR-INDEPENDENCE.json"
+      ]
+    },
+    {
+      "id": "M2A-43",
+      "criterion": "Independent attestation eligibility",
+      "acceptance": "An attestation is written only after all other criteria pass and names the immutable subject plus this later audit checkpoint; otherwise none exists.",
+      "status": "PASS",
+      "observation": "Eligibility is false and no attestation was written.",
+      "evidence": [
+        "file:FINDINGS.json",
+        "file:AUDITOR-INDEPENDENCE.json"
+      ]
+    },
+    {
+      "id": "M2A-44",
+      "criterion": "Milestone verdict derivation",
+      "acceptance": "Only all-green evidence may yield MILESTONE_INDEPENDENT_AUDIT_PASS; any blocker/failure yields truthful REWORK_REQUIRED/BLOCKED and never MILESTONE_EXTERNAL_PASS.",
+      "status": "PASS",
+      "observation": "The evidence derives BLOCKED/REWORK_REQUIRED and grants neither independent nor external milestone PASS.",
+      "evidence": [
+        "file:MILESTONE-REPORT.md",
+        "file:FINAL-REPORT.md"
+      ]
+    },
+    {
+      "id": "M2A-45",
+      "criterion": "No Gate 8 advancement",
+      "acceptance": "No Gate 8 code, checkpoint, authorization, status transition or work is created by this audit, regardless of outcome.",
+      "status": "PASS",
+      "observation": "No Gate 8 work or transition was created.",
+      "evidence": [
+        "file:PLAN.md",
+        "file:HANDOFF.md"
+      ]
+    }
+  ]
+}

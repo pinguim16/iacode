@@ -1,0 +1,200 @@
+{
+  "schemaVersion": "1.0.0",
+  "artifact": "M2_INDEPENDENT_REVIEW_TRANSPORT_RECONSTRUCTION",
+  "remote": "https://github.com/pinguim16/iacode.git",
+  "credentialsDisabled": true,
+  "ownerRoot": "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-m2-audit-reconstruct-4c81b9bb20f04c44932609b77b05239e",
+  "retained": true,
+  "cases": [
+    {
+      "id": "g4-cp0007-historical-red",
+      "checkpoint": "GATE-4-CP-0007",
+      "tag": "refs/tags/iacode-checkpoints/GATE-4-CP-0007",
+      "tagCommit": "e21d30fde473f302d0f8f60b59acf008fa52e250",
+      "expectedDeclarationMatch": false,
+      "builds": [
+        {
+          "clone": "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-m2-audit-reconstruct-4c81b9bb20f04c44932609b77b05239e\\g4-cp0007-historical-red\\a\\repository",
+          "steps": [
+            {
+              "arguments": [
+                "git",
+                "-c",
+                "http.sslBackend=openssl",
+                "-c",
+                "credential.helper=",
+                "clone",
+                "--quiet",
+                "--no-local",
+                "https://github.com/pinguim16/iacode.git",
+                "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-m2-audit-reconstruct-4c81b9bb20f04c44932609b77b05239e\\g4-cp0007-historical-red\\a\\repository"
+              ],
+              "workingDirectory": "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-m2-audit-reconstruct-4c81b9bb20f04c44932609b77b05239e",
+              "durationMs": 11785,
+              "exitCode": 128,
+              "stdout": "",
+              "stderr": "error: unable to create file docs/checkpoints/GATE-7-CP-0001/attempts/PROMOTION-DIAGNOSTIC-7ab3f7df824c4a869fdb98d73e67cddd-SETUP-00-CP-0001-M0-INTERNAL-MIRROR-RECEIPT.json: Filename too long\nerror: unable to create file docs/checkpoints/GATE-7-CP-0001/attempts/PROMOTION-DIAGNOSTIC-7ab3f7df824c4a869fdb98d73e67cddd-SETUP-00-CP-0001-M0-INTERNAL-MIRROR.json: Filename too long\nerror: unable to create file docs/checkpoints/GATE-7-CP-0001/attempts/PROMOTION-DIAGNOSTIC-7ab3f7df824c4a869fdb98d73e67cddd-SETUP-00-CP-0002-M0-INTERNAL-MIRROR-RECEIPT.json: Filename too long\nerror: unable to create file docs/checkpoints/GATE-7-CP-0001/attempts/PROMOTION-DIAGNOSTIC-7ab3f7df824c4a869fdb98d73e67cddd-SETUP-00-CP-0002-M0-INTERNAL-MIRROR.json: Filename too long\nfatal: unable to checkout working tree\nwarning: Clone succeeded, but checkout failed.\nYou can inspect what was checked out with 'git status'\nand retry with 'git restore --source=HEAD :/'\n\n"
+            }
+          ],
+          "result": "FAIL"
+        },
+        {
+          "clone": "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-m2-audit-reconstruct-4c81b9bb20f04c44932609b77b05239e\\g4-cp0007-historical-red\\b\\repository",
+          "steps": [
+            {
+              "arguments": [
+                "git",
+                "-c",
+                "http.sslBackend=openssl",
+                "-c",
+                "credential.helper=",
+                "clone",
+                "--quiet",
+                "--no-local",
+                "https://github.com/pinguim16/iacode.git",
+                "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-m2-audit-reconstruct-4c81b9bb20f04c44932609b77b05239e\\g4-cp0007-historical-red\\b\\repository"
+              ],
+              "workingDirectory": "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-m2-audit-reconstruct-4c81b9bb20f04c44932609b77b05239e",
+              "durationMs": 13180,
+              "exitCode": 128,
+              "stdout": "",
+              "stderr": "error: unable to create file docs/checkpoints/GATE-7-CP-0001/attempts/PROMOTION-DIAGNOSTIC-7ab3f7df824c4a869fdb98d73e67cddd-SETUP-00-CP-0001-M0-INTERNAL-MIRROR-RECEIPT.json: Filename too long\nerror: unable to create file docs/checkpoints/GATE-7-CP-0001/attempts/PROMOTION-DIAGNOSTIC-7ab3f7df824c4a869fdb98d73e67cddd-SETUP-00-CP-0001-M0-INTERNAL-MIRROR.json: Filename too long\nerror: unable to create file docs/checkpoints/GATE-7-CP-0001/attempts/PROMOTION-DIAGNOSTIC-7ab3f7df824c4a869fdb98d73e67cddd-SETUP-00-CP-0002-M0-INTERNAL-MIRROR-RECEIPT.json: Filename too long\nerror: unable to create file docs/checkpoints/GATE-7-CP-0001/attempts/PROMOTION-DIAGNOSTIC-7ab3f7df824c4a869fdb98d73e67cddd-SETUP-00-CP-0002-M0-INTERNAL-MIRROR.json: Filename too long\nfatal: unable to checkout working tree\nwarning: Clone succeeded, but checkout failed.\nYou can inspect what was checked out with 'git status'\nand retry with 'git restore --source=HEAD :/'\n\n"
+            }
+          ],
+          "result": "FAIL"
+        }
+      ],
+      "byteIdentical": false,
+      "declarationMatchesRebuilds": false,
+      "expectationsSatisfied": false,
+      "result": "FAIL"
+    },
+    {
+      "id": "g4-cp0009-corrective-green",
+      "checkpoint": "GATE-4-CP-0009",
+      "tag": "refs/tags/iacode-checkpoints/GATE-4-CP-0009",
+      "tagCommit": "ff2814f7d7bf06fa8a99858b958daf3f22197496",
+      "expectedDeclarationMatch": true,
+      "builds": [
+        {
+          "clone": "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-m2-audit-reconstruct-4c81b9bb20f04c44932609b77b05239e\\g4-cp0009-corrective-green\\a\\repository",
+          "steps": [
+            {
+              "arguments": [
+                "git",
+                "-c",
+                "http.sslBackend=openssl",
+                "-c",
+                "credential.helper=",
+                "clone",
+                "--quiet",
+                "--no-local",
+                "https://github.com/pinguim16/iacode.git",
+                "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-m2-audit-reconstruct-4c81b9bb20f04c44932609b77b05239e\\g4-cp0009-corrective-green\\a\\repository"
+              ],
+              "workingDirectory": "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-m2-audit-reconstruct-4c81b9bb20f04c44932609b77b05239e",
+              "durationMs": 6946,
+              "exitCode": 128,
+              "stdout": "",
+              "stderr": "error: unable to create file docs/checkpoints/GATE-7-CP-0001/attempts/PROMOTION-DIAGNOSTIC-7ab3f7df824c4a869fdb98d73e67cddd-SETUP-00-CP-0001-M0-INTERNAL-MIRROR-RECEIPT.json: Filename too long\nerror: unable to create file docs/checkpoints/GATE-7-CP-0001/attempts/PROMOTION-DIAGNOSTIC-7ab3f7df824c4a869fdb98d73e67cddd-SETUP-00-CP-0001-M0-INTERNAL-MIRROR.json: Filename too long\nerror: unable to create file docs/checkpoints/GATE-7-CP-0001/attempts/PROMOTION-DIAGNOSTIC-7ab3f7df824c4a869fdb98d73e67cddd-SETUP-00-CP-0002-M0-INTERNAL-MIRROR-RECEIPT.json: Filename too long\nerror: unable to create file docs/checkpoints/GATE-7-CP-0001/attempts/PROMOTION-DIAGNOSTIC-7ab3f7df824c4a869fdb98d73e67cddd-SETUP-00-CP-0002-M0-INTERNAL-MIRROR.json: Filename too long\nerror: unable to create file docs/checkpoints/GATE-7-CP-0001/attempts/PROMOTION-DIAGNOSTIC-985d6abe15294033a4c5ef1b2a895a54-M0-INTERNAL-MIRROR-RECEIPT.json: Filename too long\nfatal: unable to checkout working tree\nwarning: Clone succeeded, but checkout failed.\nYou can inspect what was checked out with 'git status'\nand retry with 'git restore --source=HEAD :/'\n\n"
+            }
+          ],
+          "result": "FAIL"
+        },
+        {
+          "clone": "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-m2-audit-reconstruct-4c81b9bb20f04c44932609b77b05239e\\g4-cp0009-corrective-green\\b\\repository",
+          "steps": [
+            {
+              "arguments": [
+                "git",
+                "-c",
+                "http.sslBackend=openssl",
+                "-c",
+                "credential.helper=",
+                "clone",
+                "--quiet",
+                "--no-local",
+                "https://github.com/pinguim16/iacode.git",
+                "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-m2-audit-reconstruct-4c81b9bb20f04c44932609b77b05239e\\g4-cp0009-corrective-green\\b\\repository"
+              ],
+              "workingDirectory": "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-m2-audit-reconstruct-4c81b9bb20f04c44932609b77b05239e",
+              "durationMs": 12118,
+              "exitCode": 128,
+              "stdout": "",
+              "stderr": "error: unable to create file docs/checkpoints/GATE-7-CP-0001/attempts/PROMOTION-DIAGNOSTIC-7ab3f7df824c4a869fdb98d73e67cddd-SETUP-00-CP-0001-M0-INTERNAL-MIRROR-RECEIPT.json: Filename too long\nerror: unable to create file docs/checkpoints/GATE-7-CP-0001/attempts/PROMOTION-DIAGNOSTIC-7ab3f7df824c4a869fdb98d73e67cddd-SETUP-00-CP-0001-M0-INTERNAL-MIRROR.json: Filename too long\nerror: unable to create file docs/checkpoints/GATE-7-CP-0001/attempts/PROMOTION-DIAGNOSTIC-7ab3f7df824c4a869fdb98d73e67cddd-SETUP-00-CP-0002-M0-INTERNAL-MIRROR-RECEIPT.json: Filename too long\nerror: unable to create file docs/checkpoints/GATE-7-CP-0001/attempts/PROMOTION-DIAGNOSTIC-7ab3f7df824c4a869fdb98d73e67cddd-SETUP-00-CP-0002-M0-INTERNAL-MIRROR.json: Filename too long\nerror: unable to create file docs/checkpoints/GATE-7-CP-0001/attempts/PROMOTION-DIAGNOSTIC-985d6abe15294033a4c5ef1b2a895a54-M0-INTERNAL-MIRROR-RECEIPT.json: Filename too long\nfatal: unable to checkout working tree\nwarning: Clone succeeded, but checkout failed.\nYou can inspect what was checked out with 'git status'\nand retry with 'git restore --source=HEAD :/'\n\n"
+            }
+          ],
+          "result": "FAIL"
+        }
+      ],
+      "byteIdentical": false,
+      "declarationMatchesRebuilds": false,
+      "expectationsSatisfied": false,
+      "result": "FAIL"
+    },
+    {
+      "id": "g7-cp0001-final-green",
+      "checkpoint": "GATE-7-CP-0001",
+      "tag": "refs/tags/iacode-checkpoints/GATE-7-CP-0001",
+      "tagCommit": "823cf164c6931dab7f957c92721ded7a916655bd",
+      "expectedDeclarationMatch": true,
+      "builds": [
+        {
+          "clone": "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-m2-audit-reconstruct-4c81b9bb20f04c44932609b77b05239e\\g7-cp0001-final-green\\a\\repository",
+          "steps": [
+            {
+              "arguments": [
+                "git",
+                "-c",
+                "http.sslBackend=openssl",
+                "-c",
+                "credential.helper=",
+                "clone",
+                "--quiet",
+                "--no-local",
+                "https://github.com/pinguim16/iacode.git",
+                "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-m2-audit-reconstruct-4c81b9bb20f04c44932609b77b05239e\\g7-cp0001-final-green\\a\\repository"
+              ],
+              "workingDirectory": "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-m2-audit-reconstruct-4c81b9bb20f04c44932609b77b05239e",
+              "durationMs": 9948,
+              "exitCode": 128,
+              "stdout": "",
+              "stderr": "error: unable to create file docs/checkpoints/GATE-7-CP-0001/attempts/PROMOTION-DIAGNOSTIC-7ab3f7df824c4a869fdb98d73e67cddd-SETUP-00-CP-0001-M0-INTERNAL-MIRROR-RECEIPT.json: Filename too long\nerror: unable to create file docs/checkpoints/GATE-7-CP-0001/attempts/PROMOTION-DIAGNOSTIC-7ab3f7df824c4a869fdb98d73e67cddd-SETUP-00-CP-0001-M0-INTERNAL-MIRROR.json: Filename too long\nerror: unable to create file docs/checkpoints/GATE-7-CP-0001/attempts/PROMOTION-DIAGNOSTIC-7ab3f7df824c4a869fdb98d73e67cddd-SETUP-00-CP-0002-M0-INTERNAL-MIRROR-RECEIPT.json: Filename too long\nerror: unable to create file docs/checkpoints/GATE-7-CP-0001/attempts/PROMOTION-DIAGNOSTIC-7ab3f7df824c4a869fdb98d73e67cddd-SETUP-00-CP-0002-M0-INTERNAL-MIRROR.json: Filename too long\nfatal: unable to checkout working tree\nwarning: Clone succeeded, but checkout failed.\nYou can inspect what was checked out with 'git status'\nand retry with 'git restore --source=HEAD :/'\n\n"
+            }
+          ],
+          "result": "FAIL"
+        },
+        {
+          "clone": "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-m2-audit-reconstruct-4c81b9bb20f04c44932609b77b05239e\\g7-cp0001-final-green\\b\\repository",
+          "steps": [
+            {
+              "arguments": [
+                "git",
+                "-c",
+                "http.sslBackend=openssl",
+                "-c",
+                "credential.helper=",
+                "clone",
+                "--quiet",
+                "--no-local",
+                "https://github.com/pinguim16/iacode.git",
+                "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-m2-audit-reconstruct-4c81b9bb20f04c44932609b77b05239e\\g7-cp0001-final-green\\b\\repository"
+              ],
+              "workingDirectory": "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-m2-audit-reconstruct-4c81b9bb20f04c44932609b77b05239e",
+              "durationMs": 7440,
+              "exitCode": 128,
+              "stdout": "",
+              "stderr": "error: unable to create file docs/checkpoints/GATE-7-CP-0001/attempts/PROMOTION-DIAGNOSTIC-7ab3f7df824c4a869fdb98d73e67cddd-SETUP-00-CP-0001-M0-INTERNAL-MIRROR-RECEIPT.json: Filename too long\nerror: unable to create file docs/checkpoints/GATE-7-CP-0001/attempts/PROMOTION-DIAGNOSTIC-7ab3f7df824c4a869fdb98d73e67cddd-SETUP-00-CP-0001-M0-INTERNAL-MIRROR.json: Filename too long\nerror: unable to create file docs/checkpoints/GATE-7-CP-0001/attempts/PROMOTION-DIAGNOSTIC-7ab3f7df824c4a869fdb98d73e67cddd-SETUP-00-CP-0002-M0-INTERNAL-MIRROR-RECEIPT.json: Filename too long\nerror: unable to create file docs/checkpoints/GATE-7-CP-0001/attempts/PROMOTION-DIAGNOSTIC-7ab3f7df824c4a869fdb98d73e67cddd-SETUP-00-CP-0002-M0-INTERNAL-MIRROR.json: Filename too long\nfatal: unable to checkout working tree\nwarning: Clone succeeded, but checkout failed.\nYou can inspect what was checked out with 'git status'\nand retry with 'git restore --source=HEAD :/'\n\n"
+            }
+          ],
+          "result": "FAIL"
+        }
+      ],
+      "byteIdentical": false,
+      "declarationMatchesRebuilds": false,
+      "expectationsSatisfied": false,
+      "result": "FAIL"
+    }
+  ],
+  "result": "FAIL"
+}

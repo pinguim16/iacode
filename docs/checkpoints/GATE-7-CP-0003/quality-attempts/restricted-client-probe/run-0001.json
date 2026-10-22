@@ -1,0 +1,38 @@
+{
+  "startedAt": "2026-10-21T19:21:40Z",
+  "finishedAt": "2026-10-21T19:21:44Z",
+  "durationMs": 3415,
+  "arguments": [
+    "C:/Users/cesar/AppData/Local/OpenAI/Codex/bin/896a0166b774037a/codex.exe",
+    "-c",
+    "windows.sandbox=\"elevated\"",
+    "-c",
+    "features.prefer_mxc=false",
+    "-c",
+    "sandbox_workspace_write.network_access=true",
+    "sandbox",
+    "--cd",
+    "E:\\iacode",
+    "--include-managed-config",
+    "-P",
+    ":workspace",
+    "--",
+    "C:\\Program Files\\Python313\\python.exe",
+    "docs/checkpoints/GATE-7-CP-0003/audit-harness/probe_restricted_client.py"
+  ],
+  "exitCode": 1,
+  "streams": {
+    "stdout": {
+      "sha256": "489331483123585dbde12301ebaa02d5decdee2a3f570e994e3c31de68c520d9",
+      "bytes": 1948,
+      "refused": false,
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/restricted-client-probe/run-0001.stdout.log"
+    },
+    "stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "refused": false,
+      "path": "docs/checkpoints/GATE-7-CP-0003/quality-attempts/restricted-client-probe/run-0001.stderr.log"
+    }
+  }
+}

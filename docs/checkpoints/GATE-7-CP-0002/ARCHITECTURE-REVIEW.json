@@ -1,0 +1,42 @@
+{
+  "schemaVersion": "1.0.0",
+  "artifact": "M2_INDEPENDENT_ARCHITECTURE_REVIEW",
+  "subjectCheckpoint": "GATE-7-CP-0001",
+  "subjectCommit": "823cf164c6931dab7f957c92721ded7a916655bd",
+  "scope": ["GATE-4", "GATE-5", "GATE-6", "GATE-7"],
+  "reviewedSources": [
+    "docs/ARCHITECTURE.md",
+    "docs/MASTER-PLAN.md",
+    "docs/M2-CONSOLIDATION.md",
+    "docs/adr/ADR-0029 through ADR-0060",
+    "docs/GATE-4-CHECKLIST.md",
+    "docs/GATE-5-CHECKLIST.md",
+    "docs/GATE-6-CHECKLIST.md",
+    "docs/GATE-7-CHECKLIST.md",
+    "services/evaluator",
+    "apps/cli",
+    "apps/vscode-extension",
+    "services/experience",
+    "services/knowledge",
+    "packages/contracts",
+    "packages/persistence",
+    "scripts/iacode",
+    "scripts/development-ledger"
+  ],
+  "dimensions": [
+    {"id":"AR-01","dimension":"Gate boundaries and ADR consistency","status":"PARTIAL","observation":"The documented boundaries and source structure are coherent, but live cross-Gate execution was blocked by Docker Engine access."},
+    {"id":"AR-02","dimension":"Quality verdict authority and sandbox boundary","status":"PARTIAL","observation":"Static contracts and nonfailing control-plane tests support the boundary; real evaluator/sandbox execution was not available."},
+    {"id":"AR-03","dimension":"CLI/editor authentication, workspace trust and recovery","status":"FAIL","observation":"The canonical suite reached two real Gate 5 paths but cleanup erased both producer observations (M2-F-002); native/live acceptance was blocked."},
+    {"id":"AR-04","dimension":"Experience rights, retention and source preservation","status":"PARTIAL","observation":"Static review and nonfailing controls found no new defect; real PostgreSQL/HTTP lifecycle proof was blocked."},
+    {"id":"AR-05","dimension":"Knowledge admission, citation and invalidation","status":"PARTIAL","observation":"Closed contracts and source/store separation were reviewed; real persisted retrieval and lifecycle proof was blocked."},
+    {"id":"AR-06","dimension":"Persistence and migration integration","status":"BLOCKED","observation":"No auditor-owned database stack could be started because the engine pipe was inaccessible."},
+    {"id":"AR-07","dimension":"Security and isolation","status":"FAIL","observation":"M2-F-001 and M2-F-002 violate evidence security/assurance; container and host isolation proofs were blocked."},
+    {"id":"AR-08","dimension":"Evidence immutability and review transport","status":"PASS","observation":"G4-F-004 historical red and corrective/final green transports were independently reconstructed from public detached clones."},
+    {"id":"AR-09","dimension":"Engineering memory and guardrails","status":"FAIL","observation":"Two GUARDED classes recurred, one High and one Critical."},
+    {"id":"AR-10","dimension":"Documentation and operational contracts","status":"PARTIAL","observation":"Documents and links not named among suite failures held, but live behavior comparison was incomplete."},
+    {"id":"AR-11","dimension":"Provenance and rights","status":"PARTIAL","observation":"trainingAllowed remains false and no external content was appropriated; unexecuted producers prevent full observation."},
+    {"id":"AR-12","dimension":"Milestone promotion boundary","status":"PASS","observation":"The sealed subject remains unchanged, internal evidence was not relabelled independent, no attestation was written and Gate 8 was not started."}
+  ],
+  "result": "FAIL",
+  "justification": "One Critical and one High independent finding remain open, and mandatory live integration evidence is blocked."
+}

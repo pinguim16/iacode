@@ -1,0 +1,26 @@
+PROPOSED PATCH — NOT YET APPLIED OR ACCEPTED
+
+Target: scripts/development-ledger/audit_runner_bridge.py
+Preimage: raw-preimages/BRIDGE-PATH-001.py.raw
+Causal failure: causal-attempts/bridge-path-bounds/run-0001.json
+
+Reject parent components before observation and check real containment before stat/read:
+
+--- a/scripts/development-ledger/audit_runner_bridge.py
++++ b/scripts/development-ledger/audit_runner_bridge.py
+@@
+ def regular(path: Path, root: Path) -> None:
+-    if not path.is_relative_to(root) or path == root:
++    if (".." in path.parts or ".." in root.parts
++            or not path.is_relative_to(root) or path == root):
+         raise ValueError("OUTSIDE_PRIVATE_ROOT")
+@@
+         if current == root:
+             break
++    if not path.resolve(strict=True).is_relative_to(root.resolve(strict=True)):
++        raise ValueError("OUTSIDE_RESOLVED_PRIVATE_ROOT")
+     info = path.stat()
+
+Application requires actual current unit/adverse proof and refreshed assurance. Preserve the
+existing original-path link and hardlink checks. This document is not an executed correction,
+not a PASS and not active source. The unchanged full root baseline is still running.

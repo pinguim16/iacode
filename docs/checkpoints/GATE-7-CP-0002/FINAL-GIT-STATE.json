@@ -1,0 +1,48 @@
+{
+  "schemaVersion": "1.0.0",
+  "capturedAt": "2026-10-21T18:10:50.662679Z",
+  "root": "E:\\iacode",
+  "gitConfigGlobalOverridePresent": true,
+  "commands": {
+    "status": {
+      "arguments": [
+        "status",
+        "--short",
+        "--branch",
+        "--untracked-files=all"
+      ],
+      "exitCode": 0,
+      "stdout": "## main...origin/main\n M .iacode/anchors/checkpoint-chain.json\n?? docs/audits/M2-ENTRY-BLOCKED-2026-10-21/DIVERGENCE.md\n?? docs/audits/M2-ENTRY-BLOCKED-2026-10-21/ENTRY-VALIDATION.txt\n?? docs/audits/M2-ENTRY-BLOCKED-2026-10-21/FILES.json\n?? docs/audits/M2-ENTRY-BLOCKED-2026-10-21/environment-isolation-0001/COMMANDS.json\n?? docs/audits/M2-ENTRY-BLOCKED-2026-10-21/environment-isolation-0001/FILES.json\n?? docs/audits/M2-ENTRY-BLOCKED-2026-10-21/environment-isolation-0001/REPORT.md\n?? docs/checkpoints/GATE-7-CP-0002/ARCHITECTURE-REVIEW.json\n?? docs/checkpoints/GATE-7-CP-0002/AUDITOR-INDEPENDENCE.json\n?? docs/checkpoints/GATE-7-CP-0002/AUTHORIZATION.md\n?? docs/checkpoints/GATE-7-CP-0002/BASELINE.md\n?? docs/checkpoints/GATE-7-CP-0002/CLOSURE-REQUIREMENTS.json\n?? docs/checkpoints/GATE-7-CP-0002/CLOSURE-REQUIREMENTS.md\n?? docs/checkpoints/GATE-7-CP-0002/COMMANDS.jsonl\n?? docs/checkpoints/GATE-7-CP-0002/COMPLETENESS-REPORT.json\n?? docs/checkpoints/GATE-7-CP-0002/COMPLETENESS-REPORT.md\n?? docs/checkpoints/GATE-7-CP-0002/DECISIONS.md\n?? docs/checkpoints/GATE-7-CP-0002/DIFF-SUMMARY.md\n?? docs/checkpoints/GATE-7-CP-0002/ENTRY-REPORT.md\n?? docs/checkpoints/GATE-7-CP-0002/EXECUTION-NOTES.md\n?? docs/checkpoints/GATE-7-CP-0002/FILES.json\n?? docs/checkpoints/GATE-7-CP-0002/FINAL-GIT-STATE.json\n?? docs/checkpoints/GATE-7-CP-0002/FINAL-M2-AUDIT-MATRIX.json\n?? docs/checkpoints/GATE-7-CP-0002/FINAL-M2-AUDIT-MATRIX.md\n?? docs/checkpoints/GATE-7-CP-0002/FINAL-REPORT.md\n?? docs/checkpoints/GATE-7-CP-0002/FINDINGS.json\n?? docs/checkpoints/GATE-7-CP-0002/FROZEN-M2-AUDIT-CRITERIA.json\n?? docs/checkpoints/GATE-7-CP-0002/HANDOFF.md\n?? docs/checkpoints/GATE-7-CP-0002/INDEPENDENT-RED-TEAM-LEDGER-RETRY-0002.json\n?? docs/checkpoints/GATE-7-CP-0002/INDEPENDENT-RED-TEAM-LEDGER.json\n?? docs/checkpoints/GATE-7-CP-0002/LESSON-PREFLIGHT.json\n?? docs/checkpoints/GATE-7-CP-0002/LESSON-PREFLIGHT.md\n?? docs/checkpoints/GATE-7-CP-0002/M2-AUDIT-REQUIREMENTS.json\n?? docs/checkpoints/GATE-7-CP-0002/MILESTONE-REPORT.md\n?? docs/checkpoints/GATE-7-CP-0002/NEXT.md\n?? docs/checkpoints/GATE-7-CP-0002/PLAN.md\n?? docs/checkpoints/GATE-7-CP-0002/PROVENANCE.json\n?? docs/checkpoints/GATE-7-CP-0002/QUALITY.json\n?? docs/checkpoints/GATE-7-CP-0002/RED-TEAM-REPORT.md\n?? docs/checkpoints/GATE-7-CP-0002/REQUIREMENTS-MATRIX.json\n?? docs/checkpoints/GATE-7-CP-0002/REQUIREMENTS-MATRIX.md\n?? docs/checkpoints/GATE-7-CP-0002/REVIEW-BUNDLE-VALIDATION.json\n?? docs/checkpoints/GATE-7-CP-0002/REVIEW-REPORT.md\n?? docs/checkpoints/GATE-7-CP-0002/REVIEW-TRANSPORT-RECONSTRUCTION-RETRY-0002.json\n?? docs/checkpoints/GATE-7-CP-0002/REVIEW-TRANSPORT-RECONSTRUCTION-RETRY-0003.json\n?? docs/checkpoints/GATE-7-CP-0002/REVIEW-TRANSPORT-RECONSTRUCTION.json\n?? docs/checkpoints/GATE-7-CP-0002/REWORK-LOG.jsonl\n?? docs/checkpoints/GATE-7-CP-0002/RISKS.md\n?? docs/checkpoints/GATE-7-CP-0002/RUN-METADATA.json\n?? docs/checkpoints/GATE-7-CP-0002/STATE.json\n?? docs/checkpoints/GATE-7-CP-0002/STATUS.md\n?? docs/checkpoints/GATE-7-CP-0002/TESTS.json\n?? docs/checkpoints/GATE-7-CP-0002/audit-harness/capture_git_state.py\n?? docs/checkpoints/GATE-7-CP-0002/audit-harness/derive_m2_requirements.py\n?? docs/checkpoints/GATE-7-CP-0002/audit-harness/generate_inventory.py\n?? docs/checkpoints/GATE-7-CP-0002/audit-harness/reconstruct_review_transports.py\n?? docs/checkpoints/GATE-7-CP-0002/audit-harness/red_team_command_ledger.py\n?? docs/checkpoints/GATE-7-CP-0002/audit-harness/render_final_matrix.py\n?? docs/checkpoints/GATE-7-CP-0002/audit-harness/run_observed.py\n?? docs/checkpoints/GATE-7-CP-0002/controls/command-reproducibility-tests.json\n?? docs/checkpoints/GATE-7-CP-0002/controls/control-plane-full-suite.json\n?? docs/checkpoints/GATE-7-CP-0002/controls/final-checkpoint-validation.json\n?? docs/checkpoints/GATE-7-CP-0002/controls/static-analysis.json\n?? docs/checkpoints/GATE-7-CP-0002/environment/docker-version.json\n",
+      "stderr": ""
+    },
+    "branch": {
+      "arguments": [
+        "branch",
+        "--show-current"
+      ],
+      "exitCode": 0,
+      "stdout": "main\n",
+      "stderr": ""
+    },
+    "head": {
+      "arguments": [
+        "rev-parse",
+        "HEAD"
+      ],
+      "exitCode": 0,
+      "stdout": "823cf164c6931dab7f957c92721ded7a916655bd\n",
+      "stderr": ""
+    },
+    "subjectTag": {
+      "arguments": [
+        "rev-parse",
+        "--verify",
+        "refs/tags/iacode-checkpoints/GATE-7-CP-0001^{commit}"
+      ],
+      "exitCode": 0,
+      "stdout": "823cf164c6931dab7f957c92721ded7a916655bd\n",
+      "stderr": ""
+    }
+  },
+  "result": "PASS"
+}

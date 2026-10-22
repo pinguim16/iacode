@@ -2,19 +2,101 @@
 
 from __future__ import annotations
 
+import hashlib
+import json
 import os
+import re
 import shutil
 import subprocess
+import sys
 import tempfile
 import uuid
 from pathlib import Path
 
 from build_clients import CORE, ROOT, build
 
+sys.path.insert(0, str(ROOT / "packages/common/src"))
+from iacode_common.secret_scanning import find_secret_kinds
+
 NODE_IMAGE = (
     "node:22.23.2-bookworm-slim@sha256:"
     "48e4b67d85f87bd551df43704e24d252f56cc5f8e9718841aace50f19948f0f9"
 )
+
+MAX_OBSERVATION_BYTES = 262144
+
+
+class ClientCheckError(RuntimeError):
+    """Safe, bounded producer and cleanup observations; no raw exception or hidden PASS."""
+
+    def __init__(self, producer: dict, cleanup: dict) -> None:
+        self.report = {"schemaVersion": "1.0.0", "result": "FAIL",
+                       "producer": producer, "cleanup": cleanup}
+        super().__init__(
+            "client verification failed: " + json.dumps(self.report, ensure_ascii=True)
+        )
+
+
+def _safe_stream(value: str | bytes | None) -> dict:
+    raw = value.encode("utf-8") if isinstance(value, str) else (value or b"")
+    result = {"text": None, "sha256": hashlib.sha256(raw).hexdigest(),
+              "bytes": len(raw), "refusal": None}
+    if len(raw) > MAX_OBSERVATION_BYTES:
+        result["refusal"] = "OUTPUT_LIMIT"
+        return result
+    try:
+        text = raw.decode("utf-8", errors="strict")
+        if find_secret_kinds(text) or find_secret_kinds(json.dumps(text, ensure_ascii=True)):
+            result["refusal"] = "UNSAFE_OUTPUT"
+        else:
+            result["text"] = text
+    except UnicodeError:
+        result["refusal"] = "OUTPUT_ENCODING"
+    except Exception:  # Scanner failure is refusal, never permission to publish raw output.
+        result["refusal"] = "OUTPUT_SCAN_FAILED"
+    return result
+
+
+def _attempt(argv: list[str], timeout: int) -> tuple[subprocess.CompletedProcess | None, dict]:
+    completed = None
+    status, exit_code, stdout, stderr = "COMPLETED", None, None, None
+    try:
+        # Capture bytes: a replacement decoder would destroy the original stream identity.
+        completed = subprocess.run(
+            argv, cwd=ROOT, capture_output=True, timeout=timeout, check=False
+        )
+        exit_code, stdout, stderr = completed.returncode, completed.stdout, completed.stderr
+    except subprocess.TimeoutExpired as exc:
+        status, stdout, stderr = "TIMEOUT", exc.stdout, exc.stderr
+    except OSError:
+        # OSError messages can contain arbitrary path/content. The typed launch fact is sufficient.
+        status = "LAUNCH_ERROR"
+    observation = {"status": status, "exitCode": exit_code, "arguments": list(argv)}
+    for name, value in (("stdout", stdout), ("stderr", stderr)):
+        safe = _safe_stream(value)
+        observation[name] = safe["text"]
+        observation[name + "Sha256"] = safe["sha256"]
+        observation[name + "Bytes"] = safe["bytes"]
+        observation[name + "Refusal"] = safe["refusal"]
+    # Inspect argv too before it can enter a diagnostic. Never persist an unsafe argument list.
+    if _safe_stream(json.dumps(argv, ensure_ascii=True))["refusal"]:
+        observation["arguments"] = None
+        observation["argumentsRefused"] = True
+    return completed, observation
+
+
+def _safe_observation(observation: dict) -> bool:
+    return not any(observation.get(name) for name in (
+        "stdoutRefusal", "stderrRefusal", "argumentsRefused"))
+
+
+def _owned_container_absent(observation: dict, name: str) -> bool:
+    if observation["status"] != "COMPLETED" or observation["exitCode"] != 1:
+        return False
+    return re.fullmatch(
+        r"(?:Error response from daemon: |Error: )?No such container: " + re.escape(name),
+        (observation["stderr"] or "").strip(),
+    ) is not None
 
 
 def capsule(directory: Path) -> None:
@@ -81,8 +163,7 @@ def run_node(*, guard: bool | str = False, node: Path | None = None) -> subproce
                 check=False,
             )
         name = "iacode-client-unit-" + uuid.uuid4().hex
-        try:
-            return subprocess.run(
+        completed, producer = _attempt(
                 [
                     "docker",
                     "run",
@@ -121,28 +202,18 @@ def run_node(*, guard: bool | str = False, node: Path | None = None) -> subproce
                     *arguments,
                     *tests,
                 ],
-                cwd=ROOT,
-                text=True,
-                encoding="utf-8",
-                errors="replace",
-                capture_output=True,
-                timeout=180,
-                check=False,
-            )
-        finally:
-            # Only the exact container this invocation named. Never a project/global prune.
-            removed = subprocess.run(
-                ["docker", "rm", "-f", name],
-                cwd=ROOT,
-                text=True,
-                encoding="utf-8",
-                errors="replace",
-                capture_output=True,
-                check=False,
-                timeout=30,
-            )
-            if removed.returncode and "No such container" not in removed.stderr:
-                raise RuntimeError("owned client-test container cleanup failed")
+                180,
+        )
+        # The producer observation exists BEFORE this independent, fallible cleanup attempt.
+        # Only the exact container this invocation named. Never a project/global prune.
+        _removed, cleanup = _attempt(["docker", "rm", "-f", name], 30)
+        cleanup_ok = ((cleanup["status"] == "COMPLETED" and cleanup["exitCode"] == 0)
+                      or _owned_container_absent(cleanup, name))
+        if (completed is None or not cleanup_ok
+                or not _safe_observation(producer) or not _safe_observation(cleanup)):
+            raise ClientCheckError(producer, cleanup) from None
+        completed.stdout, completed.stderr = producer["stdout"], producer["stderr"]
+        return completed
 
 
 def verify_packages() -> dict:

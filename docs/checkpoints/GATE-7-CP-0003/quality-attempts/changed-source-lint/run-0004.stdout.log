@@ -1,0 +1,80 @@
+I001 [*] Import block is un-sorted or un-formatted
+  --> scripts/iacode/client_checks.py:3:1
+   |
+ 1 |   """Reusable owned client capsules. Decision tests are never labelled live runtime acceptance."""
+ 2 |
+ 3 | / from __future__ import annotations
+ 4 | |
+ 5 | | import os
+ 6 | | import hashlib
+ 7 | | import json
+ 8 | | import re
+ 9 | | import shutil
+10 | | import subprocess
+11 | | import sys
+12 | | import tempfile
+13 | | import uuid
+14 | | from pathlib import Path
+15 | |
+16 | | from build_clients import CORE, ROOT, build
+   | |___________________________________________^
+17 |
+18 |   sys.path.insert(0, str(ROOT / "packages/common/src"))
+   |
+help: Organize imports
+  |
+4 |
+  - import os
+5 | import hashlib
+6 | import json
+7 + import os
+8 | import re
+  |
+
+N818 Exception name `ClientCheckFailure` should be named with an Error suffix
+  --> scripts/iacode/client_checks.py:29:7
+   |
+29 | class ClientCheckFailure(RuntimeError):
+   |       ^^^^^^^^^^^^^^^^^^
+30 |     """Safe, bounded producer and cleanup observations; no raw exception or hidden PASS."""
+   |
+
+E501 Line too long (101 > 100)
+  --> scripts/iacode/client_checks.py:35:101
+   |
+33 |         self.report = {"schemaVersion": "1.0.0", "result": "FAIL",
+34 |                        "producer": producer, "cleanup": cleanup}
+35 |         super().__init__("client verification failed: " + json.dumps(self.report, ensure_ascii=True))
+   |                                                                                                     ^
+
+E501 Line too long (101 > 100)
+  --> scripts/iacode/client_checks.py:63:101
+   |
+61 |     try:
+62 |         # Capture bytes: a replacement decoder would destroy the original stream identity.
+63 |         completed = subprocess.run(argv, cwd=ROOT, capture_output=True, timeout=timeout, check=False)
+   |                                                                                                     ^
+64 |         exit_code, stdout, stderr = completed.returncode, completed.stdout, completed.stderr
+65 |     except subprocess.TimeoutExpired as exc:
+   |
+
+RUF021 [*] Parenthesize `a and b` expressions when chaining `and` and `or` together, to make the precedence clear
+   --> scripts/iacode/client_checks.py:206:23
+    |
+204 |         # Only the exact container this invocation named. Never a project/global prune.
+205 |         _removed, cleanup = _attempt(["docker", "rm", "-f", name], 30)
+206 |         cleanup_ok = (cleanup["status"] == "COMPLETED" and cleanup["exitCode"] == 0
+    |                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+207 |                       or _owned_container_absent(cleanup, name))
+208 |         if (completed is None or not cleanup_ok
+    |
+help: Parenthesize the `and` subexpression
+    |
+205 |         _removed, cleanup = _attempt(["docker", "rm", "-f", name], 30)
+    -         cleanup_ok = (cleanup["status"] == "COMPLETED" and cleanup["exitCode"] == 0
+206 +         cleanup_ok = ((cleanup["status"] == "COMPLETED" and cleanup["exitCode"] == 0)
+207 |                       or _owned_container_absent(cleanup, name))
+    |
+
+Found 5 errors.
+[*] 2 fixable with the `--fix` option.

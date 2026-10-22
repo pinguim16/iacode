@@ -25,6 +25,7 @@ import argparse
 import json
 import os
 import re
+import shlex
 import shutil
 import subprocess
 import sys
@@ -1347,6 +1348,46 @@ def build_attacks() -> list[dict[str, Any]]:
     alias("SEC-01", "H", "secret handling",
           "Insert a credential-shaped value into the memory and require a refusal that does not "
           "repeat it")
+
+    def run_m2_literal_phase(fixture: Fixture) -> tuple[str, bool]:
+        """Actual no-phase null and explicit Unicode/quoted phase, including human replay."""
+        outcomes = []
+        for options in ([], ["--phase", 'M2 literal ç "quoted" phase']):
+            supplied = [NEW_CHECKPOINT, "--gate", "TEST", "--status", "IN_PROGRESS", *options]
+            directory = fixture.path / "docs/checkpoints"
+            before = {path for path in directory.iterdir() if path.is_dir()}
+            code, _output = fixture.run(*supplied)
+            created = {path for path in directory.iterdir() if path.is_dir()} - before
+            if code != 0 or len(created) != 1:
+                return "actual checkpoint producer failed its premise", False
+            checkpoint = created.pop()
+            state = load_json(checkpoint / "STATE.json")
+            records = [json.loads(line) for line in (checkpoint / "COMMANDS.jsonl").read_text(
+                encoding="utf-8").splitlines() if line.strip()]
+            if len(records) != 1:
+                return "actual producer did not emit one invocation", False
+            record = records[0]
+            expected_phase = options[1] if options else "TEST"
+            premise = state["phase"] == expected_phase
+            literal = (record["arguments"] == supplied
+                       and Path(record["workingDirectory"]) == fixture.path)
+            replay = record["command"] if os.name == "nt" else shlex.split(record["command"])
+            before_replay = {path for path in directory.iterdir() if path.is_dir()}
+            completed = subprocess.run(replay, cwd=record["workingDirectory"],
+                                       capture_output=True, timeout=60, check=False)
+            replayed = {path for path in directory.iterdir() if path.is_dir()} - before_replay
+            if completed.returncode != 0 or len(replayed) != 1:
+                return "recorded human command could not be replayed", False
+            restored = load_json(replayed.pop() / "STATE.json")
+            preserved = all(restored[key] == state[key] for key in ("gate", "phase", "status"))
+            outcomes.append(premise and literal and preserved)
+        return ("actual no-phase null and supplied quoted-phase replay preserved="
+                + str(outcomes), all(outcomes))
+
+    attack("M2-RT-01", "literal checkpoint producer and replay",
+           "Supply a quoted Unicode --phase beside a valid omitted-phase control",
+           "actual arguments remain literal and human replay preserves semantic state",
+           run_m2_literal_phase, True, "M2-CP-0002 independently escaped attack, executed anew")
 
     return attacks
 

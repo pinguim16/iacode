@@ -1,0 +1,26 @@
+{
+  "schemaVersion": "1.0.0",
+  "role": "milestone independent auditor",
+  "tool": "Codex CLI",
+  "toolVersion": "0.163.0-alpha.10.2",
+  "provider": "OpenAI",
+  "model": "GPT-5",
+  "modelQualification": "Exposed only by the active session identity; no subversion or runtime effort is exposed.",
+  "freshSession": true,
+  "inheritedImplementerConversation": false,
+  "validationMechanism": "FRESH_SESSION_INDEPENDENT_AUDIT",
+  "crossToolValidation": "NOT_AVAILABLE",
+  "crossToolEvidence": "The active capability inventory exposes no separately identified model, provider or external auditing tool callable as an independent second tool.",
+  "mayAuthorize": ["MILESTONE_INDEPENDENT_AUDIT_PASS"],
+  "mustNotAuthorize": ["MILESTONE_EXTERNAL_PASS", "GATE-8"],
+  "subjectCheckpoint": "GATE-7-CP-0001",
+  "subjectTag": "refs/tags/iacode-checkpoints/GATE-7-CP-0001",
+  "subjectCommit": "823cf164c6931dab7f957c92721ded7a916655bd",
+  "limitations": [
+    "Session independence is asserted from the owner's isolated-session authorization and this session boundary; it is not cryptographic proof.",
+    "The same Codex/OpenAI tool family performed implementation and this fresh audit, so this is not cross-tool independence.",
+    "No private chain-of-thought, other chat, rollout database or personal memory is an audit input."
+  ],
+  "trainingAllowed": false
+}
+

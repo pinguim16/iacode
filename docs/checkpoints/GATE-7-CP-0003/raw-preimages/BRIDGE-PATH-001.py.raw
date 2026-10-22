@@ -1,0 +1,389 @@
+"""Operator-owned closed audit jobs, never a command or Docker API proxy.
+
+Only the host constructor can define jobs. HTTP requests cannot provide paths,
+arguments, environment or code. Start this module from a private frozen copy.
+"""
+
+from __future__ import annotations
+
+import hashlib
+import http.server
+import json
+import os
+import re
+import secrets
+import socket
+import stat
+import subprocess
+import tempfile
+import threading
+import time
+from dataclasses import dataclass
+from pathlib import Path
+from types import MappingProxyType
+
+MAX_OUTPUT = 8 * 1024 * 1024
+KEY = re.compile(r"[a-zA-Z0-9_-]{1,80}\Z")
+
+
+def cleanup_plan(scope, current):
+    """A delta alone grants no deletion right. Every candidate also needs ownership."""
+    projects = set(scope.get("registeredProjects", [scope["inheritedOwnedProject"]]))
+    if any(not name.startswith(("iacode-m2cp3-", "iacode-verify-")) for name in projects):
+        raise ValueError("UNAUTHORIZED_PROJECT_CLAIM")
+    before = scope["before"]
+    original_refs = {tag: image["id"] for image in before["images"] for tag in image["tags"]}
+    known_owned = {image["id"] for image in before["images"]
+                   if image.get("project") in projects
+                   or any(tag.startswith(tuple(name + "/" for name in projects)) for tag in image["tags"])}
+    auxiliary = {item["id"]: item for item in scope.get("claimedAuxiliaryImages", [])
+                 if item.get("evidence") and item["id"] not in {row["id"] for row in before["images"]}}
+    own_containers = {row["id"] for row in current["containers"] if row.get("project") in projects}
+    image_ids, preserved = [], []
+    for image in current["images"]:
+        owned_tags = [tag for tag in image["tags"] if tag.startswith(tuple(name + "/" for name in projects))]
+        claimed = (image["id"] in known_owned or image["id"] in auxiliary
+                   or image.get("project") in projects or bool(owned_tags))
+        if not claimed:
+            continue
+        external_users = [row["id"] for row in current["containers"]
+                          if row["image"] == image["id"] and row["id"] not in own_containers]
+        allowed_auxiliary_tags = auxiliary.get(image["id"], {}).get("allowedTags", [])
+        allowed_auxiliary_repositories = auxiliary.get(image["id"], {}).get("allowedDigestRepositories", [])
+        external_aliases = [tag for tag in image["tags"]
+                            if tag not in owned_tags and tag not in allowed_auxiliary_tags]
+        external_digests = [digest for digest in image.get("digests", [])
+                            if not digest.startswith(tuple(name + "/" for name in projects))
+                            and not digest.startswith(tuple(name + "@" for name in allowed_auxiliary_repositories))]
+        if external_users or external_aliases or external_digests:
+            preserved.append({"id": image["id"], "reason": "SHARED_REFERENCE",
+                              "externalContainers": external_users, "externalTags": external_aliases,
+                              "externalDigests": external_digests})
+        else:
+            image_ids.append(image["id"])
+    return {"containers": sorted(own_containers), "images": sorted(image_ids),
+            "networks": [row["id"] for row in current["networks"] if row.get("project") in projects],
+            "volumes": [row["name"] for row in current["volumes"] if row.get("project") in projects],
+            "preservedShared": preserved, "baselineTagCount": len(original_refs)}
+
+
+def regular(path: Path, root: Path) -> None:
+    if not path.is_relative_to(root) or path == root:
+        raise ValueError("OUTSIDE_PRIVATE_ROOT")
+    for current in (path, *path.parents):
+        if current.is_symlink() or current.is_junction():
+            raise ValueError("REDIRECTED_INPUT")
+        if current == root:
+            break
+    info = path.stat()
+    if not stat.S_ISREG(info.st_mode) or info.st_nlink != 1:
+        raise ValueError("NONREGULAR_INPUT")
+
+
+def file_digest(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as stream:
+        for block in iter(lambda: stream.read(1024 * 1024), b""):
+            digest.update(block)
+    return digest.hexdigest()
+
+
+class FrozenInputs:
+    def __init__(self, root: Path, paths: list[Path]):
+        self.root = root.absolute()
+        self.hashes = {}
+        for path in paths:
+            regular(path, self.root)
+            self.hashes[path.relative_to(self.root).as_posix()] = file_digest(path)
+        if not self.hashes:
+            raise ValueError("EMPTY_FROZEN_SOURCE")
+        self.hashes = MappingProxyType(self.hashes)
+
+    def verify(self):
+        for name, expected in self.hashes.items():
+            path = self.root / name
+            regular(path, self.root)
+            if file_digest(path) != expected:
+                raise ValueError("SOURCE_CHANGED")
+
+
+def observe(stream, scanner, limit=MAX_OUTPUT) -> tuple[dict, bytes | None]:
+    digest, size, raw = hashlib.sha256(), 0, bytearray()
+    try:
+        stream.flush()
+        stream.seek(0)
+        for block in iter(lambda: stream.read(65536), b""):
+            size += len(block)
+            digest.update(block)
+            if size <= limit:
+                raw.extend(block)
+    except OSError:
+        return {"bytes": None, "sha256": None, "refusal": "OUTPUT_READ_FAILED"}, None
+    fact = {"bytes": size, "sha256": digest.hexdigest(), "refusal": None}
+    if size > limit:
+        fact["refusal"] = "OUTPUT_LIMIT"
+        return fact, None
+    try:
+        text = bytes(raw).decode("utf-8", errors="strict")
+        if scanner(text) or scanner(json.dumps(text, ensure_ascii=True)):
+            fact["refusal"] = "UNSAFE_OUTPUT"
+            return fact, None
+    except UnicodeError:
+        fact["refusal"] = "OUTPUT_ENCODING"
+        return fact, None
+    except Exception:
+        fact["refusal"] = "OUTPUT_SCAN_FAILED"
+        return fact, None
+    return fact, bytes(raw)
+
+
+@dataclass(frozen=True)
+class Job:
+    argv: tuple[str, ...]
+    timeout: int
+    reports: tuple[str, ...] = ()
+
+
+def run_owned(job: Job, root: Path, environment: dict, scanner, job_factory) -> tuple[dict, dict]:
+    """Capture the producer BEFORE independent, fallible process-tree cleanup."""
+    native = None
+    process = None
+    attached = False
+    producer = {"status": "LAUNCH_ERROR", "exitCode": None, "arguments": list(job.argv)}
+    cleanup = {"result": "NOT_CREATED"}
+    artifacts = {}
+    with tempfile.TemporaryFile() as stdout, tempfile.TemporaryFile() as stderr:
+        try:
+            native = job_factory()
+            flags = 0
+            startup = None
+            if os.name == "nt":
+                flags = subprocess.CREATE_NEW_PROCESS_GROUP | subprocess.CREATE_NO_WINDOW | 4
+                startup = subprocess.STARTUPINFO()
+                startup.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+            process = subprocess.Popen(job.argv, cwd=root, env=environment,
+                                       stdin=subprocess.DEVNULL, stdout=stdout, stderr=stderr,
+                                       creationflags=flags, startupinfo=startup)
+            native.attach_and_resume(process)
+            attached = True
+            producer["status"] = "RUNNING"
+            try:
+                producer["exitCode"] = process.wait(timeout=job.timeout)
+                producer["status"] = "COMPLETED"
+            except subprocess.TimeoutExpired:
+                producer["status"] = "TIMEOUT"
+        except Exception:
+            producer["status"] = "LAUNCH_ERROR"
+        finally:
+            # A cleanup exception may never replace the already captured producer.
+            for name, stream in (("stdout", stdout), ("stderr", stderr)):
+                fact, raw = observe(stream, scanner)
+                producer[name] = fact
+                if raw is not None:
+                    artifacts[name + ".log"] = raw
+            if native is not None:
+                try:
+                    cleanup = {"result": "PASS", "observation": native.close()}
+                except Exception as error:
+                    cleanup = {"result": "FAIL", "errorType": type(error).__name__}
+                    # Only typed cleanup facts, never arbitrary exception messages.
+                    fact = getattr(error, "observation", None)
+                    allowed = {"result", "phase", "totalDeadlineSeconds", "naturalExitBudgetSeconds",
+                               "forcedTermination", "remainingBeforeCleanup", "remainingJobActive",
+                               "observedProcessCount", "signaledProcessCount", "pendingProcessCount",
+                               "lastObservedElapsedSeconds"}
+                    if (type(fact) is dict and set(fact) <= allowed
+                            and all(value is None or type(value) in (bool, int, float)
+                                    or (key == "result" and value == "FAIL")
+                                    or (key == "phase" and value in (
+                                        "MEMBER_SNAPSHOT", "NATURAL_DRAIN", "FORCE_SNAPSHOT", "FORCED_DRAIN"))
+                                    for key, value in fact.items())):
+                        cleanup["observation"] = dict(fact)
+                    elif fact is not None:
+                        cleanup["observationRefusal"] = "UNSAFE_CLEANUP_FACTS"
+            if process is not None and not attached and process.poll() is None:
+                # Attachment can fail after suspended creation. Use only Popen's pinned
+                # creation handle, not a PID search, to remove that exact owned process.
+                try:
+                    process.kill()
+                    process.wait(timeout=3)
+                    cleanup["unattachedOwnedProcessRemoved"] = True
+                except Exception as error:
+                    cleanup.update(result="FAIL", unattachedErrorType=type(error).__name__)
+            if process is not None:
+                try:
+                    process.wait(timeout=3)
+                except subprocess.TimeoutExpired:
+                    cleanup["result"] = "FAIL"
+                    cleanup["processStillAlive"] = True
+    return {"producer": producer, "cleanup": cleanup}, artifacts
+
+
+class ClosedBridge:
+    def __init__(self, frozen: FrozenInputs, jobs: dict[str, Job], environment: dict,
+                 scanner, job_factory, executables: tuple[Path, ...] = ()):
+        if not jobs or any(not KEY.fullmatch(key) for key in jobs):
+            raise ValueError("INVALID_JOB_KEYS")
+        self.frozen = frozen
+        self.jobs = MappingProxyType(dict(jobs))
+        self.environment = MappingProxyType(dict(environment))
+        self.scanner, self.job_factory = scanner, job_factory
+        self.executables = MappingProxyType({path: file_digest(path) for path in executables})
+        self.capability = secrets.token_urlsafe(32)
+        self.lock = threading.Lock()
+        self.worker = None
+        self.results = {}
+        self.artifacts = {}
+        self.server = None
+
+    def start_job(self, key):
+        with self.lock:
+            if key not in self.jobs:
+                return 400, {"error": "UNKNOWN_JOB"}
+            if key in self.results:
+                return 200, self.results[key]
+            if self.worker is not None and self.worker.is_alive():
+                return 409, {"error": "BUSY"}
+            self.results[key] = {"job": key, "status": "RUNNING"}
+            self.worker = threading.Thread(target=self._execute, args=(key,), daemon=False)
+            self.worker.start()
+            return 202, self.results[key]
+
+    def _execute(self, key):
+        artifacts = {}
+        result = {"job": key, "status": "DONE", "result": "FAIL"}
+        started = time.monotonic()
+        try:
+            self.frozen.verify()
+            for path, expected in self.executables.items():
+                if file_digest(path) != expected:
+                    raise ValueError("EXECUTABLE_CHANGED")
+            execution, artifacts = run_owned(self.jobs[key], self.frozen.root,
+                                            dict(self.environment), self.scanner, self.job_factory)
+            # Bind the primary observation before any source or report interpretation.
+            result.update(execution)
+            for name in self.jobs[key].reports:
+                path = self.frozen.root / name
+                if not path.exists():
+                    result.setdefault("missingReports", []).append(name)
+                    continue
+                regular(path, self.frozen.root)
+                with path.open("rb") as stream:
+                    fact, raw = observe(stream, self.scanner)
+                result.setdefault("reports", {})[name] = fact
+                if raw is not None:
+                    artifacts["report-" + hashlib.sha256(name.encode()).hexdigest() + ".json"] = raw
+            self.frozen.verify()
+            producer = result["producer"]
+            if (producer["status"] == "COMPLETED" and producer["exitCode"] == 0
+                    and result["cleanup"]["result"] == "PASS"
+                    and not any(producer[name]["refusal"] for name in ("stdout", "stderr"))
+                    and not result.get("missingReports")
+                    and not any(fact["refusal"] for fact in result.get("reports", {}).values())):
+                result["result"] = "PASS"
+        except Exception as error:
+            result["postprocessingErrorType"] = type(error).__name__
+        result["durationMs"] = int((time.monotonic() - started) * 1000)
+        result["artifacts"] = {name: {"bytes": len(raw), "sha256": hashlib.sha256(raw).hexdigest()}
+                               for name, raw in artifacts.items()}
+        with self.lock:
+            self.artifacts[key] = MappingProxyType(artifacts)
+            self.results[key] = result
+
+    def listen(self):
+        bridge = self
+
+        class Handler(http.server.BaseHTTPRequestHandler):
+            def log_message(self, *_args):
+                return
+
+            def setup(self):
+                super().setup()
+                self.connection.settimeout(2)
+
+            def send(self, status, value):
+                raw = value if isinstance(value, bytes) else json.dumps(value).encode("utf-8")
+                self.send_response(status)
+                self.send_header("Content-Type", "application/octet-stream")
+                self.send_header("Content-Length", str(len(raw)))
+                self.send_header("Cache-Control", "no-store")
+                self.end_headers()
+                self.wfile.write(raw)
+
+            def authorized(self):
+                if (self.headers.get("Host") != f"127.0.0.1:{self.server.server_port}"
+                        or self.headers.get("Origin") is not None
+                        or not secrets.compare_digest(self.headers.get("X-IACode-Capability", ""),
+                                                       bridge.capability)):
+                    self.send(403, {"error": "REFUSED"})
+                    return False
+                return True
+
+            def do_POST(self):
+                if not self.authorized():
+                    return
+                if (self.path != "/jobs" or self.headers.get("Transfer-Encoding") is not None
+                        or self.headers.get("Content-Type") != "application/json"
+                        or len(self.headers.get_all("Content-Length", [])) != 1):
+                    self.send(400, {"error": "REQUEST_SCHEMA"})
+                    return
+                try:
+                    size = int(self.headers["Content-Length"])
+                    if size > 256:
+                        # Bounded discard lets Windows deliver the refusal rather than
+                        # resetting a connection with an unread small request body. A large
+                        # declared payload is never drained without a finite byte ceiling.
+                        if size <= 4096:
+                            self.rfile.read(size)
+                        raise ValueError("SIZE")
+                    if size < 1:
+                        raise ValueError("SIZE")
+
+                    def unique(pairs):
+                        value = {}
+                        for key, item in pairs:
+                            if key in value:
+                                raise ValueError("DUPLICATE_FIELD")
+                            value[key] = item
+                        return value
+
+                    request = json.loads(self.rfile.read(size), object_pairs_hook=unique)
+                    if (type(request) is not dict or set(request) != {"job"}
+                            or type(request["job"]) is not str or not KEY.fullmatch(request["job"])):
+                        raise ValueError("SCHEMA")
+                except (ValueError, UnicodeError, socket.timeout):
+                    self.send(400, {"error": "REQUEST_SCHEMA"})
+                    return
+                status, result = bridge.start_job(request["job"])
+                self.send(status, result)
+
+            def do_GET(self):
+                if not self.authorized():
+                    return
+                parts = self.path.split("/")
+                with bridge.lock:
+                    if self.path == "/catalog":
+                        value = {"jobs": {key: {"arguments": list(job.argv), "timeoutSeconds": job.timeout}
+                                          for key, job in bridge.jobs.items()},
+                                 "frozenInputs": dict(bridge.frozen.hashes)}
+                    elif len(parts) == 3 and parts[1] == "jobs" and parts[2] in bridge.results:
+                        value = bridge.results[parts[2]]
+                    elif (len(parts) == 4 and parts[1] == "artifacts"
+                          and parts[2] in bridge.artifacts
+                          and parts[3] in bridge.artifacts[parts[2]]):
+                        value = bridge.artifacts[parts[2]][parts[3]]
+                    else:
+                        self.send(404, {"error": "NOT_FOUND"})
+                        return
+                    self.send(200, value)
+
+        self.server = http.server.HTTPServer(("127.0.0.1", 0), Handler)
+        self.server.request_queue_size = 8
+        return self.server
+
+    def close(self):
+        if self.server is not None:
+            self.server.shutdown()
+            self.server.server_close()
+        if self.worker is not None:
+            self.worker.join()  # The fixed job has a finite timeout and exact native-job cleanup.

@@ -1,0 +1,29 @@
+{
+  "schemaVersion": "1.0.0",
+  "artifact": "OBSERVED_COMMAND",
+  "workingDirectory": "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-m2-audit-entry-public-e349d4115b584c2aadd6b1959e19f13e",
+  "arguments": [
+    "python",
+    "-m",
+    "unittest",
+    "tests.test_development_ledger.CommandReproducibilityTests",
+    "-v"
+  ],
+  "startedUnixSeconds": 1792593219.7437103,
+  "durationMs": 449,
+  "exitCode": 0,
+  "stdout": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "truncatedToTail": false,
+    "capturedBytes": 0,
+    "text": ""
+  },
+  "stderr": {
+    "bytes": 2110,
+    "sha256": "2fd1b0380e12dc6ac18df9d2de5387ef17ccdf1e726f67ed546311a1ed046835",
+    "truncatedToTail": false,
+    "capturedBytes": 2110,
+    "text": "test_a_fabricated_nontransport_input_refusal_is_rejected (tests.test_development_ledger.CommandReproducibilityTests.test_a_fabricated_nontransport_input_refusal_is_rejected) ... ok\r\ntest_a_nontransport_input_refusal_is_recomputed_from_its_precondition (tests.test_development_ledger.CommandReproducibilityTests.test_a_nontransport_input_refusal_is_recomputed_from_its_precondition) ... ok\r\ntest_bare_script_name_is_rejected (tests.test_development_ledger.CommandReproducibilityTests.test_bare_script_name_is_rejected) ... ok\r\ntest_complete_record_passes (tests.test_development_ledger.CommandReproducibilityTests.test_complete_record_passes) ... ok\r\ntest_completed_record_requires_an_exit_code (tests.test_development_ledger.CommandReproducibilityTests.test_completed_record_requires_an_exit_code) ... ok\r\ntest_declared_input_must_exist (tests.test_development_ledger.CommandReproducibilityTests.test_declared_input_must_exist) ... ok\r\ntest_missing_commit_fails (tests.test_development_ledger.CommandReproducibilityTests.test_missing_commit_fails) ... ok\r\ntest_missing_purpose_fails (tests.test_development_ledger.CommandReproducibilityTests.test_missing_purpose_fails) ... ok\r\ntest_missing_runtime_fails (tests.test_development_ledger.CommandReproducibilityTests.test_missing_runtime_fails) ... ok\r\ntest_precondition_rejection_must_not_fake_an_exit_code (tests.test_development_ledger.CommandReproducibilityTests.test_precondition_rejection_must_not_fake_an_exit_code) ... ok\r\ntest_precondition_rejection_requires_a_reason (tests.test_development_ledger.CommandReproducibilityTests.test_precondition_rejection_requires_a_reason) ... ok\r\ntest_the_first_transport_refusal_record_keeps_valid_legacy_classification (tests.test_development_ledger.CommandReproducibilityTests.test_the_first_transport_refusal_record_keeps_valid_legacy_classification) ... ok\r\ntest_unresolvable_script_path_is_rejected (tests.test_development_ledger.CommandReproducibilityTests.test_unresolvable_script_path_is_rejected) ... ok\r\n\r\n----------------------------------------------------------------------\r\nRan 13 tests in 0.118s\r\n\r\nOK\r\n"
+  }
+}

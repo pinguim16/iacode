@@ -1,0 +1,10 @@
+{
+  "kind": "HARNESS_CAPTURE_FAILURE_NOT_ACCEPTED_CAUSAL_EVIDENCE",
+  "commandRecord": "cmd-0006",
+  "observedWrapperExitCode": 1,
+  "reason": "Strict UTF-8 decoding raised UnicodeDecodeError on the unittest stderr emitted with the Windows default encoding. Only an empty stdout artifact was written before the exception.",
+  "producerExitCode": null,
+  "producerExitUnknown": true,
+  "producerRawStderrArchived": false,
+  "disposition": "Retain failed attempt, fix child encoding and fail-closed capture, then rerun unchanged implementation. Never infer a baseline verdict from this attempt."
+}

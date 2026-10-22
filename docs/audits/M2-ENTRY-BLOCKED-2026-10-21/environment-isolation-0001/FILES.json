@@ -1,0 +1,33 @@
+{
+  "kind": "unsealed-blocked-auditor-entry-inventory",
+  "status": "BLOCKED",
+  "filesCreated": [
+    {
+      "path": "docs/audits/M2-ENTRY-BLOCKED-2026-10-21/environment-isolation-0001/REPORT.md",
+      "reason": "Named read-access impediment; no accepted environment normalization or M2 verdict.",
+      "hashAfter": "3931194b0600007d5e2a8239350b650e9d87c2b8963238d1170e3e3b0216d4a5"
+    },
+    {
+      "path": "docs/audits/M2-ENTRY-BLOCKED-2026-10-21/environment-isolation-0001/COMMANDS.json",
+      "reason": "Preserved actual diagnostic commands, decoded outputs, durations and process exit codes.",
+      "hashAfter": "1f3afb0d9f2aed7ea92630cd6183f52b1c4fb951b57e8271fd93633a70035a62"
+    },
+    {
+      "path": "docs/audits/M2-ENTRY-BLOCKED-2026-10-21/environment-isolation-0001/FILES.json",
+      "reason": "Descriptive inventory itself; no self hash and no canonical checkpoint seal claim."
+    }
+  ],
+  "privateFilesCreated": [
+    {
+      "path": "var/audit-environment/m2-auditor-2026-10-21/README.txt",
+      "reason": "Owner-scoped destination instructions only; repository-ignored; no ignore copy or substitute created; not a public transport input.",
+      "hashAfter": "ea61f00d22b9746ef4ba8151fb50c625f1368c5e3112c9ca93d18d4636920bae"
+    }
+  ],
+  "filesModified": [],
+  "filesDeleted": [],
+  "priorReportsPreserved": true,
+  "configurationChanged": false,
+  "implementationChanged": false,
+  "trainingAllowed": false
+}

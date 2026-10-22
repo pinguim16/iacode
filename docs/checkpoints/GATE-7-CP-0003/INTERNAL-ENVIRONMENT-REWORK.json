@@ -1,0 +1,91 @@
+{
+  "kind": "INTERNAL_ENVIRONMENT_ADAPTER_REWORK_NOT_INDEPENDENT_FINDINGS",
+  "acceptance": "NOT_GRANTED",
+  "items": [
+    {
+      "id": "M2-F-002-NATIVE-EXTENSION",
+      "status": "LOCAL_CORRECTION_DEMONSTRATED_WHOLE_ASSURANCE_PENDING",
+      "observed": "An actual native Python producer exits 7, but a deliberately injected callback error after a real owned-tree drain exposes only cleanup facts, not the original producer.",
+      "evidence": "causal-attempts/native-cleanup-evidence/run-0001.json",
+      "exposure": "Same M2-F-002/LSN-0135 evidence-loss class, not a new independent finding or an observed OS cleanup malfunction. No editor or Docker process was started by this probe.",
+      "requiredCorrection": "Retain safe bounded producer bytes, digest and exit state before native cleanup; propagate both facts without permitting cleanup failure to pass. Preserve actual owned-tree isolation and the normal CompletedProcess interface.",
+      "sequencing": "Keep the running root baseline stable, then repair and rerun current complete assurance.",
+      "currentProof": [
+        "causal-attempts/run-0011.json",
+        "causal-attempts/native-observation/run-0003.json",
+        "causal-attempts/bridge-physical-bounds/run-0002.json",
+        "causal-attempts/bridge/run-0005.json",
+        "causal-attempts/owned-cleanup/run-0004.json",
+        "causal-attempts/operator-cleanup/run-0002.json",
+        "causal-attempts/current-streams/run-0001.json",
+        "causal-attempts/inherited-streams/run-0001.json"
+      ],
+      "currentCanonicalImplementation": true
+    },
+    {
+      "id": "BRIDGE-PATH-001",
+      "status": "LOCAL_CORRECTION_DEMONSTRATED_WHOLE_ASSURANCE_PENDING",
+      "observed": "The regular-file helper accepts a lexical parent-relative path outside the private root; direct absolute escape is correctly refused.",
+      "exposure": "Closed HTTP requests cannot supply a path or report name; no auditor has been started. This is a defensive operator-input boundary defect in the new unreleased adapter, not an observed disclosure.",
+      "evidence": "causal-attempts/bridge-path-bounds/run-0001.json",
+      "canonicalRefs": [
+        "canonical:GATE-7#7.3",
+        "canonical:GATE-7#7.5"
+      ],
+      "requiredCorrection": "Validate actual resolved containment and reject parent traversal before file observation; add actual positive/adverse controls and rerun current complete assurance.",
+      "sequencing": "The ongoing root baseline uses the unchanged source fingerprint. Do not offer this adapter or issue any readiness verdict while this item is open.",
+      "currentProof": [
+        "causal-attempts/run-0011.json",
+        "causal-attempts/native-observation/run-0003.json",
+        "causal-attempts/bridge-physical-bounds/run-0002.json",
+        "causal-attempts/bridge/run-0005.json",
+        "causal-attempts/owned-cleanup/run-0004.json",
+        "causal-attempts/operator-cleanup/run-0002.json",
+        "causal-attempts/current-streams/run-0001.json",
+        "causal-attempts/inherited-streams/run-0001.json"
+      ],
+      "currentCanonicalImplementation": true
+    },
+    {
+      "id": "PRIVATE-BUILDER-EXPORT-001",
+      "status": "RESOLVED_BY_COMPLETED_UNCHANGED_RETRY",
+      "observed": "The complete lint run passed backend checks and frontend compilation, but OCI tar export was canceled after client-session healthcheck timeouts.",
+      "evidence": "quality-attempts/lint/run-0002.json",
+      "diagnostic": "environment-attempts/builder-diagnostics/run-0001.json",
+      "requiredCorrection": "Obtain an actual full canonical lint success under supported child-only transport, preserving the original failure and without restarting applications or using stale images.",
+      "successEvidence": "quality-attempts/lint/run-0003.json"
+    },
+    {
+      "id": "ROOT-UTF8-001",
+      "status": "LOCAL_CORRECTION_DEMONSTRATED_WHOLE_ASSURANCE_PENDING",
+      "observed": "The unchanged complete Root1018 scan finds six current capturing entrypoints without their own UTF-8 stream bootstrap. Existing guards correctly remain red.",
+      "evidence": "quality-attempts/tests/run-0001.stderr.log",
+      "requiredCorrection": "Configure actual current entry blocks through the existing bootstrap, add cold positive/adverse startup proof and retain the unchanged whole-tree guards.",
+      "classification": "GUARDRAIL_FAILURE LSN-0035 and LSN-0083; no maximum-severity reset or test weakening",
+      "currentProof": [
+        "causal-attempts/run-0011.json",
+        "causal-attempts/native-observation/run-0003.json",
+        "causal-attempts/bridge-physical-bounds/run-0002.json",
+        "causal-attempts/bridge/run-0005.json",
+        "causal-attempts/owned-cleanup/run-0004.json",
+        "causal-attempts/operator-cleanup/run-0002.json",
+        "causal-attempts/current-streams/run-0001.json",
+        "causal-attempts/inherited-streams/run-0001.json"
+      ],
+      "currentCanonicalImplementation": true
+    },
+    {
+      "id": "BYTE-TRANSPORT-001",
+      "status": "LOCAL_CORRECTION_DEMONSTRATED_WHOLE_ASSURANCE_PENDING",
+      "classification": "GUARDRAIL_FAILURE LSN-0131",
+      "observed": "Actual staged copied bytes differ in62 of182 files;120 match. No originals were rewritten and no commit/tag/push occurred.",
+      "evidence": "byte-transport-attempts/index-0001.json",
+      "requiredCorrection": "Explicit copied-observation Git attributes, actual default/CRLF checkout and archive controls, index recheck, and new complete current assurance.",
+      "currentProof": [
+        "byte-transport-attempts/controls/run-0002.json",
+        "byte-transport-attempts/index-0005.json"
+      ],
+      "originalFilesRewritten": false
+    }
+  ]
+}

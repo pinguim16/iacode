@@ -1,0 +1,28 @@
+{
+  "schemaVersion": "1.0.0",
+  "artifact": "OBSERVED_COMMAND",
+  "workingDirectory": "E:\\iacode",
+  "arguments": [
+    "docker",
+    "version",
+    "--format",
+    "{{json .}}"
+  ],
+  "startedUnixSeconds": 1792590785.8179119,
+  "durationMs": 101,
+  "exitCode": 1,
+  "stdout": {
+    "bytes": 227,
+    "sha256": "a7f3745c8395d6ed6f3ab684b91e4857ccdf1a97fb680d02183d0c4ffbe81be9",
+    "truncatedToTail": false,
+    "capturedBytes": 227,
+    "text": "{\"Client\":{\"Version\":\"29.8.1\",\"ApiVersion\":\"1.56\",\"DefaultAPIVersion\":\"1.56\",\"GitCommit\":\"4a63305\",\"GoVersion\":\"go1.26.8\",\"Os\":\"windows\",\"Arch\":\"amd64\",\"BuildTime\":\"Tue Sep 15 16:28:39 2026\",\"Context\":\"default\"},\"Server\":null}\n"
+  },
+  "stderr": {
+    "bytes": 189,
+    "sha256": "ba6378f22fd83531cee34c02888b6914cb334488150d51310ba626d518c4ea6c",
+    "truncatedToTail": false,
+    "capturedBytes": 189,
+    "text": "WARNING: Error loading config file: open C:\\Users\\cesar\\.docker\\config.json: Access is denied.\npermission denied while trying to connect to the docker API at npipe:////./pipe/docker_engine\n"
+  }
+}

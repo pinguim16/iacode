@@ -1,0 +1,24 @@
+{
+  "schemaVersion": "3.4.0",
+  "unit": {
+    "executed": true,
+    "passed": 980,
+    "failed": 3,
+    "command": "python -m unittest discover -s tests",
+    "evidence": "command:cmd-0015; file:controls/control-plane-full-suite.json; one additional skipped test"
+  },
+  "integration": {
+    "executed": true,
+    "passed": 980,
+    "failed": 3,
+    "command": "python -m unittest discover -s tests",
+    "evidence": "The canonical registry defines this as the combined unit/integration suite; effective exit 1. Counts are shared, not added twice."
+  },
+  "e2e": {
+    "executed": false,
+    "passed": 0,
+    "failed": 0,
+    "command": null,
+    "evidence": "BLOCKED: command:cmd-0007 denied Docker Engine access; no substitute was run."
+  }
+}

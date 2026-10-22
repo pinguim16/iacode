@@ -1,0 +1,35 @@
+{
+  "startedAt": "2026-10-21T23:03:22Z",
+  "finishedAt": "2026-10-21T23:03:27Z",
+  "sourceFingerprint": "4440a9d036ff8644fc0349f2e45a2819914ccf3499ad5d915a50d11a43576956",
+  "sourceUnchanged": true,
+  "durationMs": 5370,
+  "arguments": [
+    "C:\\Program Files\\Python313\\python.exe",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-p",
+    "test_gate0_foundation.py",
+    "-k",
+    "SubprocessDecodingTests",
+    "-v"
+  ],
+  "exitCode": 0,
+  "streams": {
+    "stdout": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "refused": false,
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/inherited-streams/run-0001.stdout.log"
+    },
+    "stderr": {
+      "sha256": "cbed7ebd8e08a3d17250e7a95fecce6cc00c414532422cb62d28cf9f729c5514",
+      "bytes": 768,
+      "refused": false,
+      "path": "docs/checkpoints/GATE-7-CP-0003/causal-attempts/inherited-streams/run-0001.stderr.log"
+    }
+  }
+}

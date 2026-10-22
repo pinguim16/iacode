@@ -1,0 +1,36 @@
+* text=auto
+*.md text eol=lf
+*.json text eol=lf
+*.jsonl text eol=lf
+# Immutable copied observations retain their original byte digest across Git transport.
+docs/checkpoints/**/attempts/*.json -text
+# Captured UTF-8 process output retains the exact bytes named by its observed digest.
+docs/checkpoints/GATE-6-CP-0001/suite-attempts/*.log -text
+docs/checkpoints/**/DESKTOP-LIVE.json -text
+docs/checkpoints/**/HARDENED-GATEWAY.json -text
+*.py text eol=lf
+*.txt text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.ts text eol=lf
+*.cjs text eol=lf
+*.mjs text eol=lf
+*.html text eol=lf
+*.css text eol=lf
+*.scss text eol=lf
+*.sql text eol=lf
+*.sh text eol=lf
+*.mako text eol=lf
+*.ini text eol=lf
+*.toml text eol=lf
+*.conf text eol=lf
+Dockerfile text eol=lf
+.dockerignore text eol=lf
+# Copied byte for byte into the sandbox image, where Git reads it on Linux.
+gitconfig text eol=lf
+*.ps1 text eol=crlf
+# Exact archived v6 handoff observations include Markdown and Python as original bytes.
+docs/checkpoints/GATE-6-CP-0001/attempts/RUNTIME-V6-FINALIZATION-* -text
+# New producer observations retain their captured bytes across Git transport.
+docs/checkpoints/GATE-7-CP-0001/attempts/* -text
+docs/checkpoints/GATE-7-CP-0001/suite-attempts/*.log -text

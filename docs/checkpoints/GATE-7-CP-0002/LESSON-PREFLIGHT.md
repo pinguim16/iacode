@@ -1,0 +1,1218 @@
+# Lesson Preflight
+
+- Gate: `GATE-7`
+- Scope: `M2 independent audit Gates 4 5 6 7 quality desktop experience knowledge public transport immutable review reconstruction security rights retention`
+- Technologies: `Python`, `Node`, `TypeScript`, `PostgreSQL`, `Docker`, `Git`, `VS Code`
+- Modules: `evaluator`, `desktop`, `experience`, `knowledge`, `development-ledger`
+- Generated: `2026-10-21T13:46:05Z`
+- Lessons considered: 151
+- Lessons applicable: 150
+
+Every applicable lesson below is a requirement of this Gate. The derived identifiers must
+appear in `REQUIREMENTS-MATRIX.json`, and the Delivery Completeness Validator fails the
+delivery when one is absent.
+
+| Lesson | Status | Severity | Derived requirement | Required check |
+|---|---|---|---|---|
+| `LSN-0001` Checkpoint validation must succeed from a detached checkout of the checkpoint tag | `GUARDED` | HIGH | `LESSON-REQ-0001` | Validate the checkpoint from a clean clone detached at its own tag, not only on the branch. |
+| `LSN-0002` A file inventory must be recomputed from the repository, never trusted as an assertion | `GUARDED` | HIGH | `LESSON-REQ-0002` | Declare every changed path with a reason before finalizing and let the tooling bind the hashes. |
+| `LSN-0003` Every operation attempt must be auditable, including a refusal decided before execution | `GUARDED` | HIGH | `LESSON-REQ-0003` | Confirm that a refused operation appends its attempt to the ledger before returning an error. |
+| `LSN-0004` A checkpoint may never claim readiness while it also claims to be blocked | `GUARDED` | CRITICAL | `LESSON-REQ-0004` | Verify that the checkpoint carries no blocker while it claims to be ready for review. |
+| `LSN-0005` A PASS requires evidence that can be executed or resolved, not a statement | `GUARDED` | CRITICAL | `LESSON-REQ-0005` | Attach a resolvable evidence reference to every PASS recorded by this Gate. |
+| `LSN-0006` The repository must be self-contained; a specification may not live outside it | `GUARDED` | MEDIUM | `LESSON-REQ-0006` | Confirm that every specification this Gate depends on is committed to the repository. |
+| `LSN-0007` Independent validation cannot be declared by the run that did the work | `GUARDED` | CRITICAL | `LESSON-REQ-0007` | Close the implementing run at an internal status and leave the independent verdict pending. |
+| `LSN-0008` Requirement completeness must be total and evidence-backed before handoff | `GUARDED` | CRITICAL | `LESSON-REQ-0008` | Extract every requirement before implementing and audit completeness before handoff. |
+| `LSN-0009` A red gate requires rework, never a waiver, and never a weakened check | `GUARDED` | CRITICAL | `LESSON-REQ-0009` | Run the Green Keeper until every mandatory gate is green, repairing causes rather than checks. |
+| `LSN-0010` A recorded command must carry runtime, working directory, commit and purpose to be replayable | `GUARDED` | HIGH | `LESSON-REQ-0010` | Record commands with the tooling so each one is executable from its declared working directory. |
+| `LSN-0011` A control over a checkpoint's own evidence must be scoped to the moment it matters | `GUARDED` | CRITICAL | `LESSON-REQ-0011` | Check whether any new control would be invalidated by the evidence its own run produces. |
+| `LSN-0012` Sealed checkpoints and their tags are immutable, and tooling must keep validating them | `GUARDED` | CRITICAL | `LESSON-REQ-0012` | Version every changed invariant by the subject's canonical policy, retain mandatory current downgrade controls, and validate all sealed tags with current tooling without altering subjects or narrowing membership. |
+| `LSN-0013` An installed capability must be detected by resolved path, not by a bare command lookup | `CONFIRMED` | HIGH | `LESSON-REQ-0013` | When this Gate records a capability, resolve the executable path before concluding anything about availability. |
+| `LSN-0014` Evidence must be recorded as it happens, not reconstructed at the end of a run | `GUARDED` | MEDIUM | `LESSON-REQ-0014` | Record each command through the tooling while the work happens. |
+| `LSN-0015` Every positive terminal status needs one shared promotion invariant | `GUARDED` | CRITICAL | `LESSON-REQ-0015` | Confirm that every positive terminal status this Gate can produce is covered by the shared promotion invariant, not only the status this delivery ends at. |
+| `LSN-0016` A mandatory set must be closed by policy, never chosen by the caller | `GUARDED` | CRITICAL | `LESSON-REQ-0016` | Confirm that every control whose scope could be narrowed by an argument derives that scope from policy instead. |
+| `LSN-0017` A completeness denominator must come from a source the delivery does not own | `GUARDED` | CRITICAL | `LESSON-REQ-0017` | Confirm that the expected requirement set is derived independently and compared as a set, not only as a count. |
+| `LSN-0018` A structured reference must be resolved, not merely well typed | `GUARDED` | CRITICAL | `LESSON-REQ-0018` | Confirm that every reference this Gate records is resolved by a tool, not accepted as a string. |
+| `LSN-0019` A derived artifact must carry a fingerprint of the inputs that produced it | `GUARDED` | HIGH | `LESSON-REQ-0019` | Confirm that every derived artifact this Gate stores can be recomputed and is recomputed during validation. |
+| `LSN-0020` Evidence produced from a dirty tree needs immutable input identity | `GUARDED` | CRITICAL | `LESSON-REQ-0020` | Confirm that every recorded command binds its inputs by content and that no timestamp in the ledger is later than the recorded end of the run. |
+| `LSN-0021` Sealed history needs an anchor outside the content it describes | `GUARDED` | CRITICAL | `LESSON-REQ-0021` | Confirm that the integrity chain still resolves for every sealed checkpoint and that this Gate anchors every sealed predecessor. |
+| `LSN-0022` An authoritative count must be derived once, never maintained by hand twice | `GUARDED` | CRITICAL | `LESSON-REQ-0022` | Confirm that every count used as evidence in this Gate is derived from one source and verified where it is quoted. |
+| `LSN-0023` A lesson must cite a source that actually records the finding it claims | `GUARDED` | MEDIUM | `LESSON-REQ-0023` | Confirm that every lesson this Gate writes or updates cites a checkpoint that records the finding identifier it names. |
+| `LSN-0024` A control is finished only when its positive path has been executed, not only its refusals | `GUARDED` | CRITICAL | `LESSON-REQ-0024` | For every control this Gate adds or changes that gates a status, execute the path that reaches the status, not only the paths that are refused. |
+| `LSN-0025` A generic guardrail derives repository state instead of naming today's checkpoint | `GUARDED` | CRITICAL | `LESSON-REQ-0025` | Confirm that no generic guard, test or policy in this Gate names a historical checkpoint to decide behaviour, and that any such rule is derived from repository state. |
+| `LSN-0026` An adversarial battery without a null-mutation control proves nothing | `GUARDED` | HIGH | `LESSON-REQ-0026` | Run every adversarial battery of this Gate with an unmutated control through the same path, and record its result with the battery. |
+| `LSN-0027` A lesson's prose may record a residual limit but may never contradict its status | `GUARDED` | MEDIUM | `LESSON-REQ-0027` | Confirm that every lesson this Gate writes or updates describes limits rather than restating its own status. |
+| `LSN-0028` A configuration key that no code reads is a defect, not documentation | `GUARDED` | HIGH | `LESSON-REQ-0028` | Confirm that every configuration key this Gate declares is read by the implementation, or remove it and document the fixed behaviour. |
+| `LSN-0029` A required protocol transition must never turn a mandatory gate red | `GUARDED` | CRITICAL | `LESSON-REQ-0029` | Before handoff, execute the protocol transitions this Gate's successor will perform and confirm the mandatory gates stay green. |
+| `LSN-0031` An empty applicable set is not a missing required set, and a control must tell them apart | `GUARDED` | CRITICAL | `LESSON-REQ-0030` | For every quality or audit control this Gate adds or changes that operates on a derived set, confirm that an empty applicable set is reported as NOT_APPLICABLE with a justification and that a missing required set is reported as a failure. |
+| `LSN-0032` A control written while one Gate was the only Gate stops being a control when the next one starts | `GUARDED` | HIGH | `LESSON-REQ-0031` | For every control this Gate adds or changes, confirm that what it judges is derived from a canonical source rather than written into the control, and that it would still be correct for the Gate after this one. |
+| `LSN-0033` A value bound in middleware is absent in the handlers that run outside it | `GUARDED` | MEDIUM | `LESSON-REQ-0032` | For every cross-cutting value this Gate binds in middleware, confirm it is present in the responses produced above that middleware, including error responses. |
+| `LSN-0034` Re-deriving what the framework already computed diverges from the framework | `GUARDED` | MEDIUM | `LESSON-REQ-0033` | Where this Gate derives a value the framework already computes, confirm it reads the framework's result rather than recomputing it, and that a test asserts the value rather than only its presence. |
+| `LSN-0035` Captured subprocess output decoded or re-emitted with the platform codepage crashes the tool, not the work | `GUARDED` | CRITICAL | `LESSON-REQ-0034` | Confirm every subprocess capture this Gate adds states its decoder explicitly, that every entry point re-emitting captured output configures its own stream, and that the repository-wide control still passes. |
+| `LSN-0036` A gate that runs inside an image measures the image, not the source | `GUARDED` | HIGH | `LESSON-REQ-0035` | For every mandatory gate this Gate adds or changes, confirm that a gate executing inside a built artefact rebuilds that artefact before measuring, and that the repository-wide control still passes. |
+| `LSN-0037` A shared control that names an identifier the repository derives stops being a control when that identifier moves | `GUARDED` | HIGH | `LESSON-REQ-0036` | Confirm that every control this Gate adds which reasons about an identifier the repository derives -- the current Gate, the newest checkpoint, the head migration -- derives it rather than naming it, and that the repository-wide control still passes. |
+| `LSN-0038` Two representations of one concept in one module disagree, and the safer one loses | `GUARDED` | MEDIUM | `LESSON-REQ-0037` | Where this Gate defines a classification twice — once anchored and once embedded — confirm one definition is authoritative and the other derives from it or is removed. |
+| `LSN-0039` A test that writes to the operational database leaves production data behind | `GUARDED` | HIGH | `LESSON-REQ-0038` | For every test this Gate adds that writes to a shared service rather than to a disposable one, confirm it removes what it created and that an invariant detects residue. |
+| `LSN-0040` A control that judges sealed history only runs once a successor anchors it | `GUARDED` | CRITICAL | `LESSON-REQ-0039` | Confirm that every sealed predecessor this Gate anchors validates from a detached checkout of its own tag in a published clone (Git's transport, never a copy of the local object store), that every commit sealed evidence names is reachable from a published reference, and that no command this Gate records declares an input the repository does not carry. |
+| `LSN-0041` An editing path that consumes a backslash escape leaves a control character, and the control it belonged to silently matches nothing | `GUARDED` | HIGH | `LESSON-REQ-0040` | Confirm that every scan this Gate adds asserts it found something before judging it, and that no source file carries a stray control character. |
+| `LSN-0042` A naming convention rewrites a CHECK constraint's name and leaves a UNIQUE constraint's alone | `GUARDED` | CRITICAL | `LESSON-REQ-0041` | For every migration this Gate adds, confirm it is applied and reversed against a disposable database, and that autogenerate finds nothing left to do afterwards. |
+| `LSN-0043` A log line is not evidence that another process is ready | `GUARDED` | MEDIUM | `LESSON-REQ-0042` | For every wait this Gate adds on another process, confirm it asks that process or its server for the state rather than reading a log line. |
+| `LSN-0044` A boundary scan must read the code rather than the prose, and must be shown to fire on a mutated module | `GUARDED` | HIGH | `LESSON-REQ-0043` | For every boundary scan this Gate adds, confirm it reads the syntax tree rather than the text, and that it carries a control which runs the identical scan over a module that violates the rule. |
+| `LSN-0045` A counted test suite must declare its cases statically, because the denominator is read from the source | `GUARDED` | MEDIUM | `LESSON-REQ-0044` | Confirm that every case this Gate adds to a counted suite is declared statically, with table-driven inputs written as a loop rather than as a parametrisation. |
+| `LSN-0046` A timeout that cancels the task it runs in leaves nothing able to record what happened | `GUARDED` | CRITICAL | `LESSON-REQ-0045` | For every limit this Gate enforces, confirm that the enforcement path is still able to write when it fires, and that a real run is observed reaching the terminal state with the reason recorded. |
+| `LSN-0047` A refusal that misnames the defect spends the only repair on the wrong correction | `GUARDED` | HIGH | `LESSON-REQ-0046` | For every validator whose refusal is sent back as the instruction to correct - to a model through a repair, or to a user - confirm that each distinct defect (absent, wrong type, wrong value) has its own reason, and that a wrong-typed value is never reported as missing. |
+| `LSN-0048` A state and the event that explains it, written in two commits, are written event first | `GUARDED` | HIGH | `LESSON-REQ-0047` | Wherever a state and the record that explains it are written in separate commits, confirm which one a reader between the two can see alone, and that it is the one a reader may act on - the record before the state it explains. |
+| `LSN-0049` A metric read the instant after the call that moved it is read before the scrape that carries it | `GUARDED` | HIGH | `LESSON-REQ-0048` | For every check that reads what another process observes on its own cycle - a scrape, a poll, a flush - confirm that the check waits for at least one full cycle, with a bound, and never repeats the action it is observing to make the observation appear. |
+| `LSN-0050` A checkpoint sealed without naming its own tag cannot be validated from that tag | `GUARDED` | CRITICAL | `LESSON-REQ-0049` | Before sealing a checkpoint at any status, confirm that STATE.json currentCommit names the checkpoint's own canonical tag, and that the sealed content validates from that tag with a detached HEAD. |
+| `LSN-0051` A payload one service bounds for another must be bounded as the receiver measures it | `GUARDED` | HIGH | `LESSON-REQ-0050` | For every payload one service bounds and another service accepts or refuses by size, confirm both measure it the same way and that the receiver's bound is not smaller than what the sender may hand over. |
+| `LSN-0052` Two processes that meet on a queue must name what crosses it once, and a real run must exercise both | `GUARDED` | HIGH | `LESSON-REQ-0051` | For every payload this Gate sends between two processes, confirm its names are defined once in a shared contract, used by both sides, and exercised once by a run in which neither side is a double. |
+| `LSN-0053` A process sweep that reads what a forking process holds waits on the processes it has to kill | `GUARDED` | HIGH | `LESSON-REQ-0052` | For every control that must end processes it did not start, confirm it freezes before it kills, reads nothing a forking process holds, waits for killed processes to leave the PID table, and is attacked on the real engine by a process that detaches and forks. |
+| `LSN-0054` A pre-push check narrower than the change's reach lets a red gate reach the public remote | `CONFIRMED` | MEDIUM | `LESSON-REQ-0053` | Before each push, run the lint gate and the repository-wide scans as well as the suites of the change, because a change reaches every control that scans the tree. |
+| `LSN-0055` A contract a model must follow has to reach the model, rendered from the definition the parser enforces | `GUARDED` | MEDIUM | `LESSON-REQ-0054` | For every structured answer a model must produce, confirm that the exact shape is in the text every model receives — rendered from the definition the parser enforces, not written beside it — and that a live run of the configured model produces it. |
+| `LSN-0056` A result is accepted only from the executor that owns the request, decided when the request is created | `GUARDED` | MEDIUM | `LESSON-REQ-0055` | For every result, verdict or callback that more than one producer could deliver, confirm that the owner is recorded when the work is created, that the origin of a delivery comes from the code path and never from the delivery, and that a delivery from any other origin is refused before it is stored. |
+| `LSN-0057` A pinned lock can become unsafe without changing, so advisory state is live evidence | `GUARDED` | CRITICAL | `LESSON-REQ-0056` | For every pinned dependency graph delivered by a Gate, run the current advisory scan against every required source and refuse Critical or High findings without suppressing advisories or narrowing the denominator. |
+| `LSN-0058` Container health does not prove Docker Desktop host-port forwarding | `GUARDED` | MEDIUM | `LESSON-REQ-0057` | Exercise every required host-published service through its actual loopback port; do not substitute container health for host reachability. |
+| `LSN-0059` A lesson exclusion must declare the scope it excludes | `GUARDED` | HIGH | `LESSON-REQ-0058` | Confirm every active lesson excluded from a preflight declares a non-empty scope selector, and that incidental metadata does not narrow applicability. |
+| `LSN-0060` Parent and child facts without an ORM relationship require an explicit flush boundary | `GUARDED` | MEDIUM | `LESSON-REQ-0059` | Whenever one transaction inserts parent and child ORM facts using raw foreign-key identifiers without a relationship edge, confirm the parent is flushed before the child is added. |
+| `LSN-0061` Cancellation completion must not bypass cleanup acknowledgement | `GUARDED` | MEDIUM | `LESSON-REQ-0060` | For every running task that can be cancelled, prove the lifecycle records cancellation requested before it records cancellation completed. |
+| `LSN-0062` Provenance digests are a set even when their sources are distinct | `GUARDED` | MEDIUM | `LESSON-REQ-0061` | Whenever provenance is represented by content digests, normalize it as a unique ordered set rather than assuming each semantic source has different bytes. |
+| `LSN-0063` An identity shared across services must satisfy the strictest persistence type and remain stable | `GUARDED` | HIGH | `LESSON-REQ-0062` | For every identity crossing a service boundary, verify it satisfies the strictest persisted representation and is stable across delivery retries. |
+| `LSN-0064` A shared execution resource needs an explicit exclusive owner for every owning domain | `GUARDED` | HIGH | `LESSON-REQ-0063` | When another durable domain reuses an owned resource, model its real ownership explicitly, require exactly one owner, and preserve every per-owner exclusivity invariant. |
+| `LSN-0065` A shared execution identifier must not be written into a foreign key owned by another domain | `GUARDED` | HIGH | `LESSON-REQ-0064` | For a shared execution contract, prove each durable foreign key is populated only for the domain that owns the referenced row, using trusted ownership context rather than identifier shape. |
+| `LSN-0066` Immutable content identity excludes observation time and the first observer | `GUARDED` | HIGH | `LESSON-REQ-0065` | For every content-addressed or reusable immutable record, define material identity separately from creation metadata and ownership provenance. |
+| `LSN-0067` Cancellation semantics must survive orchestration-library exception wrapping | `GUARDED` | HIGH | `LESSON-REQ-0066` | For cancellation across an orchestration boundary, test the exception shape the real library delivers and derive outcome from the durable request plus executor acknowledgement rather than the wrapper class alone. |
+| `LSN-0068` A bounded parser must apply each content limit only to content it interprets | `GUARDED` | HIGH | `LESSON-REQ-0067` | For every parser-specific content limit applied to a broader inventory, prove unrelated content bypasses that limit while every interpreted candidate remains bounded. |
+| `LSN-0069` A polyglot plan binds each check to both its project root and its toolchain | `GUARDED` | HIGH | `LESSON-REQ-0068` | For every polyglot or multi-root project plan, prove each check is expanded at the roots that declared its stack and selects execution policy from the frozen runner rather than one run-wide guessed toolchain. |
+| `LSN-0070` Project discovery must separate deployable roots, nested fixtures and check applicability | `GUARDED` | HIGH | `LESSON-REQ-0069` | For project discovery over a monorepo, prove nested fixture manifests do not become execution roots and every non-applicable unit check is derived from the frozen source inventory rather than from a failed command. |
+| `LSN-0071` Every quality image must provision snapshots on its oldest runtime and prepare each isolated check | `GUARDED` | HIGH | `LESSON-REQ-0070` | For every shared helper and isolated quality runner, test the oldest pinned runtime actually used by an image and prove each check prepares all dependencies it needs without relying on a previous sandbox session. |
+| `LSN-0072` Secret findings and reviewed false positives must share one policy-owned taxonomy | `GUARDED` | HIGH | `LESSON-REQ-0071` | Whenever more than one gate scans secrets, prove all scanners share the policy-owned finding taxonomy and digest-bound allowance source, and that an unallowlisted match remains blocking. |
+| `LSN-0073` The canonical lint denominator must cover every detected project root | `GUARDED` | HIGH | `LESSON-REQ-0072` | For every manually scoped repository-wide quality command, derive or test its denominator against the current project inventory so a newly detected root cannot remain outside a green gate. |
+| `LSN-0074` An importable source tree is not an installed or repository-configured test environment | `GUARDED` | CRITICAL | `LESSON-REQ-0073` | For Python tests executed from a nested project root, prove the sandbox provides installed distribution metadata and repository-root policy/configuration without reading or writing the host. |
+| `LSN-0075` Offline package installation requires its build backend inside the quality image | `GUARDED` | HIGH | `LESSON-REQ-0074` | Whenever a sandbox performs an offline package installation, prove every declared build backend is pinned in the content-addressed execution image and usable by the non-root runtime. |
+| `LSN-0076` Projected nested configuration requires an explicit monorepo root | `GUARDED` | HIGH | `LESSON-REQ-0075` | When repository configuration is projected into a nested project, provide an explicit trusted repository root and prove source-boundary scans do not reinterpret the projection as ownership. |
+| `LSN-0077` Harness wait bounds must reflect workload size without changing product deadlines | `GUARDED` | CRITICAL | `LESSON-REQ-0076` | For a functional harness whose workload cardinality differs materially by scenario, prove its bounded wait covers the largest legitimate execution without weakening the product's own timeout or deadline. |
+| `LSN-0078` Evidence recorders must resolve caller-supplied commit references before execution | `GUARDED` | HIGH | `LESSON-REQ-0077` | Before an evidence recorder executes a command, resolve every caller-supplied commit reference to a real canonical commit and normalize repeated provenance inputs. |
+| `LSN-0079` Test discovery and the unit runner must cover the same project scope | `GUARDED` | HIGH | `LESSON-REQ-0078` | For every test applicability rule, prove the corresponding closed runner collects the same project scope and that a failing source at each recognized location is observed. |
+| `LSN-0080` A failed verification stage must not leave an older PASS report addressable | `GUARDED` | HIGH | `LESSON-REQ-0079` | Whenever a verification stage writes to a reusable report path, prove the old artifact is removed before execution and cannot survive a failed rerun as current evidence. |
+| `LSN-0081` Canonical requirement evidence must name a test the repository actually discovers | `GUARDED` | HIGH | `LESSON-REQ-0080` | Before a canonical checklist is accepted, resolve every named test identity against the suite registry rather than treating prose-like test labels as evidence. |
+| `LSN-0082` Engineering memory cannot depend on an ephemeral generated report | `GUARDED` | CRITICAL | `LESSON-REQ-0081` | Keep organizational memory evidence in committed source or checkpoint-owned file artifacts; reject unsupported evidence kinds and references to regenerable runtime output. |
+| `LSN-0083` A command that decodes captured UTF-8 must also configure the stream that re-emits it | `GUARDED` | CRITICAL | `LESSON-REQ-0082` | For every executable command that captures text from a child process and prints it, configure both the child decoder and the parent output stream explicitly. |
+| `LSN-0084` A historical Gate documentation test must derive the current entry-point state | `GUARDED` | HIGH | `LESSON-REQ-0083` | When a predecessor regression test inspects a current entry point, derive current lifecycle identifiers and keep only genuinely historical references fixed. |
+| `LSN-0085` A source-based control must assert syntax semantics rather than formatter layout | `GUARDED` | MEDIUM | `LESSON-REQ-0084` | When a control judges source structure, parse the language representation and compare semantic nodes instead of binding the rule to formatter whitespace or quote style. |
+| `LSN-0086` A subprocess assertion must preserve the exit code when both streams are empty | `GUARDED` | MEDIUM | `LESSON-REQ-0085` | For every subprocess-backed assertion, preserve return code and a non-empty diagnostic even when the child emits nothing; never add a retry that could conceal the outcome. |
+| `LSN-0087` A rehearsal worker must register every workflow activity boundary | `GUARDED` | HIGH | `LESSON-REQ-0086` | Every purpose-built worker that hosts a shared workflow must register every activity boundary that workflow can schedule, including not-applicable branches whose decision is made inside an activity. |
+| `LSN-0088` A test inside a built image can consume only inputs copied into that image | `GUARDED` | HIGH | `LESSON-REQ-0087` | Whenever a test runs inside a built image and consumes repository content outside its own copied suite, prove the Dockerfile carries that input and the test resolves the same in-image destination. |
+| `LSN-0089` Domain not-applicability and operational failure need distinct orchestration outcomes | `GUARDED` | HIGH | `LESSON-REQ-0088` | At every optional domain boundary, prove not-applicable conditions return a bounded negative applicability result while operational errors enter a shared failure taxonomy that can write terminal state. |
+| `LSN-0090` A clean-clone control must use only versioned configuration inputs | `GUARDED` | HIGH | `LESSON-REQ-0089` | Every clean-clone or repository control must consume only versioned configuration inputs; ignored developer-local files may not be preconditions for a passing gate. |
+| `LSN-0091` Secret detection must run on the exact bytes at the durable evidence boundary | `GUARDED` | CRITICAL | `LESSON-REQ-0090` | For every durable evidence boundary, scan the exact serialized bytes with the canonical taxonomy before lookup or write, fail closed when scanning cannot complete, and prove rejected bytes cannot resolve or support a verdict. |
+| `LSN-0092` Canonical audit parsers must consume every bounded sealed report rendering | `GUARDED` | HIGH | `LESSON-REQ-0091` | Whenever a sealed audit introduces a bounded report rendering, prove canonical derivation parses its own findings without importing mentions from historical or closure sections. |
+| `LSN-0093` Disposable control repositories must carry every imported repository package | `GUARDED` | HIGH | `LESSON-REQ-0092` | Whenever a repository tool is copied into a disposable or clean repository, copy every versioned repository package it imports and prove the copied entry point imports from that isolated boundary. |
+| `LSN-0094` A review bundle must include unchanged canonical artifact categories | `GUARDED` | HIGH | `LESSON-REQ-0093` | Build review transport from both the truthful changeset and the tracked canonical review context; do not infer that an unchanged mandatory category is irrelevant. |
+| `LSN-0095` A complete verifier must own its Compose runtime by checkout | `GUARDED` | HIGH | `LESSON-REQ-0094` | Every live multi-stage verifier must prove that one checkout exclusively owns its Compose project, published ports, volumes and image build inputs for the whole ordered run, while cleanup is restricted to that owned namespace. |
+| `LSN-0096` Evidence publishers must consume the producer's canonical result schema | `GUARDED` | HIGH | `LESSON-REQ-0095` | Every evidence publisher must consume the producer's canonical versioned result fields and prove the mapping behaviorally with a contradictory-alias fixture. |
+| `LSN-0097` A review-bundle declaration must bind an immutable reconstruction subject | `GUARDED` | HIGH | `LESSON-REQ-0096` | A review-bundle declaration must identify an immutable reconstruction subject, and validation must rebuild twice from transported Git content and compare digest and size with the declaration before handoff. |
+| `LSN-0098` Accepted cancellation must be enforced from durable state across activity boundaries | `GUARDED` | CRITICAL | `LESSON-REQ-0097` | When cancellation is accepted durably, the workflow must observe it before starting and while awaiting a long-running activity, cancel any newly assigned handle, give cancellation precedence over a racing normal response, and wait for cleanup before becoming terminal. |
+| `LSN-0099` A refused subject is an attempted input, not executed commit evidence | `GUARDED` | HIGH | `LESSON-REQ-0098` | A command refused before execution must retain a recomputable refusal without making its deliberately invalid subject part of the published-history evidence denominator. |
+| `LSN-0100` Pre-seal detached validation must bind the explicit subject namespace | `GUARDED` | HIGH | `LESSON-REQ-0099` | An exact detached pre-seal verifier must bind an IN_PROGRESS checkpoint to its checkpoint-named iacode-subjects ref without allowing that ref to substitute for the canonical seal tag. |
+| `LSN-0101` A structural record and its canonical index are one atomic change | `GUARDED` | HIGH | `LESSON-REQ-0100` | Whenever a structural record is created or changed, its canonical index must enumerate the same record, title and status before publication. |
+| `LSN-0102` Assurance denominators must derive category counts from the current source set | `GUARDED` | CRITICAL | `LESSON-REQ-0101` | Any assurance partition must derive category counts from its canonical identifier sets instead of maintaining a duplicate literal that can drift. |
+| `LSN-0103` Adversarial fixtures must hash the complete validated contract | `GUARDED` | HIGH | `LESSON-REQ-0102` | Construct the complete canonical verdict before hashing and execute a valid commitment before attributing a refusal to cancellation. |
+| `LSN-0104` Intermediate closure and independent validation must have unambiguous contracts | `GUARDED` | HIGH | `LESSON-REQ-0103` | Keep adapters and live Gate rows aligned with the milestone cadence, preserve internal controls and reject independent verdicts on INTERNAL_GATE_PASS. |
+| `LSN-0105` New behavioral tests must satisfy the unchanged source-quality contract | `GUARDED` | CRITICAL | `LESSON-REQ-0104` | Run the existing mandatory lint over every changed source and test path before publishing; repair formatting without weakening lint or assertions. |
+| `LSN-0106` A security repair must execute at the causal output boundary, not a similarly shaped branch | `GUARDED` | HIGH | `LESSON-REQ-0105` | Bind changes to the intended function and execute its real positive and negative service/activity paths before claiming the repair. |
+| `LSN-0107` An adversarial marker must satisfy the canonical detector before it can judge containment | `GUARDED` | HIGH | `LESSON-REQ-0106` | Prove the generated adverse bytes are recognized by the canonical detector before judging rejection, and retain a clean positive path through the identical execution. |
+| `LSN-0108` Evidence timestamp transport must preserve RFC3339 rather than a shell locale rendering | `GUARDED` | LOW | `LESSON-REQ-0107` | Read the raw command record as JSON and preserve its exact timestamp; validate lesson datetime fields and reject locale renderings before evidence publication. |
+| `LSN-0109` Regression counts and evidence must exclude only policy-bound live input repositories | `GUARDED` | HIGH | `LESSON-REQ-0108` | Declare input repositories in canonical policy with reasons and require exact agreement with literal pytest collection; use one boundary for counts and evidence while retaining every mandatory live scenario. |
+| `LSN-0110` A timed-out live proof retains bounded diagnostics before owned cleanup | `GUARDED` | CRITICAL | `LESSON-REQ-0109` | Keep the deadline unchanged, write a red report with sanitized history failure metadata and pending activity types before cleanup, and never continue adverse cases after a failed clean control. |
+| `LSN-0111` Polling watcher cleanup must preserve completed checks and accepted cancellation | `GUARDED` | HIGH | `LESSON-REQ-0110` | Accept typed activity cancellation only when this cleanup requested it, propagate unrelated and precompleted failures, and recheck active handle lifetime after durable reads without losing the accepted cancellation flag. |
+| `LSN-0112` Canonical scanner consumers must share transport decoding, not only patterns | `GUARDED` | HIGH | `LESSON-REQ-0111` | Use the identical bounded in-memory transport views for runtime and publication, retain exact component-digest review, never expose values, and keep raw/encoded clean and negative controls. |
+| `LSN-0113` Stronger delivery controls must follow the immutable subject policy version | `GUARDED` | CRITICAL | `LESSON-REQ-0112` | Version every changed invariant by the subject's canonical policy, retain mandatory current downgrade controls, and validate all sealed tags with current tooling without altering subjects or narrowing membership. |
+| `LSN-0114` Transport line metadata must not repeatedly scan the source prefix | `GUARDED` | MEDIUM | `LESSON-REQ-0113` | Run the measured source-range regression and all existing transport, secret-boundary and immutable-bundle controls without weakening their rules. |
+| `LSN-0115` A failing full verifier retains every bounded case identifier beyond its output tail | `GUARDED` | MEDIUM | `LESSON-REQ-0114` | Run actual-process long-tail, parameter-exclusion, bounded-count and successful-child controls; retain original stage denominator and exit-code semantics. |
+| `LSN-0116` A live resumability pointer is generated after Git boundaries, not committed into its own subject | `GUARDED` | CRITICAL | `LESSON-REQ-0115` | Generate current state from the latest checkpoint, truthful steps and real local/remote Git; validate exact observations, reject stale or contradictory state and prove the live output cannot dirty or overwrite tracked source. |
+| `LSN-0117` An architecture rollup must not contradict the delivered capability described below it | `GUARDED` | CRITICAL | `LESSON-REQ-0116` | Check every public current-state rollup against canonical owned capability titles and delegate live lifecycle status to LATEST, retaining earlier architecture controls and testing actual omissions, future-denials and frozen status. |
+| `LSN-0118` Post-response validation failures must preserve an accepted mutation's uncertain outcome | `GUARDED` | HIGH | `LESSON-REQ-0117` | For every refusal after a remote mutation may have been accepted, including response authentication, envelope and semantic validation, preserve uncertainty and stable reconciliation identity without automatically repeating the mutation. |
+| `LSN-0119` A clean publication scan does not replace the stricter checkpoint secret scan | `GUARDED` | CRITICAL | `LESSON-REQ-0118` | Treat publication review and strict checkpoint detection as distinct controls; execute both unchanged, preserve actual secret types when correcting source false positives, and never infer checkpoint validity from the publication scan. |
+| `LSN-0120` Native installation proofs must resolve the installed CLI entrypoint | `GUARDED` | MEDIUM | `LESSON-REQ-0119` | Resolve native tool installation/CLI entrypoints and verify actual extracted package identities before claiming installability; graphical process launch or a guessed metadata path is not installation evidence. |
+| `LSN-0121` Standard-library host probes must not initialize application dependency graphs | `GUARDED` | MEDIUM | `LESSON-REQ-0120` | For standard-library host tooling, test the actual cold import graph without site/user packages. Read canonical data directly when importing its package would initialize application-only dependencies; do not repair a host probe by silently installing production dependencies. |
+| `LSN-0122` Engine-allocated host ports must be rediscovered after container restart | `GUARDED` | MEDIUM | `LESSON-REQ-0121` | After restarting a service with engine-allocated ports, rediscover the actual published endpoint and explicitly reconfigure owned test actors before mutation. Verify real host authentication; do not infer reachability from health or silently substitute a workspace-provided production endpoint. |
+| `LSN-0123` Consent binds workspace identity, not an uncanonicalized path spelling | `GUARDED` | HIGH | `LESSON-REQ-0122` | When authorizing selected workspace content, bind the selection identity independently of filesystem spelling and revalidate canonical root plus exact content. Case/canonicalization differences must not break valid consent or weaken stale-root/trust refusal. |
+| `LSN-0124` Durable editor recovery must not use an in-memory test host | `GUARDED` | HIGH | `LESSON-REQ-0123` | Prove durable native recovery in the actual persistent storage context. Inspect tool test-mode semantics, retain recovery assertions and never seed missing state or replace production persistence with a fake. |
+| `LSN-0125` Native parent exit is not proof of process and profile cleanup | `GUARDED` | CRITICAL | `LESSON-REQ-0124` | Own native descendants before launch; pin a complete bounded member snapshot and validate each handle against the exact job. Require zero accounting plus signaled observed handles within the existing drain deadline. Preserve typed failure facts, validate exact temporary targets, bound sharing retries and require observed removal. Never kill global user processes or suppress cleanup failures. |
+| `LSN-0126` Known authentication material is not domain or presentation data | `GUARDED` | CRITICAL | `LESSON-REQ-0125` | Keep known authentication material separate from domain input and presentation. Reject declared raw and encoded forms before effects, retain unknown-secret scanning unchanged, and preserve uncertainty for response refusals after acceptance. |
+| `LSN-0127` Fresh runtime health does not initialize an operator-managed model catalog | `GUARDED` | HIGH | `LESSON-REQ-0126` | For a fresh isolated runtime, establish explicit operator-managed catalog prerequisites and verify exact authorized model availability separately from health. Never silently substitute a model or misclassify empty discovery as a credential failure. |
+| `LSN-0128` Adversarial premises must use the actual public contract | `GUARDED` | CRITICAL | `LESSON-REQ-0127` | Build adversarial premises from actual public contracts and observed execution identities. Do not invent fields, widen public metadata for test convenience or drop the real boundary assertion when a harness premise fails. |
+| `LSN-0129` Repeated cancellation must preserve an already cancelled terminal result | `GUARDED` | HIGH | `LESSON-REQ-0128` | Treat repeated cancellation of an already CANCELLED run as immutable observation, not a new transition; preserve refusal for successful/failed terminal work and distinguish request from actual completion/cleanup. |
+| `LSN-0130` Executable export line endings belong to the source and packaging contract | `GUARDED` | HIGH | `LESSON-REQ-0129` | Bind executable line endings in Git and packaging, retain exact source/protocol bytes and refuse incompatible CRLF inputs. Same-checkout deterministic agreement alone is not cross-platform byte evidence. |
+| `LSN-0131` Raw evidence digests require byte-preserving Git export, not text normalization | `GUARDED` | CRITICAL | `LESSON-REQ-0130` | Preserve claimed raw observation digests across actual Git export rather than checking only a local copy. Declare dedicated copied-evidence boundaries explicitly without changing historical observation bytes. |
+| `LSN-0132` Owned Git clones need read-only-aware cleanup, not native-profile lock retry | `GUARDED` | HIGH | `LESSON-REQ-0131` | Use a lifecycle manager that handles actual Windows read-only Git objects for fresh verification clones; do not confuse this with profile sharing locks or retry a policy-refused existing cleanup target. |
+| `LSN-0133` Shared field names do not imply shared schema types | `GUARDED` | MEDIUM | `LESSON-REQ-0132` | Read and validate the owning artifact schema when projecting metadata; equal field names do not grant equal types, nullability or rights. |
+| `LSN-0134` Configuration classifiers consume decoded values, not dotenv quote syntax | `GUARDED` | MEDIUM | `LESSON-REQ-0133` | For committed environment consumers, decode the supported literal syntax before classification and prove actual Compose agreement for quoted empty, quoted placeholder and nonempty adverse values. |
+| `LSN-0135` Capture producer evidence before fallible interpretation or owned cleanup | `GUARDED` | CRITICAL | `LESSON-REQ-0134` | Every temporary verification producer must preserve its available safe reports before interpretation can raise; actual owner cleanup must leave those reports and digests recoverable without manufacturing PASS. |
+| `LSN-0136` Strict JSON validation loses transport context | `GUARDED` | MEDIUM | `LESSON-REQ-0135` | Strict contract prevalidators must preserve the transport semantics of valid JSON arrays/dates while refusing coerced boolean/numeric values. |
+| `LSN-0137` SQL text interprets inline JSON colons as bindings | `GUARDED` | MEDIUM | `LESSON-REQ-0136` | SQL fixtures must transport structured JSON through bindings rather than let a SQL text parser reinterpret JSON property/value colons. |
+| `LSN-0138` Secret projection distinguishes public identities from authorization secrets | `GUARDED` | HIGH | `LESSON-REQ-0137` | Known-secret projection must distinguish public identities from actual passwords/bearer values; use the real configured field semantics, preserve unknown-secret detection and exact raw/encoded refusal of actual secrets. |
+| `LSN-0139` Privacy projection begins in the source query | `GUARDED` | HIGH | `LESSON-REQ-0138` | A bounded privacy-safe output must not justify fetching unneeded private source columns; the actual query must project only consumed fields and bound required source JSON before transfer. |
+| `LSN-0140` Summaries preserve canonical continuation structure | `GUARDED` | CRITICAL | `LESSON-REQ-0139` | Any helper that replaces a checkpoint artifact must preserve the owning canonical structural contract, not substitute an unstructured summary; required sections stay substantive and complete. |
+| `LSN-0141` Preflight checks honor every declared applicability dimension | `GUARDED` | HIGH | `LESSON-REQ-0140` | Applicability audits honor all canonical selector dimensions without inventing a scope-only exclusion rule or allowing an active unfiltered lesson to disappear. |
+| `LSN-0142` Local Engine recovery keeps transport and cleanup scoped | `GUARDED` | HIGH | `LESSON-REQ-0141` | Operational access recovery must pin transport only in the owning child, preserve the parent/global configuration and verify exact disposable resource ownership and other application identities before and after cleanup. |
+| `LSN-0143` Management recovery is not complete runtime capability | `GUARDED` | HIGH | `LESSON-REQ-0142` | Do not promote a management-only recovery into full runtime readiness. Verify the actual canonical build, host-bind and lint capabilities through the supported transport before immutable assurance. |
+| `LSN-0144` Raw archived observations retain original context rather than becoming active relocated documents | `GUARDED` | HIGH | `LESSON-REQ-0143` | Preserve raw observation bytes and original interpretation context; never publish a relocated byte-exact archive as active source/documentation with broken context. |
+| `LSN-0145` A new persistent capability must extend the explicit structural contract, not bypass its exact inventory | `GUARDED` | MEDIUM | `LESSON-REQ-0144` | For every authorized persistence addition, extend the owning exact table inventory, immutable/lifecycle classification and foreign-key ownership contract while preserving all inherited assertions; prove each boundary rejects a deliberate mismatch. |
+| `LSN-0146` A completed command record is not proof that its producing process has exited | `GUARDED` | CRITICAL | `LESSON-REQ-0145` | Wait for actual producer process exit before starting a dependent writer or publication step; a successful intermediate ledger record, metadata file or output line is not a process-completion signal. |
+| `LSN-0147` Framework lifecycle errors need bounded identities as well as test methods | `GUARDED` | HIGH | `LESSON-REQ-0146` | Retain safe bounded test-method and class/module lifecycle failure identities without disclosing arbitrary traceback bodies or silently omitting a supported family. |
+| `LSN-0148` Minimal protocol fixtures inherit control contracts, never deployment-owned source data | `GUARDED` | HIGH | `LESSON-REQ-0147` | Construct minimal protocol repositories from explicit canonical control assets and declared runtime dependencies, not deployment-owned curator sources, unrelated histories or attestation verdicts. |
+| `LSN-0149` A shell exit zero is not a produced digest or verified original evidence | `GUARDED` | HIGH | `LESSON-REQ-0148` | Execution exit0 does not replace a typed completed nonempty observation or actual matching file bytes; reject absent digests and incomplete reads before mutation or evidence acceptance. |
+| `LSN-0150` Build and verification root inputs need subject-versioned assurance binding | `GUARDED` | HIGH | `LESSON-REQ-0149` | Bind every current required root build/verification input by exact subject-versioned policy; real material changes, ignored files and deletion must invalidate current evidence while legacy subject fingerprints retain their original semantics. |
+| `LSN-0151` Immutable Git object reads must handle Windows long paths only in the owning child | `GUARDED` | HIGH | `LESSON-REQ-0150` | Read legitimate long immutable Git object paths with exact bytes on Windows using only child-scoped configuration; preserve local/global configuration, all archive membership and nonzero refusal semantics. |
+
+## Why each lesson applies
+
+### LSN-0001 — Checkpoint validation must succeed from a detached checkout of the checkpoint tag
+
+- Reason: applies to every Gate; category checkpoint; severity HIGH; already guarded, so the control must keep holding
+- Required check: Validate the checkpoint from a clean clone detached at its own tag, not only on the branch.
+- Required evidence: A recorded validate_checkpoint.py run from a detached checkout returning CHECKPOINT_VALID.
+- Derived requirement: `LESSON-REQ-0001`
+
+### LSN-0002 — A file inventory must be recomputed from the repository, never trusted as an assertion
+
+- Reason: applies to every Gate; category checkpoint; severity HIGH; already guarded, so the control must keep holding
+- Required check: Declare every changed path with a reason before finalizing and let the tooling bind the hashes.
+- Required evidence: A FILES.json whose declared change set matches the recomputed one, proven by a passing validation.
+- Derived requirement: `LESSON-REQ-0002`
+
+### LSN-0003 — Every operation attempt must be auditable, including a refusal decided before execution
+
+- Reason: applies to every Gate; category checkpoint; severity HIGH; already guarded, so the control must keep holding
+- Required check: Confirm that a refused operation appends its attempt to the ledger before returning an error.
+- Required evidence: A ledger record with result PRECONDITION_REJECTED, a result code and a failure reason.
+- Derived requirement: `LESSON-REQ-0003`
+
+### LSN-0004 — A checkpoint may never claim readiness while it also claims to be blocked
+
+- Reason: applies to every Gate; category checkpoint; severity CRITICAL; already guarded, so the control must keep holding
+- Required check: Verify that the checkpoint carries no blocker while it claims to be ready for review.
+- Required evidence: A passing validation with blockedBy empty at a readiness status.
+- Derived requirement: `LESSON-REQ-0004`
+
+### LSN-0005 — A PASS requires evidence that can be executed or resolved, not a statement
+
+- Reason: applies to every Gate; category quality; severity CRITICAL; already guarded, so the control must keep holding
+- Required check: Attach a resolvable evidence reference to every PASS recorded by this Gate.
+- Required evidence: A validation run confirming that every PASS reference resolves.
+- Derived requirement: `LESSON-REQ-0005`
+
+### LSN-0006 — The repository must be self-contained; a specification may not live outside it
+
+- Reason: applies to every Gate; category documentation; severity MEDIUM; already guarded, so the control must keep holding
+- Required check: Confirm that every specification this Gate depends on is committed to the repository.
+- Required evidence: A passing documentation link and checklist test.
+- Derived requirement: `LESSON-REQ-0006`
+
+### LSN-0007 — Independent validation cannot be declared by the run that did the work
+
+- Reason: applies to every Gate; category process; severity CRITICAL; already guarded, so the control must keep holding
+- Required check: Close the implementing run at an internal status and leave the independent verdict pending.
+- Required evidence: A checkpoint whose independentReview and redTeam are PENDING at handoff.
+- Derived requirement: `LESSON-REQ-0007`
+
+### LSN-0008 — Requirement completeness must be total and evidence-backed before handoff
+
+- Reason: applies to every Gate; category process; severity CRITICAL; already guarded, so the control must keep holding
+- Required check: Extract every requirement before implementing and audit completeness before handoff.
+- Required evidence: A completeness report with total coverage and total evidence coverage.
+- Derived requirement: `LESSON-REQ-0008`
+
+### LSN-0009 — A red gate requires rework, never a waiver, and never a weakened check
+
+- Reason: applies to every Gate; category testing; severity CRITICAL; already guarded, so the control must keep holding
+- Required check: Run the Green Keeper until every mandatory gate is green, repairing causes rather than checks.
+- Required evidence: A rework log whose last cycle is GREEN with zero remaining failures.
+- Derived requirement: `LESSON-REQ-0009`
+
+### LSN-0010 — A recorded command must carry runtime, working directory, commit and purpose to be replayable
+
+- Reason: applies to every Gate; category tooling; severity HIGH; already guarded, so the control must keep holding
+- Required check: Record commands with the tooling so each one is executable from its declared working directory.
+- Required evidence: A validation run over a ledger whose commands all resolve.
+- Derived requirement: `LESSON-REQ-0010`
+
+### LSN-0011 — A control over a checkpoint's own evidence must be scoped to the moment it matters
+
+- Reason: applies to every Gate; category tooling; severity CRITICAL; already guarded, so the control must keep holding
+- Required check: Check whether any new control would be invalidated by the evidence its own run produces.
+- Required evidence: A passing validation executed by the gate harness itself.
+- Derived requirement: `LESSON-REQ-0011`
+
+### LSN-0012 — Sealed checkpoints and their tags are immutable, and tooling must keep validating them
+
+- Reason: applies to every Gate; category git; severity CRITICAL; already guarded, so the control must keep holding
+- Required check: Version every changed invariant by the subject's canonical policy, retain mandatory current downgrade controls, and validate all sealed tags with current tooling without altering subjects or narrowing membership.
+- Required evidence: Passing current positive/negative and legacy policy controls plus actual current-tool validation over every canonical sealed anchor.
+- Derived requirement: `LESSON-REQ-0012`
+
+### LSN-0013 — An installed capability must be detected by resolved path, not by a bare command lookup
+
+- Reason: applies to every Gate; category environment; severity HIGH; status CONFIRMED, so it is not yet prevented automatically
+- Required check: When this Gate records a capability, resolve the executable path before concluding anything about availability.
+- Required evidence: A capability record naming the resolved path, or a justification that this Gate detects no capability.
+- Derived requirement: `LESSON-REQ-0013`
+
+### LSN-0014 — Evidence must be recorded as it happens, not reconstructed at the end of a run
+
+- Reason: applies to every Gate; category process; severity MEDIUM; already guarded, so the control must keep holding
+- Required check: Record each command through the tooling while the work happens.
+- Required evidence: A ledger whose records were produced by the recording tooling during the run.
+- Derived requirement: `LESSON-REQ-0014`
+
+### LSN-0015 — Every positive terminal status needs one shared promotion invariant
+
+- Reason: applies to every Gate; category quality; severity CRITICAL; already guarded, so the control must keep holding
+- Required check: Confirm that every positive terminal status this Gate can produce is covered by the shared promotion invariant, not only the status this delivery ends at.
+- Required evidence: A table-driven validation run that exercises every positive status against every mandatory red dimension.
+- Derived requirement: `LESSON-REQ-0015`
+
+### LSN-0016 — A mandatory set must be closed by policy, never chosen by the caller
+
+- Reason: applies to every Gate; category testing; severity CRITICAL; already guarded, so the control must keep holding
+- Required check: Confirm that every control whose scope could be narrowed by an argument derives that scope from policy instead.
+- Required evidence: A recorded gate run whose requiredGates equal the canonical mandatory set, with a successful command for each one.
+- Derived requirement: `LESSON-REQ-0016`
+
+### LSN-0017 — A completeness denominator must come from a source the delivery does not own
+
+- Reason: applies to every Gate; category process; severity CRITICAL; already guarded, so the control must keep holding
+- Required check: Confirm that the expected requirement set is derived independently and compared as a set, not only as a count.
+- Required evidence: A completeness report whose expected and declared identifier sets are equal.
+- Derived requirement: `LESSON-REQ-0017`
+
+### LSN-0018 — A structured reference must be resolved, not merely well typed
+
+- Reason: applies to every Gate; category tooling; severity CRITICAL; already guarded, so the control must keep holding
+- Required check: Confirm that every reference this Gate records is resolved by a tool, not accepted as a string.
+- Required evidence: A validation run that rejects a nonexistent control, a nonexistent evidence path and a nested secret.
+- Derived requirement: `LESSON-REQ-0018`
+
+### LSN-0019 — A derived artifact must carry a fingerprint of the inputs that produced it
+
+- Reason: applies to every Gate; category tooling; severity HIGH; already guarded, so the control must keep holding
+- Required check: Confirm that every derived artifact this Gate stores can be recomputed and is recomputed during validation.
+- Required evidence: A validation run that rejects a preflight whose inputs have changed.
+- Derived requirement: `LESSON-REQ-0019`
+
+### LSN-0020 — Evidence produced from a dirty tree needs immutable input identity
+
+- Reason: applies to every Gate; category tooling; severity CRITICAL; already guarded, so the control must keep holding
+- Required check: Confirm that every recorded command binds its inputs by content and that no timestamp in the ledger is later than the recorded end of the run.
+- Required evidence: A validation run over a ledger whose records all carry an input digest, with a post-commit validation record at the sealed commit.
+- Derived requirement: `LESSON-REQ-0020`
+
+### LSN-0021 — Sealed history needs an anchor outside the content it describes
+
+- Reason: applies to every Gate; category git; severity CRITICAL; already guarded, so the control must keep holding
+- Required check: Confirm that the integrity chain still resolves for every sealed checkpoint and that this Gate anchors every sealed predecessor.
+- Required evidence: A verification run over the anchor chain returning no divergence.
+- Derived requirement: `LESSON-REQ-0021`
+
+### LSN-0022 — An authoritative count must be derived once, never maintained by hand twice
+
+- Reason: applies to every Gate; category documentation; severity CRITICAL; already guarded, so the control must keep holding
+- Required check: Confirm that every count used as evidence in this Gate is derived from one source and verified where it is quoted.
+- Required evidence: A validation run that rejects a report whose stated count contradicts the derived one.
+- Derived requirement: `LESSON-REQ-0022`
+
+### LSN-0023 — A lesson must cite a source that actually records the finding it claims
+
+- Reason: applies to every Gate; category documentation; severity MEDIUM; already guarded, so the control must keep holding
+- Required check: Confirm that every lesson this Gate writes or updates cites a checkpoint that records the finding identifier it names.
+- Required evidence: A memory validation run that resolves every lesson source locator.
+- Derived requirement: `LESSON-REQ-0023`
+
+### LSN-0024 — A control is finished only when its positive path has been executed, not only its refusals
+
+- Reason: applies to every Gate; category quality; severity CRITICAL; already guarded, so the control must keep holding
+- Required check: For every control this Gate adds or changes that gates a status, execute the path that reaches the status, not only the paths that are refused.
+- Required evidence: An executed positive-path test or simulation artifact for each such control.
+- Derived requirement: `LESSON-REQ-0024`
+
+### LSN-0025 — A generic guardrail derives repository state instead of naming today's checkpoint
+
+- Reason: applies to every Gate; category testing; severity CRITICAL; already guarded, so the control must keep holding
+- Required check: Confirm that no generic guard, test or policy in this Gate names a historical checkpoint to decide behaviour, and that any such rule is derived from repository state.
+- Required evidence: A derived exclusion with a test proving it moves, or a documented fixture that names a concrete checkpoint on purpose.
+- Derived requirement: `LESSON-REQ-0025`
+
+### LSN-0026 — An adversarial battery without a null-mutation control proves nothing
+
+- Reason: applies to every Gate; category testing; severity HIGH; already guarded, so the control must keep holding
+- Required check: Run every adversarial battery of this Gate with an unmutated control through the same path, and record its result with the battery.
+- Required evidence: A Red Team report whose baselineControl is VALID.
+- Derived requirement: `LESSON-REQ-0026`
+
+### LSN-0027 — A lesson's prose may record a residual limit but may never contradict its status
+
+- Reason: applies to every Gate; category documentation; severity MEDIUM; already guarded, so the control must keep holding
+- Required check: Confirm that every lesson this Gate writes or updates describes limits rather than restating its own status.
+- Required evidence: A memory validation run with no status contradiction reported.
+- Derived requirement: `LESSON-REQ-0027`
+
+### LSN-0028 — A configuration key that no code reads is a defect, not documentation
+
+- Reason: applies to every Gate; category tooling; severity HIGH; already guarded, so the control must keep holding
+- Required check: Confirm that every configuration key this Gate declares is read by the implementation, or remove it and document the fixed behaviour.
+- Required evidence: A validated policy document whose every key has a consumer.
+- Derived requirement: `LESSON-REQ-0028`
+
+### LSN-0029 — A required protocol transition must never turn a mandatory gate red
+
+- Reason: applies to every Gate; category process; severity CRITICAL; already guarded, so the control must keep holding
+- Required check: Before handoff, execute the protocol transitions this Gate's successor will perform and confirm the mandatory gates stay green.
+- Required evidence: A successor durability artifact whose every state is green.
+- Derived requirement: `LESSON-REQ-0029`
+
+### LSN-0031 — An empty applicable set is not a missing required set, and a control must tell them apart
+
+- Reason: applies to every Gate; category quality; severity CRITICAL; already guarded, so the control must keep holding
+- Required check: For every quality or audit control this Gate adds or changes that operates on a derived set, confirm that an empty applicable set is reported as NOT_APPLICABLE with a justification and that a missing required set is reported as a failure.
+- Required evidence: An executed artifact showing both outcomes: a passing run whose empty dimensions are justified, and a failing run whose named items are unsatisfied.
+- Derived requirement: `LESSON-REQ-0030`
+
+### LSN-0032 — A control written while one Gate was the only Gate stops being a control when the next one starts
+
+- Reason: applies to every Gate; category quality; severity HIGH; already guarded, so the control must keep holding
+- Required check: For every control this Gate adds or changes, confirm that what it judges is derived from a canonical source rather than written into the control, and that it would still be correct for the Gate after this one.
+- Required evidence: An executed transition into the next Gate, and a test that the control's subject comes from a registry rather than a literal.
+- Derived requirement: `LESSON-REQ-0031`
+
+### LSN-0033 — A value bound in middleware is absent in the handlers that run outside it
+
+- Reason: applies to every Gate; category implementation; severity MEDIUM; already guarded, so the control must keep holding
+- Required check: For every cross-cutting value this Gate binds in middleware, confirm it is present in the responses produced above that middleware, including error responses.
+- Required evidence: A test that triggers a failure handled outside the middleware chain and asserts the value is still carried.
+- Derived requirement: `LESSON-REQ-0032`
+
+### LSN-0034 — Re-deriving what the framework already computed diverges from the framework
+
+- Reason: applies to every Gate; category implementation; severity MEDIUM; already guarded, so the control must keep holding
+- Required check: Where this Gate derives a value the framework already computes, confirm it reads the framework's result rather than recomputing it, and that a test asserts the value rather than only its presence.
+- Required evidence: A test asserting the specific derived value, not merely that the endpoint answers.
+- Derived requirement: `LESSON-REQ-0033`
+
+### LSN-0035 — Captured subprocess output decoded or re-emitted with the platform codepage crashes the tool, not the work
+
+- Reason: applies to every Gate; category tooling; severity CRITICAL; already guarded, so the control must keep holding
+- Required check: Confirm every subprocess capture this Gate adds states its decoder explicitly, that every entry point re-emitting captured output configures its own stream, and that the repository-wide control still passes.
+- Required evidence: The control-plane test that parses the tree, green, with the rule exercised against a rejecting case.
+- Derived requirement: `LESSON-REQ-0034`
+
+### LSN-0036 — A gate that runs inside an image measures the image, not the source
+
+- Reason: applies to every Gate; category tooling; severity HIGH; already guarded, so the control must keep holding
+- Required check: For every mandatory gate this Gate adds or changes, confirm that a gate executing inside a built artefact rebuilds that artefact before measuring, and that the repository-wide control still passes.
+- Required evidence: The control-plane test that parses every gate module, green, with the rule exercised against a rejecting case.
+- Derived requirement: `LESSON-REQ-0035`
+
+### LSN-0037 — A shared control that names an identifier the repository derives stops being a control when that identifier moves
+
+- Reason: applies to every Gate; category tooling; severity HIGH; already guarded, so the control must keep holding
+- Required check: Confirm that every control this Gate adds which reasons about an identifier the repository derives -- the current Gate, the newest checkpoint, the head migration -- derives it rather than naming it, and that the repository-wide control still passes.
+- Required evidence: The control-plane test that parses every caller, green, with a rejecting case.
+- Derived requirement: `LESSON-REQ-0036`
+
+### LSN-0038 — Two representations of one concept in one module disagree, and the safer one loses
+
+- Reason: applies to every Gate; category implementation; severity MEDIUM; already guarded, so the control must keep holding
+- Required check: Where this Gate defines a classification twice — once anchored and once embedded — confirm one definition is authoritative and the other derives from it or is removed.
+- Required evidence: A test asserting both paths classify the same corpus identically.
+- Derived requirement: `LESSON-REQ-0037`
+
+### LSN-0039 — A test that writes to the operational database leaves production data behind
+
+- Reason: applies to every Gate; category testing; severity HIGH; already guarded, so the control must keep holding
+- Required check: For every test this Gate adds that writes to a shared service rather than to a disposable one, confirm it removes what it created and that an invariant detects residue.
+- Required evidence: The suite run followed by a query of the shared service showing no fixture rows.
+- Derived requirement: `LESSON-REQ-0038`
+
+### LSN-0040 — A control that judges sealed history only runs once a successor anchors it
+
+- Reason: applies to every Gate; category checkpoint; severity CRITICAL; already guarded, so the control must keep holding
+- Required check: Confirm that every sealed predecessor this Gate anchors validates from a detached checkout of its own tag in a published clone (Git's transport, never a copy of the local object store), that every commit sealed evidence names is reachable from a published reference, and that no command this Gate records declares an input the repository does not carry.
+- Required evidence: A validation run against each anchored checkpoint from its tag in a published clone, green, and a clone of the remote that validates every sealed checkpoint of the milestone.
+- Derived requirement: `LESSON-REQ-0039`
+
+### LSN-0041 — An editing path that consumes a backslash escape leaves a control character, and the control it belonged to silently matches nothing
+
+- Reason: applies to every Gate; category testing; severity HIGH; already guarded, so the control must keep holding
+- Required check: Confirm that every scan this Gate adds asserts it found something before judging it, and that no source file carries a stray control character.
+- Required evidence: A green run of the repository-wide control-character scan and of each scan's own non-empty-corpus assertion.
+- Derived requirement: `LESSON-REQ-0040`
+
+### LSN-0042 — A naming convention rewrites a CHECK constraint's name and leaves a UNIQUE constraint's alone
+
+- Reason: applies to every Gate; category implementation; severity CRITICAL; already guarded, so the control must keep holding
+- Required check: For every migration this Gate adds, confirm it is applied and reversed against a disposable database, and that autogenerate finds nothing left to do afterwards.
+- Required evidence: A green reversibility run and a green autogenerate check against a database migrated from zero.
+- Derived requirement: `LESSON-REQ-0041`
+
+### LSN-0043 — A log line is not evidence that another process is ready
+
+- Reason: applies to every Gate; category testing; severity MEDIUM; already guarded, so the control must keep holding
+- Required check: For every wait this Gate adds on another process, confirm it asks that process or its server for the state rather than reading a log line.
+- Required evidence: The readiness path asserted against the server's own answer, with the log-line path refused by a test.
+- Derived requirement: `LESSON-REQ-0042`
+
+### LSN-0044 — A boundary scan must read the code rather than the prose, and must be shown to fire on a mutated module
+
+- Reason: applies to every Gate; category quality; severity HIGH; already guarded, so the control must keep holding
+- Required check: For every boundary scan this Gate adds, confirm it reads the syntax tree rather than the text, and that it carries a control which runs the identical scan over a module that violates the rule.
+- Required evidence: Each scan's null control executed and green, alongside the scan itself.
+- Derived requirement: `LESSON-REQ-0043`
+
+### LSN-0045 — A counted test suite must declare its cases statically, because the denominator is read from the source
+
+- Reason: applies to every Gate; category testing; severity MEDIUM; already guarded, so the control must keep holding
+- Required check: Confirm that every case this Gate adds to a counted suite is declared statically, with table-driven inputs written as a loop rather than as a parametrisation.
+- Required evidence: A green run of the counted-suite scan alongside the suite itself.
+- Derived requirement: `LESSON-REQ-0044`
+
+### LSN-0046 — A timeout that cancels the task it runs in leaves nothing able to record what happened
+
+- Reason: applies to every Gate; category implementation; severity CRITICAL; already guarded, so the control must keep holding
+- Required check: For every limit this Gate enforces, confirm that the enforcement path is still able to write when it fires, and that a real run is observed reaching the terminal state with the reason recorded.
+- Required evidence: A recorded scenario run in which the limit fires and the store shows the terminal state, the error type and the event.
+- Derived requirement: `LESSON-REQ-0045`
+
+### LSN-0047 — A refusal that misnames the defect spends the only repair on the wrong correction
+
+- Reason: applies to every Gate; category implementation; severity HIGH; already guarded, so the control must keep holding
+- Required check: For every validator whose refusal is sent back as the instruction to correct - to a model through a repair, or to a user - confirm that each distinct defect (absent, wrong type, wrong value) has its own reason, and that a wrong-typed value is never reported as missing.
+- Required evidence: A test per defect class asserting the reason code and that the sentence names the defect it found.
+- Derived requirement: `LESSON-REQ-0046`
+
+### LSN-0048 — A state and the event that explains it, written in two commits, are written event first
+
+- Reason: applies to every Gate; category implementation; severity HIGH; already guarded, so the control must keep holding
+- Required check: Wherever a state and the record that explains it are written in separate commits, confirm which one a reader between the two can see alone, and that it is the one a reader may act on - the record before the state it explains.
+- Required evidence: A test that observes what the log held at the moment each terminal state was written.
+- Derived requirement: `LESSON-REQ-0047`
+
+### LSN-0049 — A metric read the instant after the call that moved it is read before the scrape that carries it
+
+- Reason: applies to every Gate; category testing; severity HIGH; already guarded, so the control must keep holding
+- Required check: For every check that reads what another process observes on its own cycle - a scrape, a poll, a flush - confirm that the check waits for at least one full cycle, with a bound, and never repeats the action it is observing to make the observation appear.
+- Required evidence: A test in which the observation arrives only after a delay, and the check still passes within its bound.
+- Derived requirement: `LESSON-REQ-0048`
+
+### LSN-0050 — A checkpoint sealed without naming its own tag cannot be validated from that tag
+
+- Reason: applies to every Gate; category checkpoint; severity CRITICAL; already guarded, so the control must keep holding
+- Required check: Before sealing a checkpoint at any status, confirm that STATE.json currentCommit names the checkpoint's own canonical tag, and that the sealed content validates from that tag with a detached HEAD.
+- Required evidence: The post-seal validation from the checkpoint's own tag, and the seal tool's refusal of a state that does not name it.
+- Derived requirement: `LESSON-REQ-0049`
+
+### LSN-0051 — A payload one service bounds for another must be bounded as the receiver measures it
+
+- Reason: applies to every Gate; category implementation; severity HIGH; already guarded, so the control must keep holding
+- Required check: For every payload one service bounds and another service accepts or refuses by size, confirm both measure it the same way and that the receiver's bound is not smaller than what the sender may hand over.
+- Required evidence: A test that reads both bounds from their sources and compares them, and a test that the sender's bound holds for the worst-case rendering.
+- Derived requirement: `LESSON-REQ-0050`
+
+### LSN-0052 — Two processes that meet on a queue must name what crosses it once, and a real run must exercise both
+
+- Reason: applies to every Gate; category architecture; severity HIGH; already guarded, so the control must keep holding
+- Required check: For every payload this Gate sends between two processes, confirm its names are defined once in a shared contract, used by both sides, and exercised once by a run in which neither side is a double.
+- Required evidence: The shared definition, a scan of both sides for a literal spelling, and a recorded run through the real producer and consumer.
+- Derived requirement: `LESSON-REQ-0051`
+
+### LSN-0053 — A process sweep that reads what a forking process holds waits on the processes it has to kill
+
+- Reason: applies to every Gate; category security; severity HIGH; already guarded, so the control must keep holding
+- Required check: For every control that must end processes it did not start, confirm it freezes before it kills, reads nothing a forking process holds, waits for killed processes to leave the PID table, and is attacked on the real engine by a process that detaches and forks.
+- Required evidence: A deterministic zombie-reaping control plus an engine test in which a detached fork bomb is swept and the next command still runs.
+- Derived requirement: `LESSON-REQ-0052`
+
+### LSN-0054 — A pre-push check narrower than the change's reach lets a red gate reach the public remote
+
+- Reason: applies to every Gate; category git; severity MEDIUM; status CONFIRMED, so it is not yet prevented automatically
+- Required check: Before each push, run the lint gate and the repository-wide scans as well as the suites of the change, because a change reaches every control that scans the tree.
+- Required evidence: Recorded lint and targeted runs between each push and the one before it.
+- Derived requirement: `LESSON-REQ-0053`
+
+### LSN-0055 — A contract a model must follow has to reach the model, rendered from the definition the parser enforces
+
+- Reason: applies to every Gate; category model-behavior; severity MEDIUM; already guarded, so the control must keep holding
+- Required check: For every structured answer a model must produce, confirm that the exact shape is in the text every model receives — rendered from the definition the parser enforces, not written beside it — and that a live run of the configured model produces it.
+- Required evidence: A test that the instructions contain the rendered shape and follow a change of the schema, and a live run of the configured model that produces the shape.
+- Derived requirement: `LESSON-REQ-0054`
+
+### LSN-0056 — A result is accepted only from the executor that owns the request, decided when the request is created
+
+- Reason: applies to every Gate; category security; severity MEDIUM; already guarded, so the control must keep holding
+- Required check: For every result, verdict or callback that more than one producer could deliver, confirm that the owner is recorded when the work is created, that the origin of a delivery comes from the code path and never from the delivery, and that a delivery from any other origin is refused before it is stored.
+- Required evidence: A test that a delivery from the wrong origin is refused before and after the owner's, with a null control through the same path, and a run on the real stack.
+- Derived requirement: `LESSON-REQ-0055`
+
+### LSN-0057 — A pinned lock can become unsafe without changing, so advisory state is live evidence
+
+- Reason: applies to every Gate; category security; severity CRITICAL; already guarded, so the control must keep holding
+- Required check: For every pinned dependency graph delivered by a Gate, run the current advisory scan against every required source and refuse Critical or High findings without suppressing advisories or narrowing the denominator.
+- Required evidence: A report from every required advisory source showing zero relevant Critical or High findings, plus a test that proves those severities remain blocking.
+- Derived requirement: `LESSON-REQ-0056`
+
+### LSN-0058 — Container health does not prove Docker Desktop host-port forwarding
+
+- Reason: applies to every Gate; category environment; severity MEDIUM; already guarded, so the control must keep holding
+- Required check: Exercise every required host-published service through its actual loopback port; do not substitute container health for host reachability.
+- Required evidence: A live host-facing infrastructure suite after stack health, with the original failure retained if a non-destructive restart is required for recovery.
+- Derived requirement: `LESSON-REQ-0057`
+
+### LSN-0059 — A lesson exclusion must declare the scope it excludes
+
+- Reason: applies to every Gate; category process; severity HIGH; already guarded, so the control must keep holding
+- Required check: Confirm every active lesson excluded from a preflight declares a non-empty scope selector, and that incidental metadata does not narrow applicability.
+- Required evidence: A passing repository-preflight coverage test over the complete active lesson set.
+- Derived requirement: `LESSON-REQ-0058`
+
+### LSN-0060 — Parent and child facts without an ORM relationship require an explicit flush boundary
+
+- Reason: applies to every Gate; category implementation; severity MEDIUM; already guarded, so the control must keep holding
+- Required check: Whenever one transaction inserts parent and child ORM facts using raw foreign-key identifiers without a relationship edge, confirm the parent is flushed before the child is added.
+- Required evidence: A real-database integration test that creates the parent and child together and observes both after commit.
+- Derived requirement: `LESSON-REQ-0059`
+
+### LSN-0061 — Cancellation completion must not bypass cleanup acknowledgement
+
+- Reason: applies to every Gate; category testing; severity MEDIUM; already guarded, so the control must keep holding
+- Required check: For every running task that can be cancelled, prove the lifecycle records cancellation requested before it records cancellation completed.
+- Required evidence: A lifecycle test that enters the intermediate cancelling state, acknowledges cleanup, reaches cancelled, and rejects late delivery.
+- Derived requirement: `LESSON-REQ-0060`
+
+### LSN-0062 — Provenance digests are a set even when their sources are distinct
+
+- Reason: applies to every Gate; category implementation; severity MEDIUM; already guarded, so the control must keep holding
+- Required check: Whenever provenance is represented by content digests, normalize it as a unique ordered set rather than assuming each semantic source has different bytes.
+- Required evidence: A test in which distinct provenance roles share one digest and the stored provenance contains it once.
+- Derived requirement: `LESSON-REQ-0061`
+
+### LSN-0063 — An identity shared across services must satisfy the strictest persistence type and remain stable
+
+- Reason: applies to every Gate; category architecture; severity HIGH; already guarded, so the control must keep holding
+- Required check: For every identity crossing a service boundary, verify it satisfies the strictest persisted representation and is stable across delivery retries.
+- Required evidence: A contract or unit test proving syntactic validity, deterministic replay identity and separation between distinct work items.
+- Derived requirement: `LESSON-REQ-0062`
+
+### LSN-0064 — A shared execution resource needs an explicit exclusive owner for every owning domain
+
+- Reason: applies to every Gate; category architecture; severity HIGH; already guarded, so the control must keep holding
+- Required check: When another durable domain reuses an owned resource, model its real ownership explicitly, require exactly one owner, and preserve every per-owner exclusivity invariant.
+- Required evidence: A structural test of the ownership and uniqueness constraints plus a real-database lifecycle test for the new owner.
+- Derived requirement: `LESSON-REQ-0063`
+
+### LSN-0065 — A shared execution identifier must not be written into a foreign key owned by another domain
+
+- Reason: applies to every Gate; category implementation; severity HIGH; already guarded, so the control must keep holding
+- Required check: For a shared execution contract, prove each durable foreign key is populated only for the domain that owns the referenced row, using trusted ownership context rather than identifier shape.
+- Required evidence: A test with both owner domains showing that only the owning domain binds the foreign key.
+- Derived requirement: `LESSON-REQ-0064`
+
+### LSN-0066 — Immutable content identity excludes observation time and the first observer
+
+- Reason: applies to every Gate; category architecture; severity HIGH; already guarded, so the control must keep holding
+- Required check: For every content-addressed or reusable immutable record, define material identity separately from creation metadata and ownership provenance.
+- Required evidence: A replay test where material inputs are equal but time and first observer differ, proving reuse without rewriting the original record.
+- Derived requirement: `LESSON-REQ-0065`
+
+### LSN-0067 — Cancellation semantics must survive orchestration-library exception wrapping
+
+- Reason: applies to every Gate; category implementation; severity HIGH; already guarded, so the control must keep holding
+- Required check: For cancellation across an orchestration boundary, test the exception shape the real library delivers and derive outcome from the durable request plus executor acknowledgement rather than the wrapper class alone.
+- Required evidence: A workflow test for the wrapped cancellation and a live running-cancellation scenario proving cleanup, terminal cancellation and idempotent repeat.
+- Derived requirement: `LESSON-REQ-0066`
+
+### LSN-0068 — A bounded parser must apply each content limit only to content it interprets
+
+- Reason: applies to every Gate; category implementation; severity HIGH; already guarded, so the control must keep holding
+- Required check: For every parser-specific content limit applied to a broader inventory, prove unrelated content bypasses that limit while every interpreted candidate remains bounded.
+- Required evidence: A paired test with an oversized unrelated file accepted and an oversized interpreted file refused, plus a successful real repository evaluation.
+- Derived requirement: `LESSON-REQ-0067`
+
+### LSN-0069 — A polyglot plan binds each check to both its project root and its toolchain
+
+- Reason: applies to every Gate; category architecture; severity HIGH; already guarded, so the control must keep holding
+- Required check: For every polyglot or multi-root project plan, prove each check is expanded at the roots that declared its stack and selects execution policy from the frozen runner rather than one run-wide guessed toolchain.
+- Required evidence: A deterministic planning test over multiple roots and stacks, an execution-boundary test for per-runner images, and a successful real polyglot repository evaluation.
+- Derived requirement: `LESSON-REQ-0068`
+
+### LSN-0070 — Project discovery must separate deployable roots, nested fixtures and check applicability
+
+- Reason: applies to every Gate; category architecture; severity HIGH; already guarded, so the control must keep holding
+- Required check: For project discovery over a monorepo, prove nested fixture manifests do not become execution roots and every non-applicable unit check is derived from the frozen source inventory rather than from a failed command.
+- Required evidence: Paired planner tests proving no-test roots are explicitly non-applicable, test-bearing roots remain mandatory, fixture manifests are excluded, and a real repository evaluation succeeds.
+- Derived requirement: `LESSON-REQ-0069`
+
+### LSN-0071 — Every quality image must provision snapshots on its oldest runtime and prepare each isolated check
+
+- Reason: applies to every Gate; category implementation; severity HIGH; already guarded, so the control must keep holding
+- Required check: For every shared helper and isolated quality runner, test the oldest pinned runtime actually used by an image and prove each check prepares all dependencies it needs without relying on a previous sandbox session.
+- Required evidence: A real snapshot-provisioning test across every quality image, closed-runner assertions for self-contained preparation, and a successful real polyglot repository evaluation.
+- Derived requirement: `LESSON-REQ-0070`
+
+### LSN-0072 — Secret findings and reviewed false positives must share one policy-owned taxonomy
+
+- Reason: applies to every Gate; category security; severity HIGH; already guarded, so the control must keep holding
+- Required check: Whenever more than one gate scans secrets, prove all scanners share the policy-owned finding taxonomy and digest-bound allowance source, and that an unallowlisted match remains blocking.
+- Required evidence: Content-addressing tests for scanner and policy inputs, a real negative scan in every execution image, and consistent PASS over the same reviewed repository snapshot.
+- Derived requirement: `LESSON-REQ-0071`
+
+### LSN-0073 — The canonical lint denominator must cover every detected project root
+
+- Reason: applies to every Gate; category quality; severity HIGH; already guarded, so the control must keep holding
+- Required check: For every manually scoped repository-wide quality command, derive or test its denominator against the current project inventory so a newly detected root cannot remain outside a green gate.
+- Required evidence: A denominator test over all non-fixture manifests plus a successful canonical lint execution and matching real repository Quality Engine verdict.
+- Derived requirement: `LESSON-REQ-0072`
+
+### LSN-0074 — An importable source tree is not an installed or repository-configured test environment
+
+- Reason: applies to every Gate; category implementation; severity CRITICAL; already guarded, so the control must keep holding
+- Required check: For Python tests executed from a nested project root, prove the sandbox provides installed distribution metadata and repository-root policy/configuration without reading or writing the host.
+- Required evidence: A real snapshot test for metadata and monorepo configuration plus a successful evaluation of a committed multi-package repository.
+- Derived requirement: `LESSON-REQ-0073`
+
+### LSN-0075 — Offline package installation requires its build backend inside the quality image
+
+- Reason: applies to every Gate; category implementation; severity HIGH; already guarded, so the control must keep holding
+- Required check: Whenever a sandbox performs an offline package installation, prove every declared build backend is pinned in the content-addressed execution image and usable by the non-root runtime.
+- Required evidence: A real no-network package-installation test through the canonical image-rebuilding sandbox gate.
+- Derived requirement: `LESSON-REQ-0074`
+
+### LSN-0076 — Projected nested configuration requires an explicit monorepo root
+
+- Reason: applies to every Gate; category architecture; severity HIGH; already guarded, so the control must keep holding
+- Required check: When repository configuration is projected into a nested project, provide an explicit trusted repository root and prove source-boundary scans do not reinterpret the projection as ownership.
+- Required evidence: A real nested sandbox test that observes the explicit root plus the complete source-boundary scan from that environment.
+- Derived requirement: `LESSON-REQ-0075`
+
+### LSN-0077 — Harness wait bounds must reflect workload size without changing product deadlines
+
+- Reason: applies to every Gate; category quality; severity CRITICAL; already guarded, so the control must keep holding
+- Required check: For a functional harness whose workload cardinality differs materially by scenario, prove its bounded wait covers the largest legitimate execution without weakening the product's own timeout or deadline.
+- Required evidence: A control that binds every large-workload terminal wait to a distinct finite bound plus successful real executions within that bound.
+- Derived requirement: `LESSON-REQ-0076`
+
+### LSN-0078 — Evidence recorders must resolve caller-supplied commit references before execution
+
+- Reason: applies to every Gate; category quality; severity HIGH; already guarded, so the control must keep holding
+- Required check: Before an evidence recorder executes a command, resolve every caller-supplied commit reference to a real canonical commit and normalize repeated provenance inputs.
+- Required evidence: A positive canonicalization test and a negative unresolved-commit test proving the command was not executed and the refusal was appended.
+- Derived requirement: `LESSON-REQ-0077`
+
+### LSN-0079 — Test discovery and the unit runner must cover the same project scope
+
+- Reason: applies to every Gate; category testing; severity HIGH; already guarded, so the control must keep holding
+- Required check: For every test applicability rule, prove the corresponding closed runner collects the same project scope and that a failing source at each recognized location is observed.
+- Required evidence: A runner-registry assertion plus a real failing fixture whose root-level test produces FAIL with preserved finding and evidence.
+- Derived requirement: `LESSON-REQ-0078`
+
+### LSN-0080 — A failed verification stage must not leave an older PASS report addressable
+
+- Reason: applies to every Gate; category quality; severity HIGH; already guarded, so the control must keep holding
+- Required check: Whenever a verification stage writes to a reusable report path, prove the old artifact is removed before execution and cannot survive a failed rerun as current evidence.
+- Required evidence: A control that starts with a stale PASS file and observes it absent before the stage command is launched.
+- Derived requirement: `LESSON-REQ-0079`
+
+### LSN-0081 — Canonical requirement evidence must name a test the repository actually discovers
+
+- Reason: applies to every Gate; category testing; severity HIGH; already guarded, so the control must keep holding
+- Required check: Before a canonical checklist is accepted, resolve every named test identity against the suite registry rather than treating prose-like test labels as evidence.
+- Required evidence: A repository-wide specification-evidence test that rejects an unknown identity and passes every canonical row.
+- Derived requirement: `LESSON-REQ-0080`
+
+### LSN-0082 — Engineering memory cannot depend on an ephemeral generated report
+
+- Reason: applies to every Gate; category quality; severity CRITICAL; already guarded, so the control must keep holding
+- Required check: Keep organizational memory evidence in committed source or checkpoint-owned file artifacts; reject unsupported evidence kinds and references to regenerable runtime output.
+- Required evidence: Lesson validation proving every evidence reference is a resolvable repository file and no lesson evidence path begins with file:var/.
+- Derived requirement: `LESSON-REQ-0081`
+
+### LSN-0083 — A command that decodes captured UTF-8 must also configure the stream that re-emits it
+
+- Reason: applies to every Gate; category tooling; severity CRITICAL; already guarded, so the control must keep holding
+- Required check: For every executable command that captures text from a child process and prints it, configure both the child decoder and the parent output stream explicitly.
+- Required evidence: A repository-wide entry-point scan plus a rejecting fixture for an unconfigured captured-output command.
+- Derived requirement: `LESSON-REQ-0082`
+
+### LSN-0084 — A historical Gate documentation test must derive the current entry-point state
+
+- Reason: applies to every Gate; category testing; severity HIGH; already guarded, so the control must keep holding
+- Required check: When a predecessor regression test inspects a current entry point, derive current lifecycle identifiers and keep only genuinely historical references fixed.
+- Required evidence: A documentation test that resolves the current Gate from repository state while retaining predecessor checklist and runbook links.
+- Derived requirement: `LESSON-REQ-0083`
+
+### LSN-0085 — A source-based control must assert syntax semantics rather than formatter layout
+
+- Reason: applies to every Gate; category testing; severity MEDIUM; already guarded, so the control must keep holding
+- Required check: When a control judges source structure, parse the language representation and compare semantic nodes instead of binding the rule to formatter whitespace or quote style.
+- Required evidence: A source-control test that resolves the relevant syntax nodes and their values without substring adjacency assumptions.
+- Derived requirement: `LESSON-REQ-0084`
+
+### LSN-0086 — A subprocess assertion must preserve the exit code when both streams are empty
+
+- Reason: applies to every Gate; category testing; severity MEDIUM; already guarded, so the control must keep holding
+- Required check: For every subprocess-backed assertion, preserve return code and a non-empty diagnostic even when the child emits nothing; never add a retry that could conceal the outcome.
+- Required evidence: A mutation test for nonzero return with empty stdout and stderr that observes the exact exit code.
+- Derived requirement: `LESSON-REQ-0085`
+
+### LSN-0087 — A rehearsal worker must register every workflow activity boundary
+
+- Reason: applies to every Gate; category implementation; severity HIGH; already guarded, so the control must keep holding
+- Required check: Every purpose-built worker that hosts a shared workflow must register every activity boundary that workflow can schedule, including not-applicable branches whose decision is made inside an activity.
+- Required evidence: A worker-registration control plus a successful real restart rehearsal through the workflow's terminal state.
+- Derived requirement: `LESSON-REQ-0086`
+
+### LSN-0088 — A test inside a built image can consume only inputs copied into that image
+
+- Reason: applies to every Gate; category testing; severity HIGH; already guarded, so the control must keep holding
+- Required check: Whenever a test runs inside a built image and consumes repository content outside its own copied suite, prove the Dockerfile carries that input and the test resolves the same in-image destination.
+- Required evidence: A source-boundary control that binds COPY source and in-image path plus a successful execution through the built image.
+- Derived requirement: `LESSON-REQ-0087`
+
+### LSN-0089 — Domain not-applicability and operational failure need distinct orchestration outcomes
+
+- Reason: applies to every Gate; category architecture; severity HIGH; already guarded, so the control must keep holding
+- Required check: At every optional domain boundary, prove not-applicable conditions return a bounded negative applicability result while operational errors enter a shared failure taxonomy that can write terminal state.
+- Required evidence: A classification control plus real scenarios for the not-applicable and failure paths.
+- Derived requirement: `LESSON-REQ-0088`
+
+### LSN-0090 — A clean-clone control must use only versioned configuration inputs
+
+- Reason: applies to every Gate; category testing; severity HIGH; already guarded, so the control must keep holding
+- Required check: Every clean-clone or repository control must consume only versioned configuration inputs; ignored developer-local files may not be preconditions for a passing gate.
+- Required evidence: A test that executes the controlled command with an explicitly versioned configuration file and a passing clean-clone reproduction.
+- Derived requirement: `LESSON-REQ-0089`
+
+### LSN-0091 — Secret detection must run on the exact bytes at the durable evidence boundary
+
+- Reason: applies to every Gate; category security; severity CRITICAL; already guarded, so the control must keep holding
+- Required check: For every durable evidence boundary, scan the exact serialized bytes with the canonical taxonomy before lookup or write, fail closed when scanning cannot complete, and prove rejected bytes cannot resolve or support a verdict.
+- Required evidence: A direct zero-write persistence test, a scanner-failure test, a resolution test, and an end-to-end activity attack that derives a failing verdict.
+- Derived requirement: `LESSON-REQ-0090`
+
+### LSN-0092 — Canonical audit parsers must consume every bounded sealed report rendering
+
+- Reason: applies to every Gate; category tooling; severity HIGH; already guarded, so the control must keep holding
+- Required check: Whenever a sealed audit introduces a bounded report rendering, prove canonical derivation parses its own findings without importing mentions from historical or closure sections.
+- Required evidence: Regression tests over the exact sealed report, a negative out-of-section fixture, and a successful canonical requirement derivation.
+- Derived requirement: `LESSON-REQ-0091`
+
+### LSN-0093 — Disposable control repositories must carry every imported repository package
+
+- Reason: applies to every Gate; category testing; severity HIGH; already guarded, so the control must keep holding
+- Required check: Whenever a repository tool is copied into a disposable or clean repository, copy every versioned repository package it imports and prove the copied entry point imports from that isolated boundary.
+- Required evidence: A central fixture installer, an isolated import regression, and a passing end-to-end disposable delivery flow.
+- Derived requirement: `LESSON-REQ-0092`
+
+### LSN-0094 — A review bundle must include unchanged canonical artifact categories
+
+- Reason: applies to every Gate; category checkpoint; severity HIGH; already guarded, so the control must keep holding
+- Required check: Build review transport from both the truthful changeset and the tracked canonical review context; do not infer that an unchanged mandatory category is irrelevant.
+- Required evidence: A regression proving unchanged migrations, schemas, and policies are collected, plus a passing bundle validation over the resulting manifest.
+- Derived requirement: `LESSON-REQ-0093`
+
+### LSN-0095 — A complete verifier must own its Compose runtime by checkout
+
+- Reason: applies to every Gate; category testing; severity HIGH; already guarded, so the control must keep holding
+- Required check: Every live multi-stage verifier must prove that one checkout exclusively owns its Compose project, published ports, volumes and image build inputs for the whole ordered run, while cleanup is restricted to that owned namespace.
+- Required evidence: Repository controls for project derivation, frozen stage environment, dynamic ports, build-before-measurement and cleanup refusal, plus a clean ordered live execution.
+- Derived requirement: `LESSON-REQ-0094`
+
+### LSN-0096 — Evidence publishers must consume the producer's canonical result schema
+
+- Reason: applies to every Gate; category checkpoint; severity HIGH; already guarded, so the control must keep holding
+- Required check: Every evidence publisher must consume the producer's canonical versioned result fields and prove the mapping behaviorally with a contradictory-alias fixture.
+- Required evidence: Regressions against the actual publisher plus a publication report bound to the producer result, denominator and cleanup state.
+- Derived requirement: `LESSON-REQ-0095`
+
+### LSN-0097 — A review-bundle declaration must bind an immutable reconstruction subject
+
+- Reason: applies to every Gate; category checkpoint; severity HIGH; already guarded, so the control must keep holding
+- Required check: A review-bundle declaration must identify an immutable reconstruction subject, and validation must rebuild twice from transported Git content and compare digest and size with the declaration before handoff.
+- Required evidence: A producer/validator regression, an attack-T failure fixture for stale declarations, and two byte-identical detached-transport rebuilds matching the sealed declaration.
+- Derived requirement: `LESSON-REQ-0096`
+
+### LSN-0098 — Accepted cancellation must be enforced from durable state across activity boundaries
+
+- Reason: applies to every Gate; category implementation; severity CRITICAL; already guarded, so the control must keep holding
+- Required check: When cancellation is accepted durably, the workflow must observe it before starting and while awaiting a long-running activity, cancel any newly assigned handle, give cancellation precedence over a racing normal response, and wait for cleanup before becoming terminal.
+- Required evidence: Deterministic dispatch, handle-handoff, in-flight durable-state and response-precedence regressions, the rebuilt evaluator suite, and a live checkout-owned cancellation scenario that reaches CANCELLED with cancellation evidence and cleanup.
+- Derived requirement: `LESSON-REQ-0097`
+
+### LSN-0099 — A refused subject is an attempted input, not executed commit evidence
+
+- Reason: applies to every Gate; category checkpoint; severity HIGH; already guarded, so the control must keep holding
+- Required check: A command refused before execution must retain a recomputable refusal without making its deliberately invalid subject part of the published-history evidence denominator.
+- Required evidence: A behavioral recorder/validator regression proving no process executes, the refusal remains valid ledger evidence, and the unresolved subject is not treated as a commit that produced evidence.
+- Derived requirement: `LESSON-REQ-0098`
+
+### LSN-0100 — Pre-seal detached validation must bind the explicit subject namespace
+
+- Reason: applies to every Gate; category checkpoint; severity HIGH; already guarded, so the control must keep holding
+- Required check: An exact detached pre-seal verifier must bind an IN_PROGRESS checkpoint to its checkpoint-named iacode-subjects ref without allowing that ref to substitute for the canonical seal tag.
+- Required evidence: Positive and negative detached-checkout regressions proving the subject mode is exact, checkpoint-specific and unavailable after pre-seal work.
+- Derived requirement: `LESSON-REQ-0099`
+
+### LSN-0101 — A structural record and its canonical index are one atomic change
+
+- Reason: applies to every Gate; category checkpoint; severity HIGH; already guarded, so the control must keep holding
+- Required check: Whenever a structural record is created or changed, its canonical index must enumerate the same record, title and status before publication.
+- Required evidence: A positive full-enumeration test and a negative mutation test proving a missing index row is rejected.
+- Derived requirement: `LESSON-REQ-0100`
+
+### LSN-0102 — Assurance denominators must derive category counts from the current source set
+
+- Reason: applies to every Gate; category quality; severity CRITICAL; already guarded, so the control must keep holding
+- Required check: Any assurance partition must derive category counts from its canonical identifier sets instead of maintaining a duplicate literal that can drift.
+- Required evidence: A regression mutating the corrective source set and proving the expected partition changes automatically.
+- Derived requirement: `LESSON-REQ-0101`
+
+### LSN-0103 — Adversarial fixtures must hash the complete validated contract
+
+- Reason: applies to every Gate; category testing; severity HIGH; already guarded, so the control must keep holding
+- Required check: Construct the complete canonical verdict before hashing and execute a valid commitment before attributing a refusal to cancellation.
+- Required evidence: Executed positive/negative controls and the fresh mandatory gate suite; failures stay in the ledger.
+- Derived requirement: `LESSON-REQ-0102`
+
+### LSN-0104 — Intermediate closure and independent validation must have unambiguous contracts
+
+- Reason: applies to every Gate; category process; severity HIGH; already guarded, so the control must keep holding
+- Required check: Keep adapters and live Gate rows aligned with the milestone cadence, preserve internal controls and reject independent verdicts on INTERNAL_GATE_PASS.
+- Required evidence: Executed positive/negative controls and the fresh mandatory gate suite; failures stay in the ledger.
+- Derived requirement: `LESSON-REQ-0103`
+
+### LSN-0105 — New behavioral tests must satisfy the unchanged source-quality contract
+
+- Reason: applies to every Gate; category testing; severity CRITICAL; already guarded, so the control must keep holding
+- Required check: Run the existing mandatory lint over every changed source and test path before publishing; repair formatting without weakening lint or assertions.
+- Required evidence: Executed positive/negative controls and the fresh mandatory gate suite; failures stay in the ledger.
+- Derived requirement: `LESSON-REQ-0104`
+
+### LSN-0106 — A security repair must execute at the causal output boundary, not a similarly shaped branch
+
+- Reason: applies to every Gate; category implementation; severity HIGH; already guarded, so the control must keep holding
+- Required check: Bind changes to the intended function and execute its real positive and negative service/activity paths before claiming the repair.
+- Required evidence: A valid positive control, a premise check and behavioral proof at the actual target; the complete current mandatory suite.
+- Derived requirement: `LESSON-REQ-0105`
+
+### LSN-0107 — An adversarial marker must satisfy the canonical detector before it can judge containment
+
+- Reason: applies to every Gate; category testing; severity HIGH; already guarded, so the control must keep holding
+- Required check: Prove the generated adverse bytes are recognized by the canonical detector before judging rejection, and retain a clean positive path through the identical execution.
+- Required evidence: A valid positive control, a premise check and behavioral proof at the actual target; the complete current mandatory suite.
+- Derived requirement: `LESSON-REQ-0106`
+
+### LSN-0108 — Evidence timestamp transport must preserve RFC3339 rather than a shell locale rendering
+
+- Reason: applies to every Gate; category process; severity LOW; already guarded, so the control must keep holding
+- Required check: Read the raw command record as JSON and preserve its exact timestamp; validate lesson datetime fields and reject locale renderings before evidence publication.
+- Required evidence: A valid positive control, a premise check and behavioral proof at the actual target; the complete current mandatory suite.
+- Derived requirement: `LESSON-REQ-0107`
+
+### LSN-0109 — Regression counts and evidence must exclude only policy-bound live input repositories
+
+- Reason: applies to every Gate; category testing; severity HIGH; already guarded, so the control must keep holding
+- Required check: Declare input repositories in canonical policy with reasons and require exact agreement with literal pytest collection; use one boundary for counts and evidence while retaining every mandatory live scenario.
+- Required evidence: A valid positive control, a premise check and behavioral proof at the actual target; the complete current mandatory suite.
+- Derived requirement: `LESSON-REQ-0108`
+
+### LSN-0110 — A timed-out live proof retains bounded diagnostics before owned cleanup
+
+- Reason: applies to every Gate; category testing; severity CRITICAL; already guarded, so the control must keep holding
+- Required check: Keep the deadline unchanged, write a red report with sanitized history failure metadata and pending activity types before cleanup, and never continue adverse cases after a failed clean control.
+- Required evidence: A valid positive control, a premise check and behavioral proof at the actual target; the complete current mandatory suite.
+- Derived requirement: `LESSON-REQ-0109`
+
+### LSN-0111 — Polling watcher cleanup must preserve completed checks and accepted cancellation
+
+- Reason: applies to every Gate; category implementation; severity HIGH; already guarded, so the control must keep holding
+- Required check: Accept typed activity cancellation only when this cleanup requested it, propagate unrelated and precompleted failures, and recheck active handle lifetime after durable reads without losing the accepted cancellation flag.
+- Required evidence: A valid positive control, a premise check and behavioral proof at the actual target; the complete current mandatory suite.
+- Derived requirement: `LESSON-REQ-0110`
+
+### LSN-0112 — Canonical scanner consumers must share transport decoding, not only patterns
+
+- Reason: applies to every Gate; category security; severity HIGH; already guarded, so the control must keep holding
+- Required check: Use the identical bounded in-memory transport views for runtime and publication, retain exact component-digest review, never expose values, and keep raw/encoded clean and negative controls.
+- Required evidence: A valid positive control, a premise check and behavioral proof at the actual target; the complete current mandatory suite.
+- Derived requirement: `LESSON-REQ-0111`
+
+### LSN-0113 — Stronger delivery controls must follow the immutable subject policy version
+
+- Reason: applies to every Gate; category checkpoint; severity CRITICAL; already guarded, so the control must keep holding
+- Required check: Version every changed invariant by the subject's canonical policy, retain mandatory current downgrade controls, and validate all sealed tags with current tooling without altering subjects or narrowing membership.
+- Required evidence: Passing current positive/negative and legacy policy controls plus actual current-tool validation over every canonical sealed anchor.
+- Derived requirement: `LESSON-REQ-0112`
+
+### LSN-0114 — Transport line metadata must not repeatedly scan the source prefix
+
+- Reason: applies to every Gate; category performance; severity MEDIUM; already guarded, so the control must keep holding
+- Required check: Run the measured source-range regression and all existing transport, secret-boundary and immutable-bundle controls without weakening their rules.
+- Required evidence: A causal red range-work measurement, unchanged encoded finding and line controls, a green measured regression and the complete mandatory suite.
+- Derived requirement: `LESSON-REQ-0113`
+
+### LSN-0115 — A failing full verifier retains every bounded case identifier beyond its output tail
+
+- Reason: applies to every Gate; category tooling; severity MEDIUM; already guarded, so the control must keep holding
+- Required check: Run actual-process long-tail, parameter-exclusion, bounded-count and successful-child controls; retain original stage denominator and exit-code semantics.
+- Required evidence: A causal red diagnostic regression followed by green controls and the full verifier.
+- Derived requirement: `LESSON-REQ-0114`
+
+### LSN-0116 — A live resumability pointer is generated after Git boundaries, not committed into its own subject
+
+- Reason: applies to every Gate; category tooling; severity CRITICAL; already guarded, so the control must keep holding
+- Required check: Generate current state from the latest checkpoint, truthful steps and real local/remote Git; validate exact observations, reject stale or contradictory state and prove the live output cannot dirty or overwrite tracked source.
+- Required evidence: Real CLI/Git negative and positive controls, current checkpoint steps and a successful current live-state observation after publication.
+- Derived requirement: `LESSON-REQ-0115`
+
+### LSN-0117 — An architecture rollup must not contradict the delivered capability described below it
+
+- Reason: applies to every Gate; category documentation; severity CRITICAL; already guarded, so the control must keep holding
+- Required check: Check every public current-state rollup against canonical owned capability titles and delegate live lifecycle status to LATEST, retaining earlier architecture controls and testing actual omissions, future-denials and frozen status.
+- Required evidence: A causal red overview-consistency control followed by its unchanged green execution and a full current documentation validation.
+- Derived requirement: `LESSON-REQ-0116`
+
+### LSN-0118 — Post-response validation failures must preserve an accepted mutation's uncertain outcome
+
+- Reason: applies to every Gate; category implementation; severity HIGH; already guarded, so the control must keep holding
+- Required check: For every refusal after a remote mutation may have been accepted, including response authentication, envelope and semantic validation, preserve uncertainty and stable reconciliation identity without automatically repeating the mutation.
+- Required evidence: A real-socket clean control and a signed malformed mutation result that observes one server effect, an uncertain typed client refusal, the original idempotency identity and zero retries; a registered executable guard and full current verification.
+- Derived requirement: `LESSON-REQ-0117`
+
+### LSN-0119 — A clean publication scan does not replace the stricter checkpoint secret scan
+
+- Reason: applies to every Gate; category quality; severity CRITICAL; already guarded, so the control must keep holding
+- Required check: Treat publication review and strict checkpoint detection as distinct controls; execute both unchanged, preserve actual secret types when correcting source false positives, and never infer checkpoint validity from the publication scan.
+- Required evidence: The retained publication-clean/checkpoint-red observations, an unchanged strict-source red/green control, actual SecretStr/redaction behavior and actual current checkpoint validation; no widened scanner rule or exemption.
+- Derived requirement: `LESSON-REQ-0118`
+
+### LSN-0120 — Native installation proofs must resolve the installed CLI entrypoint
+
+- Reason: applies to every Gate; category quality; severity MEDIUM; already guarded, so the control must keep holding
+- Required check: Resolve native tool installation/CLI entrypoints and verify actual extracted package identities before claiming installability; graphical process launch or a guessed metadata path is not installation evidence.
+- Required evidence: The retained zero-run timeout, contained installed-adapter positive/adverse controls and actual fresh isolated native installation/trust execution with observed cleanup.
+- Derived requirement: `LESSON-REQ-0119`
+
+### LSN-0121 — Standard-library host probes must not initialize application dependency graphs
+
+- Reason: applies to every Gate; category quality; severity MEDIUM; already guarded, so the control must keep holding
+- Required check: For standard-library host tooling, test the actual cold import graph without site/user packages. Read canonical data directly when importing its package would initialize application-only dependencies; do not repair a host probe by silently installing production dependencies.
+- Required evidence: A retained cold-start failure, actual -I -S positive control and adverse package-import premise, plus the eventual real integration proof rather than a substituted fake.
+- Derived requirement: `LESSON-REQ-0120`
+
+### LSN-0122 — Engine-allocated host ports must be rediscovered after container restart
+
+- Reason: applies to every Gate; category environment; severity MEDIUM; already guarded, so the control must keep holding
+- Required check: After restarting a service with engine-allocated ports, rediscover the actual published endpoint and explicitly reconfigure owned test actors before mutation. Verify real host authentication; do not infer reachability from health or silently substitute a workspace-provided production endpoint.
+- Required evidence: The retained post-restart refusal, actual engine before/after port observation with working forwarding and cleanup, executable current-endpoint/authentication-negative controls and the actual replay/integration rerun.
+- Derived requirement: `LESSON-REQ-0121`
+
+### LSN-0123 — Consent binds workspace identity, not an uncanonicalized path spelling
+
+- Reason: applies to every Gate; category implementation; severity HIGH; already guarded, so the control must keep holding
+- Required check: When authorizing selected workspace content, bind the selection identity independently of filesystem spelling and revalidate canonical root plus exact content. Case/canonicalization differences must not break valid consent or weaken stale-root/trust refusal.
+- Required evidence: The retained native/canonical-spelling refusal, an actual executable alias control with exact root/digest and stale-consent negatives, followed by actual native approval/integration.
+- Derived requirement: `LESSON-REQ-0122`
+
+### LSN-0124 — Durable editor recovery must not use an in-memory test host
+
+- Reason: applies to every Gate; category testing; severity HIGH; already guarded, so the control must keep holding
+- Required check: Prove durable native recovery in the actual persistent storage context. Inspect tool test-mode semantics, retain recovery assertions and never seed missing state or replace production persistence with a fake.
+- Required evidence: The retained failed two-host proof, observed installed storage switch, executable positive/adverse launch control and eventual actual persistent two-host provider workflow.
+- Derived requirement: `LESSON-REQ-0123`
+
+### LSN-0125 — Native parent exit is not proof of process and profile cleanup
+
+- Reason: applies to every Gate; category environment; severity CRITICAL; already guarded, so the control must keep holding
+- Required check: Own native descendants before launch; pin a complete bounded member snapshot and validate each handle against the exact job. Require zero accounting plus signaled observed handles within the existing drain deadline. Preserve typed failure facts, validate exact temporary targets, bound sharing retries and require observed removal. Never kill global user processes or suppress cleanup failures.
+- Required evidence: Retained actual failures, pinned owned-handle mismatch, formerly failing positive/deadline controls, snapshot/identity refusal, actual surviving-child control, target/error negatives and fresh actual native profile removal with observed synchronized members and retained retries.
+- Derived requirement: `LESSON-REQ-0124`
+
+### LSN-0126 — Known authentication material is not domain or presentation data
+
+- Reason: applies to every Gate; category security; severity CRITICAL; already guarded, so the control must keep holding
+- Required check: Keep known authentication material separate from domain input and presentation. Reject declared raw and encoded forms before effects, retain unknown-secret scanning unchanged, and preserve uncertainty for response refusals after acceptance.
+- Required evidence: Retained encoded-form failures, complete API/client clean and adverse execution, no pre-effect replay/domain IO, and signed post-acceptance refusal preserving original identity and one mutation.
+- Derived requirement: `LESSON-REQ-0125`
+
+### LSN-0127 — Fresh runtime health does not initialize an operator-managed model catalog
+
+- Reason: applies to every Gate; category environment; severity HIGH; already guarded, so the control must keep holding
+- Required check: For a fresh isolated runtime, establish explicit operator-managed catalog prerequisites and verify exact authorized model availability separately from health. Never silently substitute a model or misclassify empty discovery as a credential failure.
+- Required evidence: Retained real NO_CANDIDATE/empty-catalog diagnostic, actual synchronization and unchanged-model inference, executable sync/missing-model negatives and complete workflow rerun.
+- Derived requirement: `LESSON-REQ-0126`
+
+### LSN-0128 — Adversarial premises must use the actual public contract
+
+- Reason: applies to every Gate; category testing; severity CRITICAL; already guarded, so the control must keep holding
+- Required check: Build adversarial premises from actual public contracts and observed execution identities. Do not invent fields, widen public metadata for test convenience or drop the real boundary assertion when a harness premise fails.
+- Required evidence: Retained actual pre-attack harness failure, canonical public-field/ID positive and adverse controls, then the actual API-origin refusal with a real executed sandbox tool.
+- Derived requirement: `LESSON-REQ-0127`
+
+### LSN-0129 — Repeated cancellation must preserve an already cancelled terminal result
+
+- Reason: applies to every Gate; category implementation; severity HIGH; already guarded, so the control must keep holding
+- Required check: Treat repeated cancellation of an already CANCELLED run as immutable observation, not a new transition; preserve refusal for successful/failed terminal work and distinguish request from actual completion/cleanup.
+- Required evidence: Retained real and causal store failures, complete store/runtime tests with explicit terminal negatives, then actual persistent cancellation, terminal cleanup and safe repeat through the real client.
+- Derived requirement: `LESSON-REQ-0128`
+
+### LSN-0130 — Executable export line endings belong to the source and packaging contract
+
+- Reason: applies to every Gate; category quality; severity HIGH; already guarded, so the control must keep holding
+- Required check: Bind executable line endings in Git and packaging, retain exact source/protocol bytes and refuse incompatible CRLF inputs. Same-checkout deterministic agreement alone is not cross-platform byte evidence.
+- Required evidence: Retained actual EOL/builder failures, actual Git attribute positive checks, CRLF refusal and complete deterministic package/client execution; installation remains separate.
+- Derived requirement: `LESSON-REQ-0129`
+
+### LSN-0131 — Raw evidence digests require byte-preserving Git export, not text normalization
+
+- Reason: applies to every Gate; category quality; severity CRITICAL; already guarded, so the control must keep holding
+- Required check: Preserve claimed raw observation digests across actual Git export rather than checking only a local copy. Declare dedicated copied-evidence boundaries explicitly without changing historical observation bytes.
+- Required evidence: Actual Git positive/adverse/restored transport controls plus equality between every staged archived observation and its original bytes before publication.
+- Derived requirement: `LESSON-REQ-0130`
+
+### LSN-0132 — Owned Git clones need read-only-aware cleanup, not native-profile lock retry
+
+- Reason: applies to every Gate; category quality; severity HIGH; already guarded, so the control must keep holding
+- Required check: Use a lifecycle manager that handles actual Windows read-only Git objects for fresh verification clones; do not confuse this with profile sharing locks or retry a policy-refused existing cleanup target.
+- Required evidence: Actual readonly-object causal red/green, exact owned directory validation and observed fresh-clone removal. Refused historical cleanup targets stay named and are never claimed removed.
+- Derived requirement: `LESSON-REQ-0131`
+
+### LSN-0133 — Shared field names do not imply shared schema types
+
+- Reason: applies to every Gate; category tooling; severity MEDIUM; already guarded, so the control must keep holding
+- Required check: Read and validate the owning artifact schema when projecting metadata; equal field names do not grant equal types, nullability or rights.
+- Required evidence: Actual target-artifact schema rejection and unchanged positive/adverse execution after correcting the value, with the schema and denied rights preserved.
+- Derived requirement: `LESSON-REQ-0132`
+
+### LSN-0134 — Configuration classifiers consume decoded values, not dotenv quote syntax
+
+- Reason: applies to every Gate; category implementation; severity MEDIUM; already guarded, so the control must keep holding
+- Required check: For committed environment consumers, decode the supported literal syntax before classification and prove actual Compose agreement for quoted empty, quoted placeholder and nonempty adverse values.
+- Required evidence: Causal red observations, actual Compose positive/adverse comparisons, host-reader and all affected consumer regressions plus complete infrastructure reexecution.
+- Derived requirement: `LESSON-REQ-0133`
+
+### LSN-0135 — Capture producer evidence before fallible interpretation or owned cleanup
+
+- Reason: applies to every Gate; category quality; severity CRITICAL; already guarded, so the control must keep holding
+- Required check: Every temporary verification producer must preserve its available safe reports before interpretation can raise; actual owner cleanup must leave those reports and digests recoverable without manufacturing PASS.
+- Required evidence: A real exception and actual temporary-owner cleanup regression with recoverable original bytes, plus a fresh complete publication capture and exact transport verification.
+- Derived requirement: `LESSON-REQ-0134`
+
+### LSN-0136 — Strict JSON validation loses transport context
+
+- Reason: applies to every Gate; category implementation; severity MEDIUM; already guarded, so the control must keep holding
+- Required check: Strict contract prevalidators must preserve the transport semantics of valid JSON arrays/dates while refusing coerced boolean/numeric values.
+- Required evidence: Actual JSON-mode clean round-trip and adverse type/privacy cases through the pinned production dependency runtime.
+- Derived requirement: `LESSON-REQ-0135`
+
+### LSN-0137 — SQL text interprets inline JSON colons as bindings
+
+- Reason: applies to every Gate; category testing; severity MEDIUM; already guarded, so the control must keep holding
+- Required check: SQL fixtures must transport structured JSON through bindings rather than let a SQL text parser reinterpret JSON property/value colons.
+- Required evidence: Actual previously failing legacy/corruption fixtures and full migration agreement through the real owning SQLAlchemy/PostgreSQL runtime.
+- Derived requirement: `LESSON-REQ-0136`
+
+### LSN-0138 — Secret projection distinguishes public identities from authorization secrets
+
+- Reason: applies to every Gate; category security; severity HIGH; already guarded, so the control must keep holding
+- Required check: Known-secret projection must distinguish public identities from actual passwords/bearer values; use the real configured field semantics, preserve unknown-secret detection and exact raw/encoded refusal of actual secrets.
+- Required evidence: Actual owning-runtime public-identity clean control plus opaque password/bearer adverse controls, and complete real source capture without any detector weakening.
+- Derived requirement: `LESSON-REQ-0137`
+
+### LSN-0139 — Privacy projection begins in the source query
+
+- Reason: applies to every Gate; category security; severity HIGH; already guarded, so the control must keep holding
+- Required check: A bounded privacy-safe output must not justify fetching unneeded private source columns; the actual query must project only consumed fields and bound required source JSON before transfer.
+- Required evidence: Actual owning SQL statement observation, oversized-source zero-effect refusal and real clean source capture/recovery, not a query-shaped mock.
+- Derived requirement: `LESSON-REQ-0138`
+
+### LSN-0140 — Summaries preserve canonical continuation structure
+
+- Reason: applies to every Gate; category quality; severity CRITICAL; already guarded, so the control must keep holding
+- Required check: Any helper that replaces a checkpoint artifact must preserve the owning canonical structural contract, not substitute an unstructured summary; required sections stay substantive and complete.
+- Required evidence: Actual renderer output against canonical headings, omission/empty-section adverse controls and current canonical checkpoint acceptance without any validator weakening.
+- Derived requirement: `LESSON-REQ-0139`
+
+### LSN-0141 — Preflight checks honor every declared applicability dimension
+
+- Reason: applies to every Gate; category testing; severity HIGH; already guarded, so the control must keep holding
+- Required check: Applicability audits honor all canonical selector dimensions without inventing a scope-only exclusion rule or allowing an active unfiltered lesson to disappear.
+- Required evidence: Actual legitimate-selector positive controls and unexplained-omission refusal, with the complete inherited preflight class green.
+- Derived requirement: `LESSON-REQ-0140`
+
+### LSN-0142 — Local Engine recovery keeps transport and cleanup scoped
+
+- Reason: applies to every Gate; category environment; severity HIGH; already guarded, so the control must keep holding
+- Required check: Operational access recovery must pin transport only in the owning child, preserve the parent/global configuration and verify exact disposable resource ownership and other application identities before and after cleanup.
+- Required evidence: Actual bounded Engine access and scoped recovery receipt with observed unrelated identities preserved, plus child-environment/failure propagation and unsafe-ownership adverse controls.
+- Derived requirement: `LESSON-REQ-0141`
+
+### LSN-0143 — Management recovery is not complete runtime capability
+
+- Reason: applies to every Gate; category environment; severity HIGH; already guarded, so the control must keep holding
+- Required check: Do not promote a management-only recovery into full runtime readiness. Verify the actual canonical build, host-bind and lint capabilities through the supported transport before immutable assurance.
+- Required evidence: Real unchanged complete lint/build/bind execution and subsequent full canonical run; otherwise named external blockers and retained failed observations, never inferred readiness.
+- Derived requirement: `LESSON-REQ-0142`
+
+### LSN-0144 — Raw archived observations retain original context rather than becoming active relocated documents
+
+- Reason: applies to every Gate; category documentation; severity HIGH; already guarded, so the control must keep holding
+- Required check: Preserve raw observation bytes and original interpretation context; never publish a relocated byte-exact archive as active source/documentation with broken context.
+- Required evidence: Actual published-object equality for every raw archive member, immutable original manifest and unchanged whole-tree active-document validation.
+- Derived requirement: `LESSON-REQ-0143`
+
+### LSN-0145 — A new persistent capability must extend the explicit structural contract, not bypass its exact inventory
+
+- Reason: applies to every Gate; category testing; severity MEDIUM; already guarded, so the control must keep holding
+- Required check: For every authorized persistence addition, extend the owning exact table inventory, immutable/lifecycle classification and foreign-key ownership contract while preserving all inherited assertions; prove each boundary rejects a deliberate mismatch.
+- Required evidence: Actual complete API gate with the expanded exact structural expectations plus executed missing/extra table, wrong fact/lifecycle and changed-cascade adverse controls; real migration parity remains separate.
+- Derived requirement: `LESSON-REQ-0144`
+
+### LSN-0146 — A completed command record is not proof that its producing process has exited
+
+- Reason: applies to every Gate; category process; severity CRITICAL; already guarded, so the control must keep holding
+- Required check: Wait for actual producer process exit before starting a dependent writer or publication step; a successful intermediate ledger record, metadata file or output line is not a process-completion signal.
+- Required evidence: Executed process-order positive and failure controls using actual child processes, including successful-looking intermediate output followed by nonzero exit; the dependent mutation must remain unexecuted on refusal.
+- Derived requirement: `LESSON-REQ-0145`
+
+### LSN-0147 — Framework lifecycle errors need bounded identities as well as test methods
+
+- Reason: applies to every Gate; category tooling; severity HIGH; already guarded, so the control must keep holding
+- Required check: Retain safe bounded test-method and class/module lifecycle failure identities without disclosing arbitrary traceback bodies or silently omitting a supported family.
+- Required evidence: Executed current parser positive/adverse/overflow controls, actual original diagnostics and the complete current mandatory suite.
+- Derived requirement: `LESSON-REQ-0146`
+
+### LSN-0148 — Minimal protocol fixtures inherit control contracts, never deployment-owned source data
+
+- Reason: applies to every Gate; category security; severity HIGH; already guarded, so the control must keep holding
+- Required check: Construct minimal protocol repositories from explicit canonical control assets and declared runtime dependencies, not deployment-owned curator sources, unrelated histories or attestation verdicts.
+- Required evidence: Actual positive protocol execution, real retained-link negative, copied dependency proof and isolated synthetic source/history noninheritance controls.
+- Derived requirement: `LESSON-REQ-0147`
+
+### LSN-0149 — A shell exit zero is not a produced digest or verified original evidence
+
+- Reason: applies to every Gate; category tooling; severity HIGH; already guarded, so the control must keep holding
+- Required check: Execution exit0 does not replace a typed completed nonempty observation or actual matching file bytes; reject absent digests and incomplete reads before mutation or evidence acceptance.
+- Required evidence: Actual nonempty original-byte proof and executed running/failed/empty/null/mismatched-observation controls; original semantic failures remain visible.
+- Derived requirement: `LESSON-REQ-0148`
+
+### LSN-0150 — Build and verification root inputs need subject-versioned assurance binding
+
+- Reason: applies to every Gate; category security; severity HIGH; already guarded, so the control must keep holding
+- Required check: Bind every current required root build/verification input by exact subject-versioned policy; real material changes, ignored files and deletion must invalidate current evidence while legacy subject fingerprints retain their original semantics.
+- Required evidence: Actual causal fingerprint red, current mutation/ignored/deletion and narrowing/version/type positive/adverse controls, preserved legacy identity, and complete current immutable verification; no caller-selected denominator or historical rewrite.
+- Derived requirement: `LESSON-REQ-0149`
+
+### LSN-0151 — Immutable Git object reads must handle Windows long paths only in the owning child
+
+- Reason: applies to every Gate; category quality; severity HIGH; already guarded, so the control must keep holding
+- Required check: Read legitimate long immutable Git object paths with exact bytes on Windows using only child-scoped configuration; preserve local/global configuration, all archive membership and nonzero refusal semantics.
+- Required evidence: Actual bare-reader long-path failure beside a real scoped-child binary-byte success with unchanged configuration and observed owner cleanup; current owning reconstruction/declaration controls and complete immutable verification.
+- Derived requirement: `LESSON-REQ-0150`

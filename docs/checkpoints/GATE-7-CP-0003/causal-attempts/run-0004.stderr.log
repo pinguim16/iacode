@@ -1,0 +1,288 @@
+test_custom_phase_and_quoted_unicode_replay_are_literal (test_m2_audit_corrections.CheckpointInvocationProducerTests.test_custom_phase_and_quoted_unicode_replay_are_literal) ... FAIL
+test_default_null_control_preserves_supplied_invocation (test_m2_audit_corrections.CheckpointInvocationProducerTests.test_default_null_control_preserves_supplied_invocation) ... FAIL
+test_nested_working_directory_and_explicit_root_replay (test_m2_audit_corrections.CheckpointInvocationProducerTests.test_nested_working_directory_and_explicit_root_replay) ... FAIL
+test_omitted_default_status_is_not_invented (test_m2_audit_corrections.CheckpointInvocationProducerTests.test_omitted_default_status_is_not_invented) ... FAIL
+test_absent_owned_container_is_successful_cleanup (test_m2_audit_corrections.ClientProducerCleanupEvidenceTests.test_absent_owned_container_is_successful_cleanup) ... ok
+test_both_failures_retain_distinct_actual_exit_and_streams (test_m2_audit_corrections.ClientProducerCleanupEvidenceTests.test_both_failures_retain_distinct_actual_exit_and_streams) ... FAIL
+test_clean_null_control_returns_actual_producer (test_m2_audit_corrections.ClientProducerCleanupEvidenceTests.test_clean_null_control_returns_actual_producer) ... ok
+test_cleanup_timeout_retains_successful_producer (test_m2_audit_corrections.ClientProducerCleanupEvidenceTests.test_cleanup_timeout_retains_successful_producer) ... ERROR
+test_launch_error_and_cleanup_error_are_separate (test_m2_audit_corrections.ClientProducerCleanupEvidenceTests.test_launch_error_and_cleanup_error_are_separate) ... ERROR
+test_secret_and_oversized_output_are_not_disclosed (test_m2_audit_corrections.ClientProducerCleanupEvidenceTests.test_secret_and_oversized_output_are_not_disclosed) ... 
+  test_secret_and_oversized_output_are_not_disclosed (test_m2_audit_corrections.ClientProducerCleanupEvidenceTests.test_secret_and_oversized_output_are_not_disclosed) (size=66) ... FAIL
+  test_secret_and_oversized_output_are_not_disclosed (test_m2_audit_corrections.ClientProducerCleanupEvidenceTests.test_secret_and_oversized_output_are_not_disclosed) (size=300000) ... FAIL
+test_successful_producer_with_failed_cleanup_cannot_pass (test_m2_audit_corrections.ClientProducerCleanupEvidenceTests.test_successful_producer_with_failed_cleanup_cannot_pass) ... FAIL
+test_timeout_and_failed_cleanup_preserve_partial_real_output (test_m2_audit_corrections.ClientProducerCleanupEvidenceTests.test_timeout_and_failed_cleanup_preserve_partial_real_output) ... FAIL
+
+======================================================================
+ERROR: test_cleanup_timeout_retains_successful_producer (test_m2_audit_corrections.ClientProducerCleanupEvidenceTests.test_cleanup_timeout_retains_successful_producer)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\iacode\tests\test_m2_audit_corrections.py", line 170, in test_cleanup_timeout_retains_successful_producer
+    outcome, _calls, _directory = self.execute(cleanup_mode="timeout")
+                                  ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\iacode\tests\test_m2_audit_corrections.py", line 117, in execute
+    outcome = client_checks.run_node(guard=True)
+  File "E:\iacode\scripts\iacode\client_checks.py", line 134, in run_node
+    removed = subprocess.run(
+        ["docker", "rm", "-f", name],
+    ...<6 lines>...
+        timeout=30,
+    )
+  File "C:\Program Files\Python313\Lib\unittest\mock.py", line 1169, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\unittest\mock.py", line 1173, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\unittest\mock.py", line 1240, in _execute_mock_call
+    result = effect(*args, **kwargs)
+  File "E:\iacode\tests\test_m2_audit_corrections.py", line 105, in transport
+    result = actual_run([sys.executable, "-c", code], **options)
+  File "C:\Program Files\Python313\Lib\subprocess.py", line 556, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+                     ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\subprocess.py", line 1222, in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+                     ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\subprocess.py", line 1665, in _communicate
+    raise TimeoutExpired(self.args, orig_timeout)
+subprocess.TimeoutExpired: Command '['C:\\Program Files\\Python313\\python.exe', '-c', "import sys,time; print('cleanup-out',flush=True); print('cleanup-error',file=sys.stderr,flush=True); time.sleep(10)"]' timed out after 0.5 seconds
+
+======================================================================
+ERROR: test_launch_error_and_cleanup_error_are_separate (test_m2_audit_corrections.ClientProducerCleanupEvidenceTests.test_launch_error_and_cleanup_error_are_separate)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\iacode\scripts\iacode\client_checks.py", line 85, in run_node
+    return subprocess.run(
+           ~~~~~~~~~~~~~~^
+        [
+        ^
+    ...<43 lines>...
+        check=False,
+        ^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Program Files\Python313\Lib\unittest\mock.py", line 1169, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\unittest\mock.py", line 1173, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\unittest\mock.py", line 1240, in _execute_mock_call
+    result = effect(*args, **kwargs)
+  File "E:\iacode\tests\test_m2_audit_corrections.py", line 93, in transport
+    raise FileNotFoundError("synthetic unavailable executable")
+FileNotFoundError: synthetic unavailable executable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\iacode\tests\test_m2_audit_corrections.py", line 164, in test_launch_error_and_cleanup_error_are_separate
+    outcome, _calls, _directory = self.execute(producer_mode="launch", cleanup_mode="launch")
+                                  ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\iacode\tests\test_m2_audit_corrections.py", line 117, in execute
+    outcome = client_checks.run_node(guard=True)
+  File "E:\iacode\scripts\iacode\client_checks.py", line 134, in run_node
+    removed = subprocess.run(
+        ["docker", "rm", "-f", name],
+    ...<6 lines>...
+        timeout=30,
+    )
+  File "C:\Program Files\Python313\Lib\unittest\mock.py", line 1169, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\unittest\mock.py", line 1173, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\unittest\mock.py", line 1240, in _execute_mock_call
+    result = effect(*args, **kwargs)
+  File "E:\iacode\tests\test_m2_audit_corrections.py", line 93, in transport
+    raise FileNotFoundError("synthetic unavailable executable")
+FileNotFoundError: synthetic unavailable executable
+
+======================================================================
+FAIL: test_custom_phase_and_quoted_unicode_replay_are_literal (test_m2_audit_corrections.CheckpointInvocationProducerTests.test_custom_phase_and_quoted_unicode_replay_are_literal)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\iacode\tests\test_m2_audit_corrections.py", line 68, in test_custom_phase_and_quoted_unicode_replay_are_literal
+    self.produce_and_replay(["--phase", 'Auditoria ç "quoted" C:\\phase\\',
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                             "--gate=TEST", "--root=."])
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\iacode\tests\test_m2_audit_corrections.py", line 52, in produce_and_replay
+    self.assertEqual(record["arguments"], supplied)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: ['scripts/development-ledger/new_checkpoint.py', '[38 chars]ESS'] != ['scripts\\development-ledger\\new_checkpoint.py',[69 chars]t=.']
+
+First differing element 0:
+'scripts/development-ledger/new_checkpoint.py'
+'scripts\\development-ledger\\new_checkpoint.py'
+
+- ['scripts/development-ledger/new_checkpoint.py',
+?          ^                  ^
+
++ ['scripts\\development-ledger\\new_checkpoint.py',
+?          ^^                  ^^
+
++  '--phase',
++  'Auditoria ç "quoted" C:\\phase\\',
+-  '--gate',
++  '--gate=TEST',
+?         +++++
+
++  '--root=.']
+-  'TEST',
+-  '--status',
+-  'IN_PROGRESS']
+
+======================================================================
+FAIL: test_default_null_control_preserves_supplied_invocation (test_m2_audit_corrections.CheckpointInvocationProducerTests.test_default_null_control_preserves_supplied_invocation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\iacode\tests\test_m2_audit_corrections.py", line 65, in test_default_null_control_preserves_supplied_invocation
+    self.produce_and_replay(["--gate", "TEST", "--status", "IN_PROGRESS"])
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\iacode\tests\test_m2_audit_corrections.py", line 52, in produce_and_replay
+    self.assertEqual(record["arguments"], supplied)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: ['scripts/development-ledger/new_checkpoint.py', '[38 chars]ESS'] != ['scripts\\development-ledger\\new_checkpoint.py',[40 chars]ESS']
+
+First differing element 0:
+'scripts/development-ledger/new_checkpoint.py'
+'scripts\\development-ledger\\new_checkpoint.py'
+
+- ['scripts/development-ledger/new_checkpoint.py',
+?          ^                  ^
+
++ ['scripts\\development-ledger\\new_checkpoint.py',
+?          ^^                  ^^
+
+   '--gate',
+   'TEST',
+   '--status',
+   'IN_PROGRESS']
+
+======================================================================
+FAIL: test_nested_working_directory_and_explicit_root_replay (test_m2_audit_corrections.CheckpointInvocationProducerTests.test_nested_working_directory_and_explicit_root_replay)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\iacode\tests\test_m2_audit_corrections.py", line 77, in test_nested_working_directory_and_explicit_root_replay
+    self.produce_and_replay(["--root", "..", "--gate", "TEST", "--phase=Nested phase"], nested)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\iacode\tests\test_m2_audit_corrections.py", line 52, in produce_and_replay
+    self.assertEqual(record["arguments"], supplied)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: ['scripts/development-ledger/new_checkpoint[45 chars]ESS'] != ['..\\scripts\\development-ledger\\new_chec[64 chars]ase']
+
+First differing element 0:
+'scripts/development-ledger/new_checkpoint.py'
+'..\\scripts\\development-ledger\\new_checkpoint.py'
+
+Second list contains 1 additional elements.
+First extra element 5:
+'--phase=Nested phase'
+
+- ['scripts/development-ledger/new_checkpoint.py',
+?          ^                  ^
+
++ ['..\\scripts\\development-ledger\\new_checkpoint.py',
+?   ++++       ^^                  ^^
+
++  '--root',
++  '..',
+   '--gate',
+   'TEST',
++  '--phase=Nested phase']
+-  '--status',
+-  'IN_PROGRESS']
+
+======================================================================
+FAIL: test_omitted_default_status_is_not_invented (test_m2_audit_corrections.CheckpointInvocationProducerTests.test_omitted_default_status_is_not_invented)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\iacode\tests\test_m2_audit_corrections.py", line 72, in test_omitted_default_status_is_not_invented
+    self.produce_and_replay(["--gate", "TEST"])
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "E:\iacode\tests\test_m2_audit_corrections.py", line 52, in produce_and_replay
+    self.assertEqual(record["arguments"], supplied)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: ['scripts/development-ledger/new_checkpoint.py', '[38 chars]ESS'] != ['scripts\\development-ledger\\new_checkpoint.py',[13 chars]EST']
+
+First differing element 0:
+'scripts/development-ledger/new_checkpoint.py'
+'scripts\\development-ledger\\new_checkpoint.py'
+
+First list contains 2 additional elements.
+First extra element 3:
+'--status'
+
+- ['scripts/development-ledger/new_checkpoint.py',
+?          ^                  ^
+
++ ['scripts\\development-ledger\\new_checkpoint.py', '--gate', 'TEST']
+?          ^^                  ^^                   ++++++++++++++++++
+
+-  '--gate',
+-  'TEST',
+-  '--status',
+-  'IN_PROGRESS']
+
+======================================================================
+FAIL: test_both_failures_retain_distinct_actual_exit_and_streams (test_m2_audit_corrections.ClientProducerCleanupEvidenceTests.test_both_failures_retain_distinct_actual_exit_and_streams)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\iacode\tests\test_m2_audit_corrections.py", line 141, in test_both_failures_retain_distinct_actual_exit_and_streams
+    report = self.report(outcome)
+  File "E:\iacode\tests\test_m2_audit_corrections.py", line 130, in report
+    self.assertIsInstance(report, dict, "cleanup must retain structured producer evidence")
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: None is not an instance of <class 'dict'> : cleanup must retain structured producer evidence
+
+======================================================================
+FAIL: test_secret_and_oversized_output_are_not_disclosed (test_m2_audit_corrections.ClientProducerCleanupEvidenceTests.test_secret_and_oversized_output_are_not_disclosed) (size=66)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\iacode\tests\test_m2_audit_corrections.py", line 185, in test_secret_and_oversized_output_are_not_disclosed
+    report = self.report(outcome)
+  File "E:\iacode\tests\test_m2_audit_corrections.py", line 130, in report
+    self.assertIsInstance(report, dict, "cleanup must retain structured producer evidence")
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: None is not an instance of <class 'dict'> : cleanup must retain structured producer evidence
+
+======================================================================
+FAIL: test_secret_and_oversized_output_are_not_disclosed (test_m2_audit_corrections.ClientProducerCleanupEvidenceTests.test_secret_and_oversized_output_are_not_disclosed) (size=300000)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\iacode\tests\test_m2_audit_corrections.py", line 185, in test_secret_and_oversized_output_are_not_disclosed
+    report = self.report(outcome)
+  File "E:\iacode\tests\test_m2_audit_corrections.py", line 130, in report
+    self.assertIsInstance(report, dict, "cleanup must retain structured producer evidence")
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: None is not an instance of <class 'dict'> : cleanup must retain structured producer evidence
+
+======================================================================
+FAIL: test_successful_producer_with_failed_cleanup_cannot_pass (test_m2_audit_corrections.ClientProducerCleanupEvidenceTests.test_successful_producer_with_failed_cleanup_cannot_pass)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\iacode\tests\test_m2_audit_corrections.py", line 151, in test_successful_producer_with_failed_cleanup_cannot_pass
+    report = self.report(outcome)
+  File "E:\iacode\tests\test_m2_audit_corrections.py", line 130, in report
+    self.assertIsInstance(report, dict, "cleanup must retain structured producer evidence")
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: None is not an instance of <class 'dict'> : cleanup must retain structured producer evidence
+
+======================================================================
+FAIL: test_timeout_and_failed_cleanup_preserve_partial_real_output (test_m2_audit_corrections.ClientProducerCleanupEvidenceTests.test_timeout_and_failed_cleanup_preserve_partial_real_output)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\iacode\tests\test_m2_audit_corrections.py", line 157, in test_timeout_and_failed_cleanup_preserve_partial_real_output
+    report = self.report(outcome)
+  File "E:\iacode\tests\test_m2_audit_corrections.py", line 130, in report
+    self.assertIsInstance(report, dict, "cleanup must retain structured producer evidence")
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: None is not an instance of <class 'dict'> : cleanup must retain structured producer evidence
+
+----------------------------------------------------------------------
+Ran 12 tests in 14.852s
+
+FAILED (failures=9, errors=2)

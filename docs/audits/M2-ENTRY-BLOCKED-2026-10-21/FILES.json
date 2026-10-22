@@ -1,0 +1,74 @@
+{
+  "filesRead": [
+    {
+      "path": "AGENTS.md",
+      "reason": "Canonical entry and mandatory divergence stop."
+    },
+    {
+      "path": "START-HERE.md",
+      "reason": "Canonical repository context and entry order."
+    },
+    {
+      "path": "docs/DEVELOPMENT-CONTRACT.md",
+      "reason": "Audit scope, evidence and rights contract."
+    },
+    {
+      "path": "docs/MASTER-PLAN.md",
+      "reason": "M2 Gates 4–7 scope."
+    },
+    {
+      "path": "docs/CHECKPOINT-PROTOCOL.md",
+      "reason": "Divergence handling and immutable subject rules."
+    },
+    {
+      "path": "docs/MILESTONE-VALIDATION.md",
+      "reason": "Separate auditor and subject; independent attestation conditions."
+    },
+    {
+      "path": "docs/checkpoints/LATEST.md",
+      "reason": "Authoritative latest subject pointer."
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/STATE.json",
+      "reason": "Expected branch, subject tag, status and clean baseline."
+    },
+    {
+      "path": "docs/checkpoints/GATE-7-CP-0001/RISKS.md",
+      "reason": "Owned resource, no-restart and cleanup restrictions."
+    },
+    {
+      "path": "scripts/development-ledger/ledger_common.py",
+      "reason": "Observed Git helper combines stdout and diagnostics."
+    },
+    {
+      "path": "scripts/development-ledger/validate_checkpoint.py",
+      "reason": "Required canonical entry validation; actual failed execution."
+    },
+    {
+      "path": "scripts/development-ledger/new_checkpoint.py",
+      "reason": "Confirmed allocator consumes the blocked Git helper observation."
+    },
+    {
+      "path": "DIVERGENCE.md",
+      "reason": "Historical tracked report recovered from HEAD and restored; no final change."
+    }
+  ],
+  "filesCreated": [
+    {
+      "path": "docs/audits/M2-ENTRY-BLOCKED-2026-10-21/DIVERGENCE.md",
+      "reason": "Separate unsealed record of the mandatory entry block; does not grant an M2 verdict.",
+      "hashAfter": "8ecba03056b0cdfa9bcd52bb260fe3a527e9cc9a446646851a29edcec4308951"
+    },
+    {
+      "path": "docs/audits/M2-ENTRY-BLOCKED-2026-10-21/ENTRY-VALIDATION.txt",
+      "reason": "Complete decoded tool transcript of actual exit-1 entry validation; explicitly normalized LF, not claimed original bytes.",
+      "hashAfter": "bed2e1ace6594a25cf785cbb21c1de0a2d43f135c89b693d79f4a1d8ed3df598"
+    },
+    {
+      "path": "docs/audits/M2-ENTRY-BLOCKED-2026-10-21/FILES.json",
+      "reason": "Descriptive inventory of this unsealed blocked-entry report; self hash intentionally omitted."
+    }
+  ],
+  "filesModified": [],
+  "filesDeleted": []
+}
