@@ -1,0 +1,418 @@
+{
+  "observedAt": "2026-10-22T05:02:13Z",
+  "result": "CAPTURED_NOT_OWNERSHIP_CLAIM_OR_ACCEPTANCE",
+  "builder": "iacode-m2cp3-61bb7b6040b746f89d25f24580762b3c",
+  "observations": [
+    {
+      "arguments": [
+        "docker",
+        "buildx",
+        "history",
+        "ls",
+        "--no-trunc",
+        "--format",
+        "json"
+      ],
+      "exitCode": 0,
+      "execution": {
+        "producer": {
+          "status": "COMPLETED",
+          "exitCode": 0,
+          "arguments": [
+            "docker",
+            "buildx",
+            "history",
+            "ls",
+            "--no-trunc",
+            "--format",
+            "json"
+          ],
+          "stdout": {
+            "bytes": 1316,
+            "sha256": "d2a0130e667622647d2dc480dc8bced232822d292e4e9a59b9669783325e7e42",
+            "refusal": null
+          },
+          "stderr": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "refusal": null
+          }
+        },
+        "cleanup": {
+          "result": "PASS",
+          "observation": {
+            "jobOwned": true,
+            "remainingBeforeCleanup": 0,
+            "remainingAfterCleanup": 0,
+            "observedProcessCount": 0,
+            "signaledProcessCount": 0,
+            "forcedTermination": false,
+            "naturalExitBudgetWithinOriginalDeadlineSeconds": 1
+          }
+        }
+      },
+      "streams": {
+        "stdout": {
+          "sha256": "d2a0130e667622647d2dc480dc8bced232822d292e4e9a59b9669783325e7e42",
+          "bytes": 1316,
+          "refused": false,
+          "path": "resource-observations/build-history/run-0006/list.stdout.json"
+        },
+        "stderr": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0,
+          "refused": false,
+          "path": "resource-observations/build-history/run-0006/list.stderr.json"
+        }
+      }
+    },
+    {
+      "arguments": [
+        "docker",
+        "buildx",
+        "history",
+        "inspect",
+        "--format",
+        "json",
+        "kabypbgv5rlmi1kr07l8ox7vy"
+      ],
+      "exitCode": 0,
+      "execution": {
+        "producer": {
+          "status": "COMPLETED",
+          "exitCode": 0,
+          "arguments": [
+            "docker",
+            "buildx",
+            "history",
+            "inspect",
+            "--format",
+            "json",
+            "kabypbgv5rlmi1kr07l8ox7vy"
+          ],
+          "stdout": {
+            "bytes": 1094,
+            "sha256": "ff1264d8736d22a6cf9856f0ba101f123fcc2dad0268877b0967aa1f422b6ef3",
+            "refusal": null
+          },
+          "stderr": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "refusal": null
+          }
+        },
+        "cleanup": {
+          "result": "PASS",
+          "observation": {
+            "jobOwned": true,
+            "remainingBeforeCleanup": 1,
+            "remainingAfterCleanup": 0,
+            "observedProcessCount": 1,
+            "signaledProcessCount": 1,
+            "forcedTermination": false,
+            "naturalExitBudgetWithinOriginalDeadlineSeconds": 1
+          }
+        }
+      },
+      "streams": {
+        "stdout": {
+          "sha256": "ff1264d8736d22a6cf9856f0ba101f123fcc2dad0268877b0967aa1f422b6ef3",
+          "bytes": 1094,
+          "refused": false,
+          "path": "resource-observations/build-history/run-0006/inspect-kabypbgv5rlmi1kr07l8ox7vy.stdout.json"
+        },
+        "stderr": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0,
+          "refused": false,
+          "path": "resource-observations/build-history/run-0006/inspect-kabypbgv5rlmi1kr07l8ox7vy.stderr.json"
+        }
+      }
+    },
+    {
+      "arguments": [
+        "docker",
+        "buildx",
+        "history",
+        "inspect",
+        "--format",
+        "json",
+        "2iv3pz5d1yg1otw4ej02ojys9"
+      ],
+      "exitCode": 0,
+      "execution": {
+        "producer": {
+          "status": "COMPLETED",
+          "exitCode": 0,
+          "arguments": [
+            "docker",
+            "buildx",
+            "history",
+            "inspect",
+            "--format",
+            "json",
+            "2iv3pz5d1yg1otw4ej02ojys9"
+          ],
+          "stdout": {
+            "bytes": 1596,
+            "sha256": "eb0b7cf716924b0c22917ce5c38d9fab2563efa84bf4106fceb677210f929275",
+            "refusal": null
+          },
+          "stderr": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "refusal": null
+          }
+        },
+        "cleanup": {
+          "result": "PASS",
+          "observation": {
+            "jobOwned": true,
+            "remainingBeforeCleanup": 0,
+            "remainingAfterCleanup": 0,
+            "observedProcessCount": 0,
+            "signaledProcessCount": 0,
+            "forcedTermination": false,
+            "naturalExitBudgetWithinOriginalDeadlineSeconds": 1
+          }
+        }
+      },
+      "streams": {
+        "stdout": {
+          "sha256": "eb0b7cf716924b0c22917ce5c38d9fab2563efa84bf4106fceb677210f929275",
+          "bytes": 1596,
+          "refused": false,
+          "path": "resource-observations/build-history/run-0006/inspect-2iv3pz5d1yg1otw4ej02ojys9.stdout.json"
+        },
+        "stderr": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0,
+          "refused": false,
+          "path": "resource-observations/build-history/run-0006/inspect-2iv3pz5d1yg1otw4ej02ojys9.stderr.json"
+        }
+      }
+    },
+    {
+      "arguments": [
+        "docker",
+        "buildx",
+        "history",
+        "inspect",
+        "--format",
+        "json",
+        "u3ery4i9xyn6nczk9ref8ema4"
+      ],
+      "exitCode": 0,
+      "execution": {
+        "producer": {
+          "status": "COMPLETED",
+          "exitCode": 0,
+          "arguments": [
+            "docker",
+            "buildx",
+            "history",
+            "inspect",
+            "--format",
+            "json",
+            "u3ery4i9xyn6nczk9ref8ema4"
+          ],
+          "stdout": {
+            "bytes": 1093,
+            "sha256": "2cf45c5221cf9a47e459a24fec3068e743d12647c4d49a76bd329850155a274a",
+            "refusal": null
+          },
+          "stderr": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "refusal": null
+          }
+        },
+        "cleanup": {
+          "result": "PASS",
+          "observation": {
+            "jobOwned": true,
+            "remainingBeforeCleanup": 1,
+            "remainingAfterCleanup": 0,
+            "observedProcessCount": 1,
+            "signaledProcessCount": 1,
+            "forcedTermination": false,
+            "naturalExitBudgetWithinOriginalDeadlineSeconds": 1
+          }
+        }
+      },
+      "streams": {
+        "stdout": {
+          "sha256": "2cf45c5221cf9a47e459a24fec3068e743d12647c4d49a76bd329850155a274a",
+          "bytes": 1093,
+          "refused": false,
+          "path": "resource-observations/build-history/run-0006/inspect-u3ery4i9xyn6nczk9ref8ema4.stdout.json"
+        },
+        "stderr": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0,
+          "refused": false,
+          "path": "resource-observations/build-history/run-0006/inspect-u3ery4i9xyn6nczk9ref8ema4.stderr.json"
+        }
+      }
+    },
+    {
+      "arguments": [
+        "docker",
+        "buildx",
+        "history",
+        "inspect",
+        "--format",
+        "json",
+        "8pyzl0gzrz0a0cdesy389y8cy"
+      ],
+      "exitCode": 0,
+      "execution": {
+        "producer": {
+          "status": "COMPLETED",
+          "exitCode": 0,
+          "arguments": [
+            "docker",
+            "buildx",
+            "history",
+            "inspect",
+            "--format",
+            "json",
+            "8pyzl0gzrz0a0cdesy389y8cy"
+          ],
+          "stdout": {
+            "bytes": 1595,
+            "sha256": "2b860d3d4f74d3489be467ad0f8cf75e8f1861b1c4ed9662023520fbd8f4de93",
+            "refusal": null
+          },
+          "stderr": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "refusal": null
+          }
+        },
+        "cleanup": {
+          "result": "PASS",
+          "observation": {
+            "jobOwned": true,
+            "remainingBeforeCleanup": 1,
+            "remainingAfterCleanup": 0,
+            "observedProcessCount": 1,
+            "signaledProcessCount": 1,
+            "forcedTermination": false,
+            "naturalExitBudgetWithinOriginalDeadlineSeconds": 1
+          }
+        }
+      },
+      "streams": {
+        "stdout": {
+          "sha256": "2b860d3d4f74d3489be467ad0f8cf75e8f1861b1c4ed9662023520fbd8f4de93",
+          "bytes": 1595,
+          "refused": false,
+          "path": "resource-observations/build-history/run-0006/inspect-8pyzl0gzrz0a0cdesy389y8cy.stdout.json"
+        },
+        "stderr": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0,
+          "refused": false,
+          "path": "resource-observations/build-history/run-0006/inspect-8pyzl0gzrz0a0cdesy389y8cy.stderr.json"
+        }
+      }
+    }
+  ],
+  "inspectSummary": [
+    {
+      "id": "kabypbgv5rlmi1kr07l8ox7vy",
+      "keys": [
+        "Attachments",
+        "CompletedAt",
+        "Config",
+        "Context",
+        "Dockerfile",
+        "Duration",
+        "Materials",
+        "Name",
+        "NumCachedSteps",
+        "NumCompletedSteps",
+        "NumTotalSteps",
+        "Ref",
+        "StartedAt",
+        "Status",
+        "Target",
+        "VCSRepository",
+        "VCSRevision"
+      ],
+      "status": "completed"
+    },
+    {
+      "id": "2iv3pz5d1yg1otw4ej02ojys9",
+      "keys": [
+        "Attachments",
+        "BuildArgs",
+        "CompletedAt",
+        "Config",
+        "Context",
+        "Dockerfile",
+        "Duration",
+        "Labels",
+        "Materials",
+        "Name",
+        "NumCachedSteps",
+        "NumCompletedSteps",
+        "NumTotalSteps",
+        "Ref",
+        "StartedAt",
+        "Status",
+        "VCSRepository",
+        "VCSRevision"
+      ],
+      "status": "completed"
+    },
+    {
+      "id": "u3ery4i9xyn6nczk9ref8ema4",
+      "keys": [
+        "Attachments",
+        "CompletedAt",
+        "Config",
+        "Context",
+        "Dockerfile",
+        "Duration",
+        "Materials",
+        "Name",
+        "NumCachedSteps",
+        "NumCompletedSteps",
+        "NumTotalSteps",
+        "Ref",
+        "StartedAt",
+        "Status",
+        "Target",
+        "VCSRepository",
+        "VCSRevision"
+      ],
+      "status": "completed"
+    },
+    {
+      "id": "8pyzl0gzrz0a0cdesy389y8cy",
+      "keys": [
+        "Attachments",
+        "BuildArgs",
+        "CompletedAt",
+        "Config",
+        "Context",
+        "Dockerfile",
+        "Duration",
+        "Labels",
+        "Materials",
+        "Name",
+        "NumCachedSteps",
+        "NumCompletedSteps",
+        "NumTotalSteps",
+        "Ref",
+        "StartedAt",
+        "Status",
+        "VCSRepository",
+        "VCSRevision"
+      ],
+      "status": "completed"
+    }
+  ]
+}

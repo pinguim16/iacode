@@ -11,12 +11,13 @@ import unittest
 from pathlib import Path
 from unittest.mock import patch
 
-CHECKPOINT = Path(__file__).resolve().parents[1]
-ROOT = CHECKPOINT.parents[2]
-sys.path.insert(0, str(ROOT / "scripts/iacode"))
+sys.path.insert(0, str(Path(__file__).resolve().parents[1].parents[2] / "scripts/iacode"))
 import client_checks
 import native_editor
 from native_process import NativeJobCleanupError, WindowsJob
+
+CHECKPOINT = Path(__file__).resolve().parents[1]
+ROOT = CHECKPOINT.parents[2]
 
 
 class NativeProducerObservationTests(unittest.TestCase):
@@ -26,12 +27,15 @@ class NativeProducerObservationTests(unittest.TestCase):
         class FaultAfterRealOwnedDrain(WindowsJob):
             def close(self):
                 observation = super().close()
-                raise NativeJobCleanupError("controlled fault after actual owned drain", observation)
+                raise NativeJobCleanupError(
+                    "controlled fault after actual owned drain", observation
+                )
 
         def execute():
             try:
-                return native_editor.run_owned(actual, environment={**os.environ, "PYTHONIOENCODING": "utf-8"},
-                                               timeout=timeout)
+                return native_editor.run_owned(
+                    actual, environment={**os.environ, "PYTHONIOENCODING": "utf-8"}, timeout=timeout
+                )
             except Exception as error:
                 return error
 
@@ -44,7 +48,9 @@ class NativeProducerObservationTests(unittest.TestCase):
 
     def observation(self, outcome):
         report = getattr(outcome, "report", None)
-        self.assertIsInstance(report, dict, "the original producer must survive cleanup/transport failure")
+        self.assertIsInstance(
+            report, dict, "the original producer must survive cleanup/transport failure"
+        )
         self.assertEqual("FAIL", report["result"])
         return report
 
@@ -76,7 +82,9 @@ class NativeProducerObservationTests(unittest.TestCase):
         self.assertEqual("FAIL", report["cleanup"]["result"])
 
     def test_timeout_has_partial_prefix_and_independent_actual_cleanup(self):
-        result = self.produce("import time;print('NATIVE_PARTIAL',flush=True);time.sleep(30)", timeout=0.5)
+        result = self.produce(
+            "import time;print('NATIVE_PARTIAL',flush=True);time.sleep(30)", timeout=0.5
+        )
         self.assertIsInstance(result, subprocess.TimeoutExpired)
         report = self.observation(result)
         self.assertEqual("TIMEOUT", report["producer"]["status"])
@@ -85,8 +93,13 @@ class NativeProducerObservationTests(unittest.TestCase):
         self.assertEqual("PASS", report["cleanup"]["result"])
 
     def test_timeout_and_callback_failure_keep_both_observations(self):
-        report = self.observation(self.produce(
-            "import time;print('NATIVE_PARTIAL',flush=True);time.sleep(30)", timeout=0.5, cleanup_fault=True))
+        report = self.observation(
+            self.produce(
+                "import time;print('NATIVE_PARTIAL',flush=True);time.sleep(30)",
+                timeout=0.5,
+                cleanup_fault=True,
+            )
+        )
         self.assertEqual("TIMEOUT", report["producer"]["status"])
         self.assertIn("NATIVE_PARTIAL", report["producer"]["stdout"])
         self.assertEqual("FAIL", report["cleanup"]["result"])
@@ -115,7 +128,9 @@ class NativeProducerObservationTests(unittest.TestCase):
         self.assertEqual(hashlib.sha256(b"x" * size).hexdigest(), fact["stdoutSha256"])
 
     def test_scanner_failure_refuses_without_publishing_exception_body(self):
-        with patch.object(client_checks, "find_secret_kinds", side_effect=RuntimeError("PRIVATE_SCANNER_BODY")):
+        with patch.object(
+            client_checks, "find_secret_kinds", side_effect=RuntimeError("PRIVATE_SCANNER_BODY")
+        ):
             result = self.produce("print('NATIVE_SCANNER')")
         report = self.observation(result)
         self.assertEqual("OUTPUT_SCAN_FAILED", report["producer"]["stdoutRefusal"])
@@ -129,9 +144,15 @@ class NativeProducerObservationTests(unittest.TestCase):
             actor.protocol_digest = "a" * 64
             fact = {"result": "FAIL", "phase": "FORCED_DRAIN", "pendingProcessCount": 1}
             error = NativeJobCleanupError("owned native process cleanup failed", fact)
-            error.report = {"result": "FAIL", "producer": {"status": "COMPLETED", "exitCode": 17,
-                                                          "stdout": "ACTUAL_RETAINED_PREFIX"},
-                            "cleanup": {"result": "FAIL", "observation": fact}}
+            error.report = {
+                "result": "FAIL",
+                "producer": {
+                    "status": "COMPLETED",
+                    "exitCode": 17,
+                    "stdout": "ACTUAL_RETAINED_PREFIX",
+                },
+                "cleanup": {"result": "FAIL", "observation": fact},
+            }
             with patch.object(native_editor, "run_owned", side_effect=error):
                 observed = actor.run("untrusted")
             self.assertEqual("FAIL", observed["result"])
@@ -173,5 +194,6 @@ class NativeProducerObservationTests(unittest.TestCase):
 if __name__ == "__main__":
     sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
     from ledger_common import use_utf8_stdout
+
     use_utf8_stdout()
     unittest.main()

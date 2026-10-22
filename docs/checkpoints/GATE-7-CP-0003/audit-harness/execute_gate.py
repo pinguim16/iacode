@@ -9,12 +9,22 @@ import subprocess
 import sys
 from pathlib import Path
 
+sys.path.insert(
+    0, str(Path(__file__).resolve().parents[1].parents[2] / "scripts/development-ledger")
+)
+
+from ledger_common import (
+    find_secrets,
+    git_snapshot,
+    scope_fingerprint,
+    use_utf8_stdout,
+    utc_now,
+    write_json,
+)
+from policies import gate_definitions
+
 CHECKPOINT = Path(__file__).resolve().parents[1]
 ROOT = CHECKPOINT.parents[2]
-sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
-
-from ledger_common import find_secrets, git_snapshot, scope_fingerprint, utc_now, use_utf8_stdout, write_json
-from policies import gate_definitions
 
 
 def preserve_execution(command: list[str], stem: str, kind: str, identity: str) -> int:
@@ -36,8 +46,14 @@ def preserve_execution(command: list[str], stem: str, kind: str, identity: str) 
     environment = child_environment()
     # Build-only canonical gates must not fall back to a preexisting application's tag.
     environment.update(read_env_file(current_owner_file(), {}))
-    result = subprocess.run(argv, cwd=ROOT, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
-                            check=False, env=environment)
+    result = subprocess.run(
+        argv,
+        cwd=ROOT,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+        check=False,
+        env=environment,
+    )
     raw = result.stdout
     encoding_valid = True
     try:
@@ -53,11 +69,20 @@ def preserve_execution(command: list[str], stem: str, kind: str, identity: str) 
             stream.write(raw)
     unchanged = scope_fingerprint(ROOT) == before
     report = {
-        "schemaVersion": "1.0.0", "kind": kind, "gate": identity, "command": command,
-        "observedAt": utc_now(), "subjectCommit": snapshot["head"], "sourceDirty": snapshot["dirty"],
-        "sourceFingerprint": before, "sourceUnchanged": unchanged, "exitCode": result.returncode,
-        "outputEncodingValid": encoding_valid, "unsafeOutputOccurrences": len(findings),
-        "outputBytes": len(raw), "outputSha256": hashlib.sha256(raw).hexdigest(),
+        "schemaVersion": "1.0.0",
+        "kind": kind,
+        "gate": identity,
+        "command": command,
+        "observedAt": utc_now(),
+        "subjectCommit": snapshot["head"],
+        "sourceDirty": snapshot["dirty"],
+        "sourceFingerprint": before,
+        "sourceUnchanged": unchanged,
+        "exitCode": result.returncode,
+        "outputEncodingValid": encoding_valid,
+        "unsafeOutputOccurrences": len(findings),
+        "outputBytes": len(raw),
+        "outputSha256": hashlib.sha256(raw).hexdigest(),
         "safeOutputArtifact": artifact.relative_to(ROOT).as_posix() if artifact else None,
         "result": "PASS" if result.returncode == 0 and unchanged and not findings else "FAIL",
     }
@@ -73,8 +98,12 @@ def main() -> int:
     gates = gate_definitions(ROOT)
     if options.gate not in gates:
         raise ValueError("gate must resolve against the canonical registry")
-    return preserve_execution(list(gates[options.gate]["command"]),
-                              "GATE-" + options.gate.upper(), "COMPLETE_POLICY_GATE", options.gate)
+    return preserve_execution(
+        list(gates[options.gate]["command"]),
+        "GATE-" + options.gate.upper(),
+        "COMPLETE_POLICY_GATE",
+        options.gate,
+    )
 
 
 if __name__ == "__main__":

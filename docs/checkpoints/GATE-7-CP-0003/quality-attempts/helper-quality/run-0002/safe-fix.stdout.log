@@ -1,0 +1,3792 @@
+E501 Line too long (297 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/authored_python_quality.py:74:101
+   |
+72 | …
+73 | …
+74 | …untime scripts; historical raw observations and inherited audit subjects are not active authored code. Existing sealed control-plane Ruff exclusion is unchanged; its owning mandatory suite still runs.",
+   |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+75 | …
+76 | …
+   |
+
+S108 Probable insecure usage of temporary file or directory: "/tmp:rw,nosuid,size=67108864"
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/authored_python_quality.py:90:13
+   |
+88 |             "--read-only",
+89 |             "--tmpfs",
+90 |             "/tmp:rw,nosuid,size=67108864",
+   |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+91 |             "--env",
+92 |             "RUFF_CACHE_DIR=/tmp/ruff-cache",
+   |
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/capture_bridge_preimage.py:12:1
+   |
+10 | ROOT = CHECKPOINT.parents[2]
+11 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+12 | from ledger_common import find_secrets, scope_fingerprint, utc_now, write_json
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+help: Move module level imports to top of file
+
+E501 Line too long (247 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/capture_bridge_preimage.py:42:101
+   |
+40 | …
+41 | …
+42 | …the failing null/adverse boundary observation is causal-attempts/bridge-path-bounds/run-0001.json. No correction or independent acceptance is claimed.",
+   |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+43 | …
+44 | …
+   |
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/capture_native_preimage.py:10:1
+   |
+ 8 | ROOT = CHECKPOINT.parents[2]
+ 9 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+10 | from ledger_common import scope_fingerprint, utc_now, write_json
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/capture_owned_build_history.py:17:1
+   |
+15 | ROOT = CHECKPOINT.parents[2]
+16 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+17 | from ledger_common import find_secrets, load_json, utc_now, write_json
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+help: Move module level imports to top of file
+
+S110 `try`-`except`-`pass` detected, consider logging the exception
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/capture_owned_build_history.py:61:13
+   |
+59 |                       if label == "stdout":
+60 |                           safe_stdout = raw
+61 | /             except Exception:
+62 | |                 pass  # Neutral refusal remains observable; no raw unsafe publication.
+   | |____________________^
+63 |               row["streams"][label] = fact
+64 |           observations.append(row)
+   |
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/check_current_environment.py:11:1
+   |
+ 9 | ROOT = CHECKPOINT.parents[2]
+10 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+11 | from ledger_common import load_json, utc_now, write_json
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+help: Move module level imports to top of file
+
+E501 Line too long (108 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/check_current_environment.py:46:101
+   |
+44 |         "applicationRestartsPerformed": False,
+45 |         "newAuditorTurnStarted": False,
+46 |         "limitation": "Other-chat preservation records no writes, not a newly measured chat-database hash.",
+   |                                                                                                     ^^^^^^^^
+47 |     }
+48 |     write_json(target, document)
+   |
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/check_resource_preservation.py:12:1
+   |
+10 | ROOT = CHECKPOINT.parents[2]
+11 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+12 | from ledger_common import load_json, utc_now, write_json
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/claim_owned_web_image.py:16:1
+   |
+14 | ROOT = CHECKPOINT.parents[2]
+15 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+16 | from ledger_common import find_secrets, load_json, utc_now, write_json
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+help: Move module level imports to top of file
+
+E501 Line too long (145 > 100)
+   --> docs/checkpoints/GATE-7-CP-0003/audit-harness/claim_owned_web_image.py:100:101
+    |
+ 98 | …
+ 99 | …
+100 | …age; remove only the proven produced replacement after all tests and safe restoration.",
+    |                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+101 | …
+102 | …
+    |
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/clarify_memory_chronology.py:9:1
+   |
+ 7 | ROOT = CHECKPOINT.parents[2]
+ 8 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+ 9 | from ledger_common import utc_now
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+10 | from lessons import load_lessons, render_index, save_lessons
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/clarify_memory_chronology.py:10:1
+   |
+ 8 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+ 9 | from ledger_common import utc_now
+10 | from lessons import load_lessons, render_index, save_lessons
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+help: Move module level imports to top of file
+
+E501 Line too long (101 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/clarify_memory_chronology.py:16:101
+   |
+14 |     old = (
+15 |         "M2 CP0003 adds actual child-producer and literal replay regressions; "
+16 |         "the independent guarded recurrence remains unresolved until complete corrective acceptance."
+   |                                                                                                     ^
+17 |     )
+18 |     new = (
+   |
+
+E501 Line too long (103 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/clarify_memory_chronology.py:20:101
+   |
+18 |     new = (
+19 |         "Earlier CP0003 child-producer/replay proof preceded the native and caller extension. "
+20 |         "Current local guard restoration is recorded below; final finding closure, complete immutable "
+   |                                                                                                     ^^^
+21 |         "delivery acceptance and the later independent audit are still distinct pending obligations."
+22 |     )
+   |
+
+E501 Line too long (101 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/clarify_memory_chronology.py:21:101
+   |
+19 |         "Earlier CP0003 child-producer/replay proof preceded the native and caller extension. "
+20 |         "Current local guard restoration is recorded below; final finding closure, complete immutable "
+21 |         "delivery acceptance and the later independent audit are still distinct pending obligations."
+   |                                                                                                     ^
+22 |     )
+23 |     lessons = load_lessons(ROOT)
+   |
+
+E501 Line too long (116 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/clarify_memory_chronology.py:39:101
+   |
+37 |     )
+38 |     print(
+39 |         "Clarified current local status versus earlier chronology; no counter, rights or historical failure removed"
+   |                                                                                                     ^^^^^^^^^^^^^^^^
+40 |     )
+41 |     return 0
+   |
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/classify_authored_artifacts.py:11:1
+   |
+ 9 | ROOT = CHECKPOINT.parents[2]
+10 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+11 | from ledger_common import load_json, write_json
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+12 |
+13 | ASSETS = (
+   |
+help: Move module level imports to top of file
+
+E501 Line too long (104 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/classify_authored_artifacts.py:62:101
+   |
+60 | …             "distillationAllowed": False,
+61 | …         },
+62 | …         "evidence": "AUTHORIZATION.md, OWNER-DECISIONS.json, COMMANDS.jsonl and FILES.json",
+   |                                                                                           ^^^^
+63 | …         "notes": "Storage for authorized engineering delivery only; denied reuse remains denied. No private reasoning, credentials o…
+64 | …     }
+   |
+
+E501 Line too long (185 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/classify_authored_artifacts.py:63:101
+   |
+61 | …
+62 | …MANDS.jsonl and FILES.json",
+63 | …ly; denied reuse remains denied. No private reasoning, credentials or vendor runtime binaries are included.",
+   |                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+64 | …
+65 | …
+   |
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/cleanup_retired_public_clone.py:12:1
+   |
+10 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+11 | sys.path.insert(0, str(ROOT / "scripts/iacode"))
+12 | from client_checks import _safe_stream
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+13 | from ledger_common import load_json, utc_now, write_json
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/cleanup_retired_public_clone.py:13:1
+   |
+11 | sys.path.insert(0, str(ROOT / "scripts/iacode"))
+12 | from client_checks import _safe_stream
+13 | from ledger_common import load_json, utc_now, write_json
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+help: Move module level imports to top of file
+
+E501 Line too long (146 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/cleanup_retired_public_clone.py:48:101
+   |
+46 | …
+47 | …run-0001.json",
+48 | … refs/tags/iacode-checkpoints/GATE-7-CP-0001 (823cf164c6931dab7f957c92721ded7a916655bd)",
+   |                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+49 | …
+50 | …
+   |
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/collect_resumed_epoch.py:9:1
+   |
+ 7 | ROOT = CHECKPOINT.parents[2]
+ 8 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+ 9 | from current_resources import current_scope_path
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+10 | from delivery_assurance import evaluate_matrix
+11 | from derive_requirements import render_closure
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/collect_resumed_epoch.py:10:1
+   |
+ 8 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+ 9 | from current_resources import current_scope_path
+10 | from delivery_assurance import evaluate_matrix
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+11 | from derive_requirements import render_closure
+12 | from ledger_common import load_json, scope_fingerprint, utc_now, write_json
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/collect_resumed_epoch.py:11:1
+   |
+ 9 | from current_resources import current_scope_path
+10 | from delivery_assurance import evaluate_matrix
+11 | from derive_requirements import render_closure
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+12 | from ledger_common import load_json, scope_fingerprint, utc_now, write_json
+13 | from sync_in_progress_metadata import synchronize
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/collect_resumed_epoch.py:12:1
+   |
+10 | from delivery_assurance import evaluate_matrix
+11 | from derive_requirements import render_closure
+12 | from ledger_common import load_json, scope_fingerprint, utc_now, write_json
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+13 | from sync_in_progress_metadata import synchronize
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/collect_resumed_epoch.py:13:1
+   |
+11 | from derive_requirements import render_closure
+12 | from ledger_common import load_json, scope_fingerprint, utc_now, write_json
+13 | from sync_in_progress_metadata import synchronize
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+help: Move module level imports to top of file
+
+E501 Line too long (144 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/collect_resumed_epoch.py:40:101
+   |
+38 | …
+39 | …
+40 | …epaired and guarded; complete current native/full immutable assurance remains pending.",
+   |                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+41 | …
+42 | …
+   |
+
+E501 Line too long (109 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/collect_resumed_epoch.py:71:101
+   |
+69 |         status="PASS",
+70 |         evidence=["file:quality-attempts/staticAnalysis/run-0007.json"],
+71 |         justification="Actual current canonical static-analysis component, not complete quality acceptance.",
+   |                                                                                                     ^^^^^^^^^
+72 |     )
+73 |     write_json(CHECKPOINT / "QUALITY.json", quality)
+   |
+
+E501 Line too long (331 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/collect_resumed_epoch.py:93:101
+   |
+91 | …
+92 | …
+93 | …l quality gates, full non-fast verifier, DCV, fresh internal Red Team/mirror and exact phase-0002 disposal; seal READY_FOR_REVIEW before a fresh independent M2 auditor. No Gate8, Engine/application restart or global/other-chat changes."
+   |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+94 | …
+95 | …
+   |
+
+E501 Line too long (152 > 100)
+   --> docs/checkpoints/GATE-7-CP-0003/audit-harness/collect_resumed_epoch.py:108:101
+    |
+106 | …
+107 | …
+108 | …oller or disposed receipt. Preserve original failed comparisons and every failed producer.",
+    |                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+109 | …
+110 | …
+    |
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/consolidate_draft_progress.py:11:1
+   |
+ 9 | ROOT = CHECKPOINT.parents[2]
+10 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+11 | from derive_requirements import render_closure, render_matrix
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+12 | from ledger_common import load_json, scope_fingerprint, utc_now, write_json
+13 | from sync_in_progress_metadata import synchronize
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/consolidate_draft_progress.py:12:1
+   |
+10 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+11 | from derive_requirements import render_closure, render_matrix
+12 | from ledger_common import load_json, scope_fingerprint, utc_now, write_json
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+13 | from sync_in_progress_metadata import synchronize
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/consolidate_draft_progress.py:13:1
+   |
+11 | from derive_requirements import render_closure, render_matrix
+12 | from ledger_common import load_json, scope_fingerprint, utc_now, write_json
+13 | from sync_in_progress_metadata import synchronize
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+help: Move module level imports to top of file
+
+E501 Line too long (152 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/consolidate_draft_progress.py:40:101
+   |
+38 | …
+39 | …
+40 | …ated prevention observed; current complete immutable and ordered assurance remain pending.",
+   |                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+41 | …
+42 | …
+   |
+
+E501 Line too long (111 > 100)
+   --> docs/checkpoints/GATE-7-CP-0003/audit-harness/consolidate_draft_progress.py:169:101
+    |
+167 |         ],
+168 |         "cleanup": "RETIRED_CLONE_REMOVED_DOCKER_SCOPE_STILL_ACTIVE_FOR_REMAINING_VALIDATION",
+169 |         "warning": "Transient session numbers are not success evidence; completed receipts bind actual exits.",
+    |                                                                                                     ^^^^^^^^^^^
+170 |         "ownedBuilderReceipt": "OWNED-DOCKER-SCOPE.json",
+171 |         "independentAuditorStarted": False,
+    |
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/current_resources.py:18:1
+   |
+16 | ROOT = CHECKPOINT.parents[2]
+17 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+18 | from audit_runner_bridge import Job, run_owned
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+19 | from ledger_common import find_secrets, load_json, use_utf8_stdout, utc_now, write_json
+20 | from native_process import WindowsJob
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/current_resources.py:19:1
+   |
+17 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+18 | from audit_runner_bridge import Job, run_owned
+19 | from ledger_common import find_secrets, load_json, use_utf8_stdout, utc_now, write_json
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+20 | from native_process import WindowsJob
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/current_resources.py:20:1
+   |
+18 | from audit_runner_bridge import Job, run_owned
+19 | from ledger_common import find_secrets, load_json, use_utf8_stdout, utc_now, write_json
+20 | from native_process import WindowsJob
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/declare_inventory.py:11:1
+   |
+ 9 | ROOT = CHECKPOINT.parents[2]
+10 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+11 | from ledger_common import blob_hash, canonical_hash_path, git_delta, load_json, write_json
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+12 |
+13 | AUTHORED = {
+   |
+help: Move module level imports to top of file
+
+E501 Line too long (201 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/declare_inventory.py:14:101
+   |
+13 | …
+14 | …ies for copied inherited audit originals and current observations; no original normalization or detector exemption.",
+   |                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+15 | …ation and actual launch directory.",
+16 | …ed independently escaped M2-RT-01 using actual no-phase/quoted-phase producers and human replay, without narrowing inherited membersh…
+   |
+
+E501 Line too long (120 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/declare_inventory.py:15:101
+   |
+13 | AUTHORED = {
+14 |     ".gitattributes": "LSN-0131 guarded recurrence: explicit byte-preserving boundaries for copied inherited audit originals and curre…
+15 |     "scripts/development-ledger/new_checkpoint.py": "M2-F-001 literal producer invocation and actual launch directory.",
+   |                                                                                                     ^^^^^^^^^^^^^^^^^^^^
+16 |     "scripts/development-ledger/m0_red_team.py": "Implement the canonically registered independently escaped M2-RT-01 using actual no-…
+17 |     "scripts/development-ledger/audit_runner_bridge.py": "Explicitly approved closed host-runner adapter and exact ownership cleanup p…
+   |
+
+E501 Line too long (222 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/declare_inventory.py:16:101
+   |
+14 | …ied inherited audit originals and current observations; no original normalization or detector exemption.",
+15 | …ctual launch directory.",
+16 | …ently escaped M2-RT-01 using actual no-phase/quoted-phase producers and human replay, without narrowing inherited membership.",
+   |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+17 | …r adapter and exact ownership cleanup planning, within canonical assurance source scope.",
+18 | …servations.",
+   |
+
+E501 Line too long (185 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/declare_inventory.py:17:101
+   |
+15 | …er invocation and actual launch directory.",
+16 | …registered independently escaped M2-RT-01 using actual no-phase/quoted-phase producers and human replay, without narrowing inherited …
+17 | …d closed host-runner adapter and exact ownership cleanup planning, within canonical assurance source scope.",
+   |                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+18 | …ucer and cleanup observations.",
+19 | …lient execution without masking either observation.",
+   |
+
+E501 Line too long (108 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/declare_inventory.py:18:101
+   |
+16 |     "scripts/development-ledger/m0_red_team.py": "Implement the canonically registered independently escaped M2-RT-01 using actual no-…
+17 |     "scripts/development-ledger/audit_runner_bridge.py": "Explicitly approved closed host-runner adapter and exact ownership cleanup p…
+18 |     "scripts/iacode/client_checks.py": "M2-F-002 separate safe raw-byte producer and cleanup observations.",
+   |                                                                                                     ^^^^^^^^
+19 |     "scripts/iacode/gates/client_tests.py": "Report structured fail-closed client execution without masking either observation.",
+20 |     "scripts/iacode/native_editor.py": "Extend M2-F-002 through the actual owned native wrapper and caller without changing process ow…
+   |
+
+E501 Line too long (129 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/declare_inventory.py:19:101
+   |
+17 |     "scripts/development-ledger/audit_runner_bridge.py": "Explicitly approved closed host-runner adapter and exact ownership cleanup p…
+18 |     "scripts/iacode/client_checks.py": "M2-F-002 separate safe raw-byte producer and cleanup observations.",
+19 |     "scripts/iacode/gates/client_tests.py": "Report structured fail-closed client execution without masking either observation.",
+   |                                                                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+20 |     "scripts/iacode/native_editor.py": "Extend M2-F-002 through the actual owned native wrapper and caller without changing process ow…
+21 |     "scripts/iacode/native_execution.py": "Bounded original native producer identity and independent typed process/handle cleanup obse…
+   |
+
+E501 Line too long (163 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/declare_inventory.py:20:101
+   |
+18 | …w-byte producer and cleanup observations.",
+19 | …il-closed client execution without masking either observation.",
+20 | …he actual owned native wrapper and caller without changing process ownership or drain deadlines.",
+   |                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+21 | …e producer identity and independent typed process/handle cleanup observations with unchanged successful interface.",
+22 | …ay regressions with null/adverse and exact-owner controls.",
+   |
+
+E501 Line too long (181 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/declare_inventory.py:21:101
+   |
+19 | … client execution without masking either observation.",
+20 | … owned native wrapper and caller without changing process ownership or drain deadlines.",
+21 | …r identity and independent typed process/handle cleanup observations with unchanged successful interface.",
+   |                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+22 | …sions with null/adverse and exact-owner controls.",
+23 | …sarial controls for the explicitly authorized isolated validation bridge.",
+   |
+
+E501 Line too long (125 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/declare_inventory.py:22:101
+   |
+20 |     "scripts/iacode/native_editor.py": "Extend M2-F-002 through the actual owned native wrapper and caller without changing process ow…
+21 |     "scripts/iacode/native_execution.py": "Bounded original native producer identity and independent typed process/handle cleanup obse…
+22 |     "tests/test_m2_audit_corrections.py": "Causal real-child/replay regressions with null/adverse and exact-owner controls.",
+   |                                                                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^
+23 |     "tests/test_m2_closed_runner_bridge.py": "Real Windows child and adversarial controls for the explicitly authorized isolated valid…
+24 |     "tests/test_m2_owned_resource_cleanup.py": "Adversarial ownership, shared-image and unrelated-application cleanup plan controls wi…
+   |
+
+E501 Line too long (149 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/declare_inventory.py:23:101
+   |
+21 | …l native producer identity and independent typed process/handle cleanup observations with unchanged successful interface.",
+22 | …ld/replay regressions with null/adverse and exact-owner controls.",
+23 | … child and adversarial controls for the explicitly authorized isolated validation bridge.",
+   |                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+24 | …l ownership, shared-image and unrelated-application cleanup plan controls without engine writes.",
+25 | …ative producer, privacy, callback, caller and output-handle failure controls; no editor or Docker launch.",
+   |
+
+E501 Line too long (156 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/declare_inventory.py:24:101
+   |
+22 | …eplay regressions with null/adverse and exact-owner controls.",
+23 | …ld and adversarial controls for the explicitly authorized isolated validation bridge.",
+24 | …nership, shared-image and unrelated-application cleanup plan controls without engine writes.",
+   |                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+25 | …e producer, privacy, callback, caller and output-handle failure controls; no editor or Docker launch.",
+26 | …-source/report confinement with valid nulls, reparse/hardlink controls and a labeled growing-prefix boundary.",
+   |
+
+E501 Line too long (165 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/declare_inventory.py:25:101
+   |
+23 | …nd adversarial controls for the explicitly authorized isolated validation bridge.",
+24 | …hip, shared-image and unrelated-application cleanup plan controls without engine writes.",
+25 | …oducer, privacy, callback, caller and output-handle failure controls; no editor or Docker launch.",
+   |                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+26 | …rce/report confinement with valid nulls, reparse/hardlink controls and a labeled growing-prefix boundary.",
+27 | …rols using real Python producers and isolated Docker boundaries; never live engine cleanup acceptance.",
+   |
+
+E501 Line too long (173 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/declare_inventory.py:26:101
+   |
+24 | … shared-image and unrelated-application cleanup plan controls without engine writes.",
+25 | …er, privacy, callback, caller and output-handle failure controls; no editor or Docker launch.",
+26 | …report confinement with valid nulls, reparse/hardlink controls and a labeled growing-prefix boundary.",
+   |                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+27 | … using real Python producers and isolated Docker boundaries; never live engine cleanup acceptance.",
+28 | …try-block positive/adverse controls without replaying runtime/cleanup main bodies.",
+   |
+
+E501 Line too long (170 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/declare_inventory.py:27:101
+   |
+25 | …cer, privacy, callback, caller and output-handle failure controls; no editor or Docker launch.",
+26 | …/report confinement with valid nulls, reparse/hardlink controls and a labeled growing-prefix boundary.",
+27 | …s using real Python producers and isolated Docker boundaries; never live engine cleanup acceptance.",
+   |                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+28 | …ntry-block positive/adverse controls without replaying runtime/cleanup main bodies.",
+29 | …oth checkout modes for every canonically declared copied observation; actual boundary-removal adverse control with valid binary null.…
+   |
+
+E501 Line too long (154 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/declare_inventory.py:28:101
+   |
+26 | …e-source/report confinement with valid nulls, reparse/hardlink controls and a labeled growing-prefix boundary.",
+27 | … controls using real Python producers and isolated Docker boundaries; never live engine cleanup acceptance.",
+28 | … UTF-8 entry-block positive/adverse controls without replaying runtime/cleanup main bodies.",
+   |                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+29 | …ve and both checkout modes for every canonically declared copied observation; actual boundary-removal adverse control with valid bina…
+30 | … current bootstrap caller and archived adverse preimage; execute real Windows owned surviving-writer proof without Engine operations.…
+   |
+
+E501 Line too long (204 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/declare_inventory.py:29:101
+   |
+27 | …on producers and isolated Docker boundaries; never live engine cleanup acceptance.",
+28 | …ve/adverse controls without replaying runtime/cleanup main bodies.",
+29 | …s for every canonically declared copied observation; actual boundary-removal adverse control with valid binary null.",
+   |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+30 | … and archived adverse preimage; execute real Windows owned surviving-writer proof without Engine operations.",
+31 | …icitly modeled metadata decision controls; real current lint remains separately required before publication.",
+   |
+
+E501 Line too long (196 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/declare_inventory.py:30:101
+   |
+28 | …sitive/adverse controls without replaying runtime/cleanup main bodies.",
+29 | …modes for every canonically declared copied observation; actual boundary-removal adverse control with valid binary null.",
+30 | …ller and archived adverse preimage; execute real Windows owned surviving-writer proof without Engine operations.",
+   |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+31 | …explicitly modeled metadata decision controls; real current lint remains separately required before publication.",
+32 | …ack to corrective requirement derivation.",
+   |
+
+E501 Line too long (196 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/declare_inventory.py:31:101
+   |
+29 | …modes for every canonically declared copied observation; actual boundary-removal adverse control with valid binary null.",
+30 | …ller and archived adverse preimage; execute real Windows owned surviving-writer proof without Engine operations.",
+31 | …explicitly modeled metadata decision controls; real current lint remains separately required before publication.",
+   |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+32 | …ack to corrective requirement derivation.",
+33 | …ausal prevention; preserve other lesson semantics.",
+   |
+
+E501 Line too long (125 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/declare_inventory.py:32:101
+   |
+30 |     "tests/test_m2_bootstrap_ownership.py": "Guard the actual current bootstrap caller and archived adverse preimage; execute real Win…
+31 |     "tests/test_m2_progress_publication.py": "Actual publication caller guard and explicitly modeled metadata decision controls; real …
+32 |     ".iacode/policies/audit-registry.json": "Bind both M2 findings and escaped attack to corrective requirement derivation.",
+   |                                                                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^
+33 |     ".iacode/memory/lessons.jsonl": "Escalate guarded recurrences and add actual causal prevention; preserve other lesson semantics.",
+34 |     ".iacode/memory/guardrails/registry.json": "Extend existing guards without removing historical controls; canonical JSON formatting…
+   |
+
+E501 Line too long (134 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/declare_inventory.py:33:101
+   |
+31 | …l publication caller guard and explicitly modeled metadata decision controls; real current lint remains separately required before pu…
+32 | …oth M2 findings and escaped attack to corrective requirement derivation.",
+33 | …ed recurrences and add actual causal prevention; preserve other lesson semantics.",
+   |                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+34 | …end existing guards without removing historical controls; canonical JSON formatting only elsewhere.",
+35 | …d memory index after recurrence/guardrail updates.",
+   |
+
+E501 Line too long (152 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/declare_inventory.py:34:101
+   |
+32 | …ndings and escaped attack to corrective requirement derivation.",
+33 | …ences and add actual causal prevention; preserve other lesson semantics.",
+34 | …ing guards without removing historical controls; canonical JSON formatting only elsewhere.",
+   |                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+35 | …index after recurrence/guardrail updates.",
+36 | …rd observed failures and current corrective limits without independent claims.",
+   |
+
+E501 Line too long (103 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/declare_inventory.py:35:101
+   |
+33 |     ".iacode/memory/lessons.jsonl": "Escalate guarded recurrences and add actual causal prevention; preserve other lesson semantics.",
+34 |     ".iacode/memory/guardrails/registry.json": "Extend existing guards without removing historical controls; canonical JSON formatting…
+35 |     ".iacode/memory/LESSONS.md": "Canonical rendered memory index after recurrence/guardrail updates.",
+   |                                                                                                     ^^^
+36 |     ".iacode/memory/retrospectives/GATE-7-CP-0003.md": "Record observed failures and current corrective limits without independent cla…
+37 |     "docs/adr/ADR-0061-client-verification-preserves-producer-and-cleanup-outcomes.md": "Structural producer/cleanup and literal invoc…
+   |
+
+E501 Line too long (140 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/declare_inventory.py:36:101
+   |
+34 | … existing guards without removing historical controls; canonical JSON formatting only elsewhere.",
+35 | …emory index after recurrence/guardrail updates.",
+36 | … "Record observed failures and current corrective limits without independent claims.",
+   |                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+37 | …roducer-and-cleanup-outcomes.md": "Structural producer/cleanup and literal invocation contract.",
+38 | …-validation-jobs.md": "Authorized closed canonical runner bridge and exact owned-resource cleanup boundary.",
+   |
+
+E501 Line too long (151 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/declare_inventory.py:37:101
+   |
+35 | … index after recurrence/guardrail updates.",
+36 | …ord observed failures and current corrective limits without independent claims.",
+37 | …er-and-cleanup-outcomes.md": "Structural producer/cleanup and literal invocation contract.",
+   |                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+38 | …dation-jobs.md": "Authorized closed canonical runner bridge and exact owned-resource cleanup boundary.",
+39 | … atomically.",
+   |
+
+E501 Line too long (163 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/declare_inventory.py:38:101
+   |
+36 | …served failures and current corrective limits without independent claims.",
+37 | …-cleanup-outcomes.md": "Structural producer/cleanup and literal invocation contract.",
+38 | …-jobs.md": "Authorized closed canonical runner bridge and exact owned-resource cleanup boundary.",
+   |                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+39 | …cally.",
+40 | …corrective checkpoint and CP0001 as the last valid immutable seal.",
+   |
+
+E501 Line too long (133 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/declare_inventory.py:40:101
+   |
+38 | …host-validation-jobs.md": "Authorized closed canonical runner bridge and exact owned-resource cleanup boundary.",
+39 | …tural ADR atomically.",
+40 | …rrent unsealed corrective checkpoint and CP0001 as the last valid immutable seal.",
+   |                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+41 | …erve inherited canonical successor anchor for the sealed CP0001 subject.",
+42 | …onment-isolation-0001/REPORT.md": "Preserve inherited unsealed entry report with only owner-approved prose repair, bound by AUTHORIZE…
+   |
+
+E501 Line too long (124 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/declare_inventory.py:41:101
+   |
+39 |     "docs/adr/README.md": "Index the current structural ADR atomically.",
+40 |     "docs/checkpoints/LATEST.md": "Identify the current unsealed corrective checkpoint and CP0001 as the last valid immutable seal.",
+41 |     ".iacode/anchors/checkpoint-chain.json": "Preserve inherited canonical successor anchor for the sealed CP0001 subject.",
+   |                                                                                                     ^^^^^^^^^^^^^^^^^^^^^^^^
+42 |     "docs/audits/M2-ENTRY-BLOCKED-2026-10-21/environment-isolation-0001/REPORT.md": "Preserve inherited unsealed entry report with onl…
+43 | }
+   |
+
+E501 Line too long (203 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/declare_inventory.py:42:101
+   |
+40 | …t and CP0001 as the last valid immutable seal.",
+41 | …anchor for the sealed CP0001 subject.",
+42 | …Preserve inherited unsealed entry report with only owner-approved prose repair, bound by AUTHORIZED-PROSE-DIFF.json.",
+   |                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+43 | …
+   |
+
+E501 Line too long (113 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/declare_inventory.py:54:101
+   |
+52 |             reason = AUTHORED[path]
+53 |         elif path.startswith("docs/checkpoints/" + CHECKPOINT.name + "/"):
+54 |             reason = "Current corrective checkpoint and owned command-produced reports; no independent approval."
+   |                                                                                                     ^^^^^^^^^^^^^
+55 |         elif path.startswith(("docs/checkpoints/GATE-7-CP-0002/", "docs/audits/")):
+56 |             reason = "Preserve inherited failed/unsealed audit or entry evidence, not acceptance or implementation."
+   |
+
+E501 Line too long (116 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/declare_inventory.py:56:101
+   |
+54 |             reason = "Current corrective checkpoint and owned command-produced reports; no independent approval."
+55 |         elif path.startswith(("docs/checkpoints/GATE-7-CP-0002/", "docs/audits/")):
+56 |             reason = "Preserve inherited failed/unsealed audit or entry evidence, not acceptance or implementation."
+   |                                                                                                     ^^^^^^^^^^^^^^^^
+57 |         else:
+58 |             raise ValueError("undeclared scope expansion: " + path)
+   |
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/diagnose_owned_builder.py:14:1
+   |
+12 | ROOT = CHECKPOINT.parents[2]
+13 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+14 | from ledger_common import find_secrets, load_json, utc_now, write_json
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+help: Move module level imports to top of file
+
+S110 `try`-`except`-`pass` detected, consider logging the exception
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/diagnose_owned_builder.py:49:9
+   |
+47 |                       stream.write(raw)
+48 |                   fact.update(refused=False, path=path.relative_to(ROOT).as_posix())
+49 | /         except Exception:
+50 | |             pass  # Explicit neutral refusal is retained; no arbitrary exception text.
+   | |________________^
+51 |           receipt["streams"][name] = fact
+52 |       write_json(stem.with_suffix(".json"), receipt)
+   |
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/execute_gate.py:16:1
+   |
+14 |   sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+15 |
+16 | / from ledger_common import (
+17 | |     find_secrets,
+18 | |     git_snapshot,
+19 | |     scope_fingerprint,
+20 | |     use_utf8_stdout,
+21 | |     utc_now,
+22 | |     write_json,
+23 | | )
+   | |_^
+24 |   from policies import gate_definitions
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/execute_gate.py:24:1
+   |
+22 |     write_json,
+23 | )
+24 | from policies import gate_definitions
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+ --> docs/checkpoints/GATE-7-CP-0003/audit-harness/extend_guardrails.py:8:1
+  |
+6 | ROOT = Path(__file__).resolve().parents[4]
+7 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+8 | from ledger_common import load_json, utc_now, write_json
+  | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+9 | from lessons import load_lessons, save_lessons
+  |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+ --> docs/checkpoints/GATE-7-CP-0003/audit-harness/extend_guardrails.py:9:1
+  |
+7 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+8 | from ledger_common import load_json, utc_now, write_json
+9 | from lessons import load_lessons, save_lessons
+  | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+help: Move module level imports to top of file
+
+E501 Line too long (112 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/extend_guardrails.py:47:101
+   |
+45 |                         "kind": "test",
+46 |                         "reference": test,
+47 |                         "description": "Actual producer/replay causal boundary with null and adverse controls.",
+   |                                                                                                     ^^^^^^^^^^^^
+48 |                     }
+49 |                 )
+   |
+
+E501 Line too long (105 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/extend_guardrails.py:62:101
+   |
+60 |         note = (
+61 |             " M2 CP0003 adds actual child-producer and literal replay regressions; "
+62 |             "the independent guarded recurrence remains unresolved until complete corrective acceptance."
+   |                                                                                                     ^^^^^
+63 |         )
+64 |         if note not in lesson.get("notes", ""):
+   |
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/inspect_environment.py:14:1
+   |
+12 | ROOT = CHECKPOINT.parents[2]
+13 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+14 | from ledger_common import find_secrets, load_json, utc_now, write_json
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+help: Move module level imports to top of file
+
+E501 Line too long (119 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/inspect_environment.py:76:101
+   |
+74 |         "globalConfigurations": configurations,
+75 |         "executables": versions,
+76 |         "nativeVerificationRuntime": "bundled-node; explicit per-child selection only; no installation or PATH change",
+   |                                                                                                     ^^^^^^^^^^^^^^^^^^^
+77 |         "allUnchanged": all(row["unchanged"] for row in configurations),
+78 |         "applicationRestartsPerformed": False,
+   |
+
+E501 Line too long (107 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/inspect_environment.py:80:101
+   |
+78 |         "applicationRestartsPerformed": False,
+79 |         "otherChatSettingWritesPerformed": False,
+80 |         "note": "Other-chat field records absence of operator writes, not a database-wide hash assertion.",
+   |                                                                                                     ^^^^^^^
+81 |     }
+82 |     write_json(folder / f"run-{index:04d}.json", report)
+   |
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/inspect_native_editor.py:15:1
+   |
+13 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+14 | sys.path.insert(0, str(ROOT / "scripts/iacode"))
+15 | from ledger_common import find_secrets, utc_now, write_json
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+16 | from native_editor import cli_command, executable
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/inspect_native_editor.py:16:1
+   |
+14 | sys.path.insert(0, str(ROOT / "scripts/iacode"))
+15 | from ledger_common import find_secrets, utc_now, write_json
+16 | from native_editor import cli_command, executable
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/inspect_retired_public_clone.py:12:1
+   |
+10 | ROOT = CHECKPOINT.parents[2]
+11 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+12 | from ledger_common import utc_now, write_json
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+13 | from owned_docker_scope import docker
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/inspect_retired_public_clone.py:13:1
+   |
+11 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+12 | from ledger_common import utc_now, write_json
+13 | from owned_docker_scope import docker
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+14 |
+15 | TARGET = ROOT / "var/gate7-sealed-public-20261019-181247"
+   |
+help: Move module level imports to top of file
+
+SIM115 Use a context manager for opening files
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/native_execution_candidate.py:28:14
+   |
+26 | @contextmanager
+27 | def owned_capture(release: dict):
+28 |     stream = tempfile.TemporaryFile()
+   |              ^^^^^^^^^^^^^^^^^^^^^^
+29 |     try:
+30 |         yield stream
+   |
+
+SIM105 Use `contextlib.suppress(ProcessLookupError)` instead of `try`-`except`-`pass`
+   --> docs/checkpoints/GATE-7-CP-0003/audit-harness/native_execution_candidate.py:186:21
+    |
+184 |                       }
+185 |                   elif process is not None:
+186 | /                     try:
+187 | |                         os.killpg(process.pid, signal.SIGKILL)
+188 | |                     except ProcessLookupError:
+189 | |                         pass  # Only the exact owned session group is absent.
+    | |____________________________^
+190 |                       cleanup = {"result": "PASS", "observation": None}
+191 |               except NativeJobCleanupError as error:
+    |
+help: Replace `try`-`except`-`pass` with `with contextlib.suppress(ProcessLookupError): ...`
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/owned_docker_scope.py:21:1
+   |
+19 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+20 | sys.path.insert(0, str(ROOT / "scripts/iacode"))
+21 | from audit_runner_bridge import cleanup_plan
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+22 | from client_checks import _safe_stream
+23 | from ledger_common import find_secrets, load_json, utc_now, write_json
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/owned_docker_scope.py:22:1
+   |
+20 | sys.path.insert(0, str(ROOT / "scripts/iacode"))
+21 | from audit_runner_bridge import cleanup_plan
+22 | from client_checks import _safe_stream
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+23 | from ledger_common import find_secrets, load_json, utc_now, write_json
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/owned_docker_scope.py:23:1
+   |
+21 | from audit_runner_bridge import cleanup_plan
+22 | from client_checks import _safe_stream
+23 | from ledger_common import find_secrets, load_json, utc_now, write_json
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+24 |
+25 | SCOPE = CHECKPOINT / "OWNED-DOCKER-SCOPE.json"
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/prepare_runtime_subject.py:9:1
+   |
+ 7 | ROOT = CHECKPOINT.parents[2]
+ 8 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+ 9 | from ledger_common import load_json, scope_fingerprint, write_json
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+10 | from sync_in_progress_metadata import synchronize
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/prepare_runtime_subject.py:10:1
+   |
+ 8 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+ 9 | from ledger_common import load_json, scope_fingerprint, write_json
+10 | from sync_in_progress_metadata import synchronize
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+help: Move module level imports to top of file
+
+E501 Line too long (116 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/prepare_runtime_subject.py:29:101
+   |
+27 |         status="PASS",
+28 |         evidence=["file:" + receipt_path.relative_to(CHECKPOINT).as_posix()],
+29 |         justification="Actual quiescent valid IN_PROGRESS draft; not terminal readiness or independent validation.",
+   |                                                                                                     ^^^^^^^^^^^^^^^^
+30 |     )
+31 |     write_json(CHECKPOINT / "QUALITY.json", quality)
+   |
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/preview_owned_cleanup.py:10:1
+   |
+ 8 | ROOT = CHECKPOINT.parents[2]
+ 9 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+10 | from audit_runner_bridge import cleanup_plan
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+11 | from ledger_common import load_json, utc_now, write_json
+12 | from owned_docker_scope import SCOPE, child_environment, snapshot
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/preview_owned_cleanup.py:11:1
+   |
+ 9 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+10 | from audit_runner_bridge import cleanup_plan
+11 | from ledger_common import load_json, utc_now, write_json
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+12 | from owned_docker_scope import SCOPE, child_environment, snapshot
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/preview_owned_cleanup.py:12:1
+   |
+10 | from audit_runner_bridge import cleanup_plan
+11 | from ledger_common import load_json, utc_now, write_json
+12 | from owned_docker_scope import SCOPE, child_environment, snapshot
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/probe_bridge_boundary.py:19:1
+   |
+17 | ROOT = CHECKPOINT.parents[2]
+18 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+19 | from ledger_common import find_secrets, utc_now, write_json
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+20 |
+21 | CHILD = """import json, os, pathlib, urllib.request
+   |
+help: Move module level imports to top of file
+
+E501 Line too long (103 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/probe_bridge_boundary.py:25:101
+   |
+23 | request = urllib.request.Request(os.environ['IACODE_PROBE_URL'],
+24 |     headers={'X-IACode-Capability': os.environ['IACODE_PROBE_CAPABILITY']})
+25 | with urllib.request.build_opener(urllib.request.ProxyHandler({})).open(request, timeout=8) as response:
+   |                                                                                                     ^^^
+26 |     transport = response.read(32) == b'FIXED_BRIDGE_PROBE_OK'
+27 | denied = False
+   |
+
+S110 `try`-`except`-`pass` detected, consider logging the exception
+   --> docs/checkpoints/GATE-7-CP-0003/audit-harness/probe_bridge_boundary.py:113:13
+    |
+111 |                   if len(raw) <= 262144 and capability not in text and not find_secrets(text):
+112 |                       item.update(text=text, refused=False)
+113 | /             except Exception:
+114 | |                 pass  # Remains an explicit neutral refusal, never raw publication.
+    | |____________________^
+115 |               streams[name] = item
+116 |           unexpected_write = target.exists()
+    |
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/probe_bridge_path_bounds.py:13:1
+   |
+11 | ROOT = CHECKPOINT.parents[2]
+12 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+13 | from audit_runner_bridge import regular
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+14 | from ledger_common import utc_now, write_json
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/probe_bridge_path_bounds.py:14:1
+   |
+12 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+13 | from audit_runner_bridge import regular
+14 | from ledger_common import utc_now, write_json
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/probe_index_byte_preservation.py:13:1
+   |
+11 | ROOT = CHECKPOINT.parents[2]
+12 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+13 | from ledger_common import utc_now, write_json
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+14 | from secret_scan import _read_blobs
+15 | from sync_in_progress_metadata import synchronize
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/probe_index_byte_preservation.py:14:1
+   |
+12 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+13 | from ledger_common import utc_now, write_json
+14 | from secret_scan import _read_blobs
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+15 | from sync_in_progress_metadata import synchronize
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/probe_index_byte_preservation.py:15:1
+   |
+13 | from ledger_common import utc_now, write_json
+14 | from secret_scan import _read_blobs
+15 | from sync_in_progress_metadata import synchronize
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/probe_native_cleanup_evidence.py:16:1
+   |
+14 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+15 | sys.path.insert(0, str(ROOT / "scripts/iacode"))
+16 | import native_editor
+   | ^^^^^^^^^^^^^^^^^^^^
+17 | from ledger_common import scope_fingerprint, utc_now, write_json
+18 | from native_process import NativeJobCleanupError, WindowsJob
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/probe_native_cleanup_evidence.py:17:1
+   |
+15 | sys.path.insert(0, str(ROOT / "scripts/iacode"))
+16 | import native_editor
+17 | from ledger_common import scope_fingerprint, utc_now, write_json
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+18 | from native_process import NativeJobCleanupError, WindowsJob
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/probe_native_cleanup_evidence.py:18:1
+   |
+16 | import native_editor
+17 | from ledger_common import scope_fingerprint, utc_now, write_json
+18 | from native_process import NativeJobCleanupError, WindowsJob
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+help: Move module level imports to top of file
+
+E501 Line too long (192 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/probe_native_cleanup_evidence.py:57:101
+   |
+55 | …
+56 | …lse "FAIL",
+57 | …wned-tree drain, not an observed OS cleanup failure. The actual producer result must remain exposed even then.",
+   |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+58 | …
+59 | …
+   |
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/probe_restricted_client.py:15:1
+   |
+13 | ROOT = Path(__file__).resolve().parents[4]
+14 | sys.path.insert(0, str(ROOT / "scripts/iacode"))
+15 | from client_checks import ClientCheckError, run_node
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/prove_canonical_bridge.py:19:1
+   |
+17 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+18 | sys.path.insert(0, str(ROOT / "scripts/iacode"))
+19 | from audit_runner_bridge import ClosedBridge, FrozenInputs, Job, regular
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+20 | from current_resources import child_environment, current_scope_path
+21 | from ledger_common import find_secrets, load_json, utc_now, write_json
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/prove_canonical_bridge.py:20:1
+   |
+18 | sys.path.insert(0, str(ROOT / "scripts/iacode"))
+19 | from audit_runner_bridge import ClosedBridge, FrozenInputs, Job, regular
+20 | from current_resources import child_environment, current_scope_path
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+21 | from ledger_common import find_secrets, load_json, utc_now, write_json
+22 | from native_process import WindowsJob
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/prove_canonical_bridge.py:21:1
+   |
+19 | from audit_runner_bridge import ClosedBridge, FrozenInputs, Job, regular
+20 | from current_resources import child_environment, current_scope_path
+21 | from ledger_common import find_secrets, load_json, utc_now, write_json
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+22 | from native_process import WindowsJob
+23 | from owned_docker_scope import snapshot
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/prove_canonical_bridge.py:22:1
+   |
+20 | from current_resources import child_environment, current_scope_path
+21 | from ledger_common import find_secrets, load_json, utc_now, write_json
+22 | from native_process import WindowsJob
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+23 | from owned_docker_scope import snapshot
+24 | from policies import gate_definitions
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/prove_canonical_bridge.py:23:1
+   |
+21 | from ledger_common import find_secrets, load_json, utc_now, write_json
+22 | from native_process import WindowsJob
+23 | from owned_docker_scope import snapshot
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+24 | from policies import gate_definitions
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/prove_canonical_bridge.py:24:1
+   |
+22 | from native_process import WindowsJob
+23 | from owned_docker_scope import snapshot
+24 | from policies import gate_definitions
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+25 |
+26 | CHILD = """import json, os, pathlib, time, urllib.request
+   |
+help: Move module level imports to top of file
+
+S110 `try`-`except`-`pass` detected, consider logging the exception
+   --> docs/checkpoints/GATE-7-CP-0003/audit-harness/prove_canonical_bridge.py:159:17
+    |
+157 |                           (output / (name + ".log")).write_bytes(raw)
+158 |                           receipt[name]["refused"] = False
+159 | /                 except Exception:
+160 | |                     pass  # Explicit refusal remains; raw stream is never published.
+    | |________________________^
+161 |           finally:
+162 |               bridge.close()
+    |
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/record_completed_lint.py:11:1
+   |
+ 9 | ROOT = CHECKPOINT.parents[2]
+10 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+11 | from ledger_common import load_json, scope_fingerprint, utc_now, write_json
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+help: Move module level imports to top of file
+
+E501 Line too long (118 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/record_completed_lint.py:28:101
+   |
+26 |         status="PASS",
+27 |         evidence=["file:" + path],
+28 |         justification="Actual full canonical retry completed at unchanged source; original export failure preserved.",
+   |                                                                                                     ^^^^^^^^^^^^^^^^^^
+29 |     )
+30 |     write_json(CHECKPOINT / "QUALITY.json", quality)
+   |
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/record_prose_edit.py:13:1
+   |
+11 | ROOT = CHECKPOINT.parents[2]
+12 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+13 | from ledger_common import find_secrets, load_json, utc_now, write_json
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+14 |
+15 | TARGET = "docs/audits/M2-ENTRY-BLOCKED-2026-10-21/environment-isolation-0001/REPORT.md"
+   |
+help: Move module level imports to top of file
+
+E501 Line too long (218 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/record_prose_edit.py:46:101
+   |
+44 | …
+45 | …
+46 | …the repaired file and inverse byte patch, verified against its preimage digest. No raw detector-shaped line is republished.",
+   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+47 | …
+48 | …
+   |
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/refresh_blocked_metadata.py:12:1
+   |
+10 | ROOT = CHECKPOINT.parents[2]
+11 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+12 | from anchors import load_anchors
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+13 | from ledger_common import load_json, utc_now, write_json
+14 | from validate_checkpoint import _validate_quality_evidence
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/refresh_blocked_metadata.py:13:1
+   |
+11 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+12 | from anchors import load_anchors
+13 | from ledger_common import load_json, utc_now, write_json
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+14 | from validate_checkpoint import _validate_quality_evidence
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/refresh_blocked_metadata.py:14:1
+   |
+12 | from anchors import load_anchors
+13 | from ledger_common import load_json, utc_now, write_json
+14 | from validate_checkpoint import _validate_quality_evidence
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+help: Move module level imports to top of file
+
+E501 Line too long (101 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/refresh_blocked_metadata.py:64:101
+   |
+62 |     write_json(CHECKPOINT / "RUN-METADATA.json", metadata)
+63 |     print(
+64 |         "BLOCKED_BOOKKEEPING_BOUND status_unchanged quality_references_resolved anchor_count_derived"
+   |                                                                                                     ^
+65 |     )
+66 |     return 0
+   |
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/register_bootstrap_drain.py:10:1
+   |
+ 8 | ROOT = CHECKPOINT.parents[2]
+ 9 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+10 | from ledger_common import load_json, write_json
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+11 | from lesson_preflight import render_markdown
+12 | from lessons import build_preflight, load_lessons, register_recurrence, render_index, save_lessons
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/register_bootstrap_drain.py:11:1
+   |
+ 9 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+10 | from ledger_common import load_json, write_json
+11 | from lesson_preflight import render_markdown
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+12 | from lessons import build_preflight, load_lessons, register_recurrence, render_index, save_lessons
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/register_bootstrap_drain.py:12:1
+   |
+10 | from ledger_common import load_json, write_json
+11 | from lesson_preflight import render_markdown
+12 | from lessons import build_preflight, load_lessons, register_recurrence, render_index, save_lessons
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+help: Move module level imports to top of file
+
+E501 Line too long (347 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/register_bootstrap_drain.py:34:101
+   |
+32 | …
+33 | …
+34 | …h a60-second timeout. The parent Docker CLI was killed, but its exact buildx plugin retained inherited output handles and prevented the timeout observation from returning until pinned helper-only recovery. Actual parent recorder duration was240210ms.",
+   |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+35 | …
+36 | …
+   |
+
+E501 Line too long (293 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/register_bootstrap_drain.py:38:101
+   |
+36 | …
+37 | …
+38 | … producer and cleanup observations, preserve the unchanged60-second producer budget, add actual surviving-writer and actual caller-boundary controls. Never signal the Engine or other applications.",
+   |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+39 | … auditor. Image pull availability is a separate unresolved operational dependency, not a proved Engine outage.",
+40 | …
+   |
+
+E501 Line too long (207 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/register_bootstrap_drain.py:39:101
+   |
+37 | …
+38 | …ain safe producer and cleanup observations, preserve the unchanged60-second producer budget, add actual surviving-writer and actual c…
+39 | …ependent auditor. Image pull availability is a separate unresolved operational dependency, not a proved Engine outage.",
+   |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+40 | …
+41 | …
+   |
+
+E501 Line too long (380 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/register_bootstrap_drain.py:51:101
+   |
+49 | …
+50 | …
+51 | …arent left exact plugin35632 with inherited handle…; image pull availability remains separate.",
+   |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^…^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+52 | …
+53 | …
+   |
+
+E501 Line too long (171 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/register_bootstrap_drain.py:82:101
+   |
+80 | …
+81 | …
+82 | …hanges assurance-scoped memory; prior actual source epochs remain preserved, not current acceptance.",
+   |                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+83 | …
+84 | …
+   |
+
+E501 Line too long (105 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/register_bootstrap_drain.py:86:101
+   |
+84 |     write_json(CHECKPOINT / "QUALITY.json", quality)
+85 |     print(
+86 |         "BOOTSTRAP-DRAIN-001 escalated; LSN-0125 CONFIRMED, no deadline extension or independent verdict"
+   |                                                                                                     ^^^^^
+87 |     )
+88 |     return 0
+   |
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/register_bridge_path_lesson.py:9:1
+   |
+ 7 | ROOT = CHECKPOINT.parents[2]
+ 8 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+ 9 | from ledger_common import load_json, utc_now, validate_schema
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+10 | from lessons import load_lessons, next_lesson_id, render_index, save_lessons
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/register_bridge_path_lesson.py:10:1
+   |
+ 8 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+ 9 | from ledger_common import load_json, utc_now, validate_schema
+10 | from lessons import load_lessons, next_lesson_id, render_index, save_lessons
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+help: Move module level imports to top of file
+
+E501 Line too long (162 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/register_bridge_path_lesson.py:27:101
+   |
+25 | …
+26 | …e, "finding": "BRIDGE-PATH-001"},
+27 | …tside file but accepts an existing parent-relative outside file under a lexically owned prefix.",
+   |                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+28 | … components and does not establish actual filesystem containment through parent components.",
+29 | …re strict physical containment while retaining reparse and hardlink refusals. No auditor or privileged HTTP path-input surface was of…
+   |
+
+E501 Line too long (158 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/register_bridge_path_lesson.py:28:101
+   |
+26 | …ame, "finding": "BRIDGE-PATH-001"},
+27 | …outside file but accepts an existing parent-relative outside file under a lexically owned prefix.",
+28 | …al components and does not establish actual filesystem containment through parent components.",
+   |                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+29 | …pare strict physical containment while retaining reparse and hardlink refusals. No auditor or privileged HTTP path-input surface was …
+30 | …
+   |
+
+E501 Line too long (206 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/register_bridge_path_lesson.py:29:101
+   |
+27 | … an existing parent-relative outside file under a lexically owned prefix.",
+28 | …ot establish actual filesystem containment through parent components.",
+29 | …tainment while retaining reparse and hardlink refusals. No auditor or privileged HTTP path-input surface was offered.",
+   |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+30 | …
+31 | …
+   |
+
+E501 Line too long (205 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/register_bridge_path_lesson.py:40:101
+   |
+38 | …
+39 | …
+40 | …stors and hardlinks before reading a frozen input or publishing a report; retain an actual valid inside-file control.",
+   |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+41 | …ent inside/absolute/parent/reparse/hardlink controls and full unchanged current assurance.",
+42 | …
+   |
+
+E501 Line too long (178 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/register_bridge_path_lesson.py:41:101
+   |
+39 | …
+40 | …directed ancestors and hardlinks before reading a frozen input or publishing a report; retain an actual valid inside-file control.",
+41 | …executed current inside/absolute/parent/reparse/hardlink controls and full unchanged current assurance.",
+   |                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+42 | …
+43 | …
+   |
+
+E501 Line too long (110 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/register_bridge_path_lesson.py:55:101
+   |
+53 |             "ownership": "project-generated engineering evidence",
+54 |             "license": "not-applicable",
+55 |             "notes": "Actual exclusively owned filesystem fixture; no unrelated data or independent verdict.",
+   |                                                                                                     ^^^^^^^^^^
+56 |         },
+57 |         "trainingEligibility": {
+   |
+
+E501 Line too long (217 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/register_bridge_path_lesson.py:63:101
+   |
+61 | …
+62 | …
+63 | …not submit source/report paths. No disclosure was observed. Working automated prevention and final delivery remain pending.",
+   |          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+64 | …
+65 | …
+   |
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/register_byte_transport_recurrence.py:10:1
+   |
+ 8 | ROOT = CHECKPOINT.parents[2]
+ 9 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+10 | from ledger_common import load_json, utc_now, write_json
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+11 | from lesson_preflight import render_markdown
+12 | from lessons import build_preflight, load_lessons, register_recurrence, render_index, save_lessons
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/register_byte_transport_recurrence.py:11:1
+   |
+ 9 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+10 | from ledger_common import load_json, utc_now, write_json
+11 | from lesson_preflight import render_markdown
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+12 | from lessons import build_preflight, load_lessons, register_recurrence, render_index, save_lessons
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/register_byte_transport_recurrence.py:12:1
+   |
+10 | from ledger_common import load_json, utc_now, write_json
+11 | from lesson_preflight import render_markdown
+12 | from lessons import build_preflight, load_lessons, register_recurrence, render_index, save_lessons
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+help: Move module level imports to top of file
+
+E501 Line too long (283 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/register_byte_transport_recurrence.py:28:101
+   |
+26 | …
+27 | …
+28 | …s/preimages, beside120 unchanged nulls. New current observation families and inherited unsealed audit bytes lack explicit Git byte boundaries; publication stopped before commit/tag/push.",
+   |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+29 | …
+30 | …
+   |
+
+E501 Line too long (165 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/register_byte_transport_recurrence.py:31:101
+   |
+29 | …
+30 | …
+31 | …t actual raw evidence and prove real Git store/archive/checkout bytes without rewriting originals."
+   |                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+32 | …
+33 | …
+   |
+
+E501 Line too long (149 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/register_byte_transport_recurrence.py:64:101
+   |
+62 | …
+63 | …,
+64 | … in62 of182 files;120 match. No originals were rewritten and no commit/tag/push occurred.",
+   |                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+65 | …1.json",
+66 | …tion Git attributes, actual default/CRLF checkout and archive controls, index recheck, and new complete current assurance.",
+   |
+
+E501 Line too long (182 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/register_byte_transport_recurrence.py:66:101
+   |
+64 | …;120 match. No originals were rewritten and no commit/tag/push occurred.",
+65 | …
+66 | …es, actual default/CRLF checkout and archive controls, index recheck, and new complete current assurance.",
+   |                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+67 | …
+68 | …
+   |
+
+E501 Line too long (114 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/register_byte_transport_recurrence.py:79:101
+   |
+77 |     )
+78 |     print(
+79 |         "LSN-0131 recurrence escalated and complete preflight refreshed; no guard or transport acceptance claimed"
+   |                                                                                                     ^^^^^^^^^^^^^^
+80 |     )
+81 |     return 0
+   |
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/register_future_byte_recurrence.py:10:1
+   |
+ 8 | ROOT = CHECKPOINT.parents[2]
+ 9 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+10 | from ledger_common import load_json, utc_now, write_json
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+11 | from lesson_preflight import render_markdown
+12 | from lessons import build_preflight, load_lessons, register_recurrence, render_index, save_lessons
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/register_future_byte_recurrence.py:11:1
+   |
+ 9 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+10 | from ledger_common import load_json, utc_now, write_json
+11 | from lesson_preflight import render_markdown
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+12 | from lessons import build_preflight, load_lessons, register_recurrence, render_index, save_lessons
+13 | from sync_in_progress_metadata import synchronize
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/register_future_byte_recurrence.py:12:1
+   |
+10 | from ledger_common import load_json, utc_now, write_json
+11 | from lesson_preflight import render_markdown
+12 | from lessons import build_preflight, load_lessons, register_recurrence, render_index, save_lessons
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+13 | from sync_in_progress_metadata import synchronize
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/register_future_byte_recurrence.py:13:1
+   |
+11 | from lesson_preflight import render_markdown
+12 | from lessons import build_preflight, load_lessons, register_recurrence, render_index, save_lessons
+13 | from sync_in_progress_metadata import synchronize
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+help: Move module level imports to top of file
+
+E501 Line too long (316 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/register_future_byte_recurrence.py:40:101
+   |
+38 | …
+39 | …
+40 | …cape current-only attributes beside valid binary nulls and both existing current controls. The public quality attempt was stopped with native exit20 and exact Job/clone cleanup, never counted as an integral test result.",
+   |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+41 | …
+42 | …
+   |
+
+E501 Line too long (250 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/register_future_byte_recurrence.py:43:101
+   |
+41 | …
+42 | …
+43 | …level byte boundaries and actual future-checkpoint positive/adverse controls remain required; no original or historical failed evidence may be normalized."
+   |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+44 | …
+45 | …
+   |
+
+E501 Line too long (162 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/register_future_byte_recurrence.py:76:101
+   |
+74 | …
+75 | …
+76 | …ate transport regression fails while current observation and binary-null controls remain valid.",
+   |                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+77 | …3.json",
+78 | …ervation families across checkpoint IDs; rerun real archive/both checkouts, exact index comparison and the unchanged complete mandato…
+   |
+
+E501 Line too long (207 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/register_future_byte_recurrence.py:78:101
+   |
+76 | …on fails while current observation and binary-null controls remain valid.",
+77 | …
+78 | …ss checkpoint IDs; rerun real archive/both checkouts, exact index comparison and the unchanged complete mandatory set.",
+   |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+79 | …
+80 | …
+   |
+
+E501 Line too long (149 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/register_future_byte_recurrence.py:95:101
+   |
+93 | …
+94 | …
+95 | …rence requires new current-source evidence; earlier actual observations remain preserved.",
+   |                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+96 | …
+97 | …
+   |
+
+E501 Line too long (275 > 100)
+   --> docs/checkpoints/GATE-7-CP-0003/audit-harness/register_future_byte_recurrence.py:101:101
+    |
+ 99 | …
+100 | …
+101 | …port and finish pre-execution exact cleanup orchestration; then run all current mandatory controls and immutable functional proof. No independent auditor before seal and no Gate8."
+    |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+102 | …
+103 | …
+    |
+
+E501 Line too long (124 > 100)
+   --> docs/checkpoints/GATE-7-CP-0003/audit-harness/register_future_byte_recurrence.py:106:101
+    |
+104 |     synchronize(ROOT, CHECKPOINT)
+105 |     print(
+106 |         "LSN-0131 distinct future-boundary recurrence reopened before repair; no mandatory set or historical result changed"
+    |                                                                                                     ^^^^^^^^^^^^^^^^^^^^^^^^
+107 |     )
+108 |     return 0
+    |
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/register_prepush_gap.py:11:1
+   |
+ 9 | ROOT = CHECKPOINT.parents[2]
+10 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+11 | from ledger_common import load_json, utc_now, write_json
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+12 | from lesson_preflight import render_markdown
+13 | from lessons import build_preflight, load_lessons, register_recurrence, render_index, save_lessons
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/register_prepush_gap.py:12:1
+   |
+10 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+11 | from ledger_common import load_json, utc_now, write_json
+12 | from lesson_preflight import render_markdown
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+13 | from lessons import build_preflight, load_lessons, register_recurrence, render_index, save_lessons
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/register_prepush_gap.py:13:1
+   |
+11 | from ledger_common import load_json, utc_now, write_json
+12 | from lesson_preflight import render_markdown
+13 | from lessons import build_preflight, load_lessons, register_recurrence, render_index, save_lessons
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+help: Move module level imports to top of file
+
+E501 Line too long (142 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/register_prepush_gap.py:49:101
+   |
+47 | …ingerprint"],
+48 | …"sourceFingerprint"],
+49 | …le lint and repository-wide scans before each push, not only later closure assurance.",
+   |                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+50 | …forced declared scope, staged secret scan and canonical validation but omitted the existing pre-push lint precondition. Targeted comp…
+51 | …
+   |
+
+E501 Line too long (242 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/register_prepush_gap.py:50:101
+   |
+48 | …
+49 | … each push, not only later closure assurance.",
+50 | …n and canonical validation but omitted the existing pre-push lint precondition. Targeted component green did not satisfy the broader requirement.",
+   |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+51 | …
+52 | …
+   |
+
+E501 Line too long (267 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/register_prepush_gap.py:55:101
+   |
+53 | …
+54 | …
+55 | …urrent pre-publication HEAD before any publication effects. Run actual lint and new guard controls, then publish a new immutable subject and execute fresh full assurance.",
+   |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+56 | …
+57 | …
+   |
+
+E501 Line too long (281 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/register_prepush_gap.py:75:101
+   |
+73 | …
+74 | …
+75 | …ED; older completed lint described another fingerprint. Preserve immutable history and cancel only its exact owned incomplete quality cycle before repairing the publisher precondition.",
+   |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+76 | …
+77 | …
+   |
+
+E501 Line too long (282 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/register_prepush_gap.py:82:101
+   |
+80 | …
+81 | …
+82 | …tive lint PASS or an independent finding. The trusted current publisher must acquire a checked current proof before another push; broad manual Git actions remain subject to the contract."
+   |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+83 | …
+84 | …
+   |
+
+E501 Line too long (143 > 100)
+   --> docs/checkpoints/GATE-7-CP-0003/audit-harness/register_prepush_gap.py:102:101
+    |
+100 | …
+101 | …
+102 | …anges assurance-scoped memory; old successful epochs are retained, not current proof.",
+    |                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+103 | …
+104 | …
+    |
+
+E501 Line too long (154 > 100)
+   --> docs/checkpoints/GATE-7-CP-0003/audit-harness/register_prepush_gap.py:111:101
+    |
+109 | …LETE",
+110 | …
+111 | …ual current lint before a new immutable runtime publication, then fresh complete assurance.",
+    |                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+112 | …
+113 | …
+    |
+
+E501 Line too long (133 > 100)
+   --> docs/checkpoints/GATE-7-CP-0003/audit-harness/register_prepush_gap.py:115:101
+    |
+113 |     write_json(CHECKPOINT / "ACTIVE-VALIDATION.json", active)
+114 |     print(
+115 |         "PRE-PUSH-LINT-001 recorded; LSN-0054 recurrence incremented, public history unchanged, no complete quality or audit verdict"
+    |                                                                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+116 |     )
+117 |     return 0
+    |
+
+E402 Module level import not at top of file
+ --> docs/checkpoints/GATE-7-CP-0003/audit-harness/register_recurrences.py:9:1
+  |
+7 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+8 |
+9 | from lessons import load_lessons, register_recurrence, save_lessons
+  | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/register_utf8_recurrence.py:9:1
+   |
+ 7 | ROOT = CHECKPOINT.parents[2]
+ 8 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+ 9 | from ledger_common import load_json, write_json
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+10 | from lessons import load_lessons, register_recurrence, render_index, save_lessons
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/register_utf8_recurrence.py:10:1
+   |
+ 8 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+ 9 | from ledger_common import load_json, write_json
+10 | from lessons import load_lessons, register_recurrence, render_index, save_lessons
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+help: Move module level imports to top of file
+
+E501 Line too long (183 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/register_utf8_recurrence.py:24:101
+   |
+22 | …
+23 | …
+24 | …rent capturing entrypoints without their own UTF-8 stream bootstrap. Existing guards correctly remain red.",
+   |                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+25 | …
+26 | …rough the existing bootstrap, add cold positive/adverse startup proof and retain the unchanged whole-tree guards.",
+   |
+
+E501 Line too long (190 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/register_utf8_recurrence.py:26:101
+   |
+24 | … capturing entrypoints without their own UTF-8 stream bootstrap. Existing guards correctly remain red.",
+25 | …
+26 | …h the existing bootstrap, add cold positive/adverse startup proof and retain the unchanged whole-tree guards.",
+   |                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+27 | …mum-severity reset or test weakening",
+28 | …
+   |
+
+E501 Line too long (117 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/register_utf8_recurrence.py:27:101
+   |
+25 |             "evidence": "quality-attempts/tests/run-0001.stderr.log",
+26 |             "requiredCorrection": "Configure actual current entry blocks through the existing bootstrap, add cold positive/adverse sta…
+27 |             "classification": "GUARDRAIL_FAILURE LSN-0035 and LSN-0083; no maximum-severity reset or test weakening",
+   |                                                                                                     ^^^^^^^^^^^^^^^^^
+28 |         }
+29 |     )
+   |
+
+E501 Line too long (199 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/register_utf8_recurrence.py:40:101
+   |
+38 | …
+39 | …
+40 | …ure entrypoints; configure actual entry blocks and prove cold bootstrap without rerunning destructive main bodies.",
+   |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+41 | …
+42 | …ution"]
+   |
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/resolve_bootstrap_drain.py:15:1
+   |
+13 | ROOT = CHECKPOINT.parents[2]
+14 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+15 | from ledger_common import use_utf8_stdout
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+help: Move module level imports to top of file
+
+E501 Line too long (290 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/resolve_bootstrap_drain.py:25:101
+   |
+23 | …
+24 | …
+25 | … 'Historical target absent'}; [pscustomobject]@{id=$p.ProcessId;parent=$p.ParentProcessId;created=$p.CreationDate.ToUniversalTime().ToString('o');command=$p.CommandLine}|ConvertTo-Json -Compress"
+   |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+26 | …ershell/pwsh.exe"
+27 | …
+   |
+
+E501 Line too long (112 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/resolve_bootstrap_drain.py:26:101
+   |
+24 |     expected_argv = [str(executable), "buildx", "inspect", builder, "--bootstrap"]
+25 |     query = "$p=Get-CimInstance Win32_Process -Filter 'ProcessId=35632'; if($null -eq $p){throw 'Historical target absent'}; [pscustom…
+26 |     shell = "C:/Users/cesar/.cache/codex-runtimes/codex-primary-runtime/dependencies/native/powershell/pwsh.exe"
+   |                                                                                                     ^^^^^^^^^^^^
+27 |     result = subprocess.run(
+28 |         [shell, "-NoProfile", "-Command", query],
+   |
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/restage_original_observation_bytes.py:13:1
+   |
+11 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+12 | sys.path.insert(0, str(ROOT / "scripts/iacode"))
+13 | from client_checks import _safe_stream
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+14 | from ledger_common import load_json, utc_now, write_json
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/restage_original_observation_bytes.py:14:1
+   |
+12 | sys.path.insert(0, str(ROOT / "scripts/iacode"))
+13 | from client_checks import _safe_stream
+14 | from ledger_common import load_json, utc_now, write_json
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/restore_bootstrap_guard.py:9:1
+   |
+ 7 | ROOT = CHECKPOINT.parents[2]
+ 8 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+ 9 | from ledger_common import load_json, scope_fingerprint, utc_now, write_json
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+10 | from lesson_preflight import render_markdown
+11 | from lessons import build_preflight, load_lessons, render_index, save_lessons
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/restore_bootstrap_guard.py:10:1
+   |
+ 8 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+ 9 | from ledger_common import load_json, scope_fingerprint, utc_now, write_json
+10 | from lesson_preflight import render_markdown
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+11 | from lessons import build_preflight, load_lessons, render_index, save_lessons
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/restore_bootstrap_guard.py:11:1
+   |
+ 9 | from ledger_common import load_json, scope_fingerprint, utc_now, write_json
+10 | from lesson_preflight import render_markdown
+11 | from lessons import build_preflight, load_lessons, render_index, save_lessons
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+help: Move module level imports to top of file
+
+E501 Line too long (191 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/restore_bootstrap_guard.py:58:101
+   |
+56 | …
+57 | …
+58 | …ved adverse preimage; real Windows surviving-writer null proves exact owned cleanup without Engine operations.",
+   |                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+59 | …
+60 | …
+   |
+
+E501 Line too long (364 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/restore_bootstrap_guard.py:65:101
+   |
+63 | …
+64 | …
+65 | …r. Actual caller/preimage/surviving-writer controls pass, and live same60-second bootstrap exits0 with independent cleanup PASS. Preserve the original240210ms timeout and pinned helper-only recovery. Current complete immutable assurance and independent M2 remain due.",
+   |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+66 | …
+67 | …
+   |
+
+E501 Line too long (273 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/restore_bootstrap_guard.py:68:101
+   |
+66 | …
+67 | …
+68 | … descendant controls plus live unchanged-budget bootstrap now restore automated prevention. No broader process termination, Engine restart or whole-delivery verdict is inferred."
+   |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+69 | …
+70 | …
+   |
+
+E501 Line too long (295 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/restore_bootstrap_guard.py:94:101
+   |
+92 | …
+93 | …
+94 | … subprocess API was still named by its mock. The test now targets the actual run_owned entry with the same no-call/refusal assertions; run-0004 passes. No assertion or production guard was weakened.",
+   |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+95 | …
+96 | …
+   |
+
+E501 Line too long (120 > 100)
+   --> docs/checkpoints/GATE-7-CP-0003/audit-harness/restore_bootstrap_guard.py:106:101
+    |
+104 |     )
+105 |     print(
+106 |         "BOOTSTRAP-DRAIN-001 local guard restored from observed controls; no whole quality, seal or independent verdict"
+    |                                                                                                     ^^^^^^^^^^^^^^^^^^^^
+107 |     )
+108 |     return 0
+    |
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/restore_byte_transport_guard.py:9:1
+   |
+ 7 | ROOT = CHECKPOINT.parents[2]
+ 8 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+ 9 | from ledger_common import load_json, utc_now, write_json
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+10 | from lesson_preflight import render_markdown
+11 | from lessons import build_preflight, load_lessons, render_index, save_lessons
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/restore_byte_transport_guard.py:10:1
+   |
+ 8 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+ 9 | from ledger_common import load_json, utc_now, write_json
+10 | from lesson_preflight import render_markdown
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+11 | from lessons import build_preflight, load_lessons, render_index, save_lessons
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/restore_byte_transport_guard.py:11:1
+   |
+ 9 | from ledger_common import load_json, utc_now, write_json
+10 | from lesson_preflight import render_markdown
+11 | from lessons import build_preflight, load_lessons, render_index, save_lessons
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+help: Move module level imports to top of file
+
+E501 Line too long (194 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/restore_byte_transport_guard.py:39:101
+   |
+37 | …
+38 | …
+39 | …te modes for the entire declared observation set, with a real binary null and removed-boundary adverse control.",
+   |                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+40 | …
+41 | …
+   |
+
+E501 Line too long (304 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/restore_byte_transport_guard.py:48:101
+   |
+46 | …
+47 | …
+48 | …iginals. Actual two-case transport controls and187-file index comparison pass. No original was normalized, no detector changed and no publication occurred. Whole current immutable assurance remains required.",
+   |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+49 | …
+50 | …
+   |
+
+E501 Line too long (262 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/restore_byte_transport_guard.py:51:101
+   |
+49 | …
+50 | …
+51 | …uality; retain all original failed comparisons, counters and stopped publication evidence. This is not actual cross-OS/cross-tool or independent milestone validation."
+   |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+52 | …
+53 | …
+   |
+
+E501 Line too long (105 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/restore_byte_transport_guard.py:88:101
+   |
+86 |     )
+87 |     print(
+88 |         "Local original-byte prevention restored; stopped publication and all original failures retained"
+   |                                                                                                     ^^^^^
+89 |     )
+90 |     return 0
+   |
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/restore_family_byte_guard.py:9:1
+   |
+ 7 | ROOT = CHECKPOINT.parents[2]
+ 8 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+ 9 | from ledger_common import load_json, scope_fingerprint, utc_now, write_json
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+10 | from lesson_preflight import render_markdown
+11 | from lessons import build_preflight, load_lessons, render_index, save_lessons
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/restore_family_byte_guard.py:10:1
+   |
+ 8 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+ 9 | from ledger_common import load_json, scope_fingerprint, utc_now, write_json
+10 | from lesson_preflight import render_markdown
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+11 | from lessons import build_preflight, load_lessons, render_index, save_lessons
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/restore_family_byte_guard.py:11:1
+   |
+ 9 | from ledger_common import load_json, scope_fingerprint, utc_now, write_json
+10 | from lesson_preflight import render_markdown
+11 | from lessons import build_preflight, load_lessons, render_index, save_lessons
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+help: Move module level imports to top of file
+
+E501 Line too long (124 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/restore_family_byte_guard.py:40:101
+   |
+38 |     if lesson["status"] != "CONFIRMED" or len(failures) != 1:
+39 |         raise ValueError("Expected exactly this open distinct recurrence")
+40 |     test = "M2ObservationTransportTests.test_next_checkpoint_and_other_gate_observations_keep_the_same_real_byte_boundaries"
+   |                                                                                                     ^^^^^^^^^^^^^^^^^^^^^^^^
+41 |     if not any(row["reference"] == test for row in lesson["prevention"]):
+42 |         lesson["prevention"].append(
+   |
+
+E501 Line too long (183 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/restore_family_byte_guard.py:46:101
+   |
+44 | …
+45 | …
+46 | … the next auditor and another Gate's complete original-observation family set, beside actual binary nulls.",
+   |                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+47 | …
+48 | …
+   |
+
+E501 Line too long (330 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/restore_family_byte_guard.py:53:101
+   |
+51 | …
+52 | …
+53 | …t and later auditor checkpoints. Three actual Git controls and206 exact staged original comparisons pass. All recurrences, failed attempts and the canceled incomplete quality run remain; complete immutable assurance is still pending.",
+   |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+54 | …
+55 | …
+   |
+
+E501 Line too long (240 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/restore_family_byte_guard.py:56:101
+   |
+54 | …
+55 | …
+56 | …BYTE-TRANSPORT-002 records that distinct guarded escape. Family-level controls now provide local automated prevention, not independent approval."
+   |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+57 | …
+58 | …
+   |
+
+E501 Line too long (121 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/restore_family_byte_guard.py:92:101
+   |
+90 |     )
+91 |     print(
+92 |         "Family-level original-byte guard restored locally; no whole Green Keeper, runtime or independent result granted"
+   |                                                                                                     ^^^^^^^^^^^^^^^^^^^^^
+93 |     )
+94 |     return 0
+   |
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/restore_local_guardrails.py:9:1
+   |
+ 7 | ROOT = CHECKPOINT.parents[2]
+ 8 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+ 9 | from ledger_common import load_json, utc_now, write_json
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+10 | from lessons import load_lessons, render_index, save_lessons
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/restore_local_guardrails.py:10:1
+   |
+ 8 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+ 9 | from ledger_common import load_json, utc_now, write_json
+10 | from lessons import load_lessons, render_index, save_lessons
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+help: Move module level imports to top of file
+
+E501 Line too long (124 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/restore_local_guardrails.py:86:101
+   |
+84 |             "verifiedBy": additions["LSN-0152"][1],
+85 |             "lessons": ["LSN-0152"],
+86 |             "removingItWouldAllow": "A lexically owned parent-relative input or report to expose an outside physical file.",
+   |                                                                                                     ^^^^^^^^^^^^^^^^^^^^^^^^
+87 |         }
+88 |     )
+   |
+
+E501 Line too long (134 > 100)
+   --> docs/checkpoints/GATE-7-CP-0003/audit-harness/restore_local_guardrails.py:102:101
+    |
+100 |                         "kind": "test",
+101 |                         "reference": control,
+102 |                         "description": "Executed actual current positive/adverse control; no production fake or independent verdict.",
+    |                                                                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+103 |                     }
+104 |                 )
+    |
+
+E501 Line too long (105 > 100)
+   --> docs/checkpoints/GATE-7-CP-0003/audit-harness/restore_local_guardrails.py:119:101
+    |
+117 |             lesson.get("notes", "") + " CP0003 local controls now execute the repaired boundary; "
+118 |             "all original failures, counters, maximum severities and historical evidence remain. "
+119 |             "No whole-delivery readiness or independent verdict is inferred from this local restoration."
+    |                                                                                                     ^^^^^
+120 |         )
+121 |         if lesson["lessonId"] == "LSN-0152":
+    |
+
+E501 Line too long (106 > 100)
+   --> docs/checkpoints/GATE-7-CP-0003/audit-harness/restore_local_guardrails.py:124:101
+    |
+122 |             lesson["notes"] = (
+123 |                 "Operator-only boundary, not an HTTP path-submission capability. Actual parent, "
+124 |                 "root alias, reparse/hardlink and report-escape controls pass beside valid inside files. "
+    |                                                                                                     ^^^^^^
+125 |                 "Whole current immutable assurance and independent M2 validation remain required."
+126 |             )
+    |
+
+E501 Line too long (113 > 100)
+   --> docs/checkpoints/GATE-7-CP-0003/audit-harness/restore_local_guardrails.py:148:101
+    |
+146 |     write_json(CHECKPOINT / "INTERNAL-ENVIRONMENT-REWORK.json", rework)
+147 |     print(
+148 |         "Local automated prevention restored for five lessons; whole acceptance and findings closure NOT granted"
+    |                                                                                                     ^^^^^^^^^^^^^
+149 |     )
+150 |     return 0
+    |
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/resume_authorized_work.py:11:1
+   |
+ 9 | ROOT = CHECKPOINT.parents[2]
+10 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+11 | from ledger_common import git_snapshot, load_json, utc_now, write_json
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+help: Move module level imports to top of file
+
+E501 Line too long (107 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/resume_authorized_work.py:28:101
+   |
+26 |         {
+27 |             "recordedAt": now,
+28 |             "source": "Direct owner replies to both pending questions and subsequent cleanup instruction.",
+   |                                                                                                     ^^^^^^^
+29 |             "limitedHostRunnerBridge": "AUTHORIZED",
+30 |             "benignUnsealedReportWordingRepair": "AUTHORIZED",
+   |
+
+E501 Line too long (105 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/resume_authorized_work.py:35:101
+   |
+33 |                 "Canonical frozen commands/arguments/sources only outside restricted token.",
+34 |                 "Rest of auditor remains workspace-write; no general CLI bypass.",
+35 |                 "No global changes, other-chat changes, restarts or writes to preexisting applications.",
+   |                                                                                                     ^^^^^
+36 |                 "Preserve CP0002 and all sealed subjects; keep strict secret detector unchanged.",
+37 |                 "Remove only verified task-owned disposable resources after preserving evidence; no global prune.",
+   |
+
+E501 Line too long (115 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/resume_authorized_work.py:37:101
+   |
+35 |                 "No global changes, other-chat changes, restarts or writes to preexisting applications.",
+36 |                 "Preserve CP0002 and all sealed subjects; keep strict secret detector unchanged.",
+37 |                 "Remove only verified task-owned disposable resources after preserving evidence; no global prune.",
+   |                                                                                                     ^^^^^^^^^^^^^^^
+38 |                 "No Gate8; independent auditor implements no corrections.",
+39 |             ],
+   |
+
+E501 Line too long (234 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/resume_authorized_work.py:47:101
+   |
+45 | …
+46 | …
+47 | …lidate the limited runner bridge and owned cleanup, then complete all canonical internal assurance before sealing and a fresh M2 auditor.",
+   |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+48 | …
+49 | …
+   |
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/run_causal.py:18:1
+   |
+16 |   ROOT = CHECKPOINT.parents[2]
+17 |   sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+18 | / from ledger_common import (
+19 | |     find_secrets,
+20 | |     load_json,
+21 | |     scope_fingerprint,
+22 | |     use_utf8_stdout,
+23 | |     utc_now,
+24 | |     write_json,
+25 | | )
+   | |_^
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/run_native_candidate.py:10:1
+   |
+ 8 | ROOT = HERE.parents[3]
+ 9 | sys.path.insert(0, str(ROOT / "scripts/iacode"))
+10 | import native_editor
+   | ^^^^^^^^^^^^^^^^^^^^
+11 | from native_execution_candidate import execute_owned
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/run_native_candidate.py:11:1
+   |
+ 9 | sys.path.insert(0, str(ROOT / "scripts/iacode"))
+10 | import native_editor
+11 | from native_execution_candidate import execute_owned
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/run_published_green_keeper.py:16:1
+   |
+14 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+15 | sys.path.insert(0, str(ROOT / "scripts/iacode"))
+16 | from audit_runner_bridge import Job, run_owned
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+17 | from current_resources import child_environment, current_scope_path
+18 | from ledger_common import find_secrets, scope_fingerprint, utc_now, write_json
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/run_published_green_keeper.py:17:1
+   |
+15 | sys.path.insert(0, str(ROOT / "scripts/iacode"))
+16 | from audit_runner_bridge import Job, run_owned
+17 | from current_resources import child_environment, current_scope_path
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+18 | from ledger_common import find_secrets, scope_fingerprint, utc_now, write_json
+19 | from native_process import WindowsJob
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/run_published_green_keeper.py:18:1
+   |
+16 | from audit_runner_bridge import Job, run_owned
+17 | from current_resources import child_environment, current_scope_path
+18 | from ledger_common import find_secrets, scope_fingerprint, utc_now, write_json
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+19 | from native_process import WindowsJob
+20 | from run_full_verification import REMOTE, command
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/run_published_green_keeper.py:19:1
+   |
+17 | from current_resources import child_environment, current_scope_path
+18 | from ledger_common import find_secrets, scope_fingerprint, utc_now, write_json
+19 | from native_process import WindowsJob
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+20 | from run_full_verification import REMOTE, command
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/run_published_green_keeper.py:20:1
+   |
+18 | from ledger_common import find_secrets, scope_fingerprint, utc_now, write_json
+19 | from native_process import WindowsJob
+20 | from run_full_verification import REMOTE, command
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/save_active_validation.py:11:1
+   |
+ 9 | ROOT = CHECKPOINT.parents[2]
+10 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+11 | from ledger_common import load_json, utc_now, write_json
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+help: Move module level imports to top of file
+
+E501 Line too long (129 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/save_active_validation.py:22:101
+   |
+20 |         status="FAIL",
+21 |         evidence=["file:quality-attempts/lint/run-0002.json"],
+22 |         justification="Actual complete runner failed OCI transfer after compilation; unchanged full retry active, not accepted.",
+   |                                                                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+23 |     )
+24 |     quality["checks"]["staticAnalysis"].update(
+   |
+
+E501 Line too long (129 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/save_active_validation.py:27:101
+   |
+25 |         status="NOT_EXECUTED",
+26 |         evidence=[],
+27 |         justification="Previous compile receipt predates the new assurance-scoped adapter; current canonical rerun remains due.",
+   |                                                                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+28 |     )
+29 |     write_json(CHECKPOINT / "QUALITY.json", quality)
+   |
+
+E501 Line too long (167 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/save_active_validation.py:57:101
+   |
+55 | …
+56 | …
+57 | …le success evidence. Read actual tool completion and canonical receipts before any dependent step.",
+   |                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+58 | …,
+59 | …
+   |
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/save_blocked_handoff.py:12:1
+   |
+10 | ROOT = CHECKPOINT.parents[2]
+11 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+12 | from ledger_common import git_snapshot, load_json, utc_now, write_json
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+13 |
+14 | BASELINE = {
+   |
+help: Move module level imports to top of file
+
+E501 Line too long (108 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/save_blocked_handoff.py:15:101
+   |
+14 | BASELINE = {
+15 |     "C:/Users/cesar/.codex/config.toml": "28611435eb10f99f2c458136fa3eb9c0941b1814d82324a76ab03738bf21f9c9",
+   |                                                                                                     ^^^^^^^^
+16 |     "C:/Users/cesar/.gitconfig": "a5677fb2056312d31a57b58d8ca526e3519fcc60dfe2ed1779de8d244576b791",
+17 |     "C:/Users/cesar/.config/git/ignore": "744e3b6c0e736af11840443f60f3f4b38176d214e026a54763628d8a6c317cbb",
+   |
+
+E501 Line too long (108 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/save_blocked_handoff.py:17:101
+   |
+15 |     "C:/Users/cesar/.codex/config.toml": "28611435eb10f99f2c458136fa3eb9c0941b1814d82324a76ab03738bf21f9c9",
+16 |     "C:/Users/cesar/.gitconfig": "a5677fb2056312d31a57b58d8ca526e3519fcc60dfe2ed1779de8d244576b791",
+17 |     "C:/Users/cesar/.config/git/ignore": "744e3b6c0e736af11840443f60f3f4b38176d214e026a54763628d8a6c317cbb",
+   |                                                                                                     ^^^^^^^^
+18 |     "C:/Program Files/Git/etc/gitconfig": "381c2fda5a3b5adf7102f5b05f68d7dc3281a44171f9b40556ca56cfdd8461c3",
+19 | }
+   |
+
+E501 Line too long (109 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/save_blocked_handoff.py:18:101
+   |
+16 |     "C:/Users/cesar/.gitconfig": "a5677fb2056312d31a57b58d8ca526e3519fcc60dfe2ed1779de8d244576b791",
+17 |     "C:/Users/cesar/.config/git/ignore": "744e3b6c0e736af11840443f60f3f4b38176d214e026a54763628d8a6c317cbb",
+18 |     "C:/Program Files/Git/etc/gitconfig": "381c2fda5a3b5adf7102f5b05f68d7dc3281a44171f9b40556ca56cfdd8461c3",
+   |                                                                                                     ^^^^^^^^^
+19 | }
+   |
+
+E501 Line too long (126 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/save_blocked_handoff.py:36:101
+   |
+34 |             "applicationRestartsPerformed": False,
+35 |             "newAuditorTurnStarted": False,
+36 |             "note": "Other-chat preservation here records absence of writes, not a new independently measured database hash.",
+   |                                                                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^
+37 |         },
+38 |     )
+   |
+
+E501 Line too long (130 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/save_blocked_handoff.py:52:101
+   |
+50 |             "dirty": snapshot["dirty"],
+51 |             "blockedBy": [
+52 |                 "M2 Docker isolation: restricted token is denied at the engine pipe; narrow host-runner bridge approval pending.",
+   |                                                                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+53 |                 "Strict scan: benign prose in the prior unsealed entry report; documented wording repair approval pending.",
+54 |             ],
+   |
+
+E501 Line too long (124 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/save_blocked_handoff.py:53:101
+   |
+51 |             "blockedBy": [
+52 |                 "M2 Docker isolation: restricted token is denied at the engine pipe; narrow host-runner bridge approval pending.",
+53 |                 "Strict scan: benign prose in the prior unsealed entry report; documented wording repair approval pending.",
+   |                                                                                                     ^^^^^^^^^^^^^^^^^^^^^^^^
+54 |             ],
+55 |         }
+   |
+
+E501 Line too long (138 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/save_blocked_handoff.py:82:101
+   |
+80 | …
+81 | …d, COMMANDS.jsonl and FILES.json",
+82 | … reasoning, secrets or inferred reuse rights; original audit evidence is preserved.",
+   |                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+83 | …
+84 | …
+   |
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/save_scoped_disposal_handoff.py:10:1
+   |
+ 8 | ROOT = CHECKPOINT.parents[2]
+ 9 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+10 | from ledger_common import load_json, scope_fingerprint, utc_now, write_json
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+11 | from sync_in_progress_metadata import synchronize
+12 | from validate_checkpoint import FINAL_REPORT_HEADINGS, HANDOFF_HEADINGS
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/save_scoped_disposal_handoff.py:11:1
+   |
+ 9 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+10 | from ledger_common import load_json, scope_fingerprint, utc_now, write_json
+11 | from sync_in_progress_metadata import synchronize
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+12 | from validate_checkpoint import FINAL_REPORT_HEADINGS, HANDOFF_HEADINGS
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/save_scoped_disposal_handoff.py:12:1
+   |
+10 | from ledger_common import load_json, scope_fingerprint, utc_now, write_json
+11 | from sync_in_progress_metadata import synchronize
+12 | from validate_checkpoint import FINAL_REPORT_HEADINGS, HANDOFF_HEADINGS
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+13 |
+14 | BLOCKER = "OWNER_CONFIRMATION_EXTERNAL_DOCKER_APPLICATION_TRANSITION"
+   |
+help: Move module level imports to top of file
+
+E501 Line too long (437 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/save_scoped_disposal_handoff.py:15:101
+   |
+14 | …
+15 | … project or rewriting the original comparison. The…fore a new independent M2 auditor. No Gate8."
+   |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^…^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+E501 Line too long (103 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/save_scoped_disposal_handoff.py:54:101
+   |
+52 |     ):
+53 |         raise ValueError(
+54 |             "Actual complete private disposal beside the retained external comparison failure required"
+   |                                                                                                     ^^^
+55 |         )
+56 |     for restore in scope["tagRestorations"]:
+   |
+
+E501 Line too long (179 > 100)
+   --> docs/checkpoints/GATE-7-CP-0003/audit-harness/save_scoped_disposal_handoff.py:113:101
+    |
+111 | …
+112 | …
+113 | …establish a different project; they do not identify the initiating person or establish their authority.",
+    |                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+114 | …
+115 | …
+    |
+
+E501 Line too long (452 > 100)
+   --> docs/checkpoints/GATE-7-CP-0003/audit-harness/save_scoped_disposal_handoff.py:128:101
+    |
+126 | …
+127 | …
+128 | …r and cleanup observations, closed-runner/physica…l prune or other-project cleanup occurred.",
+    |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^…^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+129 | …table49-stage non-fast verifier, DCV, fresh internal Red Team/mirror, canonical seal/reconstruction and a later fresh independent M2 report remain pending. The original findings remain IN_PROGRESS, not CLOSED.",
+130 | …d67c1c0fa. Lint run-0007's private OCI-export timeout remains failed evidence. Three actual transport cases and206 staged comparisons pass. Nine distinct operator boundary controls pass in dependency-cleanup/run-0004; run-0002's two missing-ownership fixture failures remain beside corrected measured premises. The old Root1018 baseline has seven failures; the f…
+    |
+
+E501 Line too long (306 > 100)
+   --> docs/checkpoints/GATE-7-CP-0003/audit-harness/save_scoped_disposal_handoff.py:129:101
+    |
+127 | …
+128 | …r and cleanup observations, closed-runner/physical-path controls, generic original-observation byte boundaries and local guard restoration. Actual private disposal removed five images, the dedicated builder/cache, on…
+129 | …table49-stage non-fast verifier, DCV, fresh internal Red Team/mirror, canonical seal/reconstruction and a later fresh independent M2 report remain pending. The original findings remain IN_PROGRESS, not CLOSED.",
+    |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+130 | …d67c1c0fa. Lint run-0007's private OCI-export timeout remains failed evidence. Three actual transport cases and206 staged comparisons pass. Nine distinct operator boundary controls pass in dependency-cleanup/run-0004…
+131 | …rs recreated with another image at2026-10-22T00:09:57Z and00:10:15Z. Their engine labels name E:/esteira_videos, outside this repository. Original IDs/snapshots and the failed comparison remain. Their replacements an…
+    |
+
+E501 Line too long (577 > 100)
+   --> docs/checkpoints/GATE-7-CP-0003/audit-harness/save_scoped_disposal_handoff.py:130:101
+    |
+128 | …r and cleanup observations, closed-runner/physical-path controls, generic original-observation byte boundaries and local guard restoration. Actual private disposal removed five images, the dedicated builder/cache, one network, two test volumes and its private config; restored the original toolchain tag. No global prune or other-project cleanup occurred.",
+129 | …table49-stage non-fast verifier, DCV, fresh internal Red Team/mirror, canonical seal/reconstruction and a later fresh independent M2 report remain pending. The original findings remain IN_PROGRESS, not CLOSED.",
+130 | …d67c1c0fa. Lint run-0007's private OCI-export tim…clone cleanup, never given a unit verdict.",
+    |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^…^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+131 | …rs recreated with another image at2026-10-22T00:09:57Z and00:10:15Z. Their engine labels name E:/esteira_videos, outside this repository. Original IDs/snapshots and the failed comparison remain. Their replacements and every other unrelated application present before our disposal stayed unchanged during it. Attribution/authority confirmation was requested from the owner and is still pending.",
+132 | …configuration change, application restart, other-chat setting write, independent self-attestation or Gate8. Four global configuration files were rechecked byte-identical after disposal. Other-chat preservation records no writes, not a newly measured chat-database hash.",
+    |
+
+E501 Line too long (490 > 100)
+   --> docs/checkpoints/GATE-7-CP-0003/audit-harness/save_scoped_disposal_handoff.py:131:101
+    |
+129 | …table49-stage non-fast verifier, DCV, fresh internal Red Team/mirror, canonical seal/reconstruction and a later fresh independent M2 report remain pending. The original findings remain IN_PROGRESS, not CLOSED.",
+130 | …d67c1c0fa. Lint run-0007's private OCI-export timeout remains failed evidence. Three actual transport cases and206 staged comparisons pass. Nine distinct operator boundary controls pass in dependency-cleanup/run-0004; run-0002's two missing-ownership fixture failures remain beside corrected measured premises. The old Root1018 baseline has seven failures; the first public whole cycle was deliberate…
+131 | …rs recreated with another image at2026-10-22T00:0…ested from the owner and is still pending.",
+    |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^…^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+132 | …configuration change, application restart, other-chat setting write, independent self-attestation or Gate8. Four global configuration files were rechecked byte-identical after disposal. Other-chat preservation records no writes, not a newly measured chat-database hash.",
+133 | …
+    |
+
+E501 Line too long (366 > 100)
+   --> docs/checkpoints/GATE-7-CP-0003/audit-harness/save_scoped_disposal_handoff.py:132:101
+    |
+130 | …d67c1c0fa. Lint run-0007's private OCI-export timeout remains failed evidence. Three actual transport cases and206 staged comparisons pass. Nine distinct operator boundary controls pass in dependency-cleanup/run-0004; run-0002's two missing-ownership fixture failures remain b…
+131 | …rs recreated with another image at2026-10-22T00:09:57Z and00:10:15Z. Their engine labels name E:/esteira_videos, outside this repository. Original IDs/snapshots and the failed comparison remain. Their replacements and every other unrelated application present before our dispo…
+132 | …configuration change, application restart, other-chat setting write, independent self-attestation or Gate8. Four global configuration files were rechecked byte-identical after disposal. Other-chat preservation records no writes, not a newly measured chat-database hash.",
+    |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+133 | …
+134 | …
+    |
+
+E501 Line too long (187 > 100)
+   --> docs/checkpoints/GATE-7-CP-0003/audit-harness/save_scoped_disposal_handoff.py:136:101
+    |
+134 | …
+135 | …
+136 | …er independent M2 audit; the latest task-owned waste cleanup is observed complete, but Gate7 is not sealed.",
+    |                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+137 | …
+138 | …
+    |
+
+E501 Line too long (322 > 100)
+   --> docs/checkpoints/GATE-7-CP-0003/audit-harness/save_scoped_disposal_handoff.py:139:101
+    |
+137 | …
+138 | …
+139 | …82844dc5d6b5e3e3f7a96f3c77cdbdca9. Current source67c1c0fa is later unsealed corrective work. Immutable CP0001 remains the last valid seal at823cf164c6931dab7f957c92721ded7a916655bd; failed/unsealed CP0002 bytes are preserved.",
+    |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+140 | …anges, their regressions, Git byte boundaries, memory/ADR records and all current observations. No files belonging to E:/esteira_videos were changed.",
+141 | …
+    |
+
+E501 Line too long (246 > 100)
+   --> docs/checkpoints/GATE-7-CP-0003/audit-harness/save_scoped_disposal_handoff.py:140:101
+    |
+138 | …
+139 | …82844dc5d6b5e3e3f7a96f3c77cdbdca9. Current source67c1c0fa is later unsealed corrective work. Immutable CP0001 remains the last valid seal at823cf164c6931dab…
+140 | …anges, their regressions, Git byte boundaries, memory/ADR records and all current observations. No files belonging to E:/esteira_videos were changed.",
+    |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+141 | …
+142 | …
+    |
+
+E501 Line too long (360 > 100)
+   --> docs/checkpoints/GATE-7-CP-0003/audit-harness/save_scoped_disposal_handoff.py:144:101
+    |
+142 | …
+143 | …
+144 | …d session timeout before an unchanged complete retry passed. The old private resource scope is now disposed and refuses replay. Historical refused/ambiguous temporary targets remain outside deletion authority. No current complete or independent acceptance exists.",
+    |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+145 | …receipt. Do not restart Docker/applications, alter global settings/other chats, rewrite CP0001/CP0002, prune global resources, delete ambiguous targets, narrow mandatory membership or silently accept/rebaseline the original external transition.",
+146 | …
+    |
+
+E501 Line too long (341 > 100)
+   --> docs/checkpoints/GATE-7-CP-0003/audit-harness/save_scoped_disposal_handoff.py:145:101
+    |
+143 | …
+144 | …d session timeout before an unchanged complete retry passed. The old private resource scope is now disposed and refuses replay. Historical refused/ambiguous temporary targets remain outside deletion authority. No current complete or independent accept…
+145 | …receipt. Do not restart Docker/applications, alter global settings/other chats, rewrite CP0001/CP0002, prune global resources, delete ambiguous targets, narrow mandatory membership or silently accept/rebaseline the original external transition.",
+    |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+146 | …
+147 | …kpoint; validate and compare Git/STATE. Resolve the explicitly named external factual question before changing the frozen environment reference. Create a new separately receipted disposable phase rather than replacing/reusing the cleaned ownership rec…
+    |
+
+E501 Line too long (443 > 100)
+   --> docs/checkpoints/GATE-7-CP-0003/audit-harness/save_scoped_disposal_handoff.py:147:101
+    |
+145 | …receipt. Do not restart Docker/applications, alter global settings/other chats, rewrite CP0001/CP0002, prune global resources, delete ambiguous targets, narrow mandatory membership or silently accept/rebaseline the original external transition.",
+146 | …
+147 | …kpoint; validate and compare Git/STATE. Resolve t…fore commissioning a history-free auditor.",
+    |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^…^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+148 | …ledger validator itself needs no Docker: run python scripts/development-ledger/validate_checkpoint.py. Do not use run_causal.py --gate for this after disposal, since its old child_environment correctly refuses the cleaned scope.",
+149 | …ership, a new installation or authority requirement, or application/global-setting changes. Never issue readiness or milestone PASS while blocked or internal proof is incomplete.",
+    |
+
+E501 Line too long (325 > 100)
+   --> docs/checkpoints/GATE-7-CP-0003/audit-harness/save_scoped_disposal_handoff.py:148:101
+    |
+146 | …
+147 | …kpoint; validate and compare Git/STATE. Resolve the explicitly named external factual question before changing the frozen environment reference. Create a new separately receipted disposable phase rather than replacing/reusing the clean…
+148 | …ledger validator itself needs no Docker: run python scripts/development-ledger/validate_checkpoint.py. Do not use run_causal.py --gate for this after disposal, since its old child_environment correctly refuses the cleaned scope.",
+    |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+149 | …ership, a new installation or authority requirement, or application/global-setting changes. Never issue readiness or milestone PASS while blocked or internal proof is incomplete.",
+150 | …
+    |
+
+E501 Line too long (275 > 100)
+   --> docs/checkpoints/GATE-7-CP-0003/audit-harness/save_scoped_disposal_handoff.py:149:101
+    |
+147 | …kpoint; validate and compare Git/STATE. Resolve the explicitly named external factual question before changing the frozen environment reference. Create a new separately receipted dispos…
+148 | …ledger validator itself needs no Docker: run python scripts/development-ledger/validate_checkpoint.py. Do not use run_causal.py --gate for this after disposal, since its old child_envir…
+149 | …ership, a new installation or authority requirement, or application/global-setting changes. Never issue readiness or milestone PASS while blocked or internal proof is incomplete.",
+    |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+150 | …
+151 | …
+    |
+
+E501 Line too long (166 > 100)
+   --> docs/checkpoints/GATE-7-CP-0003/audit-harness/save_scoped_disposal_handoff.py:152:101
+    |
+150 | …
+151 | …
+152 | …nsition confirmation. Scoped private disposal is complete. No Gate7 seal or M2 verdict is issued.",
+    |                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+153 | …er29.8.1/Compose5.5.1. The private Buildx instance and config have been removed; existing applications remain running. No Docker/app…
+154 | …active desktop model/effort/version are not exposed. No new independent auditor model turn has started.",
+    |
+
+E501 Line too long (232 > 100)
+   --> docs/checkpoints/GATE-7-CP-0003/audit-harness/save_scoped_disposal_handoff.py:153:101
+    |
+151 | …
+152 | … private disposal is complete. No Gate7 seal or M2 verdict is issued.",
+153 | …rivate Buildx instance and config have been removed; existing applications remain running. No Docker/application restart was performed.",
+    |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+154 | …version are not exposed. No new independent auditor model turn has started.",
+155 | …
+    |
+
+E501 Line too long (172 > 100)
+   --> docs/checkpoints/GATE-7-CP-0003/audit-harness/save_scoped_disposal_handoff.py:154:101
+    |
+152 | …tion confirmation. Scoped private disposal is complete. No Gate7 seal or M2 verdict is issued.",
+153 | …9.8.1/Compose5.5.1. The private Buildx instance and config have been removed; existing applications remain running. No Docker/applic…
+154 | …ive desktop model/effort/version are not exposed. No new independent auditor model turn has started.",
+    |                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+155 | …
+156 | …s, immutable preimages, structural ADRs, private ownership/cleanup and divergence receipts, and current checkpoint reports. Evidence…
+    |
+
+E501 Line too long (266 > 100)
+   --> docs/checkpoints/GATE-7-CP-0003/audit-harness/save_scoped_disposal_handoff.py:156:101
+    |
+154 | …version are not exposed. No new independent auditor model turn has started.",
+155 | …
+156 | …tructural ADRs, private ownership/cleanup and divergence receipts, and current checkpoint reports. Evidence is retained intentionally, not treated as disposable garbage.",
+    |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+157 | …ic evidence transport rules, lesson/guardrail registries, approved one-location old-report prose repair and working checkpoint pointer. No other project or global configuration…
+158 | …pass. The private cleanup component passes with every removal producer exit0 and no remaining claimed disposable resource/cache/config. Its overall original-baseline result rem…
+    |
+
+E501 Line too long (285 > 100)
+   --> docs/checkpoints/GATE-7-CP-0003/audit-harness/save_scoped_disposal_handoff.py:157:101
+    |
+155 | …
+156 | …tructural ADRs, private ownership/cleanup and divergence receipts, and current checkpoint reports. Evidence is retained intentionally, not treated as disposable garbage.",
+157 | …ic evidence transport rules, lesson/guardrail registries, approved one-location old-report prose repair and working checkpoint pointer. No other project or global configuration was edited.",
+    |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+158 | …pass. The private cleanup component passes with every removal producer exit0 and no remaining claimed disposable resource/cache/config. Its overall original-baseline result remains FAIL, not rela…
+159 | …
+    |
+
+E501 Line too long (405 > 100)
+   --> docs/checkpoints/GATE-7-CP-0003/audit-harness/save_scoped_disposal_handoff.py:158:101
+    |
+156 | …tructural ADRs, private ownership/cleanup and divergence receipts, and current checkpoint reports. Evidence is retained intentionally, not treated as disposable garbage.",
+157 | …ic evidence transport rules, lesson/guardrail registries, approved one-location old-report prose repair and working checkpoint pointer. No other project or global configuration was edited.",
+158 | …pass. The private cleanup component passes with e…sult; this report never predicts its exit.",
+    |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^…^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+159 | …
+160 | …ence, but the complete fresh post-Green-Keeper/DCV internal Red Team, closure mirror and later independent Red Team remain unexecuted.",
+    |
+
+E501 Line too long (231 > 100)
+   --> docs/checkpoints/GATE-7-CP-0003/audit-harness/save_scoped_disposal_handoff.py:160:101
+    |
+158 | …pass. The private cleanup component passes with every removal producer exit0 and no remaining claimed disposable resource/cache/config. Its o…
+159 | …
+160 | …ence, but the complete fresh post-Green-Keeper/DCV internal Red Team, closure mirror and later independent Red Team remain unexecuted.",
+    |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+161 | …
+162 | …
+    |
+
+E501 Line too long (224 > 100)
+   --> docs/checkpoints/GATE-7-CP-0003/audit-harness/save_scoped_disposal_handoff.py:163:101
+    |
+161 | …
+162 | …
+163 | …VIEW. CP0001 remains the last immutable valid seal; current corrected code is not offered as approved or independently audited.",
+    |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+164 | …ependent M2 acceptance remains a later boundary.",
+165 | …n; RESOURCE-DIVERGENCE-0001.json; environment-preservation/run-0002.json; lint/run-0008 and staticAnalysis/run-0006 under quality-atte…
+    |
+
+E501 Line too long (145 > 100)
+   --> docs/checkpoints/GATE-7-CP-0003/audit-harness/save_scoped_disposal_handoff.py:164:101
+    |
+162 | …mmon["resume"],
+163 | …CKED checkpoint only, not READY_FOR_REVIEW. CP0001 remains the last immutable valid seal; current corrected code is not offered as a…
+164 | …thorized and has not been started. Independent M2 acceptance remains a later boundary.",
+    |                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+165 | …EANUP.json; OWNED-DISPOSAL-SUMMARY.json; RESOURCE-DIVERGENCE-0001.json; environment-preservation/run-0002.json; lint/run-0008 and st…
+166 | …
+    |
+
+E501 Line too long (378 > 100)
+   --> docs/checkpoints/GATE-7-CP-0003/audit-harness/save_scoped_disposal_handoff.py:165:101
+    |
+163 | …VIEW. CP0001 remains the last immutable valid seal; current corrected code is not offered as approved or independently audited.",
+164 | …ependent M2 acceptance remains a later boundary.",
+165 | …n; RESOURCE-DIVERGENCE-0001.json; environment-pre…1 original cancellation and cleanup facts.",
+    |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^…^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+166 | …
+167 | …
+    |
+
+E501 Line too long (206 > 100)
+   --> docs/checkpoints/GATE-7-CP-0003/audit-harness/save_scoped_disposal_handoff.py:209:101
+    |
+207 | …
+208 | …
+209 | …tely retained shared-environment observation. No baseline or other project has been repaired or silently rewritten.\n",
+    |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+210 | …
+211 | …
+    |
+
+E501 Line too long (199 > 100)
+   --> docs/checkpoints/GATE-7-CP-0003/audit-harness/save_scoped_disposal_handoff.py:219:101
+    |
+217 | …
+218 | …n"],
+219 | …s were unchanged during it. The original external transition comparison remains failed and is not an M2 approval.",
+    |                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+220 | …
+221 | …
+    |
+
+E501 Line too long (121 > 100)
+   --> docs/checkpoints/GATE-7-CP-0003/audit-harness/save_scoped_disposal_handoff.py:234:101
+    |
+232 |             "gate8Authorized": False,
+233 |             "blocker": BLOCKER,
+234 |             "warning": "Historical process IDs may be reused; no old PID controller or cleanup receipt may be replayed.",
+    |                                                                                                     ^^^^^^^^^^^^^^^^^^^^^
+235 |         },
+236 |     )
+    |
+
+E501 Line too long (102 > 100)
+   --> docs/checkpoints/GATE-7-CP-0003/audit-harness/save_scoped_disposal_handoff.py:248:101
+    |
+246 |             row["functionalProof"] = (
+247 |                 common["tests"]
+248 |                 + " Full ordered controls remain pending while the named external fact is unresolved."
+    |                                                                                                     ^^
+249 |             )
+250 |         elif row["stepId"] == "G7-S03":
+    |
+
+E501 Line too long (160 > 100)
+   --> docs/checkpoints/GATE-7-CP-0003/audit-harness/save_scoped_disposal_handoff.py:252:101
+    |
+250 | …
+251 | …
+252 | …nical seal or independent audit is claimed; runtime-v1 remains an IN_PROGRESS publication only."
+    |                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+253 | …
+254 | …ESOURCE-DIVERGENCE-0001.json"]
+    |
+
+E501 Line too long (508 > 100)
+   --> docs/checkpoints/GATE-7-CP-0003/audit-harness/save_scoped_disposal_handoff.py:258:101
+    |
+256 | …
+257 | …
+258 | …er comparison records two replacements in E:/este…nd independent M2 closure remain pending.\n"
+    |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^…^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+259 | …
+260 | …
+    |
+
+E501 Line too long (343 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/stop_obsolete_public_quality.py:41:101
+   |
+39 | …
+40 | …
+41 | …ance Win32_Process -Filter 'ProcessId = 43492'); $rows | ForEach-Object { [pscustomobject]@{ id=$_.ProcessId; parent=$_.ParentProcessId; created=$_.CreationDate.ToUniversalTime().ToString('o'); command=$_.CommandLine } } | ConvertTo-Json -Compress"
+   |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+42 | …ershell/pwsh.exe"
+43 | …
+   |
+
+E501 Line too long (112 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/stop_obsolete_public_quality.py:42:101
+   |
+40 |     ]
+41 |     command = "$rows = @(Get-CimInstance Win32_Process -Filter 'ProcessId = 51764'; Get-CimInstance Win32_Process -Filter 'ProcessId =…
+42 |     shell = "C:/Users/cesar/.cache/codex-runtimes/codex-primary-runtime/dependencies/native/powershell/pwsh.exe"
+   |                                                                                                     ^^^^^^^^^^^^
+43 |     observed = subprocess.run(
+44 |         [shell, "-NoProfile", "-Command", command],
+   |
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/stop_superseded_runtime_v2.py:15:1
+   |
+13 | ROOT = CHECKPOINT.parents[2]
+14 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+15 | from ledger_common import use_utf8_stdout, utc_now, write_json
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+help: Move module level imports to top of file
+
+E501 Line too long (308 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/stop_superseded_runtime_v2.py:40:101
+   |
+38 | …
+39 | …
+40 | …ocess -Filter 'ProcessId=9340')|ForEach-Object{[pscustomobject]@{id=$_.ProcessId;parent=$_.ParentProcessId;created=$_.CreationDate.ToUniversalTime().ToString('o');command=$_.CommandLine}}|ConvertTo-Json -Compress"
+   |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+41 | …ershell/pwsh.exe"
+42 | …
+   |
+
+E501 Line too long (112 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/stop_superseded_runtime_v2.py:41:101
+   |
+39 |     ]
+40 |     query = "@(Get-CimInstance Win32_Process -Filter 'ProcessId=38840';Get-CimInstance Win32_Process -Filter 'ProcessId=9340')|ForEach…
+41 |     shell = "C:/Users/cesar/.cache/codex-runtimes/codex-primary-runtime/dependencies/native/powershell/pwsh.exe"
+   |                                                                                                     ^^^^^^^^^^^^
+42 |     result = subprocess.run(
+43 |         [shell, "-NoProfile", "-Command", query],
+   |
+
+E501 Line too long (158 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/stop_superseded_runtime_v2.py:66:101
+   |
+64 | …
+65 | …
+66 | …before current whole lint; repair publication preconditions and run fresh complete assurance.",
+   |                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+67 | …bad",
+68 | …
+   |
+
+E501 Line too long (111 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/stop_superseded_runtime_v2.py:73:101
+   |
+71 |         "dockerEngineSignaled": False,
+72 |         "preexistingApplicationsSignaled": False,
+73 |         "descendantCleanupOwner": "Existing run_owned Windows Job; actual wrapper completion remains required",
+   |                                                                                                     ^^^^^^^^^^^
+74 |     }
+75 |     write_json(output, fact)
+   |
+
+E501 Line too long (117 > 100)
+   --> docs/checkpoints/GATE-7-CP-0003/audit-harness/stop_superseded_runtime_v2.py:121:101
+    |
+119 |             raise OSError(ctypes.get_last_error(), "Pinned controller release failed")
+120 |     deadline = time.monotonic() + 40
+121 |     purpose = "Execute-all-canonical-mandatory-quality-gates-from-exact-public-runtime-v2-with-original-observations"
+    |                                                                                                     ^^^^^^^^^^^^^^^^^
+122 |     while time.monotonic() < deadline:
+123 |         records = [
+    |
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/test_bridge_physical_bounds.py:15:1
+   |
+13 | ROOT = CHECKPOINT.parents[2]
+14 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+15 | import audit_runner_bridge as bridge
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+16 | from ledger_common import find_secrets
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/test_bridge_physical_bounds.py:16:1
+   |
+14 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+15 | import audit_runner_bridge as bridge
+16 | from ledger_common import find_secrets
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+help: Move module level imports to top of file
+
+N802 Function name `setUp` should be lowercase
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/test_bridge_physical_bounds.py:20:9
+   |
+19 | class BridgePhysicalBoundsTests(unittest.TestCase):
+20 |     def setUp(self):
+   |         ^^^^^
+21 |         self.owner = tempfile.TemporaryDirectory(prefix="iacode-m2-physical-bounds-")
+22 |         self.addCleanup(self.owner.cleanup)
+   |
+help: Consider adding `@typing.override` if this method overrides a method from a superclass
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/test_cleanup_dependency_order.py:11:1
+   |
+ 9 | ROOT = Path(__file__).resolve().parents[4]
+10 | sys.path.insert(0, str(ROOT / "tests"))
+11 | import test_m2_cleanup_operator as operator_controls
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+12 | from ledger_common import load_json, write_json
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/test_cleanup_dependency_order.py:12:1
+   |
+10 | sys.path.insert(0, str(ROOT / "tests"))
+11 | import test_m2_cleanup_operator as operator_controls
+12 | from ledger_common import load_json, write_json
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+13 |
+14 | scope_module = operator_controls.scope_module
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/test_native_producer_observation.py:17:1
+   |
+15 | ROOT = CHECKPOINT.parents[2]
+16 | sys.path.insert(0, str(ROOT / "scripts/iacode"))
+17 | import client_checks
+   | ^^^^^^^^^^^^^^^^^^^^
+18 | import native_editor
+19 | from native_process import NativeJobCleanupError, WindowsJob
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/test_native_producer_observation.py:18:1
+   |
+16 | sys.path.insert(0, str(ROOT / "scripts/iacode"))
+17 | import client_checks
+18 | import native_editor
+   | ^^^^^^^^^^^^^^^^^^^^
+19 | from native_process import NativeJobCleanupError, WindowsJob
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/test_native_producer_observation.py:19:1
+   |
+17 | import client_checks
+18 | import native_editor
+19 | from native_process import NativeJobCleanupError, WindowsJob
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/test_owned_cleanup_operator.py:25:1
+   |
+23 | scope_module = importlib.util.module_from_spec(SPEC)
+24 | SPEC.loader.exec_module(scope_module)
+25 | from ledger_common import load_json, write_json
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+help: Move module level imports to top of file
+
+N802 Function name `setUp` should be lowercase
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/test_owned_cleanup_operator.py:29:9
+   |
+28 | class OperatorCleanupObservationTests(unittest.TestCase):
+29 |     def setUp(self):
+   |         ^^^^^
+30 |         self.owner = tempfile.TemporaryDirectory(prefix="iacode-m2cp3-cleanup-unit-")
+31 |         self.config = tempfile.TemporaryDirectory(prefix="iacode-m2cp3-buildx-unit-")
+   |
+help: Consider adding `@typing.override` if this method overrides a method from a superclass
+
+SIM117 Use a single `with` statement with multiple contexts instead of nested `with` statements
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/test_owned_cleanup_operator.py:75:9
+   |
+73 |           target = self.checkpoint / "OWNED-RESOURCE-CLEANUP.json"
+74 |           target.write_bytes(b"PRIOR_OBSERVATION_MUST_NOT_CHANGE")
+75 | /         with patch.object(scope_module, "child_environment") as environment:
+76 | |             with self.assertRaises(ValueError):
+   | |_______________________________________________^
+77 |                   scope_module.cleanup()
+78 |           environment.assert_not_called()
+   |
+help: Combine `with` statements
+
+E501 Line too long (109 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/test_owned_cleanup_operator.py:84:101
+   |
+82 |     def test_nonzero_actual_child_preserves_both_safe_streams(self):
+83 |         code, receipt = self.produce(
+84 |             "import sys;print('CLEANUP_STDOUT');print('CLEANUP_STDERR',file=sys.stderr);raise SystemExit(23)"
+   |                                                                                                     ^^^^^^^^^
+85 |         )
+86 |         self.assertEqual(1, code)
+   |
+
+N802 Function name `setUp` should be lowercase
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/test_resource_phase.py:18:9
+   |
+17 | class ResourcePhaseTests(unittest.TestCase):
+18 |     def setUp(self):
+   |         ^^^^^
+19 |         self.owner = tempfile.TemporaryDirectory(prefix="iacode-m2cp3-phase-unit-")
+20 |         self.config = tempfile.TemporaryDirectory(prefix="iacode-m2cp3-buildx-unit-")
+   |
+help: Consider adding `@typing.override` if this method overrides a method from a superclass
+
+SIM117 Use a single `with` statement with multiple contexts instead of nested `with` statements
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/test_resource_phase.py:77:9
+   |
+75 |           )
+76 |           write_json(self.checkpoint / "ACTIVE-DOCKER-PHASE.json", self.marker)
+77 | /         with patch.object(phase.operator, "docker") as engine:
+78 | |             with self.assertRaises(ValueError):
+   | |_______________________________________________^
+79 |                   phase.child_environment()
+80 |           engine.assert_not_called()
+   |
+help: Combine `with` statements
+
+SIM117 Use a single `with` statement with multiple contexts instead of nested `with` statements
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/test_resource_phase.py:84:9
+   |
+82 |       def test_existing_pointer_refuses_new_phase_before_engine_access(self):
+83 |           original = self.path.read_bytes()
+84 | /         with patch.object(phase.operator, "prepare") as creation:
+85 | |             with self.assertRaisesRegex(ValueError, "DO_NOT_REPLACE_RESOURCE_PHASE_POINTER"):
+   | |_____________________________________________________________________________________________^
+86 |                   phase.prepare()
+87 |           creation.assert_not_called()
+   |
+help: Combine `with` statements
+
+SIM117 Use a single `with` statement with multiple contexts instead of nested `with` statements
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/test_resource_phase.py:92:9
+   |
+90 |       def test_actual_hardlinked_receipt_is_refused(self):
+91 |           os.link(self.path, self.directory / "linked-receipt.json")
+92 | /         with patch.object(phase.operator, "docker") as engine:
+93 | |             with self.assertRaisesRegex(ValueError, "LINKED_RESOURCE_PHASE"):
+   | |_____________________________________________________________________________^
+94 |                   phase.child_environment()
+95 |           engine.assert_not_called()
+   |
+help: Combine `with` statements
+
+SIM117 Use a single `with` statement with multiple contexts instead of nested `with` statements
+   --> docs/checkpoints/GATE-7-CP-0003/audit-harness/test_resource_phase.py:138:9
+    |
+136 |           for path, raw in original.items():
+137 |               self.assertEqual(raw, path.read_bytes())
+138 | /         with patch.object(phase.operator, "snapshot") as query:
+139 | |             with self.assertRaises(ValueError):
+    | |_______________________________________________^
+140 |                   phase.operator.cleanup(self.path)
+141 |           query.assert_not_called()
+    |
+help: Combine `with` statements
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/update_bridge_progress.py:11:1
+   |
+ 9 | ROOT = CHECKPOINT.parents[2]
+10 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+11 | from ledger_common import load_json, write_json
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+12 | from sync_in_progress_metadata import synchronize
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/update_bridge_progress.py:12:1
+   |
+10 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+11 | from ledger_common import load_json, write_json
+12 | from sync_in_progress_metadata import synchronize
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+help: Move module level imports to top of file
+
+E501 Line too long (163 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/update_bridge_progress.py:49:101
+   |
+47 | …losed-host-validation-jobs.md"
+48 | …
+49 | …run/bind succeeds; current lint, full assurance and final owned-resource absence remain pending.",
+   |                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+50 | …
+51 | …
+   |
+
+E501 Line too long (114 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/update_bridge_progress.py:58:101
+   |
+56 |         status="NOT_EXECUTED",
+57 |         evidence=[],
+58 |         justification="Earlier complete lint was before the bridge/harness changes; rerun current complete gate.",
+   |                                                                                                     ^^^^^^^^^^^^^^
+59 |     )
+60 |     quality["checks"]["staticAnalysis"].update(
+   |
+
+E501 Line too long (157 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/update_bridge_progress.py:68:101
+   |
+66 | …
+67 | …
+68 | …ce cleanup; seal only on truthful readiness, then start a fresh isolated M2 auditor. No Gate8."
+   |                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+69 | …
+70 | …
+   |
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/update_current_evidence.py:9:1
+   |
+ 7 | ROOT = CHECKPOINT.parents[2]
+ 8 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+ 9 | from derive_requirements import render_closure, render_matrix
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+10 | from ledger_common import load_json, scope_fingerprint, utc_now, write_json
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/update_current_evidence.py:10:1
+   |
+ 8 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+ 9 | from derive_requirements import render_closure, render_matrix
+10 | from ledger_common import load_json, scope_fingerprint, utc_now, write_json
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+help: Move module level imports to top of file
+
+E501 Line too long (143 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/update_current_evidence.py:22:101
+   |
+20 | …
+21 | …
+22 | …r is observed; the same native evidence-loss class is reproduced and not yet repaired.",
+   |                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+23 | …
+24 | …
+   |
+
+E501 Line too long (151 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/update_current_evidence.py:25:101
+   |
+23 | …
+24 | …
+25 | …eal owned drain, not a real OS cleanup failure; no editor or Docker operation in the probe."
+   |                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+26 | …
+27 | …
+   |
+
+E501 Line too long (122 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/update_current_evidence.py:38:101
+   |
+36 |             row.update(
+37 |                 status="PARTIAL",
+38 |                 justification="Native M2-F-002 extension remains open; all current integral assurance is still required.",
+   |                                                                                                     ^^^^^^^^^^^^^^^^^^^^^^
+39 |             )
+40 |     write_json(CHECKPOINT / "CLOSURE-REQUIREMENTS.json", closure)
+   |
+
+E501 Line too long (324 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/update_current_evidence.py:51:101
+   |
+49 | …
+50 | …
+51 | …he bridge path lesson, repair physical confinement and the native M2-F-002 extension, and rerun complete current assurance. Clean only proven owned waste after producers finish. Seal before any new independent auditor; no Gate8."
+   |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+52 | …
+53 | …
+   |
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/update_prepush_context.py:9:1
+   |
+ 7 | ROOT = CHECKPOINT.parents[2]
+ 8 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+ 9 | from derive_requirements import render_closure
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+10 | from ledger_common import load_json, utc_now, write_json
+11 | from lesson_preflight import render_markdown
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/update_prepush_context.py:10:1
+   |
+ 8 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+ 9 | from derive_requirements import render_closure
+10 | from ledger_common import load_json, utc_now, write_json
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+11 | from lesson_preflight import render_markdown
+12 | from lessons import build_preflight, load_lessons, render_index, save_lessons
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/update_prepush_context.py:11:1
+   |
+ 9 | from derive_requirements import render_closure
+10 | from ledger_common import load_json, utc_now, write_json
+11 | from lesson_preflight import render_markdown
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+12 | from lessons import build_preflight, load_lessons, render_index, save_lessons
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/update_prepush_context.py:12:1
+   |
+10 | from ledger_common import load_json, utc_now, write_json
+11 | from lesson_preflight import render_markdown
+12 | from lessons import build_preflight, load_lessons, render_index, save_lessons
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+help: Move module level imports to top of file
+
+E501 Line too long (167 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/update_prepush_context.py:38:101
+   |
+36 | …
+37 | …
+38 | … and modeled receipt/input/byte decisions; does not report real repository lint or execute a push.",
+   |                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+39 | …
+40 | …
+   |
+
+E501 Line too long (466 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/update_prepush_context.py:43:101
+   |
+41 | …
+42 | …
+43 | …t bound to current source and pre-publication HEAD…main procedural, so status stays CONFIRMED.",
+   |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^…^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+44 | …
+45 | …
+   |
+
+E501 Line too long (161 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/update_prepush_context.py:60:101
+   |
+58 | …03.json"],
+59 | …
+60 | …anonical repository lint; actual current proof and a fresh complete immutable cycle remain due.",
+   |                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+61 | …
+62 | …rework)
+   |
+
+E501 Line too long (170 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/update_prepush_context.py:68:101
+   |
+66 | …
+67 | …
+68 | … and modeled metadata controls; real current lint and new properly preceded publication remain due.",
+   |                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+69 | …
+70 | …
+   |
+
+E501 Line too long (130 > 100)
+   --> docs/checkpoints/GATE-7-CP-0003/audit-harness/update_prepush_context.py:101:101
+    |
+ 99 |     )
+100 |     print(
+101 |         "Publication local controls recorded; actual current lint/full assurance still required, no guarded/independent overclaim"
+    |                                                                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+102 |     )
+103 |     return 0
+    |
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/update_progress.py:13:1
+   |
+11 | ROOT = CHECKPOINT.parents[2]
+12 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+13 | from ledger_common import load_json, write_json
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+14 | from sync_in_progress_metadata import synchronize
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/update_progress.py:14:1
+   |
+12 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+13 | from ledger_common import load_json, write_json
+14 | from sync_in_progress_metadata import synchronize
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+help: Move module level imports to top of file
+
+E501 Line too long (125 > 100)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/update_progress.py:52:101
+   |
+50 |         ]
+51 |         row["justification"] = (
+52 |             "Local causal correction is demonstrated; integral corrective acceptance and immutable assurance remain pending."
+   |                                                                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^
+53 |         )
+54 |     if observed != references:
+   |
+
+E501 Line too long (150 > 100)
+   --> docs/checkpoints/GATE-7-CP-0003/audit-harness/update_progress.py:99:101
+    |
+ 97 | …
+ 98 | …
+ 99 | …complete canonical integral assurance before sealing or a new independent audit. No Gate8."
+    |                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+100 | …
+101 | …
+    |
+
+E402 Module level import not at top of file
+  --> tests/test_m2_audit_corrections.py:19:1
+   |
+17 | sys.path.insert(0, str(ROOT / "scripts/iacode"))
+18 |
+19 | import client_checks
+   | ^^^^^^^^^^^^^^^^^^^^
+20 | from promotion_fixture import copy_ledger_runtime
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> tests/test_m2_audit_corrections.py:20:1
+   |
+19 | import client_checks
+20 | from promotion_fixture import copy_ledger_runtime
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+help: Move module level imports to top of file
+
+N802 Function name `setUp` should be lowercase
+  --> tests/test_m2_audit_corrections.py:24:9
+   |
+23 | class CheckpointInvocationProducerTests(unittest.TestCase):
+24 |     def setUp(self) -> None:
+   |         ^^^^^
+25 |         self.owner = tempfile.TemporaryDirectory(prefix="iacode-literal-producer-")
+26 |         self.addCleanup(self.owner.cleanup)
+   |
+help: Consider adding `@typing.override` if this method overrides a method from a superclass
+
+E402 Module level import not at top of file
+  --> tests/test_m2_bootstrap_ownership.py:15:1
+   |
+13 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+14 | sys.path.insert(0, str(ROOT / "scripts/iacode"))
+15 | from audit_runner_bridge import Job, run_owned
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+16 | from ledger_common import find_secrets
+17 | from native_process import WindowsJob
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> tests/test_m2_bootstrap_ownership.py:16:1
+   |
+14 | sys.path.insert(0, str(ROOT / "scripts/iacode"))
+15 | from audit_runner_bridge import Job, run_owned
+16 | from ledger_common import find_secrets
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+17 | from native_process import WindowsJob
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> tests/test_m2_bootstrap_ownership.py:17:1
+   |
+15 | from audit_runner_bridge import Job, run_owned
+16 | from ledger_common import find_secrets
+17 | from native_process import WindowsJob
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+help: Move module level imports to top of file
+
+E501 Line too long (102 > 100)
+  --> tests/test_m2_bootstrap_ownership.py:62:101
+   |
+60 |         path = (
+61 |             ROOT
+62 |             / "docs/checkpoints/GATE-7-CP-0003/raw-preimages/BOOTSTRAP-DRAIN-001-current-resources.py"
+   |                                                                                                     ^^
+63 |         )
+64 |         with self.assertRaises(AssertionError):
+   |
+
+E402 Module level import not at top of file
+  --> tests/test_m2_bridge_physical_bounds.py:14:1
+   |
+12 | ROOT = Path(__file__).resolve().parents[1]
+13 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+14 | import audit_runner_bridge as bridge
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+15 | from ledger_common import find_secrets
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> tests/test_m2_bridge_physical_bounds.py:15:1
+   |
+13 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+14 | import audit_runner_bridge as bridge
+15 | from ledger_common import find_secrets
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+help: Move module level imports to top of file
+
+N802 Function name `setUp` should be lowercase
+  --> tests/test_m2_bridge_physical_bounds.py:19:9
+   |
+18 | class BridgePhysicalBoundsTests(unittest.TestCase):
+19 |     def setUp(self):
+   |         ^^^^^
+20 |         self.owner = tempfile.TemporaryDirectory(prefix="iacode-m2-physical-bounds-")
+21 |         self.addCleanup(self.owner.cleanup)
+   |
+help: Consider adding `@typing.override` if this method overrides a method from a superclass
+
+E402 Module level import not at top of file
+  --> tests/test_m2_cleanup_operator.py:25:1
+   |
+23 | scope_module = importlib.util.module_from_spec(SPEC)
+24 | SPEC.loader.exec_module(scope_module)
+25 | from ledger_common import load_json, write_json
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+help: Move module level imports to top of file
+
+N802 Function name `setUp` should be lowercase
+  --> tests/test_m2_cleanup_operator.py:29:9
+   |
+28 | class OperatorCleanupObservationTests(unittest.TestCase):
+29 |     def setUp(self):
+   |         ^^^^^
+30 |         self.owner = tempfile.TemporaryDirectory(prefix="iacode-m2cp3-cleanup-unit-")
+31 |         self.config = tempfile.TemporaryDirectory(prefix="iacode-m2cp3-buildx-unit-")
+   |
+help: Consider adding `@typing.override` if this method overrides a method from a superclass
+
+SIM117 Use a single `with` statement with multiple contexts instead of nested `with` statements
+  --> tests/test_m2_cleanup_operator.py:75:9
+   |
+73 |           target = self.checkpoint / "OWNED-RESOURCE-CLEANUP.json"
+74 |           target.write_bytes(b"PRIOR_OBSERVATION_MUST_NOT_CHANGE")
+75 | /         with patch.object(scope_module, "child_environment") as environment:
+76 | |             with self.assertRaises(ValueError):
+   | |_______________________________________________^
+77 |                   scope_module.cleanup()
+78 |           environment.assert_not_called()
+   |
+help: Combine `with` statements
+
+E501 Line too long (109 > 100)
+  --> tests/test_m2_cleanup_operator.py:84:101
+   |
+82 |     def test_nonzero_actual_child_preserves_both_safe_streams(self):
+83 |         code, receipt = self.produce(
+84 |             "import sys;print('CLEANUP_STDOUT');print('CLEANUP_STDERR',file=sys.stderr);raise SystemExit(23)"
+   |                                                                                                     ^^^^^^^^^
+85 |         )
+86 |         self.assertEqual(1, code)
+   |
+
+E402 Module level import not at top of file
+  --> tests/test_m2_closed_runner_bridge.py:27:1
+   |
+25 | sys.path.insert(0, str(ROOT / "scripts/iacode"))
+26 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+27 | from ledger_common import find_secrets
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+28 | from native_process import WindowsJob
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> tests/test_m2_closed_runner_bridge.py:28:1
+   |
+26 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+27 | from ledger_common import find_secrets
+28 | from native_process import WindowsJob
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+help: Move module level imports to top of file
+
+N802 Function name `setUp` should be lowercase
+  --> tests/test_m2_closed_runner_bridge.py:35:9
+   |
+33 | )
+34 | class BridgeTests(unittest.TestCase):
+35 |     def setUp(self):
+   |         ^^^^^
+36 |         self.temporary = tempfile.TemporaryDirectory(prefix="iacode-m2-bridge-tests-")
+37 |         self.addCleanup(self.temporary.cleanup)
+   |
+help: Consider adding `@typing.override` if this method overrides a method from a superclass
+
+E402 Module level import not at top of file
+  --> tests/test_m2_native_observation.py:16:1
+   |
+14 | ROOT = Path(__file__).resolve().parents[1]
+15 | sys.path.insert(0, str(ROOT / "scripts/iacode"))
+16 | import client_checks
+   | ^^^^^^^^^^^^^^^^^^^^
+17 | import native_editor
+18 | from native_process import NativeJobCleanupError, WindowsJob
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> tests/test_m2_native_observation.py:17:1
+   |
+15 | sys.path.insert(0, str(ROOT / "scripts/iacode"))
+16 | import client_checks
+17 | import native_editor
+   | ^^^^^^^^^^^^^^^^^^^^
+18 | from native_process import NativeJobCleanupError, WindowsJob
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> tests/test_m2_native_observation.py:18:1
+   |
+16 | import client_checks
+17 | import native_editor
+18 | from native_process import NativeJobCleanupError, WindowsJob
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> tests/test_m2_observation_transport.py:16:1
+   |
+14 | ROOT = Path(__file__).resolve().parents[1]
+15 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+16 | from ledger_common import resolve_latest
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> tests/test_m2_progress_publication.py:19:1
+   |
+17 | sys.path.insert(0, str(HERE))
+18 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+19 | import ledger_common
+   | ^^^^^^^^^^^^^^^^^^^^
+20 | from ledger_common import canonical_hash_path, write_json
+   |
+help: Move module level imports to top of file
+
+E402 Module level import not at top of file
+  --> tests/test_m2_progress_publication.py:20:1
+   |
+18 | sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+19 | import ledger_common
+20 | from ledger_common import canonical_hash_path, write_json
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+help: Move module level imports to top of file
+
+N802 Function name `setUp` should be lowercase
+  --> tests/test_m2_progress_publication.py:69:9
+   |
+67 |     """Modeled lint facts for a verifier decision, never live lint or a real push."""
+68 |
+69 |     def setUp(self):
+   |         ^^^^^
+70 |         self.owner = tempfile.TemporaryDirectory(prefix="iacode-m2-publish-policy-")
+71 |         self.addCleanup(self.owner.cleanup)
+   |
+help: Consider adding `@typing.override` if this method overrides a method from a superclass
+
+Found 386 errors (37 fixed, 349 remaining).

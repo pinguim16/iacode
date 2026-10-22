@@ -22,14 +22,16 @@
       "justification": null
     },
     "lint": {
-      "status": "NOT_EXECUTED",
-      "evidence": [],
-      "justification": "New guarded native-descendant recurrence changes assurance-scoped memory; prior actual source epochs remain preserved, not current acceptance."
+      "status": "PASS",
+      "evidence": [
+        "file:quality-attempts/lint/run-0012.json"
+      ],
+      "justification": "Actual complete current canonical lint and publication binding."
     },
     "staticAnalysis": {
       "status": "PASS",
       "evidence": [
-        "file:quality-attempts/staticAnalysis/run-0007.json"
+        "file:quality-attempts/staticAnalysis/run-0010.json"
       ],
       "justification": "Actual current canonical static-analysis component, not complete quality acceptance."
     },
@@ -44,9 +46,11 @@
       "justification": null
     },
     "checkpointValidation": {
-      "status": "NOT_EXECUTED",
-      "evidence": [],
-      "justification": "New guarded native-descendant recurrence changes assurance-scoped memory; prior actual source epochs remain preserved, not current acceptance."
+      "status": "PASS",
+      "evidence": [
+        "file:quality-attempts/checkpointValidation/run-0008.json"
+      ],
+      "justification": "Actual quiescent valid IN_PROGRESS draft; not terminal readiness or independent validation."
     },
     "redTeam": {
       "status": "NOT_EXECUTED",

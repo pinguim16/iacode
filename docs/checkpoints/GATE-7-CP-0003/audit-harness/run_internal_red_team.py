@@ -275,36 +275,52 @@ def main() -> int:
     # The escaped corrective obligations are policy-derived additions, never replacements
     # for the complete inherited/runtime battery below. Execute the canonical fixture and
     # its actual validator/null control; do not credit a targeted unit run as this Red Team.
-    from policies import audit_attacks, open_audits
     from m0_red_team import build_attacks
-    registered = {row["id"]: row for audit in open_audits(ROOT, "GATE-7", CHECKPOINT.name)
-                  for row in audit_attacks(ROOT, audit) if row["mandatory"] == "true"}
+    from policies import audit_attacks, open_audits
+
+    registered = {
+        row["id"]: row
+        for audit in open_audits(ROOT, "GATE-7", CHECKPOINT.name)
+        for row in audit_attacks(ROOT, audit)
+        if row["mandatory"] == "true"
+    }
     implementations = {row["attackId"]: row for row in build_attacks()}
     if not registered or set(registered) - set(implementations):
         raise LedgerError("complete registered corrective attack implementations required")
-    corrective_run = execute(["scripts/development-ledger/m0_red_team.py", "--only",
-                              ",".join(sorted(registered))], "CORRECTIVE")
+    corrective_run = execute(
+        ["scripts/development-ledger/m0_red_team.py", "--only", ",".join(sorted(registered))],
+        "CORRECTIVE",
+    )
     receipts.append(corrective_run)
     corrective_receipt = load_json(CHECKPOINT / corrective_run["receipt"])
     artifact = corrective_receipt.get("safeOutputArtifact")
     if not artifact:
         raise LedgerError("original canonical corrective Red Team output required")
     raw = (ROOT / artifact).read_bytes()
-    if (len(raw) != corrective_receipt["outputBytes"]
-            or hashlib.sha256(raw).hexdigest() != corrective_receipt["outputSha256"]):
+    if (
+        len(raw) != corrective_receipt["outputBytes"]
+        or hashlib.sha256(raw).hexdigest() != corrective_receipt["outputSha256"]
+    ):
         raise LedgerError("corrective Red Team original bytes mismatch")
     text = raw.decode("utf-8", errors="strict")
     observations = re.findall(r"^\[([^\]]+)\] (DEFENDED|ESCAPED) (.*)$", text, flags=re.M)
     observed_ids = [row[0] for row in observations]
     if set(observed_ids) != set(registered) or len(observed_ids) != len(set(observed_ids)):
         raise LedgerError("canonical corrective attack execution membership differs from policy")
-    corrective_attacks = [{key: implementations[identifier][key]
-                           for key in ("attackId", "target", "mutation", "expectedDefense", "origin")}
-                          | {"description": implementations[identifier]["mutation"],
-                             "mandatory": True, "observed": observed, "result": result,
-                             "evidence": ["checkpoint:" + corrective_run["receipt"],
-                                          "file:" + artifact]}
-                          for identifier, result, observed in observations]
+    corrective_attacks = [
+        {
+            key: implementations[identifier][key]
+            for key in ("attackId", "target", "mutation", "expectedDefense", "origin")
+        }
+        | {
+            "description": implementations[identifier]["mutation"],
+            "mandatory": True,
+            "observed": observed,
+            "result": result,
+            "evidence": ["checkpoint:" + corrective_run["receipt"], "file:" + artifact],
+        }
+        for identifier, result, observed in observations
+    ]
     for arguments, label in (
         (["scripts/iacode/gates/client_tests.py"], "CLIENT"),
         (["scripts/iacode/gates/knowledge_tests.py"], "DOMAIN"),

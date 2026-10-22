@@ -1577,7 +1577,12 @@
       "reference": "scripts/iacode/gates/lint.py",
       "verifiedBy": [
         "test_mandatory_lint_covers_every_python_project_root",
-        "Gate7LintDenominatorTests.test_inherited_lint_guard_refuses_each_new_python_root_omission"
+        "Gate7LintDenominatorTests.test_inherited_lint_guard_refuses_each_new_python_root_omission",
+        "PublicationCallerTests.test_actual_publisher_checks_current_lint_before_publication_effects",
+        "PublicationCallerTests.test_archived_actual_publisher_without_precondition_is_rejected",
+        "AuthoredQualityDecisionTests.test_modeled_valid_whole_scope_acceptance_has_no_source_effects",
+        "AuthoredQualityDecisionTests.test_missing_stale_narrowed_format_and_nonzero_proofs_are_refused",
+        "AuthoredQualityDecisionTests.test_changed_original_bytes_failed_cleanup_and_latest_failure_are_refused"
       ],
       "lessons": [
         "LSN-0105"
@@ -1919,7 +1924,9 @@
         "Gate7NativeCleanupTests.test_owned_bootstrap_disables_external_reporting_not_native_or_trust_controls",
         "BootstrapOwnershipTests.test_actual_bootstrap_caller_requires_owned_native_process_boundary",
         "BootstrapOwnershipTests.test_archived_actual_preimage_is_rejected_by_identical_caller_guard",
-        "BootstrapOwnershipTests.test_real_parent_exit_with_inherited_output_writer_is_observed_then_exactly_drained"
+        "BootstrapOwnershipTests.test_real_parent_exit_with_inherited_output_writer_is_observed_then_exactly_drained",
+        "BootstrapOwnershipTests.test_actual_history_query_requires_the_same_owned_native_boundary",
+        "BootstrapOwnershipTests.test_exact_published_history_preimage_is_rejected_by_the_same_guard"
       ],
       "lessons": [
         "LSN-0125"
@@ -2164,7 +2171,11 @@
         "Gate7ContinuationContractTests.test_actual_retrospective_uses_exact_template_and_every_current_lesson_guard",
         "Gate7ContinuationContractTests.test_actual_renderer_and_each_missing_empty_extra_or_reordered_section_refusal",
         "Gate7ContinuationContractTests.test_retrospective_positive_omission_extra_and_registered_lesson_growth",
-        "Gate7ContinuationContractTests.test_original_failed_documents_remain_exact_inert_and_rejected"
+        "Gate7ContinuationContractTests.test_original_failed_documents_remain_exact_inert_and_rejected",
+        "CorrectiveContinuationTests.test_actual_corrective_and_current_handoff_next_preserve_existing_contract",
+        "CorrectiveContinuationTests.test_actual_retrospectives_keep_exact_sections_and_every_recorded_lesson_guard",
+        "CorrectiveContinuationTests.test_actual_failed_original_is_exact_inert_and_rejected_by_identical_contract",
+        "CorrectiveContinuationTests.test_current_positive_and_omission_empty_extra_order_and_lesson_growth_controls"
       ],
       "lessons": [
         "LSN-0140"

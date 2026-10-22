@@ -30,8 +30,12 @@ class ClientCheckError(RuntimeError):
     """Safe, bounded producer and cleanup observations; no raw exception or hidden PASS."""
 
     def __init__(self, producer: dict, cleanup: dict) -> None:
-        self.report = {"schemaVersion": "1.0.0", "result": "FAIL",
-                       "producer": producer, "cleanup": cleanup}
+        self.report = {
+            "schemaVersion": "1.0.0",
+            "result": "FAIL",
+            "producer": producer,
+            "cleanup": cleanup,
+        }
         super().__init__(
             "client verification failed: " + json.dumps(self.report, ensure_ascii=True)
         )
@@ -39,8 +43,12 @@ class ClientCheckError(RuntimeError):
 
 def _safe_stream(value: str | bytes | None) -> dict:
     raw = value.encode("utf-8") if isinstance(value, str) else (value or b"")
-    result = {"text": None, "sha256": hashlib.sha256(raw).hexdigest(),
-              "bytes": len(raw), "refusal": None}
+    result = {
+        "text": None,
+        "sha256": hashlib.sha256(raw).hexdigest(),
+        "bytes": len(raw),
+        "refusal": None,
+    }
     if len(raw) > MAX_OBSERVATION_BYTES:
         result["refusal"] = "OUTPUT_LIMIT"
         return result
@@ -86,17 +94,21 @@ def _attempt(argv: list[str], timeout: int) -> tuple[subprocess.CompletedProcess
 
 
 def _safe_observation(observation: dict) -> bool:
-    return not any(observation.get(name) for name in (
-        "stdoutRefusal", "stderrRefusal", "argumentsRefused"))
+    return not any(
+        observation.get(name) for name in ("stdoutRefusal", "stderrRefusal", "argumentsRefused")
+    )
 
 
 def _owned_container_absent(observation: dict, name: str) -> bool:
     if observation["status"] != "COMPLETED" or observation["exitCode"] != 1:
         return False
-    return re.fullmatch(
-        r"(?:Error response from daemon: |Error: )?No such container: " + re.escape(name),
-        (observation["stderr"] or "").strip(),
-    ) is not None
+    return (
+        re.fullmatch(
+            r"(?:Error response from daemon: |Error: )?No such container: " + re.escape(name),
+            (observation["stderr"] or "").strip(),
+        )
+        is not None
+    )
 
 
 def capsule(directory: Path) -> None:
@@ -164,53 +176,58 @@ def run_node(*, guard: bool | str = False, node: Path | None = None) -> subproce
             )
         name = "iacode-client-unit-" + uuid.uuid4().hex
         completed, producer = _attempt(
-                [
-                    "docker",
-                    "run",
-                    "--name",
-                    name,
-                    "--rm",
-                    "--network",
-                    "none",
-                    "--read-only",
-                    "--user",
-                    "1000:1000",
-                    "--cap-drop",
-                    "ALL",
-                    "--security-opt",
-                    "no-new-privileges:true",
-                    "--pids-limit",
-                    "96",
-                    "--memory",
-                    "384m",
-                    "--cpus",
-                    "1",
-                    "--tmpfs",
-                    "/tmp:rw,noexec,nosuid,nodev,size=48m,mode=1777",
-                    "--volume",
-                    f"{directory.resolve()}:/client:ro",
-                    "--workdir",
-                    "/client",
-                    "--env",
-                    "IACODE_CLIENT_MODULE=/client/cli/src/client.cjs",
-                    "--env",
-                    "IACODE_CLI_ENTRY=/client/cli/bin/iacode.cjs",
-                    "--env",
-                    "IACODE_EXTENSION_MODULE=/client/vscode-extension/src/extension.cjs",
-                    NODE_IMAGE,
-                    "node",
-                    *arguments,
-                    *tests,
-                ],
-                180,
+            [
+                "docker",
+                "run",
+                "--name",
+                name,
+                "--rm",
+                "--network",
+                "none",
+                "--read-only",
+                "--user",
+                "1000:1000",
+                "--cap-drop",
+                "ALL",
+                "--security-opt",
+                "no-new-privileges:true",
+                "--pids-limit",
+                "96",
+                "--memory",
+                "384m",
+                "--cpus",
+                "1",
+                "--tmpfs",
+                "/tmp:rw,noexec,nosuid,nodev,size=48m,mode=1777",
+                "--volume",
+                f"{directory.resolve()}:/client:ro",
+                "--workdir",
+                "/client",
+                "--env",
+                "IACODE_CLIENT_MODULE=/client/cli/src/client.cjs",
+                "--env",
+                "IACODE_CLI_ENTRY=/client/cli/bin/iacode.cjs",
+                "--env",
+                "IACODE_EXTENSION_MODULE=/client/vscode-extension/src/extension.cjs",
+                NODE_IMAGE,
+                "node",
+                *arguments,
+                *tests,
+            ],
+            180,
         )
         # The producer observation exists BEFORE this independent, fallible cleanup attempt.
         # Only the exact container this invocation named. Never a project/global prune.
         _removed, cleanup = _attempt(["docker", "rm", "-f", name], 30)
-        cleanup_ok = ((cleanup["status"] == "COMPLETED" and cleanup["exitCode"] == 0)
-                      or _owned_container_absent(cleanup, name))
-        if (completed is None or not cleanup_ok
-                or not _safe_observation(producer) or not _safe_observation(cleanup)):
+        cleanup_ok = (
+            cleanup["status"] == "COMPLETED" and cleanup["exitCode"] == 0
+        ) or _owned_container_absent(cleanup, name)
+        if (
+            completed is None
+            or not cleanup_ok
+            or not _safe_observation(producer)
+            or not _safe_observation(cleanup)
+        ):
             raise ClientCheckError(producer, cleanup) from None
         completed.stdout, completed.stderr = producer["stdout"], producer["stderr"]
         return completed

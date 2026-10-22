@@ -14,16 +14,22 @@ import sys
 import tempfile
 import unittest
 from pathlib import Path
+from typing import override
 from unittest.mock import patch
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts/development-ledger"))
+from ledger_common import load_json, write_json
+
 HERE = Path(__file__).resolve().parents[1] / "docs/checkpoints/GATE-7-CP-0003/audit-harness"
-SPEC = importlib.util.spec_from_file_location("owned_cleanup_operator_unit", HERE / "owned_docker_scope.py")
+SPEC = importlib.util.spec_from_file_location(
+    "owned_cleanup_operator_unit", HERE / "owned_docker_scope.py"
+)
 scope_module = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(scope_module)
-from ledger_common import load_json, write_json
 
 
 class OperatorCleanupObservationTests(unittest.TestCase):
+    @override
     def setUp(self):
         self.owner = tempfile.TemporaryDirectory(prefix="iacode-m2cp3-cleanup-unit-")
         self.config = tempfile.TemporaryDirectory(prefix="iacode-m2cp3-buildx-unit-")
@@ -31,13 +37,21 @@ class OperatorCleanupObservationTests(unittest.TestCase):
         self.addCleanup(self.config.cleanup)
         self.checkpoint = Path(self.owner.name)
         self.scope_path = self.checkpoint / "SCOPE.json"
-        self.baseline = {"containers": [], "images": [], "networks": [], "volumes": [],
-                         "dockerConfigHash": "f" * 64}
-        self.scope = {"status": "ACTIVE", "builder": "iacode-m2cp3-unit-builder",
-                      "privateBuildxConfig": self.config.name,
-                      "inheritedOwnedProject": "iacode-m2cp3-unit-project",
-                      "registeredProjects": ["iacode-m2cp3-unit-project"],
-                      "before": self.baseline}
+        self.baseline = {
+            "containers": [],
+            "images": [],
+            "networks": [],
+            "volumes": [],
+            "dockerConfigHash": "f" * 64,
+        }
+        self.scope = {
+            "status": "ACTIVE",
+            "builder": "iacode-m2cp3-unit-builder",
+            "privateBuildxConfig": self.config.name,
+            "inheritedOwnedProject": "iacode-m2cp3-unit-project",
+            "registeredProjects": ["iacode-m2cp3-unit-project"],
+            "before": self.baseline,
+        }
         write_json(self.scope_path, self.scope)
         self.addCleanup(patch.stopall)
         patch.object(scope_module, "CHECKPOINT", self.checkpoint).start()
@@ -62,16 +76,20 @@ class OperatorCleanupObservationTests(unittest.TestCase):
     def test_prior_receipt_refuses_before_queries_or_effects(self):
         target = self.checkpoint / "OWNED-RESOURCE-CLEANUP.json"
         target.write_bytes(b"PRIOR_OBSERVATION_MUST_NOT_CHANGE")
-        with patch.object(scope_module, "child_environment") as environment:
-            with self.assertRaises(ValueError):
-                scope_module.cleanup()
+        with (
+            patch.object(scope_module, "child_environment") as environment,
+            self.assertRaises(ValueError),
+        ):
+            scope_module.cleanup()
         environment.assert_not_called()
         self.snapshot.assert_not_called()
         self.assertEqual(b"PRIOR_OBSERVATION_MUST_NOT_CHANGE", target.read_bytes())
 
     def test_nonzero_actual_child_preserves_both_safe_streams(self):
         code, receipt = self.produce(
-            "import sys;print('CLEANUP_STDOUT');print('CLEANUP_STDERR',file=sys.stderr);raise SystemExit(23)")
+            "import sys;print('CLEANUP_STDOUT');print('CLEANUP_STDERR',fi"
+            "le=sys.stderr);raise SystemExit(23)"
+        )
         self.assertEqual(1, code)
         command = receipt["commands"][0]
         self.assertEqual("COMPLETED", command["status"])
@@ -87,7 +105,8 @@ class OperatorCleanupObservationTests(unittest.TestCase):
 
     def test_actual_timeout_has_partial_output_and_not_success(self):
         code, receipt = self.produce(
-            "import time;print('PARTIAL_CLEANUP',flush=True);time.sleep(30)", timeout=0.3)
+            "import time;print('PARTIAL_CLEANUP',flush=True);time.sleep(30)", timeout=0.3
+        )
         self.assertEqual(1, code)
         command = receipt["commands"][0]
         self.assertEqual("TIMEOUT", command["status"])

@@ -1,0 +1,28 @@
+{
+  "observedAt": "2026-10-22T04:57:40Z",
+  "kind": "EXISTING_CONTRACT_ACTUAL_CP0003_DOCUMENTS",
+  "result": "FAIL",
+  "checks": [
+    {
+      "document": "handoff",
+      "result": "PASS"
+    },
+    {
+      "document": "next",
+      "result": "PASS"
+    },
+    {
+      "document": "retrospective",
+      "result": "FAIL"
+    }
+  ],
+  "source": ".iacode/memory/retrospectives/GATE-7-CP-0003.md",
+  "bytes": 5226,
+  "sha256": "27290ec2586bbc54874289c49a32e0d5ac2dc85eadc78b6e1f25d9b9f0f89f82",
+  "original": "RETROSPECTIVE.md.raw",
+  "lessons": [
+    "LSN-0152"
+  ],
+  "testImplementation": "tests/test_gate7_continuation.py",
+  "independent": false
+}

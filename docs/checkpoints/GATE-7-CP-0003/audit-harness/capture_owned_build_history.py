@@ -2,19 +2,22 @@
 
 from __future__ import annotations
 
-import hashlib
 import json
 import re
-import subprocess
 import sys
 from pathlib import Path
 
 from current_resources import child_environment, current_scope_path
 
+sys.path.insert(
+    0, str(Path(__file__).resolve().parents[1].parents[2] / "scripts/development-ledger")
+)
+from audit_runner_bridge import Job, run_owned
+from ledger_common import find_secrets, load_json, utc_now, write_json
+from native_process import WindowsJob
+
 CHECKPOINT = Path(__file__).resolve().parents[1]
 ROOT = CHECKPOINT.parents[2]
-sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
-from ledger_common import find_secrets, load_json, utc_now, write_json
 
 
 def main():
@@ -28,26 +31,47 @@ def main():
     observations = []
 
     def capture(arguments, name):
-        result = subprocess.run(["docker", "buildx", *arguments], cwd=ROOT, env=environment,
-                                capture_output=True, timeout=60, check=False)
-        row = {"arguments": ["docker", "buildx", *arguments], "exitCode": result.returncode, "streams": {}}
+        execution, streams = run_owned(
+            Job(("docker", "buildx", *arguments), 60),
+            ROOT,
+            environment,
+            find_secrets,
+            WindowsJob,
+        )
+        producer = execution["producer"]
+        row = {
+            "arguments": ["docker", "buildx", *arguments],
+            "exitCode": producer["exitCode"],
+            "execution": execution,
+            "streams": {},
+        }
         safe_stdout = None
-        for label, raw in (("stdout", result.stdout), ("stderr", result.stderr)):
-            fact = {"sha256": hashlib.sha256(raw).hexdigest(), "bytes": len(raw), "refused": True, "path": None}
+        for label in ("stdout", "stderr"):
+            raw = streams.get(label + ".log")
+            fact = {
+                "sha256": producer[label]["sha256"],
+                "bytes": producer[label]["bytes"],
+                "refused": True,
+                "path": None,
+            }
             try:
-                text = raw.decode("utf-8", errors="strict")
-                if len(raw) <= 8 * 1024 * 1024 and not find_secrets(text):
+                if raw is not None and len(raw) <= 8 * 1024 * 1024:
                     path = output / (name + "." + label + ".json")
                     with path.open("xb") as stream:
                         stream.write(raw)
                     fact.update(refused=False, path=path.relative_to(CHECKPOINT).as_posix())
                     if label == "stdout":
                         safe_stdout = raw
-            except Exception:
-                pass  # Neutral refusal remains observable; no raw unsafe publication.
+            except Exception as error:
+                fact.update(refused=True, errorType=type(error).__name__)
             row["streams"][label] = fact
         observations.append(row)
-        if result.returncode or safe_stdout is None:
+        if (
+            producer["status"] != "COMPLETED"
+            or producer["exitCode"] != 0
+            or execution["cleanup"]["result"] != "PASS"
+            or safe_stdout is None
+        ):
             raise ValueError("HISTORY_OBSERVATION_REFUSED")
         try:
             return json.loads(safe_stdout)
@@ -78,20 +102,44 @@ def main():
             identifier = reference.removeprefix(prefix)
             if re.fullmatch(r"[a-z0-9]{20,64}", identifier) is None:
                 raise ValueError("HISTORY_ID_SHAPE")
-            document = capture(["history", "inspect", "--format", "json", identifier], "inspect-" + identifier)
+            document = capture(
+                ["history", "inspect", "--format", "json", identifier], "inspect-" + identifier
+            )
             if type(document) is not dict:
                 raise ValueError("EXPECTED_TYPED_HISTORY_INSPECT")
-            summary.append({"id": identifier, "keys": sorted(document), "status": document.get("Status", document.get("status"))})
+            summary.append(
+                {
+                    "id": identifier,
+                    "keys": sorted(document),
+                    "status": document.get("Status", document.get("status")),
+                }
+            )
         result = "CAPTURED_NOT_OWNERSHIP_CLAIM_OR_ACCEPTANCE"
     finally:
-        write_json(output / "RECEIPT.json", {"observedAt": utc_now(), "result": result,
-                                            "builder": scope["builder"], "observations": observations,
-                                            "inspectSummary": summary})
-    print(json.dumps({"result": result, "output": output.relative_to(ROOT).as_posix(), "inspectSummary": summary}))
+        write_json(
+            output / "RECEIPT.json",
+            {
+                "observedAt": utc_now(),
+                "result": result,
+                "builder": scope["builder"],
+                "observations": observations,
+                "inspectSummary": summary,
+            },
+        )
+    print(
+        json.dumps(
+            {
+                "result": result,
+                "output": output.relative_to(ROOT).as_posix(),
+                "inspectSummary": summary,
+            }
+        )
+    )
     return 0 if result != "FAIL" else 1
 
 
 if __name__ == "__main__":
     from ledger_common import use_utf8_stdout
+
     use_utf8_stdout()
     raise SystemExit(main())

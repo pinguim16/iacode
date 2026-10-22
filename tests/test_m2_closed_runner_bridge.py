@@ -14,22 +14,27 @@ import unittest
 import urllib.error
 import urllib.request
 from pathlib import Path
+from typing import override
 
-ROOT = Path(__file__).resolve().parents[1]
-SPEC = importlib.util.spec_from_file_location(
-    "m2_closed_runner_bridge",
-    ROOT / "scripts/development-ledger/audit_runner_bridge.py")
-bridge_module = importlib.util.module_from_spec(SPEC)
-sys.modules[SPEC.name] = bridge_module
-SPEC.loader.exec_module(bridge_module)
-sys.path.insert(0, str(ROOT / "scripts/iacode"))
-sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts/iacode"))
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts/development-ledger"))
 from ledger_common import find_secrets
 from native_process import WindowsJob
 
+ROOT = Path(__file__).resolve().parents[1]
+SPEC = importlib.util.spec_from_file_location(
+    "m2_closed_runner_bridge", ROOT / "scripts/development-ledger/audit_runner_bridge.py"
+)
+bridge_module = importlib.util.module_from_spec(SPEC)
+sys.modules[SPEC.name] = bridge_module
+SPEC.loader.exec_module(bridge_module)
 
-@unittest.skipUnless(os.name == "nt", "The isolated bridge uses the actual Windows Job Object boundary")
+
+@unittest.skipUnless(
+    os.name == "nt", "The isolated bridge uses the actual Windows Job Object boundary"
+)
 class BridgeTests(unittest.TestCase):
+    @override
     def setUp(self):
         self.temporary = tempfile.TemporaryDirectory(prefix="iacode-m2-bridge-tests-")
         self.addCleanup(self.temporary.cleanup)
@@ -40,8 +45,13 @@ class BridgeTests(unittest.TestCase):
 
     def service(self, jobs=None, factory=WindowsJob):
         value = bridge_module.ClosedBridge(
-            self.frozen, jobs or {"null": bridge_module.Job((sys.executable, str(self.source)), 10)},
-            dict(os.environ), find_secrets, factory, (Path(sys.executable),))
+            self.frozen,
+            jobs or {"null": bridge_module.Job((sys.executable, str(self.source)), 10)},
+            dict(os.environ),
+            find_secrets,
+            factory,
+            (Path(sys.executable),),
+        )
         server = value.listen()
         threading.Thread(target=server.serve_forever, daemon=True).start()
         self.addCleanup(value.close)
@@ -53,9 +63,12 @@ class BridgeTests(unittest.TestCase):
         if body is not None:
             headers["Content-Type"] = "application/json"
         request = urllib.request.Request(
-            f"http://127.0.0.1:{bridge.server.server_port}{path}", body, headers)
+            f"http://127.0.0.1:{bridge.server.server_port}{path}", body, headers
+        )
         try:
-            with urllib.request.build_opener(urllib.request.ProxyHandler({})).open(request, timeout=5) as response:
+            with urllib.request.build_opener(urllib.request.ProxyHandler({})).open(
+                request, timeout=5
+            ) as response:
                 return response.status, response.read()
         except urllib.error.HTTPError as error:
             return error.code, error.read()
@@ -71,25 +84,36 @@ class BridgeTests(unittest.TestCase):
         bridge = self.service()
         result = self.execute(bridge)
         self.assertEqual("PASS", result["result"])
-        self.assertEqual(b"PRODUCER_NULL_OK\r\n" if os.name == "nt" else b"PRODUCER_NULL_OK\n",
-                         bridge.artifacts["null"]["stdout.log"])
+        self.assertEqual(
+            b"PRODUCER_NULL_OK\r\n" if os.name == "nt" else b"PRODUCER_NULL_OK\n",
+            bridge.artifacts["null"]["stdout.log"],
+        )
         worker = bridge.worker
         self.assertEqual(result, self.execute(bridge))
         self.assertIs(worker, bridge.worker)
 
     def test_unknown_extra_argv_env_source_duplicate_and_path_refused(self):
         bridge = self.service()
-        for body in (b'{"job":"null","argv":["docker","ps"]}',
-                     b'{"job":"null","env":{}}', b'{"job":"null","source":"x"}',
-                     b'{"job":"null","job":"null"}', b'{"job":"../null"}',
-                     b'{"job":"unknown"}', b'[]', b'{"job":4}', b'x' * 257):
+        for body in (
+            b'{"job":"null","argv":["docker","ps"]}',
+            b'{"job":"null","env":{}}',
+            b'{"job":"null","source":"x"}',
+            b'{"job":"null","job":"null"}',
+            b'{"job":"../null"}',
+            b'{"job":"unknown"}',
+            b"[]",
+            b'{"job":4}',
+            b"x" * 257,
+        ):
             self.assertEqual(400, self.request(bridge, "/jobs", body)[0])
         self.assertIsNone(bridge.worker)
 
     def test_capability_origin_and_artifact_traversal_refused(self):
         bridge = self.service()
         self.assertEqual(403, self.request(bridge, "/catalog", capability=False)[0])
-        self.assertEqual(403, self.request(bridge, "/catalog", Origin="http://untrusted.invalid")[0])
+        self.assertEqual(
+            403, self.request(bridge, "/catalog", Origin="http://untrusted.invalid")[0]
+        )
         self.execute(bridge)
         self.assertEqual(404, self.request(bridge, "/artifacts/null/../../runner.py")[0])
         self.assertEqual(404, self.request(bridge, "/artifacts/null/%2e%2e")[0])
@@ -107,10 +131,13 @@ class BridgeTests(unittest.TestCase):
             self.frozen.verify()
 
     def test_primary_nonzero_survives_postprocessing_failure(self):
-        self.source.write_text("print('ADVERSE_PRODUCER'); raise SystemExit(23)\n", encoding="utf-8")
+        self.source.write_text(
+            "print('ADVERSE_PRODUCER'); raise SystemExit(23)\n", encoding="utf-8"
+        )
         self.frozen = bridge_module.FrozenInputs(self.root, [self.source])
-        bridge = self.service({"null": bridge_module.Job((sys.executable, str(self.source)), 10,
-                                                       ("absent.json",))})
+        bridge = self.service(
+            {"null": bridge_module.Job((sys.executable, str(self.source)), 10, ("absent.json",))}
+        )
         result = self.execute(bridge)
         self.assertEqual(23, result["producer"]["exitCode"])
         self.assertEqual("PASS", result["cleanup"]["result"])
@@ -132,7 +159,9 @@ class BridgeTests(unittest.TestCase):
         self.assertIn(b"PRODUCER_NULL_OK", bridge.artifacts["null"]["stdout.log"])
 
     def test_timeout_observation_and_exact_job_cleanup(self):
-        self.source.write_text("import time\nprint('BEFORE_TIMEOUT', flush=True)\ntime.sleep(30)\n", encoding="utf-8")
+        self.source.write_text(
+            "import time\nprint('BEFORE_TIMEOUT', flush=True)\ntime.sleep(30)\n", encoding="utf-8"
+        )
         self.frozen = bridge_module.FrozenInputs(self.root, [self.source])
         bridge = self.service({"null": bridge_module.Job((sys.executable, str(self.source)), 1)})
         result = self.execute(bridge)
@@ -160,9 +189,11 @@ class BridgeTests(unittest.TestCase):
         self.assertEqual("FAIL", result["result"])
 
     def test_secret_encoding_size_and_scanner_fail_closed_with_exact_digest(self):
-        cases = [(b"x" * 1025, lambda _text: [], 1024, "OUTPUT_LIMIT"),
-                 (b"\xff", lambda _text: [], 1024, "OUTPUT_ENCODING"),
-                 (b"safe", lambda _text: ["detected"], 1024, "UNSAFE_OUTPUT")]
+        cases = [
+            (b"x" * 1025, lambda _text: [], 1024, "OUTPUT_LIMIT"),
+            (b"\xff", lambda _text: [], 1024, "OUTPUT_ENCODING"),
+            (b"safe", lambda _text: ["detected"], 1024, "UNSAFE_OUTPUT"),
+        ]
 
         def failed(_text):
             raise RuntimeError("scanner detail")

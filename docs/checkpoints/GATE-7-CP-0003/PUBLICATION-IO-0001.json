@@ -1,0 +1,31 @@
+{
+  "kind": "OPERATIONAL_WRITE_FAILURE_NOT_A_PRODUCT_OR_INDEPENDENT_VERDICT",
+  "status": "RECOVERED_BY_UNCHANGED_RETRY",
+  "sourceFingerprint": "783fac502c9de3ff092996efd59b3fb6a72c9c3b866913a75795433945794668",
+  "subjectBeforePublication": "477ec86f09c5e03ad328cf40a3725855b3526bad",
+  "originalFailure": {"command": "cmd-0356", "exitCode": 1, "error": "OSError errno22 opening FILES.json for writing"},
+  "safeRefusal": {"command": "cmd-0357", "exitCode": 1, "observation": "Staging refused undeclared paths before Git mutation"},
+  "nonAcceptingOldIndexObservation": {"command": "cmd-0358", "compared": 250, "note": "Read-only old-index comparison after the refused stage; not current publication acceptance"},
+  "intactInventoryObserved": {
+    "bytes": 252747,
+    "sha256": "f8e1eed8fce40503de20ca52f371dd32acb00f84ab9c6e42c269892a63b84855",
+    "filesCreated": 806,
+    "filesModified": 14,
+    "attributes": ["Archive", "Compressed"],
+    "lastWriteUtc": "2026-10-22T05:46:25Z",
+    "jsonReadable": true,
+    "freeSpaceBytesObserved": 321920905216,
+    "branchAndHeadUnchanged": true,
+    "indexEmptyBeforeRetry": true
+  },
+  "unchangedRetry": {"command": "cmd-0359", "exitCode": 0, "filesCreated": 810, "filesModified": 14},
+  "actualStage": {"command": "cmd-0360", "exitCode": 0},
+  "actualCurrentIndexProof": {"command": "cmd-0361", "exitCode": 0, "compared": 393, "mismatches": 0},
+  "rootCause": "UNDETERMINED; neither file attributes nor timing establish an actor or cause",
+  "dataLossObserved": false,
+  "implementationOrDetectorChanged": false,
+  "globalConfigurationOrPermissionsChanged": false,
+  "applicationsRestarted": false,
+  "failureRecordsPreserved": true,
+  "gateAcceptanceGranted": false
+}

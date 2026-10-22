@@ -107,7 +107,7 @@ Expected set derived by: `policies.expected_requirement_refs over docs/GATE-7-CH
 | `LESSON-REQ-0050` | `lesson:LSN-0051` | yes | `NOT_STARTED` | Verify a payload one service bounds for another must be bounded as the receiver measures it | LESSON-PREFLIGHT.json LESSON-REQ-0050 |
 | `LESSON-REQ-0051` | `lesson:LSN-0052` | yes | `NOT_STARTED` | Verify two processes that meet on a queue must name what crosses it once, and a real run must exercise both | LESSON-PREFLIGHT.json LESSON-REQ-0051 |
 | `LESSON-REQ-0052` | `lesson:LSN-0053` | yes | `NOT_STARTED` | Verify a process sweep that reads what a forking process holds waits on the processes it has to kill | LESSON-PREFLIGHT.json LESSON-REQ-0052 |
-| `LESSON-REQ-0053` | `lesson:LSN-0054` | no | `NOT_STARTED` | Verify a pre-push check narrower than the change's reach lets a red gate reach the public remote | LESSON-PREFLIGHT.json LESSON-REQ-0053 |
+| `LESSON-REQ-0053` | `lesson:LSN-0054` | no | `PARTIAL` | Verify a pre-push check narrower than the change's reach lets a red gate reach the public remote | LESSON-PREFLIGHT.json LESSON-REQ-0053 |
 | `LESSON-REQ-0054` | `lesson:LSN-0055` | yes | `NOT_STARTED` | Verify a contract a model must follow has to reach the model, rendered from the definition the parser enforces | LESSON-PREFLIGHT.json LESSON-REQ-0054 |
 | `LESSON-REQ-0055` | `lesson:LSN-0056` | yes | `NOT_STARTED` | Verify a result is accepted only from the executor that owns the request, decided when the request is created | LESSON-PREFLIGHT.json LESSON-REQ-0055 |
 | `LESSON-REQ-0056` | `lesson:LSN-0057` | yes | `NOT_STARTED` | Verify a pinned lock can become unsafe without changing, so advisory state is live evidence | LESSON-PREFLIGHT.json LESSON-REQ-0056 |
@@ -158,7 +158,7 @@ Expected set derived by: `policies.expected_requirement_refs over docs/GATE-7-CH
 | `LESSON-REQ-0101` | `lesson:LSN-0102` | yes | `NOT_STARTED` | Verify assurance denominators must derive category counts from the current source set | LESSON-PREFLIGHT.json LESSON-REQ-0101 |
 | `LESSON-REQ-0102` | `lesson:LSN-0103` | yes | `NOT_STARTED` | Verify adversarial fixtures must hash the complete validated contract | LESSON-PREFLIGHT.json LESSON-REQ-0102 |
 | `LESSON-REQ-0103` | `lesson:LSN-0104` | yes | `NOT_STARTED` | Verify intermediate closure and independent validation must have unambiguous contracts | LESSON-PREFLIGHT.json LESSON-REQ-0103 |
-| `LESSON-REQ-0104` | `lesson:LSN-0105` | yes | `NOT_STARTED` | Verify new behavioral tests must satisfy the unchanged source-quality contract | LESSON-PREFLIGHT.json LESSON-REQ-0104 |
+| `LESSON-REQ-0104` | `lesson:LSN-0105` | yes | `PARTIAL` | Verify new behavioral tests must satisfy the unchanged source-quality contract | LESSON-PREFLIGHT.json LESSON-REQ-0104 |
 | `LESSON-REQ-0105` | `lesson:LSN-0106` | yes | `NOT_STARTED` | Verify a security repair must execute at the causal output boundary, not a similarly shaped branch | LESSON-PREFLIGHT.json LESSON-REQ-0105 |
 | `LESSON-REQ-0106` | `lesson:LSN-0107` | yes | `NOT_STARTED` | Verify an adversarial marker must satisfy the canonical detector before it can judge containment | LESSON-PREFLIGHT.json LESSON-REQ-0106 |
 | `LESSON-REQ-0107` | `lesson:LSN-0108` | yes | `NOT_STARTED` | Verify evidence timestamp transport must preserve RFC3339 rather than a shell locale rendering | LESSON-PREFLIGHT.json LESSON-REQ-0107 |
@@ -193,7 +193,7 @@ Expected set derived by: `policies.expected_requirement_refs over docs/GATE-7-CH
 | `LESSON-REQ-0136` | `lesson:LSN-0137` | yes | `NOT_STARTED` | Verify sQL text interprets inline JSON colons as bindings | LESSON-PREFLIGHT.json LESSON-REQ-0136 |
 | `LESSON-REQ-0137` | `lesson:LSN-0138` | yes | `NOT_STARTED` | Verify secret projection distinguishes public identities from authorization secrets | LESSON-PREFLIGHT.json LESSON-REQ-0137 |
 | `LESSON-REQ-0138` | `lesson:LSN-0139` | yes | `NOT_STARTED` | Verify privacy projection begins in the source query | LESSON-PREFLIGHT.json LESSON-REQ-0138 |
-| `LESSON-REQ-0139` | `lesson:LSN-0140` | yes | `NOT_STARTED` | Verify summaries preserve canonical continuation structure | LESSON-PREFLIGHT.json LESSON-REQ-0139 |
+| `LESSON-REQ-0139` | `lesson:LSN-0140` | yes | `PARTIAL` | Verify summaries preserve canonical continuation structure | LESSON-PREFLIGHT.json LESSON-REQ-0139 |
 | `LESSON-REQ-0140` | `lesson:LSN-0141` | yes | `NOT_STARTED` | Verify preflight checks honor every declared applicability dimension | LESSON-PREFLIGHT.json LESSON-REQ-0140 |
 | `LESSON-REQ-0141` | `lesson:LSN-0142` | yes | `PARTIAL` | Verify local Engine recovery keeps transport and cleanup scoped | LESSON-PREFLIGHT.json LESSON-REQ-0141 |
 | `LESSON-REQ-0142` | `lesson:LSN-0143` | yes | `PARTIAL` | Verify management recovery is not complete runtime capability | LESSON-PREFLIGHT.json LESSON-REQ-0142 |

@@ -119,7 +119,7 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 | `LESSON-REQ-0050` | LESSON | `lesson:LSN-0051` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify a payload one service bounds for another must be bounded as the receiver measures it |
 | `LESSON-REQ-0051` | LESSON | `lesson:LSN-0052` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify two processes that meet on a queue must name what crosses it once, and a real run must exercise both |
 | `LESSON-REQ-0052` | LESSON | `lesson:LSN-0053` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify a process sweep that reads what a forking process holds waits on the processes it has to kill |
-| `LESSON-REQ-0053` | LESSON | `lesson:LSN-0054` | no | `NOT_STARTED` | `NOT_STARTED` | Verify a pre-push check narrower than the change's reach lets a red gate reach the public remote |
+| `LESSON-REQ-0053` | LESSON | `lesson:LSN-0054` | no | `PARTIAL` | `PARTIAL` | Verify a pre-push check narrower than the change's reach lets a red gate reach the public remote |
 | `LESSON-REQ-0054` | LESSON | `lesson:LSN-0055` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify a contract a model must follow has to reach the model, rendered from the definition the parser enforces |
 | `LESSON-REQ-0055` | LESSON | `lesson:LSN-0056` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify a result is accepted only from the executor that owns the request, decided when the request is created |
 | `LESSON-REQ-0056` | LESSON | `lesson:LSN-0057` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify a pinned lock can become unsafe without changing, so advisory state is live evidence |
@@ -170,7 +170,7 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 | `LESSON-REQ-0101` | LESSON | `lesson:LSN-0102` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify assurance denominators must derive category counts from the current source set |
 | `LESSON-REQ-0102` | LESSON | `lesson:LSN-0103` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify adversarial fixtures must hash the complete validated contract |
 | `LESSON-REQ-0103` | LESSON | `lesson:LSN-0104` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify intermediate closure and independent validation must have unambiguous contracts |
-| `LESSON-REQ-0104` | LESSON | `lesson:LSN-0105` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify new behavioral tests must satisfy the unchanged source-quality contract |
+| `LESSON-REQ-0104` | LESSON | `lesson:LSN-0105` | yes | `PARTIAL` | `PARTIAL` | Verify new behavioral tests must satisfy the unchanged source-quality contract |
 | `LESSON-REQ-0105` | LESSON | `lesson:LSN-0106` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify a security repair must execute at the causal output boundary, not a similarly shaped branch |
 | `LESSON-REQ-0106` | LESSON | `lesson:LSN-0107` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify an adversarial marker must satisfy the canonical detector before it can judge containment |
 | `LESSON-REQ-0107` | LESSON | `lesson:LSN-0108` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify evidence timestamp transport must preserve RFC3339 rather than a shell locale rendering |
@@ -205,7 +205,7 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 | `LESSON-REQ-0136` | LESSON | `lesson:LSN-0137` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify sQL text interprets inline JSON colons as bindings |
 | `LESSON-REQ-0137` | LESSON | `lesson:LSN-0138` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify secret projection distinguishes public identities from authorization secrets |
 | `LESSON-REQ-0138` | LESSON | `lesson:LSN-0139` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify privacy projection begins in the source query |
-| `LESSON-REQ-0139` | LESSON | `lesson:LSN-0140` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify summaries preserve canonical continuation structure |
+| `LESSON-REQ-0139` | LESSON | `lesson:LSN-0140` | yes | `PARTIAL` | `PARTIAL` | Verify summaries preserve canonical continuation structure |
 | `LESSON-REQ-0140` | LESSON | `lesson:LSN-0141` | yes | `NOT_STARTED` | `NOT_STARTED` | Verify preflight checks honor every declared applicability dimension |
 | `LESSON-REQ-0141` | LESSON | `lesson:LSN-0142` | yes | `PARTIAL` | `PARTIAL` | Verify local Engine recovery keeps transport and cleanup scoped |
 | `LESSON-REQ-0142` | LESSON | `lesson:LSN-0143` | yes | `PARTIAL` | `PARTIAL` | Verify management recovery is not complete runtime capability |
@@ -1366,12 +1366,13 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 
 - Source reference: LESSON-PREFLIGHT.json LESSON-REQ-0053
 - Description: Verify a pre-push check narrower than the change's reach lets a red gate reach the public remote
-- Implementation: _none_
-- Test: _none_
-- Negative test: _none_
-- Documentation: _none_
+- Implementation: `file:docs/checkpoints/GATE-7-CP-0003/audit-harness/publish_progress.py`
+- Test: `file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/publication-policy/run-0003.json`
+- Negative test: `file:docs/checkpoints/GATE-7-CP-0003/PRE-PUSH-LINT-0001.json`, `file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/publication-policy/run-0001.json`
+- Documentation: `checkpoint:PRE-PUSH-LINT-0001.json`, `file:docs/DEVELOPMENT-CONTRACT.md`
 - Validation: _none_
-- Guardrail: _none_
+- Guardrail: `test:PublicationCallerTests.test_actual_publisher_checks_current_lint_before_publication_effects`, `test:PublicationCallerTests.test_archived_actual_publisher_without_precondition_is_rejected`
+- Justification: Publisher boundary repaired with actual caller and modeled metadata controls; real current lint and new properly preceded publication remain due.
 
 ### LESSON-REQ-0054 - lesson:LSN-0055
 
@@ -1928,12 +1929,13 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 
 - Source reference: LESSON-PREFLIGHT.json LESSON-REQ-0104
 - Description: Verify new behavioral tests must satisfy the unchanged source-quality contract
-- Implementation: _none_
-- Test: _none_
-- Negative test: _none_
-- Documentation: _none_
-- Validation: _none_
-- Guardrail: _none_
+- Implementation: `file:docs/checkpoints/GATE-7-CP-0003/audit-harness/authored_python_quality.py`, `file:docs/checkpoints/GATE-7-CP-0003/audit-harness/publish_progress.py`
+- Test: `checkpoint:quality-attempts/helper-quality/run-0021/RECEIPT.json`, `checkpoint:causal-attempts/all-m2/run-0005.json`
+- Negative test: `checkpoint:quality-attempts/helper-quality/run-0001/RECEIPT.json`
+- Documentation: `checkpoint:AUTHORED-STYLE-LOCAL-RESTORATION.json`, `file:.iacode/memory/retrospectives/GATE-7-CP-0003.md`
+- Validation: `checkpoint:quality-attempts/lint/run-0012.json`
+- Guardrail: `test:PublicationCallerTests.test_actual_publisher_checks_current_lint_before_publication_effects`, `test:AuthoredQualityDecisionTests.test_missing_stale_narrowed_format_and_nonzero_proofs_are_refused`
+- Justification: Local source quality and publication prevention are restored; complete current immutable assurance remains due.
 
 ### LESSON-REQ-0105 - lesson:LSN-0106
 
@@ -2149,7 +2151,7 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 - Source reference: LESSON-PREFLIGHT.json LESSON-REQ-0124
 - Description: Verify native parent exit is not proof of process and profile cleanup
 - Implementation: `file:docs/checkpoints/GATE-7-CP-0003/audit-harness/current_resources.py`, `file:scripts/development-ledger/audit_runner_bridge.py`
-- Test: `file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/bootstrap-ownership/run-0004.json`, `file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/resource-phase/run-0005.json`
+- Test: `file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/bootstrap-ownership/run-0004.json`, `file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/resource-phase/run-0005.json`, `file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/bootstrap-ownership/run-0007.json`, `file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/resource-phase/run-0007.json`, `file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/bootstrap-ownership/run-0008.json`, `file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/resource-phase/run-0008.json`
 - Negative test: `file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/bootstrap-ownership/run-0001.json`, `file:docs/checkpoints/GATE-7-CP-0003/resource-phases/phase-0002/BUILDER-BOOTSTRAP.json`
 - Documentation: `checkpoint:DECISIONS.md`, `checkpoint:INTERNAL-ENVIRONMENT-REWORK.json`
 - Validation: _none_
@@ -2316,12 +2318,13 @@ declared set, so a requirement cannot be dropped and the denominator cannot be r
 
 - Source reference: LESSON-PREFLIGHT.json LESSON-REQ-0139
 - Description: Verify summaries preserve canonical continuation structure
-- Implementation: _none_
-- Test: _none_
-- Negative test: _none_
-- Documentation: _none_
-- Validation: _none_
-- Guardrail: _none_
+- Implementation: `file:tests/test_m2_continuation.py`, `file:.iacode/memory/retrospectives/GATE-7-CP-0003.md`
+- Test: `checkpoint:causal-attempts/all-m2/run-0005.json`
+- Negative test: `checkpoint:continuation-attempts/run-0001/RECEIPT.json`, `checkpoint:causal-attempts/all-m2/run-0003.json`
+- Documentation: `checkpoint:CONTINUATION-LOCAL-RESTORATION.json`, `checkpoint:HANDOFF.md`, `checkpoint:NEXT.md`
+- Validation: `checkpoint:quality-attempts/lint/run-0012.json`
+- Guardrail: `test:CorrectiveContinuationTests.test_actual_retrospectives_keep_exact_sections_and_every_recorded_lesson_guard`, `test:CorrectiveContinuationTests.test_current_positive_and_omission_empty_extra_order_and_lesson_growth_controls`
+- Justification: Current corrective/current document controls and local guard restoration are demonstrated; complete immutable assurance remains due.
 
 ### LESSON-REQ-0140 - lesson:LSN-0141
 

@@ -1,0 +1,226 @@
+S108 Probable insecure usage of temporary file or directory: "/tmp:rw,nosuid,size=67108864"
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/authored_python_quality.py:96:13
+   |
+94 |             "--read-only",
+95 |             "--tmpfs",
+96 |             "/tmp:rw,nosuid,size=67108864",
+   |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+97 |             "--env",
+98 |             "RUFF_CACHE_DIR=/tmp/ruff-cache",
+   |
+
+S110 `try`-`except`-`pass` detected, consider logging the exception
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/capture_owned_build_history.py:64:13
+   |
+62 |                       if label == "stdout":
+63 |                           safe_stdout = raw
+64 | /             except Exception:
+65 | |                 pass  # Neutral refusal remains observable; no raw unsafe publication.
+   | |____________________^
+66 |               row["streams"][label] = fact
+67 |           observations.append(row)
+   |
+
+S110 `try`-`except`-`pass` detected, consider logging the exception
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/diagnose_owned_builder.py:52:9
+   |
+50 |                       stream.write(raw)
+51 |                   fact.update(refused=False, path=path.relative_to(ROOT).as_posix())
+52 | /         except Exception:
+53 | |             pass  # Explicit neutral refusal is retained; no arbitrary exception text.
+   | |________________^
+54 |           receipt["streams"][name] = fact
+55 |       write_json(stem.with_suffix(".json"), receipt)
+   |
+
+SIM115 Use a context manager for opening files
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/native_execution_candidate.py:28:14
+   |
+26 | @contextmanager
+27 | def owned_capture(release: dict):
+28 |     stream = tempfile.TemporaryFile()
+   |              ^^^^^^^^^^^^^^^^^^^^^^
+29 |     try:
+30 |         yield stream
+   |
+
+SIM105 Use `contextlib.suppress(ProcessLookupError)` instead of `try`-`except`-`pass`
+   --> docs/checkpoints/GATE-7-CP-0003/audit-harness/native_execution_candidate.py:186:21
+    |
+184 |                       }
+185 |                   elif process is not None:
+186 | /                     try:
+187 | |                         os.killpg(process.pid, signal.SIGKILL)
+188 | |                     except ProcessLookupError:
+189 | |                         pass  # Only the exact owned session group is absent.
+    | |____________________________^
+190 |                       cleanup = {"result": "PASS", "observation": None}
+191 |               except NativeJobCleanupError as error:
+    |
+help: Replace `try`-`except`-`pass` with `with contextlib.suppress(ProcessLookupError): ...`
+
+S110 `try`-`except`-`pass` detected, consider logging the exception
+   --> docs/checkpoints/GATE-7-CP-0003/audit-harness/probe_bridge_boundary.py:115:13
+    |
+113 |                   if len(raw) <= 262144 and capability not in text and not find_secrets(text):
+114 |                       item.update(text=text, refused=False)
+115 | /             except Exception:
+116 | |                 pass  # Remains an explicit neutral refusal, never raw publication.
+    | |____________________^
+117 |               streams[name] = item
+118 |           unexpected_write = target.exists()
+    |
+
+S110 `try`-`except`-`pass` detected, consider logging the exception
+   --> docs/checkpoints/GATE-7-CP-0003/audit-harness/prove_canonical_bridge.py:162:17
+    |
+160 |                           (output / (name + ".log")).write_bytes(raw)
+161 |                           receipt[name]["refused"] = False
+162 | /                 except Exception:
+163 | |                     pass  # Explicit refusal remains; raw stream is never published.
+    | |________________________^
+164 |           finally:
+165 |               bridge.close()
+    |
+
+F821 Undefined name `SPEC`
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/test_owned_cleanup_operator.py:20:1
+   |
+18 | from unittest.mock import patch
+19 |
+20 | SPEC.loader.exec_module(scope_module)
+   | ^^^^
+21 | from ledger_common import load_json, write_json
+   |
+
+F821 Undefined name `scope_module`
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/test_owned_cleanup_operator.py:20:25
+   |
+18 | from unittest.mock import patch
+19 |
+20 | SPEC.loader.exec_module(scope_module)
+   |                         ^^^^^^^^^^^^
+21 | from ledger_common import load_json, write_json
+   |
+
+E402 Module level import not at top of file
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/test_owned_cleanup_operator.py:21:1
+   |
+20 | SPEC.loader.exec_module(scope_module)
+21 | from ledger_common import load_json, write_json
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+22 |
+23 | HERE = Path(__file__).resolve().parent
+   |
+help: Move module level imports to top of file
+
+SIM117 Use a single `with` statement with multiple contexts instead of nested `with` statements
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/test_owned_cleanup_operator.py:78:9
+   |
+76 |           target = self.checkpoint / "OWNED-RESOURCE-CLEANUP.json"
+77 |           target.write_bytes(b"PRIOR_OBSERVATION_MUST_NOT_CHANGE")
+78 | /         with patch.object(scope_module, "child_environment") as environment:
+79 | |             with self.assertRaises(ValueError):
+   | |_______________________________________________^
+80 |                   scope_module.cleanup()
+81 |           environment.assert_not_called()
+   |
+help: Combine `with` statements
+
+SIM117 Use a single `with` statement with multiple contexts instead of nested `with` statements
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/test_resource_phase.py:79:9
+   |
+77 |           )
+78 |           write_json(self.checkpoint / "ACTIVE-DOCKER-PHASE.json", self.marker)
+79 | /         with patch.object(phase.operator, "docker") as engine:
+80 | |             with self.assertRaises(ValueError):
+   | |_______________________________________________^
+81 |                   phase.child_environment()
+82 |           engine.assert_not_called()
+   |
+help: Combine `with` statements
+
+SIM117 Use a single `with` statement with multiple contexts instead of nested `with` statements
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/test_resource_phase.py:86:9
+   |
+84 |       def test_existing_pointer_refuses_new_phase_before_engine_access(self):
+85 |           original = self.path.read_bytes()
+86 | /         with patch.object(phase.operator, "prepare") as creation:
+87 | |             with self.assertRaisesRegex(ValueError, "DO_NOT_REPLACE_RESOURCE_PHASE_POINTER"):
+   | |_____________________________________________________________________________________________^
+88 |                   phase.prepare()
+89 |           creation.assert_not_called()
+   |
+help: Combine `with` statements
+
+SIM117 Use a single `with` statement with multiple contexts instead of nested `with` statements
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/test_resource_phase.py:94:9
+   |
+92 |       def test_actual_hardlinked_receipt_is_refused(self):
+93 |           os.link(self.path, self.directory / "linked-receipt.json")
+94 | /         with patch.object(phase.operator, "docker") as engine:
+95 | |             with self.assertRaisesRegex(ValueError, "LINKED_RESOURCE_PHASE"):
+   | |_____________________________________________________________________________^
+96 |                   phase.child_environment()
+97 |           engine.assert_not_called()
+   |
+help: Combine `with` statements
+
+SIM117 Use a single `with` statement with multiple contexts instead of nested `with` statements
+   --> docs/checkpoints/GATE-7-CP-0003/audit-harness/test_resource_phase.py:140:9
+    |
+138 |           for path, raw in original.items():
+139 |               self.assertEqual(raw, path.read_bytes())
+140 | /         with patch.object(phase.operator, "snapshot") as query:
+141 | |             with self.assertRaises(ValueError):
+    | |_______________________________________________^
+142 |                   phase.operator.cleanup(self.path)
+143 |           query.assert_not_called()
+    |
+help: Combine `with` statements
+
+F821 Undefined name `SPEC`
+  --> tests/test_m2_cleanup_operator.py:20:1
+   |
+18 | from unittest.mock import patch
+19 |
+20 | SPEC.loader.exec_module(scope_module)
+   | ^^^^
+21 | from ledger_common import load_json, write_json
+   |
+
+F821 Undefined name `scope_module`
+  --> tests/test_m2_cleanup_operator.py:20:25
+   |
+18 | from unittest.mock import patch
+19 |
+20 | SPEC.loader.exec_module(scope_module)
+   |                         ^^^^^^^^^^^^
+21 | from ledger_common import load_json, write_json
+   |
+
+E402 Module level import not at top of file
+  --> tests/test_m2_cleanup_operator.py:21:1
+   |
+20 | SPEC.loader.exec_module(scope_module)
+21 | from ledger_common import load_json, write_json
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+22 |
+23 | HERE = Path(__file__).resolve().parents[1] / "docs/checkpoints/GATE-7-CP-0003/audit-harness"
+   |
+help: Move module level imports to top of file
+
+SIM117 Use a single `with` statement with multiple contexts instead of nested `with` statements
+  --> tests/test_m2_cleanup_operator.py:78:9
+   |
+76 |           target = self.checkpoint / "OWNED-RESOURCE-CLEANUP.json"
+77 |           target.write_bytes(b"PRIOR_OBSERVATION_MUST_NOT_CHANGE")
+78 | /         with patch.object(scope_module, "child_environment") as environment:
+79 | |             with self.assertRaises(ValueError):
+   | |_______________________________________________^
+80 |                   scope_module.cleanup()
+81 |           environment.assert_not_called()
+   |
+help: Combine `with` statements
+
+Found 72 errors (53 fixed, 19 remaining).

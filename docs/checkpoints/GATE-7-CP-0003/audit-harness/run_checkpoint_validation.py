@@ -29,8 +29,9 @@ def main() -> int:
     use_utf8_stdout()
     synchronize(ROOT, CHECKPOINT)
     refresh_declared_hashes(ROOT, CHECKPOINT)
-    return subprocess.run([sys.executable, "scripts/development-ledger/validate_checkpoint.py"],
-                          cwd=ROOT, check=False).returncode
+    return subprocess.run(
+        [sys.executable, "scripts/development-ledger/validate_checkpoint.py"], cwd=ROOT, check=False
+    ).returncode
 
 
 if __name__ == "__main__":

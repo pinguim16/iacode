@@ -10,17 +10,20 @@ import sys
 import tempfile
 import unittest
 from pathlib import Path
+from typing import override
 from unittest import mock
 
-ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
-sys.path.insert(0, str(ROOT / "scripts/iacode"))
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts/development-ledger"))
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts/iacode"))
 
 import client_checks
 from promotion_fixture import copy_ledger_runtime
 
+ROOT = Path(__file__).resolve().parents[1]
+
 
 class CheckpointInvocationProducerTests(unittest.TestCase):
+    @override
     def setUp(self) -> None:
         self.owner = tempfile.TemporaryDirectory(prefix="iacode-literal-producer-")
         self.addCleanup(self.owner.cleanup)
@@ -30,13 +33,34 @@ class CheckpointInvocationProducerTests(unittest.TestCase):
         (self.root / "START-HERE.md").write_text("# Isolated fixture\n", encoding="utf-8")
         (self.root / "docs/checkpoints").mkdir(parents=True)
         self.run_child(["git", "init", "-b", "main"])
-        self.run_child(["git", "-c", "user.name=Fixture", "-c",
-                        "user.email=fixture@example.invalid", "commit", "--allow-empty", "-m", "fixture"])
+        self.run_child(
+            [
+                "git",
+                "-c",
+                "user.name=Fixture",
+                "-c",
+                "user.email=fixture@example.invalid",
+                "commit",
+                "--allow-empty",
+                "-m",
+                "fixture",
+            ]
+        )
         self.script = "scripts/development-ledger/new_checkpoint.py"
 
-    def run_child(self, argv: list[str] | str, cwd: Path | None = None) -> subprocess.CompletedProcess:
-        result = subprocess.run(argv, cwd=cwd or self.root, capture_output=True, text=True,
-                                encoding="utf-8", errors="strict", timeout=30, check=False)
+    def run_child(
+        self, argv: list[str] | str, cwd: Path | None = None
+    ) -> subprocess.CompletedProcess:
+        result = subprocess.run(
+            argv,
+            cwd=cwd or self.root,
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            errors="strict",
+            timeout=30,
+            check=False,
+        )
         self.assertEqual(result.returncode, 0, result.stderr)
         return result
 
@@ -65,8 +89,9 @@ class CheckpointInvocationProducerTests(unittest.TestCase):
         self.produce_and_replay(["--gate", "TEST", "--status", "IN_PROGRESS"])
 
     def test_custom_phase_and_quoted_unicode_replay_are_literal(self) -> None:
-        self.produce_and_replay(["--phase", 'Auditoria ç "quoted" C:\\phase\\',
-                                 "--gate=TEST", "--root=."])
+        self.produce_and_replay(
+            ["--phase", 'Auditoria ç "quoted" C:\\phase\\', "--gate=TEST", "--root=."]
+        )
 
     def test_omitted_default_status_is_not_invented(self) -> None:
         self.produce_and_replay(["--gate", "TEST"])
@@ -89,8 +114,13 @@ class CheckpointInvocationProducerTests(unittest.TestCase):
     def test_registered_m2_attack_reproduces_old_phase_escape_with_valid_null(self) -> None:
         from m0_red_team import Fixture, build_attacks
 
-        old = subprocess.run(["git", "show", "823cf164c6931dab7f957c92721ded7a916655bd:" + self.script],
-                             cwd=ROOT, capture_output=True, timeout=30, check=True).stdout
+        old = subprocess.run(
+            ["git", "show", "823cf164c6931dab7f957c92721ded7a916655bd:" + self.script],
+            cwd=ROOT,
+            capture_output=True,
+            timeout=30,
+            check=True,
+        ).stdout
         # Exact immutable pre-fix producer in this disposable fixture only.
         (self.root / self.script).write_bytes(old)
         fixture = Fixture.__new__(Fixture)
@@ -102,9 +132,14 @@ class CheckpointInvocationProducerTests(unittest.TestCase):
 
 
 class ClientProducerCleanupEvidenceTests(unittest.TestCase):
-    def execute(self, producer_exit: int = 0, cleanup_exit: int = 0,
-                producer_mode: str = "exit", cleanup_mode: str = "exit",
-                output: str = "producer-out ç") -> tuple[object, list[list[str]], Path]:
+    def execute(
+        self,
+        producer_exit: int = 0,
+        cleanup_exit: int = 0,
+        producer_mode: str = "exit",
+        cleanup_mode: str = "exit",
+        output: str = "producer-out ç",
+    ) -> tuple[object, list[list[str]], Path]:
         actual_run = subprocess.run
         calls: list[list[str]] = []
         capsule_path: list[Path] = []
@@ -116,13 +151,25 @@ class ClientProducerCleanupEvidenceTests(unittest.TestCase):
             if mode == "launch":
                 raise FileNotFoundError("synthetic unavailable executable")
             marker = "cleanup-out" if cleanup else output
-            error = "No such container: " + argv[-1] if mode == "absent" else (
-                "cleanup-error" if cleanup else "producer-error")
-            expression = repr(marker) if len(marker) < 10000 else repr(marker[0]) + "*" + str(len(marker))
-            code = "import sys,time; print(" + expression + ",flush=True); " + (
-                "print(" + repr(error) + ",file=sys.stderr,flush=True); "
-            ) + ("time.sleep(10)" if mode == "timeout" else
-                 "sys.exit(" + str(cleanup_exit if cleanup else producer_exit) + ")")
+            error = (
+                "No such container: " + argv[-1]
+                if mode == "absent"
+                else ("cleanup-error" if cleanup else "producer-error")
+            )
+            expression = (
+                repr(marker) if len(marker) < 10000 else repr(marker[0]) + "*" + str(len(marker))
+            )
+            code = (
+                "import sys,time; print("
+                + expression
+                + ",flush=True); "
+                + ("print(" + repr(error) + ",file=sys.stderr,flush=True); ")
+                + (
+                    "time.sleep(10)"
+                    if mode == "timeout"
+                    else "sys.exit(" + str(cleanup_exit if cleanup else producer_exit) + ")"
+                )
+            )
             options = dict(kwargs)
             options["env"] = {**os.environ, "PYTHONIOENCODING": "utf-8"}
             if mode == "timeout":
@@ -136,8 +183,10 @@ class ClientProducerCleanupEvidenceTests(unittest.TestCase):
             for project in ("cli", "vscode-extension"):
                 (directory / project / "tests").mkdir(parents=True)
 
-        with mock.patch.object(client_checks, "capsule", empty_capsule), \
-                mock.patch.object(client_checks.subprocess, "run", side_effect=transport):
+        with (
+            mock.patch.object(client_checks, "capsule", empty_capsule),
+            mock.patch.object(client_checks.subprocess, "run", side_effect=transport),
+        ):
             try:
                 outcome = client_checks.run_node(guard=True)
             except RuntimeError as exc:
@@ -211,22 +260,28 @@ class ClientProducerCleanupEvidenceTests(unittest.TestCase):
     def test_absence_of_another_owner_does_not_waive_cleanup_failure(self) -> None:
         from client_checks import _owned_container_absent
 
-        observation = {"status": "COMPLETED", "exitCode": 1,
-                       "stderr": "Error response from daemon: No such container: other-owner"}
+        observation = {
+            "status": "COMPLETED",
+            "exitCode": 1,
+            "stderr": "Error response from daemon: No such container: other-owner",
+        }
         self.assertFalse(_owned_container_absent(observation, "this-owner"))
         observation["stderr"] = "permission denied; No such container: this-owner"
         self.assertFalse(_owned_container_absent(observation, "this-owner"))
 
     def test_invalid_utf8_retains_original_digest_without_replacement_text(self) -> None:
         import hashlib
+
         from client_checks import _attempt
 
         actual_run = subprocess.run
         raw = bytes([255, 254, 65])
 
         def producer(_argv: list[str], **kwargs: object) -> subprocess.CompletedProcess:
-            return actual_run([sys.executable, "-c", "import sys;sys.stdout.buffer.write(bytes([255,254,65]))"],
-                              **kwargs)
+            return actual_run(
+                [sys.executable, "-c", "import sys;sys.stdout.buffer.write(bytes([255,254,65]))"],
+                **kwargs,
+            )
 
         with mock.patch.object(client_checks.subprocess, "run", side_effect=producer):
             _result, observation = _attempt(["docker", "run", "owned"], 30)

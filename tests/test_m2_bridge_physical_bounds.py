@@ -8,14 +8,17 @@ import sys
 import tempfile
 import unittest
 from pathlib import Path
+from typing import override
 
-ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts/development-ledger"))
 import audit_runner_bridge as bridge
 from ledger_common import find_secrets
 
+ROOT = Path(__file__).resolve().parents[1]
+
 
 class BridgePhysicalBoundsTests(unittest.TestCase):
+    @override
     def setUp(self):
         self.owner = tempfile.TemporaryDirectory(prefix="iacode-m2-physical-bounds-")
         self.addCleanup(self.owner.cleanup)
@@ -30,7 +33,9 @@ class BridgePhysicalBoundsTests(unittest.TestCase):
     def test_actual_inside_null_and_absolute_escape_refusal(self):
         frozen = bridge.FrozenInputs(self.root, [self.inside])
         frozen.verify()
-        self.assertEqual(hashlib.sha256(self.inside.read_bytes()).hexdigest(), frozen.hashes["inside.bin"])
+        self.assertEqual(
+            hashlib.sha256(self.inside.read_bytes()).hexdigest(), frozen.hashes["inside.bin"]
+        )
         with self.assertRaises(ValueError):
             bridge.FrozenInputs(self.root, [self.outside])
 
@@ -49,10 +54,16 @@ class BridgePhysicalBoundsTests(unittest.TestCase):
         (outside_directory / "fixture.bin").write_bytes(b"OUTSIDE_OWNED_FIXTURE")
         link = self.root / "redirect"
         if os.name == "nt":
-            result = subprocess.run(["cmd", "/d", "/c", "mklink", "/J", str(link), str(outside_directory)],
-                                    capture_output=True, timeout=10, check=False,
-                                    creationflags=subprocess.CREATE_NO_WINDOW)
-            self.assertEqual(0, result.returncode, "actual owned junction creation is a required premise")
+            result = subprocess.run(
+                ["cmd", "/d", "/c", "mklink", "/J", str(link), str(outside_directory)],
+                capture_output=True,
+                timeout=10,
+                check=False,
+                creationflags=subprocess.CREATE_NO_WINDOW,
+            )
+            self.assertEqual(
+                0, result.returncode, "actual owned junction creation is a required premise"
+            )
         else:
             link.symlink_to(outside_directory, target_is_directory=True)
         try:
@@ -77,10 +88,13 @@ class BridgePhysicalBoundsTests(unittest.TestCase):
 
         script = self.root / "runner.py"
         script.write_text("print('REAL_REPORT_PRODUCER')\n", encoding="utf-8")
-        actor = bridge.ClosedBridge(bridge.FrozenInputs(self.root, [script]),
-                                   {"bounds": bridge.Job((sys.executable, str(script)), 5,
-                                                         ("../outside.bin",))},
-                                   dict(os.environ), find_secrets, WindowsJob)
+        actor = bridge.ClosedBridge(
+            bridge.FrozenInputs(self.root, [script]),
+            {"bounds": bridge.Job((sys.executable, str(script)), 5, ("../outside.bin",))},
+            dict(os.environ),
+            find_secrets,
+            WindowsJob,
+        )
         actor._execute("bounds")
         observed = actor.results["bounds"]
         self.assertEqual(0, observed["producer"]["exitCode"])
@@ -94,6 +108,7 @@ class BridgePhysicalBoundsTests(unittest.TestCase):
         primary = b"OBSERVED_PREFIX"
         path.write_bytes(primary)
         with path.open("r+b") as actual:
+
             class AppendAfterFirstRead:
                 appended = False
 

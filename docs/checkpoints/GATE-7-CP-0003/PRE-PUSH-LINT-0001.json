@@ -1,0 +1,17 @@
+{
+  "recordedAt": "2026-10-22T03:56:43Z",
+  "id": "PRE-PUSH-LINT-001",
+  "kind": "INTERNAL_PROTOCOL_FAILURE_NOT_INDEPENDENT_FINDING",
+  "publicSubject": "477ec86f09c5e03ad328cf40a3725855b3526bad",
+  "publicTag": "iacode-subjects/GATE-7-CP-0003-runtime-v2",
+  "publishedLintStatus": "NOT_EXECUTED",
+  "publishedSourceFingerprint": "7c78c7a2f601f7fa13379e22196a2a1002b297a3382069206a192734d64d1aa8",
+  "nearestCompletedLintSourceFingerprint": "67c1c0fafda55559d1214e0cf3333f5f9d42428541ddc4b61165aff41ebcf2d3",
+  "requiredCheck": "LSN-0054 requires current whole lint and repository-wide scans before each push, not only later closure assurance.",
+  "rootCause": "The trusted progress publisher enforced declared scope, staged secret scan and canonical validation but omitted the existing pre-push lint precondition. Targeted component green did not satisfy the broader requirement.",
+  "historyRewritten": false,
+  "oldSubjectOrTagChanged": false,
+  "canceledCycleIsWholeAcceptance": false,
+  "canceledCycleCleanup": "PASS",
+  "canonicalCorrection": "Require successful canonical lint bound to current source and current pre-publication HEAD before any publication effects. Run actual lint and new guard controls, then publish a new immutable subject and execute fresh full assurance."
+}

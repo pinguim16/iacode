@@ -3,6 +3,18 @@
 Current Gate: GATE-7
 Current Status: IN_PROGRESS
 
+Live continuation update: final locally restored source783fac50 has actual passing82-case M2,
+91-path read-only authored quality, full canonical lint run0012, inherited denominator, phase,
+native/history, cleanup-order, byte transport, static and memory controls. LSN-0105 and LSN-0140
+were restored only after their required actual proofs; every original failure remains. No producer
+from those local checks remains active. Finish quiescent draft validation and publish an immutable
+IN_PROGRESS runtime-v3, then run all16 canonical gates and one full49-stage non-fast verifier.
+Do not append working COMMANDS/REWORK while the public Green Keeper imports its serialized ledger.
+Requirements/completeness, fresh internal Red Team/mirror, exact phase0002 disposal and sealing
+remain due before a fresh independent M2 audit. No complete quality, seal or independent verdict
+exists. Older detailed epoch observations below remain historical until the final handoff assembly.
+Never reuse historical PIDs/controllers or rewrite failed observations.
+
 RESUME-0001.json records the owner's explicit continuation after restart. Docker concerns only
 verified E:/iacode resources, without attribution of another project's update. The original
 comparison remains FAIL and the historical disposal receipts are unchanged. The separately
@@ -11,7 +23,7 @@ project control or independent boundary was waived. No new independent auditor h
 
 ## Objective
 
-Finish the Gate7 M2-F-001/M2-F-002 correction and later independent M2 audit; the latest task-owned waste cleanup is observed complete, but Gate7 is not sealed.
+Finish the Gate7 M2-F-001/M2-F-002 correction and later independent M2 audit. Original scoped disposal is complete; active phase0002 must be disposed after validation. Gate7 is not sealed.
 
 ## What was completed
 

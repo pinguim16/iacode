@@ -14,7 +14,6 @@ import sys
 import tempfile
 import uuid
 from contextlib import contextmanager
-from datetime import UTC, datetime
 from pathlib import Path
 
 CHECKPOINT = Path(__file__).resolve().parent.parent
@@ -270,7 +269,9 @@ def command(arguments: list[str], cwd: Path) -> str:
     from current_resources import child_environment
 
     environment = child_environment()
-    environment.update(GIT_TERMINAL_PROMPT="0", GCM_INTERACTIVE="Never", GIT_ASKPASS="", SSH_ASKPASS="")
+    environment.update(
+        GIT_TERMINAL_PROMPT="0", GCM_INTERACTIVE="Never", GIT_ASKPASS="", SSH_ASKPASS=""
+    )
     if arguments[0] == "git" and "clone" in arguments:
         arguments = ["git", "-c", "credential.helper=", "-c", "core.askPass=", *arguments[1:]]
     result = subprocess.run(
@@ -315,9 +316,9 @@ def collect_producer_observations(
 
 def main() -> int:
     from audit_runner_bridge import Job, run_owned
+    from current_resources import child_environment, current_scope_path
     from ledger_common import find_secrets, load_json, scope_fingerprint
     from native_process import WindowsJob
-    from current_resources import child_environment, current_scope_path
     from verify import verification_environment
 
     parser = argparse.ArgumentParser(description=__doc__)
@@ -346,7 +347,10 @@ def main() -> int:
     with verification_directory() as owner:
         directory = owner["path"]
         clone = Path(directory) / "repository"
-        command(["git", "-c", "core.longpaths=true", "clone", "--no-local", REMOTE, str(clone)], Path(directory))
+        command(
+            ["git", "-c", "core.longpaths=true", "clone", "--no-local", REMOTE, str(clone)],
+            Path(directory),
+        )
         command(["git", "checkout", "--detach", args.tag], clone)
         observed = command(["git", "rev-parse", "HEAD"], clone)
         if (
@@ -357,46 +361,61 @@ def main() -> int:
         if command(["git", "status", "--porcelain"], clone):
             raise RuntimeError("the fresh transported subject is not clean")
         if scope_fingerprint(clone) != fingerprint:
-            raise RuntimeError("the exact transported canonical sources differ from the current source")
+            raise RuntimeError(
+                "the exact transported canonical sources differ from the current source"
+            )
         environment = child_environment()
+        temporary_children = Path(directory) / "temporary"
+        temporary_children.mkdir()
+        environment.update(TMP=str(temporary_children), TEMP=str(temporary_children))
         project = verification_environment(clone, environment)["COMPOSE_PROJECT_NAME"]
         scope_path = current_scope_path()
         scope = load_json(scope_path)
         if project in scope["registeredProjects"]:
             raise RuntimeError("fresh verifier namespace already registered")
         scope["registeredProjects"].append(project)
-        scope.setdefault("projectOwners", []).append({"project": project, "checkout": str(clone),
-                                                       "subjectCommit": observed,
-                                                       "source": "canonical verification_environment before producer launch"})
+        scope.setdefault("projectOwners", []).append(
+            {
+                "project": project,
+                "checkout": str(clone),
+                "subjectCommit": observed,
+                "source": "canonical verification_environment before producer launch",
+            }
+        )
         write_json(scope_path, scope)
         shutil.copy2(ROOT / "infra/compose/.env", clone / "infra/compose/.env")
         if command(["git", "status", "--porcelain"], clone):
             raise RuntimeError("ignored workstation configuration changed the transported tree")
         report_path = clone / "artifacts/review/INTERNAL-FULL-VERIFY.json"
         arguments = [
-                sys.executable,
-                "scripts/iacode/verify.py",
-                "--keep-going",
-                "--quiet",
-                "--node",
-                str(args.node.resolve()),
-                "--report",
-                report_path.relative_to(clone).as_posix(),
-            ]
+            sys.executable,
+            "scripts/iacode/verify.py",
+            "--keep-going",
+            "--quiet",
+            "--node",
+            str(args.node.resolve()),
+            "--report",
+            report_path.relative_to(clone).as_posix(),
+        ]
         execution = None
         try:
             # The real complete verifier owns an exact suspended/attached process tree.
             # Snapshot the actual producer before fallible report parsing or clone cleanup.
-            execution, streams = run_owned(Job(tuple(arguments), 43200), clone, environment,
-                                           find_secrets, WindowsJob)
+            execution, streams = run_owned(
+                Job(tuple(arguments), 43200), clone, environment, find_secrets, WindowsJob
+            )
             archive = CHECKPOINT / "full-verifier-executions" / uuid.uuid4().hex
             archive.mkdir(parents=True)
             for name, raw in streams.items():
                 with (archive / name).open("xb") as output:
                     output.write(raw)
-            execution.update(subjectCommit=observed, subjectTag=args.tag,
-                             sourceFingerprint=fingerprint, composeProject=project,
-                             sourceUnchanged=scope_fingerprint(ROOT) == fingerprint)
+            execution.update(
+                subjectCommit=observed,
+                subjectTag=args.tag,
+                sourceFingerprint=fingerprint,
+                composeProject=project,
+                sourceUnchanged=scope_fingerprint(ROOT) == fingerprint,
+            )
             write_json(archive / "EXECUTION.json", execution)
             exit_code = execution["producer"]["exitCode"]
         finally:

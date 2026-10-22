@@ -1,5 +1,34 @@
 # M2 consolidation - Gates 4 through 7
 
+## Current corrective continuation
+
+The corrective implementing owner is [GATE-7-CP-0003](GATE-7-CP-0003/STATE.json). This source
+update observes IN_PROGRESS work, not a predicted final state. Linked executed records and the
+canonical tag establish any later seal. CP0001 was the last valid seal at corrective entry.
+The later independent audit recorded
+M2-F-001 and M2-F-002 in [CP0002 findings](GATE-7-CP-0002/FINDINGS.json); their corrective
+closure is owned by [CP0003](GATE-7-CP-0003/M2-CP-0002-FINDINGS-CLOSURE.json), not granted here.
+Neither a local repair nor an old independent failure is rewritten into a milestone approval.
+
+The current derived set contains48 canonical Gate7 rows,151 applicable lessons, two audit findings
+and one escaped attack:202 requirements,201 mandatory. The authoritative current
+[matrix](GATE-7-CP-0003/REQUIREMENTS-MATRIX.json) and
+[closure requirements](GATE-7-CP-0003/CLOSURE-REQUIREMENTS.json) own actual coverage; they are
+incomplete at this source-update observation. Whole16-gate quality, one complete49-stage non-fast
+execution, completeness, fresh internal Red Team and closure mirror, final task-owned disposal
+and canonical sealing are mandatory, not predicted outcomes. A fresh independent M2 report is
+a separate later boundary. No Gate8, global configuration change or application restart is authorized.
+
+The correction covers literal checkpoint producer/replay and separately preserved safe primary
+and cleanup observations through client/native wrappers. [ADR-0061](../adr/ADR-0061-client-verification-preserves-producer-and-cleanup-outcomes.md)
+defines that separation; [ADR-0062](../adr/ADR-0062-isolated-audit-uses-closed-host-validation-jobs.md)
+defines the explicitly approved narrow frozen-job Docker bridge, not a general sandbox bypass.
+Actual failures, guarded recurrences, local repairs and source epochs remain in the
+[current ledger](GATE-7-CP-0003/COMMANDS.jsonl). Same-session controls are not independent review.
+
+The remaining sections retain the historical CP0001 consolidation. Their counts, process IDs,
+"current" labels and completed observations refer to that sealed owner, not to CP0003 readiness.
+
 ## Verdict boundary and authoritative state
 
 This is the implementing session's consolidation, not an independent milestone attestation.

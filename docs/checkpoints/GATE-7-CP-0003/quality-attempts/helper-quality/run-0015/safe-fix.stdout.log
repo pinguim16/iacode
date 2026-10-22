@@ -1,0 +1,14 @@
+C409 Unnecessary list literal passed to `tuple()` (rewrite as a tuple literal)
+  --> docs/checkpoints/GATE-7-CP-0003/audit-harness/capture_owned_build_history.py:35:17
+   |
+33 |     def capture(arguments, name):
+34 |         execution, streams = run_owned(
+35 |             Job(tuple(["docker", "buildx", *arguments]), 60),
+   |                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+36 |             ROOT,
+37 |             environment,
+   |
+help: Rewrite as a tuple literal
+
+Found 3 errors (2 fixed, 1 remaining).
+No fixes available (1 hidden fix can be enabled with the `--unsafe-fixes` option).

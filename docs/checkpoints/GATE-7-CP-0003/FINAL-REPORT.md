@@ -1,5 +1,14 @@
 # Scoped disposal and resumed corrective report
 
+Latest live update: final locally restored source783fac50 passes82 M2 cases,91-path read-only
+authored quality, full canonical lint run0012, inherited denominator, phase/native/history,
+cleanup-order, byte transport, static and memory controls. Original AUTHORED-STYLE-001 and
+CONTINUATION-001 failures remain intact. The publisher requires both actual current full lint and
+whole authored quality. Quiescent draft validation and immutable runtime-v3 publication are next,
+not whole quality acceptance. Runtime-v2's canceled incomplete cycle remains historical.
+All16-gate/full49-stage assurance, completeness, fresh internal Red Team/mirror, final phase0002
+disposal, seal and a later fresh independent M2 report remain pending. No Gate8 is authorized.
+
 RESUME-0001.json records explicit owner continuation after restart. The earlier scope clarification
 supersedes attribution of another project's update as a blocker, without rewriting the failed
 original comparison. Current status is IN_PROGRESS, with no readiness/seal/verdict. The new

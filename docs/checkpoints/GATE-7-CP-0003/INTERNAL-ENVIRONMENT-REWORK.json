@@ -120,6 +120,56 @@
         "resource-phases/phase-0002/BUILDER-BOOTSTRAP-RETRY-0001.json"
       ],
       "fixtureAdjustment": "Resource-phase run-0003 retained an AttributeError after the removed subprocess API was still named by its mock. The test now targets the actual run_owned entry with the same no-call/refusal assertions; run-0004 passes. No assertion or production guard was weakened."
+    },
+    {
+      "id": "PRE-PUSH-LINT-001",
+      "status": "LOCAL_CORRECTION_DEMONSTRATED_WHOLE_ASSURANCE_PENDING",
+      "classification": "RECURRENCE_OF_CONFIRMED_LSN-0054_NOT_A_GUARDED_FAILURE",
+      "observed": "The trusted progress publisher enforced declared scope, staged secret scan and canonical validation but omitted the existing pre-push lint precondition. Targeted component green did not satisfy the broader requirement.",
+      "evidence": "PRE-PUSH-LINT-0001.json",
+      "requiredCorrection": "Require successful canonical lint bound to current source and current pre-publication HEAD before any publication effects. Run actual lint and new guard controls, then publish a new immutable subject and execute fresh full assurance.",
+      "currentProof": [
+        "causal-attempts/publication-policy/run-0003.json"
+      ],
+      "actualCurrentLint": "NOT_EXECUTED",
+      "limit": "Modeled verifier decisions are not execution of canonical repository lint; actual current proof and a fresh complete immutable cycle remain due."
+    },
+    {
+      "id": "AUTHORED-STYLE-001",
+      "status": "LOCAL_CORRECTION_DEMONSTRATED_WHOLE_ASSURANCE_PENDING",
+      "classification": "GUARDRAIL_FAILURE LSN-0105",
+      "observed": "734 unchanged-rule Ruff errors in84 derived active authored paths.",
+      "evidence": "quality-attempts/helper-quality/run-0001/RECEIPT.json",
+      "commands": [
+        "cmd-0275"
+      ],
+      "requiredCorrection": "Repair all derived source paths with unchanged rules/assertions; preserve raw preimages and sealed subjects. Recheck behavior and full current lint before publication. Prior lint run0009 is not current after source changes.",
+      "currentProof": [
+        "quality-attempts/lint/run-0010.json",
+        "quality-attempts/helper-quality/run-0017/RECEIPT.json",
+        "causal-attempts/all-m2/run-0002.json",
+        "causal-attempts/lint-denominator/run-0001.json"
+      ],
+      "mechanicalFailures": "Attempts0278/0279 refused non-identical literal AST before writes to the affected source. Attempt0280 refused a dynamic import prefix; the next unchanged-rule scan also caught two reordered dynamic-load test bootstraps. Explicit order repair retained every assertion; all observations remain original. No failed formatter is read-only acceptance."
+    },
+    {
+      "id": "CONTINUATION-001",
+      "status": "LOCAL_CORRECTION_DEMONSTRATED_WHOLE_ASSURANCE_PENDING",
+      "classification": "GUARDRAIL_FAILURE LSN-0140",
+      "observed": "Actual CP0003 retrospective fails the unchanged canonical headings.",
+      "evidence": "continuation-attempts/run-0001/RECEIPT.json",
+      "commands": [
+        "cmd-0305"
+      ],
+      "requiredCorrection": "Keep the failed original; retain canonical sections and every current changed lesson/guard identity. Extend inherited controls to this corrective checkpoint with valid nulls and omission/extra/order/growth adversaries; require current lint, helper quality and quiescent checkpoint validation before local restoration.",
+      "currentProof": [
+        "quality-attempts/lint/run-0011.json",
+        "quality-attempts/helper-quality/run-0020/RECEIPT.json",
+        "causal-attempts/all-m2/run-0004.json",
+        "quality-attempts/checkpointValidation/run-0007.json",
+        "continuation-attempts/run-0001/RECEIPT.json",
+        "causal-attempts/all-m2/run-0003.json"
+      ]
     }
   ]
 }

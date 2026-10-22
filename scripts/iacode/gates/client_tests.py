@@ -23,8 +23,16 @@ def main() -> int:
     try:
         result = run_node(node=arguments.node)
     except ClientCheckError as exc:
-        print(json.dumps({"gate": "clientTests", "result": "FAIL", "execution": exc.report,
-                          "liveAcceptance": False}))
+        print(
+            json.dumps(
+                {
+                    "gate": "clientTests",
+                    "result": "FAIL",
+                    "execution": exc.report,
+                    "liveAcceptance": False,
+                }
+            )
+        )
         return 1
     print(result.stdout)
     print(result.stderr)

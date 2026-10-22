@@ -7,11 +7,14 @@ import sys
 import tempfile
 from pathlib import Path
 
-CHECKPOINT = Path(__file__).resolve().parents[1]
-ROOT = CHECKPOINT.parents[2]
-sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+sys.path.insert(
+    0, str(Path(__file__).resolve().parents[1].parents[2] / "scripts/development-ledger")
+)
 from audit_runner_bridge import regular
 from ledger_common import utc_now, write_json
+
+CHECKPOINT = Path(__file__).resolve().parents[1]
+ROOT = CHECKPOINT.parents[2]
 
 
 def main():
@@ -24,19 +27,31 @@ def main():
         inside.write_bytes(b"OWNED_NULL_CONTROL")
         outside.write_bytes(b"OWNED_ADVERSE_CONTROL")
         controls = []
-        for name, path, expected in (("inside-null", inside, True),
-                                     ("outside-absolute", outside, False),
-                                     ("parent-relative", root / ".." / outside.name, False)):
+        for name, path, expected in (
+            ("inside-null", inside, True),
+            ("outside-absolute", outside, False),
+            ("parent-relative", root / ".." / outside.name, False),
+        ):
             accepted = True
             try:
                 regular(path, root)
             except ValueError:
                 accepted = False
-            controls.append({"name": name, "expectedAccepted": expected, "actualAccepted": accepted,
-                             "result": "PASS" if accepted == expected else "FAIL"})
-    report = {"observedAt": utc_now(), "kind": "LOCAL_PATH_EDGE_PREFLIGHT_NOT_FINAL_RED_TEAM",
-              "controls": controls, "temporaryRootRemoved": not owner.exists(),
-              "result": "PASS" if all(row["result"] == "PASS" for row in controls) else "FAIL"}
+            controls.append(
+                {
+                    "name": name,
+                    "expectedAccepted": expected,
+                    "actualAccepted": accepted,
+                    "result": "PASS" if accepted == expected else "FAIL",
+                }
+            )
+    report = {
+        "observedAt": utc_now(),
+        "kind": "LOCAL_PATH_EDGE_PREFLIGHT_NOT_FINAL_RED_TEAM",
+        "controls": controls,
+        "temporaryRootRemoved": not owner.exists(),
+        "result": "PASS" if all(row["result"] == "PASS" for row in controls) else "FAIL",
+    }
     directory = CHECKPOINT / "causal-attempts/bridge-path-bounds"
     directory.mkdir(parents=True, exist_ok=True)
     index = len(list(directory.glob("run-*.json"))) + 1
@@ -47,5 +62,6 @@ def main():
 
 if __name__ == "__main__":
     from ledger_common import use_utf8_stdout
+
     use_utf8_stdout()
     raise SystemExit(main())

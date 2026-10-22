@@ -10,9 +10,10 @@ import os
 import sys
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[4]
-sys.path.insert(0, str(ROOT / "scripts/iacode"))
+sys.path.insert(0, str(Path(__file__).resolve().parents[4] / "scripts/iacode"))
 from client_checks import ClientCheckError, run_node
+
+ROOT = Path(__file__).resolve().parents[4]
 
 
 def main() -> int:
@@ -26,14 +27,23 @@ def main() -> int:
     except ClientCheckError as exc:
         print(json.dumps({"kind": "ACTUAL_RESTRICTED_CLIENT_DIAGNOSTIC", **exc.report}))
         return 1
-    print(json.dumps({"kind": "ACTUAL_RESTRICTED_CLIENT_DIAGNOSTIC",
-                      "result": "PRODUCER_RETURNED", "exitCode": completed.returncode,
-                      "stdout": completed.stdout, "stderr": completed.stderr}))
+    print(
+        json.dumps(
+            {
+                "kind": "ACTUAL_RESTRICTED_CLIENT_DIAGNOSTIC",
+                "result": "PRODUCER_RETURNED",
+                "exitCode": completed.returncode,
+                "stdout": completed.stdout,
+                "stderr": completed.stderr,
+            }
+        )
+    )
     return completed.returncode
 
 
 if __name__ == "__main__":
     from ledger_common import use_utf8_stdout
+
     use_utf8_stdout()
     for stream in (sys.stdout, sys.stderr):
         if hasattr(stream, "reconfigure"):

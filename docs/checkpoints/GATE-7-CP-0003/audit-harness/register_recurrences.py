@@ -1,12 +1,13 @@
 """Register the two authorized audit recurrences, once, without asserting repair."""
 
-from pathlib import Path
 import sys
+from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[4]
-sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
+sys.path.insert(0, str(Path(__file__).resolve().parents[4] / "scripts/development-ledger"))
 
 from lessons import load_lessons, register_recurrence, save_lessons
+
+ROOT = Path(__file__).resolve().parents[4]
 
 
 def main() -> int:
@@ -18,11 +19,13 @@ def main() -> int:
         identifier = lesson["lessonId"]
         if identifier not in findings:
             continue
-        if any(item.get("checkpoint") == checkpoint
-               for item in lesson.get("guardrailFailures", [])):
+        if any(
+            item.get("checkpoint") == checkpoint for item in lesson.get("guardrailFailures", [])
+        ):
             continue
         rows[index] = register_recurrence(
-            lesson, checkpoint,
+            lesson,
+            checkpoint,
             findings[identifier] + ": independent audit found an escaped guarded failure; "
             "causal corrective verification remains pending.",
         )
@@ -34,5 +37,6 @@ def main() -> int:
 
 if __name__ == "__main__":
     from ledger_common import use_utf8_stdout
+
     use_utf8_stdout()
     raise SystemExit(main())

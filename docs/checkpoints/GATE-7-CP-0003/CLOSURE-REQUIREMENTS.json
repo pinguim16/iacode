@@ -2026,16 +2026,29 @@
       "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0053",
       "description": "Verify a pre-push check narrower than the change's reach lets a red gate reach the public remote",
       "mandatory": false,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
-      "justification": null,
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
+      "justification": "Publisher boundary repaired with actual caller and modeled metadata controls; real current lint and new properly preceded publication remain due.",
       "notes": "",
-      "implementationEvidence": [],
-      "testEvidence": [],
-      "negativeTestEvidence": [],
-      "documentationEvidence": [],
+      "implementationEvidence": [
+        "file:docs/checkpoints/GATE-7-CP-0003/audit-harness/publish_progress.py"
+      ],
+      "testEvidence": [
+        "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/publication-policy/run-0003.json"
+      ],
+      "negativeTestEvidence": [
+        "file:docs/checkpoints/GATE-7-CP-0003/PRE-PUSH-LINT-0001.json",
+        "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/publication-policy/run-0001.json"
+      ],
+      "documentationEvidence": [
+        "checkpoint:PRE-PUSH-LINT-0001.json",
+        "file:docs/DEVELOPMENT-CONTRACT.md"
+      ],
       "validationEvidence": [],
-      "guardrailEvidence": []
+      "guardrailEvidence": [
+        "test:PublicationCallerTests.test_actual_publisher_checks_current_lint_before_publication_effects",
+        "test:PublicationCallerTests.test_archived_actual_publisher_without_precondition_is_rejected"
+      ]
     },
     {
       "id": "LESSON-REQ-0054",
@@ -2969,16 +2982,32 @@
       "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0104",
       "description": "Verify new behavioral tests must satisfy the unchanged source-quality contract",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
-      "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
-      "testEvidence": [],
-      "negativeTestEvidence": [],
-      "documentationEvidence": [],
-      "validationEvidence": [],
-      "guardrailEvidence": []
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
+      "justification": "Local source quality and publication prevention are restored; complete current immutable assurance remains due.",
+      "notes": "Original AUTHORED-STYLE-001 and all intermediate failures remain; no rule or assertion was weakened and no independent verdict is inferred.",
+      "implementationEvidence": [
+        "file:docs/checkpoints/GATE-7-CP-0003/audit-harness/authored_python_quality.py",
+        "file:docs/checkpoints/GATE-7-CP-0003/audit-harness/publish_progress.py"
+      ],
+      "testEvidence": [
+        "checkpoint:quality-attempts/helper-quality/run-0021/RECEIPT.json",
+        "checkpoint:causal-attempts/all-m2/run-0005.json"
+      ],
+      "negativeTestEvidence": [
+        "checkpoint:quality-attempts/helper-quality/run-0001/RECEIPT.json"
+      ],
+      "documentationEvidence": [
+        "checkpoint:AUTHORED-STYLE-LOCAL-RESTORATION.json",
+        "file:.iacode/memory/retrospectives/GATE-7-CP-0003.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:quality-attempts/lint/run-0012.json"
+      ],
+      "guardrailEvidence": [
+        "test:PublicationCallerTests.test_actual_publisher_checks_current_lint_before_publication_effects",
+        "test:AuthoredQualityDecisionTests.test_missing_stale_narrowed_format_and_nonzero_proofs_are_refused"
+      ]
     },
     {
       "id": "LESSON-REQ-0105",
@@ -3339,7 +3368,11 @@
       ],
       "testEvidence": [
         "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/bootstrap-ownership/run-0004.json",
-        "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/resource-phase/run-0005.json"
+        "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/resource-phase/run-0005.json",
+        "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/bootstrap-ownership/run-0007.json",
+        "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/resource-phase/run-0007.json",
+        "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/bootstrap-ownership/run-0008.json",
+        "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/resource-phase/run-0008.json"
       ],
       "negativeTestEvidence": [
         "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/bootstrap-ownership/run-0001.json",
@@ -3664,16 +3697,33 @@
       "sourceReference": "LESSON-PREFLIGHT.json LESSON-REQ-0139",
       "description": "Verify summaries preserve canonical continuation structure",
       "mandatory": true,
-      "implementationStatus": "NOT_STARTED",
-      "finalStatus": "NOT_STARTED",
-      "justification": null,
-      "notes": "",
-      "implementationEvidence": [],
-      "testEvidence": [],
-      "negativeTestEvidence": [],
-      "documentationEvidence": [],
-      "validationEvidence": [],
-      "guardrailEvidence": []
+      "implementationStatus": "PARTIAL",
+      "finalStatus": "PARTIAL",
+      "justification": "Current corrective/current document controls and local guard restoration are demonstrated; complete immutable assurance remains due.",
+      "notes": "Retain the exact failed original and causal red baseline. Current sections, lesson/guard membership and omission/empty/extra/order/growth controls use unchanged inherited assertions.",
+      "implementationEvidence": [
+        "file:tests/test_m2_continuation.py",
+        "file:.iacode/memory/retrospectives/GATE-7-CP-0003.md"
+      ],
+      "testEvidence": [
+        "checkpoint:causal-attempts/all-m2/run-0005.json"
+      ],
+      "negativeTestEvidence": [
+        "checkpoint:continuation-attempts/run-0001/RECEIPT.json",
+        "checkpoint:causal-attempts/all-m2/run-0003.json"
+      ],
+      "documentationEvidence": [
+        "checkpoint:CONTINUATION-LOCAL-RESTORATION.json",
+        "checkpoint:HANDOFF.md",
+        "checkpoint:NEXT.md"
+      ],
+      "validationEvidence": [
+        "checkpoint:quality-attempts/lint/run-0012.json"
+      ],
+      "guardrailEvidence": [
+        "test:CorrectiveContinuationTests.test_actual_retrospectives_keep_exact_sections_and_every_recorded_lesson_guard",
+        "test:CorrectiveContinuationTests.test_current_positive_and_omission_empty_extra_order_and_lesson_growth_controls"
+      ]
     },
     {
       "id": "LESSON-REQ-0140",

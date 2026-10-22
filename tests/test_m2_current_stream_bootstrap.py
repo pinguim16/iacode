@@ -12,7 +12,7 @@ sys.path.insert(0, str(ROOT / "scripts/development-ledger"))
 
 class M2CurrentStreamBootstrapTests(unittest.TestCase):
     def test_actual_capture_entry_blocks_reject_cold_bootstrap_removal(self):
-        child = r'''
+        child = r"""
 import ast
 import sys
 from pathlib import Path
@@ -36,27 +36,55 @@ def harmless_work():
     return 0
 exec(compile(ast.Module(body=[entry], type_ignores=[]), str(source), "exec"),
      {"__name__": "__main__", "main": harmless_work, "use_utf8_stdout": use_utf8_stdout})
-'''
+"""
         environment = {**os.environ, "PYTHONIOENCODING": "cp1252:strict", "PYTHONUTF8": "0"}
         environment.pop("PYTHONPATH", None)
-        for name in ("capture_owned_build_history", "diagnose_owned_builder", "inspect_environment",
-                     "owned_docker_scope", "probe_bridge_boundary", "prove_canonical_bridge"):
+        for name in (
+            "capture_owned_build_history",
+            "diagnose_owned_builder",
+            "inspect_environment",
+            "owned_docker_scope",
+            "probe_bridge_boundary",
+            "prove_canonical_bridge",
+        ):
             source = ROOT / "docs/checkpoints/GATE-7-CP-0003/audit-harness" / (name + ".py")
-            arguments = [sys.executable, "-S", "-P", "-c", child,
-                         str(ROOT / "scripts/development-ledger"), str(source)]
+            arguments = [
+                sys.executable,
+                "-S",
+                "-P",
+                "-c",
+                child,
+                str(ROOT / "scripts/development-ledger"),
+                str(source),
+            ]
             with self.subTest(entry=name):
-                actual = subprocess.run([*arguments, "configured"], cwd=ROOT, env=environment,
-                                        capture_output=True, timeout=15, check=False)
-                self.assertEqual(0, actual.returncode, actual.stderr.decode("utf-8", errors="replace"))
+                actual = subprocess.run(
+                    [*arguments, "configured"],
+                    cwd=ROOT,
+                    env=environment,
+                    capture_output=True,
+                    timeout=15,
+                    check=False,
+                )
+                self.assertEqual(
+                    0, actual.returncode, actual.stderr.decode("utf-8", errors="replace")
+                )
                 self.assertEqual(chr(0x276F).encode(), actual.stdout.strip())
                 self.assertEqual(chr(0x2713).encode(), actual.stderr.strip())
-                refused = subprocess.run([*arguments, "omit-bootstrap"], cwd=ROOT, env=environment,
-                                         capture_output=True, timeout=15, check=False)
+                refused = subprocess.run(
+                    [*arguments, "omit-bootstrap"],
+                    cwd=ROOT,
+                    env=environment,
+                    capture_output=True,
+                    timeout=15,
+                    check=False,
+                )
                 self.assertNotEqual(0, refused.returncode)
                 self.assertIn(b"UnicodeEncodeError", refused.stderr)
 
 
 if __name__ == "__main__":
     from ledger_common import use_utf8_stdout
+
     use_utf8_stdout()
     unittest.main()

@@ -1,0 +1,24 @@
+test_actual_publisher_checks_current_lint_before_publication_effects (test_m2_progress_publication.PublicationCallerTests.test_actual_publisher_checks_current_lint_before_publication_effects) ... FAIL
+test_archived_actual_publisher_without_precondition_is_rejected (test_m2_progress_publication.PublicationCallerTests.test_archived_actual_publisher_without_precondition_is_rejected) ... ok
+
+======================================================================
+FAIL: test_actual_publisher_checks_current_lint_before_publication_effects (test_m2_progress_publication.PublicationCallerTests.test_actual_publisher_checks_current_lint_before_publication_effects)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\iacode\tests\test_m2_progress_publication.py", line 21, in test_actual_publisher_checks_current_lint_before_publication_effects
+    self.assert_precondition_first((HERE / "publish_progress.py").read_text(encoding="utf-8"))
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\iacode\tests\test_m2_progress_publication.py", line 17, in assert_precondition_first
+    self.assertEqual("current-lint-precondition", ast.literal_eval(steps.elts[0].elts[0]),
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     "current canonical lint must be checked before staging/commit/tag/push")
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'current-lint-precondition' != 'stage-declared-inputs'
+- current-lint-precondition
++ stage-declared-inputs
+ : current canonical lint must be checked before staging/commit/tag/push
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.004s
+
+FAILED (failures=1)
