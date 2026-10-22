@@ -96,6 +96,26 @@ class M2ObservationTransportTests(unittest.TestCase):
         protected = self.transport(original, payloads)
         self.assertTrue(all(matched for _mode, _name, matched in protected))
 
+    def test_next_checkpoint_and_other_gate_observations_keep_the_same_real_byte_boundaries(self):
+        # A repair for only the current checkpoint must not strand its fresh auditor.
+        # These are isolated Git fixture paths, never new repository checkpoints or Gates.
+        families = ("attempts", "controls", "causal-attempts", "environment-attempts",
+                    "quality-attempts", "byte-transport-attempts", "raw-preimages",
+                    "resource-observations/build-history", "published-green-keeper",
+                    "full-verifier-executions", "suite-attempts")
+        payloads = {}
+        for checkpoint in ("GATE-7-CP-0004", "GATE-6-CP-9999"):
+            for family in families:
+                prefix = "docs/checkpoints/" + checkpoint + "/" + family + "/future-control/"
+                payloads.update({prefix + "stdout.log": b"LF_ORIGINAL\n",
+                                 prefix + "stderr.log": b"CRLF_ORIGINAL\r\n",
+                                 prefix + "binary-null.raw": b"\0BINARY_NULL\r\n"})
+        facts = self.transport((ROOT / ".gitattributes").read_bytes(), payloads)
+        nulls = [matched for _mode, name, matched in facts if name.endswith("binary-null.raw")]
+        self.assertTrue(nulls and all(nulls), "all actual binary nulls must remain valid")
+        self.assertEqual([], [(mode, name) for mode, name, matched in facts if not matched],
+                         "observation-byte protection must follow the canonical family, not one delivery ID")
+
 
 if __name__ == "__main__":
     unittest.main()

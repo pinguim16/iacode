@@ -1,0 +1,729 @@
+{
+  "observedAt": "2026-10-22T01:16:53Z",
+  "result": "CAPTURED_NOT_OWNERSHIP_CLAIM_OR_ACCEPTANCE",
+  "builder": "iacode-m2cp3-e2531ca8afd9403e828958f4c7dd8c66",
+  "observations": [
+    {
+      "arguments": [
+        "docker",
+        "buildx",
+        "history",
+        "ls",
+        "--no-trunc",
+        "--format",
+        "json"
+      ],
+      "exitCode": 0,
+      "streams": {
+        "stdout": {
+          "sha256": "72227b346ac041790810a55b54611e0d1f660b44660c36d435d9c4623c414a17",
+          "bytes": 4621,
+          "refused": false,
+          "path": "resource-observations/build-history/run-0005/list.stdout.json"
+        },
+        "stderr": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0,
+          "refused": false,
+          "path": "resource-observations/build-history/run-0005/list.stderr.json"
+        }
+      }
+    },
+    {
+      "arguments": [
+        "docker",
+        "buildx",
+        "history",
+        "inspect",
+        "--format",
+        "json",
+        "i6o2c34sso7roy3kh14yselp3"
+      ],
+      "exitCode": 0,
+      "streams": {
+        "stdout": {
+          "sha256": "b9236f52607e9ac263ae7b50628101b412257523bdcb67927ae7c9fac08d9397",
+          "bytes": 1093,
+          "refused": false,
+          "path": "resource-observations/build-history/run-0005/inspect-i6o2c34sso7roy3kh14yselp3.stdout.json"
+        },
+        "stderr": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0,
+          "refused": false,
+          "path": "resource-observations/build-history/run-0005/inspect-i6o2c34sso7roy3kh14yselp3.stderr.json"
+        }
+      }
+    },
+    {
+      "arguments": [
+        "docker",
+        "buildx",
+        "history",
+        "inspect",
+        "--format",
+        "json",
+        "s15fpo25qha6c0fwnees60xde"
+      ],
+      "exitCode": 0,
+      "streams": {
+        "stdout": {
+          "sha256": "a4ca4a2ec517a81fe0404eb5e40b53300c331efb2ae41e6d4572447c71006dd4",
+          "bytes": 1596,
+          "refused": false,
+          "path": "resource-observations/build-history/run-0005/inspect-s15fpo25qha6c0fwnees60xde.stdout.json"
+        },
+        "stderr": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0,
+          "refused": false,
+          "path": "resource-observations/build-history/run-0005/inspect-s15fpo25qha6c0fwnees60xde.stderr.json"
+        }
+      }
+    },
+    {
+      "arguments": [
+        "docker",
+        "buildx",
+        "history",
+        "inspect",
+        "--format",
+        "json",
+        "p5d146sv72z8w6h643rdtjjgc"
+      ],
+      "exitCode": 0,
+      "streams": {
+        "stdout": {
+          "sha256": "2a283ca90a356df8130884b3801a26b5bc5681a2db07b4dd32839d4ddebf4d54",
+          "bytes": 5545,
+          "refused": false,
+          "path": "resource-observations/build-history/run-0005/inspect-p5d146sv72z8w6h643rdtjjgc.stdout.json"
+        },
+        "stderr": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0,
+          "refused": false,
+          "path": "resource-observations/build-history/run-0005/inspect-p5d146sv72z8w6h643rdtjjgc.stderr.json"
+        }
+      }
+    },
+    {
+      "arguments": [
+        "docker",
+        "buildx",
+        "history",
+        "inspect",
+        "--format",
+        "json",
+        "8suhyx0j7wrinsr5syetkdopf"
+      ],
+      "exitCode": 0,
+      "streams": {
+        "stdout": {
+          "sha256": "fb133cf5182d1c68aba3353ab451dcb45101b49acc188a2ef8f9d83bcdfeb0eb",
+          "bytes": 1094,
+          "refused": false,
+          "path": "resource-observations/build-history/run-0005/inspect-8suhyx0j7wrinsr5syetkdopf.stdout.json"
+        },
+        "stderr": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0,
+          "refused": false,
+          "path": "resource-observations/build-history/run-0005/inspect-8suhyx0j7wrinsr5syetkdopf.stderr.json"
+        }
+      }
+    },
+    {
+      "arguments": [
+        "docker",
+        "buildx",
+        "history",
+        "inspect",
+        "--format",
+        "json",
+        "b35sdgyejkynfknvkaa7dk1kj"
+      ],
+      "exitCode": 0,
+      "streams": {
+        "stdout": {
+          "sha256": "309b6088f92318f1f8c7808428f58ef27278bda8112380660d683fb3a5854556",
+          "bytes": 1595,
+          "refused": false,
+          "path": "resource-observations/build-history/run-0005/inspect-b35sdgyejkynfknvkaa7dk1kj.stdout.json"
+        },
+        "stderr": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0,
+          "refused": false,
+          "path": "resource-observations/build-history/run-0005/inspect-b35sdgyejkynfknvkaa7dk1kj.stderr.json"
+        }
+      }
+    },
+    {
+      "arguments": [
+        "docker",
+        "buildx",
+        "history",
+        "inspect",
+        "--format",
+        "json",
+        "8ap6lof6sx8fgljthc7wso3f1"
+      ],
+      "exitCode": 0,
+      "streams": {
+        "stdout": {
+          "sha256": "f0fe55e467c39888a4aa997ac7a7d5c34951f98e90c5ad0176a03a0f63388779",
+          "bytes": 1093,
+          "refused": false,
+          "path": "resource-observations/build-history/run-0005/inspect-8ap6lof6sx8fgljthc7wso3f1.stdout.json"
+        },
+        "stderr": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0,
+          "refused": false,
+          "path": "resource-observations/build-history/run-0005/inspect-8ap6lof6sx8fgljthc7wso3f1.stderr.json"
+        }
+      }
+    },
+    {
+      "arguments": [
+        "docker",
+        "buildx",
+        "history",
+        "inspect",
+        "--format",
+        "json",
+        "3tyu0q4eja6o3pgnpmyrkw14r"
+      ],
+      "exitCode": 0,
+      "streams": {
+        "stdout": {
+          "sha256": "20a5ff61924349c6834824bf6c16ce36b1739245d5f07118c5b367e4fab9408f",
+          "bytes": 1595,
+          "refused": false,
+          "path": "resource-observations/build-history/run-0005/inspect-3tyu0q4eja6o3pgnpmyrkw14r.stdout.json"
+        },
+        "stderr": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0,
+          "refused": false,
+          "path": "resource-observations/build-history/run-0005/inspect-3tyu0q4eja6o3pgnpmyrkw14r.stderr.json"
+        }
+      }
+    },
+    {
+      "arguments": [
+        "docker",
+        "buildx",
+        "history",
+        "inspect",
+        "--format",
+        "json",
+        "nozjadsd1cvjyo4srbdlwdrh1"
+      ],
+      "exitCode": 0,
+      "streams": {
+        "stdout": {
+          "sha256": "d43ca64bb757d8edae19c1585c14a8e13397a4aa24fd3cc3b9ba870d58c8f47a",
+          "bytes": 1093,
+          "refused": false,
+          "path": "resource-observations/build-history/run-0005/inspect-nozjadsd1cvjyo4srbdlwdrh1.stdout.json"
+        },
+        "stderr": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0,
+          "refused": false,
+          "path": "resource-observations/build-history/run-0005/inspect-nozjadsd1cvjyo4srbdlwdrh1.stderr.json"
+        }
+      }
+    },
+    {
+      "arguments": [
+        "docker",
+        "buildx",
+        "history",
+        "inspect",
+        "--format",
+        "json",
+        "5rdfhdhqhni5ggpc6nmup7zft"
+      ],
+      "exitCode": 0,
+      "streams": {
+        "stdout": {
+          "sha256": "e7d8cc8afdbda08b8d79e4a141ce426cbc8d42d4dacbab583165cfad0ee52808",
+          "bytes": 1596,
+          "refused": false,
+          "path": "resource-observations/build-history/run-0005/inspect-5rdfhdhqhni5ggpc6nmup7zft.stdout.json"
+        },
+        "stderr": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0,
+          "refused": false,
+          "path": "resource-observations/build-history/run-0005/inspect-5rdfhdhqhni5ggpc6nmup7zft.stderr.json"
+        }
+      }
+    },
+    {
+      "arguments": [
+        "docker",
+        "buildx",
+        "history",
+        "inspect",
+        "--format",
+        "json",
+        "u1y9zh45oqq6pnzd7qtnqudhn"
+      ],
+      "exitCode": 0,
+      "streams": {
+        "stdout": {
+          "sha256": "0636c5dc91aa5b93a15b36c291664b3a1115b472c7a26d4300f399db33892cf9",
+          "bytes": 1094,
+          "refused": false,
+          "path": "resource-observations/build-history/run-0005/inspect-u1y9zh45oqq6pnzd7qtnqudhn.stdout.json"
+        },
+        "stderr": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0,
+          "refused": false,
+          "path": "resource-observations/build-history/run-0005/inspect-u1y9zh45oqq6pnzd7qtnqudhn.stderr.json"
+        }
+      }
+    },
+    {
+      "arguments": [
+        "docker",
+        "buildx",
+        "history",
+        "inspect",
+        "--format",
+        "json",
+        "wfic024jusk36x8ply7ywlg05"
+      ],
+      "exitCode": 0,
+      "streams": {
+        "stdout": {
+          "sha256": "c4c9b05aa849f51f9a4a0ada095de93ccdd103a1c0dcae59aef4f197ede8ef77",
+          "bytes": 1596,
+          "refused": false,
+          "path": "resource-observations/build-history/run-0005/inspect-wfic024jusk36x8ply7ywlg05.stdout.json"
+        },
+        "stderr": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0,
+          "refused": false,
+          "path": "resource-observations/build-history/run-0005/inspect-wfic024jusk36x8ply7ywlg05.stderr.json"
+        }
+      }
+    },
+    {
+      "arguments": [
+        "docker",
+        "buildx",
+        "history",
+        "inspect",
+        "--format",
+        "json",
+        "w9m47rdur05d56mflpzfomazt"
+      ],
+      "exitCode": 0,
+      "streams": {
+        "stdout": {
+          "sha256": "9b09dc60349614227681cc2bc69b5dcaee098686665df2782dd9da94a61d810e",
+          "bytes": 5039,
+          "refused": false,
+          "path": "resource-observations/build-history/run-0005/inspect-w9m47rdur05d56mflpzfomazt.stdout.json"
+        },
+        "stderr": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0,
+          "refused": false,
+          "path": "resource-observations/build-history/run-0005/inspect-w9m47rdur05d56mflpzfomazt.stderr.json"
+        }
+      }
+    },
+    {
+      "arguments": [
+        "docker",
+        "buildx",
+        "history",
+        "inspect",
+        "--format",
+        "json",
+        "uar1eqkvquwwj5f2xxw0jn4kt"
+      ],
+      "exitCode": 0,
+      "streams": {
+        "stdout": {
+          "sha256": "f871f69d938de24903d89067f7b86c46ddec0c9ab771c1fc4868618cf217c091",
+          "bytes": 1595,
+          "refused": false,
+          "path": "resource-observations/build-history/run-0005/inspect-uar1eqkvquwwj5f2xxw0jn4kt.stdout.json"
+        },
+        "stderr": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0,
+          "refused": false,
+          "path": "resource-observations/build-history/run-0005/inspect-uar1eqkvquwwj5f2xxw0jn4kt.stderr.json"
+        }
+      }
+    },
+    {
+      "arguments": [
+        "docker",
+        "buildx",
+        "history",
+        "inspect",
+        "--format",
+        "json",
+        "p0yql7t5w9ada4wo6ni6gh3ha"
+      ],
+      "exitCode": 0,
+      "streams": {
+        "stdout": {
+          "sha256": "63cd3f8f614845597f1ee34670a665094df9154aa10ba735997002fc5b201cff",
+          "bytes": 1573,
+          "refused": false,
+          "path": "resource-observations/build-history/run-0005/inspect-p0yql7t5w9ada4wo6ni6gh3ha.stdout.json"
+        },
+        "stderr": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0,
+          "refused": false,
+          "path": "resource-observations/build-history/run-0005/inspect-p0yql7t5w9ada4wo6ni6gh3ha.stderr.json"
+        }
+      }
+    }
+  ],
+  "inspectSummary": [
+    {
+      "id": "i6o2c34sso7roy3kh14yselp3",
+      "keys": [
+        "Attachments",
+        "CompletedAt",
+        "Config",
+        "Context",
+        "Dockerfile",
+        "Duration",
+        "Materials",
+        "Name",
+        "NumCachedSteps",
+        "NumCompletedSteps",
+        "NumTotalSteps",
+        "Ref",
+        "StartedAt",
+        "Status",
+        "Target",
+        "VCSRepository",
+        "VCSRevision"
+      ],
+      "status": "completed"
+    },
+    {
+      "id": "s15fpo25qha6c0fwnees60xde",
+      "keys": [
+        "Attachments",
+        "BuildArgs",
+        "CompletedAt",
+        "Config",
+        "Context",
+        "Dockerfile",
+        "Duration",
+        "Labels",
+        "Materials",
+        "Name",
+        "NumCachedSteps",
+        "NumCompletedSteps",
+        "NumTotalSteps",
+        "Ref",
+        "StartedAt",
+        "Status",
+        "VCSRepository",
+        "VCSRevision"
+      ],
+      "status": "completed"
+    },
+    {
+      "id": "p5d146sv72z8w6h643rdtjjgc",
+      "keys": [
+        "Attachments",
+        "BuildArgs",
+        "CompletedAt",
+        "Config",
+        "Context",
+        "Dockerfile",
+        "Duration",
+        "Error",
+        "Labels",
+        "Materials",
+        "Name",
+        "NumCachedSteps",
+        "NumCompletedSteps",
+        "NumTotalSteps",
+        "Ref",
+        "StartedAt",
+        "Status",
+        "VCSRepository",
+        "VCSRevision"
+      ],
+      "status": "canceled"
+    },
+    {
+      "id": "8suhyx0j7wrinsr5syetkdopf",
+      "keys": [
+        "Attachments",
+        "CompletedAt",
+        "Config",
+        "Context",
+        "Dockerfile",
+        "Duration",
+        "Materials",
+        "Name",
+        "NumCachedSteps",
+        "NumCompletedSteps",
+        "NumTotalSteps",
+        "Ref",
+        "StartedAt",
+        "Status",
+        "Target",
+        "VCSRepository",
+        "VCSRevision"
+      ],
+      "status": "completed"
+    },
+    {
+      "id": "b35sdgyejkynfknvkaa7dk1kj",
+      "keys": [
+        "Attachments",
+        "BuildArgs",
+        "CompletedAt",
+        "Config",
+        "Context",
+        "Dockerfile",
+        "Duration",
+        "Labels",
+        "Materials",
+        "Name",
+        "NumCachedSteps",
+        "NumCompletedSteps",
+        "NumTotalSteps",
+        "Ref",
+        "StartedAt",
+        "Status",
+        "VCSRepository",
+        "VCSRevision"
+      ],
+      "status": "completed"
+    },
+    {
+      "id": "8ap6lof6sx8fgljthc7wso3f1",
+      "keys": [
+        "Attachments",
+        "CompletedAt",
+        "Config",
+        "Context",
+        "Dockerfile",
+        "Duration",
+        "Materials",
+        "Name",
+        "NumCachedSteps",
+        "NumCompletedSteps",
+        "NumTotalSteps",
+        "Ref",
+        "StartedAt",
+        "Status",
+        "Target",
+        "VCSRepository",
+        "VCSRevision"
+      ],
+      "status": "completed"
+    },
+    {
+      "id": "3tyu0q4eja6o3pgnpmyrkw14r",
+      "keys": [
+        "Attachments",
+        "BuildArgs",
+        "CompletedAt",
+        "Config",
+        "Context",
+        "Dockerfile",
+        "Duration",
+        "Labels",
+        "Materials",
+        "Name",
+        "NumCachedSteps",
+        "NumCompletedSteps",
+        "NumTotalSteps",
+        "Ref",
+        "StartedAt",
+        "Status",
+        "VCSRepository",
+        "VCSRevision"
+      ],
+      "status": "completed"
+    },
+    {
+      "id": "nozjadsd1cvjyo4srbdlwdrh1",
+      "keys": [
+        "Attachments",
+        "CompletedAt",
+        "Config",
+        "Context",
+        "Dockerfile",
+        "Duration",
+        "Materials",
+        "Name",
+        "NumCachedSteps",
+        "NumCompletedSteps",
+        "NumTotalSteps",
+        "Ref",
+        "StartedAt",
+        "Status",
+        "Target",
+        "VCSRepository",
+        "VCSRevision"
+      ],
+      "status": "completed"
+    },
+    {
+      "id": "5rdfhdhqhni5ggpc6nmup7zft",
+      "keys": [
+        "Attachments",
+        "BuildArgs",
+        "CompletedAt",
+        "Config",
+        "Context",
+        "Dockerfile",
+        "Duration",
+        "Labels",
+        "Materials",
+        "Name",
+        "NumCachedSteps",
+        "NumCompletedSteps",
+        "NumTotalSteps",
+        "Ref",
+        "StartedAt",
+        "Status",
+        "VCSRepository",
+        "VCSRevision"
+      ],
+      "status": "completed"
+    },
+    {
+      "id": "u1y9zh45oqq6pnzd7qtnqudhn",
+      "keys": [
+        "Attachments",
+        "CompletedAt",
+        "Config",
+        "Context",
+        "Dockerfile",
+        "Duration",
+        "Materials",
+        "Name",
+        "NumCachedSteps",
+        "NumCompletedSteps",
+        "NumTotalSteps",
+        "Ref",
+        "StartedAt",
+        "Status",
+        "Target",
+        "VCSRepository",
+        "VCSRevision"
+      ],
+      "status": "completed"
+    },
+    {
+      "id": "wfic024jusk36x8ply7ywlg05",
+      "keys": [
+        "Attachments",
+        "BuildArgs",
+        "CompletedAt",
+        "Config",
+        "Context",
+        "Dockerfile",
+        "Duration",
+        "Labels",
+        "Materials",
+        "Name",
+        "NumCachedSteps",
+        "NumCompletedSteps",
+        "NumTotalSteps",
+        "Ref",
+        "StartedAt",
+        "Status",
+        "VCSRepository",
+        "VCSRevision"
+      ],
+      "status": "completed"
+    },
+    {
+      "id": "w9m47rdur05d56mflpzfomazt",
+      "keys": [
+        "Attachments",
+        "CompletedAt",
+        "Config",
+        "Context",
+        "Dockerfile",
+        "Duration",
+        "Error",
+        "Materials",
+        "Name",
+        "NumCachedSteps",
+        "NumCompletedSteps",
+        "NumTotalSteps",
+        "Ref",
+        "StartedAt",
+        "Status",
+        "Target",
+        "VCSRepository",
+        "VCSRevision"
+      ],
+      "status": "canceled"
+    },
+    {
+      "id": "uar1eqkvquwwj5f2xxw0jn4kt",
+      "keys": [
+        "Attachments",
+        "BuildArgs",
+        "CompletedAt",
+        "Config",
+        "Context",
+        "Dockerfile",
+        "Duration",
+        "Labels",
+        "Materials",
+        "Name",
+        "NumCachedSteps",
+        "NumCompletedSteps",
+        "NumTotalSteps",
+        "Ref",
+        "StartedAt",
+        "Status",
+        "VCSRepository",
+        "VCSRevision"
+      ],
+      "status": "completed"
+    },
+    {
+      "id": "p0yql7t5w9ada4wo6ni6gh3ha",
+      "keys": [
+        "Attachments",
+        "BuildArgs",
+        "CompletedAt",
+        "Config",
+        "Context",
+        "Dockerfile",
+        "Duration",
+        "Labels",
+        "Materials",
+        "Name",
+        "NumCachedSteps",
+        "NumCompletedSteps",
+        "NumTotalSteps",
+        "Ref",
+        "StartedAt",
+        "Status"
+      ],
+      "status": "completed"
+    }
+  ]
+}

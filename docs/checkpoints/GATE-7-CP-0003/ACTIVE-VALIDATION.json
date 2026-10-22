@@ -1,23 +1,12 @@
 {
-  "recordedAt": "2026-10-21T23:59:27Z",
+  "recordedAt": "2026-10-22T01:38:17Z",
   "kind": "TRANSIENT_OPERATOR_RESUME_MARKER_NOT_ACCEPTANCE",
-  "sourceFingerprint": "a013a6f9dad319804f05b950f2e7c1b14dc8b1690fed39285d081c414da26806",
-  "nativeToolSessions": [
-    {
-      "id": 45796,
-      "lastObservedStatus": "COMPLETED",
-      "exitCode": 1,
-      "evidence": "quality-attempts/tests/run-0001.json"
-    },
-    {
-      "lastObservedStatus": "COMPLETED",
-      "exitCode": 0,
-      "evidence": "quality-attempts/lint/run-0006.json"
-    }
-  ],
-  "cleanup": "RETIRED_CLONE_REMOVED_DOCKER_SCOPE_STILL_ACTIVE_FOR_REMAINING_VALIDATION",
-  "warning": "Transient session numbers are not success evidence; completed receipts bind actual exits.",
+  "sourceFingerprint": "67c1c0fafda55559d1214e0cf3333f5f9d42428541ddc4b61165aff41ebcf2d3",
+  "nativeToolSessions": [],
+  "cleanup": "COMPLETED_PRIVATE_RESOURCES_ABSENT",
   "ownedBuilderReceipt": "OWNED-DOCKER-SCOPE.json",
   "independentAuditorStarted": false,
-  "gate8Authorized": false
+  "gate8Authorized": false,
+  "blocker": "OWNER_CONFIRMATION_EXTERNAL_DOCKER_APPLICATION_TRANSITION",
+  "warning": "Historical process IDs may be reused; no old PID controller or cleanup receipt may be replayed."
 }

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "status": "ACTIVE",
+  "status": "CLEANED_EXTERNAL_OBSERVATION_CHANGED",
   "createdAt": "2026-10-21T20:22:34Z",
   "builder": "iacode-m2cp3-e2531ca8afd9403e828958f4c7dd8c66",
   "privateBuildxConfig": "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-m2cp3-buildx-asrscc8_",
@@ -1299,12 +1299,16 @@
     "iacode-m2cp3-aa560f386fe44e21876d0e3ccfdfef31"
   ],
   "builderOwnership": {
-    "observedAt": "2026-10-21T20:38:43Z",
+    "observedAt": "2026-10-22T00:40:13Z",
     "name": "buildx_buildkit_iacode-m2cp3-e2531ca8afd9403e828958f4c7dd8c660",
     "id": "143812391ec1dfd8bc402f57fafa54a1a5b9a5eb70fe126f569ac40322fce5d5",
     "imageId": "sha256:cec9f139f45e93c5c69c60f8b07cfad9f43f4ef6b6a6cd917527fea5ff2e3dea",
     "imageReference": "moby/buildkit:buildx-stable-1",
-    "source": "Exact private registered Buildx builder; container absent from baseline"
+    "source": "Exact private registered Buildx builder; container absent from baseline",
+    "cacheVolumes": [
+      "buildx_buildkit_iacode-m2cp3-e2531ca8afd9403e828958f4c7dd8c660_state"
+    ],
+    "cacheOwnership": "Actual exact builder Mounts; absent from baseline; no global cache claim"
   },
   "claimedAuxiliaryImages": [
     {

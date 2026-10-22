@@ -1,5 +1,12 @@
 # Exact validation context
 
+Current epoch update: runtime-v1 was normally published at8312bb2 but its incomplete public quality
+attempt was canceled after a real next-auditor byte-boundary escape. Its original native exit20,
+exact Job cleanup PASS, zero remaining owned processes and exact public clone removal are retained.
+LSN-0131's distinct BYTE-TRANSPORT-002 recurrence was escalated before generic original-observation
+family repair. Three real Git cases and206 exact staged comparisons now pass; current source is
+67c1c0fa after local guard restoration. No older epoch result is adopted as integral acceptance.
+
 The completed unchanged local root baseline ran 1,018 tests and exited1 with seven failures.
 Its original safe streams and source fingerprint are retained in quality-attempts/tests/run-0001.
 No later result rewrites that attempt or turns it into acceptance.

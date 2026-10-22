@@ -1,0 +1,56 @@
+{
+  "observedAt": "2026-10-22T01:38:17Z",
+  "source": "resource-preservation/run-0004.json",
+  "baselineObservedAt": "2026-10-21T20:22:34Z",
+  "originalContainers": [
+    {
+      "id": "4006c8a106e7245a77da4649f78e72b65d0bf999c89fd75433557cf7e8fba149",
+      "name": "esteira-videos-worker-1",
+      "image": "sha256:fc367b8cc0b37700fafdb25f805a3b53509dee38328c57b9250069c8d88534e1",
+      "running": true,
+      "startedAt": "2026-10-21T12:34:44.014653919Z",
+      "restartCount": 0,
+      "project": "esteira-videos"
+    },
+    {
+      "id": "a3cfb288f9e3f15c6bbe391c7cf6af6cfd1ea61c081adf7d1fb2c14c37020202",
+      "name": "esteira-videos-web-1",
+      "image": "sha256:fc367b8cc0b37700fafdb25f805a3b53509dee38328c57b9250069c8d88534e1",
+      "running": true,
+      "startedAt": "2026-10-21T12:34:44.026416993Z",
+      "restartCount": 0,
+      "project": "esteira-videos"
+    }
+  ],
+  "observedReplacements": [
+    {
+      "id": "57c7cabf5e24e389bd5e2751444ec9da37a01a5c92b8ae6f3dc5faf32a11a4db",
+      "name": "esteira-videos-web-1",
+      "image": "sha256:7e8162bc928fba1f4a51e8f3d45bd478abd4a6b54c950243a24b8ca086a428d1",
+      "running": true,
+      "startedAt": "2026-10-22T00:09:57.502120567Z",
+      "restartCount": 0,
+      "project": "esteira-videos"
+    },
+    {
+      "id": "8cf02d521401862ebb68acb36f7b93f606d471c6b33df96d5790150770b85b31",
+      "name": "esteira-videos-worker-1",
+      "image": "sha256:7e8162bc928fba1f4a51e8f3d45bd478abd4a6b54c950243a24b8ca086a428d1",
+      "running": true,
+      "startedAt": "2026-10-22T00:10:15.297689905Z",
+      "restartCount": 0,
+      "project": "esteira-videos"
+    }
+  ],
+  "originalComparisonRetained": "FAIL",
+  "readOnlyEngineLabelObservation": {
+    "workingDirectory": "E:/esteira_videos",
+    "composeFile": "E:/esteira_videos/compose.yaml"
+  },
+  "observationLimit": "Working-directory labels and start times establish a different project; they do not identify the initiating person or establish their authority.",
+  "ownerConfirmation": "PENDING",
+  "otherProjectResourcesModifiedByThisTask": false,
+  "otherProjectAddedToCleanupScope": false,
+  "originalBaselineRewritten": false,
+  "originalDenominator": 37
+}

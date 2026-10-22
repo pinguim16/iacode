@@ -1,0 +1,25 @@
+test_every_declared_copied_observation_survives_actual_archive_and_both_checkout_modes (test_m2_observation_transport.M2ObservationTransportTests.test_every_declared_copied_observation_survives_actual_archive_and_both_checkout_modes) ... ok
+test_next_checkpoint_and_other_gate_observations_keep_the_same_real_byte_boundaries (test_m2_observation_transport.M2ObservationTransportTests.test_next_checkpoint_and_other_gate_observations_keep_the_same_real_byte_boundaries) ... FAIL
+test_removing_byte_boundaries_is_detected_beside_actual_binary_null (test_m2_observation_transport.M2ObservationTransportTests.test_removing_byte_boundaries_is_detected_beside_actual_binary_null) ... ok
+
+======================================================================
+FAIL: test_next_checkpoint_and_other_gate_observations_keep_the_same_real_byte_boundaries (test_m2_observation_transport.M2ObservationTransportTests.test_next_checkpoint_and_other_gate_observations_keep_the_same_real_byte_boundaries)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\iacode\tests\test_m2_observation_transport.py", line 116, in test_next_checkpoint_and_other_gate_observations_keep_the_same_real_byte_boundaries
+    self.assertEqual([], [(mode, name) for mode, name, matched in facts if not matched],
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     "observation-byte protection must follow the canonical family, not one delivery ID")
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [] != [('git-archive', 'docs/checkpoints/GATE-7-[6861 chars]og')]
+
+Second list contains 66 additional elements.
+First extra element 0:
+('git-archive', 'docs/checkpoints/GATE-7-CP-0004/attempts/future-control/stdout.log')
+
+Diff is 7375 characters long. Set self.maxDiff to None to see it. : observation-byte protection must follow the canonical family, not one delivery ID
+
+----------------------------------------------------------------------
+Ran 3 tests in 23.143s
+
+FAILED (failures=1)

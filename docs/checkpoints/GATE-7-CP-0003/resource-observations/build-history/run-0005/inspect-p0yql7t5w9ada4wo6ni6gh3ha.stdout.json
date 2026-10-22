@@ -1,0 +1,60 @@
+{
+  "Name": "iacode-m2cp3-frozen-probe-jy9tv71i/apps/api",
+  "Ref": "p0yql7t5w9ada4wo6ni6gh3ha",
+  "Context": "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-m2cp3-frozen-probe-jy9tv71i",
+  "Dockerfile": "apps\\api\\Dockerfile",
+  "StartedAt": "2026-10-21T17:28:44.947492137-03:00",
+  "CompletedAt": "2026-10-21T17:31:41.203139726-03:00",
+  "Duration": 176255647589,
+  "Status": "completed",
+  "NumCompletedSteps": 35,
+  "NumTotalSteps": 35,
+  "NumCachedSteps": 0,
+  "BuildArgs": [
+    {
+      "Name": "IACODE_BUILD_TIMESTAMP",
+      "Value": "unknown"
+    },
+    {
+      "Name": "IACODE_COMMIT",
+      "Value": "unknown"
+    },
+    {
+      "Name": "IACODE_VERSION",
+      "Value": "0.1.0"
+    }
+  ],
+  "Labels": [
+    {
+      "Name": "com.docker.compose.project",
+      "Value": "iacode-m2cp3-aa560f386fe44e21876d0e3ccfdfef31"
+    },
+    {
+      "Name": "com.docker.compose.service",
+      "Value": "api"
+    },
+    {
+      "Name": "com.docker.compose.version",
+      "Value": "5.5.1"
+    }
+  ],
+  "Config": {},
+  "Materials": [
+    {
+      "URI": "pkg:docker/python@3.13.15-slim-bookworm?platform=linux%2Famd64",
+      "Digests": [
+        "sha256:2325bb286ec344af3e5898cc224b5844e2707ac6e26b1632516fd3edc84a5e26"
+      ]
+    }
+  ],
+  "Attachments": [
+    {
+      "Digest": "sha256:2d96b622016653f9c432c71df48d6d1864629bebb3165915cdf1eb75c5797100",
+      "Type": "application/vnd.oci.image.manifest.v1+json"
+    },
+    {
+      "Digest": "sha256:ef93d6a7297cd6e36e33efc86b6d862b546e48d5a62ee57f3a71608cd96b6c98",
+      "Type": "https://slsa.dev/provenance/v1"
+    }
+  ]
+}

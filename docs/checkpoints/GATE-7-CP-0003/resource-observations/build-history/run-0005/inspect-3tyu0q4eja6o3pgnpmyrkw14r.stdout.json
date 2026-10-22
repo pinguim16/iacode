@@ -1,0 +1,62 @@
+{
+  "Name": "iacode/apps/api",
+  "Ref": "3tyu0q4eja6o3pgnpmyrkw14r",
+  "Context": ".",
+  "Dockerfile": "apps\\api\\Dockerfile",
+  "VCSRepository": "https://github.com/pinguim16/iacode.git",
+  "VCSRevision": "823cf164c6931dab7f957c92721ded7a916655bd",
+  "StartedAt": "2026-10-21T20:47:03.016117296-03:00",
+  "CompletedAt": "2026-10-21T20:47:31.517178074-03:00",
+  "Duration": 28501060778,
+  "Status": "completed",
+  "NumCompletedSteps": 35,
+  "NumTotalSteps": 35,
+  "NumCachedSteps": 29,
+  "BuildArgs": [
+    {
+      "Name": "IACODE_BUILD_TIMESTAMP",
+      "Value": "unknown"
+    },
+    {
+      "Name": "IACODE_COMMIT",
+      "Value": "unknown"
+    },
+    {
+      "Name": "IACODE_VERSION",
+      "Value": "0.1.0"
+    }
+  ],
+  "Labels": [
+    {
+      "Name": "com.docker.compose.project",
+      "Value": "iacode-m2cp3-aa560f386fe44e21876d0e3ccfdfef31"
+    },
+    {
+      "Name": "com.docker.compose.service",
+      "Value": "api"
+    },
+    {
+      "Name": "com.docker.compose.version",
+      "Value": "5.5.1"
+    }
+  ],
+  "Config": {},
+  "Materials": [
+    {
+      "URI": "pkg:docker/python@3.13.15-slim-bookworm?platform=linux%2Famd64",
+      "Digests": [
+        "sha256:2325bb286ec344af3e5898cc224b5844e2707ac6e26b1632516fd3edc84a5e26"
+      ]
+    }
+  ],
+  "Attachments": [
+    {
+      "Digest": "sha256:7aa1939874602a99d989b4be331535700f41ad9da971dd47ba927451c7de834a",
+      "Type": "application/vnd.oci.image.manifest.v1+json"
+    },
+    {
+      "Digest": "sha256:e9f163edd9e5d958a16513e23dad30e64505f405e0b7ef010aa04d0d8c555011",
+      "Type": "https://slsa.dev/provenance/v1"
+    }
+  ]
+}

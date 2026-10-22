@@ -1,0 +1,38 @@
+{
+  "observedAt": "2026-10-22T01:38:17Z",
+  "source": "OWNED-RESOURCE-CLEANUP.json",
+  "componentResult": "PASS",
+  "removedImageIds": [
+    "sha256:08201acd56ea003a374b99f40e202b6957ee70c354d8204e0f39713b23b54c7c",
+    "sha256:2d96b622016653f9c432c71df48d6d1864629bebb3165915cdf1eb75c5797100",
+    "sha256:7aa1939874602a99d989b4be331535700f41ad9da971dd47ba927451c7de834a",
+    "sha256:cec9f139f45e93c5c69c60f8b07cfad9f43f4ef6b6a6cd917527fea5ff2e3dea",
+    "sha256:f1946a6325d77ffbecd67dcf9c373ab6f2168c8708d75593474dbfe3656a6fee"
+  ],
+  "removedImageCount": 5,
+  "privateBuilderRemoved": true,
+  "builderCacheVolumesRemoved": [
+    "buildx_buildkit_iacode-m2cp3-e2531ca8afd9403e828958f4c7dd8c660_state"
+  ],
+  "removedNetworkIds": [
+    "f2c13d24d768646d73f7158a76d4dbf40ec5c09aa7213c2d9dd00fe1c3748b21"
+  ],
+  "removedVolumeNames": [
+    "iacode-m2cp3-aa560f386fe44e21876d0e3ccfdfef31_minio-data",
+    "iacode-m2cp3-aa560f386fe44e21876d0e3ccfdfef31_postgres-data"
+  ],
+  "privateBuildxConfigRemoved": true,
+  "preexistingToolchainTagRestored": true,
+  "remainingProvenOwnedDisposableResources": {
+    "containers": [],
+    "images": [],
+    "networks": [],
+    "volumes": [],
+    "preservedShared": [],
+    "baselineTagCount": 42
+  },
+  "applicationsUnchangedDuringDisposal": true,
+  "originalFullBaselineComparison": "FAIL",
+  "globalPrunePerformed": false,
+  "milestoneOrGateVerdictGranted": false
+}

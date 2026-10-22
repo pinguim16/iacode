@@ -3,7 +3,7 @@
 *.json text eol=lf
 *.jsonl text eol=lf
 # Immutable copied observations retain their original byte digest across Git transport.
-docs/checkpoints/**/attempts/*.json -text
+docs/checkpoints/**/attempts/** -text
 # Captured UTF-8 process output retains the exact bytes named by its observed digest.
 docs/checkpoints/GATE-6-CP-0001/suite-attempts/*.log -text
 docs/checkpoints/**/DESKTOP-LIVE.json -text
@@ -37,13 +37,15 @@ docs/checkpoints/GATE-7-CP-0001/suite-attempts/*.log -text
 # Copied original unsealed audit/entry evidence is not rewritten on first publication.
 docs/checkpoints/GATE-7-CP-0002/** -text
 docs/audits/M2-ENTRY-BLOCKED-2026-10-21/** -text
-# Current byte-identified observations and exact preimages retain their original bytes.
-docs/checkpoints/GATE-7-CP-0003/causal-attempts/** -text
-docs/checkpoints/GATE-7-CP-0003/environment-attempts/** -text
-docs/checkpoints/GATE-7-CP-0003/quality-attempts/** -text
-docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/** -text
-docs/checkpoints/GATE-7-CP-0003/raw-preimages/** -text
-docs/checkpoints/GATE-7-CP-0003/resource-observations/build-history/** -text
-docs/checkpoints/GATE-7-CP-0003/published-green-keeper/** -text
-docs/checkpoints/GATE-7-CP-0003/full-verifier-executions/** -text
-docs/checkpoints/GATE-7-CP-0003/suite-attempts/** -text
+# Original-observation families remain byte-exact for later checkpoints and auditors too.
+# These are transport boundaries, not secret-scan exclusions or permission to rewrite originals.
+docs/checkpoints/**/controls/** -text
+docs/checkpoints/**/causal-attempts/** -text
+docs/checkpoints/**/environment-attempts/** -text
+docs/checkpoints/**/quality-attempts/** -text
+docs/checkpoints/**/byte-transport-attempts/** -text
+docs/checkpoints/**/raw-preimages/** -text
+docs/checkpoints/**/resource-observations/build-history/** -text
+docs/checkpoints/**/published-green-keeper/** -text
+docs/checkpoints/**/full-verifier-executions/** -text
+docs/checkpoints/**/suite-attempts/** -text

@@ -28,6 +28,7 @@ def main() -> int:
     mode.add_argument("--bridge-controls", action="store_true")
     mode.add_argument("--cleanup-controls", action="store_true")
     mode.add_argument("--operator-cleanup-controls", action="store_true")
+    mode.add_argument("--dependency-cleanup-controls", action="store_true")
     mode.add_argument("--native-controls", action="store_true")
     mode.add_argument("--native-candidate", action="store_true")
     mode.add_argument("--physical-bounds-controls", action="store_true")
@@ -67,6 +68,9 @@ def main() -> int:
         command = ["python", "-m", "unittest", "discover", "-s", "tests", "-p",
                    "test_m2_native_observation.py", "-v"]
         folder = "causal-attempts/native-observation"
+    elif options.dependency_cleanup_controls:
+        command = ["python", "docs/checkpoints/GATE-7-CP-0003/audit-harness/test_cleanup_dependency_order.py", "-v"]
+        folder = "causal-attempts/dependency-cleanup"
     elif options.operator_cleanup_controls:
         command = ["python", "-m", "unittest", "discover", "-s", "tests", "-p",
                    "test_m2_cleanup_operator.py", "-v"]

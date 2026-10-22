@@ -142,6 +142,13 @@ def capture_builder_ownership():
     evidence = {"observedAt": utc_now(), "name": name, "id": document["Id"],
                 "imageId": document["Image"], "imageReference": document["Config"]["Image"],
                 "source": "Exact private registered Buildx builder; container absent from baseline"}
+    caches = [row["Name"] for row in document["Mounts"]
+              if row["Type"] == "volume" and row["Destination"] == "/var/lib/buildkit"]
+    if (caches != [name + "_state"]
+            or any(row["name"] in caches for row in scope["before"]["volumes"])):
+        raise ValueError("EXACT_NEW_PRIVATE_BUILDER_CACHE_REQUIRED")
+    evidence["cacheVolumes"] = caches
+    evidence["cacheOwnership"] = "Actual exact builder Mounts; absent from baseline; no global cache claim"
     scope.setdefault("registeredProjects", [scope["inheritedOwnedProject"]])
     scope["builderOwnership"] = evidence
     if document["Image"] not in {row["id"] for row in scope["before"]["images"]}:
@@ -168,8 +175,23 @@ def cleanup():
     builder = scope["builder"]
     if not builder.startswith("iacode-m2cp3-") or builder in {row["name"] for row in scope["before"]["containers"]}:
         raise ValueError("BUILDER_OWNER_MISMATCH")
+    builder_owner = scope.get("builderOwnership", {})
+    caches = builder_owner.get("cacheVolumes", [])
+    if (len(caches) != len(set(caches))
+            or any(name != "buildx_buildkit_" + builder + "0_state" for name in caches)
+            or any(row["name"] in caches for row in scope["before"]["volumes"])
+            or caches and not any(row["id"] == builder_owner.get("id")
+                                 and row["name"] == builder_owner.get("name")
+                                 and row["image"] == builder_owner.get("imageId")
+                                 for row in current["containers"])):
+        raise ValueError("PRIVATE_CACHE_OWNERSHIP_CHANGED")
+    for cache in caches:
+        consumers = set(docker(["container", "ls", "--all", "--quiet", "--no-trunc",
+                                "--filter", "volume=" + cache], environment=environment).splitlines())
+        if consumers != {builder_owner["id"]}:
+            raise ValueError("PRIVATE_CACHE_HAS_UNVERIFIED_OR_EXTERNAL_CONSUMERS")
     receipt = {"startedAt": utc_now(), "before": current, "plan": plan,
-               "commands": [], "result": "FAIL"}
+               "ownedBuilderCacheVolumes": caches, "commands": [], "result": "FAIL"}
 
     def remove(arguments):
         status, code, stdout, stderr = "COMPLETED", None, None, None
@@ -214,37 +236,63 @@ def cleanup():
             success = remove(["network", "rm", identifier]) and success
         for identifier in plan["volumes"]:
             success = remove(["volume", "rm", identifier]) and success
-        for identifier in plan["images"]:
+        # Re-evaluate after removing dependencies. The original conservative plan rightly
+        # preserves the image still consumed by the private builder before buildx rm.
+        # Never convert that initial preservation into an orphan left behind afterwards.
+        post_dependencies = snapshot()
+        for identifier in caches:
+            if any(row["name"] == identifier for row in post_dependencies["volumes"]):
+                # An exact observed private cache only; Docker refuses any new consumer.
+                success = remove(["volume", "rm", identifier]) and success
+        image_plan = cleanup_plan(scope, post_dependencies)
+        receipt["postDependencyImagePlan"] = image_plan
+        for identifier in image_plan["images"]:
             # No --force: Docker itself refuses an image still in use or ambiguously tagged.
             success = remove(["image", "rm", identifier]) and success
         after = snapshot()
         receipt["after"] = after
+        receipt["ownedBuilderCacheVolumesRemaining"] = [name for name in caches
+            if any(row["name"] == name for row in after["volumes"])]
         baseline_apps = {row["id"]: row for row in scope["before"]["containers"]
                          if row.get("project") not in set(scope.get("registeredProjects", [scope["inheritedOwnedProject"]]))}
         now_apps = {row["id"]: row for row in after["containers"]}
         receipt["unrelatedApplicationsUnchanged"] = all(now_apps.get(key) == value for key, value in baseline_apps.items())
+        immediate_apps = {row["id"]: row for row in current["containers"]
+            if row.get("project") not in set(scope.get("registeredProjects", [scope["inheritedOwnedProject"]]))
+            and row["id"] != builder_owner.get("id")}
+        receipt["unrelatedApplicationsUnchangedDuringCleanup"] = all(
+            now_apps.get(key) == value for key, value in immediate_apps.items())
         receipt["remainingOwned"] = cleanup_plan(scope, after)
         remaining = receipt["remainingOwned"]
-        success = (success and receipt["unrelatedApplicationsUnchanged"]
-                   and not any(remaining[key] for key in ("containers", "networks", "volumes", "images"))
+        # External application changes do not authorize touching those applications and must
+        # not leave an otherwise disposable private config behind. Keep the original full
+        # baseline comparison false and the overall result failed; report disposal separately.
+        own_clean = (success and not any(remaining[key] for key in ("containers", "networks", "volumes", "images"))
+                   and not receipt["ownedBuilderCacheVolumesRemaining"]
                    and scope["before"]["dockerConfigHash"] == configuration_hash())
+        receipt["ownedResourceCleanupResult"] = "PASS" if own_clean else "FAIL"
+        success = (own_clean and receipt["unrelatedApplicationsUnchanged"]
+                   and receipt["unrelatedApplicationsUnchangedDuringCleanup"])
         # Revalidate the absolute private target immediately before recursive deletion.
         child_environment()
         if any(path.is_symlink() or path.is_junction() for path in directory.rglob("*")):
             raise ValueError("REDIRECTED_PRIVATE_CONFIG")
-        if success:
+        if own_clean:
             shutil.rmtree(directory)
         receipt["privateBuildxConfigRemoved"] = not directory.exists()
-        if not success:
+        if not own_clean:
             receipt["privateBuildxConfigRetainedForRecovery"] = True
         receipt["result"] = "PASS" if success and receipt["privateBuildxConfigRemoved"] else "FAIL"
-        scope["status"] = "CLEANED" if receipt["result"] == "PASS" else "CLEANUP_FAILED"
+        scope["status"] = ("CLEANED" if receipt["result"] == "PASS" else
+                           "CLEANED_EXTERNAL_OBSERVATION_CHANGED" if own_clean and receipt["privateBuildxConfigRemoved"]
+                           else "CLEANUP_FAILED")
     finally:
         receipt["finishedAt"] = utc_now()
         write_json(output, receipt)
         write_json(SCOPE, scope)
-    print(json.dumps({"result": receipt["result"], "removedImages": len(plan["images"]),
-                      "sharedResourcesPreserved": len(plan["preservedShared"]),
+    final_plan = receipt.get("postDependencyImagePlan", plan)
+    print(json.dumps({"result": receipt["result"], "removedImages": len(final_plan["images"]),
+                      "sharedResourcesPreserved": len(final_plan["preservedShared"]),
                       "unrelatedApplicationsUnchanged": receipt.get("unrelatedApplicationsUnchanged")}))
     return int(receipt["result"] != "PASS")
 

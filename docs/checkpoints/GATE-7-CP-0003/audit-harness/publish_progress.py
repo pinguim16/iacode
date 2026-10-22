@@ -69,8 +69,10 @@ def main() -> int:
     parser.add_argument("--runtime-tag")
     options = parser.parse_args()
     state = json.loads((CHECKPOINT / "STATE.json").read_bytes())
-    if state["gate"] != "GATE-7" or state["status"] != "IN_PROGRESS":
-        raise ValueError("only unsealed implementing Gate7 progress may be published")
+    if state["gate"] != "GATE-7" or state["status"] not in {"IN_PROGRESS", "BLOCKED"}:
+        raise ValueError("only unsealed implementing Gate7 progress or a truthful blocked handoff may be saved")
+    if state["status"] == "BLOCKED" and (not state["blockedBy"] or options.runtime_tag):
+        raise ValueError("a blocked handoff requires named blockers and cannot be a runtime subject publication")
     message = options.message or ""
     if not options.stage_declared and (
         not message.strip() or len(message) > 120 or any(ord(char) < 32 for char in message)
@@ -132,7 +134,7 @@ def main() -> int:
                 python,
                 ledger + "finalize_checkpoint.py",
                 "--status",
-                "IN_PROGRESS",
+                state["status"],
                 "--commit-ref",
                 "HEAD",
             ],
@@ -169,7 +171,7 @@ def main() -> int:
         json.dumps(
             {
                 "result": "PASS",
-                "kind": "IN_PROGRESS_NOT_GATE_ACCEPTANCE",
+                "kind": state["status"] + "_NOT_GATE_ACCEPTANCE",
                 "actualProcessExits": observations,
                 "checkpointSealed": False,
                 "independentM2": "PENDING",

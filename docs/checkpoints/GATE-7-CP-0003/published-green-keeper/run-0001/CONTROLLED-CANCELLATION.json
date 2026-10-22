@@ -1,0 +1,37 @@
+{
+  "kind": "CONTROLLED_OBSOLETE_ATTEMPT_NOT_GATE_ACCEPTANCE",
+  "reason": "A real next-checkpoint archive/checkout probe confirmed that current-only Git attributes leave the fresh auditor's quality observation bytes unprotected. Escalate LSN-0131 and rerun the whole mandatory set after repair.",
+  "firstProbe": {
+    "nativeExitCode": 1,
+    "observations": 9,
+    "matched": 6,
+    "mismatches": 3,
+    "actualBinaryNullValid": true,
+    "ownedTemporaryGitFixtureRemoved": true,
+    "limitations": "Direct diagnostic native tool output; not a fabricated canonical command record. The permanent regression is executed separately before repair."
+  },
+  "controller": {
+    "path": "audit-harness/stop_obsolete_public_quality.py",
+    "actualExitCode": 0,
+    "producerId": 51764,
+    "producerCreatedAt": "2026-10-22T00:11:48.795774+00:00",
+    "nativeCreationExecutableArgvAndParentMatched": true,
+    "requestedProducerExitCode": 20,
+    "historicalPidMayBeReused": true,
+    "doNotSignalHistoricalPidAgain": true,
+    "applicationsOrDockerSignaled": false
+  },
+  "observedCompletion": {
+    "executionReceipt": "RECEIPT.json",
+    "command": "cmd-0176",
+    "wrapperExitCode": 1,
+    "producerExitCode": 20,
+    "exactOwnedJobCleanup": "PASS",
+    "remainingOwnedProcesses": 0,
+    "temporaryPublicCloneRemoved": true,
+    "sourceFingerprintUnchangedDuringAttempt": true,
+    "mandatoryCycleCompleted": false,
+    "testFailureCountClaimed": false,
+    "gatePassClaimed": false
+  }
+}

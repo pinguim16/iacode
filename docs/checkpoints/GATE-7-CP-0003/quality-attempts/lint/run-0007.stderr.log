@@ -1,0 +1,43 @@
+[iacode] FAILED: the api image could not be built before the gate ran:
+15] COPY packages/common /build/packages/common
+#26 CACHED
+
+#27 [runtime  8/16] COPY --chown=iacode:iacode apps/api/pyproject.toml /app/pyproject.toml
+#27 CACHED
+
+#28 [builder  2/15] RUN python -m venv /opt/venv
+#28 CACHED
+
+#29 [runtime 14/16] COPY --chown=iacode:iacode services/agent-runtime/tests /app/agent_runtime_tests
+#29 CACHED
+
+#30 [builder  3/15] WORKDIR /build
+#30 CACHED
+
+#31 [runtime 13/16] COPY --chown=iacode:iacode agents /app/agents
+#31 CACHED
+
+#32 [runtime 15/16] COPY --chown=iacode:iacode services/experience/tests /app/experience_tests
+#32 CACHED
+
+#33 [runtime  2/16] RUN groupadd --gid 10001 iacode  && useradd --uid 10001 --gid 10001 --create-home --shell /usr/sbin/nologin iacode
+#33 CACHED
+
+#34 [runtime  5/16] COPY --chown=iacode:iacode apps/api/src /app/src
+#34 CACHED
+
+#35 [runtime 16/16] COPY --chown=iacode:iacode services/knowledge/tests /app/knowledge_tests
+#35 CACHED
+
+#36 exporting to oci image format
+#36 exporting layers done
+#36 exporting manifest sha256:7aa1939874602a99d989b4be331535700f41ad9da971dd47ba927451c7de834a done
+#36 exporting config sha256:e0f44a1c67117edd249c365d97384a9baacd5f404359a6351d43922aff2a3e6f done
+#36 sending tarball
+#36 sending tarball 368.7s done
+#36 CANCELED
+failed to solve: Canceled: failed to copy to tar: rpc error: code = Canceled desc = context canceled
+
+
+
+View build details: docker-desktop://dashboard/build/iacode-m2cp3-e2531ca8afd9403e828958f4c7dd8c66/iacode-m2cp3-e2531ca8afd9403e828958f4c7dd8c660/p5d146sv72z8w6h643rdtjjgc

@@ -4,7 +4,7 @@
 - Scope: `Knowledge-Engine-M2-corrective-checkpoint-command-replay-client-producer-evidence-Docker-isolated-validation`
 - Technologies: `Python`, `PostgreSQL`, `Docker`, `Windows`
 - Modules: `services/knowledge`, `apps/api`, `packages/contracts`, `packages/persistence`, `scripts/iacode`, `scripts/development-ledger`
-- Generated: `2026-10-21T23:49:39Z`
+- Generated: `2026-10-22T00:41:05Z`
 - Lessons considered: 152
 - Lessons applicable: 151
 

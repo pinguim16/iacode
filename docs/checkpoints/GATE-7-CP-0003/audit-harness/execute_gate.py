@@ -31,8 +31,13 @@ def preserve_execution(command: list[str], stem: str, kind: str, identity: str) 
         raise ValueError("refuse overwriting an observation")
     before = scope_fingerprint(ROOT)
     snapshot = git_snapshot(ROOT)
+    from compose import read_env_file
+
+    environment = child_environment()
+    # Build-only canonical gates must not fall back to a preexisting application's tag.
+    environment.update(read_env_file(CHECKPOINT / "RUNTIME-OWNER.txt", {}))
     result = subprocess.run(argv, cwd=ROOT, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
-                            check=False, env=child_environment())
+                            check=False, env=environment)
     raw = result.stdout
     encoding_valid = True
     try:

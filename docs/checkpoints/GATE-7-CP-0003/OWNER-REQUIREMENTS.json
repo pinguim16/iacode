@@ -4,21 +4,42 @@
   "requirements": [
     {
       "ownerRequirement": "Only frozen canonical runners may cross the restricted Docker boundary; no general bypass or global change",
-      "canonicalRefs": ["canonical:GATE-7#7.3", "canonical:GATE-7#7.5", "canonical:GATE-7#8.6"],
+      "canonicalRefs": [
+        "canonical:GATE-7#7.3",
+        "canonical:GATE-7#7.5",
+        "canonical:GATE-7#8.6"
+      ],
       "status": "PARTIAL",
-      "evidence": ["environment-attempts/bridge-boundary/run-0001.json", "causal-attempts/bridge/run-0001.json", "file:docs/adr/ADR-0062-isolated-audit-uses-closed-host-validation-jobs.md"]
+      "evidence": [
+        "environment-attempts/bridge-boundary/run-0001.json",
+        "causal-attempts/bridge/run-0001.json",
+        "file:docs/adr/ADR-0062-isolated-audit-uses-closed-host-validation-jobs.md"
+      ]
     },
     {
       "ownerRequirement": "Remove all verified task-owned disposable images/cache/files after preserving evidence; preserve other applications and shared resources",
-      "canonicalRefs": ["canonical:GATE-7#7.3", "canonical:GATE-7#7.5", "canonical:GATE-7#8.6"],
-      "status": "IN_PROGRESS",
-      "evidence": ["OWNED-DOCKER-SCOPE.json", "file:docs/checkpoints/GATE-7-CP-0003/audit-harness/owned_docker_scope.py"]
+      "canonicalRefs": [
+        "canonical:GATE-7#7.3",
+        "canonical:GATE-7#7.5",
+        "canonical:GATE-7#8.6"
+      ],
+      "status": "COMPLETE",
+      "evidence": [
+        "OWNED-RESOURCE-CLEANUP.json",
+        "OWNED-DISPOSAL-SUMMARY.json"
+      ],
+      "notes": "Private disposal is actually complete and current applications were unchanged during it. The original external transition comparison remains failed and is not an M2 approval."
     },
     {
       "ownerRequirement": "Repair only approved benign wording in the prior unsealed entry report without weakening secret detection",
-      "canonicalRefs": ["canonical:GATE-7#7.5", "canonical:GATE-7#8.6"],
+      "canonicalRefs": [
+        "canonical:GATE-7#7.5",
+        "canonical:GATE-7#8.6"
+      ],
       "status": "COMPLETE",
-      "evidence": ["AUTHORIZED-PROSE-DIFF.json"]
+      "evidence": [
+        "AUTHORIZED-PROSE-DIFF.json"
+      ]
     }
   ]
 }

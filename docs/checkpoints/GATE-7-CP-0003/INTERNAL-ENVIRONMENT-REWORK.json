@@ -86,6 +86,19 @@
         "byte-transport-attempts/index-0005.json"
       ],
       "originalFilesRewritten": false
+    },
+    {
+      "id": "BYTE-TRANSPORT-002",
+      "status": "LOCAL_CORRECTION_DEMONSTRATED_WHOLE_ASSURANCE_PENDING",
+      "classification": "GUARDRAIL_FAILURE LSN-0131",
+      "observed": "A real permanent next-checkpoint/other-Gate transport regression fails while current observation and binary-null controls remain valid.",
+      "evidence": "byte-transport-attempts/controls/run-0003.json",
+      "requiredCorrection": "Protect canonical original-observation families across checkpoint IDs; rerun real archive/both checkouts, exact index comparison and the unchanged complete mandatory set.",
+      "currentProof": [
+        "byte-transport-attempts/controls/run-0004.json",
+        "byte-transport-attempts/index-0006.json"
+      ],
+      "originalFilesRewritten": false
     }
   ]
 }

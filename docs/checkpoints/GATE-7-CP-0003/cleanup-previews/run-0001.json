@@ -1,0 +1,82 @@
+{
+  "observedAt": "2026-10-22T01:21:46Z",
+  "kind": "READ_ONLY_DISPOSAL_PREVIEW_NOT_EXECUTION",
+  "builder": {
+    "observedAt": "2026-10-22T00:40:13Z",
+    "name": "buildx_buildkit_iacode-m2cp3-e2531ca8afd9403e828958f4c7dd8c660",
+    "id": "143812391ec1dfd8bc402f57fafa54a1a5b9a5eb70fe126f569ac40322fce5d5",
+    "imageId": "sha256:cec9f139f45e93c5c69c60f8b07cfad9f43f4ef6b6a6cd917527fea5ff2e3dea",
+    "imageReference": "moby/buildkit:buildx-stable-1",
+    "source": "Exact private registered Buildx builder; container absent from baseline",
+    "cacheVolumes": [
+      "buildx_buildkit_iacode-m2cp3-e2531ca8afd9403e828958f4c7dd8c660_state"
+    ],
+    "cacheOwnership": "Actual exact builder Mounts; absent from baseline; no global cache claim"
+  },
+  "privateBuildxConfig": "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-m2cp3-buildx-asrscc8_",
+  "initialPlan": {
+    "containers": [],
+    "images": [
+      "sha256:08201acd56ea003a374b99f40e202b6957ee70c354d8204e0f39713b23b54c7c",
+      "sha256:2d96b622016653f9c432c71df48d6d1864629bebb3165915cdf1eb75c5797100",
+      "sha256:7aa1939874602a99d989b4be331535700f41ad9da971dd47ba927451c7de834a",
+      "sha256:f1946a6325d77ffbecd67dcf9c373ab6f2168c8708d75593474dbfe3656a6fee"
+    ],
+    "networks": [
+      "f2c13d24d768646d73f7158a76d4dbf40ec5c09aa7213c2d9dd00fe1c3748b21"
+    ],
+    "volumes": [
+      "iacode-m2cp3-aa560f386fe44e21876d0e3ccfdfef31_minio-data",
+      "iacode-m2cp3-aa560f386fe44e21876d0e3ccfdfef31_postgres-data"
+    ],
+    "preservedShared": [
+      {
+        "id": "sha256:cec9f139f45e93c5c69c60f8b07cfad9f43f4ef6b6a6cd917527fea5ff2e3dea",
+        "reason": "SHARED_REFERENCE",
+        "externalContainers": [
+          "143812391ec1dfd8bc402f57fafa54a1a5b9a5eb70fe126f569ac40322fce5d5"
+        ],
+        "externalTags": [],
+        "externalDigests": []
+      }
+    ],
+    "baselineTagCount": 42
+  },
+  "projectedPostBuilderPlan": {
+    "containers": [],
+    "images": [
+      "sha256:08201acd56ea003a374b99f40e202b6957ee70c354d8204e0f39713b23b54c7c",
+      "sha256:2d96b622016653f9c432c71df48d6d1864629bebb3165915cdf1eb75c5797100",
+      "sha256:7aa1939874602a99d989b4be331535700f41ad9da971dd47ba927451c7de834a",
+      "sha256:cec9f139f45e93c5c69c60f8b07cfad9f43f4ef6b6a6cd917527fea5ff2e3dea",
+      "sha256:f1946a6325d77ffbecd67dcf9c373ab6f2168c8708d75593474dbfe3656a6fee"
+    ],
+    "networks": [
+      "f2c13d24d768646d73f7158a76d4dbf40ec5c09aa7213c2d9dd00fe1c3748b21"
+    ],
+    "volumes": [
+      "iacode-m2cp3-aa560f386fe44e21876d0e3ccfdfef31_minio-data",
+      "iacode-m2cp3-aa560f386fe44e21876d0e3ccfdfef31_postgres-data"
+    ],
+    "preservedShared": [],
+    "baselineTagCount": 42
+  },
+  "projectionIsNotActualExecution": true,
+  "preexistingTagRestorations": [
+    {
+      "tag": "iacode/web-toolchain:0.1.0",
+      "baselineImageId": "sha256:b05b89a4472eb3ae1ef881f58d89f60659323acc91da9a8445d7f8bebc802f2b",
+      "producedImageIds": [
+        "sha256:f1946a6325d77ffbecd67dcf9c373ab6f2168c8708d75593474dbfe3656a6fee"
+      ],
+      "evidence": "resource-observations/build-history/run-0003/inspect-u1y9zh45oqq6pnzd7qtnqudhn.stdout.json",
+      "requiredBeforeOwnedImageRemoval": true
+    }
+  ],
+  "externalProjectContainersExcluded": [
+    "57c7cabf5e24e389bd5e2751444ec9da37a01a5c92b8ae6f3dc5faf32a11a4db",
+    "8cf02d521401862ebb68acb36f7b93f606d471c6b33df96d5790150770b85b31"
+  ],
+  "dockerMutationsPerformed": false,
+  "fileResourceDeletionsPerformed": false
+}

@@ -24,14 +24,14 @@
     "lint": {
       "status": "PASS",
       "evidence": [
-        "file:quality-attempts/lint/run-0006.json"
+        "file:quality-attempts/lint/run-0008.json"
       ],
       "justification": "Complete actual canonical current gate; earlier failures/retries preserved."
     },
     "staticAnalysis": {
       "status": "PASS",
       "evidence": [
-        "file:quality-attempts/staticAnalysis/run-0005.json"
+        "file:quality-attempts/staticAnalysis/run-0006.json"
       ],
       "justification": "Actual complete current script/test compile; not full test acceptance."
     },
@@ -46,11 +46,9 @@
       "justification": null
     },
     "checkpointValidation": {
-      "status": "PASS",
-      "evidence": [
-        "file:quality-attempts/checkpointValidation/run-0004.json"
-      ],
-      "justification": "Actual quiescent valid IN_PROGRESS draft; not terminal readiness or independent validation."
+      "status": "NOT_EXECUTED",
+      "evidence": [],
+      "justification": "The family-boundary guard recurrence requires new current-source evidence; earlier actual observations remain preserved."
     },
     "redTeam": {
       "status": "NOT_EXECUTED",

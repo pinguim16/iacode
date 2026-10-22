@@ -1,0 +1,57 @@
+{
+  "observedAt": "2026-10-22T00:11:07Z",
+  "kind": "COMPLETE_CANONICAL_GREEN_KEEPER_PUBLIC_TRANSPORT",
+  "subjectCommit": "8312bb282844dc5d6b5e3e3f7a96f3c77cdbdca9",
+  "subjectTag": "iacode-subjects/GATE-7-CP-0003-runtime-v1",
+  "sourceFingerprint": "a013a6f9dad319804f05b950f2e7c1b14dc8b1690fed39285d081c414da26806",
+  "result": "FAIL",
+  "allMandatoryGatesRequested": true,
+  "gateSelectionOverride": false,
+  "localPrivateRefsFilteredOrChanged": false,
+  "sourceEdited": false,
+  "cloneCredentialHelperDisabled": true,
+  "cloneInteractivePromptsDisabled": true,
+  "canonicalEvidenceImported": true,
+  "execution": {
+    "producer": {
+      "status": "COMPLETED",
+      "exitCode": 20,
+      "arguments": [
+        "C:\\Program Files\\Python313\\python.exe",
+        "scripts/development-ledger/green_keeper.py",
+        "--trigger",
+        "Current complete corrective assurance from an exact public transported subject",
+        "--root-cause",
+        "M2 literal invocation/cleanup evidence and measured adapter/UTF-8 guard corrections"
+      ],
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "refusal": null
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "refusal": null
+      }
+    },
+    "cleanup": {
+      "result": "PASS",
+      "observation": {
+        "jobOwned": true,
+        "remainingBeforeCleanup": 3,
+        "remainingAfterCleanup": 0,
+        "observedProcessCount": 5,
+        "signaledProcessCount": 5,
+        "forcedTermination": true,
+        "naturalExitBudgetWithinOriginalDeadlineSeconds": 1
+      }
+    }
+  },
+  "cloneSourceUnchanged": true,
+  "workingSourceUnchanged": true,
+  "importedCommandsSha256": "aff77edd57a721c820f80c5d117316997d69c9b268ce94c8db4991ca37e8bc97",
+  "temporaryClone": "C:\\Users\\cesar\\AppData\\Local\\Temp\\iacode-m2cp3-public-quality-n0v0ee24\\repository",
+  "temporaryCloneRemoved": true,
+  "finishedAt": "2026-10-22T00:34:12Z"
+}

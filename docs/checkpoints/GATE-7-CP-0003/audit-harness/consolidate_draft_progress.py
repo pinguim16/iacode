@@ -30,17 +30,19 @@ def main():
                    justification="Actual local correction and automated prevention observed; current complete immutable and ordered assurance remain pending.")
         row["implementationEvidence"] = ["file:scripts/development-ledger/new_checkpoint.py",
             "file:scripts/development-ledger/m0_red_team.py", "file:scripts/iacode/client_checks.py",
-            "file:scripts/iacode/native_execution.py", "file:scripts/development-ledger/audit_runner_bridge.py"]
+            "file:scripts/iacode/native_execution.py", "file:scripts/development-ledger/audit_runner_bridge.py",
+            "file:.gitattributes", "file:tests/test_m2_observation_transport.py"]
         row["testEvidence"] = ["file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/run-0011.json",
             "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/native-observation/run-0004.json",
             "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/bridge-physical-bounds/run-0002.json",
             "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/current-streams/run-0001.json",
-            "file:docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/controls/run-0002.json",
-            "file:docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/index-0005.json"]
+            "file:docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/controls/run-0004.json",
+            "file:docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/index-0006.json"]
         row["negativeTestEvidence"] = ["file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/run-0005.json",
             "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/native-cleanup-evidence/run-0001.json",
             "file:docs/checkpoints/GATE-7-CP-0003/causal-attempts/bridge-physical-bounds/run-0001.json",
-            "file:docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/controls/run-0001.json"]
+            "file:docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/controls/run-0001.json",
+            "file:docs/checkpoints/GATE-7-CP-0003/byte-transport-attempts/controls/run-0003.json"]
         row["documentationEvidence"] = ["file:docs/adr/ADR-0061-client-verification-preserves-producer-and-cleanup-outcomes.md",
             "file:docs/adr/ADR-0062-isolated-audit-uses-closed-host-validation-jobs.md",
             "checkpoint:ENVIRONMENT-VALIDATION-CONTEXT.md"]
