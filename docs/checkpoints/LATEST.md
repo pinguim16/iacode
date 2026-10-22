@@ -2,4 +2,9 @@
 
 Checkpoint: `docs/checkpoints/GATE-7-CP-0003`
 
-BLOCKED corrective work; scoped private disposal is complete. The original shared-Docker comparison records two replacements in E:/esteira_videos, not silently reconciled; owner confirmation is pending. No other-project cleanup, global setting change, application restart, Gate8 or new auditor turn occurred. CP0001 remains the immutable last valid seal. Read the complete current handoff and RESOURCE-DIVERGENCE-0001.json before resuming; full controls and independent M2 closure remain pending.
+IN_PROGRESS corrective work, PAUSED by owner for computer restart. Scoped private disposal is
+complete; no new Docker resource or test/auditor run was started this turn. Docker concerns only
+this project's resources: attribution of another project's update is no longer a blocker, but the
+original failed comparison remains unchanged. Read OWNER-SCOPE-AND-PAUSE-0001.json and HANDOFF.md;
+resume only on explicit instruction. CP0001 remains the last valid immutable seal. All pending
+Gate7 controls and independent M2 closure remain mandatory. No Gate8, global change or restart.

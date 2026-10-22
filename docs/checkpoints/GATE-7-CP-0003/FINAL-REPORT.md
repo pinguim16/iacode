@@ -1,8 +1,14 @@
-# Scoped disposal and blocked corrective report
+# Scoped disposal and paused corrective report
+
+Pause update: OWNER-SCOPE-AND-PAUSE-0001.json records the owner's latest scope clarification and
+explicit pause for computer restart. It supersedes the old attribution-confirmation blocker in
+the historical report below, without rewriting the failed original comparison. Current status is
+IN_PROGRESS, paused, with no readiness/seal/verdict. No operational test, Docker resource or new
+auditor was started this turn. Resume only after a new explicit owner instruction.
 
 ## Status
 
-BLOCKED awaiting the external application-transition confirmation. Scoped private disposal is complete. No Gate7 seal or M2 verdict is issued.
+IN_PROGRESS, paused by owner for computer restart. Another project's update no longer requires confirmation; the original failed comparison remains preserved. Scoped private disposal is complete. No Gate7 seal or M2 verdict is issued.
 
 ## Environment
 
@@ -46,7 +52,7 @@ Both finding closures, the complete current16-gate cycle, one complete immutable
 
 ## Handoff Readiness
 
-A truthful resumable BLOCKED checkpoint only, not READY_FOR_REVIEW. CP0001 remains the last immutable valid seal; current corrected code is not offered as approved or independently audited.
+A truthful resumable IN_PROGRESS pause checkpoint only, not READY_FOR_REVIEW. CP0001 remains the last immutable valid seal; current corrected code is not offered as approved or independently audited.
 
 ## Next Gate
 

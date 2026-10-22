@@ -1,7 +1,13 @@
 # Handoff
 
 Current Gate: GATE-7
-Current Status: BLOCKED
+Current Status: IN_PROGRESS
+
+The later OWNER-SCOPE-AND-PAUSE-0001.json supersedes the old confirmation request in this handoff.
+The owner limited Docker concerns to verified E:/iacode resources, without confirming who changed
+another project's applications. That question is no longer a blocker; the original comparison
+remains FAIL. No new test/auditor or Docker resource was started this turn. Resume only on a new
+explicit instruction. No canonical project control or independent boundary was waived.
 
 ## Objective
 
@@ -45,11 +51,11 @@ Never rerun the historical PID controller or the one-shot cleanup receipt. Do no
 
 ## Required next action
 
-Confirm the two externally originated esteira-videos replacements without changing that project or rewriting the original comparison. Then establish an explicit controlled validation interval and a new separately owned disposable resource phase, complete all16 canonical gates and the full immutable non-fast verifier, DCV, fresh internal Red Team/mirror, and seal READY_FOR_REVIEW before a new independent M2 auditor. No Gate8.
+Remain paused for computer restart until the owner explicitly resumes. Follow NEXT.md and OWNER-SCOPE-AND-PAUSE-0001.json, create a new separately receipted task-owned resource phase, then complete all16 canonical gates, full immutable non-fast verifier, DCV, fresh internal Red Team/mirror and seal READY_FOR_REVIEW before a fresh independent M2 auditor. No Gate8.
 
 ## Exact continuation sequence
 
-Read canonical intake, LATEST and this complete checkpoint; validate and compare Git/STATE. Resolve the explicitly named external factual question before changing the frozen environment reference. Create a new separately receipted disposable phase rather than replacing/reusing the cleaned ownership receipt, then complete every ordered control and seal before commissioning a history-free auditor.
+After explicit resume, read canonical intake, LATEST and this complete checkpoint; validate and compare Git/STATE. Do not require attribution of another project's update or rewrite the failed original comparison. Create a new separately receipted task-owned phase instead of reusing the disposed receipt, then complete every ordered control and seal before commissioning a history-free auditor.
 
 ## Validation commands
 

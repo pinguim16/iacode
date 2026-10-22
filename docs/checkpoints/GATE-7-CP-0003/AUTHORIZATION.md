@@ -14,3 +14,8 @@ proxy or whole-CLI sandbox bypass is approved. OWNER-DECISIONS.json binds the di
 The owner also requires removal of task-owned Docker images and other disposable waste. Preserve
 evidence first; identify exact ownership and shared references; no global prune or cleanup of
 preexisting applications/resources is implied.
+
+The owner's subsequent clarification limits Docker concerns to this project's containers/images;
+it does not confirm who changed another project's applications and never converts any historical
+failed comparison into PASS. OWNER-SCOPE-AND-PAUSE-0001.json records that clarification and the
+subsequent explicit pause for computer restart. Do not resume operational work until instructed.
